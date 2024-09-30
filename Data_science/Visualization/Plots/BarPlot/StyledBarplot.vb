@@ -181,9 +181,10 @@ Namespace BarPlot
                 ' Draw bar
                 g.FillRectangle(s.Brush.GetBrush, barRECT)
                 ' Draw label
-                label = TextRender.DrawHtmlText(s.Label, cssFont:=labelFont)
+                ' label = TextRender.DrawHtmlText(s.Label, cssFont:=labelFont)
                 ' rotate -90
-                label = label.RotateImage(-90)
+                ' label = label.RotateImage(-90)
+                Throw New NotImplementedException
                 labelLeft = bLeft + (bWidth - label.Width) / 2
                 g.DrawImageUnscaled(label, New Point(labelLeft, region.Bottom + 20))
 

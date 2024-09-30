@@ -191,7 +191,7 @@ Namespace BoxPlot
                 x0 += boxWidth + interval
             Next
 
-            Dim text As New GraphicsText(DirectCast(g, Graphics2D).Graphics)
+            ' Dim text As New GraphicsText(DirectCast(g, Graphics2D).Graphics)
             Dim label$
 
             x0! = canvas.Padding.Left + leftPart
@@ -203,13 +203,11 @@ Namespace BoxPlot
                 ' label = d.ToString("F2")
                 label = d
                 labelSize = g.MeasureString(label, tickLabelFont)
-                text.DrawString(label,
+                g.DrawString(label,
                                     tickLabelFont,
                                     Brushes.Black,
-                                    New PointF With {
-                                        .X = x0 - 10 - labelSize.Height,
-                                        .Y = y0 + labelSize.Width / 2
-                                    },
+                                        x:=x0 - 10 - labelSize.Height,
+                                        y:=y0 + labelSize.Width / 2,
                                     angle:=-90)
             Next
 
@@ -221,7 +219,7 @@ Namespace BoxPlot
                     .X = canvasPadding.Left + (leftPart - tickLabelFont.Height - labelSize.Height) / 2,
                     .Y = canvas.PlotRegion.Height / 2
                 }
-            text.DrawString(ylabel, yAxisLabelFont, Brushes.Black, location, angle:=-90)
+            g.DrawString(ylabel, yAxisLabelFont, Brushes.Black, location.X, location.Y, angle:=-90)
         End Sub
 
         Public Shared Sub PlotBox(group As NamedValue(Of Vector),

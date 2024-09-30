@@ -1,4 +1,5 @@
 ﻿Imports System.Drawing
+Imports System.Runtime.CompilerServices
 
 #If NET48 Then
 #Else
@@ -62,12 +63,9 @@ Namespace Imaging.Driver
             End Select
         End Function
 
-        Public Function CreateGraphicsDevice(size As Size,
-                                             Optional fill As String = NameOf(Color.Transparent),
+        Public Function CreateGraphicsDevice(size As Size, fill_color As Color,
                                              Optional dpi As Integer = 100,
                                              Optional driver As Drivers = Drivers.Default) As IGraphics
-
-            Dim fill_color As Color = fill.TranslateColor
 
             If driver = Drivers.Default Then
                 driver = DefaultGraphicsDevice()
@@ -80,6 +78,15 @@ Namespace Imaging.Driver
                 Case Else
                     Throw New NotImplementedException(driver.Description)
             End Select
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function CreateGraphicsDevice(size As Size,
+                                             Optional fill As String = NameOf(Color.Transparent),
+                                             Optional dpi As Integer = 100,
+                                             Optional driver As Drivers = Drivers.Default) As IGraphics
+
+            Return CreateGraphicsDevice(size, fill.TranslateColor, dpi, driver:=driver)
         End Function
     End Module
 End Namespace

@@ -232,13 +232,11 @@ Namespace Graphic.Axis
 
                 Call g.DrawLine(pen, axisX, New PointF(x, ZERO.Y + d!))
 
-                If xRotate <> 0 AndAlso TypeOf g Is Graphics2D Then
-                    Dim text As New GraphicsText(g)
-
+                If xRotate <> 0 Then
                     If xRotate > 0 Then
-                        Call text.DrawString(labelText, tickFont, tickColor, New Point(x, ZERO.Y + d * 1.2), angle:=xRotate)
+                        Call g.DrawString(labelText, tickFont, tickColor, x, ZERO.Y + d * 1.2, angle:=xRotate)
                     Else
-                        Call text.DrawString(labelText, tickFont, tickColor, New Point(x, ZERO.Y + sz.Height * std.Sin(xRotate * 180 / std.PI)), angle:=xRotate)
+                        Call g.DrawString(labelText, tickFont, tickColor, x, ZERO.Y + sz.Height * std.Sin(xRotate * 180 / std.PI), angle:=xRotate)
                     End If
                 Else
                     Call g.DrawString(labelText, tickFont, tickColor, New Point(x - sz.Width / 2, ZERO.Y + d * 1.2))

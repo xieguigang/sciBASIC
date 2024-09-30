@@ -217,13 +217,13 @@ Public Class Violin : Inherits Plot
                     }
 
                 ' 绘制X坐标轴分组标签
-                Call New GraphicsText(DirectCast(g, GDICanvas).Graphics).DrawString(
-                s:=group.name,
-                font:=labelFont,
-                brush:=Brushes.Black,
-                point:=labelPos,
-                angle:=theme.xAxisRotate
-            )
+                Call g.DrawString(
+                    s:=group.name,
+                    font:=labelFont,
+                    brush:=Brushes.Black,
+                    x:=labelPos.X, y:=labelPos.Y,
+                    angle:=theme.xAxisRotate
+                )
             End If
 
             X += semiWidth + groupInterval + semiWidth

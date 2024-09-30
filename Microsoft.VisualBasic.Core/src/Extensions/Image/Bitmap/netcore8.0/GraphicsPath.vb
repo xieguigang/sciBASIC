@@ -84,46 +84,57 @@ Namespace Imaging
             Public Property points As PointF()
         End Class
 
+        Public Class op_AddEllipse : Inherits op
+            Public Property x As Single
+            Public Property y As Single
+            Public Property r1 As Single
+            Public Property r2 As Single
+        End Class
+
         Dim opSet As New List(Of op)
 
+        Public Sub AddEllipse(x As Single, y As Single, r1 As Single, r2 As Single)
+            Call opSet.Add(New op_AddEllipse With {.x = x, .y = y, .r1 = r1, .r2 = r2})
+        End Sub
+
         Public Sub AddPolygon(points As PointF())
-            opSet.Add(New op_AddPolygon With {.points = points})
+            Call opSet.Add(New op_AddPolygon With {.points = points})
         End Sub
 
         Public Sub AddRectangle(rect As RectangleF)
-            opSet.Add(New op_AddRectangle With {.rect = rect})
+            Call opSet.Add(New op_AddRectangle With {.rect = rect})
         End Sub
 
         Public Sub AddArc(rect As RectangleF, startAngle!, sweepAngle!)
-            opSet.Add(New op_AddArc With {.rect = rect, .startAngle = startAngle, .sweepAngle = sweepAngle})
+            Call opSet.Add(New op_AddArc With {.rect = rect, .startAngle = startAngle, .sweepAngle = sweepAngle})
         End Sub
 
         Public Sub AddLine(a As PointF, b As PointF)
-            opSet.Add(New Op_AddLine(a, b))
+            Call opSet.Add(New Op_AddLine(a, b))
         End Sub
 
         Public Sub AddBezier(pt1 As PointF, pt2 As PointF, pt3 As PointF, pt4 As PointF)
-            opSet.Add(New op_AddBezier(pt1, pt2, pt3, pt4))
+            Call opSet.Add(New op_AddBezier(pt1, pt2, pt3, pt4))
         End Sub
 
         Public Sub AddCurve(ParamArray points As PointF())
-            opSet.Add(New op_AddCurve With {.points = points})
+            Call opSet.Add(New op_AddCurve With {.points = points})
         End Sub
 
         Public Sub AddLines(ParamArray points As PointF())
-            opSet.Add(New op_AddLines With {.points = points})
+            Call opSet.Add(New op_AddLines With {.points = points})
         End Sub
 
         Public Sub Reset()
-            opSet.Add(New op_Reset())
+            Call opSet.Add(New op_Reset())
         End Sub
 
         Public Sub CloseAllFigures()
-            opSet.Add(New op_CloseAllFigures())
+            Call opSet.Add(New op_CloseAllFigures())
         End Sub
 
         Public Sub CloseFigure()
-            opSet.Add(New op_CloseFigure)
+            Call opSet.Add(New op_CloseFigure)
         End Sub
     End Class
 #End If

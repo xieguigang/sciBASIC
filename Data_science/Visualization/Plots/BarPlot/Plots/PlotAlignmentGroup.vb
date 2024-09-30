@@ -76,7 +76,6 @@ Imports Microsoft.VisualBasic.Imaging.SVG
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MIME.Html.CSS
 Imports Microsoft.VisualBasic.MIME.Html.Render
-Imports FontStyle = System.Drawing.FontStyle
 Imports std = System.Math
 
 #If NET48 Then
@@ -90,6 +89,7 @@ Imports DashStyle = System.Drawing.Drawing2D.DashStyle
 Imports Image = System.Drawing.Image
 Imports Bitmap = System.Drawing.Bitmap
 Imports GraphicsPath = System.Drawing.Drawing2D.GraphicsPath
+Imports FontStyle = System.Drawing.FontStyle
 #Else
 Imports Pen = Microsoft.VisualBasic.Imaging.Pen
 Imports Pens = Microsoft.VisualBasic.Imaging.Pens
@@ -101,6 +101,7 @@ Imports DashStyle = Microsoft.VisualBasic.Imaging.DashStyle
 Imports Image = Microsoft.VisualBasic.Imaging.Image
 Imports Bitmap = Microsoft.VisualBasic.Imaging.Bitmap
 Imports GraphicsPath = Microsoft.VisualBasic.Imaging.GraphicsPath
+Imports FontStyle = Microsoft.VisualBasic.Imaging.FontStyle
 #End If
 
 Namespace BarPlot
@@ -275,9 +276,7 @@ Namespace BarPlot
                                     Call c.DrawString(label, tickFont, Brushes.Black, pos)
                                 End Sub
 
-                If TypeOf g Is Graphics2D Then
-                    DirectCast(g, Graphics2D).Stroke = tickPen
-                End If
+                g.Stroke = tickPen
 
                 If theme.drawGrid AndAlso Not theme.gridStrokeX.StringEmpty(, True) Then
                     Dim ticks = xrange.CreateAxisTicks
@@ -334,24 +333,7 @@ Namespace BarPlot
                         labPos = New Point(.Left + 3, .Top)
                         Call g.DrawString(ylabel, labelFont, Brushes.Black, labPos)
                     Case YlabelPosition.LeftCenter
-                        If TypeOf g Is Graphics2D OrElse TypeOf g Is GraphicsSVG Then
-                            Dim lx = (.Left - labSize.Height) / 4
-                            Dim ly = .Top * 2.5 + (.Height - labSize.Width) / 2
-
-                            labPos = New PointF(lx, ly)
-
-                            If TypeOf g Is Graphics2D Then
-                                With New GraphicsText(DirectCast(g, Graphics2D).Graphics)
-                                    Call .DrawString(ylabel, labelFont, Brushes.Black, labPos, -90)
-                                End With
-                            Else
-                                Call DirectCast(g, GraphicsSVG).DrawString(ylabel, labelFont, Brushes.Black, labPos.X, labPos.Y, -90)
-                            End If
-                        Else
-                            ' 20220324 pdf设备还没有找到办法兼容这个操作
-                            ' 所以在这里正常绘制，不做角度旋转
-                            Call g.DrawString(ylabel, labelFont, Brushes.Black, labPos.X, labPos.Y)
-                        End If
+                        Call g.DrawString(ylabel, labelFont, Brushes.Black, labPos.X, labPos.Y, -90)
                     Case Else
                         ' 不进行标签的绘制
                 End Select

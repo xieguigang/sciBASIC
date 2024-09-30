@@ -195,10 +195,10 @@ Namespace BarPlot
             Dim serialBrushes As NamedValue(Of SolidBrush)() = data.loadBrushes.ToArray
             Dim wb = BarWidth(width, data.Samples.Length, interval)
 
-            Call New GraphicsText(DirectCast(g, Graphics2D).Graphics).DrawString(
+            Call g.DrawString(
                 ylabel, axisFont,
                 Brushes.Black,
-                New PointF((canvas.Padding.Left - axisFont.Height), height / 2),
+                canvas.Padding.Left - axisFont.Height, height / 2,
                 angle:=-90)
 
             ' 绘制y轴

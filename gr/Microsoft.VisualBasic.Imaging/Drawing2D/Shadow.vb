@@ -142,6 +142,17 @@ Namespace Drawing2D
 #End If
         End Sub
 
+        Public Shared Sub DropdownShadows(g As IGraphics, polygon As GraphicsPath,
+                                          Optional shadowColor$ = NameOf(Color.Gray),
+                                          Optional alphaLevels$ = "0,120,150,200",
+                                          Optional gradientLevels$ = "[0,0.125,0.5,1]")
+#If NET48 Then
+            Call Effects.DropdownShadows(g, polygon, shadowColor, alphaLevels, gradientLevels)
+#Else
+            Throw New NotImplementedException
+#End If
+        End Sub
+
         ''' <summary>
         ''' Draw shadow of a specifc <paramref name="rectangle"/>
         ''' </summary>
