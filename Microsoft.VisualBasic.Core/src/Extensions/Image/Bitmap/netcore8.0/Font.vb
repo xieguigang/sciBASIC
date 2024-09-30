@@ -10,9 +10,9 @@
 
         Public ReadOnly Property Height As Single
 
-        Sub New(name As String, size As Single, Optional style As FontStyle = FontStyle.Regular)
-            Me.Name = name
-            Me.Size = size
+        Sub New(familyName As String, emSize As Single, Optional style As FontStyle = FontStyle.Regular)
+            Me.Name = familyName
+            Me.Size = emSize
             Me.Style = style
         End Sub
 

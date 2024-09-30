@@ -56,7 +56,6 @@
 #End Region
 
 Imports System.Drawing
-Imports System.Drawing.Drawing2D
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Axis
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Canvas
@@ -83,6 +82,7 @@ Imports DashStyle = System.Drawing.Drawing2D.DashStyle
 Imports Image = System.Drawing.Image
 Imports Bitmap = System.Drawing.Bitmap
 Imports GraphicsPath = System.Drawing.Drawing2D.GraphicsPath
+Imports LineCap = System.Drawing.Drawing2D.LineCap
 #Else
 Imports Pen = Microsoft.VisualBasic.Imaging.Pen
 Imports Pens = Microsoft.VisualBasic.Imaging.Pens
@@ -94,6 +94,7 @@ Imports DashStyle = Microsoft.VisualBasic.Imaging.DashStyle
 Imports Image = Microsoft.VisualBasic.Imaging.Image
 Imports Bitmap = Microsoft.VisualBasic.Imaging.Bitmap
 Imports GraphicsPath = Microsoft.VisualBasic.Imaging.GraphicsPath
+Imports LineCap = Microsoft.VisualBasic.Imaging.LineCap
 #End If
 
 ''' <summary>
