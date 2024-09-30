@@ -68,6 +68,9 @@ Imports Microsoft.VisualBasic.Serialization.JSON
 ''' A NxN data matrix which can be convert to graph object
 ''' under a certain cutoff value.
 ''' </summary>
+''' <remarks>
+''' a matrix data wrapper for pairwise comparision analysis
+''' </remarks>
 Public Class DataMatrix : Implements IBucketVector
 
     Protected Friend ReadOnly names As Index(Of String)

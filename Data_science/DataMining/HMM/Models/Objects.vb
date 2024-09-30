@@ -61,28 +61,36 @@
 #End Region
 
 Imports Microsoft.VisualBasic.Serialization.JSON
-Imports stdNum = System.Math
+Imports std = System.Math
 
 Namespace Models
 
     Public Class StatesObject
 
+        ''' <summary>
+        ''' the state name
+        ''' </summary>
+        ''' <returns></returns>
         Public Property state As String
         Public Property prob As Double()
 
         Public Overrides Function ToString() As String
-            Return $"{state}: {prob.Select(Function(d) stdNum.Round(d, 3)).ToArray.GetJson}"
+            Return $"{state}: {prob.Select(Function(d) std.Round(d, 3)).ToArray.GetJson}"
         End Function
 
     End Class
 
     Public Class Observable
 
+        ''' <summary>
+        ''' the observed state name
+        ''' </summary>
+        ''' <returns></returns>
         Public Property obs As String
         Public Property prob As Double()
 
         Public Overrides Function ToString() As String
-            Return $"{obs}: {prob.Select(Function(d) stdNum.Round(d, 3)).ToArray.GetJson}"
+            Return $"{obs}: {prob.Select(Function(d) std.Round(d, 3)).ToArray.GetJson}"
         End Function
 
     End Class
