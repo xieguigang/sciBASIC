@@ -54,93 +54,58 @@
 #End Region
 
 Imports System.Drawing
-Imports System.Drawing.Drawing2D
-Imports System.Drawing.Text
-Imports System.IO
 Imports System.Runtime.CompilerServices
-Imports Microsoft.VisualBasic.Drawing
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
-Imports Microsoft.VisualBasic.Imaging.PostScript
-Imports Microsoft.VisualBasic.Imaging.SVG
-Imports Microsoft.VisualBasic.MIME.Html.CSS
 
-<Assembly: InternalsVisibleTo("Microsoft.VisualBasic.Imaging.PDF")>
+#If NET48 Then
+Imports Microsoft.VisualBasic.Drawing
+#End If
 
 Namespace Driver
 
     Public Module ImageDriver
 
-        Friend pdfDriver As Func(Of Size, IGraphics)
-        Friend getPdfImage As Func(Of IGraphics, Size, Padding, GraphicsData)
-
-        Public Delegate Function HookGraphicsDrawingDevice(desc As DeviceDescription, plot As IPlot) As GraphicsData
-        Public Delegate Function OpenGraphicsDevice(size As Size, background As Color, dpi As Integer) As IGraphics
-
-        Dim raster As OpenGraphicsDevice
-        Dim svg As OpenGraphicsDevice
-        Dim pdf As OpenGraphicsDevice
-
-        Sub New()
-#If NET48 Then
-            raster = AddressOf Drawing.Drawing.OpenGraphicsDevice
-#End If
-        End Sub
-
-        Private Function handleSVG(g As DeviceDescription, plot As IPlot) As GraphicsData
-            Dim dpiXY = g.dpi
-            Dim svg As New GraphicsSVG(g.size, dpiXY.Width, dpiXY.Height)
-
-            Call svg.Clear(g.background)
-            Call plot(svg, g.GetRegion)
-
-            Return New SVGData(svg, g.size, g.padding)
+        Private Function handleSVG(d As DeviceDescription, plot As IPlot) As GraphicsData
+            Using g As IGraphics = DriverLoad.CreateGraphicsDevice(d.size, d.bgHtmlColor, d.dpi, driver:=Drivers.SVG)
+                Call g.Clear(g.Background)
+                Call plot(g, d.GetRegion)
+                Return New SVGData(svg, d.size, d.padding)
+            End Using
         End Function
 
         Private Function handlePostScript(g As DeviceDescription, plot As IPlot) As GraphicsData
-            Dim dpiXY = g.dpi
-            Dim ps As New GraphicsPS(g.size, dpiXY)
-
             Throw New NotImplementedException
         End Function
 
         Private Function handleWmfVector(g As DeviceDescription, plot As IPlot) As GraphicsData
-            Dim wmfstream As New MemoryStream
-            Dim dpiXY = g.dpi
-
-            Using wmf As New Wmf(g.size, wmfstream, g.bgHtmlColor, dpi:=dpiXY)
-                Call plot(wmf, g.GetRegion)
-                Call wmf.Flush()
-            End Using
-
-            Return New WmfData(wmfstream, g.size, g.padding)
+            Throw New NotImplementedException
         End Function
 
         Private Function handlePdf(d As DeviceDescription, plot As IPlot) As GraphicsData
-            Dim g As IGraphics = pdfDriver(d.size)
-
-            Call g.Clear(d.background)
-            Call plot(g, d.GetRegion)
-            Call g.Flush()
-
-            Return getPdfImage(g, d.size, d.padding)
-        End Function
-
-        Public Function handleGdiPlusRaster(d As DeviceDescription, plot As IPlot) As GraphicsData
-            Dim dpi As String = $"{d.dpi.Width},{d.dpi.Height}"
-
-            ' using gdi+ graphics driver
-            ' 在这里使用透明色进行填充，防止当bg参数为透明参数的时候被CreateGDIDevice默认填充为白色
-            Using g As IGraphics = raster(d.size, d.bgHtmlColor.TranslateColor, dpi:=dpi)
-                Dim rect As New Rectangle(New Point, d.size)
+            Using g As IGraphics = DriverLoad.CreateGraphicsDevice(d.size, d.bgHtmlColor, d.dpi, driver:=Drivers.PDF)
+                Call g.Clear(d.background)
                 Call plot(g, d.GetRegion)
-#If NET48 Then
-                Return New ImageData(DirectCast(g, Graphics2D).ImageResource, d.size, d.padding)
-#Else
+                Call g.Flush()
                 Throw New NotImplementedException
-#End If
             End Using
         End Function
 
+        Public Function handleGdiPlusRaster(d As DeviceDescription, plot As IPlot) As GraphicsData
+            ' using gdi+ graphics driver
+            ' 在这里使用透明色进行填充，防止当bg参数为透明参数的时候被CreateGDIDevice默认填充为白色
+            Using g As IGraphics = DriverLoad.CreateGraphicsDevice(d.size, d.bgHtmlColor, d.dpi, driver:=Drivers.GDI)
+                Dim rect As New Rectangle(New Point, d.size)
+                Call plot(g, d.GetRegion)
+                Return New ImageData(DirectCast(g, GdiRasterGraphics).ImageResource, d.size, d.padding)
+            End Using
+        End Function
+
+        ''' <summary>
+        ''' a unify method for create graphics plot
+        ''' </summary>
+        ''' <param name="g"></param>
+        ''' <param name="plot"></param>
+        ''' <returns></returns>
         <Extension>
         Public Function GraphicsPlot(g As DeviceDescription, plot As IPlot) As GraphicsData
             Select Case g.driverUsed

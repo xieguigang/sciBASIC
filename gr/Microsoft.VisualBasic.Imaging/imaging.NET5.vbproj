@@ -809,11 +809,14 @@
 	<ItemGroup>
 		<ProjectReference Include="..\..\Data_science\Mathematica\Math\Math\Math.NET5.vbproj" />
 		<ProjectReference Include="..\..\Microsoft.VisualBasic.Core\src\Core.vbproj" />
-		<ProjectReference Include="..\..\mime\text%html\html_netcore5.vbproj" />
-		<ProjectReference Include="..\Drawing-net4.8\Drawing-net4.8.vbproj" />
+		<ProjectReference Include="..\..\mime\text%html\html_netcore5.vbproj" />		
 	</ItemGroup>
 
   <ItemGroup Condition=" '$(TargetFramework)' == 'net48' ">
+    <ProjectReference Include="..\Drawing-net4.8\Drawing-net4.8.vbproj" />
+  </ItemGroup>
+
+    <ItemGroup Condition=" '$(TargetFramework)' == 'net48' ">
     <Reference Include="PresentationCore">
       <HintPath>C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\PresentationCore.dll</HintPath>
     </Reference>

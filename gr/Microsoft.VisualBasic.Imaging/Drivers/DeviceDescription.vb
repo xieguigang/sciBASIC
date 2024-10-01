@@ -67,7 +67,7 @@ Namespace Driver
         Public Property size As Size
         Public Property padding As Padding
         Public Property driverUsed As Drivers
-        Public Property dpi As Size
+        Public Property dpi As Integer
 
         Public ReadOnly Property background As Color
         Public ReadOnly Property bgHtmlColor As String
