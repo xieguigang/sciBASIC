@@ -139,14 +139,7 @@ Public Module TextureResourceLoader
     ''' </summary>
     ''' <returns></returns>
     Public Function LoadInternalDefaultResource() As Bitmap()
-        Dim [default] As Bitmap
-
-#If NET48 Then
-        [default] = My.Resources.DefaultTexture
-#Else
-        [default] = Bitmap.FromStream(My.Resources.ResourceManager.GetStream("DefaultTexture"))
-#End If
-
+        Dim [default] As Bitmap = Bitmap.FromStream(My.Resources.ResourceManager.GetStream("DefaultTexture"))
         Return TextureResourceLoader.LoadTextureResource([default], New Size(27, 19), 6, 6).ToArray
     End Function
 End Module
