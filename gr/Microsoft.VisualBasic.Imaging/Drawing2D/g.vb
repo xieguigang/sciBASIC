@@ -67,7 +67,6 @@ Imports System.Drawing
 Imports System.Drawing.Drawing2D
 Imports System.Drawing.Text
 Imports System.Runtime.CompilerServices
-Imports Microsoft.VisualBasic.Drawing
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.Imaging.SVG
@@ -75,7 +74,10 @@ Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.MIME.Html.CSS
 Imports Microsoft.VisualBasic.My.FrameworkInternal
-Imports Microsoft.VisualBasic.Scripting.Runtime
+
+#If NET48 Then
+Imports Microsoft.VisualBasic.Drawing
+#End If
 
 Namespace Drawing2D
 
@@ -266,10 +268,9 @@ Namespace Drawing2D
                                       bg$,
                                       plotAPI As IPlot,
                                       Optional driver As Drivers = Drivers.Default,
-                                      Optional dpi$ = "100,100") As GraphicsData
+                                      Optional dpi As Integer = 100) As GraphicsData
 
             Dim driverUsed As Drivers = g.__getDriver(developerValue:=driver)
-            Dim dpiXY As Size = dpi.SizeParser
 
             size = size Or defaultSize
             ' 20221211 default config will makes the zero-padding
@@ -278,7 +279,7 @@ Namespace Drawing2D
             ' padding = padding Or defaultPaddingValue
 
             Return New DeviceDescription(bg) With {
-                .dpi = dpiXY,
+                .dpi = dpi,
                 .driverUsed = driverUsed,
                 .padding = padding,
                 .size = size
