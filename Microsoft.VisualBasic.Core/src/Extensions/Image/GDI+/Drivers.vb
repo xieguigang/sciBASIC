@@ -57,6 +57,8 @@
 
 #End Region
 
+Imports System.Runtime.CompilerServices
+
 Namespace Imaging.Driver
 
     ''' <summary>
@@ -86,4 +88,23 @@ Namespace Imaging.Driver
         WMF
         PDF
     End Enum
+
+    Public Module FormatHelper
+
+        <Extension>
+        Public Function ConvertFormat(format As ImageFormats) As Drivers
+            Select Case format
+                Case ImageFormats.Bmp, ImageFormats.Gif, ImageFormats.Jpeg, ImageFormats.Png, ImageFormats.Tiff
+                    Return Drivers.GDI
+                Case ImageFormats.Wmf
+                    Return Drivers.WMF
+                Case ImageFormats.Svg
+                    Return Drivers.SVG
+                Case ImageFormats.Pdf
+                    Return Drivers.PDF
+                Case Else
+                    Return DriverLoad.DefaultGraphicsDevice
+            End Select
+        End Function
+    End Module
 End Namespace

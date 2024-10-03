@@ -65,6 +65,8 @@ Namespace Imaging
     ''' </summary>
     Public Enum ImageFormats As Integer
 
+        Unknown = 0
+
         ''' <summary>
         ''' Gets the bitmap (BMP) image format.
         ''' </summary>
