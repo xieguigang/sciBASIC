@@ -82,6 +82,10 @@ Namespace Driver
         ''' <returns></returns>
         Public MustOverride ReadOnly Property Driver As Drivers
 
+        ''' <summary>
+        ''' http content type
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property content_type As String
             Get
                 Select Case Driver
