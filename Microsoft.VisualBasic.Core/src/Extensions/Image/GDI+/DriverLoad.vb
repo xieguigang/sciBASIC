@@ -71,6 +71,10 @@ Namespace Imaging.Driver
                 driver = DefaultGraphicsDevice()
             End If
 
+            If svg Is Nothing OrElse pdf Is Nothing OrElse libgdiplus_raster Is Nothing Then
+
+            End If
+
             Select Case driver
                 Case Drivers.SVG : Return svg(size, fill_color, dpi)
                 Case Drivers.PDF : Return pdf(size, fill_color, dpi)
