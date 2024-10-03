@@ -27,9 +27,7 @@ Namespace Imaging
             End Get
         End Property
 
-        Public Sub Save(s As Stream, format As ImageFormats)
-            Throw New NotImplementedException
-        End Sub
+        Public MustOverride Sub Save(s As Stream, format As ImageFormats)
 
         Public Shared Function FromStream(s As Stream) As Bitmap
             Throw New NotImplementedException
@@ -108,6 +106,10 @@ Namespace Imaging
         Public Function GetPixel(X As Integer, Y As Integer) As Color
             Return memoryBuffer.GetPixel(X, Y)
         End Function
+
+        Public Overrides Sub Save(s As Stream, format As ImageFormats)
+            Throw New NotImplementedException()
+        End Sub
     End Class
 #End If
 End Namespace
