@@ -8,27 +8,11 @@ Imports Bitmap = Microsoft.VisualBasic.Imaging.Bitmap
 
 Namespace Imaging.Driver
 
-    Public Delegate Function CreateGraphic(size As Size, fill As Color, dpi As Integer) As IGraphics
-    ''' <summary>
-    ''' 
-    ''' </summary>
-    ''' <param name="background"></param>
-    ''' <param name="direct_access">
-    ''' create the graphics canvas directly based on the input background image resource if set this parameter to true, 
-    ''' or make a copy of the image and then create the graphics canvas if set this parameter false.
-    ''' </param>
-    ''' <returns></returns>
-    Public Delegate Function CreateCanvas2D(background As Bitmap, direct_access As Boolean) As IGraphics
-
     Public Module DriverLoad
 
-        Public libgdiplus_raster As CreateGraphic
-        Public svg As CreateGraphic
-        Public pdf As CreateGraphic
-
-        Public libgdiplus_canvas As CreateCanvas2D
-        Public svg_canvas As CreateCanvas2D
-        Public pdf_canvas As CreateCanvas2D
+        Public libgdiplus_raster As DeviceInterop
+        Public svg As DeviceInterop
+        Public pdf As DeviceInterop
 
         Sub New()
         End Sub
@@ -55,9 +39,9 @@ Namespace Imaging.Driver
             End If
 
             Select Case driver
-                Case Drivers.GDI : Return libgdiplus_canvas(background, direct_access)
-                Case Drivers.PDF : Return pdf_canvas(background, direct_access)
-                Case Drivers.SVG : Return svg_canvas(background, direct_access)
+                Case Drivers.GDI : Return libgdiplus_raster.CreateCanvas2D(background, direct_access)
+                Case Drivers.PDF : Return pdf.CreateCanvas2D(background, direct_access)
+                Case Drivers.SVG : Return svg.CreateCanvas2D(background, direct_access)
                 Case Else
                     Throw New NotImplementedException(driver.Description)
             End Select
@@ -76,9 +60,9 @@ Namespace Imaging.Driver
             End If
 
             Select Case driver
-                Case Drivers.SVG : Return svg(size, fill_color, dpi)
-                Case Drivers.PDF : Return pdf(size, fill_color, dpi)
-                Case Drivers.GDI : Return libgdiplus_raster(size, fill_color, dpi)
+                Case Drivers.SVG : Return svg.CreateGraphic(size, fill_color, dpi)
+                Case Drivers.PDF : Return pdf.CreateGraphic(size, fill_color, dpi)
+                Case Drivers.GDI : Return libgdiplus_raster.CreateGraphic(size, fill_color, dpi)
                 Case Else
                     Throw New NotImplementedException(driver.Description)
             End Select
