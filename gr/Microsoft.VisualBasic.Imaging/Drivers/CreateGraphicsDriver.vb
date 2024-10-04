@@ -65,61 +65,22 @@ Namespace Driver
 
     Public Module ImageDriver
 
-        Private Function handleSVG(d As DeviceDescription, plot As IPlot) As GraphicsData
-            Dim device = DriverLoad.UseGraphicsDevice(Drivers.SVG)
-
-            Using g As IGraphics = device.CreateGraphic(d.size, d.background, d.dpi)
-                Call g.Clear(g.Background)
-                Call plot(g, d.GetRegion)
-
-                Return New SVGData(device, d.size, d.padding)
-            End Using
-        End Function
-
-        Private Function handlePostScript(g As DeviceDescription, plot As IPlot) As GraphicsData
-            Throw New NotImplementedException
-        End Function
-
-        Private Function handleWmfVector(g As DeviceDescription, plot As IPlot) As GraphicsData
-            Throw New NotImplementedException
-        End Function
-
-        Private Function handlePdf(d As DeviceDescription, plot As IPlot) As GraphicsData
-            Using g As IGraphics = DriverLoad.CreateGraphicsDevice(d.size, d.bgHtmlColor, d.dpi, driver:=Drivers.PDF)
-                Call g.Clear(d.background)
-                Call plot(g, d.GetRegion)
-                Call g.Flush()
-                Throw New NotImplementedException
-            End Using
-        End Function
-
-        Public Function handleGdiPlusRaster(d As DeviceDescription, plot As IPlot) As GraphicsData
-            ' using gdi+ graphics driver
-            ' 在这里使用透明色进行填充，防止当bg参数为透明参数的时候被CreateGDIDevice默认填充为白色
-            Using g As IGraphics = DriverLoad.CreateGraphicsDevice(d.size, d.bgHtmlColor, d.dpi, driver:=Drivers.GDI)
-                Dim rect As New Rectangle(New Point, d.size)
-                Call plot(g, d.GetRegion)
-                Return New ImageData(DirectCast(g, GdiRasterGraphics).ImageResource, d.size, d.padding)
-            End Using
-        End Function
-
         ''' <summary>
         ''' a unify method for create graphics plot
         ''' </summary>
-        ''' <param name="g"></param>
+        ''' <param name="desc">the graphics drawing context description</param>
         ''' <param name="plot"></param>
         ''' <returns></returns>
         <Extension>
-        Public Function GraphicsPlot(g As DeviceDescription, plot As IPlot) As GraphicsData
-            Select Case g.driverUsed
-                Case Drivers.SVG : Return handleSVG(g, plot)
-                Case Drivers.PS : Return handlePostScript(g, plot)
-                Case Drivers.WMF : Return handleWmfVector(g, plot)
-                Case Drivers.PDF : Return handlePdf(g, plot)
+        Public Function GraphicsPlot(desc As DeviceDescription, plot As IPlot) As GraphicsData
+            Dim device = DriverLoad.UseGraphicsDevice(desc.driverUsed)
 
-                Case Else
-                    Return handleGdiPlusRaster(g, plot)
-            End Select
+            Using g As IGraphics = device.CreateGraphic(desc.size, desc.background, desc.dpi)
+                Call g.Clear(desc.background)
+                Call plot(g, desc.GetRegion)
+
+                Return device.GetData(g, desc.padding)
+            End Using
         End Function
     End Module
 End Namespace
