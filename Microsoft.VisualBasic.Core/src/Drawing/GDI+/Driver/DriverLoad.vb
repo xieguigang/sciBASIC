@@ -47,25 +47,32 @@ Namespace Imaging.Driver
             End Select
         End Function
 
-        Public Function CreateGraphicsDevice(size As Size, fill_color As Color,
-                                             Optional dpi As Integer = 100,
-                                             Optional driver As Drivers = Drivers.Default) As IGraphics
-
+        Public Function UseGraphicsDevice(driver As Drivers) As DeviceInterop
             If driver = Drivers.Default Then
                 driver = DefaultGraphicsDevice()
             End If
 
-            If svg Is Nothing OrElse pdf Is Nothing OrElse libgdiplus_raster Is Nothing Then
+            If svg Is Nothing OrElse
+                pdf Is Nothing OrElse
+                libgdiplus_raster Is Nothing Then
 
             End If
 
             Select Case driver
-                Case Drivers.SVG : Return svg.CreateGraphic(size, fill_color, dpi)
-                Case Drivers.PDF : Return pdf.CreateGraphic(size, fill_color, dpi)
-                Case Drivers.GDI : Return libgdiplus_raster.CreateGraphic(size, fill_color, dpi)
+                Case Drivers.SVG : Return svg
+                Case Drivers.PDF : Return pdf
+                Case Drivers.GDI : Return libgdiplus_raster
                 Case Else
                     Throw New NotImplementedException(driver.Description)
             End Select
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function CreateGraphicsDevice(size As Size, fill_color As Color,
+                                             Optional dpi As Integer = 100,
+                                             Optional driver As Drivers = Drivers.Default) As IGraphics
+
+            Return UseGraphicsDevice(driver).CreateGraphic(size, fill_color, dpi)
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>

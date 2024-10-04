@@ -64,6 +64,9 @@ Namespace SVG.XML
     ''' <summary>
     ''' SVG之中的画布对象
     ''' </summary>
+    ''' <remarks>
+    ''' 理论上应该是<see cref="SvgGroup"/> &lt;g>对象容器
+    ''' </remarks>
     Public MustInherit Class SvgContainer : Inherits SvgElement
 
         Public Property filter As String

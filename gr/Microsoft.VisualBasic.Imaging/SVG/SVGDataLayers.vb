@@ -92,6 +92,12 @@ Namespace SVG
             Me.size = size
         End Sub
 
+        Sub New(svg As SvgDocument)
+            Me.svg = svg
+            Me.bg = svg.Fill
+            Me.size = New Size(svg.Width, svg.Height)
+        End Sub
+
         ''' <summary>
         ''' reset
         ''' </summary>

@@ -57,6 +57,7 @@
 #End Region
 
 Imports System.Drawing
+Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.MIME.Html.CSS
 
@@ -69,7 +70,16 @@ Namespace Driver
         Public Property driverUsed As Drivers
         Public Property dpi As Integer
 
+        ''' <summary>
+        ''' the default background fill color
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property background As Color
+
+        ''' <summary>
+        ''' the html color string value of <see cref="background"/>
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property bgHtmlColor As String
 
         Sub New(bg As String)
@@ -81,6 +91,7 @@ Namespace Driver
             Return $"{bgHtmlColor} [{size.Width},{size.Height}]"
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function GetRegion() As GraphicsRegion
             Return New GraphicsRegion With {
                 .Size = size,

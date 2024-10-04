@@ -66,10 +66,13 @@ Namespace Driver
     Public Module ImageDriver
 
         Private Function handleSVG(d As DeviceDescription, plot As IPlot) As GraphicsData
-            Using g As IGraphics = DriverLoad.CreateGraphicsDevice(d.size, d.bgHtmlColor, d.dpi, driver:=Drivers.SVG)
+            Dim device = DriverLoad.UseGraphicsDevice(Drivers.SVG)
+
+            Using g As IGraphics = device.CreateGraphic(d.size, d.background, d.dpi)
                 Call g.Clear(g.Background)
                 Call plot(g, d.GetRegion)
-                Return New SVGData(svg, d.size, d.padding)
+
+                Return New SVGData(device, d.size, d.padding)
             End Using
         End Function
 
