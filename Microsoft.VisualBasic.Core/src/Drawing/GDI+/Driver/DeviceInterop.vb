@@ -22,7 +22,15 @@ Namespace Imaging.Driver
         ''' <returns></returns>
         Public MustOverride Function CreateCanvas2D(background As Bitmap, direct_access As Boolean) As IGraphics
 
-        Public MustOverride Function GetData(g As IGraphics) As IGraphicsData
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="g"></param>
+        ''' <param name="padding">
+        ''' the graphics drawing layout context information, should be an integer vector of paddings
+        ''' </param>
+        ''' <returns></returns>
+        Public MustOverride Function GetData(g As IGraphics, padding As Integer()) As IGraphicsData
 
     End Class
 End Namespace
