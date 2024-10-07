@@ -1,53 +1,53 @@
 ﻿#Region "Microsoft.VisualBasic::1897072bb62516806b71383266916a24, Data_science\Visualization\Plots-statistics\TimeTrends\TimeTrends.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 321
-    '    Code Lines: 245 (76.32%)
-    ' Comment Lines: 35 (10.90%)
-    '    - Xml Docs: 91.43%
-    ' 
-    '   Blank Lines: 41 (12.77%)
-    '     File Size: 14.20 KB
+' Summaries:
 
 
-    ' Module TimeTrends
-    ' 
-    '     Function: Plot
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 321
+'    Code Lines: 245 (76.32%)
+' Comment Lines: 35 (10.90%)
+'    - Xml Docs: 91.43%
+' 
+'   Blank Lines: 41 (12.77%)
+'     File Size: 14.20 KB
+
+
+' Module TimeTrends
+' 
+'     Function: Plot
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -198,36 +198,36 @@ Public Module TimeTrends
                 ' 绘制X坐标轴
                 Call g.DrawLine(axisPen, rect.Left, rect.Bottom, rect.Right, rect.Bottom)
 
-                With New GraphicsText(DirectCast(g, GDICanvas).Graphics)
+                'With New GraphicsText(DirectCast(g, GDICanvas).Graphics)
 
-                    dateFormat = dateFormat Or shortDateString
+                dateFormat = dateFormat Or shortDateString
 
-                    ' 绘制X坐标轴日期标签
-                    For Each tickDate As Date In timer.Ticks
-                        labelText = dateFormat(tickDate)
-                        labelSize = g.MeasureString(labelText, tickLabelFont)
-                        x = xScaler(tickDate)
-                        x = x - labelSize.Width / 2
-                        y = rect.Bottom + labelSize.Width * (3 / 4)
+                ' 绘制X坐标轴日期标签
+                For Each tickDate As Date In timer.Ticks
+                    labelText = dateFormat(tickDate)
+                    labelSize = g.MeasureString(labelText, tickLabelFont)
+                    x = xScaler(tickDate)
+                    x = x - labelSize.Width / 2
+                    y = rect.Bottom + labelSize.Width * (3 / 4)
 
-                        maxLabelXWidth = stdNum.Max(
-                            labelSize.Width,
-                            maxLabelXWidth
-                        )
+                    maxLabelXWidth = stdNum.Max(
+                        labelSize.Width,
+                        maxLabelXWidth
+                    )
 
-                        .DrawString(s:=labelText,
-                                    font:=tickLabelFont,
-                                    brush:=Brushes.Black,
-                                    point:=New PointF(x, y),
-                                    angle:=-35.0!
-                         )
+                    g.DrawString(s:=labelText,
+                        font:=tickLabelFont,
+                        brush:=Brushes.Black,
+                        x:=x, y:=y,
+                        angle:=-35.0!
+                    )
 
-                        x = xScaler(tickDate)
-                        y = rect.Bottom + labelSize.Height / 2
+                    x = xScaler(tickDate)
+                    y = rect.Bottom + labelSize.Height / 2
 
-                        g.DrawLine(axisPen, CInt(x), CInt(y), CInt(x), rect.Bottom)
-                    Next
-                End With
+                    g.DrawLine(axisPen, CInt(x), CInt(y), CInt(x), rect.Bottom)
+                Next
+                'End With
 
                 rangePoly = (New List(Of PointF), New List(Of PointF))
 

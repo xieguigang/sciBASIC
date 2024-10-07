@@ -58,6 +58,7 @@ Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Axis
 Imports Microsoft.VisualBasic.Data.GraphTheory
 Imports Microsoft.VisualBasic.Data.GraphTheory.GridGraph
+Imports Microsoft.VisualBasic.Emit.Delegates
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
@@ -204,8 +205,8 @@ Namespace Heatmap
                     tickAxisStroke:=legendTickStroke,
                     unmapColor:=NameOf(Color.Gray))
 
-                If TypeOf g Is Graphics2D Then
-                    Return New ImageData(DirectCast(g, Graphics2D).ImageResource, g.Size, padding)
+                If g.GetType.ImplementInterface(Of GdiRasterGraphics) Then
+                    Return New ImageData(DirectCast(g, GdiRasterGraphics).ImageResource, g.Size, padding)
                 Else
                     Return New SVGData(g, g.Size, padding)
                 End If

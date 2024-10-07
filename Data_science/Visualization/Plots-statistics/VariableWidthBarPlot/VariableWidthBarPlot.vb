@@ -122,7 +122,7 @@ Public Module VariableWidthBarPlot
 
                 ' 绘制Y坐标轴ticks
                 Dim ty#
-                Dim textDrawer As New GraphicsText(DirectCast(g, GDICanvas).Graphics)
+                ' Dim textDrawer As New GraphicsText(DirectCast(g, GDICanvas).Graphics)
 
                 For Each tick As Double In Y
                     ty = scaler.TranslateY(tick)
@@ -148,7 +148,7 @@ Public Module VariableWidthBarPlot
                     Call g.FillRectangle(New SolidBrush(color), rect)
 
                     ' 绘制数据系列标签
-                    Call textDrawer.DrawString(bar.Name, XLabelFont, Brushes.Black, New PointF(left + (width - labelSize.Width) / 2, plotRect.Bottom + labelSize.Width), angle:=-45.0!)
+                    Call g.DrawString(bar.Name, XLabelFont, Brushes.Black, left + (width - labelSize.Width) / 2, plotRect.Bottom + labelSize.Width, angle:=-45.0!)
                     ' 绘制数据点标签
                     If showDataLabel Then
                         label = bar.Data.height.ToString("G2")

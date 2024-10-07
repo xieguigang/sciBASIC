@@ -113,7 +113,6 @@ Namespace Heatmap
             Dim dr!
             Dim blockSize As New SizeF With {.Width = r, .Height = r}
             Dim i% = 1
-            Dim text As New GraphicsText(DirectCast(g, Graphics2D).Graphics)
             Dim radius As DoubleRange = {0R, r}
             Dim getRadius = Function(corr#) As Double
                                 If variantSize Then
@@ -160,7 +159,7 @@ Namespace Heatmap
                         gridDraw = False
                         ' 绘制标签
                         If i = x.i + 1 Then
-                            Call text.DrawString(key, rowLabelFont, Brushes.Black, rect.Location, angle:=-45)
+                            Call g.DrawString(key, rowLabelFont, Brushes.Black, rect.Left, rect.Top, angle:=-45)
                         End If
                     Else
                         ' 得到等级
