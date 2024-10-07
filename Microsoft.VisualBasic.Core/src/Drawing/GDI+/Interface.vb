@@ -2002,5 +2002,7 @@ Namespace Imaging
         ''' string specified by the text parameter as drawn with the font parameter.</returns>
         Public MustOverride Function MeasureString(text As String, font As Font, layoutArea As SizeF) As SizeF
 
+        Public MustOverride Function GetStringPath(s As String, rect As RectangleF, font As Font) As GraphicsPath
+
     End Class
 End Namespace

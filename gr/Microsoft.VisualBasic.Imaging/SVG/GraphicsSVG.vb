@@ -742,5 +742,9 @@ Namespace SVG
         Public Overrides Function MeasureString(text As String, font As Font, layoutArea As SizeF) As SizeF
             Throw New NotImplementedException()
         End Function
+
+        Public Overrides Function GetStringPath(s As String, rect As RectangleF, font As Font) As GraphicsPath
+            Throw New NotImplementedException()
+        End Function
     End Class
 End Namespace

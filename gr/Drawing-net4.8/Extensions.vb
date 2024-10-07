@@ -138,6 +138,8 @@ Public Module Extensions
         End With
     End Function
 
+    Const InvalidSize As String = "One of the size parameter for the gdi+ device is not valid!"
+
     <Extension>
     Public Function GetStringPath(s$, dpi!, rect As RectangleF, font As Font, format As StringFormat) As GraphicsPath
         Dim path As New GraphicsPath()
@@ -146,9 +148,6 @@ Public Module Extensions
         path.AddString(s, font.FontFamily, font.Style, emSize, rect, format)
         Return path
     End Function
-
-    Const InvalidSize As String = "One of the size parameter for the gdi+ device is not valid!"
-
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>

@@ -566,5 +566,9 @@ Namespace PostScript
         Public Overrides Sub DrawString(s As String, font As Font, brush As Brush, ByRef x As Single, ByRef y As Single, angle As Single)
             Throw New NotImplementedException()
         End Sub
+
+        Public Overrides Function GetStringPath(s As String, rect As RectangleF, font As Font) As GraphicsPath
+            Throw New NotImplementedException()
+        End Function
     End Class
 End Namespace

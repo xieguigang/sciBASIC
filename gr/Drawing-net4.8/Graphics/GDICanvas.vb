@@ -2147,6 +2147,11 @@ Public MustInherit Class GDICanvas : Inherits IGraphics
     Public Overrides Sub DrawRectangle(pen As Pen, rect As RectangleF)
         Call Graphics.DrawRectangles(pen, {rect})
     End Sub
+
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    Public Overrides Function GetStringPath(s As String, rect As RectangleF, font As Font) As GraphicsPath
+        Return s.GetStringPath(Dpi, rect, font, StringFormat.GenericTypographic)
+    End Function
 #End Region
 
     ''' <summary>
