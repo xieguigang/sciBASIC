@@ -10,7 +10,7 @@
 
 		<AssemblyVersion>5.33.69.2558</AssemblyVersion>
 		<Deterministic>false</Deterministic>
-		<RuntimeIdentifiers>win7-x64;win7-x86;win-x64;linux-x64;linux-arm64;osx-x64</RuntimeIdentifiers>
+		<RuntimeIdentifiers>win-x64;linux-x64;linux-arm64;osx-x64</RuntimeIdentifiers>
 		<Copyright>GPL3</Copyright>
 
 		<PackageProjectUrl>http://sciBASIC.NET</PackageProjectUrl>
