@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <OptionInfer>On</OptionInfer>
-    <TargetFramework>net6.0</TargetFramework>
+    <TargetFrameworks>net8.0-windows;net8.0;net48</TargetFrameworks>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <Platforms>AnyCPU;x64</Platforms>

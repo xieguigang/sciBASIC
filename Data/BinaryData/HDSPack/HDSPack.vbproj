@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <RootNamespace>Microsoft.VisualBasic.DataStorage.HDSPack</RootNamespace>
-    <TargetFrameworks>net6.0-windows;net6.0;net48</TargetFrameworks>
+    <TargetFrameworks>net8.0-windows;net8.0;net48</TargetFrameworks>
     <AssemblyName>Microsoft.VisualBasic.DataStorage.HDSPack</AssemblyName>
     <Description>Hierarchical Data Stream Pack</Description>
 	  <Platforms>AnyCPU;x64</Platforms>
