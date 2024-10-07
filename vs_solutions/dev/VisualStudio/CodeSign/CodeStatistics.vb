@@ -57,7 +57,7 @@
 #End Region
 
 Imports System.Text
-Imports Microsoft.VisualBasic.Text
+Imports ASCII = Microsoft.VisualBasic.Text.ASCII
 
 Namespace CodeSign
 
