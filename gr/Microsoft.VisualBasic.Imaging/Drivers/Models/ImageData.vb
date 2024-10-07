@@ -59,13 +59,15 @@
 #End Region
 
 Imports System.Drawing
-Imports System.Drawing.Imaging
 Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Imaging.BitmapImage
 Imports Microsoft.VisualBasic.MIME.Html.CSS
 Imports Microsoft.VisualBasic.Net.Http
+
+#If NET48 Then
 Imports Microsoft.VisualBasic.Drawing
+#End If
 
 Namespace Driver
 
