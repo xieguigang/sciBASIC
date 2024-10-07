@@ -147,6 +147,7 @@ Namespace Imaging
         Public Shared ReadOnly Property Gray As New Pen(Color.Gray)
         Public Shared ReadOnly Property LightGray As New Pen(Color.LightGray)
         Public Shared ReadOnly Property White As New Pen(Color.White)
+        Public Shared ReadOnly Property WhiteSmoke As New Pen(Color.WhiteSmoke)
 
         Private Sub New()
         End Sub

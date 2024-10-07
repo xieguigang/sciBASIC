@@ -169,7 +169,7 @@ Friend Class LabelRendering
 
             Dim path As GraphicsPath = Imaging.GetStringPath(
                 .label.text,
-                g.DpiX,
+                g.Dpi,
                 rect.OffSet2D(.style.Size / 5, 0).ToFloat,
                 .style,
                 StringFormat.GenericTypographic

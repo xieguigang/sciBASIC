@@ -75,6 +75,7 @@ Imports Microsoft.VisualBasic.Linq.Extensions
 Imports Microsoft.VisualBasic.Scripting
 Imports Microsoft.VisualBasic.Text
 Imports any = Microsoft.VisualBasic.Scripting
+Imports ASCII = Microsoft.VisualBasic.Text.ASCII
 Imports File_csv = Microsoft.VisualBasic.Data.csv.IO.File
 
 ''' <summary>

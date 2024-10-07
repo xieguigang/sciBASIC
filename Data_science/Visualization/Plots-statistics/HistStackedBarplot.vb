@@ -130,7 +130,7 @@ Public Module HistStackedBarplot
                 ' rowKeys得到的是sample的从上到下的绘图顺序
                 Dim cluster As Cluster = Time(AddressOf array.RunCluster)
                 Dim rowKeys$() = histCanvas(cluster) _
-                    .Paint(DirectCast(g, Graphics2D), treeRegion) _
+                    .Paint(g, treeRegion) _
                     .OrderBy(Function(x) x.Value.Y) _
                     .Keys
 
