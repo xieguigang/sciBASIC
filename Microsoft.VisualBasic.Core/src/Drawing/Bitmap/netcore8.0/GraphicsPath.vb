@@ -18,6 +18,12 @@ Namespace Imaging
             End Get
         End Property
 
+        Public ReadOnly Property PathPoints As PointF()
+            Get
+                Throw New NotImplementedException
+            End Get
+        End Property
+
         Sub New()
         End Sub
 

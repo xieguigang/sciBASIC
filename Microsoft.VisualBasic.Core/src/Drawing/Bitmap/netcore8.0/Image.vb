@@ -84,7 +84,7 @@ Namespace Imaging
             Call Me.New(size.Width, size.Height)
         End Sub
 
-        Sub New(width As Integer, height As Integer)
+        Sub New(width As Integer, height As Integer, Optional format As PixelFormat = PixelFormat.Format32bppArgb)
             Throw New NotImplementedException
         End Sub
 
@@ -111,5 +111,98 @@ Namespace Imaging
             Throw New NotImplementedException()
         End Sub
     End Class
+
+    '     Specifies the format of the color data for each pixel in the image.
+    Public Enum PixelFormat
+
+        '     The pixel data contains color-indexed values, which means the values are an index
+        '     to colors in the system color table, as opposed to individual color values.
+        Indexed = 65536
+
+        '     The pixel data contains GDI colors.
+        Gdi = 131072
+
+        '     The pixel data contains alpha values that are Not premultiplied.
+        Alpha = 262144
+
+        '     The pixel format contains premultiplied alpha values.
+        PAlpha = 524288
+
+        '     Reserved.
+        Extended = 1048576
+
+        '     The default pixel format of 32 bits per pixel. The format specifies 24-bit color
+        '     depth And an 8-bit alpha channel.
+        Canonical = 2097152
+
+        '     The pixel format Is undefined.
+        Undefined = 0
+
+        '     No pixel format Is specified.
+        DontCare = 0
+
+        '     Specifies that the pixel format Is 1 bit per pixel And that it uses indexed color.
+        '     The color table therefore has two colors in it.
+        Format1bppIndexed = 196865
+
+        '     Specifies that the format Is 4 bits per pixel, indexed.
+        Format4bppIndexed = 197634
+
+        '     Specifies that the format Is 8 bits per pixel, indexed. The color table therefore
+        '     has 256 colors in it.
+        Format8bppIndexed = 198659
+
+        '     The pixel format Is 16 bits per pixel. The color information specifies 65536
+        '     shades of gray.
+        Format16bppGrayScale = 1052676
+
+        '     Specifies that the format Is 16 bits per pixel; 5 bits each are used for the
+        '     red, green, And blue components. The remaining bit Is Not used.
+        Format16bppRgb555 = 135173
+
+        '     Specifies that the format Is 16 bits per pixel; 5 bits are used for the red component,
+        '     6 bits are used for the green component, And 5 bits are used for the blue component.
+        Format16bppRgb565 = 135174
+
+        '     The pixel format Is 16 bits per pixel. The color information specifies 32,768
+        '     shades of color, of which 5 bits are red, 5 bits are green, 5 bits are blue,
+        '     And 1 bit Is alpha.
+        Format16bppArgb1555 = 397319
+
+        '     Specifies that the format Is 24 bits per pixel; 8 bits each are used for the
+        '     red, green, And blue components.
+        Format24bppRgb = 137224
+
+        '     Specifies that the format Is 32 bits per pixel; 8 bits each are used for the
+        '     red, green, And blue components. The remaining 8 bits are Not used.
+        Format32bppRgb = 139273
+
+        ''' <summary>
+        ''' Specifies that the format Is 32 bits per pixel; 8 bits each are used for the
+        ''' alpha, red, green, And blue components.
+        ''' </summary>
+        Format32bppArgb = 2498570
+
+        '     Specifies that the format Is 32 bits per pixel; 8 bits each are used for the
+        '     alpha, red, green, And blue components. The red, green, And blue components are
+        '     premultiplied, according to the alpha component.
+        Format32bppPArgb = 925707
+
+        '     Specifies that the format Is 48 bits per pixel; 16 bits each are used for the
+        '     red, green, And blue components.
+        Format48bppRgb = 1060876
+
+        '     Specifies that the format Is 64 bits per pixel; 16 bits each are used for the
+        '     alpha, red, green, And blue components.
+        Format64bppArgb = 3424269
+
+        '     Specifies that the format Is 64 bits per pixel; 16 bits each are used for the
+        '     alpha, red, green, And blue components. The red, green, And blue components are
+        '     premultiplied according to the alpha component.
+        Format64bppPArgb = 1851406
+
+        '     The maximum value for this enumeration.
+        Max = 15
+    End Enum
 #End If
 End Namespace

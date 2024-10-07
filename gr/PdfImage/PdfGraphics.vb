@@ -78,7 +78,33 @@ Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.MIME.application.pdf
 Imports Microsoft.VisualBasic.MIME.Html.CSS
 
-Public Class PdfGraphics : Inherits MockGDIPlusGraphics
+#If NET48 Then
+Imports Pen = System.Drawing.Pen
+Imports Pens = System.Drawing.Pens
+Imports Brush = System.Drawing.Brush
+Imports Font = System.Drawing.Font
+Imports Brushes = System.Drawing.Brushes
+Imports SolidBrush = System.Drawing.SolidBrush
+Imports DashStyle = System.Drawing.Drawing2D.DashStyle
+Imports Image = System.Drawing.Image
+Imports Bitmap = System.Drawing.Bitmap
+Imports GraphicsPath = System.Drawing.Drawing2D.GraphicsPath
+Imports FontStyle = System.Drawing.FontStyle
+#Else
+Imports Pen = Microsoft.VisualBasic.Imaging.Pen
+Imports Pens = Microsoft.VisualBasic.Imaging.Pens
+Imports Brush = Microsoft.VisualBasic.Imaging.Brush
+Imports Font = Microsoft.VisualBasic.Imaging.Font
+Imports Brushes = Microsoft.VisualBasic.Imaging.Brushes
+Imports SolidBrush = Microsoft.VisualBasic.Imaging.SolidBrush
+Imports DashStyle = Microsoft.VisualBasic.Imaging.DashStyle
+Imports Image = Microsoft.VisualBasic.Imaging.Image
+Imports Bitmap = Microsoft.VisualBasic.Imaging.Bitmap
+Imports GraphicsPath = Microsoft.VisualBasic.Imaging.GraphicsPath
+Imports FontStyle = Microsoft.VisualBasic.Imaging.FontStyle
+#End If
+
+Public Class PdfGraphics : Inherits IGraphics
     Implements SaveGdiBitmap
 
     Friend ReadOnly g As PdfContents
@@ -92,7 +118,7 @@ Public Class PdfGraphics : Inherits MockGDIPlusGraphics
     ReadOnly height As Integer
 
     Sub New(size As Size, page As PdfPage, buffer As Stream)
-        Call MyBase.New(size, New Size(300, 300))
+        Call MyBase.New(300)
 
         Me.buffer = buffer
         Me.page = page
@@ -100,68 +126,11 @@ Public Class PdfGraphics : Inherits MockGDIPlusGraphics
         Me.height = size.Height
     End Sub
 
-    Public Overrides Property CompositingMode As CompositingMode
-        Get
-            Throw New NotImplementedException()
-        End Get
-        Set(value As CompositingMode)
-            Throw New NotImplementedException()
-        End Set
-    End Property
-
-    Public Overrides Property CompositingQuality As CompositingQuality
-        Get
-            Throw New NotImplementedException()
-        End Get
-        Set(value As CompositingQuality)
-            Throw New NotImplementedException()
-        End Set
-    End Property
-
-    Public Overrides Property InterpolationMode As InterpolationMode
-        Get
-            Throw New NotImplementedException()
-        End Get
-        Set(value As InterpolationMode)
-            Throw New NotImplementedException()
-        End Set
-    End Property
-
-    Public Overrides ReadOnly Property IsClipEmpty As Boolean
-        Get
-            Throw New NotImplementedException()
-        End Get
-    End Property
-
-    Public Overrides ReadOnly Property IsVisibleClipEmpty As Boolean
-        Get
-            Throw New NotImplementedException()
-        End Get
-    End Property
-
     Public Overrides Property PageScale As Single
         Get
             Throw New NotImplementedException()
         End Get
         Set(value As Single)
-            Throw New NotImplementedException()
-        End Set
-    End Property
-
-    Public Overrides Property PageUnit As GraphicsUnit
-        Get
-            Throw New NotImplementedException()
-        End Get
-        Set(value As GraphicsUnit)
-            Throw New NotImplementedException()
-        End Set
-    End Property
-
-    Public Overrides Property PixelOffsetMode As PixelOffsetMode
-        Get
-            Throw New NotImplementedException()
-        End Get
-        Set(value As PixelOffsetMode)
             Throw New NotImplementedException()
         End Set
     End Property
@@ -175,29 +144,11 @@ Public Class PdfGraphics : Inherits MockGDIPlusGraphics
         End Set
     End Property
 
-    Public Overrides Property SmoothingMode As SmoothingMode
-        Get
-            Throw New NotImplementedException()
-        End Get
-        Set(value As SmoothingMode)
-            Throw New NotImplementedException()
-        End Set
-    End Property
-
     Public Overrides Property TextContrast As Integer
         Get
             Throw New NotImplementedException()
         End Get
         Set(value As Integer)
-            Throw New NotImplementedException()
-        End Set
-    End Property
-
-    Public Overrides Property TextRenderingHint As TextRenderingHint
-        Get
-            Throw New NotImplementedException()
-        End Get
-        Set(value As TextRenderingHint)
             Throw New NotImplementedException()
         End Set
     End Property
@@ -209,22 +160,6 @@ Public Class PdfGraphics : Inherits MockGDIPlusGraphics
     Protected Overrides Sub ClearCanvas(color As Color)
         Call g.SetColorNonStroking(color)
         Call g.DrawRectangle(New PointD(0, 0), New SizeD(Size.Width, Size.Height), PaintOp.Fill)
-    End Sub
-
-    Public Overrides Sub CopyFromScreen(upperLeftSource As Point, upperLeftDestination As Point, blockRegionSize As Size)
-        Throw New NotImplementedException()
-    End Sub
-
-    Public Overrides Sub CopyFromScreen(upperLeftSource As Point, upperLeftDestination As Point, blockRegionSize As Size, copyPixelOperation As CopyPixelOperation)
-        Throw New NotImplementedException()
-    End Sub
-
-    Public Overrides Sub CopyFromScreen(sourceX As Integer, sourceY As Integer, destinationX As Integer, destinationY As Integer, blockRegionSize As Size)
-        Throw New NotImplementedException()
-    End Sub
-
-    Public Overrides Sub CopyFromScreen(sourceX As Integer, sourceY As Integer, destinationX As Integer, destinationY As Integer, blockRegionSize As Size, copyPixelOperation As CopyPixelOperation)
-        Throw New NotImplementedException()
     End Sub
 
     Public Overrides Sub Dispose()
@@ -275,14 +210,6 @@ Public Class PdfGraphics : Inherits MockGDIPlusGraphics
         Throw New NotImplementedException()
     End Sub
 
-    Public Overrides Sub DrawClosedCurve(pen As Pen, points() As Point, tension As Single, fillmode As FillMode)
-        Throw New NotImplementedException()
-    End Sub
-
-    Public Overrides Sub DrawClosedCurve(pen As Pen, points() As PointF, tension As Single, fillmode As FillMode)
-        Throw New NotImplementedException()
-    End Sub
-
     Public Overrides Sub DrawCurve(pen As Pen, points() As Point)
         Throw New NotImplementedException()
     End Sub
@@ -327,18 +254,6 @@ Public Class PdfGraphics : Inherits MockGDIPlusGraphics
         Throw New NotImplementedException()
     End Sub
 
-    Public Overrides Sub DrawIcon(icon As Icon, targetRect As Rectangle)
-        Throw New NotImplementedException()
-    End Sub
-
-    Public Overrides Sub DrawIcon(icon As Icon, x As Integer, y As Integer)
-        Throw New NotImplementedException()
-    End Sub
-
-    Public Overrides Sub DrawIconUnstretched(icon As Icon, targetRect As Rectangle)
-        Throw New NotImplementedException()
-    End Sub
-
     Public Overrides Sub DrawImage(image As Image, point As Point)
         DrawImage(image, New Rectangle(point, image.Size))
     End Sub
@@ -376,91 +291,11 @@ Public Class PdfGraphics : Inherits MockGDIPlusGraphics
         DrawImage(image, New Rectangle(x, y, image.Width, image.Height))
     End Sub
 
-    Public Overrides Sub DrawImage(image As Image, destRect As RectangleF, srcRect As RectangleF, srcUnit As GraphicsUnit)
-        Throw New NotImplementedException()
-    End Sub
-
-    Public Overrides Sub DrawImage(image As Image, destRect As Rectangle, srcRect As Rectangle, srcUnit As GraphicsUnit)
-        Throw New NotImplementedException()
-    End Sub
-
-    Public Overrides Sub DrawImage(image As Image, destPoints() As PointF, srcRect As RectangleF, srcUnit As GraphicsUnit)
-        Throw New NotImplementedException()
-    End Sub
-
-    Public Overrides Sub DrawImage(image As Image, destPoints() As Point, srcRect As Rectangle, srcUnit As GraphicsUnit)
-        Throw New NotImplementedException()
-    End Sub
-
     Public Overrides Sub DrawImage(image As Image, x As Single, y As Single, width As Single, height As Single)
         Throw New NotImplementedException()
     End Sub
 
-    Public Overrides Sub DrawImage(image As Image, destPoints() As Point, srcRect As Rectangle, srcUnit As GraphicsUnit, imageAttr As ImageAttributes)
-        Throw New NotImplementedException()
-    End Sub
-
     Public Overrides Sub DrawImage(image As Image, x As Integer, y As Integer, width As Integer, height As Integer)
-        Throw New NotImplementedException()
-    End Sub
-
-    Public Overrides Sub DrawImage(image As Image, x As Single, y As Single, srcRect As RectangleF, srcUnit As GraphicsUnit)
-        Throw New NotImplementedException()
-    End Sub
-
-    Public Overrides Sub DrawImage(image As Image, destPoints() As PointF, srcRect As RectangleF, srcUnit As GraphicsUnit, imageAttr As ImageAttributes)
-        Throw New NotImplementedException()
-    End Sub
-
-    Public Overrides Sub DrawImage(image As Image, x As Integer, y As Integer, srcRect As Rectangle, srcUnit As GraphicsUnit)
-        Throw New NotImplementedException()
-    End Sub
-
-    Public Overrides Sub DrawImage(image As Image, destPoints() As Point, srcRect As Rectangle, srcUnit As GraphicsUnit, imageAttr As ImageAttributes, callback As Graphics.DrawImageAbort)
-        Throw New NotImplementedException()
-    End Sub
-
-    Public Overrides Sub DrawImage(image As Image, destPoints() As PointF, srcRect As RectangleF, srcUnit As GraphicsUnit, imageAttr As ImageAttributes, callback As Graphics.DrawImageAbort)
-        Throw New NotImplementedException()
-    End Sub
-
-    Public Overrides Sub DrawImage(image As Image, destPoints() As Point, srcRect As Rectangle, srcUnit As GraphicsUnit, imageAttr As ImageAttributes, callback As Graphics.DrawImageAbort, callbackData As Integer)
-        Throw New NotImplementedException()
-    End Sub
-
-    Public Overrides Sub DrawImage(image As Image, destRect As Rectangle, srcX As Single, srcY As Single, srcWidth As Single, srcHeight As Single, srcUnit As GraphicsUnit)
-        Throw New NotImplementedException()
-    End Sub
-
-    Public Overrides Sub DrawImage(image As Image, destRect As Rectangle, srcX As Integer, srcY As Integer, srcWidth As Integer, srcHeight As Integer, srcUnit As GraphicsUnit)
-        Throw New NotImplementedException()
-    End Sub
-
-    Public Overrides Sub DrawImage(image As Image, destPoints() As PointF, srcRect As RectangleF, srcUnit As GraphicsUnit, imageAttr As ImageAttributes, callback As Graphics.DrawImageAbort, callbackData As Integer)
-        Throw New NotImplementedException()
-    End Sub
-
-    Public Overrides Sub DrawImage(image As Image, destRect As Rectangle, srcX As Single, srcY As Single, srcWidth As Single, srcHeight As Single, srcUnit As GraphicsUnit, imageAttrs As ImageAttributes)
-        Throw New NotImplementedException()
-    End Sub
-
-    Public Overrides Sub DrawImage(image As Image, destRect As Rectangle, srcX As Integer, srcY As Integer, srcWidth As Integer, srcHeight As Integer, srcUnit As GraphicsUnit, imageAttr As ImageAttributes)
-        Throw New NotImplementedException()
-    End Sub
-
-    Public Overrides Sub DrawImage(image As Image, destRect As Rectangle, srcX As Integer, srcY As Integer, srcWidth As Integer, srcHeight As Integer, srcUnit As GraphicsUnit, imageAttr As ImageAttributes, callback As Graphics.DrawImageAbort)
-        Throw New NotImplementedException()
-    End Sub
-
-    Public Overrides Sub DrawImage(image As Image, destRect As Rectangle, srcX As Single, srcY As Single, srcWidth As Single, srcHeight As Single, srcUnit As GraphicsUnit, imageAttrs As ImageAttributes, callback As Graphics.DrawImageAbort)
-        Throw New NotImplementedException()
-    End Sub
-
-    Public Overrides Sub DrawImage(image As Image, destRect As Rectangle, srcX As Single, srcY As Single, srcWidth As Single, srcHeight As Single, srcUnit As GraphicsUnit, imageAttrs As ImageAttributes, callback As Graphics.DrawImageAbort, callbackData As IntPtr)
-        Throw New NotImplementedException()
-    End Sub
-
-    Public Overrides Sub DrawImage(image As Image, destRect As Rectangle, srcX As Integer, srcY As Integer, srcWidth As Integer, srcHeight As Integer, srcUnit As GraphicsUnit, imageAttrs As ImageAttributes, callback As Graphics.DrawImageAbort, callbackData As IntPtr)
         Throw New NotImplementedException()
     End Sub
 
@@ -584,14 +419,6 @@ Public Class PdfGraphics : Inherits MockGDIPlusGraphics
         Throw New NotImplementedException()
     End Sub
 
-    Public Overrides Sub DrawString(s As String, font As Font, brush As Brush, layoutRectangle As RectangleF, format As StringFormat)
-        Throw New NotImplementedException()
-    End Sub
-
-    Public Overrides Sub DrawString(s As String, font As Font, brush As Brush, point As PointF, format As StringFormat)
-        Throw New NotImplementedException()
-    End Sub
-
     Public Overrides Sub DrawString(s As String, font As Font, brush As Brush, x As Single, y As Single)
         Dim pdfFont As PdfFont = PdfFont.CreatePdfFont(page.Document, font.Name, font.Style)
         Dim color As Color = DirectCast(brush, SolidBrush).Color
@@ -600,163 +427,7 @@ Public Class PdfGraphics : Inherits MockGDIPlusGraphics
         Call g.DrawText(pdfFont, font.Size, x, height - y, s)
     End Sub
 
-    Public Overrides Sub DrawString(s As String, font As Font, brush As Brush, x As Single, y As Single, format As StringFormat)
-        Throw New NotImplementedException()
-    End Sub
-
-    Public Overrides Sub EndContainer(container As GraphicsContainer)
-        Throw New NotImplementedException()
-    End Sub
-
-    Public Overrides Sub EnumerateMetafile(metafile As Metafile, destPoints() As Point, callback As Graphics.EnumerateMetafileProc)
-        Throw New NotImplementedException()
-    End Sub
-
-    Public Overrides Sub EnumerateMetafile(metafile As Metafile, destPoints() As PointF, callback As Graphics.EnumerateMetafileProc)
-        Throw New NotImplementedException()
-    End Sub
-
-    Public Overrides Sub EnumerateMetafile(metafile As Metafile, destRect As Rectangle, callback As Graphics.EnumerateMetafileProc)
-        Throw New NotImplementedException()
-    End Sub
-
-    Public Overrides Sub EnumerateMetafile(metafile As Metafile, destRect As RectangleF, callback As Graphics.EnumerateMetafileProc)
-        Throw New NotImplementedException()
-    End Sub
-
-    Public Overrides Sub EnumerateMetafile(metafile As Metafile, destPoint As Point, callback As Graphics.EnumerateMetafileProc)
-        Throw New NotImplementedException()
-    End Sub
-
-    Public Overrides Sub EnumerateMetafile(metafile As Metafile, destPoint As PointF, callback As Graphics.EnumerateMetafileProc)
-        Throw New NotImplementedException()
-    End Sub
-
-    Public Overrides Sub EnumerateMetafile(metafile As Metafile, destPoints() As Point, callback As Graphics.EnumerateMetafileProc, callbackData As IntPtr)
-        Throw New NotImplementedException()
-    End Sub
-
-    Public Overrides Sub EnumerateMetafile(metafile As Metafile, destPoints() As PointF, callback As Graphics.EnumerateMetafileProc, callbackData As IntPtr)
-        Throw New NotImplementedException()
-    End Sub
-
-    Public Overrides Sub EnumerateMetafile(metafile As Metafile, destRect As Rectangle, callback As Graphics.EnumerateMetafileProc, callbackData As IntPtr)
-        Throw New NotImplementedException()
-    End Sub
-
-    Public Overrides Sub EnumerateMetafile(metafile As Metafile, destPoint As Point, callback As Graphics.EnumerateMetafileProc, callbackData As IntPtr)
-        Throw New NotImplementedException()
-    End Sub
-
-    Public Overrides Sub EnumerateMetafile(metafile As Metafile, destPoint As PointF, callback As Graphics.EnumerateMetafileProc, callbackData As IntPtr)
-        Throw New NotImplementedException()
-    End Sub
-
-    Public Overrides Sub EnumerateMetafile(metafile As Metafile, destRect As RectangleF, callback As Graphics.EnumerateMetafileProc, callbackData As IntPtr)
-        Throw New NotImplementedException()
-    End Sub
-
-    Public Overrides Sub EnumerateMetafile(metafile As Metafile, destRect As Rectangle, srcRect As Rectangle, srcUnit As GraphicsUnit, callback As Graphics.EnumerateMetafileProc)
-        Throw New NotImplementedException()
-    End Sub
-
-    Public Overrides Sub EnumerateMetafile(metafile As Metafile, destPoint As PointF, callback As Graphics.EnumerateMetafileProc, callbackData As IntPtr, imageAttr As ImageAttributes)
-        Throw New NotImplementedException()
-    End Sub
-
-    Public Overrides Sub EnumerateMetafile(metafile As Metafile, destPoints() As Point, callback As Graphics.EnumerateMetafileProc, callbackData As IntPtr, imageAttr As ImageAttributes)
-        Throw New NotImplementedException()
-    End Sub
-
-    Public Overrides Sub EnumerateMetafile(metafile As Metafile, destPoint As PointF, srcRect As RectangleF, srcUnit As GraphicsUnit, callback As Graphics.EnumerateMetafileProc)
-        Throw New NotImplementedException()
-    End Sub
-
-    Public Overrides Sub EnumerateMetafile(metafile As Metafile, destPoint As Point, srcRect As Rectangle, srcUnit As GraphicsUnit, callback As Graphics.EnumerateMetafileProc)
-        Throw New NotImplementedException()
-    End Sub
-
-    Public Overrides Sub EnumerateMetafile(metafile As Metafile, destRect As RectangleF, callback As Graphics.EnumerateMetafileProc, callbackData As IntPtr, imageAttr As ImageAttributes)
-        Throw New NotImplementedException()
-    End Sub
-
-    Public Overrides Sub EnumerateMetafile(metafile As Metafile, destRect As RectangleF, srcRect As RectangleF, srcUnit As GraphicsUnit, callback As Graphics.EnumerateMetafileProc)
-        Throw New NotImplementedException()
-    End Sub
-
-    Public Overrides Sub EnumerateMetafile(metafile As Metafile, destPoints() As PointF, callback As Graphics.EnumerateMetafileProc, callbackData As IntPtr, imageAttr As ImageAttributes)
-        Throw New NotImplementedException()
-    End Sub
-
-    Public Overrides Sub EnumerateMetafile(metafile As Metafile, destPoints() As PointF, srcRect As RectangleF, srcUnit As GraphicsUnit, callback As Graphics.EnumerateMetafileProc)
-        Throw New NotImplementedException()
-    End Sub
-
-    Public Overrides Sub EnumerateMetafile(metafile As Metafile, destRect As Rectangle, callback As Graphics.EnumerateMetafileProc, callbackData As IntPtr, imageAttr As ImageAttributes)
-        Throw New NotImplementedException()
-    End Sub
-
-    Public Overrides Sub EnumerateMetafile(metafile As Metafile, destPoints() As Point, srcRect As Rectangle, srcUnit As GraphicsUnit, callback As Graphics.EnumerateMetafileProc)
-        Throw New NotImplementedException()
-    End Sub
-
-    Public Overrides Sub EnumerateMetafile(metafile As Metafile, destPoint As Point, callback As Graphics.EnumerateMetafileProc, callbackData As IntPtr, imageAttr As ImageAttributes)
-        Throw New NotImplementedException()
-    End Sub
-
-    Public Overrides Sub EnumerateMetafile(metafile As Metafile, destRect As Rectangle, srcRect As Rectangle, srcUnit As GraphicsUnit, callback As Graphics.EnumerateMetafileProc, callbackData As IntPtr)
-        Throw New NotImplementedException()
-    End Sub
-
-    Public Overrides Sub EnumerateMetafile(metafile As Metafile, destRect As RectangleF, srcRect As RectangleF, srcUnit As GraphicsUnit, callback As Graphics.EnumerateMetafileProc, callbackData As IntPtr)
-        Throw New NotImplementedException()
-    End Sub
-
-    Public Overrides Sub EnumerateMetafile(metafile As Metafile, destPoints() As Point, srcRect As Rectangle, srcUnit As GraphicsUnit, callback As Graphics.EnumerateMetafileProc, callbackData As IntPtr)
-        Throw New NotImplementedException()
-    End Sub
-
-    Public Overrides Sub EnumerateMetafile(metafile As Metafile, destPoint As Point, srcRect As Rectangle, srcUnit As GraphicsUnit, callback As Graphics.EnumerateMetafileProc, callbackData As IntPtr)
-        Throw New NotImplementedException()
-    End Sub
-
-    Public Overrides Sub EnumerateMetafile(metafile As Metafile, destPoint As PointF, srcRect As RectangleF, srcUnit As GraphicsUnit, callback As Graphics.EnumerateMetafileProc, callbackData As IntPtr)
-        Throw New NotImplementedException()
-    End Sub
-
-    Public Overrides Sub EnumerateMetafile(metafile As Metafile, destPoints() As PointF, srcRect As RectangleF, srcUnit As GraphicsUnit, callback As Graphics.EnumerateMetafileProc, callbackData As IntPtr)
-        Throw New NotImplementedException()
-    End Sub
-
-    Public Overrides Sub EnumerateMetafile(metafile As Metafile, destRect As Rectangle, srcRect As Rectangle, unit As GraphicsUnit, callback As Graphics.EnumerateMetafileProc, callbackData As IntPtr, imageAttr As ImageAttributes)
-        Throw New NotImplementedException()
-    End Sub
-
-    Public Overrides Sub EnumerateMetafile(metafile As Metafile, destPoints() As PointF, srcRect As RectangleF, unit As GraphicsUnit, callback As Graphics.EnumerateMetafileProc, callbackData As IntPtr, imageAttr As ImageAttributes)
-        Throw New NotImplementedException()
-    End Sub
-
-    Public Overrides Sub EnumerateMetafile(metafile As Metafile, destRect As RectangleF, srcRect As RectangleF, unit As GraphicsUnit, callback As Graphics.EnumerateMetafileProc, callbackData As IntPtr, imageAttr As ImageAttributes)
-        Throw New NotImplementedException()
-    End Sub
-
-    Public Overrides Sub EnumerateMetafile(metafile As Metafile, destPoints() As Point, srcRect As Rectangle, unit As GraphicsUnit, callback As Graphics.EnumerateMetafileProc, callbackData As IntPtr, imageAttr As ImageAttributes)
-        Throw New NotImplementedException()
-    End Sub
-
-    Public Overrides Sub EnumerateMetafile(metafile As Metafile, destPoint As PointF, srcRect As RectangleF, unit As GraphicsUnit, callback As Graphics.EnumerateMetafileProc, callbackData As IntPtr, imageAttr As ImageAttributes)
-        Throw New NotImplementedException()
-    End Sub
-
-    Public Overrides Sub EnumerateMetafile(metafile As Metafile, destPoint As Point, srcRect As Rectangle, unit As GraphicsUnit, callback As Graphics.EnumerateMetafileProc, callbackData As IntPtr, imageAttr As ImageAttributes)
-        Throw New NotImplementedException()
-    End Sub
-
     Public Overrides Sub ExcludeClip(rect As Rectangle)
-        Throw New NotImplementedException()
-    End Sub
-
-    Public Overrides Sub ExcludeClip(region As Region)
         Throw New NotImplementedException()
     End Sub
 
@@ -765,22 +436,6 @@ Public Class PdfGraphics : Inherits MockGDIPlusGraphics
     End Sub
 
     Public Overrides Sub FillClosedCurve(brush As Brush, points() As Point)
-        Throw New NotImplementedException()
-    End Sub
-
-    Public Overrides Sub FillClosedCurve(brush As Brush, points() As Point, fillmode As FillMode)
-        Throw New NotImplementedException()
-    End Sub
-
-    Public Overrides Sub FillClosedCurve(brush As Brush, points() As PointF, fillmode As FillMode)
-        Throw New NotImplementedException()
-    End Sub
-
-    Public Overrides Sub FillClosedCurve(brush As Brush, points() As PointF, fillmode As FillMode, tension As Single)
-        Throw New NotImplementedException()
-    End Sub
-
-    Public Overrides Sub FillClosedCurve(brush As Brush, points() As Point, fillmode As FillMode, tension As Single)
         Throw New NotImplementedException()
     End Sub
 
@@ -841,14 +496,6 @@ Public Class PdfGraphics : Inherits MockGDIPlusGraphics
         Throw New NotImplementedException()
     End Sub
 
-    Public Overrides Sub FillPolygon(brush As Brush, points() As Point, fillMode As FillMode)
-        Throw New NotImplementedException()
-    End Sub
-
-    Public Overrides Sub FillPolygon(brush As Brush, points() As PointF, fillMode As FillMode)
-        Throw New NotImplementedException()
-    End Sub
-
     Public Overrides Sub FillRectangle(brush As Brush, rect As Rectangle)
         Call FillRectangle(brush, New RectangleF(rect.X, rect.Y, rect.Width, rect.Height))
     End Sub
@@ -871,21 +518,9 @@ Public Class PdfGraphics : Inherits MockGDIPlusGraphics
         Throw New NotImplementedException()
     End Sub
 
-    Public Overrides Sub FillRegion(brush As Brush, region As Region)
-        Throw New NotImplementedException()
-    End Sub
-
     Public Overrides Sub Flush()
         ' save graphics state
         g.SaveGraphicsState()
-    End Sub
-
-    Public Overrides Sub Flush(intention As FlushIntention)
-        Throw New NotImplementedException()
-    End Sub
-
-    Public Overrides Sub IntersectClip(region As Region)
-        Throw New NotImplementedException()
     End Sub
 
     Public Overrides Sub IntersectClip(rect As RectangleF)
@@ -893,14 +528,6 @@ Public Class PdfGraphics : Inherits MockGDIPlusGraphics
     End Sub
 
     Public Overrides Sub IntersectClip(rect As Rectangle)
-        Throw New NotImplementedException()
-    End Sub
-
-    Public Overrides Sub MultiplyTransform(matrix As Matrix)
-        Throw New NotImplementedException()
-    End Sub
-
-    Public Overrides Sub MultiplyTransform(matrix As Matrix, order As MatrixOrder)
         Throw New NotImplementedException()
     End Sub
 
@@ -916,15 +543,7 @@ Public Class PdfGraphics : Inherits MockGDIPlusGraphics
         Throw New NotImplementedException()
     End Sub
 
-    Public Overrides Sub RotateTransform(angle As Single, order As MatrixOrder)
-        Throw New NotImplementedException()
-    End Sub
-
     Public Overrides Sub ScaleTransform(sx As Single, sy As Single)
-        Throw New NotImplementedException()
-    End Sub
-
-    Public Overrides Sub ScaleTransform(sx As Single, sy As Single, order As MatrixOrder)
         Throw New NotImplementedException()
     End Sub
 
@@ -932,43 +551,7 @@ Public Class PdfGraphics : Inherits MockGDIPlusGraphics
         Throw New NotImplementedException()
     End Sub
 
-    Public Overrides Sub SetClip(path As GraphicsPath)
-        Throw New NotImplementedException()
-    End Sub
-
     Public Overrides Sub SetClip(rect As Rectangle)
-        Throw New NotImplementedException()
-    End Sub
-
-    Public Overrides Sub SetClip(g As Graphics)
-        Throw New NotImplementedException()
-    End Sub
-
-    Public Overrides Sub SetClip(rect As Rectangle, combineMode As CombineMode)
-        Throw New NotImplementedException()
-    End Sub
-
-    Public Overrides Sub SetClip(region As Region, combineMode As CombineMode)
-        Throw New NotImplementedException()
-    End Sub
-
-    Public Overrides Sub SetClip(path As GraphicsPath, combineMode As CombineMode)
-        Throw New NotImplementedException()
-    End Sub
-
-    Public Overrides Sub SetClip(rect As RectangleF, combineMode As CombineMode)
-        Throw New NotImplementedException()
-    End Sub
-
-    Public Overrides Sub SetClip(g As Graphics, combineMode As CombineMode)
-        Throw New NotImplementedException()
-    End Sub
-
-    Public Overrides Sub TransformPoints(destSpace As CoordinateSpace, srcSpace As CoordinateSpace, pts() As Point)
-        Throw New NotImplementedException()
-    End Sub
-
-    Public Overrides Sub TransformPoints(destSpace As CoordinateSpace, srcSpace As CoordinateSpace, pts() As PointF)
         Throw New NotImplementedException()
     End Sub
 
@@ -983,22 +566,6 @@ Public Class PdfGraphics : Inherits MockGDIPlusGraphics
     Public Overrides Sub TranslateTransform(dx As Single, dy As Single)
         Throw New NotImplementedException()
     End Sub
-
-    Public Overrides Sub TranslateTransform(dx As Single, dy As Single, order As MatrixOrder)
-        Throw New NotImplementedException()
-    End Sub
-
-    Public Overrides Function BeginContainer() As GraphicsContainer
-        Throw New NotImplementedException()
-    End Function
-
-    Public Overrides Function BeginContainer(dstrect As RectangleF, srcrect As RectangleF, unit As GraphicsUnit) As GraphicsContainer
-        Throw New NotImplementedException()
-    End Function
-
-    Public Overrides Function BeginContainer(dstrect As Rectangle, srcrect As Rectangle, unit As GraphicsUnit) As GraphicsContainer
-        Throw New NotImplementedException()
-    End Function
 
     Public Overrides Function GetContextInfo() As Object
         Throw New NotImplementedException()
@@ -1024,7 +591,7 @@ Public Class PdfGraphics : Inherits MockGDIPlusGraphics
         Throw New NotImplementedException()
     End Function
 
-    Public Function Save(stream As Stream, format As ImageFormat) As Boolean Implements SaveGdiBitmap.Save
+    Public Function Save(stream As Stream, format As ImageFormats) As Boolean Implements SaveGdiBitmap.Save
         Dim pdf As New PdfImage(Me, Size, New Padding)
 
         Call pdf.Save(stream)
