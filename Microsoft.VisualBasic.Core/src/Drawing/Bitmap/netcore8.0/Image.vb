@@ -110,6 +110,10 @@ Namespace Imaging
         Public Overrides Sub Save(s As Stream, format As ImageFormats)
             Throw New NotImplementedException()
         End Sub
+
+        Public Function Clone() As Object
+            Throw New NotImplementedException
+        End Function
     End Class
 
     '     Specifies the format of the color data for each pixel in the image.
