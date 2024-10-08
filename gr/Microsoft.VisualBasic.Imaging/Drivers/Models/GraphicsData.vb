@@ -64,7 +64,7 @@ Imports Microsoft.VisualBasic.MIME.Html.CSS
 Namespace Driver
 
     ''' <summary>
-    ''' gdi+ images: <see cref="Drawing.Image"/>, <see cref="Bitmap"/> / SVG image: <see cref="SVGDocument"/>
+    ''' gdi+ images: <see cref="Image"/>, <see cref="Bitmap"/> / SVG image: <see cref="SVGDocument"/>
     ''' </summary>
     Public MustInherit Class GraphicsData : Inherits IGraphicsData
         Implements IDisposable

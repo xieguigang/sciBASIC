@@ -62,7 +62,12 @@ Namespace Imaging.Driver
         ''' </summary>
         ''' <param name="path$"></param>
         ''' <returns></returns>
-        Public MustOverride Function Save(path$) As Boolean
+        Public Overridable Function Save(path$) As Boolean
+            Using s As Stream = path.Open(FileMode.OpenOrCreate, doClear:=True)
+                Return Save(s)
+            End Using
+        End Function
+
         ''' <summary>
         ''' Save the image graphics to a specific output stream
         ''' </summary>

@@ -61,6 +61,9 @@
 
 #End Region
 
+Imports Microsoft.VisualBasic.Imaging
+Imports Microsoft.VisualBasic.Imaging.Driver
+
 #If NET48 Then
 Imports Bitmap = System.Drawing.Bitmap
 Imports PixelFormat = System.Drawing.Imaging.PixelFormat
@@ -81,8 +84,8 @@ Namespace Convolutional
         Private Shared Function Stretch(b As Bitmap, inputSize As Integer()) As Bitmap
             Dim resizedBmp As New Bitmap(inputSize(1), inputSize(0), PixelFormat.Format24bppRgb)
 
-            Using gr As Graphics = Graphics.FromImage(resizedBmp)
-                Call gr.DrawImage(b, 0, 0, inputSize(1), inputSize(0))
+            Using g As IGraphics = DriverLoad.CreateGraphicsDevice(resizedBmp, driver:=Drivers.GDI)
+                Call g.DrawImage(b, 0, 0, inputSize(1), inputSize(0))
             End Using
 
             Return resizedBmp
@@ -91,7 +94,7 @@ Namespace Convolutional
         Private Shared Function ZeroPad(b As Bitmap, inputSize As Integer())
             Dim resizedBmp As New Bitmap(inputSize(1), inputSize(0), PixelFormat.Format24bppRgb)
 
-            Using gr As Graphics = Graphics.FromImage(resizedBmp)
+            Using g As IGraphics = DriverLoad.CreateGraphicsDevice(resizedBmp, driver:=Drivers.GDI)
                 Dim inputAspRatio As Single = CSng(inputSize(0) / inputSize(1))
                 Dim newHeight, newWidth As Integer
                 Dim multiplier = CSng(b.Width) / b.Height
@@ -105,7 +108,7 @@ Namespace Convolutional
                     newWidth = CInt(newHeight * multiplier)
                 End If
 
-                gr.DrawImage(b, (inputSize(1) - newWidth) / 2.0F, (inputSize(0) - newHeight) / 2.0F, newWidth, newHeight)
+                g.DrawImage(b, (inputSize(1) - newWidth) / 2.0F, (inputSize(0) - newHeight) / 2.0F, newWidth, newHeight)
             End Using
 
             Return resizedBmp
