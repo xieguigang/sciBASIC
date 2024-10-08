@@ -69,6 +69,7 @@
 Imports System.Drawing
 Imports System.Drawing.Text
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Imaging.Driver
 
 #If NET48 Then
 Imports DefaultFont = Microsoft.VisualBasic.Language.Default.Default(Of System.Drawing.Font)
@@ -184,8 +185,6 @@ Namespace Imaging
             End If
         End Function
 
-#If NET48 Then
-
         ''' <summary>
         ''' A common shared method for measure text drawing size in gdi+ environment.
         ''' </summary>
@@ -193,12 +192,10 @@ Namespace Imaging
         ''' <param name="font"></param>
         ''' <returns></returns>
         Public Shared Function MeasureString(s As String, font As Font) As SizeF
-            Static blank As New Bitmap(10, 10)
-            Static g As Graphics = Graphics.FromImage(blank)
-
+            Static g As IGraphics = DriverLoad.CreateGraphicsDevice(New Size(12, 12), driver:=Drivers.GDI)
             Return g.MeasureString(s, font)
         End Function
-#End If
+
     End Class
 
     ''' <summary>

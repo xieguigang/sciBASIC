@@ -58,8 +58,8 @@ Imports System.Drawing
 Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports System.Text
-Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.BitmapImage
+Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.MIME.Html.CSS
 Imports std = System.Math
@@ -75,7 +75,9 @@ Namespace Drawing2D.Text.ASCIIArt
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
-        Public Function ASCIIImage(text$, Optional font$ = CSSFont.Win7Normal, Optional characters As WeightedChar() = Nothing) As String
+        Public Function ASCIIImage(text$,
+                                   Optional font$ = CSSFont.Win7Normal,
+                                   Optional characters As WeightedChar() = Nothing) As String
             Return text _
                 .DrawText(Color.Black, Color.White, , CSSEnvirnment.Empty.GetFont(CSSFont.TryParse(font))) _
                 .Convert2ASCII(characters)
@@ -149,7 +151,7 @@ Namespace Drawing2D.Text.ASCIIArt
             End Using
         End Sub
 
-        ReadOnly defaultFont As [Default](Of Font) = SystemFonts.DefaultFont
+        ReadOnly defaultFont As [Default](Of Font) = CharSet.DefaultFont
 
         ''' <summary>
         ''' 将字符转换为图像
@@ -181,7 +183,7 @@ Namespace Drawing2D.Text.ASCIIArt
             Dim img As New Bitmap(w, h)
 
             ' Get a graphics object
-            Using drawing = Graphics.FromImage(img)
+            Using drawing = DriverLoad.CreateGraphicsDevice(img, driver:=Drivers.GDI)
 
                 ' Create a brush for the text
                 Dim textBrush As New SolidBrush(textColor)
