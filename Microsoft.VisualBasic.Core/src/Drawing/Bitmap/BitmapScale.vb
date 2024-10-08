@@ -83,9 +83,11 @@ Namespace Imaging.BitmapImage
         Friend Const RGBSize% = 3
 
         <Extension>
-        Public Function GetBinaryBitmap(res As Image, Optional style As BinarizationStyles = BinarizationStyles.Binary) As Bitmap
+        Public Function GetBinaryBitmap(res As Image,
+                                        Optional style As BinarizationStyles = BinarizationStyles.Binary) As Bitmap
+
             Dim bmp As New Bitmap(DirectCast(res.Clone, Image))
-            bmp.Binarization(style)
+            Call bmp.Binarization(style)
             Return bmp
         End Function
 
