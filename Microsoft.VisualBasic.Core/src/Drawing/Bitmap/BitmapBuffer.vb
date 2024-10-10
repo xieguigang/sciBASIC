@@ -111,7 +111,7 @@ Namespace Imaging.BitmapImage
             Me.Size = New Size(Width, Height)
             Me.channels = channel
         End Sub
-#Else
+#End If
 
         ''' <summary>
         ''' Make the memory data copy
@@ -144,7 +144,6 @@ Namespace Imaging.BitmapImage
             _Width = size.Width
             _Height = size.Height
         End Sub
-#End If
 
         ''' <summary>
         ''' The dimension width of the current bitmap buffer object
