@@ -2,6 +2,7 @@
 Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Imaging.BitmapImage
+Imports Microsoft.VisualBasic.Imaging.BitmapImage.StreamWriter
 
 Namespace Imaging
 
@@ -49,10 +50,10 @@ Namespace Imaging
         ''' <remarks>
         ''' function for make bitmap object constructor
         ''' </remarks>
-        Protected MustOverride Function ConvertToBitmapStream() As MemoryStream
+        Protected Friend MustOverride Function ConvertToBitmapStream() As MemoryStream
 
         Public Shared Function FromStream(s As Stream) As Bitmap
-            Throw New NotImplementedException
+            Return New Bitmap(New BitmapReader(s).LoadMemory)
         End Function
 
         Protected Overridable Sub Dispose(disposing As Boolean)
@@ -99,7 +100,10 @@ Namespace Imaging
         End Sub
 
         Sub New(copy As Image)
-            Throw New NotImplementedException
+            Dim buf As MemoryStream = copy.ConvertToBitmapStream()
+            Dim reader As New BitmapReader(buf)
+
+            MemoryBuffer = reader.LoadMemory
         End Sub
 
         Sub New(size As Size)
@@ -107,7 +111,11 @@ Namespace Imaging
         End Sub
 
         Sub New(width As Integer, height As Integer, Optional format As PixelFormat = PixelFormat.Format32bppArgb)
-            Throw New NotImplementedException
+            Dim channels As Integer = If(format = PixelFormat.Format32bppArgb, 4, 3)
+            Dim buffer As Byte() = New Byte(width * height * channels - 1) {}
+
+            ' create empty bitmap data
+            MemoryBuffer = New BitmapBuffer(buffer, New Size(width, height), channels)
         End Sub
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -135,14 +143,25 @@ Namespace Imaging
         ''' <param name="s"></param>
         ''' <param name="format"></param>
         Public Overrides Sub Save(s As Stream, format As ImageFormats)
-            Throw New NotImplementedException()
+            Dim writer As New BitmapWriter(Width, Height)
+            Dim pixel As Color
+
+            For x As Integer = 0 To Width - 1
+                For y As Integer = 0 To Height - 1
+                    pixel = MemoryBuffer.GetPixel(x, y)
+                    writer.SetPixel(x, y, pixel.R, pixel.G, pixel.B)
+                Next
+            Next
+
+            Call writer.SaveColorImage(s)
+            Call s.Flush()
         End Sub
 
         Public Function Clone() As Object
-            Throw New NotImplementedException
+            Return New Bitmap(MemoryBuffer)
         End Function
 
-        Protected Overrides Function ConvertToBitmapStream() As MemoryStream
+        Protected Friend Overrides Function ConvertToBitmapStream() As MemoryStream
             Dim ms As New MemoryStream
             Call Save(ms, ImageFormats.Bmp)
             Call ms.Seek(Scan0, SeekOrigin.Begin)

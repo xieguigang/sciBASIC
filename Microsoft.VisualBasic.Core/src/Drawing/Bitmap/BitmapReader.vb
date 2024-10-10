@@ -198,7 +198,31 @@ Namespace Imaging.BitmapImage
         End Function
 
         Public Function LoadMemory() As BitmapBuffer
+            Dim buf As Byte() = New Byte(ImageWidth * ImageHeight * 4 - 1) {}
+            Dim buf_offset As Integer = Scan0
 
+            For column As Integer = 0 To ImageWidth - 1
+                For row As Integer = 0 To ImageHeight - 1
+                    Dim pixelByteLocation = GetOffset(row, column)
+                    Dim colorByteLocation = GetColorByteLocation(column, pixelByteLocation)
+
+                    ' (0,0) ??
+                    If colorByteLocation < 0 Then
+                        colorByteLocation = Offset
+                    End If
+
+                    Call s.BaseStream.Seek(colorByteLocation, SeekOrigin.Begin)
+
+                    ' bitmap has no alpha channel
+                    buf(buf_offset + 0) = s.ReadByte
+                    buf(buf_offset + 1) = s.ReadByte
+                    buf(buf_offset + 2) = s.ReadByte
+
+                    buf_offset += 4
+                Next
+            Next
+
+            Return New BitmapBuffer(buf, New Size(ImageWidth, ImageHeight), channel:=4)
         End Function
 
         Protected Overridable Sub Dispose(disposing As Boolean)

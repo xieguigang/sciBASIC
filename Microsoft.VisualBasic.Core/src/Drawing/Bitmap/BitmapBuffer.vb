@@ -65,6 +65,7 @@
 Imports System.Drawing
 Imports System.Drawing.Imaging
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.ApplicationServices.Terminal.Utility
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports std = System.Math
@@ -115,13 +116,23 @@ Namespace Imaging.BitmapImage
         ''' <summary>
         ''' Make the memory data copy
         ''' </summary>
-        ''' <param name="ptr"></param>
-        ''' <param name="byts%"></param>
+        ''' <param name="ptr">the memory data will be copy via this pointer</param>
+        ''' <param name="byts"></param>
         ''' <param name="channel"></param>
         Sub New(ptr As IntPtr, byts%, channel As Integer)
             Call MyBase.New(ptr, byts)
 
             Throw New NotImplementedException
+        End Sub
+
+        Sub New(memory As Byte(), size As Size, channel As Integer)
+            Call MyBase.New(memory)
+
+            channels = channel
+
+            _Size = size
+            _Width = size.Width
+            _Height = size.Height
         End Sub
 
         Sub New(pixels As Color(,), size As Size)
