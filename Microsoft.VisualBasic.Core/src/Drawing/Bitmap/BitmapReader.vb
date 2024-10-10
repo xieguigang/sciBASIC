@@ -172,6 +172,12 @@ Namespace Imaging.BitmapImage
             End Select
         End Function
 
+        ''' <summary>
+        ''' get pixel via given x,y location
+        ''' </summary>
+        ''' <param name="row">the y location</param>
+        ''' <param name="column">the x location</param>
+        ''' <returns></returns>
         Public Function GetPixelColor(row As Integer, column As Integer) As Color
             Dim pixelByteLocation = GetOffset(row, column)
             Dim colorByteLocation = GetColorByteLocation(column, pixelByteLocation)
@@ -183,6 +189,7 @@ Namespace Imaging.BitmapImage
 
             s.BaseStream.Seek(colorByteLocation, SeekOrigin.Begin)
 
+            ' bitmap has no alpha channel
             Dim Blue = s.ReadByte
             Dim Green = s.ReadByte
             Dim Red = s.ReadByte

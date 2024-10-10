@@ -111,6 +111,13 @@ Namespace Imaging.BitmapImage
             Me.channels = channel
         End Sub
 #Else
+
+        ''' <summary>
+        ''' Make the memory data copy
+        ''' </summary>
+        ''' <param name="ptr"></param>
+        ''' <param name="byts%"></param>
+        ''' <param name="channel"></param>
         Sub New(ptr As IntPtr, byts%, channel As Integer)
             Call MyBase.New(ptr, byts)
 
@@ -162,7 +169,7 @@ Namespace Imaging.BitmapImage
 #If NET48 Then
             Return DirectCast(raw.Clone, Bitmap)
 #Else
-            Throw New NotImplementedException
+            Return New Bitmap(Me)
 #End If
         End Function
 
@@ -478,7 +485,7 @@ Namespace Imaging.BitmapImage
 #If NET48 Then
             Return FromBitmap(curBitmap, ImageLockMode.ReadWrite)
 #Else
-            Throw New NotImplementedException
+            Return curBitmap.MemoryBuffer
 #End If
         End Function
 
