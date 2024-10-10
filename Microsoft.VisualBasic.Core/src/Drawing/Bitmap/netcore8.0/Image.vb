@@ -13,14 +13,27 @@ Namespace Imaging
     Public MustInherit Class Image : Implements IDisposable
 
         Private disposedValue As Boolean
+
+        ''' <summary>
+        ''' the size of the image
+        ''' </summary>
+        ''' <returns></returns>
         Public MustOverride ReadOnly Property Size As Size
 
+        ''' <summary>
+        ''' the width of the image <see cref="Size"/>
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property Width As Integer
             Get
                 Return Size.Width
             End Get
         End Property
 
+        ''' <summary>
+        ''' the height of the image <see cref="Size"/>
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property Height As Integer
             Get
                 Return Size.Height
@@ -28,6 +41,15 @@ Namespace Imaging
         End Property
 
         Public MustOverride Sub Save(s As Stream, format As ImageFormats)
+
+        ''' <summary>
+        ''' Convert current image object as bitmap file data
+        ''' </summary>
+        ''' <returns></returns>
+        ''' <remarks>
+        ''' function for make bitmap object constructor
+        ''' </remarks>
+        Protected MustOverride Function ConvertToBitmapStream() As MemoryStream
 
         Public Shared Function FromStream(s As Stream) As Bitmap
             Throw New NotImplementedException
@@ -66,14 +88,14 @@ Namespace Imaging
 
         Public Overrides ReadOnly Property Size As Size
             Get
-                Return memoryBuffer.Size
+                Return MemoryBuffer.Size
             End Get
         End Property
 
-        ReadOnly memoryBuffer As BitmapBuffer
+        Public ReadOnly Property MemoryBuffer As BitmapBuffer
 
         Sub New(data As BitmapBuffer)
-            memoryBuffer = data
+            MemoryBuffer = data
         End Sub
 
         Sub New(copy As Image)
@@ -90,12 +112,12 @@ Namespace Imaging
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Sub SetPixel(x As Integer, y As Integer, pixel As Color)
-            Call memoryBuffer.SetPixel(x, y, pixel)
+            Call MemoryBuffer.SetPixel(x, y, pixel)
         End Sub
 
         Public Function Resize(newWidth As Integer, newHeight As Integer) As Bitmap
-            Dim pixels = memoryBuffer.GetARGB
-            pixels = BitmapResizer.ResizeImage(pixels, memoryBuffer.Width, memoryBuffer.Height, newWidth, newHeight)
+            Dim pixels = MemoryBuffer.GetARGB
+            pixels = BitmapResizer.ResizeImage(pixels, MemoryBuffer.Width, MemoryBuffer.Height, newWidth, newHeight)
             ' construct bitmap data based on pixels matrix
             Dim sizedBitmap As New BitmapBuffer(pixels, New Size(newWidth, newHeight))
             Dim bitmap As New Bitmap(sizedBitmap)
@@ -104,9 +126,14 @@ Namespace Imaging
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function GetPixel(X As Integer, Y As Integer) As Color
-            Return memoryBuffer.GetPixel(X, Y)
+            Return MemoryBuffer.GetPixel(X, Y)
         End Function
 
+        ''' <summary>
+        ''' Save current bitmap object into a specific file
+        ''' </summary>
+        ''' <param name="s"></param>
+        ''' <param name="format"></param>
         Public Overrides Sub Save(s As Stream, format As ImageFormats)
             Throw New NotImplementedException()
         End Sub
@@ -114,9 +141,18 @@ Namespace Imaging
         Public Function Clone() As Object
             Throw New NotImplementedException
         End Function
+
+        Protected Overrides Function ConvertToBitmapStream() As MemoryStream
+            Dim ms As New MemoryStream
+            Call Save(ms, ImageFormats.Bmp)
+            Call ms.Seek(Scan0, SeekOrigin.Begin)
+            Return ms
+        End Function
     End Class
 
-    '     Specifies the format of the color data for each pixel in the image.
+    ''' <summary>
+    ''' Specifies the format of the color data for each pixel in the image.
+    ''' </summary>
     Public Enum PixelFormat
 
         '     The pixel data contains color-indexed values, which means the values are an index

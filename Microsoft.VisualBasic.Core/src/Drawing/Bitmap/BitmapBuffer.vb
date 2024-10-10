@@ -470,7 +470,7 @@ Namespace Imaging.BitmapImage
 
             Return BitmapBuffer.FromBitmap(copy)
 #Else
-            Throw New NotImplementedException
+            Return FromBitmap(New Bitmap(res))
 #End If
         End Function
 
