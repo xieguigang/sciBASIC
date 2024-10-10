@@ -197,6 +197,10 @@ Namespace Imaging.BitmapImage
             Return Color.FromArgb(Red, Green, Blue)
         End Function
 
+        Public Function LoadMemory() As BitmapBuffer
+
+        End Function
+
         Protected Overridable Sub Dispose(disposing As Boolean)
             If Not disposedValue Then
                 If disposing Then
