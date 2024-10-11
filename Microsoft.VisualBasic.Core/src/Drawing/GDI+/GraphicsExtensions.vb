@@ -67,6 +67,7 @@ Imports System.Runtime.CompilerServices
 Imports System.Runtime.InteropServices
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.Algorithm.base
+Imports Microsoft.VisualBasic.Imaging.BitmapImage
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Net.Http
@@ -405,6 +406,36 @@ Namespace Imaging
 
                 Return .ByRef
             End With
+        End Function
+
+        ''' <summary>
+        ''' Color replace using memory pointer
+        ''' </summary>
+        ''' <param name="image"></param>
+        ''' <param name="subject"></param>
+        ''' <param name="replaceAs"></param>
+        ''' <returns></returns>
+        <Extension>
+        Public Function ColorReplace(image As Bitmap, subject As Color, replaceAs As Color, Optional tolerance% = 3) As Bitmap
+            Using bitmap As BitmapBuffer = BitmapBuffer.FromBitmap(image)
+                Dim byts As BitmapBuffer = bitmap
+
+                For x As Integer = 0 To byts.Width - 1
+                    For y As Integer = 0 To byts.Height - 1
+                        If GDIColors.Equals(byts.GetPixel(x, y), subject, tolerance) Then
+                            Call byts.SetPixel(x, y, replaceAs)
+                        End If
+                    Next
+                Next
+            End Using
+
+            Return image
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function ColorReplace(image As Image, subject As Color, replaceAs As Color, Optional tolerance% = 3) As Bitmap
+            Return New Bitmap(image).ColorReplace(subject, replaceAs, tolerance)
         End Function
 
         ''' <summary>

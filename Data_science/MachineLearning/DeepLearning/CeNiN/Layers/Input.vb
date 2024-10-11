@@ -62,6 +62,8 @@ Imports System.Runtime.CompilerServices
 Imports System.Runtime.InteropServices
 Imports Microsoft.VisualBasic.MachineLearning.Convolutional.ImageProcessor
 Imports System.Drawing
+Imports Microsoft.VisualBasic.Imaging.BitmapImage
+
 
 #If NET48 Then
 Imports Pen = System.Drawing.Pen
@@ -142,7 +144,7 @@ Namespace Convolutional
         ''' <returns></returns>
         Public Overrides Function feedNext() As Layer
             Dim fullImage As New Rectangle(0, 0, inputSize(1), inputSize(0))
-            Dim bmpData As BitmapData = _resizedInputBmp.LockBits(fullImage, ImageLockMode.ReadOnly, _resizedInputBmp.PixelFormat)
+            Dim bmpData As BitmapBuffer = BitmapBuffer.FromBitmap(_resizedInputBmp)
             Dim stride As Integer = bmpData.Stride
             Dim emptyBytesCount As Integer = stride - bmpData.Width * 3
             Dim rowLengthWithoutEB As Integer = stride - emptyBytesCount
@@ -178,7 +180,6 @@ Namespace Convolutional
                 End If
             End While
 
-            Call _resizedInputBmp.UnlockBits(bmpData)
             Call _resizedInputBmp.Dispose()
 
             Return Me

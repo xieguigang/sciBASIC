@@ -65,6 +65,8 @@ Imports System.Runtime.CompilerServices
 Imports System.Runtime.InteropServices
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports std = System.Math
+Imports Microsoft.VisualBasic.Imaging.BitmapImage
+
 
 #If NET48 Then
 Imports Pen = System.Drawing.Pen
@@ -168,7 +170,7 @@ Public Class MNIST : Implements IDisposable
 
     Public Function ConvertImage(raw As NamedCollection(Of Byte)) As NamedValue(Of Image)
         Dim image As Bitmap = New Bitmap(columns, rows)
-        Dim data = image.LockBits(rect, ImageLockMode.ReadWrite, PixelFormat.Format24bppRgb)
+        Dim data As BitmapBuffer = BitmapBuffer.FromBitmap(image)
         Dim ptr As IntPtr = data.Scan0
         Dim bytes = std.Abs(data.Stride) * image.Height
         Dim rgbValues = New Byte(bytes - 1) {}
@@ -184,8 +186,7 @@ Public Class MNIST : Implements IDisposable
         Next
 
         Marshal.Copy(rgbValues, 0, ptr, bytes)
-
-        image.UnlockBits(data)
+        data.Dispose()
 
         Return New NamedValue(Of Image) With {
             .Name = raw.Last,
