@@ -62,7 +62,6 @@ Imports System.Drawing
 Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports System.Xml
-Imports Microsoft.VisualBasic.Drawing
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Net.Http
 Imports Microsoft.VisualBasic.Text.Xml
