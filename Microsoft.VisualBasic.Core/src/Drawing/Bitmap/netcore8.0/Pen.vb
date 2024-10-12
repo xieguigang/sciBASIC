@@ -18,6 +18,11 @@ Namespace Imaging
         Public Property LineJoin As LineJoin
         Public Property CustomEndCap As CustomLineCap
         Public Property EndCap As LineCap
+        Public Property Alignment As PenAlignment
+        Public Property StartCap As LineCap
+        Public Property MiterLimit As Single
+        Public Property DashCap As DashCap
+        Public Property DashOffset As Single
 
         Sub New(color As Color, Optional width As Single = 1)
             _Color = color
@@ -56,6 +61,42 @@ Namespace Imaging
             GC.SuppressFinalize(Me)
         End Sub
     End Class
+
+    '     Specifies the type of graphic shape to use on both ends of each dash in a dashed
+    '     line.
+    Public Enum DashCap
+
+        '     Specifies a square cap that squares off both ends of each dash.
+        Flat = 0
+        '     Specifies a circular cap that rounds off both ends of each dash.
+        Round = 2
+        '     Specifies a triangular cap that points both ends of each dash.
+        Triangle = 3
+    End Enum
+
+    '     Specifies the alignment of a System.Drawing.Pen object in relation to the theoretical,
+    '     zero-width line.
+    Public Enum PenAlignment
+
+        '
+        '     Specifies that the System.Drawing.Pen object Is centered over the theoretical
+        '     line.
+        Center
+
+        '     Specifies that the System.Drawing.Pen Is positioned on the inside of the theoretical
+        '     line.
+        Inset
+        '   Specifies the System.Drawing.Pen Is positioned On the outside Of the theoretical
+        '     line.
+        Outset
+        '     Specifies the System.Drawing.Pen Is positioned to the left of the theoretical
+        '     line.
+        Left
+
+        '     Specifies the System.Drawing.Pen Is positioned to the right of the theoretical
+        '     line.
+        Right
+    End Enum
 
     Public Enum DashStyle
         Solid
