@@ -66,6 +66,10 @@ Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Net.Http
 Imports Microsoft.VisualBasic.Text.Xml
 
+#If NET48 Then
+Imports Microsoft.VisualBasic.Drawing
+#End If
+
 Namespace SVG.XML
 
     ''' <summary>
