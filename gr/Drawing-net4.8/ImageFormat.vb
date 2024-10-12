@@ -108,22 +108,6 @@ Public Module ImageFormatExtensions
         Return formatsEnumMapping(format)
     End Function
 
-    ReadOnly enumFormats As Dictionary(Of String, ImageFormats) =
-        [Enums](Of ImageFormats)() _
-        .ToDictionary(Function(t) t.ToString.ToLower)
-
-    ''' <summary>
-    ''' 不存在的名称会返回<see cref="ImageFormats.Png"/>类型
-    ''' </summary>
-    ''' <param name="format$">大小写不敏感</param>
-    ''' <returns></returns>
-    ''' 
-    <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    <Extension>
-    Public Function ParseImageFormat(format$) As ImageFormats
-        Return enumFormats.TryGetValue(LCase(format), [default]:=ImageFormats.Png)
-    End Function
-
     ReadOnly formatsEnumMapping As New SortedDictionary(Of ImageFormats, ImageFormat) From {
                                                                                             _
         {ImageFormats.Bmp, ImageFormat.Bmp},

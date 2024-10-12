@@ -87,6 +87,22 @@ Namespace Imaging
     <HideModuleName>
     Public Module GraphicsExtensions
 
+        ReadOnly enumFormats As Dictionary(Of String, ImageFormats) =
+            [Enums](Of ImageFormats)() _
+            .ToDictionary(Function(t) t.ToString.ToLower)
+
+        ''' <summary>
+        ''' 不存在的名称会返回<see cref="ImageFormats.Png"/>类型
+        ''' </summary>
+        ''' <param name="format$">大小写不敏感</param>
+        ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function ParseImageFormat(format$) As ImageFormats
+            Return enumFormats.TryGetValue(LCase(format), [default]:=ImageFormats.Png)
+        End Function
+
 #If NET8_0_OR_GREATER Then
         ''' <summary>
         ''' Saves this <see cref="System.Drawing.Image"/> to the specified file in the specified format.
