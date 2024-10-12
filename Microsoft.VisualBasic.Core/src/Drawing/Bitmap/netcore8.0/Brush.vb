@@ -65,6 +65,7 @@ Namespace Imaging
         Public Shared ReadOnly Property Blue As New SolidBrush(Color.Blue)
         Public Shared ReadOnly Property Green As New SolidBrush(Color.Green)
         Public Shared ReadOnly Property Yellow As New SolidBrush(Color.Yellow)
+        Public Shared ReadOnly Property DarkGreen As New SolidBrush(Color.DarkGreen)
 
         Private Sub New()
         End Sub
