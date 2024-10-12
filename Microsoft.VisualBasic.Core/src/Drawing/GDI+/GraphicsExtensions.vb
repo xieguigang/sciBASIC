@@ -72,6 +72,7 @@ Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Net.Http
 Imports Microsoft.VisualBasic.Scripting.MetaData
+Imports Microsoft.VisualBasic.Text
 
 Namespace Imaging
 
@@ -85,6 +86,61 @@ Namespace Imaging
                   Url:="http://gcmodeller.org")>
     <HideModuleName>
     Public Module GraphicsExtensions
+
+#If NET8_0_OR_GREATER Then
+        ''' <summary>
+        ''' Saves this <see cref="System.Drawing.Image"/> to the specified file in the specified format.
+        ''' (这个函数可以很容易的将图像对象保存为tiff文件)
+        ''' </summary>
+        ''' <param name="res">
+        ''' The image resource data that will be saved to the disk.
+        ''' (因为这个函数可能会被<see cref="Graphics2D.ImageResource"/>所调用，
+        ''' 由于该属性的Set方法是不公开可见的，所以将会不兼容这个方法，如果这个
+        ''' 参数被设置为ByRef的话)
+        ''' </param>
+        ''' <param name="path">path string</param>
+        ''' <param name="format">Image formats enumeration.</param>
+        ''' <returns></returns>
+        <Extension>
+        Public Function SaveAs(res As Image,
+                           path$,
+                           Optional format As ImageFormats = ImageFormats.Png,
+                           Optional autoDispose As Boolean = False) As Boolean
+
+            If res Is Nothing Then
+                Return False
+            End If
+
+            Try
+                Call path.ParentPath.MakeDir
+
+                If format = ImageFormats.Tiff Then
+                    Throw New NotImplementedException
+                ElseIf format = ImageFormats.Base64 Then
+                    Return res _
+                    .ToBase64String _
+                    .SaveTo(path, Encodings.ASCII.CodePage)
+                Else
+                    Using s As Stream = path.Open(FileMode.OpenOrCreate, doClear:=True, [readOnly]:=False)
+                        Call res.Save(s, format)
+                    End Using
+                End If
+            Catch ex As Exception
+                ex = New Exception(path, ex)
+                Call App.LogException(ex)
+                Call ex.PrintException
+                Return False
+            Finally
+                If autoDispose Then
+                    Call res.Dispose()
+                    Call GC.SuppressFinalize(res)
+                    Call GC.Collect()
+                End If
+            End Try
+
+            Return True
+        End Function
+#End If
 
         <Extension>
         Public Sub FillPolygon(g As IGraphics, color As Brush, x As Double(), y As Double())
