@@ -146,7 +146,6 @@ Namespace Driver
 #Else
                 Call Image.Save(stream, format)
 #End If
-
             Catch ex As Exception
                 Call App.LogException(ex)
                 Return False

@@ -109,6 +109,11 @@ Namespace ComponentModel.Activations
             Return x
         End Function
 
+        ''' <summary>
+        ''' ReLU activator function will clip the negative value as zero
+        ''' </summary>
+        ''' <param name="x"></param>
+        ''' <returns></returns>
         Public Shared Function ReLU(x As Double()) As Double()
             For i As Integer = 0 To x.Length - 1
                 If x(i) < 0 Then

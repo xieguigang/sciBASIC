@@ -1,63 +1,63 @@
 ﻿#Region "Microsoft.VisualBasic::9f06ba92988b961f448d830a316b3ee1, Microsoft.VisualBasic.Core\src\Text\StringSimilarity\Similarity.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 192
-    '    Code Lines: 124 (64.58%)
-    ' Comment Lines: 37 (19.27%)
-    '    - Xml Docs: 91.89%
-    ' 
-    '   Blank Lines: 31 (16.15%)
-    '     File Size: 8.11 KB
+' Summaries:
 
 
-    '     Delegate Function
-    ' 
-    ' 
-    '     Module Evaluations
-    ' 
-    '         Function: Evaluate, tokenEquals, tokenEqualsIgnoreCase
-    '         Delegate Function
-    ' 
-    '             Function: (+4 Overloads) IsOrdered, LevenshteinEvaluate, StringSelection, (+3 Overloads) TokenOrders
-    ' 
-    ' 
-    ' 
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 192
+'    Code Lines: 124 (64.58%)
+' Comment Lines: 37 (19.27%)
+'    - Xml Docs: 91.89%
+' 
+'   Blank Lines: 31 (16.15%)
+'     File Size: 8.11 KB
+
+
+'     Delegate Function
+' 
+' 
+'     Module Evaluations
+' 
+'         Function: Evaluate, tokenEquals, tokenEqualsIgnoreCase
+'         Delegate Function
+' 
+'             Function: (+4 Overloads) IsOrdered, LevenshteinEvaluate, StringSelection, (+3 Overloads) TokenOrders
+' 
+' 
+' 
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -66,6 +66,7 @@ Imports Microsoft.VisualBasic.ComponentModel.Algorithm.DynamicProgramming.Levens
 Imports Microsoft.VisualBasic.ComponentModel.DataStructures.GenericLambda(Of String)
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.Default
+Imports std = System.Math
 
 Namespace Text.Similarity
 
@@ -91,13 +92,17 @@ Namespace Text.Similarity
         Public Function Evaluate(s1$, s2$,
                                  Optional ignoreCase As Boolean = True,
                                  Optional cost# = 0.7,
-                                 Optional ByRef dist As DistResult = Nothing) As Double
+                                 Optional ByRef dist As DistResult = Nothing,
+                                 Optional strlen_diff As Boolean = True) As Double
 
             If String.Equals(s1, s2, If(ignoreCase, StringComparison.OrdinalIgnoreCase, StringComparison.Ordinal)) Then
                 Return 1
             End If
 
             Dim tokenEquals As IEquals = New IEquals(AddressOf Evaluations.tokenEquals) Or Evaluations.ignoreCase.When(ignoreCase)
+            Dim len1 = s1.Length
+            Dim len2 = s2.Length
+            Dim diff As Double = If(strlen_diff, std.Min(len1, len2) / std.Max(len1, len2), 1)
 
             dist = LevenshteinDistance.ComputeDistance(
                 s1.Split,
@@ -109,7 +114,7 @@ Namespace Text.Similarity
             If dist Is Nothing Then
                 Return 0
             Else
-                Return dist.MatchSimilarity
+                Return dist.MatchSimilarity * diff
             End If
         End Function
 
