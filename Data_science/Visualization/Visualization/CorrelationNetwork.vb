@@ -60,8 +60,6 @@ Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
 Imports Microsoft.VisualBasic.Math.DataFrame
 Imports df = Microsoft.VisualBasic.Math.DataFrame.DataFrame
 Imports std = System.Math
-Imports df = Microsoft.VisualBasic.Math.DataFrame.DataFrame
-Imports Microsoft.VisualBasic.Linq
 
 ''' <summary>
 ''' 使用这个模块用来生成相关度的网络，相关度网络是``Kmeans``，``Cmeans``或者其他的一些聚类网络可视化的基础
@@ -130,7 +128,7 @@ Public Module CorrelationNetwork
                 .origID = id,
                 .label = id,
                 .Properties = New Dictionary(Of String, String) From {
-                    {NamesOf.REFLECTION_ID_MAPPING_NODETYPE, "Feature"}
+                    {NamesOf.REFLECTION_ID_MAPPING_NODETYPE, feature_label}
                 }
             }
 
@@ -142,7 +140,7 @@ Public Module CorrelationNetwork
                 .origID = id,
                 .label = id,
                 .Properties = New Dictionary(Of String, String) From {
-                    {NamesOf.REFLECTION_ID_MAPPING_NODETYPE, "Sample"}
+                    {NamesOf.REFLECTION_ID_MAPPING_NODETYPE, sample_label}
                 }
             }
 
