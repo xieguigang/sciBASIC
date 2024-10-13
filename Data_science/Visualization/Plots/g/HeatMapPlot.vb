@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2d36593bab41da9da61f3531f3650886, Data_science\Visualization\Plots\g\HeatMapPlot.vb"
+﻿#Region "Microsoft.VisualBasic::1977c5fa698466123a6130b449f53c35, Data_science\Visualization\Plots\g\HeatMapPlot.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 45
-    '    Code Lines: 37 (82.22%)
+    '   Total Lines: 71
+    '    Code Lines: 62 (87.32%)
     ' Comment Lines: 0 (0.00%)
     '    - Xml Docs: 0.00%
     ' 
-    '   Blank Lines: 8 (17.78%)
-    '     File Size: 1.54 KB
+    '   Blank Lines: 9 (12.68%)
+    '     File Size: 2.67 KB
 
 
     '     Class HeatMapPlot

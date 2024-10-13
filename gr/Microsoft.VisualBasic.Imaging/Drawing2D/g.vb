@@ -1,65 +1,65 @@
-﻿#Region "Microsoft.VisualBasic::91362808e826bfb000c085c078576f00, gr\Microsoft.VisualBasic.Imaging\Drawing2D\g.vb"
+﻿#Region "Microsoft.VisualBasic::3b06a55aad325ccd94f12b2ad324a25a, gr\Microsoft.VisualBasic.Imaging\Drawing2D\g.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 317
-'    Code Lines: 183 (57.73%)
-' Comment Lines: 94 (29.65%)
-'    - Xml Docs: 89.36%
-' 
-'   Blank Lines: 40 (12.62%)
-'     File Size: 12.96 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Delegate Sub
-' 
-' 
-'     Module g
-' 
-'         Properties: ActiveDriver, DriverExtensionName
-' 
-'         Constructor: (+1 Overloads) Sub New
-' 
-'         Function: __getDriver, Allocate, CreateGraphics, (+3 Overloads) GraphicsPlots, (+2 Overloads) MeasureSize
-'                   MeasureWidthOrHeight, ParseDriverEnumValue
-' 
-'         Sub: FillBackground, SetDriver
-' 
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 319
+    '    Code Lines: 189 (59.25%)
+    ' Comment Lines: 92 (28.84%)
+    '    - Xml Docs: 90.22%
+    ' 
+    '   Blank Lines: 38 (11.91%)
+    '     File Size: 13.20 KB
+
+
+    '     Delegate Sub
+    ' 
+    ' 
+    '     Module g
+    ' 
+    '         Properties: ActiveDriver, DriverExtensionName
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
+    '         Function: __getDriver, Allocate, CreateGraphics, (+3 Overloads) GraphicsPlots, (+2 Overloads) MeasureSize
+    '                   MeasureWidthOrHeight, ParseDriverEnumValue
+    ' 
+    '         Sub: FillBackground, SetDriver
+    ' 
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

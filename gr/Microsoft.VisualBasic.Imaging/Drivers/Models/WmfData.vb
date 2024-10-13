@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::766812eb8e5139bb33a1e1eefbeb9209, gr\Microsoft.VisualBasic.Imaging\Drivers\Models\WmfData.vb"
+﻿#Region "Microsoft.VisualBasic::3fb21891df0675b553c8549a315484cc, gr\Microsoft.VisualBasic.Imaging\Drivers\Models\WmfData.vb"
 
     ' Author:
     ' 

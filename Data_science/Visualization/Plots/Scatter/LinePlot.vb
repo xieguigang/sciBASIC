@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::49476d68c88847a89f0153ca4e85a6b5, Data_science\Visualization\Plots\Scatter\LinePlot.vb"
+﻿#Region "Microsoft.VisualBasic::e9d198999bfa691480f462b725125015, Data_science\Visualization\Plots\Scatter\LinePlot.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 20
-    '    Code Lines: 15 (75.00%)
-    ' Comment Lines: 1 (5.00%)
+    '   Total Lines: 44
+    '    Code Lines: 38 (86.36%)
+    ' Comment Lines: 1 (2.27%)
     '    - Xml Docs: 0.00%
     ' 
-    '   Blank Lines: 4 (20.00%)
-    '     File Size: 684 B
+    '   Blank Lines: 5 (11.36%)
+    '     File Size: 1.71 KB
 
 
     ' Module LinePlot

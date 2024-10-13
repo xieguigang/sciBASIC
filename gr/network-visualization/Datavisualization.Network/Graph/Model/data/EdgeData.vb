@@ -1,57 +1,57 @@
-﻿#Region "Microsoft.VisualBasic::0b647074f3f91e3952a7bc9ac450a3f4, gr\network-visualization\Datavisualization.Network\Graph\Model\data\EdgeData.vb"
+﻿#Region "Microsoft.VisualBasic::2a89d0958f4ba036d69e790e9716be35, gr\network-visualization\Datavisualization.Network\Graph\Model\data\EdgeData.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 67
-'    Code Lines: 44 (65.67%)
-' Comment Lines: 12 (17.91%)
-'    - Xml Docs: 100.00%
-' 
-'   Blank Lines: 11 (16.42%)
-'     File Size: 2.08 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Class EdgeData
-' 
-'         Properties: bends, length, style
-' 
-'         Constructor: (+2 Overloads) Sub New
-'         Function: Clone, ToString
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 94
+    '    Code Lines: 70 (74.47%)
+    ' Comment Lines: 12 (12.77%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 12 (12.77%)
+    '     File Size: 3.31 KB
+
+
+    '     Class EdgeData
+    ' 
+    '         Properties: bends, length, style
+    ' 
+    '         Constructor: (+2 Overloads) Sub New
+    '         Function: Clone, ToString
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

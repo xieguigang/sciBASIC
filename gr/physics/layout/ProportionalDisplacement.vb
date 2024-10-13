@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ce14c040bf4a09ac76e699c17609a51a, gr\physics\layout\ProportionalDisplacement.vb"
+﻿#Region "Microsoft.VisualBasic::2470b2c47d22fbf1c819755e93027375, gr\physics\layout\ProportionalDisplacement.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 10.64%
     ' 
     '   Blank Lines: 10 (11.49%)
-    '     File Size: 3.34 KB
+    '     File Size: 3.33 KB
 
 
     '     Class ProportionalDisplacement

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8bc08d9f05783835a22defa6d3bde2f9, Data_science\Visualization\Plots\g\Axis\DataScaler\DataScaler.vb"
+﻿#Region "Microsoft.VisualBasic::1d52b7625780fd40d1eb70373fbb7b40, Data_science\Visualization\Plots\g\Axis\DataScaler\DataScaler.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 96.15%
     ' 
     '   Blank Lines: 25 (15.82%)
-    '     File Size: 5.37 KB
+    '     File Size: 5.38 KB
 
 
     '     Class DataScaler

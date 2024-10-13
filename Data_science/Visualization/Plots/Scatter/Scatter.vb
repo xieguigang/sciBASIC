@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::13d5e9337d372537f42c5bc21fb9ed1b, Data_science\Visualization\Plots\Scatter\Scatter.vb"
+﻿#Region "Microsoft.VisualBasic::c27f02dda73c68c0704bb5bd4d521b5a, Data_science\Visualization\Plots\Scatter\Scatter.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 590
-    '    Code Lines: 485 (82.20%)
-    ' Comment Lines: 65 (11.02%)
+    '   Total Lines: 612
+    '    Code Lines: 506 (82.68%)
+    ' Comment Lines: 65 (10.62%)
     '    - Xml Docs: 90.77%
     ' 
-    '   Blank Lines: 40 (6.78%)
-    '     File Size: 26.55 KB
+    '   Blank Lines: 41 (6.70%)
+    '     File Size: 27.43 KB
 
 
     ' Module Scatter

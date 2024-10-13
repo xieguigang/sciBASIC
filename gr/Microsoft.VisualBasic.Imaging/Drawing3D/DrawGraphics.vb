@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f3255304f4e1657156450c0a91a15d53, gr\Microsoft.VisualBasic.Imaging\Drawing3D\DrawGraphics.vb"
+﻿#Region "Microsoft.VisualBasic::af8d1d673f61aad241b44bdcaa3f8c3e, gr\Microsoft.VisualBasic.Imaging\Drawing3D\DrawGraphics.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 3 (25.00%)
-    '     File Size: 423 B
+    '     File Size: 424 B
 
 
     '     Delegate Sub

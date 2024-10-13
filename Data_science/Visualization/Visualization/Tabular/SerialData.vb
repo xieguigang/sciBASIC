@@ -1,57 +1,57 @@
-﻿#Region "Microsoft.VisualBasic::2ab72ba42317fd979c89ee7da702bfcf, Data_science\Visualization\Plots\csv\SerialData.vb"
+﻿#Region "Microsoft.VisualBasic::9ecd94cd4d39c278a343ee0713fd74f7, Data_science\Visualization\Visualization\Tabular\SerialData.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 107
-'    Code Lines: 83 (77.57%)
-' Comment Lines: 11 (10.28%)
-'    - Xml Docs: 100.00%
-' 
-'   Blank Lines: 13 (12.15%)
-'     File Size: 4.28 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Class SerialData
-' 
-'         Properties: errMinus, errPlus, serial, Statics, tag
-'                     value, X, Y
-' 
-'         Function: (+2 Overloads) GetData, Interpolation, ToString
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 108
+    '    Code Lines: 84 (77.78%)
+    ' Comment Lines: 11 (10.19%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 13 (12.04%)
+    '     File Size: 4.34 KB
+
+
+    '     Class SerialData
+    ' 
+    '         Properties: errMinus, errPlus, serial, Statics, tag
+    '                     value, X, Y
+    ' 
+    '         Function: (+2 Overloads) GetData, Interpolation, ToString
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

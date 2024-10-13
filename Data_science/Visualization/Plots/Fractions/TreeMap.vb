@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b055bb42074e8c1b33be1feba0710584, Data_science\Visualization\Plots\Fractions\TreeMap.vb"
+﻿#Region "Microsoft.VisualBasic::1a4b2f1a7405a74ce926670c7714308c, Data_science\Visualization\Plots\Fractions\TreeMap.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 88
-    '    Code Lines: 63 (71.59%)
-    ' Comment Lines: 10 (11.36%)
+    '   Total Lines: 114
+    '    Code Lines: 88 (77.19%)
+    ' Comment Lines: 10 (8.77%)
     '    - Xml Docs: 60.00%
     ' 
-    '   Blank Lines: 15 (17.05%)
-    '     File Size: 3.54 KB
+    '   Blank Lines: 16 (14.04%)
+    '     File Size: 4.67 KB
 
 
     '     Module TreeMap

@@ -1,63 +1,63 @@
-﻿#Region "Microsoft.VisualBasic::9f06ba92988b961f448d830a316b3ee1, Microsoft.VisualBasic.Core\src\Text\StringSimilarity\Similarity.vb"
+﻿#Region "Microsoft.VisualBasic::cdfc8dd3bc208351ecf474461954d2bb, Microsoft.VisualBasic.Core\src\Text\StringSimilarity\Similarity.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 192
-'    Code Lines: 124 (64.58%)
-' Comment Lines: 37 (19.27%)
-'    - Xml Docs: 91.89%
-' 
-'   Blank Lines: 31 (16.15%)
-'     File Size: 8.11 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Delegate Function
-' 
-' 
-'     Module Evaluations
-' 
-'         Function: Evaluate, tokenEquals, tokenEqualsIgnoreCase
-'         Delegate Function
-' 
-'             Function: (+4 Overloads) IsOrdered, LevenshteinEvaluate, StringSelection, (+3 Overloads) TokenOrders
-' 
-' 
-' 
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 199
+    '    Code Lines: 129 (64.82%)
+    ' Comment Lines: 39 (19.60%)
+    '    - Xml Docs: 92.31%
+    ' 
+    '   Blank Lines: 31 (15.58%)
+    '     File Size: 8.45 KB
+
+
+    '     Delegate Function
+    ' 
+    ' 
+    '     Module Evaluations
+    ' 
+    '         Function: Evaluate, tokenEquals, tokenEqualsIgnoreCase
+    '         Delegate Function
+    ' 
+    '             Function: (+4 Overloads) IsOrdered, LevenshteinEvaluate, StringSelection, (+3 Overloads) TokenOrders
+    ' 
+    ' 
+    ' 
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

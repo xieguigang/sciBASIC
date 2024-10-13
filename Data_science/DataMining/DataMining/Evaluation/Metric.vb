@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::56caaaed13fc8170e7d29409e3c11962, Data_science\DataMining\DataMining\Evaluation\Metric.vb"
+﻿#Region "Microsoft.VisualBasic::b1cdcc7d20460c0acc12350dbd4704e5, Data_science\DataMining\DataMining\Evaluation\Metric.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 139
-    '    Code Lines: 95 (68.35%)
-    ' Comment Lines: 15 (10.79%)
+    '   Total Lines: 155
+    '    Code Lines: 107 (69.03%)
+    ' Comment Lines: 15 (9.68%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 29 (20.86%)
-    '     File Size: 4.54 KB
+    '   Blank Lines: 33 (21.29%)
+    '     File Size: 5.17 KB
 
 
     '     Enum Metrics
@@ -58,8 +58,8 @@
     '     Class Metric
     ' 
     '         Constructor: (+1 Overloads) Sub New
-    '         Function: [error], accuracy, auc, GetMetric, mean_absolute_error
-    '                   mean_square_error, Parse
+    '         Function: [error], accuracy, auc, crossEntropyLoss, GetMetric
+    '                   mean_absolute_error, mean_square_error, Parse
     '         Class labelComparer
     ' 
     '             Constructor: (+1 Overloads) Sub New

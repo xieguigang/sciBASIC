@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4bd573cf77a8c464ba4b502604fce772, Data_science\Mathematica\Math\DataFrame\Correlation\CorrelationMatrix.vb"
+﻿#Region "Microsoft.VisualBasic::c780b9067ddb0ca443b576eee48a68b3, Data_science\Mathematica\Math\DataFrame\Correlation\CorrelationMatrix.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 158
-    '    Code Lines: 121 (76.58%)
-    ' Comment Lines: 16 (10.13%)
+    '   Total Lines: 162
+    '    Code Lines: 121 (74.69%)
+    ' Comment Lines: 20 (12.35%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 21 (13.29%)
-    '     File Size: 5.45 KB
+    '   Blank Lines: 21 (12.96%)
+    '     File Size: 5.57 KB
 
 
     ' Class CorrelationMatrix

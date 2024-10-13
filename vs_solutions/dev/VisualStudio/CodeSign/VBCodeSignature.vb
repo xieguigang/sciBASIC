@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5f3dbf60e067c2dd17584e5313cd047d, vs_solutions\dev\VisualStudio\CodeSign\VBCodeSignature.vb"
+﻿#Region "Microsoft.VisualBasic::2f4f0c30945ec6ac70046f563c612f2e, vs_solutions\dev\VisualStudio\CodeSign\VBCodeSignature.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 77.78%
     ' 
     '   Blank Lines: 38 (13.24%)
-    '     File Size: 12.11 KB
+    '     File Size: 12.12 KB
 
 
     '     Module VBCodeSignature

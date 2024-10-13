@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::76110239d9d3c77396c54835d899ee29, gr\Microsoft.VisualBasic.Imaging\Drawing2D\HeatMap\PixelRender.vb"
+﻿#Region "Microsoft.VisualBasic::a372e88f4fa35f18b3cf49ae6c6ba586, gr\Microsoft.VisualBasic.Imaging\Drawing2D\HeatMap\PixelRender.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 161
-    '    Code Lines: 118 (73.29%)
-    ' Comment Lines: 19 (11.80%)
+    '   Total Lines: 170
+    '    Code Lines: 126 (74.12%)
+    ' Comment Lines: 19 (11.18%)
     '    - Xml Docs: 73.68%
     ' 
-    '   Blank Lines: 24 (14.91%)
-    '     File Size: 6.41 KB
+    '   Blank Lines: 25 (14.71%)
+    '     File Size: 6.56 KB
 
 
     '     Class PixelRender

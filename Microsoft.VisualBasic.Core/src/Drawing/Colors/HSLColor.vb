@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3963edb49d23d59932d98b0a8d97f127, Microsoft.VisualBasic.Core\src\Extensions\Image\Colors\HSLColor.vb"
+﻿#Region "Microsoft.VisualBasic::7d9144fb3824ee02288f4622969dcac9, Microsoft.VisualBasic.Core\src\Drawing\Colors\HSLColor.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 94.74%
     ' 
     '   Blank Lines: 21 (14.29%)
-    '     File Size: 4.92 KB
+    '     File Size: 4.91 KB
 
 
     '     Structure HSLColor

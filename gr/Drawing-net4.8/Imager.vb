@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b96b1e2a603e3c2a2514c3187a47eb74, Microsoft.VisualBasic.Core\src\Extensions\Image\Bitmap\Imager.vb"
+﻿#Region "Microsoft.VisualBasic::a50c82e4a089bafb3dd1aba8856aee91, gr\Drawing-net4.8\Imager.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 96.36%
     ' 
     '   Blank Lines: 17 (12.41%)
-    '     File Size: 5.86 KB
+    '     File Size: 5.88 KB
 
 
     '     Module Imager

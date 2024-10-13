@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7f1b8f2a20fef839bfe27f925d9c1e73, Microsoft.VisualBasic.Core\src\CommandLine\CLITools.vb"
+﻿#Region "Microsoft.VisualBasic::db7c534a26609777108f4117eeec242a, Microsoft.VisualBasic.Core\src\CommandLine\CLITools.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 78.64%
     ' 
     '   Blank Lines: 51 (13.35%)
-    '     File Size: 14.92 KB
+    '     File Size: 14.94 KB
 
 
     '     Module CLITools

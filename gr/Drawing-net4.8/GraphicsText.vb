@@ -1,58 +1,57 @@
-﻿#Region "Microsoft.VisualBasic::460de3d6ae2d46cc814a07d621cad79b, Microsoft.VisualBasic.Core\src\Extensions\Image\GDI+\GraphicsText.vb"
+﻿#Region "Microsoft.VisualBasic::738682e48d3c0d6023b5998138e9303b, gr\Drawing-net4.8\GraphicsText.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 150
-'    Code Lines: 95 (63.33%)
-' Comment Lines: 32 (21.33%)
-'    - Xml Docs: 68.75%
-' 
-'   Blank Lines: 23 (15.33%)
-'     File Size: 5.82 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Class GraphicsText
-' 
-'         Constructor: (+2 Overloads) Sub New
-' 
-'         Function: ConvertSize, GetRotatePoint
-' 
-'         Sub: (+2 Overloads) DrawString, DrawStringInternal
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 148
+    '    Code Lines: 94 (63.51%)
+    ' Comment Lines: 32 (21.62%)
+    '    - Xml Docs: 68.75%
+    ' 
+    '   Blank Lines: 22 (14.86%)
+    '     File Size: 5.34 KB
+
+
+    ' Class GraphicsText
+    ' 
+    '     Constructor: (+2 Overloads) Sub New
+    ' 
+    '     Function: ConvertSize, GetRotatePoint
+    ' 
+    '     Sub: (+2 Overloads) DrawString, DrawStringInternal
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

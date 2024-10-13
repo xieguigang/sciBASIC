@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7463f59d14794f842f0e5e46595536c6, Microsoft.VisualBasic.Core\src\Extensions\Image\Math\QuadrantRegions.vb"
+﻿#Region "Microsoft.VisualBasic::7463f59d14794f842f0e5e46595536c6, Microsoft.VisualBasic.Core\src\Drawing\Math\QuadrantRegions.vb"
 
     ' Author:
     ' 

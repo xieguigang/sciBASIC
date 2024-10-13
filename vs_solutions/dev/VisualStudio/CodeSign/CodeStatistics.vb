@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::51c68e0dfb729482b05636aef2a39119, vs_solutions\dev\VisualStudio\CodeSign\CodeStatistics.vb"
+﻿#Region "Microsoft.VisualBasic::e53ea2ef474fc7c5f6febc0ac78aaf38, vs_solutions\dev\VisualStudio\CodeSign\CodeStatistics.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 80.00%
     ' 
     '   Blank Lines: 8 (16.33%)
-    '     File Size: 1.75 KB
+    '     File Size: 1.77 KB
 
 
     '     Class CodeStatics

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bebf41fcde06b08b7faffd320dc0f560, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::99b92410a958cc98d7d2a86acfff7068, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Extensions.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 75.36%
     ' 
     '   Blank Lines: 31 (10.69%)
-    '     File Size: 13.16 KB
+    '     File Size: 13.14 KB
 
 
     '     Module Extensions

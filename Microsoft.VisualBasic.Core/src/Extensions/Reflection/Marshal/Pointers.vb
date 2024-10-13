@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f13ea8556ad8d7833dfbd328e3818857, Microsoft.VisualBasic.Core\src\Extensions\Reflection\Marshal\Pointers.vb"
+﻿#Region "Microsoft.VisualBasic::5e09a95e0fff15fe0fa0b237e3e6c169, Microsoft.VisualBasic.Core\src\Extensions\Reflection\Marshal\Pointers.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 68
-    '    Code Lines: 43 (63.24%)
-    ' Comment Lines: 8 (11.76%)
+    '   Total Lines: 75
+    '    Code Lines: 46 (61.33%)
+    ' Comment Lines: 11 (14.67%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 17 (25.00%)
-    '     File Size: 2.26 KB
+    '   Blank Lines: 18 (24.00%)
+    '     File Size: 2.53 KB
 
 
     '     Class [Integer]
@@ -65,7 +65,7 @@
     ' 
     '     Class [Byte]
     ' 
-    '         Constructor: (+1 Overloads) Sub New
+    '         Constructor: (+2 Overloads) Sub New
     ' 
     '     Class [IntPtr]
     ' 

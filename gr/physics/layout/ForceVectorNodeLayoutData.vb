@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fca803be29ea406b4c8520f144bd4745, gr\physics\layout\ForceVectorNodeLayoutData.vb"
+﻿#Region "Microsoft.VisualBasic::b4928056e106570c6e2d0e5ea9cee2e9, gr\physics\layout\ForceVectorNodeLayoutData.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 68
-    '    Code Lines: 15 (22.06%)
-    ' Comment Lines: 45 (66.18%)
+    '   Total Lines: 67
+    '    Code Lines: 14 (20.90%)
+    ' Comment Lines: 45 (67.16%)
     '    - Xml Docs: 6.67%
     ' 
-    '   Blank Lines: 8 (11.76%)
-    '     File Size: 2.50 KB
+    '   Blank Lines: 8 (11.94%)
+    '     File Size: 2.49 KB
 
 
     '     Class LayoutData

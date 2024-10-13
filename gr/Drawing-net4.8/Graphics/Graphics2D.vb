@@ -1,65 +1,64 @@
-﻿#Region "Microsoft.VisualBasic::7257be68ac7e964c6f836808195d52f4, Microsoft.VisualBasic.Core\src\Extensions\Image\GDI+\Graphics2D.vb"
+﻿#Region "Microsoft.VisualBasic::13fcf2b8b9c45f8567c4537a81025302, gr\Drawing-net4.8\Graphics\Graphics2D.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 238
-'    Code Lines: 143 (60.08%)
-' Comment Lines: 60 (25.21%)
-'    - Xml Docs: 91.67%
-' 
-'   Blank Lines: 35 (14.71%)
-'     File Size: 8.93 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Class Graphics2D
-' 
-'         Properties: Center, Height, ImageResource, Size, Width
-' 
-'         Constructor: (+5 Overloads) Sub New
-' 
-'         Function: CreateDevice, CreateObject, Open, (+3 Overloads) Save, ToString
-' 
-'         Sub: DrawCircle, DrawString, saveFile
-'         Structure Context
-' 
-'             Function: Create
-' 
-' 
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 207
+    '    Code Lines: 123 (59.42%)
+    ' Comment Lines: 54 (26.09%)
+    '    - Xml Docs: 92.59%
+    ' 
+    '   Blank Lines: 30 (14.49%)
+    '     File Size: 7.18 KB
+
+
+    ' Class Graphics2D
+    ' 
+    '     Properties: Center, ImageResource, Size
+    ' 
+    '     Constructor: (+5 Overloads) Sub New
+    ' 
+    '     Function: CreateDevice, CreateObject, Open, (+2 Overloads) Save, ToString
+    ' 
+    '     Sub: DrawCircle, DrawString, saveFile
+    '     Structure Context
+    ' 
+    '         Function: Create
+    ' 
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

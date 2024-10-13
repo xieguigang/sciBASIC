@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3118e430a0cff687ee0a78f2586b385c, Data_science\Mathematica\Math\ANOVA\MultivariateAnalysis\Debugger.vb"
+﻿#Region "Microsoft.VisualBasic::f04c93c7ee2082f120409812d549d528, Data_science\Mathematica\Math\ANOVA\MultivariateAnalysis\Debugger.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 0.00%
     ' 
     '   Blank Lines: 34 (16.27%)
-    '     File Size: 7.79 KB
+    '     File Size: 7.80 KB
 
 
     ' Module Debugger

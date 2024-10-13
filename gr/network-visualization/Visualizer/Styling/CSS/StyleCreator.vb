@@ -1,54 +1,54 @@
-﻿#Region "Microsoft.VisualBasic::c978f7d92b9a31d21d23af67f74f499d, gr\network-visualization\Visualizer\Styling\CSS\StyleCreator.vb"
+﻿#Region "Microsoft.VisualBasic::d5d5bfdd314798d5ce6f5667a72e8520, gr\network-visualization\Visualizer\Styling\CSS\StyleCreator.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 46
-'    Code Lines: 22 (47.83%)
-' Comment Lines: 18 (39.13%)
-'    - Xml Docs: 100.00%
-' 
-'   Blank Lines: 6 (13.04%)
-'     File Size: 1.54 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Structure StyleCreator
-' 
-'         Function: CompileSelector
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 71
+    '    Code Lines: 46 (64.79%)
+    ' Comment Lines: 18 (25.35%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 7 (9.86%)
+    '     File Size: 2.66 KB
+
+
+    '     Structure StyleCreator
+    ' 
+    '         Function: CompileSelector
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

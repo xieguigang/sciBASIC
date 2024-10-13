@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a1bd7efd74d26ef3c83346b698b9aaa4, Microsoft.VisualBasic.Core\src\Extensions\IO\Extensions\SerializationIO.vb"
+﻿#Region "Microsoft.VisualBasic::cb226939fed5a0311a0ec51f08716738, Microsoft.VisualBasic.Core\src\Extensions\IO\Extensions\SerializationIO.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 90
-    '    Code Lines: 58 (64.44%)
-    ' Comment Lines: 24 (26.67%)
+    '   Total Lines: 91
+    '    Code Lines: 59 (64.84%)
+    ' Comment Lines: 24 (26.37%)
     '    - Xml Docs: 95.83%
     ' 
-    '   Blank Lines: 8 (8.89%)
-    '     File Size: 3.43 KB
+    '   Blank Lines: 8 (8.79%)
+    '     File Size: 3.48 KB
 
 
     ' Module SerializationIO

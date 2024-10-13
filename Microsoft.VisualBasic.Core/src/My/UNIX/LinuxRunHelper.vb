@@ -1,55 +1,55 @@
-﻿#Region "Microsoft.VisualBasic::b1001930f9c4b17a4eb8503d1592fbf6, Microsoft.VisualBasic.Core\src\My\UNIX\LinuxRunHelper.vb"
+﻿#Region "Microsoft.VisualBasic::7181c258b34e590c9eaeb7fba85b2f47, Microsoft.VisualBasic.Core\src\My\UNIX\LinuxRunHelper.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 126
-'    Code Lines: 77 (61.11%)
-' Comment Lines: 31 (24.60%)
-'    - Xml Docs: 77.42%
-' 
-'   Blank Lines: 18 (14.29%)
-'     File Size: 4.49 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Module LinuxRunHelper
-' 
-'         Function: BashRun, BashShell, GetLocationHelper, getRunnerBash, MonoRun
-'                   Shell
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 122
+    '    Code Lines: 74 (60.66%)
+    ' Comment Lines: 31 (25.41%)
+    '    - Xml Docs: 77.42%
+    ' 
+    '   Blank Lines: 17 (13.93%)
+    '     File Size: 4.42 KB
+
+
+    '     Module LinuxRunHelper
+    ' 
+    '         Function: BashRun, BashShell, GetLocationHelper, getRunnerBash, MonoRun
+    '                   Shell
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

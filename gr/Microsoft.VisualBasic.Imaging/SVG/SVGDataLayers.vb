@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::58097e6cf244c752c9de61705f265ddf, gr\Microsoft.VisualBasic.Imaging\SVG\SVGDataLayers.vb"
+﻿#Region "Microsoft.VisualBasic::f4250eed450ea676bd97de4125c5cd32, gr\Microsoft.VisualBasic.Imaging\SVG\SVGDataLayers.vb"
 
     ' Author:
     ' 
@@ -34,20 +34,20 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 59
-    '    Code Lines: 30 (50.85%)
-    ' Comment Lines: 19 (32.20%)
-    '    - Xml Docs: 94.74%
+    '   Total Lines: 69
+    '    Code Lines: 35 (50.72%)
+    ' Comment Lines: 22 (31.88%)
+    '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 10 (16.95%)
-    '     File Size: 1.90 KB
+    '   Blank Lines: 12 (17.39%)
+    '     File Size: 2.20 KB
 
 
     '     Class SVGDataLayers
     ' 
     '         Properties: styles
     ' 
-    '         Constructor: (+1 Overloads) Sub New
+    '         Constructor: (+2 Overloads) Sub New
     ' 
     '         Function: ApplyFilter
     ' 

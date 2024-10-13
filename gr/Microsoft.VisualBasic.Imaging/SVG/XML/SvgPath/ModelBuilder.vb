@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6d3e8f714f0406ca00686556d0e436e8, gr\Microsoft.VisualBasic.Imaging\SVG\XML\SvgPath\ModelBuilder.vb"
+﻿#Region "Microsoft.VisualBasic::11d971fc69fc1277757f6c5009ebeacf, gr\Microsoft.VisualBasic.Imaging\SVG\XML\SvgPath\ModelBuilder.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 237
-    '    Code Lines: 151 (63.71%)
-    ' Comment Lines: 55 (23.21%)
+    '   Total Lines: 238
+    '    Code Lines: 153 (64.29%)
+    ' Comment Lines: 55 (23.11%)
     '    - Xml Docs: 78.18%
     ' 
-    '   Blank Lines: 31 (13.08%)
-    '     File Size: 8.82 KB
+    '   Blank Lines: 30 (12.61%)
+    '     File Size: 8.84 KB
 
 
     '     Module ModelBuilder

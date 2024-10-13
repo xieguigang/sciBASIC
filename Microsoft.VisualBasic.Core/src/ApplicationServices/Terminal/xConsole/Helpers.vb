@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cba8301f977fe2567dbfef38b86e58d0, Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\xConsole\Helpers.vb"
+﻿#Region "Microsoft.VisualBasic::e7239aabbc1881247e1ab3069dbca90e, Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\xConsole\Helpers.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 76
-    '    Code Lines: 54 (71.05%)
-    ' Comment Lines: 6 (7.89%)
+    '   Total Lines: 78
+    '    Code Lines: 56 (71.79%)
+    ' Comment Lines: 6 (7.69%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 16 (21.05%)
-    '     File Size: 2.65 KB
+    '   Blank Lines: 16 (20.51%)
+    '     File Size: 2.67 KB
 
 
     '     Module Helpers

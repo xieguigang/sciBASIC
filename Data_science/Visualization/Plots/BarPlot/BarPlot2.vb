@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b5f2255d65178b56f826438fa494eb1b, Data_science\Visualization\Plots\BarPlot\BarPlot2.vb"
+﻿#Region "Microsoft.VisualBasic::a905392db7e3886788894ca8f1834b39, Data_science\Visualization\Plots\BarPlot\BarPlot2.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 118
-    '    Code Lines: 83 (70.34%)
-    ' Comment Lines: 16 (13.56%)
+    '   Total Lines: 144
+    '    Code Lines: 108 (75.00%)
+    ' Comment Lines: 16 (11.11%)
     '    - Xml Docs: 81.25%
     ' 
-    '   Blank Lines: 19 (16.10%)
-    '     File Size: 5.34 KB
+    '   Blank Lines: 20 (13.89%)
+    '     File Size: 6.47 KB
 
 
     '     Module BarPlotAPI

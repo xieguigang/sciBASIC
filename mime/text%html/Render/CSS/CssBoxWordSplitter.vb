@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0dcf340b42dd0b324dc0248a10c3b9fb, mime\text%html\Render\CSS\CssBoxWordSplitter.vb"
+﻿#Region "Microsoft.VisualBasic::f1d60a552e500c5e6fe1b1acf9b1b3d9, mime\text%html\Render\CSS\CssBoxWordSplitter.vb"
 
     ' Author:
     ' 
@@ -35,12 +35,12 @@
     ' Code Statistics:
 
     '   Total Lines: 122
-    '    Code Lines: 77 (63.11%)
+    '    Code Lines: 79 (64.75%)
     ' Comment Lines: 17 (13.93%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 28 (22.95%)
-    '     File Size: 3.68 KB
+    '   Blank Lines: 26 (21.31%)
+    '     File Size: 3.70 KB
 
 
     '     Class CssBoxWordSplitter

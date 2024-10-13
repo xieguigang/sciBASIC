@@ -1,56 +1,56 @@
-﻿#Region "Microsoft.VisualBasic::38f8e6e841217fd8370ad3d4eb2d44dd, gr\Microsoft.VisualBasic.Imaging\SVG\Renderer.vb"
+﻿#Region "Microsoft.VisualBasic::8acde70f1478dfdefd03c1d2bf71b27e, gr\Microsoft.VisualBasic.Imaging\SVG\Renderer.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 72
-'    Code Lines: 52 (72.22%)
-' Comment Lines: 12 (16.67%)
-'    - Xml Docs: 75.00%
-' 
-'   Blank Lines: 8 (11.11%)
-'     File Size: 2.55 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Module Renderer
-' 
-'         Function: DrawImage, SVGColorHelper
-' 
-'         Sub: drawLayer
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 74
+    '    Code Lines: 52 (70.27%)
+    ' Comment Lines: 14 (18.92%)
+    '    - Xml Docs: 78.57%
+    ' 
+    '   Blank Lines: 8 (10.81%)
+    '     File Size: 2.62 KB
+
+
+    '     Module Renderer
+    ' 
+    '         Function: DrawImage, SVGColorHelper
+    ' 
+    '         Sub: drawLayer
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

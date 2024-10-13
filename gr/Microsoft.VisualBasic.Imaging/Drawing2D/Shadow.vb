@@ -1,57 +1,57 @@
-﻿#Region "Microsoft.VisualBasic::65975eadc33fb63cb7f11d8015e228d5, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Shadow.vb"
+﻿#Region "Microsoft.VisualBasic::90a9f3e731f582c421ea50eb128e0ef6, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Shadow.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 148
-'    Code Lines: 85 (57.43%)
-' Comment Lines: 41 (27.70%)
-'    - Xml Docs: 53.66%
-' 
-'   Blank Lines: 22 (14.86%)
-'     File Size: 6.73 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Class Shadow
-' 
-'         Properties: alphaLevels, gradientLevels, shadowColor
-' 
-'         Constructor: (+1 Overloads) Sub New
-'         Sub: Circle, DrawCircleShadow, (+2 Overloads) DropdownShadows, RoundRectangle
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 123
+    '    Code Lines: 88 (71.54%)
+    ' Comment Lines: 16 (13.01%)
+    '    - Xml Docs: 87.50%
+    ' 
+    '   Blank Lines: 19 (15.45%)
+    '     File Size: 4.82 KB
+
+
+    '     Class Shadow
+    ' 
+    '         Properties: alphaLevels, gradientLevels, shadowColor
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    '         Sub: Circle, DrawCircleShadow, (+2 Overloads) DropdownShadows, RoundRectangle
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

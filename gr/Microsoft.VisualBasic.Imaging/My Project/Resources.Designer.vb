@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f087e1ad425d0328d441e37a262a51b0, gr\Microsoft.VisualBasic.Imaging\My Project\Resources.Designer.vb"
+﻿#Region "Microsoft.VisualBasic::caf0c96ff93d1b7b4d7617f65a85d89d, gr\Microsoft.VisualBasic.Imaging\My Project\Resources.Designer.vb"
 
     ' Author:
     ' 
@@ -35,12 +35,12 @@
     ' Code Statistics:
 
     '   Total Lines: 377
-    '    Code Lines: 165 (43.77%)
-    ' Comment Lines: 178 (47.21%)
-    '    - Xml Docs: 47.19%
+    '    Code Lines: 159 (42.18%)
+    ' Comment Lines: 184 (48.81%)
+    '    - Xml Docs: 45.11%
     ' 
     '   Blank Lines: 34 (9.02%)
-    '     File Size: 31.38 KB
+    '     File Size: 31.37 KB
 
 
     '     Module Resources
@@ -50,7 +50,7 @@
     '                     Default_Marquee, Default_Median, Default_Office, Default_Office2007_2010, Default_Orange
     '                     Default_OrangeRed, Default_Paper, Default_Red, Default_RedOrange, Default_RedViolet
     '                     Default_Slipstream, Default_Violet, Default_Violet2, Default_Yellow, Default_YellowOrange
-    '                     DefaultTexture, designer_colors, ResourceManager
+    '                     designer_colors, ResourceManager
     ' 
     ' 
     ' /********************************************************************************/

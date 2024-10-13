@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a6320fc316d7240e29c3490b8dd9057c, gr\physics\layout\ForceVector.vb"
+﻿#Region "Microsoft.VisualBasic::3c80f627ee095f0647ba98a0a5d2529f, gr\physics\layout\ForceVector.vb"
 
     ' Author:
     ' 
@@ -34,22 +34,22 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 139
-    '    Code Lines: 73 (52.52%)
-    ' Comment Lines: 46 (33.09%)
-    '    - Xml Docs: 6.52%
+    '   Total Lines: 116
+    '    Code Lines: 56 (48.28%)
+    ' Comment Lines: 44 (37.93%)
+    '    - Xml Docs: 6.82%
     ' 
-    '   Blank Lines: 20 (14.39%)
-    '     File Size: 4.76 KB
+    '   Blank Lines: 16 (13.79%)
+    '     File Size: 3.80 KB
 
 
     '     Class ForceVector
     ' 
-    '         Properties: Energy, Norm, XProp, YProp
+    '         Properties: Energy, Norm
     ' 
     '         Constructor: (+3 Overloads) Sub New
     ' 
-    '         Function: normalize, ToString, x, y, z
+    '         Function: normalize, ToString, z
     ' 
     '         Sub: add, multiply, subtract
     ' 

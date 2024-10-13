@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::28e4191721c5a14d8f5a2c58f81bf29c, Microsoft.VisualBasic.Core\src\ApplicationServices\Debugger\Logging\ErrorLog.vb"
+﻿#Region "Microsoft.VisualBasic::28950257f065272cce929680d69a8775, Microsoft.VisualBasic.Core\src\ApplicationServices\Debugger\Logging\ErrorLog.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 85.71%
     ' 
     '   Blank Lines: 6 (7.23%)
-    '     File Size: 3.43 KB
+    '     File Size: 3.45 KB
 
 
     '     Module ErrorLog

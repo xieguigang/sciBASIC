@@ -1,54 +1,54 @@
-﻿#Region "Microsoft.VisualBasic::01185c2ae5b47e9818982345c83543d0, Data_science\Visualization\Plots\Contour\HeatMap\Utils.vb"
+﻿#Region "Microsoft.VisualBasic::367230ee417acb0d3bc2fb1bbdfab632, Data_science\Visualization\Plots\Contour\HeatMap\Utils.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 310
-'    Code Lines: 203 (65.48%)
-' Comment Lines: 86 (27.74%)
-'    - Xml Docs: 95.35%
-' 
-'   Blank Lines: 21 (6.77%)
-'     File Size: 13.63 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Module Utils
-' 
-'         Function: __getData, Compile, CreatePlot, (+3 Overloads) Plot
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 311
+    '    Code Lines: 204 (65.59%)
+    ' Comment Lines: 86 (27.65%)
+    '    - Xml Docs: 95.35%
+    ' 
+    '   Blank Lines: 21 (6.75%)
+    '     File Size: 13.90 KB
+
+
+    '     Module Utils
+    ' 
+    '         Function: __getData, Compile, CreatePlot, (+3 Overloads) Plot
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::daca2b1ff58fc8ce428030a619f2ec87, Data_science\Visualization\Plots-statistics\RegressionPlot.vb"
+﻿#Region "Microsoft.VisualBasic::8368de3d94fa3911534c774e927669ca, Data_science\Visualization\Plots-statistics\RegressionPlot.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 474
-    '    Code Lines: 363 (76.58%)
-    ' Comment Lines: 47 (9.92%)
+    '   Total Lines: 472
+    '    Code Lines: 361 (76.48%)
+    ' Comment Lines: 47 (9.96%)
     '    - Xml Docs: 55.32%
     ' 
-    '   Blank Lines: 64 (13.50%)
-    '     File Size: 19.84 KB
+    '   Blank Lines: 64 (13.56%)
+    '     File Size: 19.75 KB
 
 
     ' Class RegressionPlot

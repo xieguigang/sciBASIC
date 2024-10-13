@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::01f9f6d7b1ae1a05731d32c2bbcd436b, Data_science\DataMining\DataMining\AprioriRules\Algorithm\Output.vb"
+﻿#Region "Microsoft.VisualBasic::4b2eefeffe3b97952fb7b243d2c3cb3b, Data_science\DataMining\DataMining\AprioriRules\Algorithm\Output.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 6 (11.76%)
-    '     File Size: 2.02 KB
+    '     File Size: 2.04 KB
 
 
     '     Class Output

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e08239ef70c21882705f529b2114eb64, Microsoft.VisualBasic.Core\src\Extensions\Image\Colors\CMYKColor.vb"
+﻿#Region "Microsoft.VisualBasic::e08239ef70c21882705f529b2114eb64, Microsoft.VisualBasic.Core\src\Drawing\Colors\CMYKColor.vb"
 
     ' Author:
     ' 

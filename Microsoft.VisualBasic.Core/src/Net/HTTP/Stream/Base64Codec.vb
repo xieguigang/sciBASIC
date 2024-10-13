@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d2a635716b040094980c94ae6df53e55, Microsoft.VisualBasic.Core\src\Net\HTTP\Stream\Base64Codec.vb"
+﻿#Region "Microsoft.VisualBasic::66926136290dff3c7cfa790763e14109, Microsoft.VisualBasic.Core\src\Net\HTTP\Stream\Base64Codec.vb"
 
     ' Author:
     ' 
@@ -34,19 +34,19 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 206
-    '    Code Lines: 119 (57.77%)
-    ' Comment Lines: 58 (28.16%)
+    '   Total Lines: 214
+    '    Code Lines: 126 (58.88%)
+    ' Comment Lines: 58 (27.10%)
     '    - Xml Docs: 87.93%
     ' 
-    '   Blank Lines: 29 (14.08%)
-    '     File Size: 7.60 KB
+    '   Blank Lines: 30 (14.02%)
+    '     File Size: 7.82 KB
 
 
     '     Module Base64Codec
     ' 
     '         Function: __getImageFromBase64, __toBase64String, Base64RawBytes, Base64String, DecodeBase64
-    '                   GetImage, IsBase64Pattern, (+4 Overloads) ToBase64String, (+2 Overloads) ToStream
+    '                   GetImage, IsBase64Pattern, (+4 Overloads) ToBase64String, ToStream
     ' 
     ' 
     ' /********************************************************************************/

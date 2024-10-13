@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::27fb6702891675b93446219a3c649d16, Data_science\Visualization\Plots\3D\Data.vb"
+﻿#Region "Microsoft.VisualBasic::c3fd1eb92225da5a6cf473bea1d269ea, Data_science\Visualization\Plots\3D\Data.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 327
-    '    Code Lines: 231 (70.64%)
-    ' Comment Lines: 53 (16.21%)
+    '   Total Lines: 338
+    '    Code Lines: 241 (71.30%)
+    ' Comment Lines: 53 (15.68%)
     '    - Xml Docs: 83.02%
     ' 
-    '   Blank Lines: 43 (13.15%)
-    '     File Size: 13.95 KB
+    '   Blank Lines: 44 (13.02%)
+    '     File Size: 14.38 KB
 
 
     '     Module DataProvider

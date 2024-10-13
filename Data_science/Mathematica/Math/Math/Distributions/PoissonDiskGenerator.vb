@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d9db438a0f119c6fa4dbdb7f3e9e2014, Data_science\Mathematica\Math\Math\Distributions\PoissonDiskGenerator.vb"
+﻿#Region "Microsoft.VisualBasic::ba670695507b49008a88af71f5bcb517, Data_science\Mathematica\Math\Math\Distributions\PoissonDiskGenerator.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 303
-    '    Code Lines: 178 (58.75%)
-    ' Comment Lines: 70 (23.10%)
-    '    - Xml Docs: 65.71%
+    '   Total Lines: 310
+    '    Code Lines: 183 (59.03%)
+    ' Comment Lines: 72 (23.23%)
+    '    - Xml Docs: 63.89%
     ' 
-    '   Blank Lines: 55 (18.15%)
-    '     File Size: 11.82 KB
+    '   Blank Lines: 55 (17.74%)
+    '     File Size: 12.11 KB
 
 
     '     Class PoissonDiskGenerator

@@ -1,4 +1,58 @@
-﻿Imports System.Drawing
+﻿#Region "Microsoft.VisualBasic::2f020c1c151795b933f1da61520bdac7, gr\Drawing-net4.8\Extensions.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 225
+    '    Code Lines: 147 (65.33%)
+    ' Comment Lines: 49 (21.78%)
+    '    - Xml Docs: 89.80%
+    ' 
+    '   Blank Lines: 29 (12.89%)
+    '     File Size: 8.69 KB
+
+
+    ' Module Extensions
+    ' 
+    '     Function: CanvasCreateFromImageFile, CreateCanvas2D, (+4 Overloads) CreateGDIDevice, CreateObject, (+2 Overloads) GetIcon
+    '               GetStringPath, SaveIcon
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+Imports System.Drawing
 Imports System.Drawing.Drawing2D
 Imports System.Drawing.Imaging
 Imports System.Drawing.Text
@@ -223,3 +277,4 @@ Public Module Extensions
         Return Graphics2D.CreateObject(g, bitmap)
     End Function
 End Module
+

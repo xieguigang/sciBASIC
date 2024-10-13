@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ad0cb5de08aead88e9550b3ddff5dbb0, gr\Microsoft.VisualBasic.Imaging\SVG\XML\Container\SvgContainer.vb"
+﻿#Region "Microsoft.VisualBasic::28e06dfdd6483f20c9a476278fd395f9, gr\Microsoft.VisualBasic.Imaging\SVG\XML\Container\SvgContainer.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 131
-    '    Code Lines: 76 (58.02%)
-    ' Comment Lines: 31 (23.66%)
-    '    - Xml Docs: 35.48%
+    '   Total Lines: 134
+    '    Code Lines: 76 (56.72%)
+    ' Comment Lines: 34 (25.37%)
+    '    - Xml Docs: 41.18%
     ' 
-    '   Blank Lines: 24 (18.32%)
-    '     File Size: 5.23 KB
+    '   Blank Lines: 24 (17.91%)
+    '     File Size: 5.34 KB
 
 
     '     Class SvgContainer

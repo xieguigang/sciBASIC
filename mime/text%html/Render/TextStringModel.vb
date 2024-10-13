@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5ce6823b410867fbcfb8b8d3a1432a05, mime\text%html\Render\TextStringModel.vb"
+﻿#Region "Microsoft.VisualBasic::c536dfb76b9de44582ef044e3f842d3e, mime\text%html\Render\TextStringModel.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 348
-    '    Code Lines: 242 (69.54%)
-    ' Comment Lines: 55 (15.80%)
+    '   Total Lines: 360
+    '    Code Lines: 253 (70.28%)
+    ' Comment Lines: 55 (15.28%)
     '    - Xml Docs: 34.55%
     ' 
-    '   Blank Lines: 51 (14.66%)
-    '     File Size: 14.24 KB
+    '   Blank Lines: 52 (14.44%)
+    '     File Size: 14.67 KB
 
 
     '     Module TextAPI

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bda82927f2532399610bec4e05f30f06, Microsoft.VisualBasic.Core\src\Extensions\Image\TiffWriter.vb"
+﻿#Region "Microsoft.VisualBasic::010cbaaddcf691c8eb61488f6d9b3054, gr\Drawing-net4.8\TiffWriter.vb"
 
     ' Author:
     ' 
@@ -34,24 +34,23 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 354
-    '    Code Lines: 265 (74.86%)
-    ' Comment Lines: 24 (6.78%)
+    '   Total Lines: 351
+    '    Code Lines: 263 (74.93%)
+    ' Comment Lines: 24 (6.84%)
     '    - Xml Docs: 29.17%
     ' 
-    '   Blank Lines: 65 (18.36%)
-    '     File Size: 16.02 KB
+    '   Blank Lines: 64 (18.23%)
+    '     File Size: 14.91 KB
 
 
-    '     Class TiffWriter
+    ' Class TiffWriter
     ' 
-    '         Constructor: (+1 Overloads) Sub New
+    '     Constructor: (+1 Overloads) Sub New
     ' 
-    '         Function: ConvertToBitonal, ExistingFileSave, GetCodec, GetEnumerator, getPageNumber
-    '                   IEnumerable_GetEnumerator, layers2Bitmaps, MultipageTiffSave, SaveMultipage, SaveToExistingFile
+    '     Function: ConvertToBitonal, ExistingFileSave, GetCodec, GetEnumerator, getPageNumber
+    '               IEnumerable_GetEnumerator, layers2Bitmaps, MultipageTiffSave, SaveMultipage, SaveToExistingFile
     ' 
-    '         Sub: __saveImageExistingMultiplePage, __saveImageExistingSinglePage, Add, doSaveToExistingFile, saveMultipage
-    ' 
+    '     Sub: __saveImageExistingMultiplePage, __saveImageExistingSinglePage, Add, doSaveToExistingFile, saveMultipage
     ' 
     ' /********************************************************************************/
 

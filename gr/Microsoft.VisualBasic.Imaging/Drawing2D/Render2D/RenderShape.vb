@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1f6121c9ace59a780d3c7ee1a44bb749, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Render2D\RenderShape.vb"
+﻿#Region "Microsoft.VisualBasic::55d0e7739c52ae964fa4bcba430a551a, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Render2D\RenderShape.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 33
-    '    Code Lines: 27 (81.82%)
+    '   Total Lines: 35
+    '    Code Lines: 29 (82.86%)
     ' Comment Lines: 0 (0.00%)
     '    - Xml Docs: 0.00%
     ' 
-    '   Blank Lines: 6 (18.18%)
-    '     File Size: 1023 B
+    '   Blank Lines: 6 (17.14%)
+    '     File Size: 1.05 KB
 
 
     '     Class RenderShape

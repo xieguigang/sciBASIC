@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0e5e3bf5e5056213bfd4f9dda9ef0525, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Colors\Legend\Legend.vb"
+﻿#Region "Microsoft.VisualBasic::ae51543865570e8e315a31fb497859f1, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Colors\Legend\Legend.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 342
-    '    Code Lines: 240 (70.18%)
-    ' Comment Lines: 51 (14.91%)
+    '   Total Lines: 345
+    '    Code Lines: 242 (70.14%)
+    ' Comment Lines: 51 (14.78%)
     '    - Xml Docs: 78.43%
     ' 
-    '   Blank Lines: 51 (14.91%)
-    '     File Size: 14.14 KB
+    '   Blank Lines: 52 (15.07%)
+    '     File Size: 14.31 KB
 
 
     '     Module Legends

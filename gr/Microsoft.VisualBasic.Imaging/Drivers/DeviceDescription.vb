@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d6356a44eb26925de492af41f4df944e, gr\Microsoft.VisualBasic.Imaging\Drivers\DeviceDescription.vb"
+﻿#Region "Microsoft.VisualBasic::7e656d5bc848c96106b4613d8637983a, gr\Microsoft.VisualBasic.Imaging\Drivers\DeviceDescription.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 35
-    '    Code Lines: 27 (77.14%)
-    ' Comment Lines: 0 (0.00%)
-    '    - Xml Docs: 0.00%
+    '   Total Lines: 46
+    '    Code Lines: 29 (63.04%)
+    ' Comment Lines: 8 (17.39%)
+    '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 8 (22.86%)
-    '     File Size: 994 B
+    '   Blank Lines: 9 (19.57%)
+    '     File Size: 1.38 KB
 
 
     '     Class DeviceDescription

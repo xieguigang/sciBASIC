@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::73fc5ccb77bbfc410ddaca2a5df52771, mime\text%html\Render\CSS\CssAnonymousBlockBox.vb"
+﻿#Region "Microsoft.VisualBasic::36fa126c4764a500ba9f7c8eb8cf23e1, mime\text%html\Render\CSS\CssAnonymousBlockBox.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 44
-    '    Code Lines: 27 (61.36%)
-    ' Comment Lines: 10 (22.73%)
+    '   Total Lines: 45
+    '    Code Lines: 29 (64.44%)
+    ' Comment Lines: 10 (22.22%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 7 (15.91%)
-    '     File Size: 1.41 KB
+    '   Blank Lines: 6 (13.33%)
+    '     File Size: 1.44 KB
 
 
     '     Class CssAnonymousBlockBox

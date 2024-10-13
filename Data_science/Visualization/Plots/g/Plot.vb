@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c8c8daefacbe287cb9553f7293ef7c84, Data_science\Visualization\Plots\g\Plot.vb"
+﻿#Region "Microsoft.VisualBasic::534c7b89fff1b2632544827e07b70bdd, Data_science\Visualization\Plots\g\Plot.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 209
-    '    Code Lines: 158 (75.60%)
-    ' Comment Lines: 22 (10.53%)
+    '   Total Lines: 233
+    '    Code Lines: 181 (77.68%)
+    ' Comment Lines: 22 (9.44%)
     '    - Xml Docs: 90.91%
     ' 
-    '   Blank Lines: 29 (13.88%)
-    '     File Size: 8.88 KB
+    '   Blank Lines: 30 (12.88%)
+    '     File Size: 9.91 KB
 
 
     '     Class Plot

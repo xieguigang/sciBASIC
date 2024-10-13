@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::09274a99e2594b4507ea6fd0af7ddd0b, gr\physics\layout\LabelAdjust.vb"
+﻿#Region "Microsoft.VisualBasic::22d529a3b06becec315d4644ed6f410a, gr\physics\layout\LabelAdjust.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 421
-    '    Code Lines: 288 (68.41%)
-    ' Comment Lines: 73 (17.34%)
-    '    - Xml Docs: 19.18%
+    '   Total Lines: 424
+    '    Code Lines: 284 (66.98%)
+    ' Comment Lines: 79 (18.63%)
+    '    - Xml Docs: 25.32%
     ' 
-    '   Blank Lines: 60 (14.25%)
-    '     File Size: 17.14 KB
+    '   Blank Lines: 61 (14.39%)
+    '     File Size: 17.16 KB
 
 
     '     Class Node

@@ -1,57 +1,57 @@
-﻿#Region "Microsoft.VisualBasic::c3b2629df35501747f530d8760e4010c, mime\text%html\CSS\Elements\Stroke.vb"
+﻿#Region "Microsoft.VisualBasic::ba893e71f7d029db031b80d5f528d093, mime\text%html\CSS\Elements\Stroke.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 156
-'    Code Lines: 87 (55.77%)
-' Comment Lines: 51 (32.69%)
-'    - Xml Docs: 98.04%
-' 
-'   Blank Lines: 18 (11.54%)
-'     File Size: 5.41 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Class Stroke
-' 
-'         Properties: CSSValue, dash, fill, width
-' 
-'         Constructor: (+5 Overloads) Sub New
-'         Function: GetDashStyle, ParserImpl, ToString, TryParse
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 183
+    '    Code Lines: 107 (58.47%)
+    ' Comment Lines: 55 (30.05%)
+    '    - Xml Docs: 98.18%
+    ' 
+    '   Blank Lines: 21 (11.48%)
+    '     File Size: 6.19 KB
+
+
+    '     Class Stroke
+    ' 
+    '         Properties: CSSValue, (+2 Overloads) dash, fill, width
+    ' 
+    '         Constructor: (+6 Overloads) Sub New
+    '         Function: GetDashStyle, ParserImpl, ToString, TryParse
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

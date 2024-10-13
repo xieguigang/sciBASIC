@@ -1,58 +1,58 @@
-﻿#Region "Microsoft.VisualBasic::ee75f892dd6ac311899aad9702d46cef, Data_science\Visualization\Plots\BoxPlot\Box.vb"
+﻿#Region "Microsoft.VisualBasic::c67e75bae9216aacedd3e52943e7503b, Data_science\Visualization\Plots\BoxPlot\Box.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 239
-'    Code Lines: 176 (73.64%)
-' Comment Lines: 23 (9.62%)
-'    - Xml Docs: 0.00%
-' 
-'   Blank Lines: 40 (16.74%)
-'     File Size: 10.54 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Class Box
-' 
-'         Properties: dotSize, fillBox, interval, lineWidth, rangeScale
-'                     showDataPoints, showOutliers
-' 
-'         Constructor: (+1 Overloads) Sub New
-'         Sub: PlotBox, PlotInternal
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 255
+    '    Code Lines: 190 (74.51%)
+    ' Comment Lines: 24 (9.41%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 41 (16.08%)
+    '     File Size: 11.03 KB
+
+
+    '     Class Box
+    ' 
+    '         Properties: dotSize, fillBox, interval, lineWidth, rangeScale
+    '                     showDataPoints, showOutliers
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    '         Sub: PlotBox, PlotInternal
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6edaac4ddb54b577ec4d7542a5abe53a, Microsoft.VisualBasic.Core\src\Extensions\Image\Math\Geometry\MoranBatch.vb"
+﻿#Region "Microsoft.VisualBasic::6edaac4ddb54b577ec4d7542a5abe53a, Microsoft.VisualBasic.Core\src\Drawing\Math\Geometry\MoranBatch.vb"
 
     ' Author:
     ' 

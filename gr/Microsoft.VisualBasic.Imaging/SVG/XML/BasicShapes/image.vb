@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::01dd9258ec19a4f2afa3f90c7ba0e4b0, gr\Microsoft.VisualBasic.Imaging\SVG\XML\BasicShapes\image.vb"
+﻿#Region "Microsoft.VisualBasic::300a02418c366c8fcf731d06019d1f92, gr\Microsoft.VisualBasic.Imaging\SVG\XML\BasicShapes\image.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 124
-    '    Code Lines: 91 (73.39%)
-    ' Comment Lines: 18 (14.52%)
+    '   Total Lines: 137
+    '    Code Lines: 102 (74.45%)
+    ' Comment Lines: 18 (13.14%)
     '    - Xml Docs: 88.89%
     ' 
-    '   Blank Lines: 15 (12.10%)
-    '     File Size: 4.75 KB
+    '   Blank Lines: 17 (12.41%)
+    '     File Size: 5.08 KB
 
 
     '     Class SvgImage

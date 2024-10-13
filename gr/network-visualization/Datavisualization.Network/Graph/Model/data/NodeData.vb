@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a73def74171b4bfef0606fc211ec19ce, gr\network-visualization\Datavisualization.Network\Graph\Model\data\NodeData.vb"
+﻿#Region "Microsoft.VisualBasic::cc1d7540649bb659f16a77d4bf8b886b, gr\network-visualization\Datavisualization.Network\Graph\Model\data\NodeData.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 123
-    '    Code Lines: 77 (62.60%)
-    ' Comment Lines: 27 (21.95%)
+    '   Total Lines: 150
+    '    Code Lines: 104 (69.33%)
+    ' Comment Lines: 27 (18.00%)
     '    - Xml Docs: 96.30%
     ' 
-    '   Blank Lines: 19 (15.45%)
-    '     File Size: 4.15 KB
+    '   Blank Lines: 19 (12.67%)
+    '     File Size: 5.40 KB
 
 
     '     Class NodeData

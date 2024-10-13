@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5ccaf427df832fba69d3b7a1edb74305, Data_science\Mathematica\Math\DataFittings\LMA.vb"
+﻿#Region "Microsoft.VisualBasic::069b6312a79e771279d3290e6c090929, Data_science\Mathematica\Math\DataFittings\LMA.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 36
-    '    Code Lines: 15 (41.67%)
-    ' Comment Lines: 16 (44.44%)
-    '    - Xml Docs: 87.50%
+    '   Total Lines: 40
+    '    Code Lines: 16 (40.00%)
+    ' Comment Lines: 19 (47.50%)
+    '    - Xml Docs: 89.47%
     ' 
-    '   Blank Lines: 5 (13.89%)
-    '     File Size: 1.13 KB
+    '   Blank Lines: 5 (12.50%)
+    '     File Size: 1.28 KB
 
 
     ' Module LMA

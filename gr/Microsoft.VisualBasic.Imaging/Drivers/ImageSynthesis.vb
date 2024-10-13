@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3168f2de99809415664f74df3350525d, gr\Microsoft.VisualBasic.Imaging\Drivers\ImageSynthesis.vb"
+﻿#Region "Microsoft.VisualBasic::92ed1bc5ed56fcb61313da8869a43171, gr\Microsoft.VisualBasic.Imaging\Drivers\ImageSynthesis.vb"
 
     ' Author:
     ' 
@@ -34,18 +34,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 1084
-    '    Code Lines: 154 (14.21%)
-    ' Comment Lines: 897 (82.75%)
-    '    - Xml Docs: 4.91%
+    '   Total Lines: 343
+    '    Code Lines: 94 (27.41%)
+    ' Comment Lines: 233 (67.93%)
+    '    - Xml Docs: 18.88%
     ' 
-    '   Blank Lines: 33 (3.04%)
-    '     File Size: 46.71 KB
+    '   Blank Lines: 16 (4.66%)
+    '     File Size: 13.34 KB
 
 
     '     Module ImageSynthesis
     ' 
-    '         Sub: (+30 Overloads) DrawImage, (+4 Overloads) DrawImageUnscaled, DrawImageUnscaledAndClipped
+    '         Sub: (+10 Overloads) DrawImage, (+4 Overloads) DrawImageUnscaled, DrawImageUnscaledAndClipped
     ' 
     ' 
     ' /********************************************************************************/

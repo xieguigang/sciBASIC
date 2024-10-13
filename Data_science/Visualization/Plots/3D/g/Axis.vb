@@ -1,54 +1,54 @@
-﻿#Region "Microsoft.VisualBasic::0e7252414a40c35c8b18e15c9358f65c, Data_science\Visualization\Plots\3D\g\Axis.vb"
+﻿#Region "Microsoft.VisualBasic::02833334e2c7b2c383c26dbc12bf077a, Data_science\Visualization\Plots\3D\g\Axis.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 65
-'    Code Lines: 50 (76.92%)
-' Comment Lines: 7 (10.77%)
-'    - Xml Docs: 42.86%
-' 
-'   Blank Lines: 8 (12.31%)
-'     File Size: 2.88 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Module AxisDraw
-' 
-'         Function: Axis
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 91
+    '    Code Lines: 75 (82.42%)
+    ' Comment Lines: 7 (7.69%)
+    '    - Xml Docs: 42.86%
+    ' 
+    '   Blank Lines: 9 (9.89%)
+    '     File Size: 4.11 KB
+
+
+    '     Module AxisDraw
+    ' 
+    '         Function: Axis
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

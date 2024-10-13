@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4aca92116b7719bdc24b8615ab849c5a, gr\PdfImage\PdfGraphics.vb"
+﻿#Region "Microsoft.VisualBasic::a99a1285927ab7aed534d6db57f3d343, gr\PdfImage\PdfGraphics.vb"
 
     ' Author:
     ' 
@@ -34,34 +34,31 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 970
-    '    Code Lines: 737 (75.98%)
-    ' Comment Lines: 6 (0.62%)
+    '   Total Lines: 537
+    '    Code Lines: 408 (75.98%)
+    ' Comment Lines: 6 (1.12%)
     '    - Xml Docs: 66.67%
     ' 
-    '   Blank Lines: 227 (23.40%)
-    '     File Size: 41.10 KB
+    '   Blank Lines: 123 (22.91%)
+    '     File Size: 20.09 KB
 
 
     ' Class PdfGraphics
     ' 
-    '     Properties: CompositingMode, CompositingQuality, InterpolationMode, IsClipEmpty, IsVisibleClipEmpty
-    '                 PageScale, PageUnit, PixelOffsetMode, RenderingOrigin, SmoothingMode
-    '                 TextContrast, TextRenderingHint
+    '     Properties: PageScale, RenderingOrigin, TextContrast
     ' 
     '     Constructor: (+1 Overloads) Sub New
     ' 
-    '     Function: (+3 Overloads) BeginContainer, GetContextInfo, GetNearestColor, (+4 Overloads) IsVisible, Save
+    '     Function: GetContextInfo, GetNearestColor, (+4 Overloads) IsVisible, Save
     ' 
-    '     Sub: AddMetafileComment, ClearCanvas, (+4 Overloads) CopyFromScreen, Dispose, (+4 Overloads) DrawArc
-    '          (+3 Overloads) DrawBezier, (+2 Overloads) DrawBeziers, DrawCircle, (+4 Overloads) DrawClosedCurve, (+7 Overloads) DrawCurve
-    '          (+4 Overloads) DrawEllipse, (+2 Overloads) DrawIcon, DrawIconUnstretched, (+30 Overloads) DrawImage, (+4 Overloads) DrawImageUnscaled
-    '          DrawImageUnscaledAndClipped, (+4 Overloads) DrawLine, (+2 Overloads) DrawLines, DrawPath, (+4 Overloads) DrawPie
-    '          (+2 Overloads) DrawPolygon, (+4 Overloads) DrawRectangle, (+2 Overloads) DrawRectangles, (+7 Overloads) DrawString, EndContainer
-    '          (+36 Overloads) EnumerateMetafile, (+2 Overloads) ExcludeClip, (+6 Overloads) FillClosedCurve, (+4 Overloads) FillEllipse, FillPath
-    '          (+3 Overloads) FillPie, (+4 Overloads) FillPolygon, (+4 Overloads) FillRectangle, FillRegion, (+2 Overloads) Flush
-    '          (+3 Overloads) IntersectClip, (+2 Overloads) MultiplyTransform, ResetClip, ResetTransform, (+2 Overloads) RotateTransform
-    '          (+2 Overloads) ScaleTransform, (+9 Overloads) SetClip, (+2 Overloads) TransformPoints, (+2 Overloads) TranslateClip, (+2 Overloads) TranslateTransform
+    '     Sub: AddMetafileComment, ClearCanvas, Dispose, (+4 Overloads) DrawArc, (+3 Overloads) DrawBezier
+    '          (+2 Overloads) DrawBeziers, DrawCircle, (+2 Overloads) DrawClosedCurve, (+7 Overloads) DrawCurve, (+4 Overloads) DrawEllipse
+    '          (+10 Overloads) DrawImage, (+4 Overloads) DrawImageUnscaled, DrawImageUnscaledAndClipped, (+4 Overloads) DrawLine, (+2 Overloads) DrawLines
+    '          DrawPath, (+4 Overloads) DrawPie, (+2 Overloads) DrawPolygon, (+4 Overloads) DrawRectangle, (+2 Overloads) DrawRectangles
+    '          (+4 Overloads) DrawString, ExcludeClip, (+2 Overloads) FillClosedCurve, (+4 Overloads) FillEllipse, FillPath
+    '          (+3 Overloads) FillPie, (+2 Overloads) FillPolygon, (+4 Overloads) FillRectangle, Flush, (+2 Overloads) IntersectClip
+    '          ResetClip, ResetTransform, RotateTransform, ScaleTransform, (+2 Overloads) SetClip
+    '          (+2 Overloads) TranslateClip, TranslateTransform
     ' 
     ' /********************************************************************************/
 

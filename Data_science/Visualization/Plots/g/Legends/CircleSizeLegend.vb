@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::dd812b5f92a21fbe1c28e740e36e4364, Data_science\Visualization\Plots\g\Legends\CircleSizeLegend.vb"
+﻿#Region "Microsoft.VisualBasic::529a94a4af503878839eb45ec5a007a0, Data_science\Visualization\Plots\g\Legends\CircleSizeLegend.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 37
-    '    Code Lines: 29 (78.38%)
+    '   Total Lines: 59
+    '    Code Lines: 50 (84.75%)
     ' Comment Lines: 0 (0.00%)
     '    - Xml Docs: 0.00%
     ' 
-    '   Blank Lines: 8 (21.62%)
-    '     File Size: 1.38 KB
+    '   Blank Lines: 9 (15.25%)
+    '     File Size: 2.27 KB
 
 
     '     Class CircleSizeLegend

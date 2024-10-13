@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4d37b7a5111a60811e3133040b532fc1, Data_science\Mathematica\Math\Math\Algebra\Matrix.NET\Extensions\Serialization.vb"
+﻿#Region "Microsoft.VisualBasic::c2512fac2139a9c89745e245e9b9bd06, Data_science\Mathematica\Math\Math\Algebra\Matrix.NET\Extensions\Serialization.vb"
 
     ' Author:
     ' 
@@ -34,12 +34,12 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 56
-    '    Code Lines: 32 (57.14%)
-    ' Comment Lines: 13 (23.21%)
+    '   Total Lines: 55
+    '    Code Lines: 32 (58.18%)
+    ' Comment Lines: 13 (23.64%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 11 (19.64%)
+    '   Blank Lines: 10 (18.18%)
     '     File Size: 1.71 KB
 
 
@@ -53,7 +53,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 Imports System.IO
 Imports System.Runtime.CompilerServices

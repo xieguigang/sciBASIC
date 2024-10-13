@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c60fe70b44d4b1e7104fa4fa71e25bdf, Microsoft.VisualBasic.Core\src\Extensions\Image\Math\NamespaceDoc.vb"
+﻿#Region "Microsoft.VisualBasic::c60fe70b44d4b1e7104fa4fa71e25bdf, Microsoft.VisualBasic.Core\src\Drawing\Math\NamespaceDoc.vb"
 
     ' Author:
     ' 

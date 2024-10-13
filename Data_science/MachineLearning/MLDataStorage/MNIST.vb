@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a56e43876fe554ebde1e9e246f6e82e2, Data_science\MachineLearning\MLDataStorage\MNIST.vb"
+﻿#Region "Microsoft.VisualBasic::b82143e812313438635d2a887cbea946, Data_science\MachineLearning\MLDataStorage\MNIST.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 170
-    '    Code Lines: 113 (66.47%)
-    ' Comment Lines: 26 (15.29%)
+    '   Total Lines: 197
+    '    Code Lines: 139 (70.56%)
+    ' Comment Lines: 26 (13.20%)
     '    - Xml Docs: 57.69%
     ' 
-    '   Blank Lines: 31 (18.24%)
-    '     File Size: 5.86 KB
+    '   Blank Lines: 32 (16.24%)
+    '     File Size: 7.01 KB
 
 
     ' Class MNIST

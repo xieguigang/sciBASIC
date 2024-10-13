@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e65599c41fbe94bb3a3f46a34bf6dfbc, mime\text%html\Render\CSS\CssDefaults.vb"
+﻿#Region "Microsoft.VisualBasic::e0052410d7407b3fd38eab82f2c1db94, mime\text%html\Render\CSS\CssDefaults.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 11 (20.00%)
-    '     File Size: 9.41 KB
+    '     File Size: 9.35 KB
 
 
     '     Class CssDefaults

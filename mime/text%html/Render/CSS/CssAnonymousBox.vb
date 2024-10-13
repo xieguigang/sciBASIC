@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9fe593dd987941b02eaa989dbe720141, mime\text%html\Render\CSS\CssAnonymousBox.vb"
+﻿#Region "Microsoft.VisualBasic::be68a17ec5962cf24108e6470a4d85cb, mime\text%html\Render\CSS\CssAnonymousBox.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 28
-    '    Code Lines: 14 (50.00%)
-    ' Comment Lines: 10 (35.71%)
+    '   Total Lines: 29
+    '    Code Lines: 16 (55.17%)
+    ' Comment Lines: 10 (34.48%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 4 (14.29%)
-    '     File Size: 777 B
+    '   Blank Lines: 3 (10.34%)
+    '     File Size: 800 B
 
 
     '     Class CssAnonymousBox

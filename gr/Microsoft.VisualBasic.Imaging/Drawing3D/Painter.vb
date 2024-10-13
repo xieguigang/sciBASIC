@@ -1,61 +1,61 @@
-﻿#Region "Microsoft.VisualBasic::2c44e05d47f832ce15deccbcd2daaa3c, gr\Microsoft.VisualBasic.Imaging\Drawing3D\Painter.vb"
+﻿#Region "Microsoft.VisualBasic::7b525c61aa8d206dae8ce7be888d7e0e, gr\Microsoft.VisualBasic.Imaging\Drawing3D\Painter.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 227
-'    Code Lines: 138 (60.79%)
-' Comment Lines: 60 (26.43%)
-'    - Xml Docs: 85.00%
-' 
-'   Blank Lines: 29 (12.78%)
-'     File Size: 8.80 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Module PainterAlgorithm
-' 
-'         Function: CreateCanvas2D, OrderProvider, PainterBuffer
-' 
-'         Sub: (+2 Overloads) BufferPainting, (+2 Overloads) SurfacePainter
-'         Structure Polygon
-' 
-' 
-' 
-' 
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 231
+    '    Code Lines: 143 (61.90%)
+    ' Comment Lines: 60 (25.97%)
+    '    - Xml Docs: 85.00%
+    ' 
+    '   Blank Lines: 28 (12.12%)
+    '     File Size: 8.89 KB
+
+
+    '     Module PainterAlgorithm
+    ' 
+    '         Function: CreateCanvas2D, OrderProvider, PainterBuffer
+    ' 
+    '         Sub: (+2 Overloads) BufferPainting, (+2 Overloads) SurfacePainter
+    '         Structure Polygon
+    ' 
+    ' 
+    ' 
+    ' 
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

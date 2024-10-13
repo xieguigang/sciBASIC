@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2d2b11145fbed1ca20f18485b1562366, Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\Utility\ProgressBar\Tqdm\ProgressBar.vb"
+﻿#Region "Microsoft.VisualBasic::9d6b677b46e42b9cc138eb0c936d3d3f, Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\Utility\ProgressBar\Tqdm\ProgressBar.vb"
 
     ' Author:
     ' 
@@ -34,18 +34,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 340
-    '    Code Lines: 197 (57.94%)
-    ' Comment Lines: 92 (27.06%)
+    '   Total Lines: 346
+    '    Code Lines: 202 (58.38%)
+    ' Comment Lines: 92 (26.59%)
     '    - Xml Docs: 59.78%
     ' 
-    '   Blank Lines: 51 (15.00%)
-    '     File Size: 14.10 KB
+    '   Blank Lines: 52 (15.03%)
+    '     File Size: 14.25 KB
 
 
     '     Class ProgressBar
     ' 
-    '         Properties: ElapsedSeconds, FormatTaskCounter, UpdateDynamicConfigs
+    '         Properties: CurrentTicks, ElapsedSeconds, FormatTaskCounter, UpdateDynamicConfigs
     ' 
     '         Constructor: (+1 Overloads) Sub New
     '         Sub: [Step], Finish, PrintLine, (+2 Overloads) Progress, Reset

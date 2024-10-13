@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1117607db00b863b282064ff55ef5162, Data_science\DataMining\DataMining\Evaluation\ROC.vb"
+﻿#Region "Microsoft.VisualBasic::ea32fe8e1509a8d1bac5a2bf1d8ab6dc, Data_science\DataMining\DataMining\Evaluation\ROC.vb"
 
     ' Author:
     ' 
@@ -34,18 +34,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 111
-    '    Code Lines: 68 (61.26%)
-    ' Comment Lines: 30 (27.03%)
-    '    - Xml Docs: 83.33%
+    '   Total Lines: 139
+    '    Code Lines: 73 (52.52%)
+    ' Comment Lines: 51 (36.69%)
+    '    - Xml Docs: 86.27%
     ' 
-    '   Blank Lines: 13 (11.71%)
-    '     File Size: 4.31 KB
+    '   Blank Lines: 15 (10.79%)
+    '     File Size: 5.33 KB
 
 
     '     Module ROC
     ' 
-    '         Function: (+3 Overloads) AUC, SimpleAUC
+    '         Function: (+3 Overloads) AUC, BestThreshold, SimpleAUC
     ' 
     ' 
     ' /********************************************************************************/

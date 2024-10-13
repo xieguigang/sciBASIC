@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1fdb0a6b31b45946f6afd70be2932d2f, Microsoft.VisualBasic.Core\src\Data\Tsv.vb"
+﻿#Region "Microsoft.VisualBasic::5a1546c474137b521fe041de7368eccf, Microsoft.VisualBasic.Core\src\Data\Tsv.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 176
-    '    Code Lines: 112 (63.64%)
-    ' Comment Lines: 45 (25.57%)
+    '   Total Lines: 177
+    '    Code Lines: 113 (63.84%)
+    ' Comment Lines: 45 (25.42%)
     '    - Xml Docs: 88.89%
     ' 
-    '   Blank Lines: 19 (10.80%)
-    '     File Size: 7.95 KB
+    '   Blank Lines: 19 (10.73%)
+    '     File Size: 8.00 KB
 
 
     '     Module TsvFileIO

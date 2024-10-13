@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::65769e0a88dc1bf5100e87e916a720bd, Data_science\Visualization\Plots\ImageData.vb"
+﻿#Region "Microsoft.VisualBasic::9a465981ce4560b483486b9536b1b9bb, Data_science\Visualization\Plots\ImageData.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 74
-    '    Code Lines: 62 (83.78%)
+    '   Total Lines: 100
+    '    Code Lines: 87 (87.00%)
     ' Comment Lines: 0 (0.00%)
     '    - Xml Docs: 0.00%
     ' 
-    '   Blank Lines: 12 (16.22%)
-    '     File Size: 2.80 KB
+    '   Blank Lines: 13 (13.00%)
+    '     File Size: 3.93 KB
 
 
     ' Module ImageDataExtensions

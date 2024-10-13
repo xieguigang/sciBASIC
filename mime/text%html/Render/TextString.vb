@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::76dd099d396264ff7e659d98c490e857, mime\text%html\Render\TextString.vb"
+﻿#Region "Microsoft.VisualBasic::73274cc38763d38edcb6bd8ef166d71d, mime\text%html\Render\TextString.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 54
-    '    Code Lines: 38 (70.37%)
-    ' Comment Lines: 6 (11.11%)
+    '   Total Lines: 66
+    '    Code Lines: 49 (74.24%)
+    ' Comment Lines: 6 (9.09%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 10 (18.52%)
-    '     File Size: 1.43 KB
+    '   Blank Lines: 11 (16.67%)
+    '     File Size: 1.86 KB
 
 
     '     Class TextString

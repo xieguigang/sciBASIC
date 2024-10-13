@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::dfc7a1e2f48db6b0a6372e5712ade6a0, Data_science\Visualization\Visualization\Embedding\EmbeddingRender.vb"
+﻿#Region "Microsoft.VisualBasic::afc87cf68bc5bcb8a2c2f06abc8a0092, Data_science\Visualization\Visualization\Embedding\EmbeddingRender.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 54
-    '    Code Lines: 39 (72.22%)
-    ' Comment Lines: 3 (5.56%)
+    '   Total Lines: 61
+    '    Code Lines: 45 (73.77%)
+    ' Comment Lines: 3 (4.92%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 12 (22.22%)
-    '     File Size: 1.82 KB
+    '   Blank Lines: 13 (21.31%)
+    '     File Size: 2.02 KB
 
 
     ' Class EmbeddingRender

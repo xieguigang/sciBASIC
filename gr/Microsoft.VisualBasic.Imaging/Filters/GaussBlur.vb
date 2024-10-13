@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5ddcd862d0d56eff40c232466b909aa6, gr\Microsoft.VisualBasic.Imaging\Filters\GaussBlur.vb"
+﻿#Region "Microsoft.VisualBasic::87acbd20c86bfdc36191c3b938d24178, gr\Microsoft.VisualBasic.Imaging\Filters\GaussBlur.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 186
-    '    Code Lines: 145 (77.96%)
-    ' Comment Lines: 22 (11.83%)
+    '   Total Lines: 184
+    '    Code Lines: 143 (77.72%)
+    ' Comment Lines: 22 (11.96%)
     '    - Xml Docs: 54.55%
     ' 
-    '   Blank Lines: 19 (10.22%)
-    '     File Size: 11.70 KB
+    '   Blank Lines: 19 (10.33%)
+    '     File Size: 11.58 KB
 
 
     '     Class GaussBlur

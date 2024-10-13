@@ -1,4 +1,116 @@
-﻿Imports System.Drawing
+﻿#Region "Microsoft.VisualBasic::4c92051ca6648b5222a4ab9607535ed9, Microsoft.VisualBasic.Core\src\Drawing\Bitmap\netcore8.0\Pen.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 198
+    '    Code Lines: 95 (47.98%)
+    ' Comment Lines: 62 (31.31%)
+    '    - Xml Docs: 33.87%
+    ' 
+    '   Blank Lines: 41 (20.71%)
+    '     File Size: 6.35 KB
+
+
+    '     Class Pen
+    ' 
+    '         Properties: Alignment, Brush, Color, CustomEndCap, DashCap
+    '                     DashOffset, DashStyle, EndCap, LineJoin, MiterLimit
+    '                     StartCap, Width
+    ' 
+    '         Constructor: (+2 Overloads) Sub New
+    '         Sub: (+2 Overloads) Dispose
+    ' 
+    '     Enum DashCap
+    ' 
+    ' 
+    '  
+    ' 
+    ' 
+    ' 
+    '     Enum PenAlignment
+    ' 
+    '         Center, Inset, Left, Outset, Right
+    ' 
+    '  
+    ' 
+    ' 
+    ' 
+    '     Enum DashStyle
+    ' 
+    '         Custom, Dash, DashDot, DashDotDot, Dot
+    '         Solid
+    ' 
+    '  
+    ' 
+    ' 
+    ' 
+    '     Enum LineJoin
+    ' 
+    '         Bevel, Miter, MiterClipped, Round
+    ' 
+    '  
+    ' 
+    ' 
+    ' 
+    '     Enum LineCap
+    ' 
+    ' 
+    '  
+    ' 
+    ' 
+    ' 
+    '     Class CustomLineCap
+    ' 
+    ' 
+    ' 
+    '     Class AdjustableArrowCap
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
+    '     Class Pens
+    ' 
+    '         Properties: Black, Gray, LightGray, White, WhiteSmoke
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+Imports System.Drawing
 
 Namespace Imaging
 

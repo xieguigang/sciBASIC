@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::79b4804aa82cd9789b2957440c35bb0b, Microsoft.VisualBasic.Core\src\Extensions\Image\Math\Models\EllipseShape.vb"
+﻿#Region "Microsoft.VisualBasic::79b4804aa82cd9789b2957440c35bb0b, Microsoft.VisualBasic.Core\src\Drawing\Math\Models\EllipseShape.vb"
 
     ' Author:
     ' 

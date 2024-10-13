@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::76448d9202dc063f7b3ca653041e6659, Data_science\Visualization\Plots-statistics\Heatmap\Internal.vb"
+﻿#Region "Microsoft.VisualBasic::0473e0fc4a952e3b5c03f62291885574, Data_science\Visualization\Plots-statistics\Heatmap\Internal.vb"
 
     ' Author:
     ' 
@@ -35,12 +35,12 @@
     ' Code Statistics:
 
     '   Total Lines: 394
-    '    Code Lines: 281 (71.32%)
-    ' Comment Lines: 59 (14.97%)
-    '    - Xml Docs: 54.24%
+    '    Code Lines: 277 (70.30%)
+    ' Comment Lines: 63 (15.99%)
+    '    - Xml Docs: 50.79%
     ' 
     '   Blank Lines: 54 (13.71%)
-    '     File Size: 18.76 KB
+    '     File Size: 18.71 KB
 
 
     '     Module Internal

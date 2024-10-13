@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::aeb358e8499bbd9140c6456c36fa2915, Microsoft.VisualBasic.Core\src\CommandLine\InteropService\SharedORM\Languages\VisualBasic.vb"
+﻿#Region "Microsoft.VisualBasic::121839a6f7acda8b84ce0520b692fb1e, Microsoft.VisualBasic.Core\src\CommandLine\InteropService\SharedORM\Languages\VisualBasic.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 54.17%
     ' 
     '   Blank Lines: 60 (15.79%)
-    '     File Size: 16.81 KB
+    '     File Size: 16.83 KB
 
 
     '     Class VisualBasic

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7ba8109b5ebff3963c6ebc50fbc484f1, mime\text%html\zzz.vb"
+﻿#Region "Microsoft.VisualBasic::b60f7b8340a75431a1e159c43aae7105, mime\text%html\zzz.vb"
 
     ' Author:
     ' 
@@ -35,12 +35,12 @@
     ' Code Statistics:
 
     '   Total Lines: 3
-    '    Code Lines: 2 (66.67%)
-    ' Comment Lines: 0 (0.00%)
+    '    Code Lines: 1 (33.33%)
+    ' Comment Lines: 1 (33.33%)
     '    - Xml Docs: 0.00%
     ' 
     '   Blank Lines: 1 (33.33%)
-    '     File Size: 84 B
+    '     File Size: 86 B
 
 
     ' 

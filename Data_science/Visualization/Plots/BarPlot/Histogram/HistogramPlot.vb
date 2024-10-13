@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6c5a34d4e2ecf9ed0ff7ab3f389a9bdd, Data_science\Visualization\Plots\BarPlot\Histogram\HistogramPlot.vb"
+﻿#Region "Microsoft.VisualBasic::e03dcde079f1b4d5c3f0480f6e24031c, Data_science\Visualization\Plots\BarPlot\Histogram\HistogramPlot.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 155
-    '    Code Lines: 127 (81.94%)
-    ' Comment Lines: 2 (1.29%)
+    '   Total Lines: 181
+    '    Code Lines: 152 (83.98%)
+    ' Comment Lines: 2 (1.10%)
     '    - Xml Docs: 0.00%
     ' 
-    '   Blank Lines: 26 (16.77%)
-    '     File Size: 6.49 KB
+    '   Blank Lines: 27 (14.92%)
+    '     File Size: 7.62 KB
 
 
     '     Class HistogramPlot

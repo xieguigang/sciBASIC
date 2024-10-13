@@ -1,53 +1,53 @@
-﻿#Region "Microsoft.VisualBasic::1897072bb62516806b71383266916a24, Data_science\Visualization\Plots-statistics\TimeTrends\TimeTrends.vb"
+﻿#Region "Microsoft.VisualBasic::48b018df0e4b0838f3b78c4186a5572e, Data_science\Visualization\Plots-statistics\TimeTrends\TimeTrends.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 321
-'    Code Lines: 245 (76.32%)
-' Comment Lines: 35 (10.90%)
-'    - Xml Docs: 91.43%
-' 
-'   Blank Lines: 41 (12.77%)
-'     File Size: 14.20 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-' Module TimeTrends
-' 
-'     Function: Plot
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 321
+    '    Code Lines: 243 (75.70%)
+    ' Comment Lines: 37 (11.53%)
+    '    - Xml Docs: 86.49%
+    ' 
+    '   Blank Lines: 41 (12.77%)
+    '     File Size: 14.07 KB
+
+
+    ' Module TimeTrends
+    ' 
+    '     Function: Plot
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

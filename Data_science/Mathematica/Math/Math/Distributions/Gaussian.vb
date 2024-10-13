@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e3e48f0a5956c5ce3874082df4304fce, Data_science\Mathematica\Math\Math\Distributions\Gaussian.vb"
+﻿#Region "Microsoft.VisualBasic::d593f1c22ac916c3ca4cad11b5bba340, Data_science\Mathematica\Math\Math\Distributions\Gaussian.vb"
 
     ' Author:
     ' 
@@ -34,18 +34,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 58
-    '    Code Lines: 27 (46.55%)
-    ' Comment Lines: 25 (43.10%)
+    '   Total Lines: 68
+    '    Code Lines: 36 (52.94%)
+    ' Comment Lines: 25 (36.76%)
     '    - Xml Docs: 84.00%
     ' 
-    '   Blank Lines: 6 (10.34%)
-    '     File Size: 2.28 KB
+    '   Blank Lines: 7 (10.29%)
+    '     File Size: 2.86 KB
 
 
     '     Module Gaussian
     ' 
-    '         Function: Gaussian, (+2 Overloads) rnorm, StandadizedGaussianFunction
+    '         Function: (+2 Overloads) Gaussian, (+2 Overloads) rnorm, StandadizedGaussianFunction
     ' 
     ' 
     ' /********************************************************************************/

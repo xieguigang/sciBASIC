@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::585d141c53f82ebae6127b7c9bebf2c8, Microsoft.VisualBasic.Core\src\Extensions\Image\ImageFormats.vb"
+﻿#Region "Microsoft.VisualBasic::290d074e5ff53c19dd3ff2b37639d250, Microsoft.VisualBasic.Core\src\Drawing\ImageFormats.vb"
 
     ' Author:
     ' 
@@ -34,20 +34,20 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 53
-    '    Code Lines: 15 (28.30%)
-    ' Comment Lines: 36 (67.92%)
+    '   Total Lines: 59
+    '    Code Lines: 18 (30.51%)
+    ' Comment Lines: 36 (61.02%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 2 (3.77%)
-    '     File Size: 1.49 KB
+    '   Blank Lines: 5 (8.47%)
+    '     File Size: 1.54 KB
 
 
     '     Enum ImageFormats
     ' 
     '         Base64, Bmp, Emf, Exif, Gif
-    '         Icon, Jpeg, MemoryBmp, Png, Tiff
-    '         Wmf
+    '         Icon, Jpeg, MemoryBmp, Pdf, Png
+    '         Svg, Tiff, Wmf
     ' 
     '  
     ' 

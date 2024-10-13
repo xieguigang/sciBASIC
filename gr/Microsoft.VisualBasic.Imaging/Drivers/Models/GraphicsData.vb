@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cea69aa81a77ad6d080c8b48670926c4, gr\Microsoft.VisualBasic.Imaging\Drivers\Models\GraphicsData.vb"
+﻿#Region "Microsoft.VisualBasic::a74aa038067ef48dcf82a03d30bf02aa, gr\Microsoft.VisualBasic.Imaging\Drivers\Models\GraphicsData.vb"
 
     ' Author:
     ' 
@@ -34,18 +34,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 125
-    '    Code Lines: 65 (52.00%)
-    ' Comment Lines: 45 (36.00%)
-    '    - Xml Docs: 64.44%
+    '   Total Lines: 80
+    '    Code Lines: 43 (53.75%)
+    ' Comment Lines: 26 (32.50%)
+    '    - Xml Docs: 46.15%
     ' 
-    '   Blank Lines: 15 (12.00%)
-    '     File Size: 4.78 KB
+    '   Blank Lines: 11 (13.75%)
+    '     File Size: 3.10 KB
 
 
     '     Class GraphicsData
     ' 
-    '         Properties: content_type, Height, Layout, Width
+    '         Properties: Height, Layout, Width
     ' 
     '         Constructor: (+1 Overloads) Sub New
     '         Sub: (+2 Overloads) Dispose

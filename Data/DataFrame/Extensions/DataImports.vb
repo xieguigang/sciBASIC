@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c85e27c770875c94733c6a668f19c530, Data\DataFrame\Extensions\DataImports.vb"
+﻿#Region "Microsoft.VisualBasic::8f0a88335dd8bfb6e5c7f8cce742ea79, Data\DataFrame\Extensions\DataImports.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 90.79%
     ' 
     '   Blank Lines: 20 (9.90%)
-    '     File Size: 8.31 KB
+    '     File Size: 8.33 KB
 
 
     ' Module DataImports

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::826a36c440bdd1fc8bd797127bef65fe, Microsoft.VisualBasic.Core\src\Extensions\Image\Colors\ColorCube.vb"
+﻿#Region "Microsoft.VisualBasic::d9c3aed97ce47fd89d217add0769780c, Microsoft.VisualBasic.Core\src\Drawing\Colors\ColorCube.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 90.41%
     ' 
     '   Blank Lines: 26 (9.52%)
-    '     File Size: 13.23 KB
+    '     File Size: 13.16 KB
 
 
     '     Module ColorCube

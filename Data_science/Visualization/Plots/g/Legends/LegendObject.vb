@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::090e8cdb4e143bb186dc293db70de869, Data_science\Visualization\Plots\g\Legends\LegendObject.vb"
+﻿#Region "Microsoft.VisualBasic::30381003c0660f09315a386dcc728cfe, Data_science\Visualization\Plots\g\Legends\LegendObject.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 58
-    '    Code Lines: 23 (39.66%)
-    ' Comment Lines: 29 (50.00%)
+    '   Total Lines: 82
+    '    Code Lines: 46 (56.10%)
+    ' Comment Lines: 29 (35.37%)
     '    - Xml Docs: 96.55%
     ' 
-    '   Blank Lines: 6 (10.34%)
-    '     File Size: 1.87 KB
+    '   Blank Lines: 7 (8.54%)
+    '     File Size: 2.90 KB
 
 
     '     Class LegendObject

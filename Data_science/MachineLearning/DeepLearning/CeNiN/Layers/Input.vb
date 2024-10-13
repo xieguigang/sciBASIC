@@ -1,60 +1,60 @@
-﻿#Region "Microsoft.VisualBasic::599e0d3175de92970d991a6b01e664a2, Data_science\MachineLearning\DeepLearning\CeNiN\Layers\Input.vb"
+﻿#Region "Microsoft.VisualBasic::815a2d06e1bb288c89857fb591c65d92, Data_science\MachineLearning\DeepLearning\CeNiN\Layers\Input.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 102
-'    Code Lines: 75 (73.53%)
-' Comment Lines: 11 (10.78%)
-'    - Xml Docs: 100.00%
-' 
-'   Blank Lines: 16 (15.69%)
-'     File Size: 3.62 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Class Input
-' 
-'         Properties: resizedInputBmp, type
-' 
-'         Constructor: (+1 Overloads) Sub New
-' 
-'         Function: feedNext, layerFeedNext, setInput
-' 
-'         Sub: setOutputDims
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 128
+    '    Code Lines: 99 (77.34%)
+    ' Comment Lines: 11 (8.59%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 18 (14.06%)
+    '     File Size: 4.67 KB
+
+
+    '     Class Input
+    ' 
+    '         Properties: resizedInputBmp, type
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
+    '         Function: feedNext, layerFeedNext, setInput
+    ' 
+    '         Sub: setOutputDims
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6df1f784c86502359b065e63c0911c6a, Data_science\Visualization\Plots\Scatter\Data\SerialData.vb"
+﻿#Region "Microsoft.VisualBasic::ff9d07aa57fab0c92d9abc1f5485d44b, Data_science\Visualization\Plots\Scatter\Data\SerialData.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 107
-    '    Code Lines: 61 (57.01%)
-    ' Comment Lines: 32 (29.91%)
+    '   Total Lines: 131
+    '    Code Lines: 84 (64.12%)
+    ' Comment Lines: 32 (24.43%)
     '    - Xml Docs: 96.88%
     ' 
-    '   Blank Lines: 14 (13.08%)
-    '     File Size: 3.45 KB
+    '   Blank Lines: 15 (11.45%)
+    '     File Size: 4.47 KB
 
 
     ' Class SerialData

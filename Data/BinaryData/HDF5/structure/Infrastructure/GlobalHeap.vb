@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b37b7964cb3b7f4faa428e3c48cd1204, Data\BinaryData\HDF5\structure\Infrastructure\GlobalHeap.vb"
+﻿#Region "Microsoft.VisualBasic::dd3f689b9ed8f154cc55f5ff2ed72a3d, Data\BinaryData\HDF5\structure\Infrastructure\GlobalHeap.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 92.31%
     ' 
     '   Blank Lines: 28 (15.38%)
-    '     File Size: 7.66 KB
+    '     File Size: 7.67 KB
 
 
     '     Class GlobalHeap

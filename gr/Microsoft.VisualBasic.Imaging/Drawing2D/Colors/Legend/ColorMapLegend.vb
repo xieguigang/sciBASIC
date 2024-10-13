@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c344e132223b88d592c7bfa4bdb39922, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Colors\Legend\ColorMapLegend.vb"
+﻿#Region "Microsoft.VisualBasic::b6c33b036b0cd707e204f5a1bd0d11e4, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Colors\Legend\ColorMapLegend.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 91
-    '    Code Lines: 69 (75.82%)
-    ' Comment Lines: 11 (12.09%)
+    '   Total Lines: 92
+    '    Code Lines: 70 (76.09%)
+    ' Comment Lines: 11 (11.96%)
     '    - Xml Docs: 81.82%
     ' 
-    '   Blank Lines: 11 (12.09%)
-    '     File Size: 3.31 KB
+    '   Blank Lines: 11 (11.96%)
+    '     File Size: 3.44 KB
 
 
     '     Class ColorMapLegend

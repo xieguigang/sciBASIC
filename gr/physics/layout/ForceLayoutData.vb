@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b5b7e2584d2eb74f7882a5d1da7813f6, gr\physics\layout\ForceLayoutData.vb"
+﻿#Region "Microsoft.VisualBasic::4e24e1f7395db9391642d1035bb50571, gr\physics\layout\ForceLayoutData.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 62
-    '    Code Lines: 13 (20.97%)
-    ' Comment Lines: 44 (70.97%)
+    '   Total Lines: 61
+    '    Code Lines: 12 (19.67%)
+    ' Comment Lines: 44 (72.13%)
     '    - Xml Docs: 6.82%
     ' 
-    '   Blank Lines: 5 (8.06%)
-    '     File Size: 2.37 KB
+    '   Blank Lines: 5 (8.20%)
+    '     File Size: 2.36 KB
 
 
     '     Class ForceLayoutData

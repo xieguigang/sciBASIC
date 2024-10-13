@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a2c28a35b7faec224ac3eba1350d3882, Microsoft.VisualBasic.Core\src\Extensions\Image\Bitmap\BitmapReader.vb"
+﻿#Region "Microsoft.VisualBasic::e12ae7526532fdaa39dac05a867a41cc, Microsoft.VisualBasic.Core\src\Drawing\Bitmap\BitmapReader.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 157
-    '    Code Lines: 107 (68.15%)
-    ' Comment Lines: 23 (14.65%)
-    '    - Xml Docs: 43.48%
+    '   Total Lines: 192
+    '    Code Lines: 126 (65.62%)
+    ' Comment Lines: 32 (16.67%)
+    '    - Xml Docs: 50.00%
     ' 
-    '   Blank Lines: 27 (17.20%)
-    '     File Size: 6.24 KB
+    '   Blank Lines: 34 (17.71%)
+    '     File Size: 7.63 KB
 
 
     '     Class BitmapReader
@@ -51,7 +51,7 @@
     ' 
     '         Constructor: (+2 Overloads) Sub New
     ' 
-    '         Function: GetColorByteLocation, GetOffset, GetPixelColor, RoundUpToNearestFour
+    '         Function: GetColorByteLocation, GetOffset, GetPixelColor, LoadMemory, RoundUpToNearestFour
     ' 
     '         Sub: (+2 Overloads) Dispose
     ' 

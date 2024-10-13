@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6dcf175406f9a05b30786a98d82af6d7, mime\text%html\CSS\Elements\Padding.vb"
+﻿#Region "Microsoft.VisualBasic::2f0f8fb0b613ab76fdf1189896ca166a, mime\text%html\CSS\Elements\Padding.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 300
-    '    Code Lines: 162 (54.00%)
-    ' Comment Lines: 102 (34.00%)
+    '   Total Lines: 320
+    '    Code Lines: 180 (56.25%)
+    ' Comment Lines: 102 (31.87%)
     '    - Xml Docs: 98.04%
     ' 
-    '   Blank Lines: 36 (12.00%)
-    '     File Size: 11.89 KB
+    '   Blank Lines: 38 (11.88%)
+    '     File Size: 12.55 KB
 
 
     '     Structure Padding

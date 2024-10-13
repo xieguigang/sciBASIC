@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a119b28ea327aec2097f32abe61c2190, Data_science\Visualization\Plots\BarPlot\Data\BarPlotDataExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::190d57b0563203d9745671905ea42ccf, Data_science\Visualization\Plots\BarPlot\Data\BarPlotDataExtensions.vb"
 
     ' Author:
     ' 
@@ -34,18 +34,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 224
-    '    Code Lines: 178 (79.46%)
-    ' Comment Lines: 19 (8.48%)
+    '   Total Lines: 171
+    '    Code Lines: 133 (77.78%)
+    ' Comment Lines: 19 (11.11%)
     '    - Xml Docs: 84.21%
     ' 
-    '   Blank Lines: 27 (12.05%)
-    '     File Size: 8.97 KB
+    '   Blank Lines: 19 (11.11%)
+    '     File Size: 7.01 KB
 
 
     '     Module BarPlotDataExtensions
     ' 
-    '         Function: GroupBy, LoadDataSet, Normalize, SerialDatas, Takes
+    '         Function: GroupBy, Normalize, SerialDatas, Takes
     ' 
     ' 
     ' /********************************************************************************/

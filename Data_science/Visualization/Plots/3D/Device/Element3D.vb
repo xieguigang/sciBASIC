@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1a6a92fcf3e93dd38552f6f8965abe72, Data_science\Visualization\Plots\3D\Device\Element3D.vb"
+﻿#Region "Microsoft.VisualBasic::a06f125d1122adce6edc4768acc6d582, Data_science\Visualization\Plots\3D\Device\Element3D.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 208
-    '    Code Lines: 148 (71.15%)
-    ' Comment Lines: 18 (8.65%)
+    '   Total Lines: 220
+    '    Code Lines: 159 (72.27%)
+    ' Comment Lines: 18 (8.18%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 42 (20.19%)
-    '     File Size: 7.79 KB
+    '   Blank Lines: 43 (19.55%)
+    '     File Size: 8.17 KB
 
 
     '     Class Element3D

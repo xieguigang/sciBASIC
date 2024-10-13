@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ce34067740e8a46aa4be2900fe2f7d03, Data_science\MachineLearning\MachineLearning\SVM\StorageProcedure\TextWriter\ProblemText.vb"
+﻿#Region "Microsoft.VisualBasic::f1c344ab73de5832bbeb3a43e8a6a62d, Data_science\MachineLearning\MachineLearning\SVM\StorageProcedure\TextWriter\ProblemText.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 39
-    '    Code Lines: 25 (64.10%)
-    ' Comment Lines: 5 (12.82%)
+    '   Total Lines: 38
+    '    Code Lines: 24 (63.16%)
+    ' Comment Lines: 5 (13.16%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 9 (23.08%)
-    '     File Size: 1.13 KB
+    '   Blank Lines: 9 (23.68%)
+    '     File Size: 1.12 KB
 
 
     '     Module ProblemText

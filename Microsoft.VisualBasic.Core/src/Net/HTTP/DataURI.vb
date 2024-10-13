@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c114df43db2c8678d0033d7ec616146b, Microsoft.VisualBasic.Core\src\Net\HTTP\DataURI.vb"
+﻿#Region "Microsoft.VisualBasic::f4788f6570b374ca5021fae2e88953f7, Microsoft.VisualBasic.Core\src\Net\HTTP\DataURI.vb"
 
     ' Author:
     ' 
@@ -34,20 +34,20 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 139
-    '    Code Lines: 83 (59.71%)
-    ' Comment Lines: 38 (27.34%)
+    '   Total Lines: 146
+    '    Code Lines: 90 (61.64%)
+    ' Comment Lines: 38 (26.03%)
     '    - Xml Docs: 94.74%
     ' 
-    '   Blank Lines: 18 (12.95%)
-    '     File Size: 4.77 KB
+    '   Blank Lines: 18 (12.33%)
+    '     File Size: 5.04 KB
 
 
     '     Class DataURI
     ' 
     '         Properties: base64, chartSet, mime
     ' 
-    '         Constructor: (+4 Overloads) Sub New
+    '         Constructor: (+5 Overloads) Sub New
     '         Function: FromFile, IsWellFormedUriString, SVGImage, ToStream, ToString
     '                   URIParser
     ' 

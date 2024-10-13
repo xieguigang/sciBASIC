@@ -1,7 +1,7 @@
 @echo off
 
 SET R_proj=../../../R-sharp
-SET R_HOME=%R_proj%/App/net6.0
+SET R_HOME=%R_proj%/App/net8.0
 SET REnv="%R_HOME%/R#.exe"
 SET updater=%R_proj%/studio/code_banner.R
 

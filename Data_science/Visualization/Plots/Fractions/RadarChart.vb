@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1fb3a706b21e88e15bc66c48dbc10a4b, Data_science\Visualization\Plots\Fractions\RadarChart.vb"
+﻿#Region "Microsoft.VisualBasic::5d8735d36d0618268fd4c24dd7bbe59c, Data_science\Visualization\Plots\Fractions\RadarChart.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 400
-    '    Code Lines: 256 (64.00%)
-    ' Comment Lines: 93 (23.25%)
+    '   Total Lines: 426
+    '    Code Lines: 281 (65.96%)
+    ' Comment Lines: 93 (21.83%)
     '    - Xml Docs: 45.16%
     ' 
-    '   Blank Lines: 51 (12.75%)
-    '     File Size: 20.25 KB
+    '   Blank Lines: 52 (12.21%)
+    '     File Size: 21.38 KB
 
 
     '     Module RadarChart

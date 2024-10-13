@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d7900fd0f4e68c4e4cd3bc5261ce419f, Data_science\MachineLearning\MachineLearning\SVM\StorageProcedure\TextWriter\ModelText.vb"
+﻿#Region "Microsoft.VisualBasic::d8e9bed28294f1ed31b6fab311bf8bcf, Data_science\MachineLearning\MachineLearning\SVM\StorageProcedure\TextWriter\ModelText.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 83.33%
     ' 
     '   Blank Lines: 31 (25.62%)
-    '     File Size: 4.24 KB
+    '     File Size: 4.25 KB
 
 
     '     Module ModelText

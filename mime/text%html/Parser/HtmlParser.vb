@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::01208aa46597ee2016adc32233d5e27c, mime\text%html\Parser\HtmlParser.vb"
+﻿#Region "Microsoft.VisualBasic::2026465e4d85548b1e5f46bbc19b3e5f, mime\text%html\Parser\HtmlParser.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 0.00%
     ' 
     '   Blank Lines: 22 (18.64%)
-    '     File Size: 3.94 KB
+    '     File Size: 3.95 KB
 
 
     '     Class HtmlParser

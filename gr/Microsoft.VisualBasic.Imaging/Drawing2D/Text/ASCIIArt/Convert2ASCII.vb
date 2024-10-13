@@ -1,56 +1,56 @@
-﻿#Region "Microsoft.VisualBasic::76f82b0faad8a6d25cd5bf4fbec615ae, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Text\ASCIIArt\Convert2ASCII.vb"
+﻿#Region "Microsoft.VisualBasic::5e5c7064c102212329b74bcdbd0d190f, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Text\ASCIIArt\Convert2ASCII.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 141
-'    Code Lines: 76 (53.90%)
-' Comment Lines: 46 (32.62%)
-'    - Xml Docs: 41.30%
-' 
-'   Blank Lines: 19 (13.48%)
-'     File Size: 6.52 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Module HelperMethods
-' 
-'         Function: ASCIIImage, Convert2ASCII, DrawText
-' 
-'         Sub: WriteASCIIStream, writeInternal
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 144
+    '    Code Lines: 79 (54.86%)
+    ' Comment Lines: 46 (31.94%)
+    '    - Xml Docs: 41.30%
+    ' 
+    '   Blank Lines: 19 (13.19%)
+    '     File Size: 6.67 KB
+
+
+    '     Module HelperMethods
+    ' 
+    '         Function: ASCIIImage, Convert2ASCII, DrawText
+    ' 
+    '         Sub: WriteASCIIStream, writeInternal
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

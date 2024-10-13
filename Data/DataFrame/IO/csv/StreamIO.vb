@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::020944f4f898906b84594a6c29a57100, Data\DataFrame\IO\csv\StreamIO.vb"
+﻿#Region "Microsoft.VisualBasic::b9c28bf704e1c89dd504d2fb1e6a8420, Data\DataFrame\IO\csv\StreamIO.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 78.12%
     ' 
     '   Blank Lines: 17 (13.49%)
-    '     File Size: 5.34 KB
+    '     File Size: 5.36 KB
 
 
     '     Module StreamIO

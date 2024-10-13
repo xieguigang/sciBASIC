@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ed454011b289139f6185c67c969cd4d4, Microsoft.VisualBasic.Core\src\Text\Xml\Linq\Linq.vb"
+﻿#Region "Microsoft.VisualBasic::7d623521efcbe41b7bf9a68275174f55, Microsoft.VisualBasic.Core\src\Text\Xml\Linq\Linq.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 405
-    '    Code Lines: 249 (61.48%)
-    ' Comment Lines: 108 (26.67%)
-    '    - Xml Docs: 95.37%
+    '   Total Lines: 415
+    '    Code Lines: 251 (60.48%)
+    ' Comment Lines: 115 (27.71%)
+    '    - Xml Docs: 95.65%
     ' 
-    '   Blank Lines: 48 (11.85%)
-    '     File Size: 19.86 KB
+    '   Blank Lines: 49 (11.81%)
+    '     File Size: 20.20 KB
 
 
     '     Module Data

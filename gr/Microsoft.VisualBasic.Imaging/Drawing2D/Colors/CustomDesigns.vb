@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7f05a960cbdce37388916dccf28d2eab, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Colors\CustomDesigns.vb"
+﻿#Region "Microsoft.VisualBasic::77175ad04db01771ae4f2a07a2a2130c, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Colors\CustomDesigns.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 168
-    '    Code Lines: 135 (80.36%)
-    ' Comment Lines: 16 (9.52%)
+    '   Total Lines: 174
+    '    Code Lines: 140 (80.46%)
+    ' Comment Lines: 16 (9.20%)
     '    - Xml Docs: 87.50%
     ' 
-    '   Blank Lines: 17 (10.12%)
-    '     File Size: 7.09 KB
+    '   Blank Lines: 18 (10.34%)
+    '     File Size: 7.17 KB
 
 
     '     Class CustomDesigns

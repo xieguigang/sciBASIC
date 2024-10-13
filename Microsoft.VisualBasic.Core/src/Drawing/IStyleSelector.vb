@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::041e07b82200679bb38dc8b50a8d27a4, Microsoft.VisualBasic.Core\src\Extensions\Image\IStyleSelector.vb"
+﻿#Region "Microsoft.VisualBasic::041e07b82200679bb38dc8b50a8d27a4, Microsoft.VisualBasic.Core\src\Drawing\IStyleSelector.vb"
 
     ' Author:
     ' 

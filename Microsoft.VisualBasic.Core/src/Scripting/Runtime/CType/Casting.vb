@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9680813d07cb520c34c4fde5cdda4f1d, Microsoft.VisualBasic.Core\src\Scripting\Runtime\CType\Casting.vb"
+﻿#Region "Microsoft.VisualBasic::83786b743814173f5ef8aee211a637ea, Microsoft.VisualBasic.Core\src\Scripting\Runtime\CType\Casting.vb"
 
     ' Author:
     ' 
@@ -34,23 +34,23 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 420
-    '    Code Lines: 250 (59.52%)
-    ' Comment Lines: 126 (30.00%)
+    '   Total Lines: 415
+    '    Code Lines: 246 (59.28%)
+    ' Comment Lines: 126 (30.36%)
     '    - Xml Docs: 86.51%
     ' 
-    '   Blank Lines: 44 (10.48%)
-    '     File Size: 16.13 KB
+    '   Blank Lines: 43 (10.36%)
+    '     File Size: 15.93 KB
 
 
     '     Module Casting
     ' 
     '         Function: (+3 Overloads) [As], AsBaseType, CastChar, CastCharArray, CastCommandLine
-    '                   CastDate, CastFileInfo, CastFont, CastGDIPlusDeviceHandle, CastImage
-    '                   CastInteger, CastIPEndPoint, CastLogFile, CastLong, CastProcess
-    '                   CastRegexOptions, CastSingle, CastStringBuilder, (+2 Overloads) Expression, FloatPointParser
-    '                   FloatSizeParser, NumericRangeParser, ParseNumeric, PointParser, RegexParseDouble
-    '                   ScriptValue, SizeParser, TryParse
+    '                   CastDate, CastFileInfo, CastFont, CastImage, CastInteger
+    '                   CastIPEndPoint, CastLogFile, CastLong, CastProcess, CastRegexOptions
+    '                   CastSingle, CastStringBuilder, (+2 Overloads) Expression, FloatPointParser, FloatSizeParser
+    '                   NumericRangeParser, ParseNumeric, PointParser, RegexParseDouble, ScriptValue
+    '                   SizeParser, TryParse
     ' 
     ' 
     ' /********************************************************************************/

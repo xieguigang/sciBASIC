@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::05f71f617df0dd689cac41587c1d5ffc, gr\physics\layout\StepDisplacement.vb"
+﻿#Region "Microsoft.VisualBasic::5b0243bed1cdb10e50b4eda8008ff47a, gr\physics\layout\StepDisplacement.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 8.70%
     ' 
     '   Blank Lines: 10 (11.63%)
-    '     File Size: 3.30 KB
+    '     File Size: 3.29 KB
 
 
     '     Class StepDisplacement

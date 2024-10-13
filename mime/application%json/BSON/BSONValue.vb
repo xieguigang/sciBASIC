@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1bbe0785699d28e468324b7ef48d178a, mime\application%json\BSON\BSONValue.vb"
+﻿#Region "Microsoft.VisualBasic::cbb8df3f4fb4ea72e5f527d5dbd0c611, mime\application%json\BSON\BSONValue.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 0.00%
     ' 
     '   Blank Lines: 41 (13.62%)
-    '     File Size: 11.01 KB
+    '     File Size: 11.02 KB
 
 
     '     Class BSONValue
