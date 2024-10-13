@@ -56,8 +56,7 @@
 
 Imports System.IO
 Imports System.Text
-Imports Microsoft.VisualBasic.Text
-Imports stdNum = System.Math
+Imports ASCII = Microsoft.VisualBasic.Text.ASCII
 
 Namespace SVM
 

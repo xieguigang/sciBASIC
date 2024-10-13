@@ -56,48 +56,18 @@
 #End Region
 
 Imports System.Drawing
-Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.SVG.XML
 Imports Microsoft.VisualBasic.MIME.Html.CSS
-Imports Microsoft.VisualBasic.Net.Http
 
 Namespace Driver
 
     ''' <summary>
-    ''' gdi+ images: <see cref="Drawing.Image"/>, <see cref="Bitmap"/> / SVG image: <see cref="SVGDocument"/>
+    ''' gdi+ images: <see cref="Image"/>, <see cref="Bitmap"/> / SVG image: <see cref="SVGDocument"/>
     ''' </summary>
-    Public MustInherit Class GraphicsData
+    Public MustInherit Class GraphicsData : Inherits IGraphicsData
         Implements IDisposable
-
-        ''' <summary>
-        ''' The graphics engine driver type indicator, 
-        ''' 
-        ''' + for <see cref="Drivers.GDI"/> -> <see cref="ImageData"/>(<see cref="Drawing.Image"/>, <see cref="Bitmap"/>)
-        ''' + for <see cref="Drivers.SVG"/> -> <see cref="SVGData"/>(<see cref="SVGDocument"/>)
-        ''' 
-        ''' (驱动程序的类型)
-        ''' </summary>
-        ''' <returns></returns>
-        Public MustOverride ReadOnly Property Driver As Drivers
-
-        Public ReadOnly Property content_type As String
-            Get
-                Select Case Driver
-                    Case Drivers.GDI
-                        Return "image/png"
-                    Case Drivers.PS
-                        Return "application/postscript"
-                    Case Drivers.SVG
-                        Return "image/svg+xml"
-                    Case Drivers.WMF
-                        Return "application/x-wmf"
-                    Case Else
-                        Return "application/octet-stream"
-                End Select
-            End Get
-        End Property
 
         ''' <summary>
         ''' The image size
@@ -105,14 +75,14 @@ Namespace Driver
         ''' <returns></returns>
         Public ReadOnly Property Layout As GraphicsRegion
 
-        Public ReadOnly Property Width As Integer
+        Public Overrides ReadOnly Property Width As Integer
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return _Layout.Size.Width
             End Get
         End Property
 
-        Public ReadOnly Property Height As Integer
+        Public Overrides ReadOnly Property Height As Integer
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return _Layout.Size.Height
@@ -131,21 +101,6 @@ Namespace Driver
                 .Padding = padding
             }
         End Sub
-
-        Public MustOverride Function GetDataURI() As DataURI
-
-        ''' <summary>
-        ''' Save the image graphics to file
-        ''' </summary>
-        ''' <param name="path$"></param>
-        ''' <returns></returns>
-        Public MustOverride Function Save(path$) As Boolean
-        ''' <summary>
-        ''' Save the image graphics to a specific output stream
-        ''' </summary>
-        ''' <param name="out"></param>
-        ''' <returns></returns>
-        Public MustOverride Function Save(out As Stream) As Boolean
 
 #Region "IDisposable Support"
         Private disposedValue As Boolean ' 要检测冗余调用

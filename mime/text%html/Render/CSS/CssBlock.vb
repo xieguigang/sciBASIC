@@ -59,7 +59,7 @@ Imports System.Reflection
 Imports System.Text.RegularExpressions
 
 Namespace Render.CSS
-
+#If NET48 Then
     ''' <summary>
     ''' Represents a block of CSS property values
     ''' </summary>
@@ -170,4 +170,5 @@ Namespace Render.CSS
         End Sub
 #End Region
     End Class
+#End If
 End Namespace

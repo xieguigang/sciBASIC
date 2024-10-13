@@ -76,8 +76,8 @@ Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MIME.application.json.Javascript
 Imports Microsoft.VisualBasic.Scripting.TokenIcer
-Imports Microsoft.VisualBasic.Text
 Imports Microsoft.VisualBasic.Text.Parser
+Imports ASCII = Microsoft.VisualBasic.Text.ASCII
 
 ''' <summary>
 ''' A json text parser module

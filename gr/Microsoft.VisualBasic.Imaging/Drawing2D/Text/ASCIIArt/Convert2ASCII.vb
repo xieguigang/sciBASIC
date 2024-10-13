@@ -1,56 +1,56 @@
 ﻿#Region "Microsoft.VisualBasic::76f82b0faad8a6d25cd5bf4fbec615ae, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Text\ASCIIArt\Convert2ASCII.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 141
-    '    Code Lines: 76 (53.90%)
-    ' Comment Lines: 46 (32.62%)
-    '    - Xml Docs: 41.30%
-    ' 
-    '   Blank Lines: 19 (13.48%)
-    '     File Size: 6.52 KB
+' Summaries:
 
 
-    '     Module HelperMethods
-    ' 
-    '         Function: ASCIIImage, Convert2ASCII, DrawText
-    ' 
-    '         Sub: WriteASCIIStream, writeInternal
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 141
+'    Code Lines: 76 (53.90%)
+' Comment Lines: 46 (32.62%)
+'    - Xml Docs: 41.30%
+' 
+'   Blank Lines: 19 (13.48%)
+'     File Size: 6.52 KB
+
+
+'     Module HelperMethods
+' 
+'         Function: ASCIIImage, Convert2ASCII, DrawText
+' 
+'         Sub: WriteASCIIStream, writeInternal
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -59,6 +59,7 @@ Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports Microsoft.VisualBasic.Imaging.BitmapImage
+Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.MIME.Html.CSS
 Imports std = System.Math
@@ -74,7 +75,9 @@ Namespace Drawing2D.Text.ASCIIArt
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
-        Public Function ASCIIImage(text$, Optional font$ = CSSFont.Win7Normal, Optional characters As WeightedChar() = Nothing) As String
+        Public Function ASCIIImage(text$,
+                                   Optional font$ = CSSFont.Win7Normal,
+                                   Optional characters As WeightedChar() = Nothing) As String
             Return text _
                 .DrawText(Color.Black, Color.White, , CSSEnvirnment.Empty.GetFont(CSSFont.TryParse(font))) _
                 .Convert2ASCII(characters)
@@ -148,7 +151,7 @@ Namespace Drawing2D.Text.ASCIIArt
             End Using
         End Sub
 
-        ReadOnly defaultFont As [Default](Of Font) = SystemFonts.DefaultFont
+        ReadOnly defaultFont As [Default](Of Font) = CharSet.DefaultFont
 
         ''' <summary>
         ''' 将字符转换为图像
@@ -180,7 +183,7 @@ Namespace Drawing2D.Text.ASCIIArt
             Dim img As New Bitmap(w, h)
 
             ' Get a graphics object
-            Using drawing = Graphics.FromImage(img)
+            Using drawing = DriverLoad.CreateGraphicsDevice(img, driver:=Drivers.GDI)
 
                 ' Create a brush for the text
                 Dim textBrush As New SolidBrush(textColor)

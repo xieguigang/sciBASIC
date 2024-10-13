@@ -93,10 +93,17 @@ Namespace Net.Http
             chartSet = codepage
         End Sub
 
+#If NET48 Then
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Sub New(image As Image)
+        Sub New(image As System.Drawing.Image)
             Call Me.New(image.ToBase64String, ContentTypes.MIME.Png, Nothing)
         End Sub
+#Else
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Sub New(image As Microsoft.VisualBasic.Imaging.Image)
+            Call Me.New(image.ToBase64String, ContentTypes.MIME.Png, Nothing)
+        End Sub
+#End If
 
         Sub New(stream As Stream, mime$, Optional charset$ = Nothing)
             Me.mime = mime

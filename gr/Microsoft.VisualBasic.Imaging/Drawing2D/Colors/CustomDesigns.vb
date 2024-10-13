@@ -199,11 +199,17 @@ Namespace Drawing2D.Colors
                                                            Optional excludeBlack As Byte = 50) As IEnumerable(Of Color)
             ' get all colors at first
             Dim size As Size = src.Size
+#If NET48 Then
             Dim copy As New Bitmap(size.Width, size.Height, format:=PixelFormat.Format32bppArgb)
             Dim g As Graphics = Graphics.FromImage(copy)
-            Call g.DrawImageUnscaled(src, New Point)
+
+            Call g.DrawImage(src, New Point)
             Call g.Flush()
-            Dim buffer As BitmapBuffer = BitmapBuffer.FromBitmap(copy, ImageLockMode.ReadOnly)
+            Call g.Dispose()
+#Else
+            Dim copy As New Bitmap(src)
+#End If
+            Dim buffer As BitmapBuffer = BitmapBuffer.FromBitmap(copy)
             Dim allColors = buffer.GetPixelsAll.ToArray
             ' group all colors
             Dim colorGroups = allColors _

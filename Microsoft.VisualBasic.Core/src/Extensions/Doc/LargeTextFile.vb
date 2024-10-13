@@ -59,6 +59,7 @@ Imports Microsoft.VisualBasic.ApplicationServices
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.Text
+Imports ASCII = Microsoft.VisualBasic.Text.ASCII
 
 ''' <summary>
 ''' Wrapper for the file operations.

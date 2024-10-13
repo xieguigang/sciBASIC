@@ -74,7 +74,7 @@ Imports System.Math
 Imports Microsoft.VisualBasic.MIME.Html.CSS
 
 Namespace Render.CSS
-
+#If NET48 Then
     Friend Class CssTable
 #Region "Subclasses"
 
@@ -945,4 +945,5 @@ Namespace Render.CSS
 
 #End Region
     End Class
+#End If
 End Namespace

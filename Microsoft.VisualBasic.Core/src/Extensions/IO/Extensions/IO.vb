@@ -66,6 +66,7 @@ Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.Serialization
 Imports Microsoft.VisualBasic.Text
+Imports ASCII = Microsoft.VisualBasic.Text.ASCII
 
 ''' <summary>
 ''' The extension API for system file io.

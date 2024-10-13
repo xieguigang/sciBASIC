@@ -163,7 +163,7 @@ Namespace Net.Http
                     ' Checking The Base64 string validity
                     Return Nothing
                 Else
-                    Return Base64String.__getImageFromBase64(GetFormat(format))
+                    Return Base64String.__getImageFromBase64(format)
                 End If
             Catch ex As Exception
                 Call ex.PrintException
@@ -191,7 +191,7 @@ Namespace Net.Http
         ''' <returns></returns>
         ''' 
         <Extension>
-        Private Function __getImageFromBase64(base64String$, format As ImageFormat) As Bitmap
+        Private Function __getImageFromBase64(base64String$, format As ImageFormats) As Bitmap
             Dim bytData As Byte(), streamImage As Bitmap
 
             ' Convert Base64 to Byte Array
@@ -216,7 +216,7 @@ Namespace Net.Http
         <Extension>
         Public Function ToBase64String(img As Image, Optional format As ImageFormats = ImageFormats.Png) As String
             Try
-                Return __toBase64String(img, GetFormat(format))
+                Return __toBase64String(img, format)
             Catch ex As Exception
                 Call ex.PrintException
                 Return ""
@@ -229,20 +229,28 @@ Namespace Net.Http
         ''' <returns></returns>
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        <Extension> Public Function ToBase64String(bmp As Bitmap, Optional format As ImageFormats = ImageFormats.Png) As String
+        <Extension>
+        Public Function ToBase64String(bmp As Bitmap, Optional format As ImageFormats = ImageFormats.Png) As String
             Return ToBase64String(img:=bmp, format:=format)
         End Function
 
-        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
-        Public Function ToStream(image As Image, Optional format As ImageFormats = ImageFormats.Png) As MemoryStream
-            Return image.ToStream(format.GetFormat)
-        End Function
-
-        <Extension>
-        Public Function ToStream(image As Image, format As ImageFormat) As MemoryStream
+        Public Function ToStream(image As Image, format As ImageFormats) As MemoryStream
             With New MemoryStream
+#If NET48 Then
+                Dim format_gdi As ImageFormat = ImageFormat.Png
+
+                Select Case format
+                    Case ImageFormats.Jpeg : format_gdi = ImageFormat.Jpeg
+                    Case ImageFormats.Gif : format_gdi = ImageFormat.Gif
+                    Case Else
+                        Call $"The given image format flag is not supported, use png as default.".Warning
+                End Select
+
+                Call image.Save(.ByRef, format_gdi)
+#Else
                 Call image.Save(.ByRef, format)
+#End If
                 Call .Flush()
                 Call .Seek(Scan0, SeekOrigin.Begin)
                 Return .ByRef
@@ -250,7 +258,7 @@ Namespace Net.Http
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Private Function __toBase64String(image As Image, format As ImageFormat) As String
+        Private Function __toBase64String(image As Image, format As ImageFormats) As String
             Dim s = image.ToStream(format)
             Dim buffer = s.ToArray
 

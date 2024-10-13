@@ -123,13 +123,14 @@ Namespace SVG.PathHelper
             Return sb.ToString
         End Function
 
+#If NET48 Then
         Public Function GlyphPath(c As Char, font As Font) As String
             Using g As New GraphicsPath
                 g.AddString(c.ToString, font.FontFamily, font.Style, font.Size, New PointF, New StringFormat)
                 Return g.SVGPathData
             End Using
         End Function
-
+#End If
         ''' <summary>
         ''' 解析SVG之中的path数据，并转换为等价的gdi+的path对象
         ''' </summary>

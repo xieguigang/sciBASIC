@@ -149,7 +149,8 @@ Public Module CollectionValueGetter
 
     ''' <summary>
     ''' This is a safely method for gets the value in a array, if the index was 
-    ''' outside of the boundary, then the default value will be return.
+    ''' outside of the boundary or the given <paramref name="array"/> is nothing, 
+    ''' then the default value will be return.
     ''' </summary>
     ''' <typeparam name="T">The generic type of current array object</typeparam>
     ''' <param name="array"></param>
@@ -162,11 +163,14 @@ Public Module CollectionValueGetter
     ''' The value at the specified position in the one-dimensional System.Array.
     ''' </returns>
     ''' <remarks>
-    ''' (假若下标越界的话会返回默认值)
+    ''' 假若目标数组是空值或者下标越界的话会返回<paramref name="default"/>默认值
     ''' </remarks> 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
     Public Function ElementAtOrDefault(Of T)(array As T(), index As Integer, Optional [default] As T = Nothing) As T
+        If array Is Nothing Then
+            Return [default]
+        End If
         Return array.GetValueOrDefault(index, [default])
     End Function
 

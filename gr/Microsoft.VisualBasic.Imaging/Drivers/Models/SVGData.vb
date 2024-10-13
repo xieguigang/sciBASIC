@@ -71,13 +71,17 @@ Namespace Driver
     Public Class SVGData : Inherits GraphicsData
 
         Public ReadOnly Property SVG As SVGDataLayers
-            <MethodImpl(MethodImplOptions.AggressiveInlining)>
-            Get
-                Return engine.__svgData
-            End Get
-        End Property
 
-        Dim engine As GraphicsSVG
+        ''' <summary>
+        ''' The xml comment text when generates the svg document text
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property XmlComment As String
+        ''' <summary>
+        ''' title of current svg graphics plot document
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property title As String
 
         ''' <summary>
         ''' <paramref name="img"/> parameter is <see cref="GraphicsSVG"/>
@@ -88,7 +92,8 @@ Namespace Driver
         Public Sub New(img As Object, size As Size, padding As Padding)
             Call MyBase.New(img, size, padding)
 
-            Me.engine = DirectCast(img, GraphicsSVG)
+            ' get svg document data
+            SVG = DirectCast(img, GraphicsSVG).__svgData
         End Sub
 
         Sub New(canvas As GraphicsSVG, padding As Padding)
@@ -102,23 +107,28 @@ Namespace Driver
             End Get
         End Property
 
-        Public Property XmlComment As String
-        Public Property title As String
-
         Const InvalidSuffix$ = "The SVG image file save path: {0} not ending with *.svg file extension suffix!"
 
+        ''' <summary>
+        ''' convert the svg document to base64 encoded data uri
+        ''' </summary>
+        ''' <returns></returns>
         Public Overrides Function GetDataURI() As DataURI
             Dim layoutSize = Layout.Size
             Dim sz$ = $"{layoutSize.Width},{layoutSize.Height}"
 
             Using data As New MemoryStream
-                Call engine.WriteSVG(data, sz, XmlComment, title:=title)
+                Call SVG.WriteSVG(data, sz, XmlComment, title:=title)
                 Call data.Seek(Scan0, SeekOrigin.Begin)
 
                 Return New DataURI(data, content_type)
             End Using
         End Function
 
+        ''' <summary>
+        ''' get xml document text of current svg graphics plot
+        ''' </summary>
+        ''' <returns></returns>
         Public Function GetSVGXml() As String
             Using buffer As New MemoryStream
                 Call Save(out:=buffer)
@@ -138,21 +148,20 @@ Namespace Driver
                 Call String.Format(InvalidSuffix, path.ToFileURL).Warning
             End If
 
-            With Layout.Size
-                Dim sz$ = $"{ .Width},{ .Height}"
-                Return engine.WriteSVG(path, sz, XmlComment, title:=title)
-            End With
+            Using s As Stream = path.Open(FileMode.OpenOrCreate, doClear:=True)
+                Return Save(s)
+            End Using
         End Function
 
         Public Overrides Function Save(out As Stream) As Boolean
             With Layout.Size
                 Dim sz$ = $"{ .Width},{ .Height}"
-                Return engine.WriteSVG(out, size:=sz, comments:=XmlComment, title:=title)
+                Return SVG.WriteSVG(out, size:=sz, comments:=XmlComment, title:=title)
             End With
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Function Render() As Drawing.Image
+        Public Function Render() As Image
             Return Renderer.DrawImage(Me)
         End Function
     End Class

@@ -52,50 +52,60 @@
 #End Region
 
 Imports System.Drawing
-Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Imaging.BitmapImage
-Imports Microsoft.VisualBasic.Language
-Imports Microsoft.VisualBasic.Scripting.MetaData
 
-<Package("Texture.Resource.Loader", Publisher:="xie.guigang@gmail.com")>
+''' <summary>
+''' Default texture brush provider
+''' </summary>
 Public Module TextureResourceLoader
 
     ''' <summary>
     ''' 按照指定的资源图片和参数进行纹理资源的剪裁处理
     ''' </summary>
-    ''' <param name="Resource"></param>
+    ''' <param name="res"></param>
     ''' <param name="Size"></param>
     ''' <param name="IntervalWidth">纹理模块之间在水平上的间隔宽度</param>
     ''' <param name="IntervalHeight">纹理模块之间在竖直方向上的间隔宽度</param>
     ''' <returns></returns>
     ''' <remarks></remarks>
     ''' 
-    <ExportAPI("Load.TextureResource")>
-    Public Function LoadTextureResource(Resource As Image, Size As Size, IntervalWidth As Integer, IntervalHeight As Integer) As Image()
-        Dim list As New List(Of Image)
+    Public Iterator Function LoadTextureResource(res As Image, Size As Size, IntervalWidth As Integer, IntervalHeight As Integer) As IEnumerable(Of Bitmap)
         Dim X As Integer
         Dim Y As Integer
+        Dim spirit As BitmapBuffer = BitmapBuffer.FromImage(res)
 
         Do While True
-            Dim resToken As Image = Resource.ImageCrop(New Rectangle(New Point(X, Y), Size))
+            Dim resToken As New Bitmap(Size.Width, Size.Height)
 
-            list += resToken
+            ' make copy of a rection in location x,y and rectangle in size
+            ' from spirit texture resource to resToken bitmap
+            For xi As Integer = 0 To Size.Width
+                For yi As Integer = 0 To Size.Height
+                    resToken.SetPixel(xi, yi, spirit.GetPixel(xi + X, yi + Y))
+                Next
+            Next
+
+            Yield resToken
+
             X += IntervalWidth + Size.Width
 
-            If X >= Resource.Width Then
+            If X >= res.Width Then
                 X = 0
                 Y += Size.Height + IntervalHeight
             End If
 
-            If Y >= Resource.Height Then
+            If Y >= res.Height Then
                 Exit Do
             End If
         Loop
-
-        Return list.ToArray
     End Function
 
-    <ExportAPI("Texture.Color.Adjust")>
+    ''' <summary>
+    ''' adjust of the image color of the texture image
+    ''' </summary>
+    ''' <param name="Image"></param>
+    ''' <param name="Color"></param>
+    ''' <returns></returns>
     Public Function AdjustColor(Image As Image, Color As Color) As Image
         Dim res As BitmapBuffer = BitmapBuffer.FromImage(Image)
         Dim X, Y As Integer
@@ -124,8 +134,12 @@ Public Module TextureResourceLoader
         Return res.GetImage
     End Function
 
-    <ExportAPI("LoadResource.InternalDefault")>
-    Public Function LoadInternalDefaultResource() As Image()
-        Return TextureResourceLoader.LoadTextureResource(My.Resources.DefaultTexture, New Size(27, 19), 6, 6)
+    ''' <summary>
+    ''' Load default internal texture image resource
+    ''' </summary>
+    ''' <returns></returns>
+    Public Function LoadInternalDefaultResource() As Bitmap()
+        Dim [default] As Bitmap = Bitmap.FromStream(My.Resources.ResourceManager.GetStream("DefaultTexture"))
+        Return TextureResourceLoader.LoadTextureResource([default], New Size(27, 19), 6, 6).ToArray
     End Function
 End Module

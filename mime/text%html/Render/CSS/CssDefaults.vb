@@ -84,12 +84,12 @@ Namespace Render.CSS
         ''' <summary>
         ''' Default font used for the generic 'serif' family
         ''' </summary>
-        Public Shared FontSerif As String = FontFamily.GenericSerif.Name
+        Public Shared FontSerif As String = "serif"
 
         ''' <summary>
         ''' Default font used for the generic 'sans-serif' family
         ''' </summary>
-        Public Shared FontSansSerif As String = FontFamily.GenericSansSerif.Name
+        Public Shared FontSansSerif As String = "sans-serif"
 
         ''' <summary>
         ''' Default font used for the generic 'cursive' family
@@ -104,6 +104,6 @@ Namespace Render.CSS
         ''' <summary>
         ''' Default font used for the generic 'monospace' family
         ''' </summary>
-        Public Shared FontMonospace As String = FontFamily.GenericMonospace.Name
+        Public Shared FontMonospace As String = "monospace"
     End Class
 End Namespace

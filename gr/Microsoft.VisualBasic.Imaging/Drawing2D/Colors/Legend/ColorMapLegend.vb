@@ -62,6 +62,7 @@
 
 Imports System.Drawing
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Imaging.Driver
 
 Namespace Drawing2D.Colors
 
@@ -132,9 +133,9 @@ Namespace Drawing2D.Colors
         End Sub
 
         Public Function Draw(size As Size) As Image
-            Using g As Graphics2D = size.CreateGDIDevice(filled:=Color.Transparent)
+            Using g As IGraphics = Driver.CreateGraphicsDevice(size, fill:=NameOf(Color.Transparent), driver:=Driver.Drivers.GDI)
                 Call Draw(g, New Rectangle With {.X = 0, .Y = 0, .Width = size.Width, .Height = size.Height})
-                Return g.ImageResource
+                Return DirectCast(g, GdiRasterGraphics).ImageResource
             End Using
         End Function
 

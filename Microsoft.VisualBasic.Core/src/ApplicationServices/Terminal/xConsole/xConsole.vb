@@ -476,9 +476,11 @@ Namespace ApplicationServices.Terminal.xConsole
             Helpers.SetConsoleFont(i)
         End Sub
 
+#If NET48 Then
         Public Sub SetIcon(icon As Icon)
             Helpers.SetConsoleIcon(icon)
         End Sub
+#End If
 
 #End Region
 

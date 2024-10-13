@@ -59,7 +59,7 @@
 #End Region
 
 Namespace Render.CSS
-
+#If NET48 Then
     ''' <summary>
     ''' Splits text on words for a box
     ''' </summary>
@@ -178,5 +178,5 @@ Namespace Render.CSS
         End Function
 #End Region
     End Class
-
+#End If
 End Namespace

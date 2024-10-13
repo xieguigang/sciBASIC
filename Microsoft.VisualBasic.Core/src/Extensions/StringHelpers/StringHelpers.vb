@@ -83,6 +83,7 @@ Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Microsoft.VisualBasic.Text
 Imports Microsoft.VisualBasic.Text.Patterns
+Imports ASCII = Microsoft.VisualBasic.Text.ASCII
 Imports r = System.Text.RegularExpressions.Regex
 
 ''' <summary>

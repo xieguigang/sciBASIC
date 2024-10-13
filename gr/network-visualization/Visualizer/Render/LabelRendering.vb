@@ -167,13 +167,7 @@ Friend Class LabelRendering
                 rect = New Rectangle(lx, ly, .Width, .Height)
             End With
 
-            Dim path As GraphicsPath = Imaging.GetStringPath(
-                .label.text,
-                g.DpiX,
-                rect.OffSet2D(.style.Size / 5, 0).ToFloat,
-                .style,
-                StringFormat.GenericTypographic
-            )
+            Dim path As GraphicsPath = g.GetStringPath(.label.text, rect.OffSet2D(.style.Size / 5, 0).ToFloat, .style)
 
             If Not labelTextStroke Is Nothing Then
                 ' 绘制轮廓（描边）

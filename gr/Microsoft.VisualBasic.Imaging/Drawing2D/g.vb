@@ -1,65 +1,65 @@
 ﻿#Region "Microsoft.VisualBasic::91362808e826bfb000c085c078576f00, gr\Microsoft.VisualBasic.Imaging\Drawing2D\g.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 317
-    '    Code Lines: 183 (57.73%)
-    ' Comment Lines: 94 (29.65%)
-    '    - Xml Docs: 89.36%
-    ' 
-    '   Blank Lines: 40 (12.62%)
-    '     File Size: 12.96 KB
+' Summaries:
 
 
-    '     Delegate Sub
-    ' 
-    ' 
-    '     Module g
-    ' 
-    '         Properties: ActiveDriver, DriverExtensionName
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    ' 
-    '         Function: __getDriver, Allocate, CreateGraphics, (+3 Overloads) GraphicsPlots, (+2 Overloads) MeasureSize
-    '                   MeasureWidthOrHeight, ParseDriverEnumValue
-    ' 
-    '         Sub: FillBackground, SetDriver
-    ' 
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 317
+'    Code Lines: 183 (57.73%)
+' Comment Lines: 94 (29.65%)
+'    - Xml Docs: 89.36%
+' 
+'   Blank Lines: 40 (12.62%)
+'     File Size: 12.96 KB
+
+
+'     Delegate Sub
+' 
+' 
+'     Module g
+' 
+'         Properties: ActiveDriver, DriverExtensionName
+' 
+'         Constructor: (+1 Overloads) Sub New
+' 
+'         Function: __getDriver, Allocate, CreateGraphics, (+3 Overloads) GraphicsPlots, (+2 Overloads) MeasureSize
+'                   MeasureWidthOrHeight, ParseDriverEnumValue
+' 
+'         Sub: FillBackground, SetDriver
+' 
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -74,12 +74,15 @@ Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.MIME.Html.CSS
 Imports Microsoft.VisualBasic.My.FrameworkInternal
-Imports Microsoft.VisualBasic.Scripting.Runtime
+
+#If NET48 Then
+Imports Microsoft.VisualBasic.Drawing
+#End If
 
 Namespace Drawing2D
 
     ''' <summary>
-    ''' 
+    ''' An abstract function interface for make graphics plot
     ''' </summary>
     ''' <param name="g">GDI+设备</param>
     ''' <param name="grct">绘图区域的大小</param>
@@ -87,9 +90,10 @@ Namespace Drawing2D
 
     ''' <summary>
     ''' Data plots graphics engine common abstract. 
-    ''' (在命令行中使用``graphic_driver=svg``来切换默认的图形引擎为SVG矢量图作图引擎)
     ''' </summary>
-    ''' 
+    ''' <remarks>
+    ''' (在命令行中使用``graphic_driver=svg``来切换默认的图形引擎为SVG矢量图作图引擎)
+    ''' </remarks>
     <FrameworkConfig(GraphicDriverEnvironmentConfigName)>
     Public Module g
 
@@ -123,11 +127,12 @@ Namespace Drawing2D
         ''' </summary>
         Sub New()
             Dim type$ = Strings.LCase(App.GetVariable(GraphicDriverEnvironmentConfigName))
+            Dim defaultDriver = ParseDriverEnumValue(type)
 
-            g.__defaultDriver = ParseDriverEnumValue(type)
+            Driver.DefaultGraphicsDevice([default]:=defaultDriver)
 
             If VBDebugger.debugMode Then
-                Call $"The default graphics driver value is config as {g.__defaultDriver.Description}({type}).".__INFO_ECHO
+                Call $"The default graphics driver value is config as {Driver.DefaultGraphicsDevice.Description}({type}).".__INFO_ECHO
             End If
         End Sub
 
@@ -152,7 +157,7 @@ Namespace Drawing2D
         Public ReadOnly Property ActiveDriver As Drivers
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
-                Return __defaultDriver
+                Return Driver.DefaultGraphicsDevice
             End Get
         End Property
 
@@ -176,12 +181,6 @@ Namespace Drawing2D
         End Property
 
         ''' <summary>
-        ''' 用户所指定的图形引擎驱动程序类型，但是这个值会被开发人员设定的驱动程序类型的值所覆盖，
-        ''' 通常情况下，默认引擎选用的是``gdi+``引擎
-        ''' </summary>
-        Dim __defaultDriver As Drivers = Drivers.Default
-
-        ''' <summary>
         ''' 这个函数不会返回<see cref="Drivers.Default"/>
         ''' </summary>
         ''' <param name="developerValue">程序开发人员所设计的驱动程序的值</param>
@@ -190,11 +189,11 @@ Namespace Drawing2D
             If developerValue <> Drivers.Default Then
                 Return developerValue
             Else
-                If g.__defaultDriver = Drivers.Default Then
+                If Driver.DefaultGraphicsDevice = Drivers.Default Then
                     ' 默认为使用gdi引擎
                     Return Drivers.GDI
                 Else
-                    Return g.__defaultDriver
+                    Return Driver.DefaultGraphicsDevice
                 End If
             End If
         End Function
@@ -203,8 +202,10 @@ Namespace Drawing2D
         ''' 在代码中手动配置默认的驱动程序
         ''' </summary>
         ''' <param name="driver"></param>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Sub SetDriver(driver As Drivers)
-            g.__defaultDriver = driver
+            Call Microsoft.VisualBasic.Imaging.Driver.DefaultGraphicsDevice(driver)
         End Sub
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -225,21 +226,23 @@ Namespace Drawing2D
 
             Select Case base.Driver
                 Case Drivers.GDI
-                    Using g As New Graphics2D(base.AsGDIImage)
+                    Using g As IGraphics = Driver.CreateGraphicsDevice(base.AsGDIImage, driver:=Drivers.GDI)
                         Dim rect As New Rectangle(New Point, g.Size)
-
-                        With g.Graphics
-                            .CompositingQuality = CompositingQuality.HighQuality
-                            .CompositingMode = CompositingMode.SourceOver
-                            .InterpolationMode = InterpolationMode.HighQualityBicubic
-                            .PixelOffsetMode = PixelOffsetMode.HighQuality
-                            .SmoothingMode = SmoothingMode.HighQuality
-                            .TextRenderingHint = TextRenderingHint.ClearTypeGridFit
-                        End With
-
+#If NET48 Then
+                        If TypeOf g Is Graphics2D Then
+                            With DirectCast(g, Graphics2D).Graphics
+                                .CompositingQuality = CompositingQuality.HighQuality
+                                .CompositingMode = CompositingMode.SourceOver
+                                .InterpolationMode = InterpolationMode.HighQualityBicubic
+                                .PixelOffsetMode = PixelOffsetMode.HighQuality
+                                .SmoothingMode = SmoothingMode.HighQuality
+                                .TextRenderingHint = TextRenderingHint.ClearTypeGridFit
+                            End With
+                        End If
+#End If
                         Call plot(g, region)
 
-                        Return New ImageData(g.ImageResource, region.Size, region.Padding)
+                        Return New ImageData(DirectCast(g, GdiRasterGraphics).ImageResource, region.Size, region.Padding)
                     End Using
                 Case Drivers.SVG
                     Throw New NotImplementedException
@@ -265,10 +268,9 @@ Namespace Drawing2D
                                       bg$,
                                       plotAPI As IPlot,
                                       Optional driver As Drivers = Drivers.Default,
-                                      Optional dpi$ = "100,100") As GraphicsData
+                                      Optional dpi As Integer = 100) As GraphicsData
 
             Dim driverUsed As Drivers = g.__getDriver(developerValue:=driver)
-            Dim dpiXY As Size = dpi.SizeParser
 
             size = size Or defaultSize
             ' 20221211 default config will makes the zero-padding
@@ -277,7 +279,7 @@ Namespace Drawing2D
             ' padding = padding Or defaultPaddingValue
 
             Return New DeviceDescription(bg) With {
-                .dpi = dpiXY,
+                .dpi = dpi,
                 .driverUsed = driverUsed,
                 .padding = padding,
                 .size = size
@@ -294,7 +296,7 @@ Namespace Drawing2D
         ''' 3. 可能为base64图片字符串
         ''' </param>
         <Extension>
-        Public Sub FillBackground(ByRef g As Graphics, bg$, rect As Rectangle)
+        Public Sub FillBackground(ByRef g As IGraphics, bg$, rect As Rectangle)
             Dim bgColor As Color = bg.TranslateColor(throwEx:=False)
 
             If Not bgColor.IsEmpty Then
@@ -375,7 +377,7 @@ Namespace Drawing2D
 
                 Return g
             Else
-                Return Graphics2D.Open(DirectCast(img, ImageData).Image)
+                Return Driver.CreateGraphicsDevice(DirectCast(img, ImageData).Image, driver:=img.Driver)
             End If
         End Function
     End Module

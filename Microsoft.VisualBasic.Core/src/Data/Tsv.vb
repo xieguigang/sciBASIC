@@ -62,6 +62,7 @@ Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Text
+Imports ASCII = Microsoft.VisualBasic.Text.ASCII
 Imports FieldTuple = System.Collections.Generic.KeyValuePair(Of String, System.Reflection.PropertyInfo)
 Imports RowTokens = System.Collections.Generic.IEnumerable(Of String)
 

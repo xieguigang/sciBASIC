@@ -77,6 +77,28 @@ Imports Microsoft.VisualBasic.MIME.Html.CSS
 Imports Microsoft.VisualBasic.MIME.Html.Render
 Imports std = System.Math
 
+#If NET48 Then
+Imports Pen = System.Drawing.Pen
+Imports Pens = System.Drawing.Pens
+Imports Brush = System.Drawing.Brush
+Imports Font = System.Drawing.Font
+Imports Brushes = System.Drawing.Brushes
+Imports SolidBrush = System.Drawing.SolidBrush
+Imports DashStyle = System.Drawing.Drawing2D.DashStyle
+Imports Image = System.Drawing.Image
+Imports Bitmap = System.Drawing.Bitmap
+#Else
+Imports Pen = Microsoft.VisualBasic.Imaging.Pen
+Imports Pens = Microsoft.VisualBasic.Imaging.Pens
+Imports Brush = Microsoft.VisualBasic.Imaging.Brush
+Imports Font = Microsoft.VisualBasic.Imaging.Font
+Imports Brushes = Microsoft.VisualBasic.Imaging.Brushes
+Imports SolidBrush = Microsoft.VisualBasic.Imaging.SolidBrush
+Imports DashStyle = Microsoft.VisualBasic.Imaging.DashStyle
+Imports Image = Microsoft.VisualBasic.Imaging.Image
+Imports Bitmap = Microsoft.VisualBasic.Imaging.Bitmap
+#End If
+
 Public Class Violin : Inherits Plot
 
     ReadOnly matrix As NamedCollection(Of Double)()
@@ -195,13 +217,13 @@ Public Class Violin : Inherits Plot
                     }
 
                 ' 绘制X坐标轴分组标签
-                Call New GraphicsText(DirectCast(g, GDICanvas).Graphics).DrawString(
-                s:=group.name,
-                font:=labelFont,
-                brush:=Brushes.Black,
-                point:=labelPos,
-                angle:=theme.xAxisRotate
-            )
+                Call g.DrawString(
+                    s:=group.name,
+                    font:=labelFont,
+                    brush:=Brushes.Black,
+                    x:=labelPos.X, y:=labelPos.Y,
+                    angle:=theme.xAxisRotate
+                )
             End If
 
             X += semiWidth + groupInterval + semiWidth

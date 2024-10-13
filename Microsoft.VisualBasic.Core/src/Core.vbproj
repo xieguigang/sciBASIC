@@ -2,7 +2,7 @@
 
 	<PropertyGroup>
 		<RootNamespace>Microsoft.VisualBasic</RootNamespace>
-		<TargetFrameworks>net6.0-windows;net6.0;net48;net7.0-windows;net7.0</TargetFrameworks>
+		<TargetFrameworks>net8.0-windows;net8.0;net48</TargetFrameworks>
 		<AssemblyName>Microsoft.VisualBasic.Runtime</AssemblyName>
 		<Authors>xie.guigang@live.com</Authors>
 		<Company>sciBASIC.NET</Company>
@@ -310,20 +310,19 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="System.Composition" Version="6.0.0" />
+		<PackageReference Include="System.Composition" Version="8.0.0" />
 		<PackageReference Include="System.Data.DataSetExtensions" Version="4.6.0-preview3.19128.7" />
-		<PackageReference Include="System.Drawing.Common" Version="6.0.0" />
 		<PackageReference Include="System.Drawing.Primitives" Version="4.3.0" />
 		<PackageReference Include="System.IO.Compression" Version="4.3.0" />
 		<PackageReference Include="System.Linq.Queryable" Version="4.3.0" />
 		<PackageReference Include="System.Net.Http" Version="4.3.4" />
 		<PackageReference Include="System.Net.Requests" Version="4.3.0" />
 		<PackageReference Include="System.Net.WebHeaderCollection" Version="4.3.0" />
-		<PackageReference Include="System.Resources.Extensions" Version="6.0.0" />
+		<PackageReference Include="System.Resources.Extensions" Version="8.0.0" />
 		<PackageReference Include="System.Runtime" Version="4.3.1" />
 		<PackageReference Include="System.Runtime.CompilerServices.Unsafe" Version="6.0.0" />
-		<PackageReference Include="System.Text.Encoding.CodePages" Version="6.0.0" />
-		<PackageReference Include="System.Text.Encodings.Web" Version="6.0.0" />
+		<PackageReference Include="System.Text.Encoding.CodePages" Version="8.0.0" />
+		<PackageReference Include="System.Text.Encodings.Web" Version="8.0.0" />
 	</ItemGroup>
 
   <PropertyGroup Condition=" '$(Configuration)|$(TargetFramework)' == 'mzkit_win32|net48' ">

@@ -59,12 +59,15 @@
 #End Region
 
 Imports System.Drawing
-Imports System.Drawing.Imaging
 Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Imaging.BitmapImage
 Imports Microsoft.VisualBasic.MIME.Html.CSS
 Imports Microsoft.VisualBasic.Net.Http
+
+#If NET48 Then
+Imports Microsoft.VisualBasic.Drawing
+#End If
 
 Namespace Driver
 
@@ -84,13 +87,13 @@ Namespace Driver
             MyBase.New(img, size, padding)
 
             If img.GetType() Is GetType(Bitmap) Then
-                Image = CType(DirectCast(img, Bitmap), Drawing.Image)
+                Image = CType(DirectCast(img, Bitmap), Image)
             Else
-                Image = DirectCast(img, Drawing.Image)
+                Image = DirectCast(img, Image)
             End If
         End Sub
 
-        Sub New(image As Drawing.Image)
+        Sub New(image As Image)
             Call Me.New(image, image.Size, New Padding)
         End Sub
 
@@ -126,12 +129,24 @@ Namespace Driver
             If path.ExtensionSuffix.TextEquals("svg") Then
                 Call String.Format(InvalidSuffix, path.ToFileURL).Warning
             End If
+
+#If NET48 Then
             Return Image.SaveAs(path, ImageData.DefaultFormat)
+#Else
+            Using s As Stream = path.Open(FileMode.OpenOrCreate, doClear:=True)
+                Return Save(s, ImageData.DefaultFormat)
+            End Using
+#End If
         End Function
 
         Public Overloads Function Save(stream As Stream, format As ImageFormats) As Boolean Implements SaveGdiBitmap.Save
             Try
+#If NET48 Then
                 Call Image.Save(stream, format.GetFormat)
+#Else
+                Call Image.Save(stream, format)
+#End If
+
             Catch ex As Exception
                 Call App.LogException(ex)
                 Return False
@@ -142,7 +157,11 @@ Namespace Driver
 
         Public Overrides Function Save(out As Stream) As Boolean
             Try
+#If NET48 Then
                 Call Image.Save(out, DefaultFormat.GetFormat)
+#Else
+                Call Image.Save(out, DefaultFormat)
+#End If
             Catch ex As Exception
                 Call App.LogException(ex)
                 Return False

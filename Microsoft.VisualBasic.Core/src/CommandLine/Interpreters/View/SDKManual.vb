@@ -71,6 +71,7 @@ Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.My.JavaScript
 Imports Microsoft.VisualBasic.Scripting
 Imports Microsoft.VisualBasic.Text
+Imports ASCII = Microsoft.VisualBasic.Text.ASCII
 Imports AssemblyMeta = Microsoft.VisualBasic.ApplicationServices.Development.AssemblyInfo
 Imports VBCore = Microsoft.VisualBasic.App
 

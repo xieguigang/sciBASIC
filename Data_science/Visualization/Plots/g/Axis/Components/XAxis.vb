@@ -62,6 +62,28 @@ Imports Microsoft.VisualBasic.MIME.Html.Render
 Imports Microsoft.VisualBasic.Text.Parser.HtmlParser
 Imports std = System.Math
 
+#If NET48 Then
+Imports Pen = System.Drawing.Pen
+Imports Pens = System.Drawing.Pens
+Imports Brush = System.Drawing.Brush
+Imports Font = System.Drawing.Font
+Imports Brushes = System.Drawing.Brushes
+Imports SolidBrush = System.Drawing.SolidBrush
+Imports DashStyle = System.Drawing.Drawing2D.DashStyle
+Imports Image = System.Drawing.Image
+Imports Bitmap = System.Drawing.Bitmap
+#Else
+Imports Pen = Microsoft.VisualBasic.Imaging.Pen
+Imports Pens = Microsoft.VisualBasic.Imaging.Pens
+Imports Brush = Microsoft.VisualBasic.Imaging.Brush
+Imports Font = Microsoft.VisualBasic.Imaging.Font
+Imports Brushes = Microsoft.VisualBasic.Imaging.Brushes
+Imports SolidBrush = Microsoft.VisualBasic.Imaging.SolidBrush
+Imports DashStyle = Microsoft.VisualBasic.Imaging.DashStyle
+Imports Image = Microsoft.VisualBasic.Imaging.Image
+Imports Bitmap = Microsoft.VisualBasic.Imaging.Bitmap
+#End If
+
 Namespace Graphic.Axis
 
     Public Class XAxis
@@ -210,13 +232,11 @@ Namespace Graphic.Axis
 
                 Call g.DrawLine(pen, axisX, New PointF(x, ZERO.Y + d!))
 
-                If xRotate <> 0 AndAlso TypeOf g Is Graphics2D Then
-                    Dim text As New GraphicsText(g)
-
+                If xRotate <> 0 Then
                     If xRotate > 0 Then
-                        Call text.DrawString(labelText, tickFont, tickColor, New Point(x, ZERO.Y + d * 1.2), angle:=xRotate)
+                        Call g.DrawString(labelText, tickFont, tickColor, x, ZERO.Y + d * 1.2, angle:=xRotate)
                     Else
-                        Call text.DrawString(labelText, tickFont, tickColor, New Point(x, ZERO.Y + sz.Height * std.Sin(xRotate * 180 / std.PI)), angle:=xRotate)
+                        Call g.DrawString(labelText, tickFont, tickColor, x, ZERO.Y + sz.Height * std.Sin(xRotate * 180 / std.PI), angle:=xRotate)
                     End If
                 Else
                     Call g.DrawString(labelText, tickFont, tickColor, New Point(x - sz.Width / 2, ZERO.Y + d * 1.2))

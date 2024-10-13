@@ -58,7 +58,6 @@ Imports System.Drawing
 Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports Microsoft.VisualBasic.Language
-Imports Microsoft.VisualBasic.Text
 
 Namespace Drawing2D.Text
 

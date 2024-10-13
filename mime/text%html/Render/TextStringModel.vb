@@ -68,6 +68,18 @@ Imports Microsoft.VisualBasic.MIME.Html.Document
 Imports Microsoft.VisualBasic.MIME.Html.Language.CSS
 Imports Microsoft.VisualBasic.Text.Xml
 
+#If NET48 Then
+Imports Font = System.Drawing.Font
+Imports Pen = System.Drawing.Pen
+Imports DashStyle = System.Drawing.Drawing2D.DashStyle
+Imports FontStyle = System.Drawing.FontStyle
+#Else
+Imports Font = Microsoft.VisualBasic.Imaging.Font
+Imports Pen = Microsoft.VisualBasic.Imaging.Pen
+Imports DashStyle = Microsoft.VisualBasic.Imaging.DashStyle
+Imports FontStyle = Microsoft.VisualBasic.Imaging.FontStyle
+#End If
+
 Namespace Render
 
     ''' <summary>

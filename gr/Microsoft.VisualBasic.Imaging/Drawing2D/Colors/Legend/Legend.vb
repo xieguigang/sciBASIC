@@ -146,11 +146,12 @@ Namespace Drawing2D.Colors
 
             Dim plotInternal =
                 Sub(ByRef g As IGraphics, region As GraphicsRegion)
+                    Dim titleFontHeight As Single = g.MeasureString("A", titleFont).Height
                     Dim layout As New Rectangle With {
                         .X = 0,
                         .Y = 0,
                         .Width = region.Width,
-                        .Height = region.Height - titleFont.Height - 5
+                        .Height = region.Height - titleFontHeight - 5
                     }
 
                     Call g.ColorMapLegend(
@@ -250,6 +251,8 @@ Namespace Drawing2D.Colors
                 y += d
             Next
 
+            Dim tickFontHeight As Single = g.MeasureString("A", tickFont).Height
+
             If Not unmapColor.StringEmpty Then
                 Dim color As Brush = unmapColor.GetBrush
 
@@ -260,7 +263,7 @@ Namespace Drawing2D.Colors
                 }
                 point = New PointF With {
                     .X = legendOffsetLeft + legendWidth + 5,
-                    .Y = y + (d - tickFont.Height) / 2
+                    .Y = y + (d - tickFontHeight) / 2
                 }
                 g.FillRectangle(color, rect:=rect)
                 g.DrawString("Unknown", tickFont, fontColor, point)
@@ -277,9 +280,9 @@ Namespace Drawing2D.Colors
             g.DrawLine(Pens.Black, x, y, x + ruleOffset, y)
             g.DrawLine(Pens.Black, x, y + legendHeight, x + ruleOffset, y + legendHeight)
 
-            Dim tickOffset As Double = If(App.IsMicrosoftPlatform, tickFont.Height / 2, 0)
+            Dim tickOffset As Double = If(App.IsMicrosoftPlatform, tickFontHeight / 2, 0)
 
-            y -= tickFont.Height
+            y -= tickFontHeight
             x += ruleOffset + 5
             point = New PointF(x, y - tickOffset)
             g.DrawString(ticks.Max.ToString(format), tickFont, fontColor, point)
@@ -298,8 +301,8 @@ Namespace Drawing2D.Colors
 
             y += delta
             x -= ruleOffset
-            tickFont = New Font(tickFont.FontFamily, tickFont.Size * 2.5 / 3)
-            tickOffset = If(App.IsMicrosoftPlatform, tickFont.Height, 0)
+            tickFont = New Font(tickFont.Name, tickFont.Size * 2.5 / 3)
+            tickOffset = If(App.IsMicrosoftPlatform, tickFontHeight, 0)
 
             ' 画出剩余的小标尺
             For Each tick As Double In ticks

@@ -1,5 +1,6 @@
 ﻿#Region "Microsoft.VisualBasic::1024bad1bda5129e07c8c9c48140912d, Microsoft.VisualBasic.Core\src\Extensions\WebServices\WebServiceUtils.vb"
 
+
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
@@ -68,6 +69,75 @@
     ' 
     ' /********************************************************************************/
 
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+' /********************************************************************************/
+
+' Summaries:
+
+
+' Code Statistics:
+
+'   Total Lines: 944
+'    Code Lines: 574 (60.81%)
+' Comment Lines: 238 (25.21%)
+'    - Xml Docs: 89.50%
+' 
+'   Blank Lines: 132 (13.98%)
+'     File Size: 34.03 KB
+
+
+' Module WebServiceUtils
+' 
+'     Properties: DefaultUA, LocalIPAddress, Protocols, Proxy
+' 
+'     Constructor: (+1 Overloads) Sub New
+' 
+'     Function: BuildArgs, (+2 Overloads) BuildReqparm, BuildUrlData, CheckValidationResult, DownloadFile
+'               GetDownload, getIPAddressInternal, GetMyIPAddress, GetProxy, (+2 Overloads) GetRequest
+'               GetRequestRaw, isFilePath, IsSocketPortOccupied, isURL, IsURLPattern
+'               ParseUrlQueryParameters, (+2 Overloads) POST, POSTFile, PostMultipartForm, (+2 Overloads) PostRequest
+'               PostUrlDataParser, QueryStringParameters, readStreamText, UrlDecode, UrlEncode
+'               UrlPathEncode
+' 
+'     Sub: (+2 Overloads) SetProxy, UrlDecode, UrlEncode
+'     Class WebClient
+' 
+'         Properties: timeout
+' 
+'         Constructor: (+1 Overloads) Sub New
+'         Function: GetWebRequest
+' 
+' 
+' 
+' /********************************************************************************/
+
+
 #End Region
 
 Imports System.Collections.Specialized
@@ -87,15 +157,13 @@ Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Linq.Extensions
+Imports Microsoft.VisualBasic.Net
 Imports Microsoft.VisualBasic.Net.Http
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.Text
+Imports ASCII = Microsoft.VisualBasic.Text.ASCII
 Imports IPEndPoint = Microsoft.VisualBasic.Net.IPEndPoint
 Imports r = System.Text.RegularExpressions.Regex
-
-#If NET_48 Or NETCOREAPP Then
-Imports Microsoft.VisualBasic.Net
-#End If
 
 ''' <summary>
 ''' The extension module for web services works.

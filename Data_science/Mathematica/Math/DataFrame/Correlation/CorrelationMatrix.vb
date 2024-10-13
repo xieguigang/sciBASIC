@@ -167,6 +167,10 @@ Public Class CorrelationMatrix : Inherits DataMatrix
         Return New CorrelationMatrix(names, pow, pvalueMat)
     End Function
 
+    ''' <summary>
+    ''' get the sign of the correlation value
+    ''' </summary>
+    ''' <returns></returns>
     Public Function Sign() As Double()()
         Return matrix _
             .Select(Function(c)

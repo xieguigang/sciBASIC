@@ -199,7 +199,7 @@ Namespace Graphic.Axis
         ''' <param name="scaler"></param>
         ''' <param name="bottom">
         ''' 如果是正常的坐标系，那么这个值就必须是一个正数，值为绘图区域的<paramref name="bottom"/>的y值，
-        ''' 否则获取得到的y值将会是颠倒过来的，除非将<see cref="Graphics"/>的旋转矩阵给颠倒了
+        ''' 否则获取得到的y值将会是颠倒过来的，除非将<see cref="IGraphics"/>的旋转矩阵给颠倒了
         ''' </param>
         ''' <returns></returns>
         <Extension>

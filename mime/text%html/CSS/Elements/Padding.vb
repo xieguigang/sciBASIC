@@ -232,7 +232,7 @@ Namespace CSS
         Public ReadOnly Property LayoutVector As Single()
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
-                Return {Top, Right, Bottom, Left}
+                Return Me
             End Get
         End Property
 
@@ -245,6 +245,26 @@ Namespace CSS
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Narrowing Operator CType(padding As Padding) As String
             Return padding.ToString
+        End Operator
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Narrowing Operator CType(padding As Padding) As Integer()
+            Return New Integer() {
+                padding.Top,
+                padding.Right,
+                padding.Bottom,
+                padding.Left
+            }
+        End Operator
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Narrowing Operator CType(padding As Padding) As Single()
+            Return New Single() {
+                padding.Top,
+                padding.Right,
+                padding.Bottom,
+                padding.Left
+            }
         End Operator
 
         ''' <summary>

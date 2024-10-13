@@ -68,8 +68,8 @@ Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Imaging
-Imports Microsoft.VisualBasic.Text
 Imports Microsoft.VisualBasic.ValueTypes
+Imports ASCII = Microsoft.VisualBasic.Text.ASCII
 
 Namespace Scripting.Runtime
 
@@ -420,11 +420,6 @@ Namespace Scripting.Runtime
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function CastFileInfo(path As String) As FileInfo
             Return FileIO.FileSystem.GetFileInfo(path)
-        End Function
-
-        <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Function CastGDIPlusDeviceHandle(path As String) As Graphics2D
-            Return CanvasCreateFromImageFile(path)
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>

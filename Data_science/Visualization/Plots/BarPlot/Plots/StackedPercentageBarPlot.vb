@@ -67,6 +67,32 @@ Imports Microsoft.VisualBasic.MIME.Html.CSS
 Imports Microsoft.VisualBasic.MIME.Html.Render
 Imports std = System.Math
 
+#If NET48 Then
+Imports Pen = System.Drawing.Pen
+Imports Pens = System.Drawing.Pens
+Imports Brush = System.Drawing.Brush
+Imports Font = System.Drawing.Font
+Imports Brushes = System.Drawing.Brushes
+Imports SolidBrush = System.Drawing.SolidBrush
+Imports DashStyle = System.Drawing.Drawing2D.DashStyle
+Imports Image = System.Drawing.Image
+Imports Bitmap = System.Drawing.Bitmap
+Imports GraphicsPath = System.Drawing.Drawing2D.GraphicsPath
+Imports FontStyle = System.Drawing.FontStyle
+#Else
+Imports Pen = Microsoft.VisualBasic.Imaging.Pen
+Imports Pens = Microsoft.VisualBasic.Imaging.Pens
+Imports Brush = Microsoft.VisualBasic.Imaging.Brush
+Imports Font = Microsoft.VisualBasic.Imaging.Font
+Imports Brushes = Microsoft.VisualBasic.Imaging.Brushes
+Imports SolidBrush = Microsoft.VisualBasic.Imaging.SolidBrush
+Imports DashStyle = Microsoft.VisualBasic.Imaging.DashStyle
+Imports Image = Microsoft.VisualBasic.Imaging.Image
+Imports Bitmap = Microsoft.VisualBasic.Imaging.Bitmap
+Imports GraphicsPath = Microsoft.VisualBasic.Imaging.GraphicsPath
+Imports FontStyle = Microsoft.VisualBasic.Imaging.FontStyle
+#End If
+
 Namespace BarPlot
 
     Public Class StackedPercentageBarPlot : Inherits Plot
@@ -169,10 +195,10 @@ Namespace BarPlot
             Dim serialBrushes As NamedValue(Of SolidBrush)() = data.loadBrushes.ToArray
             Dim wb = BarWidth(width, data.Samples.Length, interval)
 
-            Call New GraphicsText(DirectCast(g, Graphics2D).Graphics).DrawString(
+            Call g.DrawString(
                 ylabel, axisFont,
                 Brushes.Black,
-                New PointF((canvas.Padding.Left - axisFont.Height), height / 2),
+                canvas.Padding.Left - axisFont.Height, height / 2,
                 angle:=-90)
 
             ' 绘制y轴

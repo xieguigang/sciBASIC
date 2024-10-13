@@ -62,7 +62,7 @@ Imports System.Text.RegularExpressions
 Imports Microsoft.VisualBasic.MIME.Html.Render.CSS
 
 Namespace Render
-
+#If NET48 Then
     Public Class HtmlTag
 #Region "Fields"
 
@@ -306,4 +306,5 @@ Namespace Render
         End Function
 #End Region
     End Class
+#End If
 End Namespace

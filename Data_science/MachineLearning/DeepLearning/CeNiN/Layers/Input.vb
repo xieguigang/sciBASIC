@@ -1,68 +1,95 @@
 ﻿#Region "Microsoft.VisualBasic::599e0d3175de92970d991a6b01e664a2, Data_science\MachineLearning\DeepLearning\CeNiN\Layers\Input.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 102
-    '    Code Lines: 75 (73.53%)
-    ' Comment Lines: 11 (10.78%)
-    '    - Xml Docs: 100.00%
-    ' 
-    '   Blank Lines: 16 (15.69%)
-    '     File Size: 3.62 KB
+' Summaries:
 
 
-    '     Class Input
-    ' 
-    '         Properties: resizedInputBmp, type
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    ' 
-    '         Function: feedNext, layerFeedNext, setInput
-    ' 
-    '         Sub: setOutputDims
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 102
+'    Code Lines: 75 (73.53%)
+' Comment Lines: 11 (10.78%)
+'    - Xml Docs: 100.00%
+' 
+'   Blank Lines: 16 (15.69%)
+'     File Size: 3.62 KB
+
+
+'     Class Input
+' 
+'         Properties: resizedInputBmp, type
+' 
+'         Constructor: (+1 Overloads) Sub New
+' 
+'         Function: feedNext, layerFeedNext, setInput
+' 
+'         Sub: setOutputDims
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
-Imports System.Drawing
-Imports System.Drawing.Imaging
 Imports System.Runtime.CompilerServices
 Imports System.Runtime.InteropServices
 Imports Microsoft.VisualBasic.MachineLearning.Convolutional.ImageProcessor
+Imports System.Drawing
+Imports Microsoft.VisualBasic.Imaging.BitmapImage
+
+
+#If NET48 Then
+Imports Pen = System.Drawing.Pen
+Imports Pens = System.Drawing.Pens
+Imports Brush = System.Drawing.Brush
+Imports Font = System.Drawing.Font
+Imports Brushes = System.Drawing.Brushes
+Imports SolidBrush = System.Drawing.SolidBrush
+Imports DashStyle = System.Drawing.Drawing2D.DashStyle
+Imports Image = System.Drawing.Image
+Imports Bitmap = System.Drawing.Bitmap
+Imports GraphicsPath = System.Drawing.Drawing2D.GraphicsPath
+Imports FontStyle = System.Drawing.FontStyle
+#Else
+Imports Pen = Microsoft.VisualBasic.Imaging.Pen
+Imports Pens = Microsoft.VisualBasic.Imaging.Pens
+Imports Brush = Microsoft.VisualBasic.Imaging.Brush
+Imports Font = Microsoft.VisualBasic.Imaging.Font
+Imports Brushes = Microsoft.VisualBasic.Imaging.Brushes
+Imports SolidBrush = Microsoft.VisualBasic.Imaging.SolidBrush
+Imports DashStyle = Microsoft.VisualBasic.Imaging.DashStyle
+Imports Image = Microsoft.VisualBasic.Imaging.Image
+Imports Bitmap = Microsoft.VisualBasic.Imaging.Bitmap
+Imports GraphicsPath = Microsoft.VisualBasic.Imaging.GraphicsPath
+Imports FontStyle = Microsoft.VisualBasic.Imaging.FontStyle
+#End If
 
 Namespace Convolutional
 
@@ -117,7 +144,7 @@ Namespace Convolutional
         ''' <returns></returns>
         Public Overrides Function feedNext() As Layer
             Dim fullImage As New Rectangle(0, 0, inputSize(1), inputSize(0))
-            Dim bmpData As BitmapData = _resizedInputBmp.LockBits(fullImage, ImageLockMode.ReadOnly, _resizedInputBmp.PixelFormat)
+            Dim bmpData As BitmapBuffer = BitmapBuffer.FromBitmap(_resizedInputBmp)
             Dim stride As Integer = bmpData.Stride
             Dim emptyBytesCount As Integer = stride - bmpData.Width * 3
             Dim rowLengthWithoutEB As Integer = stride - emptyBytesCount
@@ -153,7 +180,6 @@ Namespace Convolutional
                 End If
             End While
 
-            Call _resizedInputBmp.UnlockBits(bmpData)
             Call _resizedInputBmp.Dispose()
 
             Return Me

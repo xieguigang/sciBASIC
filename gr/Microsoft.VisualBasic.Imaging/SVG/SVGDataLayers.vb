@@ -72,6 +72,10 @@ Namespace SVG
 
         Protected Friend bg$
         Protected Friend size As Size
+
+        ''' <summary>
+        ''' the svg xml document data
+        ''' </summary>
         Protected Friend svg As SvgDocument
         Protected Friend layers As New List(Of SvgContainer)
 
@@ -88,6 +92,12 @@ Namespace SVG
             Me.size = size
         End Sub
 
+        Sub New(svg As SvgDocument)
+            Me.svg = svg
+            Me.bg = svg.Fill
+            Me.size = New Size(svg.Width, svg.Height)
+        End Sub
+
         ''' <summary>
         ''' reset
         ''' </summary>
@@ -99,10 +109,10 @@ Namespace SVG
         End Sub
 
         ''' <summary>
-        ''' 
+        ''' Apply of the graphics filter to a specific layer
         ''' </summary>
-        ''' <param name="zindex%">图层的编号</param>
-        ''' <param name="filter$">filter的id编号</param>
+        ''' <param name="zindex">图层的编号</param>
+        ''' <param name="filter">filter的id编号</param>
         Public Sub ApplyFilter(zindex%, filter$)
             layers(zindex).filter = $"url(#{filter})"
         End Sub
@@ -110,8 +120,8 @@ Namespace SVG
         ''' <summary>
         ''' 通过元素选择器来设置滤镜，函数返回所有<paramref name="selector"/>查找成功的图层的编号
         ''' </summary>
-        ''' <param name="selector$"></param>
-        ''' <param name="filter$"></param>
+        ''' <param name="selector"></param>
+        ''' <param name="filter"></param>
         Public Iterator Function ApplyFilter(selector$, filter$) As IEnumerable(Of Integer)
 
         End Function

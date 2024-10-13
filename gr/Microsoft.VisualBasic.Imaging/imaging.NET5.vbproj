@@ -2,7 +2,7 @@
 
 	<PropertyGroup>
 		<RootNamespace>Microsoft.VisualBasic.Imaging</RootNamespace>
-    <TargetFrameworks>net6.0-windows;net6.0;net48</TargetFrameworks>
+    <TargetFrameworks>net8.0-windows;net8.0;net48</TargetFrameworks>
 		<AssemblyName>Microsoft.VisualBasic.Imaging</AssemblyName>
 		<Platforms>AnyCPU;x64</Platforms>
 		<Configurations>Debug;Release;LipidSearch;Rsharp_app_release;mzkit;NPSearch;mzkit_win32;gcmodeller_desktop;CFD_win32;nuget_release</Configurations>
@@ -677,6 +677,94 @@
 	  <DefineTrace>True</DefineTrace>
 	</PropertyGroup>
 
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net8.0-windows|x64'">
+	  <RemoveIntegerChecks>True</RemoveIntegerChecks>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net8.0|x64'">
+	  <RemoveIntegerChecks>True</RemoveIntegerChecks>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net8.0-windows|AnyCPU'">
+	  <RemoveIntegerChecks>True</RemoveIntegerChecks>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net8.0|AnyCPU'">
+	  <RemoveIntegerChecks>True</RemoveIntegerChecks>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='LipidSearch|net8.0-windows|AnyCPU'">
+	  <RemoveIntegerChecks>True</RemoveIntegerChecks>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='LipidSearch|net8.0|AnyCPU'">
+	  <RemoveIntegerChecks>True</RemoveIntegerChecks>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Rsharp_app_release|net8.0-windows|AnyCPU'">
+	  <RemoveIntegerChecks>True</RemoveIntegerChecks>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Rsharp_app_release|net8.0|AnyCPU'">
+	  <RemoveIntegerChecks>True</RemoveIntegerChecks>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='mzkit|net8.0-windows|AnyCPU'">
+	  <RemoveIntegerChecks>True</RemoveIntegerChecks>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='mzkit|net8.0|AnyCPU'">
+	  <RemoveIntegerChecks>True</RemoveIntegerChecks>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='NPSearch|net8.0-windows|AnyCPU'">
+	  <RemoveIntegerChecks>True</RemoveIntegerChecks>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='NPSearch|net8.0|AnyCPU'">
+	  <RemoveIntegerChecks>True</RemoveIntegerChecks>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='NPSearch|net8.0-windows|x64'">
+	  <RemoveIntegerChecks>True</RemoveIntegerChecks>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='NPSearch|net8.0|x64'">
+	  <RemoveIntegerChecks>True</RemoveIntegerChecks>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='mzkit_win32|net8.0-windows|AnyCPU'">
+	  <RemoveIntegerChecks>True</RemoveIntegerChecks>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='mzkit_win32|net8.0|AnyCPU'">
+	  <RemoveIntegerChecks>True</RemoveIntegerChecks>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='gcmodeller_desktop|net8.0-windows|AnyCPU'">
+	  <RemoveIntegerChecks>True</RemoveIntegerChecks>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='gcmodeller_desktop|net8.0|AnyCPU'">
+	  <RemoveIntegerChecks>True</RemoveIntegerChecks>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='CFD_win32|net8.0-windows|AnyCPU'">
+	  <RemoveIntegerChecks>True</RemoveIntegerChecks>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='CFD_win32|net8.0|AnyCPU'">
+	  <RemoveIntegerChecks>True</RemoveIntegerChecks>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='nuget_release|net8.0-windows|AnyCPU'">
+	  <RemoveIntegerChecks>True</RemoveIntegerChecks>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='nuget_release|net8.0|AnyCPU'">
+	  <RemoveIntegerChecks>True</RemoveIntegerChecks>
+	</PropertyGroup>
+
 	<ItemGroup>
 		<Compile Remove="Drawing3D\Models\screenshots\**" />
 		<Compile Remove="test\**" />
@@ -703,9 +791,8 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="System.Drawing.Common" Version="6.0.0" />
 		<PackageReference Include="System.Drawing.Primitives" Version="4.3.0" />
-		<PackageReference Include="System.Resources.Extensions" Version="6.0.0">
+		<PackageReference Include="System.Resources.Extensions" Version="8.0.0">
 		  <GeneratePathProperty>True</GeneratePathProperty>
 		</PackageReference>
 	</ItemGroup>
@@ -722,10 +809,14 @@
 	<ItemGroup>
 		<ProjectReference Include="..\..\Data_science\Mathematica\Math\Math\Math.NET5.vbproj" />
 		<ProjectReference Include="..\..\Microsoft.VisualBasic.Core\src\Core.vbproj" />
-		<ProjectReference Include="..\..\mime\text%html\html_netcore5.vbproj" />
+		<ProjectReference Include="..\..\mime\text%html\html_netcore5.vbproj" />		
 	</ItemGroup>
 
   <ItemGroup Condition=" '$(TargetFramework)' == 'net48' ">
+    <ProjectReference Include="..\Drawing-net4.8\Drawing-net4.8.vbproj" />
+  </ItemGroup>
+
+    <ItemGroup Condition=" '$(TargetFramework)' == 'net48' ">
     <Reference Include="PresentationCore">
       <HintPath>C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\PresentationCore.dll</HintPath>
     </Reference>

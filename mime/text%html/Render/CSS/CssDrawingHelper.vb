@@ -66,7 +66,7 @@ Imports System.Drawing.Drawing2D
 Imports rect = System.Drawing.Rectangle
 
 Namespace Render.CSS
-
+#If NET48 Then
     ''' <summary>
     ''' Provides some drawing functionallity
     ''' </summary>
@@ -344,4 +344,5 @@ Namespace Render.CSS
             Return path
         End Function
     End Class
+#End If
 End Namespace

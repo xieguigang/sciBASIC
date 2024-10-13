@@ -363,7 +363,7 @@ Namespace Heatmap
                                 .Height = matrixPlotRegion.Height
                             }
                         rowKeys = configDendrogramCanvas(cluster, drawClass.rowClass) _
-                                .Paint(DirectCast(g, Graphics2D), New Rectangle(topleft, dsize)) _
+                                .Paint(g, New Rectangle(topleft, dsize)) _
                                 .OrderBy(Function(x) x.Value.Y) _
                                 .Keys
                         'Catch ex As Exception
@@ -384,7 +384,7 @@ Namespace Heatmap
                         Dim cluster As Cluster = Time(AddressOf array.Transpose.RunCluster)
 
                         colKeys = configDendrogramCanvas(cluster, drawClass.colClass) _
-                            .Paint(DirectCast(g, Graphics2D), New Rectangle(300, 100, 500, 500)) _
+                            .Paint(g, New Rectangle(300, 100, 500, 500)) _
                             .OrderBy(Function(x) x.Value.X) _
                             .Keys
                     Else
@@ -418,10 +418,10 @@ Namespace Heatmap
 
                     ' 绘制下方的矩阵的列标签
                     If drawLabels = DrawElements.Both OrElse drawLabels = DrawElements.Cols Then
-                        Dim text As New GraphicsText(DirectCast(g, Graphics2D).Graphics)
-                        Dim format As New StringFormat() With {
-                            .FormatFlags = StringFormatFlags.MeasureTrailingSpaces
-                        }
+                        'Dim text As New GraphicsText(DirectCast(g, Graphics2D).Graphics)
+                        'Dim format As New StringFormat() With {
+                        '    .FormatFlags = StringFormatFlags.MeasureTrailingSpaces
+                        '}
 
                         For Each key$ In keys
                             Dim sz = g.MeasureString(key$, colLabelFont) ' 得到斜边的长度
@@ -429,7 +429,7 @@ Namespace Heatmap
                             Dim dy! = sz.Width * std.Sin(angle) + (sz.Width / 2) * std.Cos(angle) - sz.Height
                             Dim pos As New PointF(left - dx, top - dy)
 
-                            Call text.DrawString(key$, colLabelFont, Brushes.Black, pos, angle, format)
+                            Call g.DrawString(key$, colLabelFont, Brushes.Black, pos.X, pos.Y, angle)
 
                             left += dw
                         Next

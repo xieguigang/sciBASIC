@@ -75,6 +75,30 @@ Imports Microsoft.VisualBasic.Scripting.Runtime
 Imports Microsoft.VisualBasic.Text.Parser.HtmlParser
 Imports std = System.Math
 
+#If NET48 Then
+Imports Pen = System.Drawing.Pen
+Imports Pens = System.Drawing.Pens
+Imports Brush = System.Drawing.Brush
+Imports Font = System.Drawing.Font
+Imports Brushes = System.Drawing.Brushes
+Imports SolidBrush = System.Drawing.SolidBrush
+Imports DashStyle = System.Drawing.Drawing2D.DashStyle
+Imports Image = System.Drawing.Image
+Imports Bitmap = System.Drawing.Bitmap
+Imports GraphicsPath = System.Drawing.Drawing2D.GraphicsPath
+#Else
+Imports Pen = Microsoft.VisualBasic.Imaging.Pen
+Imports Pens = Microsoft.VisualBasic.Imaging.Pens
+Imports Brush = Microsoft.VisualBasic.Imaging.Brush
+Imports Font = Microsoft.VisualBasic.Imaging.Font
+Imports Brushes = Microsoft.VisualBasic.Imaging.Brushes
+Imports SolidBrush = Microsoft.VisualBasic.Imaging.SolidBrush
+Imports DashStyle = Microsoft.VisualBasic.Imaging.DashStyle
+Imports Image = Microsoft.VisualBasic.Imaging.Image
+Imports Bitmap = Microsoft.VisualBasic.Imaging.Bitmap
+Imports GraphicsPath = Microsoft.VisualBasic.Imaging.GraphicsPath
+#End If
+
 Namespace Graphic.Axis
 
     Public Module Axis
@@ -430,7 +454,8 @@ Namespace Graphic.Axis
                     Dim labelImage As Image = label.__plotLabel(labelFont, False)
 
                     ' y轴标签文本是旋转90度绘制于左边
-                    labelImage = labelImage.RotateImage(-90)
+                    ' labelImage = labelImage.RotateImage(-90)
+                    Throw New NotImplementedException
 
                     Dim location As New Point With {
                         .X = scaler.region.Left - labelImage.Width + maxYTickSize,
@@ -450,16 +475,7 @@ Namespace Graphic.Axis
                         location = New PointF(5, location.Y)
                     End If
 
-                    ' Call $"[Y:={label}] {location.ToString}".__INFO_ECHO
-                    If TypeOf g Is Graphics2D Then
-                        With New GraphicsText(DirectCast(g, Graphics2D).Graphics)
-                            Call .DrawString(label, font, labelColor, location, -90)
-                        End With
-                    ElseIf TypeOf g Is GraphicsSVG Then
-                        Call DirectCast(g, GraphicsSVG).DrawString(label, font, labelColor, location.X, location.Y, -90)
-                    Else
-                        Call g.DrawString(label, font, labelColor, location)
-                    End If
+                    Call g.DrawString(label, font, labelColor, location.X, location.Y, -90)
                 End If
             End If
         End Sub
@@ -472,8 +488,10 @@ Namespace Graphic.Axis
         ''' <returns></returns>
         <Extension>
         Friend Function __plotLabel(label$, css$, Optional throwEx As Boolean = True) As Image
+            Throw New NotImplementedException
+
             Try
-                Return TextRender.DrawHtmlText(label, css)
+                ' Return TextRender.DrawHtmlText(label, css)
             Catch ex As Exception
                 If throwEx Then
                     Throw
@@ -514,18 +532,14 @@ Namespace Graphic.Axis
         ''' <returns></returns>
         <Extension>
         Public Function DrawLabel(label$, font As Font, Optional fcolor$ = "black", Optional size$ = "500,300") As Image
-            Using g As Graphics2D = size.SizeParser.CreateGDIDevice(Color.Transparent)
-                With g
-                    Dim b As Brush = fcolor.GetBrush
+            Using g As IGraphics = DriverLoad.CreateGraphicsDevice(size.SizeParser, NameOf(Color.Transparent), driver:=Drivers.GDI)
+                Dim b As Brush = fcolor.GetBrush
 
-                    Call .DrawString(label, font, b, New Point)
+                Call g.DrawString(label, font, b, New Point)
 
-                    Dim img As Image =
-                        .ImageResource _
-                        .CorpBlank(blankColor:=Color.Transparent) _
-                        .RotateImage(-90)
-                    Return img
-                End With
+                ' Dim img As Image = DirectCast(g, GdiRasterGraphics).ImageResource.CorpBlank(blankColor:=Color.Transparent).RotateImage(-90)
+                ' Return img
+                Throw New NotImplementedException
             End Using
         End Function
 

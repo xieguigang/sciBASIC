@@ -64,7 +64,7 @@
 
 Imports System.IO
 Imports System.Text
-Imports Microsoft.VisualBasic.Text
+Imports ASCII = Microsoft.VisualBasic.Text.ASCII
 Imports BinaryReader = Microsoft.VisualBasic.Data.IO.HDF5.device.BinaryReader
 
 Namespace struct

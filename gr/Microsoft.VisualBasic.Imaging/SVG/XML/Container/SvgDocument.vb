@@ -76,7 +76,8 @@ Namespace SVG.XML
     ''' 
     ''' Scalable Vector Graphics (SVG) is an XML-based markup language for describing 
     ''' two-dimensional based vector graphics.
-    '''
+    ''' </summary>
+    ''' <remarks>
     ''' As such, it's a text-based, open Web standard for describing images that can 
     ''' be rendered cleanly at any size and are designed specifically to work well with 
     ''' other web standards including CSS, DOM, JavaScript, and SMIL. SVG is, 
@@ -92,10 +93,13 @@ Namespace SVG.XML
     ''' to do so. With proper libraries, SVG files can even be localized on-the-fly.
     '''
     ''' SVG has been developed by the World Wide Web Consortium (W3C) since 1999.
-    ''' </summary>
+    ''' </remarks>
     Public NotInheritable Class SvgDocument : Inherits SvgContainer
         Implements ISaveHandle
 
+        ''' <summary>
+        ''' the xml document model of the current svg document object
+        ''' </summary>
         ReadOnly _document As XmlDocument
 
         Dim _defs As SvgDefs
@@ -176,6 +180,24 @@ Namespace SVG.XML
             End Set
         End Property
 
+        ''' <summary>
+        ''' get the canvas view size of the current svg document.
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property ViewSize As Size
+            Get
+                With ViewBox
+                    Return New Size(.Width, .Height)
+                End With
+            End Get
+        End Property
+
+        Public ReadOnly Property BackgroundFill As String
+            Get
+
+            End Get
+        End Property
+
         Private Sub New(document As XmlDocument, element As XmlElement)
             MyBase.New(element)
             _document = document
@@ -184,7 +206,7 @@ Namespace SVG.XML
         ''' <summary>
         ''' set svg canvas size and viewbox size
         ''' </summary>
-        ''' <param name="sz"></param>
+        ''' <param name="sz">set the viewbox size only</param>
         ''' <returns></returns>
         Public Function Size(sz As Size) As SvgDocument
             ' 20240910 svg width/height is a fixed layout data, if we set width via the css, then height will not change
@@ -216,6 +238,11 @@ Namespace SVG.XML
             Return New SvgDocument(document, rootElement)
         End Function
 
+        ''' <summary>
+        ''' Parse the given xml document text as svg doucment model
+        ''' </summary>
+        ''' <param name="xml"></param>
+        ''' <returns></returns>
         Public Shared Function Parse(xml As String) As SvgDocument
             Dim xmlDoc As New XmlDocument
             Dim svgEle As XmlElement

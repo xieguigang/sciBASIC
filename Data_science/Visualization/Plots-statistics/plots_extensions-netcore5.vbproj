@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <RootNamespace>Microsoft.VisualBasic.Data.ChartPlots.Statistics</RootNamespace>
-	  <TargetFrameworks>net6.0-windows;net6.0;net48</TargetFrameworks>
+    <TargetFrameworks>net8.0-windows;net8.0;net48</TargetFrameworks>
     <AssemblyName>Microsoft.VisualBasic.Data.ChartPlots.Statistics</AssemblyName>
     <Platforms>AnyCPU;x64</Platforms>
     <Configurations>Debug;Release;LipidSearch;Rsharp_app_release;mzkit;gcmodeller_desktop;nuget_release</Configurations>
@@ -340,9 +340,8 @@
   </ItemGroup>
 
   <ItemGroup>
-	  <PackageReference Include="System.Drawing.Common" Version="6.0.0" />
     <PackageReference Include="System.Drawing.Primitives" Version="4.3.0" />
-    <PackageReference Include="System.Resources.Extensions" Version="6.0.0" />
+    <PackageReference Include="System.Resources.Extensions" Version="8.0.0" />
   </ItemGroup>
 
 </Project>

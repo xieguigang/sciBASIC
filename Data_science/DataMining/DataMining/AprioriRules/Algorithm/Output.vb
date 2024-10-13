@@ -55,8 +55,8 @@
 #End Region
 
 Imports System.Text
-Imports Microsoft.VisualBasic.Text
 Imports Microsoft.VisualBasic.Text.Xml
+Imports ASCII = Microsoft.VisualBasic.Text.ASCII
 
 Namespace AprioriRules.Entities
 

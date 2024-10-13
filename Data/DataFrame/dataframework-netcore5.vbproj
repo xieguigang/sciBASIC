@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <RootNamespace>Microsoft.VisualBasic.Data.csv</RootNamespace>
-    <TargetFrameworks>net6.0-windows;net6.0;net48</TargetFrameworks>
+    <TargetFrameworks>net8.0-windows;net8.0;net48</TargetFrameworks>
     <AssemblyName>Microsoft.VisualBasic.Data.Framework</AssemblyName>
     <Platforms>AnyCPU;x64</Platforms>
     <Configurations>Debug;Release;LipidSearch;Rsharp_app_release;PlantMAT;mzkit;NPSearch;mzkit_win32;gcmodeller_desktop;nuget_release;Desktop</Configurations>
@@ -170,9 +170,9 @@
   <ItemGroup>
     <PackageReference Include="System.Data.DataSetExtensions" Version="4.6.0-preview3.19128.7" />
     <PackageReference Include="System.Linq.Queryable" Version="4.3.0" />
-    <PackageReference Include="System.Resources.Extensions" Version="6.0.0" />
+    <PackageReference Include="System.Resources.Extensions" Version="8.0.0" />
 	  <PackageReference Include="System.Runtime" Version="4.3.1" />
-	  <PackageReference Include="System.Composition" Version="6.0.0" />
+	  <PackageReference Include="System.Composition" Version="8.0.0" />
   </ItemGroup>
 
   <ItemGroup>

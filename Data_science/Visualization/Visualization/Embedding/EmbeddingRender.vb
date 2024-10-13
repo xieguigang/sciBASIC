@@ -56,9 +56,16 @@ Imports System.Drawing
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Canvas
 Imports Microsoft.VisualBasic.DataMining.ComponentModel
-Imports Microsoft.VisualBasic.DataMining.UMAP
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
 Imports Microsoft.VisualBasic.Linq
+
+#If NET48 Then
+Imports SolidBrush = System.Drawing.SolidBrush
+Imports Brushes = System.Drawing.Brushes
+#Else
+Imports SolidBrush = Microsoft.VisualBasic.Imaging.SolidBrush
+Imports Brushes = Microsoft.VisualBasic.Imaging.Brushes
+#End If
 
 Public MustInherit Class EmbeddingRender : Inherits Plot
 

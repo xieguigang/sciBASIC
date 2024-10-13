@@ -57,6 +57,12 @@ Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.MIME.Html.Language.CSS
 
+#If NET48 Then
+Imports FontStyle = System.Drawing.FontStyle
+#Else
+Imports FontStyle = Microsoft.VisualBasic.Imaging.FontStyle
+#End If
+
 Namespace CSS
 
     <HideModuleName>
