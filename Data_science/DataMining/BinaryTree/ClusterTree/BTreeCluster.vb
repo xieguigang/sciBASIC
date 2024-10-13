@@ -114,4 +114,19 @@ Public Class BTreeCluster : Implements INamedValue
             .data = data
         }
     End Function
+
+    Public Shared Sub PullAllClusterNodes(btree As BTreeCluster, ByRef pull As List(Of BTreeCluster))
+        If btree Is Nothing Then
+            Return
+        Else
+            If Not btree.left Is Nothing Then
+                pull.Add(btree.left)
+                BTreeCluster.PullAllClusterNodes(btree.left, pull)
+            End If
+            If Not btree.right Is Nothing Then
+                pull.Add(btree.right)
+                BTreeCluster.PullAllClusterNodes(btree.right, pull)
+            End If
+        End If
+    End Sub
 End Class
