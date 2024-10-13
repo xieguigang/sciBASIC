@@ -58,7 +58,6 @@ Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Math.Correlations
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
-Imports Microsoft.VisualBasic.Math.Scripting.Rscript
 
 Namespace Evaluation
 
@@ -96,11 +95,40 @@ Namespace Evaluation
             End With
         End Function
 
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="TPR"></param>
+        ''' <param name="FPR"></param>
+        ''' <returns></returns>
+        ''' <remarks>
+        ''' two input vector must be sorted
+        ''' </remarks>
         Public Function SimpleAUC(TPR As Vector, FPR As Vector) As Double
-            Dim dFPR As Vector = diff(FPR).AppendAfter(0).ToArray
-            Dim dTPR As Vector = diff(TPR).AppendAfter(0).ToArray
+            Dim auc As Double = 0.0
 
-            Return (TPR * dFPR).Sum + (dTPR * dFPR).Sum / 2
+            For i As Integer = 1 To FPR.Length - 1
+                auc += (FPR(i) - FPR(i - 1)) * (TPR(i) + TPR(i - 1)) / 2.0
+            Next
+
+            Return auc
+        End Function
+
+        ''' <summary>
+        ''' get the index of best threshold 
+        ''' </summary>
+        ''' <param name="TPR">sensibility</param>
+        ''' <param name="FPR"></param>
+        ''' <returns></returns>
+        ''' <remarks>
+        ''' Calculate the distance to the ideal point (0,1) for each row
+        ''' We use the euclidean distance: sqrt((1-TPR)^2 + (FPR)^2)
+        ''' 
+        ''' NA value will be ignored from this function automatically.
+        ''' </remarks>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function BestThreshold(TPR As Vector, FPR As Vector) As Integer
+            Return which.Min(Vector.Sqrt((1 - TPR) ^ 2 + (FPR) ^ 2).Select(Function(vi) If(vi.IsNaNImaginary, Double.MaxValue, vi)))
         End Function
 
         ''' <summary>

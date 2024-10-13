@@ -663,6 +663,9 @@ Namespace FileSystem
             Return Extensions.ReadText(Me, path)
         End Function
 
+        ''' <summary>
+        ''' Commit the metadata header stream into filesystem
+        ''' </summary>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Private Sub Flush() Implements IFileSystemEnvironment.Flush
             Call flushStreamPack()

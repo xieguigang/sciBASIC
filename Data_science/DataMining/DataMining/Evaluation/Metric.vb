@@ -74,7 +74,7 @@
 #End Region
 
 Imports Microsoft.VisualBasic.ComponentModel.Collection
-Imports stdNum = System.Math
+Imports std = System.Math
 
 Namespace Evaluation
 
@@ -154,7 +154,7 @@ Namespace Evaluation
             Dim sum = 0.0
 
             For i = 0 To pred.Length - 1
-                sum += stdNum.Pow(pred(i) - label(i), 2.0)
+                sum += std.Pow(pred(i) - label(i), 2.0)
             Next
 
             Return sum / pred.Length
@@ -164,7 +164,7 @@ Namespace Evaluation
             Dim sum = 0.0
 
             For i = 0 To pred.Length - 1
-                sum += stdNum.Abs(pred(i) - label(i))
+                sum += std.Abs(pred(i) - label(i))
             Next
 
             Return sum / pred.Length
@@ -210,5 +210,21 @@ Namespace Evaluation
                 Return a(1).CompareTo(b(1))
             End Function
         End Class
+
+        Public Shared Function crossEntropyLoss(predictions As Double(), labels As Double()) As Double
+            Dim loss As Double = 0
+
+            For i As Integer = 0 To predictions.Length - 1
+                If predictions(i) = 0.0 Then
+                    predictions(i) = 0.000000000000001
+                ElseIf predictions(i) = 1.0 Then
+                    predictions(i) = 1 - 0.000000000000001
+                End If
+
+                loss -= labels(i) * std.Log(predictions(i)) + (1 - labels(i)) * std.Log(1 - predictions(i))
+            Next
+
+            Return loss / predictions.Length
+        End Function
     End Class
 End Namespace

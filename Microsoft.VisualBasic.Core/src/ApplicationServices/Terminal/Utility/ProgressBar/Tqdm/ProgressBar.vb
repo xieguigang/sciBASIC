@@ -106,6 +106,12 @@ Namespace ApplicationServices.Terminal.ProgressBar.Tqdm
         Public Property UpdateDynamicConfigs As Boolean = True
         Public Property FormatTaskCounter As Func(Of Integer, String)
 
+        Public ReadOnly Property CurrentTicks As Integer
+            Get
+                Return _current
+            End Get
+        End Property
+
         ''' <summary>
         ''' Initializes a new instance of the ProgressBar class.
         ''' </summary>

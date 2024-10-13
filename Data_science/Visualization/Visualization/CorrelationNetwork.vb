@@ -1,53 +1,53 @@
 ﻿#Region "Microsoft.VisualBasic::0e95d9a5015c4d93d66074350c8cf5e6, Data_science\Visualization\Visualization\CorrelationNetwork.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 121
-    '    Code Lines: 91 (75.21%)
-    ' Comment Lines: 11 (9.09%)
-    '    - Xml Docs: 100.00%
-    ' 
-    '   Blank Lines: 19 (15.70%)
-    '     File Size: 4.37 KB
+' Summaries:
 
 
-    ' Module CorrelationNetwork
-    ' 
-    '     Function: (+3 Overloads) BuildNetwork, HowStrong
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 121
+'    Code Lines: 91 (75.21%)
+' Comment Lines: 11 (9.09%)
+'    - Xml Docs: 100.00%
+' 
+'   Blank Lines: 19 (15.70%)
+'     File Size: 4.37 KB
+
+
+' Module CorrelationNetwork
+' 
+'     Function: (+3 Overloads) BuildNetwork, HowStrong
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -58,6 +58,7 @@ Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.Data.visualize.Network.FileStream.Generic
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
 Imports Microsoft.VisualBasic.Math.DataFrame
+Imports df = Microsoft.VisualBasic.Math.DataFrame.DataFrame
 Imports std = System.Math
 Imports df = Microsoft.VisualBasic.Math.DataFrame.DataFrame
 Imports Microsoft.VisualBasic.Linq
@@ -113,7 +114,9 @@ Public Module CorrelationNetwork
     End Function
 
     <Extension>
-    Public Function BuildNetwork(corDf As df, cutoff As Double) As NetworkGraph
+    Public Function BuildNetwork(corDf As df, cutoff As Double,
+                                 Optional sample_label As String = "Sample",
+                                 Optional feature_label As String = "Feature") As NetworkGraph
         Dim g As New NetworkGraph
         Dim nodeData As NodeData
         Dim linkdata As EdgeData
@@ -184,7 +187,9 @@ Public Module CorrelationNetwork
     ''' <param name="cutoff">
     ''' 相关度阈值的绝对值
     ''' </param>
-    ''' <returns></returns>
+    ''' <returns>
+    ''' the correlation value is assigned to the edge weight value.
+    ''' </returns>
     <Extension>
     Public Function BuildNetwork(matrix As CorrelationMatrix, cutoff#, Optional pvalue As Double = 1) As (net As NetworkGraph, matrix As CorrelationMatrix)
         Dim g As New NetworkGraph
