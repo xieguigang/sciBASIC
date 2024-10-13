@@ -123,6 +123,11 @@ Namespace Imaging.Driver
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function CreateDefaultRasterGraphics(size As Size, fill_color As Color, Optional dpi As Integer = 100) As IGraphics
+            Return UseGraphicsDevice(Drivers.GDI).CreateGraphic(size, fill_color, dpi)
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function CreateGraphicsDevice(size As Size, fill_color As Color,
                                              Optional dpi As Integer = 100,
                                              Optional driver As Drivers = Drivers.Default) As IGraphics
