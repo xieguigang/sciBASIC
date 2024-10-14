@@ -92,8 +92,14 @@ Namespace Driver
         Public Sub New(img As Object, size As Size, padding As Padding)
             Call MyBase.New(img, size, padding)
 
-            ' get svg document data
-            SVG = DirectCast(img, GraphicsSVG).__svgData
+            If TypeOf img Is SVGDataLayers Then
+                SVG = img
+            ElseIf TypeOf img Is GraphicsSVG Then
+                ' get svg document data
+                SVG = DirectCast(img, GraphicsSVG).__svgData
+            Else
+                Throw New InvalidCastException(img.GetType.FullName)
+            End If
         End Sub
 
         Sub New(canvas As GraphicsSVG, padding As Padding)

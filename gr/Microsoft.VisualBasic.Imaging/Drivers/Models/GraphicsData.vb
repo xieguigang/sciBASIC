@@ -100,6 +100,10 @@ Namespace Driver
                 .Size = size,
                 .Padding = padding
             }
+
+            If img Is Nothing Then
+                Throw New NullReferenceException("the given image data object should no be nothing!")
+            End If
         End Sub
 
 #Region "IDisposable Support"
