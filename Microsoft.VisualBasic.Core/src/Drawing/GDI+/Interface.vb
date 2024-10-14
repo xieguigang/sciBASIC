@@ -123,7 +123,10 @@ Namespace Imaging
         ''' <returns></returns>
         Public ReadOnly Property Dpi As Single
 
-        Dim m_isDisposed As Boolean = False
+        ''' <summary>
+        ''' use this flag for avoid multiple calls of the dispose/release handle method
+        ''' </summary>
+        Protected m_isDisposed As Boolean = False
 
         ''' <summary>
         ''' config graphics canvas dpi
