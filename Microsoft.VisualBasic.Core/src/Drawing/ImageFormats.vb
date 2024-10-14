@@ -111,6 +111,7 @@ Namespace Imaging
         ''' Base64
         ''' </summary>
         Base64
+        Webp
 
         Svg
 

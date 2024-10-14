@@ -1,75 +1,75 @@
 ﻿#Region "Microsoft.VisualBasic::be3082c5af594011cb1f1eb6ac3b785e, Microsoft.VisualBasic.Core\src\Drawing\Bitmap\netcore8.0\Image.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 267
-    '    Code Lines: 124 (46.44%)
-    ' Comment Lines: 88 (32.96%)
-    '    - Xml Docs: 42.05%
-    ' 
-    '   Blank Lines: 55 (20.60%)
-    '     File Size: 10.14 KB
+' Summaries:
 
 
-    '     Class Image
-    ' 
-    '         Properties: Height, Width
-    ' 
-    '         Function: FromStream
-    ' 
-    '         Sub: (+2 Overloads) Dispose
-    ' 
-    '     Class Bitmap
-    ' 
-    '         Properties: MemoryBuffer, Size
-    ' 
-    '         Constructor: (+4 Overloads) Sub New
-    ' 
-    '         Function: Clone, ConvertToBitmapStream, GetPixel, Resize
-    ' 
-    '         Sub: Save, SetPixel
-    ' 
-    '     Enum PixelFormat
-    ' 
-    ' 
-    '  
-    ' 
-    ' 
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 267
+'    Code Lines: 124 (46.44%)
+' Comment Lines: 88 (32.96%)
+'    - Xml Docs: 42.05%
+' 
+'   Blank Lines: 55 (20.60%)
+'     File Size: 10.14 KB
+
+
+'     Class Image
+' 
+'         Properties: Height, Width
+' 
+'         Function: FromStream
+' 
+'         Sub: (+2 Overloads) Dispose
+' 
+'     Class Bitmap
+' 
+'         Properties: MemoryBuffer, Size
+' 
+'         Constructor: (+4 Overloads) Sub New
+' 
+'         Function: Clone, ConvertToBitmapStream, GetPixel, Resize
+' 
+'         Sub: Save, SetPixel
+' 
+'     Enum PixelFormat
+' 
+' 
+'  
+' 
+' 
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -77,7 +77,8 @@ Imports System.Drawing
 Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Imaging.BitmapImage
-Imports Microsoft.VisualBasic.Imaging.BitmapImage.StreamWriter
+Imports Microsoft.VisualBasic.Imaging.BitmapImage.FileStream
+Imports MemoryBmp = Microsoft.VisualBasic.Imaging.BitmapImage.FileStream.Bitmap
 
 Namespace Imaging
 
@@ -127,6 +128,11 @@ Namespace Imaging
         ''' </remarks>
         Protected Friend MustOverride Function ConvertToBitmapStream() As MemoryStream
 
+        ''' <summary>
+        ''' Load bitmap image from file stream
+        ''' </summary>
+        ''' <param name="s">only works for bitmap image file stream</param>
+        ''' <returns></returns>
         Public Shared Function FromStream(s As Stream) As Bitmap
             Return New Bitmap(New BitmapReader(s).LoadMemory)
         End Function
@@ -176,9 +182,11 @@ Namespace Imaging
 
         Sub New(copy As Image)
             Dim buf As MemoryStream = copy.ConvertToBitmapStream()
-            Dim reader As New BitmapReader(buf)
+            buf.Seek(Scan0, SeekOrigin.Begin)
+            Dim memoryBmp As MemoryBmp = BitmapFileHelper.ParseMemoryBitmap(buf)
+            Dim channels As Integer = memoryBmp.BytesPerPixel
 
-            MemoryBuffer = reader.LoadMemory
+            MemoryBuffer = New BitmapBuffer(memoryBmp.PixelDataFliped, copy.Size, channels)
         End Sub
 
         Sub New(size As Size)
@@ -218,17 +226,10 @@ Namespace Imaging
         ''' <param name="s"></param>
         ''' <param name="format"></param>
         Public Overrides Sub Save(s As Stream, format As ImageFormats)
-            Dim writer As New BitmapWriter(Width, Height)
-            Dim pixel As Color
+            Dim pixelFormat As BitsPerPixelEnum = If(MemoryBuffer.GetPixelChannels = 3, BitsPerPixelEnum.RGB24, BitsPerPixelEnum.RGBA32)
+            Dim writer As New MemoryBmp(Width, Height, MemoryBuffer.RawBuffer, pixelFormat)
 
-            For x As Integer = 0 To Width - 1
-                For y As Integer = 0 To Height - 1
-                    pixel = MemoryBuffer.GetPixel(x, y)
-                    writer.SetPixel(x, y, pixel.R, pixel.G, pixel.B)
-                Next
-            Next
-
-            Call writer.SaveColorImage(s)
+            Call writer.Save(s, flipped:=True)
             Call s.Flush()
         End Sub
 

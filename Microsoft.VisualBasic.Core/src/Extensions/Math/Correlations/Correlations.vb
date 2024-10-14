@@ -77,7 +77,7 @@ Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Linq.Extensions
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports DataSet = Microsoft.VisualBasic.ComponentModel.DataSourceModel.NamedValue(Of System.Collections.Generic.Dictionary(Of String, Double))
-Imports stdNum = System.Math
+Imports std = System.Math
 Imports Vector = Microsoft.VisualBasic.ComponentModel.DataSourceModel.NamedValue(Of Double())
 
 Namespace Math.Correlations
@@ -177,7 +177,7 @@ Namespace Math.Correlations
                 Return 0R
             Else
                 ' KLD(P||Q) = Σ[P(i)*ln(P(i)/Q(i))]
-                Dim value As Double = Xa * stdNum.Log(Xa / Ya)
+                Dim value As Double = Xa * std.Log(Xa / Ya)
                 Return value
             End If
         End Function
@@ -315,7 +315,7 @@ Namespace Math.Correlations
                 n2 += (s * (s - 1)) / 2
             Next
 
-            denom = stdNum.Sqrt((n0 - n1) * (n0 - n2))
+            denom = std.Sqrt((n0 - n1) * (n0 - n2))
 
             If denom = 0 Then
                 denom += 0.000000001
@@ -400,15 +400,15 @@ Namespace Math.Correlations
 
             ' fisher's z trasnformation
             ' 1/2 * ln((1+r)/(1-r))
-            z = 0.5 * stdNum.Log((1.0 + cor + TINY) / (1.0 - cor + TINY))
+            z = 0.5 * std.Log((1.0 + cor + TINY) / (1.0 - cor + TINY))
 
             ' student's t probability
             df = n - 2
-            t = cor * stdNum.Sqrt(df / ((1.0 - cor + TINY) * (1.0 + cor + TINY)))
+            t = cor * std.Sqrt(df / ((1.0 - cor + TINY) * (1.0 + cor + TINY)))
 
             pvalue = Beta.betai(0.5 * df, 0.5, df / (df + t ^ 2), throwMaxIterError)
             ' for a large n
-            prob2 = Beta.erfcc(stdNum.Abs(z * stdNum.Sqrt(n - 1.0)) / 1.4142136)
+            prob2 = Beta.erfcc(std.Abs(z * std.Sqrt(n - 1.0)) / 1.4142136)
         End Sub
 
         Public Structure Pearson
@@ -421,7 +421,7 @@ Namespace Math.Correlations
             Public ReadOnly Property P As Double
                 <MethodImpl(MethodImplOptions.AggressiveInlining)>
                 Get
-                    Return -stdNum.Log10(pvalue)
+                    Return -std.Log10(pvalue)
                 End Get
             End Property
 
@@ -486,7 +486,7 @@ Namespace Math.Correlations
                 sxy += xt * yt
             Next
 
-            Return sxy / (stdNum.Sqrt(sxx * syy) + TINY)
+            Return sxy / (std.Sqrt(sxx * syy) + TINY)
         End Function
 
         ''' <summary>
@@ -500,9 +500,8 @@ Namespace Math.Correlations
         Const VectorSizeMustAgree$ = "[X:={0}, Y:={1}] The vector length betwen the two samples is not agreed!!!"
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Private Sub throwNotAgree(x#(), y#())
-            Dim message$ = String.Format(VectorSizeMustAgree, x.Length, y.Length)
-            Throw New DataException(message)
+        Private Sub throwDimensionSizeNotAgree(x#(), y#())
+            Throw New DataException(String.Format(VectorSizeMustAgree, x.Length, y.Length))
         End Sub
 
         ''' <summary>

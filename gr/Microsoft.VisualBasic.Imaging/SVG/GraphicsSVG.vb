@@ -727,7 +727,7 @@ Namespace SVG
             circle.Stroke = New Stroke(stroke).CSSValue
         End Sub
 
-        Public Overrides Sub Dispose()
+        Protected Overrides Sub ReleaseHandle()
         End Sub
 
         Public Function Save(stream As IO.Stream, format As ImageFormats) As Boolean Implements SaveGdiBitmap.Save

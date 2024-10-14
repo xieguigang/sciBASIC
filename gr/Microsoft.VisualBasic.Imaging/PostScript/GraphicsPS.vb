@@ -140,8 +140,7 @@ Namespace PostScript
             Throw New NotImplementedException()
         End Sub
 
-        Public Overrides Sub Dispose()
-            Throw New NotImplementedException()
+        Protected Overrides Sub ReleaseHandle()
         End Sub
 
         Public Overrides Sub DrawArc(pen As Pen, rect As RectangleF, startAngle As Single, sweepAngle As Single)

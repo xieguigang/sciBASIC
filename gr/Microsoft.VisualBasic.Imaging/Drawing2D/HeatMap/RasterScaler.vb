@@ -195,7 +195,7 @@ Namespace Drawing2D.HeatMap
             Call Scale(canvas, New Size(newWidth, newHeight))
             Call canvas.Flush()
 
-            Return DirectCast(canvas, GdiRasterGraphics).ImageResource
+            Return New Bitmap(DirectCast(canvas, GdiRasterGraphics).ImageResource)
         End Function
 
         ''' <summary>
@@ -238,35 +238,35 @@ Namespace Drawing2D.HeatMap
                 ' no scale
                 ' returns the raw image directly
                 Return buffer.GetImage
-            Else
-                ' create new bitmap for write scaled data
+            End If
+
+            ' create new bitmap for write scaled data
 #If NET48 Then
-                Dim scales As New Bitmap(buffer.Width * hqx, buffer.Height * hqx, format:=PixelFormat.Format32bppArgb)
+            Dim scales As New Bitmap(buffer.Width * hqx, buffer.Height * hqx, format:=PixelFormat.Format32bppArgb)
 #Else
-                Dim scales As New Bitmap(buffer.Width * hqx, buffer.Height * hqx)
+            Dim scales As New Bitmap(buffer.Width * hqx, buffer.Height * hqx)
 #End If
 
-                Dim p As BitmapBuffer = BitmapBuffer.FromBitmap(scales)
-                ' get source data
-                Dim sp As UInteger() = buffer.GetARGBStream
-                Dim dp As UInteger() = p.GetARGBStream
+            Dim p As BitmapBuffer = BitmapBuffer.FromBitmap(scales)
+            ' get source data
+            Dim sp As UInteger() = buffer.GetARGBStream
+            Dim dp As UInteger() = p.GetARGBStream
 
-                Select Case hqx
-                    Case HqxScales.Hqx_2x : Call Hqx_2x.hq2x_32_rb(sp, dp, buffer.Width, buffer.Height)
-                    Case HqxScales.Hqx_3x : Call Hqx_3x.hq3x_32_rb(sp, dp, buffer.Width, buffer.Height)
-                    Case HqxScales.Hqx_4x : Call Hqx_4x.hq4x_32_rb(sp, dp, buffer.Width, buffer.Height)
-                    Case Else
-                        Throw New InvalidProgramException($"invalid scale name: {hqx.ToString}!")
-                End Select
+            Select Case hqx
+                Case HqxScales.Hqx_2x : Call Hqx_2x.hq2x_32_rb(sp, dp, buffer.Width, buffer.Height)
+                Case HqxScales.Hqx_3x : Call Hqx_3x.hq3x_32_rb(sp, dp, buffer.Width, buffer.Height)
+                Case HqxScales.Hqx_4x : Call Hqx_4x.hq4x_32_rb(sp, dp, buffer.Width, buffer.Height)
+                Case Else
+                    Throw New InvalidProgramException($"invalid scale name: {hqx.ToString}!")
+            End Select
 
-                Call p.WriteARGBStream(dp)
-                Call p.Dispose()
+            Call p.WriteARGBStream(dp)
+            Call p.Dispose()
 
-                Erase sp
-                Erase dp
+            Erase sp
+            Erase dp
 
-                Return scales
-            End If
+            Return scales
         End Function
 
         Protected Overridable Sub Dispose(disposing As Boolean)

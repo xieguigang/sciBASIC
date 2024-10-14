@@ -205,15 +205,10 @@ Public Class Wmf : Inherits GDICanvas
     ''' <summary>
     ''' Close the metafile and free resources.
     ''' </summary>
-    Private Sub releaseInternal()
+    Protected Overrides Sub ReleaseHandle()
         Call Graphics.Dispose()
         Call vectorMetafile.Dispose()
         Call stream.Flush()
-    End Sub
-
-    Public Overrides Sub Dispose()
-        Call releaseInternal()
-        Call MyBase.Dispose()
     End Sub
 
     Public Overrides Sub DrawCircle(center As PointF, fill As Color, stroke As Pen, radius As Single)

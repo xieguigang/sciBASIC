@@ -146,7 +146,12 @@ Namespace Emit.Marshal
         ''' <param name="p"></param>
         Sub New(ByRef raw As T(), Optional p As System.IntPtr? = Nothing)
             Call MyBase.New(raw)
-            Scan0 = p
+
+            ' 20241014
+            ' avoid the error: nullable value must have a value
+            If Not p Is Nothing Then
+                Scan0 = p
+            End If
         End Sub
 
         Public Sub Write(data As T())

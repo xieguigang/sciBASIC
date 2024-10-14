@@ -68,8 +68,6 @@ Imports System.ComponentModel
 Imports System.Drawing
 Imports System.Drawing.Drawing2D
 Imports System.Drawing.Graphics
-Imports System.Drawing.Imaging
-Imports System.Drawing.Text
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Imaging
 
@@ -78,7 +76,6 @@ Imports Microsoft.VisualBasic.Imaging
 ''' </summary>
 ''' <remarks>the gdi+ graphics canvas base model</remarks>
 Public MustInherit Class GDICanvas : Inherits IGraphics
-    Implements IDisposable
 
     Protected Friend g As Graphics
 
@@ -2151,7 +2148,7 @@ Public MustInherit Class GDICanvas : Inherits IGraphics
     ''' <summary>
     ''' Releases all resources used by this <see cref="Graphics"/>.
     ''' </summary>
-    Public Overrides Sub Dispose() Implements IDisposable.Dispose
+    Protected Overrides Sub ReleaseHandle()
         ' 在这里不应该将图片资源给消灭掉，只需要释放掉gdi+资源就行了
         Call Graphics.Dispose()
     End Sub

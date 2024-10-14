@@ -123,6 +123,8 @@ Namespace Imaging
         ''' <returns></returns>
         Public ReadOnly Property Dpi As Single
 
+        Dim m_isDisposed As Boolean = False
+
         ''' <summary>
         ''' config graphics canvas dpi
         ''' </summary>
@@ -216,11 +218,18 @@ Namespace Imaging
         ''' </summary>
         ''' <param name="color"></param>
         Protected MustOverride Sub ClearCanvas(color As Color)
+        Protected MustOverride Sub ReleaseHandle()
 
         ''' <summary>
         ''' Releases all resources used by this System.Drawing.Graphics.    
         ''' </summary>
-        Public MustOverride Sub Dispose() Implements IDisposable.Dispose
+        Public Sub Dispose() Implements IDisposable.Dispose
+            If Not m_isDisposed Then
+                ReleaseHandle()
+                m_isDisposed = True
+            End If
+        End Sub
+
         '
         ' Summary:
         '     Draws an arc representing a portion of an ellipse specified by a System.Drawing.RectangleF
