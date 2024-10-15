@@ -74,6 +74,10 @@ Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Math.Interpolation
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
+Imports Microsoft.VisualBasic.MIME.Html.CSS
+Imports Microsoft.VisualBasic.MIME.Html.Render
+
+
 
 #If NET48 Then
 Imports Pen = System.Drawing.Pen
@@ -140,8 +144,9 @@ Namespace Plots
             Dim br As New SolidBrush(line.color)
             Dim fillBrush As New SolidBrush(Color.FromArgb(100, baseColor:=line.color))
             Dim d! = line.pointSize
+            Dim css As CSSEnvirnment = g.LoadEnvironment
             Dim r As Single = line.pointSize / 2
-            Dim bottom! = rect.PlotRegion.Bottom
+            Dim bottom! = rect.PlotRegion(css).Bottom
             Dim getPointBrush = Function(pt As PointData)
                                     If pt.color.StringEmpty Then
                                         Return br
@@ -241,7 +246,8 @@ Namespace Plots
 
         Protected Overrides Sub PlotInternal(ByRef g As IGraphics, rect As GraphicsRegion)
             Dim canvas As IGraphics = g
-            Dim region As Rectangle = rect.PlotRegion
+            Dim css As CSSEnvirnment = g.LoadEnvironment
+            Dim region As Rectangle = rect.PlotRegion(css)
             Dim scaler As DataScaler = CreateScaler(g, rect)
             Dim gSize As Size = rect.Size
 
@@ -263,7 +269,7 @@ Namespace Plots
                 )
             End If
 
-            Dim width As Double = rect.PlotRegion.Width / 200
+            Dim width As Double = region.Width / 200
             Dim annotations As New Dictionary(Of String, (raw As SerialData, line As SerialData))
 
             For Each line As SerialData In array
@@ -311,7 +317,8 @@ Namespace Plots
 
         Public Function CreateScaler(ByRef g As IGraphics, rect As GraphicsRegion) As DataScaler
             Dim canvas As IGraphics = g
-            Dim region As Rectangle = rect.PlotRegion
+            Dim css As CSSEnvirnment = g.LoadEnvironment
+            Dim region As Rectangle = rect.PlotRegion(css)
             Dim XTicks#(), YTicks#()
 
             '    With array.CreateAxisTicks(

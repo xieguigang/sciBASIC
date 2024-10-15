@@ -74,6 +74,8 @@ Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Math.Statistics.Linq
 Imports Microsoft.VisualBasic.MIME.Html.CSS
+Imports Microsoft.VisualBasic.MIME.Html.Render
+
 
 #If NET48 Then
 Imports Pen = System.Drawing.Pen
@@ -179,7 +181,7 @@ Namespace Plots
             'End If
 
             Dim canvas As IGraphics = g
-            Dim region As Rectangle = rect.PlotRegion
+            Dim region As Rectangle = rect.PlotRegion(g.LoadEnvironment)
             Dim X As d3js.scale.Scaler
             Dim Y As d3js.scale.LinearScale
 
@@ -292,7 +294,8 @@ Namespace Plots
             Dim scaler As DataScaler = GetDataScaler(g, rect)
             Dim gSize As Size = rect.Size
             Dim canvas As IGraphics = g
-            Dim region As Rectangle = rect.PlotRegion
+            Dim css As CSSEnvirnment = g.LoadEnvironment
+            Dim region As Rectangle = rect.PlotRegion(css)
 
             If theme.drawAxis Then
                 Call g.DrawAxis(
@@ -312,13 +315,13 @@ Namespace Plots
                 )
             End If
 
-            Dim width As Double = rect.PlotRegion.Width / 200
+            Dim width As Double = region.Width / 200
             Dim annotations As New Dictionary(Of String, (raw As SerialData, line As SerialData))
 
             For Each line As SerialData In array
                 Dim pen As Pen = line.GetPen
                 Dim fillBrush As New SolidBrush(Color.FromArgb(100, baseColor:=line.color))
-                Dim bottom! = gSize.Height - rect.PlotRegion.Bottom
+                Dim bottom! = gSize.Height - region.Bottom
                 Dim scatter As IEnumerable(Of PointData)
 
                 If scatterReorder Then
