@@ -1,57 +1,61 @@
 ﻿#Region "Microsoft.VisualBasic::c8e77ca8cba7ae9ea4ba8195ff20a1fd, gr\Microsoft.VisualBasic.Imaging\test\Program.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 156
-    '    Code Lines: 79 (50.64%)
-    ' Comment Lines: 20 (12.82%)
-    '    - Xml Docs: 0.00%
-    ' 
-    '   Blank Lines: 57 (36.54%)
-    '     File Size: 4.53 KB
+' Summaries:
 
 
-    ' Module Program
-    ' 
-    '     Sub: ASCIIArt_test, Main, test3Dmodels
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 156
+'    Code Lines: 79 (50.64%)
+' Comment Lines: 20 (12.82%)
+'    - Xml Docs: 0.00%
+' 
+'   Blank Lines: 57 (36.54%)
+'     File Size: 4.53 KB
+
+
+' Module Program
+' 
+'     Sub: ASCIIArt_test, Main, test3Dmodels
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Drawing
+Imports System.Drawing.Drawing2D
+Imports System.Drawing.Text
+Imports Microsoft.VisualBasic.Drawing
+Imports Microsoft.VisualBasic.Drawing.Drawing2D.Text
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.BitmapImage
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Text.ASCIIArt
@@ -132,7 +136,7 @@ Module Program
         Call ASCIIArt_test()
 
         Call test3Dmodels()
-        Call SVGTest.Test()
+        '  Call SVGTest.Test()
 
         Dim html As String = "
 <html>
@@ -158,12 +162,12 @@ log<sub>2</sub> ratio
         Using g As Graphics = Graphics.FromImage(bitmap)
 
             g.Clear(Color.White)
-            g.CompositingQuality = Drawing.Drawing2D.CompositingQuality.HighQuality
-            g.TextRenderingHint = Drawing.Text.TextRenderingHint.AntiAlias
+            g.CompositingQuality = CompositingQuality.HighQuality
+            g.TextRenderingHint = TextRenderingHint.AntiAlias
             Call g.Render(html, New PointF(10, 10), 500)
 
 
-            Call Microsoft.VisualBasic.Imaging.Drawing2D.Text.TextRender.RenderHTML(g, "<span style=""color:lime"">Green Color Text</span>", CSSFont.PlotTitle, New PointF(0, 200))
+            Call TextRender.RenderHTML(g, "<span style=""color:lime"">Green Color Text</span>", CSSFont.PlotTitle, New PointF(0, 200))
 
 
         End Using

@@ -54,6 +54,7 @@
 Imports System.Drawing
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Shapes
 Imports Microsoft.VisualBasic.Imaging
+Imports Microsoft.VisualBasic.Drawing
 
 Module LineTest
 

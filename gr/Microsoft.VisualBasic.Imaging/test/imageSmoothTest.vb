@@ -55,6 +55,7 @@ Imports System.Drawing
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Filters
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Drawing
 
 Module imageSmoothTest
 

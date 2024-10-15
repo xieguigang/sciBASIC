@@ -6,7 +6,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{1A566414-428F-403B-84A6-6B9F36FB1117}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <StartupObject>Test.Project.objReaderTest</StartupObject>
+    <StartupObject>Test.Project.cssPaddingTest</StartupObject>
     <RootNamespace>Test.Project</RootNamespace>
     <AssemblyName>Test.Project</AssemblyName>
     <FileAlignment>512</FileAlignment>
@@ -129,6 +129,7 @@
     <Compile Include="ExifTest.vb" />
     <Compile Include="gifTest.vb" />
     <Compile Include="imageSmoothTest.vb" />
+    <Compile Include="cssPaddingTest.vb" />
     <Compile Include="objReaderTest.vb" />
     <Compile Include="ShadowsTest.vb" />
     <Compile Include="SVGTest.vb" />
@@ -172,23 +173,23 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\Data_science\Mathematica\Math\Math\Math.NET5.vbproj">
-      <Project>{7b55a6ec-7f70-4a03-8a3f-3705f01658d6}</Project>
+      <Project>{f52a18cc-fd88-4ffe-868f-f0209cce9e99}</Project>
       <Name>Math.NET5</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\..\Microsoft.VisualBasic.Core\src\Core.vbproj">
-      <Project>{14589a8e-dec0-4f3b-bba3-f127b5a89b23}</Project>
+      <Project>{e8302d0d-9535-4290-b81b-db0125712ae9}</Project>
       <Name>Core</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\..\mime\text%25html\html_netcore5.vbproj">
-      <Project>{a9cf5f42-84f0-4b92-922c-0f1cf08e0b59}</Project>
+      <Project>{6941da43-b84d-4192-bdab-d50c42726298}</Project>
       <Name>html_netcore5</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Landscape\Landscape.vbproj">
-      <Project>{3e100c21-5196-485e-9546-bb0db4138af7}</Project>
-      <Name>Landscape</Name>
+    <ProjectReference Include="..\..\Drawing-net4.8\Drawing-net4.8.vbproj">
+      <Project>{4b2ce6bd-c605-48a0-b0d2-191248b44a87}</Project>
+      <Name>Drawing-net4.8</Name>
     </ProjectReference>
     <ProjectReference Include="..\imaging.NET5.vbproj">
-      <Project>{2ccc6428-7934-4b1d-be0d-757f6af14692}</Project>
+      <Project>{99f38e30-d12d-45a3-b7c2-c2eda9f49ef0}</Project>
       <Name>imaging.NET5</Name>
     </ProjectReference>
   </ItemGroup>
