@@ -153,7 +153,7 @@ Namespace Render
         ''' </remarks>
         <Extension>
         Public Function LoadEnvironment(g As IGraphics) As CSSEnvirnment
-            Return New CSSEnvirnment(g.Size, g.Dpi).SetBaseStyles(g.Font, g.Stroke)
+            Return New CSSEnvirnment(g.Size, CInt(g.Dpi)).SetBaseStyles(g.Font, g.Stroke)
         End Function
     End Module
 

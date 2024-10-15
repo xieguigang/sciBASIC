@@ -1,56 +1,56 @@
 ﻿#Region "Microsoft.VisualBasic::7c97a10b15a5e8db99b645742c1524ab, Data_science\Visualization\Plots\g\Mapper.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 276
-    '    Code Lines: 204 (73.91%)
-    ' Comment Lines: 33 (11.96%)
-    '    - Xml Docs: 93.94%
-    ' 
-    '   Blank Lines: 39 (14.13%)
-    '     File Size: 10.90 KB
+' Summaries:
 
 
-    '     Class Mapper
-    ' 
-    '         Constructor: (+3 Overloads) Sub New
-    '         Function: ForEach, ForEach_histSample, (+3 Overloads) PointScaler, ScallingWidth, TupleScaler
-    '                   XScaler, YScaler
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 276
+'    Code Lines: 204 (73.91%)
+' Comment Lines: 33 (11.96%)
+'    - Xml Docs: 93.94%
+' 
+'   Blank Lines: 39 (14.13%)
+'     File Size: 10.90 KB
+
+
+'     Class Mapper
+' 
+'         Constructor: (+3 Overloads) Sub New
+'         Function: ForEach, ForEach_histSample, (+3 Overloads) PointScaler, ScallingWidth, TupleScaler
+'                   XScaler, YScaler
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -195,17 +195,18 @@ Namespace Graphic
         ''' 返回的系列是已经被转换过的，直接使用来进行画图
         ''' </summary>
         ''' <returns></returns>
-        Public Iterator Function ForEach(size As Size, margin As Padding) As IEnumerable(Of SerialData)
-            Dim bottom As Integer = size.Height - margin.Bottom
-            Dim width As Integer = size.Width - margin.Horizontal
-            Dim height As Integer = size.Height - margin.Vertical
+        Public Iterator Function ForEach(css As CSSEnvirnment, margin As Padding) As IEnumerable(Of SerialData)
+            Dim size As Size = css.canvas
+            Dim bottom As Integer = size.Height - css.GetValue(margin.Bottom)
+            Dim width As Integer = size.Width - margin.Horizontal(css)
+            Dim height As Integer = size.Height - margin.Vertical(css)
 
             For Each s As SerialData In serials
                 Dim pts = LinqAPI.Exec(Of PointData) <=
- _
+                                                       _
                 From p As PointData
                 In s.pts
-                Let px As Single = margin.Left + width * (p.pt.X - xmin) / dx
+                Let px As Single = css.GetValue(margin.Left) + width * (p.pt.X - xmin) / dx
                 Let yh As Single = If(dy = 0R, height / 2, height * (p.pt.Y - ymin) / dy) ' 如果y没有变化，则是一条居中的水平直线
                 Let py As Single = bottom - yh
                 Select New PointData(px, py) With {
@@ -234,18 +235,19 @@ Namespace Graphic
         ''' 返回的系列是已经被转换过的，直接使用来进行画图
         ''' </summary>
         ''' <returns></returns>
-        Public Iterator Function ForEach_histSample(size As Size, margin As Padding) As IEnumerable(Of HistProfile)
-            Dim bottom As Integer = size.Height - margin.Bottom
-            Dim width As Integer = size.Width - margin.Horizontal
-            Dim height As Integer = size.Height - margin.Vertical
+        Public Iterator Function ForEach_histSample(css As CSSEnvirnment, margin As Padding) As IEnumerable(Of HistProfile)
+            Dim size As Size = css.canvas
+            Dim bottom As Integer = size.Height - css.GetValue(margin.Bottom)
+            Dim width As Integer = size.Width - margin.Horizontal(css)
+            Dim height As Integer = size.Height - margin.Vertical(css)
 
             For Each histData As HistProfile In hist.Samples
                 Dim pts = LinqAPI.Exec(Of HistogramData) <=
- _
+                                                           _
                 From p As HistogramData
                 In histData.data
-                Let px1 As Single = margin.Left + width * (p.x1 - xmin) / dx
-                Let px2 As Single = margin.Left + width * (p.x2 - xmin) / dx
+                Let px1 As Single = css.GetValue(margin.Left) + width * (p.x1 - xmin) / dx
+                Let px2 As Single = css.GetValue(margin.Left) + width * (p.x2 - xmin) / dx
                 Let py As Single = bottom - height * (p.y - ymin) / dy
                 Select New HistogramData With {
                     .x1 = px1,
@@ -260,13 +262,14 @@ Namespace Graphic
             Next
         End Function
 
-        Public Function PointScaler(size As Size, padding As Padding) As Func(Of PointF, PointF)
-            Dim bottom As Integer = size.Height - padding.Bottom
-            Dim width As Integer = size.Width - padding.Horizontal
-            Dim height As Integer = size.Height - padding.Vertical
+        Public Function PointScaler(css As CSSEnvirnment, padding As Padding) As Func(Of PointF, PointF)
+            Dim size As Size = css.canvas
+            Dim bottom As Integer = size.Height - css.GetValue(padding.Bottom)
+            Dim width As Integer = size.Width - padding.Horizontal(css)
+            Dim height As Integer = size.Height - padding.Vertical(css)
 
             Return Function(pt)
-                       Dim px As Single = padding.Left + width * (pt.X - xmin) / dx
+                       Dim px As Single = css.GetValue(padding.Left) + width * (pt.X - xmin) / dx
                        Dim py As Single = bottom - height * (pt.Y - ymin) / dy
 
                        Return New PointF(px, py)
@@ -274,30 +277,32 @@ Namespace Graphic
         End Function
 
         Public Function PointScaler(rect As GraphicsRegion) As Func(Of PointF, PointF)
-            Return PointScaler(rect.Size, rect.Padding)
+            Return PointScaler(New CSSEnvirnment(rect.Size), rect.Padding)
         End Function
 
         Public Function TupleScaler(rect As GraphicsRegion) As Func(Of (x#, y#), PointF)
-            Dim point = PointScaler(rect.Size, rect.Padding)
+            Dim point = PointScaler(New CSSEnvirnment(rect.Size), rect.Padding)
             Return Function(pt) point(New PointF(pt.x, pt.y))
         End Function
 
         Public Function PointScaler(r As GraphicsRegion, pt As PointF) As PointF
-            Dim bottom As Integer = r.Size.Height - r.Padding.Bottom
-            Dim width As Integer = r.Size.Width - r.Padding.Horizontal
-            Dim height As Integer = r.Size.Height - r.Padding.Vertical
-            Dim px As Single = r.Padding.Left + width * (pt.X - xmin) / dx
+            Dim css As New CSSEnvirnment(r.Size)
+            Dim bottom As Integer = r.Size.Height - css.GetValue(r.Padding.Bottom)
+            Dim width As Integer = r.Size.Width - r.Padding.Horizontal(css)
+            Dim height As Integer = r.Size.Height - r.Padding.Vertical(css)
+            Dim px As Single = css.GetValue(r.Padding.Left) + width * (pt.X - xmin) / dx
             Dim py As Single = bottom - height * (pt.Y - ymin) / dy
 
             Return New PointF(px!, py!)
         End Function
 
         Public Function XScaler(size As Size, margin As Padding) As Func(Of Single, Single)
-            Dim bottom As Integer = size.Height - margin.Bottom
-            Dim width As Integer = size.Width - margin.Horizontal
-            Dim height As Integer = size.Height - margin.Vertical
+            Dim css As New CSSEnvirnment(size)
+            Dim bottom As Integer = size.Height - css.GetValue(margin.Bottom)
+            Dim width As Integer = size.Width - margin.Horizontal(css)
+            Dim height As Integer = size.Height - margin.Vertical(css)
 
-            Return Function(x) margin.Left + width * (x - xmin) / dx
+            Return Function(x) css.GetValue(margin.Left) + width * (x - xmin) / dx
         End Function
 
         ''' <summary>
@@ -308,8 +313,9 @@ Namespace Graphic
         ''' <param name="avg">当这个参数值是一个有效的数字的时候，返回的Y将会以这个平均值为零点</param>
         ''' <returns></returns>
         Public Function YScaler(size As Size, margin As Padding, Optional avg# = Double.NaN) As Func(Of Single, Single)
-            Dim bottom As Integer = size.Height - margin.Bottom
-            Dim height As Integer = size.Height - margin.Vertical    ' 绘图区域的高度
+            Dim css As New CSSEnvirnment(size)
+            Dim bottom As Integer = size.Height - css.GetValue(margin.Bottom)
+            Dim height As Integer = size.Height - margin.Vertical(css)    ' 绘图区域的高度
 
             If Double.IsNaN(avg#) Then
                 Return Function(y!) bottom - height * (y - ymin) / dy

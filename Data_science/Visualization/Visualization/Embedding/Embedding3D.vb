@@ -63,6 +63,8 @@ Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Drawing3D
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.MIME.Html.CSS
+Imports Microsoft.VisualBasic.MIME.Html.Render
 
 Public Class Embedding3D : Inherits EmbeddingRender
 
@@ -115,7 +117,8 @@ Public Class Embedding3D : Inherits EmbeddingRender
             hullBspline:=2,
             theme:=theme
         )
+        Dim css As CSSEnvirnment = g.LoadEnvironment
 
-        Call engine.Plot(g, canvas.PlotRegion)
+        Call engine.Plot(g, canvas.PlotRegion(css))
     End Sub
 End Class

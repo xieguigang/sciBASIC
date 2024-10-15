@@ -115,6 +115,7 @@
 #End Region
 
 Imports System.Drawing
+Imports Microsoft.VisualBasic.Linq
 
 Namespace Imaging
 
@@ -126,7 +127,7 @@ Namespace Imaging
 
     End Class
 
-    Public Class GraphicsPath
+    Public Class GraphicsPath : Implements Enumeration(Of op)
 
         Public ReadOnly Property PathData As PathData
             Get
@@ -152,7 +153,7 @@ Namespace Imaging
 
         End Class
 
-        Public Class Op_AddLine : Inherits op
+        Public Class op_AddLine : Inherits op
 
             Public Property a As PointF
             Public Property b As PointF
@@ -240,7 +241,7 @@ Namespace Imaging
         End Sub
 
         Public Sub AddLine(a As PointF, b As PointF)
-            Call opSet.Add(New Op_AddLine(a, b))
+            Call opSet.Add(New op_AddLine(a, b))
         End Sub
 
         Public Sub AddBezier(pt1 As PointF, pt2 As PointF, pt3 As PointF, pt4 As PointF)
@@ -266,6 +267,12 @@ Namespace Imaging
         Public Sub CloseFigure()
             Call opSet.Add(New op_CloseFigure)
         End Sub
+
+        Public Iterator Function GenericEnumerator() As IEnumerator(Of op) Implements Enumeration(Of op).GenericEnumerator
+            For Each op As op In opSet
+                Yield op
+            Next
+        End Function
     End Class
 #End If
 End Namespace

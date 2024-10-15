@@ -1,59 +1,59 @@
 ﻿#Region "Microsoft.VisualBasic::2a137f4d7aff4a089a8fec5dab0d92c6, Data_science\Visualization\Plots\VennPlot.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 213
-    '    Code Lines: 128 (60.09%)
-    ' Comment Lines: 55 (25.82%)
-    '    - Xml Docs: 76.36%
-    ' 
-    '   Blank Lines: 30 (14.08%)
-    '     File Size: 9.08 KB
+' Summaries:
 
 
-    ' Module VennPlot
-    ' 
-    '     Function: Venn2, Venn3
-    ' 
-    '     Sub: fixSetCompleteness
-    ' 
-    ' Class VennSet
-    ' 
-    '     Properties: color, intersections, Name, Size, Title
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 213
+'    Code Lines: 128 (60.09%)
+' Comment Lines: 55 (25.82%)
+'    - Xml Docs: 76.36%
+' 
+'   Blank Lines: 30 (14.08%)
+'     File Size: 9.08 KB
+
+
+' Module VennPlot
+' 
+'     Function: Venn2, Venn3
+' 
+'     Sub: fixSetCompleteness
+' 
+' Class VennSet
+' 
+'     Properties: color, intersections, Name, Size, Title
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -123,8 +123,8 @@ Public Module VennPlot
 
         Dim plotInternal =
             Sub(ByRef g As IGraphics, rectangle As GraphicsRegion)
-                Dim region As Rectangle = rectangle.PlotRegion
                 Dim css As CSSEnvirnment = g.LoadEnvironment
+                Dim region As Rectangle = rectangle.PlotRegion(css)
                 Dim regionTitleFont As Font = css.GetFont(CSSFont.TryParse(regionTitleFontCSS))
                 Dim strokePen As Pen = css.GetPen(Stroke.TryParse(strokeCSS))
 
@@ -196,8 +196,8 @@ Public Module VennPlot
 
         Dim plotInternal =
             Sub(ByRef g As IGraphics, rectangle As GraphicsRegion)
-                Dim region As Rectangle = rectangle.PlotRegion
                 Dim css As CSSEnvirnment = g.LoadEnvironment
+                Dim region As Rectangle = rectangle.PlotRegion(css)
                 Dim strokePen As Pen = css.GetPen(Stroke.TryParse(strokeCSS))
                 Dim regionTitleFont As Font = css.GetFont(CSSFont.TryParse(regionTitleFontCSS))
                 ' 计算三个圆的半径大小

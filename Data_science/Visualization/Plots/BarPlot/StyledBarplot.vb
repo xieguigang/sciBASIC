@@ -72,6 +72,8 @@ Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MIME.Html.CSS
 Imports Microsoft.VisualBasic.Scripting.Runtime
 Imports Microsoft.VisualBasic.Serialization.JSON
+Imports Microsoft.VisualBasic.MIME.Html.Render
+
 
 #If NET48 Then
 Imports Pen = System.Drawing.Pen
@@ -140,7 +142,7 @@ Namespace BarPlot
                     Call data _
                         .ToArray _
                         .plotInternal(g, region,
-                                        interval:=interval * region.PlotRegion.Width,
+                                        interval:=interval * region.PlotRegion(g.LoadEnvironment).Width,
                                         labelFont:=labelFont,
                                         shadowOffset:=shadowOffset)
                 End Sub)
@@ -153,10 +155,12 @@ Namespace BarPlot
                                  labelFont$,
                                  shadowOffset%)
 
+            Dim css As CSSEnvirnment = g.LoadEnvironment
             Dim scaler As New Mapper(
                 range:=New Scaling(data.Select(Function(o) o.Value), horizontal:=False),
                 ignoreX:=True)
-            Dim bWidth% = (region.PlotRegion.Width - data.Length * interval) / data.Length
+            Dim rect As Rectangle = region.PlotRegion(css)
+            Dim bWidth% = (rect.Width - data.Length * interval) / data.Length
             Dim bTop%
             Dim hScaler As Func(Of Single, Single) =
                 scaler _
@@ -173,7 +177,7 @@ Namespace BarPlot
 
             For Each s As BarSerial In data
                 bTop = hScaler(s.Value)
-                bRECT = BarPlotAPI.Rectangle(bTop, bLeft, bLeft + bWidth, region.PlotRegion.Bottom)
+                bRECT = BarPlotAPI.Rectangle(bTop, bLeft, bLeft + bWidth, rect.Bottom)
                 barRECT = New Rectangle(bRECT.Location.OffSet2D(-2, -2), bRECT.Size)
 
                 ' Draw shadows
@@ -186,7 +190,7 @@ Namespace BarPlot
                 ' label = label.RotateImage(-90)
                 Throw New NotImplementedException
                 labelLeft = bLeft + (bWidth - label.Width) / 2
-                g.DrawImageUnscaled(label, New Point(labelLeft, region.Bottom + 20))
+                g.DrawImageUnscaled(label, New Point(labelLeft, region.Bottom(css) + 20))
 
                 bLeft += interval + bWidth
             Next

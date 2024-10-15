@@ -64,8 +64,6 @@
 #End Region
 
 Imports System.Drawing
-Imports System.Drawing.Drawing2D
-Imports System.Drawing.Text
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Driver
@@ -76,6 +74,8 @@ Imports Microsoft.VisualBasic.MIME.Html.CSS
 Imports Microsoft.VisualBasic.My.FrameworkInternal
 
 #If NET48 Then
+Imports System.Drawing.Drawing2D
+Imports System.Drawing.Text
 Imports Microsoft.VisualBasic.Drawing
 #End If
 

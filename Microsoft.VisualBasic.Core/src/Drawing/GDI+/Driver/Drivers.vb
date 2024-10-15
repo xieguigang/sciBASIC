@@ -78,17 +78,20 @@ Namespace Imaging.Driver
         ''' </summary>
         GDI
         ''' <summary>
-        ''' <see cref="GraphicsSVG"/>, mime type: image/svg+xml
+        ''' mime type: image/svg+xml
         ''' </summary>
         SVG
         ''' <summary>
-        ''' <see cref="GraphicsPS"/>
+        ''' application/postscript
         ''' </summary>
         PS
         ''' <summary>
         ''' Windows meta file
         ''' </summary>
         WMF
+        ''' <summary>
+        ''' application/pdf
+        ''' </summary>
         PDF
     End Enum
 

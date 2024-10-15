@@ -154,7 +154,8 @@ Namespace Plots
         Protected Overrides Sub PlotInternal(ByRef g As IGraphics, canvas As GraphicsRegion)
             Dim xTicks As Double() = polygons.Select(Function(p) p.pts.Select(Function(pi) CDbl(pi.pt.X))).IteratesALL.CreateAxisTicks
             Dim yTicks As Double() = polygons.Select(Function(p) p.pts.Select(Function(pi) CDbl(pi.pt.Y))).IteratesALL.CreateAxisTicks
-            Dim rect = canvas.PlotRegion
+            Dim css As CSSEnvirnment = g.LoadEnvironment
+            Dim rect = canvas.PlotRegion(css)
             Dim xscale = d3js.scale.linear.domain(values:=xTicks).range(values:=New Double() {rect.Left, rect.Right})
             Dim yscale = d3js.scale.linear.domain(values:=yTicks).range(values:=New Double() {rect.Top, rect.Bottom})
             Dim shape As PointF()
@@ -164,7 +165,6 @@ Namespace Plots
                 .X = xscale,
                 .Y = yscale
             }
-            Dim css As CSSEnvirnment = g.LoadEnvironment
             Dim stroke As Stroke = Stroke.TryParse(theme.lineStroke)
             Dim pen As Pen = css.GetPen(stroke)
 

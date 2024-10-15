@@ -67,6 +67,8 @@ Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
+Imports Microsoft.VisualBasic.MIME.Html.CSS
+Imports Microsoft.VisualBasic.MIME.Html.Render
 
 #If NET48 Then
 Imports Pen = System.Drawing.Pen
@@ -117,20 +119,16 @@ Namespace BarPlot
                 .IteratesALL _
                 .Range _
                 .CreateAxisTicks
+            Dim css As CSSEnvirnment = g.LoadEnvironment
+            Dim rect As Rectangle = canvas.PlotRegion(css)
             Dim xscale = d3js.scale.ordinal() _
                 .domain(tags:=data.Samples.Select(Function(s) s.tag).ToArray) _
-                .range(values:=New Double() {
-                    canvas.PlotRegion.Left,
-                    canvas.PlotRegion.Right
-                })
+                .range(values:=New Double() {rect.Left, rect.Right})
             Dim yscale = d3js.scale.linear() _
                 .domain(values:=yTicks) _
-                .range(values:=New Double() {
-                    canvas.PlotRegion.Top,
-                    canvas.PlotRegion.Bottom
-                })
+                .range(values:=New Double() {rect.Top, rect.Bottom})
             Dim yscaler As New YScaler(reversed:=False) With {
-                .region = canvas.PlotRegion,
+                .region = rect,
                 .Y = yscale
             }
 
@@ -138,7 +136,7 @@ Namespace BarPlot
                 g:=g,
                 scaler:=New DataScaler With {
                     .AxisTicks = (Nothing, yTicks.AsVector),
-                    .region = canvas.PlotRegion,
+                    .region = rect,
                     .X = xscale,
                     .Y = yscale
                 },
@@ -163,7 +161,7 @@ Namespace BarPlot
                 n = data.Samples.Sum(Function(x) x.data.Length) - 1
             End If
 
-            Dim bottom As Double = canvas.PlotRegion.Bottom
+            Dim bottom As Double = rect.Bottom
             Dim barWidth As Double = xscale.binWidth
 
             For Each sample As SeqValue(Of BarDataSample) In data.Samples.SeqIterator
@@ -174,7 +172,7 @@ Namespace BarPlot
                     Dim right As Double = x + barWidth
                     Dim top = yscaler.TranslateY(sample.value.StackedSum)
                     ' 畫布的高度
-                    Dim canvasHeight = canvas.Size.Height - (canvas.Padding.Vertical)
+                    Dim canvasHeight = canvas.Size.Height - (canvas.Padding.Vertical(css))
                     ' 底部減去最高的就是實際的高度（縂的）
                     Dim actualHeight = bottom - top
                     Dim stack As IEnumerable(Of SeqValue(Of Double))
@@ -196,9 +194,8 @@ Namespace BarPlot
                         Dim barHeight! = (+val) / (+sample).StackedSum
                         barHeight = barHeight * actualHeight
                         Dim barSize As New Size(barWidth, barHeight)
-                        Dim rect As New Rectangle(topleft, barSize)
 
-                        Call g.FillRectangle(New SolidBrush(data.Serials(val.i).Value), rect)
+                        Call g.FillRectangle(New SolidBrush(data.Serials(val.i).Value), New Rectangle(topleft, barSize))
 
                         top += barHeight
                     Next
@@ -211,9 +208,8 @@ Namespace BarPlot
                     For Each val As SeqValue(Of Double) In sample.value.data.SeqIterator
                         Dim right As Double = x + dw
                         Dim top As Double = yscaler.TranslateY(val.value)
-                        Dim rect As Rectangle = BarPlotAPI.Rectangle(top, x, right, bottom)
 
-                        Call g.DrawRectangle(Pens.Black, rect)
+                        Call g.DrawRectangle(Pens.Black, BarPlotAPI.Rectangle(top, x, right, bottom))
                         Call g.FillRectangle(
                             New SolidBrush(data.Serials(val.i).Value),
                             BarPlotAPI.Rectangle(top + 1,

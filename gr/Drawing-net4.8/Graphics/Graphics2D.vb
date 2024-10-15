@@ -69,6 +69,7 @@ Imports System.Reflection
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.BitmapImage
+Imports Microsoft.VisualBasic.Imaging.Driver
 Imports std = System.Math
 
 ''' <summary>
@@ -104,6 +105,12 @@ Public Class Graphics2D : Inherits GDICanvas
     End Property
 
     Dim innerImage As Image
+
+    Public Overrides ReadOnly Property Driver As Drivers
+        Get
+            Return Drivers.GDI
+        End Get
+    End Property
 
     Protected Friend Sub New()
     End Sub

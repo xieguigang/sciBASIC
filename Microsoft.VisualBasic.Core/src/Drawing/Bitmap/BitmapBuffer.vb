@@ -141,6 +141,7 @@ Namespace Imaging.BitmapImage
             channels = channel
             memoryBuffer = True
 
+            _Stride = size.Width * channel
             _Size = size
             _Width = size.Width
             _Height = size.Height
@@ -152,6 +153,7 @@ Namespace Imaging.BitmapImage
             channels = 4 ' argb
             memoryBuffer = True
 
+            _Stride = size.Width * channels
             _Size = size
             _Width = size.Width
             _Height = size.Height
@@ -174,6 +176,14 @@ Namespace Imaging.BitmapImage
         ''' </summary>
         ''' <returns></returns>
         Public ReadOnly Property Size As Size
+
+        ''' <summary>
+        ''' Stride is the number of bytes your code must iterate past to reach the next vertical pixel.
+        ''' </summary>
+        ''' <returns>
+        ''' always be width * pixel_size on .NET 8.0 runtime;
+        ''' may be not matched with width * pixel_size on .net 4.8 runtime
+        ''' </returns>
         Public ReadOnly Property Stride As Integer
 
         ''' <summary>

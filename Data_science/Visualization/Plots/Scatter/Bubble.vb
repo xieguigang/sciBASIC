@@ -292,13 +292,13 @@ Public Class Bubble : Inherits Plot
         Dim yTicks = mapper.yAxis.CreateAxisTicks(, decimalDigits:=If(mapper.xAxis.Max > 0.01, 2, -1))
         Dim labels As New List(Of Label)
         Dim anchors As New List(Of Anchor)
-        Dim plotrect As Rectangle = canvas.PlotRegion
+        Dim plotRect As Rectangle = canvas.PlotRegion(css)
 
         If positiveRangeY Then
             yTicks = yTicks.Where(Function(t) t >= 0).ToArray
         End If
 
-        With canvas.PlotRegion
+        With plotRect
             x = d3js.scale.linear.domain(values:=xTicks).range(integers:={ .Left, .Right})
             y = d3js.scale.linear.domain(values:=yTicks).range(integers:={ .Top, .Bottom})
         End With
@@ -306,7 +306,7 @@ Public Class Bubble : Inherits Plot
         Dim device = g
         Dim scaler As New DataScaler With {
             .AxisTicks = (xTicks, yTicks),
-            .region = canvas.PlotRegion,
+            .region = plotRect,
             .X = x,
             .Y = y
         }
@@ -348,9 +348,9 @@ Public Class Bubble : Inherits Plot
             anchor = anchors(index)
             ' labelPos = New PointF(label.X, label.Y)
 
-            If label.X + label.width > canvas.PlotRegion.Right Then
+            If label.X + label.width > plotRect.Right Then
                 ' labelPos = New PointF(canvas.PlotRegion.Right - label.width, labelPos.Y)
-                label.X = canvas.PlotRegion.Right - label.width
+                label.X = plotRect.Right - label.width
             End If
 
             Call g.DrawLine(labelPointer, anchor, label.GetTextAnchor(anchor))
@@ -370,7 +370,7 @@ Public Class Bubble : Inherits Plot
             .Select(Function(str) g.MeasureString(str, legendLabelFont).Width) _
             .Max
         Dim topLeft As Point
-        Dim grect = canvas.PlotRegion
+        Dim grect = canvas.PlotRegion(env)
 
         If theme.legendLayout.IsNullOrEmpty Then
             topLeft = New Point With {

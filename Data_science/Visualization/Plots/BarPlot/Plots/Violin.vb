@@ -146,7 +146,7 @@ Public Class Violin : Inherits Plot
         Dim labelPos As PointF
         Dim polygonStroke As Pen = css.GetPen(Stroke.TryParse(theme.lineStroke))
         Dim titleFont As Font = css.GetFont(CSSFont.TryParse(theme.mainCSS))
-        Dim plotRegion As Rectangle = canvas.PlotRegion
+        Dim plotRegion As Rectangle = canvas.PlotRegion(css)
         Dim Y = d3js.scale _
             .linear _
             .domain(values:=yticks) _
@@ -245,7 +245,7 @@ Public Class Violin : Inherits Plot
                                  canvas As GraphicsRegion,
                                  theme As Theme)
 
-        Dim plotRegion As Rectangle = canvas.PlotRegion
+        Dim plotRegion As Rectangle = canvas.PlotRegion(g.LoadEnvironment)
         Dim quartile As DataQuartile = group.Quartile
         Dim lowerBound = quartile.Q1 - 1.5 * quartile.IQR
         Dim upperBound = quartile.Q3 + 1.5 * quartile.IQR

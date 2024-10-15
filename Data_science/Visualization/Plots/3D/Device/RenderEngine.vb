@@ -116,9 +116,11 @@ Namespace Plot3D.Device
                 Call element.Transform(camera)
             Next
 
+            Dim css As CSSEnvirnment = canvas.LoadEnvironment
+
             ' 进行投影之后只需要直接取出XY即可得到二维的坐标
             ' 然后生成多边形，进行画布的居中处理
-            Dim plotRect As Rectangle = region.PlotRegion
+            Dim plotRect As Rectangle = region.PlotRegion(css)
             Dim polygon As PointF() = models _
                 .Select(Function(element) element.EnumeratePath) _
                 .IteratesALL _
@@ -133,7 +135,6 @@ Namespace Plot3D.Device
             Dim anchors As New List(Of d3js.Layout.Anchor)
             Dim location As PointF
             Dim labelSize As SizeF
-            Dim css As CSSEnvirnment = canvas.LoadEnvironment
             Dim labelFont As Font = css.GetFont(CSSFont.TryParse(theme.tagCSS))
 
             For i As Integer = 0 To models.Length - 1

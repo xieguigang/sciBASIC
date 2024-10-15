@@ -147,7 +147,8 @@ Namespace BarPlot.Histogram
         End Sub
 
         Protected Overrides Sub PlotInternal(ByRef g As IGraphics, canvas As GraphicsRegion)
-            Dim region As Rectangle = canvas.PlotRegion
+            Dim css As CSSEnvirnment = g.LoadEnvironment
+            Dim region As Rectangle = canvas.PlotRegion(css)
 
             If groups.Samples.Length = 1 AndAlso groups.Samples.First.data.Length = 0 Then
                 Call "No content data for plot histogram chart...".Warning
@@ -160,9 +161,8 @@ Namespace BarPlot.Histogram
             Dim X, Y As d3js.scale.LinearScale
             Dim XTicks#() = groups.XRange.CreateAxisTicks
             Dim YTicks#() = groups.YRange.CreateAxisTicks
-            Dim css As CSSEnvirnment = g.LoadEnvironment
 
-            With canvas.PlotRegion
+            With region
                 If Not xAxis.StringEmpty Then
                     XTicks = AxisProvider.TryParse(xAxis).AxisTicks
                     X = XTicks.LinearScale.range(integers:={ .Left, .Right})
@@ -179,11 +179,11 @@ Namespace BarPlot.Histogram
             End With
 
             Dim scaler As New DataScaler With {
-                        .X = X,
-                        .Y = Y,
-                        .region = canvas.PlotRegion,
-                        .AxisTicks = (XTicks, YTicks)
-                    }
+                .X = X,
+                .Y = Y,
+                .region = region,
+                .AxisTicks = (XTicks, YTicks)
+            }
 
             Call g.DrawAxis(
                 canvas, scaler, theme.drawGrid,
@@ -196,7 +196,7 @@ Namespace BarPlot.Histogram
             )
 
             If Not main.StringEmpty Then
-                Dim titleFont As Font = css.GetFont(CSSFont.TryParse(theme.mainCSS))
+                Dim titleFont As Font = CSS.GetFont(CSSFont.TryParse(theme.mainCSS))
                 Dim titleSize As SizeF = g.MeasureString(main, titleFont)
                 Dim titlePos As New PointF With {
                     .X = region.Left + (region.Width - titleSize.Width) / 2,

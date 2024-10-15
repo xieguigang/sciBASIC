@@ -78,7 +78,8 @@ Public Class Circular : Inherits DendrogramPanel
     End Sub
 
     Protected Overrides Sub PlotInternal(ByRef g As IGraphics, canvas As GraphicsRegion)
-        Dim plotRegion = canvas.PlotRegion
+        Dim css As CSSEnvirnment = g.LoadEnvironment
+        Dim plotRegion = canvas.PlotRegion(css)
         Dim maxRadius As Double = std.Min(plotRegion.Width, plotRegion.Height) / 2
         ' 每一个样本点都平分一段长度
         Dim unitAngle As Double = (2 * std.PI) / hist.Leafs
@@ -95,19 +96,18 @@ Public Class Circular : Inherits DendrogramPanel
             .linear() _
             .domain(values:=axisTicks) _
             .range(integers:={0, maxRadius})
-        Dim css As CSSEnvirnment = g.LoadEnvironment
 
         ' 绘制距离标尺
         Dim outer = scaleR(axisTicks.Max)
         Dim inner = scaleR(0)
-        Dim tickFont As Font = css.GetFont(CSSFont.TryParse(theme.axisTickCSS))
+        Dim tickFont As Font = CSS.GetFont(CSSFont.TryParse(theme.axisTickCSS))
         Dim tickFontHeight As Single = g.MeasureString("0", tickFont).Height
         Dim dh As Double = tickFontHeight / 3
         Dim tickLable As String
         Dim tickLabelSize As SizeF
         Dim labelPadding As Integer
         Dim charWidth As Integer = g.MeasureString("0", labelFont).Width
-        Dim axisPen As Pen = css.GetPen(Stroke.TryParse(theme.axisStroke))
+        Dim axisPen As Pen = CSS.GetPen(Stroke.TryParse(theme.axisStroke))
         Dim angle As Double = 0
         Dim r As Double
 

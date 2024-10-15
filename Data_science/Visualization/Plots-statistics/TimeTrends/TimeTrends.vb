@@ -56,22 +56,21 @@ Imports System.Drawing.Drawing2D
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Algorithm.base
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
+Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Axis
+Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Legend
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.d3js.Layout
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Math2D
-Imports Microsoft.VisualBasic.Imaging.Drawing2D.Text
 Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MIME.Html.CSS
-Imports Microsoft.VisualBasic.Scripting.Runtime
-Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic
-Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Legend
-Imports stdNum = System.Math
 Imports Microsoft.VisualBasic.MIME.Html.Render
+Imports Microsoft.VisualBasic.Scripting.Runtime
+Imports std = System.Math
 
 Public Module TimeTrends
 
@@ -164,16 +163,16 @@ Public Module TimeTrends
 
         Dim plotInternal =
             Sub(ByRef g As IGraphics, region As GraphicsRegion)
-                Dim yScaler = region.YScaler(yTicks)
-                Dim xScaler = timer.Scaler(DoubleRange.TryParse(region.XRange))
-                Dim rect As Rectangle = region.PlotRegion
+                Dim css As CSSEnvirnment = g.LoadEnvironment
+                Dim yScaler = region.YScaler(yTicks, css)
+                Dim xScaler = timer.Scaler(DoubleRange.TryParse(region.XRange(css)))
+                Dim rect As Rectangle = region.PlotRegion(css)
                 Dim x#, y#
                 Dim ty#() = {0, 0, 0}
                 Dim trends As New List(Of PointF)
                 Dim labelSize As SizeF
                 Dim labelText$
                 Dim maxLabelXWidth!
-                Dim css As CSSEnvirnment = g.LoadEnvironment
                 Dim valueLabelFont As Font = css.GetFont(CSSFont.TryParse(valueLabelFontCSS))
                 Dim tickLabelFont As Font = css.GetFont(CSSFont.TryParse(tickLabelFontCSS))
                 Dim titleFont As Font = css.GetFont(CSSFont.TryParse(titleFontCSS))
@@ -210,7 +209,7 @@ Public Module TimeTrends
                     x = x - labelSize.Width / 2
                     y = rect.Bottom + labelSize.Width * (3 / 4)
 
-                    maxLabelXWidth = stdNum.Max(
+                    maxLabelXWidth = std.Max(
                         labelSize.Width,
                         maxLabelXWidth
                     )

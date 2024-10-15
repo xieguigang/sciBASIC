@@ -101,14 +101,15 @@ Public Class ZScoresPlot : Inherits Plot
         Dim maxLegendLabelSize As SizeF = g.MeasureString(maxGroupLabel, legendLabelFont)
         Dim pointSize As New SizeF(theme.pointSize, theme.pointSize)
         Dim axisStroke As Pen = css.GetPen(Stroke.TryParse(theme.axisStroke))
+        Dim plotRect = canvas.PlotRegion(css)
 
         ' 计算出layout信息
-        Dim plotWidth% = canvas.PlotRegion.Width _
+        Dim plotWidth% = plotRect.Width _
                                  - maxSerialLabelSize.Width _
                                  - maxLegendLabelSize.Width _
                                  - maxLegendLabelSize.Height _
                                  - 30
-        Dim plotHeight = canvas.PlotRegion.Height - titleFont.Height - tickFont.Height - 20
+        Dim plotHeight = plotRect.Height - titleFont.Height - tickFont.Height - 20
         Dim plotWidthRange As DoubleRange = New Double() {0, plotWidth}
         Dim X = Function(Z#)
                     Return canvas.Padding.Left _

@@ -1,63 +1,63 @@
 ﻿#Region "Microsoft.VisualBasic::4f978579a2ebb19691ce8dc6c968a44b, Data_science\Visualization\Plots\BarPlot\Plots\PlotAlignmentGroup.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 551
-    '    Code Lines: 383 (69.51%)
-    ' Comment Lines: 73 (13.25%)
-    '    - Xml Docs: 10.96%
-    ' 
-    '   Blank Lines: 95 (17.24%)
-    '     File Size: 23.91 KB
+' Summaries:
 
 
-    '     Class PlotAlignmentGroup
-    ' 
-    '         Properties: bw, displayX, highlightMargin, hitsHightLights, idTag
-    '                     labelPlotStrength, legendLayout, queryName, subjectName, XAxisLabelCss
-    '                     xError
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    ' 
-    '         Function: Hit
-    ' 
-    '         Sub: DrawAlignmentBars, DrawLegendTitleRegion, DrawLegendTopRight, DrawLegeneds, DrawTextLabels
-    '              PlotInternal
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 551
+'    Code Lines: 383 (69.51%)
+' Comment Lines: 73 (13.25%)
+'    - Xml Docs: 10.96%
+' 
+'   Blank Lines: 95 (17.24%)
+'     File Size: 23.91 KB
+
+
+'     Class PlotAlignmentGroup
+' 
+'         Properties: bw, displayX, highlightMargin, hitsHightLights, idTag
+'                     labelPlotStrength, legendLayout, queryName, subjectName, XAxisLabelCss
+'                     xError
+' 
+'         Constructor: (+1 Overloads) Sub New
+' 
+'         Function: Hit
+' 
+'         Sub: DrawAlignmentBars, DrawLegendTitleRegion, DrawLegendTopRight, DrawLegeneds, DrawTextLabels
+'              PlotInternal
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -252,11 +252,11 @@ Namespace BarPlot
         Public Const DefaultGridXStroke As String = "stroke: lightgray; stroke-width: 1px; stroke-dash: dash;"
 
         Protected Overrides Sub PlotInternal(ByRef g As IGraphics, canvas As GraphicsRegion)
-            Dim rect As Rectangle = canvas.PlotRegion
+            Dim css As CSSEnvirnment = g.LoadEnvironment
+            Dim rect As Rectangle = canvas.PlotRegion(css)
             Dim scaleX = d3js.scale.linear().domain(values:={xrange.Min, xrange.Max}).range(values:={rect.Left, rect.Right})
             Dim scaleY = d3js.scale.linear().domain(values:={0, yrange.Max}).range(values:={0, rect.Height / 2})
             Dim ymid! = rect.Height / 2 + canvas.Padding.Top
-            Dim css As CSSEnvirnment = g.LoadEnvironment
 
             css.SetBaseStyles(New Font(FontFace.MicrosoftYaHei, 12.0!))
 
@@ -351,14 +351,14 @@ Namespace BarPlot
 #Region "绘制横坐标轴"
                 Call DrawTextLabels(g, ymid, scaleX, scaleY)
 #End Region
-                rect = canvas.PlotRegion
+                rect = canvas.PlotRegion(css)
 
                 If theme.drawLegend Then
                     Call DrawLegeneds(g, rect)
                 End If
 
                 If Strings.LCase(legendLayout) <> "title" Then
-                    Call DrawMainTitle(g, canvas.PlotRegion, offsetFactor:=1.5)
+                    Call DrawMainTitle(g, canvas.PlotRegion(css), offsetFactor:=1.5)
                 End If
 
                 If Not idTag Is Nothing Then

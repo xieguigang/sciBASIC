@@ -224,10 +224,10 @@ Namespace Fractions
 
             Dim plotInternal =
                 Sub(ByRef g As IGraphics, region As GraphicsRegion)
-                    Dim plotRect = region.PlotRegion
-                    Dim center As PointF = plotRect.Centre
                     Dim css As CSSEnvirnment = g.LoadEnvironment
-                    Dim axisPen As Pen = css.GetPen(Stroke.TryParse(axisStrokeStyle))
+                    Dim plotRect = region.PlotRegion(css)
+                    Dim center As PointF = plotRect.Centre
+                    Dim axisPen As Pen = CSS.GetPen(Stroke.TryParse(axisStrokeStyle))
                     Dim labelFont As Font = css.GetFont(CSSFont.TryParse(labelFontCSS))
                     Dim radius As DoubleRange = {0, std.Min(plotRect.Width, plotRect.Height) / 2}
                     Dim serial As NamedValue(Of FractionData())

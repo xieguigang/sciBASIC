@@ -57,6 +57,7 @@ Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Imaging.d3js.Layout
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
+Imports Microsoft.VisualBasic.MIME.Html.CSS
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports np = Microsoft.VisualBasic.Math.LinearAlgebra.Matrix.Numpy
 
@@ -65,10 +66,11 @@ Namespace Drawing2D.Text.Nudge
     Public Module Adjustment
 
         Private Function measureSize(xy As Double(), text As String, marge As Double(), ax As GraphicsTextHandle) As SizeF
-            Dim x_scope = ax.get_xlim()(1) - ax.get_xlim()(0)
-            Dim y_scope = ax.get_ylim()(1) - ax.get_ylim()(0)
-            Dim figwidth = ax.get_figwidth()
-            Dim figheight = ax.get_figheight()
+            Dim css As New CSSEnvirnment(ax.canvas.Size)
+            Dim x_scope = ax.get_xlim(css)(1) - ax.get_xlim(css)(0)
+            Dim y_scope = ax.get_ylim(css)(1) - ax.get_ylim(css)(0)
+            Dim figwidth = ax.get_figwidth(css)
+            Dim figheight = ax.get_figheight(css)
             Dim sizing_dict As New Dictionary(Of String, Double) From {
                 {"default", 1.1},
                 {"a", 1.1},
@@ -163,10 +165,11 @@ Namespace Drawing2D.Text.Nudge
             'If the Then axis aspect Is Set To equal To keep proportion (For cercle) For example, the x_scope Is going To be multiply by two When we will enlarge 
             'If ax Then.get_aspect() == "equal":
             '	x_scope *= 2
-            Dim x_scope = ax.get_xlim()(1) - ax.get_xlim()(0)
-            Dim y_scope = ax.get_ylim()(1) - ax.get_ylim()(0)
-            Dim figwidth = ax.get_figwidth()
-            Dim figheight = ax.get_figheight()
+            Dim css As New CSSEnvirnment(ax.canvas.Size)
+            Dim x_scope = ax.get_xlim(css)(1) - ax.get_xlim(css)(0)
+            Dim y_scope = ax.get_ylim(css)(1) - ax.get_ylim(css)(0)
+            Dim figwidth = ax.get_figwidth(css)
+            Dim figheight = ax.get_figheight(css)
             Dim marge As Vector
 
             If add_marge Then

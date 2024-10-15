@@ -206,7 +206,7 @@ Namespace Plot3D.Impl
                 .ToArray
             Dim css As CSSEnvirnment = g.LoadEnvironment
             Dim font As Font = css.GetFont(CSSFont.TryParse(theme.axisLabelCSS))
-            Dim region As Rectangle = canvas.PlotRegion
+            Dim region As Rectangle = canvas.PlotRegion(css)
 
             ' 绘制图例？？
             Dim legendHeight! = (legends.Length * (font.Height + 5))

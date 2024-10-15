@@ -55,6 +55,7 @@
 #End Region
 
 Imports Microsoft.VisualBasic.Imaging.d3js.Layout
+Imports Microsoft.VisualBasic.MIME.Html.CSS
 
 Namespace Drawing2D.Text.Nudge
 
@@ -68,24 +69,24 @@ Namespace Drawing2D.Text.Nudge
         ''' <returns></returns>
         Public Property canvas As GraphicsRegion
 
-        Public Function get_xlim() As Double()
-            With canvas.PlotRegion
+        Public Function get_xlim(css As CSSEnvirnment) As Double()
+            With canvas.PlotRegion(css)
                 Return { .X, .Right}
             End With
         End Function
 
-        Public Function get_ylim() As Double()
-            With canvas.PlotRegion
+        Public Function get_ylim(css As CSSEnvirnment) As Double()
+            With canvas.PlotRegion(css)
                 Return { .Top, .Bottom}
             End With
         End Function
 
-        Friend Function get_figheight() As Double
-            Return canvas.PlotRegion.Height
+        Friend Function get_figheight(css As CSSEnvirnment) As Double
+            Return canvas.PlotRegion(css).Height
         End Function
 
-        Friend Function get_figwidth() As Double
-            Return canvas.PlotRegion.Width
+        Friend Function get_figwidth(css As CSSEnvirnment) As Double
+            Return canvas.PlotRegion(css).Width
         End Function
     End Class
 End Namespace

@@ -110,11 +110,11 @@ Namespace BarPlot
         End Sub
 
         Protected Overrides Sub PlotInternal(ByRef g As IGraphics, canvas As GraphicsRegion)
-            Dim rect As Rectangle = canvas.PlotRegion
+            Dim css As CSSEnvirnment = g.LoadEnvironment
+            Dim rect As Rectangle = canvas.PlotRegion(css)
             Dim dh As Double = rect.Height / data.size
             Dim barHeight As Double = dh * 0.7
-            Dim css As CSSEnvirnment = g.LoadEnvironment
-            Dim labelFont As Font = css.GetFont(CSSFont.TryParse(theme.axisLabelCSS))
+            Dim labelFont As Font = CSS.GetFont(CSSFont.TryParse(theme.axisLabelCSS))
             Dim maxLen As Double = g.MeasureString(data.samples.Select(Function(d) d.tag).MaxLengthString, labelFont).Width
             Dim boxLeft As Double = rect.Left + maxLen
             Dim boxWidth As Double = rect.Right - boxLeft
@@ -228,10 +228,11 @@ Namespace BarPlot
                 New LegendObject With {.color = colorFactor1.Color.ToHtmlColor, .fontstyle = theme.legendLabelCSS, .style = LegendStyles.Square, .title = data.Factor1},
                 New LegendObject With {.color = colorFactor2.Color.ToHtmlColor, .fontstyle = theme.legendLabelCSS, .style = LegendStyles.Square, .title = data.Factor2}
             }
+            Dim plotRect = canvas.PlotRegion(css)
 
             theme.legendLayout = New Absolute With {
-                .x = canvas.PlotRegion.Right + 20,
-                .y = canvas.PlotRegion.Top + 20
+                .x = plotRect.Right + 20,
+                .y = plotRect.Top + 20
             }
 
             Call DrawLegends(g, legends, showBorder:=False, canvas:=canvas)

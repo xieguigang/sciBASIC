@@ -60,6 +60,8 @@ Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
 Imports Microsoft.VisualBasic.Imaging.Driver
+Imports Microsoft.VisualBasic.MIME.Html.CSS
+Imports Microsoft.VisualBasic.MIME.Html.Render
 Imports Microsoft.VisualBasic.Scripting.Runtime
 Imports stdNum = System.Math
 
@@ -89,7 +91,8 @@ Namespace Heatmap
 
             Dim plotInternal =
                 Sub(ByRef g As IGraphics, region As GraphicsRegion)
-                    Dim plotRegion As Rectangle = region.PlotRegion
+                    Dim css As CSSEnvirnment = g.LoadEnvironment
+                    Dim plotRegion As Rectangle = region.PlotRegion(css)
                     ' 应该是正方形的
                     Dim maxRadius = stdNum.Min(plotRegion.Width / ncols, plotRegion.Height / nrows)
 

@@ -60,6 +60,8 @@ Imports Microsoft.VisualBasic.DataMining.HierarchicalClustering
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
+Imports Microsoft.VisualBasic.MIME.Html.CSS
+Imports Microsoft.VisualBasic.MIME.Html.Render
 
 Namespace Heatmap
 
@@ -91,7 +93,8 @@ Namespace Heatmap
             Dim hor As New DendrogramPanelV2(hist, theme, showRuler:=False, showLeafLabels:=False)
             ' top
             Dim ver As New Horizon(hist, theme, showRuler:=False, showLeafLabels:=False)
-            Dim region As Rectangle = canvas.PlotRegion
+            Dim css As CSSEnvirnment = g.LoadEnvironment
+            Dim region As Rectangle = canvas.PlotRegion(css)
             Dim labelOrders As String() = hist.OrderLeafs
             Dim deltaW As Integer = treeHeight * region.Width
             Dim deltaH As Integer = treeHeight * region.Height

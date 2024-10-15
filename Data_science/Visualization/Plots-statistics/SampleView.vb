@@ -135,10 +135,10 @@ Public Module SampleView
         Dim plotInternal =
             Sub(ByRef g As IGraphics, region As GraphicsRegion)
                 Dim X, Y As d3js.scale.LinearScale
-                Dim rect = region.PlotRegion
-                Dim up As New Rectangle(rect.Location, New Size(rect.Width, rect.Height / 2))
                 Dim css As CSSEnvirnment = g.LoadEnvironment
-                Dim meanLine As Pen = css.GetPen(Stroke.TryParse(meanLineCSS))
+                Dim rect = region.PlotRegion(css)
+                Dim up As New Rectangle(rect.Location, New Size(rect.Width, rect.Height / 2))
+                Dim meanLine As Pen = CSS.GetPen(Stroke.TryParse(meanLineCSS))
                 Dim normalErrorLine As Pen = css.GetPen(Stroke.TryParse(normalErrorColor))
                 Dim outlierLine As Pen = css.GetPen(Stroke.TryParse(outlierColor))
                 Dim normaldistLine As Pen = css.GetPen(Stroke.TryParse(normaldistLineColor))

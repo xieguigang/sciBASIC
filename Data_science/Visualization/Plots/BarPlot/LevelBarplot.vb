@@ -158,7 +158,7 @@ Namespace BarPlot
                     Dim tickFont As Font = css.GetFont(CSSFont.TryParse(tickFontCSS))
                     Dim valueTitleFont As Font = css.GetFont(CSSFont.TryParse(valueTitleFontCSS))
                     Dim maxLabelSize As SizeF = g.MeasureString(maxLengthLabel, labelFont)
-                    Dim plotRegion As Rectangle = region.PlotRegion
+                    Dim plotRegion As Rectangle = region.PlotRegion(css)
                     Dim pos As PointF
                     Dim chartBox As New Rectangle With {
                         .X = plotRegion.Left + maxLabelSize.Width + 5,

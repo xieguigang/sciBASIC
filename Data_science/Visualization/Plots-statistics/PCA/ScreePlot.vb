@@ -93,7 +93,8 @@ Namespace PCA
             Dim Y As Vector = cv.CreateAxisTicks
             Dim plotInternal =
                 Sub(ByRef g As IGraphics, region As GraphicsRegion)
-                    Dim rect As Rectangle = region.PlotRegion
+                    Dim css As CSSEnvirnment = g.LoadEnvironment
+                    Dim rect As Rectangle = region.PlotRegion(css)
                     Dim Xscaler = d3js.scale.ordinal.domain(tags:=X).range(integers:={rect.Left, rect.Right})
                     Dim Yscaler = d3js.scale.linear.domain(values:=Y).range(integers:={rect.Top, rect.Bottom})
                     Dim scaler As New TermScaler With {
@@ -104,7 +105,6 @@ Namespace PCA
                     }
                     Dim labelColor As Brush = CSSFont.TryParse(labelFontStyle).color.GetBrush
                     Dim tickColor As Brush = CSSFont.TryParse(tickFontStyle).color.GetBrush
-                    Dim css As CSSEnvirnment = g.LoadEnvironment
 
                     Call g.DrawY(css.GetPen(Stroke.TryParse(axisStrokeCSS)), "Variances", scaler, -1, Y, YAxisLayoutStyles.Left, Nothing, labelFontStyle, labelColor,
                                  css.GetFont(CSSFont.TryParse(tickFontStyle)), tickColor,

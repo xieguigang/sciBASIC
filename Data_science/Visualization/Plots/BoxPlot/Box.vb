@@ -132,7 +132,7 @@ Namespace BoxPlot
 
             ranges *= rangeScale
 
-            Dim plotRegion = canvas.PlotRegion
+            Dim plotRegion = canvas.PlotRegion(css)
             Dim leftPart = yAxisLabelFont.Height + tickLabelFont.Height + 50
             Dim bottomPart = groupLabelFont.Height + 50
 
@@ -217,7 +217,7 @@ Namespace BoxPlot
 
             Dim location As New PointF With {
                     .X = canvasPadding.Left + (leftPart - tickLabelFont.Height - labelSize.Height) / 2,
-                    .Y = canvas.PlotRegion.Height / 2
+                    .Y = canvas.PlotRegion(css).Height / 2
                 }
             g.DrawString(ylabel, yAxisLabelFont, Brushes.Black, location.X, location.Y, angle:=-90)
         End Sub

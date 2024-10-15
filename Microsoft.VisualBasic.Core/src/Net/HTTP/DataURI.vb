@@ -110,20 +110,25 @@ Namespace Net.Http
             Me.chartSet = charset
 
             Dim chunkbuffer As New List(Of Byte)
-            Dim buffer As Byte() = New Byte(1024) {}
-            Dim nreads As Integer
 
-            Do While stream.Position < stream.Length
-                nreads = stream.Read(buffer, Scan0, buffer.Length)
+            If TypeOf stream Is MemoryStream Then
+                Me.base64 = DirectCast(stream, MemoryStream).ToBase64String
+            Else
+                Dim buffer As Byte() = New Byte(1024) {}
+                Dim nreads As Integer
 
-                If nreads <= 0 Then
-                    Exit Do
-                Else
-                    Call chunkbuffer.AddRange(buffer.Take(nreads))
-                End If
-            Loop
+                Do While stream.Position < stream.Length
+                    nreads = stream.Read(buffer, Scan0, buffer.Length)
 
-            Me.base64 = chunkbuffer.ToBase64String
+                    If nreads <= 0 Then
+                        Exit Do
+                    Else
+                        Call chunkbuffer.AddRange(buffer.Take(nreads))
+                    End If
+                Loop
+
+                Me.base64 = chunkbuffer.ToBase64String
+            End If
         End Sub
 
         Public Sub New(base64$, mime$, Optional charset$ = Nothing)

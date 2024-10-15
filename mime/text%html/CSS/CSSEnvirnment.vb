@@ -93,7 +93,7 @@ Namespace CSS
         ''' bugs fixed for config dpi value on unix mono platform 
         ''' </summary>
         ''' <returns></returns>
-        Public ReadOnly Property dpi As Integer = 100
+        Public ReadOnly Property dpi As Single = 100
 
         ''' <summary>
         ''' the canvas size [width,height].
@@ -101,11 +101,21 @@ Namespace CSS
         ''' <returns></returns>
         Public ReadOnly Property canvas As Size
 
-        Sub New(canvas As Size, Optional dpi As Integer = 100)
+        Sub New(canvas As Size, Optional dpi As Single = 100)
             Me.canvas = canvas
             Me.dpi = dpi
         End Sub
 
+        Sub New(canvas As SizeF, Optional dpi As Single = 100)
+            Call Me.New(canvas.ToSize, dpi)
+        End Sub
+
+        ''' <summary>
+        ''' set css base styles
+        ''' </summary>
+        ''' <param name="font"></param>
+        ''' <param name="stroke"></param>
+        ''' <returns></returns>
         Public Function SetBaseStyles(Optional font As Font = Nothing, Optional stroke As Pen = Nothing) As CSSEnvirnment
             _baseFont = font
             _baseLine = stroke
@@ -120,12 +130,25 @@ Namespace CSS
             )
         End Function
 
-        Public Shared Function GetValue(size As CssLength) As Single
+        Public Function GetValue(size As CssLength) As Single
             Select Case size.Unit
-                Case CssUnit.None, CssUnit.Pixels, CssUnit.Points : Return size.Number
+                Case CssUnit.None, CssUnit.Pixels, CssUnit.Points
+                    Return size.Number
+
                 Case Else
                     Throw New NotImplementedException(size.ToString)
             End Select
+        End Function
+
+        ''' <summary>
+        ''' get css length value, usually be padding/margin width calculation
+        ''' </summary>
+        ''' <param name="len"></param>
+        ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function GetValue(len As String) As Single
+            Return GetValue(New CssLength(len))
         End Function
 
         ''' <summary>
@@ -164,7 +187,7 @@ Namespace CSS
             End If
 
             Dim style As DashStyle = GetDashStyle(stroke)
-            Dim width As Single = GetLineWidth(stroke)
+            Dim width As Single = GetLineWidth(stroke) * dpi / 96
 
             Return New Pen(stroke.fill.GetBrush, width) With {
                 .DashStyle = style

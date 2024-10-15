@@ -101,6 +101,12 @@ Namespace SVG
             End Get
         End Property
 
+        Public Overrides ReadOnly Property Driver As Drivers
+            Get
+                Return Drivers.SVG
+            End Get
+        End Property
+
         ''' <summary>
         ''' try to get the last created <see cref="SvgElement"/> in this svg document data.
         ''' </summary>
@@ -111,7 +117,6 @@ Namespace SVG
             End Get
         End Property
 
-        Public Overrides Property PageScale As Single
         Public Overrides Property RenderingOrigin As Point
         Public Overrides Property TextContrast As Integer
 
@@ -488,12 +493,7 @@ Namespace SVG
         End Sub
 
         Public Overrides Function MeasureString(text As String, font As Font) As SizeF
-            Dim css As New CSSFont(font, FontFace.SVGPointSize(font.SizeInPoints, Dpi))
-
-            Throw New NotImplementedException
-
-            ' Dim size As SizeF = gdi.MeasureString(text, font)
-            ' Return size
+            Return FontFace.MeasureString(text, New Font(font, FontFace.SVGPointSize(font.SizeInPoints, Dpi)))
         End Function
 
         Public Overloads Overrides Sub DrawString(s As String, font As Font, brush As Brush, ByRef x!, ByRef y!, angle!)
@@ -689,10 +689,6 @@ Namespace SVG
         End Sub
 
         Public Overrides Function GetContextInfo() As Object
-            Throw New NotImplementedException()
-        End Function
-
-        Public Overrides Function GetNearestColor(color As Color) As Color
             Throw New NotImplementedException()
         End Function
 

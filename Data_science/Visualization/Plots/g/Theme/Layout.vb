@@ -74,6 +74,7 @@ Imports System.Drawing
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Language.Default
+Imports Microsoft.VisualBasic.MIME.Html.CSS
 Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace Graphic.Canvas
@@ -108,7 +109,7 @@ Namespace Graphic.Canvas
         ''' </summary>
         ''' <param name="canvas"></param>
         Sub New(canvas As GraphicsRegion)
-            Dim rect As Rectangle = canvas.PlotRegion
+            Dim rect As Rectangle = canvas.PlotRegion(New CSSEnvirnment(canvas.Size))
             Dim rectf As New RectangleF(rect.Location.PointF, rect.Size.SizeF)
 
             dependency = New Dictionary(Of String, RectangleF) From {

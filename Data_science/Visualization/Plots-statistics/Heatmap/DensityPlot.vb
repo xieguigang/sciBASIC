@@ -171,7 +171,8 @@ Namespace Heatmap
                     .Size = g.Size,
                     .Padding = scatterPadding
                 }
-                Dim scatterRegion As Rectangle = plotRegion.PlotRegion
+                Dim css As CSSEnvirnment = g.LoadEnvironment
+                Dim scatterRegion As Rectangle = plotRegion.PlotRegion(css)
                 Dim legendHeight! = scatterRegion.Height * 2 / 3
                 Dim legendLayout As New Rectangle With {
                     .Size = New Size With {
@@ -193,7 +194,7 @@ Namespace Heatmap
                     .IteratesALL _
                     .Range _
                     .CreateAxisTicks
-                Dim css As CSSEnvirnment = g.LoadEnvironment
+
                 Dim legendTitleFont As Font = css.GetFont(CSSFont.TryParse(legendTitleFontCSS))
                 Dim legendTickFont As Font = css.GetFont(CSSFont.TryParse(legendTickFontCSS))
                 Dim legendTickStroke As Pen = css.GetPen(Stroke.TryParse(legendTickStrokeCSS))

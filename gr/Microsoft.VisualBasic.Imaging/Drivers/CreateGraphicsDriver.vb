@@ -86,8 +86,8 @@ Namespace Driver
 
 #If NET48 Then
         Public Sub Register()
-            DriverLoad.libgdiplus_raster = New RasterInterop
-            DriverLoad.svg = New SvgInterop
+            Call DriverLoad.Register(New RasterInterop, Drivers.GDI)
+            Call DriverLoad.Register(New SvgInterop, Drivers.SVG)
         End Sub
 
         Private Class RasterInterop : Inherits DeviceInterop

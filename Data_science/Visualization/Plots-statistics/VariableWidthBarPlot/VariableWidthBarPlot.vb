@@ -98,7 +98,7 @@ Public Module VariableWidthBarPlot
                 Dim tickFont As Font = css.GetFont(CSSFont.TryParse(tickFontCSS))
                 Dim titleFont As Font = css.GetFont(CSSFont.TryParse(titleFontCSS))
                 Dim dataLabelFont As Font = css.GetFont(CSSFont.TryParse(dataLabelFontCSS))
-                Dim plotRect As Rectangle = region.PlotRegion
+                Dim plotRect As Rectangle = region.PlotRegion(css)
                 Dim scaler As New DataScaler With {
                     .region = plotRect,
                     .X = d3js.scale.linear.domain(values:=X).range(integers:={plotRect.Left, plotRect.Right}),

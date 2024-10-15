@@ -126,7 +126,7 @@ Namespace Graphic
                 bg:=theme.background,
                 plotAPI:=AddressOf PlotInternal,
                 driver:=driver,
-                dpi:=$"{dpi},{dpi}"
+                dpi:=dpi
             )
         End Function
 
@@ -138,7 +138,7 @@ Namespace Graphic
                 bg:=theme.background,
                 plotAPI:=AddressOf PlotInternal,
                 driver:=driver,
-                dpi:=$"{ppi},{ppi}"
+                dpi:=ppi
             )
         End Function
 
@@ -189,7 +189,7 @@ Namespace Graphic
             Dim maxWidth!
             Dim legendPos As PointF
             Dim legendSize$
-            Dim region As Rectangle = canvas.PlotRegion
+            Dim region As Rectangle = canvas.PlotRegion(css)
 
             Const ratio As Double = 0.65
 

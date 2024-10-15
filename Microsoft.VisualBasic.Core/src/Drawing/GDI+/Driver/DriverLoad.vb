@@ -65,11 +65,21 @@ Namespace Imaging.Driver
 
     Public Module DriverLoad
 
-        Public libgdiplus_raster As DeviceInterop
-        Public svg As DeviceInterop
-        Public pdf As DeviceInterop
+        Dim libgdiplus_raster As DeviceInterop
+        Dim svg As DeviceInterop
+        Dim pdf As DeviceInterop
 
         Sub New()
+        End Sub
+
+        Public Sub Register(interop As DeviceInterop, driver As Drivers)
+            Select Case driver
+                Case Drivers.GDI : libgdiplus_raster = interop
+                Case Drivers.PDF : pdf = interop
+                Case Drivers.SVG : svg = interop
+                Case Else
+                    Throw New NotSupportedException(driver.Description)
+            End Select
         End Sub
 
         ''' <summary>
@@ -78,6 +88,12 @@ Namespace Imaging.Driver
         ''' </summary>
         Public Function DefaultGraphicsDevice(Optional [default] As Drivers? = Nothing) As Drivers
             Static __default As Drivers = Drivers.GDI
+
+            ' 20241015 the initialization of the static __default to gdi as default is not working
+            ' config of the __default manually at here
+            If __default = Drivers.Default AndAlso [default] Is Nothing Then
+                __default = Drivers.GDI
+            End If
 
             If Not [default] Is Nothing Then
                 __default = [default]

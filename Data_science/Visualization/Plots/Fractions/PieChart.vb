@@ -263,10 +263,10 @@ Namespace Fractions
 
             Dim plotInternal =
                 Sub(ByRef g As IGraphics, region As GraphicsRegion)
-                    Dim gSize = region.PlotRegion.Size
-                    Dim r# = std.Min(gSize.Width, gSize.Height - shadowDistance) / 2 ' 最大的半径值
                     Dim css As CSSEnvirnment = g.LoadEnvironment
-                    Dim font As Font = css.GetFont(CSSFont.TryParse(legendFont))
+                    Dim gSize = region.PlotRegion(css).Size
+                    Dim r# = std.Min(gSize.Width, gSize.Height - shadowDistance) / 2 ' 最大的半径值
+                    Dim font As Font = CSS.GetFont(CSSFont.TryParse(legendFont))
                     Dim valueLabelFont As Font = css.GetFont(CSSFont.TryParse(valueLabelStyle))
                     Dim layoutRect As Rectangle
                     Dim topLeft As New Point(region.Padding.Left, region.Padding.Top)

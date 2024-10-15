@@ -63,6 +63,7 @@ Imports Microsoft.VisualBasic.Imaging.SVG
 Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MIME.Html.CSS
+Imports Microsoft.VisualBasic.MIME.Html.Render
 
 Namespace Drawing2D.Colors
 
@@ -341,7 +342,7 @@ Namespace Drawing2D.Colors
                 Sub(ByRef g As IGraphics, region As GraphicsRegion)
                     Call designer.ColorLegendHorizontal(
                         ticks,
-                        g, region.PlotRegion,
+                        g, region.PlotRegion(g.LoadEnvironment),
                         padding,
                         labelFontCSS)
                 End Sub

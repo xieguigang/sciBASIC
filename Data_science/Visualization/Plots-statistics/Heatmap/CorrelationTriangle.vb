@@ -99,7 +99,7 @@ Namespace Heatmap
             Dim maxLabelSize = cor.data.keys _
                 .MaxLengthString _
                 .MeasureSize(g, rowLabelFont)
-            Dim plotRegion = canvas.PlotRegion
+            Dim plotRegion = canvas.PlotRegion(css)
             Dim dStep As New SizeF With {
                 .Width = (plotRegion.Width - maxLabelSize.Width) / cor.data.size,
                 .Height = (plotRegion.Height - maxLabelSize.Width) / cor.data.size

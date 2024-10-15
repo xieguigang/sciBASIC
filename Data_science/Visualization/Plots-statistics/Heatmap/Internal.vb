@@ -291,8 +291,9 @@ Namespace Heatmap
                     End If
 
                     ' 宽度与最大行标签宽度相减得到矩阵的绘制宽度
-                    Dim dw = rect.PlotRegion.Width - maxRowLabelSize.Width
-                    Dim dh = rect.PlotRegion.Height - maxColLabelSize.Width - legendSize.Height
+                    Dim plotRect = rect.PlotRegion(css)
+                    Dim dw = plotRect.Width - maxRowLabelSize.Width
+                    Dim dh = plotRect.Height - maxColLabelSize.Width - legendSize.Height
 
                     top += legendSize.Height + 20
 

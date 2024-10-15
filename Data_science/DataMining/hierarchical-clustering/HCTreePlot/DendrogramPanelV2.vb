@@ -95,11 +95,11 @@ Public Class DendrogramPanelV2 : Inherits DendrogramPanel
     End Function
 
     Protected Overrides Sub PlotInternal(ByRef g As IGraphics, canvas As GraphicsRegion)
-        Dim plotRegion As Rectangle = canvas.PlotRegion
+        Dim css As CSSEnvirnment = g.LoadEnvironment
+        Dim plotRegion As Rectangle = canvas.PlotRegion(css)
         ' 每一个样本点都平分一段长度
         Dim unitWidth As Double = plotRegion.Height / hist.Leafs
         Dim axisTicks As Double()
-        Dim css As CSSEnvirnment = g.LoadEnvironment
 
         If hist.DistanceValue <= 0.1 Then
             axisTicks = {0, hist.DistanceValue}.Range.CreateAxisTicks(decimalDigits:=-1)

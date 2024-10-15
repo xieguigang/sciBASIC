@@ -60,6 +60,8 @@ Imports Microsoft.VisualBasic.DataMining.ComponentModel
 Imports Microsoft.VisualBasic.DataMining.UMAP
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
+Imports Microsoft.VisualBasic.MIME.Html.CSS
+Imports Microsoft.VisualBasic.MIME.Html.Render
 
 Public Class Embedding2D ： Inherits EmbeddingRender
 
@@ -122,6 +124,8 @@ Public Class Embedding2D ： Inherits EmbeddingRender
             End If
         End If
 
+        Dim css As CSSEnvirnment = g.LoadEnvironment
+
         Call New Plots.Scatter2D(
             data:=serials,
             theme:=theme,
@@ -129,6 +133,6 @@ Public Class Embedding2D ： Inherits EmbeddingRender
             fillPie:=True,
             ablines:=Nothing,
             hullConvexList:=hullConvexList
-        ).Plot(g, canvas.PlotRegion)
+        ).Plot(g, canvas.PlotRegion(css))
     End Sub
 End Class

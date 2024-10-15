@@ -107,20 +107,6 @@ Public MustInherit Class GDICanvas : Inherits IGraphics
         Call Graphics.DrawString(str, Font, Brushes.Black, New Point(x, y))
     End Sub
 
-    ''' <summary>
-    ''' Gets or sets the scaling between world units and page units for this System.Drawing.Graphics.
-    ''' </summary>
-    ''' <returns>This property specifies a value for the scaling between world units and page
-    ''' units for this System.Drawing.Graphics.</returns>
-    Public Overrides Property PageScale As Single
-        Get
-            Return Graphics.PageScale
-        End Get
-        Set(value As Single)
-            Graphics.PageScale = value
-        End Set
-    End Property
-
     '
     ' Summary:
     '     Gets or sets the rendering origin of this System.Drawing.Graphics for dithering
@@ -1899,20 +1885,6 @@ Public MustInherit Class GDICanvas : Inherits IGraphics
         Return Graphics.GetContextInfo
     End Function
 
-    '
-    ' Summary:
-    '     Gets the nearest color to the specified System.Drawing.Color structure.
-    '
-    ' Parameters:
-    '   color:
-    '     System.Drawing.Color structure for which to find a match.
-    '
-    ' Returns:
-    '     A System.Drawing.Color structure that represents the nearest color to the one
-    '     specified with the color parameter.
-    Public Overrides Function GetNearestColor(color As Color) As Color
-        Return Graphics.GetNearestColor(color)
-    End Function
     '
     ' Summary:
     '     Indicates whether the rectangle specified by a System.Drawing.Rectangle structure

@@ -136,12 +136,14 @@ Namespace Imaging
         ''' <param name="dpiResolution"></param>
         ''' <returns></returns>
         Public Shared Function PointSizeScale(pointSize As Single, dpiResolution As Single) As Single
-            If Environment.OSVersion.Platform <> PlatformID.Win32NT Then
-                ' fix for running on unix mono/dotnet core 
-                Return If(App.IsMicrosoftPlatform, pointSize, pointSize * dpiResolution / 96)
-            Else
-                Return pointSize
-            End If
+            'If Environment.OSVersion.Platform <> PlatformID.Win32NT Then
+            '    ' fix for running on unix mono/dotnet core 
+            '    Return If(App.IsMicrosoftPlatform, pointSize, pointSize * dpiResolution / 96)
+            'Else
+            '    Return pointSize
+            'End If
+
+            Return pointSize * dpiResolution / 96
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>

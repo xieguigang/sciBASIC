@@ -67,6 +67,7 @@ Imports System.ComponentModel
 Imports System.Drawing
 Imports System.Drawing.Drawing2D
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Imaging.Driver
 Imports std = System.Math
 
 Namespace Imaging
@@ -75,7 +76,7 @@ Namespace Imaging
     ''' Encapsulates a GDI+(bitmap, wmf)/SVG etc drawing surface. This class must be inherited.
     ''' </summary>
     ''' <remarks>
-    ''' <see cref="Graphics"/>
+    ''' an default interface wrapper of the .NET gdi+ Graphics object
     ''' </remarks>
     Public MustInherit Class IGraphics
         Implements IDisposable
@@ -86,12 +87,26 @@ Namespace Imaging
         ''' <returns></returns>
         Public MustOverride ReadOnly Property Size As Size
 
+        ''' <summary>
+        ''' Get graphics driver code
+        ''' </summary>
+        ''' <returns></returns>
+        Public MustOverride ReadOnly Property Driver As Drivers
+
+        ''' <summary>
+        ''' the image graphics width
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property Width As Integer
             Get
                 Return Size.Width
             End Get
         End Property
 
+        ''' <summary>
+        ''' the image graphics height
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property Height As Integer
             Get
                 Return Size.Height
@@ -144,57 +159,31 @@ Namespace Imaging
             Call Me.New(std.max(dpiXY.Width, dpiXY.Height))
         End Sub
 
-        '
-        ' Summary:
-        '     Gets or sets the scaling between world units and page units for this System.Drawing.Graphics.
-        '
-        ' Returns:
-        '     This property specifies a value for the scaling between world units and page
-        '     units for this System.Drawing.Graphics.
-        Public MustOverride Property PageScale As Single
-        '
-        ' Summary:
-        '     Gets or sets the rendering origin of this System.Drawing.Graphics for dithering
-        '     and for hatch brushes.
-        '
-        ' Returns:
-        '     A System.Drawing.Point structure that represents the dither origin for 8-bits-per-pixel
-        '     and 16-bits-per-pixel dithering and is also used to set the origin for hatch
-        '     brushes.
+        ''' <summary>
+        ''' Gets or sets the rendering origin of this System.Drawing.Graphics for dithering
+        ''' and for hatch brushes.
+        ''' </summary>
+        ''' <returns>
+        ''' A System.Drawing.Point structure that represents the dither origin for 8-bits-per-pixel
+        ''' and 16-bits-per-pixel dithering and is also used to set the origin for hatch
+        ''' brushes.
+        ''' </returns>
         Public MustOverride Property RenderingOrigin As Point
 
-        '
-        ' Summary:
-        '     Gets or sets the gamma correction value for rendering text.
-        '
-        ' Returns:
-        '     The gamma correction value used for rendering antialiased and ClearType text.
+        ''' <summary>
+        ''' Gets or sets the gamma correction value for rendering text.
+        ''' </summary>
+        ''' <returns>
+        ''' The gamma correction value used for rendering antialiased and ClearType text.
+        ''' </returns>
         Public MustOverride Property TextContrast As Integer
 
-        ''
-        '' Summary:
-        ''     Gets or sets a copy of the geometric world transformation for this System.Drawing.Graphics.
-        ''
-        '' Returns:
-        ''     A copy of the System.Drawing.Drawing2D.Matrix that represents the geometric world
-        ''     transformation for this System.Drawing.Graphics.
-        'Public MustOverride Property Transform As Matrix
-        ''
-        '' Summary:
-        ''     Gets the bounding rectangle of the visible clipping region of this System.Drawing.Graphics.
-        ''
-        '' Returns:
-        ''     A System.Drawing.RectangleF structure that represents a bounding rectangle for
-        ''     the visible clipping region of this System.Drawing.Graphics.
-        'Public MustOverride ReadOnly Property VisibleClipBounds As RectangleF
-
-        '
-        ' Summary:
-        '     Adds a comment to the current System.Drawing.Imaging.Metafile.
-        '
-        ' Parameters:
-        '   data:
-        '     Array of bytes that contains the comment.
+        ''' <summary>
+        ''' Adds a comment to the current System.Drawing.Imaging.Metafile.
+        ''' </summary>
+        ''' <param name="data">
+        ''' Array of bytes that contains the comment.
+        ''' </param>
         Public MustOverride Sub AddMetafileComment(data() As Byte)
 
         ''' <summary>
@@ -233,29 +222,16 @@ Namespace Imaging
             End If
         End Sub
 
-        '
-        ' Summary:
-        '     Draws an arc representing a portion of an ellipse specified by a System.Drawing.RectangleF
-        '     structure.
-        '
-        ' Parameters:
-        '   pen:
-        '     System.Drawing.Pen that determines the color, width, and style of the arc.
-        '
-        '   rect:
-        '     System.Drawing.RectangleF structure that defines the boundaries of the ellipse.
-        '
-        '   startAngle:
-        '     Angle in degrees measured clockwise from the x-axis to the starting point of
-        '     the arc.
-        '
-        '   sweepAngle:
-        '     Angle in degrees measured clockwise from the startAngle parameter to ending point
-        '     of the arc.
-        '
-        ' Exceptions:
-        '   T:System.ArgumentNullException:
-        '     pen is null
+        ''' <summary>
+        ''' Draws an arc representing a portion of an ellipse specified by a System.Drawing.RectangleF
+        ''' structure.
+        ''' </summary>
+        ''' <param name="pen">System.Drawing.Pen that determines the color, width, and style of the arc.</param>
+        ''' <param name="rect">System.Drawing.RectangleF structure that defines the boundaries of the ellipse.</param>
+        ''' <param name="startAngle">Angle in degrees measured clockwise from the x-axis to the starting point of
+        ''' the arc.</param>
+        ''' <param name="sweepAngle">Angle in degrees measured clockwise from the startAngle parameter to ending point
+        ''' of the arc.</param>
         Public MustOverride Sub DrawArc(pen As Pen, rect As RectangleF, startAngle As Single, sweepAngle As Single)
 
         ''' <summary>
@@ -1491,42 +1467,23 @@ Namespace Imaging
             End With
         End Sub
 
-        '
-        ' Summary:
-        '     Fills the interior of a pie section defined by an ellipse specified by a pair
-        '     of coordinates, a width, a height, and two radial lines.
-        '
-        ' Parameters:
-        '   brush:
-        '     System.Drawing.Brush that determines the characteristics of the fill.
-        '
-        '   x:
-        '     The x-coordinate of the upper-left corner of the bounding rectangle that defines
-        '     the ellipse from which the pie section comes.
-        '
-        '   y:
-        '     The y-coordinate of the upper-left corner of the bounding rectangle that defines
-        '     the ellipse from which the pie section comes.
-        '
-        '   width:
-        '     Width of the bounding rectangle that defines the ellipse from which the pie section
-        '     comes.
-        '
-        '   height:
-        '     Height of the bounding rectangle that defines the ellipse from which the pie
-        '     section comes.
-        '
-        '   startAngle:
-        '     Angle in degrees measured clockwise from the x-axis to the first side of the
-        '     pie section.
-        '
-        '   sweepAngle:
-        '     Angle in degrees measured clockwise from the startAngle parameter to the second
-        '     side of the pie section.
-        '
-        ' Exceptions:
-        '   T:System.ArgumentNullException:
-        '     brush is null.
+        ''' <summary>
+        ''' Fills the interior of a pie section defined by an ellipse specified by a pair
+        ''' of coordinates, a width, a height, and two radial lines.
+        ''' </summary>
+        ''' <param name="brush">System.Drawing.Brush that determines the characteristics of the fill.</param>
+        ''' <param name="x">The x-coordinate of the upper-left corner of the bounding rectangle that defines
+        ''' the ellipse from which the pie section comes.</param>
+        ''' <param name="y">The y-coordinate of the upper-left corner of the bounding rectangle that defines
+        ''' the ellipse from which the pie section comes.</param>
+        ''' <param name="width">Width of the bounding rectangle that defines the ellipse from which the pie section
+        ''' comes.</param>
+        ''' <param name="height">Height of the bounding rectangle that defines the ellipse from which the pie
+        ''' section comes.</param>
+        ''' <param name="startAngle">Angle in degrees measured clockwise from the x-axis to the first side of the
+        ''' pie section.</param>
+        ''' <param name="sweepAngle">Angle in degrees measured clockwise from the startAngle parameter to the second
+        ''' side of the pie section.</param>
         Public MustOverride Sub FillPie(brush As Brush, x As Integer, y As Integer, width As Integer, height As Integer, startAngle As Integer, sweepAngle As Integer)
 
         ''' <summary>
@@ -1547,22 +1504,14 @@ Namespace Imaging
         ''' <param name="sweepAngle">Angle in degrees measured clockwise from the startAngle parameter to the second
         ''' side of the pie section.</param>
         Public MustOverride Sub FillPie(brush As Brush, x As Single, y As Single, width As Single, height As Single, startAngle As Single, sweepAngle As Single)
-        '
-        ' Summary:
-        '     Fills the interior of a polygon defined by an array of points specified by System.Drawing.Point
-        '     structures.
-        '
-        ' Parameters:
-        '   brush:
-        '     System.Drawing.Brush that determines the characteristics of the fill.
-        '
-        '   points:
-        '     Array of System.Drawing.Point structures that represent the vertices of the polygon
-        '     to fill.
-        '
-        ' Exceptions:
-        '   T:System.ArgumentNullException:
-        '     brush is null.-or-points is null.
+
+        ''' <summary>
+        ''' Fills the interior of a polygon defined by an array of points specified by System.Drawing.Point
+        ''' structures.
+        ''' </summary>
+        ''' <param name="brush">System.Drawing.Brush that determines the characteristics of the fill.</param>
+        ''' <param name="points">Array of System.Drawing.Point structures that represent the vertices of the polygon
+        ''' to fill.</param>
         Public MustOverride Sub FillPolygon(brush As Brush, points() As Point)
 
         ''' <summary>
@@ -1603,55 +1552,27 @@ Namespace Imaging
         ''' <see cref="RectangleF"/> structure that represents the rectangle to fill.
         ''' </param>
         Public MustOverride Sub FillRectangle(brush As Brush, rect As RectangleF)
-        '
-        ' Summary:
-        '     Fills the interior of a rectangle specified by a pair of coordinates, a width,
-        '     and a height.
-        '
-        ' Parameters:
-        '   brush:
-        '     System.Drawing.Brush that determines the characteristics of the fill.
-        '
-        '   x:
-        '     The x-coordinate of the upper-left corner of the rectangle to fill.
-        '
-        '   y:
-        '     The y-coordinate of the upper-left corner of the rectangle to fill.
-        '
-        '   width:
-        '     Width of the rectangle to fill.
-        '
-        '   height:
-        '     Height of the rectangle to fill.
-        '
-        ' Exceptions:
-        '   T:System.ArgumentNullException:
-        '     brush is null.
+
+        ''' <summary>
+        ''' Fills the interior of a rectangle specified by a pair of coordinates, a width,
+        ''' and a height.
+        ''' </summary>
+        ''' <param name="brush">System.Drawing.Brush that determines the characteristics of the fill.</param>
+        ''' <param name="x">The x-coordinate of the upper-left corner of the rectangle to fill.</param>
+        ''' <param name="y">The y-coordinate of the upper-left corner of the rectangle to fill.</param>
+        ''' <param name="width">Width of the rectangle to fill.</param>
+        ''' <param name="height">Height of the rectangle to fill.</param>
         Public MustOverride Sub FillRectangle(brush As Brush, x As Integer, y As Integer, width As Integer, height As Integer)
-        '
-        ' Summary:
-        '     Fills the interior of a rectangle specified by a pair of coordinates, a width,
-        '     and a height.
-        '
-        ' Parameters:
-        '   brush:
-        '     System.Drawing.Brush that determines the characteristics of the fill.
-        '
-        '   x:
-        '     The x-coordinate of the upper-left corner of the rectangle to fill.
-        '
-        '   y:
-        '     The y-coordinate of the upper-left corner of the rectangle to fill.
-        '
-        '   width:
-        '     Width of the rectangle to fill.
-        '
-        '   height:
-        '     Height of the rectangle to fill.
-        '
-        ' Exceptions:
-        '   T:System.ArgumentNullException:
-        '     brush is null.
+
+        ''' <summary>
+        ''' Fills the interior of a rectangle specified by a pair of coordinates, a width,
+        ''' and a height.
+        ''' </summary>
+        ''' <param name="brush">System.Drawing.Brush that determines the characteristics of the fill.</param>
+        ''' <param name="x">The x-coordinate of the upper-left corner of the rectangle to fill.</param>
+        ''' <param name="y">The y-coordinate of the upper-left corner of the rectangle to fill.</param>
+        ''' <param name="width">Width of the rectangle to fill.</param>
+        ''' <param name="height">Height of the rectangle to fill.</param>
         Public MustOverride Sub FillRectangle(brush As Brush, x As Single, y As Single, width As Single, height As Single)
 
         ''' <summary>
@@ -1680,10 +1601,10 @@ Namespace Imaging
             Next
         End Sub
 
-        '
-        ' Summary:
-        '     Forces execution of all pending graphics operations and returns immediately without
-        '     waiting for the operations to finish.
+        ''' <summary>
+        ''' Forces execution of all pending graphics operations and returns immediately without
+        ''' waiting for the operations to finish.
+        ''' </summary>
         Public MustOverride Sub Flush()
 
         '
@@ -1822,32 +1743,20 @@ Namespace Imaging
         '     The y-coordinate of the translation.
         Public MustOverride Sub TranslateTransform(dx As Single, dy As Single)
 
-
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Protected Overrides Sub Finalize()
             Call MyBase.Finalize()
         End Sub
 
-        '
-        ' Summary:
-        '     Gets the cumulative graphics context.
-        '
-        ' Returns:
-        '     An System.Object representing the cumulative graphics context.
+        ''' <summary>
+        ''' Gets the cumulative graphics context.
+        ''' </summary>
+        ''' <returns>
+        ''' An System.Object representing the cumulative graphics context.
+        ''' </returns>
         <EditorBrowsable(EditorBrowsableState.Never)>
         Public MustOverride Function GetContextInfo() As Object
 
-        '
-        ' Summary:
-        '     Gets the nearest color to the specified System.Drawing.Color structure.
-        '
-        ' Parameters:
-        '   color:
-        '     System.Drawing.Color structure for which to find a match.
-        '
-        ' Returns:
-        '     A System.Drawing.Color structure that represents the nearest color to the one
-        '     specified with the color parameter.
-        Public MustOverride Function GetNearestColor(color As Color) As Color
         '
         ' Summary:
         '     Indicates whether the rectangle specified by a System.Drawing.Rectangle structure
@@ -1988,7 +1897,7 @@ Namespace Imaging
         ''' <param name="text">String to measure.</param>
         ''' <param name="font"><see cref="Font"/> that defines the text format of the string.</param>
         ''' <returns>This method returns a <see cref="SizeF"/> structure that represents the size,
-        ''' in the units specified by the <see cref="PageUnit"/> property, of the
+        ''' in the units specified by the PageUnit property, of the
         ''' string specified by the text parameter as drawn with the font parameter.
         ''' </returns>
         Public MustOverride Function MeasureString(text As String, font As Font) As SizeF

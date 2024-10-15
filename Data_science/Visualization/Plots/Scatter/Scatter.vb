@@ -80,6 +80,8 @@ Imports Microsoft.VisualBasic.Math.Scripting.MathExpression.Impl
 Imports Microsoft.VisualBasic.MIME.Html.CSS
 Imports Microsoft.VisualBasic.Scripting.Runtime
 Imports randf2 = Microsoft.VisualBasic.Math.RandomExtensions
+Imports Microsoft.VisualBasic.MIME.Html.Render
+
 
 #If NET48 Then
 Imports Pen = System.Drawing.Pen
@@ -323,7 +325,7 @@ Public Module Scatter
             }
         End If
 
-        Call plot.Plot(g, rect.PlotRegion)
+        Call plot.Plot(g, rect.PlotRegion(g.LoadEnvironment))
     End Sub
 
     ''' <summary>
@@ -447,7 +449,7 @@ Public Module Scatter
             padding:=padding,
             bg:=bg,
             plotAPI:=plotInternal,
-            dpi:=$"{dpi},{dpi}",
+            dpi:=dpi,
             driver:=driver
         )
     End Function

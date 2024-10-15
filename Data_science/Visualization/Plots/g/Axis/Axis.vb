@@ -333,10 +333,10 @@ Namespace Graphic.Axis
                              Optional tickFont$ = CSSFont.Win10NormalLarger,
                              Optional gridStroke$ = Stroke.AxisGridStroke)
             With region
-                Dim rect As Rectangle = .Padding.GetCanvasRegion(.Size)
+                Dim env As CSSEnvirnment = g.LoadEnvironment
+                Dim rect As Rectangle = .Padding.GetCanvasRegion(env)
                 Dim labelColor = CSSFont.TryParse(labelFont).color.GetBrush
                 Dim tickColor = CSSFont.TryParse(tickFont).color.GetBrush
-                Dim env As CSSEnvirnment = g.LoadEnvironment
                 Dim tickFontStyle As Font = env.GetFont(CSSFont.TryParse(tickFont))
                 Dim gridPen As Pen = env.GetPen(Stroke.TryParse(css:=gridStroke))
 

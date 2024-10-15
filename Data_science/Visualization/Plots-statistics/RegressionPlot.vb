@@ -138,8 +138,9 @@ Public Class RegressionPlot : Inherits Plot
         Dim errorFitPointBrush As Brush = errorFitPointStyle.GetBrush
         Dim polynomial = DirectCast(fit.Polynomial, Polynomial)
 
-        Dim rect = canvas.PlotRegion
         Dim css As CSSEnvirnment = g.LoadEnvironment
+        Dim rect = canvas.PlotRegion(css)
+
         Dim pointLabelFont As Font = css.GetFont(CSSFont.TryParse(theme.tagCSS))
         Dim regressionPen As Pen = css.GetPen(Stroke.TryParse(theme.lineStroke))
         Dim predictedPointBorder As Pen = css.GetPen(Stroke.TryParse(predictPointStroke))
@@ -306,7 +307,7 @@ Public Class RegressionPlot : Inherits Plot
         Call printEquation(g, rect, theme.legendTickCSS, theme.legendLabelCSS, theme.legendTickFormat)
 
         If Not main.StringEmpty Then
-            Call DrawMainTitle(g, canvas.PlotRegion)
+            Call DrawMainTitle(g, canvas.PlotRegion(css))
         End If
     End Sub
 

@@ -62,6 +62,7 @@ Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.MIME.Html.CSS
+Imports Microsoft.VisualBasic.MIME.Html.Render.CSS
 Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace Drawing2D
@@ -83,17 +84,6 @@ Namespace Drawing2D
         Dim device As DeviceDescription
 
 #Region "property based on the two fields value"
-
-        ''' <summary>
-        ''' 绘图区域的底部Y坐标值
-        ''' </summary>
-        ''' <returns></returns>
-        Public ReadOnly Property Bottom As Integer
-            <MethodImpl(MethodImplOptions.AggressiveInlining)>
-            Get
-                Return Size.Height - Padding.Bottom
-            End Get
-        End Property
 
         ''' <summary>
         ''' Get the width of the entire canvas <see cref="Size"/>
@@ -118,22 +108,6 @@ Namespace Drawing2D
         End Property
 
         ''' <summary>
-        ''' 整张画布出去margin部分剩余的可供绘图的区域
-        ''' </summary>
-        ''' <returns></returns>
-        Public ReadOnly Property PlotRegion As Rectangle
-            Get
-                Dim topLeft As New Point(Padding.Left, Padding.Top)
-                Dim size As New Size With {
-                    .Width = Me.Size.Width - Padding.Horizontal,
-                    .Height = Me.Size.Height - Padding.Vertical
-                }
-
-                Return New Rectangle(topLeft, size)
-            End Get
-        End Property
-
-        ''' <summary>
         ''' 整张画布的大小区域
         ''' </summary>
         ''' <returns></returns>
@@ -141,30 +115,6 @@ Namespace Drawing2D
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return New Rectangle(New Point, Size)
-            End Get
-        End Property
-
-        ''' <summary>
-        ''' ``[left, right]`` as <see cref="DoubleRange"/>
-        ''' </summary>
-        ''' <returns></returns>
-        Public ReadOnly Property XRange As String
-            Get
-                With Padding
-                    Return $"{ .Left},{Width - .Right}"
-                End With
-            End Get
-        End Property
-
-        ''' <summary>
-        ''' ``[top, bottom]`` as <see cref="DoubleRange"/>
-        ''' </summary>
-        ''' <returns></returns>
-        Public ReadOnly Property YRange As String
-            Get
-                With Padding
-                    Return $"{ .Top},{Height - .Bottom}"
-                End With
             End Get
         End Property
 #End Region
@@ -186,29 +136,79 @@ Namespace Drawing2D
             Me.Padding = New Padding(padding)
         End Sub
 
-        Public Function GetXLinearScaleRange() As Double()
-            Return New Double() {Padding.Left, Size.Width - Padding.Right}
+        ''' <summary>
+        ''' 绘图区域的底部Y坐标值
+        ''' </summary>
+        ''' <returns></returns>
+        Public Function Bottom(css As CSSEnvirnment) As Integer
+            Return Size.Height - css.GetValue(New CssLength(Padding.Bottom))
         End Function
 
-        Public Function GetYLinearScaleRange() As Double()
-            Return New Double() {Padding.Top, Size.Height - Padding.Bottom}
+        ''' <summary>
+        ''' ``[left, right]`` as <see cref="DoubleRange"/>
+        ''' </summary>
+        ''' <returns></returns>
+        Public Function XRange(css As CSSEnvirnment) As String
+            With Padding
+                Return $"{css.GetValue(New CssLength(.Left))},{Width - css.GetValue(New CssLength(.Right))}"
+            End With
         End Function
 
-        Public Function TopCentra(size As Size) As Point
+        ''' <summary>
+        ''' ``[top, bottom]`` as <see cref="DoubleRange"/>
+        ''' </summary>
+        ''' <returns></returns>
+        Public Function YRange(css As CSSEnvirnment) As String
+            With Padding
+                Return $"{css.GetValue(New CssLength(.Top))},{Height - css.GetValue(New CssLength(.Bottom))}"
+            End With
+        End Function
+
+        ''' <summary>
+        ''' 整张画布出去margin部分剩余的可供绘图的区域
+        ''' </summary>
+        ''' <returns></returns>
+        Public Function PlotRegion(css As CSSEnvirnment) As Rectangle
+            Dim topLeft As New Point(css.GetValue(New CssLength(Padding.Left)), css.GetValue(New CssLength(Padding.Top)))
+            Dim size As New Size With {
+                .Width = Me.Size.Width - Padding.Horizontal(css),
+                .Height = Me.Size.Height - Padding.Vertical(css)
+            }
+
+            Return New Rectangle(topLeft, size)
+        End Function
+
+        Public Function GetXLinearScaleRange(css As CSSEnvirnment) As Double()
+            Return New Double() {
+                css.GetValue(New CssLength(Padding.Left)),
+                Size.Width - css.GetValue(New CssLength(Padding.Right))
+            }
+        End Function
+
+        Public Function GetYLinearScaleRange(css As CSSEnvirnment) As Double()
+            Return New Double() {
+                css.GetValue(New CssLength(Padding.Top)),
+                Size.Height - css.GetValue(New CssLength(Padding.Bottom))
+            }
+        End Function
+
+        Public Function TopCentra(size As Size, css As CSSEnvirnment) As Point
             Dim left = (Me.Size.Width - size.Width) / 2
-            Dim top = (Padding.Top - size.Height) / 2
+            Dim top = (css.GetValue(New CssLength(Padding.Top)) - size.Height) / 2
+
             Return New Point(left, top)
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Function XScaler(xrange As DoubleRange) As Func(Of Double, Double)
-            Return scaler(xrange, DoubleRange.TryParse(Me.XRange))
+        Public Function XScaler(xrange As DoubleRange, css As CSSEnvirnment) As Func(Of Double, Double)
+            Return scaler(xrange, DoubleRange.TryParse(Me.XRange(css)))
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Function YScaler(yrange As DoubleRange) As Func(Of Double, Double)
-            Dim scaler = GraphicsRegion.scaler(yrange, New DoubleRange(0, PlotRegion.Height))
-            Dim bottom = PlotRegion.Bottom
+        Public Function YScaler(yrange As DoubleRange, css As CSSEnvirnment) As Func(Of Double, Double)
+            Dim rect = PlotRegion(css)
+            Dim scaler = GraphicsRegion.scaler(yrange, New DoubleRange(0, rect.Height))
+            Dim bottom = rect.Bottom
 
             Return Function(y) bottom - scaler(y)
         End Function

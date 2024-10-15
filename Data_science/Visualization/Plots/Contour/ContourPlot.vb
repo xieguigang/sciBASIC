@@ -155,9 +155,10 @@ Namespace Contour
                 .GetColors(theme.colorSet, level_cutoff.Length) _
                 .Select(Function(c) New SolidBrush(c)) _
                 .ToArray
+            Dim css As CSSEnvirnment = g.LoadEnvironment
             Dim i As i32 = Scan0
             Dim dims As Size = getDimensions()
-            Dim rect As Rectangle = canvas.PlotRegion
+            Dim rect As Rectangle = canvas.PlotRegion(css)
 
             If Not (xlim.IsNaNImaginary AndAlso ylim.IsNaNImaginary) Then
                 Call g.FillRectangle(colors(Scan0), rect)
@@ -175,7 +176,6 @@ Namespace Contour
                 Next
             End If
 
-            Dim css As CSSEnvirnment = g.LoadEnvironment
             Dim layout As New Rectangle(rect.Right + 10, rect.Top, canvas.Padding.Right / 3 * 2, rect.Height / 3 * 2)
             Dim legendTitleFont As Font = css.GetFont(CSSFont.TryParse(theme.legendTitleCSS))
             Dim tickFont As Font = css.GetFont(CSSFont.TryParse(theme.legendTickCSS))

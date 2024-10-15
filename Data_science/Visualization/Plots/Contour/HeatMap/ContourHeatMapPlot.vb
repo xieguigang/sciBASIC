@@ -187,10 +187,11 @@ Namespace Contour.HeatMap
         End Function
 
         Protected Overrides Sub PlotInternal(ByRef g As IGraphics, canvas As GraphicsRegion)
-            Dim data = GetData(canvas.PlotRegion.Size)
+            Dim css As CSSEnvirnment = g.LoadEnvironment
+            Dim rect As Rectangle = canvas.PlotRegion(css)
+            Dim data = GetData(rect.Size)
             Dim xTicks = data.Select(Function(d) d.x).Range.CreateAxisTicks
             Dim yTicks = data.Select(Function(d) d.y).Range.CreateAxisTicks
-            Dim rect As Rectangle = canvas.PlotRegion
             Dim x = d3js.scale.linear() _
                 .domain(values:=xTicks) _
                 .range(integers:={rect.Left, rect.Right})
@@ -201,7 +202,7 @@ Namespace Contour.HeatMap
             Dim getColors = GetColor(data.Select(Function(o) o.z).ToArray, colorDatas)
             Dim scaler As New DataScaler() With {
                 .AxisTicks = (xTicks.AsVector, yTicks.AsVector),
-                .region = canvas.PlotRegion,
+                .region = rect,
                 .X = x,
                 .Y = y
             }
@@ -253,7 +254,6 @@ Namespace Contour.HeatMap
                        End Function) _
                 .ToArray
             Dim rangeTicks#() = realData.Range.CreateAxisTicks
-            Dim css As CSSEnvirnment = g.LoadEnvironment
             Dim legendFont As Font = css.GetFont(CSSFont.TryParse(theme.legendLabelCSS))
             Dim tickFont As Font = css.GetFont(CSSFont.TryParse(theme.legendTickCSS))
 

@@ -118,13 +118,13 @@ Public Module HistStackedBarplot
 
         Dim plotInternal =
             Sub(ByRef g As IGraphics, region As GraphicsRegion)
-                Dim plotRegion As Rectangle = region.PlotRegion
+                Dim css As CSSEnvirnment = g.LoadEnvironment
+                Dim plotRegion As Rectangle = region.PlotRegion(css)
                 Dim treeRegion As New Rectangle With {
                     .Location = plotRegion.Location,
                     .Width = MeasureWidthOrHeight(treeWidth, plotRegion.Width),
                     .Height = plotRegion.Height
                 }
-                Dim css As CSSEnvirnment = g.LoadEnvironment
 
                 ' 首先绘制出层次聚类树
                 ' rowKeys得到的是sample的从上到下的绘图顺序

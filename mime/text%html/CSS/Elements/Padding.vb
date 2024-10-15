@@ -61,6 +61,7 @@ Imports System.ComponentModel
 Imports System.Drawing
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.MIME.Html.Render.CSS
 Imports Microsoft.VisualBasic.Scripting.Runtime
 
 Namespace CSS
@@ -70,18 +71,6 @@ Namespace CSS
     ''' (padding: top, right, bottom, left)
     ''' </summary>
     Public Structure Padding
-
-        ''' <summary>
-        ''' Gets the combined padding for the right and left edges.
-        ''' </summary>
-        ''' <returns></returns>
-        <Browsable(False)>
-        Public ReadOnly Property Horizontal As Single
-            <MethodImpl(MethodImplOptions.AggressiveInlining)>
-            Get
-                Return Left + Right
-            End Get
-        End Property
 
         Public Shared ReadOnly Property Zero As Padding
             Get
@@ -94,40 +83,28 @@ Namespace CSS
         ''' </summary>
         ''' <returns>The padding, in pixels, for the top edge.</returns>
         <RefreshProperties(RefreshProperties.All)>
-        Public Property Top As Single
+        Public Property Top As String
 
         ''' <summary>
         ''' Gets or sets the padding value for the right edge.
         ''' </summary>
         ''' <returns>The padding, in pixels, for the right edge.</returns>
         <RefreshProperties(RefreshProperties.All)>
-        Public Property Right As Single
+        Public Property Right As String
 
         ''' <summary>
         ''' Gets or sets the padding value for the left edge.
         ''' </summary>
         ''' <returns>The padding, in pixels, for the left edge.</returns>
         <RefreshProperties(RefreshProperties.All)>
-        Public Property Left As Single
+        Public Property Left As String
 
         ''' <summary>
         ''' Gets or sets the padding value for the bottom edge.
         ''' </summary>
         ''' <returns>The padding, in pixels, for the bottom edge.</returns>
         <RefreshProperties(RefreshProperties.All)>
-        Public Property Bottom As Single
-
-        ''' <summary>
-        ''' Gets the combined padding for the top and bottom edges.
-        ''' </summary>
-        ''' <returns></returns>
-        <Browsable(False)>
-        Public ReadOnly Property Vertical As Single
-            <MethodImpl(MethodImplOptions.AggressiveInlining)>
-            Get
-                Return Top + Bottom
-            End Get
-        End Property
+        Public Property Bottom As String
 
         ''' <summary>
         ''' all padding value is ZERO then it means empty
@@ -136,10 +113,10 @@ Namespace CSS
         Public ReadOnly Property IsEmpty As Boolean
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
-                Return Top = 0 AndAlso
-                    Bottom = 0 AndAlso
-                    Left = 0 AndAlso
-                    Right = 0
+                Return Top.StringEmpty(, True) AndAlso
+                    Bottom.StringEmpty(, True) AndAlso
+                    Left.StringEmpty(, True) AndAlso
+                    Right.StringEmpty(, True)
             End Get
         End Property
 
@@ -163,10 +140,10 @@ Namespace CSS
         ''' <param name="bottom">The padding size, in pixels, for the bottom edge.</param>
         Public Sub New(left%, top%, right%, bottom%)
             With Me
-                .Left = left
-                .Top = top
-                .Right = right
-                .Bottom = bottom
+                .Left = left & "px"
+                .Top = top & "px"
+                .Right = right & "px"
+                .Bottom = bottom & "px"
             End With
         End Sub
 
@@ -198,12 +175,29 @@ Namespace CSS
             Left = layoutVector(3)
         End Sub
 
-        Public Function GetCanvasRegion(size As Size) As Rectangle
-            Dim location As New Point(Left, Top)
-            Dim width = size.Width - Horizontal
-            Dim height = size.Height - Vertical
+        Public Function GetCanvasRegion(css As CSSEnvirnment) As Rectangle
+            Dim location As New Point(css.GetValue(Left), css.GetValue(Top))
+            Dim size As Size = css.canvas
+            Dim width = size.Width - Horizontal(css)
+            Dim height = size.Height - Vertical(css)
 
             Return New Rectangle(location, New Size(width, height))
+        End Function
+
+        ''' <summary>
+        ''' Gets the combined padding for the right and left edges.
+        ''' </summary>
+        ''' <returns></returns>
+        Public Function Horizontal(css As CSSEnvirnment) As Single
+            Return css.GetValue(New CssLength(Left)) + css.GetValue(New CssLength(Right))
+        End Function
+
+        ''' <summary>
+        ''' Gets the combined padding for the top and bottom edges.
+        ''' </summary>
+        ''' <returns></returns>
+        Public Function Vertical(css As CSSEnvirnment) As Single
+            Return css.GetValue(New CssLength(Top)) + css.GetValue(New CssLength(Bottom))
         End Function
 
         <DebuggerStepThrough>

@@ -1,56 +1,56 @@
 ﻿#Region "Microsoft.VisualBasic::d9c3aed97ce47fd89d217add0769780c, Microsoft.VisualBasic.Core\src\Drawing\Colors\ColorCube.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 273
-    '    Code Lines: 174 (63.74%)
-    ' Comment Lines: 73 (26.74%)
-    '    - Xml Docs: 90.41%
-    ' 
-    '   Blank Lines: 26 (9.52%)
-    '     File Size: 13.16 KB
+' Summaries:
 
 
-    '     Module ColorCube
-    ' 
-    '         Function: Compare, CompareGreater, CompareLess, DegreesToRadians, GetAzimuthTo
-    '                   GetBrightness, (+2 Overloads) GetColorFrom, GetColorsAround, GetColorSequence, GetColorSpectrum
-    '                   GetElevationTo, RadiansToDegrees, WrapAngle
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 273
+'    Code Lines: 174 (63.74%)
+' Comment Lines: 73 (26.74%)
+'    - Xml Docs: 90.41%
+' 
+'   Blank Lines: 26 (9.52%)
+'     File Size: 13.16 KB
+
+
+'     Module ColorCube
+' 
+'         Function: Compare, CompareGreater, CompareLess, DegreesToRadians, GetAzimuthTo
+'                   GetBrightness, (+2 Overloads) GetColorFrom, GetColorsAround, GetColorSequence, GetColorSpectrum
+'                   GetElevationTo, RadiansToDegrees, WrapAngle
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -58,6 +58,7 @@ Imports System.Drawing
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports std = System.Math
 
@@ -161,8 +162,8 @@ While any number of complex code solutions could be created to attempt to addres
                 a = azimuth
                 e = elevation
             Else
-                a = DegreesToRadians(azimuth)
-                e = DegreesToRadians(elevation)
+                a = Trigonometric.ToRadians(azimuth)
+                e = Trigonometric.ToRadians(elevation)
             End If
 
             r = distance * std.Cos(a) * std.Cos(e)
@@ -293,16 +294,6 @@ While any number of complex code solutions could be created to attempt to addres
         <ExportAPI("CompareGreater")>
         Public Function CompareGreater(value As Integer, inc As Integer) As Boolean
             Return value > 0 + std.Abs(inc)
-        End Function
-
-        <ExportAPI("Radians")>
-        Public Function DegreesToRadians(degrees As Double) As Double
-            Return degrees * (std.PI / 180.0)
-        End Function
-
-        <ExportAPI("Degrees")>
-        Public Function RadiansToDegrees(radians As Double) As Double
-            Return CSng(radians * (180.0 / std.PI))
         End Function
 
         <ExportAPI("Azimuth")>
