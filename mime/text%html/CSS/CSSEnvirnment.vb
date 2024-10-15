@@ -124,13 +124,14 @@ Namespace CSS
         End Function
 
         Public Function GetSize(size As CSSsize) As SizeF
-            Return New SizeF(
-                GetValue(New CssLength(size.width)),
-                GetValue(New CssLength(size.height))
-            )
+            Return New SizeF(GetWidth(size.width), GetHeight(size.height))
         End Function
 
-        Public Function GetValue(size As CssLength) As Single
+        Public Function GetValue(size As CssLength, base As Single) As Single
+            If size.IsPercentage OrElse size.IsRelative Then
+                Return size.Number * base
+            End If
+
             Select Case size.Unit
                 Case CssUnit.None, CssUnit.Pixels, CssUnit.Points
                     Return size.Number
@@ -145,10 +146,17 @@ Namespace CSS
         ''' </summary>
         ''' <param name="len"></param>
         ''' <returns></returns>
-        ''' 
-        <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Function GetValue(len As String) As Single
-            Return GetValue(New CssLength(len))
+        Public Function GetWidth(len As String) As Single
+            Return GetValue(New CssLength(len), canvas.Width)
+        End Function
+
+        ''' <summary>
+        ''' get css length value, usually be padding/margin width calculation
+        ''' </summary>
+        ''' <param name="len"></param>
+        ''' <returns></returns>
+        Public Function GetHeight(len As String) As Single
+            Return GetValue(New CssLength(len), canvas.Height)
         End Function
 
         ''' <summary>
