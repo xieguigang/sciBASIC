@@ -202,12 +202,12 @@ Namespace CSS
 
         <DebuggerStepThrough>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Function Offset2D(dx As Double, dy As Double) As Padding
+        Public Function Offset2D(dx As Double, dy As Double, css As CSSEnvirnment) As Padding
             Return New Padding With {
-                .Left = Left + dx,
-                .Right = Right - dx,
-                .Top = Top + dy,
-                .Bottom = Bottom - dy
+                .Left = css.GetValue(Left) + dx,
+                .Right = css.GetValue(Right) - dx,
+                .Top = css.GetValue(Top) + dy,
+                .Bottom = css.GetValue(Bottom) - dy
             }
         End Function
 
@@ -282,14 +282,21 @@ Namespace CSS
             End If
 
             Dim tokens$() = (+value).Trim$(";"c).Split
-            Dim vector%() = tokens _
-                .Select(Function(s) CInt(s.ParseNumeric)) _
-                .ToArray
 
-            If vector.Length = 1 Then  ' all
-                Return New Padding(all:=vector(Scan0))
+            If tokens.Length = 1 Then  ' all
+                Return New Padding With {
+                    .Bottom = tokens(0),
+                    .Left = tokens(0),
+                    .Right = tokens(0),
+                    .Top = tokens(0)
+                }
             Else
-                Return New Padding(vector)
+                Return New Padding With {
+                    .Top = tokens(0),
+                    .Right = tokens(1),
+                    .Bottom = tokens(2),
+                    .Left = tokens(3)
+                }
             End If
         End Function
 
