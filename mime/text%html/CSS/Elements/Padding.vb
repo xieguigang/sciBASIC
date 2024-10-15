@@ -61,7 +61,6 @@ Imports System.ComponentModel
 Imports System.Drawing
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
-Imports Microsoft.VisualBasic.MIME.Html.Render.CSS
 Imports Microsoft.VisualBasic.Scripting.Runtime
 
 Namespace CSS
@@ -176,7 +175,7 @@ Namespace CSS
         End Sub
 
         Public Function GetCanvasRegion(css As CSSEnvirnment) As Rectangle
-            Dim location As New Point(css.GetValue(Left), css.GetValue(Top))
+            Dim location As New Point(css.GetWidth(Left), css.GetHeight(Top))
             Dim size As Size = css.canvas
             Dim width = size.Width - Horizontal(css)
             Dim height = size.Height - Vertical(css)
@@ -189,7 +188,7 @@ Namespace CSS
         ''' </summary>
         ''' <returns></returns>
         Public Function Horizontal(css As CSSEnvirnment) As Single
-            Return css.GetValue(New CssLength(Left)) + css.GetValue(New CssLength(Right))
+            Return css.GetWidth(Left) + css.GetWidth(Right)
         End Function
 
         ''' <summary>
@@ -197,17 +196,17 @@ Namespace CSS
         ''' </summary>
         ''' <returns></returns>
         Public Function Vertical(css As CSSEnvirnment) As Single
-            Return css.GetValue(New CssLength(Top)) + css.GetValue(New CssLength(Bottom))
+            Return css.GetHeight(Top) + css.GetHeight(Bottom)
         End Function
 
         <DebuggerStepThrough>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Offset2D(dx As Double, dy As Double, css As CSSEnvirnment) As Padding
             Return New Padding With {
-                .Left = css.GetValue(Left) + dx,
-                .Right = css.GetValue(Right) - dx,
-                .Top = css.GetValue(Top) + dy,
-                .Bottom = css.GetValue(Bottom) - dy
+                .Left = css.GetWidth(Left) + dx,
+                .Right = css.GetWidth(Right) - dx,
+                .Top = css.GetHeight(Top) + dy,
+                .Bottom = css.GetHeight(Bottom) - dy
             }
         End Function
 
@@ -225,10 +224,10 @@ Namespace CSS
         ''' <returns></returns>
         Public Function LayoutVector(css As CSSEnvirnment) As Single()
             Return New Single() {
-                css.GetValue(Top),
-                css.GetValue(Right),
-                css.GetValue(Bottom),
-                css.GetValue(Left)
+                css.GetHeight(Top),
+                css.GetWidth(Right),
+                css.GetHeight(Bottom),
+                css.GetWidth(Left)
             }
         End Function
 

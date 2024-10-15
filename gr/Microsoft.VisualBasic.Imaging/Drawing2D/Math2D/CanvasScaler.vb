@@ -114,8 +114,8 @@ Namespace Drawing2D.Math2D
                 .Height = CInt(frameSize.Height - padding.Vertical(frame))
             }
             Dim paddingTopleft As New PointF(
-                frame.GetValue(padding.Left),
-                frame.GetValue(padding.Top)
+                frame.GetWidth(padding.Left),
+                frame.GetHeight(padding.Top)
             )
             Dim offset As PointF = scales _
                 .CentralOffset(plotSize) _
