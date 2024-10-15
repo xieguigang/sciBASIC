@@ -128,7 +128,7 @@ Namespace CSS
         End Function
 
         Public Function GetValue(size As CssLength, base As Single) As Single
-            If size.IsPercentage OrElse size.IsRelative Then
+            If size.IsPercentage Then
                 Return size.Number * base
             End If
 
