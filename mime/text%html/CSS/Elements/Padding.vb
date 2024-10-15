@@ -216,7 +216,7 @@ Namespace CSS
         ''' </summary>
         ''' <returns></returns>
         Public Overrides Function ToString() As String
-            Return $"padding:{Top}px {Right}px {Bottom}px {Left}px;"
+            Return $"padding:{Top} {Right} {Bottom} {Left};"
         End Function
 
         ''' <summary>

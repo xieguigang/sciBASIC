@@ -224,7 +224,7 @@ Namespace Drawing2D
         Public Function Offset2D(dx As Double, dy As Double) As GraphicsRegion
             Return New GraphicsRegion With {
                 .Size = Size,
-                .Padding = Padding.Offset2D(dx, dy)
+                .Padding = Padding.Offset2D(dx, dy, New CSSEnvirnment(Size))
             }
         End Function
 
