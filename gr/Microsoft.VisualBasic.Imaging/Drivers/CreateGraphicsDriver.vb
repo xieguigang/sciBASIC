@@ -86,12 +86,13 @@ Namespace Driver
         <Extension>
         Public Function GraphicsPlot(desc As DeviceDescription, plot As IPlot) As GraphicsData
             Dim device = DriverLoad.UseGraphicsDevice(desc.driverUsed)
+            Dim css As New CSSEnvirnment(desc.size)
 
             Using g As IGraphics = device.CreateGraphic(desc.size, desc.background, desc.dpi)
                 Call g.Clear(desc.background)
                 Call plot(g, desc.GetRegion)
 
-                Return device.GetData(g, desc.padding)
+                Return device.GetData(g, PaddingLayout.EvaluateFromCSS(css, desc.padding))
             End Using
         End Function
 

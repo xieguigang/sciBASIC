@@ -145,6 +145,16 @@ Namespace CSS
             Return New PaddingLayout(layoutVector:=out)
         End Operator
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Narrowing Operator CType(padding As PaddingLayout) As Integer()
+            Return New Integer() {
+                padding.Top,
+                padding.Right,
+                padding.Bottom,
+                padding.Left
+            }
+        End Operator
+
     End Structure
 
     ''' <summary>
