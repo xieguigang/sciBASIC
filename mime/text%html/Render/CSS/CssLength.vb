@@ -121,6 +121,14 @@ Namespace Render.CSS
                 Return
             End If
 
+            If length.IsSimpleNumber Then
+                ' default is px
+                _Unit = CssUnit.Pixels
+                _IsRelative = False
+                _Number = Single.Parse(length)
+                Return
+            End If
+
             'If no units, has error
             If length.Length < 3 Then
                 Single.TryParse(length, _number)
