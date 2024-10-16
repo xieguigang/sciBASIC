@@ -146,7 +146,7 @@ Namespace Fractions
             Dim margin As Padding = region.Padding
             Dim height% = region.PlotRegion(css).Height
             Dim width% = region.PlotRegion(css).Width * wp
-            Dim left! = (region.PlotRegion(css).Width - width) / 2 + css.GetValue(margin.Left)
+            Dim left! = (region.PlotRegion(css).Width - width) / 2 + css.GetWidth(margin.Left)
             Dim tan_ab = height / (width / 2) ' tan(a)
             Dim right! = (left + width)
             Dim bottom! = region.PlotRegion(css).Bottom
@@ -182,7 +182,7 @@ Namespace Fractions
             Dim gr As IGraphics = g
             Dim maxL = array.Select(Function(x) gr.MeasureString(x.Name, font).Width).Max
             left = size.Width - (margin.Horizontal(css)) - maxL
-            Dim top = css.GetValue(margin.Top)
+            Dim top = css.GetHeight(margin.Top)
             Dim legends As New List(Of LegendObject)
             Dim legendBorder As Stroke = Stroke.TryParse(theme.legendBoxStroke)
 

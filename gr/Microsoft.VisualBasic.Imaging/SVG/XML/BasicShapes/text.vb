@@ -213,6 +213,16 @@ Namespace SVG.XML
             Return Me
         End Function
 
+        Public Overrides Function ToString() As String
+            Dim id As String = Me.Id
+
+            If id.StringEmpty(, True) Then
+                id = "n/a"
+            End If
+
+            Return $"{Id}: {Text}"
+        End Function
+
         Friend Overloads Shared Function Create(parent As XmlElement) As SvgText
             Dim element = parent.OwnerDocument.CreateElement("text")
             parent.AppendChild(element)

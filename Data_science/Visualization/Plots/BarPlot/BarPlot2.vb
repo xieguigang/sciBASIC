@@ -219,7 +219,7 @@ Namespace BarPlot
                 }
 
                 If legendPos.IsEmpty Then
-                    legendPos = New Point(CInt(size.Width * 0.8), css.GetValue(margin.Top))
+                    legendPos = New Point(CInt(size.Width * 0.8), css.GetHeight(margin.Top))
                 End If
 
                 Call g.DrawLegends(legendPos, legends,,, shapeBorder:=legendBorder)

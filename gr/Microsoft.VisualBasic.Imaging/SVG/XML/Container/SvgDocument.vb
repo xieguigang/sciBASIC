@@ -243,11 +243,31 @@ Namespace SVG.XML
         ''' </summary>
         ''' <param name="xml"></param>
         ''' <returns></returns>
-        Public Shared Function Parse(xml As String) As SvgDocument
+        Public Shared Function Parse(xml As String, Optional strict As Boolean = True) As SvgDocument
             Dim xmlDoc As New XmlDocument
             Dim svgEle As XmlElement
 
-            xmlDoc.LoadXml(xml)
+            Const bom1 As Char = ChrW(&HFEFF)
+
+            xml = xml.Replace(bom1, "")
+
+            If strict Then
+                Call xmlDoc.LoadXml(xml)
+            Else
+                Dim settings As New XmlReaderSettings()
+                settings.IgnoreWhitespace = True
+                settings.ConformanceLevel = ConformanceLevel.Fragment
+                settings.ValidationType = ValidationType.None
+                settings.XmlResolver = Nothing
+
+                Using stringReader As New StringReader(xml)
+                    Using reader As XmlReader = XmlReader.Create(stringReader, settings)
+                        xmlDoc.XmlResolver = Nothing
+                        xmlDoc.Load(reader)
+                    End Using
+                End Using
+            End If
+
             svgEle = xmlDoc.DocumentElement
 
             Return New SvgDocument(xmlDoc, svgEle)

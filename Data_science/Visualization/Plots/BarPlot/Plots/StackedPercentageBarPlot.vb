@@ -123,12 +123,12 @@ Namespace BarPlot
             Dim barRegionWidth = plotRect.Width
             Dim n = data.Samples.Length
             Dim wb = BarWidth(barRegionHeight, n, interval)
-            Dim y0! = css.GetValue(canvas.Padding.Top)
+            Dim y0! = css.GetHeight(canvas.Padding.Top)
 
             ' 遍历X轴上面的每一个分组
             For Each group As BarDataSample In data.Samples
                 Dim sum# = group.StackedSum
-                Dim x0! = css.GetValue(canvas.Padding.Left)
+                Dim x0! = css.GetWidth(canvas.Padding.Left)
 
                 ' 慢慢的从上面累加y到下面底部
                 For Each serial As SeqValue(Of NamedValue(Of SolidBrush)) In serialBrushes.SeqIterator
@@ -155,14 +155,14 @@ Namespace BarPlot
             Dim css As CSSEnvirnment = g.LoadEnvironment
             Dim plotRect = canvas.PlotRegion(CSS)
             Dim barRegionHeight = plotRect.Height
-            Dim x0! = css.GetValue(canvas.Padding.Left)
+            Dim x0! = css.GetWidth(canvas.Padding.Left)
             Dim barRegionWidth = plotRect.Width
             Dim n = data.Samples.Length
             Dim wb = BarWidth(barRegionWidth, n, interval)
 
             ' 遍历X轴上面的每一个分组
             For Each group As BarDataSample In data.Samples
-                Dim y0! = css.GetValue(canvas.Padding.Top)
+                Dim y0! = css.GetHeight(canvas.Padding.Top)
                 Dim sum# = group.StackedSum
 
                 ' 慢慢的从上面累加y到下面底部
@@ -195,19 +195,20 @@ Namespace BarPlot
             Dim bottomPart = groupLabelFont.Height + 30 + (boxWidth + boxSeperator * 2) * columnCount
             ' 条形图区域的总高度
             Dim barRegionHeight = height - bottomPart
-            Dim x0! = css.GetValue(canvas.Padding.Left) + leftPart
+            Dim padding = PaddingLayout.EvaluateFromCSS(css, canvas.Padding)
+            Dim x0! = padding.Left + leftPart
             Dim serialBrushes As NamedValue(Of SolidBrush)() = data.loadBrushes.ToArray
             Dim wb = BarWidth(width, data.Samples.Length, interval)
 
             Call g.DrawString(
                 ylabel, axisFont,
                 Brushes.Black,
-                css.GetValue(canvas.Padding.Left) - axisFont.Height, height / 2,
+                padding.Left - axisFont.Height, height / 2,
                 angle:=-90)
 
             ' 绘制y轴
             For Each tick# In {0.00, 0.25, 0.5, 0.75, 1.0}
-                Dim y# = rect.Height - css.GetValue(canvas.Padding.Bottom) - bottomPart - barRegionHeight * tick
+                Dim y# = rect.Height - padding.Bottom - bottomPart - barRegionHeight * tick
                 Dim location As New PointF(x0 - tickSize.Width - 20, y - tickSize.Height / 2)
 
                 g.DrawLine(Pens.Black, New PointF(x0 - 10, y), New PointF(x0 - 20, y))
@@ -220,7 +221,7 @@ Namespace BarPlot
             For Each group As BarDataSample In data.Samples
                 Dim x!, y!
                 Dim labelSize = g.MeasureString(group.tag, groupLabelFont)
-                Dim y0! = css.GetValue(canvas.Padding.Top)
+                Dim y0! = padding.Top
 
                 x = x0 + (wb - labelSize.Width) / 2
                 y = y0 + (30)
@@ -229,10 +230,10 @@ Namespace BarPlot
             Next
 
             ' 绘制图例
-            Dim bottomY = css.GetValue(canvas.Padding.Top) + barRegionHeight + boxWidth * 2 + groupLabelFont.Height
+            Dim bottomY = padding.Top + barRegionHeight + boxWidth * 2 + groupLabelFont.Height
             Dim ly! = bottomY
 
-            x0 = css.GetValue(canvas.Padding.Left) + leftPart
+            x0 = padding.Left + leftPart
 
             For Each block As NamedValue(Of SolidBrush)() In serialBrushes.Split(columnCount)
                 ' 似乎在for循环之中申明的变量必须要初始化，否则下一个循环使用的是上一个循环的结果值？？？

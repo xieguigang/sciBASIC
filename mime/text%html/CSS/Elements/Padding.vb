@@ -65,15 +65,99 @@ Imports Microsoft.VisualBasic.Scripting.Runtime
 
 Namespace CSS
 
+    Public Structure PaddingLayout
+
+        Dim Top As Single
+        Dim Right As Single
+        Dim Bottom As Single
+        Dim Left As Single
+
+        Public ReadOnly Property LayoutVector As Single()
+            Get
+                Return New Single() {Top, Right, Bottom, Left}
+            End Get
+        End Property
+
+        Sub New(layoutVector As Single())
+            Top = layoutVector(0)
+            Right = layoutVector(1)
+            Bottom = layoutVector(2)
+            Left = layoutVector(3)
+        End Sub
+
+        Public Overrides Function ToString() As String
+            Return $"padding: {Top}px {Right}px {Bottom}px {Left}px;"
+        End Function
+
+        Public Shared Function EvaluateFromCSS(css As CSSEnvirnment, layout As Padding) As PaddingLayout
+            Return New PaddingLayout With {
+                .Bottom = css.GetHeight(layout.Bottom),
+                .Left = css.GetWidth(layout.Left),
+                .Right = css.GetWidth(layout.Right),
+                .Top = css.GetHeight(layout.Top)
+            }
+        End Function
+
+        ''' <summary>
+        ''' Performs vector addition on the two specified System.Windows.Forms.Padding objects,
+        ''' resulting in a new System.Windows.Forms.Padding.
+        ''' </summary>
+        ''' <param name="p1">The first System.Windows.Forms.Padding to add.</param>
+        ''' <param name="p2">The second System.Windows.Forms.Padding to add.</param>
+        ''' <returns>A new System.Windows.Forms.Padding that results from adding p1 and p2.</returns>
+        Public Shared Operator +(p1 As PaddingLayout, p2 As PaddingLayout) As PaddingLayout
+            Dim a = p1.LayoutVector
+            Dim b = p2.LayoutVector
+            Dim out!() = New Single(3) {}
+
+            For i As Integer = 0 To out.Length - 1
+                out(i) = a(i) + b(i)
+            Next
+
+            Return New PaddingLayout(layoutVector:=out)
+        End Operator
+
+        ''' <summary>
+        ''' Performs vector subtraction on the two specified System.Windows.Forms.Padding
+        ''' objects, resulting in a new System.Windows.Forms.Padding.
+        ''' </summary>
+        ''' <param name="p1">The System.Windows.Forms.Padding to subtract from (the minuend).</param>
+        ''' <param name="p2">The System.Windows.Forms.Padding to subtract from (the subtrahend).</param>
+        ''' <returns>The System.Windows.Forms.Padding result of subtracting p2 from p1.</returns>
+        Public Shared Operator -(p1 As PaddingLayout, p2 As PaddingLayout) As PaddingLayout
+            Dim a = p1.LayoutVector
+            Dim b = p2.LayoutVector
+            Dim out!() = New Single(3) {}
+
+            For i As Integer = 0 To out.Length - 1
+                out(i) = a(i) - b(i)
+            Next
+
+            Return New PaddingLayout(layoutVector:=out)
+        End Operator
+
+    End Structure
+
     ''' <summary>
-    ''' Represents padding or margin information associated with a gdi element. 
+    ''' Represents padding or margin information associated with a gdi+ element. 
     ''' (padding: top, right, bottom, left)
     ''' </summary>
     Public Structure Padding
 
+        ''' <summary>
+        ''' A empty padding layout css data
+        ''' </summary>
+        ''' <returns>
+        ''' zero padding layout element, but not empty
+        ''' </returns>
         Public Shared ReadOnly Property Zero As Padding
             Get
-                Return New Padding
+                Return New Padding With {
+                    .Left = "0px",
+                    .Bottom = "0px",
+                    .Right = "0px",
+                    .Top = "0px"
+                }
             End Get
         End Property
 
@@ -172,6 +256,13 @@ Namespace CSS
             Right = layoutVector(1)
             Bottom = layoutVector(2)
             Left = layoutVector(3)
+        End Sub
+
+        Sub New(layout As PaddingLayout)
+            Top = layout.Top
+            Right = layout.Right
+            Bottom = layout.Bottom
+            Left = layout.Left
         End Sub
 
         Public Function GetCanvasRegion(css As CSSEnvirnment) As Rectangle
@@ -318,44 +409,6 @@ Namespace CSS
                 End With
             End If
         End Function
-
-        '''' <summary>
-        '''' Performs vector addition on the two specified System.Windows.Forms.Padding objects,
-        '''' resulting in a new System.Windows.Forms.Padding.
-        '''' </summary>
-        '''' <param name="p1">The first System.Windows.Forms.Padding to add.</param>
-        '''' <param name="p2">The second System.Windows.Forms.Padding to add.</param>
-        '''' <returns>A new System.Windows.Forms.Padding that results from adding p1 and p2.</returns>
-        'Public Shared Operator +(p1 As Padding, p2 As Padding) As Padding
-        '    Dim a = p1.LayoutVector
-        '    Dim b = p2.LayoutVector
-        '    Dim out%() = New Integer(4) {}
-
-        '    For i As Integer = 0 To out.Length - 1
-        '        out(i) = a(i) + b(i)
-        '    Next
-
-        '    Return New Padding(layoutVector:=out)
-        'End Operator
-
-        '''' <summary>
-        '''' Performs vector subtraction on the two specified System.Windows.Forms.Padding
-        '''' objects, resulting in a new System.Windows.Forms.Padding.
-        '''' </summary>
-        '''' <param name="p1">The System.Windows.Forms.Padding to subtract from (the minuend).</param>
-        '''' <param name="p2">The System.Windows.Forms.Padding to subtract from (the subtrahend).</param>
-        '''' <returns>The System.Windows.Forms.Padding result of subtracting p2 from p1.</returns>
-        'Public Shared Operator -(p1 As Padding, p2 As Padding) As Padding
-        '    Dim a = p1.LayoutVector
-        '    Dim b = p2.LayoutVector
-        '    Dim out%() = New Integer(4) {}
-
-        '    For i As Integer = 0 To out.Length - 1
-        '        out(i) = a(i) - b(i)
-        '    Next
-
-        '    Return New Padding(layoutVector:=out)
-        'End Operator
 
         ''' <summary>
         ''' Tests whether two specified System.Windows.Forms.Padding objects are equivalent.

@@ -72,16 +72,21 @@ Namespace Imaging.BitmapImage
     Public Module RTCP
 
         Private Function copy(inBitmap As Bitmap) As Bitmap
-#If NET48 Then
             '-----缩放64*64-----
             Dim scale As Single = 64 / std.Sqrt(inBitmap.Width * inBitmap.Height)
-            Dim bp As New Bitmap(CInt(inBitmap.Width * scale), CInt(inBitmap.Height * scale))
+            Dim bpw = CInt(inBitmap.Width * scale)
+            Dim bph = CInt(inBitmap.Height * scale)
+
+#If NET48 Then
+            Dim bp As New Bitmap(bpw, bph)
             Dim g As Graphics = Graphics.FromImage(bp)
             g.InterpolationMode = InterpolationMode.NearestNeighbor
             g.DrawImage(inBitmap, New Rectangle(0, 0, bp.Width, bp.Height))
             g.Dispose()
 
             Return bp
+#Else
+            Return inBitmap.Resize(bpw, bph)
 #End If
         End Function
 
@@ -232,9 +237,9 @@ Namespace Imaging.BitmapImage
             Marshal.Copy(bpData.Scan0, bpBuffer, 0, bpBuffer.Length)
             bp.UnlockBits(bpData)
 #Else
-            Throw New NotImplementedException
+            bpBuffer = inBitmap.MemoryBuffer.RawBuffer
+            stride = inBitmap.MemoryBuffer.Stride
 #End If
-
 
             Call VBDebugger.EchoLine($"image_src_dims: [{inBitmap.Width},{inBitmap.Height}]")
             Call VBDebugger.EchoLine($"image_copy_dims: [{bp.Width},{bp.Height}]")

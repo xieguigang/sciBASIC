@@ -9,36 +9,10 @@ Namespace Imaging.BitmapImage.FileStream
         ' Warning CS0414  The field 'BitmapInfoHeader.HorizontalPixelPerMeter' is assigned but its value is never used
         ' disable error warning , we dont need values in those fields !!
 
-        ''' <summary>
-        ''' the bitmap Width in pixels (signed integer)
-        ''' </summary>
-
-        ''' <summary>
-        ''' the bitmap Height in pixels (signed integer)
-        ''' </summary>
-
-        ''' <summary>
-        ''' the number of bits per pixel, which is the color depth of the image. Typical values are 1, 4, 8, 16, 24 and 32.
-        ''' </summary>
-
-        ''' <summary>
-        ''' 0 	BI_RGB (UNCOMPRESSED)
-        ''' </summary>
-
-        ''' <summary>
-        ''' the image size. This is the size of the raw bitmap data; a dummy 0 can be given for BI_RGB bitmaps.
-        ''' </summary>
-
-        ''' <summary>
-        ''' the horizontal resolution of the image. (pixel per metre, signed integer)
-        ''' </summary>
-
-        ''' <summary>
-        ''' the vertical resolution of the image. (pixel per metre, signed integer)
-        ''' </summary>
         Private _BitmapInfoHeaderSize As UInteger, _Width As Integer, _Height As Integer, _BitsPerPixel As BitsPerPixelEnum
         Dim _CompressionMethod As CompressionMethod = CompressionMethod.BI_RGB
         Dim _ImageSize As Integer, _HorizontalPixelPerMeter As Integer, _VerticalPixelPerMeter As Integer
+
 
         Public Property BitmapInfoHeaderSize As UInteger
             Get
@@ -49,6 +23,9 @@ Namespace Imaging.BitmapImage.FileStream
             End Set
         End Property
 
+        ''' <summary>
+        ''' the bitmap Width in pixels (signed integer)
+        ''' </summary>
         Public Property Width As Integer
             Get
                 Return _Width
@@ -58,6 +35,9 @@ Namespace Imaging.BitmapImage.FileStream
             End Set
         End Property
 
+        ''' <summary>
+        ''' the bitmap Height in pixels (signed integer)
+        ''' </summary>
         Public Property Height As Integer
             Get
                 Return _Height
@@ -76,6 +56,9 @@ Namespace Imaging.BitmapImage.FileStream
             End Get
         End Property
 
+        ''' <summary>
+        ''' the number of bits per pixel, which is the color depth of the image. Typical values are 1, 4, 8, 16, 24 and 32.
+        ''' </summary>
         Public Property BitsPerPixel As BitsPerPixelEnum
             Get
                 Return _BitsPerPixel
@@ -85,6 +68,9 @@ Namespace Imaging.BitmapImage.FileStream
             End Set
         End Property
 
+        ''' <summary>
+        ''' 0 	BI_RGB (UNCOMPRESSED)
+        ''' </summary>
         Public Property CompressionMethod As CompressionMethod
             Get
                 Return _CompressionMethod
@@ -94,6 +80,9 @@ Namespace Imaging.BitmapImage.FileStream
             End Set
         End Property
 
+        ''' <summary>
+        ''' the image size. This is the size of the raw bitmap data; a dummy 0 can be given for BI_RGB bitmaps.
+        ''' </summary>
         Public Property ImageSize As Integer
             Get
                 Return _ImageSize
@@ -103,6 +92,10 @@ Namespace Imaging.BitmapImage.FileStream
             End Set
         End Property
 
+
+        ''' <summary>
+        ''' the horizontal resolution of the image. (pixel per metre, signed integer)
+        ''' </summary>
         Public Property HorizontalPixelPerMeter As Integer
             Get
                 Return _HorizontalPixelPerMeter
@@ -112,6 +105,9 @@ Namespace Imaging.BitmapImage.FileStream
             End Set
         End Property
 
+        ''' <summary>
+        ''' the vertical resolution of the image. (pixel per metre, signed integer)
+        ''' </summary>
         Public Property VerticalPixelPerMeter As Integer
             Get
                 Return _VerticalPixelPerMeter

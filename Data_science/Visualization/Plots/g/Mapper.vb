@@ -197,7 +197,8 @@ Namespace Graphic
         ''' <returns></returns>
         Public Iterator Function ForEach(css As CSSEnvirnment, margin As Padding) As IEnumerable(Of SerialData)
             Dim size As Size = css.canvas
-            Dim bottom As Integer = size.Height - css.GetValue(margin.Bottom)
+            Dim padding = PaddingLayout.EvaluateFromCSS(css, margin)
+            Dim bottom As Integer = size.Height - padding.Bottom
             Dim width As Integer = size.Width - margin.Horizontal(css)
             Dim height As Integer = size.Height - margin.Vertical(css)
 
@@ -206,7 +207,7 @@ Namespace Graphic
                                                        _
                 From p As PointData
                 In s.pts
-                Let px As Single = css.GetValue(margin.Left) + width * (p.pt.X - xmin) / dx
+                Let px As Single = padding.Left + width * (p.pt.X - xmin) / dx
                 Let yh As Single = If(dy = 0R, height / 2, height * (p.pt.Y - ymin) / dy) ' 如果y没有变化，则是一条居中的水平直线
                 Let py As Single = bottom - yh
                 Select New PointData(px, py) With {
@@ -237,7 +238,8 @@ Namespace Graphic
         ''' <returns></returns>
         Public Iterator Function ForEach_histSample(css As CSSEnvirnment, margin As Padding) As IEnumerable(Of HistProfile)
             Dim size As Size = css.canvas
-            Dim bottom As Integer = size.Height - css.GetValue(margin.Bottom)
+            Dim padding = PaddingLayout.EvaluateFromCSS(css, margin)
+            Dim bottom As Integer = size.Height - padding.Bottom
             Dim width As Integer = size.Width - margin.Horizontal(css)
             Dim height As Integer = size.Height - margin.Vertical(css)
 
@@ -246,8 +248,8 @@ Namespace Graphic
                                                            _
                 From p As HistogramData
                 In histData.data
-                Let px1 As Single = css.GetValue(margin.Left) + width * (p.x1 - xmin) / dx
-                Let px2 As Single = css.GetValue(margin.Left) + width * (p.x2 - xmin) / dx
+                Let px1 As Single = padding.Left + width * (p.x1 - xmin) / dx
+                Let px2 As Single = padding.Left + width * (p.x2 - xmin) / dx
                 Let py As Single = bottom - height * (p.y - ymin) / dy
                 Select New HistogramData With {
                     .x1 = px1,
@@ -264,12 +266,13 @@ Namespace Graphic
 
         Public Function PointScaler(css As CSSEnvirnment, padding As Padding) As Func(Of PointF, PointF)
             Dim size As Size = css.canvas
-            Dim bottom As Integer = size.Height - css.GetValue(padding.Bottom)
+            Dim layout = PaddingLayout.EvaluateFromCSS(css, padding)
+            Dim bottom As Integer = size.Height - layout.Bottom
             Dim width As Integer = size.Width - padding.Horizontal(css)
             Dim height As Integer = size.Height - padding.Vertical(css)
 
             Return Function(pt)
-                       Dim px As Single = css.GetValue(padding.Left) + width * (pt.X - xmin) / dx
+                       Dim px As Single = layout.Left + width * (pt.X - xmin) / dx
                        Dim py As Single = bottom - height * (pt.Y - ymin) / dy
 
                        Return New PointF(px, py)
@@ -287,10 +290,11 @@ Namespace Graphic
 
         Public Function PointScaler(r As GraphicsRegion, pt As PointF) As PointF
             Dim css As New CSSEnvirnment(r.Size)
-            Dim bottom As Integer = r.Size.Height - css.GetValue(r.Padding.Bottom)
+            Dim padding = PaddingLayout.EvaluateFromCSS(css, r.Padding)
+            Dim bottom As Integer = r.Size.Height - padding.Bottom
             Dim width As Integer = r.Size.Width - r.Padding.Horizontal(css)
             Dim height As Integer = r.Size.Height - r.Padding.Vertical(css)
-            Dim px As Single = css.GetValue(r.Padding.Left) + width * (pt.X - xmin) / dx
+            Dim px As Single = padding.Left + width * (pt.X - xmin) / dx
             Dim py As Single = bottom - height * (pt.Y - ymin) / dy
 
             Return New PointF(px!, py!)
@@ -298,11 +302,12 @@ Namespace Graphic
 
         Public Function XScaler(size As Size, margin As Padding) As Func(Of Single, Single)
             Dim css As New CSSEnvirnment(size)
-            Dim bottom As Integer = size.Height - css.GetValue(margin.Bottom)
+            Dim padding = PaddingLayout.EvaluateFromCSS(css, margin)
+            Dim bottom As Integer = size.Height - padding.Bottom
             Dim width As Integer = size.Width - margin.Horizontal(css)
             Dim height As Integer = size.Height - margin.Vertical(css)
 
-            Return Function(x) css.GetValue(margin.Left) + width * (x - xmin) / dx
+            Return Function(x) padding.Left + width * (x - xmin) / dx
         End Function
 
         ''' <summary>
@@ -314,7 +319,7 @@ Namespace Graphic
         ''' <returns></returns>
         Public Function YScaler(size As Size, margin As Padding, Optional avg# = Double.NaN) As Func(Of Single, Single)
             Dim css As New CSSEnvirnment(size)
-            Dim bottom As Integer = size.Height - css.GetValue(margin.Bottom)
+            Dim bottom As Integer = size.Height - css.GetHeight(margin.Bottom)
             Dim height As Integer = size.Height - margin.Vertical(css)    ' 绘图区域的高度
 
             If Double.IsNaN(avg#) Then

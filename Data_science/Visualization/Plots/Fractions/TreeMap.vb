@@ -137,19 +137,21 @@ Namespace Fractions
         Protected Overrides Sub PlotInternal(ByRef g As IGraphics, canvas As GraphicsRegion)
             Dim css As CSSEnvirnment = g.LoadEnvironment
             Dim margin = canvas.Padding
+            Dim padding = PaddingLayout.EvaluateFromCSS(css, margin)
             Dim size As Size = g.Size
             Dim rect As New RectangleF With {
-                .Location = New PointF(css.GetValue(margin.Left), css.GetValue(margin.Top)),
+                .Location = New PointF(padding.Left, padding.Top),
                 .Size = New SizeF With {
                     .Width = size.Width - margin.Horizontal(css),
-                    .Height = size.Height - css.GetValue(margin.Left) - css.GetValue(margin.Top)
+                    .Height = size.Height - padding.Left - padding.Top
                 }
             }
 
             ' true -> width percentage; false -> height percentage
             Dim f As Boolean = True
             Dim width! = rect.Width, height! = rect.Height
-            Dim x! = css.GetValue(margin.Left), y! = css.GetValue(margin.Top)
+            Dim x! = padding.Left
+            Dim Y! = padding.Top
             Dim drawW!, drawH!
             Dim labels As New List(Of FractionData)
 
