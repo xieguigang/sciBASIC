@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::da1c1f8ab2cda34542b06d31976debed, Data_science\Visualization\Plots\BarPlot\Plots\SimpleBarPlot.vb"
+﻿#Region "Microsoft.VisualBasic::6315254cdb18b1484c929525a766f438, Data_science\Visualization\Plots\BarPlot\Plots\SimpleBarPlot.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 188
-    '    Code Lines: 161 (85.64%)
-    ' Comment Lines: 5 (2.66%)
+    '   Total Lines: 184
+    '    Code Lines: 157 (85.33%)
+    ' Comment Lines: 5 (2.72%)
     '    - Xml Docs: 0.00%
     ' 
-    '   Blank Lines: 22 (11.70%)
-    '     File Size: 7.76 KB
+    '   Blank Lines: 22 (11.96%)
+    '     File Size: 7.66 KB
 
 
     '     Class SimpleBarPlot

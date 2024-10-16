@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4874ccab1fab94f9fad5eb7902980639, gr\Drawing-net4.8\Graphics\GDICanvas.vb"
+﻿#Region "Microsoft.VisualBasic::752e5b68cb1fc633f3a91ffa5e818335, gr\Drawing-net4.8\Graphics\GDICanvas.vb"
 
     ' Author:
     ' 
@@ -34,30 +34,30 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 2092
-    '    Code Lines: 355 (16.97%)
-    ' Comment Lines: 1637 (78.25%)
-    '    - Xml Docs: 12.65%
+    '   Total Lines: 2061
+    '    Code Lines: 341 (16.55%)
+    ' Comment Lines: 1621 (78.65%)
+    '    - Xml Docs: 12.46%
     ' 
-    '   Blank Lines: 100 (4.78%)
-    '     File Size: 77.18 KB
+    '   Blank Lines: 99 (4.80%)
+    '     File Size: 76.03 KB
 
 
     ' Class GDICanvas
     ' 
-    '     Properties: Graphics, PageScale, RenderingOrigin, TextContrast
+    '     Properties: Graphics, RenderingOrigin, TextContrast
     ' 
     '     Constructor: (+1 Overloads) Sub New
     ' 
-    '     Function: GetContextInfo, GetNearestColor, GetStringPath, (+4 Overloads) IsVisible, (+4 Overloads) MeasureString
+    '     Function: GetContextInfo, GetStringPath, (+4 Overloads) IsVisible, (+4 Overloads) MeasureString
     ' 
-    '     Sub: AddMetafileComment, ClearCanvas, Dispose, (+4 Overloads) DrawArc, DrawB
-    '          (+3 Overloads) DrawBezier, (+2 Overloads) DrawBeziers, (+2 Overloads) DrawClosedCurve, (+7 Overloads) DrawCurve, (+4 Overloads) DrawEllipse
-    '          (+10 Overloads) DrawImage, (+4 Overloads) DrawImageUnscaled, DrawImageUnscaledAndClipped, (+5 Overloads) DrawLine, (+2 Overloads) DrawLines
-    '          DrawPath, (+4 Overloads) DrawPie, (+2 Overloads) DrawPolygon, (+4 Overloads) DrawRectangle, (+2 Overloads) DrawRectangles
-    '          (+4 Overloads) DrawString, ExcludeClip, (+2 Overloads) FillClosedCurve, (+4 Overloads) FillEllipse, FillPath
-    '          (+3 Overloads) FillPie, (+2 Overloads) FillPolygon, (+4 Overloads) FillRectangle, Finalize, Flush
-    '          (+2 Overloads) IntersectClip, ResetClip, ResetTransform, RotateTransform, ScaleTransform
+    '     Sub: AddMetafileComment, ClearCanvas, (+4 Overloads) DrawArc, DrawB, (+3 Overloads) DrawBezier
+    '          (+2 Overloads) DrawBeziers, (+2 Overloads) DrawClosedCurve, (+7 Overloads) DrawCurve, (+4 Overloads) DrawEllipse, (+10 Overloads) DrawImage
+    '          (+4 Overloads) DrawImageUnscaled, DrawImageUnscaledAndClipped, (+5 Overloads) DrawLine, (+2 Overloads) DrawLines, DrawPath
+    '          (+4 Overloads) DrawPie, (+2 Overloads) DrawPolygon, (+4 Overloads) DrawRectangle, (+2 Overloads) DrawRectangles, (+4 Overloads) DrawString
+    '          ExcludeClip, (+2 Overloads) FillClosedCurve, (+4 Overloads) FillEllipse, FillPath, (+3 Overloads) FillPie
+    '          (+2 Overloads) FillPolygon, (+4 Overloads) FillRectangle, Finalize, Flush, (+2 Overloads) IntersectClip
+    '          ReleaseHandle, ResetClip, ResetTransform, RotateTransform, ScaleTransform
     '          (+2 Overloads) SetClip, (+2 Overloads) TranslateClip, TranslateTransform
     ' 
     ' /********************************************************************************/

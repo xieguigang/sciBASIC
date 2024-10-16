@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3b9aa5b9d45c1ffe7ebb4799debe96e9, Data_science\Visualization\Plots\BarPlot\StyledBarplot.vb"
+﻿#Region "Microsoft.VisualBasic::dfc42d78b628a1b234b7c12333f7d741, Data_science\Visualization\Plots\BarPlot\StyledBarplot.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 161
-    '    Code Lines: 120 (74.53%)
-    ' Comment Lines: 26 (16.15%)
+    '   Total Lines: 165
+    '    Code Lines: 123 (74.55%)
+    ' Comment Lines: 26 (15.76%)
     '    - Xml Docs: 73.08%
     ' 
-    '   Blank Lines: 15 (9.32%)
-    '     File Size: 6.74 KB
+    '   Blank Lines: 16 (9.70%)
+    '     File Size: 6.91 KB
 
 
     '     Module StyledBarplot

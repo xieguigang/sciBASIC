@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c207f4fc0acda0b4579213d7498d5459, Data_science\Mathematica\Math\DataFrame\DataFrame\FileWriter.vb"
+﻿#Region "Microsoft.VisualBasic::17abeb043230ec6c68d117768de6e6b7, Data_science\Mathematica\Math\DataFrame\DataFrame\FileWriter.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 0.00%
     ' 
     '   Blank Lines: 8 (21.62%)
-    '     File Size: 1.18 KB
+    '     File Size: 1.17 KB
 
 
     ' Module FileWriter
@@ -88,4 +88,3 @@ Public Module FileWriter
         Call s.Flush()
     End Sub
 End Module
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7b525c61aa8d206dae8ce7be888d7e0e, gr\Microsoft.VisualBasic.Imaging\Drawing3D\Painter.vb"
+﻿#Region "Microsoft.VisualBasic::c71043cf47305ce76776e23240983672, gr\Microsoft.VisualBasic.Imaging\Drawing3D\Painter.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 231
-    '    Code Lines: 143 (61.90%)
-    ' Comment Lines: 60 (25.97%)
+    '   Total Lines: 234
+    '    Code Lines: 145 (61.97%)
+    ' Comment Lines: 60 (25.64%)
     '    - Xml Docs: 85.00%
     ' 
-    '   Blank Lines: 28 (12.12%)
-    '     File Size: 8.89 KB
+    '   Blank Lines: 29 (12.39%)
+    '     File Size: 8.92 KB
 
 
     '     Module PainterAlgorithm

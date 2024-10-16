@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cf8bc48d8ac10a5bd1ae3cef8c2b1c53, Data_science\Mathematica\Math\DataFittings\Levenberg-Marquardt\LmSolver.vb"
+﻿#Region "Microsoft.VisualBasic::c135738ef55c5e80f51ed231ed9bc112, Data_science\Mathematica\Math\DataFittings\Levenberg-Marquardt\LmSolver.vb"
 
     ' Author:
     ' 
@@ -319,4 +319,3 @@ Namespace LevenbergMarquardt
     End Class
 
 End Namespace
-

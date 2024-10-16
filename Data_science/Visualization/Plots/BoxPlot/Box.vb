@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c67e75bae9216aacedd3e52943e7503b, Data_science\Visualization\Plots\BoxPlot\Box.vb"
+﻿#Region "Microsoft.VisualBasic::84f06b94a2c957d13258767401c20f42, Data_science\Visualization\Plots\BoxPlot\Box.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 0.00%
     ' 
     '   Blank Lines: 41 (16.08%)
-    '     File Size: 11.03 KB
+    '     File Size: 11.04 KB
 
 
     '     Class Box

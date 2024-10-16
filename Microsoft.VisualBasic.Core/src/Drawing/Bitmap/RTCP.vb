@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b66fe7762a77257dad24a7bbf543d984, Microsoft.VisualBasic.Core\src\Drawing\Bitmap\RTCP.vb"
+﻿#Region "Microsoft.VisualBasic::bc76f5ac842201d91a16de786bfa00dc, Microsoft.VisualBasic.Core\src\Drawing\Bitmap\RTCP.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 227
-    '    Code Lines: 165 (72.69%)
-    ' Comment Lines: 29 (12.78%)
+    '   Total Lines: 232
+    '    Code Lines: 170 (73.28%)
+    ' Comment Lines: 29 (12.50%)
     '    - Xml Docs: 68.97%
     ' 
-    '   Blank Lines: 33 (14.54%)
-    '     File Size: 8.90 KB
+    '   Blank Lines: 33 (14.22%)
+    '     File Size: 9.07 KB
 
 
     '     Module RTCP

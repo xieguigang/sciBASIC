@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e645b2aa5cc76adfa298fb206a2c5de4, mime\text%html\Render\HtmlRenderer.vb"
+﻿#Region "Microsoft.VisualBasic::7147633f395e5c2ee7733e6118b57564, mime\text%html\Render\HtmlRenderer.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 92.50%
     ' 
     '   Blank Lines: 14 (14.00%)
-    '     File Size: 3.61 KB
+    '     File Size: 3.62 KB
 
 
     '     Module HtmlRenderer

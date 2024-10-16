@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2f020c1c151795b933f1da61520bdac7, gr\Drawing-net4.8\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::859ee2f58ab2e40a0f4a3db30ac77a6f, gr\Drawing-net4.8\Extensions.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 89.80%
     ' 
     '   Blank Lines: 29 (12.89%)
-    '     File Size: 8.69 KB
+    '     File Size: 8.68 KB
 
 
     ' Module Extensions
@@ -277,4 +277,3 @@ Public Module Extensions
         Return Graphics2D.CreateObject(g, bitmap)
     End Function
 End Module
-

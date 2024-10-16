@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bb3ff75a1738ad932944571e14f8125e, Data_science\Mathematica\Math\DataFittings\Levenberg-Marquardt\JamaHelper.vb"
+﻿#Region "Microsoft.VisualBasic::6455864c90d714af50e9eec1bba5ed93, Data_science\Mathematica\Math\DataFittings\Levenberg-Marquardt\JamaHelper.vb"
 
     ' Author:
     ' 
@@ -93,4 +93,3 @@ Namespace LevenbergMarquardt
     End Class
 
 End Namespace
-

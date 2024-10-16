@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bbdb892f6c215d6f058f3e919a6465a0, gr\Microsoft.VisualBasic.Imaging\SVG\XML\BasicShapes\text.vb"
+﻿#Region "Microsoft.VisualBasic::f431bebed16af32e7f08e100a144acb4, gr\Microsoft.VisualBasic.Imaging\SVG\XML\BasicShapes\text.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 163
-    '    Code Lines: 113 (69.33%)
-    ' Comment Lines: 31 (19.02%)
+    '   Total Lines: 173
+    '    Code Lines: 120 (69.36%)
+    ' Comment Lines: 31 (17.92%)
     '    - Xml Docs: 90.32%
     ' 
-    '   Blank Lines: 19 (11.66%)
-    '     File Size: 5.85 KB
+    '   Blank Lines: 22 (12.72%)
+    '     File Size: 6.10 KB
 
 
     '     Class SvgText
@@ -50,7 +50,7 @@
     '                     Y
     ' 
     '         Constructor: (+1 Overloads) Sub New
-    '         Function: Create, SetPosition, SetText
+    '         Function: Create, SetPosition, SetText, ToString
     ' 
     ' 
     ' /********************************************************************************/

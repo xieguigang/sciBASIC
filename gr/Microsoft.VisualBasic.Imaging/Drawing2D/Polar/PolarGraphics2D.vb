@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1cca0d5b099c4d57b717de5b2d58fc3b, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Polar\PolarGraphics2D.vb"
+﻿#Region "Microsoft.VisualBasic::a50ee4274ee22b469a6761a66bf1b801, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Polar\PolarGraphics2D.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 91.30%
     ' 
     '   Blank Lines: 11 (11.58%)
-    '     File Size: 4.20 KB
+    '     File Size: 4.19 KB
 
 
     '     Class PolarGraphics2D

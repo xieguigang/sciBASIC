@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5f427c1b78246838eb21365252cb8390, Data_science\Visualization\Plots-statistics\SampleView.vb"
+﻿#Region "Microsoft.VisualBasic::7779ed7ce3263565900a865cd4c34953, Data_science\Visualization\Plots-statistics\SampleView.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 60.00%
     ' 
     '   Blank Lines: 20 (12.50%)
-    '     File Size: 6.82 KB
+    '     File Size: 6.83 KB
 
 
     ' Module SampleView

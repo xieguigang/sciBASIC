@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::aee476ab4155bd3cbf376972955f454a, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Text\Nudge\GraphicsTextHandle.vb"
+﻿#Region "Microsoft.VisualBasic::7b216585bf52c2ba6c09d7933bcb91ba, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Text\Nudge\GraphicsTextHandle.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 35
-    '    Code Lines: 23 (65.71%)
-    ' Comment Lines: 4 (11.43%)
+    '   Total Lines: 36
+    '    Code Lines: 24 (66.67%)
+    ' Comment Lines: 4 (11.11%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 8 (22.86%)
-    '     File Size: 943 B
+    '   Blank Lines: 8 (22.22%)
+    '     File Size: 1.09 KB
 
 
     '     Class GraphicsTextHandle

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d7a18dc6a573709d3f1a0407d47fc859, gr\Microsoft.VisualBasic.Imaging\test\imageSmoothTest.vb"
+﻿#Region "Microsoft.VisualBasic::cd7b11be8104964a93926a54466fb9a1, gr\Microsoft.VisualBasic.Imaging\test\imageSmoothTest.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 48
-    '    Code Lines: 33 (68.75%)
+    '   Total Lines: 49
+    '    Code Lines: 34 (69.39%)
     ' Comment Lines: 0 (0.00%)
     '    - Xml Docs: 0.00%
     ' 
-    '   Blank Lines: 15 (31.25%)
-    '     File Size: 2.05 KB
+    '   Blank Lines: 15 (30.61%)
+    '     File Size: 2.09 KB
 
 
     ' Module imageSmoothTest

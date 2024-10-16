@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::19345faa0f3ef9b15cb9998e47b73a64, gr\Microsoft.VisualBasic.Imaging\test\LineTest.vb"
+﻿#Region "Microsoft.VisualBasic::67f9b2a2d3f10a7626034daa24be6e94, gr\Microsoft.VisualBasic.Imaging\test\LineTest.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 44
-    '    Code Lines: 30 (68.18%)
+    '   Total Lines: 45
+    '    Code Lines: 31 (68.89%)
     ' Comment Lines: 0 (0.00%)
     '    - Xml Docs: 0.00%
     ' 
-    '   Blank Lines: 14 (31.82%)
-    '     File Size: 1.07 KB
+    '   Blank Lines: 14 (31.11%)
+    '     File Size: 1.11 KB
 
 
     ' Module LineTest

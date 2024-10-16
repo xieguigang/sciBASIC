@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::59dda79b001168ccf03c792d12aa846f, Microsoft.VisualBasic.Core\src\Drawing\Bitmap\netcore8.0\GraphicsPath.vb"
+﻿#Region "Microsoft.VisualBasic::50bbc96e336f3b3716dbcdacf99cf754, Microsoft.VisualBasic.Core\src\Drawing\Bitmap\netcore8.0\GraphicsPath.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 155
-    '    Code Lines: 111 (71.61%)
+    '   Total Lines: 162
+    '    Code Lines: 117 (72.22%)
     ' Comment Lines: 0 (0.00%)
     '    - Xml Docs: 0.00%
     ' 
-    '   Blank Lines: 44 (28.39%)
-    '     File Size: 4.32 KB
+    '   Blank Lines: 45 (27.78%)
+    '     File Size: 4.62 KB
 
 
     '     Class PathData
@@ -52,6 +52,9 @@
     '         Properties: PathData, PathPoints
     ' 
     '         Constructor: (+2 Overloads) Sub New
+    ' 
+    '         Function: GenericEnumerator
+    ' 
     '         Sub: AddArc, AddBezier, AddCurve, AddEllipse, AddLine
     '              AddLines, AddPolygon, AddRectangle, CloseAllFigures, CloseFigure
     '              Reset
@@ -59,7 +62,7 @@
     ' 
     ' 
     ' 
-    '         Class Op_AddLine
+    '         Class op_AddLine
     ' 
     '             Properties: a, b
     ' 

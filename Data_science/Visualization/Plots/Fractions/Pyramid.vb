@@ -1,54 +1,61 @@
-﻿#Region "Microsoft.VisualBasic::bbe0d052dfc9092086764b765113e357, Data_science\Visualization\Plots\Fractions\Pyramid.vb"
+﻿#Region "Microsoft.VisualBasic::dac92bcd5dfe9a378ea773983a19c1ec, Data_science\Visualization\Plots\Fractions\Pyramid.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 125
-'    Code Lines: 97 (77.60%)
-' Comment Lines: 13 (10.40%)
-'    - Xml Docs: 76.92%
-' 
-'   Blank Lines: 15 (12.00%)
-'     File Size: 5.07 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Module Pyramid
-' 
-'         Function: Plot
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 147
+    '    Code Lines: 114 (77.55%)
+    ' Comment Lines: 13 (8.84%)
+    '    - Xml Docs: 76.92%
+    ' 
+    '   Blank Lines: 20 (13.61%)
+    '     File Size: 5.79 KB
+
+
+    '     Module Pyramid
+    ' 
+    '         Function: Plot
+    ' 
+    '     Class PyramidPlot
+    ' 
+    '         Properties: wp
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    '         Sub: PlotInternal
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

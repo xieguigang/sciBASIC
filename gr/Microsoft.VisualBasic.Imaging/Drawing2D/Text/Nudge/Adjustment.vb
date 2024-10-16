@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::35d4a890c675ca142ea2cfd875d4b753, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Text\Nudge\Adjustment.vb"
+﻿#Region "Microsoft.VisualBasic::aa7bf692a24718c9b18cc805aaa94f19, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Text\Nudge\Adjustment.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 169
-    '    Code Lines: 131 (77.51%)
-    ' Comment Lines: 16 (9.47%)
+    '   Total Lines: 172
+    '    Code Lines: 134 (77.91%)
+    ' Comment Lines: 16 (9.30%)
     '    - Xml Docs: 43.75%
     ' 
-    '   Blank Lines: 22 (13.02%)
-    '     File Size: 6.50 KB
+    '   Blank Lines: 22 (12.79%)
+    '     File Size: 6.70 KB
 
 
     '     Module Adjustment

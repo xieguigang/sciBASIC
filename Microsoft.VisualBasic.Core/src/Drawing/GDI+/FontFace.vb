@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a0fb6acef97a564d7d4ca6e54cd660aa, Microsoft.VisualBasic.Core\src\Drawing\GDI+\FontFace.vb"
+﻿#Region "Microsoft.VisualBasic::ae4725bb80c16acadedee4e12bb7beae, Microsoft.VisualBasic.Core\src\Drawing\GDI+\FontFace.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 148
-    '    Code Lines: 89 (60.14%)
-    ' Comment Lines: 37 (25.00%)
-    '    - Xml Docs: 91.89%
+    '   Total Lines: 150
+    '    Code Lines: 85 (56.67%)
+    ' Comment Lines: 42 (28.00%)
+    '    - Xml Docs: 80.95%
     ' 
-    '   Blank Lines: 22 (14.86%)
-    '     File Size: 6.16 KB
+    '   Blank Lines: 23 (15.33%)
+    '     File Size: 6.22 KB
 
 
     '     Class FontFace

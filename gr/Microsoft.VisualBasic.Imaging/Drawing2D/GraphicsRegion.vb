@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e9e11a88ada775d5086942f2e35fd196, gr\Microsoft.VisualBasic.Imaging\Drawing2D\GraphicsRegion.vb"
+﻿#Region "Microsoft.VisualBasic::a98e26a81916e04a761740a8f833dac5, gr\Microsoft.VisualBasic.Imaging\Drawing2D\GraphicsRegion.vb"
 
     ' Author:
     ' 
@@ -35,22 +35,22 @@
     ' Code Statistics:
 
     '   Total Lines: 177
-    '    Code Lines: 115 (64.97%)
+    '    Code Lines: 114 (64.41%)
     ' Comment Lines: 37 (20.90%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 25 (14.12%)
-    '     File Size: 5.95 KB
+    '   Blank Lines: 26 (14.69%)
+    '     File Size: 6.24 KB
 
 
     '     Structure GraphicsRegion
     ' 
-    '         Properties: Bottom, EntireArea, Height, PlotRegion, Width
-    '                     XRange, YRange
+    '         Properties: EntireArea, Height, Width
     ' 
     '         Constructor: (+3 Overloads) Sub New
-    '         Function: GetXLinearScaleRange, GetYLinearScaleRange, Offset2D, scaler, TopCentra
-    '                   ToString, XScaler, YScaler
+    '         Function: Bottom, GetXLinearScaleRange, GetYLinearScaleRange, Offset2D, PlotRegion
+    '                   scaler, TopCentra, ToString, XRange, XScaler
+    '                   YRange, YScaler
     ' 
     ' 
     ' /********************************************************************************/

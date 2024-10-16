@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e2f4ef919d6e2046e3176eaef0c08040, gr\Microsoft.VisualBasic.Imaging\test\HtmlRenderTest.vb"
+﻿#Region "Microsoft.VisualBasic::4811d94f559cec8d55230c926c0f08be, gr\Microsoft.VisualBasic.Imaging\test\HtmlRenderTest.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 31
-    '    Code Lines: 22 (70.97%)
+    '   Total Lines: 32
+    '    Code Lines: 23 (71.88%)
     ' Comment Lines: 0 (0.00%)
     '    - Xml Docs: 0.00%
     ' 
-    '   Blank Lines: 9 (29.03%)
-    '     File Size: 1.08 KB
+    '   Blank Lines: 9 (28.12%)
+    '     File Size: 1.12 KB
 
 
     ' Module HtmlRenderTest

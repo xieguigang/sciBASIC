@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::93515bc9aa863db821479856db3caa23, Data_science\Mathematica\Math\DataFittings\Levenberg-Marquardt\LmScalarModel.vb"
+﻿#Region "Microsoft.VisualBasic::e73b976faf563b924066755ae378937e, Data_science\Mathematica\Math\DataFittings\Levenberg-Marquardt\LmScalarModel.vb"
 
     ' Author:
     ' 
@@ -98,4 +98,3 @@ Namespace LevenbergMarquardt
     End Interface
 
 End Namespace
-

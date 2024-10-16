@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3cf6c9a13e6a54728296e9fb06cc7c39, Data_science\Visualization\Plots\BarPlot\Plots\Violin.vb"
+﻿#Region "Microsoft.VisualBasic::aed4c8cfad0bf06c2fdd11424a1253e0, Data_science\Visualization\Plots\BarPlot\Plots\Violin.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 0.00%
     ' 
     '   Blank Lines: 44 (14.77%)
-    '     File Size: 11.99 KB
+    '     File Size: 12.02 KB
 
 
     ' Class Violin

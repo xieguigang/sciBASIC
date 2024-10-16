@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::41f671fb4d07491c39dc65ebc98fdb1b, Data_science\Mathematica\Math\DataFittings\Levenberg-Marquardt\LmDatumError.vb"
+﻿#Region "Microsoft.VisualBasic::f23068760c005d716301fedabc16be1b, Data_science\Mathematica\Math\DataFittings\Levenberg-Marquardt\LmDatumError.vb"
 
     ' Author:
     ' 
@@ -111,4 +111,3 @@ Namespace LevenbergMarquardt
     End Class
 
 End Namespace
-

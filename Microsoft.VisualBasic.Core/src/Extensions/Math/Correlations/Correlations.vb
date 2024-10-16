@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::371772e614bf97a626f7dbc3b2fa2f65, Microsoft.VisualBasic.Core\src\Extensions\Math\Correlations\Correlations.vb"
+﻿#Region "Microsoft.VisualBasic::bcf0ab873364917ec1414758af06a4d4, Microsoft.VisualBasic.Core\src\Extensions\Math\Correlations\Correlations.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 529
-    '    Code Lines: 301 (56.90%)
-    ' Comment Lines: 146 (27.60%)
+    '   Total Lines: 528
+    '    Code Lines: 300 (56.82%)
+    ' Comment Lines: 146 (27.65%)
     '    - Xml Docs: 90.41%
     ' 
-    '   Blank Lines: 82 (15.50%)
-    '     File Size: 20.22 KB
+    '   Blank Lines: 82 (15.53%)
+    '     File Size: 20.17 KB
 
 
     '     Module Correlations
@@ -61,7 +61,7 @@
     ' 
     '             Function: CorrelationMatrix, sortRanking, Spearman
     ' 
-    '             Sub: throwNotAgree
+    '             Sub: throwDimensionSizeNotAgree
     ' 
     ' 
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::19f395762131d9f776625611ccc4a27e, gr\Drawing-net4.8\ImageExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::2f5fecbeddb32e3decfca8d52ba3d500, gr\Drawing-net4.8\ImageExtensions.vb"
 
     ' Author:
     ' 
@@ -94,4 +94,3 @@ Public Module ImageExtensions
         originalImage = adjustedImage
     End Sub
 End Module
-

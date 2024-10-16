@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::534c7b89fff1b2632544827e07b70bdd, Data_science\Visualization\Plots\g\Plot.vb"
+﻿#Region "Microsoft.VisualBasic::993165e20fdb9d513dac37676c2bac96, Data_science\Visualization\Plots\g\Plot.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 90.91%
     ' 
     '   Blank Lines: 30 (12.88%)
-    '     File Size: 9.91 KB
+    '     File Size: 9.89 KB
 
 
     '     Class Plot

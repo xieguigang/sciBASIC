@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4c92051ca6648b5222a4ab9607535ed9, Microsoft.VisualBasic.Core\src\Drawing\Bitmap\netcore8.0\Pen.vb"
+﻿#Region "Microsoft.VisualBasic::e493099f077e58e9b48ded21a72db683, Microsoft.VisualBasic.Core\src\Drawing\Bitmap\netcore8.0\Pen.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 198
-    '    Code Lines: 95 (47.98%)
-    ' Comment Lines: 62 (31.31%)
+    '   Total Lines: 199
+    '    Code Lines: 96 (48.24%)
+    ' Comment Lines: 62 (31.16%)
     '    - Xml Docs: 33.87%
     ' 
-    '   Blank Lines: 41 (20.71%)
-    '     File Size: 6.35 KB
+    '   Blank Lines: 41 (20.60%)
+    '     File Size: 6.42 KB
 
 
     '     Class Pen
@@ -101,7 +101,8 @@
     ' 
     '     Class Pens
     ' 
-    '         Properties: Black, Gray, LightGray, White, WhiteSmoke
+    '         Properties: Black, Gray, LightGray, Red, White
+    '                     WhiteSmoke
     ' 
     '         Constructor: (+1 Overloads) Sub New
     ' 

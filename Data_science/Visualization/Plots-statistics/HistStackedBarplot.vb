@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c459e20ab629a226e871e0471d57a32c, Data_science\Visualization\Plots-statistics\HistStackedBarplot.vb"
+﻿#Region "Microsoft.VisualBasic::4e53d37f40a771c753b3d184ce79d9a8, Data_science\Visualization\Plots-statistics\HistStackedBarplot.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 50.00%
     ' 
     '   Blank Lines: 19 (12.03%)
-    '     File Size: 6.90 KB
+    '     File Size: 6.91 KB
 
 
     ' Module HistStackedBarplot

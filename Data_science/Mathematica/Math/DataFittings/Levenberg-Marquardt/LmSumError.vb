@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::296adfecd5ea8897fa285248eb27dab6, Data_science\Mathematica\Math\DataFittings\Levenberg-Marquardt\LmSumError.vb"
+﻿#Region "Microsoft.VisualBasic::167187d2080fcb4adb6e3105739894d7, Data_science\Mathematica\Math\DataFittings\Levenberg-Marquardt\LmSumError.vb"
 
     ' Author:
     ' 
@@ -188,4 +188,3 @@ Namespace LevenbergMarquardt
     End Class
 
 End Namespace
-

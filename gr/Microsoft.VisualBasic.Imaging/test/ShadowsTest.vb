@@ -1,53 +1,53 @@
-﻿#Region "Microsoft.VisualBasic::68397ce361c70fd984f3a930cff75325, gr\Microsoft.VisualBasic.Imaging\test\ShadowsTest.vb"
+﻿#Region "Microsoft.VisualBasic::c6b4630304a623ebf142524c75003d34, gr\Microsoft.VisualBasic.Imaging\test\ShadowsTest.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 66
-'    Code Lines: 30 (45.45%)
-' Comment Lines: 21 (31.82%)
-'    - Xml Docs: 0.00%
-' 
-'   Blank Lines: 15 (22.73%)
-'     File Size: 2.87 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-' Module ShadowsTest
-' 
-'     Sub: Main1
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 67
+    '    Code Lines: 31 (46.27%)
+    ' Comment Lines: 21 (31.34%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 15 (22.39%)
+    '     File Size: 2.91 KB
+
+
+    ' Module ShadowsTest
+    ' 
+    '     Sub: Main1
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

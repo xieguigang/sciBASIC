@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::07c252b8a9de69110a4ccb9adea4e1ae, Microsoft.VisualBasic.Core\src\Drawing\GDI+\Driver\Drivers.vb"
+﻿#Region "Microsoft.VisualBasic::ce14f4e9962b3fc006de85f8f7071939, Microsoft.VisualBasic.Core\src\Drawing\GDI+\Driver\Drivers.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 51
-    '    Code Lines: 28 (54.90%)
-    ' Comment Lines: 18 (35.29%)
+    '   Total Lines: 54
+    '    Code Lines: 28 (51.85%)
+    ' Comment Lines: 21 (38.89%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 5 (9.80%)
-    '     File Size: 1.68 KB
+    '   Blank Lines: 5 (9.26%)
+    '     File Size: 1.73 KB
 
 
     '     Enum Drivers

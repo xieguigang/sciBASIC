@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c9a3870b2fb4dc875eec9fb2e57c62bd, Data_science\Mathematica\Math\DataFittings\Levenberg-Marquardt\LmParamHandler.vb"
+﻿#Region "Microsoft.VisualBasic::2dc62d5250c1d80f367e3a33d16e3bff, Data_science\Mathematica\Math\DataFittings\Levenberg-Marquardt\LmParamHandler.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 1 (7.69%)
-    '     File Size: 452 B
+    '     File Size: 450 B
 
 
     '     Interface LmParamHandler
@@ -65,4 +65,3 @@ Namespace LevenbergMarquardt
     End Interface
 
 End Namespace
-

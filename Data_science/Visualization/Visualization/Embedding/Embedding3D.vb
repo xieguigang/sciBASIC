@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7ae53c9a7cac78ab6fdc8e8d2b7b13ae, Data_science\Visualization\Visualization\Embedding\Embedding3D.vb"
+﻿#Region "Microsoft.VisualBasic::3471b6fcea71e43d679b7ec973e2325e, Data_science\Visualization\Visualization\Embedding\Embedding3D.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 67
-    '    Code Lines: 57 (85.07%)
+    '   Total Lines: 70
+    '    Code Lines: 60 (85.71%)
     ' Comment Lines: 0 (0.00%)
     '    - Xml Docs: 0.00%
     ' 
-    '   Blank Lines: 10 (14.93%)
-    '     File Size: 2.67 KB
+    '   Blank Lines: 10 (14.29%)
+    '     File Size: 2.82 KB
 
 
     ' Class Embedding3D

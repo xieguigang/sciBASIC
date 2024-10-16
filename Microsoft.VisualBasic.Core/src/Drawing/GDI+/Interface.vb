@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::53114ff8857185e8f9f284f0d627cbb3, Microsoft.VisualBasic.Core\src\Drawing\GDI+\Interface.vb"
+﻿#Region "Microsoft.VisualBasic::861594c8ad0d970217bf7d5dc1168a4d, Microsoft.VisualBasic.Core\src\Drawing\GDI+\Interface.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 1950
-    '    Code Lines: 196 (10.05%)
-    ' Comment Lines: 1673 (85.79%)
-    '    - Xml Docs: 19.19%
+    '   Total Lines: 1871
+    '    Code Lines: 204 (10.90%)
+    ' Comment Lines: 1582 (84.55%)
+    '    - Xml Docs: 26.49%
     ' 
-    '   Blank Lines: 81 (4.15%)
-    '     File Size: 83.92 KB
+    '   Blank Lines: 85 (4.54%)
+    '     File Size: 82.51 KB
 
 
     '     Class IGraphics
@@ -52,7 +52,8 @@
     ' 
     '         Function: (+4 Overloads) IsVisible
     ' 
-    '         Sub: (+2 Overloads) Clear, FillPie, FillRectangle, (+2 Overloads) FillRectangles, Finalize
+    '         Sub: (+2 Overloads) Clear, Dispose, FillPie, FillRectangle, (+2 Overloads) FillRectangles
+    '              Finalize
     ' 
     ' 
     ' /********************************************************************************/

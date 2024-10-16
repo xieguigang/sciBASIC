@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e70d3e4c5f31fba67f488d017d9f8712, Data_science\Visualization\Plots\g\Theme\Layout.vb"
+﻿#Region "Microsoft.VisualBasic::d4182d965d1a7d1ac0f179d1c4b212c8, Data_science\Visualization\Plots\g\Theme\Layout.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 116
-    '    Code Lines: 69 (59.48%)
-    ' Comment Lines: 23 (19.83%)
+    '   Total Lines: 117
+    '    Code Lines: 70 (59.83%)
+    ' Comment Lines: 23 (19.66%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 24 (20.69%)
-    '     File Size: 3.80 KB
+    '   Blank Lines: 24 (20.51%)
+    '     File Size: 3.87 KB
 
 
     '     Class Layout

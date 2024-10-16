@@ -1,3 +1,57 @@
+﻿#Region "Microsoft.VisualBasic::012cc19e6f9d8f7b6d5a1df2a45794c6, Microsoft.VisualBasic.Core\src\Drawing\Bitmap\Bitmap\BinarySerializationExtensions.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 37
+    '    Code Lines: 23 (62.16%)
+    ' Comment Lines: 6 (16.22%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 8 (21.62%)
+    '     File Size: 1.67 KB
+
+
+    '     Module BinarySerializationExtensions
+    ' 
+    '         Function: Deserialize, Serialize
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
 Imports System.Runtime.InteropServices
 
 Namespace Imaging.BitmapImage.FileStream
@@ -35,3 +89,4 @@ Namespace Imaging.BitmapImage.FileStream
         End Function
     End Module
 End Namespace
+

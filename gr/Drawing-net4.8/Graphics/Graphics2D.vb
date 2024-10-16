@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::13fcf2b8b9c45f8567c4537a81025302, gr\Drawing-net4.8\Graphics\Graphics2D.vb"
+﻿#Region "Microsoft.VisualBasic::5cbcb0f263106a23a5107a20d9f501f5, gr\Drawing-net4.8\Graphics\Graphics2D.vb"
 
     ' Author:
     ' 
@@ -34,18 +34,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 207
-    '    Code Lines: 123 (59.42%)
-    ' Comment Lines: 54 (26.09%)
+    '   Total Lines: 214
+    '    Code Lines: 129 (60.28%)
+    ' Comment Lines: 54 (25.23%)
     '    - Xml Docs: 92.59%
     ' 
-    '   Blank Lines: 30 (14.49%)
-    '     File Size: 7.18 KB
+    '   Blank Lines: 31 (14.49%)
+    '     File Size: 7.37 KB
 
 
     ' Class Graphics2D
     ' 
-    '     Properties: Center, ImageResource, Size
+    '     Properties: Center, Driver, ImageResource, Size
     ' 
     '     Constructor: (+5 Overloads) Sub New
     ' 
