@@ -85,7 +85,6 @@ Namespace Imaging.BitmapImage.FileStream
         ''' <summary>
         ''' BMP file must be aligned at 4 butes at the end of row
         ''' </summary>
-        ''' <param name="BitsPerPixelEnum"></param>
         ''' <returns></returns>
         Public ReadOnly Property BytesPerRow As Integer
             Get
@@ -203,11 +202,11 @@ Namespace Imaging.BitmapImage.FileStream
         ''' get in-memory stream data of the current bitmap object, could not 
         ''' be processed when bitmap object is greater than 2GB.
         ''' </returns>
-        Public Function GetBmpStream(Optional fliped As Boolean = False) As MemoryStream
+        Public Function GetBmpStream(Optional flipped As Boolean = False) As MemoryStream
             Dim rawImageSize = BytesPerRow * Height
             Dim stream As New MemoryStream(rawImageSize)
 
-            Save(stream, fliped)
+            Save(stream, flipped)
             stream.Position = 0
 
             Return stream

@@ -57,9 +57,12 @@
 
 Imports System.Drawing
 Imports System.Drawing.Drawing2D
-Imports Microsoft.VisualBasic.Drawing.Imaging.BitmapImage
 Imports Microsoft.VisualBasic.Imaging.Math2D
 Imports std = System.Math
+
+#If NET48 Then
+Imports Microsoft.VisualBasic.Drawing.Imaging.BitmapImage
+#End If
 
 Namespace Drawing2D
 

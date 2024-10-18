@@ -61,11 +61,14 @@
 Imports System.Drawing
 Imports System.Drawing.Imaging
 Imports System.Runtime.CompilerServices
-Imports Microsoft.VisualBasic.Drawing.Imaging.BitmapImage
 Imports Microsoft.VisualBasic.Imaging.BitmapImage
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.HeatMap.hqx
 Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
+
+#If NET48 Then
+Imports Microsoft.VisualBasic.Drawing.Imaging.BitmapImage
+#End If
 
 Namespace Drawing2D.HeatMap
 

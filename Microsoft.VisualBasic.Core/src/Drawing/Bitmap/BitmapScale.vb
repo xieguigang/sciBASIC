@@ -147,7 +147,7 @@ Namespace Imaging.BitmapImage
         ''' So, single pixel access call to <see cref="Bitmap.SetPixel"/>/<see cref="Bitmap.GetPixel"/> Or 
         ''' even retrieve Width/Height properties does something Like: 
         ''' lock handle In place-Get/Set value/unlock handle. It Is the most inefficient way To manipulate bitmaps In .NET. 
-        ''' The author should read about <see cref="Bitmap.LockBits"/> first.
+        ''' The author should read about ``Bitmap.LockBits`` first.
         ''' </remarks>
         <Extension>
         Public Sub Binarization(ByRef curBitmap As Bitmap, Optional style As BinarizationStyles = BinarizationStyles.Binary)

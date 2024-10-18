@@ -83,8 +83,8 @@ Namespace Imaging.Driver
         ''' <summary>
         ''' The graphics engine driver type indicator, 
         ''' 
-        ''' + for <see cref="Drivers.GDI"/> -> <see cref="ImageData"/>(<see cref="Drawing.Image"/>, <see cref="Bitmap"/>)
-        ''' + for <see cref="Drivers.SVG"/> -> <see cref="SVGData"/>(<see cref="SVGDocument"/>)
+        ''' + for <see cref="Drivers.GDI"/> -> ImageData(<see cref="Image"/>, <see cref="Bitmap"/>)
+        ''' + for <see cref="Drivers.SVG"/> -> SVGData(SVGDocument)
         ''' 
         ''' (驱动程序的类型)
         ''' </summary>

@@ -300,7 +300,7 @@ Namespace Imaging.Math2D
         End Function
 
         ''' <summary>
-        ''' <see cref="Graphics.DrawEllipse(Pen, RectangleF)"/>
+        ''' <see cref="IGraphics.DrawEllipse(Pen, RectangleF)"/>
         ''' </summary>
         ''' <param name="center"></param>
         ''' <param name="r!"></param>

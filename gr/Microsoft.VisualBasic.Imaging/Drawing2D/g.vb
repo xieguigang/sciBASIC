@@ -309,7 +309,7 @@ Namespace Drawing2D
         End Sub
 
         ''' <summary>
-        ''' <see cref="Graphics.MeasureString(String, Font)"/> extensions
+        ''' <see cref="IGraphics.MeasureString(String, Font)"/> extensions
         ''' </summary>
         ''' <param name="text$"></param>
         ''' <param name="g"></param>
@@ -322,9 +322,9 @@ Namespace Drawing2D
         End Function
 
         ''' <summary>
-        ''' <see cref="Graphics.MeasureString(String, Font)"/> extensions
+        ''' <see cref="IGraphics.MeasureString(String, Font)"/> extensions
         ''' </summary>
-        ''' <param name="text$"></param>
+        ''' <param name="text"></param>
         ''' <param name="g"></param>
         ''' <param name="font"></param>
         ''' <returns></returns>

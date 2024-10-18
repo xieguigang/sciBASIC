@@ -1,72 +1,71 @@
 ﻿#Region "Microsoft.VisualBasic::a3a0ad4864a4f20d53a2ef3b486895dd, Microsoft.VisualBasic.Core\src\Extensions\StringHelpers\StringHelpers.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 1442
-    '    Code Lines: 782 (54.23%)
-    ' Comment Lines: 501 (34.74%)
-    '    - Xml Docs: 89.82%
-    ' 
-    '   Blank Lines: 159 (11.03%)
-    '     File Size: 54.03 KB
+' Summaries:
 
 
-    ' Module StringHelpers
-    ' 
-    '     Properties: EmptyString, NonStrictCompares, StrictCompares
-    ' 
-    '     Function: __json, AllEquals, AsciiBytes, (+4 Overloads) ByteString, CharAtOrDefault
-    '               CharString, (+3 Overloads) Count, CreateBuilder, DistinctIgnoreCase, EqualsAny
-    '               First, FormatString, FormatZero, GetBetween, GetEMails
-    '               GetStackValue, GetString, (+3 Overloads) GetTagValue, GetURLs, IgnoreCase
-    '               InStrAny, (+2 Overloads) Intersection, IsEmptyStringVector, JoinBy, LineTokens
-    '               Located, Lookup, Lookups, (+2 Overloads) Match, Matches
-    '               MatchPattern, (+2 Overloads) MaxLengthString, MinLengthString, NotEmpty, PadEnd
-    '               Parts, RepeatString, ReplaceChars, (+2 Overloads) Reverse, RNull
-    '               SaveTo, (+2 Overloads) Split, SplitBy, StartsWith, StringEmpty
-    '               StringHashCode, StringReplace, (+2 Overloads) StringSplit, StripBlank, Strips
-    '               SubstringSpecial, TextEquals, TextLast, TokenCount, TokenCountIgnoreCase
-    '               TrimNewLine, TrimNull, WildcardsLocated
-    ' 
-    '     Sub: Parts, RemoveLast
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 1442
+'    Code Lines: 782 (54.23%)
+' Comment Lines: 501 (34.74%)
+'    - Xml Docs: 89.82%
+' 
+'   Blank Lines: 159 (11.03%)
+'     File Size: 54.03 KB
+
+
+' Module StringHelpers
+' 
+'     Properties: EmptyString, NonStrictCompares, StrictCompares
+' 
+'     Function: __json, AllEquals, AsciiBytes, (+4 Overloads) ByteString, CharAtOrDefault
+'               CharString, (+3 Overloads) Count, CreateBuilder, DistinctIgnoreCase, EqualsAny
+'               First, FormatString, FormatZero, GetBetween, GetEMails
+'               GetStackValue, GetString, (+3 Overloads) GetTagValue, GetURLs, IgnoreCase
+'               InStrAny, (+2 Overloads) Intersection, IsEmptyStringVector, JoinBy, LineTokens
+'               Located, Lookup, Lookups, (+2 Overloads) Match, Matches
+'               MatchPattern, (+2 Overloads) MaxLengthString, MinLengthString, NotEmpty, PadEnd
+'               Parts, RepeatString, ReplaceChars, (+2 Overloads) Reverse, RNull
+'               SaveTo, (+2 Overloads) Split, SplitBy, StartsWith, StringEmpty
+'               StringHashCode, StringReplace, (+2 Overloads) StringSplit, StripBlank, Strips
+'               SubstringSpecial, TextEquals, TextLast, TokenCount, TokenCountIgnoreCase
+'               TrimNewLine, TrimNull, WildcardsLocated
+' 
+'     Sub: Parts, RemoveLast
+' 
+' /********************************************************************************/
 
 #End Region
 
-Imports System.Drawing
 Imports System.Numerics
 Imports System.Runtime.CompilerServices
 Imports System.Text
@@ -74,6 +73,7 @@ Imports System.Text.RegularExpressions
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Linq
@@ -250,7 +250,7 @@ Public Module StringHelpers
     End Function
 
     ''' <summary>
-    ''' 常用于gdi+绘图操作，和<see cref="Graphics.MeasureString"/>共同使用
+    ''' 常用于gdi+绘图操作，和<see cref="IGraphics.MeasureString"/>共同使用
     ''' </summary>
     ''' <param name="source"></param>
     ''' <returns></returns>
