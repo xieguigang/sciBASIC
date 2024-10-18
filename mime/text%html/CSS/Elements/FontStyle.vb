@@ -149,7 +149,7 @@ Namespace CSS
         ''' <returns></returns>
         <Description("font-size")> Public Property size As String
         ''' <summary>
-        ''' A string representation of the <see cref="FontFamily"/> for the new System.Drawing.Font.
+        ''' A string representation of the ``FontFamily`` for the new System.Drawing.Font.
         ''' </summary>
         ''' <returns></returns>
         <Description("font-family")> Public Property family As String
