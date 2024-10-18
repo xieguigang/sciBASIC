@@ -62,7 +62,7 @@ Imports Microsoft.VisualBasic.ComponentModel.DataStructures
 Imports Microsoft.VisualBasic.Linq.Extensions
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.Text.Xml.Models
-Imports stdNum = System.Math
+Imports std = System.Math
 
 Namespace ComponentModel.Algorithm.DynamicProgramming.Levenshtein
 
@@ -133,10 +133,10 @@ Vladimir I",
                         '  if the letters are same
                         distTable(i, j) = distTable(i - 1, j - 1)
                     Else ' if not add 1 to its neighborhoods and assign minumun of its neighborhoods
-                        Dim n As Double = stdNum.Min(
+                        Dim n As Double = std.Min(
                             distTable(i - 1, j - 1) + cost.substitute(reference(i - 1), hypotheses(j - 1)),
                             distTable(i - 1, j) + cost.delete(reference(i - 1)))
-                        distTable(i, j) = stdNum.Min(n, distTable(i, j - 1) + cost.insert(hypotheses(j - 1)))
+                        distTable(i, j) = std.Min(n, distTable(i, j - 1) + cost.insert(hypotheses(j - 1)))
                     End If
                 Next
             Next
@@ -173,7 +173,11 @@ Vladimir I",
         ''' <param name="asChar">这个只是用于进行显示输出的</param>
         ''' <param name="cost"></param>
         ''' <returns></returns>
-        Public Function ComputeDistance(Of T)(reference As T(), hypotheses As T(), equals As GenericLambda(Of T).IEquals, asChar As ToChar(Of T), Optional cost As Double = 0.7) As DistResult
+        Public Function ComputeDistance(Of T)(reference As T(), hypotheses As T(),
+                                              equals As GenericLambda(Of T).IEquals,
+                                              asChar As ToChar(Of T),
+                                              Optional cost As Double = 0.7) As DistResult
+
             If hypotheses Is Nothing Then hypotheses = New T() {}
             If reference Is Nothing Then reference = New T() {}
 
@@ -183,9 +187,10 @@ Vladimir I",
             Dim sHyp As String = New String(hypotheses.Select(Function(x) asChar(x)).ToArray)
             Dim sRef As String = New String(reference.Select(Function(x) asChar(x)).ToArray)
             Dim result As New DistResult With {
-                .hypotheses = sHyp,
-                .reference = sRef
+                .Hypotheses = sHyp,
+                .Reference = sRef
             }
+
             Return computeRouteImpl(sHyp, result, i, j, distTable)
         End Function
 

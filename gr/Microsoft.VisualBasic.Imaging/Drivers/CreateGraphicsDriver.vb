@@ -97,6 +97,10 @@ Namespace Driver
         End Function
 
 #If NET48 Then
+
+        ''' <summary>
+        ''' register the default System.Drawing.Common graphics driver for .net 4.8 runtime
+        ''' </summary>
         Public Sub Register()
             Call DriverLoad.Register(New RasterInterop, Drivers.GDI)
             Call DriverLoad.Register(New SvgInterop, Drivers.SVG)

@@ -54,6 +54,7 @@
 
 Imports System.IO
 Imports System.Text
+Imports Microsoft.VisualBasic.ApplicationServices.Terminal.ProgressBar.Tqdm
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.Values
 
@@ -70,7 +71,9 @@ Namespace LDA
         Public Function load(folderPath As String) As Corpus
             Dim corpus As New Corpus()
 
-            For Each filepath As String In folderPath.ListFiles()
+            Call VBDebugger.EchoLine("load documents for build corpus data pool...")
+
+            For Each filepath As String In TqdmWrapper.Wrap(folderPath.ListFiles.ToArray)
                 Dim file = filepath.Open(doClear:=False, [readOnly]:=True)
                 Dim br As New StreamReader(file, Encoding.UTF8)
                 Dim line As New Value(Of String)

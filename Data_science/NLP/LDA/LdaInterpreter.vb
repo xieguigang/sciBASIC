@@ -1,59 +1,60 @@
 ﻿#Region "Microsoft.VisualBasic::2288afd9598785195d560ffecb003f84, Data_science\NLP\LDA\LdaInterpreter.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 74
-    '    Code Lines: 48 (64.86%)
-    ' Comment Lines: 12 (16.22%)
-    '    - Xml Docs: 100.00%
-    ' 
-    '   Blank Lines: 14 (18.92%)
-    '     File Size: 2.71 KB
+' Summaries:
 
 
-    '     Class LdaInterpreter
-    ' 
-    '         Function: (+2 Overloads) translate
-    ' 
-    '         Sub: (+2 Overloads) explain
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 74
+'    Code Lines: 48 (64.86%)
+' Comment Lines: 12 (16.22%)
+'    - Xml Docs: 100.00%
+' 
+'   Blank Lines: 14 (18.92%)
+'     File Size: 2.71 KB
+
+
+'     Class LdaInterpreter
+' 
+'         Function: (+2 Overloads) translate
+' 
+'         Sub: (+2 Overloads) explain
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
+Imports System.IO
 Imports std = System.Math
 
 Namespace LDA
@@ -111,19 +112,25 @@ Namespace LDA
         ''' <summary>
         ''' To print the result in a well formatted form </summary>
         ''' <param name="result"> </param>
-        Public Shared Sub explain(result As IDictionary(Of String, Double)())
-            Dim i = 0
+        Public Shared Sub explain(result As IDictionary(Of String, Double)(), Optional dev As TextWriter = Nothing)
+            Dim i As Integer = 0
+
+            If dev Is Nothing Then
+                dev = Console.Out
+            End If
 
             For Each topicMap In result
-                Console.Write("topic {0:D} :" & vbLf, std.Min(Threading.Interlocked.Increment(i), i - 1))
-                explain(topicMap)
-                Console.WriteLine()
+                dev.Write("topic {0:D} :" & vbLf, std.Min(Threading.Interlocked.Increment(i), i - 1))
+                explain(topicMap, dev)
+                dev.WriteLine()
             Next
+
+            Call dev.Flush()
         End Sub
 
-        Public Shared Sub explain(topicMap As IDictionary(Of String, Double))
+        Private Shared Sub explain(topicMap As IDictionary(Of String, Double), dev As TextWriter)
             For Each entry In topicMap
-                Console.WriteLine(entry)
+                dev.WriteLine(entry)
             Next
         End Sub
     End Class

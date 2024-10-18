@@ -77,6 +77,10 @@ Namespace Emit.Delegates
     Public Class DataObjectVector
 
         Protected ReadOnly type As Type
+
+        ''' <summary>
+        ''' the raw input pool data
+        ''' </summary>
         Protected ReadOnly data As Array
 
         ''' <summary>
@@ -108,6 +112,19 @@ Namespace Emit.Delegates
         End Property
 
         Const DimNotAgree$ = "Value array should have the same length as the target data array"
+
+        Default Public ReadOnly Property Evaluate(offset As IEnumerable(Of Integer)) As Array
+            Get
+                Dim pullIndex As Integer() = offset.ToArray
+                Dim vector As Array = Array.CreateInstance(type, pullIndex.Length)
+
+                For i As Integer = 0 To pullIndex.Length - 1
+                    vector(i) = data(pullIndex(i))
+                Next
+
+                Return vector
+            End Get
+        End Property
 
         ''' <summary>
         ''' Evaluate the clr object property, and get vector value exports in batch 
@@ -178,6 +195,12 @@ Namespace Emit.Delegates
             data = array
             properties = inspectType(type)
         End Sub
+
+        Public Function GetSubVector(property$) As DataObjectVector
+            Dim subvec As Array = Evaluate([property])
+            Dim vec As New DataObjectVector(subvec)
+            Return vec
+        End Function
 
         Public Function GetProperty(property$) As PropertyInfo
             Return properties([property])
