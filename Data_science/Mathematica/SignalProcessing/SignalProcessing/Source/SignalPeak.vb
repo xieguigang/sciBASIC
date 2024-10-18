@@ -82,5 +82,11 @@ Namespace Source
             )
         End Function
 
+        Public Function GetSignalData(x As Double()) As Double()
+            Dim center As Double = offset + width / 2
+            Dim y As Double() = Gaussian.Gaussian(x, max_intensity, center, width)
+            Return y
+        End Function
+
     End Class
 End Namespace
