@@ -1,58 +1,58 @@
 ﻿#Region "Microsoft.VisualBasic::a372e88f4fa35f18b3cf49ae6c6ba586, gr\Microsoft.VisualBasic.Imaging\Drawing2D\HeatMap\PixelRender.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 170
-    '    Code Lines: 126 (74.12%)
-    ' Comment Lines: 19 (11.18%)
-    '    - Xml Docs: 73.68%
-    ' 
-    '   Blank Lines: 25 (14.71%)
-    '     File Size: 6.56 KB
+' Summaries:
 
 
-    '     Class PixelRender
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    ' 
-    '         Function: RenderRasterImage, (+2 Overloads) ScalePixels
-    ' 
-    '         Sub: (+2 Overloads) FillRectangles, SetPixels
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 170
+'    Code Lines: 126 (74.12%)
+' Comment Lines: 19 (11.18%)
+'    - Xml Docs: 73.68%
+' 
+'   Blank Lines: 25 (14.71%)
+'     File Size: 6.56 KB
+
+
+'     Class PixelRender
+' 
+'         Constructor: (+1 Overloads) Sub New
+' 
+'         Function: RenderRasterImage, (+2 Overloads) ScalePixels
+' 
+'         Sub: (+2 Overloads) FillRectangles, SetPixels
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -61,6 +61,8 @@ Imports System.Drawing.Imaging
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Imaging.BitmapImage
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
+Imports Microsoft.VisualBasic.Imaging.Driver
+
 
 #If NET48 Then
 #Else
@@ -127,13 +129,8 @@ Namespace Drawing2D.HeatMap
                                                          Optional ch As Double = 1,
                                                          Optional gauss As Boolean = False) As Bitmap
 
-#If NET48 Then
-            Dim raw As New Bitmap(size.Width, size.Height, PixelFormat.Format32bppArgb)
-#Else
-            Dim raw As New Bitmap(size)
-#End If
-            Dim full As New Rectangle(0, 0, raw.Width, raw.Height)
-            Dim g As IGraphics = Driver.CreateGraphicsDevice(raw, direct_access:=True)
+            Dim full As New Rectangle(0, 0, size.Width, size.Height)
+            Dim g As IGraphics = Driver.CreateGraphicsDevice(size, driver:=Drivers.GDI)
             Dim raster As Pixel()
 
             If gauss Then
@@ -149,6 +146,8 @@ Namespace Drawing2D.HeatMap
 
             Call g.Clear(defaultColor)
 
+            fillRect = True
+
             ' 20220525 set pixels is not working on the
             ' linux server platform
             '
@@ -162,10 +161,10 @@ Namespace Drawing2D.HeatMap
                     defaultColor:=defaultColor
                 )
             Else
-                Call SetPixels(raw, raster)
+                ' Call SetPixels(raw, raster)
             End If
 
-            Return raw
+            Return New Bitmap(DirectCast(g, GdiRasterGraphics).ImageResource)
         End Function
 
         Private Sub SetPixels(raw As Bitmap, raster As Pixel())
