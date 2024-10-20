@@ -230,6 +230,13 @@ Public Module ListExtensions
         Return New Index(Of T)(source, base)
     End Function
 
+    ''' <summary>
+    ''' swap the position of two specific element inside a given list collection object
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    ''' <param name="l"></param>
+    ''' <param name="i%"></param>
+    ''' <param name="j%"></param>
     <Extension>
     Public Sub Swap(Of T)(ByRef l As System.Collections.Generic.List(Of T), i%, j%)
         Dim tmp = l(i)
@@ -237,10 +244,29 @@ Public Module ListExtensions
         l(j) = tmp
     End Sub
 
+    ''' <summary>
+    ''' for each loop
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    ''' <param name="source"></param>
+    ''' <param name="action"></param>
     <Extension>
     Public Sub ForEach(Of T)(source As IEnumerable(Of T), action As Action(Of T, Integer))
         For Each x As SeqValue(Of T) In source.SeqIterator
             Call action(x.value, x.i)
+        Next
+    End Sub
+
+    ''' <summary>
+    ''' for each loop
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    ''' <param name="source"></param>
+    ''' <param name="action"></param>
+    <Extension>
+    Public Sub ForEach(Of T)(source As IEnumerable(Of T), action As Action(Of T))
+        For Each x As T In source.SafeQuery
+            Call action(x)
         Next
     End Sub
 
@@ -250,11 +276,10 @@ Public Module ListExtensions
     ''' to accommodate the number of elements copied.
     ''' </summary>
     ''' <param name="source">The collection whose elements are copied to the new list.</param>
-    <Extension> Public Function ToList(Of T, TOut)(
-                                  source As IEnumerable(Of T),
-                                 [CType] As Func(Of T, TOut),
-                       Optional parallel As Boolean = False) As List(Of TOut)
-
+    <Extension>
+    Public Function ToList(Of T, TOut)(source As IEnumerable(Of T),
+                                       [CType] As Func(Of T, TOut),
+                                       Optional parallel As Boolean = False) As List(Of TOut)
         If source Is Nothing Then
             Return New List(Of TOut)
         End If
@@ -284,11 +309,12 @@ Public Module ListExtensions
     ''' <param name="source">
     ''' The collection whose elements are copied to the new list.
     ''' </param>
-    ''' 
+    ''' <remarks>
+    ''' 如果source集合是空值的话，不会抛错
+    ''' </remarks>
     <DebuggerStepThrough>
     <Extension>
     Public Function AsList(Of T)(source As IEnumerable(Of T)) As List(Of T)
-        ' 如果source集合是空值的话，不会抛错
         Return New List(Of T)(source)
     End Function
 
