@@ -156,6 +156,25 @@ Public Class Gibbs
         Return start.Values.ToArray
     End Function
 
+    Public Function PQ(chosenSeqIndex As Integer) As (p As Double(), q As Double())
+        Dim chosenSequence As String = sequences(chosenSeqIndex)
+        Dim w = chosenSequence.Length - motifLength
+        Dim qv As Double() = New Double(w) {}
+        Dim pv As Double() = New Double(w) {}
+
+        ' i = possibleStart
+        For i As Integer = 0 To w
+            Dim tempMotif = chosenSequence.Substring(i, motifLength)
+            Dim p = calculateP(tempMotif, chosenSeqIndex)
+            Dim q = calculateQ(tempMotif, chosenSeqIndex, i)
+
+            qv(i) = q
+            pv(i) = p
+        Next
+
+        Return (pv, qv)
+    End Function
+
     ''' <summary>
     ''' Calculates the probability of a letter in this position.
     ''' </summary>
