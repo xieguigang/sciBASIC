@@ -64,7 +64,9 @@ Namespace ComponentModel.Algorithm.BinaryTree
     ''' <summary>
     ''' A binary tree model for do data clustering
     ''' </summary>
-    ''' <typeparam name="K"></typeparam>
+    ''' <typeparam name="K">
+    ''' the key data type andalso the cluster value type
+    ''' </typeparam>
     Public Class AVLClusterTree(Of K) : Implements Enumeration(Of ClusterKey(Of K))
 
         ReadOnly avltree As AVLTree(Of ClusterKey(Of K), K)

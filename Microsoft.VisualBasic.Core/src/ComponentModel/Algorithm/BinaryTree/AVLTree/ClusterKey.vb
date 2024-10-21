@@ -195,7 +195,10 @@ Namespace ComponentModel.Algorithm.BinaryTree
         ''' </summary>
         ''' <param name="compares"></param>
         ''' <returns></returns>
-        Public Shared Function DoComparison(compares As Comparison(Of K), prefer As ComparisonDirectionPrefers, loopAll As Boolean) As Func(Of ClusterKey(Of K), K, Integer)
+        Public Shared Function DoComparison(compares As Comparison(Of K),
+                                            prefer As ComparisonDirectionPrefers,
+                                            loopAll As Boolean) As Func(Of ClusterKey(Of K), K, Integer)
+
             Dim dir = PreferDirection(prefer)
 
             If Not loopAll Then
