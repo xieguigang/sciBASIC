@@ -87,33 +87,13 @@ Namespace BSON
 
     Public Class ObjectId
 
-        ' 时间戳部分（4 字节）
-        Public Property timestamp As Integer
-        ' 机器标识符部分（5 字节）
-        Public Property machineIdentifier As Byte()
-        ' 进程标识符部分（3 字节）
-        Public Property processIdentifier As Byte()
-
-        Public Sub New(timestamp As Integer, machineIdentifier As Byte(), processIdentifier As Byte())
-            Me.timestamp = timestamp
-            Me.machineIdentifier = machineIdentifier
-            Me.processIdentifier = processIdentifier
-        End Sub
+        Public Property value As Byte()
 
         Public Shared Function ReadIdValue(s As BinaryReader) As JsonValue
-            ' 读取 4 字节的时间戳
-            Dim timestamp As Integer = s.ReadInt32()
+            Dim byts = s.ReadBytes(12)
+            Dim id As New ObjectId With {.value = byts}
 
-            ' 读取 5 字节的机器标识符
-            Dim machineIdentifier(4) As Byte
-            s.Read(machineIdentifier, 0, 5)
-
-            ' 读取 3 字节的进程标识符
-            Dim processIdentifier(2) As Byte
-            s.Read(processIdentifier, 0, 3)
-
-            ' 创建并返回 ObjectId 对象
-            Return New JsonValue(New ObjectId(timestamp, machineIdentifier, processIdentifier))
+            Return New JsonValue(id)
         End Function
 
     End Class

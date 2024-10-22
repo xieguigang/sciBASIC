@@ -92,6 +92,7 @@ Namespace BSON
                 Throw New Exception(String.Format("Original type is {0}. Cannot convert from {0} to double", valueType))
             End Get
         End Property
+
         Public ReadOnly Property int32Value() As Int32
             Get
                 Select Case valueType
@@ -106,6 +107,7 @@ Namespace BSON
                 Throw New Exception(String.Format("Original type is {0}. Cannot convert from {0} to Int32", valueType))
             End Get
         End Property
+
         Public ReadOnly Property int64Value() As Int64
             Get
                 Select Case valueType
@@ -120,6 +122,7 @@ Namespace BSON
                 Throw New Exception(String.Format("Original type is {0}. Cannot convert from {0} to Int64", valueType))
             End Get
         End Property
+
         Public ReadOnly Property binaryValue() As Byte()
             Get
                 Select Case valueType
@@ -130,6 +133,7 @@ Namespace BSON
                 Throw New Exception(String.Format("Original type is {0}. Cannot convert from {0} to binary", valueType))
             End Get
         End Property
+
         Public ReadOnly Property dateTimeValue() As DateTime
             Get
                 Select Case valueType
@@ -140,6 +144,7 @@ Namespace BSON
                 Throw New Exception(String.Format("Original type is {0}. Cannot convert from {0} to DateTime", valueType))
             End Get
         End Property
+
         Public ReadOnly Property stringValue() As [String]
             Get
                 Select Case valueType
@@ -160,6 +165,7 @@ Namespace BSON
                 Throw New Exception(String.Format("Original type is {0}. Cannot convert from {0} to string", valueType))
             End Get
         End Property
+
         Public ReadOnly Property boolValue() As Boolean
             Get
                 Select Case valueType
@@ -170,6 +176,7 @@ Namespace BSON
                 Throw New Exception(String.Format("Original type is {0}. Cannot convert from {0} to bool", valueType))
             End Get
         End Property
+
         Public ReadOnly Property isNone() As Boolean
             Get
                 Return valueType = ValueType.None
@@ -344,6 +351,8 @@ Namespace BSON
                     Return New BSONValue(CType(obj, Double))
                 Case GetType(BSONValue)
                     Return obj
+                Case GetType(ObjectId)
+                    Return New BSONValue(DirectCast(obj, ObjectId).value)
                 Case Else
                     Throw New InvalidCastException(obj.GetType.FullName)
             End Select
