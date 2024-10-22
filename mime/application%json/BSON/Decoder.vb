@@ -184,6 +184,9 @@ Namespace BSON
                 ' Int64
                 name = decodeCString()
                 Return New JsonValue(New BSONValue(reader.ReadInt64()))
+            ElseIf elementType = &H7 Then
+                name = decodeCString()
+                Return ObjectId.ReadIdValue(reader)
             End If
 
             Throw New Exception(String.Format("Don't know elementType={0}", elementType))

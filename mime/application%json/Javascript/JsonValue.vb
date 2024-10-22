@@ -113,7 +113,9 @@ Namespace Javascript
         ''' <summary>
         ''' create based on the value literal data
         ''' </summary>
-        ''' <param name="obj"></param>
+        ''' <param name="obj">
+        ''' could be any type of the clr runtime object as the json value
+        ''' </param>
         Public Sub New(obj As Object)
             value = obj
         End Sub

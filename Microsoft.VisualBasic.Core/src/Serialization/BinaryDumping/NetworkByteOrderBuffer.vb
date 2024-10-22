@@ -96,6 +96,12 @@ Namespace Serialization.BinaryDumping
             Return vals
         End Function
 
+        Public Function Base64String(data As IEnumerable(Of Double)) As String
+            Dim raw As Byte() = GetBytes(data)
+            Dim str As String = Base64Codec.ToBase64String(raw)
+            Return str
+        End Function
+
         Public Function ParseDouble(raw As Byte()) As Double()
             Return decode(raw)
         End Function

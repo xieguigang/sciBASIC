@@ -62,7 +62,6 @@
 #End Region
 
 Imports System.Drawing
-Imports System.Drawing.Drawing2D
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Axis
@@ -72,7 +71,6 @@ Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Text.Nudge
 Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.Imaging.Math2D
-Imports Microsoft.VisualBasic.Imaging.SVG
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MIME.Html.CSS
 Imports Microsoft.VisualBasic.MIME.Html.Render
@@ -173,8 +171,8 @@ Namespace BarPlot
             Dim rect As Rectangle
             Dim css As CSSEnvirnment = g.LoadEnvironment
             Dim highlightPen As Pen = css.GetPen(Stroke.TryParse(theme.lineStroke))
-            Dim paddingTop = canvas.Padding.Top
-            Dim paddingBottom = canvas.Padding.Bottom
+            Dim paddingTop = css.GetHeight(canvas.Padding.Top)
+            Dim paddingBottom = css.GetHeight(canvas.Padding.Bottom)
             Dim height As Double
             Dim isHighlight = Hit(Me.hitsHightLights, Me.xError)
             Dim hasHighlights = Not hitsHightLights.IsNullOrEmpty
@@ -256,7 +254,7 @@ Namespace BarPlot
             Dim rect As Rectangle = canvas.PlotRegion(css)
             Dim scaleX = d3js.scale.linear().domain(values:={xrange.Min, xrange.Max}).range(values:={rect.Left, rect.Right})
             Dim scaleY = d3js.scale.linear().domain(values:={0, yrange.Max}).range(values:={0, rect.Height / 2})
-            Dim ymid! = rect.Height / 2 + canvas.Padding.Top
+            Dim ymid! = rect.Height / 2 + css.GetHeight(canvas.Padding.Top)
 
             css.SetBaseStyles(New Font(FontFace.MicrosoftYaHei, 12.0!))
 
