@@ -93,14 +93,11 @@ Namespace BSON
         Public Property machineIdentifier As Byte()
         ' 进程标识符部分（3 字节）
         Public Property processIdentifier As Byte()
-        ' 计数器部分（3 字节）
-        Public Property counter As Integer
 
-        Public Sub New(timestamp As Integer, machineIdentifier As Byte(), processIdentifier As Byte(), counter As Integer)
+        Public Sub New(timestamp As Integer, machineIdentifier As Byte(), processIdentifier As Byte())
             Me.timestamp = timestamp
             Me.machineIdentifier = machineIdentifier
             Me.processIdentifier = processIdentifier
-            Me.counter = counter
         End Sub
 
         Public Shared Function ReadIdValue(s As BinaryReader) As JsonValue
@@ -115,13 +112,8 @@ Namespace BSON
             Dim processIdentifier(2) As Byte
             s.Read(processIdentifier, 0, 3)
 
-            ' 读取 3 字节的计数器，并将其转换为整数
-            Dim counterBytes(2) As Byte
-            s.Read(counterBytes, 0, 3)
-            Dim counter As Integer = BitConverter.ToInt32(New Byte() {0, counterBytes(0), counterBytes(1), counterBytes(2)}, 0)
-
             ' 创建并返回 ObjectId 对象
-            Return New JsonValue(New ObjectId(timestamp, machineIdentifier, processIdentifier, counter))
+            Return New JsonValue(New ObjectId(timestamp, machineIdentifier, processIdentifier))
         End Function
 
     End Class

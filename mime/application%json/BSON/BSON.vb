@@ -90,6 +90,16 @@ Namespace BSON
             End If
         End Function
 
+        Public Iterator Function LoadCollection(buf As Stream) As IEnumerable(Of JsonObject)
+            If buf.Length = 0 Then
+                Return
+            End If
+
+            Using decoder As New Decoder(buf)
+
+            End Using
+        End Function
+
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Sub WriteBuffer(obj As JsonObject, buffer As Stream)
