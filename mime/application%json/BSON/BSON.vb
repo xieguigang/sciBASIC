@@ -56,6 +56,7 @@
 
 Imports System.IO
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.ApplicationServices.Terminal.ProgressBar.Tqdm
 Imports Microsoft.VisualBasic.MIME.application.json.Javascript
 Imports Microsoft.VisualBasic.Parallel
 
@@ -78,27 +79,56 @@ Namespace BSON
             Return Load(buf.ChunkBuffer)
         End Function
 
-        Public Function Load(buf As Stream) As JsonObject
+        Public Function Load(buf As Stream, Optional leaveOpen As Boolean = False) As JsonObject
             If buf.Length = 0 Then
                 ' 20221008
                 ' is empty object?
                 Return New JsonObject
             Else
-                Using decoder As New Decoder(buf)
+                Using decoder As New Decoder(buf, leaveOpen:=leaveOpen)
                     Return decoder.decodeDocument()
                 End Using
             End If
         End Function
 
-        Public Iterator Function LoadList(buf As Stream) As IEnumerable(Of JsonObject)
+        ''' <summary>
+        ''' usually apply this function for load MongoDB database file
+        ''' </summary>
+        ''' <param name="buf"></param>
+        ''' <param name="tqdm"></param>
+        ''' <returns></returns>
+        Public Iterator Function LoadList(buf As Stream, Optional tqdm As Boolean = False) As IEnumerable(Of JsonObject)
             If buf.Length = 0 Then
                 Return
             End If
 
+            Dim target As Long = buf.Length - 3
+
             Using decoder As New Decoder(buf)
-                Do While buf.Position < buf.Length
-                    Yield decoder.decodeDocument
-                Loop
+                If tqdm Then
+                    For Each obj As JsonObject In TqdmWrapper.WrapStreamReader(
+                        bytesOfStream:=target,
+                        request:=Function(ByRef offset, bar)
+                                     offset = buf.Position
+
+                                     If offset >= target Then
+                                         Return Nothing
+                                     Else
+                                         Return decoder.decodeDocument
+                                     End If
+                                 End Function)
+
+                        If obj Is Nothing AndAlso buf.Position >= target Then
+                            Exit For
+                        Else
+                            Yield obj
+                        End If
+                    Next
+                Else
+                    Do While buf.Position < target
+                        Yield decoder.decodeDocument
+                    Loop
+                End If
             End Using
         End Function
 

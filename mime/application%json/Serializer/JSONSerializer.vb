@@ -129,6 +129,17 @@ Public Module JSONSerializer
         End Select
     End Function
 
+    <Extension>
+    Public Function CreateArray(objs As IEnumerable(Of JsonObject)) As JsonArray
+        Dim list As New JsonArray
+
+        For Each x As JsonObject In objs
+            Call list.Add(x)
+        Next
+
+        Return list
+    End Function
+
     ''' <summary>
     ''' find two char
     ''' </summary>
@@ -195,7 +206,7 @@ Public Module JSONSerializer
 
         If value Is Nothing Then
             Return "null"
-        ElseIf value.GetType Is obj.BSONValue Then
+        ElseIf TypeOf value Is BSONValue Then
             value = DirectCast(value, BSONValue).GetObjectValue
         End If
 
@@ -205,6 +216,10 @@ Public Module JSONSerializer
             Return encodeString(value, opt)
         ElseIf TypeOf value Is Boolean Then
             Return value.ToString.ToLower
+        ElseIf TypeOf value Is ObjectId Then
+            Return $"""{value.ToString}"""
+        ElseIf TypeOf value Is Double AndAlso CDbl(value).IsNaNImaginary Then
+            Return """NaN"""
         Else
             ' number,integer,etc
             Return any.ToString(value)

@@ -57,38 +57,54 @@
 #End Region
 
 Imports System.IO
+Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.MIME.application.json.Javascript
+Imports Microsoft.VisualBasic.Text
 
 Namespace BSON
 
     Public Class Decoder : Implements IDisposable
 
         ReadOnly reader As BinaryReader
+        ReadOnly leaveOpen As Boolean = False
 
-        Sub New(buf As Byte())
-            Call Me.New(New MemoryStream(buf))
+        ''' <summary>
+        ''' create document decoder from a given in-memory stream data
+        ''' </summary>
+        ''' <param name="buf"></param>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Sub New(buf As Byte(), Optional encoding As Encodings = Encodings.UTF8)
+            Call Me.New(New MemoryStream(buf), encoding, leaveOpen:=False)
         End Sub
 
-        Sub New(raw As Stream)
-            Me.reader = New BinaryReader(raw)
+        Sub New(raw As Stream, Optional encoding As Encodings = Encodings.UTF8, Optional leaveOpen As Boolean = False)
+            Me.reader = New BinaryReader(raw, encoding.CodePage, leaveOpen)
+            Me.leaveOpen = leaveOpen
         End Sub
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function getDocumentOffset() As Long
+            Return reader.BaseStream.Position
+        End Function
 
         Public Function decodeDocument() As JsonObject
-            Dim length As Integer = reader.ReadInt32() - 4
+            Dim length As Long = reader.ReadInt32() - 4
             Dim obj As New JsonObject()
-            Dim i As Integer = CInt(reader.BaseStream.Position)
+            Dim i As Long = reader.BaseStream.Position
 
             While reader.BaseStream.Position < i + length - 1
                 Dim name As String = Nothing
                 Dim value As JsonElement = decodeElement(name)
 
-                obj.Add(name, value)
+                Call obj.Add(name, value)
             End While
 
-            reader.ReadByte()
-            ' zero
+            ' zero byte as terminator of current document object
+            Call reader.ReadByte()
+
             Return obj
         End Function
 
@@ -200,7 +216,9 @@ Namespace BSON
             If Not disposedValue Then
                 If disposing Then
                     ' TODO: dispose managed state (managed objects).
-                    Call reader.Dispose()
+                    If Not leaveOpen Then
+                        Call reader.Dispose()
+                    End If
                 End If
 
                 ' TODO: free unmanaged resources (unmanaged objects) and override Finalize() below.

@@ -89,6 +89,10 @@ Namespace BSON
 
         Public Property value As Byte()
 
+        Public Overrides Function ToString() As String
+            Return value.Select(Function(b) b.ToString("x2")).JoinBy("")
+        End Function
+
         Public Shared Function ReadIdValue(s As BinaryReader) As JsonValue
             Dim byts = s.ReadBytes(12)
             Dim id As New ObjectId With {.value = byts}
