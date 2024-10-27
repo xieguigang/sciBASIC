@@ -60,6 +60,10 @@ Public Class HtmlRender : Inherits Render
 
     Public Property image_class As String
 
+    Public Delegate Function CodeHtmlSyntaxHighlight(code As String, lang As String) As String
+
+    Public Property CodeSyntaxHighlight As CodeHtmlSyntaxHighlight
+
     ''' <summary>
     ''' 
     ''' </summary>
@@ -105,7 +109,9 @@ Public Class HtmlRender : Inherits Render
     End Function
 
     Public Overrides Function CodeBlock(code As String, lang As String) As String
-        Return String.Concat(vbLf & vbLf & $"<pre><code class=""{lang}"">", escapeHtml(code), vbLf & "</code></pre>" & vbLf & vbLf)
+        Return String.Concat(vbLf & vbLf & $"<pre><code class=""{lang}"">",
+                             If(CodeSyntaxHighlight Is Nothing, escapeHtml(code), _CodeSyntaxHighlight(code, lang)),
+                             vbLf & "</code></pre>" & vbLf & vbLf)
     End Function
 
     Public Overrides Function Image(url As String, altText As String, title As String) As String
