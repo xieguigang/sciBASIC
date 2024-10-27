@@ -148,7 +148,9 @@ Public Module ROCPlot
                          Optional showReference As Boolean = False,
                          Optional labelFontStyle$ = CSSFont.PlotTitleNormal,
                          Optional titleFontCSS$ = CSSFont.Win7VeryLarge,
-                         Optional tickFontStyle$ = CSSFont.Win7LargerBold) As GraphicsData
+                         Optional tickFontStyle$ = CSSFont.Win7LargerBold,
+                         Optional dpi As Integer = 100,
+                         Optional driver As Drivers = Drivers.Default) As GraphicsData
 
         Dim reference As New SerialData With {
             .color = referenceLineColor.TranslateColor,
@@ -187,8 +189,9 @@ Public Module ROCPlot
             title:=$"ROC (AUC={roc.title})",
             labelFontStyle:=labelFontStyle,
             tickFontStyle:=tickFontStyle,
-            dpi:=300,
-            titleFontCSS:=titleFontCSS
+            dpi:=dpi,
+            titleFontCSS:=titleFontCSS,
+            driver:=driver
         )
 
         Return img

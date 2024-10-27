@@ -53,6 +53,7 @@
 #End Region
 
 Imports Microsoft.VisualBasic.ApplicationServices.Terminal.ProgressBar.Tqdm
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports randf = Microsoft.VisualBasic.Math.RandomExtensions
 Imports std = System.Math
@@ -93,44 +94,43 @@ Namespace Evaluation
             Return probs
         End Function
 
-        Public Function BuildOutput2(labels As Double(), auc As Double, Optional cutoff As Double = 0.5, Optional itrs As Integer = 100000) As Double()
-            Dim out As Double() = Vector.rand(labels.Length)
-            Dim d As Integer = labels.Length * 0.3
-            Dim auc_delta As Double = Double.MaxValue
-            Dim best As Double() = out
+        Public Function BuildOutput2(labels As Double(), auc As Double, Optional cutoff As Double = 0.5, Optional itrs As Integer = 10) As Double()
+            Dim copy As SeqValue(Of Double)() = labels.SeqIterator.Shuffles.ToArray
+            Dim ordinal = copy.Select(Function(i) i.i).ToArray
+            Dim out As Double() = copy.Select(Function(i) i.value).ToArray
+            Dim d As Integer = 100
             Dim bar As ProgressBar = Nothing
+            Dim auc_delta As Double = 0.05
+
+            labels = out.ToArray
+
+            If d < 1 Then
+                d = 1
+            End If
 
             For Each i As Integer In TqdmWrapper.Range(0, itrs, bar:=bar)
-                Dim copy = out.ToArray
-
-                For j As Integer = 0 To d
-                    Dim offset = randf.NextInteger(out.Length)
-
-                    If randf.NextBoolean Then
-                        copy(offset) += randf.NextDouble
+                For offset As Integer = i * d To (i + 1) * d
+                    ' flip the position
+                    If out(offset) > cutoff Then
+                        ' less than cutoff
+                        out(offset) = randf.NextDouble * cutoff
                     Else
-                        copy(offset) -= randf.NextDouble
-                    End If
-
-                    If copy(offset) < 0 Then
-                        copy(offset) = 0
-                    ElseIf copy(offset) > 1 Then
-                        copy(offset) = 1
+                        ' greater than cutoff
+                        out(offset) = randf.NextDouble * cutoff + cutoff
                     End If
                 Next
 
-                Dim delta = std.Abs(Evaluation.AUC(out, labels) - auc)
+                Dim eval As Double = Evaluation.AUC(out, labels)
+                Dim delta = std.Abs(eval - auc)
+
+                Call bar.SetLabel($"auc: {eval }")
 
                 If delta < auc_delta Then
-                    auc_delta = delta
-                    best = copy
-                    out = copy
-
-                    bar.SetLabel($"auc: {Evaluation.AUC(out, labels)}")
+                    Exit For
                 End If
             Next
 
-            Return best
+            Return ordinal.Zip(out).OrderBy(Function(a) a.First).Select(Function(i) i.Second).ToArray
         End Function
 
     End Module

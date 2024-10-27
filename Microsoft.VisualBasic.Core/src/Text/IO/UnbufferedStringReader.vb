@@ -176,14 +176,13 @@ Namespace Text
                 Dim ch As Char = Me._s(num)
                 Select Case ch
                     Case ControlChars.Cr, ControlChars.Lf
-                        If True Then
-                            Dim text As String = Me._s.Substring(Me._pos, num - Me._pos)
-                            Me._pos = num + 1
-                            If ((ch = ControlChars.Cr) AndAlso (Me._pos < Me._length)) AndAlso (Me._s(Me._pos) = ControlChars.Lf) Then
-                                Me._pos += 1
-                            End If
-                            Return text
+
+                        Dim text As String = Me._s.Substring(Me._pos, num - Me._pos)
+                        Me._pos = num + 1
+                        If ((ch = ControlChars.Cr) AndAlso (Me._pos < Me._length)) AndAlso (Me._s(Me._pos) = ControlChars.Lf) Then
+                            Me._pos += 1
                         End If
+                        Return text
                 End Select
                 num += 1
             End While

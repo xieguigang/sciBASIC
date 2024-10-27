@@ -1,63 +1,62 @@
 ﻿#Region "Microsoft.VisualBasic::956e8db6d0839ceebd0a47e87949c318, Data_science\Mathematica\Math\Math\Algebra\Matrix.NET\Decomposition\SingularValueDecomposition.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 572
-    '    Code Lines: 410 (71.68%)
-    ' Comment Lines: 92 (16.08%)
-    '    - Xml Docs: 54.35%
-    ' 
-    '   Blank Lines: 70 (12.24%)
-    '     File Size: 22.95 KB
+' Summaries:
 
 
-    '     Class SingularValueDecomposition
-    ' 
-    '         Properties: Condition, Norm2, Rank, S, SingularValues
-    '                     U, V
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    '         Sub: ISerializable_GetObjectData
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 572
+'    Code Lines: 410 (71.68%)
+' Comment Lines: 92 (16.08%)
+'    - Xml Docs: 54.35%
+' 
+'   Blank Lines: 70 (12.24%)
+'     File Size: 22.95 KB
+
+
+'     Class SingularValueDecomposition
+' 
+'         Properties: Condition, Norm2, Rank, S, SingularValues
+'                     U, V
+' 
+'         Constructor: (+1 Overloads) Sub New
+'         Sub: ISerializable_GetObjectData
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
-Imports System.Runtime.Serialization
-Imports stdnum = System.Math
+Imports stdf = System.Math
 
 Namespace LinearAlgebra.Matrix
 
@@ -74,9 +73,7 @@ Namespace LinearAlgebra.Matrix
     ''' never fail.  The matrix condition number and the effective numerical
     ''' rank can be computed from this decomposition.</P>
     ''' </summary>
-    <Serializable>
     Public Class SingularValueDecomposition
-        Implements ISerializable
 
 #Region "Class variables"
 
@@ -332,7 +329,7 @@ Namespace LinearAlgebra.Matrix
                     If k = -1 Then
                         Exit For
                     End If
-                    If stdnum.Abs(e(k)) <= eps * (stdnum.Abs(m_s(k)) + stdnum.Abs(m_s(k + 1))) Then
+                    If stdf.Abs(e(k)) <= eps * (stdf.Abs(m_s(k)) + stdf.Abs(m_s(k + 1))) Then
                         e(k) = 0.0
                         Exit For
                     End If
@@ -345,8 +342,8 @@ Namespace LinearAlgebra.Matrix
                         If ks = k Then
                             Exit For
                         End If
-                        Dim t As Double = (If(ks <> p, stdnum.Abs(e(ks)), 0.0)) + (If(ks <> k + 1, stdnum.Abs(e(ks - 1)), 0.0))
-                        If stdnum.Abs(m_s(ks)) <= eps * t Then
+                        Dim t As Double = (If(ks <> p, stdf.Abs(e(ks)), 0.0)) + (If(ks <> k + 1, stdf.Abs(e(ks - 1)), 0.0))
+                        If stdf.Abs(m_s(ks)) <= eps * t Then
                             m_s(ks) = 0.0
                             Exit For
                         End If
@@ -369,165 +366,161 @@ Namespace LinearAlgebra.Matrix
 
                 ' Deflate negligible s(p).
                     Case 1
-                        If True Then
-                            Dim f As Double = e(p - 2)
-                            e(p - 2) = 0.0
-                            For j As Integer = p - 2 To k Step -1
-                                Dim t As Double = Hypot(m_s(j), f)
-                                Dim cs As Double = m_s(j) / t
-                                Dim sn As Double = f / t
-                                m_s(j) = t
-                                If j <> k Then
-                                    f = (-sn) * e(j - 1)
-                                    e(j - 1) = cs * e(j - 1)
-                                End If
-                                If wantv Then
-                                    For i As Integer = 0 To n - 1
-                                        t = cs * V(i)(j) + sn * V(i)(p - 1)
-                                        V(i)(p - 1) = (-sn) * V(i)(j) + cs * V(i)(p - 1)
-                                        V(i)(j) = t
-                                    Next
-                                End If
-                            Next
-                        End If
+
+                        Dim f As Double = e(p - 2)
+                        e(p - 2) = 0.0
+                        For j As Integer = p - 2 To k Step -1
+                            Dim t As Double = Hypot(m_s(j), f)
+                            Dim cs As Double = m_s(j) / t
+                            Dim sn As Double = f / t
+                            m_s(j) = t
+                            If j <> k Then
+                                f = (-sn) * e(j - 1)
+                                e(j - 1) = cs * e(j - 1)
+                            End If
+                            If wantv Then
+                                For i As Integer = 0 To n - 1
+                                    t = cs * V(i)(j) + sn * V(i)(p - 1)
+                                    V(i)(p - 1) = (-sn) * V(i)(j) + cs * V(i)(p - 1)
+                                    V(i)(j) = t
+                                Next
+                            End If
+                        Next
+
 
 
                 ' Split at negligible s(k).
 
 
                     Case 2
-                        If True Then
-                            Dim f As Double = e(k - 1)
-                            e(k - 1) = 0.0
-                            For j As Integer = k To p - 1
-                                Dim t As Double = Hypot(m_s(j), f)
-                                Dim cs As Double = m_s(j) / t
-                                Dim sn As Double = f / t
-                                m_s(j) = t
-                                f = (-sn) * e(j)
-                                e(j) = cs * e(j)
-                                If wantu Then
-                                    For i As Integer = 0 To m - 1
-                                        t = cs * U(i)(j) + sn * U(i)(k - 1)
-                                        U(i)(k - 1) = (-sn) * U(i)(j) + cs * U(i)(k - 1)
-                                        U(i)(j) = t
-                                    Next
-                                End If
-                            Next
-                        End If
 
+                        Dim f As Double = e(k - 1)
+                        e(k - 1) = 0.0
+                        For j As Integer = k To p - 1
+                            Dim t As Double = Hypot(m_s(j), f)
+                            Dim cs As Double = m_s(j) / t
+                            Dim sn As Double = f / t
+                            m_s(j) = t
+                            f = (-sn) * e(j)
+                            e(j) = cs * e(j)
+                            If wantu Then
+                                For i As Integer = 0 To m - 1
+                                    t = cs * U(i)(j) + sn * U(i)(k - 1)
+                                    U(i)(k - 1) = (-sn) * U(i)(j) + cs * U(i)(k - 1)
+                                    U(i)(j) = t
+                                Next
+                            End If
+                        Next
 
                 ' Perform one qr step.
 
 
                     Case 3
-                        If True Then
-                            ' Calculate the shift.
 
-                            Dim scale As Double = stdnum.Max(stdnum.Max(stdnum.Max(stdnum.Max(stdnum.Abs(m_s(p - 1)), stdnum.Abs(m_s(p - 2))), stdnum.Abs(e(p - 2))), stdnum.Abs(m_s(k))), stdnum.Abs(e(k)))
-                            Dim sp As Double = m_s(p - 1) / scale
-                            Dim spm1 As Double = m_s(p - 2) / scale
-                            Dim epm1 As Double = e(p - 2) / scale
-                            Dim sk As Double = m_s(k) / scale
-                            Dim ek As Double = e(k) / scale
-                            Dim b As Double = ((spm1 + sp) * (spm1 - sp) + epm1 * epm1) / 2.0
-                            Dim c As Double = (sp * epm1) * (sp * epm1)
-                            Dim shift As Double = 0.0
-                            If (b <> 0.0) Or (c <> 0.0) Then
-                                shift = stdnum.Sqrt(b * b + c)
-                                If b < 0.0 Then
-                                    shift = -shift
-                                End If
-                                shift = c / (b + shift)
+                        ' Calculate the shift.
+
+                        Dim scale As Double = stdf.Max(stdf.Max(stdf.Max(stdf.Max(stdf.Abs(m_s(p - 1)), stdf.Abs(m_s(p - 2))), stdf.Abs(e(p - 2))), stdf.Abs(m_s(k))), stdf.Abs(e(k)))
+                        Dim sp As Double = m_s(p - 1) / scale
+                        Dim spm1 As Double = m_s(p - 2) / scale
+                        Dim epm1 As Double = e(p - 2) / scale
+                        Dim sk As Double = m_s(k) / scale
+                        Dim ek As Double = e(k) / scale
+                        Dim b As Double = ((spm1 + sp) * (spm1 - sp) + epm1 * epm1) / 2.0
+                        Dim c As Double = (sp * epm1) * (sp * epm1)
+                        Dim shift As Double = 0.0
+                        If (b <> 0.0) Or (c <> 0.0) Then
+                            shift = stdf.Sqrt(b * b + c)
+                            If b < 0.0 Then
+                                shift = -shift
                             End If
-                            Dim f As Double = (sk + sp) * (sk - sp) + shift
-                            Dim g As Double = sk * ek
-
-                            ' Chase zeros.
-
-                            For j As Integer = k To p - 2
-                                Dim t As Double = Hypot(f, g)
-                                Dim cs As Double = f / t
-                                Dim sn As Double = g / t
-                                If j <> k Then
-                                    e(j - 1) = t
-                                End If
-                                f = cs * m_s(j) + sn * e(j)
-                                e(j) = cs * e(j) - sn * m_s(j)
-                                g = sn * m_s(j + 1)
-                                m_s(j + 1) = cs * m_s(j + 1)
-                                If wantv Then
-                                    For i As Integer = 0 To n - 1
-                                        t = cs * V(i)(j) + sn * V(i)(j + 1)
-                                        V(i)(j + 1) = (-sn) * V(i)(j) + cs * V(i)(j + 1)
-                                        V(i)(j) = t
-                                    Next
-                                End If
-                                t = Hypot(f, g)
-                                cs = f / t
-                                sn = g / t
-                                m_s(j) = t
-                                f = cs * e(j) + sn * m_s(j + 1)
-                                m_s(j + 1) = (-sn) * e(j) + cs * m_s(j + 1)
-                                g = sn * e(j + 1)
-                                e(j + 1) = cs * e(j + 1)
-                                If wantu AndAlso (j < m - 1) Then
-                                    For i As Integer = 0 To m - 1
-                                        t = cs * U(i)(j) + sn * U(i)(j + 1)
-                                        U(i)(j + 1) = (-sn) * U(i)(j) + cs * U(i)(j + 1)
-                                        U(i)(j) = t
-                                    Next
-                                End If
-                            Next
-                            e(p - 2) = f
-                            iter = iter + 1
+                            shift = c / (b + shift)
                         End If
+                        Dim f As Double = (sk + sp) * (sk - sp) + shift
+                        Dim g As Double = sk * ek
 
+                        ' Chase zeros.
+
+                        For j As Integer = k To p - 2
+                            Dim t As Double = Hypot(f, g)
+                            Dim cs As Double = f / t
+                            Dim sn As Double = g / t
+                            If j <> k Then
+                                e(j - 1) = t
+                            End If
+                            f = cs * m_s(j) + sn * e(j)
+                            e(j) = cs * e(j) - sn * m_s(j)
+                            g = sn * m_s(j + 1)
+                            m_s(j + 1) = cs * m_s(j + 1)
+                            If wantv Then
+                                For i As Integer = 0 To n - 1
+                                    t = cs * V(i)(j) + sn * V(i)(j + 1)
+                                    V(i)(j + 1) = (-sn) * V(i)(j) + cs * V(i)(j + 1)
+                                    V(i)(j) = t
+                                Next
+                            End If
+                            t = Hypot(f, g)
+                            cs = f / t
+                            sn = g / t
+                            m_s(j) = t
+                            f = cs * e(j) + sn * m_s(j + 1)
+                            m_s(j + 1) = (-sn) * e(j) + cs * m_s(j + 1)
+                            g = sn * e(j + 1)
+                            e(j + 1) = cs * e(j + 1)
+                            If wantu AndAlso (j < m - 1) Then
+                                For i As Integer = 0 To m - 1
+                                    t = cs * U(i)(j) + sn * U(i)(j + 1)
+                                    U(i)(j + 1) = (-sn) * U(i)(j) + cs * U(i)(j + 1)
+                                    U(i)(j) = t
+                                Next
+                            End If
+                        Next
+                        e(p - 2) = f
+                        iter = iter + 1
 
                 ' Convergence.
 
 
                     Case 4
-                        If True Then
-                            ' Make the singular values positive.
 
-                            If m_s(k) <= 0.0 Then
-                                m_s(k) = (If(m_s(k) < 0.0, -m_s(k), 0.0))
-                                If wantv Then
-                                    For i As Integer = 0 To pp
-                                        V(i)(k) = -V(i)(k)
-                                    Next
-                                End If
+                        ' Make the singular values positive.
+
+                        If m_s(k) <= 0.0 Then
+                            m_s(k) = (If(m_s(k) < 0.0, -m_s(k), 0.0))
+                            If wantv Then
+                                For i As Integer = 0 To pp
+                                    V(i)(k) = -V(i)(k)
+                                Next
                             End If
-
-                            ' Order the singular values.
-
-                            While k < pp
-                                If m_s(k) >= m_s(k + 1) Then
-                                    Exit While
-                                End If
-                                Dim t As Double = m_s(k)
-                                m_s(k) = m_s(k + 1)
-                                m_s(k + 1) = t
-                                If wantv AndAlso (k < n - 1) Then
-                                    For i As Integer = 0 To n - 1
-                                        t = V(i)(k + 1)
-                                        V(i)(k + 1) = V(i)(k)
-                                        V(i)(k) = t
-                                    Next
-                                End If
-                                If wantu AndAlso (k < m - 1) Then
-                                    For i As Integer = 0 To m - 1
-                                        t = U(i)(k + 1)
-                                        U(i)(k + 1) = U(i)(k)
-                                        U(i)(k) = t
-                                    Next
-                                End If
-                                k += 1
-                            End While
-                            iter = 0
-                            p -= 1
                         End If
+
+                        ' Order the singular values.
+
+                        While k < pp
+                            If m_s(k) >= m_s(k + 1) Then
+                                Exit While
+                            End If
+                            Dim t As Double = m_s(k)
+                            m_s(k) = m_s(k + 1)
+                            m_s(k + 1) = t
+                            If wantv AndAlso (k < n - 1) Then
+                                For i As Integer = 0 To n - 1
+                                    t = V(i)(k + 1)
+                                    V(i)(k + 1) = V(i)(k)
+                                    V(i)(k) = t
+                                Next
+                            End If
+                            If wantu AndAlso (k < m - 1) Then
+                                For i As Integer = 0 To m - 1
+                                    t = U(i)(k + 1)
+                                    U(i)(k + 1) = U(i)(k)
+                                    U(i)(k) = t
+                                Next
+                            End If
+                            k += 1
+                        End While
+                        iter = 0
+                        p -= 1
+
 
                 End Select
             End While
@@ -623,8 +616,5 @@ Namespace LinearAlgebra.Matrix
         End Property
 #End Region
 
-        ' A method called when serializing this class.
-        Private Sub ISerializable_GetObjectData(info As SerializationInfo, context As StreamingContext) Implements ISerializable.GetObjectData
-        End Sub
     End Class
 End Namespace

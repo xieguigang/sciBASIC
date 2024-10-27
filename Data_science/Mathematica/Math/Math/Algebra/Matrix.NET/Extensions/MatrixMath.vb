@@ -65,7 +65,7 @@
 
 Imports System.Runtime.CompilerServices
 Imports System.Runtime.InteropServices
-Imports stdnum = System.Math
+Imports stdf = System.Math
 
 Namespace LinearAlgebra.Matrix
 
@@ -84,7 +84,7 @@ Namespace LinearAlgebra.Matrix
         ''' </remarks>
         <Extension>
         Public Function SG(K As GeneralMatrix) As (M As GeneralMatrix, N As GeneralMatrix, rank As Int16)
-            Dim erro As Double = stdnum.Pow(0.1, 10)
+            Dim erro As Double = stdf.Pow(0.1, 10)
             Dim n As Int16 = K.RowDimension
             Dim m As Int16 = K.RowDimension / n
             Dim i As Int16
@@ -136,7 +136,7 @@ Namespace LinearAlgebra.Matrix
                             temp = tempk(i, j) / tempk(i1, j)
                             For j1 = 0 To n - 1
                                 tempk(i1, j1) = tempk(i1, j1) * temp - tempk(i, j1)
-                                If stdnum.Abs(tempk(i1, j1)) <= erro Then
+                                If stdf.Abs(tempk(i1, j1)) <= erro Then
                                     tempk(i1, j1) = 0
                                 End If
                             Next
@@ -159,7 +159,7 @@ Namespace LinearAlgebra.Matrix
                         temp = tempk(i, j)
                         While j < n
                             tempk(i, j) /= temp
-                            If stdnum.Abs(tempk(i, j)) <= erro Then
+                            If stdf.Abs(tempk(i, j)) <= erro Then
                                 tempk(i, j) = 0
                             End If
                             j += 1
@@ -241,7 +241,7 @@ Namespace LinearAlgebra.Matrix
         ''' <remarks></remarks>
         Public Function Pinv2(K As GeneralMatrix, Erro As Int16, m As Int16, Ret As GeneralMatrix) As Int16
             Dim n As Integer = K.RowDimension / m
-            Dim Erro1 As Double = stdnum.Pow(0.1, Erro)
+            Dim Erro1 As Double = stdf.Pow(0.1, Erro)
             If Erro1 = 1 Then
                 Erro1 = 0
             End If
@@ -264,11 +264,11 @@ Namespace LinearAlgebra.Matrix
                 If i = n + 1 Then
                     Exit For
                 End If
-                If stdnum.Abs(K(i, i)) <= Erro1 Then
+                If stdf.Abs(K(i, i)) <= Erro1 Then
                     K(i, i) = 0
                     ii = i + 1
                     While ii <= m
-                        If stdnum.Abs(K(ii, i)) > Erro1 Then
+                        If stdf.Abs(K(ii, i)) > Erro1 Then
                             For j = 0 To n
                                 temp = K(i, j)
                                 K(i, j) = K(ii, j)
@@ -288,17 +288,17 @@ Namespace LinearAlgebra.Matrix
                 If K(i, i) <> 0 Then
                     For ii = 0 To m
                         If ii <> i Then
-                            If stdnum.Abs(K(ii, i)) > Erro1 Then
+                            If stdf.Abs(K(ii, i)) > Erro1 Then
                                 temp = K(i, i) / K(ii, i)
                                 For j = 0 To n
                                     K(ii, j) = K(ii, j) * temp - K(i, j)
-                                    If stdnum.Abs(K(ii, j)) <= Erro1 Then
+                                    If stdf.Abs(K(ii, j)) <= Erro1 Then
                                         K(ii, j) = 0
                                     End If
                                 Next
                                 For j = 0 To m
                                     P(ii, j) = P(ii, j) * temp - P(i, j)
-                                    If stdnum.Abs(P(ii, j)) <= Erro1 Then
+                                    If stdf.Abs(P(ii, j)) <= Erro1 Then
                                         P(ii, j) = 0
                                     End If
                                 Next
@@ -313,11 +313,11 @@ Namespace LinearAlgebra.Matrix
                 If j = m + 1 Then
                     Exit For
                 End If
-                If stdnum.Abs(K(j, j)) <= Erro1 Then
+                If stdf.Abs(K(j, j)) <= Erro1 Then
                     K(j, j) = 0
                     jj = j + 1
                     While jj <= n
-                        If stdnum.Abs(K(j, jj)) > Erro1 Then
+                        If stdf.Abs(K(j, jj)) > Erro1 Then
                             For i = 0 To m
                                 temp = K(i, j)
                                 K(i, j) = K(i, jj)
@@ -337,17 +337,17 @@ Namespace LinearAlgebra.Matrix
                 If K(j, j) <> 0 Then
                     For jj = 0 To n
                         If jj <> j Then
-                            If stdnum.Abs(K(j, jj)) > Erro1 Then
+                            If stdf.Abs(K(j, jj)) > Erro1 Then
                                 temp = K(j, j) / K(j, jj)
                                 For i = 0 To m
                                     K(i, jj) = K(i, jj) * temp - K(i, j)
-                                    If stdnum.Abs(K(i, jj)) <= Erro1 Then
+                                    If stdf.Abs(K(i, jj)) <= Erro1 Then
                                         K(i, jj) = 0
                                     End If
                                 Next
                                 For i = 0 To n
                                     Q(i, jj) = Q(i, jj) * temp - Q(i, j)
-                                    If stdnum.Abs(Q(i, jj)) <= Erro1 Then
+                                    If stdf.Abs(Q(i, jj)) <= Erro1 Then
                                         Q(i, jj) = 0
                                     End If
                                 Next
@@ -364,7 +364,7 @@ Namespace LinearAlgebra.Matrix
                     E(i, i) = 1
                     For j = 0 To m
                         P(i, j) /= K(i, i)
-                        If stdnum.Abs(P(i, j)) <= Erro1 Then
+                        If stdf.Abs(P(i, j)) <= Erro1 Then
                             P(i, j) = 0
                         End If
                     Next
@@ -459,11 +459,11 @@ Namespace LinearAlgebra.Matrix
                     While i1 <= m
                         If temp(i1, j) <> 0 And i1 <> i Then
                             temp1 = temp(i, j) / temp(i1, j)
-                            error1 = stdnum.Abs((temp(i, j) - temp(i1, j) * temp1)) * 100 '误差控制。因为有时候temp(i, j) - temp(i1, j) * (temp(i, j) / temp(i1, j))≠0
+                            error1 = stdf.Abs((temp(i, j) - temp(i1, j) * temp1)) * 100 '误差控制。因为有时候temp(i, j) - temp(i1, j) * (temp(i, j) / temp(i1, j))≠0
                             error1 += error0
                             For j1 = 0 To n
                                 temp(i1, j1) = temp(i, j1) - temp(i1, j1) * temp1
-                                If stdnum.Abs(temp(i1, j1)) < error1 Then
+                                If stdf.Abs(temp(i1, j1)) < error1 Then
                                     temp(i1, j1) = 0
                                 End If
                             Next
@@ -536,7 +536,7 @@ Namespace LinearAlgebra.Matrix
                 For j = 0 To n
                     Btemp(i) += B(j, i) * B(j, i)
                 Next
-                Btemp(i) = stdnum.Pow(Btemp(i), 0.5)
+                Btemp(i) = stdf.Pow(Btemp(i), 0.5)
             Next
             Q = New NumericMatrix(n, n) '  ReDim Q(n, n)
             R = New NumericMatrix(n, n) '   ReDim R(n, n)
@@ -602,7 +602,7 @@ Namespace LinearAlgebra.Matrix
                 For j = 0 To n
                     Btemp(i) += B(j, i) * B(j, i)
                 Next
-                Btemp(i) = stdnum.Pow(Btemp(i), 0.5)
+                Btemp(i) = stdf.Pow(Btemp(i), 0.5)
             Next
             Ret = New NumericMatrix(n, n) '  ReDim Ret(n, n)
             For i = 0 To n
@@ -635,7 +635,7 @@ Namespace LinearAlgebra.Matrix
             Dim m As Int16
             Dim A As GeneralMatrix = NumericMatrix.Number
             Ret = New NumericMatrix(n - 1, 1) ' ReDim Ret(n - 1, 1) 'u v
-            Dim erro As Double = stdnum.Pow(0.1, errors)
+            Dim erro As Double = stdf.Pow(0.1, errors)
             Dim b As Double
             Dim c As Double
             Dim d As Double
@@ -672,7 +672,7 @@ Namespace LinearAlgebra.Matrix
             While m <> 0
                 t = m - 1
                 While t > 0
-                    If stdnum.Abs(A(t, t - 1)) > erro * (stdnum.Abs(A(t - 1, t - 1)) + stdnum.Abs(A(t, t))) Then
+                    If stdf.Abs(A(t, t - 1)) > erro * (stdf.Abs(A(t - 1, t - 1)) + stdf.Abs(A(t, t))) Then
                         t -= 1
                     Else
                         Exit While
@@ -687,7 +687,7 @@ Namespace LinearAlgebra.Matrix
                     b = -(A(m - 1, m - 1) + A(m - 2, m - 2))
                     c = A(m - 1, m - 1) * A(m - 2, m - 2) - A(m - 1, m - 2) * A(m - 2, m - 1)
                     d = b * b - 4 * c
-                    y = stdnum.Abs(d) ^ 0.5
+                    y = stdf.Abs(d) ^ 0.5
                     If d > 0 Then
                         xy = 1
                         If b < 0 Then
@@ -745,7 +745,7 @@ Namespace LinearAlgebra.Matrix
                             Else
                                 xy = 1
                             End If
-                            s = xy * stdnum.Pow(p * p + q * q + r * r, 0.5)
+                            s = xy * stdf.Pow(p * p + q * q + r * r, 0.5)
                             If k <> t Then
                                 A(k, k - 1) = -s
                             End If
@@ -818,9 +818,9 @@ Namespace LinearAlgebra.Matrix
             For k = 1 To n - 1
                 i = k - 1
                 MaxNumber = k
-                temp = stdnum.Abs(A(k, i))
+                temp = stdf.Abs(A(k, i))
                 For j = k + 1 To n
-                    If stdnum.Abs(A(j, i)) > temp Then
+                    If stdf.Abs(A(j, i)) > temp Then
                         MaxNumber = j
                     End If
                 Next
@@ -883,7 +883,7 @@ Namespace LinearAlgebra.Matrix
             Dim b(0, 0) As Double
             Dim b1(0, 0) As Double
             Dim temp As Double
-            Dim Error1 As Double = stdnum.Pow(0.1, 10) '误差控制
+            Dim Error1 As Double = stdf.Pow(0.1, 10) '误差控制
             At = A.Transpose '   Math_Matrix_T(A, n, At)
             Mul(At, A, m, New NumericMatrix(AtA))
             EigSym(New NumericMatrix(AtA), n, 9, New NumericMatrix(b), New NumericMatrix(b1)) 'b特征值，b1特征向量
@@ -918,7 +918,7 @@ Namespace LinearAlgebra.Matrix
             For i = 0 To j '给s赋值
                 If b(i, 0) > Error1 Then
                     ii += 1
-                    S(i, i) = stdnum.Sqrt(b(i, 0))
+                    S(i, i) = stdf.Sqrt(b(i, 0))
                 Else
                     Exit For
                 End If
@@ -928,7 +928,7 @@ Namespace LinearAlgebra.Matrix
                 For i = 0 To n
                     temp += b1(i, j) * b1(i, j)
                 Next
-                temp = stdnum.Sqrt(temp)
+                temp = stdf.Sqrt(temp)
                 For i = 0 To n
                     V(i, j) = b1(i, j) / temp
                 Next
@@ -962,7 +962,7 @@ Namespace LinearAlgebra.Matrix
                 For i = 0 To m
                     temp += A(i, 0) * A(i, 0)
                 Next
-                temp = stdnum.Sqrt(temp)
+                temp = stdf.Sqrt(temp)
                 If temp = 0 Then
                     temp = Error1
                 End If
@@ -1092,7 +1092,7 @@ Namespace LinearAlgebra.Matrix
             Dim n As Integer = A.RowDimension
             n -= 1
             L = New NumericMatrix(n, n) '     ReDim L(n, n)
-            L(0, 0) = stdnum.Sqrt(A(0, 0))
+            L(0, 0) = stdf.Sqrt(A(0, 0))
             For i = 1 To n
                 j = 0
                 While j < i
@@ -1116,7 +1116,7 @@ Namespace LinearAlgebra.Matrix
                 If sun <= 0 Then
                     Return False
                 End If
-                L(i, i) = stdnum.Sqrt(sun)
+                L(i, i) = stdf.Sqrt(sun)
             Next
             Return True
         End Function
@@ -1162,7 +1162,7 @@ Namespace LinearAlgebra.Matrix
                 '误差控制
                 maxerr = 0
                 For i = k To m
-                    t = stdnum.Abs(A(i, k))
+                    t = stdf.Abs(A(i, k))
                     If t > maxerr Then
                         maxerr = t
                     End If
@@ -1172,7 +1172,7 @@ Namespace LinearAlgebra.Matrix
                     p = A(i, k) / maxerr
                     t += p * p
                 Next
-                a1 = maxerr * stdnum.Pow(t, 0.5)
+                a1 = maxerr * stdf.Pow(t, 0.5)
                 If A(k, k) > 0 Then
                     a1 = 0 - a1
                 End If
@@ -1180,7 +1180,7 @@ Namespace LinearAlgebra.Matrix
                 If t <= 0 Then
                     Return False
                 End If
-                p = stdnum.Pow(t, 0.5)
+                p = stdf.Pow(t, 0.5)
                 If p > 0 Then
                     A(k, k) = (A(k, k) - a1) / p
                     i = k + 1
@@ -1276,7 +1276,7 @@ Namespace LinearAlgebra.Matrix
                 '误差控制
                 maxerr = 0
                 For i = k To m
-                    t = stdnum.Abs(A(i, k))
+                    t = stdf.Abs(A(i, k))
                     If t > maxerr Then
                         maxerr = t
                     End If
@@ -1286,7 +1286,7 @@ Namespace LinearAlgebra.Matrix
                     p = A(i, k) / maxerr
                     t += p * p
                 Next
-                a1 = maxerr * stdnum.Pow(t, 0.5)
+                a1 = maxerr * stdf.Pow(t, 0.5)
                 If A(k, k) > 0 Then
                     a1 = 0 - a1
                 End If
@@ -1294,7 +1294,7 @@ Namespace LinearAlgebra.Matrix
                 If t <= 0 Then
                     Return False
                 End If
-                p = stdnum.Pow(t, 0.5)
+                p = stdf.Pow(t, 0.5)
                 If p > 0 Then
                     A(k, k) = (A(k, k) - a1) / p
                     i = k + 1
@@ -1519,7 +1519,7 @@ Namespace LinearAlgebra.Matrix
         ''' <remarks></remarks>
         Public Function Inv(K As GeneralMatrix, Return_K As GeneralMatrix) As Boolean '求矩阵K的逆.成功返回True与其逆矩阵Return_K
             Dim i As Integer = K.RowDimension
-            Dim N As Integer = stdnum.Pow(i, 0.5)
+            Dim N As Integer = stdf.Pow(i, 0.5)
             If i <> N * N Or N = 1 Then '必须是N阶方阵
                 Return False
             End If
@@ -1600,7 +1600,7 @@ Namespace LinearAlgebra.Matrix
                     m = 0
                     For i = 0 To n
                         If At(i, 0) > 0 Then
-                            Ret(m, 0) = stdnum.Sqrt(At(i, 0))
+                            Ret(m, 0) = stdf.Sqrt(At(i, 0))
                             m += 1
                         End If
                     Next
@@ -1658,12 +1658,12 @@ Namespace LinearAlgebra.Matrix
                     d = A(k, i)
                     s += d * d
                 Next
-                s = stdnum.Pow(s, 0.5)
+                s = stdf.Pow(s, 0.5)
                 If s <> 0 Then
                     For i = 0 To n
                         w(i) = 0
                     Next
-                    w(k + 1) = stdnum.Pow((1 + stdnum.Abs(A(k, k + 1) / s)) / 2, 0.5)
+                    w(k + 1) = stdf.Pow((1 + stdf.Abs(A(k, k + 1) / s)) / 2, 0.5)
                     i = k + 2
                     While i <= n
                         w(i) = A(k, i) / (2 * s * w(k + 1))
@@ -1884,7 +1884,7 @@ Namespace LinearAlgebra.Matrix
             Dim J As Double
             Dim ATemp(0, 0) As Double
             Dim ATemp2(0, 2) As Double
-            Dim Erro1 As Double = stdnum.Pow(0.1, Erro)
+            Dim Erro1 As Double = stdf.Pow(0.1, Erro)
             ret = New NumericMatrix(N, 1) '    ReDim Ret(N, 1)
             While N >= 0
                 u = 1
@@ -1905,7 +1905,7 @@ Namespace LinearAlgebra.Matrix
                     J = c(A_n - 2) * c(A_n) - c(A_n - 1) * c(A_n - 1)
                     u = u + (c(A_n - 1) * b(A_n - 1) - c(A_n - 2) * b(A_n)) / J
                     v = v + (c(A_n - 1) * b(A_n) - c(A_n) * b(A_n - 1)) / J
-                    If stdnum.Abs(b(A_n)) <= Erro1 And stdnum.Abs(b(A_n - 1)) <= Erro1 Then
+                    If stdf.Abs(b(A_n)) <= Erro1 And stdf.Abs(b(A_n - 1)) <= Erro1 Then
                         Exit While
                     End If
                 End While
@@ -2034,7 +2034,7 @@ Namespace LinearAlgebra.Matrix
                 Next
                 Return 1
             End If
-            Dim error1 As Double = stdnum.Abs(A2(0, 0)) * stdnum.Pow(0.1, Erro)
+            Dim error1 As Double = stdf.Abs(A2(0, 0)) * stdf.Pow(0.1, Erro)
             Dim j As Integer
             N = n1 - n2
             Ret = New NumericMatrix(0, N) '  ReDim Ret(0, N)
@@ -2044,7 +2044,7 @@ Namespace LinearAlgebra.Matrix
                 i = 1
                 While i < n2
                     A1(0, i) -= A2(0, i) * Ret(0, N)
-                    If stdnum.Abs(A1(0, i)) <= error1 Then
+                    If stdf.Abs(A1(0, i)) <= error1 Then
                         A1(0, i) = 0
                     End If
                     i += 1
@@ -2133,7 +2133,7 @@ Namespace LinearAlgebra.Matrix
                 max = 0
                 For temp_i = i To A_m
                     For temp_j = i To n
-                        temp = stdnum.Abs(A(temp_i, temp_j))
+                        temp = stdf.Abs(A(temp_i, temp_j))
                         If temp > max Then
                             max = temp
                             Index_j = temp_j
@@ -2241,7 +2241,7 @@ A:              For temp_i = A_m + 1 To n
             Dim x As Double
             Dim y As Double
             Dim d As Double
-            Dim ero As Double = stdnum.Pow(0.1, Erro1)
+            Dim ero As Double = stdf.Pow(0.1, Erro1)
             Ret_Eigenvectors = New NumericMatrix(n, n) '  ReDim Ret_Eigenvectors(n, n)
             For i = 0 To n
                 Ret_Eigenvectors(i, i) = 1
@@ -2253,13 +2253,13 @@ A:              For temp_i = A_m + 1 To n
                     ff += d * d
                 Next
             Next
-            ff = stdnum.Pow(2 * ff, 0.5)
+            ff = stdf.Pow(2 * ff, 0.5)
 Loop0:
             ff /= (n + 1)
 Loop1:
             For i = 1 To n
                 For j = 0 To i - 1
-                    d = stdnum.Abs(A(i, j))
+                    d = stdf.Abs(A(i, j))
                     If d > ff Then
                         p = i
                         q = j
@@ -2275,13 +2275,13 @@ Loop1:
 Loop00:
             x = -A(p, q)
             y = (A(q, q) - A(p, p)) / 2
-            comega = x / stdnum.Pow(x * x + y * y, 0.5)
+            comega = x / stdf.Pow(x * x + y * y, 0.5)
             If y < 0 Then
                 comega = -comega
             End If
-            sn = 1 + stdnum.Pow(1 - comega * comega, 0.5)
-            sn = comega / stdnum.Pow(2 * sn, 0.5)
-            cn = stdnum.Pow(1 - sn * sn, 0.5)
+            sn = 1 + stdf.Pow(1 - comega * comega, 0.5)
+            sn = comega / stdf.Pow(2 * sn, 0.5)
+            cn = stdf.Pow(1 - sn * sn, 0.5)
             fm = A(p, p)
             A(p, p) = fm * cn * cn + A(q, q) * sn * sn + A(p, q) * comega
             A(q, q) = fm * sn * sn + A(q, q) * cn * cn - A(p, q) * comega
@@ -2397,7 +2397,7 @@ Loopexit:
                 Next
                 Dim diag(n, n), eigtor(n, n), temp(n, 0), temp2(n, 0) As Double
                 For i = 0 To n
-                    diag(i, i) = stdnum.Sqrt(eigvalue(i, 0))
+                    diag(i, i) = stdf.Sqrt(eigvalue(i, 0))
                     EigTorF(K, n + 1, eigvalue(i, 0), New NumericMatrix(temp))
                     For j = 0 To n
                         eigtor(j, i) = temp(j, 0)
@@ -2611,7 +2611,7 @@ Loopexit:
                 Next
                 Return 1
             End If
-            Dim error1 As Double = stdnum.Abs(A2(0, 0)) * stdnum.Pow(0.1, Erro)
+            Dim error1 As Double = stdf.Abs(A2(0, 0)) * stdf.Pow(0.1, Erro)
             Dim j As Integer
             N = n1 - n2
             Ret = New NumericMatrix(0, N) '     ReDim Ret(0, N)
@@ -2621,7 +2621,7 @@ Loopexit:
                 i = 1
                 While i < n2
                     A1(0, i) -= A2(0, i) * Ret(0, N)
-                    If stdnum.Abs(A1(0, i)) <= error1 Then
+                    If stdf.Abs(A1(0, i)) <= error1 Then
                         A1(0, i) = 0
                     End If
                     i += 1
@@ -2686,7 +2686,7 @@ Loopexit:
                 Next
                 i = a1n + 1
             Else
-                Dim Erro1 As Double = stdnum.Abs(A2(0, 0)) * stdnum.Pow(0.1, Erro)
+                Dim Erro1 As Double = stdf.Abs(A2(0, 0)) * stdf.Pow(0.1, Erro)
                 Dim n As Integer
                 Dim is1 As Boolean
                 While a1n >= a2n
@@ -2695,11 +2695,11 @@ Loopexit:
                     For i = 1 To a2n
                         A1(0, i) -= temp * A2(0, i)
                         If is1 Then
-                            If stdnum.Abs(A1(0, i)) > Erro1 Then
+                            If stdf.Abs(A1(0, i)) > Erro1 Then
                                 n = i
                                 is1 = False
                             End If
-                        ElseIf stdnum.Abs(A1(0, i)) <= Erro1 Then
+                        ElseIf stdf.Abs(A1(0, i)) <= Erro1 Then
                             A1(0, i) = 0
                         End If
                     Next
@@ -2760,13 +2760,13 @@ Loopexit:
             Dim tempcos As Double
             Dim tempsin As Double
             For i = 0 To m
-                temp = stdnum.PI * 2 * i / Number
+                temp = stdf.PI * 2 * i / Number
                 tempx = 0
                 tempy = 0
                 For j = 0 To m
                     temp2 = temp * j
-                    tempcos = stdnum.Cos(temp2)
-                    tempsin = stdnum.Sin(temp2)
+                    tempcos = stdf.Cos(temp2)
+                    tempsin = stdf.Sin(temp2)
                     tempx += tempcos * k(j, 0) - tempsin * k(j, 1)
                     tempy += tempcos * k(j, 1) + tempsin * k(j, 0)
                 Next
@@ -2803,13 +2803,13 @@ Loopexit:
             Dim tempcos As Double
             Dim tempsin As Double
             For i = 0 To m
-                temp = -stdnum.PI * 2 * i / Number
+                temp = -stdf.PI * 2 * i / Number
                 tempx = 0
                 tempy = 0
                 For j = 0 To m
                     temp2 = temp * j
-                    tempcos = stdnum.Cos(temp2)
-                    tempsin = stdnum.Sin(temp2)
+                    tempcos = stdf.Cos(temp2)
+                    tempsin = stdf.Sin(temp2)
                     tempx += tempcos * k(j, 0) - tempsin * k(j, 1)
                     tempy += tempcos * k(j, 1) + tempsin * k(j, 0)
                 Next
@@ -3057,7 +3057,7 @@ Loopexit:
                 max = 0
                 For temp_i = i To A_m
                     For temp_j = i To n
-                        temp = stdnum.Abs(A(temp_i, temp_j))
+                        temp = stdf.Abs(A(temp_i, temp_j))
                         If temp > max Then
                             max = temp
                             Index_j = temp_j
@@ -3185,14 +3185,14 @@ Loopexit:
             End If
             Dim i As Integer
             Dim j As Integer
-            Dim Erro1 As Double = stdnum.Abs(A1(0, 0)) * stdnum.Pow(0.1, Erro)
+            Dim Erro1 As Double = stdf.Abs(A1(0, 0)) * stdf.Pow(0.1, Erro)
             Dim temp As Double
             While True
                 temp = A1(0, 0) / A2(0, 0)
                 i = 1
                 While i < A2_n
                     A1(0, i) -= A2(0, i) * temp
-                    If stdnum.Abs(A1(0, i)) <= Erro1 Then
+                    If stdf.Abs(A1(0, i)) <= Erro1 Then
                         A1(0, i) = 0
                     End If
                     i += 1

@@ -1,57 +1,57 @@
 ﻿#Region "Microsoft.VisualBasic::59621032113849533ede49e629ae4ea9, Data_science\DataMining\DataMining\Clustering\HDBSCAN\Hdbscanstar\HdbscanAlgorithm.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 546
-    '    Code Lines: 345 (63.19%)
-    ' Comment Lines: 115 (21.06%)
-    '    - Xml Docs: 61.74%
-    ' 
-    '   Blank Lines: 86 (15.75%)
-    '     File Size: 30.10 KB
+' Summaries:
 
 
-    '     Class HdbscanAlgorithm
-    ' 
-    '         Function: CalculateCoreDistances, CalculateOutlierScores, ComputeHierarchyAndClusterTree, ConstructMst, CreateNewCluster
-    '                   FindProminentClusters, PropagateTree
-    ' 
-    '         Sub: CalculateNumConstraintsSatisfied
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 546
+'    Code Lines: 345 (63.19%)
+' Comment Lines: 115 (21.06%)
+'    - Xml Docs: 61.74%
+' 
+'   Blank Lines: 86 (15.75%)
+'     File Size: 30.10 KB
+
+
+'     Class HdbscanAlgorithm
+' 
+'         Function: CalculateCoreDistances, CalculateOutlierScores, ComputeHierarchyAndClusterTree, ConstructMst, CreateNewCluster
+'                   FindProminentClusters, PropagateTree
+' 
+'         Sub: CalculateNumConstraintsSatisfied
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -204,7 +204,12 @@ Namespace HDBSCAN.Hdbscanstar
         ''' <param name="pointNoiseLevels">A double[] to be filled with the levels at which each point becomes noise</param>
         ''' <param name="pointLastClusters">An int[] to be filled with the last label each point had before becoming noise</param>
         ''' <returns>The cluster tree</returns>
-        Public Shared Function ComputeHierarchyAndClusterTree(mst As UndirectedGraph, minClusterSize As Integer, constraints As List(Of HdbscanConstraint), hierarchy As List(Of Integer()), pointNoiseLevels As Double(), pointLastClusters As Integer()) As List(Of Cluster)
+        Public Shared Function ComputeHierarchyAndClusterTree(mst As UndirectedGraph,
+                                                              minClusterSize As Integer,
+                                                              constraints As List(Of HdbscanConstraint),
+                                                              hierarchy As List(Of Integer()),
+                                                              pointNoiseLevels As Double(),
+                                                              pointLastClusters As Integer()) As List(Of Cluster)
             Dim hierarchyPosition = 0
 
             'The current edge being removed from the MST:
@@ -234,6 +239,7 @@ Namespace HDBSCAN.Hdbscanstar
             'Sets for the clusters and vertices that are affected by the edge(s) being removed:
             Dim affectedClusterLabels = New SortedSet(Of Integer)()
             Dim affectedVertices = New SortedSet(Of Integer)()
+            Dim lineContents As Integer()
 
             While currentEdgeIndex >= 0
                 Dim currentEdgeWeight = mst.GetEdgeWeightAtIndex(currentEdgeIndex)
@@ -364,7 +370,7 @@ Namespace HDBSCAN.Hdbscanstar
 
                 'Write out the current level of the hierarchy:
                 If nextLevelSignificant OrElse newClusters.Any() Then
-                    Dim lineContents = New Integer(previousClusterLabels.Length - 1) {}
+                    lineContents = New Integer(previousClusterLabels.Length - 1) {}
                     For i = 0 To previousClusterLabels.Length - 1
                         lineContents(i) = previousClusterLabels(i)
                     Next
@@ -393,13 +399,11 @@ Namespace HDBSCAN.Hdbscanstar
             End While
 
             'Write out the final level of the hierarchy (all points noise):
-            If True Then
-                Dim lineContents = New Integer(previousClusterLabels.Length + 1 - 1) {}
-                For i = 0 To previousClusterLabels.Length - 1
-                    lineContents(i) = 0
-                Next
-                hierarchy.Add(lineContents)
-            End If
+            lineContents = New Integer(previousClusterLabels.Length + 1 - 1) {}
+            For i = 0 To previousClusterLabels.Length - 1
+                lineContents(i) = 0
+            Next
+            hierarchy.Add(lineContents)
 
             Return clusters
         End Function

@@ -718,6 +718,13 @@ Public Module VectorExtensions
         End If
     End Function
 
+    ''' <summary>
+    ''' java arrays.copyOf
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    ''' <param name="a"></param>
+    ''' <param name="newLen"></param>
+    ''' <returns></returns>
     <Extension>
     Public Function CopyOf(Of T)(a As T(), newLen As Integer) As T()
         Dim newVec As T() = New T(newLen - 1) {}

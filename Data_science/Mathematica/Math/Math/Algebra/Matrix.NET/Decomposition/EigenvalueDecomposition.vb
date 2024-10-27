@@ -1,62 +1,61 @@
 ﻿#Region "Microsoft.VisualBasic::abbc32540d27ea08b6a36ce96b7cf598, Data_science\Mathematica\Math\Math\Algebra\Matrix.NET\Decomposition\EigenvalueDecomposition.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 980
-    '    Code Lines: 707 (72.14%)
-    ' Comment Lines: 140 (14.29%)
-    '    - Xml Docs: 42.86%
-    ' 
-    '   Blank Lines: 133 (13.57%)
-    '     File Size: 36.83 KB
+' Summaries:
 
 
-    '     Class EigenvalueDecomposition
-    ' 
-    '         Properties: D, ImagEigenvalues, RealEigenvalues, V
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    '         Sub: cdiv, hqr2, orthes, tql2, tred2
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 980
+'    Code Lines: 707 (72.14%)
+' Comment Lines: 140 (14.29%)
+'    - Xml Docs: 42.86%
+' 
+'   Blank Lines: 133 (13.57%)
+'     File Size: 36.83 KB
+
+
+'     Class EigenvalueDecomposition
+' 
+'         Properties: D, ImagEigenvalues, RealEigenvalues, V
+' 
+'         Constructor: (+1 Overloads) Sub New
+'         Sub: cdiv, hqr2, orthes, tql2, tred2
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
-Imports System.Runtime.Serialization
-Imports stdnum = System.Math
+Imports __std = System.Math
 
 Namespace LinearAlgebra.Matrix
 
@@ -135,7 +134,7 @@ Namespace LinearAlgebra.Matrix
                 Dim scale As Double = 0.0
                 Dim h As Double = 0.0
                 For k As Integer = 0 To i - 1
-                    scale = scale + stdnum.Abs(m_d(k))
+                    scale = scale + __std.Abs(m_d(k))
                 Next
                 If scale = 0.0 Then
                     m_e(i) = m_d(i - 1)
@@ -250,10 +249,10 @@ Namespace LinearAlgebra.Matrix
             For l As Integer = 0 To n - 1
                 ' Find small subdiagonal element
 
-                tst1 = System.Math.Max(tst1, stdnum.Abs(m_d(l)) + stdnum.Abs(m_e(l)))
+                tst1 = System.Math.Max(tst1, __std.Abs(m_d(l)) + __std.Abs(m_e(l)))
                 Dim m As Integer = l
                 While m < n
-                    If stdnum.Abs(m_e(m)) <= eps * tst1 Then
+                    If __std.Abs(m_e(m)) <= eps * tst1 Then
                         Exit While
                     End If
                     m += 1
@@ -319,7 +318,7 @@ Namespace LinearAlgebra.Matrix
 
                         ' Check for convergence.
                         m_d(l) = c * p
-                    Loop While stdnum.Abs(m_e(l)) > eps * tst1
+                    Loop While __std.Abs(m_e(l)) > eps * tst1
                 End If
                 m_d(l) = m_d(l) + f
                 m_e(l) = 0.0
@@ -366,7 +365,7 @@ Namespace LinearAlgebra.Matrix
 
                 Dim scale As Double = 0.0
                 For i As Integer = m To high
-                    scale = scale + stdnum.Abs(H(i)(m - 1))
+                    scale = scale + __std.Abs(H(i)(m - 1))
                 Next
                 If scale <> 0.0 Then
 
@@ -452,7 +451,7 @@ Namespace LinearAlgebra.Matrix
 
         Private Sub cdiv(xr As Double, xi As Double, yr As Double, yi As Double)
             Dim r As Double, d As Double
-            If stdnum.Abs(yr) > stdnum.Abs(yi) Then
+            If __std.Abs(yr) > __std.Abs(yi) Then
                 r = yi / yr
                 d = yr + r * yi
                 cdivr = (xr + r * xi) / d
@@ -495,8 +494,8 @@ Namespace LinearAlgebra.Matrix
                     m_d(i) = H(i)(i)
                     m_e(i) = 0.0
                 End If
-                For j As Integer = stdnum.Max(i - 1, 0) To nn - 1
-                    norm = norm + stdnum.Abs(H(i)(j))
+                For j As Integer = __std.Max(i - 1, 0) To nn - 1
+                    norm = norm + __std.Abs(H(i)(j))
                 Next
             Next
 
@@ -509,11 +508,11 @@ Namespace LinearAlgebra.Matrix
 
                 Dim l As Integer = n
                 While l > low
-                    s = stdnum.Abs(H(l - 1)(l - 1)) + stdnum.Abs(H(l)(l))
+                    s = __std.Abs(H(l - 1)(l - 1)) + __std.Abs(H(l)(l))
                     If s = 0.0 Then
                         s = norm
                     End If
-                    If stdnum.Abs(H(l)(l - 1)) < eps * s Then
+                    If __std.Abs(H(l)(l - 1)) < eps * s Then
                         Exit While
                     End If
                     l -= 1
@@ -534,7 +533,7 @@ Namespace LinearAlgebra.Matrix
                     w = H(n)(n - 1) * H(n - 1)(n)
                     p = (H(n - 1)(n - 1) - H(n)(n)) / 2.0
                     q = p * p + w
-                    z = stdnum.Sqrt(stdnum.Abs(q))
+                    z = __std.Sqrt(__std.Abs(q))
                     H(n)(n) = H(n)(n) + exshift
                     H(n - 1)(n - 1) = H(n - 1)(n - 1) + exshift
                     x = H(n)(n)
@@ -555,7 +554,7 @@ Namespace LinearAlgebra.Matrix
                         m_e(n - 1) = 0.0
                         m_e(n) = 0.0
                         x = H(n)(n - 1)
-                        s = stdnum.Abs(x) + stdnum.Abs(z)
+                        s = __std.Abs(x) + __std.Abs(z)
                         p = x / s
                         q = z / s
                         r = System.Math.Sqrt(p * p + q * q)
@@ -616,7 +615,7 @@ Namespace LinearAlgebra.Matrix
                         For i As Integer = low To n
                             H(i)(i) -= x
                         Next
-                        s = stdnum.Abs(H(n)(n - 1)) + stdnum.Abs(H(n - 1)(n - 2))
+                        s = __std.Abs(H(n)(n - 1)) + __std.Abs(H(n - 1)(n - 2))
                         y = 0.75 * s
                         x = y
                         w = (-0.4375) * s * s
@@ -655,14 +654,14 @@ Namespace LinearAlgebra.Matrix
                         p = (r * s - w) / H(m + 1)(m) + H(m)(m + 1)
                         q = H(m + 1)(m + 1) - z - r - s
                         r = H(m + 2)(m + 1)
-                        s = stdnum.Abs(p) + stdnum.Abs(q) + stdnum.Abs(r)
+                        s = __std.Abs(p) + __std.Abs(q) + __std.Abs(r)
                         p = p / s
                         q = q / s
                         r = r / s
                         If m = l Then
                             Exit While
                         End If
-                        If stdnum.Abs(H(m)(m - 1)) * (stdnum.Abs(q) + stdnum.Abs(r)) < eps * (stdnum.Abs(p) * (stdnum.Abs(H(m - 1)(m - 1)) + stdnum.Abs(z) + stdnum.Abs(H(m + 1)(m + 1)))) Then
+                        If __std.Abs(H(m)(m - 1)) * (__std.Abs(q) + __std.Abs(r)) < eps * (__std.Abs(p) * (__std.Abs(H(m - 1)(m - 1)) + __std.Abs(z) + __std.Abs(H(m + 1)(m + 1)))) Then
                             Exit While
                         End If
                         m -= 1
@@ -683,7 +682,7 @@ Namespace LinearAlgebra.Matrix
                             p = H(k)(k - 1)
                             q = H(k + 1)(k - 1)
                             r = (If(notlast, H(k + 2)(k - 1), 0.0))
-                            x = stdnum.Abs(p) + stdnum.Abs(q) + stdnum.Abs(r)
+                            x = __std.Abs(p) + __std.Abs(q) + __std.Abs(r)
                             If x <> 0.0 Then
                                 p = p / x
                                 q = q / x
@@ -793,7 +792,7 @@ Namespace LinearAlgebra.Matrix
                                 q = (m_d(i) - p) * (m_d(i) - p) + m_e(i) * m_e(i)
                                 t = (x * s - z * r) / q
                                 H(i)(n) = t
-                                If stdnum.Abs(x) > stdnum.Abs(z) Then
+                                If __std.Abs(x) > __std.Abs(z) Then
                                     H(i + 1)(n) = (-r - w * t) / x
                                 Else
                                     H(i + 1)(n) = (-s - y * t) / z
@@ -802,7 +801,7 @@ Namespace LinearAlgebra.Matrix
 
                             ' Overflow control
 
-                            t = stdnum.Abs(H(i)(n))
+                            t = __std.Abs(H(i)(n))
                             If (eps * t) * t > 1 Then
                                 For j As Integer = i To n
                                     H(j)(n) = H(j)(n) / t
@@ -817,7 +816,7 @@ Namespace LinearAlgebra.Matrix
 
                     ' Last vector component imaginary so matrix is triangular
 
-                    If stdnum.Abs(H(n)(n - 1)) > stdnum.Abs(H(n - 1)(n)) Then
+                    If __std.Abs(H(n)(n - 1)) > __std.Abs(H(n - 1)(n)) Then
                         H(n - 1)(n - 1) = q / H(n)(n - 1)
                         H(n - 1)(n) = (-(H(n)(n) - p)) / H(n)(n - 1)
                     Else
@@ -856,12 +855,12 @@ Namespace LinearAlgebra.Matrix
                                 vr = (m_d(i) - p) * (m_d(i) - p) + m_e(i) * m_e(i) - q * q
                                 vi = (m_d(i) - p) * 2.0 * q
                                 If vr = 0.0 And vi = 0.0 Then
-                                    vr = eps * norm * (stdnum.Abs(w) + stdnum.Abs(q) + stdnum.Abs(x) + stdnum.Abs(y) + stdnum.Abs(z))
+                                    vr = eps * norm * (__std.Abs(w) + __std.Abs(q) + __std.Abs(x) + __std.Abs(y) + __std.Abs(z))
                                 End If
                                 cdiv(x * r - z * ra + q * sa, x * s - z * sa - q * ra, vr, vi)
                                 H(i)(n - 1) = cdivr
                                 H(i)(n) = cdivi
-                                If stdnum.Abs(x) > (stdnum.Abs(z) + stdnum.Abs(q)) Then
+                                If __std.Abs(x) > (__std.Abs(z) + __std.Abs(q)) Then
                                     H(i + 1)(n - 1) = (-ra - w * H(i)(n - 1) + q * H(i)(n)) / x
                                     H(i + 1)(n) = (-sa - w * H(i)(n) - q * H(i)(n - 1)) / x
                                 Else
@@ -873,7 +872,7 @@ Namespace LinearAlgebra.Matrix
 
                             ' Overflow control
 
-                            t = stdnum.Max(stdnum.Abs(H(i)(n - 1)), stdnum.Abs(H(i)(n)))
+                            t = __std.Max(__std.Abs(H(i)(n - 1)), __std.Abs(H(i)(n)))
                             If (eps * t) * t > 1 Then
                                 For j As Integer = i To n
                                     H(j)(n - 1) = H(j)(n - 1) / t

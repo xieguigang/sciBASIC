@@ -65,6 +65,9 @@ Imports TypeInfo = Microsoft.VisualBasic.Scripting.MetaData.TypeInfo
 
 Namespace Serialization.BinaryDumping
 
+    ''' <summary>
+    ''' clr object binary serialization helper
+    ''' </summary>
     Public Class ObjectOutputStream : Implements IDisposable
 
         Dim disposedValue As Boolean
@@ -83,6 +86,10 @@ Namespace Serialization.BinaryDumping
             stream = wr
         End Sub
 
+        ''' <summary>
+        ''' safe any kind of clr object to binary file
+        ''' </summary>
+        ''' <param name="obj"></param>
         Public Sub WriteObject(obj As Object)
             If obj Is Nothing Then
                 Call stream.Write(-1)

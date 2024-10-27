@@ -1,55 +1,55 @@
 ﻿#Region "Microsoft.VisualBasic::870564f55daf9d9f6c41a05626b4e5cc, Data_science\Mathematica\Math\Math\HashMaps\Crc32.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 116
-    '    Code Lines: 98 (84.48%)
-    ' Comment Lines: 8 (6.90%)
-    '    - Xml Docs: 87.50%
-    ' 
-    '   Blank Lines: 10 (8.62%)
-    '     File Size: 5.57 KB
+' Summaries:
 
 
-    ' Class Crc32
-    ' 
-    '     Properties: CheckSum
-    ' 
-    '     Function: (+2 Overloads) AddToCRC32, CRC32Bytes, CRC32String, UPDC32
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 116
+'    Code Lines: 98 (84.48%)
+' Comment Lines: 8 (6.90%)
+'    - Xml Docs: 87.50%
+' 
+'   Blank Lines: 10 (8.62%)
+'     File Size: 5.57 KB
+
+
+' Class Crc32
+' 
+'     Properties: CheckSum
+' 
+'     Function: (+2 Overloads) AddToCRC32, CRC32Bytes, CRC32String, UPDC32
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -59,12 +59,6 @@ Imports System.Runtime.CompilerServices
 ''' Crc32校验码
 ''' </summary>
 Public Class Crc32
-
-    ''' <summary>
-    ''' crc32
-    ''' </summary>
-    ''' <returns></returns>
-    Public Property CheckSum As Integer
 
     Shared ReadOnly crc_32_tab%() = {
         0,
@@ -121,6 +115,8 @@ Public Class Crc32
         &H2A6F2B94, &HB40BBE37, &HC30C8EA1, &H5A05DF1B, &H2D02EF8D
     }
 
+    Dim _checkSum As UInteger
+
     Public Function AddToCRC32(c As Integer) As UInt32
         Return AddToCRC32(CUShort(c))
     End Function
@@ -128,9 +124,9 @@ Public Class Crc32
     Public Function AddToCRC32(c As UInt16) As UInt32
         Dim octet As Byte = CByte((c And &HFF))
         Dim num2 As Byte = CByte((c >> 8))
-        _CheckSum = Crc32.UPDC32(num2, _CheckSum)
-        _CheckSum = Crc32.UPDC32(octet, _CheckSum)
-        Return Not _CheckSum
+        _checkSum = Crc32.UPDC32(num2, _checkSum)
+        _checkSum = Crc32.UPDC32(octet, _checkSum)
+        Return Not _checkSum
     End Function
 
     Public Shared Function CRC32Bytes(bytes As Byte()) As UInt32

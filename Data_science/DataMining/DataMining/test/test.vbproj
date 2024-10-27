@@ -6,7 +6,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{B8D9B266-355C-42C3-9669-457B3874E5D7}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <StartupObject>Testing.AprioriTest</StartupObject>
+    <StartupObject>Testing.roc_test2</StartupObject>
     <RootNamespace>Testing</RootNamespace>
     <AssemblyName>Testing</AssemblyName>
     <FileAlignment>512</FileAlignment>
@@ -97,6 +97,7 @@
     <Compile Include="AprioriTest.vb" />
     <Compile Include="KmedoidsTest.vb" />
     <Compile Include="DecisionTreeProgram.vb" />
+    <Compile Include="roc_test2.vb" />
     <Compile Include="SCStest.vb" />
     <Compile Include="TestingMain.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />

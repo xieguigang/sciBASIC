@@ -166,28 +166,40 @@ Namespace Evaluation
         End Function
 
         Public Function AUC(predicts As Double(), actuals As Double()) As Double
-            Dim validateVector = predicts _
-                .Select(Function(a, i) (predicts:=a, actual:=actuals(i))) _
-                .ToArray
-            ' 首先对score从大到小排序
-            Dim orderScoreDesc = validateVector _
-                .OrderByDescending(Function(test) test.predicts) _
-                .ToArray
-            ' 然后按照score进行ranking的计算
-            Dim ranks = orderScoreDesc _
-                .Select(Function(test) test.predicts) _
-                .Ranking(, desc:=False) _
-                .AsVector
-            ' 然后把所有的正类样本的rank相加
-            Dim positiveRankSum = which _
-                .IsTrue(orderScoreDesc.Select(Function(test) test.actual > 0)) _
-                .DoCall(Function(indices) ranks(indices)) _
-                .Sum
-            Dim M = orderScoreDesc.Count(Function(test) test.actual > 0)
-            Dim N = validateVector.Length - M
-            Dim aucValue = (positiveRankSum - M * (1 + M) / 2) / (M * N)
+            ' 创建一个包含预测值、标签和索引的元组数组
+            ' 按预测值降序排序
+            Dim labeledPredictions = Enumerable.Range(0, predicts.Length) _
+                .Select(Function(i) (prediction:=predicts(i), label:=actuals(i) > 0, i)) _
+                .OrderByDescending(Function(a) a.prediction) _
+                .ToArray()
 
-            Return aucValue
+            ' 计算TPR和FPR
+            Dim aucVal As Double = 0
+            Dim prevFPR As Double = 0
+            Dim tprSum As Double = 0
+            Dim fprSum As Double = 0
+            Dim posCount As Double = labeledPredictions.Count(Function(l) l.label)
+            Dim negCount = actuals.Length - posCount
+
+            For i As Integer = 0 To labeledPredictions.Length - 1
+                If labeledPredictions(i).label Then ' 真阳性
+                    tprSum += 1 ' 假阳性
+                Else
+                    fprSum += 1
+                End If
+
+                Dim tpr = tprSum / posCount
+                Dim fpr = fprSum / negCount
+
+                ' 累加面积
+                aucVal += (tpr + prevFPR) * (fpr - prevFPR) / 2
+                prevFPR = fpr
+            Next
+
+            ' 处理最后一个点（FPR=0）
+            aucVal += tprSum / posCount * prevFPR / 2
+
+            Return aucVal
         End Function
     End Module
 End Namespace
