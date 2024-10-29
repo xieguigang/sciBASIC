@@ -269,8 +269,12 @@ Public Class MarkdownRender
     Private Sub RunAutoLink()
         ' text = auto_link.Replace(text, Function(m) AutoLink(m.Value))
         text = url_link.Replace(text, Function(m)
-                                          Dim url As String = m.Value.Trim
-                                          Return render.AnchorLink(url, url, url)
+                                          Dim subtext = m.Value
+                                          Dim a = subtext.First
+                                          Dim b = subtext.Last
+                                          Dim url As String = subtext.Substring(1, subtext.Length - 2)
+
+                                          Return a & render.AnchorLink(url, url, url) & b
                                       End Function)
     End Sub
 
@@ -389,9 +393,11 @@ Public Class MarkdownRender
 
     Private Shared Function TrimBlockquote(s As String) As String
         Dim lines = s.Trim(ASCII.LF, ASCII.CR, " "c).LineTokens
+
         lines = lines _
             .Select(Function(si) si.Substring(1).Trim) _
             .ToArray
+
         Return lines.JoinBy(vbLf)
     End Function
 

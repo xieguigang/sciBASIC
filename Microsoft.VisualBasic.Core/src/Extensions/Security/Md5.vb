@@ -268,7 +268,7 @@ Namespace SecurityString
             Else
                 ' large files
                 Using stream As New FileStream(PathUri, FileMode.Open, FileAccess.Read, FileShare.Read, 1024 * 1024 * 2)
-                    Dim sha As New SHA256Managed()
+                    Dim sha = SHA256.Create()
                     Dim checksum = sha.ComputeHash(stream)
 
                     Return BitConverter _
@@ -373,7 +373,7 @@ Namespace SecurityString
         ''' <returns></returns>
         Public Function GetSha1Hash(filePath As String) As String
             Using fs As FileStream = File.OpenRead(filePath)
-                Dim sha As SHA1 = New SHA1Managed()
+                Dim sha As SHA1 = SHA1.Create()
                 Return BitConverter.ToString(sha.ComputeHash(fs)).Replace("-", "").ToLower
             End Using
         End Function

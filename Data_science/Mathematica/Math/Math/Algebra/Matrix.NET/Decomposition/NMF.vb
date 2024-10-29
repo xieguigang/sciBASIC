@@ -1,60 +1,62 @@
 ﻿#Region "Microsoft.VisualBasic::1a059219163f8507116bd4b4332c3716, Data_science\Mathematica\Math\Math\Algebra\Matrix.NET\Decomposition\NMF.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 105
-    '    Code Lines: 48 (45.71%)
-    ' Comment Lines: 41 (39.05%)
-    '    - Xml Docs: 85.37%
-    ' 
-    '   Blank Lines: 16 (15.24%)
-    '     File Size: 4.86 KB
+' Summaries:
 
 
-    '     Class NMF
-    ' 
-    '         Properties: cost, errors, H, W
-    ' 
-    '         Function: Factorisation
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 105
+'    Code Lines: 48 (45.71%)
+' Comment Lines: 41 (39.05%)
+'    - Xml Docs: 85.37%
+' 
+'   Blank Lines: 16 (15.24%)
+'     File Size: 4.86 KB
+
+
+'     Class NMF
+' 
+'         Properties: cost, errors, H, W
+' 
+'         Function: Factorisation
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
+Imports System.Runtime.InteropServices
 Imports Microsoft.VisualBasic.ApplicationServices.Terminal.ProgressBar
+Imports Microsoft.VisualBasic.ApplicationServices.Terminal.ProgressBar.Tqdm
 
 Namespace LinearAlgebra.Matrix
 
@@ -109,45 +111,38 @@ Namespace LinearAlgebra.Matrix
                                              Optional k As Integer = 2,
                                              Optional max_iterations As Integer = 1000,
                                              Optional tolerance As Double = 0.001,
-                                             Optional epsilon As Double = 0.0001) As NMF
+                                             Optional epsilon As Double = 0.0001,
+                                             Optional tqdm As Boolean = True) As NMF
 
             Dim m As Integer = A.RowDimension
             Dim n As Integer = A.ColumnDimension
             ' initialize W,H as random matrix
             Dim W As NumericMatrix = NumericMatrix.random(rowDimension:=m, columnDimension:=k)
             Dim H As NumericMatrix = NumericMatrix.random(rowDimension:=k, columnDimension:=n)
-            Dim V As NumericMatrix
+            Dim V As NumericMatrix = Nothing
             Dim cost As Double
             Dim errors As New List(Of Double)
             Dim bar As Tqdm.ProgressBar = Nothing
 
-            For Each i As Integer In Tqdm.Range(0, max_iterations, bar:=bar)
-                Dim Wt As NumericMatrix = W.Transpose
+            If tqdm Then
+                For Each i As Integer In TqdmWrapper.Range(0, max_iterations, bar:=bar)
+                    Call Factorisation(W, H, A, V, cost, errors)
 
-                Dim HN = Wt.DotProduct(A)
-                Dim HD = Wt.DotProduct(W)
+                    If cost <= tolerance Then
+                        Exit For
+                    Else
+                        Call bar.SetLabel(cost)
+                    End If
+                Next
+            Else
+                For i As Integer = 0 To max_iterations
+                    Call Factorisation(W, H, A, V, cost, errors)
 
-                HD = HD.Dot(H)
-
-                H = DirectCast(H * HN, NumericMatrix) / HD
-
-                Dim Ht As NumericMatrix = H.Transpose
-
-                Dim WN = A.DotProduct(Ht)
-                Dim WD = W.DotProduct(H.DotProduct(Ht))
-
-                W = DirectCast(W * WN, NumericMatrix) / WD
-
-                V = W.DotProduct(H)
-                cost = ((A - V) ^ 2).sum(axis:=-1).Sum
-                errors.Add(cost)
-
-                If cost <= tolerance Then
-                    Exit For
-                Else
-                    Call bar.SetLabel(cost)
-                End If
-            Next
+                    If cost <= tolerance Then
+                        Exit For
+                    End If
+                Next
+            End If
 
             Return New NMF With {
                 .cost = cost,
@@ -156,6 +151,34 @@ Namespace LinearAlgebra.Matrix
                 .errors = errors.ToArray
             }
         End Function
+
+        Private Shared Sub Factorisation(<Out> ByRef W As NumericMatrix,
+                                         <Out> ByRef H As NumericMatrix,
+                                         <Out> ByRef A As NumericMatrix,
+                                         <Out> ByRef V As NumericMatrix,
+                                         <Out> ByRef cost As Double,
+                                         <Out> ByRef errors As List(Of Double))
+
+            Dim Wt As NumericMatrix = W.Transpose
+
+            Dim HN = Wt.DotProduct(A)
+            Dim HD = Wt.DotProduct(W)
+
+            HD = HD.Dot(H)
+
+            H = DirectCast(H * HN, NumericMatrix) / HD
+
+            Dim Ht As NumericMatrix = H.Transpose
+
+            Dim WN = A.DotProduct(Ht)
+            Dim WD = W.DotProduct(H.DotProduct(Ht))
+
+            W = DirectCast(W * WN, NumericMatrix) / WD
+
+            V = W.DotProduct(H)
+            cost = ((A - V) ^ 2).sum(axis:=-1).Sum
+            errors.Add(cost)
+        End Sub
 
     End Class
 End Namespace

@@ -173,9 +173,29 @@ _this_ _is_ _your_ _basic_ _boring_ _emphasis_
 
 "
 
-    Sub Main(args As String())
-        Console.WriteLine(New MakrdownRender().Transform(markdown_demo))
+    Const quote_demo = "
+# reference
 
-        Call New MakrdownRender().Transform(markdown_demo).SaveTo("./test_demo.html")
+> aaaaa
+> bbbbbbb
+> ccccc
+> dddddddd
+
+"
+
+    Const quote_links = "
+
+### Help Documentation and Literature Citation
+
+> + Parse the SMILES molecule structre string - https://mzkit.org/vignettes/mzkit/mzkit/SMILES/parse.html
+> + as.formula - https://mzkit.org/vignettes/mzkit/mzkit/SMILES/as.formula.html
+> + get atoms table from the SMILES structure data - https://mzkit.org/vignettes/mzkit/mzkit/SMILES/atoms.html
+> + create graph embedding result for a specific molecular strucutre data - https://mzkit.org/vignettes/mzkit/mzkit/SMILES/links.html
+"
+
+    Sub Main(args As String())
+        Console.WriteLine(New MarkdownRender().Transform(quote_links))
+
+        Call New MarkdownRender().Transform(quote_links).SaveTo("./test_demo.html")
     End Sub
 End Module

@@ -1137,7 +1137,7 @@ Public Module StringHelpers
     ''' <param name="opt"></param>
     ''' <returns></returns>
     ''' <remarks>
-    ''' 这个函数是一个安全的函数：对于空值字符串对象会直接返回一个空字符串
+    ''' 这个函数是一个安全的函数：对于空值字符串对象会直接返回一个长度为零的空字符串，不会返回空值。
     ''' </remarks>
     <Extension>
     Public Function StringReplace(s$, pattern$, replaceAs$, Optional opt As RegexOptions = RegexICSng) As String

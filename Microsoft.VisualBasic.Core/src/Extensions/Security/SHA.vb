@@ -57,6 +57,7 @@
 #End Region
 
 Imports System.IO
+Imports System.Runtime.CompilerServices
 Imports System.Security.Cryptography
 Imports System.Text
 Imports Microsoft.VisualBasic.Linq.Extensions
@@ -279,10 +280,8 @@ Namespace SecurityString
 
             Dim plainTextBytes As Byte() = Encoding.UTF8.GetBytes(plainText)
             Dim password As New PasswordDeriveBytes(strPassphrase, saltValueBytes, hashAlgorithm, passwordIterations)
-#Disable Warning
             Dim keyBytes As Byte() = password.GetBytes(keySize \ 8)
-#Enable Warning
-            Dim symmetricKey As New RijndaelManaged()
+            Dim symmetricKey As Rijndael = Rijndael.Create()
 
             symmetricKey.Mode = CipherMode.CBC
 
@@ -334,6 +333,11 @@ Namespace SecurityString
             Dim saltValue As String = Microsoft.VisualBasic.SecurityString.GetFileMd5(GetType(SHA256).Assembly.Location)
             saltValue = Mid(saltValue, 3, 8)
             Return New SHA256(Password, saltValue)
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Function Create() As System.Security.Cryptography.SHA256
+            Return System.Security.Cryptography.SHA256.Create
         End Function
     End Class
 End Namespace

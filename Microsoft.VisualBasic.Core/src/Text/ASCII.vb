@@ -268,6 +268,13 @@ Namespace Text
         Public Const TAB As Char = CChar(vbTab)
 
         ''' <summary>
+        ''' a collection of the ascii whitespace chars
+        ''' </summary>
+        Public Shared ReadOnly Whitespace As Char() = {
+            " "c, ASCII.TAB, ASCII.CR, ASCII.LF
+        }
+
+        ''' <summary>
         ''' 双引号``"``
         ''' </summary>
         Public Const Quot As Char = """"c ' Strings.Chr(34)
