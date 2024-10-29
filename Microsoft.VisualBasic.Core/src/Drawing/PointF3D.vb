@@ -157,7 +157,7 @@ Namespace Imaging
     ''' <remarks>
     ''' the layout information comes from the base <see cref="RasterPixel"/> model
     ''' </remarks>
-    Public Interface Pixel : Inherits Imaging.RasterPixel
+    Public Interface Pixel : Inherits RasterPixel
 
         ''' <summary>
         ''' the color scale data

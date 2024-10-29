@@ -56,7 +56,7 @@ Imports System.Drawing
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Imaging.LayoutModel
 Imports Microsoft.VisualBasic.Serialization.JSON
-Imports stdNum = System.Math
+Imports std = System.Math
 
 Namespace Imaging.Math2D
 
@@ -79,8 +79,8 @@ Namespace Imaging.Math2D
         ''' <returns></returns>
         Public Function angleBetween2Lines(x1#, y1#, z1#, x2#, y2#, z2#) As Double
             Dim ab = x1 * x2 + y1 * y2 + z1 * z2
-            Dim a = stdNum.Sqrt(x1 ^ 2 + y1 ^ 2 + z1 ^ 2)
-            Dim b = stdNum.Sqrt(x2 ^ 2 + y2 ^ 2 + z2 ^ 2)
+            Dim a = std.Sqrt(x1 ^ 2 + y1 ^ 2 + z1 ^ 2)
+            Dim b = std.Sqrt(x2 ^ 2 + y2 ^ 2 + z2 ^ 2)
 
             If ab = 0R Then
                 Return 0
@@ -91,11 +91,11 @@ Namespace Imaging.Math2D
         End Function
 
         Public Function angleBetween2Lines(line1 As Point2D(), line2 As Point2D()) As Double
-            Dim angle1 = stdNum.Atan2(line1(0).Y - line1(1).Y, line1(0).X - line1(1).X)
-            Dim angle2 = stdNum.Atan2(line2(0).Y - line2(1).Y, line2(0).X - line2(1).X)
+            Dim angle1 = std.Atan2(line1(0).Y - line1(1).Y, line1(0).X - line1(1).X)
+            Dim angle2 = std.Atan2(line2(0).Y - line2(1).Y, line2(0).X - line2(1).X)
             Dim diff = angle1 - angle2
 
-            If diff > stdNum.PI OrElse diff < -stdNum.PI Then
+            If diff > std.PI OrElse diff < -std.PI Then
                 diff = angle2 - angle1
             End If
 
@@ -169,9 +169,9 @@ Namespace Imaging.Math2D
                     Return Intersections.Tangent
                 End If
 
-                If point.Y > stdNum.Min(p1.Y, p2.Y) Then
-                    If point.Y <= stdNum.Max(p1.Y, p2.Y) Then
-                        If point.X <= stdNum.Max(p1.X, p2.X) Then
+                If point.Y > std.Min(p1.Y, p2.Y) Then
+                    If point.Y <= std.Max(p1.Y, p2.Y) Then
+                        If point.X <= std.Max(p1.X, p2.X) Then
                             If p1.Y <> p2.Y Then
                                 Dim xinters As Double = (point.Y - p1.Y) * (p2.X - p1.X) / (p2.Y - p1.Y) + p1.X
                                 If p1.X = p2.X OrElse point.X <= xinters Then
@@ -194,8 +194,8 @@ Namespace Imaging.Math2D
         ''' <param name="line"></param>
         ''' <returns></returns>
         Public Function IntersectionOf(point As PointF, line As Line) As Intersections
-            Dim bottomY As Single = stdNum.Min(line.Y1, line.Y2)
-            Dim topY As Single = stdNum.Max(line.Y1, line.Y2)
+            Dim bottomY As Single = std.Min(line.Y1, line.Y2)
+            Dim topY As Single = std.Max(line.Y1, line.Y2)
             Dim heightIsRight As Boolean = point.Y >= bottomY AndAlso point.Y <= topY
             'Vertical line, slope is divideByZero error!
             If line.X1 = line.X2 Then
@@ -354,20 +354,20 @@ Namespace Imaging.Math2D
         ''' <returns></returns>
         <Extension>
         Public Function QuadrantRegion(origin As PointF, p As PointF, Optional d! = 5) As QuadrantRegions
-            If stdNum.Abs(p.X - origin.X) <= d AndAlso stdNum.Abs(p.Y - origin.Y) <= d Then
+            If std.Abs(p.X - origin.X) <= d AndAlso std.Abs(p.Y - origin.Y) <= d Then
                 Return QuadrantRegions.Origin
             End If
 
-            If stdNum.Abs(p.X - origin.X) <= d AndAlso p.Y < origin.Y Then
+            If std.Abs(p.X - origin.X) <= d AndAlso p.Y < origin.Y Then
                 Return QuadrantRegions.YTop
             End If
-            If stdNum.Abs(p.X - origin.X) <= d AndAlso p.Y > origin.Y Then
+            If std.Abs(p.X - origin.X) <= d AndAlso p.Y > origin.Y Then
                 Return QuadrantRegions.YBottom
             End If
-            If p.X > origin.X AndAlso stdNum.Abs(p.Y - origin.Y) <= d Then
+            If p.X > origin.X AndAlso std.Abs(p.Y - origin.Y) <= d Then
                 Return QuadrantRegions.XRight
             End If
-            If p.X < origin.X AndAlso stdNum.Abs(p.Y - origin.Y) <= d Then
+            If p.X < origin.X AndAlso std.Abs(p.Y - origin.Y) <= d Then
                 Return QuadrantRegions.XLeft
             End If
 
