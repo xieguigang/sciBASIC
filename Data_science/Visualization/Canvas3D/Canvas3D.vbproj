@@ -184,6 +184,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\gr\Drawing-net4.8\Drawing-net4.8.vbproj">
+      <Project>{b30e29f5-e117-4245-9f74-38b5db9688d0}</Project>
+      <Name>Drawing-net4.8</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\gr\Microsoft.VisualBasic.Imaging\imaging.NET5.vbproj">
       <Project>{63e24d1e-75b6-47e3-ab22-54e238a9d818}</Project>
       <Name>imaging.NET5</Name>

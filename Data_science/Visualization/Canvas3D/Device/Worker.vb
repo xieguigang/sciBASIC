@@ -67,6 +67,7 @@
 
 Imports System.Drawing.Drawing2D
 Imports Microsoft.VisualBasic.ComponentModel
+Imports Microsoft.VisualBasic.Drawing
 Imports Microsoft.VisualBasic.Imaging.Drawing3D
 Imports Microsoft.VisualBasic.Imaging.Drawing3D.Math3D
 Imports Microsoft.VisualBasic.Language
@@ -161,7 +162,7 @@ Namespace Drawing3D.Device
                     Call canvas.BufferPainting(buffer, .DrawPath)
                 End If
                 If Not .Plot Is Nothing Then
-                    Call .Plot()(canvas, ._camera)
+                    Call .Plot()(New Graphics2D(canvas, ._camera.screen), ._camera)
                 End If
                 If device.ShowDebugger Then
                     Call debugger.DrawInformation(canvas)
