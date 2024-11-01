@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5c5588d156e26f21214475fb22789317, Microsoft.VisualBasic.Core\src\Text\ASCII.vb"
+﻿#Region "Microsoft.VisualBasic::865705ad273db2d5b0e5d2c95a929419, Microsoft.VisualBasic.Core\src\Text\ASCII.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 474
-    '    Code Lines: 193 (40.72%)
-    ' Comment Lines: 252 (53.16%)
-    '    - Xml Docs: 99.21%
+    '   Total Lines: 481
+    '    Code Lines: 196 (40.75%)
+    ' Comment Lines: 255 (53.01%)
+    '    - Xml Docs: 99.22%
     ' 
-    '   Blank Lines: 29 (6.12%)
-    '     File Size: 18.21 KB
+    '   Blank Lines: 30 (6.24%)
+    '     File Size: 18.44 KB
 
 
     '     Class ASCII

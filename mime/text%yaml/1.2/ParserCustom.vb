@@ -76,7 +76,7 @@ Namespace Grammar
             If success Then
                 Return stream
             Else
-                Dim message$ = parser.GetEorrorMessages()
+                Dim message$ = parser.GetErrorMessageText()
                 Throw New Exception(message)
             End If
         End Function

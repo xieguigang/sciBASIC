@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::de445f222ae8a549c9d3d6c81b1126f2, Data_science\DataMining\DataMining\Evaluation\LabelEvaluate\FakeAUCGenerator.vb"
+﻿#Region "Microsoft.VisualBasic::e6ecd19cab8bfb5bd347aaf56de84f68, Data_science\DataMining\DataMining\Evaluation\LabelEvaluate\FakeAUCGenerator.vb"
 
     ' Author:
     ' 
@@ -35,12 +35,12 @@
     ' Code Statistics:
 
     '   Total Lines: 83
-    '    Code Lines: 62 (74.70%)
-    ' Comment Lines: 6 (7.23%)
-    '    - Xml Docs: 100.00%
+    '    Code Lines: 60 (72.29%)
+    ' Comment Lines: 9 (10.84%)
+    '    - Xml Docs: 66.67%
     ' 
-    '   Blank Lines: 15 (18.07%)
-    '     File Size: 3.17 KB
+    '   Blank Lines: 14 (16.87%)
+    '     File Size: 3.29 KB
 
 
     '     Module FakeAUCGenerator

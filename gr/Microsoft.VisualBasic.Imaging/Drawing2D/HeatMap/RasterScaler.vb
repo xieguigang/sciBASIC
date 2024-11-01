@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::34d490cab0a77f5537bba13c8fe29c70, gr\Microsoft.VisualBasic.Imaging\Drawing2D\HeatMap\RasterScaler.vb"
+﻿#Region "Microsoft.VisualBasic::8505b62c2f7968157f9d5c85fdc779bd, gr\Microsoft.VisualBasic.Imaging\Drawing2D\HeatMap\RasterScaler.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 238
-    '    Code Lines: 153 (64.29%)
-    ' Comment Lines: 50 (21.01%)
-    '    - Xml Docs: 66.00%
+    '   Total Lines: 246
+    '    Code Lines: 158 (64.23%)
+    ' Comment Lines: 51 (20.73%)
+    '    - Xml Docs: 64.71%
     ' 
-    '   Blank Lines: 35 (14.71%)
-    '     File Size: 8.93 KB
+    '   Blank Lines: 37 (15.04%)
+    '     File Size: 9.08 KB
 
 
     '     Class RasterScaler
@@ -237,6 +237,11 @@ Namespace Drawing2D.HeatMap
         End Sub
 
         Public Function Scale(hqx As HqxScales) As Bitmap
+            ' 1 means no scale, none
+            If hqx = 1 Then
+                hqx = HqxScales.None
+            End If
+
             If hqx = HqxScales.None Then
                 ' no scale
                 ' returns the raw image directly

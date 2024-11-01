@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e16f35d05434851f5386c4ef4d0d7b04, Data_science\Mathematica\SignalProcessing\SignalProcessing\Source\SignalPeak.vb"
+﻿#Region "Microsoft.VisualBasic::3f38db609a254d2eb1221b6500d04592, Data_science\Mathematica\SignalProcessing\SignalProcessing\Source\SignalPeak.vb"
 
     ' Author:
     ' 
@@ -34,20 +34,20 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 30
-    '    Code Lines: 23 (76.67%)
+    '   Total Lines: 36
+    '    Code Lines: 28 (77.78%)
     ' Comment Lines: 0 (0.00%)
     '    - Xml Docs: 0.00%
     ' 
-    '   Blank Lines: 7 (23.33%)
-    '     File Size: 995 B
+    '   Blank Lines: 8 (22.22%)
+    '     File Size: 1.25 KB
 
 
     '     Class SignalPeak
     ' 
     '         Properties: max_intensity, offset, width
     ' 
-    '         Function: GetSignalData
+    '         Function: (+2 Overloads) GetSignalData
     ' 
     ' 
     ' /********************************************************************************/

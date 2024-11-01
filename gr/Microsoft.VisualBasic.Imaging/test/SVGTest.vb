@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ba4197ddce38c692d8508f5ed6bf9097, gr\Microsoft.VisualBasic.Imaging\test\SVGTest.vb"
+﻿#Region "Microsoft.VisualBasic::ee26ec038c962fe50c1d2e989672be28, gr\Microsoft.VisualBasic.Imaging\test\SVGTest.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 0.00%
     ' 
     '   Blank Lines: 35 (25.55%)
-    '     File Size: 4.26 KB
+    '     File Size: 4.25 KB
 
 
     ' 
@@ -185,4 +185,3 @@
 '        Pause()
 '    End Sub
 'End Module
-

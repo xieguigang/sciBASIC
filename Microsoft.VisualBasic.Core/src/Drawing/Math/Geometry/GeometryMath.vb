@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7fc88297afe4cbd28d065f34d8e9f0b1, Microsoft.VisualBasic.Core\src\Drawing\Math\Geometry\GeometryMath.vb"
+﻿#Region "Microsoft.VisualBasic::86cd8f69f97b35ddf7760ce069fd3744, Microsoft.VisualBasic.Core\src\Drawing\Math\Geometry\GeometryMath.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 89.33%
     ' 
     '   Blank Lines: 40 (12.01%)
-    '     File Size: 13.02 KB
+    '     File Size: 12.97 KB
 
 
     '     Module GeometryMath

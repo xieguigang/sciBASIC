@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::66797c212a8ce90620b17019fb3856a6, mime\text%html\CSS\Elements\Padding.vb"
+﻿#Region "Microsoft.VisualBasic::d45de3d760e45f1184097fe7a3577f2c, mime\text%html\CSS\Elements\Padding.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 378
-    '    Code Lines: 224 (59.26%)
-    ' Comment Lines: 108 (28.57%)
+    '   Total Lines: 388
+    '    Code Lines: 233 (60.05%)
+    ' Comment Lines: 108 (27.84%)
     '    - Xml Docs: 98.15%
     ' 
-    '   Blank Lines: 46 (12.17%)
-    '     File Size: 14.76 KB
+    '   Blank Lines: 47 (12.11%)
+    '     File Size: 15.11 KB
 
 
     '     Structure PaddingLayout

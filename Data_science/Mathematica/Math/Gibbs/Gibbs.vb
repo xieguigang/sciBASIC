@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f9c1d9d11f4996fecd261f6d8b6d1778, Data_science\Mathematica\Math\Gibbs\Gibbs.vb"
+﻿#Region "Microsoft.VisualBasic::b88d4b5164143ecfce104a2c120bd46a, Data_science\Mathematica\Math\Gibbs\Gibbs.vb"
 
     ' Author:
     ' 
@@ -34,26 +34,25 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 203
-    '    Code Lines: 125 (61.58%)
-    ' Comment Lines: 54 (26.60%)
-    '    - Xml Docs: 94.44%
+    '   Total Lines: 215
+    '    Code Lines: 128 (59.53%)
+    ' Comment Lines: 59 (27.44%)
+    '    - Xml Docs: 86.44%
     ' 
-    '   Blank Lines: 24 (11.82%)
-    '     File Size: 7.74 KB
+    '   Blank Lines: 28 (13.02%)
+    '     File Size: 8.18 KB
 
 
     ' Class Score
     ' 
-    '     Properties: len, p, pwm, q, score
-    '                 seq, start
+    '     Properties: len, pwm, seq, start
     ' 
     '     Function: ToString
     ' 
     ' Class Gibbs
     ' 
     '     Constructor: (+1 Overloads) Sub New
-    '     Function: calculateP, calculateQ, generateRandomValue, sample
+    '     Function: calculateP, calculateQ, generateRandomValue, PQ, sample
     ' 
     ' /********************************************************************************/
 

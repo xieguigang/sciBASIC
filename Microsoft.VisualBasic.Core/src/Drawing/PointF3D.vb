@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a0b776c56ffb0ac35627e275d69f63ba, Microsoft.VisualBasic.Core\src\Drawing\PointF3D.vb"
+﻿#Region "Microsoft.VisualBasic::a53892c1bde09fad590c0526ebf9f4da, Microsoft.VisualBasic.Core\src\Drawing\PointF3D.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 95.74%
     ' 
     '   Blank Lines: 23 (19.49%)
-    '     File Size: 3.03 KB
+    '     File Size: 3.02 KB
 
 
     '     Interface PointF3D

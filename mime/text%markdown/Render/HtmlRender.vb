@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::011ead56698b448ff1764ab73cf402a9, mime\text%markdown\Render\HtmlRender.vb"
+﻿#Region "Microsoft.VisualBasic::4235e1e0cb9995d1e357a1b92a205c22, mime\text%markdown\Render\HtmlRender.vb"
 
     ' Author:
     ' 
@@ -34,23 +34,28 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 130
-    '    Code Lines: 90 (69.23%)
-    ' Comment Lines: 13 (10.00%)
+    '   Total Lines: 136
+    '    Code Lines: 94 (69.12%)
+    ' Comment Lines: 13 (9.56%)
     '    - Xml Docs: 84.62%
     ' 
-    '   Blank Lines: 27 (20.77%)
-    '     File Size: 4.11 KB
+    '   Blank Lines: 29 (21.32%)
+    '     File Size: 4.41 KB
 
 
     ' Class HtmlRender
     ' 
     '     Properties: image_class
+    '     Delegate Function
     ' 
-    '     Function: AnchorLink, BlockQuote, Bold, CodeBlock, CodeSpan
-    '               Document, escapeHtml, Header, HorizontalLine, Image
-    '               Italic, List, NewLine, Paragraph, Table
-    '               Underline
+    '         Properties: CodeSyntaxHighlight
+    ' 
+    '         Function: AnchorLink, BlockQuote, Bold, CodeBlock, CodeSpan
+    '                   Document, escapeHtml, Header, HorizontalLine, Image
+    '                   Italic, List, NewLine, Paragraph, Table
+    '                   Underline
+    ' 
+    ' 
     ' 
     ' /********************************************************************************/
 

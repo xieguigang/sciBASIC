@@ -1,55 +1,53 @@
-﻿#Region "Microsoft.VisualBasic::870564f55daf9d9f6c41a05626b4e5cc, Data_science\Mathematica\Math\Math\HashMaps\Crc32.vb"
+﻿#Region "Microsoft.VisualBasic::fd58498641d1fa5c6e128ff6bc698231, Data_science\Mathematica\Math\Math\HashMaps\Crc32.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 116
-'    Code Lines: 98 (84.48%)
-' Comment Lines: 8 (6.90%)
-'    - Xml Docs: 87.50%
-' 
-'   Blank Lines: 10 (8.62%)
-'     File Size: 5.57 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-' Class Crc32
-' 
-'     Properties: CheckSum
-' 
-'     Function: (+2 Overloads) AddToCRC32, CRC32Bytes, CRC32String, UPDC32
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 112
+    '    Code Lines: 98 (87.50%)
+    ' Comment Lines: 4 (3.57%)
+    '    - Xml Docs: 75.00%
+    ' 
+    '   Blank Lines: 10 (8.93%)
+    '     File Size: 5.47 KB
+
+
+    ' Class Crc32
+    ' 
+    '     Function: (+2 Overloads) AddToCRC32, CRC32Bytes, CRC32String, UPDC32
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

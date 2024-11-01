@@ -1,60 +1,57 @@
-﻿#Region "Microsoft.VisualBasic::f84f019ccd2306b266e36c425fe0aa73, Data_science\Mathematica\Math\Math\Algebra\Matrix.NET\Decomposition\CholeskyDecomposition.vb"
+﻿#Region "Microsoft.VisualBasic::608b9c452c516e6c329b6b460fc1ec8b, Data_science\Mathematica\Math\Math\Algebra\Matrix.NET\Decomposition\CholeskyDecomposition.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 151
-'    Code Lines: 89 (58.94%)
-' Comment Lines: 42 (27.81%)
-'    - Xml Docs: 85.71%
-' 
-'   Blank Lines: 20 (13.25%)
-'     File Size: 5.48 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Class CholeskyDecomposition
-' 
-'         Properties: SPD
-' 
-'         Constructor: (+1 Overloads) Sub New
-' 
-'         Function: GetL, Solve
-' 
-'         Sub: ISerializable_GetObjectData
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 144
+    '    Code Lines: 84 (58.33%)
+    ' Comment Lines: 41 (28.47%)
+    '    - Xml Docs: 87.80%
+    ' 
+    '   Blank Lines: 19 (13.19%)
+    '     File Size: 5.17 KB
+
+
+    '     Class CholeskyDecomposition
+    ' 
+    '         Properties: SPD
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    '         Function: GetL, Solve
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

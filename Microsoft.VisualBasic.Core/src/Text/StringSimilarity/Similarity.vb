@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cdfc8dd3bc208351ecf474461954d2bb, Microsoft.VisualBasic.Core\src\Text\StringSimilarity\Similarity.vb"
+﻿#Region "Microsoft.VisualBasic::280246689c0256c23d13e0e564e00db2, Microsoft.VisualBasic.Core\src\Text\StringSimilarity\Similarity.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 199
-    '    Code Lines: 129 (64.82%)
-    ' Comment Lines: 39 (19.60%)
-    '    - Xml Docs: 92.31%
+    '   Total Lines: 270
+    '    Code Lines: 170 (62.96%)
+    ' Comment Lines: 63 (23.33%)
+    '    - Xml Docs: 92.06%
     ' 
-    '   Blank Lines: 31 (15.58%)
-    '     File Size: 8.45 KB
+    '   Blank Lines: 37 (13.70%)
+    '     File Size: 11.73 KB
 
 
     '     Delegate Function
@@ -51,7 +51,7 @@
     '         Function: Evaluate, tokenEquals, tokenEqualsIgnoreCase
     '         Delegate Function
     ' 
-    '             Function: (+4 Overloads) IsOrdered, LevenshteinEvaluate, StringSelection, (+3 Overloads) TokenOrders
+    '             Function: (+4 Overloads) IsOrdered, LevenshteinEvaluate, LevenshteinOrder, StringSelection, (+3 Overloads) TokenOrders
     ' 
     ' 
     ' 

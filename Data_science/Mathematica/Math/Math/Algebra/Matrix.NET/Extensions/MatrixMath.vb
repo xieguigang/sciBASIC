@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5d9b3fc45a5278cb73fd4de975910df8, Data_science\Mathematica\Math\Math\Algebra\Matrix.NET\Extensions\MatrixMath.vb"
+﻿#Region "Microsoft.VisualBasic::c9ef1e8974e814b2860a91042cc7146c, Data_science\Mathematica\Math\Math\Algebra\Matrix.NET\Extensions\MatrixMath.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 89.46%
     ' 
     '   Blank Lines: 55 (1.72%)
-    '     File Size: 128.21 KB
+    '     File Size: 128.06 KB
 
 
     '     Module vbMatrix

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f8f1fe3629baa18f0965478275e43af0, Microsoft.VisualBasic.Core\src\Serialization\BinaryDumping\NetworkByteOrderBuffer.vb"
+﻿#Region "Microsoft.VisualBasic::af1c86c4512f3883fd8cd84bb7fba0eb, Microsoft.VisualBasic.Core\src\Serialization\BinaryDumping\NetworkByteOrderBuffer.vb"
 
     ' Author:
     ' 
@@ -34,20 +34,21 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 196
-    '    Code Lines: 141 (71.94%)
-    ' Comment Lines: 14 (7.14%)
+    '   Total Lines: 202
+    '    Code Lines: 146 (72.28%)
+    ' Comment Lines: 14 (6.93%)
     '    - Xml Docs: 78.57%
     ' 
-    '   Blank Lines: 41 (20.92%)
-    '     File Size: 7.08 KB
+    '   Blank Lines: 42 (20.79%)
+    '     File Size: 7.33 KB
 
 
     '     Class NetworkByteOrderBuffer
     ' 
     '         Constructor: (+1 Overloads) Sub New
-    '         Function: defaultDecoder, defaultDecoder32, (+2 Overloads) defaultEncoder, (+3 Overloads) GetBytes, networkByteOrderDecoder
-    '                   networkByteOrderDecoder32, (+2 Overloads) networkByteOrderEncoder, (+2 Overloads) ParseDouble, ToDouble, ToFloat
+    '         Function: Base64String, defaultDecoder, defaultDecoder32, (+2 Overloads) defaultEncoder, (+3 Overloads) GetBytes
+    '                   networkByteOrderDecoder, networkByteOrderDecoder32, (+2 Overloads) networkByteOrderEncoder, (+2 Overloads) ParseDouble, ToDouble
+    '                   ToFloat
     ' 
     ' 
     ' /********************************************************************************/

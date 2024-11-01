@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2e27929fc178f3df28c09345cc9491b3, mime\application%json\JSONtest\big_bson_reader.vb"
+﻿#Region "Microsoft.VisualBasic::982ef18214f22708b920803d8766cf48, mime\application%json\JSONtest\big_bson_reader.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 0.00%
     ' 
     '   Blank Lines: 2 (33.33%)
-    '     File Size: 69 B
+    '     File Size: 67 B
 
 
     ' Module big_bson_reader
@@ -57,4 +57,3 @@ Module big_bson_reader
 
     End Sub
 End Module
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7223f7508fd056ff32e2b365feeb476e, Microsoft.VisualBasic.Core\src\Serialization\BinaryDumping\Stream\ObjectOutputStream.vb"
+﻿#Region "Microsoft.VisualBasic::2ba9428873dbf6c532f1f544d38b5ffe, Microsoft.VisualBasic.Core\src\Serialization\BinaryDumping\Stream\ObjectOutputStream.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 134
-    '    Code Lines: 99 (73.88%)
-    ' Comment Lines: 14 (10.45%)
-    '    - Xml Docs: 0.00%
+    '   Total Lines: 141
+    '    Code Lines: 99 (70.21%)
+    ' Comment Lines: 21 (14.89%)
+    '    - Xml Docs: 33.33%
     ' 
-    '   Blank Lines: 21 (15.67%)
-    '     File Size: 5.62 KB
+    '   Blank Lines: 21 (14.89%)
+    '     File Size: 5.85 KB
 
 
     '     Class ObjectOutputStream

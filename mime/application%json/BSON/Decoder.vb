@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5e9b49816eae85084d43b530ba0b4825, mime\application%json\BSON\Decoder.vb"
+﻿#Region "Microsoft.VisualBasic::18ae4547853de4a1d1da5119e0e542b3, mime\application%json\BSON\Decoder.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 168
-    '    Code Lines: 105 (62.50%)
-    ' Comment Lines: 29 (17.26%)
-    '    - Xml Docs: 13.79%
+    '   Total Lines: 189
+    '    Code Lines: 119 (62.96%)
+    ' Comment Lines: 34 (17.99%)
+    '    - Xml Docs: 23.53%
     ' 
-    '   Blank Lines: 34 (20.24%)
-    '     File Size: 5.92 KB
+    '   Blank Lines: 36 (19.05%)
+    '     File Size: 6.95 KB
 
 
     '     Class Decoder
@@ -48,6 +48,7 @@
     '         Constructor: (+2 Overloads) Sub New
     ' 
     '         Function: decodeArray, decodeCString, decodeDocument, decodeElement, decodeString
+    '                   getDocumentOffset
     ' 
     '         Sub: (+2 Overloads) Dispose
     ' 

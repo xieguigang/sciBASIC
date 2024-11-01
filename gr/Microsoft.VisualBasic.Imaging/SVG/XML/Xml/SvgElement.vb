@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::17ee4123fb969348ba9307a4448729ec, gr\Microsoft.VisualBasic.Imaging\SVG\XML\Xml\SvgElement.vb"
+﻿#Region "Microsoft.VisualBasic::fce69b8925c5ad7b15ee1b17ee0579dc, gr\Microsoft.VisualBasic.Imaging\SVG\XML\Xml\SvgElement.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 292
-    '    Code Lines: 226 (77.40%)
-    ' Comment Lines: 26 (8.90%)
+    '   Total Lines: 301
+    '    Code Lines: 234 (77.74%)
+    ' Comment Lines: 26 (8.64%)
     '    - Xml Docs: 96.15%
     ' 
-    '   Blank Lines: 40 (13.70%)
-    '     File Size: 10.94 KB
+    '   Blank Lines: 41 (13.62%)
+    '     File Size: 11.23 KB
 
 
     '     Class SvgElement
@@ -103,7 +103,7 @@ Namespace SVG.XML
 
         Public Property Fill As String
             Get
-                Return Element.GetAttribute("fill", Attributes.FillAndStroke.Fill)
+                Return Element.GetAttribute("fill", defaultValue:=Attributes.FillAndStroke.Fill)
             End Get
             Set(value As String)
                 Element.SetAttribute("fill", value)
@@ -125,7 +125,7 @@ Namespace SVG.XML
         ''' <returns></returns>
         Public Property Stroke As String
             Get
-                Return Element.GetAttribute("stroke", Attributes.FillAndStroke.Stroke)
+                Return Element.GetAttribute("stroke", defaultValue:=Attributes.FillAndStroke.Stroke)
             End Get
             Set(value As String)
                 Element.SetAttribute("stroke", value)
@@ -184,7 +184,7 @@ Namespace SVG.XML
 
         Public Property Visible As Boolean
             Get
-                Return Not Equals(GetStyle("display"), "none")
+                Return GetStyle("display") <> "none"
             End Get
             Set(value As Boolean)
                 SetStyle("display", If(value, String.Empty, "none"))
@@ -202,6 +202,32 @@ Namespace SVG.XML
             Set(value As String)
                 Element.SetAttribute("style", value)
             End Set
+        End Property
+
+        ''' <summary>
+        ''' get/set of the xml attribute value of current svg element.
+        ''' </summary>
+        ''' <param name="name"></param>
+        ''' <returns></returns>
+        Default Public Property Attribute(name As String) As String
+            Get
+                Return Element.GetAttribute(name)
+            End Get
+            Set(value As String)
+                Element.SetAttribute(name, value)
+            End Set
+        End Property
+
+        ''' <summary>
+        ''' get the xml tag name of current svg element
+        ''' </summary>
+        ''' <returns>
+        ''' the tag name string in lower case
+        ''' </returns>
+        Public ReadOnly Property Tag As String
+            Get
+                Return Strings.LCase(Element.LocalName)
+            End Get
         End Property
 
         Protected Friend Sub New(element As XmlElement)

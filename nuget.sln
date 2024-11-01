@@ -10583,8 +10583,8 @@ Global
 		{2A8F4B2B-0892-44C5-B1C0-B5001B8D8AD0}.nuget_release|Any CPU.Build.0 = Debug|Any CPU
 		{2A8F4B2B-0892-44C5-B1C0-B5001B8D8AD0}.nuget_release|ARM32.ActiveCfg = Debug|Any CPU
 		{2A8F4B2B-0892-44C5-B1C0-B5001B8D8AD0}.nuget_release|ARM32.Build.0 = Debug|Any CPU
-		{2A8F4B2B-0892-44C5-B1C0-B5001B8D8AD0}.nuget_release|x64.ActiveCfg = Debug|x64
-		{2A8F4B2B-0892-44C5-B1C0-B5001B8D8AD0}.nuget_release|x64.Build.0 = Debug|x64
+		{2A8F4B2B-0892-44C5-B1C0-B5001B8D8AD0}.nuget_release|x64.ActiveCfg = nuget_release|x64
+		{2A8F4B2B-0892-44C5-B1C0-B5001B8D8AD0}.nuget_release|x64.Build.0 = nuget_release|x64
 		{2A8F4B2B-0892-44C5-B1C0-B5001B8D8AD0}.nuget_release|x86.ActiveCfg = Debug|Any CPU
 		{2A8F4B2B-0892-44C5-B1C0-B5001B8D8AD0}.nuget_release|x86.Build.0 = Debug|Any CPU
 		{2A8F4B2B-0892-44C5-B1C0-B5001B8D8AD0}.PlantMAT|Any CPU.ActiveCfg = Debug|Any CPU

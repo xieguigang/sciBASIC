@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::75d54bdda74b00e3fefac741cd505e76, Microsoft.VisualBasic.Core\src\Drawing\Bitmap\Bitmap\BitmapInfoHeaderRGBA.vb"
+﻿#Region "Microsoft.VisualBasic::a6e5e531add1dd79d7e91da4f234f8ba, Microsoft.VisualBasic.Core\src\Drawing\Bitmap\Bitmap\BitmapInfoHeaderRGBA.vb"
 
     ' Author:
     ' 
@@ -183,4 +183,3 @@ Namespace Imaging.BitmapImage.FileStream
     End Class
 
 End Namespace
-

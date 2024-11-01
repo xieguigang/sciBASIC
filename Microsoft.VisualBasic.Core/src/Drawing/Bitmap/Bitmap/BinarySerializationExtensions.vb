@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::012cc19e6f9d8f7b6d5a1df2a45794c6, Microsoft.VisualBasic.Core\src\Drawing\Bitmap\Bitmap\BinarySerializationExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::f78c572d997100f63001c4e0f19366b8, Microsoft.VisualBasic.Core\src\Drawing\Bitmap\Bitmap\BinarySerializationExtensions.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 8 (21.62%)
-    '     File Size: 1.67 KB
+    '     File Size: 1.66 KB
 
 
     '     Module BinarySerializationExtensions
@@ -89,4 +89,3 @@ Namespace Imaging.BitmapImage.FileStream
         End Function
     End Module
 End Namespace
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::90ec8ef8b94273c1219ce554e502ac76, Data_science\NLP\LDA\ParallelGibbsLda\GibbsWorker.vb"
+﻿#Region "Microsoft.VisualBasic::39ac962561dd3d5a9e7a478e52d74f50, Data_science\NLP\LDA\ParallelGibbsLda\GibbsWorker.vb"
 
     ' Author:
     ' 
@@ -34,18 +34,21 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 85
-    '    Code Lines: 61 (71.76%)
-    ' Comment Lines: 7 (8.24%)
+    '   Total Lines: 90
+    '    Code Lines: 64 (71.11%)
+    ' Comment Lines: 7 (7.78%)
     '    - Xml Docs: 42.86%
     ' 
-    '   Blank Lines: 17 (20.00%)
-    '     File Size: 2.91 KB
+    '   Blank Lines: 19 (21.11%)
+    '     File Size: 3.03 KB
 
 
     '     Class GibbsWorker
     ' 
     '         Constructor: (+1 Overloads) Sub New
+    ' 
+    '         Function: ToString
+    ' 
     '         Sub: gibbsSampling, run
     ' 
     ' 

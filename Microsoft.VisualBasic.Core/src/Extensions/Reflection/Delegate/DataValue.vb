@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1ee88c0b02c6e652e4309a5a25d16309, Microsoft.VisualBasic.Core\src\Extensions\Reflection\Delegate\DataValue.vb"
+﻿#Region "Microsoft.VisualBasic::f5bbeca7cf365c7a2b26a1faa896bdb3, Microsoft.VisualBasic.Core\src\Extensions\Reflection\Delegate\DataValue.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 185
-    '    Code Lines: 96 (51.89%)
-    ' Comment Lines: 60 (32.43%)
-    '    - Xml Docs: 46.67%
+    '   Total Lines: 208
+    '    Code Lines: 111 (53.37%)
+    ' Comment Lines: 63 (30.29%)
+    '    - Xml Docs: 49.21%
     ' 
-    '   Blank Lines: 29 (15.68%)
-    '     File Size: 7.10 KB
+    '   Blank Lines: 34 (16.35%)
+    '     File Size: 7.88 KB
 
 
     '     Class DataObjectVector
@@ -49,7 +49,7 @@
     ' 
     '         Constructor: (+1 Overloads) Sub New
     ' 
-    '         Function: GetProperty, inspectType
+    '         Function: GetProperty, GetSubVector, inspectType
     ' 
     '         Sub: SetProperty
     ' 

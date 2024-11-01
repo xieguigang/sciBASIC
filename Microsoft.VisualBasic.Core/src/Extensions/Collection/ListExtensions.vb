@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::942ab3d561b2d49b6e260b11b5f48283, Microsoft.VisualBasic.Core\src\Extensions\Collection\ListExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::6e622df8a6f76e235f224028c74c3772, Microsoft.VisualBasic.Core\src\Extensions\Collection\ListExtensions.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 327
-    '    Code Lines: 176 (53.82%)
-    ' Comment Lines: 115 (35.17%)
-    '    - Xml Docs: 81.74%
+    '   Total Lines: 353
+    '    Code Lines: 182 (51.56%)
+    ' Comment Lines: 135 (38.24%)
+    '    - Xml Docs: 85.93%
     ' 
-    '   Blank Lines: 36 (11.01%)
-    '     File Size: 12.20 KB
+    '   Blank Lines: 36 (10.20%)
+    '     File Size: 13.05 KB
 
 
     ' Module ListExtensions
@@ -49,7 +49,7 @@
     '               Count, HasKey, Indexing, Pop, PopAt
     '               Random, ReorderByKeys, (+2 Overloads) ToList, TopMostFrequent
     ' 
-    '     Sub: DoEach, ForEach, RemoveAll, Swap
+    '     Sub: DoEach, (+2 Overloads) ForEach, RemoveAll, Swap
     ' 
     ' /********************************************************************************/
 

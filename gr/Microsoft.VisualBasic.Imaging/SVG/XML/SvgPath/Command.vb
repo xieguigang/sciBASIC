@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b248d457d3d9e5a772c2eceb0181f036, gr\Microsoft.VisualBasic.Imaging\SVG\XML\SvgPath\Command.vb"
+﻿#Region "Microsoft.VisualBasic::b2104e0e5850fbbaf141ad661e27aed6, gr\Microsoft.VisualBasic.Imaging\SVG\XML\SvgPath\Command.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 32
-    '    Code Lines: 24 (75.00%)
-    ' Comment Lines: 3 (9.38%)
+    '   Total Lines: 35
+    '    Code Lines: 24 (68.57%)
+    ' Comment Lines: 3 (8.57%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 5 (15.62%)
-    '     File Size: 1.12 KB
+    '   Blank Lines: 8 (22.86%)
+    '     File Size: 1.13 KB
 
 
     '     Class Command
@@ -67,6 +67,7 @@ Namespace SVG.PathHelper
             Dim s As String = text.Trim()
             Dim tokens = New List(Of String)()
             Dim startIdx = 0
+
             For i = 0 To s.Length - 1
                 If s(i) = "-"c Then i += 1
                 While i < s.Length AndAlso s(i) <> "-"c AndAlso s(i) <> " "c AndAlso s(i) <> ","c
@@ -79,10 +80,12 @@ Namespace SVG.PathHelper
 
                 startIdx = If(i < s.Length AndAlso s(i) = "-"c, i, i + 1)
             Next
+
             Return tokens
         End Function
 
         Public MustOverride Sub Scale(factor As Double)
         Public MustOverride Sub Translate(deltaX As Double, deltaY As Double)
+
     End Class
 End Namespace

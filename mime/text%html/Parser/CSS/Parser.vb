@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7f997cedcde30264300280072f888317, mime\text%html\Parser\CSS\Parser.vb"
+﻿#Region "Microsoft.VisualBasic::0ce49e1fe4202af26f1b5718ca4a56b9, mime\text%html\Parser\CSS\Parser.vb"
 
     ' Author:
     ' 
@@ -37,10 +37,10 @@
     '   Total Lines: 206
     '    Code Lines: 131 (63.59%)
     ' Comment Lines: 50 (24.27%)
-    '    - Xml Docs: 88.00%
+    '    - Xml Docs: 90.00%
     ' 
     '   Blank Lines: 25 (12.14%)
-    '     File Size: 7.63 KB
+    '     File Size: 7.72 KB
 
 
     '     Module CssParser
@@ -162,7 +162,7 @@ Namespace Language.CSS
         End Function
 
         ''' <summary>
-        ''' 
+        ''' Parse the css style string for a given selector, example as: ``background-color: lightblue;``
         ''' </summary>
         ''' <param name="style">the style text inside an element node selector</param>
         ''' <returns></returns>

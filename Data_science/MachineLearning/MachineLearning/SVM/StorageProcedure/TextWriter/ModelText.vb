@@ -1,56 +1,56 @@
-﻿#Region "Microsoft.VisualBasic::d8e9bed28294f1ed31b6fab311bf8bcf, Data_science\MachineLearning\MachineLearning\SVM\StorageProcedure\TextWriter\ModelText.vb"
+﻿#Region "Microsoft.VisualBasic::50f1aec5cfe8f6859b72205ad8caf0c7, Data_science\MachineLearning\MachineLearning\SVM\StorageProcedure\TextWriter\ModelText.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 121
-'    Code Lines: 84 (69.42%)
-' Comment Lines: 6 (4.96%)
-'    - Xml Docs: 83.33%
-' 
-'   Blank Lines: 31 (25.62%)
-'     File Size: 4.25 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Module ModelText
-' 
-'         Function: ToString
-' 
-'         Sub: Write
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 120
+    '    Code Lines: 82 (68.33%)
+    ' Comment Lines: 6 (5.00%)
+    '    - Xml Docs: 83.33%
+    ' 
+    '   Blank Lines: 32 (26.67%)
+    '     File Size: 4.19 KB
+
+
+    '     Module ModelText
+    ' 
+    '         Function: ToString
+    ' 
+    '         Sub: Write
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4fa4d824b6e5919ecae711e5a98242fc, gr\Microsoft.VisualBasic.Imaging\test\cssPaddingTest.vb"
+﻿#Region "Microsoft.VisualBasic::03f53fbda44aacd7077b96b5f8c0717b, gr\Microsoft.VisualBasic.Imaging\test\cssPaddingTest.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 0.00%
     ' 
     '   Blank Lines: 4 (25.00%)
-    '     File Size: 428 B
+    '     File Size: 426 B
 
 
     ' Module cssPaddingTest
@@ -67,4 +67,3 @@ Module cssPaddingTest
         Pause()
     End Sub
 End Module
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ea32fe8e1509a8d1bac5a2bf1d8ab6dc, Data_science\DataMining\DataMining\Evaluation\ROC.vb"
+﻿#Region "Microsoft.VisualBasic::174d4a1d5f5fdce4c52257c339d70190, Data_science\DataMining\DataMining\Evaluation\ROC.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 139
-    '    Code Lines: 73 (52.52%)
-    ' Comment Lines: 51 (36.69%)
-    '    - Xml Docs: 86.27%
+    '   Total Lines: 151
+    '    Code Lines: 78 (51.66%)
+    ' Comment Lines: 53 (35.10%)
+    '    - Xml Docs: 83.02%
     ' 
-    '   Blank Lines: 15 (10.79%)
-    '     File Size: 5.33 KB
+    '   Blank Lines: 20 (13.25%)
+    '     File Size: 5.60 KB
 
 
     '     Module ROC

@@ -1,4 +1,69 @@
-﻿Imports Microsoft.VisualBasic.ComponentModel.Algorithm.BinaryTree
+﻿#Region "Microsoft.VisualBasic::14a55eb4690708e077d529f349e68a12, Microsoft.VisualBasic.Core\src\Text\StringSimilarity\Levenshtein\LevenshteinTree.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 119
+    '    Code Lines: 85 (71.43%)
+    ' Comment Lines: 13 (10.92%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 21 (17.65%)
+    '     File Size: 3.94 KB
+
+
+    '     Class LevenshteinTree
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    '         Function: AddString, Compares, Query
+    ' 
+    '     Class LevenshteinTreeIndex
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    '         Function: AddString, Compares, Query
+    '         Structure TextKey
+    ' 
+    '             Function: ToString
+    ' 
+    ' 
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+Imports Microsoft.VisualBasic.ComponentModel.Algorithm.BinaryTree
 
 Namespace Text.Levenshtein
 

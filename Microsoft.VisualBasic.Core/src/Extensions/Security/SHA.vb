@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2545004bbf22df1b121354da8939da63, Microsoft.VisualBasic.Core\src\Extensions\Security\SHA.vb"
+﻿#Region "Microsoft.VisualBasic::af0079c08e8717711dfaece43adc6b67, Microsoft.VisualBasic.Core\src\Extensions\Security\SHA.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 281
-    '    Code Lines: 119 (42.35%)
-    ' Comment Lines: 88 (31.32%)
+    '   Total Lines: 285
+    '    Code Lines: 122 (42.81%)
+    ' Comment Lines: 88 (30.88%)
     '    - Xml Docs: 43.18%
     ' 
-    '   Blank Lines: 74 (26.33%)
-    '     File Size: 11.66 KB
+    '   Blank Lines: 75 (26.32%)
+    '     File Size: 11.90 KB
 
 
     '     Class SHA256
@@ -48,8 +48,8 @@
     '         Properties: CertificateSigned, Passphrase
     ' 
     '         Constructor: (+2 Overloads) Sub New
-    '         Function: Decrypt, DecryptString, Deserialization, Encrypt, EncryptData
-    '                   (+2 Overloads) GetDynamicsCertification, Serialization, ToString
+    '         Function: Create, Decrypt, DecryptString, Deserialization, Encrypt
+    '                   EncryptData, (+2 Overloads) GetDynamicsCertification, Serialization, ToString
     ' 
     ' 
     ' /********************************************************************************/

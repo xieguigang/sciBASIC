@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::784f1e218f53cd83a82567ee8982c527, Data_science\NLP\LDA\ParallelGibbsLda\ParallelGibbsLda.vb"
+﻿#Region "Microsoft.VisualBasic::a866f94ebc545d2c3fee39f2656b4ca5, Data_science\NLP\LDA\ParallelGibbsLda\ParallelGibbsLda.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 218
-    '    Code Lines: 129 (59.17%)
-    ' Comment Lines: 50 (22.94%)
+    '   Total Lines: 216
+    '    Code Lines: 127 (58.80%)
+    ' Comment Lines: 50 (23.15%)
     '    - Xml Docs: 96.00%
     ' 
-    '   Blank Lines: 39 (17.89%)
-    '     File Size: 7.04 KB
+    '   Blank Lines: 39 (18.06%)
+    '     File Size: 6.93 KB
 
 
     '     Class ParallelGibbsLda
@@ -51,7 +51,7 @@
     ' 
     '         Function: calcPhiMatrix, calcThetaMatrix, perplexity
     ' 
-    '         Sub: (+2 Overloads) gibbsSampling, initial
+    '         Sub: gibbsSampling, initial
     ' 
     ' 
     ' /********************************************************************************/

@@ -176,10 +176,15 @@ Namespace Text.Parser.HtmlParser
         End Function
 
         ''' <summary>
-        ''' Removes the html tags from the text string.(这个函数会移除所有的html标签)
+        ''' Removes the html tags from the text string.
         ''' </summary>
         ''' <param name="s"></param>
-        ''' <returns></returns>
+        ''' <returns>
+        ''' a plain text that removes all html format tags
+        ''' </returns>
+        ''' <remarks>
+        ''' (这个函数会移除所有的html标签)
+        ''' </remarks>
         <ExportAPI("Html.Tag.Trim"), Extension> Public Function StripHTMLTags(s$, Optional stripBlank As Boolean = False) As String
             If String.IsNullOrEmpty(s) Then
                 Return ""

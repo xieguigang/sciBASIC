@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1cc4fe0615e2e44df8ead3ef7cc00762, Microsoft.VisualBasic.Core\src\Drawing\Bitmap\BitmapResizer.vb"
+﻿#Region "Microsoft.VisualBasic::b0a5667959487ce72f00fb58702efb07, Microsoft.VisualBasic.Core\src\Drawing\Bitmap\BitmapResizer.vb"
 
     ' Author:
     ' 
@@ -34,18 +34,19 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 116
-    '    Code Lines: 93 (80.17%)
-    ' Comment Lines: 6 (5.17%)
-    '    - Xml Docs: 0.00%
+    '   Total Lines: 224
+    '    Code Lines: 166 (74.11%)
+    ' Comment Lines: 23 (10.27%)
+    '    - Xml Docs: 65.22%
     ' 
-    '   Blank Lines: 17 (14.66%)
-    '     File Size: 5.67 KB
+    '   Blank Lines: 35 (15.62%)
+    '     File Size: 9.97 KB
 
 
     '     Module BitmapResizer
     ' 
-    '         Function: GetPixelValue, (+2 Overloads) ResizeImage
+    '         Function: BilinearInterpolation, ByteArrayToByteMatrix, ByteMatrixToByteArray, CubicInterpolate, CubicInterpolation
+    '                   GetPixelValue, ResizeImage
     '         Enum EdgeHandlingMethod
     ' 
     '             Clamp, Fill, Mirror, Repeat
@@ -62,11 +63,46 @@
 #End Region
 
 Imports System.Drawing
+Imports System.Runtime.CompilerServices
 Imports std = System.Math
 
 Namespace Imaging.BitmapImage
 
     Public Module BitmapResizer
+
+        Public Function ByteArrayToByteMatrix(byteArray As Byte(), width As Integer, height As Integer) As Byte(,)
+            Dim matrix = New Byte(width - 1, height * 4 - 1) {} ' 4 channels (ARGB)
+
+            For Y As Integer = 0 To height - 1
+                For X As Integer = 0 To width - 1
+                    Dim index = (Y * width + X) * 4 ' Calculate index in the byte array
+                    matrix(X, Y * 4) = byteArray(index)     ' Alpha
+                    matrix(X, Y * 4 + 1) = byteArray(index + 1) ' Red
+                    matrix(X, Y * 4 + 2) = byteArray(index + 2) ' Green
+                    matrix(X, Y * 4 + 3) = byteArray(index + 3) ' Blue
+                Next
+            Next
+
+            Return matrix
+        End Function
+
+        Public Function ByteMatrixToByteArray(byteMatrix As Byte(,)) As Byte()
+            Dim width = byteMatrix.GetLength(0)
+            Dim height = byteMatrix.GetLength(1)
+            Dim channels = 4 ' 假设每个像素有4个通道（例如 ARGB）
+            Dim byteArray = New Byte(width * height * channels - 1) {}
+
+            For Y As Integer = 0 To height - 1
+                For X As Integer = 0 To width - 1
+                    For c = 0 To channels - 1
+                        Dim index = Y * width * channels + X * channels + c
+                        byteArray(index) = byteMatrix(X, Y)
+                    Next
+                Next
+            Next
+
+            Return byteArray
+        End Function
 
         Public Function ResizeImage(ByRef srcImage(,) As Color, srcWidth As Integer, srcHeight As Integer, dstWidth As Integer, dstHeight As Integer) As Color(,)
             Dim dstImage(dstHeight - 1, dstWidth - 1) As Color
@@ -105,7 +141,80 @@ Namespace Imaging.BitmapImage
             Return dstImage
         End Function
 
-        Public Function ResizeImage(ByRef srcImage(,) As Byte, srcWidth As Integer, srcHeight As Integer, dstWidth As Integer, dstHeight As Integer) As Byte(,)
+        ''' <summary>
+        ''' Cubic interpolate
+        ''' </summary>
+        ''' <param name="input"></param>
+        ''' <param name="scale"></param>
+        ''' <returns></returns>
+        ''' 
+        <Extension>
+        Public Function CubicInterpolation(input As Byte(,), scale As Double) As Byte(,)
+            Dim originalWidth = input.GetLength(0)
+            Dim originalHeight = input.GetLength(1)
+            Dim newWidth As Integer = originalWidth * scale
+            Dim newHeight As Integer = originalHeight * scale
+
+            Dim output = New Byte(newWidth - 1, newHeight - 1) {}
+
+            For X As Integer = 0 To newWidth - 1
+                For Y As Integer = 0 To newHeight - 1
+                    Dim newX = X / scale
+                    Dim newY = Y / scale
+
+                    Dim x0 As Integer = newX
+                    Dim y0 As Integer = newY
+                    Dim x1 = x0 + 1
+                    Dim y1 = y0 + 1
+
+                    Dim dx = newX - x0
+                    Dim dy = newY - y0
+
+                    Dim values = New Byte(3) {}
+                    For i = 0 To 1
+                        For j = 0 To 1
+                            If x1 < originalWidth AndAlso y1 < originalHeight Then
+                                values(i * 2 + j) = input(x1 + i, y1 + j)
+                            Else
+                                values(i * 2 + j) = 0 ' or use edge pixel value
+                            End If
+                        Next
+                    Next
+
+                    Dim interpolationX0 = CubicInterpolate(values(0), values(1), values(2), values(3), dx)
+                    Dim interpolationX1 = CubicInterpolate(values(2), values(3), values(4), values(5), dx)
+
+                    output(X, Y) = CByte(CubicInterpolate(interpolationX0, interpolationX1, 0, 0, dy))
+                Next
+            Next
+
+            Return output
+        End Function
+
+        Private Function CubicInterpolate(v0 As Double, v1 As Double, v2 As Double, v3 As Double, x As Double) As Double
+            Dim a0, a1, a2, a3, x2 As Double
+
+            x2 = x * x
+            a0 = v3 - v2 - v0 + v1
+            a1 = v0 - v1 - a0
+            a2 = v2 - v0
+            a3 = v1
+
+            Return a0 * x * x2 + a1 * x2 + a2 * x + a3
+        End Function
+
+        ''' <summary>
+        ''' Bilinear interpolation
+        ''' </summary>
+        ''' <param name="srcImage"></param>
+        ''' <param name="srcWidth"></param>
+        ''' <param name="srcHeight"></param>
+        ''' <param name="dstWidth"></param>
+        ''' <param name="dstHeight"></param>
+        ''' <returns></returns>
+        ''' 
+        <Extension>
+        Public Function BilinearInterpolation(ByRef srcImage(,) As Byte, srcWidth As Integer, srcHeight As Integer, dstWidth As Integer, dstHeight As Integer) As Byte(,)
             Dim dstImage(dstHeight - 1, dstWidth - 1) As Byte
             Dim scaleX As Double = CDbl(srcWidth) / dstWidth
             Dim scaleY As Double = CDbl(srcHeight) / dstHeight

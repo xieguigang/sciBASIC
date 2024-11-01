@@ -71,7 +71,7 @@ Public Module Serialization
         If success Then
             Return yamlStream.Load(Of T)
         Else
-            Dim ex As New Exception(parser.GetEorrorMessages())
+            Dim ex As New Exception(parser.GetErrorMessageText())
             Throw New Exception(path.ToFileURL, ex)
         End If
     End Function

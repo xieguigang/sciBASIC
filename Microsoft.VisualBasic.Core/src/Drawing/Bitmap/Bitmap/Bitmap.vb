@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::97b0d28343fad9cec128365cd4025109, Microsoft.VisualBasic.Core\src\Drawing\Bitmap\Bitmap\Bitmap.vb"
+﻿#Region "Microsoft.VisualBasic::5f375b8a625b14061d2c0f1cd58ee5aa, Microsoft.VisualBasic.Core\src\Drawing\Bitmap\Bitmap\Bitmap.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 180
-    '    Code Lines: 91 (50.56%)
-    ' Comment Lines: 64 (35.56%)
-    '    - Xml Docs: 89.06%
+    '   Total Lines: 179
+    '    Code Lines: 91 (50.84%)
+    ' Comment Lines: 63 (35.20%)
+    '    - Xml Docs: 88.89%
     ' 
-    '   Blank Lines: 25 (13.89%)
-    '     File Size: 7.70 KB
+    '   Blank Lines: 25 (13.97%)
+    '     File Size: 7.64 KB
 
 
     '     Class Bitmap
@@ -238,4 +238,3 @@ Namespace Imaging.BitmapImage.FileStream
         End Function
     End Class
 End Namespace
-

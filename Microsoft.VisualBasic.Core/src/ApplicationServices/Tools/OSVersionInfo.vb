@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3c118018626760676a3fc9601c964582, Microsoft.VisualBasic.Core\src\ApplicationServices\Tools\OSVersionInfo.vb"
+﻿#Region "Microsoft.VisualBasic::c8a0dd0fbf4d1e3b1e4f9ea75946137f, Microsoft.VisualBasic.Core\src\ApplicationServices\Tools\OSVersionInfo.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 1100
-    '    Code Lines: 663 (60.27%)
-    ' Comment Lines: 249 (22.64%)
+    '   Total Lines: 1099
+    '    Code Lines: 659 (59.96%)
+    ' Comment Lines: 249 (22.66%)
     '    - Xml Docs: 69.48%
     ' 
-    '   Blank Lines: 188 (17.09%)
-    '     File Size: 48.67 KB
+    '   Blank Lines: 191 (17.38%)
+    '     File Size: 48.33 KB
 
 
     '     Module OSVersionInfo

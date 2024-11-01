@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bcda9249fd29f7701a100da6bbbe074e, Microsoft.VisualBasic.Core\src\Drawing\Bitmap\Bitmap\SafeBinaryReader.vb"
+﻿#Region "Microsoft.VisualBasic::de4956e59caad240adc984f1a7d00ed2, Microsoft.VisualBasic.Core\src\Drawing\Bitmap\Bitmap\SafeBinaryReader.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 0.00%
     ' 
     '   Blank Lines: 9 (21.95%)
-    '     File Size: 1.36 KB
+    '     File Size: 1.35 KB
 
 
     '     Class SafeBinaryReader
@@ -95,4 +95,3 @@ Namespace Imaging.BitmapImage.FileStream
         End Function
     End Class
 End Namespace
-

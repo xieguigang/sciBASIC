@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2388dafda77b9b1f6e77b4a3cd44568e, gr\Microsoft.VisualBasic.Imaging\test\objReaderTest.vb"
+﻿#Region "Microsoft.VisualBasic::8123357812458721f63442bf52c31376, gr\Microsoft.VisualBasic.Imaging\test\objReaderTest.vb"
 
     ' Author:
     ' 
@@ -114,4 +114,3 @@
 '        End Using
 '    End Sub
 'End Module
-

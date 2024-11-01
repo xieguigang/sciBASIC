@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::25b3b0256c1dcc3a95046b555ec29ab2, mime\application%json\BSON\BSON.vb"
+﻿#Region "Microsoft.VisualBasic::06a802d85c6be89f6198de83f8f1bd7f, mime\application%json\BSON\BSON.vb"
 
     ' Author:
     ' 
@@ -34,18 +34,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 79
-    '    Code Lines: 54 (68.35%)
-    ' Comment Lines: 12 (15.19%)
-    '    - Xml Docs: 83.33%
+    '   Total Lines: 121
+    '    Code Lines: 85 (70.25%)
+    ' Comment Lines: 18 (14.88%)
+    '    - Xml Docs: 88.89%
     ' 
-    '   Blank Lines: 13 (16.46%)
-    '     File Size: 2.48 KB
+    '   Blank Lines: 18 (14.88%)
+    '     File Size: 4.23 KB
 
 
     '     Module BSONFormat
     ' 
-    '         Function: GetBuffer, (+3 Overloads) Load, SafeGetBuffer
+    '         Function: GetBuffer, (+3 Overloads) Load, LoadList, SafeGetBuffer
     ' 
     '         Sub: SafeWriteBuffer, WriteBuffer
     ' 

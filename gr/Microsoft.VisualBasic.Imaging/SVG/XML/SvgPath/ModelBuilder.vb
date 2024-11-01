@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::11d971fc69fc1277757f6c5009ebeacf, gr\Microsoft.VisualBasic.Imaging\SVG\XML\SvgPath\ModelBuilder.vb"
+﻿#Region "Microsoft.VisualBasic::8256dabf4d9efa12f0f6b340d0a561d0, gr\Microsoft.VisualBasic.Imaging\SVG\XML\SvgPath\ModelBuilder.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 78.18%
     ' 
     '   Blank Lines: 30 (12.61%)
-    '     File Size: 8.84 KB
+    '     File Size: 8.72 KB
 
 
     '     Module ModelBuilder
@@ -107,9 +107,9 @@ Namespace SVG.PathHelper
         ''' </remarks>
         <Extension>
         Public Function SVGPathData(path As GraphicsPath) As String
-            Dim points = path.PathData _
-               .Points _
-               .Select(Function(pt) $"{pt.X} {pt.Y}")
+            Dim points = path.PathData.Points _
+               .Select(Function(pt) $"{pt.X} {pt.Y}") _
+               .ToArray
             Dim sb As New StringBuilder("M" & points.First)
 
             For Each pt In points.Skip(1)
@@ -154,7 +154,7 @@ Namespace SVG.PathHelper
             Dim parameters As New List(Of Double)
             Dim buffer As New List(Of Char)
             Dim action As Char = Text.ASCII.NUL
-            Dim gdiPath As New Path2D
+            Dim g As New Path2D
 
             Do While Not scanner.EndRead
                 ' Get current value and move forward the Pointer 
@@ -164,7 +164,7 @@ Namespace SVG.PathHelper
                 If Char.IsLetter(c) Then
 
                     If Not action = Text.ASCII.NUL Then
-                        Call gdiPath.Call(action, parameters, path)
+                        Call g.Call(action, parameters, path)
                     End If
 
                     ' clear buffer
@@ -185,47 +185,47 @@ Namespace SVG.PathHelper
                 End If
             Loop
 
-            Return gdiPath.Path
+            Return g.Path
         End Function
 
         ''' <summary>
         ''' Invoke gdi+ path build action
         ''' </summary>
-        ''' <param name="gdiPath"></param>
+        ''' <param name="g"></param>
         ''' <param name="action"></param>
         ''' <param name="parameters"></param>
         ''' <param name="path"></param>
         <Extension>
-        Private Sub [Call](gdiPath As Path2D, action As Char, parameters As List(Of Double), path As SvgPath)
+        Private Sub [Call](g As Path2D, action As Char, parameters As List(Of Double), path As SvgPath)
             Select Case action
                 Case "M"c
-                    Call gdiPath.MoveTo(parameters(0), parameters(1))
+                    Call g.MoveTo(parameters(0), parameters(1))
                 Case "m"c
-                    Call gdiPath.MoveTo(parameters(0), parameters(1), relative:=True)
+                    Call g.MoveTo(parameters(0), parameters(1), relative:=True)
 
                 Case "L"c
-                    Call gdiPath.LineTo(parameters(0), parameters(1))
+                    Call g.LineTo(parameters(0), parameters(1))
                 Case "l"c
-                    Call gdiPath.LineTo(parameters(0), parameters(1), relative:=True)
+                    Call g.LineTo(parameters(0), parameters(1), relative:=True)
 
                 Case "H"c
                     ' 水平平行线
                     ' 变X不变Y
-                    Call gdiPath.HorizontalTo(parameters(0))
+                    Call g.HorizontalTo(parameters(0))
                 Case "h"c
-                    Call gdiPath.HorizontalTo(parameters(0), relative:=True)
+                    Call g.HorizontalTo(parameters(0), relative:=True)
 
                 Case "V"c
                     ' 垂直平行线
                     ' 变Y不变X
-                    Call gdiPath.VerticalTo(parameters(0))
+                    Call g.VerticalTo(parameters(0))
                 Case "v"c
-                    Call gdiPath.VerticalTo(parameters(0), relative:=True)
+                    Call g.VerticalTo(parameters(0), relative:=True)
 
                 Case "C"c
                     Dim i As i32 = 0
 
-                    Call gdiPath.CurveTo(
+                    Call g.CurveTo(
                         parameters(++i),
                         parameters(++i),
                         parameters(++i),
@@ -236,7 +236,7 @@ Namespace SVG.PathHelper
                 Case "c"c
                     Dim i As i32 = 0
 
-                    Call gdiPath.CurveTo(
+                    Call g.CurveTo(
                         parameters(++i),
                         parameters(++i),
                         parameters(++i),
@@ -248,19 +248,19 @@ Namespace SVG.PathHelper
                     )
 
                 Case "S"c
-                    Call gdiPath.SmoothCurveTo(parameters(0), parameters(1), parameters(2), parameters(4))
+                    Call g.SmoothCurveTo(parameters(0), parameters(1), parameters(2), parameters(4))
                 Case "s"c
-                    Call gdiPath.SmoothCurveTo(parameters(0), parameters(1), parameters(2), parameters(4), relative:=True)
+                    Call g.SmoothCurveTo(parameters(0), parameters(1), parameters(2), parameters(4), relative:=True)
 
                 Case "Q"c
-                    Call gdiPath.QuadraticBelzier(parameters(0), parameters(1), parameters(3), parameters(4))
+                    Call g.QuadraticBelzier(parameters(0), parameters(1), parameters(3), parameters(4))
                 Case "q"c
-                    Call gdiPath.QuadraticBelzier(parameters(0), parameters(1), parameters(3), parameters(4), relative:=True)
+                    Call g.QuadraticBelzier(parameters(0), parameters(1), parameters(3), parameters(4), relative:=True)
 
                 Case "A"c
                     Dim i As i32 = 0
 
-                    Call gdiPath.EllipticalArc(
+                    Call g.EllipticalArc(
                         parameters(++i),
                         parameters(++i),
                         parameters(++i),
@@ -272,7 +272,7 @@ Namespace SVG.PathHelper
                 Case "a"c
                     Dim i As i32 = 0
 
-                    Call gdiPath.EllipticalArc(
+                    Call g.EllipticalArc(
                         parameters(++i),
                         parameters(++i),
                         parameters(++i),
@@ -285,7 +285,7 @@ Namespace SVG.PathHelper
                     )
 
                 Case "Z"c, "z"c
-                    Call gdiPath.CloseAllFigures()
+                    Call g.CloseAllFigures()
                 Case Else
                     Throw New NotImplementedException($"Action ""{action}""@{path.D}")
             End Select

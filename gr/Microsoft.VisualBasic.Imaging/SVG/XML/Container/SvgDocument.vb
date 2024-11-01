@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::161b294e6ba878017cfadbed35a41014, gr\Microsoft.VisualBasic.Imaging\SVG\XML\Container\SvgDocument.vb"
+﻿#Region "Microsoft.VisualBasic::c90d81e6989131c214803f8a7ccb30c2, gr\Microsoft.VisualBasic.Imaging\SVG\XML\Container\SvgDocument.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 262
-    '    Code Lines: 161 (61.45%)
-    ' Comment Lines: 69 (26.34%)
-    '    - Xml Docs: 82.61%
+    '   Total Lines: 267
+    '    Code Lines: 165 (61.80%)
+    ' Comment Lines: 70 (26.22%)
+    '    - Xml Docs: 81.43%
     ' 
-    '   Blank Lines: 32 (12.21%)
-    '     File Size: 9.71 KB
+    '   Blank Lines: 32 (11.99%)
+    '     File Size: 9.98 KB
 
 
     '     Class SvgDocument
@@ -66,6 +66,7 @@ Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports System.Xml
 Imports Microsoft.VisualBasic.ComponentModel
+Imports Microsoft.VisualBasic.MIME.Html.Language.CSS
 Imports Microsoft.VisualBasic.Text
 Imports Microsoft.VisualBasic.Text.Xml
 
@@ -194,7 +195,11 @@ Namespace SVG.XML
 
         Public ReadOnly Property BackgroundFill As String
             Get
+                ' style="background-color: lightblue;"
+                Dim style = CssParser.ParseStyle(Me.Style)
+                Dim color As String = style("background-color")
 
+                Return color
             End Get
         End Property
 

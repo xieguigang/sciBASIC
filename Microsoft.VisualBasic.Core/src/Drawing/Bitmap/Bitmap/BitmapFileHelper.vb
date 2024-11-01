@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c40e0581c5e91a750e1dd5670710de0b, Microsoft.VisualBasic.Core\src\Drawing\Bitmap\Bitmap\BitmapFileHelper.vb"
+﻿#Region "Microsoft.VisualBasic::7e43bc62de7d561a4f5773bd0a52123f, Microsoft.VisualBasic.Core\src\Drawing\Bitmap\Bitmap\BitmapFileHelper.vb"
 
     ' Author:
     ' 
@@ -143,4 +143,3 @@ Namespace Imaging.BitmapImage.FileStream
         End Sub
     End Module
 End Namespace
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cac9e880578574c47a9bd5199daba26d, Data_science\NLP\LDA\DocumentLoader.vb"
+﻿#Region "Microsoft.VisualBasic::7b751831a5bdb8476a121ec3f29cb6e4, Data_science\NLP\LDA\DocumentLoader.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 81
-    '    Code Lines: 56 (69.14%)
-    ' Comment Lines: 6 (7.41%)
+    '   Total Lines: 84
+    '    Code Lines: 58 (69.05%)
+    ' Comment Lines: 6 (7.14%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 19 (23.46%)
-    '     File Size: 2.57 KB
+    '   Blank Lines: 20 (23.81%)
+    '     File Size: 2.75 KB
 
 
     '     Module DocumentLoader

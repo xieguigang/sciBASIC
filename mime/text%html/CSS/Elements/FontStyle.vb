@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f3a7aa249eb796961f28712053e2d72d, mime\text%html\CSS\Elements\FontStyle.vb"
+﻿#Region "Microsoft.VisualBasic::ca039f10e8b3a95a088e04098c4f9f7b, mime\text%html\CSS\Elements\FontStyle.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 89.47%
     ' 
     '   Blank Lines: 35 (10.94%)
-    '     File Size: 14.57 KB
+    '     File Size: 14.56 KB
 
 
     '     Class CSSFont
