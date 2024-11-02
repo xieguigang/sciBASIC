@@ -181,7 +181,7 @@ Namespace CommandLine
             End If
 
             If Not async Then
-                While Not reader.EndOfStream
+                While App.Running AndAlso Not reader.EndOfStream
                     Call onReadLine(reader.ReadLine)
                 End While
 
@@ -189,7 +189,7 @@ Namespace CommandLine
             Else
                 Call Task.Run(
                     Sub()
-                        While Not reader.EndOfStream
+                        While App.Running AndAlso Not reader.EndOfStream
                             Call onReadLine(reader.ReadLine)
                         End While
                     End Sub)
@@ -276,7 +276,7 @@ Namespace CommandLine
             Dim chunk As Byte() = New Byte(1024 - 1) {}
             Dim nbytes As Integer
 
-            Do While True
+            Do While Microsoft.VisualBasic.App.Running
                 nbytes = reader.Read(chunk, Scan0, chunk.Length)
 
                 If nbytes = 0 Then
