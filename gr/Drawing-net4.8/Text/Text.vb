@@ -99,10 +99,14 @@ Namespace Drawing2D.Text
             Dim html$ = HTMLtemplate _
                 .Interpolate(table, nullAsEmpty:=True)
 
+#If NET48 Then
             Call HtmlRenderer.Render(
                 g, html,
                 location, maxWidth
             )
+#Else
+            Throw New NotImplementedException
+#End If
         End Sub
 
         ''' <summary>
