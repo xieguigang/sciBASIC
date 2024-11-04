@@ -57,8 +57,10 @@ Imports System.Drawing
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Driver
+Imports Bitmap = Microsoft.VisualBasic.Imaging.Bitmap
 Imports Brush = Microsoft.VisualBasic.Imaging.Brush
 Imports Font = Microsoft.VisualBasic.Imaging.Font
+Imports Image = Microsoft.VisualBasic.Imaging.Image
 Imports Pen = Microsoft.VisualBasic.Imaging.Pen
 Imports SolidBrush = Microsoft.VisualBasic.Imaging.SolidBrush
 Imports TextureBrush = Microsoft.VisualBasic.Imaging.TextureBrush
@@ -96,6 +98,20 @@ Public Module DrawingInterop
 
     <Extension>
     Public Function CTypeGraphicsPath(path As GraphicsPath) As System.Drawing.Drawing2D.GraphicsPath
+        Throw New NotImplementedException
+    End Function
+
+    <Extension>
+    Public Function CTypeImage(image As Image) As System.Drawing.Image
+        If TypeOf image Is Bitmap Then
+            Return DirectCast(image, Bitmap).CTypeBitmap
+        Else
+            Throw New NotImplementedException
+        End If
+    End Function
+
+    <Extension>
+    Public Function CTypeBitmap(bitmap As Bitmap) As System.Drawing.Bitmap
         Throw New NotImplementedException
     End Function
 End Module
