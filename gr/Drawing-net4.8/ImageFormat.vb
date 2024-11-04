@@ -150,9 +150,13 @@ Public Module ImageFormatExtensions
             If format = ImageFormats.Tiff Then
                 Return New TiffWriter(res).MultipageTiffSave(path)
             ElseIf format = ImageFormats.Base64 Then
+#If NET8_0_OR_GREATER Then
+                Throw New NotImplementedException
+#Else
                 Return res _
                     .ToBase64String _
                     .SaveTo(path, Encodings.ASCII.CodePage)
+#End If
             Else
                 Call res.Save(path, format.GetFormat)
             End If

@@ -122,9 +122,12 @@ Public Module Extensions
     ''' <param name="path"></param>
     ''' <returns></returns>
     '''
-    <ExportAPI("GDI+.Create")>
-    <Extension> Public Function CanvasCreateFromImageFile(path As String) As Graphics2D
-        Dim image As Image = LoadImage(path)
+    <Extension>
+    Public Function CanvasCreateFromImageFile(path As String) As Graphics2D
+#If NET8_0_OR_GREATER Then
+        Throw New NotImplementedException
+#Else
+                Dim image As Image = LoadImage(path)
         Dim g As Graphics = Graphics.FromImage(image)
 
         With g
@@ -133,6 +136,7 @@ Public Module Extensions
         End With
 
         Return Graphics2D.CreateObject(g, image)
+#End If
     End Function
 
     ''' <summary>
