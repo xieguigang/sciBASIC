@@ -426,8 +426,13 @@ Namespace Imaging
             End If
         End Function
 
+        ''' <summary>
+        ''' cast the memory stream buffer as the gdi+ image
+        ''' </summary>
+        ''' <param name="rawStream"></param>
+        ''' <param name="throwEx"></param>
+        ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        <ExportAPI("LoadImage")>
         <Extension>
         Public Function LoadImage(rawStream As Byte(), Optional throwEx As Boolean = True) As Image
             Try

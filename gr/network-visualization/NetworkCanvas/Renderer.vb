@@ -63,7 +63,7 @@ Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts.SpringForce
 Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts.SpringForce.Interfaces
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Math2D
-Imports stdNum = System.Math
+Imports std = System.Math
 
 Public Class Renderer : Inherits AbstractRenderer
     Implements IGraphicsEngine
@@ -71,7 +71,7 @@ Public Class Renderer : Inherits AbstractRenderer
     ''' <summary>
     ''' Gets the graphics source
     ''' </summary>
-    Protected graphicsProvider As Func(Of Graphics)
+    Protected graphicsProvider As Func(Of IGraphics)
     ''' <summary>
     ''' gets the graphics region for the projections: <see cref="GraphToScreen"/> and <see cref="ScreenToGraph"/>
     ''' </summary>
@@ -91,7 +91,7 @@ Public Class Renderer : Inherits AbstractRenderer
     ''' <param name="canvas"></param>
     ''' <param name="regionProvider"></param>
     ''' <param name="iForceDirected"></param>
-    Public Sub New(canvas As Func(Of Graphics), regionProvider As Func(Of Rectangle), iForceDirected As IForceDirected)
+    Public Sub New(canvas As Func(Of IGraphics), regionProvider As Func(Of Rectangle), iForceDirected As IForceDirected)
         MyBase.New(iForceDirected)
 
         Me.graphicsProvider = canvas
@@ -158,14 +158,14 @@ Public Class Renderer : Inherits AbstractRenderer
     ''' <param name="iPos"></param>
     ''' <returns></returns>
     Public Shared Function GraphToScreen(iPos As FDGVector2, rect As Rectangle) As Point
-        Dim x As Integer = CInt(stdNum.Truncate(iPos.x + (CSng(rect.Right - rect.Left) / 2.0F)))
-        Dim y As Integer = CInt(stdNum.Truncate(iPos.y + (CSng(rect.Bottom - rect.Top) / 2.0F)))
+        Dim x As Integer = CInt(std.Truncate(iPos.x + (CSng(rect.Right - rect.Left) / 2.0F)))
+        Dim y As Integer = CInt(std.Truncate(iPos.y + (CSng(rect.Bottom - rect.Top) / 2.0F)))
         Return New Point(x, y)
     End Function
 
     Public Shared Function GraphToScreen(iPos As Point, rect As Rectangle) As Point
-        Dim x As Integer = CInt(stdNum.Truncate(iPos.X + (CSng(rect.Right - rect.Left) / 2.0F)))
-        Dim y As Integer = CInt(stdNum.Truncate(iPos.Y + (CSng(rect.Bottom - rect.Top) / 2.0F)))
+        Dim x As Integer = CInt(std.Truncate(iPos.X + (CSng(rect.Right - rect.Left) / 2.0F)))
+        Dim y As Integer = CInt(std.Truncate(iPos.Y + (CSng(rect.Bottom - rect.Top) / 2.0F)))
         Return New Point(x, y)
     End Function
 
@@ -195,7 +195,7 @@ Public Class Renderer : Inherits AbstractRenderer
         Dim rect As Rectangle = regionProvider()
         Dim pos1 As Point = GraphToScreen(TryCast(iPosition1, FDGVector2), rect)
         Dim pos2 As Point = GraphToScreen(TryCast(iPosition2, FDGVector2), rect)
-        Dim canvas As Graphics = graphicsProvider()
+        Dim canvas As IGraphics = graphicsProvider()
 
         SyncLock canvas
             Try
@@ -216,7 +216,7 @@ Public Class Renderer : Inherits AbstractRenderer
 
     Protected Overrides Sub drawNode(n As Node, iPosition As AbstractVector)
         Dim pos As Point = GraphToScreen(TryCast(iPosition, FDGVector2), regionProvider())
-        Dim canvas As Graphics = graphicsProvider()
+        Dim canvas As IGraphics = graphicsProvider()
 
         SyncLock canvas
             Dim r As Single = radiushash(n)
@@ -239,7 +239,7 @@ Public Class Renderer : Inherits AbstractRenderer
                     CInt(center.Y - sz.Height / 2)
                 )
 
-                Call canvas.DrawString(labelText, Font, Brushes.Black, center)
+                Call canvas.DrawString(labelText, Font, Brushes.Black, center.X, center.Y)
             End If
         End SyncLock
     End Sub

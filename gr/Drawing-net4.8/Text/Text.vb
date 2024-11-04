@@ -57,9 +57,9 @@
 Imports System.Drawing
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Drawing.Imaging.BitmapImage
-Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.MIME.Html.Render
 Imports Microsoft.VisualBasic.Scripting.Expressions
+Imports Image = System.Drawing.Image
 
 Namespace Drawing2D.Text
 

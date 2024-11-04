@@ -63,7 +63,6 @@
 #End Region
 
 Imports System.Drawing
-Imports System.Drawing.Imaging
 Imports System.IO
 Imports System.Reflection
 Imports System.Runtime.CompilerServices
@@ -71,6 +70,16 @@ Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.BitmapImage
 Imports Microsoft.VisualBasic.Imaging.Driver
 Imports std = System.Math
+
+#If NET8_0_OR_GREATER Then
+Imports Font = Microsoft.VisualBasic.Imaging.Font
+Imports Brush = Microsoft.VisualBasic.Imaging.Brush
+Imports Pen = Microsoft.VisualBasic.Imaging.Pen
+Imports Image = Microsoft.VisualBasic.Imaging.Image
+Imports Bitmap = Microsoft.VisualBasic.Imaging.Bitmap
+Imports GraphicsPath = Microsoft.VisualBasic.Imaging.GraphicsPath
+Imports SolidBrush = Microsoft.VisualBasic.Imaging.SolidBrush
+#End If
 
 ''' <summary>
 ''' GDI+ device handle for encapsulates a GDI+ drawing surface.
@@ -86,12 +95,12 @@ Public Class Graphics2D : Inherits GDICanvas
     ''' GDI+ device handle memory.(GDI+设备之中的图像数据)
     ''' </summary>
     ''' <remarks></remarks>
-    Public Property ImageResource As Image
+    Public Property ImageResource As System.Drawing.Image
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Get
             Return innerImage
         End Get
-        Protected Friend Set(value As Image)
+        Protected Friend Set(value As System.Drawing.Image)
             innerImage = value
 
             If Not value Is Nothing Then
@@ -104,7 +113,7 @@ Public Class Graphics2D : Inherits GDICanvas
         End Set
     End Property
 
-    Dim innerImage As Image
+    Dim innerImage As System.Drawing.Image
 
     Public Overrides ReadOnly Property Driver As Drivers
         Get
@@ -134,7 +143,7 @@ Public Class Graphics2D : Inherits GDICanvas
         Me.Size = size
     End Sub
 
-    Sub New(base As Image)
+    Sub New(base As System.Drawing.Image)
         innerImage = base
         Size = base.Size
         Center = New Point(Size.Width / 2, Size.Height / 2)
@@ -215,17 +224,17 @@ Public Class Graphics2D : Inherits GDICanvas
     ''' <returns></returns>
     ''' 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    Public Shared Narrowing Operator CType(g2D As Graphics2D) As Image
+    Public Shared Narrowing Operator CType(g2D As Graphics2D) As System.Drawing.Image
         Return g2D.ImageResource
     End Operator
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    Public Shared Widening Operator CType(img As Image) As Graphics2D
+    Public Shared Widening Operator CType(img As System.Drawing.Image) As Graphics2D
         Return CreateObject(Graphics.FromImage(img), res:=img)
     End Operator
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    Public Shared Widening Operator CType(img As Bitmap) As Graphics2D
+    Public Shared Widening Operator CType(img As System.Drawing.Bitmap) As Graphics2D
         Return CreateObject(Graphics.FromImage(img), img)
     End Operator
 
@@ -240,12 +249,12 @@ Public Class Graphics2D : Inherits GDICanvas
     ''' </returns>
     ''' 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    Public Shared Function Open(image As Image) As Graphics2D
+    Public Shared Function Open(image As System.Drawing.Image) As Graphics2D
         Return Graphics2D.CreateObject(Graphics.FromImage(image), image)
     End Function
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    Friend Shared Function CreateObject(g As Graphics, res As Image) As Graphics2D
+    Friend Shared Function CreateObject(g As Graphics, res As System.Drawing.Image) As Graphics2D
         Return Extensions.CreateObject(g, res)
     End Function
 
@@ -262,17 +271,28 @@ Public Class Graphics2D : Inherits GDICanvas
     End Function
 
     Public Overrides Sub DrawString(s As String, font As Font, brush As Brush, ByRef x As Single, ByRef y As Single, angle As Single)
+        Dim sfont As System.Drawing.Font = Nothing
+        Dim sbrush As System.Drawing.Brush = Nothing
+
+#If NET8_0_OR_GREATER Then
+        sfont = font.CTypeFontObject
+        sbrush = brush.CTypeBrushObject
+#Else
+        sfont = font
+        sbrush = brush
+#End If
+
         If angle <> 0 Then
             Dim text As New GraphicsText(g)
-            Dim sz As SizeF = g.MeasureString(s, font)
+            Dim sz As SizeF = g.MeasureString(s, sfont)
 
             If angle > 0 Then
-                Call text.DrawString(s, font, brush, New Point(x, y), angle:=angle)
+                Call text.DrawString(s, sfont, sbrush, New Point(x, y), angle:=angle)
             Else
-                Call text.DrawString(s, font, brush, New Point(x, y + sz.Height * std.Sin(angle * 180 / std.PI)), angle:=angle)
+                Call text.DrawString(s, sfont, sbrush, New Point(x, y + sz.Height * std.Sin(angle * 180 / std.PI)), angle:=angle)
             End If
         Else
-            Call Graphics.DrawString(s, font, brush, x, y)
+            Call Graphics.DrawString(s, sfont, sbrush, x, y)
         End If
     End Sub
 End Class

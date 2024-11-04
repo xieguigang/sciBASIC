@@ -65,6 +65,10 @@ Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.MIME.Html.CSS
 Imports Microsoft.VisualBasic.MIME.Html.Render
 
+#If NET8_0_OR_GREATER Then
+Imports Font = Microsoft.VisualBasic.Imaging.Font
+#End If
+
 Namespace Drawing2D.Text
 
     ''' <summary>
@@ -93,9 +97,17 @@ Namespace Drawing2D.Text
         End Sub
 
         Sub New(font As Font, g As Graphics)
+            Dim sfont As System.Drawing.Font = Nothing
+
             Me.Font = font
 
-            Height = g.MeasureString("1", font).Height
+#If NET8_0_OR_GREATER Then
+            sfont = font.CTypeFontObject
+#Else
+            sfont = font
+#End If
+
+            Height = g.MeasureString("1", sfont).Height
             Graphics = g
         End Sub
 
@@ -111,7 +123,15 @@ Namespace Drawing2D.Text
         ''' <param name="g"></param>
         ''' <returns></returns>
         Public Shared Function GetStringBounds(s As String, font As Font, g As Graphics) As RectangleF
-            Return New RectangleF(New Point, g.MeasureString(s, font))
+            Dim sfont As System.Drawing.Font = Nothing
+
+#If NET8_0_OR_GREATER Then
+            sfont = font.CTypeFontObject
+#Else
+            sfont = font
+#End If
+
+            Return New RectangleF(New Point, g.MeasureString(s, sfont))
         End Function
 
         Public Function GetStringBounds(s As String) As RectangleF

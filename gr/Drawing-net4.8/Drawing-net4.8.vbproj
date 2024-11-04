@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <RootNamespace>Microsoft.VisualBasic.Drawing</RootNamespace>
-    <TargetFramework>net48</TargetFramework>
+    <TargetFrameworks>net48;net8.0-windows</TargetFrameworks>
     <UseApplicationFramework>True</UseApplicationFramework>
     <AssemblyName>Microsoft.VisualBasic.Drawing</AssemblyName>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
@@ -45,6 +45,10 @@
     <Compile Remove="HtmlRender\**" />
     <EmbeddedResource Remove="HtmlRender\**" />
     <None Remove="HtmlRender\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.Drawing.Common" Version="8.0.10" />
   </ItemGroup>
 
   <ItemGroup>

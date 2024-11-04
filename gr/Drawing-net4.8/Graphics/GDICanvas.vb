@@ -71,6 +71,14 @@ Imports System.Drawing.Graphics
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Imaging
 
+#If NET8_0_OR_GREATER Then
+Imports Pen = Microsoft.VisualBasic.Imaging.Pen
+Imports Brush = Microsoft.VisualBasic.Imaging.Brush
+Imports Font = Microsoft.VisualBasic.Imaging.Font
+Imports Image = Microsoft.VisualBasic.Imaging.Image
+Imports GraphicsPath = Microsoft.VisualBasic.Imaging.GraphicsPath
+#End If
+
 ''' <summary>
 ''' 这个对象是<see cref="Graphics2D"/>以及<see cref="Wmf"/>公用的基础类型
 ''' </summary>
@@ -701,6 +709,11 @@ Public MustInherit Class GDICanvas : Inherits IGraphics
     Public Overrides Sub DrawImage(image As Image, rect As RectangleF)
         Call Graphics.DrawImage(image, rect)
     End Sub
+
+    Public Overloads Sub DrawImage(image As System.Drawing.Image, rect As RectangleF)
+        Call Graphics.DrawImage(image, rect)
+    End Sub
+
     '
     ' Summary:
     '     Draws the specified System.Drawing.Image at the specified location and with the
@@ -841,6 +854,20 @@ Public MustInherit Class GDICanvas : Inherits IGraphics
     Public Overrides Sub DrawImage(image As Image, x As Integer, y As Integer, width As Integer, height As Integer)
         Call Graphics.DrawImage(image, x, y, width, height)
     End Sub
+
+    ''' <summary>
+    ''' Draws the specified <see cref="Image"/> at the specified location and with the
+    ''' specified size.
+    ''' </summary>
+    ''' <param name="image">System.Drawing.Image to draw.</param>
+    ''' <param name="x">The x-coordinate of the upper-left corner of the drawn image.</param>
+    ''' <param name="y">The y-coordinate of the upper-left corner of the drawn image.</param>
+    ''' <param name="width">Width of the drawn image.</param>
+    ''' <param name="height">Height of the drawn image.</param>
+    Public Overloads Sub DrawImage(image As System.Drawing.Image, x As Integer, y As Integer, width As Integer, height As Integer)
+
+    End Sub
+
     '
     ' Summary:
     '     Draws the specified System.Drawing.Image at the specified location and with the

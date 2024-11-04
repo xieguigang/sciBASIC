@@ -55,13 +55,29 @@
 #End Region
 
 Imports System.Drawing
-Imports System.Drawing.Drawing2D
 Imports System.Math
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
+Imports Bitmap = System.Drawing.Bitmap
+Imports Image = System.Drawing.Image
 Imports std = System.Math
+
+#If NET8_0_OR_GREATER Then
+Imports SolidBrush = Microsoft.VisualBasic.Imaging.SolidBrush
+Imports GraphicsPath = Microsoft.VisualBasic.Imaging.GraphicsPath
+Imports PathGradientBrush = Microsoft.VisualBasic.Imaging.PathGradientBrush
+Imports Pen = Microsoft.VisualBasic.Imaging.Pen
+Imports ColorBlend = Microsoft.VisualBasic.Imaging.ColorBlend
+Imports WrapMode = Microsoft.VisualBasic.Imaging.WrapMode
+#Else
+Imports GraphicsPath = System.Drawing.Drawing2D.GraphicsPath
+Imports PathGradientBrush = System.Drawing.Drawing2D.PathGradientBrush
+Imports Pen = System.Drawing.Pen
+Imports ColorBlend = System.Drawing.Drawing2D.ColorBlend
+Imports WrapMode = System.Drawing.Drawing2D.WrapMode
+#End If
 
 Namespace Imaging.BitmapImage
 
@@ -76,9 +92,9 @@ Namespace Imaging.BitmapImage
         ''' <param name="alphaLevels$"></param>
         ''' <param name="gradientLevels$"></param>
         Public Sub DropdownShadows(g As IGraphics, polygon As GraphicsPath,
-                                          Optional shadowColor$ = NameOf(Color.Gray),
-                                          Optional alphaLevels$ = "0,120,150,200",
-                                          Optional gradientLevels$ = "[0,0.125,0.5,1]")
+                                   Optional shadowColor$ = NameOf(Color.Gray),
+                                   Optional alphaLevels$ = "0,120,150,200",
+                                   Optional gradientLevels$ = "[0,0.125,0.5,1]")
 
             Dim alphas As Vector = alphaLevels
             ' Create a color blend to manage our colors And positions And

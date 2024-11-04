@@ -61,6 +61,13 @@ Imports System.Drawing.Text
 Imports System.IO
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Driver
+Imports Bitmap = System.Drawing.Bitmap
+
+#If NET8_0_OR_GREATER Then
+Imports Pen = Microsoft.VisualBasic.Imaging.Pen
+Imports Font = Microsoft.VisualBasic.Imaging.Font
+Imports Brush = Microsoft.VisualBasic.Imaging.Brush
+#End If
 
 ''' <summary>
 ''' Windows Metafile (WMF) is an image file format originally designed for Microsoft Windows in the 1990s. 

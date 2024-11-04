@@ -1,86 +1,86 @@
 ﻿#Region "Microsoft.VisualBasic::3253571e22de957535c4a770b615bc3b, Microsoft.VisualBasic.Core\src\Drawing\Bitmap\netcore8.0\Brush.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 146
-    '    Code Lines: 115 (78.77%)
-    ' Comment Lines: 10 (6.85%)
-    '    - Xml Docs: 0.00%
-    ' 
-    '   Blank Lines: 21 (14.38%)
-    '     File Size: 4.81 KB
+' Summaries:
 
 
-    '     Class Brush
-    ' 
-    '         Sub: (+2 Overloads) Dispose
-    ' 
-    '     Class SolidBrush
-    ' 
-    '         Properties: Color
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    ' 
-    '     Class TextureBrush
-    ' 
-    '         Properties: Image
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    ' 
-    '     Class Brushes
-    ' 
-    '         Properties: Black, Blue, BlueViolet, Brown, DarkGreen
-    '                     DarkOliveGreen, Gray, Green, LightGray, Orange
-    '                     Red, SkyBlue, Transparent, Violet, White
-    '                     Yellow
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    ' 
-    '     Class HatchBrush
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    ' 
-    '     Enum HatchStyle
-    ' 
-    ' 
-    '  
-    ' 
-    ' 
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 146
+'    Code Lines: 115 (78.77%)
+' Comment Lines: 10 (6.85%)
+'    - Xml Docs: 0.00%
+' 
+'   Blank Lines: 21 (14.38%)
+'     File Size: 4.81 KB
+
+
+'     Class Brush
+' 
+'         Sub: (+2 Overloads) Dispose
+' 
+'     Class SolidBrush
+' 
+'         Properties: Color
+' 
+'         Constructor: (+1 Overloads) Sub New
+' 
+'     Class TextureBrush
+' 
+'         Properties: Image
+' 
+'         Constructor: (+1 Overloads) Sub New
+' 
+'     Class Brushes
+' 
+'         Properties: Black, Blue, BlueViolet, Brown, DarkGreen
+'                     DarkOliveGreen, Gray, Green, LightGray, Orange
+'                     Red, SkyBlue, Transparent, Violet, White
+'                     Yellow
+' 
+'         Constructor: (+1 Overloads) Sub New
+' 
+'     Class HatchBrush
+' 
+'         Constructor: (+1 Overloads) Sub New
+' 
+'     Enum HatchStyle
+' 
+' 
+'  
+' 
+' 
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -169,6 +169,34 @@ Namespace Imaging
                 color2 As Color)
         End Sub
     End Class
+
+    Public Class PathGradientBrush : Inherits Brush
+
+        Public Property WrapMode As WrapMode
+        Public Property InterpolationColors As ColorBlend
+
+        Sub New(polygon As GraphicsPath)
+
+        End Sub
+    End Class
+
+    Public Class ColorBlend
+
+        Public Property Colors As Color()
+        Public Property Positions As Single()
+
+        Sub New(size As Integer)
+
+        End Sub
+    End Class
+
+    Public Enum WrapMode
+        Tile
+        TileFlipX
+        TileFlipY
+        TileFlipXY
+        Clamp
+    End Enum
 
     Public Enum HatchStyle
         Horizontal = 0

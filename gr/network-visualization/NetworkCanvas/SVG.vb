@@ -73,6 +73,10 @@ Imports Microsoft.VisualBasic.Imaging.SVG
 Imports Microsoft.VisualBasic.Imaging.SVG.XML
 Imports Microsoft.VisualBasic.MIME.Html
 
+#If NET8_0_OR_GREATER Then
+Imports SolidBrush = Microsoft.VisualBasic.Imaging.SolidBrush
+#End If
+
 ''' <summary>
 ''' <see cref="NetworkGraph"/> to svg doc
 ''' </summary>

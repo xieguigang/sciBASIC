@@ -57,8 +57,9 @@
 
 Imports System.Drawing
 Imports System.Drawing.Drawing2D
-Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Language.Default
+Imports Brush = System.Drawing.Brush
+Imports Font = System.Drawing.Font
 
 ''' <summary>
 ''' 利用GDI+绘制旋转文字，矩形内可以根据布局方式排列文本

@@ -60,10 +60,15 @@ Imports System.IO
 Imports System.Reflection
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.CommandLine.Reflection
-Imports Microsoft.VisualBasic.Drawing.Imaging
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Scripting.Runtime
+Imports Bitmap = System.Drawing.Bitmap
+Imports Font = System.Drawing.Font
+Imports GraphicsPath = System.Drawing.Drawing2D.GraphicsPath
+Imports Image = System.Drawing.Image
+Imports Pens = System.Drawing.Pens
+Imports Pen = System.Drawing.Pen
 
 Public Module Extensions
 
@@ -174,7 +179,7 @@ Public Module Extensions
     ''' <param name="g"></param>
     ''' <param name="res">绘图的基础图像对象</param>
     ''' <returns></returns>
-    Friend Function CreateObject(g As Graphics, res As Image) As Graphics2D
+    Friend Function CreateObject(g As Graphics, res As System.Drawing.Image) As Graphics2D
         g.InterpolationMode = InterpolationMode.HighQualityBicubic
         g.PixelOffsetMode = PixelOffsetMode.HighQuality
         g.CompositingQuality = CompositingQuality.HighQuality
@@ -183,10 +188,17 @@ Public Module Extensions
 
         With New Graphics2D With {
                 .ImageResource = res,
-                .g = g,
-                .Font = New Font(FontFace.MicrosoftYaHei, 12),
-                .Stroke = Pens.Black
+                .g = g
             }
+
+#If NET8_0_OR_GREATER Then
+            .Font = New Microsoft.VisualBasic.Imaging.Font(FontFace.MicrosoftYaHei, 12)
+            .Stroke = Microsoft.VisualBasic.Imaging.Pens.Black
+#Else
+            .Font = New Font(FontFace.MicrosoftYaHei, 12)
+            .Stroke = Pens.Black
+#End If
+
             ' .Clear(Color.Transparent)
             Return .ByRef
         End With
@@ -246,7 +258,7 @@ Public Module Extensions
         End If
 
         Try
-            bitmap = New Bitmap(width, height, PixelFormat.Format32bppArgb)
+            bitmap = New Bitmap(width, height, System.Drawing.Imaging.PixelFormat.Format32bppArgb)
 
             With dpi_sz
                 Call bitmap.SetResolution(.Width, .Height)

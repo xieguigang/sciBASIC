@@ -58,9 +58,9 @@
 #End Region
 
 Imports System.Drawing
-Imports System.Drawing.Imaging
 Imports Microsoft.VisualBasic.ApplicationServices
 Imports Microsoft.VisualBasic.Imaging.BitmapImage
+Imports Microsoft.VisualBasic.Linq
 
 Public Class AVIStream
 
@@ -79,8 +79,8 @@ Public Class AVIStream
     End Sub
 
     Public Sub addFrame(image As Bitmap)
-        Using bitmap As BitmapBuffer = BitmapBuffer.FromBitmap(image, ImageLockMode.ReadOnly)
-            Call addFrame(bitmap.ToArray)
+        Using bitmap As BitmapBuffer = BitmapBuffer.FromBitmap(image)
+            Call addFrame(bitmap.AsEnumerable.ToArray)
         End Using
     End Sub
 

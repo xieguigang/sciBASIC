@@ -60,6 +60,9 @@ Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.BitmapImage
 Imports Microsoft.VisualBasic.Serialization.JSON
+Imports Bitmap = System.Drawing.Bitmap
+Imports Image = System.Drawing.Image
+Imports TextureBrush = System.Drawing.TextureBrush
 
 Namespace Imaging.BitmapImage
 
@@ -153,9 +156,7 @@ Namespace Imaging.BitmapImage
                 '    在 System.Drawing.Bitmap..ctor(Int32 width, Int32 height, PixelFormat format)
                 '    在 System.Drawing.Bitmap..ctor(Image original, Int32 width, Int32 height)
                 '    在 System.Drawing.Bitmap..ctor(Image original)
-
-                ex = New Exception(trace & " --> " & res.Size.GetJson, ex)
-                Throw ex
+                Throw New Exception(trace & " --> " & res.Size.GetJson, ex)
             End Try
 
             ' top

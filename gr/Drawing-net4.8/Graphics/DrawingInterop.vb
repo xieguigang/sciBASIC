@@ -1,0 +1,102 @@
+﻿#Region "Microsoft.VisualBasic::0f227124ff017b23dde0e922d6f7c25d, gr\Drawing-net4.8\Graphics\Drawing.vb"
+
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+' /********************************************************************************/
+
+' Summaries:
+
+
+' Code Statistics:
+
+'   Total Lines: 8
+'    Code Lines: 5 (62.50%)
+' Comment Lines: 0 (0.00%)
+'    - Xml Docs: 0.00%
+' 
+'   Blank Lines: 3 (37.50%)
+'     File Size: 148 B
+
+
+' Module Drawing
+' 
+' 
+' 
+' /********************************************************************************/
+
+#End Region
+
+#If NET8_0_OR_GREATER Then
+
+Imports System.Drawing
+Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Imaging
+Imports Microsoft.VisualBasic.Imaging.Driver
+Imports Brush = Microsoft.VisualBasic.Imaging.Brush
+Imports Font = Microsoft.VisualBasic.Imaging.Font
+Imports Pen = Microsoft.VisualBasic.Imaging.Pen
+Imports SolidBrush = Microsoft.VisualBasic.Imaging.SolidBrush
+Imports TextureBrush = Microsoft.VisualBasic.Imaging.TextureBrush
+
+Public Module DrawingInterop
+
+    <Extension>
+    Public Function CTypeFontObject(font As Font) As System.Drawing.Font
+        Throw New NotImplementedException
+    End Function
+
+    <Extension>
+    Public Function CTypePenObject(font As Pen) As System.Drawing.Pen
+        Throw New NotImplementedException
+    End Function
+
+    <Extension>
+    Public Function CTypeBrushObject(font As SolidBrush) As System.Drawing.SolidBrush
+        Throw New NotImplementedException
+    End Function
+
+    <Extension>
+    Public Function CTypeBrushObject(font As TextureBrush) As System.Drawing.TextureBrush
+        Throw New NotImplementedException
+    End Function
+
+    <Extension>
+    Public Function CTypeBrushObject(font As Brush) As System.Drawing.Brush
+        If TypeOf font Is SolidBrush Then
+            Return DirectCast(font, SolidBrush).CTypeBrushObject
+        Else
+            Return DirectCast(font, TextureBrush).CTypeBrushObject
+        End If
+    End Function
+
+    <Extension>
+    Public Function CTypeGraphicsPath(path As GraphicsPath) As System.Drawing.Drawing2D.GraphicsPath
+        Throw New NotImplementedException
+    End Function
+End Module
+#End If
