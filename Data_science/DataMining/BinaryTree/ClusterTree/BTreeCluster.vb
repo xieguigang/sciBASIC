@@ -117,6 +117,15 @@ Public Class BTreeCluster : Implements INamedValue
         }
     End Function
 
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="btree"></param>
+    ''' <param name="pull"></param>
+    ''' <remarks>
+    ''' this function will missing the current cluster node itself,
+    ''' you should add current node after call this function
+    ''' </remarks>
     Public Shared Sub PullAllClusterNodes(btree As BTreeCluster, ByRef pull As List(Of BTreeCluster))
         If btree Is Nothing Then
             Return

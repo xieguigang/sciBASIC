@@ -1,60 +1,60 @@
 ﻿#Region "Microsoft.VisualBasic::d81a74c352036e75044a38eb2a027291, Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\TablePrinter\ConsoleTableBuilderExtensions.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 639
-    '    Code Lines: 484 (75.74%)
-    ' Comment Lines: 46 (7.20%)
-    '    - Xml Docs: 91.30%
-    ' 
-    '   Blank Lines: 109 (17.06%)
-    '     File Size: 28.91 KB
+' Summaries:
 
 
-    '     Module ConsoleTableBuilderExtensions
-    ' 
-    '         Function: (+3 Overloads) AddColumn, (+4 Overloads) AddRow, BuildMetaRowsFormat, CreateTableForCustomFormat, Export
-    '                   FillCharMap, FillHeaderCharMap, RealLength, TrimColumn, (+3 Overloads) WithCharMapDefinition
-    '                   (+2 Overloads) WithColumn, WithColumnFormatter, WithFormat, WithFormatter, WithHeaderCharMapDefinition
-    '                   WithHeaderTextAlignment, WithMetadataRow, WithMinLength, WithPaddingLeft, WithPaddingRight
-    '                   WithTextAlignment, (+3 Overloads) WithTitle
-    ' 
-    '         Sub: ExportAndWrite, ExportAndWriteLine
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 639
+'    Code Lines: 484 (75.74%)
+' Comment Lines: 46 (7.20%)
+'    - Xml Docs: 91.30%
+' 
+'   Blank Lines: 109 (17.06%)
+'     File Size: 28.91 KB
+
+
+'     Module ConsoleTableBuilderExtensions
+' 
+'         Function: (+3 Overloads) AddColumn, (+4 Overloads) AddRow, BuildMetaRowsFormat, CreateTableForCustomFormat, Export
+'                   FillCharMap, FillHeaderCharMap, RealLength, TrimColumn, (+3 Overloads) WithCharMapDefinition
+'                   (+2 Overloads) WithColumn, WithColumnFormatter, WithFormat, WithFormatter, WithHeaderCharMapDefinition
+'                   WithHeaderTextAlignment, WithMetadataRow, WithMinLength, WithPaddingLeft, WithPaddingRight
+'                   WithTextAlignment, (+3 Overloads) WithTitle
+' 
+'         Sub: ExportAndWrite, ExportAndWriteLine
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -62,6 +62,7 @@ Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports Microsoft.VisualBasic.ApplicationServices.Terminal.TablePrinter.Flags
 Imports Microsoft.VisualBasic.Linq
+Imports ASCII = Microsoft.VisualBasic.Text.ASCII
 
 Namespace ApplicationServices.Terminal.TablePrinter
 
@@ -167,7 +168,11 @@ Namespace ApplicationServices.Terminal.TablePrinter
         ''' <param name="backgroundColor">background color</param>
         ''' <returns></returns>
         <Extension()>
-        Public Function WithTitle(builder As ConsoleTableBuilder, title As String, foregroundColor As ConsoleColor, backgroundColor As ConsoleColor, Optional titleAligntment As TextAligntment = TextAligntment.Center) As ConsoleTableBuilder
+        Public Function WithTitle(builder As ConsoleTableBuilder, title As String,
+                                  foregroundColor As ConsoleColor,
+                                  backgroundColor As ConsoleColor,
+                                  Optional titleAligntment As TextAligntment = TextAligntment.Center) As ConsoleTableBuilder
+
             builder.TableTitle = title
             builder.TableTitleColor = New ConsoleColorNullable(foregroundColor, backgroundColor)
             builder.TableTitleTextAlignment = titleAligntment
@@ -353,14 +358,17 @@ Namespace ApplicationServices.Terminal.TablePrinter
         End Function
 
         <Extension()>
-        Public Function WithCharMapDefinition(builder As ConsoleTableBuilder, charMapPositions As Dictionary(Of CharMapPositions, Char), Optional headerCharMapPositions As Dictionary(Of HeaderCharMapPositions, Char) = Nothing) As ConsoleTableBuilder
+        Public Function WithCharMapDefinition(builder As ConsoleTableBuilder,
+                                              charMapPositions As Dictionary(Of CharMapPositions, Char),
+                                              Optional headerCharMapPositions As Dictionary(Of HeaderCharMapPositions, Char) = Nothing) As ConsoleTableBuilder
             builder.CharMapPositionStore = charMapPositions
             builder.HeaderCharMapPositionStore = headerCharMapPositions
             Return builder
         End Function
 
         <Extension()>
-        Public Function WithHeaderCharMapDefinition(builder As ConsoleTableBuilder, Optional headerCharMapPositions As Dictionary(Of HeaderCharMapPositions, Char) = Nothing) As ConsoleTableBuilder
+        Public Function WithHeaderCharMapDefinition(builder As ConsoleTableBuilder,
+                                                    Optional headerCharMapPositions As Dictionary(Of HeaderCharMapPositions, Char) = Nothing) As ConsoleTableBuilder
             builder.HeaderCharMapPositionStore = headerCharMapPositions
             Return builder
         End Function
@@ -528,7 +536,9 @@ Namespace ApplicationServices.Terminal.TablePrinter
             End If
 
             ' find the longest formatted line
-            Dim hasHeader = builder.FormattedColumns IsNot Nothing AndAlso builder.FormattedColumns.Any() AndAlso builder.FormattedColumns.Max(Function(x) If(x, String.Empty).ToString().Length) > 0
+            Dim hasHeader = builder.FormattedColumns IsNot Nothing AndAlso
+                builder.FormattedColumns.Any() AndAlso
+                builder.FormattedColumns.Max(Function(x) If(x, String.Empty).ToString().Length) > 0
 
             ' header
             If hasHeader Then
@@ -551,10 +561,10 @@ Namespace ApplicationServices.Terminal.TablePrinter
                 End If
             End If
 
-            Dim results = builder.FormattedRows.[Select](Function(row)
-                                                             Dim rowFormate = builder.CreateRawLineFormat(columnLengths, filledMap, row.ToArray())
-                                                             Return String.Format(rowFormate, row.ToArray())
-                                                         End Function).ToList()
+            Dim results = builder.FormattedRows.Select(Function(row)
+                                                           Dim rowFormate = builder.CreateRawLineFormat(columnLengths, filledMap, row.ToArray())
+                                                           Return String.Format(rowFormate, row.ToArray())
+                                                       End Function).ToList()
             Dim isFirstRow = True
 
             For Each row In results
@@ -652,9 +662,8 @@ Namespace ApplicationServices.Terminal.TablePrinter
             Dim filledMap = definition
 
             For Each c In CType([Enum].GetValues(GetType(CharMapPositions)), CharMapPositions())
-
                 If Not filledMap.ContainsKey(c) Then
-                    filledMap.Add(c, Microsoft.VisualBasic.Strings.ChrW(0))
+                    filledMap.Add(c, ASCII.NUL)
                 End If
             Next
 
@@ -669,31 +678,41 @@ Namespace ApplicationServices.Terminal.TablePrinter
             Dim filledMap = definition
 
             For Each c In CType([Enum].GetValues(GetType(HeaderCharMapPositions)), HeaderCharMapPositions())
-
                 If Not filledMap.ContainsKey(c) Then
-                    filledMap.Add(c, Microsoft.VisualBasic.Strings.ChrW(0))
+                    filledMap.Add(c, ASCII.NUL)
                 End If
             Next
 
             Return filledMap
         End Function
 
+        ''' <summary>
+        ''' Get the real width for do console print of a string
+        ''' </summary>
+        ''' <param name="value"></param>
+        ''' <param name="withUtf8Characters"></param>
+        ''' <returns></returns>
+        ''' <remarks>
+        ''' 1 char width for ascii character, and
+        ''' 2 char width for chinese character.
+        ''' </remarks>
         <Extension()>
         Public Function RealLength(value As String, withUtf8Characters As Boolean) As Integer
-            If String.IsNullOrEmpty(value) Then Return 0
-            If Not withUtf8Characters Then Return value.Length
-            Dim i = 0 'count
+            Dim w = 0 ' count
 
-            For Each newChar In value.Select(AddressOf AscW)
+            If value Is Nothing OrElse value = "" Then Return 0
+            If Not withUtf8Characters Then Return value.Length
+
+            For Each newChar As Integer In value.Select(AddressOf AscW)
                 If newChar >= &H4E00 AndAlso newChar <= &H9FBB Then
-                    'utf-8 characters
-                    i += 2
+                    ' utf-8 characters
+                    w += 2
                 Else
-                    i += 1
+                    w += 1
                 End If
             Next
 
-            Return i
+            Return w
         End Function
     End Module
 End Namespace

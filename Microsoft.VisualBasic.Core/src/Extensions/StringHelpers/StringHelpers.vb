@@ -255,8 +255,29 @@ Public Module StringHelpers
     ''' <param name="source"></param>
     ''' <returns></returns>
     <Extension>
-    Public Function MaxLengthString(source As IEnumerable(Of String)) As String
-        Return source.OrderByDescending(Function(s) Len(s)).First
+    Public Function MaxLengthString(source As IEnumerable(Of String), Optional consolePrintWidth As Boolean = False) As String
+        If consolePrintWidth Then
+            ' 20241104
+            ' ascii character for 1 and chinese character for 2
+            ' in console print when do layout
+            ' by default
+            Return source _
+                .OrderByDescending(Function(s)
+                                       If s Is Nothing Then
+                                           Return 0
+                                       Else
+                                           Return Aggregate c As Char
+                                                  In s
+                                                  Let w = If(GB2312.IsChineseCharacter(c), 2, 1)
+                                                  Into Sum(w)
+                                       End If
+                                   End Function) _
+                .First
+        Else
+            Return source _
+                .OrderByDescending(Function(s) Len(s)) _
+                .First
+        End If
     End Function
 
     <Extension>
@@ -272,8 +293,11 @@ Public Module StringHelpers
     ''' <param name="getString"></param>
     ''' <returns></returns>
     <Extension>
-    Public Function MaxLengthString(Of T)(source As IEnumerable(Of T), getString As Func(Of T, String)) As String
-        Return source.Select(getString).MaxLengthString
+    Public Function MaxLengthString(Of T)(source As IEnumerable(Of T),
+                                          getString As Func(Of T, String),
+                                          Optional consolePrintWidth As Boolean = False) As String
+
+        Return source.Select(getString).MaxLengthString(consolePrintWidth)
     End Function
 
     ''' <summary>

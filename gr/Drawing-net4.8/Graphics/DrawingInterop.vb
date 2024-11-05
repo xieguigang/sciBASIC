@@ -57,6 +57,7 @@ Imports System.Drawing
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Driver
+Imports Microsoft.VisualBasic.Linq
 Imports Bitmap = Microsoft.VisualBasic.Imaging.Bitmap
 Imports Brush = Microsoft.VisualBasic.Imaging.Brush
 Imports Font = Microsoft.VisualBasic.Imaging.Font
@@ -65,40 +66,85 @@ Imports Pen = Microsoft.VisualBasic.Imaging.Pen
 Imports SolidBrush = Microsoft.VisualBasic.Imaging.SolidBrush
 Imports TextureBrush = Microsoft.VisualBasic.Imaging.TextureBrush
 
+''' <summary>
+''' helper for make gdi+ graphics component conversion
+''' </summary>
 Public Module DrawingInterop
 
+    ''' <summary>
+    ''' Convert of the .NET 8.0 visualbasic graphics component as .NET clr windows gdi+ object
+    ''' </summary>
+    ''' <param name="font"></param>
+    ''' <returns></returns>
     <Extension>
     Public Function CTypeFontObject(font As Font) As System.Drawing.Font
+        Return New System.Drawing.Font(font.Name, font.Size, CType(font.Style, System.Drawing.FontStyle))
+    End Function
+
+    ''' <summary>
+    ''' Convert of the .NET 8.0 visualbasic graphics component as .NET clr windows gdi+ object
+    ''' </summary>
+    ''' <param name="stroke"></param>
+    ''' <returns></returns>
+    <Extension>
+    Public Function CTypePenObject(stroke As Pen) As System.Drawing.Pen
         Throw New NotImplementedException
     End Function
 
+    ''' <summary>
+    ''' Convert of the .NET 8.0 visualbasic graphics component as .NET clr windows gdi+ object
+    ''' </summary>
+    ''' <param name="paint"></param>
+    ''' <returns></returns>
     <Extension>
-    Public Function CTypePenObject(font As Pen) As System.Drawing.Pen
+    Public Function CTypeBrushObject(paint As SolidBrush) As System.Drawing.SolidBrush
+        Return New System.Drawing.SolidBrush(paint.Color)
+    End Function
+
+    ''' <summary>
+    ''' Convert of the .NET 8.0 visualbasic graphics component as .NET clr windows gdi+ object
+    ''' </summary>
+    ''' <param name="paint"></param>
+    ''' <returns></returns>
+    <Extension>
+    Public Function CTypeBrushObject(paint As TextureBrush) As System.Drawing.TextureBrush
         Throw New NotImplementedException
     End Function
 
+    ''' <summary>
+    ''' Convert of the .NET 8.0 visualbasic graphics component as .NET clr windows gdi+ object
+    ''' </summary>
+    ''' <param name="paint"></param>
+    ''' <returns></returns>
     <Extension>
-    Public Function CTypeBrushObject(font As SolidBrush) As System.Drawing.SolidBrush
-        Throw New NotImplementedException
-    End Function
-
-    <Extension>
-    Public Function CTypeBrushObject(font As TextureBrush) As System.Drawing.TextureBrush
-        Throw New NotImplementedException
-    End Function
-
-    <Extension>
-    Public Function CTypeBrushObject(font As Brush) As System.Drawing.Brush
-        If TypeOf font Is SolidBrush Then
-            Return DirectCast(font, SolidBrush).CTypeBrushObject
+    Public Function CTypeBrushObject(paint As Brush) As System.Drawing.Brush
+        If TypeOf paint Is SolidBrush Then
+            Return DirectCast(paint, SolidBrush).CTypeBrushObject
         Else
-            Return DirectCast(font, TextureBrush).CTypeBrushObject
+            Return DirectCast(paint, TextureBrush).CTypeBrushObject
         End If
     End Function
 
+    ''' <summary>
+    ''' Convert of the .NET 8.0 visualbasic graphics component as .NET clr windows gdi+ object
+    ''' </summary>
+    ''' <param name="path"></param>
+    ''' <returns></returns>
     <Extension>
     Public Function CTypeGraphicsPath(path As GraphicsPath) As System.Drawing.Drawing2D.GraphicsPath
-        Throw New NotImplementedException
+        Dim g As New System.Drawing.Drawing2D.GraphicsPath
+
+        For Each op As GraphicsPath.op In path.AsEnumerable
+            Select Case op.GetType
+                Case GetType(GraphicsPath.op_AddArc)
+                    Dim arc As GraphicsPath.op_AddArc = op
+                    g.AddArc(arc.rect, arc.startAngle, arc.sweepAngle)
+                Case Else
+                    Throw New NotImplementedException
+            End Select
+        Next
+
+        Return g
     End Function
 
     <Extension>
