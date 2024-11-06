@@ -169,7 +169,7 @@ Namespace Imaging.BitmapImage
 
                     Call .FillRectangle(New SolidBrush(renderColor), rect)
 
-                    Return .ImageResource
+                    Return .GetImageResource
                 End With
             End Using
         End Function

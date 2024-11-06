@@ -1052,9 +1052,11 @@ Public MustInherit Class GDICanvas : Inherits IGraphics
 #End If
     End Sub
 
-    ' Exceptions:
-    '   T:System.ArgumentNullException:
-    '     image is null.
+#If NET8_0_OR_GREATER Then
+    Public Overloads Sub DrawImageUnscaled(image As System.Drawing.Image, point As Point)
+        Call Graphics.DrawImageUnscaled(image, point)
+    End Sub
+#End If
     ''' <summary>
     ''' Draws the specified image using its original physical size at the location specified
     ''' by a coordinate pair.
@@ -2201,6 +2203,10 @@ Public MustInherit Class GDICanvas : Inherits IGraphics
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Overrides Sub RotateTransform(angle As Single)
         Call Graphics.RotateTransform(angle)
+    End Sub
+
+    Public Sub SetTransformMatrix(x As Matrix)
+        Graphics.Transform = x
     End Sub
 
     ''' <summary>

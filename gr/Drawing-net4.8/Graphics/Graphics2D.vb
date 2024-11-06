@@ -1,64 +1,64 @@
 ﻿#Region "Microsoft.VisualBasic::5cbcb0f263106a23a5107a20d9f501f5, gr\Drawing-net4.8\Graphics\Graphics2D.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 214
-    '    Code Lines: 129 (60.28%)
-    ' Comment Lines: 54 (25.23%)
-    '    - Xml Docs: 92.59%
-    ' 
-    '   Blank Lines: 31 (14.49%)
-    '     File Size: 7.37 KB
+' Summaries:
 
 
-    ' Class Graphics2D
-    ' 
-    '     Properties: Center, Driver, ImageResource, Size
-    ' 
-    '     Constructor: (+5 Overloads) Sub New
-    ' 
-    '     Function: CreateDevice, CreateObject, Open, (+2 Overloads) Save, ToString
-    ' 
-    '     Sub: DrawCircle, DrawString, saveFile
-    '     Structure Context
-    ' 
-    '         Function: Create
-    ' 
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 214
+'    Code Lines: 129 (60.28%)
+' Comment Lines: 54 (25.23%)
+'    - Xml Docs: 92.59%
+' 
+'   Blank Lines: 31 (14.49%)
+'     File Size: 7.37 KB
+
+
+' Class Graphics2D
+' 
+'     Properties: Center, Driver, ImageResource, Size
+' 
+'     Constructor: (+5 Overloads) Sub New
+' 
+'     Function: CreateDevice, CreateObject, Open, (+2 Overloads) Save, ToString
+' 
+'     Sub: DrawCircle, DrawString, saveFile
+'     Structure Context
+' 
+'         Function: Create
+' 
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -90,28 +90,35 @@ Imports SolidBrush = Microsoft.VisualBasic.Imaging.SolidBrush
 Public Class Graphics2D : Inherits GDICanvas
     Implements IDisposable
     Implements SaveGdiBitmap
+    Implements GdiRasterGraphics
 
     ''' <summary>
-    ''' GDI+ device handle memory.(GDI+设备之中的图像数据)
+    ''' GDI+ device handle memory.
     ''' </summary>
-    ''' <remarks></remarks>
-    Public Property ImageResource As System.Drawing.Image
+    ''' <remarks>(GDI+设备之中的图像数据)</remarks>
+#If NET48 Then
+    Public Property ImageResource As System.Drawing.Image Implements GdiRasterGraphics.ImageResource
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Get
             Return innerImage
         End Get
         Protected Friend Set(value As System.Drawing.Image)
             innerImage = value
-
-            If Not value Is Nothing Then
-                _Size = value.Size
-                _Center = New Point(Size.Width / 2, Size.Height / 2)
-            Else
-                _Size = Nothing
-                _Center = Nothing
-            End If
+            innerSet()
         End Set
     End Property
+#Else
+    Public Property ImageResource As Image Implements GdiRasterGraphics.ImageResource
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Get
+            Throw New NotImplementedException
+        End Get
+        Protected Friend Set(value As Image)
+            innerImage = value.CTypeImage
+            innerSet()
+        End Set
+    End Property
+#End If
 
     Dim innerImage As System.Drawing.Image
 
@@ -180,6 +187,21 @@ Public Class Graphics2D : Inherits GDICanvas
     ''' <returns></returns>
     Public ReadOnly Property Center As Point
 
+    Private Sub innerSet()
+        If Not innerImage Is Nothing Then
+            _Size = innerImage.Size
+            _Center = New Point(Size.Width / 2, Size.Height / 2)
+        Else
+            _Size = Nothing
+            _Center = Nothing
+        End If
+    End Sub
+
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    Public Function GetImageResource() As System.Drawing.Image
+        Return innerImage
+    End Function
+
     ''' <summary>
     ''' 将GDI+设备之中的图像数据保存到指定的文件路径之中，默认的图像文件的格式为PNG格式
     ''' </summary>
@@ -225,7 +247,7 @@ Public Class Graphics2D : Inherits GDICanvas
     ''' 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Shared Narrowing Operator CType(g2D As Graphics2D) As System.Drawing.Image
-        Return g2D.ImageResource
+        Return g2D.innerImage
     End Operator
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -264,7 +286,7 @@ Public Class Graphics2D : Inherits GDICanvas
     End Sub
 
     Public Overloads Function Save(stream As Stream, format As ImageFormats) As Boolean Implements SaveGdiBitmap.Save
-        Call ImageResource.Save(stream, format.GetFormat)
+        Call innerImage.Save(stream, format.GetFormat)
         Call stream.Flush()
 
         Return True

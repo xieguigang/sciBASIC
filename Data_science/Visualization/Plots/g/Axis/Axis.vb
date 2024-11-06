@@ -504,7 +504,7 @@ Namespace Graphic.Axis
 
         ''' <summary>
         ''' 这个函数不是将文本作为html来进行渲染，而是直接使用gdi进行绘图，如果需要将文本
-        ''' 作为html渲染出来，则需要使用<see cref="TextRender.DrawHtmlText"/>方法
+        ''' 作为html渲染出来，则需要使用TextRender.DrawHtmlText方法
         ''' </summary>
         ''' <param name="label$"></param>
         ''' <param name="css$"><see cref="CssFont"/></param>
@@ -519,7 +519,7 @@ Namespace Graphic.Axis
 
         ''' <summary>
         ''' 这个函数不是将文本作为html来进行渲染，而是直接使用gdi进行绘图，如果需要将文本
-        ''' 作为html渲染出来，则需要使用<see cref="TextRender.DrawHtmlText"/>方法
+        ''' 作为html渲染出来，则需要使用TextRender.DrawHtmlText方法
         ''' </summary>
         ''' <param name="label$"></param>
         ''' <param name="font"></param>

@@ -125,7 +125,7 @@ Namespace Imaging.BitmapImage
                 g.Graphics.InterpolationMode = interpolate
                 g.DrawImage(image, New RectangleF(New PointF, g.Size))
 
-                Return g.ImageResource
+                Return g.GetImageResource
             End Using
         End Function
 

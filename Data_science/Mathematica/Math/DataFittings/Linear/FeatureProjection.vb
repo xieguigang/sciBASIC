@@ -55,6 +55,7 @@ Imports System.Drawing
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
+Imports Microsoft.VisualBasic.Scripting.Runtime
 
 Public Module FeatureProjection
 
@@ -82,7 +83,7 @@ Public Module FeatureProjection
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
     Public Function Project(vector As Vector, dimension%) As Vector
-        Dim x As Double() = vector.Sequence.Cast(Of Double).ToArray
+        Dim x As Double() = vector.Sequence.AsDouble
         Dim y As Double() = vector.ToArray
 
         Return (x, y).Project(dimension)

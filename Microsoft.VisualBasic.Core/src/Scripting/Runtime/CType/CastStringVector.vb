@@ -182,6 +182,19 @@ Namespace Scripting.Runtime
         End Function
 
         ''' <summary>
+        ''' cast integer to double in batch
+        ''' </summary>
+        ''' <param name="singles"></param>
+        ''' <returns></returns>
+        <Extension>
+        Public Function AsDouble(singles As IEnumerable(Of Integer)) As Double()
+            Return singles _
+                .SafeQuery _
+                .Select(Function(s) CDbl(s)) _
+                .ToArray
+        End Function
+
+        ''' <summary>
         ''' parse string as float number in batch mode
         ''' </summary>
         ''' <param name="source"></param>

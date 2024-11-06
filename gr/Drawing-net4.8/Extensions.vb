@@ -54,7 +54,6 @@
 
 Imports System.Drawing
 Imports System.Drawing.Drawing2D
-Imports System.Drawing.Imaging
 Imports System.Drawing.Text
 Imports System.IO
 Imports System.Reflection
@@ -68,7 +67,6 @@ Imports Font = System.Drawing.Font
 Imports GraphicsPath = System.Drawing.Drawing2D.GraphicsPath
 Imports Image = System.Drawing.Image
 Imports Pens = System.Drawing.Pens
-Imports Pen = System.Drawing.Pen
 
 Public Module Extensions
 
@@ -184,17 +182,21 @@ Public Module Extensions
     ''' <param name="res">绘图的基础图像对象</param>
     ''' <returns></returns>
     Friend Function CreateObject(g As Graphics, res As System.Drawing.Image) As Graphics2D
+        Dim img As Image
+
+#If NET48 Then
+        img = res 
+#Else
+        Throw New NotImplementedException
+#End If
+
         g.InterpolationMode = InterpolationMode.HighQualityBicubic
         g.PixelOffsetMode = PixelOffsetMode.HighQuality
         g.CompositingQuality = CompositingQuality.HighQuality
         g.SmoothingMode = SmoothingMode.HighQuality
         g.TextRenderingHint = TextRenderingHint.AntiAliasGridFit
 
-        With New Graphics2D With {
-                .ImageResource = res,
-                .g = g
-            }
-
+        With New Graphics2D(img) With {.g = g}
 #If NET8_0_OR_GREATER Then
             .Font = New Microsoft.VisualBasic.Imaging.Font(FontFace.MicrosoftYaHei, 12)
             .Stroke = Microsoft.VisualBasic.Imaging.Pens.Black

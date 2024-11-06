@@ -1,68 +1,63 @@
 ﻿#Region "Microsoft.VisualBasic::ec3af6adda39965bb51714271b48b0bd, Microsoft.VisualBasic.Core\src\Drawing\GDI+\Driver\DriverLoad.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 108
-    '    Code Lines: 81 (75.00%)
-    ' Comment Lines: 6 (5.56%)
-    '    - Xml Docs: 66.67%
-    ' 
-    '   Blank Lines: 21 (19.44%)
-    '     File Size: 4.47 KB
+' Summaries:
 
 
-    '     Module DriverLoad
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    ' 
-    '         Function: CreateDefaultRasterGraphics, (+3 Overloads) CreateGraphicsDevice, DefaultGraphicsDevice, UseGraphicsDevice
-    ' 
-    '         Sub: Register
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 108
+'    Code Lines: 81 (75.00%)
+' Comment Lines: 6 (5.56%)
+'    - Xml Docs: 66.67%
+' 
+'   Blank Lines: 21 (19.44%)
+'     File Size: 4.47 KB
+
+
+'     Module DriverLoad
+' 
+'         Constructor: (+1 Overloads) Sub New
+' 
+'         Function: CreateDefaultRasterGraphics, (+3 Overloads) CreateGraphicsDevice, DefaultGraphicsDevice, UseGraphicsDevice
+' 
+'         Sub: Register
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Drawing
 Imports System.Runtime.CompilerServices
-
-#If NET48 Then
-#Else
-Imports Bitmap = Microsoft.VisualBasic.Imaging.Bitmap
-#End If
 
 Namespace Imaging.Driver
 
@@ -121,21 +116,53 @@ Namespace Imaging.Driver
             End Select
         End Function
 
+        Const skia_driver = "A skiasharp graphics driver was wrapped by the Microsoft.VisualBasic.Drawing(https://github.com/xieguigang/Microsoft.VisualBasic.Drawing) project, call the method at the very begining of your program startup: Microsoft.VisualBasic.Drawing.SkiaDriver.Register()."
+        Const windows_gdi_driver = "The internal windows gdi+ graphics driver must be registered before calling the corresponding graphics code, call this method at the very begining of your program startup: Microsoft.VisualBasic.Imaging.Driver.ImageDriver.Register(); you can find this method in module: Microsoft.VisualBasic.Imaging.dll"
+
+        Const missing_svg = "Missing the graphics device driver for svg graphics, you should register the corresponding graphics driver at first!" & vbCrLf
+        Const missing_pdf = "Missing the graphics device driver for pdf drawing, you should register the corresponding pdf drawing driver at first!" & vbCrLf
+        Const missing_gdi = "Missing the raster graphics driver for the image drawing, you should register the corresponding raster rendering driver at first!" & vbCrLf
+
         Public Function UseGraphicsDevice(driver As Drivers) As DeviceInterop
             If driver = Drivers.Default Then
                 driver = DefaultGraphicsDevice()
             End If
 
-            If svg Is Nothing OrElse
-                pdf Is Nothing OrElse
-                libgdiplus_raster Is Nothing Then
-
-            End If
-
             Select Case driver
-                Case Drivers.SVG : Return svg
-                Case Drivers.PDF : Return pdf
-                Case Drivers.GDI : Return libgdiplus_raster
+                Case Drivers.SVG
+                    If svg Is Nothing Then
+#If NET48 Then
+                        Throw New MissingMethodException(missing_svg & windows_gdi_driver)
+#Else
+                        Throw New MissingMethodException(missing_svg & skia_driver)
+#End If
+                    End If
+
+                    Return svg
+                Case Drivers.PDF
+                    If pdf Is Nothing Then
+#If NET48 Then
+                        Throw New NotSupportedException("Sorry, pdf graphics drawing is not yet supported for .NET Framework 4.8 application currently.")
+#Else
+                        Throw New MissingMethodException(missing_pdf & skia_driver)
+#End If
+                    End If
+
+                    Return pdf
+                Case Drivers.GDI
+                    If libgdiplus_raster Is Nothing Then
+#If NET48 Then
+                        Throw New MissingMethodException(missing_gdi & windows_gdi_driver)
+#Else
+#If WINDOWS Then
+                        Throw New MissingMethodException(missing_gdi & skia_driver & vbCrLf & "Or " & windows_gdi_driver)
+#Else
+                        Throw New MissingMethodException(missing_gdi & skia_driver)
+#End If
+#End If
+                    End If
+
+                    Return libgdiplus_raster
                 Case Else
                     Throw New NotImplementedException(driver.Description)
             End Select

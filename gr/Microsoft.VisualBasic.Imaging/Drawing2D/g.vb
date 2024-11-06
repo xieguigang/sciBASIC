@@ -129,7 +129,13 @@ Namespace Drawing2D
             Dim type$ = Strings.LCase(App.GetVariable(GraphicDriverEnvironmentConfigName))
             Dim defaultDriver = ParseDriverEnumValue(type)
 
-            Driver.DefaultGraphicsDevice([default]:=defaultDriver)
+            Call Driver.DefaultGraphicsDevice([default]:=defaultDriver)
+
+#If NET48 Then
+            ' use the internal windows gdi+ library
+            ' for .net 4.8 program
+            Call ImageDriver.Register()
+#End If
 
             If VBDebugger.debugMode Then
                 Call $"The default graphics driver value is config as {Driver.DefaultGraphicsDevice.Description}({type}).".__INFO_ECHO

@@ -499,7 +499,9 @@ Public Class Column
     Public Function IndexOf(item As Value) As Integer Implements IList(Of Value).IndexOf
         Dim ret = LongIndexOf(item)
 
-        If ret > Integer.MaxValue Then Throw New InvalidOperationException($"Index {ret:N0} exceeded Int32.MaxValue")
+        If ret > Integer.MaxValue Then
+            Throw New InvalidOperationException($"Index {ret:N0} exceeded Int32.MaxValue")
+        End If
 
         Return ret
     End Function

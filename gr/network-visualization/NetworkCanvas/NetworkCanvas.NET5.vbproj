@@ -20,7 +20,7 @@
 	  <Copyright>GPL3</Copyright>
 	  <PackageLicenseExpression>GPL3</PackageLicenseExpression>
 	  <GenerateDocumentationFile>True</GenerateDocumentationFile>
-	  <MyType>WindowsFormsWithCustomSubMain</MyType>
+	  <MyType>WindowsForms</MyType>
 
 
   </PropertyGroup>

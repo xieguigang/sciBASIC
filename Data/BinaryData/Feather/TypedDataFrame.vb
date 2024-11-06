@@ -384,15 +384,13 @@ End Class
 ''' </summary>
 Public NotInheritable Class TypedDataFrameType(Of TCol1, TCol2)
     Inherits TypedDataFrameBase(Of TypedRowType(Of TCol1, TCol2))
+
+    Dim _Column1 As TypedColumn(Of TCol1)
+    Dim _Column2 As TypedColumn(Of TCol2)
+
     ''' <summary>
     ''' The first column in the dataframe.
     ''' </summary>
-    Dim _Column1 As TypedColumn(Of TCol1)
-    ''' <summary>
-    ''' The second column in the dataframe.
-    ''' </summary>
-    Dim _Column2 As TypedColumn(Of TCol2)
-
     Public Property Column1 As TypedColumn(Of TCol1)
         Get
             Return _Column1
@@ -402,6 +400,9 @@ Public NotInheritable Class TypedDataFrameType(Of TCol1, TCol2)
         End Set
     End Property
 
+    ''' <summary>
+    ''' The second column in the dataframe.
+    ''' </summary>
     Public Property Column2 As TypedColumn(Of TCol2)
         Get
             Return _Column2
@@ -435,17 +436,12 @@ End Class
 ''' </summary>
 Public NotInheritable Class TypedDataFrameType1(Of TCol1, TCol2, TCol3)
     Inherits TypedDataFrameBase(Of TypedRowType1(Of TCol1, TCol2, TCol3))
+
+    Private _Column1 As TypedColumn(Of TCol1), _Column2 As TypedColumn(Of TCol2), _Column3 As TypedColumn(Of TCol3)
+
     ''' <summary>
     ''' The first column in the dataframe.
     ''' </summary>
-    ''' <summary>
-    ''' The second column in the dataframe.
-    ''' </summary>
-    ''' <summary>
-    ''' The third column in the dataframe.
-    ''' </summary>
-    Private _Column1 As TypedColumn(Of TCol1), _Column2 As TypedColumn(Of TCol2), _Column3 As TypedColumn(Of TCol3)
-
     Public Property Column1 As TypedColumn(Of TCol1)
         Get
             Return _Column1
@@ -455,6 +451,9 @@ Public NotInheritable Class TypedDataFrameType1(Of TCol1, TCol2, TCol3)
         End Set
     End Property
 
+    ''' <summary>
+    ''' The second column in the dataframe.
+    ''' </summary>
     Public Property Column2 As TypedColumn(Of TCol2)
         Get
             Return _Column2
@@ -464,6 +463,9 @@ Public NotInheritable Class TypedDataFrameType1(Of TCol1, TCol2, TCol3)
         End Set
     End Property
 
+    ''' <summary>
+    ''' The third column in the dataframe.
+    ''' </summary>
     Public Property Column3 As TypedColumn(Of TCol3)
         Get
             Return _Column3
@@ -501,20 +503,15 @@ End Class
 ''' </summary>
 Public NotInheritable Class TypedDataFrameType2(Of TCol1, TCol2, TCol3, TCol4)
     Inherits TypedDataFrameBase(Of TypedRowType2(Of TCol1, TCol2, TCol3, TCol4))
+
+    Private _Column1 As TypedColumn(Of TCol1),
+        _Column2 As TypedColumn(Of TCol2),
+        _Column3 As TypedColumn(Of TCol3),
+        _Column4 As TypedColumn(Of TCol4)
+
     ''' <summary>
     ''' The first column in the dataframe.
     ''' </summary>
-    ''' <summary>
-    ''' The second column in the dataframe.
-    ''' </summary>
-    ''' <summary>
-    ''' The third column in the dataframe.
-    ''' </summary>
-    ''' <summary>
-    ''' The fourth column in the dataframe.
-    ''' </summary>
-    Private _Column1 As TypedColumn(Of TCol1), _Column2 As TypedColumn(Of TCol2), _Column3 As TypedColumn(Of TCol3), _Column4 As TypedColumn(Of TCol4)
-
     Public Property Column1 As TypedColumn(Of TCol1)
         Get
             Return _Column1
@@ -524,6 +521,9 @@ Public NotInheritable Class TypedDataFrameType2(Of TCol1, TCol2, TCol3, TCol4)
         End Set
     End Property
 
+    ''' <summary>
+    ''' The second column in the dataframe.
+    ''' </summary>
     Public Property Column2 As TypedColumn(Of TCol2)
         Get
             Return _Column2
@@ -533,6 +533,9 @@ Public NotInheritable Class TypedDataFrameType2(Of TCol1, TCol2, TCol3, TCol4)
         End Set
     End Property
 
+    ''' <summary>
+    ''' The third column in the dataframe.
+    ''' </summary>
     Public Property Column3 As TypedColumn(Of TCol3)
         Get
             Return _Column3
@@ -542,6 +545,9 @@ Public NotInheritable Class TypedDataFrameType2(Of TCol1, TCol2, TCol3, TCol4)
         End Set
     End Property
 
+    ''' <summary>
+    ''' The fourth column in the dataframe.
+    ''' </summary>
     Public Property Column4 As TypedColumn(Of TCol4)
         Get
             Return _Column4
@@ -583,23 +589,16 @@ End Class
 ''' </summary>
 Public NotInheritable Class TypedDataFrameType3(Of TCol1, TCol2, TCol3, TCol4, TCol5)
     Inherits TypedDataFrameBase(Of TypedRowType3(Of TCol1, TCol2, TCol3, TCol4, TCol5))
+
+    Private _Column1 As TypedColumn(Of TCol1),
+        _Column2 As TypedColumn(Of TCol2),
+        _Column3 As TypedColumn(Of TCol3),
+        _Column4 As TypedColumn(Of TCol4),
+        _Column5 As TypedColumn(Of TCol5)
+
     ''' <summary>
     ''' The first column in the dataframe.
     ''' </summary>
-    ''' <summary>
-    ''' The second column in the dataframe.
-    ''' </summary>
-    ''' <summary>
-    ''' The third column in the dataframe.
-    ''' </summary>
-    ''' <summary>
-    ''' The fourth column in the dataframe.
-    ''' </summary>
-    ''' <summary>
-    ''' The fifth column in the dataframe.
-    ''' </summary>
-    Private _Column1 As TypedColumn(Of TCol1), _Column2 As TypedColumn(Of TCol2), _Column3 As TypedColumn(Of TCol3), _Column4 As TypedColumn(Of TCol4), _Column5 As TypedColumn(Of TCol5)
-
     Public Property Column1 As TypedColumn(Of TCol1)
         Get
             Return _Column1
@@ -609,6 +608,9 @@ Public NotInheritable Class TypedDataFrameType3(Of TCol1, TCol2, TCol3, TCol4, T
         End Set
     End Property
 
+    ''' <summary>
+    ''' The second column in the dataframe.
+    ''' </summary>
     Public Property Column2 As TypedColumn(Of TCol2)
         Get
             Return _Column2
@@ -618,6 +620,9 @@ Public NotInheritable Class TypedDataFrameType3(Of TCol1, TCol2, TCol3, TCol4, T
         End Set
     End Property
 
+    ''' <summary>
+    ''' The third column in the dataframe.
+    ''' </summary>
     Public Property Column3 As TypedColumn(Of TCol3)
         Get
             Return _Column3
@@ -627,6 +632,9 @@ Public NotInheritable Class TypedDataFrameType3(Of TCol1, TCol2, TCol3, TCol4, T
         End Set
     End Property
 
+    ''' <summary>
+    ''' The fourth column in the dataframe.
+    ''' </summary>
     Public Property Column4 As TypedColumn(Of TCol4)
         Get
             Return _Column4
@@ -636,6 +644,9 @@ Public NotInheritable Class TypedDataFrameType3(Of TCol1, TCol2, TCol3, TCol4, T
         End Set
     End Property
 
+    ''' <summary>
+    ''' The fifth column in the dataframe.
+    ''' </summary>
     Public Property Column5 As TypedColumn(Of TCol5)
         Get
             Return _Column5
@@ -681,26 +692,17 @@ End Class
 ''' </summary>
 Public NotInheritable Class TypedDataFrameType4(Of TCol1, TCol2, TCol3, TCol4, TCol5, TCol6)
     Inherits TypedDataFrameBase(Of TypedRowType4(Of TCol1, TCol2, TCol3, TCol4, TCol5, TCol6))
+
+    Dim _Column1 As TypedColumn(Of TCol1)
+    Dim _Column2 As TypedColumn(Of TCol2)
+    Dim _Column3 As TypedColumn(Of TCol3)
+    Dim _Column4 As TypedColumn(Of TCol4)
+    Dim _Column5 As TypedColumn(Of TCol5)
+    Dim _Column6 As TypedColumn(Of TCol6)
+
     ''' <summary>
     ''' The first column in the dataframe.
     ''' </summary>
-    ''' <summary>
-    ''' The second column in the dataframe.
-    ''' </summary>
-    ''' <summary>
-    ''' The third column in the dataframe.
-    ''' </summary>
-    ''' <summary>
-    ''' The fourth column in the dataframe.
-    ''' </summary>
-    ''' <summary>
-    ''' The fifth column in the dataframe.
-    ''' </summary>
-    ''' <summary>
-    ''' The sixth column in the dataframe.
-    ''' </summary>
-    Private _Column1 As TypedColumn(Of TCol1), _Column2 As TypedColumn(Of TCol2), _Column3 As TypedColumn(Of TCol3), _Column4 As TypedColumn(Of TCol4), _Column5 As TypedColumn(Of TCol5), _Column6 As TypedColumn(Of TCol6)
-
     Public Property Column1 As TypedColumn(Of TCol1)
         Get
             Return _Column1
@@ -710,6 +712,9 @@ Public NotInheritable Class TypedDataFrameType4(Of TCol1, TCol2, TCol3, TCol4, T
         End Set
     End Property
 
+    ''' <summary>
+    ''' The second column in the dataframe.
+    ''' </summary>
     Public Property Column2 As TypedColumn(Of TCol2)
         Get
             Return _Column2
@@ -719,6 +724,9 @@ Public NotInheritable Class TypedDataFrameType4(Of TCol1, TCol2, TCol3, TCol4, T
         End Set
     End Property
 
+    ''' <summary>
+    ''' The third column in the dataframe.
+    ''' </summary>
     Public Property Column3 As TypedColumn(Of TCol3)
         Get
             Return _Column3
@@ -728,6 +736,9 @@ Public NotInheritable Class TypedDataFrameType4(Of TCol1, TCol2, TCol3, TCol4, T
         End Set
     End Property
 
+    ''' <summary>
+    ''' The fourth column in the dataframe.
+    ''' </summary>
     Public Property Column4 As TypedColumn(Of TCol4)
         Get
             Return _Column4
@@ -737,6 +748,9 @@ Public NotInheritable Class TypedDataFrameType4(Of TCol1, TCol2, TCol3, TCol4, T
         End Set
     End Property
 
+    ''' <summary>
+    ''' The fifth column in the dataframe.
+    ''' </summary>
     Public Property Column5 As TypedColumn(Of TCol5)
         Get
             Return _Column5
@@ -746,6 +760,9 @@ Public NotInheritable Class TypedDataFrameType4(Of TCol1, TCol2, TCol3, TCol4, T
         End Set
     End Property
 
+    ''' <summary>
+    ''' The sixth column in the dataframe.
+    ''' </summary>
     Public Property Column6 As TypedColumn(Of TCol6)
         Get
             Return _Column6
@@ -795,29 +812,18 @@ End Class
 ''' </summary>
 Public NotInheritable Class TypedDataFrameType5(Of TCol1, TCol2, TCol3, TCol4, TCol5, TCol6, TCol7)
     Inherits TypedDataFrameBase(Of TypedRowType5(Of TCol1, TCol2, TCol3, TCol4, TCol5, TCol6, TCol7))
+
+    Private _Column1 As TypedColumn(Of TCol1),
+        _Column2 As TypedColumn(Of TCol2),
+        _Column3 As TypedColumn(Of TCol3),
+        _Column4 As TypedColumn(Of TCol4),
+        _Column5 As TypedColumn(Of TCol5),
+        _Column6 As TypedColumn(Of TCol6),
+        _Column7 As TypedColumn(Of TCol7)
+
     ''' <summary>
     ''' The first column in the dataframe.
     ''' </summary>
-    ''' <summary>
-    ''' The second column in the dataframe.
-    ''' </summary>
-    ''' <summary>
-    ''' The third column in the dataframe.
-    ''' </summary>
-    ''' <summary>
-    ''' The fourth column in the dataframe.
-    ''' </summary>
-    ''' <summary>
-    ''' The fifth column in the dataframe.
-    ''' </summary>
-    ''' <summary>
-    ''' The sixth column in the dataframe.
-    ''' </summary>
-    ''' <summary>
-    ''' The seventh column in the dataframe.
-    ''' </summary>
-    Private _Column1 As TypedColumn(Of TCol1), _Column2 As TypedColumn(Of TCol2), _Column3 As TypedColumn(Of TCol3), _Column4 As TypedColumn(Of TCol4), _Column5 As TypedColumn(Of TCol5), _Column6 As TypedColumn(Of TCol6), _Column7 As TypedColumn(Of TCol7)
-
     Public Property Column1 As TypedColumn(Of TCol1)
         Get
             Return _Column1
@@ -827,6 +833,9 @@ Public NotInheritable Class TypedDataFrameType5(Of TCol1, TCol2, TCol3, TCol4, T
         End Set
     End Property
 
+    ''' <summary>
+    ''' The second column in the dataframe.
+    ''' </summary>
     Public Property Column2 As TypedColumn(Of TCol2)
         Get
             Return _Column2
@@ -836,6 +845,9 @@ Public NotInheritable Class TypedDataFrameType5(Of TCol1, TCol2, TCol3, TCol4, T
         End Set
     End Property
 
+    ''' <summary>
+    ''' The third column in the dataframe.
+    ''' </summary>
     Public Property Column3 As TypedColumn(Of TCol3)
         Get
             Return _Column3
@@ -845,6 +857,9 @@ Public NotInheritable Class TypedDataFrameType5(Of TCol1, TCol2, TCol3, TCol4, T
         End Set
     End Property
 
+    ''' <summary>
+    ''' The fourth column in the dataframe.
+    ''' </summary>
     Public Property Column4 As TypedColumn(Of TCol4)
         Get
             Return _Column4
@@ -854,6 +869,9 @@ Public NotInheritable Class TypedDataFrameType5(Of TCol1, TCol2, TCol3, TCol4, T
         End Set
     End Property
 
+    ''' <summary>
+    ''' The fifth column in the dataframe.
+    ''' </summary>
     Public Property Column5 As TypedColumn(Of TCol5)
         Get
             Return _Column5
@@ -863,6 +881,9 @@ Public NotInheritable Class TypedDataFrameType5(Of TCol1, TCol2, TCol3, TCol4, T
         End Set
     End Property
 
+    ''' <summary>
+    ''' The sixth column in the dataframe.
+    ''' </summary>
     Public Property Column6 As TypedColumn(Of TCol6)
         Get
             Return _Column6
@@ -872,6 +893,9 @@ Public NotInheritable Class TypedDataFrameType5(Of TCol1, TCol2, TCol3, TCol4, T
         End Set
     End Property
 
+    ''' <summary>
+    ''' The seventh column in the dataframe.
+    ''' </summary>
     Public Property Column7 As TypedColumn(Of TCol7)
         Get
             Return _Column7
@@ -925,32 +949,19 @@ End Class
 ''' </summary>
 Public NotInheritable Class TypedDataFrameType6(Of TCol1, TCol2, TCol3, TCol4, TCol5, TCol6, TCol7, TCol8)
     Inherits TypedDataFrameBase(Of TypedRowType6(Of TCol1, TCol2, TCol3, TCol4, TCol5, TCol6, TCol7, TCol8))
+
+    Private _Column1 As TypedColumn(Of TCol1),
+        _Column2 As TypedColumn(Of TCol2),
+        _Column3 As TypedColumn(Of TCol3),
+        _Column4 As TypedColumn(Of TCol4),
+        _Column5 As TypedColumn(Of TCol5),
+        _Column6 As TypedColumn(Of TCol6),
+        _Column7 As TypedColumn(Of TCol7),
+        _Column8 As TypedColumn(Of TCol8)
+
     ''' <summary>
     ''' The first column in the dataframe.
     ''' </summary>
-    ''' <summary>
-    ''' The second column in the dataframe.
-    ''' </summary>
-    ''' <summary>
-    ''' The third column in the dataframe.
-    ''' </summary>
-    ''' <summary>
-    ''' The fourth column in the dataframe.
-    ''' </summary>
-    ''' <summary>
-    ''' The fifth column in the dataframe.
-    ''' </summary>
-    ''' <summary>
-    ''' The sixth column in the dataframe.
-    ''' </summary>
-    ''' <summary>
-    ''' The seventh column in the dataframe.
-    ''' </summary>
-    ''' <summary>
-    ''' The eigth column in the dataframe.
-    ''' </summary>
-    Private _Column1 As TypedColumn(Of TCol1), _Column2 As TypedColumn(Of TCol2), _Column3 As TypedColumn(Of TCol3), _Column4 As TypedColumn(Of TCol4), _Column5 As TypedColumn(Of TCol5), _Column6 As TypedColumn(Of TCol6), _Column7 As TypedColumn(Of TCol7), _Column8 As TypedColumn(Of TCol8)
-
     Public Property Column1 As TypedColumn(Of TCol1)
         Get
             Return _Column1
@@ -960,6 +971,9 @@ Public NotInheritable Class TypedDataFrameType6(Of TCol1, TCol2, TCol3, TCol4, T
         End Set
     End Property
 
+    ''' <summary>
+    ''' The second column in the dataframe.
+    ''' </summary>
     Public Property Column2 As TypedColumn(Of TCol2)
         Get
             Return _Column2
@@ -969,6 +983,9 @@ Public NotInheritable Class TypedDataFrameType6(Of TCol1, TCol2, TCol3, TCol4, T
         End Set
     End Property
 
+    ''' <summary>
+    ''' The third column in the dataframe.
+    ''' </summary>
     Public Property Column3 As TypedColumn(Of TCol3)
         Get
             Return _Column3
@@ -978,6 +995,9 @@ Public NotInheritable Class TypedDataFrameType6(Of TCol1, TCol2, TCol3, TCol4, T
         End Set
     End Property
 
+    ''' <summary>
+    ''' The fourth column in the dataframe.
+    ''' </summary>
     Public Property Column4 As TypedColumn(Of TCol4)
         Get
             Return _Column4
@@ -987,6 +1007,9 @@ Public NotInheritable Class TypedDataFrameType6(Of TCol1, TCol2, TCol3, TCol4, T
         End Set
     End Property
 
+    ''' <summary>
+    ''' The fifth column in the dataframe.
+    ''' </summary>
     Public Property Column5 As TypedColumn(Of TCol5)
         Get
             Return _Column5
@@ -996,6 +1019,9 @@ Public NotInheritable Class TypedDataFrameType6(Of TCol1, TCol2, TCol3, TCol4, T
         End Set
     End Property
 
+    ''' <summary>
+    ''' The sixth column in the dataframe.
+    ''' </summary>
     Public Property Column6 As TypedColumn(Of TCol6)
         Get
             Return _Column6
@@ -1005,6 +1031,9 @@ Public NotInheritable Class TypedDataFrameType6(Of TCol1, TCol2, TCol3, TCol4, T
         End Set
     End Property
 
+    ''' <summary>
+    ''' The seventh column in the dataframe.
+    ''' </summary>
     Public Property Column7 As TypedColumn(Of TCol7)
         Get
             Return _Column7
@@ -1014,6 +1043,9 @@ Public NotInheritable Class TypedDataFrameType6(Of TCol1, TCol2, TCol3, TCol4, T
         End Set
     End Property
 
+    ''' <summary>
+    ''' The eigth column in the dataframe.
+    ''' </summary>
     Public Property Column8 As TypedColumn(Of TCol8)
         Get
             Return _Column8

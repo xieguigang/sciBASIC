@@ -299,7 +299,7 @@ Namespace Imaging.BitmapImage
                     Throw New NotImplementedException
 #End If
 
-                    Return .ImageResource
+                    Return .GetImageResource
                 End With
             Else
                 Return res

@@ -121,7 +121,7 @@ Namespace Drawing2D.Text
                 Dim out As Image
 
                 TextRender.RenderHTML(g.Graphics, label, cssFont,, maxWidth:=g.Width)
-                out = g.ImageResource
+                out = g.GetImageResource
                 out = out.CorpBlank(blankColor:=Color.Transparent)
 
                 Return out
