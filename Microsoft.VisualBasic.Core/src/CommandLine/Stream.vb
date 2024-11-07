@@ -100,6 +100,7 @@ Namespace CommandLine
             ElseIf reference.TextEquals("std_out://") Then
                 Throw New InvalidProgramException()
             ElseIf reference.ToLower.StartsWith("memory://") Then
+#If WINDOWS Then
                 Dim view As Stream
 
                 reference = reference.GetTagValue(":/").Value
@@ -107,6 +108,9 @@ Namespace CommandLine
                 view.Seek(Scan0, SeekOrigin.Begin)
 
                 Return view
+#Else
+                Throw New NotSupportedException("MemoryMappedFile is not supported on unix system")
+#End If
             Else
                 Return New FileStream(reference, FileMode.Open, access:=FileAccess.Read, share:=FileShare.ReadWrite)
             End If
@@ -124,6 +128,7 @@ Namespace CommandLine
             ElseIf reference.TextEquals("std_out://") Then
                 Return Console.OpenStandardOutput
             ElseIf reference.ToLower.StartsWith("memory://") Then
+#If WINDOWS Then
                 Dim view As Stream
                 'Dim security As New MemoryMappedFileSecurity()
                 'Dim userName$ = "everyone"
@@ -147,6 +152,9 @@ Namespace CommandLine
                 Call view.Seek(Scan0, SeekOrigin.Begin)
 
                 Return view
+#Else
+                Throw New NotSupportedException("MemoryMappedFile is not working on unix system.")
+#End If
             Else
                 Return New FileStream(reference, FileMode.OpenOrCreate, access:=FileAccess.Write, share:=FileShare.Read)
             End If

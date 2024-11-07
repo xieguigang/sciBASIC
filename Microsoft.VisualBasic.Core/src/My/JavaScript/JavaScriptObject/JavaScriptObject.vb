@@ -84,6 +84,7 @@ Namespace My.JavaScript
         ''' <returns></returns>
         Protected ReadOnly Property this As JavaScriptObject = Me
 
+        <DataIgnored>
         Public ReadOnly Property length As Integer
             Get
                 Return members.Count
@@ -91,6 +92,13 @@ Namespace My.JavaScript
         End Property
 
         Public Const undefined$ = "UNDEFINED"
+
+        <DataIgnored>
+        Public ReadOnly Property data As JavaScriptValue()
+            Get
+                Return members.Values.ToArray
+            End Get
+        End Property
 
         ''' <summary>
         ''' 只针对Public的属性或者字段有效
@@ -131,14 +139,21 @@ Namespace My.JavaScript
             Static properties As New Dictionary(Of Type, PropertyInfo())
             Static fields As New Dictionary(Of Type, FieldInfo())
 
+            ' check of the static cache hit for the clr type schema
             If Not properties.ContainsKey(type) Then
-                properties.Add(type, type _
-                               .GetProperties(PublicProperty) _
-                               .Where(Function(t) t.Name <> NameOf(JavaScriptObject.length) AndAlso t.GetIndexParameters.IsNullOrEmpty) _
-                               .ToArray)
+                Call properties.Add(type, type _
+                    .GetProperties(PublicProperty) _
+                    .Where(Function(t)
+                               Return t.Name <> NameOf(JavaScriptObject.length) AndAlso
+                                    t.Name <> NameOf(JavaScriptObject.data) AndAlso
+                                    t.GetCustomAttribute(Of DataIgnoredAttribute) Is Nothing AndAlso
+                                    t.GetIndexParameters _
+                                     .IsNullOrEmpty
+                           End Function) _
+                    .ToArray)
             End If
             If Not fields.ContainsKey(type) Then
-                fields.Add(type, type.GetFields(PublicProperty).ToArray)
+                Call fields.Add(type, type.GetFields(PublicProperty).ToArray)
             End If
 
             For Each prop As PropertyInfo In properties(type)

@@ -61,6 +61,7 @@
 #End Region
 
 Imports System.Text.RegularExpressions
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Text
 
 Public Class MarkdownRender
@@ -129,7 +130,13 @@ Public Class MarkdownRender
         Dim grafs As String() = _newlinesMultiple.Split(_newlinesLeadingTrailing.Replace(text, ""))
         Dim graf_text As String
 
-        Static check_tags As String() = {"<p>", "<blockquote>", "<div>", "<ul>", "<ol>", "<h1>", "<h2>", "<h3>", "<h4>", "<h5>"}
+        Static check_tags As String() = {"p", "blockquote", "div", "ul", "ol", "h1", "h2", "h3", "h4", "h5"} _
+            .Select(Iterator Function(tag) As IEnumerable(Of String)
+                        Yield $"<{tag}>"
+                        Yield $"</{tag}>"
+                    End Function) _
+            .IteratesALL _
+            .ToArray
 
         For i As Integer = 0 To grafs.Length - 1
             graf_text = grafs(i).Trim(ASCII.LF, ASCII.CR, " "c, ASCII.TAB)
@@ -270,11 +277,14 @@ Public Class MarkdownRender
         ' text = auto_link.Replace(text, Function(m) AutoLink(m.Value))
         text = url_link.Replace(text, Function(m)
                                           Dim subtext = m.Value
-                                          Dim a = subtext.First
-                                          Dim b = subtext.Last
-                                          Dim url As String = subtext.Substring(1, subtext.Length - 2)
+                                          Dim a$ = subtext.First
+                                          Dim b$ = subtext.Last
+                                          Dim offset1 As Integer = If(a.StringEmpty(), 1, 0)
+                                          Dim offset2 As Integer = If(b.StringEmpty, subtext.Length - 2, subtext.Length - offset1)
+                                          Dim url As String = subtext.Substring(offset1, offset2)
+                                          Dim link = If(a.StringEmpty, a, "") & render.AnchorLink(url, url, url) & If(b.StringEmpty, b, "")
 
-                                          Return a & render.AnchorLink(url, url, url) & b
+                                          Return link
                                       End Function)
     End Sub
 
@@ -398,7 +408,7 @@ Public Class MarkdownRender
             .Select(Function(si) si.Substring(1).Trim) _
             .ToArray
 
-        Return lines.JoinBy(vbLf)
+        Return vbLf & lines.JoinBy(vbLf) & vbLf & vbLf
     End Function
 
     ReadOnly list1 As New Regex("(\n[\+]\s([^\n])+)+", RegexOptions.Compiled Or RegexOptions.Singleline)

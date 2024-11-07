@@ -614,7 +614,12 @@ Partial Public Class DataFrame
         Return ReadString(View, RowCount, ByteBuffer, columnMetadata, translatedRowIndex)
     End Function
 
-    Friend Shared Function ReadString(view As MemoryMappedViewAccessor, rowCount As Long, byteBuffer As ThreadLocal(Of Byte()), ByRef columnMetadata As ColumnSpec, translatedRowIndex As Long) As String
+    Friend Shared Function ReadString(view As MemoryMappedViewAccessor,
+                                      rowCount As Long,
+                                      byteBuffer As ThreadLocal(Of Byte()),
+                                      ByRef columnMetadata As ColumnSpec,
+                                      translatedRowIndex As Long) As String
+
         Dim dataOffset = columnMetadata.DataOffset
 
         Dim stringOffsetOffset = dataOffset + translatedRowIndex * HeapSizeOf.int

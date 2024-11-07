@@ -116,8 +116,8 @@ Namespace Plots
         ReadOnly fillPie As Boolean
         ReadOnly interplot As Splines
 
-        Friend xlim As Double = -1
-        Friend ylim As Double = -1
+        Friend xlim As Double() = Nothing
+        Friend ylim As Double() = Nothing
 
         Public Sub New(data As IEnumerable(Of SerialData), theme As Theme,
                        Optional fill As Boolean = False,
@@ -364,31 +364,23 @@ Namespace Plots
                         .domain(allTermLabels) _
                         .range(integers:={region.Left, region.Right})
                 Else
-                    If (Not xlim.IsNaNImaginary) AndAlso xlim > 0 Then
-                        If XTicks.Length = 1 Then
-                            Dim dleft = XTicks(0) - (xlim - XTicks(0))
-
-                            If dleft < 0 Then
-                                dleft = 0
-                            End If
-
-                            XTicks = XTicks.JoinIterates({xlim, dleft}).ToArray
-                        Else
-                            XTicks = XTicks.JoinIterates({xlim}).ToArray
-                        End If
+                    If Not xlim.IsNullOrEmpty Then
+                        XTicks = xlim.CreateAxisTicks
+                    Else
+                        XTicks = XTicks.Range.CreateAxisTicks
                     End If
-                    If (Not ylim.IsNaNImaginary) AndAlso ylim > 0 Then
-                        YTicks = YTicks.JoinIterates({ylim}).ToArray
+                    If Not ylim.IsNullOrEmpty Then
+                        YTicks = ylim.CreateAxisTicks
+                    Else
+                        YTicks = YTicks.Range.CreateAxisTicks
                     End If
 
-                    XTicks = XTicks.Range.CreateAxisTicks
                     X = d3js.scale _
                         .linear(reverse:=theme.xAxisReverse) _
                         .domain(values:=XTicks) _
                         .range(integers:={region.Left, region.Right})
                 End If
 
-                YTicks = YTicks.Range.CreateAxisTicks
                 Y = d3js.scale.linear.domain(values:=YTicks).range(integers:={region.Bottom, region.Top})
             End If
 

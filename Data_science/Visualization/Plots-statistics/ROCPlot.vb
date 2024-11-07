@@ -179,7 +179,7 @@ Public Module ROCPlot
             padding:=margin,
             bg:=bg,
             interplot:=Splines.B_Spline,
-            xlim:=1, ylim:=1,
+            xlim:={0, 1}, ylim:={0, 1},
             showLegend:=False,
             fill:=fillAUC,
             Xlabel:="1 - Specificity",

@@ -102,7 +102,7 @@ Namespace ApplicationServices.Development
             Dim dt As New DateTime(1970, 1, 1, 0, 0, 0)
 
             dt = dt.AddSeconds(secondsSince1970)
-            dt = dt.AddHours(TimeZone.CurrentTimeZone.GetUtcOffset(dt).Hours)
+            dt = dt.AddHours(TimeZoneInfo.Local.GetUtcOffset(dt).Hours)
 
             Return dt
         End Function

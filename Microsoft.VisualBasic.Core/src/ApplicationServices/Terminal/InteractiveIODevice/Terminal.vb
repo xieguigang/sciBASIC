@@ -89,44 +89,6 @@ Namespace ApplicationServices.Terminal
         End Sub
 
         ''' <summary>
-        ''' Copies a specified source area of the screen buffer to a specified destination area.
-        ''' </summary>
-        ''' <param name="sourceLeft">The leftmost column of the source area.</param>
-        ''' <param name="sourceTop">The topmost row of the source area.</param>
-        ''' <param name="sourceWidth">The number of columns in the source area.</param>
-        ''' <param name="sourceHeight">The number of rows in the source area.</param>
-        ''' <param name="targetLeft">The leftmost column of the destination area.</param>
-        ''' <param name="targetTop">The topmost row of the destination area.</param>
-        ''' <remarks></remarks>
-        ''' <exception cref="System.ArgumentOutOfRangeException">One or more of the parameters is less than zero.-or- sourceLeft or targetLeft is greater than or equal to System.Console.BufferWidth.-or- sourceTop or targetTop is greater than or equal to System.Console.BufferHeight.-or- sourceTop + sourceHeight is greater than or equal to System.Console.BufferHeight.-or- sourceLeft + sourceWidth is greater than or equal to System.Console.BufferWidth.</exception>
-        ''' <exception cref="System.Security.SecurityException">The user does not have permission to perform this action.</exception>
-        ''' <exception cref="System.IO.IOException">An I/O error occurred.</exception>
-        Public Sub MoveBufferArea(sourceLeft As Integer, sourceTop As Integer, sourceWidth As Integer, sourceHeight As Integer, targetLeft As Integer, targetTop As Integer)
-            Call Console.MoveBufferArea(sourceLeft, sourceTop, sourceWidth, sourceHeight, targetLeft, targetTop)
-        End Sub
-
-        ''' <summary>
-        ''' Copies a specified source area of the screen buffer to a specified destination area.
-        ''' </summary>
-        ''' <param name="sourceLeft">The leftmost column of the source area.</param>
-        ''' <param name="sourceTop">The topmost row of the source area.</param>
-        ''' <param name="sourceWidth">The number of columns in the source area.</param>
-        ''' <param name="sourceHeight">The number of rows in the source area.</param>
-        ''' <param name="targetLeft">The leftmost column of the destination area.</param>
-        ''' <param name="targetTop">The topmost row of the destination area.</param>
-        ''' <param name="sourceChar">The character used to fill the source area.</param>
-        ''' <param name="sourceForeColor">The foreground color used to fill the source area.</param>
-        ''' <param name="sourceBackColor">The background color used to fill the source area.</param>
-        ''' <remarks></remarks>
-        ''' <exception cref="System.ArgumentOutOfRangeException">One or more of the parameters is less than zero.-or- sourceLeft or targetLeft is greater than or equal to System.Console.BufferWidth.-or- sourceTop or targetTop is greater than or equal to System.Console.BufferHeight.-or- sourceTop + sourceHeight is greater than or equal to System.Console.BufferHeight.-or- sourceLeft + sourceWidth is greater than or equal to System.Console.BufferWidth.</exception>
-        ''' <exception cref="System.ArgumentException">One or both of the color parameters is not a member of the System.ConsoleColor enumeration.</exception>
-        ''' <exception cref="System.Security.SecurityException">The user does not have permission to perform this action.</exception>
-        ''' <exception cref="System.IO.IOException">An I/O error occurred.</exception>
-        Public Sub MoveBufferArea(sourceLeft As Integer, sourceTop As Integer, sourceWidth As Integer, sourceHeight As Integer, targetLeft As Integer, targetTop As Integer, sourceChar As Char, sourceForeColor As System.ConsoleColor, sourceBackColor As System.ConsoleColor)
-            Call Console.MoveBufferArea(sourceLeft, sourceTop, sourceWidth, sourceHeight, targetLeft, targetTop, sourceChar, sourceForeColor, sourceBackColor)
-        End Sub
-
-        ''' <summary>
         ''' Sets the foreground and background console colors to their defaults.
         ''' </summary>
         ''' <remarks></remarks>
@@ -134,19 +96,6 @@ Namespace ApplicationServices.Terminal
         ''' <exception cref="System.IO.IOException">An I/O error occurred.</exception>
         Public Sub ResetColor()
             Call Console.ResetColor()
-        End Sub
-
-        ''' <summary>
-        ''' Sets the height and width of the screen buffer area to the specified values.
-        ''' </summary>
-        ''' <param name="width">The width of the buffer area measured in columns.</param>
-        ''' <param name="height">The height of the buffer area measured in rows.</param>
-        ''' <remarks></remarks>
-        ''' <exception cref="System.ArgumentOutOfRangeException">height or width is less than or equal to zero.-or- height or width is greater than or equal to System.Int16.MaxValue.-or- width is less than System.Console.WindowLeft + System.Console.WindowWidth.-or- height is less than System.Console.WindowTop + System.Console.WindowHeight.</exception>
-        ''' <exception cref="System.Security.SecurityException">The user does not have permission to perform this action.</exception>
-        ''' <exception cref="System.IO.IOException">An I/O error occurred.</exception>
-        Public Sub SetBufferSize(width As Integer, height As Integer)
-            Call Console.SetBufferSize(width, height)
         End Sub
 
         ''' <summary>
@@ -193,19 +142,6 @@ Namespace ApplicationServices.Terminal
         ''' <exception cref="System.Security.SecurityException">The caller does not have the required permission.</exception>
         Public Sub SetOut(newOut As System.IO.TextWriter)
             Call Console.SetOut(newOut)
-        End Sub
-
-        ''' <summary>
-        ''' Sets the position of the console window relative to the screen buffer.
-        ''' </summary>
-        ''' <param name="left">The column position of the upper left corner of the console window.</param>
-        ''' <param name="top">The row position of the upper left corner of the console window.</param>
-        ''' <remarks></remarks>
-        ''' <exception cref="System.ArgumentOutOfRangeException">left or top is less than zero.-or- left + System.Console.WindowWidth is greater than System.Console.BufferWidth.-or- top + System.Console.WindowHeight is greater than System.Console.BufferHeight.</exception>
-        ''' <exception cref="System.Security.SecurityException">The user does not have permission to perform this action.</exception>
-        ''' <exception cref="System.IO.IOException">An I/O error occurred.</exception>
-        Public Sub SetWindowPosition(left As Integer, top As Integer)
-            Call Console.SetWindowPosition(left, top)
         End Sub
 
         ''' <summary>
@@ -734,54 +670,6 @@ Namespace ApplicationServices.Terminal
         End Property
 
         ''' <summary>
-        ''' Gets or sets the height of the buffer area.
-        ''' </summary>
-        ''' <value></value>
-        ''' <returns>The current height, in rows, of the buffer area.</returns>
-        ''' <remarks></remarks>
-        ''' <exception cref="System.ArgumentOutOfRangeException">The value in a set operation is less than or equal to zero.-or- The value in a set operation is greater than or equal to System.Int16.MaxValue.-or- The value in a set operation is less than System.Console.WindowTop + System.Console.WindowHeight.</exception>
-        ''' <exception cref="System.Security.SecurityException">The user does not have permission to perform this action.</exception>
-        ''' <exception cref="System.IO.IOException">An I/O error occurred.</exception>
-        Public Property BufferHeight As Integer
-            Get
-                Return Console.BufferHeight
-            End Get
-            Set(value As Integer)
-                Console.BufferHeight = value
-            End Set
-        End Property
-
-        ''' <summary>
-        ''' Gets or sets the width of the buffer area.
-        ''' </summary>
-        ''' <value></value>
-        ''' <returns>The current width, in columns, of the buffer area.</returns>
-        ''' <remarks></remarks>
-        ''' <exception cref="System.ArgumentOutOfRangeException">The value in a set operation is less than or equal to zero.-or- The value in a set operation is greater than or equal to System.Int16.MaxValue.-or- The value in a set operation is less than System.Console.WindowLeft + System.Console.WindowWidth.</exception>
-        ''' <exception cref="System.Security.SecurityException">The user does not have permission to perform this action.</exception>
-        ''' <exception cref="System.IO.IOException">An I/O error occurred.</exception>
-        Public Property BufferWidth As Integer
-            Get
-                Return Console.BufferWidth
-            End Get
-            Set(value As Integer)
-                Console.BufferWidth = value
-            End Set
-        End Property
-
-        ''' <summary>
-        ''' Gets a value indicating whether the CAPS LOCK keyboard toggle is turned on or turned off.
-        ''' </summary>
-        ''' <value></value>
-        ''' <returns>true if CAPS LOCK is turned on; false if CAPS LOCK is turned off.</returns>
-        ''' <remarks></remarks>
-        Public ReadOnly Property CapsLock As Boolean
-            Get
-                Return Console.CapsLock
-            End Get
-        End Property
-
-        ''' <summary>
         ''' Gets or sets the column position of the cursor within the buffer area.
         ''' </summary>
         ''' <value></value>
@@ -800,24 +688,6 @@ Namespace ApplicationServices.Terminal
         End Property
 
         ''' <summary>
-        ''' Gets or sets the height of the cursor within a character cell.
-        ''' </summary>
-        ''' <value></value>
-        ''' <returns>The size of the cursor expressed as a percentage of the height of a character cell. The property value ranges from 1 to 100.</returns>
-        ''' <remarks></remarks>
-        ''' <exception cref="System.ArgumentOutOfRangeException">The value specified in a set operation is less than 1 or greater than 100.</exception>
-        ''' <exception cref="System.Security.SecurityException">The user does not have permission to perform this action.</exception>
-        ''' <exception cref="System.IO.IOException">An I/O error occurred.</exception>
-        Public Property CursorSize As Integer
-            Get
-                Return Console.CursorSize
-            End Get
-            Set(value As Integer)
-                Console.CursorSize = value
-            End Set
-        End Property
-
-        ''' <summary>
         ''' Gets or sets the row position of the cursor within the buffer area.
         ''' </summary>
         ''' <value></value>
@@ -832,23 +702,6 @@ Namespace ApplicationServices.Terminal
             End Get
             Set(value As Integer)
                 Console.CursorTop = value
-            End Set
-        End Property
-
-        ''' <summary>
-        ''' Gets or sets a value indicating whether the cursor is visible.
-        ''' </summary>
-        ''' <value></value>
-        ''' <returns>true if the cursor is visible; otherwise, false.</returns>
-        ''' <remarks></remarks>
-        ''' <exception cref="System.Security.SecurityException">The user does not have permission to perform this action.</exception>
-        ''' <exception cref="System.IO.IOException">An I/O error occurred.</exception>
-        Public Property CursorVisible As Boolean
-            Get
-                Return Console.CursorVisible
-            End Get
-            Set(value As Boolean)
-                Console.CursorVisible = value
             End Set
         End Property
 
@@ -990,18 +843,6 @@ Namespace ApplicationServices.Terminal
         End Property
 
         ''' <summary>
-        ''' Gets a value indicating whether the NUM LOCK keyboard toggle is turned on or turned off.
-        ''' </summary>
-        ''' <value></value>
-        ''' <returns>true if NUM LOCK is turned on; false if NUM LOCK is turned off.</returns>
-        ''' <remarks></remarks>
-        Public ReadOnly Property NumberLock As Boolean
-            Get
-                Return Console.NumberLock
-            End Get
-        End Property
-
-        ''' <summary>
         ''' Gets the standard output stream.
         ''' </summary>
         ''' <value></value>
@@ -1028,25 +869,6 @@ Namespace ApplicationServices.Terminal
             End Get
             Set(value As System.Text.Encoding)
                 Console.OutputEncoding = value
-            End Set
-        End Property
-
-        ''' <summary>
-        ''' Gets or sets the title to display in the console title bar.
-        ''' </summary>
-        ''' <value></value>
-        ''' <returns>The string to be displayed in the title bar of the console. The maximum length of the title string is 24500 characters.</returns>
-        ''' <remarks></remarks>
-        ''' <exception cref="System.InvalidOperationException">In a get operation, the retrieved title is longer than 24500 characters.</exception>
-        ''' <exception cref="System.ArgumentOutOfRangeException">In a set operation, the specified title is longer than 24500 characters.</exception>
-        ''' <exception cref="System.ArgumentNullException">In a set operation, the specified title is null.</exception>
-        ''' <exception cref="System.IO.IOException">An I/O error occurred.</exception>
-        Public Property Title As String
-            Get
-                Return Console.Title
-            End Get
-            Set(value As String)
-                Console.Title = value
             End Set
         End Property
 
@@ -1080,40 +902,6 @@ Namespace ApplicationServices.Terminal
             End Get
             Set(value As Integer)
                 Console.WindowHeight = value
-            End Set
-        End Property
-
-        ''' <summary>
-        ''' Gets or sets the leftmost position of the console window area relative to the screen buffer.
-        ''' </summary>
-        ''' <value></value>
-        ''' <returns>The leftmost console window position measured in columns.</returns>
-        ''' <remarks></remarks>
-        ''' <exception cref="System.ArgumentOutOfRangeException">In a set operation, the value to be assigned is less than zero.-or-As a result of the assignment, System.Console.WindowLeft plus System.Console.WindowWidth would exceed System.Console.BufferWidth.</exception>
-        ''' <exception cref="System.IO.IOException">Error reading or writing information.</exception>
-        Public Property WindowLeft As Integer
-            Get
-                Return Console.WindowLeft
-            End Get
-            Set(value As Integer)
-                Console.WindowLeft = value
-            End Set
-        End Property
-
-        ''' <summary>
-        ''' Gets or sets the top position of the console window area relative to the screen buffer.
-        ''' </summary>
-        ''' <value></value>
-        ''' <returns>The uppermost console window position measured in rows.</returns>
-        ''' <remarks></remarks>
-        ''' <exception cref="System.ArgumentOutOfRangeException">In a set operation, the value to be assigned is less than zero.-or-As a result of the assignment, System.Console.WindowTop plus System.Console.WindowHeight would exceed System.Console.BufferHeight.</exception>
-        ''' <exception cref="System.IO.IOException">Error reading or writing information.</exception>
-        Public Property WindowTop As Integer
-            Get
-                Return Console.WindowTop
-            End Get
-            Set(value As Integer)
-                Console.WindowTop = value
             End Set
         End Property
 

@@ -145,8 +145,13 @@ Namespace Parallel.MMFProtocol.MapStream
         ''' <param name="ChunkSize">内存映射文件的数据块的预分配大小</param>
         Sub New(uri As String, callback As DataArrival, ChunkSize As Long)
             Call MyBase.New(uri, ChunkSize)
+
+#If WINDOWS Then
             file = MemoryMappedFile.OpenExisting(uri)
             _dataArrivals = callback
+#Else
+            Throw New NotSupportedException
+#End If
 
             Call Parallel.RunTask(AddressOf __threadElapsed)
         End Sub

@@ -187,10 +187,11 @@ _this_ _is_ _your_ _basic_ _boring_ _emphasis_
 
 ### Help Documentation and Literature Citation
 
-> + Parse the SMILES molecule structre string - https://mzkit.org/vignettes/mzkit/mzkit/SMILES/parse.html
-> + as.formula - https://mzkit.org/vignettes/mzkit/mzkit/SMILES/as.formula.html
-> + get atoms table from the SMILES structure data - https://mzkit.org/vignettes/mzkit/mzkit/SMILES/atoms.html
-> + create graph embedding result for a specific molecular strucutre data - https://mzkit.org/vignettes/mzkit/mzkit/SMILES/links.html
+> 1. Abdelmoula WM, Lopez BG, Randall EC, Kapur T, Sarkaria JN, White FM, Agar JN, Wells WM, Agar NYR. Peak learning of mass spectrometry imaging data using artificial neural networks. *Nat Commun*. 2021 Sep 20;12(1):5544. doi: 10.1038/s41467-021-25744-8. PMID: 34545087; PMCID: PMC8452737.
+> 2. Parse the SMILES molecule structre string - https://mzkit.org/vignettes/mzkit/mzkit/SMILES/parse.html
+> 3. as.formula - https://mzkit.org/vignettes/mzkit/mzkit/SMILES/as.formula.html
+> 4. get atoms table from the SMILES structure data - https://mzkit.org/vignettes/mzkit/mzkit/SMILES/atoms.html
+> 5. create graph embedding result for a specific molecular strucutre data - https://mzkit.org/vignettes/mzkit/mzkit/SMILES/links.html
 "
 
     Sub Main(args As String())

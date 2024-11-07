@@ -92,7 +92,12 @@ Namespace Parallel.MMFProtocol.MapStream
             Try
                 file = MemoryMappedFiles.MemoryMappedFile.CreateNew(uri, chunkSize)
             Catch ex As Exception
+                Call App.LogException(New Exception(uri, ex))
+#If WINDOWS Then
                 file = MemoryMappedFiles.MemoryMappedFile.CreateOrOpen(uri, chunkSize)
+#Else
+                Throw New NotSupportedException("MemoryMappedFile is not supported on unix system")
+#End If
             Finally
             End Try
         End Sub

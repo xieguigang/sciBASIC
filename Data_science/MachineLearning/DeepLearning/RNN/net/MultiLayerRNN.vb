@@ -70,27 +70,28 @@ Namespace RNN
 
 		' Init data
 
-		Private hiddenSizeField As Integer()
-		Private learningRateField As Double
+		Private m_hiddenSize As Integer()
+		Private m_learningRate As Double
 
-		Protected Friend initializedField As Boolean
+		Protected Friend m_initialized As Boolean
 
 		''' <summary>
-		''' * Construct ** </summary>
-
-		' Creates a net with default parameters.
+		''' Creates a net with default parameters.
+		''' </summary>
 		Public Sub New()
-			learningRateField = RNNLayer.defaultLearningRate
+			m_learningRate = RNNLayer.defaultLearningRate
 		End Sub
 
-		' Creates a net with default parameters and initializes immediately.
+		''' <summary>
+		''' Creates a net with default parameters and initializes immediately.
+		''' </summary>
+		''' <param name="vocabularySize"></param>
 		Public Sub New(vocabularySize As Integer)
 			Me.New()
-			initialize(vocabularySize)
+			Call initialize(vocabularySize)
 		End Sub
 
-		''' <summary>
-		''' * Hyperparameters ** </summary>
+		' * Hyperparameters ** 
 
 		' 
 		' 		    Sets the hidden layer sizes per RNN layer
@@ -102,8 +103,8 @@ Namespace RNN
 		' 		
 		Public Overridable WriteOnly Property HiddenSize As Integer()
 			Set(value As Integer())
-				hiddenSizeField = value
-				initializedField = False
+				m_hiddenSize = value
+				m_initialized = False
 			End Set
 		End Property
 
@@ -111,7 +112,7 @@ Namespace RNN
 		Public Overridable WriteOnly Property LearningRate As Double
 			Set(value As Double)
 				If layer Is Nothing Then
-					learningRateField = value
+					m_learningRate = value
 				Else
 					For Each layer As RNNLayer In Me.layer
 						layer.LearningRate = value
@@ -120,20 +121,17 @@ Namespace RNN
 			End Set
 		End Property
 
-		''' <summary>
-		''' * Initialize ** </summary>
-
 		' Initializes the net for this vocabulary size.
 		' Requires vocabularySize > 0.
 		Public Overrides Sub initialize(vocabularySize As Integer)
 			' Create layers
 
-			If hiddenSizeField Is Nothing Then ' default: single layer
-				hiddenSizeField = New Integer(0) {}
-				hiddenSizeField(0) = RNNLayer.defaultHiddenSize
+			If m_hiddenSize Is Nothing Then ' default: single layer
+				m_hiddenSize = New Integer(0) {}
+				m_hiddenSize(0) = RNNLayer.defaultHiddenSize
 			End If
 
-			layer = New RNNLayer(hiddenSizeField.Length - 1) {}
+			layer = New RNNLayer(m_hiddenSize.Length - 1) {}
 
 			For i = 0 To layer.Length - 1
 				layer(i) = New RNNLayer()
@@ -141,27 +139,26 @@ Namespace RNN
 				If i = 0 Then
 					layer(i).InputSize = vocabularySize
 				Else
-					layer(i).InputSize = hiddenSizeField(i - 1)
+					layer(i).InputSize = m_hiddenSize(i - 1)
 				End If
 
-				layer(i).HiddenSize = hiddenSizeField(i)
-				layer(i).LearningRate = learningRateField
+				layer(i).HiddenSize = m_hiddenSize(i)
+				layer(i).LearningRate = m_learningRate
 
 
 				If i = layer.Length - 1 Then
 					layer(i).OutputSize = vocabularySize
 				Else
-					layer(i).OutputSize = hiddenSizeField(i)
+					layer(i).OutputSize = m_hiddenSize(i)
 				End If
 
 				layer(i).initialize()
 			Next
 
-			initializedField = True
+			m_initialized = True
 		End Sub
 
-		''' <summary>
-		''' * Train ** </summary>
+		' * Train ** 
 
 		' 
 		' 		    Performs a forward-backward pass for the given indices.
@@ -243,14 +240,20 @@ Namespace RNN
 			Return sampled
 		End Function
 
-		' Returns true if the net was initialized.
+		''' <summary>
+		''' Returns true if the net was initialized.
+		''' </summary>
+		''' <returns></returns>
 		Public Overrides ReadOnly Property Initialized As Boolean
 			Get
-				Return initializedField
+				Return m_initialized
 			End Get
 		End Property
 
-		' Returns the vocabulary size - max index + 1.
+		''' <summary>
+		''' Returns the vocabulary size - max index + 1.
+		''' </summary>
+		''' <returns></returns>
 		Public Overrides ReadOnly Property VocabularySize As Integer
 			Get
 				Return layer(0).InputSize

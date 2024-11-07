@@ -327,6 +327,7 @@ Namespace IO
 
         Sub New(header As IEnumerable(Of String))
             columnList = New HeaderSchema(header)
+            table = New List(Of RowObject)
         End Sub
 
         ''' <summary>

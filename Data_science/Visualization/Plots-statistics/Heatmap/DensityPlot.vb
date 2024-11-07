@@ -158,8 +158,8 @@ Namespace Heatmap
                 ablines:=ablines,
                 Xlabel:=labX,
                 Ylabel:=labY,
-                xlim:=xrange.Max,
-                ylim:=yrange.Max,
+                xlim:=xrange.MinMax,
+                ylim:=yrange.MinMax,
                 htmlLabel:=htmlLabel,
                 labelFontStyle:=CSSFont.Win7VeryLarge,
                 tickFontStyle:=CSSFont.Win7Large).CreateGraphics

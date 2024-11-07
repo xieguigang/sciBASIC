@@ -63,18 +63,17 @@ Imports std = System.Math
 
 Namespace RNN
 
-    ' An RNN Layer with support for multi-layer networks.
+    ''' <summary>
+    ''' An RNN Layer with support for multi-layer networks.
+    ''' </summary>
     <Serializable>
     Public Class RNNLayer
-        ' Hyperparameters
-
-        Private learningRateField As Double ' Backpropagation parameter.
 
         ' Dimensions
 
-        Private inputSizeField As Integer ' input vector size
-        Private hiddenSizeField As Integer ' hidden state size
-        Private outputSizeField As Integer ' input vector size
+        Private m_inputSize As Integer ' input vector size
+        Private m_hiddenSize As Integer ' hidden state size
+        Private m_outputSize As Integer ' input vector size
 
         ' Defaults
 
@@ -114,79 +113,99 @@ Namespace RNN
 
         Private initialized As Boolean
 
-        ' Init 
-        ' Creates a net with default parameters.
+        ''' <summary>
+        ''' Init: Creates a net with default parameters.
+        ''' </summary>
         Public Sub New()
-            inputSizeField = defaultInputSize
-            hiddenSizeField = defaultHiddenSize
-            inputSizeField = defaultOutputSize
-            learningRateField = defaultLearningRate
+            m_inputSize = defaultInputSize
+            m_hiddenSize = defaultHiddenSize
+            m_inputSize = defaultOutputSize
+
+            _LearningRate = defaultLearningRate
         End Sub
 
-        ' Creates a net with custom parameters
+        ''' <summary>
+        ''' Creates a net with custom parameters
+        ''' </summary>
+        ''' <param name="inputSize"></param>
+        ''' <param name="hiddenSize"></param>
+        ''' <param name="outputSize"></param>
+        ''' <param name="learningRate"></param>
         Public Sub New(inputSize As Integer, hiddenSize As Integer, outputSize As Integer, learningRate As Double)
-            inputSizeField = inputSize
-            hiddenSizeField = hiddenSize
-            outputSizeField = outputSize
-            learningRateField = learningRate
+            m_inputSize = inputSize
+            m_hiddenSize = hiddenSize
+            m_outputSize = outputSize
+
+            _LearningRate = learningRate
         End Sub
 
-        ' Set the input size.
+        ''' <summary>
+        ''' Set the input size.
+        ''' </summary>
+        ''' <returns></returns>
         Public Overridable Property InputSize As Integer
             Set(value As Integer)
                 initialized = False
-                inputSizeField = value
+                m_inputSize = value
             End Set
             Get
-                Return inputSizeField
+                Return m_inputSize
             End Get
         End Property
 
-        ' Set the hidden size.
+        ''' <summary>
+        ''' Set the hidden size.
+        ''' </summary>
+        ''' <returns></returns>
         Public Overridable Property HiddenSize As Integer
             Set(value As Integer)
                 initialized = False
 
-                hiddenSizeField = value
+                m_hiddenSize = value
             End Set
             Get
-                Return hiddenSizeField
+                Return m_hiddenSize
             End Get
         End Property
 
-        ' Set the output size.
+        ''' <summary>
+        ''' Set the output size.
+        ''' </summary>
+        ''' <returns></returns>
         Public Overridable Property OutputSize As Integer
             Set(value As Integer)
                 initialized = False
 
-                outputSizeField = value
+                m_outputSize = value
             End Set
             Get
-                Return outputSizeField
+                Return m_outputSize
             End Get
         End Property
 
+        ''' <summary>
+        ''' Backpropagation parameter.
+        ''' </summary>
+        ''' <returns></returns>
+        ''' <remarks>
+        ''' Hyperparameters
+        ''' </remarks>
         Public Overridable Property LearningRate As Double
-            Set(value As Double)
-                learningRateField = value
-            End Set
-            Get
-                Return learningRateField
-            End Get
-        End Property
 
-        ' Initialize the net with random weights.
+        ''' <summary>
+        ''' Initialize the net with random weights.
+        ''' </summary>
         Public Overridable Sub initialize()
 
             ' create weight matrices
 
             Dim scale = 0.1
 
-            Wxh = Random.randn(hiddenSizeField, inputSizeField).mul(scale)
-            Whh = Random.randn(hiddenSizeField, hiddenSizeField).mul(scale)
-            Why = Random.randn(outputSizeField, hiddenSizeField).mul(scale)
-            bh = Matrix.zeros(hiddenSizeField)
-            by = Matrix.zeros(outputSizeField)
+            Wxh = Random.randn(m_hiddenSize, m_inputSize).mul(scale)
+            Whh = Random.randn(m_hiddenSize, m_hiddenSize).mul(scale)
+            Why = Random.randn(m_outputSize, m_hiddenSize).mul(scale)
+            bh = Matrix.zeros(m_hiddenSize)
+            by = Matrix.zeros(m_outputSize)
 
             gWxh = Matrix.zerosLike(Wxh)
             gWhh = Matrix.zerosLike(Whh)
@@ -194,7 +213,7 @@ Namespace RNN
             gbh = Matrix.zerosLike(bh)
             gby = Matrix.zerosLike(by)
 
-            h = Random.randn(hiddenSizeField)
+            h = Random.randn(m_hiddenSize)
 
             initialized = True
         End Sub
@@ -209,15 +228,19 @@ Namespace RNN
             ' start at t = 1
             Dim oneHot = New Matrix(ix.Length + 1 - 1) {}
             For t = 1 To ix.Length + 1 - 1
-                oneHot(t) = Matrix.oneHot(inputSizeField, ix(t - 1))
+                oneHot(t) = Matrix.oneHot(m_inputSize, ix(t - 1))
             Next
 
             Return oneHot
         End Function
 
-        ' Like ixTox, but a single index instead of an array
+        ''' <summary>
+        ''' Like ixTox, but a single index instead of an array
+        ''' </summary>
+        ''' <param name="ix"></param>
+        ''' <returns></returns>
         Friend Overridable Function ixTox(ix As Integer) As Matrix
-            Return Matrix.oneHot(inputSizeField, ix)
+            Return Matrix.oneHot(m_inputSize, ix)
         End Function
 
         ' 
@@ -281,7 +304,10 @@ Namespace RNN
             h = hAt(lastSequenceLength)
         End Sub
 
-        ' Forward pass for a single seed.
+        ''' <summary>
+        ''' Forward pass for a single seed.
+        ''' </summary>
+        ''' <param name="x"></param>
         Friend Overridable Sub forward(x As Matrix)
             Dim xa = New Matrix(1) {}
             xa(1) = x
@@ -432,21 +458,21 @@ Namespace RNN
 
                 gparam.add((New Matrix(dparam)).mul(dparam))
                 Dim tmp As Matrix = (New Matrix(gparam)).apply(Function(elem) std.Sqrt(elem) + 0.00000001)
-                param.add((New Matrix(dparam)).mul(-learningRateField).div(tmp))
+                param.add((New Matrix(dparam)).mul(-LearningRate).div(tmp))
                 Threading.Interlocked.Increment(i)
             End While
         End Sub
 
-        ' 
-        ' 		    Returns dx: the gradients to be used as input to the previous layer's
-        ' 		    backward pass.
-        ' 		
+        ''' <summary>
+        ''' Returns dx: the gradients to be used as input to the previous layer's
+        ''' backward pass.
+        ''' </summary>
+        ''' <returns></returns>
         Friend Overridable Function getdx() As Matrix()
             Return dxAt
         End Function
 
-        ''' <summary>
-        ''' * Sampling ** </summary>
+        ' * Sampling ** 
 
 
         ' Returns softmax(last y,temp) as an array of doubles: like last p, but
@@ -456,12 +482,18 @@ Namespace RNN
             Return Math.softmax(New Matrix(yAt(yAt.Length - 1)), temp).unravel()
         End Function
 
-        ' Save the hidden state before sampling.
+        ''' <summary>
+        ''' Save the hidden state before sampling.
+        ''' </summary>
+        ''' <returns></returns>
         Friend Overridable Function saveHiddenState() As Matrix
             Return New Matrix(h)
         End Function
 
-        ' Restore the hidden state after sampling.
+        ''' <summary>
+        ''' Restore the hidden state after sampling.
+        ''' </summary>
+        ''' <param name="h"></param>
         Friend Overridable Sub restoreHiddenState(h As Matrix)
             Me.h = h
         End Sub

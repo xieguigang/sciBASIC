@@ -311,10 +311,13 @@ Namespace ComponentModel.DataSourceModel
         ''' Is one of the primitive type in the hash <see cref="StringBuilders"/>?
         ''' </summary>
         ''' <param name="type"></param>
+        ''' <param name="autoCastEnum">
+        ''' and also treate the enum type as primitive value?(enum is integer)
+        ''' </param>
         ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Function IsPrimitive(type As Type) As Boolean
-            Return StringBuilders.ContainsKey(type)
+        Public Function IsPrimitive(type As Type, Optional autoCastEnum As Boolean = False) As Boolean
+            Return StringBuilders.ContainsKey(type) OrElse (autoCastEnum AndAlso type.IsEnum)
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -403,13 +406,27 @@ Namespace ComponentModel.DataSourceModel
             End SyncLock
         End Function
 
-        Public Function IsIntegerType(type As Type) As Boolean
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="type"></param>
+        ''' <param name="autoCastEnums">
+        ''' and also treated the enum value as integer type?
+        ''' </param>
+        ''' <returns></returns>
+        Public Function IsIntegerType(type As Type, Optional autoCastEnums As Boolean = False) As Boolean
             Static ints As Type() = {
                 GetType(Integer), GetType(Short), GetType(Byte), GetType(Long),
                 GetType(UInteger), GetType(UShort), GetType(SByte), GetType(ULong)
             }
 
-            Return ints.Any(Function(int) int Is type)
+            If ints.Any(Function(int) int Is type) Then
+                Return True
+            ElseIf autoCastEnums Then
+                Return type.IsEnum
+            End If
+
+            Return False
         End Function
 
         Public Enum EnumCastTo

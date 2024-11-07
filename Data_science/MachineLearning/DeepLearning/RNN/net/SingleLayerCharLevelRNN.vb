@@ -60,16 +60,15 @@
 
 Namespace RNN
 
-	' Single layer character level RNN.
+	''' <summary>
+	''' Single layer character level RNN.
+	''' </summary>
 	<Serializable>
 	Public Class SingleLayerCharLevelRNN
 		Inherits CharLevelRNN
 		Protected Friend alphabetField As Alphabet ' The alphabet for sampling.
 
 		Protected Friend internal As SingleLayerRNN ' Basic network.
-
-		''' <summary>
-		''' * Construct ** </summary>
 
 		' Constructs without initialization.
 		Public Sub New()
@@ -82,10 +81,12 @@ Namespace RNN
 			initialize(alphabet)
 		End Sub
 
-		''' <summary>
-		''' * Hyperparameters ** </summary>
+		' * Hyperparameters ** 
 
-		' Sets the hidden layer size. Network must be initialized again.
+		''' <summary>
+		''' Sets the hidden layer size. Network must be initialized again.
+		''' </summary>
+		''' <param name="value"></param>
 		Public Sub SetHiddenSize(value As Integer)
 			internal.HiddenSize = value
 		End Sub
@@ -96,16 +97,15 @@ Namespace RNN
 		End Sub
 
 		''' <summary>
-		''' * Initialize ** </summary>
-
-		' Initializes the net. alphabet != null.
+		''' Initializes the net. alphabet != null.
+		''' </summary>
+		''' <param name="alphabet"></param>
 		Public Overrides Sub initialize(alphabet As Alphabet)
 			alphabetField = alphabet
 			internal.initialize(alphabet.size())
 		End Sub
 
-		''' <summary>
-		''' * Train ** </summary>
+		' * Train ** 
 
 		' 
 		' 		    Performs a forward-backward pass for the given indices.
@@ -120,9 +120,12 @@ Namespace RNN
 		End Function
 
 		''' <summary>
-		''' * Sample ** </summary>
-
-		' Samples n indices, sequence seed, advance the state.
+		''' Samples n indices, sequence seed, advance the state.
+		''' </summary>
+		''' <param name="n"></param>
+		''' <param name="seed"></param>
+		''' <param name="temp"></param>
+		''' <returns></returns>
 		Public Overloads Overrides Function sampleIndices(n As Integer, seed As Integer(), temp As Double) As Integer()
 			Return internal.sampleIndices(n, seed, temp)
 		End Function
@@ -131,9 +134,6 @@ Namespace RNN
 		Public Overloads Overrides Function sampleIndices(n As Integer, seed As Integer(), temp As Double, advance As Boolean) As Integer()
 			Return internal.sampleIndices(n, seed, temp, advance)
 		End Function
-
-		''' <summary>
-		''' * Get ** </summary>
 
 		' Returns the alphabet, if initialized.
 		Public Overrides ReadOnly Property Alphabet As Alphabet

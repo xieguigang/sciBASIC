@@ -121,8 +121,8 @@ Namespace Plots
         ReadOnly ablines As Line()
         ReadOnly hullPolygonIndex As Index(Of String)
 
-        Friend xlim As Double = -1
-        Friend ylim As Double = -1
+        Friend xlim As Double() = Nothing
+        Friend ylim As Double() = Nothing
         Friend XaxisAbsoluteScalling As Boolean = False
         Friend YaxisAbsoluteScalling As Boolean = False
 
@@ -160,25 +160,25 @@ Namespace Plots
                 Call Console.WriteLine($"ylim: {ylim};")
             End If
 
-            If (Not xlim.IsNaNImaginary) AndAlso xlim > 0 Then
-                XTicks = XTicks.JoinIterates({xlim}).ToArray
-            End If
-            If (Not ylim.IsNaNImaginary) AndAlso ylim > 0 Then
-                YTicks = YTicks.JoinIterates({ylim}).ToArray
-            End If
-            If XaxisAbsoluteScalling Then
-                XTicks = {0.0}.JoinIterates(XTicks).ToArray
-            End If
-            If YaxisAbsoluteScalling Then
-                YTicks = {0.0}.JoinIterates(YTicks).ToArray
+            If Not xlim.IsNullOrEmpty Then
+                XTicks = xlim.CreateAxisTicks
+            Else
+                If XaxisAbsoluteScalling Then
+                    XTicks = {0.0}.JoinIterates(XTicks).ToArray
+                End If
+
+                XTicks = XTicks.Range.CreateAxisTicks
             End If
 
-            XTicks = XTicks.Range.CreateAxisTicks
-            YTicks = YTicks.Range.CreateAxisTicks
+            If Not ylim.IsNullOrEmpty Then
+                YTicks = ylim.CreateAxisTicks
+            Else
+                If YaxisAbsoluteScalling Then
+                    YTicks = {0.0}.JoinIterates(YTicks).ToArray
+                End If
 
-            'If ticksY > 0 Then
-            '    YTicks = AxisScalling.GetAxisByTick(YTicks, tick:=ticksY)
-            'End If
+                YTicks = YTicks.Range.CreateAxisTicks
+            End If
 
             Dim canvas As IGraphics = g
             Dim region As Rectangle = rect.PlotRegion(g.LoadEnvironment)

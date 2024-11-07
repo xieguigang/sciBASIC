@@ -61,7 +61,7 @@ Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.Distributions.BinBox
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
-Imports stdNum = System.Math
+Imports std = System.Math
 Imports randf2 = Microsoft.VisualBasic.Math.RandomExtensions
 
 Namespace Distributions
@@ -211,7 +211,7 @@ Namespace Distributions
             Dim array As DoubleTagged(Of Double)() = data _
                 .Select(Function(x)
                             Return New DoubleTagged(Of Double) With {
-                                .Tag = stdNum.Log(x, base),
+                                .Tag = std.Log(x, base),
                                 .Value = x
                             }
                         End Function) _
@@ -261,7 +261,11 @@ Namespace Distributions
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
-        Public Function Hist(data As Double(), Optional step! = 1) As IEnumerable(Of DataBinBox(Of Double))
+        Public Function Hist(data As Double(),
+                             Optional step! = 1,
+                             Optional min As Double? = Nothing,
+                             Optional max As Double? = Nothing) As IEnumerable(Of DataBinBox(Of Double))
+
             If data.Length = 0 Then
                 Return {}
             Else
@@ -269,8 +273,8 @@ Namespace Distributions
                     v:=data.OrderBy(Function(x) x).ToArray,
                     width:=[step],
                     eval:=Function(x) x,
-                    min:=data.Min,
-                    max:=data.Max
+                    min:=If(min, data.Min),
+                    max:=If(max, data.Max)
                 )
             End If
         End Function

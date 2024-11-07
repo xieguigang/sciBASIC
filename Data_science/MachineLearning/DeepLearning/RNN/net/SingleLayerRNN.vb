@@ -60,18 +60,19 @@
 
 Namespace RNN
 
-	' Single layer RNN.
+	''' <summary>
+	''' Single layer RNN.
+	''' </summary>
 	<Serializable>
 	Public Class SingleLayerRNN
 		Inherits BasicRNN
-		' The layer
-
-		Protected Friend layer As RNNLayer ' The single RNN layer
-
-		Private initializedField As Boolean
 
 		''' <summary>
-		''' * Construct ** </summary>
+		''' The single RNN layer
+		''' </summary>
+		Protected Friend layer As RNNLayer
+
+		Private m_initialized As Boolean
 
 		' Creates a net with default parameters.
 		Public Sub New()
@@ -84,14 +85,13 @@ Namespace RNN
 			initialize(vocabularySize)
 		End Sub
 
-		''' <summary>
-		''' * Hyperparameters ** </summary>
+		' * Hyperparameters ** 
 
 		' Sets the hidden layer size. Network must be initialized again.
 		Public Overridable WriteOnly Property HiddenSize As Integer
 			Set(value As Integer)
 				layer.HiddenSize = value
-				initializedField = False
+				m_initialized = False
 			End Set
 		End Property
 
@@ -101,9 +101,6 @@ Namespace RNN
 				layer.LearningRate = value
 			End Set
 		End Property
-
-		''' <summary>
-		''' * Initialize ** </summary>
 
 		' Initializes the net for this vocabulary size.
 		' Requires vocabularySize > 0.
@@ -115,11 +112,10 @@ Namespace RNN
 
 			layer.initialize()
 
-			initializedField = True
+			m_initialized = True
 		End Sub
 
-		''' <summary>
-		''' * Train ** </summary>
+		' * Train ** 
 
 		' 
 		' 		    Performs a forward-backward pass for the given indices.
@@ -136,9 +132,6 @@ Namespace RNN
 
 			Return loss
 		End Function
-
-		''' <summary>
-		''' * Sample ** </summary>
 
 		' Samples n indices, sequence seed, advance the state.
 		Public Overloads Overrides Function sampleIndices(n As Integer, seed As Integer(), temp As Double) As Integer()
@@ -172,7 +165,7 @@ Namespace RNN
 		' Returns true if the net was initialized.
 		Public Overrides ReadOnly Property Initialized As Boolean
 			Get
-				Return initializedField
+				Return m_initialized
 			End Get
 		End Property
 

@@ -65,13 +65,13 @@ Namespace RNN
 			End If
 
 			Dim dst = New Double(src.Length - 1)() {}
-			For i = 0 To src.Length - 1
-				If src(i) IsNot Nothing Then
-					dst(i) = src(i).CopyOf(src(i).Length)
-				End If
-			Next
+            For i As Integer = 0 To src.Length - 1
+                If src(i) IsNot Nothing Then
+                    dst(i) = src(i).CopyOf(src(i).Length)
+                End If
+            Next
 
-			Return dst
+            Return dst
 		End Function
 
 		' Returns the row count of a 2D array of doubles.

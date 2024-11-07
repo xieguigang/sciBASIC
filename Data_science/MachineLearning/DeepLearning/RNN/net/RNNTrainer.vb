@@ -84,23 +84,25 @@ Namespace RNN
 		Private initialized As Boolean
 
 		''' <summary>
-		''' * Construct ** </summary>
-
-		' Constructs without initializing
+		''' Constructs without initializing
+		''' </summary>
 		Public Sub New()
 			SequenceLength = defaultSequenceLength
 		End Sub
 
-		' Constructs and initializes.
+		''' <summary>
+		''' Constructs and initializes.
+		''' </summary>
+		''' <param name="net"></param>
+		''' <param name="data"></param>
 		Public Sub New(net As Trainable, data As TrainingSet)
 			Me.New()
 			initialize(net, data)
 		End Sub
 
 		''' <summary>
-		''' * Params ** </summary>
-
-		' Set a different sequence length.
+		''' Set a different sequence length.
+		''' </summary>
 		Public Overridable WriteOnly Property SequenceLength As Integer
 			Set(value As Integer)
 				If value <= 1 Then
@@ -115,10 +117,13 @@ Namespace RNN
 			End Set
 		End Property
 
-		''' <summary>
-		''' * Initialize ** </summary>
+		' * Initialize ** 
 
-		' Initializes training. Requires trainingSet != null.
+		''' <summary>
+		''' Initializes training. Requires trainingSet != null.
+		''' </summary>
+		''' <param name="net"></param>
+		''' <param name="trainingSet"></param>
 		Public Overridable Sub initialize(net As Trainable, trainingSet As TrainingSet)
 			Me.net = net
 			Me.trainingSet = trainingSet
@@ -144,15 +149,19 @@ Namespace RNN
 			initialized = True
 		End Sub
 
-		''' <summary>
-		''' * Train ** </summary>
+		' * Train ** 
 
-		' Trains the network until there's no more data.
+		''' <summary>
+		''' Trains the network until there's no more data.
+		''' </summary>
 		Public Overridable Sub train()
 			train(Integer.MaxValue)
 		End Sub
 
-		' Trains the net for a few steps. Requires steps >= 0.
+		''' <summary>
+		''' Trains the net for a few steps. Requires steps >= 0.
+		''' </summary>
+		''' <param name="steps"></param>
 		Public Overridable Sub train(steps As Integer)
 			For Each i As Integer In TqdmWrapper.Range(0, steps)
 				' try to extract
@@ -177,22 +186,27 @@ Namespace RNN
 			End If
 		End Sub
 
-		' Reset the data pointer to the beginning.
+		''' <summary>
+		''' Reset the data pointer to the beginning.
+		''' </summary>
 		Public Overridable Sub loopAround()
 			dataTrainedIndex = 0
 		End Sub
 
 		''' <summary>
-		''' * Get ** </summary>
-
-		' Returns the step count.
+		''' Returns the step count.
+		''' </summary>
+		''' <returns></returns>
 		Public Overridable ReadOnly Property TotalSteps As Integer
 			Get
 				Return totalStepsField
 			End Get
 		End Property
 
-		' Returns the smooth cross-entropy loss.
+		''' <summary>
+		''' Returns the smooth cross-entropy loss.
+		''' </summary>
+		''' <returns></returns>
 		Public Overridable ReadOnly Property SmoothLoss As Double
 			Get
 				If Not initialized Then
@@ -204,9 +218,9 @@ Namespace RNN
 		End Property
 
 		''' <summary>
-		''' * Set ** </summary>
-
-		' Print debug messages.
+		''' Print debug messages.
+		''' </summary>
+		''' <param name="[on]"></param>
 		Public Overridable Sub printDebug([on] As Boolean)
 			debugMessagesOn = [on]
 		End Sub

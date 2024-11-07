@@ -54,22 +54,26 @@
 
 Namespace RNN
 
-	' RNN that can use both indices, and characters as inputs/outputs.
-	<Serializable>
-	Public MustInherit Class CharLevelRNN
-		Inherits RNN
-		Implements CharacterSampleable
-		''' <summary>
-		''' * Initialize ** </summary>
+    ''' <summary>
+    ''' RNN that can use both indices, and characters as inputs/outputs.
+    ''' </summary>
+    <Serializable>
+    Public MustInherit Class CharLevelRNN : Inherits RNN
+        Implements CharacterSampleable
 
-		' Initializes the net. Requires that alphabet != null.
-		Public MustOverride Sub initialize(alphabet As Alphabet)
+        ' * Initialize ** 
 
-		''' <summary>
-		''' * Get ** </summary>
+        ''' <summary>
+        ''' Initializes the net. Requires that alphabet != null.
+        ''' </summary>
+        ''' <param name="alphabet"></param>
+        Public MustOverride Sub initialize(alphabet As Alphabet)
 
-		' Returns the alphabet, if initialized.
-		Public MustOverride ReadOnly Property Alphabet As Alphabet
+        ''' <summary>
+        ''' Returns the alphabet, if initialized.
+        ''' </summary>
+        ''' <returns></returns>
+        Public MustOverride ReadOnly Property Alphabet As Alphabet
 
 		''' <summary>
 		''' * Sample ** </summary>
@@ -79,12 +83,10 @@ Namespace RNN
 
 		Public Overridable Function sampleString(length As Integer, seed As String, temp As Double, advance As Boolean) As String Implements CharacterSampleable.sampleString
 			Dim seedIndices = Alphabet.charsToIndices(seed)
+            Dim sampledIndices = sampleIndices(length, seedIndices, temp, advance)
+            Dim sampledChars = Alphabet.indicesToChars(sampledIndices)
 
-			Dim sampledIndices = sampleIndices(length, seedIndices, temp, advance)
-
-			Dim sampledChars = Alphabet.indicesToChars(sampledIndices)
-
-			Return New String(sampledChars)
+            Return New String(sampledChars)
 		End Function
 	End Class
 End Namespace

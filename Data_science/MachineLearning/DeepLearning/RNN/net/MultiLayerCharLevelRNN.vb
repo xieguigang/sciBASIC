@@ -60,18 +60,24 @@
 
 Namespace RNN
 
-	' Single layer character level RNN.
+	''' <summary>
+	''' Single layer character level RNN.
+	''' </summary>
 	<Serializable>
-	Public Class MultiLayerCharLevelRNN
-		Inherits CharLevelRNN
-		Protected Friend alphabetField As Alphabet ' The alphabet for sampling.
-
-		Protected Friend internal As MultiLayerRNN ' Basic network.
+	Public Class MultiLayerCharLevelRNN : Inherits CharLevelRNN
 
 		''' <summary>
-		''' * Construct ** </summary>
+		''' The alphabet for sampling.
+		''' </summary>
+		Protected Friend m_alphabet As Alphabet
+		''' <summary>
+		''' Basic network.
+		''' </summary>
+		Protected Friend internal As MultiLayerRNN
 
-		' Constructs without initialization.
+		''' <summary>
+		''' Constructs without initialization.
+		''' </summary>
 		Public Sub New()
 			internal = New MultiLayerRNN()
 		End Sub
@@ -83,8 +89,7 @@ Namespace RNN
 			initialize(alphabet)
 		End Sub
 
-		''' <summary>
-		''' * Hyperparameters ** </summary>
+		' * Hyperparameters ** 
 
 		' Sets the hidden layer size. Network must be initialized again.
 		Public Sub SetHiddenSize(value As Integer())
@@ -96,17 +101,15 @@ Namespace RNN
 			internal.LearningRate = value
 		End Sub
 
-		''' <summary>
-		''' * Initialize ** </summary>
+		' * Initialize ** 
 
 		' Initializes the net. alphabet != null.
 		Public Overrides Sub initialize(alphabet As Alphabet)
-			alphabetField = alphabet
+			m_alphabet = alphabet
 			internal.initialize(alphabet.size())
 		End Sub
 
-		''' <summary>
-		''' * Train ** </summary>
+		' * Train ** 
 
 		' 
 		' 		    Performs a forward-backward pass for the given indices.
@@ -121,36 +124,52 @@ Namespace RNN
 		End Function
 
 		''' <summary>
-		''' * Sample ** </summary>
-
-		' Samples n indices, sequence seed, advance the state.
+		''' Samples n indices, sequence seed, advance the state.
+		''' </summary>
+		''' <param name="n"></param>
+		''' <param name="seed"></param>
+		''' <param name="temp"></param>
+		''' <returns></returns>
 		Public Overloads Overrides Function sampleIndices(n As Integer, seed As Integer(), temp As Double) As Integer()
 			Return internal.sampleIndices(n, seed, temp)
 		End Function
 
-		' Samples n indices, sequence seed, choose whether to advance the state.
+		''' <summary>
+		''' Samples n indices, sequence seed, choose whether to advance the state.
+		''' </summary>
+		''' <param name="n"></param>
+		''' <param name="seed"></param>
+		''' <param name="temp"></param>
+		''' <param name="advance"></param>
+		''' <returns></returns>
 		Public Overloads Overrides Function sampleIndices(n As Integer, seed As Integer(), temp As Double, advance As Boolean) As Integer()
 			Return internal.sampleIndices(n, seed, temp, advance)
 		End Function
 
 		''' <summary>
-		''' * Get ** </summary>
-
-		' Returns the alphabet, if initialized.
+		''' Returns the alphabet, if initialized.
+		''' </summary>
+		''' <returns></returns>
 		Public Overrides ReadOnly Property Alphabet As Alphabet
 			Get
-				Return alphabetField
+				Return m_alphabet
 			End Get
 		End Property
 
-		' Returns true if the net was initialized.
+		''' <summary>
+		''' Returns true if the net was initialized.
+		''' </summary>
+		''' <returns></returns>
 		Public Overrides ReadOnly Property Initialized As Boolean
 			Get
 				Return internal.Initialized
 			End Get
 		End Property
 
-		' Returns the vocabulary size (the alphabet size), if initialized.
+		''' <summary>
+		''' Returns the vocabulary size (the alphabet size), if initialized.
+		''' </summary>
+		''' <returns></returns>
 		Public Overrides ReadOnly Property VocabularySize As Integer
 			Get
 				Return internal.VocabularySize

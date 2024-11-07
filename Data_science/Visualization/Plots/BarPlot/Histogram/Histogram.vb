@@ -217,7 +217,8 @@ Namespace BarPlot.Histogram
                              Optional xlabelRotate As Double = 0,
                              Optional xTickFormat As String = "F2",
                              Optional yTickFormat As String = "F0",
-                             Optional dpi As Integer = 100) As GraphicsData
+                             Optional dpi As Integer = 100,
+                             Optional driver As Drivers = Drivers.Default) As GraphicsData
 
             Dim theme As New Theme With {
                 .padding = padding,
@@ -243,7 +244,7 @@ Namespace BarPlot.Histogram
                 theme.legendLayout = New Absolute(legendPos)
             End If
 
-            Return app.Plot(size, ppi:=dpi)
+            Return app.Plot(size, ppi:=dpi, driver:=driver)
         End Function
 
         ''' <summary>
@@ -323,7 +324,8 @@ Namespace BarPlot.Histogram
                                       Optional xlabelRotate As Double = 0,
                                       Optional xTickFormat As String = "F2",
                                       Optional yTickFormat As String = "F0",
-                                      Optional dpi As Integer = 100) As GraphicsData
+                                      Optional dpi As Integer = 100,
+                                      Optional driver As Drivers = Drivers.Default) As GraphicsData
 
             Dim histLegend As New LegendObject With {
                 .color = color,
@@ -349,7 +351,8 @@ Namespace BarPlot.Histogram
                 dpi:=dpi,
                 xTickFormat:=xTickFormat,
                 yTickFormat:=yTickFormat,
-                xlabelRotate:=xlabelRotate
+                xlabelRotate:=xlabelRotate,
+                driver:=driver
             )
         End Function
     End Module

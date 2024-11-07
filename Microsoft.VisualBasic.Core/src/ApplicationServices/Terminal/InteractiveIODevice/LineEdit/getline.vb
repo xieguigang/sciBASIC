@@ -760,6 +760,7 @@ mismatch:
         ' 
         Private Sub UpdateCompletionWindow()
             If current_completion IsNot Nothing Then Throw New Exception("This method should only be called if the window has been hidden")
+            If AutoCompleteEvent Is Nothing Then Return
 
             Dim completion As Completion = AutoCompleteEvent(text.ToString(), cursor)
             Dim completions = completion.Result
