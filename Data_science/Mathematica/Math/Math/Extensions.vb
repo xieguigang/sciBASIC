@@ -218,6 +218,9 @@ Imports std = System.Math
     ''' </summary>
     ''' <param name="range">Number values iterates from value ``from`` to value ``to``.</param>
     ''' <returns></returns>
+    ''' <remarks>
+    ''' step 1 or -1 based on the to - from delta value its sign symbol.
+    ''' </remarks>
     <Extension>
     Public Iterator Function Iterates(range As (From%, To%)) As IEnumerable(Of Integer)
         Dim step% = std.Sign(range.To - range.From)
