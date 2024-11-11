@@ -4,16 +4,17 @@
     <RootNamespace>Microsoft.VisualBasic.Drawing</RootNamespace>
     <TargetFrameworks>net48;net8.0-windows</TargetFrameworks>
     <UseApplicationFramework>True</UseApplicationFramework>
-    <AssemblyName>Microsoft.VisualBasic.Drawing</AssemblyName>
+    <AssemblyName>Microsoft.VisualBasic.Drawing.Windows</AssemblyName>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
     <Platforms>AnyCPU;x64</Platforms>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-    <PackageId>Microsoft.VisualBasic.Drawing.net4.8</PackageId>
-    <Title>System.Drawing gdi+ drawing wrapper</Title>
+    <PackageId>Microsoft.VisualBasic.Drawing.Windows</PackageId>
+    <Title>System.Drawing gdi+ drawing wrapper on windows</Title>
     <Authors>xieguigang</Authors>
     <Company>scibasic.net</Company>
     <Product>scibasic.net</Product>
     <Configurations>Debug;Release;nuget_release</Configurations>
+    <Description>This package provides a gdi+ drawing wrapper on windows platform, for make keeps the compability between then skiasharp and system.drawing.common for .NET 8.0 abd .NET 8.0-windows</Description>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
