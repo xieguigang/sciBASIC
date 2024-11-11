@@ -74,7 +74,7 @@ Namespace FileIO
     ''' <remarks>
     ''' a local filesystem implementation for <see cref="IFileSystemEnvironment"/>
     ''' </remarks>
-    Public Class Directory : Implements IFileSystemEnvironment
+    Public Class Directory : Implements IFileSystemEnvironment, IWorkspace
 
         ''' <summary>
         ''' 当前的这个文件夹对象的文件路径
@@ -83,7 +83,7 @@ Namespace FileIO
         ''' <remarks>
         ''' it is the full name via the function <see cref="FileSystem.GetDirectoryInfo"/>
         ''' </remarks>
-        Public ReadOnly Property folder As String
+        Public ReadOnly Property folder As String Implements IWorkspace.Workspace
         Public ReadOnly Property strict As Boolean = False
 
         Public ReadOnly Property [readonly] As Boolean Implements IFileSystemEnvironment.readonly
