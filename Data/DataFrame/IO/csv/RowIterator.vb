@@ -59,7 +59,6 @@
 Imports System.IO
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
-Imports Microsoft.VisualBasic.Text
 
 Namespace IO
 

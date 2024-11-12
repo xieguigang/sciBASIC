@@ -407,11 +407,16 @@ Namespace FileSystem
         ''' <param name="access"></param>
         ''' <returns></returns>
         ''' <remarks>
-        ''' the parameter <paramref name="access"/> only supports data mode:
+        ''' the parameter <paramref name="access"/> only supports data mode:<br />
         ''' 
-        ''' 1. <see cref="FileAccess.Read"/>
-        ''' 2. <see cref="FileAccess.Write"/>
+        ''' 1. <see cref="FileAccess.Read"/>;
+        ''' 2. <see cref="FileAccess.Write"/>;
         ''' 
+        ''' <br /><br />
+        ''' 
+        ''' <strong><span style="color: red">Do not dispose the readonly stream;</span> </strong>
+        ''' for a write stream, dispose method should be call for commit the data into 
+        ''' filesystem.
         ''' </remarks>
         Public Function OpenFile(path As String,
                                  Optional mode As FileMode = FileMode.OpenOrCreate,

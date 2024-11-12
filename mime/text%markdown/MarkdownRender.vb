@@ -175,6 +175,7 @@ Public Class MarkdownRender
     Dim codeblocks As New Dictionary(Of String, String)
     Dim images As New Dictionary(Of String, String)
     Dim urls As New Dictionary(Of String, String)
+    Dim autoUrls As New Dictionary(Of String, String)
 
     ''' <summary>
     ''' due to the reason of some image file name pattern may be mis-interpretered as
@@ -246,18 +247,25 @@ Public Class MarkdownRender
         text = hr.Replace(text, Function(m) render.HorizontalLine)
     End Sub
 
-    ReadOnly table As New Regex("([|].+[|]\n)+", RegexOptions.Compiled Or RegexOptions.Singleline)
+    ReadOnly table As New Regex("([|].+[|]\n)+", RegexOptions.Compiled Or RegexOptions.Multiline)
 
     Private Sub RunTable()
         text = table.Replace(text, Function(m) TableBlock(m.Value))
     End Sub
 
     Private Function TableBlock(s As String) As String
-        Dim lines = s.LineTokens
-        Dim headers = lines(0).Split("|"c).Select(AddressOf Strings.Trim).ToArray
+        Dim lines As String() = s.LineTokens
+        Dim headers As String() = lines(0) _
+            .Trim("|"c) _
+            .Split("|"c) _
+            .Select(AddressOf Strings.Trim) _
+            .ToArray
         Dim bodyRows = lines.Skip(2) _
             .Select(Function(line)
-                        Return line.Split("|"c).Select(AddressOf Strings.Trim).ToArray
+                        Return line.Trim("|"c) _
+                            .Split("|"c) _
+                            .Select(AddressOf Strings.Trim) _
+                            .ToArray
                     End Function)
 
         Return render.Table(headers, bodyRows)
@@ -271,21 +279,39 @@ Public Class MarkdownRender
         For Each link In urls.Reverse
             text = text.Replace(link.Key, AnchorTag(link.Value))
         Next
+
+        ' restore auto link
+        For Each link In autoUrls.Reverse
+            text = text.Replace(link.Key, link.Value)
+        Next
     End Sub
 
+    ''' <summary>
+    ''' Create url and hide it
+    ''' </summary>
+    ''' <remarks>
+    ''' for avoid some un-expected markdown format bug, example as /?q=__a__ maybe transform as /?q=&lt;em>a&lt;/em>
+    ''' </remarks>
     Private Sub RunAutoLink()
-        ' text = auto_link.Replace(text, Function(m) AutoLink(m.Value))
-        text = url_link.Replace(text, Function(m)
-                                          Dim subtext = m.Value
-                                          Dim a$ = subtext.First
-                                          Dim b$ = subtext.Last
-                                          Dim offset1 As Integer = If(a.StringEmpty(), 1, 0)
-                                          Dim offset2 As Integer = If(b.StringEmpty, subtext.Length - 2, subtext.Length - offset1)
-                                          Dim url As String = subtext.Substring(offset1, offset2)
-                                          Dim link = If(a.StringEmpty, a, "") & render.AnchorLink(url, url, url) & If(b.StringEmpty, b, "")
+        Dim offset As Integer = 1
 
-                                          Return link
-                                      End Function)
+        autoUrls.Clear()
+        text = url_link.Replace(text,
+            evaluator:=Function(m)
+                           Dim subtext = m.Value
+                           Dim a$ = subtext.First
+                           Dim b$ = subtext.Last
+                           Dim offset1 As Integer = If(a.StringEmpty(), 1, 0)
+                           Dim offset2 As Integer = If(b.StringEmpty, subtext.Length - 2, subtext.Length - offset1)
+                           Dim url As String = subtext.Substring(offset1, offset2)
+                           Dim link = If(a.StringEmpty, a, "") & render.AnchorLink(url, url, url) & If(b.StringEmpty, b, "")
+                           Dim hash = $";;;auto_url+{offset}xxx;;;"
+
+                           offset += 1
+                           autoUrls(hash) = link
+
+                           Return hash
+                       End Function)
     End Sub
 
     Private Function AutoLink(s As String) As String

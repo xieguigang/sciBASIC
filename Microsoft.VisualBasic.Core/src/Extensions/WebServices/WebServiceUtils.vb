@@ -107,7 +107,7 @@ Public Module WebServiceUtils
     ''' <returns></returns>
     Public ReadOnly Property Protocols As IReadOnlyCollection(Of String) = {"http://", "https://", "ftp://", "sftp://"}
 
-    Public Const UnixPathPattern$ = "([a-zA-Z0-9\~\!\@\#\$\%\^\&\*\(\)_\-\=\+\\\/\?\.\:\;\'\,]*)?"
+    Public Const UnixPathPattern$ = "([a-zA-Z0-9\~\!\@\#\$\%\^\&\*\(\)_\-\=\+\\\/\?\.\:\;\'\,\[\]]*)?"
     ''' <summary>
     ''' regex pattern for http url
     ''' </summary>

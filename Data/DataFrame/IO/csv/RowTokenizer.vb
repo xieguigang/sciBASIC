@@ -59,6 +59,9 @@ Imports Microsoft.VisualBasic.Text.Parser
 
 Namespace IO
 
+    ''' <summary>
+    ''' Parse the csv row by char scanning
+    ''' </summary>
     Friend Class RowTokenizer
 
         ReadOnly rowStr As CharPtr

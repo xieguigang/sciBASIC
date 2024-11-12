@@ -194,7 +194,13 @@ _this_ _is_ _your_ _basic_ _boring_ _emphasis_
 > 5. create graph embedding result for a specific molecular strucutre data - https://mzkit.org/vignettes/mzkit/mzkit/SMILES/links.html
 "
 
+    Private Sub tableTest()
+        Dim md = "E:\GCModeller\src\runtime\sciBASIC#\mime\text%markdown\test\test_table.md".ReadAllText
+        Call New MarkdownRender().Transform(md).SaveTo("./test_table.html")
+    End Sub
+
     Sub Main(args As String())
+        tableTest()
         Console.WriteLine(New MarkdownRender().Transform(quote_links))
 
         Call New MarkdownRender().Transform(quote_links).SaveTo("./test_demo.html")

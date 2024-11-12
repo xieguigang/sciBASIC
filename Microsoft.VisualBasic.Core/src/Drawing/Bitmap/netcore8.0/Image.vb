@@ -137,6 +137,12 @@ Namespace Imaging
             Return New Bitmap(New BitmapReader(s).LoadMemory)
         End Function
 
+        Public Shared Function FromFile(path As String) As Bitmap
+            Using s As Stream = path.Open(FileMode.Open, doClear:=False, [readOnly]:=True)
+                Return FromStream(s)
+            End Using
+        End Function
+
         Protected Overridable Sub Dispose(disposing As Boolean)
             If Not disposedValue Then
                 If disposing Then
