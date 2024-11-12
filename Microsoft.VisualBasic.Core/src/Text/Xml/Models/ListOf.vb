@@ -182,5 +182,15 @@ Namespace Text.Xml.Models
         Public Shared Widening Operator CType(array As T()) As XmlList(Of T)
             Return New XmlList(Of T) With {.items = array}
         End Operator
+
+        ''' <summary>
+        ''' cast the scalar value to a list
+        ''' </summary>
+        ''' <param name="scalar"></param>
+        ''' <returns></returns>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Widening Operator CType(scalar As T) As XmlList(Of T)
+            Return New XmlList(Of T) With {.items = {scalar}}
+        End Operator
     End Class
 End Namespace
