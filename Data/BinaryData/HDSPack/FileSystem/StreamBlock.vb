@@ -1,60 +1,61 @@
 ﻿#Region "Microsoft.VisualBasic::003d2fdef4bf1c4989552b0d31d99ad9, Data\BinaryData\HDSPack\FileSystem\StreamBlock.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 62
-    '    Code Lines: 37 (59.68%)
-    ' Comment Lines: 15 (24.19%)
-    '    - Xml Docs: 100.00%
-    ' 
-    '   Blank Lines: 10 (16.13%)
-    '     File Size: 2.00 KB
+' Summaries:
 
 
-    '     Class StreamBlock
-    ' 
-    '         Properties: fullName, mimeType, offset, size
-    ' 
-    '         Constructor: (+2 Overloads) Sub New
-    '         Function: GetRegion, ToString
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 62
+'    Code Lines: 37 (59.68%)
+' Comment Lines: 15 (24.19%)
+'    - Xml Docs: 100.00%
+' 
+'   Blank Lines: 10 (16.13%)
+'     File Size: 2.00 KB
+
+
+'     Class StreamBlock
+' 
+'         Properties: fullName, mimeType, offset, size
+' 
+'         Constructor: (+2 Overloads) Sub New
+'         Function: GetRegion, ToString
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
+Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ApplicationServices
 Imports Microsoft.VisualBasic.Data.IO
@@ -64,7 +65,7 @@ Imports Microsoft.VisualBasic.Net.Protocols.ContentTypes
 Namespace FileSystem
 
     ''' <summary>
-    ''' A data file
+    ''' A data file reference
     ''' </summary>
     Public Class StreamBlock : Inherits StreamObject
 
@@ -79,10 +80,24 @@ Namespace FileSystem
         ''' <returns></returns>
         Public Property size As Long
 
+        ''' <summary>
+        ''' get http mime content type of current file object
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property mimeType As ContentType
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return referencePath.ToString.FileMimeType
+            End Get
+        End Property
+
+        ''' <summary>
+        ''' get the extension suffix name of current file node
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property extensionSuffix As String
+            Get
+                Return referencePath.FileName.ExtensionSuffix
             End Get
         End Property
 
@@ -110,9 +125,17 @@ Namespace FileSystem
             Return $"{MyBase.ToString} [offset={offset}, size={StringFormats.Lanudry(size)}] ({mimeType.ToString})"
         End Function
 
+        ''' <summary>
+        ''' get data stream region of current file content data
+        ''' </summary>
+        ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function GetRegion() As BufferRegion
             Return New BufferRegion With {.size = size, .position = offset}
+        End Function
+
+        Public Function StreamSpan(file As Stream) As Stream
+            Return New SubStream(file, offset, size)
         End Function
 
     End Class

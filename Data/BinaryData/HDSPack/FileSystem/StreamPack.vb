@@ -416,7 +416,10 @@ Namespace FileSystem
         ''' 
         ''' <strong><span style="color: red">Do not dispose the readonly stream;</span> </strong>
         ''' for a write stream, dispose method should be call for commit the data into 
-        ''' filesystem.
+        ''' filesystem.<br />
+        ''' 
+        ''' this function create data buffer without pre-allocation for write, and append 
+        ''' to the file last location
         ''' </remarks>
         Public Function OpenFile(path As String,
                                  Optional mode As FileMode = FileMode.OpenOrCreate,

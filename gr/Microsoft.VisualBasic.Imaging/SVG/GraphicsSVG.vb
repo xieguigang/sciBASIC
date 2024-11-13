@@ -1,73 +1,74 @@
 ﻿#Region "Microsoft.VisualBasic::2392604dcc9a63c04c15ad4ca89135b6, gr\Microsoft.VisualBasic.Imaging\SVG\GraphicsSVG.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 677
-    '    Code Lines: 487 (71.94%)
-    ' Comment Lines: 36 (5.32%)
-    '    - Xml Docs: 80.56%
-    ' 
-    '   Blank Lines: 154 (22.75%)
-    '     File Size: 27.58 KB
+' Summaries:
 
 
-    '     Class GraphicsSVG
-    ' 
-    '         Properties: Driver, LastSvgLayerElement, RenderingOrigin, Size, TextContrast
-    ' 
-    '         Constructor: (+4 Overloads) Sub New
-    ' 
-    '         Function: GetContextInfo, GetStringPath, (+4 Overloads) IsVisible, (+3 Overloads) MeasureString, Save
-    ' 
-    '         Sub: AddMetafileComment, ClearCanvas, (+4 Overloads) DrawArc, (+3 Overloads) DrawBezier, (+2 Overloads) DrawBeziers
-    '              DrawCircle, (+2 Overloads) DrawClosedCurve, (+7 Overloads) DrawCurve, (+4 Overloads) DrawEllipse, (+10 Overloads) DrawImage
-    '              (+4 Overloads) DrawImageUnscaled, DrawImageUnscaledAndClipped, (+4 Overloads) DrawLine, (+2 Overloads) DrawLines, DrawPath
-    '              (+4 Overloads) DrawPie, (+2 Overloads) DrawPolygon, (+6 Overloads) DrawRectangle, (+2 Overloads) DrawRectangles, (+4 Overloads) DrawString
-    '              ExcludeClip, (+2 Overloads) FillClosedCurve, (+4 Overloads) FillEllipse, FillPath, (+3 Overloads) FillPie
-    '              (+2 Overloads) FillPolygon, (+4 Overloads) FillRectangle, Flush, (+2 Overloads) IntersectClip, ReleaseHandle
-    '              ResetClip, ResetTransform, RotateTransform, ScaleTransform, (+2 Overloads) SetClip
-    '              (+2 Overloads) TranslateClip, TranslateTransform
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 677
+'    Code Lines: 487 (71.94%)
+' Comment Lines: 36 (5.32%)
+'    - Xml Docs: 80.56%
+' 
+'   Blank Lines: 154 (22.75%)
+'     File Size: 27.58 KB
+
+
+'     Class GraphicsSVG
+' 
+'         Properties: Driver, LastSvgLayerElement, RenderingOrigin, Size, TextContrast
+' 
+'         Constructor: (+4 Overloads) Sub New
+' 
+'         Function: GetContextInfo, GetStringPath, (+4 Overloads) IsVisible, (+3 Overloads) MeasureString, Save
+' 
+'         Sub: AddMetafileComment, ClearCanvas, (+4 Overloads) DrawArc, (+3 Overloads) DrawBezier, (+2 Overloads) DrawBeziers
+'              DrawCircle, (+2 Overloads) DrawClosedCurve, (+7 Overloads) DrawCurve, (+4 Overloads) DrawEllipse, (+10 Overloads) DrawImage
+'              (+4 Overloads) DrawImageUnscaled, DrawImageUnscaledAndClipped, (+4 Overloads) DrawLine, (+2 Overloads) DrawLines, DrawPath
+'              (+4 Overloads) DrawPie, (+2 Overloads) DrawPolygon, (+6 Overloads) DrawRectangle, (+2 Overloads) DrawRectangles, (+4 Overloads) DrawString
+'              ExcludeClip, (+2 Overloads) FillClosedCurve, (+4 Overloads) FillEllipse, FillPath, (+3 Overloads) FillPie
+'              (+2 Overloads) FillPolygon, (+4 Overloads) FillRectangle, Flush, (+2 Overloads) IntersectClip, ReleaseHandle
+'              ResetClip, ResetTransform, RotateTransform, ScaleTransform, (+2 Overloads) SetClip
+'              (+2 Overloads) TranslateClip, TranslateTransform
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Drawing
-Imports System.Drawing.Drawing2D
+Imports System.IO
 Imports System.Runtime.CompilerServices
+Imports System.Text
 Imports Microsoft.VisualBasic.ComponentModel.Algorithm.base
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.BitmapImage
@@ -78,6 +79,10 @@ Imports Microsoft.VisualBasic.MIME.Html.CSS
 Imports Microsoft.VisualBasic.Net.Http
 Imports std = System.Math
 
+#If NET48 Then
+Imports System.Drawing.Drawing2D
+#End If
+
 Namespace SVG
 
     ''' <summary>
@@ -85,6 +90,7 @@ Namespace SVG
     ''' </summary>
     Public Class GraphicsSVG : Inherits IGraphics
         Implements SaveGdiBitmap
+        Implements ISvgGraphics
 
         ''' <summary>
         ''' SVG图型的数据结构以及渲染是树形的，但是利用程序代码进行SVG数据的生成却是线性的
@@ -725,7 +731,13 @@ Namespace SVG
         Protected Overrides Sub ReleaseHandle()
         End Sub
 
-        Public Function Save(stream As IO.Stream, format As ImageFormats) As Boolean Implements SaveGdiBitmap.Save
+        ''' <summary>
+        ''' save svg to a given file
+        ''' </summary>
+        ''' <param name="stream"></param>
+        ''' <param name="format"></param>
+        ''' <returns></returns>
+        Public Function Save(stream As Stream, format As ImageFormats) As Boolean Implements SaveGdiBitmap.Save
             Return New SVGData(Me, Size, New Padding).Save(stream)
         End Function
 
@@ -739,6 +751,15 @@ Namespace SVG
 
         Public Overrides Function GetStringPath(s As String, rect As RectangleF, font As Font) As GraphicsPath
             Throw New NotImplementedException()
+        End Function
+
+        Public Function GetSvgText() As String Implements ISvgGraphics.GetSvgText
+            Using s As New MemoryStream
+                Call Save(s, Nothing)
+                Call s.Seek(Scan0, SeekOrigin.Begin)
+
+                Return Encoding.UTF8.GetString(s.ToArray)
+            End Using
         End Function
     End Class
 End Namespace

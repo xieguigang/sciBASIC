@@ -78,6 +78,12 @@ Namespace Imaging.Driver
 
     End Interface
 
+    Public Interface ISvgGraphics
+
+        Function GetSvgText() As String
+
+    End Interface
+
     Public MustInherit Class IGraphicsData
 
         ''' <summary>

@@ -123,7 +123,7 @@ Namespace ApplicationServices
         End Property
 
         ''' <summary>
-        ''' 
+        ''' Construct a new stream data view window
         ''' </summary>
         ''' <param name="s"></param>
         ''' <param name="offset"></param>
@@ -139,6 +139,9 @@ Namespace ApplicationServices
             m_position = offset
         End Sub
 
+        ''' <summary>
+        ''' commit data to the base stream
+        ''' </summary>
         Public Overrides Sub Flush()
             Call BaseStream.Flush()
         End Sub
@@ -226,7 +229,7 @@ Namespace ApplicationServices
                 Case SeekOrigin.Current
                     real = m_position + d
                 Case Else
-                    Throw New ArgumentException()
+                    Throw New ArgumentException("invalid origin for seek!")
             End Select
 
             Dim virt As Long = real - offset

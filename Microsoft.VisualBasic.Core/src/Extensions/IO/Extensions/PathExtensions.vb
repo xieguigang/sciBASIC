@@ -159,7 +159,6 @@ Public Module PathExtensions
 
     ''' <summary>
     ''' returns a file extension suffix name in lower case.
-    ''' (函数返回文件的拓展名后缀，请注意，这里的返回值是不会带有小数点的)
     ''' </summary>
     ''' <param name="path">the file path string</param>
     ''' <returns>
@@ -170,6 +169,8 @@ Public Module PathExtensions
     ''' <remarks>
     ''' this is a safe function, which mean the value Nothing will never 
     ''' be returns from this function.
+    ''' 
+    ''' (函数返回文件的拓展名后缀，请注意，这里的返回值是不会带有小数点的)
     ''' </remarks>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>

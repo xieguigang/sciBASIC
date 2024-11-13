@@ -264,10 +264,11 @@ Public Module IsNullOrEmptyExtensions
 
     ''' <summary>
     ''' This object array is a null object or contains zero count items.
-    ''' (判断某一个对象数组是否为空)
     ''' </summary>
     ''' <returns></returns>
-    ''' <remarks></remarks>
+    ''' <remarks>
+    ''' (判断某一个对象数组是否为空)
+    ''' </remarks>
     ''' 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
@@ -277,10 +278,11 @@ Public Module IsNullOrEmptyExtensions
 
     ''' <summary>
     ''' This object array is a null object or contains zero count items.
-    ''' (判断某一个对象数组是否为空)
     ''' </summary>
     ''' <returns></returns>
-    ''' <remarks></remarks>
+    ''' <remarks>
+    ''' (判断某一个对象数组是否为空)
+    ''' </remarks>
     <Extension>
     Public Function IsNullOrEmpty(Of T)(array As T()) As Boolean
         Return array Is Nothing OrElse array.Length = 0
