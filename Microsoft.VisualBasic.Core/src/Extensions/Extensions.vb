@@ -558,15 +558,15 @@ Public Module Extensions
 
     ''' <summary>
     ''' Gets the element counts in the target data collection, if the collection object is nothing or empty
-    ''' then this function will returns ZERO, others returns Collection.Count.(返回一个数据集合之中的元素的数目，
-    ''' 假若这个集合是空值或者空的，则返回0，其他情况则返回Count拓展函数的结果)
+    ''' then this function will returns ZERO, others returns Collection.Count.
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
     ''' <param name="collection"></param>
     ''' <returns>this is a safe function: this function returns zero 
     ''' if the given input <paramref name="collection"/> object is nothing
     ''' </returns>
-    ''' <remarks></remarks>
+    ''' <remarks>(返回一个数据集合之中的元素的数目，
+    ''' 假若这个集合是空值或者空的，则返回0，其他情况则返回Count拓展函数的结果)</remarks>
     <Extension>
     Public Function TryCount(Of T)(collection As IEnumerable(Of T)) As Integer
         If collection Is Nothing Then
