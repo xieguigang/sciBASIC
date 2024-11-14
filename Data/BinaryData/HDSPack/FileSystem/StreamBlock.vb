@@ -115,6 +115,10 @@ Namespace FileSystem
         Sub New()
         End Sub
 
+        ''' <summary>
+        ''' just create the file path reference of current stream block file
+        ''' </summary>
+        ''' <param name="filepath"></param>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Sub New(filepath As FilePath)
             Call MyBase.New(filepath)

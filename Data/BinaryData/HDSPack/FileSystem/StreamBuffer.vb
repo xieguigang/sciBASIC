@@ -69,9 +69,12 @@ Namespace FileSystem
     ''' an in-memory stream buffer for write new file data
     ''' </summary>
     ''' <remarks>
-    ''' size is limited to 2GB, use the <see cref="IDisposable.Dispose()"/> method
+    ''' <strong>size is limited to 2GB</strong>, use the <see cref="IDisposable.Dispose()"/> method
     ''' for save the memory data to the underlying stream, and this dispose method
-    ''' will not close the target base stream
+    ''' will not close the target base stream<br />
+    ''' 
+    ''' this model will append of the block data into the last of the physical file
+    ''' by default, or write to the specific location when in pre-allocation mode
     ''' </remarks>
     Public Class StreamBuffer : Inherits Stream
 
@@ -146,8 +149,12 @@ Namespace FileSystem
         ''' create a new temp stream for write new object data
         ''' </summary>
         ''' <param name="buffer"></param>
-        ''' <param name="block"></param>
+        ''' <param name="block">the block location of current file data</param>
         ''' <param name="buffer_size"></param>
+        ''' <remarks>
+        ''' all stream data before flush into file is in-memory, so one block file 
+        ''' its file size <strong>should be less then 2GB</strong>.
+        ''' </remarks>
         Friend Sub New(buffer As Stream,
                        block As StreamBlock,
                        Optional buffer_size As Integer = 1024)
@@ -220,6 +227,10 @@ Namespace FileSystem
         ''' the base file stream, and then update 
         ''' the stream block content data
         ''' </summary>
+        ''' <remarks>
+        ''' append current file block object to the last of the file by default 
+        ''' when flush the data to physical pack file
+        ''' </remarks>
         Private Sub writeBuffer()
             If Not IsPreallocated Then
                 block.size = buffer.Length

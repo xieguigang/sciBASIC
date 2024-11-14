@@ -106,6 +106,12 @@ Namespace CSS
             Me.dpi = dpi
         End Sub
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Sub New(width As Integer, height As Integer, Optional dpi As Single = 100)
+            Call Me.New(New Size(width, height), dpi)
+        End Sub
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Sub New(canvas As SizeF, Optional dpi As Single = 100)
             Call Me.New(canvas.ToSize, dpi)
         End Sub
@@ -123,6 +129,7 @@ Namespace CSS
             Return Me
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function GetSize(size As CSSsize) As SizeF
             Return New SizeF(GetWidth(size.width), GetHeight(size.height))
         End Function

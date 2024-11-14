@@ -98,6 +98,10 @@ Namespace FileSystem
         ''' a messagepack schema should be defined for these types.
         ''' </summary>
         ReadOnly _registriedTypes As New Index(Of String)
+        ''' <summary>
+        ''' the pre-allocated metadata header size, includes of the global metadata and filesystem tree
+        ''' </summary>
+        ReadOnly _meta_size As Long
 
         Dim disposedValue As Boolean
 
@@ -143,6 +147,12 @@ Namespace FileSystem
         End Property
 
         ''' <summary>
+        ''' the actual used file header size
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property HeaderSize As Long
+
+        ''' <summary>
         ''' open or create new stream pack data object
         ''' </summary>
         ''' <param name="filepath"></param>
@@ -172,9 +182,11 @@ Namespace FileSystem
         ''' 
         ''' </summary>
         ''' <param name="buffer"></param>
-        ''' <param name="init_size"></param>
+        ''' <param name="init_size">
+        ''' the initialize block file of the memorystream for the block file when do create new file.
+        ''' </param>
         ''' <param name="meta_size">
-        ''' the size in bytes of the tree header data
+        ''' the size in bytes of the tree header data, used for create new file only
         ''' </param>
         Sub New(buffer As Stream,
                 Optional init_size As Integer = 1024,
@@ -184,6 +196,7 @@ Namespace FileSystem
             Me.is_readonly = [readonly]
             Me.buffer = buffer
             Me.init_size = init_size
+            Me._meta_size = meta_size
 
             If Not buffer.CanSeek AndAlso [readonly] Then
                 ' zip stream, probably...
@@ -198,9 +211,13 @@ Namespace FileSystem
             End If
 
             If Me.buffer.Length > 128 Then
+                ' load the filesystem tree
                 superBlock = ParseTree()
+                HeaderSize = buffer.Position
             Else
+                ' is empty file, initialize of the filesystem
                 Call Clear(meta_size)
+                HeaderSize = meta_size + Magic.Length
             End If
         End Sub
 
@@ -222,7 +239,7 @@ Namespace FileSystem
         End Function
 
         ''' <summary>
-        ''' 
+        ''' Clear the file tree
         ''' </summary>
         ''' <param name="meta_size">
         ''' the size in bytes of the tree header data
@@ -322,13 +339,17 @@ Namespace FileSystem
             Return Encoding.ASCII.GetString(magic) = StreamPack.Magic
         End Function
 
+        ''' <summary>
+        ''' parse the magic header/global metadata attribute/filesystem tree
+        ''' </summary>
+        ''' <returns></returns>
         Private Function ParseTree() As StreamGroup
             ' verify data at first
             Dim is_magic As Boolean = TestMagic(buffer)
             Dim registry As New Dictionary(Of String, String)
 
             If Not is_magic Then
-                Throw New FormatException("invalid magic header!")
+                Throw New FormatException("invalid magic header for the current HDS pack stream!")
             Else
                 Call ParseMetadata(buffer, registry)
             End If
@@ -381,13 +402,18 @@ Namespace FileSystem
             Return superBlock.GetObject(New FilePath(fileName), throw_err:=False)
         End Function
 
+        ''' <summary>
+        ''' Open an existed block file
+        ''' </summary>
+        ''' <param name="block"></param>
+        ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function OpenBlock(block As StreamBlock) As Stream
             Return New SubStream(buffer, block.offset, block.size)
         End Function
 
         ''' <summary>
-        ''' 
+        ''' Check of the given file data stream is existsed inside current data pack file
         ''' </summary>
         ''' <param name="path"></param>
         ''' <param name="ZERO_Nonexists">
@@ -580,6 +606,10 @@ Namespace FileSystem
         ''' <summary>
         ''' just write stream header data
         ''' </summary>
+        ''' <remarks>
+        ''' check of the header size is larger than the pre-allocated metadata size,
+        ''' and populate warning message if it is.
+        ''' </remarks>
         Private Sub flushStreamPack()
             Dim treeMetadata As Byte() = New MemoryStream(superBlock.GetBuffer(_registriedTypes)).GZipStream.ToArray
             Dim registeryMetadata As Byte() = _registriedTypes.GetTypeCodes
@@ -595,6 +625,14 @@ Namespace FileSystem
             Call buffer.Write(globalMetadata, Scan0, globalMetadata.Length)
             Call buffer.Write(size, Scan0, size.Length)
             Call buffer.Write(treeMetadata, Scan0, treeMetadata.Length)
+
+            ' check of the actual header size is larger than the pre-allocated header size
+            If buffer.Position > _meta_size Then
+                Dim warn = $"the actual header size({StringFormats.Lanudry(buffer.Position)}) is greater than the pre-allocated metadata header size({StringFormats.Lanudry(_meta_size)})! some data file is damaged."
+
+                Call warn.Warning
+                Call VBDebugger.PrintException(warn, "HDS::flushStreamPack()")
+            End If
 
             Call buffer.Flush()
         End Sub
