@@ -249,7 +249,7 @@ Namespace Graph
             If Not dataLabel AndAlso vertices.ContainsKey(labelID) Then
                 Return vertices(labelID)
             Else
-                Return vertex _
+                Return vertex.AsParallel _
                     .Where(Function(n)
                                Return n.data.label = labelID
                            End Function) _
