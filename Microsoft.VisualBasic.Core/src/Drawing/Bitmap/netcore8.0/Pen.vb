@@ -303,6 +303,7 @@ Namespace Imaging
         Public Shared ReadOnly Property White As New Pen(Color.White)
         Public Shared ReadOnly Property WhiteSmoke As New Pen(Color.WhiteSmoke)
         Public Shared ReadOnly Property Red As New Pen(Color.Red)
+        Public Shared ReadOnly Property Green As New Pen(Color.Green)
 
         Private Sub New()
         End Sub
