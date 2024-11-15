@@ -57,6 +57,7 @@
 #End Region
 
 Imports System.Linq.Expressions
+Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Algorithm.DynamicProgramming.Levenshtein
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Math.Scripting.MathExpression.Impl
@@ -65,7 +66,7 @@ Imports ScriptExpression = Microsoft.VisualBasic.Math.Scripting.MathExpression.I
 Namespace Scripting.MathExpression
 
     ''' <summary>
-    ''' 
+    ''' An abstract function interface for make math formula expression evaluation
     ''' </summary>
     ''' <param name="eval">evaluate the variable as numeric value.</param>
     ''' <returns></returns>
@@ -94,32 +95,7 @@ Namespace Scripting.MathExpression
                 Case GetType(Factorial)
                     Return Expressions.Expression.Constant(DirectCast(model, Factorial).Evaluate(Nothing), GetType(Double))
                 Case GetType(SymbolExpression)
-                    Dim symbolName As String = DirectCast(model, SymbolExpression).symbolName
-
-                    If parameters.ContainsKey(symbolName) Then
-                        If Not symbolName Like applied Then
-                            applied += symbolName
-                        End If
-
-                        Return parameters(symbolName)
-                    Else
-                        With parameters _
-                            .Where(Function(t) Not t.Key Like applied) _
-                            .OrderByDescending(Function(t)
-                                                   Return LevenshteinDistance.ComputeDistance(t.Key, symbolName)?.MatchSimilarity >= 0.5
-                                               End Function) _
-                            .FirstOrDefault
-
-                            If Not .Value Is Nothing Then
-                                Call $"the missing {symbolName} is replaced by un-applied '{ .Key}'!".Warning
-
-                                applied += .Key
-                                Return .Value
-                            Else
-                                Throw New EntryPointNotFoundException(symbolName)
-                            End If
-                        End With
-                    End If
+                    Return DirectCast(model, SymbolExpression).MakeSymbolReference(parameters, applied)
                 Case GetType(Impl.BinaryExpression)
                     Dim bin As Impl.BinaryExpression = DirectCast(model, Impl.BinaryExpression)
                     Dim left As Expressions.Expression = CreateExpression(parameters, bin.left, applied)
@@ -139,6 +115,39 @@ Namespace Scripting.MathExpression
                 Case Else
                     Throw New InvalidProgramException(model.GetType.FullName)
             End Select
+        End Function
+
+        <Extension>
+        Private Function MakeSymbolReference(model As SymbolExpression,
+                                             parameters As Dictionary(Of String, ParameterExpression),
+                                             applied As Index(Of String)) As Expressions.Expression
+
+            Dim symbolName As String = DirectCast(model, SymbolExpression).symbolName
+
+            If parameters.ContainsKey(symbolName) Then
+                If Not symbolName Like applied Then
+                    applied += symbolName
+                End If
+
+                Return parameters(symbolName)
+            Else
+                With parameters _
+                    .Where(Function(t) Not t.Key Like applied) _
+                    .OrderByDescending(Function(t)
+                                           Return LevenshteinDistance.ComputeDistance(t.Key, symbolName)?.MatchSimilarity >= 0.5
+                                       End Function) _
+                    .FirstOrDefault
+
+                    If Not .Value Is Nothing Then
+                        Call $"the missing {symbolName} is replaced by un-applied '{ .Key}'!".Warning
+
+                        applied += .Key
+                        Return .Value
+                    Else
+                        Throw New EntryPointNotFoundException(symbolName)
+                    End If
+                End With
+            End If
         End Function
     End Module
 End Namespace
