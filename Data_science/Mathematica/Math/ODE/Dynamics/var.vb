@@ -89,6 +89,10 @@ Namespace Dynamics
         Implements ICloneable
         Implements IAddress(Of Integer)
 
+        ''' <summary>
+        ''' index reference of this variable inside the ODEs system
+        ''' </summary>
+        ''' <returns></returns>
         Public Overloads Property Index As Integer Implements IAddress(Of Integer).Address
         Public Overridable Property Name As String Implements IReadOnlyId.Identity
         Public Overrides Property Value As Double Implements Ivar.value
