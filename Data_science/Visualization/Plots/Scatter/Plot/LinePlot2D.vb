@@ -359,6 +359,7 @@ Namespace Plots
                         .Distinct _
                         .ToArray
 
+                    YTicks = YTicks.Range.CreateAxisTicks
                     X = d3js.scale _
                         .ordinal _
                         .domain(allTermLabels) _
