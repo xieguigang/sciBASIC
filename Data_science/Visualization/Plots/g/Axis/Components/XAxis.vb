@@ -189,7 +189,7 @@ Namespace Graphic.Axis
             Dim ZERO As New Point(plotRegion.Left + offset.X, Y)
             ' X轴
             Dim right As New Point(ZERO.X + size.Width, Y)
-            Dim d! = If(overridesTickLine <= 0, 10, overridesTickLine)
+            Dim d! = If(overridesTickLine <= 0, 15, overridesTickLine)
 
             ' X轴
             Call g.DrawLine(pen, ZERO, right)
@@ -234,9 +234,9 @@ Namespace Graphic.Axis
 
                 If xRotate <> 0 Then
                     If xRotate > 0 Then
-                        Call g.DrawString(labelText, tickFont, tickColor, x, ZERO.Y + d * 1.2, angle:=xRotate)
+                        Call g.DrawString(labelText, tickFont, tickColor, x, ZERO.Y + d * 2, angle:=xRotate)
                     Else
-                        Call g.DrawString(labelText, tickFont, tickColor, x, ZERO.Y + sz.Height * std.Sin(xRotate * 180 / std.PI), angle:=xRotate)
+                        Call g.DrawString(labelText, tickFont, tickColor, x, ZERO.Y + d + sz.Height * std.Sin(xRotate * 180 / std.PI), angle:=xRotate)
                     End If
                 Else
                     Call g.DrawString(labelText, tickFont, tickColor, New Point(x - sz.Width / 2, ZERO.Y + d * 1.2))
