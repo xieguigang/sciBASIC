@@ -202,7 +202,8 @@ Namespace StorageProvider.Reflection
                                             Optional mute As Boolean = False,
                                             Optional metaBlank As String = "",
                                             Optional skipWhile As NamedValue(Of Func(Of String, Boolean)) = Nothing,
-                                            Optional simpleRowIterators As Boolean = True) As IEnumerable(Of T)
+                                            Optional simpleRowIterators As Boolean = True,
+                                            Optional tsv As Boolean = False) As IEnumerable(Of T)
             If Not path.FileExists Then
                 ' 空文件
                 Call $"Csv file ""{path.ToFileURL}"" is empty!".Warning
@@ -211,9 +212,11 @@ Namespace StorageProvider.Reflection
                 Call "Load data from filestream....".__DEBUG_ECHO(mute:=mute)
             End If
 
-            ' read csv data
-            Dim reader As DataFrame = IO.DataFrame.Load(path, encoding, fast, skipWhile, simpleRowIterators:=simpleRowIterators)
             Dim buffer As IEnumerable(Of T)
+            ' read csv data
+            Dim reader As DataFrame = IO.DataFrame.Load(path, encoding, fast, skipWhile,
+                                                        simpleRowIterators:=simpleRowIterators,
+                                                        tsv:=tsv)
 
             If Not maps Is Nothing Then
                 ' 改变列的名称映射以方便进行反序列化数据加载

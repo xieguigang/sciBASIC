@@ -404,13 +404,16 @@ Namespace IO
                                               Optional encoding As Encoding = Nothing,
                                               Optional fast As Boolean = False,
                                               Optional skipWhile As NamedValue(Of Func(Of String, Boolean)) = Nothing,
-                                              Optional simpleRowIterators As Boolean = True) As DataFrame
+                                              Optional simpleRowIterators As Boolean = True,
+                                              Optional tsv As Boolean = False) As DataFrame
             Dim file As File
 
             If fast Then
-                file = FileLoader.FastLoad(path, True, encoding, skipWhile)
+                file = FileLoader.FastLoad(path, True, encoding, skipWhile, tsv:=tsv)
             Else
-                file = File.Load(path, encoding, , skipWhile, simpleRowIterator:=simpleRowIterators)
+                file = File.Load(path, encoding, , skipWhile,
+                                 simpleRowIterator:=simpleRowIterators,
+                                 isTsv:=tsv)
             End If
 
             Return CreateObject(file)

@@ -80,19 +80,21 @@ Namespace IO
         Public Function FastLoad(path As String,
                                  Optional parallel As Boolean = True,
                                  Optional encoding As Encoding = Nothing,
-                                 Optional skipWhile As NamedValue(Of Func(Of String, Boolean)) = Nothing) As File
+                                 Optional skipWhile As NamedValue(Of Func(Of String, Boolean)) = Nothing,
+                                 Optional tsv As Boolean = False) As File
 
             Dim sw As Stopwatch = Stopwatch.StartNew
             Dim lines As String() = path.MapNetFile.ReadAllLines(encoding Or DefaultEncoding)
             Dim headers As New RowObject(lines(Scan0))
             Dim cData As New File
             Dim headerIndex As Integer = headers.IndexOf(skipWhile.Name)
+            Dim deli As Char = If(tsv, ASCII.TAB, ","c)
 
             If parallel Then
                 Dim cache = (From x As SeqValue(Of String) In lines.SeqIterator Select x)
                 Dim Rows = From line As SeqValue(Of String)
                            In cache.AsParallel
-                           Let __innerList As RowObject = New RowObject(line.value.Split(","c))
+                           Let __innerList As RowObject = New RowObject(line.value.Split(deli))
                            Select i = line.i,
                                 data = __innerList
                            Order By i Ascending
@@ -104,8 +106,8 @@ Namespace IO
                 End If
             Else
                 Dim Rows = From strLine As String In lines
-                           Let InternalList As RowObject = New RowObject(strLine.Split(","c))
-                           Select InternalList
+                           Let internal As RowObject = New RowObject(strLine.Split(deli))
+                           Select internal
 
                 If headerIndex >= 0 Then
                     cData._innerTable = Rows _
