@@ -614,9 +614,10 @@ Namespace XLSX.Writer
         ''' Adds an object to the next cell position. If the type of the value does not match with one of the supported data types, it will be casted to a String. A prepared object of the type Cell will not be casted but adjusted
         ''' </summary>
         ''' <param name="value">Unspecified value to insert.</param>
-        Public Sub AddNextCell(value As Object)
+        Public Function AddNextCell(value As Object) As Worksheet
             AddNextCell(CastValue(value, currentColumnNumber, currentRowNumber), True, Nothing)
-        End Sub
+            Return Me
+        End Function
 
         ''' <summary>
         ''' Adds an object to the next cell position. If the type of the value does not match with one of the supported data types, it will be casted to a String. A prepared object of the type Cell will not be casted but adjusted
@@ -1323,11 +1324,12 @@ Namespace XLSX.Writer
         ''' <summary>
         ''' Moves the current position to the next row (use for a new line)
         ''' </summary>
-        Public Sub GoToNextRow()
+        Public Function GoToNextRow() As Worksheet
             currentRowNumber += 1
             currentColumnNumber = 0
             ValidateRowNumber(currentRowNumber)
-        End Sub
+            Return Me
+        End Function
 
         ''' <summary>
         ''' Moves the current position to the next row with the number of cells to move (use for a new line)
@@ -1793,15 +1795,15 @@ Namespace XLSX.Writer
         ''' <param name="name">Name to set.</param>
         Public Sub SetSheetName(name As String)
             If String.IsNullOrEmpty(name) Then
-                Throw New FormatException("the worksheet name must be between 1 and " & MAX_WORKSHEET_NAME_LENGTH.ToString() & " characters")
+                Throw New FormatException("the worksheet name is empty! length of the name string must be between 1 and " & MAX_WORKSHEET_NAME_LENGTH.ToString() & " characters")
             End If
             If name.Length > MAX_WORKSHEET_NAME_LENGTH Then
-                Throw New FormatException("the worksheet name must be between 1 and " & MAX_WORKSHEET_NAME_LENGTH.ToString() & " characters")
+                Throw New FormatException($"the worksheet name ({name}) contains {name.Length} chars, string length of the worksheet name must be between 1 and " & MAX_WORKSHEET_NAME_LENGTH.ToString() & " characters")
             End If
             Dim regex As Regex = New Regex("[\[\]\*\?/\\]")
             Dim match = regex.Match(name)
             If match.Captures.Count > 0 Then
-                Throw New FormatException("the worksheet name must not contain the characters [  ]  * ? / \ ")
+                Throw New FormatException($"invalid worksheet name: '{name}'! The worksheet name must not contain the characters [  ]  * ? / \ ")
             End If
             sheetNameField = name
         End Sub

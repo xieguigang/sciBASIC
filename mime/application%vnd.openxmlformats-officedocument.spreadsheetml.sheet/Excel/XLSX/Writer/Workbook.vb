@@ -373,13 +373,14 @@ Namespace XLSX.Writer
         ''' </summary>
         ''' <param name="name">Name of the new worksheet.</param>
         Public Sub AddWorksheet(name As String)
-            For Each item In Worksheets
-                If Equals(item.SheetName, name) Then
+            For Each sheet As Worksheet In Worksheets
+                If sheet.SheetName = name Then
                     Throw New WorksheetException("The worksheet with the name '" & name & "' already exists.")
                 End If
             Next
             Dim number As Integer = GetNextWorksheetId()
-            Dim newWs As Worksheet = New Worksheet(name, number, Me)
+            Dim newWs As New Worksheet(name, number, Me)
+
             m_currentWorksheet = newWs
             Worksheets.Add(newWs)
             m_shortener.SetCurrentWorksheetInternal(m_currentWorksheet)
