@@ -61,9 +61,16 @@ Imports Microsoft.VisualBasic.Linq
 
 Namespace Document
 
+    ''' <summary>
+    ''' A key-value pair of the html attribute, includes the attribute name and attribute value
+    ''' </summary>
     Public Structure ValueAttribute : Implements INamedValue, IsEmpty
 
         Public Property Name As String Implements INamedValue.Key
+        ''' <summary>
+        ''' A collection of the attribute values, apply for the multiple value attribute data, example as class attribute
+        ''' </summary>
+        ''' <returns></returns>
         Public Property Values As List(Of String)
 
         Public ReadOnly Property IsEmpty As Boolean Implements IsEmpty.IsEmpty
@@ -72,6 +79,10 @@ Namespace Document
             End Get
         End Property
 
+        ''' <summary>
+        ''' get the first attribute value string
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property Value As String
             Get
                 Return Values?.FirstOrDefault
@@ -106,6 +117,15 @@ Namespace Document
         Public Overrides Function ToString() As String
             Return $"{Name}={Values.Select(Function(v) $"""{v}""").JoinBy(", ")}"
         End Function
+
+        ''' <summary>
+        ''' get attribute value
+        ''' </summary>
+        ''' <param name="attr"></param>
+        ''' <returns></returns>
+        Public Shared Narrowing Operator CType(attr As ValueAttribute) As String
+            Return attr.Value
+        End Operator
     End Structure
 
 End Namespace

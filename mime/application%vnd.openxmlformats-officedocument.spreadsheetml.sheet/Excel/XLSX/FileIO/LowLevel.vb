@@ -609,7 +609,7 @@ Namespace XLSX.FileIO
         ''' Method to save the workbook
         ''' </summary>
         Public Sub Save()
-            Using fs As FileStream = New FileStream(m_workbook.Filename, FileMode.Create)
+            Using fs As Stream = m_workbook.Filename.Open(FileMode.OpenOrCreate, doClear:=True, [readOnly]:=False)
                 Call SaveAsStream(fs)
             End Using
         End Sub

@@ -75,6 +75,34 @@ Namespace Linq
     Public Module Extensions
 
         ''' <summary>
+        ''' An index of liked function for find the first element its index offset that matches the condition test
+        ''' </summary>
+        ''' <typeparam name="T"></typeparam>
+        ''' <param name="collection"></param>
+        ''' <param name="where"></param>
+        ''' <returns>
+        ''' -1 means not found
+        ''' </returns>
+        <Extension>
+        Public Function AtWhich(Of T)(collection As IEnumerable(Of T), where As Func(Of T, Boolean)) As Integer
+            If collection Is Nothing Then
+                Return -1
+            End If
+
+            Dim i As Integer = 0
+
+            For Each item As T In collection
+                If where(item) Then
+                    Return i
+                End If
+
+                i += 1
+            Next
+
+            Return -1
+        End Function
+
+        ''' <summary>
         ''' Parallel helper
         ''' </summary>
         ''' <typeparam name="T"></typeparam>

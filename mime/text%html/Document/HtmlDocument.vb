@@ -58,6 +58,9 @@ Imports Microsoft.VisualBasic.Text.Parser.HtmlParser
 
 Namespace Document
 
+    ''' <summary>
+    ''' A root document that is a kind of subclass of <see cref="HtmlElement"/>
+    ''' </summary>
     Public Class HtmlDocument : Inherits HtmlElement
 
         ''' <summary>

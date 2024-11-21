@@ -79,7 +79,7 @@ Namespace XmlMeta
         ''' node class id, just like the id in HTML, you can also using this attribute to tweaks on the style by CSS.
         ''' </summary>
         ''' <returns></returns>
-        <XmlAttribute> Public Property [class] As String
+        <XmlAttribute> Public Property [class] As String()
 
         ''' <summary>
         ''' CSS style definition <see cref="ICSSValue"/>.(请注意，假若是SVG对象则赋值这个属性无效)

@@ -372,7 +372,7 @@ Namespace XLSX.Writer
         ''' Adding a new Worksheet. The new worksheet will be defined as current worksheet
         ''' </summary>
         ''' <param name="name">Name of the new worksheet.</param>
-        Public Sub AddWorksheet(name As String)
+        Public Function AddWorksheet(name As String) As Worksheet
             For Each sheet As Worksheet In Worksheets
                 If sheet.SheetName = name Then
                     Throw New WorksheetException("The worksheet with the name '" & name & "' already exists.")
@@ -384,7 +384,9 @@ Namespace XLSX.Writer
             m_currentWorksheet = newWs
             Worksheets.Add(newWs)
             m_shortener.SetCurrentWorksheetInternal(m_currentWorksheet)
-        End Sub
+
+            Return CurrentWorksheet
+        End Function
 
         ''' <summary>
         ''' Adding a new Worksheet with a sanitizing option. The new worksheet will be defined as current worksheet

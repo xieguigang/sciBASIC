@@ -127,6 +127,13 @@ Namespace Document
             End Set
         End Property
 
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="name">case insensitive</param>
+        ''' <returns>
+        ''' this property returns nothing if the attribute is not found from the current element node
+        ''' </returns>
         Default Public Property Attribute(name As String) As ValueAttribute
             Get
                 Return attrs.TryGetValue(LCase(name))
@@ -170,6 +177,13 @@ Namespace Document
             End Get
         End Property
 
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <returns></returns>
+        ''' <remarks>
+        ''' multiple class could be assigned to a html node
+        ''' </remarks>
         Public ReadOnly Property [class] As String()
             Get
                 Dim names As String = Trim(attrs.TryGetValue("class").Value)
