@@ -131,7 +131,10 @@ Namespace Emit.Delegates
             While source IsNot Nothing
                 Dim interfaces = source.GetInterfaces()
 
-                If interfaces.Any(Function(i) i Is interfaceType OrElse i.ImplementInterface(interfaceType)) Then
+                If interfaces.Any(Function(i)
+                                      Return i Is interfaceType OrElse
+                                             i.ImplementInterface(interfaceType)
+                                  End Function) Then
                     Return True
                 End If
 
