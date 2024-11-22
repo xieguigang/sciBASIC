@@ -613,15 +613,8 @@ Namespace Math
         ''' 
         <Extension>
         Public Function SD(values As IEnumerable(Of Double), Optional isSample As Boolean = False) As Double
-            Dim x As Double() = values.ToArray
-            Dim n As Integer = x.Length
-            Dim var As Double = x.Variance
-
-            If isSample Then
-                Return std.Sqrt(var / (n - 1))
-            Else
-                Return std.Sqrt(var / n)
-            End If
+            Dim var As Double = values.Variance
+            Return std.Sqrt(var)
         End Function
 
         ''' <summary>
