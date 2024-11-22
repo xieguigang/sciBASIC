@@ -131,6 +131,24 @@ Namespace Scripting.Runtime
             End If
         End Function
 
+        ''' <summary>
+        ''' get ctype operator function for cast <paramref name="fromType"/> to <paramref name="ctypeTo"/>.
+        ''' </summary>
+        ''' <param name="fromType"></param>
+        ''' <param name="ctypeTo"></param>
+        ''' <returns>
+        ''' this function returns nothing if the ctype operator is not found
+        ''' </returns>
+        Public Function GetCTypeOperator(fromType As Type, ctypeTo As Type) As MethodInfo
+            Dim op = CType(fromType, TypeInfo).GetOperatorMethod(ctypeTo, op_Explicit)
+
+            If op Is Nothing Then
+                op = CType(ctypeTo, TypeInfo).GetOperatorMethod(fromType, op_Implicit)
+            End If
+
+            Return op
+        End Function
+
         <Extension>
         Public Function GetWideningOperator(Of T)(type As Type) As IImplictCTypeOperator(Of T, Object)
             ' 函数找不到会返回Nothing
