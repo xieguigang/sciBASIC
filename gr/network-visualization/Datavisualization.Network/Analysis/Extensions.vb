@@ -60,8 +60,8 @@
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
+Imports Microsoft.VisualBasic.Data.GraphTheory
 Imports Microsoft.VisualBasic.Data.GraphTheory.Network
-Imports Microsoft.VisualBasic.Data.GraphTheory.SparseGraph
 Imports Microsoft.VisualBasic.Data.visualize.Network.Analysis.Model
 Imports Microsoft.VisualBasic.Data.visualize.Network.FileStream.Generic
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
@@ -82,7 +82,7 @@ Namespace Analysis
         ''' <param name="edge"></param>
         ''' <returns></returns>
         <Extension>
-        Public Function isTupleEdge(Of Node As INamedValue, IEdge As {Class, IInteraction})(edge As IEdge, g As GraphIndex(Of Node, IEdge)) As Boolean
+        Public Function isTupleEdge(Of Node As INamedValue, IEdge As {Class, SparseGraph.IInteraction})(edge As IEdge, g As GraphIndex(Of Node, IEdge)) As Boolean
             Dim uset = g.GetEdges(edge.source).ToArray
             Dim vset = g.GetEdges(edge.target).ToArray
 

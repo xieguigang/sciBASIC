@@ -15,10 +15,18 @@ Public Class SparseGraph
         End Set
     End Property
 
-    Public Class Edge : Implements IInteraction
+    Public NotInheritable Class Edge : Implements IInteraction
 
         <XmlAttribute> Public Property u As String Implements IInteraction.source
         <XmlAttribute> Public Property v As String Implements IInteraction.target
+
+        Sub New()
+        End Sub
+
+        Sub New(u As String, v As String)
+            _u = u
+            _v = v
+        End Sub
 
         Public Overrides Function ToString() As String
             Return $"[{u}, {v}]"
