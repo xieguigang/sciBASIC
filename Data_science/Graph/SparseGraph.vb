@@ -19,16 +19,31 @@ Public Class SparseGraph
         End Set
     End Property
 
-    Public Class Edge
+    Public Class Edge : Implements IInteraction
 
-        <XmlAttribute> Public Property u As String
-        <XmlAttribute> Public Property v As String
+        <XmlAttribute> Public Property u As String Implements IInteraction.source
+        <XmlAttribute> Public Property v As String Implements IInteraction.target
 
         Public Overrides Function ToString() As String
             Return $"[{u}, {v}]"
         End Function
 
     End Class
+
+    Public Interface IInteraction
+
+        ''' <summary>
+        ''' U
+        ''' </summary>
+        ''' <returns></returns>
+        Property source As String
+        ''' <summary>
+        ''' V
+        ''' </summary>
+        ''' <returns></returns>
+        Property target As String
+
+    End Interface
 
     Dim index_u As Dictionary(Of String, Edge())
     Dim graph As Edge()
