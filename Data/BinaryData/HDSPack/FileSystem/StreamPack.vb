@@ -408,8 +408,15 @@ Namespace FileSystem
         ''' <param name="block"></param>
         ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Function OpenBlock(block As StreamBlock) As Stream
-            Return New SubStream(buffer, block.offset, block.size)
+        Public Function OpenBlock(block As StreamBlock, Optional loadMemory As Boolean = False) As Stream
+            If loadMemory Then
+                Dim buf As Byte() = New Byte(block.size - 1) {}
+                buffer.Seek(block.offset, SeekOrigin.Begin)
+                buffer.Read(buf, Scan0, block.size)
+                Return New MemoryStream(buf)
+            Else
+                Return New SubStream(buffer, block.offset, block.size)
+            End If
         End Function
 
         ''' <summary>
