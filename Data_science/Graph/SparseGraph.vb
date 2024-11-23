@@ -2,7 +2,7 @@
 Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.Math.LinearAlgebra.Matrix
 
-Public Class SparseGraph
+Public Class SparseGraph : Implements ISparseGraph
 
     <XmlElement("edges")>
     Public Property Edges As Edge()
@@ -46,6 +46,12 @@ Public Class SparseGraph
         ''' </summary>
         ''' <returns></returns>
         Property target As String
+
+    End Interface
+
+    Public Interface ISparseGraph
+
+        Function GetGraph() As IEnumerable(Of IInteraction)
 
     End Interface
 
@@ -99,4 +105,9 @@ Public Class SparseGraph
         End If
     End Function
 
+    Public Iterator Function GetGraph() As IEnumerable(Of IInteraction) Implements ISparseGraph.GetGraph
+        For Each edge As Edge In graph
+            Yield edge
+        Next
+    End Function
 End Class
