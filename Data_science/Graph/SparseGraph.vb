@@ -1,4 +1,5 @@
-﻿Imports System.Xml.Serialization
+﻿Imports System.Runtime.CompilerServices
+Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.Math.LinearAlgebra.Matrix
 
 Public Class SparseGraph
@@ -10,12 +11,7 @@ Public Class SparseGraph
         End Get
         Set(value As Edge())
             graph = value.ToArray
-            index_u = value _
-                .GroupBy(Function(a) a.u) _
-                .ToDictionary(Function(a) a.Key,
-                              Function(a)
-                                  Return a.ToArray
-                              End Function)
+            index_u = MakeIndex(value)
         End Set
     End Property
 
@@ -45,20 +41,40 @@ Public Class SparseGraph
 
     End Interface
 
-    Dim index_u As Dictionary(Of String, Edge())
+    Dim index_u As Dictionary(Of String, IInteraction())
     Dim graph As Edge()
 
     Public Function CreateMatrix(keys As String()) As NumericMatrix
         Dim rows As New List(Of Double())
 
         For Each u As String In keys
-            Call rows.Add(Links(u, keys).ToArray)
+            Call rows.Add(Links(u, keys, index_u).ToArray)
         Next
 
         Return New NumericMatrix(rows)
     End Function
 
-    Private Iterator Function Links(u As String, keys As String()) As IEnumerable(Of Double)
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    Private Shared Function MakeIndex(Of T As IInteraction)(graph As IEnumerable(Of T)) As Dictionary(Of String, IInteraction())
+        Return graph.GroupBy(Function(a) a.source) _
+            .ToDictionary(Function(a) a.Key,
+                            Function(a)
+                                Return a.Select(Function(e) DirectCast(e, IInteraction)).ToArray
+                            End Function)
+    End Function
+
+    Public Shared Function CreateMatrix(Of T As IInteraction)(graph As IEnumerable(Of T), keys As String()) As NumericMatrix
+        Dim index_u = MakeIndex(graph)
+        Dim rows As New List(Of Double())
+
+        For Each u As String In keys
+            Call rows.Add(Links(u, keys, index_u).ToArray)
+        Next
+
+        Return New NumericMatrix(rows)
+    End Function
+
+    Private Shared Iterator Function Links(u As String, keys As String(), index_u As Dictionary(Of String, IInteraction())) As IEnumerable(Of Double)
         If Not index_u.ContainsKey(u) Then
             For i As Integer = 0 To keys.Length - 1
                 Yield 0.0
