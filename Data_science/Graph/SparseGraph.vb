@@ -1,5 +1,6 @@
 ﻿Imports System.Runtime.CompilerServices
 Imports System.Xml.Serialization
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.LinearAlgebra.Matrix
 
 Public Class SparseGraph : Implements ISparseGraph
@@ -15,6 +16,19 @@ Public Class SparseGraph : Implements ISparseGraph
         End Set
     End Property
 
+    Public ReadOnly Property Vertex As String()
+        Get
+            Return graph _
+                .Select(Iterator Function(e) As IEnumerable(Of String)
+                            Yield e.u
+                            Yield e.v
+                        End Function) _
+                .IteratesALL _
+                .Distinct _
+                .ToArray
+        End Get
+    End Property
+
     Public NotInheritable Class Edge : Implements IInteraction
 
         <XmlAttribute> Public Property u As String Implements IInteraction.source
@@ -26,6 +40,11 @@ Public Class SparseGraph : Implements ISparseGraph
         Sub New(u As String, v As String)
             _u = u
             _v = v
+        End Sub
+
+        Sub New(line As IInteraction)
+            _u = line.source
+            _v = line.target
         End Sub
 
         Public Overrides Function ToString() As String
@@ -57,6 +76,11 @@ Public Class SparseGraph : Implements ISparseGraph
 
     Dim index_u As Dictionary(Of String, IInteraction())
     Dim graph As Edge()
+
+    Public Overrides Function ToString() As String
+        Dim vlist = Vertex
+        Return $"sparse graph of {vlist.Length}x{vlist.Length} vertex and {graph.Length} edges."
+    End Function
 
     Public Function CreateMatrix(keys As String()) As NumericMatrix
         Dim rows As New List(Of Double())
@@ -109,5 +133,12 @@ Public Class SparseGraph : Implements ISparseGraph
         For Each edge As Edge In graph
             Yield edge
         Next
+    End Function
+
+    Public Shared Function Copy(g As ISparseGraph) As SparseGraph
+        Dim edges As Edge() = g.GetGraph.Select(Function(e) New Edge(e)).ToArray
+        Dim graph As New SparseGraph With {.Edges = edges}
+
+        Return graph
     End Function
 End Class
