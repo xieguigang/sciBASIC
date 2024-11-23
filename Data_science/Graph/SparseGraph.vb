@@ -118,12 +118,12 @@ Public Class SparseGraph : Implements ISparseGraph
                 Yield 0.0
             Next
         Else
-            Dim vlist As Edge() = index_u.TryGetValue(u)
+            Dim vlist As IInteraction() = index_u.TryGetValue(u)
 
             For Each v As String In keys
-                Yield Aggregate e As Edge
+                Yield Aggregate e As IInteraction
                       In vlist
-                      Where e.v = v
+                      Where e.target = v
                       Into Count
             Next
         End If
