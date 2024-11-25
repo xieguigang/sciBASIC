@@ -175,7 +175,7 @@ Namespace CNN
                 .Where(Function(d) d.CheckInvalidNaN) _
                 .ToArray
 
-            If checkInvalids.IsNullOrEmpty Then
+            If Not checkInvalids.IsNullOrEmpty Then
                 Dim message As String = $"There are {checkInvalids.Length} invalid NaN samples data was found: {checkInvalids.Select(Function(d) d.id).GetJson}, these invalid sample data will be ignored in the training steps!"
 
                 Call message.Warning
