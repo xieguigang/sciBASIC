@@ -94,9 +94,24 @@ Namespace CNN.layers
         ''' [ax,ay] map to [x,y]
         ''' </summary>
         <IgnoreDataMember>
-        Dim switchMaps As New Dictionary(Of UInteger, Dictionary(Of String, Integer()))
+        Dim switchMaps As New Dictionary(Of UInteger, Dictionary(Of String, SwitchMap))
 
-        Private Class Map
+        Private Class SwitchMap
+
+            Public switchx As Integer
+            Public switchy As Integer
+
+            Sub New()
+            End Sub
+
+            Sub New(winx As Integer, winy As Integer)
+                switchx = winx
+                switchy = winy
+            End Sub
+
+            Public Overrides Function ToString() As String
+                Return $"[{switchx}, {switchy}]"
+            End Function
 
         End Class
 
@@ -144,7 +159,7 @@ Namespace CNN.layers
             ' switchx = New Integer(out_sx * out_sy * out_depth - 1) {}
             ' switchy = New Integer(out_sx * out_sy * out_depth - 1) {}
             For d As Integer = 0 To out_depth - 1
-                Call switchMaps.Add(d, New Dictionary(Of String, Integer()))
+                Call switchMaps.Add(d, New Dictionary(Of String, SwitchMap))
             Next
         End Sub
 
@@ -188,7 +203,7 @@ Namespace CNN.layers
                 For d As Integer = start To ends
                     Dim x = -layer.padding
                     Dim ax = 0
-                    Dim map As Dictionary(Of String, Integer()) = layer.switchMaps(key:=CUInt(d))
+                    Dim map As Dictionary(Of String, SwitchMap) = layer.switchMaps(key:=CUInt(d))
 
                     While ax < layer.out_sx
                         Dim y = -layer.padding
@@ -218,7 +233,7 @@ Namespace CNN.layers
                                 Next
                             Next
 
-                            Call map.Add(ax & "," & ay, {winx, winy})
+                            Call map.Add(ax & "," & ay, New SwitchMap(winx, winy))
 
                             'switchx(n) = winx
                             'switchy(n) = winy
@@ -269,10 +284,10 @@ Namespace CNN.layers
                             Dim key As String = ax & "," & ay
 
                             If map.ContainsKey(key) Then
-                                Dim switch As Integer() = map(key)
+                                Dim switch As SwitchMap = map(key)
 
                                 ' V.addGradient(switchx(n), switchy(n), d, chain_grad)
-                                v.addGradient(switch(0), switch(1), d, chain_grad)
+                                v.addGradient(switch.switchx, switch.switchy, d, chain_grad)
                                 y += layer.stride
                             End If
 
