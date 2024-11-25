@@ -208,11 +208,14 @@ Public Module VectorExtensions
     End Function
 
     ''' <summary>
-    ''' Dynamics add a element into the target array.(注意：不推荐使用这个函数来频繁的向数组中添加元素，这个函数会频繁的分配内存，效率非常低)
+    ''' Dynamics add a element into the target array.
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
     ''' <param name="vector"></param>
     ''' <param name="value"></param>
+    ''' <remarks>
+    ''' (注意：不推荐使用这个函数来频繁的向数组中添加元素，这个函数会频繁的分配内存，效率非常低)
+    ''' </remarks>
     <Extension>
     Public Sub Add(Of T)(ByRef vector As T(), value As T)
         If vector.IsNullOrEmpty Then
@@ -249,11 +252,14 @@ Public Module VectorExtensions
     End Sub
 
     ''' <summary>
-    ''' Add given elements into an array object.(会自动跳过空集合，这个方法是安全的)
+    ''' Add given elements into an array object.
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
     ''' <param name="vector"></param>
     ''' <param name="value"></param>
+    ''' <remarks>
+    ''' (会自动跳过空集合，这个方法是安全的)
+    ''' </remarks>
     <Extension>
     Public Sub Add(Of T)(ByRef vector As T(), ParamArray value As T())
         If value.IsNullOrEmpty Then
@@ -357,12 +363,15 @@ Public Module VectorExtensions
     End Function
 
     ''' <summary>
-    ''' Removes array element at index.(请注意，这个函数并不会修改原来的数组，而是创建一个新的拷贝)
+    ''' Removes array element at index.
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
     ''' <param name="vector"></param>
-    ''' <param name="index%"></param>
+    ''' <param name="index"></param>
     ''' <returns></returns>
+    ''' <remarks>
+    ''' (请注意，这个函数并不会修改原来的数组，而是创建一个新的拷贝)
+    ''' </remarks>
     <Extension>
     Public Function Delete(Of T)(vector As T(), index%) As T()
         Dim newVector As T() = New T(vector.Length - 2) {}

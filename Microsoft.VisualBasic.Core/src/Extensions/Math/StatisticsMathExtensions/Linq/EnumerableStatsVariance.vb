@@ -570,7 +570,7 @@ Namespace Math.Statistics.Linq
         '     empty or contains only values that are null.
         <Extension>
         Public Function Variance(Of TSource)(source As IEnumerable(Of TSource), selector As Func(Of TSource, Long?), Optional isSample As Boolean = True) As Double
-            Return source.[Select](selector).Variance(isSample)
+            Return source.Select(selector).Variance(isSample)
         End Function
         '
         ' Summary:
