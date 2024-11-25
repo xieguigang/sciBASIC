@@ -1,64 +1,64 @@
 ﻿#Region "Microsoft.VisualBasic::c128f702a707469381b8eb9f3e7162ed, Data_science\MachineLearning\DeepLearning\CeNiN\Layers\Pool.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 88
-    '    Code Lines: 66 (75.00%)
-    ' Comment Lines: 0 (0.00%)
-    '    - Xml Docs: 0.00%
-    ' 
-    '   Blank Lines: 22 (25.00%)
-    '     File Size: 2.77 KB
+' Summaries:
 
 
-    '     Class Pool
-    ' 
-    '         Properties: type
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    ' 
-    '         Function: layerFeedNext
-    ' 
-    '         Sub: setOutputDims
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 88
+'    Code Lines: 66 (75.00%)
+' Comment Lines: 0 (0.00%)
+'    - Xml Docs: 0.00%
+' 
+'   Blank Lines: 22 (25.00%)
+'     File Size: 2.77 KB
+
+
+'     Class Pool
+' 
+'         Properties: type
+' 
+'         Constructor: (+1 Overloads) Sub New
+' 
+'         Function: layerFeedNext
+' 
+'         Sub: setOutputDims
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
-Imports stdNum = System.Math
+Imports std = System.Math
 
 Namespace Convolutional
 
@@ -82,8 +82,8 @@ Namespace Convolutional
 
         Public Overloads Sub setOutputDims()
             outputDims = New Integer(2) {
-                CInt(stdNum.Floor(inputTensorDims(0) / stride(0))),
-                CInt(stdNum.Floor(inputTensorDims(1) / stride(1))),
+                CInt(std.Floor(inputTensorDims(0) / stride(0))),
+                CInt(std.Floor(inputTensorDims(1) / stride(1))),
                 inputTensorDims(2)
             }
         End Sub
@@ -105,11 +105,11 @@ Namespace Convolutional
                 i = 0
 
                 While i <= inputHeight - poolHeight
-                    outputInd(0) = CInt(stdNum.Floor(i / stride(0)))
+                    outputInd(0) = CInt(std.Floor(i / stride(0)))
                     j = 0
 
                     While j <= inputWidth - poolWidth
-                        outputInd(1) = CInt(stdNum.Floor(j / stride(1)))
+                        outputInd(1) = CInt(std.Floor(j / stride(1)))
                         max = Single.MinValue
                         inputInd(0) = i
 

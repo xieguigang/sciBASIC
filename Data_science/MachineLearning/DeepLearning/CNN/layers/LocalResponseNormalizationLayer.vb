@@ -140,7 +140,7 @@ Namespace CNN.layers
                             den += aa * aa
                         Next
                         den *= alpha / n
-                        den += k
+                        den += k + 1.0E-20
                         S_cache_.setWeight(x, y, i, den) ' will be useful for backprop
                         den = std.Pow(den, beta)
                         A.setWeight(x, y, i, ai / den)
@@ -169,7 +169,7 @@ Namespace CNN.layers
 
                         ' normalize in a window of size n
                         For j = std.Max(0, i - n2) To std.Min(i + n2, V.Depth - 1)
-                            Dim aj = V.getWeight(x, y, j)
+                            Dim aj = V.getWeight(x, y, j) + 1.0E-20
                             Dim g = -aj * beta * std.Pow(S, beta - 1) * alpha / n * 2 * aj
                             If j = i Then
                                 g += SB

@@ -61,7 +61,7 @@
 Imports System.Threading
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
-Imports stdNum = System.Math
+Imports std = System.Math
 
 Namespace Convolutional
 
@@ -84,8 +84,8 @@ Namespace Convolutional
         End Sub
 
         Public Overloads Sub setOutputDims()
-            Dim newHeight = CInt(stdNum.Floor((inputTensorDims(0) - weights.Dimensions(0)) / stride(0))) + 1
-            Dim newWidth = CInt(stdNum.Floor((inputTensorDims(1) - weights.Dimensions(1)) / stride(1))) + 1
+            Dim newHeight = CInt(std.Floor((inputTensorDims(0) - weights.Dimensions(0)) / stride(0))) + 1
+            Dim newWidth = CInt(std.Floor((inputTensorDims(1) - weights.Dimensions(1)) / stride(1))) + 1
 
             outputDims = New Integer() {newHeight, newWidth, weights.Dimensions(3)}
         End Sub
