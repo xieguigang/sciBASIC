@@ -81,7 +81,9 @@ Namespace CNN.trainers
             ' so the gradient is not accumulated over the entire history of the run.
             ' it's also referred to as Idea #1 in Zeiler paper on Adadelta. Seems reasonable to me!
             gsumi(j) = ro * gsumi(j) + (1 - ro) * gij * gij
-            Dim dx = -learning_rate / std.Sqrt(gsumi(j) + eps) * gij ' eps added for better conditioning
+            Dim dx As Double
+            dx = gsumi(j) + eps
+            dx = -learning_rate / std.Sqrt(If(dx < 0, 0, dx)) * gij ' eps added for better conditioning
             p(j) += dx
         End Sub
     End Class

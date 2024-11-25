@@ -89,7 +89,8 @@ Namespace CNN.trainers
             Dim dx As Double
 
             gsumi(j) = ro * gsumi(j) + (1 - ro) * gij * gij
-            dx = -std.Sqrt((xsumi(j) + eps) / (gsumi(j) + eps)) * gij
+            dx = (xsumi(j) + eps) / (gsumi(j) + eps)
+            dx = -std.Sqrt(If(dx < 0, 0, dx)) * gij
             ' yes, xsum lags behind gsum by 1.
             xsumi(j) = ro * xsumi(j) + (1 - ro) * dx * dx
             p(j) += dx

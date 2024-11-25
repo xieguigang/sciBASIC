@@ -77,7 +77,8 @@ Namespace CNN.trainers
             Dim dx As Double
             ' adagrad update
             gsumi(j) = gsumi(j) + gij * gij
-            dx = -learning_rate / std.Sqrt(gsumi(j) + eps) * gij
+            dx = gsumi(j) + eps
+            dx = -learning_rate / std.Sqrt(If(dx < 0, 0, dx)) * gij
             p(j) += dx
         End Sub
 

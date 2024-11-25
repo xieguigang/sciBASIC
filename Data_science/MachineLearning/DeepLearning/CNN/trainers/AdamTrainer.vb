@@ -93,7 +93,7 @@ Namespace CNN.trainers
             xsumi(j) = xsumi(j) * beta2 + (1 - beta2) * gij * gij ' update biased second moment estimate
             Dim biasCorr1 = gsumi(j) * (1 - std.Pow(beta1, k)) ' correct bias first moment estimate
             Dim biasCorr2 = xsumi(j) * (1 - std.Pow(beta2, k)) ' correct bias second moment estimate
-            Dim dx = -learning_rate * biasCorr1 / (std.Sqrt(biasCorr2) + eps)
+            Dim dx = -learning_rate * biasCorr1 / (std.Sqrt(If(biasCorr2 < 0, 0, biasCorr2)) + eps)
             p(j) += dx
         End Sub
 
