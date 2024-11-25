@@ -65,6 +65,7 @@ Imports Microsoft.VisualBasic.MachineLearning.CNN.layers
 Imports Microsoft.VisualBasic.MachineLearning.CNN.trainers
 Imports Microsoft.VisualBasic.MachineLearning.ComponentModel.StoreProcedure
 Imports Microsoft.VisualBasic.Math
+Imports Microsoft.VisualBasic.Serialization.JSON
 Imports std = System.Math
 
 Namespace CNN
@@ -169,6 +170,22 @@ Namespace CNN
                 is_training:=True
             ).ToArray
 
+            Dim checkInvalids As SampleData() = trainset _
+                .AsParallel _
+                .Where(Function(d) d.CheckInvalidNaN) _
+                .ToArray
+
+            If checkInvalids.IsNullOrEmpty Then
+                Dim message As String = $"There are {checkInvalids.Length} invalid NaN samples data was found: {checkInvalids.Select(Function(d) d.id).GetJson}, these invalid sample data will be ignored in the training steps!"
+
+                Call message.Warning
+                Call VBDebugger.EchoLine(message)
+
+                trainset = trainset _
+                    .AsParallel _
+                    .Where(Function(d) Not d.CheckInvalidNaN) _
+                    .ToArray
+            End If
             If alg.conv_net Is Nothing Then
                 Throw New InvalidProgramException("no neuron network model inside the trainer algorithm module, call SetKernel method before call this train method!")
             End If
