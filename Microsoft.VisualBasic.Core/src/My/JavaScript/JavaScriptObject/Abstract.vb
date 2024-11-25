@@ -62,8 +62,22 @@
 
 Namespace My.JavaScript
 
+    ''' <summary>
+    ''' Interface helper for get value by name
+    ''' </summary>
     Public Interface IJavaScriptObjectAccessor
+
+        ''' <summary>
+        ''' get member value by name
+        ''' </summary>
+        ''' <param name="name">
+        ''' the member name, could be property name or field name
+        ''' </param>
+        ''' <returns>
+        ''' the object member value
+        ''' </returns>
         Default Property Accessor(name As String) As Object
+
     End Interface
 
     Public Enum MemberAccessorResult

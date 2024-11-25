@@ -65,11 +65,13 @@
 Imports System.ComponentModel
 Imports System.Reflection
 Imports System.Reflection.Emit
+Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.My.JavaScript
 
 ''' <summary>
-''' 
+''' Build dynamics clr runtime type
 ''' </summary>
 ''' <remarks>
 ''' https://blog.wedport.co.uk/2020/06/10/generating-c-net-core-classes-at-runtime/
@@ -79,18 +81,56 @@ Public Class DynamicType
     Public ReadOnly Property GeneratedType As Type
 
     ReadOnly inheritsFrom As Type
-    ReadOnly properties As PropertyInfo()
+    ReadOnly properties As New List(Of PropertyInfo)
 
     Public Structure PropertyInfo
+
+        ''' <summary>
+        ''' the property name
+        ''' </summary>
         Dim Name As String
+        ''' <summary>
+        ''' the property data type
+        ''' </summary>
         Dim PropertyType As Type
+        ''' <summary>
+        ''' [optional] the description text for tagged the <see cref="DescriptionAttribute"/> value to current property.
+        ''' </summary>
         Dim Description As String
+        ''' <summary>
+        ''' [optional] the name display string for tagged the <see cref="DisplayNameAttribute"/> value to current property.
+        ''' </summary>
         Dim DisplayName As String
+
+        Sub New(name As String, type As Type)
+            Me.Name = name
+            Me.PropertyType = type
+        End Sub
+
+        Public Overrides Function ToString() As String
+            Return $"Public Property {Name} As {PropertyType.ToString}"
+        End Function
+
     End Structure
 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Sub New(ParamArray properties As PropertyInfo())
-        Me.properties = properties
+        Me.properties = New List(Of PropertyInfo)(properties)
     End Sub
+
+    Public Function Add(name As String, type As Type,
+                        Optional description As String = Nothing,
+                        Optional displayName As String = Nothing) As DynamicType
+
+        Call properties.Add(
+            New PropertyInfo(name, type) With {
+                .Description = description,
+                .DisplayName = displayName
+            }
+        )
+
+        Return Me
+    End Function
 
     Const flag As TypeAttributes = TypeAttributes.Public Or
                                    TypeAttributes.Class Or
@@ -142,18 +182,18 @@ Public Class DynamicType
         Dim fieldBuilder = typeBuilder.DefineField("_" & propertyName, propertyType, FieldAttributes.Private)
         Dim propertyBuilder As PropertyBuilder = typeBuilder.DefineProperty(propertyName, PropertyAttributes.HasDefault, propertyType, null)
         Dim getMethod = typeBuilder.DefineMethod("get_" & propertyName,
-        MethodAttributes.Public Or
-        MethodAttributes.SpecialName Or
-        MethodAttributes.HideBySig, propertyType, Type.EmptyTypes)
+            MethodAttributes.Public Or
+            MethodAttributes.SpecialName Or
+            MethodAttributes.HideBySig, propertyType, Type.EmptyTypes)
         Dim getMethodIL = getMethod.GetILGenerator()
         getMethodIL.Emit(OpCodes.Ldarg_0)
         getMethodIL.Emit(OpCodes.Ldfld, fieldBuilder)
         getMethodIL.Emit(OpCodes.Ret)
         Dim setMethod = typeBuilder.DefineMethod("set_" & propertyName,
-          MethodAttributes.Public Or
-          MethodAttributes.SpecialName Or
-          MethodAttributes.HideBySig,
-          null, New Type() {propertyType})
+            MethodAttributes.Public Or
+            MethodAttributes.SpecialName Or
+            MethodAttributes.HideBySig,
+            null, New Type() {propertyType})
         Dim setMethodIL = setMethod.GetILGenerator()
         Dim modifyProperty = setMethodIL.DefineLabel()
         Dim exitSet = setMethodIL.DefineLabel()
@@ -177,6 +217,11 @@ Public Class DynamicType
         Call propertyBuilder.SetSetMethod(setMethod)
     End Sub
 
+    ''' <summary>
+    ''' add <see cref="DisplayNameAttribute"/>
+    ''' </summary>
+    ''' <param name="propertyBuilder"></param>
+    ''' <param name="display"></param>
     Private Shared Sub AddDisplayName(propertyBuilder As PropertyBuilder, display As String)
         Dim ctorSig = New Type() {GetType(String)}
         Dim classInfo As ConstructorInfo = GetType(DisplayNameAttribute).GetConstructor(ctorSig)
@@ -185,6 +230,11 @@ Public Class DynamicType
         Call propertyBuilder.SetCustomAttribute(attr)
     End Sub
 
+    ''' <summary>
+    ''' add <see cref="DescriptionAttribute"/>
+    ''' </summary>
+    ''' <param name="propertyBuilder"></param>
+    ''' <param name="desc"></param>
     Private Shared Sub AddDescription(propertyBuilder As PropertyBuilder, desc As String)
         Dim ctorSig = New Type() {GetType(String)}
         Dim classInfo As ConstructorInfo = GetType(DescriptionAttribute).GetConstructor(ctorSig)
@@ -193,11 +243,33 @@ Public Class DynamicType
         Call propertyBuilder.SetCustomAttribute(attr)
     End Sub
 
+    ''' <summary>
+    ''' A helper function for create a valid symbol name
+    ''' </summary>
+    ''' <param name="key"></param>
+    ''' <returns></returns>
+    ''' 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    Public Shared Function CreateValidSymbolName(key As String) As String
+        Return key.NormalizePathString().StringReplace("\s+", "_")
+    End Function
+
+    ''' <summary>
+    ''' Create dynamics object in debug view
+    ''' </summary>
+    ''' <param name="metadata"></param>
+    ''' <returns></returns>
+    ''' <remarks>
+    ''' the type object that generated at here has different class guid, for create array of the dynamics type object, 
+    ''' you should create the template dynamics clr type at first, and then set property value for each data in the 
+    ''' array seperately.
+    ''' </remarks>
     Public Shared Function Create(metadata As Dictionary(Of String, Object)) As Object
         Dim properties As New List(Of PropertyInfo)
+        Dim normalized As New List(Of KeyValuePair(Of String, Object))(capacity:=metadata.Count)
 
-        For Each meta In metadata
-            Dim symbol As String = meta.Key.NormalizePathString().StringReplace("\s+", "_")
+        For Each meta As KeyValuePair(Of String, Object) In metadata
+            Dim symbol As String = CreateValidSymbolName(meta.Key)
             Dim type As Type
             Dim value As Object = meta.Value
 
@@ -208,24 +280,23 @@ Public Class DynamicType
                 type = value.GetType
             End If
 
-            properties.Add(New PropertyInfo With {
+            Call properties.Add(New PropertyInfo With {
                 .Name = symbol,
                 .PropertyType = type,
                 .Description = "",
                 .DisplayName = meta.Key
             })
+            Call normalized.Add(New KeyValuePair(Of String, Object)(symbol, meta.Value))
         Next
 
-        Dim obj As Object = New DynamicType(properties.ToArray).Create.GeneratedType.DoCall(AddressOf Activator.CreateInstance)
-        Dim schema = DataFramework.Schema(obj.GetType, flag:=PropertyAccess.Writeable, nonIndex:=True)
-
-        For Each meta In properties
-            Dim value As Object = metadata(meta.DisplayName)
-            Dim prop = schema(meta.Name)
-
-            Call prop.SetValue(obj, value)
-        Next
-
-        Return obj
+        Return JavaScriptObject.CreateDynamicObject(New DynamicType(properties.ToArray).Create, normalized)
     End Function
+
+    Public Shared Narrowing Operator CType(dynamic As DynamicType) As Type
+        If dynamic.GeneratedType Is Nothing Then
+            Call dynamic.Create()
+        End If
+
+        Return dynamic.GeneratedType
+    End Operator
 End Class

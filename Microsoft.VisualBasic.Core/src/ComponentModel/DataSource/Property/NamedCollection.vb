@@ -140,6 +140,11 @@ Namespace ComponentModel.DataSourceModel
             End Get
         End Property
 
+        ''' <summary>
+        ''' get/set value in a gvien offset position of the data array.
+        ''' </summary>
+        ''' <param name="index"></param>
+        ''' <returns></returns>
         Default Public Property Item(index As Integer) As T
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get

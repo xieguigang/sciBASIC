@@ -72,8 +72,9 @@ Namespace My.JavaScript
     ''' <summary>
     ''' javascript object
     ''' </summary>
-    Public Class JavaScriptObject : Implements IEnumerable(Of String),
-            IEnumerable(Of NamedValue(Of Object)),
+    Public Class JavaScriptObject
+        Implements IEnumerable(Of String),          ' for each key name, implements javascript foreach
+            IEnumerable(Of NamedValue(Of Object)),  ' for each key-value pair tuple value
             IJavaScriptObjectAccessor
 
         Dim members As New Dictionary(Of String, JavaScriptValue)
@@ -84,6 +85,10 @@ Namespace My.JavaScript
         ''' <returns></returns>
         Protected ReadOnly Property this As JavaScriptObject = Me
 
+        ''' <summary>
+        ''' the size of the member collection in this javascript object
+        ''' </summary>
+        ''' <returns></returns>
         <DataIgnored>
         Public ReadOnly Property length As Integer
             Get
@@ -174,8 +179,20 @@ Namespace My.JavaScript
             Next
         End Sub
 
+        Sub New(keys As String(), values As Object())
+            Call Me.New()
+
+            If keys.Length <> values.Length Then
+                Throw New InvalidExpressionException($"this size of the keys({keys.Length}) should be equals to the size of the values data({values.Length})!")
+            Else
+                For i As Integer = 0 To keys.Length - 1
+                    Me(keys(i)) = values(i)
+                Next
+            End If
+        End Sub
+
         Public Shared Function Join(left As JavaScriptObject, right As JavaScriptObject) As JavaScriptObject
-            Dim leftObj As Dictionary(Of String, Object) = left.GetGenericJson
+            Dim leftObj As Dictionary(Of String, Object) = left.GetGenericJSON
 
             For Each item As NamedValue(Of Object) In DirectCast(right, IEnumerable(Of NamedValue(Of Object)))
                 If Not leftObj.ContainsKey(item.Name) Then
@@ -264,19 +281,50 @@ Namespace My.JavaScript
         ''' <summary>
         ''' populate all members data
         ''' </summary>
-        ''' <returns></returns>
+        ''' <returns>
+        ''' Apply for create json in dynamics
+        ''' </returns>
+        ''' <remarks>
+        ''' only works for the object in primitive type
+        ''' </remarks>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Function GetGenericJson() As Dictionary(Of String, Object)
+        Public Function GetGenericJSON() As Dictionary(Of String, Object)
             Return members.ToDictionary(Function(a) a.Key, Function(a) a.Value.GetValue)
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Function ToString() As String
-            Return GetGenericJson.GetJson(knownTypes:={
-                GetType(Integer),
-                GetType(String),
-                GetType(Double),
-                GetType(Boolean)
-            })
+            Return GetGenericJSON.GetJson(knownTypes:=DataFramework.GetPrimitiveTypes)
+        End Function
+
+        ''' <summary>
+        ''' A wrapper for <see cref="DynamicType.Create"/>
+        ''' </summary>
+        ''' <param name="names"></param>
+        ''' <param name="values"></param>
+        ''' <returns></returns>
+        Public Shared Function CreateDynamicObject(names As String(), values As Object()) As Object
+            Dim obj As New Dictionary(Of String, Object)
+
+            For i As Integer = 0 To names.Length - 1
+                obj(names(i)) = values(i)
+            Next
+
+            Return DynamicType.Create(obj)
+        End Function
+
+        Public Shared Function CreateDynamicObject(dynamic As Type, values As IEnumerable(Of KeyValuePair(Of String, Object))) As Object
+            Dim obj As Object = Activator.CreateInstance(dynamic)
+            Dim schema = DataFramework.Schema(dynamic, flag:=PropertyAccess.Writeable, nonIndex:=True)
+
+            For Each tuple As KeyValuePair(Of String, Object) In values
+                Dim value As Object = tuple.Value
+                Dim prop As PropertyInfo = schema(tuple.Key)
+
+                Call prop.SetValue(obj, value)
+            Next
+
+            Return obj
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>

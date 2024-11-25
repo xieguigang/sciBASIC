@@ -58,6 +58,7 @@
 
 #End Region
 
+Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.SchemaMaps
 Imports Microsoft.VisualBasic.Language
@@ -103,6 +104,7 @@ Namespace My.JavaScript
         Sub New()
         End Sub
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function GetValue() As Object
             If IsConstant Then
                 Return Literal
@@ -111,11 +113,21 @@ Namespace My.JavaScript
             End If
         End Function
 
+        ''' <summary>
+        ''' proxy of set value to slot or clr object member
+        ''' </summary>
+        ''' <param name="value"></param>
+        ''' <remarks>
+        ''' if current value proxy is literal value, then this method just update the 
+        ''' slot value, or set member value via the reflection operation.
+        ''' </remarks>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Sub SetValue(value As Object)
             If IsConstant Then
                 Literal = value
             Else
-                Accessor.SetValue(target, value)
+                Call Accessor.SetValue(target, value)
             End If
         End Sub
 

@@ -868,7 +868,10 @@ Namespace ComponentModel.Collection
         ''' <typeparam name="T">Unique identifier provider <see cref="INamedValue.Key"/></typeparam>
         ''' <param name="source"></param>
         ''' <returns></returns>
-        ''' 
+        ''' <remarks>
+        ''' 20241125
+        ''' NOTE: the generated dictionary is a sort dictionary, keys will be re-ordered!
+        ''' </remarks>
         <Extension>
         Public Function ToDictionary(Of T As INamedValue)(source As IEnumerable(Of T), Optional replaceOnDuplicate As Boolean = False) As Dictionary(Of T)
             If source Is Nothing Then

@@ -320,6 +320,10 @@ Namespace ComponentModel.DataSourceModel
             Return StringBuilders.ContainsKey(type) OrElse (autoCastEnum AndAlso type.IsEnum)
         End Function
 
+        ''' <summary>
+        ''' Enumerates all pre-defined clr runtime primitive types.
+        ''' </summary>
+        ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function GetPrimitiveTypes() As IEnumerable(Of Type)
             Return StringBuilders.Keys

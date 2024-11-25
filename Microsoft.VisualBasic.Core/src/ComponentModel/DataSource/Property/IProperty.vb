@@ -87,7 +87,8 @@ Namespace ComponentModel.DataSourceModel
         ''' </summary>
         ''' <param name="target"></param>
         ''' <param name="value"></param>
-        Sub SetValue(target As Object, value As Object)
+        Sub SetValue(ByRef target As Object, value As Object)
+
     End Interface
 
     ''' <summary>

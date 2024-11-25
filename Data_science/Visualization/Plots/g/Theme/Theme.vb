@@ -71,6 +71,9 @@ Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace Graphic.Canvas
 
+    ''' <summary>
+    ''' The plot style theme definition 
+    ''' </summary>
     Public Class Theme : Implements ICloneable
 
         ''' <summary>

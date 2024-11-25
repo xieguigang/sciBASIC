@@ -192,7 +192,7 @@ Namespace ComponentModel.DataSourceModel.SchemaMaps
         ''' <param name="value">The new property value.</param>
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Sub SetValue(obj As Object, value As Object) Implements IProperty.SetValue
+        Public Sub SetValue(ByRef obj As Object, value As Object) Implements IProperty.SetValue
             ' 2017-6-26 目前value参数为空值的话，会报错，故而在这里添加了一个If分支判断
             If value IsNot Nothing Then
                 Call handleSetValue(obj, value)
