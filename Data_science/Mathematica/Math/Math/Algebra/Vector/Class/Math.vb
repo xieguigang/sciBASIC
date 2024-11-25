@@ -75,7 +75,6 @@ Namespace LinearAlgebra
         ''' <returns></returns>
         ''' <remarks></remarks>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        <ExportAPI("Sqrt")>
         Public Shared Function Sqrt(x As Vector) As Vector
             Return New Vector(From n In x Select sys.Sqrt(n))
         End Function
@@ -92,7 +91,6 @@ Namespace LinearAlgebra
         ''' <returns></returns>
         ''' <remarks></remarks>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        <ExportAPI("Exp")>
         Public Shared Function Exp(x As Vector) As Vector
             Return New Vector(From n As Double In x Select sys.Exp(n))
         End Function
@@ -149,7 +147,6 @@ Namespace LinearAlgebra
         ''' <param name="base">a positive or complex number: the base with respect to which logarithms are computed. Defaults to e=exp(1).</param>
         ''' <remarks></remarks>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        <ExportAPI("Log")>
         Public Shared Function Log(x As Vector, Optional base As Double = sys.E) As Vector
             Return New Vector(From n As Double In x Select sys.Log(n, base))
         End Function
@@ -164,7 +161,6 @@ Namespace LinearAlgebra
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        <ExportAPI("Max")>
         Public Shared Function Max(x As Vector) As Double
             Return x.Max
         End Function
@@ -182,7 +178,6 @@ Namespace LinearAlgebra
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        <ExportAPI("Min")>
         Public Shared Function Min(x As Vector) As Double
             Return x.Min
         End Function
@@ -206,13 +201,11 @@ Namespace LinearAlgebra
         ''' <returns></returns>
         ''' <remarks></remarks>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        <ExportAPI("Trunc")>
         Public Shared Function Trunc(x As Vector) As Vector
             Return New Vector(x.Select(AddressOf sys.Truncate))
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        <ExportAPI("Abs")>
         Public Shared Function Abs(x As Vector) As Vector
             Return New Vector(From d As Double In x Select sys.Abs(d))
         End Function
