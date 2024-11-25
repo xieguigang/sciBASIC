@@ -78,6 +78,7 @@ Namespace Imaging
             HexColor = HexColor.Trim("#"c)
 
             If HexColor = "" Then
+                Call "the given html color code is empty, black color value will be returned.".Warning
                 Return Color.Black
             End If
 
