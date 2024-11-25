@@ -96,6 +96,10 @@ Namespace CNN.layers
         <IgnoreDataMember>
         Dim switchMaps As New Dictionary(Of UInteger, Dictionary(Of String, Integer()))
 
+        Private Class Map
+
+        End Class
+
         Public Overridable ReadOnly Iterator Property BackPropagationResult As IEnumerable(Of BackPropResult) Implements Layer.BackPropagationResult
             Get
                 ' no data
@@ -214,7 +218,7 @@ Namespace CNN.layers
                                 Next
                             Next
 
-                            map.Add(ax & "," & ay, {winx, winy})
+                            Call map.Add(ax & "," & ay, {winx, winy})
 
                             'switchx(n) = winx
                             'switchy(n) = winy
