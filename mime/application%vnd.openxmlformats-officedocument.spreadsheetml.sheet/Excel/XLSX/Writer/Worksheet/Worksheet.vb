@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1518347e9a7c39fb1589784732248aeb, mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\XLSX\Writer\Worksheet\Worksheet.vb"
+﻿#Region "Microsoft.VisualBasic::c6d61d49cc15a689b48ab79cc4b7920c, mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\XLSX\Writer\Worksheet\Worksheet.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 1982
-    '    Code Lines: 1064 (53.68%)
-    ' Comment Lines: 744 (37.54%)
+    '   Total Lines: 1984
+    '    Code Lines: 1066 (53.73%)
+    ' Comment Lines: 744 (37.50%)
     '    - Xml Docs: 98.52%
     ' 
-    '   Blank Lines: 174 (8.78%)
-    '     File Size: 96.55 KB
+    '   Blank Lines: 174 (8.77%)
+    '     File Size: 96.79 KB
 
 
     '     Class Worksheet
@@ -54,16 +54,16 @@
     ' 
     '         Constructor: (+3 Overloads) Sub New
     ' 
-    '         Function: CastValue, Copy, GetBoundaryDataNumber, GetBoundaryNumber, (+2 Overloads) GetCell
-    '                   GetCurrentColumnNumber, GetCurrentRowNumber, GetFirstCellAddress, GetFirstColumnNumber, GetFirstDataCellAddress
-    '                   GetFirstDataColumnNumber, GetFirstDataRowNumber, GetFirstRowNumber, GetLastCellAddress, GetLastColumnNumber
-    '                   GetLastDataCellAddress, GetLastDataColumnNumber, GetLastDataRowNumber, GetLastRowNumber, GetMaxRow
-    '                   GetMinRow, GetUnusedWorksheetName, (+2 Overloads) HasCell, (+3 Overloads) MergeCells, (+2 Overloads) RemoveCell
-    '                   SanitizeWorksheetName, WorksheetExists
+    '         Function: AddNextCell, CastValue, Copy, GetBoundaryDataNumber, GetBoundaryNumber
+    '                   (+2 Overloads) GetCell, GetCurrentColumnNumber, GetCurrentRowNumber, GetFirstCellAddress, GetFirstColumnNumber
+    '                   GetFirstDataCellAddress, GetFirstDataColumnNumber, GetFirstDataRowNumber, GetFirstRowNumber, GetLastCellAddress
+    '                   GetLastColumnNumber, GetLastDataCellAddress, GetLastDataColumnNumber, GetLastDataRowNumber, GetLastRowNumber
+    '                   GetMaxRow, GetMinRow, GetUnusedWorksheetName, GoToNextRow, (+2 Overloads) HasCell
+    '                   (+3 Overloads) MergeCells, (+2 Overloads) RemoveCell, SanitizeWorksheetName, WorksheetExists
     ' 
     '         Sub: AddAllowedActionOnSheetProtection, (+4 Overloads) AddCell, (+4 Overloads) AddCellFormula, (+4 Overloads) AddCellRange, AddCellRangeInternal
-    '              (+2 Overloads) AddHiddenColumn, AddHiddenRow, (+3 Overloads) AddNextCell, (+2 Overloads) AddNextCellFormula, (+3 Overloads) AddSelectedCells
-    '              ClearActiveStyle, (+2 Overloads) GoToNextColumn, (+2 Overloads) GoToNextRow, RecalculateAutoFilter, RecalculateColumns
+    '              (+2 Overloads) AddHiddenColumn, AddHiddenRow, (+2 Overloads) AddNextCell, (+2 Overloads) AddNextCellFormula, (+3 Overloads) AddSelectedCells
+    '              ClearActiveStyle, (+2 Overloads) GoToNextColumn, GoToNextRow, RecalculateAutoFilter, RecalculateColumns
     '              RemoveAllowedActionOnSheetProtection, RemoveAutoFilter, (+2 Overloads) RemoveHiddenColumn, RemoveHiddenRow, RemoveMergedCells
     '              RemoveRowHeight, RemoveSelectedCells, ResetColumn, ResetSplit, ResolveMergedCells
     '              SetActiveStyle, (+2 Overloads) SetAutoFilter, SetColumnHiddenState, (+2 Overloads) SetColumnWidth, (+2 Overloads) SetCurrentCellAddress

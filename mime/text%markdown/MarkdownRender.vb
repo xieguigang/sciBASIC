@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7517fd2c34db7dbcbe5a9f2035763747, mime\text%markdown\MarkdownRender.vb"
+﻿#Region "Microsoft.VisualBasic::45c57171fba87e0cdef1d0eca8d4738b, mime\text%markdown\MarkdownRender.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 374
-    '    Code Lines: 270 (72.19%)
-    ' Comment Lines: 19 (5.08%)
-    '    - Xml Docs: 73.68%
+    '   Total Lines: 410
+    '    Code Lines: 297 (72.44%)
+    ' Comment Lines: 25 (6.10%)
+    '    - Xml Docs: 80.00%
     ' 
-    '   Blank Lines: 85 (22.73%)
-    '     File Size: 14.26 KB
+    '   Blank Lines: 88 (21.46%)
+    '     File Size: 15.54 KB
 
 
     ' Class MarkdownRender

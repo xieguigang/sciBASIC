@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::be4390065ca9bdec4e31755fe5776499, Microsoft.VisualBasic.Core\src\Drawing\Math\Geometry\GeomTransform.vb"
+﻿#Region "Microsoft.VisualBasic::56d6dc5c236ba9026b4916ad8a9e0893, Microsoft.VisualBasic.Core\src\Drawing\Math\Geometry\GeomTransform.vb"
 
     ' Author:
     ' 
@@ -34,19 +34,19 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 565
-    '    Code Lines: 307 (54.34%)
-    ' Comment Lines: 201 (35.58%)
+    '   Total Lines: 571
+    '    Code Lines: 312 (54.64%)
+    ' Comment Lines: 201 (35.20%)
     '    - Xml Docs: 95.52%
     ' 
-    '   Blank Lines: 57 (10.09%)
-    '     File Size: 21.20 KB
+    '   Blank Lines: 58 (10.16%)
+    '     File Size: 21.45 KB
 
 
     '     Module GeomTransform
     ' 
     '         Function: Angle, (+2 Overloads) Area, (+2 Overloads) CalculateAngle, CenterAlign, (+2 Overloads) CentralOffset
-    '                   (+4 Overloads) Centre, CircleRectangle, (+5 Overloads) Distance, DistanceTo, (+2 Overloads) GetBounds
+    '                   (+4 Overloads) Centre, CircleRectangle, (+5 Overloads) Distance, (+2 Overloads) DistanceTo, (+2 Overloads) GetBounds
     '                   GetCenter, (+2 Overloads) InRegion, MirrorX, MirrorY, (+9 Overloads) OffSet2D
     '                   (+2 Overloads) Offsets, (+5 Overloads) Scale, ShapePoints, SquareSize
     ' 

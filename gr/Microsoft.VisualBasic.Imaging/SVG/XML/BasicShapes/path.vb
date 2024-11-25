@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::10fd715c14c19effb11ea39fe9d7537a, gr\Microsoft.VisualBasic.Imaging\SVG\XML\BasicShapes\path.vb"
+﻿#Region "Microsoft.VisualBasic::13618019e4df5ceda353684393a6ab0c, gr\Microsoft.VisualBasic.Imaging\SVG\XML\BasicShapes\path.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 73
-    '    Code Lines: 40 (54.79%)
-    ' Comment Lines: 26 (35.62%)
+    '   Total Lines: 77
+    '    Code Lines: 43 (55.84%)
+    ' Comment Lines: 26 (33.77%)
     '    - Xml Docs: 92.31%
     ' 
-    '   Blank Lines: 7 (9.59%)
-    '     File Size: 2.55 KB
+    '   Blank Lines: 8 (10.39%)
+    '     File Size: 2.67 KB
 
 
     '     Class SvgPath
@@ -48,7 +48,7 @@
     '         Properties: D, FillRule, Length
     ' 
     '         Constructor: (+1 Overloads) Sub New
-    '         Function: Create
+    '         Function: Create, ToString
     ' 
     ' 
     ' /********************************************************************************/

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1d29d822507b18e368473917fe944414, Microsoft.VisualBasic.Core\src\CommandLine\Stream.vb"
+﻿#Region "Microsoft.VisualBasic::c20ce6cb29d2cf1b7db251d1c2529176, Microsoft.VisualBasic.Core\src\CommandLine\Stream.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 93
-    '    Code Lines: 50 (53.76%)
-    ' Comment Lines: 31 (33.33%)
+    '   Total Lines: 101
+    '    Code Lines: 58 (57.43%)
+    ' Comment Lines: 31 (30.69%)
     '    - Xml Docs: 54.84%
     ' 
-    '   Blank Lines: 12 (12.90%)
-    '     File Size: 3.95 KB
+    '   Blank Lines: 12 (11.88%)
+    '     File Size: 4.22 KB
 
 
     '     Enum FileTypes

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::eec66f5f52d32b017e8e40c864e31de4, Microsoft.VisualBasic.Core\src\Text\Xml\Models\ListOf.vb"
+﻿#Region "Microsoft.VisualBasic::4cc652f5139e621ce934adafd5669163, Microsoft.VisualBasic.Core\src\Text\Xml\Models\ListOf.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 119
-    '    Code Lines: 74 (62.18%)
-    ' Comment Lines: 27 (22.69%)
-    '    - Xml Docs: 81.48%
+    '   Total Lines: 129
+    '    Code Lines: 78 (60.47%)
+    ' Comment Lines: 32 (24.81%)
+    '    - Xml Docs: 84.38%
     ' 
-    '   Blank Lines: 18 (15.13%)
-    '     File Size: 3.85 KB
+    '   Blank Lines: 19 (14.73%)
+    '     File Size: 4.24 KB
 
 
     '     Interface IList

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::11834815a4782e5d2783fa42e6326cba, Data_science\DataMining\DataMining\test\roc_test2.vb"
+﻿#Region "Microsoft.VisualBasic::53721770872fbad4bb67b0fd53cf1dd5, Data_science\DataMining\DataMining\test\roc_test2.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 0.00%
     ' 
     '   Blank Lines: 4 (26.67%)
-    '     File Size: 575 B
+    '     File Size: 573 B
 
 
     ' Module roc_test2
@@ -66,4 +66,3 @@ Module roc_test2
         Pause()
     End Sub
 End Module
-

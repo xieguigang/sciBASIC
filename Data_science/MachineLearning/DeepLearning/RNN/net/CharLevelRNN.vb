@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b579453f08384f93af21003a339b149b, Data_science\MachineLearning\DeepLearning\RNN\net\CharLevelRNN.vb"
+﻿#Region "Microsoft.VisualBasic::59d99f299ee33c9879cd970e39c22416, Data_science\MachineLearning\DeepLearning\RNN\net\CharLevelRNN.vb"
 
     ' Author:
     ' 
@@ -34,18 +34,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 36
-    '    Code Lines: 18 (50.00%)
-    ' Comment Lines: 9 (25.00%)
-    '    - Xml Docs: 66.67%
+    '   Total Lines: 38
+    '    Code Lines: 17 (44.74%)
+    ' Comment Lines: 14 (36.84%)
+    '    - Xml Docs: 92.86%
     ' 
-    '   Blank Lines: 9 (25.00%)
-    '     File Size: 1.23 KB
+    '   Blank Lines: 7 (18.42%)
+    '     File Size: 1.44 KB
 
 
-    ' 	Class CharLevelRNN
+    '     Class CharLevelRNN
     ' 
-    ' 	    Function: (+2 Overloads) sampleString
+    '         Function: (+2 Overloads) sampleString
     ' 
     ' 
     ' /********************************************************************************/

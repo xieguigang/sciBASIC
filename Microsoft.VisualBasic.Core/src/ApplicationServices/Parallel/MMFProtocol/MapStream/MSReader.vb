@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2393125faf83bc9ae53a165797bdd6f1, Microsoft.VisualBasic.Core\src\ApplicationServices\Parallel\MMFProtocol\MapStream\MSReader.vb"
+﻿#Region "Microsoft.VisualBasic::3daaf89b84573541467366ac2ee1b7f1, Microsoft.VisualBasic.Core\src\ApplicationServices\Parallel\MMFProtocol\MapStream\MSReader.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 124
-    '    Code Lines: 73 (58.87%)
-    ' Comment Lines: 28 (22.58%)
+    '   Total Lines: 129
+    '    Code Lines: 77 (59.69%)
+    ' Comment Lines: 28 (21.71%)
     '    - Xml Docs: 46.43%
     ' 
-    '   Blank Lines: 23 (18.55%)
-    '     File Size: 4.50 KB
+    '   Blank Lines: 24 (18.60%)
+    '     File Size: 4.58 KB
 
 
     '     Class MapStream

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a1d99631f0a3e880e162a3f8c14389d1, mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\XLSX\FileIO\LowLevel.vb"
+﻿#Region "Microsoft.VisualBasic::5e0fe7c4dad73634008c08bb528e8870, mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\XLSX\FileIO\LowLevel.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 93.35%
     ' 
     '   Blank Lines: 97 (6.06%)
-    '     File Size: 86.01 KB
+    '     File Size: 86.04 KB
 
 
     '     Class LowLevel

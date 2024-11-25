@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a50c82e4a089bafb3dd1aba8856aee91, gr\Drawing-net4.8\Imager.vb"
+﻿#Region "Microsoft.VisualBasic::c76faeeffaffa49db0d6fc6ed5245184, gr\Drawing-net4.8\Imager.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 137
-    '    Code Lines: 65 (47.45%)
-    ' Comment Lines: 55 (40.15%)
+    '   Total Lines: 138
+    '    Code Lines: 66 (47.83%)
+    ' Comment Lines: 55 (39.86%)
     '    - Xml Docs: 96.36%
     ' 
-    '   Blank Lines: 17 (12.41%)
-    '     File Size: 5.88 KB
+    '   Blank Lines: 17 (12.32%)
+    '     File Size: 5.92 KB
 
 
     '     Module Imager

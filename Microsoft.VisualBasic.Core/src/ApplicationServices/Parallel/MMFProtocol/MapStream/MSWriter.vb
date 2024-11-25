@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::87875128aa281d5755d90adb3b445deb, Microsoft.VisualBasic.Core\src\ApplicationServices\Parallel\MMFProtocol\MapStream\MSWriter.vb"
+﻿#Region "Microsoft.VisualBasic::39d4ffaa8d59f707728f3242d51360e4, Microsoft.VisualBasic.Core\src\ApplicationServices\Parallel\MMFProtocol\MapStream\MSWriter.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 84
-    '    Code Lines: 51 (60.71%)
-    ' Comment Lines: 18 (21.43%)
+    '   Total Lines: 89
+    '    Code Lines: 56 (62.92%)
+    ' Comment Lines: 18 (20.22%)
     '    - Xml Docs: 94.44%
     ' 
-    '   Blank Lines: 15 (17.86%)
-    '     File Size: 3.00 KB
+    '   Blank Lines: 15 (16.85%)
+    '     File Size: 3.20 KB
 
 
     '     Class MSWriter

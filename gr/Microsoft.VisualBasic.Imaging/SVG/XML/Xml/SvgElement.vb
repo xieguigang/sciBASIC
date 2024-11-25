@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fce69b8925c5ad7b15ee1b17ee0579dc, gr\Microsoft.VisualBasic.Imaging\SVG\XML\Xml\SvgElement.vb"
+﻿#Region "Microsoft.VisualBasic::befa4153b85284ff544aea117ba10962, gr\Microsoft.VisualBasic.Imaging\SVG\XML\Xml\SvgElement.vb"
 
     ' Author:
     ' 
@@ -34,20 +34,20 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 301
-    '    Code Lines: 234 (77.74%)
-    ' Comment Lines: 26 (8.64%)
-    '    - Xml Docs: 96.15%
+    '   Total Lines: 318
+    '    Code Lines: 239 (75.16%)
+    ' Comment Lines: 37 (11.64%)
+    '    - Xml Docs: 97.30%
     ' 
-    '   Blank Lines: 41 (13.62%)
-    '     File Size: 11.23 KB
+    '   Blank Lines: 42 (13.21%)
+    '     File Size: 11.81 KB
 
 
     '     Class SvgElement
     ' 
     '         Properties: Fill, FillOpacity, Id, Stroke, StrokeDashArray
     '                     StrokeLineCap, StrokeOpacity, StrokeWidth, Style, TabIndex
-    '                     Transform, Visible
+    '                     Tag, Transform, Visible
     ' 
     '         Constructor: (+1 Overloads) Sub New
     ' 

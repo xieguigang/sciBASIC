@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e54ef74b12489883ca04cedc6cb2520b, gr\Drawing-net4.8\Effects.vb"
+﻿#Region "Microsoft.VisualBasic::55d75e49b20380e88221800d138afe0b, gr\Drawing-net4.8\Effects.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 276
-    '    Code Lines: 123 (44.57%)
-    ' Comment Lines: 112 (40.58%)
+    '   Total Lines: 292
+    '    Code Lines: 138 (47.26%)
+    ' Comment Lines: 112 (38.36%)
     '    - Xml Docs: 55.36%
     ' 
-    '   Blank Lines: 41 (14.86%)
-    '     File Size: 12.37 KB
+    '   Blank Lines: 42 (14.38%)
+    '     File Size: 13.10 KB
 
 
     '     Module Effects

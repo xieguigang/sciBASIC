@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cc96c83021c7732fe4d31b36a77345aa, gr\Drawing-net4.8\Graphics\Wmf.vb"
+﻿#Region "Microsoft.VisualBasic::747e217362f6adbe9de65ef2f2eb3a3e, gr\Drawing-net4.8\Graphics\Wmf.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 171
-    '    Code Lines: 94 (54.97%)
-    ' Comment Lines: 53 (30.99%)
+    '   Total Lines: 178
+    '    Code Lines: 100 (56.18%)
+    ' Comment Lines: 53 (29.78%)
     '    - Xml Docs: 83.02%
     ' 
-    '   Blank Lines: 24 (14.04%)
-    '     File Size: 7.45 KB
+    '   Blank Lines: 25 (14.04%)
+    '     File Size: 7.69 KB
 
 
     ' Class Wmf

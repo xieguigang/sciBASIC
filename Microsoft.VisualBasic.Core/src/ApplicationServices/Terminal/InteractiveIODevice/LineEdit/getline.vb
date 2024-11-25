@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6f9e818f184df24fdc0a0bbadf4e9288, Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\InteractiveIODevice\LineEdit\getline.vb"
+﻿#Region "Microsoft.VisualBasic::cea93114e1e8294974c3ac16d54dcd6c, Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\InteractiveIODevice\LineEdit\getline.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 1251
-    '    Code Lines: 714 (57.07%)
-    ' Comment Lines: 360 (28.78%)
+    '   Total Lines: 1252
+    '    Code Lines: 715 (57.11%)
+    ' Comment Lines: 360 (28.75%)
     '    - Xml Docs: 68.06%
     ' 
-    '   Blank Lines: 177 (14.15%)
-    '     File Size: 45.77 KB
+    '   Blank Lines: 177 (14.14%)
+    '     File Size: 45.83 KB
 
 
     '     Class LineEditor

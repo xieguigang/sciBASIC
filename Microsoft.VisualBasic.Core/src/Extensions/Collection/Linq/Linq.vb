@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b1c35d49b0e00853172c7d6059b61c65, Microsoft.VisualBasic.Core\src\Extensions\Collection\Linq\Linq.vb"
+﻿#Region "Microsoft.VisualBasic::1f577ec6c85f1a0b2f180ddd0bef76d4, Microsoft.VisualBasic.Core\src\Extensions\Collection\Linq\Linq.vb"
 
     ' Author:
     ' 
@@ -34,18 +34,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 472
-    '    Code Lines: 265 (56.14%)
-    ' Comment Lines: 160 (33.90%)
-    '    - Xml Docs: 95.62%
+    '   Total Lines: 500
+    '    Code Lines: 279 (55.80%)
+    ' Comment Lines: 169 (33.80%)
+    '    - Xml Docs: 95.86%
     ' 
-    '   Blank Lines: 47 (9.96%)
-    '     File Size: 18.06 KB
+    '   Blank Lines: 52 (10.40%)
+    '     File Size: 18.93 KB
 
 
     '     Module Extensions
     ' 
-    '         Function: DATA, Populate, (+2 Overloads) SafeQuery, ToArray
+    '         Function: AtWhich, DATA, Populate, (+2 Overloads) SafeQuery, ToArray
     '         Delegate Sub
     ' 
     '             Function: (+2 Overloads) [With], CopyVector, DefaultFirst, FirstOrDefault, LastOrDefault

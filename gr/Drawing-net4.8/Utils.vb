@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::53df1d0ebac975c38a5bc526b5fe583c, gr\Drawing-net4.8\Utils.vb"
+﻿#Region "Microsoft.VisualBasic::aeb972e76b7445d1254fc12f75f9bad1, gr\Drawing-net4.8\Utils.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 225
-    '    Code Lines: 147 (65.33%)
-    ' Comment Lines: 34 (15.11%)
+    '   Total Lines: 255
+    '    Code Lines: 173 (67.84%)
+    ' Comment Lines: 34 (13.33%)
     '    - Xml Docs: 50.00%
     ' 
-    '   Blank Lines: 44 (19.56%)
-    '     File Size: 8.18 KB
+    '   Blank Lines: 48 (18.82%)
+    '     File Size: 8.84 KB
 
 
     '     Module Utils

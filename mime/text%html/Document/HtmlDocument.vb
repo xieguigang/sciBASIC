@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::af2165d2a3ec4a3d7bf404956d56dc67, mime\text%html\Document\HtmlDocument.vb"
+﻿#Region "Microsoft.VisualBasic::f74b5fd18bed40123585d64443dfb57d, mime\text%html\Document\HtmlDocument.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 37
-    '    Code Lines: 21 (56.76%)
-    ' Comment Lines: 9 (24.32%)
+    '   Total Lines: 40
+    '    Code Lines: 21 (52.50%)
+    ' Comment Lines: 12 (30.00%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 7 (18.92%)
-    '     File Size: 1.33 KB
+    '   Blank Lines: 7 (17.50%)
+    '     File Size: 1.45 KB
 
 
     '     Class HtmlDocument

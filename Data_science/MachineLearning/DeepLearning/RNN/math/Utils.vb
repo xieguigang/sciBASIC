@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::229f95da99534e81bcc700cdc71f361d, Data_science\MachineLearning\DeepLearning\RNN\math\Utils.vb"
+﻿#Region "Microsoft.VisualBasic::ef390c40e02c10d42dfe8f7ac8f7378c, Data_science\MachineLearning\DeepLearning\RNN\math\Utils.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 0.00%
     ' 
     '   Blank Lines: 9 (18.37%)
-    '     File Size: 1.17 KB
+    '     File Size: 1.25 KB
 
 
     ' 	Class Utils

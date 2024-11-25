@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9b6fab0c232aec43699b2132959db27d, Microsoft.VisualBasic.Core\src\Drawing\GDI+\GdiRasterGraphics.vb"
+﻿#Region "Microsoft.VisualBasic::cd5f56304941b055a85ec47dd58f6840, Microsoft.VisualBasic.Core\src\Drawing\GDI+\GdiRasterGraphics.vb"
 
     ' Author:
     ' 
@@ -34,18 +34,22 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 79
-    '    Code Lines: 40 (50.63%)
-    ' Comment Lines: 26 (32.91%)
+    '   Total Lines: 85
+    '    Code Lines: 43 (50.59%)
+    ' Comment Lines: 26 (30.59%)
     '    - Xml Docs: 88.46%
     ' 
-    '   Blank Lines: 13 (16.46%)
-    '     File Size: 2.44 KB
+    '   Blank Lines: 16 (18.82%)
+    '     File Size: 2.54 KB
 
 
     '     Interface GdiRasterGraphics
     ' 
     '         Properties: ImageResource
+    ' 
+    '     Interface ISvgGraphics
+    ' 
+    '         Function: GetSvgText
     ' 
     '     Class IGraphicsData
     ' 

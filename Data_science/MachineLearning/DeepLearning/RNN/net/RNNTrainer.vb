@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::adcf2a706ba16be3bf909ab00d1792b0, Data_science\MachineLearning\DeepLearning\RNN\net\RNNTrainer.vb"
+﻿#Region "Microsoft.VisualBasic::22c283c3cd7f7c181ed40a7af58a3470, Data_science\MachineLearning\DeepLearning\RNN\net\RNNTrainer.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 158
-    '    Code Lines: 84 (53.16%)
-    ' Comment Lines: 31 (19.62%)
-    '    - Xml Docs: 38.71%
+    '   Total Lines: 172
+    '    Code Lines: 84 (48.84%)
+    ' Comment Lines: 49 (28.49%)
+    '    - Xml Docs: 77.55%
     ' 
-    '   Blank Lines: 43 (27.22%)
-    '     File Size: 4.16 KB
+    '   Blank Lines: 39 (22.67%)
+    '     File Size: 4.55 KB
 
 
     ' 	Class RNNTrainer

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::399ba58ec5ec9d57a249d5bc01ee0f5a, mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\XLSX\Writer\Workbook.vb"
+﻿#Region "Microsoft.VisualBasic::752a389fd94d7cac170e6b2a0e544e95, mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\XLSX\Writer\Workbook.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 949
-    '    Code Lines: 471 (49.63%)
-    ' Comment Lines: 384 (40.46%)
+    '   Total Lines: 952
+    '    Code Lines: 472 (49.58%)
+    ' Comment Lines: 384 (40.34%)
     '    - Xml Docs: 97.40%
     ' 
-    '   Blank Lines: 94 (9.91%)
-    '     File Size: 45.24 KB
+    '   Blank Lines: 96 (10.08%)
+    '     File Size: 45.30 KB
 
 
     '     Class Workbook
@@ -51,10 +51,10 @@
     ' 
     '         Constructor: (+5 Overloads) Sub New
     ' 
-    '         Function: AddStyle, AddStyleComponent, (+3 Overloads) CopyWorksheetIntoThis, (+3 Overloads) CopyWorksheetTo, GetMruColors
-    '                   GetNextWorksheetId, (+2 Overloads) GetWorksheet, (+2 Overloads) SetCurrentWorksheet
+    '         Function: AddStyle, AddStyleComponent, AddWorksheet, (+3 Overloads) CopyWorksheetIntoThis, (+3 Overloads) CopyWorksheetTo
+    '                   GetMruColors, GetNextWorksheetId, (+2 Overloads) GetWorksheet, (+2 Overloads) SetCurrentWorksheet
     ' 
-    '         Sub: AddMruColor, (+4 Overloads) AddWorksheet, ClearMruColors, Init, (+4 Overloads) RemoveStyle
+    '         Sub: AddMruColor, (+3 Overloads) AddWorksheet, ClearMruColors, Init, (+4 Overloads) RemoveStyle
     '              (+3 Overloads) RemoveWorksheet, ResolveMergedCells, Save, SaveAs, SaveAsStream
     '              SetCurrentWorksheet, (+3 Overloads) SetSelectedWorksheet, SetWorkbookProtection, ValidateWorksheets
     '         Class Shortener

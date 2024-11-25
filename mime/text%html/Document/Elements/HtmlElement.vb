@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::518a370031030500cf78d561086fa553, mime\text%html\Document\Elements\HtmlElement.vb"
+﻿#Region "Microsoft.VisualBasic::a1d5353597e5bd72a3fcc10d6f321c0a, mime\text%html\Document\Elements\HtmlElement.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 394
-    '    Code Lines: 233 (59.14%)
-    ' Comment Lines: 108 (27.41%)
-    '    - Xml Docs: 97.22%
+    '   Total Lines: 408
+    '    Code Lines: 233 (57.11%)
+    ' Comment Lines: 122 (29.90%)
+    '    - Xml Docs: 95.90%
     ' 
-    '   Blank Lines: 53 (13.45%)
-    '     File Size: 17.15 KB
+    '   Blank Lines: 53 (12.99%)
+    '     File Size: 17.62 KB
 
 
     '     Class HtmlElement

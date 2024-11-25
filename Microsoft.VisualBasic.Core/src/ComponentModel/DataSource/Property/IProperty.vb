@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e2129d0a26c311ae11d7a793fd4e374b, Microsoft.VisualBasic.Core\src\ComponentModel\DataSource\Property\IProperty.vb"
+﻿#Region "Microsoft.VisualBasic::bd34bd2baa54c497c6828a16bfa64b15, Microsoft.VisualBasic.Core\src\ComponentModel\DataSource\Property\IProperty.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 80
-    '    Code Lines: 35 (43.75%)
-    ' Comment Lines: 29 (36.25%)
+    '   Total Lines: 81
+    '    Code Lines: 35 (43.21%)
+    ' Comment Lines: 29 (35.80%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 16 (20.00%)
-    '     File Size: 2.80 KB
+    '   Blank Lines: 17 (20.99%)
+    '     File Size: 2.81 KB
 
 
     '     Interface IProperty

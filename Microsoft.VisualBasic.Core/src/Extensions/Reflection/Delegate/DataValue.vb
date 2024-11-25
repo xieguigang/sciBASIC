@@ -1,65 +1,58 @@
-﻿#Region "Microsoft.VisualBasic::f5bbeca7cf365c7a2b26a1faa896bdb3, Microsoft.VisualBasic.Core\src\Extensions\Reflection\Delegate\DataValue.vb"
+﻿#Region "Microsoft.VisualBasic::a83a684941618983dd929c05f90f9428, Microsoft.VisualBasic.Core\src\Extensions\Reflection\Delegate\DataValue.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 208
-'    Code Lines: 111 (53.37%)
-' Comment Lines: 63 (30.29%)
-'    - Xml Docs: 49.21%
-' 
-'   Blank Lines: 34 (16.35%)
-'     File Size: 7.88 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Class DataObjectVector
-' 
-'         Properties: PropertyNames, RawArray
-' 
-'         Constructor: (+1 Overloads) Sub New
-' 
-'         Function: GetProperty, GetSubVector, inspectType
-' 
-'         Sub: SetProperty
-' 
-'     Class DataValue
-' 
-'         Constructor: (+1 Overloads) Sub New
-'         Function: ToString
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 66
+    '    Code Lines: 43 (65.15%)
+    ' Comment Lines: 11 (16.67%)
+    '    - Xml Docs: 54.55%
+    ' 
+    '   Blank Lines: 12 (18.18%)
+    '     File Size: 2.63 KB
+
+
+    '     Class DataValue
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
+    '         Function: GetVector, ToString
+    ' 
+    '         Sub: (+2 Overloads) SetValue
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

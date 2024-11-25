@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4cd9f019a84df2f074e5299d7d79194e, Data\DataFrame\IO\csv\RowIterator.vb"
+﻿#Region "Microsoft.VisualBasic::2e482f3e4c66e03659523abdf49a4755, Data\DataFrame\IO\csv\RowIterator.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 91
-    '    Code Lines: 63 (69.23%)
-    ' Comment Lines: 12 (13.19%)
+    '   Total Lines: 90
+    '    Code Lines: 62 (68.89%)
+    ' Comment Lines: 12 (13.33%)
     '    - Xml Docs: 0.00%
     ' 
-    '   Blank Lines: 16 (17.58%)
-    '     File Size: 3.29 KB
+    '   Blank Lines: 16 (17.78%)
+    '     File Size: 3.26 KB
 
 
     '     Class RowIterator

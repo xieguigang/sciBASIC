@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b82805adf3da7475d153e7804bbc721f, Data\DataFrame\IO\csv\Tokenizer.vb"
+﻿#Region "Microsoft.VisualBasic::b871e945e3253583006033dd392d7e94, Data\DataFrame\IO\csv\Tokenizer.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 85
-    '    Code Lines: 47 (55.29%)
-    ' Comment Lines: 23 (27.06%)
+    '   Total Lines: 88
+    '    Code Lines: 49 (55.68%)
+    ' Comment Lines: 23 (26.14%)
     '    - Xml Docs: 95.65%
     ' 
-    '   Blank Lines: 15 (17.65%)
-    '     File Size: 2.70 KB
+    '   Blank Lines: 16 (18.18%)
+    '     File Size: 2.79 KB
 
 
     '     Class Tokenizer

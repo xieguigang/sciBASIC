@@ -1,55 +1,55 @@
-﻿#Region "Microsoft.VisualBasic::098d300667afc3fd7225514d9960fc7e, gr\Drawing-net4.8\ImageFormat.vb"
+﻿#Region "Microsoft.VisualBasic::f910f9b3d4ac9af7ae07659db5853085, gr\Drawing-net4.8\ImageFormat.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 119
-'    Code Lines: 81 (68.07%)
-' Comment Lines: 26 (21.85%)
-'    - Xml Docs: 96.15%
-' 
-'   Blank Lines: 12 (10.08%)
-'     File Size: 4.35 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-' Module ImageFormatExtensions
-' 
-'     Properties: Png
-' 
-'     Function: GetFormat, GetSaveImageFormat, SaveAs
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 123
+    '    Code Lines: 85 (69.11%)
+    ' Comment Lines: 26 (21.14%)
+    '    - Xml Docs: 96.15%
+    ' 
+    '   Blank Lines: 12 (9.76%)
+    '     File Size: 4.46 KB
+
+
+    ' Module ImageFormatExtensions
+    ' 
+    '     Properties: Png
+    ' 
+    '     Function: GetFormat, GetSaveImageFormat, SaveAs
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

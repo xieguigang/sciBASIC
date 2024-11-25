@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f0f3779401b16a4529ad3574f13d6d5c, Microsoft.VisualBasic.Core\src\My\JavaScript\JavaScriptObject\JavaScriptObject.vb"
+﻿#Region "Microsoft.VisualBasic::8eb9c478161cc10da46fc191567ea6e4, Microsoft.VisualBasic.Core\src\My\JavaScript\JavaScriptObject\JavaScriptObject.vb"
 
     ' Author:
     ' 
@@ -34,23 +34,24 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 257
-    '    Code Lines: 193 (75.10%)
-    ' Comment Lines: 21 (8.17%)
-    '    - Xml Docs: 90.48%
+    '   Total Lines: 320
+    '    Code Lines: 230 (71.88%)
+    ' Comment Lines: 37 (11.56%)
+    '    - Xml Docs: 91.89%
     ' 
-    '   Blank Lines: 43 (16.73%)
-    '     File Size: 10.16 KB
+    '   Blank Lines: 53 (16.56%)
+    '     File Size: 12.79 KB
 
 
     '     Class JavaScriptObject
     ' 
-    '         Properties: length, this
+    '         Properties: data, length, this
     ' 
-    '         Constructor: (+2 Overloads) Sub New
+    '         Constructor: (+3 Overloads) Sub New
     ' 
-    '         Function: (+2 Overloads) CreateObject, GetDescription, GetEnumerator, GetGenericJson, GetMemberValue
-    '                   GetNames, IEnumerable_GetEnumerator, IEnumerable_GetEnumerator1, Join, ToString
+    '         Function: (+2 Overloads) CreateDynamicObject, (+2 Overloads) CreateObject, GetDescription, GetEnumerator, GetGenericJSON
+    '                   GetMemberValue, GetNames, IEnumerable_GetEnumerator, IEnumerable_GetEnumerator1, Join
+    '                   ToString
     ' 
     '         Sub: Delete, loadObject
     ' 

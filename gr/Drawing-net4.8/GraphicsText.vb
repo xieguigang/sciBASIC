@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::738682e48d3c0d6023b5998138e9303b, gr\Drawing-net4.8\GraphicsText.vb"
+﻿#Region "Microsoft.VisualBasic::53f5b5b0d43637091252c43e4cef6e39, gr\Drawing-net4.8\GraphicsText.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 148
-    '    Code Lines: 94 (63.51%)
-    ' Comment Lines: 32 (21.62%)
+    '   Total Lines: 149
+    '    Code Lines: 95 (63.76%)
+    ' Comment Lines: 32 (21.48%)
     '    - Xml Docs: 68.75%
     ' 
-    '   Blank Lines: 22 (14.86%)
-    '     File Size: 5.34 KB
+    '   Blank Lines: 22 (14.77%)
+    '     File Size: 5.37 KB
 
 
     ' Class GraphicsText

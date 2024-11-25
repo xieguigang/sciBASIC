@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d8db0a7ee800255f64486642b63ffb37, Microsoft.VisualBasic.Core\src\Data\DataFramework.vb"
+﻿#Region "Microsoft.VisualBasic::d5588100362f22627e8697403f40489b, Microsoft.VisualBasic.Core\src\Data\DataFramework.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 489
-    '    Code Lines: 305 (62.37%)
-    ' Comment Lines: 120 (24.54%)
-    '    - Xml Docs: 95.83%
+    '   Total Lines: 510
+    '    Code Lines: 310 (60.78%)
+    ' Comment Lines: 135 (26.47%)
+    '    - Xml Docs: 95.56%
     ' 
-    '   Blank Lines: 64 (13.09%)
-    '     File Size: 21.71 KB
+    '   Blank Lines: 65 (12.75%)
+    '     File Size: 22.55 KB
 
 
     '     Module DataFramework

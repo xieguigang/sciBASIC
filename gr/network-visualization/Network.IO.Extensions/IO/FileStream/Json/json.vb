@@ -1,69 +1,69 @@
-﻿#Region "Microsoft.VisualBasic::74f4cf58c885fcfdef95af796520d1d1, gr\network-visualization\Network.IO.Extensions\IO\FileStream\Json\json.vb"
+﻿#Region "Microsoft.VisualBasic::03a38e38c246098ff00efe396a11247d, gr\network-visualization\Network.IO.Extensions\IO\FileStream\Json\json.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 56
-'    Code Lines: 37 (66.07%)
-' Comment Lines: 8 (14.29%)
-'    - Xml Docs: 100.00%
-' 
-'   Blank Lines: 11 (19.64%)
-'     File Size: 1.85 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Class net
-' 
-'         Properties: edges, nodes, style, types
-' 
-'         Function: ToString
-' 
-'     Class edges
-' 
-'         Properties: A, B, Data, id, source
-'                     target, value, weight
-' 
-'         Function: ToString
-' 
-'     Class node
-' 
-'         Properties: Data, degree, id, name, type
-' 
-'         Function: ToString
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 56
+    '    Code Lines: 37 (66.07%)
+    ' Comment Lines: 8 (14.29%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 11 (19.64%)
+    '     File Size: 1.84 KB
+
+
+    '     Class net
+    ' 
+    '         Properties: edges, nodes, style, types
+    ' 
+    '         Function: ToString
+    ' 
+    '     Class edges
+    ' 
+    '         Properties: A, B, Data, id, source
+    '                     target, value, weight
+    ' 
+    '         Function: ToString
+    ' 
+    '     Class node
+    ' 
+    '         Properties: Data, degree, id, name, type
+    ' 
+    '         Function: ToString
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

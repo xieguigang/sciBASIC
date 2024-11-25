@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c62019106ed0b84dc5b6d30868c58847, Microsoft.VisualBasic.Core\src\Drawing\Bitmap\netcore8.0\Image.vb"
+﻿#Region "Microsoft.VisualBasic::d874eede9ca4a3d83014dd5cd9518d09, Microsoft.VisualBasic.Core\src\Drawing\Bitmap\netcore8.0\Image.vb"
 
     ' Author:
     ' 
@@ -34,20 +34,20 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 268
-    '    Code Lines: 121 (45.15%)
-    ' Comment Lines: 93 (34.70%)
+    '   Total Lines: 274
+    '    Code Lines: 126 (45.99%)
+    ' Comment Lines: 93 (33.94%)
     '    - Xml Docs: 45.16%
     ' 
-    '   Blank Lines: 54 (20.15%)
-    '     File Size: 10.49 KB
+    '   Blank Lines: 55 (20.07%)
+    '     File Size: 10.74 KB
 
 
     '     Class Image
     ' 
     '         Properties: Height, Width
     ' 
-    '         Function: FromStream
+    '         Function: FromFile, FromStream
     ' 
     '         Sub: (+2 Overloads) Dispose
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d4cfddccf794f10cabd9e0b88450e8a5, Microsoft.VisualBasic.Core\src\ComponentModel\DataSource\Property\NamedCollection.vb"
+﻿#Region "Microsoft.VisualBasic::f27cffcc9cd04c4740acaefe58bed27e, Microsoft.VisualBasic.Core\src\ComponentModel\DataSource\Property\NamedCollection.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 212
-    '    Code Lines: 128 (60.38%)
-    ' Comment Lines: 58 (27.36%)
-    '    - Xml Docs: 58.62%
+    '   Total Lines: 217
+    '    Code Lines: 128 (58.99%)
+    ' Comment Lines: 63 (29.03%)
+    '    - Xml Docs: 61.90%
     ' 
-    '   Blank Lines: 26 (12.26%)
-    '     File Size: 9.99 KB
+    '   Blank Lines: 26 (11.98%)
+    '     File Size: 10.19 KB
 
 
     '     Structure NamedCollection

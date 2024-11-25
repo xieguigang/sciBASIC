@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::859ee2f58ab2e40a0f4a3db30ac77a6f, gr\Drawing-net4.8\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::5d354d77c45168bacbe89869a17fd4f9, gr\Drawing-net4.8\Extensions.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 225
-    '    Code Lines: 147 (65.33%)
-    ' Comment Lines: 49 (21.78%)
+    '   Total Lines: 243
+    '    Code Lines: 162 (66.67%)
+    ' Comment Lines: 49 (20.16%)
     '    - Xml Docs: 89.80%
     ' 
-    '   Blank Lines: 29 (12.89%)
-    '     File Size: 8.68 KB
+    '   Blank Lines: 32 (13.17%)
+    '     File Size: 9.17 KB
 
 
     ' Module Extensions

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a5244aa00130a2bc01e6642fae8bc289, gr\Drawing-net4.8\FontMetrics.vb"
+﻿#Region "Microsoft.VisualBasic::2bd1d737689ed3c09f491052104c0078, gr\Drawing-net4.8\FontMetrics.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 85
-    '    Code Lines: 52 (61.18%)
-    ' Comment Lines: 20 (23.53%)
+    '   Total Lines: 105
+    '    Code Lines: 67 (63.81%)
+    ' Comment Lines: 20 (19.05%)
     '    - Xml Docs: 95.00%
     ' 
-    '   Blank Lines: 13 (15.29%)
-    '     File Size: 2.86 KB
+    '   Blank Lines: 18 (17.14%)
+    '     File Size: 3.29 KB
 
 
     '     Class FontMetrics

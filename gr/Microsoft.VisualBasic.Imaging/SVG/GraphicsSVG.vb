@@ -1,67 +1,68 @@
-﻿#Region "Microsoft.VisualBasic::2392604dcc9a63c04c15ad4ca89135b6, gr\Microsoft.VisualBasic.Imaging\SVG\GraphicsSVG.vb"
+﻿#Region "Microsoft.VisualBasic::f02d76067ce082e5367b2c5f5f4da6c2, gr\Microsoft.VisualBasic.Imaging\SVG\GraphicsSVG.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 677
-'    Code Lines: 487 (71.94%)
-' Comment Lines: 36 (5.32%)
-'    - Xml Docs: 80.56%
-' 
-'   Blank Lines: 154 (22.75%)
-'     File Size: 27.58 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Class GraphicsSVG
-' 
-'         Properties: Driver, LastSvgLayerElement, RenderingOrigin, Size, TextContrast
-' 
-'         Constructor: (+4 Overloads) Sub New
-' 
-'         Function: GetContextInfo, GetStringPath, (+4 Overloads) IsVisible, (+3 Overloads) MeasureString, Save
-' 
-'         Sub: AddMetafileComment, ClearCanvas, (+4 Overloads) DrawArc, (+3 Overloads) DrawBezier, (+2 Overloads) DrawBeziers
-'              DrawCircle, (+2 Overloads) DrawClosedCurve, (+7 Overloads) DrawCurve, (+4 Overloads) DrawEllipse, (+10 Overloads) DrawImage
-'              (+4 Overloads) DrawImageUnscaled, DrawImageUnscaledAndClipped, (+4 Overloads) DrawLine, (+2 Overloads) DrawLines, DrawPath
-'              (+4 Overloads) DrawPie, (+2 Overloads) DrawPolygon, (+6 Overloads) DrawRectangle, (+2 Overloads) DrawRectangles, (+4 Overloads) DrawString
-'              ExcludeClip, (+2 Overloads) FillClosedCurve, (+4 Overloads) FillEllipse, FillPath, (+3 Overloads) FillPie
-'              (+2 Overloads) FillPolygon, (+4 Overloads) FillRectangle, Flush, (+2 Overloads) IntersectClip, ReleaseHandle
-'              ResetClip, ResetTransform, RotateTransform, ScaleTransform, (+2 Overloads) SetClip
-'              (+2 Overloads) TranslateClip, TranslateTransform
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 698
+    '    Code Lines: 499 (71.49%)
+    ' Comment Lines: 42 (6.02%)
+    '    - Xml Docs: 83.33%
+    ' 
+    '   Blank Lines: 157 (22.49%)
+    '     File Size: 28.21 KB
+
+
+    '     Class GraphicsSVG
+    ' 
+    '         Properties: Driver, LastSvgLayerElement, RenderingOrigin, Size, TextContrast
+    ' 
+    '         Constructor: (+4 Overloads) Sub New
+    ' 
+    '         Function: GetContextInfo, GetStringPath, GetSvgText, (+4 Overloads) IsVisible, (+3 Overloads) MeasureString
+    '                   Save
+    ' 
+    '         Sub: AddMetafileComment, ClearCanvas, (+4 Overloads) DrawArc, (+3 Overloads) DrawBezier, (+2 Overloads) DrawBeziers
+    '              DrawCircle, (+2 Overloads) DrawClosedCurve, (+7 Overloads) DrawCurve, (+4 Overloads) DrawEllipse, (+10 Overloads) DrawImage
+    '              (+4 Overloads) DrawImageUnscaled, DrawImageUnscaledAndClipped, (+4 Overloads) DrawLine, (+2 Overloads) DrawLines, DrawPath
+    '              (+4 Overloads) DrawPie, (+2 Overloads) DrawPolygon, (+6 Overloads) DrawRectangle, (+2 Overloads) DrawRectangles, (+4 Overloads) DrawString
+    '              ExcludeClip, (+2 Overloads) FillClosedCurve, (+4 Overloads) FillEllipse, FillPath, (+3 Overloads) FillPie
+    '              (+2 Overloads) FillPolygon, (+4 Overloads) FillRectangle, Flush, (+2 Overloads) IntersectClip, ReleaseHandle
+    '              ResetClip, ResetTransform, RotateTransform, ScaleTransform, (+2 Overloads) SetClip
+    '              (+2 Overloads) TranslateClip, TranslateTransform
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

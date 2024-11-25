@@ -1,56 +1,56 @@
-﻿#Region "Microsoft.VisualBasic::4ca2a8368044858fb64a55c3155c3147, gr\network-visualization\NetworkCanvas\Canvas3D\Renderer3D.vb"
+﻿#Region "Microsoft.VisualBasic::1a55ef29c303e54162c4055de50c5657, gr\network-visualization\NetworkCanvas\Canvas3D\Renderer3D.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 108
-'    Code Lines: 81 (75.00%)
-' Comment Lines: 9 (8.33%)
-'    - Xml Docs: 55.56%
-' 
-'   Blank Lines: 18 (16.67%)
-'     File Size: 4.00 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-' Class Renderer3D
-' 
-'     Properties: rotate, ViewDistance
-' 
-'     Constructor: (+1 Overloads) Sub New
-'     Sub: drawEdge, drawNode
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 109
+    '    Code Lines: 82 (75.23%)
+    ' Comment Lines: 9 (8.26%)
+    '    - Xml Docs: 55.56%
+    ' 
+    '   Blank Lines: 18 (16.51%)
+    '     File Size: 4.04 KB
+
+
+    ' Class Renderer3D
+    ' 
+    '     Properties: rotate, ViewDistance
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    '     Sub: drawEdge, drawNode
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

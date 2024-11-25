@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::69208aca7368006f7640b7ed4621afe0, Microsoft.VisualBasic.Core\src\My\JavaScript\JavaScriptObject\Abstract.vb"
+﻿#Region "Microsoft.VisualBasic::5f4d3515f0fcf271e7e086e1b3283446, Microsoft.VisualBasic.Core\src\My\JavaScript\JavaScriptObject\Abstract.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 22
-    '    Code Lines: 10 (45.45%)
-    ' Comment Lines: 9 (40.91%)
+    '   Total Lines: 36
+    '    Code Lines: 10 (27.78%)
+    ' Comment Lines: 21 (58.33%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 3 (13.64%)
-    '     File Size: 631 B
+    '   Blank Lines: 5 (13.89%)
+    '     File Size: 1013 B
 
 
     '     Interface IJavaScriptObjectAccessor

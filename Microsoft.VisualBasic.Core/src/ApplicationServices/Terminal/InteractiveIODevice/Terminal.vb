@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::128194f05d6e03b61d02480ee6ef8a80, Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\InteractiveIODevice\Terminal.vb"
+﻿#Region "Microsoft.VisualBasic::8063f919ae2f0a1b13b7a51849b15fad, Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\InteractiveIODevice\Terminal.vb"
 
     ' Author:
     ' 
@@ -34,30 +34,27 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 1083
-    '    Code Lines: 366 (33.80%)
-    ' Comment Lines: 626 (57.80%)
+    '   Total Lines: 871
+    '    Code Lines: 288 (33.07%)
+    ' Comment Lines: 505 (57.98%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 91 (8.40%)
-    '     File Size: 60.22 KB
+    '   Blank Lines: 78 (8.96%)
+    '     File Size: 46.44 KB
 
 
     '     Class Terminal
     ' 
-    '         Properties: [Error], [In], BackgroundColor, BufferHeight, BufferWidth
-    '                     CapsLock, CursorLeft, CursorSize, CursorTop, CursorVisible
+    '         Properties: [Error], [In], BackgroundColor, CursorLeft, CursorTop
     '                     ForegroundColor, InputEncoding, IsErrorRedirected, IsInputRedirected, IsOutputRedirected
-    '                     KeyAvailable, LargestWindowHeight, LargestWindowWidth, NumberLock, Out
-    '                     OutputEncoding, Title, TreatControlCAsInput, WindowHeight, WindowLeft
-    '                     WindowTop, WindowWidth
+    '                     KeyAvailable, LargestWindowHeight, LargestWindowWidth, Out, OutputEncoding
+    '                     TreatControlCAsInput, WindowHeight, WindowWidth
     ' 
     '         Function: (+2 Overloads) OpenStandardError, (+2 Overloads) OpenStandardInput, (+2 Overloads) OpenStandardOutput, Read, (+2 Overloads) ReadKey
     '                   ReadLine
     ' 
-    '         Sub: Clear, (+2 Overloads) MoveBufferArea, ResetColor, SetBufferSize, SetCursorPosition
-    '              SetError, SetIn, SetOut, SetWindowPosition, SetWindowSize
-    '              (+17 Overloads) Write, (+18 Overloads) WriteLine
+    '         Sub: Clear, ResetColor, SetCursorPosition, SetError, SetIn
+    '              SetOut, SetWindowSize, (+17 Overloads) Write, (+18 Overloads) WriteLine
     ' 
     ' 
     ' /********************************************************************************/

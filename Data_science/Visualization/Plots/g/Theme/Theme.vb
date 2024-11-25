@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::19045b127682121f427f99e91e43e8bf, Data_science\Visualization\Plots\g\Theme\Theme.vb"
+﻿#Region "Microsoft.VisualBasic::8c6c9e73a2f17e7bf9d9fb500d42eadc, Data_science\Visualization\Plots\g\Theme\Theme.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 203
-    '    Code Lines: 76 (37.44%)
-    ' Comment Lines: 96 (47.29%)
+    '   Total Lines: 206
+    '    Code Lines: 76 (36.89%)
+    ' Comment Lines: 99 (48.06%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 31 (15.27%)
-    '     File Size: 7.07 KB
+    '   Blank Lines: 31 (15.05%)
+    '     File Size: 7.15 KB
 
 
     '     Class Theme

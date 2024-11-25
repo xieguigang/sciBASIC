@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f2d26f7bde46b22519d8546d830e0d0d, Data_science\DataMining\BinaryTree\ClusterTree\BTreeCluster.vb"
+﻿#Region "Microsoft.VisualBasic::2fc6d5b74694bb6b68f0ee28c5d90195, Data_science\DataMining\BinaryTree\ClusterTree\BTreeCluster.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 77
-    '    Code Lines: 56 (72.73%)
-    ' Comment Lines: 10 (12.99%)
-    '    - Xml Docs: 70.00%
+    '   Total Lines: 86
+    '    Code Lines: 56 (65.12%)
+    ' Comment Lines: 19 (22.09%)
+    '    - Xml Docs: 78.95%
     ' 
-    '   Blank Lines: 11 (14.29%)
-    '     File Size: 2.82 KB
+    '   Blank Lines: 11 (12.79%)
+    '     File Size: 3.12 KB
 
 
     ' Class BTreeCluster

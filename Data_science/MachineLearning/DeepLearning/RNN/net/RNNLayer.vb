@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d0395fac12030d8fc979adfa7c7d829d, Data_science\MachineLearning\DeepLearning\RNN\net\RNNLayer.vb"
+﻿#Region "Microsoft.VisualBasic::215d31e473d1256e9d41f4acf4c25c40, Data_science\MachineLearning\DeepLearning\RNN\net\RNNLayer.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 409
-    '    Code Lines: 210 (51.34%)
-    ' Comment Lines: 109 (26.65%)
-    '    - Xml Docs: 1.83%
+    '   Total Lines: 441
+    '    Code Lines: 202 (45.80%)
+    ' Comment Lines: 148 (33.56%)
+    '    - Xml Docs: 38.51%
     ' 
-    '   Blank Lines: 90 (22.00%)
-    '     File Size: 14.15 KB
+    '   Blank Lines: 91 (20.63%)
+    '     File Size: 14.96 KB
 
 
     '     Class RNNLayer

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6657d5ffbc230e0f49137c55c0b0f5da, gr\network-visualization\Datavisualization.Network\Graph\Model\Graph.vb"
+﻿#Region "Microsoft.VisualBasic::49b12c739aeec6f0dee310bfd8d7fe8d, gr\network-visualization\Datavisualization.Network\Graph\Model\Graph.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 71.71%
     ' 
     '   Blank Lines: 81 (12.40%)
-    '     File Size: 25.13 KB
+    '     File Size: 25.14 KB
 
 
     '     Class NetworkGraph

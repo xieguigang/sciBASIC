@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e7b6330c2ee861d1ea82aa464ea506a1, Data\DataFrame\IO\csv\FileLoader.vb"
+﻿#Region "Microsoft.VisualBasic::d3de84ccb54dd919615f98e17a107720, Data\DataFrame\IO\csv\FileLoader.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 139
-    '    Code Lines: 101 (72.66%)
-    ' Comment Lines: 20 (14.39%)
+    '   Total Lines: 141
+    '    Code Lines: 103 (73.05%)
+    ' Comment Lines: 20 (14.18%)
     '    - Xml Docs: 85.00%
     ' 
-    '   Blank Lines: 18 (12.95%)
-    '     File Size: 6.58 KB
+    '   Blank Lines: 18 (12.77%)
+    '     File Size: 6.70 KB
 
 
     '     Module FileLoader

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e484833245be5d9b2428e81b52b15d30, gr\Microsoft.VisualBasic.Imaging\SVG\Geometry\Transform.vb"
+﻿#Region "Microsoft.VisualBasic::aac9d1524e25fd793439ec21f138c997, gr\Microsoft.VisualBasic.Imaging\SVG\Geometry\Transform.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 0.00%
     ' 
     '   Blank Lines: 10 (20.41%)
-    '     File Size: 1.64 KB
+    '     File Size: 1.68 KB
 
 
     '     Class Transform

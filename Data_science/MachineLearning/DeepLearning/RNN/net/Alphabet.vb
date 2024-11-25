@@ -1,56 +1,56 @@
-﻿#Region "Microsoft.VisualBasic::3750329b1404e1098a207e8d39fa46aa, Data_science\MachineLearning\DeepLearning\RNN\net\Alphabet.vb"
+﻿#Region "Microsoft.VisualBasic::62694c6c892892ba8056aa5fd9bde2fc, Data_science\MachineLearning\DeepLearning\RNN\net\Alphabet.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 81
-'    Code Lines: 53 (65.43%)
-' Comment Lines: 12 (14.81%)
-'    - Xml Docs: 0.00%
-' 
-'   Blank Lines: 16 (19.75%)
-'     File Size: 2.32 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-' 	Class Alphabet
-' 
-' 	    Constructor: (+1 Overloads) Sub New
-' 	    Function: charsToIndices, charToIndex, fromString, indexToChar, indicesToChars
-'                size
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 117
+    '    Code Lines: 56 (47.86%)
+    ' Comment Lines: 43 (36.75%)
+    '    - Xml Docs: 90.70%
+    ' 
+    '   Blank Lines: 18 (15.38%)
+    '     File Size: 3.22 KB
+
+
+    ' 	Class Alphabet
+    ' 
+    ' 	    Constructor: (+1 Overloads) Sub New
+    ' 	    Function: charsToIndices, charToIndex, fromString, indexToChar, indicesToChars
+    '                size
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

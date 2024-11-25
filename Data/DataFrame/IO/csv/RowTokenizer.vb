@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8eb0989d666ba70473d36fe6eb3ff578, Data\DataFrame\IO\csv\RowTokenizer.vb"
+﻿#Region "Microsoft.VisualBasic::f6e4af7dfa353d7f8afaf8c39cc198bc, Data\DataFrame\IO\csv\RowTokenizer.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 139
-    '    Code Lines: 93 (66.91%)
-    ' Comment Lines: 17 (12.23%)
-    '    - Xml Docs: 17.65%
+    '   Total Lines: 142
+    '    Code Lines: 93 (65.49%)
+    ' Comment Lines: 20 (14.08%)
+    '    - Xml Docs: 30.00%
     ' 
-    '   Blank Lines: 29 (20.86%)
-    '     File Size: 4.49 KB
+    '   Blank Lines: 29 (20.42%)
+    '     File Size: 4.58 KB
 
 
     '     Class RowTokenizer
