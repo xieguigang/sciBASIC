@@ -64,11 +64,23 @@ Namespace Imaging
     ''' <remarks>http://stackoverflow.com/questions/13356486/convert-hex-color-string-to-rgb-color</remarks>
     Public Module HexColor
 
+        ''' <summary>
+        ''' Parse html color code as rgb color
+        ''' </summary>
+        ''' <param name="HexColor"></param>
+        ''' <returns>
+        ''' this function will returns <see cref="Color.Black"/> if the given html color string is empty.
+        ''' </returns>
         Public Function ConvertToRbg(HexColor As String) As Color
             Dim Red As String
             Dim Green As String
             Dim Blue As String
             HexColor = HexColor.Trim("#"c)
+
+            If HexColor = "" Then
+                Return Color.Black
+            End If
+
             '"&H" &
             Red = i32.GetHexInteger(Mid(HexColor, 1, 2))
             Green = i32.GetHexInteger(Mid(HexColor, 3, 2))
