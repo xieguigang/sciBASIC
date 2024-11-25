@@ -128,7 +128,15 @@ Namespace ComponentModel.StoreProcedure
             Me.labels = labels
         End Sub
 
+        Public Function CheckInvalidNaN() As Boolean
+            Return features.Any(Function(d) d.IsNaNImaginary) OrElse labels.Any(Function(d) d.IsNaNImaginary)
+        End Function
+
         Public Overrides Function ToString() As String
+            If CheckInvalidNaN() Then
+                Return $"*(NaN!) {id}"
+            End If
+
             Return id
         End Function
 
