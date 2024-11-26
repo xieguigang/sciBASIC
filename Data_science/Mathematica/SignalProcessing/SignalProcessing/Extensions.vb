@@ -96,4 +96,45 @@ Public Module Extensions
     Public Function ShannonTransferRate(bandWidth As Double, signal As Double, noise As Double) As Double
         Return bandWidth * std.Log(1 + signal / noise, 2)
     End Function
+
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="analogSignal"></param>
+    ''' <param name="samplingRate"></param>
+    ''' <param name="bitDepth">
+    ''' `bitDepth`在ADC（模数转换）中指的是用于量化模拟信号的位数。它决定了ADC的分辨率，即能够区分不同模拟信号强度的能力。
+    ''' `bitDepth`的取值范围通常取决于特定的应用和所需的精度。
+    ''' 
+    ''' 常见的`bitDepth`取值包括：
+    ''' 
+    ''' - **8位（8-bit）**：提供256个不同的量化级别。这在一些低端或对精度要求不高的应用中使用，例如早期的计算机声卡。
+    ''' - **10位（10-bit）**：提供1024个量化级别。这种精度在消费级和专业音频设备中越来越常见。
+    ''' - **12位（12-bit）**：提供4096个量化级别。常用于医疗设备和一些高端音频设备。
+    ''' - **16位（16-bit）**：提供65536个量化级别。这是CD音频的标准，也被广泛用于专业音频和数字音频工作站。
+    ''' - **24位（24-bit）**：提供16777216个量化级别。这种高精度常用于专业音频录音和制作，因为它提供了更高的动态范围和更低的噪声水平。
+    ''' - **32位（32-bit）**：提供超过43亿个量化级别。这种超高精度通常用于专业音频处理和科学测量。
+    ''' 
+    ''' 在音频应用中，16位和24位是最常见的`bitDepth`设置。更高的`bitDepth`可以提供更好的声音质量和更大的动态范围，
+    ''' 但也意味着更大的数据文件和处理需求。选择合适的`bitDepth`取决于具体的应用场景和所需的音频质量。
+    ''' </param>
+    ''' <returns></returns>
+    Public Iterator Function AnalogDigitConvert(analogSignal As List(Of Single),
+                                                samplingRate As Integer,
+                                                Optional bitDepth As Integer = 8) As IEnumerable(Of Integer)
+        ' 量化级别
+        Dim levels = std.Pow(2, bitDepth)
+        ' 假设模拟信号以固定的时间间隔产生
+        Dim timeInterval = 1.0 / samplingRate
+
+        ' 对模拟信号进行采样和量化
+        For i = 0 To analogSignal.Count - 1 Step timeInterval
+            ' 根据采样率选择采样点
+            Dim sample = analogSignal(CInt(i))
+            ' 量化过程
+            Dim digitalSample = CInt(std.Round(sample * (levels - 1)))
+
+            Yield digitalSample
+        Next
+    End Function
 End Module
