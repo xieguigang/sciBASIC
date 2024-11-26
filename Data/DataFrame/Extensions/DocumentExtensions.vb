@@ -411,6 +411,15 @@ Public Module DocumentExtensions
         Next
     End Function
 
+    ''' <summary>
+    ''' Load csv table from a given file path.
+    ''' </summary>
+    ''' <param name="path$"></param>
+    ''' <param name="encoding"></param>
+    ''' <returns></returns>
+    ''' <remarks>
+    ''' A wrapper function of <see cref="IO.File.Load"/>.
+    ''' </remarks>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
     Public Function LoadCsv(path$, Optional encoding As Encodings = Encodings.ASCII) As IO.File

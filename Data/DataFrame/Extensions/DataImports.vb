@@ -1,54 +1,54 @@
 ﻿#Region "Microsoft.VisualBasic::8f0a88335dd8bfb6e5c7f8cce742ea79, Data\DataFrame\Extensions\DataImports.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 202
-    '    Code Lines: 106 (52.48%)
-    ' Comment Lines: 76 (37.62%)
-    '    - Xml Docs: 90.79%
-    ' 
-    '   Blank Lines: 20 (9.90%)
-    '     File Size: 8.33 KB
+' Summaries:
 
 
-    ' Module DataImports
-    ' 
-    '     Function: (+2 Overloads) [Imports], FixLengthImports, (+3 Overloads) ImportsData, ImportsTsv, (+2 Overloads) RowParsing
-    '               SampleForType
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 202
+'    Code Lines: 106 (52.48%)
+' Comment Lines: 76 (37.62%)
+'    - Xml Docs: 90.79%
+' 
+'   Blank Lines: 20 (9.90%)
+'     File Size: 8.33 KB
+
+
+' Module DataImports
+' 
+'     Function: (+2 Overloads) [Imports], FixLengthImports, (+3 Overloads) ImportsData, ImportsTsv, (+2 Overloads) RowParsing
+'               SampleForType
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -61,6 +61,7 @@ Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Scripting.MetaData
+Imports Microsoft.VisualBasic.Text
 Imports ASCII = Microsoft.VisualBasic.Text.ASCII
 Imports csvFile = Microsoft.VisualBasic.Data.csv.IO.File
 
@@ -80,6 +81,15 @@ Public Module DataImports
     ''' </summary>
     ''' <remarks></remarks>
     Public Const SplitRegxExpression As String = "[" & vbTab & "{0}](?=(?:[^""]|""[^""]*"")*$)"
+
+    ''' <summary>
+    ''' Parse the csv table file
+    ''' </summary>
+    ''' <param name="file"></param>
+    ''' <returns></returns>
+    Public Function ReadCsv(file As String, Optional encoding As Encodings = Encodings.UTF8) As File
+        Return file.LoadCsv(encoding)
+    End Function
 
     ''' <summary>
     ''' Imports the data in a well formatted text file using a specific delimiter, default delimiter is comma character.

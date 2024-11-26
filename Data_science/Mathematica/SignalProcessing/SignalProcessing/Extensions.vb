@@ -77,6 +77,12 @@ Public Module Extensions
         Return 10 * std.Log10(If(noise <= 0.0, Double.MaxValue, signal / noise))
     End Function
 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    <Extension>
+    Public Function GetNoise(signalPower As Double, snrDb As Double) As Double
+        Return signalPower / std.Pow(10, snrDb / 10)
+    End Function
+
     ''' <summary>
     ''' ### 香农公式
     ''' 

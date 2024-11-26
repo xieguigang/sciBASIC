@@ -77,6 +77,25 @@ Namespace IO
             Return csv.Headers.TypeOf(types)
         End Function
 
+        <Extension>
+        Public Function HeaderMatchScore(type As Type, headers As Index(Of String)) As (hits As Integer, total As Integer)
+            Dim schema As SchemaProvider = SchemaProvider.CreateObjectInternal(type)
+            Dim allNames$() = schema.Properties _
+                .Select(Function(pi)
+                            ' 20241126
+                            ' get mapping field name or the property name
+                            ' if the mapping file attribute tag is missing
+                            Return pi.Name
+                        End Function) _
+                .ToArray
+            Dim matches = Aggregate p As String
+                In allNames
+                Where headers.IndexOf(p) > -1
+                Into Count
+
+            Return (matches, allNames.Length)
+        End Function
+
         ''' <summary>
         ''' 根据文件的头部的定义，从<paramref name="types"/>之中选取得到最合适的类型的定义
         ''' </summary>
@@ -90,16 +109,10 @@ Namespace IO
             Dim scores As New List(Of (Type, Integer, Integer))
             Dim headers As New Index(Of String)(header)
 
-            For Each schema As SchemaProvider In types.Select(AddressOf SchemaProvider.CreateObjectInternal)
-                Dim allNames$() = schema.Properties _
-                    .Select(Function(x) x.Name) _
-                    .ToArray
-                Dim matches = Aggregate p As String
-                              In allNames
-                              Where headers.IndexOf(p) > -1
-                              Into Count
-
-                scores += (schema.DeclaringType, matches, allNames.Length)
+            For Each schema As Type In types
+                With schema.HeaderMatchScore(headers)
+                    scores += (schema.DeclaringType, .hits, .total)
+                End With
             Next
 
             Dim desc = From score As (type As Type, score%, allNames%)

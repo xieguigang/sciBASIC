@@ -103,8 +103,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Data_science\Mathematica\Math\DataFrame\dataframeUtils-netcore5.vbproj" />
-    <ProjectReference Include="..\..\Data_science\Mathematica\Math\Math.Statistics\stats-netcore5.vbproj" />
-    <ProjectReference Include="..\..\Data_science\Mathematica\Math\Math\Math.NET5.vbproj" />
     <ProjectReference Include="..\..\Microsoft.VisualBasic.Core\src\Core.vbproj" />
     <ProjectReference Include="..\DataFrame\dataframework-netcore5.vbproj" />
   </ItemGroup>

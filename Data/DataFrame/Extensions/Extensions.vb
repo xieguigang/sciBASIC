@@ -426,7 +426,7 @@ Public Module Extensions
     End Function
 
     ''' <summary>
-    ''' Convert the csv data file to a type specific collection.(将目标Csv文件转换为特定类型的集合数据)
+    ''' Convert the csv data file to a type specific collection.
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
     ''' <param name="dataSet"></param>
@@ -435,7 +435,9 @@ Public Module Extensions
     ''' <see cref="Column"/> attribute, then this property will be ignored.
     ''' </param>
     ''' <returns></returns>
-    ''' <remarks></remarks>
+    ''' <remarks>
+    ''' (将目标Csv文件转换为特定类型的集合数据)
+    ''' </remarks>
     <Extension>
     Public Function AsDataSource(Of T As Class)(dataSet As File_csv,
                                                 Optional strict As Boolean = False,

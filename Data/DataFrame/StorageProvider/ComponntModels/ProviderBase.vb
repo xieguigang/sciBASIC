@@ -91,9 +91,11 @@ Namespace StorageProvider.ComponentModels
         ''' If the target property didn't provides the column name by 
         ''' using custom attribute, then this property will returns 
         ''' the Class propertyName from <see cref="PropertyInfo"/>.
-        ''' (假若目标属性之中没有提供名称的话，则会使用属性名称来代替)
         ''' </summary>
         ''' <returns></returns>
+        ''' <remarks>
+        ''' (假若目标属性之中没有提供名称的话，则会使用属性名称来代替)
+        ''' </remarks>
         Public MustOverride ReadOnly Property Name As String
 
         ''' <summary>

@@ -95,6 +95,7 @@
   <ItemGroup>
     <Compile Include="Module1.vb" />
     <Compile Include="fileParser2.vb" />
+    <Compile Include="Module2.vb" />
     <Compile Include="Outlining\Class1.vb" />
     <Compile Include="Outlining\OutliningTest.vb" />
     <Compile Include="parserTest.vb" />

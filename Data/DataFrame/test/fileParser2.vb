@@ -57,9 +57,18 @@ Module fileParser2
 
     Sub Main()
 
+        Call HeaderTest()
+
         ' Call multipleLineRowtest1()
 
         Dim df As DataFrame = DataFrame.Load("E:\GCModeller\src\runtime\sciBASIC#\Data\DataFrame\test\Food.csv", simpleRowIterators:=False)
+
+        Pause()
+    End Sub
+
+    Sub HeaderTest()
+        Dim headers As String() = {"uid", "time", "url", "ip", "ua"}
+        Dim score = GetType(Visitor).HeaderMatchScore(headers)
 
         Pause()
     End Sub

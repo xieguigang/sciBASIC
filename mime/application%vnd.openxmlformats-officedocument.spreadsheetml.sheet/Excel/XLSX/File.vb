@@ -67,17 +67,12 @@ Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Data.csv
 Imports Microsoft.VisualBasic.Emit.Delegates
-Imports Microsoft.VisualBasic.Language
-Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.MIME.Office.Excel.XLSX.FileIO
-Imports Microsoft.VisualBasic.MIME.Office.Excel.XLSX.Model
 Imports Microsoft.VisualBasic.MIME.Office.Excel.XLSX.Model.Directory
-Imports Microsoft.VisualBasic.MIME.Office.Excel.XLSX.XML.xl.worksheets
 Imports Microsoft.VisualBasic.Net.Protocols.ContentTypes
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Microsoft.VisualBasic.Text.Xml.OpenXml
 Imports csv = Microsoft.VisualBasic.Data.csv.IO.File
-Imports OpenXML = Microsoft.VisualBasic.MIME.Office.Excel.XLSX.Model.Xmlns
 
 Namespace XLSX
 
@@ -256,6 +251,11 @@ Namespace XLSX
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function LoadDataSet(Of T As Class)(sheetName$) As T()
             Return GetTable(sheetName).AsDataSource(Of T)
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function LoadDataSet(Of T As Class)(sheetIndex As Integer) As T()
+            Return GetTable(sheetIndex).AsDataSource(Of T)
         End Function
 
         Public Shared Function CreatePackage(tmp$, xlsx$, Optional throwEx As Boolean = True) As Boolean
