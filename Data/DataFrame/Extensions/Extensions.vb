@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8e98bba89be85880f81ae89cf45f359b, Data\DataFrame\Extensions\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::174fcfe4f7e06ba6412018cd750a5ecb, Data\DataFrame\Extensions\Extensions.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 664
-    '    Code Lines: 380 (57.23%)
-    ' Comment Lines: 210 (31.63%)
-    '    - Xml Docs: 92.86%
+    '   Total Lines: 666
+    '    Code Lines: 380 (57.06%)
+    ' Comment Lines: 212 (31.83%)
+    '    - Xml Docs: 92.92%
     ' 
-    '   Blank Lines: 74 (11.14%)
-    '     File Size: 28.68 KB
+    '   Blank Lines: 74 (11.11%)
+    '     File Size: 28.70 KB
 
 
     ' Module Extensions

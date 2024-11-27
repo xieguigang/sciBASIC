@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::36da934bbda1b48ede6449b2ad934893, mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\XLSX\File.vb"
+﻿#Region "Microsoft.VisualBasic::951fce6822f6e4402ade340effec60d1, mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\XLSX\File.vb"
 
     ' Author:
     ' 
@@ -35,12 +35,12 @@
     ' Code Statistics:
 
     '   Total Lines: 264
-    '    Code Lines: 137 (51.89%)
+    '    Code Lines: 136 (51.52%)
     ' Comment Lines: 99 (37.50%)
     '    - Xml Docs: 78.79%
     ' 
-    '   Blank Lines: 28 (10.61%)
-    '     File Size: 11.60 KB
+    '   Blank Lines: 29 (10.98%)
+    '     File Size: 11.53 KB
 
 
     '     Class File
@@ -50,7 +50,7 @@
     ' 
     '         Constructor: (+1 Overloads) Sub New
     ' 
-    '         Function: _name, CreatePackage, (+2 Overloads) GetTable, GetWorksheet, LoadDataSet
+    '         Function: _name, CreatePackage, (+2 Overloads) GetTable, GetWorksheet, (+2 Overloads) LoadDataSet
     '                   Open, SheetNames, ToString
     ' 
     '         Sub: _loadContents, (+2 Overloads) Dispose

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a06a5da185ef0987fa017d7c81fa2d73, Data_science\Graph\SparseGraph.vb"
+﻿#Region "Microsoft.VisualBasic::12cfb6b501e595dfa78400a8c4c3e472, Data_science\Graph\SparseGraph.vb"
 
     ' Author:
     ' 
@@ -214,4 +214,3 @@ Public Class SparseGraph : Implements ISparseGraph
         Return graph
     End Function
 End Class
-

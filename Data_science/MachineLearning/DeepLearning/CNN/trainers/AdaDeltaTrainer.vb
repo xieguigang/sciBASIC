@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::002752e9432384c651c3c6094b682d46, Data_science\MachineLearning\DeepLearning\CNN\trainers\AdaDeltaTrainer.vb"
+﻿#Region "Microsoft.VisualBasic::e067d87b3df19554779d5dad60adbf21, Data_science\MachineLearning\DeepLearning\CNN\trainers\AdaDeltaTrainer.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 45
-    '    Code Lines: 29 (64.44%)
-    ' Comment Lines: 6 (13.33%)
+    '   Total Lines: 46
+    '    Code Lines: 30 (65.22%)
+    ' Comment Lines: 6 (13.04%)
     '    - Xml Docs: 66.67%
     ' 
-    '   Blank Lines: 10 (22.22%)
-    '     File Size: 1.53 KB
+    '   Blank Lines: 10 (21.74%)
+    '     File Size: 1.57 KB
 
 
     '     Class AdaDeltaTrainer

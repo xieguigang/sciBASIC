@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0ad9df1e19fb35d691775c9b7b633ea7, Microsoft.VisualBasic.Core\src\Extensions\Reflection\Delegate\DataObjectVector.vb"
+﻿#Region "Microsoft.VisualBasic::88dd0df29d3f5016d093fbc5205678d5, Microsoft.VisualBasic.Core\src\Extensions\Reflection\Delegate\DataObjectVector.vb"
 
     ' Author:
     ' 
@@ -34,12 +34,12 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 158
-    '    Code Lines: 103 (65.19%)
-    ' Comment Lines: 25 (15.82%)
+    '   Total Lines: 157
+    '    Code Lines: 103 (65.61%)
+    ' Comment Lines: 25 (15.92%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 30 (18.99%)
+    '   Blank Lines: 29 (18.47%)
     '     File Size: 5.75 KB
 
 
@@ -57,7 +57,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 Imports System.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel

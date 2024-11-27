@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::17e3497f6e822a1f5c19837849e462d1, Data_science\MachineLearning\DeepLearning\CNN\Layers\LocalResponseNormalizationLayer.vb"
+﻿#Region "Microsoft.VisualBasic::2459b5600d43843829f347eeafd2575f, Data_science\MachineLearning\DeepLearning\CNN\Layers\LocalResponseNormalizationLayer.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 46.43%
     ' 
     '   Blank Lines: 23 (17.42%)
-    '     File Size: 5.04 KB
+    '     File Size: 5.06 KB
 
 
     '     Class LocalResponseNormalizationLayer

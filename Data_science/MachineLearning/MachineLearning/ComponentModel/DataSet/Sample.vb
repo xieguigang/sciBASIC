@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7cc9db040afae0837c3a9cf7c43dec67, Data_science\MachineLearning\MachineLearning\ComponentModel\DataSet\Sample.vb"
+﻿#Region "Microsoft.VisualBasic::bf95312ef4daf1cb10a7e7560f540dc7, Data_science\MachineLearning\MachineLearning\ComponentModel\DataSet\Sample.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 270
-    '    Code Lines: 171 (63.33%)
-    ' Comment Lines: 60 (22.22%)
+    '   Total Lines: 278
+    '    Code Lines: 177 (63.67%)
+    ' Comment Lines: 60 (21.58%)
     '    - Xml Docs: 95.00%
     ' 
-    '   Blank Lines: 39 (14.44%)
-    '     File Size: 10.05 KB
+    '   Blank Lines: 41 (14.75%)
+    '     File Size: 10.34 KB
 
 
     '     Class SampleData
@@ -49,7 +49,7 @@
     ' 
     '         Constructor: (+5 Overloads) Sub New
     ' 
-    '         Function: CreateDataSet, Load, ToString, TransformDataset
+    '         Function: CheckInvalidNaN, CreateDataSet, Load, ToString, TransformDataset
     ' 
     '         Sub: Save
     ' 

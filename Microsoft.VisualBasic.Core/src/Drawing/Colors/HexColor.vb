@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5cd9430d658431c8d0ed76605c87dd77, Microsoft.VisualBasic.Core\src\Drawing\Colors\HexColor.vb"
+﻿#Region "Microsoft.VisualBasic::89dedd65d4534b863c4b58000c10f761, Microsoft.VisualBasic.Core\src\Drawing\Colors\HexColor.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 66
-    '    Code Lines: 50 (75.76%)
-    ' Comment Lines: 10 (15.15%)
-    '    - Xml Docs: 80.00%
+    '   Total Lines: 79
+    '    Code Lines: 54 (68.35%)
+    ' Comment Lines: 17 (21.52%)
+    '    - Xml Docs: 88.24%
     ' 
-    '   Blank Lines: 6 (9.09%)
-    '     File Size: 2.90 KB
+    '   Blank Lines: 8 (10.13%)
+    '     File Size: 3.40 KB
 
 
     '     Module HexColor

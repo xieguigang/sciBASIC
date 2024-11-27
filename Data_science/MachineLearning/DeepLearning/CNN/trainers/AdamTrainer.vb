@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::80d72199a5b983abbe2c16f7c0b397b1, Data_science\MachineLearning\DeepLearning\CNN\trainers\AdamTrainer.vb"
+﻿#Region "Microsoft.VisualBasic::9315edb46629db5567ea7898a444e5d4, Data_science\MachineLearning\DeepLearning\CNN\trainers\AdamTrainer.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 83.33%
     ' 
     '   Blank Lines: 9 (19.15%)
-    '     File Size: 1.96 KB
+    '     File Size: 1.98 KB
 
 
     '     Class AdamTrainer

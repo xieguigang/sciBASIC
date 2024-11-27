@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fb0e61acedf717e2ea22d60533ae22f9, Data_science\MachineLearning\DeepLearning\CNN\Layers\RectifiedLinearUnitsLayer.vb"
+﻿#Region "Microsoft.VisualBasic::224066dfe29f0b7a75aef751f7affed3, Data_science\MachineLearning\DeepLearning\CNN\Layers\RectifiedLinearUnitsLayer.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 75
-    '    Code Lines: 47 (62.67%)
-    ' Comment Lines: 13 (17.33%)
+    '   Total Lines: 74
+    '    Code Lines: 46 (62.16%)
+    ' Comment Lines: 13 (17.57%)
     '    - Xml Docs: 76.92%
     ' 
-    '   Blank Lines: 15 (20.00%)
-    '     File Size: 2.43 KB
+    '   Blank Lines: 15 (20.27%)
+    '     File Size: 2.37 KB
 
 
     '     Class RectifiedLinearUnitsLayer

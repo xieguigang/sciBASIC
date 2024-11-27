@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1a8c2b057969a8e15660d8bed2679273, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Colors\Designer.vb"
+﻿#Region "Microsoft.VisualBasic::2aed1e897a7220182959666898b093fd, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Colors\Designer.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 600
-    '    Code Lines: 305 (50.83%)
-    ' Comment Lines: 233 (38.83%)
-    '    - Xml Docs: 87.55%
+    '   Total Lines: 620
+    '    Code Lines: 315 (50.81%)
+    ' Comment Lines: 240 (38.71%)
+    '    - Xml Docs: 87.92%
     ' 
-    '   Blank Lines: 62 (10.33%)
-    '     File Size: 33.13 KB
+    '   Blank Lines: 65 (10.48%)
+    '     File Size: 33.95 KB
 
 
     '     Module Designer
@@ -50,11 +50,15 @@
     ' 
     '         Constructor: (+1 Overloads) Sub New
     ' 
-    '         Function: Colors, ConsoleColor, CubicSpline, FromConsoleColor, FromNames
-    '                   FromSchema, GetBrushes, (+2 Overloads) GetColors, getColorsInternal, internalFills
-    '                   IsColorNameList, ParseAvailableInterpolates, ParseColorBrewer, rangeConstraint, SplitColorList
+    '         Function: ConsoleColor, FromConsoleColor, GetColors, getColorsInternal, IsColorNameList
+    '                   ParseAvailableInterpolates, ParseColorBrewer, SplitColorList
     ' 
-    '         Sub: Register
+    '         Sub: (+2 Overloads) Register
+    '         Delegate Function
+    ' 
+    '             Function: Colors, CubicSpline, FromNames, FromSchema, GetBrushes
+    '                       GetColors, internalFills, rangeConstraint
+    ' 
     ' 
     ' 
     ' /********************************************************************************/

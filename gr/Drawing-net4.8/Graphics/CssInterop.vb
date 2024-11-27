@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::77bd46fafe45be6c2e89a3935aea554e, gr\Drawing-net4.8\Graphics\CssInterop.vb"
+﻿#Region "Microsoft.VisualBasic::bfe700e3b1e521730cf8383772e64890, gr\Drawing-net4.8\Graphics\CssInterop.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 2 (11.76%)
-    '     File Size: 462 B
+    '     File Size: 460 B
 
 
     ' Module CssInterop
@@ -68,4 +68,3 @@ Public Module CssInterop
         }
     End Function
 End Module
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::22b72710f2f0227e73f45902ebd0861c, Data_science\MachineLearning\DeepLearning\CNN\trainers\WindowGradTrainer.vb"
+﻿#Region "Microsoft.VisualBasic::d38839fd0208e8f563ba3fd1e4af4568, Data_science\MachineLearning\DeepLearning\CNN\trainers\WindowGradTrainer.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 34
-    '    Code Lines: 16 (47.06%)
-    ' Comment Lines: 10 (29.41%)
+    '   Total Lines: 36
+    '    Code Lines: 18 (50.00%)
+    ' Comment Lines: 10 (27.78%)
     '    - Xml Docs: 60.00%
     ' 
-    '   Blank Lines: 8 (23.53%)
-    '     File Size: 1.31 KB
+    '   Blank Lines: 8 (22.22%)
+    '     File Size: 1.37 KB
 
 
     '     Class WindowGradTrainer

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0aa71dd16cf578e4fb5bd4af59243c89, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Colors\Expression.vb"
+﻿#Region "Microsoft.VisualBasic::2e3bf5f58e5b11db07d1f3d6441a5f85, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Colors\Expression.vb"
 
     ' Author:
     ' 
@@ -34,19 +34,19 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 126
-    '    Code Lines: 94 (74.60%)
-    ' Comment Lines: 11 (8.73%)
+    '   Total Lines: 130
+    '    Code Lines: 97 (74.62%)
+    ' Comment Lines: 11 (8.46%)
     '    - Xml Docs: 90.91%
     ' 
-    '   Blank Lines: 21 (16.67%)
-    '     File Size: 4.19 KB
+    '   Blank Lines: 22 (16.92%)
+    '     File Size: 4.30 KB
 
 
     '     Structure DesignerExpression
     ' 
     '         Constructor: (+1 Overloads) Sub New
-    '         Function: ToString
+    '         Function: ParseInternalApi, ToString
     '         Delegate Function
     ' 
     '             Function: alpha, darker, lighter, Modify, reverse

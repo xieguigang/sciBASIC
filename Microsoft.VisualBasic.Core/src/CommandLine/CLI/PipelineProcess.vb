@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::df5ebe560b34e957712aad4a63808e18, Microsoft.VisualBasic.Core\src\CommandLine\CLI\PipelineProcess.vb"
+﻿#Region "Microsoft.VisualBasic::5b605ea37e6dcf9d5dd67bd510232f56, Microsoft.VisualBasic.Core\src\CommandLine\CLI\PipelineProcess.vb"
 
     ' Author:
     ' 
@@ -34,19 +34,19 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 318
-    '    Code Lines: 173 (54.40%)
-    ' Comment Lines: 99 (31.13%)
-    '    - Xml Docs: 87.88%
+    '   Total Lines: 338
+    '    Code Lines: 182 (53.85%)
+    ' Comment Lines: 107 (31.66%)
+    '    - Xml Docs: 86.92%
     ' 
-    '   Blank Lines: 46 (14.47%)
-    '     File Size: 12.40 KB
+    '   Blank Lines: 49 (14.50%)
+    '     File Size: 13.08 KB
 
 
     '     Module PipelineProcess
     ' 
-    '         Function: (+2 Overloads) [Call], CallDotNetCorePipeline, CreatePipeline, (+2 Overloads) ExecSub, FindProc
-    '                   (+2 Overloads) GetProc, handleRunStream
+    '         Function: (+2 Overloads) [Call], CallDotNetCorePipeline, CheckProcessStreamOpen, CreatePipeline, (+2 Overloads) ExecSub
+    '                   FindProc, (+2 Overloads) GetProc, handleRunStream
     ' 
     ' 
     ' /********************************************************************************/

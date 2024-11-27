@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b9c28bf704e1c89dd504d2fb1e6a8420, Data\DataFrame\IO\csv\StreamIO.vb"
+﻿#Region "Microsoft.VisualBasic::337eca8c2bc7e66840fb985fe270022d, Data\DataFrame\IO\csv\StreamIO.vb"
 
     ' Author:
     ' 
@@ -34,18 +34,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 126
-    '    Code Lines: 77 (61.11%)
-    ' Comment Lines: 32 (25.40%)
-    '    - Xml Docs: 78.12%
+    '   Total Lines: 139
+    '    Code Lines: 86 (61.87%)
+    ' Comment Lines: 35 (25.18%)
+    '    - Xml Docs: 71.43%
     ' 
-    '   Blank Lines: 17 (13.49%)
-    '     File Size: 5.36 KB
+    '   Blank Lines: 18 (12.95%)
+    '     File Size: 5.88 KB
 
 
     '     Module StreamIO
     ' 
-    '         Function: (+2 Overloads) [TypeOf], (+2 Overloads) SaveDataFrame
+    '         Function: (+2 Overloads) [TypeOf], HeaderMatchScore, (+2 Overloads) SaveDataFrame
     ' 
     ' 
     ' /********************************************************************************/

@@ -1,55 +1,55 @@
-﻿#Region "Microsoft.VisualBasic::f17af4f5e6c17eb7842f13a607157478, Microsoft.VisualBasic.Core\src\Serialization\BEncoding\BencodingExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::58c5c8fca2e2830ae7d51266a5192f3b, Microsoft.VisualBasic.Core\src\Serialization\BEncoding\BencodingExtensions.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 157
-'    Code Lines: 88 (56.05%)
-' Comment Lines: 48 (30.57%)
-'    - Xml Docs: 85.42%
-' 
-'   Blank Lines: 21 (13.38%)
-'     File Size: 6.31 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Module BencodingExtensions
-' 
-'         Function: BDecode, encodeList, encodeObject, encodePrimitive, theSameObject
-'                   ToBEncode, ToBEncodeString, ToList
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 190
+    '    Code Lines: 88 (46.32%)
+    ' Comment Lines: 73 (38.42%)
+    '    - Xml Docs: 56.16%
+    ' 
+    '   Blank Lines: 29 (15.26%)
+    '     File Size: 7.81 KB
+
+
+    '     Module BencodingExtensions
+    ' 
+    '         Function: BDecode, encodeList, encodeObject, encodePrimitive, theSameObject
+    '                   ToBEncode, ToBEncodeString, ToList
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 
