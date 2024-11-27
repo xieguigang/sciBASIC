@@ -82,33 +82,37 @@ Namespace Drawing2D.Colors
 
         Sub New(exp$)
             If exp.IsPattern(FunctionPattern) Then
-                With exp.GetTagValue("(", trim:=True)
-                    Dim api$ = .Name
-                    Dim arg$ = Nothing
-
-                    With .Value _
-                        .Trim(")"c) _
-                        .GetTagValue(",", trim:=True)
-
-                        Term = .Name.Trim
-
-                        If Term.StringEmpty Then
-                            ' 只有一个参数
-                            Term = .Value
-                        Else
-                            arg = .Value
-                        End If
-                    End With
-
-                    Me.API = New NamedValue(Of String) With {
-                        .Name = api,
-                        .Value = arg
-                    }
-                End With
+                API = ParseInternalApi(exp, Term)
             Else
                 Term = exp
             End If
         End Sub
+
+        Private Shared Function ParseInternalApi(exp As String, ByRef term As String) As NamedValue(Of String)
+            With exp.GetTagValue("(", trim:=True)
+                Dim api$ = .Name
+                Dim arg$ = Nothing
+
+                With .Value _
+                    .Trim(")"c) _
+                    .GetTagValue(",", trim:=True)
+
+                    term = .Name.Trim
+
+                    If term.StringEmpty Then
+                        ' 只有一个参数
+                        term = .Value
+                    Else
+                        arg = .Value
+                    End If
+                End With
+
+                Return New NamedValue(Of String) With {
+                    .Name = api,
+                    .Value = arg
+                }
+            End With
+        End Function
 
         Public Overrides Function ToString() As String
             If API.IsEmpty Then
