@@ -262,8 +262,8 @@ Namespace Drawing2D.Colors
                     .LoadJSON(Of Dictionary(Of String, String()))
             Dim valids As New Dictionary(Of Color, Color())
 
-            For Each x As KeyValuePair(Of String, String()) In colors
-                valids(ColorTranslator.FromHtml(x.Key)) = x.Value _
+            For Each ci As KeyValuePair(Of String, String()) In colors
+                valids(ColorTranslator.FromHtml(ci.Key)) = ci.Value _
                     .Select(AddressOf ColorTranslator.FromHtml) _
                     .ToArray
             Next
@@ -398,6 +398,9 @@ Namespace Drawing2D.Colors
             End If
         End Function
 
+        ''' <summary>
+        ''' registry for external color palette
+        ''' </summary>
         ReadOnly colorRegistry As New Dictionary(Of String, Color())
 
         ''' <summary>
@@ -408,6 +411,16 @@ Namespace Drawing2D.Colors
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Sub Register(colorName As String, ParamArray colors As Color())
             colorRegistry(colorName) = colors
+        End Sub
+
+        Dim external As TryGetExternalColorPalette
+
+        ''' <summary>
+        ''' register an external custom color palette function
+        ''' </summary>
+        ''' <param name="external"></param>
+        Public Sub Register(external As TryGetExternalColorPalette)
+            Designer.external = external
         End Sub
 
         ''' <summary>
@@ -474,13 +487,20 @@ Namespace Drawing2D.Colors
                     ElseIf colorRegistry.ContainsKey(term) Then
                         Return colorRegistry(term)
                     Else
-                        Call $"unknown color set name: '{term}', returns the paper schema by default.".Warning
+                        Dim tryExternal As Color() = If(external Is Nothing, Nothing, external(term))
 
-                        ' returns the default color set
-                        Return CustomDesigns.Paper
+                        If tryExternal.IsNullOrEmpty Then
+                            Call $"unknown color set name: '{term}', returns the paper schema by default.".Warning
+                            ' returns the default color set
+                            Return CustomDesigns.Paper
+                        Else
+                            Return tryExternal
+                        End If
                     End If
             End Select
         End Function
+
+        Public Delegate Function TryGetExternalColorPalette(term As String) As Color()
 
         ''' <summary>
         ''' 这个函数是获取得到一个连续的颜色谱
