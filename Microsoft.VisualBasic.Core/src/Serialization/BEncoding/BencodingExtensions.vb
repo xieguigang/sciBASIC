@@ -1,55 +1,55 @@
 ﻿#Region "Microsoft.VisualBasic::f17af4f5e6c17eb7842f13a607157478, Microsoft.VisualBasic.Core\src\Serialization\BEncoding\BencodingExtensions.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 157
-    '    Code Lines: 88 (56.05%)
-    ' Comment Lines: 48 (30.57%)
-    '    - Xml Docs: 85.42%
-    ' 
-    '   Blank Lines: 21 (13.38%)
-    '     File Size: 6.31 KB
+' Summaries:
 
 
-    '     Module BencodingExtensions
-    ' 
-    '         Function: BDecode, encodeList, encodeObject, encodePrimitive, theSameObject
-    '                   ToBEncode, ToBEncodeString, ToList
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 157
+'    Code Lines: 88 (56.05%)
+' Comment Lines: 48 (30.57%)
+'    - Xml Docs: 85.42%
+' 
+'   Blank Lines: 21 (13.38%)
+'     File Size: 6.31 KB
+
+
+'     Module BencodingExtensions
+' 
+'         Function: BDecode, encodeList, encodeObject, encodePrimitive, theSameObject
+'                   ToBEncode, ToBEncodeString, ToList
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -136,6 +136,39 @@ Namespace Serialization.Bencoding
         <Extension>
         Public Function ToBEncode(obj As Object, Optional digest As Func(Of Object, Object) = Nothing) As BElement
             Dim type As Type
+
+            ' 20241127
+            ' null is not supported inside bencode
+            '
+            ' Bencode is a data serialization format used by the BitTorrent peer-to-peer file sharing protocol.
+            ' It is designed to encode structured data, including dictionaries, lists, integers, and strings.
+            ' However, bencode does not have a concept of a "null" value like some other serialization formats
+            ' (e.g., JSON has `null`).
+
+            ' In bencode, if you need to represent the absence of a value, you typically use an empty string (`""`)
+            ' or simply omit the key from a dictionary. There is no standard representation of a null value in
+            ' bencode. If you attempt to encode a null value using a bencode library, it might result in an
+            ' error or an empty string, depending on how the library is implemented.
+
+            ' For example, in a bencoded dictionary, you might have:
+            ' ```
+            ' d3:foo4:bar4:spamede
+            ' ```
+
+            ' Here, "foo" and "spam" are keys with associated values "bar" and an empty string, respectively.
+            ' If you wanted to represent "null" for "spam", you could either omit it:
+
+            ' ```
+            ' d3:fooe
+            ' ```
+
+            ' Or use an empty string:
+
+            ' ```
+            ' d3:foo4:bar4:spam0:e
+            ' ```
+
+            ' In both cases, "spam" would effectively be "null" or absent.
 
             digest = If(digest, theSampleObjectDigest.DefaultValue)
             obj = digest(obj)

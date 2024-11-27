@@ -181,7 +181,7 @@ Namespace CommandLine
             End If
 
             If Not async Then
-                While App.Running AndAlso Not reader.EndOfStream
+                While CheckProcessStreamOpen(p, reader)
                     Call onReadLine(reader.ReadLine)
                 End While
 
@@ -189,13 +189,33 @@ Namespace CommandLine
             Else
                 Call Task.Run(
                     Sub()
-                        While App.Running AndAlso Not reader.EndOfStream
+                        While CheckProcessStreamOpen(p, reader)
                             Call onReadLine(reader.ReadLine)
                         End While
                     End Sub)
 
                 Return Nothing
             End If
+        End Function
+
+        ''' <summary>
+        ''' A common wrapper for check of the sub-process stdout stream is avaiable?
+        ''' </summary>
+        ''' <param name="p"></param>
+        ''' <param name="reader"></param>
+        ''' <returns></returns>
+        Public Function CheckProcessStreamOpen(ByRef p As Process, ByRef reader As StreamReader) As Boolean
+            ' current program has flag exited
+            ' the loop thread should break for exit 
+            If Not App.Running Then
+                Return False
+            End If
+
+            If reader.EndOfStream Then
+                Return False
+            End If
+
+            Return Not p.HasExited
         End Function
 
         ''' <summary>
