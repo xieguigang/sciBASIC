@@ -1,68 +1,68 @@
-﻿#Region "Microsoft.VisualBasic::d45de3d760e45f1184097fe7a3577f2c, mime\text%html\CSS\Elements\Padding.vb"
+﻿#Region "Microsoft.VisualBasic::c3ead70707eaeceeab390be78659c0a9, mime\text%html\CSS\Elements\Padding.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 388
-'    Code Lines: 233 (60.05%)
-' Comment Lines: 108 (27.84%)
-'    - Xml Docs: 98.15%
-' 
-'   Blank Lines: 47 (12.11%)
-'     File Size: 15.11 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Structure PaddingLayout
-' 
-'         Properties: LayoutVector
-' 
-'         Constructor: (+1 Overloads) Sub New
-'         Function: EvaluateFromCSS, ToString
-'         Operators: -, +
-' 
-'     Structure Padding
-' 
-'         Properties: Bottom, IsEmpty, Left, Right, Top
-'                     Zero
-' 
-'         Constructor: (+7 Overloads) Sub New
-'         Function: Equals, GetCanvasRegion, Horizontal, LayoutVector, Offset2D
-'                   ToString, TryParse, Vertical
-'         Operators: <>, =
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 400
+    '    Code Lines: 243 (60.75%)
+    ' Comment Lines: 108 (27.00%)
+    '    - Xml Docs: 98.15%
+    ' 
+    '   Blank Lines: 49 (12.25%)
+    '     File Size: 15.41 KB
+
+
+    '     Structure PaddingLayout
+    ' 
+    '         Properties: Horizontal, LayoutVector, Vertical
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    '         Function: EvaluateFromCSS, ToString
+    '         Operators: -, +
+    ' 
+    '     Structure Padding
+    ' 
+    '         Properties: Bottom, IsEmpty, Left, Right, Top
+    '                     Zero
+    ' 
+    '         Constructor: (+7 Overloads) Sub New
+    '         Function: Equals, GetCanvasRegion, Horizontal, LayoutVector, Offset2D
+    '                   ToString, TryParse, Vertical
+    '         Operators: <>, =
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

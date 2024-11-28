@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fa4d2b2994d69ac9b5626dbe630effba, Data\DataFrame\test\Module2.vb"
+﻿#Region "Microsoft.VisualBasic::91c17b9f71c63f0f9ae8cde2ad9192bc, Data\DataFrame\test\Module2.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 0.00%
     ' 
     '   Blank Lines: 1 (33.33%)
-    '     File Size: 30 B
+    '     File Size: 28 B
 
 
     ' Module Module2
@@ -54,4 +54,3 @@
 Module Module2
 
 End Module
-
