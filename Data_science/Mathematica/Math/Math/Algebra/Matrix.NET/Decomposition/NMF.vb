@@ -1,58 +1,58 @@
 ﻿#Region "Microsoft.VisualBasic::955f9ab6e90ad7de08334758cec3effb, Data_science\Mathematica\Math\Math\Algebra\Matrix.NET\Decomposition\NMF.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 128
-    '    Code Lines: 68 (53.12%)
-    ' Comment Lines: 41 (32.03%)
-    '    - Xml Docs: 85.37%
-    ' 
-    '   Blank Lines: 19 (14.84%)
-    '     File Size: 5.90 KB
+' Summaries:
 
 
-    '     Class NMF
-    ' 
-    '         Properties: cost, errors, H, W
-    ' 
-    '         Function: Factorisation
-    ' 
-    '         Sub: Factorisation
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 128
+'    Code Lines: 68 (53.12%)
+' Comment Lines: 41 (32.03%)
+'    - Xml Docs: 85.37%
+' 
+'   Blank Lines: 19 (14.84%)
+'     File Size: 5.90 KB
+
+
+'     Class NMF
+' 
+'         Properties: cost, errors, H, W
+' 
+'         Function: Factorisation
+' 
+'         Sub: Factorisation
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -100,6 +100,27 @@ Namespace LinearAlgebra.Matrix
         Public Property H As NumericMatrix
         Public Property cost As Double
         Public Property errors As Double()
+        Public Property rank As Integer
+
+        Public Iterator Function Decompose(raw As NumericMatrix) As IEnumerable(Of NumericMatrix)
+            Dim width As Integer = raw.ColumnDimension
+
+            For i As Integer = 0 To rank - 1
+                Dim factor As Vector = H(i)
+                Dim decomposer As New List(Of Double())
+                Dim sum As Double() = New Double(width - 1) {}
+
+                For j As Integer = 0 To raw.RowDimension - 1
+                    Dim offset = W(j)
+                    Dim weight = offset(i)
+                    Dim d As Vector = (factor * raw(j)) * weight
+
+                    Call decomposer.Add(d)
+                Next
+
+                Yield New NumericMatrix(decomposer)
+            Next
+        End Function
 
         ''' <summary>
         ''' Implements Lee and Seungs Multiplicative Update Algorithm
@@ -150,7 +171,8 @@ Namespace LinearAlgebra.Matrix
                 .cost = cost,
                 .H = H,
                 .W = W,
-                .errors = errors.ToArray
+                .errors = errors.ToArray,
+                .rank = k
             }
         End Function
 
