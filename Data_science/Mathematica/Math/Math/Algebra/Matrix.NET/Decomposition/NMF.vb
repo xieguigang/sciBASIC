@@ -108,7 +108,6 @@ Namespace LinearAlgebra.Matrix
             For i As Integer = 0 To rank - 1
                 Dim factor As Vector = H(i)
                 Dim decomposer As New List(Of Double())
-                Dim sum As Double() = New Double(width - 1) {}
 
                 For j As Integer = 0 To raw.RowDimension - 1
                     Dim offset = W(j)
