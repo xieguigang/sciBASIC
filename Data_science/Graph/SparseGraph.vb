@@ -149,6 +149,13 @@ Public Class SparseGraph : Implements ISparseGraph
     Dim index_u As Dictionary(Of String, IInteraction())
     Dim graph As Edge()
 
+    Sub New()
+    End Sub
+
+    Sub New(edges As IEnumerable(Of Edge))
+        Me.Edges = edges.ToArray
+    End Sub
+
     Public Overrides Function ToString() As String
         Dim vlist = Vertex
         Return $"sparse graph of {vlist.Length}x{vlist.Length} vertex and {graph.Length} edges."
