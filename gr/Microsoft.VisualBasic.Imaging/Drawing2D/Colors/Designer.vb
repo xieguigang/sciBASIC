@@ -463,6 +463,7 @@ Namespace Drawing2D.Colors
                 Case "blackgreenred" : Return BlackGreenRed
                 Case "seismic" : Return CustomDesigns.Seismic
                 Case "icefire" : Return CustomDesigns.Icefire
+                Case "grays" : Return New ColorMap(20, 255).ColorSequence(NameOf(ColorMap.PatternGray))
 
                 Case "red_channel" : Return {Color.FromArgb(0, 0, 0), Color.FromArgb(128, 0, 0), Color.FromArgb(255, 0, 0)}
                 Case "green_channel" : Return {Color.FromArgb(0, 0, 0), Color.FromArgb(0, 128, 0), Color.FromArgb(0, 255, 0)}
