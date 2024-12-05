@@ -24,6 +24,11 @@
 		<DebugType>full</DebugType>				
 		<OutputPath>../../../.nuget/</OutputPath>
 	</PropertyGroup>
+
+  	<ItemGroup>
+  	  <PackageReference Include="System.Composition" Version="8.0.0" />
+  	  <PackageReference Include="System.Resources.Extensions" Version="8.0.0" />
+  	</ItemGroup>
   
   <ItemGroup>
     <ProjectReference Include="..\..\..\Microsoft.VisualBasic.Core\src\Core.vbproj" />

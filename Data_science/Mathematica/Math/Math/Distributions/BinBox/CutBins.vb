@@ -183,6 +183,15 @@ Namespace Distributions.BinBox
                     lowerbound += slideWindowSteps
                 End If
             Loop
+
+            ' check boundary outside
+            If i < len Then
+                list.AddRange(v.Skip(i))
+
+                If list > 0 Then
+                    Yield New DataBinBox(Of T)(list, eval, lowerbound, upbound + slideWindowSteps)
+                End If
+            End If
         End Function
 
         ''' <summary>

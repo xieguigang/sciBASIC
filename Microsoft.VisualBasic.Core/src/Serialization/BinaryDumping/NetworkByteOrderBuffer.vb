@@ -97,6 +97,11 @@ Namespace Serialization.BinaryDumping
             Return vals
         End Function
 
+        ''' <summary>
+        ''' encode the given numeric data vector in network byte order and then returns the base64 encode string
+        ''' </summary>
+        ''' <param name="data"></param>
+        ''' <returns></returns>
         Public Function Base64String(data As IEnumerable(Of Double)) As String
             Dim raw As Byte() = GetBytes(data)
             Dim str As String = Base64Codec.ToBase64String(raw)

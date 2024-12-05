@@ -178,6 +178,30 @@ Namespace LinearAlgebra
         End Function
 
         ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="x"></param>
+        ''' <param name="y"></param>
+        ''' <returns></returns>
+        ''' <remarks>
+        ''' use common non-zero index as intersect
+        ''' </remarks>
+        Public Function JaccardIndex(x As Double(), y As Double()) As Double
+            Dim ia As New List(Of Integer)
+            Dim ib As New List(Of Integer)
+
+            For i As Integer = 0 To x.Length - 1
+                If x(i) <> 0 Then Call ia.Add(i)
+                If y(i) <> 0 Then Call ib.Add(i)
+            Next
+
+            Dim ni As Integer = ia.Intersect(ib).Count
+            Dim nu As Integer = ia.Union(ib).Count
+
+            Return ni / nu
+        End Function
+
+        ''' <summary>
         ''' Evaluate the jaccard coeff between two dataset
         ''' </summary>
         ''' <param name="a"></param>

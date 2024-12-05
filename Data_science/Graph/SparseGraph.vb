@@ -214,6 +214,11 @@ Public Class SparseGraph : Implements ISparseGraph
         Next
     End Function
 
+    ''' <summary>
+    ''' make graph structure data copy
+    ''' </summary>
+    ''' <param name="g"></param>
+    ''' <returns></returns>
     Public Shared Function Copy(g As ISparseGraph) As SparseGraph
         Dim edges As Edge() = g.GetGraph.Select(Function(e) New Edge(e)).ToArray
         Dim graph As New SparseGraph With {.Edges = edges}

@@ -490,6 +490,7 @@ Namespace IO
             End Get
         End Property
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Remove(item As String) As Boolean Implements ICollection(Of String).Remove
             Return buffer.Remove(item)
         End Function
@@ -505,6 +506,18 @@ Namespace IO
             Else
                 Return buffer.IndexOf(item)
             End If
+        End Function
+
+        Public Function IndexAny(ParamArray any As String()) As Integer
+            For Each item As String In any
+                Dim ordinal As Integer = IndexOf(item)
+
+                If ordinal > -1 Then
+                    Return ordinal
+                End If
+            Next
+
+            Return -1
         End Function
 
         ''' <summary>
