@@ -93,8 +93,9 @@ Namespace Excel
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        <Extension> Public Function ColumnIndex(i%) As String
-            Return i.TranslateDecimal(alphas:=AZ.Objects)
+        <Extension>
+        Public Function ColumnIndex(i%) As String
+            Return i.TranslateDecimal(alphabets:=AZ.Objects)
         End Function
 
         <Extension> Public Function Dimension(table As Table) As String
