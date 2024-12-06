@@ -540,6 +540,7 @@
 
   <ItemGroup>
     <PackageReference Include="System.IO.Packaging" Version="8.0.1" />
+    <PackageReference Include="System.Numerics.Vectors" Version="4.6.0" />
   </ItemGroup>
 
   <ItemGroup>
