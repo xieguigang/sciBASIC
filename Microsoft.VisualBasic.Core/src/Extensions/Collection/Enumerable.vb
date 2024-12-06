@@ -164,19 +164,22 @@ Public Module IEnumerations
     ''' </summary>
     ReadOnly TextCompareStrict As [Default](Of StringComparison) = StringComparison.Ordinal
 
-    <Extension> Public Function FindByItemKey(source As IEnumerable(Of KeyValuePair), Key As String, Optional strict As Boolean = True) As KeyValuePair()
+    <Extension>
+    Public Function FindByItemKey(source As IEnumerable(Of KeyValuePair), Key As String, Optional strict As Boolean = True) As KeyValuePair()
         Dim method As StringComparison = StringComparison.OrdinalIgnoreCase Or TextCompareStrict.When(strict)
         Dim LQuery = (From item In source Where String.Equals(item.Key, Key, method) Select item).ToArray
         Return LQuery
     End Function
 
-    <Extension> Public Function FindByItemKey(Of PairItemType As IKeyValuePair)(source As IEnumerable(Of PairItemType), Key As String, Optional strict As Boolean = True) As PairItemType()
+    <Extension>
+    Public Function FindByItemKey(Of PairItemType As IKeyValuePair)(source As IEnumerable(Of PairItemType), Key As String, Optional strict As Boolean = True) As PairItemType()
         Dim method As StringComparison = StringComparison.OrdinalIgnoreCase Or TextCompareStrict.When(strict)
         Dim LQuery = (From item In source Where String.Equals(item.Key, Key, method) Select item).ToArray
         Return LQuery
     End Function
 
-    <Extension> Public Function FindByItemValue(Of PairItemType As IKeyValuePair)(source As IEnumerable(Of PairItemType), Value As String, Optional strict As Boolean = True) As PairItemType()
+    <Extension>
+    Public Function FindByItemValue(Of PairItemType As IKeyValuePair)(source As IEnumerable(Of PairItemType), Value As String, Optional strict As Boolean = True) As PairItemType()
         Dim method As StringComparison = StringComparison.OrdinalIgnoreCase Or TextCompareStrict.When(strict)
         Dim LQuery = (From item In source Where String.Equals(item.Key, Value, method) Select item).ToArray
         Return LQuery
@@ -282,7 +285,8 @@ Public Module IEnumerations
     ''' True: 这个参数会去处重复项
     ''' </param>
     ''' <returns></returns>
-    <Extension> Public Function ToDictionary(Of T As INamedValue)(source As IEnumerable(Of T), distinct As Boolean) As Dictionary(Of T)
+    <Extension>
+    Public Function ToDictionary(Of T As INamedValue)(source As IEnumerable(Of T), distinct As Boolean) As Dictionary(Of T)
         If Not distinct Then
             Return source.ToDictionary
         End If
@@ -342,7 +346,6 @@ Public Module IEnumerations
 
         Return recurse(0)
     End Function
-
 
     Public Function CartesianProduct(Of T)(collections As IReadOnlyList(Of IReadOnlyList(Of T))) As IEnumerable(Of T())
         Dim [set] = New T(collections.Count - 1) {}

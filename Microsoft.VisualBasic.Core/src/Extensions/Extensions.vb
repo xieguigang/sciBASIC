@@ -1545,26 +1545,26 @@ Public Module Extensions
     ''' Removes the last element in the List object.
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
-    ''' <param name="dotNETlist"></param>
+    ''' <param name="clrList"></param>
     ''' <returns></returns>
     ''' <remarks>
     ''' (这个拓展函数同时兼容.NET框架的list类型以及sciBASIC之中的list类型)
     ''' </remarks>
     <Extension>
-    Public Function RemoveLast(Of T)(ByRef dotNETlist As System.Collections.Generic.List(Of T)) As System.Collections.Generic.List(Of T)
-        If dotNETlist.IsNullOrEmpty Then
-            dotNETlist = New List(Of T)
+    Public Function RemoveLast(Of T)(ByRef clrList As System.Collections.Generic.List(Of T)) As System.Collections.Generic.List(Of T)
+        If clrList.IsNullOrEmpty Then
+            clrList = New List(Of T)
 
             ' 2018-1-25
             ' 需要将0和1分开来看，否则会造成最后一个元素永远都移除不了的bug
-        ElseIf dotNETlist.Count = 1 Then
-            dotNETlist.Clear()
+        ElseIf clrList.Count = 1 Then
+            clrList.Clear()
         Else
-            Dim i As Integer = dotNETlist.Count - 1
-            Call dotNETlist.RemoveAt(i)
+            Dim i As Integer = clrList.Count - 1
+            Call clrList.RemoveAt(i)
         End If
 
-        Return dotNETlist
+        Return clrList
     End Function
 
     ''' <summary>
@@ -1576,11 +1576,17 @@ Public Module Extensions
     ''' <returns></returns>
     <Extension>
     Public Function RemoveLast(Of T)(ByRef list As List(Of T)) As List(Of T)
-        Return DirectCast(RemoveLast(dotNETlist:=list), List(Of T))
+        Return DirectCast(RemoveLast(clrList:=list), List(Of T))
     End Function
 
 #End Region
 
+    ''' <summary>
+    ''' Removes the first element and then returns the list
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    ''' <param name="list"></param>
+    ''' <returns></returns>
     <Extension>
     Public Function RemoveFirst(Of T)(ByRef list As List(Of T)) As List(Of T)
         If list.IsNullOrEmpty OrElse list.Count = 1 Then

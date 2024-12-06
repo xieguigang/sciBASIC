@@ -1,57 +1,57 @@
 ﻿#Region "Microsoft.VisualBasic::6e622df8a6f76e235f224028c74c3772, Microsoft.VisualBasic.Core\src\Extensions\Collection\ListExtensions.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 353
-    '    Code Lines: 182 (51.56%)
-    ' Comment Lines: 135 (38.24%)
-    '    - Xml Docs: 85.93%
-    ' 
-    '   Blank Lines: 36 (10.20%)
-    '     File Size: 13.05 KB
+' Summaries:
 
 
-    ' Module ListExtensions
-    ' 
-    '     Function: AppendAfter, AsHashList, AsHashSet, AsList, AsLoop
-    '               Count, HasKey, Indexing, Pop, PopAt
-    '               Random, ReorderByKeys, (+2 Overloads) ToList, TopMostFrequent
-    ' 
-    '     Sub: DoEach, (+2 Overloads) ForEach, RemoveAll, Swap
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 353
+'    Code Lines: 182 (51.56%)
+' Comment Lines: 135 (38.24%)
+'    - Xml Docs: 85.93%
+' 
+'   Blank Lines: 36 (10.20%)
+'     File Size: 13.05 KB
+
+
+' Module ListExtensions
+' 
+'     Function: AppendAfter, AsHashList, AsHashSet, AsList, AsLoop
+'               Count, HasKey, Indexing, Pop, PopAt
+'               Random, ReorderByKeys, (+2 Overloads) ToList, TopMostFrequent
+' 
+'     Sub: DoEach, (+2 Overloads) ForEach, RemoveAll, Swap
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -371,7 +371,8 @@ Public Module ListExtensions
     ''' to accommodate the number of elements copied.
     ''' </summary>
     ''' <param name="linq">The collection whose elements are copied to the new list.</param>
-    <Extension> Public Function ToList(Of T)(linq As ParallelQuery(Of T)) As List(Of T)
+    <Extension>
+    Public Function ToList(Of T)(linq As ParallelQuery(Of T)) As List(Of T)
         Return New List(Of T)(linq)
     End Function
 
@@ -399,6 +400,23 @@ Public Module ListExtensions
         End If
     End Function
 
+    ''' <summary>
+    ''' Remove the first element from the list and then returns this removed element.
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    ''' <param name="list"></param>
+    ''' <returns></returns>
+    <Extension>
+    Public Function PopFirst(Of T)(ByRef list As System.Collections.Generic.List(Of T)) As T
+        If list.IsNullOrEmpty Then
+            Return Nothing
+        Else
+            Dim first As T = list(0)
+            Call list.RemoveAt(0)
+            Return first
+        End If
+    End Function
+
     <Extension>
     Public Sub RemoveAll(Of T)(list As System.Collections.Generic.List(Of T), all As IEnumerable(Of T))
         If Not all Is Nothing Then
@@ -406,5 +424,11 @@ Public Module ListExtensions
                 Call list.Remove(item)
             Next
         End If
+    End Sub
+
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    <Extension>
+    Public Sub AddFirst(Of T)(ByRef list As System.Collections.Generic.List(Of T), x As T)
+        Call list.Insert(0, x)
     End Sub
 End Module

@@ -128,6 +128,113 @@ Namespace Math
         End Function
 #End If
 
+        ''' <summary>
+        ''' Function to calculate the Least Common Multiple (LCM)
+        ''' </summary>
+        ''' <param name="a"></param>
+        ''' <param name="b"></param>
+        ''' <returns></returns>
+        ''' <remarks>
+        ''' 计算最小公倍数
+        ''' </remarks>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function LeastCommonMultiple(a As Integer, b As Integer) As Integer
+            Return (a / EuclidGcd(a, b)) * b
+        End Function
+
+        ''' <summary>
+        ''' Method which computes GCD of two numbers using Euclid's algorithm.
+        ''' </summary>
+        ''' <param name="a">First number.</param>
+        ''' <param name="b">Second number.</param>
+        ''' <returns>GCD of source numbers.</returns>
+        ''' <exception cref="ArgumentOutOfRangeException">Thrown when source numbers are out of range.</exception>
+        ''' <remarks>
+        ''' 计算最大公约数
+        ''' </remarks>
+        Public Function EuclidGcd(a As Integer, b As Integer) As Integer
+            If a < 0 Then
+                Throw New ArgumentOutOfRangeException($"{a} is out of range.")
+            End If
+
+            If b < 0 Then
+                Throw New ArgumentOutOfRangeException($"{b} is out of range.")
+            End If
+
+            If a = b Then
+                Return a
+            End If
+
+            If a = 0 Then
+                Return b
+            End If
+
+            If b = 0 Then
+                Return a
+            End If
+
+            While a <> b
+                If a > b Then
+                    a = a - b
+                Else
+                    b = b - a
+                End If
+            End While
+
+            Return a
+        End Function
+
+        ''' <summary>
+        ''' Method which computes GCD of two numbers using Stein's algorithm.
+        ''' </summary>
+        ''' <param name="a">First number.</param>
+        ''' <param name="b">Second number.</param>
+        ''' <returns>GCD of source numbers.</returns>
+        ''' <exception cref="ArgumentOutOfRangeException">Thrown when source numbers are out of range.</exception>
+        ''' <remarks>
+        ''' 计算最大公约数
+        ''' </remarks>
+        Public Function SteinGcd(a As Integer, b As Integer) As Integer
+            If a < 0 Then
+                Throw New ArgumentOutOfRangeException($"{a} is out of range.")
+            End If
+
+            If b < 0 Then
+                Throw New ArgumentOutOfRangeException($"{b} is out of range.")
+            End If
+
+            If a = b Then
+                Return a
+            End If
+
+            If a = 0 Then
+                Return b
+            End If
+
+            If b = 0 Then
+                Return a
+            End If
+
+            If (Not a And 1) <> 0 Then
+                If (b And 1) <> 0 Then
+                    Return SteinGcd(a >> 1, b)
+                End If
+
+                Return SteinGcd(a >> 1, b >> 1) << 1
+            End If
+
+            If (Not b And 1) <> 0 Then
+                Return SteinGcd(a, b >> 1)
+            End If
+
+            If a > b Then
+                Return SteinGcd(a - b >> 1, b)
+            End If
+
+            Return SteinGcd(b - a >> 1, a)
+        End Function
+
         Public Function Permut(k As Integer, n As Integer) As Long
             Dim nfactors As Integer() = (n - 1).SeqIterator(offset:=1).ToArray
             Dim nkfactors As Integer() = (n - k - 1).SeqIterator(offset:=1).ToArray
@@ -498,7 +605,7 @@ Namespace Math
             End If
         End Function
 
-#If NET_48 = 1 Or netcore5 = 1 Then
+#If NET48 Or NETCOREAPP Then
 
 #Region "Sum all tuple members"
 

@@ -58,7 +58,6 @@ Imports System.Runtime.CompilerServices
 
 Namespace ComponentModel.Collection
 
-    <HideModuleName>
     Public Module PriorityQueueCreator
 
         Public Function CreateEmptyPriorityQueue(Of T As IComparable(Of T))() As PriorityQueue(Of T)
