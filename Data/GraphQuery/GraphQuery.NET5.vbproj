@@ -170,6 +170,7 @@
 
   <ItemGroup>
     <PackageReference Include="System.Linq.Queryable" Version="4.3.0" />
+    <PackageReference Include="System.Numerics.Vectors" Version="4.6.0" />
     <PackageReference Include="System.Resources.Extensions" Version="8.0.0" />
 	  <PackageReference Include="System.Runtime" Version="4.3.1" />
 	  <PackageReference Include="System.Composition" Version="8.0.0" />

@@ -126,6 +126,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="System.Numerics.Vectors" Version="4.6.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\..\..\..\Data\BinaryData\DataStorage\datastorage-netcore5.vbproj" />
     <ProjectReference Include="..\..\..\..\Data\BinaryData\netCDF\netCDF.vbproj" />
     <ProjectReference Include="..\..\..\..\Microsoft.VisualBasic.Core\src\Core.vbproj" />
