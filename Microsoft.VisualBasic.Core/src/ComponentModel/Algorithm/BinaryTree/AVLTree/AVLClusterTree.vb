@@ -118,7 +118,7 @@ Namespace ComponentModel.Algorithm.BinaryTree
         End Sub
 
         ''' <summary>
-        ''' 
+        ''' Make key search and then populate all hits cluster member
         ''' </summary>
         ''' <param name="key"></param>
         ''' <returns></returns>

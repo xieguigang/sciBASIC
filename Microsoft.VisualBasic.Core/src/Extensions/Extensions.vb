@@ -251,7 +251,8 @@ Public Module Extensions
         End If
     End Function
 
-    <Extension> Public Function Add(Of T As INamedValue)(ByRef table As Dictionary(Of String, T), obj As T) As Dictionary(Of String, T)
+    <Extension>
+    Public Function Add(Of T As INamedValue)(ByRef table As Dictionary(Of String, T), obj As T) As Dictionary(Of String, T)
         If table Is Nothing Then
             table = New Dictionary(Of String, T)
         End If
