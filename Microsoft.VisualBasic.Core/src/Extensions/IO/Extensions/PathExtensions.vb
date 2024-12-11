@@ -628,7 +628,8 @@ Public Module PathExtensions
     ''' path seperator symbol: ``\`` or ``/``.
     ''' </param>
     ''' <returns></returns>
-    <Extension> Public Function FileCopy(source$, copyTo$) As Boolean
+    <Extension>
+    Public Function FileCopy(source$, copyTo$) As Boolean
         Try
             If copyTo.Last = "/"c OrElse copyTo.Last = "\"c Then
                 copyTo = copyTo & source.FileName
