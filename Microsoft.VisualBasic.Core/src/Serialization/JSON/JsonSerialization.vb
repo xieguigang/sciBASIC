@@ -336,10 +336,11 @@ Namespace Serialization.JSON
         Public Function LoadJsonFile(Of T)(file$,
                                            Optional encoding As Encoding = Nothing,
                                            Optional simpleDict As Boolean = True,
-                                           Optional knownTypes As IEnumerable(Of Type) = Nothing) As T
+                                           Optional knownTypes As IEnumerable(Of Type) = Nothing,
+                                           Optional throwEx As Boolean = True) As T
 
-            Return (file.ReadAllText(encoding Or UTF8, throwEx:=False, suppress:=True) Or "null".AsDefault) _
-                .LoadJSON(Of T)(simpleDict, knownTypes:=knownTypes)
+            Return (file.ReadAllText(encoding Or UTF8, throwEx:=throwEx, suppress:=True) Or "null".AsDefault) _
+                .LoadJSON(Of T)(simpleDict, knownTypes:=knownTypes, throwEx:=throwEx)
         End Function
 
         Const JsonLongTime$ = "\d+-\d+-\d+T\d+:\d+:\d+\.\d+"
