@@ -67,8 +67,7 @@ Imports System.ComponentModel
 Imports System.Reflection
 Imports System.Reflection.Emit
 Imports System.Runtime.CompilerServices
-Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
-Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.My.JavaScript
 
 ''' <summary>
@@ -253,6 +252,25 @@ Public Class DynamicType
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Shared Function CreateValidSymbolName(key As String) As String
         Return key.NormalizePathString().StringReplace("\s+", "_")
+    End Function
+
+    Public Shared Function CreateEnum(members As Dictionary(Of String, String), Optional typeName As String = "DynamicEnumType") As Type
+        Dim assemblyName As New AssemblyName(Guid.NewGuid.ToString)
+        Dim assemblyBuilder As AssemblyBuilder = AssemblyBuilder.DefineDynamicAssembly(assemblyName, AssemblyBuilderAccess.Run)
+        Dim moduleBuilder = assemblyBuilder.DefineDynamicModule("MainModule")
+        Dim enumBuilder = moduleBuilder.DefineEnum(typeName, TypeAttributes.Public, GetType(Integer))
+        Dim value As i32 = 0
+
+        For Each member As KeyValuePair(Of String, String) In members
+            Dim fieldBuilder = enumBuilder.DefineLiteral(member.Key, ++value)
+            Dim constructor = GetType(DescriptionAttribute).GetConstructor(New Type() {GetType(String)})
+            Dim attributeBuilder As New CustomAttributeBuilder(constructor, New Object() {member.Value})
+
+            Call fieldBuilder.SetCustomAttribute(attributeBuilder)
+        Next
+
+        Dim enumType As Type = enumBuilder.CreateType()
+        Return enumType
     End Function
 
     ''' <summary>

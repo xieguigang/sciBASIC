@@ -190,7 +190,7 @@ Namespace SVG.PathHelper
                         ElseIf cU = "S"c Then
                             If tokens.Count Mod 4 = 0 Then
                                 For j = 0 To tokens.Count - 1 Step 4
-                                    Yield New C(tokens.GetRange(j, 4), isRelative)
+                                    Yield New S(tokens.GetRange(j, 4), isRelative)
                                 Next
                             End If
                         ElseIf cU = "Q"c Then

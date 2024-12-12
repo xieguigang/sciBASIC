@@ -758,7 +758,6 @@ B21,B22,B23,...
             Return Load(path, encoding:=encoding, isTsv:=True)
         End Function
 
-
         Public Shared Function ReadHeaderRow(path$, Optional encoding As Encodings = Encodings.UTF8, Optional tsv As Boolean = False) As RowObject
             Dim firstLine$ = path.ReadFirstLine(encoding.CodePage)
 

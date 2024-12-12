@@ -90,7 +90,7 @@ Namespace IO
                         End If
                     End If
 
-                    row.AddRange(.ByRef)
+                    Call row.AddRange(.ByRef)
 
                     If .Length > 0 Then
                         lastOpen = parser.GetStackOpenStatus

@@ -56,6 +56,7 @@
 #End Region
 
 Imports System.Drawing
+Imports Microsoft.VisualBasic.Scripting.Runtime
 Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace SVG
@@ -84,6 +85,28 @@ Namespace SVG
                               End Function)
         End Sub
 
+        Public Function GetOffsetTransform() As PointF
+            Dim x As Single = 0
+            Dim y As Single = 0
+
+            For Each apply As KeyValuePair(Of String, String()) In transform
+                Select Case apply.Key
+                    Case "translate"
+                        Dim translate_pars = apply.Value
+
+                        x += Val(translate_pars(0))
+                        y += Val(translate_pars(1))
+                    Case "matrix"
+                        Dim matrix As New MatrixTransform(apply.Value.AsDouble)
+
+                        x += matrix.x
+                        y += matrix.y
+                End Select
+            Next
+
+            Return New PointF(x, y)
+        End Function
+
         Public Overrides Function ToString() As String
             Return transform.GetJson
         End Function
@@ -102,5 +125,37 @@ Namespace SVG
                 Yield (Strings.LCase(op_name), pars)
             Next
         End Function
+    End Class
+
+    Public Class MatrixTransform
+
+        Public ReadOnly a, b, c, d, x, y As Single
+
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="a">水平缩放因子</param>
+        ''' <param name="b">水平倾斜因子</param>
+        ''' <param name="c">垂直倾斜因子</param>
+        ''' <param name="d">垂直缩放因子</param>
+        ''' <param name="e">水平移动距离</param>
+        ''' <param name="f">垂直移动距离</param>
+        Sub New(a!, b!, c!, d!, e!, f!)
+            Me.a = a
+            Me.b = b
+            Me.c = c
+            Me.d = d
+            Me.x = e
+            Me.y = f
+        End Sub
+
+        Sub New(d As Double())
+            Call Me.New(d(0), d(1), d(2), d(3), d(4), d(5))
+        End Sub
+
+        Public Function GetOffset() As PointF
+            Return New PointF(x, y)
+        End Function
+
     End Class
 End Namespace

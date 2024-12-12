@@ -1,60 +1,61 @@
 ﻿#Region "Microsoft.VisualBasic::3f3baa782d2f037614c30521182bb516, gr\Microsoft.VisualBasic.Imaging\SVG\Geometry\GeometryElement.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 117
-    '    Code Lines: 84 (71.79%)
-    ' Comment Lines: 14 (11.97%)
-    '    - Xml Docs: 42.86%
-    ' 
-    '   Blank Lines: 19 (16.24%)
-    '     File Size: 4.36 KB
+' Summaries:
 
 
-    '     Class GeometryElement
-    ' 
-    '         Properties: svgElement, tag, X, Y
-    ' 
-    '         Function: CheckPossibleCircleShape, LoadElements, ToString
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 117
+'    Code Lines: 84 (71.79%)
+' Comment Lines: 14 (11.97%)
+'    - Xml Docs: 42.86%
+' 
+'   Blank Lines: 19 (16.24%)
+'     File Size: 4.36 KB
+
+
+'     Class GeometryElement
+' 
+'         Properties: svgElement, tag, X, Y
+' 
+'         Function: CheckPossibleCircleShape, LoadElements, ToString
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Xml
+Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Imaging.SVG.PathHelper
 Imports Microsoft.VisualBasic.Imaging.SVG.XML
 
@@ -119,6 +120,8 @@ Namespace SVG
             Return False
         End Function
 
+        Shared ReadOnly ignoresElement As Index(Of String) = {"style", "i:pgf"}
+
         Public Shared Iterator Function LoadElements(svg As SvgContainer, offsetX As Double, offsetY As Double) As IEnumerable(Of GeometryElement)
             Dim list As XmlNodeList = svg.GetSvgElement.ChildNodes
             Dim node As XmlElement
@@ -126,46 +129,54 @@ Namespace SVG
             For i As Integer = 0 To list.Count - 1
                 node = TryCast(list(i), XmlElement)
 
-                If Not node Is Nothing Then
-                    If node.Name = "i:pgf" Then
-                        Continue For
-                    End If
+                If node Is Nothing Then
+                    Continue For
+                End If
 
-                    Dim svgElement As SvgElement = SvgElement.Create(node)
-                    Dim x As Double = Val(svgElement("x")) + offsetX
-                    Dim y As Double = Val(svgElement("y")) + offsetY
-                    Dim transform As New Transform(svgElement("transform"))
+                If node.Name Like ignoresElement Then
+                    Continue For
+                End If
 
-                    With transform.translate
-                        x += .X
-                        y += .Y
-                    End With
+                Dim svgElement As SvgElement = SvgElement.Create(node)
+                Dim x As Double = Val(svgElement("x")) + offsetX
+                Dim y As Double = Val(svgElement("y")) + offsetY
+                Dim transform As New Transform(svgElement("transform"))
 
-                    If TypeOf svgElement Is SvgGroup Then
-                        For Each element As GeometryElement In LoadElements(svgElement, x, y)
-                            Yield element
-                        Next
-                    ElseIf TypeOf svgElement Is SvgText Then
+                With transform.GetOffsetTransform
+                    x += .X
+                    y += .Y
+                End With
+
+                If TypeOf svgElement Is SvgGroup Then
+                    For Each element As GeometryElement In LoadElements(svgElement, x, y)
+                        Yield element
+                    Next
+                ElseIf TypeOf svgElement Is SvgText Then
+                    Yield New GeometryElement With {
+                        .X = x,
+                        .Y = y,
+                        .svgElement = svgElement
+                    }
+                ElseIf TypeOf svgElement Is SvgPath Then
+                    Dim op = Interpreter.ParsePathCommands(DirectCast(svgElement, SvgPath).D).ToArray
+                    Dim moveTo = op.FirstOrDefault
+
+                    ' move to is nothing means invalid path data
+                    If Not moveTo Is Nothing Then
+                        Dim M As M = DirectCast(moveTo, M)
+
                         Yield New GeometryElement With {
-                            .X = x,
-                            .Y = y,
-                            .svgElement = svgElement
+                            .svgElement = svgElement,
+                            .X = x + M.X,
+                            .Y = y + M.Y
                         }
-                    ElseIf TypeOf svgElement Is SvgPath Then
-                        Dim op = Interpreter.ParsePathCommands(DirectCast(svgElement, SvgPath).D).ToArray
-                        Dim moveTo = op.FirstOrDefault
-
-                        ' move to is nothing means invalid path data
-                        If Not moveTo Is Nothing Then
-                            Dim M As M = DirectCast(moveTo, M)
-
-                            Yield New GeometryElement With {
-                                .svgElement = svgElement,
-                                .X = x + M.X,
-                                .Y = y + M.Y
-                            }
-                        End If
                     End If
+                ElseIf TypeOf svgElement Is SvgCircle Then
+                    Yield New GeometryElement With {
+                        .svgElement = svgElement,
+                        .X = x + DirectCast(svgElement, SvgCircle).CX,
+                        .Y = y + DirectCast(svgElement, SvgCircle).CY
+                    }
                 End If
             Next
         End Function

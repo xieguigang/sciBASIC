@@ -1,57 +1,58 @@
 ﻿#Region "Microsoft.VisualBasic::d3de84ccb54dd919615f98e17a107720, Data\DataFrame\IO\csv\FileLoader.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 141
-    '    Code Lines: 103 (73.05%)
-    ' Comment Lines: 20 (14.18%)
-    '    - Xml Docs: 85.00%
-    ' 
-    '   Blank Lines: 18 (12.77%)
-    '     File Size: 6.70 KB
+' Summaries:
 
 
-    '     Module FileLoader
-    ' 
-    '         Function: FastLoad, Load, parallelLoad
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 141
+'    Code Lines: 103 (73.05%)
+' Comment Lines: 20 (14.18%)
+'    - Xml Docs: 85.00%
+' 
+'   Blank Lines: 18 (12.77%)
+'     File Size: 6.70 KB
+
+
+'     Module FileLoader
+' 
+'         Function: FastLoad, Load, parallelLoad
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
+Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
@@ -64,6 +65,9 @@ Imports ASCII = Microsoft.VisualBasic.Text.ASCII
 
 Namespace IO
 
+    ''' <summary>
+    ''' Wrapper module for read csv/tsv file
+    ''' </summary>
     Public Module FileLoader
 
         ''' <summary>
@@ -123,6 +127,15 @@ Namespace IO
             Call $"CSV data ""{path.ToFileURL}"" load done!   {sw.ElapsedMilliseconds}ms.".__DEBUG_ECHO
 
             Return cData
+        End Function
+
+        Public Function Load(s As Stream, trimBlanks As Boolean,
+                             Optional skipWhile As NamedValue(Of Func(Of String, Boolean)) = Nothing,
+                             Optional isTsv As Boolean = False) As List(Of RowObject)
+
+            Using str As New StreamReader(s)
+                Return Load(str.IteratesStream.ToArray, trimBlanks, skipWhile, isTsv:=isTsv)
+            End Using
         End Function
 
         ''' <summary>
