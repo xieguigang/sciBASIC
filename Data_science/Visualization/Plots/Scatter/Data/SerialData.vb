@@ -121,6 +121,14 @@ Public Class SerialData : Implements INamedValue
     ''' <returns></returns>
     Public Property DataAnnotations As Annotation()
 
+    Sub New()
+    End Sub
+
+    Sub New(name As String, scatter As IEnumerable(Of PointData))
+        title = name
+        pts = scatter.ToArray
+    End Sub
+
     ''' <summary>
     ''' get x axis data 
     ''' </summary>

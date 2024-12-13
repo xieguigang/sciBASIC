@@ -61,6 +61,22 @@ Namespace ComponentModel.Collection
         End Sub
 
         ''' <summary>
+        ''' Make deep copy of the rectangular array value
+        ''' </summary>
+        ''' <typeparam name="T"></typeparam>
+        ''' <param name="m"></param>
+        ''' <returns></returns>
+        Public Shared Function CopyOf(Of T)(ByRef m As T()()) As T()()
+            Dim copy As T()() = New T(m.Length - 1)() {}
+
+            For i As Integer = 0 To m.Length - 1
+                copy(i) = m(i).ToArray
+            Next
+
+            Return copy
+        End Function
+
+        ''' <summary>
         ''' Create an empty matrix with m row and n cols.
         ''' </summary>
         ''' <typeparam name="T"></typeparam>

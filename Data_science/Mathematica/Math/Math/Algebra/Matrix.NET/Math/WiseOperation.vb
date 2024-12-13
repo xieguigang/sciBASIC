@@ -58,21 +58,27 @@ Namespace LinearAlgebra.Matrix
 
     Public Class WiseOperation
 
-        Dim matrix_wise As Vector()
+        Public ReadOnly Property matrix_wise As Vector()
 
         Public Function Sum() As Vector
             Return matrix_wise.Select(Function(xi) xi.Sum).AsVector
         End Function
 
+        Public Iterator Function ScaleX(Optional center As Boolean = True, Optional scale As Boolean = True) As IEnumerable(Of Vector)
+            For Each v As Vector In matrix_wise
+                Yield New Vector(ScaleMaps.Scale(v.Array, center, scale))
+            Next
+        End Function
+
         Public Shared Function RowWise(m As GeneralMatrix) As WiseOperation
             Return New WiseOperation With {
-                .matrix_wise = m.RowVectors.ToArray
+                ._matrix_wise = m.RowVectors.ToArray
             }
         End Function
 
         Public Shared Function ColWise(m As GeneralMatrix) As WiseOperation
             Return New WiseOperation With {
-                .matrix_wise = m.ColumnDimension _
+                ._matrix_wise = m.ColumnDimension _
                     .Sequence _
                     .Select(Function(i)
                                 Return m.ColumnVector(i)

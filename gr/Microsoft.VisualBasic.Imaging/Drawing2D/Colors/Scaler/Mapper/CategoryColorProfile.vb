@@ -112,6 +112,11 @@ Namespace Drawing2D.Colors.Scaler
             )
         End Sub
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Sub New(terms As IEnumerable(Of String), colors As IEnumerable(Of Color))
+            Call Me.New(category:=terms.Distinct.ToDictionary(Function(s) s), colorSchema:=colors)
+        End Sub
+
         Sub New(category As Dictionary(Of String, String), colorSchema As IEnumerable(Of Color))
             Call MyBase.New(colorSchema)
 

@@ -779,10 +779,12 @@ Namespace Math
         End Function
 
         ''' <summary>
-        ''' Root mean square.(均方根)
+        ''' Root mean square.
         ''' </summary>
         ''' <returns></returns>
-        ''' 
+        ''' <remarks>
+        ''' (均方根)
+        ''' </remarks>
         <ExportAPI("RMS")>
         <Extension>
         Public Function RMS(data As IEnumerable(Of Double)) As Double

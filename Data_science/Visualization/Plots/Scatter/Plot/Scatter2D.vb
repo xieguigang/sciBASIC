@@ -75,6 +75,8 @@ Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Math.Statistics.Linq
 Imports Microsoft.VisualBasic.MIME.Html.CSS
 Imports Microsoft.VisualBasic.MIME.Html.Render
+Imports System.Runtime.CompilerServices
+
 
 
 #If NET48 Then
@@ -146,6 +148,22 @@ Namespace Plots
             Me.fillPie = fillPie
             Me.ablines = ablines
             Me.verbose = verbose
+        End Sub
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Sub New(scatter As IEnumerable(Of PointData), theme As Theme,
+                Optional scatterReorder As Boolean = False,
+                Optional fillPie As Boolean = True,
+                Optional ablines As Line() = Nothing,
+                Optional hullConvexList As IEnumerable(Of String) = Nothing,
+                Optional verbose As Boolean = False)
+
+            Call Me.New({New SerialData("Scatter data", scatter) With {.pointSize = theme.pointSize}}, theme,
+                        scatterReorder:=scatterReorder,
+                        fillPie:=fillPie,
+                        ablines:=ablines,
+                        hullConvexList:=hullConvexList,
+                        verbose:=verbose)
         End Sub
 
         Public Function GetDataScaler(ByRef g As IGraphics, rect As GraphicsRegion) As DataScaler

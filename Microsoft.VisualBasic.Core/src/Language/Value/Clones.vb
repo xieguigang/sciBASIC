@@ -76,7 +76,8 @@ Namespace Language.Values
             Return New List(Of T)(list)
         End Function
 
-        <Extension> Public Function CloneCopy(Of T)(array As T()) As T()
+        <Extension>
+        Public Function CloneCopy(Of T)(array As T()) As T()
             Return DirectCast(array.Clone, T())
         End Function
 
