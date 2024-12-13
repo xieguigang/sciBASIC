@@ -406,7 +406,10 @@ Namespace FileSystem
         ''' Open an existed block file
         ''' </summary>
         ''' <param name="block"></param>
-        ''' <returns></returns>
+        ''' <returns>
+        ''' this function will returns a <see cref="MemoryStream"/> in-memory data 
+        ''' when <paramref name="loadMemory"/> parameter value is set to TRUE.
+        ''' </returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function OpenBlock(block As StreamBlock, Optional loadMemory As Boolean = False) As Stream
             If loadMemory Then
