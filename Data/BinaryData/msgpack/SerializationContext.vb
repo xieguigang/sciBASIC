@@ -99,7 +99,7 @@ Public Class SerializationContext
     Public Sub RegisterSerializer(Of T)(ParamArray propertyNames As String())
         Dim defs As New List(Of MessagePackMemberDefinition)()
 
-        For Each propertyName In propertyNames
+        For Each propertyName As String In propertyNames
             defs.Add(New MessagePackMemberDefinition() With {
                 .PropertyName = propertyName,
                 .NilImplication = NilImplication.MemberDefault
