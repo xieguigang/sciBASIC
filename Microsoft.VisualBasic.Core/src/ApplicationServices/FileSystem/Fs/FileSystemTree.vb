@@ -55,13 +55,14 @@
 #End Region
 
 Imports Microsoft.VisualBasic.FileIO.Path
+Imports Microsoft.VisualBasic.Linq
 
 Namespace ApplicationServices
 
     ''' <summary>
     ''' A virtual filesystem tree
     ''' </summary>
-    Public Class FileSystemTree
+    Public Class FileSystemTree : Implements Enumeration(Of String)
 
         Public Property Name As String
         Public Property Files As Dictionary(Of String, FileSystemTree)
@@ -72,6 +73,10 @@ Namespace ApplicationServices
         Public Property Parent As FileSystemTree
         Public Property data As Object
 
+        ''' <summary>
+        ''' absolute full path
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property FullName As String
             Get
                 If Parent Is Nothing OrElse Parent Is Me Then
@@ -108,6 +113,10 @@ Namespace ApplicationServices
             Return node
         End Function
 
+        ''' <summary>
+        ''' absolute full path
+        ''' </summary>
+        ''' <returns></returns>
         Public Overrides Function ToString() As String
             Return FullName
         End Function
@@ -190,5 +199,18 @@ Namespace ApplicationServices
             Return node
         End Function
 
+        Public Iterator Function GenericEnumerator() As IEnumerator(Of String) Implements Enumeration(Of String).GenericEnumerator
+            Yield FullName
+
+            If Files.IsNullOrEmpty Then
+                Return
+            End If
+
+            For Each file As FileSystemTree In Files.Values
+                For Each subfile As String In file.AsEnumerable
+                    Yield subfile
+                Next
+            Next
+        End Function
     End Class
 End Namespace
