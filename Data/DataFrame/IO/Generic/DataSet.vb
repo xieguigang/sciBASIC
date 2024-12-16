@@ -220,7 +220,7 @@ Namespace IO
         ''' <param name="uidMap$"></param>
         ''' <param name="encoding"></param>
         ''' <returns></returns>
-        Public Shared Function LoadDataSet(Of T As DataSet)(path$,
+        Public Shared Function LoadDataSet(Of T As {New, INamedValue, DynamicPropertyBase(Of Double)})(path$,
                                                             Optional uidMap$ = Nothing,
                                                             Optional encoding As Encoding = Nothing,
                                                             Optional isTsv As Boolean = False) As IEnumerable(Of T)

@@ -73,6 +73,9 @@ Namespace Serialization.BinaryDumping
         Public ReadOnly encode32 As Func(Of Single(), Byte())
         Public ReadOnly decode32 As Func(Of Byte(), Single())
 
+        Public ReadOnly encodei32 As Func(Of Integer(), Byte())
+        Public ReadOnly decodei32 As Func(Of Byte(), Integer())
+
         Sub New()
             If BitConverter.IsLittleEndian Then
                 ' reverse bytes
@@ -80,6 +83,8 @@ Namespace Serialization.BinaryDumping
                 decode = AddressOf networkByteOrderDecoder
                 encode32 = AddressOf networkByteOrderEncoder
                 decode32 = AddressOf networkByteOrderDecoder32
+                encodei32 = AddressOf networkByteOrderEncoder
+                decodei32 = AddressOf networkByteOrderDecoderi32
 
                 ' Call VBDebugger.EchoLine("system byte order is little endian.")
             Else
@@ -88,6 +93,8 @@ Namespace Serialization.BinaryDumping
                 decode = AddressOf defaultDecoder
                 encode32 = AddressOf defaultEncoder
                 decode32 = AddressOf defaultDecoder32
+                encodei32 = AddressOf defaultEncoder
+                decodei32 = AddressOf defaultDecoderi32
             End If
         End Sub
 
@@ -97,19 +104,47 @@ Namespace Serialization.BinaryDumping
             Return vals
         End Function
 
+        Public Function Base64String(data As IEnumerable(Of Integer), Optional gzip As Boolean = False) As String
+            Dim raw As Byte() = GetBytes(data)
+            Dim str As String
+
+            If gzip Then
+                str = raw.GZipAsBase64(noMagic:=False)
+            Else
+                str = Base64Codec.ToBase64String(raw)
+            End If
+
+            Return str
+        End Function
+
         ''' <summary>
         ''' encode the given numeric data vector in network byte order and then returns the base64 encode string
         ''' </summary>
         ''' <param name="data"></param>
         ''' <returns></returns>
-        Public Function Base64String(data As IEnumerable(Of Double)) As String
+        Public Function Base64String(data As IEnumerable(Of Double), Optional gzip As Boolean = False) As String
             Dim raw As Byte() = GetBytes(data)
-            Dim str As String = Base64Codec.ToBase64String(raw)
+            Dim str As String
+
+            If gzip Then
+                str = raw.GZipAsBase64(noMagic:=False)
+            Else
+                str = Base64Codec.ToBase64String(raw)
+            End If
+
             Return str
         End Function
 
         Public Function ParseDouble(raw As Byte()) As Double()
             Return decode(raw)
+        End Function
+
+        Public Function ParseInteger(raw As Byte()) As Integer()
+            Return decodei32(raw)
+        End Function
+
+        Public Function GetBytes(i As IEnumerable(Of Integer)) As Byte()
+            Return encodei32(i.SafeQuery.ToArray)
         End Function
 
         ''' <summary>
@@ -175,6 +210,27 @@ Namespace Serialization.BinaryDumping
             Return nums
         End Function
 
+        Private Shared Function defaultDecoderi32(buffer As Byte()) As Integer()
+            Dim nums As Integer() = New Integer(buffer.Length / 4 - 1) {}
+
+            For i As Integer = 0 To nums.Length - 1
+                nums(i) = BitConverter.ToSingle(buffer, i * 4)
+            Next
+
+            Return nums
+        End Function
+
+        Private Shared Function defaultEncoder(nums As Integer()) As Byte()
+            Dim bytes As New List(Of Byte)
+
+            For Each d As Integer In nums
+                Call bytes.AddRange(BitConverter.GetBytes(d))
+            Next
+
+            Return bytes.ToArray
+        End Function
+
+
         Private Shared Function defaultDecoder32(buffer As Byte()) As Single()
             Dim nums As Single() = New Single(buffer.Length / 4 - 1) {}
 
@@ -205,6 +261,20 @@ Namespace Serialization.BinaryDumping
             Return bytes.ToArray
         End Function
 
+        Private Shared Function networkByteOrderDecoderi32(buffer As Byte()) As Integer()
+            Dim nums As Integer() = New Integer(buffer.Length / 4 - 1) {}
+            Dim bytes As Byte() = New Byte(4 - 1) {}
+
+            For i As Integer = 0 To nums.Length - 1
+                Call Array.ConstrainedCopy(buffer, i * 4, bytes, Scan0, bytes.Length)
+                Call Array.Reverse(bytes)
+
+                nums(i) = BitConverter.ToInt32(bytes, Scan0)
+            Next
+
+            Return nums
+        End Function
+
         Private Shared Function networkByteOrderDecoder32(buffer As Byte()) As Single()
             Dim nums As Single() = New Single(buffer.Length / 4 - 1) {}
             Dim bytes As Byte() = New Byte(4 - 1) {}
@@ -232,6 +302,21 @@ Namespace Serialization.BinaryDumping
 
             Return nums
         End Function
+
+        Private Shared Function networkByteOrderEncoder(nums As Integer()) As Byte()
+            Dim bytes As New List(Of Byte)
+            Dim buffer As Byte()
+
+            For Each d As Integer In nums
+                buffer = BitConverter.GetBytes(d)
+
+                Call Array.Reverse(buffer)
+                Call bytes.AddRange(buffer)
+            Next
+
+            Return bytes.ToArray
+        End Function
+
 
         Private Shared Function networkByteOrderEncoder(nums As Single()) As Byte()
             Dim bytes As New List(Of Byte)

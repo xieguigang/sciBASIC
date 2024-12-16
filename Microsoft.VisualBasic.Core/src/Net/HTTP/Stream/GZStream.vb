@@ -153,6 +153,9 @@ Namespace Net.Http
         ''' 对所输入的流进行gzip压缩
         ''' </summary>
         ''' <param name="stream"></param>
+        ''' <param name="noMagic">
+        ''' omit the gzip magic number?
+        ''' </param>
         ''' <returns></returns>
         <Extension>
         Public Function GZipStream(stream As Stream, Optional noMagic As Boolean = False) As MemoryStream
@@ -171,6 +174,14 @@ Namespace Net.Http
             Return ms
         End Function
 
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="bytes"></param>
+        ''' <param name="noMagic">
+        ''' omit the gzip magic number?
+        ''' </param>
+        ''' <returns></returns>
         <Extension>
         Public Function GZipAsBase64(bytes As IEnumerable(Of Byte), Optional noMagic As Boolean = False) As String
             Using ms As New MemoryStream(bytes.ToArray)
