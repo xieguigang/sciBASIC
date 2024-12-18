@@ -1,57 +1,57 @@
 ﻿#Region "Microsoft.VisualBasic::af1c86c4512f3883fd8cd84bb7fba0eb, Microsoft.VisualBasic.Core\src\Serialization\BinaryDumping\NetworkByteOrderBuffer.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 202
-    '    Code Lines: 146 (72.28%)
-    ' Comment Lines: 14 (6.93%)
-    '    - Xml Docs: 78.57%
-    ' 
-    '   Blank Lines: 42 (20.79%)
-    '     File Size: 7.33 KB
+' Summaries:
 
 
-    '     Class NetworkByteOrderBuffer
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    '         Function: Base64String, defaultDecoder, defaultDecoder32, (+2 Overloads) defaultEncoder, (+3 Overloads) GetBytes
-    '                   networkByteOrderDecoder, networkByteOrderDecoder32, (+2 Overloads) networkByteOrderEncoder, (+2 Overloads) ParseDouble, ToDouble
-    '                   ToFloat
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 202
+'    Code Lines: 146 (72.28%)
+' Comment Lines: 14 (6.93%)
+'    - Xml Docs: 78.57%
+' 
+'   Blank Lines: 42 (20.79%)
+'     File Size: 7.33 KB
+
+
+'     Class NetworkByteOrderBuffer
+' 
+'         Constructor: (+1 Overloads) Sub New
+'         Function: Base64String, defaultDecoder, defaultDecoder32, (+2 Overloads) defaultEncoder, (+3 Overloads) GetBytes
+'                   networkByteOrderDecoder, networkByteOrderDecoder32, (+2 Overloads) networkByteOrderEncoder, (+2 Overloads) ParseDouble, ToDouble
+'                   ToFloat
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -76,6 +76,9 @@ Namespace Serialization.BinaryDumping
         Public ReadOnly encodei32 As Func(Of Integer(), Byte())
         Public ReadOnly decodei32 As Func(Of Byte(), Integer())
 
+        Public ReadOnly encodei16 As Func(Of Short(), Byte())
+        Public ReadOnly decodei16 As Func(Of Byte(), Short())
+
         Sub New()
             If BitConverter.IsLittleEndian Then
                 ' reverse bytes
@@ -85,6 +88,8 @@ Namespace Serialization.BinaryDumping
                 decode32 = AddressOf networkByteOrderDecoder32
                 encodei32 = AddressOf networkByteOrderEncoder
                 decodei32 = AddressOf networkByteOrderDecoderi32
+                encodei16 = AddressOf networkByteOrderEncoder
+                decodei16 = AddressOf networkByteOrderDecoderi16
 
                 ' Call VBDebugger.EchoLine("system byte order is little endian.")
             Else
@@ -95,6 +100,8 @@ Namespace Serialization.BinaryDumping
                 decode32 = AddressOf defaultDecoder32
                 encodei32 = AddressOf defaultEncoder
                 decodei32 = AddressOf defaultDecoderi32
+                encodei16 = AddressOf defaultEncoder
+                decodei16 = AddressOf defaultDecoderi16
             End If
         End Sub
 
@@ -104,7 +111,33 @@ Namespace Serialization.BinaryDumping
             Return vals
         End Function
 
+        Public Function Base64String(data As IEnumerable(Of Single), Optional gzip As Boolean = False) As String
+            Dim raw As Byte() = GetBytes(data)
+            Dim str As String
+
+            If gzip Then
+                str = raw.GZipAsBase64(noMagic:=False)
+            Else
+                str = Base64Codec.ToBase64String(raw)
+            End If
+
+            Return str
+        End Function
+
         Public Function Base64String(data As IEnumerable(Of Integer), Optional gzip As Boolean = False) As String
+            Dim raw As Byte() = GetBytes(data)
+            Dim str As String
+
+            If gzip Then
+                str = raw.GZipAsBase64(noMagic:=False)
+            Else
+                str = Base64Codec.ToBase64String(raw)
+            End If
+
+            Return str
+        End Function
+
+        Public Function Base64String(data As IEnumerable(Of Short), Optional gzip As Boolean = False) As String
             Dim raw As Byte() = GetBytes(data)
             Dim str As String
 
@@ -143,8 +176,17 @@ Namespace Serialization.BinaryDumping
             Return decodei32(raw)
         End Function
 
+        Public Function GetBytes(i As IEnumerable(Of Single)) As Byte()
+            Return encode32(i.SafeQuery.ToArray)
+        End Function
+
+
         Public Function GetBytes(i As IEnumerable(Of Integer)) As Byte()
             Return encodei32(i.SafeQuery.ToArray)
+        End Function
+
+        Public Function GetBytes(i As IEnumerable(Of Short)) As Byte()
+            Return encodei16(i.SafeQuery.ToArray)
         End Function
 
         ''' <summary>
@@ -214,7 +256,17 @@ Namespace Serialization.BinaryDumping
             Dim nums As Integer() = New Integer(buffer.Length / 4 - 1) {}
 
             For i As Integer = 0 To nums.Length - 1
-                nums(i) = BitConverter.ToSingle(buffer, i * 4)
+                nums(i) = BitConverter.ToInt32(buffer, i * 4)
+            Next
+
+            Return nums
+        End Function
+
+        Private Shared Function defaultDecoderi16(buffer As Byte()) As Short()
+            Dim nums As Short() = New Short(buffer.Length / 2 - 1) {}
+
+            For i As Integer = 0 To nums.Length - 1
+                nums(i) = BitConverter.ToInt16(buffer, i * 2)
             Next
 
             Return nums
@@ -261,6 +313,16 @@ Namespace Serialization.BinaryDumping
             Return bytes.ToArray
         End Function
 
+        Private Shared Function defaultEncoder(nums As Short()) As Byte()
+            Dim bytes As New List(Of Byte)
+
+            For Each d As Short In nums
+                Call bytes.AddRange(BitConverter.GetBytes(d))
+            Next
+
+            Return bytes.ToArray
+        End Function
+
         Private Shared Function networkByteOrderDecoderi32(buffer As Byte()) As Integer()
             Dim nums As Integer() = New Integer(buffer.Length / 4 - 1) {}
             Dim bytes As Byte() = New Byte(4 - 1) {}
@@ -270,6 +332,20 @@ Namespace Serialization.BinaryDumping
                 Call Array.Reverse(bytes)
 
                 nums(i) = BitConverter.ToInt32(bytes, Scan0)
+            Next
+
+            Return nums
+        End Function
+
+        Private Shared Function networkByteOrderDecoderi16(buffer As Byte()) As Short()
+            Dim nums As Int16() = New Short(buffer.Length / 2 - 1) {}
+            Dim bytes As Byte() = New Byte(2 - 1) {}
+
+            For i As Integer = 0 To nums.Length - 1
+                Call Array.ConstrainedCopy(buffer, i * 2, bytes, Scan0, bytes.Length)
+                Call Array.Reverse(bytes)
+
+                nums(i) = BitConverter.ToInt16(bytes, Scan0)
             Next
 
             Return nums
@@ -317,6 +393,19 @@ Namespace Serialization.BinaryDumping
             Return bytes.ToArray
         End Function
 
+        Private Shared Function networkByteOrderEncoder(nums As Short()) As Byte()
+            Dim bytes As New List(Of Byte)
+            Dim buffer As Byte()
+
+            For Each d As Short In nums
+                buffer = BitConverter.GetBytes(d)
+
+                Call Array.Reverse(buffer)
+                Call bytes.AddRange(buffer)
+            Next
+
+            Return bytes.ToArray
+        End Function
 
         Private Shared Function networkByteOrderEncoder(nums As Single()) As Byte()
             Dim bytes As New List(Of Byte)
