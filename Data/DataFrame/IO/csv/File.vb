@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::47e438642b53dd69f30614f435827a4d, Data\DataFrame\IO\csv\File.vb"
+﻿#Region "Microsoft.VisualBasic::2ce131e7595c81e568ed800967c4e843, Data\DataFrame\IO\csv\File.vb"
 
     ' Author:
     ' 
@@ -34,12 +34,12 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 977
-    '    Code Lines: 592 (60.59%)
-    ' Comment Lines: 259 (26.51%)
+    '   Total Lines: 976
+    '    Code Lines: 592 (60.66%)
+    ' Comment Lines: 259 (26.54%)
     '    - Xml Docs: 96.91%
     ' 
-    '   Blank Lines: 126 (12.90%)
+    '   Blank Lines: 125 (12.81%)
     '     File Size: 39.60 KB
 
 

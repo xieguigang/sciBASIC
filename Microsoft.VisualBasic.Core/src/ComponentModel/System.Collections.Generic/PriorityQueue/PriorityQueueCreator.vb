@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fe46f8f9ad6f56636e10ca462a48243b, Microsoft.VisualBasic.Core\src\ComponentModel\System.Collections.Generic\PriorityQueue\PriorityQueueCreator.vb"
+﻿#Region "Microsoft.VisualBasic::7763fdf358c00ef20d58554c4529562c, Microsoft.VisualBasic.Core\src\ComponentModel\System.Collections.Generic\PriorityQueue\PriorityQueueCreator.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 19
-    '    Code Lines: 15 (78.95%)
+    '   Total Lines: 18
+    '    Code Lines: 14 (77.78%)
     ' Comment Lines: 0 (0.00%)
     '    - Xml Docs: 0.00%
     ' 
-    '   Blank Lines: 4 (21.05%)
-    '     File Size: 600 B
+    '   Blank Lines: 4 (22.22%)
+    '     File Size: 578 B
 
 
     '     Module PriorityQueueCreator

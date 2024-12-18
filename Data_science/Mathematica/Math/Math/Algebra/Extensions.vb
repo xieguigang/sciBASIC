@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::00d1170e9fc376e383a84a5d5114ebe2, Data_science\Mathematica\Math\Math\Algebra\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::974da631139f864ce50440b9ec19e0a9, Data_science\Mathematica\Math\Math\Algebra\Extensions.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 179
-    '    Code Lines: 100 (55.87%)
-    ' Comment Lines: 53 (29.61%)
-    '    - Xml Docs: 60.38%
+    '   Total Lines: 203
+    '    Code Lines: 111 (54.68%)
+    ' Comment Lines: 62 (30.54%)
+    '    - Xml Docs: 64.52%
     ' 
-    '   Blank Lines: 26 (14.53%)
-    '     File Size: 7.27 KB
+    '   Blank Lines: 30 (14.78%)
+    '     File Size: 8.04 KB
 
 
     '     Delegate Function
@@ -49,7 +49,7 @@
     '     Module HelperExtensions
     ' 
     '         Function: AsMatrix, IsNaNImaginary, (+2 Overloads) jaccard_coeff, jaccard_coeff_parallel, jaccard_row
-    '                   PrimitiveLinearEquation, Tangent
+    '                   JaccardIndex, PrimitiveLinearEquation, Tangent
     '         Class JaccardTask
     ' 
     '             Constructor: (+1 Overloads) Sub New

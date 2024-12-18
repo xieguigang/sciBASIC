@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2299bbfc11de4d2633d71b105e646420, Microsoft.VisualBasic.Core\src\ComponentModel\Algorithm\BinaryTree\AVLTree\AVLClusterTree.vb"
+﻿#Region "Microsoft.VisualBasic::8b17577eeef3a89f575afc6c0101617f, Microsoft.VisualBasic.Core\src\ComponentModel\Algorithm\BinaryTree\AVLTree\AVLClusterTree.vb"
 
     ' Author:
     ' 
@@ -37,10 +37,10 @@
     '   Total Lines: 94
     '    Code Lines: 59 (62.77%)
     ' Comment Lines: 15 (15.96%)
-    '    - Xml Docs: 86.67%
+    '    - Xml Docs: 93.33%
     ' 
     '   Blank Lines: 20 (21.28%)
-    '     File Size: 3.78 KB
+    '     File Size: 3.83 KB
 
 
     '     Class AVLClusterTree

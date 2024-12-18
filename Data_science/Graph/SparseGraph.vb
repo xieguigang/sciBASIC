@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::12cfb6b501e595dfa78400a8c4c3e472, Data_science\Graph\SparseGraph.vb"
+﻿#Region "Microsoft.VisualBasic::bc5eec77d1531d7f787688674e231b5a, Data_science\Graph\SparseGraph.vb"
 
     ' Author:
     ' 
@@ -34,19 +34,20 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 144
-    '    Code Lines: 106 (73.61%)
-    ' Comment Lines: 8 (5.56%)
+    '   Total Lines: 156
+    '    Code Lines: 111 (71.15%)
+    ' Comment Lines: 13 (8.33%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 30 (20.83%)
-    '     File Size: 4.50 KB
+    '   Blank Lines: 32 (20.51%)
+    '     File Size: 4.77 KB
 
 
     ' Class SparseGraph
     ' 
     '     Properties: Edges, Vertex
     ' 
+    '     Constructor: (+2 Overloads) Sub New
     '     Function: Copy, (+2 Overloads) CreateMatrix, GetGraph, Links, MakeIndex
     '               ToString
     '     Class Edge

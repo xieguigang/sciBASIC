@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ff9d07aa57fab0c92d9abc1f5485d44b, Data_science\Visualization\Plots\Scatter\Data\SerialData.vb"
+﻿#Region "Microsoft.VisualBasic::e2c3bbb2178e65c835c6b516fc42d1c5, Data_science\Visualization\Plots\Scatter\Data\SerialData.vb"
 
     ' Author:
     ' 
@@ -34,18 +34,20 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 131
-    '    Code Lines: 84 (64.12%)
-    ' Comment Lines: 32 (24.43%)
+    '   Total Lines: 139
+    '    Code Lines: 90 (64.75%)
+    ' Comment Lines: 32 (23.02%)
     '    - Xml Docs: 96.88%
     ' 
-    '   Blank Lines: 15 (11.45%)
-    '     File Size: 4.47 KB
+    '   Blank Lines: 17 (12.23%)
+    '     File Size: 4.64 KB
 
 
     ' Class SerialData
     ' 
     '     Properties: DataAnnotations, title
+    ' 
+    '     Constructor: (+2 Overloads) Sub New
     ' 
     '     Function: BrushHandler, GetPen, GetPointByX, ToString, x
     ' 

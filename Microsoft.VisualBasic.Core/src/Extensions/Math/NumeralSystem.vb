@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::19de6bd9898c3ec432f52570db8e30c0, Microsoft.VisualBasic.Core\src\Extensions\Math\NumeralSystem.vb"
+﻿#Region "Microsoft.VisualBasic::e85cf18ab813f19f4d58c6af49535ea7, Microsoft.VisualBasic.Core\src\Extensions\Math\NumeralSystem.vb"
 
     ' Author:
     ' 
@@ -34,18 +34,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 26
-    '    Code Lines: 15 (57.69%)
-    ' Comment Lines: 6 (23.08%)
+    '   Total Lines: 71
+    '    Code Lines: 38 (53.52%)
+    ' Comment Lines: 21 (29.58%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 5 (19.23%)
-    '     File Size: 750 B
+    '   Blank Lines: 12 (16.90%)
+    '     File Size: 2.81 KB
 
 
     '     Module NumeralSystem
     ' 
-    '         Function: TranslateDecimal
+    '         Function: FindNthRoot, TranslateDecimal
     ' 
     ' 
     ' /********************************************************************************/

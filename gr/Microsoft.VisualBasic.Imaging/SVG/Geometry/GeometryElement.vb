@@ -1,56 +1,56 @@
-﻿#Region "Microsoft.VisualBasic::3f3baa782d2f037614c30521182bb516, gr\Microsoft.VisualBasic.Imaging\SVG\Geometry\GeometryElement.vb"
+﻿#Region "Microsoft.VisualBasic::062aa748f15159a573a7ffe587f1ed98, gr\Microsoft.VisualBasic.Imaging\SVG\Geometry\GeometryElement.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 117
-'    Code Lines: 84 (71.79%)
-' Comment Lines: 14 (11.97%)
-'    - Xml Docs: 42.86%
-' 
-'   Blank Lines: 19 (16.24%)
-'     File Size: 4.36 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Class GeometryElement
-' 
-'         Properties: svgElement, tag, X, Y
-' 
-'         Function: CheckPossibleCircleShape, LoadElements, ToString
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 128
+    '    Code Lines: 93 (72.66%)
+    ' Comment Lines: 14 (10.94%)
+    '    - Xml Docs: 42.86%
+    ' 
+    '   Blank Lines: 21 (16.41%)
+    '     File Size: 4.75 KB
+
+
+    '     Class GeometryElement
+    ' 
+    '         Properties: svgElement, tag, X, Y
+    ' 
+    '         Function: CheckPossibleCircleShape, LoadElements, ToString
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::aac9d1524e25fd793439ec21f138c997, gr\Microsoft.VisualBasic.Imaging\SVG\Geometry\Transform.vb"
+﻿#Region "Microsoft.VisualBasic::8ca441a050d0200fb309fb0788b35737, gr\Microsoft.VisualBasic.Imaging\SVG\Geometry\Transform.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 49
-    '    Code Lines: 39 (79.59%)
-    ' Comment Lines: 0 (0.00%)
-    '    - Xml Docs: 0.00%
+    '   Total Lines: 104
+    '    Code Lines: 74 (71.15%)
+    ' Comment Lines: 9 (8.65%)
+    '    - Xml Docs: 88.89%
     ' 
-    '   Blank Lines: 10 (20.41%)
-    '     File Size: 1.68 KB
+    '   Blank Lines: 21 (20.19%)
+    '     File Size: 3.40 KB
 
 
     '     Class Transform
@@ -48,7 +48,12 @@
     '         Properties: translate
     ' 
     '         Constructor: (+1 Overloads) Sub New
-    '         Function: Parse, ToString
+    '         Function: GetOffsetTransform, Parse, ToString
+    ' 
+    '     Class MatrixTransform
+    ' 
+    '         Constructor: (+2 Overloads) Sub New
+    '         Function: GetOffset
     ' 
     ' 
     ' /********************************************************************************/

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::214369396ce57aafd3fbbfb35dee4a42, Data_science\Mathematica\Math\Math\Algebra\Matrix.NET\Math\WiseOperation.vb"
+﻿#Region "Microsoft.VisualBasic::99d2509b51641e7a1f9435583d63565b, Data_science\Mathematica\Math\Math\Algebra\Matrix.NET\Math\WiseOperation.vb"
 
     ' Author:
     ' 
@@ -34,18 +34,20 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 31
-    '    Code Lines: 24 (77.42%)
+    '   Total Lines: 37
+    '    Code Lines: 29 (78.38%)
     ' Comment Lines: 0 (0.00%)
     '    - Xml Docs: 0.00%
     ' 
-    '   Blank Lines: 7 (22.58%)
-    '     File Size: 941 B
+    '   Blank Lines: 8 (21.62%)
+    '     File Size: 1.27 KB
 
 
     '     Class WiseOperation
     ' 
-    '         Function: ColWise, RowWise, Sum
+    '         Properties: matrix_wise
+    ' 
+    '         Function: ColWise, RowWise, ScaleX, Sum
     ' 
     ' 
     ' /********************************************************************************/

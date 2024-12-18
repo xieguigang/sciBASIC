@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f24ef23c5d5e412900435c15a7738933, Data\BinaryData\HDSPack\FileSystem\StreamPack.vb"
+﻿#Region "Microsoft.VisualBasic::5fa0527f798342f090117461a889afc3, Data\BinaryData\HDSPack\FileSystem\StreamPack.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 703
-    '    Code Lines: 388 (55.19%)
-    ' Comment Lines: 228 (32.43%)
-    '    - Xml Docs: 76.32%
+    '   Total Lines: 706
+    '    Code Lines: 388 (54.96%)
+    ' Comment Lines: 231 (32.72%)
+    '    - Xml Docs: 76.62%
     ' 
-    '   Blank Lines: 87 (12.38%)
-    '     File Size: 29.21 KB
+    '   Blank Lines: 87 (12.32%)
+    '     File Size: 29.39 KB
 
 
     '     Class StreamPack

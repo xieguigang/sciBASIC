@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2e482f3e4c66e03659523abdf49a4755, Data\DataFrame\IO\csv\RowIterator.vb"
+﻿#Region "Microsoft.VisualBasic::7011584c0ea87bdc82ec3296cab0d881, Data\DataFrame\IO\csv\RowIterator.vb"
 
     ' Author:
     ' 

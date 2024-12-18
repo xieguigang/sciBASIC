@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cfb4d2fb0adc8995b617293eae50aa64, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Colors\Scaler\Mapper\CategoryColorProfile.vb"
+﻿#Region "Microsoft.VisualBasic::56058cb588624dad53b7c19ecc2e50a2, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Colors\Scaler\Mapper\CategoryColorProfile.vb"
 
     ' Author:
     ' 
@@ -34,20 +34,20 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 88
-    '    Code Lines: 52 (59.09%)
-    ' Comment Lines: 21 (23.86%)
+    '   Total Lines: 93
+    '    Code Lines: 56 (60.22%)
+    ' Comment Lines: 21 (22.58%)
     '    - Xml Docs: 90.48%
     ' 
-    '   Blank Lines: 15 (17.05%)
-    '     File Size: 3.25 KB
+    '   Blank Lines: 16 (17.20%)
+    '     File Size: 3.51 KB
 
 
     '     Class CategoryColorProfile
     ' 
     '         Properties: size
     ' 
-    '         Constructor: (+4 Overloads) Sub New
+    '         Constructor: (+5 Overloads) Sub New
     '         Function: (+2 Overloads) GetColor, GetTermColors
     ' 
     ' 

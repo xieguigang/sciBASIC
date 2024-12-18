@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::63d0d4e5a5b4b70dacdbbe844e0cac38, Data\DataFrame\IO\Generic\DataSet.vb"
+﻿#Region "Microsoft.VisualBasic::f6a50ebf99ff4f8b0d1178550ac32261, Data\DataFrame\IO\Generic\DataSet.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 94.37%
     ' 
     '   Blank Lines: 26 (11.26%)
-    '     File Size: 9.76 KB
+    '     File Size: 9.80 KB
 
 
     '     Class DataSet

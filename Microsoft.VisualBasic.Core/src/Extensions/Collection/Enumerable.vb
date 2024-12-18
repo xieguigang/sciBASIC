@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::da7758db6d52e6ff6afab465c34c354c, Microsoft.VisualBasic.Core\src\Extensions\Collection\Enumerable.vb"
+﻿#Region "Microsoft.VisualBasic::0bf8e44c72b2dd4574a2756d274da959, Microsoft.VisualBasic.Core\src\Extensions\Collection\Enumerable.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 323
-    '    Code Lines: 225 (69.66%)
-    ' Comment Lines: 51 (15.79%)
+    '   Total Lines: 326
+    '    Code Lines: 229 (70.25%)
+    ' Comment Lines: 51 (15.64%)
     '    - Xml Docs: 98.04%
     ' 
-    '   Blank Lines: 47 (14.55%)
-    '     File Size: 13.28 KB
+    '   Blank Lines: 46 (14.11%)
+    '     File Size: 13.30 KB
 
 
     ' Module IEnumerations

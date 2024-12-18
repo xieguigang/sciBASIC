@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e810832cf5d6c82781203734f26deb1f, Data\BinaryData\msgpack\SerializationContext.vb"
+﻿#Region "Microsoft.VisualBasic::731022ce6b422e3fad3e643e289583c8, Data\BinaryData\msgpack\SerializationContext.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 80.00%
     ' 
     '   Blank Lines: 12 (17.14%)
-    '     File Size: 2.63 KB
+    '     File Size: 2.64 KB
 
 
     ' Class SerializationContext

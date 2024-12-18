@@ -1,57 +1,58 @@
-﻿#Region "Microsoft.VisualBasic::af1c86c4512f3883fd8cd84bb7fba0eb, Microsoft.VisualBasic.Core\src\Serialization\BinaryDumping\NetworkByteOrderBuffer.vb"
+﻿#Region "Microsoft.VisualBasic::51e60bb95ee1038deb8bdfbe887d78be, Microsoft.VisualBasic.Core\src\Serialization\BinaryDumping\NetworkByteOrderBuffer.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 202
-'    Code Lines: 146 (72.28%)
-' Comment Lines: 14 (6.93%)
-'    - Xml Docs: 78.57%
-' 
-'   Blank Lines: 42 (20.79%)
-'     File Size: 7.33 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Class NetworkByteOrderBuffer
-' 
-'         Constructor: (+1 Overloads) Sub New
-'         Function: Base64String, defaultDecoder, defaultDecoder32, (+2 Overloads) defaultEncoder, (+3 Overloads) GetBytes
-'                   networkByteOrderDecoder, networkByteOrderDecoder32, (+2 Overloads) networkByteOrderEncoder, (+2 Overloads) ParseDouble, ToDouble
-'                   ToFloat
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 381
+    '    Code Lines: 273 (71.65%)
+    ' Comment Lines: 19 (4.99%)
+    '    - Xml Docs: 84.21%
+    ' 
+    '   Blank Lines: 89 (23.36%)
+    '     File Size: 13.53 KB
+
+
+    '     Class NetworkByteOrderBuffer
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    '         Function: (+4 Overloads) Base64String, defaultDecoder, defaultDecoder32, defaultDecoderi16, defaultDecoderi32
+    '                   (+4 Overloads) defaultEncoder, (+6 Overloads) GetBytes, networkByteOrderDecoder, networkByteOrderDecoder32, networkByteOrderDecoderi16
+    '                   networkByteOrderDecoderi32, (+4 Overloads) networkByteOrderEncoder, (+2 Overloads) ParseDouble, ParseInteger, ToDouble
+    '                   ToFloat
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

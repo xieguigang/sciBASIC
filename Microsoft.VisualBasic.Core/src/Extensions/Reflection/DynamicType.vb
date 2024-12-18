@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::48a39c10a84cbbb59fc115151a210e2a, Microsoft.VisualBasic.Core\src\Extensions\Reflection\DynamicType.vb"
+﻿#Region "Microsoft.VisualBasic::a2dc9c6db73beb0c669f2a77e651fd0a, Microsoft.VisualBasic.Core\src\Extensions\Reflection\DynamicType.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 238
-    '    Code Lines: 156 (65.55%)
-    ' Comment Lines: 44 (18.49%)
+    '   Total Lines: 256
+    '    Code Lines: 170 (66.41%)
+    ' Comment Lines: 44 (17.19%)
     '    - Xml Docs: 97.73%
     ' 
-    '   Blank Lines: 38 (15.97%)
-    '     File Size: 9.58 KB
+    '   Blank Lines: 42 (16.41%)
+    '     File Size: 10.62 KB
 
 
     ' Class DynamicType
@@ -49,7 +49,7 @@
     ' 
     '     Constructor: (+1 Overloads) Sub New
     ' 
-    '     Function: Add, (+2 Overloads) Create, CreateValidSymbolName, GetTypeBuilder
+    '     Function: Add, (+2 Overloads) Create, CreateEnum, CreateValidSymbolName, GetTypeBuilder
     ' 
     '     Sub: AddDescription, AddDisplayName, AddProperty
     '     Structure PropertyInfo

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b1c0c5dcd9014d763195f74ba32344d8, Data\DataFrame\IO\csv\RowObject.vb"
+﻿#Region "Microsoft.VisualBasic::b02acc0cf5846eb63357dce6d8fb7e68, Data\DataFrame\IO\csv\RowObject.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 489
-    '    Code Lines: 290 (59.30%)
-    ' Comment Lines: 141 (28.83%)
+    '   Total Lines: 502
+    '    Code Lines: 300 (59.76%)
+    ' Comment Lines: 141 (28.09%)
     '    - Xml Docs: 97.87%
     ' 
-    '   Blank Lines: 58 (11.86%)
-    '     File Size: 18.57 KB
+    '   Blank Lines: 61 (12.15%)
+    '     File Size: 18.97 KB
 
 
     '     Class RowObject
@@ -50,9 +50,9 @@
     '         Constructor: (+4 Overloads) Sub New
     ' 
     '         Function: AddRange, AppendItem, (+2 Overloads) Contains, CreateObject, GetALLNonEmptys
-    '                   GetColumn, GetEnumerator, GetEnumerator1, IndexOf, InsertAt
-    '                   LocateKeyWord, PopLine, Remove, (+2 Overloads) Takes, (+2 Overloads) ToString
-    '                   TryParse
+    '                   GetColumn, GetEnumerator, GetEnumerator1, IndexAny, IndexOf
+    '                   InsertAt, LocateKeyWord, PopLine, Remove, (+2 Overloads) Takes
+    '                   (+2 Overloads) ToString, TryParse
     ' 
     '         Sub: Add, Clear, CopyTo, Insert, RemoveAt
     '              Trim

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0957a54a2ae1ad510b2f56eac61dc6d8, Microsoft.VisualBasic.Core\src\Serialization\JSON\JsonSerialization.vb"
+﻿#Region "Microsoft.VisualBasic::249fe0faf6818c2e599a294af8421fa7, Microsoft.VisualBasic.Core\src\Serialization\JSON\JsonSerialization.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 323
-    '    Code Lines: 206 (63.78%)
-    ' Comment Lines: 80 (24.77%)
+    '   Total Lines: 324
+    '    Code Lines: 207 (63.89%)
+    ' Comment Lines: 80 (24.69%)
     '    - Xml Docs: 96.25%
     ' 
-    '   Blank Lines: 37 (11.46%)
-    '     File Size: 13.69 KB
+    '   Blank Lines: 37 (11.42%)
+    '     File Size: 13.79 KB
 
 
     '     Module JsonContract
