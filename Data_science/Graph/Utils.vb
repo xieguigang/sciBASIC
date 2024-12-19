@@ -73,14 +73,24 @@ Public Module Utils
         End If
 
         If tree.IsLeaf Then
-            Return If(labelKey, tree.label, tree.ID)
+            Return If(labelKey, EscapeLabel(tree.label), tree.ID)
         Else
             Dim children = tree _
                 .EnumerateChilds _
                 .Select(Function(tr) tr.Build) _
                 .JoinBy(", ")
 
-            Return $"{If(labelKey, tree.label, tree.ID)}({children})"
+            Return $"{If(labelKey, EscapeLabel(tree.label), tree.ID)}({children})"
+        End If
+    End Function
+
+    Private Function EscapeLabel(label As String) As String
+        If label.IndexOf(","c) > -1 OrElse label.IndexOf("("c) > -1 OrElse label.IndexOf(")"c) > -1 Then
+            Return $"""{label}"""
+        ElseIf label.IndexOf(""""c) > -1 Then
+            Return $"'{label}'"
+        Else
+            Return label
         End If
     End Function
 
