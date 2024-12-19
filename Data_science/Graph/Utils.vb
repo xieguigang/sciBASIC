@@ -67,20 +67,20 @@ Public Module Utils
     ''' <param name="tree"></param>
     ''' <returns></returns>
     <Extension>
-    Public Function Build(Of T, K)(tree As Tree(Of T, K)) As String
+    Public Function Build(Of T, K)(tree As Tree(Of T, K), Optional labelKey As Boolean = False) As String
         If tree Is Nothing Then
             Return "()"
         End If
 
         If tree.IsLeaf Then
-            Return tree.ID
+            Return If(labelKey, tree.label, tree.ID)
         Else
             Dim children = tree _
                 .EnumerateChilds _
                 .Select(Function(tr) tr.Build) _
                 .JoinBy(", ")
 
-            Return $"{tree.ID}({children})"
+            Return $"{If(labelKey, tree.label, tree.ID)}({children})"
         End If
     End Function
 

@@ -61,6 +61,11 @@ Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Linq
 
+''' <summary>
+''' An abstract tree data model
+''' </summary>
+''' <typeparam name="T">the data type of the reference key its associated data.</typeparam>
+''' <typeparam name="K">the data type of the reference key</typeparam>
 <DataContract>
 Public Class AbstractTree(Of T As AbstractTree(Of T, K), K) : Inherits Vertex
 
@@ -84,6 +89,11 @@ Public Class AbstractTree(Of T As AbstractTree(Of T, K), K) : Inherits Vertex
 
     Dim qualDeli$ = "."
 
+    ''' <summary>
+    ''' Get child node with a reference key
+    ''' </summary>
+    ''' <param name="key"></param>
+    ''' <returns></returns>
     Default Public ReadOnly Property Child(key As K) As T
         Get
             Return Childs(key)

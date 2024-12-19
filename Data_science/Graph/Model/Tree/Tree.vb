@@ -63,10 +63,12 @@
 Imports System.Runtime.Serialization
 
 ''' <summary>
-''' Tree node with data..(可以直接被使用的树对象类型)
+''' Tree node with data.
 ''' </summary>
 ''' <typeparam name="T"></typeparam>
-''' 
+''' <remarks>
+''' (可以直接被使用的树对象类型)
+''' </remarks>
 <DataContract>
 Public Class Tree(Of T, K) : Inherits AbstractTree(Of Tree(Of T, K), K)
 
