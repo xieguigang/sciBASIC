@@ -60,24 +60,57 @@ Namespace ComponentModel.Algorithm.BinaryTree
 
     Public Delegate Sub TreeKeyInsertHandler(Of K, V)(keyNode As BinaryTree(Of K, V), newValue As V)
 
-    Public Class DelegateTreeInsertCallback(Of K, V)
+    Public MustInherit Class TreeInsertCallback(Of K, V)
+
+        Public MustOverride Sub InsertDuplicated(keyNode As BinaryTree(Of K, V), newValue As V)
+        Public MustOverride Sub InsertRight(keyNode As BinaryTree(Of K, V), newValue As V)
+        Public MustOverride Sub InsertLeft(keyNode As BinaryTree(Of K, V), newValue As V)
+
+    End Class
+
+    Public Class DelegateTreeInsertCallback(Of K, V) : Inherits TreeInsertCallback(Of K, V)
+
+        ' default nothing means do nothing
 
         ''' <summary>
         ''' usually for add cluster member into cluster
         ''' </summary>
-        Public insertDuplicated As TreeKeyInsertHandler(Of K, V) =
-            Sub(tree, key)
-                ' do nothing 
-            End Sub
-        Public insertRight As TreeKeyInsertHandler(Of K, V) =
-            Sub(tree, key)
-                ' do nothing
-            End Sub
-        Public insertLeft As TreeKeyInsertHandler(Of K, V) =
-            Sub(tree, key)
-                ' do nothing
-            End Sub
+        ReadOnly m_duplicated As TreeKeyInsertHandler(Of K, V)
+        ReadOnly m_right As TreeKeyInsertHandler(Of K, V)
+        ReadOnly m_left As TreeKeyInsertHandler(Of K, V)
 
+        ''' <summary>
+        ''' default is do nothing
+        ''' </summary>
+        Sub New()
+        End Sub
+
+        Sub New(Optional left As TreeKeyInsertHandler(Of K, V) = Nothing,
+                Optional right As TreeKeyInsertHandler(Of K, V) = Nothing,
+                Optional duplicated As TreeKeyInsertHandler(Of K, V) = Nothing)
+
+            m_left = left
+            m_right = right
+            m_duplicated = duplicated
+        End Sub
+
+        Public Overrides Sub InsertDuplicated(keyNode As BinaryTree(Of K, V), newValue As V)
+            If Not m_duplicated Is Nothing Then
+                Call m_duplicated(keyNode, newValue)
+            End If
+        End Sub
+
+        Public Overrides Sub InsertRight(keyNode As BinaryTree(Of K, V), newValue As V)
+            If Not m_right Is Nothing Then
+                Call m_right(keyNode, newValue)
+            End If
+        End Sub
+
+        Public Overrides Sub InsertLeft(keyNode As BinaryTree(Of K, V), newValue As V)
+            If Not m_left Is Nothing Then
+                Call m_left(keyNode, newValue)
+            End If
+        End Sub
     End Class
 
 End Namespace
