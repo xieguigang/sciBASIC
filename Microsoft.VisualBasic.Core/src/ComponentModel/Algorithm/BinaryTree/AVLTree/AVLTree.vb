@@ -109,11 +109,11 @@ Namespace ComponentModel.Algorithm.BinaryTree
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Sub Add(key As K, value As V, Optional valueReplace As Boolean = True)
             Dim callback As New DelegateTreeInsertCallback(Of K, V) With {
-                .insertDuplicated = Sub(node, newValue)
-                                        If valueReplace Then
-                                            node.Value = newValue
-                                        End If
-                                    End Sub
+                .m_duplicated = Sub(node, newValue)
+                                    If valueReplace Then
+                                        node.Value = newValue
+                                    End If
+                                End Sub
             }
 
             _root = Add(key, value, _root, callback)
@@ -153,9 +153,9 @@ Namespace ComponentModel.Algorithm.BinaryTree
         End Function
 
         Private Sub appendRight(ByRef tree As BinaryTree(Of K, V), key As K, value As V, callback As DelegateTreeInsertCallback(Of K, V))
-            If tree.Right Is Nothing AndAlso Not callback.insertRight Is Nothing Then
+            If tree.Right Is Nothing Then
                 ' add new leaf node
-                Call callback.insertRight(tree, value)
+                Call callback.InsertRight(tree, value)
             End If
 
             ' construct tree link
@@ -171,9 +171,9 @@ Namespace ComponentModel.Algorithm.BinaryTree
         End Sub
 
         Private Sub appendLeft(ByRef tree As BinaryTree(Of K, V), key As K, value As V, callback As DelegateTreeInsertCallback(Of K, V))
-            If tree.Left Is Nothing AndAlso Not callback.insertLeft Is Nothing Then
+            If tree.Left Is Nothing Then
                 ' add new leaf node
-                Call callback.insertLeft(tree, value)
+                Call callback.InsertLeft(tree, value)
             End If
 
             tree.Left = Add(key, value, tree.Left, callback)

@@ -75,9 +75,9 @@ Namespace ComponentModel.Algorithm.BinaryTree
         ''' <summary>
         ''' usually for add cluster member into cluster
         ''' </summary>
-        ReadOnly m_duplicated As TreeKeyInsertHandler(Of K, V)
-        ReadOnly m_right As TreeKeyInsertHandler(Of K, V)
-        ReadOnly m_left As TreeKeyInsertHandler(Of K, V)
+        Public m_duplicated As TreeKeyInsertHandler(Of K, V)
+        Public m_right As TreeKeyInsertHandler(Of K, V)
+        Public m_left As TreeKeyInsertHandler(Of K, V)
 
         ''' <summary>
         ''' default is do nothing

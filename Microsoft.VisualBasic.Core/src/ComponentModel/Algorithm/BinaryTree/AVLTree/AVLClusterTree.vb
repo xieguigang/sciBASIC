@@ -98,7 +98,7 @@ Namespace ComponentModel.Algorithm.BinaryTree
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Sub Add(key As K)
-            addClusterMember.insertDuplicated = Sub(node, null) node.Key.Add(key)
+            addClusterMember.m_duplicated = Sub(node, null) node.Key.Add(key)
             avltree.Add(New ClusterKey(Of K)(key, views), key, callback:=addClusterMember)
             totals += 1
         End Sub
@@ -107,9 +107,9 @@ Namespace ComponentModel.Algorithm.BinaryTree
                        Optional left As Action(Of ClusterKey(Of K), K) = Nothing,
                        Optional right As Action(Of ClusterKey(Of K), K) = Nothing)
 
-            If Not cluster Is Nothing Then addClusterMember.insertDuplicated = Sub(node, null) Call cluster(node.Key, key)
-            If Not left Is Nothing Then addClusterMember.insertLeft = Sub(node, null) Call left(node.Key, key)
-            If Not right Is Nothing Then addClusterMember.insertRight = Sub(node, null) Call right(node.Key, key)
+            If Not cluster Is Nothing Then addClusterMember.m_duplicated = Sub(node, null) Call cluster(node.Key, key)
+            If Not left Is Nothing Then addClusterMember.m_left = Sub(node, null) Call left(node.Key, key)
+            If Not right Is Nothing Then addClusterMember.m_right = Sub(node, null) Call right(node.Key, key)
 
             Dim clusterRoot As New ClusterKey(Of K)(key, views)
 
