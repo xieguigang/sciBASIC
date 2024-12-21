@@ -102,6 +102,7 @@ Public Class ZScoresPlot : Inherits Plot
         Dim pointSize As New SizeF(theme.pointSize, theme.pointSize)
         Dim axisStroke As Pen = css.GetPen(Stroke.TryParse(theme.axisStroke))
         Dim plotRect = canvas.PlotRegion(css)
+        Dim padding As PaddingLayout = PaddingLayout.EvaluateFromCSS(css, canvas.Padding)
 
         ' 计算出layout信息
         Dim plotWidth% = plotRect.Width _
@@ -112,13 +113,13 @@ Public Class ZScoresPlot : Inherits Plot
         Dim plotHeight = plotRect.Height - titleFont.Height - tickFont.Height - 20
         Dim plotWidthRange As DoubleRange = New Double() {0, plotWidth}
         Dim X = Function(Z#)
-                    Return canvas.Padding.Left _
+                    Return padding.Left _
                                    + maxSerialLabelSize.Width _
                                    + 5 _
                                    + range.ScaleMapping(Z, plotWidthRange)
                 End Function
         Dim dy! = plotHeight / (data.serials.Length)
-        Dim yTop! = canvas.Padding.Top
+        Dim yTop! = padding.Top
         Dim left! = X(range.Min)
         Dim labelSize As SizeF
         Dim labelPosition As PointF
@@ -177,7 +178,7 @@ Public Class ZScoresPlot : Inherits Plot
         Next
 
         ' 绘制出标题
-        yTop! = canvas.Padding.Top
+        yTop! = padding.Top
         labelSize = g.MeasureString(main, titleFont)
         labelPosition = New PointF With {
                     .X = left + (plotWidth - labelSize.Width) / 2,
@@ -190,7 +191,7 @@ Public Class ZScoresPlot : Inherits Plot
         Dim legendHeight! = (legendLabelFont.Height + 5) * groups.Count
         Dim maxWidth = maxLegendLabelSize.Width + legendLabelFont.Height * 3
         Dim legendLocation As New Point With {
-                    .X = X(range.Max) + (canvas.Padding.Right - maxWidth) / 2,
+                    .X = X(range.Max) + (padding.Right - maxWidth) / 2,
                     .Y = yTop + (plotHeight - legendHeight) / 2
                 }
         Dim shapes = data.shapes

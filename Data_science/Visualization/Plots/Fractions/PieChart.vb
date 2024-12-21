@@ -269,7 +269,8 @@ Namespace Fractions
                     Dim font As Font = CSS.GetFont(CSSFont.TryParse(legendFont))
                     Dim valueLabelFont As Font = css.GetFont(CSSFont.TryParse(valueLabelStyle))
                     Dim layoutRect As Rectangle
-                    Dim topLeft As New Point(region.Padding.Left, region.Padding.Top)
+                    Dim layout As PaddingLayout = PaddingLayout.EvaluateFromCSS(css, region.Padding)
+                    Dim topLeft As New Point(layout.Left, layout.Top)
 
                     If minRadius <= 0 OrElse CDbl(minRadius) >= r Then  ' 半径固定不变的样式
                         Call g.PlotPie(
@@ -313,12 +314,12 @@ Namespace Fractions
 
                     If legendAlt Then
                         Dim maxL = g.MeasureString(data.MaxLengthString(Function(x) x.Name), font).Width
-                        Dim left = layoutRect.Right + margin.Left
+                        Dim left = layoutRect.Right + layout.Left
                         Dim legends As New List(Of LegendObject)
                         Dim d = font.Size
                         Dim height! = (d + g.MeasureString("1", font).Height) * data.Count
                         ' Excel之中的饼图的示例样式位置为默认右居中的
-                        Dim top = (gSize.Height - height) / 2 - margin.Top
+                        Dim top = (gSize.Height - height) / 2 - layout.Top
 
                         For Each x As FractionData In data
                             legends += New LegendObject With {

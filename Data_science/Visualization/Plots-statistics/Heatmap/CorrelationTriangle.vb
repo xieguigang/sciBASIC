@@ -93,6 +93,7 @@ Namespace Heatmap
 
         Protected Overrides Sub PlotInternal(ByRef g As IGraphics, canvas As GraphicsRegion)
             Dim css As CSSEnvirnment = g.LoadEnvironment
+            Dim padding As PaddingLayout = PaddingLayout.EvaluateFromCSS(css, canvas.Padding)
             Dim valuelabelFont As Font = css.GetFont(theme.tagCSS)
             Dim rowLabelFont As Font = css.GetFont(theme.axisLabelCSS)
             Dim keys$() = cor.data.keys
@@ -122,10 +123,10 @@ Namespace Heatmap
                                 End If
                             End Function
             Dim rawLeft! = plotRegion.Left + maxLabelSize.Width
-            Dim top = canvas.Padding.Top + g.MeasureString(cor.data.keys.First, rowLabelFont).Width
+            Dim top = padding.Top + g.MeasureString(cor.data.keys.First, rowLabelFont).Width
             Dim levels = cor.data.PopulateRowObjects(Of DataSet).ToArray.DataScaleLevels(cor.data.keys, -1, DrawElements.None, mapLevels)
             Dim llayout As New Rectangle With {
-                .Location = New Point(plotRegion.Right - legendSize, canvas.Padding.Top),
+                .Location = New Point(plotRegion.Right - legendSize, padding.Top),
                 .Size = New Size(legendSize, legendSize * 2)
             }
 

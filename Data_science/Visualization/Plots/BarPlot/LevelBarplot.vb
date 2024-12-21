@@ -152,6 +152,7 @@ Namespace BarPlot
             Dim plotInternal =
                 Sub(ByRef g As IGraphics, region As GraphicsRegion)
                     Dim css As CSSEnvirnment = g.LoadEnvironment
+                    Dim padding As PaddingLayout = PaddingLayout.EvaluateFromCSS(css, region.Padding)
                     Dim pen As Pen = css.GetPen(Stroke.TryParse(chartBoxStroke))
                     Dim titleFont As Font = css.GetFont(CSSFont.TryParse(titleFontCSS))
                     Dim labelFont As Font = css.GetFont(CSSFont.TryParse(labelFontCSS))
@@ -245,7 +246,7 @@ Namespace BarPlot
                     Dim legendLayout As New Rectangle With {
                         .X = chartBox.Right + 20,
                         .Y = chartBox.Top + (chartBox.Height - 200) / 2,
-                        .Width = region.Padding.Right * (2 / 3),
+                        .Width = padding.Right * (2 / 3),
                         .Height = chartBox.Height / 2
                     }
 
@@ -254,7 +255,7 @@ Namespace BarPlot
                     ' 绘制底部的小标题
                     titleSize = g.MeasureString(valueTitle, valueTitleFont)
                     x = chartBox.Left + (chartBox.Width - titleSize.Width) / 2
-                    y = chartBox.Bottom + (region.Padding.Bottom - titleSize.Height) / 2
+                    y = chartBox.Bottom + (padding.Bottom - titleSize.Height) / 2
 
                     Call g.DrawString(valueTitle, valueTitleFont, Brushes.Black, New PointF(x, y))
                 End Sub

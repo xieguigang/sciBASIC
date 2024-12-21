@@ -207,7 +207,7 @@ Namespace Contour.HeatMap
                 .Y = y
             }
             Dim size As Size = canvas.Size
-            Dim margin = canvas.Padding
+            Dim margin As PaddingLayout = PaddingLayout.EvaluateFromCSS(css, canvas.Padding)
             Dim plotWidth! = rect.Width
             Dim plotHeight! = rect.Height
             ' 图例位于右边，占1/5的绘图区域的宽度，高度为绘图区域的高度的2/3

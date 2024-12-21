@@ -176,7 +176,8 @@ Namespace Contour
                 Next
             End If
 
-            Dim layout As New Rectangle(rect.Right + 10, rect.Top, canvas.Padding.Right / 3 * 2, rect.Height / 3 * 2)
+            Dim padding As PaddingLayout = PaddingLayout.EvaluateFromCSS(css, canvas.Padding)
+            Dim layout As New Rectangle(rect.Right + 10, rect.Top, padding.Right / 3 * 2, rect.Height / 3 * 2)
             Dim legendTitleFont As Font = css.GetFont(CSSFont.TryParse(theme.legendTitleCSS))
             Dim tickFont As Font = css.GetFont(CSSFont.TryParse(theme.legendTickCSS))
             Dim tickStroke As Pen = css.GetPen(Stroke.TryParse(theme.legendTickAxisStroke))

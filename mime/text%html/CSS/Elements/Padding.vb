@@ -74,6 +74,9 @@ Imports Microsoft.VisualBasic.Scripting.Runtime
 
 Namespace CSS
 
+    ''' <summary>
+    ''' A fix numeric layout data 
+    ''' </summary>
     Public Structure PaddingLayout
 
         Dim Top As Single
@@ -110,6 +113,7 @@ Namespace CSS
             Return $"padding: {Top}px {Right}px {Bottom}px {Left}px;"
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Function EvaluateFromCSS(css As CSSEnvirnment, layout As Padding) As PaddingLayout
             Return New PaddingLayout With {
                 .Bottom = css.GetHeight(layout.Bottom),

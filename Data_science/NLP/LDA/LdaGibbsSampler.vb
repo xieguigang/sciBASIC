@@ -342,7 +342,11 @@ Namespace LDA
             Dim v As Integer() = z(zi)
             Dim gibbs As New GibbsSamplingTask(v, zi, Me)
 
-            Call gibbs.Solve()
+            If VectorTask.n_threads > 1 Then
+                Call gibbs.Run()
+            Else
+                Call gibbs.Solve()
+            End If
         End Sub
 
         ''' <summary>
@@ -368,9 +372,10 @@ Namespace LDA
 
             ' initial state of the Markov chain:
             Call initialState(K)
-            Call println($"Sampling {ITERATIONS} iterations with burn-in of {BURN_IN} unique temp var.")
-            Call println($"gibbs run with {VectorTask.n_threads} CPU threads!")
+            Call println($"* Sampling {ITERATIONS} iterations with burn-in of {BURN_IN} unique temp var.")
+            Call println($"* gibbs run in {If(VectorTask.n_threads <= 1, "sequential mode", $"parallel with {VectorTask.n_threads} CPU threads")}!")
             Call println($"z_index size={z.Length}")
+            Call VBDebugger.WaitOutput()
 
             ' z is initialized after initialState is called
             Dim zIndex As Integer() = z.Sequence.ToArray

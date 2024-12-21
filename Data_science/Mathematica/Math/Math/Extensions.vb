@@ -130,6 +130,12 @@ Imports std = System.Math
         End If
     End Function
 
+    ''' <summary>
+    ''' SIMD version of the modified cosine score
+    ''' </summary>
+    ''' <param name="q"></param>
+    ''' <param name="s"></param>
+    ''' <returns></returns>
     Public Function SSM_SIMD(q As Double(), s As Double()) As Double
         If q.All(Function(a) a = 0.0R) OrElse s.All(Function(a) a = 0.0R) Then
             Return 0.0

@@ -115,6 +115,7 @@ Namespace BoxPlot
 
         Protected Overrides Sub PlotInternal(ByRef g As IGraphics, canvas As GraphicsRegion)
             Dim css As CSSEnvirnment = g.LoadEnvironment
+            Dim padding As PaddingLayout = PaddingLayout.EvaluateFromCSS(css, canvas.Padding)
             Dim yAxisLabelFont As Font = css.GetFont(CSSFont.TryParse(theme.axisLabelCSS))
             Dim groupLabelFont As Font = css.GetFont(CSSFont.TryParse(theme.tagCSS))
             Dim tickLabelFont As Font = css.GetFont(CSSFont.TryParse(theme.axisTickCSS))
@@ -168,7 +169,7 @@ Namespace BoxPlot
             End If
 
             ' x0在盒子的左边
-            Dim x0! = canvas.Padding.Left + leftPart + interval
+            Dim x0! = padding.Left + leftPart + interval
             Dim y0!
             Dim labelSize As SizeF
             Dim tickPen As Pen = css.GetPen(Stroke.TryParse(regionStroke))
@@ -194,7 +195,7 @@ Namespace BoxPlot
             ' Dim text As New GraphicsText(DirectCast(g, Graphics2D).Graphics)
             Dim label$
 
-            x0! = canvas.Padding.Left + leftPart
+            x0! = padding.Left + leftPart
 
             ' 绘制y坐标轴
             For Each d As Double In ticks
@@ -211,12 +212,11 @@ Namespace BoxPlot
                                     angle:=-90)
             Next
 
-            Dim canvasPadding As Padding = canvas.Padding
             ' 绘制y坐标轴标签
             labelSize = g.MeasureString(ylabel, yAxisLabelFont)
 
             Dim location As New PointF With {
-                    .X = canvasPadding.Left + (leftPart - tickLabelFont.Height - labelSize.Height) / 2,
+                    .X = padding.Left + (leftPart - tickLabelFont.Height - labelSize.Height) / 2,
                     .Y = canvas.PlotRegion(css).Height / 2
                 }
             g.DrawString(ylabel, yAxisLabelFont, Brushes.Black, location.X, location.Y, angle:=-90)

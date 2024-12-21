@@ -156,16 +156,15 @@ Namespace BarPlot
                                  shadowOffset%)
 
             Dim css As CSSEnvirnment = g.LoadEnvironment
+            Dim padding As PaddingLayout = PaddingLayout.EvaluateFromCSS(css, region.Padding)
             Dim scaler As New Mapper(
                 range:=New Scaling(data.Select(Function(o) o.Value), horizontal:=False),
                 ignoreX:=True)
             Dim rect As Rectangle = region.PlotRegion(css)
             Dim bWidth% = (rect.Width - data.Length * interval) / data.Length
             Dim bTop%
-            Dim hScaler As Func(Of Single, Single) =
-                scaler _
-                .YScaler(region.Size, region.Padding)
-            Dim bLeft% = region.Padding.Left + interval / 2
+            Dim hScaler As Func(Of Single, Single) = scaler.YScaler(region.Size, region.Padding)
+            Dim bLeft% = padding.Left + interval / 2
             Dim bRECT As Rectangle   ' shadow rectangle
             Dim barRECT As Rectangle
             Dim label As Image

@@ -146,8 +146,9 @@ Namespace Heatmap
                     r:=ptSize
                 )
             Dim scatterPadding As Padding = padding
+            Dim scatterCss As New CSSEnvirnment(size.SizeParser)
 
-            scatterPadding.Right += legendWidth
+            scatterPadding.Right = PaddingLayout.EvaluateFromCSS(scatterCss, scatterPadding).Right + legendWidth
 
             Using g As IGraphics = Scatter.Plot(
                 c:={density},
@@ -173,6 +174,7 @@ Namespace Heatmap
                 }
                 Dim css As CSSEnvirnment = g.LoadEnvironment
                 Dim scatterRegion As Rectangle = plotRegion.PlotRegion(css)
+                Dim margin As PaddingLayout = PaddingLayout.EvaluateFromCSS(css, scatterPadding)
                 Dim legendHeight! = scatterRegion.Height * 2 / 3
                 Dim legendLayout As New Rectangle With {
                     .Size = New Size With {
@@ -181,7 +183,7 @@ Namespace Heatmap
                     },
                     .Location = New Point With {
                         .X = scatterRegion.Right,
-                        .Y = (scatterRegion.Height - legendHeight) / 2 + scatterPadding.Top
+                        .Y = (scatterRegion.Height - legendHeight) / 2 + margin.Top
                     }
                 }
                 Dim designer As SolidBrush() = colors _

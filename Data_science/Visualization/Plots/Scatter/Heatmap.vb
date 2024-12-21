@@ -63,6 +63,7 @@ Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
 Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
+Imports Microsoft.VisualBasic.MIME.Html.CSS
 
 Partial Module Scatter
 
@@ -132,6 +133,8 @@ Partial Module Scatter
                                labelX$, labelY$, legendTitle$,
                                ptSize%)
 
+        Dim css As New CSSEnvirnment(rect.Size)
+        Dim padding As PaddingLayout = PaddingLayout.EvaluateFromCSS(css, rect.Padding)
         Dim points As (pt As PointF, value#)() = data.Select(
             Function(o) (New PointF(o(fieldX), o(fieldY)), o(fieldValue))).ToArray
         Dim levels%() = points.Select(Function(pt) pt.value) _
@@ -159,9 +162,9 @@ Partial Module Scatter
             title:=legendTitle,
             min:=points.Min(Function(pt) pt.value),
             max:=points.Max(Function(pt) pt.value),
-            lsize:=New Size(rect.Size.Width - leftWidth + rect.Padding.Right, rect.Size.Height * 0.7))
+            lsize:=New Size(rect.Size.Width - leftWidth + padding.Right, rect.Size.Height * 0.7))
 
-        leftWidth -= (rect.Padding.Right)
+        leftWidth -= (padding.Right)
 
         With g
             .DrawImageUnscaled(left, New Point)

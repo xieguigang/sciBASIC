@@ -112,6 +112,7 @@ Namespace BarPlot
         Protected Overrides Sub PlotInternal(ByRef g As IGraphics, canvas As GraphicsRegion)
             Dim css As CSSEnvirnment = g.LoadEnvironment
             Dim rect As Rectangle = canvas.PlotRegion(css)
+            Dim padding As PaddingLayout = PaddingLayout.EvaluateFromCSS(css, canvas.Padding)
             Dim dh As Double = rect.Height / data.size
             Dim barHeight As Double = dh * 0.7
             Dim labelFont As Font = CSS.GetFont(CSSFont.TryParse(theme.axisLabelCSS))
@@ -135,7 +136,7 @@ Namespace BarPlot
             Dim labelSize As SizeF = g.MeasureString(main, titleFont)
             Dim labelPos As New PointF With {
                 .X = rect.Left + (rect.Width - labelSize.Width) / 2,
-                .Y = (canvas.Padding.Top - labelSize.Height) / 2
+                .Y = (padding.Top - labelSize.Height) / 2
             }
             Dim tickLabelFont As Font = css.GetFont(CSSFont.TryParse(theme.axisTickCSS))
 

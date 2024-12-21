@@ -267,8 +267,10 @@ Namespace Heatmap
             Dim plotInternal =
                 Sub(ByRef g As IGraphics, rect As GraphicsRegion)
 
+                    Dim css As CSSEnvirnment = g.LoadEnvironment
+                    Dim margin As PaddingLayout = PaddingLayout.EvaluateFromCSS(css, padding)
                     ' 根据布局计算出矩阵的大小和位置
-                    Dim left! = padding.Left + rowXOffset, top! = padding.Top    ' 绘图区域的左上角位置
+                    Dim left! = margin.Left + rowXOffset, top! = margin.Top    ' 绘图区域的左上角位置
                     ' 计算出右边的行标签的最大的占用宽度
                     Dim maxRowLabelSize As SizeF = g.MeasureString(array.Keys.MaxLengthString, rowLabelfont)
                     Dim maxColLabelSize As SizeF = g.MeasureString(keys.MaxLengthString, colLabelFont)
@@ -276,7 +278,6 @@ Namespace Heatmap
                         .Location = New Point(left, top),
                         .Size = legendSize
                     }
-                    Dim css As CSSEnvirnment = g.LoadEnvironment
 
                     If legendLayout = Layouts.Horizon Then
                         ' legend位于整个图片的左上角
@@ -356,7 +357,7 @@ Namespace Heatmap
                         ' 绘制出聚类树
                         Dim cluster As Cluster = Time(AddressOf array.RunCluster)
                         Dim topleft As New Point With {
-                                .X = rect.Padding.Left,
+                                .X = margin.Left,
                                 .Y = top
                             }
                         Dim dsize As New Size With {
@@ -439,7 +440,7 @@ Namespace Heatmap
                     Dim titleSize = g.MeasureString(mainTitle, titleFont)
                     Dim titlePosi As New PointF With {
                         .X = args.matrixPlotRegion.Left + (args.matrixPlotRegion.Width - titleSize.Width) / 2, ' 标题在所绘制的矩阵上方居中
-                        .Y = (padding.Top - titleSize.Height) / 2
+                        .Y = (margin.Top - titleSize.Height) / 2
                     }
 
                     Call g.DrawString(mainTitle, titleFont, Brushes.Black, titlePosi)

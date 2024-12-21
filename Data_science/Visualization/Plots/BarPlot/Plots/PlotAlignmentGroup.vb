@@ -254,7 +254,8 @@ Namespace BarPlot
             Dim rect As Rectangle = canvas.PlotRegion(css)
             Dim scaleX = d3js.scale.linear().domain(values:={xrange.Min, xrange.Max}).range(values:={rect.Left, rect.Right})
             Dim scaleY = d3js.scale.linear().domain(values:={0, yrange.Max}).range(values:={0, rect.Height / 2})
-            Dim ymid! = rect.Height / 2 + css.GetHeight(canvas.Padding.Top)
+            Dim padding As PaddingLayout = PaddingLayout.EvaluateFromCSS(css, canvas.Padding)
+            Dim ymid! = rect.Height / 2 + css.GetHeight(padding.Top)
 
             css.SetBaseStyles(New Font(FontFace.MicrosoftYaHei, 12.0!))
 
@@ -332,7 +333,6 @@ Namespace BarPlot
                         Call g.DrawString(ylabel, labelFont, Brushes.Black, labPos)
                     Case YlabelPosition.LeftCenter
                         Dim shape_size As SizeF = g.MeasureString(ylabel, labelFont)
-                        Dim padding As New PaddingLayout(canvas.Padding.LayoutVector(css))
 
                         labPos = New PointF((padding.Left - shape_size.Height) / 2, padding.Top + (canvas.Height - shape_size.Width) / 2)
                         g.DrawString(ylabel, labelFont, Brushes.Black, labPos.X, labPos.Y, -90)

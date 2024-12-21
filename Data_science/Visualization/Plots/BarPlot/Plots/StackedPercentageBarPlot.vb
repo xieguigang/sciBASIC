@@ -153,16 +153,17 @@ Namespace BarPlot
             Dim serialBrushes As NamedValue(Of SolidBrush)() = data.loadBrushes.ToArray
             ' 条形图区域的总高度
             Dim css As CSSEnvirnment = g.LoadEnvironment
+            Dim padding As PaddingLayout = PaddingLayout.EvaluateFromCSS(css, canvas.Padding)
             Dim plotRect = canvas.PlotRegion(CSS)
             Dim barRegionHeight = plotRect.Height
-            Dim x0! = css.GetWidth(canvas.Padding.Left)
+            Dim x0! = padding.Left
             Dim barRegionWidth = plotRect.Width
             Dim n = data.Samples.Length
             Dim wb = BarWidth(barRegionWidth, n, interval)
 
             ' 遍历X轴上面的每一个分组
             For Each group As BarDataSample In data.Samples
-                Dim y0! = css.GetHeight(canvas.Padding.Top)
+                Dim y0! = padding.Top
                 Dim sum# = group.StackedSum
 
                 ' 慢慢的从上面累加y到下面底部

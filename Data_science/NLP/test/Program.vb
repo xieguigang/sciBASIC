@@ -53,6 +53,7 @@
 
 Imports System.IO
 Imports Microsoft.VisualBasic.Data.NLP.LDA
+Imports Microsoft.VisualBasic.Parallel
 
 Module Program
     Sub Main(args As String())
@@ -66,8 +67,9 @@ Module Program
     End Sub
 
     Sub test2(corpus As Corpus)
-        Dim ldaGibbsSampler As New ParallelGibbsLda(corpus.Document, corpus.VocabularySize)
-        ldaGibbsSampler.gibbsSampling(5, 2.0, 0.5, 1000, 8)
+        VectorTask.n_threads = 12
+        Dim ldaGibbsSampler As New LdaGibbsSampler(corpus.Document, corpus.VocabularySize)
+        ldaGibbsSampler.gibbs(5)
         Dim phi = ldaGibbsSampler.phi
         Dim topicMap = LdaInterpreter.translate(phi, corpus.Vocabulary(), 10)
         Console.WriteLine("parallel result:")
@@ -79,6 +81,8 @@ Module Program
     End Sub
 
     Sub test1(corpus As Corpus)
+        VectorTask.n_threads = 1
+
         ' 2. Create a LDA sampler
         Dim ldaGibbsSampler As New LdaGibbsSampler(corpus.Document(), corpus.VocabularySize())
         ' 3. Train it
