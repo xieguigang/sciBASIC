@@ -67,4 +67,16 @@ Public Module CssInterop
             .size = font.Size
         }
     End Function
+
+#If NET8_0_OR_GREATER Then
+
+    <Extension>
+    Public Function CreateCss(font As Microsoft.VisualBasic.Imaging.Font) As CSSFont
+        Return New CSSFont With {
+            .style = font.Style,
+            .family = font.Name,
+            .size = font.Size
+        }
+    End Function
+#End If
 End Module
