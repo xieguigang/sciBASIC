@@ -57,6 +57,7 @@
 #End Region
 
 Imports System.Drawing
+Imports System.IO
 Imports System.Runtime.CompilerServices
 
 Namespace Imaging.Driver
@@ -66,6 +67,7 @@ Namespace Imaging.Driver
         Dim libgdiplus_raster As DeviceInterop
         Dim svg As DeviceInterop
         Dim pdf As DeviceInterop
+        Dim loadImage As Func(Of Stream, Image)
 
         Sub New()
         End Sub
@@ -79,6 +81,18 @@ Namespace Imaging.Driver
                     Throw New NotSupportedException(driver.Description)
             End Select
         End Sub
+
+        Public Sub Register(loader As Func(Of Stream, Image))
+            loadImage = loader
+        End Sub
+
+        Public Function LoadFromStream(s As Stream) As Image
+            If loadImage Is Nothing Then
+                Throw New InvalidProgramException("missing image loader driver!")
+            Else
+                Return loadImage(s)
+            End If
+        End Function
 
         ''' <summary>
         ''' 用户所指定的图形引擎驱动程序类型，但是这个值会被开发人员设定的驱动程序类型的值所覆盖，
