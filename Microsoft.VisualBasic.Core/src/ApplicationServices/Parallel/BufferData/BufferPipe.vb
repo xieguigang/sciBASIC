@@ -54,6 +54,9 @@
 
 Namespace Parallel
 
+    ''' <summary>
+    ''' the abstract base type of the package data
+    ''' </summary>
     Public MustInherit Class BufferPipe
 
         Public MustOverride Iterator Function GetBlocks() As IEnumerable(Of Byte())

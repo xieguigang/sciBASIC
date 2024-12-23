@@ -109,6 +109,15 @@ Namespace Drawing2D.HeatMap
             End If
         End Sub
 
+        Sub New(image As Image, Optional formula As Func(Of Color, Single) = Nothing)
+            Me.buffer = BitmapBuffer.FromImage(image)
+            Me.formula = formula
+
+            If formula Is Nothing Then
+                Me.formula = Function(c) c.GetBrightness
+            End If
+        End Sub
+
         Shared Sub New()
             Call RgbYuv.hqxInit()
         End Sub

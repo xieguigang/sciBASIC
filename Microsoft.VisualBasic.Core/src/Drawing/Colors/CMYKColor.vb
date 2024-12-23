@@ -55,6 +55,7 @@
 #End Region
 
 Imports System.Drawing
+Imports System.Runtime.CompilerServices
 
 Namespace Imaging
 
@@ -75,12 +76,27 @@ Namespace Imaging
         Public Property Y As Single
         Public Property K As Single
 
+        Sub New()
+        End Sub
+
+        Sub New(c#, m#, y#, k#)
+            Me.C = c
+            Me.M = m
+            Me.Y = y
+            Me.K = k
+        End Sub
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Sub New(c As Byte, m As Byte, y As Byte, k As Byte)
+            Call Me.New(c / 255, m / 255, y / 255, k / 255)
+        End Sub
+
         ''' <summary>
         ''' CMYK
         ''' </summary>
         ''' <returns></returns>
         Public Overrides Function ToString() As String
-            Return $"({C}, {M}, {Y}, {K})"
+            Return $"CMYK({C}, {M}, {Y}, {K})"
         End Function
 
         Public Shared Function FromRGB(rgb As Color) As CMYKColor

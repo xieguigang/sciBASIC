@@ -1,57 +1,58 @@
 ﻿#Region "Microsoft.VisualBasic::da31037d820b7924844eb4ca63f15c71, Data_science\Mathematica\Math\Math\Distributions\BinBox\CutBins.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 165
-    '    Code Lines: 84 (50.91%)
-    ' Comment Lines: 60 (36.36%)
-    '    - Xml Docs: 80.00%
-    ' 
-    '   Blank Lines: 21 (12.73%)
-    '     File Size: 6.48 KB
+' Summaries:
 
 
-    '     Module CutBins
-    ' 
-    '         Function: EqualFrequencyBins, (+4 Overloads) FixedWidthBins
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 165
+'    Code Lines: 84 (50.91%)
+' Comment Lines: 60 (36.36%)
+'    - Xml Docs: 80.00%
+' 
+'   Blank Lines: 21 (12.73%)
+'     File Size: 6.48 KB
+
+
+'     Module CutBins
+' 
+'         Function: EqualFrequencyBins, (+4 Overloads) FixedWidthBins
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
+Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Language
@@ -83,21 +84,39 @@ Namespace Distributions.BinBox
         ''' 将变量的取值范围分为<paramref name="k"/>个等宽的区间，每个区间当作一个分箱。
         ''' </summary>
         ''' <param name="data"></param>
+        ''' <param name="allow_empty">
+        ''' this function will just returns an empty collection of the data bin box if the given 
+        ''' data collection is empty and also this parameter is set to TRUE.
+        ''' </param>
         ''' <returns></returns>
         ''' <remarks>
         ''' 宽度是自动计算的
         ''' </remarks>
         Public Function FixedWidthBins(Of T)(data As IEnumerable(Of T), k%, eval As Evaluate(Of T),
                                              Optional eps As Double = 0.001,
-                                             Optional range As DoubleRange = Nothing) As IEnumerable(Of DataBinBox(Of T))
+                                             Optional range As DoubleRange = Nothing,
+                                             Optional allow_empty As Boolean = False) As IEnumerable(Of DataBinBox(Of T))
             ' 升序排序方便进行快速计算
             Dim v = data.OrderBy(Function(d) eval(d)).ToArray
-            Dim min# = eval(v.First)
-            Dim max# = eval(v.Last)
+            Dim min#, max#
 
-            If range IsNot Nothing AndAlso range.Length > 0 Then
-                min = range.Min
-                max = range.Max
+            If v.Length = 0 Then
+                Dim err As String = "empty data collection for make evaluation of the data bin box!"
+
+                If allow_empty Then
+                    Call err.Warning
+                    Return {}
+                Else
+                    Throw New InvalidDataException(err)
+                End If
+            Else
+                If range IsNot Nothing AndAlso range.Length > 0 Then
+                    min = range.Min
+                    max = range.Max
+                Else
+                    min = eval(v.First)
+                    max = eval(v.Last)
+                End If
             End If
 
             Dim width# = (max - min) / k
