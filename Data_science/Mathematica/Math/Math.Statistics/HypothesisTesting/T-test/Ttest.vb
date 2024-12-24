@@ -300,12 +300,17 @@ Namespace Hypothesis
         ''' tcdf(0,5) = 0.5
         ''' ```
         ''' </remarks>
-        Public Function Tcdf(t#, v#) As Decimal
-            Dim x# = v / (v + t ^ 2)
-            Dim inc As Double = SpecialFunctions.RegularizedIncompleteBetaFunction(v / 2.0, 0.5, x)
-            ' there is a bug about the precision in small number
-            ' this problem case the pvalue zero
-            Dim cdf As Double = d128_one - inc / d128_two
+        Public Function Tcdf(t#, v#) As Double
+            'Dim x# = v / (v + t ^ 2)
+            'Dim inc As Double = SpecialFunctions.RegularizedIncompleteBetaFunction(v / 2.0, 0.5, x)
+            '' there is a bug about the precision in small number
+            '' this problem case the pvalue zero
+            'Dim cdf As Double = d128_one - inc / d128_two
+
+            'Return cdf
+
+            Dim tdist As New StudenttDistribution(v)
+            Dim cdf As Double = tdist.cdf(t)
 
             Return cdf
         End Function

@@ -75,8 +75,23 @@ Namespace Hypothesis
             Return pdf_const / std.Pow(1 + ((x * x) / DegreeOfFreedom), (DegreeOfFreedom + 1) / 2)
         End Function
 
-        Public Function cdf(x As Double) As Double
-            Return t.Tcdf(x, DegreeOfFreedom)
+        Public Function cdf(x As Double, Optional resolution As Integer = 1000) As Double
+            Dim a As Double = -10
+            Dim b As Double = x
+            Dim h As Double = (b - a) / resolution
+            Dim integral As Double = 0
+
+            integral += pdf(a) / 2
+            integral += pdf(b) / 2
+
+            For i As Integer = 0 To resolution
+                x = a + i * h
+                integral += pdf(x)
+            Next
+
+            integral *= h
+
+            Return integral
         End Function
 
         Public Function inv(p As Double) As Double
