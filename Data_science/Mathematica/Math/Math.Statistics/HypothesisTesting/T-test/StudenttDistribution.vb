@@ -76,7 +76,7 @@ Namespace Hypothesis
         End Function
 
         Public Function cdf(x As Double, Optional resolution As Integer = 1000) As Double
-            Dim a As Double = -10
+            Dim a As Double = -20
             Dim b As Double = x
             Dim h As Double = (b - a) / resolution
             Dim integral As Double = 0

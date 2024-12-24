@@ -125,7 +125,7 @@ Namespace Hypothesis
                              Optional alternative As Hypothesis = Hypothesis.TwoSided,
                              Optional mu# = 0,
                              Optional alpha# = 0.05,
-                             Optional varEqual As Boolean = True,
+                             Optional varEqual As Boolean = False,
                              Optional [strict] As Boolean = True) As TwoSampleResult
 
             Dim va#() = a.ToArray, vb = b.ToArray
@@ -310,7 +310,7 @@ Namespace Hypothesis
             'Return cdf
 
             Dim tdist As New StudenttDistribution(v)
-            Dim cdf As Double = tdist.cdf(t)
+            Dim cdf As Double = tdist.cdf(t, resolution:=10000)
 
             Return cdf
         End Function
