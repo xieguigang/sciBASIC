@@ -53,7 +53,7 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
-Imports stdNum = System.Math
+Imports std = System.Math
 
 ' 
 '     zt - Simple and partial Mantel Test - version 1.1
@@ -250,7 +250,7 @@ Namespace Hypothesis.Mantel
             r_bc = r_bc / (p.numelt - 1)
 
             ' computing initial r_abc 
-            r_abc = (r_ab - r_ac * r_bc) / (stdNum.Sqrt(1 - r_ac * r_ac) * stdNum.Sqrt(1 - r_bc * r_bc))
+            r_abc = (r_ab - r_ac * r_bc) / (std.Sqrt(1 - r_ac * r_ac) * std.Sqrt(1 - r_bc * r_bc))
             p.coef = r_abc
 
             ' force exact permutation ? 

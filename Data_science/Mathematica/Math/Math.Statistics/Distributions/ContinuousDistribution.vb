@@ -59,6 +59,7 @@
 Imports System.Reflection
 Imports Microsoft.VisualBasic.Language.Java
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
+Imports randf2 = Microsoft.VisualBasic.Math.RandomExtensions
 
 '
 ' * To change this license header, choose License Headers in Project Properties.
@@ -240,9 +241,8 @@ Namespace Distributions
 
         Public Overridable Function BootStrap() As Double()
             Dim result As Double() = New Double(_PeriodOfRecord - 1) {}
-            Dim Random As New Random
             For i As Integer = 0 To _PeriodOfRecord - 1
-                result(i) = GetInvCDF(Random.NextDouble())
+                result(i) = GetInvCDF(randf2.NextDouble())
             Next
             Return result
         End Function

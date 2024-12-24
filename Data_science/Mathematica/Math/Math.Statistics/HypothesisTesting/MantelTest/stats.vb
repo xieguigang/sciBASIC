@@ -1,61 +1,61 @@
 ﻿#Region "Microsoft.VisualBasic::e58e08771c0d93646acb94cc2e5e2e9e, Data_science\Mathematica\Math\Math.Statistics\HypothesisTesting\MantelTest\stats.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 600
-    '    Code Lines: 389 (64.83%)
-    ' Comment Lines: 115 (19.17%)
-    '    - Xml Docs: 79.13%
-    ' 
-    '   Blank Lines: 96 (16.00%)
-    '     File Size: 19.92 KB
+' Summaries:
 
 
-    '     Module stats
-    ' 
-    '         Function: ect, moy, pmt_perm, pmt_perm_exact, smt_perm
-    '                   smt_perm_exact, sompx, sompxy, somx, somx2
-    ' 
-    '         Sub: norm, resid, shake
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 600
+'    Code Lines: 389 (64.83%)
+' Comment Lines: 115 (19.17%)
+'    - Xml Docs: 79.13%
+' 
+'   Blank Lines: 96 (16.00%)
+'     File Size: 19.92 KB
+
+
+'     Module stats
+' 
+'         Function: ect, moy, pmt_perm, pmt_perm_exact, smt_perm
+'                   smt_perm_exact, sompx, sompxy, somx, somx2
+' 
+'         Sub: norm, resid, shake
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
-Imports stdNum = System.Math
+Imports std = System.Math
 Imports rand2 = Microsoft.VisualBasic.Math.RandomExtensions
 
 '      zt - Simple and partial Mantel Test - version 1.1
@@ -165,7 +165,7 @@ Namespace Hypothesis.Mantel
             Dim lsomx = somx(a, [stop])
             Dim lsomx2 = somx2(a, [stop])
             N = [stop] * ([stop] - 1) / 2 + [stop]
-            ret = stdNum.Sqrt((lsomx2 - lsomx * lsomx / N) / (N - 1))
+            ret = std.Sqrt((lsomx2 - lsomx * lsomx / N) / (N - 1))
             Return ret
         End Function
 
@@ -339,9 +339,9 @@ Namespace Hypothesis.Mantel
                 Next
 
                 r_ac = r_ac / (p.numelt - 1)
-                rrand = (r_ab - r_ac * r_bc) / (stdNum.Sqrt(1 - r_ac * r_ac) * stdNum.Sqrt(1 - r_bc * r_bc))
+                rrand = (r_ab - r_ac * r_bc) / (std.Sqrt(1 - r_ac * r_ac) * std.Sqrt(1 - r_bc * r_bc))
 
-                If stdNum.Abs(rrand - p.coef) <= epsilon * stdNum.Abs(rrand) Then
+                If std.Abs(rrand - p.coef) <= epsilon * std.Abs(rrand) Then
                     cptega += 1
                 Else
                     If rrand > p.coef Then cptsup += 1
@@ -435,9 +435,9 @@ Namespace Hypothesis.Mantel
                 Next
 
                 r_ac = r_ac / (p.numelt - 1)
-                rrand = (r_ab - r_ac * r_bc) / (stdNum.Sqrt(1 - r_ac * r_ac) * stdNum.Sqrt(1 - r_bc * r_bc))
+                rrand = (r_ab - r_ac * r_bc) / (std.Sqrt(1 - r_ac * r_ac) * std.Sqrt(1 - r_bc * r_bc))
 
-                If stdNum.Abs(rrand - p.coef) <= epsilon * stdNum.Abs(rrand) Then
+                If std.Abs(rrand - p.coef) <= epsilon * std.Abs(rrand) Then
                     cptega += 1
                 Else
                     If rrand > p.coef Then cptsup += 1
@@ -532,7 +532,7 @@ Namespace Hypothesis.Mantel
 
                 zrand = zrand / (p.numelt - 1)
 
-                If stdNum.Abs(zrand - p.coef) <= epsilon * stdNum.Abs(zrand) Then
+                If std.Abs(zrand - p.coef) <= epsilon * std.Abs(zrand) Then
                     cptega += 1
                 Else
                     If zrand > p.coef Then cptsup += 1
@@ -607,7 +607,7 @@ Namespace Hypothesis.Mantel
 
                 zrand = zrand / (p.numelt - 1)
 
-                If stdNum.Abs(zrand - p.coef) <= epsilon * stdNum.Abs(zrand) Then
+                If std.Abs(zrand - p.coef) <= epsilon * std.Abs(zrand) Then
                     cptega += 1
                 Else
                     If zrand > p.coef Then cptsup += 1

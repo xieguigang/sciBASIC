@@ -56,7 +56,7 @@
 Imports Microsoft.VisualBasic.Math.Distributions.MathGamma
 Imports f64 = System.Double
 Imports i32 = System.Int32
-Imports stdNum = System.Math
+Imports std = System.Math
 
 Namespace Hypothesis.FishersExact
 
@@ -91,7 +91,7 @@ Namespace Hypothesis.FishersExact
         End Function
 
         Public Function hyper_323(n11 As i32, n1_ As i32, n_1 As i32, n As i32) As f64
-            Return stdNum.Exp((lnbico(n1_, n11) + lnbico(n - n1_, n_1 - n11) - lnbico(n, n_1)))
+            Return std.Exp((lnbico(n1_, n11) + lnbico(n - n1_, n_1 - n11) - lnbico(n, n_1)))
         End Function
 
         Public Function hyper(s As HyperState, n11 As i32) As f64
@@ -202,7 +202,7 @@ Namespace Hypothesis.FishersExact
                 j += 1
             End If
 
-            If stdNum.Abs(i - n11) < stdNum.Abs(j - n11) Then
+            If std.Abs(i - n11) < std.Abs(j - n11) Then
                 sless = sleft
                 slarg = 1.0 - sleft + prob
             Else
