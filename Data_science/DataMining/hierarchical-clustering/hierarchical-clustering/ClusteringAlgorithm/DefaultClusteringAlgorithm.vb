@@ -94,10 +94,10 @@ Public Class DefaultClusteringAlgorithm : Implements ClusteringAlgorithm
         Dim i As i32 = 1
 
         Do While Not builder.TreeComplete
-            builder.Agglomerate(linkageStrategy)
+            Call builder.Agglomerate(linkageStrategy)
 
             If debug Then
-                Call Console.WriteLine($"[iteration_{++i}] {builder.Clusters.Count}...")
+                Call VBDebugger.EchoLine($"[iteration_{++i}] {builder.Clusters.Count}...")
             End If
         Loop
 

@@ -54,7 +54,6 @@
 
 Imports System.Runtime.CompilerServices
 Imports System.Runtime.Serialization
-Imports Microsoft.VisualBasic.Serialization.JSON
 
 ''' <summary>
 ''' A tree with string term as key

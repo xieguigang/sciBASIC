@@ -54,6 +54,7 @@
 
 Imports System.Drawing
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.ComponentModel.DataStructures.Tree
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Data.GraphTheory.GridGraph
 Imports Microsoft.VisualBasic.Language
@@ -125,10 +126,7 @@ Imports Microsoft.VisualBasic.Linq
     ''' <returns></returns>
     <Extension>
     Private Function Add(Of T, K)(g As Graph, tree As Tree(Of T, K)) As Graph
-        Dim childs = tree _
-            .EnumerateChilds _
-            .SafeQuery _
-            .Where(Function(c) Not c Is Nothing)
+        Dim childs = DirectCast(tree, ITreeNodeData(Of Tree(Of T, K))).ChildNodes
 
         Call g.AddVertex(tree)
 

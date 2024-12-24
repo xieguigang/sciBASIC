@@ -59,8 +59,9 @@
 Namespace ComponentModel.Algorithm
 
     Public NotInheritable Class BipartiteMatching
-        Private ReadOnly _v As Integer
-        Private ReadOnly _g As List(Of Integer)()
+
+        ReadOnly _v As Integer
+        ReadOnly _g As List(Of Integer)()
 
         Public Sub New(v As Integer)
             _v = v

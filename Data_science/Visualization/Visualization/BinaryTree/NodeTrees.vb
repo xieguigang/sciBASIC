@@ -162,9 +162,10 @@ Namespace KMeans
         <Extension>
         Private Iterator Function __cutTrees(tree As EntityNode, childsDistribute As Dictionary(Of String, Double), min%) As IEnumerable(Of Partition)
             Dim part = Function(cut As EntityNode)
-                           Dim allChilds As EntityNode() = cut _
+                           Dim allChilds As EntityNode() = cut.AsEnumerable _
                                .Where(Function(c) c.Type = EntityType) _
                                .ToArray
+
                            Return New Partition() With {
                                 .Tag = cut.FullyQualifiedName,
                                 .uids = allChilds.Select(Function(x) x.EntityID),

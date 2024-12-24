@@ -57,12 +57,10 @@
 
 Imports System.Text.RegularExpressions
 Imports Microsoft.VisualBasic.ComponentModel.DataStructures.Tree
-Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace KMeans
 
-    Public Class EntityNode
-        Inherits TreeNodeBase(Of EntityNode)
+    Public Class EntityNode : Inherits TreeNodeBase(Of EntityNode)
 
         Public ReadOnly Property EntityID As String
         Public ReadOnly Property Type As String

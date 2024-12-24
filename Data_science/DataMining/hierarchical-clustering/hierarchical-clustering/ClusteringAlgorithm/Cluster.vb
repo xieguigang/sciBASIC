@@ -1,66 +1,67 @@
 ﻿#Region "Microsoft.VisualBasic::890e2bdfc5df7b68da2321c38c9b705c, Data_science\DataMining\hierarchical-clustering\hierarchical-clustering\ClusteringAlgorithm\Cluster.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 179
-    '    Code Lines: 107 (59.78%)
-    ' Comment Lines: 47 (26.26%)
-    '    - Xml Docs: 61.70%
-    ' 
-    '   Blank Lines: 25 (13.97%)
-    '     File Size: 5.41 KB
+' Summaries:
 
 
-    ' Class Cluster
-    ' 
-    '     Properties: Children, Distance, DistanceValue, isLeaf, LeafNames
-    '                 Leafs, Name, Parent, TotalDistance, WeightValue
-    ' 
-    '     Constructor: (+1 Overloads) Sub New
-    ' 
-    '     Function: contains, CountLeafs, Equals, GetHashCode, OrderLeafs
-    '               ToString
-    ' 
-    '     Sub: AddChild, AddLeafName, AppendLeafNames
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 179
+'    Code Lines: 107 (59.78%)
+' Comment Lines: 47 (26.26%)
+'    - Xml Docs: 61.70%
+' 
+'   Blank Lines: 25 (13.97%)
+'     File Size: 5.41 KB
+
+
+' Class Cluster
+' 
+'     Properties: Children, Distance, DistanceValue, isLeaf, LeafNames
+'                 Leafs, Name, Parent, TotalDistance, WeightValue
+' 
+'     Constructor: (+1 Overloads) Sub New
+' 
+'     Function: contains, CountLeafs, Equals, GetHashCode, OrderLeafs
+'               ToString
+' 
+'     Sub: AddChild, AddLeafName, AppendLeafNames
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
+Imports Microsoft.VisualBasic.ComponentModel.DataStructures.Tree
 Imports Microsoft.VisualBasic.DataMining.HierarchicalClustering.Hierarchy
 
 '
@@ -81,7 +82,10 @@ Imports Microsoft.VisualBasic.DataMining.HierarchicalClustering.Hierarchy
 ' *****************************************************************************
 '
 
-Public Class Cluster : Implements INamedValue
+''' <summary>
+''' the hierarchy cluster tree
+''' </summary>
+Public Class Cluster : Implements INamedValue, ITreeNodeData(Of Cluster)
 
     Public Property Distance As Distance
 
@@ -101,20 +105,32 @@ Public Class Cluster : Implements INamedValue
         End Get
     End Property
 
-    Public Property Parent As Cluster
+    Public Property Parent As Cluster Implements ITreeNodeData(Of Cluster).Parent
     ''' <summary>
     ''' 名称是唯一的？
     ''' </summary>
     ''' <returns></returns>
-    Public Property Name As String Implements INamedValue.Key
-    Public ReadOnly Property Children As IList(Of Cluster)
+    Public Property Name As String Implements INamedValue.Key, ITreeNodeData(Of Cluster).FullyQualifiedName
+    Public ReadOnly Property Children As IReadOnlyCollection(Of Cluster) Implements ITreeNodeData(Of Cluster).ChildNodes
+        Get
+            Return m_childs
+        End Get
+    End Property
+
+    Dim m_childs As New List(Of Cluster)
+
     Public ReadOnly Property LeafNames As List(Of String)
+    Public ReadOnly Property IsRoot As Boolean Implements ITreeNodeData(Of Cluster).IsRoot
+        Get
+            Return Parent Is Nothing OrElse Parent Is Me
+        End Get
+    End Property
 
     ''' <summary>
     ''' 是否是一个叶节点？
     ''' </summary>
     ''' <returns></returns>
-    Public ReadOnly Property isLeaf As Boolean
+    Public ReadOnly Property isLeaf As Boolean Implements ITreeNodeData(Of Cluster).IsLeaf
         Get
             Return Children.Count = 0
         End Get
@@ -145,7 +161,6 @@ Public Class Cluster : Implements INamedValue
     Public Sub New(name$)
         Me.Name = name
         LeafNames = New List(Of String)
-        Children = New List(Of Cluster)
         Distance = New Distance
     End Sub
 
@@ -157,8 +172,9 @@ Public Class Cluster : Implements INamedValue
         LeafNames.AddRange(lnames)
     End Sub
 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Sub AddChild(cluster As Cluster)
-        Children.Add(cluster)
+        m_childs.Add(cluster)
     End Sub
 
     Public Function contains(cluster As Cluster) As Boolean

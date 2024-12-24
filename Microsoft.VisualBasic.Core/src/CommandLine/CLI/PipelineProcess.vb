@@ -1,60 +1,61 @@
 ﻿#Region "Microsoft.VisualBasic::5b605ea37e6dcf9d5dd67bd510232f56, Microsoft.VisualBasic.Core\src\CommandLine\CLI\PipelineProcess.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 338
-    '    Code Lines: 182 (53.85%)
-    ' Comment Lines: 107 (31.66%)
-    '    - Xml Docs: 86.92%
-    ' 
-    '   Blank Lines: 49 (14.50%)
-    '     File Size: 13.08 KB
+' Summaries:
 
 
-    '     Module PipelineProcess
-    ' 
-    '         Function: (+2 Overloads) [Call], CallDotNetCorePipeline, CheckProcessStreamOpen, CreatePipeline, (+2 Overloads) ExecSub
-    '                   FindProc, (+2 Overloads) GetProc, handleRunStream
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 338
+'    Code Lines: 182 (53.85%)
+' Comment Lines: 107 (31.66%)
+'    - Xml Docs: 86.92%
+' 
+'   Blank Lines: 49 (14.50%)
+'     File Size: 13.08 KB
+
+
+'     Module PipelineProcess
+' 
+'         Function: (+2 Overloads) [Call], CallDotNetCorePipeline, CheckProcessStreamOpen, CreatePipeline, (+2 Overloads) ExecSub
+'                   FindProc, (+2 Overloads) GetProc, handleRunStream
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.IO
 Imports System.Runtime.CompilerServices
+Imports System.Threading
 Imports Microsoft.VisualBasic.ApplicationServices
 Imports Microsoft.VisualBasic.Language
 Imports ConsoleApp = Microsoft.VisualBasic.CommandLine.InteropService.InteropService
@@ -143,6 +144,11 @@ Namespace CommandLine
                 it:=(Not app.ExtensionSuffix("sh")) OrElse (Not shell) OrElse app.FileExists,
                 workdir:=workdir
             )
+
+            ' 20241224 there is a bug about access the standard output stream:
+            ' thread needs to sleep for a while
+            ' or the file access error will happends when access the standard output stream
+            Call Thread.Sleep(100)
 
             If p.StartInfo.RedirectStandardOutput Then
                 stdErr = handleRunStream(p, [in], onReadLine, async:=False)

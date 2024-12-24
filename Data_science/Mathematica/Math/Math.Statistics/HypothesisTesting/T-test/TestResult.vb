@@ -56,7 +56,6 @@
 #End Region
 
 Imports Microsoft.VisualBasic.Serialization.JSON
-Imports stdNum = System.Math
 
 Namespace Hypothesis
 

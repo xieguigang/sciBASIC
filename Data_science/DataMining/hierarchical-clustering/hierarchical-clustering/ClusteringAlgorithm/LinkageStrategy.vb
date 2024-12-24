@@ -88,22 +88,39 @@ Imports Microsoft.VisualBasic.DataMining.HierarchicalClustering.Hierarchy
 '
 
 Public Interface LinkageStrategy
+
     Function CalculateDistance(distances As ICollection(Of Distance)) As Distance
+    Function CalculateDistance(a As Distance, b As Distance) As Double
+
 End Interface
 
 Public Class SingleLinkageStrategy : Implements LinkageStrategy
 
     Public Function CalculateDistance(distances As ICollection(Of Distance)) As Distance Implements LinkageStrategy.CalculateDistance
-        Dim min As Double = Double.NaN
+        Dim min As Double = Double.MaxValue
 
         For Each dist As Distance In distances
-            If Double.IsNaN(min) OrElse dist.Distance < min Then min = dist.Distance
+            If dist.Distance < min Then
+                min = dist.Distance
+            End If
         Next
 
         Return New Distance(min)
     End Function
-End Class
 
+    Public Function CalculateDistance(a As Distance, b As Distance) As Double Implements LinkageStrategy.CalculateDistance
+        Dim min As Double = Double.MaxValue
+
+        If a IsNot Nothing AndAlso a.Distance < min Then
+            min = a.Distance
+        End If
+        If b IsNot Nothing AndAlso b.Distance < min Then
+            min = b.Distance
+        End If
+
+        Return min
+    End Function
+End Class
 
 Public Class WeightedLinkageStrategy : Implements LinkageStrategy
 
@@ -118,18 +135,47 @@ Public Class WeightedLinkageStrategy : Implements LinkageStrategy
 
         Return New Distance(sum / weightTotal, weightTotal)
     End Function
+
+    Public Function CalculateDistance(a As Distance, b As Distance) As Double Implements LinkageStrategy.CalculateDistance
+        Dim sum As Double = 0
+        Dim weightTotal As Double = 0
+
+        If Not a Is Nothing Then
+            weightTotal += a.Weight
+            sum += a.Distance * a.Weight
+        End If
+        If Not b Is Nothing Then
+            weightTotal += b.Weight
+            sum += b.Distance * b.Weight
+        End If
+
+        Return sum / weightTotal
+    End Function
 End Class
 
 Public Class CompleteLinkageStrategy : Implements LinkageStrategy
 
     Public Function CalculateDistance(distances As ICollection(Of Distance)) As Distance Implements LinkageStrategy.CalculateDistance
-        Dim max As Double = Double.NaN
+        Dim max As Double = Double.MinValue
 
         For Each dist As Distance In distances
-            If Double.IsNaN(max) OrElse dist.Distance > max Then max = dist.Distance
+            If dist.Distance > max Then max = dist.Distance
         Next
 
         Return New Distance(max)
+    End Function
+
+    Public Function CalculateDistance(a As Distance, b As Distance) As Double Implements LinkageStrategy.CalculateDistance
+        Dim max As Double = Double.MinValue
+
+        If a IsNot Nothing AndAlso a.Distance > max Then
+            max = a.Distance
+        End If
+        If b IsNot Nothing AndAlso b.Distance > max Then
+            max = b.Distance
+        End If
+
+        Return max
     End Function
 End Class
 
@@ -150,5 +196,25 @@ Public Class AverageLinkageStrategy : Implements LinkageStrategy
         End If
 
         Return New Distance(result)
+    End Function
+
+    Public Function CalculateDistance(a As Distance, b As Distance) As Double Implements LinkageStrategy.CalculateDistance
+        Dim sum As Double
+        Dim n As Integer = 0
+
+        If Not a Is Nothing Then
+            n += 1
+            sum += a.Distance
+        End If
+        If Not b Is Nothing Then
+            n += 1
+            sum += b.Distance
+        End If
+
+        If n > 0 Then
+            Return sum / n
+        Else
+            Return 0
+        End If
     End Function
 End Class

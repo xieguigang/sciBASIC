@@ -133,6 +133,13 @@ Namespace Hierarchy
             Return l
         End Function
 
+        ''' <summary>
+        ''' dictionary hash search for the link
+        ''' </summary>
+        ''' <param name="c1"></param>
+        ''' <param name="c2"></param>
+        ''' <returns></returns>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function FindByCodePair(c1 As Cluster, c2 As Cluster) As HierarchyTreeNode
             Return linkTable(hashCodePair(c1, c2)).Tree
         End Function

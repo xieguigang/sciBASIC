@@ -1,60 +1,61 @@
 ﻿#Region "Microsoft.VisualBasic::84b5231f8710f8ad4ae0355c416a813d, Data_science\DataMining\hierarchical-clustering\hierarchical-clustering\HierarchyBuilder\HierarchyTreeNode.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 111
-    '    Code Lines: 66 (59.46%)
-    ' Comment Lines: 22 (19.82%)
-    '    - Xml Docs: 13.64%
-    ' 
-    '   Blank Lines: 23 (20.72%)
-    '     File Size: 3.67 KB
+' Summaries:
 
 
-    '     Class HierarchyTreeNode
-    ' 
-    '         Properties: Left, LinkageDistance, Right
-    ' 
-    '         Constructor: (+2 Overloads) Sub New
-    '         Function: Agglomerate, compareTo, GetOtherCluster, Reverse, ToString
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 111
+'    Code Lines: 66 (59.46%)
+' Comment Lines: 22 (19.82%)
+'    - Xml Docs: 13.64%
+' 
+'   Blank Lines: 23 (20.72%)
+'     File Size: 3.67 KB
+
+
+'     Class HierarchyTreeNode
+' 
+'         Properties: Left, LinkageDistance, Right
+' 
+'         Constructor: (+2 Overloads) Sub New
+'         Function: Agglomerate, compareTo, GetOtherCluster, Reverse, ToString
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
+Imports System.Runtime.CompilerServices
 Imports System.Text
 
 '
@@ -90,6 +91,14 @@ Namespace Hierarchy
             LinkageDistance = distance
         End Sub
 
+        ''' <summary>
+        ''' returns the partner of the given cluster
+        ''' </summary>
+        ''' <param name="c"></param>
+        ''' <returns>
+        ''' if the given c is left then returns partner right, otherwise returns partner left
+        ''' </returns>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function GetOtherCluster(c As Cluster) As Cluster
             Return If(Left Is c, Right, Left)
         End Function

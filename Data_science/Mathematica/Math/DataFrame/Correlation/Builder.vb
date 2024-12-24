@@ -78,6 +78,7 @@ Public Module Builder
     <Extension>
     Public Function Correlation(Of DataSet As INamedValue)(data As Enumeration(Of DataSet), eval As Func(Of DataSet, Double())) As CorrelationMatrix
         Dim allData = data.AsEnumerable.ToArray
+        ' extract the matrix data
         Dim mat As Double()() = allData.Select(eval).ToArray
         Dim corr = mat.GetCorrelations(AddressOf Mantel.Pearson)
         Dim keys As Index(Of String) = allData.Keys.Indexing

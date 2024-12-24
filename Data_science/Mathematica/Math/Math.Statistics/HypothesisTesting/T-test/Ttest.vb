@@ -63,6 +63,32 @@ Namespace Hypothesis
     ''' <summary>
     ''' Performs one and two sample t-tests on vectors of data.
     ''' </summary>
+    ''' <remarks>
+    ''' 进行t检验的p值计算通常涉及两个主要步骤：首先计算t统计量，然后根据t统计量和自由度查找t分布表或使用计算方法来得出p值。
+    ''' 计算t统计量：t统计量的计算公式是
+    ''' $$
+    ''' t = \frac{\bar{X} - \mu}{s / \sqrt{n}}
+    ''' $$
+    ''' 其中，$\bar{X}$ 是样本均值，$\mu$ 是总体均值，$s$ 是样本标准差，$n$ 是样本大小。
+    ''' 
+    ''' 计算p值：
+    ''' 对于单尾t检验，p值是t分布曲线下超过或等于计算出的t统计量的面积。
+    ''' 对于双尾t检验，p值是t分布曲线下超过或等于计算出的t统计量的绝对值的面积的两倍。
+    ''' p值的具体计算方法使用数值积分技术（如梯形法则或辛普森法则）来估算t分布下的面积。数值积分法可以作为一种近似计算p值的方法。
+    '''
+    ''' 数值积分法是一种数学方法，用于估算函数下的面积。在统计学中，特别是在计算t检验的p值时，我们可以使用数值积分法来估算t分布曲线下特定区间（通常是尾区间）的面积。
+    ''' 为了讲解这个算法，我们首先需要了解t分布和p值的基本概念。t分布是一种概率分布，用于小样本数据集的情况。p值则是衡量观察结果或更极端结果在零假设为真时出现的概率。
+    ''' **数值积分法计算p值的步骤如下**：
+    ''' 1. **定义t分布函数**：首先，我们需要定义t分布的概率密度函数（PDF）。t分布的PDF定义为：
+    ''' $$
+    '''  f(t; \nu) = \frac{\Gamma(\frac{\nu + 1}{2})}{\sqrt{\nu \pi} \Gamma(\frac{\nu}{2})} (1 + \frac{t^2}{\nu})^{-\frac{\nu + 1}{2}} 
+    ''' $$
+    '''    其中，$\nu$ 是自由度，$\Gamma$ 是伽玛函数。
+    ''' 2. **选择积分区间**：对于单尾t检验，积分区间是从t统计量到正无穷；对于双尾t检验，积分区间是从-t统计量到t统计量，然后乘以2。
+    ''' 3. **应用数值积分方法**：数值积分方法（如梯形法则或辛普森法则）用于估算积分区间内t分布函数下的面积。这些方法通过将积分区间分成若干小段，然后近似每段的面积，最后将这些面积相加来估算总面积。
+    ''' 4. **计算p值**：通过数值积分得到的面积即为p值。对于单尾t检验，这个面积就是p值；对于双尾t检验，需要将这个面积乘以2。
+    ''' 在实际应用中，由于t分布是对称的，我们通常只需要计算单尾的面积，然后根据检验的类型（单尾或双尾）来调整p值。
+    ''' </remarks>
     Public Module t
 
         ''' <summary>
@@ -270,14 +296,16 @@ Namespace Hypothesis
         ''' <remarks>
         ''' 请注意，双样本检测与单样本检测的pvalue在less和greater是反过来的
         ''' </remarks>
-        Public Function Pvalue(t#, v#, Optional hyp As Hypothesis = Hypothesis.TwoSided) As Decimal
+        Public Function Pvalue(t#, v#, Optional hyp As Hypothesis = Hypothesis.TwoSided) As Double
+            Dim tdist As New StudenttDistribution(v)
+
             Select Case hyp
                 Case Hypothesis.Less
-                    Return d128_one - Tcdf(t, v)
+                    Return d128_one - tdist.cdf(t)
                 Case Hypothesis.Greater
-                    Return Tcdf(t, v)
+                    Return tdist.cdf(t)
                 Case Else
-                    Return d128_two * (d128_one - Tcdf(std.Abs(t), v))
+                    Return d128_two * (d128_one - tdist.cdf(std.Abs(t)))
             End Select
         End Function
 

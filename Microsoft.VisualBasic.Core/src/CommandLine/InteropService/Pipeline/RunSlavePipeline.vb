@@ -184,6 +184,9 @@ Namespace CommandLine.InteropService.Pipeline
                 Dim message As String = data.Value
 
                 RaiseEvent SetProgress(percentage, message)
+            Else
+                ' other standard output text treated as message output?
+                RaiseEvent SetMessage(line)
             End If
         End Sub
 

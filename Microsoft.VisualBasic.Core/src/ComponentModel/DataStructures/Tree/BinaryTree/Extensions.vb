@@ -53,7 +53,7 @@
 #End Region
 
 Imports Microsoft.VisualBasic.ComponentModel.Algorithm.DynamicProgramming.Levenshtein
-Imports stdNum = System.Math
+Imports std = System.Math
 
 Namespace ComponentModel.DataStructures.BinaryTree
 
@@ -83,7 +83,7 @@ Namespace ComponentModel.DataStructures.BinaryTree
                 Return 0
             Else
 
-                Dim minl = stdNum.Min(a.Length, b.Length)
+                Dim minl = std.Min(a.Length, b.Length)
                 Dim c1, c2 As Char
 
                 For i As Integer = 0 To minl - 1

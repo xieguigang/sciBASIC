@@ -75,6 +75,9 @@
 
 Namespace Hierarchy
 
+    ''' <summary>
+    ''' distance value union the corresponding weight value(default weight is ``1.0``).
+    ''' </summary>
     Public Class Distance : Implements IComparable(Of Distance), ICloneable
 
         Public Property Distance As Double
