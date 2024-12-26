@@ -1,57 +1,59 @@
 ﻿#Region "Microsoft.VisualBasic::607936532cb87a7d9d96c445389760e5, Microsoft.VisualBasic.Core\src\Extensions\Collection\RectangularArray.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 89
-    '    Code Lines: 56 (62.92%)
-    ' Comment Lines: 16 (17.98%)
-    '    - Xml Docs: 100.00%
-    ' 
-    '   Blank Lines: 17 (19.10%)
-    '     File Size: 3.02 KB
+' Summaries:
 
 
-    '     Class RectangularArray
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    '         Function: CopyOf, Cubic, CubicMatrix, (+2 Overloads) Matrix
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 89
+'    Code Lines: 56 (62.92%)
+' Comment Lines: 16 (17.98%)
+'    - Xml Docs: 100.00%
+' 
+'   Blank Lines: 17 (19.10%)
+'     File Size: 3.02 KB
+
+
+'     Class RectangularArray
+' 
+'         Constructor: (+1 Overloads) Sub New
+'         Function: CopyOf, Cubic, CubicMatrix, (+2 Overloads) Matrix
+' 
+' 
+' /********************************************************************************/
 
 #End Region
+
+Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 
 Namespace ComponentModel.Collection
 
@@ -74,6 +76,21 @@ Namespace ComponentModel.Collection
             Next
 
             Return copy
+        End Function
+
+        Public Shared Function GlobalRange(m As IEnumerable(Of Double())) As (Min As Double, Max As Double)
+            Dim min As Double = Double.MaxValue
+            Dim max As Double = Double.MinValue
+            Dim range As DoubleRange
+
+            For Each row As Double() In m
+                range = row.Range
+
+                If range.Min < min Then min = range.Min
+                If range.Max > max Then max = range.Max
+            Next
+
+            Return (min, max)
         End Function
 
         ''' <summary>

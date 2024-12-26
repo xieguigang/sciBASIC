@@ -69,6 +69,12 @@ Namespace Imaging.Driver
         Dim pdf As DeviceInterop
         Dim loadImage As Func(Of Stream, Image)
 
+        Public ReadOnly Property CheckRasterImageLoader As Boolean
+            Get
+                Return Not loadImage Is Nothing
+            End Get
+        End Property
+
         Sub New()
         End Sub
 
@@ -86,6 +92,11 @@ Namespace Imaging.Driver
             loadImage = loader
         End Sub
 
+        ''' <summary>
+        ''' load image from stream data
+        ''' </summary>
+        ''' <param name="s"></param>
+        ''' <returns></returns>
         Public Function LoadFromStream(s As Stream) As Image
             If loadImage Is Nothing Then
                 Throw New InvalidProgramException("missing image loader driver!")

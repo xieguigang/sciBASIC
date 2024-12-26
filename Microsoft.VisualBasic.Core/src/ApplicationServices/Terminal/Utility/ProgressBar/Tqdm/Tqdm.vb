@@ -82,10 +82,12 @@ Namespace ApplicationServices.Terminal.ProgressBar.Tqdm
         Public Function Wrap(Of T)(collection As ICollection(Of T),
                                    Optional width As Integer = 40,
                                    Optional printsPerSecond As Integer = 10,
-                                   Optional useColor As Boolean = False) As IEnumerable(Of T)
+                                   Optional useColor As Boolean = False,
+                                   Optional wrap_console As Boolean = True) As IEnumerable(Of T)
 
             Dim __ As ProgressBar = Nothing
-            Return Wrap(collection, __, width, printsPerSecond, useColor)
+            Return Wrap(collection, __, width, printsPerSecond, useColor,
+                        wrap_console:=wrap_console)
         End Function
 
         ''' <summary>
@@ -100,10 +102,12 @@ Namespace ApplicationServices.Terminal.ProgressBar.Tqdm
         Public Function Wrap(Of T)(enumerable As IEnumerable(Of T), total As Integer,
                                    Optional width As Integer = 40,
                                    Optional printsPerSecond As Integer = 10,
-                                   Optional useColor As Boolean = False) As IEnumerable(Of T)
+                                   Optional useColor As Boolean = False,
+                                   Optional wrap_console As Boolean = True) As IEnumerable(Of T)
 
             Dim __ As ProgressBar = Nothing
-            Return Wrap(enumerable, total, __, width, printsPerSecond, useColor)
+            Return Wrap(enumerable, total, __, width, printsPerSecond, useColor,
+                        wrap_console:=wrap_console)
         End Function
 
         ''' <summary>
@@ -120,12 +124,14 @@ Namespace ApplicationServices.Terminal.ProgressBar.Tqdm
         Public Function Wrap(Of T)(collection As ICollection(Of T), <Out> ByRef bar As ProgressBar,
                                    Optional width As Integer = 40,
                                    Optional printsPerSecond As Integer = 10,
-                                   Optional useColor As Boolean = False) As IEnumerable(Of T)
+                                   Optional useColor As Boolean = False,
+                                   Optional wrap_console As Boolean = True) As IEnumerable(Of T)
 
             If collection Is Nothing Then
                 Return New T() {}
             Else
-                Return Wrap(collection, collection.Count, bar, width, printsPerSecond, useColor)
+                Return Wrap(collection, collection.Count, bar, width, printsPerSecond, useColor,
+                            wrap_console:=wrap_console)
             End If
         End Function
 
@@ -142,7 +148,15 @@ Namespace ApplicationServices.Terminal.ProgressBar.Tqdm
         Public Function Wrap(Of T)(enumerable As IEnumerable(Of T), total As Integer, <Out> ByRef bar As ProgressBar,
                                    Optional width As Integer = 40,
                                    Optional printsPerSecond As Integer = 10,
-                                   Optional useColor As Boolean = False) As IEnumerable(Of T)
+                                   Optional useColor As Boolean = False,
+                                   Optional wrap_console As Boolean = True) As IEnumerable(Of T)
+
+            ' 20241225 set this parameter to FALSE in winform application
+            ' for avoid call the console related function 
+            ' which could be crashed the application in non-console application
+            If Not wrap_console Then
+                Return enumerable
+            End If
 
             bar = New ProgressBar(total:=total, width:=width, printsPerSecond:=printsPerSecond, useColor:=useColor)
             Return InternalWrap(enumerable, total, bar)
@@ -211,12 +225,14 @@ Namespace ApplicationServices.Terminal.ProgressBar.Tqdm
                               Optional ByRef bar As ProgressBar = Nothing,
                               Optional width As Integer = 40,
                               Optional printsPerSecond As Integer = 10,
-                              Optional useColor As Boolean = False) As IEnumerable(Of Integer)
+                              Optional useColor As Boolean = False,
+                              Optional wrap_console As Boolean = True) As IEnumerable(Of Integer)
 
             Return Enumerable.Range(start, count).ToArray.Wrap(bar,
                 width:=width,
                 printsPerSecond:=printsPerSecond,
-                useColor:=useColor
+                useColor:=useColor,
+                wrap_console:=wrap_console
             )
         End Function
     End Module

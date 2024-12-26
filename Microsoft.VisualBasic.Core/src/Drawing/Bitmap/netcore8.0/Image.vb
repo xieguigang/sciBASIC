@@ -78,6 +78,7 @@ Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Imaging.BitmapImage
 Imports Microsoft.VisualBasic.Imaging.BitmapImage.FileStream
+Imports Microsoft.VisualBasic.Imaging.Driver
 Imports MemoryBmp = Microsoft.VisualBasic.Imaging.BitmapImage.FileStream.Bitmap
 
 Namespace Imaging
@@ -133,11 +134,15 @@ Namespace Imaging
         ''' </summary>
         ''' <param name="s">only works for bitmap image file stream</param>
         ''' <returns></returns>
-        Public Shared Function FromStream(s As Stream) As Bitmap
-            Return New Bitmap(New BitmapReader(s).LoadMemory)
+        Public Shared Function FromStream(s As Stream) As Image
+            If DriverLoad.CheckRasterImageLoader Then
+                Return DriverLoad.LoadFromStream(s)
+            Else
+                Return New Bitmap(New BitmapReader(s).LoadMemory)
+            End If
         End Function
 
-        Public Shared Function FromFile(path As String) As Bitmap
+        Public Shared Function FromFile(path As String) As Image
             Using s As Stream = path.Open(FileMode.Open, doClear:=False, [readOnly]:=True)
                 Return FromStream(s)
             End Using
