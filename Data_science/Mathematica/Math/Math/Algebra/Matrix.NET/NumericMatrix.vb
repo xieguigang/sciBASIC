@@ -254,7 +254,11 @@ Namespace LinearAlgebra.Matrix
 
             For i As Integer = 0 To m - 1
                 If A(i).Length <> n Then
-                    Throw New ArgumentException("All rows must have the same length.")
+                    Dim total_len As Long = Aggregate ai As Double()
+                                            In A
+                                            Into Sum(CLng(ai.Length))
+
+                    Throw New ArgumentException($"All rows must have the same length. total length of matrix vector {total_len} is not matched with the given matrix size: {m}x{n}!")
                 End If
             Next
 
