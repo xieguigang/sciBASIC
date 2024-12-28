@@ -180,7 +180,11 @@ Namespace Net.Http
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function Base64RawBytes(base64 As String) As Byte()
-            Return Convert.FromBase64String(base64)
+            If base64 Is Nothing OrElse base64 = "" Then
+                Return {}
+            Else
+                Return Convert.FromBase64String(base64)
+            End If
         End Function
 
         ''' <summary>
