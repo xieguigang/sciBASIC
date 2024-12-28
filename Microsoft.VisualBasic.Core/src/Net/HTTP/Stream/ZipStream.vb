@@ -124,6 +124,13 @@ Namespace Net.Http
         ''' > https://bbs.csdn.net/topics/392275364
         ''' </summary>
         ''' <param name="stream"></param>
+        ''' <param name="noMagic">
+        ''' does the given stream data not contains the ziplib magic header?
+        ''' 
+        ''' default parameter value false means not contains, then the given stream data will be deflate directly.
+        ''' otherwise this function will try to populate out two bytes(zlib magic header) and then make stream 
+        ''' data decompression if the parameter value is TRUE.
+        ''' </param>
         ''' <returns></returns>
         ''' <remarks>
         ''' ###### 2018-11-15 经过测试，没有bug，与zlibnet的测试结果一致
