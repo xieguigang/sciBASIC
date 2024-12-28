@@ -108,7 +108,7 @@ Namespace Serialization.BinaryDumping
 
         Public Function ParseDouble(base64 As String, Optional gzip As Boolean = False) As Double()
             Dim raw As Byte() = Base64Codec.Base64RawBytes(base64)
-            Dim vals As Double() = decode(If(gzip, raw.UnZipStream, raw))
+            Dim vals As Double() = decode(If(gzip, raw.UnZipStream.ToArray, raw))
             Return vals
         End Function
 
