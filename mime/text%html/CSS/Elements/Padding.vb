@@ -123,6 +123,15 @@ Namespace CSS
             }
         End Function
 
+        Public Shared Function ParsePixels(layout As Padding) As PaddingLayout
+            Return New PaddingLayout With {
+                .Bottom = Val(layout.Bottom),
+                .Left = Val(layout.Left),
+                .Right = Val(layout.Right),
+                .Top = Val(layout.Top)
+            }
+        End Function
+
         ''' <summary>
         ''' Performs vector addition on the two specified System.Windows.Forms.Padding objects,
         ''' resulting in a new System.Windows.Forms.Padding.

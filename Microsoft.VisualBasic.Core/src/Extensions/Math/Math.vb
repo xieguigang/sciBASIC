@@ -100,8 +100,6 @@ Namespace Math
             Next
         End Function
 
-#If NET48 Then
-
         ' Clamp function is missing in .NET 4.8 
 
         ''' <summary>
@@ -127,7 +125,16 @@ Namespace Math
                 Return x
             End If
         End Function
-#End If
+
+        Public Function Clamp(x As Integer, min As Integer, max As Integer) As Integer
+            If x < min Then
+                Return min
+            ElseIf x > max Then
+                Return max
+            Else
+                Return x
+            End If
+        End Function
 
         ''' <summary>
         ''' Function to calculate the Least Common Multiple (LCM)
