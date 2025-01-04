@@ -87,7 +87,6 @@ Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Parallel.Linq
 Imports Microsoft.VisualBasic.Text
-Imports ASCII = Microsoft.VisualBasic.Text.ASCII
 
 Namespace IO.Linq
 
