@@ -201,9 +201,9 @@ Namespace Graphic.Canvas
         ''' </summary>
         ''' <returns></returns>
         Public Property axisTickCSS As String = CSSFont.PlotLabelNormal
-        Public Property axisTickStroke As String = Stroke.ScatterLineStroke
+        Public Property axisTickStroke As String = "stroke: black; stroke-width: 1px; stroke-dash: solid;"
         Public Property axisTickPadding As Double = 5
-        Public Property axisStroke As String = Stroke.AxisStroke
+        Public Property axisStroke As String = "stroke: black; stroke-width: 3px; stroke-dash: solid;"
 
         ''' <summary>
         ''' 一般为F2或者G3
@@ -237,8 +237,8 @@ Namespace Graphic.Canvas
         ''' <returns></returns>
         Public Property lineStroke As String = Stroke.AxisStroke
 
-        Public Property gridStrokeX As String = Stroke.AxisGridStroke
-        Public Property gridStrokeY As String = Stroke.AxisGridStroke
+        Public Property gridStrokeX As String = "stroke: lightgray; stroke-width: 1px; stroke-dash: dash;"
+        Public Property gridStrokeY As String = "stroke: lightgray; stroke-width: 1px; stroke-dash: dash;"
         ''' <summary>
         ''' the background of the charting plot region
         ''' </summary>

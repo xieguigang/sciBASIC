@@ -136,6 +136,11 @@ Namespace Drawing2D
             Me.Padding = New Padding(padding)
         End Sub
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function GetAbsolutePadding() As PaddingLayout
+            Return PaddingLayout.EvaluateFromCSS(New CSSEnvirnment(Size), Padding)
+        End Function
+
         ''' <summary>
         ''' 绘图区域的底部Y坐标值
         ''' </summary>
