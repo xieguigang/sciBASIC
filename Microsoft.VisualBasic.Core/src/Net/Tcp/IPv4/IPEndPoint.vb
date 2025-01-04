@@ -163,12 +163,8 @@ Namespace Net
             End If
         End Sub
 
-        ''' <summary>
-        ''' http://IPAddress:&lt;Port>/
-        ''' </summary>
-        ''' <returns></returns>
         Public Overrides Function ToString() As String
-            Return $"http://{ipAddress}:{port}/"
+            Return $"{ipAddress}:{port}"
         End Function
 
         ''' <summary>

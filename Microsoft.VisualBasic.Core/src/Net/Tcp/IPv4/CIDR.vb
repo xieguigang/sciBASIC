@@ -186,11 +186,43 @@ Namespace Net.Tcp
         Public ReadOnly Property IPAddress() As String
 
         ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="hexIp"></param>
+        ''' <returns></returns>
+        Public Shared Function NumericIpToSymbolic(hexIp As String, Optional networkByteOrder As Boolean = True) As String
+            Dim int32 As Integer = If(networkByteOrder, Convert.ToInt32(hexIp, 16), HostToNetworkOrder(hexIp))
+            Dim ip As String = NumericIpToSymbolic(int32)
+            Return ip
+        End Function
+
+        Public Shared Function HostToNetworkOrder(hexIp As String) As Integer
+            ' 确保输入的16进制字符串长度正确
+            If hexIp.Length <> 8 Then
+                Throw New ArgumentException("The hexIp string must be 8 characters long.")
+            End If
+
+            ' 将16进制字符串分割成4个部分，每部分2个字符
+            Dim parts As String() = New String() {
+                hexIp.Substring(0, 2),
+                hexIp.Substring(2, 2),
+                hexIp.Substring(4, 2),
+                hexIp.Substring(6, 2)
+            }
+
+            ' 交换字节顺序以转换为网络字节序
+            Dim networkOrderHex As String = String.Join("", parts.Reverse())
+
+            ' 将网络字节序的16进制字符串转换为32位整型数值
+            Return Convert.ToInt32(networkOrderHex, 16)
+        End Function
+
+        ''' <summary>
         ''' Get the IP in symbolic form, i.e. ``xxx.xxx.xxx.xxx``
         ''' </summary>
         ''' <param name="ip"></param>
         ''' <returns></returns>
-        Public Shared Function NumericIpToSymbolic(ip As Integer?) As String
+        Public Shared Function NumericIpToSymbolic(ip As Integer) As String
             Dim sb As New StringBuilder(15)
 
             For shift As Integer = 24 To 1 Step -8
@@ -274,16 +306,15 @@ Namespace Net.Tcp
             Dim numberOfIPs__2 As Integer? = 0
 
             For n As Integer = 0 To (32 - numberOfBits) - 1
-
                 numberOfIPs__2 = numberOfIPs__2 << 1
                 numberOfIPs__2 = numberOfIPs__2 Or &H1
             Next
 
-            Dim baseIP As Integer? = _baseIPnumeric And _netmaskNumeric
+            Dim baseIP As Integer = _baseIPnumeric And _netmaskNumeric
             Dim i As Integer = 1
 
             While i < (numberOfIPs__2) AndAlso i < numberofIPs
-                Dim ourIP As Integer? = baseIP + i
+                Dim ourIP As Integer = baseIP + i
                 Dim ip As String = NumericIpToSymbolic(ourIP)
 
                 result.Add(ip)
@@ -302,14 +333,14 @@ Namespace Net.Tcp
                 End If
             Next
 
-            Dim numberOfIPs As System.Nullable(Of Integer) = 0
+            Dim numberOfIPs As Integer = 0
             For n As Integer = 0 To (32 - numberOfBits) - 1
 
                 numberOfIPs = numberOfIPs << 1
                 numberOfIPs = numberOfIPs Or &H1
             Next
 
-            Dim baseIP As System.Nullable(Of Integer) = baseIPnumeric And netmaskNumeric
+            Dim baseIP As Integer = baseIPnumeric And netmaskNumeric
             Dim firstIP As String = NumericIpToSymbolic(baseIP + 1)
             Dim lastIP As String = NumericIpToSymbolic(baseIP + numberOfIPs - 1)
 
@@ -382,15 +413,15 @@ Namespace Net.Tcp
                 End If
             Next
 
-            Dim numberOfIPs As System.Nullable(Of Integer) = 0
+            Dim numberOfIPs As Integer = 0
 
             For n As Integer = 0 To (32 - numberOfBits) - 1
                 numberOfIPs = numberOfIPs << 1
                 numberOfIPs = numberOfIPs Or &H1
             Next
 
-            Dim baseIP As System.Nullable(Of Integer) = baseIPnumeric And netMaskNumeric
-            Dim ourIP As System.Nullable(Of Integer) = baseIP + numberOfIPs
+            Dim baseIP As Integer = baseIPnumeric And netMaskNumeric
+            Dim ourIP As Integer = baseIP + numberOfIPs
             Dim ip As String = NumericIpToSymbolic(ourIP)
 
             Return ip

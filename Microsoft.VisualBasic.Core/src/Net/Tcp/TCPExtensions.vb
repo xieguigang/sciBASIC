@@ -139,7 +139,9 @@ Namespace Net.Tcp
 
             Call allPorts.AddRange(From ep As System.Net.IPEndPoint In ipsTCP Select ep.Port)
             Call allPorts.AddRange(From ep As System.Net.IPEndPoint In ipsUDP Select ep.Port)
-            Call allPorts.AddRange(From conn As TcpConnectionInformation In tcpConnInfoArray Select conn.LocalEndPoint.Port)
+            Call allPorts.AddRange(From conn As TcpConnectionInformation
+                                   In tcpConnInfoArray
+                                   Select conn.LocalEndPoint.Port)
 
             Return allPorts.ToArray
         End Function

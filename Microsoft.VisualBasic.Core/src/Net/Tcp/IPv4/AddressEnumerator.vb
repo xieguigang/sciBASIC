@@ -76,7 +76,7 @@ Namespace Net
         ''' <summary>
         ''' 
         ''' </summary>
-        ''' <param name="expression$">
+        ''' <param name="expression">
         ''' Example as:
         ''' 
         ''' ```
