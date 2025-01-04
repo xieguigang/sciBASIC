@@ -125,6 +125,9 @@ Namespace Net.Tcp
         ''' 获取操作系统已用的端口号
         ''' </summary>
         ''' <returns></returns>
+        ''' <remarks>
+        ''' not supported on linux
+        ''' </remarks>
         Public Function PortIsUsed() As Integer()
             '获取本地计算机的网络连接和通信统计数据的信息
             Dim ipGlobalProperties As IPGlobalProperties = IPGlobalProperties.GetIPGlobalProperties()
