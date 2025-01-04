@@ -235,7 +235,7 @@ Public Module Extensions
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
-    Public Sub ForEach(Of T As Class)(path As String, invoke As Action(Of T))
+    Public Sub ForEach(Of T As {New, Class})(path As String, invoke As Action(Of T))
         Call DataStream.OpenHandle(path).ForEach(Of T)(invoke)
     End Sub
 
