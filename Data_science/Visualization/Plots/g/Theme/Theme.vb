@@ -203,7 +203,7 @@ Namespace Graphic.Canvas
         Public Property axisTickCSS As String = CSSFont.PlotLabelNormal
         Public Property axisTickStroke As String = "stroke: black; stroke-width: 1px; stroke-dash: solid;"
         Public Property axisTickPadding As Double = 5
-        Public Property axisStroke As String = "stroke: black; stroke-width: 3px; stroke-dash: solid;"
+        Public Property axisStroke As String = "stroke: black; stroke-width: 2px; stroke-dash: solid;"
 
         ''' <summary>
         ''' 一般为F2或者G3

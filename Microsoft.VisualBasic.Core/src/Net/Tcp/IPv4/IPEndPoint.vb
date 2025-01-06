@@ -67,9 +67,10 @@ Namespace Net
 
     ''' <summary>
     ''' The object of <see cref="System.Net.IPEndPoint"/> can not be Xml serialization.
-    ''' (系统自带的<see cref="System.Net.IPEndPoint"></see>不能够进行Xml序列化)
     ''' </summary>
-    ''' <remarks></remarks>
+    ''' <remarks>
+    ''' (系统自带的<see cref="System.Net.IPEndPoint"></see>不能够进行Xml序列化)
+    ''' </remarks>
     Public Class IPEndPoint
 
         ''' <summary>
