@@ -173,13 +173,17 @@ Namespace Plots
             YTicks = array.Select(Function(s) s.pts).IteratesALL.Select(Function(p) CDbl(p.pt.Y)).ToArray
 
             If verbose Then
-                Call Console.WriteLine("set [x,y] axis range manually:")
-                Call Console.WriteLine($"xlim: {xlim};")
-                Call Console.WriteLine($"ylim: {ylim};")
+                Call VBDebugger.EchoLine("set [x,y] axis range manually:")
+                Call VBDebugger.EchoLine($"xlim: {xlim};")
+                Call VBDebugger.EchoLine($"ylim: {ylim};")
             End If
 
             If Not xlim.IsNullOrEmpty Then
-                XTicks = xlim.CreateAxisTicks
+                If xlim.Length = 1 AndAlso XaxisAbsoluteScalling Then
+                    XTicks = xlim.JoinIterates({0.0}).CreateAxisTicks
+                Else
+                    XTicks = xlim.CreateAxisTicks
+                End If
             Else
                 If XaxisAbsoluteScalling Then
                     XTicks = {0.0}.JoinIterates(XTicks).ToArray
@@ -189,7 +193,11 @@ Namespace Plots
             End If
 
             If Not ylim.IsNullOrEmpty Then
-                YTicks = ylim.CreateAxisTicks
+                If ylim.Length = 1 AndAlso YaxisAbsoluteScalling Then
+                    YTicks = ylim.JoinIterates({0.0}).CreateAxisTicks
+                Else
+                    YTicks = ylim.CreateAxisTicks
+                End If
             Else
                 If YaxisAbsoluteScalling Then
                     YTicks = {0.0}.JoinIterates(YTicks).ToArray
@@ -339,7 +347,6 @@ Namespace Plots
             For Each line As SerialData In array
                 Dim pen As Pen = line.GetPen
                 Dim fillBrush As New SolidBrush(Color.FromArgb(100, baseColor:=line.color))
-                Dim bottom! = gSize.Height - region.Bottom
                 Dim scatter As IEnumerable(Of PointData)
 
                 If scatterReorder Then
