@@ -157,7 +157,8 @@ Namespace Net.Http
         ''' <param name="Base64String"></param>
         ''' <param name="format"></param>
         ''' <returns></returns>
-        <Extension> Public Function GetImage(Base64String As String, Optional format As ImageFormats = ImageFormats.Png) As Bitmap
+        <Extension>
+        Public Function GetImage(Base64String As String, Optional format As ImageFormats = ImageFormats.Png) As Image
             Try
                 If String.IsNullOrEmpty(Base64String) Then
                     ' Checking The Base64 string validity
@@ -195,8 +196,8 @@ Namespace Net.Http
         ''' <returns></returns>
         ''' 
         <Extension>
-        Private Function __getImageFromBase64(base64String$, format As ImageFormats) As Bitmap
-            Dim bytData As Byte(), streamImage As Bitmap
+        Private Function __getImageFromBase64(base64String$, format As ImageFormats) As Image
+            Dim bytData As Byte(), streamImage As Image
 
             ' Convert Base64 to Byte Array
             bytData = Convert.FromBase64String(base64String)
