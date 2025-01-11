@@ -54,11 +54,6 @@
 
 Imports System.Drawing
 
-#If NET48 Then
-#Else
-Imports Bitmap = Microsoft.VisualBasic.Imaging.Bitmap
-#End If
-
 Namespace Imaging.Driver
 
     Public MustInherit Class DeviceInterop
@@ -75,6 +70,7 @@ Namespace Imaging.Driver
         ''' </param>
         ''' <returns></returns>
         Public MustOverride Function CreateCanvas2D(background As Bitmap, direct_access As Boolean) As IGraphics
+        Public MustOverride Function CreateCanvas2D(background As Image, direct_access As Boolean) As IGraphics
 
         ''' <summary>
         ''' 

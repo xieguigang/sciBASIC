@@ -125,6 +125,22 @@ Namespace Imaging.Driver
             Return __default
         End Function
 
+        Public Function CreateGraphicsDevice(background As Image,
+                                             Optional direct_access As Boolean = True,
+                                             Optional driver As Drivers = Drivers.Default) As IGraphics
+            If driver = Drivers.Default Then
+                driver = DefaultGraphicsDevice()
+            End If
+
+            Select Case driver
+                Case Drivers.GDI : Return libgdiplus_raster.CreateCanvas2D(background, direct_access)
+                Case Drivers.PDF : Return pdf.CreateCanvas2D(background, direct_access)
+                Case Drivers.SVG : Return svg.CreateCanvas2D(background, direct_access)
+                Case Else
+                    Throw New NotImplementedException(driver.Description)
+            End Select
+        End Function
+
         Public Function CreateGraphicsDevice(background As Bitmap,
                                              Optional direct_access As Boolean = True,
                                              Optional driver As Drivers = Drivers.Default) As IGraphics
