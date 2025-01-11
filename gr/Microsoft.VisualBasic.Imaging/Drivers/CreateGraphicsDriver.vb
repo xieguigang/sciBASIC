@@ -120,6 +120,10 @@ Namespace Driver
                 Return background.CreateCanvas2D(direct_access)
             End Function
 
+            Public Overrides Function CreateCanvas2D(background As Image, direct_access As Boolean) As IGraphics
+                Return background.CreateCanvas2D(direct_access)
+            End Function
+
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Public Overrides Function GetData(g As IGraphics, padding() As Integer) As IGraphicsData
                 Return New ImageData(DirectCast(g, Graphics2D).ImageResource, g.Size, New Padding(padding))
@@ -135,6 +139,12 @@ Namespace Driver
             End Function
 
             Public Overrides Function CreateCanvas2D(background As Bitmap, direct_access As Boolean) As IGraphics
+                Dim svg As New GraphicsSVG(background.Size, 100, 100)
+                svg.DrawImageUnscaled(background, New Point)
+                Return svg
+            End Function
+
+            Public Overrides Function CreateCanvas2D(background As Image, direct_access As Boolean) As IGraphics
                 Dim svg As New GraphicsSVG(background.Size, 100, 100)
                 svg.DrawImageUnscaled(background, New Point)
                 Return svg
