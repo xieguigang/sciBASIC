@@ -165,8 +165,8 @@ Namespace Hierarchy
             Dim d2 As Distance = Nothing
 
             For Each i As Cluster In Clusters
-                Dim link1 As HierarchyTreeNode = findByClusters(i, oldClusterL)
-                Dim link2 As HierarchyTreeNode = findByClusters(i, oldClusterR)
+                Dim link1 As HierarchyTreeNode = Distances.FindByCodePair(i, oldClusterL)
+                Dim link2 As HierarchyTreeNode = Distances.FindByCodePair(i, oldClusterR)
 
                 If link1 IsNot Nothing Then
                     Dim distVal As Double = link1.LinkageDistance
@@ -197,16 +197,5 @@ Namespace Hierarchy
             Call Distances.Sort()
             Call Clusters.Add(newCluster)
         End Sub
-
-        ''' <summary>
-        ''' dictionary key search
-        ''' </summary>
-        ''' <param name="c1"></param>
-        ''' <param name="c2"></param>
-        ''' <returns></returns>
-        <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Private Function findByClusters(c1 As Cluster, c2 As Cluster) As HierarchyTreeNode
-            Return Distances.FindByCodePair(c1, c2)
-        End Function
     End Class
 End Namespace
