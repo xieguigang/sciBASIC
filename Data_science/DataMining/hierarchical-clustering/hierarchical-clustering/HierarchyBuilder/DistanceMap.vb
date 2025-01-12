@@ -191,8 +191,9 @@ Namespace Hierarchy
             Dim hlink As New HierarchyLink(link)
 
             If linkTable.ContainsKey(hlink.HashKey) Then
-                Dim existingItem As HierarchyLink = linkTable(hlink.HashKey)
 #If DEBUG Then
+                Dim existingItem As HierarchyLink = linkTable(hlink.HashKey)
+
                 Call Console _
                     .Error _
                     .WriteLine("hashCode = " & existingItem.HashKey & " adding redundant link:" & link.ToString & " (exist:" & existingItem.ToString & ")")
