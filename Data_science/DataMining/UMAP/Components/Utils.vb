@@ -61,7 +61,7 @@ Imports Microsoft.VisualBasic.Math
 Module Utils
 
     ''' <summary>
-    ''' Enable of show tqdm progress bar?
+    ''' Enable of show tqdm progress bar? default is enable.
     ''' </summary>
     ''' <returns>default is true, get config from ``tqdm`` variable from the runtime framework.</returns>
     ''' <remarks>

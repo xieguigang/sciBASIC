@@ -96,6 +96,7 @@
 
 Imports System.Drawing
 Imports System.Math
+Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Math
 
 Namespace Layouts
@@ -108,6 +109,11 @@ Namespace Layouts
 
         Sub New(p As PointF)
             Call Me.New(p.X, p.Y, 0)
+        End Sub
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Sub New(xyz As Double())
+            Call Me.New(xyz(0), xyz(1), xyz(2))
         End Sub
 
         Sub New(copy As AbstractVector)
@@ -129,6 +135,7 @@ Namespace Layouts
         Public Overrides Function GetHashCode() As Integer
             Return CInt(Truncate(x)) Xor CInt(Truncate(y)) Xor CInt(Truncate(z))
         End Function
+
         Public Overrides Function Equals(obj As Object) As Boolean
             ' If parameter is null return false.
             If obj Is Nothing Then
