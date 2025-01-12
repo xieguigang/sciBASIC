@@ -161,6 +161,14 @@ Namespace Hierarchy
             End If
         End Function
 
+        Public Function Remove(pending As IEnumerable(Of HierarchyTreeNode)) As Boolean
+            For Each i As HierarchyTreeNode In pending
+                Call Remove(i)
+            Next
+
+            Return True
+        End Function
+
         Public Function Remove(link As HierarchyTreeNode) As Boolean
             Dim removed As HierarchyLink = linkTable.RemoveAndGet(hashCodePair(link))
 

@@ -161,41 +161,53 @@ Namespace Hierarchy
             Dim oldClusterL As Cluster = minDistLink.Left()
             Dim oldClusterR As Cluster = minDistLink.Right()
             Dim newCluster As Cluster = minDistLink.Agglomerate(Nothing)
-            Dim d1 As Distance = Nothing
-            Dim d2 As Distance = Nothing
+            Dim eval = Clusters.AsParallel _
+                .Select(Function(i)
+                            Return evaluateDistance(newCluster, i, oldClusterL, oldClusterR, linkageStrategy)
+                        End Function) _
+                .ToArray
 
-            For Each i As Cluster In Clusters
-                Dim link1 As HierarchyTreeNode = Distances.FindByCodePair(i, oldClusterL)
-                Dim link2 As HierarchyTreeNode = Distances.FindByCodePair(i, oldClusterR)
-
-                If link1 IsNot Nothing Then
-                    Dim distVal As Double = link1.LinkageDistance
-                    Dim weightVal As Double = link1.GetOtherCluster(i).WeightValue
-                    d1 = New Distance(distVal, weightVal)
-                    Distances.Remove(link1)
-                End If
-
-                If link2 IsNot Nothing Then
-                    Dim distVal As Double = link2.LinkageDistance
-                    Dim weightVal As Double = link2.GetOtherCluster(i).WeightValue
-                    d2 = New Distance(distVal, weightVal)
-                    Distances.Remove(link2)
-                End If
-
-                Dim newLinkage As New HierarchyTreeNode With {
-                    .Left = i,
-                    .Right = newCluster,
-                    .LinkageDistance = linkageStrategy.CalculateDistance(d1, d2)
-                }
-
-                d1 = Nothing
-                d2 = Nothing
-
-                Call Distances.Add(newLinkage, direct:=True)
+            For Each i As (removes As List(Of HierarchyTreeNode), newLinkage As HierarchyTreeNode) In eval
+                Call Distances.Remove(i.removes)
+                Call Distances.Add(i.newLinkage, direct:=True)
             Next
 
             Call Distances.Sort()
             Call Clusters.Add(newCluster)
         End Sub
+
+        Private Function evaluateDistance(newCluster As Cluster,
+                                          i As Cluster,
+                                          oldClusterL As Cluster, oldClusterR As Cluster,
+                                          linkageStrategy As LinkageStrategy) As (removes As List(Of HierarchyTreeNode), newLinkage As HierarchyTreeNode)
+
+            Dim link1 As HierarchyTreeNode = Distances.FindByCodePair(i, oldClusterL)
+            Dim link2 As HierarchyTreeNode = Distances.FindByCodePair(i, oldClusterR)
+            Dim d1 As Distance = Nothing
+            Dim d2 As Distance = Nothing
+            Dim removes As New List(Of HierarchyTreeNode)
+
+            If link1 IsNot Nothing Then
+                Dim distVal As Double = link1.LinkageDistance
+                Dim weightVal As Double = link1.GetOtherCluster(i).WeightValue
+                d1 = New Distance(distVal, weightVal)
+                removes.Add(link1)
+            End If
+
+            If link2 IsNot Nothing Then
+                Dim distVal As Double = link2.LinkageDistance
+                Dim weightVal As Double = link2.GetOtherCluster(i).WeightValue
+                d2 = New Distance(distVal, weightVal)
+                removes.Add(link2)
+            End If
+
+            Dim newLinkage As New HierarchyTreeNode With {
+                .Left = i,
+                .Right = newCluster,
+                .LinkageDistance = linkageStrategy.CalculateDistance(d1, d2)
+            }
+
+            Return (removes, newLinkage)
+        End Function
     End Class
 End Namespace
