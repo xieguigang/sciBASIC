@@ -56,6 +56,7 @@
 #End Region
 
 Imports Microsoft.VisualBasic.ApplicationServices
+Imports Microsoft.VisualBasic.ApplicationServices.Terminal.ProgressBar.Tqdm
 Imports Microsoft.VisualBasic.DataMining.HierarchicalClustering.Hierarchy
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
@@ -82,7 +83,6 @@ Public Class DefaultClusteringAlgorithm : Implements ClusteringAlgorithm
     Public Property debug As Boolean = False
 
     Public Function performClustering(distances As Double()(), clusterNames$(), linkageStrategy As LinkageStrategy) As Cluster Implements ClusteringAlgorithm.performClustering
-
         Call checkArguments(distances, clusterNames, linkageStrategy)
 
         ' Setup model 
@@ -92,14 +92,17 @@ Public Class DefaultClusteringAlgorithm : Implements ClusteringAlgorithm
         ' Process 
         Dim builder As New HierarchyBuilder(clusters, linkages)
         Dim i As i32 = 1
+        Dim total As Integer = clusters.Count
+        Dim tqdm As ProgressBar = TqdmWrapper.Wrap(total)
 
         Do While Not builder.TreeComplete
             Call builder.Agglomerate(linkageStrategy)
-
-            If debug Then
-                Call VBDebugger.EchoLine($"[iteration_{++i}] {builder.Clusters.Count}...")
-            End If
+            Call tqdm.SetLabel($"[iteration_{++i}] {builder.Clusters.Count}...")
+            Call tqdm.Progress(total - builder.Clusters.Count, total)
         Loop
+
+        Call tqdm.Finish()
+        Call VBDebugger.EchoLine("")
 
         Return builder.RootCluster
     End Function

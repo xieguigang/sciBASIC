@@ -162,6 +162,20 @@ Namespace ApplicationServices.Terminal.ProgressBar.Tqdm
             Return InternalWrap(enumerable, total, bar)
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function Wrap(total As Integer,
+                             Optional width As Integer = 40,
+                             Optional printsPerSecond As Integer = 10,
+                             Optional useColor As Boolean = False) As ProgressBar
+
+            Return New ProgressBar(
+                total,
+                width:=width,
+                printsPerSecond:=printsPerSecond,
+                useColor:=useColor
+            )
+        End Function
+
         Private Iterator Function InternalWrap(Of T)(enumerable As IEnumerable(Of T), total As Integer, bar As ProgressBar) As IEnumerable(Of T)
             Dim count = 0
             For Each item In enumerable

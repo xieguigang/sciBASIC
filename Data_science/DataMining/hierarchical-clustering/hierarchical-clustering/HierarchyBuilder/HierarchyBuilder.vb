@@ -77,7 +77,6 @@
 '
 
 Imports System.Runtime.CompilerServices
-Imports Microsoft.VisualBasic.ApplicationServices.Terminal.ProgressBar.Tqdm
 
 Namespace Hierarchy
 
@@ -155,11 +154,9 @@ Namespace Hierarchy
             If minDistLink Is Nothing Then
                 Return
             Else
-
+                Call Clusters.Remove(minDistLink.Right())
+                Call Clusters.Remove(minDistLink.Left())
             End If
-
-            Call Clusters.Remove(minDistLink.Right())
-            Call Clusters.Remove(minDistLink.Left())
 
             Dim oldClusterL As Cluster = minDistLink.Left()
             Dim oldClusterR As Cluster = minDistLink.Right()
