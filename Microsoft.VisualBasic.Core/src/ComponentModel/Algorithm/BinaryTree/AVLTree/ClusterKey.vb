@@ -115,6 +115,10 @@ Namespace ComponentModel.Algorithm.BinaryTree
             Call members.Add([single])
         End Sub
 
+        ''' <summary>
+        ''' get all cluster data from this cluster data object, the first element is the root seed of current tree node
+        ''' </summary>
+        ''' <param name="newMember"></param>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Sub Add(newMember As K)
             Call members.Add(newMember)

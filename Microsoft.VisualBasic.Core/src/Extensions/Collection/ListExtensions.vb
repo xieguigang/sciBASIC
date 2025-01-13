@@ -123,7 +123,10 @@ Public Module ListExtensions
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
     ''' <param name="list"></param>
-    ''' <returns></returns>
+    ''' <returns>
+    ''' this function returns the item with top frequency in the given list sequence; 
+    ''' and nothing will be returns if the given collection is empty.
+    ''' </returns>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
     Public Function TopMostFrequent(Of T)(list As IEnumerable(Of T), Optional equals As IEqualityComparer(Of T) = Nothing) As T

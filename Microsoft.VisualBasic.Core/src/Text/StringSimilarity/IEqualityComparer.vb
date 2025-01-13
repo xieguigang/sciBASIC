@@ -1,60 +1,61 @@
 ﻿#Region "Microsoft.VisualBasic::858bde950215379f8c5d5eac77a0e4f5, Microsoft.VisualBasic.Core\src\Text\StringSimilarity\IEqualityComparer.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 72
-    '    Code Lines: 44 (61.11%)
-    ' Comment Lines: 19 (26.39%)
-    '    - Xml Docs: 89.47%
-    ' 
-    '   Blank Lines: 9 (12.50%)
-    '     File Size: 2.58 KB
+' Summaries:
 
 
-    '     Class StringEqualityHelper
-    ' 
-    '         Properties: BinaryEquals, TextEquals
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    '         Function: Equals, GetHashCode, ToString
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 72
+'    Code Lines: 44 (61.11%)
+' Comment Lines: 19 (26.39%)
+'    - Xml Docs: 89.47%
+' 
+'   Blank Lines: 9 (12.50%)
+'     File Size: 2.58 KB
+
+
+'     Class StringEqualityHelper
+' 
+'         Properties: BinaryEquals, TextEquals
+' 
+'         Constructor: (+1 Overloads) Sub New
+'         Function: Equals, GetHashCode, ToString
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
+Imports System.Diagnostics.CodeAnalysis
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Algorithm.DynamicProgramming.Levenshtein
 Imports Microsoft.VisualBasic.ComponentModel.DataStructures
@@ -117,6 +118,32 @@ Namespace Text.Similarity
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overloads Function Equals(x As String, y As String) As Boolean Implements IEqualityComparer(Of String).Equals
             Return compare(x, y)
+        End Function
+
+        Public Overloads Function GetHashCode(obj As String) As Integer Implements IEqualityComparer(Of String).GetHashCode
+            If obj Is Nothing Then
+                Return 0
+            End If
+            Return obj.GetHashCode
+        End Function
+    End Class
+
+    ''' <summary>
+    ''' A wrapper of the <see cref="TextEquals"/> function
+    ''' </summary>
+    Public Class DirectTextComparer : Implements IEqualityComparer(Of String)
+
+        ReadOnly null_equals As Boolean = False
+        ReadOnly empty_equals As Boolean = True
+
+        Sub New(Optional null_equals As Boolean = False, Optional empty_equals As Boolean = True)
+            Me.null_equals = null_equals
+            Me.empty_equals = empty_equals
+        End Sub
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Overloads Function Equals(x As String, y As String) As Boolean Implements IEqualityComparer(Of String).Equals
+            Return x.TextEquals(y, null_equals, empty_equals)
         End Function
 
         Public Overloads Function GetHashCode(obj As String) As Integer Implements IEqualityComparer(Of String).GetHashCode
