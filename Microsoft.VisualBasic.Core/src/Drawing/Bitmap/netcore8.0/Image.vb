@@ -231,6 +231,14 @@ Namespace Imaging
             Return MemoryBuffer.GetPixel(X, Y)
         End Function
 
+        Public Overrides Function ToString() As String
+            If MemoryBuffer Is Nothing Then
+                Return "null;"
+            Else
+                Return MemoryBuffer.ToString
+            End If
+        End Function
+
         ''' <summary>
         ''' Save current bitmap object into a specific file
         ''' </summary>

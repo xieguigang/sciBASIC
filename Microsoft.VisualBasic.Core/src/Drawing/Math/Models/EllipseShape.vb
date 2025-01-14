@@ -89,5 +89,9 @@ Namespace Imaging.Math2D
                 origin.Y + dHalfheightEllipse * std.Sin(t * std.PI / 180)
             )
         End Function
+
+        Public Overrides Function ToString() As String
+            Return $"[{center.X},{center.Y}] r1={radiusX},r2={radiusY}"
+        End Function
     End Class
 End Namespace

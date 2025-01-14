@@ -147,6 +147,10 @@ Namespace Imaging
         Sub New(color As Color)
             Me.Color = color
         End Sub
+
+        Public Overrides Function ToString() As String
+            Return Color.ToHtmlColor
+        End Function
     End Class
 
     Public Class TextureBrush : Inherits Brush
@@ -157,6 +161,9 @@ Namespace Imaging
             Me.Image = image
         End Sub
 
+        Public Overrides Function ToString() As String
+            Return Image.ToString
+        End Function
     End Class
 
     Public NotInheritable Class Brushes

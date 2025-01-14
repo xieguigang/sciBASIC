@@ -610,6 +610,10 @@ Namespace Imaging.BitmapImage
             End If
         End Sub
 
+        Public Overrides Function ToString() As String
+            Return $"memory_bitmap({Width}x{Height}); sizeof={StringFormats.Lanudry(bytes:=Width * Height * channels)}"
+        End Function
+
         ''' <summary>
         ''' 这个函数会自动复制原始图片数据里面的东西的
         ''' </summary>
