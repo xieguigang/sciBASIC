@@ -163,7 +163,7 @@ Namespace RNN
 		''' </summary>
 		''' <param name="steps"></param>
 		Public Overridable Sub train(steps As Integer)
-			For Each i As Integer In TqdmWrapper.Range(0, steps)
+			For Each i As Integer In TqdmWrapper.Range(0, steps, wrap_console:=App.EnableTqdm)
 				' try to extract
 				trainingSet.extract(dataTrainedIndex, ix, iy)
 

@@ -182,7 +182,7 @@ Namespace node2vec
         Public Overridable Iterator Function simulateWalks(numWalks As Integer, walkLength As Integer) As IEnumerable(Of IList(Of Node))
             Dim nodeList As New List(Of Node)(nodeSet)
 
-            For Each i As Integer In Tqdm.Range(0, numWalks)
+            For Each i As Integer In Tqdm.Range(0, numWalks, wrap_console:=App.EnableTqdm)
                 Call nodeList.Shuffle()
 
                 For Each node As Node In nodeList

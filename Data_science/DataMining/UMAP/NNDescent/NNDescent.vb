@@ -121,7 +121,7 @@ Friend Class NNDescent : Implements NNDescentFn
         Dim d As Double
         Dim vIndex As IEnumerable(Of Integer)
 
-        If Utils.EnableTqdm Then
+        If App.EnableTqdm Then
             vIndex = Tqdm.Range(0, nVertices)
         Else
             vIndex = Enumerable.Range(0, nVertices)

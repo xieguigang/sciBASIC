@@ -161,6 +161,19 @@ Public Module App
     End Property
 
     ''' <summary>
+    ''' Enable of show tqdm progress bar? default is enable.
+    ''' </summary>
+    ''' <returns>default is true, get config from ``tqdm`` variable from the runtime framework.</returns>
+    ''' <remarks>
+    ''' There is a bug about the tqdm progressbar when processing as a slave background process on windows system.
+    ''' </remarks>
+    Public ReadOnly Property EnableTqdm As Boolean
+        Get
+            Return App.GetVariable("tqdm", "TRUE").ParseBoolean
+        End Get
+    End Property
+
+    ''' <summary>
     ''' Numbers of the CPU kernels on the current machine.
     ''' </summary>
     ''' <returns></returns>

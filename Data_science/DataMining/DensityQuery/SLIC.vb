@@ -92,7 +92,7 @@ Public Class SLIC
     Public Function MeasureSegments(regionSize As Integer, numIterations As Integer) As SLICPixel()
         Dim centers As List(Of SLICPixel) = InitializeCenters(bitmap, regionSize).ToList
 
-        For Each i As Integer In TqdmWrapper.Range(0, numIterations)
+        For Each i As Integer In TqdmWrapper.Range(0, numIterations, wrap_console:=App.EnableTqdm)
             Call IterateClustering(bitmap, centers, regionSize)
         Next
 

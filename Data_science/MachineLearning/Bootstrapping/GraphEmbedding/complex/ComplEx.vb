@@ -176,7 +176,7 @@ Namespace GraphEmbedding.complex
                     End If
                 Next
 
-                For Each iID As Integer In Tqdm.Range(0, m_NumBatch)
+                For Each iID As Integer In Tqdm.Range(0, m_NumBatch, wrap_console:=App.EnableTqdm)
                     Dim adagrad As New AdaGrad(
                         lstPosTriples(iID), lstHeadNegTriples(iID), lstTailNegTriples(iID),
                         m_Real_MatrixE,

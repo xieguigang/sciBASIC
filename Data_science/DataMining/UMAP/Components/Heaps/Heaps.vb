@@ -208,7 +208,7 @@ Friend Module Heaps
         Dim weights = heap(1)
         Dim indicesGroup As IEnumerable(Of Integer)
 
-        If Utils.EnableTqdm Then
+        If App.EnableTqdm Then
             indicesGroup = Tqdm.Range(0, indices.Length)
         Else
             indicesGroup = Enumerable.Range(0, indices.Length)

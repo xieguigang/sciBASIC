@@ -383,7 +383,7 @@ Namespace LDA
             Dim t1 As Date = Now
             Dim bar As Tqdm.ProgressBar = Nothing
 
-            For Each i As Integer In Tqdm.Range(0, ITERATIONS, bar:=bar)
+            For Each i As Integer In Tqdm.Range(0, ITERATIONS, bar:=bar, wrap_console:=App.EnableTqdm)
                 Call counter.Set()
 
                 ' for all z_i

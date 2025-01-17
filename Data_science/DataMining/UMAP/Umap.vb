@@ -406,7 +406,7 @@ Public NotInheritable Class Umap : Inherits IDataEmbedding
     Public Function [Step](nEpochs As Integer) As Umap
         Dim epochsIndex As IEnumerable(Of Integer)
 
-        If Utils.EnableTqdm Then
+        If App.EnableTqdm Then
             epochsIndex = Tqdm.Range(0, nEpochs)
         Else
             epochsIndex = Enumerable.Range(0, nEpochs)

@@ -111,7 +111,7 @@ Namespace CNN
             right = 0
             count = 0
 
-            For Each i As Integer In Tqdm.Range(0, epochsNum, bar:=progress)
+            For Each i As Integer In Tqdm.Range(0, epochsNum, bar:=progress, wrap_console:=App.EnableTqdm)
                 randPerm = Util.randomPerm(trainset.Length, alg.batch_size)
 
                 For Each index As Integer In randPerm

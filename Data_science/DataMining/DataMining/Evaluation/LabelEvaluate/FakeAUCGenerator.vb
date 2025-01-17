@@ -108,7 +108,7 @@ Namespace Evaluation
                 d = 1
             End If
 
-            For Each i As Integer In TqdmWrapper.Range(0, itrs, bar:=bar)
+            For Each i As Integer In TqdmWrapper.Range(0, itrs, bar:=bar, wrap_console:=App.EnableTqdm)
                 For offset As Integer = i * d To (i + 1) * d
                     ' flip the position
                     If out(offset) > cutoff Then

@@ -135,7 +135,7 @@ Public Class SelfOrganizingMap
         Next
 
         ' SOM training algorithm
-        For Each iteration As Integer In TqdmWrapper.Range(0, epoch)
+        For Each iteration As Integer In TqdmWrapper.Range(0, epoch, wrap_console:=App.EnableTqdm)
             ' Randomly shuffle the pixels
             Call shufflePixels(pixels)
 

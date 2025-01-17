@@ -147,7 +147,7 @@ Namespace LinearAlgebra.Matrix
             Dim bar As Tqdm.ProgressBar = Nothing
 
             If tqdm Then
-                For Each i As Integer In TqdmWrapper.Range(0, max_iterations, bar:=bar)
+                For Each i As Integer In TqdmWrapper.Range(0, max_iterations, bar:=bar, wrap_console:=App.EnableTqdm)
                     Call Factorisation(W, H, A, V, cost, errors)
 
                     If cost <= tolerance Then

@@ -127,7 +127,7 @@ Namespace Clustering
             Next
 
             ' start computing
-            For Each test As Integer In TqdmWrapper.Range(0, testSet.Length, bar:=bar)
+            For Each test As Integer In TqdmWrapper.Range(0, testSet.Length, bar:=bar, wrap_console:=App.EnableTqdm)
                 Dim test_vec As Double() = testSet(test).value
 
                 Call bar.SetLabel(testSet(test).name)
