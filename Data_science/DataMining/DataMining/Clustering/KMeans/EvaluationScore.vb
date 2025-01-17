@@ -139,7 +139,7 @@ Namespace KMeans
         End Function
 
         Private Shared Iterator Function SingleScore(data As ClusterEntity(), traceback As TraceBackIterator, eval As Func(Of Bisecting.Cluster(), Double)) As IEnumerable(Of PointF)
-            For Each i As Integer In Tqdm.Wrap(Enumerable.Range(1, traceback.size - 1).ToArray, useColor:=True)
+            For Each i As Integer In Tqdm.Wrap(Enumerable.Range(1, traceback.size - 1).ToArray, useColor:=True, wrap_console:=App.EnableTqdm)
                 traceback.SetTraceback(data, itr:=i)
                 Yield New PointF(i, eval(CreateClusters(data).ToArray))
             Next

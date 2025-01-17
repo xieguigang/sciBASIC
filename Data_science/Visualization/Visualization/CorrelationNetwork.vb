@@ -155,7 +155,7 @@ Public Module CorrelationNetwork
                               Return a.Value.TryCast(Of Double)
                           End Function)
 
-        For Each id As String In TqdmWrapper.Wrap(rownames)
+        For Each id As String In TqdmWrapper.Wrap(rownames, wrap_console:=App.EnableTqdm)
             For Each partner As String In colnames
                 cor = cols(partner)(rowOffset(id))
 
@@ -203,7 +203,7 @@ Public Module CorrelationNetwork
         Dim uid As String
         Dim prob As Double
 
-        For Each id As String In TqdmWrapper.Wrap(matrix.keys)
+        For Each id As String In TqdmWrapper.Wrap(matrix.keys, wrap_console:=App.EnableTqdm)
             For Each partner As String In matrix.keys.Where(Function(b) b <> id)
                 cor = matrix(id, partner)
                 prob = matrix.pvalue(id, partner)

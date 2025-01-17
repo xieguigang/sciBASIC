@@ -243,7 +243,7 @@ Namespace AprioriRules.Impl
 
             Call VBDebugger.EchoLine("get closed item sets...")
 
-            For Each item In Tqdm.Wrap(allFrequentItems)
+            For Each item In Tqdm.Wrap(allFrequentItems, wrap_console:=App.EnableTqdm)
                 Dim parents = item.Key.GetItemParents(++i, allFrequentItems)
 
                 If item.Key.CheckIsClosed(parents, allFrequentItems) Then

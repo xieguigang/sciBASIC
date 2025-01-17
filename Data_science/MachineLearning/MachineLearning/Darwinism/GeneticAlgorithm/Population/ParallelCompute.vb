@@ -153,7 +153,7 @@ Namespace Darwinism.GAF.Population
         Private Iterator Function ComputeFitnessVerboseProgress(comparator As FitnessPool(Of chr), source As PopulationCollection(Of chr)) As IEnumerable(Of NamedValue(Of Double))
             Dim pool As chr() = source.GetCollection.ToArray
 
-            For Each c As chr In TqdmWrapper.Wrap(pool)
+            For Each c As chr In TqdmWrapper.Wrap(pool, wrap_console:=App.EnableTqdm)
                 Dim fit As Double = comparator.Fitness(c, parallel:=True)
                 Dim key As String = c.Identity
 

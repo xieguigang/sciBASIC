@@ -183,7 +183,7 @@ Namespace AprioriRules.Impl
 
             Call VBDebugger.EchoLine("get maximal item sets...")
 
-            For Each item In Tqdm.Wrap(closedItemSets)
+            For Each item In Tqdm.Wrap(closedItemSets, wrap_console:=App.EnableTqdm)
                 Dim parents = item.Value
 
                 If parents.Count = 0 Then

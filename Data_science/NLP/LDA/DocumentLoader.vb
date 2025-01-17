@@ -73,7 +73,7 @@ Namespace LDA
 
             Call VBDebugger.EchoLine("load documents for build corpus data pool...")
 
-            For Each filepath As String In TqdmWrapper.Wrap(folderPath.ListFiles.ToArray)
+            For Each filepath As String In TqdmWrapper.Wrap(folderPath.ListFiles.ToArray, wrap_console:=App.EnableTqdm)
                 Dim file = filepath.Open(doClear:=False, [readOnly]:=True)
                 Dim br As New StreamReader(file, Encoding.UTF8)
                 Dim line As New Value(Of String)
