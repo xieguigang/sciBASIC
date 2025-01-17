@@ -177,6 +177,12 @@ Namespace SVG
                         .X = x + DirectCast(svgElement, SvgCircle).CX,
                         .Y = y + DirectCast(svgElement, SvgCircle).CY
                     }
+                ElseIf TypeOf svgElement Is SvgPolygon Then
+                    Yield New GeometryElement With {
+                        .svgElement = svgElement,
+                        .X = x,
+                        .Y = y
+                    }
                 End If
             Next
         End Function
