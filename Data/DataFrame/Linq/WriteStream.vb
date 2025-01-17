@@ -72,6 +72,7 @@ Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Data.csv.StorageProvider.ComponentModels
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Text
 
 Namespace IO.Linq
@@ -172,6 +173,10 @@ Namespace IO.Linq
 
             Call _fileIO.WriteLine(populateLine(title))
             Call _fileIO.Flush()
+        End Sub
+
+        Public Sub CacheMetaIndex(meta As IEnumerable(Of String))
+            rowWriter.__cachedIndex = meta.SafeQuery.ToArray
         End Sub
 
         Public Overrides Function ToString() As String

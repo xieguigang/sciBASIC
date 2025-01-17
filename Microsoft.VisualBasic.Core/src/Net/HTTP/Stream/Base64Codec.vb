@@ -113,16 +113,35 @@ Namespace Net.Http
         ''' <summary>
         ''' 将base64字符串还原为原来的字符串文本
         ''' </summary>
-        ''' <param name="base64$"></param>
+        ''' <param name="base64">a base64 encoded text string data for make decode</param>
         ''' <param name="encoding"></param>
-        ''' <returns></returns>
+        ''' <param name="strict">
+        ''' throw exception when error occurs during base64 decode? this function will 
+        ''' returns empty string if not strict and exception happends. 
+        ''' </param>
+        ''' <returns>
+        ''' this function may returns empty string when the given base64 string is invalid 
+        ''' and case the base64 decoder error and set strict parameter to false.
+        ''' </returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function DecodeBase64(base64$,
                                      Optional encoding As Encoding = Nothing,
-                                     Optional ungzip As Boolean = False) As String
+                                     Optional ungzip As Boolean = False,
+                                     Optional strict As Boolean = True) As String
 
-            Dim bytes As Byte() = Convert.FromBase64String(base64)
+            Dim bytes As Byte()
+
+            If strict Then
+                bytes = Convert.FromBase64String(base64)
+            Else
+                Try
+                    bytes = Convert.FromBase64String(base64)
+                Catch ex As Exception
+                    Call App.LogException(ex)
+                    Return ""
+                End Try
+            End If
 
             If ungzip Then
                 bytes = bytes.UnGzipStream.ToArray

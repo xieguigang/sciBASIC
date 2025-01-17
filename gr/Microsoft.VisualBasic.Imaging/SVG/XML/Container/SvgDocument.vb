@@ -247,7 +247,11 @@ Namespace SVG.XML
         ''' Parse the given xml document text as svg doucment model
         ''' </summary>
         ''' <param name="xml"></param>
-        ''' <returns></returns>
+        ''' <returns>
+        ''' this function will returns nothing if this parser function is not 
+        ''' in strict mode and also the given <paramref name="xml"/> text is 
+        ''' empty.
+        ''' </returns>
         Public Shared Function Parse(xml As String, Optional strict As Boolean = True) As SvgDocument
             Dim xmlDoc As New XmlDocument
             Dim svgEle As XmlElement
@@ -257,7 +261,15 @@ Namespace SVG.XML
             xml = xml.Replace(bom1, "")
 
             If strict Then
+                ' 20250117 the exception is not captured in strict mode
+                ' and the .net internal error of xml parser will be throw
+                ' if the given xml is invalid
                 Call xmlDoc.LoadXml(xml)
+            ElseIf xml.StringEmpty(, True) Then
+                ' given xml string is empty and also 
+                ' not in strict mode
+                ' returns nothing directly
+                Return Nothing
             Else
                 Dim settings As New XmlReaderSettings()
                 settings.IgnoreWhitespace = True

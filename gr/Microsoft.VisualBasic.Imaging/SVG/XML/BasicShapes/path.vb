@@ -121,10 +121,6 @@ Namespace SVG.XML
             MyBase.New(element)
         End Sub
 
-        Public Overrides Function ToString() As String
-            Return $"{D}@fill:{Fill}"
-        End Function
-
         Friend Overloads Shared Function Create(parent As XmlElement) As SvgPath
             Dim element = parent.OwnerDocument.CreateElement("path")
             parent.AppendChild(element)

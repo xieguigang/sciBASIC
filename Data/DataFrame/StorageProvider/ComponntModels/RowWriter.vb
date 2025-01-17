@@ -298,12 +298,14 @@ Namespace StorageProvider.ComponentModels
         ''' </summary>
         ''' <param name="source"></param>
         ''' <param name="reorderKeys">
+        ''' options for sorts the metadata index keys?
+        ''' 
         ''' + 0: 不排序
         ''' + 1: 升序排序
         ''' +-1: 降序排序
         ''' </param>
         ''' <returns></returns>
-        Public Function CacheIndex(source As IEnumerable(Of Object), reorderKeys As Integer) As RowWriter
+        Public Function CacheIndex(source As IEnumerable(Of Object), Optional reorderKeys As Integer = 0) As RowWriter
             If metaRow Is Nothing Then
                 Return Me
             End If
@@ -359,11 +361,15 @@ Namespace StorageProvider.ComponentModels
             ' 得到实体之中的字典类型的属性值
             Dim source As Object = metaRow.BindProperty.GetValue(obj, Nothing)
 
+            If __cachedIndex Is Nothing Then
+                Throw New NullReferenceException($"the cache index is nothing, you should run the method '{NameOf(CacheIndex)}' for index cached at first, and then write the data!")
+            End If
             If source Is Nothing Then
                 Return _metaBlank.Repeats(__cachedIndex.Length)
             End If
 
-            Dim values As String() = New String(Me.__cachedIndex.Length - 1) {}
+            Dim metaSize As Integer = __cachedIndex.Length
+            Dim values As String() = New String(metaSize - 1) {}
             Dim hash As IDictionary = DirectCast(source, IDictionary)
 
             For i As Integer = 0 To __cachedIndex.Length - 1

@@ -250,9 +250,20 @@ Namespace Text.Similarity
         ''' <typeparam name="T"></typeparam>
         ''' <param name="collection"></param>
         ''' <param name="query"></param>
-        ''' <param name="cutoff"></param>
+        ''' <param name="cutoff">
+        ''' this text similarity cutoff will filter out some content from the result.
+        ''' </param>
         ''' <param name="strlen_diff"></param>
-        ''' <returns></returns>
+        ''' <returns>
+        ''' a sort collection result by the text similarity measurement. this result
+        ''' collection may has elements number less than the input <paramref name="collection"/> 
+        ''' elements number.
+        ''' </returns>
+        ''' <remarks>
+        ''' this function will removes the item inside the collection
+        ''' which its text similarity is smaller than the cutoff of given 
+        ''' <paramref name="query"/> text.
+        ''' </remarks>
         <Extension>
         Public Function LevenshteinOrder(Of T)(collection As IEnumerable(Of T), query As String, getData As Func(Of T, IEnumerable(Of String)),
                                                Optional ignoreCase As Boolean = True,
