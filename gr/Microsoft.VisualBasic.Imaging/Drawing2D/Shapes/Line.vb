@@ -64,13 +64,15 @@ Imports Microsoft.VisualBasic.Imaging.Drawing2D.Math2D
 Imports Microsoft.VisualBasic.Imaging.LayoutModel
 Imports Microsoft.VisualBasic.Imaging.Math2D
 Imports Microsoft.VisualBasic.Math
-Imports stdNum = System.Math
+Imports Microsoft.VisualBasic.MIME.Html.CSS
+Imports Microsoft.VisualBasic.MIME.Html.Render
+Imports std = System.Math
 
 Namespace Drawing2D.Shapes
 
     Public Class Line : Inherits Shape
 
-        Public Property Stroke As Pen
+        Public Property Stroke As Stroke
 
         Public ReadOnly Property A As PointF
         Public ReadOnly Property B As PointF
@@ -92,7 +94,7 @@ Namespace Drawing2D.Shapes
         Public ReadOnly Property Length As Double
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
-                Return stdNum.Sqrt((A.X - B.X) ^ 2 + (A.Y - B.Y) ^ 2)
+                Return std.Sqrt((A.X - B.X) ^ 2 + (A.Y - B.Y) ^ 2)
             End Get
         End Property
 
@@ -122,7 +124,7 @@ Namespace Drawing2D.Shapes
             Get
                 Dim dx! = B.X - Me.A.X
                 Dim dy! = B.Y - Me.A.Y
-                Dim cos = dx / stdNum.Sqrt(dx ^ 2 + dy ^ 2)
+                Dim cos = dx / std.Sqrt(dx ^ 2 + dy ^ 2)
                 Dim a = Arccos(cos)
 
                 If dy < 0 Then
@@ -157,10 +159,10 @@ Namespace Drawing2D.Shapes
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Sub New(a As PointF, b As PointF, c As Color, width%)
-            Call Me.New(a, b, pen:=New Pen(New SolidBrush(c), width))
+            Call Me.New(a, b, pen:=New Stroke(width, c))
         End Sub
 
-        Sub New(a As PointF, b As PointF, pen As Pen)
+        Sub New(a As PointF, b As PointF, pen As Stroke)
             Call MyBase.New(a.ToPoint)
 
             Me.A = a
@@ -170,6 +172,11 @@ Namespace Drawing2D.Shapes
 
         Sub New(x1#, y1#, x2#, y2#)
             Call Me.New(New PointF(x1, y1), New PointF(x2, y2))
+        End Sub
+
+        Sub New(pen As Pen, a As PointF, b As PointF)
+            Call Me.New(a, b)
+            Stroke = New Stroke(pen)
         End Sub
 
         Sub New(a As PointF, b As PointF)
@@ -222,6 +229,8 @@ Namespace Drawing2D.Shapes
 
         Public Overrides Function Draw(ByRef g As IGraphics, Optional overridesLoci As Point = Nothing) As RectangleF
             Dim rect As RectangleF = MyBase.Draw(g, overridesLoci)
+            Dim css As CSSEnvirnment = g.LoadEnvironment
+            Dim stroke As Pen = css.GetPen(Me.Stroke, allowNull:=True)
             Call g.DrawLine(Stroke, A, B)
             Return rect
         End Function
@@ -233,7 +242,7 @@ Namespace Drawing2D.Shapes
         ''' <returns></returns>
         Public Function ParallelShift(d#) As Line
             With Stroke
-                Dim color As Color = DirectCast(.Brush, SolidBrush).Color
+                Dim color As Color = .fill.TranslateColor
                 Dim dx = d * Sin
                 Dim dy = d * Cos
                 Dim offset As New Point(dx, -dy)

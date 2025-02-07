@@ -68,16 +68,20 @@
 
 Imports System.Drawing
 Imports System.Drawing.Drawing2D
-Imports System.IO
 Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.Language.C
 
 Namespace PostScript
 
     Public Class GraphicsPS : Inherits IGraphics
+
         Public Overrides Property RenderingOrigin As Point
         Public Overrides Property TextContrast As Integer
         Public Overrides ReadOnly Property Size As Size
+            Get
+                Return painting.size
+            End Get
+        End Property
 
         Public Overrides ReadOnly Property Driver As Drivers
             Get
@@ -86,56 +90,14 @@ Namespace PostScript
         End Property
 
         Dim ps_fontsize% = 15
-        Dim buffer As New MemoryStream
-        Dim fp As StreamWriter
+        Dim painting As New PostScriptBuilder
         Dim originx, originy As Single
 
         Sub New(size As Size, dpi As Size)
             Call MyBase.New(dpi)
 
-            Me.fp = New StreamWriter(buffer)
-            Me.Size = size
-
-            fprintf(fp, "%%!PS-Adobe-3.0 EPSF-3.0\n")
-            fprintf(fp, "%%%%DocumentData: Clean7Bit\n")
-            fprintf(fp, "%%%\%Origin: %10.2f %10.2f\n", originx, originy)
-            fprintf(fp, "%%%%BoundingBox: %10.2f %10.2f %10.2f %10.2f\n", originx, originy, size.Width, size.Height)
-            fprintf(fp, "%%%%LanguageLevel: 2\n")
-            fprintf(fp, "%%%%Pages: 1\n")
-            fprintf(fp, "%%%%Page: 1 1                           \n")
-            fprintf(fp, "%% Convert to PDF with something like this:\n")
-            fprintf(fp, "%% gs -o OutputFileName.pdf -sDEVICE=pdfwrite -dEPSCrop InputFileName.ps\n")
-            fprintf(fp, "%% PostScript generated using the PStools library\n")
-            fprintf(fp, "%% from the Binghamton Optimality Research Group\n")
-            fprintf(fp, "%% Get the library at https://github.com/profmadden/pstools\n")
-            fprintf(fp, "%% This library is free to use, however you see fit.  It would be\n")
-            fprintf(fp, "%% nice if you let us know that you're using it, though!\n")
-            fprintf(fp, "%% Drop us an email at pmadden@binghamton.edu, or pop by our\n")
-            fprintf(fp, "%% web page, https://optimal.cs.binghamton.edu\n")
-            fprintf(fp, "%% Standard use-at-your-own-risk stuff applies....\n")
-            fprintf(fp, "/Courier findfont 15 scalefont setfont\n")
+            painting.size = size
         End Sub
-
-        Public Function linewidth(width As Single) As GraphicsPS
-            fprintf(fp, "%f setlinewidth\n", width)
-            Return Me
-        End Function
-
-        Public Function color(r!, g!, b!) As GraphicsPS
-            fprintf(fp, "%3.2f %3.2f %3.2f setrgbcolor\n", r, g, b)
-            Return Me
-        End Function
-
-        Public Shadows Function font(name As String, fontsize!) As GraphicsPS
-            fprintf(fp, "/%s findfont %f scalefont setfont\n", name, fontsize)
-            ps_fontsize = fontsize
-            Return Me
-        End Function
-
-        Public Function note(noteText As String) As GraphicsPS
-            fprintf(fp, "%% %s\n", noteText)
-            Return Me
-        End Function
 
         Public Overrides Sub AddMetafileComment(data() As Byte)
             Throw New NotImplementedException()
@@ -297,19 +259,19 @@ Namespace PostScript
         End Sub
 
         Public Overrides Sub DrawLine(pen As Pen, pt1 As PointF, pt2 As PointF)
-            Throw New NotImplementedException()
+            Call painting.Add(New Elements.Line(pen, pt1, pt2))
         End Sub
 
         Public Overrides Sub DrawLine(pen As Pen, pt1 As Point, pt2 As Point)
-            Throw New NotImplementedException()
+            Call painting.Add(New Elements.Line(pen, pt1.PointF, pt2.PointF))
         End Sub
 
         Public Overrides Sub DrawLine(pen As Pen, x1 As Integer, y1 As Integer, x2 As Integer, y2 As Integer)
-            Throw New NotImplementedException()
+            Call painting.Add(New Elements.Line(pen, New PointF(x1, y1), New PointF(x2, y2)))
         End Sub
 
         Public Overrides Sub DrawLine(pen As Pen, x1 As Single, y1 As Single, x2 As Single, y2 As Single)
-            fprintf(fp, "newpath %f %f moveto %f %f lineto stroke\n", x1, y1, x2, y2)
+            Call painting.Add(New Elements.Line(pen, New PointF(x1, y1), New PointF(x2, y2)))
         End Sub
 
         Public Overrides Sub DrawLines(pen As Pen, points() As PointF)
@@ -341,13 +303,7 @@ Namespace PostScript
         End Sub
 
         Public Overrides Sub DrawCircle(center As PointF, fill As Color, stroke As Pen, radius As Single)
-            fprintf(fp, "%f %f %f 0 360 arc closepath\n", center.X, center.Y, radius)
 
-            If Not fill.IsTransparent Then
-                fprintf(fp, "gsave fill grestore stroke\n")
-            Else
-                fprintf(fp, "stroke\n")
-            End If
         End Sub
 
         Public Overrides Sub DrawPolygon(pen As Pen, points() As PointF)
@@ -367,24 +323,7 @@ Namespace PostScript
         End Sub
 
         Public Overrides Sub DrawRectangle(pen As Pen, x As Single, y As Single, width As Single, height As Single)
-            Dim x1 = x, y1 = y
-            Dim x2 = x1 + width
-            Dim y2 = y1 + height
 
-            fprintf(fp, "newpath %f %f moveto ", x1, y1)
-            fprintf(fp, "%f %f lineto ", x2, y1)
-            fprintf(fp, "%f %f lineto ", x2, y2)
-            fprintf(fp, "%f %f lineto ", x1, y2)
-            fprintf(fp, "%f %f lineto ", x1, y1)
-            '           If (Fill())Then
-            '{
-            '	If (stroke) Then
-            '                   fprintf(context -> fp, "closepath gsave fill grestore stroke\n");
-            '	Else
-            '                   fprintf(context -> fp, "closepath fill\n");
-            '}
-
-            fprintf(fp, "closepath stroke\n")
         End Sub
 
         Public Overrides Sub DrawRectangle(pen As Pen, x As Integer, y As Integer, width As Integer, height As Integer)
@@ -408,7 +347,7 @@ Namespace PostScript
         End Sub
 
         Public Overrides Sub DrawString(s As String, font As Font, brush As Brush, x As Single, y As Single)
-            fprintf(fp, "%f %f moveto (%s) show\n", x, y, s)
+
         End Sub
 
         Public Overrides Sub ExcludeClip(rect As Rectangle)
@@ -477,11 +416,6 @@ Namespace PostScript
 
         Public Overrides Sub FillRectangle(brush As Brush, x As Single, y As Single, width As Single, height As Single)
             Throw New NotImplementedException()
-        End Sub
-
-        Public Overrides Sub Flush()
-            fprintf(fp, "%%%%EOF\n")
-            fp.Flush()
         End Sub
 
         Public Overrides Sub IntersectClip(rect As RectangleF)
@@ -567,5 +501,9 @@ Namespace PostScript
         Public Overrides Function GetStringPath(s As String, rect As RectangleF, font As Font) As GraphicsPath
             Throw New NotImplementedException()
         End Function
+
+        Public Overrides Sub Flush()
+            Throw New NotImplementedException()
+        End Sub
     End Class
 End Namespace

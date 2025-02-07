@@ -93,6 +93,45 @@ Namespace Imaging.Driver
         ''' application/pdf
         ''' </summary>
         PDF
+        ''' <summary>
+        ''' The PostScript file format is a page description language (PDL) developed by Adobe Systems, Inc. It was first 
+        ''' introduced in 1982 and has since become a standard for printing and imaging in the graphics and publishing 
+        ''' industries. PostScript is a powerful and flexible format used primarily for printing high-quality text and
+        ''' graphics.
+        ''' 
+        ''' Here are some key aspects of the PostScript file format:
+        ''' 
+        ''' 1. **Language-Based Format**: PostScript is not just a file format but a full-fledged programming language. 
+        '''    It includes a set of commands that describe how text, graphics, and images should be rendered on a page.
+        ''' 2. **Device Independence**: One of the main advantages of PostScript is its device independence. This means
+        '''    that a PostScript file can be created on one device and then printed or displayed on another device without 
+        '''    needing to adjust the file for the specific characteristics of the output device.
+        ''' 3. **Vector Graphics**: PostScript is particularly well-suited for vector graphics, which are defined by 
+        '''    mathematical equations rather than pixels. This allows for crisp, high-resolution output at any size.
+        ''' 4. **Encapsulated PostScript (EPS)**: A variant of PostScript, EPS is a file format that can be used to exchange 
+        '''    graphics between different applications. EPS files can contain both vector and bitmap graphics and are often
+        '''    used for logos, illustrations, and other graphics that need to be integrated into larger documents.
+        ''' 5. **Font Handling**: PostScript introduced sophisticated font handling, including the ability to scale and rotate 
+        '''    text. It also supports both Type 1 and Type 3 fonts, which are outline fonts that can be scaled to any size
+        '''    without losing quality.
+        ''' 6. **Complex Page Layouts**: PostScript is capable of describing very complex page layouts, including text in 
+        '''    multiple columns, overlapping graphics, and nested objects.
+        ''' 7. **Interpreted Language**: PostScript files are interpreted by a PostScript interpreter, which is typically 
+        '''    built into a printer or a raster image processor (RIP). The interpreter reads the PostScript commands and
+        '''    renders the page accordingly.
+        ''' 8. **Compatibility**: While PostScript was once the dominant format for professional printing, its use has declined 
+        '''    somewhat with the rise of PDF (Portable Document Format), also developed by Adobe. However, PostScript remains 
+        '''    important in certain niches, and many printers and RIPs still support it.
+        ''' 9. **File Extensions**: PostScript files commonly have the extensions .ps (for PostScript) or .eps (for Encapsulated PostScript).
+        ''' 10. **Programming Features**: PostScript includes programming constructs such as variables, loops, and conditionals, 
+        '''     which allow for a high degree of automation and customization in the creation of documents.
+        '''     
+        ''' Despite the rise of other formats like PDF, PostScript still has a place in the world of digital printing and publishing, 
+        ''' particularly for applications where precise control over the output is required. It's also worth noting that many of the
+        ''' concepts and technologies introduced with PostScript laid the groundwork for later developments in digital graphics and 
+        ''' document management.
+        ''' </summary>
+        PostScript
     End Enum
 
     Public Module FormatHelper

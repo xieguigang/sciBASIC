@@ -59,6 +59,8 @@ Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MIME.Html.Language.CSS
+Imports System.Drawing
+
 
 #If NET48 Then
 Imports Font = System.Drawing.Font
@@ -133,6 +135,16 @@ Namespace CSS
             Me.width = width
             fill = "black"
             dash = DashStyle.Solid
+        End Sub
+
+        Sub New(width As Single, color As Color)
+            Call Me.New(width)
+            fill = color.ToHtmlColor
+        End Sub
+
+        Sub New(color As Color, w!)
+            Call Me.New(w)
+            fill = color.ToHtmlColor
         End Sub
 
         Sub New(width As Double)

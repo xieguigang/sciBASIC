@@ -138,10 +138,11 @@ Namespace CommandLine
                                 Optional shell As Boolean = False,
                                 Optional setProcess As Action(Of Process) = Nothing) As Integer
 
+            Dim check_shell = (Not app.ExtensionSuffix("sh")) OrElse (Not shell) OrElse app.FileExists
             Dim p As Process = CreatePipeline(
                 appPath:=app,
                 args:=args,
-                it:=(Not app.ExtensionSuffix("sh")) OrElse (Not shell) OrElse app.FileExists,
+                it:=check_shell,
                 workdir:=workdir
             )
 
@@ -174,7 +175,6 @@ Namespace CommandLine
         ''' </param>
         ''' <returns></returns>
         Friend Function handleRunStream(p As Process, in$, onReadLine As Action(Of String), async As Boolean) As String
-            Dim reader As StreamReader = p.StandardOutput
             Dim errReader As StreamReader = p.StandardError
 
             If Not String.IsNullOrEmpty([in]) Then
@@ -187,22 +187,25 @@ Namespace CommandLine
             End If
 
             If Not async Then
-                While CheckProcessStreamOpen(p, reader)
-                    Call onReadLine(reader.ReadLine)
-                End While
-
+                Call ReadLines(p, onReadLine)
                 Return errReader.ReadToEnd
             Else
-                Call Task.Run(
-                    Sub()
-                        While CheckProcessStreamOpen(p, reader)
-                            Call onReadLine(reader.ReadLine)
-                        End While
-                    End Sub)
-
+                Call Task.Run(Sub() Call ReadLines(p, onReadLine))
                 Return Nothing
             End If
         End Function
+
+        Private Sub ReadLines(p As Process, onReadLine As Action(Of String))
+            Dim reader As StreamReader = p.StandardOutput
+
+            While CheckProcessStreamOpen(p, reader)
+                Call onReadLine(reader.ReadLine)
+            End While
+
+            For Each line As String In reader.ReadToEnd.LineTokens
+                Call onReadLine(line)
+            Next
+        End Sub
 
         ''' <summary>
         ''' A common wrapper for check of the sub-process stdout stream is avaiable?
@@ -273,7 +276,7 @@ Namespace CommandLine
                 p.StartInfo.WorkingDirectory = workdir.GetDirectoryFullPath
             End If
 
-            p.Start()
+            Call p.Start()
 
             Return p
         End Function

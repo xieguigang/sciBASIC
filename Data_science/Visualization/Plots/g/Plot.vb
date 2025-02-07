@@ -119,6 +119,13 @@ Namespace Graphic
             Me.theme = theme
         End Sub
 
+        ''' <summary>
+        ''' function for make plot
+        ''' </summary>
+        ''' <param name="size"></param>
+        ''' <param name="dpi"></param>
+        ''' <param name="driver"></param>
+        ''' <returns>this function returns a graphics plot wrapper object that supports save png/svg/pdf file</returns>
         Public Overloads Function Plot(size As SizeF, Optional dpi As Integer = 300, Optional driver As Drivers = Drivers.Default) As GraphicsData
             Return g.GraphicsPlots(
                 size:=size.ToSize,
@@ -130,6 +137,13 @@ Namespace Graphic
             )
         End Function
 
+        ''' <summary>
+        ''' function for make plot
+        ''' </summary>
+        ''' <param name="size$"></param>
+        ''' <param name="ppi"></param>
+        ''' <param name="driver"></param>
+        ''' <returns>this function returns a graphics plot wrapper object that supports save png/svg/pdf file</returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overridable Overloads Function Plot(Optional size$ = Resolution2K.Size, Optional ppi As Integer = 300, Optional driver As Drivers = Drivers.Default) As GraphicsData
             Return g.GraphicsPlots(
@@ -143,7 +157,7 @@ Namespace Graphic
         End Function
 
         ''' <summary>
-        ''' 
+        ''' make plot with a specific given layout information
         ''' </summary>
         ''' <param name="g"></param>
         ''' <param name="layout">
@@ -155,6 +169,11 @@ Namespace Graphic
             Call PlotInternal(g, EvaluateLayout(g, layout))
         End Sub
 
+        ''' <summary>
+        ''' make plot with a specific given layout information
+        ''' </summary>
+        ''' <param name="g"></param>
+        ''' <param name="canvas"></param>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overloads Sub Plot(ByRef g As IGraphics, canvas As GraphicsRegion)
             Call PlotInternal(g, canvas)

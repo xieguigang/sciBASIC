@@ -61,8 +61,17 @@ Imports Microsoft.VisualBasic.MIME.Html.Render
 
 Namespace Drawing2D.Shapes
 
+    ''' <summary>
+    ''' rectangle model
+    ''' </summary>
     Public Class Box : Inherits Shape
 
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="Location"></param>
+        ''' <param name="Size"></param>
+        ''' <param name="Color">the fill color of the rectangle object</param>
         Sub New(Location As Point, Size As Size, Color As Color)
             Call MyBase.New(Location)
         End Sub

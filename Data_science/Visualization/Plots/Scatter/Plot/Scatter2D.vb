@@ -415,8 +415,9 @@ Namespace Plots
             For Each line As Line In ablines.SafeQuery
                 Dim a As PointF = scaler.Translate(line.A)
                 Dim b As PointF = scaler.Translate(line.B)
+                Dim style As Pen = css.GetPen(line.Stroke)
 
-                Call g.DrawLine(line.Stroke, a, b)
+                Call g.DrawLine(style, a, b)
             Next
         End Sub
     End Class

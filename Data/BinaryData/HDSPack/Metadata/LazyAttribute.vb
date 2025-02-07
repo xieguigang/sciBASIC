@@ -90,6 +90,20 @@ Public Class LazyAttribute : Implements IEnumerable(Of String)
         attributes(name) = attr
     End Sub
 
+    ''' <summary>
+    ''' build a dynamics object that could be used for show in property grid controld
+    ''' </summary>
+    ''' <returns></returns>
+    Public Function BuildDynamicTypeObject() As Object
+        Dim attrs As New Dictionary(Of String, Object)
+
+        For Each attr As String In attributes.Keys
+            attrs(attr) = GetValue(attr)
+        Next
+
+        Return DynamicType.Create(attrs)
+    End Function
+
     Public Function GetValue(name As String) As Object
         Dim attr As AttributeMetadata = attributes.TryGetValue(name)
 

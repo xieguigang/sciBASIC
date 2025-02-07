@@ -52,10 +52,7 @@
 #End Region
 
 Imports System.Drawing
-Imports System.Drawing.Drawing2D
 Imports System.Drawing.Imaging
-Imports System.Drawing.Text
-Imports System.Runtime.CompilerServices
 
 Public Module ImageExtensions
 

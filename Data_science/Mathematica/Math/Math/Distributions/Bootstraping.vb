@@ -290,6 +290,13 @@ Namespace Distributions
             End If
         End Function
 
+        ''' <summary>
+        ''' Find top frequency binbox
+        ''' </summary>
+        ''' <param name="data"></param>
+        ''' <param name="topBin"></param>
+        ''' <param name="bags">binbox number of the fix width cut bins method</param>
+        ''' <returns></returns>
         <Extension>
         Public Function TabulateBin(data As IEnumerable(Of Double), Optional topBin As Boolean = False, Optional bags As Integer = 5) As Double()
             With data.ToArray

@@ -54,6 +54,7 @@
 #End Region
 
 Imports System.Drawing.Imaging
+Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Net.Http
@@ -120,6 +121,20 @@ Public Module ImageFormatExtensions
         {ImageFormats.Tiff, ImageFormat.Tiff},
         {ImageFormats.Wmf, ImageFormat.Wmf}
     }
+
+    <Extension>
+    Public Function SaveAs(res As Image, path As String, format As ImageFormat, Optional autoDispose As Boolean = False) As Boolean
+        Using s As Stream = path.Open(FileMode.OpenOrCreate, doClear:=True)
+            Call path.ParentPath.MakeDir
+            Call res.Save(s, format)
+        End Using
+
+        If autoDispose Then
+            Call res.Dispose()
+        End If
+
+        Return True
+    End Function
 
     ''' <summary>
     ''' Saves this <see cref="System.Drawing.Image"/> to the specified file in the specified format.

@@ -56,8 +56,15 @@
 Imports System.Reflection
 Imports System.Runtime.CompilerServices
 
+''' <summary>
+''' a name key tagged attribute metadata.
+''' </summary>
 Public Class AttributeMetadata
 
+    ''' <summary>
+    ''' the attribute name
+    ''' </summary>
+    ''' <returns></returns>
     Public Property name As String
     Public Property type As String
     Public Property data As Byte()

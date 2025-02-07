@@ -407,9 +407,10 @@ Namespace Math
         Public Sub Shuffle(Of T)(r As Random, ByRef list As List(Of T))
             Dim j As Integer
             Dim temp As T
+            Dim nsize As Integer = list.Count - 1
 
-            For i As Integer = 0 To list.Count - 1
-                j = r.[Next](0, i + 1)
+            For i As Integer = 0 To nsize
+                j = r.Next(0, i + 1)
                 temp = list(j)
                 list(j) = list(i)
                 list(i) = temp

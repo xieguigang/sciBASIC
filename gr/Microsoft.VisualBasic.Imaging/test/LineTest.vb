@@ -60,14 +60,14 @@ Module LineTest
 
     Sub Main1()
         Using g = New Size(1600, 900).CreateGDIDevice
-            Dim line As New Line(0, 0, 100, 0)
+            Dim line As New Drawing2D.Shapes.Line(0, 0, 100, 0)
             Dim down = line.ParallelShift(20)
 
 
             Call line.Draw(g)
             Call down.Draw(g)
 
-            line = New Line(0, 0, 0, 100)
+            line = New Drawing2D.Shapes.Line(0, 0, 0, 100)
             Dim left = line.ParallelShift(20)
 
             Call line.Draw(g)
@@ -75,13 +75,13 @@ Module LineTest
 
 
             For Each line In {
-                New Line(200, 200, 450, 450),
-                New Line(300, 532, 1026, 663),
-                New Line(1200, 635, 1999, 99)
+                New Drawing2D.Shapes.Line(200, 200, 450, 450),
+                New Drawing2D.Shapes.Line(300, 532, 1026, 663),
+                New Drawing2D.Shapes.Line(1200, 635, 1999, 99)
             }
 
                 Dim cor = line.ParallelShift(-150)
-                cor.Stroke.Color = Color.Red
+                cor.Stroke.fill = NameOf(Color.Red)
                 cor.Stroke.Width = 5
 
                 Call line.Draw(g)

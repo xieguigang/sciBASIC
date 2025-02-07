@@ -117,7 +117,7 @@ Namespace Distributions
         ''' <param name="q"></param>
         ''' <param name="N"></param>
         ''' <param name="eps"></param>
-        ''' <returns></returns>
+        ''' <returns>[min,max] of the data range.</returns>
         <Extension>
         Public Function GetTrIQRange(data As IEnumerable(Of Double), q As Double,
                                      Optional N As Integer = 100,
