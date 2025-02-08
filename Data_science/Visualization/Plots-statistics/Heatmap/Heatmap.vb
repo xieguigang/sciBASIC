@@ -151,13 +151,17 @@ Namespace Heatmap
                              Optional ppi As Integer = 100,
                              Optional driver As Drivers = Drivers.Default) As GraphicsData
 
-            Dim array As DataSet() = data.ToArray
-            Dim dlayout As (A%, B%)
-
-            Dim margin As Padding = padding
-            Dim env As CSSEnvirnment = CSSEnvirnment.Empty(ppi)
-            Dim theme As New Theme With {.padding = padding}
-            Dim app As New HeatMapPlot(data, dlayout:=dendrogramLayout.SizeParser, theme)
+            Dim theme As New Theme With {
+                .padding = padding,
+                .background = bg,
+                .colorSet = mapName,
+                .drawGrid = drawGrid
+            }
+            Dim app As New HeatMapPlot(data, dlayout:=dendrogramLayout.SizeParser, theme) With {
+                .legendTitle = legendTitle,
+                .main = mainTitle,
+                .mapLevels = mapLevels
+            }
 
             Return app.Plot(size.SizeParser, dpi:=ppi, driver:=driver)
         End Function
