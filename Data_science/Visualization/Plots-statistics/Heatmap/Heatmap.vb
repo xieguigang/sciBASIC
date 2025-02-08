@@ -160,7 +160,8 @@ Namespace Heatmap
             Dim app As New HeatMapPlot(data, dlayout:=dendrogramLayout.SizeParser, theme) With {
                 .legendTitle = legendTitle,
                 .main = mainTitle,
-                .mapLevels = mapLevels
+                .mapLevels = mapLevels,
+                .LegendLayout = legendLayout
             }
 
             Return app.Plot(size.SizeParser, dpi:=ppi, driver:=driver)

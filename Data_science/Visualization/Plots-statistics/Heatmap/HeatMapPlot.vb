@@ -1,14 +1,5 @@
 ﻿
 Imports System.Drawing
-Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Canvas
-Imports Microsoft.VisualBasic.Data.csv.IO
-Imports Microsoft.VisualBasic.Imaging
-Imports Microsoft.VisualBasic.Imaging.Drawing2D
-Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
-Imports Microsoft.VisualBasic.MIME.Html.CSS
-Imports Microsoft.VisualBasic.MIME.Html.Render
-Imports System.Drawing
-Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ApplicationServices
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
@@ -19,11 +10,8 @@ Imports Microsoft.VisualBasic.DataMining.HierarchicalClustering
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
-Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
-Imports Microsoft.VisualBasic.Math.LinearAlgebra
-Imports Microsoft.VisualBasic.Math.Scripting
 Imports Microsoft.VisualBasic.MIME.Html.CSS
 Imports Microsoft.VisualBasic.MIME.Html.Render
 Imports Microsoft.VisualBasic.Serialization.JSON
@@ -34,14 +22,21 @@ Namespace Heatmap
     Public Class HeatMapPlot : Inherits Graphic.HeatMapPlot
 
         Dim array As DataSet()
-        Dim dlayout As (A!, B!)
+        Dim dendrogramLayout As (A!, B!)
         Dim dataTable As Dictionary(Of String, DataSet)
+        Dim logScale#
+        Dim scaleMethod As DrawElements,
+            drawLabels As DrawElements,
+            drawDendrograms As DrawElements,
+            drawClass As (rowClass As Dictionary(Of String, String), colClass As Dictionary(Of String, String))
+
+        Public Property LegendLayout As Layouts = Layouts.Horizon
 
         Public Sub New(matrix As IEnumerable(Of DataSet), dlayout As SizeF, theme As Theme)
             MyBase.New(theme)
 
             Me.array = matrix.ToArray
-            Me.dlayout = (dlayout.Width, dlayout.Height)
+            Me.dendrogramLayout = (dlayout.Width, dlayout.Height)
             Me.dataTable = array.ToDictionary(Function(r) r.ID)
         End Sub
 
