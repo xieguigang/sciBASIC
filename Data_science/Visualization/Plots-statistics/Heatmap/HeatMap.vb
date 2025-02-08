@@ -54,18 +54,13 @@
 
 Imports System.Drawing
 Imports System.Runtime.CompilerServices
-Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Canvas
 Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.DataMining.HierarchicalClustering
-Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
 Imports Microsoft.VisualBasic.Imaging.Driver
-Imports Microsoft.VisualBasic.Language
-Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MIME.Html.CSS
-Imports Microsoft.VisualBasic.MIME.Html.Render
 Imports Microsoft.VisualBasic.Scripting.Runtime
 
 Namespace Heatmap
@@ -77,7 +72,7 @@ Namespace Heatmap
     ''' depicting financial market information,[1] though similar plots such as shading matrices 
     ''' have existed for over a century.
     ''' </summary>
-    Public Module Heatmap
+    Public Module HeatMap
 
         ' dendrogramLayout$ = A,B
         '                                         |
