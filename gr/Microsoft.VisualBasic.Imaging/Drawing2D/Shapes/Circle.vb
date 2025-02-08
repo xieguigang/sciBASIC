@@ -1,60 +1,60 @@
 ﻿#Region "Microsoft.VisualBasic::f37c7bc4a339ac36f5466ce70a6cd1b7, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Shapes\Circle.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 115
-    '    Code Lines: 83 (72.17%)
-    ' Comment Lines: 13 (11.30%)
-    '    - Xml Docs: 92.31%
-    ' 
-    '   Blank Lines: 19 (16.52%)
-    '     File Size: 4.10 KB
+' Summaries:
 
 
-    '     Class Circle
-    ' 
-    '         Properties: FillColor, Radius, Size
-    ' 
-    '         Constructor: (+2 Overloads) Sub New
-    ' 
-    '         Function: Draw, (+2 Overloads) PathIterator
-    ' 
-    '         Sub: Draw
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 115
+'    Code Lines: 83 (72.17%)
+' Comment Lines: 13 (11.30%)
+'    - Xml Docs: 92.31%
+' 
+'   Blank Lines: 19 (16.52%)
+'     File Size: 4.10 KB
+
+
+'     Class Circle
+' 
+'         Properties: FillColor, Radius, Size
+' 
+'         Constructor: (+2 Overloads) Sub New
+' 
+'         Function: Draw, (+2 Overloads) PathIterator
+' 
+'         Sub: Draw
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -72,16 +72,7 @@ Namespace Drawing2D.Shapes
 
     Public Class Circle : Inherits Shape
 
-        Dim Brush As SolidBrush
-
-        Public Property FillColor As Color
-            Get
-                Return Brush.Color
-            End Get
-            Set(value As Color)
-                Brush = New SolidBrush(value)
-            End Set
-        End Property
+        Public Property fill As String
 
         ''' <summary>
         ''' 
@@ -89,27 +80,27 @@ Namespace Drawing2D.Shapes
         ''' <param name="topLeft">左上角</param>
         ''' <param name="d">圆的直径</param>
         ''' <remarks></remarks>
-        Public Sub New(topLeft As Point, d As Integer, FillColor As Color)
+        Public Sub New(topLeft As PointF, d As Integer, fillColor As Color)
             Call MyBase.New(topLeft)
-            _Size = New Size(d, d)
-            Me.FillColor = FillColor
+            _Size = New SizeF(d, d)
+            _fill = fillColor.ToHtmlColor
         End Sub
 
         Public Sub New(d%, fill As Color)
             Me.New(Nothing, d, fill)
         End Sub
 
-        Public Overrides ReadOnly Property Size As Size
+        Public Overrides ReadOnly Property Size As SizeF
 
         Public ReadOnly Property Radius As Single
             Get
-                Return Min(Size.Width, Size.Height) / 2
+                Return std.Min(Size.Width, Size.Height) / 2
             End Get
         End Property
 
         Public Overrides Function Draw(ByRef g As IGraphics, Optional overridesLoci As Point = Nothing) As RectangleF
             Dim rect = MyBase.Draw(g, overridesLoci)
-            Call Draw(g, Location, Radius, Brush)
+            Call Draw(g, Location, Radius, fill.GetBrush)
             Return rect
         End Function
 

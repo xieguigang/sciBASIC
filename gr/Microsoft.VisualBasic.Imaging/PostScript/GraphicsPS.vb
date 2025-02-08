@@ -1,75 +1,79 @@
 ﻿#Region "Microsoft.VisualBasic::b827fb082332f43a1e333d9014cf4512, gr\Microsoft.VisualBasic.Imaging\PostScript\GraphicsPS.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 503
-    '    Code Lines: 380 (75.55%)
-    ' Comment Lines: 7 (1.39%)
-    '    - Xml Docs: 0.00%
-    ' 
-    '   Blank Lines: 116 (23.06%)
-    '     File Size: 20.49 KB
+' Summaries:
 
 
-    '     Class GraphicsPS
-    ' 
-    '         Properties: Driver, RenderingOrigin, Size, TextContrast
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    ' 
-    '         Function: color, font, GetContextInfo, GetStringPath, (+4 Overloads) IsVisible
-    '                   linewidth, (+3 Overloads) MeasureString, note
-    ' 
-    '         Sub: AddMetafileComment, ClearCanvas, (+4 Overloads) DrawArc, (+3 Overloads) DrawBezier, (+2 Overloads) DrawBeziers
-    '              DrawCircle, (+2 Overloads) DrawClosedCurve, (+7 Overloads) DrawCurve, (+4 Overloads) DrawEllipse, (+10 Overloads) DrawImage
-    '              (+4 Overloads) DrawImageUnscaled, DrawImageUnscaledAndClipped, (+4 Overloads) DrawLine, (+2 Overloads) DrawLines, DrawPath
-    '              (+4 Overloads) DrawPie, (+2 Overloads) DrawPolygon, (+4 Overloads) DrawRectangle, (+2 Overloads) DrawRectangles, (+4 Overloads) DrawString
-    '              ExcludeClip, (+2 Overloads) FillClosedCurve, (+4 Overloads) FillEllipse, FillPath, (+3 Overloads) FillPie
-    '              (+2 Overloads) FillPolygon, (+4 Overloads) FillRectangle, Flush, (+2 Overloads) IntersectClip, ReleaseHandle
-    '              ResetClip, ResetTransform, RotateTransform, ScaleTransform, (+2 Overloads) SetClip
-    '              (+2 Overloads) TranslateClip, TranslateTransform
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 503
+'    Code Lines: 380 (75.55%)
+' Comment Lines: 7 (1.39%)
+'    - Xml Docs: 0.00%
+' 
+'   Blank Lines: 116 (23.06%)
+'     File Size: 20.49 KB
+
+
+'     Class GraphicsPS
+' 
+'         Properties: Driver, RenderingOrigin, Size, TextContrast
+' 
+'         Constructor: (+1 Overloads) Sub New
+' 
+'         Function: color, font, GetContextInfo, GetStringPath, (+4 Overloads) IsVisible
+'                   linewidth, (+3 Overloads) MeasureString, note
+' 
+'         Sub: AddMetafileComment, ClearCanvas, (+4 Overloads) DrawArc, (+3 Overloads) DrawBezier, (+2 Overloads) DrawBeziers
+'              DrawCircle, (+2 Overloads) DrawClosedCurve, (+7 Overloads) DrawCurve, (+4 Overloads) DrawEllipse, (+10 Overloads) DrawImage
+'              (+4 Overloads) DrawImageUnscaled, DrawImageUnscaledAndClipped, (+4 Overloads) DrawLine, (+2 Overloads) DrawLines, DrawPath
+'              (+4 Overloads) DrawPie, (+2 Overloads) DrawPolygon, (+4 Overloads) DrawRectangle, (+2 Overloads) DrawRectangles, (+4 Overloads) DrawString
+'              ExcludeClip, (+2 Overloads) FillClosedCurve, (+4 Overloads) FillEllipse, FillPath, (+3 Overloads) FillPie
+'              (+2 Overloads) FillPolygon, (+4 Overloads) FillRectangle, Flush, (+2 Overloads) IntersectClip, ReleaseHandle
+'              ResetClip, ResetTransform, RotateTransform, ScaleTransform, (+2 Overloads) SetClip
+'              (+2 Overloads) TranslateClip, TranslateTransform
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Drawing
 Imports System.Drawing.Drawing2D
+Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.ComponentModel.Algorithm.base
+Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Driver
-Imports Microsoft.VisualBasic.Language.C
+Imports Microsoft.VisualBasic.Imaging.Math2D
+Imports Microsoft.VisualBasic.MIME.Html.CSS
 
 Namespace PostScript
 
@@ -89,41 +93,59 @@ Namespace PostScript
             End Get
         End Property
 
-        Dim ps_fontsize% = 15
         Dim painting As New PostScriptBuilder
-        Dim originx, originy As Single
 
         Sub New(size As Size, dpi As Size)
             Call MyBase.New(dpi)
-
             painting.size = size
         End Sub
 
         Public Overrides Sub AddMetafileComment(data() As Byte)
-            Throw New NotImplementedException()
+            Call painting.Add(New PsComment(data))
         End Sub
 
         Protected Overrides Sub ClearCanvas(color As Color)
-            Throw New NotImplementedException()
+            Call painting.Clear()
+            Call painting.Add(New Elements.Rectangle(New Rectangle(New Point, painting.size), color))
         End Sub
 
+        ''' <summary>
+        ''' do nothing at here
+        ''' </summary>
         Protected Overrides Sub ReleaseHandle()
         End Sub
 
         Public Overrides Sub DrawArc(pen As Pen, rect As RectangleF, startAngle As Single, sweepAngle As Single)
-            Throw New NotImplementedException()
+            Call DrawArc(pen, (rect.X), (rect.Y), (rect.Width), (rect.Height), startAngle, sweepAngle)
         End Sub
 
         Public Overrides Sub DrawArc(pen As Pen, rect As Rectangle, startAngle As Single, sweepAngle As Single)
-            Throw New NotImplementedException()
+            Call DrawArc(pen, CSng(rect.X), CSng(rect.Y), CSng(rect.Width), CSng(rect.Height), startAngle, sweepAngle)
         End Sub
 
         Public Overrides Sub DrawArc(pen As Pen, x As Integer, y As Integer, width As Integer, height As Integer, startAngle As Integer, sweepAngle As Integer)
-            Throw New NotImplementedException()
+            Call painting.Add(New Elements.Arc With {
+                .height = height,
+                .startAngle = startAngle,
+                .stroke = New Stroke(pen),
+                .sweepAngle = sweepAngle,
+                .width = width,
+                .x = x,
+                .y = y
+            })
         End Sub
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Sub DrawArc(pen As Pen, x As Single, y As Single, width As Single, height As Single, startAngle As Single, sweepAngle As Single)
-            Throw New NotImplementedException()
+            Call painting.Add(New Elements.Arc With {
+                .height = height,
+                .startAngle = startAngle,
+                .stroke = New Stroke(pen),
+                .sweepAngle = sweepAngle,
+                .width = width,
+                .x = x,
+                .y = y
+            })
         End Sub
 
         Public Overrides Sub DrawBezier(pen As Pen, pt1 As Point, pt2 As Point, pt3 As Point, pt4 As Point)
@@ -147,19 +169,29 @@ Namespace PostScript
         End Sub
 
         Public Overrides Sub DrawClosedCurve(pen As Pen, points() As Point)
-            Throw New NotImplementedException()
+            Call DrawClosedCurve(pen, points.PointF.ToArray)
         End Sub
 
         Public Overrides Sub DrawClosedCurve(pen As Pen, points() As PointF)
-            Throw New NotImplementedException()
+            Call painting.Add(New Elements.Poly With {
+                .closedPath = True,
+                .fill = Nothing,
+                .points = points,
+                .stroke = New Stroke(pen)
+            })
         End Sub
 
         Public Overrides Sub DrawCurve(pen As Pen, points() As Point)
-            Throw New NotImplementedException()
+            Call DrawCurve(pen, points.PointF.ToArray)
         End Sub
 
         Public Overrides Sub DrawCurve(pen As Pen, points() As PointF)
-            Throw New NotImplementedException()
+            Call painting.Add(New Elements.Poly With {
+                .closedPath = False,
+                .fill = Nothing,
+                .points = points,
+                .stroke = New Stroke(pen)
+            })
         End Sub
 
         Public Overrides Sub DrawCurve(pen As Pen, points() As PointF, tension As Single)
@@ -275,11 +307,15 @@ Namespace PostScript
         End Sub
 
         Public Overrides Sub DrawLines(pen As Pen, points() As PointF)
-            Throw New NotImplementedException()
+            For Each ab As SlideWindow(Of PointF) In points.SlideWindows(2)
+                Call painting.Add(New Elements.Line(pen, ab(0), ab(1)))
+            Next
         End Sub
 
         Public Overrides Sub DrawLines(pen As Pen, points() As Point)
-            Throw New NotImplementedException()
+            For Each ab As SlideWindow(Of Point) In points.SlideWindows(2)
+                Call painting.Add(New Elements.Line(pen, ab(0), ab(1)))
+            Next
         End Sub
 
         Public Overrides Sub DrawPath(pen As Pen, path As GraphicsPath)
@@ -303,39 +339,63 @@ Namespace PostScript
         End Sub
 
         Public Overrides Sub DrawCircle(center As PointF, fill As Color, stroke As Pen, radius As Single)
-
+            Call painting.Add(New Elements.Circle With {
+                .stroke = New Stroke(stroke),
+                .shape = New Shapes.Circle(center.OffSet2D(-radius, -radius), radius * 2, fill)
+            })
         End Sub
 
         Public Overrides Sub DrawPolygon(pen As Pen, points() As PointF)
-            Throw New NotImplementedException()
+            Call painting.Add(New Elements.Polygon With {
+                .points = points,
+                .fill = Nothing,
+                .stroke = New Stroke(pen)
+            })
         End Sub
 
         Public Overrides Sub DrawPolygon(pen As Pen, points() As Point)
-            Throw New NotImplementedException()
+            Call painting.Add(New Elements.Polygon With {
+                .points = points.PointF.ToArray,
+                .fill = Nothing,
+                .stroke = New Stroke(pen)
+            })
         End Sub
 
         Public Overrides Sub DrawRectangle(pen As Pen, rect As Rectangle)
-            Throw New NotImplementedException()
+            Dim box As New Elements.Rectangle(rect, Nothing)
+
+            box.shape.border = New Stroke(pen)
+            painting.Add(box)
         End Sub
 
         Public Overrides Sub DrawRectangle(pen As Pen, rect As RectangleF)
-            Throw New NotImplementedException()
+            Dim box As New Elements.Rectangle(rect, Nothing)
+
+            box.shape.border = New Stroke(pen)
+            painting.Add(box)
         End Sub
 
         Public Overrides Sub DrawRectangle(pen As Pen, x As Single, y As Single, width As Single, height As Single)
+            Dim rect As New Elements.Rectangle(New RectangleF(x, y, width, height), Nothing)
 
+            rect.shape.border = New Stroke(pen)
+            painting.Add(rect)
         End Sub
 
         Public Overrides Sub DrawRectangle(pen As Pen, x As Integer, y As Integer, width As Integer, height As Integer)
-            Throw New NotImplementedException()
+            Call DrawRectangle(pen, CSng(x), CSng(y), CSng(width), CSng(height))
         End Sub
 
         Public Overrides Sub DrawRectangles(pen As Pen, rects() As RectangleF)
-            Throw New NotImplementedException()
+            For Each rect As RectangleF In rects
+                Call DrawRectangle(pen, rect)
+            Next
         End Sub
 
         Public Overrides Sub DrawRectangles(pen As Pen, rects() As Rectangle)
-            Throw New NotImplementedException()
+            For Each rect As RectangleF In rects
+                Call DrawRectangle(pen, rect)
+            Next
         End Sub
 
         Public Overrides Sub DrawString(s As String, font As Font, brush As Brush, ByRef point As PointF)
@@ -462,8 +522,12 @@ Namespace PostScript
             Throw New NotImplementedException()
         End Sub
 
+        ''' <summary>
+        ''' get the current postscript canvas context information
+        ''' </summary>
+        ''' <returns>An object in clr type <see cref="PostScriptBuilder"/>.</returns>
         Public Overrides Function GetContextInfo() As Object
-            Throw New NotImplementedException()
+            Return painting
         End Function
 
         Public Overrides Function IsVisible(rect As Rectangle) As Boolean
@@ -502,8 +566,10 @@ Namespace PostScript
             Throw New NotImplementedException()
         End Function
 
+        ''' <summary>
+        ''' do nothing on flush
+        ''' </summary>
         Public Overrides Sub Flush()
-            Throw New NotImplementedException()
         End Sub
     End Class
 End Namespace

@@ -61,18 +61,30 @@ Imports Microsoft.VisualBasic.Imaging
 Namespace Drawing2D.Shapes
 
     ''' <summary>
-    ''' 矢量图形
+    ''' An abstract shape element with layout information data.(矢量图形)
     ''' </summary>
     Public MustInherit Class Shape
 
-        Public Property Location As Point
+        ''' <summary>
+        ''' the location of the current shape element
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property Location As PointF
+        ''' <summary>
+        ''' the metadata string of current shape element
+        ''' </summary>
+        ''' <returns></returns>
         Public Property TooltipTag As String
 
-        Public MustOverride ReadOnly Property Size As Size
+        Public MustOverride ReadOnly Property Size As SizeF
 
-        Public ReadOnly Property DrawingRegion As Rectangle
+        ''' <summary>
+        ''' create the layout rectangle value based on the shape <see cref="Location"/> and its shape <see cref="Size"/>.
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property DrawingRegion As RectangleF
             Get
-                Return New Rectangle(Location, Size)
+                Return New RectangleF(Location, Size)
             End Get
         End Property
 
@@ -85,16 +97,25 @@ Namespace Drawing2D.Shapes
         Public Property EnableAutoLayout As Boolean = True
 
         Sub New(initLoci As Point)
-            Location = initLoci
+            Location = initLoci.PointF
+        End Sub
+
+        Sub New(loc As PointF)
+            Location = loc
         End Sub
 
         Public Function MoveTo(pt As Point) As Shape
+            Location = pt.PointF
+            Return Me
+        End Function
+
+        Public Function MoveTo(pt As PointF) As Shape
             Location = pt
             Return Me
         End Function
 
-        Public Function MoveOffset(offset As Point) As Shape
-            Location = New Point(Location.X + offset.X, Location.Y + offset.Y)
+        Public Function MoveOffset(offset As PointF) As Shape
+            Location = New PointF(Location.X + offset.X, Location.Y + offset.Y)
             Return Me
         End Function
 

@@ -72,6 +72,12 @@ Namespace Language.C
         ''' </summary>
         Public Const SEEK_END As SeekOrigin = SeekOrigin.End
 
+        ''' <summary>
+        ''' print data to file
+        ''' </summary>
+        ''' <param name="fp">a file pointer</param>
+        ''' <param name="format">string format for the print</param>
+        ''' <param name="args"></param>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Sub fprintf(fp As StreamWriter, format As String, ParamArray args As Object())
             Call fp.Write(sprintf(format, args))

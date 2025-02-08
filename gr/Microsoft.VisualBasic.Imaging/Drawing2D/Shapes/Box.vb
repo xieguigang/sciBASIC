@@ -66,17 +66,39 @@ Namespace Drawing2D.Shapes
     ''' </summary>
     Public Class Box : Inherits Shape
 
+        Public Property box As SizeF
+        Public Property fill As String
+        Public Property border As Stroke
+
         ''' <summary>
         ''' 
         ''' </summary>
         ''' <param name="Location"></param>
         ''' <param name="Size"></param>
         ''' <param name="Color">the fill color of the rectangle object</param>
-        Sub New(Location As Point, Size As Size, Color As Color)
-            Call MyBase.New(Location)
+        Sub New(location As Point, size As Size, color As Color)
+            Call MyBase.New(location)
         End Sub
 
-        Public Overrides ReadOnly Property Size As Size
+        Sub New(rect As Rectangle, color As Color)
+            Call MyBase.New(rect.Location)
+
+            Me.box = rect.Size
+            Me.fill = color.ToHtmlColor
+        End Sub
+
+        Sub New(rect As RectangleF, color As Color)
+            Call MyBase.New(rect.Location)
+
+            Me.box = rect.Size
+            Me.fill = color.ToHtmlColor
+        End Sub
+
+        Public Overrides ReadOnly Property Size As SizeF
+            Get
+                Return box
+            End Get
+        End Property
 
         Public Shared Sub DrawRectangle(ByRef g As IGraphics,
                                         topLeft As Point,

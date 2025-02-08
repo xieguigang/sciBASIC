@@ -70,12 +70,17 @@ Namespace Drawing2D.Shapes
 
         Public Property Color As Color
 
-        Public Property Vertex1 As Point
-        Public Property Vertex2 As Point
-        Public Property Vertex3 As Point
+        Public Property Vertex1 As PointF
+        Public Property Vertex2 As PointF
+        Public Property Vertex3 As PointF
         Public Property Angle As Single
 
         Sub New(Location As Point, Color As Color)
+            Call MyBase.New(Location)
+            Me.Color = Color
+        End Sub
+
+        Sub New(Location As PointF, Color As Color)
             Call MyBase.New(Location)
             Me.Color = Color
         End Sub
@@ -89,7 +94,7 @@ Namespace Drawing2D.Shapes
             Throw New NotImplementedException
         End Function
 
-        Public Overrides ReadOnly Property Size As Size
+        Public Overrides ReadOnly Property Size As SizeF
             Get
                 Throw New NotImplementedException
             End Get

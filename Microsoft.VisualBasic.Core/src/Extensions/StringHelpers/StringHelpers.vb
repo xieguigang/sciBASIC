@@ -1445,9 +1445,6 @@ Public Module StringHelpers
 
     ''' <summary>
     ''' Line tokens. **=> Parsing the text into lines by using <see cref="vbCr"/>, <see cref="vbLf"/>**.
-    ''' (函数对文本进行分行操作，由于在Windows(<see cref="VbCrLf"/>)和
-    ''' Linux(<see cref="vbCr"/>, <see cref="vbLf"/>)平台上面所生成的文本文件的换行符有差异，
-    ''' 所以可以使用这个函数来进行统一的分行操作)
     ''' </summary>
     ''' <param name="s"></param>
     ''' <returns></returns>
@@ -1457,7 +1454,11 @@ Public Module StringHelpers
     ''' <param name="escape">
     ''' 是否需要将字符串之中的``\n``转义为换行之后再进行分割？默认不进行转义
     ''' </param>
-    <ExportAPI("LineTokens")>
+    ''' <remarks>
+    ''' (函数对文本进行分行操作，由于在Windows(<see cref="VbCrLf"/>)和
+    ''' Linux(<see cref="vbCr"/>, <see cref="vbLf"/>)平台上面所生成的文本文件的换行符有差异，
+    ''' 所以可以使用这个函数来进行统一的分行操作)
+    ''' </remarks>
     <Extension>
     Public Function LineTokens(s$, Optional trim As Boolean = True, Optional escape As Boolean = False) As String()
         If String.IsNullOrEmpty(s) Then
