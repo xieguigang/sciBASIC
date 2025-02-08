@@ -56,24 +56,17 @@
 
 Imports System.Drawing
 Imports System.Runtime.CompilerServices
-Imports Microsoft.VisualBasic.ApplicationServices
 Imports Microsoft.VisualBasic.ComponentModel.Collection
-Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
-Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Axis
-Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Canvas
 Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.DataMining.HierarchicalClustering
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
-Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
 Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Math.Scripting
 Imports Microsoft.VisualBasic.MIME.Html.CSS
-Imports Microsoft.VisualBasic.MIME.Html.Render
-Imports Microsoft.VisualBasic.Serialization.JSON
 Imports std = System.Math
 
 Namespace Heatmap
@@ -117,7 +110,7 @@ Namespace Heatmap
         ''' <param name="rowClass"></param>
         ''' <param name="widthOrHeight">``row -> width/col -> height``</param>
         <Extension>
-        Private Sub DrawClass(g As IGraphics, orders$(), colors As Dictionary(Of String, String), layout As Rectangle, rowClass As Boolean, widthOrHeight%, interval%)
+        Friend Sub DrawClass(g As IGraphics, orders$(), colors As Dictionary(Of String, String), layout As Rectangle, rowClass As Boolean, widthOrHeight%, interval%)
             Dim color As SolidBrush
 
             If rowClass Then
@@ -231,38 +224,6 @@ Namespace Heatmap
                                Optional tick# = -1,
                                Optional legendLayout As Layouts = Layouts.Horizon) As GraphicsData
 
-            Dim keys$() = array.PropertyNames
-            Dim angle! = -45
-
-            If colors.IsNullOrEmpty Then
-                colors = Designer.GetColors(mapName, mapLevels).GetBrushes
-                If reverseClrSeq Then
-                    colors = colors.Reverse.ToArray
-                End If
-            End If
-
-            Dim rowKeys$() ' 经过聚类之后得到的新的排序顺序
-            Dim colKeys$()
-
-            Dim configDendrogramCanvas =
-                Function(cluster As Cluster, [class] As Dictionary(Of String, String))
-                    Return New DendrogramPanelV2(cluster, New Theme)
-                End Function
-            Dim DATArange As DoubleRange = array _
-                .Select(Function(x) x.Properties.Values) _
-                .IteratesALL _
-                .Join(min, max) _
-                .Distinct _
-                .ToArray
-            Dim ticks#()
-
-            If tick > 0 Then
-                ticks = AxisScalling.GetAxisByTick(DATArange, tick)
-            Else
-                ticks = DATArange.CreateAxisTicks(ticks:=5)
-            End If
-
-            Call $"{DATArange.ToString} -> {ticks.GetJson}".__INFO_ECHO
 
             Dim plotInternal =
                 Sub(ByRef g As IGraphics, rect As GraphicsRegion)

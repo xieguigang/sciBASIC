@@ -55,6 +55,7 @@
 Imports System.Drawing
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Collection
+Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Canvas
 Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.DataMining.HierarchicalClustering
 Imports Microsoft.VisualBasic.Imaging
@@ -152,95 +153,13 @@ Namespace Heatmap
 
             Dim array As DataSet() = data.ToArray
             Dim dlayout As (A%, B%)
-            Dim dataTable As Dictionary(Of DataSet) = array.ToDictionary
+
             Dim margin As Padding = padding
             Dim env As CSSEnvirnment = CSSEnvirnment.Empty(ppi)
+            Dim theme As New Theme With {.padding = padding}
+            Dim app As New HeatMapPlot(data, dlayout:=dendrogramLayout.SizeParser, theme)
 
-            With dendrogramLayout.SizeParser
-                dlayout = (.Width, .Height)
-            End With
-
-            Dim plotInternal =
-                Sub(g As IGraphics, region As GraphicsRegion, args As PlotArguments)
-                    Dim css As CSSEnvirnment = g.LoadEnvironment
-                    Dim dw! = args.dStep.Width, dh! = args.dStep.Height
-                    Dim blockSize As New SizeF(dw, dh)
-                    Dim colors As SolidBrush() = args.colors
-                    Dim valuelabelFont As Font = css.GetFont(valuelabelFontCSS)
-                    Dim titleFont As Font = css.GetFont(titleFontCSS)
-                    Dim legendFont As Font = css.GetFont(legendFontStyle)
-                    Dim rowLabelFont As Font = css.GetFont(rowLabelfontStyle)
-
-                    ' 按行绘制heatmap之中的矩阵
-                    For Each x As DataSet In args.RowOrders.Select(Function(key) dataTable(key))     ' 在这里绘制具体的矩阵
-                        Dim levelRow As DataSet = args.levels(x.ID)
-
-                        For Each key As String In args.ColOrders
-                            Dim c# = x(key)
-                            Dim level% = levelRow(key)  '  得到等级
-                            Dim b = colors(
-                                If(level% > colors.Length - 1,
-                                    colors.Length - 1,
-                                    level))
-                            Dim rect As New RectangleF With {
-                                .Location = New PointF(args.left, args.top),
-                                .Size = blockSize
-                            }
-#If DEBUG Then
-                            ' Call $"{level} -> {b.Color.ToString}".__DEBUG_ECHO
-#End If
-                            Call g.FillRectangle(b, rect)
-
-                            If drawGrid Then
-                                Call g.DrawRectangles(Pens.WhiteSmoke, {rect})
-                            End If
-                            If drawValueLabel Then
-
-                                With c.ToString("F2")
-                                    Dim ksz As SizeF = g.MeasureString(.ByRef, valuelabelFont)
-                                    Dim kpos As New PointF With {
-                                        .X = rect.Left + (rect.Width - ksz.Width) / 2,
-                                        .Y = rect.Top + (rect.Height - ksz.Height) / 2
-                                    }
-                                    Call g.DrawString(.ByRef, valuelabelFont, Brushes.White, kpos)
-                                End With
-                            End If
-
-                            args.left += dw!
-                        Next
-
-                        args.left = args.matrixPlotRegion.Left
-                        args.top += dh!
-
-                        ' debug
-                        ' Call g.DrawLine(Pens.Blue, New Point(args.left, args.top), New Point(args.matrixPlotRegion.Right, args.top))
-
-                        If drawLabels = DrawElements.Both OrElse drawLabels = DrawElements.Rows Then
-                            Dim sz As SizeF = g.MeasureString(x.ID, rowLabelFont)
-                            Dim y As Single = args.top - dh - (sz.Height - dh) / 2
-                            Dim lx As Single = args.matrixPlotRegion.Right + 10
-
-                            ' 绘制行标签
-                            Call g.DrawString(x.ID, rowLabelFont, Brushes.Black, New PointF(lx, y))
-                        End If
-                    Next
-
-                    ' debug
-                    ' Call g.DrawRectangle(Pens.LawnGreen, args.matrixPlotRegion)
-                End Sub
-
-            Return doPlot(
-                plotInternal, array,
-                env.GetFont(rowLabelfontStyle), env.GetFont(colLabelFontStyle), logTransform, drawScaleMethod, drawLabels, drawDendrograms, drawClass, dlayout,
-                reverseClrSeq, customColors.GetBrushes, mapLevels, mapName,
-                size.SizeParser, margin, bg,
-                legendTitle, env.GetFont(legendFontStyle), Nothing,
-                min, max,
-                mainTitle, env.GetFont(titleFontCSS),
-                legendWidth, legendHasUnmapped, legendSize.SizeParser,
-                tick:=tick,
-                legendLayout:=legendLayout
-            )
+            Return app.Plot(size.SizeParser, dpi:=ppi, driver:=driver)
         End Function
     End Module
 End Namespace

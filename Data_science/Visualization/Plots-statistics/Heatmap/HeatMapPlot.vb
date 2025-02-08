@@ -1,29 +1,85 @@
 ﻿
+Imports System.Drawing
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Canvas
+Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
-Imports Microsoft.VisualBasic.Data.csv.IO
-Imports System.Drawing
+Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
 Imports Microsoft.VisualBasic.MIME.Html.CSS
 Imports Microsoft.VisualBasic.MIME.Html.Render
+Imports System.Drawing
+Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.ApplicationServices
+Imports Microsoft.VisualBasic.ComponentModel.Collection
+Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
+Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Axis
+Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Canvas
+Imports Microsoft.VisualBasic.Data.csv.IO
+Imports Microsoft.VisualBasic.DataMining.HierarchicalClustering
+Imports Microsoft.VisualBasic.Imaging
+Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
+Imports Microsoft.VisualBasic.Imaging.Driver
+Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Math
+Imports Microsoft.VisualBasic.Math.LinearAlgebra
+Imports Microsoft.VisualBasic.Math.Scripting
+Imports Microsoft.VisualBasic.MIME.Html.CSS
+Imports Microsoft.VisualBasic.MIME.Html.Render
+Imports Microsoft.VisualBasic.Serialization.JSON
+Imports std = System.Math
 
 Namespace Heatmap
-
 
     Public Class HeatMapPlot : Inherits Graphic.HeatMapPlot
 
         Dim array As DataSet()
         Dim dlayout As (A!, B!)
+        Dim dataTable As Dictionary(Of String, DataSet)
 
         Public Sub New(matrix As IEnumerable(Of DataSet), dlayout As SizeF, theme As Theme)
             MyBase.New(theme)
 
             Me.array = matrix.ToArray
             Me.dlayout = (dlayout.Width, dlayout.Height)
+            Me.dataTable = array.ToDictionary(Function(r) r.ID)
         End Sub
 
         Protected Overrides Sub PlotInternal(ByRef g As IGraphics, canvas As GraphicsRegion)
+            Dim keys$() = array.PropertyNames
+            Dim angle! = -45
+
+            If Colors.IsNullOrEmpty Then
+                Colors = Designer.GetColors(mapName, mapLevels).GetBrushes
+                If reverseClrSeq Then
+                    Colors = Colors.Reverse.ToArray
+                End If
+            End If
+
+            Dim rowKeys$() ' 经过聚类之后得到的新的排序顺序
+            Dim colKeys$()
+
+            Dim configDendrogramCanvas =
+                Function(cluster As Cluster, [class] As Dictionary(Of String, String))
+                    Return New DendrogramPanelV2(cluster, New Theme)
+                End Function
+            Dim DATArange As DoubleRange = array _
+                .Select(Function(x) x.Properties.Values) _
+                .IteratesALL _
+                .Join(min, max) _
+                .Distinct _
+                .ToArray
+            Dim ticks#()
+
+            If tick > 0 Then
+                ticks = AxisScalling.GetAxisByTick(DATArange, tick)
+            Else
+                ticks = DATArange.CreateAxisTicks(ticks:=5)
+            End If
+
+            Call $"{DATArange.ToString} -> {ticks.GetJson}".__INFO_ECHO
+
+
             Dim css As CSSEnvirnment = g.LoadEnvironment
             Dim margin As PaddingLayout = PaddingLayout.EvaluateFromCSS(css, Padding)
             ' 根据布局计算出矩阵的大小和位置
@@ -155,8 +211,6 @@ Namespace Heatmap
                 End If
             End If
 
-
-
             Dim args As New PlotArguments With {
                 .colors = Colors,
                 .left = left,
@@ -201,6 +255,74 @@ Namespace Heatmap
             }
 
             Call g.DrawString(main, titleFont, Brushes.Black, titlePosi)
+        End Sub
+
+        Public Shared Sub RenderHeatmap(g As IGraphics, region As GraphicsRegion, args As PlotArguments)
+            Dim css As CSSEnvirnment = g.LoadEnvironment
+            Dim dw! = args.dStep.Width, dh! = args.dStep.Height
+            Dim blockSize As New SizeF(dw, dh)
+            Dim colors As SolidBrush() = args.colors
+            Dim valuelabelFont As Font = css.GetFont(valuelabelFontCSS)
+            Dim titleFont As Font = css.GetFont(titleFontCSS)
+            Dim legendFont As Font = css.GetFont(legendFontStyle)
+            Dim rowLabelFont As Font = css.GetFont(rowLabelfontStyle)
+
+            ' 按行绘制heatmap之中的矩阵
+            For Each x As DataSet In args.RowOrders.Select(Function(key) DataTable(key))     ' 在这里绘制具体的矩阵
+                Dim levelRow As DataSet = args.levels(x.ID)
+
+                For Each key As String In args.ColOrders
+                    Dim c# = x(key)
+                    Dim level% = levelRow(key)  '  得到等级
+                    Dim b = colors(
+                                If(level% > colors.Length - 1,
+                                    colors.Length - 1,
+                                    level))
+                    Dim rect As New RectangleF With {
+                                .Location = New PointF(args.left, args.top),
+                                .Size = blockSize
+                            }
+#If DEBUG Then
+                            ' Call $"{level} -> {b.Color.ToString}".__DEBUG_ECHO
+#End If
+                    Call g.FillRectangle(b, rect)
+
+                    If drawGrid Then
+                        Call g.DrawRectangles(Pens.WhiteSmoke, {rect})
+                    End If
+                    If drawValueLabel Then
+
+                        With c.ToString("F2")
+                            Dim ksz As SizeF = g.MeasureString(.ByRef, valuelabelFont)
+                            Dim kpos As New PointF With {
+                                        .X = rect.Left + (rect.Width - ksz.Width) / 2,
+                                        .Y = rect.Top + (rect.Height - ksz.Height) / 2
+                                    }
+                            Call g.DrawString(.ByRef, valuelabelFont, Brushes.White, kpos)
+                        End With
+                    End If
+
+                    args.left += dw!
+                Next
+
+                args.left = args.matrixPlotRegion.Left
+                args.top += dh!
+
+                ' debug
+                ' Call g.DrawLine(Pens.Blue, New Point(args.left, args.top), New Point(args.matrixPlotRegion.Right, args.top))
+
+                If drawLabels = DrawElements.Both OrElse drawLabels = DrawElements.Rows Then
+                    Dim sz As SizeF = g.MeasureString(x.ID, rowLabelFont)
+                    Dim y As Single = args.top - dh - (sz.Height - dh) / 2
+                    Dim lx As Single = args.matrixPlotRegion.Right + 10
+
+                    ' 绘制行标签
+                    Call g.DrawString(x.ID, rowLabelFont, Brushes.Black, New PointF(lx, y))
+                End If
+            Next
+
+            ' debug
+            ' Call g.DrawRectangle(Pens.LawnGreen, args.matrixPlotRegion)
         End Sub
     End Class
 End Namespace
