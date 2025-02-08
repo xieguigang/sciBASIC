@@ -54,7 +54,6 @@
 
 Imports System.Drawing
 Imports System.Runtime.CompilerServices
-Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Data.csv.IO
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
@@ -63,7 +62,7 @@ Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.MIME.Html.CSS
 Imports Microsoft.VisualBasic.MIME.Html.Render
 Imports Microsoft.VisualBasic.Scripting.Runtime
-Imports stdNum = System.Math
+Imports std = System.Math
 
 Namespace Heatmap
 
@@ -94,7 +93,7 @@ Namespace Heatmap
                     Dim css As CSSEnvirnment = g.LoadEnvironment
                     Dim plotRegion As Rectangle = region.PlotRegion(css)
                     ' 应该是正方形的
-                    Dim maxRadius = stdNum.Min(plotRegion.Width / ncols, plotRegion.Height / nrows)
+                    Dim maxRadius = std.Min(plotRegion.Width / ncols, plotRegion.Height / nrows)
 
                 End Sub
 
