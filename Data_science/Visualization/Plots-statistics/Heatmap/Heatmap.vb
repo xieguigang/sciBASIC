@@ -147,7 +147,8 @@ Namespace Heatmap
                              Optional legendSize$ = "600,100",
                              Optional tick# = -1,
                              Optional legendLayout As Layouts = Layouts.Horizon,
-                             Optional ppi As Integer = 100) As GraphicsData
+                             Optional ppi As Integer = 100,
+                             Optional driver As Drivers = Drivers.Default) As GraphicsData
 
             Dim array As DataSet() = data.ToArray
             Dim dlayout As (A%, B%)
