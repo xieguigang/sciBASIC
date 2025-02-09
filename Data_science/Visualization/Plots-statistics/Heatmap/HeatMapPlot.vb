@@ -24,11 +24,13 @@ Namespace Heatmap
         Dim array As DataSet()
         Dim dendrogramLayout As (A!, B!)
         Dim dataTable As Dictionary(Of String, DataSet)
-        Dim logScale#
-        Dim scaleMethod As DrawElements,
-            drawLabels As DrawElements,
-            drawDendrograms As DrawElements,
-            drawClass As (rowClass As Dictionary(Of String, String), colClass As Dictionary(Of String, String))
+
+        Public Property logTransform As Double
+
+        Public Property scaleMethod As DrawElements = DrawElements.None
+        Public Property drawLabels As DrawElements = DrawElements.Both
+        Public Property drawDendrograms As DrawElements = DrawElements.Rows
+        Public Property drawClass As (rowClass As Dictionary(Of String, String), colClass As Dictionary(Of String, String))
 
         Public Property globalRange As DoubleRange
         Public Property LegendLayout As Layouts = Layouts.Horizon
@@ -57,6 +59,9 @@ Namespace Heatmap
             Dim rowKeys$() ' 经过聚类之后得到的新的排序顺序
             Dim colKeys$()
             Dim ticks#()
+            Dim css As CSSEnvirnment = g.LoadEnvironment
+            Dim rowLabelFont As Font = css.GetFont(CSSFont.TryParse(theme.axisTickCSS))
+            Dim colLabelFont As Font = css.GetFont(CSSFont.TryParse(theme.axisLabelCSS))
 
             If theme.legendCustomTicks IsNot Nothing Then
                 ticks = AxisScalling.GetAxisByTick(globalRange, theme.legendCustomTicks)
@@ -66,10 +71,9 @@ Namespace Heatmap
 
             Call $"{globalRange.ToString} -> {ticks.GetJson}".__INFO_ECHO
 
-            Dim css As CSSEnvirnment = g.LoadEnvironment
             Dim margin As PaddingLayout = PaddingLayout.EvaluateFromCSS(css, canvas.Padding)
             ' 根据布局计算出矩阵的大小和位置
-            Dim left! = margin.Left + rowXOffset, top! = margin.Top    ' 绘图区域的左上角位置
+            Dim left! = margin.Left, top! = margin.Top    ' 绘图区域的左上角位置
             ' 计算出右边的行标签的最大的占用宽度
             Dim maxRowLabelSize As SizeF = g.MeasureString(array.Keys.MaxLengthString, rowLabelfont)
             Dim maxColLabelSize As SizeF = g.MeasureString(keys.MaxLengthString, colLabelFont)
@@ -198,9 +202,9 @@ Namespace Heatmap
             End If
 
             Dim args As New PlotArguments With {
-                .colors = Colors,
+                .colors = colors,
                 .left = left,
-                .levels = array.DataScaleLevels(keys, logScale, scaleMethod, Colors.Length),
+                .levels = array.DataScaleLevels(keys, logTransform, scaleMethod, colors.Length),
                 .top = top,
                 .ColOrders = colKeys,
                 .RowOrders = rowKeys,
@@ -217,8 +221,6 @@ Namespace Heatmap
 
             ' 绘制下方的矩阵的列标签
             If drawLabels = DrawElements.Both OrElse drawLabels = DrawElements.Cols Then
-                Dim colLabelFont As Font = css.GetFont(CSSFont.TryParse(theme.axisTickCSS))
-
                 For Each key$ In keys
                     Dim sz = g.MeasureString(key$, colLabelFont) ' 得到斜边的长度
                     Dim dx! = sz.Width * std.Cos(angle) + sz.Height / 2

@@ -122,7 +122,7 @@ Namespace Heatmap
                              Optional padding$ = g.DefaultPadding,
                              Optional bg$ = "white",
                              Optional logTransform# = 0,
-                             Optional drawScaleMethod As DrawElements = DrawElements.Cols,
+                             Optional drawScaleMethod As DrawElements = DrawElements.Rows,
                              Optional drawLabels As DrawElements = DrawElements.Both,
                              Optional drawDendrograms As DrawElements = DrawElements.Rows,
                              Optional drawClass As (rowClass As Dictionary(Of String, String), colClass As Dictionary(Of String, String)) = Nothing,
@@ -150,13 +150,28 @@ Namespace Heatmap
                 .padding = padding,
                 .background = bg,
                 .colorSet = mapName,
-                .drawGrid = drawGrid
+                .drawGrid = drawGrid,
+                .axisTickCSS = rowLabelfontStyle,
+                .axisLabelCSS = colLabelFontStyle,
+                .legendTitleCSS = legendFontStyle,
+                .drawLabels = drawValueLabel,
+                .tagCSS = valuelabelFontCSS,
+                .legendCustomTicks = If(tick <= 0, Nothing, New Nullable(Of Double)(tick)),
+                .mainCSS = titleFontCSS
             }
             Dim app As New HeatMapPlot(data, dlayout:=dendrogramLayout.SizeParser, theme) With {
                 .legendTitle = legendTitle,
                 .main = mainTitle,
                 .mapLevels = mapLevels,
-                .LegendLayout = legendLayout
+                .LegendLayout = legendLayout,
+                .colors = customColors,
+                .legendSize = legendSize.SizeParser,
+                .reverseColors = reverseClrSeq,
+                .drawClass = drawClass,
+                .drawDendrograms = drawDendrograms,
+                .drawLabels = drawLabels,
+                .logTransform = logTransform,
+                .scaleMethod = drawScaleMethod
             }
 
             Return app.Plot(size.SizeParser, dpi:=ppi, driver:=driver)
