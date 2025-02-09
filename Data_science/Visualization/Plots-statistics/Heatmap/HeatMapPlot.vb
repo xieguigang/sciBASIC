@@ -30,6 +30,7 @@ Namespace Heatmap
             drawDendrograms As DrawElements,
             drawClass As (rowClass As Dictionary(Of String, String), colClass As Dictionary(Of String, String))
 
+        Public Property globalRange As DoubleRange
         Public Property LegendLayout As Layouts = Layouts.Horizon
 
         Public Sub New(matrix As IEnumerable(Of DataSet), dlayout As SizeF, theme As Theme)
@@ -38,45 +39,34 @@ Namespace Heatmap
             Me.array = matrix.ToArray
             Me.dendrogramLayout = (dlayout.Width, dlayout.Height)
             Me.dataTable = array.ToDictionary(Function(r) r.ID)
+            Me.globalRange = array _
+                .Select(Function(x) x.Properties.Values) _
+                .IteratesALL _
+                .Range
         End Sub
+
+        Private Function configDendrogramCanvas(cluster As Cluster, [class] As Dictionary(Of String, String)) As DendrogramPanelV2
+            Return New DendrogramPanelV2(cluster, New Theme)
+        End Function
 
         Protected Overrides Sub PlotInternal(ByRef g As IGraphics, canvas As GraphicsRegion)
             Dim keys$() = array.PropertyNames
             Dim angle! = -45
-
-            If Colors.IsNullOrEmpty Then
-                Colors = Designer.GetColors(mapName, mapLevels).GetBrushes
-                If reverseClrSeq Then
-                    Colors = Colors.Reverse.ToArray
-                End If
-            End If
-
+            Dim colors = GetBrushes()
             Dim rowKeys$() ' 经过聚类之后得到的新的排序顺序
             Dim colKeys$()
-
-            Dim configDendrogramCanvas =
-                Function(cluster As Cluster, [class] As Dictionary(Of String, String))
-                    Return New DendrogramPanelV2(cluster, New Theme)
-                End Function
-            Dim DATArange As DoubleRange = array _
-                .Select(Function(x) x.Properties.Values) _
-                .IteratesALL _
-                .Join(min, max) _
-                .Distinct _
-                .ToArray
             Dim ticks#()
 
-            If tick > 0 Then
-                ticks = AxisScalling.GetAxisByTick(DATArange, tick)
+            If theme.legendCustomTicks IsNot Nothing Then
+                ticks = AxisScalling.GetAxisByTick(globalRange, theme.legendCustomTicks)
             Else
-                ticks = DATArange.CreateAxisTicks(ticks:=5)
+                ticks = globalRange.CreateAxisTicks(ticks:=5)
             End If
 
-            Call $"{DATArange.ToString} -> {ticks.GetJson}".__INFO_ECHO
-
+            Call $"{globalRange.ToString} -> {ticks.GetJson}".__INFO_ECHO
 
             Dim css As CSSEnvirnment = g.LoadEnvironment
-            Dim margin As PaddingLayout = PaddingLayout.EvaluateFromCSS(css, Padding)
+            Dim margin As PaddingLayout = PaddingLayout.EvaluateFromCSS(css, canvas.Padding)
             ' 根据布局计算出矩阵的大小和位置
             Dim left! = margin.Left + rowXOffset, top! = margin.Top    ' 绘图区域的左上角位置
             ' 计算出右边的行标签的最大的占用宽度
@@ -100,7 +90,7 @@ Namespace Heatmap
             End If
 
             ' 宽度与最大行标签宽度相减得到矩阵的绘制宽度
-            Dim plotRect = rect.PlotRegion(css)
+            Dim plotRect = canvas.PlotRegion(css)
             Dim dw = plotRect.Width - maxRowLabelSize.Width
             Dim dh = plotRect.Height - maxColLabelSize.Width - legendSize.Height
 
@@ -217,7 +207,7 @@ Namespace Heatmap
             }
 
             ' 绘制heatmap之中的矩阵内容
-            Call Plot(g, rect, args)
+            Call RenderHeatmap(g, canvas, args)
 
             dw = args.dStep.Width
             left = args.left
@@ -252,7 +242,7 @@ Namespace Heatmap
             Call g.DrawString(main, titleFont, Brushes.Black, titlePosi)
         End Sub
 
-        Public Shared Sub RenderHeatmap(g As IGraphics, region As GraphicsRegion, args As PlotArguments)
+        Public Sub RenderHeatmap(g As IGraphics, region As GraphicsRegion, args As PlotArguments)
             Dim css As CSSEnvirnment = g.LoadEnvironment
             Dim dw! = args.dStep.Width, dh! = args.dStep.Height
             Dim blockSize As New SizeF(dw, dh)
@@ -263,7 +253,7 @@ Namespace Heatmap
             Dim rowLabelFont As Font = css.GetFont(rowLabelfontStyle)
 
             ' 按行绘制heatmap之中的矩阵
-            For Each x As DataSet In args.RowOrders.Select(Function(key) DataTable(key))     ' 在这里绘制具体的矩阵
+            For Each x As DataSet In args.RowOrders.Select(Function(key) dataTable(key))     ' 在这里绘制具体的矩阵
                 Dim levelRow As DataSet = args.levels(x.ID)
 
                 For Each key As String In args.ColOrders
@@ -282,11 +272,10 @@ Namespace Heatmap
 #End If
                     Call g.FillRectangle(b, rect)
 
-                    If drawGrid Then
+                    If theme.drawGrid Then
                         Call g.DrawRectangles(Pens.WhiteSmoke, {rect})
                     End If
-                    If drawValueLabel Then
-
+                    If theme.drawLabels Then
                         With c.ToString("F2")
                             Dim ksz As SizeF = g.MeasureString(.ByRef, valuelabelFont)
                             Dim kpos As New PointF With {

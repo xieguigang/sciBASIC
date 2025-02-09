@@ -63,15 +63,29 @@ Namespace Drawing2D.Colors.Scaler
     ''' <summary>
     ''' A color collection
     ''' </summary>
+    ''' <remarks>
+    ''' includes sub class:
+    ''' 
+    ''' 1. <see cref="ValueScaleColorProfile"/>: a color mapper for the value range;
+    ''' 2. <see cref="CategoryColorProfile"/>: a color mapper for the category terms
+    ''' </remarks>
     Public MustInherit Class ColorProfile
 
         Protected colors As Color()
 
+        ''' <summary>
+        ''' Create profile with a pre-defined color set
+        ''' </summary>
+        ''' <param name="colorSchema"></param>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Sub New(colorSchema As String)
             Me.colors = Designer.GetColors(colorSchema)
         End Sub
 
+        ''' <summary>
+        ''' Create profile with custom color set
+        ''' </summary>
+        ''' <param name="colors"></param>
         Sub New(colors As IEnumerable(Of Color))
             Me.colors = colors.ToArray
         End Sub

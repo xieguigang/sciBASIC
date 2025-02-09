@@ -510,14 +510,16 @@ Namespace Drawing2D.Colors
         ''' <summary>
         ''' 这个函数是获取得到一个连续的颜色谱
         ''' </summary>
-        ''' <param name="term$"></param>
+        ''' <param name="term"></param>
         ''' <param name="n">negative or zero value means no interoplation, 
         ''' just returns the raw color list which is mapping by the 
         ''' <paramref name="term"/>
         ''' </param>
-        ''' <param name="alpha%"></param>
+        ''' <param name="alpha">the transparency alpha channel data</param>
         ''' <returns></returns>
-        ''' 
+        ''' <remarks>
+        ''' create color profile with <see cref="CubicSpline"/>.
+        ''' </remarks>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function GetColors(term$, Optional n% = 256, Optional alpha% = 255) As Color()
             Return CubicSpline(GetColors(term), n, alpha)

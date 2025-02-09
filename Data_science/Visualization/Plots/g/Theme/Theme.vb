@@ -115,6 +115,7 @@ Namespace Graphic.Canvas
         Public Property legendTickCSS As String = CSSFont.Win7Normal
         Public Property legendTickAxisStroke As String = Stroke.AxisStroke
         Public Property legendTickFormat As String = "F2"
+        Public Property legendCustomTicks As Double? = Nothing
 
         ''' <summary>
         ''' 图例标签字体样式

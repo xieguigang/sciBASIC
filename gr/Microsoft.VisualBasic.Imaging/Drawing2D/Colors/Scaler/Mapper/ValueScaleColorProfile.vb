@@ -71,7 +71,7 @@ Namespace Drawing2D.Colors.Scaler
         Dim logarithm%
 
         Public Sub New(data As IEnumerable(Of NamedValue(Of Double)), colorSchema$, level%, Optional logarithm% = 0)
-            MyBase.New(colorSchema)
+            Call MyBase.New(colorSchema)
 
             With data.ToArray
                 Dim minX As Double = Aggregate item In .AsEnumerable Into Min(item.Value)
@@ -88,6 +88,11 @@ Namespace Drawing2D.Colors.Scaler
             End With
         End Sub
 
+        ''' <summary>
+        ''' get color use the item value
+        ''' </summary>
+        ''' <param name="item"></param>
+        ''' <returns></returns>
         Public Overrides Function GetColor(item As NamedValue(Of Double)) As Color
             Dim termValue# = If(logarithm > 0, std.Log(item.Value, logarithm), item.Value)
             Dim index As Integer = valueRange.ScaleMapping(termValue, indexRange)

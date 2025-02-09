@@ -135,6 +135,11 @@ Namespace Drawing2D.Colors.Scaler
             Return colors(i)
         End Function
 
+        ''' <summary>
+        ''' get color by term name
+        ''' </summary>
+        ''' <param name="item">get color use this item name</param>
+        ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Function GetColor(item As NamedValue(Of Double)) As Color
             Return GetColor(termName:=item.Name)
