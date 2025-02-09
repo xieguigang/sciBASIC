@@ -164,7 +164,6 @@ Namespace Heatmap
                 .main = mainTitle,
                 .mapLevels = mapLevels,
                 .LegendLayout = legendLayout,
-                .colors = customColors,
                 .legendSize = legendSize.SizeParser,
                 .reverseColors = reverseClrSeq,
                 .drawClass = drawClass,
@@ -173,6 +172,10 @@ Namespace Heatmap
                 .logTransform = logTransform,
                 .scaleMethod = drawScaleMethod
             }
+
+            If Not customColors.IsNullOrEmpty Then
+                app.colors = customColors
+            End If
 
             Return app.Plot(size.SizeParser, dpi:=ppi, driver:=driver)
         End Function
