@@ -32,6 +32,7 @@ Namespace Heatmap
 
         Public Property globalRange As DoubleRange
         Public Property LegendLayout As Layouts = Layouts.Horizon
+        Public Property legendSize As New Size(600, 100)
 
         Public Sub New(matrix As IEnumerable(Of DataSet), dlayout As SizeF, theme As Theme)
             MyBase.New(theme)
@@ -216,10 +217,7 @@ Namespace Heatmap
 
             ' 绘制下方的矩阵的列标签
             If drawLabels = DrawElements.Both OrElse drawLabels = DrawElements.Cols Then
-                'Dim text As New GraphicsText(DirectCast(g, Graphics2D).Graphics)
-                'Dim format As New StringFormat() With {
-                '    .FormatFlags = StringFormatFlags.MeasureTrailingSpaces
-                '}
+                Dim colLabelFont As Font = css.GetFont(CSSFont.TryParse(theme.axisTickCSS))
 
                 For Each key$ In keys
                     Dim sz = g.MeasureString(key$, colLabelFont) ' 得到斜边的长度
@@ -233,13 +231,9 @@ Namespace Heatmap
                 Next
             End If
 
-            Dim titleSize = g.MeasureString(main, titleFont)
-            Dim titlePosi As New PointF With {
-                .X = args.matrixPlotRegion.Left + (args.matrixPlotRegion.Width - titleSize.Width) / 2, ' 标题在所绘制的矩阵上方居中
-                .Y = (margin.Top - titleSize.Height) / 2
-            }
-
-            Call g.DrawString(main, titleFont, Brushes.Black, titlePosi)
+            If Not main.StringEmpty(, True) Then
+                Call DrawMainTitle(g, args.matrixPlotRegion)
+            End If
         End Sub
 
         Public Sub RenderHeatmap(g As IGraphics, region As GraphicsRegion, args As PlotArguments)
@@ -247,10 +241,8 @@ Namespace Heatmap
             Dim dw! = args.dStep.Width, dh! = args.dStep.Height
             Dim blockSize As New SizeF(dw, dh)
             Dim colors As SolidBrush() = args.colors
-            Dim valuelabelFont As Font = css.GetFont(valuelabelFontCSS)
-            Dim titleFont As Font = css.GetFont(titleFontCSS)
-            Dim legendFont As Font = css.GetFont(legendFontStyle)
-            Dim rowLabelFont As Font = css.GetFont(rowLabelfontStyle)
+            Dim valuelabelFont As Font = css.GetFont(theme.tagCSS)
+            Dim rowLabelFont As Font = css.GetFont(theme.axisTickCSS)
 
             ' 按行绘制heatmap之中的矩阵
             For Each x As DataSet In args.RowOrders.Select(Function(key) dataTable(key))     ' 在这里绘制具体的矩阵
@@ -276,14 +268,14 @@ Namespace Heatmap
                         Call g.DrawRectangles(Pens.WhiteSmoke, {rect})
                     End If
                     If theme.drawLabels Then
-                        With c.ToString("F2")
-                            Dim ksz As SizeF = g.MeasureString(.ByRef, valuelabelFont)
-                            Dim kpos As New PointF With {
-                                        .X = rect.Left + (rect.Width - ksz.Width) / 2,
-                                        .Y = rect.Top + (rect.Height - ksz.Height) / 2
-                                    }
-                            Call g.DrawString(.ByRef, valuelabelFont, Brushes.White, kpos)
-                        End With
+                        Dim val_str = c.ToString("F2")
+                        Dim ksz As SizeF = g.MeasureString(val_str, valuelabelFont)
+                        Dim kpos As New PointF With {
+                            .X = rect.Left + (rect.Width - ksz.Width) / 2,
+                            .Y = rect.Top + (rect.Height - ksz.Height) / 2
+                        }
+
+                        Call g.DrawString(val_str, valuelabelFont, Brushes.White, kpos)
                     End If
 
                     args.left += dw!
