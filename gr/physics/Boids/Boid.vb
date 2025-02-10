@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f223f40fb8de1cf15e013b8ca33c01d3, gr\physics\Boids\Boid.vb"
+﻿#Region "Microsoft.VisualBasic::8b12de272d14087a96b9296b58ac1857, gr\physics\Boids\Boid.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 67
-    '    Code Lines: 49 (73.13%)
-    ' Comment Lines: 6 (8.96%)
+    '   Total Lines: 71
+    '    Code Lines: 49 (69.01%)
+    ' Comment Lines: 10 (14.08%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 12 (17.91%)
-    '     File Size: 2.25 KB
+    '   Blank Lines: 12 (16.90%)
+    '     File Size: 2.35 KB
 
 
     '     Class Boid

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::280246689c0256c23d13e0e564e00db2, Microsoft.VisualBasic.Core\src\Text\StringSimilarity\Similarity.vb"
+﻿#Region "Microsoft.VisualBasic::54732f3cdaa73894d0fbb4adda4c8021, Microsoft.VisualBasic.Core\src\Text\StringSimilarity\Similarity.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 270
-    '    Code Lines: 170 (62.96%)
-    ' Comment Lines: 63 (23.33%)
-    '    - Xml Docs: 92.06%
+    '   Total Lines: 281
+    '    Code Lines: 170 (60.50%)
+    ' Comment Lines: 74 (26.33%)
+    '    - Xml Docs: 93.24%
     ' 
-    '   Blank Lines: 37 (13.70%)
-    '     File Size: 11.73 KB
+    '   Blank Lines: 37 (13.17%)
+    '     File Size: 12.30 KB
 
 
     '     Delegate Function

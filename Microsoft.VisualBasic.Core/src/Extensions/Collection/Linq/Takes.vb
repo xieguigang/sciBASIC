@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ae4de2be1628622acbfba8995d6f4152, Microsoft.VisualBasic.Core\src\Extensions\Collection\Linq\Takes.vb"
+﻿#Region "Microsoft.VisualBasic::2f9417e431b8776653d0d119f663fdbe, Microsoft.VisualBasic.Core\src\Extensions\Collection\Linq\Takes.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 153
-    '    Code Lines: 78 (50.98%)
-    ' Comment Lines: 60 (39.22%)
+    '   Total Lines: 142
+    '    Code Lines: 69 (48.59%)
+    ' Comment Lines: 60 (42.25%)
     '    - Xml Docs: 88.33%
     ' 
-    '   Blank Lines: 15 (9.80%)
-    '     File Size: 6.46 KB
+    '   Blank Lines: 13 (9.15%)
+    '     File Size: 6.11 KB
 
 
     '     Module TakesExtension

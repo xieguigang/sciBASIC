@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::13ec74533f64a337eff86602c40a2851, Data_science\Visualization\Plots\Scatter\Heatmap.vb"
+﻿#Region "Microsoft.VisualBasic::5a97f8cb970f47a2678919f0ba2707cc, Data_science\Visualization\Plots\Scatter\Heatmap.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 116
-    '    Code Lines: 89 (76.72%)
-    ' Comment Lines: 18 (15.52%)
+    '   Total Lines: 119
+    '    Code Lines: 92 (77.31%)
+    ' Comment Lines: 18 (15.13%)
     '    - Xml Docs: 94.44%
     ' 
-    '   Blank Lines: 9 (7.76%)
-    '     File Size: 5.08 KB
+    '   Blank Lines: 9 (7.56%)
+    '     File Size: 5.25 KB
 
 
     ' Module Scatter

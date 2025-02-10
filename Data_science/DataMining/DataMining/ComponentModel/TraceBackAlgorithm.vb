@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::334fc7f4ec0683e91664890a30cee102, Data_science\DataMining\DataMining\ComponentModel\TraceBackAlgorithm.vb"
+﻿#Region "Microsoft.VisualBasic::c0cc5a70a998e2f1a3f31e309de01fa5, Data_science\DataMining\DataMining\ComponentModel\TraceBackAlgorithm.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 85.71%
     ' 
     '   Blank Lines: 9 (16.67%)
-    '     File Size: 2.10 KB
+    '     File Size: 2.13 KB
 
 
     '     Class TraceBackAlgorithm

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6606646653c9f272f66c1f849b781168, Data_science\Visualization\Plots-statistics\Heatmap\DensityPlot.vb"
+﻿#Region "Microsoft.VisualBasic::c9d20f23e63be00f7bac1813b2cfcda5, Data_science\Visualization\Plots-statistics\HeatMap\DensityPlot.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 212
-    '    Code Lines: 175 (82.55%)
-    ' Comment Lines: 22 (10.38%)
+    '   Total Lines: 214
+    '    Code Lines: 177 (82.71%)
+    ' Comment Lines: 22 (10.28%)
     '    - Xml Docs: 81.82%
     ' 
-    '   Blank Lines: 15 (7.08%)
-    '     File Size: 9.72 KB
+    '   Blank Lines: 15 (7.01%)
+    '     File Size: 9.94 KB
 
 
     '     Module DensityPlot

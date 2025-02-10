@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8077259137ee67ef646302f5526d6bf2, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Shapes\Box.vb"
+﻿#Region "Microsoft.VisualBasic::8d6d070126a604e220149f8360d7d1c9, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Shapes\Box.vb"
 
     ' Author:
     ' 
@@ -34,20 +34,20 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 29
-    '    Code Lines: 22 (75.86%)
-    ' Comment Lines: 0 (0.00%)
-    '    - Xml Docs: 0.00%
+    '   Total Lines: 60
+    '    Code Lines: 39 (65.00%)
+    ' Comment Lines: 9 (15.00%)
+    '    - Xml Docs: 88.89%
     ' 
-    '   Blank Lines: 7 (24.14%)
-    '     File Size: 1.02 KB
+    '   Blank Lines: 12 (20.00%)
+    '     File Size: 1.91 KB
 
 
     '     Class Box
     ' 
-    '         Properties: Size
+    '         Properties: border, box, fill, Size
     ' 
-    '         Constructor: (+1 Overloads) Sub New
+    '         Constructor: (+3 Overloads) Sub New
     '         Sub: DrawRectangle
     ' 
     ' 

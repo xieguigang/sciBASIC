@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5be4e8549ffa265e9e5b208eb535f5d2, Data_science\Mathematica\Math\Math\Algebra\Matrix.NET\Decomposition\NMF.vb"
+﻿#Region "Microsoft.VisualBasic::f8284811475051e45277bf9d64af2828, Data_science\Mathematica\Math\Math\Algebra\Matrix.NET\Decomposition\NMF.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 85.37%
     ' 
     '   Blank Lines: 24 (16.11%)
-    '     File Size: 6.65 KB
+    '     File Size: 6.68 KB
 
 
     '     Class NMF

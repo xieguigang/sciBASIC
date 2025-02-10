@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8c6c9e73a2f17e7bf9d9fb500d42eadc, Data_science\Visualization\Plots\g\Theme\Theme.vb"
+﻿#Region "Microsoft.VisualBasic::eee69754640d9f4e6da54b8f7ce98426, Data_science\Visualization\Plots\g\Theme\Theme.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 206
-    '    Code Lines: 76 (36.89%)
-    ' Comment Lines: 99 (48.06%)
+    '   Total Lines: 207
+    '    Code Lines: 77 (37.20%)
+    ' Comment Lines: 99 (47.83%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 31 (15.05%)
-    '     File Size: 7.15 KB
+    '   Blank Lines: 31 (14.98%)
+    '     File Size: 7.35 KB
 
 
     '     Class Theme
@@ -48,12 +48,12 @@
     '         Properties: axisLabelCSS, axisStroke, axisTickCSS, axisTickPadding, axisTickStroke
     '                     background, colorSet, drawAxis, drawGrid, drawLabels
     '                     drawLegend, flipAxis, gridFill, gridStrokeX, gridStrokeY
-    '                     htmlLabel, legendBoxBackground, legendBoxStroke, legendLabelCSS, legendLayout
-    '                     legendSplitSize, legendTickAxisStroke, legendTickCSS, legendTickFormat, legendTitleCSS
-    '                     lineStroke, mainCSS, mainTextColor, mainTextWrap, padding
-    '                     pointSize, subtitleCSS, tagColor, tagCSS, tagFormat
-    '                     tagLinkStroke, xAxisLayout, xAxisReverse, xAxisRotate, XaxisTickFormat
-    '                     yAxislabelPosition, yAxisLayout, YaxisTickFormat
+    '                     htmlLabel, legendBoxBackground, legendBoxStroke, legendCustomTicks, legendLabelCSS
+    '                     legendLayout, legendSplitSize, legendTickAxisStroke, legendTickCSS, legendTickFormat
+    '                     legendTitleCSS, lineStroke, mainCSS, mainTextColor, mainTextWrap
+    '                     padding, pointSize, subtitleCSS, tagColor, tagCSS
+    '                     tagFormat, tagLinkStroke, xAxisLayout, xAxisReverse, xAxisRotate
+    '                     XaxisTickFormat, yAxislabelPosition, yAxisLayout, YaxisTickFormat
     ' 
     '         Function: Clone, GetLegendPosition, NewColorSet, ToString
     ' 

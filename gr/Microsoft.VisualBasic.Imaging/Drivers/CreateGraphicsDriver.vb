@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::73bbf9d9cb0acbad68c1a1d69bad1009, gr\Microsoft.VisualBasic.Imaging\Drivers\CreateGraphicsDriver.vb"
+﻿#Region "Microsoft.VisualBasic::9d9d97f64e93b1c4908d5b6e87077390, gr\Microsoft.VisualBasic.Imaging\Drivers\CreateGraphicsDriver.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 85
-    '    Code Lines: 60 (70.59%)
-    ' Comment Lines: 9 (10.59%)
+    '   Total Lines: 95
+    '    Code Lines: 68 (71.58%)
+    ' Comment Lines: 9 (9.47%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 16 (18.82%)
-    '     File Size: 3.49 KB
+    '   Blank Lines: 18 (18.95%)
+    '     File Size: 4.00 KB
 
 
     '     Module ImageDriver
@@ -50,11 +50,11 @@
     '         Sub: Register
     '         Class RasterInterop
     ' 
-    '             Function: CreateCanvas2D, CreateGraphic, GetData
+    '             Function: (+2 Overloads) CreateCanvas2D, CreateGraphic, GetData
     ' 
     '         Class SvgInterop
     ' 
-    '             Function: CreateCanvas2D, CreateGraphic, GetData
+    '             Function: (+2 Overloads) CreateCanvas2D, CreateGraphic, GetData
     ' 
     ' 
     ' 

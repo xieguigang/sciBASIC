@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7b0c8c38c210e4455429c2af8c47e493, Data_science\NLP\LDA\Debugger.vb"
+﻿#Region "Microsoft.VisualBasic::0dda50e5aa9e2884c94b037fa8cce20a, Data_science\NLP\LDA\Debugger.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 54.29%
     ' 
     '   Blank Lines: 36 (20.45%)
-    '     File Size: 6.50 KB
+    '     File Size: 6.48 KB
 
 
     '     Module Debugger

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2aaf09dd99cc3280bf048fbcbf2ab306, Microsoft.VisualBasic.Core\src\ComponentModel\DataStructures\Tree\TreeNodeBase.vb"
+﻿#Region "Microsoft.VisualBasic::06df92ed3e784008ae4f006c9c8d018a, Microsoft.VisualBasic.Core\src\ComponentModel\DataStructures\Tree\TreeNodeBase.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 192
-    '    Code Lines: 101 (52.60%)
-    ' Comment Lines: 62 (32.29%)
-    '    - Xml Docs: 91.94%
+    '   Total Lines: 186
+    '    Code Lines: 96 (51.61%)
+    ' Comment Lines: 63 (33.87%)
+    '    - Xml Docs: 90.48%
     ' 
-    '   Blank Lines: 29 (15.10%)
-    '     File Size: 6.62 KB
+    '   Blank Lines: 27 (14.52%)
+    '     File Size: 6.37 KB
 
 
     '     Class TreeNodeBase
@@ -50,8 +50,8 @@
     ' 
     '         Constructor: (+1 Overloads) Sub New
     ' 
-    '         Function: __travelInternal, GetEnumerator, GetLeafNodes, GetNonLeafNodes, GetRootNode
-    '                   IEnumerable_GetEnumerator, IteratesAllChilds, MaxTravelDepth
+    '         Function: __travelInternal, GenericEnumerator, GetLeafNodes, GetNonLeafNodes, GetRootNode
+    '                   MaxTravelDepth
     ' 
     '         Sub: AddChild, AddChildren, ChildCountsTravel
     ' 

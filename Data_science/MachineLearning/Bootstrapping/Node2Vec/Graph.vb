@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9e2b57e2426aab679139e2975251ba88, Data_science\MachineLearning\Bootstrapping\Node2Vec\Graph.vb"
+﻿#Region "Microsoft.VisualBasic::087e981ea681840e2c27bccafd0381e9, Data_science\MachineLearning\Bootstrapping\Node2Vec\Graph.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 91.38%
     ' 
     '   Blank Lines: 22 (9.02%)
-    '     File Size: 10.24 KB
+    '     File Size: 10.27 KB
 
 
     '     Class Graph

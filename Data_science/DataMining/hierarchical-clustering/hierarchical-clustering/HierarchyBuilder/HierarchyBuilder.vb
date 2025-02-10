@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::49c90882251105fbd278d497807c7179, Data_science\DataMining\hierarchical-clustering\hierarchical-clustering\HierarchyBuilder\HierarchyBuilder.vb"
+﻿#Region "Microsoft.VisualBasic::db9f4cae3364b68aea3d7e44573b035f, Data_science\DataMining\hierarchical-clustering\hierarchical-clustering\HierarchyBuilder\HierarchyBuilder.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 145
-    '    Code Lines: 80 (55.17%)
-    ' Comment Lines: 43 (29.66%)
+    '   Total Lines: 153
+    '    Code Lines: 88 (57.52%)
+    ' Comment Lines: 43 (28.10%)
     '    - Xml Docs: 51.16%
     ' 
-    '   Blank Lines: 22 (15.17%)
-    '     File Size: 5.78 KB
+    '   Blank Lines: 22 (14.38%)
+    '     File Size: 6.24 KB
 
 
     '     Class HierarchyBuilder
@@ -49,7 +49,7 @@
     ' 
     '         Constructor: (+1 Overloads) Sub New
     ' 
-    '         Function: findByClusters, flatAgg
+    '         Function: evaluateDistance, flatAgg
     ' 
     '         Sub: Agglomerate
     ' 

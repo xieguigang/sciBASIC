@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::407d1c0bfd6a401fbaae6ebc8bf416c1, Microsoft.VisualBasic.Core\src\Language\Language\C\File.vb"
+﻿#Region "Microsoft.VisualBasic::f9b648bc16ae7d996c08232e4847e112, Microsoft.VisualBasic.Core\src\Language\Language\C\File.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 26
-    '    Code Lines: 13 (50.00%)
-    ' Comment Lines: 9 (34.62%)
+    '   Total Lines: 32
+    '    Code Lines: 13 (40.62%)
+    ' Comment Lines: 15 (46.88%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 4 (15.38%)
-    '     File Size: 895 B
+    '   Blank Lines: 4 (12.50%)
+    '     File Size: 1.14 KB
 
 
     '     Module File

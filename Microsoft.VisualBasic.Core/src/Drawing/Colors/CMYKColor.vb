@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e08239ef70c21882705f529b2114eb64, Microsoft.VisualBasic.Core\src\Drawing\Colors\CMYKColor.vb"
+﻿#Region "Microsoft.VisualBasic::0af630391a215da560683e3677f51374, Microsoft.VisualBasic.Core\src\Drawing\Colors\CMYKColor.vb"
 
     ' Author:
     ' 
@@ -34,19 +34,20 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 52
-    '    Code Lines: 30 (57.69%)
-    ' Comment Lines: 14 (26.92%)
+    '   Total Lines: 68
+    '    Code Lines: 43 (63.24%)
+    ' Comment Lines: 14 (20.59%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 8 (15.38%)
-    '     File Size: 1.69 KB
+    '   Blank Lines: 11 (16.18%)
+    '     File Size: 2.12 KB
 
 
     '     Class CMYKColor
     ' 
     '         Properties: C, K, M, Y
     ' 
+    '         Constructor: (+3 Overloads) Sub New
     '         Function: FromRGB, ToRGB, ToString
     ' 
     ' 

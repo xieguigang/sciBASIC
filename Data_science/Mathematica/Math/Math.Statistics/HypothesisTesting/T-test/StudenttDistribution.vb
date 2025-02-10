@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f8c0b796c214a732aceb241a3df00800, Data_science\Mathematica\Math\Math.Statistics\HypothesisTesting\T-test\StudenttDistribution.vb"
+﻿#Region "Microsoft.VisualBasic::ff83b688847d69fcb5731e3606e5b63a, Data_science\Mathematica\Math\Math.Statistics\HypothesisTesting\T-test\StudenttDistribution.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 47
-    '    Code Lines: 34 (72.34%)
-    ' Comment Lines: 3 (6.38%)
+    '   Total Lines: 62
+    '    Code Lines: 45 (72.58%)
+    ' Comment Lines: 3 (4.84%)
     '    - Xml Docs: 0.00%
     ' 
-    '   Blank Lines: 10 (21.28%)
-    '     File Size: 1.93 KB
+    '   Blank Lines: 14 (22.58%)
+    '     File Size: 2.35 KB
 
 
     '     Class StudenttDistribution

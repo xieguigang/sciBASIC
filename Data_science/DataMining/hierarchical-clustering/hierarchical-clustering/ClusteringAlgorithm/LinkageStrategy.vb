@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::51a750ad09a00f3993ed48adf39f47b5, Data_science\DataMining\hierarchical-clustering\hierarchical-clustering\ClusteringAlgorithm\LinkageStrategy.vb"
+﻿#Region "Microsoft.VisualBasic::a0fa2573925b769d1957c5a39ce38d77, Data_science\DataMining\hierarchical-clustering\hierarchical-clustering\ClusteringAlgorithm\LinkageStrategy.vb"
 
     ' Author:
     ' 
@@ -34,34 +34,34 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 85
-    '    Code Lines: 48 (56.47%)
-    ' Comment Lines: 17 (20.00%)
+    '   Total Lines: 151
+    '    Code Lines: 101 (66.89%)
+    ' Comment Lines: 17 (11.26%)
     '    - Xml Docs: 0.00%
     ' 
-    '   Blank Lines: 20 (23.53%)
-    '     File Size: 2.99 KB
+    '   Blank Lines: 33 (21.85%)
+    '     File Size: 4.93 KB
 
 
     ' Interface LinkageStrategy
     ' 
-    '     Function: CalculateDistance
+    '     Function: (+2 Overloads) CalculateDistance
     ' 
     ' Class SingleLinkageStrategy
     ' 
-    '     Function: CalculateDistance
+    '     Function: (+2 Overloads) CalculateDistance
     ' 
     ' Class WeightedLinkageStrategy
     ' 
-    '     Function: CalculateDistance
+    '     Function: (+2 Overloads) CalculateDistance
     ' 
     ' Class CompleteLinkageStrategy
     ' 
-    '     Function: CalculateDistance
+    '     Function: (+2 Overloads) CalculateDistance
     ' 
     ' Class AverageLinkageStrategy
     ' 
-    '     Function: CalculateDistance
+    '     Function: (+2 Overloads) CalculateDistance
     ' 
     ' /********************************************************************************/
 

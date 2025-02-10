@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::85889dcbc8213524990be39681034a90, Microsoft.VisualBasic.Core\src\ComponentModel\Algorithm\BipartiteMatching.vb"
+﻿#Region "Microsoft.VisualBasic::854000c3c3ffa1dc7892813139da84ea, Microsoft.VisualBasic.Core\src\ComponentModel\Algorithm\BipartiteMatching.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 44
-    '    Code Lines: 39 (88.64%)
+    '   Total Lines: 45
+    '    Code Lines: 39 (86.67%)
     ' Comment Lines: 0 (0.00%)
     '    - Xml Docs: 0.00%
     ' 
-    '   Blank Lines: 5 (11.36%)
-    '     File Size: 1.50 KB
+    '   Blank Lines: 6 (13.33%)
+    '     File Size: 1.49 KB
 
 
     '     Class BipartiteMatching

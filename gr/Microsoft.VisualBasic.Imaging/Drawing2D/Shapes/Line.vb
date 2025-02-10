@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cfe7d6f6496e91d0df2cf4625f613f59, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Shapes\Line.vb"
+﻿#Region "Microsoft.VisualBasic::4e30742a524be32f1006eade000876b4, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Shapes\Line.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 195
-    '    Code Lines: 133 (68.21%)
-    ' Comment Lines: 32 (16.41%)
+    '   Total Lines: 208
+    '    Code Lines: 144 (69.23%)
+    ' Comment Lines: 32 (15.38%)
     '    - Xml Docs: 78.12%
     ' 
-    '   Blank Lines: 30 (15.38%)
-    '     File Size: 6.52 KB
+    '   Blank Lines: 32 (15.38%)
+    '     File Size: 6.97 KB
 
 
     '     Class Line
@@ -48,7 +48,7 @@
     '         Properties: A, Alpha, B, Center, Cos
     '                     Length, Sin, Size, Stroke
     ' 
-    '         Constructor: (+4 Overloads) Sub New
+    '         Constructor: (+6 Overloads) Sub New
     '         Function: CopyStyle, Draw, GetIntersectLocation, LengthVariationFromPointA, LengthVariationFromPointB
     '                   ParallelShift, QuadraticBelzier, ToString
     ' 

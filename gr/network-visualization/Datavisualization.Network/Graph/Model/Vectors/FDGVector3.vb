@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::be14939c15cde0910895d71c61dcdf25, gr\network-visualization\Datavisualization.Network\Graph\Model\Vectors\FDGVector3.vb"
+﻿#Region "Microsoft.VisualBasic::a59067bda1e5d3ee9afb5477e73d2814, gr\network-visualization\Datavisualization.Network\Graph\Model\Vectors\FDGVector3.vb"
 
     ' Author:
     ' 
@@ -34,18 +34,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 191
-    '    Code Lines: 114 (59.69%)
-    ' Comment Lines: 45 (23.56%)
+    '   Total Lines: 198
+    '    Code Lines: 119 (60.10%)
+    ' Comment Lines: 45 (22.73%)
     '    - Xml Docs: 0.00%
     ' 
-    '   Blank Lines: 32 (16.75%)
-    '     File Size: 6.39 KB
+    '   Blank Lines: 34 (17.17%)
+    '     File Size: 6.60 KB
 
 
     '     Class FDGVector3
     ' 
-    '         Constructor: (+4 Overloads) Sub New
+    '         Constructor: (+5 Overloads) Sub New
     '         Function: (+2 Overloads) Equals, GetHashCode, Identity, Magnitude, Normalize
     '                   Random, SetIdentity, SetZero, Zero
     '         Operators: -, (+2 Overloads) *, /, (+2 Overloads) +, <>

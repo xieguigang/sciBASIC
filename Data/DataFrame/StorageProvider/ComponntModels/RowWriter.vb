@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::dca41c84d8592361c10560dbe89167b7, Data\DataFrame\StorageProvider\ComponntModels\RowWriter.vb"
+﻿#Region "Microsoft.VisualBasic::782e767cc18008ad3105b8ed5df50386, Data\DataFrame\StorageProvider\ComponntModels\RowWriter.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 323
-    '    Code Lines: 228 (70.59%)
-    ' Comment Lines: 50 (15.48%)
-    '    - Xml Docs: 82.00%
+    '   Total Lines: 329
+    '    Code Lines: 232 (70.52%)
+    ' Comment Lines: 52 (15.81%)
+    '    - Xml Docs: 80.77%
     ' 
-    '   Blank Lines: 45 (13.93%)
-    '     File Size: 13.04 KB
+    '   Blank Lines: 45 (13.68%)
+    '     File Size: 13.42 KB
 
 
     '     Class RowWriter

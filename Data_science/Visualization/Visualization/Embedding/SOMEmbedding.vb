@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::babf5b42b0663a7bbd3fcc6a6ce4c3a0, Data_science\Visualization\Visualization\Embedding\SOMEmbedding.vb"
+﻿#Region "Microsoft.VisualBasic::7a88cabcb12e3acc6a6aa9ef1a9121c4, Data_science\Visualization\Visualization\Embedding\SOMEmbedding.vb"
 
     ' Author:
     ' 
@@ -115,4 +115,3 @@ Public Class SOMEmbedding : Inherits Plot
         Call scatter.Plot(g, canvas)
     End Sub
 End Class
-

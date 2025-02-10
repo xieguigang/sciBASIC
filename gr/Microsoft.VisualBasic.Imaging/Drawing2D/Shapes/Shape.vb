@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::308bf091e449b13a390f0744254b7c1e, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Shapes\Shape.vb"
+﻿#Region "Microsoft.VisualBasic::e0cab9f6c20aefbd31850820d0ead63b, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Shapes\Shape.vb"
 
     ' Author:
     ' 
@@ -34,21 +34,21 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 62
-    '    Code Lines: 35 (56.45%)
-    ' Comment Lines: 15 (24.19%)
-    '    - Xml Docs: 93.33%
+    '   Total Lines: 86
+    '    Code Lines: 42 (48.84%)
+    ' Comment Lines: 30 (34.88%)
+    '    - Xml Docs: 96.67%
     ' 
-    '   Blank Lines: 12 (19.35%)
-    '     File Size: 1.95 KB
+    '   Blank Lines: 14 (16.28%)
+    '     File Size: 2.76 KB
 
 
     '     Class Shape
     ' 
     '         Properties: DrawingRegion, EnableAutoLayout, Location, TooltipTag
     ' 
-    '         Constructor: (+1 Overloads) Sub New
-    '         Function: Draw, MoveOffset, MoveTo, ToString
+    '         Constructor: (+2 Overloads) Sub New
+    '         Function: Draw, MoveOffset, (+2 Overloads) MoveTo, ToString
     ' 
     ' 
     ' /********************************************************************************/

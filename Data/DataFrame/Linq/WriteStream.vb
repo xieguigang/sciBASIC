@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::713eeece2785b5349249793e911f0374, Data\DataFrame\Linq\WriteStream.vb"
+﻿#Region "Microsoft.VisualBasic::87f695c99decf1658d275933d5250dcd, Data\DataFrame\Linq\WriteStream.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 265
-    '    Code Lines: 156 (58.87%)
-    ' Comment Lines: 71 (26.79%)
+    '   Total Lines: 270
+    '    Code Lines: 160 (59.26%)
+    ' Comment Lines: 71 (26.30%)
     '    - Xml Docs: 76.06%
     ' 
-    '   Blank Lines: 38 (14.34%)
-    '     File Size: 9.93 KB
+    '   Blank Lines: 39 (14.44%)
+    '     File Size: 10.11 KB
 
 
     '     Class WriteStream
@@ -52,7 +52,7 @@
     '         Function: [Ctype], (+2 Overloads) Flush, populateLine, ToArray, ToString
     '                   TryFlushObject
     ' 
-    '         Sub: (+2 Overloads) Dispose, Flush
+    '         Sub: CacheMetaIndex, (+2 Overloads) Dispose, Flush
     '         Class __ctypeTransform
     ' 
     '             Function: ToString

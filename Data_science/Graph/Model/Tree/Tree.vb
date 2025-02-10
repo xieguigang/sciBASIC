@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bd4dd3ff341aa52cbe7d7255b8bcaf86, Data_science\Graph\Model\Tree\Tree.vb"
+﻿#Region "Microsoft.VisualBasic::7e91f3bdbda6859ade65fa9b896d2da4, Data_science\Graph\Model\Tree\Tree.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 89
-    '    Code Lines: 45 (50.56%)
-    ' Comment Lines: 28 (31.46%)
-    '    - Xml Docs: 82.14%
+    '   Total Lines: 91
+    '    Code Lines: 45 (49.45%)
+    ' Comment Lines: 30 (32.97%)
+    '    - Xml Docs: 86.67%
     ' 
-    '   Blank Lines: 16 (17.98%)
-    '     File Size: 2.52 KB
+    '   Blank Lines: 16 (17.58%)
+    '     File Size: 2.55 KB
 
 
     ' Class Tree

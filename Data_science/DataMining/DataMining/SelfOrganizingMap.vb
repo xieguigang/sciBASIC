@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1e57e711bdabaac818f6e8f4b4288c2f, Data_science\DataMining\DataMining\SelfOrganizingMap.vb"
+﻿#Region "Microsoft.VisualBasic::419c1aa8b9d0e1de108f4527acb5db17, Data_science\DataMining\DataMining\SelfOrganizingMap.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 66.67%
     ' 
     '   Blank Lines: 29 (19.21%)
-    '     File Size: 5.30 KB
+    '     File Size: 5.33 KB
 
 
     ' Class SelfOrganizingMap
@@ -208,4 +208,3 @@ Public Class SelfOrganizingMap
         Return class_id
     End Function
 End Class
-

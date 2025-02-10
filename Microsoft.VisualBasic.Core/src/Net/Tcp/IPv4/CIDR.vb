@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0fb66cac8915d07e569afe866fcfb799, Microsoft.VisualBasic.Core\src\Net\Tcp\IPv4\CIDR.vb"
+﻿#Region "Microsoft.VisualBasic::fc873e0d20482d6360fd49f757079c54, Microsoft.VisualBasic.Core\src\Net\Tcp\IPv4\CIDR.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 422
-    '    Code Lines: 245 (58.06%)
-    ' Comment Lines: 80 (18.96%)
-    '    - Xml Docs: 86.25%
+    '   Total Lines: 453
+    '    Code Lines: 263 (58.06%)
+    ' Comment Lines: 89 (19.65%)
+    '    - Xml Docs: 82.02%
     ' 
-    '   Blank Lines: 97 (22.99%)
-    '     File Size: 14.61 KB
+    '   Blank Lines: 101 (22.30%)
+    '     File Size: 15.88 KB
 
 
     '     Class IPv4
@@ -51,8 +51,8 @@
     '         Constructor: (+1 Overloads) Sub New
     ' 
     '         Function: contains, Contains, GetAvailableIPs, GetBinary, GetBroadcastAddress
-    '                   GetCIDR, GetHostAddressRange, GetNumberOfHosts, GetWildcardMask, invalidIPAddress
-    '                   invalidNetMask, NumericIpToSymbolic, NumericNetmaskToSymbolic, ToString
+    '                   GetCIDR, GetHostAddressRange, GetNumberOfHosts, GetWildcardMask, HostToNetworkOrder
+    '                   invalidIPAddress, invalidNetMask, (+2 Overloads) NumericIpToSymbolic, NumericNetmaskToSymbolic, ToString
     ' 
     '         Sub: checkNetMask, IPNumeric, NetMaskNumeric
     ' 

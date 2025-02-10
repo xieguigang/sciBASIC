@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2c6ad112fd5a306847e7dcca6c358c96, Microsoft.VisualBasic.Core\src\ComponentModel\Algorithm\BinaryTree\AVLTree\AVLTree.vb"
+﻿#Region "Microsoft.VisualBasic::7f4deb46690546114844280b8425a355, Microsoft.VisualBasic.Core\src\ComponentModel\Algorithm\BinaryTree\AVLTree\AVLTree.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 77.55%
     ' 
     '   Blank Lines: 32 (15.31%)
-    '     File Size: 8.25 KB
+    '     File Size: 8.14 KB
 
 
     '     Class AVLTree

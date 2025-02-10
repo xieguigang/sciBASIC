@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2b722e0129563a79efa5b00a6daed107, Data_science\NLP\LDA\LdaGibbsSampler.vb"
+﻿#Region "Microsoft.VisualBasic::3fd2267064f79504ca8ad25d0fa583a1, Data_science\NLP\LDA\LdaGibbsSampler.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 389
-    '    Code Lines: 168 (43.19%)
-    ' Comment Lines: 168 (43.19%)
+    '   Total Lines: 394
+    '    Code Lines: 173 (43.91%)
+    ' Comment Lines: 168 (42.64%)
     '    - Xml Docs: 79.76%
     ' 
-    '   Blank Lines: 53 (13.62%)
-    '     File Size: 14.94 KB
+    '   Blank Lines: 53 (13.45%)
+    '     File Size: 15.20 KB
 
 
     '     Class LdaGibbsSampler

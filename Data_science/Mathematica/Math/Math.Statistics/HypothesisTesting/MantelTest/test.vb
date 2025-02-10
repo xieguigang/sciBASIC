@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6519615a782b8667f28c5eeda7f37d69, Data_science\Mathematica\Math\Math.Statistics\HypothesisTesting\MantelTest\test.vb"
+﻿#Region "Microsoft.VisualBasic::6906b24a8fcdc3d7af7a35653b844a4f, Data_science\Mathematica\Math\Math.Statistics\HypothesisTesting\MantelTest\test.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 49.21%
     ' 
     '   Blank Lines: 42 (17.00%)
-    '     File Size: 8.89 KB
+    '     File Size: 8.88 KB
 
 
     '     Module statistical_test

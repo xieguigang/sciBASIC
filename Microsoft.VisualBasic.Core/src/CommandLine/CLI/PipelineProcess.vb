@@ -1,55 +1,57 @@
-﻿#Region "Microsoft.VisualBasic::5b605ea37e6dcf9d5dd67bd510232f56, Microsoft.VisualBasic.Core\src\CommandLine\CLI\PipelineProcess.vb"
+﻿#Region "Microsoft.VisualBasic::8c7dd99fb4173c88d092f771ff9d4536, Microsoft.VisualBasic.Core\src\CommandLine\CLI\PipelineProcess.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 338
-'    Code Lines: 182 (53.85%)
-' Comment Lines: 107 (31.66%)
-'    - Xml Docs: 86.92%
-' 
-'   Blank Lines: 49 (14.50%)
-'     File Size: 13.08 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Module PipelineProcess
-' 
-'         Function: (+2 Overloads) [Call], CallDotNetCorePipeline, CheckProcessStreamOpen, CreatePipeline, (+2 Overloads) ExecSub
-'                   FindProc, (+2 Overloads) GetProc, handleRunStream
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 347
+    '    Code Lines: 186 (53.60%)
+    ' Comment Lines: 110 (31.70%)
+    '    - Xml Docs: 84.55%
+    ' 
+    '   Blank Lines: 51 (14.70%)
+    '     File Size: 13.49 KB
+
+
+    '     Module PipelineProcess
+    ' 
+    '         Function: (+2 Overloads) [Call], CallDotNetCorePipeline, CheckProcessStreamOpen, CreatePipeline, (+2 Overloads) ExecSub
+    '                   FindProc, (+2 Overloads) GetProc, handleRunStream
+    ' 
+    '         Sub: ReadLines
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

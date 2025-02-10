@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0cb7b803e0e0a83339859b9c035a7704, Data_science\Visualization\Plots\Fractions\PieChart.vb"
+﻿#Region "Microsoft.VisualBasic::42f9a880c8872ae884f0c5504f24b226, Data_science\Visualization\Plots\Fractions\PieChart.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 377
-    '    Code Lines: 266 (70.56%)
-    ' Comment Lines: 70 (18.57%)
+    '   Total Lines: 378
+    '    Code Lines: 267 (70.63%)
+    ' Comment Lines: 70 (18.52%)
     '    - Xml Docs: 80.00%
     ' 
-    '   Blank Lines: 41 (10.88%)
-    '     File Size: 16.54 KB
+    '   Blank Lines: 41 (10.85%)
+    '     File Size: 16.62 KB
 
 
     '     Module PieChart

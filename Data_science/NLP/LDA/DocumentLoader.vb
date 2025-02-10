@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7b751831a5bdb8476a121ec3f29cb6e4, Data_science\NLP\LDA\DocumentLoader.vb"
+﻿#Region "Microsoft.VisualBasic::d42f08c5d73d08941d2a24bd29322752, Data_science\NLP\LDA\DocumentLoader.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 20 (23.81%)
-    '     File Size: 2.75 KB
+    '     File Size: 2.79 KB
 
 
     '     Module DocumentLoader

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f5dbd5b403831bc5f3dc9538bb77c21b, Data_science\Visualization\Plots-statistics\Heatmap\CorrelationTriangle.vb"
+﻿#Region "Microsoft.VisualBasic::96f6ab352b9ea3671ee1bfd81c4c18d1, Data_science\Visualization\Plots-statistics\HeatMap\CorrelationTriangle.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 215
-    '    Code Lines: 174 (80.93%)
-    ' Comment Lines: 17 (7.91%)
+    '   Total Lines: 216
+    '    Code Lines: 175 (81.02%)
+    ' Comment Lines: 17 (7.87%)
     '    - Xml Docs: 35.29%
     ' 
-    '   Blank Lines: 24 (11.16%)
-    '     File Size: 10.69 KB
+    '   Blank Lines: 24 (11.11%)
+    '     File Size: 10.77 KB
 
 
     '     Class CorrelationTriangle

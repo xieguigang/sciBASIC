@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::802e18b3a0207e31c900371e274252e9, Microsoft.VisualBasic.Core\src\ComponentModel\DataStructures\Tree\BinaryTree\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::bd7193e5c81cae9d7075761a459e8275, Microsoft.VisualBasic.Core\src\ComponentModel\DataStructures\Tree\BinaryTree\Extensions.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 90.00%
     ' 
     '   Blank Lines: 10 (13.16%)
-    '     File Size: 2.70 KB
+    '     File Size: 2.69 KB
 
 
     '     Module Extensions

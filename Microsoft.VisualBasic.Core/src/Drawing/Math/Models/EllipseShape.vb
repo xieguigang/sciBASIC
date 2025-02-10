@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::79b4804aa82cd9789b2957440c35bb0b, Microsoft.VisualBasic.Core\src\Drawing\Math\Models\EllipseShape.vb"
+﻿#Region "Microsoft.VisualBasic::b630c74357d21b3825fc00d3de3ba967, Microsoft.VisualBasic.Core\src\Drawing\Math\Models\EllipseShape.vb"
 
     ' Author:
     ' 
@@ -34,19 +34,19 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 38
-    '    Code Lines: 27 (71.05%)
-    ' Comment Lines: 3 (7.89%)
+    '   Total Lines: 42
+    '    Code Lines: 30 (71.43%)
+    ' Comment Lines: 3 (7.14%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 8 (21.05%)
-    '     File Size: 1.21 KB
+    '   Blank Lines: 9 (21.43%)
+    '     File Size: 1.36 KB
 
 
     '     Class EllipseShape
     ' 
     '         Constructor: (+1 Overloads) Sub New
-    '         Function: EllipseDrawing, GetPolygonPath
+    '         Function: EllipseDrawing, GetPolygonPath, ToString
     ' 
     ' 
     ' /********************************************************************************/

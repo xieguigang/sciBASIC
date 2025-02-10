@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c29bbafc272b780e7ab5c97ad626854c, Data\BinaryData\HDSPack\Metadata\AttributeMetadata.vb"
+﻿#Region "Microsoft.VisualBasic::331c6220daf9a325307903a141e32a8a, Data\BinaryData\HDSPack\Metadata\AttributeMetadata.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 25
-    '    Code Lines: 20 (80.00%)
-    ' Comment Lines: 0 (0.00%)
-    '    - Xml Docs: 0.00%
+    '   Total Lines: 32
+    '    Code Lines: 20 (62.50%)
+    ' Comment Lines: 7 (21.88%)
+    '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 5 (20.00%)
-    '     File Size: 705 B
+    '   Blank Lines: 5 (15.62%)
+    '     File Size: 875 B
 
 
     ' Class AttributeMetadata

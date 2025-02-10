@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2f5fecbeddb32e3decfca8d52ba3d500, gr\Drawing-net4.8\ImageExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::8c89ee0e0f5c030b6c53313d8ae432c6, gr\Drawing-net4.8\ImageExtensions.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 43
-    '    Code Lines: 27 (62.79%)
-    ' Comment Lines: 11 (25.58%)
+    '   Total Lines: 40
+    '    Code Lines: 24 (60.00%)
+    ' Comment Lines: 11 (27.50%)
     '    - Xml Docs: 81.82%
     ' 
-    '   Blank Lines: 5 (11.63%)
-    '     File Size: 1.89 KB
+    '   Blank Lines: 5 (12.50%)
+    '     File Size: 1.78 KB
 
 
     ' Module ImageExtensions

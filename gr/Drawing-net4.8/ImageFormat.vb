@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f910f9b3d4ac9af7ae07659db5853085, gr\Drawing-net4.8\ImageFormat.vb"
+﻿#Region "Microsoft.VisualBasic::7ee0cfac337bb4acff3fca6991926d2f, gr\Drawing-net4.8\ImageFormat.vb"
 
     ' Author:
     ' 
@@ -34,20 +34,20 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 123
-    '    Code Lines: 85 (69.11%)
-    ' Comment Lines: 26 (21.14%)
+    '   Total Lines: 138
+    '    Code Lines: 97 (70.29%)
+    ' Comment Lines: 26 (18.84%)
     '    - Xml Docs: 96.15%
     ' 
-    '   Blank Lines: 12 (9.76%)
-    '     File Size: 4.46 KB
+    '   Blank Lines: 15 (10.87%)
+    '     File Size: 4.93 KB
 
 
     ' Module ImageFormatExtensions
     ' 
     '     Properties: Png
     ' 
-    '     Function: GetFormat, GetSaveImageFormat, SaveAs
+    '     Function: GetFormat, GetSaveImageFormat, (+2 Overloads) SaveAs
     ' 
     ' /********************************************************************************/
 

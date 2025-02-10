@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f3b45212a8c2337a550473f582945d20, Data_science\Mathematica\Math\Math.Statistics\HypothesisTesting\MantelTest\corr.vb"
+﻿#Region "Microsoft.VisualBasic::f39527e8cdcd59e1a16565fe71e72b13, Data_science\Mathematica\Math\Math.Statistics\HypothesisTesting\MantelTest\corr.vb"
 
     ' Author:
     ' 
@@ -34,18 +34,22 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 41
-    '    Code Lines: 33 (80.49%)
-    ' Comment Lines: 0 (0.00%)
-    '    - Xml Docs: 0.00%
+    '   Total Lines: 100
+    '    Code Lines: 37 (37.00%)
+    ' Comment Lines: 53 (53.00%)
+    '    - Xml Docs: 94.34%
     ' 
-    '   Blank Lines: 8 (19.51%)
-    '     File Size: 1.61 KB
+    '   Blank Lines: 10 (10.00%)
+    '     File Size: 5.96 KB
 
 
     '     Module corr
     ' 
-    '         Function: GetCorrelations, Pearson
+    ' 
+    '         Delegate Function
+    ' 
+    '             Function: evalInternal, GetCorrelations, Pearson
+    ' 
     ' 
     ' 
     ' /********************************************************************************/

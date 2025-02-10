@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3dd1841a0382106fceb96b1dd0cddac6, Data_science\Visualization\Visualization\BinaryTree\EntityNode.vb"
+﻿#Region "Microsoft.VisualBasic::9c8d0a4a8380c9de0dd35a75d9a8b119, Data_science\Visualization\Visualization\BinaryTree\EntityNode.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 39
-    '    Code Lines: 31 (79.49%)
+    '   Total Lines: 37
+    '    Code Lines: 29 (78.38%)
     ' Comment Lines: 0 (0.00%)
     '    - Xml Docs: 0.00%
     ' 
-    '   Blank Lines: 8 (20.51%)
-    '     File Size: 1.16 KB
+    '   Blank Lines: 8 (21.62%)
+    '     File Size: 1.11 KB
 
 
     '     Class EntityNode

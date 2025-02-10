@@ -1,4 +1,65 @@
-﻿Imports System.Threading
+﻿#Region "Microsoft.VisualBasic::f94c4bf723c0ef95cd828a69457da555, Data_science\NLP\Stemmer.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 663
+    '    Code Lines: 457 (68.93%)
+    ' Comment Lines: 167 (25.19%)
+    '    - Xml Docs: 44.31%
+    ' 
+    '   Blank Lines: 39 (5.88%)
+    '     File Size: 21.51 KB
+
+
+    ' Class Stemmer
+    ' 
+    '     Properties: ResultBuffer, ResultLength
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    ' 
+    '     Function: cons, cvc, doublec, ends, m
+    '               ToString, vowelinstem
+    ' 
+    '     Sub: (+2 Overloads) add, r, setto, stem, step1
+    '          step2, step3, step4, step5, step6
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+Imports System.Threading
 Imports std = System.Math
 
 ' 
@@ -661,3 +722,4 @@ Public Class Stemmer
         i = 0
     End Sub
 End Class
+

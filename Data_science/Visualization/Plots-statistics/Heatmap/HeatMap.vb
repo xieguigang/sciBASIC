@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cb65ad357f236df1729bf0a50bd5c042, Data_science\Visualization\Plots-statistics\Heatmap\Heatmap.vb"
+﻿#Region "Microsoft.VisualBasic::2ec64ef5f2f9b127ed2308cca420f9e9, Data_science\Visualization\Plots-statistics\HeatMap\HeatMap.vb"
 
     ' Author:
     ' 
@@ -34,16 +34,16 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 191
-    '    Code Lines: 122 (63.87%)
-    ' Comment Lines: 51 (26.70%)
-    '    - Xml Docs: 66.67%
+    '   Total Lines: 129
+    '    Code Lines: 78 (60.47%)
+    ' Comment Lines: 44 (34.11%)
+    '    - Xml Docs: 77.27%
     ' 
-    '   Blank Lines: 18 (9.42%)
-    '     File Size: 10.56 KB
+    '   Blank Lines: 7 (5.43%)
+    '     File Size: 7.21 KB
 
 
-    '     Module Heatmap
+    '     Module HeatMap
     ' 
     '         Function: Plot
     ' 

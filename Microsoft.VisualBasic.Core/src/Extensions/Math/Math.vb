@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e1c49201d26d49cbb2573e0848fd16f9, Microsoft.VisualBasic.Core\src\Extensions\Math\Math.vb"
+﻿#Region "Microsoft.VisualBasic::fc5d93f3bb2b6e5ca310c6848426ee88, Microsoft.VisualBasic.Core\src\Extensions\Math\Math.vb"
 
     ' Author:
     ' 
@@ -34,18 +34,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 834
-    '    Code Lines: 471 (56.47%)
-    ' Comment Lines: 269 (32.25%)
+    '   Total Lines: 841
+    '    Code Lines: 478 (56.84%)
+    ' Comment Lines: 269 (31.99%)
     '    - Xml Docs: 87.36%
     ' 
-    '   Blank Lines: 94 (11.27%)
-    '     File Size: 28.94 KB
+    '   Blank Lines: 94 (11.18%)
+    '     File Size: 29.21 KB
 
 
     '     Module VBMath
     ' 
-    '         Function: Clamp, Clip, ClipUpper, Covariance, CumSum
+    '         Function: (+2 Overloads) Clamp, Clip, ClipUpper, Covariance, CumSum
     '                   EuclidGcd, Factorial, FactorialSequence, Hypot, (+2 Overloads) IsPowerOf2
     '                   LeastCommonMultiple, (+2 Overloads) Log2, LogN, (+2 Overloads) Max, Permut
     '                   PoissonPDF, Pow2, (+3 Overloads) ProductALL, (+3 Overloads) RangesAt, RMS

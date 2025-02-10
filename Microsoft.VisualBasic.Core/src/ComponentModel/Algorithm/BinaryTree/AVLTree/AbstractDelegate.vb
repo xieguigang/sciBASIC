@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5e05928f728e7b6abbf93b2478140100, Microsoft.VisualBasic.Core\src\ComponentModel\Algorithm\BinaryTree\AVLTree\AbstractDelegate.vb"
+﻿#Region "Microsoft.VisualBasic::456722e6dfc9b2eb38a5f33de95e4b50, Microsoft.VisualBasic.Core\src\ComponentModel\Algorithm\BinaryTree\AVLTree\AbstractDelegate.vb"
 
     ' Author:
     ' 
@@ -34,21 +34,26 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 25
-    '    Code Lines: 14 (56.00%)
-    ' Comment Lines: 6 (24.00%)
-    '    - Xml Docs: 50.00%
+    '   Total Lines: 58
+    '    Code Lines: 37 (63.79%)
+    ' Comment Lines: 7 (12.07%)
+    '    - Xml Docs: 85.71%
     ' 
-    '   Blank Lines: 5 (20.00%)
-    '     File Size: 776 B
+    '   Blank Lines: 14 (24.14%)
+    '     File Size: 2.10 KB
 
 
     '     Delegate Sub
     ' 
     ' 
+    '     Class TreeInsertCallback
+    ' 
+    ' 
+    ' 
     '     Class DelegateTreeInsertCallback
     ' 
-    ' 
+    '         Constructor: (+2 Overloads) Sub New
+    '         Sub: InsertDuplicated, InsertLeft, InsertRight
     ' 
     ' 
     ' 

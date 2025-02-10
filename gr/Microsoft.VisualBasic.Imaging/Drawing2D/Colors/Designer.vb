@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::80cdabefea3d700f454f4c9a149c37b4, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Colors\Designer.vb"
+﻿#Region "Microsoft.VisualBasic::7a8c6a83bc5ccbc5176d010888ef5a1f, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Colors\Designer.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 621
-    '    Code Lines: 316 (50.89%)
-    ' Comment Lines: 240 (38.65%)
-    '    - Xml Docs: 87.92%
+    '   Total Lines: 623
+    '    Code Lines: 316 (50.72%)
+    ' Comment Lines: 242 (38.84%)
+    '    - Xml Docs: 88.43%
     ' 
-    '   Blank Lines: 65 (10.47%)
-    '     File Size: 34.04 KB
+    '   Blank Lines: 65 (10.43%)
+    '     File Size: 34.18 KB
 
 
     '     Module Designer

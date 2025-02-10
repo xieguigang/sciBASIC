@@ -1,57 +1,57 @@
-﻿#Region "Microsoft.VisualBasic::e58e08771c0d93646acb94cc2e5e2e9e, Data_science\Mathematica\Math\Math.Statistics\HypothesisTesting\MantelTest\stats.vb"
+﻿#Region "Microsoft.VisualBasic::dbd2ba97df7db0029d665c0b1cae5b05, Data_science\Mathematica\Math\Math.Statistics\HypothesisTesting\MantelTest\stats.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 600
-'    Code Lines: 389 (64.83%)
-' Comment Lines: 115 (19.17%)
-'    - Xml Docs: 79.13%
-' 
-'   Blank Lines: 96 (16.00%)
-'     File Size: 19.92 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Module stats
-' 
-'         Function: ect, moy, pmt_perm, pmt_perm_exact, smt_perm
-'                   smt_perm_exact, sompx, sompxy, somx, somx2
-' 
-'         Sub: norm, resid, shake
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 600
+    '    Code Lines: 389 (64.83%)
+    ' Comment Lines: 115 (19.17%)
+    '    - Xml Docs: 79.13%
+    ' 
+    '   Blank Lines: 96 (16.00%)
+    '     File Size: 19.87 KB
+
+
+    '     Module stats
+    ' 
+    '         Function: ect, moy, pmt_perm, pmt_perm_exact, smt_perm
+    '                   smt_perm_exact, sompx, sompxy, somx, somx2
+    ' 
+    '         Sub: norm, resid, shake
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

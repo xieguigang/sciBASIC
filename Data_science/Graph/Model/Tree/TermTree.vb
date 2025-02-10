@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e4d9e1d486b553d182ec4c32111305c5, Data_science\Graph\Model\Tree\TermTree.vb"
+﻿#Region "Microsoft.VisualBasic::8093aee2e02a419e066d78b257ba3c9a, Data_science\Graph\Model\Tree\TermTree.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 80
-    '    Code Lines: 56 (70.00%)
-    ' Comment Lines: 11 (13.75%)
+    '   Total Lines: 79
+    '    Code Lines: 55 (69.62%)
+    ' Comment Lines: 11 (13.92%)
     '    - Xml Docs: 72.73%
     ' 
-    '   Blank Lines: 13 (16.25%)
-    '     File Size: 2.43 KB
+    '   Blank Lines: 13 (16.46%)
+    '     File Size: 2.38 KB
 
 
     ' Class TermTree

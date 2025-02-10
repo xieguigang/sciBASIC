@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::062aa748f15159a573a7ffe587f1ed98, gr\Microsoft.VisualBasic.Imaging\SVG\Geometry\GeometryElement.vb"
+﻿#Region "Microsoft.VisualBasic::d8755ae5e432ebf72d3a310c800419fb, gr\Microsoft.VisualBasic.Imaging\SVG\Geometry\GeometryElement.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 128
-    '    Code Lines: 93 (72.66%)
-    ' Comment Lines: 14 (10.94%)
+    '   Total Lines: 134
+    '    Code Lines: 99 (73.88%)
+    ' Comment Lines: 14 (10.45%)
     '    - Xml Docs: 42.86%
     ' 
-    '   Blank Lines: 21 (16.41%)
-    '     File Size: 4.75 KB
+    '   Blank Lines: 21 (15.67%)
+    '     File Size: 5.00 KB
 
 
     '     Class GeometryElement

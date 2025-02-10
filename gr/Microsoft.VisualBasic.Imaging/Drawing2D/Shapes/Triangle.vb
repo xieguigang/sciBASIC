@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::376ca2acfde7da317e468fb9a7b23c0c, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Shapes\Triangle.vb"
+﻿#Region "Microsoft.VisualBasic::72242f5ac4e688b751e1f46be43225f2, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Shapes\Triangle.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 82
-    '    Code Lines: 55 (67.07%)
-    ' Comment Lines: 14 (17.07%)
-    '    - Xml Docs: 92.86%
+    '   Total Lines: 105
+    '    Code Lines: 64 (60.95%)
+    ' Comment Lines: 24 (22.86%)
+    '    - Xml Docs: 83.33%
     ' 
-    '   Blank Lines: 13 (15.85%)
-    '     File Size: 2.94 KB
+    '   Blank Lines: 17 (16.19%)
+    '     File Size: 3.72 KB
 
 
     '     Class Triangle
@@ -48,7 +48,7 @@
     '         Properties: Angle, Color, Size, Vertex1, Vertex2
     '                     Vertex3
     ' 
-    '         Constructor: (+1 Overloads) Sub New
+    '         Constructor: (+3 Overloads) Sub New
     ' 
     '         Function: DrawAsRightTriangle
     ' 

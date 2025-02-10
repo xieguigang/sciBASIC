@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4fbcdb606f58aee6aec4651e51bdab8b, Data_science\DataMining\DataMining\Clustering\KMeans\EvaluationScore.vb"
+﻿#Region "Microsoft.VisualBasic::058e9e74e8ae59b90068b168080b3735, Data_science\DataMining\DataMining\Clustering\KMeans\EvaluationScore.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 87.50%
     ' 
     '   Blank Lines: 13 (14.29%)
-    '     File Size: 4.26 KB
+    '     File Size: 4.29 KB
 
 
     '     Class EvaluationScore

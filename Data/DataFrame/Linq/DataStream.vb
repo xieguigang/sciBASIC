@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c380ce71f48194273e4e823ed101ca73, Data\DataFrame\Linq\DataStream.vb"
+﻿#Region "Microsoft.VisualBasic::91fc8868cc38a1348b63ca68f5d95bf3, Data\DataFrame\Linq\DataStream.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 370
-    '    Code Lines: 218 (58.92%)
-    ' Comment Lines: 92 (24.86%)
+    '   Total Lines: 391
+    '    Code Lines: 236 (60.36%)
+    ' Comment Lines: 92 (23.53%)
     '    - Xml Docs: 82.61%
     ' 
-    '   Blank Lines: 60 (16.22%)
-    '     File Size: 14.99 KB
+    '   Blank Lines: 63 (16.11%)
+    '     File Size: 15.57 KB
 
 
     '     Delegate Function

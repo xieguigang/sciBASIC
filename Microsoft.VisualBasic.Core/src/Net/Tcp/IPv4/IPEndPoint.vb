@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c3080c6bf92edf11fceb293b9ff45867, Microsoft.VisualBasic.Core\src\Net\Tcp\IPv4\IPEndPoint.vb"
+﻿#Region "Microsoft.VisualBasic::dc60f41ad7ac81ff3c8ea4bec32eee06, Microsoft.VisualBasic.Core\src\Net\Tcp\IPv4\IPEndPoint.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 148
-    '    Code Lines: 78 (52.70%)
-    ' Comment Lines: 46 (31.08%)
-    '    - Xml Docs: 95.65%
+    '   Total Lines: 145
+    '    Code Lines: 78 (53.79%)
+    ' Comment Lines: 43 (29.66%)
+    '    - Xml Docs: 95.35%
     ' 
-    '   Blank Lines: 24 (16.22%)
-    '     File Size: 5.34 KB
+    '   Blank Lines: 24 (16.55%)
+    '     File Size: 5.22 KB
 
 
     '     Class IPEndPoint

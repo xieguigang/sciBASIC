@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::45f4a1065f4fcd7f9ae6416b5ac47327, Data_science\Graph\Utils.vb"
+﻿#Region "Microsoft.VisualBasic::95211aa2074cde27a1a3d2b9b3289c55, Data_science\Graph\Utils.vb"
 
     ' Author:
     ' 
@@ -34,18 +34,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 85
-    '    Code Lines: 55 (64.71%)
-    ' Comment Lines: 20 (23.53%)
+    '   Total Lines: 153
+    '    Code Lines: 113 (73.86%)
+    ' Comment Lines: 20 (13.07%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 10 (11.76%)
-    '     File Size: 2.88 KB
+    '   Blank Lines: 20 (13.07%)
+    '     File Size: 5.45 KB
 
 
     ' Module Utils
     ' 
-    '     Function: Build, Summary, SummaryMe
+    '     Function: (+2 Overloads) Build, EscapeLabel, Summary, SummaryMe, (+2 Overloads) Translate
     ' 
     ' /********************************************************************************/
 

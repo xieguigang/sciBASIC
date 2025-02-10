@@ -1,68 +1,67 @@
-﻿#Region "Microsoft.VisualBasic::b827fb082332f43a1e333d9014cf4512, gr\Microsoft.VisualBasic.Imaging\PostScript\GraphicsPS.vb"
+﻿#Region "Microsoft.VisualBasic::e36980e56afc3a1508913f687405548d, gr\Microsoft.VisualBasic.Imaging\PostScript\GraphicsPS.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 503
-'    Code Lines: 380 (75.55%)
-' Comment Lines: 7 (1.39%)
-'    - Xml Docs: 0.00%
-' 
-'   Blank Lines: 116 (23.06%)
-'     File Size: 20.49 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Class GraphicsPS
-' 
-'         Properties: Driver, RenderingOrigin, Size, TextContrast
-' 
-'         Constructor: (+1 Overloads) Sub New
-' 
-'         Function: color, font, GetContextInfo, GetStringPath, (+4 Overloads) IsVisible
-'                   linewidth, (+3 Overloads) MeasureString, note
-' 
-'         Sub: AddMetafileComment, ClearCanvas, (+4 Overloads) DrawArc, (+3 Overloads) DrawBezier, (+2 Overloads) DrawBeziers
-'              DrawCircle, (+2 Overloads) DrawClosedCurve, (+7 Overloads) DrawCurve, (+4 Overloads) DrawEllipse, (+10 Overloads) DrawImage
-'              (+4 Overloads) DrawImageUnscaled, DrawImageUnscaledAndClipped, (+4 Overloads) DrawLine, (+2 Overloads) DrawLines, DrawPath
-'              (+4 Overloads) DrawPie, (+2 Overloads) DrawPolygon, (+4 Overloads) DrawRectangle, (+2 Overloads) DrawRectangles, (+4 Overloads) DrawString
-'              ExcludeClip, (+2 Overloads) FillClosedCurve, (+4 Overloads) FillEllipse, FillPath, (+3 Overloads) FillPie
-'              (+2 Overloads) FillPolygon, (+4 Overloads) FillRectangle, Flush, (+2 Overloads) IntersectClip, ReleaseHandle
-'              ResetClip, ResetTransform, RotateTransform, ScaleTransform, (+2 Overloads) SetClip
-'              (+2 Overloads) TranslateClip, TranslateTransform
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 507
+    '    Code Lines: 385 (75.94%)
+    ' Comment Lines: 10 (1.97%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 112 (22.09%)
+    '     File Size: 20.29 KB
+
+
+    '     Class GraphicsPS
+    ' 
+    '         Properties: Driver, RenderingOrigin, Size, TextContrast
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
+    '         Function: GetContextInfo, GetStringPath, (+4 Overloads) IsVisible, (+3 Overloads) MeasureString
+    ' 
+    '         Sub: AddMetafileComment, ClearCanvas, (+4 Overloads) DrawArc, (+3 Overloads) DrawBezier, (+2 Overloads) DrawBeziers
+    '              DrawCircle, (+2 Overloads) DrawClosedCurve, (+7 Overloads) DrawCurve, (+4 Overloads) DrawEllipse, (+10 Overloads) DrawImage
+    '              (+4 Overloads) DrawImageUnscaled, DrawImageUnscaledAndClipped, (+4 Overloads) DrawLine, (+2 Overloads) DrawLines, DrawPath
+    '              (+4 Overloads) DrawPie, (+2 Overloads) DrawPolygon, (+4 Overloads) DrawRectangle, (+2 Overloads) DrawRectangles, (+4 Overloads) DrawString
+    '              ExcludeClip, (+2 Overloads) FillClosedCurve, (+4 Overloads) FillEllipse, FillPath, (+3 Overloads) FillPie
+    '              (+2 Overloads) FillPolygon, (+4 Overloads) FillRectangle, Flush, (+2 Overloads) IntersectClip, ReleaseHandle
+    '              ResetClip, ResetTransform, RotateTransform, ScaleTransform, (+2 Overloads) SetClip
+    '              (+2 Overloads) TranslateClip, TranslateTransform
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

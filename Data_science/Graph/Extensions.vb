@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::eb1f8a65860720fde6973039e33d7f63, Data_science\Graph\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::b93346568e0f6279a4d659100f578485, Data_science\Graph\Extensions.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 132
-    '    Code Lines: 76 (57.58%)
-    ' Comment Lines: 41 (31.06%)
+    '   Total Lines: 130
+    '    Code Lines: 74 (56.92%)
+    ' Comment Lines: 41 (31.54%)
     '    - Xml Docs: 95.12%
     ' 
-    '   Blank Lines: 15 (11.36%)
-    '     File Size: 4.52 KB
+    '   Blank Lines: 15 (11.54%)
+    '     File Size: 4.53 KB
 
 
     ' Module Extensions

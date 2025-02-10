@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::690bea94513c38280b44221150f113d7, Microsoft.VisualBasic.Core\src\Drawing\GDI+\Driver\DeviceInterop.vb"
+﻿#Region "Microsoft.VisualBasic::4b6d3c707d1c144be31f823785fa4b4b, Microsoft.VisualBasic.Core\src\Drawing\GDI+\Driver\DeviceInterop.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 36
-    '    Code Lines: 12 (33.33%)
-    ' Comment Lines: 17 (47.22%)
+    '   Total Lines: 32
+    '    Code Lines: 9 (28.12%)
+    ' Comment Lines: 17 (53.12%)
     '    - Xml Docs: 88.24%
     ' 
-    '   Blank Lines: 7 (19.44%)
-    '     File Size: 1.28 KB
+    '   Blank Lines: 6 (18.75%)
+    '     File Size: 1.30 KB
 
 
     '     Class DeviceInterop

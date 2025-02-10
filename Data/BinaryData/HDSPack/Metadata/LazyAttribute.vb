@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0a9daa1c5c3c3bf08fe4aad241a0e98d, Data\BinaryData\HDSPack\Metadata\LazyAttribute.vb"
+﻿#Region "Microsoft.VisualBasic::76602baabe6535c855827ff626baa7c1, Data\BinaryData\HDSPack\Metadata\LazyAttribute.vb"
 
     ' Author:
     ' 
@@ -34,20 +34,21 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 98
-    '    Code Lines: 79 (80.61%)
-    ' Comment Lines: 5 (5.10%)
+    '   Total Lines: 112
+    '    Code Lines: 86 (76.79%)
+    ' Comment Lines: 9 (8.04%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 14 (14.29%)
-    '     File Size: 4.12 KB
+    '   Blank Lines: 17 (15.18%)
+    '     File Size: 4.56 KB
 
 
     ' Class LazyAttribute
     ' 
     '     Properties: attributes
     ' 
-    '     Function: GetBuffer, GetEnumerator, (+2 Overloads) GetValue, IEnumerable_GetEnumerator, ToArray
+    '     Function: BuildDynamicTypeObject, GetBuffer, GetEnumerator, (+2 Overloads) GetValue, IEnumerable_GetEnumerator
+    '               ToArray
     ' 
     '     Sub: Add
     ' 

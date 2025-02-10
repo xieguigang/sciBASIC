@@ -1,4 +1,62 @@
-﻿Imports System.Drawing
+﻿#Region "Microsoft.VisualBasic::c4a41f729c7447031ac52654914f8507, Microsoft.VisualBasic.Core\src\Drawing\Colors\CIELABColor.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 104
+    '    Code Lines: 66 (63.46%)
+    ' Comment Lines: 18 (17.31%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 20 (19.23%)
+    '     File Size: 4.82 KB
+
+
+    '     Class CIELABColor
+    ' 
+    '         Properties: a, b, L
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    '         Function: CalculateDeltaE, CIELABToRGB, Fxyz, FxyzInv, RGBToCIELAB
+    '                   ToString
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+Imports System.Drawing
 Imports System.Runtime.CompilerServices
 Imports std = System.Math
 

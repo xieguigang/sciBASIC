@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8505b62c2f7968157f9d5c85fdc779bd, gr\Microsoft.VisualBasic.Imaging\Drawing2D\HeatMap\RasterScaler.vb"
+﻿#Region "Microsoft.VisualBasic::41145bd6cc4682d1bca16503caa8ae37, gr\Microsoft.VisualBasic.Imaging\Drawing2D\HeatMap\RasterScaler.vb"
 
     ' Author:
     ' 
@@ -34,20 +34,20 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 246
-    '    Code Lines: 158 (64.23%)
-    ' Comment Lines: 51 (20.73%)
+    '   Total Lines: 255
+    '    Code Lines: 165 (64.71%)
+    ' Comment Lines: 51 (20.00%)
     '    - Xml Docs: 64.71%
     ' 
-    '   Blank Lines: 37 (15.04%)
-    '     File Size: 9.08 KB
+    '   Blank Lines: 39 (15.29%)
+    '     File Size: 9.40 KB
 
 
     '     Class RasterScaler
     ' 
     '         Properties: size
     ' 
-    '         Constructor: (+2 Overloads) Sub New
+    '         Constructor: (+3 Overloads) Sub New
     ' 
     '         Function: GetPixel, GetRasterData, GetRasterPixels, (+2 Overloads) Scale, ToRasterVector
     ' 

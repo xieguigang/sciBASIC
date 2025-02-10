@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0c7bf02345689d988d411df4fe3a26b4, Data_science\Mathematica\Math\Math\Distributions\TrIQ.vb"
+﻿#Region "Microsoft.VisualBasic::48d33946b569a5ba00964227e6b1bb4e, Data_science\Mathematica\Math\Math\Distributions\TrIQ.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 91.55%
     ' 
     '   Blank Lines: 18 (12.33%)
-    '     File Size: 5.45 KB
+    '     File Size: 5.48 KB
 
 
     '     Module TrIQ

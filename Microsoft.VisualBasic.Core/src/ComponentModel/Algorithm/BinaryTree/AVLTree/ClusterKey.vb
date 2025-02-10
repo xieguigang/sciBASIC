@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d84808620a0135c669c1b118c3808163, Microsoft.VisualBasic.Core\src\ComponentModel\Algorithm\BinaryTree\AVLTree\ClusterKey.vb"
+﻿#Region "Microsoft.VisualBasic::90c56e8406073e8b2228815ed4b8769d, Microsoft.VisualBasic.Core\src\ComponentModel\Algorithm\BinaryTree\AVLTree\ClusterKey.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 143
-    '    Code Lines: 106 (74.13%)
-    ' Comment Lines: 14 (9.79%)
-    '    - Xml Docs: 92.86%
+    '   Total Lines: 147
+    '    Code Lines: 106 (72.11%)
+    ' Comment Lines: 18 (12.24%)
+    '    - Xml Docs: 94.44%
     ' 
-    '   Blank Lines: 23 (16.08%)
-    '     File Size: 5.15 KB
+    '   Blank Lines: 23 (15.65%)
+    '     File Size: 5.36 KB
 
 
     '     Enum ComparisonDirectionPrefers

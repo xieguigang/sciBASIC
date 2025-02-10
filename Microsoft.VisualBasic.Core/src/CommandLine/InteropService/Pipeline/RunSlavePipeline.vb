@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f71422c8a03c76380218111e6e2db3db, Microsoft.VisualBasic.Core\src\CommandLine\InteropService\Pipeline\RunSlavePipeline.vb"
+﻿#Region "Microsoft.VisualBasic::ca9f66bfc28f0335121026c710b08d08, Microsoft.VisualBasic.Core\src\CommandLine\InteropService\Pipeline\RunSlavePipeline.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 179
-    '    Code Lines: 106 (59.22%)
-    ' Comment Lines: 43 (24.02%)
-    '    - Xml Docs: 83.72%
+    '   Total Lines: 182
+    '    Code Lines: 108 (59.34%)
+    ' Comment Lines: 44 (24.18%)
+    '    - Xml Docs: 81.82%
     ' 
-    '   Blank Lines: 30 (16.76%)
-    '     File Size: 6.69 KB
+    '   Blank Lines: 30 (16.48%)
+    '     File Size: 6.82 KB
 
 
     '     Class RunSlavePipeline

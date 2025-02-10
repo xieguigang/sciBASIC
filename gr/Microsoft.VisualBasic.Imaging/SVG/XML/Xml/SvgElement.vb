@@ -1,64 +1,64 @@
-﻿#Region "Microsoft.VisualBasic::befa4153b85284ff544aea117ba10962, gr\Microsoft.VisualBasic.Imaging\SVG\XML\Xml\SvgElement.vb"
+﻿#Region "Microsoft.VisualBasic::ecdf2470c1e0364ff3f3e0478556c5f4, gr\Microsoft.VisualBasic.Imaging\SVG\XML\Xml\SvgElement.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 318
-'    Code Lines: 239 (75.16%)
-' Comment Lines: 37 (11.64%)
-'    - Xml Docs: 97.30%
-' 
-'   Blank Lines: 42 (13.21%)
-'     File Size: 11.81 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Class SvgElement
-' 
-'         Properties: Fill, FillOpacity, Id, Stroke, StrokeDashArray
-'                     StrokeLineCap, StrokeOpacity, StrokeWidth, Style, TabIndex
-'                     Tag, Transform, Visible
-' 
-'         Constructor: (+1 Overloads) Sub New
-' 
-'         Function: AddClass, (+2 Overloads) Create, GetClasses, GetStyle, GetSvgElement
-'                   HasClass, ParseClassAttribute, ParseStyleAttribute
-' 
-'         Sub: RemoveClass, SetAttributeData, SetClassAttribute, SetStyle, SetStyleAttribute
-'              ToggleClass
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 373
+    '    Code Lines: 250 (67.02%)
+    ' Comment Lines: 79 (21.18%)
+    '    - Xml Docs: 88.61%
+    ' 
+    '   Blank Lines: 44 (11.80%)
+    '     File Size: 14.84 KB
+
+
+    '     Class SvgElement
+    ' 
+    '         Properties: AriaLabel, Fill, FillOpacity, Id, Stroke
+    '                     StrokeDashArray, StrokeLineCap, StrokeOpacity, StrokeWidth, Style
+    '                     TabIndex, Tag, Transform, Visible
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
+    '         Function: AddClass, (+2 Overloads) Create, GetClasses, GetStyle, GetSvgElement
+    '                   HasClass, ParseClassAttribute, ParseStyleAttribute, ToString
+    ' 
+    '         Sub: RemoveClass, SetAttributeData, SetClassAttribute, SetStyle, SetStyleAttribute
+    '              ToggleClass
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

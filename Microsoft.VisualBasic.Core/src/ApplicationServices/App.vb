@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4e481de77f4a9b2a30a005eb7752ac34, Microsoft.VisualBasic.Core\src\ApplicationServices\App.vb"
+﻿#Region "Microsoft.VisualBasic::a964afe5ef3f1adf59b70bb41a8fa643, Microsoft.VisualBasic.Core\src\ApplicationServices\App.vb"
 
     ' Author:
     ' 
@@ -34,27 +34,27 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 1552
-    '    Code Lines: 751 (48.39%)
-    ' Comment Lines: 620 (39.95%)
-    '    - Xml Docs: 83.23%
+    '   Total Lines: 1565
+    '    Code Lines: 756 (48.31%)
+    ' Comment Lines: 627 (40.06%)
+    '    - Xml Docs: 83.41%
     ' 
-    '   Blank Lines: 181 (11.66%)
-    '     File Size: 67.09 KB
+    '   Blank Lines: 182 (11.63%)
+    '     File Size: 67.62 KB
 
 
     ' Module App
     ' 
     '     Properties: AppSystemTemp, AssemblyName, BufferSize, Command, CommandLine
     '                 CPUCoreNumbers, CurrentDirectory, CurrentProcessTemp, CurrentUnixTimeMillis, Desktop
-    '                 DoNothing, ExecutablePath, GetLastError, Github, HOME
-    '                 Info, InputFile, IsConsoleApp, IsMicrosoftPlatform, LocalData
-    '                 LocalDataTemp, LogErrDIR, LogFile, MemoryLoad, n_threads
-    '                 NanoTime, NextTempName, OutFile, PID, Platform
-    '                 PreviousDirectory, Process, ProductName, ProductProgramData, ProductSharedDIR
-    '                 ProductSharedTemp, Running, RunningInGitBash, RunTimeDirectory, StartTime
-    '                 StartupDirectory, StdErr, StdInput, StdOut, SysTemp
-    '                 UnixTimeStamp, UserHOME, Version
+    '                 DoNothing, EnableTqdm, ExecutablePath, GetLastError, Github
+    '                 HOME, Info, InputFile, IsConsoleApp, IsMicrosoftPlatform
+    '                 LocalData, LocalDataTemp, LogErrDIR, LogFile, MemoryLoad
+    '                 n_threads, NanoTime, NextTempName, OutFile, PID
+    '                 Platform, PreviousDirectory, Process, ProductName, ProductProgramData
+    '                 ProductSharedDIR, ProductSharedTemp, Running, RunningInGitBash, RunTimeDirectory
+    '                 StartTime, StartupDirectory, StdErr, StdInput, StdOut
+    '                 SysTemp, UnixTimeStamp, UserHOME, Version
     ' 
     '     Constructor: (+1 Overloads) Sub New
     ' 

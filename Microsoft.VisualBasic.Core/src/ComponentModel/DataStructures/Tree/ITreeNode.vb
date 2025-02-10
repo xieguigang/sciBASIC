@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1b6696441a2046b70e2472e46d333064, Microsoft.VisualBasic.Core\src\ComponentModel\DataStructures\Tree\ITreeNode.vb"
+﻿#Region "Microsoft.VisualBasic::6728f763b2c263e93848803114f1e89b, Microsoft.VisualBasic.Core\src\ComponentModel\DataStructures\Tree\ITreeNode.vb"
 
     ' Author:
     ' 
@@ -34,22 +34,24 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 28
-    '    Code Lines: 12 (42.86%)
-    ' Comment Lines: 11 (39.29%)
+    '   Total Lines: 33
+    '    Code Lines: 14 (42.42%)
+    ' Comment Lines: 11 (33.33%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 5 (17.86%)
-    '     File Size: 886 B
+    '   Blank Lines: 8 (24.24%)
+    '     File Size: 1020 B
 
 
-    '     Interface ITreeNode
+    '     Interface ITreeNodeData
     ' 
     '         Properties: ChildNodes, FullyQualifiedName, IsLeaf, IsRoot, Parent
     ' 
-    '         Function: GetRootNode, IteratesAllChilds
+    '     Interface ITreeNode
     ' 
-    '         Sub: ChildCountsTravel
+    '         Function: GetRootNode
+    ' 
+    '         Sub: Add, ChildCountsTravel
     ' 
     ' 
     ' /********************************************************************************/

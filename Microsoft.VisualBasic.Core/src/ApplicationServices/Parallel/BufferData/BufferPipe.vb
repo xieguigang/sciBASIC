@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9d8a15366154f01b184c200bc5656066, Microsoft.VisualBasic.Core\src\ApplicationServices\Parallel\BufferData\BufferPipe.vb"
+﻿#Region "Microsoft.VisualBasic::7fd19641556e5319cfc5049133419908, Microsoft.VisualBasic.Core\src\ApplicationServices\Parallel\BufferData\BufferPipe.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 9
-    '    Code Lines: 6 (66.67%)
-    ' Comment Lines: 0 (0.00%)
-    '    - Xml Docs: 0.00%
+    '   Total Lines: 12
+    '    Code Lines: 6 (50.00%)
+    ' Comment Lines: 3 (25.00%)
+    '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 3 (33.33%)
-    '     File Size: 235 B
+    '   Blank Lines: 3 (25.00%)
+    '     File Size: 326 B
 
 
     '     Class BufferPipe

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::55d0e7739c52ae964fa4bcba430a551a, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Render2D\RenderShape.vb"
+﻿#Region "Microsoft.VisualBasic::ad7edac65630bd7f89258ac00031abad, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Render2D\RenderShape.vb"
 
     ' Author:
     ' 
@@ -34,20 +34,20 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 35
-    '    Code Lines: 29 (82.86%)
-    ' Comment Lines: 0 (0.00%)
-    '    - Xml Docs: 0.00%
+    '   Total Lines: 82
+    '    Code Lines: 51 (62.20%)
+    ' Comment Lines: 18 (21.95%)
+    '    - Xml Docs: 61.11%
     ' 
-    '   Blank Lines: 6 (17.14%)
-    '     File Size: 1.05 KB
+    '   Blank Lines: 13 (15.85%)
+    '     File Size: 2.90 KB
 
 
     '     Class RenderShape
     ' 
     '         Properties: fill, pen, shape
     ' 
-    '         Sub: RenderBoid
+    '         Sub: (+2 Overloads) RenderBoid
     ' 
     ' 
     ' /********************************************************************************/

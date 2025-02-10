@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6572048bd7c5845e1358f7d24419bbac, Data_science\DataMining\DataMining\Clustering\DBSCAN\DbscanAlgorithm.vb"
+﻿#Region "Microsoft.VisualBasic::072f1ed60e79bf9eba44da5086a086a6, Data_science\DataMining\DataMining\Clustering\DBSCAN\DbscanAlgorithm.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 89.66%
     ' 
     '   Blank Lines: 19 (13.67%)
-    '     File Size: 5.82 KB
+    '     File Size: 5.85 KB
 
 
     '     Class DbscanAlgorithm

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7f8847e2c4458ab02e9609836f29d98c, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Shapes\Arrow.vb"
+﻿#Region "Microsoft.VisualBasic::bcccbb57197eddc0f0112c9414be3a2b, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Shapes\Arrow.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 95.12%
     ' 
     '   Blank Lines: 17 (12.32%)
-    '     File Size: 5.61 KB
+    '     File Size: 5.60 KB
 
 
     '     Class Arrow

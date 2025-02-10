@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::32c38cf9b383b5a5f0cf681180713724, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Colors\Scaler\Mapper\ColorManager.vb"
+﻿#Region "Microsoft.VisualBasic::064e2bbeeea2c3ef89ca32052cab1ed3, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Colors\Scaler\Mapper\ColorManager.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 32
-    '    Code Lines: 20 (62.50%)
-    ' Comment Lines: 3 (9.38%)
-    '    - Xml Docs: 100.00%
+    '   Total Lines: 46
+    '    Code Lines: 20 (43.48%)
+    ' Comment Lines: 17 (36.96%)
+    '    - Xml Docs: 94.12%
     ' 
-    '   Blank Lines: 9 (28.12%)
-    '     File Size: 920 B
+    '   Blank Lines: 9 (19.57%)
+    '     File Size: 1.46 KB
 
 
     '     Class ColorProfile

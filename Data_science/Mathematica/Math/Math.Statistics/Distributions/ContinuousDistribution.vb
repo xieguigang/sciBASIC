@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3bb77958f11d187e82360ee4631b5d1d, Data_science\Mathematica\Math\Math.Statistics\Distributions\ContinuousDistribution.vb"
+﻿#Region "Microsoft.VisualBasic::f067c28b1bd09e7c23ddc4c4771dcae3, Data_science\Mathematica\Math\Math.Statistics\Distributions\ContinuousDistribution.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 75.00%
     ' 
     '   Blank Lines: 29 (14.36%)
-    '     File Size: 9.76 KB
+    '     File Size: 9.78 KB
 
 
     '     Class ContinuousDistribution

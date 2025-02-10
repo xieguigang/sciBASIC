@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bfe700e3b1e521730cf8383772e64890, gr\Drawing-net4.8\Graphics\CssInterop.vb"
+﻿#Region "Microsoft.VisualBasic::a1eace34b0c69512220fb2e82f9e69b3, gr\Drawing-net4.8\Graphics\CssInterop.vb"
 
     ' Author:
     ' 
@@ -34,18 +34,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 17
-    '    Code Lines: 12 (70.59%)
-    ' Comment Lines: 3 (17.65%)
+    '   Total Lines: 29
+    '    Code Lines: 22 (75.86%)
+    ' Comment Lines: 3 (10.34%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 2 (11.76%)
-    '     File Size: 460 B
+    '   Blank Lines: 4 (13.79%)
+    '     File Size: 767 B
 
 
     ' Module CssInterop
     ' 
-    '     Function: CreateCss
+    '     Function: (+2 Overloads) CreateCss
     ' 
     ' /********************************************************************************/
 

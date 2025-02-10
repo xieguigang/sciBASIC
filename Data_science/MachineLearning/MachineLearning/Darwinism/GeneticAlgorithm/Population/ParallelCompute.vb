@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fd24a441b0827ea5d587454a3929f120, Data_science\MachineLearning\MachineLearning\Darwinism\GeneticAlgorithm\Population\ParallelCompute.vb"
+﻿#Region "Microsoft.VisualBasic::6236cec149600a9f406ed0e06a8f748c, Data_science\MachineLearning\MachineLearning\Darwinism\GeneticAlgorithm\Population\ParallelCompute.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 18 (18.56%)
-    '     File Size: 4.19 KB
+    '     File Size: 4.22 KB
 
 
     '     Class ParallelComputeFitness

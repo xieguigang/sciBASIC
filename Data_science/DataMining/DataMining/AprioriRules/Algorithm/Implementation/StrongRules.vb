@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9ff9b486ca7f13d7adc1954fd86521bb, Data_science\DataMining\DataMining\AprioriRules\Algorithm\Implementation\StrongRules.vb"
+﻿#Region "Microsoft.VisualBasic::860f65980563d66d550c9aab04a1764a, Data_science\DataMining\DataMining\AprioriRules\Algorithm\Implementation\StrongRules.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 0.00%
     ' 
     '   Blank Lines: 32 (22.86%)
-    '     File Size: 5.83 KB
+    '     File Size: 5.86 KB
 
 
     '     Module StrongRules
