@@ -56,6 +56,7 @@
 
 Imports System.Drawing
 Imports System.Drawing.Drawing2D
+Imports std = System.Math
 
 Namespace Drawing2D
 
@@ -69,14 +70,22 @@ Namespace Drawing2D
             Return s.shape
         End Operator
 
+#If NET48 Then
         Shared ReadOnly boidArrow As Point() = New Point() {
             New Point(0, 0), New Point(-4, -1),
             New Point(0, 8),
             New Point(4, -1), New Point(0, 0)
         }
 
-#If NET48 Then
 #Disable Warning
+        ''' <summary>
+        ''' Arrow drawing for the winform application
+        ''' </summary>
+        ''' <param name="gfx"></param>
+        ''' <param name="x"></param>
+        ''' <param name="y"></param>
+        ''' <param name="angle"></param>
+        ''' <param name="color"></param>
         Public Shared Sub RenderBoid(gfx As Graphics, x As Single, y As Single, angle As Single, color As Color)
             Using brush = New SolidBrush(color)
                 gfx.TranslateTransform(x, y)
@@ -87,5 +96,43 @@ Namespace Drawing2D
         End Sub
 #Enable Warning
 #End If
+
+        ''' <summary>
+        ''' Arrow drawing for the .net core console application
+        ''' </summary>
+        Public Shared Sub RenderBoid(gfx As IGraphics, x As Single, y As Single, vx As Single, vy As Single, color As Color,
+                                     Optional l As Single = 8,
+                                     Optional w As Single = 3)
+            ' 计算单位方向向量
+            Dim length As Single = std.Sqrt(vx * vx + vy * vy)
+            Dim ux As Single = vx / length
+            Dim uy As Single = vy / length
+
+            ' 计算箭头的终点
+            Dim endX As Single = x + l * ux
+            Dim endY As Single = y + l * uy
+
+            ' 定义箭头的头部大小
+            Dim arrowHeadSize As Single = 10
+
+            ' 计算箭头两翼的顶点
+            Dim wing1X As Single = endX - arrowHeadSize * uy
+            Dim wing1Y As Single = endY + arrowHeadSize * ux
+            Dim wing2X As Single = endX - arrowHeadSize * uy
+            Dim wing2Y As Single = endY - arrowHeadSize * ux
+
+            ' 绘制箭身
+            Call gfx.DrawLine(Pens.Black, x, y, endX, endY)
+
+            ' 定义三角形的三个顶点
+            Dim points As PointF() = {
+                New PointF(endX, endY),
+                New PointF(wing1X, wing1Y),
+                New PointF(wing2X, wing2Y)
+            }
+
+            ' 绘制实心黑色三角形作为箭头
+            Call gfx.FillPolygon(Brushes.Black, points)
+        End Sub
     End Class
 End Namespace

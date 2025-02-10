@@ -59,6 +59,7 @@
 #End Region
 
 Imports System.Drawing
+Imports Microsoft.VisualBasic.Drawing
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
 Imports Microsoft.VisualBasic.Imaging.Physics
@@ -325,7 +326,7 @@ Public Module FluidRender
         Dim maxV As Double = Aggregate p In container.Entity Into Max(p.velocity.magnitude)
         Dim minV As Double = 0
 
-        Using gfx As Graphics = Graphics.FromImage(bmp)
+        Using gfx As IGraphics = Graphics2D.Open(bmp)
             Call gfx.Clear(Color.Black)
 
             For Each p In container.Entity
@@ -337,7 +338,7 @@ Public Module FluidRender
                     level = colors.Length - 1
                 End If
 
-                Call gfx.DrawCircle(p.position, particleSize, colors(level))
+                Call gfx.DrawCircle(CType(p.position, PointF), particleSize, colors(level))
             Next
 
             Return bmp

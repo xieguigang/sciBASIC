@@ -93,13 +93,18 @@ Namespace RNN
             End If
         End Function
 
-        ' Trains the network.
+        ''' <summary>
+        ''' Trains the network.
+        ''' </summary>
+        ''' <param name="options"></param>
+        ''' <param name="net"></param>
+        ''' <param name="snapshotName"></param>
         Public Shared Sub train(options As Options, net As CharLevelRNN, snapshotName As String)
             ' Load the training set.
 
             Dim trainingSet = StringTrainingSet.fromFile(options.inputFile)
 
-            Console.WriteLine("Data size: " & trainingSet.size().ToString() & ", vocabulary size: " & trainingSet.vocabularySize().ToString())
+            VBDebugger.EchoLine("Data size: " & trainingSet.size().ToString() & ", vocabulary size: " & trainingSet.vocabularySize().ToString())
 
             ' Initialize the network and its trainer.
 
@@ -158,16 +163,12 @@ Namespace RNN
             End While
         End Sub
 
-        ' Saves a network snapshot with this name to file.
+        ''' <summary>
+        ''' Saves a network snapshot with this name to file.
+        ''' </summary>
+        ''' <param name="name"></param>
+        ''' <param name="net"></param>
         Public Shared Sub saveASnapshot(name As String, net As CharLevelRNN)
-            If ReferenceEquals(name, Nothing) Then
-                Throw New NullReferenceException("Network name can't be null.")
-            End If
-
-            If net Is Nothing Then
-                Throw New NullReferenceException("Network can't be null.")
-            End If
-
             ' Take a snapshot
             Try
                 Using str As FileStream = New FileStream(name & ".snapshot", FileMode.Create, FileAccess.Write)
@@ -188,10 +189,6 @@ Namespace RNN
         ''' <param name="name"></param>
         ''' <returns></returns>
         Public Shared Function loadASnapshot(name As String) As CharLevelRNN
-            If ReferenceEquals(name, Nothing) Then
-                Throw New NullReferenceException("Name can't be null.")
-            End If
-
             Dim net As CharLevelRNN = Nothing
 
             ' Load the snapshot

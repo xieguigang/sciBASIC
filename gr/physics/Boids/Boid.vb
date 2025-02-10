@@ -118,8 +118,12 @@ Namespace Boids
             Return angle
         End Function
 
+        ''' <summary>
+        ''' Velocity
+        ''' </summary>
+        ''' <returns></returns>
         Public Function GetSpeed() As Double
-            Return std.Sqrt(Xvel * Xvel + Yvel * Yvel)
+            Return std.Sqrt(Xvel ^ 2 + Yvel ^ 2)
         End Function
     End Class
 End Namespace

@@ -63,6 +63,7 @@ Namespace RNN
 	' Immutable training set for a character level RNN.
 	Public Class StringTrainingSet
 		Implements TrainingSet
+
 		Private dataField As String ' Data from file.
 		Private alphabetField As Alphabet ' Alphabet extracted from data.
 

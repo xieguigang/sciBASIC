@@ -195,6 +195,10 @@
       <Project>{bc196690-17bb-4562-a209-a05e197320bc}</Project>
       <Name>html_netcore5</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\Drawing-net4.8\Drawing-net4.8.vbproj">
+      <Project>{03baf13d-3f53-48ed-b97f-a7ed936df01e}</Project>
+      <Name>Drawing-net4.8</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Microsoft.VisualBasic.Imaging\imaging.NET5.vbproj">
       <Project>{5f018723-06f2-434f-8d89-ba1cf6766f01}</Project>
       <Name>imaging.NET5</Name>

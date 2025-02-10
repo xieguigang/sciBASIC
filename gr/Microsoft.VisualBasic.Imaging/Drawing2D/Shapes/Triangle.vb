@@ -75,6 +75,26 @@ Namespace Drawing2D.Shapes
         Public Property Vertex3 As PointF
         Public Property Angle As Single
 
+        '      vertex1
+        '     /       \
+        ' vertex2 -- vertex3
+
+        ''' <summary>
+        ''' get the possible shape size of the triangle shape object
+        ''' </summary>
+        ''' <returns>
+        ''' width is the delta of the vertex2 and vertex3 x location;
+        ''' height is the delta of the vertex1 with mean of vertex2 and vertex3 y location value.
+        ''' </returns>
+        Public Overrides ReadOnly Property Size As SizeF
+            Get
+                Dim height As Double = Vertex1.Y - (Vertex2.Y + Vertex3.Y) / 2
+                Dim width As Double = Vertex3.X - Vertex2.X
+
+                Return New SizeF(width, height)
+            End Get
+        End Property
+
         Sub New(Location As Point, Color As Color)
             Call MyBase.New(Location)
             Me.Color = Color
@@ -85,6 +105,10 @@ Namespace Drawing2D.Shapes
             Me.Color = Color
         End Sub
 
+        Sub New()
+            Call MyBase.New(Nothing)
+        End Sub
+
         ''' <summary>
         ''' 直角三角形
         ''' </summary>
@@ -93,12 +117,6 @@ Namespace Drawing2D.Shapes
         Public Function DrawAsRightTriangle(a As Integer, b As Integer) As Triangle
             Throw New NotImplementedException
         End Function
-
-        Public Overrides ReadOnly Property Size As SizeF
-            Get
-                Throw New NotImplementedException
-            End Get
-        End Property
 
         ''' <summary>
         ''' 

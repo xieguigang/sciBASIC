@@ -61,8 +61,11 @@ Imports Microsoft.VisualBasic.Imaging
 Namespace Drawing2D.Shapes
 
     ''' <summary>
-    ''' An abstract shape element with layout information data.(矢量图形)
+    ''' An abstract shape element with layout information data.
     ''' </summary>
+    ''' <remarks>
+    ''' (矢量图形)
+    ''' </remarks>
     Public MustInherit Class Shape
 
         ''' <summary>

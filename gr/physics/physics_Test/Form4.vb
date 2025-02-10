@@ -71,6 +71,7 @@
 
 Imports System.Drawing
 Imports System.Math
+Imports Microsoft.VisualBasic.Drawing
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Physics
 Imports Microsoft.VisualBasic.MIME.Html.CSS
@@ -447,7 +448,7 @@ Public Class Form4
 
     Sub draw()
         Dim bmp As New Bitmap(Canvas.Width, Canvas.Height)
-        Dim gfx As Graphics = Graphics.FromImage(bmp)
+        Dim gfx As IGraphics = Graphics2D.Open(bmp)
         Dim nr As Integer = 0
 
         For i As Integer = 0 To numParticles - 1
