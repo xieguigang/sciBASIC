@@ -136,7 +136,7 @@ Namespace ComponentModel
         ''' <returns></returns>
         Public ReadOnly Property [Next] As LinkNode(Of T)
             Get
-                Return New LinkNode(Of T)(list.Next(node.Address), list)
+                Return New LinkNode(Of T)(list.Next(CInt(node.Address)), list)
             End Get
         End Property
 
@@ -146,7 +146,7 @@ Namespace ComponentModel
         ''' <returns></returns>
         Public ReadOnly Property Previous As LinkNode(Of T)
             Get
-                Return New LinkNode(Of T)(list.Previous(node.Address), list)
+                Return New LinkNode(Of T)(list.Previous(CInt(node.Address)), list)
             End Get
         End Property
 
@@ -190,7 +190,7 @@ Namespace ComponentModel
         End Function
 
         Public Function [Next](x As T) As T
-            Return [Next](x.Address)
+            Return [Next](CInt(x.Address))
         End Function
 
         Public Function [Next](x As String) As T

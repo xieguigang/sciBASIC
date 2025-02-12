@@ -80,10 +80,9 @@ Namespace ComponentModel
     ''' <summary>
     ''' This object gets a object handle value to indicated that the position this object exists 
     ''' in the list collection structure. 
-    ''' (这个对象具有一个用于指明该对象在列表对象中的位置的对象句柄值)
     ''' </summary>
-    ''' <remarks></remarks>
-    Public Interface IAddressOf : Inherits IAddress(Of Integer)
+    ''' <remarks>(这个对象具有一个用于指明该对象在列表对象中的位置的对象句柄值)</remarks>
+    Public Interface IAddressOf : Inherits IAddress(Of UInteger)
     End Interface
 
     ''' <summary>
@@ -113,7 +112,7 @@ Namespace ComponentModel
         Implements IHashHandle
 
         Public Property obj As T
-        Public Property Address As Integer Implements IAddressOf.Address
+        Public Property Address As UInteger Implements IAddressOf.Address
         Public Property ID As String Implements INamedValue.Key
             Get
                 Return obj.Key
@@ -123,7 +122,7 @@ Namespace ComponentModel
             End Set
         End Property
 
-        Public Sub Assign(address As Integer) Implements IAddress(Of Integer).Assign
+        Public Sub Assign(address As UInteger) Implements IAddress(Of UInteger).Assign
             Me.Address = address
         End Sub
     End Class

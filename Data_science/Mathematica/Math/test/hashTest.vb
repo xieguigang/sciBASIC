@@ -20,6 +20,7 @@ Module hashTest
             "splash10-00ei-0900000000-36152281406a11fbbc79",
             "splash10-00ei-0900000000-361dee3193514eddf43d"}
 
+        Call hashlist_test()
         Call stringKeys()
         Call hashtest2()
 
@@ -65,6 +66,37 @@ Module hashTest
         Else
             Console.WriteLine("两个字符串的哈希码不同")
         End If
+
+        Pause()
+    End Sub
+
+    Sub hashlist_test()
+
+        Dim list As New List(Of String)
+        Dim list2 As New List(Of String)
+
+        For i As Integer = 0 To 1000000
+            Call list.Add(i.ToString)
+            Call list2.Add(i.ToString)
+        Next
+
+        Dim removes As New List(Of String)
+
+        For i As Integer = 0 To 9999
+            Call removes.Add(i.ToString)
+        Next
+
+        Call BENCHMARK(Sub()
+                           For i As Integer = 0 To 9999
+                               Call list.RemoveAt(i)
+                           Next
+                       End Sub)
+
+        Call BENCHMARK(Sub()
+                           For Each str As String In removes
+                               Call list.Remove(str)
+                           Next
+                       End Sub)
 
         Pause()
     End Sub
