@@ -72,7 +72,7 @@ Namespace Hierarchy
     ''' </summary>
     Public Class DistanceMap
 
-        Dim linkTable As New Dictionary(Of String, HierarchyLink)
+        Dim linkTable As New Dictionary(Of ULong, HierarchyLink)
         Dim data As New List(Of HierarchyLink)
 
         ''' <summary>

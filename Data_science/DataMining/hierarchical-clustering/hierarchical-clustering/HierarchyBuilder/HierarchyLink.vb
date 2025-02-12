@@ -60,14 +60,14 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
-Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
+Imports Microsoft.VisualBasic.Math.HashMaps
 
 Namespace Hierarchy
 
-    Public Class HierarchyLink : Implements IComparable, IComparable(Of HierarchyLink), IReadOnlyId
+    Public Class HierarchyLink : Implements IComparable, IComparable(Of HierarchyLink)
 
         Public ReadOnly Tree As HierarchyTreeNode
-        Public ReadOnly Property HashKey As String Implements IReadOnlyId.Identity
+        Public ReadOnly Property HashKey As ULong
 
         Friend removed As Boolean = False
 
@@ -107,18 +107,18 @@ Namespace Hierarchy
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
-        Public Function hashCodePair(link As HierarchyTreeNode) As String
+        Public Function hashCodePair(link As HierarchyTreeNode) As ULong
             Return hashCodePair(link.Left(), link.Right())
         End Function
 
-        Public Function hashCodePair(lCluster As Cluster, rCluster As Cluster) As String
+        Public Function hashCodePair(lCluster As Cluster, rCluster As Cluster) As ULong
             Dim lName = lCluster.Name
             Dim rName = rCluster.Name
 
             If lName.CompareTo(rName) < 0 Then
-                Return lName & "~~~" & rName
+                Return HashMap.HashCodePair(lCluster.GetHashCode, rCluster.GetHashCode)
             Else
-                Return rName & "~~~" & lName
+                Return HashMap.HashCodePair(rCluster.GetHashCode, lCluster.GetHashCode)
             End If
         End Function
     End Module
