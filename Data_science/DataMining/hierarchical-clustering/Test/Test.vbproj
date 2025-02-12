@@ -137,6 +137,10 @@
       <Project>{e7caa625-b735-4b76-b53a-79623bb305a6}</Project>
       <Name>dataframework-netcore5</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\..\gr\Drawing-net4.8\Drawing-net4.8.vbproj">
+      <Project>{b052f3e6-4fc2-4583-9548-cc7a1eaf072a}</Project>
+      <Name>Drawing-net4.8</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\..\gr\Microsoft.VisualBasic.Imaging\imaging.NET5.vbproj">
       <Project>{e683480e-46bd-44e0-9ef5-0d64c218849d}</Project>
       <Name>imaging.NET5</Name>

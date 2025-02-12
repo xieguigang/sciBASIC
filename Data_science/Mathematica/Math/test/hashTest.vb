@@ -20,6 +20,7 @@ Module hashTest
             "splash10-00ei-0900000000-36152281406a11fbbc79",
             "splash10-00ei-0900000000-361dee3193514eddf43d"}
 
+        Call stringKeys()
         Call hashtest2()
 
         For Each s As String In list
@@ -51,8 +52,20 @@ Module hashTest
     End Sub
 
     Sub stringKeys()
-        Dim total As Integer = 10000000
+        Dim str1 As String = "hello"
+        Dim str2 As String = New String("hello") & "              "
+        Dim hashCode1 As Integer = str1.GetHashCode()
+        Dim hashCode2 As Integer = Strings.Trim(str2).GetHashCode()
 
+        Console.WriteLine(hashCode1)
+        Console.WriteLine(hashCode2)
 
+        If hashCode1 = hashCode2 Then
+            Console.WriteLine("两个字符串的哈希码相同")
+        Else
+            Console.WriteLine("两个字符串的哈希码不同")
+        End If
+
+        Pause()
     End Sub
 End Module
