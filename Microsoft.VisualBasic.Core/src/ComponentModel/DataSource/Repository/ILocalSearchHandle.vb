@@ -119,11 +119,18 @@ Namespace ComponentModel.DataSourceModel.Repository
         ''' makes the name string unique by adding an additional numeric suffix
         ''' </summary>
         ''' <param name="names"></param>
-        ''' <returns></returns>
+        ''' <returns>
+        ''' this function is a safe function, it will returns an empty string collection 
+        ''' if the given <paramref name="names"/> is nothing.
+        ''' </returns>
         <Extension>
         Public Function UniqueNames(names As IEnumerable(Of String), <Out> Optional ByRef duplicated As String() = Nothing) As String()
             Dim nameUniques As New Dictionary(Of String, Counter)
             Dim duplicates As New List(Of String)
+
+            If names Is Nothing Then
+                Return New String() {}
+            End If
 
             For Each name As String In names
 RE0:

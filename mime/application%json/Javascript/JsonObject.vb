@@ -147,6 +147,42 @@ Namespace Javascript
             Call array.Add(key, New JsonValue(value))
         End Sub
 
+        Public Function GetString(key As String) As String
+            If array.ContainsKey(key) Then
+                Dim val As JsonValue = TryCast(array(key), JsonValue)
+
+                If val Is Nothing OrElse val.IsLiteralNull Then
+                    Return Nothing
+                Else
+                    Return Scripting.ToString(val.Literal)
+                End If
+            End If
+
+            Return Nothing
+        End Function
+
+        Public Function GetInteger(key As String) As Integer
+            Dim str As String = GetString(key)
+
+            If str Is Nothing Then
+                Return Nothing
+            End If
+
+            Return Integer.Parse(str)
+        End Function
+
+        Public Function GetDouble(key As String) As Double
+            Return Val(GetString(key))
+        End Function
+
+        Public Function GetDate(key As String) As Date
+            Return GetString(key).ParseDate
+        End Function
+
+        Public Function GetBoolean(key As String) As Boolean
+            Return GetString(key).ParseBoolean
+        End Function
+
         ''' <summary>
         ''' write bson buffer
         ''' </summary>

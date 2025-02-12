@@ -58,6 +58,7 @@ Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Scripting.Runtime
 Imports Microsoft.VisualBasic.Text
+Imports Microsoft.VisualBasic.ValueTypes
 
 ''' <summary>
 ''' Simple type parser extension function for <see cref="String"/>
@@ -318,6 +319,10 @@ Public Module PrimitiveParser
 
         If s.ToLower Like empty_output Then
             Return Nothing
+        End If
+        If s.IsSimpleNumber Then
+            ' unix timestamp
+            Return DateTimeHelper.FromUnixTimeStamp(s)
         End If
 
         If Date.TryParse(Trim(s), d) Then

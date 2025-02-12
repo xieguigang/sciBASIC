@@ -210,7 +210,7 @@ Namespace ValueTypes
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function FromUnixTimeStamp(unixDateTime As Long) As Date
-#If NET_48 = 1 Or netcore5 = 1 Then
+#If NET_48 Then
             Return DateTimeOffset _
                 .FromUnixTimeSeconds(unixDateTime) _
                 .DateTime _
