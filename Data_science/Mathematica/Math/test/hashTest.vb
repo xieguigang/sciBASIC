@@ -1,5 +1,6 @@
 ﻿Imports System.Text
 Imports Microsoft.VisualBasic.Math
+Imports Microsoft.VisualBasic.Math.HashMaps
 
 Module hashTest
 
@@ -19,10 +20,39 @@ Module hashTest
             "splash10-00ei-0900000000-36152281406a11fbbc79",
             "splash10-00ei-0900000000-361dee3193514eddf43d"}
 
+        Call hashtest2()
+
         For Each s As String In list
             Call Console.WriteLine($"{s}: {Crc32.CRC32Bytes(Encoding.ASCII.GetBytes(s))}")
         Next
 
         Pause()
+    End Sub
+
+    Sub hashtest2()
+        Dim conflicts As Integer = 0
+        Dim total As Integer = 10000000
+        Dim hashSet As New System.Collections.Generic.HashSet(Of ULong)()
+
+        For i As Integer = 0 To total - 1
+            Dim a As Integer = i
+            Dim b As Integer = i * 2
+            Dim hash As ULong = HashMap.HashCodePair(a, b)
+            If Not hashSet.Add(hash) Then
+                conflicts += 1
+            End If
+        Next
+
+        Console.WriteLine($"Total hashes: {total}")
+        Console.WriteLine($"Total conflicts: {conflicts}")
+        Console.WriteLine($"Conflict rate: {CDbl(conflicts) / total * 100}%")
+
+        Pause()
+    End Sub
+
+    Sub stringKeys()
+        Dim total As Integer = 10000000
+
+
     End Sub
 End Module
