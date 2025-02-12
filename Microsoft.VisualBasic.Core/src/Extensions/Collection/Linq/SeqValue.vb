@@ -73,7 +73,7 @@ Namespace Linq
     ''' Value <typeparamref name="T"/> with sequence index <see cref="i"/>.
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
-    Public Structure SeqValue(Of T) : Implements IAddressOf
+    Public Structure SeqValue(Of T) : Implements IAddress(Of Integer)
         Implements IComparable(Of Integer)
         Implements IComparable
         Implements Value(Of T).IValueOf
@@ -83,7 +83,7 @@ Namespace Linq
         ''' The position of this object value in the original sequence.
         ''' </summary>
         ''' <returns></returns>
-        Public Property i As Integer Implements IAddressOf.Address
+        Public Property i As Integer Implements IAddress(Of Integer).Address
         ''' <summary>
         ''' The Object data
         ''' </summary>
