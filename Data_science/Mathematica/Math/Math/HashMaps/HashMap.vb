@@ -420,15 +420,13 @@ Namespace HashMaps
         ''' <param name="b">hashcode of another clr object.</param>
         ''' <returns></returns>
         Public Function HashCodePair(a As Integer, b As Integer) As ULong
-            ' 将两个整数拼接成一个ulong
-            Dim hash As ULong = CULng(a) << 32 Or CULng(b)
+            Dim hash As ULong = 17 ' 一个小的质数， 作为初始哈希值
 
-            ' 进行位混合操作以增加哈希的随机性和降低冲突概率
-            hash = hash Xor (hash >> 17)
-            hash = hash * 23UL
-            hash = hash Xor (hash >> 11)
-            hash = hash * 29UL
-            hash = hash Xor (hash >> 19)
+            Const prime1 As ULong = 2654435761 ' 一个大的质数
+            Const prime2 As ULong = 1597334677 ' 另一个大的质数
+
+            hash = hash * prime1 + CULng(a)
+            hash = hash * prime2 + CULng(b)
 
             Return hash
         End Function

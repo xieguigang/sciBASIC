@@ -112,13 +112,13 @@ Namespace Hierarchy
         End Function
 
         Public Function hashCodePair(lCluster As Cluster, rCluster As Cluster) As ULong
-            Dim lName = lCluster.Name
-            Dim rName = rCluster.Name
+            Dim lName = lCluster.Name.GetHashCode
+            Dim rName = rCluster.Name.GetHashCode
 
-            If lName.CompareTo(rName) < 0 Then
-                Return HashMap.HashCodePair(lCluster.GetHashCode, rCluster.GetHashCode)
+            If lCluster.Name.CompareTo(rCluster.Name) < 0 Then
+                Return HashMap.HashCodePair(lName, rName)
             Else
-                Return HashMap.HashCodePair(rCluster.GetHashCode, lCluster.GetHashCode)
+                Return HashMap.HashCodePair(rName, lName)
             End If
         End Function
     End Module
