@@ -199,7 +199,7 @@ Namespace Analysis.Dijkstra
                 Next
 
                 ' Add the location to the list of processed locations
-                handledLocations.Add(locationToProcess)
+                Call handledLocations.Replace(locationToProcess)
             End While
 
             Call shortestPaths.Remove(startPos)

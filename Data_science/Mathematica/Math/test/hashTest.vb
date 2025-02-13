@@ -1,4 +1,5 @@
 ﻿Imports System.Text
+Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Math.HashMaps
 
@@ -20,6 +21,7 @@ Module hashTest
             "splash10-00ei-0900000000-36152281406a11fbbc79",
             "splash10-00ei-0900000000-361dee3193514eddf43d"}
 
+        Call hashindex_test()
         Call hashlist_test()
         Call stringKeys()
         Call hashtest2()
@@ -66,6 +68,35 @@ Module hashTest
         Else
             Console.WriteLine("两个字符串的哈希码不同")
         End If
+
+        Pause()
+    End Sub
+
+    Sub hashindex_test()
+        Dim list As New List(Of String)
+
+        For i As Integer = 0 To 1000000
+            Call list.Add(i.ToString)
+        Next
+
+        Dim index As New Index(Of String)(list)
+        Dim check As Integer
+        Dim check2 As Integer
+
+        Call index.Delete("10000")
+        Call list.Remove("10000")
+
+        For Each str As String In list
+            If str Like index Then
+                check += 1
+            End If
+            If Integer.Parse(str) = index.IndexOf(str) Then
+                check2 += 1
+            End If
+        Next
+
+        Call Console.WriteLine($"{check / list.Count * 100}%")
+        Call Console.WriteLine($"{check2 / list.Count * 100}%")
 
         Pause()
     End Sub

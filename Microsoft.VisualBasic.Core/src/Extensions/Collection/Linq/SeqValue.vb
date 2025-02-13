@@ -73,7 +73,7 @@ Namespace Linq
     ''' Value <typeparamref name="T"/> with sequence index <see cref="i"/>.
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
-    Public Structure SeqValue(Of T) : Implements IAddress(Of Integer)
+    Public Structure SeqValue(Of T) : Implements IAddressOf
         Implements IComparable(Of Integer)
         Implements IComparable
         Implements Value(Of T).IValueOf

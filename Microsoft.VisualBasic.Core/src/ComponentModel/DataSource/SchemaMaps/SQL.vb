@@ -58,8 +58,10 @@ Namespace ComponentModel.DataSourceModel.SchemaMaps
 
     ''' <summary>
     ''' A generic abstract model of a SQL table.
-    ''' (SQL之中的一个数据表的抽象描述接口)
     ''' </summary>
+    ''' <remarks>
+    ''' (SQL之中的一个数据表的抽象描述接口)
+    ''' </remarks>
     Public MustInherit Class SQLTable
         Implements ICloneable
 
@@ -94,10 +96,12 @@ Namespace ComponentModel.DataSourceModel.SchemaMaps
 
         ''' <summary>
         ''' Clones the property values.
-        ''' (由于这个<see cref="SQLTable"/>对象的所有属性都是简单的基本类型，所以能够很容易
-        ''' 的复制这些属性，从而很容易的复制数据表之中的一个行对象)
         ''' </summary>
         ''' <returns></returns>
+        ''' <remarks>
+        ''' (由于这个<see cref="SQLTable"/>对象的所有属性都是简单的基本类型，所以能够很容易
+        ''' 的复制这些属性，从而很容易的复制数据表之中的一个行对象)
+        ''' </remarks>
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Private Function Clone() As Object Implements ICloneable.Clone

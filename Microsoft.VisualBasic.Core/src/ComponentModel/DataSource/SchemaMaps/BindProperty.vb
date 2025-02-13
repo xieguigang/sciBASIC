@@ -67,9 +67,11 @@ Namespace ComponentModel.DataSourceModel.SchemaMaps
 
     ''' <summary>
     ''' Schema for <see cref="Attribute"/> and its bind <see cref="PropertyInfo"/>/<see cref="FieldInfo"/> object target.
-    ''' (使用这个对象将公共的域或者属性的读写统一起来)
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
+    ''' <remarks>
+    ''' (使用这个对象将公共的域或者属性的读写统一起来)
+    ''' </remarks>
     Public Class BindProperty(Of T As Attribute) : Inherits Bind
         Implements IReadOnlyId
         Implements INamedValue
