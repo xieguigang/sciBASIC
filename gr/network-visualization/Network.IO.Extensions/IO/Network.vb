@@ -91,7 +91,7 @@ Namespace FileStream.Generic
                 If value Is Nothing Then
                     __nodes = New Dictionary(Of T_Node)
                 Else
-                    __nodes = value.ToDictionary
+                    __nodes = value.ToDictionary(replaceOnDuplicate:=True)
                 End If
             End Set
         End Property

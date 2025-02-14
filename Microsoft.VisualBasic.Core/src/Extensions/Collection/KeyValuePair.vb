@@ -901,9 +901,19 @@ Namespace ComponentModel.Collection
                                                             replaceOnDuplicate As Boolean) As Dictionary(Of T)
             With New Dictionary(Of T)
                 If replaceOnDuplicate Then
+                    Dim duplicated As New List(Of String)
+
                     For Each item As T In source
-                        .Item(item.Key) = item
+                        If .ContainsKey(item.Key) Then
+                            Call duplicated.Add(item.Key)
+                        Else
+                            Call .Add(item.Key, item)
+                        End If
                     Next
+
+                    If duplicated.Count > 0 Then
+                        Call $"duplicated keys was found for build hash index: {duplicated.GetJson}".Warning
+                    End If
                 Else
                     For Each item As T In source
                         currentKey = item.Key
