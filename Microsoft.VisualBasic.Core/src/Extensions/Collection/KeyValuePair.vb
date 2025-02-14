@@ -902,12 +902,15 @@ Namespace ComponentModel.Collection
             With New Dictionary(Of T)
                 If replaceOnDuplicate Then
                     Dim duplicated As New List(Of String)
+                    Dim key As String
 
                     For Each item As T In source
-                        If .ContainsKey(item.Key) Then
-                            Call duplicated.Add(item.Key)
+                        key = If(item.Key, "")
+
+                        If .ContainsKey(key) Then
+                            Call duplicated.Add(key)
                         Else
-                            Call .Add(item.Key, item)
+                            Call .Add(key, item)
                         End If
                     Next
 
