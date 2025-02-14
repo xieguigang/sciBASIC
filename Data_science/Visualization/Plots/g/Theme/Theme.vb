@@ -232,6 +232,8 @@ Namespace Graphic.Canvas
 
 #End Region
 
+        Public Property shapeStroke As String = Stroke.HighlightStroke
+
         ''' <summary>
         ''' 绘制的线条的样式
         ''' </summary>
