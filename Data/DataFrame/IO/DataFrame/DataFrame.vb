@@ -655,6 +655,15 @@ Namespace IO
         End Function
 
         ''' <summary>
+        ''' get row line by its row number
+        ''' </summary>
+        ''' <param name="i"></param>
+        ''' <returns></returns>
+        Public Function GetRow(i As Integer) As RowObject
+            Return table(i)
+        End Function
+
+        ''' <summary>
         ''' Subset of the dataframe object by given column field names
         ''' </summary>
         ''' <param name="columnList"></param>
