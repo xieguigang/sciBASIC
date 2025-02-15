@@ -151,6 +151,28 @@ Namespace BarPlot.Histogram
             End Get
         End Property
 
+        Public Shared Iterator Function CheckHighlightRange(data As IEnumerable(Of HistogramData), range As DoubleRange) As IEnumerable(Of HistogramData)
+            Dim checkLeft As Boolean = True
+            Dim checkRight As Boolean = True
+
+            For Each bar As HistogramData In data.OrderBy(Function(a) a.x1)
+                If checkLeft Then
+                    If bar.x1 >= range.Min Then
+                        Yield bar
+                        checkLeft = False
+                    End If
+                ElseIf checkRight Then
+                    If bar.x2 <= range.Max Then
+                        Yield bar
+                    Else
+                        Exit For
+                    End If
+                Else
+                    Exit For
+                End If
+            Next
+        End Function
+
         Public Overrides Function ToString() As String
             Return Me.GetJson
         End Function

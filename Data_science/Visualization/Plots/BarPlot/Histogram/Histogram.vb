@@ -324,6 +324,7 @@ Namespace BarPlot.Histogram
                                       Optional xlabelRotate As Double = 0,
                                       Optional xTickFormat As String = "F2",
                                       Optional yTickFormat As String = "F0",
+                                      Optional highlights As NamedValue(Of DoubleRange)() = Nothing,
                                       Optional dpi As Integer = 100,
                                       Optional driver As Drivers = Drivers.Default) As GraphicsData
 
@@ -338,6 +339,28 @@ Namespace BarPlot.Histogram
                 .Samples = {s},
                 .Serials = {s.SerialData}
             }
+
+            If Not highlights.IsNullOrEmpty Then
+                Dim samples As New List(Of HistProfile)(group.Samples)
+                Dim serials As New List(Of NamedValue(Of Color))(group.Serials)
+                Dim sourceData As HistogramData() = samples(0).data
+
+                For Each highlight As NamedValue(Of DoubleRange) In highlights
+                    serials.Add(New NamedValue(Of Color)(highlight.Name, highlight.Description.TranslateColor))
+                    samples.Add(New HistProfile() With {
+                        .legend = New LegendObject With {
+                            .color = highlight.Description,
+                            .fontstyle = CSSFont.Win7LargeBold,
+                            .style = LegendStyles.Rectangle,
+                            .title = highlight.Name
+                        },
+                        .data = HistogramData.CheckHighlightRange(sourceData, highlight.Value).ToArray
+                    })
+                Next
+
+                group.Samples = samples.ToArray
+                group.Serials = serials.ToArray
+            End If
 
             histData = s.data
 
