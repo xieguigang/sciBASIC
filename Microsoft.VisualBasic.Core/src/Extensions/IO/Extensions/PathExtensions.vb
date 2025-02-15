@@ -643,7 +643,7 @@ Public Module PathExtensions
 
             Call FileIO.FileSystem.CopyFile(source, copyTo)
         Catch ex As Exception
-            ex = New Exception({source, copyTo}.GetJson, ex)
+            ex = New Exception($"copy '{source}' -> '{copyTo}'; {ex.Message}", ex)
             App.LogException(ex)
 
             Return False
