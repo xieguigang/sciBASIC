@@ -84,6 +84,7 @@ Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Emit.Delegates
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Language.[Default]
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Linq.Extensions
 Imports Microsoft.VisualBasic.Parallel
@@ -121,6 +122,20 @@ Imports Microsoft.VisualBasic.Serialization.JSON
 ''' <remarks></remarks>
 Public Module Extensions
 #End If
+
+    ''' <summary>
+    ''' check of the given object is nothing or value is empty?
+    ''' </summary>
+    ''' <param name="obj"></param>
+    ''' <returns></returns>
+    <Extension>
+    Public Function is_empty(obj As IsEmpty) As Boolean
+        If obj Is Nothing Then
+            Return True
+        Else
+            Return obj.IsEmpty
+        End If
+    End Function
 
     ''' <summary>
     ''' get description text value from <see cref="DescriptionAttribute"/>.
