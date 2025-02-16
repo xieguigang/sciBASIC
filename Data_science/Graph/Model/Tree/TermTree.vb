@@ -54,6 +54,7 @@
 
 Imports System.Runtime.CompilerServices
 Imports System.Runtime.Serialization
+Imports Microsoft.VisualBasic.ComponentModel.Collection
 
 ''' <summary>
 ''' A tree with string term as key
@@ -87,7 +88,7 @@ Public Class TermTree(Of T) : Inherits Tree(Of T, String)
         Return New TermTree(Of T) With {
             .Data = value,
             .ID = Me.ID + Childs.Count,
-            .Label = name,
+            .label = name,
             .Parent = Me,
             .Childs = New Dictionary(Of String, Tree(Of T, String))
         }
