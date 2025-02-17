@@ -135,7 +135,7 @@ Namespace FileStream
             End If
 
             Dim nodes = LinqAPI.Exec(Of Graph.Node) <=
- _
+                                                      _
                 From n As Node
                 In net.nodes
                 Let id = n.ID
@@ -160,7 +160,9 @@ Namespace FileStream
                                End If
                            Next
                        End Sub)
-                Select New Graph.Node(id, data)
+                Select New Graph.Node(id, data) With {
+                    .degree = (CInt(Val(n(names.REFLECTION_ID_MAPPING_DEGREE_IN))), CInt(Val(n(names.REFLECTION_ID_MAPPING_DEGREE_OUT))))
+                }
 
             Dim nodeTable As New Dictionary(Of Graph.Node)(nodes)
             Dim edges As Edge() =
