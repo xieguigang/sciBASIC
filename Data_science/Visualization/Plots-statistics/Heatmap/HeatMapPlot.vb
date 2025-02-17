@@ -63,6 +63,7 @@
 Imports System.Drawing
 Imports Microsoft.VisualBasic.ApplicationServices
 Imports Microsoft.VisualBasic.ComponentModel.Collection
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.Repository
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Axis
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Canvas
@@ -98,20 +99,28 @@ Namespace Heatmap
         Public Sub New(matrix As IEnumerable(Of DataSet), rowLabelsMaxChars As Integer, dlayout As SizeF, theme As Theme)
             MyBase.New(theme)
 
+            Me.array = matrix.ToArray
+
+            Dim keys As String() = array.Keys.ToArray
+
             If rowLabelsMaxChars > 0 Then
-                Me.array = matrix _
+                keys = keys _
                     .Select(Function(d)
                                 Dim label As String = If(
-                                    d.ID.Length > rowLabelsMaxChars,
-                                    d.ID.Substring(0, rowLabelsMaxChars) & "...",
-                                    d.ID)
+                                    d.Length > rowLabelsMaxChars,
+                                    d.Substring(0, rowLabelsMaxChars) & "...",
+                                    d)
 
-                                Return New DataSet(label, d.Properties)
+                                Return label
                             End Function) _
                     .ToArray
-            Else
-                Me.array = matrix.ToArray
             End If
+
+            keys = keys.UniqueNames
+
+            For i As Integer = 0 To array.Length - 1
+                array(i) = New DataSet(keys(i), array(i).Properties)
+            Next
 
             Me.dendrogramLayout = (dlayout.Width, dlayout.Height)
             Me.dataTable = array.ToDictionary(Function(r) r.ID)
