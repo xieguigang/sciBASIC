@@ -131,7 +131,7 @@ Namespace Heatmap
         End Sub
 
         Private Function configDendrogramCanvas(cluster As Cluster, [class] As Dictionary(Of String, String)) As DendrogramPanelV2
-            Return New DendrogramPanelV2(cluster, New Theme)
+            Return New DendrogramPanelV2(cluster, New Theme With {.gridStrokeX = .axisStroke}, showLeafLabels:=False)
         End Function
 
         Protected Overrides Sub PlotInternal(ByRef g As IGraphics, canvas As GraphicsRegion)

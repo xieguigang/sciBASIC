@@ -115,7 +115,7 @@ Namespace Heatmap
         Public Function Plot(data As IEnumerable(Of DataSet),
                              Optional customColors As Color() = Nothing,
                              Optional reverseClrSeq As Boolean = False,
-                             Optional mapLevels% = 100,
+                             Optional mapLevels% = 30,
                              Optional mapName$ = ColorBrewer.DivergingSchemes.RdYlBu11,
                              Optional size$ = "3000,2700",
                              Optional padding$ = g.DefaultPadding,
@@ -141,7 +141,7 @@ Namespace Heatmap
                              Optional legendSize$ = "600,100",
                              Optional tick# = -1,
                              Optional legendLayout As Layouts = Layouts.Horizon,
-                             Optional rowLabelsMaxChars As Integer = 32,
+                             Optional rowLabelsMaxChars As Integer = 48,
                              Optional ppi As Integer = 100,
                              Optional driver As Drivers = Drivers.Default) As GraphicsData
 
