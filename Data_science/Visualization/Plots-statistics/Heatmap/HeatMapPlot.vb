@@ -86,8 +86,6 @@ Namespace Heatmap
         Dim dendrogramLayout As (A!, B!)
         Dim dataTable As Dictionary(Of String, DataSet)
 
-        Public Property logTransform As Double
-
         Public Property scaleMethod As DrawElements = DrawElements.None
         Public Property drawLabels As DrawElements = DrawElements.Both
         Public Property drawDendrograms As DrawElements = DrawElements.Rows
@@ -97,10 +95,24 @@ Namespace Heatmap
         Public Property LegendLayout As Layouts = Layouts.Horizon
         Public Property legendSize As New Size(600, 100)
 
-        Public Sub New(matrix As IEnumerable(Of DataSet), dlayout As SizeF, theme As Theme)
+        Public Sub New(matrix As IEnumerable(Of DataSet), rowLabelsMaxChars As Integer, dlayout As SizeF, theme As Theme)
             MyBase.New(theme)
 
-            Me.array = matrix.ToArray
+            If rowLabelsMaxChars > 0 Then
+                Me.array = matrix _
+                    .Select(Function(d)
+                                Dim label As String = If(
+                                    d.ID.Length > rowLabelsMaxChars,
+                                    d.ID.Substring(0, rowLabelsMaxChars) & "...",
+                                    d.ID)
+
+                                Return New DataSet(label, d.Properties)
+                            End Function) _
+                    .ToArray
+            Else
+                Me.array = matrix.ToArray
+            End If
+
             Me.dendrogramLayout = (dlayout.Width, dlayout.Height)
             Me.dataTable = array.ToDictionary(Function(r) r.ID)
             Me.globalRange = array _
@@ -265,7 +277,7 @@ Namespace Heatmap
             Dim args As New PlotArguments With {
                 .colors = colors,
                 .left = left,
-                .levels = array.DataScaleLevels(keys, logTransform, scaleMethod, colors.Length),
+                .levels = array.DataScaleLevels(keys, -1, scaleMethod, colors.Length),
                 .top = top,
                 .ColOrders = colKeys,
                 .RowOrders = rowKeys,
@@ -282,7 +294,7 @@ Namespace Heatmap
 
             ' 绘制下方的矩阵的列标签
             If drawLabels = DrawElements.Both OrElse drawLabels = DrawElements.Cols Then
-                For Each key$ In keys
+                For Each key As String In keys
                     Dim sz = g.MeasureString(key$, colLabelFont) ' 得到斜边的长度
                     Dim dx! = sz.Width * std.Cos(angle) + sz.Height / 2
                     Dim dy! = sz.Width * std.Sin(angle) + (sz.Width / 2) * std.Cos(angle) - sz.Height

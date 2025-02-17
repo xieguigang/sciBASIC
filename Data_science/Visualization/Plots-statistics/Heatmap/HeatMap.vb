@@ -109,8 +109,7 @@ Namespace Heatmap
         '''   enhancing it.
         ''' </param>
         ''' <param name="size"></param>
-        ''' <param name="bg$"></param>
-        ''' <param name="logTransform">0或者小于零的数表示不会进行log变换</param>
+        ''' <param name="bg"></param>
         ''' <returns></returns>
         <Extension>
         Public Function Plot(data As IEnumerable(Of DataSet),
@@ -121,7 +120,6 @@ Namespace Heatmap
                              Optional size$ = "3000,2700",
                              Optional padding$ = g.DefaultPadding,
                              Optional bg$ = "white",
-                             Optional logTransform# = 0,
                              Optional drawScaleMethod As DrawElements = DrawElements.Rows,
                              Optional drawLabels As DrawElements = DrawElements.Both,
                              Optional drawDendrograms As DrawElements = DrawElements.Rows,
@@ -143,6 +141,7 @@ Namespace Heatmap
                              Optional legendSize$ = "600,100",
                              Optional tick# = -1,
                              Optional legendLayout As Layouts = Layouts.Horizon,
+                             Optional rowLabelsMaxChars As Integer = 32,
                              Optional ppi As Integer = 100,
                              Optional driver As Drivers = Drivers.Default) As GraphicsData
 
@@ -159,7 +158,7 @@ Namespace Heatmap
                 .legendCustomTicks = If(tick <= 0, Nothing, New Nullable(Of Double)(tick)),
                 .mainCSS = titleFontCSS
             }
-            Dim app As New HeatMapPlot(data, dlayout:=dendrogramLayout.SizeParser, theme) With {
+            Dim app As New HeatMapPlot(data, rowLabelsMaxChars, dlayout:=dendrogramLayout.SizeParser, theme) With {
                 .legendTitle = legendTitle,
                 .main = mainTitle,
                 .mapLevels = mapLevels,
@@ -169,7 +168,6 @@ Namespace Heatmap
                 .drawClass = drawClass,
                 .drawDendrograms = drawDendrograms,
                 .drawLabels = drawLabels,
-                .logTransform = logTransform,
                 .scaleMethod = drawScaleMethod
             }
 

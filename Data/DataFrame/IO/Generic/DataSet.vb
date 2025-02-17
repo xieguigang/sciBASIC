@@ -113,6 +113,11 @@ Namespace IO
         Sub New()
         End Sub
 
+        Sub New(id$, data As Dictionary(Of String, Double))
+            Me.ID = id
+            Me.propertyTable = data
+        End Sub
+
         Sub New(id$)
             Me.ID = id
             Me.Properties = New Dictionary(Of String, Double)
