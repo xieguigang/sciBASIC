@@ -254,7 +254,23 @@ Namespace FileIO
                                  Optional access As FileAccess = FileAccess.Read) As Stream Implements IFileSystemEnvironment.OpenFile
 
             Dim fullPath As String = $"{folder}/{path}"
-            Dim file As Stream = fullPath.Open(mode:=mode, doClear:=False, [readOnly]:=access = FileAccess.Read)
+            Dim check_readonly As Boolean = access = FileAccess.Read
+
+            If check_readonly AndAlso mode = FileMode.Open Then
+                Return fullPath.Open(FileMode.Open, doClear:=False, [readOnly]:=True)
+            ElseIf mode = FileMode.Open Then
+                Return fullPath.Open(FileMode.Open, doClear:=False, [readOnly]:=False)
+            End If
+
+            Dim truncate As Boolean = mode = FileMode.Create OrElse
+                mode = FileMode.CreateNew OrElse
+                mode = FileMode.OpenOrCreate OrElse
+                mode = FileMode.Truncate
+            Dim file As Stream = fullPath.Open(
+                mode:=mode,
+                doClear:=truncate,
+                [readOnly]:=check_readonly
+            )
 
             Return file
         End Function
