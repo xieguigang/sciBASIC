@@ -668,7 +668,11 @@ Namespace Graph
             Dim g As New NetworkGraph
 
             For Each v As Node In vertex
-                g.CreateNode(v.label, v.data.Clone)
+                Dim cloneNode = g.CreateNode(v.label, v.data.Clone)
+
+                cloneNode.degree = v.degree
+                cloneNode.pinned = v.pinned
+                cloneNode.visited = v.visited
             Next
 
             For Each edge As Edge In graphEdges
