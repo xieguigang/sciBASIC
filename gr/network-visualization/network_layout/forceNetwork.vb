@@ -138,7 +138,6 @@ Public Module forceNetwork
                                   Optional Damping# = 0.83,
                                   Optional iterations% = 1000,
                                   Optional showProgress As Boolean = False,
-                                  Optional clearScreen As Boolean = False,
                                   Optional progressCallback As Action(Of String) = Nothing,
                                   Optional cancel As Value(Of Boolean) = Nothing) As NetworkGraph
 
