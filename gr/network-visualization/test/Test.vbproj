@@ -6,7 +6,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{1458A1A1-110C-4587-A763-BA88CB808671}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <StartupObject>Test.OrthogonalLayoutTest</StartupObject>
+    <StartupObject>Test.FormCanvas</StartupObject>
     <RootNamespace>Test</RootNamespace>
     <AssemblyName>Test</AssemblyName>
     <FileAlignment>512</FileAlignment>
@@ -209,6 +209,10 @@
     <ProjectReference Include="..\..\avi\AVI.NET5.vbproj">
       <Project>{7d676b15-f894-4d3b-ace2-0e1927f7bb0a}</Project>
       <Name>AVI.NET5</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Drawing-net4.8\Drawing-net4.8.vbproj">
+      <Project>{d415b2d0-c4ba-cc52-8797-71c9ac710bd0}</Project>
+      <Name>Drawing-net4.8</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Microsoft.VisualBasic.Imaging\imaging.NET5.vbproj">
       <Project>{8cdb2729-f4d2-4cbd-a2fb-faf4906170e7}</Project>
