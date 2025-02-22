@@ -80,6 +80,9 @@ Namespace RandomForests
     ''' <summary>
     ''' Random Forest for classified and regression problems 
     ''' </summary>
+    ''' <remarks>
+    ''' https://github.com/ogrecio/RanFog
+    ''' </remarks>
     Public Class RanFog : Inherits MachineLearning.Model
 
         ''' <summary>

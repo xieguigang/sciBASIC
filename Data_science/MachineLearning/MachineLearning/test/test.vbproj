@@ -135,25 +135,21 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\Data\DataFrame\47_dotnet_ms-vb_data.framework.vbproj">
-      <Project>{7283c179-f852-4ead-8d8f-b82ef2cbd7db}</Project>
-      <Name>47_dotnet_ms-vb_data.framework</Name>
+    <ProjectReference Include="..\..\..\..\Microsoft.VisualBasic.Core\src\Core.vbproj">
+      <Project>{7c7d0129-8931-fdff-7c5a-c8a634b419a7}</Project>
+      <Name>Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\..\Microsoft.VisualBasic.Core\src\47-dotnet_Microsoft.VisualBasic.vbproj">
-      <Project>{fecce1fd-e1d4-49e3-a668-60bb5e7aed99}</Project>
-      <Name>47-dotnet_Microsoft.VisualBasic</Name>
+    <ProjectReference Include="..\..\..\DataMining\DataMining\DataMining.NET5.vbproj">
+      <Project>{fd46ac2d-4388-5e74-af98-78ce0cde896e}</Project>
+      <Name>DataMining.NET5</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\DataMining\DataMining\DataMining.vbproj">
-      <Project>{4b877ab2-e15f-4aa9-b7d6-7c11b2213f10}</Project>
-      <Name>DataMining</Name>
+    <ProjectReference Include="..\..\..\Mathematica\Math\Math\Math.NET5.vbproj">
+      <Project>{1f356eac-7669-e13d-2d5f-d6a927649811}</Project>
+      <Name>Math.NET5</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\Mathematica\Math\Math\math-core.vbproj">
-      <Project>{e3367b88-5d0c-495a-8273-331656d4b5aa}</Project>
-      <Name>math-core</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\MachineLearning.vbproj">
-      <Project>{a43ec013-2b55-4d25-b9f1-96bd5fb1e577}</Project>
-      <Name>MachineLearning</Name>
+    <ProjectReference Include="..\machine_learning-netcore5.vbproj">
+      <Project>{6a84de4b-ac7e-5232-fcf2-0a0464ae1fd0}</Project>
+      <Name>machine_learning-netcore5</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
