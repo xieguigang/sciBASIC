@@ -15,6 +15,8 @@ Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "DataMining.NET5", "..\DataM
 EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "test", "MachineLearning\test\test.vbproj", "{3E1122C1-25C9-47E0-8697-004D353C75FD}"
 EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "dataframework-netcore5", "..\..\Data\DataFrame\dataframework-netcore5.vbproj", "{D410907F-A387-B1C5-6417-66B7623D41BE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -195,6 +197,38 @@ Global
 		{3E1122C1-25C9-47E0-8697-004D353C75FD}.Rsharp_app_release|Any CPU.Build.0 = Release|Any CPU
 		{3E1122C1-25C9-47E0-8697-004D353C75FD}.Rsharp_app_release|x64.ActiveCfg = Release|x64
 		{3E1122C1-25C9-47E0-8697-004D353C75FD}.Rsharp_app_release|x64.Build.0 = Release|x64
+		{D410907F-A387-B1C5-6417-66B7623D41BE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D410907F-A387-B1C5-6417-66B7623D41BE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D410907F-A387-B1C5-6417-66B7623D41BE}.Debug|x64.ActiveCfg = Debug|x64
+		{D410907F-A387-B1C5-6417-66B7623D41BE}.Debug|x64.Build.0 = Debug|x64
+		{D410907F-A387-B1C5-6417-66B7623D41BE}.gcmodeller_desktop|Any CPU.ActiveCfg = gcmodeller_desktop|Any CPU
+		{D410907F-A387-B1C5-6417-66B7623D41BE}.gcmodeller_desktop|Any CPU.Build.0 = gcmodeller_desktop|Any CPU
+		{D410907F-A387-B1C5-6417-66B7623D41BE}.gcmodeller_desktop|x64.ActiveCfg = gcmodeller_desktop|x64
+		{D410907F-A387-B1C5-6417-66B7623D41BE}.gcmodeller_desktop|x64.Build.0 = gcmodeller_desktop|x64
+		{D410907F-A387-B1C5-6417-66B7623D41BE}.LipidSearch|Any CPU.ActiveCfg = LipidSearch|Any CPU
+		{D410907F-A387-B1C5-6417-66B7623D41BE}.LipidSearch|Any CPU.Build.0 = LipidSearch|Any CPU
+		{D410907F-A387-B1C5-6417-66B7623D41BE}.LipidSearch|x64.ActiveCfg = LipidSearch|x64
+		{D410907F-A387-B1C5-6417-66B7623D41BE}.LipidSearch|x64.Build.0 = LipidSearch|x64
+		{D410907F-A387-B1C5-6417-66B7623D41BE}.mzkit_win32|Any CPU.ActiveCfg = mzkit_win32|Any CPU
+		{D410907F-A387-B1C5-6417-66B7623D41BE}.mzkit_win32|Any CPU.Build.0 = mzkit_win32|Any CPU
+		{D410907F-A387-B1C5-6417-66B7623D41BE}.mzkit_win32|x64.ActiveCfg = mzkit_win32|x64
+		{D410907F-A387-B1C5-6417-66B7623D41BE}.mzkit_win32|x64.Build.0 = mzkit_win32|x64
+		{D410907F-A387-B1C5-6417-66B7623D41BE}.mzkit|Any CPU.ActiveCfg = mzkit|Any CPU
+		{D410907F-A387-B1C5-6417-66B7623D41BE}.mzkit|Any CPU.Build.0 = mzkit|Any CPU
+		{D410907F-A387-B1C5-6417-66B7623D41BE}.mzkit|x64.ActiveCfg = mzkit|x64
+		{D410907F-A387-B1C5-6417-66B7623D41BE}.mzkit|x64.Build.0 = mzkit|x64
+		{D410907F-A387-B1C5-6417-66B7623D41BE}.nuget_release|Any CPU.ActiveCfg = nuget_release|Any CPU
+		{D410907F-A387-B1C5-6417-66B7623D41BE}.nuget_release|Any CPU.Build.0 = nuget_release|Any CPU
+		{D410907F-A387-B1C5-6417-66B7623D41BE}.nuget_release|x64.ActiveCfg = nuget_release|x64
+		{D410907F-A387-B1C5-6417-66B7623D41BE}.nuget_release|x64.Build.0 = nuget_release|x64
+		{D410907F-A387-B1C5-6417-66B7623D41BE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D410907F-A387-B1C5-6417-66B7623D41BE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D410907F-A387-B1C5-6417-66B7623D41BE}.Release|x64.ActiveCfg = Release|x64
+		{D410907F-A387-B1C5-6417-66B7623D41BE}.Release|x64.Build.0 = Release|x64
+		{D410907F-A387-B1C5-6417-66B7623D41BE}.Rsharp_app_release|Any CPU.ActiveCfg = Rsharp_app_release|Any CPU
+		{D410907F-A387-B1C5-6417-66B7623D41BE}.Rsharp_app_release|Any CPU.Build.0 = Rsharp_app_release|Any CPU
+		{D410907F-A387-B1C5-6417-66B7623D41BE}.Rsharp_app_release|x64.ActiveCfg = Rsharp_app_release|x64
+		{D410907F-A387-B1C5-6417-66B7623D41BE}.Rsharp_app_release|x64.Build.0 = Rsharp_app_release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -203,6 +237,7 @@ Global
 		{7C7D0129-8931-FDFF-7C5A-C8A634B419A7} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 		{1F356EAC-7669-E13D-2D5F-D6A927649811} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 		{FD46AC2D-4388-5E74-AF98-78CE0CDE896E} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+		{D410907F-A387-B1C5-6417-66B7623D41BE} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {4CD70265-4CE4-4B23-8CAD-1060601A3D30}

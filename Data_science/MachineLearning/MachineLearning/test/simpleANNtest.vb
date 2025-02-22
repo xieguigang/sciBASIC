@@ -53,8 +53,6 @@
 
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.MachineLearning.ComponentModel.StoreProcedure
-Imports Microsoft.VisualBasic.MachineLearning.NeuralNetwork
-Imports Microsoft.VisualBasic.Serialization.JSON
 
 Module simpleANNtest
 
@@ -116,23 +114,23 @@ Module simpleANNtest
 
         Pause()
 
-        Dim trainer As New TrainingUtils(6, {100, 300, 30}, 5, momentum:=0.9)
+        'Dim trainer As New TrainingUtils(6, {100, 300, 30}, 5, momentum:=0.9)
 
-        Helpers.MaxEpochs = 5000
+        'Helpers.MaxEpochs = 5000
 
-        ' trainer.SetDropOut(0.8)
+        '' trainer.SetDropOut(0.8)
 
-        Call samples.DoEach(Sub(dset) trainer.Add(dset))
-        Call trainer.Train(parallel:=True)
+        'Call samples.DoEach(Sub(dset) trainer.Add(dset))
+        'Call trainer.Train(parallel:=True)
 
-        trainer.SetDropOut(0)
+        'trainer.SetDropOut(0)
 
-        Dim predict1 = trainer.NeuronNetwork.Compute(0, 0, 0, 0, 0, 1)
-        Dim predict2 = trainer.NeuronNetwork.Compute(0.8, 0.002, 0, 0, 0, 0.0008)
+        'Dim predict1 = trainer.NeuronNetwork.Compute(0, 0, 0, 0, 0, 1)
+        'Dim predict2 = trainer.NeuronNetwork.Compute(0.8, 0.002, 0, 0, 0, 0.0008)
 
-        Call Console.WriteLine(predict1.GetJson)
-        Call Console.WriteLine(predict2.GetJson)
+        'Call Console.WriteLine(predict1.GetJson)
+        'Call Console.WriteLine(predict2.GetJson)
 
-        Pause()
+        'Pause()
     End Sub
 End Module

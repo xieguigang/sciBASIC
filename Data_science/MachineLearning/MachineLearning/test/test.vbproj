@@ -135,6 +135,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\..\Data\DataFrame\dataframework-netcore5.vbproj">
+      <Project>{d410907f-a387-b1c5-6417-66b7623d41be}</Project>
+      <Name>dataframework-netcore5</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\..\Microsoft.VisualBasic.Core\src\Core.vbproj">
       <Project>{7c7d0129-8931-fdff-7c5a-c8a634b419a7}</Project>
       <Name>Core</Name>
