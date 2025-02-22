@@ -132,6 +132,12 @@ Namespace Text.Parser
             Return New CharPtr(str.ToString)
         End Operator
 
+        ''' <summary>
+        ''' check of the string equals?
+        ''' </summary>
+        ''' <param name="str"></param>
+        ''' <param name="text"></param>
+        ''' <returns></returns>
         Public Overloads Shared Operator =(str As CharPtr, text As String) As Boolean
             If str Is Nothing Then
                 Return text Is Nothing
@@ -144,6 +150,12 @@ Namespace Text.Parser
             Return Not str = text
         End Operator
 
+        ''' <summary>
+        ''' Check of the text equals?
+        ''' </summary>
+        ''' <param name="str">text1</param>
+        ''' <param name="text">text2</param>
+        ''' <returns></returns>
         Public Shared Operator Like(str As CharPtr, text As String) As Boolean
             If str Is Nothing Then
                 Return text Is Nothing

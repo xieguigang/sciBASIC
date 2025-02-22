@@ -1,58 +1,58 @@
 ﻿#Region "Microsoft.VisualBasic::c5922e15b937867f5b478d5785ba5e08, Data_science\MachineLearning\MachineLearning\RandomForests\Branch.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 85
-    '    Code Lines: 52 (61.18%)
-    ' Comment Lines: 25 (29.41%)
-    '    - Xml Docs: 92.00%
-    ' 
-    '   Blank Lines: 8 (9.41%)
-    '     File Size: 2.91 KB
+' Summaries:
 
 
-    '     Class Branch
-    ' 
-    '         Function: getClass, getMean, getMissClass, getMSE
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 85
+'    Code Lines: 52 (61.18%)
+' Comment Lines: 25 (29.41%)
+'    - Xml Docs: 92.00%
+' 
+'   Blank Lines: 8 (9.41%)
+'     File Size: 2.91 KB
+
+
+'     Class Branch
+' 
+'         Function: getClass, getMean, getMissClass, getMSE
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
-Imports stdNum = System.Math
+Imports std = System.Math
 
 Namespace RandomForests
 
@@ -130,7 +130,7 @@ Namespace RandomForests
             getClass(phen)
             Dim MSE = 0.0R
             For i = 0 To list.Count - 1
-                MSE = MSE + stdNum.Abs(CInt(phen(list(i))) - class_val)
+                MSE = MSE + std.Abs(CInt(phen(list(i))) - class_val)
             Next
             'MSE=MSE/list.size();
             Return MSE

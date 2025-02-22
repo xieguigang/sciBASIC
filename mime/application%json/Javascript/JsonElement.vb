@@ -76,9 +76,17 @@ Namespace Javascript
             Return DirectCast(Me, T)
         End Function
 
+        ''' <summary>
+        ''' Parse the json string as clr json element
+        ''' </summary>
+        ''' <param name="jsonStr"></param>
+        ''' <param name="default">
+        ''' set the default json value returns if the given json string is nothing or ``null`` literal.
+        ''' </param>
+        ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Shared Function ParseJSON(jsonStr As String) As JsonElement
-            Return New JsonParser(jsonStr).OpenJSON()
+        Public Shared Function ParseJSON(jsonStr As String, Optional [default] As JsonElement = Nothing) As JsonElement
+            Return If(New JsonParser(jsonStr).OpenJSON, [default])
         End Function
 
         Public Shared Function Parse(json_str As String) As Task(Of JsonElement)

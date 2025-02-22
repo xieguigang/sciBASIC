@@ -60,7 +60,9 @@ Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Public Module Impute
 
     <Extension>
-    Public Function SimulateMissingValues(Of DataSet As {INamedValue, DynamicPropertyBase(Of Double)})(rawMatrix As IEnumerable(Of DataSet), Optional byRow As Boolean = True, Optional infer As InferMethods = InferMethods.Average) As IEnumerable(Of DataSet)
+    Public Function SimulateMissingValues(Of DataSet As {INamedValue, DynamicPropertyBase(Of Double)})(rawMatrix As IEnumerable(Of DataSet),
+                                                                                                       Optional byRow As Boolean = True,
+                                                                                                       Optional infer As InferMethods = InferMethods.Average) As IEnumerable(Of DataSet)
         Dim method As Func(Of Vector, Double)
 
         If infer = InferMethods.Average Then
@@ -98,7 +100,8 @@ Public Module Impute
     End Function
 
     <Extension>
-    Public Iterator Function SimulateMissingValuesByProtein(Of DataSet As {INamedValue, DynamicPropertyBase(Of Double)})(rawMatrix As IEnumerable(Of DataSet), infer As Func(Of Vector, Double)) As IEnumerable(Of DataSet)
+    Public Iterator Function SimulateMissingValuesByProtein(Of DataSet As {INamedValue, DynamicPropertyBase(Of Double)})(rawMatrix As IEnumerable(Of DataSet),
+                                                                                                                         infer As Func(Of Vector, Double)) As IEnumerable(Of DataSet)
         For Each protein As DataSet In rawMatrix
             Dim iBAQ As Vector = protein.Properties.Values.AsVector
 

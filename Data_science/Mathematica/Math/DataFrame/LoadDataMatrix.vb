@@ -78,7 +78,10 @@ Public Module LoadDataMatrix
     End Property
 
     <Extension>
-    Private Function loadAsMatrix(Of DataSet As {INamedValue, DynamicPropertyBase(Of String)})(allData As IEnumerable(Of DataSet), item1$, item2$, correlation$, ByRef names As String()) As Dictionary(Of String, Dictionary(Of String, Double))
+    Private Function loadAsMatrix(Of DataSet As {INamedValue, DynamicPropertyBase(Of String)})(allData As IEnumerable(Of DataSet),
+                                                                                               item1$, item2$,
+                                                                                               correlation$,
+                                                                                               ByRef names As String()) As Dictionary(Of String, Dictionary(Of String, Double))
         Dim hash As New Dictionary(Of String, Dictionary(Of String, Double))
         Dim a, b As String
         Dim c As Double

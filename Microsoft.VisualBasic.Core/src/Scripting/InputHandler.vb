@@ -197,7 +197,7 @@ Namespace Scripting
         Public Function CTypeDynamic(expression$, target As Type) As Object
             If target Is GetType(String) Then
                 Return expression
-            ElseIf expression.StringEmpty Then
+            ElseIf expression.StringEmpty OrElse expression.ToLower = "null" Then
                 Return Nothing
             End If
 

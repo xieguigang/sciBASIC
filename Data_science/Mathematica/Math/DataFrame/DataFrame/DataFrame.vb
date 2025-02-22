@@ -180,6 +180,16 @@ Public Class DataFrame : Implements INumericMatrix
         Next
     End Sub
 
+    Sub New(cols As IEnumerable(Of FeatureVector), labels As IEnumerable(Of String))
+        For Each col As FeatureVector In cols
+            Call features.Add(col.name, col)
+        Next
+
+        If labels IsNot Nothing Then
+            rownames = labels.ToArray
+        End If
+    End Sub
+
     ''' <summary>
     ''' removes a column field from current dataframe object by a given field name
     ''' </summary>

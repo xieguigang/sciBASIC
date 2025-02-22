@@ -234,7 +234,7 @@ Namespace Javascript
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function CreateObject(Of T)(decodeMetachar As Boolean) As T
-            Return CreateObject(type:=GetType(T), decodeMetachar)
+            Return DirectCast(CreateObject(type:=GetType(T), decodeMetachar), T)
         End Function
 
         Public Function CreateObject(type As Type, decodeMetachar As Boolean) As Object

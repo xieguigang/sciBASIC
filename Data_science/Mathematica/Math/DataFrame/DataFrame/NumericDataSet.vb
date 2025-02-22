@@ -144,6 +144,34 @@ Public Module NumericDataSet
     End Function
 
     <Extension>
+    Public Function FromDataSet(Of T As {INamedValue, DynamicPropertyBase(Of Double)})(dataset As IEnumerable(Of T)) As DataFrame
+        If dataset Is Nothing Then
+            Return Nothing
+        End If
+
+        Dim pool As New List(Of T)
+        Dim cols As New List(Of String)
+        Dim labels As New List(Of String)
+
+        For Each row As T In dataset
+            Call pool.Add(row)
+            Call cols.AddRange(row.Properties.Keys)
+            Call labels.Add(row.Key)
+        Next
+
+        Dim fields As New List(Of FeatureVector)
+
+        For Each colname As String In cols.Distinct
+            Dim v As Double() = pool.Select(Function(x) x(colname)).ToArray
+            Dim vec As New FeatureVector(colname, v)
+
+            Call fields.Add(vec)
+        Next
+
+        Return New DataFrame(fields, labels)
+    End Function
+
+    <Extension>
     Public Iterator Function NumericMatrix(df As DataFrame) As IEnumerable(Of NamedCollection(Of Double))
         Dim colnames As String() = df.featureNames
         Dim fieldGetters As Func(Of Integer, Double)() = colnames _

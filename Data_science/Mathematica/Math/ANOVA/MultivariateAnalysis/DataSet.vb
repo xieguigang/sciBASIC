@@ -66,6 +66,14 @@ Imports df = Microsoft.VisualBasic.Math.DataFrame.DataFrame
 ''' </summary>
 Public Module DataSetHelper
 
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="df"></param>
+    ''' <param name="labels">
+    ''' should be the sample name of each sample data, should be unique, and should not be the class label of each sample.
+    ''' </param>
+    ''' <returns></returns>
     <Extension>
     Public Function CommonDataSet(df As df, Optional labels As Array = Nothing) As StatisticsObject
         Return df.NumericMatrix().CommonDataSet(colnames:=df.featureNames, labels)
