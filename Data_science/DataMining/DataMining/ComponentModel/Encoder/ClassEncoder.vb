@@ -57,6 +57,7 @@
 
 Imports System.Drawing
 Imports Microsoft.VisualBasic.Imaging
+Imports Microsoft.VisualBasic.Serialization.JSON
 Imports std = System.Math
 
 Namespace ComponentModel.Encoder
@@ -164,6 +165,10 @@ Namespace ComponentModel.Encoder
             Call m_labels.Add(label)
 
             Return Me
+        End Function
+
+        Public Overrides Function ToString() As String
+            Return m_colors.Keys.GetJson
         End Function
 
         Public Function GetColor(value As Double) As ColorClass
