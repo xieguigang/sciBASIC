@@ -142,7 +142,7 @@ Namespace ComponentModel.StoreProcedure
         Sub New(id As String, features As Double(), label As Double)
             Me.id = id
             Me.features = features
-            Me.features = {label}
+            Me.labels = {label}
         End Sub
 
         ''' <summary>
