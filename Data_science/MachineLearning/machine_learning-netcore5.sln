@@ -195,8 +195,8 @@ Global
 		{3E1122C1-25C9-47E0-8697-004D353C75FD}.Release|x64.Build.0 = Release|x64
 		{3E1122C1-25C9-47E0-8697-004D353C75FD}.Rsharp_app_release|Any CPU.ActiveCfg = Release|Any CPU
 		{3E1122C1-25C9-47E0-8697-004D353C75FD}.Rsharp_app_release|Any CPU.Build.0 = Release|Any CPU
-		{3E1122C1-25C9-47E0-8697-004D353C75FD}.Rsharp_app_release|x64.ActiveCfg = Release|x64
-		{3E1122C1-25C9-47E0-8697-004D353C75FD}.Rsharp_app_release|x64.Build.0 = Release|x64
+		{3E1122C1-25C9-47E0-8697-004D353C75FD}.Rsharp_app_release|x64.ActiveCfg = Debug|x64
+		{3E1122C1-25C9-47E0-8697-004D353C75FD}.Rsharp_app_release|x64.Build.0 = Debug|x64
 		{D410907F-A387-B1C5-6417-66B7623D41BE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{D410907F-A387-B1C5-6417-66B7623D41BE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D410907F-A387-B1C5-6417-66B7623D41BE}.Debug|x64.ActiveCfg = Debug|x64
