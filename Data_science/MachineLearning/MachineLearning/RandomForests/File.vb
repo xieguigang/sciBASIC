@@ -69,6 +69,7 @@ Imports System.IO
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.Java
+Imports Microsoft.VisualBasic.MachineLearning.ComponentModel.StoreProcedure
 
 Namespace RandomForests
 
@@ -113,6 +114,16 @@ Namespace RandomForests
                 Return phenotype.Length
             End Get
         End Property
+
+        Sub New()
+        End Sub
+
+        Sub New(df As MLDataFrame)
+            ID = df.samples.Select(Function(a) a.id).ToArray
+            phenotype = df.samples.Select(Function(a) a.labels(0)).ToArray
+            Genotype = df.samples.Select(Function(a) a.features).ToArray
+            attributeNames = df.featureNames
+        End Sub
 
     End Class
 
