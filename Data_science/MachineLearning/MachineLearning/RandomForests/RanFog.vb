@@ -77,6 +77,9 @@ Namespace RandomForests
     '
     ''''''''''''''''''''''''''' 80 columns wide //////////////////////////////////
 
+    ''' <summary>
+    ''' Random Forest for classified and regression problems 
+    ''' </summary>
     Public Class RanFog : Inherits MachineLearning.Model
 
         ''' <summary>
@@ -361,7 +364,7 @@ Namespace RandomForests
             '    MSEval_tree = MSEval_tree + (tst.phenotype(i) - y_hat(i) / (n_tree + 1)) * (tst.phenotype(i) - y_hat(i) / (n_tree + 1))
             'Next
             'Console.WriteLine("Iteration #" & n_tree + 1 & ";MSE in testing set=" & MSEval_tree / N_tst)
-            Console.WriteLine("average Loss Function in OOB=" & MSE_oob_ave / CSng(n_tree + 1) & "; N_oob=" & N_oob)
+            VBDebugger.EchoLine("average Loss Function in OOB=" & MSE_oob_ave / CSng(n_tree + 1) & "; N_oob=" & N_oob)
 
             Return (MSE_oob_ave / CSng(n_tree + 1), MSE_oob)
             ' outTreeTest.WriteLine(MSEval_tree / N_tst)
@@ -443,9 +446,9 @@ Namespace RandomForests
 
             ' outPred.Close()
             ' outEGBV.Close()
-            Console.WriteLine("TERMINATED WITHOUT ERRORS")
-            Console.WriteLine("Random Forest algorithm for regression and classification problems (Ver.Beta)")
-            Console.WriteLine("by Oscar Gonzalez-Recio (2019) ")
+            VBDebugger.EchoLine("TERMINATED WITHOUT ERRORS")
+            VBDebugger.EchoLine("Random Forest algorithm for regression and classification problems (Ver.Beta)")
+            VBDebugger.EchoLine("by Oscar Gonzalez-Recio (2019) ")
 
             Return New Result With {.Model = Me, .outGEBV = outEGBV.ToArray, .data = train}
         End Function

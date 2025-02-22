@@ -83,6 +83,9 @@ Namespace RandomForests
         <Description("Gini Index")> Gini_Index = 5
     End Enum
 
+    ''' <summary>
+    ''' the training dataset
+    ''' </summary>
     Public Class Data
 
         Public Property ID As String()
