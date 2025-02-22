@@ -105,6 +105,18 @@ Namespace ComponentModel.StoreProcedure
         ''' <returns></returns>
         Public Property featureLabels As String()
 
+        Public ReadOnly Property N_attributes As Integer
+            Get
+                Return featureNames.Length
+            End Get
+        End Property
+
+        Public ReadOnly Property N_tot As Integer
+            Get
+                Return samples.Length
+            End Get
+        End Property
+
         Public Overrides Function ToString() As String
             Return featureNames.GetJson & " -> " & featureLabels.GetJson
         End Function
