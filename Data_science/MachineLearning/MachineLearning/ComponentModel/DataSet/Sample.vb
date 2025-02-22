@@ -87,7 +87,7 @@ Namespace ComponentModel.StoreProcedure
     ''' <summary>
     ''' a collection of the samples data
     ''' </summary>
-    Public Class DataFrame
+    Public Class MLDataFrame
 
         ''' <summary>
         ''' a collection of the samples data.
