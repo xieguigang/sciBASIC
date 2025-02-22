@@ -57,14 +57,20 @@
 
 Imports System.Drawing
 Imports Microsoft.VisualBasic.Imaging
-Imports stdNum = System.Math
+Imports std = System.Math
 
 Namespace ComponentModel.Encoder
 
     Public Class ClassEncoder
 
+        ''' <summary>
+        ''' label class enums
+        ''' </summary>
         Dim m_colors As New Dictionary(Of String, ColorClass)
-        Dim labels As New List(Of String)
+        ''' <summary>
+        ''' the input label list
+        ''' </summary>
+        Dim m_labels As New List(Of String)
 
         ''' <summary>
         ''' get unique class label list
@@ -76,6 +82,12 @@ Namespace ComponentModel.Encoder
         Public ReadOnly Property Colors As ColorClass()
             Get
                 Return m_colors.Values.ToArray
+            End Get
+        End Property
+
+        Public ReadOnly Property labels As Double()
+            Get
+                Return AsNumeric(m_labels).ToArray
             End Get
         End Property
 
@@ -100,6 +112,12 @@ Namespace ComponentModel.Encoder
             Next
         End Sub
 
+        Public Iterator Function AsNumeric(labels As IEnumerable(Of String)) As IEnumerable(Of Double)
+            For Each str As String In labels
+                Yield m_colors(str).factor
+            Next
+        End Function
+
         ''' <summary>
         ''' 
         ''' </summary>
@@ -113,7 +131,7 @@ Namespace ComponentModel.Encoder
                 m_colors.Add(color.name, color)
             End If
 
-            labels.Add(color.name)
+            m_labels.Add(color.name)
 
             Return Me
         End Function
@@ -143,7 +161,7 @@ Namespace ComponentModel.Encoder
                 Call m_colors.Add(label, tag)
             End If
 
-            labels.Add(label)
+            Call m_labels.Add(label)
 
             Return Me
         End Function
@@ -151,7 +169,7 @@ Namespace ComponentModel.Encoder
         Public Function GetColor(value As Double) As ColorClass
             Dim min = m_colors.Values _
                 .Select(Function(cls)
-                            Return (ds:=stdNum.Abs(cls.factor - value), cls)
+                            Return (ds:=std.Abs(cls.factor - value), cls)
                         End Function) _
                 .OrderBy(Function(a) a.ds) _
                 .First
@@ -160,7 +178,7 @@ Namespace ComponentModel.Encoder
         End Function
 
         Public Iterator Function PopulateFactors() As IEnumerable(Of ColorClass)
-            For Each label As String In labels
+            For Each label As String In m_labels
                 Dim template As ColorClass = m_colors(label)
                 Dim factor As New ColorClass With {
                     .color = template.color,

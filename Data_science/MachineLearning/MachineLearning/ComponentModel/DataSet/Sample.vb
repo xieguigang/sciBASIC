@@ -139,6 +139,12 @@ Namespace ComponentModel.StoreProcedure
         Sub New()
         End Sub
 
+        Sub New(id As String, features As Double(), label As Double)
+            Me.id = id
+            Me.features = features
+            Me.features = {label}
+        End Sub
+
         ''' <summary>
         ''' make data copy from the given sample object, this constructor will assign the id, 
         ''' features and labels from the given sample data object.

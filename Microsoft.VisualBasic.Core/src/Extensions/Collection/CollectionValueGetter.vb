@@ -253,9 +253,15 @@ Public Module CollectionValueGetter
     ''' <param name="table"></param>
     ''' <param name="key"></param>
     ''' <param name="default"></param>
-    ''' <returns></returns>
+    ''' <returns>
+    ''' the value that associated with the given <paramref name="key"/>,
+    ''' which is going to be removed from the specific dictionary 
+    ''' <paramref name="table"/> object.
+    ''' </returns>
     <Extension>
-    Public Function TryPopOut(Of TKey, TValue)(table As Dictionary(Of TKey, TValue), key As TKey, Optional [default] As TValue = Nothing) As TValue
+    Public Function TryPopOut(Of TKey, TValue)(table As Dictionary(Of TKey, TValue),
+                                               key As TKey,
+                                               Optional [default] As TValue = Nothing) As TValue
         If table Is Nothing Then
             Return [default]
         ElseIf Not table.ContainsKey(key) Then
