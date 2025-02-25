@@ -383,6 +383,15 @@ Public Module TextDoc
         Return Nothing
     End Function
 
+    <Extension>
+    Public Iterator Function ReadAllLines(s As Stream, Optional encoding As Encoding = Nothing) As IEnumerable(Of String)
+        Using reader As New StreamReader(s, encoding Or UTF8)
+            Do While Not reader.EndOfStream
+                Yield reader.ReadLine
+            Loop
+        End Using
+    End Function
+
     ''' <summary>
     ''' This function is recommend using for the small(probably smaller than 300MB) text file reading.
     ''' </summary>

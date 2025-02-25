@@ -430,6 +430,24 @@ Namespace HashMaps
 
             Return hash
         End Function
+
+        ''' <summary>
+        ''' generate unique hashcode for a tuple object
+        ''' </summary>
+        ''' <param name="a">hashcode of one clr object.</param>
+        ''' <param name="b">hashcode of another clr object.</param>
+        ''' <returns></returns>
+        Public Function HashCodePair(a As ULong, b As ULong) As ULong
+            Dim hash As ULong = 17 ' 一个小的质数， 作为初始哈希值
+
+            Const prime1 As ULong = 2654435761 ' 一个大的质数
+            Const prime2 As ULong = 1597334677 ' 另一个大的质数
+
+            hash = hash * prime1 + a
+            hash = hash * prime2 + b
+
+            Return hash
+        End Function
 #End Region
     End Module
 End Namespace
