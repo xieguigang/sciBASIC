@@ -67,7 +67,7 @@ Module StreamIOHandler
     Friend Sub initStreamIOHandlers()
         Call IOHandler.RegisterHandle(AddressOf ISaveDataFrame, GetType(IEnumerable))
         Call IOHandler.RegisterHandle(AddressOf ISaveCsv, GetType(File))
-        Call IOHandler.RegisterHandle(AddressOf ISaveCsv, GetType(DataFrame))
+        Call IOHandler.RegisterHandle(AddressOf ISaveCsv, GetType(DataFrameResolver))
 
         Call IOHandler.RegisterHandle(AddressOf ISaveDataSet, GetType(IEnumerable(Of DataSet)))
         Call IOHandler.RegisterHandle(AddressOf ISaveDataSet, GetType(DataSet()))
@@ -79,18 +79,28 @@ Module StreamIOHandler
     End Sub
 
     Public Function ISaveDataSet(source As IEnumerable, path$, encoding As Encoding) As Boolean
-        Return DirectCast(source, IEnumerable(Of DataSet)).SaveTo(path, encoding:=encoding, layout:=New Dictionary(Of String, Integer) From {{NameOf(DataSet.ID), -999}})
+        Return DirectCast(source, IEnumerable(Of DataSet)) _
+            .SaveTo(path,
+                    encoding:=encoding,
+                    layout:=New Dictionary(Of String, Integer) From {
+                        {NameOf(DataSet.ID), -999}
+                    })
     End Function
 
     Public Function ISaveEntitySet(source As IEnumerable, path$, encoding As Encoding) As Boolean
-        Return DirectCast(source, IEnumerable(Of EntityObject)).SaveTo(path, encoding:=encoding, layout:=New Dictionary(Of String, Integer) From {{NameOf(EntityObject.ID), -999}})
+        Return DirectCast(source, IEnumerable(Of EntityObject)) _
+            .SaveTo(path,
+                    encoding:=encoding,
+                    layout:=New Dictionary(Of String, Integer) From {
+                        {NameOf(EntityObject.ID), -999}
+                    })
     End Function
 
     Public Function ISaveCsv(source As IEnumerable, path$, encoding As Encoding) As Boolean
         If TypeOf source Is File Then
             Return DirectCast(source, File).Save(path, encoding)
         Else
-            Return DirectCast(source, DataFrame).csv.Save(path, encoding)
+            Return DirectCast(source, DataFrameResolver).csv.Save(path, encoding)
         End If
     End Function
 

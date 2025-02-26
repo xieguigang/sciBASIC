@@ -162,13 +162,13 @@ Namespace TabularRender
 
         <Extension>
         Public Function LoadBarData(csv$, colors As Color()) As BarDataGroup
-            Dim file As DataFrame = DataFrame.CreateObject(New File(csv))
+            Dim file As DataFrameResolver = DataFrameResolver.CreateObject(New File(csv))
             Dim model As BarDataGroup = file.LoadBarData(colors)
             Return model
         End Function
 
         <Extension>
-        Public Function LoadBarData(csv As DataFrame, colors As Color()) As BarDataGroup
+        Public Function LoadBarData(csv As DataFrameResolver, colors As Color()) As BarDataGroup
             Dim header As RowObject = csv.Headers
             Dim names$() = header.Skip(1).ToArray
             Dim clData As Color()

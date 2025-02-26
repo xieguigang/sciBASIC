@@ -1,56 +1,56 @@
 ﻿#Region "Microsoft.VisualBasic::53ce5b55d52e33e3ae5c99736f6e7241, Data\DataFrame\Extensions\DocumentExtensions.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 495
-    '    Code Lines: 297 (60.00%)
-    ' Comment Lines: 129 (26.06%)
-    '    - Xml Docs: 93.02%
-    ' 
-    '   Blank Lines: 69 (13.94%)
-    '     File Size: 18.32 KB
+' Summaries:
 
 
-    ' Module DocumentExtensions
-    ' 
-    '     Function: Apply, CreateTable, DirectAppends, Distinct, GetColumnObjects
-    '               (+4 Overloads) GetColumnValues, GetLastRow, JoinColumns, LoadCsv, LoadData
-    '               LoadDictionary, LoadMappings, LoadTable, (+2 Overloads) LoadTsv, Normalization
-    '               ParseDoc, (+2 Overloads) SaveAsDataFrame, SaveTsv, TsvLine
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 495
+'    Code Lines: 297 (60.00%)
+' Comment Lines: 129 (26.06%)
+'    - Xml Docs: 93.02%
+' 
+'   Blank Lines: 69 (13.94%)
+'     File Size: 18.32 KB
+
+
+' Module DocumentExtensions
+' 
+'     Function: Apply, CreateTable, DirectAppends, Distinct, GetColumnObjects
+'               (+4 Overloads) GetColumnValues, GetLastRow, JoinColumns, LoadCsv, LoadData
+'               LoadDictionary, LoadMappings, LoadTable, (+2 Overloads) LoadTsv, Normalization
+'               ParseDoc, (+2 Overloads) SaveAsDataFrame, SaveTsv, TsvLine
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -59,15 +59,16 @@ Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
-Imports Microsoft.VisualBasic.Data.csv.IO
-Imports Microsoft.VisualBasic.Data.csv.StorageProvider.Reflection
+Imports Microsoft.VisualBasic.Data.Framework.IO
+Imports Microsoft.VisualBasic.Data.Framework.IO.CSVFile
+Imports Microsoft.VisualBasic.Data.Framework.StorageProvider.Reflection
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Serialization
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Microsoft.VisualBasic.Text
 Imports ASCII = Microsoft.VisualBasic.Text.ASCII
-Imports Table = Microsoft.VisualBasic.Data.csv.IO.File
+Imports Table = Microsoft.VisualBasic.Data.Framework.IO.File
 
 ''' <summary>
 ''' The csv document extensions API
@@ -337,7 +338,7 @@ Public Module DocumentExtensions
     End Function
 
     <Extension>
-    Public Function GetColumnValues(csv As DataFrame, synonyms As String()) As IEnumerable(Of String)
+    Public Function GetColumnValues(csv As DataFrameResolver, synonyms As String()) As IEnumerable(Of String)
         For Each name As String In synonyms.SafeQuery
             Dim offset As Integer = csv.GetOrdinal(name)
 
@@ -389,7 +390,7 @@ Public Module DocumentExtensions
     ''' is not exists in the table headers
     ''' </returns>
     <Extension>
-    Public Function GetColumnValues(csv As DataFrame, column$) As IEnumerable(Of String)
+    Public Function GetColumnValues(csv As DataFrameResolver, column$) As IEnumerable(Of String)
         Dim index As Integer = csv.Headers.IndexOf(column)
         Dim out As New List(Of String)
 
@@ -543,7 +544,7 @@ Public Module DocumentExtensions
         Dim textEncoding As Encoding = encoding.CodePage
         Dim header As RowObject = RowObject.TryParse(path.ReadFirstLine(textEncoding))
         Dim data As RowObject = RowObject.TryParse(path.GetLastLine(textEncoding))
-        Dim subFrame As DataFrame = IO.DataFrameResolver.CreateObject({header, data})
+        Dim subFrame As DataFrameResolver = DataFrameResolver.CreateObject({header, data})
         Dim buffer = Reflector.Convert(Of T)(subFrame, strict, silent:=silent)
 
         Return buffer.First

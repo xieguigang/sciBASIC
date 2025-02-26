@@ -347,7 +347,7 @@ Namespace StorageProvider.ComponentModels
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Function CacheOrdinal(df As DataFrame) As SchemaProvider
+        Public Function CacheOrdinal(df As DataFrameResolver) As SchemaProvider
             Return CacheOrdinal(AddressOf df.GetOrdinal)
         End Function
 

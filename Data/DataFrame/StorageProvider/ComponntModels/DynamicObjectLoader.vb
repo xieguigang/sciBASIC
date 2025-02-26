@@ -100,7 +100,7 @@ Namespace StorageProvider.ComponentModels
         ''' <returns></returns>
         Public Property lineNumber As Long
 
-        Protected Friend dataFrame As DataFrame
+        Protected Friend dataFrame As DataFrameResolver
 
         Public Sub New()
         End Sub
@@ -109,7 +109,7 @@ Namespace StorageProvider.ComponentModels
         ''' Copy the ordinal schema from the source data frame.
         ''' </summary>
         ''' <param name="df">The source data frame</param>
-        Public Sub New(df As DataFrame)
+        Public Sub New(df As DataFrameResolver)
             Schema = df.SchemaOridinal
         End Sub
 

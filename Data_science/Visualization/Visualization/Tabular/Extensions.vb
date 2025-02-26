@@ -66,7 +66,7 @@ Namespace TabularRender
 
         <Extension>
         Public Function ScatterSerials(csv As File, fieldX$, fieldY$, color$, Optional ptSize! = 5) As ChartPlots.SerialData
-            With DataFrame.CreateObject(csv)
+            With DataFrameResolver.CreateObject(csv)
                 Dim index As (X%, y%) = (.GetOrdinal(fieldX), .GetOrdinal(fieldY))
                 Dim columns = .GetColumnVectors.ToArray
                 Dim X = columns(index.X)

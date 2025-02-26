@@ -1,57 +1,58 @@
 ﻿#Region "Microsoft.VisualBasic::a480ef35f06884c898521b5cd25be080, Data_science\MachineLearning\MLDebugger\ANN\FrameExports.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 89
-    '    Code Lines: 74 (83.15%)
-    ' Comment Lines: 4 (4.49%)
-    '    - Xml Docs: 100.00%
-    ' 
-    '   Blank Lines: 11 (12.36%)
-    '     File Size: 3.60 KB
+' Summaries:
 
 
-    ' Module FrameExports
-    ' 
-    '     Function: ExportErrorCurve, ExportValueFrames, GetTimeIndex, NormalizeSample
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 89
+'    Code Lines: 74 (83.15%)
+' Comment Lines: 4 (4.49%)
+'    - Xml Docs: 100.00%
+' 
+'   Blank Lines: 11 (12.36%)
+'     File Size: 3.60 KB
+
+
+' Module FrameExports
+' 
+'     Function: ExportErrorCurve, ExportValueFrames, GetTimeIndex, NormalizeSample
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Data.Framework.IO
 Imports Microsoft.VisualBasic.DataMining.ComponentModel.Normalizer
 Imports Microsoft.VisualBasic.DataStorage.netCDF
 Imports Microsoft.VisualBasic.DataStorage.netCDF.Components
@@ -59,7 +60,7 @@ Imports Microsoft.VisualBasic.DataStorage.netCDF.DataVector
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MachineLearning.ComponentModel.StoreProcedure
 Imports Basic = Microsoft.VisualBasic.Language.Runtime
-Imports DataFrame = Microsoft.VisualBasic.Data.Framework.IO.DataFrame
+Imports DataSet = Microsoft.VisualBasic.MachineLearning.ComponentModel.StoreProcedure.DataSet
 Imports Excel = Microsoft.VisualBasic.Data.Framework.IO.DataSet
 
 Public Module FrameExports
@@ -90,12 +91,12 @@ Public Module FrameExports
     ''' 导出误差率曲线数据
     ''' </summary>
     ''' <returns></returns>
-    Public Function ExportErrorCurve(cdf As netCDFReader) As DataFrame
+    Public Function ExportErrorCurve(cdf As netCDFReader) As DataFrameResolver
         Dim errors As Double() = DirectCast(cdf.getDataVariable("fitness"), doubles).Array
         Dim index As Integer() = DirectCast(cdf.getDataVariable("iterations"), integers).Array
 
         With New Basic
-            Return New DataFrame(!iterations = index, !fitness = errors)
+            Return New DataFrameResolver(!iterations = index, !fitness = errors)
         End With
     End Function
 
