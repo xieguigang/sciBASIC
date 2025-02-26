@@ -261,7 +261,7 @@ Public Module Extensions
     ''' <remarks></remarks>
     '''
     <Extension>
-    Public Function DataFrame(reader As DbDataReader) As DataFrameReader
+    Public Function DataFrame(reader As DbDataReader) As DataFrameResolver
         Dim csv As New IO.File
         Dim fields As Integer() = reader.FieldCount.Sequence.ToArray
 
@@ -276,11 +276,11 @@ Public Module Extensions
                    Select s = Scripting.ToString(val)
         Loop
 
-        Return DataFrameReader.CreateObject(csv)
+        Return DataFrameResolver.CreateObject(csv)
     End Function
 
     <Extension>
-    Public Function DataFrame(table As DataTable) As DataFrameReader
+    Public Function DataFrame(table As DataTable) As DataFrameResolver
         Dim headers As New List(Of String)
         Dim rows As New List(Of RowObject)
         Dim rowObj As DataRow
@@ -301,7 +301,7 @@ Public Module Extensions
             rows.Add(New RowObject(rowData))
         Next
 
-        Return DataFrameReader.CreateObject(headers, rows)
+        Return DataFrameResolver.CreateObject(headers, rows)
     End Function
 
     ''' <summary>
@@ -325,7 +325,7 @@ Public Module Extensions
 
     <Extension>
     Public Function DataFrame(Of T)(source As IEnumerable(Of T)) As EntityObject()
-        Return IO.DataFrameReader.CreateObject(source.ToCsvDoc).AsDataSource(Of EntityObject)(False).ToArray
+        Return IO.DataFrameResolver.CreateObject(source.ToCsvDoc).AsDataSource(Of EntityObject)(False).ToArray
     End Function
 
     <Extension>
@@ -422,8 +422,8 @@ Public Module Extensions
     '''
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
-    Public Function DataFrame(data As File) As DataFrameReader
-        Return DataFrameReader.CreateObject(data)
+    Public Function DataFrame(data As File) As DataFrameResolver
+        Return DataFrameResolver.CreateObject(data)
     End Function
 
     ''' <summary>
@@ -457,7 +457,7 @@ Public Module Extensions
             sheet = dataSet
         End If
 
-        Return IO.DataFrameReader _
+        Return IO.DataFrameResolver _
             .CreateObject(file:=sheet) _
             .AsDataSource(Of T)(strict, maps, silent:=silent)
     End Function
@@ -471,7 +471,7 @@ Public Module Extensions
     ''' <returns></returns>
     ''' <remarks></remarks>
     <Extension>
-    Public Function AsDataSource(Of T As Class)(dataframe As DataFrameReader,
+    Public Function AsDataSource(Of T As Class)(dataframe As DataFrameResolver,
                                                 Optional explicit As Boolean = False,
                                                 Optional maps As Dictionary(Of String, String) = Nothing,
                                                 Optional silent As Boolean = False) As IEnumerable(Of T)
@@ -499,7 +499,7 @@ Public Module Extensions
                                                 Optional explicit As Boolean = True,
                                                 Optional silent As Boolean = False) As T()
 
-        Dim df As DataFrameReader = IO.DataFrameReader.CreateObject([Imports](importsFile, delimiter))
+        Dim df As DataFrameResolver = IO.DataFrameResolver.CreateObject([Imports](importsFile, delimiter))
         Dim data As T() = Reflector.Convert(Of T)(df, explicit, silent:=silent).ToArray
 
         Return data

@@ -543,7 +543,7 @@ Public Module DocumentExtensions
         Dim textEncoding As Encoding = encoding.CodePage
         Dim header As RowObject = RowObject.TryParse(path.ReadFirstLine(textEncoding))
         Dim data As RowObject = RowObject.TryParse(path.GetLastLine(textEncoding))
-        Dim subFrame As DataFrame = IO.DataFrameReader.CreateObject({header, data})
+        Dim subFrame As DataFrame = IO.DataFrameResolver.CreateObject({header, data})
         Dim buffer = Reflector.Convert(Of T)(subFrame, strict, silent:=silent)
 
         Return buffer.First

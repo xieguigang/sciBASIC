@@ -91,7 +91,7 @@ Namespace IO
     ''' <remarks>
     ''' (第一行总是没有的，即本对象类型适用于第一行为列标题行的数据)
     ''' </remarks>
-    Public Class DataFrameReader
+    Public Class DataFrameResolver
         Implements ISchema
         Implements IDataReader
         Implements IDisposable
@@ -182,7 +182,7 @@ Namespace IO
             Return columnList.AddAttribute(Name)
         End Function
 
-        Public Function MeasureTypeSchema() As DataFrameReader
+        Public Function MeasureTypeSchema() As DataFrameResolver
             Dim types As New List(Of Type)
 
             For Each col As String() In table.GetColumns
@@ -299,9 +299,9 @@ Namespace IO
             End Get
         End Property
 
-        Public Function Slice(index As IEnumerable(Of Integer)) As DataFrameReader
+        Public Function Slice(index As IEnumerable(Of Integer)) As DataFrameResolver
             Dim subset = Rows.ToArray.CopyOf(index.ToArray)
-            Dim df As New DataFrameReader With {
+            Dim df As New DataFrameResolver With {
                 .columnList = columnList,
                 .current = Nothing,
                 .p = Nothing,
@@ -346,7 +346,7 @@ Namespace IO
             Return table.GetColumns
         End Function
 
-        Public Function AppendLine(row As IEnumerable(Of String)) As DataFrameReader
+        Public Function AppendLine(row As IEnumerable(Of String)) As DataFrameResolver
             Call table.Add(New RowObject(row))
             Return Me
         End Function
@@ -406,7 +406,7 @@ Namespace IO
                                               Optional fast As Boolean = False,
                                               Optional skipWhile As NamedValue(Of Func(Of String, Boolean)) = Nothing,
                                               Optional simpleRowIterators As Boolean = True,
-                                              Optional tsv As Boolean = False) As DataFrameReader
+                                              Optional tsv As Boolean = False) As DataFrameResolver
             Dim file As File
 
             If fast Then
@@ -422,7 +422,7 @@ Namespace IO
 
         Public Overloads Shared Function Load(stream As Stream,
                                               Optional encoding As Encoding = Nothing,
-                                              Optional isTsv As Boolean = False) As DataFrameReader
+                                              Optional isTsv As Boolean = False) As DataFrameResolver
             Dim file As New File With {
                 ._innerTable = File.loads(
                     file:=stream,
@@ -432,7 +432,7 @@ Namespace IO
                     isTsv:=isTsv
                 )
             }
-            Dim table As DataFrameReader = CreateObject(file)
+            Dim table As DataFrameResolver = CreateObject(file)
 
             Return table
         End Function
@@ -513,7 +513,7 @@ Namespace IO
         ''' <returns></returns>
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Overloads Shared Function CreateObject(file As File) As DataFrameReader
+        Public Overloads Shared Function CreateObject(file As File) As DataFrameResolver
             Return createObjectInternal(file)
         End Function
 
@@ -523,8 +523,8 @@ Namespace IO
         ''' <param name="headers">the header text data of each columns</param>
         ''' <param name="rows">the table data that exlcudes the first header row.</param>
         ''' <returns></returns>
-        Public Overloads Shared Function CreateObject(headers As IEnumerable(Of String), rows As IEnumerable(Of RowObject)) As DataFrameReader
-            Dim df As New DataFrameReader With {
+        Public Overloads Shared Function CreateObject(headers As IEnumerable(Of String), rows As IEnumerable(Of RowObject)) As DataFrameResolver
+            Dim df As New DataFrameResolver With {
                 .table = rows.AsList,
                 .columnList = New HeaderSchema(headers)
             }
@@ -536,13 +536,13 @@ Namespace IO
         ''' </summary>
         ''' <param name="table"></param>
         ''' <param name="dataframe"></param>
-        Private Shared Sub Initialize(table As List(Of RowObject), ByRef dataframe As DataFrameReader)
+        Private Shared Sub Initialize(table As List(Of RowObject), ByRef dataframe As DataFrameResolver)
             dataframe.table = table.Skip(1).AsList
             dataframe.columnList = New HeaderSchema(getColumnList(table))
         End Sub
 
-        Private Shared Function createObjectInternal(file As File) As DataFrameReader
-            Dim dataframe As New DataFrameReader
+        Private Shared Function createObjectInternal(file As File) As DataFrameResolver
+            Dim dataframe As New DataFrameResolver
             Call Initialize(file._innerTable, dataframe)
             Return dataframe
         End Function
@@ -676,7 +676,7 @@ Namespace IO
         ''' </summary>
         ''' <param name="columnList"></param>
         ''' <returns></returns>
-        Public Function [Select](columnList As String()) As DataFrameReader
+        Public Function [Select](columnList As String()) As DataFrameResolver
             Dim newTable As New List(Of RowObject)
             ' Location pointer to the column
             Dim pList As Integer() = GetOrdinalSchema(columnList)
@@ -687,7 +687,7 @@ Namespace IO
                 newTable += New RowObject(pList.Select(Function(i) current.Column(i)))
             Loop
 
-            Return New DataFrameReader With {
+            Return New DataFrameResolver With {
                 .columnList = New HeaderSchema(columnList),
                 .table = newTable
             }
@@ -710,7 +710,7 @@ Namespace IO
         End Function
 
         ''' <summary>
-        ''' Closes the <see cref="System.Data.IDataReader"/>:<see cref="DataFrameReader"/> Object.  
+        ''' Closes the <see cref="System.Data.IDataReader"/>:<see cref="DataFrameResolver"/> Object.  
         ''' </summary>
         Private Sub Close() Implements IDataReader.Close
             ' Do Nothing

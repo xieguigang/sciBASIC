@@ -130,7 +130,7 @@ Namespace StorageProvider.Reflection
         ''' <remarks></remarks>
         ''' 
         <Extension>
-        Public Function LoadDataToObject(csv As DataFrameReader, type As Type,
+        Public Function LoadDataToObject(csv As DataFrameResolver, type As Type,
                                          Optional strict As Boolean = False,
                                          Optional metaBlank As String = "",
                                          Optional parallel As Boolean = True,
@@ -176,7 +176,7 @@ Namespace StorageProvider.Reflection
         ''' <remarks>在这里查找所有具有写属性的属性对象即可</remarks>
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Function Convert(Of TClass As Class)(df As DataFrameReader,
+        Public Function Convert(Of TClass As Class)(df As DataFrameResolver,
                                                     Optional strict As Boolean = True,
                                                     Optional metaBlank$ = "",
                                                     Optional silent As Boolean = False) As IEnumerable(Of TClass)
@@ -215,7 +215,7 @@ Namespace StorageProvider.Reflection
 
             Dim buffer As IEnumerable(Of T)
             ' read csv data
-            Dim reader As DataFrameReader = IO.DataFrameReader.Load(path, encoding, fast, skipWhile,
+            Dim reader As DataFrameResolver = IO.DataFrameResolver.Load(path, encoding, fast, skipWhile,
                                                         simpleRowIterators:=simpleRowIterators,
                                                         tsv:=tsv)
 
