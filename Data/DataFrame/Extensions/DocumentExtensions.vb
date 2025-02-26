@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::80b8564aaf9bc6bfe54b225db52ad152, Data\DataFrame\Extensions\DocumentExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::53ce5b55d52e33e3ae5c99736f6e7241, Data\DataFrame\Extensions\DocumentExtensions.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 496
-    '    Code Lines: 298 (60.08%)
-    ' Comment Lines: 129 (26.01%)
+    '   Total Lines: 495
+    '    Code Lines: 297 (60.00%)
+    ' Comment Lines: 129 (26.06%)
     '    - Xml Docs: 93.02%
     ' 
-    '   Blank Lines: 69 (13.91%)
-    '     File Size: 18.40 KB
+    '   Blank Lines: 69 (13.94%)
+    '     File Size: 18.32 KB
 
 
     ' Module DocumentExtensions
@@ -59,16 +59,15 @@ Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
-Imports Microsoft.VisualBasic.Data.Framework.IO
-Imports Microsoft.VisualBasic.Data.Framework.IO.CSVFile
-Imports Microsoft.VisualBasic.Data.Framework.StorageProvider.Reflection
+Imports Microsoft.VisualBasic.Data.csv.IO
+Imports Microsoft.VisualBasic.Data.csv.StorageProvider.Reflection
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Serialization
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Microsoft.VisualBasic.Text
 Imports ASCII = Microsoft.VisualBasic.Text.ASCII
-Imports Table = Microsoft.VisualBasic.Data.Framework.IO.File
+Imports Table = Microsoft.VisualBasic.Data.csv.IO.File
 
 ''' <summary>
 ''' The csv document extensions API
@@ -544,7 +543,7 @@ Public Module DocumentExtensions
         Dim textEncoding As Encoding = encoding.CodePage
         Dim header As RowObject = RowObject.TryParse(path.ReadFirstLine(textEncoding))
         Dim data As RowObject = RowObject.TryParse(path.GetLastLine(textEncoding))
-        Dim subFrame As DataFrame = IO.DataFrame.CreateObject({header, data})
+        Dim subFrame As DataFrame = IO.DataFrameReader.CreateObject({header, data})
         Dim buffer = Reflector.Convert(Of T)(subFrame, strict, silent:=silent)
 
         Return buffer.First

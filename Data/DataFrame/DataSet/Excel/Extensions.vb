@@ -70,10 +70,10 @@ Namespace Excel
         ''' <param name="sheetName">Table name</param>
         ''' <returns></returns>
         <Extension>
-        Public Function ReadXlsx(file$, Optional sheetName As String = "Sheet1") As DataFrame
+        Public Function ReadXlsx(file$, Optional sheetName As String = "Sheet1") As DataFrameReader
             Dim reader As New ExcelReader(file.GetFullPath, True, True)
             Dim data As DataTable = reader.GetWorksheet(sheetName)
-            Dim df As DataFrame = data.CreateDataReader.DataFrame
+            Dim df As DataFrameReader = data.CreateDataReader.DataFrame
             Return df
         End Function
 
@@ -89,7 +89,7 @@ Namespace Excel
         Public Function ReadXlsx(Of T As Class)(file As String,
                                                 Optional sheetName As String = "Sheet1",
                                                 Optional maps As Dictionary(Of String, String) = Nothing) As IEnumerable(Of T)
-            Dim df As DataFrame = file.ReadXlsx(sheetName)
+            Dim df As DataFrameReader = file.ReadXlsx(sheetName)
             Return df.AsDataSource(Of T)(False, maps)
         End Function
 
@@ -104,7 +104,7 @@ Namespace Excel
         Public Function LoadDataSet(file As String,
                                     Optional sheetName As String = "Sheet1",
                                     Optional uidMaps As String = Nothing) As IEnumerable(Of DataSet)
-            Dim df As DataFrame = file.ReadXlsx(sheetName)
+            Dim df As DataFrameReader = file.ReadXlsx(sheetName)
             Call df.doUpdateMaps(uidMaps)
             Return df.AsDataSource(Of DataSet)(False)
         End Function
@@ -120,7 +120,7 @@ Namespace Excel
         Public Function LoadEntitySet(file As String,
                                       Optional sheetName As String = "Sheet1",
                                       Optional uidMaps As String = Nothing) As IEnumerable(Of EntityObject)
-            Dim df As DataFrame = file.ReadXlsx(sheetName)
+            Dim df As DataFrameReader = file.ReadXlsx(sheetName)
             Call df.doUpdateMaps(uidMaps)
             Return df.AsDataSource(Of EntityObject)(False)
         End Function
@@ -132,7 +132,7 @@ Namespace Excel
         ''' <param name="mapName"></param>
         ''' 
         <Extension>
-        Private Sub doUpdateMaps(ByRef df As DataFrame, mapName$)
+        Private Sub doUpdateMaps(ByRef df As DataFrameReader, mapName$)
             If String.IsNullOrEmpty(mapName) Then
                 mapName = df.HeadTitles(Scan0)
             End If

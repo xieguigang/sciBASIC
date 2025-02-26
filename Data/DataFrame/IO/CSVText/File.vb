@@ -275,7 +275,7 @@ B21,B22,B23,...
         ''' <returns></returns>
         ''' <remarks>
         ''' 由于是使用<see cref="_innerTable"/>来作为数据源的，所以对于csv对象而言，是含有header数据的，即含有第一行数据
-        ''' 对于<see cref="DataFrame"/>类型而言，由于在创建对象的时候，第一行数据由于需要被用作为header，
+        ''' 对于<see cref="DataFrameReader"/>类型而言，由于在创建对象的时候，第一行数据由于需要被用作为header，
         ''' 所以这个内部表对象之中是不包含有header行的，即这个属性所输出的结果只中是不包含有header行的
         ''' </remarks>
         Public ReadOnly Property Columns As IEnumerable(Of String())
@@ -656,7 +656,7 @@ B21,B22,B23,...
         End Function
 
         ''' <summary>
-        ''' 这个方法是保存<see cref="DataFrame"></see>对象之中的数据所需要的
+        ''' 这个方法是保存<see cref="DataFrameReader"></see>对象之中的数据所需要的
         ''' </summary>
         ''' <returns></returns>
         ''' <remarks></remarks>
