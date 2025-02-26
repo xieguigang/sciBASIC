@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bf95312ef4daf1cb10a7e7560f540dc7, Data_science\MachineLearning\MachineLearning\ComponentModel\DataSet\Sample.vb"
+﻿#Region "Microsoft.VisualBasic::0880a8b54f1632c3131ca010da4854ae, Data_science\MachineLearning\MachineLearning\ComponentModel\DataSet\Sample.vb"
 
     ' Author:
     ' 
@@ -34,20 +34,26 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 278
-    '    Code Lines: 177 (63.67%)
-    ' Comment Lines: 60 (21.58%)
-    '    - Xml Docs: 95.00%
+    '   Total Lines: 324
+    '    Code Lines: 201 (62.04%)
+    ' Comment Lines: 75 (23.15%)
+    '    - Xml Docs: 96.00%
     ' 
-    '   Blank Lines: 41 (14.75%)
-    '     File Size: 10.34 KB
+    '   Blank Lines: 48 (14.81%)
+    '     File Size: 11.75 KB
 
 
+    '     Class MLDataFrame
+    ' 
+    '         Properties: featureLabels, featureNames, N_attributes, N_tot, samples
+    ' 
+    '         Function: ToString
+    ' 
     '     Class SampleData
     ' 
     '         Properties: features, id, labels
     ' 
-    '         Constructor: (+5 Overloads) Sub New
+    '         Constructor: (+6 Overloads) Sub New
     ' 
     '         Function: CheckInvalidNaN, CreateDataSet, Load, ToString, TransformDataset
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::193f67ffc0a6558739f3d7b3c9b00ecb, Data\DataFrame\Extensions\PipeStream.vb"
+﻿#Region "Microsoft.VisualBasic::49ffb7925adfdcb00d07c7280329032c, Data\DataFrame\Extensions\PipeStream.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 10 (11.49%)
-    '     File Size: 3.32 KB
+    '     File Size: 3.34 KB
 
 
     ' Module PipeStream
@@ -55,9 +55,9 @@
 Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
-Imports Microsoft.VisualBasic.Data.csv.IO
+Imports Microsoft.VisualBasic.Data.Framework.IO
 Imports Microsoft.VisualBasic.Linq
-Imports Table = Microsoft.VisualBasic.Data.csv.IO.File
+Imports Table = Microsoft.VisualBasic.Data.Framework.IO.File
 
 Public Module PipeStream
 

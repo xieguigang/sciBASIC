@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2ce131e7595c81e568ed800967c4e843, Data\DataFrame\IO\csv\File.vb"
+﻿#Region "Microsoft.VisualBasic::ff020d60d91082a08dd54efa7ab27c63, Data\DataFrame\IO\CSVText\File.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 976
-    '    Code Lines: 592 (60.66%)
-    ' Comment Lines: 259 (26.54%)
+    '   Total Lines: 977
+    '    Code Lines: 593 (60.70%)
+    ' Comment Lines: 259 (26.51%)
     '    - Xml Docs: 96.91%
     ' 
-    '   Blank Lines: 125 (12.81%)
-    '     File Size: 39.60 KB
+    '   Blank Lines: 125 (12.79%)
+    '     File Size: 39.66 KB
 
 
     '     Class File
@@ -84,7 +84,8 @@ Imports System.Text
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
-Imports Microsoft.VisualBasic.Data.csv.StorageProvider.Reflection
+Imports Microsoft.VisualBasic.Data.Framework.IO.CSVFile
+Imports Microsoft.VisualBasic.Data.Framework.StorageProvider.Reflection
 Imports Microsoft.VisualBasic.FileIO
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
@@ -655,7 +656,7 @@ B21,B22,B23,...
         End Function
 
         ''' <summary>
-        ''' 这个方法是保存<see cref="Csv.DataFrame"></see>对象之中的数据所需要的
+        ''' 这个方法是保存<see cref="DataFrame"></see>对象之中的数据所需要的
         ''' </summary>
         ''' <returns></returns>
         ''' <remarks></remarks>
@@ -750,7 +751,7 @@ B21,B22,B23,...
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Function LoadTsv(path$, Optional encoding As Encodings = Encodings.UTF8) As File
-            Return csv.Imports(path, ASCII.TAB, encoding.CodePage)
+            Return Framework.Imports(path, ASCII.TAB, encoding.CodePage)
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -764,7 +765,7 @@ B21,B22,B23,...
             If tsv Then
                 Return New RowObject(firstLine.Split(ASCII.TAB))
             Else
-                Return New RowObject(IO.Tokenizer.CharsParser(firstLine))
+                Return New RowObject(Tokenizer.CharsParser(firstLine))
             End If
         End Function
 

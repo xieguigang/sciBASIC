@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::48ff3084033ccacd65e4fbddc9f522b8, mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\XLSX\IO\XlsxDirectoryPart\xl.vb"
+﻿#Region "Microsoft.VisualBasic::e12ca993c0920d4337fc54ad970561fa, mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\XLSX\IO\XlsxDirectoryPart\xl.vb"
 
     ' Author:
     ' 
@@ -63,7 +63,7 @@ Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.MIME.Office.Excel.XLSX.FileIO
 Imports Microsoft.VisualBasic.MIME.Office.Excel.XLSX.XML.xl
 Imports Microsoft.VisualBasic.MIME.Office.Excel.XLSX.XML.xl.worksheets
-Imports csv = Microsoft.VisualBasic.Data.csv.IO.File
+Imports csv = Microsoft.VisualBasic.Data.Framework.IO.File
 
 Namespace XLSX.Model.Directory
 

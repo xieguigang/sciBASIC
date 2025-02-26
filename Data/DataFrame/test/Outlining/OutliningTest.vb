@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::64d64639922f14472f4f7cf45564bcf9, Data\DataFrame\test\Outlining\OutliningTest.vb"
+﻿#Region "Microsoft.VisualBasic::8fcf3d390a0d91d136fe492136d4433b, Data\DataFrame\test\Outlining\OutliningTest.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 0.00%
     ' 
     '   Blank Lines: 4 (36.36%)
-    '     File Size: 253 B
+    '     File Size: 259 B
 
 
     ' Module OutliningTest
@@ -51,7 +51,7 @@
 
 #End Region
 
-Imports Microsoft.VisualBasic.Data.csv.Outlining
+Imports Microsoft.VisualBasic.Data.Framework.Outlining
 
 Module OutliningTest
 

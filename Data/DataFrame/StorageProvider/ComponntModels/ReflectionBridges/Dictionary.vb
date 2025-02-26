@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3d7a045365c266ca68f9ce84c253257f, Data\DataFrame\StorageProvider\ComponntModels\ReflectionBridges\Dictionary.vb"
+﻿#Region "Microsoft.VisualBasic::68fa54f9fa2661c9474d93e4d9fbe8c3, Data\DataFrame\StorageProvider\ComponntModels\ReflectionBridges\Dictionary.vb"
 
     ' Author:
     ' 
@@ -56,7 +56,7 @@
 #End Region
 
 Imports System.Reflection
-Imports Microsoft.VisualBasic.Data.csv.StorageProvider.Reflection
+Imports Microsoft.VisualBasic.Data.Framework.StorageProvider.Reflection
 
 Namespace StorageProvider.ComponentModels
 

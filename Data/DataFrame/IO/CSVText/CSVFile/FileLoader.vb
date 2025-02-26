@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::17910db8b7c0989d246a022168739715, Data\DataFrame\IO\csv\FileLoader.vb"
+﻿#Region "Microsoft.VisualBasic::299df2904a86bfc52564d8764cba25a4, Data\DataFrame\IO\CSVText\CSVFile\FileLoader.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 86.96%
     ' 
     '   Blank Lines: 20 (12.99%)
-    '     File Size: 7.25 KB
+    '     File Size: 7.26 KB
 
 
     '     Module FileLoader
@@ -63,7 +63,7 @@ Imports Microsoft.VisualBasic.Linq.Extensions
 Imports Microsoft.VisualBasic.Text
 Imports ASCII = Microsoft.VisualBasic.Text.ASCII
 
-Namespace IO
+Namespace IO.CSVFile
 
     ''' <summary>
     ''' Wrapper module for read csv/tsv file

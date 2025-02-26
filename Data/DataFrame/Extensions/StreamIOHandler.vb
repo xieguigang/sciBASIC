@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b9d53861eb2c7e0809d9f5a72b44e7ac, Data\DataFrame\Extensions\StreamIOHandler.vb"
+﻿#Region "Microsoft.VisualBasic::b2b99777c0624840b092e0b6ad899e15, Data\DataFrame\Extensions\StreamIOHandler.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 53
-    '    Code Lines: 39 (73.58%)
-    ' Comment Lines: 3 (5.66%)
+    '   Total Lines: 54
+    '    Code Lines: 40 (74.07%)
+    ' Comment Lines: 3 (5.56%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 11 (20.75%)
-    '     File Size: 2.66 KB
+    '   Blank Lines: 11 (20.37%)
+    '     File Size: 2.73 KB
 
 
     ' Module StreamIOHandler
@@ -54,8 +54,9 @@
 #End Region
 
 Imports System.Text
-Imports Microsoft.VisualBasic.Data.csv.IO
-Imports Microsoft.VisualBasic.Data.csv.StorageProvider.Reflection
+Imports Microsoft.VisualBasic.Data.Framework.IO
+Imports Microsoft.VisualBasic.Data.Framework.IO.CSVFile
+Imports Microsoft.VisualBasic.Data.Framework.StorageProvider.Reflection
 Imports Microsoft.VisualBasic.My.FrameworkInternal
 
 Module StreamIOHandler

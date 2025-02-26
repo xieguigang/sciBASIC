@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::703a22500c45f1b912a839a7145cd9c4, Data_science\Visualization\Visualization\Tabular\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::a3c66f57eba6b41da70d83f6a065f478, Data_science\Visualization\Visualization\Tabular\Extensions.vb"
 
     ' Author:
     ' 
@@ -55,7 +55,7 @@
 Imports System.Drawing
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Data.ChartPlots
-Imports Microsoft.VisualBasic.Data.csv.IO
+Imports Microsoft.VisualBasic.Data.Framework.IO
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.Quantile

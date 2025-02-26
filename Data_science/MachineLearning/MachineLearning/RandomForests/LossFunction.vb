@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::69a1815b362191cb2ab067259b14b036, Data_science\MachineLearning\MachineLearning\RandomForests\LossFunction.vb"
+﻿#Region "Microsoft.VisualBasic::d4180706faef7434aee370fc381737ac, Data_science\MachineLearning\MachineLearning\RandomForests\LossFunction.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 20.00%
     ' 
     '   Blank Lines: 14 (3.64%)
-    '     File Size: 19.90 KB
+    '     File Size: 19.83 KB
 
 
     '     Class LossFunction

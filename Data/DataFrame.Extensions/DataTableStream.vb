@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3be9a1b3192d104bdf0bc6f97dbf6c4f, Data\DataFrame.Extensions\DataTableStream.vb"
+﻿#Region "Microsoft.VisualBasic::54948aefd358337bf611f4dbea19489e, Data\DataFrame.Extensions\DataTableStream.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 18 (12.00%)
-    '     File Size: 6.92 KB
+    '     File Size: 6.94 KB
 
 
     ' Module DataTableStream
@@ -55,11 +55,11 @@
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.TypeCast
-Imports Microsoft.VisualBasic.Data.csv.StorageProvider.ComponentModels
+Imports Microsoft.VisualBasic.Data.Framework.StorageProvider.ComponentModels
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.DataFrame
 Imports Microsoft.VisualBasic.Scripting.Runtime
-Imports TableSchema = Microsoft.VisualBasic.Data.csv.StorageProvider.ComponentModels.SchemaProvider
+Imports TableSchema = Microsoft.VisualBasic.Data.Framework.StorageProvider.ComponentModels.SchemaProvider
 
 Public Module DataTableStream
 

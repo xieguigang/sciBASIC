@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::56479ba0ea3136d11d7fcc87fceb0fab, Data\DataFrame\DATA\MySQL.vb"
+﻿#Region "Microsoft.VisualBasic::a0e7d4c2ff4e5488dc319edd63614288, Data\DataFrame\DataSet\MySQL.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 202
-    '    Code Lines: 122 (60.40%)
-    ' Comment Lines: 55 (27.23%)
+    '   Total Lines: 203
+    '    Code Lines: 123 (60.59%)
+    ' Comment Lines: 55 (27.09%)
     '    - Xml Docs: 96.36%
     ' 
-    '   Blank Lines: 25 (12.38%)
-    '     File Size: 8.02 KB
+    '   Blank Lines: 25 (12.32%)
+    '     File Size: 8.08 KB
 
 
     '     Module MySQL
@@ -60,7 +60,8 @@ Imports System.Runtime.CompilerServices
 Imports System.Text.RegularExpressions
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
-Imports Microsoft.VisualBasic.Data.csv.IO
+Imports Microsoft.VisualBasic.Data.Framework.IO
+Imports Microsoft.VisualBasic.Data.Framework.IO.CSVFile
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Text
@@ -207,7 +208,7 @@ Namespace DATA
             Dim values As IEnumerable(Of String)
 
             For Each block As String In blocks
-                values = IO.Tokenizer _
+                values = Tokenizer _
                     .CharsParser(block,, ASCII.Mark) _
                     .ToArray
 
@@ -226,7 +227,7 @@ Namespace DATA
         <Extension>
         Public Function SQLValues(insertSQL$) As String()
             Dim values$ = Regex.Split(insertSQL, "\)\s*VALUES\s*\(", RegexICSng).Last
-            Dim t$() = IO.Tokenizer _
+            Dim t$() = Tokenizer _
                 .CharsParser(values, quot:=ASCII.Mark) _
                 .Select(Function(s) s.GetStackValue("'", "'")) _
                 .ToArray
@@ -246,7 +247,7 @@ Namespace DATA
                 .StringSplit("\s*VALUES\s*\(") _
                 .First _
                 .GetStackValue("(", ")")
-            Dim names$() = IO.Tokenizer _
+            Dim names$() = Tokenizer _
                 .CharsParser(fields) _
                 .Select(Function(s) s.GetStackValue("`", "`")) _
                 .ToArray

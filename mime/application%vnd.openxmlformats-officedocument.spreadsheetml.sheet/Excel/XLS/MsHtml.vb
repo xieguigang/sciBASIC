@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9cbceee9b6bb35d9c119b11702acb973, mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\XLS\MsHtml.vb"
+﻿#Region "Microsoft.VisualBasic::d6c0e0874eb971f7235080c232ba4f9c, mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\XLS\MsHtml.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 8 (14.29%)
-    '     File Size: 2.13 KB
+    '     File Size: 2.15 KB
 
 
     '     Module MsHtml
@@ -54,9 +54,9 @@
 
 Imports System.Runtime.CompilerServices
 Imports System.Text
-Imports Microsoft.VisualBasic.Data.csv
-Imports Microsoft.VisualBasic.Data.csv.DATA
-Imports Table = Microsoft.VisualBasic.Data.csv.IO.File
+Imports Microsoft.VisualBasic.Data.Framework
+Imports Microsoft.VisualBasic.Data.Framework.DATA
+Imports Table = Microsoft.VisualBasic.Data.Framework.IO.File
 
 Namespace XLS
 

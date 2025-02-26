@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0608a57a4031a51be02b2312409fb656, Data\DataFrame.Extensions\Serialize\ObjectSchema\Schema.vb"
+﻿#Region "Microsoft.VisualBasic::09d2293b3edf323abcce6196ec162a5a, Data\DataFrame.Extensions\Serialize\ObjectSchema\Schema.vb"
 
     ' Author:
     ' 
@@ -60,7 +60,7 @@ Imports System.Reflection
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
-Imports Microsoft.VisualBasic.Data.csv.StorageProvider.Reflection.TypeSchemaProvider
+Imports Microsoft.VisualBasic.Data.Framework.StorageProvider.Reflection.TypeSchemaProvider
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Serialization.JSON
 

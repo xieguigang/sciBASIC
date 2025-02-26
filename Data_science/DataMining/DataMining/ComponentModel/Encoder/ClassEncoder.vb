@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::aa8566016b4d5ce8bdb2cae3df9d94e5, Data_science\DataMining\DataMining\ComponentModel\Encoder\ClassEncoder.vb"
+﻿#Region "Microsoft.VisualBasic::066cc25489e7c9e1f5422a63b2626def, Data_science\DataMining\DataMining\ComponentModel\Encoder\ClassEncoder.vb"
 
     ' Author:
     ' 
@@ -34,21 +34,22 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 137
-    '    Code Lines: 87 (63.50%)
-    ' Comment Lines: 27 (19.71%)
-    '    - Xml Docs: 92.59%
+    '   Total Lines: 160
+    '    Code Lines: 101 (63.12%)
+    ' Comment Lines: 33 (20.62%)
+    '    - Xml Docs: 93.94%
     ' 
-    '   Blank Lines: 23 (16.79%)
-    '     File Size: 4.19 KB
+    '   Blank Lines: 26 (16.25%)
+    '     File Size: 4.93 KB
 
 
     '     Class ClassEncoder
     ' 
-    '         Properties: Colors
+    '         Properties: Colors, labels
     ' 
     '         Constructor: (+3 Overloads) Sub New
-    '         Function: (+2 Overloads) AddClass, GetColor, PopulateFactors, Union
+    '         Function: (+2 Overloads) AddClass, AsNumeric, GetColor, PopulateFactors, ToString
+    '                   Union
     ' 
     ' 
     ' /********************************************************************************/

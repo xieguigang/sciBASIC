@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d7e7598023bed47c287f9be4694741ae, Data_science\Visualization\Visualization\Kmeans\Kmeans.vb"
+﻿#Region "Microsoft.VisualBasic::8bb4a0310e8764e407975ab3d125c03f, Data_science\Visualization\Visualization\Kmeans\Kmeans.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 93.88%
     ' 
     '   Blank Lines: 29 (10.36%)
-    '     File Size: 13.28 KB
+    '     File Size: 13.29 KB
 
 
     '     Module KmeansExtensions
@@ -59,8 +59,8 @@ Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.ChartPlots
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Legend
 Imports Microsoft.VisualBasic.Data.ChartPlots.Plot3D
-Imports Microsoft.VisualBasic.Data.csv
-Imports Microsoft.VisualBasic.Data.csv.IO
+Imports Microsoft.VisualBasic.Data.Framework
+Imports Microsoft.VisualBasic.Data.Framework.IO
 Imports Microsoft.VisualBasic.DataMining.KMeans
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors

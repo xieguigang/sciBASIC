@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6fa66e9d20477d9f29681ba976a96ee1, Data\DataFrame\Extensions\Math.vb"
+﻿#Region "Microsoft.VisualBasic::b46086fac187321086fc752869b741e8, Data\DataFrame\Extensions\Math.vb"
 
     ' Author:
     ' 
@@ -52,7 +52,7 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
-Imports Microsoft.VisualBasic.Data.csv.IO
+Imports Microsoft.VisualBasic.Data.Framework.IO
 Imports std = System.Math
 
 ''' <summary>

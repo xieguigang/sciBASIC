@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1612507bf95fc2bc31178c8151f6c450, Data\DataFrame.Extensions\Serialize\ObjectSchema\Field.vb"
+﻿#Region "Microsoft.VisualBasic::22d56631ffeb9c765ed0211ea2cc4182, Data\DataFrame.Extensions\Serialize\ObjectSchema\Field.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 8 (14.04%)
-    '     File Size: 1.91 KB
+    '     File Size: 1.93 KB
 
 
     '     Class Field
@@ -57,8 +57,8 @@
 Imports System.Reflection
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
-Imports Microsoft.VisualBasic.Data.csv.StorageProvider
-Imports Microsoft.VisualBasic.Data.csv.StorageProvider.Reflection
+Imports Microsoft.VisualBasic.Data.Framework.StorageProvider
+Imports Microsoft.VisualBasic.Data.Framework.StorageProvider.Reflection
 
 Namespace Serialize.ObjectSchema
 

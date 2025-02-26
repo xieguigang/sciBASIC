@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e7e860d24dde996ecca0d9317368a9e8, Data\DataFrame\IO\DataFrame\HeaderSchema.vb"
+﻿#Region "Microsoft.VisualBasic::02aee3f8af96552f4c0cf646d7e6fdfc, Data\DataFrame\IO\DataFrame\HeaderSchema.vb"
 
     ' Author:
     ' 
@@ -63,7 +63,7 @@ Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
-Imports Microsoft.VisualBasic.Data.csv.StorageProvider.ComponentModels
+Imports Microsoft.VisualBasic.Data.Framework.StorageProvider.ComponentModels
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Linq.Extensions

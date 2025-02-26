@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1a94179f171cb5cf078e77708f9af12d, Data\DataFrame\DATA\RDataFrameHelpers.vb"
+﻿#Region "Microsoft.VisualBasic::dc1e99083cce7dda739ce8c3f0ecdcba, Data\DataFrame\DataSet\RDataFrameHelpers.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 90.91%
     ' 
     '   Blank Lines: 12 (16.90%)
-    '     File Size: 2.73 KB
+    '     File Size: 2.74 KB
 
 
     '     Module RDataFrameHelpers
@@ -54,7 +54,7 @@
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Collection
-Imports Microsoft.VisualBasic.Data.csv.IO
+Imports Microsoft.VisualBasic.Data.Framework.IO
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Text
 

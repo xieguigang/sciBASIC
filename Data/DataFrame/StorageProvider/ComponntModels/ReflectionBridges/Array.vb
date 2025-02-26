@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::df9ded7ff1f9d7e73e101cea0ddb4690, Data\DataFrame\StorageProvider\ComponntModels\ReflectionBridges\Array.vb"
+﻿#Region "Microsoft.VisualBasic::d030e58820a6cec09ce746f3be73afe7, Data\DataFrame\StorageProvider\ComponntModels\ReflectionBridges\Array.vb"
 
     ' Author:
     ' 
@@ -62,7 +62,7 @@
 #End Region
 
 Imports System.Reflection
-Imports Microsoft.VisualBasic.Data.csv.StorageProvider.Reflection
+Imports Microsoft.VisualBasic.Data.Framework.StorageProvider.Reflection
 Imports Microsoft.VisualBasic.Linq
 
 Namespace StorageProvider.ComponentModels

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::221a858fb8d9d70d848d8149d4995fa1, Data_science\Visualization\Plots-statistics\HeatMap\PlotExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::182b0513248659c3f37dc5f9e73f5961, Data_science\Visualization\Plots-statistics\Heatmap\PlotExtensions.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 92.31%
     ' 
     '   Blank Lines: 17 (14.17%)
-    '     File Size: 5.07 KB
+    '     File Size: 5.08 KB
 
 
     '     Module PlotExtensions
@@ -54,7 +54,7 @@
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
-Imports Microsoft.VisualBasic.Data.csv.IO
+Imports Microsoft.VisualBasic.Data.Framework.IO
 Imports Microsoft.VisualBasic.DataMining.KMeans
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq

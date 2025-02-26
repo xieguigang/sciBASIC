@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9061108d6e4da6b89aedbbf152b1b0e9, Data\DataFrame\Mappings.vb"
+﻿#Region "Microsoft.VisualBasic::368904758eb2fd622f58b41f34b59944, Data\DataFrame\Mappings.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 115
-    '    Code Lines: 60 (52.17%)
-    ' Comment Lines: 42 (36.52%)
-    '    - Xml Docs: 92.86%
+    '   Total Lines: 118
+    '    Code Lines: 61 (51.69%)
+    ' Comment Lines: 44 (37.29%)
+    '    - Xml Docs: 93.18%
     ' 
-    '   Blank Lines: 13 (11.30%)
-    '     File Size: 5.02 KB
+    '   Blank Lines: 13 (11.02%)
+    '     File Size: 5.12 KB
 
 
     ' Class MappingsHelper
@@ -54,15 +54,18 @@
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
-Imports Microsoft.VisualBasic.Data.csv.IO
-Imports Microsoft.VisualBasic.Data.csv.StorageProvider.ComponentModels
-Imports Field = Microsoft.VisualBasic.Data.csv.StorageProvider.ComponentModels.StorageProvider
+Imports Microsoft.VisualBasic.Data.Framework.IO
+Imports Microsoft.VisualBasic.Data.Framework.IO.CSVFile
+Imports Microsoft.VisualBasic.Data.Framework.StorageProvider.ComponentModels
+Imports Field = Microsoft.VisualBasic.Data.Framework.StorageProvider.ComponentModels.StorageProvider
 
 ''' <summary>
 ''' Handling the data fields mapping for make processing of
 ''' the csv headers.
-''' (在写csv的时候生成列域名的映射的一些快捷函数)
 ''' </summary>
+''' <remarks>
+''' (在写csv的时候生成列域名的映射的一些快捷函数)
+''' </remarks>
 Public Class MappingsHelper
 
     ''' <summary>

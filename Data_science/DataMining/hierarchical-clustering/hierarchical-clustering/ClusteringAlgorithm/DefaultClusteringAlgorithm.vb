@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1db91a0197c8dbd7fbcc3789cad71cd1, Data_science\DataMining\hierarchical-clustering\hierarchical-clustering\ClusteringAlgorithm\DefaultClusteringAlgorithm.vb"
+﻿#Region "Microsoft.VisualBasic::e2446cf9274b188b39e302338285633f, Data_science\DataMining\hierarchical-clustering\hierarchical-clustering\ClusteringAlgorithm\DefaultClusteringAlgorithm.vb"
 
     ' Author:
     ' 
@@ -34,20 +34,21 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 174
-    '    Code Lines: 112 (64.37%)
-    ' Comment Lines: 28 (16.09%)
+    '   Total Lines: 172
+    '    Code Lines: 110 (63.95%)
+    ' Comment Lines: 28 (16.28%)
     '    - Xml Docs: 17.86%
     ' 
-    '   Blank Lines: 34 (19.54%)
-    '     File Size: 7.55 KB
+    '   Blank Lines: 34 (19.77%)
+    '     File Size: 7.30 KB
 
 
     ' Class DefaultClusteringAlgorithm
     ' 
     '     Properties: debug
     ' 
-    '     Function: (+2 Overloads) createClusters, createLinkages, performClustering, performFlatClustering, performWeightedClustering
+    '     Function: alignRow, (+2 Overloads) createClusters, createLinkages, performClustering, performFlatClustering
+    '               performWeightedClustering
     ' 
     '     Sub: checkArguments
     ' 

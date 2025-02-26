@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f6e4af7dfa353d7f8afaf8c39cc198bc, Data\DataFrame\IO\csv\RowTokenizer.vb"
+﻿#Region "Microsoft.VisualBasic::c7c9994c807decb6578a91ec4757f282, Data\DataFrame\IO\CSVText\CSVFile\RowTokenizer.vb"
 
     ' Author:
     ' 
@@ -57,7 +57,7 @@ Imports Microsoft.VisualBasic.Scripting.TokenIcer
 Imports Microsoft.VisualBasic.Text
 Imports Microsoft.VisualBasic.Text.Parser
 
-Namespace IO
+Namespace IO.CSVFile
 
     ''' <summary>
     ''' Parse the csv row by char scanning

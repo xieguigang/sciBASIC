@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f94c4bf723c0ef95cd828a69457da555, Data_science\NLP\Stemmer.vb"
+﻿#Region "Microsoft.VisualBasic::4d9cc8feb94d1182f5bffaab1f156143, Data_science\NLP\Stemmer.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 44.31%
     ' 
     '   Blank Lines: 39 (5.88%)
-    '     File Size: 21.51 KB
+    '     File Size: 21.50 KB
 
 
     ' Class Stemmer
@@ -722,4 +722,3 @@ Public Class Stemmer
         i = 0
     End Sub
 End Class
-

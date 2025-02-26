@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ae5def23fc6fdb22a952566c8a989354, gr\network-visualization\network_layout\forceNetwork.vb"
+﻿#Region "Microsoft.VisualBasic::6a028338107c70d19a7dbe7dae42cdd4, gr\network-visualization\network_layout\forceNetwork.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 163
-    '    Code Lines: 111 (68.10%)
-    ' Comment Lines: 34 (20.86%)
+    '   Total Lines: 130
+    '    Code Lines: 82 (63.08%)
+    ' Comment Lines: 34 (26.15%)
     '    - Xml Docs: 91.18%
     ' 
-    '   Blank Lines: 18 (11.04%)
-    '     File Size: 6.90 KB
+    '   Blank Lines: 14 (10.77%)
+    '     File Size: 5.71 KB
 
 
     ' Module forceNetwork

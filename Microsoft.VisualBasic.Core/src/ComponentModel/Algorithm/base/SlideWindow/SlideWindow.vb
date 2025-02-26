@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7a3156fb0868cd0be2c2da152b5023fc, Microsoft.VisualBasic.Core\src\ComponentModel\Algorithm\base\SlideWindow\SlideWindow.vb"
+﻿#Region "Microsoft.VisualBasic::5099e3079efec16919b33212601347b6, Microsoft.VisualBasic.Core\src\ComponentModel\Algorithm\base\SlideWindow\SlideWindow.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 13 (12.87%)
-    '     File Size: 3.59 KB
+    '     File Size: 3.61 KB
 
 
     '     Structure SlideWindow

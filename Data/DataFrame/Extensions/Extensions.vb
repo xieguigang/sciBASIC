@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::dd9da75f3dfa839d979fa06bbe406e40, Data\DataFrame\Extensions\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::d9d5f22ad5d8b442042f07ae294a5e8d, Data\DataFrame\Extensions\Extensions.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 666
-    '    Code Lines: 380 (57.06%)
-    ' Comment Lines: 212 (31.83%)
+    '   Total Lines: 667
+    '    Code Lines: 381 (57.12%)
+    ' Comment Lines: 212 (31.78%)
     '    - Xml Docs: 92.92%
     ' 
-    '   Blank Lines: 74 (11.11%)
-    '     File Size: 28.70 KB
+    '   Blank Lines: 74 (11.09%)
+    '     File Size: 28.80 KB
 
 
     ' Module Extensions
@@ -64,10 +64,11 @@ Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
-Imports Microsoft.VisualBasic.Data.csv.IO
-Imports Microsoft.VisualBasic.Data.csv.IO.Linq
-Imports Microsoft.VisualBasic.Data.csv.StorageProvider.ComponentModels
-Imports Microsoft.VisualBasic.Data.csv.StorageProvider.Reflection
+Imports Microsoft.VisualBasic.Data.Framework.IO
+Imports Microsoft.VisualBasic.Data.Framework.IO.CSVFile
+Imports Microsoft.VisualBasic.Data.Framework.IO.Linq
+Imports Microsoft.VisualBasic.Data.Framework.StorageProvider.ComponentModels
+Imports Microsoft.VisualBasic.Data.Framework.StorageProvider.Reflection
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Linq
@@ -76,7 +77,7 @@ Imports Microsoft.VisualBasic.Scripting
 Imports Microsoft.VisualBasic.Text
 Imports any = Microsoft.VisualBasic.Scripting
 Imports ASCII = Microsoft.VisualBasic.Text.ASCII
-Imports File_csv = Microsoft.VisualBasic.Data.csv.IO.File
+Imports File_csv = Microsoft.VisualBasic.Data.Framework.IO.File
 
 ''' <summary>
 ''' The shortcuts operation for the common csv document operations.
@@ -91,8 +92,8 @@ Public Module Extensions
     End Sub
 
     <Extension>
-    Public Function LoadDataFrame(path As String, Optional encoding As Encoding = Nothing) As DATA.DataFrame
-        Return New DATA.DataFrame(EntityObject.LoadDataSet(path, encoding:=encoding))
+    Public Function LoadDataFrame(path As String, Optional encoding As Encoding = Nothing) As DATA.DataRows
+        Return New DATA.DataRows(EntityObject.LoadDataSet(path, encoding:=encoding))
     End Function
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -135,7 +136,7 @@ Public Module Extensions
     '''   at System.RuntimeType.CreateInstanceSlow(Boolean publicOnly, Boolean skipCheckThis, Boolean fillCache, StackCrawlMark&amp; stackMark)
     '''   at System.Activator.CreateInstance(Type type, Boolean nonPublic)
     '''   at System.Activator.CreateInstance(Type type)
-    '''   at Microsoft.VisualBasic.Data.csv.StorageProvider.Reflection.Reflector._Closure$__1-0._Lambda$__0(SeqValue`1 line) In G:\GCModeller\src\runtime\sciBASIC#\Data\DataFrame\StorageProvider\Reflection\StorageProviders\Reflection.vb:line 96
+    '''   at Microsoft.VisualBasic.Data.Framework.StorageProvider.Reflection.Reflector._Closure$__1-0._Lambda$__0(SeqValue`1 line) In G:\GCModeller\src\runtime\sciBASIC#\Data\DataFrame\StorageProvider\Reflection\StorageProviders\Reflection.vb:line 96
     '''   at System.Linq.Parallel.SelectQueryOperator`2.SelectQueryOperatorEnumerator`1.MoveNext(TOutput&amp; currentElement, TKey&amp; currentKey)
     '''   at System.Linq.Parallel.PipelineSpoolingTask`2.SpoolingWork()
     '''   at System.Linq.Parallel.SpoolingTaskBase.Work()

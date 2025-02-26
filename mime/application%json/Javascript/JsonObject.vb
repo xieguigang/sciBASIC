@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e9d2836315049b4b53dc7c97ea578326, mime\application%json\Javascript\JsonObject.vb"
+﻿#Region "Microsoft.VisualBasic::d4b3a3f9f95752dd1c418dfea5f67b17, mime\application%json\Javascript\JsonObject.vb"
 
     ' Author:
     ' 
@@ -34,20 +34,21 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 209
-    '    Code Lines: 130 (62.20%)
-    ' Comment Lines: 48 (22.97%)
+    '   Total Lines: 245
+    '    Code Lines: 157 (64.08%)
+    ' Comment Lines: 48 (19.59%)
     '    - Xml Docs: 70.83%
     ' 
-    '   Blank Lines: 31 (14.83%)
-    '     File Size: 7.57 KB
+    '   Blank Lines: 40 (16.33%)
+    '     File Size: 8.69 KB
 
 
     '     Class JsonObject
     ' 
     '         Properties: isArray, ObjectKeys, size
     ' 
-    '         Function: ContainsElement, (+2 Overloads) CreateObject, GetEnumerator, HasObjectKey, IEnumerable_GetEnumerator
+    '         Function: ContainsElement, (+2 Overloads) CreateObject, GetBoolean, GetDate, GetDouble
+    '                   GetEnumerator, GetInteger, GetString, HasObjectKey, IEnumerable_GetEnumerator
     '                   Remove, ToJsonArray, ToString
     ' 
     '         Sub: (+2 Overloads) Add, (+2 Overloads) Dispose, WriteBuffer

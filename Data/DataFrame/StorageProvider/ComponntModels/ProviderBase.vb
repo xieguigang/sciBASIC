@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::65cd3f350f81693cdfb82a68a0d8057f, Data\DataFrame\StorageProvider\ComponntModels\ProviderBase.vb"
+﻿#Region "Microsoft.VisualBasic::fa39dd986cff97be3f7777c494cbaf01, Data\DataFrame\StorageProvider\ComponntModels\ProviderBase.vb"
 
     ' Author:
     ' 
@@ -61,7 +61,7 @@
 
 Imports System.Reflection
 Imports System.Runtime.CompilerServices
-Imports Microsoft.VisualBasic.Data.csv.StorageProvider.Reflection
+Imports Microsoft.VisualBasic.Data.Framework.StorageProvider.Reflection
 Imports Microsoft.VisualBasic.Scripting
 
 Namespace StorageProvider.ComponentModels

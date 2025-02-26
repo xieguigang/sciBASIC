@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::084c1bc06ae95efd4a0876037bc872c5, Data_science\Visualization\Plots-statistics\Zscore\ZScoresPlot.vb"
+﻿#Region "Microsoft.VisualBasic::3af035d6c5b8adc6dcfa85c7b27f3332, Data_science\Visualization\Plots-statistics\Zscore\ZScoresPlot.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 0.00%
     ' 
     '   Blank Lines: 22 (13.41%)
-    '     File Size: 7.18 KB
+    '     File Size: 7.19 KB
 
 
     ' Class ZScoresPlot
@@ -59,7 +59,7 @@ Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Axis
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Canvas
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Legend
-Imports Microsoft.VisualBasic.Data.csv.IO
+Imports Microsoft.VisualBasic.Data.Framework.IO
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Linq

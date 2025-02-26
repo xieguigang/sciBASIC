@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::93e4af80684106fb91ef4edf332e73f2, Data\DataFrame.Extensions\Serialize\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::4f1144bd505985493341466df8538f99, Data\DataFrame.Extensions\Serialize\Extensions.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 92.31%
     ' 
     '   Blank Lines: 19 (13.48%)
-    '     File Size: 5.33 KB
+    '     File Size: 5.35 KB
 
 
     ' Module SchemasAPI
@@ -54,14 +54,14 @@
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
-Imports Microsoft.VisualBasic.Data.csv.IO
-Imports Microsoft.VisualBasic.Data.csv.Serialize.ObjectSchema
+Imports Microsoft.VisualBasic.Data.Framework.IO
+Imports Microsoft.VisualBasic.Data.Framework.Serialize.ObjectSchema
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Scripting.Runtime
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Microsoft.VisualBasic.Text
-Imports Schema = Microsoft.VisualBasic.Data.csv.Serialize.ObjectSchema.Schema
+Imports Schema = Microsoft.VisualBasic.Data.Framework.Serialize.ObjectSchema.Schema
 
 Public Module SchemasAPI
 

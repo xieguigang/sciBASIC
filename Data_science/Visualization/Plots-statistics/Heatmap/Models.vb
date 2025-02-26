@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6cdf68a05d1d66615b14c269ad3b7a68, Data_science\Visualization\Plots-statistics\HeatMap\Models.vb"
+﻿#Region "Microsoft.VisualBasic::df98c3da0435e5e2186a7ac52cef9131, Data_science\Visualization\Plots-statistics\Heatmap\Models.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 9 (15.00%)
-    '     File Size: 1.70 KB
+    '     File Size: 1.71 KB
 
 
     '     Class PlotArguments
@@ -63,7 +63,7 @@
 #End Region
 
 Imports System.Drawing
-Imports Microsoft.VisualBasic.Data.csv.IO
+Imports Microsoft.VisualBasic.Data.Framework.IO
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
 

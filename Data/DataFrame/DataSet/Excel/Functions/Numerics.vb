@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4b54223797069fcda9f5d87b49b7fea5, Data\DataFrame\DATA\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::450b3e6ad19d5d069b2311b2521082f0, Data\DataFrame\DataSet\Excel\Functions\Numerics.vb"
 
     ' Author:
     ' 
@@ -34,48 +34,38 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 27
-    '    Code Lines: 21 (77.78%)
+    '   Total Lines: 17
+    '    Code Lines: 13 (76.47%)
     ' Comment Lines: 0 (0.00%)
     '    - Xml Docs: 0.00%
     ' 
-    '   Blank Lines: 6 (22.22%)
-    '     File Size: 952 B
+    '   Blank Lines: 4 (23.53%)
+    '     File Size: 495 B
 
 
-    '     Module Extensions
+    '     Module Numerics
     ' 
-    '         Sub: ProjectLargeDataFrame
+    '         Function: (+2 Overloads) SUM
     ' 
     ' 
     ' /********************************************************************************/
 
 #End Region
 
-Imports System.IO
-Imports Microsoft.VisualBasic.ComponentModel.Collection
-Imports Microsoft.VisualBasic.Data.csv.IO
+Imports System.Runtime.CompilerServices
 
-Namespace DATA
+Namespace Excel
 
-    <HideModuleName>
-    Public Module Extensions
+    Public Module Numerics
 
-        Public Sub ProjectLargeDataFrame(targetFile$, columns As IEnumerable(Of String), output As TextWriter)
-            Dim headers As Index(Of String) = Tokenizer.CharsParser(targetFile.ReadFirstLine).Indexing
-            Dim index As Integer() = headers.GetOrdinal(columns)
-            Dim row As RowObject
+        <Extension>
+        Public Function SUM(data As IO.File, ParamArray cells As String()) As Double
+            Return cells.Select(Function(c) data.CellValue(c).ParseDouble).Sum
+        End Function
 
-            row = New RowObject(index.Select(Function(i) headers(i)))
-            output.WriteLine(row.AsLine)
-
-            For Each line As String In targetFile.IterateAllLines.Skip(1)
-                row = New RowObject(Tokenizer.CharsParser(line))
-                row = row.Takes(index)
-                output.WriteLine(row.AsLine)
-            Next
-
-            Call output.Flush()
-        End Sub
+        <Extension>
+        Public Function SUM(data As IO.File, range As String) As Double
+            Throw New NotImplementedException
+        End Function
     End Module
 End Namespace

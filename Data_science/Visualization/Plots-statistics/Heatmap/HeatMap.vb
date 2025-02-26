@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2ec64ef5f2f9b127ed2308cca420f9e9, Data_science\Visualization\Plots-statistics\HeatMap\HeatMap.vb"
+﻿#Region "Microsoft.VisualBasic::8b529d79ce99d1743d701ddabf81fd2e, Data_science\Visualization\Plots-statistics\Heatmap\Heatmap.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 129
-    '    Code Lines: 78 (60.47%)
-    ' Comment Lines: 44 (34.11%)
-    '    - Xml Docs: 77.27%
+    '   Total Lines: 127
+    '    Code Lines: 77 (60.63%)
+    ' Comment Lines: 43 (33.86%)
+    '    - Xml Docs: 76.74%
     ' 
-    '   Blank Lines: 7 (5.43%)
-    '     File Size: 7.21 KB
+    '   Blank Lines: 7 (5.51%)
+    '     File Size: 7.11 KB
 
 
     '     Module HeatMap
@@ -55,7 +55,7 @@
 Imports System.Drawing
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Canvas
-Imports Microsoft.VisualBasic.Data.csv.IO
+Imports Microsoft.VisualBasic.Data.Framework.IO
 Imports Microsoft.VisualBasic.DataMining.HierarchicalClustering
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors

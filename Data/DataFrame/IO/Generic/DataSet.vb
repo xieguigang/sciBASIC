@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f6a50ebf99ff4f8b0d1178550ac32261, Data\DataFrame\IO\Generic\DataSet.vb"
+﻿#Region "Microsoft.VisualBasic::cb53870141f20fef5d209656394de054, Data\DataFrame\IO\Generic\DataSet.vb"
 
     ' Author:
     ' 
@@ -34,20 +34,20 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 231
-    '    Code Lines: 134 (58.01%)
-    ' Comment Lines: 71 (30.74%)
+    '   Total Lines: 237
+    '    Code Lines: 139 (58.65%)
+    ' Comment Lines: 71 (29.96%)
     '    - Xml Docs: 94.37%
     ' 
-    '   Blank Lines: 26 (11.26%)
-    '     File Size: 9.80 KB
+    '   Blank Lines: 27 (11.39%)
+    '     File Size: 10.01 KB
 
 
     '     Class DataSet
     ' 
     '         Properties: ID, MyHashCode, Vector
     ' 
-    '         Constructor: (+2 Overloads) Sub New
+    '         Constructor: (+3 Overloads) Sub New
     '         Function: Append, Copy, JoinVector, (+2 Overloads) LoadDataSet, LoadMatrix
     '                   SubSet, ToString
     ' 
@@ -61,7 +61,8 @@ Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
-Imports Microsoft.VisualBasic.Data.csv.StorageProvider.Reflection
+Imports Microsoft.VisualBasic.Data.Framework.IO.CSVFile
+Imports Microsoft.VisualBasic.Data.Framework.StorageProvider.Reflection
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.Default
 Imports ASCII = Microsoft.VisualBasic.Text.ASCII

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e601b76310010aebb99c324f0e943326, Data\DataFrame\StorageProvider\ComponntModels\ReflectionBridges\Enum.vb"
+﻿#Region "Microsoft.VisualBasic::87ee13c371bad058543ac84b5d88a51f, Data\DataFrame\StorageProvider\ComponntModels\ReflectionBridges\Enum.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 13 (19.70%)
-    '     File Size: 2.51 KB
+    '     File Size: 2.52 KB
 
 
     '     Class [Enum]
@@ -62,7 +62,7 @@
 #End Region
 
 Imports System.Reflection
-Imports Microsoft.VisualBasic.Data.csv.StorageProvider.Reflection
+Imports Microsoft.VisualBasic.Data.Framework.StorageProvider.Reflection
 
 Namespace StorageProvider.ComponentModels
 

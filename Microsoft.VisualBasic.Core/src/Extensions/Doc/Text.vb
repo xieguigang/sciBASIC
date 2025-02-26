@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7189b9df34d9ad607cba6b0b177866f1, Microsoft.VisualBasic.Core\src\Extensions\Doc\Text.vb"
+﻿#Region "Microsoft.VisualBasic::3f0a8f5b0f459050853e0380f80240bc, Microsoft.VisualBasic.Core\src\Extensions\Doc\Text.vb"
 
     ' Author:
     ' 
@@ -34,19 +34,19 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 543
-    '    Code Lines: 319 (58.75%)
-    ' Comment Lines: 163 (30.02%)
+    '   Total Lines: 552
+    '    Code Lines: 327 (59.24%)
+    ' Comment Lines: 163 (29.53%)
     '    - Xml Docs: 91.41%
     ' 
-    '   Blank Lines: 61 (11.23%)
-    '     File Size: 20.74 KB
+    '   Blank Lines: 62 (11.23%)
+    '     File Size: 21.09 KB
 
 
     ' Module TextDoc
     ' 
     '     Function: ForEachChar, IsTextFile, (+2 Overloads) IterateAllLines, LineIterators, LoadTextDoc
-    '               OpenWriter, ReadAllLines, ReadAllText, ReadFirstLine, SaveHTML
+    '               OpenWriter, (+2 Overloads) ReadAllLines, ReadAllText, ReadFirstLine, SaveHTML
     '               SaveJson, (+4 Overloads) SaveTo, SaveTSV, SaveWithHTMLEncoding, SolveStream
     '               TsvHeaders
     ' 

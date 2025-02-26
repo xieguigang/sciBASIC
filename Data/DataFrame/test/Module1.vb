@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fc85d126d5e1c2a042a8acdb5150e8c0, Data\DataFrame\test\Module1.vb"
+﻿#Region "Microsoft.VisualBasic::d5456572de2f3f7c531290618c1a3176, Data\DataFrame\test\Module1.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 0.00%
     ' 
     '   Blank Lines: 7 (22.58%)
-    '     File Size: 1010 B
+    '     File Size: 1022 B
 
 
     ' Module Module1
@@ -51,8 +51,8 @@
 
 #End Region
 
-Imports Microsoft.VisualBasic.Data.csv
-Imports Microsoft.VisualBasic.Data.csv.IO
+Imports Microsoft.VisualBasic.Data.Framework
+Imports Microsoft.VisualBasic.Data.Framework.IO
 
 Module Module1
 

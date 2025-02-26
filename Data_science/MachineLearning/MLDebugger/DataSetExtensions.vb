@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2a691bd4b470c4e5f99b0d7d7d0ffb86, Data_science\MachineLearning\MLDebugger\DataSetExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::23c099f6851399ed73502859a3f52c08, Data_science\MachineLearning\MLDebugger\DataSetExtensions.vb"
 
     ' Author:
     ' 
@@ -54,7 +54,7 @@
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MachineLearning.ComponentModel.StoreProcedure
-Imports Table = Microsoft.VisualBasic.Data.csv.IO.DataSet
+Imports Table = Microsoft.VisualBasic.Data.Framework.IO.DataSet
 
 <HideModuleName>
 Public Module DataSetExtensions

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::09b6db20ed99b91932bdc8e6e828c08f, gr\network-visualization\Datavisualization.Network\test\OrthogonalTest.vb"
+﻿#Region "Microsoft.VisualBasic::3346bbd26f30f4e1b1cab15f7cab2123, gr\network-visualization\Datavisualization.Network\test\OrthogonalTest.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 39
-    '    Code Lines: 31 (79.49%)
+    '   Total Lines: 38
+    '    Code Lines: 30 (78.95%)
     ' Comment Lines: 0 (0.00%)
     '    - Xml Docs: 0.00%
     ' 
-    '   Blank Lines: 8 (20.51%)
-    '     File Size: 1.31 KB
+    '   Blank Lines: 8 (21.05%)
+    '     File Size: 1.27 KB
 
 
     ' Module OrthogonalTest
@@ -51,7 +51,6 @@
 
 #End Region
 
-Imports System.Drawing
 Imports Microsoft.VisualBasic.Data.visualize.Network
 Imports Microsoft.VisualBasic.Data.visualize.Network.FileStream
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
@@ -81,7 +80,7 @@ Module OrthogonalTest
         Call g.AddEdge("B", "F")
         Call g.AddEdge("G", "K")
 
-        Call Orthogonal.Algorithm.DoLayout(g, New Size(10, 10), 10)
+        Call Orthogonal.algorithm.DoLayout(g, 10)
 
         Dim result = g.Tabular()
 

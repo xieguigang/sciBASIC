@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7011584c0ea87bdc82ec3296cab0d881, Data\DataFrame\IO\csv\RowIterator.vb"
+﻿#Region "Microsoft.VisualBasic::d26c7d0436e34b483ded495910e39b35, Data\DataFrame\IO\CSVText\CSVFile\RowIterator.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 0.00%
     ' 
     '   Blank Lines: 16 (17.78%)
-    '     File Size: 3.26 KB
+    '     File Size: 3.27 KB
 
 
     '     Class RowIterator
@@ -60,7 +60,7 @@ Imports System.IO
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 
-Namespace IO
+Namespace IO.CSVFile
 
     Public Class RowIterator : Implements IDisposable
 

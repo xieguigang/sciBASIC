@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::96f6ab352b9ea3671ee1bfd81c4c18d1, Data_science\Visualization\Plots-statistics\HeatMap\CorrelationTriangle.vb"
+﻿#Region "Microsoft.VisualBasic::2f18e828a5aa1dbb31396e422b917d9a, Data_science\Visualization\Plots-statistics\Heatmap\CorrelationTriangle.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 35.29%
     ' 
     '   Blank Lines: 24 (11.11%)
-    '     File Size: 10.77 KB
+    '     File Size: 10.78 KB
 
 
     '     Class CorrelationTriangle
@@ -61,7 +61,7 @@ Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Axis
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Canvas
-Imports Microsoft.VisualBasic.Data.csv.IO
+Imports Microsoft.VisualBasic.Data.Framework.IO
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors

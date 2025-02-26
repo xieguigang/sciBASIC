@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2f9570dd868215410516922ea5601b60, Data\DataFrame\IO\csv\RowHelpers.vb"
+﻿#Region "Microsoft.VisualBasic::ab36c0e037df054d06d851ec323f6f60, Data\DataFrame\IO\CSVText\CSVFile\RowHelpers.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 72.73%
     ' 
     '   Blank Lines: 15 (12.20%)
-    '     File Size: 4.51 KB
+    '     File Size: 4.52 KB
 
 
     '     Module RowHelpers
@@ -58,7 +58,7 @@ Imports Microsoft.VisualBasic.Emit.Marshal
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Text
 
-Namespace IO
+Namespace IO.CSVFile
 
     Public Module RowHelpers
 

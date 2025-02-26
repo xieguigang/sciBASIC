@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6dfdc5e772ca9b7f39c4745f2e80ff35, Data_science\NLP\My Project\Resources.Designer.vb"
+﻿#Region "Microsoft.VisualBasic::110ff9040dc71f1f39fce2fc55efda98, Data_science\NLP\My Project\Resources.Designer.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 17.39%
     ' 
     '   Blank Lines: 8 (12.70%)
-    '     File Size: 2.80 KB
+    '     File Size: 2.79 KB
 
 
     '     Module Resources
@@ -115,4 +115,3 @@ Namespace My.Resources
         End Property
     End Module
 End Namespace
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4bc844a6dae22584615c5ff5ce0a3876, Data_science\Visualization\Plots-statistics\ROCPlot.vb"
+﻿#Region "Microsoft.VisualBasic::e8feeeca223b4dc4d3111d58d1941c39, Data_science\Visualization\Plots-statistics\ROCPlot.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 95.83%
     ' 
     '   Blank Lines: 14 (9.59%)
-    '     File Size: 5.71 KB
+    '     File Size: 5.72 KB
 
 
     ' Module ROCPlot
@@ -55,7 +55,7 @@ Imports System.Drawing
 Imports System.Drawing.Drawing2D
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Legend
-Imports Microsoft.VisualBasic.Data.csv.IO
+Imports Microsoft.VisualBasic.Data.Framework.IO
 Imports Microsoft.VisualBasic.DataMining.Evaluation
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D

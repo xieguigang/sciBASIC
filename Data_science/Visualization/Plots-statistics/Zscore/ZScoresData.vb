@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::843182e2fc04dfcd538a5cf24491fe12, Data_science\Visualization\Plots-statistics\Zscore\ZScoresData.vb"
+﻿#Region "Microsoft.VisualBasic::8bdb8a6463134c3a7e31c627921379ac, Data_science\Visualization\Plots-statistics\Zscore\ZScoresData.vb"
 
     ' Author:
     ' 
@@ -57,7 +57,7 @@ Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.DataStructures
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Legend
-Imports Microsoft.VisualBasic.Data.csv.IO
+Imports Microsoft.VisualBasic.Data.Framework.IO
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math

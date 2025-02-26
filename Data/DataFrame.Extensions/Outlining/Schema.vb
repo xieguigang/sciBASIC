@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::62392eae59a48ed7bab9e0706a540c46, Data\DataFrame.Extensions\Outlining\Schema.vb"
+﻿#Region "Microsoft.VisualBasic::031c55e6035a99349aa12a23ce89b2b5, Data\DataFrame.Extensions\Outlining\Schema.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 80.00%
     ' 
     '   Blank Lines: 27 (16.98%)
-    '     File Size: 5.95 KB
+    '     File Size: 5.96 KB
 
 
     '     Class Builder
@@ -60,8 +60,8 @@
 
 Imports System.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
-Imports Microsoft.VisualBasic.Data.csv.IO
-Imports Microsoft.VisualBasic.Data.csv.StorageProvider.ComponentModels
+Imports Microsoft.VisualBasic.Data.Framework.IO
+Imports Microsoft.VisualBasic.Data.Framework.StorageProvider.ComponentModels
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Scripting
 

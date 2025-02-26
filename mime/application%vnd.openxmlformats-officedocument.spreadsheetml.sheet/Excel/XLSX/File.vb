@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::951fce6822f6e4402ade340effec60d1, mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\XLSX\File.vb"
+﻿#Region "Microsoft.VisualBasic::fdd4761ef8fd629d565536faaf3440b5, mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\XLSX\File.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 78.79%
     ' 
     '   Blank Lines: 29 (10.98%)
-    '     File Size: 11.53 KB
+    '     File Size: 11.54 KB
 
 
     '     Class File
@@ -65,14 +65,14 @@ Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ApplicationServices.Zip
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.ComponentModel.Collection
-Imports Microsoft.VisualBasic.Data.csv
+Imports Microsoft.VisualBasic.Data.Framework
 Imports Microsoft.VisualBasic.Emit.Delegates
 Imports Microsoft.VisualBasic.MIME.Office.Excel.XLSX.FileIO
 Imports Microsoft.VisualBasic.MIME.Office.Excel.XLSX.Model.Directory
 Imports Microsoft.VisualBasic.Net.Protocols.ContentTypes
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Microsoft.VisualBasic.Text.Xml.OpenXml
-Imports csv = Microsoft.VisualBasic.Data.csv.IO.File
+Imports csv = Microsoft.VisualBasic.Data.Framework.IO.File
 
 Namespace XLSX
 

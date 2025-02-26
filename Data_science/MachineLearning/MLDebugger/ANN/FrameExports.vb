@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b0e6211672550423ebd4a7ed0572f303, Data_science\MachineLearning\MLDebugger\ANN\FrameExports.vb"
+﻿#Region "Microsoft.VisualBasic::a480ef35f06884c898521b5cd25be080, Data_science\MachineLearning\MLDebugger\ANN\FrameExports.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 11 (12.36%)
-    '     File Size: 3.59 KB
+    '     File Size: 3.60 KB
 
 
     ' Module FrameExports
@@ -59,8 +59,8 @@ Imports Microsoft.VisualBasic.DataStorage.netCDF.DataVector
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MachineLearning.ComponentModel.StoreProcedure
 Imports Basic = Microsoft.VisualBasic.Language.Runtime
-Imports DataFrame = Microsoft.VisualBasic.Data.csv.IO.DataFrame
-Imports Excel = Microsoft.VisualBasic.Data.csv.IO.DataSet
+Imports DataFrame = Microsoft.VisualBasic.Data.Framework.IO.DataFrame
+Imports Excel = Microsoft.VisualBasic.Data.Framework.IO.DataSet
 
 Public Module FrameExports
 

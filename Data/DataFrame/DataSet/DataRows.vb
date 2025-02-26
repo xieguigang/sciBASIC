@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9cb52eef12222618ddfc34ef63606cca, Data\DataFrame\DATA\DataFrame.vb"
+﻿#Region "Microsoft.VisualBasic::579e1073f79dac06364700886f26a3d8, Data\DataFrame\DataSet\DataRows.vb"
 
     ' Author:
     ' 
@@ -43,7 +43,7 @@
     '     File Size: 7.68 KB
 
 
-    '     Class DataFrame
+    '     Class DataRows
     ' 
     '         Constructor: (+2 Overloads) Sub New
     ' 
@@ -61,7 +61,7 @@
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Collection
-Imports Microsoft.VisualBasic.Data.csv.IO
+Imports Microsoft.VisualBasic.Data.Framework.IO
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Microsoft.VisualBasic.Text
@@ -71,7 +71,7 @@ Namespace DATA
     ''' <summary>
     ''' 提供了类似于R语言之中的``cbind``操作类似的按照列进行数据框合并的方法
     ''' </summary>
-    Public Class DataFrame : Implements IEnumerable(Of EntityObject)
+    Public Class DataRows : Implements IEnumerable(Of EntityObject)
 
         ''' <summary>
         ''' Row data in the csv table
@@ -116,7 +116,7 @@ Namespace DATA
                 .ToArray
         End Sub
 
-        Public Function Cbind(data As EntityObject, Optional transpose As Boolean = False) As DataFrame
+        Public Function Cbind(data As EntityObject, Optional transpose As Boolean = False) As DataRows
             If Not transpose Then
                 Return Me + {data}
             Else
@@ -176,9 +176,9 @@ Namespace DATA
         Public Shared Function Load(path$,
                                     Optional encoding As Encodings = Encodings.Default,
                                     Optional uidMap$ = Nothing,
-                                    Optional doUnique As Boolean = False) As DataFrame
+                                    Optional doUnique As Boolean = False) As DataRows
 
-            Return New DataFrame(EntityObject.LoadDataSet(path, uidMap:=uidMap), doUnique)
+            Return New DataRows(EntityObject.LoadDataSet(path, uidMap:=uidMap), doUnique)
         End Function
 
         Public Iterator Function GetEnumerator() As IEnumerator(Of EntityObject) Implements IEnumerable(Of EntityObject).GetEnumerator
@@ -198,7 +198,7 @@ Namespace DATA
         ''' <param name="data">unique</param>
         ''' <param name="appends">multiple</param>
         ''' <returns></returns>
-        Public Shared Operator +(data As DataFrame, appends As IEnumerable(Of EntityObject)) As DataFrame
+        Public Shared Operator +(data As DataRows, appends As IEnumerable(Of EntityObject)) As DataRows
             For Each x As EntityObject In appends
                 ' 如果对象列表之中存在append，则进行属性合并
                 If data.entityList.ContainsKey(x.ID) Then
@@ -223,7 +223,7 @@ Namespace DATA
         ''' <param name="unique"></param>
         ''' <returns></returns>
         Public Shared Function Append(multiple As IEnumerable(Of EntityObject),
-                                      unique As DataFrame,
+                                      unique As DataRows,
                                       Optional allowNothing As Boolean = False) As IEnumerable(Of EntityObject)
             Return multiple _
                 .Select(Function(query)

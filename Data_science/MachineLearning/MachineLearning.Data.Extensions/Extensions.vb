@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d220ab48479db5965d21670427668de4, Data_science\MachineLearning\MachineLearning.Data.Extensions\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::3e0e33f379dd0625b349fdcbeae52eb0, Data_science\MachineLearning\MachineLearning.Data.Extensions\Extensions.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 10 (14.08%)
-    '     File Size: 3.26 KB
+    '     File Size: 3.27 KB
 
 
     ' Module Extensions
@@ -62,7 +62,7 @@ Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MachineLearning.ComponentModel.StoreProcedure
 Imports Microsoft.VisualBasic.MachineLearning.QLearning
 Imports Microsoft.VisualBasic.MachineLearning.QLearning.DataModel
-Imports row = Microsoft.VisualBasic.Data.csv.IO.DataSet
+Imports row = Microsoft.VisualBasic.Data.Framework.IO.DataSet
 
 Public Module Extensions
 

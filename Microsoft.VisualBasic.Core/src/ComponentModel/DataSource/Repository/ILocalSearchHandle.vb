@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d85db7629e4e1843b9ee61506ab5f0ac, Microsoft.VisualBasic.Core\src\ComponentModel\DataSource\Repository\ILocalSearchHandle.vb"
+﻿#Region "Microsoft.VisualBasic::4aacb526634afe2328c66289f8b181f5, Microsoft.VisualBasic.Core\src\ComponentModel\DataSource\Repository\ILocalSearchHandle.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 91
-    '    Code Lines: 58 (63.74%)
-    ' Comment Lines: 20 (21.98%)
-    '    - Xml Docs: 90.00%
+    '   Total Lines: 98
+    '    Code Lines: 61 (62.24%)
+    ' Comment Lines: 23 (23.47%)
+    '    - Xml Docs: 91.30%
     ' 
-    '   Blank Lines: 13 (14.29%)
-    '     File Size: 3.71 KB
+    '   Blank Lines: 14 (14.29%)
+    '     File Size: 3.98 KB
 
 
     '     Interface ILocalSearchHandle

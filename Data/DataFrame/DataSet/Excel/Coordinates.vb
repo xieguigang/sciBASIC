@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::612933f515cb6bf1ad060ec7caa5bb99, Data\DataFrame\DATA\Excel\Coordinates.vb"
+﻿#Region "Microsoft.VisualBasic::ab9adf17f60ed78b542821dda166a83d, Data\DataFrame\DataSet\Excel\Coordinates.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 71.43%
     ' 
     '   Blank Lines: 21 (16.15%)
-    '     File Size: 4.27 KB
+    '     File Size: 4.28 KB
 
 
     '     Module Coordinates
@@ -56,10 +56,10 @@
 Imports System.Drawing
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Collection
-Imports Microsoft.VisualBasic.Data.csv.IO
+Imports Microsoft.VisualBasic.Data.Framework.IO
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
-Imports Table = Microsoft.VisualBasic.Data.csv.IO.File
+Imports Table = Microsoft.VisualBasic.Data.Framework.IO.File
 
 Namespace Excel
 

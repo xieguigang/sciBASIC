@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d32077e185eda46b8b8b2cce7694489c, Data_science\MachineLearning\MachineLearning\RandomForests\RanFog.vb"
+﻿#Region "Microsoft.VisualBasic::e30489689be61313da887d4ddbc8a00a, Data_science\MachineLearning\MachineLearning\RandomForests\RanFog.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 405
-    '    Code Lines: 222 (54.81%)
-    ' Comment Lines: 151 (37.28%)
-    '    - Xml Docs: 33.77%
+    '   Total Lines: 411
+    '    Code Lines: 222 (54.01%)
+    ' Comment Lines: 157 (38.20%)
+    '    - Xml Docs: 36.31%
     ' 
-    '   Blank Lines: 32 (7.90%)
-    '     File Size: 20.97 KB
+    '   Blank Lines: 32 (7.79%)
+    '     File Size: 21.16 KB
 
 
     '     Class RanFog

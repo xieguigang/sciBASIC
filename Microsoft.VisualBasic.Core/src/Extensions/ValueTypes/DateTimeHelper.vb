@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::403d4b44237c92163b2fa792907f3689, Microsoft.VisualBasic.Core\src\Extensions\ValueTypes\DateTimeHelper.vb"
+﻿#Region "Microsoft.VisualBasic::d704160edc60b2a69902deadf487364f, Microsoft.VisualBasic.Core\src\Extensions\ValueTypes\DateTimeHelper.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 84.48%
     ' 
     '   Blank Lines: 38 (16.17%)
-    '     File Size: 8.13 KB
+    '     File Size: 8.11 KB
 
 
     '     Enum TimeScales

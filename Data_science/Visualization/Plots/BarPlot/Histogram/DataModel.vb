@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4de1e490dd07cc33423d0b9b4fd6cca7, Data_science\Visualization\Plots\BarPlot\Histogram\DataModel.vb"
+﻿#Region "Microsoft.VisualBasic::cb92e4885912c54c442ebede0a85bfc4, Data_science\Visualization\Plots\BarPlot\Histogram\DataModel.vb"
 
     ' Author:
     ' 
@@ -34,20 +34,20 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 213
-    '    Code Lines: 151 (70.89%)
-    ' Comment Lines: 39 (18.31%)
+    '   Total Lines: 235
+    '    Code Lines: 171 (72.77%)
+    ' Comment Lines: 39 (16.60%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 23 (10.80%)
-    '     File Size: 7.25 KB
+    '   Blank Lines: 25 (10.64%)
+    '     File Size: 8.09 KB
 
 
     '     Structure HistogramData
     ' 
     '         Properties: LinePoint, width
     ' 
-    '         Function: ToString
+    '         Function: CheckHighlightRange, ToString
     ' 
     '     Class HistogramGroup
     ' 

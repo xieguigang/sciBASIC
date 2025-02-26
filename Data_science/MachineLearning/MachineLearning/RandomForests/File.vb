@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::580318ff3d8d9223510fee323cb63ab6, Data_science\MachineLearning\MachineLearning\RandomForests\File.vb"
+﻿#Region "Microsoft.VisualBasic::e9eba38c09297b95230c170f2d63c739, Data_science\MachineLearning\MachineLearning\RandomForests\File.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 219
-    '    Code Lines: 144 (65.75%)
-    ' Comment Lines: 53 (24.20%)
-    '    - Xml Docs: 20.75%
+    '   Total Lines: 233
+    '    Code Lines: 153 (65.67%)
+    ' Comment Lines: 56 (24.03%)
+    '    - Xml Docs: 25.00%
     ' 
-    '   Blank Lines: 22 (10.05%)
-    '     File Size: 10.39 KB
+    '   Blank Lines: 24 (10.30%)
+    '     File Size: 10.89 KB
 
 
     '     Enum LF_c
@@ -54,6 +54,8 @@
     ' 
     '         Properties: attributeNames, Genotype, ID, N_attributes, N_tot
     '                     phenotype
+    ' 
+    '         Constructor: (+2 Overloads) Sub New
     ' 
     '     Class File
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f522846f339112e3ac9ff7d6d43d592e, Data\DataFrame\DATA\Excel\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::29d209f352bcb66e6d08af3e34480af6, Data\DataFrame\DataSet\Excel\Extensions.vb"
 
     ' Author:
     ' 
@@ -54,10 +54,10 @@
 
 #End Region
 
-#If Not NETCOREAPP Then
+#If NET48 Then
 
 Imports System.Runtime.CompilerServices
-Imports Microsoft.VisualBasic.Data.csv.IO
+Imports Microsoft.VisualBasic.Data.Framework.IO
 
 Namespace Excel
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b02acc0cf5846eb63357dce6d8fb7e68, Data\DataFrame\IO\csv\RowObject.vb"
+﻿#Region "Microsoft.VisualBasic::cce9684e8bde7e56115c68cce5838134, Data\DataFrame\IO\CSVText\RowObject.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 502
-    '    Code Lines: 300 (59.76%)
-    ' Comment Lines: 141 (28.09%)
+    '   Total Lines: 503
+    '    Code Lines: 301 (59.84%)
+    ' Comment Lines: 141 (28.03%)
     '    - Xml Docs: 97.87%
     ' 
-    '   Blank Lines: 61 (12.15%)
-    '     File Size: 18.97 KB
+    '   Blank Lines: 61 (12.13%)
+    '     File Size: 19.03 KB
 
 
     '     Class RowObject
@@ -65,6 +65,7 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Data.Framework.IO.CSVFile
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq.Extensions
 Imports Microsoft.VisualBasic.Text
@@ -73,9 +74,9 @@ Imports any = Microsoft.VisualBasic.Scripting
 Namespace IO
 
     ''' <summary>
-    ''' A line of data in the csv file.(Csv表格文件之中的一行)
+    ''' A line of data in the csv file.
     ''' </summary>
-    ''' <remarks></remarks>
+    ''' <remarks>(Csv表格文件之中的一行)</remarks>
     Public Class RowObject : Implements IEnumerable(Of String)
         Implements IList(Of String)
 

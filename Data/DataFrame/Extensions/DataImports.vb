@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8fa824291f4a10091115002bb9432a50, Data\DataFrame\Extensions\DataImports.vb"
+﻿#Region "Microsoft.VisualBasic::aac3e3b23ba89ba1d1281ae7846e7092, Data\DataFrame\Extensions\DataImports.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 91.36%
     ' 
     '   Blank Lines: 21 (9.91%)
-    '     File Size: 8.66 KB
+    '     File Size: 8.68 KB
 
 
     ' Module DataImports
@@ -58,12 +58,12 @@ Imports System.Text.RegularExpressions
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
-Imports Microsoft.VisualBasic.Data.csv.IO
+Imports Microsoft.VisualBasic.Data.Framework.IO
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.Text
 Imports ASCII = Microsoft.VisualBasic.Text.ASCII
-Imports csvFile = Microsoft.VisualBasic.Data.csv.IO.File
+Imports csvFile = Microsoft.VisualBasic.Data.Framework.IO.File
 
 ''' <summary>
 ''' Module provides the csv data imports operation of the csv document creates from a text file.

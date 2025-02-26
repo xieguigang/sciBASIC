@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cb01831866ef1e20340c123d2350abb6, Data\DataFrame\StorageProvider\ComponntModels\DynamicObjectLoader.vb"
+﻿#Region "Microsoft.VisualBasic::7cf671b2c80ac8f36afbd7759b493344, Data\DataFrame\StorageProvider\ComponntModels\DynamicObjectLoader.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 96.99%
     ' 
     '   Blank Lines: 64 (14.25%)
-    '     File Size: 18.67 KB
+    '     File Size: 18.68 KB
 
 
     '     Class DynamicObjectLoader
@@ -66,7 +66,7 @@
 Imports System.Dynamic
 Imports System.Reflection
 Imports System.Runtime.CompilerServices
-Imports Microsoft.VisualBasic.Data.csv.IO
+Imports Microsoft.VisualBasic.Data.Framework.IO
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Linq.Extensions

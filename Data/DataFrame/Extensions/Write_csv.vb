@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::27dd55ac0abfb18ffb22c3c8971d67ac, Data\DataFrame\Extensions\Write_csv.vb"
+﻿#Region "Microsoft.VisualBasic::ee531c649a540cf95a155ede211caae1, Data\DataFrame\Extensions\Write_csv.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 143
-    '    Code Lines: 97 (67.83%)
-    ' Comment Lines: 31 (21.68%)
+    '   Total Lines: 144
+    '    Code Lines: 98 (68.06%)
+    ' Comment Lines: 31 (21.53%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 15 (10.49%)
-    '     File Size: 6.16 KB
+    '   Blank Lines: 15 (10.42%)
+    '     File Size: 6.23 KB
 
 
     ' Module Write_csv
@@ -63,8 +63,9 @@ Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports Microsoft.VisualBasic.ComponentModel.Collection
-Imports Microsoft.VisualBasic.Data.csv.IO
-Imports Microsoft.VisualBasic.Data.csv.StorageProvider.Reflection
+Imports Microsoft.VisualBasic.Data.Framework.IO
+Imports Microsoft.VisualBasic.Data.Framework.IO.CSVFile
+Imports Microsoft.VisualBasic.Data.Framework.StorageProvider.Reflection
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Linq.Extensions
 

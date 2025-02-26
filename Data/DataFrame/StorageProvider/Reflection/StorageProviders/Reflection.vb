@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::be062f63f1405e77c3491c5cc2b65267, Data\DataFrame\StorageProvider\Reflection\StorageProviders\Reflection.vb"
+﻿#Region "Microsoft.VisualBasic::8aa93d7341486ffd8aa242b4bf05c96b, Data\DataFrame\StorageProvider\Reflection\StorageProviders\Reflection.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 86.42%
     ' 
     '   Blank Lines: 38 (11.08%)
-    '     File Size: 16.51 KB
+    '     File Size: 16.52 KB
 
 
     '     Module Reflector
@@ -56,14 +56,14 @@
 Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
-Imports Microsoft.VisualBasic.Data.csv.IO
-Imports Microsoft.VisualBasic.Data.csv.StorageProvider.ComponentModels
+Imports Microsoft.VisualBasic.Data.Framework.IO
+Imports Microsoft.VisualBasic.Data.Framework.StorageProvider.ComponentModels
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Linq.Extensions
 Imports Microsoft.VisualBasic.Scripting.Runtime
 Imports Microsoft.VisualBasic.Serialization.JSON
-Imports TableSchema = Microsoft.VisualBasic.Data.csv.StorageProvider.ComponentModels.SchemaProvider
+Imports TableSchema = Microsoft.VisualBasic.Data.Framework.StorageProvider.ComponentModels.SchemaProvider
 
 Namespace StorageProvider.Reflection
 
@@ -189,7 +189,7 @@ Namespace StorageProvider.Reflection
         ''' <typeparam name="T"></typeparam>
         ''' <param name="Explicit">
         ''' 当本参数值为False的时候，所有的简单属性值都将被解析出来，而忽略掉其是否带有
-        ''' <see cref="Csv.StorageProvider.Reflection.ColumnAttribute"></see>自定义属性
+        ''' <see cref="StorageProvider.Reflection.ColumnAttribute"></see>自定义属性
         ''' </param>
         ''' <param name="path"></param>
         ''' <returns></returns>

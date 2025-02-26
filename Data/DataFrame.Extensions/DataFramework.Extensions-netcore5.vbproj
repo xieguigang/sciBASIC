@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <RootNamespace>Microsoft.VisualBasic.Data.csv</RootNamespace>
+    <RootNamespace>Microsoft.VisualBasic.Data.Framework</RootNamespace>
     <TargetFrameworks>net8.0-windows;net8.0;net48</TargetFrameworks>
     <AssemblyName>Microsoft.VisualBasic.Data.Framework.Extensions</AssemblyName>
     <Platforms>AnyCPU;x64</Platforms>
@@ -35,7 +35,7 @@
     <RemoveIntegerChecks>true</RemoveIntegerChecks>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
-    <DocumentationFile>Microsoft.VisualBasic.Data.Csv.Extensions.xml</DocumentationFile>
+    <DocumentationFile>Microsoft.VisualBasic.Data.FrameworkFramework.Extensions.xml</DocumentationFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -43,31 +43,31 @@
     <RemoveIntegerChecks>true</RemoveIntegerChecks>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
-    <DocumentationFile>Microsoft.VisualBasic.Data.Csv.Extensions.xml</DocumentationFile>
+    <DocumentationFile>Microsoft.VisualBasic.Data.FrameworkFramework.Extensions.xml</DocumentationFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <DocumentationFile>Microsoft.VisualBasic.Data.Csv.Extensions.xml</DocumentationFile>
+    <DocumentationFile>Microsoft.VisualBasic.Data.FrameworkFramework.Extensions.xml</DocumentationFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Rsharp_app_release|AnyCPU'">
-    <DocumentationFile>Microsoft.VisualBasic.Data.Csv.Extensions.xml</DocumentationFile>
+    <DocumentationFile>Microsoft.VisualBasic.Data.FrameworkFramework.Extensions.xml</DocumentationFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='mzkit_win32|AnyCPU'">
-    <DocumentationFile>Microsoft.VisualBasic.Data.Csv.Extensions.xml</DocumentationFile>
+    <DocumentationFile>Microsoft.VisualBasic.Data.FrameworkFramework.Extensions.xml</DocumentationFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='LipidSearch|AnyCPU'">
-    <DocumentationFile>Microsoft.VisualBasic.Data.Csv.Extensions.xml</DocumentationFile>
+    <DocumentationFile>Microsoft.VisualBasic.Data.FrameworkFramework.Extensions.xml</DocumentationFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <DocumentationFile>Microsoft.VisualBasic.Data.Csv.Extensions.xml</DocumentationFile>
+    <DocumentationFile>Microsoft.VisualBasic.Data.FrameworkFramework.Extensions.xml</DocumentationFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Rsharp_app_release|x64'">
-    <DocumentationFile>Microsoft.VisualBasic.Data.Csv.Extensions.xml</DocumentationFile>
+    <DocumentationFile>Microsoft.VisualBasic.Data.FrameworkFramework.Extensions.xml</DocumentationFile>
     <RemoveIntegerChecks>true</RemoveIntegerChecks>
     <Optimize>false</Optimize>
     <DebugSymbols>true</DebugSymbols>
@@ -79,7 +79,7 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='mzkit_win32|x64'">
-    <DocumentationFile>Microsoft.VisualBasic.Data.Csv.Extensions.xml</DocumentationFile>
+    <DocumentationFile>Microsoft.VisualBasic.Data.FrameworkFramework.Extensions.xml</DocumentationFile>
     <RemoveIntegerChecks>true</RemoveIntegerChecks>
     <Optimize>false</Optimize>
     <DebugSymbols>true</DebugSymbols>
@@ -91,7 +91,7 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='LipidSearch|x64'">
-    <DocumentationFile>Microsoft.VisualBasic.Data.Csv.Extensions.xml</DocumentationFile>
+    <DocumentationFile>Microsoft.VisualBasic.Data.FrameworkFramework.Extensions.xml</DocumentationFile>
     <RemoveIntegerChecks>true</RemoveIntegerChecks>
     <Optimize>false</Optimize>
     <DebugSymbols>true</DebugSymbols>
@@ -103,6 +103,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Data_science\Mathematica\Math\DataFrame\dataframeUtils-netcore5.vbproj" />
+    <ProjectReference Include="..\..\Data_science\Mathematica\Math\Math.Statistics\stats-netcore5.vbproj" />
+    <ProjectReference Include="..\..\Data_science\Mathematica\Math\Math\Math.NET5.vbproj" />
     <ProjectReference Include="..\..\Microsoft.VisualBasic.Core\src\Core.vbproj" />
     <ProjectReference Include="..\DataFrame\dataframework-netcore5.vbproj" />
   </ItemGroup>

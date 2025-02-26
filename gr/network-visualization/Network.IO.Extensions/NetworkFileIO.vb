@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::dd466a5010eaf0083801b104825fecbd, gr\network-visualization\Network.IO.Extensions\NetworkFileIO.vb"
+﻿#Region "Microsoft.VisualBasic::218048263a97266602c2faa5695ca138, gr\network-visualization\Network.IO.Extensions\NetworkFileIO.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 92.00%
     ' 
     '   Blank Lines: 14 (12.73%)
-    '     File Size: 4.99 KB
+    '     File Size: 5.00 KB
 
 
     ' Module NetworkFileIO
@@ -55,7 +55,7 @@ Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports Microsoft.VisualBasic.ApplicationServices
-Imports Microsoft.VisualBasic.Data.csv
+Imports Microsoft.VisualBasic.Data.Framework
 Imports Microsoft.VisualBasic.Data.visualize.Network.FileStream
 Imports Microsoft.VisualBasic.Data.visualize.Network.FileStream.Generic
 Imports Microsoft.VisualBasic.Language

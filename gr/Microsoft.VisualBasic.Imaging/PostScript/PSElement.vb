@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::77b1d8b3bd0101d9d17644e8fe0bffa4, gr\Microsoft.VisualBasic.Imaging\PostScript\PSElement.vb"
+﻿#Region "Microsoft.VisualBasic::5b516eaad80b7fdd14cea1c4430831ba, gr\Microsoft.VisualBasic.Imaging\PostScript\PSElement.vb"
 
     ' Author:
     ' 
@@ -34,12 +34,12 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 72
-    '    Code Lines: 39 (54.17%)
-    ' Comment Lines: 15 (20.83%)
+    '   Total Lines: 71
+    '    Code Lines: 39 (54.93%)
+    ' Comment Lines: 15 (21.13%)
     '    - Xml Docs: 93.33%
     ' 
-    '   Blank Lines: 18 (25.00%)
+    '   Blank Lines: 17 (23.94%)
     '     File Size: 1.90 KB
 
 
@@ -134,5 +134,3 @@ Namespace PostScript
     End Class
 
 End Namespace
-
-

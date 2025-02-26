@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::102b4542bebd4fd21bf573680ff70e82, mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\XLSX\Model\Worksheet.vb"
+﻿#Region "Microsoft.VisualBasic::7fa60feb7d27f438de7ac25d5e629558, mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\XLSX\Model\Worksheet.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 0.00%
     ' 
     '   Blank Lines: 13 (15.85%)
-    '     File Size: 2.47 KB
+    '     File Size: 2.48 KB
 
 
     '     Class SheetTable
@@ -56,7 +56,7 @@
 #End Region
 
 Imports Microsoft.VisualBasic.ComponentModel
-Imports Microsoft.VisualBasic.Data.csv.IO
+Imports Microsoft.VisualBasic.Data.Framework.IO
 Imports Microsoft.VisualBasic.MIME.Office.Excel.XLSX.XML.xl
 Imports Microsoft.VisualBasic.MIME.Office.Excel.XLSX.XML.xl.worksheets
 

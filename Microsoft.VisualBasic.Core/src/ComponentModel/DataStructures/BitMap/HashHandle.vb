@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9ab6de94b9be81c46ce96c1a2414f20f, Microsoft.VisualBasic.Core\src\ComponentModel\DataStructures\BitMap\HashHandle.vb"
+﻿#Region "Microsoft.VisualBasic::b3b8d4b77cb0c7281929e207902b489e, Microsoft.VisualBasic.Core\src\ComponentModel\DataStructures\BitMap\HashHandle.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 44 (20.75%)
-    '     File Size: 6.67 KB
+    '     File Size: 6.69 KB
 
 
     '     Class DefaultHashHandle

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::66e00524b0cde6831fc58bf50fef4fc9, Microsoft.VisualBasic.Core\src\Text\Parser\CharEnumerator.vb"
+﻿#Region "Microsoft.VisualBasic::0c58965277ad160b5e9898ac2d07601f, Microsoft.VisualBasic.Core\src\Text\Parser\CharEnumerator.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 97
-    '    Code Lines: 68 (70.10%)
-    ' Comment Lines: 12 (12.37%)
-    '    - Xml Docs: 91.67%
+    '   Total Lines: 109
+    '    Code Lines: 68 (62.39%)
+    ' Comment Lines: 24 (22.02%)
+    '    - Xml Docs: 95.83%
     ' 
-    '   Blank Lines: 17 (17.53%)
-    '     File Size: 3.21 KB
+    '   Blank Lines: 17 (15.60%)
+    '     File Size: 3.62 KB
 
 
     '     Class CharPtr

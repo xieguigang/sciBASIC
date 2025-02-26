@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::82ec1fab2b7ad7a28d3c22610c054848, Data_science\Visualization\Plots-statistics\HeatMap\DataScaler.vb"
+﻿#Region "Microsoft.VisualBasic::221c4057ff78fba14b9d927e6b2aeb7c, Data_science\Visualization\Plots-statistics\Heatmap\DataScaler.vb"
 
     ' Author:
     ' 
@@ -54,7 +54,7 @@
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
-Imports Microsoft.VisualBasic.Data.csv.IO
+Imports Microsoft.VisualBasic.Data.Framework.IO
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
 

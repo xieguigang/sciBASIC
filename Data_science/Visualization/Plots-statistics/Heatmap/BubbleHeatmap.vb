@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ce3c48a143815ff546d5f098e24cd311, Data_science\Visualization\Plots-statistics\HeatMap\BubbleHeatmap.vb"
+﻿#Region "Microsoft.VisualBasic::5cdfcb823c5c010fdb600204a27cd8d4, Data_science\Visualization\Plots-statistics\Heatmap\BubbleHeatmap.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 80.00%
     ' 
     '   Blank Lines: 8 (14.81%)
-    '     File Size: 2.25 KB
+    '     File Size: 2.26 KB
 
 
     '     Module BubbleHeatmap
@@ -54,7 +54,7 @@
 
 Imports System.Drawing
 Imports System.Runtime.CompilerServices
-Imports Microsoft.VisualBasic.Data.csv.IO
+Imports Microsoft.VisualBasic.Data.Framework.IO
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors

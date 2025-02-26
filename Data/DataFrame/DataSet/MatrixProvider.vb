@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::450b3e6ad19d5d069b2311b2521082f0, Data\DataFrame\DATA\Excel\Functions\Numerics.vb"
+﻿#Region "Microsoft.VisualBasic::3ac04ac86dafe7b92c01a86a6fd537cd, Data\DataFrame\DataSet\MatrixProvider.vb"
 
     ' Author:
     ' 
@@ -35,37 +35,37 @@
     ' Code Statistics:
 
     '   Total Lines: 17
-    '    Code Lines: 13 (76.47%)
-    ' Comment Lines: 0 (0.00%)
-    '    - Xml Docs: 0.00%
+    '    Code Lines: 6 (35.29%)
+    ' Comment Lines: 7 (41.18%)
+    '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 4 (23.53%)
-    '     File Size: 495 B
+    '     File Size: 410 B
 
 
-    '     Module Numerics
+    '     Interface MatrixProvider
     ' 
-    '         Function: (+2 Overloads) SUM
+    '         Function: GetMatrix
     ' 
     ' 
     ' /********************************************************************************/
 
 #End Region
 
-Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Data.Framework.IO
 
-Namespace Excel
+Namespace DATA
 
-    Public Module Numerics
+    ''' <summary>
+    ''' A numeric data matrix provider
+    ''' </summary>
+    Public Interface MatrixProvider
 
-        <Extension>
-        Public Function SUM(data As IO.File, ParamArray cells As String()) As Double
-            Return cells.Select(Function(c) data.CellValue(c).ParseDouble).Sum
-        End Function
+        ''' <summary>
+        ''' populate the matrix data in row by row
+        ''' </summary>
+        ''' <returns></returns>
+        Function GetMatrix() As IEnumerable(Of DataSet)
 
-        <Extension>
-        Public Function SUM(data As IO.File, range As String) As Double
-            Throw New NotImplementedException
-        End Function
-    End Module
+    End Interface
 End Namespace

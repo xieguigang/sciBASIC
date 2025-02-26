@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::87f695c99decf1658d275933d5250dcd, Data\DataFrame\Linq\WriteStream.vb"
+﻿#Region "Microsoft.VisualBasic::95635d4b3b8574fde2a343b8ed1ab1f8, Data\DataFrame\Linq\WriteStream.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 76.06%
     ' 
     '   Blank Lines: 39 (14.44%)
-    '     File Size: 10.11 KB
+    '     File Size: 10.12 KB
 
 
     '     Class WriteStream
@@ -70,7 +70,7 @@ Option Strict Off
 
 Imports System.IO
 Imports System.Runtime.CompilerServices
-Imports Microsoft.VisualBasic.Data.csv.StorageProvider.ComponentModels
+Imports Microsoft.VisualBasic.Data.Framework.StorageProvider.ComponentModels
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Text

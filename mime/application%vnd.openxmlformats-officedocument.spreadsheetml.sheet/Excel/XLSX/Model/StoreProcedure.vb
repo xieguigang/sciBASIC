@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::46738daeaf8739828721c95f7440b879, mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\XLSX\Model\StoreProcedure.vb"
+﻿#Region "Microsoft.VisualBasic::7bafeccd06987f2768a9ceea544e1afe, mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\XLSX\Model\StoreProcedure.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 69.23%
     ' 
     '   Blank Lines: 21 (14.48%)
-    '     File Size: 5.08 KB
+    '     File Size: 5.10 KB
 
 
     '     Module StoreProcedure
@@ -54,12 +54,12 @@
 
 Imports System.Drawing
 Imports System.Runtime.CompilerServices
-Imports Microsoft.VisualBasic.Data.csv.Excel
-Imports Microsoft.VisualBasic.Data.csv.IO
+Imports Microsoft.VisualBasic.Data.Framework.Excel
+Imports Microsoft.VisualBasic.Data.Framework.IO
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MIME.Office.Excel.XLSX.XML.xl
 Imports Microsoft.VisualBasic.MIME.Office.Excel.XLSX.XML.xl.worksheets
-Imports csv = Microsoft.VisualBasic.Data.csv.IO.File
+Imports csv = Microsoft.VisualBasic.Data.Framework.IO.File
 
 Namespace XLSX.Model
 

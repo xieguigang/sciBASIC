@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d2ea574ad3073fb176f72036be9f6149, Data_science\MachineLearning\MachineLearning\test\simpleANNtest.vb"
+﻿#Region "Microsoft.VisualBasic::960cd1390534080d80438e768fceb44a, Data_science\MachineLearning\MachineLearning\test\simpleANNtest.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 85
-    '    Code Lines: 68 (80.00%)
-    ' Comment Lines: 1 (1.18%)
+    '   Total Lines: 83
+    '    Code Lines: 56 (67.47%)
+    ' Comment Lines: 11 (13.25%)
     '    - Xml Docs: 0.00%
     ' 
-    '   Blank Lines: 16 (18.82%)
-    '     File Size: 5.60 KB
+    '   Blank Lines: 16 (19.28%)
+    '     File Size: 5.50 KB
 
 
     ' Module simpleANNtest

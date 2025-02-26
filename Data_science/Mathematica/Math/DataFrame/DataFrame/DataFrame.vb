@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::57d337bb39567ca408e2873f544ab385, Data_science\Mathematica\Math\DataFrame\DataFrame\DataFrame.vb"
+﻿#Region "Microsoft.VisualBasic::a8cc7a392f0ed3c071c2273658751166, Data_science\Mathematica\Math\DataFrame\DataFrame\DataFrame.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 321
-    '    Code Lines: 185 (57.63%)
-    ' Comment Lines: 95 (29.60%)
+    '   Total Lines: 331
+    '    Code Lines: 193 (58.31%)
+    ' Comment Lines: 95 (28.70%)
     '    - Xml Docs: 92.63%
     ' 
-    '   Blank Lines: 41 (12.77%)
-    '     File Size: 11.15 KB
+    '   Blank Lines: 43 (12.99%)
+    '     File Size: 11.45 KB
 
 
     ' Class DataFrame
@@ -48,7 +48,7 @@
     '     Properties: dims, featureNames, features, nfeatures, nsamples
     '                 rownames
     ' 
-    '     Constructor: (+3 Overloads) Sub New
+    '     Constructor: (+4 Overloads) Sub New
     '     Function: (+3 Overloads) add, ArrayPack, delete, foreachRow, row
     '               slice, ToString, Union
     ' 

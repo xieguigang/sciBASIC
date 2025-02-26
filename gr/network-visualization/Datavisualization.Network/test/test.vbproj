@@ -137,33 +137,37 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\Data\DataFrame\47_dotnet_ms-vb_data.framework.vbproj">
-      <Project>{7283c179-f852-4ead-8d8f-b82ef2cbd7db}</Project>
-      <Name>47_dotnet_ms-vb_data.framework</Name>
+    <ProjectReference Include="..\..\..\..\Data\DataFrame\dataframework-netcore5.vbproj">
+      <Project>{d410907f-a387-b1c5-6417-66b7623d41be}</Project>
+      <Name>dataframework-netcore5</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\..\Data_science\Graph\GraphTheory.vbproj">
-      <Project>{203BC68F-A0CD-443A-AB62-4AF4110F752F}</Project>
-      <Name>GraphTheory</Name>
+    <ProjectReference Include="..\..\..\..\Data_science\Graph\graph-netcore5.vbproj">
+      <Project>{294962ba-2365-487a-9810-0679d26c1ab5}</Project>
+      <Name>graph-netcore5</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\..\Data_science\Mathematica\Math\Math\math-core.vbproj">
-      <Project>{e3367b88-5d0c-495a-8273-331656d4b5aa}</Project>
-      <Name>math-core</Name>
+    <ProjectReference Include="..\..\..\..\Data_science\Mathematica\Math\Math\Math.NET5.vbproj">
+      <Project>{1ab58239-13f7-b08f-f097-4c5f0d4c3764}</Project>
+      <Name>Math.NET5</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\..\Microsoft.VisualBasic.Core\src\47-dotnet_Microsoft.VisualBasic.vbproj">
-      <Project>{fecce1fd-e1d4-49e3-a668-60bb5e7aed99}</Project>
-      <Name>47-dotnet_Microsoft.VisualBasic</Name>
+    <ProjectReference Include="..\..\..\..\Microsoft.VisualBasic.Core\src\Core.vbproj">
+      <Project>{7c7d0129-8931-fdff-7c5a-c8a634b419a7}</Project>
+      <Name>Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\physics\physics.vbproj">
-      <Project>{3291389c-ea87-4b33-a9a5-65a2d60ba3e2}</Project>
-      <Name>physics</Name>
+    <ProjectReference Include="..\..\..\physics\physics-netcore5.vbproj">
+      <Project>{fe524930-28af-654b-77b4-9370b6df623a}</Project>
+      <Name>physics-netcore5</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Network.IO.Extensions\Network.IO.Extensions.vbproj">
-      <Project>{78cb32e6-2904-41e7-acca-f1e2757bfa8e}</Project>
-      <Name>Network.IO.Extensions</Name>
+    <ProjectReference Include="..\..\Network.IO.Extensions\network_io-netcore5.vbproj">
+      <Project>{84b8b586-af1a-7006-6185-4e89001add34}</Project>
+      <Name>network_io-netcore5</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Network.GraphTheory.vbproj">
-      <Project>{076315ee-b598-40dc-9280-c71cdf9b6a48}</Project>
-      <Name>Network.GraphTheory</Name>
+    <ProjectReference Include="..\..\network_layout\network_layout.vbproj">
+      <Project>{8d33eef9-4e68-e33f-97f2-98723cd7d2ba}</Project>
+      <Name>network_layout</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\network_graph-netcore5.vbproj">
+      <Project>{fbc0cde1-53c8-0593-7872-ab16fabe966e}</Project>
+      <Name>network_graph-netcore5</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />

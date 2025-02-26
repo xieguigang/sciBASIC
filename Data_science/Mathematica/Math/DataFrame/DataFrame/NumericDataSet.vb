@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7af32fe8c2fcf5babba12d9e906843b2, Data_science\Mathematica\Math\DataFrame\DataFrame\NumericDataSet.vb"
+﻿#Region "Microsoft.VisualBasic::9880ad8f58476fd023ff73de22fac02a, Data_science\Mathematica\Math\DataFrame\DataFrame\NumericDataSet.vb"
 
     ' Author:
     ' 
@@ -34,21 +34,21 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 363
-    '    Code Lines: 278 (76.58%)
-    ' Comment Lines: 23 (6.34%)
+    '   Total Lines: 391
+    '    Code Lines: 299 (76.47%)
+    ' Comment Lines: 23 (5.88%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 62 (17.08%)
-    '     File Size: 11.73 KB
+    '   Blank Lines: 69 (17.65%)
+    '     File Size: 12.61 KB
 
 
     ' Module NumericDataSet
     ' 
-    '     Function: Center, CenterByCol, CenterByRow, IndexGetter, Log
-    '               NumericGetter, NumericMatrix, PullDataSet, Scale01, Scale01ByCol
-    '               Scale01ByRow, Standard, StandardByCol, StandardByRow, ZScale
-    '               ZScaleByCol, ZScaleByRow
+    '     Function: Center, CenterByCol, CenterByRow, FromDataSet, IndexGetter
+    '               Log, NumericGetter, NumericMatrix, PullDataSet, Scale01
+    '               Scale01ByCol, Scale01ByRow, Standard, StandardByCol, StandardByRow
+    '               ZScale, ZScaleByCol, ZScaleByRow
     ' 
     ' /********************************************************************************/
 

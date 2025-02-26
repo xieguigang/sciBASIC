@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9d920c3902ee1712e58581ff81cd633c, Data\DataFrame\test\fileParser2.vb"
+﻿#Region "Microsoft.VisualBasic::65669a40e851b297db6907a9e9bc4838, Data\DataFrame\DataSet\Extensions.vb"
 
     ' Author:
     ' 
@@ -34,51 +34,49 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 31
-    '    Code Lines: 19 (61.29%)
-    ' Comment Lines: 1 (3.23%)
+    '   Total Lines: 28
+    '    Code Lines: 22 (78.57%)
+    ' Comment Lines: 0 (0.00%)
     '    - Xml Docs: 0.00%
     ' 
-    '   Blank Lines: 11 (35.48%)
-    '     File Size: 840 B
+    '   Blank Lines: 6 (21.43%)
+    '     File Size: 1015 B
 
 
-    ' Module fileParser2
+    '     Module Extensions
     ' 
-    '     Sub: HeaderTest, Main, multipleLineRowtest1
+    '         Sub: ProjectLargeDataFrame
+    ' 
     ' 
     ' /********************************************************************************/
 
 #End Region
 
+Imports System.IO
+Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Data.Framework.IO
 Imports Microsoft.VisualBasic.Data.Framework.IO.CSVFile
 
-Module fileParser2
+Namespace DATA
 
-    Sub Main()
+    <HideModuleName>
+    Public Module Extensions
 
-        Call HeaderTest()
+        Public Sub ProjectLargeDataFrame(targetFile$, columns As IEnumerable(Of String), output As TextWriter)
+            Dim headers As Index(Of String) = Tokenizer.CharsParser(targetFile.ReadFirstLine).Indexing
+            Dim index As Integer() = headers.GetOrdinal(columns)
+            Dim row As RowObject
 
-        ' Call multipleLineRowtest1()
+            row = New RowObject(index.Select(Function(i) headers(i)))
+            output.WriteLine(row.AsLine)
 
-        Dim df As DataFrame = DataFrame.Load("E:\GCModeller\src\runtime\sciBASIC#\Data\DataFrame\test\Food.csv", simpleRowIterators:=False)
+            For Each line As String In targetFile.IterateAllLines.Skip(1)
+                row = New RowObject(Tokenizer.CharsParser(line))
+                row = row.Takes(index)
+                output.WriteLine(row.AsLine)
+            Next
 
-        Pause()
-    End Sub
-
-    Sub HeaderTest()
-        Dim headers As String() = {"uid", "time", "url", "ip", "ua"}
-        Dim score = GetType(Visitor).HeaderMatchScore(headers)
-
-        Pause()
-    End Sub
-
-    Sub multipleLineRowtest1()
-        Dim reader As New RowIterator("E:\GCModeller\src\runtime\sciBASIC#\Data\DataFrame\test\single_row.csv".OpenReadonly)
-        Dim r As RowObject() = reader.GetRows.ToArray
-
-        Pause()
-    End Sub
-
-End Module
+            Call output.Flush()
+        End Sub
+    End Module
+End Namespace

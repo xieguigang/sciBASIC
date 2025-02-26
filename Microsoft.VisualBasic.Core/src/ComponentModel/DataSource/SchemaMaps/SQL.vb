@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5b06e4396b4bda66d00a83bb75c598bd, Microsoft.VisualBasic.Core\src\ComponentModel\DataSource\SchemaMaps\SQL.vb"
+﻿#Region "Microsoft.VisualBasic::7201c98f3b6eea4ddf0af132dcf6956d, Microsoft.VisualBasic.Core\src\ComponentModel\DataSource\SchemaMaps\SQL.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 63
-    '    Code Lines: 21 (33.33%)
-    ' Comment Lines: 36 (57.14%)
-    '    - Xml Docs: 91.67%
+    '   Total Lines: 67
+    '    Code Lines: 21 (31.34%)
+    ' Comment Lines: 40 (59.70%)
+    '    - Xml Docs: 92.50%
     ' 
-    '   Blank Lines: 6 (9.52%)
-    '     File Size: 2.41 KB
+    '   Blank Lines: 6 (8.96%)
+    '     File Size: 2.50 KB
 
 
     '     Class SQLTable

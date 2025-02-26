@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::337eca8c2bc7e66840fb985fe270022d, Data\DataFrame\IO\csv\StreamIO.vb"
+﻿#Region "Microsoft.VisualBasic::48e52b42a99c39ca74b8bd144f2ad581, Data\DataFrame\IO\CSVText\CSVFile\StreamIO.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 71.43%
     ' 
     '   Blank Lines: 18 (12.95%)
-    '     File Size: 5.88 KB
+    '     File Size: 5.89 KB
 
 
     '     Module StreamIO
@@ -56,12 +56,12 @@ Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports Microsoft.VisualBasic.ComponentModel.Collection
-Imports Microsoft.VisualBasic.Data.csv.StorageProvider.ComponentModels
+Imports Microsoft.VisualBasic.Data.Framework.StorageProvider.ComponentModels
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports ASCII = Microsoft.VisualBasic.Text.ASCII
 
-Namespace IO
+Namespace IO.CSVFile
 
     Public Module StreamIO
 

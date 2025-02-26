@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1e9fa74a2d267b278d262dc9efed5633, Data_science\NLP\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::9e28af478f9a6a258bff15bafc90fbab, Data_science\NLP\Extensions.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 0.00%
     ' 
     '   Blank Lines: 10 (27.03%)
-    '     File Size: 1006 B
+    '     File Size: 1004 B
 
 
     ' Module Extensions
@@ -88,4 +88,3 @@ Public Module Extensions
         Next
     End Function
 End Module
-

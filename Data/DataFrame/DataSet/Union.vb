@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::af1c9ec9cca65e898487df45eafc43aa, Data\DataFrame\DATA\Union.vb"
+﻿#Region "Microsoft.VisualBasic::4ddf331566947d935b363d058d7018ac, Data\DataFrame\DataSet\Union.vb"
 
     ' Author:
     ' 
@@ -55,7 +55,7 @@
 
 Imports System.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
-Imports Microsoft.VisualBasic.Data.csv.IO
+Imports Microsoft.VisualBasic.Data.Framework.IO
 
 Namespace DATA
 

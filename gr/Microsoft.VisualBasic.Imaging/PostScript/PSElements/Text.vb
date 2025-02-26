@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3bdb2684355804dfad94ea4b65410c12, gr\Microsoft.VisualBasic.Imaging\PostScript\PSElements\Text.vb"
+﻿#Region "Microsoft.VisualBasic::e2aa5ff6a23e8dc6538898e66b0d8ca3, gr\Microsoft.VisualBasic.Imaging\PostScript\PSElements\Text.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 0.00%
     ' 
     '   Blank Lines: 6 (25.00%)
-    '     File Size: 672 B
+    '     File Size: 670 B
 
 
     '     Class Text
@@ -78,4 +78,3 @@ Namespace PostScript.Elements
     End Class
 
 End Namespace
-

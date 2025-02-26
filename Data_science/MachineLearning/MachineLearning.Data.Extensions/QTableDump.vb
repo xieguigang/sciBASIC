@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::47029061b0222090f779ae578a4e56f0, Data_science\MachineLearning\MachineLearning.Data.Extensions\QTableDump.vb"
+﻿#Region "Microsoft.VisualBasic::49a646d17e7e98a72443c91e66c655df, Data_science\MachineLearning\MachineLearning.Data.Extensions\QTableDump.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 0.00%
     ' 
     '   Blank Lines: 4 (16.00%)
-    '     File Size: 896 B
+    '     File Size: 902 B
 
 
     ' Class QTableDump
@@ -52,7 +52,7 @@
 #End Region
 
 Imports Microsoft.VisualBasic.ComponentModel.Collection
-Imports Microsoft.VisualBasic.Data.csv
+Imports Microsoft.VisualBasic.Data.Framework
 Imports Microsoft.VisualBasic.MachineLearning.QLearning.DataModel
 Imports Microsoft.VisualBasic.Text
 

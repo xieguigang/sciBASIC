@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f4f1f5f9e826ace6b87151d1f5b19b1c, Data\DataFrame\IO\DataFrame\DataFrame.vb"
+﻿#Region "Microsoft.VisualBasic::ca596bf19adbb4c0b0631acaf0eaf7a5, Data\DataFrame\IO\DataFrame\DataFrame.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 780
-    '    Code Lines: 504 (64.62%)
-    ' Comment Lines: 162 (20.77%)
-    '    - Xml Docs: 82.10%
+    '   Total Lines: 790
+    '    Code Lines: 508 (64.30%)
+    ' Comment Lines: 167 (21.14%)
+    '    - Xml Docs: 82.63%
     ' 
-    '   Blank Lines: 114 (14.62%)
-    '     File Size: 31.63 KB
+    '   Blank Lines: 115 (14.56%)
+    '     File Size: 31.97 KB
 
 
     '     Class DataFrame
@@ -57,10 +57,10 @@
     '                   GetChars, getColumnList, GetColumnVectors, GetData, GetDataTypeName
     '                   GetDateTime, GetDecimal, GetDouble, GetEnumerator, GetEnumerator2
     '                   GetFieldType, GetFloat, GetGuid, GetInt16, GetInt32
-    '                   GetInt64, GetName, (+2 Overloads) GetOrdinal, GetOrdinalSchema, GetSchemaTable
-    '                   GetString, GetValue, GetValueLambda, GetValues, IDataRecord_GetValue
-    '                   IsDBNull, (+2 Overloads) Load, LoadDataSet, MeasureTypeSchema, Parse
-    '                   Read, Slice, ToString
+    '                   GetInt64, GetName, (+2 Overloads) GetOrdinal, GetOrdinalSchema, GetRow
+    '                   GetSchemaTable, GetString, GetValue, GetValueLambda, GetValues
+    '                   IDataRecord_GetValue, IsDBNull, (+2 Overloads) Load, LoadDataSet, MeasureTypeSchema
+    '                   Parse, Read, Slice, ToString
     ' 
     '         Sub: ChangeMapping, Close, CopyFrom, (+2 Overloads) Dispose, Initialize
     '              Reset
@@ -75,7 +75,8 @@ Imports System.Reflection
 Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
-Imports Microsoft.VisualBasic.Data.csv.StorageProvider.ComponentModels
+Imports Microsoft.VisualBasic.Data.Framework.IO.CSVFile
+Imports Microsoft.VisualBasic.Data.Framework.StorageProvider.ComponentModels
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Linq.Extensions
