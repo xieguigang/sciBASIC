@@ -456,44 +456,51 @@ Namespace IO
         ''' just check for the table header and give the warning message
         ''' </remarks>
         Private Shared Function getColumnList(table As IEnumerable(Of RowObject)) As List(Of String)
-            Dim empty_ordinal As New List(Of Integer)
-            Dim whitespace_padding As New List(Of (String, Integer))
             Dim colnames As List(Of String) = table.FirstOrDefault.AsList
 
             If colnames.IsNullOrEmpty Then
                 Call "empty table data!".Warning
             Else
-                For i As Integer = 0 To colnames.Count - 1
-                    If colnames(i).StringEmpty(whitespaceAsEmpty:=True) Then
-                        Call empty_ordinal.Add(i)
-                    Else
-                        Dim lc As Char = colnames(i).First
-                        Dim rc As Char = colnames(i).Last
+                colnames = getColumnList(colnames)
+            End If
 
-                        If lc = " "c OrElse lc = ASCII.TAB OrElse rc = " "c OrElse rc = ASCII.TAB Then
-                            Call whitespace_padding.Add((colnames(i), i))
-                        End If
+            Return colnames
+        End Function
+
+        Private Shared Function getColumnList(colnames As List(Of String)) As List(Of String)
+            Dim empty_ordinal As New List(Of Integer)
+            Dim whitespace_padding As New List(Of (String, Integer))
+
+            For i As Integer = 0 To colnames.Count - 1
+                If colnames(i).StringEmpty(whitespaceAsEmpty:=True) Then
+                    Call empty_ordinal.Add(i)
+                Else
+                    Dim lc As Char = colnames(i).First
+                    Dim rc As Char = colnames(i).Last
+
+                    If lc = " "c OrElse lc = ASCII.TAB OrElse rc = " "c OrElse rc = ASCII.TAB Then
+                        Call whitespace_padding.Add((colnames(i), i))
                     End If
-                Next
-
-                ' 20240430
-                ' 这里不能够使用Trim函数，因为Column也可能是故意定义了空格在其实或者结束的位置的，
-                ' 使用Trim函数之后，反而可能会导致GetOrder函数执行失败。故而在这里只给出警告信息即可
-                If empty_ordinal.Any OrElse whitespace_padding.Any Then
-                    Dim warnings As New List(Of String)
-
-                    If empty_ordinal.Any Then
-                        warnings.Add($"there are empty column header in your table data in columns: {empty_ordinal.ToArray.GetJson}.")
-                    End If
-                    If whitespace_padding.Any Then
-                        If warnings.Any Then
-                            warnings.Add("and also ")
-                        End If
-                        warnings.Add($"there are column headers that padding with whitespace in left or right: {whitespace_padding.Select(Function(c) $"[{c.Item2}] '{c.Item1}'").JoinBy(", ")}. these may caused the ``GetOrder()`` function execute failure!")
-                    End If
-
-                    Call warnings.JoinBy("").Warning
                 End If
+            Next
+
+            ' 20240430
+            ' 这里不能够使用Trim函数，因为Column也可能是故意定义了空格在其实或者结束的位置的，
+            ' 使用Trim函数之后，反而可能会导致GetOrder函数执行失败。故而在这里只给出警告信息即可
+            If empty_ordinal.Any OrElse whitespace_padding.Any Then
+                Dim warnings As New List(Of String)
+
+                If empty_ordinal.Any Then
+                    warnings.Add($"there are empty column header in your table data in columns: {empty_ordinal.ToArray.GetJson}.")
+                End If
+                If whitespace_padding.Any Then
+                    If warnings.Any Then
+                        warnings.Add("and also ")
+                    End If
+                    warnings.Add($"there are column headers that padding with whitespace in left or right: {whitespace_padding.Select(Function(c) $"[{c.Item2}] '{c.Item1}'").JoinBy(", ")}. these may caused the ``GetOrder()`` function execute failure!")
+                End If
+
+                Call warnings.JoinBy("").Warning
             End If
 
             Return colnames
