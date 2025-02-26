@@ -57,6 +57,7 @@ Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.Framework.IO
+Imports Microsoft.VisualBasic.Data.Framework.PipeStream
 Imports Microsoft.VisualBasic.Data.Framework.StorageProvider.ComponentModels
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
@@ -262,7 +263,9 @@ Namespace StorageProvider.Reflection
         ''' <param name="objSource"></param>
         ''' <param name="strict"></param>
         ''' <param name="schemaOut">请注意，Key是Csv文件之中的标题，不是属性名称了</param>
-        ''' <returns></returns>
+        ''' <returns>
+        ''' this function populate out the title row and other data rows
+        ''' </returns>
         ''' <remarks>查找所有具备读属性的属性值</remarks>
         Public Iterator Function doSave(objSource As IEnumerable,
                                           typeDef As Type,
@@ -353,7 +356,7 @@ Namespace StorageProvider.Reflection
                                    Optional reorderKeys As Integer = 0,
                                    Optional numFormat$ = Nothing) As File
 
-            Return Reflector.doSave(
+            Dim table = Reflector.doSave(
                 source, GetType(T), strict,
                 schemaOut,
                 metaBlank,
@@ -362,6 +365,8 @@ Namespace StorageProvider.Reflection
                 reorderKeys:=reorderKeys,
                 numFormat:=numFormat
             ).DataFrame
+
+            Return table
         End Function
 
         ''' <summary>
