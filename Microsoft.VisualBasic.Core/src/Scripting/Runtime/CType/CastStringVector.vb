@@ -83,6 +83,23 @@ Namespace Scripting.Runtime
             Return values.ToDictionary(Function(x) x.Key, Function(x) Scripting.ToString(x.Value, null))
         End Function
 
+        ''' <summary>
+        ''' Cats the given numeric vector as character string.
+        ''' </summary>
+        ''' <param name="values"></param>
+        ''' <param name="negPrefix">add prefix to the positive value for make align with the negative symbol, 
+        ''' example as if this parameter is set to true:
+        ''' 
+        ''' ```
+        '''  256.333
+        ''' -111.112  
+        ''' ```
+        ''' 
+        ''' the positive number ``256.333`` has a white space prefix for make aligned with the negative 
+        ''' value ``-111.112``.
+        ''' </param>
+        ''' <param name="format"></param>
+        ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function AsCharacter(values As IEnumerable(Of Double), Optional negPrefix As Boolean = False, Optional format$ = "G4") As IEnumerable(Of String)

@@ -151,7 +151,7 @@ Namespace CommandLine
             ' 20241224 there is a bug about access the standard output stream:
             ' thread needs to sleep for a while
             ' or the file access error will happends when access the standard output stream
-            Call Thread.Sleep(100)
+            Call Thread.Sleep(500)
 
             If p.StartInfo.RedirectStandardOutput Then
                 stdErr = handleRunStream(p, [in], onReadLine, async:=False)

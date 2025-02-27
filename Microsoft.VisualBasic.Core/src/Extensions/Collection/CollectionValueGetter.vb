@@ -57,12 +57,31 @@ Imports System.Reflection
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Algorithm.base
 Imports Microsoft.VisualBasic.Language
+Imports std = System.Math
 
 #If DEBUG Then
 Imports Microsoft.VisualBasic.Serialization.JSON
 #End If
 
 Public Module CollectionValueGetter
+
+    <Extension>
+    Public Iterator Function PowerSet(Of T)([set] As ICollection(Of T)) As IEnumerable(Of T())
+        Dim setSize As Integer = [set].Count
+        Dim powerSetSize As Integer = std.Pow(2, setSize)
+
+        For i As Integer = 0 To powerSetSize - 1
+            Dim subset As New List(Of T)()
+
+            For j As Integer = 0 To setSize - 1
+                If (i And (1 << j)) <> 0 Then
+                    subset.Add([set](j))
+                End If
+            Next
+
+            Yield subset.ToArray
+        Next
+    End Function
 
     ''' <summary>
     ''' 
