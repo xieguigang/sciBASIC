@@ -63,6 +63,7 @@ Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Math.LinearAlgebra.Matrix
+Imports Microsoft.VisualBasic.Math.Matrix
 Imports Microsoft.VisualBasic.Math.Statistics.Hypothesis.ANOVA
 Imports Microsoft.VisualBasic.MIME.Html.CSS
 
@@ -89,8 +90,8 @@ Namespace PCA
                             Optional colorSchema$ = "Set1:c8") As GraphicsData
 
             Dim score = input.GetPCAScore
-            Dim x As Vector = score!PC1
-            Dim y As Vector = score!PC2
+            Dim x As Vector = score!PC1.AsVector
+            Dim y As Vector = score!PC2.AsVector
             Dim getlabel As Func(Of Integer, String)
 
             If labels.IsNullOrEmpty Then

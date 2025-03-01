@@ -55,11 +55,10 @@ Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.Data.Framework
 Imports Microsoft.VisualBasic.Linq
-Imports Microsoft.VisualBasic.Math.DataFrame
 Imports Microsoft.VisualBasic.Scripting.Expressions
 Imports any = Microsoft.VisualBasic.Scripting
-Imports df = Microsoft.VisualBasic.Math.DataFrame.DataFrame
 
 ''' <summary>
 ''' helper module for create the input dataset for run analysis
@@ -75,7 +74,7 @@ Public Module DataSetHelper
     ''' </param>
     ''' <returns></returns>
     <Extension>
-    Public Function CommonDataSet(df As df, Optional labels As Array = Nothing) As StatisticsObject
+    Public Function CommonDataSet(df As DataFrame, Optional labels As Array = Nothing) As StatisticsObject
         Return df.NumericMatrix().CommonDataSet(colnames:=df.featureNames, labels)
     End Function
 

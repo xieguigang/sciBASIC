@@ -1,58 +1,58 @@
 ﻿#Region "Microsoft.VisualBasic::2f18e828a5aa1dbb31396e422b917d9a, Data_science\Visualization\Plots-statistics\Heatmap\CorrelationTriangle.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 216
-    '    Code Lines: 175 (81.02%)
-    ' Comment Lines: 17 (7.87%)
-    '    - Xml Docs: 35.29%
-    ' 
-    '   Blank Lines: 24 (11.11%)
-    '     File Size: 10.78 KB
+' Summaries:
 
 
-    '     Class CorrelationTriangle
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    ' 
-    '         Function: Plot
-    ' 
-    '         Sub: PlotInternal
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 216
+'    Code Lines: 175 (81.02%)
+' Comment Lines: 17 (7.87%)
+'    - Xml Docs: 35.29%
+' 
+'   Blank Lines: 24 (11.11%)
+'     File Size: 10.78 KB
+
+
+'     Class CorrelationTriangle
+' 
+'         Constructor: (+1 Overloads) Sub New
+' 
+'         Function: Plot
+' 
+'         Sub: PlotInternal
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -69,7 +69,7 @@ Imports Microsoft.VisualBasic.Imaging.Drawing2D.Text
 Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
-Imports Microsoft.VisualBasic.Math.DataFrame
+Imports Microsoft.VisualBasic.Math.Matrix
 Imports Microsoft.VisualBasic.MIME.Html.CSS
 Imports Microsoft.VisualBasic.MIME.Html.Render
 Imports std = System.Math
@@ -106,8 +106,8 @@ Namespace Heatmap
                 .Height = (plotRegion.Height - maxLabelSize.Width) / cor.data.size
             }
             ' 在绘制上三角的时候假设每一个对象的keys的顺序都是相同的
-            Dim dw! = dStep.Width - gridBrush.Width
-            Dim dh! = dStep.Height - gridBrush.Width
+            Dim dw! = dStep.Width - gridBrush.width
+            Dim dh! = dStep.Height - gridBrush.width
             Dim legendSize = plotRegion.Width / 5
             ' 每一个方格的大小是不变的
             Dim r! = std.Max(dw, dh)

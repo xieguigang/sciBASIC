@@ -58,9 +58,9 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Data.Framework
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Serialization.JSON
-Imports df = Microsoft.VisualBasic.Math.DataFrame.DataFrame
 
 ''' <summary>
 ''' get pls-da result
@@ -81,7 +81,7 @@ Public Module PLSData
     End Function
 
     <Extension>
-    Public Function GetPLSScore(mvar As MultivariateAnalysisResult, opls As Boolean) As df
+    Public Function GetPLSScore(mvar As MultivariateAnalysisResult, opls As Boolean) As DataFrame
         Dim [class] As String() = mvar.StatisticsObject.YLabels.ToArray
         Dim Tscore As New List(Of Double())
         Dim fileSize = mvar.StatisticsObject.YIndexes.Count
@@ -107,7 +107,7 @@ Public Module PLSData
             ypre(i) = mvar.PredictedYs(i)
         Next
 
-        Dim df As New df With {.rownames = [class]}
+        Dim df As New DataFrame With {.rownames = [class]}
         Dim index As i32 = 1
 
         For Each t As Double() In Tscore
@@ -121,7 +121,7 @@ Public Module PLSData
     End Function
 
     <Extension>
-    Public Function GetPLSLoading(mvar As MultivariateAnalysisResult, opls As Boolean) As df
+    Public Function GetPLSLoading(mvar As MultivariateAnalysisResult, opls As Boolean) As DataFrame
         Dim features As String() = mvar.StatisticsObject.XLabels.ToArray
         Dim Ploads As New List(Of Double())
         Dim metSize = mvar.StatisticsObject.XIndexes.Count
@@ -144,7 +144,7 @@ Public Module PLSData
             End If
         Next
 
-        Dim df As New df With {.rownames = features}
+        Dim df As New DataFrame With {.rownames = features}
         Dim index As i32 = 1
 
         For Each p As Double() In Ploads
