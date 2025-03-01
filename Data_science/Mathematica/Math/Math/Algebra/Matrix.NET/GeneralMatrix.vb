@@ -66,18 +66,6 @@ Imports Microsoft.VisualBasic.Language.Vectorization
 
 Namespace LinearAlgebra.Matrix
 
-    ''' <summary>
-    ''' an abstract model of the numeric matrix object
-    ''' </summary>
-    Public Interface INumericMatrix
-
-        ''' <summary>Copy the internal two-dimensional array.</summary>
-        ''' <returns>Two-dimensional array copy of matrix elements.
-        ''' </returns>
-        Function ArrayPack(Optional deepcopy As Boolean = False) As Double()()
-
-    End Interface
-
     Public Interface ILabeledMatrix
 
         Function GetLabels() As IEnumerable(Of String)

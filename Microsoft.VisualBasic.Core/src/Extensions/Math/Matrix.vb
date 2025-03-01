@@ -62,6 +62,18 @@ Imports Microsoft.VisualBasic.ComponentModel.Collection
 Namespace Math
 
     ''' <summary>
+    ''' an abstract model of the numeric matrix object
+    ''' </summary>
+    Public Interface INumericMatrix
+
+        ''' <summary>Copy the internal two-dimensional array.</summary>
+        ''' <returns>Two-dimensional array copy of matrix elements.
+        ''' </returns>
+        Function ArrayPack(Optional deepcopy As Boolean = False) As Double()()
+
+    End Interface
+
+    ''' <summary>
     ''' This class contains methods that perform mathematical operations on matrices.
     ''' Operations currently supported are matrix multiplication and scalar multiplication.
     ''' 
