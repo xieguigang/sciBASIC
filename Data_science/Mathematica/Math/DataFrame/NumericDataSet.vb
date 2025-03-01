@@ -1,7 +1,11 @@
 ﻿Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.Data.Framework
+Imports Microsoft.VisualBasic.Math.Distributions
+Imports Microsoft.VisualBasic.Scripting
 
 Public Module NumericDataSet
+
     ''' <summary>
     ''' log of the dataframe fields 
     ''' </summary>

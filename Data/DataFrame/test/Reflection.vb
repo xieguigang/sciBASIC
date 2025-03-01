@@ -79,7 +79,7 @@ Module Reflection
         Next
 
         With New VisualBasic
-            Call New DataFrame(
+            Call New DataFrameResolver(
                 !X = {1, 2, 3, 4, 5},
                 !Y = {9, 8, 7, 6, 5}
             ).csv _

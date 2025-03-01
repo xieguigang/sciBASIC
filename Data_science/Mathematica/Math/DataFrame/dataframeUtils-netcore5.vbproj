@@ -1,9 +1,9 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <RootNamespace>Microsoft.VisualBasic.Math.DataFrame</RootNamespace>
+    <RootNamespace>Microsoft.VisualBasic.Math.Matrix</RootNamespace>
     <TargetFrameworks>net8.0-windows;net8.0;net48</TargetFrameworks>
-    <AssemblyName>Microsoft.VisualBasic.Math.DataFrame</AssemblyName>
+    <AssemblyName>Microsoft.VisualBasic.Math.Matrix</AssemblyName>
     <Platforms>AnyCPU;x64</Platforms>
     <Configurations>Debug;Release;LipidSearch;Rsharp_app_release;mzkit;mzkit_win32;gcmodeller_desktop;nuget_release</Configurations>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
