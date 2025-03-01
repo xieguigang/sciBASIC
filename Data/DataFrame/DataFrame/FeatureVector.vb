@@ -268,14 +268,6 @@ Public Class FeatureVector : Implements IReadOnlyId
         End Select
     End Function
 
-    Public Shared Narrowing Operator CType(col As FeatureVector) As Vector
-        If DataFramework.IsNumericType(col.type) Then
-            Return New Vector(From xi As Object In col.vector Select CDbl(xi))
-        Else
-            Throw New InvalidCastException($"{col.type.Name} could not be cast to a number directly!")
-        End If
-    End Operator
-
     Public Shared Narrowing Operator CType(col As FeatureVector) As BooleanVector
         If col.type Is GetType(Boolean) Then
             Return New BooleanVector(From xi As Object In col.vector Select CBool(xi))
