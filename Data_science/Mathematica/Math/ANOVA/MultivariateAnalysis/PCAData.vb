@@ -52,9 +52,8 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Data.Framework
 Imports Microsoft.VisualBasic.Language
-Imports Microsoft.VisualBasic.Math.DataFrame
-Imports df = Microsoft.VisualBasic.Math.DataFrame.DataFrame
 
 ''' <summary>
 ''' get pca result: contribution, score, loading
@@ -67,8 +66,8 @@ Public Module PCAData
     ''' <param name="mvar"></param>
     ''' <returns>a dataframe object that contains data field column: ``PC1, PC2, PCx``</returns>
     <Extension>
-    Public Function GetPCAScore(mvar As MultivariateAnalysisResult) As df
-        Dim score As New df
+    Public Function GetPCAScore(mvar As MultivariateAnalysisResult) As DataFrame
+        Dim score As New DataFrame
         Dim filesize = mvar.StatisticsObject.YIndexes.Count
         Dim compSize = mvar.Contributions.Count
         Dim labels = mvar.StatisticsObject.YLabels
@@ -97,8 +96,8 @@ Public Module PCAData
     End Function
 
     <Extension>
-    Public Function GetPCALoading(mvar As MultivariateAnalysisResult) As df
-        Dim loading As New df
+    Public Function GetPCALoading(mvar As MultivariateAnalysisResult) As DataFrame
+        Dim loading As New DataFrame
         Dim metsize = mvar.StatisticsObject.XLabels.Count
         Dim compSize = mvar.Contributions.Count
         Dim labels = mvar.StatisticsObject.XLabels

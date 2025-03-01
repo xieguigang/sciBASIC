@@ -64,6 +64,37 @@ Imports any = Microsoft.VisualBasic.Scripting
 Public Module NumericDataSet
 
     <Extension>
+    Public Function Transpose(mat As DataFrame) As DataFrame
+        Dim table As New Dictionary(Of String, FeatureVector)
+        Dim cols As String() = mat.featureNames
+
+        If mat.rownames.IsNullOrEmpty Then
+            mat.rownames = mat.dims.Height _
+                .Sequence _
+                .Select(Function(i) CStr(i + 1)) _
+                .ToArray
+        End If
+
+        Dim nrows = mat.dims.Height
+        Dim index As Integer
+
+        For i As Integer = 0 To nrows - 1
+            index = i
+            table(mat.rownames(i)) = New FeatureVector(
+                name:=mat.rownames(i),
+                doubles:=cols _
+                    .Select(Function(k) CDbl(mat(k)(index))) _
+                    .ToArray
+            )
+        Next
+
+        Return New DataFrame With {
+            .features = table,
+            .rownames = cols
+        }
+    End Function
+
+    <Extension>
     Private Function IndexGetter(v As Double()) As Func(Of Integer, Double)
         If v.IsNullOrEmpty Then
             Return Function(any) 0.0
