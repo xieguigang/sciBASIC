@@ -199,6 +199,17 @@ Namespace Drawing2D.Colors
             Dim offsetAuto As Boolean = legendOffsetLeft < 0
             Dim fontColor As Brush = foreColor.GetBrush
 
+            If maxWidth > 0 Then
+                If maxWidth < 1 Then
+                    ' is percentage
+                    maxWidth = layout.Width * maxWidth
+                End If
+
+                If legendWidth > maxWidth Then
+                    legendWidth = maxWidth
+                End If
+            End If
+
             ' 首先计算出layout
             legendOffsetTop = titleSize.Height * 2 + 5
 

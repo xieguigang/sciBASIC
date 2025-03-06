@@ -61,7 +61,7 @@
 Imports System.IO
 Imports Microsoft.VisualBasic.Parallel
 
-Namespace Net.Http
+Namespace Net.WebClient
 
     Public Class WriteData : Implements IDisposable
 

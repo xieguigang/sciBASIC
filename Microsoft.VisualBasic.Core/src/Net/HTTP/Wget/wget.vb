@@ -62,7 +62,7 @@ Imports System.Net
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Parallel
 
-Namespace Net.Http
+Namespace Net.WebClient
 
     ''' <summary>
     ''' 命令行下的下载程序组件

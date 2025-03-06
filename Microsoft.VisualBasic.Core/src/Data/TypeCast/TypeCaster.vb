@@ -1,78 +1,80 @@
 ﻿#Region "Microsoft.VisualBasic::2bff583ba36ecc03ca0f25ac58c4a467, Microsoft.VisualBasic.Core\src\Data\TypeCast\TypeCaster.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 79
-    '    Code Lines: 56 (70.89%)
-    ' Comment Lines: 5 (6.33%)
-    '    - Xml Docs: 100.00%
-    ' 
-    '   Blank Lines: 18 (22.78%)
-    '     File Size: 3.15 KB
+' Summaries:
 
 
-    '     Module Extensions
-    ' 
-    '         Function: GetBytes, GetString, ParseObject, ParseVector, ToObject
-    ' 
-    '         Sub: Add
-    ' 
-    '     Interface ITypeCaster
-    ' 
-    '         Properties: type
-    ' 
-    '         Function: GetBytes, GetString, (+2 Overloads) ParseObject, ToObject
-    ' 
-    '     Class TypeCaster
-    ' 
-    '         Properties: sizeOf, type
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 79
+'    Code Lines: 56 (70.89%)
+' Comment Lines: 5 (6.33%)
+'    - Xml Docs: 100.00%
+' 
+'   Blank Lines: 18 (22.78%)
+'     File Size: 3.15 KB
+
+
+'     Module Extensions
+' 
+'         Function: GetBytes, GetString, ParseObject, ParseVector, ToObject
+' 
+'         Sub: Add
+' 
+'     Interface ITypeCaster
+' 
+'         Properties: type
+' 
+'         Function: GetBytes, GetString, (+2 Overloads) ParseObject, ToObject
+' 
+'     Class TypeCaster
+' 
+'         Properties: sizeOf, type
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Runtime.CompilerServices
 Imports System.Runtime.InteropServices
+Imports Microsoft.VisualBasic.ApplicationServices.Debugging
 
 Namespace ComponentModel.DataSourceModel.TypeCast
 
     <HideModuleName> Public Module Extensions
 
         ReadOnly typeCaster As New Dictionary(Of Type, ITypeCaster) From {
-            New StringCaster, New IntegerCaster, New DoubleCaster,
+            New StringCaster,
+            New IntegerCaster, New DoubleCaster,
             New DateCaster,
             New BooleanCaster
         }
@@ -131,8 +133,24 @@ Namespace ComponentModel.DataSourceModel.TypeCast
 
     Public MustInherit Class TypeCaster(Of T) : Implements ITypeCaster
 
-        Public ReadOnly Property sizeOf As Integer = Marshal.SizeOf(type)
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <returns></returns>
+        ''' <remarks>
+        ''' string has no marshal size value, but data type of string always has a zero terminator
+        ''' </remarks>
+        Public ReadOnly Property sizeOf As Integer = marshalSizeOf()
         Public ReadOnly Property type As Type = GetType(T) Implements ITypeCaster.type
+
+        Private Shared Function marshalSizeOf() As Integer
+            Select Case GetType(T)
+                Case GetType(String) : Return 1
+                Case GetType(Date) : Return HeapSizeOf.datetime
+                Case Else
+                    Return Marshal.SizeOf(GetType(T))
+            End Select
+        End Function
 
         Public MustOverride Function GetBytes(value As Object) As Byte() Implements ITypeCaster.GetBytes
         Public MustOverride Function GetString(value As Object) As String Implements ITypeCaster.GetString

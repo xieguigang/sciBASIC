@@ -75,7 +75,7 @@ Public Module DataSetHelper
     ''' <returns></returns>
     <Extension>
     Public Function CommonDataSet(df As DataFrame, Optional labels As Array = Nothing) As StatisticsObject
-        Return df.NumericMatrix().CommonDataSet(colnames:=df.featureNames, labels)
+        Return df.NumericMatrix().CommonDataSet(colnames:=df.featureNames, If(labels, df.rownames))
     End Function
 
     ''' <summary>

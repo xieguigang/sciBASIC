@@ -1,60 +1,62 @@
 ﻿#Region "Microsoft.VisualBasic::e7fd4b3ddd8ac7dd78f9b8684efb8913, Data_science\Mathematica\Math\DataFrame\DataFrame\FastLoader.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 88
-    '    Code Lines: 60 (68.18%)
-    ' Comment Lines: 18 (20.45%)
-    '    - Xml Docs: 94.44%
-    ' 
-    '   Blank Lines: 10 (11.36%)
-    '     File Size: 3.22 KB
+' Summaries:
 
 
-    ' Module FastLoader
-    ' 
-    '     Function: ParseFeature, ReadCsv
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 88
+'    Code Lines: 60 (68.18%)
+' Comment Lines: 18 (20.45%)
+'    - Xml Docs: 94.44%
+' 
+'   Blank Lines: 10 (11.36%)
+'     File Size: 3.22 KB
+
+
+' Module FastLoader
+' 
+'     Function: ParseFeature, ReadCsv
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Collection
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.Repository
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.TypeCast
+Imports Microsoft.VisualBasic.Data.Framework.IO.CSVFile
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.Values
 Imports Microsoft.VisualBasic.Text
@@ -82,10 +84,7 @@ Public Module FastLoader
         Dim read As New StreamReader(file, encoding.CodePage)
         Dim rowHeaders As New List(Of String)
         Dim features As New Dictionary(Of String, List(Of String))
-        Dim ordinals As Index(Of String) = read _
-            .ReadLine _
-            .Split(delimiter) _
-            .Indexing
+        Dim ordinals As Index(Of String) = Tokenizer.CharsParser(read.ReadLine, delimiter).Indexing
         Dim line As Value(Of String) = ""
         Dim tokens As String()
         Dim i As i32 = 1
@@ -120,7 +119,7 @@ Public Module FastLoader
                               Function(a)
                                   Return a.Value.ParseFeature(a.Key)
                               End Function),
-            .rownames = rowHeaders.ToArray
+            .rownames = rowHeaders.UniqueNames.ToArray
         }
     End Function
 

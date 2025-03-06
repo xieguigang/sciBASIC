@@ -69,6 +69,13 @@ Imports std = System.Math
 
 Public Module PCA
 
+    ''' <summary>
+    ''' PCA analysis
+    ''' </summary>
+    ''' <param name="statObject"></param>
+    ''' <param name="maxPC"></param>
+    ''' <param name="cutoff"></param>
+    ''' <returns></returns>
     <Extension>
     Public Function PrincipalComponentAnalysis(statObject As StatisticsObject,
                                                Optional maxPC As Integer = 5,

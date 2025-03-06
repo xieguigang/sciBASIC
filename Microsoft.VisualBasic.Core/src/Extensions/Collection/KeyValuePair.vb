@@ -98,7 +98,9 @@ Namespace ComponentModel.Collection
         ''' <typeparam name="V"></typeparam>
         ''' <param name="table"></param>
         ''' <param name="key"></param>
-        ''' <returns></returns>
+        ''' <returns>
+        ''' returns nothing if the given key is not existed inside the dictionary
+        ''' </returns>
         <Extension>
         Public Function Popout(Of K, V)(table As Dictionary(Of K, V), key As K) As V
             If table.ContainsKey(key) Then

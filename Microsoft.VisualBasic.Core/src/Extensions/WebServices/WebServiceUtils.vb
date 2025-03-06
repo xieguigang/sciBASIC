@@ -703,7 +703,12 @@ Public Module WebServiceUtils
     ''' <param name="referer$"></param>
     ''' <returns></returns>
     <Extension>
-    Public Function POSTFile(url$, buffer As Byte(), Optional name$ = "", Optional referer$ = Nothing) As String
+    Public Function POSTFile(url$, buffer As Byte(),
+                             Optional name$ = "",
+                             Optional referer$ = Nothing,
+                             Optional timeout As Integer = 30 * 60 * 1000,
+                             Optional verbose As Boolean = True) As String
+
         Dim request As HttpWebRequest = DirectCast(WebRequest.Create(url), HttpWebRequest)
 
         request.Method = "POST"
@@ -712,13 +717,15 @@ Public Module WebServiceUtils
         request.ContentType = "multipart/form-data; boundary=------WebKitFormBoundaryBpijhG6dKsQpCMdN--;"
         request.UserAgent = UserAgent.GoogleChrome
         request.Referer = referer
-        '  request.Headers("fileName") = name Or File.FileName.AsDefault
+        request.Timeout = timeout
 
         If Not String.IsNullOrEmpty(Proxy) Then
             Call request.SetProxy(Proxy)
         End If
 
-        Call $"[POST] {url}....".__DEBUG_ECHO
+        If verbose Then
+            Call VBDebugger.EchoLine($"[POST@{Now.ToString}] {url}....")
+        End If
 
         ' post data Is sent as a stream
         With request.GetRequestStream()
@@ -741,7 +748,9 @@ Public Module WebServiceUtils
                 Call html.AppendLine(+s)
             Loop
 
-            Call $"Get {html.Length} bytes from server response...".__DEBUG_ECHO
+            If verbose Then
+                Call VBDebugger.EchoLine($"Get {html.Length} bytes from server response...")
+            End If
 
             Return html.ToString
         End Using

@@ -95,6 +95,7 @@ Namespace Render.CSS
 
             Return result
         End Function
+
 #If NET48 Then
         ''' <summary>
         ''' Parses a length. Lengths are followed by an unit identifier (e.g. 10px, 3.1em)

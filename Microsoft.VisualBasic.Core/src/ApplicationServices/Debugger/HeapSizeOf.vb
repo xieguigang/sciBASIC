@@ -94,6 +94,8 @@ Namespace ApplicationServices.Debugging
         Public Const [decimal] = 16
         Public Const bool = 1
 
+        Public Const [datetime] = 8
+
         Public ReadOnly Property sizeOf As Long
             Get
                 Return byteSize

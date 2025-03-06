@@ -57,13 +57,16 @@
 #End Region
 
 Imports System.Drawing
+Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.Language.Vectorization
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Scripting.Runtime
 Imports Microsoft.VisualBasic.Serialization.JSON
+Imports Microsoft.VisualBasic.Text
 
 ''' <summary>
 ''' R language liked dataframe object
@@ -195,8 +198,13 @@ Public Class DataFrame : Implements INumericMatrix
     ''' <param name="featureName"></param>
     ''' <returns></returns>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    Public Function delete(featureName As String) As Boolean
-        Return features.Remove(featureName)
+    Public Function delete(featureName As String) As FeatureVector
+        Return features.Popout(featureName)
+    End Function
+
+    Public Function add(featureName As String, v As StringVector) As DataFrame
+        Call features.Add(featureName, New FeatureVector(featureName, v.AsEnumerable))
+        Return Me
     End Function
 
     ''' <summary>
@@ -368,7 +376,23 @@ Public Class DataFrame : Implements INumericMatrix
         Return $"[{size.Width}x{size.Height}] {featureSet}"
     End Function
 
-    Public Function ArrayPack(Optional deepcopy As Boolean = False) As Double()() Implements INumericMatrix.ArrayPack
+    Public Shared Function read_csv(file As String,
+                                    Optional delimiter As Char = ","c,
+                                    Optional rowHeader As Boolean = True,
+                                    Optional encoding As Encodings = Encodings.UTF8) As DataFrame
+        Using s As Stream = file.Open(FileMode.Open, doClear:=False, [readOnly]:=True)
+            Return FastLoader.ReadCsv(s, delimiter, rowHeader, encoding)
+        End Using
+    End Function
+
+    Public Shared Function read_csv(file As Stream,
+                                    Optional delimiter As Char = ","c,
+                                    Optional rowHeader As Boolean = True,
+                                    Optional encoding As Encodings = Encodings.UTF8) As DataFrame
+        Return FastLoader.ReadCsv(file, delimiter, rowHeader, encoding)
+    End Function
+
+    Private Function ArrayPack(Optional deepcopy As Boolean = False) As Double()() Implements INumericMatrix.ArrayPack
         Dim m As Double()() = New Double(nsamples - 1)() {}
         Dim colnames As String() = featureNames
         Dim getters As Func(Of Integer, Double)() = colnames _

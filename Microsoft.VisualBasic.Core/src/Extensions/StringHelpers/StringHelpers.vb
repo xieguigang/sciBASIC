@@ -457,8 +457,10 @@ Public Module StringHelpers
     ''' <param name="s"></param>
     ''' <param name="delimiter"></param>
     ''' <param name="trim">Needs Removes all leading and trailing white-space characters from 
-    ''' the current <see cref="System.String"/> object.</param>
-    ''' <returns></returns>
+    ''' the current <see cref="String"/> object.</param>
+    ''' <returns>
+    ''' this function will returns empty data if the given string is nothing
+    ''' </returns>
     ''' 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
@@ -805,9 +807,9 @@ Public Module StringHelpers
     ''' <summary>
     ''' Get sub string value from the region that between the <paramref name="left"/> and <paramref name="right"/>.
     ''' </summary>
-    ''' <param name="str$"></param>
-    ''' <param name="left$"></param>
-    ''' <param name="right$"></param>
+    ''' <param name="str"></param>
+    ''' <param name="left"></param>
+    ''' <param name="right"></param>
     ''' <returns></returns>
     ''' <remarks>
     ''' (这个函数是直接分别查找左右两边的定位字符串来进行切割的) 
