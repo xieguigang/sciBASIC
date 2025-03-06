@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7cf671b2c80ac8f36afbd7759b493344, Data\DataFrame\StorageProvider\ComponntModels\DynamicObjectLoader.vb"
+﻿#Region "Microsoft.VisualBasic::6c664b426fae91feb5d4eaf01a715e71, Data\DataFrame\StorageProvider\ComponntModels\DynamicObjectLoader.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 96.99%
     ' 
     '   Blank Lines: 64 (14.25%)
-    '     File Size: 18.68 KB
+    '     File Size: 18.70 KB
 
 
     '     Class DynamicObjectLoader

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::75342804545da4865fdd04aaa76ea5e0, Data_science\Mathematica\Math\ANOVA\MultivariateAnalysis\PLSData.vb"
+﻿#Region "Microsoft.VisualBasic::c961dcfc3408f7c4bec12c8d7f7d0544, Data_science\Mathematica\Math\ANOVA\MultivariateAnalysis\PLSData.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 75.00%
     ' 
     '   Blank Lines: 22 (19.13%)
-    '     File Size: 3.70 KB
+    '     File Size: 3.71 KB
 
 
     ' Module PLSData

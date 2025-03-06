@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3cac95546523c6cb8e5f4a7c89ab7023, Data\DataFrame\StorageProvider\ComponntModels\SchemaProvider.vb"
+﻿#Region "Microsoft.VisualBasic::f35f015790d8a236a5879ae2d9f24ced, Data\DataFrame\StorageProvider\ComponntModels\SchemaProvider.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 96.30%
     ' 
     '   Blank Lines: 64 (12.67%)
-    '     File Size: 21.24 KB
+    '     File Size: 21.25 KB
 
 
     '     Class SchemaProvider

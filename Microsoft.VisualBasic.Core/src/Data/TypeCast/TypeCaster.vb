@@ -1,66 +1,68 @@
-﻿#Region "Microsoft.VisualBasic::2bff583ba36ecc03ca0f25ac58c4a467, Microsoft.VisualBasic.Core\src\Data\TypeCast\TypeCaster.vb"
+﻿#Region "Microsoft.VisualBasic::f19851830e0e0b7e9e64cad38eb807c7, Microsoft.VisualBasic.Core\src\Data\TypeCast\TypeCaster.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 79
-'    Code Lines: 56 (70.89%)
-' Comment Lines: 5 (6.33%)
-'    - Xml Docs: 100.00%
-' 
-'   Blank Lines: 18 (22.78%)
-'     File Size: 3.15 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Module Extensions
-' 
-'         Function: GetBytes, GetString, ParseObject, ParseVector, ToObject
-' 
-'         Sub: Add
-' 
-'     Interface ITypeCaster
-' 
-'         Properties: type
-' 
-'         Function: GetBytes, GetString, (+2 Overloads) ParseObject, ToObject
-' 
-'     Class TypeCaster
-' 
-'         Properties: sizeOf, type
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 97
+    '    Code Lines: 66 (68.04%)
+    ' Comment Lines: 12 (12.37%)
+    '    - Xml Docs: 91.67%
+    ' 
+    '   Blank Lines: 19 (19.59%)
+    '     File Size: 3.80 KB
+
+
+    '     Module Extensions
+    ' 
+    '         Function: GetBytes, GetString, ParseObject, ParseVector, ToObject
+    ' 
+    '         Sub: Add
+    ' 
+    '     Interface ITypeCaster
+    ' 
+    '         Properties: type
+    ' 
+    '         Function: GetBytes, GetString, (+2 Overloads) ParseObject, ToObject
+    ' 
+    '     Class TypeCaster
+    ' 
+    '         Properties: sizeOf, type
+    ' 
+    '         Function: marshalSizeOf
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

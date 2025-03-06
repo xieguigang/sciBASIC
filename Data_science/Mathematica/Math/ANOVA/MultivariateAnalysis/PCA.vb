@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f957bd92b319f5b330b58bc3033d5aef, Data_science\Mathematica\Math\ANOVA\MultivariateAnalysis\PCA.vb"
+﻿#Region "Microsoft.VisualBasic::68a213f095ee28c5ecaf294463f90e69, Data_science\Mathematica\Math\ANOVA\MultivariateAnalysis\PCA.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 226
-    '    Code Lines: 159 (70.35%)
-    ' Comment Lines: 22 (9.73%)
-    '    - Xml Docs: 0.00%
+    '   Total Lines: 233
+    '    Code Lines: 159 (68.24%)
+    ' Comment Lines: 29 (12.45%)
+    '    - Xml Docs: 24.14%
     ' 
-    '   Blank Lines: 45 (19.91%)
-    '     File Size: 7.65 KB
+    '   Blank Lines: 45 (19.31%)
+    '     File Size: 7.86 KB
 
 
     ' Module PCA

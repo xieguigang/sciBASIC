@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::17abeb043230ec6c68d117768de6e6b7, Data_science\Mathematica\Math\DataFrame\DataFrame\FileWriter.vb"
+﻿#Region "Microsoft.VisualBasic::17abeb043230ec6c68d117768de6e6b7, Data\DataFrame\DataFrame\FileWriter.vb"
 
     ' Author:
     ' 

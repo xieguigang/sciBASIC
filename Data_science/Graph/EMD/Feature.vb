@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::12235d550d7b8a4fc1603e647d0b0ad2, Data_science\Graph\EMD\Feature.vb"
+﻿#Region "Microsoft.VisualBasic::e0b32f1caaa7b70174307a5d543f531d, Data_science\Graph\EMD\Feature.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 0.00%
     ' 
     '   Blank Lines: 0 (0.00%)
-    '     File Size: 132 B
+    '     File Size: 130 B
 
 
     '     Interface Feature
@@ -57,4 +57,3 @@ Namespace EMD
         Function groundDist(f As Feature) As Double
     End Interface
 End Namespace
-

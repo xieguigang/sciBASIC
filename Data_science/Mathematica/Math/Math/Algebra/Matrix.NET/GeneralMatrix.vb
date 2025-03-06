@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d262e6bbeea17d3d88e8c08c4cefc535, Data_science\Mathematica\Math\Math\Algebra\Matrix.NET\GeneralMatrix.vb"
+﻿#Region "Microsoft.VisualBasic::d4b1c7a685b656b8147fc634f169784d, Data_science\Mathematica\Math\Math\Algebra\Matrix.NET\GeneralMatrix.vb"
 
     ' Author:
     ' 
@@ -34,19 +34,15 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 83
-    '    Code Lines: 22 (26.51%)
-    ' Comment Lines: 47 (56.63%)
+    '   Total Lines: 71
+    '    Code Lines: 19 (26.76%)
+    ' Comment Lines: 41 (57.75%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 14 (16.87%)
-    '     File Size: 2.80 KB
+    '   Blank Lines: 11 (15.49%)
+    '     File Size: 2.39 KB
 
 
-    '     Interface INumericMatrix
-    ' 
-    '         Function: ArrayPack
-    ' 
     '     Interface ILabeledMatrix
     ' 
     '         Function: GetLabels

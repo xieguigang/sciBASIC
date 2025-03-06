@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::89bc0b39bcb7ec75a82b28bef1b76ffb, Microsoft.VisualBasic.Core\src\Extensions\Math\Matrix.vb"
+﻿#Region "Microsoft.VisualBasic::607782c23476f66af2dfed3261dc383f, Microsoft.VisualBasic.Core\src\Extensions\Math\Matrix.vb"
 
     ' Author:
     ' 
@@ -34,15 +34,19 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 65
-    '    Code Lines: 37 (56.92%)
-    ' Comment Lines: 23 (35.38%)
-    '    - Xml Docs: 73.91%
+    '   Total Lines: 77
+    '    Code Lines: 40 (51.95%)
+    ' Comment Lines: 29 (37.66%)
+    '    - Xml Docs: 79.31%
     ' 
-    '   Blank Lines: 5 (7.69%)
-    '     File Size: 2.85 KB
+    '   Blank Lines: 8 (10.39%)
+    '     File Size: 3.26 KB
 
 
+    '     Interface INumericMatrix
+    ' 
+    '         Function: ArrayPack
+    ' 
     '     Module MatrixExtensions
     ' 
     '         Function: MatrixMult, ScalarMult

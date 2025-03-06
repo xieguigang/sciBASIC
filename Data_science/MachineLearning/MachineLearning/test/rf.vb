@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2252970f26d49c3842f8ddd319030af1, Data_science\MachineLearning\MachineLearning\test\rf.vb"
+﻿#Region "Microsoft.VisualBasic::04d5d70908ac3a8940c73146ec298724, Data_science\MachineLearning\MachineLearning\test\rf.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 0.00%
     ' 
     '   Blank Lines: 6 (20.00%)
-    '     File Size: 936 B
+    '     File Size: 934 B
 
 
     ' Module rf
@@ -81,4 +81,3 @@ Module rf
         Pause()
     End Sub
 End Module
-

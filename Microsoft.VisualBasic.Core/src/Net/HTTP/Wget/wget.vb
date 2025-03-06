@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6b252aef4e7935a26809d277b8277e41, Microsoft.VisualBasic.Core\src\Net\HTTP\Wget\wget.vb"
+﻿#Region "Microsoft.VisualBasic::149f5210800c9ee88244ed5a6c508815, Microsoft.VisualBasic.Core\src\Net\HTTP\Wget\wget.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 69.70%
     ' 
     '   Blank Lines: 37 (20.00%)
-    '     File Size: 7.04 KB
+    '     File Size: 7.05 KB
 
 
     '     Class wget

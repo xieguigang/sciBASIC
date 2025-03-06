@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::eb127028be968cce64b5463aeaf7d20f, Data_science\Graph\EMD\Feature2D.vb"
+﻿#Region "Microsoft.VisualBasic::ccf9da8d99526842c9793969cf7f7866, Data_science\Graph\EMD\Feature2D.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 75.00%
     ' 
     '   Blank Lines: 5 (16.67%)
-    '     File Size: 827 B
+    '     File Size: 825 B
 
 
     '     Class Feature2D
@@ -83,4 +83,3 @@ Namespace EMD
         End Function
     End Class
 End Namespace
-

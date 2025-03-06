@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::182b0513248659c3f37dc5f9e73f5961, Data_science\Visualization\Plots-statistics\Heatmap\PlotExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::62b4bb435d26f696fe92e1e93694f1f6, Data_science\Visualization\Plots-statistics\HeatMap\PlotExtensions.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 92.31%
     ' 
     '   Blank Lines: 17 (14.17%)
-    '     File Size: 5.08 KB
+    '     File Size: 5.07 KB
 
 
     '     Module PlotExtensions

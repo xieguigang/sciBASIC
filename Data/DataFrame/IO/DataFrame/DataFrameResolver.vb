@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ca596bf19adbb4c0b0631acaf0eaf7a5, Data\DataFrame\IO\DataFrame\DataFrame.vb"
+﻿#Region "Microsoft.VisualBasic::ac2c9f935ec6f54b19f49ef390ada7db, Data\DataFrame\IO\DataFrame\DataFrameResolver.vb"
 
     ' Author:
     ' 
@@ -34,16 +34,16 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 790
-    '    Code Lines: 508 (64.30%)
-    ' Comment Lines: 167 (21.14%)
+    '   Total Lines: 797
+    '    Code Lines: 512 (64.24%)
+    ' Comment Lines: 167 (20.95%)
     '    - Xml Docs: 82.63%
     ' 
-    '   Blank Lines: 115 (14.56%)
-    '     File Size: 31.97 KB
+    '   Blank Lines: 118 (14.81%)
+    '     File Size: 32.20 KB
 
 
-    '     Class DataFrame
+    '     Class DataFrameResolver
     ' 
     '         Properties: Depth, FieldCount, Headers, HeadTitles, IDataRecord_Item
     '                     IsClosed, Item, Nrows, RecordsAffected, Rows
@@ -54,7 +54,7 @@
     '         Function: __createTableVector, [Select], AddAttribute, AppendLine, ColumnRows
     '                   CreateDataSource, (+2 Overloads) CreateObject, createObjectInternal, csv, EnumerateData
     '                   EnumerateRowObjects, GetBoolean, GetByte, GetBytes, GetChar
-    '                   GetChars, getColumnList, GetColumnVectors, GetData, GetDataTypeName
+    '                   GetChars, (+2 Overloads) getColumnList, GetColumnVectors, GetData, GetDataTypeName
     '                   GetDateTime, GetDecimal, GetDouble, GetEnumerator, GetEnumerator2
     '                   GetFieldType, GetFloat, GetGuid, GetInt16, GetInt32
     '                   GetInt64, GetName, (+2 Overloads) GetOrdinal, GetOrdinalSchema, GetRow

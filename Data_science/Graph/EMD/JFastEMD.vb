@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::017a797f732df2bd5aaad568a463f093, Data_science\Graph\EMD\JFastEMD.vb"
+﻿#Region "Microsoft.VisualBasic::f8637638c1d104fe1173319dee291688, Data_science\Graph\EMD\JFastEMD.vb"
 
     ' Author:
     ' 
@@ -420,4 +420,3 @@ Namespace EMD
         End Function
     End Class
 End Namespace
-

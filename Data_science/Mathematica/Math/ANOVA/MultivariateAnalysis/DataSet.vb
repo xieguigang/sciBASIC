@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cbe78d34170ada4380dee1a3c1736afe, Data_science\Mathematica\Math\ANOVA\MultivariateAnalysis\DataSet.vb"
+﻿#Region "Microsoft.VisualBasic::5eb3ef553666892ff93b1bebfb333f15, Data_science\Mathematica\Math\ANOVA\MultivariateAnalysis\DataSet.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 89
-    '    Code Lines: 58 (65.17%)
-    ' Comment Lines: 21 (23.60%)
+    '   Total Lines: 88
+    '    Code Lines: 57 (64.77%)
+    ' Comment Lines: 21 (23.86%)
     '    - Xml Docs: 85.71%
     ' 
-    '   Blank Lines: 10 (11.24%)
-    '     File Size: 3.73 KB
+    '   Blank Lines: 10 (11.36%)
+    '     File Size: 3.69 KB
 
 
     ' Module DataSetHelper

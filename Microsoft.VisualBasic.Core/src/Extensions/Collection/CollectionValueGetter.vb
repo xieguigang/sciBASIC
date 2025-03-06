@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1459c331cc43d0daaa83845adaca1223, Microsoft.VisualBasic.Core\src\Extensions\Collection\CollectionValueGetter.vb"
+﻿#Region "Microsoft.VisualBasic::9983623c61b99ae609a4287962604767, Microsoft.VisualBasic.Core\src\Extensions\Collection\CollectionValueGetter.vb"
 
     ' Author:
     ' 
@@ -34,20 +34,20 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 374
-    '    Code Lines: 207 (55.35%)
-    ' Comment Lines: 133 (35.56%)
+    '   Total Lines: 393
+    '    Code Lines: 222 (56.49%)
+    ' Comment Lines: 133 (33.84%)
     '    - Xml Docs: 93.23%
     ' 
-    '   Blank Lines: 34 (9.09%)
-    '     File Size: 13.61 KB
+    '   Blank Lines: 38 (9.67%)
+    '     File Size: 14.21 KB
 
 
     ' Module CollectionValueGetter
     ' 
     '     Function: [Get], AsEnumerable, ElementAtOrDefault, ElementAtOrNull, FirstNotEmpty
-    '               GetItem, GetValueOrDefault, GetValueOrNull, NotNull, (+3 Overloads) TryGetValue
-    '               (+2 Overloads) TryPopOut, Values
+    '               GetItem, GetValueOrDefault, GetValueOrNull, NotNull, PowerSet
+    '               (+3 Overloads) TryGetValue, (+2 Overloads) TryPopOut, Values
     ' 
     ' /********************************************************************************/
 

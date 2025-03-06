@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8c7dd99fb4173c88d092f771ff9d4536, Microsoft.VisualBasic.Core\src\CommandLine\CLI\PipelineProcess.vb"
+﻿#Region "Microsoft.VisualBasic::7b9bfc2821619b9f5d1c355c431163d1, Microsoft.VisualBasic.Core\src\CommandLine\CLI\PipelineProcess.vb"
 
     ' Author:
     ' 

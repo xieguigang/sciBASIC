@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ff020d60d91082a08dd54efa7ab27c63, Data\DataFrame\IO\CSVText\File.vb"
+﻿#Region "Microsoft.VisualBasic::852a8dfb9237776b9c55892eec953a8e, Data\DataFrame\IO\CSVText\File.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 96.91%
     ' 
     '   Blank Lines: 125 (12.79%)
-    '     File Size: 39.66 KB
+    '     File Size: 39.67 KB
 
 
     '     Class File

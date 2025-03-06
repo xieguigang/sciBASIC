@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5c5ae74ed858393dad793f130f81490b, Microsoft.VisualBasic.Core\src\ApplicationServices\Debugger\HeapSizeOf.vb"
+﻿#Region "Microsoft.VisualBasic::378c9766cac4c1ee74399e9c99b19635, Microsoft.VisualBasic.Core\src\ApplicationServices\Debugger\HeapSizeOf.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 163
-    '    Code Lines: 110 (67.48%)
-    ' Comment Lines: 39 (23.93%)
+    '   Total Lines: 165
+    '    Code Lines: 111 (67.27%)
+    ' Comment Lines: 39 (23.64%)
     '    - Xml Docs: 43.59%
     ' 
-    '   Blank Lines: 14 (8.59%)
-    '     File Size: 6.23 KB
+    '   Blank Lines: 15 (9.09%)
+    '     File Size: 6.27 KB
 
 
     '     Class HeapSizeOf

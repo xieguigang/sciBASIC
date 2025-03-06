@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c4e3c4c69a7058aa6cf8ee6c41166fb5, mime\text%html\Render\CSS\CssValue.vb"
+﻿#Region "Microsoft.VisualBasic::8cef507a1b1b20f927b73e2ad789b0ef, mime\text%html\Render\CSS\CssValue.vb"
 
     ' Author:
     ' 
@@ -34,12 +34,12 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 494
-    '    Code Lines: 312 (63.16%)
-    ' Comment Lines: 89 (18.02%)
+    '   Total Lines: 495
+    '    Code Lines: 312 (63.03%)
+    ' Comment Lines: 89 (17.98%)
     '    - Xml Docs: 74.16%
     ' 
-    '   Blank Lines: 93 (18.83%)
+    '   Blank Lines: 94 (18.99%)
     '     File Size: 18.66 KB
 
 

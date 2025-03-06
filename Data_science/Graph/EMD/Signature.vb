@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::42ac364cedbe1537c9ae1cdd182702fb, Data_science\Graph\EMD\Signature.vb"
+﻿#Region "Microsoft.VisualBasic::c9f8fc5254be976028227b2dc349b13e, Data_science\Graph\EMD\Signature.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 75.00%
     ' 
     '   Blank Lines: 5 (20.83%)
-    '     File Size: 807 B
+    '     File Size: 805 B
 
 
     '     Class Signature
@@ -78,4 +78,3 @@ Namespace EMD
 
     End Class
 End Namespace
-

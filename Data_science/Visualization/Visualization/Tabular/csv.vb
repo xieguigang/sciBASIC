@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::efb2cd4822bc15ecff3dc2c9465589e8, Data_science\Visualization\Visualization\Tabular\csv.vb"
+﻿#Region "Microsoft.VisualBasic::f7afafe4f7938de9ea0fae63519e1062, Data_science\Visualization\Visualization\Tabular\csv.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 33.33%
     ' 
     '   Blank Lines: 17 (11.26%)
-    '     File Size: 5.54 KB
+    '     File Size: 5.56 KB
 
 
     '     Module BarDataTableExtensions

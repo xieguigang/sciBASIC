@@ -1,4 +1,59 @@
-﻿Imports System.Runtime.CompilerServices
+﻿#Region "Microsoft.VisualBasic::f3500705f3a5a6d26d25e0660d737f70, Data_science\Mathematica\Math\DataFrame\NumericDataSet.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 261
+    '    Code Lines: 200 (76.63%)
+    ' Comment Lines: 12 (4.60%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 49 (18.77%)
+    '     File Size: 7.84 KB
+
+
+    ' Module NumericDataSet
+    ' 
+    '     Function: Center, CenterByCol, CenterByRow, Log, Scale01
+    '               Scale01ByCol, Scale01ByRow, Standard, StandardByCol, StandardByRow
+    '               ZScale, ZScaleByCol, ZScaleByRow
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.Framework
 Imports Microsoft.VisualBasic.Math.Distributions
