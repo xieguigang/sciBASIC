@@ -144,6 +144,10 @@ Namespace FileSystem
             Me.tree = tree
         End Sub
 
+        Public Function FilePath(filename As String) As String
+            Return referencePath.ToString & "/" & filename
+        End Function
+
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function hasName(nodeName As String) As Boolean
             Return tree.ContainsKey(nodeName)
