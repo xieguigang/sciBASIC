@@ -52,6 +52,7 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports System.Runtime.Serialization
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
@@ -144,16 +145,21 @@ Public Module Builder
         Dim matrix As Double()() = evalData _
             .Select(Function(d) d.cor) _
             .ToArray
+        Dim nameIndex = keys.Indexing
+
+        If keys.Length <> nameIndex.Count Then
+            Throw New InvalidDataContractException("there are some duplicated names of your data matrix, please makes the label of each data object be unique!")
+        End If
 
         If type = DataType.Correlation Then
             Return New CorrelationMatrix(
-                names:=keys.Indexing,
+                names:=nameIndex,
                 matrix:=matrix,
                 pvalue:=evalData.Select(Function(d) d.pval).ToArray
             )
         Else
             Return New DistanceMatrix(
-                names:=keys.Indexing,
+                names:=nameIndex,
                 matrix:=matrix,
                 isDistance:=(type = DataType.Distance)
             )

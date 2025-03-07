@@ -192,16 +192,17 @@ Namespace LinearAlgebra.Matrix
         ''' m is row number and n is column number
         ''' </remarks>
         Public Sub New(m As Integer, n As Integer)
-            Dim A = New Double(m - 1)() {}
+            'Dim A = New Double(m - 1)() {}
 
             Me.m = m
             Me.n = n
 
-            For i As Integer = 0 To m - 1
-                A(i) = New Double(n - 1) {}
-            Next
+            'For i As Integer = 0 To m - 1
+            '    A(i) = New Double(n - 1) {}
+            'Next
 
-            buffer = A
+            'buffer = A
+            buffer = RectangularArray.Matrix(Of Double)(m, n)
         End Sub
 
         ''' <summary>Construct an m-by-n constant matrix.</summary>
@@ -214,18 +215,19 @@ Namespace LinearAlgebra.Matrix
         Public Sub New(m As Integer, n As Integer, s As Double)
             Me.m = m
             Me.n = n
-            Dim A = New Double(m - 1)() {}
+            'Dim A = New Double(m - 1)() {}
 
-            For i As Integer = 0 To m - 1
-                A(i) = New Double(n - 1) {}
-            Next
-            For i As Integer = 0 To m - 1
-                For j As Integer = 0 To n - 1
-                    A(i)(j) = s
-                Next
-            Next
+            'For i As Integer = 0 To m - 1
+            '    A(i) = New Double(n - 1) {}
+            'Next
+            'For i As Integer = 0 To m - 1
+            '    For j As Integer = 0 To n - 1
+            '        A(i)(j) = s
+            '    Next
+            'Next
 
-            buffer = A
+            ' buffer = A
+            buffer = RectangularArray.Matrix(m, n, s)
         End Sub
 
         ''' <summary>Construct a matrix from a 2-D array.</summary>
@@ -1220,7 +1222,7 @@ Namespace LinearAlgebra.Matrix
         ''' </returns>
 
         Public Overridable Function ArrayLeftDivideEquals(B As GeneralMatrix) As GeneralMatrix
-            CheckMatrixDimensions(B)
+            Call CheckMatrixDimensions(B)
             For i As Integer = 0 To m - 1
                 For j As Integer = 0 To n - 1
                     buffer(i)(j) = B(i, j) / buffer(i)(j)

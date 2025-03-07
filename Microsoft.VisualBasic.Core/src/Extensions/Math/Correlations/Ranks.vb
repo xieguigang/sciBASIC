@@ -69,7 +69,7 @@ Namespace Math
 
     Public Delegate Function Evaluate(Of T)(x As T) As Double
 
-#If NET_48 = 1 Or netcore5 = 1 Then
+#If NET48_OR_GREATER Or NETCOREAPP Then
 
     Public Class Ranking(Of T)
 

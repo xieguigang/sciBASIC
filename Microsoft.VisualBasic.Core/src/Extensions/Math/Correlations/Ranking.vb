@@ -108,7 +108,10 @@ Namespace Math.Correlations
         ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
-        Public Function Ranking(Of C As IComparable)(list As IEnumerable(Of C), Optional strategy As Strategies = Strategies.OrdinalRanking, Optional desc As Boolean = False) As Double()
+        Public Function Ranking(Of C As IComparable)(list As IEnumerable(Of C),
+                                                     Optional strategy As Strategies = Strategies.OrdinalRanking,
+                                                     Optional desc As Boolean = False) As Double()
+
             If strategy = Strategies.OrdinalRanking Then
                 Return list.OrdinalRanking(desc)
             ElseIf strategy = Strategies.DenseRanking Then

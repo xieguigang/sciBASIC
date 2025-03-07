@@ -71,7 +71,7 @@ Imports Microsoft.VisualBasic.Serialization.JSON
 ''' <remarks>
 ''' a matrix data wrapper for pairwise comparision analysis
 ''' </remarks>
-Public Class DataMatrix : Implements IBucketVector
+Public Class DataMatrix : Implements IBucketVector, INumericMatrix, ILabeledMatrix
 
     Protected Friend ReadOnly names As Index(Of String)
     Protected Friend ReadOnly matrix As Double()()
@@ -211,5 +211,24 @@ Public Class DataMatrix : Implements IBucketVector
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function GetVector() As IEnumerable Implements IBucketVector.GetVector
         Return PopulateRows.IteratesALL.ToArray
+    End Function
+
+    Public Function ArrayPack(Optional deepcopy As Boolean = False) As Double()() Implements INumericMatrix.ArrayPack
+        If deepcopy Then
+            Dim len As Integer = matrix(0).Length
+            Dim copy As Double()() = RectangularArray.Matrix(Of Double)(matrix.Length, len)
+
+            For i As Integer = 0 To matrix.Length - 1
+                Call Array.ConstrainedCopy(matrix(i), Scan0, copy(i), Scan0, len)
+            Next
+
+            Return copy
+        Else
+            Return matrix
+        End If
+    End Function
+
+    Public Function GetLabels() As IEnumerable(Of String) Implements ILabeledMatrix.GetLabels
+        Return names.Objects
     End Function
 End Class

@@ -80,42 +80,11 @@ Imports stdf = System.Math
 
 Namespace LinearAlgebra.Matrix.MDSScale
 
-    ''' <summary>
-    ''' A class implementing Stress Minimization by Majorizing a Complex Function (SMACOF).
-    ''' 
-    ''' Created by IntelliJ IDEA.
-    ''' User: da
-    ''' Date: 10/8/11
-    ''' Time: 2:43 AM
-    ''' </summary>
+    Public MustInherit Class MDSMethod
 
-    Public Class SMACOF
-
-        Private x As Double()()
-        Private d As Double()()
-        Private w As Double()()
-
-        ''' <summary>
-        ''' Construct a new SMACOF instance. </summary>
-        ''' <param name="d"> distance matrix </param>
-        ''' <param name="x"> initial coordinate matrix </param>
-        ''' <param name="w"> weights matrix </param>
-        Public Sub New(d As Double()(), x As Double()(), w As Double()())
-            Me.x = x
-            Me.d = d
-            Me.w = w
-        End Sub
-
-        ''' <summary>
-        ''' Construct a SMACOF instance without weights. </summary>
-        ''' <param name="d"> distance matrix </param>
-        ''' <param name="x"> initial coordinate matrix </param>
-        Public Sub New(d As Double()(), x As Double()())
-            Me.x = x
-            Me.d = d
-            '        this.w = weightMatrix(d, 0.0D);
-            w = Nothing
-        End Sub
+        Protected x As Double()()
+        Protected d As Double()()
+        Protected w As Double()()
 
         Public Overridable Property Dissimilarities As Double()()
             Get
@@ -144,13 +113,16 @@ Namespace LinearAlgebra.Matrix.MDSScale
             End Set
         End Property
 
-
-
+        Public Sub New(d As Double()(), x As Double()(), w As Double()())
+            Me.x = x
+            Me.d = d
+            Me.w = w
+        End Sub
 
         ''' <summary>
         ''' Perform 1 majorization iteration using this SMACOF instance. </summary>
         ''' <returns> report </returns>
-        Public Overridable Function iterate() As String
+        Public Function iterate() As String
             Return iterate(1)
         End Function
 
@@ -158,7 +130,71 @@ Namespace LinearAlgebra.Matrix.MDSScale
         ''' Perform n majorization iterations using this SMACOF instance. </summary>
         ''' <param name="n"> number of iterations </param>
         ''' <returns> report </returns>
-        Public Overridable Function iterate(n As Integer) As String
+        Public MustOverride Function iterate(n As Integer) As String
+
+        ''' <summary>
+        ''' Perform majorization iterations until the maximum number of iterations
+        ''' is reached, the maximum runtime has elapsed, or the change in
+        ''' normalized stress falls below the threshold, whichever comes first. </summary>
+        ''' <param name="iter"> maximum number of iterations </param>
+        ''' <param name="threshold"> threshold for change in normalized stress </param>
+        ''' <returns> report </returns>
+        Public MustOverride Function iterate(iter As Integer, threshold As Integer) As String
+
+        ''' <summary>
+        ''' Element-wise matrix exponentiation for self-weighting of distances. </summary>
+        ''' <param name="D"> distance matrix or initial weights </param>
+        ''' <param name="exponent"> power to raise each element the matrix </param>
+        ''' <returns> exponentiated weights </returns>
+        Public Shared Function weightMatrix(D As Double()(), exponent As Double) As Double()()
+            Dim n = D(0).Length
+            Dim k = D.Length
+            Dim result = RectangularArray.Matrix(Of Double)(k, n)
+
+            For i = 0 To k - 1
+                For j = 0 To n - 1
+                    If D(i)(j) > 0.0R Then
+                        result(i)(j) = stdf.Pow(D(i)(j), exponent)
+                    End If
+                Next
+            Next
+            Return result
+        End Function
+    End Class
+
+    ''' <summary>
+    ''' A class implementing Stress Minimization by Majorizing a Complex Function (SMACOF).
+    ''' 
+    ''' Created by IntelliJ IDEA.
+    ''' User: da
+    ''' Date: 10/8/11
+    ''' Time: 2:43 AM
+    ''' </summary>
+
+    Public Class SMACOF : Inherits MDSMethod
+
+        ''' <summary>
+        ''' Construct a new SMACOF instance. </summary>
+        ''' <param name="d"> distance matrix </param>
+        ''' <param name="x"> initial coordinate matrix </param>
+        ''' <param name="w"> weights matrix </param>
+        Public Sub New(d As Double()(), x As Double()(), w As Double()())
+            Call MyBase.New(d, x, w)
+        End Sub
+
+        ''' <summary>
+        ''' Construct a SMACOF instance without weights. </summary>
+        ''' <param name="d"> distance matrix </param>
+        ''' <param name="x"> initial coordinate matrix </param>
+        Public Sub New(d As Double()(), x As Double()())
+            Call MyBase.New(d, x, w:=Nothing)
+        End Sub
+
+        ''' <summary>
+        ''' Perform n majorization iterations using this SMACOF instance. </summary>
+        ''' <param name="n"> number of iterations </param>
+        ''' <returns> report </returns>
+        Public Overrides Function iterate(n As Integer) As String
             If w IsNot Nothing Then
                 Return majorize(x, d, w, n, 0)
             End If
@@ -172,7 +208,7 @@ Namespace LinearAlgebra.Matrix.MDSScale
         ''' <param name="iter"> maximum number of iterations </param>
         ''' <param name="threshold"> threshold for change in normalized stress </param>
         ''' <returns> report </returns>
-        Public Overridable Function iterate(iter As Integer, threshold As Integer) As String
+        Public Overrides Function iterate(iter As Integer, threshold As Integer) As String
             If w IsNot Nothing Then
                 Return majorize(x, d, w, iter, threshold)
             End If
@@ -202,26 +238,6 @@ Namespace LinearAlgebra.Matrix.MDSScale
                 Return normalizedStress(d, x)
             End Get
         End Property
-
-        ''' <summary>
-        ''' Element-wise matrix exponentiation for self-weighting of distances. </summary>
-        ''' <param name="D"> distance matrix or initial weights </param>
-        ''' <param name="exponent"> power to raise each element the matrix </param>
-        ''' <returns> exponentiated weights </returns>
-        Public Shared Function weightMatrix(D As Double()(), exponent As Double) As Double()()
-            Dim n = D(0).Length
-            Dim k = D.Length
-            Dim result = RectangularArray.Matrix(Of Double)(k, n)
-
-            For i = 0 To k - 1
-                For j = 0 To n - 1
-                    If D(i)(j) > 0.0R Then
-                        result(i)(j) = stdf.Pow(D(i)(j), exponent)
-                    End If
-                Next
-            Next
-            Return result
-        End Function
 
         ''' <summary>
         ''' SMACOF algorithm (weighted). </summary>

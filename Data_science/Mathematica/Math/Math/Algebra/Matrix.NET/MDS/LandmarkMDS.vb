@@ -87,62 +87,21 @@ Namespace LinearAlgebra.Matrix.MDSScale
     ''' Date: 10/8/11
     ''' Time: 2:43 AM
     ''' </summary>
-    Public Class LandmarkMDS
-        Private x As Double()()
-        Private d As Double()()
-        Private w As Double()()
+    Public Class LandmarkMDS : Inherits MDSMethod
 
         Public Sub New(d As Double()(), x As Double()(), w As Double()())
-            Me.x = x
-            Me.d = d
-            Me.w = w
+            Call MyBase.New(d, x, w)
         End Sub
 
         Public Sub New(d As Double()(), x As Double()())
-            Me.x = x
-            Me.d = d
-            w = weightMatrix(d, 0.0R)
+            Call MyBase.New(d, x, w:=weightMatrix(d, 0.0R))
         End Sub
 
-        Public Overridable Property Dissimilarities As Double()()
-            Get
-                Return d
-            End Get
-            Set(value As Double()())
-                d = value
-            End Set
-        End Property
-
-        Public Overridable Property Weights As Double()()
-            Get
-                Return w
-            End Get
-            Set(value As Double()())
-                w = value
-            End Set
-        End Property
-
-        Public Overridable Property Positions As Double()()
-            Get
-                Return x
-            End Get
-            Set(value As Double()())
-                x = value
-            End Set
-        End Property
-
-
-
-
-        Public Overridable Function iterate() As String
-            Return iterate(1)
-        End Function
-
-        Public Overridable Function iterate(n As Integer) As String
+        Public Overrides Function iterate(n As Integer) As String
             Return majorize(x, d, w, n, 0)
         End Function
 
-        Public Overridable Function iterate(iter As Integer, threshold As Integer) As String
+        Public Overrides Function iterate(iter As Integer, threshold As Integer) As String
             Return majorize(x, d, w, iter, threshold)
         End Function
 
@@ -157,20 +116,6 @@ Namespace LinearAlgebra.Matrix.MDSScale
                 Return normalizedStress(d, w, x)
             End Get
         End Property
-
-        Public Shared Function weightMatrix(D As Double()(), exponent As Double) As Double()()
-            Dim n = D(0).Length
-            Dim k = D.Length
-            Dim result = RectangularArray.Matrix(Of Double)(k, n)
-            For i = 0 To k - 1
-                For j = 0 To n - 1
-                    If D(i)(j) > 0.0R Then
-                        result(i)(j) = stdf.Pow(D(i)(j), exponent)
-                    End If
-                Next
-            Next
-            Return result
-        End Function
 
         Public Shared Function majorize(x As Double()(), d As Double()(), w As Double()(), iter As Integer, threshold As Integer) As String
             Dim report = ""

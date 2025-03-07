@@ -76,7 +76,13 @@ Namespace Serialization.BinaryDumping
     ''' </summary>
     Public Class NetworkByteOrderBuffer
 
+        ''' <summary>
+        ''' encode the numeric vector as raw stream in network byte order
+        ''' </summary>
         Public ReadOnly encode As Func(Of Double(), Byte())
+        ''' <summary>
+        ''' decode the given raw stream as a numeric vector in network byte order
+        ''' </summary>
         Public ReadOnly decode As Func(Of Byte(), Double())
 
         Public ReadOnly encode32 As Func(Of Single(), Byte())

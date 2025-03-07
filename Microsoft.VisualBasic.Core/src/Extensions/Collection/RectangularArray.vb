@@ -113,6 +113,35 @@ Namespace ComponentModel.Collection
             Return x
         End Function
 
+        ''' <summary>
+        ''' Create an empty matrix with m row and n cols.
+        ''' </summary>
+        ''' <typeparam name="T"></typeparam>
+        ''' <param name="m">m Rows</param>
+        ''' <param name="n">n Cols</param>
+        ''' <param name="s">fill the generated matrix this scalar value</param>
+        ''' <returns></returns>
+        ''' <remarks>
+        ''' (生成一个有m行n列的矩阵，但是是使用数组来表示的)
+        ''' </remarks>
+        Public Shared Function Matrix(Of T)(m%, n%, s As T) As T()()
+            Dim x As T()() = New T(m - 1)() {}
+            Dim template As T() = New T(n - 1) {}
+            Dim v As T()
+
+            For i As Integer = 0 To n - 1
+                template(i) = s
+            Next
+
+            For i As Integer = 0 To m - 1
+                v = New T(n - 1) {}
+                Array.ConstrainedCopy(template, Scan0, v, Scan0, n)
+                x(i) = v
+            Next
+
+            Return x
+        End Function
+
         Public Shared Function Cubic(Of T)(size1 As Integer, size2 As Integer, size3 As Integer) As T()()()
             Dim x = New T(size1 - 1)()() {}
 

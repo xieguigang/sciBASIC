@@ -245,7 +245,7 @@ Namespace Math.Correlations
             Return MinkowskiDistance(x.Data, y.Data, 1)
         End Function
 
-#If NET_48 = 1 Or NETCOREAPP Then
+#If NET48_OR_GREATER Or NETCOREAPP Then
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
@@ -308,6 +308,39 @@ Namespace Math.Correlations
             Next
 
             Return SIMD.Exponent.f64_op_exponent_f64_scalar(v, 2).Sum
+        End Function
+
+        ''' <summary>
+        ''' Bray-Curtis distance
+        ''' </summary>
+        ''' <param name="sample1"></param>
+        ''' <param name="sample2"></param>
+        ''' <returns></returns>
+        Public Function BrayCurtis(sample1 As Double(), sample2 As Double()) As Double
+            Dim C As Double = 0.0
+            Dim S1 As Double = 0.0
+            Dim S2 As Double = 0.0
+
+            ' 遍历所有物种计算统计量
+            For i As Integer = 0 To sample1.Length - 1
+                If sample1(i) < 0 Then
+                    Throw New ArgumentException($"sample-1 value([{i}] {sample1(i)}) should not be negative!")
+                ElseIf sample2(i) < 0 Then
+                    Throw New ArgumentException($"sample-2 value([{i}] {sample1(i)}) should not be negative!")
+                End If
+
+                C += std.Min(sample1(i), sample2(i))
+                S1 += sample1(i)
+                S2 += sample2(i)
+            Next
+
+            ' 处理全零情况
+            If S1 = 0.0 AndAlso S2 = 0.0 Then
+                Return 0.0
+            End If
+
+            ' 计算Bray-Curtis相异度
+            Return 1.0 - (2.0 * C) / (S1 + S2)
         End Function
     End Module
 End Namespace
