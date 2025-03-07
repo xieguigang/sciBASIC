@@ -422,6 +422,10 @@ Namespace FileSystem
             End If
         End Function
 
+        Public Function OpenFolder(path As String) As StreamGroup
+            Return DirectCast(GetObject(path & "/"), StreamGroup)
+        End Function
+
         ''' <summary>
         ''' Check of the given file data stream is existsed inside current data pack file
         ''' </summary>
