@@ -171,7 +171,14 @@ Namespace d3js.scale
         ''' <param name="values"></param>
         ''' <returns></returns>
         Public Overrides Function domain(values As IEnumerable(Of Double)) As LinearScale
-            _domain = values.ToArray
+            With values.ToArray
+                If .Length = 0 Then
+                    _domain = New DoubleRange
+                Else
+                    _domain = values.ToArray
+                End If
+            End With
+
             Return Me
         End Function
 
