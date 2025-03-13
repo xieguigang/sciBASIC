@@ -76,7 +76,13 @@ Namespace Language.C
     ''' </summary>
     Public Module CString
 
-        <Extension> Public Function Decode(s As String) As String
+        ''' <summary>
+        ''' decode of the meta char inside the given format string
+        ''' </summary>
+        ''' <param name="s"></param>
+        ''' <returns></returns>
+        <Extension>
+        Public Function Decode(s As String) As String
             If s.StringEmpty Then
                 Return s
             Else
@@ -202,6 +208,7 @@ Namespace Language.C
         End Function
 
         Private Structure __tokensHelper
+
             Private activestring As String
             Private activeposition As Integer
 

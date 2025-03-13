@@ -55,6 +55,7 @@
 
 Imports System.Drawing
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.Ranges
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Language.Default
@@ -105,11 +106,27 @@ Namespace LinearAlgebra
             End With
         End Function
 
-        <Extension> Public Function Top(vector As Vector, n%) As BooleanVector
-            Dim desc = vector.OrderByDescending(Function(x) x).Take(n).AsList
-            Dim bools As New BooleanVector(vector.Select(Function(x) desc.IndexOf(x) > -1))
-
-            Return bools
+        ''' <summary>
+        ''' Check of the elements of the vector inside the top n elements?
+        ''' </summary>
+        ''' <param name="vector"></param>
+        ''' <param name="n"></param>
+        ''' <returns>a logical vector that indicates that each corresponding element is inside the top n elements?</returns>
+        ''' <remarks>
+        ''' this function will create the top n element index, and then
+        ''' check of the each vector elements that existed inside the
+        ''' top n element index or not?
+        ''' </remarks>
+        <Extension>
+        Public Function Top(vector As Vector, n%) As BooleanVector
+            Dim cutoff As Double = vector _
+                .OrderByDescending(Function(x) x) _
+                .Take(n) _
+                .Min
+            Dim checks As New BooleanVector(From x As Double
+                                            In vector
+                                            Select x >= cutoff)
+            Return checks
         End Function
 
         ''' <summary>

@@ -331,6 +331,26 @@ Namespace Math
         End Function
 
         ''' <summary>
+        ''' np.random.exponential
+        ''' </summary>
+        ''' <param name="lambda"></param>
+        ''' <param name="size"></param>
+        ''' <returns></returns>
+        Public Function ExponentialRandomNumbers(lambda As Double, size As Integer) As Double()
+            Dim randomNumbers As Double() = New Double(size - 1) {}
+            Dim rand As Random = seeds
+
+            For i As Integer = 0 To size - 1
+                ' 生成一个[0,1)区间内的均匀随机数
+                Dim uniformRandom As Double = rand.NextDouble()
+                ' 使用指数分布的逆变换方法来生成指数分布随机数
+                randomNumbers(i) = -std.Log(1 - uniformRandom) / lambda
+            Next
+
+            Return randomNumbers
+        End Function
+
+        ''' <summary>
         ''' Generates normally distributed numbers. Each operation 
         ''' makes two Gaussians for the price of one, and apparently 
         ''' they can be cached or something for better performance, 

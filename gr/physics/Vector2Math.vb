@@ -68,7 +68,7 @@ Public Module Vector2Math
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function Dot(lhs As Vector2, rhs As Vector2) As Double
-        Return Vector.DotProduct({lhs.x, lhs.y}, {rhs.x, rhs.y})
+        Return Vector.dot({lhs.x, lhs.y}, {rhs.x, rhs.y})
     End Function
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>

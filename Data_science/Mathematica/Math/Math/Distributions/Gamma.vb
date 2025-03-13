@@ -54,7 +54,7 @@
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
-Imports stdNum = System.Math
+Imports std = System.Math
 
 Namespace Distributions
 
@@ -118,7 +118,7 @@ Namespace Distributions
             x += 676.52036812188351 / (Z)
             x += 0.99999999999951827
 
-            Return stdNum.Log(x) - 5.5810614667953278 - Z + (Z - 0.5) * stdNum.Log(Z + 6.5)
+            Return std.Log(x) - 5.5810614667953278 - Z + (Z - 0.5) * std.Log(Z + 6.5)
         End Function
 
         ''' <summary>
@@ -140,7 +140,7 @@ Namespace Distributions
             Next
 
             Dim t As Double = z + g_ln + 0.5
-            Dim lngm = 0.5 * stdNum.Log(2 * stdNum.PI) + (z + 0.5) * stdNum.Log(t) - t + stdNum.Log(x) - stdNum.Log(z)
+            Dim lngm = 0.5 * std.Log(2 * std.PI) + (z + 0.5) * std.Log(t) - t + std.Log(x) - std.Log(z)
 
             Return lngm
         End Function
@@ -183,9 +183,9 @@ Namespace Distributions
         <Extension>
         Public Function gamma(z As Double) As Double
             If (z < 0.5) Then
-                Return stdNum.PI / (stdNum.Sin(stdNum.PI * z) * gamma(1 - z))
+                Return std.PI / (std.Sin(std.PI * z) * gamma(1 - z))
             ElseIf (z > 100) Then
-                Return stdNum.Exp(lngamma(z))
+                Return std.Exp(lngamma(z))
             Else
                 Dim x As Double = p(0)
 
@@ -197,7 +197,7 @@ Namespace Distributions
 
                 Dim t As Double = z + g + 0.5
 
-                Return stdNum.Sqrt(2 * stdNum.PI) * stdNum.Pow(t, z + 0.5) * stdNum.Exp(-t) * x
+                Return std.Sqrt(2 * std.PI) * std.Pow(t, z + 0.5) * std.Exp(-t) * x
             End If
         End Function
     End Module

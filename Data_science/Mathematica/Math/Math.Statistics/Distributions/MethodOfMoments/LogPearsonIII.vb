@@ -94,7 +94,7 @@ Namespace Distributions.MethodOfMoments
             Dim PM As New MomentFunctions.ProductMoments(data)
             _Mean = PM.Mean()
             _StDev = PM.StandardDeviation
-            _Skew = PM.Skew()
+            _Skew = PM.skewness()
             PeriodOfRecord = (PM.SampleSize())
         End Sub
         Public Overrides Function GetInvCDF(probability As Double) As Double

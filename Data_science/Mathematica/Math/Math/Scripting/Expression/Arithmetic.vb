@@ -56,7 +56,7 @@
 
 Imports System.Runtime.CompilerServices
 Imports rand = Microsoft.VisualBasic.Math.RandomExtensions
-Imports stdNum = System.Math
+Imports std = System.Math
 
 Namespace Scripting.MathExpression
 
@@ -72,14 +72,14 @@ Namespace Scripting.MathExpression
         ''' </summary>
         ''' <remarks></remarks>
         Public ReadOnly Property Arithmetic As Func(Of Double, Double, Double)() = {
- _
+                                                                                    _
             Function(a, b) a + b,
             Function(a, b) a - b,
             Function(a, b) If(a = 0.0 OrElse b = 0.0, 0.0, a * b),
             Function(a, b) If(a = 0.0, 0.0, a / b),
             Function(a, b) If(a = 0.0, 0.0, a \ b),
             Function(a, b) If(a = 0.0, 0.0, a Mod b),
-            AddressOf stdNum.Pow,
+            AddressOf std.Pow,
             AddressOf Factorial
         }
 

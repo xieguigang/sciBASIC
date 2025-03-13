@@ -154,7 +154,7 @@ Namespace LinearAlgebra
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Operator *(v As HalfVector, multiple As Vector) As Vector
             If v.Dim <> multiple.Dim Then
-                Throw New InvalidConstraintException
+                Throw New InvalidConstraintException($"the dimension size between two vector should be equals!")
             Else
                 Return New Vector(From i As Integer In v.Sequence Select CSng(v(i)) * multiple(i))
             End If

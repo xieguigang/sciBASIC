@@ -1145,8 +1145,11 @@
   </PropertyGroup>
 
 	<ItemGroup>
+	  <Compile Remove="Numerics\Optimization\LBFGSB\examples\**" />
 	  <Compile Remove="packages\**" />
+	  <EmbeddedResource Remove="Numerics\Optimization\LBFGSB\examples\**" />
 	  <EmbeddedResource Remove="packages\**" />
+	  <None Remove="Numerics\Optimization\LBFGSB\examples\**" />
 	  <None Remove="packages\**" />
 	</ItemGroup>
 

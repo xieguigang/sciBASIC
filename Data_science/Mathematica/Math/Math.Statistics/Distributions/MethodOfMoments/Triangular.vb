@@ -104,7 +104,7 @@ Namespace Distributions.MethodOfMoments
             'Alternate Method from Ben Chaon
             Dim sqrt2 As Double = stdNum.Sqrt(2)
             Dim sqrt3 As Double = stdNum.Sqrt(3)
-            Dim a3 As Double = PM.Skew()
+            Dim a3 As Double = PM.skewness()
             Dim b3 As Double
             Dim angle As Double
             Dim aa As Double

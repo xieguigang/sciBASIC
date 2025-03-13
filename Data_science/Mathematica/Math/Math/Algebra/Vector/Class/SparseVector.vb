@@ -63,12 +63,10 @@
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
-Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.Vectorization
 Imports Microsoft.VisualBasic.Linq
-Imports Microsoft.VisualBasic.Linq.WhichIndex
 Imports Microsoft.VisualBasic.My.FrameworkInternal
-Imports stdNum = System.Math
+Imports std = System.Math
 
 Namespace LinearAlgebra
 
@@ -254,7 +252,7 @@ Namespace LinearAlgebra
             Dim buffer As New Dictionary(Of Integer, Double)
 
             For Each x As Double In data
-                If stdNum.Abs(x) < Precision Then
+                If std.Abs(x) < Precision Then
                     ' 0.0
                 Else
                     ' has a non-ZERO value at current index
@@ -269,7 +267,7 @@ Namespace LinearAlgebra
         End Sub
 
         Public Sub SetValue(index%, value#)
-            If value = 0.0 OrElse stdNum.Abs(value) < Precision Then
+            If value = 0.0 OrElse std.Abs(value) < Precision Then
                 buffer.Remove(key:=index)
             Else
                 buffer.Remove(key:=index)
@@ -279,12 +277,12 @@ Namespace LinearAlgebra
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overloads Function Min() As Double
-            Return stdNum.Min(0.0, Values.Min)
+            Return std.Min(0.0, Values.Min)
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overloads Function Max() As Double
-            Return stdNum.Max(0.0, Values.Max)
+            Return std.Max(0.0, Values.Max)
         End Function
 
         ''' <summary>
@@ -300,7 +298,7 @@ Namespace LinearAlgebra
         End Function
 
         Public Overloads Shared Function Equals(a#, b#) As Boolean
-            Return stdNum.Abs(a - b) <= Precision
+            Return std.Abs(a - b) <= Precision
         End Function
 
         ''' <summary>

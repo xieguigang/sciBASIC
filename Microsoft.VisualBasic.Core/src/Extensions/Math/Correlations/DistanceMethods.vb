@@ -148,7 +148,7 @@ Namespace Math.Correlations
         <Extension>
         Public Function EuclideanDistance(vector As IEnumerable(Of Double)) As Double
             ' 由于是和令进行比较，减零仍然为原来的数，所以这里直接使用n^2了
-            Return std.Sqrt((From n In vector Select n ^ 2).Sum)
+            Return std.Sqrt(Aggregate x As Double In vector Into Sum(x ^ 2))
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>

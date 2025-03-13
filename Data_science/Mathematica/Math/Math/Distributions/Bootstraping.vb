@@ -61,8 +61,8 @@ Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.Distributions.BinBox
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
-Imports std = System.Math
 Imports randf2 = Microsoft.VisualBasic.Math.RandomExtensions
+Imports std = System.Math
 
 Namespace Distributions
 

@@ -59,11 +59,11 @@
 #End Region
 
 Imports System.Drawing
+Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.BitmapImage
 Imports Microsoft.VisualBasic.Imaging.Math2D
 Imports rand = Microsoft.VisualBasic.Math.RandomExtensions
 Imports std = System.Math
-Imports Microsoft.VisualBasic.Imaging
 
 Namespace Distributions
 

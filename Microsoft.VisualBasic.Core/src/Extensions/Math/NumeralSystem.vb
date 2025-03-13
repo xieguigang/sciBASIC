@@ -1,63 +1,114 @@
 ﻿#Region "Microsoft.VisualBasic::e85cf18ab813f19f4d58c6af49535ea7, Microsoft.VisualBasic.Core\src\Extensions\Math\NumeralSystem.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 71
-    '    Code Lines: 38 (53.52%)
-    ' Comment Lines: 21 (29.58%)
-    '    - Xml Docs: 100.00%
-    ' 
-    '   Blank Lines: 12 (16.90%)
-    '     File Size: 2.81 KB
+' Summaries:
 
 
-    '     Module NumeralSystem
-    ' 
-    '         Function: FindNthRoot, TranslateDecimal
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 71
+'    Code Lines: 38 (53.52%)
+' Comment Lines: 21 (29.58%)
+'    - Xml Docs: 100.00%
+' 
+'   Blank Lines: 12 (16.90%)
+'     File Size: 2.81 KB
+
+
+'     Module NumeralSystem
+' 
+'         Function: FindNthRoot, TranslateDecimal
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports System.Runtime.InteropServices
 Imports std = System.Math
 
 Namespace Math
 
     Public Module NumeralSystem
+
+        <StructLayout(LayoutKind.Explicit)>
+        Public Structure DoubleUnion
+            <FieldOffset(0)>
+            Public DoubleValue As Double
+            <FieldOffset(0)>
+            Public LongValue As Long
+        End Structure
+
+        ''' <summary>
+        ''' Unit in the Last Place, ulp
+        ''' </summary>
+        ''' <param name="value"></param>
+        ''' <returns></returns>
+        ''' <remarks>
+        ''' Math.ulp 是一个用于获取一个数的最小精度单位（Unit in the Last Place，ulp）的方法。
+        ''' 这个方法在浮点数运算中非常有用，特别是在需要考虑数值精度和误差分析的场景。
+        ''' </remarks>
+        Public Function Ulp(value As Double) As Double
+            Dim union As DoubleUnion
+            union.DoubleValue = value
+            Dim nextValue As Double = BitConverter.Int64BitsToDouble(union.LongValue + 1)
+            Return nextValue - value
+        End Function
+
+#If NET8_0_OR_GREATER Then
+        ' 定义一个联合体，用于浮点数和整数的转换
+        <StructLayout(LayoutKind.Explicit)>
+        Public Structure SingleUnion
+            <FieldOffset(0)>
+            Public SingleValue As Single
+            <FieldOffset(0)>
+            Public IntegerValue As Integer
+        End Structure
+
+        ' 计算单精度浮点数的ulp值
+        Public Function Ulp(f As Single) As Single
+            Dim union As SingleUnion
+            union.SingleValue = f
+
+            ' 如果输入的是非规格化数，则ulp值为最小正非规格化数
+            If union.IntegerValue And &H7F800000 = 0 Then
+                Return CSng(BitConverter.Int32BitsToSingle(1))
+            End If
+
+            ' 计算ulp值
+            Dim ulp32 As Integer = If(union.IntegerValue And &H7FFFFFFF = &H7F7FFFFF, union.IntegerValue - &H7F7FFFFF, union.IntegerValue + 1) - union.IntegerValue
+            Return CSng(BitConverter.Int32BitsToSingle(ulp32))
+        End Function
+#End If
 
         ''' <summary>
         ''' A helper function for translate decimal number to the number of another kind of custom number system

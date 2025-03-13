@@ -91,7 +91,8 @@ Namespace Math
             Dim result As SeqValue(Of (T, Double))()
             Dim weights As IEnumerable(Of Double) = _Weight.Repeats(LQuery.Length)
 
-            If Max Then   ' 由于后面需要进行加权计算，所以在这里是反过来求最大的
+            If Max Then
+                ' 由于后面需要进行加权计算，所以在这里是反过来求最大的
                 result = (From x In LQuery Select x Order By x.v Ascending) _
                         .Select(Function(x) x.x) _
                         .Tuple(weights) _

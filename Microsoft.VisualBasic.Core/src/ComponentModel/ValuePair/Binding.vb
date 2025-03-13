@@ -120,7 +120,7 @@ Namespace ComponentModel
             Return Me
         End Function
 
-#If NET_48 Or netcore5 = 1 Then
+#If NET48_OR_GREATER Or NET8_0_OR_GREATER Then
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function ValueTuple() As (bind As T, target As K)

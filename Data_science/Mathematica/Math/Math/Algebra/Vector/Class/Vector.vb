@@ -130,9 +130,12 @@ Namespace LinearAlgebra
 #End Region
 
         ''' <summary>
-        ''' <see cref="[Dim]"/>为1?即当前的向量对象是否是只包含有一个数字？
+        ''' check of current vector is scalar?
         ''' </summary>
         ''' <returns></returns>
+        ''' <remarks>
+        ''' <see cref="[Dim]"/>为1?即当前的向量对象是否是只包含有一个数字？
+        ''' </remarks>
         Public ReadOnly Property IsNumeric As Boolean
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
@@ -140,6 +143,10 @@ Namespace LinearAlgebra
             End Get
         End Property
 
+        ''' <summary>
+        ''' get NaN elements
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property IsNaN As BooleanVector
             Get
                 Return New BooleanVector(From xi As Double In buffer Select xi.IsNaNImaginary)
@@ -351,6 +358,12 @@ Namespace LinearAlgebra
             Call Me.New(values.Skip(index).Take(count))
         End Sub
 
+        ''' <summary>
+        ''' Convert the vector as the diagonal matrix
+        ''' </summary>
+        ''' <returns>
+        ''' returns a NxN matrix object, N size is equals to the vector dimension size
+        ''' </returns>
         Public Function AsDiagonal() As NumericMatrix
             Dim rows As New List(Of Double())
             Dim r As Double()
@@ -794,11 +807,8 @@ Namespace LinearAlgebra
         ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overloads Shared Operator =(x As Vector, n As Double) As BooleanVector
-            ' 不可以缺少这一对括号，否则会被当作为属性d，而非值比较
-            Dim asserts = From d As Double In x Select (d = n)
-            Dim b As New BooleanVector(asserts)
-
-            Return b
+            ' 不可以缺少这一对括号，否则会被当作为匿名类型的属性d，而非值比较
+            Return New BooleanVector(From d As Double In x Select (d = n))
         End Operator
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -1013,10 +1023,16 @@ Namespace LinearAlgebra
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function DotProduct(v2 As Vector) As Double
-            Return DotProduct(buffer, v2.buffer)
+            Return dot(buffer, v2.buffer)
         End Function
 
-        Public Shared Function DotProduct(lhs As Double(), rhs As Double()) As Double
+        ''' <summary>
+        ''' helper function for vector dot product
+        ''' </summary>
+        ''' <param name="lhs"></param>
+        ''' <param name="rhs"></param>
+        ''' <returns></returns>
+        Public Shared Function dot(ByRef lhs As Double(), ByRef rhs As Double()) As Double
             'Dim sum#
 
             'For i As Integer = 0 To Me.Count - 1
@@ -1024,15 +1040,21 @@ Namespace LinearAlgebra
             'Next
 
             'Return sum
-            Dim dot As Double() = SIMD.Multiply.f64_op_multiply_f64(lhs, rhs)
-            Dim sum As Double = dot.Sum
+            Dim prod As Double() = SIMD.Multiply.f64_op_multiply_f64(lhs, rhs)
+            Dim sum As Double = prod.Sum
 
             Return sum
         End Function
 
-        Public Shared Function DotProduct(lhs As Single(), rhs As Single()) As Double
-            Dim dot As Single() = SIMD.Multiply.f32_op_multiply_f32(lhs, rhs)
-            Dim sum As Double = dot.Sum
+        ''' <summary>
+        ''' helper function for vector dot product
+        ''' </summary>
+        ''' <param name="lhs"></param>
+        ''' <param name="rhs"></param>
+        ''' <returns></returns>
+        Public Shared Function dot(ByRef lhs As Single(), ByRef rhs As Single()) As Double
+            Dim prod As Single() = SIMD.Multiply.f32_op_multiply_f32(lhs, rhs)
+            Dim sum As Double = prod.Sum
 
             Return sum
         End Function
@@ -1155,6 +1177,16 @@ Namespace LinearAlgebra
             Return Extensions.rand(size, {min, max})
         End Function
 
+        ''' <summary>
+        ''' create a vector that contains the random number from the gaussian distribution
+        ''' </summary>
+        ''' <param name="size"></param>
+        ''' <param name="mu"></param>
+        ''' <param name="sigma"></param>
+        ''' <returns></returns>
+        ''' <remarks>
+        ''' gaussian number generated via the <see cref="randf2.NextGaussian"/> method.
+        ''' </remarks>
         Public Shared Function norm(size As Integer, Optional mu As Double = 0.0, Optional sigma As Double = 1.0) As Vector
             Dim v As Double() = New Double(size - 1) {}
 
