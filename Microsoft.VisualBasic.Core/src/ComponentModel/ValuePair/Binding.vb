@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::db221bb06201d8825c7a437e7af3b2e2, Microsoft.VisualBasic.Core\src\ComponentModel\ValuePair\Binding.vb"
+﻿#Region "Microsoft.VisualBasic::6dd3d9c1d86b985cfdc833b54f7e819c, Microsoft.VisualBasic.Core\src\ComponentModel\ValuePair\Binding.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 96.00%
     ' 
     '   Blank Lines: 14 (16.28%)
-    '     File Size: 2.94 KB
+    '     File Size: 2.95 KB
 
 
     '     Structure Binding

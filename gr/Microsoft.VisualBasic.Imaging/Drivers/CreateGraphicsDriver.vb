@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9d9d97f64e93b1c4908d5b6e87077390, gr\Microsoft.VisualBasic.Imaging\Drivers\CreateGraphicsDriver.vb"
+﻿#Region "Microsoft.VisualBasic::f38d0136737c64d00ed0f623d915169a, gr\Microsoft.VisualBasic.Imaging\Drivers\CreateGraphicsDriver.vb"
 
     ' Author:
     ' 
@@ -34,25 +34,29 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 95
-    '    Code Lines: 68 (71.58%)
-    ' Comment Lines: 9 (9.47%)
+    '   Total Lines: 128
+    '    Code Lines: 94 (73.44%)
+    ' Comment Lines: 9 (7.03%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 18 (18.95%)
-    '     File Size: 4.00 KB
+    '   Blank Lines: 25 (19.53%)
+    '     File Size: 5.60 KB
 
 
     '     Module ImageDriver
     ' 
     '         Function: GraphicsPlot
     ' 
-    '         Sub: Register
+    '         Sub: Register, RegisterPostScript
     '         Class RasterInterop
     ' 
     '             Function: (+2 Overloads) CreateCanvas2D, CreateGraphic, GetData
     ' 
     '         Class SvgInterop
+    ' 
+    '             Function: (+2 Overloads) CreateCanvas2D, CreateGraphic, GetData
+    ' 
+    '         Class PostScriptInterop
     ' 
     '             Function: (+2 Overloads) CreateCanvas2D, CreateGraphic, GetData
     ' 
@@ -66,6 +70,7 @@
 Imports System.Drawing
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
+Imports Microsoft.VisualBasic.Imaging.PostScript
 Imports Microsoft.VisualBasic.Imaging.SVG
 Imports Microsoft.VisualBasic.MIME.Html.CSS
 
@@ -96,14 +101,23 @@ Namespace Driver
             End Using
         End Function
 
+        Public Sub RegisterPostScript()
+            Call DriverLoad.Register(New PostScriptInterop, Drivers.PostScript)
+        End Sub
+
 #If NET48 Then
 
         ''' <summary>
         ''' register the default System.Drawing.Common graphics driver for .net 4.8 runtime
         ''' </summary>
         Public Sub Register()
+            Static gfx As Graphics = Graphics.FromImage(New Bitmap(10, 10))
+
             Call DriverLoad.Register(New RasterInterop, Drivers.GDI)
             Call DriverLoad.Register(New SvgInterop, Drivers.SVG)
+            Call DriverLoad.Register(Function(text As String, font As Font)
+                                         Return gfx.MeasureString(text, font)
+                                     End Function)
         End Sub
 
         Private Class RasterInterop : Inherits DeviceInterop
@@ -156,5 +170,28 @@ Namespace Driver
             End Function
         End Class
 #End If
+
+        Private Class PostScriptInterop : Inherits DeviceInterop
+
+            Public Overrides Function CreateGraphic(size As Size, fill As Color, dpi As Integer) As IGraphics
+                Dim g As New GraphicsPostScript(size, New Size(dpi, dpi))
+                g.Clear(fill)
+                Return g
+            End Function
+
+            Public Overrides Function CreateCanvas2D(background As Bitmap, direct_access As Boolean) As IGraphics
+                Return CreateCanvas2D(CType(background, Image), direct_access)
+            End Function
+
+            Public Overrides Function CreateCanvas2D(background As Image, direct_access As Boolean) As IGraphics
+                Dim g As New GraphicsPostScript(background.Size, New Size(100, 100))
+                Call g.DrawImageUnscaled(background, New Point)
+                Return g
+            End Function
+
+            Public Overrides Function GetData(g As IGraphics, padding() As Integer) As IGraphicsData
+                Return New PostScriptData(g.GetContextInfo, g.Size, New Padding(padding))
+            End Function
+        End Class
     End Module
 End Namespace

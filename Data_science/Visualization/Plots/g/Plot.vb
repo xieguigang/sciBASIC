@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f911f4b1fb9211984e40bbb5592dadb8, Data_science\Visualization\Plots\g\Plot.vb"
+﻿#Region "Microsoft.VisualBasic::5bcebbdcd94c7e7cc5653f028fe49ba3, Data_science\Visualization\Plots\g\Plot.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 252
-    '    Code Lines: 181 (71.83%)
-    ' Comment Lines: 41 (16.27%)
+    '   Total Lines: 256
+    '    Code Lines: 185 (72.27%)
+    ' Comment Lines: 41 (16.02%)
     '    - Xml Docs: 97.56%
     ' 
-    '   Blank Lines: 30 (11.90%)
-    '     File Size: 10.79 KB
+    '   Blank Lines: 30 (11.72%)
+    '     File Size: 10.98 KB
 
 
     '     Class Plot
@@ -126,7 +126,9 @@ Namespace Graphic
         ''' <param name="dpi"></param>
         ''' <param name="driver"></param>
         ''' <returns>this function returns a graphics plot wrapper object that supports save png/svg/pdf file</returns>
-        Public Overloads Function Plot(size As SizeF, Optional dpi As Integer = 300, Optional driver As Drivers = Drivers.Default) As GraphicsData
+        Public Overloads Function Plot(size As SizeF,
+                                       Optional dpi As Integer = 300,
+                                       Optional driver As Drivers = Drivers.Default) As GraphicsData
             Return g.GraphicsPlots(
                 size:=size.ToSize,
                 padding:=theme.padding,
@@ -145,7 +147,9 @@ Namespace Graphic
         ''' <param name="driver"></param>
         ''' <returns>this function returns a graphics plot wrapper object that supports save png/svg/pdf file</returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Overridable Overloads Function Plot(Optional size$ = Resolution2K.Size, Optional ppi As Integer = 300, Optional driver As Drivers = Drivers.Default) As GraphicsData
+        Public Overridable Overloads Function Plot(Optional size$ = Resolution2K.Size,
+                                                   Optional ppi As Integer = 300,
+                                                   Optional driver As Drivers = Drivers.Default) As GraphicsData
             Return g.GraphicsPlots(
                 size:=size.SizeParser,
                 padding:=theme.padding,

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f1d5e00721720af9b546353f3621d708, Microsoft.VisualBasic.Core\src\Serialization\BinaryDumping\NetworkByteOrderBuffer.vb"
+﻿#Region "Microsoft.VisualBasic::18faa4094f50aaf67a201882e424dec0, Microsoft.VisualBasic.Core\src\Serialization\BinaryDumping\NetworkByteOrderBuffer.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 408
-    '    Code Lines: 288 (70.59%)
-    ' Comment Lines: 26 (6.37%)
-    '    - Xml Docs: 88.46%
+    '   Total Lines: 414
+    '    Code Lines: 288 (69.57%)
+    ' Comment Lines: 32 (7.73%)
+    '    - Xml Docs: 90.62%
     ' 
-    '   Blank Lines: 94 (23.04%)
-    '     File Size: 14.55 KB
+    '   Blank Lines: 94 (22.71%)
+    '     File Size: 14.80 KB
 
 
     '     Class NetworkByteOrderBuffer

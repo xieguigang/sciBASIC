@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e2aa5ff6a23e8dc6538898e66b0d8ca3, gr\Microsoft.VisualBasic.Imaging\PostScript\PSElements\Text.vb"
+﻿#Region "Microsoft.VisualBasic::6673940582e8973536728f601ff5cfe0, gr\Microsoft.VisualBasic.Imaging\PostScript\PSElements\Text.vb"
 
     ' Author:
     ' 
@@ -34,18 +34,20 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 24
-    '    Code Lines: 18 (75.00%)
+    '   Total Lines: 42
+    '    Code Lines: 33 (78.57%)
     ' Comment Lines: 0 (0.00%)
     '    - Xml Docs: 0.00%
     ' 
-    '   Blank Lines: 6 (25.00%)
-    '     File Size: 670 B
+    '   Blank Lines: 9 (21.43%)
+    '     File Size: 1.46 KB
 
 
     '     Class Text
     ' 
     '         Properties: font, location, rotation, text
+    ' 
+    '         Function: ScaleTo, ToString
     ' 
     '         Sub: Paint, WriteAscii
     ' 
@@ -56,6 +58,7 @@
 
 Imports System.Drawing
 Imports Microsoft.VisualBasic.MIME.Html.CSS
+Imports Microsoft.VisualBasic.MIME.Html.Render
 
 Namespace PostScript.Elements
 
@@ -73,8 +76,29 @@ Namespace PostScript.Elements
         End Sub
 
         Friend Overrides Sub Paint(g As IGraphics)
-            Throw New NotImplementedException()
+            Dim css As CSSEnvirnment = g.LoadEnvironment
+            Dim font As Font = css.GetFont(Me.font)
+            Dim br As New SolidBrush(Me.font.color.TranslateColor)
+
+            Call g.DrawString(text, font, br, location.X, location.Y, rotation)
         End Sub
+
+        Public Overrides Function ToString() As String
+            Return $"({location.X},{location.Y}) {text} [{font.color}]"
+        End Function
+
+        Friend Overrides Function ScaleTo(scaleX As d3js.scale.LinearScale, scaleY As d3js.scale.LinearScale) As PSElement
+            Return New Text With {
+                .font = font,
+                .location = New PointF(scaleX(location.X), scaleY(location.Y)),
+                .rotation = rotation,
+                .text = text
+            }
+        End Function
+
+        Friend Overrides Function GetXy() As PointF
+            Return location
+        End Function
     End Class
 
 End Namespace

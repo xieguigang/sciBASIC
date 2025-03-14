@@ -1,68 +1,72 @@
-﻿#Region "Microsoft.VisualBasic::5b516eaad80b7fdd14cea1c4430831ba, gr\Microsoft.VisualBasic.Imaging\PostScript\PSElement.vb"
+﻿#Region "Microsoft.VisualBasic::26d0d125fced7574791a9313a8ea8d9c, gr\Microsoft.VisualBasic.Imaging\PostScript\PSElement.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-    ' /********************************************************************************/
-
-    ' Summaries:
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-    ' Code Statistics:
 
-    '   Total Lines: 71
-    '    Code Lines: 39 (54.93%)
-    ' Comment Lines: 15 (21.13%)
-    '    - Xml Docs: 93.33%
-    ' 
-    '   Blank Lines: 17 (23.94%)
-    '     File Size: 1.90 KB
+' /********************************************************************************/
+
+' Summaries:
 
 
-    '     Class PSElement
-    ' 
-    ' 
-    ' 
-    '     Class PSElement
-    ' 
-    '         Properties: shape
-    ' 
-    '     Class PsComment
-    ' 
-    '         Properties: binary, text
-    ' 
-    '         Constructor: (+3 Overloads) Sub New
-    '         Sub: Paint, WriteAscii
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 86
+'    Code Lines: 46 (53.49%)
+' Comment Lines: 21 (24.42%)
+'    - Xml Docs: 95.24%
+' 
+'   Blank Lines: 19 (22.09%)
+'     File Size: 2.52 KB
+
+
+'     Class PSElement
+' 
+' 
+' 
+'     Class PSElement
+' 
+'         Properties: shape
+' 
+'     Class PsComment
+' 
+'         Properties: binary, text
+' 
+'         Constructor: (+3 Overloads) Sub New
+' 
+'         Function: ScaleTo
+' 
+'         Sub: Paint, WriteAscii
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
+Imports System.Drawing
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Shapes
 Imports Microsoft.VisualBasic.Net.Http
 Imports Microsoft.VisualBasic.Text
@@ -74,8 +78,18 @@ Namespace PostScript
     ''' </summary>
     Public MustInherit Class PSElement
 
+        Friend MustOverride Function GetXy() As PointF
+
         Friend MustOverride Sub WriteAscii(ps As Writer)
         Friend MustOverride Sub Paint(g As IGraphics)
+
+        ''' <summary>
+        ''' scale the current element to new location
+        ''' </summary>
+        ''' <param name="scaleX"></param>
+        ''' <param name="scaleY"></param>
+        ''' <returns></returns>
+        Friend MustOverride Function ScaleTo(scaleX As d3js.scale.LinearScale, scaleY As d3js.scale.LinearScale) As PSElement
 
     End Class
 
@@ -131,6 +145,17 @@ Namespace PostScript
         ''' <param name="g"></param>
         Friend Overrides Sub Paint(g As IGraphics)
         End Sub
+
+        Friend Overrides Function ScaleTo(scaleX As d3js.scale.LinearScale, scaleY As d3js.scale.LinearScale) As PSElement
+            Return New PsComment With {
+                .binary = binary,
+                .text = text
+            }
+        End Function
+
+        Friend Overrides Function GetXy() As PointF
+            Return Nothing
+        End Function
     End Class
 
 End Namespace

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c819054e3eec0c406079a8d97fae681f, gr\Microsoft.VisualBasic.Imaging\Drivers\Models\ImageData.vb"
+﻿#Region "Microsoft.VisualBasic::48af63081570c12c139bdfcdbc839df1, gr\Microsoft.VisualBasic.Imaging\Drivers\Models\ImageData.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 124
-    '    Code Lines: 84 (67.74%)
-    ' Comment Lines: 20 (16.13%)
-    '    - Xml Docs: 100.00%
+    '   Total Lines: 133
+    '    Code Lines: 90 (67.67%)
+    ' Comment Lines: 21 (15.79%)
+    '    - Xml Docs: 95.24%
     ' 
-    '   Blank Lines: 20 (16.13%)
-    '     File Size: 3.88 KB
+    '   Blank Lines: 22 (16.54%)
+    '     File Size: 4.21 KB
 
 
     '     Class ImageData
@@ -118,7 +118,7 @@ Namespace Driver
             Return New DataURI(Image)
         End Function
 
-        Const InvalidSuffix$ = "The gdi+ image file save path: {0} ending with *.svg file extension suffix!"
+        Const InvalidSuffix$ = "The gdi+ image file save path: {0} ending with non-raster gdi `*.{1}` file extension suffix!"
 
         ''' <summary>
         ''' Save the image as png
@@ -126,15 +126,24 @@ Namespace Driver
         ''' <param name="path"></param>
         ''' <returns></returns>
         Public Overrides Function Save(path As String) As Boolean
-            If path.ExtensionSuffix.TextEquals("svg") Then
-                Call String.Format(InvalidSuffix, path.ToFileURL).Warning
+            If path.ExtensionSuffix("svg", "pdf", "ps") Then
+                Call String.Format(InvalidSuffix, path.ToFileURL, path.ExtensionSuffix).Warning
             End If
 
+            Dim format As ImageFormats = path.ExtensionSuffix.ParseImageFormat()
+
+            Select Case format
+                Case ImageFormats.Svg, ImageFormats.Pdf, ImageFormats.PS
+                    format = ImageFormats.Png
+                Case Else
+                    ' do nothing
+            End Select
+
 #If NET48 Then
-            Return Image.SaveAs(path, ImageData.DefaultFormat)
+            Return Image.SaveAs(path, format)
 #Else
             Using s As Stream = path.Open(FileMode.OpenOrCreate, doClear:=True)
-                Return Save(s, ImageData.DefaultFormat)
+                Return Save(s, format)
             End Using
 #End If
         End Function

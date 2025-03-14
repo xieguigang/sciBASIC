@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f89e8889d87af6042d88bea79aa8aede, Data_science\Mathematica\Math\Math\Scripting\Expression\Arithmetic.vb"
+﻿#Region "Microsoft.VisualBasic::e73a0bd7644a85f10922f3bcc25beb22, Data_science\Mathematica\Math\Math\Scripting\Expression\Arithmetic.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 98.15%
     ' 
     '   Blank Lines: 8 (8.25%)
-    '     File Size: 4.37 KB
+    '     File Size: 4.45 KB
 
 
     '     Module Arithmetic

@@ -1,4 +1,74 @@
-﻿Imports std = System.Math
+﻿#Region "Microsoft.VisualBasic::8ea3db0c09f604ce912a70196b59ac6c, Data_science\Mathematica\Math\Math\Numerics\Optimization\LBFGSB\LineSearches\LewisOverton.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 196
+    '    Code Lines: 143 (72.96%)
+    ' Comment Lines: 16 (8.16%)
+    '    - Xml Docs: 93.75%
+    ' 
+    '   Blank Lines: 37 (18.88%)
+    '     File Size: 6.34 KB
+
+
+    '     Class LewisOverton
+    ' 
+    ' 
+    '         Enum RESULT
+    ' 
+    '             CONVERGED, MAX_ITERS, NONE, STEPTOL, STPMAX
+    '             STPMIN, ZERODG
+    ' 
+    ' 
+    ' 
+    '         Class PhiDPhi
+    ' 
+    '             Constructor: (+1 Overloads) Sub New
+    '             Function: evaluate
+    ' 
+    '  
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    '     Sub: finish
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+Imports std = System.Math
 
 Namespace Framework.Optimization.LBFGSB.LineSearches
 

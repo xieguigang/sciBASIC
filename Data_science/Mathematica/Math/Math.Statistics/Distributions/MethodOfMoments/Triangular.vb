@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::99d292df53e70397a605c1c0824c7bdf, Data_science\Mathematica\Math\Math.Statistics\Distributions\MethodOfMoments\Triangular.vb"
+﻿#Region "Microsoft.VisualBasic::029b5b10261d6d2d4053ef0c25936d06, Data_science\Mathematica\Math\Math.Statistics\Distributions\MethodOfMoments\Triangular.vb"
 
     ' Author:
     ' 

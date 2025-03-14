@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ebd2c0462ff6520e685bbec3b97ae331, Data_science\Mathematica\Math\DataFrame\DataMatrix.vb"
+﻿#Region "Microsoft.VisualBasic::7051a034284993eafae4314715463045, Data_science\Mathematica\Math\DataFrame\DataMatrix.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 158
-    '    Code Lines: 122 (77.22%)
-    ' Comment Lines: 12 (7.59%)
+    '   Total Lines: 177
+    '    Code Lines: 137 (77.40%)
+    ' Comment Lines: 12 (6.78%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 24 (15.19%)
-    '     File Size: 5.58 KB
+    '   Blank Lines: 28 (15.82%)
+    '     File Size: 6.30 KB
 
 
     ' Class DataMatrix
@@ -48,8 +48,8 @@
     '     Properties: keys, size
     ' 
     '     Constructor: (+3 Overloads) Sub New
-    '     Function: (+2 Overloads) GetVector, PopulateRowEntitys, PopulateRowObjects, PopulateRows, ToString
-    '               Visit
+    '     Function: ArrayPack, GetLabels, (+2 Overloads) GetVector, PopulateRowEntitys, PopulateRowObjects
+    '               PopulateRows, ToString, Visit
     ' 
     ' /********************************************************************************/
 

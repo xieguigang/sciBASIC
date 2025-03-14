@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::885ddb4febca2f6da6e636d276c4bb21, Data_science\Mathematica\Math\Math\Algebra\Matrix.NET\MDS\LandmarkMDS.vb"
+﻿#Region "Microsoft.VisualBasic::79e87570261f95460d4bf73f9a3fd983, Data_science\Mathematica\Math\Math\Algebra\Matrix.NET\MDS\LandmarkMDS.vb"
 
     ' Author:
     ' 
@@ -34,22 +34,22 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 238
-    '    Code Lines: 192 (80.67%)
-    ' Comment Lines: 22 (9.24%)
+    '   Total Lines: 182
+    '    Code Lines: 144 (79.12%)
+    ' Comment Lines: 22 (12.09%)
     '    - Xml Docs: 27.27%
     ' 
-    '   Blank Lines: 24 (10.08%)
-    '     File Size: 8.45 KB
+    '   Blank Lines: 16 (8.79%)
+    '     File Size: 6.94 KB
 
 
     '     Class LandmarkMDS
     ' 
-    '         Properties: Dissimilarities, NormalizedStressProp, Positions, StressProp, Weights
+    '         Properties: NormalizedStressProp, StressProp
     ' 
     '         Constructor: (+2 Overloads) Sub New
     ' 
-    '         Function: (+3 Overloads) iterate, majorize, normalizedStress, stress, weightMatrix
+    '         Function: (+2 Overloads) iterate, majorize, normalizedStress, stress
     ' 
     '         Sub: majorize
     ' 
@@ -240,4 +240,3 @@ Namespace LinearAlgebra.Matrix.MDSScale
     End Class
 
 End Namespace
-

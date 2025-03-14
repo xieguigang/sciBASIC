@@ -1,4 +1,62 @@
-﻿Imports Microsoft.VisualBasic.Math.Framework.Optimization.LBFGSB.LineSearches
+﻿#Region "Microsoft.VisualBasic::64ce18d5e11fa8327acf972f9a37bc87, Data_science\Mathematica\Math\Math\Numerics\Optimization\LBFGSB\LBFGSB.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 261
+    '    Code Lines: 179 (68.58%)
+    ' Comment Lines: 37 (14.18%)
+    '    - Xml Docs: 64.86%
+    ' 
+    '   Blank Lines: 45 (17.24%)
+    '     File Size: 10.14 KB
+
+
+    '     Class LBFGSB
+    ' 
+    '         Constructor: (+2 Overloads) Sub New
+    ' 
+    '         Function: max_step_size, minimize, proj_grad_norm
+    ' 
+    '         Sub: force_bounds, reset
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+Imports Microsoft.VisualBasic.Math.Framework.Optimization.LBFGSB.LineSearches
 Imports std = System.Math
 
 Namespace Framework.Optimization.LBFGSB

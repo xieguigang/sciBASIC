@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a755dd5e4b5572fc9ee81c5f84a16a77, Data_science\Mathematica\Math\Math\Algebra\Matrix.NET\MDS\SMACOF.vb"
+﻿#Region "Microsoft.VisualBasic::246cdc21d631273a2f90adf6edbf5ee3, Data_science\Mathematica\Math\Math\Algebra\Matrix.NET\MDS\SMACOF.vb"
 
     ' Author:
     ' 
@@ -34,22 +34,29 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 413
-    '    Code Lines: 273 (66.10%)
-    ' Comment Lines: 102 (24.70%)
-    '    - Xml Docs: 82.35%
+    '   Total Lines: 429
+    '    Code Lines: 278 (64.80%)
+    ' Comment Lines: 112 (26.11%)
+    '    - Xml Docs: 84.82%
     ' 
-    '   Blank Lines: 38 (9.20%)
-    '     File Size: 16.32 KB
+    '   Blank Lines: 39 (9.09%)
+    '     File Size: 17.29 KB
 
 
+    '     Class MDSMethod
+    ' 
+    '         Properties: Dissimilarities, Positions, Weights
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    '         Function: iterate, weightMatrix
+    ' 
     '     Class SMACOF
     ' 
-    '         Properties: Dissimilarities, NormalizedStressProp, Positions, StressProp, Weights
+    '         Properties: NormalizedStressProp, StressProp
     ' 
     '         Constructor: (+2 Overloads) Sub New
     ' 
-    '         Function: (+3 Overloads) iterate, (+2 Overloads) majorize, (+2 Overloads) normalizedStress, (+2 Overloads) stress, weightMatrix
+    '         Function: (+2 Overloads) iterate, (+2 Overloads) majorize, (+2 Overloads) normalizedStress, (+2 Overloads) stress
     ' 
     '         Sub: majorize
     ' 
@@ -487,4 +494,3 @@ Namespace LinearAlgebra.Matrix.MDSScale
     End Class
 
 End Namespace
-

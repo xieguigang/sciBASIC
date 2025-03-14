@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::dadb0dc71f9606692bc8ef1c0f2e1855, Microsoft.VisualBasic.Core\src\Drawing\GDI+\GraphicsExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::be4ef87ef54c46813e4f1132bce9ac4c, Microsoft.VisualBasic.Core\src\Drawing\GDI+\GraphicsExtensions.vb"
 
     ' Author:
     ' 
@@ -34,16 +34,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 514
-    '    Code Lines: 334 (64.98%)
-    ' Comment Lines: 118 (22.96%)
+    '   Total Lines: 519
+    '    Code Lines: 338 (65.13%)
+    ' Comment Lines: 118 (22.74%)
     '    - Xml Docs: 95.76%
     ' 
-    '   Blank Lines: 62 (12.06%)
-    '     File Size: 19.36 KB
+    '   Blank Lines: 63 (12.14%)
+    '     File Size: 19.51 KB
 
 
     '     Module GraphicsExtensions
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
     ' 
     '         Function: (+2 Overloads) Clone, ColorBrush, (+2 Overloads) ColorReplace, EntireImage, GetBrush
     '                   GetBrushes, GetStreamBuffer, (+2 Overloads) GraphicsPath, ImageAddFrame, IsValidGDIParameter
@@ -87,9 +89,14 @@ Namespace Imaging
     <HideModuleName>
     Public Module GraphicsExtensions
 
-        ReadOnly enumFormats As Dictionary(Of String, ImageFormats) =
-            [Enums](Of ImageFormats)() _
-            .ToDictionary(Function(t) t.ToString.ToLower)
+        ReadOnly enumFormats As New Dictionary(Of String, ImageFormats)
+
+        Sub New()
+            For Each flag As ImageFormats In [Enums](Of ImageFormats)()
+                enumFormats(flag.ToString.ToLower) = flag
+                enumFormats(flag.Description.ToLower) = flag
+            Next
+        End Sub
 
         ''' <summary>
         ''' 不存在的名称会返回<see cref="ImageFormats.Png"/>类型

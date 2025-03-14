@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1f577ec6c85f1a0b2f180ddd0bef76d4, Microsoft.VisualBasic.Core\src\Extensions\Collection\Linq\Linq.vb"
+﻿#Region "Microsoft.VisualBasic::cc390267510c534b936f70d1b4d4753c, Microsoft.VisualBasic.Core\src\Extensions\Collection\Linq\Linq.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 500
-    '    Code Lines: 279 (55.80%)
-    ' Comment Lines: 169 (33.80%)
+    '   Total Lines: 517
+    '    Code Lines: 293 (56.67%)
+    ' Comment Lines: 169 (32.69%)
     '    - Xml Docs: 95.86%
     ' 
-    '   Blank Lines: 52 (10.40%)
-    '     File Size: 18.93 KB
+    '   Blank Lines: 55 (10.64%)
+    '     File Size: 19.37 KB
 
 
     '     Module Extensions
@@ -49,7 +49,7 @@
     '         Delegate Sub
     ' 
     '             Function: (+2 Overloads) [With], CopyVector, DefaultFirst, FirstOrDefault, LastOrDefault
-    '                       MaxInd, (+2 Overloads) Read, RemoveLeft, (+2 Overloads) Removes, Repeats
+    '                       MaxInd, (+2 Overloads) Read, RemoveLeft, (+2 Overloads) Removes, (+2 Overloads) Repeats
     '                       (+2 Overloads) SeqIterator, (+4 Overloads) Sequence, (+3 Overloads) ToArray, ToVector, TryCatch
     ' 
     ' 
@@ -209,7 +209,8 @@ Namespace Linq
         ''' <typeparam name="T"></typeparam>
         ''' <param name="source"></param>
         ''' <returns></returns>
-        <Extension> Public Function MaxInd(Of T As IComparable)(source As IEnumerable(Of T)) As Integer
+        <Extension>
+        Public Function MaxInd(Of T As IComparable)(source As IEnumerable(Of T)) As Integer
             Dim i As Integer = 0
             Dim m As T
             Dim mi As Integer
@@ -233,7 +234,8 @@ Namespace Linq
         ''' <param name="source"></param>
         ''' <param name="match">符合这个条件的所有的元素都将会被移除</param>
         ''' <returns></returns>
-        <Extension> Public Function Removes(Of T)(source As IEnumerable(Of T), match As Func(Of T, Boolean), Optional parallel As Boolean = False) As T()
+        <Extension>
+        Public Function Removes(Of T)(source As IEnumerable(Of T), match As Func(Of T, Boolean), Optional parallel As Boolean = False) As T()
             Dim LQuery As T()
             If parallel Then
                 LQuery = (From x In source.AsParallel Where Not match(x) Select x).ToArray
@@ -243,7 +245,8 @@ Namespace Linq
             Return LQuery
         End Function
 
-        <Extension> Public Function Removes(Of T)(lst As List(Of T), match As Func(Of T, Boolean)) As List(Of T)
+        <Extension>
+        Public Function Removes(Of T)(lst As List(Of T), match As Func(Of T, Boolean)) As List(Of T)
             If lst.IsNullOrEmpty Then
                 Return New List(Of T)
             Else
@@ -311,6 +314,18 @@ Namespace Linq
             Return times.Sequence.Select(Function(x) source).ToArray
         End Function
 
+        <Extension>
+        Public Function Repeats(Of T)(source As T(), each%) As T()
+            Dim out As T() = New T([each] * source.Length - 1) {}
+            Dim i As i32 = 0
+
+            For Each xi As T In source
+                Call Array.ConstrainedCopy(xi.Repeats(each%), Scan0, out, (++i) * [each], [each])
+            Next
+
+            Return out
+        End Function
+
         ''' <summary>
         ''' 
         ''' </summary>
@@ -324,7 +339,8 @@ Namespace Linq
             Return n.Sequence.Select(Function(x) source()).ToArray
         End Function
 
-        <Extension> Public Function Read(Of T)(array As T(), ByRef i As Integer, ByRef out As T) As T
+        <Extension>
+        Public Function Read(Of T)(array As T(), ByRef i As Integer, ByRef out As T) As T
             out = array(i)
             i += 1
             Return out
@@ -338,7 +354,8 @@ Namespace Linq
         ''' <param name="array"></param>
         ''' <param name="i"></param>
         ''' <returns></returns>
-        <Extension> Public Function Read(Of T)(array As T(), ByRef i As Integer) As T
+        <Extension>
+        Public Function Read(Of T)(array As T(), ByRef i As Integer) As T
             Dim out As T = array(i)
             i += 1
             Return out

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d6e2731b70e20865198cd9e22da1b4d1, Microsoft.VisualBasic.Core\src\Drawing\GDI+\Driver\DriverLoad.vb"
+﻿#Region "Microsoft.VisualBasic::82c8423344d9eb9b1b81b5e03cf5d4c8, Microsoft.VisualBasic.Core\src\Drawing\GDI+\Driver\DriverLoad.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 176
-    '    Code Lines: 137 (77.84%)
-    ' Comment Lines: 11 (6.25%)
+    '   Total Lines: 190
+    '    Code Lines: 147 (77.37%)
+    ' Comment Lines: 11 (5.79%)
     '    - Xml Docs: 81.82%
     ' 
-    '   Blank Lines: 28 (15.91%)
-    '     File Size: 8.14 KB
+    '   Blank Lines: 32 (16.84%)
+    '     File Size: 8.63 KB
 
 
     '     Module DriverLoad
@@ -49,9 +49,10 @@
     ' 
     '         Constructor: (+1 Overloads) Sub New
     ' 
-    '         Function: CreateDefaultRasterGraphics, (+4 Overloads) CreateGraphicsDevice, DefaultGraphicsDevice, LoadFromStream, UseGraphicsDevice
+    '         Function: CreateDefaultRasterGraphics, (+4 Overloads) CreateGraphicsDevice, DefaultGraphicsDevice, GetData, LoadFromStream
+    '                   MeasureTextSize, UseGraphicsDevice
     ' 
-    '         Sub: (+2 Overloads) Register
+    '         Sub: (+3 Overloads) Register
     ' 
     ' 
     ' /********************************************************************************/
@@ -69,7 +70,9 @@ Namespace Imaging.Driver
         Dim libgdiplus_raster As DeviceInterop
         Dim svg As DeviceInterop
         Dim pdf As DeviceInterop
+        Dim ps As DeviceInterop
         Dim loadImage As Func(Of Stream, Image)
+        Dim measureString As Func(Of String, Font, SizeF)
 
         Public ReadOnly Property CheckRasterImageLoader As Boolean
             Get
@@ -85,6 +88,7 @@ Namespace Imaging.Driver
                 Case Drivers.GDI : libgdiplus_raster = interop
                 Case Drivers.PDF : pdf = interop
                 Case Drivers.SVG : svg = interop
+                Case Drivers.PostScript : ps = interop
                 Case Else
                     Throw New NotSupportedException(driver.Description)
             End Select
@@ -92,6 +96,10 @@ Namespace Imaging.Driver
 
         Public Sub Register(loader As Func(Of Stream, Image))
             loadImage = loader
+        End Sub
+
+        Public Sub Register(measure As Func(Of String, Font, SizeF))
+            measureString = measure
         End Sub
 
         ''' <summary>
@@ -104,6 +112,14 @@ Namespace Imaging.Driver
                 Throw New InvalidProgramException("missing image loader driver!")
             Else
                 Return loadImage(s)
+            End If
+        End Function
+
+        Public Function MeasureTextSize(text As String, font As Font) As SizeF
+            If measureString Is Nothing Then
+                Throw New InvalidProgramException("missing text size measurement driver!")
+            Else
+                Return measureString(text, font)
             End If
         End Function
 
@@ -127,6 +143,10 @@ Namespace Imaging.Driver
             Return __default
         End Function
 
+        Public Function GetData(g As IGraphics, padding As Integer()) As IGraphicsData
+            Return UseGraphicsDevice(g.Driver).GetData(g, padding)
+        End Function
+
         Public Function CreateGraphicsDevice(background As Image,
                                              Optional direct_access As Boolean = True,
                                              Optional driver As Drivers = Drivers.Default) As IGraphics
@@ -134,13 +154,7 @@ Namespace Imaging.Driver
                 driver = DefaultGraphicsDevice()
             End If
 
-            Select Case driver
-                Case Drivers.GDI : Return libgdiplus_raster.CreateCanvas2D(background, direct_access)
-                Case Drivers.PDF : Return pdf.CreateCanvas2D(background, direct_access)
-                Case Drivers.SVG : Return svg.CreateCanvas2D(background, direct_access)
-                Case Else
-                    Throw New NotImplementedException(driver.Description)
-            End Select
+            Return UseGraphicsDevice(driver).CreateCanvas2D(background, direct_access)
         End Function
 
         Public Function CreateGraphicsDevice(background As Bitmap,
@@ -150,13 +164,7 @@ Namespace Imaging.Driver
                 driver = DefaultGraphicsDevice()
             End If
 
-            Select Case driver
-                Case Drivers.GDI : Return libgdiplus_raster.CreateCanvas2D(background, direct_access)
-                Case Drivers.PDF : Return pdf.CreateCanvas2D(background, direct_access)
-                Case Drivers.SVG : Return svg.CreateCanvas2D(background, direct_access)
-                Case Else
-                    Throw New NotImplementedException(driver.Description)
-            End Select
+            Return UseGraphicsDevice(driver).CreateCanvas2D(background, direct_access)
         End Function
 
         Const skia_driver = "A skiasharp graphics driver was wrapped by the Microsoft.VisualBasic.Drawing(https://github.com/xieguigang/Microsoft.VisualBasic.Drawing) project, call the method at the very begining of your program startup: Microsoft.VisualBasic.Drawing.SkiaDriver.Register()."
@@ -165,6 +173,7 @@ Namespace Imaging.Driver
         Const missing_svg = "Missing the graphics device driver for svg graphics, you should register the corresponding graphics driver at first!" & vbCrLf
         Const missing_pdf = "Missing the graphics device driver for pdf drawing, you should register the corresponding pdf drawing driver at first!" & vbCrLf
         Const missing_gdi = "Missing the raster graphics driver for the image drawing, you should register the corresponding raster rendering driver at first!" & vbCrLf
+        Const missing_ps = "Missing the graphics driver for the postscript generates, you should register the corresponding postscript rendering driver at first!" & vbCrLf
 
         Public Function UseGraphicsDevice(driver As Drivers) As DeviceInterop
             If driver = Drivers.Default Then
@@ -206,6 +215,12 @@ Namespace Imaging.Driver
                     End If
 
                     Return libgdiplus_raster
+                Case Drivers.PostScript
+                    If ps Is Nothing Then
+                        Throw New MissingMethodException(missing_ps & windows_gdi_driver)
+                    End If
+
+                    Return ps
                 Case Else
                     Throw New NotImplementedException(driver.Description)
             End Select

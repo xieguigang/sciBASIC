@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e9b5a484ae21bfcda046a53daff85e4a, Microsoft.VisualBasic.Core\src\Extensions\Math\Correlations\Ranks.vb"
+﻿#Region "Microsoft.VisualBasic::d441abd42a10040d1d76a8ccb0c8ae1b, Microsoft.VisualBasic.Core\src\Extensions\Math\Correlations\Ranks.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 77
-    '    Code Lines: 51 (66.23%)
-    ' Comment Lines: 15 (19.48%)
-    '    - Xml Docs: 93.33%
+    '   Total Lines: 78
+    '    Code Lines: 51 (65.38%)
+    ' Comment Lines: 16 (20.51%)
+    '    - Xml Docs: 87.50%
     ' 
-    '   Blank Lines: 11 (14.29%)
-    '     File Size: 3.08 KB
+    '   Blank Lines: 11 (14.10%)
+    '     File Size: 3.10 KB
 
 
     '     Delegate Function

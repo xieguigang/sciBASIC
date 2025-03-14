@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::dd246722f9733a79ad64227cec1cd926, Data_science\Visualization\Plots\BarPlot\Histogram\HistogramPlot.vb"
+﻿#Region "Microsoft.VisualBasic::ae94a619f886e1415945bbd6cbf34226, Data_science\Visualization\Plots\BarPlot\Histogram\HistogramPlot.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 183
-    '    Code Lines: 153 (83.61%)
-    ' Comment Lines: 2 (1.09%)
-    '    - Xml Docs: 0.00%
+    '   Total Lines: 193
+    '    Code Lines: 153 (79.27%)
+    ' Comment Lines: 12 (6.22%)
+    '    - Xml Docs: 83.33%
     ' 
-    '   Blank Lines: 28 (15.30%)
-    '     File Size: 7.62 KB
+    '   Blank Lines: 28 (14.51%)
+    '     File Size: 7.95 KB
 
 
     '     Class HistogramPlot
@@ -117,6 +117,16 @@ Namespace BarPlot.Histogram
             Me.groups = groups
         End Sub
 
+        ''' <summary>
+        ''' Draw histogram with <see cref="HistProfile.data"/>.
+        ''' </summary>
+        ''' <param name="g"></param>
+        ''' <param name="region"></param>
+        ''' <param name="hist"></param>
+        ''' <param name="ann"></param>
+        ''' <param name="scaler"></param>
+        ''' <param name="alpha"></param>
+        ''' <param name="drawRect"></param>
         Public Shared Sub DrawSample(g As IGraphics, region As Rectangle,
                                      hist As HistProfile,
                                      ann As NamedValue(Of Color),
@@ -129,21 +139,21 @@ Namespace BarPlot.Histogram
             For Each block As HistogramData In hist.data
                 Dim pos As PointF = scaler.Translate(block.x1, block.y)
                 Dim sizeF As New SizeF With {
-                            .Width = scaler.TranslateX(block.x2) - scaler.TranslateX(block.x1),
-                            .Height = region.Bottom - scaler.TranslateY(block.y)
-                        }
+                    .Width = scaler.TranslateX(block.x2) - scaler.TranslateX(block.x1),
+                    .Height = region.Bottom - scaler.TranslateY(block.y)
+                }
                 Dim rect As New RectangleF With {
-                            .Location = pos,
-                            .Size = sizeF
-                        }
+                    .Location = pos,
+                    .Size = sizeF
+                }
 
                 Call g.FillRectangle(b, rect)
 
                 If drawRect Then
                     Call g.DrawRectangle(
-                                Pens.Black,
-                                rect.Left, rect.Top,
-                                rect.Width, rect.Height)
+                        Pens.Black,
+                        rect.Left, rect.Top,
+                        rect.Width, rect.Height)
                 End If
             Next
         End Sub

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::29195d05e441ece2a9df95217d648b6a, Microsoft.VisualBasic.Core\src\Extensions\Collection\Linq\JoinExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::e305b9c946f50de411f5e9e3d85e7e18, Microsoft.VisualBasic.Core\src\Extensions\Collection\Linq\JoinExtensions.vb"
 
     ' Author:
     ' 
@@ -34,18 +34,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 74
-    '    Code Lines: 43 (58.11%)
-    ' Comment Lines: 24 (32.43%)
+    '   Total Lines: 78
+    '    Code Lines: 46 (58.97%)
+    ' Comment Lines: 24 (30.77%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 7 (9.46%)
-    '     File Size: 2.79 KB
+    '   Blank Lines: 8 (10.26%)
+    '     File Size: 2.96 KB
 
 
     '     Module JoinExtensions
     ' 
-    '         Function: IteratesALL, (+2 Overloads) JoinIterates
+    '         Function: Concatenate, IteratesALL, (+2 Overloads) JoinIterates
     ' 
     ' 
     ' /********************************************************************************/
@@ -84,6 +84,10 @@ Namespace Linq
                     End Using
                 End If
             Next
+        End Function
+
+        Public Function Concatenate(Of T)(ParamArray source As IEnumerable(Of T)()) As IEnumerable(Of T)
+            Return source.IteratesALL
         End Function
 
         ''' <summary>

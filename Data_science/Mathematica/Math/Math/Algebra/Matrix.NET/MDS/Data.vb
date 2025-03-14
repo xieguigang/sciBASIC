@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bc8293e77e155538fc0ffc346fbd5e32, Data_science\Mathematica\Math\Math\Algebra\Matrix.NET\MDS\Data.vb"
+﻿#Region "Microsoft.VisualBasic::a1dcc0bb14ca4351a8ee89d0f8e256d2, Data_science\Mathematica\Math\Math\Algebra\Matrix.NET\MDS\Data.vb"
 
     ' Author:
     ' 
@@ -266,4 +266,3 @@ Namespace LinearAlgebra.Matrix.MDSScale
     End Class
 
 End Namespace
-

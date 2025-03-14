@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5cdfcb823c5c010fdb600204a27cd8d4, Data_science\Visualization\Plots-statistics\HeatMap\BubbleHeatmap.vb"
+﻿#Region "Microsoft.VisualBasic::5cdfcb823c5c010fdb600204a27cd8d4, Data_science\Visualization\Plots-statistics\Heatmap\BubbleHeatmap.vb"
 
     ' Author:
     ' 

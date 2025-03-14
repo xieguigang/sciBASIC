@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b4794bc40771759401505090c9186e42, Microsoft.VisualBasic.Core\src\Drawing\GDI+\Driver\Drivers.vb"
+﻿#Region "Microsoft.VisualBasic::e6027e37b44e799a1a164b39e0014b33, Microsoft.VisualBasic.Core\src\Drawing\GDI+\Driver\Drivers.vb"
 
     ' Author:
     ' 
@@ -34,19 +34,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 93
-    '    Code Lines: 29 (31.18%)
-    ' Comment Lines: 59 (63.44%)
-    '    - Xml Docs: 94.92%
+    '   Total Lines: 90
+    '    Code Lines: 29 (32.22%)
+    ' Comment Lines: 56 (62.22%)
+    '    - Xml Docs: 94.64%
     ' 
-    '   Blank Lines: 5 (5.38%)
-    '     File Size: 5.44 KB
+    '   Blank Lines: 5 (5.56%)
+    '     File Size: 5.42 KB
 
 
     '     Enum Drivers
     ' 
-    '         GDI, PDF, PostScript, PS, SVG
-    '         WMF
+    '         GDI, PDF, SVG, WMF
     ' 
     '  
     ' 
@@ -61,6 +60,7 @@
 
 #End Region
 
+Imports System.ComponentModel
 Imports System.Runtime.CompilerServices
 
 Namespace Imaging.Driver
@@ -82,10 +82,6 @@ Namespace Imaging.Driver
         ''' mime type: image/svg+xml
         ''' </summary>
         SVG
-        ''' <summary>
-        ''' application/postscript
-        ''' </summary>
-        PS
         ''' <summary>
         ''' Windows meta file
         ''' </summary>
@@ -132,7 +128,7 @@ Namespace Imaging.Driver
         ''' concepts and technologies introduced with PostScript laid the groundwork for later developments in digital graphics and 
         ''' document management.
         ''' </summary>
-        PostScript
+        <Description("application/postscript")> PostScript
     End Enum
 
     Public Module FormatHelper

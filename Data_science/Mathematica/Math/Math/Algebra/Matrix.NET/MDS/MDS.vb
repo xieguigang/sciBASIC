@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3bdd9de6d7ae75b0ab7522ee1f41bf94, Data_science\Mathematica\Math\Math\Algebra\Matrix.NET\MDS\MDS.vb"
+﻿#Region "Microsoft.VisualBasic::422a34a6f4b9ee38b941e41d8357fe75, Data_science\Mathematica\Math\Math\Algebra\Matrix.NET\MDS\MDS.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 71
-    '    Code Lines: 38 (53.52%)
-    ' Comment Lines: 25 (35.21%)
-    '    - Xml Docs: 36.00%
+    '   Total Lines: 81
+    '    Code Lines: 38 (46.91%)
+    ' Comment Lines: 33 (40.74%)
+    '    - Xml Docs: 48.48%
     ' 
-    '   Blank Lines: 8 (11.27%)
-    '     File Size: 2.66 KB
+    '   Blank Lines: 10 (12.35%)
+    '     File Size: 3.01 KB
 
 
     '     Class MDS
@@ -133,4 +133,3 @@ Namespace LinearAlgebra.Matrix.MDSScale
     End Class
 
 End Namespace
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::614b707a4fd23b444c1007f683c4404e, Data_science\Mathematica\Math\Math\Distributions\Bootstraping.vb"
+﻿#Region "Microsoft.VisualBasic::836e2f0c99bcb08f40aa581a25436c21, Data_science\Mathematica\Math\Math\Distributions\Bootstraping.vb"
 
     ' Author:
     ' 

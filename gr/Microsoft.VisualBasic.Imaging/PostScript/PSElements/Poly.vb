@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::537ac7b94170e12aa9b2095a2cb98ee0, gr\Microsoft.VisualBasic.Imaging\PostScript\PSElements\Poly.vb"
+﻿#Region "Microsoft.VisualBasic::02ca016d3f9142b0008b684223f90aa1, gr\Microsoft.VisualBasic.Imaging\PostScript\PSElements\Poly.vb"
 
     ' Author:
     ' 
@@ -34,18 +34,20 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 57
-    '    Code Lines: 42 (73.68%)
+    '   Total Lines: 61
+    '    Code Lines: 45 (73.77%)
     ' Comment Lines: 0 (0.00%)
     '    - Xml Docs: 0.00%
     ' 
-    '   Blank Lines: 15 (26.32%)
-    '     File Size: 1.74 KB
+    '   Blank Lines: 16 (26.23%)
+    '     File Size: 1.93 KB
 
 
     '     Class Polygon
     ' 
     '         Properties: fill, points, stroke
+    ' 
+    '         Function: ScaleTo
     ' 
     '         Sub: Paint, WriteAscii
     ' 
@@ -79,6 +81,14 @@ Namespace PostScript.Elements
         Friend Overrides Sub Paint(g As IGraphics)
             Throw New NotImplementedException()
         End Sub
+
+        Friend Overrides Function ScaleTo(scaleX As d3js.scale.LinearScale, scaleY As d3js.scale.LinearScale) As PSElement
+            Throw New NotImplementedException()
+        End Function
+
+        Friend Overrides Function GetXy() As PointF
+            Return New PointF(points.Average(Function(p) p.X), points.Average(Function(p) p.Y))
+        End Function
     End Class
 
     Public Class Poly : Inherits Polygon

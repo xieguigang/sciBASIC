@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a942a701a97b9f9c00b6c79f02825e89, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Shapes\Circle.vb"
+﻿#Region "Microsoft.VisualBasic::23ece0c4801f457fe5e6f121ee7b2930, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Shapes\Circle.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 106
-    '    Code Lines: 75 (70.75%)
-    ' Comment Lines: 13 (12.26%)
+    '   Total Lines: 105
+    '    Code Lines: 75 (71.43%)
+    ' Comment Lines: 13 (12.38%)
     '    - Xml Docs: 92.31%
     ' 
-    '   Blank Lines: 18 (16.98%)
-    '     File Size: 3.89 KB
+    '   Blank Lines: 17 (16.19%)
+    '     File Size: 3.88 KB
 
 
     '     Class Circle
@@ -73,6 +73,13 @@ Namespace Drawing2D.Shapes
     Public Class Circle : Inherits Shape
 
         Public Property fill As String
+        Public Overrides ReadOnly Property Size As SizeF
+
+        Public ReadOnly Property Radius As Single
+            Get
+                Return std.Min(Size.Width, Size.Height) / 2
+            End Get
+        End Property
 
         ''' <summary>
         ''' 
@@ -89,14 +96,6 @@ Namespace Drawing2D.Shapes
         Public Sub New(d%, fill As Color)
             Me.New(Nothing, d, fill)
         End Sub
-
-        Public Overrides ReadOnly Property Size As SizeF
-
-        Public ReadOnly Property Radius As Single
-            Get
-                Return std.Min(Size.Width, Size.Height) / 2
-            End Get
-        End Property
 
         Public Overrides Function Draw(ByRef g As IGraphics, Optional overridesLoci As Point = Nothing) As RectangleF
             Dim rect = MyBase.Draw(g, overridesLoci)

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f6e10c5b137a58891f0658a26f8e2595, Data_science\Mathematica\Math\Math\Numerics\Optimization\LBFGSB\LBFGSBException.vb"
+﻿#Region "Microsoft.VisualBasic::ca3993d59212e443bf4e58d813e6fa21, gr\Microsoft.VisualBasic.Imaging\PostScript\PostScriptData.vb"
 
     ' Author:
     ' 
@@ -34,39 +34,53 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 18
-    '    Code Lines: 13 (72.22%)
+    '   Total Lines: 29
+    '    Code Lines: 23 (79.31%)
     ' Comment Lines: 0 (0.00%)
     '    - Xml Docs: 0.00%
     ' 
-    '   Blank Lines: 5 (27.78%)
-    '     File Size: 372 B
+    '   Blank Lines: 6 (20.69%)
+    '     File Size: 859 B
 
 
-    '     Class LBFGSBException
+    '     Class PostScriptData
     ' 
-    '         Constructor: (+2 Overloads) Sub New
+    '         Properties: Driver
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    '         Function: GetDataURI, Save
     ' 
     ' 
     ' /********************************************************************************/
 
 #End Region
 
-Imports System
+Imports System.Drawing
+Imports System.IO
+Imports Microsoft.VisualBasic.Imaging.Driver
+Imports Microsoft.VisualBasic.MIME.Html.CSS
+Imports Microsoft.VisualBasic.Net.Http
 
-Namespace Framework.Optimization.LBFGSB
-    Public Class LBFGSBException
-        Inherits Exception
+Namespace PostScript
 
-        Private Const serialVersionUID As Long = 1L
+    Public Class PostScriptData : Inherits GraphicsData
 
-        Public Sub New(message As String)
-            MyBase.New(message)
+        Public Overrides ReadOnly Property Driver As Drivers
+            Get
+                Return Drivers.PostScript
+            End Get
+        End Property
+
+        Public Sub New(img As Object, size As Size, padding As Padding)
+            MyBase.New(img, size, padding)
         End Sub
-        Public Sub New()
-            MyBase.New()
-        End Sub
 
+        Public Overrides Function GetDataURI() As DataURI
+            Throw New NotImplementedException()
+        End Function
+
+        Public Overrides Function Save(out As Stream) As Boolean
+            Throw New NotImplementedException()
+        End Function
     End Class
-
 End Namespace

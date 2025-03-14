@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::26683428474d996eab679c79699d72bc, Microsoft.VisualBasic.Core\src\Language\Language\Java\MathUtils.vb"
+﻿#Region "Microsoft.VisualBasic::1699b021ddc41e1a57f764631ede0312, Microsoft.VisualBasic.Core\src\Language\Language\Java\MathUtils.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 387
-    '    Code Lines: 194 (50.13%)
-    ' Comment Lines: 148 (38.24%)
-    '    - Xml Docs: 72.30%
+    '   Total Lines: 291
+    '    Code Lines: 141 (48.45%)
+    ' Comment Lines: 115 (39.52%)
+    '    - Xml Docs: 66.09%
     ' 
-    '   Blank Lines: 45 (11.63%)
-    '     File Size: 14.13 KB
+    '   Blank Lines: 35 (12.03%)
+    '     File Size: 10.80 KB
 
 
     '     Module MathUtils
@@ -48,10 +48,8 @@
     '         Properties: Seed
     ' 
     '         Function: getNormalized, (+2 Overloads) getTotal, hypot, nextBoolean, nextByte
-    '                   nextChar, nextDouble, nextExponential, nextFloat, nextGamma
-    '                   nextGaussian, (+2 Overloads) nextInt, nextInverseGaussian, nextLong, nextShort
-    '                   permuted, randomChoice, randomChoicePDF, randomLogDouble, sampleIndicesWithReplacement
-    '                   shuffled, uniform
+    '                   nextExponential, nextGaussian, nextInverseGaussian, permuted, randomChoice
+    '                   randomChoicePDF, randomLogDouble, sampleIndicesWithReplacement, shuffled, uniform
     ' 
     '         Sub: nextBytes, permute, (+2 Overloads) shuffle
     ' 
@@ -61,6 +59,8 @@
 #End Region
 
 Imports std = System.Math
+Imports randf = Microsoft.VisualBasic.Math.RandomExtensions
+Imports Microsoft.VisualBasic.Linq
 
 '
 ' * MathUtils.java
@@ -100,23 +100,13 @@ Namespace Language.Java
     Public Module MathUtils
 
         ''' <summary>
-        ''' A random number generator that is initialized with the clock when this
-        ''' class is loaded into the JVM. Use this for all random numbers. Note: This
-        ''' method or getting random numbers in not thread-safe. Since
-        ''' MersenneTwisterFast is currently (as of 9/01) not synchronized using this
-        ''' function may cause concurrency issues. Use the static get methods of the
-        ''' MersenneTwisterFast class for access to a single instance of the class,
-        ''' that has synchronization.
-        ''' </summary>
-        ReadOnly random As MersenneTwisterFast = MersenneTwisterFast.DEFAULT_INSTANCE
-
-        ''' <summary>
         ''' Chooses one category if a cumulative probability distribution is given 
         ''' </summary>
         ''' <param name="cf"></param>
         ''' <returns></returns>
         Public Function randomChoice(cf As Double()) As Integer
-            Dim U As Double = random.nextDouble()
+            Dim random As Random = randf.seeds
+            Dim U As Double = random.NextDouble()
             Dim s As Integer
 
             If U <= cf(0) Then
@@ -136,7 +126,8 @@ Namespace Language.Java
         '''            array of unnormalized probabilities </param>
         ''' <returns> a sample according to an unnormalized probability distribution </returns>
         Public Function randomChoicePDF(pdf As Double()) As Integer
-            Dim U As Double = random.nextDouble() * getTotal(pdf)
+            Dim random As Random = randf.seeds
+            Dim U As Double = random.NextDouble() * getTotal(pdf)
 
             For i As Integer = 0 To pdf.Length - 1
                 U -= pdf(i)
@@ -195,16 +186,12 @@ Namespace Language.Java
         ''' <summary>
         ''' Access a default instance of this class, access is synchronized
         ''' </summary>
-        Public Property Seed As Long
+        Public Property Seed As Integer
             Get
-                SyncLock random
-                    Return random.Seed
-                End SyncLock
+                Return randf.Seed
             End Get
-            Set(seed As Long)
-                SyncLock random
-                    random.Seed = seed
-                End SyncLock
+            Set
+                randf.SetSeed(Seed)
             End Set
         End Property
 
@@ -212,148 +199,65 @@ Namespace Language.Java
         ''' Access a default instance of this class, access is synchronized
         ''' </summary>
         Public Function nextByte() As SByte
-            SyncLock random
-                Return random.nextByte()
-            End SyncLock
+            Return CSByte(randf.NextInteger(-128, 127))
         End Function
 
         ''' <summary>
         ''' Access a default instance of this class, access is synchronized
         ''' </summary>
         Public Function nextBoolean() As Boolean
-            SyncLock random
-                Return random.nextBoolean()
-            End SyncLock
+            Return randf.NextBoolean
         End Function
 
         ''' <summary>
         ''' Access a default instance of this class, access is synchronized
         ''' </summary>
         Public Sub nextBytes(bs As SByte())
-            SyncLock random
-                random.nextBytes(bs)
-            End SyncLock
+            For i As Integer = 0 To bs.Length - 1
+                bs(i) = CSByte(randf.NextInteger(-128, 127))
+            Next
         End Sub
 
         ''' <summary>
         ''' Access a default instance of this class, access is synchronized
         ''' </summary>
-        Public Function nextChar() As Char
-            SyncLock random
-                Return random.nextChar()
-            End SyncLock
-        End Function
-
-        ''' <summary>
-        ''' Access a default instance of this class, access is synchronized
-        ''' </summary>
         Public Function nextGaussian() As Double
-            SyncLock random
-                Return random.nextGaussian()
-            End SyncLock
-        End Function
-
-        ' Mean = alpha / lambda
-        ' Variance = alpha / (lambda*lambda)
-
-        Public Function nextGamma(alpha As Double, lambda As Double) As Double
-            SyncLock random
-                Return random.nextGamma(alpha, lambda)
-            End SyncLock
-        End Function
-
-        ''' <summary>
-        ''' Access a default instance of this class, access is synchronized
-        ''' </summary>
-        ''' <returns> a pseudo random double precision floating point number in [01) </returns>
-        Public Function nextDouble() As Double
-            SyncLock random
-                Return random.nextDouble()
-            End SyncLock
+            Return randf.NextGaussian
         End Function
 
         ''' <returns> log of random variable in [0,1] </returns>
         Public Function randomLogDouble() As Double
-            Return std.Log(nextDouble())
+            Return std.Log(randf.NextDouble())
         End Function
 
         ''' <summary>
         ''' Access a default instance of this class, access is synchronized
         ''' </summary>
         Public Function nextExponential(lambda As Double) As Double
-            SyncLock random
-                Return -1.0 * std.Log(1 - random.nextDouble()) / lambda
-            End SyncLock
+            Return -1.0 * std.Log(1 - randf.NextDouble()) / lambda
         End Function
 
         ''' <summary>
         ''' Access a default instance of this class, access is synchronized
         ''' </summary>
         Public Function nextInverseGaussian(mu As Double, lambda As Double) As Double
-            SyncLock random
-                '			
-                '			 * CODE TAKEN FROM WIKIPEDIA. TESTING DONE WITH RESULTS GENERATED IN
-                '			 * R AND LOOK COMPARABLE
-                '			 
-                Dim v As Double = random.nextGaussian() ' sample from a normal
-                ' distribution with a mean of 0
-                ' and 1 standard deviation
-                Dim y As Double = v * v
-                Dim x As Double = mu + (mu * mu * y) / (2 * lambda) - (mu / (2 * lambda)) * std.Sqrt(4 * mu * lambda * y + mu * mu * y * y)
-                Dim test As Double = MathUtils.nextDouble() ' sample from a uniform
-                ' distribution between 0
-                ' and 1
-                If test <= (mu) / (mu + x) Then
-                    Return x
-                Else
-                    Return (mu * mu) / x
-                End If
-            End SyncLock
-        End Function
-
-        ''' <summary>
-        ''' Access a default instance of this class, access is synchronized
-        ''' </summary>
-        Public Function nextFloat() As Single
-            SyncLock random
-                Return random.nextFloat()
-            End SyncLock
-        End Function
-
-        ''' <summary>
-        ''' Access a default instance of this class, access is synchronized
-        ''' </summary>
-        Public Function nextLong() As Long
-            SyncLock random
-                Return random.nextLong()
-            End SyncLock
-        End Function
-
-        ''' <summary>
-        ''' Access a default instance of this class, access is synchronized
-        ''' </summary>
-        Public Function nextShort() As Short
-            SyncLock random
-                Return random.nextShort()
-            End SyncLock
-        End Function
-
-        ''' <summary>
-        ''' Access a default instance of this class, access is synchronized
-        ''' </summary>
-        Public Function nextInt() As Integer
-            SyncLock random
-                Return random.nextInt()
-            End SyncLock
-        End Function
-
-        ''' <summary>
-        ''' Access a default instance of this class, access is synchronized
-        ''' </summary>
-        Public Function nextInt(n As Integer) As Integer
-            SyncLock random
-                Return random.nextInt(n)
-            End SyncLock
+            '			
+            '			 * CODE TAKEN FROM WIKIPEDIA. TESTING DONE WITH RESULTS GENERATED IN
+            '			 * R AND LOOK COMPARABLE
+            '			 
+            Dim v As Double = randf.NextGaussian() ' sample from a normal
+            ' distribution with a mean of 0
+            ' and 1 standard deviation
+            Dim y As Double = v * v
+            Dim x As Double = mu + (mu * mu * y) / (2 * lambda) - (mu / (2 * lambda)) * std.Sqrt(4 * mu * lambda * y + mu * mu * y * y)
+            Dim test As Double = randf.NextDouble() ' sample from a uniform
+            ' distribution between 0
+            ' and 1
+            If test <= (mu) / (mu + x) Then
+                Return x
+            Else
+                Return (mu * mu) / x
+            End If
         End Function
 
         ''' 
@@ -361,25 +265,21 @@ Namespace Language.Java
         ''' <param name="high"> </param>
         ''' <returns> uniform between low and high </returns>
         Public Function uniform(low As Double, high As Double) As Double
-            Return low + nextDouble() * (high - low)
+            Return low + randf.NextDouble() * (high - low)
         End Function
 
         ''' <summary>
         ''' Shuffles an array.
         ''' </summary>
         Public Sub shuffle(array As Integer())
-            SyncLock random
-                random.shuffle(array)
-            End SyncLock
+            randf.Shuffle(array)
         End Sub
 
         ''' <summary>
         ''' Shuffles an array. Shuffles numberOfShuffles times
         ''' </summary>
         Public Sub shuffle(array As Integer(), numberOfShuffles As Integer)
-            SyncLock random
-                random.shuffle(array, numberOfShuffles)
-            End SyncLock
+            randf.Shuffle(randf.seeds, array, numberOfShuffles)
         End Sub
 
         ''' <summary>
@@ -388,28 +288,30 @@ Namespace Language.Java
         ''' <param name="l">
         '''            length of the array required. </param>
         Public Function shuffled(l As Integer) As Integer()
-            SyncLock random
-                Return random.shuffled(l)
-            End SyncLock
+            Dim index As Integer() = l.Sequence
+            randf.Shuffle(index)
+            Return index
         End Function
 
         Public Function sampleIndicesWithReplacement(length As Integer) As Integer()
-            SyncLock random
-                Dim result As Integer() = New Integer(length - 1) {}
-                For i As Integer = 0 To length - 1
-                    result(i) = random.nextInt(length)
-                Next i
-                Return result
-            End SyncLock
+            Dim result As Integer() = New Integer(length - 1) {}
+            For i As Integer = 0 To length - 1
+                result(i) = randf.NextInteger(length)
+            Next i
+            Return result
         End Function
 
         ''' <summary>
         ''' Permutes an array.
         ''' </summary>
         Public Sub permute(array As Integer())
-            SyncLock random
-                random.permute(array)
-            End SyncLock
+            Dim l As Integer = array.Length
+            For i As Integer = 0 To l - 1
+                Dim index As Integer = randf.NextInteger(l - i) + i
+                Dim temp As Integer = array(index)
+                array(index) = array(i)
+                array(i) = temp
+            Next i
         End Sub
 
         ''' <summary>
@@ -418,9 +320,9 @@ Namespace Language.Java
         ''' <param name="l">
         '''            length of the array required. </param>
         Public Function permuted(l As Integer) As Integer()
-            SyncLock random
-                Return random.permuted(l)
-            End SyncLock
+            Dim index As Integer() = l.Sequence
+            permute(index)
+            Return index
         End Function
 
         'Public Function logHyperSphereVolume(dimension As Integer, radius As Double) As Double

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ca039f10e8b3a95a088e04098c4f9f7b, mime\text%html\CSS\Elements\FontStyle.vb"
+﻿#Region "Microsoft.VisualBasic::7e973852794b918177942dcc6a28c37a, mime\text%html\CSS\Elements\FontStyle.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 320
-    '    Code Lines: 190 (59.38%)
-    ' Comment Lines: 95 (29.69%)
+    '   Total Lines: 325
+    '    Code Lines: 194 (59.69%)
+    ' Comment Lines: 95 (29.23%)
     '    - Xml Docs: 89.47%
     ' 
-    '   Blank Lines: 35 (10.94%)
-    '     File Size: 14.56 KB
+    '   Blank Lines: 36 (11.08%)
+    '     File Size: 14.72 KB
 
 
     '     Class CSSFont
@@ -48,7 +48,7 @@
     '         Properties: [variant], color, CSSValue, family, size
     '                     style, weight
     ' 
-    '         Constructor: (+3 Overloads) Sub New
+    '         Constructor: (+4 Overloads) Sub New
     '         Function: (+2 Overloads) GetFontStyle, GetStyle, parseInner, SetFontColor, (+2 Overloads) ToString
     '                   TryParse
     ' 
@@ -206,6 +206,11 @@ Namespace CSS
         Sub New(font As Font, fontSize As Single)
             Call Me.New(font)
             size = fontSize
+        End Sub
+
+        Sub New(font As Font, fill As Brush)
+            Call Me.New(font)
+            color = DirectCast(fill, SolidBrush).Color.ToHtmlColor
         End Sub
 
         Sub New(font As Font)

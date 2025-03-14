@@ -1,58 +1,59 @@
-﻿#Region "Microsoft.VisualBasic::2ee7f8ed5f4d818ea7071fb14d915976, Data_science\Mathematica\Math\Math.Statistics\MomentFunctions\ProductMoments.vb"
+﻿#Region "Microsoft.VisualBasic::6690d5f49d730ac928d0c161ee12a906, Data_science\Mathematica\Math\Math.Statistics\MomentFunctions\ProductMoments.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 58
-'    Code Lines: 37 (63.79%)
-' Comment Lines: 11 (18.97%)
-'    - Xml Docs: 27.27%
-' 
-'   Blank Lines: 10 (17.24%)
-'     File Size: 2.08 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Class ProductMoments
-' 
-'         Properties: Kurtosis, Max, Mean, Median, Min
-'                     SampleSize, Skew, StandardDeviation
-' 
-'         Constructor: (+1 Overloads) Sub New
-'         Function: ToString
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 184
+    '    Code Lines: 86 (46.74%)
+    ' Comment Lines: 74 (40.22%)
+    '    - Xml Docs: 68.92%
+    ' 
+    '   Blank Lines: 24 (13.04%)
+    '     File Size: 7.92 KB
+
+
+    '     Class ProductMoments
+    ' 
+    '         Properties: data, kurtosis, max, mean, median
+    '                     min, sampleSize, skewness, standardDeviation
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    '         Function: (+2 Overloads) AbsoluteMoment, (+2 Overloads) CentralMoment, (+2 Overloads) Moment, SecondMoment, ThirdCentralMoment
+    '                   ToString
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

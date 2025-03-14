@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ae4725bb80c16acadedee4e12bb7beae, Microsoft.VisualBasic.Core\src\Drawing\GDI+\FontFace.vb"
+﻿#Region "Microsoft.VisualBasic::67762ec5d32f240fd2618271fd950ba4, Microsoft.VisualBasic.Core\src\Drawing\GDI+\FontFace.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 150
-    '    Code Lines: 85 (56.67%)
-    ' Comment Lines: 42 (28.00%)
-    '    - Xml Docs: 80.95%
+    '   Total Lines: 151
+    '    Code Lines: 85 (56.29%)
+    ' Comment Lines: 43 (28.48%)
+    '    - Xml Docs: 79.07%
     ' 
-    '   Blank Lines: 23 (15.33%)
-    '     File Size: 6.22 KB
+    '   Blank Lines: 23 (15.23%)
+    '     File Size: 6.20 KB
 
 
     '     Class FontFace
@@ -193,9 +193,10 @@ Namespace Imaging
         ''' <param name="s"></param>
         ''' <param name="font"></param>
         ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Function MeasureString(s As String, font As Font) As SizeF
-            Static g As IGraphics = DriverLoad.CreateGraphicsDevice(New Size(12, 12), driver:=Drivers.GDI)
-            Return g.MeasureString(s, font)
+            Return DriverLoad.MeasureTextSize(s, font)
         End Function
 
     End Class

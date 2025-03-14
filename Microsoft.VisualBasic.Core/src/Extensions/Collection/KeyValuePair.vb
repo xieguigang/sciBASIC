@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::90efea9d960124f78bbb0fe1ded29537, Microsoft.VisualBasic.Core\src\Extensions\Collection\KeyValuePair.vb"
+﻿#Region "Microsoft.VisualBasic::a79fb572c4e8c1f8eab336c155232017, Microsoft.VisualBasic.Core\src\Extensions\Collection\KeyValuePair.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 94.68%
     ' 
     '   Blank Lines: 108 (11.20%)
-    '     File Size: 40.96 KB
+    '     File Size: 40.98 KB
 
 
     '     Module KeyValuePairExtensions

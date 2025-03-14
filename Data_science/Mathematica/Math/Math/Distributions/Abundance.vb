@@ -1,58 +1,66 @@
-﻿#Region "Microsoft.VisualBasic::5627d797e358395d6809a740869d3048, Data_science\Mathematica\Math\Math\Distributions\Abundance.vb"
+﻿#Region "Microsoft.VisualBasic::ae597a98b8ec3e42b6094d9b8bb986aa, Data_science\Mathematica\Math\Math\Distributions\Abundance.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 47
-'    Code Lines: 36 (76.60%)
-' Comment Lines: 6 (12.77%)
-'    - Xml Docs: 100.00%
-' 
-'   Blank Lines: 5 (10.64%)
-'     File Size: 1.89 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Module Abundance
-' 
-'         Function: RelativeAbundances
-' 
-'     Interface ISample
-' 
-'         Properties: Samples
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 267
+    '    Code Lines: 93 (34.83%)
+    ' Comment Lines: 149 (55.81%)
+    '    - Xml Docs: 64.43%
+    ' 
+    '   Blank Lines: 25 (9.36%)
+    '     File Size: 13.76 KB
+
+
+    '     Module Abundance
+    ' 
+    '         Function: RelativeAbundances, Skewness
+    '         Enum AlgorithmType
+    ' 
+    ' 
+    ' 
+    ' 
+    '  
+    ' 
+    '     Function: Kurtosis
+    ' 
+    '     Interface ISample
+    ' 
+    '         Properties: Samples
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

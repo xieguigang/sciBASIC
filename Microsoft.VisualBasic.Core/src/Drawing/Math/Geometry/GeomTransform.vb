@@ -390,6 +390,18 @@ Namespace Imaging.Math2D
         End Function
 
         ''' <summary>
+        ''' 计算任意两点之间的欧几里得距离
+        ''' </summary>
+        ''' <param name="a"></param>
+        ''' <param name="b"></param>
+        ''' <returns></returns>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function Distance(a As PointF, x#, y#) As Double
+            Return Distance(a.X, a.Y, x, y)
+        End Function
+
+        ''' <summary>
         ''' 计算每一个顶点到同一个锚点的距离值的集合
         ''' </summary>
         ''' <param name="points"></param>

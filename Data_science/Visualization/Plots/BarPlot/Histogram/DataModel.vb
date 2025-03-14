@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cb92e4885912c54c442ebede0a85bfc4, Data_science\Visualization\Plots\BarPlot\Histogram\DataModel.vb"
+﻿#Region "Microsoft.VisualBasic::d1cbcd97aac90fdd078207dfd3046268, Data_science\Visualization\Plots\BarPlot\Histogram\DataModel.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 235
-    '    Code Lines: 171 (72.77%)
-    ' Comment Lines: 39 (16.60%)
+    '   Total Lines: 241
+    '    Code Lines: 175 (72.61%)
+    ' Comment Lines: 39 (16.18%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 25 (10.64%)
-    '     File Size: 8.09 KB
+    '   Blank Lines: 27 (11.20%)
+    '     File Size: 8.32 KB
 
 
     '     Structure HistogramData
@@ -285,7 +285,13 @@ Namespace BarPlot.Histogram
         End Sub
 
         Public Overrides Function ToString() As String
-            Return legend.ToString
+            If data.IsNullOrEmpty Then
+                Return legend.ToString
+            End If
+
+            Dim range As New DoubleRange(data.Select(Function(a) {a.x1, a.x2}).IteratesALL)
+
+            Return $"[{range.Min} - {range.Max}] {legend.ToString}"
         End Function
 
         Public Function GetLine(color As Color, width!, ptSize!, Optional type As DashStyle = DashStyle.Solid) As SerialData

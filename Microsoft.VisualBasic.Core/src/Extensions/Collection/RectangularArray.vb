@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::13d79a64b82408a5587799420c9b7ef7, Microsoft.VisualBasic.Core\src\Extensions\Collection\RectangularArray.vb"
+﻿#Region "Microsoft.VisualBasic::911982a90888fd41c3200cbfee786704, Microsoft.VisualBasic.Core\src\Extensions\Collection\RectangularArray.vb"
 
     ' Author:
     ' 
@@ -34,19 +34,19 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 106
-    '    Code Lines: 68 (64.15%)
-    ' Comment Lines: 16 (15.09%)
+    '   Total Lines: 135
+    '    Code Lines: 82 (60.74%)
+    ' Comment Lines: 27 (20.00%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 22 (20.75%)
-    '     File Size: 3.60 KB
+    '   Blank Lines: 26 (19.26%)
+    '     File Size: 4.62 KB
 
 
     '     Class RectangularArray
     ' 
     '         Constructor: (+1 Overloads) Sub New
-    '         Function: CopyOf, Cubic, CubicMatrix, GlobalRange, (+2 Overloads) Matrix
+    '         Function: CopyOf, Cubic, CubicMatrix, GlobalRange, (+3 Overloads) Matrix
     ' 
     ' 
     ' /********************************************************************************/

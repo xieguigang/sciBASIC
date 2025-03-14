@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0e6901cc8e6f8c952ce9c2343648f015, Microsoft.VisualBasic.Core\src\Extensions\Math\Random\RandomExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::8478e089ce99cb6609c2c7c4cb41fd95, Microsoft.VisualBasic.Core\src\Extensions\Math\Random\RandomExtensions.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 412
-    '    Code Lines: 182 (44.17%)
-    ' Comment Lines: 187 (45.39%)
-    '    - Xml Docs: 93.05%
+    '   Total Lines: 473
+    '    Code Lines: 218 (46.09%)
+    ' Comment Lines: 205 (43.34%)
+    '    - Xml Docs: 92.68%
     ' 
-    '   Blank Lines: 43 (10.44%)
-    '     File Size: 16.72 KB
+    '   Blank Lines: 50 (10.57%)
+    '     File Size: 19.00 KB
 
 
     '     Delegate Function
@@ -53,11 +53,11 @@
     ' 
     '         Properties: seeds
     ' 
-    '         Function: (+4 Overloads) [Next], (+2 Overloads) GetNextBetween, (+2 Overloads) GetRandomValue, (+2 Overloads) NextBoolean, (+4 Overloads) NextDouble
-    '                   (+2 Overloads) NextGaussian, (+2 Overloads) NextInteger, NextNumber, NextTriangular, Permutation
-    '                   randf, RandomSingle, Seed
+    '         Function: (+4 Overloads) [Next], ExponentialRandomNumbers, (+2 Overloads) GetNextBetween, (+2 Overloads) GetRandomValue, (+2 Overloads) NextBoolean
+    '                   (+4 Overloads) NextDouble, (+2 Overloads) NextGaussian, (+2 Overloads) NextInteger, NextNumber, NextTriangular
+    '                   Permutation, randf, RandomSingle, Seed
     ' 
-    '         Sub: SetSeed, (+3 Overloads) Shuffle
+    '         Sub: SetSeed, (+5 Overloads) Shuffle
     ' 
     ' 
     ' 
@@ -438,6 +438,36 @@ Namespace Math
         End Sub
 
         ''' <summary>
+        ''' Shuffles a list in O(n) time by using the Fisher-Yates/Knuth algorithm.
+        ''' </summary>
+        ''' <param name="r"></param>
+        ''' <param name = "list"></param>
+        <Extension>
+        Public Sub Shuffle(Of T)(r As Random, ByRef list As T(), Optional numberOfShuffles As Integer? = Nothing)
+            Dim j As Integer
+            Dim temp As T
+            Dim nsize As Integer = list.Length
+
+            If numberOfShuffles Is Nothing Then
+                For i As Integer = 0 To nsize - 1
+                    j = r.Next(0, i + 1)
+                    temp = list(j)
+                    list(j) = list(i)
+                    list(i) = temp
+                Next
+            Else
+                Dim max As Integer = CInt(numberOfShuffles)
+
+                For i As Integer = 0 To max
+                    j = r.Next(0, nsize)
+                    temp = list(j)
+                    list(j) = list(i)
+                    list(i) = temp
+                Next
+            End If
+        End Sub
+
+        ''' <summary>
         ''' makes the element inside the input list random orders
         ''' </summary>
         ''' <typeparam name="T"></typeparam>
@@ -445,6 +475,17 @@ Namespace Math
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Sub Shuffle(Of T)(ByRef list As List(Of T))
+            Call seeds.Shuffle(list)
+        End Sub
+
+        ''' <summary>
+        ''' makes the element inside the input list random orders
+        ''' </summary>
+        ''' <typeparam name="T"></typeparam>
+        ''' <param name="list"></param>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Sub Shuffle(Of T)(ByRef list As T())
             Call seeds.Shuffle(list)
         End Sub
 

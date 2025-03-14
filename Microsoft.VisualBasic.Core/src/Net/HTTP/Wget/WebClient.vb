@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::da0bda44a53590ae9578890df84047ee, Microsoft.VisualBasic.Core\src\Net\HTTP\Wget\WebClient.vb"
+﻿#Region "Microsoft.VisualBasic::7435e2d09af3b915de127760fc9bb7e6, Microsoft.VisualBasic.Core\src\Net\HTTP\Wget\WebClient.vb"
 
     ' Author:
     ' 
@@ -34,12 +34,12 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 46
-    '    Code Lines: 29 (63.04%)
-    ' Comment Lines: 4 (8.70%)
+    '   Total Lines: 45
+    '    Code Lines: 29 (64.44%)
+    ' Comment Lines: 4 (8.89%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 13 (28.26%)
+    '   Blank Lines: 12 (26.67%)
     '     File Size: 1.44 KB
 
 
@@ -57,7 +57,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 Imports System.IO
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b79a9ef227b95215ab4632009d5a4d14, gr\physics\Vector2Math.vb"
+﻿#Region "Microsoft.VisualBasic::c31f17fb3cb69623ceb75b1a4dbb857f, gr\physics\Vector2Math.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 4 (16.00%)
-    '     File Size: 779 B
+    '     File Size: 772 B
 
 
     ' Module Vector2Math

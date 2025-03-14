@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::52c98e95e2daf60299f56380568c7106, Microsoft.VisualBasic.Core\src\Extensions\Math\Correlations\DistanceMethods.vb"
+﻿#Region "Microsoft.VisualBasic::3d5741f3518b1a81f02c98e1e13ce357, Microsoft.VisualBasic.Core\src\Extensions\Math\Correlations\DistanceMethods.vb"
 
     ' Author:
     ' 
@@ -34,19 +34,20 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 258
-    '    Code Lines: 128 (49.61%)
-    ' Comment Lines: 97 (37.60%)
-    '    - Xml Docs: 91.75%
+    '   Total Lines: 291
+    '    Code Lines: 147 (50.52%)
+    ' Comment Lines: 106 (36.43%)
+    '    - Xml Docs: 89.62%
     ' 
-    '   Blank Lines: 33 (12.79%)
-    '     File Size: 9.66 KB
+    '   Blank Lines: 38 (13.06%)
+    '     File Size: 10.91 KB
 
 
     '     Module DistanceMethods
     ' 
-    '         Function: chebyshev_distance, Distance, (+2 Overloads) DistanceTo, (+6 Overloads) EuclideanDistance, fidelity_distance
-    '                   harmonic_mean_distance, Mahalanobis, (+2 Overloads) ManhattanDistance, MinkowskiDistance, (+2 Overloads) SquareDistance
+    '         Function: BrayCurtis, chebyshev_distance, Distance, (+2 Overloads) DistanceTo, (+6 Overloads) EuclideanDistance
+    '                   fidelity_distance, harmonic_mean_distance, Mahalanobis, (+2 Overloads) ManhattanDistance, MinkowskiDistance
+    '                   (+2 Overloads) SquareDistance
     ' 
     ' 
     ' /********************************************************************************/

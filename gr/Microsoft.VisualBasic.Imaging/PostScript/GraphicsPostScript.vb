@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e36980e56afc3a1508913f687405548d, gr\Microsoft.VisualBasic.Imaging\PostScript\GraphicsPS.vb"
+﻿#Region "Microsoft.VisualBasic::2d129aa4ec27c6f433ef2c8466ed0e4e, gr\Microsoft.VisualBasic.Imaging\PostScript\GraphicsPostScript.vb"
 
     ' Author:
     ' 
@@ -34,16 +34,16 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 507
-    '    Code Lines: 385 (75.94%)
-    ' Comment Lines: 10 (1.97%)
+    '   Total Lines: 520
+    '    Code Lines: 396 (76.15%)
+    ' Comment Lines: 13 (2.50%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 112 (22.09%)
-    '     File Size: 20.29 KB
+    '   Blank Lines: 111 (21.35%)
+    '     File Size: 21.00 KB
 
 
-    '     Class GraphicsPS
+    '     Class GraphicsPostScript
     ' 
     '         Properties: Driver, RenderingOrigin, Size, TextContrast
     ' 
@@ -76,7 +76,10 @@ Imports Microsoft.VisualBasic.MIME.Html.CSS
 
 Namespace PostScript
 
-    Public Class GraphicsPS : Inherits IGraphics
+    ''' <summary>
+    ''' Graphics for create postscript 
+    ''' </summary>
+    Public Class GraphicsPostScript : Inherits IGraphics
 
         Public Overrides Property RenderingOrigin As Point
         Public Overrides Property TextContrast As Integer
@@ -88,7 +91,7 @@ Namespace PostScript
 
         Public Overrides ReadOnly Property Driver As Drivers
             Get
-                Return Drivers.PS
+                Return Drivers.PostScript
             End Get
         End Property
 
@@ -398,15 +401,20 @@ Namespace PostScript
         End Sub
 
         Public Overrides Sub DrawString(s As String, font As Font, brush As Brush, ByRef point As PointF)
-            Throw New NotImplementedException()
+            Call painting.Add(New Elements.Text With {
+                .font = New CSSFont(font, brush),
+                .location = point,
+                .rotation = 0,
+                .text = s
+            })
         End Sub
 
         Public Overrides Sub DrawString(s As String, font As Font, brush As Brush, layoutRectangle As RectangleF)
-            Throw New NotImplementedException()
+            Call DrawString(s, font, brush, layoutRectangle.Location)
         End Sub
 
         Public Overrides Sub DrawString(s As String, font As Font, brush As Brush, x As Single, y As Single)
-
+            Call DrawString(s, font, brush, New PointF(x, y))
         End Sub
 
         Public Overrides Sub ExcludeClip(rect As Rectangle)
@@ -462,19 +470,19 @@ Namespace PostScript
         End Sub
 
         Public Overrides Sub FillRectangle(brush As Brush, rect As Rectangle)
-            Throw New NotImplementedException()
+            Call painting.Add(New Elements.Rectangle(rect, DirectCast(brush, SolidBrush).Color))
         End Sub
 
         Public Overrides Sub FillRectangle(brush As Brush, rect As RectangleF)
-            Throw New NotImplementedException()
+            Call painting.Add(New Elements.Rectangle(rect, DirectCast(brush, SolidBrush).Color))
         End Sub
 
         Public Overrides Sub FillRectangle(brush As Brush, x As Integer, y As Integer, width As Integer, height As Integer)
-            Throw New NotImplementedException()
+            Call FillRectangle(brush, New Rectangle(x, y, width, height))
         End Sub
 
         Public Overrides Sub FillRectangle(brush As Brush, x As Single, y As Single, width As Single, height As Single)
-            Throw New NotImplementedException()
+            Call FillRectangle(brush, New RectangleF(x, y, width, height))
         End Sub
 
         Public Overrides Sub IntersectClip(rect As RectangleF)
@@ -546,19 +554,24 @@ Namespace PostScript
         End Function
 
         Public Overrides Function MeasureString(text As String, font As Font) As SizeF
-            Throw New NotImplementedException()
+            Return DriverLoad.MeasureTextSize(text, font)
         End Function
 
         Public Overrides Function MeasureString(text As String, font As Font, width As Integer) As SizeF
-            Throw New NotImplementedException()
+            Return DriverLoad.MeasureTextSize(text, font)
         End Function
 
         Public Overrides Function MeasureString(text As String, font As Font, layoutArea As SizeF) As SizeF
-            Throw New NotImplementedException()
+            Return DriverLoad.MeasureTextSize(text, font)
         End Function
 
         Public Overrides Sub DrawString(s As String, font As Font, brush As Brush, ByRef x As Single, ByRef y As Single, angle As Single)
-            Throw New NotImplementedException()
+            Call painting.Add(New Elements.Text With {
+                .font = New CSSFont(font, brush),
+                .location = New PointF(x, y),
+                .rotation = angle,
+                .text = s
+            })
         End Sub
 
         Public Overrides Function GetStringPath(s As String, rect As RectangleF, font As Font) As GraphicsPath

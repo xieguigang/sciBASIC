@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d7b33281a80aa492a269dfccdef639b4, gr\Microsoft.VisualBasic.Imaging\d3js\scale\linear.vb"
+﻿#Region "Microsoft.VisualBasic::91f28e736a1e3950fd4a1089ab7fe750, gr\Microsoft.VisualBasic.Imaging\d3js\scale\linear.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 161
-    '    Code Lines: 92 (57.14%)
-    ' Comment Lines: 48 (29.81%)
+    '   Total Lines: 168
+    '    Code Lines: 98 (58.33%)
+    ' Comment Lines: 48 (28.57%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 21 (13.04%)
-    '     File Size: 5.86 KB
+    '   Blank Lines: 22 (13.10%)
+    '     File Size: 6.05 KB
 
 
     '     Class LinearScale
