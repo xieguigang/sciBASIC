@@ -1,4 +1,5 @@
-﻿
+﻿Imports Microsoft.VisualBasic.Data.GraphTheory.Network
+
 Namespace Analysis.MorganFingerprint
 
     ''' <summary>
@@ -44,7 +45,60 @@ Namespace Analysis.MorganFingerprint
     ''' around it. This makes them effective for comparing the similarity of molecules based on their 
     ''' structural features.
     ''' </summary>
-    Public Module GraphMorganFingerprint
+    Public MustInherit Class GraphMorganFingerprint(Of V As IMorganAtom, E As IndexEdge)
 
-    End Module
+        ''' <summary>
+        ''' the size of the fingerprint data
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property FingerprintLength As Integer = 4096
+
+        Sub New(size As Integer)
+            FingerprintLength = size
+        End Sub
+
+        Public Function CalculateFingerprintCheckSum(Of G As MorganGraph(Of V, E))(struct As G, Optional radius As Integer = 3) As Byte()
+            Dim bits As BitArray = CalculateFingerprint(struct, radius)
+            Dim bytes = New Byte(FingerprintLength / 8 - 1) {}
+            bits.CopyTo(bytes, 0)
+            Return bytes
+        End Function
+
+        Public Function CalculateFingerprint(Of G As MorganGraph(Of V, E))(struct As G, Optional radius As Integer = 3) As BitArray
+            Dim atoms As V() = struct.Atoms
+
+            ' Initialize atom codes based on atom type
+            For i As Integer = 0 To struct.Atoms.Length - 1
+                atoms(i).Code = CULng(HashAtom(struct.Atoms(i)))
+                atoms(i).Index = i
+            Next
+
+            ' Perform iterations to expand the atom codes
+            For r As Integer = 0 To radius - 1
+                Dim newCodes As ULong() = New ULong(struct.Atoms.Length - 1) {}
+
+                For Each bound As E In struct.Graph
+                    newCodes(bound.U) = HashEdge(atoms, bound, flip:=False)
+                    newCodes(bound.V) = HashEdge(atoms, bound, flip:=True)
+                Next
+
+                For i As Integer = 0 To struct.Atoms.Length - 1
+                    atoms(i).Code = newCodes(i)
+                Next
+            Next
+
+            ' Generate the final fingerprint
+            Dim fingerprint As New BitArray(FingerprintLength)
+
+            For Each atom As IMorganAtom In atoms
+                Call fingerprint.Xor(position:=atom.Code Mod FingerprintLength)
+            Next
+
+            Return fingerprint
+        End Function
+
+        Protected MustOverride Function HashAtom(v As V) As Integer
+        Protected MustOverride Function HashEdge(atoms As V(), e As E, flip As Boolean) As ULong
+
+    End Class
 End Namespace

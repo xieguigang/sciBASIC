@@ -87,4 +87,13 @@ Public Module ByteStreamExtensions
     Public Function RotateRight(value As Integer, count As Integer) As Integer
         Return (value >> count) Or (value << (32 - count))
     End Function
+
+    <Extension>
+    Public Sub [Xor](ByRef fingerprint As BitArray, position As Integer)
+        If fingerprint.Get(position) Then
+            Call fingerprint.Set(position, False)
+        Else
+            Call fingerprint.Set(position, True)
+        End If
+    End Sub
 End Module
