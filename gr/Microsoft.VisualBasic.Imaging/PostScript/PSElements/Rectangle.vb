@@ -110,6 +110,7 @@ Namespace PostScript.Elements
             box = New RectangleF(scaleX(box.X), scaleY(box.Y), scaleX(box.Width), scaleY(box.Height))
             Dim rect As New Rectangle(box, shape.fill.TranslateColor)
             rect.shape.border = shape.border
+            rect.comment = comment
             Return rect
         End Function
 

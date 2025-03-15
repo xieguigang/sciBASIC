@@ -123,7 +123,8 @@ Namespace PostScript.Elements
             Dim b = shape.B
 
             Return New Line With {
-                .shape = New Shapes.Line(New PointF(scaleX(a.X), scaleY(a.Y)), New PointF(scaleX(b.X), scaleY(b.Y)), shape.Stroke)
+                .shape = New Shapes.Line(New PointF(scaleX(a.X), scaleY(a.Y)), New PointF(scaleX(b.X), scaleY(b.Y)), shape.Stroke),
+                .comment = comment
             }
         End Function
 

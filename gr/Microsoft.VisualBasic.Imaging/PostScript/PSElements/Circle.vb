@@ -99,7 +99,8 @@ Namespace PostScript.Elements
 
             Return New Circle With {
                 .stroke = stroke,
-                .shape = New Shapes.Circle(moveTo, O.Radius * 2, O.fill.TranslateColor)
+                .shape = New Shapes.Circle(moveTo, O.Radius * 2, O.fill.TranslateColor),
+                .comment = comment
             }
         End Function
 

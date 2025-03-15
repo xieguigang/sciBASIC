@@ -93,7 +93,8 @@ Namespace PostScript.Elements
                 .font = font,
                 .location = New PointF(scaleX(location.X), scaleY(location.Y)),
                 .rotation = rotation,
-                .text = text
+                .text = text,
+                .comment = comment
             }
         End Function
 

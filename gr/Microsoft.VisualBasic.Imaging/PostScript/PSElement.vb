@@ -156,7 +156,8 @@ Namespace PostScript
         Friend Overrides Function ScaleTo(scaleX As d3js.scale.LinearScale, scaleY As d3js.scale.LinearScale) As PSElement
             Return New PsComment With {
                 .binary = binary,
-                .text = text
+                .text = text,
+                .comment = comment
             }
         End Function
 

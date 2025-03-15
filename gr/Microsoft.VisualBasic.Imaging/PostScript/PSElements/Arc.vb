@@ -104,7 +104,8 @@ Namespace PostScript.Elements
                 .sweepAngle = sweepAngle,
                 .width = width,
                 .x = scaleX(x),
-                .y = scaleY(y)
+                .y = scaleY(y),
+                .comment = comment
             }
         End Function
 

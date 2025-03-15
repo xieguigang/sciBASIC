@@ -96,7 +96,8 @@ Namespace PostScript.Elements
                 .image = image,
                 .location = New PointF(scaleX(location.X), scaleY(location.Y)),
                 .scale = scale,
-                .size = size
+                .size = size,
+                .comment = comment
             }
         End Function
 
