@@ -78,6 +78,12 @@ Namespace PostScript
     ''' </summary>
     Public MustInherit Class PSElement
 
+        ''' <summary>
+        ''' comment text about this postscript element
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property comment As String
+
         Friend MustOverride Function GetXy() As PointF
 
         Friend MustOverride Sub WriteAscii(ps As Writer)

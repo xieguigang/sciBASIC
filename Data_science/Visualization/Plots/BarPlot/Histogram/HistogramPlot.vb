@@ -69,7 +69,7 @@ Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MIME.Html.CSS
 Imports Microsoft.VisualBasic.MIME.Html.Render
-Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
+Imports Microsoft.VisualBasic.Emit.Delegates
 
 
 #If NET48 Then
@@ -132,9 +132,17 @@ Namespace BarPlot.Histogram
                                      ann As NamedValue(Of Color),
                                      scaler As DataScaler,
                                      Optional alpha As Integer = 255,
-                                     Optional drawRect As Boolean = True)
+                                     Optional drawRect As Boolean = True,
+                                     Optional commentText As Boolean = False)
 
             Dim b As New SolidBrush(Color.FromArgb(alpha, ann.Value))
+            Dim writer As IElementCommentWriter = Nothing
+
+            If g.GetContextInfo IsNot Nothing AndAlso g.GetContextInfo.GetType.ImplementInterface(Of IElementCommentWriter) Then
+                writer = g.GetContextInfo
+            End If
+
+            commentText = commentText AndAlso Not writer Is Nothing
 
             For Each block As HistogramData In hist.data
                 Dim pos As PointF = scaler.Translate(block.x1, block.y)
@@ -148,6 +156,10 @@ Namespace BarPlot.Histogram
                 }
 
                 Call g.FillRectangle(b, rect)
+
+                If commentText Then
+                    Call writer.SetLastComment($"histogram bar of [{block.x1}~{block.x2}] frequency:{block.y} - serial:{ann.Name}")
+                End If
 
                 If drawRect Then
                     Call g.DrawRectangle(

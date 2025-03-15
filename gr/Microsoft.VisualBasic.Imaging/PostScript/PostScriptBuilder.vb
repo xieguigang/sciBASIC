@@ -70,7 +70,7 @@ Namespace PostScript
     ''' <summary>
     ''' A helper module for convert the postscript object as ASCII script text
     ''' </summary>
-    Public Class PostScriptBuilder : Implements Enumeration(Of PSElement)
+    Public Class PostScriptBuilder : Implements Enumeration(Of PSElement), IElementCommentWriter
 
         Dim paints As New List(Of PSElement)
 
@@ -203,5 +203,11 @@ Namespace PostScript
                 Yield element
             Next
         End Function
+
+        Public Sub SetLastComment(comment As String) Implements IElementCommentWriter.SetLastComment
+            If paints.Any Then
+                paints.Last.comment = comment
+            End If
+        End Sub
     End Class
 End Namespace
