@@ -194,7 +194,7 @@ Namespace Network
                 Loop
             Loop
 
-            Call Console.WriteLine($"sub-graph: {subnetwork.ToString}!")
+            Call VBDebugger.EchoLine($"sub-graph: {subnetwork.ToString}!")
 
             Return subnetwork
         End Function
