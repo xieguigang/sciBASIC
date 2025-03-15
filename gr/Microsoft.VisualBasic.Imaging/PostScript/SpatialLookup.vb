@@ -27,21 +27,23 @@ Namespace PostScript
             Dim endX As UInteger = HashX(pos.X + size.Width)
             Dim startY As UInteger = HashY(pos.Y)
             Dim endY As UInteger = HashY(pos.Y + size.Height)
+            Dim cX = CUInt((startX + endX) / 2)
+            Dim cY = CUInt((startY + endY) / 2)
 
-            For x As UInteger = startX To endX
-                If Not grid.ContainsKey(x) Then
-                    Call grid.Add(x, New Dictionary(Of UInteger, List(Of PSElement)))
+            For Each xy As UInteger() In New UInteger()() {
+                    New UInteger() {startX, startY}, New UInteger() {cX, startY}, New UInteger() {endX, startY},
+                    New UInteger() {startX, cY}, New UInteger() {cX, cY}, New UInteger() {endX, cY},
+                    New UInteger() {startX, endY}, New UInteger() {cX, endY}, New UInteger() {endX, endY}
+                }
+
+                If Not grid.ContainsKey(xy(0)) Then
+                    Call grid.Add(xy(0), New Dictionary(Of UInteger, List(Of PSElement)))
+                End If
+                If Not grid(xy(0)).ContainsKey(xy(1)) Then
+                    Call grid(xy(0)).Add(xy(1), New List(Of PSElement))
                 End If
 
-                Dim col = grid(key:=x)
-
-                For y As UInteger = startY To endY
-                    If Not col.ContainsKey(y) Then
-                        Call col.Add(y, New List(Of PSElement))
-                    End If
-
-                    Call col(key:=y).Add(shape)
-                Next
+                Call grid(xy(0))(xy(1)).Add(shape)
             Next
         End Sub
 
