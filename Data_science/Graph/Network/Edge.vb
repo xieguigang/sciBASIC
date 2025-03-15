@@ -63,4 +63,19 @@ Namespace Network
         Sub New()
         End Sub
     End Class
+
+    Public Interface IndexEdge
+
+        ''' <summary>
+        ''' index of the vertex u source
+        ''' </summary>
+        ''' <returns></returns>
+        Property U As Integer
+        ''' <summary>
+        ''' index of the vertex v target
+        ''' </summary>
+        ''' <returns></returns>
+        Property V As Integer
+
+    End Interface
 End Namespace
