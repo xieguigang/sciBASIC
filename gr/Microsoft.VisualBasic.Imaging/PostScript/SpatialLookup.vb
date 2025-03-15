@@ -57,6 +57,25 @@ Namespace PostScript
             Return CUInt(std.Floor(y / gridSize.Height))
         End Function
 
+        Public Function FindCommentShapeByPoint(x As Single, y As Single) As PSElement
+            Dim hX As UInteger = HashX(x)
+            Dim hY As UInteger = HashY(y)
+
+            If grid.ContainsKey(hX) Then
+                Dim col = grid(key:=hX)
+
+                If col.ContainsKey(hY) Then
+                    Return col(key:=hY) _
+                        .Where(Function(s)
+                                   Return Not s.comment.StringEmpty(, True)
+                               End Function) _
+                        .LastOrDefault
+                End If
+            End If
+
+            Return Nothing
+        End Function
+
         Public Function FindShapeByPoint(x As Single, y As Single) As PSElement
             Dim hX As UInteger = HashX(x)
             Dim hY As UInteger = HashY(y)
