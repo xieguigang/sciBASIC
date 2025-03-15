@@ -59,27 +59,18 @@ Namespace MinimumSpanningTree
 
     Friend Class DJSet
 
-        Private rootField As Integer
+        Public Property Root As Integer
+
         Private [set] As HashSet(Of Integer)
 
         Public Sub New(root As Integer)
             [set] = New HashSet(Of Integer)()
-            rootField = root
+            _Root = root
         End Sub
 
         Public Sub add(i As Integer)
             [set].Add(i)
         End Sub
-
-
-        Public Property Root As Integer
-            Get
-                Return rootField
-            End Get
-            Set(value As Integer)
-                rootField = value
-            End Set
-        End Property
 
         Public Sub print()
             Dim firstTime = True
