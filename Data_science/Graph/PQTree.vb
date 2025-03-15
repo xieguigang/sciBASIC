@@ -90,8 +90,15 @@ Public Class PQTree
     Public nodeIndex As Integer ' if the nodes int he PQ-tree represent nodes in another graph,
     ' this is used to store their indexes
     Public nodeType As Integer
-    Public direction As Integer ' left/right
-    Public label As Integer ' empty, partial, full
+
+    ''' <summary>
+    ''' left/right
+    ''' </summary>
+    Public direction As Integer
+    ''' <summary>
+    ''' empty, partial, full
+    ''' </summary>
+    Public label As Integer
     Public children As List(Of PQTree)
     Public parent As PQTree
 

@@ -54,6 +54,10 @@
 
 Namespace Network
 
+    ''' <summary>
+    ''' interaction edge is a tuple of two node vertex object
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
     Public Class Edge(Of T As Node) : Inherits GraphTheory.Edge(Of T)
 
         Sub New()

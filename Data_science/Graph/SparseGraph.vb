@@ -126,6 +126,9 @@ Public Class SparseGraph : Implements ISparseGraph
 
     End Class
 
+    ''' <summary>
+    ''' interaction edge tuple of vertex reference id
+    ''' </summary>
     Public Interface IInteraction
 
         ''' <summary>
