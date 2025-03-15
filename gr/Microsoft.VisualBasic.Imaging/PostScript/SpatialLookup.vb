@@ -10,7 +10,7 @@ Namespace PostScript
         ReadOnly gridSize As SizeF
         ReadOnly grid As New Dictionary(Of UInteger, Dictionary(Of UInteger, List(Of PSElement)))
 
-        Public Sub New(width As Single, height As Single, Optional numGrids As Integer = 10)
+        Public Sub New(width As Single, height As Single, Optional numGrids As Integer = 5)
             Me.gridSize = New SizeF(width / numGrids, height / numGrids)
         End Sub
 
