@@ -115,7 +115,7 @@ Namespace PostScript.Elements
         End Sub
 
         Public Overrides Function ToString() As String
-            Return $"({shape.A.X},{shape.A.Y}) -> line({shape.B.X},{shape.B.Y}) [{shape.Stroke.fill}]"
+            Return $"({shape.A.X.ToString("F1")},{shape.A.Y.ToString("F1")}) -> line({shape.B.X.ToString("F1")},{shape.B.Y.ToString("F1")}) [{shape.Stroke.fill}]"
         End Function
 
         Friend Overrides Function ScaleTo(scaleX As d3js.scale.LinearScale, scaleY As d3js.scale.LinearScale) As PSElement

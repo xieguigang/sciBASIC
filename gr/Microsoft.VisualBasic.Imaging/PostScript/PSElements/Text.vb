@@ -84,7 +84,7 @@ Namespace PostScript.Elements
         End Sub
 
         Public Overrides Function ToString() As String
-            Return $"({location.X},{location.Y}) {text} [{font.color}]"
+            Return $"({location.X.ToString("F1")},{location.Y.ToString("F1")}) text({text}) [{font.color}]"
         End Function
 
         Friend Overrides Function ScaleTo(scaleX As d3js.scale.LinearScale, scaleY As d3js.scale.LinearScale) As PSElement

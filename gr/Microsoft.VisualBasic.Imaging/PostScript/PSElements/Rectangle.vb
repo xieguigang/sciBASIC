@@ -102,7 +102,7 @@ Namespace PostScript.Elements
         End Sub
 
         Public Overrides Function ToString() As String
-            Return $"({shape.Location.X},{shape.Location.Y}) rectangle(fill={shape.fill}, size=[{shape.Size.Width},{shape.Size.Height}])"
+            Return $"({shape.Location.X.ToString("F1")},{shape.Location.Y.ToString("F1")}) rectangle(fill={shape.fill}, size=[{shape.Size.Width.ToString("F1")},{shape.Size.Height.ToString("F1")}])"
         End Function
 
         Friend Overrides Function ScaleTo(scaleX As d3js.scale.LinearScale, scaleY As d3js.scale.LinearScale) As PSElement

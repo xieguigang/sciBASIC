@@ -89,6 +89,10 @@ Namespace PostScript.Elements
             End If
         End Sub
 
+        Public Overrides Function ToString() As String
+            Return $"({center.X.ToString("F1")},{center.Y.ToString("F1")}) circle(radius={shape.Radius.ToString("F2")}) [{shape.fill}]"
+        End Function
+
         Friend Overrides Function ScaleTo(scaleX As d3js.scale.LinearScale, scaleY As d3js.scale.LinearScale) As PSElement
             Dim O As Shapes.Circle = shape
             Dim moveTo As New PointF(scaleX(O.Location.X), scaleY(O.Location.Y))
