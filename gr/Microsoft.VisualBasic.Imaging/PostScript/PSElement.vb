@@ -85,6 +85,7 @@ Namespace PostScript
         Public Property comment As String
 
         Friend MustOverride Function GetXy() As PointF
+        Friend MustOverride Function GetSize() As SizeF
 
         Friend MustOverride Sub WriteAscii(ps As Writer)
         Friend MustOverride Sub Paint(g As IGraphics)
