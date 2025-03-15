@@ -70,7 +70,15 @@ Namespace PostScript.Elements
         ''' </summary>
         ''' <returns></returns>
         Public Property image As DataURI
+        ''' <summary>
+        ''' the image dimension size
+        ''' </summary>
+        ''' <returns></returns>
         Public Property size As Size
+        ''' <summary>
+        ''' the image drawing size
+        ''' </summary>
+        ''' <returns></returns>
         Public Property scale As SizeF
         Public Property location As PointF
 
@@ -80,7 +88,7 @@ Namespace PostScript.Elements
         End Sub
 
         Friend Overrides Sub Paint(g As IGraphics)
-            Call g.DrawImage(DriverLoad.LoadFromStream(image.ToStream), location.X, location.Y, size.Width, size.Height)
+            Call g.DrawImage(DriverLoad.LoadFromStream(image.ToStream), location.X, location.Y, scale.Width, scale.Height)
         End Sub
 
         Friend Overrides Function ScaleTo(scaleX As d3js.scale.LinearScale, scaleY As d3js.scale.LinearScale) As PSElement
@@ -94,6 +102,10 @@ Namespace PostScript.Elements
 
         Friend Overrides Function GetXy() As PointF
             Return location
+        End Function
+
+        Friend Overrides Function GetSize() As SizeF
+            Return scale
         End Function
     End Class
 End Namespace

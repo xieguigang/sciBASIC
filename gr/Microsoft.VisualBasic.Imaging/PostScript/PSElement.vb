@@ -163,6 +163,10 @@ Namespace PostScript
         Friend Overrides Function GetXy() As PointF
             Return Nothing
         End Function
+
+        Friend Overrides Function GetSize() As SizeF
+            Return Nothing
+        End Function
     End Class
 
 End Namespace

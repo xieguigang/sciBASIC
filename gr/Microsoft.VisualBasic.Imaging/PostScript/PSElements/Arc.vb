@@ -111,5 +111,9 @@ Namespace PostScript.Elements
         Friend Overrides Function GetXy() As PointF
             Return New PointF(x, y)
         End Function
+
+        Friend Overrides Function GetSize() As SizeF
+            Return New SizeF(width, height)
+        End Function
     End Class
 End Namespace

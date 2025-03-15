@@ -63,6 +63,7 @@
 #End Region
 
 Imports System.Drawing
+Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.MIME.Html.CSS
 Imports Microsoft.VisualBasic.MIME.Html.Render
 
@@ -88,6 +89,13 @@ Namespace PostScript.Elements
 
         Friend Overrides Function GetXy() As PointF
             Return New PointF(points.Average(Function(p) p.X), points.Average(Function(p) p.Y))
+        End Function
+
+        Friend Overrides Function GetSize() As SizeF
+            Dim x As New List(Of Single)
+            Dim y As New List(Of Single)
+
+            Return New SizeF(New DoubleRange(x).Length, New DoubleRange(y).Length)
         End Function
     End Class
 

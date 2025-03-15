@@ -155,6 +155,10 @@ Namespace ComponentModel.Ranges.Model
             Call Me.New(data:=vector.ToArray)
         End Sub
 
+        Sub New(vector As IEnumerable(Of Single))
+            Call Me.New(data:=vector.Select(Function(f) CDbl(f)).ToArray)
+        End Sub
+
         Sub New(vector As IEnumerable(Of Integer))
             With vector.ToArray
                 If .Length = 0 Then

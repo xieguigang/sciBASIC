@@ -57,6 +57,7 @@
 #End Region
 
 Imports System.Drawing
+Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.MIME.Html.CSS
 Imports Microsoft.VisualBasic.MIME.Html.Render
 
@@ -98,6 +99,10 @@ Namespace PostScript.Elements
 
         Friend Overrides Function GetXy() As PointF
             Return location
+        End Function
+
+        Friend Overrides Function GetSize() As SizeF
+            Return DriverLoad.MeasureTextSize(text, New CSSEnvirnment(1000, 1000).GetFont(font))
         End Function
     End Class
 
