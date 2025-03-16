@@ -96,7 +96,7 @@ Namespace Boids.Viewer
             ' pictureBox1.Image?.Dispose()
             pictureBox1.Image = RenderField(field)
             counter.Mark("gdi+ rendering")
-            Text = counter.TaskSequantialCounterReport
+            Text = counter.TaskSequentialCounterReport
         End Sub
 
     End Class

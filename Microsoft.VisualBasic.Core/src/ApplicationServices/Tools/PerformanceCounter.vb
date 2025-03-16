@@ -133,7 +133,7 @@ Namespace ApplicationServices
             Return spans.AsEnumerable
         End Function
 
-        Public Function TaskSequantialCounterReport() As String
+        Public Function TaskSequentialCounterReport() As String
             Dim report As New List(Of String)
 
             For Each flag As TimeCounter In Me.GetCounters
