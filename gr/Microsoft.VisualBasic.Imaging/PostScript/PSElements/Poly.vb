@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::02ca016d3f9142b0008b684223f90aa1, gr\Microsoft.VisualBasic.Imaging\PostScript\PSElements\Poly.vb"
+﻿#Region "Microsoft.VisualBasic::c51d914874b1dc3092f6cc7f420b3dda, gr\Microsoft.VisualBasic.Imaging\PostScript\PSElements\Poly.vb"
 
     ' Author:
     ' 
@@ -34,20 +34,20 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 61
-    '    Code Lines: 45 (73.77%)
+    '   Total Lines: 73
+    '    Code Lines: 54 (73.97%)
     ' Comment Lines: 0 (0.00%)
     '    - Xml Docs: 0.00%
     ' 
-    '   Blank Lines: 16 (26.23%)
-    '     File Size: 1.93 KB
+    '   Blank Lines: 19 (26.03%)
+    '     File Size: 2.41 KB
 
 
     '     Class Polygon
     ' 
     '         Properties: fill, points, stroke
     ' 
-    '         Function: ScaleTo
+    '         Function: GetSize, GetXy, ScaleTo
     ' 
     '         Sub: Paint, WriteAscii
     ' 

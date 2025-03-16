@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3a2c7f17a7800fa06736f4685b007b58, gr\Microsoft.VisualBasic.Imaging\PostScript\PSElements\Rectangle.vb"
+﻿#Region "Microsoft.VisualBasic::705a5ec8142e2148722cc0b016571142, gr\Microsoft.VisualBasic.Imaging\PostScript\PSElements\Rectangle.vb"
 
     ' Author:
     ' 
@@ -34,20 +34,20 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 58
-    '    Code Lines: 41 (70.69%)
-    ' Comment Lines: 5 (8.62%)
+    '   Total Lines: 67
+    '    Code Lines: 48 (71.64%)
+    ' Comment Lines: 5 (7.46%)
     '    - Xml Docs: 0.00%
     ' 
-    '   Blank Lines: 12 (20.69%)
-    '     File Size: 2.16 KB
+    '   Blank Lines: 14 (20.90%)
+    '     File Size: 2.48 KB
 
 
     '     Class Rectangle
     ' 
     '         Constructor: (+3 Overloads) Sub New
     ' 
-    '         Function: ScaleTo, ToString
+    '         Function: GetSize, GetXy, ScaleTo, ToString
     ' 
     '         Sub: Paint, WriteAscii
     ' 

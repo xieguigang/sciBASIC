@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::224514d95b523dffd800775d954a4864, Data_science\Graph\PQTree.vb"
+﻿#Region "Microsoft.VisualBasic::f451c91ff58d9d443ce88e8a245d3bda, Data_science\Graph\PQTree.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 966
-    '    Code Lines: 809 (83.75%)
-    ' Comment Lines: 90 (9.32%)
-    '    - Xml Docs: 3.33%
+    '   Total Lines: 973
+    '    Code Lines: 809 (83.14%)
+    ' Comment Lines: 96 (9.87%)
+    '    - Xml Docs: 9.38%
     ' 
-    '   Blank Lines: 67 (6.94%)
-    '     File Size: 43.83 KB
+    '   Blank Lines: 68 (6.99%)
+    '     File Size: 43.92 KB
 
 
     ' Class PQTree

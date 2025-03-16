@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0e75b50ef76a74078bdbac498b6cccc1, Data_science\Graph\Network\Edge.vb"
+﻿#Region "Microsoft.VisualBasic::585f212cba4963436ef4d6475a168109, Data_science\Graph\Network\Edge.vb"
 
     ' Author:
     ' 
@@ -34,18 +34,22 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 8
-    '    Code Lines: 6 (75.00%)
-    ' Comment Lines: 0 (0.00%)
-    '    - Xml Docs: 0.00%
+    '   Total Lines: 27
+    '    Code Lines: 10 (37.04%)
+    ' Comment Lines: 12 (44.44%)
+    '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 2 (25.00%)
-    '     File Size: 158 B
+    '   Blank Lines: 5 (18.52%)
+    '     File Size: 665 B
 
 
     '     Class Edge
     ' 
     '         Constructor: (+1 Overloads) Sub New
+    ' 
+    '     Interface IndexEdge
+    ' 
+    '         Properties: U, V
     ' 
     ' 
     ' /********************************************************************************/

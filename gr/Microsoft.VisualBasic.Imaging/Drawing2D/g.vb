@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::340438475cf552c6950c804c1063774b, gr\Microsoft.VisualBasic.Imaging\Drawing2D\g.vb"
+﻿#Region "Microsoft.VisualBasic::3e6e643e5d079ed21f99feb561c73d07, gr\Microsoft.VisualBasic.Imaging\Drawing2D\g.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 88.30%
     ' 
     '   Blank Lines: 39 (11.96%)
-    '     File Size: 13.43 KB
+    '     File Size: 13.47 KB
 
 
     '     Delegate Sub

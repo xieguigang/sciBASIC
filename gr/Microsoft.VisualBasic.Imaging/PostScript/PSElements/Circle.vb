@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c271c0d41a6bea00b3895381f8333ad0, gr\Microsoft.VisualBasic.Imaging\PostScript\PSElements\Circle.vb"
+﻿#Region "Microsoft.VisualBasic::a749bde3427c010c08091d360770f368, gr\Microsoft.VisualBasic.Imaging\PostScript\PSElements\Circle.vb"
 
     ' Author:
     ' 
@@ -34,20 +34,20 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 44
-    '    Code Lines: 34 (77.27%)
+    '   Total Lines: 57
+    '    Code Lines: 44 (77.19%)
     ' Comment Lines: 0 (0.00%)
     '    - Xml Docs: 0.00%
     ' 
-    '   Blank Lines: 10 (22.73%)
-    '     File Size: 1.52 KB
+    '   Blank Lines: 13 (22.81%)
+    '     File Size: 2.00 KB
 
 
     '     Class Circle
     ' 
     '         Properties: center, stroke
     ' 
-    '         Function: ScaleTo
+    '         Function: GetSize, GetXy, ScaleTo, ToString
     ' 
     '         Sub: Paint, WriteAscii
     ' 

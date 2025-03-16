@@ -1,55 +1,55 @@
-﻿#Region "Microsoft.VisualBasic::30e5c911930e258ea4058e0de5192ced, Data_science\Graph\Analysis\PQDijkstra\Example.vb"
+﻿#Region "Microsoft.VisualBasic::40b498dea6a0295ab4f6f3078ad544d9, Data_science\Graph\Analysis\PQDijkstra\Finder.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 73
-'    Code Lines: 52 (71.23%)
-' Comment Lines: 8 (10.96%)
-'    - Xml Docs: 75.00%
-' 
-'   Blank Lines: 13 (17.81%)
-'     File Size: 2.54 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Class Finder
-' 
-'         Constructor: (+1 Overloads) Sub New
-'         Function: getInternodeTraversalCost, GetNearbyNodes, GetRelativePosition
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 74
+    '    Code Lines: 51 (68.92%)
+    ' Comment Lines: 8 (10.81%)
+    '    - Xml Docs: 75.00%
+    ' 
+    '   Blank Lines: 15 (20.27%)
+    '     File Size: 2.53 KB
+
+
+    '     Class Finder
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    '         Function: getInternodeTraversalCost, GetNearbyNodes, GetRelativePosition
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

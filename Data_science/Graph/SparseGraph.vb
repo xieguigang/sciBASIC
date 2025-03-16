@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bc5eec77d1531d7f787688674e231b5a, Data_science\Graph\SparseGraph.vb"
+﻿#Region "Microsoft.VisualBasic::ca9e64b832c346c6bd63d6800b4f35c8, Data_science\Graph\SparseGraph.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 156
-    '    Code Lines: 111 (71.15%)
-    ' Comment Lines: 13 (8.33%)
+    '   Total Lines: 159
+    '    Code Lines: 111 (69.81%)
+    ' Comment Lines: 16 (10.06%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 32 (20.51%)
-    '     File Size: 4.77 KB
+    '   Blank Lines: 32 (20.13%)
+    '     File Size: 4.86 KB
 
 
     ' Class SparseGraph

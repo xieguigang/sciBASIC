@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6673940582e8973536728f601ff5cfe0, gr\Microsoft.VisualBasic.Imaging\PostScript\PSElements\Text.vb"
+﻿#Region "Microsoft.VisualBasic::d98189869b81cc2c092923fa4428a379, gr\Microsoft.VisualBasic.Imaging\PostScript\PSElements\Text.vb"
 
     ' Author:
     ' 
@@ -34,20 +34,20 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 42
-    '    Code Lines: 33 (78.57%)
+    '   Total Lines: 52
+    '    Code Lines: 41 (78.85%)
     ' Comment Lines: 0 (0.00%)
     '    - Xml Docs: 0.00%
     ' 
-    '   Blank Lines: 9 (21.43%)
-    '     File Size: 1.46 KB
+    '   Blank Lines: 11 (21.15%)
+    '     File Size: 1.86 KB
 
 
     '     Class Text
     ' 
     '         Properties: font, location, rotation, text
     ' 
-    '         Function: ScaleTo, ToString
+    '         Function: GetSize, GetXy, ScaleTo, ToString
     ' 
     '         Sub: Paint, WriteAscii
     ' 

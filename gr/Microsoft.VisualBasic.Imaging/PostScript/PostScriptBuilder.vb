@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::505c2d8beb72fdda931b1dfdf5fd1369, gr\Microsoft.VisualBasic.Imaging\PostScript\PostScriptBuilder.vb"
+﻿#Region "Microsoft.VisualBasic::925ae2268d245273120507bebc043544, gr\Microsoft.VisualBasic.Imaging\PostScript\PostScriptBuilder.vb"
 
     ' Author:
     ' 
@@ -34,22 +34,24 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 137
-    '    Code Lines: 91 (66.42%)
-    ' Comment Lines: 25 (18.25%)
+    '   Total Lines: 155
+    '    Code Lines: 106 (68.39%)
+    ' Comment Lines: 25 (16.13%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 21 (15.33%)
-    '     File Size: 5.40 KB
+    '   Blank Lines: 24 (15.48%)
+    '     File Size: 5.95 KB
 
 
     '     Class PostScriptBuilder
+    ' 
+    '         Properties: height, width
     ' 
     '         Constructor: (+2 Overloads) Sub New
     ' 
     '         Function: GenericEnumerator, GetGdiPlusRasterImageResource, MakePaint, Resize, ToString
     ' 
-    '         Sub: Add, BuildString, Clear, MakePaint
+    '         Sub: Add, BuildString, Clear, MakePaint, SetLastComment
     ' 
     ' 
     ' /********************************************************************************/

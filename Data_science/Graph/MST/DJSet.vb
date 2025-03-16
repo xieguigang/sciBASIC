@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1182f0740c05f067761940c6d438ae55, Data_science\Graph\MST\DJSet.vb"
+﻿#Region "Microsoft.VisualBasic::f19750d7227979e657980b345226860e, Data_science\Graph\MST\DJSet.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 43
-    '    Code Lines: 34 (79.07%)
+    '   Total Lines: 34
+    '    Code Lines: 26 (76.47%)
     ' Comment Lines: 0 (0.00%)
     '    - Xml Docs: 0.00%
     ' 
-    '   Blank Lines: 9 (20.93%)
-    '     File Size: 1.02 KB
+    '   Blank Lines: 8 (23.53%)
+    '     File Size: 796 B
 
 
     '     Class DJSet

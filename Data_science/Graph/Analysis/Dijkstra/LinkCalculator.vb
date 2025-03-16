@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::501d840aeedf2f0300b14221d9165c2b, Data_science\Graph\Analysis\Dijkstra\LinkCalculator.vb"
+﻿#Region "Microsoft.VisualBasic::8a6a0f7216f931dc7a6ec2535b91403f, Data_science\Graph\Analysis\Dijkstra\LinkCalculator.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 86.11%
     ' 
     '   Blank Lines: 47 (20.43%)
-    '     File Size: 7.96 KB
+    '     File Size: 7.94 KB
 
 
     '     Class Neighbour
