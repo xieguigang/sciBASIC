@@ -137,7 +137,7 @@ Namespace ApplicationServices
             Dim report As New List(Of String)
 
             For Each flag As TimeCounter In Me.GetCounters
-                Call report.Add($"[{flag.task}]{StringFormats.ReadableElapsedTime(flag.span1)}")
+                Call report.Add($"[{flag.task}] {StringFormats.ReadableElapsedTime(flag.span1)}")
             Next
 
             Return report.JoinBy(" -> ")
