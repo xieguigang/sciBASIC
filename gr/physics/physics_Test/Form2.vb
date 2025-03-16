@@ -55,6 +55,7 @@
 
 Imports System.Drawing
 Imports System.Windows.Forms
+Imports Microsoft.VisualBasic.ApplicationServices
 Imports Microsoft.VisualBasic.Imaging.Physics.Boids
 Imports Microsoft.VisualBasic.Parallel
 
@@ -86,10 +87,16 @@ Namespace Boids.Viewer
             field = New Field(pictureBox1.Width, pictureBox1.Height, 10000)
         End Sub
 
+        Dim counter As New PerformanceCounter
+
         Private Sub timer1_Tick(sender As Object, e As EventArgs) Handles timer1.Tick
+            counter.Set()
             field.Advance()
+            counter.Mark("physics simulation")
             ' pictureBox1.Image?.Dispose()
             pictureBox1.Image = RenderField(field)
+            counter.Mark("gdi+ rendering")
+            Text = counter.TaskSequantialCounterReport
         End Sub
 
     End Class

@@ -133,6 +133,16 @@ Namespace ApplicationServices
             Return spans.AsEnumerable
         End Function
 
+        Public Function TaskSequantialCounterReport() As String
+            Dim report As New List(Of String)
+
+            For Each flag As TimeCounter In Me.GetCounters
+                Call report.Add($"[{flag.task}]{StringFormats.ReadableElapsedTime(flag.span1)}")
+            Next
+
+            Return report.JoinBy(" -> ")
+        End Function
+
         Public Overrides Function ToString() As String
             Return $"{spans.Count} samples, total time {StringFormats.ReadableElapsedTime(spans.Last.span0.TotalMilliseconds)}"
         End Function
@@ -142,7 +152,15 @@ Namespace ApplicationServices
 
         Public Property task As String
         Public Property start As Date
+        ''' <summary>
+        ''' time interval span from the begining
+        ''' </summary>
+        ''' <returns></returns>
         Public Property span0 As TimeSpan
+        ''' <summary>
+        ''' time interval span since from the last checkpoint
+        ''' </summary>
+        ''' <returns></returns>
         Public Property span1 As TimeSpan
 
         Public Overrides Function ToString() As String
