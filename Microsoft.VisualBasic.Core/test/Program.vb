@@ -55,6 +55,8 @@ Imports System
 
 Module Program
     Sub Main(args As String())
+        Call numberParserTest.Main1()
+
         Call logfiletest.readerTest()
         Call group_test.RunGroup()
 

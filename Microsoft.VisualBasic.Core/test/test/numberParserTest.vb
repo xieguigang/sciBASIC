@@ -75,6 +75,8 @@ Module numberParserTest
 
     Sub Main1()
 
+        Call Console.WriteLine("6.24551029215526E-06".IsNumeric)
+
         Call hexTest()
 
         Dim dbl1 = "-4.6465E+65"

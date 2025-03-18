@@ -178,7 +178,7 @@ Public Module PrimitiveParser
                         dotCheck = True
                     End If
                 ElseIf c = "E"c OrElse c = "e"c Then
-                    Return IsInteger(num, i + 1)
+                    Return IsInteger(num, i + 1, checkLong:=False)
                 Else
                     Return False
                 End If
@@ -203,7 +203,7 @@ Public Module PrimitiveParser
     ''' this function also checks for the negative integer/long value
     ''' </remarks>
     <Extension>
-    Public Function IsInteger(num As String, Optional offset As Integer = 0) As Boolean
+    Public Function IsInteger(num As String, Optional offset As Integer = 0, Optional checkLong As Boolean = True) As Boolean
         Dim c As Char
 
         If num Is Nothing OrElse num = "" Then
@@ -239,7 +239,7 @@ Public Module PrimitiveParser
                 ' may be long
                 Return True
             End If
-        ElseIf num.Length > 10 Then
+        ElseIf checkLong AndAlso num.Length > 10 Then
             ' is long
             Return False
         End If

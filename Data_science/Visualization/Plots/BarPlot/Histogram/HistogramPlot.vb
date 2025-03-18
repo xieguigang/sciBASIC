@@ -136,11 +136,7 @@ Namespace BarPlot.Histogram
                                      Optional commentText As Boolean = False)
 
             Dim b As New SolidBrush(Color.FromArgb(alpha, ann.Value))
-            Dim writer As IElementCommentWriter = Nothing
-
-            If g.GetContextInfo IsNot Nothing AndAlso g.GetContextInfo.GetType.ImplementInterface(Of IElementCommentWriter) Then
-                writer = g.GetContextInfo
-            End If
+            Dim writer As IElementCommentWriter = g.CheckElementWriter
 
             commentText = commentText AndAlso Not writer Is Nothing
 

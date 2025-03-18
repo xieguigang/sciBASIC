@@ -100,7 +100,7 @@ Public Module FastLoader
         End If
 
         Do While Not (line = read.ReadLine) Is Nothing
-            tokens = line.Split(delimiter)
+            tokens = Tokenizer.CharsParser(line, delimiter).ToArray
 
             If rowHeader Then
                 rowHeaders.Add(tokens(Scan0))
@@ -131,7 +131,7 @@ Public Module FastLoader
     ''' <returns></returns>
     <Extension>
     Private Function ParseFeature(data As List(Of String), name As String) As FeatureVector
-        Dim type As Type = DataImports.SampleForType(data)
+        Dim type As Type = DataImports.SampleForType(data, checkNullFactor:=True)
         Dim parser = type.ParseVector
         Dim array As Array = parser(data)
 

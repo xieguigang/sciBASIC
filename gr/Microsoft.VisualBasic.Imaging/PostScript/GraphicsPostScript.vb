@@ -450,15 +450,31 @@ Namespace PostScript
         End Sub
 
         Public Overrides Sub FillPie(brush As Brush, rect As Rectangle, startAngle As Single, sweepAngle As Single)
-            Throw New NotImplementedException()
+            Call painting.Add(New Elements.Pie With {
+                .height = rect.Height,
+                .startAngle = startAngle,
+                .sweepAngle = sweepAngle,
+                .width = rect.Width,
+                .y = rect.Y,
+                .x = rect.X,
+                .fill = DirectCast(brush, SolidBrush).Color.ToHtmlColor
+            })
         End Sub
 
         Public Overrides Sub FillPie(brush As Brush, x As Integer, y As Integer, width As Integer, height As Integer, startAngle As Integer, sweepAngle As Integer)
-            Throw New NotImplementedException()
+            Call FillPie(brush, CSng(x), CSng(y), CSng(width), CSng(height), CSng(startAngle), CSng(sweepAngle))
         End Sub
 
         Public Overrides Sub FillPie(brush As Brush, x As Single, y As Single, width As Single, height As Single, startAngle As Single, sweepAngle As Single)
-            Throw New NotImplementedException()
+            Call painting.Add(New Elements.Pie With {
+                .height = height,
+                .startAngle = startAngle,
+                .sweepAngle = sweepAngle,
+                .width = width,
+                .y = y,
+                .x = x,
+                .fill = DirectCast(brush, SolidBrush).Color.ToHtmlColor
+            })
         End Sub
 
         Public Overrides Sub FillPolygon(brush As Brush, points() As Point)

@@ -540,7 +540,9 @@ Public Module VectorExtensions
     ''' <param name="array">要搜索的从零开始的一维数组。</param>
     ''' <param name="o">要在 array 中查找的对象。</param>
     ''' <returns>如果在整个 array 中找到 value 的第一个匹配项，则为该项的从零开始的索引；否则为 -1。</returns>
-    ''' 
+    ''' <remarks>
+    ''' this function returns -1 always if the given array is nothing
+    ''' </remarks>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
     Public Function IndexOf(Of T)(array As T(), o As T) As Integer

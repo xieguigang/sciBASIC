@@ -260,7 +260,7 @@ Namespace Graphic
             End If
         End Sub
 
-        Protected Sub DrawMainTitle(g As IGraphics, plotRegion As Rectangle, Optional offsetFactor As Double = 1.125)
+        Protected Sub DrawMainTitle(g As IGraphics, plotRegion As Rectangle, Optional offsetFactor As Double = 1.125, Optional commentText As Boolean = False)
             If Not main.StringEmpty Then
                 Dim css As CSSEnvirnment = g.LoadEnvironment
                 Dim fontOfTitle As Font = css.GetFont(CSSFont.TryParse(theme.mainCSS))
@@ -285,6 +285,14 @@ Namespace Graphic
                     Call DrawMultipleLineTitle(g, plotRegion, fontOfTitle, color, maxChars, offsetFactor)
                 Else
                     Call g.DrawString(main, fontOfTitle, color, position)
+                End If
+
+                If commentText Then
+                    Dim writer As IElementCommentWriter = g.CheckElementWriter
+
+                    If Not writer Is Nothing Then
+                        Call writer.SetLastComment($"main title: {main}")
+                    End If
                 End If
             End If
         End Sub

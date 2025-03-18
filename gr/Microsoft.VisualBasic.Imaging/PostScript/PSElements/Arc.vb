@@ -65,6 +65,46 @@ Imports std = System.Math
 
 Namespace PostScript.Elements
 
+    Public Class Pie : Inherits PSElement
+
+        Public Property x As Single
+        Public Property y As Single
+        Public Property width As Single
+        Public Property height As Single
+        Public Property startAngle As Single
+        Public Property sweepAngle As Single
+        Public Property fill As String
+
+        Friend Overrides Sub WriteAscii(ps As Writer)
+            Throw New NotImplementedException()
+        End Sub
+
+        Friend Overrides Sub Paint(g As IGraphics)
+            Call g.FillPie(fill.GetBrush, x, y, width, height, startAngle, sweepAngle)
+        End Sub
+
+        Friend Overrides Function GetXy() As PointF
+            Return New PointF(x, y)
+        End Function
+
+        Friend Overrides Function GetSize() As SizeF
+            Return New SizeF(width, height)
+        End Function
+
+        Friend Overrides Function ScaleTo(scaleX As d3js.scale.LinearScale, scaleY As d3js.scale.LinearScale) As PSElement
+            Return New Pie With {
+                .comment = comment,
+                .fill = fill,
+                .height = scaleY(height),
+                .startAngle = startAngle,
+                .sweepAngle = sweepAngle,
+                .width = scaleX(width),
+                .x = scaleX(x),
+                .y = scaleY(y)
+            }
+        End Function
+    End Class
+
     Public Class Arc : Inherits PSElement
 
         Public Property stroke As Stroke
@@ -98,11 +138,11 @@ Namespace PostScript.Elements
 
         Friend Overrides Function ScaleTo(scaleX As d3js.scale.LinearScale, scaleY As d3js.scale.LinearScale) As PSElement
             Return New Arc With {
-                .height = height,
+                .height = scaleY(height),
                 .startAngle = startAngle,
                 .stroke = stroke,
                 .sweepAngle = sweepAngle,
-                .width = width,
+                .width = scaleX(width),
                 .x = scaleX(x),
                 .y = scaleY(y),
                 .comment = comment

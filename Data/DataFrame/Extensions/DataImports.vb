@@ -260,7 +260,7 @@ Public Module DataImports
     <ExportAPI("DataType.Match")>
     <Extension>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    Public Function SampleForType(column As IEnumerable(Of String)) As Type
-        Return TypeCast.DataImports.SampleForType(column.ToArray)
+    Public Function SampleForType(column As IEnumerable(Of String), Optional checkNullFactor As Boolean = False) As Type
+        Return TypeCast.DataImports.SampleForType(column.ToArray, checkNullFactor)
     End Function
 End Module

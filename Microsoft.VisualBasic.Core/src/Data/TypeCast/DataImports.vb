@@ -64,7 +64,7 @@ Namespace ComponentModel.DataSourceModel.TypeCast
         ''' </summary>
         ''' <param name="column"></param>
         ''' <returns></returns>
-        Public Function SampleForType(column As IReadOnlyCollection(Of String)) As Type
+        Public Function SampleForType(column As IReadOnlyCollection(Of String), Optional checkNullFactor As Boolean = False) As Type
             Dim integers As Integer = 0,
                 doubles As Integer = 0,
                 booleans As Integer = 0,
@@ -73,6 +73,8 @@ Namespace ComponentModel.DataSourceModel.TypeCast
 
             For Each r As String In column
                 If String.IsNullOrEmpty(r) Then
+                    Continue For
+                ElseIf checkNullFactor AndAlso r.StringEmpty(, True) Then
                     Continue For
                 End If
 

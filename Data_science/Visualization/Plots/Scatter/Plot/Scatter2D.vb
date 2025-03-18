@@ -1,62 +1,63 @@
 ﻿#Region "Microsoft.VisualBasic::0444de191b508d13f823f682047fa92e, Data_science\Visualization\Plots\Scatter\Plot\Scatter2D.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 366
-    '    Code Lines: 276 (75.41%)
-    ' Comment Lines: 41 (11.20%)
-    '    - Xml Docs: 65.85%
-    ' 
-    '   Blank Lines: 49 (13.39%)
-    '     File Size: 15.86 KB
+' Summaries:
 
 
-    '     Class Scatter2D
-    ' 
-    '         Constructor: (+2 Overloads) Sub New
-    ' 
-    '         Function: (+2 Overloads) DrawScatter, GetDataScaler
-    ' 
-    '         Sub: PlotInternal
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 366
+'    Code Lines: 276 (75.41%)
+' Comment Lines: 41 (11.20%)
+'    - Xml Docs: 65.85%
+' 
+'   Blank Lines: 49 (13.39%)
+'     File Size: 15.86 KB
+
+
+'     Class Scatter2D
+' 
+'         Constructor: (+2 Overloads) Sub New
+' 
+'         Function: (+2 Overloads) DrawScatter, GetDataScaler
+' 
+'         Sub: PlotInternal
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Drawing
+Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Algorithm.base
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Data.ChartPlots
@@ -69,15 +70,13 @@ Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Math2D
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Math2D.ConvexHull
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Shapes
+Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Math.Statistics.Linq
 Imports Microsoft.VisualBasic.MIME.Html.CSS
 Imports Microsoft.VisualBasic.MIME.Html.Render
-Imports System.Runtime.CompilerServices
-
-
 
 #If NET48 Then
 Imports Pen = System.Drawing.Pen
@@ -258,8 +257,9 @@ Namespace Plots
                                            Optional strokeCss As Stroke = Nothing) As IEnumerable(Of PointF)
 
             Dim color As Brush = New SolidBrush(cluster.color)
+            Dim brush As Func(Of PointData, Brush) = Function(a) color
 
-            Return DrawScatter(g, cluster.pts, scaler, fillPie, cluster.shape, cluster.pointSize, Function(a) color, strokeCss)
+            Return DrawScatter(g, cluster.pts, scaler, fillPie, cluster.shape, cluster.pointSize, brush, strokeCss, serialName:=cluster.title)
         End Function
 
         ''' <summary>
@@ -284,10 +284,15 @@ Namespace Plots
                                                     shape As LegendStyles,
                                                     pointSize As Single,
                                                     getPointBrush As Func(Of PointData, Brush),
-                                                    strokeCss As Stroke) As IEnumerable(Of PointF)
+                                                    strokeCss As Stroke,
+                                                    serialName As String,
+                                                    Optional commentText As Boolean = False) As IEnumerable(Of PointF)
             Dim r As Single = pointSize / 2
             Dim d As Single = pointSize
             Dim shapeSize As New Size(d, d)
+            Dim writer As IElementCommentWriter = g.CheckElementWriter
+
+            commentText = commentText AndAlso Not writer Is Nothing
 
             For Each pt As PointData In scatter
                 Dim pt1 = scaler.Translate(pt)
@@ -312,6 +317,10 @@ Namespace Plots
                     End Select
 
                     g.DrawLegendShape(pt1, shapeSize, shape, getPointBrush(pt), border:=strokeCss)
+
+                    If commentText Then
+                        Call writer.SetLastComment($"scatter point of [{pt.pt.X.ToString("F2")},{pt.pt.Y.ToString("F2")}] size:{pointSize} - serial:{serialName}")
+                    End If
                 End If
             Next
         End Function
@@ -362,7 +371,8 @@ Namespace Plots
                     shape:=line.shape,
                     pointSize:=line.pointSize,
                     getPointBrush:=line.BrushHandler,
-                    Nothing
+                    Nothing,
+                    serialName:=line.title
                 ) _
                 .ToArray
 
@@ -395,7 +405,7 @@ Namespace Plots
 
             If theme.drawLegend Then
                 Dim legends As LegendObject() = LinqAPI.Exec(Of LegendObject) _
- _
+                                                                              _
                     () <= From s As SerialData
                           In array
                           Let sColor As String = s.color.RGBExpression
