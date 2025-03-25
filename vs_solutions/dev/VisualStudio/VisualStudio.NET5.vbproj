@@ -92,8 +92,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="System.Buffers" Version="4.6.1" />
     <PackageReference Include="System.Configuration.ConfigurationManager" Version="8.0.1" />
-    <PackageReference Include="System.Numerics.Vectors" Version="4.6.0" />
+    <PackageReference Include="System.Numerics.Vectors" Version="4.6.1" />
   </ItemGroup>
 
   <ItemGroup>

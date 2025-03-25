@@ -478,11 +478,17 @@ Namespace PostScript
         End Sub
 
         Public Overrides Sub FillPolygon(brush As Brush, points() As Point)
-            Throw New NotImplementedException()
+            Call painting.Add(New Elements.Polygon With {
+                .fill = DirectCast(brush, SolidBrush).Color.ToHtmlColor,
+                .points = points.PointF.ToArray
+            })
         End Sub
 
         Public Overrides Sub FillPolygon(brush As Brush, points() As PointF)
-            Throw New NotImplementedException()
+            Call painting.Add(New Elements.Polygon With {
+                .fill = DirectCast(brush, SolidBrush).Color.ToHtmlColor,
+                .points = points
+            })
         End Sub
 
         Public Overrides Sub FillRectangle(brush As Brush, rect As Rectangle)

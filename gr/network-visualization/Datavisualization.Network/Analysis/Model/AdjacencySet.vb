@@ -90,6 +90,14 @@ Namespace Analysis.Model
             End Get
         End Property
 
+        Public Sub New()
+
+        End Sub
+
+        Sub New(label As String)
+            U = label
+        End Sub
+
         ''' <summary>
         ''' check the input node <paramref name="i"/> is a 
         ''' connected adjacent node to current node vertex.

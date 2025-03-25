@@ -54,9 +54,11 @@
 Imports System.Reflection
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Algorithm.BinaryTree
+Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.ComponentModel.DataStructures.Tree
+Imports Microsoft.VisualBasic.Data.GraphTheory.Network
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Scripting.Runtime
 
@@ -202,5 +204,40 @@ Public Module Utils
             .Key = name,
             .Properties = values
         }
+    End Function
+
+    <Extension>
+    Public Function CreateEdgeMatrix(Of Node As {New, Network.Node},
+                                        Edge As {New, Network.Edge(Of Node)}, T)(g As NetworkGraph(Of Node, Edge), f As Func(Of Edge, T), ByRef labels As String()) As T()()
+        Dim vertexSize = g.vertex.Count
+        Dim edges As T()() = RectangularArray.Matrix(Of T)(vertexSize, vertexSize)
+        Dim hash As Index(Of String) = g.vertex.Select(Function(vi) vi.label).Indexing
+
+        For Each e As Edge In g.graphEdges
+            Dim i As Integer = hash(e.U.label)
+            Dim j As Integer = hash(e.V.label)
+            Dim fx = f(e)
+
+            edges(i)(j) = fx
+            edges(j)(i) = fx
+        Next
+
+        labels = hash.Objects
+
+        Return edges
+    End Function
+
+    <Extension>
+    Public Function CreateEdgeMatrix(Of Node As {New, Network.Node},
+                                        Edge As {New, Network.Edge(Of Node)})(g As NetworkGraph(Of Node, Edge), Optional ByRef labels As String() = Nothing) As Integer()()
+
+        Return g.CreateEdgeMatrix(Function(e) 1, labels)
+    End Function
+
+    <Extension>
+    Public Function CreateEdgeWeights(Of Node As {New, Network.Node},
+                                        Edge As {New, Network.Edge(Of Node)})(g As NetworkGraph(Of Node, Edge), Optional ByRef labels As String() = Nothing) As Double()()
+
+        Return g.CreateEdgeMatrix(Function(e) e.weight, labels)
     End Function
 End Module

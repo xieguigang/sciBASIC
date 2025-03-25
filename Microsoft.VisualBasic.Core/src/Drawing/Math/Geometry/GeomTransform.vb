@@ -393,7 +393,6 @@ Namespace Imaging.Math2D
         ''' 计算任意两点之间的欧几里得距离
         ''' </summary>
         ''' <param name="a"></param>
-        ''' <param name="b"></param>
         ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>

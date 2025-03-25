@@ -83,10 +83,25 @@ Namespace LinearAlgebra
             Return New NumericMatrix(d.ToArray)
         End Function
 
+        ''' <summary>
+        ''' get a logical vector for indicates that which elements inside the given numeric vector is invalid number, like NaN, Inf
+        ''' </summary>
+        ''' <param name="v"></param>
+        ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function IsNaNImaginary(v As IEnumerable(Of Double)) As BooleanVector
             Return New BooleanVector(From xi As Double In v Let flag As Boolean = xi.IsNaNImaginary Select flag)
+        End Function
+
+        ''' <summary>
+        ''' removes all invalid number from the given numeric vector data
+        ''' </summary>
+        ''' <param name="x"></param>
+        ''' <returns></returns>
+        <Extension>
+        Public Function NAremove(x As IEnumerable(Of Double)) As IEnumerable(Of Double)
+            Return From xi As Double In x Where Not xi.IsNaNImaginary
         End Function
 
         ''' <summary>

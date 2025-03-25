@@ -141,6 +141,12 @@ Namespace XLSX
             Return xlsx.GetTable(sheetName:=xlsx.SheetNames.FirstOrDefault)
         End Function
 
+        Public Function FirstSheet(path As String) As csv
+            Using Xlsx As XlsxFile = File.Open(path)
+                Return FirstSheet(Xlsx)
+            End Using
+        End Function
+
         <Extension>
         Public Sub WriteSheetTable(workbook As Workbook, data As csv)
             Dim sheet As Worksheet = workbook.CurrentWorksheet

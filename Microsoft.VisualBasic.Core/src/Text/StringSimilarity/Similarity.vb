@@ -1,68 +1,69 @@
 ﻿#Region "Microsoft.VisualBasic::54732f3cdaa73894d0fbb4adda4c8021, Microsoft.VisualBasic.Core\src\Text\StringSimilarity\Similarity.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 281
-    '    Code Lines: 170 (60.50%)
-    ' Comment Lines: 74 (26.33%)
-    '    - Xml Docs: 93.24%
-    ' 
-    '   Blank Lines: 37 (13.17%)
-    '     File Size: 12.30 KB
+' Summaries:
 
 
-    '     Delegate Function
-    ' 
-    ' 
-    '     Module Evaluations
-    ' 
-    '         Function: Evaluate, tokenEquals, tokenEqualsIgnoreCase
-    '         Delegate Function
-    ' 
-    '             Function: (+4 Overloads) IsOrdered, LevenshteinEvaluate, LevenshteinOrder, StringSelection, (+3 Overloads) TokenOrders
-    ' 
-    ' 
-    ' 
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 281
+'    Code Lines: 170 (60.50%)
+' Comment Lines: 74 (26.33%)
+'    - Xml Docs: 93.24%
+' 
+'   Blank Lines: 37 (13.17%)
+'     File Size: 12.30 KB
+
+
+'     Delegate Function
+' 
+' 
+'     Module Evaluations
+' 
+'         Function: Evaluate, tokenEquals, tokenEqualsIgnoreCase
+'         Delegate Function
+' 
+'             Function: (+4 Overloads) IsOrdered, LevenshteinEvaluate, LevenshteinOrder, StringSelection, (+3 Overloads) TokenOrders
+' 
+' 
+' 
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Algorithm.DynamicProgramming.Levenshtein
+Imports Microsoft.VisualBasic.ComponentModel.DataStructures
 Imports Microsoft.VisualBasic.ComponentModel.DataStructures.GenericLambda(Of String)
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.Default
@@ -109,9 +110,11 @@ Namespace Text.Similarity
             Dim len2 = s2.Length
             Dim diff As Double = If(strlen_diff, std.Min(len1, len2) / std.Max(len1, len2), 1)
 
+            Static deli As Char() = {" "c, ASCII.TAB, ","c, ";"c, "-"c, "_"c, "."c, ASCII.CR, ASCII.LF, "'"c, """"c}
+
             dist = LevenshteinDistance.ComputeDistance(
-                s1.Split,
-                s2.Split,
+                s1.Split(deli),
+                s2.Split(deli),
                 tokenEquals,
                 Function(s) s.FirstOrDefault,
                 cost)
@@ -148,7 +151,8 @@ Namespace Text.Similarity
                                             Optional ignoreCase As Boolean = True,
                                             Optional cost# = 0.7,
                                             Optional ByRef dist As DistResult = Nothing,
-                                            Optional strlen_diff As Boolean = True) As Double
+                                            Optional strlen_diff As Boolean = True,
+                                            Optional checkChar As GenericLambda(Of Char).IEquals = Nothing) As Double
             If ignoreCase Then
                 s1 = s1.ToLower
                 s2 = s2.ToLower
@@ -160,7 +164,7 @@ Namespace Text.Similarity
                 Return 1
             End If
 
-            dist = LevenshteinDistance.ComputeDistance(s1, s2, cost)
+            dist = LevenshteinDistance.ComputeDistance(s1, s2, cost, checkChar)
 
             If dist Is Nothing Then
                 Return 0
@@ -269,7 +273,8 @@ Namespace Text.Similarity
                                                Optional ignoreCase As Boolean = True,
                                                Optional cutoff As Double = 0.6,
                                                Optional cost As Double = 0.7,
-                                               Optional strlen_diff As Boolean = True) As IEnumerable(Of T)
+                                               Optional strlen_diff As Boolean = True,
+                                               Optional checkChar As GenericLambda(Of Char).IEquals = Nothing) As IEnumerable(Of T)
             Return collection.AsParallel _
                 .Select(Function(a)
                             Dim top As Double = Double.MinValue
@@ -283,7 +288,8 @@ Namespace Text.Similarity
                                     query, si,
                                     ignoreCase:=ignoreCase,
                                     cost:=cost,
-                                    strlen_diff:=strlen_diff)
+                                    strlen_diff:=strlen_diff,
+                                    checkChar:=checkChar)
 
                                 If score > top Then
                                     top = score
@@ -309,7 +315,7 @@ Namespace Text.Similarity
         ''' <param name="query">the text for the similarity measurement</param>
         ''' <param name="collection">a given string collection for compares with the 
         ''' given <paramref name="query"/> text string.</param>
-        ''' <param name="cutoff"></param>
+        ''' <param name="cutoff">the similarity score cutoff for the string filter</param>
         ''' <param name="ignoreCase"></param>
         ''' <param name="tokenBased"></param>
         ''' <returns></returns>

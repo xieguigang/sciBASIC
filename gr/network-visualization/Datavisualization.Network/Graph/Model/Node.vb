@@ -164,6 +164,10 @@ Namespace Graph
 
             label = iId
             pinned = False
+
+            If iId IsNot Nothing Then
+                adjacencies = New AdjacencySet(Of Edge)(iId)
+            End If
         End Sub
 
         Sub New()

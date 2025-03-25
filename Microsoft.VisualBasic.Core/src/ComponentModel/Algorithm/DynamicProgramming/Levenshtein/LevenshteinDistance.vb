@@ -84,16 +84,7 @@ Vladimir I",
       Journal:="Soviet Physics Doklady", Year:=1966)>
     Public Module LevenshteinDistance
 
-        ''' <summary>
-        ''' Creates distance table for data visualization
-        ''' </summary>
-        ''' <param name="reference"></param>
-        ''' <param name="hypotheses"></param>
-        ''' <param name="cost"></param>
-        ''' <returns></returns>
-        Private Function createMatrix(reference As Integer(), hypotheses As Integer(), cost As Double) As Double(,)
-            Return CreateTable(Of Integer)(reference, hypotheses, DynamicProgramming.Cost(Of Integer).DefaultCost(cost), AddressOf i32Equals)
-        End Function
+        ReadOnly checkIntDefault As GenericLambda(Of Integer).IEquals = AddressOf i32Equals
 
         Private Function i32Equals(a As Integer, b As Integer) As Boolean
             Return a = b
@@ -209,18 +200,16 @@ Vladimir I",
         ''' <param name="cost"></param>
         ''' <returns></returns>
         <ExportAPI("ComputeDistance")>
-        Public Function ComputeDistance(reference As Integer(), hypotheses As String, Optional cost As Double = 0.7) As DistResult
+        Public Function ComputeDistance(reference As Integer(), hypotheses As String, Optional cost As Double = 0.7, Optional checkInt As GenericLambda(Of Integer).IEquals = Nothing) As DistResult
             If hypotheses Is Nothing Then hypotheses = ""
             If reference Is Nothing Then reference = New Integer() {}
 
-            Dim distTable#(,) = createMatrix(reference,
-                                              hypotheses.Select(Function(ch) Asc(ch)).ToArray,
-                                              cost)
+            Dim distTable#(,) = CreateTable(Of Integer)(reference, hypotheses.Select(Function(ch) Asc(ch)).ToArray, DynamicProgramming.Cost(Of Integer).DefaultCost(cost), If(checkInt, checkIntDefault))
             Dim i As Integer = reference.Length
             Dim j As Integer = hypotheses.Length
             Dim result As New DistResult With {
-                .hypotheses = hypotheses,
-                .reference = Nothing
+                .Hypotheses = hypotheses,
+                .Reference = Nothing
             }
             Return computeRouteImpl(hypotheses, result, i, j, distTable)
         End Function
@@ -363,19 +352,24 @@ Vladimir I",
         ''' <param name="cost"></param>
         ''' <returns></returns>
         <ExportAPI("ComputeDistance")>
-        Public Function ComputeDistance(reference$, hypotheses$, Optional cost# = 0.7) As DistResult
-
+        Public Function ComputeDistance(reference$, hypotheses$, Optional cost# = 0.7, Optional checkChar As GenericLambda(Of Char).IEquals = Nothing) As DistResult
             If hypotheses Is Nothing Then hypotheses = ""
             If reference Is Nothing Then reference = ""
 
             Dim vectorRef = reference.Select(Function(ch) AscW(ch)).ToArray
             Dim vectorHypo = hypotheses.Select(Function(ch) AscW(ch)).ToArray
-            Dim distTable As Double(,) = createMatrix(vectorRef, vectorHypo, cost)
+            Dim checkInt As GenericLambda(Of Integer).IEquals = Nothing
+
+            If checkChar IsNot Nothing Then
+                checkInt = Function(i1, i2) checkChar(ChrW(i1), ChrW(i2))
+            End If
+
+            Dim distTable As Double(,) = CreateTable(Of Integer)(vectorRef, vectorHypo, DynamicProgramming.Cost(Of Integer).DefaultCost(cost), If(checkInt, checkIntDefault))
             Dim i As Integer = reference.Length
             Dim j As Integer = hypotheses.Length
             Dim result As New DistResult With {
-                .hypotheses = hypotheses,
-                .reference = reference
+                .Hypotheses = hypotheses,
+                .Reference = reference
             }
 
             Return computeRouteImpl(hypotheses, result, i, j, distTable)

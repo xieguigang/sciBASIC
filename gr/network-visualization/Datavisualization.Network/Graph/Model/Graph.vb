@@ -372,6 +372,10 @@ Namespace Graph
             Return tNewNode
         End Function
 
+        Public Overrides Function AddVertex(label As String) As Node
+            Return CreateNode(label)
+        End Function
+
         ''' <summary>
         ''' 使用节点的标签创建一个新的节点对象，将这个节点对象添加进入网络模型之后将新创建的节点对象返回给用户
         ''' </summary>

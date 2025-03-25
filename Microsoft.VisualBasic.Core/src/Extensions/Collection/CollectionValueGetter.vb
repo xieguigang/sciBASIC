@@ -374,8 +374,16 @@ Public Module CollectionValueGetter
     ''' <param name="table"></param>
     ''' <param name="index">这个函数会自动处理空键名的情况</param>
     ''' <param name="default"></param>
+    ''' <param name="mute">
+    ''' mute the verbose debug echo in debug mode?
+    ''' </param>
     ''' <returns></returns>
+    ''' <remarks>
+    ''' this function is a safe function:
     ''' 
+    ''' 1. for input hash table object is nothing, this function will returns the default value
+    ''' 2. for key is nothing or key is not found inside the hash table, this function also returns the default value
+    ''' </remarks>
     <DebuggerStepThrough>
     <Extension>
     Public Function TryGetValue(Of TKey, TValue)(table As IDictionary(Of TKey, TValue),

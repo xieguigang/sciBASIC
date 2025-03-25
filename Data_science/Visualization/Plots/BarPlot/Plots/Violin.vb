@@ -1,59 +1,59 @@
 ﻿#Region "Microsoft.VisualBasic::aed4c8cfad0bf06c2fdd11424a1253e0, Data_science\Visualization\Plots\BarPlot\Plots\Violin.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 298
-    '    Code Lines: 237 (79.53%)
-    ' Comment Lines: 17 (5.70%)
-    '    - Xml Docs: 0.00%
-    ' 
-    '   Blank Lines: 44 (14.77%)
-    '     File Size: 12.02 KB
+' Summaries:
 
 
-    ' Class Violin
-    ' 
-    '     Properties: showStats, splineDegree
-    ' 
-    '     Constructor: (+1 Overloads) Sub New
-    ' 
-    '     Function: removesOutliers
-    ' 
-    '     Sub: PlotInternal, PlotViolin
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 298
+'    Code Lines: 237 (79.53%)
+' Comment Lines: 17 (5.70%)
+'    - Xml Docs: 0.00%
+' 
+'   Blank Lines: 44 (14.77%)
+'     File Size: 12.02 KB
+
+
+' Class Violin
+' 
+'     Properties: showStats, splineDegree
+' 
+'     Constructor: (+1 Overloads) Sub New
+' 
+'     Function: removesOutliers
+' 
+'     Sub: PlotInternal, PlotViolin
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -71,6 +71,8 @@ Imports Microsoft.VisualBasic.Imaging.Drawing2D.Math2D
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
+Imports Microsoft.VisualBasic.Math.Distributions
+Imports Microsoft.VisualBasic.Math.Distributions.BinBox
 Imports Microsoft.VisualBasic.Math.Interpolation
 Imports Microsoft.VisualBasic.Math.Quantile
 Imports Microsoft.VisualBasic.MIME.Html.CSS
@@ -246,34 +248,23 @@ Public Class Violin : Inherits Plot
                                  theme As Theme)
 
         Dim plotRegion As Rectangle = canvas.PlotRegion(g.LoadEnvironment)
-        Dim quartile As DataQuartile = group.Quartile
-        Dim lowerBound = quartile.Q1 - 1.5 * quartile.IQR
-        Dim upperBound = quartile.Q3 + 1.5 * quartile.IQR
+        Dim data As New BinBox.Violin(group)
+        Dim upperBound = data.range.Max
+        Dim lowerBound = data.range.Min
         Dim upper = yscale.TranslateY(upperBound)
         Dim lower = yscale.TranslateY(lowerBound)
         ' 计算数据分布的密度之后，进行左右对称的线条的生成
         Dim line_l As New List(Of PointF)
         Dim line_r As New List(Of PointF)
-        Dim q0 = lowerBound  'group.Min
-        Dim dstep = (upperBound - lowerBound) / nbins ' (group.Max - group.Min) / n
-        Dim dy = std.Abs(upper - lower) / nbins
 
-        For p As Integer = 0 To nbins
-            Dim q1 = q0 + dstep
-            Dim range As DoubleRange = {q0, q1}
-            Dim density = quartile.ModelSamples.normal.Count(AddressOf range.IsInside)
-            Dim yi As Double = lower - p * dy
-
-            If yi <= 0 AndAlso zeroBreak Then
+        For Each density As Density In data.ViolinDensity(nbins)
+            If density.axis < 0 AndAlso zeroBreak Then
                 Exit For
             End If
 
-            line_l += New PointF With {.X = density, .Y = yi}
-            line_r += New PointF With {.X = density, .Y = yi}
-            q0 = q1
+            line_l += New PointF With {.X = density.density, .Y = density.axis}
+            line_r += New PointF With {.X = density.density, .Y = density.axis}
         Next
-
-        ' Call $"{group.name} = {New Double() {group.Min, group.Max}.GetJson}".__DEBUG_ECHO
 
         ' 进行宽度伸缩映射
         Dim maxDensity As DoubleRange = line_l.X
@@ -306,7 +297,7 @@ Public Class Violin : Inherits Plot
         Call g.FillPolygon(New SolidBrush(color), polygon)
 
         ' 绘制quartile
-        Dim yQ1 As Double = yscale.TranslateY(quartile.Q1)
+        Dim yQ1 As Double = yscale.TranslateY(data.quartile.Q1)
         Dim wd As Double = semiWidth * 0.65
 
         If wd > 32 Then
@@ -317,15 +308,15 @@ Public Class Violin : Inherits Plot
         Dim iqrBox As New RectangleF With {
             .Width = wd,
             .X = x - .Width / 2,
-            .Y = yscale.TranslateY(quartile.Q3),
+            .Y = yscale.TranslateY(data.quartile.Q3),
             .Height = std.Abs(.Y - yQ1)
         }
 
         Call g.FillRectangle(polygonStroke.Brush, iqrBox)
 
         ' draw 95% CI
-        upperBound = group.Average + 1.96 * group.SD
-        lowerBound = group.Average - 1.96 * group.SD
+        upperBound = data.mean + 1.96 * data.sd
+        lowerBound = data.mean - 1.96 * data.sd
 
         Dim lowerDraw As Double = lowerBound
 
@@ -340,14 +331,14 @@ Public Class Violin : Inherits Plot
         )
 
         ' draw median point
-        Call g.DrawCircle(New PointF(x + 1, yscale.TranslateY(quartile.Q2) - 1), wd / 4, color:=Pens.White)
+        Call g.DrawCircle(New PointF(x + 1, yscale.TranslateY(data.quartile.Q2) - 1), wd / 4, color:=Pens.White)
 
         If showStats Then
             ' 在右上绘制数据的分布信息
             Dim sampleDescrib As String =
                 $"CI95%: {lowerBound.ToString(theme.YaxisTickFormat)} ~ {upperBound.ToString(theme.YaxisTickFormat)}" & vbCrLf &
-                $"Median: {quartile.Q2.ToString(theme.YaxisTickFormat)}" & vbCrLf &
-                $"Normal Range: {(quartile.Q1 - 1.5 * quartile.IQR).ToString(theme.YaxisTickFormat)} ~ {(quartile.Q3 + 1.5 * quartile.IQR).ToString(theme.YaxisTickFormat)}"
+                $"Median: {data.quartile.Q2.ToString(theme.YaxisTickFormat)}" & vbCrLf &
+                $"Normal Range: {(data.quartile.Q1 - 1.5 * data.quartile.IQR).ToString(theme.YaxisTickFormat)} ~ {(data.quartile.Q3 + 1.5 * data.quartile.IQR).ToString(theme.YaxisTickFormat)}"
 
             Dim labelSize = g.MeasureString(group.name, labelFont)
 

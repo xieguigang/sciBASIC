@@ -174,6 +174,11 @@ Namespace Imaging
             End If
         End Sub
 
+        ''' <summary>
+        ''' Make batch convert of <see cref="Point"/> to <see cref="System.Drawing.PointF"/> object
+        ''' </summary>
+        ''' <param name="polygon"></param>
+        ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function PointF(polygon As IEnumerable(Of Point)) As IEnumerable(Of PointF)

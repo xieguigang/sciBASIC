@@ -243,12 +243,15 @@ Public MustInherit Class Graph(Of V As {New, TV}, Edge As {New, Edge(Of V)}, G A
     ''' </summary>
     ''' <param name="label$"></param>
     ''' <returns></returns>
-    Public Function AddVertex(label As String) As V
+    Public Overridable Function AddVertex(label As String) As V
         If vertices.ContainsKey(label) Then
+            ' skip of current already existed vertex node
             Return vertices(label)
         Else
+            Dim maxBuffer As Integer = If(buffer.Count = 0, 0, buffer.Keys.Max)
+
             With New V With {
-                .ID = buffer.Keys.Max + 1,
+                .ID = maxBuffer + 1,
                 .label = label
             }
                 Call AddVertex(.ByRef)
@@ -340,6 +343,13 @@ Public MustInherit Class Graph(Of V As {New, TV}, Edge As {New, Edge(Of V)}, G A
     Public Overridable Function AddEdge(u$, v$, Optional weight# = 0) As G
         edges += CreateEdge(u, v, weight)
         Return Me
+    End Function
+
+    Public Overloads Function Add(edge As (u$, v$)) As G
+        If Not ExistVertex(edge.u) Then Call AddVertex(edge.u)
+        If Not ExistVertex(edge.v) Then Call AddVertex(edge.v)
+
+        Return AddEdge(edge.u, edge.v, 1)
     End Function
 
     ''' <summary>
