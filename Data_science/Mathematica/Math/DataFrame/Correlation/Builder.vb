@@ -77,6 +77,13 @@ Public Module Builder
         Return data.MatrixBuilder(Function(x, y) (eval(x, y), 0), type)
     End Function
 
+    ''' <summary>
+    ''' Create a new pearson correlation matrix
+    ''' </summary>
+    ''' <typeparam name="DataSet"></typeparam>
+    ''' <param name="data"></param>
+    ''' <param name="eval"></param>
+    ''' <returns></returns>
     <Extension>
     Public Function Correlation(Of DataSet As INamedValue)(data As Enumeration(Of DataSet), eval As Func(Of DataSet, Double())) As CorrelationMatrix
         Dim allData = data.AsEnumerable.ToArray

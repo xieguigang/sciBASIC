@@ -288,8 +288,13 @@ Namespace Graph
         End Function
 #End Region
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Function AddEdge(u As String, v As String, Optional weight As Double = 0) As NetworkGraph(Of Node, Edge)
-            Call New EdgeData With {
+            Return AddEdge(u, v, weight, Nothing)
+        End Function
+
+        Public Overloads Function AddEdge(u As String, v As String, weight As Double, ByRef getNewEdge As Edge) As NetworkGraph(Of Node, Edge)
+            getNewEdge = New EdgeData With {
                 .bends = {},
                 .label = $"{u}->{v}"
             }.DoCall(Function(data)

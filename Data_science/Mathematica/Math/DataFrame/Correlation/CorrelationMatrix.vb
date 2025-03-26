@@ -98,6 +98,12 @@ Public Class CorrelationMatrix : Inherits DataMatrix
         Call MyBase.New(names)
     End Sub
 
+    ''' <summary>
+    ''' Create a new correlation matrix data
+    ''' </summary>
+    ''' <param name="names"></param>
+    ''' <param name="matrix"></param>
+    ''' <param name="pvalue"></param>
     Sub New(names As Index(Of String), matrix As Double()(), pvalue As Double()())
         Call MyBase.New(names, matrix)
 
