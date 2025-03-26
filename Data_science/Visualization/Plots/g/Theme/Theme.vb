@@ -255,6 +255,22 @@ Namespace Graphic.Canvas
             Return Me.GetJson
         End Function
 
+        Public Function GetXAxisDecimals() As Integer
+            If XaxisTickFormat.IsPattern("F\d+") Then
+                Return Integer.Parse(XaxisTickFormat.Match("\d+"))
+            Else
+                Return 2
+            End If
+        End Function
+
+        Public Function GetYAxisDecimals() As Integer
+            If YaxisTickFormat.IsPattern("F\d+") Then
+                Return Integer.Parse(YaxisTickFormat.Match("\d+"))
+            Else
+                Return 2
+            End If
+        End Function
+
         Public Function NewColorSet(colorSet As Color()) As Theme
             Dim seq As String = colorSet.Select(Function(c) c.ToHtmlColor).JoinBy(",")
             Dim theme As Theme = Me.GetJson.LoadJSON(Of Theme)

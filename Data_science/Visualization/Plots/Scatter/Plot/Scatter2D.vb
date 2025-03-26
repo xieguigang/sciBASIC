@@ -179,30 +179,30 @@ Namespace Plots
 
             If Not xlim.IsNullOrEmpty Then
                 If xlim.Length = 1 AndAlso XaxisAbsoluteScalling Then
-                    XTicks = xlim.JoinIterates({0.0}).CreateAxisTicks
+                    XTicks = xlim.JoinIterates({0.0}).CreateAxisTicks(decimalDigits:=theme.GetXAxisDecimals)
                 Else
-                    XTicks = xlim.CreateAxisTicks
+                    XTicks = xlim.CreateAxisTicks(decimalDigits:=theme.GetXAxisDecimals)
                 End If
             Else
                 If XaxisAbsoluteScalling Then
                     XTicks = {0.0}.JoinIterates(XTicks).ToArray
                 End If
 
-                XTicks = XTicks.Range.CreateAxisTicks
+                XTicks = XTicks.Range.CreateAxisTicks(decimalDigits:=theme.GetXAxisDecimals)
             End If
 
             If Not ylim.IsNullOrEmpty Then
                 If ylim.Length = 1 AndAlso YaxisAbsoluteScalling Then
-                    YTicks = ylim.JoinIterates({0.0}).CreateAxisTicks
+                    YTicks = ylim.JoinIterates({0.0}).CreateAxisTicks(decimalDigits:=theme.GetYAxisDecimals)
                 Else
-                    YTicks = ylim.CreateAxisTicks
+                    YTicks = ylim.CreateAxisTicks(decimalDigits:=theme.GetYAxisDecimals)
                 End If
             Else
                 If YaxisAbsoluteScalling Then
                     YTicks = {0.0}.JoinIterates(YTicks).ToArray
                 End If
 
-                YTicks = YTicks.Range.CreateAxisTicks
+                YTicks = YTicks.Range.CreateAxisTicks(decimalDigits:=theme.GetYAxisDecimals)
             End If
 
             Dim canvas As IGraphics = g
