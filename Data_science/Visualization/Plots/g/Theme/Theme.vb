@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::797053b8b6173ffaa39aa8074487a15a, Data_science\Visualization\Plots\g\Theme\Theme.vb"
+﻿#Region "Microsoft.VisualBasic::632eb531972fa69c3105f324af1869e7, Data_science\Visualization\Plots\g\Theme\Theme.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 209
-    '    Code Lines: 78 (37.32%)
-    ' Comment Lines: 99 (47.37%)
+    '   Total Lines: 225
+    '    Code Lines: 92 (40.89%)
+    ' Comment Lines: 99 (44.00%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 32 (15.31%)
-    '     File Size: 7.43 KB
+    '   Blank Lines: 34 (15.11%)
+    '     File Size: 7.96 KB
 
 
     '     Class Theme
@@ -55,7 +55,8 @@
     '                     tagCSS, tagFormat, tagLinkStroke, xAxisLayout, xAxisReverse
     '                     xAxisRotate, XaxisTickFormat, yAxislabelPosition, yAxisLayout, YaxisTickFormat
     ' 
-    '         Function: Clone, GetLegendPosition, NewColorSet, ToString
+    '         Function: Clone, GetLegendPosition, GetXAxisDecimals, GetYAxisDecimals, NewColorSet
+    '                   ToString
     ' 
     ' 
     ' /********************************************************************************/

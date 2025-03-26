@@ -1,69 +1,69 @@
-﻿#Region "Microsoft.VisualBasic::f38d0136737c64d00ed0f623d915169a, gr\Microsoft.VisualBasic.Imaging\Drivers\CreateGraphicsDriver.vb"
+﻿#Region "Microsoft.VisualBasic::e480d5cd7d67dc8e34972cf9bfc5f304, gr\Microsoft.VisualBasic.Imaging\Drivers\CreateGraphicsDriver.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 128
-'    Code Lines: 94 (73.44%)
-' Comment Lines: 9 (7.03%)
-'    - Xml Docs: 100.00%
-' 
-'   Blank Lines: 25 (19.53%)
-'     File Size: 5.60 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Module ImageDriver
-' 
-'         Function: GraphicsPlot
-' 
-'         Sub: Register, RegisterPostScript
-'         Class RasterInterop
-' 
-'             Function: (+2 Overloads) CreateCanvas2D, CreateGraphic, GetData
-' 
-'         Class SvgInterop
-' 
-'             Function: (+2 Overloads) CreateCanvas2D, CreateGraphic, GetData
-' 
-'         Class PostScriptInterop
-' 
-'             Function: (+2 Overloads) CreateCanvas2D, CreateGraphic, GetData
-' 
-' 
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 142
+    '    Code Lines: 105 (73.94%)
+    ' Comment Lines: 9 (6.34%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 28 (19.72%)
+    '     File Size: 6.11 KB
+
+
+    '     Module ImageDriver
+    ' 
+    '         Function: CheckElementWriter, GraphicsPlot
+    ' 
+    '         Sub: Register, RegisterPostScript
+    '         Class RasterInterop
+    ' 
+    '             Function: (+2 Overloads) CreateCanvas2D, CreateGraphic, GetData
+    ' 
+    '         Class SvgInterop
+    ' 
+    '             Function: (+2 Overloads) CreateCanvas2D, CreateGraphic, GetData
+    ' 
+    '         Class PostScriptInterop
+    ' 
+    '             Function: (+2 Overloads) CreateCanvas2D, CreateGraphic, GetData
+    ' 
+    ' 
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

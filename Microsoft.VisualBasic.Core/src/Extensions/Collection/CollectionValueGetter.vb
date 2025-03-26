@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9983623c61b99ae609a4287962604767, Microsoft.VisualBasic.Core\src\Extensions\Collection\CollectionValueGetter.vb"
+﻿#Region "Microsoft.VisualBasic::98cbe1f279414f369c8ec5aad1652c23, Microsoft.VisualBasic.Core\src\Extensions\Collection\CollectionValueGetter.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 393
-    '    Code Lines: 222 (56.49%)
-    ' Comment Lines: 133 (33.84%)
-    '    - Xml Docs: 93.23%
+    '   Total Lines: 401
+    '    Code Lines: 222 (55.36%)
+    ' Comment Lines: 141 (35.16%)
+    '    - Xml Docs: 93.62%
     ' 
-    '   Blank Lines: 38 (9.67%)
-    '     File Size: 14.21 KB
+    '   Blank Lines: 38 (9.48%)
+    '     File Size: 14.60 KB
 
 
     ' Module CollectionValueGetter

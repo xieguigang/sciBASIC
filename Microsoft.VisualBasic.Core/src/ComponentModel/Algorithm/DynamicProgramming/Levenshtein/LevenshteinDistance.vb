@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3a7255cb8049d8a93b664cfacb4dfa42, Microsoft.VisualBasic.Core\src\ComponentModel\Algorithm\DynamicProgramming\Levenshtein\LevenshteinDistance.vb"
+﻿#Region "Microsoft.VisualBasic::ba7941a7b445ddb37822d17e3df89105, Microsoft.VisualBasic.Core\src\ComponentModel\Algorithm\DynamicProgramming\Levenshtein\LevenshteinDistance.vb"
 
     ' Author:
     ' 
@@ -34,18 +34,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 326
-    '    Code Lines: 205 (62.88%)
-    ' Comment Lines: 72 (22.09%)
-    '    - Xml Docs: 91.67%
+    '   Total Lines: 320
+    '    Code Lines: 205 (64.06%)
+    ' Comment Lines: 65 (20.31%)
+    '    - Xml Docs: 90.77%
     ' 
-    '   Blank Lines: 49 (15.03%)
-    '     File Size: 14.70 KB
+    '   Blank Lines: 50 (15.62%)
+    '     File Size: 14.67 KB
 
 
     '     Module LevenshteinDistance
     ' 
-    '         Function: (+2 Overloads) ComputeDistance, createMatrix, CreateTable, i32Equals, SaveMatch
+    '         Function: (+2 Overloads) ComputeDistance, CreateTable, i32Equals, SaveMatch
     '         Delegate Function
     ' 
     '             Function: (+2 Overloads) ComputeDistance, computeRouteImpl, Similarity

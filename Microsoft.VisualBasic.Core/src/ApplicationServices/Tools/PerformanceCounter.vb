@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::04ef8f457e1ac136fea898cec6216bde, Microsoft.VisualBasic.Core\src\ApplicationServices\Tools\PerformanceCounter.vb"
+﻿#Region "Microsoft.VisualBasic::09902d77b1a896d37bce048bed25cc3b, Microsoft.VisualBasic.Core\src\ApplicationServices\Tools\PerformanceCounter.vb"
 
     ' Author:
     ' 
@@ -34,20 +34,20 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 91
-    '    Code Lines: 60 (65.93%)
-    ' Comment Lines: 16 (17.58%)
+    '   Total Lines: 109
+    '    Code Lines: 67 (61.47%)
+    ' Comment Lines: 24 (22.02%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 15 (16.48%)
-    '     File Size: 2.74 KB
+    '   Blank Lines: 18 (16.51%)
+    '     File Size: 3.37 KB
 
 
     '     Class PerformanceCounter
     ' 
     '         Properties: LastCheckPoint, Top
     ' 
-    '         Function: [Set], GetCounters, (+2 Overloads) Mark, ToString
+    '         Function: [Set], GetCounters, (+2 Overloads) Mark, TaskSequentialCounterReport, ToString
     ' 
     '     Class TimeCounter
     ' 

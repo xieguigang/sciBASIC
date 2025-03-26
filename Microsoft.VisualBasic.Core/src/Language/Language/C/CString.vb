@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::46224d76a9fc50fe95ba7935ae3270f8, Microsoft.VisualBasic.Core\src\Language\Language\C\CString.vb"
+﻿#Region "Microsoft.VisualBasic::4946ef24356d54bf4c0d5b39b371668a, Microsoft.VisualBasic.Core\src\Language\Language\C\CString.vb"
 
     ' Author:
     ' 
@@ -34,19 +34,19 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 215
-    '    Code Lines: 109 (50.70%)
-    ' Comment Lines: 76 (35.35%)
+    '   Total Lines: 231
+    '    Code Lines: 122 (52.81%)
+    ' Comment Lines: 76 (32.90%)
     '    - Xml Docs: 72.37%
     ' 
-    '   Blank Lines: 30 (13.95%)
-    '     File Size: 8.33 KB
+    '   Blank Lines: 33 (14.29%)
+    '     File Size: 8.79 KB
 
 
     '     Module CString
     ' 
-    '         Function: ChangeCharacter, Decode, IsXDigit, StrChr, StrRChr
-    '                   StrStr, StrTok
+    '         Function: ChangeCharacter, Decode, DecodeDecimalAscii, DecodeHexUnicode, IsXDigit
+    '                   StrChr, StrRChr, StrStr, StrTok
     '         Structure __tokensHelper
     ' 
     '             Function: StrTok

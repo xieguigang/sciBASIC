@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::aa36473a6e9719e05eacdc8c6d1476e6, gr\network-visualization\Datavisualization.Network\Graph\Model\Graph.vb"
+﻿#Region "Microsoft.VisualBasic::7e0159cc7b8ab69bf4265cb6997643c5, gr\network-visualization\Datavisualization.Network\Graph\Model\Graph.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 657
-    '    Code Lines: 370 (56.32%)
-    ' Comment Lines: 205 (31.20%)
+    '   Total Lines: 661
+    '    Code Lines: 373 (56.43%)
+    ' Comment Lines: 205 (31.01%)
     '    - Xml Docs: 71.71%
     ' 
-    '   Blank Lines: 82 (12.48%)
-    '     File Size: 25.30 KB
+    '   Blank Lines: 83 (12.56%)
+    '     File Size: 25.43 KB
 
 
     '     Class NetworkGraph
@@ -49,10 +49,10 @@
     ' 
     '         Constructor: (+2 Overloads) Sub New
     ' 
-    '         Function: (+3 Overloads) AddEdge, AddNode, (+2 Overloads) Clone, Copy, (+2 Overloads) CreateEdge
-    '                   createEdgeInternal, (+2 Overloads) CreateNode, GetConnectedGraph, GetConnectedVertex, GetEdge
-    '                   (+2 Overloads) GetEdges, (+2 Overloads) GetElementByID, GetElementsByClassName, GetElementsByName, StyleSelectorGetElementById
-    '                   ToString, Union
+    '         Function: (+3 Overloads) AddEdge, AddNode, AddVertex, (+2 Overloads) Clone, Copy
+    '                   (+2 Overloads) CreateEdge, createEdgeInternal, (+2 Overloads) CreateNode, GetConnectedGraph, GetConnectedVertex
+    '                   GetEdge, (+2 Overloads) GetEdges, (+2 Overloads) GetElementByID, GetElementsByClassName, GetElementsByName
+    '                   StyleSelectorGetElementById, ToString, Union
     ' 
     '         Sub: Clear, (+2 Overloads) CreateEdges, (+2 Overloads) CreateNodes, DetachNode, FilterEdges
     '              FilterNodes, Merge, RemoveEdge, (+2 Overloads) RemoveNode, RemovesIsolatedNodes

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::95211aa2074cde27a1a3d2b9b3289c55, Data_science\Graph\Utils.vb"
+﻿#Region "Microsoft.VisualBasic::69ccf01d914e7fdba8cd9da80beac3b2, Data_science\Graph\Utils.vb"
 
     ' Author:
     ' 
@@ -34,18 +34,19 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 153
-    '    Code Lines: 113 (73.86%)
-    ' Comment Lines: 20 (13.07%)
+    '   Total Lines: 190
+    '    Code Lines: 141 (74.21%)
+    ' Comment Lines: 20 (10.53%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 20 (13.07%)
-    '     File Size: 5.45 KB
+    '   Blank Lines: 29 (15.26%)
+    '     File Size: 7.05 KB
 
 
     ' Module Utils
     ' 
-    '     Function: (+2 Overloads) Build, EscapeLabel, Summary, SummaryMe, (+2 Overloads) Translate
+    '     Function: (+2 Overloads) Build, (+2 Overloads) CreateEdgeMatrix, CreateEdgeWeights, EscapeLabel, Summary
+    '               SummaryMe, (+2 Overloads) Translate
     ' 
     ' /********************************************************************************/
 

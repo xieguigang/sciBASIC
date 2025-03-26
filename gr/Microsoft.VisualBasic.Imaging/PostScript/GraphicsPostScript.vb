@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2d129aa4ec27c6f433ef2c8466ed0e4e, gr\Microsoft.VisualBasic.Imaging\PostScript\GraphicsPostScript.vb"
+﻿#Region "Microsoft.VisualBasic::d2ce444eda903d488dae51493ae3bc6f, gr\Microsoft.VisualBasic.Imaging\PostScript\GraphicsPostScript.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 520
-    '    Code Lines: 396 (76.15%)
-    ' Comment Lines: 13 (2.50%)
+    '   Total Lines: 542
+    '    Code Lines: 418 (77.12%)
+    ' Comment Lines: 13 (2.40%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 111 (21.35%)
-    '     File Size: 21.00 KB
+    '   Blank Lines: 111 (20.48%)
+    '     File Size: 21.96 KB
 
 
     '     Class GraphicsPostScript

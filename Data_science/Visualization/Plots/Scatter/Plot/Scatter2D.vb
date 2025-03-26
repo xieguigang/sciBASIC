@@ -1,58 +1,58 @@
-﻿#Region "Microsoft.VisualBasic::0444de191b508d13f823f682047fa92e, Data_science\Visualization\Plots\Scatter\Plot\Scatter2D.vb"
+﻿#Region "Microsoft.VisualBasic::733e3c619fe288c8d74feec1ee98c95b, Data_science\Visualization\Plots\Scatter\Plot\Scatter2D.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 366
-'    Code Lines: 276 (75.41%)
-' Comment Lines: 41 (11.20%)
-'    - Xml Docs: 65.85%
-' 
-'   Blank Lines: 49 (13.39%)
-'     File Size: 15.86 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Class Scatter2D
-' 
-'         Constructor: (+2 Overloads) Sub New
-' 
-'         Function: (+2 Overloads) DrawScatter, GetDataScaler
-' 
-'         Sub: PlotInternal
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 376
+    '    Code Lines: 286 (76.06%)
+    ' Comment Lines: 41 (10.90%)
+    '    - Xml Docs: 65.85%
+    ' 
+    '   Blank Lines: 49 (13.03%)
+    '     File Size: 16.89 KB
+
+
+    '     Class Scatter2D
+    ' 
+    '         Constructor: (+2 Overloads) Sub New
+    ' 
+    '         Function: (+2 Overloads) DrawScatter, GetDataScaler
+    ' 
+    '         Sub: PlotInternal
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

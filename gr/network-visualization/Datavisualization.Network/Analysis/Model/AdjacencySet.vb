@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::01c23b345a3f9e4434aaa7389b9d6af7, gr\network-visualization\Datavisualization.Network\Analysis\Model\AdjacencySet.vb"
+﻿#Region "Microsoft.VisualBasic::4eea0d51dadad7dcc266f18652226df3, gr\network-visualization\Datavisualization.Network\Analysis\Model\AdjacencySet.vb"
 
     ' Author:
     ' 
@@ -34,18 +34,20 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 97
-    '    Code Lines: 59 (60.82%)
-    ' Comment Lines: 22 (22.68%)
+    '   Total Lines: 105
+    '    Code Lines: 64 (60.95%)
+    ' Comment Lines: 22 (20.95%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 16 (16.49%)
-    '     File Size: 3.68 KB
+    '   Blank Lines: 19 (18.10%)
+    '     File Size: 3.80 KB
 
 
     '     Class AdjacencySet
     ' 
     '         Properties: Count, U
+    ' 
+    '         Constructor: (+2 Overloads) Sub New
     ' 
     '         Function: Clone, (+2 Overloads) EnumerateAllEdges, hasNeighbor, ToString
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c1e47242e55cd2f4c3ca6bdd39420705, Data_science\Graph\Analysis\MorganFingerprint\MorganGraph.vb"
+﻿#Region "Microsoft.VisualBasic::a5a57d967d37e976e47c0f70faaa3ce5, Data_science\Graph\Analysis\MorganFingerprint\MorganGraph.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 20
-    '    Code Lines: 7 (35.00%)
-    ' Comment Lines: 8 (40.00%)
+    '   Total Lines: 19
+    '    Code Lines: 7 (36.84%)
+    ' Comment Lines: 8 (42.11%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 5 (25.00%)
-    '     File Size: 544 B
+    '   Blank Lines: 4 (21.05%)
+    '     File Size: 542 B
 
 
     '     Interface MorganGraph
@@ -51,7 +51,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 Imports Microsoft.VisualBasic.Data.GraphTheory.Network
 

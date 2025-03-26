@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8bc844378cc85cb8f12580305ad44192, Microsoft.VisualBasic.Core\src\Drawing\Math\Geometry\GeomTransform.vb"
+﻿#Region "Microsoft.VisualBasic::350c143046d13673e3f6d3018abbed3d, Microsoft.VisualBasic.Core\src\Drawing\Math\Geometry\GeomTransform.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 583
-    '    Code Lines: 317 (54.37%)
-    ' Comment Lines: 207 (35.51%)
-    '    - Xml Docs: 95.65%
+    '   Total Lines: 582
+    '    Code Lines: 317 (54.47%)
+    ' Comment Lines: 206 (35.40%)
+    '    - Xml Docs: 95.63%
     ' 
-    '   Blank Lines: 59 (10.12%)
-    '     File Size: 21.88 KB
+    '   Blank Lines: 59 (10.14%)
+    '     File Size: 21.84 KB
 
 
     '     Module GeomTransform

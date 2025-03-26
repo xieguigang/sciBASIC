@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6b34b2b584e8a1743bdbb092ba006eaa, Microsoft.VisualBasic.Core\src\Data\TypeCast\DataImports.vb"
+﻿#Region "Microsoft.VisualBasic::ac9b7bf358af58004201a5ae2888a699, Microsoft.VisualBasic.Core\src\Data\TypeCast\DataImports.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 123
-    '    Code Lines: 83 (67.48%)
-    ' Comment Lines: 24 (19.51%)
+    '   Total Lines: 125
+    '    Code Lines: 85 (68.00%)
+    ' Comment Lines: 24 (19.20%)
     '    - Xml Docs: 66.67%
     ' 
-    '   Blank Lines: 16 (13.01%)
-    '     File Size: 4.53 KB
+    '   Blank Lines: 16 (12.80%)
+    '     File Size: 4.68 KB
 
 
     '     Module DataImports

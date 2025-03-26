@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e37a6b31719fef660cab562899e82f98, gr\physics\physics_Test\Form2.vb"
+﻿#Region "Microsoft.VisualBasic::a56838ddcde78aa5340b464c50a4e649, gr\physics\physics_Test\Form2.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 41
-    '    Code Lines: 29 (70.73%)
-    ' Comment Lines: 6 (14.63%)
+    '   Total Lines: 48
+    '    Code Lines: 35 (72.92%)
+    ' Comment Lines: 6 (12.50%)
     '    - Xml Docs: 66.67%
     ' 
-    '   Blank Lines: 6 (14.63%)
-    '     File Size: 1.26 KB
+    '   Blank Lines: 7 (14.58%)
+    '     File Size: 1.54 KB
 
 
     '     Class Form2

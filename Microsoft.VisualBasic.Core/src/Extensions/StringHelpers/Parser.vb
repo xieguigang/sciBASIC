@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::036308571517cf485ae5582968af5c58, Microsoft.VisualBasic.Core\src\Extensions\StringHelpers\Parser.vb"
+﻿#Region "Microsoft.VisualBasic::92581bc89226b08f2892671245776495, Microsoft.VisualBasic.Core\src\Extensions\StringHelpers\Parser.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 80.29%
     ' 
     '   Blank Lines: 50 (11.60%)
-    '     File Size: 14.03 KB
+    '     File Size: 14.10 KB
 
 
     ' Module PrimitiveParser

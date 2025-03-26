@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::374ab679605e9516da51ef4dec6fe56b, Data\DataFrame\DataFrame\FastLoader.vb"
+﻿#Region "Microsoft.VisualBasic::bb217597026f56d3a5314a520aa34fb7, Data\DataFrame\DataFrame\FastLoader.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 94.44%
     ' 
     '   Blank Lines: 10 (11.49%)
-    '     File Size: 3.33 KB
+    '     File Size: 3.38 KB
 
 
     ' Module FastLoader

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::53b851bcb3f9131bac80e4dddc3837eb, gr\Microsoft.VisualBasic.Imaging\Drivers\IElementCommentWriter.vb"
+﻿#Region "Microsoft.VisualBasic::1652edaed64c8f628f14f8f55ab5c9d1, gr\Microsoft.VisualBasic.Imaging\Drivers\IElementCommentWriter.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 13
-    '    Code Lines: 5 (38.46%)
-    ' Comment Lines: 4 (30.77%)
+    '   Total Lines: 12
+    '    Code Lines: 5 (41.67%)
+    ' Comment Lines: 4 (33.33%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 4 (30.77%)
-    '     File Size: 299 B
+    '   Blank Lines: 3 (25.00%)
+    '     File Size: 297 B
 
 
     '     Interface IElementCommentWriter
@@ -51,7 +51,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 Namespace Driver
 
