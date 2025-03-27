@@ -91,7 +91,10 @@ Public Module Debugger
     ''' </summary>
     ''' <param name="dir"></param>
     ''' <returns>
-    ''' contains data file and file group object
+    ''' contains data file and file group object, for filter only data objects, the linq 
+    ''' extension function <see cref="Enumerable.OfType(Of StreamBlock)(IEnumerable)"/> 
+    ''' with generic parameter type <see cref="StreamBlock"/> constrained
+    ''' is recommended.
     ''' </returns>
     ''' <remarks>
     ''' get all the files/dirs inside current dir object and its child dirs.
