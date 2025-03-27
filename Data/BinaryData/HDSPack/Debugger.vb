@@ -94,7 +94,10 @@ Public Module Debugger
     ''' contains data file and file group object
     ''' </returns>
     ''' <remarks>
-    ''' get all the files/dirs inside current dir object and its child dirs
+    ''' get all the files/dirs inside current dir object and its child dirs.
+    ''' this function will returns an empty collection if the given dir object
+    ''' is nothing andalso <paramref name="safe"/> parameter value is configured 
+    ''' as true.
     ''' </remarks>
     <Extension>
     Public Iterator Function ListFiles(dir As StreamGroup,
