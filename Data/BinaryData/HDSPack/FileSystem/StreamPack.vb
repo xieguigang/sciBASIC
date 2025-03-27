@@ -70,6 +70,7 @@ Imports System.Text
 Imports Microsoft.VisualBasic.ApplicationServices
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.ComponentModel.Ranges.Unit
 Imports Microsoft.VisualBasic.Data.IO
 Imports Microsoft.VisualBasic.FileIO.Path
 Imports Microsoft.VisualBasic.My.FrameworkInternal
@@ -611,7 +612,32 @@ Namespace FileSystem
             )
         End Function
 
-        Public Shared Function OpenReadOnly(filepath As String) As StreamPack
+        ''' <summary>
+        ''' Open a stream pack data file for read data
+        ''' </summary>
+        ''' <param name="filepath"></param>
+        ''' <param name="strict_missing">
+        ''' this parameter controls the behaviours about the missing <paramref name="filepath"/>, if this
+        ''' parameter is set to value true(default behaviours), function will throw file not found 
+        ''' exception, otherwise will returns an empty stream object. 
+        ''' </param>
+        ''' <returns>
+        ''' this function may returns an empty stream data if the given <paramref name="filepath"/> is
+        ''' missing on the filesystem andalso not set <paramref name="strict_missing"/> to true.
+        ''' </returns>
+        Public Shared Function OpenReadOnly(filepath As String, Optional strict_missing As Boolean = True) As StreamPack
+            If Not filepath.FileExists Then
+                ' handling of the missing file
+                If strict_missing Then
+                    Throw New FileNotFoundException($"the required data file('{filepath.GetFullPath}') for load stream pack could not be found on your filesystem!")
+                Else
+                    Dim empty As New MemoryStream
+                    Dim emptyPack As New StreamPack(buffer:=empty, init_size:=4 * ByteSize.KB, meta_size:=8 * ByteSize.KB)
+                    Return emptyPack
+                End If
+            End If
+
+            ' read local file
             Dim stream As Stream = filepath.Open(FileMode.Open, doClear:=False, [readOnly]:=True)
             Dim pack As New StreamPack(stream, [readonly]:=True)
             Return pack
