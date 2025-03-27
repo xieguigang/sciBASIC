@@ -1,59 +1,60 @@
 ﻿#Region "Microsoft.VisualBasic::ea447a79504d8aa6098bdffaaaf2be78, Microsoft.VisualBasic.Core\src\Extensions\WebServices\HttpGet.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 229
-    '    Code Lines: 159 (69.43%)
-    ' Comment Lines: 30 (13.10%)
-    '    - Xml Docs: 70.00%
-    ' 
-    '   Blank Lines: 40 (17.47%)
-    '     File Size: 8.62 KB
+' Summaries:
 
 
-    ' Module HttpGet
-    ' 
-    '     Properties: HttpRequestTimeOut
-    ' 
-    '     Function: [GET], BuildWebRequest, httpRequest, LogException, UrlGet
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 229
+'    Code Lines: 159 (69.43%)
+' Comment Lines: 30 (13.10%)
+'    - Xml Docs: 70.00%
+' 
+'   Blank Lines: 40 (17.47%)
+'     File Size: 8.62 KB
+
+
+' Module HttpGet
+' 
+'     Properties: HttpRequestTimeOut
+' 
+'     Function: [GET], BuildWebRequest, httpRequest, LogException, UrlGet
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.IO
+Imports System.IO.Compression
 Imports System.Net
 Imports System.Runtime.CompilerServices
 Imports System.Text
@@ -234,19 +235,27 @@ Re0:
     Public Function UrlGet(webrequest As HttpWebRequest, echo As Boolean) As WebResponseResult
         Dim timer As Stopwatch = Stopwatch.StartNew
         Dim url As String = webrequest.RequestUri.ToString
+        Dim html As String
 
-        Using response As WebResponse = webrequest.GetResponse,
-            respStream As Stream = response.GetResponseStream,
-            reader As New StreamReader(respStream)
+        Using response As HttpWebResponse = webrequest.GetResponse
+            ' 检查内容编码是否为gzip
+            If response.ContentEncoding.ToLower().Contains("gzip") Then
+                ' 使用GZipStream解压缩响应流
+                Using gzipStream As New GZipStream(response.GetResponseStream(), CompressionMode.Decompress)
+                    ' 读取解压缩后的流
+                    Using reader As New StreamReader(gzipStream, Encoding.UTF8)
+                        ' 返回响应内容
+                        html = reader.ReadToEnd()
+                    End Using
+                End Using
+            Else
+                ' 如果不是gzip压缩，直接读取响应流
+                Using reader As New StreamReader(response.GetResponseStream(), Encoding.UTF8)
+                    ' 返回响应内容
+                    html = reader.ReadToEnd()
+                End Using
+            End If
 
-            Dim htmlBuilder As New StringBuilder
-            Dim line As Value(Of String) = ""
-
-            Do While Not (line = reader.ReadLine) Is Nothing
-                htmlBuilder.AppendLine(line)
-            Loop
-
-            Dim html As String = htmlBuilder.ToString
             Dim timespan As Long = timer.ElapsedMilliseconds
             Dim headers As New ResponseHeaders(response.Headers)
 
