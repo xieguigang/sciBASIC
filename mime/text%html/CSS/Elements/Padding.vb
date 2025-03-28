@@ -114,6 +114,11 @@ Namespace CSS
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Function EvaluateFromCSS(css As CSSEnvirnment, layout As String) As PaddingLayout
+            Return EvaluateFromCSS(css, Padding.TryParse(layout))
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Function EvaluateFromCSS(css As CSSEnvirnment, layout As Padding) As PaddingLayout
             Return New PaddingLayout With {
                 .Bottom = css.GetHeight(layout.Bottom),
