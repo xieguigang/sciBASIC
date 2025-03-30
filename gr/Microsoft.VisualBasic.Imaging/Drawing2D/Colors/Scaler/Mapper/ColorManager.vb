@@ -74,6 +74,12 @@ Namespace Drawing2D.Colors.Scaler
         Protected colors As Color()
 
         ''' <summary>
+        ''' default color value for missing value, example as: nothing, NaN, Inf, etc
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property DefaultColor As Color = Nothing
+
+        ''' <summary>
         ''' Create profile with a pre-defined color set
         ''' </summary>
         ''' <param name="colorSchema"></param>
@@ -87,7 +93,9 @@ Namespace Drawing2D.Colors.Scaler
         ''' </summary>
         ''' <param name="colors"></param>
         Sub New(colors As IEnumerable(Of Color))
-            Me.colors = colors.ToArray
+            If Not colors Is Nothing Then
+                Me.colors = colors.ToArray
+            End If
         End Sub
 
         Public MustOverride Function GetColor(item As NamedValue(Of Double)) As Color

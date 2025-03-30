@@ -80,6 +80,22 @@ Namespace Drawing2D.Colors.Scaler
         ''' </summary>
         Dim logarithm%
 
+        ReadOnly solidColors As New Dictionary(Of Color, SolidBrush)
+
+        ''' <summary>
+        ''' get the [min,max] value range of the real world sample value input.
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property ValueMinMax As Double()
+            Get
+                Return valueRange.MinMax
+            End Get
+        End Property
+
+        Private Sub New()
+            Call MyBase.New(colors:=Nothing)
+        End Sub
+
         ''' <summary>
         ''' 
         ''' </summary>
@@ -130,6 +146,16 @@ Namespace Drawing2D.Colors.Scaler
             End With
         End Sub
 
+        Public Function ReScaleToValueRange(min As Double, max As Double) As ValueScaleColorProfile
+            Return New ValueScaleColorProfile With {
+                .colors = colors,
+                .DefaultColor = DefaultColor,
+                .indexRange = indexRange,
+                .logarithm = logarithm,
+                .valueRange = {min, max}
+            }
+        End Function
+
         ''' <summary>
         ''' get color use the item value
         ''' </summary>
@@ -138,13 +164,14 @@ Namespace Drawing2D.Colors.Scaler
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Function GetColor(item As NamedValue(Of Double)) As Color
-            Return GetColor(item.Value)
+            Return GetColor(item.Value, 0)
         End Function
 
-        Public Overloads Function GetColor(val As Double) As Color
+        Public Overloads Function GetColor(val As Double, ByRef index As Integer) As Color
             Dim termValue# = If(logarithm > 0, std.Log(val, logarithm), val)
-            Dim index As Integer = valueRange.ScaleMapping(termValue, indexRange)
             Dim color As Color
+
+            index = valueRange.ScaleMapping(termValue, indexRange)
 
             If index >= colors.Length - 1 Then
                 color = colors.Last
@@ -155,6 +182,10 @@ Namespace Drawing2D.Colors.Scaler
             End If
 
             Return color
+        End Function
+
+        Public Function GetSolidColor(val As Double, Optional ByRef index As Integer = -1) As SolidBrush
+            Return solidColors.ComputeIfAbsent(GetColor(val, index), lazyValue:=Function(c) New SolidBrush(c))
         End Function
 
     End Class
