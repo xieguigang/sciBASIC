@@ -268,8 +268,21 @@ Namespace ComponentModel.Ranges.Model
         '    Return r
         'End Operator
 
+        ''' <summary>
+        ''' get [min,max] value range from a given vector of the input data
+        ''' </summary>
+        ''' <param name="data"></param>
+        ''' <returns></returns>
+        ''' <remarks>
+        ''' this type cast operator is a kind of the safe function, for null input or
+        ''' empty vector input, this operator will returns nothing.
+        ''' </remarks>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Widening Operator CType(data#()) As DoubleRange
+            If data Is Nothing OrElse data.Length = 0 Then
+                Return Nothing
+            End If
+
             With data
                 Return New DoubleRange(min:= .Min, max:= .Max)
             End With
