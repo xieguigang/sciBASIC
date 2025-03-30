@@ -33,6 +33,11 @@ Namespace Drawing2D.HeatMap
             valueRange = args.valueRange
         End Sub
 
+        Sub New(brushes As IEnumerable(Of SolidBrush), defaultFill$)
+            Me.brushes = brushes.SafeQuery.ToArray
+            Me.defaultFill = defaultFill
+        End Sub
+
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function GetMapping(values As IEnumerable(Of Double)) As ValueScaleColorProfile
             Return New ValueScaleColorProfile(values.JoinIterates(valueRange.AsEnumerable), brushes.Select(Function(b) b.Color), -1)
