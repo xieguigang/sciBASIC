@@ -1,5 +1,11 @@
 ﻿Imports System.Drawing
+Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
+Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors.Scaler
+Imports Microsoft.VisualBasic.Linq
+
+
 
 #If NET48 Then
 Imports Brush = System.Drawing.Brush
@@ -18,6 +24,11 @@ Namespace Drawing2D.HeatMap
         ''' </summary>
         ''' <returns></returns>
         Public ReadOnly Property defaultFill As Color = Color.Transparent
+        ''' <summary>
+        ''' manual controls of the heatmap value mapping range
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property ValueRange As DoubleRange
 
         Sub New(Optional colorSet As String = "YlGnBu:c8",
                 Optional mapLevels% = 25,
@@ -45,6 +56,11 @@ Namespace Drawing2D.HeatMap
             _mapLevels = mapLevels
             _defaultFill = background
         End Sub
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function GetMapping(values As IEnumerable(Of Double)) As ValueScaleColorProfile
+            Return New ValueScaleColorProfile(values.JoinIterates(ValueRange.AsEnumerable), colorSet, mapLevels, -1)
+        End Function
 
         Public Function GetColors() As Color()
             Return Designer.GetColors(colorSet, mapLevels)
