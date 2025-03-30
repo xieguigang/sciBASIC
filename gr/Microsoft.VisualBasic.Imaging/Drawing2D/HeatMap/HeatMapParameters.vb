@@ -13,6 +13,10 @@ Namespace Drawing2D.HeatMap
 
         Public ReadOnly Property colorSet As String = "YlGnBu:c8"
         Public ReadOnly Property mapLevels As Integer = 30
+        ''' <summary>
+        ''' background color options when deal with the irregular polygon
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property defaultFill As Color = Color.Transparent
 
         Sub New(Optional colorSet As String = "YlGnBu:c8",
