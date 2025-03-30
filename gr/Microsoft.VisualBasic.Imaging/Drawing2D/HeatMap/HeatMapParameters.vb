@@ -20,7 +20,7 @@ Namespace Drawing2D.HeatMap
         ''' background color options when deal with the irregular polygon
         ''' </summary>
         ''' <returns></returns>
-        Public ReadOnly Property defaultFill As Color = Color.Transparent
+        Public ReadOnly Property defaultFill As String = NameOf(Color.Transparent)
         ''' <summary>
         ''' manual controls of the heatmap value mapping range
         ''' </summary>
@@ -47,7 +47,7 @@ Namespace Drawing2D.HeatMap
         ''' background color options when deal with the irregular polygon
         ''' </summary>
         ''' <returns></returns>
-        Public ReadOnly Property defaultFill As Color = Color.Transparent
+        Public ReadOnly Property defaultFill As String = NameOf(Color.Transparent)
         ''' <summary>
         ''' manual controls of the heatmap value mapping range
         ''' </summary>
@@ -60,7 +60,7 @@ Namespace Drawing2D.HeatMap
 
             _colorSet = colorSet
             _mapLevels = mapLevels
-            _defaultFill = defaultFill.TranslateColor
+            _defaultFill = defaultFill
         End Sub
 
         Sub New(Optional colorSet As ScalerPalette = ScalerPalette.Jet,
@@ -69,7 +69,7 @@ Namespace Drawing2D.HeatMap
 
             _colorSet = colorSet.Description
             _mapLevels = mapLevels
-            _defaultFill = defaultFill.TranslateColor
+            _defaultFill = defaultFill
         End Sub
 
         Sub New(background As Color,
@@ -78,7 +78,7 @@ Namespace Drawing2D.HeatMap
 
             _colorSet = colorSet
             _mapLevels = mapLevels
-            _defaultFill = background
+            _defaultFill = background.ToHtmlColor
         End Sub
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -99,7 +99,7 @@ Namespace Drawing2D.HeatMap
         End Function
 
         Public Overrides Function ToString() As String
-            Return $"{colorSet}[interpolate={mapLevels}], background={defaultFill.ToHtmlColor}"
+            Return $"{colorSet}[interpolate={mapLevels}], background={defaultFill}"
         End Function
     End Class
 End Namespace
