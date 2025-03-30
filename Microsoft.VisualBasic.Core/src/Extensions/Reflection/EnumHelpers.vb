@@ -130,8 +130,14 @@ Public Module EnumHelpers
     ''' then function will return the string value from the ToString() function.
     ''' </summary>
     ''' <param name="value"></param>
+    ''' <param name="deli">
+    ''' a delimiter string for join multiple flag enumeration value theirs enum string
+    ''' </param>
     ''' <returns></returns>
-    ''' <remarks></remarks>
+    ''' <remarks>
+    ''' this extension function has an internal cache table for get the description
+    ''' text of a given enum value
+    ''' </remarks>
     <Extension>
     Public Function Description(value As [Enum], Optional deli$ = "|") As String
         Static descriptionCache As New Dictionary(Of Object, String)

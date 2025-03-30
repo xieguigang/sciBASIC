@@ -24,6 +24,15 @@ Namespace Drawing2D.HeatMap
             _defaultFill = defaultFill.TranslateColor
         End Sub
 
+        Sub New(Optional colorSet As ScalerPalette = ScalerPalette.Jet,
+                Optional mapLevels% = 25,
+                Optional defaultFill As String = "Transparent")
+
+            _colorSet = colorSet.Description
+            _mapLevels = mapLevels
+            _defaultFill = defaultFill.TranslateColor
+        End Sub
+
         Sub New(background As Color,
                 Optional colorSet As String = "YlGnBu:c8",
                 Optional mapLevels% = 25)
