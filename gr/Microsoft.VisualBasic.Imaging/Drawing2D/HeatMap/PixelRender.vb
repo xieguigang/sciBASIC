@@ -63,7 +63,6 @@ Imports Microsoft.VisualBasic.Imaging.BitmapImage
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
 Imports Microsoft.VisualBasic.Imaging.Driver
 
-
 #If NET48 Then
 #Else
 Imports Bitmap = Microsoft.VisualBasic.Imaging.Bitmap
