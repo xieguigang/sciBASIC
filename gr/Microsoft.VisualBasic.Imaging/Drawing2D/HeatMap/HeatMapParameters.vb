@@ -94,6 +94,10 @@ Namespace Drawing2D.HeatMap
             Return Designer.GetBrushes(colorSet, mapLevels)
         End Function
 
+        Public Function CreateBrushParameters() As HeatMapBrushes
+            Return New HeatMapBrushes(Me)
+        End Function
+
         Public Overrides Function ToString() As String
             Return $"{colorSet}[interpolate={mapLevels}], background={defaultFill.ToHtmlColor}"
         End Function
