@@ -78,7 +78,7 @@ Namespace Drawing2D.Colors.Scaler
         ''' <summary>
         ''' base value for the log function for scale of the input value.
         ''' </summary>
-        Dim logarithm%
+        Dim logarithm#
 
         ReadOnly solidColors As New Dictionary(Of Color, SolidBrush)
 
@@ -107,11 +107,11 @@ Namespace Drawing2D.Colors.Scaler
         ''' <param name="logarithm">
         ''' base value for the log function for scale of the input value. zero or negative value mean no log function calls
         ''' </param>
-        Public Sub New(data As IEnumerable(Of NamedValue(Of Double)), colorSchema$, level%, Optional logarithm% = 0)
+        Public Sub New(data As IEnumerable(Of NamedValue(Of Double)), colorSchema$, level%, Optional logarithm# = 0)
             Call Me.New(values:=(From xi As NamedValue(Of Double) In data Select xi.Value), colorSchema, level, logarithm)
         End Sub
 
-        Sub New(values As IEnumerable(Of Double), colors As IEnumerable(Of Color), Optional logarithm% = 0)
+        Sub New(values As IEnumerable(Of Double), colors As IEnumerable(Of Color), Optional logarithm# = 0)
             Call MyBase.New(colors)
 
             With values.ToArray
@@ -124,7 +124,8 @@ Namespace Drawing2D.Colors.Scaler
                     valueRange = New Double() {minX, maxX}
                 End If
 
-                indexRange = New Double() {0.0, MyBase.colors.Length - 1}
+                Me.logarithm = logarithm
+                Me.indexRange = New Double() {0.0, MyBase.colors.Length - 1}
             End With
         End Sub
 
