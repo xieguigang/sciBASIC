@@ -92,6 +92,10 @@ Namespace Drawing2D.Colors.Scaler
 
         Public MustOverride Function GetColor(item As NamedValue(Of Double)) As Color
 
+        ''' <summary>
+        ''' view of the colors vector for mapping
+        ''' </summary>
+        ''' <returns></returns>
         Public Overrides Function ToString() As String
             Return colors.Select(Function(c) c.ToHtmlColor).GetJson
         End Function

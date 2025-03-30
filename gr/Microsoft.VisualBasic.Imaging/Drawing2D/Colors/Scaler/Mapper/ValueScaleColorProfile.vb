@@ -95,6 +95,23 @@ Namespace Drawing2D.Colors.Scaler
             Call Me.New(values:=(From xi As NamedValue(Of Double) In data Select xi.Value), colorSchema, level, logarithm)
         End Sub
 
+        Sub New(values As IEnumerable(Of Double), colors As IEnumerable(Of Color), Optional logarithm% = 0)
+            Call MyBase.New(colors)
+
+            With values.ToArray
+                Dim minX As Double = Aggregate xi As Double In .AsEnumerable Into Min(xi)
+                Dim maxX As Double = Aggregate xi As Double In .AsEnumerable Into Max(xi)
+
+                If logarithm > 0 Then
+                    valueRange = New Double() {std.Log(minX, logarithm), std.Log(maxX, logarithm)}
+                Else
+                    valueRange = New Double() {minX, maxX}
+                End If
+
+                indexRange = New Double() {0.0, MyBase.colors.Length - 1}
+            End With
+        End Sub
+
         Sub New(values As IEnumerable(Of Double), colorSchema$, level%, Optional logarithm% = 0)
             Call MyBase.New(colorSchema)
 
@@ -108,8 +125,8 @@ Namespace Drawing2D.Colors.Scaler
                     valueRange = New Double() {minX, maxX}
                 End If
 
-                indexRange = New Double() {0.0, .Length - 1}
                 colors = Designer.CubicSpline(colors, n:=level)
+                indexRange = New Double() {0.0, colors.Length - 1}
             End With
         End Sub
 
