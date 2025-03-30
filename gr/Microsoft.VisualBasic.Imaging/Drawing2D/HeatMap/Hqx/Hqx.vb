@@ -79,7 +79,7 @@
 
 Option Strict On
 
-Imports stdNum = System.Math
+Imports std = System.Math
 
 Namespace Drawing2D.HeatMap.hqx
 
@@ -113,10 +113,10 @@ Namespace Drawing2D.HeatMap.hqx
             Dim YUV1 As Integer = RgbYuv.getYuv(c1)
             Dim YUV2 As Integer = RgbYuv.getYuv(c2)
 
-            Return stdNum.Abs((YUV1 And HqxScaling.Ymask) - (YUV2 And HqxScaling.Ymask)) > [trY] OrElse
-                stdNum.Abs((YUV1 And HqxScaling.Umask) - (YUV2 And HqxScaling.Umask)) > trU OrElse
-                stdNum.Abs((YUV1 And HqxScaling.Vmask) - (YUV2 And HqxScaling.Vmask)) > trV OrElse
-                stdNum.Abs((c1 >> 24) - (c2 >> 24)) > trA
+            Return std.Abs((YUV1 And HqxScaling.Ymask) - (YUV2 And HqxScaling.Ymask)) > [trY] OrElse
+                std.Abs((YUV1 And HqxScaling.Umask) - (YUV2 And HqxScaling.Umask)) > trU OrElse
+                std.Abs((YUV1 And HqxScaling.Vmask) - (YUV2 And HqxScaling.Vmask)) > trV OrElse
+                std.Abs((c1 >> 24) - (c2 >> 24)) > trA
         End Function
 
     End Class
