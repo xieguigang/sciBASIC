@@ -474,15 +474,19 @@ Public Module Extensions
     ''' <summary>
     ''' Join the string tokens with a given delimiter text.
     ''' </summary>
-    ''' <param name="tokens"></param>
-    ''' <param name="delimiter"></param>
-    ''' <returns></returns>
-    ''' <remarks>
+    ''' <param name="tokens">parts of the string tokens for make join</param>
+    ''' <param name="delimiter">
+    ''' the delimiter for make string join.
+    ''' </param>
+    ''' <returns>
     ''' This is a safe function: if the source string collection is nothing, 
     ''' then whistle function will returns a empty string instead of throw 
     ''' exception.
     ''' 
-    ''' (a safe wrapper of <see cref="System.String.Join"/>，这是一个安全的函数，当数组为空的时候回返回空字符串)
+    ''' (a safe wrapper of <see cref="System.String.Join"/>)
+    ''' </returns>
+    ''' <remarks>
+    ''' 这是一个安全的函数，当数组为空的时候回返回空字符串
     ''' </remarks>
     <DebuggerStepThrough>
     <Extension>
@@ -490,7 +494,7 @@ Public Module Extensions
         If tokens Is Nothing Then
             Return ""
         End If
-        Return String.Join(delimiter, tokens.ToArray)
+        Return String.Join(If(delimiter, ""), tokens.ToArray)
     End Function
 
     ''' <summary>
