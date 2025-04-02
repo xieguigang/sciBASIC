@@ -216,6 +216,12 @@ Namespace CSS
             End If
         End Function
 
+        ''' <summary>
+        ''' this css parser function returns nothing if the given <paramref name="css"/> string value is null or empty
+        ''' </summary>
+        ''' <param name="css$"></param>
+        ''' <param name="[default]"></param>
+        ''' <returns></returns>
         Public Shared Function TryParse(css$, Optional [default] As Stroke = Nothing) As Stroke
             If css.StringEmpty Then
                 Return [default]

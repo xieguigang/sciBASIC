@@ -58,6 +58,7 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Axis
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Canvas
@@ -136,7 +137,8 @@ Namespace BarPlot
                                       Optional legendLayout As String = "top-right",
                                       Optional gridStrokeX As String = PlotAlignmentGroup.DefaultGridXStroke,
                                       Optional gridStrokeY As String = PlotAlignmentGroup.DefaultGridYStroke,
-                                      Optional highlights As Double() = Nothing,
+                                      Optional highlights As NamedValue(Of Double)() = Nothing,
+                                      Optional highlightStyle As String = Stroke.StrongHighlightStroke,
                                       Optional driver As Drivers = Drivers.Default) As GraphicsData
 
             Dim q As New Signal With {
@@ -169,7 +171,8 @@ Namespace BarPlot
                 drawGridX:=drawGridX,
                 gridStrokeX:=gridStrokeX,
                 gridStrokeY:=gridStrokeY,
-                hitsHightLights:=highlights
+                hitsHightLights:=highlights,
+                highlight:=highlightStyle
             )
         End Function
 
@@ -215,7 +218,7 @@ Namespace BarPlot
                                             Optional X_CSS$ = CSSFont.Win10Normal,
                                             Optional yAxislabelPosition As YlabelPosition = YlabelPosition.InsidePlot,
                                             Optional labelPlotStrength# = 0.25,
-                                            Optional hitsHightLights As Double() = Nothing,
+                                            Optional hitsHightLights As NamedValue(Of Double)() = Nothing,
                                             Optional xError# = 0.5,
                                             Optional highlight$ = Stroke.StrongHighlightStroke,
                                             Optional highlightMargin! = 2,

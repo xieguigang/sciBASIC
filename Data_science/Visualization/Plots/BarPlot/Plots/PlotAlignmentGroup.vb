@@ -62,6 +62,7 @@
 #End Region
 
 Imports System.Drawing
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic
 Imports Microsoft.VisualBasic.Data.ChartPlots.Graphic.Axis
@@ -109,13 +110,14 @@ Namespace BarPlot
         Dim query As Signal(), subject As Signal()
         Dim xrange As DoubleRange, yrange As DoubleRange
         Dim rectangleStyle As RectangleStyling
+        Dim highlightStyle As RectangleStyling
 
         Public Property XAxisLabelCss As String
         Public Property displayX As Boolean
         Public Property queryName As String
         Public Property subjectName As String
         Public Property highlightMargin As Single
-        Public Property hitsHightLights As Double()
+        Public Property hitsHightLights As NamedValue(Of Double)()
         Public Property labelPlotStrength As Double
         Public Property idTag As String
         ''' <summary>
@@ -140,6 +142,18 @@ Namespace BarPlot
             Me.xrange = xrange
             Me.yrange = yrange
             Me.rectangleStyle = rectangleStyle Or RectangleStyles.DefaultStyle
+
+            Dim highlights = Stroke.TryParse(theme.lineStroke)
+            Dim highlightColor As Brush = Nothing
+
+            If highlights IsNot Nothing Then
+                highlightColor = highlights.fill.GetBrush
+            End If
+
+            Me.highlightStyle =
+                Sub(g As IGraphics, color As SolidBrush, layout As Rectangle, unsealSide As RectangleSides)
+                    Call g.FillRectangle(highlightColor, layout)
+                End Sub
 
             If xrange Is Nothing Then
                 Dim ALL = query _
@@ -204,8 +218,11 @@ Namespace BarPlot
                         .Size = sz
                     }
 
-                    ' Call g.FillRectangle(ba, rect)
-                    Call rectangleStyle(g, ba, rect, RectangleSides.Bottom)
+                    If makeHighlights Then
+                        Call highlightStyle(g, ba, rect, RectangleSides.Bottom)
+                    Else
+                        Call rectangleStyle(g, ba, rect, RectangleSides.Bottom)
+                    End If
                 Next
             Next
 
@@ -240,8 +257,11 @@ Namespace BarPlot
                         rect = Rectangle(ymid, left, left + bw, y)
                     End If
 
-                    ' g.FillRectangle(bb, rect)
-                    Call rectangleStyle(g, bb, rect, RectangleSides.Top)
+                    If makeHighlights Then
+                        Call highlightStyle(g, bb, rect, RectangleSides.Top)
+                    Else
+                        Call rectangleStyle(g, bb, rect, RectangleSides.Top)
+                    End If
                 Next
             Next
         End Sub
@@ -405,13 +425,14 @@ Namespace BarPlot
             For Each part As Signal In query
                 For Each o As (x#, value#) In part.signals
                     Dim xCSSFont As Font
+                    Dim checkHighlight = isHighlight(o.x)
 
                     y = o.value
                     y = ymid - scaleY(y)
                     left = scaleX(o.x)
                     rect = New RectangleF(New PointF(left, y), New SizeF(bw, scaleY(o.value)))
 
-                    If hasHighlights AndAlso isHighlight(o.x).yes Then
+                    If hasHighlights AndAlso checkHighlight.yes Then
                         xCSSFont = tag_highlights
                     Else
                         xCSSFont = tag_label
@@ -421,6 +442,11 @@ Namespace BarPlot
 
                     If displayX AndAlso o.value / yrange.Max >= labelPlotStrength Then
                         xlabel = o.x.ToString(theme.tagFormat)
+
+                        If checkHighlight.yes Then
+                            xlabel = xlabel & $" [{checkHighlight.X.Name}]"
+                        End If
+
                         xsz = g.MeasureString(xlabel, xCSSFont)
                         xpos = New PointF(rect.Left + (rect.Width - xsz.Width) / 2, rect.Top - xsz.Height)
                         text = New TextRectangle(xlabel, New RectangleF(xpos, xsz))
@@ -470,13 +496,14 @@ Namespace BarPlot
             For Each part As Signal In subject
                 For Each o As (x#, value#) In part.signals
                     Dim xCssFont As Font = Nothing
+                    Dim checkHighlight = isHighlight(o.x)
 
                     y = o.value
                     y = ymid + scaleY(y)
                     left = scaleX(o.x)
                     rect = Rectangle(ymid, left, left + bw, y)
 
-                    If hasHighlights AndAlso isHighlight(o.x).yes Then
+                    If hasHighlights AndAlso checkHighlight.yes Then
                         xCssFont = tag_highlights
                     Else
                         xCssFont = tag_label
@@ -486,6 +513,11 @@ Namespace BarPlot
 
                     If displayX AndAlso o.value / yrange.Max >= labelPlotStrength Then
                         xlabel = o.x.ToString(theme.tagFormat)
+
+                        If checkHighlight.yes Then
+                            xlabel = xlabel & $" [{checkHighlight.X.Name}]"
+                        End If
+
                         xsz = g.MeasureString(xlabel, xCssFont)
                         xpos = New PointF(rect.Left + (rect.Width - xsz.Width) / 2, rect.Bottom + 3)
                         text = New TextRectangle(xlabel, New RectangleF(xpos, xsz))
@@ -595,22 +627,22 @@ Namespace BarPlot
             Call g.DrawString(subjectName, legendFont, Brushes.Black, box.Location.OffSet2D(25, -y))
         End Sub
 
-        Private Shared Function Hit(highlights#(), err#) As Func(Of Double, (err#, X#, yes As Boolean))
+        Private Shared Function Hit(highlights As NamedValue(Of Double)(), err#) As Func(Of Double, (err#, X As NamedValue(Of Double), yes As Boolean))
             If highlights.IsNullOrEmpty Then
-                Return Function() (-1, -1, False)
+                Return Function() (-1, Nothing, False)
             Else
                 Return Function(x)
                            Dim e#
 
-                           For Each n In highlights
-                               e = std.Abs(n - x)
+                           For Each n As NamedValue(Of Double) In highlights
+                               e = std.Abs(n.Value - x)
 
                                If e <= err Then
                                    Return (e, n, True)
                                End If
                            Next
 
-                           Return (-1, -1, False)
+                           Return (-1, Nothing, False)
                        End Function
             End If
         End Function
