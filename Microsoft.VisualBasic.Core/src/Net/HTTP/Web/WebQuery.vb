@@ -118,6 +118,11 @@ Namespace Net.Http
 
         Friend Const WebQueryDebug As String = "webquery.debug"
 
+        ''' <summary>
+        ''' config default web query parameters:
+        ''' 
+        ''' from cli: /@set sleep=3000;webquery.debug=TRUE
+        ''' </summary>
         Shared Sub New()
             Static defaultInterval As [Default](Of String) = "3000"
 
