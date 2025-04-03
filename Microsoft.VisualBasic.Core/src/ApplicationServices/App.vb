@@ -737,8 +737,12 @@ Public Module App
         Call GC.Collect()
         Call GC.WaitForPendingFinalizers()
 
-        If (Environment.OSVersion.Platform = PlatformID.Win32NT) Then
-            Call SetProcessWorkingSetSize(Process.GetCurrentProcess().Handle, -1, -1)
+        If Environment.OSVersion.Platform = PlatformID.Win32NT Then
+            Try
+                Call SetProcessWorkingSetSize(Process.GetCurrentProcess().Handle, -1, -1)
+            Catch ex As Exception
+                Call App.LogException(ex)
+            End Try
         End If
     End Sub
 
