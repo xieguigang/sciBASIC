@@ -422,7 +422,9 @@ Namespace LinearAlgebra
         ''' </summary>
         ''' <param name="v1"></param>
         ''' <param name="v2"></param>
-        ''' <returns></returns>
+        ''' <returns>
+        ''' this operator is a safe function: if any one vector is nothing, then returns the copy of another vector directly.
+        ''' </returns>
         ''' <remarks></remarks>
         Public Overloads Shared Operator +(v1 As Vector, v2 As Vector) As Vector
             Dim output As Double()
