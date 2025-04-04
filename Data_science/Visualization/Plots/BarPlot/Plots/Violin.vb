@@ -260,7 +260,7 @@ Public Class Violin : Inherits Plot
 
         For Each density As Density In data.ViolinDensity(nbins)
             If density.axis < 0 AndAlso zeroBreak Then
-                Exit For
+                Continue For
             Else
                 yi = yscale.TranslateY(density.axis)
             End If
