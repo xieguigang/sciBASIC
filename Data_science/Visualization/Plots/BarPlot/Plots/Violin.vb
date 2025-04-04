@@ -256,14 +256,17 @@ Public Class Violin : Inherits Plot
         ' 计算数据分布的密度之后，进行左右对称的线条的生成
         Dim line_l As New List(Of PointF)
         Dim line_r As New List(Of PointF)
+        Dim yi As Double
 
         For Each density As Density In data.ViolinDensity(nbins)
             If density.axis < 0 AndAlso zeroBreak Then
                 Exit For
+            Else
+                yi = yscale.TranslateY(density.axis)
             End If
 
-            line_l += New PointF With {.X = density.density, .Y = density.axis}
-            line_r += New PointF With {.X = density.density, .Y = density.axis}
+            line_l += New PointF With {.X = density.density, .Y = yi}
+            line_r += New PointF With {.X = density.density, .Y = yi}
         Next
 
         ' 进行宽度伸缩映射
