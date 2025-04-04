@@ -327,6 +327,13 @@ Public Class Violin : Inherits Plot
             lowerDraw = 0
         End If
 
+        If lowerDraw < yscale.Y.valueDomain.Min Then
+            lowerDraw = yscale.Y.valueDomain.Min
+        End If
+        If upperBound > yscale.Y.valueDomain.Max Then
+            upperBound = yscale.Y.valueDomain.Max
+        End If
+
         Call g.DrawLine(
             pen:=polygonStroke,
             pt1:=New PointF(x, yscale.TranslateY(lowerDraw)),
