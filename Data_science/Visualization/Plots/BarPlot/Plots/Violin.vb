@@ -257,9 +257,12 @@ Public Class Violin : Inherits Plot
         Dim line_l As New List(Of PointF)
         Dim line_r As New List(Of PointF)
         Dim yi As Double
+        Dim yrange = yscale.Y.valueDomain
 
         For Each density As Density In data.ViolinDensity(nbins)
             If density.axis < 0 AndAlso zeroBreak Then
+                Continue For
+            ElseIf density.axis > yrange.Max Then
                 Continue For
             Else
                 yi = yscale.TranslateY(density.axis)
@@ -325,13 +328,6 @@ Public Class Violin : Inherits Plot
 
         If zeroBreak AndAlso lowerDraw < 0 Then
             lowerDraw = 0
-        End If
-
-        If lowerDraw < yscale.Y.valueDomain.Min Then
-            lowerDraw = yscale.Y.valueDomain.Min
-        End If
-        If upperBound > yscale.Y.valueDomain.Max Then
-            upperBound = yscale.Y.valueDomain.Max
         End If
 
         Call g.DrawLine(
