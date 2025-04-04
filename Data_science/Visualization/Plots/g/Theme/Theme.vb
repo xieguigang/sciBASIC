@@ -214,6 +214,9 @@ Namespace Graphic.Canvas
         Public Property XaxisTickFormat As String = "F2"
         Public Property YaxisTickFormat As String = "F2"
 
+        Public Property nticksX As Integer = 9
+        Public Property nticksY As Integer = 9
+
 #End Region
 
 #Region "options"
