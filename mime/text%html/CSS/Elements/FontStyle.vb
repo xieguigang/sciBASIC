@@ -278,7 +278,7 @@ Namespace CSS
         ''' <param name="hasValue">
         ''' 所输入到这个函数进行解析的<paramref name="css"/>样式字符串之中是否包含有字体的定义?
         ''' </param>
-        ''' <returns></returns>
+        ''' <returns>this function returns default nothing if the input <paramref name="css"/> string is nothing or empty.</returns>
         Public Shared Function TryParse(css$, Optional [default] As CSSFont = Nothing, Optional ByRef hasValue As Boolean = False) As CSSFont
             hasValue = False
 

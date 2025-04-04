@@ -245,8 +245,9 @@ Namespace Graphic.Axis
             ' 填充网格要先于坐标轴的绘制操作进行，否则会将坐标轴给覆盖掉
             Dim env As CSSEnvirnment = g.LoadEnvironment
             Dim rect As Rectangle = scaler.region
-            Dim tickFont As Font = env.GetFont(CSSFont.TryParse(tickFontStyle))
-            Dim tickColor As Brush = CSSFont.TryParse(tickFontStyle).color.GetBrush
+            ' 20250405 style css string maybe empty if the both x and y axis layout is config as none
+            Dim tickFont As Font = If(tickFontStyle.StringEmpty(, True), Nothing, env.GetFont(CSSFont.TryParse(tickFontStyle)))
+            Dim tickColor As Brush = If(tickFontStyle.StringEmpty(, True), Nothing, CSSFont.TryParse(tickFontStyle).color.GetBrush)
             Dim gridPenX As Pen = env.GetPen(Stroke.TryParse(gridX))
             Dim gridPenY As Pen = env.GetPen(Stroke.TryParse(gridY))
 
