@@ -115,13 +115,15 @@ Namespace Drawing2D.Colors.Scaler
             Call MyBase.New(colors)
 
             With values.ToArray
-                Dim minX As Double = Aggregate xi As Double In .AsEnumerable Into Min(xi)
-                Dim maxX As Double = Aggregate xi As Double In .AsEnumerable Into Max(xi)
+                If .Length > 0 Then
+                    Dim minX As Double = Aggregate xi As Double In .AsEnumerable Into Min(xi)
+                    Dim maxX As Double = Aggregate xi As Double In .AsEnumerable Into Max(xi)
 
-                If logarithm > 0 Then
-                    valueRange = New Double() {std.Log(minX, logarithm), std.Log(maxX, logarithm)}
-                Else
-                    valueRange = New Double() {minX, maxX}
+                    If logarithm > 0 Then
+                        valueRange = New Double() {std.Log(minX, logarithm), std.Log(maxX, logarithm)}
+                    Else
+                        valueRange = New Double() {minX, maxX}
+                    End If
                 End If
 
                 Me.logarithm = logarithm
