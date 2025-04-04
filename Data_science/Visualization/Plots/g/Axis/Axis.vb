@@ -473,6 +473,12 @@ Namespace Graphic.Axis
                         .Y = fSize.Width + (size.Height - fSize.Width) / 2 + scaler.region.Top
                     }
 
+#If NET8_0_OR_GREATER Then
+                    location = New PointF With {
+                        .X = scaler.region.Left - fSize.Height - maxYTickSize * 1.5,
+                        .Y = fSize.Width / 2 + (size.Height - fSize.Width) / 2 + scaler.region.Top
+                    }
+#End If
                     If location.X < 5 Then
                         location = New PointF(5, location.Y)
                     End If
