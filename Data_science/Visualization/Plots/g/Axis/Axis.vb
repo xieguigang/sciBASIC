@@ -301,8 +301,10 @@ Namespace Graphic.Axis
                 Next
             End If
 
+            ' 20250405 style css string maybe empty if the
+            ' both x and y axis layout is config as none
             Dim pen As Pen = env.GetPen(Stroke.TryParse(axisStroke))
-            Dim labelColor As SolidBrush = CSSFont.TryParse(labelFontStyle).color.GetBrush
+            Dim labelColor As SolidBrush = If(labelFontStyle.StringEmpty(, True), Nothing, CSSFont.TryParse(labelFontStyle).color.GetBrush)
 
             If xlayout <> XAxisLayoutStyles.None Then
                 Call g.DrawX(pen, xlabel, scaler, xlayout, scaler.Y(0), offset,
