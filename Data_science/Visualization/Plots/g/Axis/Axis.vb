@@ -362,8 +362,6 @@ Namespace Graphic.Axis
             End With
         End Sub
 
-        Public Property delta As Integer = 10
-
         ''' <summary>
         ''' 
         ''' </summary>
@@ -398,6 +396,7 @@ Namespace Graphic.Axis
             Dim env As CSSEnvirnment = g.LoadEnvironment
             Dim X%  ' y轴的layout的变化只需要变换x的值即可
             Dim size = scaler.region.Size
+            Dim delta As Single = g.MeasureString("A", tickFont).Width * 0.8
 
             Select Case layout
                 Case YAxisLayoutStyles.Centra
