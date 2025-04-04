@@ -510,6 +510,11 @@ Namespace Imaging
         ' 2. 0,255,255,255
         ' 3. 255,0,0,0
 
+        ''' <summary>
+        ''' Check of the given color value is transparent color?
+        ''' </summary>
+        ''' <param name="c"></param>
+        ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function IsTransparent(c As Color) As Boolean
