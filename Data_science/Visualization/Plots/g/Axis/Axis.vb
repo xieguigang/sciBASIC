@@ -396,7 +396,7 @@ Namespace Graphic.Axis
             Dim env As CSSEnvirnment = g.LoadEnvironment
             Dim X%  ' y轴的layout的变化只需要变换x的值即可
             Dim size = scaler.region.Size
-            Dim delta As Single = g.MeasureString("A", tickFont).Width * 0.8
+            Dim delta As Single = g.MeasureString("A", tickFont).Width
 
             Select Case layout
                 Case YAxisLayoutStyles.Centra
@@ -428,9 +428,9 @@ Namespace Graphic.Axis
 
                     If showAxisLine Then
                         If layout = YAxisLayoutStyles.Right Then
-                            Call g.DrawLine(pen, axisY, New PointF(ZERO.X + delta, y))
+                            Call g.DrawLine(pen, axisY, New PointF(ZERO.X + delta / 2, y))
                         Else
-                            Call g.DrawLine(pen, axisY, New PointF(ZERO.X - delta, y))
+                            Call g.DrawLine(pen, axisY, New PointF(ZERO.X - delta / 2, y))
                         End If
                     End If
 
