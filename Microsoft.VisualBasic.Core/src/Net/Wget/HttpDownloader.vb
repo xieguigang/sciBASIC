@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f9d8a840dbf30a6bedfddaf363275f36, Microsoft.VisualBasic.Core\src\Net\HTTP\Wget\HttpDownloader.vb"
+﻿#Region "Microsoft.VisualBasic::f9d8a840dbf30a6bedfddaf363275f36, Microsoft.VisualBasic.Core\src\Net\Wget\HttpDownloader.vb"
 
     ' Author:
     ' 

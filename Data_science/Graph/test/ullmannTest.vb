@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9a4edd4868b5ae101741e523d2a2b21e, Data_science\Graph\test\ullmannTest.vb"
+﻿#Region "Microsoft.VisualBasic::0c2c24e4ea3e4a8db5b08184a7f99f80, Data_science\Graph\test\ullmannTest.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 0.00%
     ' 
     '   Blank Lines: 5 (20.83%)
-    '     File Size: 805 B
+    '     File Size: 803 B
 
 
     ' Module ullmannTest
@@ -75,4 +75,3 @@ Module ullmannTest
     End Sub
 
 End Module
-

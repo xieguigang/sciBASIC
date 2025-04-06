@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1f68c02a2d6247208e0d9a5467a2540c, Microsoft.VisualBasic.Core\src\Extensions\Reflection\EnumHelpers.vb"
+﻿#Region "Microsoft.VisualBasic::af42b88dfd82f32c152bc9c641e26fe6, Microsoft.VisualBasic.Core\src\Extensions\Reflection\EnumHelpers.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 127
-    '    Code Lines: 82 (64.57%)
-    ' Comment Lines: 25 (19.69%)
-    '    - Xml Docs: 96.00%
+    '   Total Lines: 133
+    '    Code Lines: 82 (61.65%)
+    ' Comment Lines: 31 (23.31%)
+    '    - Xml Docs: 96.77%
     ' 
-    '   Blank Lines: 20 (15.75%)
-    '     File Size: 4.55 KB
+    '   Blank Lines: 20 (15.04%)
+    '     File Size: 4.82 KB
 
 
     ' Module EnumHelpers

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5741b46918ef0d857dd5de54530ac480, Data_science\Graph\test\My Project\Settings.Designer.vb"
+﻿#Region "Microsoft.VisualBasic::3ec1edbf205f46efa91d1b9fbc6b5111, Data_science\Graph\test\My Project\Settings.Designer.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 0.00%
     ' 
     '   Blank Lines: 13 (17.81%)
-    '     File Size: 2.98 KB
+    '     File Size: 2.97 KB
 
 
     '     Class MySettings
@@ -131,4 +131,3 @@ Namespace My
         End Property
     End Module
 End Namespace
-

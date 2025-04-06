@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::064e2bbeeea2c3ef89ca32052cab1ed3, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Colors\Scaler\Mapper\ColorManager.vb"
+﻿#Region "Microsoft.VisualBasic::96b98dcb765317e7d9924bb6995809f1, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Colors\Scaler\Mapper\ColorManager.vb"
 
     ' Author:
     ' 
@@ -34,16 +34,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 46
-    '    Code Lines: 20 (43.48%)
-    ' Comment Lines: 17 (36.96%)
-    '    - Xml Docs: 94.12%
+    '   Total Lines: 58
+    '    Code Lines: 23 (39.66%)
+    ' Comment Lines: 25 (43.10%)
+    '    - Xml Docs: 96.00%
     ' 
-    '   Blank Lines: 9 (19.57%)
-    '     File Size: 1.46 KB
+    '   Blank Lines: 10 (17.24%)
+    '     File Size: 1.89 KB
 
 
     '     Class ColorProfile
+    ' 
+    '         Properties: DefaultColor
     ' 
     '         Constructor: (+2 Overloads) Sub New
     '         Function: ToString

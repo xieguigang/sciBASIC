@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4c482875704af886240510e8670533bd, Data_science\Graph\Analysis\Ullmann.vb"
+﻿#Region "Microsoft.VisualBasic::4327f967e9da14991349520d6800c41e, Data_science\Graph\Analysis\Ullmann.vb"
 
     ' Author:
     ' 
@@ -224,4 +224,3 @@ Namespace Analysis
     End Class
 
 End Namespace
-

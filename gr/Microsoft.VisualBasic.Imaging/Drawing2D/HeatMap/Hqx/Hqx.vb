@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::dbad680bff6b52781fcf328ddb658911, gr\Microsoft.VisualBasic.Imaging\Drawing2D\HeatMap\Hqx\Hqx.vb"
+﻿#Region "Microsoft.VisualBasic::b4b435bcc86465a469d8aaa27d689361, gr\Microsoft.VisualBasic.Imaging\Drawing2D\HeatMap\Hqx\Hqx.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 36.84%
     ' 
     '   Blank Lines: 10 (14.29%)
-    '     File Size: 3.23 KB
+    '     File Size: 3.22 KB
 
 
     '     Class HqxScaling

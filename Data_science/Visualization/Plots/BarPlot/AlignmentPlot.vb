@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3f9e80387816c26d3605e1dbd3fa94de, Data_science\Visualization\Plots\BarPlot\AlignmentPlot.vb"
+﻿#Region "Microsoft.VisualBasic::832c86da30a3a2a158aab1611aeef0e7, Data_science\Visualization\Plots\BarPlot\AlignmentPlot.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 241
-    '    Code Lines: 195 (80.91%)
-    ' Comment Lines: 26 (10.79%)
+    '   Total Lines: 244
+    '    Code Lines: 198 (81.15%)
+    ' Comment Lines: 26 (10.66%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 20 (8.30%)
-    '     File Size: 12.67 KB
+    '   Blank Lines: 20 (8.20%)
+    '     File Size: 12.91 KB
 
 
     '     Module AlignmentPlot

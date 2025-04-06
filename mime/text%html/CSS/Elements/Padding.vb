@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2a3a49cad8d50d46b6a248b6f181900a, mime\text%html\CSS\Elements\Padding.vb"
+﻿#Region "Microsoft.VisualBasic::1500119c66bd8ab81d0a4217d9c722f6, mime\text%html\CSS\Elements\Padding.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 413
-    '    Code Lines: 252 (61.02%)
-    ' Comment Lines: 111 (26.88%)
+    '   Total Lines: 418
+    '    Code Lines: 256 (61.24%)
+    ' Comment Lines: 111 (26.56%)
     '    - Xml Docs: 98.20%
     ' 
-    '   Blank Lines: 50 (12.11%)
-    '     File Size: 15.89 KB
+    '   Blank Lines: 51 (12.20%)
+    '     File Size: 16.14 KB
 
 
     '     Structure PaddingLayout
@@ -48,7 +48,7 @@
     '         Properties: Horizontal, LayoutVector, Vertical
     ' 
     '         Constructor: (+1 Overloads) Sub New
-    '         Function: EvaluateFromCSS, ParsePixels, ToString
+    '         Function: (+2 Overloads) EvaluateFromCSS, ParsePixels, ToString
     '         Operators: -, +
     ' 
     '     Structure Padding

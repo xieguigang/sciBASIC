@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7e0159cc7b8ab69bf4265cb6997643c5, gr\network-visualization\Datavisualization.Network\Graph\Model\Graph.vb"
+﻿#Region "Microsoft.VisualBasic::51efd27aa4b0031e9341b733dbc1b896, gr\network-visualization\Datavisualization.Network\Graph\Model\Graph.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 661
-    '    Code Lines: 373 (56.43%)
-    ' Comment Lines: 205 (31.01%)
+    '   Total Lines: 666
+    '    Code Lines: 377 (56.61%)
+    ' Comment Lines: 205 (30.78%)
     '    - Xml Docs: 71.71%
     ' 
-    '   Blank Lines: 83 (12.56%)
-    '     File Size: 25.43 KB
+    '   Blank Lines: 84 (12.61%)
+    '     File Size: 25.72 KB
 
 
     '     Class NetworkGraph
@@ -49,7 +49,7 @@
     ' 
     '         Constructor: (+2 Overloads) Sub New
     ' 
-    '         Function: (+3 Overloads) AddEdge, AddNode, AddVertex, (+2 Overloads) Clone, Copy
+    '         Function: (+4 Overloads) AddEdge, AddNode, AddVertex, (+2 Overloads) Clone, Copy
     '                   (+2 Overloads) CreateEdge, createEdgeInternal, (+2 Overloads) CreateNode, GetConnectedGraph, GetConnectedVertex
     '                   GetEdge, (+2 Overloads) GetEdges, (+2 Overloads) GetElementByID, GetElementsByClassName, GetElementsByName
     '                   StyleSelectorGetElementById, ToString, Union

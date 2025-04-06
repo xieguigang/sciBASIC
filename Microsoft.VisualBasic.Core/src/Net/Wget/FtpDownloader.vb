@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::230f3901acc08000c2d05f49fa574a16, Microsoft.VisualBasic.Core\src\Net\HTTP\Wget\FtpDownloader.vb"
+﻿#Region "Microsoft.VisualBasic::230f3901acc08000c2d05f49fa574a16, Microsoft.VisualBasic.Core\src\Net\Wget\FtpDownloader.vb"
 
     ' Author:
     ' 

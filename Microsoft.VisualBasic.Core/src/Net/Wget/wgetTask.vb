@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e98183971f9ec46aae479dd6f8ed6093, Microsoft.VisualBasic.Core\src\Net\HTTP\Wget\wgetTask.vb"
+﻿#Region "Microsoft.VisualBasic::e98183971f9ec46aae479dd6f8ed6093, Microsoft.VisualBasic.Core\src\Net\Wget\wgetTask.vb"
 
     ' Author:
     ' 

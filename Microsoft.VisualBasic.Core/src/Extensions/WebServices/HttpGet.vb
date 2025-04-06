@@ -1,55 +1,55 @@
-﻿#Region "Microsoft.VisualBasic::ea447a79504d8aa6098bdffaaaf2be78, Microsoft.VisualBasic.Core\src\Extensions\WebServices\HttpGet.vb"
+﻿#Region "Microsoft.VisualBasic::500298774507b0d82e206a74936561ec, Microsoft.VisualBasic.Core\src\Extensions\WebServices\HttpGet.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 229
-'    Code Lines: 159 (69.43%)
-' Comment Lines: 30 (13.10%)
-'    - Xml Docs: 70.00%
-' 
-'   Blank Lines: 40 (17.47%)
-'     File Size: 8.62 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-' Module HttpGet
-' 
-'     Properties: HttpRequestTimeOut
-' 
-'     Function: [GET], BuildWebRequest, httpRequest, LogException, UrlGet
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 238
+    '    Code Lines: 164 (68.91%)
+    ' Comment Lines: 36 (15.13%)
+    '    - Xml Docs: 58.33%
+    ' 
+    '   Blank Lines: 38 (15.97%)
+    '     File Size: 9.17 KB
+
+
+    ' Module HttpGet
+    ' 
+    '     Properties: HttpRequestTimeOut
+    ' 
+    '     Function: [GET], BuildWebRequest, httpRequest, LogException, UrlGet
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

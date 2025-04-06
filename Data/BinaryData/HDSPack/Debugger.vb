@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5ff772a9f875d2a4faa2e329c7e2aeaa, Data\BinaryData\HDSPack\Debugger.vb"
+﻿#Region "Microsoft.VisualBasic::28e9d3927374fe46a392b58c6c4e9def, Data\BinaryData\HDSPack\Debugger.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 122
-    '    Code Lines: 83 (68.03%)
-    ' Comment Lines: 23 (18.85%)
-    '    - Xml Docs: 95.65%
+    '   Total Lines: 128
+    '    Code Lines: 83 (64.84%)
+    ' Comment Lines: 29 (22.66%)
+    '    - Xml Docs: 96.55%
     ' 
-    '   Blank Lines: 16 (13.11%)
-    '     File Size: 4.92 KB
+    '   Blank Lines: 16 (12.50%)
+    '     File Size: 5.33 KB
 
 
     ' Module Debugger

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::978d617ec7cffd492c83a45b2bcb2f16, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Colors\Scaler\Mapper\ValueScaleColorProfile.vb"
+﻿#Region "Microsoft.VisualBasic::61ef84a4215a8c51da705693dea2eec4, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Colors\Scaler\Mapper\ValueScaleColorProfile.vb"
 
     ' Author:
     ' 
@@ -34,19 +34,21 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 57
-    '    Code Lines: 39 (68.42%)
-    ' Comment Lines: 8 (14.04%)
-    '    - Xml Docs: 100.00%
+    '   Total Lines: 140
+    '    Code Lines: 84 (60.00%)
+    ' Comment Lines: 33 (23.57%)
+    '    - Xml Docs: 93.94%
     ' 
-    '   Blank Lines: 10 (17.54%)
-    '     File Size: 2.11 KB
+    '   Blank Lines: 23 (16.43%)
+    '     File Size: 5.64 KB
 
 
     '     Class ValueScaleColorProfile
     ' 
-    '         Constructor: (+1 Overloads) Sub New
-    '         Function: GetColor
+    '         Properties: ValueMinMax
+    ' 
+    '         Constructor: (+4 Overloads) Sub New
+    '         Function: (+2 Overloads) GetColor, GetSolidColor, ReScaleToValueRange
     ' 
     ' 
     ' /********************************************************************************/

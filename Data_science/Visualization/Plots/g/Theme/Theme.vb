@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::632eb531972fa69c3105f324af1869e7, Data_science\Visualization\Plots\g\Theme\Theme.vb"
+﻿#Region "Microsoft.VisualBasic::099d0dbc372e5f8398ee0eb99bc69539, Data_science\Visualization\Plots\g\Theme\Theme.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 225
-    '    Code Lines: 92 (40.89%)
-    ' Comment Lines: 99 (44.00%)
+    '   Total Lines: 228
+    '    Code Lines: 94 (41.23%)
+    ' Comment Lines: 99 (43.42%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 34 (15.11%)
-    '     File Size: 7.96 KB
+    '   Blank Lines: 35 (15.35%)
+    '     File Size: 8.06 KB
 
 
     '     Class Theme
@@ -51,9 +51,10 @@
     '                     htmlLabel, legendBoxBackground, legendBoxStroke, legendCustomTicks, legendLabelCSS
     '                     legendLayout, legendSplitSize, legendTickAxisStroke, legendTickCSS, legendTickFormat
     '                     legendTitleCSS, lineStroke, mainCSS, mainTextColor, mainTextWrap
-    '                     padding, pointSize, shapeStroke, subtitleCSS, tagColor
-    '                     tagCSS, tagFormat, tagLinkStroke, xAxisLayout, xAxisReverse
-    '                     xAxisRotate, XaxisTickFormat, yAxislabelPosition, yAxisLayout, YaxisTickFormat
+    '                     nticksX, nticksY, padding, pointSize, shapeStroke
+    '                     subtitleCSS, tagColor, tagCSS, tagFormat, tagLinkStroke
+    '                     xAxisLayout, xAxisReverse, xAxisRotate, XaxisTickFormat, yAxislabelPosition
+    '                     yAxisLayout, YaxisTickFormat
     ' 
     '         Function: Clone, GetLegendPosition, GetXAxisDecimals, GetYAxisDecimals, NewColorSet
     '                   ToString

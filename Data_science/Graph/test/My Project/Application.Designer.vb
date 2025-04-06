@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::dc60230cc062d820209b398435e851e8, Data_science\Graph\test\My Project\Application.Designer.vb"
+﻿#Region "Microsoft.VisualBasic::2f560b88ef6ef660399bf1150ab8b6b5, Data_science\Graph\test\My Project\Application.Designer.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 13
-    '    Code Lines: 2 (15.38%)
-    ' Comment Lines: 9 (69.23%)
+    '   Total Lines: 12
+    '    Code Lines: 2 (16.67%)
+    ' Comment Lines: 9 (75.00%)
     '    - Xml Docs: 0.00%
     ' 
-    '   Blank Lines: 2 (15.38%)
-    '     File Size: 455 B
+    '   Blank Lines: 1 (8.33%)
+    '     File Size: 451 B
 
 
     ' 
@@ -60,5 +60,3 @@
 
 Option Strict On
 Option Explicit On
-
-

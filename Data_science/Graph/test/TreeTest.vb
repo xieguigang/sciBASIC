@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7bc4455504425ecb406f5451f99c8f27, Data_science\Graph\test\TreeTest.vb"
+﻿#Region "Microsoft.VisualBasic::1e8821b842bffa8b00636e1bb08d46db, Data_science\Graph\test\TreeTest.vb"
 
     ' Author:
     ' 
@@ -118,4 +118,3 @@
 '        Pause()
 '    End Sub
 'End Module
-

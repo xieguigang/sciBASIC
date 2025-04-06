@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6c6c5aa6604544b0a7167ed142054bd6, Data_science\Visualization\Plots\g\Axis\Axis.vb"
+﻿#Region "Microsoft.VisualBasic::c6188848d60021d6d6df678791b138f0, Data_science\Visualization\Plots\g\Axis\Axis.vb"
 
     ' Author:
     ' 
@@ -34,18 +34,16 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 521
-    '    Code Lines: 354 (67.95%)
-    ' Comment Lines: 113 (21.69%)
-    '    - Xml Docs: 85.84%
+    '   Total Lines: 529
+    '    Code Lines: 360 (68.05%)
+    ' Comment Lines: 116 (21.93%)
+    '    - Xml Docs: 83.62%
     ' 
-    '   Blank Lines: 54 (10.36%)
-    '     File Size: 24.30 KB
+    '   Blank Lines: 53 (10.02%)
+    '     File Size: 24.99 KB
 
 
     '     Module Axis
-    ' 
-    '         Properties: delta
     ' 
     '         Function: __plotLabel, (+2 Overloads) DrawLabel
     ' 
