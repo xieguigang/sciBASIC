@@ -303,7 +303,10 @@ Public Module Scatter
         Dim plot As Plot
 
         If drawLine Then
-            plot = New Plots.LinePlot2D(data:=c, theme:=theme, fill:=fill, interplot:=interplot) With {
+            plot = New Plots.LinePlot2D(data:=c, theme:=theme,
+                                        fill:=fill,
+                                        fillPie:=fillPie,
+                                        interplot:=interplot) With {
                 .xlabel = Xlabel,
                 .ylabel = Ylabel,
                 .main = title,
