@@ -275,7 +275,9 @@ Public Module Scatter
                     Optional axisStroke$ = Stroke.AxisStroke,
                     Optional axisLabelCSS$ = CSSFont.Win10Normal,
                     Optional scatterReorder As Boolean = False,
-                    Optional xAxisLabelRotate As Double = 0)
+                    Optional xAxisLabelRotate As Double = 0,
+                    Optional nticksX As Integer = 9,
+                    Optional nticksY As Integer = 9)
 
         Dim theme As New Theme With {
             .drawLegend = showLegend,
@@ -294,7 +296,9 @@ Public Module Scatter
             .legendLabelCSS = legendFontCSS,
             .legendSplitSize = legendSplit,
             .YaxisTickFormat = YtickFormat,
-            .xAxisRotate = xAxisLabelRotate
+            .xAxisRotate = xAxisLabelRotate,
+            .nticksX = nticksX,
+            .nticksY = nticksY
         }
         Dim plot As Plot
 
@@ -392,6 +396,8 @@ Public Module Scatter
                          Optional axisStroke$ = Stroke.AxisStroke,
                          Optional axisLabelCSS$ = CSSFont.Win10Normal,
                          Optional scatterReorder As Boolean = False,
+                         Optional nticksX As Integer = 9,
+                         Optional nticksY As Integer = 9,
                          Optional dpi As Integer = 100,
                          Optional driver As Drivers = Drivers.Default) As GraphicsData
 
@@ -440,7 +446,9 @@ Public Module Scatter
                     YtickFormat:=YtickFormat,
                     axisStroke:=axisStroke,
                     scatterReorder:=scatterReorder,
-                    axisLabelCSS:=axisLabelCSS
+                    axisLabelCSS:=axisLabelCSS,
+                    nticksX:=nticksX,
+                    nticksY:=nticksY
                 )
             End Sub
 

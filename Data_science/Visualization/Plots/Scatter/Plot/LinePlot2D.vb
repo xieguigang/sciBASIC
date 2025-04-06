@@ -77,8 +77,6 @@ Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.MIME.Html.CSS
 Imports Microsoft.VisualBasic.MIME.Html.Render
 
-
-
 #If NET48 Then
 Imports Pen = System.Drawing.Pen
 Imports Pens = System.Drawing.Pens
@@ -360,21 +358,21 @@ Namespace Plots
                         .Distinct _
                         .ToArray
 
-                    YTicks = YTicks.Range.CreateAxisTicks
+                    YTicks = YTicks.Range.CreateAxisTicks(ticks:=theme.nticksY, decimalDigits:=theme.GetYAxisDecimals)
                     X = d3js.scale _
                         .ordinal _
                         .domain(allTermLabels) _
                         .range(integers:={region.Left, region.Right})
                 Else
                     If Not xlim.IsNullOrEmpty Then
-                        XTicks = xlim.CreateAxisTicks
+                        XTicks = xlim.CreateAxisTicks(ticks:=theme.nticksX, decimalDigits:=theme.GetXAxisDecimals)
                     Else
-                        XTicks = XTicks.Range.CreateAxisTicks
+                        XTicks = XTicks.Range.CreateAxisTicks(ticks:=theme.nticksX, decimalDigits:=theme.GetXAxisDecimals)
                     End If
                     If Not ylim.IsNullOrEmpty Then
-                        YTicks = ylim.CreateAxisTicks
+                        YTicks = ylim.CreateAxisTicks(ticks:=theme.nticksY, decimalDigits:=theme.GetYAxisDecimals)
                     Else
-                        YTicks = YTicks.Range.CreateAxisTicks
+                        YTicks = YTicks.Range.CreateAxisTicks(ticks:=theme.nticksY, decimalDigits:=theme.GetYAxisDecimals)
                     End If
 
                     X = d3js.scale _
