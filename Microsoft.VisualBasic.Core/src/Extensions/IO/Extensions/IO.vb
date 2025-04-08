@@ -334,30 +334,30 @@ Public Module IOExtensions
     Public Function ReadBinary(path As String) As Byte()
         If Not path.FileExists Then
             Return {}
-        Else
-            ' 20220922
-            '
-            ' this function call may not shared file access
-            ' it is unwanted on read common library file
-            ' when run parallel, for each process read the
-            ' same library data file
-            '
-            ' Return IO.File.ReadAllBytes(path)
-            Using file As New FileStream(path, FileMode.Open, FileAccess.Read, FileShare.Read, App.BufferSize)
-                Dim buffer_size As Long = file.Length
-                Dim buffer As Byte()
-
-                If buffer_size >= size_2GB Then
-                    Throw New InvalidProgramException($"can not read all binary into memory: the file size({StringFormats.Lanudry(buffer_size)}) of target file '{path}' is greater than 2GB!")
-                Else
-                    buffer = New Byte(buffer_size - 1) {}
-                End If
-
-                Call file.Read(buffer, Scan0, buffer_size)
-
-                Return buffer
-            End Using
         End If
+
+        ' 20220922
+        '
+        ' this function call may not shared file access
+        ' it is unwanted on read common library file
+        ' when run parallel, for each process read the
+        ' same library data file
+        '
+        ' Return IO.File.ReadAllBytes(path)
+        Using file As New FileStream(path, FileMode.Open, FileAccess.Read, FileShare.Read, App.BufferSize)
+            Dim buffer_size As Long = file.Length
+            Dim buffer As Byte()
+
+            If buffer_size >= size_2GB Then
+                Throw New InvalidProgramException($"can not read all binary into memory: the file size({StringFormats.Lanudry(buffer_size)}) of target file '{path}' is greater than 2GB!")
+            Else
+                buffer = New Byte(buffer_size - 1) {}
+            End If
+
+            Call file.Read(buffer, Scan0, buffer_size)
+
+            Return buffer
+        End Using
     End Function
 
     ''' <summary>
