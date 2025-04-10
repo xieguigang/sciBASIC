@@ -100,6 +100,12 @@ Namespace IO.CSVFile
             Return rowStr.ToString
         End Function
 
+        ''' <summary>
+        ''' A iterator function that parse the string line as cells content data
+        ''' </summary>
+        ''' <param name="delimiter"></param>
+        ''' <param name="quot"></param>
+        ''' <returns></returns>
         Public Iterator Function GetTokens(Optional delimiter As Char = ","c, Optional quot As Char = ASCII.Quot) As IEnumerable(Of String)
             Dim doubleQuot$ = quot & quot
 

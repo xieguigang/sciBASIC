@@ -71,7 +71,7 @@ Imports Microsoft.VisualBasic.Text
 ''' <summary>
 ''' R language liked dataframe object
 ''' </summary>
-Public Class DataFrame : Implements INumericMatrix
+Public Class DataFrame : Implements INumericMatrix, ILabeledMatrix
 
     ''' <summary>
     ''' the dataframe columns
@@ -388,8 +388,10 @@ Public Class DataFrame : Implements INumericMatrix
     Public Shared Function read_csv(file As Stream,
                                     Optional delimiter As Char = ","c,
                                     Optional rowHeader As Boolean = True,
-                                    Optional encoding As Encodings = Encodings.UTF8) As DataFrame
-        Return FastLoader.ReadCsv(file, delimiter, rowHeader, encoding)
+                                    Optional encoding As Encodings = Encodings.UTF8,
+                                    Optional verbose As Boolean = True) As DataFrame
+
+        Return FastLoader.ReadCsv(file, delimiter, rowHeader, encoding, verbose:=verbose)
     End Function
 
     Private Function ArrayPack(Optional deepcopy As Boolean = False) As Double()() Implements INumericMatrix.ArrayPack
@@ -408,5 +410,9 @@ Public Class DataFrame : Implements INumericMatrix
         Next
 
         Return m
+    End Function
+
+    Private Function GetLabels() As IEnumerable(Of String) Implements ILabeledMatrix.GetLabels
+        Return rownames
     End Function
 End Class

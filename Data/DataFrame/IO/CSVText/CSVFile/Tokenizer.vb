@@ -106,7 +106,7 @@ Namespace IO.CSVFile
         ''' 通过Chars枚举来解析域，分隔符默认为逗号
         ''' </summary>
         ''' <param name="s"></param>
-        ''' <returns></returns>
+        ''' <returns>this function returns empty string array for null or empty string input.</returns>
         Public Shared Function CharsParser(s$,
                                            Optional delimiter As Char = ","c,
                                            Optional quot As Char = ASCII.Quot) As IEnumerable(Of String)
