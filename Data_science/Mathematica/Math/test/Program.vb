@@ -56,6 +56,7 @@ Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Math.Correlations
+Imports Microsoft.VisualBasic.Math.Distributions
 Imports Microsoft.VisualBasic.Math.HashMaps
 Imports Microsoft.VisualBasic.Math.Numerics
 Imports Microsoft.VisualBasic.Math.Scripting
@@ -90,6 +91,12 @@ Module Program
     End Sub
 
     Sub Main()
+
+        Dim time = {1, 2, 2.5, 3, 10, 10.5, 11, 20, 21, 21.5}
+        Dim time_slice = AxisDensity.GetClusters(time).ToArray
+
+        Pause()
+
 
         Call uncheckedTest()
 
