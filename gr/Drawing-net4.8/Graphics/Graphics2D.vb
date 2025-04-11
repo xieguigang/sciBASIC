@@ -240,6 +240,11 @@ Public Class Graphics2D : Inherits GDICanvas
         Return r.CreateGDIDevice(filled)
     End Function
 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    Public Shared Function CreateDevice(size As Size, gfx As Graphics) As Graphics2D
+        Return New Graphics2D(gfx, size)
+    End Function
+
     ''' <summary>
     ''' Get the internal <see cref="ImageResource"/>
     ''' </summary>
