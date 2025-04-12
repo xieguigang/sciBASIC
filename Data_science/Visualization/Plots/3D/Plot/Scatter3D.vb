@@ -118,7 +118,12 @@ Namespace Plot3D.Impl
         ''' <param name="hullAlpha">``[0, 255]``</param>
         ''' <param name="hullBspline"></param>
         ''' <param name="theme"></param>
-        Public Sub New(serials As IEnumerable(Of Serial3D), camera As Camera, arrowFactor$, showHull As Boolean, hullAlpha As Double, hullBspline As Single, theme As Theme)
+        Public Sub New(serials As IEnumerable(Of Serial3D), camera As Camera, arrowFactor$,
+                       showHull As Boolean,
+                       hullAlpha As Double,
+                       hullBspline As Single,
+                       theme As Theme)
+
             MyBase.New(theme)
 
             Me.serials = serials.ToArray

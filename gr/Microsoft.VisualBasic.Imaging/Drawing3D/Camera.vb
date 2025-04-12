@@ -63,7 +63,6 @@ Imports System.Text
 Imports Microsoft.VisualBasic.Imaging.Drawing3D.Device
 Imports Microsoft.VisualBasic.Imaging.Drawing3D.Math3D
 Imports Microsoft.VisualBasic.Language
-Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace Drawing3D
 
@@ -100,6 +99,13 @@ Namespace Drawing3D
             Me.lightAngle = lightPosition.Normalize()
             Me.colorDifference = 0.2
             Me.lightColor = Color.FromArgb(255, 255, 255)
+        End Sub
+
+        Sub New(gfx As IGraphics, viewAngle As Point3D, Optional viewDistance As Single = 100)
+            Call Me.New(viewAngle)
+
+            Me.viewDistance = viewDistance
+            Me.screen = gfx.Size
         End Sub
 
         Sub New(viewAngle As Point3D)
