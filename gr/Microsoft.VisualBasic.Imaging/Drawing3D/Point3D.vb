@@ -110,6 +110,10 @@ Namespace Drawing3D
             Me.Z = z
         End Sub
 
+        ''' <summary>
+        ''' Copy 3d point data from the 3d point interface model
+        ''' </summary>
+        ''' <param name="p">the 3d point interface value</param>
         Sub New(p As PointF3D)
             Call Me.New(p.X, p.Y, p.Z)
         End Sub

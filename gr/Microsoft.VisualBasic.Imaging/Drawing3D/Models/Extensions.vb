@@ -82,5 +82,10 @@ Namespace Drawing3D.Models
         Public Function TupleZ(p As PointF, z#) As Point3D
             Return New Point3D(p, z)
         End Function
+
+        <Extension>
+        Public Function LoadVector3D(Of T As PointF3D)(data As IEnumerable(Of T)) As IEnumerable(Of Point3D)
+            Return From p3d As T In data Select New Point3D(p3d)
+        End Function
     End Module
 End Namespace
