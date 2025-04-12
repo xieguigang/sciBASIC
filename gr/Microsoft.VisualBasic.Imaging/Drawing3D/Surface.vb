@@ -67,8 +67,10 @@ Namespace Drawing3D
 
     ''' <summary>
     ''' Object model that using for the 3D graphics.
-    ''' (进行实际3D绘图操作的对象模型，这个对象实际上就是相当于Path3D??)
     ''' </summary>
+    ''' <remarks>
+    ''' (进行实际3D绘图操作的对象模型，这个对象实际上就是相当于Path3D??)
+    ''' </remarks>
     Public Structure Surface
         Implements IEnumerable(Of Point3D)
         Implements I3DModel
