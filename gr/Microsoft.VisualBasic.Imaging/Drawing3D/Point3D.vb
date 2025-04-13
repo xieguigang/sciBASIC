@@ -134,7 +134,7 @@ Namespace Drawing3D
         End Sub
 
         Public Overrides Function ToString() As String
-            Return Me.GetJson
+            Return $"[x:{X.ToString("F2")},y:{Y.ToString("F3")},z:{Z.ToString("F3")}]"
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>

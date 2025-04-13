@@ -117,7 +117,8 @@ Namespace Plot3D
                              Optional showLegend As Boolean = True,
                              Optional showHull As Boolean = True,
                              Optional hullAlpha As Integer = 150,
-                             Optional hullBspline As Single = 2) As GraphicsData
+                             Optional hullBspline As Single = 2,
+                             Optional driver As Drivers = Drivers.Default) As GraphicsData
 
             Dim size$ = $"{camera.screen.Width},{camera.screen.Height}"
             Dim theme As New Theme With {
@@ -142,7 +143,7 @@ Namespace Plot3D
                 .xlabel = labX,
                 .ylabel = labY,
                 .zlabel = labZ
-            }.Plot(size:=size)
+            }.Plot(size:=size, driver:=driver)
         End Function
 
         ''' <summary>
