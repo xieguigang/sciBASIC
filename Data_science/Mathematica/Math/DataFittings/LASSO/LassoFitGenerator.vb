@@ -1,4 +1,5 @@
 ﻿Imports Microsoft.VisualBasic.ApplicationServices.Debugging
+Imports std = System.Math
 
 Namespace LASSO
     ''' <summary>
@@ -92,29 +93,27 @@ Namespace LASSO
                 maxAllowedFeaturesPerModel = numFeatures
             End If
             Dim numberOfLambdas = DEFAULT_NUMBER_OF_LAMBDAS
-            Dim maxAllowedFeaturesAlongPath As Integer = Math.Min(maxAllowedFeaturesPerModel * 1.2, numFeatures)
+            Dim maxAllowedFeaturesAlongPath As Integer = std.Min(maxAllowedFeaturesPerModel * 1.2, numFeatures)
 
             ' lambdaMin = flmin * lambdaMax
             Dim flmin = If(numObservations < numFeatures, 0.05, 0.0001)
 
-            ''' <summary>
-            ''' ******************************
-            ''' Standardize features and target: Center the target and features
-            ''' (mean 0) and normalize their vectors to have the same standard
-            ''' deviation
-            ''' </summary>
+            ' ******************************
+            ' Standardize features and target: Center the target and features
+            ' (mean 0) and normalize their vectors to have the same standard
+            ' deviation
             Dim featureMeans = New Double(numFeatures - 1) {}
             Dim featureStds = New Double(numFeatures - 1) {}
             Dim feature2residualCorrelations = New Double(numFeatures - 1) {}
 
-            Dim factor As Single = 1.0 / Math.Sqrt(numObservations)
+            Dim factor As Single = 1.0 / std.Sqrt(numObservations)
             For j = 0 To numFeatures - 1
                 Dim mean As Double = observations(j).Average()
                 featureMeans(j) = mean
                 For i = 0 To numObservations - 1
                     observations(j)(i) = CSng(factor * (observations(j)(i) - mean))
                 Next
-                featureStds(j) = Math.Sqrt(MathUtil.getDotProduct(observations(j), observations(j)))
+                featureStds(j) = std.Sqrt(MathUtil.getDotProduct(observations(j), observations(j)))
 
                 MathUtil.divideInPlace(observations(j), featureStds(j))
             Next
@@ -123,7 +122,7 @@ Namespace LASSO
             For i = 0 To numObservations - 1
                 targetsField(i) = factor * (targetsField(i) - targetMean)
             Next
-            Dim targetStd As Single = Math.Sqrt(MathUtil.getDotProduct(targetsField, targetsField))
+            Dim targetStd As Single = std.Sqrt(MathUtil.getDotProduct(targetsField, targetsField))
             MathUtil.divideInPlace(targetsField, targetStd)
 
             For j = 0 To numFeatures - 1
@@ -138,27 +137,25 @@ Namespace LASSO
             Dim fit As LassoFit = New LassoFit(numberOfLambdas, maxAllowedFeaturesAlongPath, numFeatures)
             fit.numberOfLambdas = 0
 
-            Dim alf = Math.Pow(Math.Max(EPSILON, flmin), 1.0 / (numberOfLambdas - 1))
+            Dim alf = std.Pow(std.Max(EPSILON, flmin), 1.0 / (numberOfLambdas - 1))
             Dim rsquared = 0.0
             fit.numberOfPasses = 0
             Dim numberOfInputs = 0
-            Dim minimumNumberOfLambdas = Math.Min(MIN_NUMBER_OF_LAMBDAS, numberOfLambdas)
+            Dim minimumNumberOfLambdas = std.Min(MIN_NUMBER_OF_LAMBDAS, numberOfLambdas)
 
             Dim curLambda As Double = 0
             Dim maxDelta As Double
             For iteration = 1 To numberOfLambdas
                 Console.WriteLine("Starting iteration " & iteration.ToString() & " of Compression.")
 
-                ''' <summary>
-                ''' ********
-                ''' Compute lambda for this round
-                ''' </summary>
+                ' ********
+                ' Compute lambda for this round
                 If iteration = 1 Then
                     curLambda = Double.MaxValue ' first lambda is infinity
                 ElseIf iteration = 2 Then
                     curLambda = 0.0
                     For j = 0 To numFeatures - 1
-                        curLambda = Math.Max(curLambda, Math.Abs(feature2residualCorrelations(j)))
+                        curLambda = std.Max(curLambda, std.Abs(feature2residualCorrelations(j)))
                     Next
                     curLambda = alf * curLambda
                 Else
@@ -213,7 +210,7 @@ Namespace LASSO
                         ' How much is the weight changed?
                         Dim delta = activeWeights(k) - prevWeight
                         rsquared += delta * (2.0 * feature2residualCorrelations(k) - delta)
-                        maxDelta = Math.Max(If(delta >= 0, delta, -delta), maxDelta)
+                        maxDelta = std.Max(If(delta >= 0, delta, -delta), maxDelta)
 
                         For j = 0 To numFeatures - 1
                             feature2residualCorrelations(j) -= feature2featureCorrelations(j)(correlationCacheIndices(k) - 1) * delta
@@ -242,7 +239,7 @@ Namespace LASSO
                             End If
                             Dim delta = activeWeights(k) - prevWeight
                             rsquared += delta * (2.0 * feature2residualCorrelations(k) - delta)
-                            maxDelta = Math.Max(If(delta >= 0, delta, -delta), maxDelta)
+                            maxDelta = std.Max(If(delta >= 0, delta, -delta), maxDelta)
                             For j = 0 To numberOfInputs - 1
                                 feature2residualCorrelations(fit.indices(j)) -= feature2featureCorrelations(fit.indices(j))(correlationCacheIndices(k) - 1) * delta
                             Next
@@ -304,7 +301,7 @@ Namespace LASSO
             Next
 
             ' First lambda was infinity; fixing it
-            fit.lambdas(0) = Math.Exp(2 * Math.Log(fit.lambdas(1)) - Math.Log(fit.lambdas(2)))
+            fit.lambdas(0) = std.Exp(2 * std.Log(fit.lambdas(1)) - std.Log(fit.lambdas(2)))
 
             Dim duration = CurrentUnixTimeMillis - startTime
             Console.WriteLine("Elapsed time for compression: " & duration.ToString())

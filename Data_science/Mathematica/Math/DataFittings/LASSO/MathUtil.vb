@@ -1,4 +1,6 @@
-﻿Namespace LASSO
+﻿Imports std = System.Math
+
+Namespace LASSO
 
     ''' <summary>
     ''' Utility Math functions that are used by other classes.
@@ -20,17 +22,17 @@
         Public Shared Function getStd(arr As Double(), avg As Double) As Double
             Dim sum As Double = 0
             For Each item In arr
-                sum += Math.Pow(item - avg, 2)
+                sum += std.Pow(item - avg, 2)
             Next
-            Return Math.Sqrt(sum / arr.Length)
+            Return std.Sqrt(sum / arr.Length)
         End Function
 
         Public Shared Function getStd(arr As IList(Of Double), avg As Double) As Double
             Dim sum As Double = 0
             For Each item In arr
-                sum += Math.Pow(item - avg, 2)
+                sum += std.Pow(item - avg, 2)
             Next
-            Return Math.Sqrt(sum / arr.Count)
+            Return std.Sqrt(sum / arr.Count)
         End Function
 
         Public Shared Function getDotProduct(vector1 As Single(), vector2 As Single(), length As Integer) As Double
