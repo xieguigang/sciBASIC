@@ -72,6 +72,8 @@ Namespace LASSO
         ''' <returns></returns>
         Public Property numFeatures As Integer
 
+        Public Property featureNames As String()
+
         Public Sub New(numberOfLambdas As Integer, maxAllowedFeaturesAlongPath As Integer, numFeatures As Integer)
             intercepts = New Double(numberOfLambdas - 1) {}
             compressedWeights = MathUtil.allocateDoubleMatrix(numberOfLambdas, maxAllowedFeaturesAlongPath)

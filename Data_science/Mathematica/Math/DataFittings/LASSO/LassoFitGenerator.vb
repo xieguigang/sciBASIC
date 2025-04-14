@@ -93,8 +93,6 @@ Namespace LASSO
         End Sub
 
         Private Function getLassoFit(maxAllowedFeaturesPerModel As Integer) As LassoFit
-            Dim startTime = CurrentUnixTimeMillis
-
             If maxAllowedFeaturesPerModel < 0 Then
                 maxAllowedFeaturesPerModel = numFeatures
             End If
@@ -140,8 +138,10 @@ Namespace LASSO
             Dim correlationCacheIndices = New Integer(numFeatures - 1) {}
             Dim denseActiveSet = New Double(numFeatures - 1) {}
 
-            Dim fit As LassoFit = New LassoFit(numberOfLambdas, maxAllowedFeaturesAlongPath, numFeatures)
-            fit.numberOfLambdas = 0
+            Dim fit As New LassoFit(numberOfLambdas, maxAllowedFeaturesAlongPath, numFeatures) With {
+                .featureNames = featureNames,
+                .numberOfLambdas = 0
+            }
 
             Dim alf = std.Pow(std.Max(EPSILON, flmin), 1.0 / (numberOfLambdas - 1))
             Dim rsquared = 0.0
@@ -151,8 +151,9 @@ Namespace LASSO
 
             Dim curLambda As Double = 0
             Dim maxDelta As Double
+
             For iteration = 1 To numberOfLambdas
-                Console.WriteLine("Starting iteration " & iteration.ToString() & " of Compression.")
+                Call VBDebugger.EchoLine("Starting iteration " & iteration.ToString() & " of Compression.")
 
                 ' ********
                 ' Compute lambda for this round
@@ -309,8 +310,6 @@ Namespace LASSO
             ' First lambda was infinity; fixing it
             fit.lambdas(0) = std.Exp(2 * std.Log(fit.lambdas(1)) - std.Log(fit.lambdas(2)))
 
-            Dim duration = CurrentUnixTimeMillis - startTime
-            Console.WriteLine("Elapsed time for compression: " & duration.ToString())
             Return fit
         End Function
 
