@@ -1,4 +1,5 @@
 ﻿Imports System.Text
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 
 Namespace LASSO
 
@@ -101,6 +102,36 @@ Namespace LASSO
                 sb.Append(i + 1.ToString() & vbTab & nonZeroWeights(i).ToString() & vbTab & MathUtil.getFormattedDouble(rsquared(i), 4) & vbTab & MathUtil.getFormattedDouble(lambdas(i), 5) & vbLf)
             Next
             Return sb.ToString().Trim()
+        End Function
+
+        Public Function toDataFrame() As Dictionary(Of String, Array)
+            Dim len As Integer = intercepts.Length
+            Dim weights As New Dictionary(Of String, Double())
+
+            For i As Integer = 0 To featureNames.Length - 1
+                Dim offset = indices(i)
+                Dim vector As New List(Of Double)
+
+                For idx As Integer = 0 To len - 1
+                    Call vector.Add(compressedWeights(idx)(i))
+                Next
+
+                weights(featureNames(offset)) = vector.ToArray
+            Next
+
+            Dim output As New Dictionary(Of String, Array) From {
+                {"intercepts", intercepts},
+                {"Df", nonZeroWeights},
+                {"rsquared", rsquared},
+                {"lambdas", lambdas},
+                {"numberOfWeights", numberOfWeights}
+            }
+
+            For Each w In weights
+                Call output.Add("w." & w.Key, w.Value)
+            Next
+
+            Return output
         End Function
 
     End Class
