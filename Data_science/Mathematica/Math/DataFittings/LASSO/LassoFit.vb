@@ -1,6 +1,7 @@
 ﻿Imports System.Text
 
 Namespace LASSO
+
     ''' <summary>
     ''' This class is a container for arrays and values that
     ''' are computed during computation of a lasso fit. It also
@@ -10,34 +11,66 @@ Namespace LASSO
     ''' </summary>
 
     Public Class LassoFit
-        ' Number of lambda values
-        Public numberOfLambdas As Integer
 
-        ' Intercepts
-        Public intercepts As Double()
+        ''' <summary>
+        ''' Number of lambda values
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property numberOfLambdas As Integer
 
-        ' Compressed weights for each solution
-        Public compressedWeights As Double()()
+        ''' <summary>
+        ''' Intercepts
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property intercepts As Double()
 
-        ' Pointers to compressed weights
-        Public indices As Integer()
+        ''' <summary>
+        ''' Compressed weights for each solution
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property compressedWeights As Double()()
 
-        ' Number of weights for each solution
-        Public numberOfWeights As Integer()
+        ''' <summary>
+        ''' Pointers to compressed weights
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property indices As Integer()
 
-        ' Number of non-zero weights for each solution
-        Public nonZeroWeights As Integer()
+        ''' <summary>
+        ''' Number of weights for each solution
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property numberOfWeights As Integer()
 
-        ' The value of lambdas for each solution
-        Public lambdas As Double()
+        ''' <summary>
+        ''' Number of non-zero weights for each solution
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property nonZeroWeights As Integer()
 
-        ' R^2 value for each solution
-        Public rsquared As Double()
+        ''' <summary>
+        ''' The value of lambdas for each solution
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property lambdas As Double()
 
-        ' Total number of passes over data
-        Public numberOfPasses As Integer
+        ''' <summary>
+        ''' R^2 value for each solution
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property rsquared As Double()
 
-        Private numFeatures As Integer
+        ''' <summary>
+        ''' Total number of passes over data
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property numberOfPasses As Integer
+
+        ''' <summary>
+        ''' number of the data features that input from the training data
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property numFeatures As Integer
 
         Public Sub New(numberOfLambdas As Integer, maxAllowedFeaturesAlongPath As Integer, numFeatures As Integer)
             intercepts = New Double(numberOfLambdas - 1) {}
@@ -59,7 +92,7 @@ Namespace LASSO
         End Function
 
         Public Overrides Function ToString() As String
-            Dim sb As StringBuilder = New StringBuilder()
+            Dim sb As New StringBuilder()
             Dim numberOfSolutions = numberOfLambdas
             sb.Append("Compression R2 values:" & vbLf)
             For i = 0 To numberOfSolutions - 1
