@@ -51,12 +51,8 @@ Namespace LASSO
             Return product
         End Function
 
-        Public Shared Function getDotProduct(vector1 As Single(), vector2 As Single()) As Double
-            Return getDotProduct(vector1, vector2, vector1.Length)
-        End Function
-
         ' Divides the second vector from the first one (vector1[i] /= val)
-        Public Shared Sub divideInPlace(vector As Single(), val As Single)
+        Public Shared Sub divideInPlace(ByRef vector As Double(), val As Single)
             Dim length = vector.Length
             For i = 0 To length - 1
                 vector(i) /= val

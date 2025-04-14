@@ -36,10 +36,12 @@ Namespace LASSO
         Private Const MIN_NUMBER_OF_LAMBDAS As Integer = 5
         Private Const MAX_RSQUARED As Double = 0.99999
 
-        Private targetsField As Single()
-        Private observations As Single()()
+        Private targetsField As Double()
+        Private observations As Double()()
         Private numFeatures As Integer
         Private numObservations As Integer
+
+        Dim featureNames As String()
 
         Public Overridable Function getMaxAllowedObservations(maxNumFeatures As Integer) As Integer
             Dim maxObservations As Integer = MAX_AVAILABLE_MEMORY / maxNumFeatures / (HeapSizeOf.float * 8 / 8)
@@ -49,17 +51,23 @@ Namespace LASSO
             Return maxObservations
         End Function
 
+        Public Sub init(featureNames As String(), numObservations As Integer)
+            Me.featureNames = featureNames
+            ' make initialize of the matrix data
+            Call init(featureNames.Length, numObservations)
+        End Sub
+
         Public Overridable Sub init(maxNumFeatures As Integer, numObservations As Integer)
             numFeatures = maxNumFeatures
             If numObservations > getMaxAllowedObservations(maxNumFeatures) Then
                 Throw New Exception("Number of observations (" & numObservations.ToString() & ") exceeds the maximum allowed number: " & getMaxAllowedObservations(maxNumFeatures).ToString())
             End If
             Me.numObservations = numObservations
-            observations = New Single(Me.numObservations - 1)() {}
+            observations = New Double(Me.numObservations - 1)() {}
             For t = 0 To maxNumFeatures - 1
-                observations(t) = New Single(Me.numObservations - 1) {}
+                observations(t) = New Double(Me.numObservations - 1) {}
             Next
-            targetsField = New Single(Me.numObservations - 1) {}
+            targetsField = New Double(Me.numObservations - 1) {}
         End Sub
 
         Public Overridable WriteOnly Property NumberOfFeatures As Integer
@@ -68,17 +76,17 @@ Namespace LASSO
             End Set
         End Property
 
-        Public Overridable Sub setFeatureValues(idx As Integer, values As Single())
+        Public Overridable Sub setFeatureValues(idx As Integer, values As Double())
             For i = 0 To values.Length - 1
                 observations(idx)(i) = values(i)
             Next
         End Sub
 
-        Public Overridable Function getFeatureValues(idx As Integer) As Single()
+        Public Overridable Function getFeatureValues(idx As Integer) As Double()
             Return observations(idx)
         End Function
 
-        Public Overridable Sub setObservationValues(idx As Integer, values As Single())
+        Public Overridable Sub setObservationValues(idx As Integer, values As Double())
             For f = 0 To numFeatures - 1
                 observations(f)(idx) = values(f)
             Next
@@ -104,27 +112,27 @@ Namespace LASSO
             Dim featureStds = New Double(numFeatures - 1) {}
             Dim feature2residualCorrelations = New Double(numFeatures - 1) {}
 
-            Dim factor As Single = 1.0 / std.Sqrt(numObservations)
+            Dim factor As Double = 1.0 / std.Sqrt(numObservations)
             For j = 0 To numFeatures - 1
                 Dim mean As Double = observations(j).Average()
                 featureMeans(j) = mean
                 For i = 0 To numObservations - 1
                     observations(j)(i) = CSng(factor * (observations(j)(i) - mean))
                 Next
-                featureStds(j) = std.Sqrt(MathUtil.getDotProduct(observations(j), observations(j)))
+                featureStds(j) = std.Sqrt(MathUtil.getDotProduct(observations(j), observations(j), observations(j).Length))
 
                 MathUtil.divideInPlace(observations(j), featureStds(j))
             Next
 
-            Dim targetMean As Single = CSng(targetsField.Average())
+            Dim targetMean As Double = CSng(targetsField.Average())
             For i = 0 To numObservations - 1
                 targetsField(i) = factor * (targetsField(i) - targetMean)
             Next
-            Dim targetStd As Single = std.Sqrt(MathUtil.getDotProduct(targetsField, targetsField))
+            Dim targetStd As Double = std.Sqrt(MathUtil.getDotProduct(targetsField, targetsField, targetsField.Length))
             MathUtil.divideInPlace(targetsField, targetStd)
 
             For j = 0 To numFeatures - 1
-                feature2residualCorrelations(j) = MathUtil.getDotProduct(targetsField, observations(j))
+                feature2residualCorrelations(j) = MathUtil.getDotProduct(targetsField, observations(j), targetsField.Length)
             Next
 
             Dim feature2featureCorrelations = MathUtil.allocateDoubleMatrix(numFeatures, maxAllowedFeaturesAlongPath)
@@ -197,7 +205,7 @@ Namespace LASSO
                                     If j = k Then
                                         feature2featureCorrelations(j)(numberOfInputs - 1) = 1.0
                                     Else
-                                        feature2featureCorrelations(j)(numberOfInputs - 1) = MathUtil.getDotProduct(observations(j), observations(k))
+                                        feature2featureCorrelations(j)(numberOfInputs - 1) = MathUtil.getDotProduct(observations(j), observations(k), observations(j).Length)
                                     End If
                                 End If
                             Next
