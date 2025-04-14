@@ -2,6 +2,7 @@
 Imports std = System.Math
 
 Namespace LASSO
+
     ''' <summary>
     ''' This implemenation is based on: Friedman, J., Hastie, T. and Tibshirani, R.
     ''' (2008) Regularization Paths for Generalized Linear Models via Coordinate
@@ -9,7 +10,6 @@ Namespace LASSO
     ''' 
     ''' @author Yasser Ganjisaffar (http://www.ics.uci.edu/~yganjisa/)
     ''' </summary>
-
     Public Class LassoFitGenerator
         ' This module shouldn't consume more than 8GB of memory
         Private Shared ReadOnly MAX_AVAILABLE_MEMORY As Long = 8L * 1024 * 1024 * 1024
@@ -49,8 +49,6 @@ Namespace LASSO
             Return maxObservations
         End Function
 
-        'JAVA TO C# CONVERTER WARNING: Method 'throws' clauses are not available in C#:
-        'ORIGINAL LINE: public void init(int maxNumFeatures, int numObservations) throws Exception
         Public Overridable Sub init(maxNumFeatures As Integer, numObservations As Integer)
             numFeatures = maxNumFeatures
             If numObservations > getMaxAllowedObservations(maxNumFeatures) Then
@@ -320,6 +318,15 @@ Namespace LASSO
             targetsField(idx) = CSng(target)
         End Sub
 
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="maxAllowedFeaturesPerModel">
+        ''' Generate the Lasso fit. The -1 arguments means that
+        ''' there would be no limit on the maximum number of 
+        ''' features per model
+        ''' </param>
+        ''' <returns></returns>
         Public Overridable Function fit(maxAllowedFeaturesPerModel As Integer) As LassoFit
             Dim lFit = getLassoFit(maxAllowedFeaturesPerModel)
             Return lFit

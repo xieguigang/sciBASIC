@@ -61,7 +61,6 @@ namespace org.gephi.layout.plugin.noverlap
 	public class NoverlapLayout : AbstractLayout, Layout, LongTask
 	{
 
-//JAVA TO C# CONVERTER NOTE: Fields cannot have the same name as methods:
 		protected internal bool cancel_Conflict;
 		protected internal Graph graph;
 		private double speed;
@@ -381,8 +380,7 @@ namespace org.gephi.layout.plugin.noverlap
 				{
 					return false;
 				}
-//JAVA TO C# CONVERTER WARNING: The original Java variable was marked 'final':
-//ORIGINAL LINE: final Cell other = (Cell) obj;
+
 				Cell other = (Cell) obj;
 				if (this.row != other.row)
 				{

@@ -154,9 +154,6 @@ Namespace LevenbergMarquardt
             Dim measuredOutputs = modelField.MeasuredData
             Dim numData = measuredOutputs.Length
             Dim numParams = optParams.Length
-
-            ' JAVA TO C# CONVERTER NOTE: The following call to the 'RectangularArrays' helper class reproduces the rectangular array initialization that is automatic in Java:
-            ' ORIGINAL LINE: double[][] jVectors = new double[numData][numParams];
             Dim jVectors = RectangularArray.Matrix(Of Double)(numData, numParams)
             Dim i = 0
 

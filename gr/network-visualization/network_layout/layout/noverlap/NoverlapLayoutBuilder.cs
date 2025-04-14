@@ -51,8 +51,6 @@ namespace org.gephi.layout.plugin.noverlap
 	/// <summary>
 	/// @author Mathieu Jacomy
 	/// </summary>
-//JAVA TO C# CONVERTER TODO TASK: Most Java annotations will not have direct .NET equivalent attributes:
-//ORIGINAL LINE: @ServiceProvider(service = LayoutBuilder.class) public class NoverlapLayoutBuilder implements org.gephi.layout.spi.LayoutBuilder
 	public class NoverlapLayoutBuilder : LayoutBuilder
 	{
 

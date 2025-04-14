@@ -51,8 +51,6 @@ namespace org.gephi.layout.plugin.scale
 	/// <summary>
 	/// @author Helder Suzuki
 	/// </summary>
-//JAVA TO C# CONVERTER TODO TASK: Most Java annotations will not have direct .NET equivalent attributes:
-//ORIGINAL LINE: @ServiceProvider(service = LayoutBuilder.class) public class Expand implements org.gephi.layout.spi.LayoutBuilder
 	public class Expand : LayoutBuilder
 	{
 

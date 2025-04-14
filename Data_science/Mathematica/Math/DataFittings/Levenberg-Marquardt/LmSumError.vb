@@ -145,8 +145,6 @@ Namespace LevenbergMarquardt
         Public Overrides Function hessian(optParams As Double(), approxHessianFlg As Boolean) As Double()()
             Dim numData = datumErrorField.NumData
             Dim numParams = optParams.Length
-            ' JAVA TO C# CONVERTER NOTE: The following call to the 'RectangularArrays' helper class reproduces the rectangular array initialization that is automatic in Java:
-            ' ORIGINAL LINE: double[][] hessianMat = new double[numParams][numParams];
             Dim hessianMat = RectangularArray.Matrix(Of Double)(numParams, numParams)
 
             Dim i = 0

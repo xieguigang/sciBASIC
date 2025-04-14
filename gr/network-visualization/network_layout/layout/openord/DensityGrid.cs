@@ -71,14 +71,8 @@ namespace org.gephi.layout.plugin.openord
 
 		public virtual void init()
 		{
-//JAVA TO C# CONVERTER NOTE: The following call to the 'RectangularArrays' helper class reproduces the rectangular array initialization that is automatic in Java:
-//ORIGINAL LINE: density = new float[GRID_SIZE][GRID_SIZE];
 			density = RectangularArrays.RectangularFloatArray(GRID_SIZE, GRID_SIZE);
-//JAVA TO C# CONVERTER NOTE: The following call to the 'RectangularArrays' helper class reproduces the rectangular array initialization that is automatic in Java:
-//ORIGINAL LINE: fallOff = new float[RADIUS * 2 + 1][RADIUS * 2 + 1];
 			fallOff = RectangularArrays.RectangularFloatArray(RADIUS * 2 + 1, RADIUS * 2 + 1);
-//JAVA TO C# CONVERTER NOTE: The following call to the 'RectangularArrays' helper class reproduces the rectangular array initialization that is automatic in Java:
-//ORIGINAL LINE: bins = new LinkedList[GRID_SIZE][GRID_SIZE];
 			bins = RectangularArrays.RectangularLinkedListArray(GRID_SIZE, GRID_SIZE);
 
 			for (int i = -RADIUS; i <= RADIUS; i++)
