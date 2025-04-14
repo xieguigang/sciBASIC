@@ -44,6 +44,8 @@ Namespace LASSO
 
         Dim featureNames As String()
 
+        Public Shared Property tqdm_verbose As Boolean = True
+
         Public Overridable Function getMaxAllowedObservations(maxNumFeatures As Integer) As Integer
             Dim maxObservations As Integer = MAX_AVAILABLE_MEMORY / maxNumFeatures / (HeapSizeOf.float * 8 / 8)
             If maxObservations > MAX_OBSERVATIONS_TO_FEATURES_RATIO * maxNumFeatures Then
@@ -154,7 +156,7 @@ Namespace LASSO
             Dim maxDelta As Double
             Dim bar As ProgressBar = Nothing
 
-            For Each iteration As Integer In TqdmWrapper.Range(1, numberOfLambdas, bar:=bar)
+            For Each iteration As Integer In TqdmWrapper.Range(1, numberOfLambdas, bar:=bar, wrap_console:=tqdm_verbose)
                 Call bar.SetLabel("Starting iteration " & iteration.ToString() & " of Compression.")
 
                 ' ********
