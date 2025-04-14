@@ -177,13 +177,15 @@ Namespace ApplicationServices.Terminal.ProgressBar.Tqdm
         End Function
 
         Private Iterator Function InternalWrap(Of T)(enumerable As IEnumerable(Of T), total As Integer, bar As ProgressBar) As IEnumerable(Of T)
-            Dim count = 0
-            For Each item In enumerable
+            Dim count As Integer = 0
+
+            For Each item As T In enumerable
                 bar.Progress(count, total)
                 count += 1
                 Yield item
             Next
-            bar.Finish()
+
+            Call bar.Finish()
         End Function
 
         Public Delegate Function RequestStreamProgressLocation(Of T)(ByRef getOffset As Long, bar As ProgressBar) As T

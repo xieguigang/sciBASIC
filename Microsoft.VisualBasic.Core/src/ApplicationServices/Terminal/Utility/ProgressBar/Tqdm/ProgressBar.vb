@@ -228,6 +228,7 @@ Namespace ApplicationServices.Terminal.ProgressBar.Tqdm
 
             Call Progress(_total, _total)
             Call VBDebugger.EchoLine("")
+            Call VBDebugger.EchoLine("")
             Call VBDebugger.WaitOutput()
         End Sub
 
