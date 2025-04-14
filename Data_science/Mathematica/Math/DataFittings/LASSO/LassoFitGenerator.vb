@@ -1,4 +1,5 @@
 ﻿Imports Microsoft.VisualBasic.ApplicationServices.Debugging
+Imports Microsoft.VisualBasic.ApplicationServices.Terminal.ProgressBar.Tqdm
 Imports std = System.Math
 
 Namespace LASSO
@@ -151,9 +152,10 @@ Namespace LASSO
 
             Dim curLambda As Double = 0
             Dim maxDelta As Double
+            Dim bar As ProgressBar = Nothing
 
-            For iteration = 1 To numberOfLambdas
-                Call VBDebugger.EchoLine("Starting iteration " & iteration.ToString() & " of Compression.")
+            For Each iteration As Integer In TqdmWrapper.Range(1, numberOfLambdas, bar:=bar)
+                Call bar.SetLabel("Starting iteration " & iteration.ToString() & " of Compression.")
 
                 ' ********
                 ' Compute lambda for this round
