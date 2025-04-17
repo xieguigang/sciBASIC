@@ -106,6 +106,7 @@ Public Class DataFrameReader
         Dim tokens As String() = Tokenizer.CharsParser(line, delimiter).ToArray
 
         If tokens.Length = 0 Then
+            Call $"found an empty string line after row #{i}.".Warning
             Return
         End If
 
@@ -124,6 +125,10 @@ Public Class DataFrameReader
         Dim i As i32 = 1
 
         For Each line_str As String In TqdmWrapper.WrapStreamReader(file.Length, AddressOf ReadLine)
+            If line_str Is Nothing Then
+                Exit For
+            End If
+
             Call ReadLine(i, line_str)
         Next
     End Sub
