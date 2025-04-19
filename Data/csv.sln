@@ -13,6 +13,8 @@ Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "dataframework-netcore5", "D
 EndProject
 Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "DataFramework.Extensions-netcore5", "DataFrame.Extensions\DataFramework.Extensions-netcore5.vbproj", "{B5F82B82-541A-477B-BB6E-A471A62B5E23}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "framework", "framework", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Biodeep_UNIX_x64|Any CPU = Biodeep_UNIX_x64|Any CPU
@@ -535,6 +537,7 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
+		{5E97BF00-0C20-4BE8-8D09-DDAF189BD47C} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 		{71F2F29E-F55A-4377-ACC1-ABB29D610B27} = {EE38492A-1706-4E59-87B0-77FBE09788BB}
 		{B5F82B82-541A-477B-BB6E-A471A62B5E23} = {EE38492A-1706-4E59-87B0-77FBE09788BB}
 	EndGlobalSection

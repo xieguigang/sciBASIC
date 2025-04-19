@@ -149,7 +149,7 @@ Public Class DataFrame : Implements INumericMatrix, ILabeledMatrix
     ''' make dataframe column fields projection
     ''' </summary>
     ''' <param name="cols"></param>
-    ''' <returns></returns>
+    ''' <returns>a subset of the dataframe value with fields projection</returns>
     Default Public ReadOnly Property Item(cols As IEnumerable(Of String)) As DataFrame
         Get
             Return New DataFrame With {

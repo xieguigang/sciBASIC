@@ -132,6 +132,30 @@ Public Module DataTableStream
         Next
     End Sub
 
+    ''' <summary>
+    ''' cast the clr object collection as the dataframe
+    ''' </summary>
+    ''' <remarks>
+    ''' this function will create a new dataframe object, and the dataframe object will be
+    ''' created by the given clr object collection
+    ''' </remarks>
+    ''' <example>
+    ''' <code>
+    ''' Dim df As DataFrame = list.StreamToFrame()
+    ''' </code>
+    ''' </example>
+    ''' <typeparam name="T"></typeparam>
+    ''' <param name="list">a generic clr object collection for make data cast</param>
+    ''' <param name="strict">only extract the property/field value which has column attribute tagged if this parameter value is config as TRUE.</param>
+    ''' <param name="metaBlank"></param>
+    ''' <param name="nonParallel"></param>
+    ''' <param name="maps"></param>
+    ''' <param name="reorderKeys"></param>
+    ''' <param name="layout"></param>
+    ''' <param name="tsv"></param>
+    ''' <param name="transpose"></param>
+    ''' <param name="silent"></param>
+    ''' <returns></returns>
     <Extension>
     Public Function StreamToFrame(Of T As Class)(list As IEnumerable(Of T),
                                                  Optional strict As Boolean = False,
@@ -165,7 +189,7 @@ Public Module DataTableStream
         Dim columns As New Dictionary(Of String, List(Of Object))
 
         For Each name As String In fieldNames.JoinIterates(metaNames)
-            Call columns.Add(name, New Generic.List(Of Object))
+            Call columns.Add(name, New List(Of Object))
         Next
 
         For Each item As Object In source
@@ -191,7 +215,7 @@ Public Module DataTableStream
             .features = New Dictionary(Of String, FeatureVector)
         }
 
-        For Each col In columns
+        For Each col As KeyValuePair(Of String, List(Of Object)) In columns
             Dim type As Type = rowWriter.GetColumnType(col.Key)
             Dim pull_vec As Array = VectorCast.CType(col.Value, type.PrimitiveTypeCode)
             Dim v As FeatureVector = FeatureVector.FromGeneral(col.Key, pull_vec)
