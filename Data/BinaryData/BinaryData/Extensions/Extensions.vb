@@ -120,6 +120,13 @@ End Interface
     End Function
 
     <Extension>
+    Public Function CheckMagicNumber(s As Stream, magic As IReadOnlyCollection(Of Byte)) As Boolean
+        Dim buf As Byte() = New Byte(magic.Count - 1) {}
+        s.Read(buf, 0, buf.Length)
+        Return buf.SequenceEqual(magic)
+    End Function
+
+    <Extension>
     Public Function VerifyMagicSignature(block As IMagicBlock, buffer As BinaryDataReader) As Boolean
         Return block.VerifyMagicSignature(buffer.ReadString(block.magic.Length))
     End Function

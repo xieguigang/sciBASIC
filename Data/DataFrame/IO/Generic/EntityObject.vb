@@ -68,8 +68,10 @@ Namespace IO
 
     ''' <summary>
     ''' The object entity, <see cref="DynamicPropertyBase(Of String)"/>, <see cref="String"/>.
-    ''' (有名称属性的表抽象对象)
     ''' </summary>
+    ''' <remarks>
+    ''' (有名称属性的表抽象对象)
+    ''' </remarks>
     Public Class EntityObject : Inherits Table
         Implements INamedValue
 
