@@ -74,7 +74,6 @@ Public Module DataTableStream
     ''' <param name="maps"></param>
     ''' <param name="reorderKeys"></param>
     ''' <param name="layout"></param>
-    ''' <param name="tsv"></param>
     ''' <param name="transpose"></param>
     ''' <param name="silent"></param>
     <Extension>
@@ -85,7 +84,6 @@ Public Module DataTableStream
                                        Optional maps As Dictionary(Of String, String) = Nothing,
                                        Optional reorderKeys As Integer = 0,
                                        Optional layout As Dictionary(Of String, Integer) = Nothing,
-                                       Optional tsv As Boolean = False,
                                        Optional transpose As Boolean = False,
                                        Optional silent As Boolean = False)
 
@@ -97,8 +95,7 @@ Public Module DataTableStream
             .reorderKeys = reorderKeys,
             .silent = silent,
             .strict = strict,
-            .transpose = transpose,
-            .tsv = tsv
+            .transpose = transpose
         }
         Dim source As IEnumerable(Of Object) = list.Select(Function(a) CObj(a)).ToArray
         Dim typeDef As Type = GetType(T)
@@ -152,7 +149,6 @@ Public Module DataTableStream
     ''' <param name="maps"></param>
     ''' <param name="reorderKeys"></param>
     ''' <param name="layout"></param>
-    ''' <param name="tsv"></param>
     ''' <param name="transpose"></param>
     ''' <param name="silent"></param>
     ''' <returns></returns>
@@ -164,9 +160,52 @@ Public Module DataTableStream
                                                  Optional maps As Dictionary(Of String, String) = Nothing,
                                                  Optional reorderKeys As Integer = 0,
                                                  Optional layout As Dictionary(Of String, Integer) = Nothing,
-                                                 Optional tsv As Boolean = False,
                                                  Optional transpose As Boolean = False,
                                                  Optional silent As Boolean = False) As DataFrame
+
+        Dim source As Object() = list.Select(Function(a) CObj(a)).ToArray
+        Dim typeDef As Type = GetType(T)
+        Dim dataframe As DataFrame = source.StreamToFrame(
+            typeDef:=typeDef,
+            strict:=strict,
+            metaBlank:=metaBlank,
+            nonParallel:=nonParallel,
+            maps:=maps,
+            reorderKeys:=reorderKeys,
+            layout:=layout,
+            transpose:=transpose,
+            silent:=silent)
+
+        Return dataframe
+    End Function
+
+    ''' <summary>
+    ''' cast the clr object collection as the dataframe
+    ''' </summary>
+    ''' <remarks>
+    ''' this function will create a new dataframe object, and the dataframe object will be
+    ''' created by the given clr object collection
+    ''' </remarks>
+    ''' <param name="source">a generic clr object collection for make data cast</param>
+    ''' <param name="strict">only extract the property/field value which has column attribute tagged if this parameter value is config as TRUE.</param>
+    ''' <param name="metaBlank"></param>
+    ''' <param name="nonParallel"></param>
+    ''' <param name="maps"></param>
+    ''' <param name="reorderKeys"></param>
+    ''' <param name="layout"></param>
+    ''' <param name="transpose"></param>
+    ''' <param name="silent"></param>
+    ''' <returns></returns>
+    <Extension>
+    Public Function StreamToFrame(source As Object(), typeDef As Type,
+                                  Optional strict As Boolean = False,
+                                  Optional metaBlank As String = "",
+                                  Optional nonParallel As Boolean = False,
+                                  Optional maps As Dictionary(Of String, String) = Nothing,
+                                  Optional reorderKeys As Integer = 0,
+                                  Optional layout As Dictionary(Of String, Integer) = Nothing,
+                                  Optional transpose As Boolean = False,
+                                  Optional silent As Boolean = False) As DataFrame
 
         Dim argv As New Arguments With {
             .layout = layout,
@@ -176,11 +215,8 @@ Public Module DataTableStream
             .reorderKeys = reorderKeys,
             .silent = silent,
             .strict = strict,
-            .transpose = transpose,
-            .tsv = tsv
+            .transpose = transpose
         }
-        Dim source As Object() = list.Select(Function(a) CObj(a)).ToArray
-        Dim typeDef As Type = GetType(T)
         Dim schema As TableSchema = TableSchema.CreateObjectInternal(typeDef, strict).CopyReadDataFromObject
         Dim rowWriter As RowWriter = New RowWriter(schema, metaBlank, layout).CacheIndex(source, reorderKeys)
         Dim fieldNames As String() = rowWriter.GetRowNames(maps).ToArray
