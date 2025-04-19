@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5fb3745fce18207751319bf903c444f7, gr\Microsoft.VisualBasic.Imaging\Drawing3D\Camera.vb"
+﻿#Region "Microsoft.VisualBasic::5747ffa2c423f7b4bba5ba4cb671349d, gr\Microsoft.VisualBasic.Imaging\Drawing3D\Camera.vb"
 
     ' Author:
     ' 
@@ -34,18 +34,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 183
-    '    Code Lines: 131 (71.58%)
-    ' Comment Lines: 19 (10.38%)
+    '   Total Lines: 189
+    '    Code Lines: 135 (71.43%)
+    ' Comment Lines: 19 (10.05%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 33 (18.03%)
-    '     File Size: 6.34 KB
+    '   Blank Lines: 35 (18.52%)
+    '     File Size: 6.52 KB
 
 
     '     Class Camera
     ' 
-    '         Constructor: (+2 Overloads) Sub New
+    '         Constructor: (+3 Overloads) Sub New
     ' 
     '         Function: Lighting, (+2 Overloads) Project, (+4 Overloads) Rotate, (+2 Overloads) RotateX, (+2 Overloads) RotateY
     '                   (+2 Overloads) RotateZ, ToString

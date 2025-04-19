@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::08b9ca56f3ea777f1a16ceee7c897695, Data\BinaryData\BinaryData\Extensions\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::605e89268aa8f2429d7a0af348cf18ef, Data\BinaryData\BinaryData\Extensions\Extensions.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 161
-    '    Code Lines: 95 (59.01%)
-    ' Comment Lines: 42 (26.09%)
+    '   Total Lines: 168
+    '    Code Lines: 101 (60.12%)
+    ' Comment Lines: 42 (25.00%)
     '    - Xml Docs: 97.62%
     ' 
-    '   Blank Lines: 24 (14.91%)
-    '     File Size: 4.90 KB
+    '   Blank Lines: 25 (14.88%)
+    '     File Size: 5.17 KB
 
 
     ' Interface IMagicBlock
@@ -49,7 +49,7 @@
     ' 
     ' Module Extensions
     ' 
-    '     Function: CheckMagicNumber, OpenBinaryReader, ReadAsDoubleVector, ReadAsInt64Vector, skip
+    '     Function: (+2 Overloads) CheckMagicNumber, OpenBinaryReader, ReadAsDoubleVector, ReadAsInt64Vector, skip
     '               (+3 Overloads) VerifyMagicSignature
     ' 
     '     Sub: WriteByte

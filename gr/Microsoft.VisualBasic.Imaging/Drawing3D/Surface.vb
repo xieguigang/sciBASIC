@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e1b238c9e896b1b0e4a315ffcf4699d9, gr\Microsoft.VisualBasic.Imaging\Drawing3D\Surface.vb"
+﻿#Region "Microsoft.VisualBasic::02f5bb88c00259235466f0e9ad85bf2a, gr\Microsoft.VisualBasic.Imaging\Drawing3D\Surface.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 86
-    '    Code Lines: 60 (69.77%)
-    ' Comment Lines: 12 (13.95%)
+    '   Total Lines: 88
+    '    Code Lines: 60 (68.18%)
+    ' Comment Lines: 14 (15.91%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 14 (16.28%)
-    '     File Size: 2.88 KB
+    '   Blank Lines: 14 (15.91%)
+    '     File Size: 2.92 KB
 
 
     '     Structure Surface

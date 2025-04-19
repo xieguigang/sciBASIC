@@ -1,4 +1,62 @@
-﻿Imports Microsoft.VisualBasic.ApplicationServices.Debugging
+﻿#Region "Microsoft.VisualBasic::79e2749dcc07ece1266d28db988b65ee, Data_science\Mathematica\Math\DataFittings\LASSO\LassoFitGenerator.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 347
+    '    Code Lines: 250 (72.05%)
+    ' Comment Lines: 48 (13.83%)
+    '    - Xml Docs: 29.17%
+    ' 
+    '   Blank Lines: 49 (14.12%)
+    '     File Size: 16.52 KB
+
+
+    '     Class LassoFitGenerator
+    ' 
+    '         Properties: NumberOfFeatures, Targets, tqdm_verbose
+    ' 
+    '         Function: fit, getFeatureValues, getLassoFit, getMaxAllowedObservations
+    ' 
+    '         Sub: (+2 Overloads) init, setFeatureValues, setObservationValues, setTarget
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+Imports Microsoft.VisualBasic.ApplicationServices.Debugging
 Imports Microsoft.VisualBasic.ApplicationServices.Terminal.ProgressBar.Tqdm
 Imports std = System.Math
 
@@ -345,3 +403,4 @@ Namespace LASSO
     End Class
 
 End Namespace
+

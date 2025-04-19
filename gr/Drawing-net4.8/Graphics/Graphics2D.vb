@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5f9a06a3806dda614ba922e7d50327ee, gr\Drawing-net4.8\Graphics\Graphics2D.vb"
+﻿#Region "Microsoft.VisualBasic::126cd86aad5fbbe0047b01d60849e608, gr\Drawing-net4.8\Graphics\Graphics2D.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 256
-    '    Code Lines: 167 (65.23%)
-    ' Comment Lines: 54 (21.09%)
+    '   Total Lines: 261
+    '    Code Lines: 171 (65.52%)
+    ' Comment Lines: 54 (20.69%)
     '    - Xml Docs: 92.59%
     ' 
-    '   Blank Lines: 35 (13.67%)
-    '     File Size: 8.87 KB
+    '   Blank Lines: 36 (13.79%)
+    '     File Size: 9.08 KB
 
 
     ' Class Graphics2D
@@ -49,7 +49,7 @@
     ' 
     '     Constructor: (+5 Overloads) Sub New
     ' 
-    '     Function: CreateDevice, CreateObject, GetImageResource, Open, (+2 Overloads) Save
+    '     Function: (+2 Overloads) CreateDevice, CreateObject, GetImageResource, Open, (+2 Overloads) Save
     '               ToString
     ' 
     '     Sub: DrawCircle, DrawString, innerSet, saveFile

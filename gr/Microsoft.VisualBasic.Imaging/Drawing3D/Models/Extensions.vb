@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8130913df7755e09b4eb88313a7ec630, gr\Microsoft.VisualBasic.Imaging\Drawing3D\Models\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::8f042f12971da342b4d458c785ab92c1, gr\Microsoft.VisualBasic.Imaging\Drawing3D\Models\Extensions.vb"
 
     ' Author:
     ' 
@@ -34,18 +34,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 32
-    '    Code Lines: 27 (84.38%)
+    '   Total Lines: 37
+    '    Code Lines: 31 (83.78%)
     ' Comment Lines: 0 (0.00%)
     '    - Xml Docs: 0.00%
     ' 
-    '   Blank Lines: 5 (15.62%)
-    '     File Size: 1.03 KB
+    '   Blank Lines: 6 (16.22%)
+    '     File Size: 1.25 KB
 
 
     '     Module Extensions
     ' 
-    '         Function: (+2 Overloads) Model3D, TupleZ
+    '         Function: LoadVector3D, (+2 Overloads) Model3D, TupleZ
     ' 
     ' 
     ' /********************************************************************************/

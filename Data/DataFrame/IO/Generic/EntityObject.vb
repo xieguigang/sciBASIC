@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::635bd552744069a02921b2942dafb1b0, Data\DataFrame\IO\Generic\EntityObject.vb"
+﻿#Region "Microsoft.VisualBasic::a1760ad1f550faa1677ff4e93da5f361, Data\DataFrame\IO\Generic\EntityObject.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 214
-    '    Code Lines: 131 (61.21%)
-    ' Comment Lines: 61 (28.50%)
-    '    - Xml Docs: 88.52%
+    '   Total Lines: 216
+    '    Code Lines: 131 (60.65%)
+    ' Comment Lines: 63 (29.17%)
+    '    - Xml Docs: 88.89%
     ' 
-    '   Blank Lines: 22 (10.28%)
-    '     File Size: 8.85 KB
+    '   Blank Lines: 22 (10.19%)
+    '     File Size: 8.89 KB
 
 
     '     Class EntityObject

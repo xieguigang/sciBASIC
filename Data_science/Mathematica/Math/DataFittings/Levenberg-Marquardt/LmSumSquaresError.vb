@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::22c173a526b6943343bed7c1961e0a09, Data_science\Mathematica\Math\DataFittings\Levenberg-Marquardt\LmSumSquaresError.vb"
+﻿#Region "Microsoft.VisualBasic::788bdebc9f629563465134929827bd79, Data_science\Mathematica\Math\DataFittings\Levenberg-Marquardt\LmSumSquaresError.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 128
-    '    Code Lines: 74 (57.81%)
-    ' Comment Lines: 30 (23.44%)
-    '    - Xml Docs: 93.33%
+    '   Total Lines: 125
+    '    Code Lines: 74 (59.20%)
+    ' Comment Lines: 28 (22.40%)
+    '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 24 (18.75%)
-    '     File Size: 5.22 KB
+    '   Blank Lines: 23 (18.40%)
+    '     File Size: 4.96 KB
 
 
     '     Class LmSumSquaresError
