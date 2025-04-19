@@ -63,7 +63,7 @@ Public Module FrameReader
     ''' </summary>
     ''' <param name="file"></param>
     ''' <returns></returns>
-    Public Function ReadFeather(file As String) As DataFrame
+    Public Function ReadFeatures(file As String) As DataFrame
         Dim df As New DataFrame With {
             .features = New Dictionary(Of String, FeatureVector)
         }

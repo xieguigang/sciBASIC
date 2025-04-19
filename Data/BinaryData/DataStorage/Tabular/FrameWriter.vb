@@ -62,7 +62,7 @@ Imports Microsoft.VisualBasic.ValueTypes
 
 Public Module FrameWriter
 
-    Public ReadOnly magic As IReadOnlyCollection(Of Byte) = Encoding.ASCII.GetBytes("dataframe")
+    Public ReadOnly Property magic As IReadOnlyCollection(Of Byte) = Encoding.ASCII.GetBytes("scibasic.net/dataframe")
 
     ''' <summary>
     ''' write dataframe object as the binary file
