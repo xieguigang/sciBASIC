@@ -60,6 +60,7 @@ Imports System.Text
 Imports System.Threading
 Imports Microsoft.VisualBasic.ApplicationServices
 Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports Microsoft.VisualBasic.ComponentModel.Ranges.Unit
 Imports Microsoft.VisualBasic.FileIO
 Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Linq
@@ -211,7 +212,7 @@ Public Module IOExtensions
         End If
     End Function
 
-    Public Const size_2GB As Long = 1024& * 1024& * 1024& * 2&
+    Public Const size_2GB As Long = 2 * ByteSize.GB
 
     ''' <summary>
     ''' Safe open a local file handle. Warning: this function is set to write mode by default, 
