@@ -6,7 +6,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{70DD1DBE-6F3F-467A-BE71-E78300CF1B0E}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <StartupObject>test.KalmanFilterDemotest</StartupObject>
+    <StartupObject>test.TrajectoryTest</StartupObject>
     <RootNamespace>test</RootNamespace>
     <AssemblyName>test</AssemblyName>
     <FileAlignment>512</FileAlignment>
@@ -97,6 +97,7 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -118,6 +119,7 @@
     <Compile Include="DataSeriesFactory.vb" />
     <Compile Include="demo_data1.vb" />
     <Compile Include="KalmanFilterDemotest.vb" />
+    <Compile Include="TrajectoryTest.vb" />
     <Compile Include="MultivariateDataSeriesRepository.vb" />
     <Compile Include="Program.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />

@@ -19,7 +19,7 @@ Namespace HungarianAlgorithm
         ''' is the column of the task assigned to agent <em>i</em>.</returns>
         ''' <exception cref="ArgumentNullException"><paramref name="costs"/> is null.</exception>
         <Extension()>
-        Public Function FindAssignments(costs As Integer(,)) As Integer()
+        Public Function FindAssignments(costs As Double(,)) As Integer()
             If costs Is Nothing Then Throw New ArgumentNullException(NameOf(costs))
 
             Dim h = costs.GetLength(0)
@@ -29,7 +29,7 @@ Namespace HungarianAlgorithm
                 ' make sure cost matrix has number of rows greater than columns
                 Dim row = w
                 Dim col = h
-                Dim transposeCosts = New Integer(row - 1, col - 1) {}
+                Dim transposeCosts = New Double(row - 1, col - 1) {}
                 For i = 0 To row - 1
                     For j = 0 To col - 1
                         transposeCosts(i, j) = costs(j, i)
@@ -41,7 +41,7 @@ Namespace HungarianAlgorithm
             End If
 
             For i = 0 To h - 1
-                Dim min = Integer.MaxValue
+                Dim min As Double = Double.MaxValue
 
                 For j = 0 To w - 1
                     min = std.Min(min, costs(i, j))
@@ -58,7 +58,7 @@ Namespace HungarianAlgorithm
 
             For i = 0 To h - 1
                 For j = 0 To w - 1
-                    If costs(i, j) = 0 AndAlso Not rowsCovered(i) AndAlso Not colsCovered(j) Then
+                    If costs(i, j) = 0.0 AndAlso Not rowsCovered(i) AndAlso Not colsCovered(j) Then
                         masks(i, j) = 1
                         rowsCovered(i) = True
                         colsCovered(j) = True
@@ -136,7 +136,7 @@ Namespace HungarianAlgorithm
             Return 2
         End Function
 
-        Private Function RunStep2(costs As Integer(,), masks As Byte(,), rowsCovered As Boolean(), colsCovered As Boolean(), w As Integer, h As Integer, ByRef pathStart As Location) As Integer
+        Private Function RunStep2(costs As Double(,), masks As Byte(,), rowsCovered As Boolean(), colsCovered As Boolean(), w As Integer, h As Integer, ByRef pathStart As Location) As Integer
             If costs Is Nothing Then Throw New ArgumentNullException(NameOf(costs))
 
             If masks Is Nothing Then Throw New ArgumentNullException(NameOf(masks))
@@ -192,7 +192,7 @@ Namespace HungarianAlgorithm
 
             Return 1
         End Function
-        Private Function RunStep4(costs As Integer(,), rowsCovered As Boolean(), colsCovered As Boolean(), w As Integer, h As Integer) As Integer
+        Private Function RunStep4(costs As Double(,), rowsCovered As Boolean(), colsCovered As Boolean(), w As Integer, h As Integer) As Integer
             If costs Is Nothing Then Throw New ArgumentNullException(NameOf(costs))
 
             If rowsCovered Is Nothing Then Throw New ArgumentNullException(NameOf(rowsCovered))
@@ -210,14 +210,14 @@ Namespace HungarianAlgorithm
             Return 2
         End Function
 
-        Private Function FindMinimum(costs As Integer(,), rowsCovered As Boolean(), colsCovered As Boolean(), w As Integer, h As Integer) As Integer
+        Private Function FindMinimum(costs As Double(,), rowsCovered As Boolean(), colsCovered As Boolean(), w As Integer, h As Integer) As Double
             If costs Is Nothing Then Throw New ArgumentNullException(NameOf(costs))
 
             If rowsCovered Is Nothing Then Throw New ArgumentNullException(NameOf(rowsCovered))
 
             If colsCovered Is Nothing Then Throw New ArgumentNullException(NameOf(colsCovered))
 
-            Dim minValue = Integer.MaxValue
+            Dim minValue = Double.MaxValue
 
             For i = 0 To h - 1
                 For j = 0 To w - 1
@@ -254,7 +254,7 @@ Namespace HungarianAlgorithm
 
             Return -1
         End Function
-        Private Function FindZero(costs As Integer(,), rowsCovered As Boolean(), colsCovered As Boolean(), w As Integer, h As Integer) As Location
+        Private Function FindZero(costs As Double(,), rowsCovered As Boolean(), colsCovered As Boolean(), w As Integer, h As Integer) As Location
             If costs Is Nothing Then Throw New ArgumentNullException(NameOf(costs))
 
             If rowsCovered Is Nothing Then Throw New ArgumentNullException(NameOf(rowsCovered))
@@ -263,7 +263,7 @@ Namespace HungarianAlgorithm
 
             For i = 0 To h - 1
                 For j = 0 To w - 1
-                    If costs(i, j) = 0 AndAlso Not rowsCovered(i) AndAlso Not colsCovered(j) Then Return New Location(i, j)
+                    If costs(i, j) = 0.0 AndAlso Not rowsCovered(i) AndAlso Not colsCovered(j) Then Return New Location(i, j)
                 Next
             Next
 
