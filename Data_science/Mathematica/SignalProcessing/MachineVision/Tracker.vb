@@ -1,24 +1,39 @@
 ﻿
+Imports Microsoft.VisualBasic.Imaging.Math2D
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.SignalProcessing
 Imports std = System.Math
 
 Public Class Tracker : Implements Enumeration(Of Trajectory)
 
-    Public trajectories As New List(Of Trajectory)
-    Public nextID As Integer = 0
+    ''' <summary>
+    ''' current tracking objects
+    ''' </summary>
+    Public ReadOnly currentTrajectories As New List(Of Trajectory)
 
-    Private lastUpdated As New Dictionary(Of Integer, Integer)
-    Private Const MAX_INACTIVE_FRAMES As Integer = 3 ' 轨迹最大不活跃帧数
+    ''' <summary>
+    ''' the global object id
+    ''' </summary>
+    Dim nextID As Integer = 0
+    Dim lastUpdated As New Dictionary(Of Integer, Integer)
 
+    ''' <summary>
+    ''' 轨迹最大不活跃帧数
+    ''' </summary>
+    Public Const MAX_INACTIVE_FRAMES As Integer = 3
+
+    ''' <summary>
+    ''' Contains all objects for make tracking
+    ''' </summary>
     Dim objects As New List(Of Trajectory)
 
-    Public Sub Update(frameData As FrameData)
+    Public Sub Update(Of T As Detection)(frameData As FrameData(Of T))
         Dim currentFrameID = frameData.FrameID
 
         ' 1. 移除过期轨迹
         Dim toRemove As New List(Of Trajectory)
-        For Each traj In trajectories
+
+        For Each traj In currentTrajectories
             If lastUpdated.ContainsKey(traj.TrajectoryID) Then
                 If currentFrameID - lastUpdated(traj.TrajectoryID) > MAX_INACTIVE_FRAMES Then
                     toRemove.Add(traj)
@@ -26,16 +41,18 @@ Public Class Tracker : Implements Enumeration(Of Trajectory)
             End If
         Next
         For Each traj In toRemove
-            trajectories.Remove(traj)
+            currentTrajectories.Remove(traj)
         Next
 
         ' 构建代价矩阵（欧氏距离）
-        Dim costMatrix(trajectories.Count - 1, frameData.Detections.Count - 1) As Double
-        For i = 0 To trajectories.Count - 1
-            For j = 0 To frameData.Detections.Count - 1
-                Dim lastPos = trajectories(i).LastPosition
+        Dim costMatrix(currentTrajectories.Count - 1, frameData.Detections.Count - 1) As Double
+
+        For i As Integer = 0 To currentTrajectories.Count - 1
+            For j As Integer = 0 To frameData.Detections.Count - 1
+                Dim lastPos = currentTrajectories(i).LastPosition
                 Dim currPos = frameData.Detections(j).Position
-                costMatrix(i, j) = std.Sqrt((lastPos.X - currPos.X) ^ 2 + (lastPos.Y - currPos.Y) ^ 2)
+
+                costMatrix(i, j) = lastPos.Distance(currPos)
             Next
         Next
 
@@ -43,26 +60,28 @@ Public Class Tracker : Implements Enumeration(Of Trajectory)
         Dim assignments As Integer() = HungarianAlgorithm.FindAssignments(costMatrix)
 
         ' 3. 更新现有轨迹
-        For i = 0 To assignments.Length - 1
-            Dim j = assignments(i)
-            If j >= 0 AndAlso i < trajectories.Count AndAlso j < frameData.Detections.Count Then
-                trajectories(i).Update(frameData.Detections(j))
-                lastUpdated(trajectories(i).TrajectoryID) = currentFrameID
+        For i As Integer = 0 To assignments.Length - 1
+            Dim j As Integer = assignments(i)
+
+            If j >= 0 AndAlso i < currentTrajectories.Count AndAlso j < frameData.Detections.Count Then
+                currentTrajectories(i).Update(frameData.Detections(j))
+                lastUpdated(currentTrajectories(i).TrajectoryID) = currentFrameID
             Else
                 ' 未分配到检测，更新最后活跃时间
-                If i < trajectories.Count Then
-                    lastUpdated(trajectories(i).TrajectoryID) = currentFrameID
+                If i < currentTrajectories.Count Then
+                    lastUpdated(currentTrajectories(i).TrajectoryID) = currentFrameID
                 End If
             End If
         Next
 
         ' 4. 处理新检测
         Dim assignedCols As New HashSet(Of Integer)(assignments)
-        For j = 0 To frameData.Detections.Count - 1
+
+        For j As Integer = 0 To frameData.Detections.Count - 1
             If Not assignedCols.Contains(j) Then
-                trajectories.Add(New Trajectory(nextID, frameData.Detections(j)))
+                currentTrajectories.Add(New Trajectory(nextID, frameData.Detections(j)))
                 lastUpdated.Add(nextID, currentFrameID)
-                objects.Add(trajectories.Last)
+                objects.Add(currentTrajectories.Last)
                 nextID += 1
             End If
         Next

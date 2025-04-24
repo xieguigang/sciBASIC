@@ -144,8 +144,11 @@ Namespace Text.Similarity
         ''' <param name="s1$"></param>
         ''' <param name="s2$"></param>
         ''' <param name="ignoreCase"></param>
-        ''' <param name="cost#"></param>
+        ''' <param name="cost"></param>
         ''' <param name="dist"></param>
+        ''' <param name="checkChar">
+        ''' lambda function pointer for check two char is equals or not?
+        ''' </param>
         ''' <returns></returns>
         Public Function LevenshteinEvaluate(s1$, s2$,
                                             Optional ignoreCase As Boolean = True,
