@@ -1,8 +1,11 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <RootNamespace>MachineVision</RootNamespace>
-    <TargetFramework>net8.0</TargetFramework>
+    <RootNamespace>Microsoft.VisualBasic.Math.MachineVision</RootNamespace>
+    <TargetFrameworks>net8.0-windows;net8.0;net48</TargetFrameworks>
+    <Platforms>AnyCPU;x64</Platforms>
+    <AutoGenerateBindingRedirects>True</AutoGenerateBindingRedirects>
+    <AssemblyName>Microsoft.VisualBasic.Math.MachineVision</AssemblyName>
   </PropertyGroup>
 
   <ItemGroup>

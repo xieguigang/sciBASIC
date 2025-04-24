@@ -1,6 +1,6 @@
 ﻿Imports System.Drawing
 Imports Microsoft.VisualBasic.Linq
-Imports Microsoft.VisualBasic.Math.SignalProcessing.HungarianAlgorithm
+Imports Microsoft.VisualBasic.Math.MachineVision
 
 Public Class MotionSimulator
     ' 生成ABC三个物体的模拟运动数据

@@ -1,6 +1,7 @@
 ﻿
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.SignalProcessing
+Imports std = System.Math
 
 Public Class Tracker : Implements Enumeration(Of Trajectory)
 
@@ -34,7 +35,7 @@ Public Class Tracker : Implements Enumeration(Of Trajectory)
             For j = 0 To frameData.Detections.Count - 1
                 Dim lastPos = trajectories(i).LastPosition
                 Dim currPos = frameData.Detections(j).Position
-                costMatrix(i, j) = Math.Sqrt((lastPos.X - currPos.X) ^ 2 + (lastPos.Y - currPos.Y) ^ 2)
+                costMatrix(i, j) = std.Sqrt((lastPos.X - currPos.X) ^ 2 + (lastPos.Y - currPos.Y) ^ 2)
             Next
         Next
 

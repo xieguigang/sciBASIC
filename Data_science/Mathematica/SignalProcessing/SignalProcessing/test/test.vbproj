@@ -175,6 +175,10 @@
       <Project>{662e885c-a888-45a6-9504-f0b49e6a0e52}</Project>
       <Name>Math.NET5</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\MachineVision\MachineVision.vbproj">
+      <Project>{82a03256-a1e4-4656-89e9-29a90341afc7}</Project>
+      <Name>MachineVision</Name>
+    </ProjectReference>
     <ProjectReference Include="..\signalprocessing-netcore5.vbproj">
       <Project>{08833fcb-e57a-4e02-9209-5f1e7c0b0c22}</Project>
       <Name>signalprocessing-netcore5</Name>
