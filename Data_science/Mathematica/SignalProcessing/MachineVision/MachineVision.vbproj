@@ -1,0 +1,14 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <RootNamespace>MachineVision</RootNamespace>
+    <TargetFramework>net8.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\Microsoft.VisualBasic.Core\src\Core.vbproj" />
+    <ProjectReference Include="..\..\Math\Math\Math.NET5.vbproj" />
+    <ProjectReference Include="..\SignalProcessing\signalprocessing-netcore5.vbproj" />
+  </ItemGroup>
+
+</Project>
