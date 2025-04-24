@@ -25,7 +25,9 @@
     '  measurement always 1 dimension 
     ' 
 
-    ' 1 Dimension 
+    ''' <summary>
+    ''' Represents the state of a 1-dimensional Kalman filter
+    ''' </summary>
     Public Class kalman1_state
         Public x As Single ' state
         Public A As Single ' x(n)=A*x(n-1)+u(n),u(n)~N(0,q)
@@ -36,7 +38,9 @@
         Public gain As Single
     End Class
 
-    ' 2 Dimension 
+    ''' <summary>
+    ''' Represents the state of a 2-dimensional Kalman filter
+    ''' </summary>
     Public Class kalman2_state
         Public x As Single() = New Single(1) {} ' state: [0]-angle [1]-diffrence of angle, 2x1
         Public A As Single()() = {New Single(1) {}, New Single(1) {}}

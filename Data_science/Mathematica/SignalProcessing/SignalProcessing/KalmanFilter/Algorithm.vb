@@ -22,6 +22,22 @@ Namespace KalmanFilter
         '  @retval  
         ' 
 
+        ''' <summary>
+        ''' Initializes the 1-dimensional Kalman filter state structure
+        ''' </summary>
+        ''' <param name="state">The Kalman filter state structure to initialize</param>
+        ''' <param name="init_x">Initial state value (x0)</param>
+        ''' <param name="init_p">Initial error covariance estimate (p0)</param>
+        ''' <remarks>
+        ''' Default configuration:
+        ''' <list type="bullet">
+        ''' <item><description>State transition matrix (A) = 1.0</description></item>
+        ''' <item><description>Observation matrix (H) = 1.0</description></item>
+        ''' <item><description>Process noise covariance (q) = 200.0</description></item>
+        ''' <item><description>Measurement noise covariance (r) = 500.0</description></item>
+        ''' </list>
+        ''' Note: These parameters should be tuned for specific applications
+        ''' </remarks>
         <Extension>
         Public Sub kalman1_init(state As kalman1_state, init_x As Single, init_p As Single)
             state.x = init_x
@@ -42,6 +58,18 @@ Namespace KalmanFilter
         '  @retval  
         '    Estimated result
         ' 
+
+        ''' <summary>
+        ''' Performs 1-dimensional Kalman filtering
+        ''' </summary>
+        ''' <param name="state">Kalman filter state structure</param>
+        ''' <param name="z_measure">Measurement value</param>
+        ''' <returns>Filtered state estimate</returns>
+        ''' <remarks>
+        ''' Implements standard Kalman filter equations:
+        ''' 1. Prediction step (state and covariance)
+        ''' 2. Measurement update (Kalman gain, state correction, covariance update)
+        ''' </remarks>
         <Extension>
         Public Function kalman1_filter(state As kalman1_state, z_measure As Single) As Single
             ' Predict 
@@ -70,6 +98,23 @@ Namespace KalmanFilter
         '  @outputs 
         '  @retval  
         ' 
+
+        ''' <summary>
+        ''' Initializes the 2-dimensional Kalman filter state structure
+        ''' </summary>
+        ''' <param name="state">The Kalman filter state structure to initialize</param>
+        ''' <param name="init_x">Initial state vector [x0, x1]</param>
+        ''' <param name="init_p">Initial error covariance matrix (2x2)</param>
+        ''' <remarks>
+        ''' Default configuration:
+        ''' <list type="bullet">
+        ''' <item><description>State transition matrix (A) = [[1, 0.1], [0, 1]]</description></item>
+        ''' <item><description>Observation matrix (H) = [1, 0]</description></item>
+        ''' <item><description>Process noise covariance (q) = [1e-6, 1e-6]</description></item>
+        ''' <item><description>Measurement noise covariance (r) = 1e-6</description></item>
+        ''' </list>
+        ''' Note: These parameters should be tuned for specific applications
+        ''' </remarks>
         <Extension>
         Public Sub kalman2_init(state As kalman2_state, init_x As Single(), init_p As Single()())
             state.x(0) = init_x(0)
@@ -105,6 +150,25 @@ Namespace KalmanFilter
         '  @retval  
         '    Return value is equals to state->x[0], so maybe angle or velocity.
         ' 
+
+        ''' <summary>
+        ''' Performs 2-dimensional Kalman filtering
+        ''' </summary>
+        ''' <param name="state">Kalman filter state structure</param>
+        ''' <param name="z_measure">Measurement value</param>
+        ''' <returns>Primary state estimate (x[0])</returns>
+        ''' <remarks>
+        ''' Updates both state vector elements (typically [position, velocity] or [angle, angular velocity])
+        ''' and covariance matrix. Implements:
+        ''' <list type="number">
+        ''' <item><description>State prediction</description></item>
+        ''' <item><description>Covariance prediction</description></item>
+        ''' <item><description>Kalman gain calculation</description></item>
+        ''' <item><description>State correction</description></item>
+        ''' <item><description>Covariance update</description></item>
+        ''' </list>
+        ''' Returns the first element of the updated state vector (x[0])
+        ''' </remarks>
         <Extension>
         Public Function kalman2_filter(state As kalman2_state, z_measure As Single) As Single
             Dim temp0 = 0.0F
