@@ -10,7 +10,8 @@ Public Class MotionSimulator
         Dim positions = New Dictionary(Of String, PointF) From {
             {"A", New PointF(rnd.Next(50, 100), rnd.Next(50, 100))},
             {"B", New PointF(rnd.Next(200, 300), rnd.Next(150, 200))},
-            {"C", New PointF(rnd.Next(400, 500), rnd.Next(250, 300))}
+            {"C", New PointF(rnd.Next(400, 500), rnd.Next(250, 300))},
+            {"D", New PointF(rnd.Next(50, 500), rnd.Next(250, 500))}
         }
 
         For frame = 0 To frameCount - 1
@@ -31,6 +32,11 @@ Public Class MotionSimulator
                 positions("C").X + frame * 0.3F,
                 positions("C").Y + frame * 0.2F)
 
+            ' 物体D：余弦曲线运动
+            positions("D") = New PointF(
+                positions("D").X + 5,
+                positions("D").Y + 10 * CSng(Math.Cos(frame * 0.2)))
+
             ' 添加高斯噪声（标准差=3）
             For Each kvp In positions
                 frameData.Detections.Add(New Detection With {
@@ -40,6 +46,8 @@ Public Class MotionSimulator
                         kvp.Value.Y + CSng(rnd.NextDouble() * 6 - 3))
                 })
             Next
+
+            frameData.Detections = New List(Of Detection)(frameData.Detections.Shuffles)
 
             Yield frameData
         Next
@@ -68,19 +76,21 @@ Module TrajectoryTest
 
         ' 可视化输出（需引用System.Drawing）
         VisualizeTracks(tracker.trajectories)
+
+        Pause()
     End Sub
 
     Private Sub VisualizeTracks(trajectories As List(Of Trajectory))
-        Using bmp As New Bitmap(800, 600)
+        Using bmp As New Bitmap(1000, 900)
             Using g = Graphics.FromImage(bmp)
                 g.Clear(Color.White)
                 Dim colors As New Dictionary(Of Integer, Color) From {
-                {0, Color.Red}, {1, Color.Blue}, {2, Color.Green}
+                {0, Color.Red}, {1, Color.Blue}, {2, Color.Green}, {3, Color.Purple}
             }
 
                 For Each traj In trajectories
                     If traj.positions.Count > 1 Then
-                        Dim pen As New Pen(colors(traj.TrajectoryID Mod 3), 2)
+                        Dim pen As New Pen(colors(traj.TrajectoryID Mod 4), 2)
                         g.DrawLines(pen, traj.positions.Select(Function(p) New Point(CInt(p.X), CInt(p.Y))).ToArray())
                     End If
                 Next
