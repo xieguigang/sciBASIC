@@ -61,15 +61,16 @@ Public Module BucketOperators
 
     ''' <summary>
     ''' Data partitioning function.
-    ''' (将目标集合之中的数据按照<paramref name="partitionSize"></paramref>参数分配到子集合之中，
-    ''' 这个函数之中不能够使用并行化Linq拓展，以保证元素之间的相互原有的顺序，
-    ''' 每一个子集合之中的元素数量为<paramref name="partitionSize"/>)
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
     ''' <param name="source"></param>
     ''' <param name="partitionSize">每一个子集合之中的元素的数目</param>
     ''' <returns></returns>
-    ''' <remarks></remarks>
+    ''' <remarks>
+    ''' (将目标集合之中的数据按照<paramref name="partitionSize"></paramref>参数分配到子集合之中，
+    ''' 这个函数之中不能够使用并行化Linq拓展，以保证元素之间的相互原有的顺序，
+    ''' 每一个子集合之中的元素数量为<paramref name="partitionSize"/>)
+    ''' </remarks>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension> Public Function Split(Of T)(source As IEnumerable(Of T), partitionSize As Integer) As T()()
         Return source.SplitIterator(partitionSize).ToArray
@@ -77,7 +78,6 @@ Public Module BucketOperators
 
     ''' <summary>
     ''' Performance the partitioning operation on the input sequence.
-    ''' (请注意，这个函数只适用于数量较少的序列。对所输入的序列进行分区操作，<paramref name="partitionSize"/>函数参数是每一个分区里面的元素的数量)
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
     ''' <param name="source"></param>
@@ -85,6 +85,9 @@ Public Module BucketOperators
     ''' The partition size should be less than the array upbound size
     ''' </param>
     ''' <returns></returns>
+    ''' <remarks>
+    ''' (请注意，这个函数只适用于数量较少的序列。对所输入的序列进行分区操作，<paramref name="partitionSize"/>函数参数是每一个分区里面的元素的数量)
+    ''' </remarks>
     <Extension>
     Public Iterator Function SplitIterator(Of T)(source As IEnumerable(Of T), partitionSize As Integer) As IEnumerable(Of T())
         Dim buffer As New List(Of T)(capacity:=partitionSize)
@@ -105,13 +108,17 @@ Public Module BucketOperators
     End Function
 
     ''' <summary>
-    ''' Merge two type specific collection.(函数会忽略掉空的集合，函数会构建一个新的集合，原有的集合不受影响)
+    ''' Merge two type specific collection.
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
     ''' <param name="source"></param>
     ''' <param name="target"></param>
     ''' <returns></returns>
-    <Extension> Public Function Join(Of T)(source As IEnumerable(Of T), target As IEnumerable(Of T)) As List(Of T)
+    ''' <remarks>
+    ''' (函数会忽略掉空的集合，函数会构建一个新的集合，原有的集合不受影响)
+    ''' </remarks>
+    <Extension>
+    Public Function Join(Of T)(source As IEnumerable(Of T), target As IEnumerable(Of T)) As List(Of T)
         Dim srcList As List(Of T) = If(source Is Nothing, New List(Of T), source.AsList)
         If Not target Is Nothing Then
             Call srcList.AddRange(target)
@@ -120,7 +127,8 @@ Public Module BucketOperators
     End Function
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    <Extension> Public Function Join(Of T)(source As IEnumerable(Of T), ParamArray data As T()) As List(Of T)
+    <Extension>
+    Public Function Join(Of T)(source As IEnumerable(Of T), ParamArray data As T()) As List(Of T)
         Return source.Join(target:=data)
     End Function
 
@@ -131,7 +139,8 @@ Public Module BucketOperators
     ''' <param name="source"></param>
     ''' <param name="data"></param>
     ''' <returns></returns>
-    <Extension> Public Function Join(Of T)(source As IEnumerable(Of T), data As T) As List(Of T)
+    <Extension>
+    Public Function Join(Of T)(source As IEnumerable(Of T), data As T) As List(Of T)
         Return source.Join({data})
     End Function
 
@@ -145,7 +154,8 @@ Public Module BucketOperators
     ''' <param name="obj"></param>
     ''' <param name="collection"></param>
     ''' <returns></returns>
-    <Extension> Public Function Join(Of T)(obj As T, collection As IEnumerable(Of T)) As List(Of T)
+    <Extension>
+    Public Function Join(Of T)(obj As T, collection As IEnumerable(Of T)) As List(Of T)
         With New List(Of T) From {obj}
             If Not collection Is Nothing Then
                 Call .AddRange(collection)
