@@ -158,7 +158,7 @@ Namespace Linq
         ''' double works whose min or max is searched for.
         ''' </param>
         ''' <returns>
-        ''' returns -1 means empty collection
+        ''' A zero-based index offset for the item with max value, returns -1 means empty collection
         ''' </returns>
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>

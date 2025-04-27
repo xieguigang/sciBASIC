@@ -18,6 +18,17 @@ Public Class FrameData(Of T As Detection) : Implements Enumeration(Of T)
     <XmlElement("Objects")>
     Public Property Detections As T()
 
+    ''' <summary>
+    ''' get detection object by its index in current frame
+    ''' </summary>
+    ''' <param name="index"></param>
+    ''' <returns></returns>
+    Default Public ReadOnly Property Item(index As Integer) As T
+        Get
+            Return Detections(index)
+        End Get
+    End Property
+
     Sub New()
     End Sub
 
@@ -26,8 +37,19 @@ Public Class FrameData(Of T As Detection) : Implements Enumeration(Of T)
         _Detections = detections.SafeQuery.ToArray
     End Sub
 
+    ''' <summary>
+    ''' Just set the given index value to the <see cref="FrameID"/>
+    ''' </summary>
+    ''' <param name="id"></param>
+    ''' <returns></returns>
+    <DebuggerStepThrough>
     Public Function SetIndex(id As Integer) As FrameData(Of T)
         FrameID = id
+
+        For Each obj As T In Detections.SafeQuery
+            obj.FrameID = id
+        Next
+
         Return Me
     End Function
 
@@ -51,6 +73,7 @@ Public Class Detection
     <XmlAttribute>
     Public Property ObjectID As String
     Public Property Position As PointF
+    Public Property FrameID As Integer
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Overrides Function ToString() As String

@@ -106,7 +106,7 @@ Namespace Language
         ''' <typeparam name="T"></typeparam>
         ''' <param name="source"></param>
         ''' <returns>
-        ''' -1 means empty collection
+        ''' A zero-based index offset for the item with max value, -1 means empty collection
         ''' </returns>
         <Extension>
         Public Function MaxIndex(Of T As IComparable)(source As IEnumerable(Of T)) As Integer

@@ -1,6 +1,8 @@
 ﻿Imports System.Drawing
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.MachineVision
+Imports Microsoft.VisualBasic.Math.SignalProcessing.HungarianAlgorithm
+Imports Microsoft.VisualBasic.Serialization.JSON
 
 Public Class MotionSimulator
     ' 生成ABC三个物体的模拟运动数据
@@ -62,7 +64,7 @@ Public Class MotionSimulator
                 })
             Next
 
-            frameData.Detections = New List(Of Detection)(frameData.Detections.Shuffles)
+            frameData.Detections = frameData.Detections.Shuffles
 
             Yield frameData
         Next
@@ -71,7 +73,23 @@ End Class
 
 Module TrajectoryTest
 
+    Sub matchesTest()
+        ' 测试方阵
+        Dim costSquare As Double(,) = {{1.0, 2.0}, {2.0, 1.0}}
+        Console.WriteLine(HungarianAlgorithm.FindAssignments(costSquare).GetJson)
+
+        ' 测试宽矩阵
+        Dim costWide As Double(,) = {{1.0, 3.0, 5.0}, {2.0, 4.0, 6.0}}
+        Console.WriteLine(HungarianAlgorithm.FindAssignments(costWide).GetJson)
+
+        ' 测试高矩阵
+        Dim costTall As Double(,) = {{1.0, 4.0}, {9.0, 15.0}, {3.0, 6.0}}
+        Console.WriteLine(HungarianAlgorithm.FindAssignments(costTall).GetJson)
+    End Sub
+
     Sub Main()
+        Call matchesTest()
+
         ' 生成模拟数据（50帧）
         Dim simulatedData = MotionSimulator.GenerateTrackData(50).ToArray
 

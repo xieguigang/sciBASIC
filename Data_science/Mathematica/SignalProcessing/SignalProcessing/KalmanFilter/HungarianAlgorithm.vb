@@ -20,11 +20,10 @@ Namespace HungarianAlgorithm
         ''' <exception cref="ArgumentNullException"><paramref name="costs"/> is null.</exception>
         <Extension()>
         Public Function FindAssignments(costs As Double(,)) As Integer()
-            If costs Is Nothing Then Throw New ArgumentNullException(NameOf(costs))
-
             Dim h = costs.GetLength(0)
             Dim w = costs.GetLength(1)
             Dim rowsGreaterThanCols = h > w
+
             If rowsGreaterThanCols Then
                 ' make sure cost matrix has number of rows greater than columns
                 Dim row = w
@@ -115,10 +114,6 @@ Namespace HungarianAlgorithm
         End Function
 
         Private Function RunStep1(masks As Byte(,), colsCovered As Boolean(), w As Integer, h As Integer) As Integer
-            If masks Is Nothing Then Throw New ArgumentNullException(NameOf(masks))
-
-            If colsCovered Is Nothing Then Throw New ArgumentNullException(NameOf(colsCovered))
-
             For i = 0 To h - 1
                 For j = 0 To w - 1
                     If masks(i, j) = 1 Then colsCovered(j) = True
@@ -137,14 +132,6 @@ Namespace HungarianAlgorithm
         End Function
 
         Private Function RunStep2(costs As Double(,), masks As Byte(,), rowsCovered As Boolean(), colsCovered As Boolean(), w As Integer, h As Integer, ByRef pathStart As Location) As Integer
-            If costs Is Nothing Then Throw New ArgumentNullException(NameOf(costs))
-
-            If masks Is Nothing Then Throw New ArgumentNullException(NameOf(masks))
-
-            If rowsCovered Is Nothing Then Throw New ArgumentNullException(NameOf(rowsCovered))
-
-            If colsCovered Is Nothing Then Throw New ArgumentNullException(NameOf(colsCovered))
-
             While True
                 Dim loc = FindZero(costs, rowsCovered, colsCovered, w, h)
                 If loc.row = -1 Then Return 4
@@ -164,12 +151,6 @@ Namespace HungarianAlgorithm
             Throw New Exception("never!")
         End Function
         Private Function RunStep3(masks As Byte(,), rowsCovered As Boolean(), colsCovered As Boolean(), w As Integer, h As Integer, path As Location(), pathStart As Location) As Integer
-            If masks Is Nothing Then Throw New ArgumentNullException(NameOf(masks))
-
-            If rowsCovered Is Nothing Then Throw New ArgumentNullException(NameOf(rowsCovered))
-
-            If colsCovered Is Nothing Then Throw New ArgumentNullException(NameOf(colsCovered))
-
             Dim pathIndex = 0
             path(0) = pathStart
 
@@ -192,13 +173,8 @@ Namespace HungarianAlgorithm
 
             Return 1
         End Function
+
         Private Function RunStep4(costs As Double(,), rowsCovered As Boolean(), colsCovered As Boolean(), w As Integer, h As Integer) As Integer
-            If costs Is Nothing Then Throw New ArgumentNullException(NameOf(costs))
-
-            If rowsCovered Is Nothing Then Throw New ArgumentNullException(NameOf(rowsCovered))
-
-            If colsCovered Is Nothing Then Throw New ArgumentNullException(NameOf(colsCovered))
-
             Dim minValue = FindMinimum(costs, rowsCovered, colsCovered, w, h)
 
             For i = 0 To h - 1
@@ -211,12 +187,6 @@ Namespace HungarianAlgorithm
         End Function
 
         Private Function FindMinimum(costs As Double(,), rowsCovered As Boolean(), colsCovered As Boolean(), w As Integer, h As Integer) As Double
-            If costs Is Nothing Then Throw New ArgumentNullException(NameOf(costs))
-
-            If rowsCovered Is Nothing Then Throw New ArgumentNullException(NameOf(rowsCovered))
-
-            If colsCovered Is Nothing Then Throw New ArgumentNullException(NameOf(colsCovered))
-
             Dim minValue = Double.MaxValue
 
             For i = 0 To h - 1
@@ -227,40 +197,32 @@ Namespace HungarianAlgorithm
 
             Return minValue
         End Function
-        Private Function FindStarInRow(masks As Byte(,), w As Integer, row As Integer) As Integer
-            If masks Is Nothing Then Throw New ArgumentNullException(NameOf(masks))
 
+        Private Function FindStarInRow(masks As Byte(,), w As Integer, row As Integer) As Integer
             For j = 0 To w - 1
                 If masks(row, j) = 1 Then Return j
             Next
 
             Return -1
         End Function
-        Private Function FindStarInColumn(masks As Byte(,), h As Integer, col As Integer) As Integer
-            If masks Is Nothing Then Throw New ArgumentNullException(NameOf(masks))
 
+        Private Function FindStarInColumn(masks As Byte(,), h As Integer, col As Integer) As Integer
             For i = 0 To h - 1
                 If masks(i, col) = 1 Then Return i
             Next
 
             Return -1
         End Function
-        Private Function FindPrimeInRow(masks As Byte(,), w As Integer, row As Integer) As Integer
-            If masks Is Nothing Then Throw New ArgumentNullException(NameOf(masks))
 
+        Private Function FindPrimeInRow(masks As Byte(,), w As Integer, row As Integer) As Integer
             For j = 0 To w - 1
                 If masks(row, j) = 2 Then Return j
             Next
 
             Return -1
         End Function
+
         Private Function FindZero(costs As Double(,), rowsCovered As Boolean(), colsCovered As Boolean(), w As Integer, h As Integer) As Location
-            If costs Is Nothing Then Throw New ArgumentNullException(NameOf(costs))
-
-            If rowsCovered Is Nothing Then Throw New ArgumentNullException(NameOf(rowsCovered))
-
-            If colsCovered Is Nothing Then Throw New ArgumentNullException(NameOf(colsCovered))
-
             For i = 0 To h - 1
                 For j = 0 To w - 1
                     If costs(i, j) = 0.0 AndAlso Not rowsCovered(i) AndAlso Not colsCovered(j) Then Return New Location(i, j)
@@ -269,11 +231,8 @@ Namespace HungarianAlgorithm
 
             Return New Location(-1, -1)
         End Function
+
         Private Sub ConvertPath(masks As Byte(,), path As Location(), pathLength As Integer)
-            If masks Is Nothing Then Throw New ArgumentNullException(NameOf(masks))
-
-            If path Is Nothing Then Throw New ArgumentNullException(NameOf(path))
-
             For i = 0 To pathLength - 1
                 Dim x = masks(path(i).row, path(i).column)
 
@@ -290,8 +249,6 @@ Namespace HungarianAlgorithm
             Next
         End Sub
         Private Sub ClearPrimes(masks As Byte(,), w As Integer, h As Integer)
-            If masks Is Nothing Then Throw New ArgumentNullException(NameOf(masks))
-
             For i = 0 To h - 1
                 For j = 0 To w - 1
                     If masks(i, j) = 2 Then masks(i, j) = 0
@@ -299,10 +256,6 @@ Namespace HungarianAlgorithm
             Next
         End Sub
         Private Sub ClearCovers(rowsCovered As Boolean(), colsCovered As Boolean(), w As Integer, h As Integer)
-            If rowsCovered Is Nothing Then Throw New ArgumentNullException(NameOf(rowsCovered))
-
-            If colsCovered Is Nothing Then Throw New ArgumentNullException(NameOf(colsCovered))
-
             For i = 0 To h - 1
                 rowsCovered(i) = False
             Next
@@ -313,12 +266,13 @@ Namespace HungarianAlgorithm
         End Sub
 
         Private Structure Location
+
             Friend ReadOnly row As Integer
             Friend ReadOnly column As Integer
 
             Friend Sub New(row As Integer, col As Integer)
                 Me.row = row
-                column = col
+                Me.column = col
             End Sub
         End Structure
     End Module

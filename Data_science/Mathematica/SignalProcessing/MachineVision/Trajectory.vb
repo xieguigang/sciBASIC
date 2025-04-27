@@ -25,6 +25,12 @@ Public Class Trajectory
 
     Public Property objectSet As New List(Of Detection)
 
+    Default Public ReadOnly Property GetFrame(i As Integer) As Detection
+        Get
+            Return _objectSet(i)
+        End Get
+    End Property
+
     Public Sub New(id As Integer, t0 As Detection)
         TrajectoryID = id
         objectSet.Add(t0)
