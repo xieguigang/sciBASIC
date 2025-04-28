@@ -53,6 +53,9 @@
 
 Imports System.Drawing
 Imports System.Drawing.Imaging
+Imports System.IO
+Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Imaging
 
 Public Module ImageExtensions
 
@@ -66,9 +69,9 @@ Public Module ImageExtensions
     ''' <remarks>
     ''' 1 means no changed
     ''' </remarks>
-    Public Sub Adjust(ByRef originalImage As Bitmap, Optional brightness As Single = 1, Optional contrast As Single = 1, Optional gamma As Single = 1)
+    Public Sub Adjust(ByRef originalImage As System.Drawing.Bitmap, Optional brightness As Single = 1, Optional contrast As Single = 1, Optional gamma As Single = 1)
         Dim size As New Size(originalImage.Width, originalImage.Height)
-        Dim adjustedImage As New Bitmap(size.Width, size.Height)
+        Dim adjustedImage As New System.Drawing.Bitmap(size.Width, size.Height)
         Dim adjustedBrightness As Single = brightness - 1.0F
         ' create matrix that will brighten and contrast the image
         Dim ptsArray()() As Single = {
@@ -90,4 +93,16 @@ Public Module ImageExtensions
 
         originalImage = adjustedImage
     End Sub
+
+    <Extension>
+    Public Function ReadDrawingImage(file As String) As System.Drawing.Image
+        Try
+            Dim bytes As New MemoryStream(file.ReadBinary)
+            Dim img As System.Drawing.Image = System.Drawing.Image.FromStream(bytes)
+
+            Return img
+        Catch ex As Exception
+            Return Nothing
+        End Try
+    End Function
 End Module

@@ -17,4 +17,13 @@ Public Class OcrFrameScan : Inherits FrameData(Of OcrText)
                 .ToArray
         }
     End Function
+
+    Public Function FilterLength(len As Integer) As OcrFrameScan
+        Return New OcrFrameScan With {
+            .FrameID = FrameID,
+            .Detections = Detections _
+                .Where(Function(a) a.ObjectID.Length > len) _
+                .ToArray
+        }
+    End Function
 End Class
