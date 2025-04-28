@@ -193,7 +193,7 @@ Namespace Text.Patterns
                     .OrderByDescending(Function(a) a.Count) _
                     .ToArray
 
-                If col.Length = 0 Then
+                If chars.Length = 0 Then
                     Call motif.Add(any)
                 Else
                     Call motif.Add(chars.First.Key)
