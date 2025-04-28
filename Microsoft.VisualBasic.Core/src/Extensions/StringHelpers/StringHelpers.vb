@@ -253,7 +253,12 @@ Public Module StringHelpers
     ''' 常用于gdi+绘图操作，和<see cref="IGraphics.MeasureString"/>共同使用
     ''' </summary>
     ''' <param name="source"></param>
-    ''' <returns></returns>
+    ''' <returns>
+    ''' A string with max number of the chars counting result
+    ''' </returns>
+    ''' <param name="consolePrintWidth">
+    ''' set this parameter value to TRUE will treated the non-ascii char as two ascii char width.
+    ''' </param>
     <Extension>
     Public Function MaxLengthString(source As IEnumerable(Of String), Optional consolePrintWidth As Boolean = False) As String
         If consolePrintWidth Then
