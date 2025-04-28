@@ -105,7 +105,7 @@ Namespace Text.Patterns
         Sub New(allSampleNames As IEnumerable(Of String), Optional maxDepth As Boolean = False)
             nameMatrix = allSampleNames _
                 .SafeQuery _
-                .Select(Function(name) name.ToArray) _
+                .Select(Function(name) If(name, "").ToArray) _
                 .ToArray
             maxLen% = Aggregate name As Char()
                       In nameMatrix
@@ -165,7 +165,9 @@ Namespace Text.Patterns
             Return LabelPrefix
         End Function
 
-        Public Shared Function StringMotif(commonStr As IEnumerable(Of String), Optional threshold As Double = 0.3, Optional any As Char = "-") As String
+        Public Shared Function StringMotif(commonStr As IEnumerable(Of String),
+                                           Optional threshold As Double = 0.3,
+                                           Optional any As Char = "-") As String
             Dim motif As New List(Of Char)
             Dim common As New CommonTagParser(commonStr)
 
