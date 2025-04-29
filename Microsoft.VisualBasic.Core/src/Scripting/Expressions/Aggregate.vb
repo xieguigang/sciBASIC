@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d5505ba27b80af1091978a0c60c5f90f, Microsoft.VisualBasic.Core\src\Scripting\Expressions\Aggregate.vb"
+﻿#Region "Microsoft.VisualBasic::aabca316090fbf30dab176bb4f1281ab, Microsoft.VisualBasic.Core\src\Scripting\Expressions\Aggregate.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 78
-    '    Code Lines: 46 (58.97%)
-    ' Comment Lines: 21 (26.92%)
-    '    - Xml Docs: 95.24%
+    '   Total Lines: 110
+    '    Code Lines: 59 (53.64%)
+    ' Comment Lines: 37 (33.64%)
+    '    - Xml Docs: 94.59%
     ' 
-    '   Blank Lines: 11 (14.10%)
-    '     File Size: 2.71 KB
+    '   Blank Lines: 14 (12.73%)
+    '     File Size: 3.84 KB
 
 
     '     Enum Aggregates
@@ -55,7 +55,7 @@
     '     Module Aggregate
     ' 
     '         Constructor: (+1 Overloads) Sub New
-    '         Function: (+2 Overloads) GetAggregateFunction, ParseFlag
+    '         Function: CommonThrowInvalid, (+2 Overloads) GetAggregateFunction, GetAggregateFunction2, ParseFlag
     ' 
     ' 
     ' /********************************************************************************/

@@ -1168,9 +1168,9 @@ G:\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematica\Math\DataFittings\l
 G:\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematica\Math\DataFittings\linear-netcore5.vbproj,DataFittings\LMA.vb,40,19,5,16,3,0,0,2,0,1283,1.28 KB
 G:\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematica\Math\DataFittings\linear-netcore5.vbproj,DataFittings\stockpredict.vb,101,11,30,60,1,2,2,0,0,2847,2.85 KB
 G:\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematica\Math\DataFittings\linear-netcore5.vbproj,DataFittings\TestPoint.vb,37,0,8,29,2,5,0,1,0,1090,1.09 KB
-G:\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematica\Math\DataFittings\linear-netcore5.vbproj,DataFittings\LASSO\LassoFit.vb,139,47,26,66,1,11,1,3,0,4888,4.89 KB
-G:\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematica\Math\DataFittings\linear-netcore5.vbproj,DataFittings\LASSO\LassoFitGenerator.vb,347,48,49,250,1,3,5,4,0,16522,16.52 KB
-G:\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematica\Math\DataFittings\linear-netcore5.vbproj,DataFittings\LASSO\MathUtil.vb,79,7,13,59,1,0,1,8,0,2678,2.68 KB
+G:\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematica\Math\DataFittings\linear-netcore5.vbproj,DataFittings\LASSO\LassoFit.vb,139,47,26,66,1,11,1,3,0,4886,4.89 KB
+G:\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematica\Math\DataFittings\linear-netcore5.vbproj,DataFittings\LASSO\LassoFitGenerator.vb,347,48,49,250,1,3,5,4,0,16520,16.52 KB
+G:\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematica\Math\DataFittings\linear-netcore5.vbproj,DataFittings\LASSO\MathUtil.vb,79,7,13,59,1,0,1,8,0,2676,2.68 KB
 G:\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematica\Math\DataFittings\linear-netcore5.vbproj,DataFittings\Levenberg-Marquardt\JamaHelper.vb,41,15,4,22,1,0,0,2,0,1812,1.81 KB
 G:\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematica\Math\DataFittings\linear-netcore5.vbproj,DataFittings\Levenberg-Marquardt\LmDatumError.vb,59,41,7,11,1,0,0,1,0,2787,2.79 KB
 G:\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematica\Math\DataFittings\linear-netcore5.vbproj,DataFittings\Levenberg-Marquardt\LmModelError.vb,48,33,5,10,1,0,0,1,0,2347,2.35 KB
@@ -1195,7 +1195,7 @@ G:\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematica\Math\DataFittings\l
 G:\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematica\Math\DataFittings\linear-netcore5.vbproj,DataFittings\Logistic\LogisticFit.vb,43,0,7,36,1,3,0,2,0,1503,1.50 KB
 G:\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematica\Math\DataFittings\linear-netcore5.vbproj,DataFittings\Lowess\LowessFittings.vb,301,66,48,187,1,0,0,4,0,11088,11.09 KB
 G:\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematica\Math\DataFittings\linear-netcore5.vbproj,DataFittings\test\Program.vb,22,0,3,19,1,0,1,0,0,786,786 B
-G:\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematica\Math\DataFittings\linear-netcore5.vbproj,<project>,3605,883,536,2186,40,75,30,99,0,132292,132.29 KB
+G:\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematica\Math\DataFittings\linear-netcore5.vbproj,<project>,3605,883,536,2186,40,75,30,99,0,132286,132.29 KB
 G:\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematica\Math\DataFittings\test\test.vbproj,test\Program.vb,22,0,3,19,1,0,1,0,0,786,786 B
 G:\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematica\Math\DataFittings\test\test.vbproj,<project>,22,0,3,19,1,0,1,0,0,786,786 B
 G:\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematica\Math\DataFrame\dataframeUtils-netcore5.vbproj,DataFrame\DataMatrix.vb,177,12,28,137,1,2,3,9,0,6303,6.30 KB
@@ -1580,6 +1580,14 @@ G:\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematica\Math\Randomizer\ran
 G:\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematica\Math\Randomizer\randomizer-netcore5.vbproj,Randomizer\FastRandom\ThreadSafeFastRandom.vb,123,24,27,72,1,0,1,5,0,4441,4.44 KB
 G:\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematica\Math\Randomizer\randomizer-netcore5.vbproj,Randomizer\My Project\Resources.Designer.vb,94,42,10,42,1,4,0,0,0,4651,4.65 KB
 G:\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematica\Math\Randomizer\randomizer-netcore5.vbproj,<project>,1971,540,294,1137,7,6,16,42,0,79007,79.01 KB
+G:\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematica\SignalProcessing\MachineVision\MachineVision.vbproj,MachineVision\FrameData.vb,88,13,17,58,3,5,2,4,0,2533,2.53 KB
+G:\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematica\SignalProcessing\MachineVision\MachineVision.vbproj,MachineVision\Tracker.vb,102,29,18,55,1,0,1,1,0,3868,3.87 KB
+G:\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematica\SignalProcessing\MachineVision\MachineVision.vbproj,MachineVision\Trajectory.vb,48,7,8,33,1,4,2,0,0,1277,1.28 KB
+G:\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematica\SignalProcessing\MachineVision\MachineVision.vbproj,MachineVision\OCR\ConfusionChars.vb,66,4,12,50,1,0,2,3,0,1795,1.79 KB
+G:\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematica\SignalProcessing\MachineVision\MachineVision.vbproj,MachineVision\OCR\OcrFrameScan.vb,29,0,5,24,1,0,2,2,0,859,859 B
+G:\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematica\SignalProcessing\MachineVision\MachineVision.vbproj,MachineVision\OCR\OcrText.vb,17,8,4,5,1,2,0,0,0,382,382 B
+G:\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematica\SignalProcessing\MachineVision\MachineVision.vbproj,MachineVision\OCR\OcrTextMatches.vb,34,19,4,11,1,0,0,1,0,1542,1.54 KB
+G:\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematica\SignalProcessing\MachineVision\MachineVision.vbproj,<project>,384,80,68,236,9,11,9,11,0,12256,12.26 KB
 G:\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematica\SignalProcessing\Signal.IO\signal_io-netcore5.vbproj,Signal.IO\SignalsReader.vb,66,0,9,57,1,0,0,1,0,3104,3.10 KB
 G:\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematica\SignalProcessing\Signal.IO\signal_io-netcore5.vbproj,Signal.IO\SignalsWriter.vb,160,14,27,119,1,0,0,2,0,8015,8.02 KB
 G:\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematica\SignalProcessing\Signal.IO\signal_io-netcore5.vbproj,<project>,226,14,36,176,2,0,0,3,0,11119,11.12 KB
@@ -1610,6 +1618,9 @@ G:\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematica\SignalProcessing\Si
 G:\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematica\SignalProcessing\SignalProcessing\signalprocessing-netcore5.vbproj,SignalProcessing\Filters\SGFilter.vb,516,264,34,218,1,2,7,15,0,22799,22.80 KB
 G:\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematica\SignalProcessing\SignalProcessing\signalprocessing-netcore5.vbproj,SignalProcessing\Filters\TrendRemover.vb,63,34,5,24,1,0,2,0,0,2286,2.29 KB
 G:\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematica\SignalProcessing\SignalProcessing\signalprocessing-netcore5.vbproj,SignalProcessing\Filters\ZeroEliminator.vb,100,42,10,48,1,1,3,0,0,3180,3.18 KB
+G:\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematica\SignalProcessing\SignalProcessing\signalprocessing-netcore5.vbproj,SignalProcessing\KalmanFilter\Algorithm.vb,208,126,16,66,1,0,2,2,0,9214,9.21 KB
+G:\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematica\SignalProcessing\SignalProcessing\signalprocessing-netcore5.vbproj,SignalProcessing\KalmanFilter\HungarianAlgorithm.vb,279,14,52,213,3,0,4,10,0,10097,10.10 KB
+G:\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematica\SignalProcessing\SignalProcessing\signalprocessing-netcore5.vbproj,SignalProcessing\KalmanFilter\kalman_filter.vb,53,28,5,20,2,0,0,0,0,1797,1.80 KB
 G:\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematica\SignalProcessing\SignalProcessing\signalprocessing-netcore5.vbproj,SignalProcessing\NDtw\DistanceMeasure.vb,8,0,0,8,1,0,0,0,0,173,173 B
 G:\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematica\SignalProcessing\SignalProcessing\signalprocessing-netcore5.vbproj,SignalProcessing\NDtw\Dtw.vb,520,109,84,327,1,4,7,4,0,27345,27.34 KB
 G:\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematica\SignalProcessing\SignalProcessing\signalprocessing-netcore5.vbproj,SignalProcessing\NDtw\Preprocessing\CentralizationPreprocessor.vb,19,3,4,12,1,0,0,2,0,595,595 B
@@ -1634,8 +1645,10 @@ G:\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematica\SignalProcessing\Si
 G:\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematica\SignalProcessing\SignalProcessing\signalprocessing-netcore5.vbproj,SignalProcessing\Source\SignalPeak.vb,36,0,8,28,1,3,0,2,0,1246,1.25 KB
 G:\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematica\SignalProcessing\SignalProcessing\signalprocessing-netcore5.vbproj,SignalProcessing\test\DataSeriesFactory.vb,6118,3,13,6102,1,0,0,1,0,138951,138.95 KB
 G:\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematica\SignalProcessing\SignalProcessing\signalprocessing-netcore5.vbproj,SignalProcessing\test\demo_data1.vb,51,2,12,37,1,0,3,0,0,1689,1.69 KB
+G:\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematica\SignalProcessing\SignalProcessing\signalprocessing-netcore5.vbproj,SignalProcessing\test\KalmanFilterDemotest.vb,71,8,13,50,1,0,2,2,0,2943,2.94 KB
 G:\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematica\SignalProcessing\SignalProcessing\signalprocessing-netcore5.vbproj,SignalProcessing\test\MultivariateDataSeriesRepository.vb,74,10,18,46,1,1,3,3,0,2955,2.96 KB
-G:\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematica\SignalProcessing\SignalProcessing\signalprocessing-netcore5.vbproj,SignalProcessing\test\Program.vb,28,0,8,20,1,0,2,0,0,994,994 B
+G:\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematica\SignalProcessing\SignalProcessing\signalprocessing-netcore5.vbproj,SignalProcessing\test\Program.vb,28,0,8,20,1,0,2,0,0,1006,1006 B
+G:\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematica\SignalProcessing\SignalProcessing\signalprocessing-netcore5.vbproj,SignalProcessing\test\TrajectoryTest.vb,136,15,25,96,2,0,3,1,0,5035,5.04 KB
 G:\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematica\SignalProcessing\SignalProcessing\signalprocessing-netcore5.vbproj,SignalProcessing\test\My Project\Application.Designer.vb,12,9,1,2,0,0,0,0,0,451,451 B
 G:\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematica\SignalProcessing\SignalProcessing\signalprocessing-netcore5.vbproj,SignalProcessing\test\My Project\AssemblyInfo.vb,35,15,7,13,0,0,0,0,0,1043,1.04 KB
 G:\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematica\SignalProcessing\SignalProcessing\signalprocessing-netcore5.vbproj,SignalProcessing\test\My Project\Resources.Designer.vb,63,23,8,32,1,2,0,0,0,2775,2.77 KB
@@ -1647,7 +1660,7 @@ G:\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematica\SignalProcessing\Si
 G:\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematica\SignalProcessing\SignalProcessing\signalprocessing-netcore5.vbproj,SignalProcessing\WaveletTransform\Constructors\Daubechies.vb,134,0,3,131,1,0,1,1,0,11459,11.46 KB
 G:\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematica\SignalProcessing\SignalProcessing\signalprocessing-netcore5.vbproj,SignalProcessing\WaveletTransform\Constructors\Symlets.vb,38,0,3,35,1,0,1,1,0,3186,3.19 KB
 G:\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematica\SignalProcessing\SignalProcessing\signalprocessing-netcore5.vbproj,SignalProcessing\WaveletTransform\Constructors\WaveletConstructor.vb,24,0,6,18,1,0,1,2,0,759,759 B
-G:\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematica\SignalProcessing\SignalProcessing\signalprocessing-netcore5.vbproj,<project>,18797,1844,1208,15745,78,68,173,132,1,664096,664.10 KB
+G:\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematica\SignalProcessing\SignalProcessing\signalprocessing-netcore5.vbproj,<project>,19544,2035,1319,16190,87,68,184,147,1,693194,693.19 KB
 G:\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematica\SignalProcessing\wav\wav\waveFile-netcore5.vbproj,wav\WaveFile.vb,94,44,14,36,1,5,2,1,0,3044,3.04 KB
 G:\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematica\SignalProcessing\wav\wav\waveFile-netcore5.vbproj,wav\SubChunk\Data.vb,137,2,28,107,3,1,2,8,0,4637,4.64 KB
 G:\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematica\SignalProcessing\wav\wav\waveFile-netcore5.vbproj,wav\SubChunk\Enums.vb,33,15,2,16,3,0,0,0,0,652,652 B
@@ -1873,7 +1886,7 @@ G:\GCModeller\src\runtime\sciBASIC#\gr\Drawing-net4.8\Drawing-net4.8.vbproj,Draw
 G:\GCModeller\src\runtime\sciBASIC#\gr\Drawing-net4.8\Drawing-net4.8.vbproj,Drawing-net4.8\FontMetrics.vb,105,20,18,67,2,3,3,4,0,3292,3.29 KB
 G:\GCModeller\src\runtime\sciBASIC#\gr\Drawing-net4.8\Drawing-net4.8.vbproj,Drawing-net4.8\GifEncoder.vb,205,59,24,122,1,1,10,0,0,8015,8.02 KB
 G:\GCModeller\src\runtime\sciBASIC#\gr\Drawing-net4.8\Drawing-net4.8.vbproj,Drawing-net4.8\GraphicsText.vb,149,32,22,95,1,0,5,2,0,5372,5.37 KB
-G:\GCModeller\src\runtime\sciBASIC#\gr\Drawing-net4.8\Drawing-net4.8.vbproj,Drawing-net4.8\ImageExtensions.vb,40,11,5,24,1,0,1,0,0,1784,1.78 KB
+G:\GCModeller\src\runtime\sciBASIC#\gr\Drawing-net4.8\Drawing-net4.8.vbproj,Drawing-net4.8\ImageExtensions.vb,55,11,7,37,1,0,1,1,0,2289,2.29 KB
 G:\GCModeller\src\runtime\sciBASIC#\gr\Drawing-net4.8\Drawing-net4.8.vbproj,Drawing-net4.8\ImageFormat.vb,138,26,15,97,1,1,0,4,0,4928,4.93 KB
 G:\GCModeller\src\runtime\sciBASIC#\gr\Drawing-net4.8\Drawing-net4.8.vbproj,Drawing-net4.8\Imager.vb,138,55,17,66,1,0,0,7,0,5923,5.92 KB
 G:\GCModeller\src\runtime\sciBASIC#\gr\Drawing-net4.8\Drawing-net4.8.vbproj,Drawing-net4.8\TiffWriter.vb,351,24,64,263,1,0,6,10,0,14907,14.91 KB
@@ -1884,7 +1897,7 @@ G:\GCModeller\src\runtime\sciBASIC#\gr\Drawing-net4.8\Drawing-net4.8.vbproj,Draw
 G:\GCModeller\src\runtime\sciBASIC#\gr\Drawing-net4.8\Drawing-net4.8.vbproj,Drawing-net4.8\Graphics\Graphics2D.vb,261,54,36,171,3,5,9,9,0,9077,9.08 KB
 G:\GCModeller\src\runtime\sciBASIC#\gr\Drawing-net4.8\Drawing-net4.8.vbproj,Drawing-net4.8\Graphics\Wmf.vb,178,53,25,100,1,3,9,0,0,7686,7.69 KB
 G:\GCModeller\src\runtime\sciBASIC#\gr\Drawing-net4.8\Drawing-net4.8.vbproj,Drawing-net4.8\Text\Text.vb,75,18,8,49,1,0,1,1,0,2557,2.56 KB
-G:\GCModeller\src\runtime\sciBASIC#\gr\Drawing-net4.8\Drawing-net4.8.vbproj,<project>,5107,2207,568,2332,19,16,145,74,0,186492,186.49 KB
+G:\GCModeller\src\runtime\sciBASIC#\gr\Drawing-net4.8\Drawing-net4.8.vbproj,<project>,5122,2207,570,2345,19,16,145,75,0,186997,187.00 KB
 G:\GCModeller\src\runtime\sciBASIC#\gr\Landscape\Landscape.vbproj,Landscape\Graphics.vb,16,7,3,6,1,2,0,0,0,437,437 B
 G:\GCModeller\src\runtime\sciBASIC#\gr\Landscape\Landscape.vbproj,Landscape\Surface.vb,62,28,8,26,1,3,0,2,0,2331,2.33 KB
 G:\GCModeller\src\runtime\sciBASIC#\gr\Landscape\Landscape.vbproj,Landscape\Vector.vb,40,6,6,28,1,2,1,1,0,1313,1.31 KB
@@ -2914,14 +2927,14 @@ G:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj,s
 G:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj,src\Extensions\Extensions.vb,1550,553,142,855,3,0,5,79,0,57477,57.48 KB
 G:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj,src\Extensions\MsgBoxStyle.vb,137,103,1,33,2,0,0,0,0,4353,4.35 KB
 G:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj,src\Extensions\Collection\AnonymousTypeHelper.vb,36,18,4,14,1,0,0,2,0,1527,1.53 KB
-G:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj,src\Extensions\Collection\BucketOperators.vb,104,48,12,44,1,0,0,6,0,4215,4.21 KB
+G:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj,src\Extensions\Collection\BucketOperators.vb,114,54,12,48,1,0,0,6,0,4333,4.33 KB
 G:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj,src\Extensions\Collection\ByteStreamExtensions.vb,46,0,7,39,1,0,1,5,0,1576,1.58 KB
 G:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj,src\Extensions\Collection\CategoryOperations.vb,65,6,5,54,1,0,0,4,0,2806,2.81 KB
 G:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj,src\Extensions\Collection\CollectionValueGetter.vb,401,141,38,222,1,0,0,16,0,14603,14.60 KB
 G:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj,src\Extensions\Collection\DelimiterLocation.vb,21,15,0,6,1,0,0,0,0,556,556 B
 G:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj,src\Extensions\Collection\Enumerable.vb,326,51,46,229,1,0,0,23,0,13297,13.30 KB
 G:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj,src\Extensions\Collection\IsNullOrEmptyExtensions.vb,261,103,28,130,1,0,0,19,0,8725,8.72 KB
-G:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj,src\Extensions\Collection\KeyValuePair.vb,964,301,108,555,1,0,3,60,0,40979,40.98 KB
+G:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj,src\Extensions\Collection\KeyValuePair.vb,964,301,108,555,1,0,3,60,0,40992,40.99 KB
 G:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj,src\Extensions\Collection\ListExtensions.vb,380,144,38,198,1,0,6,16,0,13999,14.00 KB
 G:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj,src\Extensions\Collection\Matrix.vb,252,64,40,148,1,0,0,14,0,9100,9.10 KB
 G:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj,src\Extensions\Collection\RectangularArray.vb,135,27,26,82,1,0,1,7,0,4619,4.62 KB
@@ -2939,7 +2952,7 @@ G:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj,s
 G:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj,src\Extensions\Collection\Linq\Takes.vb,142,60,13,69,1,0,0,6,0,6107,6.11 KB
 G:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj,src\Extensions\Collection\Linq\VectorAssertExtensions.vb,62,22,7,33,1,0,0,3,0,2377,2.38 KB
 G:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj,src\Extensions\Collection\Linq\VectorAssertor.vb,52,6,8,38,1,0,0,1,4,1797,1.80 KB
-G:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj,src\Extensions\Collection\Linq\WhichIndex.vb,229,94,26,109,2,1,1,14,0,9166,9.17 KB
+G:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj,src\Extensions\Collection\Linq\WhichIndex.vb,229,94,26,109,2,1,1,14,0,9221,9.22 KB
 G:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj,src\Extensions\Doc\LargeTextFile.vb,203,79,26,98,1,0,0,8,0,7828,7.83 KB
 G:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj,src\Extensions\Doc\PartitionedStream.vb,116,23,23,70,3,3,4,3,0,4263,4.26 KB
 G:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj,src\Extensions\Doc\Text.vb,552,163,62,327,1,0,0,21,0,21088,21.09 KB
@@ -2947,7 +2960,7 @@ G:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj,s
 G:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj,src\Extensions\IO\IOStream.vb,53,0,12,41,2,0,3,2,1,1625,1.62 KB
 G:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj,src\Extensions\IO\SearchOption.vb,20,9,3,8,1,0,0,0,0,564,564 B
 G:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj,src\Extensions\IO\Extensions\Extensions.vb,100,23,13,64,1,0,0,2,0,3759,3.76 KB
-G:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj,src\Extensions\IO\Extensions\IO.vb,351,130,35,186,1,0,2,11,0,13836,13.84 KB
+G:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj,src\Extensions\IO\Extensions\IO.vb,352,130,35,187,1,0,2,11,0,13883,13.88 KB
 G:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj,src\Extensions\IO\Extensions\NetFile.vb,103,11,15,77,1,0,0,6,0,3630,3.63 KB
 G:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj,src\Extensions\IO\Extensions\PathExtensions.vb,1078,346,114,618,1,0,0,38,0,41951,41.95 KB
 G:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj,src\Extensions\IO\Extensions\SerializationIO.vb,91,24,8,59,1,0,0,3,0,3478,3.48 KB
@@ -3040,7 +3053,7 @@ G:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj,s
 G:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj,src\Extensions\StringHelpers\RegexExtensions.vb,307,134,41,132,3,1,2,10,0,12232,12.23 KB
 G:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj,src\Extensions\StringHelpers\StringBuilders.vb,44,16,5,23,1,0,0,3,0,1464,1.46 KB
 G:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj,src\Extensions\StringHelpers\StringFormats.vb,137,26,17,94,1,0,0,6,0,4824,4.82 KB
-G:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj,src\Extensions\StringHelpers\StringHelpers.vb,1469,509,160,800,1,3,2,71,0,55290,55.29 KB
+G:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj,src\Extensions\StringHelpers\StringHelpers.vb,1474,514,160,800,1,3,2,71,0,55522,55.52 KB
 G:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj,src\Extensions\StringHelpers\StrUtils.vb,675,216,61,398,1,1,0,38,0,24087,24.09 KB
 G:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj,src\Extensions\ValueTypes\DateTimeHelper.vb,235,58,38,139,2,1,1,11,0,8109,8.11 KB
 G:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj,src\Extensions\ValueTypes\RangeExtensions.vb,22,9,3,10,1,0,0,1,0,778,778 B
@@ -3113,7 +3126,7 @@ G:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj,s
 G:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj,src\Language\Value\Numeric\chr.vb,71,0,18,53,1,0,2,1,9,2042,2.04 KB
 G:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj,src\Language\Value\Numeric\f64.vb,231,19,49,163,1,1,2,20,16,8097,8.10 KB
 G:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj,src\Language\Value\Numeric\i32.vb,313,94,41,178,1,2,2,6,29,11232,11.23 KB
-G:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj,src\Language\Value\Numeric\Numeric.vb,190,80,25,85,2,0,0,12,0,6438,6.44 KB
+G:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj,src\Language\Value\Numeric\Numeric.vb,190,80,25,85,2,0,0,12,0,6493,6.49 KB
 G:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj,src\My\File.vb,127,25,20,82,1,0,2,5,0,4152,4.15 KB
 G:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj,src\My\FileFormats.vb,13,3,1,9,1,0,0,0,0,208,208 B
 G:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj,src\My\InnerQueue.vb,36,16,5,15,1,1,2,0,0,1107,1.11 KB
@@ -3179,7 +3192,7 @@ G:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj,s
 G:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj,src\Scripting\InputHandler.vb,447,134,47,266,1,3,1,18,0,19708,19.71 KB
 G:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj,src\Scripting\ScriptBuilder.vb,165,54,22,89,1,2,6,6,1,6081,6.08 KB
 G:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj,src\Scripting\TextGrepScriptEngine.vb,299,82,33,184,5,4,1,12,0,12161,12.16 KB
-G:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj,src\Scripting\Expressions\Aggregate.vb,78,21,11,46,2,0,1,3,0,2706,2.71 KB
+G:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj,src\Scripting\Expressions\Aggregate.vb,110,37,14,59,2,0,1,5,0,3844,3.84 KB
 G:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj,src\Scripting\Expressions\ArrayIndex.vb,75,19,8,48,1,0,0,2,0,2585,2.58 KB
 G:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj,src\Scripting\Expressions\Selector.vb,193,56,20,117,3,0,0,5,0,8039,8.04 KB
 G:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj,src\Scripting\Expressions\StringInterpolation.vb,118,40,17,61,1,0,1,3,0,5047,5.05 KB
@@ -3268,8 +3281,8 @@ G:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj,s
 G:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj,src\Text\Parser\TryParse.vb,47,12,6,29,4,0,0,1,0,1466,1.47 KB
 G:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj,src\Text\Parser\HtmlParser\HtmlStrips.vb,415,91,51,273,1,0,1,24,0,15636,15.64 KB
 G:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj,src\Text\Parser\HtmlParser\Table.vb,92,23,13,56,1,0,0,4,0,3727,3.73 KB
-G:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj,src\Text\Parser\HtmlParser\TagAttributeParser.vb,157,31,23,103,1,0,0,10,0,5875,5.88 KB
-G:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj,src\Text\Patterns\CommonTagParser.vb,75,12,11,52,1,4,2,1,0,2579,2.58 KB
+G:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj,src\Text\Parser\HtmlParser\TagAttributeParser.vb,157,31,23,103,1,0,0,10,0,5886,5.89 KB
+G:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj,src\Text\Patterns\CommonTagParser.vb,146,21,23,102,1,6,2,3,0,4942,4.94 KB
 G:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj,src\Text\Patterns\NamespaceDoc.vb,8,3,1,4,1,0,0,0,0,159,159 B
 G:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj,src\Text\Patterns\Regexp.vb,91,35,12,44,1,1,1,1,10,3615,3.62 KB
 G:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj,src\Text\Patterns\Wildcards.vb,92,32,13,47,1,0,0,2,0,3625,3.62 KB
@@ -3278,7 +3291,7 @@ G:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj,s
 G:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj,src\Text\SearchEngine\TextIndexing\TextIndexing.vb,204,43,30,131,1,1,1,9,0,8589,8.59 KB
 G:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj,src\Text\SearchEngine\TextIndexing\TextSegment.vb,65,15,10,40,1,3,1,1,2,2008,2.01 KB
 G:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj,src\Text\StringSimilarity\IEqualityComparer.vb,99,22,14,63,2,2,2,5,0,3655,3.65 KB
-G:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj,src\Text\StringSimilarity\Similarity.vb,287,74,38,175,5,0,0,13,0,12834,12.83 KB
+G:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj,src\Text\StringSimilarity\Similarity.vb,290,77,38,175,5,0,0,13,0,12967,12.97 KB
 G:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj,src\Text\StringSimilarity\Levenshtein\Extensions.vb,58,7,11,40,1,0,1,1,0,2191,2.19 KB
 G:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj,src\Text\StringSimilarity\Levenshtein\LevenshteinString.vb,87,24,10,53,1,0,1,1,6,2949,2.95 KB
 G:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj,src\Text\StringSimilarity\Levenshtein\LevenshteinTree.vb,119,13,21,85,4,0,2,7,0,3939,3.94 KB
@@ -3312,7 +3325,7 @@ G:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj,s
 G:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj,src\Text\Xml\OpenXml\Content_Types.vb,40,4,7,29,2,5,0,2,0,1244,1.24 KB
 G:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj,src\Text\Xml\OpenXml\rels.vb,44,0,8,36,2,5,0,1,0,1506,1.51 KB
 G:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj,src\Text\Xml\Serialization\XmlComment.vb,54,0,12,42,2,1,1,3,0,1825,1.82 KB
-G:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj,<project>,133542,39801,17651,76090,1396,1481,1779,4526,429,5272013,5.27 MB
+G:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj,<project>,133664,39840,17666,76158,1396,1483,1779,4530,429,5276178,5.28 MB
 G:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\Utility\ProgressBar\ShellProgressBar\ShellProgressBar.Example\ShellProgressBar.Example.vbproj,ShellProgressBar.Example\IProgressBarExample.vb,8,0,1,7,1,0,0,1,0,230,230 B
 G:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\Utility\ProgressBar\ShellProgressBar\ShellProgressBar.Example\ShellProgressBar.Example.vbproj,ShellProgressBar.Example\Program.vb,92,0,10,82,1,0,2,0,0,3422,3.42 KB
 G:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\Utility\ProgressBar\ShellProgressBar\ShellProgressBar.Example\ShellProgressBar.Example.vbproj,ShellProgressBar.Example\Examples\AlternateFinishedColorExample.vb,30,1,4,25,1,0,0,0,0,1157,1.16 KB
@@ -3785,6 +3798,7 @@ G:\GCModeller\src\runtime\sciBASIC#\vs_solutions\dev\VisualStudio\VisualStudio.N
 G:\GCModeller\src\runtime\sciBASIC#\vs_solutions\dev\VisualStudio\VisualStudio.NET5.vbproj,VisualStudio\CodeSign\VBCodeSignature.vb,287,9,38,240,1,0,0,5,0,12125,12.12 KB
 G:\GCModeller\src\runtime\sciBASIC#\vs_solutions\dev\VisualStudio\VisualStudio.NET5.vbproj,VisualStudio\IL\Globals.vb,203,121,27,55,1,0,2,2,0,5191,5.19 KB
 G:\GCModeller\src\runtime\sciBASIC#\vs_solutions\dev\VisualStudio\VisualStudio.NET5.vbproj,VisualStudio\IL\ILInstruction.vb,116,12,23,81,1,4,0,5,0,4121,4.12 KB
+G:\GCModeller\src\runtime\sciBASIC#\vs_solutions\dev\VisualStudio\VisualStudio.NET5.vbproj,VisualStudio\IL\MethodAnalyzer.vb,220,14,36,170,2,4,4,5,0,9049,9.05 KB
 G:\GCModeller\src\runtime\sciBASIC#\vs_solutions\dev\VisualStudio\VisualStudio.NET5.vbproj,VisualStudio\IL\MethodBodyReader.vb,228,35,44,149,1,0,4,5,0,8840,8.84 KB
 G:\GCModeller\src\runtime\sciBASIC#\vs_solutions\dev\VisualStudio\VisualStudio.NET5.vbproj,VisualStudio\Ngen\Ngen.vb,359,193,38,128,5,1,2,7,0,21057,21.06 KB
 G:\GCModeller\src\runtime\sciBASIC#\vs_solutions\dev\VisualStudio\VisualStudio.NET5.vbproj,VisualStudio\Ngen\Registry.vb,88,18,13,57,1,0,0,3,0,3228,3.23 KB
@@ -3797,6 +3811,7 @@ G:\GCModeller\src\runtime\sciBASIC#\vs_solutions\dev\VisualStudio\VisualStudio.N
 G:\GCModeller\src\runtime\sciBASIC#\vs_solutions\dev\VisualStudio\VisualStudio.NET5.vbproj,VisualStudio\sourceMap\mappingLine.vb,69,24,7,38,1,6,0,2,0,2392,2.39 KB
 G:\GCModeller\src\runtime\sciBASIC#\vs_solutions\dev\VisualStudio\VisualStudio.NET5.vbproj,VisualStudio\sourceMap\sourceMap.vb,21,8,3,10,1,6,0,0,0,569,569 B
 G:\GCModeller\src\runtime\sciBASIC#\vs_solutions\dev\VisualStudio\VisualStudio.NET5.vbproj,VisualStudio\test\Module1.vb,35,0,8,27,1,0,3,0,0,1236,1.24 KB
+G:\GCModeller\src\runtime\sciBASIC#\vs_solutions\dev\VisualStudio\VisualStudio.NET5.vbproj,VisualStudio\test\Module2.vb,23,0,6,17,2,0,1,1,0,671,671 B
 G:\GCModeller\src\runtime\sciBASIC#\vs_solutions\dev\VisualStudio\VisualStudio.NET5.vbproj,VisualStudio\test\My Project\Application.Designer.vb,12,9,1,2,0,0,0,0,0,434,434 B
 G:\GCModeller\src\runtime\sciBASIC#\vs_solutions\dev\VisualStudio\VisualStudio.NET5.vbproj,VisualStudio\test\My Project\AssemblyInfo.vb,35,15,7,13,0,0,0,0,0,1019,1019 B
 G:\GCModeller\src\runtime\sciBASIC#\vs_solutions\dev\VisualStudio\VisualStudio.NET5.vbproj,VisualStudio\test\My Project\Resources.Designer.vb,63,23,8,32,1,2,0,0,0,2769,2.77 KB
@@ -3809,7 +3824,7 @@ G:\GCModeller\src\runtime\sciBASIC#\vs_solutions\dev\VisualStudio\VisualStudio.N
 G:\GCModeller\src\runtime\sciBASIC#\vs_solutions\dev\VisualStudio\VisualStudio.NET5.vbproj,VisualStudio\vbproj\Xml\PropertyGroup.vb,72,0,4,68,1,59,0,1,0,3200,3.20 KB
 G:\GCModeller\src\runtime\sciBASIC#\vs_solutions\dev\VisualStudio\VisualStudio.NET5.vbproj,VisualStudio\VersionControl\svn.vb,16,0,5,11,1,0,0,1,0,405,405 B
 G:\GCModeller\src\runtime\sciBASIC#\vs_solutions\dev\VisualStudio\VisualStudio.NET5.vbproj,VisualStudio\VersionControl\git\log.vb,57,13,5,39,1,4,0,2,0,2136,2.14 KB
-G:\GCModeller\src\runtime\sciBASIC#\vs_solutions\dev\VisualStudio\VisualStudio.NET5.vbproj,<project>,3024,722,449,1853,53,175,14,74,0,120193,120.19 KB
+G:\GCModeller\src\runtime\sciBASIC#\vs_solutions\dev\VisualStudio\VisualStudio.NET5.vbproj,<project>,3267,736,491,2040,57,179,19,80,0,129913,129.91 KB
 G:\GCModeller\src\runtime\sciBASIC#\www\githubAPI\github-netcore5.vbproj,githubAPI\Extensions.vb,56,0,9,47,1,0,0,5,0,2039,2.04 KB
 G:\GCModeller\src\runtime\sciBASIC#\www\githubAPI\github-netcore5.vbproj,githubAPI\QueryBuilder.vb,96,9,15,72,3,0,0,4,0,3646,3.65 KB
 G:\GCModeller\src\runtime\sciBASIC#\www\githubAPI\github-netcore5.vbproj,githubAPI\API\Organizations.vb,22,0,4,18,1,0,0,2,0,815,815 B
@@ -3867,4 +3882,4 @@ G:\GCModeller\src\runtime\sciBASIC#\www\Microsoft.VisualBasic.Webservices.Bing\B
 G:\GCModeller\src\runtime\sciBASIC#\www\Microsoft.VisualBasic.Webservices.Bing\Bing.NET5.vbproj,Microsoft.VisualBasic.Webservices.Bing\test\My Project\Resources.Designer.vb,63,23,8,32,1,2,0,0,0,2781,2.78 KB
 G:\GCModeller\src\runtime\sciBASIC#\www\Microsoft.VisualBasic.Webservices.Bing\Bing.NET5.vbproj,Microsoft.VisualBasic.Webservices.Bing\test\My Project\Settings.Designer.vb,73,9,13,51,2,2,1,0,0,2966,2.97 KB
 G:\GCModeller\src\runtime\sciBASIC#\www\Microsoft.VisualBasic.Webservices.Bing\Bing.NET5.vbproj,<project>,1225,208,179,838,25,55,8,27,0,46125,46.12 KB
-../,<root>,1034582,234186,148072,652324,10492,14382,15988,26386,1394,40498274,40.50 MB
+../,<root>,1037604,234834,148548,654222,10536,14416,16038,26460,1394,40609750,40.61 MB

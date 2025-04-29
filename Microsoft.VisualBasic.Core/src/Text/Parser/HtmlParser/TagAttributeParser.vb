@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ec96caa198a36c9665a3d873063f0ccc, Microsoft.VisualBasic.Core\src\Text\Parser\HtmlParser\TagAttributeParser.vb"
+﻿#Region "Microsoft.VisualBasic::bcff1fa04f7dfcaf506cce59570a238b, Microsoft.VisualBasic.Core\src\Text\Parser\HtmlParser\TagAttributeParser.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 96.77%
     ' 
     '   Blank Lines: 23 (14.65%)
-    '     File Size: 5.88 KB
+    '     File Size: 5.89 KB
 
 
     '     Module TagAttributeParser

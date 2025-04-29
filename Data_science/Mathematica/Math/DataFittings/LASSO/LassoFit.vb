@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d2c9a5bbe2a9db6fa426f54ad398f917, Data_science\Mathematica\Math\DataFittings\LASSO\LassoFit.vb"
+﻿#Region "Microsoft.VisualBasic::ad7cc92e536346fc94dd3823ea3f5e2a, Data_science\Mathematica\Math\DataFittings\LASSO\LassoFit.vb"
 
     ' Author:
     ' 
@@ -196,4 +196,3 @@ Namespace LASSO
     End Class
 
 End Namespace
-

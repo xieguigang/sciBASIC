@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b53e5a16b90f3215ce3108640938caa8, Data_science\Mathematica\Math\DataFittings\LASSO\MathUtil.vb"
+﻿#Region "Microsoft.VisualBasic::c5ebdf8c764f0d85a7c042387c71d950, Data_science\Mathematica\Math\DataFittings\LASSO\MathUtil.vb"
 
     ' Author:
     ' 
@@ -133,4 +133,3 @@ Namespace LASSO
     End Class
 
 End Namespace
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8010d2a75b0505934abab58b936643f3, Microsoft.VisualBasic.Core\src\Extensions\Collection\Linq\WhichIndex.vb"
+﻿#Region "Microsoft.VisualBasic::5f30d331c66abddc1a2d45dc76a836c0, Microsoft.VisualBasic.Core\src\Extensions\Collection\Linq\WhichIndex.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 91.49%
     ' 
     '   Blank Lines: 26 (11.35%)
-    '     File Size: 9.17 KB
+    '     File Size: 9.22 KB
 
 
     '     Module WhichSymbol

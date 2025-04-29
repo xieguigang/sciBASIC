@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8c89ee0e0f5c030b6c53313d8ae432c6, gr\Drawing-net4.8\ImageExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::f6ce1f2963a85305ac6c40e528f1553e, gr\Drawing-net4.8\ImageExtensions.vb"
 
     ' Author:
     ' 
@@ -34,16 +34,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 40
-    '    Code Lines: 24 (60.00%)
-    ' Comment Lines: 11 (27.50%)
+    '   Total Lines: 55
+    '    Code Lines: 37 (67.27%)
+    ' Comment Lines: 11 (20.00%)
     '    - Xml Docs: 81.82%
     ' 
-    '   Blank Lines: 5 (12.50%)
-    '     File Size: 1.78 KB
+    '   Blank Lines: 7 (12.73%)
+    '     File Size: 2.29 KB
 
 
     ' Module ImageExtensions
+    ' 
+    '     Function: ReadDrawingImage
     ' 
     '     Sub: Adjust
     ' 
