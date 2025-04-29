@@ -182,13 +182,13 @@ Namespace FileIO
         ''' <param name="target">The directory path of target folder.</param>
         ''' <returns></returns>
         Public Function CopyTo(target$,
-                               Optional progress As Progress(Of String) = Nothing,
+                               Optional progress As IProgress(Of String) = Nothing,
                                Optional includeSrc As Boolean = False) As IEnumerable(Of String)
 
             Dim list As New List(Of String)
             Dim action = Sub(path$)
                              If Not progress Is Nothing Then
-                                 Call DirectCast(progress, IProgress(Of String)).Report(path)
+                                 Call progress.Report(path)
                              End If
 
                              Call list.Add(path)

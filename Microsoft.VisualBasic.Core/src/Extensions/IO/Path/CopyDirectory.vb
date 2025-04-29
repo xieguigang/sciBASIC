@@ -65,7 +65,7 @@ Namespace FileIO
 
         ReadOnly progress As IProgress(Of String)
 
-        Sub New(progress As Progress(Of String))
+        Sub New(progress As IProgress(Of String))
             Me.progress = progress
         End Sub
 
