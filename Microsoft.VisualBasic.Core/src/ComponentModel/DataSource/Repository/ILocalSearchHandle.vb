@@ -144,7 +144,9 @@ Namespace ComponentModel.DataSourceModel.Repository
         ''' </param>
         ''' <returns>
         ''' this function is a safe function, it will returns an empty string collection 
-        ''' if the given <paramref name="names"/> is nothing.
+        ''' if the given <paramref name="names"/> is nothing. this function returns a string
+        ''' array with the same size equals to the input string collection with duplicated values
+        ''' renamed with numeric counter suffix
         ''' </returns>
         ''' <remarks>
         ''' this function will erase the <paramref name="duplicated"/> at first and then make value assigned.
