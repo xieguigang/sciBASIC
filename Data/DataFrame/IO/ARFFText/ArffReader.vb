@@ -109,7 +109,8 @@ Namespace IO.ArffFile
     Public Module ArffReader
 
         Public Iterator Function LoadDataFrame(arff As Stream) As IEnumerable(Of FeatureVector)
-
+            Dim fields As New Dictionary(Of String, List(Of String))
+            Dim attrs As New Dictionary(Of String, (name$, type$))
         End Function
 
         Public Function GetCommentText(arff As Stream) As String

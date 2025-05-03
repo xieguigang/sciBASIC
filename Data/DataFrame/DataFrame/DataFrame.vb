@@ -80,6 +80,17 @@ Public Class DataFrame : Implements INumericMatrix, ILabeledMatrix
     Public Property features As New Dictionary(Of String, FeatureVector)
 
     ''' <summary>
+    ''' the name of current dataset
+    ''' </summary>
+    ''' <returns></returns>
+    Public Property name As String
+    ''' <summary>
+    ''' the comment text about this dataset
+    ''' </summary>
+    ''' <returns></returns>
+    Public Property description As String
+
+    ''' <summary>
     ''' get the row names labels in current dataframe object, the size of 
     ''' this row names vector should be equals to the number of rows in 
     ''' current dataframe object.
