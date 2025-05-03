@@ -3,27 +3,37 @@
 Namespace IO.ArffFile
 
     ''' <summary>
-    ''' The **ARFF (Attribute-Relation File Format)** is a text-based file format designed for storing structured datasets, primarily used in machine learning and data mining tools like Weka. Here's a detailed breakdown of its structure, features, and applications:
+    ''' The **ARFF (Attribute-Relation File Format)** is a text-based file format designed for storing 
+    ''' structured datasets, primarily used in machine learning and data mining tools like Weka. 
+    ''' Here's a detailed breakdown of its structure, features, and applications:
     '''
     ''' ---
     ''' 
     ''' ### 1. **ARFF File Structure**
+    ''' 
     ''' ARFF files consist of two main sections: the **header** (metadata) and the **data** (instances).
     ''' 
     ''' #### **Header Section**
+    ''' 
     ''' - **`@relation`**: Declares the dataset name. Example:  
+    ''' 
     '''   ```arff
     '''   @relation weather
     '''   ```
+    '''   
     ''' - **`@attribute`**: Defines each attribute (column) with its name and data type. Supported types include:
+    ''' 
     '''   - **Numeric**: `@attribute temperature numeric`  
     '''   - **Nominal/Categorical**: `@attribute outlook {sunny, overcast, rainy}`  
     '''   - **String**: `@attribute description string`  
     '''   - **Date**: `@attribute timestamp date "yyyy-MM-dd"`  
+    '''   
     ''' - **Missing values** are represented by `?`.
     ''' 
     ''' #### **Data Section**
+    ''' 
     ''' - Begins with `@data`, followed by rows of comma-separated values:  
+    ''' 
     '''   ```arff
     '''   @data
     '''   sunny,85,85,FALSE,no
@@ -33,6 +43,7 @@ Namespace IO.ArffFile
     ''' ---
     ''' 
     ''' ### 2. **Key Features**
+    ''' 
     ''' - **Structured Metadata**: Explicitly defines data types and categories, reducing ambiguity.
     ''' - **Human-Readable**: Easy to edit and interpret compared to binary formats.
     ''' - **Compatibility**: Native support in Weka and tools like Python's `liac-arff` library.
@@ -41,6 +52,7 @@ Namespace IO.ArffFile
     ''' ---
     ''' 
     ''' ### 3. **Use Cases**
+    ''' 
     ''' - **Machine Learning**: Standard format for training models in Weka (e.g., decision trees, clustering).
     ''' - **Data Preprocessing**: Supports missing value imputation (`?`) and categorical encoding.
     ''' - **Research and Education**: Widely used in academic datasets (e.g., UCI repositories).
@@ -48,16 +60,18 @@ Namespace IO.ArffFile
     ''' ---
     ''' 
     ''' ### 4. **Comparison with Other Formats**
-    ''' | **Feature**       | **ARFF**                                  | **CSV**                     |
-    ''' |--------------------|-------------------------------------------|-----------------------------|
-    ''' | **Metadata**       | Explicit (types, categories)             | Implicit (no type info)     |
-    ''' | **Readability**    | High (structured headers)                | Moderate (flat structure)   |
-    ''' | **Missing Values** | Supported (`?`)                           | Often ad-hoc (e.g., blanks) |
+    ''' 
+    ''' | **Feature**        | **ARFF**                            | **CSV**                     |
+    ''' |--------------------|-------------------------------------|-----------------------------|
+    ''' | **Metadata**       | Explicit (types, categories)        | Implicit (no type info)     |
+    ''' | **Readability**    | High (structured headers)           | Moderate (flat structure)   |
+    ''' | **Missing Values** | Supported (`?`)                     | Often ad-hoc (e.g., blanks) |
     ''' | **Tools**          | Weka, Python (`liac-arff`, `scipy`) | Universal                   |
     ''' 
     ''' ---
     ''' 
     ''' ### 5. **Limitations**
+    ''' 
     ''' - **Verbosity**: Header definitions can be lengthy for large datasets.
     ''' - **Limited Sparse Data Support**: Requires specific syntax for sparse entries.
     ''' - **Format Rigidity**: Sensitive to line breaks and spacing.
@@ -65,6 +79,7 @@ Namespace IO.ArffFile
     ''' ---
     ''' 
     ''' ### 6. **Tools and Libraries**
+    ''' 
     ''' - **Weka**: Native support for ARFF; includes visualization and preprocessing tools.
     ''' - **Python**:  
     '''   - `liac-arff`: Read/write ARFF files with Pandas integration.  
@@ -74,6 +89,7 @@ Namespace IO.ArffFile
     ''' ---
     ''' 
     ''' ### Example ARFF File
+    ''' 
     ''' ```arff
     ''' @relation iris
     ''' @attribute sepal_length numeric
@@ -85,7 +101,8 @@ Namespace IO.ArffFile
     ''' 7.0,?,Iris-versicolor  // Missing value
     ''' ```
     ''' 
-    ''' For more details, refer to Weka's documentation or explore sample datasets like `weather.arff`.
+    ''' For more details, refer to Weka's documentation or explore sample datasets 
+    ''' like `weather.arff`.
     ''' </summary>
     Public Module ArffReader
 
