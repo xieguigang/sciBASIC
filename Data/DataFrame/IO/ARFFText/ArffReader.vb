@@ -1,4 +1,6 @@
 ﻿Imports System.IO
+Imports System.Text
+Imports Microsoft.VisualBasic.Language
 
 Namespace IO.ArffFile
 
@@ -106,8 +108,24 @@ Namespace IO.ArffFile
     ''' </summary>
     Public Module ArffReader
 
-        Public Function LoadDataFrame(arff As Stream) As FeatureVector
+        Public Iterator Function LoadDataFrame(arff As Stream) As IEnumerable(Of FeatureVector)
 
+        End Function
+
+        Public Function GetCommentText(arff As Stream) As String
+            Dim str As New StreamReader(arff)
+            Dim line As Value(Of String) = ""
+            Dim comment As New StringBuilder
+
+            Do While (line = str.ReadLine) IsNot Nothing
+                If line.StartsWith("%"c) Then
+                    Call comment.AppendLine(CStr(line).TrimStart("%").Trim(" "c))
+                ElseIf CStr(line) = "@DATA" Then
+                    Exit Do
+                End If
+            Loop
+
+            Return comment.ToString
         End Function
     End Module
 End Namespace
