@@ -119,10 +119,20 @@ Namespace Language.Values
             Return s.Value.GetTagValue(delimiter, trim, failureNoName)
         End Function
 
-        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        ''' <summary>
+        ''' Determines whether the beginning of this string instance matches the specified
+        ''' string.
+        ''' </summary>
+        ''' <param name="str"></param>
+        ''' <param name="substr">The string to compare.</param>
+        ''' <returns>true if value matches the beginning of this string; otherwise, false.</returns>
         <Extension>
-        Public Function StartsWith(str As ByRefString, start As String) As Boolean
-            Return str.Value.StartsWith(start)
+        Public Function StartsWith(str As Value(Of String), substr As String) As Boolean
+            If str Is Nothing OrElse str.Value Is Nothing Then
+                Return False
+            Else
+                Return str.Value.StartsWith(substr)
+            End If
         End Function
 
         ''' <summary>

@@ -1,6 +1,9 @@
 ﻿Imports System.IO
 Imports System.Text
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.Data.Framework.IO.CSVFile
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Language.Values
 
 Namespace IO.ArffFile
 
@@ -108,9 +111,48 @@ Namespace IO.ArffFile
     ''' </summary>
     Public Module ArffReader
 
-        Public Iterator Function LoadDataFrame(arff As Stream) As IEnumerable(Of FeatureVector)
+        Public Function LoadDataFrame(arff As Stream) As DataFrame
             Dim fields As New Dictionary(Of String, List(Of String))
-            Dim attrs As New Dictionary(Of String, (name$, type$))
+            Dim attrs As New Dictionary(Of String, (Integer, String))
+            Dim str As New StreamReader(arff)
+            Dim line As Value(Of String) = ""
+            Dim name As String = Nothing
+            Dim desc As New StringBuilder
+
+            Do While (line = str.ReadLine) <> "@DATA"
+                If line.StartsWith("@RELATION") Then
+                    name = line.GetTagValue(" ", trim:=True).Value
+                    name = name.Trim(""""c)
+                ElseIf line.StartsWith("@ATTRIBUTE") Then
+                    Dim attr As String = line.GetTagValue(" ", trim:=True).Value
+                    Dim kv = Tokenizer.CharsParser(attr, delimiter:=" "c,).ToArray
+
+                    Call fields.Add(kv(0), New List(Of String))
+                    Call attrs.Add(kv(0), (attrs.Count, kv.Skip(1).JoinBy(" ")))
+                End If
+            Loop
+
+            Dim offsets = attrs.Keys.ToArray
+
+            Do While (line = str.ReadLine) IsNot Nothing
+                Dim r As String() = Tokenizer.CharsParser(line).ToArray
+
+                For i As Integer = 0 To offsets.Length - 1
+                    Call fields(offsets(i)).Add(r(i))
+                Next
+            Loop
+
+            Dim fieldData As New Dictionary(Of String, FeatureVector)
+
+            For Each field In fields
+
+            Next
+
+            Return New DataFrame With {
+                .description = desc.ToString,
+                .name = name,
+                .features = fieldData
+            }
         End Function
 
         Public Function GetCommentText(arff As Stream) As String
