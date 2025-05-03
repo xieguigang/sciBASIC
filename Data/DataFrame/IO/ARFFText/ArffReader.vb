@@ -4,6 +4,7 @@ Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.Framework.IO.CSVFile
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.Values
+Imports Microsoft.VisualBasic.Scripting.Runtime
 
 Namespace IO.ArffFile
 
@@ -145,7 +146,7 @@ Namespace IO.ArffFile
             Dim fieldData As New Dictionary(Of String, FeatureVector)
 
             For Each field In fields
-
+                Call fieldData.Add(field.Key, ParseFeature(field.Key, attrs(field.Key).Item2, field.Value))
             Next
 
             Return New DataFrame With {
@@ -153,6 +154,23 @@ Namespace IO.ArffFile
                 .name = name,
                 .features = fieldData
             }
+        End Function
+
+        Private Function ParseFeature(name$, type$, data As List(Of String)) As FeatureVector
+            Select Case LCase(type)
+                Case "real", "numeric", "double"
+                    Return New FeatureVector(name, data.AsDouble)
+                Case "bool", "boolean", "logical"
+                    Return New FeatureVector(name, data.AsBoolean)
+                Case "int", "integer", "int32"
+                    Return New FeatureVector(name, data.AsInteger)
+                Case "float"
+                    Return New FeatureVector(name, data.AsSingle)
+                Case "long", "int64"
+                    Return New FeatureVector(name, data.AsLong)
+                Case Else
+                    Return New FeatureVector(name, data)
+            End Select
         End Function
 
         Public Function GetCommentText(arff As Stream) As String

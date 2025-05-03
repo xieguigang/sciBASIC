@@ -222,6 +222,16 @@ Namespace Scripting.Runtime
         End Function
 
         ''' <summary>
+        ''' parse string as long integer in batch mode
+        ''' </summary>
+        ''' <param name="source"></param>
+        ''' <returns></returns>
+        <Extension>
+        Public Function AsLong(source As IEnumerable(Of String)) As Long()
+            Return source.AsType(Of Long).ToArray
+        End Function
+
+        ''' <summary>
         ''' parse string as boolean in batch mode
         ''' </summary>
         ''' <param name="source"></param>
