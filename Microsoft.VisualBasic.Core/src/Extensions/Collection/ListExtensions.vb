@@ -255,8 +255,15 @@ Public Module ListExtensions
     ''' <param name="action"></param>
     <Extension>
     Public Sub ForEach(Of T)(source As IEnumerable(Of T), action As Action(Of T, Integer))
-        For Each x As SeqValue(Of T) In source.SeqIterator
-            Call action(x.value, x.i)
+        Dim i As Integer = 0
+
+        If source Is Nothing Then
+            Return
+        End If
+
+        For Each x As T In source
+            action(x, i)
+            i += 1
         Next
     End Sub
 
