@@ -1,59 +1,59 @@
 ﻿#Region "Microsoft.VisualBasic::702776c8466483ab4d0058efa9b61b0d, Microsoft.VisualBasic.Core\src\Extensions\IO\Extensions\PathExtensions.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 1078
-    '    Code Lines: 618 (57.33%)
-    ' Comment Lines: 346 (32.10%)
-    '    - Xml Docs: 86.13%
-    ' 
-    '   Blank Lines: 114 (10.58%)
-    '     File Size: 41.95 KB
+' Summaries:
 
 
-    ' Module PathExtensions
-    ' 
-    '     Function: BaseName, ChangeSuffix, DeleteFile, DIR, DirectoryExists
-    '               DirectoryName, EnumerateFiles, (+2 Overloads) ExtensionSuffix, FileCopy, FileExists
-    '               FileLength, FileMove, FileName, FileOpened, GetDirectoryFullPath
-    '               GetFullPath, ListDirectory, ListFiles, Long2Short, MakeDir
-    '               (+2 Overloads) NormalizePathString, ParentDirName, ParentPath, PathCombine, PathIllegal
-    '               ReadDirectory, (+2 Overloads) RelativePath, SafeCopyTo, SplitPath, TheFile
-    '               ToDIR_URL, ToFileURL, TrimDIR, TrimSuffix, UnixPath
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 1078
+'    Code Lines: 618 (57.33%)
+' Comment Lines: 346 (32.10%)
+'    - Xml Docs: 86.13%
+' 
+'   Blank Lines: 114 (10.58%)
+'     File Size: 41.95 KB
+
+
+' Module PathExtensions
+' 
+'     Function: BaseName, ChangeSuffix, DeleteFile, DIR, DirectoryExists
+'               DirectoryName, EnumerateFiles, (+2 Overloads) ExtensionSuffix, FileCopy, FileExists
+'               FileLength, FileMove, FileName, FileOpened, GetDirectoryFullPath
+'               GetFullPath, ListDirectory, ListFiles, Long2Short, MakeDir
+'               (+2 Overloads) NormalizePathString, ParentDirName, ParentPath, PathCombine, PathIllegal
+'               ReadDirectory, (+2 Overloads) RelativePath, SafeCopyTo, SplitPath, TheFile
+'               ToDIR_URL, ToFileURL, TrimDIR, TrimSuffix, UnixPath
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -62,6 +62,7 @@ Imports System.Math
 Imports System.Reflection
 Imports System.Runtime.CompilerServices
 Imports System.Text
+Imports System.Text.RegularExpressions
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.FileIO
 Imports Microsoft.VisualBasic.Language.Default
@@ -117,16 +118,26 @@ Public Module PathExtensions
                                Optional verbose As Action(Of Object) = Nothing) As Boolean
         Try
             If verbose Is Nothing Then
-                verbose = Sub(any)
-                              ' do nothing
-                          End Sub
+                verbose = AddressOf App.DoNothing
             End If
+
+            ' 20250505
+            ' fix error of the windows UI on linux platform
+            ' 
+            ' System.PlatformNotSupportedException: UI not available for copy or move
+            '   at Microsoft.VisualBasic.FileIO.FileSystem.ShellDelete(String FullPath, UIOptionInternal ShowUI, RecycleOption recycle, UICancelOption OnUserCancel, FileOrDirectory FileOrDirectory)
+            '   at Microsoft.VisualBasic.FileIO.FileSystem.DeleteFileInternal(String file, UIOptionInternal showUI, RecycleOption recycle, UICancelOption onUserCancel)
+            '   at Microsoft.VisualBasic.PathExtensions.DeleteFile(String path, Boolean throwEx, Boolean strictFile, Action`1 verbose)
+            '   --- End of inner exception stack trace ---
+            '
+            '   file.R#_clr_interop:.unlink\ [DeleteFile] [file.R#_clr_interop:.unlink at [REnv, Version = 2.33.856.6961, Culture = neutral, PublicKeyToken = null]: line &Hx056042375]
+            '
+            ' 18. System.Exception: DeleteFile()
+            ' 
 
             If path.FileExists Then
                 Call verbose($"removes file '{path}'.")
-                Call FileIO.FileSystem.DeleteFile(
-                   path, UIOption.OnlyErrorDialogs, RecycleOption.DeletePermanently
-                )
+                Call System.IO.File.Delete(path)
             ElseIf path.DirectoryExists Then
                 Call verbose($"removes directory '{path}'.")
 
@@ -137,9 +148,7 @@ Public Module PathExtensions
 
                     Call msg.Warning
                     Call verbose(msg)
-                    Call FileIO.FileSystem.DeleteDirectory(
-                        path, DeleteDirectoryOption.DeleteAllContents
-                    )
+                    Call System.IO.Directory.Delete(path, recursive:=True)
                 End If
             End If
 
