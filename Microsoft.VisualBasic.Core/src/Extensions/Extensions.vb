@@ -1204,13 +1204,13 @@ Public Module Extensions
     ''' <summary>
     ''' Return a collection with randomize element position in 
     ''' <paramref name="source">the original collection</paramref>.
-    ''' (从原有序序列中获取一个随机元素的序列)
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
     ''' <param name="source"></param>
     ''' <returns></returns>
     ''' <remarks>
     ''' this method can be affected by the <see cref="Math.RandomExtensions.SetSeed"/> method.
+    ''' (从原有序序列中获取一个随机元素的序列)
     ''' </remarks>
     <ExportAPI("Shuffles")>
     <Extension>
@@ -1222,9 +1222,6 @@ Public Module Extensions
 
     ''' <summary>
     ''' Generates the shuffle index result
-    ''' 
-    ''' (返回n长度的序列数值，这些序列数值是打乱顺序的，但是升序排序之后会得到1:<paramref name="n"/>的序列
-    ''' 请注意，这个序列并不是随机数，而是将n长度的序列之中的元素打乱顺序的结果)
     ''' </summary>
     ''' <param name="n">the size of the index vector</param>
     ''' <returns></returns>
@@ -1232,7 +1229,10 @@ Public Module Extensions
     ''' 1. generates a index vector in range 0:<paramref name="n"/>-1
     ''' 2. make index shuffles
     ''' 
-    ''' returns the shuffles result
+    ''' returns the shuffles result.
+    ''' 
+    ''' (返回n长度的序列数值，这些序列数值是打乱顺序的，但是升序排序之后会得到1:<paramref name="n"/>的序列
+    ''' 请注意，这个序列并不是随机数，而是将n长度的序列之中的元素打乱顺序的结果)
     ''' </remarks>
     <Extension>
     Public Function SeqRandom(n As Integer) As Integer()
