@@ -39,6 +39,9 @@ Namespace BIRCH
     ''' @version 0.1
     ''' 
     ''' </summary>
+    ''' <remarks>
+    ''' https://github.com/sehee-lee/JBIRCH
+    ''' </remarks>
     Public Class CFTree
 
         ''' <summary>
