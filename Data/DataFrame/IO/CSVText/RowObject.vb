@@ -1,66 +1,66 @@
 ﻿#Region "Microsoft.VisualBasic::cce9684e8bde7e56115c68cce5838134, Data\DataFrame\IO\CSVText\RowObject.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 503
-    '    Code Lines: 301 (59.84%)
-    ' Comment Lines: 141 (28.03%)
-    '    - Xml Docs: 97.87%
-    ' 
-    '   Blank Lines: 61 (12.13%)
-    '     File Size: 19.03 KB
+' Summaries:
 
 
-    '     Class RowObject
-    ' 
-    '         Properties: AsLine, DirectGet, IsReadOnly, NumbersOfColumn, Width
-    ' 
-    '         Constructor: (+4 Overloads) Sub New
-    ' 
-    '         Function: AddRange, AppendItem, (+2 Overloads) Contains, CreateObject, GetALLNonEmptys
-    '                   GetColumn, GetEnumerator, GetEnumerator1, IndexAny, IndexOf
-    '                   InsertAt, LocateKeyWord, PopLine, Remove, (+2 Overloads) Takes
-    '                   (+2 Overloads) ToString, TryParse
-    ' 
-    '         Sub: Add, Clear, CopyTo, Insert, RemoveAt
-    '              Trim
-    ' 
-    '         Operators: -, (+4 Overloads) +
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 503
+'    Code Lines: 301 (59.84%)
+' Comment Lines: 141 (28.03%)
+'    - Xml Docs: 97.87%
+' 
+'   Blank Lines: 61 (12.13%)
+'     File Size: 19.03 KB
+
+
+'     Class RowObject
+' 
+'         Properties: AsLine, DirectGet, IsReadOnly, NumbersOfColumn, Width
+' 
+'         Constructor: (+4 Overloads) Sub New
+' 
+'         Function: AddRange, AppendItem, (+2 Overloads) Contains, CreateObject, GetALLNonEmptys
+'                   GetColumn, GetEnumerator, GetEnumerator1, IndexAny, IndexOf
+'                   InsertAt, LocateKeyWord, PopLine, Remove, (+2 Overloads) Takes
+'                   (+2 Overloads) ToString, TryParse
+' 
+'         Sub: Add, Clear, CopyTo, Insert, RemoveAt
+'              Trim
+' 
+'         Operators: -, (+4 Overloads) +
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -69,7 +69,7 @@ Imports Microsoft.VisualBasic.Data.Framework.IO.CSVFile
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq.Extensions
 Imports Microsoft.VisualBasic.Text
-Imports any = Microsoft.VisualBasic.Scripting
+Imports anys = Microsoft.VisualBasic.Scripting
 
 Namespace IO
 
@@ -98,13 +98,12 @@ Namespace IO
         End Sub
 
         ''' <summary>
-        ''' 
+        ''' safe convert the given object collection to string and create this row object
         ''' </summary>
-        ''' <param name="objs">using <see cref="any.ToString"/> to converts the objects into a string array.</param>
-        ''' 
+        ''' <param name="objs">using <see cref="anys.ToString"/> to converts the objects into a string array.</param>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Sub New(objs As IEnumerable(Of Object))
-            Call Me.New(objs.Select(Function(x) Scripting.ToString(x)))
+            Call Me.New(objs.Select(Function(x) anys.ToString(x)))
         End Sub
 
         ''' <summary>
