@@ -69,6 +69,22 @@ Namespace Language
     Public Module FormatHelpers
 
         ''' <summary>
+        ''' Determines whether the beginning of this string instance matches the specified
+        ''' string.
+        ''' </summary>
+        ''' <param name="str"></param>
+        ''' <param name="c">The string to compare.</param>
+        ''' <returns>true if value matches the beginning of this string; otherwise, false.</returns>
+        <Extension>
+        Public Function StartsWith(str As Value(Of String), c As Char) As Boolean
+            If str Is Nothing OrElse str.Value Is Nothing Then
+                Return False
+            Else
+                Return str.Value.StartsWith(c)
+            End If
+        End Function
+
+        ''' <summary>
         ''' Removes all leading and trailing occurrences of a set of characters specified
         ''' in an array from the current string.
         ''' </summary>
