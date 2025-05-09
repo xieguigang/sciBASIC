@@ -109,7 +109,7 @@ Namespace BIRCH
         ''' <param name="distThreshold"> parameter T </param>
         ''' <param name="distFunction"> must be one of CFTree.D0_DIST,...,CFTree.D4_DIST, otherwise it will default to D0_DIST </param>
         ''' <param name="applyMergingRefinement"> if true, activates merging refinement after each node split </param>
-        Public Sub New(maxNodeEntries As Integer, distThreshold As Double, distFunction As Integer, applyMergingRefinement As Boolean)
+        Public Sub New(maxNodeEntries As Integer, distThreshold As Double, Optional distFunction As Integer = D0_DIST, Optional applyMergingRefinement As Boolean = False)
             If distFunction < D0_DIST OrElse distFunction > D4_DIST Then
                 distFunction = D0_DIST
             End If
