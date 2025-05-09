@@ -61,6 +61,7 @@ Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.Data.Framework.IO.ArffFile
 Imports Microsoft.VisualBasic.Language.Vectorization
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
@@ -394,6 +395,18 @@ Public Class DataFrame : Implements INumericMatrix, ILabeledMatrix
         Using s As Stream = file.Open(FileMode.Open, doClear:=False, [readOnly]:=True)
             Return FastLoader.ReadCsv(s, delimiter, rowHeader, encoding)
         End Using
+    End Function
+
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    Public Shared Function read_arff(file As String) As DataFrame
+        Using s As Stream = file.Open(FileMode.Open, doClear:=False, [readOnly]:=True)
+            Return read_arff(s)
+        End Using
+    End Function
+
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    Public Shared Function read_arff(file As Stream) As DataFrame
+        Return ArffReader.LoadDataFrame(file)
     End Function
 
     Public Shared Function read_csv(file As Stream,
