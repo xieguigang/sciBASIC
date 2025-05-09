@@ -119,11 +119,11 @@ Namespace IO.ArffFile
             Dim name As String = Nothing
             Dim desc As New StringBuilder
 
-            Do While (line = str.ReadLine) <> "@DATA"
-                If line.StartsWith("@RELATION") Then
+            Do While LCase(line = str.ReadLine) <> "@data"
+                If line.ToLower.StartsWith("@relation") Then
                     name = line.GetTagValue(" ", trim:=True).Value
                     name = name.Trim(""""c)
-                ElseIf line.StartsWith("@ATTRIBUTE") Then
+                ElseIf line.ToLower.StartsWith("@attribute") Then
                     Dim attr As String = line.GetTagValue(" ", trim:=True).Value
                     Dim kv = Tokenizer.CharsParser(attr, delimiter:=" "c,).ToArray
 
@@ -182,7 +182,7 @@ Namespace IO.ArffFile
             Do While (line = str.ReadLine) IsNot Nothing
                 If line.StartsWith("%"c) Then
                     Call comment.AppendLine(CStr(line).TrimStart("%").Trim(" "c))
-                ElseIf CStr(line) = "@DATA" Then
+                ElseIf line.ToLower = "@data" Then
                     Exit Do
                 End If
             Loop

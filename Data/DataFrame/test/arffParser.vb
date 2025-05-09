@@ -4,6 +4,8 @@ Module arffParser
 
     Sub Main()
         Dim df As DataFrame = DataFrame.read_arff("G:\GCModeller\src\runtime\sciBASIC#\Data\Example\dataframe\Smile.arff")
+        Dim df2 As DataFrame = DataFrame.read_arff("G:\GCModeller\src\runtime\sciBASIC#\Data\Example\dataframe\COP.arff")
+        Dim df3 As DataFrame = DataFrame.read_arff("G:\GCModeller\src\runtime\sciBASIC#\Data\Example\dataframe\Aggregation.arff")
 
         Pause()
     End Sub
