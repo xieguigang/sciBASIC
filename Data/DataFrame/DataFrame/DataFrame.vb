@@ -257,7 +257,9 @@ Public Class DataFrame : Implements INumericMatrix, ILabeledMatrix
     ''' get row by index
     ''' </summary>
     ''' <param name="i"></param>
-    ''' <returns></returns>
+    ''' <returns>
+    ''' A row data without row names
+    ''' </returns>
     Public Function row(i As Integer) As Object()
         Return features.Select(Function(c) c.Value(i)).ToArray
     End Function

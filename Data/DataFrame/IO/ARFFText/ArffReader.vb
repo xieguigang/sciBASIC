@@ -145,15 +145,21 @@ Namespace IO.ArffFile
             Loop
 
             Dim fieldData As New Dictionary(Of String, FeatureVector)
+            Dim rowNames As String() = Nothing
 
             For Each field In fields
-                Call fieldData.Add(field.Key, ParseFeature(field.Key, attrs(field.Key).Item2, field.Value))
+                If field.Key = ArffWriter.DataframeArffRowNames Then
+                    rowNames = field.Value.ToArray
+                Else
+                    Call fieldData.Add(field.Key, ParseFeature(field.Key, attrs(field.Key).Item2, field.Value))
+                End If
             Next
 
             Return New DataFrame With {
                 .description = desc.ToString,
                 .name = name,
-                .features = fieldData
+                .features = fieldData,
+                .rownames = rowNames
             }
         End Function
 

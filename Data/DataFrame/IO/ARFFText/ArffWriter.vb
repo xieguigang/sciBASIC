@@ -13,6 +13,8 @@ Namespace IO.ArffFile
             End Using
         End Sub
 
+        Friend Const DataframeArffRowNames As String = "_row.names"
+
         <Extension>
         Public Sub WriteText(d As DataFrame, s As TextWriter)
             Dim offsets As String() = d.featureNames
@@ -28,6 +30,10 @@ Namespace IO.ArffFile
                 Call s.WriteLine()
             End If
 
+            If Not d.rownames.IsNullOrEmpty Then
+                Call s.WriteLine("@attribute " & DataframeArffRowNames)
+            End If
+
             For Each col As String In offsets
                 Call s.WriteLine($"@attribute {col.CLIToken} {ArffWriter.desc(d(col))}")
             Next
@@ -36,10 +42,15 @@ Namespace IO.ArffFile
             Call s.WriteLine("@data")
 
             Dim rows As Integer = d.nsamples
+            Dim checkRowNames As Boolean = Not d.rownames.IsNullOrEmpty
 
             For i As Integer = 0 To rows - 1
                 Dim row As Object() = d.row(i)
                 Dim line As String = New RowObject(row).AsLine
+
+                If checkRowNames Then
+                    Call s.Write($"{d.rownames(i).CLIToken},")
+                End If
 
                 Call s.WriteLine(line)
             Next
