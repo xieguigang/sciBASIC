@@ -23,7 +23,9 @@ Module arffParser
             .description = "text data writer in different vectro data type",
             .features = New Dictionary(Of String, FeatureVector) From {
                 {"numbers", New FeatureVector("numbers", randf.ExponentialRandomNumbers(2, 6))},
-                {"flags", New FeatureVector("flags", {True, True, True, False, False, True})}
+                {"flags", New FeatureVector("flags", {True, True, True, False, False, True})},
+                {"ints", New FeatureVector("ints", New Integer() {544, 53, 46, 4, 5, 99997})},
+                {"string cols", New FeatureVector("string cols", {"as", "kjfsdha", "jdkh jkbvwucdxnjasdch", "uqweibcfweyf sdsadsadj", "fhjksacadslkdmas", "klx"})}
             },
             .rownames = {"# 1", "# 2", "# 3", "# 4", "# 5", "# 6"}
         }
