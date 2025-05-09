@@ -409,6 +409,16 @@ Public Class DataFrame : Implements INumericMatrix, ILabeledMatrix
         Return ArffReader.LoadDataFrame(file)
     End Function
 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    Public Shared Sub write_arff(df As DataFrame, file As Stream)
+        Call ArffWriter.WriteText(df, file)
+    End Sub
+
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    Public Shared Sub write_arff(df As DataFrame, text As TextWriter)
+        Call ArffWriter.WriteText(df, text)
+    End Sub
+
     Public Shared Function read_csv(file As Stream,
                                     Optional delimiter As Char = ","c,
                                     Optional rowHeader As Boolean = True,
