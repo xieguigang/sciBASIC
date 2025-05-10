@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::80cca26dc7c76e92bf8f252e6f0eacb4, Data_science\Mathematica\SignalProcessing\MachineVision\Tracker.vb"
+﻿#Region "Microsoft.VisualBasic::fe398e718de5169b1f41d664b93dc9b2, Data_science\Mathematica\SignalProcessing\MachineVision\Tracker.vb"
 
     ' Author:
     ' 
@@ -34,12 +34,12 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 102
-    '    Code Lines: 55 (53.92%)
-    ' Comment Lines: 29 (28.43%)
+    '   Total Lines: 101
+    '    Code Lines: 55 (54.46%)
+    ' Comment Lines: 29 (28.71%)
     '    - Xml Docs: 41.38%
     ' 
-    '   Blank Lines: 18 (17.65%)
+    '   Blank Lines: 17 (16.83%)
     '     File Size: 3.87 KB
 
 
@@ -52,7 +52,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 Imports Microsoft.VisualBasic.Imaging.Math2D
 Imports Microsoft.VisualBasic.Linq

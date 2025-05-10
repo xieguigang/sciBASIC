@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::73982f5137c3ef9f0713b395a1c53ac6, Microsoft.VisualBasic.Core\src\Language\Value\ByRefValueExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::c3f3bc718740e277635a2c1a6ec1b49a, Microsoft.VisualBasic.Core\src\Language\Value\ByRefValueExtensions.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 85
-    '    Code Lines: 52 (61.18%)
-    ' Comment Lines: 23 (27.06%)
+    '   Total Lines: 95
+    '    Code Lines: 55 (57.89%)
+    ' Comment Lines: 30 (31.58%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 10 (11.76%)
-    '     File Size: 3.44 KB
+    '   Blank Lines: 10 (10.53%)
+    '     File Size: 3.89 KB
 
 
     '     Module ByRefValueExtensions

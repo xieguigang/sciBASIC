@@ -1,59 +1,59 @@
-﻿#Region "Microsoft.VisualBasic::702776c8466483ab4d0058efa9b61b0d, Microsoft.VisualBasic.Core\src\Extensions\IO\Extensions\PathExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::4918c7bf439bbd107371a1034e61fb7c, Microsoft.VisualBasic.Core\src\Extensions\IO\Extensions\PathExtensions.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 1078
-'    Code Lines: 618 (57.33%)
-' Comment Lines: 346 (32.10%)
-'    - Xml Docs: 86.13%
-' 
-'   Blank Lines: 114 (10.58%)
-'     File Size: 41.95 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-' Module PathExtensions
-' 
-'     Function: BaseName, ChangeSuffix, DeleteFile, DIR, DirectoryExists
-'               DirectoryName, EnumerateFiles, (+2 Overloads) ExtensionSuffix, FileCopy, FileExists
-'               FileLength, FileMove, FileName, FileOpened, GetDirectoryFullPath
-'               GetFullPath, ListDirectory, ListFiles, Long2Short, MakeDir
-'               (+2 Overloads) NormalizePathString, ParentDirName, ParentPath, PathCombine, PathIllegal
-'               ReadDirectory, (+2 Overloads) RelativePath, SafeCopyTo, SplitPath, TheFile
-'               ToDIR_URL, ToFileURL, TrimDIR, TrimSuffix, UnixPath
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 1087
+    '    Code Lines: 614 (56.49%)
+    ' Comment Lines: 358 (32.93%)
+    '    - Xml Docs: 83.24%
+    ' 
+    '   Blank Lines: 115 (10.58%)
+    '     File Size: 42.78 KB
+
+
+    ' Module PathExtensions
+    ' 
+    '     Function: BaseName, ChangeSuffix, DeleteFile, DIR, DirectoryExists
+    '               DirectoryName, EnumerateFiles, (+2 Overloads) ExtensionSuffix, FileCopy, FileExists
+    '               FileLength, FileMove, FileName, FileOpened, GetDirectoryFullPath
+    '               GetFullPath, ListDirectory, ListFiles, Long2Short, MakeDir
+    '               (+2 Overloads) NormalizePathString, ParentDirName, ParentPath, PathCombine, PathIllegal
+    '               ReadDirectory, (+2 Overloads) RelativePath, SafeCopyTo, SplitPath, TheFile
+    '               ToDIR_URL, ToFileURL, TrimDIR, TrimSuffix, UnixPath
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

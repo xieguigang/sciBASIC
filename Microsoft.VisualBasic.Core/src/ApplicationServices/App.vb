@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d0ef49979d9b38ff0142062282d93727, Microsoft.VisualBasic.Core\src\ApplicationServices\App.vb"
+﻿#Region "Microsoft.VisualBasic::36864ddc536a542cb425429ad099da8b, Microsoft.VisualBasic.Core\src\ApplicationServices\App.vb"
 
     ' Author:
     ' 
@@ -34,27 +34,27 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 1569
-    '    Code Lines: 760 (48.44%)
-    ' Comment Lines: 627 (39.96%)
+    '   Total Lines: 1577
+    '    Code Lines: 761 (48.26%)
+    ' Comment Lines: 633 (40.14%)
     '    - Xml Docs: 83.41%
     ' 
-    '   Blank Lines: 182 (11.60%)
-    '     File Size: 67.74 KB
+    '   Blank Lines: 183 (11.60%)
+    '     File Size: 67.96 KB
 
 
     ' Module App
     ' 
     '     Properties: AppSystemTemp, AssemblyName, BufferSize, Command, CommandLine
     '                 CPUCoreNumbers, CurrentDirectory, CurrentProcessTemp, CurrentUnixTimeMillis, Desktop
-    '                 DoNothing, EnableTqdm, ExecutablePath, GetLastError, Github
-    '                 HOME, Info, InputFile, IsConsoleApp, IsMicrosoftPlatform
-    '                 LocalData, LocalDataTemp, LogErrDIR, LogFile, MemoryLoad
-    '                 n_threads, NanoTime, NextTempName, OutFile, PID
-    '                 Platform, PreviousDirectory, Process, ProductName, ProductProgramData
-    '                 ProductSharedDIR, ProductSharedTemp, Running, RunningInGitBash, RunTimeDirectory
-    '                 StartTime, StartupDirectory, StdErr, StdInput, StdOut
-    '                 SysTemp, UnixTimeStamp, UserHOME, Version
+    '                 EnableTqdm, ExecutablePath, GetLastError, Github, HOME
+    '                 Info, InputFile, IsConsoleApp, IsMicrosoftPlatform, LocalData
+    '                 LocalDataTemp, LogErrDIR, LogFile, MemoryLoad, n_threads
+    '                 NanoTime, NextTempName, OutFile, PID, Platform
+    '                 PreviousDirectory, Process, ProductName, ProductProgramData, ProductSharedDIR
+    '                 ProductSharedTemp, Running, RunningInGitBash, RunTimeDirectory, StartTime
+    '                 StartupDirectory, StdErr, StdInput, StdOut, SysTemp
+    '                 UnixTimeStamp, UserHOME, Version
     ' 
     '     Constructor: (+1 Overloads) Sub New
     ' 
@@ -65,9 +65,9 @@
     '               (+13 Overloads) RunCLI, RunCLIInternal, SelfFolk, Shell, tempCode
     '               TemporaryEnvironment, TraceBugs
     ' 
-    '     Sub: __GCThreadInvoke, __removesTEMP, [Stop], AddExitCleanHook, FlushMemory
-    '          Free, JoinVariable, (+2 Overloads) JoinVariables, Pause, (+2 Overloads) println
-    '          SetBufferSize, StartGC, StopGC
+    '     Sub: __GCThreadInvoke, __removesTEMP, [Stop], AddExitCleanHook, (+2 Overloads) DoNothing
+    '          FlushMemory, Free, JoinVariable, (+2 Overloads) JoinVariables, Pause
+    '          (+2 Overloads) println, SetBufferSize, StartGC, StopGC
     ' 
     ' /********************************************************************************/
 

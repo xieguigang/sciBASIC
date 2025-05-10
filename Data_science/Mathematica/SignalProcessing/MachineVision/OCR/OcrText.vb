@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::09d33b3cd6c30905838cc1214bf00124, Data_science\Mathematica\SignalProcessing\MachineVision\OCR\OcrText.vb"
+﻿#Region "Microsoft.VisualBasic::868f97ae3da92b42108ccf8755bcc346, Data_science\Mathematica\SignalProcessing\MachineVision\OCR\OcrText.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 4 (23.53%)
-    '     File Size: 382 B
+    '     File Size: 380 B
 
 
     ' Class OcrText
@@ -68,4 +68,3 @@ Public Class OcrText : Inherits Detection
     Public Property polygon As PointF()
 
 End Class
-

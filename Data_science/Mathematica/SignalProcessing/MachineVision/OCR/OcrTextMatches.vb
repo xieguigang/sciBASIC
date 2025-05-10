@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c4a310b87a6ffdb271ba48642508f658, Data_science\Mathematica\SignalProcessing\MachineVision\OCR\OcrTextMatches.vb"
+﻿#Region "Microsoft.VisualBasic::4232f8e1d3cbfafc89b5e7edb8dceda6, Data_science\Mathematica\SignalProcessing\MachineVision\OCR\OcrTextMatches.vb"
 
     ' Author:
     ' 
@@ -85,4 +85,3 @@ Public Module OcrTextMatches
     End Function
 
 End Module
-

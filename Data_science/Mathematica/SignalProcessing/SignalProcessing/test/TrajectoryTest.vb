@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6261280a471adde249defc48834fef0b, Data_science\Mathematica\SignalProcessing\SignalProcessing\test\TrajectoryTest.vb"
+﻿#Region "Microsoft.VisualBasic::1c38bfbe3276e05496fb1356ad66d3f5, Data_science\Mathematica\SignalProcessing\SignalProcessing\test\TrajectoryTest.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 0.00%
     ' 
     '   Blank Lines: 25 (18.38%)
-    '     File Size: 5.04 KB
+    '     File Size: 5.03 KB
 
 
     ' Class MotionSimulator
@@ -191,4 +191,3 @@ Module TrajectoryTest
 
 
 End Module
-

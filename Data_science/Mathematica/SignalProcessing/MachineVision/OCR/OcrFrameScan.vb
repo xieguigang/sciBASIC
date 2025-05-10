@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::82129f150eba3cd237ed3e32f875145b, Data_science\Mathematica\SignalProcessing\MachineVision\OCR\OcrFrameScan.vb"
+﻿#Region "Microsoft.VisualBasic::8a0b2aac0ca0625847097d5e33270c24, Data_science\Mathematica\SignalProcessing\MachineVision\OCR\OcrFrameScan.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 0.00%
     ' 
     '   Blank Lines: 5 (17.24%)
-    '     File Size: 859 B
+    '     File Size: 857 B
 
 
     ' Class OcrFrameScan
@@ -81,4 +81,3 @@ Public Class OcrFrameScan : Inherits FrameData(Of OcrText)
         }
     End Function
 End Class
-

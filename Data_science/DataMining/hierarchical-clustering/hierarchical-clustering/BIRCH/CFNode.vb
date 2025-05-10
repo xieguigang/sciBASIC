@@ -1,4 +1,68 @@
-﻿Imports System.Text
+﻿#Region "Microsoft.VisualBasic::88b44d586d7984c7607e29dfd711e503, Data_science\DataMining\hierarchical-clustering\hierarchical-clustering\BIRCH\CFNode.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 608
+    '    Code Lines: 368 (60.53%)
+    ' Comment Lines: 140 (23.03%)
+    '    - Xml Docs: 45.00%
+    ' 
+    '   Blank Lines: 100 (16.45%)
+    '     File Size: 25.14 KB
+
+
+    '     Class CFNode
+    ' 
+    '         Properties: DistFunction, DistThreshold, Dummy, Entries, Leaf
+    '                     LeafStatus, MaxNodeEntries, NextLeaf, PreviousLeaf
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
+    '         Function: applyMergingRefinement, countChildrenNodes, countEntriesInChildrenNodes, findClosestEntry, findClosestEntryPair
+    '                   findFarthestEntryPair, insertEntry, mapToClosestSubcluster, size, splitEntry
+    '                   ToString
+    ' 
+    '         Sub: addToEntryList, mergingRefinement, (+3 Overloads) redistributeEntries, replaceClosestPairWithNewEntries, replaceClosestPairWithNewMergedEntry
+    '              replaceEntries, resetEntries
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+Imports System.Text
 
 ' 
 '   This file is part of JBIRCH.
@@ -606,3 +670,4 @@ Namespace BIRCH
     End Class
 
 End Namespace
+

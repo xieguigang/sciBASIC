@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::797e35f5d33be65d1a641714d25bc818, Microsoft.VisualBasic.Core\src\Language\StringHelpers.vb"
+﻿#Region "Microsoft.VisualBasic::4ef819db819e4dced64a93bc199b629a, Microsoft.VisualBasic.Core\src\Language\StringHelpers.vb"
 
     ' Author:
     ' 
@@ -34,18 +34,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 133
-    '    Code Lines: 58 (43.61%)
-    ' Comment Lines: 60 (45.11%)
+    '   Total Lines: 149
+    '    Code Lines: 66 (44.30%)
+    ' Comment Lines: 67 (44.97%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 15 (11.28%)
-    '     File Size: 5.54 KB
+    '   Blank Lines: 16 (10.74%)
+    '     File Size: 6.21 KB
 
 
     '     Module FormatHelpers
     ' 
-    '         Function: (+2 Overloads) Split, StringFormat, Trim, xFormat
+    '         Function: (+2 Overloads) Split, StartsWith, StringFormat, Trim, xFormat
     ' 
     '     Structure FormatHelper
     ' 

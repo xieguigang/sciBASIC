@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1e0cad6745178b3d3d43578e66249050, Data_science\Mathematica\SignalProcessing\MachineVision\FrameData.vb"
+﻿#Region "Microsoft.VisualBasic::b4fce2a3cb6d1ec4d9600b3ca04ec831, Data_science\Mathematica\SignalProcessing\MachineVision\FrameData.vb"
 
     ' Author:
     ' 
@@ -34,12 +34,12 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 88
-    '    Code Lines: 58 (65.91%)
-    ' Comment Lines: 13 (14.77%)
+    '   Total Lines: 87
+    '    Code Lines: 58 (66.67%)
+    ' Comment Lines: 13 (14.94%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 17 (19.32%)
+    '   Blank Lines: 16 (18.39%)
     '     File Size: 2.53 KB
 
 
@@ -59,7 +59,6 @@
     '     Properties: FrameID, ObjectID, Position
     ' 
     '     Function: ToString
-    ' 
     ' 
     ' /********************************************************************************/
 
@@ -152,5 +151,3 @@ Public Class Detection
         Return obj.Position
     End Operator
 End Class
-
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5679059c5b234b04b449fb300f468d89, Microsoft.VisualBasic.Core\src\Scripting\Runtime\CType\CastStringVector.vb"
+﻿#Region "Microsoft.VisualBasic::189fa22e1c5923813be6610921666f33, Microsoft.VisualBasic.Core\src\Scripting\Runtime\CType\CastStringVector.vb"
 
     ' Author:
     ' 
@@ -34,19 +34,20 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 204
-    '    Code Lines: 96 (47.06%)
-    ' Comment Lines: 90 (44.12%)
-    '    - Xml Docs: 96.67%
+    '   Total Lines: 214
+    '    Code Lines: 100 (46.73%)
+    ' Comment Lines: 95 (44.39%)
+    '    - Xml Docs: 96.84%
     ' 
-    '   Blank Lines: 18 (8.82%)
-    '     File Size: 8.34 KB
+    '   Blank Lines: 19 (8.88%)
+    '     File Size: 8.69 KB
 
 
     '     Module CastStringVector
     ' 
     '         Function: AsBoolean, (+4 Overloads) AsCharacter, AsColor, AsDateTime, (+3 Overloads) AsDouble
-    '                   AsGeneric, AsInteger, (+2 Overloads) AsNumeric, AsSingle, AsType
+    '                   AsGeneric, AsInteger, AsLong, (+2 Overloads) AsNumeric, AsSingle
+    '                   AsType
     ' 
     ' 
     ' /********************************************************************************/

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b3c78f4b419df56217c5e51e7232f606, Data_science\Mathematica\SignalProcessing\MachineVision\Trajectory.vb"
+﻿#Region "Microsoft.VisualBasic::9f34c269e214c00436680a49e07d7ffd, Data_science\Mathematica\SignalProcessing\MachineVision\Trajectory.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 8 (16.67%)
-    '     File Size: 1.28 KB
+    '     File Size: 1.27 KB
 
 
     ' Class Trajectory
@@ -102,4 +102,3 @@ Public Class Trajectory
     End Sub
 
 End Class
-

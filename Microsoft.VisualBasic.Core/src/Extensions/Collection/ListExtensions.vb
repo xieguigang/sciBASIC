@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4117d4995955d06f42f2f581850d0eb5, Microsoft.VisualBasic.Core\src\Extensions\Collection\ListExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::94c371fad203032b59da6a80dafbf4c7, Microsoft.VisualBasic.Core\src\Extensions\Collection\ListExtensions.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 380
-    '    Code Lines: 198 (52.11%)
-    ' Comment Lines: 144 (37.89%)
+    '   Total Lines: 387
+    '    Code Lines: 203 (52.45%)
+    ' Comment Lines: 144 (37.21%)
     '    - Xml Docs: 86.81%
     ' 
-    '   Blank Lines: 38 (10.00%)
-    '     File Size: 14.00 KB
+    '   Blank Lines: 40 (10.34%)
+    '     File Size: 14.09 KB
 
 
     ' Module ListExtensions
