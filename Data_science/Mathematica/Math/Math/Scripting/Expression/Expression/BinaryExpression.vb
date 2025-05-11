@@ -64,7 +64,7 @@ Namespace Scripting.MathExpression.Impl
 
         Public ReadOnly Property left As Expression
         Public ReadOnly Property right As Expression
-        Public ReadOnly Property [operator] As Char
+        Public ReadOnly Property [operator] As String
 
         ''' <summary>
         ''' construct a new binary expression of:
@@ -78,7 +78,7 @@ Namespace Scripting.MathExpression.Impl
         ''' <param name="op">
         ''' the binary math operator
         ''' </param>
-        Sub New(left As Expression, right As Expression, op As Char)
+        Sub New(left As Expression, right As Expression, op As String)
             Me.left = left
             Me.right = right
             Me.operator = op
