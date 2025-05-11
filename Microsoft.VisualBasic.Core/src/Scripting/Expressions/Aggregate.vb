@@ -82,6 +82,15 @@ Namespace Scripting.Expressions
     End Enum
 
     ''' <summary>
+    ''' Aggregate a numeric vector as a scalar numeric value
+    ''' </summary>
+    ''' <param name="data">
+    ''' a numeric vector, should contains at least one element
+    ''' </param>
+    ''' <returns></returns>
+    Public Delegate Function IAggregate(data As IEnumerable(Of Double)) As Double
+
+    ''' <summary>
     ''' Helper module for get lambda function by scripting text
     ''' </summary>
     Public Module Aggregate

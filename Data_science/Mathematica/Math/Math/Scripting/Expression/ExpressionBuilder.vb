@@ -102,16 +102,22 @@ Namespace Scripting.MathExpression
             Dim blocks = tokens.SplitByTopLevelDelimiter(MathTokens.Operator)
 
             If blocks = 1 Then
+                ' multiple tokens
                 If blocks(Scan0).Length > 1 Then
-                    If blocks(Scan0).isFunctionInvoke Then
-                        Return blocks(Scan0).AsCallFunction
-                    Else
+                    Dim first = blocks.First
+
+                    If first.isFunctionInvoke Then
+                        Return first.AsCallFunction
+                    ElseIf first.First.name = MathTokens.Open AndAlso first.Last.name = MathTokens.Close Then
                         ' (....)
-                        tokens = blocks(Scan0)
+                        tokens = first
                         tokens = tokens.Skip(1).Take(tokens.Length - 2).ToArray
                         blocks = tokens.SplitByTopLevelDelimiter(MathTokens.Operator)
+                    Else
+
                     End If
                 Else
+                    ' single token
                     With blocks(Scan0)(Scan0)
                         Return .AsExpression
                     End With
