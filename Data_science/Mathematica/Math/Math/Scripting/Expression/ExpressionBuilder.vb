@@ -130,7 +130,7 @@ Namespace Scripting.MathExpression
             Call buf.processOperators(oplist, operatorPriority, test:=Function(op, o) op.IndexOf(o) > -1)
 
             If buf > 1 Then
-                Throw New SyntaxErrorException
+                Throw New SyntaxErrorException("the given expression token set result an invalid syntax: " & tokens.Select(Function(t) t.text).JoinBy(" "))
             Else
                 Return buf(Scan0)
             End If
