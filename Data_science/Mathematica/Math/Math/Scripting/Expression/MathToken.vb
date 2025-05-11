@@ -87,7 +87,9 @@ Namespace Scripting.MathExpression
     Public Enum MathTokens
         Invalid
         Literal
+        LogicalLiteral
         [Operator]
+        UnaryNot
         Open
         Close
         Symbol

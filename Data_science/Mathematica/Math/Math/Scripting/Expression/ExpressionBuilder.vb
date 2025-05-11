@@ -74,6 +74,8 @@ Namespace Scripting.MathExpression
                     Else
                         Return New Literal(token.text)
                     End If
+                Case MathTokens.LogicalLiteral
+                    Return New LogicalLiteral(token.text)
                 Case MathTokens.Symbol
                     Return New SymbolExpression(token.text)
                 Case MathTokens.Open, MathTokens.Close, MathTokens.Invalid, MathTokens.Operator, MathTokens.Terminator
@@ -114,7 +116,13 @@ Namespace Scripting.MathExpression
                         tokens = tokens.Skip(1).Take(tokens.Length - 2).ToArray
                         blocks = tokens.SplitByTopLevelDelimiter(MathTokens.Operator)
                     Else
-
+                        If first.First.name = MathTokens.UnaryNot Then
+                            Dim secondary = BuildExpression(first.Skip(1).ToArray)
+                            Dim unary_not As New UnaryNot With {.value = secondary}
+                            Return unary_not
+                        Else
+                            Throw New SyntaxErrorException(tokens.Select(Function(t) t.text).JoinBy(" "))
+                        End If
                     End If
                 Else
                     ' single token
