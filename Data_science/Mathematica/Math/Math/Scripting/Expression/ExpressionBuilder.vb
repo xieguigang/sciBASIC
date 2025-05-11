@@ -101,7 +101,13 @@ Namespace Scripting.MathExpression
         End Function
 
         Public Function BuildExpression(tokens As MathToken()) As Expression
-            Dim blocks = tokens.SplitByTopLevelDelimiter(MathTokens.Operator)
+            Dim blocks As List(Of MathToken())
+
+            If tokens.Length = 1 Then
+                Return tokens.First.AsExpression
+            Else
+                blocks = tokens.SplitByTopLevelDelimiter(MathTokens.Operator)
+            End If
 
             If blocks = 1 Then
                 ' multiple tokens
