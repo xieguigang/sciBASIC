@@ -153,7 +153,13 @@ Namespace Scripting.MathExpression
             End If
 
             If Char.IsLetter(text.First) Then
-                Return New MathToken(MathTokens.Symbol, text)
+                If text.TextEquals("not") Then
+                    Return New MathToken(MathTokens.UnaryNot, "!")
+                ElseIf IsBooleanFactor(text, False) Then
+                    Return New MathToken(MathTokens.LogicalLiteral, text)
+                Else
+                    Return New MathToken(MathTokens.Symbol, text)
+                End If
             ElseIf text.IsNumeric Then
                 Return New MathToken(MathTokens.Literal, text)
             ElseIf text.Last = "!"c AndAlso Mid(text, 1, text.Length - 1).IsNumeric() Then
