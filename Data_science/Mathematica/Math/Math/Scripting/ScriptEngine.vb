@@ -198,10 +198,12 @@ Namespace Scripting
 
         Public Function ParseExpression(expression As String, Optional throwEx As Boolean = True) As Expression
             Try
-                Return New ExpressionTokenIcer(expression) _
+                Dim tokenSet = New ExpressionTokenIcer(expression) _
                     .GetTokens _
-                    .ToArray _
-                    .DoCall(AddressOf ExpressionBuilder.BuildExpression)
+                    .ToArray
+                Dim exp As Expression = ExpressionBuilder.BuildExpression(tokenSet)
+
+                Return exp
             Catch ex As Exception
                 Call App.LogException(New Exception(expression, ex))
                 Return Nothing
