@@ -67,7 +67,7 @@ Namespace Symbolic
         ''' <param name="right"></param>
         ''' <param name="bin">the math binary operator</param>
         ''' <returns></returns>
-        Private Function makeSimple(left As Literal, right As Expression, bin As Char) As Expression
+        Private Function makeSimple(left As Literal, right As Expression, bin As String) As Expression
             If bin = "*"c Then
                 If left = 0 Then
                     Return Literal.Zero
@@ -89,7 +89,7 @@ Namespace Symbolic
             Return New BinaryExpression(left, right, bin)
         End Function
 
-        Private Function makeSimple(left As Expression, right As Literal, bin As Char) As Expression
+        Private Function makeSimple(left As Expression, right As Literal, bin As String) As Expression
             If bin = "+"c OrElse bin = "*"c Then
                 ' 加法与乘法可以交换位置
                 Return makeSimple(New BinaryExpression(right, left, bin))
