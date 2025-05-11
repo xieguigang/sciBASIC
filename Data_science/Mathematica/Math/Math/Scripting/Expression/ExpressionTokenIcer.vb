@@ -194,6 +194,8 @@ Namespace Scripting.MathExpression
                 Return New MathToken(MathTokens.Close, ")")
             ElseIf text = ";" Then
                 Return New MathToken(MathTokens.Terminator, ";")
+            ElseIf text = "<" OrElse text = ">" Then
+                Return New MathToken(MathTokens.Operator, text)
             Else
                 Throw New NotImplementedException(text)
             End If

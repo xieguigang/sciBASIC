@@ -63,7 +63,7 @@ Namespace Scripting.MathExpression
 
     Public Module ExpressionBuilder
 
-        ReadOnly operatorPriority As String() = {"^", "*/%", "+-"}
+        ReadOnly operatorPriority As String() = {"^", "*/%", "+-", "<>"}
 
         <Extension>
         Private Function AsExpression(token As MathToken) As Expression
