@@ -56,7 +56,7 @@
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.DataMining.DecisionTree.Data
 Imports Microsoft.VisualBasic.Math.Information
-Imports stdNum = System.Math
+Imports std = System.Math
 
 Namespace DecisionTree
 
@@ -196,7 +196,7 @@ Namespace DecisionTree
                 If firstDivision = 0.0 OrElse secondDivision = 0.0 Then
                     stepsForCalculation.Add(0.0)
                 Else
-                    stepsForCalculation.Add(-firstDivision * stdNum.Log(firstDivision, 2) - secondDivision * stdNum.Log(secondDivision, 2))
+                    stepsForCalculation.Add(-firstDivision * std.Log(firstDivision, 2) - secondDivision * std.Log(secondDivision, 2))
                 End If
             Next
 
