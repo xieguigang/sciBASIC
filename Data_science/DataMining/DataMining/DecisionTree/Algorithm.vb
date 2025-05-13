@@ -182,6 +182,15 @@ Namespace DecisionTree
             End If
         End Function
 
+        ''' <summary>
+        ''' information Gain
+        ''' </summary>
+        ''' <param name="data"></param>
+        ''' <param name="colIndex"></param>
+        ''' <param name="entropyOfDataset">
+        ''' the total information entropy for entire dataset
+        ''' </param>
+        ''' <returns></returns>
         Private Function GetGainForAllAttributes(data As DataTable, colIndex As Integer, entropyOfDataset As Double) As Double
             Dim totalRows = data.rows.Length
             Dim amountForDifferentValue = GetAmountOfEdgesAndTotalPositivResults(data, colIndex)
