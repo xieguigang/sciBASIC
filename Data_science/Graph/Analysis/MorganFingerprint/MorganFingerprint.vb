@@ -159,6 +159,43 @@ Namespace Analysis.MorganFingerprint
         Protected MustOverride Function HashAtom(v As V) As ULong
         Protected MustOverride Function HashEdge(atoms As V(), e As E, flip As Boolean) As ULong
 
+        ''' <summary>
+        ''' A helper function for create hashcode of the string label in the graph
+        ''' </summary>
+        ''' <param name="key"></param>
+        ''' <returns></returns>
+        ''' <remarks>
+        ''' 在 .NET 中，字符串的 `GetHashCode()` 方法返回的哈希值**并不能保证在不同时间、操作系统或硬件上保持一致**。以下是具体原因和背景分析：
+        '''
+        ''' ---
+        ''' 
+        ''' ### 1. **实现依赖性与版本差异**
+        ''' - **不同 .NET 版本可能生成不同的哈希值**  
+        '''   微软明确声明，`GetHashCode()` 的实现可能因公共语言运行时（CLR）的版本变化而调整，例如从 .NET Framework 4.x 到 .NET Core 或 .NET 5+ 的升级。这种调整可能是出于性能优化或哈希分布均匀性的考虑。
+        '''   
+        ''' - **哈希随机化（.NET Core 2.1+）**  
+        '''   从 .NET Core 2.1 开始，默认启用了哈希随机化机制，即使同一程序在不同时间运行，同一字符串的哈希值也可能不同。此设计旨在防止哈希碰撞攻击，增强安全性。
+        ''' 
+        ''' ---
+        ''' 
+        ''' ### 2. **跨操作系统与硬件的差异**
+        ''' - **操作系统的影响**  
+        '''   .NET 的不同运行时（如 .NET Framework 仅支持 Windows，而 .NET Core 支持跨平台）在实现哈希算法时可能采用不同策略。例如，Windows 和 Linux 上的哈希计算结果可能不一致。
+        ''' 
+        ''' - **硬件架构的差异**  
+        '''   32 位与 64 位系统的内存寻址方式不同，可能影响 `GetHashCode()` 的默认行为（如对象地址计算）。此外，CPU 架构（x86/x64/ARM）也可能导致哈希值差异。
+        ''' 
+        ''' ---
+        ''' 
+        ''' ### 3. **设计原则与使用场景限制**
+        ''' - **仅保证同一进程内的唯一性**  
+        '''   `GetHashCode()` 的主要设计目标是支持哈希表等数据结构的高效查找，其核心保证是：**在同一进程的同一执行周期内，相同内容的字符串返回相同的哈希值**。但跨进程、跨机器或持久化存储时，这一保证失效。
+        ''' 
+        ''' - **哈希冲突的可能性**  
+        '''   即使在同一环境中，不同字符串可能生成相同的哈希值（哈希碰撞）。例如，字符串 `"FB"` 和 `"Ea"` 在某些情况下哈希值相同。
+        ''' 
+        ''' ---
+        ''' </remarks>
         Public Shared Function HashLabelKey(key As String) As ULong
             Static hashcodes As New Dictionary(Of String, ULong)
 
