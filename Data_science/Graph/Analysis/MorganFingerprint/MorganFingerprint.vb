@@ -1,61 +1,63 @@
 ﻿#Region "Microsoft.VisualBasic::03f5b851cae2f0fa752904a95c00a0a3, Data_science\Graph\Analysis\MorganFingerprint\MorganFingerprint.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 104
-    '    Code Lines: 39 (37.50%)
-    ' Comment Lines: 50 (48.08%)
-    '    - Xml Docs: 76.00%
-    ' 
-    '   Blank Lines: 15 (14.42%)
-    '     File Size: 5.22 KB
+' Summaries:
 
 
-    '     Class GraphMorganFingerprint
-    ' 
-    '         Properties: FingerprintLength
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    '         Function: CalculateFingerprint, CalculateFingerprintCheckSum
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 104
+'    Code Lines: 39 (37.50%)
+' Comment Lines: 50 (48.08%)
+'    - Xml Docs: 76.00%
+' 
+'   Blank Lines: 15 (14.42%)
+'     File Size: 5.22 KB
+
+
+'     Class GraphMorganFingerprint
+' 
+'         Properties: FingerprintLength
+' 
+'         Constructor: (+1 Overloads) Sub New
+'         Function: CalculateFingerprint, CalculateFingerprintCheckSum
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
+Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Data.GraphTheory.Network
+Imports Microsoft.VisualBasic.Math.HashMaps
 
 Namespace Analysis.MorganFingerprint
 
@@ -154,8 +156,23 @@ Namespace Analysis.MorganFingerprint
             Return fingerprint
         End Function
 
-        Protected MustOverride Function HashAtom(v As V) As Integer
+        Protected MustOverride Function HashAtom(v As V) As ULong
         Protected MustOverride Function HashEdge(atoms As V(), e As E, flip As Boolean) As ULong
 
+        Public Shared Function HashLabelKey(key As String) As ULong
+            Static hashcodes As New Dictionary(Of String, ULong)
+
+            Return hashcodes.ComputeIfAbsent(
+                key,
+                lazyValue:=Function(k)
+                               Dim hashcode As ULong = 0
+
+                               For Each c As Char In k
+                                   hashcode = HashMap.HashCodePair(hashcode, CULng(Asc(c)))
+                               Next
+
+                               Return hashcode
+                           End Function)
+        End Function
     End Class
 End Namespace
