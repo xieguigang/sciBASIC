@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fc4eee75828a699aad79cd31aebf2652, Data_science\Mathematica\Math\MathLambda\Symbolic\MakeSimplify.vb"
+﻿#Region "Microsoft.VisualBasic::6e6f0699cbf5758746794529070eceae, Data_science\Mathematica\Math\MathLambda\Symbolic\MakeSimplify.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 63.64%
     ' 
     '   Blank Lines: 19 (12.26%)
-    '     File Size: 6.51 KB
+    '     File Size: 6.52 KB
 
 
     '     Module MakeSimplify

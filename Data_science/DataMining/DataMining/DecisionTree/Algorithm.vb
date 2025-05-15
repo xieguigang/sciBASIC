@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::22da49f39ae25ec04eaa6a22f7b4bc2b, Data_science\DataMining\DataMining\DecisionTree\Algorithm.vb"
+﻿#Region "Microsoft.VisualBasic::a73da611bbf58801f66f8c9a11652ca1, Data_science\DataMining\DataMining\DecisionTree\Algorithm.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 213
-    '    Code Lines: 148 (69.48%)
-    ' Comment Lines: 25 (11.74%)
-    '    - Xml Docs: 36.00%
+    '   Total Lines: 222
+    '    Code Lines: 148 (66.67%)
+    ' Comment Lines: 34 (15.32%)
+    '    - Xml Docs: 52.94%
     ' 
-    '   Blank Lines: 40 (18.78%)
-    '     File Size: 8.99 KB
+    '   Blank Lines: 40 (18.02%)
+    '     File Size: 9.31 KB
 
 
     '     Module Algorithm

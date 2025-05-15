@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5a56d9f35d19893a98687b5d45e04062, Data_science\DataMining\hierarchical-clustering\hierarchical-clustering\BIRCH\CFEntry.vb"
+﻿#Region "Microsoft.VisualBasic::22c6cd4ab21ecb1ca958412a3f5a80d8, Data_science\DataMining\hierarchical-clustering\hierarchical-clustering\BIRCH\CFEntry.vb"
 
     ' Author:
     ' 
@@ -419,4 +419,3 @@ Namespace BIRCH
     End Class
 
 End Namespace
-

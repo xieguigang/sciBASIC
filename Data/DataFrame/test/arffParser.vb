@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8676e3f6153085af7f6b150342283e62, Data\DataFrame\test\arffParser.vb"
+﻿#Region "Microsoft.VisualBasic::d5eabb9ffbba4ce8b04a22d00aaecf52, Data\DataFrame\test\arffParser.vb"
 
     ' Author:
     ' 
@@ -93,4 +93,3 @@ Module arffParser
         Pause()
     End Sub
 End Module
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::88b44d586d7984c7607e29dfd711e503, Data_science\DataMining\hierarchical-clustering\hierarchical-clustering\BIRCH\CFNode.vb"
+﻿#Region "Microsoft.VisualBasic::c61119da25805db77f760bbdd56ab298, Data_science\DataMining\hierarchical-clustering\hierarchical-clustering\BIRCH\CFNode.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 45.00%
     ' 
     '   Blank Lines: 100 (16.45%)
-    '     File Size: 25.14 KB
+    '     File Size: 25.13 KB
 
 
     '     Class CFNode
@@ -670,4 +670,3 @@ Namespace BIRCH
     End Class
 
 End Namespace
-

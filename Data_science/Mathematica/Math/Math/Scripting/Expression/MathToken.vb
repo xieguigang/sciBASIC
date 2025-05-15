@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5968315bd5c118d751d8be8d8f064109, Data_science\Mathematica\Math\Math\Scripting\Expression\MathToken.vb"
+﻿#Region "Microsoft.VisualBasic::94fffb6118695820a03f44339dc9c9a0, Data_science\Mathematica\Math\Math\Scripting\Expression\MathToken.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 32
-    '    Code Lines: 23 (71.88%)
-    ' Comment Lines: 4 (12.50%)
+    '   Total Lines: 34
+    '    Code Lines: 25 (73.53%)
+    ' Comment Lines: 4 (11.76%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 5 (15.62%)
-    '     File Size: 780 B
+    '   Blank Lines: 5 (14.71%)
+    '     File Size: 822 B
 
 
     '     Class MathToken
@@ -52,7 +52,7 @@
     '     Enum MathTokens
     ' 
     '         [Operator], Close, Comma, Invalid, Literal
-    '         Open, Symbol, Terminator
+    '         LogicalLiteral, Open, Symbol, Terminator, UnaryNot
     ' 
     '  
     ' 
