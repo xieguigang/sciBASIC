@@ -156,6 +156,10 @@ Namespace Text.Similarity
                                             Optional ByRef dist As DistResult = Nothing,
                                             Optional strlen_diff As Boolean = True,
                                             Optional checkChar As GenericLambda(Of Char).IEquals = Nothing) As Double
+
+            If s1 Is Nothing OrElse s2 Is Nothing Then
+                Return 0
+            End If
             If ignoreCase Then
                 s1 = s1.ToLower
                 s2 = s2.ToLower
