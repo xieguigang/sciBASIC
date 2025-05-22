@@ -85,7 +85,7 @@ Namespace Parallel
         ''' <summary>
         ''' Writer Thread ☺
         ''' </summary>
-        Dim myThread As New Thread(AddressOf exeQueue)
+        Dim xThread As New Thread(AddressOf ExecQueue)
 
         ''' <summary>
         ''' Is thread running?
@@ -106,7 +106,11 @@ Namespace Parallel
 
         Public Property lockQueue As Boolean = False
 
-        Public ReadOnly Property runningTask As Action
+        ''' <summary>
+        ''' get the task that is running now.
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property RunningTask As Action
 
         Sub New()
             QSolverRunning = False
@@ -124,17 +128,17 @@ Namespace Parallel
             If MultiThreadSupport Then
                 ' 只需要将任务添加到队列之中就行了
                 SyncLock dummy
-                    If Not myThread.IsAlive Then
+                    If Not xThread.IsAlive Then
                         QSolverRunning = False
-                        myThread = New Thread(AddressOf exeQueue)
 
-                        myThread.Name = "xConsole · Multi-Thread Writer"
-                        myThread.Start()
+                        xThread = New Thread(AddressOf ExecQueue)
+                        xThread.Name = "Multi-Thread Worker"
+                        xThread.Start()
                     End If
                 End SyncLock
             Else
                 ' 等待线程任务的执行完毕
-                exeQueue()
+                Call ExecQueue()
             End If
         End Sub
 
@@ -150,19 +154,22 @@ Namespace Parallel
         ''' <summary>
         ''' Execute the queue list
         ''' </summary>
-        Private Sub exeQueue()
+        Private Sub ExecQueue()
             QSolverRunning = True
 
             While queue IsNot Nothing AndAlso queue.Count > 0
                 Call Thread.MemoryBarrier()
-                Call tickLoop()
+                Call ThreadLoop()
             End While
 
             QSolverRunning = False
         End Sub
 
-        Private Sub tickLoop()
-            While True
+        ''' <summary>
+        ''' running all task inside current <see cref="queue"/>
+        ''' </summary>
+        Private Sub ThreadLoop()
+            While App.Running
                 If lockQueue Then
                     Continue While
                 End If
@@ -171,12 +178,12 @@ Namespace Parallel
                     If queue.Count = 0 Then
                         Exit While
                     Else
-                        _runningTask = queue.Dequeue()
+                        _RunningTask = queue.Dequeue()
                     End If
                 End SyncLock
 
-                If _runningTask IsNot Nothing Then
-                    Call _runningTask()
+                If _RunningTask IsNot Nothing Then
+                    Call _RunningTask()
                 End If
             End While
         End Sub
