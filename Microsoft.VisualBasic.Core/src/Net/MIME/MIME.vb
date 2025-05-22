@@ -133,8 +133,10 @@ Namespace Net.Protocols.ContentTypes
                 Yield group.First
             Next
 
+            ' add exteneded content types
             Yield New ContentType With {.Details = "Deep Zoom Image", .FileExt = ".dzi", .MIMEType = "application/xml", .Name = "Deep Zoom Image"}
             Yield New ContentType With {.Details = "Jpeg image", .FileExt = ".jpeg", .MIMEType = "image/jpeg", .Name = "Jpeg image"}
+            Yield New ContentType With {.Details = "ECMAScript Module JavaScript", .FileExt = ".mjs", .MIMEType = "application/javascript", .Name = "ECMAScript Module"}
         End Function
 
         <Extension>
