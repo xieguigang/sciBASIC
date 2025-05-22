@@ -65,8 +65,11 @@ Namespace Parallel.Threads
         ''' Run parallel task
         ''' </summary>
         ''' <param name="tasks"></param>
+        ''' <remarks>
+        ''' run tasks in batch mode based on the <see cref="ParallelTask.Run(Action)"/>
+        ''' </remarks>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Shared Sub execute(tasks As IEnumerable(Of ThreadStart))
+        Public Shared Sub Execute(tasks As IEnumerable(Of ThreadStart))
             Dim pool As New List(Of Task)
 
             For Each task As ThreadStart In tasks
