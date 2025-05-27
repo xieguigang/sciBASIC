@@ -126,6 +126,9 @@ Namespace Drawing2D.Colors.Scaler
                     Else
                         valueRange = New Double() {minX, maxX}
                     End If
+                Else
+                    ' default value range
+                    valueRange = New Double() {0.0, 1.0}
                 End If
 
                 Me.logarithm = logarithm
