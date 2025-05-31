@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::61ef84a4215a8c51da705693dea2eec4, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Colors\Scaler\Mapper\ValueScaleColorProfile.vb"
+﻿#Region "Microsoft.VisualBasic::0fbb75fd8577fd19e5bd2cc0d09db446, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Colors\Scaler\Mapper\ValueScaleColorProfile.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 140
-    '    Code Lines: 84 (60.00%)
-    ' Comment Lines: 33 (23.57%)
-    '    - Xml Docs: 93.94%
+    '   Total Lines: 143
+    '    Code Lines: 86 (60.14%)
+    ' Comment Lines: 34 (23.78%)
+    '    - Xml Docs: 91.18%
     ' 
-    '   Blank Lines: 23 (16.43%)
-    '     File Size: 5.64 KB
+    '   Blank Lines: 23 (16.08%)
+    '     File Size: 5.76 KB
 
 
     '     Class ValueScaleColorProfile

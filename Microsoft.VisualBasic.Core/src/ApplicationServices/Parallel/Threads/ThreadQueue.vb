@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6002e87336e9a12b2362ef4312cfbe9a, Microsoft.VisualBasic.Core\src\ApplicationServices\Parallel\Threads\ThreadQueue.vb"
+﻿#Region "Microsoft.VisualBasic::45c27d54b350ff978293a280495b58c3, Microsoft.VisualBasic.Core\src\ApplicationServices\Parallel\Threads\ThreadQueue.vb"
 
     ' Author:
     ' 
@@ -34,24 +34,24 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 163
-    '    Code Lines: 88 (53.99%)
-    ' Comment Lines: 49 (30.06%)
-    '    - Xml Docs: 67.35%
+    '   Total Lines: 170
+    '    Code Lines: 88 (51.76%)
+    ' Comment Lines: 56 (32.94%)
+    '    - Xml Docs: 71.43%
     ' 
-    '   Blank Lines: 26 (15.95%)
-    '     File Size: 5.28 KB
+    '   Blank Lines: 26 (15.29%)
+    '     File Size: 5.52 KB
 
 
     '     Class ThreadQueue
     ' 
-    '         Properties: lockQueue, MultiThreadSupport, runningTask, Sleep
+    '         Properties: lockQueue, MultiThreadSupport, RunningTask, Sleep
     ' 
     '         Constructor: (+1 Overloads) Sub New
     ' 
     '         Function: GetPendingTasks
     ' 
-    '         Sub: AddToQueue, (+2 Overloads) Dispose, exeQueue, tickLoop, WaitQueue
+    '         Sub: AddToQueue, (+2 Overloads) Dispose, ExecQueue, ThreadLoop, WaitQueue
     ' 
     ' 
     ' /********************************************************************************/

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4918c7bf439bbd107371a1034e61fb7c, Microsoft.VisualBasic.Core\src\Extensions\IO\Extensions\PathExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::704af2d0fe7b5156b9d9e0b769821a09, Microsoft.VisualBasic.Core\src\Extensions\IO\Extensions\PathExtensions.vb"
 
     ' Author:
     ' 
@@ -34,24 +34,25 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 1087
-    '    Code Lines: 614 (56.49%)
-    ' Comment Lines: 358 (32.93%)
-    '    - Xml Docs: 83.24%
+    '   Total Lines: 1107
+    '    Code Lines: 620 (56.01%)
+    ' Comment Lines: 370 (33.42%)
+    '    - Xml Docs: 83.78%
     ' 
-    '   Blank Lines: 115 (10.58%)
-    '     File Size: 42.78 KB
+    '   Blank Lines: 117 (10.57%)
+    '     File Size: 43.48 KB
 
 
     ' Module PathExtensions
     ' 
-    '     Function: BaseName, ChangeSuffix, DeleteFile, DIR, DirectoryExists
-    '               DirectoryName, EnumerateFiles, (+2 Overloads) ExtensionSuffix, FileCopy, FileExists
-    '               FileLength, FileMove, FileName, FileOpened, GetDirectoryFullPath
-    '               GetFullPath, ListDirectory, ListFiles, Long2Short, MakeDir
-    '               (+2 Overloads) NormalizePathString, ParentDirName, ParentPath, PathCombine, PathIllegal
-    '               ReadDirectory, (+2 Overloads) RelativePath, SafeCopyTo, SplitPath, TheFile
-    '               ToDIR_URL, ToFileURL, TrimDIR, TrimSuffix, UnixPath
+    '     Function: BaseName, ChangeSuffix, CheckUNCNetworkPath, DeleteFile, DIR
+    '               DirectoryExists, DirectoryName, EnumerateFiles, (+2 Overloads) ExtensionSuffix, FileCopy
+    '               FileExists, FileLength, FileMove, FileName, FileOpened
+    '               GetDirectoryFullPath, GetFullPath, ListDirectory, ListFiles, Long2Short
+    '               MakeDir, (+2 Overloads) NormalizePathString, ParentDirName, ParentPath, PathCombine
+    '               PathIllegal, ReadDirectory, (+2 Overloads) RelativePath, SafeCopyTo, SplitPath
+    '               TheFile, ToDIR_URL, ToFileURL, TrimDIR, TrimSuffix
+    '               UnixPath
     ' 
     ' /********************************************************************************/
 
