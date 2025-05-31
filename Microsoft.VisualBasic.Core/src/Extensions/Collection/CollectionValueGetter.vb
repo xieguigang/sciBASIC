@@ -327,9 +327,11 @@ Public Module CollectionValueGetter
     ''' <typeparam name="TKey"></typeparam>
     ''' <typeparam name="TValue"></typeparam>
     ''' <param name="table"></param>
-    ''' <param name="keys"></param>
+    ''' <param name="keys">
+    ''' the synonym keys
+    ''' </param>
     ''' <param name="default"></param>
-    ''' <returns></returns>
+    ''' <returns>returns the key-value which is matched with any input synonym <paramref name="keys"/>.</returns>
     <Extension>
     Public Function TryGetValue(Of TKey, TValue)(table As Dictionary(Of TKey, TValue),
                                                  keys As TKey(),
@@ -351,6 +353,7 @@ Public Module CollectionValueGetter
 #End If
             Return [default]
         Else
+            ' scan the synonym keys
             For Each key As TKey In keys
                 If table.ContainsKey(key) Then
                     Return table(key)
