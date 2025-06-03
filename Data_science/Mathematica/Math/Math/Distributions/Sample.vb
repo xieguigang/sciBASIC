@@ -130,8 +130,15 @@ Namespace Distributions
         ''' </summary>
         ''' <param name="data">the raw data matrix column data</param>
         ''' <param name="estimateQuantile"></param>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Sub New(data As IEnumerable(Of Double), Optional estimateQuantile As Boolean = True)
             Call Me.New(data.SafeQuery.ToArray, estimateQuantile)
+        End Sub
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Sub New(data As IEnumerable(Of Single), Optional estimateQuantile As Boolean = True)
+            Call Me.New(data.SafeQuery.Select(Function(f) CDbl(f)).ToArray, estimateQuantile)
         End Sub
 
         ''' <summary>
