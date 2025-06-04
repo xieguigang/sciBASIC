@@ -91,7 +91,7 @@ Namespace ApplicationServices
         ''' <summary>
         ''' Get a node by its key name in current tree node
         ''' </summary>
-        ''' <param name="name"></param>
+        ''' <param name="name">the file node name in current tree node</param>
         ''' <returns>
         ''' returns nothing if the file with given <paramref name="name"/> was could not be found
         ''' </returns>
@@ -117,7 +117,7 @@ Namespace ApplicationServices
         ''' <summary>
         ''' absolute full path
         ''' </summary>
-        ''' <returns></returns>
+        ''' <returns>the value of <see cref="FullName"/> property data</returns>
         Public Overrides Function ToString() As String
             Return FullName
         End Function

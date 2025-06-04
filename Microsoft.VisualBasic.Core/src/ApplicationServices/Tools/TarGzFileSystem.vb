@@ -1,61 +1,61 @@
 ﻿#Region "Microsoft.VisualBasic::b9d8f02c1534b9f6ec4398b5c9f8bb28, Microsoft.VisualBasic.Core\src\ApplicationServices\Tools\TarGzFileSystem.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 136
-    '    Code Lines: 102 (75.00%)
-    ' Comment Lines: 1 (0.74%)
-    '    - Xml Docs: 0.00%
-    ' 
-    '   Blank Lines: 33 (24.26%)
-    '     File Size: 4.98 KB
+' Summaries:
 
 
-    '     Class TarGzFileSystem
-    ' 
-    '         Properties: [readonly]
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    ' 
-    '         Function: CheckVirtualEntry, DeleteFile, FileExists, FileModifyTime, FileSize
-    '                   GetFiles, GetFullPath, OpenFile, ReadAllText, WriteText
-    ' 
-    '         Sub: Close, Flush
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 136
+'    Code Lines: 102 (75.00%)
+' Comment Lines: 1 (0.74%)
+'    - Xml Docs: 0.00%
+' 
+'   Blank Lines: 33 (24.26%)
+'     File Size: 4.98 KB
+
+
+'     Class TarGzFileSystem
+' 
+'         Properties: [readonly]
+' 
+'         Constructor: (+1 Overloads) Sub New
+' 
+'         Function: CheckVirtualEntry, DeleteFile, FileExists, FileModifyTime, FileSize
+'                   GetFiles, GetFullPath, OpenFile, ReadAllText, WriteText
+' 
+'         Sub: Close, Flush
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -64,6 +64,7 @@ Imports System.IO
 Imports System.IO.Compression
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Language.UnixBash
 Imports Microsoft.VisualBasic.Linq
 
 Namespace ApplicationServices
@@ -134,7 +135,6 @@ Namespace ApplicationServices
         End Function
 
         Public Function FileExists(path As String, Optional ZERO_Nonexists As Boolean = False) As Boolean Implements IFileSystemEnvironment.FileExists
-
             Dim entry As FileSystemTree = tree.GetFile(path)
 
             If entry Is Nothing Then
@@ -166,8 +166,13 @@ Namespace ApplicationServices
             End If
         End Function
 
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="filename">the relative file path of the target file/folder</param>
+        ''' <returns></returns>
         Public Function GetFullPath(filename As String) As String Implements IFileSystemEnvironment.GetFullPath
-            Dim entry As FileSystemTree = tree.GetFile(filename)
+            Dim entry As FileSystemTree = FileSystemTree.GetFile(tree, filename)
 
             If entry Is Nothing Then
                 Return Nothing
@@ -190,6 +195,40 @@ Namespace ApplicationServices
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function GetFiles() As IEnumerable(Of String) Implements IFileSystemEnvironment.GetFiles
             Return tree.AsEnumerable
+        End Function
+
+        Public Function GetFiles(subdir As String, ParamArray exts() As String) As IEnumerable(Of String) Implements IFileSystemEnvironment.GetFiles
+            Dim entry As FileSystemTree = FileSystemTree.GetFile(tree, subdir)
+
+            ' virtual folder is not existsed
+            If entry Is Nothing Then
+                Return New String() {}
+            End If
+
+            With ls - ShellSyntax.wildcards(exts)
+                Dim filter As Func(Of String, Boolean) = .MakeFilter
+                Dim subset As IEnumerable(Of String) = entry.AsEnumerable.Where(filter)
+
+                Return subset
+            End With
+        End Function
+
+        Public Function EnumerateFiles(subdir As String, ParamArray exts() As String) As IEnumerable(Of String) Implements IFileSystemEnvironment.EnumerateFiles
+            Dim entry As FileSystemTree = FileSystemTree.GetFile(tree, subdir)
+
+            ' virtual folder is not existsed
+            If entry Is Nothing Then
+                Return New String() {}
+            End If
+
+            With ls - ShellSyntax.wildcards(exts)
+                Dim filter As Func(Of String, Boolean) = .MakeFilter
+                Dim subset As IEnumerable(Of String) = From file As FileSystemTree
+                                                       In entry.Files.Values
+                                                       Where filter(file.Name)
+                                                       Select file.FullName
+                Return subset
+            End With
         End Function
     End Class
 #End If
