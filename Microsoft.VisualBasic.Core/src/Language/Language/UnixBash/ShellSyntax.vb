@@ -69,7 +69,12 @@ Namespace Language.UnixBash
         ''' ``ls -l -ext("*.xml") &lt;= DIR``,  The filesystem search proxy
         ''' </summary>
         ''' <returns></returns>
-        Public ReadOnly Property ls As New Search
+        Public ReadOnly Property ls As Search
+            Get
+                Return New Search
+            End Get
+        End Property
+
         ''' <summary>
         ''' Long name(DIR+fiename), if not only file name.
         ''' </summary>

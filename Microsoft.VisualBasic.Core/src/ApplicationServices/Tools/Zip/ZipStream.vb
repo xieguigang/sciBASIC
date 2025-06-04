@@ -62,6 +62,7 @@
 
 Imports System.IO
 Imports System.IO.Compression
+Imports Microsoft.VisualBasic.Language.UnixBash
 
 Namespace ApplicationServices.Zip
 
@@ -228,7 +229,7 @@ Namespace ApplicationServices.Zip
         End Function
 
         Public Function GetFullPath(filename As String) As String Implements IFileSystemEnvironment.GetFullPath
-            Return "/" & filename
+            Return ("/" & filename.Replace("\"c, "/"c)).StringReplace("/{2,}", "/")
         End Function
 
         Public Function WriteText(text As String, path As String) As Boolean Implements IFileSystemEnvironment.WriteText
@@ -291,6 +292,39 @@ Namespace ApplicationServices.Zip
 
         Public Function FileModifyTime(path As String) As Date Implements IFileSystemEnvironment.FileModifyTime
             Return Nothing
+        End Function
+
+        Public Function GetFiles(subdir As String, ParamArray exts() As String) As IEnumerable(Of String) Implements IFileSystemEnvironment.GetFiles
+            With ls - ShellSyntax.wildcards(exts)
+                Dim filter As Func(Of String, Boolean) = .MakeFilter
+                Dim fullpath As String = GetFullPath(subdir)
+                Dim subset As IEnumerable(Of String) = GetFiles() _
+                    .Select(Function(file) GetFullPath(file)) _
+                    .Where(Function(file) file.StartsWith(fullpath)) _
+                    .Where(filter)
+
+                Return subset
+            End With
+        End Function
+
+        Public Function EnumerateFiles(subdir As String, ParamArray exts() As String) As IEnumerable(Of String) Implements IFileSystemEnvironment.EnumerateFiles
+            Dim fullpath As String = GetFullPath(subdir)
+            Dim nsize As Integer = fullpath.Split("/"c).Length
+            Dim folderFiles = GetFiles _
+                .Select(Function(file) GetFullPath(file)) _
+                .Where(Function(file) file.StartsWith(fullpath)) _
+                .Where(Function(file)
+                           Dim nsize2 As Integer = file.Split("/"c).Length
+                           Dim test As Boolean = nsize2 - 1 = nsize
+                           Return test
+                       End Function)
+
+            With ls - ShellSyntax.wildcards(exts)
+                Dim filter As Func(Of String, Boolean) = .MakeFilter
+                Dim subset As IEnumerable(Of String) = folderFiles.Where(filter)
+
+                Return subset
+            End With
         End Function
     End Class
 End Namespace
