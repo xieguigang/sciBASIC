@@ -223,6 +223,7 @@ Namespace ApplicationServices
 
             With ls - ShellSyntax.wildcards(exts)
                 Dim filter As Func(Of String, Boolean) = .MakeFilter
+                ' only scan current filesystem node
                 Dim subset As IEnumerable(Of String) = From file As FileSystemTree
                                                        In entry.Files.Values
                                                        Where filter(file.Name)
