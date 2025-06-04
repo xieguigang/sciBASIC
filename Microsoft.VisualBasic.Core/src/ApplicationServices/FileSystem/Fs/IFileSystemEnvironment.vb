@@ -137,6 +137,20 @@ Namespace ApplicationServices
         ''' be careful when running this on local filesystem object!
         ''' </remarks>
         Function GetFiles() As IEnumerable(Of String)
+        ''' <summary>
+        ''' get all files inside a specific subfolder recursivly
+        ''' </summary>
+        ''' <param name="subdir">relative path of the subfolder in current workspace</param>
+        ''' <param name="exts">file extension type wildcard filters for the files, default is ``*.*``</param>
+        ''' <returns></returns>
+        Function GetFiles(subdir As String, ParamArray exts As String()) As IEnumerable(Of String)
+        ''' <summary>
+        ''' get all files inside a specific subfolder, not recursivly
+        ''' </summary>
+        ''' <param name="subdir">relative path of the subfolder in current workspace</param>
+        ''' <param name="exts">file extension type wildcard filters for the files, default is ``*.*``</param>
+        ''' <returns></returns>
+        Function EnumerateFiles(subdir As String, ParamArray exts As String()) As IEnumerable(Of String)
 
         ''' <summary>
         ''' close current filesystem session
