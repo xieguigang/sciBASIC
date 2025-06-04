@@ -118,10 +118,15 @@ Namespace Imaging
         ''' 
         <DebuggerStepThrough>
         <Extension>
-        Public Function ToHtmlColor(color As Color) As String
+        Public Function ToHtmlColor(color As Color, Optional allowTransparent As Boolean = False) As String
             'Dim RGBValue As Integer = color.ToArgb
             'Dim HexValue = DeciamlToHexadeciaml(RGBValue)
             'Return HexValue
+            If allowTransparent AndAlso color.IsTransparent Then
+                Return NameOf(color.Transparent)
+            End If
+
+            ' no transparent in html #rgb color
             Dim colorString$ = String.Format("#{0:X2}{1:X2}{2:X2}", color.R, color.G, color.B)
             Return colorString
         End Function
