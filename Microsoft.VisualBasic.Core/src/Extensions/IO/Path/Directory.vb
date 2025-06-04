@@ -150,12 +150,26 @@ Namespace FileIO
             ' the local filesystem(win/unix) and the http filesystem, the file
             ' path may start with / prefix, then check on unix environment will
             ' always be treated as absolute path, this may cased the problem on
-            ' linux environment, so disable for check unix environment at here
+            ' linux environment, so disable for check unix environment at here.
+            '
+            ' so file path input like /file will not be treated as the absolute
+            ' file path on linux platform
             If Not IsAbsolutePath(file, checkUnix:=False) Then
                 file = $"{folder}/{file}"
             End If
 
-            file = FileSystem.GetFileInfo(file).FullName
+            If FileSystem.FileExists(file) Then
+                With FileSystem.GetFileInfo(file)
+                    file = .FullName
+                End With
+            ElseIf file.ExtensionSuffix.StringEmpty(, True) Then
+                ' is directory?
+                file = file.GetDirectoryFullPath
+            Else
+                ' is a file path that not existed
+                file = file.GetFullPath
+            End If
+
             Return file
         End Function
 
@@ -208,6 +222,11 @@ Namespace FileIO
             Return IO.Directory.Exists(DIR)
         End Function
 
+        ''' <summary>
+        ''' get relative of the given <paramref name="file"/> path that relative to current workspace dir
+        ''' </summary>
+        ''' <param name="file"></param>
+        ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function GetRelativePath(file As String) As String
             Return PathExtensions.RelativePath(folder, file, appendParent:=False)
@@ -326,6 +345,20 @@ Namespace FileIO
             Else
                 Return Nothing
             End If
+        End Function
+
+        Public Function GetFiles(subdir As String, ParamArray exts() As String) As IEnumerable(Of String) Implements IFileSystemEnvironment.GetFiles
+            If exts.TryCount = 0 Then
+                exts = {"*.*"}
+            End If
+            Return ls - l - r - exts <= GetFullPath(subdir)
+        End Function
+
+        Public Function EnumerateFiles(subdir As String, ParamArray exts() As String) As IEnumerable(Of String) Implements IFileSystemEnvironment.EnumerateFiles
+            If exts.TryCount = 0 Then
+                exts = {"*.*"}
+            End If
+            Return GetFullPath(subdir).EnumerateFiles(exts)
         End Function
     End Class
 End Namespace
