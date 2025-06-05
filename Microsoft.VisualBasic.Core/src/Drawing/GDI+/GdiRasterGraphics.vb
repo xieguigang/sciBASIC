@@ -64,6 +64,8 @@
 
 Imports System.IO
 Imports Microsoft.VisualBasic.Net.Http
+Imports Microsoft.VisualBasic.ApplicationServices.Debugging
+
 
 #If NET48 Then
 Imports System.Drawing
@@ -88,7 +90,7 @@ Namespace Imaging.Driver
 
     End Interface
 
-    Public MustInherit Class IGraphicsData
+    Public MustInherit Class IGraphicsData : Implements IVisualStudioPreviews
 
         ''' <summary>
         ''' The graphics engine driver type indicator, 
@@ -121,7 +123,7 @@ Namespace Imaging.Driver
 
         Public MustOverride ReadOnly Property Width As Integer
         Public MustOverride ReadOnly Property Height As Integer
-
+        Public MustOverride ReadOnly Property Previews As String Implements IVisualStudioPreviews.Previews
         Public MustOverride Function GetDataURI() As DataURI
 
         ''' <summary>
