@@ -128,6 +128,7 @@ Namespace Imaging
         ''' function for make bitmap object constructor
         ''' </remarks>
         Protected Friend MustOverride Function ConvertToBitmapStream() As MemoryStream
+        Protected Friend MustOverride Function GetMemoryBitmap() As BitmapBuffer
 
         ''' <summary>
         ''' Load bitmap image from file stream
@@ -191,13 +192,14 @@ Namespace Imaging
             MemoryBuffer = data
         End Sub
 
+        ''' <summary>
+        ''' make memory data copy
+        ''' </summary>
+        ''' <param name="copy"></param>
         Sub New(copy As Image)
-            Dim buf As MemoryStream = copy.ConvertToBitmapStream()
-            buf.Seek(Scan0, SeekOrigin.Begin)
-            Dim memoryBmp As MemoryBmp = BitmapFileHelper.ParseMemoryBitmap(buf)
-            Dim channels As Integer = memoryBmp.BytesPerPixel
-
-            MemoryBuffer = New BitmapBuffer(memoryBmp.PixelDataFliped, copy.Size, channels)
+            With copy.GetMemoryBitmap
+                MemoryBuffer = New BitmapBuffer(.RawBuffer.ToArray, .Size, .GetPixelChannels)
+            End With
         End Sub
 
         Sub New(size As Size)
@@ -261,6 +263,10 @@ Namespace Imaging
             Call Save(ms, ImageFormats.Bmp)
             Call ms.Seek(Scan0, SeekOrigin.Begin)
             Return ms
+        End Function
+
+        Protected Friend Overrides Function GetMemoryBitmap() As BitmapBuffer
+            Return MemoryBuffer
         End Function
     End Class
 
