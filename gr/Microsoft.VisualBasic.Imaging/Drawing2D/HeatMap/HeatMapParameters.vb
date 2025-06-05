@@ -147,7 +147,7 @@ Namespace Drawing2D.HeatMap
 
             _colorSet = colorSet
             _mapLevels = mapLevels
-            _defaultFill = background.ToHtmlColor
+            _defaultFill = background.ToHtmlColor(allowTransparent:=True)
         End Sub
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
