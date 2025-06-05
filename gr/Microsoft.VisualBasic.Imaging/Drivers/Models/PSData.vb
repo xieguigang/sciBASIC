@@ -70,6 +70,12 @@ Namespace Driver
             End Get
         End Property
 
+        Public Overrides ReadOnly Property Previews As String
+            Get
+                Return "PostScript"
+            End Get
+        End Property
+
         Public Sub New(img As Object, size As Size, padding As Padding)
             MyBase.New(img, size, padding)
         End Sub

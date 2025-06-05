@@ -83,6 +83,19 @@ Namespace Driver
         ''' <returns></returns>
         Public ReadOnly Property Image As Image
 
+        Public Overrides ReadOnly Property Previews As String
+            Get
+                Dim uri As New DataURI(Image)
+                Dim html As XElement = <html>
+                                           <body>
+                                               <img src=<%= uri.ToString %> style="width:100%;"/>
+                                           </body>
+                                       </html>
+
+                Return html.ToString
+            End Get
+        End Property
+
         Public Sub New(img As Object, size As Size, padding As Padding)
             MyBase.New(img, size, padding)
 

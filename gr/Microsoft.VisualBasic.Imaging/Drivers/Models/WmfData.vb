@@ -56,9 +56,7 @@
 #End Region
 
 Imports System.Drawing
-Imports System.Drawing.Imaging
 Imports System.IO
-Imports Microsoft.VisualBasic.ApplicationServices
 Imports Microsoft.VisualBasic.Imaging.BitmapImage
 Imports Microsoft.VisualBasic.MIME.Html.CSS
 Imports Microsoft.VisualBasic.Net.Http
@@ -66,11 +64,18 @@ Imports Microsoft.VisualBasic.Net.Http
 Namespace Driver
 
     Public Class WmfData : Inherits GraphicsData
+
         Implements SaveGdiBitmap
 
         Public Overrides ReadOnly Property Driver As Drivers
             Get
                 Return Drivers.WMF
+            End Get
+        End Property
+
+        Public Overrides ReadOnly Property Previews As String
+            Get
+                Return "Wmf"
             End Get
         End Property
 

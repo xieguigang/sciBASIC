@@ -113,6 +113,19 @@ Namespace Driver
             End Get
         End Property
 
+        Public Overrides ReadOnly Property Previews As String
+            Get
+                Dim svg As DataURI = GetDataURI()
+                Dim html As XElement = <html>
+                                           <body>
+                                               <img src=<%= svg.ToString() %> style="width:100%;"/>
+                                           </body>
+                                       </html>
+
+                Return html.ToString
+            End Get
+        End Property
+
         Const InvalidSuffix$ = "The SVG image file save path: {0} not ending with *.svg file extension suffix!"
 
         ''' <summary>
