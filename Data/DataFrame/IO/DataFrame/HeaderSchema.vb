@@ -138,7 +138,7 @@ Namespace IO
             End If
         End Function
 
-        Const FieldExists$ = "Required change column name mapping from `{0}` to `{1}`, but the column ``{1}`` is already exists in your file data!"
+        Const FieldExists$ = "Required change column name mapping from `{0}` to `{1}`, but the column ``{1}`` is already exists in your file data! Opened data schema: "
 
         ''' <summary>
         ''' ``Csv.Field -> <see cref="PropertyInfo.Name"/>``
@@ -156,7 +156,7 @@ Namespace IO
                 End If
 
                 If oridinal.ContainsKey(map.Value) AndAlso map.Name <> map.Value Then
-                    Dim msg = String.Format(FieldExists, map.Name, map.Value)
+                    Dim msg = String.Format(FieldExists & oridinal.Keys.GetJson, map.Name, map.Value)
                     Dim ex As New Exception(msg)
 
                     ' 2017-11-4 假设在原来的文件之中存在一个名字叫做ID的列
