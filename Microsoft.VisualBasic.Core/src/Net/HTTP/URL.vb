@@ -112,12 +112,26 @@ Namespace Net.Http
             End Get
         End Property
 
+        Sub New(url As URL)
+            query = New Dictionary(Of String, String())(url.query)
+            path = url.path
+            hostName = url.hostName
+            port = url.port
+            protocol = url.protocol
+            hashcode = url.hashcode
+        End Sub
+
         Sub New(url As String)
             Call Parser(url, hashcode, query, protocol, port, hostName, path)
         End Sub
 
         Private Sub New()
         End Sub
+
+        Public Function Refresh(stamp As String) As URL
+            query("refresh") = New String() {stamp}
+            Return Me
+        End Function
 
         Public Function GetValues(query As String) As String()
             With LCase(query)
