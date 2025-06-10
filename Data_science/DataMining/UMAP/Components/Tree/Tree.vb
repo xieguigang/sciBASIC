@@ -62,23 +62,29 @@ Namespace Tree
     Friend Module Tree
 
         ''' <summary>
+        ''' max depth for make tree 
+        ''' </summary>
+        Const maxDepth As Integer = 10000
+
+        ''' <summary>
         ''' Construct a random projection tree based on ``data`` with leaves of size at most ``leafSize``
         ''' </summary>
         Public Function MakeTree(data As Double()(), leafSize As Integer, n As Integer, random As IProvideRandomValues) As RandomProjectionTreeNode
             Dim indices = Enumerable.Range(0, data.Length).ToArray()
-            Return Tree.MakeEuclideanTree(data, indices, leafSize, n, random)
+            Return Tree.MakeEuclideanTree(data, indices, leafSize, n, 0, random)
         End Function
 
-        Private Function MakeEuclideanTree(data As Double()(),
-                                           indices As Integer(),
+        Private Function MakeEuclideanTree(ByRef data As Double()(),
+                                           ByRef indices As Integer(),
                                            leafSize As Integer,
                                            q As Integer,
+                                           depth As Integer,
                                            random As IProvideRandomValues) As RandomProjectionTreeNode
 
-            If indices.Length > leafSize Then
+            If indices.Length > leafSize AndAlso depth < maxDepth Then
                 Dim any = Tree.EuclideanRandomProjectionSplit(data, indices, random)
-                Dim leftChild = Tree.MakeEuclideanTree(data, any.indicesLeft, leafSize, q + 1, random)
-                Dim rightChild = Tree.MakeEuclideanTree(data, any.IndicesRight, leafSize, q + 1, random)
+                Dim leftChild = Tree.MakeEuclideanTree(data, any.indicesLeft, leafSize, q + 1, depth + 1, random)
+                Dim rightChild = Tree.MakeEuclideanTree(data, any.IndicesRight, leafSize, q + 1, depth + 1, random)
 
                 Return New RandomProjectionTreeNode With {
                     .Indices = indices,
