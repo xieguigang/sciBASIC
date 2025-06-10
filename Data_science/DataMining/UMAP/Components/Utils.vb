@@ -84,7 +84,7 @@ Module Utils
     ''' </summary>
     Public Function RejectionSample(nSamples As Integer, poolSize As Integer, random As IProvideRandomValues) As Integer()
         Dim result = New Integer(nSamples - 1) {}
-        Dim maxItrs As Integer = 1000
+        Dim maxItrs As Integer = 10000
 
         For i As Integer = 0 To nSamples - 1
             Dim rejectSample = True
