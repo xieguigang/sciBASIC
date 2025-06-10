@@ -1881,6 +1881,28 @@ Namespace LinearAlgebra.Matrix
             Return sb.ToString
         End Function
 
+        Public Shared Function GetRectangularArray(m As GeneralMatrix) As Double(,)
+            Dim x As Double()() = m.ArrayPack(deepcopy:=False)
+            Dim a As Double(,) = ConvertJaggedToRectangularFlexible(x)
+            Return a
+        End Function
+
+        Public Shared Function ConvertJaggedToRectangularFlexible(x As Double()()) As Double(,)
+            If x Is Nothing Then Return Nothing
+            If x.Length = 0 Then Return New Double(,) {}
+
+            Dim maxColumns As Integer = x.Max(Function(row) row.Length)
+            Dim y As Double(,) = New Double(x.Length - 1, maxColumns - 1) {}
+
+            For rowIdx As Integer = 0 To x.Length - 1
+                For colIdx As Integer = 0 To x(rowIdx).Length - 1
+                    y(rowIdx, colIdx) = x(rowIdx)(colIdx)
+                Next
+            Next
+
+            Return y
+        End Function
+
         Public Shared Widening Operator CType(data#(,)) As NumericMatrix
             Return New NumericMatrix(data.RowIterator.ToArray)
         End Operator
