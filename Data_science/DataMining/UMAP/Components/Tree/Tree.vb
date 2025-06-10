@@ -81,6 +81,8 @@ Namespace Tree
                                            depth As Integer,
                                            random As IProvideRandomValues) As RandomProjectionTreeNode
 
+            ' 20250611 
+            ' set max tree depth for avoid stack overflow
             If indices.Length > leafSize AndAlso depth < maxDepth Then
                 Dim any = Tree.EuclideanRandomProjectionSplit(data, indices, random)
                 Dim leftChild = Tree.MakeEuclideanTree(data, any.indicesLeft, leafSize, q + 1, depth + 1, random)
