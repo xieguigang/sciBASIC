@@ -64,7 +64,7 @@ Namespace Tree
         ''' <summary>
         ''' max depth for make tree 
         ''' </summary>
-        Const maxDepth As Integer = 10000
+        Const maxDepth As Integer = 100000
 
         ''' <summary>
         ''' Construct a random projection tree based on ``data`` with leaves of size at most ``leafSize``

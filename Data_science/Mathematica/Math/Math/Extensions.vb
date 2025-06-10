@@ -402,4 +402,17 @@ Imports std = System.Math
     Public Function X(points As IEnumerable(Of PointF)) As Vector
         Return points.Select(Function(pt) CDbl(pt.X)).AsVector
     End Function
+
+    <Extension>
+    Public Function FilterNaN(ByRef m As Double()(), replace As Double) As Double()()
+        For Each xi As Double() In m
+            For i As Integer = 0 To xi.Length - 1
+                If xi(i).IsNaNImaginary Then
+                    xi(i) = replace
+                End If
+            Next
+        Next
+
+        Return m
+    End Function
 End Module
