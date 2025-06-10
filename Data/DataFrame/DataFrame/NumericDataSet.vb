@@ -198,9 +198,15 @@ Public Module NumericDataSet
         Return New DataFrame(fields, labels)
     End Function
 
+    ''' <summary>
+    ''' returns a data matrix in row collections
+    ''' </summary>
+    ''' <param name="df"></param>
+    ''' <returns></returns>
     <Extension>
     Public Iterator Function NumericMatrix(df As DataFrame) As IEnumerable(Of NamedCollection(Of Double))
         Dim colnames As String() = df.featureNames
+        ' field columns
         Dim fieldGetters As Func(Of Integer, Double)() = colnames _
             .Select(Function(s) df(s).NumericGetter) _
             .ToArray
@@ -215,6 +221,7 @@ Public Module NumericDataSet
                 .Select(Function(v) v(offset)) _
                 .ToArray
 
+            ' populate each row data
             Yield New NamedCollection(Of Double)(rownames(i), row)
         Next
     End Function
