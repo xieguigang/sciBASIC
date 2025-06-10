@@ -84,11 +84,16 @@ Module Utils
     ''' </summary>
     Public Function RejectionSample(nSamples As Integer, poolSize As Integer, random As IProvideRandomValues) As Integer()
         Dim result = New Integer(nSamples - 1) {}
+        Dim maxItrs As Integer = 1000
 
-        For i = 0 To nSamples - 1
+        For i As Integer = 0 To nSamples - 1
             Dim rejectSample = True
+            Dim counter As Integer = 0
 
-            While rejectSample
+            ' 20250610 possible dead loop at here
+            ' if always broken
+            ' use a counter for avoid such possible error
+            While rejectSample AndAlso counter < maxItrs
                 Dim j = random.Next(0, poolSize)
                 Dim broken = False
 
@@ -103,8 +108,13 @@ Module Utils
                     rejectSample = False
                 End If
 
+                counter += 1
                 result(i) = j
             End While
+
+            If counter >= maxItrs Then
+                Call $"dead loop was detected while make sample rejection for sample {i}!".Warning
+            End If
         Next
 
         Return result
