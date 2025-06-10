@@ -94,7 +94,7 @@ Namespace Tree
                     .LeftChild = Nothing,
                     .RightChild = Nothing,
                     .IsLeaf = True,
-                    .Hyperplane = Nothing,
+                    .Hyperplane = New Double() {},
                     .Offset = 0
                 }
             End If
@@ -105,10 +105,10 @@ Namespace Tree
             Dim nLeaves = NumLeaves(tree)
 
             ' TODO[umap-js]: Verify that sparse code is not relevant...
-            Dim hyperplanes = Utils.Range(nNodes).[Select](Function(__) New Double(tree.Hyperplane.Length - 1) {}).ToArray()
+            Dim hyperplanes = Utils.Range(nNodes).Select(Function(__) New Double(tree.Hyperplane.Length - 1) {}).ToArray()
             Dim offsets = New Double(nNodes - 1) {}
-            Dim children = Utils.Range(nNodes).[Select](Function(__) {-1, -1}).ToArray()
-            Dim indices = Utils.Range(nLeaves).[Select](Function(__) Utils.Range(leafSize).[Select](Function(____) -1).ToArray()).ToArray()
+            Dim children = Utils.Range(nNodes).Select(Function(__) {-1, -1}).ToArray()
+            Dim indices = Utils.Range(nLeaves).Select(Function(__) Utils.Range(leafSize).[Select](Function(____) -1).ToArray()).ToArray()
 
             RecursiveFlatten(tree, hyperplanes, offsets, children, indices, 0, 0)
 
