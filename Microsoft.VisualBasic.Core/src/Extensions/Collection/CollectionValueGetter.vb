@@ -207,7 +207,7 @@ Public Module CollectionValueGetter
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
     Public Function ElementAtOrNull(Of T)(array As T(), index As Integer) As T
-        Return array.GetValueOrDefault(index)
+        Return array.GetValueOrDefault(index, [default]:=Nothing)
     End Function
 
     ''' <summary>
