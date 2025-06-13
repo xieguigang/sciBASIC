@@ -100,9 +100,9 @@ Namespace node2vec
         End Function
 
         ''' <summary>
-        ''' 
+        ''' implements of node2vec embedding for the nodes in graph 
         ''' </summary>
-        ''' <param name="graph"></param>
+        ''' <param name="graph">could be generated from the <see cref="Solver.CreateGraph(String(), String(), Double())"/> function.</param>
         ''' <param name="numWalks"></param>
         ''' <param name="walkLength"></param>
         ''' <param name="dimensions"></param>
