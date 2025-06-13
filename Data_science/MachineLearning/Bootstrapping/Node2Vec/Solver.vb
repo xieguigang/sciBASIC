@@ -108,6 +108,14 @@ Namespace node2vec
         ''' <param name="dimensions"></param>
         ''' <param name="windowSize"></param>
         ''' <returns>node mapping to a vector</returns>
+        ''' <remarks>
+        ''' implements of the graph embedding to vector via node2vec:
+        ''' 
+        ''' 1. random walk for get a collection node chains
+        ''' 2. use the node chain as text, and node in chain as the words
+        ''' 3. word2vec for make the node chains as vector
+        ''' 4. get vector embedding result for each node
+        ''' </remarks>
         <Extension>
         Public Function CreateEmbedding(graph As Graph,
                                         Optional numWalks As Integer = 10,
@@ -123,14 +131,17 @@ Namespace node2vec
                 .setVectorSize(dimensions) _
                 .build()
 
+            ' random walks get node chains(path)
             For Each path As IList(Of Vertex) In graph.simulateWalks(numWalks, walkLength)
                 ' convert path list to string
                 engine.readTokens(path.Select(Function(v) v.label).ToArray)
             Next
 
-            VBDebugger.EchoLine("Learning Embedding...")
-            engine.training()
+            ' make embedding of the nodes
+            Call VBDebugger.EchoLine("Learning Embedding...")
+            Call engine.training()
 
+            ' get node vector embedding result
             Dim vectors = engine.outputVector
             Return vectors
         End Function
