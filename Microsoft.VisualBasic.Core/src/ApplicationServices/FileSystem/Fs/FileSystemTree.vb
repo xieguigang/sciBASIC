@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8f026dc155239e811e3a3e1a50c85a08, Microsoft.VisualBasic.Core\src\ApplicationServices\FileSystem\Fs\FileSystemTree.vb"
+﻿#Region "Microsoft.VisualBasic::66238eade57016e51e471840c6031117, Microsoft.VisualBasic.Core\src\ApplicationServices\FileSystem\Fs\FileSystemTree.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 97.67%
     ' 
     '   Blank Lines: 23 (14.37%)
-    '     File Size: 5.37 KB
+    '     File Size: 5.46 KB
 
 
     '     Class FileSystemTree

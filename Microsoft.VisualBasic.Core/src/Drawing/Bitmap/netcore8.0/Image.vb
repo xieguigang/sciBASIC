@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d81274f2143171b5e7599c8f94e6c709, Microsoft.VisualBasic.Core\src\Drawing\Bitmap\netcore8.0\Image.vb"
+﻿#Region "Microsoft.VisualBasic::ffb2e3bb5531c22f68ecd48e5bef1417, Microsoft.VisualBasic.Core\src\Drawing\Bitmap\netcore8.0\Image.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 287
-    '    Code Lines: 138 (48.08%)
-    ' Comment Lines: 93 (32.40%)
-    '    - Xml Docs: 45.16%
+    '   Total Lines: 293
+    '    Code Lines: 140 (47.78%)
+    ' Comment Lines: 97 (33.11%)
+    '    - Xml Docs: 47.42%
     ' 
-    '   Blank Lines: 56 (19.51%)
-    '     File Size: 11.17 KB
+    '   Blank Lines: 56 (19.11%)
+    '     File Size: 11.32 KB
 
 
     '     Class Image
@@ -57,7 +57,8 @@
     ' 
     '         Constructor: (+4 Overloads) Sub New
     ' 
-    '         Function: Clone, ConvertToBitmapStream, GetPixel, Resize, ToString
+    '         Function: Clone, ConvertToBitmapStream, GetMemoryBitmap, GetPixel, Resize
+    '                   ToString
     ' 
     '         Sub: Save, SetPixel
     ' 

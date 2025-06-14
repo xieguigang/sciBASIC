@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::18c7a7220e2c89dfe6b1ce0e62b23f8e, Microsoft.VisualBasic.Core\src\ApplicationServices\FileSystem\Fs\IFileSystemEnvironment.vb"
+﻿#Region "Microsoft.VisualBasic::3605e2e0927b106c84ca70b22bfd7849, Microsoft.VisualBasic.Core\src\ApplicationServices\FileSystem\Fs\IFileSystemEnvironment.vb"
 
     ' Author:
     ' 
@@ -34,21 +34,21 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 98
-    '    Code Lines: 21 (21.43%)
-    ' Comment Lines: 68 (69.39%)
-    '    - Xml Docs: 97.06%
+    '   Total Lines: 112
+    '    Code Lines: 23 (20.54%)
+    ' Comment Lines: 80 (71.43%)
+    '    - Xml Docs: 97.50%
     ' 
-    '   Blank Lines: 9 (9.18%)
-    '     File Size: 3.49 KB
+    '   Blank Lines: 9 (8.04%)
+    '     File Size: 4.40 KB
 
 
     '     Interface IFileSystemEnvironment
     ' 
     '         Properties: [readonly]
     ' 
-    '         Function: DeleteFile, FileExists, FileModifyTime, FileSize, GetFiles
-    '                   GetFullPath, OpenFile, ReadAllText, WriteText
+    '         Function: DeleteFile, EnumerateFiles, FileExists, FileModifyTime, FileSize
+    '                   (+2 Overloads) GetFiles, GetFullPath, OpenFile, ReadAllText, WriteText
     ' 
     '         Sub: Close, Flush
     ' 

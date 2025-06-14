@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3fb21891df0675b553c8549a315484cc, gr\Microsoft.VisualBasic.Imaging\Drivers\Models\WmfData.vb"
+﻿#Region "Microsoft.VisualBasic::9fd138737a8e1a41eea86ffcb97cbbe8, gr\Microsoft.VisualBasic.Imaging\Drivers\Models\WmfData.vb"
 
     ' Author:
     ' 
@@ -34,18 +34,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 59
-    '    Code Lines: 44 (74.58%)
-    ' Comment Lines: 4 (6.78%)
+    '   Total Lines: 64
+    '    Code Lines: 47 (73.44%)
+    ' Comment Lines: 4 (6.25%)
     '    - Xml Docs: 0.00%
     ' 
-    '   Blank Lines: 11 (18.64%)
-    '     File Size: 1.99 KB
+    '   Blank Lines: 13 (20.31%)
+    '     File Size: 2.06 KB
 
 
     '     Class WmfData
     ' 
-    '         Properties: Driver
+    '         Properties: Driver, Previews
     ' 
     '         Constructor: (+1 Overloads) Sub New
     '         Function: GetDataURI, (+3 Overloads) Save

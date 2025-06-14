@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a1d566a5d38c69a97cddfca23b8ae28c, Data_science\Mathematica\Math\Math\Algebra\Matrix.NET\NumericMatrix.vb"
+﻿#Region "Microsoft.VisualBasic::8519a5dc6fa7f86e25528fe470991037, Data_science\Mathematica\Math\Math\Algebra\Matrix.NET\NumericMatrix.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 1953
-    '    Code Lines: 1045 (53.51%)
-    ' Comment Lines: 647 (33.13%)
+    '   Total Lines: 1975
+    '    Code Lines: 1062 (53.77%)
+    ' Comment Lines: 647 (32.76%)
     '    - Xml Docs: 93.51%
     ' 
-    '   Blank Lines: 261 (13.36%)
-    '     File Size: 70.89 KB
+    '   Blank Lines: 266 (13.47%)
+    '     File Size: 71.79 KB
 
 
     '     Class NumericMatrix
@@ -53,14 +53,15 @@
     '         Function: Abs, Add, AddEquals, ArrayLeftDivide, ArrayLeftDivideEquals
     '                   ArrayMultiply, ArrayMultiplyEquals, ArrayPack, ArrayRightDivide, ArrayRightDivideEquals
     '                   Block, chol, Clone, ColWise, Condition
-    '                   Copy, (+2 Overloads) Create, Determinant, DotMultiply, DotProduct
-    '                   Eigen, Gauss, (+4 Overloads) GetMatrix, (+2 Overloads) Identity, Inverse
-    '                   Log, LUD, max, Max, Min
-    '                   (+3 Overloads) Multiply, MultiplyEquals, Norm1, Norm2, NormF
-    '                   NormInf, Number, One, Power, QRD
-    '                   random, Rank, Resize, RowApply, RowVectors
-    '                   RowWise, (+2 Overloads) Solve, SolveTranspose, (+2 Overloads) Subtract, SubtractEquals
-    '                   SVD, ToString, Trace, Transpose, Zero
+    '                   ConvertJaggedToRectangularFlexible, Copy, (+2 Overloads) Create, Determinant, DotMultiply
+    '                   DotProduct, Eigen, Gauss, (+4 Overloads) GetMatrix, GetRectangularArray
+    '                   (+2 Overloads) Identity, Inverse, Log, LUD, max
+    '                   Max, Min, (+3 Overloads) Multiply, MultiplyEquals, Norm1
+    '                   Norm2, NormF, NormInf, Number, One
+    '                   Power, QRD, random, Rank, Resize
+    '                   RowApply, RowVectors, RowWise, (+2 Overloads) Solve, SolveTranspose
+    '                   (+2 Overloads) Subtract, SubtractEquals, SVD, ToString, Trace
+    '                   Transpose, Zero
     ' 
     '         Sub: CheckMatrixDimensions, (+2 Overloads) Dispose, Finalize, (+4 Overloads) SetMatrix
     ' 

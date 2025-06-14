@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d8ca4ab94d8244b2d402c78b35c088b7, Microsoft.VisualBasic.Core\src\ApplicationServices\Tools\Zip\ZipStream.vb"
+﻿#Region "Microsoft.VisualBasic::091b316445de6e75116ed4f356535597, Microsoft.VisualBasic.Core\src\ApplicationServices\Tools\Zip\ZipStream.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 234
-    '    Code Lines: 138 (58.97%)
-    ' Comment Lines: 57 (24.36%)
+    '   Total Lines: 268
+    '    Code Lines: 167 (62.31%)
+    ' Comment Lines: 57 (21.27%)
     '    - Xml Docs: 63.16%
     ' 
-    '   Blank Lines: 39 (16.67%)
-    '     File Size: 8.87 KB
+    '   Blank Lines: 44 (16.42%)
+    '     File Size: 10.62 KB
 
 
     '     Class ZipStream
@@ -49,9 +49,9 @@
     ' 
     '         Constructor: (+2 Overloads) Sub New
     ' 
-    '         Function: DeleteFile, FileExists, FileModifyTime, FileSize, GetFileEntry
-    '                   GetFiles, GetFullPath, OpenFile, ReadAllText, ToString
-    '                   WriteText
+    '         Function: DeleteFile, EnumerateFiles, FileExists, FileModifyTime, FileSize
+    '                   GetFileEntry, (+2 Overloads) GetFiles, GetFullPath, OpenFile, ReadAllText
+    '                   ToString, WriteText
     ' 
     '         Sub: Close, (+2 Overloads) Dispose, Flush
     ' 

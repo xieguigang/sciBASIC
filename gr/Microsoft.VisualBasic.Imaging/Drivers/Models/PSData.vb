@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bd6bc82c9139c85f1335c39ceaab4828, gr\Microsoft.VisualBasic.Imaging\Drivers\Models\PSData.vb"
+﻿#Region "Microsoft.VisualBasic::62606d80e109f8aaa67e138dcef3810f, gr\Microsoft.VisualBasic.Imaging\Drivers\Models\PSData.vb"
 
     ' Author:
     ' 
@@ -34,18 +34,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 28
-    '    Code Lines: 22 (78.57%)
+    '   Total Lines: 34
+    '    Code Lines: 27 (79.41%)
     ' Comment Lines: 0 (0.00%)
     '    - Xml Docs: 0.00%
     ' 
-    '   Blank Lines: 6 (21.43%)
-    '     File Size: 809 B
+    '   Blank Lines: 7 (20.59%)
+    '     File Size: 971 B
 
 
     '     Class PostScriptData
     ' 
-    '         Properties: Driver
+    '         Properties: Driver, Previews
     ' 
     '         Constructor: (+1 Overloads) Sub New
     '         Function: GetDataURI, Save

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::48af63081570c12c139bdfcdbc839df1, gr\Microsoft.VisualBasic.Imaging\Drivers\Models\ImageData.vb"
+﻿#Region "Microsoft.VisualBasic::65fc6a7c987796e90161399ec5de5d2f, gr\Microsoft.VisualBasic.Imaging\Drivers\Models\ImageData.vb"
 
     ' Author:
     ' 
@@ -34,18 +34,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 133
-    '    Code Lines: 90 (67.67%)
-    ' Comment Lines: 21 (15.79%)
+    '   Total Lines: 146
+    '    Code Lines: 101 (69.18%)
+    ' Comment Lines: 21 (14.38%)
     '    - Xml Docs: 95.24%
     ' 
-    '   Blank Lines: 22 (16.54%)
-    '     File Size: 4.21 KB
+    '   Blank Lines: 24 (16.44%)
+    '     File Size: 4.72 KB
 
 
     '     Class ImageData
     ' 
-    '         Properties: DefaultFormat, Driver, Image
+    '         Properties: DefaultFormat, Driver, Image, Previews
     ' 
     '         Constructor: (+3 Overloads) Sub New
     ' 

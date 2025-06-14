@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::02aee3f8af96552f4c0cf646d7e6fdfc, Data\DataFrame\IO\DataFrame\HeaderSchema.vb"
+﻿#Region "Microsoft.VisualBasic::ec485ead0562da129b3c49a937a76269, Data\DataFrame\IO\DataFrame\HeaderSchema.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 84.00%
     ' 
     '   Blank Lines: 23 (15.13%)
-    '     File Size: 6.07 KB
+    '     File Size: 6.12 KB
 
 
     '     Class HeaderSchema

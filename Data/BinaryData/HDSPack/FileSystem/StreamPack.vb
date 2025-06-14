@@ -1,65 +1,66 @@
-﻿#Region "Microsoft.VisualBasic::4291ef1b7c9747c352b7251802859221, Data\BinaryData\HDSPack\FileSystem\StreamPack.vb"
+﻿#Region "Microsoft.VisualBasic::3571f02472eb73fcd60586869d818b0c, Data\BinaryData\HDSPack\FileSystem\StreamPack.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 736
-'    Code Lines: 401 (54.48%)
-' Comment Lines: 246 (33.42%)
-'    - Xml Docs: 77.24%
-' 
-'   Blank Lines: 89 (12.09%)
-'     File Size: 31.00 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Class StreamPack
-' 
-'         Properties: filepath, files, globalAttributes, HeaderSize, is_readonly
-'                     isDiskFile, superBlock
-' 
-'         Constructor: (+2 Overloads) Sub New
-' 
-'         Function: Allocate, AllocateNext, CreateNewStream, Delete, FileExists
-'                   FileModifyTime, FileSize, (+2 Overloads) GetFiles, GetFullPath, GetGlobalAttribute
-'                   GetObject, (+2 Overloads) OpenBlock, OpenFile, OpenFolder, OpenReadOnly
-'                   ParseTree, ReadAllText, (+2 Overloads) TestMagic, ToString, WriteText
-' 
-'         Sub: Clear, Close, (+2 Overloads) Dispose, Flush, flushStreamPack
-'              ParseMetadata, (+2 Overloads) SetAttribute
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 770
+    '    Code Lines: 428 (55.58%)
+    ' Comment Lines: 247 (32.08%)
+    '    - Xml Docs: 76.92%
+    ' 
+    '   Blank Lines: 95 (12.34%)
+    '     File Size: 32.57 KB
+
+
+    '     Class StreamPack
+    ' 
+    '         Properties: filepath, files, globalAttributes, HeaderSize, is_readonly
+    '                     isDiskFile, superBlock
+    ' 
+    '         Constructor: (+2 Overloads) Sub New
+    ' 
+    '         Function: Allocate, AllocateNext, CreateNewStream, Delete, EnumerateFiles
+    '                   FileExists, FileModifyTime, FileSize, (+3 Overloads) GetFiles, GetFullPath
+    '                   GetGlobalAttribute, GetObject, (+2 Overloads) OpenBlock, OpenFile, OpenFolder
+    '                   OpenReadOnly, ParseTree, ReadAllText, (+2 Overloads) TestMagic, ToString
+    '                   WriteText
+    ' 
+    '         Sub: Clear, Close, (+2 Overloads) Dispose, Flush, flushStreamPack
+    '              ParseMetadata, (+2 Overloads) SetAttribute
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

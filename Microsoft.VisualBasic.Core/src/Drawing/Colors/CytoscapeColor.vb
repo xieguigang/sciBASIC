@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6b4ac062a4e7093a85b2b9c46edbf765, Microsoft.VisualBasic.Core\src\Drawing\Colors\CytoscapeColor.vb"
+﻿#Region "Microsoft.VisualBasic::c1dd26e14cc6df6e4d53920b50b4ac88, Microsoft.VisualBasic.Core\src\Drawing\Colors\CytoscapeColor.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 137
-    '    Code Lines: 95 (69.34%)
-    ' Comment Lines: 16 (11.68%)
-    '    - Xml Docs: 68.75%
+    '   Total Lines: 142
+    '    Code Lines: 98 (69.01%)
+    ' Comment Lines: 17 (11.97%)
+    '    - Xml Docs: 64.71%
     ' 
-    '   Blank Lines: 26 (18.98%)
-    '     File Size: 4.39 KB
+    '   Blank Lines: 27 (19.01%)
+    '     File Size: 4.62 KB
 
 
     '     Module HexColor

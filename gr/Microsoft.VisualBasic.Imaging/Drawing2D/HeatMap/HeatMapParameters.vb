@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fa7674632427c41d378c602890b57de5, gr\Microsoft.VisualBasic.Imaging\Drawing2D\HeatMap\HeatMapParameters.vb"
+﻿#Region "Microsoft.VisualBasic::2df0db7fbf438c857fb21a014a3802f1, gr\Microsoft.VisualBasic.Imaging\Drawing2D\HeatMap\HeatMapParameters.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 20 (18.18%)
-    '     File Size: 4.09 KB
+    '     File Size: 4.11 KB
 
 
     '     Class HeatMapBrushes

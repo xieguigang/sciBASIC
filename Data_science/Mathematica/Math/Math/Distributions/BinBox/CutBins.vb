@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f281892f305248570046a250a0d216a4, Data_science\Mathematica\Math\Math\Distributions\BinBox\CutBins.vb"
+﻿#Region "Microsoft.VisualBasic::3de0a455cfc60021c67d22b660868a74, Data_science\Mathematica\Math\Math\Distributions\BinBox\CutBins.vb"
 
     ' Author:
     ' 
@@ -34,18 +34,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 184
-    '    Code Lines: 98 (53.26%)
-    ' Comment Lines: 64 (34.78%)
-    '    - Xml Docs: 81.25%
+    '   Total Lines: 198
+    '    Code Lines: 101 (51.01%)
+    ' Comment Lines: 74 (37.37%)
+    '    - Xml Docs: 82.43%
     ' 
-    '   Blank Lines: 22 (11.96%)
-    '     File Size: 7.28 KB
+    '   Blank Lines: 23 (11.62%)
+    '     File Size: 7.91 KB
 
 
     '     Module CutBins
     ' 
-    '         Function: EqualFrequencyBins, (+4 Overloads) FixedWidthBins
+    '         Function: EqualFrequencyBins, (+5 Overloads) FixedWidthBins
     ' 
     ' 
     ' /********************************************************************************/

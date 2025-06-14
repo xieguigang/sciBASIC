@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4b75b3396d7dafc64a3124ee3c95f7dc, Data\DataFrame\DataFrame\NumericDataSet.vb"
+﻿#Region "Microsoft.VisualBasic::9a432991b8f0f71341ab054024bf3aee, Data\DataFrame\DataFrame\NumericDataSet.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 167
-    '    Code Lines: 130 (77.84%)
-    ' Comment Lines: 11 (6.59%)
-    '    - Xml Docs: 100.00%
+    '   Total Lines: 174
+    '    Code Lines: 130 (74.71%)
+    ' Comment Lines: 18 (10.34%)
+    '    - Xml Docs: 88.89%
     ' 
-    '   Blank Lines: 26 (15.57%)
-    '     File Size: 5.89 KB
+    '   Blank Lines: 26 (14.94%)
+    '     File Size: 6.11 KB
 
 
     ' Module NumericDataSet

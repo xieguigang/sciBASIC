@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0fa46b976cb3f11edc105fc5db0c497c, Data_science\Mathematica\SignalProcessing\SignalProcessing\KalmanFilter\HungarianAlgorithm.vb"
+﻿#Region "Microsoft.VisualBasic::fa9faab1e7ed8c65b51677a19213639a, Data_science\Mathematica\SignalProcessing\SignalProcessing\KalmanFilter\HungarianAlgorithm.vb"
 
     ' Author:
     ' 
@@ -34,18 +34,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 279
-    '    Code Lines: 213 (76.34%)
-    ' Comment Lines: 14 (5.02%)
-    '    - Xml Docs: 92.86%
+    '   Total Lines: 305
+    '    Code Lines: 225 (73.77%)
+    ' Comment Lines: 24 (7.87%)
+    '    - Xml Docs: 95.83%
     ' 
-    '   Blank Lines: 52 (18.64%)
-    '     File Size: 10.10 KB
+    '   Blank Lines: 56 (18.36%)
+    '     File Size: 11.51 KB
 
 
     '     Module HungarianAlgorithm
     ' 
-    '         Function: FindAssignments, FindMinimum, FindPrimeInRow, FindStarInColumn, FindStarInRow
+    '         Function: (+2 Overloads) FindAssignments, FindMinimum, FindPrimeInRow, FindStarInColumn, FindStarInRow
     '                   FindZero, RunStep1, RunStep2, RunStep3, RunStep4
     ' 
     '         Sub: ClearCovers, ClearPrimes, ConvertPath

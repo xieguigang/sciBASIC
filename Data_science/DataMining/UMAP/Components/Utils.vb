@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8fd4d60b939bac46733d5b728a6bc04a, Data_science\DataMining\UMAP\Components\Utils.vb"
+﻿#Region "Microsoft.VisualBasic::f47405e935a4d28f0029783133e8715c, Data_science\DataMining\UMAP\Components\Utils.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 84
-    '    Code Lines: 58 (69.05%)
-    ' Comment Lines: 12 (14.29%)
-    '    - Xml Docs: 100.00%
+    '   Total Lines: 94
+    '    Code Lines: 64 (68.09%)
+    ' Comment Lines: 15 (15.96%)
+    '    - Xml Docs: 80.00%
     ' 
-    '   Blank Lines: 14 (16.67%)
-    '     File Size: 2.62 KB
+    '   Blank Lines: 15 (15.96%)
+    '     File Size: 3.07 KB
 
 
     ' Module Utils

@@ -1,61 +1,62 @@
-﻿#Region "Microsoft.VisualBasic::b9d8f02c1534b9f6ec4398b5c9f8bb28, Microsoft.VisualBasic.Core\src\ApplicationServices\Tools\TarGzFileSystem.vb"
+﻿#Region "Microsoft.VisualBasic::e2c4eef031f7a0234e523f719a17d063, Microsoft.VisualBasic.Core\src\ApplicationServices\Tools\TarGzFileSystem.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 136
-'    Code Lines: 102 (75.00%)
-' Comment Lines: 1 (0.74%)
-'    - Xml Docs: 0.00%
-' 
-'   Blank Lines: 33 (24.26%)
-'     File Size: 4.98 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Class TarGzFileSystem
-' 
-'         Properties: [readonly]
-' 
-'         Constructor: (+1 Overloads) Sub New
-' 
-'         Function: CheckVirtualEntry, DeleteFile, FileExists, FileModifyTime, FileSize
-'                   GetFiles, GetFullPath, OpenFile, ReadAllText, WriteText
-' 
-'         Sub: Close, Flush
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 176
+    '    Code Lines: 128 (72.73%)
+    ' Comment Lines: 9 (5.11%)
+    '    - Xml Docs: 44.44%
+    ' 
+    '   Blank Lines: 39 (22.16%)
+    '     File Size: 6.86 KB
+
+
+    '     Class TarGzFileSystem
+    ' 
+    '         Properties: [readonly]
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
+    '         Function: CheckVirtualEntry, DeleteFile, EnumerateFiles, FileExists, FileModifyTime
+    '                   FileSize, (+2 Overloads) GetFiles, GetFullPath, OpenFile, ReadAllText
+    '                   WriteText
+    ' 
+    '         Sub: Close, Flush
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

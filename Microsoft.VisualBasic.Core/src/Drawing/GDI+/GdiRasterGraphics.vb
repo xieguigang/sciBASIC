@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9784272b77744c87faf227e87334da8e, Microsoft.VisualBasic.Core\src\Drawing\GDI+\GdiRasterGraphics.vb"
+﻿#Region "Microsoft.VisualBasic::98f0e91f7a38231b6d40d09a28825da8, Microsoft.VisualBasic.Core\src\Drawing\GDI+\GdiRasterGraphics.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 82
-    '    Code Lines: 39 (47.56%)
-    ' Comment Lines: 26 (31.71%)
+    '   Total Lines: 84
+    '    Code Lines: 41 (48.81%)
+    ' Comment Lines: 26 (30.95%)
     '    - Xml Docs: 88.46%
     ' 
-    '   Blank Lines: 17 (20.73%)
-    '     File Size: 2.46 KB
+    '   Blank Lines: 17 (20.24%)
+    '     File Size: 2.66 KB
 
 
     '     Interface GdiRasterGraphics

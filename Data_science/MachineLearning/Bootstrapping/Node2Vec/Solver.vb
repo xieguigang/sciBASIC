@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::44cb9d3a68d37fe00b0d8b637c4b12c5, Data_science\MachineLearning\Bootstrapping\Node2Vec\Solver.vb"
+﻿#Region "Microsoft.VisualBasic::93fa3c39a997df85553415d9d2042201, Data_science\MachineLearning\Bootstrapping\Node2Vec\Solver.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 85
-    '    Code Lines: 47 (55.29%)
-    ' Comment Lines: 23 (27.06%)
-    '    - Xml Docs: 78.26%
+    '   Total Lines: 96
+    '    Code Lines: 47 (48.96%)
+    ' Comment Lines: 34 (35.42%)
+    '    - Xml Docs: 76.47%
     ' 
-    '   Blank Lines: 15 (17.65%)
-    '     File Size: 3.14 KB
+    '   Blank Lines: 15 (15.62%)
+    '     File Size: 3.84 KB
 
 
     '     Module Solver

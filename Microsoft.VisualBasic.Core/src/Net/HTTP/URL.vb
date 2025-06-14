@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f6d7d111ae2420059241bea021642933, Microsoft.VisualBasic.Core\src\Net\HTTP\URL.vb"
+﻿#Region "Microsoft.VisualBasic::d4e1818d09348cbc7777e4ed9fcec70b, Microsoft.VisualBasic.Core\src\Net\HTTP\URL.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 199
-    '    Code Lines: 149 (74.87%)
-    ' Comment Lines: 25 (12.56%)
+    '   Total Lines: 213
+    '    Code Lines: 161 (75.59%)
+    ' Comment Lines: 25 (11.74%)
     '    - Xml Docs: 72.00%
     ' 
-    '   Blank Lines: 25 (12.56%)
-    '     File Size: 7.35 KB
+    '   Blank Lines: 27 (12.68%)
+    '     File Size: 7.79 KB
 
 
     '     Class URL
@@ -48,9 +48,10 @@
     '         Properties: hashcode, Host, hostName, path, port
     '                     protocol, query
     ' 
-    '         Constructor: (+2 Overloads) Sub New
+    '         Constructor: (+3 Overloads) Sub New
     ' 
-    '         Function: BuildUrl, GetValues, Parse, (+2 Overloads) ToString, UrlQueryString
+    '         Function: BuildUrl, GetValues, Parse, Refresh, (+2 Overloads) ToString
+    '                   UrlQueryString
     ' 
     '         Sub: Parser
     ' 
