@@ -172,6 +172,10 @@ Namespace Javascript
             Return list.Contains(element)
         End Function
 
+        ''' <summary>
+        ''' directcast this json array as a collection of the json object
+        ''' </summary>
+        ''' <returns></returns>
         Public Iterator Function AsObjects() As IEnumerable(Of JsonObject)
             If list.IsNullOrEmpty Then
                 Return
