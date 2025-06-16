@@ -127,6 +127,11 @@ Namespace Text.Parser
             Return New CharPtr(str)
         End Operator
 
+        ''' <summary>
+        ''' construct an in-memory dataset
+        ''' </summary>
+        ''' <param name="str">the in-memory string data</param>
+        ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overloads Shared Widening Operator CType(str As StringBuilder) As CharPtr
             Return New CharPtr(str.ToString)

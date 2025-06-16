@@ -70,11 +70,17 @@ Imports Microsoft.VisualBasic.Linq
 Namespace Emit.Marshal
 
     ''' <summary>
-    ''' <see cref="Array"/> index helper.(在数组的索引基础上封装了数组本身)
+    ''' <see cref="Array"/> index helper.
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
+    ''' <remarks>
+    ''' (在数组的索引基础上封装了数组本身)
+    ''' </remarks>
     Public Class Pointer(Of T) : Inherits DataStructures.Pointer(Of T)
 
+        ''' <summary>
+        ''' the in-memory dataset
+        ''' </summary>
         Protected buffer As T()
 
         ''' <summary>
@@ -209,6 +215,9 @@ Namespace Emit.Marshal
         ''' Create a collection wrapper from a <paramref name="source"/> buffer.
         ''' </summary>
         ''' <param name="source">The collection source buffer</param>
+        ''' <remarks>
+        ''' construct an in-memory dataset
+        ''' </remarks>
         Sub New(source As IEnumerable(Of T))
             buffer = source.ToArray
         End Sub
