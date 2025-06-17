@@ -956,6 +956,20 @@ Public Module StringHelpers
     ''' <param name="options"></param>
     ''' <returns>empty string will be returns if the given input string is null or empty.</returns>
     <Extension>
+    Public Iterator Function Match(input As IEnumerable(Of String), pattern$, Optional options As RegexOptions = RegexOptions.Multiline) As IEnumerable(Of String)
+        For Each str As String In input.SafeQuery
+            Yield str.Match(pattern, options)
+        Next
+    End Function
+
+    ''' <summary>
+    ''' Searches the specified input string for the first occurrence of the specified regular expression.
+    ''' </summary>
+    ''' <param name="input">The string to search for a match.</param>
+    ''' <param name="pattern">The regular expression pattern to match.</param>
+    ''' <param name="options"></param>
+    ''' <returns>empty string will be returns if the given input string is null or empty.</returns>
+    <Extension>
     Public Function Match(input$, pattern$, Optional options As RegexOptions = RegexOptions.Multiline) As String
         If input.StringEmpty Then
             Return ""
