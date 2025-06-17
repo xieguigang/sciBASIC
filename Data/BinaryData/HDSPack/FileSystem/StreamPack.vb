@@ -469,7 +469,7 @@ Namespace FileSystem
                                  Optional access As FileAccess = FileAccess.Read) As Stream Implements IFileSystemEnvironment.OpenFile
 
             If access = FileAccess.ReadWrite Then
-                Throw New InvalidOperationException("HDS Streampack is not supports read/write stream mode!")
+                Throw New InvalidOperationException($"HDS Streampack is not supports read/write stream mode! open_block_error: {path}")
             ElseIf access = FileAccess.Read Then
                 Return OpenBlock(path)
             Else
