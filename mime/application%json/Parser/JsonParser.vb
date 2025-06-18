@@ -296,7 +296,7 @@ Public Class JsonParser
                 If t = (Token.JSONElements.Close, "}") Then
                     Exit Do
                 Else
-                    Throw New InvalidDataException($"a comma delimiter or json object close symbol should be follow the end of key:value tuple! (json_document_line: {t.span.line})")
+                    Throw New InvalidDataException($"a comma delimiter or json object close symbol should be follow the end of key:value tuple! (json_document_line: {t.span.line}, in-complete_json_obj: {obj.BuildJsonString})")
                 End If
             End If
         Loop
