@@ -83,6 +83,7 @@ Public Module PLSData
     <Extension>
     Public Function GetPLSScore(mvar As MultivariateAnalysisResult, opls As Boolean) As DataFrame
         Dim [class] As String() = mvar.StatisticsObject.YLabels.ToArray
+        Dim smaple_id As String() = mvar.StatisticsObject.YLabels2.ToArray
         Dim Tscore As New List(Of Double())
         Dim fileSize = mvar.StatisticsObject.YIndexes.Count
         Dim yexp As Double() = mvar.StatisticsObject.YVariables
@@ -107,13 +108,14 @@ Public Module PLSData
             ypre(i) = mvar.PredictedYs(i)
         Next
 
-        Dim df As New DataFrame With {.rownames = [class]}
+        Dim df As New DataFrame With {.rownames = smaple_id}
         Dim index As i32 = 1
 
         For Each t As Double() In Tscore
             Call df.add($"T{++index}", t)
         Next
 
+        Call df.add("class", [class])
         Call df.add("Y experiment", yexp)
         Call df.add("Y predicted", ypre)
 
