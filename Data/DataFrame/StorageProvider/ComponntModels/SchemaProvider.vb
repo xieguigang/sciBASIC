@@ -66,6 +66,7 @@
 Imports System.Reflection
 Imports System.Runtime.CompilerServices
 Imports System.Text
+Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.Framework.IO
 Imports Microsoft.VisualBasic.Data.Framework.IO.Linq
@@ -376,7 +377,7 @@ Namespace StorageProvider.ComponentModels
         Public Function ContainsField(name As String) As Boolean
             Dim LQuery As StorageProvider =
                 LinqAPI.DefaultFirst(Of Column) <=
- _
+                                                  _
                 From p As Column
                 In Columns
                 Where String.Equals(name, p.Name)
@@ -387,7 +388,7 @@ Namespace StorageProvider.ComponentModels
             End If
 
             LQuery = LinqAPI.DefaultFirst(Of CollectionColumn) <=
- _
+                                                                 _
                 From p As CollectionColumn
                 In Me.CollectionColumns
                 Where String.Equals(name, p.Name)
@@ -397,7 +398,7 @@ Namespace StorageProvider.ComponentModels
         End Function
 
         ''' <summary>
-        ''' 
+        ''' Check of all the csv fields that could be mapped to the current clr object schema?
         ''' </summary>
         ''' <param name="headers">The csv header row.</param>
         ''' <returns>
@@ -417,6 +418,39 @@ Namespace StorageProvider.ComponentModels
             Next
 
             Return sb.ToString
+        End Function
+
+        ''' <summary>
+        ''' Check of does any field is missing from the input csv table headers?
+        ''' </summary>
+        ''' <param name="headers"></param>
+        ''' <returns></returns>
+        Public Iterator Function CheckFieldMissing(headers As RowObject) As IEnumerable(Of String)
+            Dim checkIndex As Index(Of String) = headers.Indexing
+
+            For Each field As Column In Columns
+                If Not field.Name Like checkIndex Then
+                    Dim desc As String = field.GetDescription
+
+                    If desc.StringEmpty(, True) Then
+                        Yield $"Field: `{field.Name}` is missing!"
+                    Else
+                        Yield $"Field: `{field.Name}` is missing({desc})!"
+                    End If
+                End If
+            Next
+
+            For Each field As CollectionColumn In Me.CollectionColumns
+                If Not field.Name Like checkIndex Then
+                    Dim desc As String = field.GetDescription
+
+                    If desc.StringEmpty(, True) Then
+                        Yield $"Field: `{field.Name}` is missing!"
+                    Else
+                        Yield $"Field: `{field.Name}` is missing({desc})!"
+                    End If
+                End If
+            Next
         End Function
 
         ''' <summary>

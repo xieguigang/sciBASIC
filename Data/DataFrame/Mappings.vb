@@ -144,6 +144,19 @@ Public Class MappingsHelper
         Return result
     End Function
 
+    Public Shared Function CheckFieldMissing(Of T As Class)(filepath As String) As IEnumerable(Of String)
+        Dim headers As New RowObject(Tokenizer.CharsParser(filepath.ReadFirstLine))
+        ' 因为这里是判断读文件的时候是否能够把csv文件之中的
+        ' 所有的列数据都读取完全了， 所以在这里是获取所有的
+        ' 可写属性
+        Dim schema As SchemaProvider = SchemaProvider _
+            .CreateObject(Of T)(strict:=False) _
+            .CopyWriteDataToObject
+        Dim result = schema.CheckFieldMissing(headers)
+
+        Return result
+    End Function
+
     ''' <summary>
     ''' <see cref="NamedValue(Of T)"/>
     ''' </summary>
