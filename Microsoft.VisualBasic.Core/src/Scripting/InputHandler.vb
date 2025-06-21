@@ -259,14 +259,28 @@ Namespace Scripting
         End Function
 
         ''' <summary>
-        ''' Does this type can be cast from the <see cref="String"/> type?(目标类型能否由字符串转换过来??)
+        ''' Does this type can be cast from the <see cref="String"/> type?
         ''' </summary>
         ''' <param name="targetType"></param>
         ''' <returns></returns>
+        ''' <remarks>
+        ''' (目标类型能否由字符串转换过来??)
+        ''' </remarks>
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function IsPrimitive(targetType As Type) As Boolean
             Return CasterString.ContainsKey(targetType)
+        End Function
+
+        Public Function IsNullablePrimitive(targetType As Type) As Boolean
+            If targetType Is Nothing Then
+                Return False
+            End If
+            If targetType.IsGenericType AndAlso targetType.GetGenericTypeDefinition = GetType(Nullable(Of )) Then
+                Return IsPrimitive(targetType.GenericTypeArguments.First)
+            Else
+                Return False
+            End If
         End Function
 
         ''' <summary>

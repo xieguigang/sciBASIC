@@ -220,6 +220,8 @@ Namespace StorageProvider.Reflection
                 ' 属性值的类型是简单类型，则其标记的类型只能是普通列
                 Dim column As ColumnAttribute = If(ColumnMaps, New ColumnAttribute(_getName))
                 Return ComponentModels.Column.CreateObject(column, [Property])
+            ElseIf Scripting.IsNullablePrimitive([Property].PropertyType) Then
+                Return ComponentModels.Column.CreateObject(New ColumnAttribute(_getName), [Property])
             End If
 
             Dim valueType As New Value(Of Type)
