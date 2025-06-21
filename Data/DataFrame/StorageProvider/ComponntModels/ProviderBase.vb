@@ -180,6 +180,8 @@ Namespace StorageProvider.ComponentModels
 
             If CasterString.ContainsKey(ElementType) Then
                 Me.LoadMethod = AddressOf CasterString(ElementType).Invoke
+            ElseIf Scripting.IsNullablePrimitive(ElementType) Then
+                Me.LoadMethod = AddressOf CasterString(ElementType.GenericTypeArguments.First).Invoke
             Else
                 ' Meta 字典类型，则忽略掉
             End If
