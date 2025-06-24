@@ -259,11 +259,13 @@ Namespace Graphic.Axis
         ''' <param name="d"></param>
         ''' <param name="zero"></param>
         Private Sub drawLabel(g As IGraphics, size As Size, d As Double, zero As Point)
+            Dim tickFontHeight As Single = g.MeasureString("0", tickFont).Height
+
             If htmlLabel Then
                 Dim labelImage As Image = label.__plotLabel(labelFont, False)
                 Dim point As New Point With {
                     .X = (size.Width - labelImage.Width) / 2 + plotRegion.Left,
-                    .Y = zero.Y + tickFont.Height + d * 4
+                    .Y = zero.Y + tickFontHeight + d * 4
                 }
 
                 Call g.DrawImageUnscaled(labelImage, point)
@@ -271,8 +273,8 @@ Namespace Graphic.Axis
                 Dim css As CSSEnvirnment = g.LoadEnvironment
                 Dim font As Font = css.GetFont(CSSFont.TryParse(labelFont))
                 Dim fSize As SizeF = g.MeasureString(label, font)
-                Dim y1 As Double = zero.Y + tickFont.Height * 3
-                Dim y2 As Double = zero.Y + tickFont.Height + fSize.Height
+                Dim y1 As Double = zero.Y + tickFontHeight * 2
+                Dim y2 As Double = zero.Y + tickFontHeight + fSize.Height
                 Dim point As New PointF With {
                     .X = (size.Width - fSize.Width) / 2 + plotRegion.Left,
                     .Y = std.Max(y1, y2)
