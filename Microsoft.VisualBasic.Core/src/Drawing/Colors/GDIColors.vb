@@ -508,7 +508,6 @@ Namespace Imaging
         '    A,R,G,B
         ' 1. 0,0,0,0
         ' 2. 0,255,255,255
-        ' 3. 255,0,0,0
 
         ''' <summary>
         ''' Check of the given color value is transparent color?
@@ -518,7 +517,7 @@ Namespace Imaging
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function IsTransparent(c As Color) As Boolean
-            Return c.A = 0 OrElse (c.R = 0 AndAlso c.G = 0 AndAlso c.B = 0)
+            Return c.A = 0
         End Function
 
         ''' <summary>
