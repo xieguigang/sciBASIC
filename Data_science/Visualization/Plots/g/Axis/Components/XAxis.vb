@@ -271,8 +271,8 @@ Namespace Graphic.Axis
                 Dim css As CSSEnvirnment = g.LoadEnvironment
                 Dim font As Font = css.GetFont(CSSFont.TryParse(labelFont))
                 Dim fSize As SizeF = g.MeasureString(label, font)
-                Dim y1 As Double = zero.Y + tickFont.Height * 2
-                Dim y2 As Double = zero.Y + fSize.Height
+                Dim y1 As Double = zero.Y + tickFont.Height * 3
+                Dim y2 As Double = zero.Y + tickFont.Height + fSize.Height
                 Dim point As New PointF With {
                     .X = (size.Width - fSize.Width) / 2 + plotRegion.Left,
                     .Y = std.Max(y1, y2)
