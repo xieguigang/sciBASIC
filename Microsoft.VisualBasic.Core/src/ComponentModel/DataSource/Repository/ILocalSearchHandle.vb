@@ -116,9 +116,20 @@ Namespace ComponentModel.DataSourceModel.Repository
             Return source.MultipleQuery({New NamedValue(Of Term())("null", queries.ToArray)}, assert).Values
         End Function
 
+        ''' <summary>
+        ''' A general method for make the tuple name unique
+        ''' </summary>
+        ''' <typeparam name="T"></typeparam>
+        ''' <param name="list"></param>
+        ''' <param name="duplicated"></param>
+        ''' <returns></returns>
+        ''' <remarks>
+        ''' the name is uniqued via the <see cref="UniqueNames(IEnumerable(Of String), ByRef String())"/> method 
+        ''' via add numeric suffix to the name key string.
+        ''' </remarks>
         <Extension>
-        Public Function UniqueNames(list As IEnumerable(Of NamedValue(Of String)), <Out> Optional ByRef duplicated As String() = Nothing) As IEnumerable(Of NamedValue(Of String))
-            Dim alldata As NamedValue(Of String)() = list.SafeQuery.ToArray
+        Public Function UniqueNames(Of T)(list As IEnumerable(Of NamedValue(Of T)), <Out> Optional ByRef duplicated As String() = Nothing) As IEnumerable(Of NamedValue(Of T))
+            Dim alldata As NamedValue(Of T)() = list.SafeQuery.ToArray
             Dim allnames As String() = alldata.Select(Function(i) i.Name).UniqueNames(duplicated).ToArray
 
             If duplicated.IsNullOrEmpty Then
@@ -127,8 +138,9 @@ Namespace ComponentModel.DataSourceModel.Repository
                 Return alldata
             Else
                 ' replace the old name with new unique names
+                ' value and description has no changes
                 For i As Integer = 0 To alldata.Length - 1
-                    alldata(i) = New NamedValue(Of String)(allnames(i), alldata(i).Value, alldata(i).Description)
+                    alldata(i) = New NamedValue(Of T)(allnames(i), alldata(i).Value, alldata(i).Description)
                 Next
 
                 Return alldata
