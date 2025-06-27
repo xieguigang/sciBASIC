@@ -72,8 +72,11 @@ Public Module Extensions
     ''' <param name="noise"></param>
     ''' <returns></returns>
     ''' 
-    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function SNRatio(signal As Double, noise As Double) As Double
+        If signal = 0.0 Then
+            Return 0
+        End If
+
         Return 10 * std.Log10(If(noise <= 0.0, Double.MaxValue, signal / noise))
     End Function
 
