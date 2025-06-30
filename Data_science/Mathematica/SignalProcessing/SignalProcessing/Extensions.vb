@@ -52,6 +52,8 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.ComponentModel.TagData
+Imports Microsoft.VisualBasic.Linq
 Imports std = System.Math
 
 <HideModuleName>
@@ -61,6 +63,15 @@ Public Module Extensions
     <Extension>
     Public Function AsSignal(signals As IEnumerable(Of TimeSignal)) As Signal
         Return New Signal(signals)
+    End Function
+
+    <Extension>
+    Public Function CastTo(Of TIn As ITimeSignal, TOut As ITimeSignal)(source As IEnumerable(Of TIn), cast As Func(Of TIn, TOut)) As IEnumerable(Of TOut)
+        If source Is Nothing Then
+            Return New TOut() {}
+        Else
+            Return From ti As TIn In source Select cast(ti)
+        End If
     End Function
 
     ''' <summary>
