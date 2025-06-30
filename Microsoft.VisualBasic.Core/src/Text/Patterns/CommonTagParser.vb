@@ -115,6 +115,12 @@ Namespace Text.Patterns
             Call walkLabels(maxDepth)
         End Sub
 
+        Public Iterator Function GetTagNames() As IEnumerable(Of String)
+            For Each row As Char() In nameMatrix
+                Yield row.Skip(MaxColumnIndex).CharString
+            Next
+        End Function
+
         Public Iterator Function GetColumn(offset As Integer) As IEnumerable(Of Char)
             For Each row As Char() In nameMatrix
                 If offset < row.Length Then
