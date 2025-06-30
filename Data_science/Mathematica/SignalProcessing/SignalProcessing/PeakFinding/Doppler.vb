@@ -54,7 +54,7 @@
 Imports Microsoft.VisualBasic.ComponentModel.TagData
 Imports Microsoft.VisualBasic.Math.SignalProcessing.PeakFinding
 Imports Microsoft.VisualBasic.Scripting.Runtime
-Imports stdNum = System.Math
+Imports std = System.Math
 
 Public Module Doppler
 
@@ -64,7 +64,7 @@ Public Module Doppler
         Dim into = raw.Min(Function(x) x.intensity)
 
         If into < 0 Then
-            into = stdNum.Abs(into)
+            into = std.Abs(into)
             raw = raw _
                 .Select(Function(a)
                             Return New TimeSignal With {

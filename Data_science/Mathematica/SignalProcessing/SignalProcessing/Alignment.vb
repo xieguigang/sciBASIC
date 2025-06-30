@@ -55,7 +55,7 @@ Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.Distributions
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
-Imports stdNum = System.Math
+Imports std = System.Math
 
 Public Module Alignment
 
@@ -123,7 +123,7 @@ Public Module Alignment
     <Extension>
     Public Function Normalize(signal As GeneralSignal) As GeneralSignal
         If signal.Strength.Any(Function(vi) vi < 0) Then
-            Dim minY As Double = stdNum.Abs(signal.Strength.Min)
+            Dim minY As Double = std.Abs(signal.Strength.Min)
             Dim norm As Double() = signal.Strength _
                 .Select(Function(v) v + minY) _
                 .ToArray
