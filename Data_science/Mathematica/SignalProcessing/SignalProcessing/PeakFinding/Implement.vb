@@ -101,14 +101,14 @@ Namespace PeakFinding
         End Function
 
         ''' <summary>
-        ''' 
+        ''' Detection of the signal base line based on the quantile method.
         ''' </summary>
         ''' <param name="signals"></param>
         ''' <param name="quantile">一般建议值为0.65</param>
-        ''' <returns></returns>
+        ''' <returns>the intensity value cutoff for the noise/baseline</returns>
         <Extension>
-        Public Function SignalBaseline(signals As ITimeSignal(), quantile As Double) As Double
-            Dim allIntensity As Double() = signals.Select(Function(t) t.intensity).ToArray
+        Public Function SignalBaseline(Of T As ITimeSignal)(signals As IEnumerable(Of T), quantile As Double) As Double
+            Dim allIntensity As Double() = signals.Select(Function(ti) ti.intensity).ToArray
             Dim q As QuantileEstimationGK = allIntensity.GKQuantile
             Dim baseline As Double = q.Query(quantile)
 
