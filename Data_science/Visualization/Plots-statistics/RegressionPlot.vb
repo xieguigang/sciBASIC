@@ -477,7 +477,7 @@ Public Class RegressionPlot : Inherits Plot
         Dim css As CSSEnvirnment = g.LoadEnvironment
         Dim legendLabelFont As Font = css.GetFont(CSSFont.TryParse(linearDetailsFontCSS))
         Dim eq$ = "f<sub>(x)</sub> = " & fit.Polynomial.ToString(factorFormat, html:=True)
-        Dim R2$ = "R<sup>2</sup> = " & fit.CorrelationCoefficient.ToString("F5")
+        Dim R2$ = "R = " & fit.CorrelationCoefficient.ToString("F5")
         Dim pt As New PointF With {
             .X = rect.Left + g.MeasureString("00", legendLabelFont).Width,
             .Y = rect.Top + 20

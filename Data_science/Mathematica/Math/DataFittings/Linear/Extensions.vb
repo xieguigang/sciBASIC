@@ -131,6 +131,11 @@ Public Module Extensions
         Return fit
     End Function
 
+    ''' <summary>
+    ''' Sqrt of R<sup>2</sup>
+    ''' </summary>
+    ''' <param name="lm"></param>
+    ''' <returns></returns>
     <Extension>
     Public Function CorrelationCoefficient(lm As IFitted) As Double
         Return std.Sqrt(lm.R2)
