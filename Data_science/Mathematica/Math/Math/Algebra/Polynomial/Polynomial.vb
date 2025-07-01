@@ -98,6 +98,18 @@ Namespace LinearAlgebra
             End Get
         End Property
 
+        Sub New()
+        End Sub
+
+        ''' <summary>
+        ''' y = a + bx
+        ''' </summary>
+        ''' <param name="a"></param>
+        ''' <param name="b"></param>
+        Sub New(a As Double, b As Double)
+            Factors = {a, b}
+        End Sub
+
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Function Evaluate(ParamArray x() As Double) As Double
             Return F(x:=x(Scan0))
