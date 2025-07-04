@@ -1,56 +1,56 @@
-﻿#Region "Microsoft.VisualBasic::29521ef3388eb234bac5313fe88b3b7f, Data_science\Mathematica\SignalProcessing\SignalProcessing\Sampler\BinSampler.vb"
+﻿#Region "Microsoft.VisualBasic::eb505180599911b3d55870013318d47f, Data_science\Mathematica\SignalProcessing\SignalProcessing\Sampler\BinSampler.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 53
-'    Code Lines: 32 (60.38%)
-' Comment Lines: 11 (20.75%)
-'    - Xml Docs: 90.91%
-' 
-'   Blank Lines: 10 (18.87%)
-'     File Size: 1.84 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-' Class BinSampler
-' 
-'     Properties: Range
-' 
-'     Constructor: (+2 Overloads) Sub New
-'     Function: AggregateSignal, GetTicks
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 66
+    '    Code Lines: 38 (57.58%)
+    ' Comment Lines: 17 (25.76%)
+    '    - Xml Docs: 94.12%
+    ' 
+    '   Blank Lines: 11 (16.67%)
+    '     File Size: 2.74 KB
+
+
+    ' Class BinSampler
+    ' 
+    '     Properties: Range
+    ' 
+    '     Constructor: (+2 Overloads) Sub New
+    '     Function: (+3 Overloads) AggregateSignal, GetTicks
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

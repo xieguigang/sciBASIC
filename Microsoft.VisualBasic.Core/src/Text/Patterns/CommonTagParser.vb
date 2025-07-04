@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c92f4dca4afec8da9785f10c46b0415d, Microsoft.VisualBasic.Core\src\Text\Patterns\CommonTagParser.vb"
+﻿#Region "Microsoft.VisualBasic::4193bfb13712025c1cad948324b782b8, Microsoft.VisualBasic.Core\src\Text\Patterns\CommonTagParser.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 146
-    '    Code Lines: 102 (69.86%)
-    ' Comment Lines: 21 (14.38%)
+    '   Total Lines: 152
+    '    Code Lines: 107 (70.39%)
+    ' Comment Lines: 21 (13.82%)
     '    - Xml Docs: 71.43%
     ' 
-    '   Blank Lines: 23 (15.75%)
-    '     File Size: 4.94 KB
+    '   Blank Lines: 24 (15.79%)
+    '     File Size: 5.17 KB
 
 
     '     Class CommonTagParser
@@ -50,7 +50,7 @@
     ' 
     '         Constructor: (+1 Overloads) Sub New
     ' 
-    '         Function: GetColumn, StringMotif, ToString
+    '         Function: GetColumn, GetTagNames, StringMotif, ToString
     ' 
     '         Sub: walkLabels
     ' 

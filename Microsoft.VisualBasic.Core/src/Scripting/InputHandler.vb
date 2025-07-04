@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0201d27f5e39f79af459ccfee7416407, Microsoft.VisualBasic.Core\src\Scripting\InputHandler.vb"
+﻿#Region "Microsoft.VisualBasic::5af578c2c5b265e9d6f3d6150f7babcc, Microsoft.VisualBasic.Core\src\Scripting\InputHandler.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 447
-    '    Code Lines: 266 (59.51%)
-    ' Comment Lines: 134 (29.98%)
-    '    - Xml Docs: 91.04%
+    '   Total Lines: 461
+    '    Code Lines: 276 (59.87%)
+    ' Comment Lines: 137 (29.72%)
+    '    - Xml Docs: 91.24%
     ' 
-    '   Blank Lines: 47 (10.51%)
-    '     File Size: 19.71 KB
+    '   Blank Lines: 48 (10.41%)
+    '     File Size: 20.22 KB
 
 
     '     Module InputHandler
@@ -48,8 +48,8 @@
     '         Properties: [String], CasterString, Types
     ' 
     '         Function: [DirectCast], (+3 Overloads) [GetType], (+2 Overloads) CastArray, Convertible, (+4 Overloads) CTypeDynamic
-    '                   DefaultTextParser, GetString, IsPrimitive, ParseDateTime, StringParser
-    '                   (+2 Overloads) ToString
+    '                   DefaultTextParser, GetString, IsNullablePrimitive, IsPrimitive, ParseDateTime
+    '                   StringParser, (+2 Overloads) ToString
     ' 
     '         Sub: CapabilityPromise
     ' 

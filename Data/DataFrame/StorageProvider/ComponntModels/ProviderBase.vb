@@ -1,61 +1,61 @@
-﻿#Region "Microsoft.VisualBasic::fa39dd986cff97be3f7777c494cbaf01, Data\DataFrame\StorageProvider\ComponntModels\ProviderBase.vb"
+﻿#Region "Microsoft.VisualBasic::230ec7e3a4035d91642e1222aad26d67, Data\DataFrame\StorageProvider\ComponntModels\ProviderBase.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 140
-'    Code Lines: 60 (42.86%)
-' Comment Lines: 62 (44.29%)
-'    - Xml Docs: 98.39%
-' 
-'   Blank Lines: 18 (12.86%)
-'     File Size: 5.44 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Class StorageProvider
-' 
-'         Properties: BindProperty, CanReadDataFromObject, CanWriteDataToObject, IsMetaField, LoadMethod
-'                     Ordinal
-' 
-'         Constructor: (+3 Overloads) Sub New
-' 
-'         Function: GetValue, ToString
-' 
-'         Sub: SetValue
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 156
+    '    Code Lines: 74 (47.44%)
+    ' Comment Lines: 62 (39.74%)
+    '    - Xml Docs: 98.39%
+    ' 
+    '   Blank Lines: 20 (12.82%)
+    '     File Size: 6.13 KB
+
+
+    '     Class StorageProvider
+    ' 
+    '         Properties: BindProperty, CanReadDataFromObject, CanWriteDataToObject, IsMetaField, LoadMethod
+    '                     Ordinal
+    ' 
+    '         Constructor: (+3 Overloads) Sub New
+    ' 
+    '         Function: GetDescription, GetValue, ToString
+    ' 
+    '         Sub: SetValue
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

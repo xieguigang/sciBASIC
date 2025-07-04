@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::27c2754f7e02a7103d01656987de21a3, mime\application%json\Javascript\JsonArray.vb"
+﻿#Region "Microsoft.VisualBasic::f2e1e5034f596a4622965721814163d5, mime\application%json\Javascript\JsonArray.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 160
-    '    Code Lines: 118 (73.75%)
-    ' Comment Lines: 17 (10.62%)
+    '   Total Lines: 164
+    '    Code Lines: 118 (71.95%)
+    ' Comment Lines: 21 (12.80%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 25 (15.62%)
-    '     File Size: 5.55 KB
+    '   Blank Lines: 25 (15.24%)
+    '     File Size: 5.70 KB
 
 
     '     Class JsonArray

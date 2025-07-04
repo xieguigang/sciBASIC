@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9784d6ae91858d509dad2b2cee5b0d0e, Data_science\Mathematica\SignalProcessing\SignalProcessing\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::03f211b0812b848a6d934f59fa5ca2cc, Data_science\Mathematica\SignalProcessing\SignalProcessing\Extensions.vb"
 
     ' Author:
     ' 
@@ -34,18 +34,19 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 93
-    '    Code Lines: 34 (36.56%)
-    ' Comment Lines: 51 (54.84%)
+    '   Total Lines: 107
+    '    Code Lines: 46 (42.99%)
+    ' Comment Lines: 51 (47.66%)
     '    - Xml Docs: 72.55%
     ' 
-    '   Blank Lines: 8 (8.60%)
-    '     File Size: 4.95 KB
+    '   Blank Lines: 10 (9.35%)
+    '     File Size: 5.40 KB
 
 
     ' Module Extensions
     ' 
-    '     Function: AnalogDigitConvert, AsSignal, GetNoise, ShannonTransferRate, SNRatio
+    '     Function: AnalogDigitConvert, AsSignal, CastTo, GetNoise, ShannonTransferRate
+    '               SNRatio
     ' 
     ' /********************************************************************************/
 

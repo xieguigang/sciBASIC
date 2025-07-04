@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::22c56b260c4b5a9b9cf9a1824798f5c0, mime\application%json\Parser\JsonParser.vb"
+﻿#Region "Microsoft.VisualBasic::00cfdf960967eeed00587947131ee202, mime\application%json\Parser\JsonParser.vb"
 
     ' Author:
     ' 
@@ -34,26 +34,22 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 486
-    '    Code Lines: 333 (68.52%)
-    ' Comment Lines: 94 (19.34%)
-    '    - Xml Docs: 59.57%
+    '   Total Lines: 344
+    '    Code Lines: 222 (64.53%)
+    ' Comment Lines: 74 (21.51%)
+    '    - Xml Docs: 62.16%
     ' 
-    '   Blank Lines: 59 (12.14%)
-    '     File Size: 16.76 KB
+    '   Blank Lines: 48 (13.95%)
+    '     File Size: 12.22 KB
 
 
     ' Class JsonParser
     ' 
     '     Properties: JSONvalue
     ' 
-    '     Constructor: (+1 Overloads) Sub New
-    ' 
-    '     Function: _parse, GetParserErrors, GetTokenSequence, MeasureToken, Open
-    '               OpenJSON, Parse, PullArray, PullJson, PullObject
-    '               StripString, walkChar
-    ' 
-    '     Sub: ClearParserError
+    '     Constructor: (+2 Overloads) Sub New
+    '     Function: _parse, Open, OpenJSON, Parse, PullArray
+    '               PullJson, PullObject, StripString
     ' 
     ' /********************************************************************************/
 

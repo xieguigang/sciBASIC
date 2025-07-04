@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8891facf327a9441b15438e53e184638, Data\DataFrame\StorageProvider\Reflection\StorageProviders\TypeSchemaProvider.vb"
+﻿#Region "Microsoft.VisualBasic::77cb0608e3b3bb87463b58fc12aca9ff, Data\DataFrame\StorageProvider\Reflection\StorageProviders\TypeSchemaProvider.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 319
-    '    Code Lines: 201 (63.01%)
-    ' Comment Lines: 62 (19.44%)
+    '   Total Lines: 321
+    '    Code Lines: 203 (63.24%)
+    ' Comment Lines: 62 (19.31%)
     '    - Xml Docs: 53.23%
     ' 
-    '   Blank Lines: 56 (17.55%)
-    '     File Size: 14.74 KB
+    '   Blank Lines: 56 (17.45%)
+    '     File Size: 14.93 KB
 
 
     '     Module TypeSchemaProvider

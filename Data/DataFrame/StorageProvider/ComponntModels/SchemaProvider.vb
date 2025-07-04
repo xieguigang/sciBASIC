@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f35f015790d8a236a5879ae2d9f24ced, Data\DataFrame\StorageProvider\ComponntModels\SchemaProvider.vb"
+﻿#Region "Microsoft.VisualBasic::8964bc91dacf8a9025672864128f198b, Data\DataFrame\StorageProvider\ComponntModels\SchemaProvider.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 505
-    '    Code Lines: 360 (71.29%)
-    ' Comment Lines: 81 (16.04%)
-    '    - Xml Docs: 96.30%
+    '   Total Lines: 539
+    '    Code Lines: 384 (71.24%)
+    ' Comment Lines: 86 (15.96%)
+    '    - Xml Docs: 97.67%
     ' 
-    '   Blank Lines: 64 (12.67%)
-    '     File Size: 21.25 KB
+    '   Blank Lines: 69 (12.80%)
+    '     File Size: 22.85 KB
 
 
     '     Class SchemaProvider
@@ -50,11 +50,11 @@
     ' 
     '         Constructor: (+1 Overloads) Sub New
     ' 
-    '         Function: __columnType, (+2 Overloads) CacheOrdinal, CheckFieldConsistent, ContainsField, ContainsProperty
-    '                   CopyReadDataFromObject, CopyWriteDataToObject, (+2 Overloads) CreateObject, CreateObjectInternal, GetCollectionColumns
-    '                   GetColumns, GetEnumColumns, GetEnumerator, GetField, GetKeyValuePairColumn
-    '                   getMeta, GetMetaAttributeColumn, gets, getWriteProvider, IEnumerable_GetEnumerator
-    '                   ToString
+    '         Function: __columnType, (+2 Overloads) CacheOrdinal, CheckFieldConsistent, CheckFieldMissing, ContainsField
+    '                   ContainsProperty, CopyReadDataFromObject, CopyWriteDataToObject, (+2 Overloads) CreateObject, CreateObjectInternal
+    '                   GetCollectionColumns, GetColumns, GetEnumColumns, GetEnumerator, GetField
+    '                   GetKeyValuePairColumn, getMeta, GetMetaAttributeColumn, gets, getWriteProvider
+    '                   IEnumerable_GetEnumerator, ToString
     ' 
     '         Sub: Remove
     ' 

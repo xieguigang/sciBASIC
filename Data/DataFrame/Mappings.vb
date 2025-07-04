@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::368904758eb2fd622f58b41f34b59944, Data\DataFrame\Mappings.vb"
+﻿#Region "Microsoft.VisualBasic::96f0d7a0028e1677377c32a6a8cb3429, Data\DataFrame\Mappings.vb"
 
     ' Author:
     ' 
@@ -34,19 +34,19 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 118
-    '    Code Lines: 61 (51.69%)
-    ' Comment Lines: 44 (37.29%)
-    '    - Xml Docs: 93.18%
+    '   Total Lines: 131
+    '    Code Lines: 69 (52.67%)
+    ' Comment Lines: 47 (35.88%)
+    '    - Xml Docs: 87.23%
     ' 
-    '   Blank Lines: 13 (11.02%)
-    '     File Size: 5.12 KB
+    '   Blank Lines: 15 (11.45%)
+    '     File Size: 5.75 KB
 
 
     ' Class MappingsHelper
     ' 
-    '     Function: [Typeof], CheckFieldConsistent, ColumnName, NamedValueMapsWrite, PropertyNames
-    '               TagFieldName
+    '     Function: [Typeof], CheckFieldConsistent, CheckFieldMissing, ColumnName, NamedValueMapsWrite
+    '               PropertyNames, TagFieldName
     ' 
     ' /********************************************************************************/
 

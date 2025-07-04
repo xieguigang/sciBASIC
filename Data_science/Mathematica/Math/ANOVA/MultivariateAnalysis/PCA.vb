@@ -1,64 +1,64 @@
-﻿#Region "Microsoft.VisualBasic::68a213f095ee28c5ecaf294463f90e69, Data_science\Mathematica\Math\ANOVA\MultivariateAnalysis\PCA.vb"
+﻿#Region "Microsoft.VisualBasic::cc7ba828f2a92034069efbb88f3243d7, Data_science\Mathematica\Math\ANOVA\MultivariateAnalysis\PCA.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 233
-'    Code Lines: 159 (68.24%)
-' Comment Lines: 29 (12.45%)
-'    - Xml Docs: 24.14%
-' 
-'   Blank Lines: 45 (19.31%)
-'     File Size: 7.86 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-' Module PCA
-' 
-'     Function: CalculateComponent, PrincipalComponentAnalysis
-'     Class LoadingTask
-' 
-'         Constructor: (+1 Overloads) Sub New
-'         Sub: Solve
-' 
-'     Class ScoreTask
-' 
-'         Constructor: (+1 Overloads) Sub New
-'         Sub: Solve
-' 
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 233
+    '    Code Lines: 157 (67.38%)
+    ' Comment Lines: 31 (13.30%)
+    '    - Xml Docs: 22.58%
+    ' 
+    '   Blank Lines: 45 (19.31%)
+    '     File Size: 7.86 KB
+
+
+    ' Module PCA
+    ' 
+    '     Function: CalculateComponent, PrincipalComponentAnalysis
+    '     Class LoadingTask
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    '         Sub: Solve
+    ' 
+    '     Class ScoreTask
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    '         Sub: Solve
+    ' 
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

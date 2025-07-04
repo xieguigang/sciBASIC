@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fc70a6260265380977e2d461d7b88d61, Data_science\Mathematica\Math\DataFittings\Linear\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::29597023eca2a3d5d5e2b0ed06f10a59, Data_science\Mathematica\Math\DataFittings\Linear\Extensions.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 85
-    '    Code Lines: 44 (51.76%)
-    ' Comment Lines: 29 (34.12%)
-    '    - Xml Docs: 75.86%
+    '   Total Lines: 90
+    '    Code Lines: 44 (48.89%)
+    ' Comment Lines: 34 (37.78%)
+    '    - Xml Docs: 79.41%
     ' 
-    '   Blank Lines: 12 (14.12%)
-    '     File Size: 2.86 KB
+    '   Blank Lines: 12 (13.33%)
+    '     File Size: 2.99 KB
 
 
     ' Module Extensions

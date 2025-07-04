@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c996e41621d9059f77c3886e0e5a4178, Microsoft.VisualBasic.Core\src\Extensions\StringHelpers\StringHelpers.vb"
+﻿#Region "Microsoft.VisualBasic::34b8a571a12b8b7693ba81271d638495, Microsoft.VisualBasic.Core\src\Extensions\StringHelpers\StringHelpers.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 1474
-    '    Code Lines: 800 (54.27%)
-    ' Comment Lines: 514 (34.87%)
-    '    - Xml Docs: 89.30%
+    '   Total Lines: 1488
+    '    Code Lines: 806 (54.17%)
+    ' Comment Lines: 521 (35.01%)
+    '    - Xml Docs: 89.44%
     ' 
-    '   Blank Lines: 160 (10.85%)
-    '     File Size: 55.52 KB
+    '   Blank Lines: 161 (10.82%)
+    '     File Size: 56.27 KB
 
 
     ' Module StringHelpers
@@ -52,7 +52,7 @@
     '               First, FormatString, FormatZero, GetBetween, GetEMails
     '               GetStackValue, GetString, (+3 Overloads) GetTagValue, GetURLs, IgnoreCase
     '               InStrAny, (+2 Overloads) Intersection, IsEmptyStringVector, JoinBy, LineTokens
-    '               Located, Lookup, Lookups, (+2 Overloads) Match, Matches
+    '               Located, Lookup, Lookups, (+3 Overloads) Match, Matches
     '               MatchPattern, (+2 Overloads) MaxLengthString, MinLengthString, NotEmpty, PadEnd
     '               Parts, RepeatString, ReplaceChars, (+2 Overloads) Reverse, RNull
     '               SaveTo, (+2 Overloads) Split, SplitBy, StartsWith, StringEmpty

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::da7d37f5c2821e7d67cec90f93723e9e, Data_science\Mathematica\Math\Math\Algebra\Polynomial\Polynomial.vb"
+﻿#Region "Microsoft.VisualBasic::ebc6a34729e804b232153d63d0644505, Data_science\Mathematica\Math\Math\Algebra\Polynomial\Polynomial.vb"
 
     ' Author:
     ' 
@@ -34,19 +34,20 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 125
-    '    Code Lines: 82 (65.60%)
-    ' Comment Lines: 24 (19.20%)
-    '    - Xml Docs: 91.67%
+    '   Total Lines: 137
+    '    Code Lines: 87 (63.50%)
+    ' Comment Lines: 29 (21.17%)
+    '    - Xml Docs: 93.10%
     ' 
-    '   Blank Lines: 19 (15.20%)
-    '     File Size: 4.11 KB
+    '   Blank Lines: 21 (15.33%)
+    '     File Size: 4.39 KB
 
 
     '     Class Polynomial
     ' 
     '         Properties: IsLinear
     ' 
+    '         Constructor: (+2 Overloads) Sub New
     '         Function: Evaluate, Parse, (+3 Overloads) ToString
     ' 
     ' 
