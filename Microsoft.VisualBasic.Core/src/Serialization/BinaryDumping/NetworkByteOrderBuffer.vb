@@ -126,17 +126,15 @@ Namespace Serialization.BinaryDumping
             zlib
         End Enum
 
-        ''' <summary>
-        ''' parse the given base64 string as the numeric vector
-        ''' </summary>
-        ''' <param name="base64"></param>
-        ''' <param name="zip">does the given base64 string is gzip compressed data?</param>
-        ''' <param name="noMagic">does the zip compression data has two byte of magic number, default is false which means it has the magic number</param>
-        ''' <returns></returns>
-        Public Function ParseDouble(base64 As String,
-                                    Optional zip As Compression = Compression.none,
-                                    Optional noMagic As Boolean = False) As Double()
+        Public Function ParseFloat(base64 As String,
+                                   Optional zip As Compression = Compression.none,
+                                   Optional noMagic As Boolean = False) As Single()
 
+            Dim vec As Single() = decode32(ParseStreamCommon(base64, zip, noMagic))
+            Return vec
+        End Function
+
+        Private Function ParseStreamCommon(base64 As String, zip As Compression, noMagic As Boolean) As Byte()
             Dim raw As Byte() = Base64Codec.Base64RawBytes(base64)
             Dim data As Byte() = raw
 
@@ -148,9 +146,22 @@ Namespace Serialization.BinaryDumping
                 End If
             End If
 
-            Dim vals As Double() = decode(data)
+            Return data
+        End Function
 
-            Return vals
+        ''' <summary>
+        ''' parse the given base64 string as the numeric vector
+        ''' </summary>
+        ''' <param name="base64"></param>
+        ''' <param name="zip">does the given base64 string is gzip compressed data?</param>
+        ''' <param name="noMagic">does the zip compression data has two byte of magic number, default is false which means it has the magic number</param>
+        ''' <returns></returns>
+        Public Function ParseDouble(base64 As String,
+                                    Optional zip As Compression = Compression.none,
+                                    Optional noMagic As Boolean = False) As Double()
+
+            Dim vec As Double() = decode(ParseStreamCommon(base64, zip, noMagic))
+            Return vec
         End Function
 
         Public Function Base64String(data As IEnumerable(Of Single), Optional gzip As Boolean = False) As String
