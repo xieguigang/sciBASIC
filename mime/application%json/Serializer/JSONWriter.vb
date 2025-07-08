@@ -185,7 +185,9 @@ Friend Class JSONWriter : Implements IDisposable
                     End If
                 Next
 
-                Call BuildJSONString(objs.Last, indent + 1)
+                If objs.Any Then
+                    Call BuildJSONString(objs.Last, indent + 1)
+                End If
 
                 If opts.indent Then
                     Call json.WriteLine()
