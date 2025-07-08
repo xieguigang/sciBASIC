@@ -95,6 +95,10 @@ Namespace Javascript
             End Get
         End Property
 
+        ''' <summary>
+        ''' the literal value is nothing?
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property IsLiteralNull As Boolean
             Get
                 Return value Is Nothing OrElse any.ToString(value).TextEquals("null")
