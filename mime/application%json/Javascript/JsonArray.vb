@@ -94,7 +94,7 @@ Namespace Javascript
         End Property
 
         ''' <summary>
-        ''' the array base element type
+        ''' try to measure of the array base element type
         ''' </summary>
         ''' <returns></returns>
         Public ReadOnly Property UnderlyingType As Type

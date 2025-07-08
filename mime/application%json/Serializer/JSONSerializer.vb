@@ -263,7 +263,18 @@ Public Module JSONSerializer
             .ToArray
 
         If opt.indent Then
-            Call a.AppendLine("[").AppendLine(array.JoinBy(", ")).AppendLine("]")
+            Dim elementType As Type = arr.UnderlyingType
+
+            Select Case elementType
+                Case GetType(String)
+                    ' one line per string element
+                    Call a.AppendLine("[").AppendLine(array.JoinBy(", ")).AppendLine("]")
+                Case GetType(Object)
+                    Call a.AppendLine("[").AppendLine(array.JoinBy(", ")).AppendLine("]")
+                Case Else
+                    ' number, boolean in vector style
+                    Call a.Append("[").Append(array.JoinBy(", ")).Append("]")
+            End Select
         Else
             Call a.Append("[").Append(array.JoinBy(", ")).Append("]")
         End If
