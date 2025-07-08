@@ -91,7 +91,7 @@ Namespace Text.Parser
         End Function
 
         Private Function ReadNextC() As SeqValue(Of Char)
-            If buffer.EndRead Then
+            If buffer Is Nothing OrElse buffer.EndRead Then
                 buffer = str.ReadLine
             End If
 
