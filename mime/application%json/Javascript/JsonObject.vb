@@ -131,6 +131,16 @@ Namespace Javascript
             End Get
         End Property
 
+        ''' <summary>
+        ''' try to measure of the array base element type
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property UnderlyingType As Type
+            Get
+                Return JsonArray.MeasureUnderlyingType(array.Values)
+            End Get
+        End Property
+
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Sub Add(key As String, element As JsonElement)
             Call array.Add(key, element)

@@ -14,7 +14,13 @@ Module writerTest
     'a': true,
     'b': [5,23,53,2.4244,2.323],
     'c': 'xxxxxxxxxxxxxxxxxx'
-}
+},
+'objs': [
+
+{'a':1,'c':false},
+{'a':-1,'c':false,'v':[23,4,32,43,24]},
+{'a':1,'c':true}
+]
 }"
 
     Sub Main()
