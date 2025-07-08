@@ -31,9 +31,9 @@ Friend Class JSONWriter : Implements IDisposable
             Call Me.json.WriteLine("null")
         Else
             Select Case json.GetType
-                Case GetType(JsonValue) : Return DirectCast(json, JsonValue).jsonValueString(opts)
-                Case GetType(JsonObject) : Return DirectCast(json, JsonObject).jsonObjectString(opts)
-                Case GetType(JsonArray) : Return DirectCast(json, JsonArray).jsonArrayString(opts)
+                Case GetType(JsonValue) : Call jsonValueString(DirectCast(json, JsonValue))
+                Case GetType(JsonObject) : Call jsonObjectString(DirectCast(json, JsonObject))
+                Case GetType(JsonArray) : Call jsonArrayString(DirectCast(json, JsonArray))
                 Case Else
                     Throw New NotImplementedException(json.GetType.FullName)
             End Select
@@ -57,7 +57,7 @@ Friend Class JSONWriter : Implements IDisposable
         If TypeOf value Is Date AndAlso opts.unixTimestamp Then
             Return DirectCast(value, Date).UnixTimeStamp
         ElseIf TypeOf value Is String Then
-            Return encodeString(value, opt)
+            Return encodeString(value)
         ElseIf TypeOf value Is Boolean Then
             Return value.ToString.ToLower
         ElseIf TypeOf value Is ObjectId Then
@@ -74,18 +74,17 @@ Friend Class JSONWriter : Implements IDisposable
     ''' {...}
     ''' </summary>
     ''' <param name="obj"></param>
-    ''' <param name="opt"></param>
     ''' <returns></returns>
-    Private Function jsonObjectString(obj As JsonObject, opt As JSONSerializerOptions) As String
+    Private Function jsonObjectString(obj As JsonObject) As String
         Dim members As New List(Of String)
 
         For Each member As NamedValue(Of JsonElement) In obj
-            Call members.Add($"{encodeString(member.Name, opt)}: {member.Value.BuildJsonString(opt)}")
+            Call members.Add($"{encodeString(member.Name)}: {member.Value.BuildJsonString()}")
         Next
 
-        If opt.indent Then
+        If opts.indent Then
             Return $"{{
-            {members.JoinBy("," & Ascii.LF)}
+            {members.JoinBy("," & ASCII.LF)}
         }}"
         Else
             Return $"{{{members.JoinBy(",")}}}"
@@ -96,15 +95,14 @@ Friend Class JSONWriter : Implements IDisposable
     ''' [...]
     ''' </summary>
     ''' <param name="arr"></param>
-    ''' <param name="opt"></param>
     ''' <returns></returns>
-    Private Function jsonArrayString(arr As JsonArray, opt As JSONSerializerOptions) As String
+    Private Function jsonArrayString(arr As JsonArray) As String
         Dim a As New StringBuilder
         Dim array$() = arr _
-            .Select(Function(item) item.BuildJsonString(opt)) _
+            .Select(Function(item) item.BuildJsonString()) _
             .ToArray
 
-        If opt.indent Then
+        If opts.indent Then
             Dim elementType As Type = arr.UnderlyingType
 
             Select Case elementType
