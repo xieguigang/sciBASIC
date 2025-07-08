@@ -62,6 +62,7 @@
 
 Imports System.Runtime.CompilerServices
 Imports System.Xml.Serialization
+Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Serialization.JSON
@@ -72,13 +73,13 @@ Namespace Text.Xml.Models
     ''' A <see cref="Double"/> type numeric sequence container
     ''' </summary>
     <XmlType("numerics")>
-    Public Class NumericVector : Implements Enumeration(Of Double)
+    Public Class NumericVector : Implements Enumeration(Of Double), INamedValue, IReadOnlyId
 
         ''' <summary>
         ''' 可以用这个属性来简单的标记这个向量所属的对象名称
         ''' </summary>
         ''' <returns></returns>
-        <XmlAttribute> Public Property name As String
+        <XmlAttribute> Public Property name As String Implements INamedValue.Key, IReadOnlyId.Identity
         ''' <summary>
         ''' 存储于XML文档之中的数据向量
         ''' </summary>
@@ -114,6 +115,18 @@ Namespace Text.Xml.Models
                 End If
             End Get
         End Property
+
+        Sub New()
+        End Sub
+
+        Sub New(ParamArray v As Double())
+            vector = v
+        End Sub
+
+        Sub New(id As String, ParamArray v As Double())
+            name = id
+            vector = v
+        End Sub
 
         Public Overrides Function ToString() As String
             If name.StringEmpty Then
