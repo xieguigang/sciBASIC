@@ -56,9 +56,14 @@ Public Class JSONSerializerOptions
 
     Public Property maskReadonly As Boolean = False
     Public Property indent As Boolean = False
+    Public Property indent_width As Integer = 4
     Public Property enumToString As Boolean = True
     Public Property unixTimestamp As Boolean = True
     Public Property digest As Dictionary(Of Type, Func(Of Object, Object))
     Public Property unicodeEscape As Boolean = True
+
+    Friend Function offsets(indent As Integer) As String
+        Return New String(" "c, indent * indent_width)
+    End Function
 
 End Class

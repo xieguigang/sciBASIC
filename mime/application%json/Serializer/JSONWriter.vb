@@ -9,12 +9,17 @@ Imports Microsoft.VisualBasic.MIME.application.json.Javascript
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Microsoft.VisualBasic.ValueTypes
 Imports any = Microsoft.VisualBasic.Scripting
-Imports ASCII = Microsoft.VisualBasic.Text.ASCII
 
 Friend Class JSONWriter : Implements IDisposable
 
     ReadOnly json As TextWriter
     ReadOnly opts As JSONSerializerOptions
+    ''' <summary>
+    ''' find two char
+    ''' </summary>
+    ReadOnly unescape As New Regex("[^\\]""", RegexOptions.Multiline)
+
+    Dim disposedValue As Boolean
 
     Sub New(opts As JSONSerializerOptions, file As Stream)
         Me.opts = opts
@@ -27,13 +32,28 @@ Friend Class JSONWriter : Implements IDisposable
     End Sub
 
     Public Sub BuildJSONString(json As JsonElement)
+        Call BuildJSONString(json, 0)
+    End Sub
+
+    Private Sub BuildJSONString(json As JsonElement, indent As Integer)
         If json Is Nothing OrElse (TypeOf json Is JsonValue AndAlso DirectCast(json, JsonValue).IsLiteralNull) Then
-            Call Me.json.WriteLine("null")
+            If opts.indent Then
+                Call Me.json.WriteLine(opts.offsets(indent) & "null")
+            Else
+                Call Me.json.WriteLine("null")
+            End If
         Else
             Select Case json.GetType
-                Case GetType(JsonValue) : Call jsonValueString(DirectCast(json, JsonValue))
-                Case GetType(JsonObject) : Call jsonObjectString(DirectCast(json, JsonObject))
-                Case GetType(JsonArray) : Call jsonArrayString(DirectCast(json, JsonArray))
+                Case GetType(JsonValue)
+                    Dim val As String = jsonValueString(DirectCast(json, JsonValue))
+
+                    If opts.indent Then
+                        Call Me.json.WriteLine(opts.offsets(indent) & val)
+                    Else
+                        Call Me.json.WriteLine(val)
+                    End If
+                Case GetType(JsonObject) : Call jsonObjectString(DirectCast(json, JsonObject), indent)
+                Case GetType(JsonArray) : Call jsonArrayString(DirectCast(json, JsonArray), indent)
                 Case Else
                     Throw New NotImplementedException(json.GetType.FullName)
             End Select
@@ -48,10 +68,12 @@ Friend Class JSONWriter : Implements IDisposable
     Private Function jsonValueString(obj As JsonValue) As String
         Dim value As Object = obj.value
 
+        If TypeOf value Is BSONValue Then
+            value = DirectCast(value, BSONValue).GetObjectValue
+        End If
+
         If value Is Nothing Then
             Return "null"
-        ElseIf TypeOf value Is BSONValue Then
-            value = DirectCast(value, BSONValue).GetObjectValue
         End If
 
         If TypeOf value Is Date AndAlso opts.unixTimestamp Then
@@ -66,7 +88,7 @@ Friend Class JSONWriter : Implements IDisposable
             Return """NaN"""
         Else
             ' number,integer,etc
-            Return Any.ToString(value)
+            Return any.ToString(value)
         End If
     End Function
 
@@ -74,59 +96,105 @@ Friend Class JSONWriter : Implements IDisposable
     ''' {...}
     ''' </summary>
     ''' <param name="obj"></param>
-    ''' <returns></returns>
-    Private Function jsonObjectString(obj As JsonObject) As String
-        Dim members As New List(Of String)
+    Private Sub jsonObjectString(obj As JsonObject, indent As Integer)
+        If opts.indent Then
+            Call json.WriteLine(opts.offsets(indent) & "{")
+        Else
+            Call json.Write("{")
+        End If
 
-        For Each member As NamedValue(Of JsonElement) In obj
-            Call members.Add($"{encodeString(member.Name)}: {member.Value.BuildJsonString()}")
+        Dim members = obj.ToArray
+
+        For i As Integer = 0 To members.Length - 1
+            Dim member As NamedValue(Of JsonElement) = members(i)
+            Dim name As String = encodeString(member.Name)
+            Dim isLiteral As Boolean = TypeOf member.Value Is JsonValue
+
+            If opts.indent AndAlso Not isLiteral Then
+                Call json.WriteLine(opts.offsets(indent + 1) & name & ":")
+            Else
+                Call json.Write(name & ": ")
+            End If
+
+            If isLiteral Then
+                Call json.Write(jsonValueString(DirectCast(member.Value, JsonValue)))
+            Else
+                Call BuildJSONString(member.Value, indent + 1)
+            End If
+
+            If i < members.Length - 1 Then
+                Call json.Write(",")
+
+                If opts.indent Then
+                    Call json.WriteLine()
+                End If
+            End If
         Next
 
         If opts.indent Then
-            Return $"{{
-            {members.JoinBy("," & ASCII.LF)}
-        }}"
+            Call json.WriteLine(opts.offsets(indent) & "}")
         Else
-            Return $"{{{members.JoinBy(",")}}}"
+            Call json.Write("}")
         End If
-    End Function
+    End Sub
 
     ''' <summary>
     ''' [...]
     ''' </summary>
     ''' <param name="arr"></param>
-    ''' <returns></returns>
-    Private Function jsonArrayString(arr As JsonArray) As String
-        Dim a As New StringBuilder
-        Dim array$() = arr _
-            .Select(Function(item) item.BuildJsonString()) _
-            .ToArray
+    Private Sub jsonArrayString(arr As JsonArray, indent As Integer)
+        Dim elementType As Type = arr.UnderlyingType
 
         If opts.indent Then
-            Dim elementType As Type = arr.UnderlyingType
-
-            Select Case elementType
-                Case GetType(String)
-                    ' one line per string element
-                    Call a.AppendLine("[").AppendLine(array.JoinBy(", ")).AppendLine("]")
-                Case GetType(Object)
-                    Call a.AppendLine("[").AppendLine(array.JoinBy(", ")).AppendLine("]")
-                Case Else
-                    ' number, boolean in vector style
-                    Call a.Append("[").Append(array.JoinBy(", ")).Append("]")
-            End Select
+            Call json.WriteLine(opts.offsets(indent) & "[")
         Else
-            Call a.Append("[").Append(array.JoinBy(", ")).Append("]")
+            Call json.Write("[")
         End If
 
-        Return a.ToString
-    End Function
+        Select Case elementType
+            Case GetType(Object)
+                Dim objs As JsonElement() = arr.ToArray
 
-    ''' <summary>
-    ''' find two char
-    ''' </summary>
-    ReadOnly unescape As New Regex("[^\\]""", RegexOptions.Multiline)
-    Private disposedValue As Boolean
+                For i As Integer = 0 To objs.Length - 2
+                    Call BuildJSONString(objs(i), indent + 1)
+                    Call json.Write(",")
+
+                    If opts.indent Then
+                        Call json.WriteLine()
+                    End If
+                Next
+
+                Call BuildJSONString(objs.Last, indent + 1)
+            Case GetType(String)
+                ' one line per string element
+                Dim strs As New List(Of String)
+
+                For Each ele As JsonElement In arr
+                    Call strs.Add(jsonValueString(DirectCast(ele, JsonValue)))
+                Next
+
+                If opts.indent Then
+                    Call json.WriteLine(strs.Select(Function(si) opts.offsets(indent + 1) & si).JoinBy("," & vbCrLf))
+                Else
+                    Call json.Write(strs.JoinBy(","))
+                End If
+            Case Else
+                ' in one line vector style
+                Dim strs As New List(Of String)
+
+                For Each ele As JsonElement In arr
+                    Call strs.Add(jsonValueString(DirectCast(ele, JsonValue)))
+                Next
+
+                Call json.Write(strs.JoinBy(","))
+        End Select
+
+        If opts.indent Then
+            Call json.WriteLine(opts.offsets(indent) & "]")
+        Else
+            Call json.Write("]")
+        End If
+    End Sub
 
     Private Function encodeString(value As String) As String
         value = value.Replace(vbCr, vbLf)
