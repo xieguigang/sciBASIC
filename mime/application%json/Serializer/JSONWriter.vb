@@ -144,9 +144,14 @@ Friend Class JSONWriter : Implements IDisposable
     ''' <param name="arr"></param>
     Private Sub jsonArrayString(arr As JsonArray, indent As Integer)
         Dim elementType As Type = arr.UnderlyingType
+        Dim literalVector As Boolean = elementType IsNot GetType(Object) AndAlso elementType IsNot GetType(String)
 
         If opts.indent Then
-            Call json.WriteLine(opts.offsets(indent) & "[")
+            If literalVector Then
+                Call json.Write(opts.offsets(indent) & "[")
+            Else
+                Call json.WriteLine(opts.offsets(indent) & "[")
+            End If
         Else
             Call json.Write("[")
         End If
@@ -190,7 +195,11 @@ Friend Class JSONWriter : Implements IDisposable
         End Select
 
         If opts.indent Then
-            Call json.WriteLine(opts.offsets(indent) & "]")
+            If literalVector Then
+                Call json.Write("]")
+            Else
+                Call json.Write(opts.offsets(indent) & "]")
+            End If
         Else
             Call json.Write("]")
         End If
