@@ -110,14 +110,29 @@ Friend Class JSONWriter : Implements IDisposable
             Dim name As String = encodeString(member.Name)
             Dim isLiteral As Boolean = TypeOf member.Value Is JsonValue
 
-            If opts.indent AndAlso Not isLiteral Then
-                Call json.WriteLine(opts.offsets(indent + 1) & name & ":")
+            If Not isLiteral Then
+                If TypeOf member.Value Is JsonArray Then
+                    Dim type = DirectCast(member.Value, JsonArray).UnderlyingType
+                    isLiteral = type IsNot GetType(Object) AndAlso type IsNot GetType(String)
+                End If
+            End If
+
+            If opts.indent Then
+                If Not isLiteral Then
+                    Call json.WriteLine(opts.offsets(indent + 1) & name & ":")
+                Else
+                    Call json.Write(opts.offsets(indent + 1) & name & ": ")
+                End If
             Else
                 Call json.Write(name & ": ")
             End If
 
             If isLiteral Then
-                Call json.Write(jsonValueString(DirectCast(member.Value, JsonValue)))
+                If TypeOf member.Value Is JsonValue Then
+                    Call json.Write(jsonValueString(DirectCast(member.Value, JsonValue)))
+                Else
+                    Call BuildJSONString(member.Value, 0)
+                End If
             Else
                 Call BuildJSONString(member.Value, indent + 1)
             End If
@@ -132,7 +147,8 @@ Friend Class JSONWriter : Implements IDisposable
         Next
 
         If opts.indent Then
-            Call json.WriteLine(opts.offsets(indent) & "}")
+            Call json.WriteLine()
+            Call json.Write(opts.offsets(indent) & "}")
         Else
             Call json.Write("}")
         End If
@@ -170,6 +186,10 @@ Friend Class JSONWriter : Implements IDisposable
                 Next
 
                 Call BuildJSONString(objs.Last, indent + 1)
+
+                If opts.indent Then
+                    Call json.WriteLine()
+                End If
             Case GetType(String)
                 ' one line per string element
                 Dim strs As New List(Of String)
@@ -178,8 +198,14 @@ Friend Class JSONWriter : Implements IDisposable
                     Call strs.Add(jsonValueString(DirectCast(ele, JsonValue)))
                 Next
 
+                ' Dim check_chars = strs.All(Function(s) s = "null" OrElse s.Length < 5)
+
                 If opts.indent Then
-                    Call json.WriteLine(strs.Select(Function(si) opts.offsets(indent + 1) & si).JoinBy("," & vbCrLf))
+                    ' If check_chars Then
+                    ' Call json.Write(strs.JoinBy(", "))
+                    ' Else
+                    Call json.WriteLine(strs.Select(Function(si) opts.offsets(indent + 1) & si).JoinBy(", " & vbCrLf))
+                    ' End If
                 Else
                     Call json.Write(strs.JoinBy(","))
                 End If
@@ -191,7 +217,11 @@ Friend Class JSONWriter : Implements IDisposable
                     Call strs.Add(jsonValueString(DirectCast(ele, JsonValue)))
                 Next
 
-                Call json.Write(strs.JoinBy(","))
+                If opts.indent Then
+                    Call json.Write(strs.JoinBy(", "))
+                Else
+                    Call json.Write(strs.JoinBy(","))
+                End If
         End Select
 
         If opts.indent Then

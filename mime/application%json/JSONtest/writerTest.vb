@@ -9,6 +9,7 @@ Module writerTest
         'dsadsadad',
 'asdadasdsd','qeqeqweqwewq','4444444444','3333'
 ],
+'chars':['a','s','m','d','k','j','a','d','b','a','s','d','a','s','d'],
 'flags':[true,true,true,false,false,true],
 'nest_obj':{
     'a': true,

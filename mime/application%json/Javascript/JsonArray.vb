@@ -195,8 +195,15 @@ Namespace Javascript
                 If Not TypeOf val Is JsonValue Then
                     Return GetType(Object)
                 Else
+                    Dim literal As Type = DirectCast(val, JsonValue).UnderlyingType
+
                     checkLiteral = True
-                    literals(DirectCast(val, JsonValue).UnderlyingType) += 1
+
+                    If literals.ContainsKey(literal) Then
+                        literals(literal) += 1
+                    Else
+                        literals(literal) = 1
+                    End If
                 End If
             Next
 
