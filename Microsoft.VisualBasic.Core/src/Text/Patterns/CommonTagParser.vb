@@ -1,64 +1,65 @@
 ﻿#Region "Microsoft.VisualBasic::4193bfb13712025c1cad948324b782b8, Microsoft.VisualBasic.Core\src\Text\Patterns\CommonTagParser.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 152
-    '    Code Lines: 107 (70.39%)
-    ' Comment Lines: 21 (13.82%)
-    '    - Xml Docs: 71.43%
-    ' 
-    '   Blank Lines: 24 (15.79%)
-    '     File Size: 5.17 KB
+' Summaries:
 
 
-    '     Class CommonTagParser
-    ' 
-    '         Properties: IsNullOrEmpty, LabelPrefix, MaxColumnIndex, maxLen, nameMatrix
-    '                     Size
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    ' 
-    '         Function: GetColumn, GetTagNames, StringMotif, ToString
-    ' 
-    '         Sub: walkLabels
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 152
+'    Code Lines: 107 (70.39%)
+' Comment Lines: 21 (13.82%)
+'    - Xml Docs: 71.43%
+' 
+'   Blank Lines: 24 (15.79%)
+'     File Size: 5.17 KB
+
+
+'     Class CommonTagParser
+' 
+'         Properties: IsNullOrEmpty, LabelPrefix, MaxColumnIndex, maxLen, nameMatrix
+'                     Size
+' 
+'         Constructor: (+1 Overloads) Sub New
+' 
+'         Function: GetColumn, GetTagNames, StringMotif, ToString
+' 
+'         Sub: walkLabels
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
+Imports System.Text.RegularExpressions
 Imports Microsoft.VisualBasic.Linq
 
 Namespace Text.Patterns
@@ -208,6 +209,20 @@ Namespace Text.Patterns
             Next
 
             Return motif.CharString
+        End Function
+
+        ''' <summary>
+        ''' removes leading number and symbols
+        ''' </summary>
+        ''' <param name="input"></param>
+        ''' <returns>
+        ''' 1-B11 to B11
+        ''' B2 remains B2
+        ''' </returns>
+        Public Shared Function RemoveLeadingNumbersAndSymbols(input As String) As String
+            ' 正则表达式：匹配字符串开头（^）的一个或多个（+）数字（\d）或非字母数字字符（\W）
+            Dim result As String = Regex.Replace(input, "^[\W\d]+", "")
+            Return result
         End Function
     End Class
 End Namespace
