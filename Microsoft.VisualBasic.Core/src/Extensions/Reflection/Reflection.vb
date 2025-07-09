@@ -332,7 +332,8 @@ Public Module EmitReflection
     ''' <param name="type"></param>
     ''' <returns></returns>
     <ExportAPI("Is.Module")>
-    <Extension> Public Function IsModule(type As Type) As Boolean
+    <Extension>
+    Public Function IsModule(type As Type) As Boolean
         If type.Name.IndexOf("$") > -1 OrElse type.Name.IndexOf("`") > -1 Then
             ' 匿名类型
             Return False
@@ -431,13 +432,14 @@ Public Module EmitReflection
     ''' <param name="type"></param>
     ''' <returns></returns>
 #If FRAMEWORD_CORE Then
-    <ExportAPI("Get.Properties")>
-    <Extension> Public Function GetReadWriteProperties(type As Type) As PropertyInfo()
+    <Extension> 
+    Public Function GetReadWriteProperties(type As Type) As PropertyInfo()
 #Else
-    <Extension> Public Function GetReadWriteProperties(type As System.Type) As System.Reflection.PropertyInfo()
+    <Extension>
+    Public Function GetReadWriteProperties(type As System.Type) As System.Reflection.PropertyInfo()
 #End If
         Dim LQuery = LinqAPI.Exec(Of PropertyInfo) <=
- _
+                                                     _
             From p As PropertyInfo
             In type.GetProperties
             Where p.CanRead AndAlso p.CanWrite
