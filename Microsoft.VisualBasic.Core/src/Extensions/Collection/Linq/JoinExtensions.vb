@@ -61,7 +61,7 @@ Namespace Linq
 
         ''' <summary>
         ''' Iterates all of the elements in a two dimension collection as the data source 
-        ''' for the linq expression or ForEach statement.
+        ''' for the linq expression or ForEach statement.<br />
         ''' (适用于二维的集合做为linq的数据源，不像<see cref="Unlist"/>是进行转换，
         ''' 这个是返回迭代器的，推荐使用这个函数)
         ''' </summary>
