@@ -116,9 +116,12 @@ Public Class JsonParser
         Me.ps = New StringTokenIcer(lineText.JoinBy(vbLf), strictVectorSyntax)
     End Sub
 
-    Sub New(s As StreamReader, Optional strictVectorSyntax As Boolean = True)
+    Sub New(s As StreamReader,
+            Optional strictVectorSyntax As Boolean = True,
+            Optional tqdm As Boolean = True)
+
         Me.strictVectorSyntax = strictVectorSyntax
-        Me.ps = New StreamTokenIcer(s, strictVectorSyntax)
+        Me.ps = New StreamTokenIcer(s, strictVectorSyntax, tqdm)
     End Sub
 
     ''' <summary>

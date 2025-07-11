@@ -245,14 +245,14 @@ Public Class StreamTokenIcer : Inherits TokenIcer
     ''' </summary>
     Dim json_str As CharStream
 
-    Sub New(s As Stream, strictVectorSyntax As Boolean)
+    Sub New(s As Stream, strictVectorSyntax As Boolean, Optional tqdm As Boolean = True)
         Call MyBase.New(strictVectorSyntax)
-        json_str = New CharStream(New StreamReader(s))
+        json_str = New CharStream(New StreamReader(s), tqdm)
     End Sub
 
-    Sub New(s As StreamReader, strictVectorSyntax As Boolean)
+    Sub New(s As StreamReader, strictVectorSyntax As Boolean, Optional tqdm As Boolean = True)
         Call MyBase.New(strictVectorSyntax)
-        json_str = New CharStream(s)
+        json_str = New CharStream(s, tqdm)
     End Sub
 
     Public Overrides Iterator Function GetTokenSequence() As IEnumerable(Of Token)
