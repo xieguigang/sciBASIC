@@ -162,7 +162,7 @@ Namespace ApplicationServices.Zip
                 Return Nothing
             Else
                 ' create new?
-                Throw New NotImplementedException
+                Return zip.CreateEntry(CStr(ref.data))
             End If
         End Function
 
