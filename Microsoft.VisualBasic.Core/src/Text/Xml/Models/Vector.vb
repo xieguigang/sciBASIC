@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::86136ca9f92d22eebacf2c2a4ac55d23, Microsoft.VisualBasic.Core\src\Text\Xml\Models\Vector.vb"
+﻿#Region "Microsoft.VisualBasic::d0c2dba6f7d7e1af3e6568c6d471738a, Microsoft.VisualBasic.Core\src\Text\Xml\Models\Vector.vb"
 
     ' Author:
     ' 
@@ -34,19 +34,20 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 106
-    '    Code Lines: 70 (66.04%)
-    ' Comment Lines: 20 (18.87%)
+    '   Total Lines: 123
+    '    Code Lines: 84 (68.29%)
+    ' Comment Lines: 20 (16.26%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 16 (15.09%)
-    '     File Size: 3.85 KB
+    '   Blank Lines: 19 (15.45%)
+    '     File Size: 4.36 KB
 
 
     '     Class NumericVector
     ' 
     '         Properties: Length, name, vector
     ' 
+    '         Constructor: (+3 Overloads) Sub New
     '         Function: GenericEnumerator, SequenceEqual, ToString
     ' 
     '     Class TermsVector

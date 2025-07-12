@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f2e1e5034f596a4622965721814163d5, mime\application%json\Javascript\JsonArray.vb"
+﻿#Region "Microsoft.VisualBasic::eb0642d241f566cf9be8b96b988157a2, mime\application%json\Javascript\JsonArray.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 164
-    '    Code Lines: 118 (71.95%)
-    ' Comment Lines: 21 (12.80%)
+    '   Total Lines: 182
+    '    Code Lines: 131 (71.98%)
+    ' Comment Lines: 21 (11.54%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 25 (15.24%)
-    '     File Size: 5.70 KB
+    '   Blank Lines: 30 (16.48%)
+    '     File Size: 6.26 KB
 
 
     '     Class JsonArray
@@ -49,7 +49,8 @@
     ' 
     '         Constructor: (+5 Overloads) Sub New
     ' 
-    '         Function: AsObjects, ContainsElement, GetEnumerator, IEnumerable_GetEnumerator, ToString
+    '         Function: AsObjects, ContainsElement, GetEnumerator, IEnumerable_GetEnumerator, MeasureUnderlyingType
+    '                   ToString
     ' 
     '         Sub: Add, Insert, Remove
     ' 

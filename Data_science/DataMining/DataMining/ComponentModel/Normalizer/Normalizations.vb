@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::50ed10d75d5f739e37dc12a90e93f6b0, Data_science\DataMining\DataMining\ComponentModel\Normalizer\Normalizations.vb"
+﻿#Region "Microsoft.VisualBasic::8f5086060351326f7bdc379d3fc22bc6, Data_science\DataMining\DataMining\ComponentModel\Normalizer\Normalizations.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 88.24%
     ' 
     '   Blank Lines: 13 (13.54%)
-    '     File Size: 3.45 KB
+    '     File Size: 3.44 KB
 
 
     '     Module Normalizations

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::00cfdf960967eeed00587947131ee202, mime\application%json\Parser\JsonParser.vb"
+﻿#Region "Microsoft.VisualBasic::3636da59ebf3cc7cf506d4058d2e4892, mime\application%json\Parser\JsonParser.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 344
-    '    Code Lines: 222 (64.53%)
-    ' Comment Lines: 74 (21.51%)
+    '   Total Lines: 347
+    '    Code Lines: 224 (64.55%)
+    ' Comment Lines: 74 (21.33%)
     '    - Xml Docs: 62.16%
     ' 
-    '   Blank Lines: 48 (13.95%)
-    '     File Size: 12.22 KB
+    '   Blank Lines: 49 (14.12%)
+    '     File Size: 12.29 KB
 
 
     ' Class JsonParser

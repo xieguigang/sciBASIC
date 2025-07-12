@@ -1,61 +1,61 @@
-﻿#Region "Microsoft.VisualBasic::4193bfb13712025c1cad948324b782b8, Microsoft.VisualBasic.Core\src\Text\Patterns\CommonTagParser.vb"
+﻿#Region "Microsoft.VisualBasic::4c92145c9a1c9d1cd0d3bbf719f7d610, Microsoft.VisualBasic.Core\src\Text\Patterns\CommonTagParser.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 152
-'    Code Lines: 107 (70.39%)
-' Comment Lines: 21 (13.82%)
-'    - Xml Docs: 71.43%
-' 
-'   Blank Lines: 24 (15.79%)
-'     File Size: 5.17 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Class CommonTagParser
-' 
-'         Properties: IsNullOrEmpty, LabelPrefix, MaxColumnIndex, maxLen, nameMatrix
-'                     Size
-' 
-'         Constructor: (+1 Overloads) Sub New
-' 
-'         Function: GetColumn, GetTagNames, StringMotif, ToString
-' 
-'         Sub: walkLabels
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 167
+    '    Code Lines: 112 (67.07%)
+    ' Comment Lines: 30 (17.96%)
+    '    - Xml Docs: 76.67%
+    ' 
+    '   Blank Lines: 25 (14.97%)
+    '     File Size: 5.79 KB
+
+
+    '     Class CommonTagParser
+    ' 
+    '         Properties: IsNullOrEmpty, LabelPrefix, MaxColumnIndex, maxLen, nameMatrix
+    '                     Size
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
+    '         Function: GetColumn, GetTagNames, RemoveLeadingNumbersAndSymbols, StringMotif, ToString
+    ' 
+    '         Sub: walkLabels
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

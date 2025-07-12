@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7df70af12e0a961c18d8b885254e6aae, mime\application%json\Javascript\JsonValue.vb"
+﻿#Region "Microsoft.VisualBasic::60af66345a49c9398cf96ff6c1a81efe, mime\application%json\Javascript\JsonValue.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 154
-    '    Code Lines: 106 (68.83%)
-    ' Comment Lines: 29 (18.83%)
+    '   Total Lines: 158
+    '    Code Lines: 106 (67.09%)
+    ' Comment Lines: 33 (20.89%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 19 (12.34%)
-    '     File Size: 5.19 KB
+    '   Blank Lines: 19 (12.03%)
+    '     File Size: 5.31 KB
 
 
     '     Class JsonValue

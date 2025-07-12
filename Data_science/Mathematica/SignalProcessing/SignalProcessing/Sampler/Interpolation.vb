@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f54b7c5f5214d29dc4942e05e3722d96, Data_science\Mathematica\SignalProcessing\SignalProcessing\Sampler\Interpolation.vb"
+﻿#Region "Microsoft.VisualBasic::d65c4670f954805a500e852d4b2aa293, Data_science\Mathematica\SignalProcessing\SignalProcessing\Sampler\Interpolation.vb"
 
     ' Author:
     ' 
@@ -90,4 +90,3 @@ Public Module Interpolation
         Return From i As PointF In interpolate Select activator(i.X, i.Y)
     End Function
 End Module
-

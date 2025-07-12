@@ -1,58 +1,58 @@
-﻿#Region "Microsoft.VisualBasic::d4a46639c3d7423d580cc2994e9b2995, Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\Utility\ProgressBar\Tqdm\Tqdm.vb"
+﻿#Region "Microsoft.VisualBasic::c38bbe73e27cc528fe3ef64a455c19cc, Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\Utility\ProgressBar\Tqdm\Tqdm.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 197
-'    Code Lines: 108 (54.82%)
-' Comment Lines: 64 (32.49%)
-'    - Xml Docs: 82.81%
-' 
-'   Blank Lines: 25 (12.69%)
-'     File Size: 10.43 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Module TqdmWrapper
-' 
-'         Function: InternalWrap, (+5 Overloads) Wrap
-'         Delegate Function
-' 
-'             Function: Range, WrapStreamReader
-' 
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 240
+    '    Code Lines: 141 (58.75%)
+    ' Comment Lines: 66 (27.50%)
+    '    - Xml Docs: 80.30%
+    ' 
+    '   Blank Lines: 33 (13.75%)
+    '     File Size: 12.24 KB
+
+
+    '     Module TqdmWrapper
+    ' 
+    '         Function: InternalWrap, (+5 Overloads) Wrap
+    '         Delegate Function
+    ' 
+    '             Function: Range, (+2 Overloads) StreamReader, WrapStreamReader
+    ' 
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 
