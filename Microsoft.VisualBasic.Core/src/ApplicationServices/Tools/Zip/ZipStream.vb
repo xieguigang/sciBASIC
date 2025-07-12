@@ -164,7 +164,7 @@ Namespace ApplicationServices.Zip
                 Return Nothing
             Else
                 ' create new?
-                Return zip.CreateEntry(CStr(ref.data))
+                Return zip.CreateEntry(path)
             End If
         End Function
 
