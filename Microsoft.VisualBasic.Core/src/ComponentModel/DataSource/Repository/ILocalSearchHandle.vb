@@ -59,6 +59,7 @@
 Imports System.Runtime.CompilerServices
 Imports System.Runtime.InteropServices
 Imports Microsoft.VisualBasic.ComponentModel.Collection
+Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.Linq
 
 Namespace ComponentModel.DataSourceModel.Repository
@@ -128,9 +129,37 @@ Namespace ComponentModel.DataSourceModel.Repository
         ''' via add numeric suffix to the name key string.
         ''' </remarks>
         <Extension>
-        Public Function UniqueNames(Of T)(list As IEnumerable(Of NamedValue(Of T)), <Out> Optional ByRef duplicated As String() = Nothing) As IEnumerable(Of NamedValue(Of T))
+        Public Function UniqueNames(Of T)(list As IEnumerable(Of NamedValue(Of T)), <Out> Optional ByRef duplicated As String() = Nothing) As NamedValue(Of T)()
             Dim alldata As NamedValue(Of T)() = list.SafeQuery.ToArray
-            Dim allnames As String() = alldata.Select(Function(i) i.Name).UniqueNames(duplicated).ToArray
+            Dim unique As String() = alldata.GetUniqueNames(duplicated)
+
+            If Not duplicated.Any Then
+                Return alldata
+            End If
+
+            For i As Integer = 0 To alldata.Length - 1
+                alldata(i) = New NamedValue(Of T)(unique(i), alldata(i).Value, alldata(i).Description)
+            Next
+
+            Return alldata
+        End Function
+
+        <Extension>
+        Public Function GetUniqueNames(Of T As INamedValue)(list As IEnumerable(Of T), <Out> Optional ByRef duplicated As String() = Nothing) As String()
+            Return list.Select(Function(a) a.Key).UniqueNames(duplicated)
+        End Function
+
+        ''' <summary>
+        ''' update and set the unique names to the index collection
+        ''' </summary>
+        ''' <typeparam name="T"></typeparam>
+        ''' <param name="list"></param>
+        ''' <param name="duplicated"></param>
+        ''' <returns></returns>
+        <Extension>
+        Public Function UniqueNames(Of T As INamedValue)(list As IEnumerable(Of T), <Out> Optional ByRef duplicated As String() = Nothing) As IEnumerable(Of T)
+            Dim alldata As T() = list.SafeQuery.ToArray
+            Dim allnames As String() = alldata.Select(Function(i) i.Key).UniqueNames(duplicated).ToArray
 
             If duplicated.IsNullOrEmpty Then
                 ' no duplicated items
@@ -140,7 +169,7 @@ Namespace ComponentModel.DataSourceModel.Repository
                 ' replace the old name with new unique names
                 ' value and description has no changes
                 For i As Integer = 0 To alldata.Length - 1
-                    alldata(i) = New NamedValue(Of T)(allnames(i), alldata(i).Value, alldata(i).Description)
+                    alldata(i).Key = allnames(i)
                 Next
 
                 Return alldata
