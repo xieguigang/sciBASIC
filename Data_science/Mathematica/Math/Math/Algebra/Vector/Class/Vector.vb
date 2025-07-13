@@ -416,6 +416,18 @@ Namespace LinearAlgebra
             Next
         End Sub
 
+        ''' <summary>
+        ''' Make data copy from the given <paramref name="source"/> to current vector object
+        ''' </summary>
+        ''' <param name="source">the source vector data for copy data to current vector</param>
+        ''' <param name="startIndex">the start index of the data in current vector</param>
+        ''' <param name="count">the number of the data elements copy from the source data</param>
+        Public Sub CopyFrom(ByRef source As Double(), startIndex As Integer, count As Integer)
+            For i As Integer = 0 To count - 1
+                buffer(i + startIndex) = source(i)
+            Next
+        End Sub
+
 #Region "Operators"
         ''' <summary>
         ''' 两个向量加法算符重载，分量分别相加
