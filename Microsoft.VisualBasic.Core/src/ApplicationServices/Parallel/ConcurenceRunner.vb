@@ -88,6 +88,18 @@ Namespace Parallel
         ''' </summary>
         Public Shared n_threads As Integer = 4
 
+        Public ReadOnly Property num_threads As Integer
+            Get
+                Return cpu_count
+            End Get
+        End Property
+
+        Public ReadOnly Property span_size As Integer
+            Get
+                Return workLen / cpu_count
+            End Get
+        End Property
+
         ''' <summary>
         ''' construct a new parallel task executator
         ''' </summary>
@@ -99,7 +111,7 @@ Namespace Parallel
         Sub New(nsize As Integer, Optional verbose As Boolean = False, Optional workers As Integer? = Nothing)
             workLen = nsize
             cpu_count = If(workers, n_threads)
-            opt = New ParallelOptions With {.MaxDegreeOfParallelism = n_threads}
+            opt = New ParallelOptions With {.MaxDegreeOfParallelism = cpu_count}
             is_verbose = verbose
         End Sub
 
@@ -130,8 +142,6 @@ Namespace Parallel
         ''' </summary>
         ''' <returns></returns>
         Public Function Run() As VectorTask
-            Dim span_size As Integer = workLen / cpu_count
-
             If sequenceMode OrElse cpu_count = 1 OrElse span_size < 1 Then
                 ' run in sequence
                 Call Solve()
