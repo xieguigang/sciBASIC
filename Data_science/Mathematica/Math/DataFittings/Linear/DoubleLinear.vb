@@ -58,6 +58,7 @@
 
 Imports System.Drawing
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
@@ -74,8 +75,15 @@ Public Module DoubleLinear
             .ToArray
     End Function
 
+    ''' <summary>
+    ''' removes NAN points
+    ''' </summary>
+    ''' <param name="pointVec"></param>
+    ''' <param name="removed"></param>
+    ''' <param name="removesZeroY"></param>
+    ''' <returns></returns>
     <Extension>
-    Private Function doFilterInternal(pointVec As PointF(), ByRef removed As List(Of PointF), removesZeroY As Boolean) As PointF()
+    Private Function doFilterInternal(pointVec As PointF(), ByRef removed As List(Of PointF), removesZeroY As Boolean, range As DoubleRange) As PointF()
         Dim filter As PointF()
 
         If removed Is Nothing Then
@@ -101,6 +109,22 @@ Public Module DoubleLinear
             pointVec = pointVec.Where(Function(p) p.Y >= 0).ToArray
         End If
 
+        If Not range Is Nothing Then
+            Dim range_points As New List(Of PointF)
+
+            range = New DoubleRange(range.Min * 0.85, range.Max * 1.125)
+
+            For Each pt As PointF In pointVec
+                If range.IsInside(pt.X) Then
+                    Call range_points.Add(pt)
+                Else
+                    Call removed.Add(pt)
+                End If
+            Next
+
+            pointVec = range_points.ToArray
+        End If
+
         Return pointVec
     End Function
 
@@ -124,12 +148,13 @@ Public Module DoubleLinear
                                       Optional max As Integer = -1,
                                       Optional ByRef removed As List(Of PointF) = Nothing,
                                       Optional keepsLowestPoint As Boolean = False,
-                                      Optional removesZeroY As Boolean = False) As IFitted
+                                      Optional removesZeroY As Boolean = False,
+                                      Optional range As DoubleRange = Nothing) As IFitted
 
         Dim pointVec As PointF() = points _
             .OrderBy(Function(p) p.X) _
             .ToArray _
-            .doFilterInternal(removed, removesZeroY)
+            .doFilterInternal(removed, removesZeroY, range)
 
         If pointVec.Length = 0 Then
             Return Nothing
