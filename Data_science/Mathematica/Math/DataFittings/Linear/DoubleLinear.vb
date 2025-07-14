@@ -109,10 +109,10 @@ Public Module DoubleLinear
             pointVec = pointVec.Where(Function(p) p.Y >= 0).ToArray
         End If
 
-        If Not range Is Nothing Then
+        If Not range Is Nothing AndAlso range.Length > 0 Then
             Dim range_points As New List(Of PointF)
 
-            range = New DoubleRange(range.Min * 0.85, range.Max * 1.125)
+            range = New DoubleRange(range.Min * 0.8, range.Max * 1.5)
 
             For Each pt As PointF In pointVec
                 If range.IsInside(pt.X) Then
