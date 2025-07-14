@@ -157,7 +157,7 @@ Namespace ComponentModel.DataSourceModel.Repository
         ''' <param name="duplicated"></param>
         ''' <returns></returns>
         <Extension>
-        Public Function UniqueNames(Of T As INamedValue)(list As IEnumerable(Of T), <Out> Optional ByRef duplicated As String() = Nothing) As IEnumerable(Of T)
+        Public Function MakeUniqueNames(Of T As INamedValue)(list As IEnumerable(Of T), <Out> Optional ByRef duplicated As String() = Nothing) As IEnumerable(Of T)
             Dim alldata As T() = list.SafeQuery.ToArray
             Dim allnames As String() = alldata.Select(Function(i) i.Key).UniqueNames(duplicated).ToArray
 
