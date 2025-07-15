@@ -133,7 +133,7 @@ Namespace ComponentModel.DataSourceModel.Repository
             Dim alldata As NamedValue(Of T)() = list.SafeQuery.ToArray
             Dim unique As String() = alldata.GetUniqueNames(duplicated)
 
-            If Not duplicated.Any Then
+            If duplicated.IsNullOrEmpty Then
                 Return alldata
             End If
 
