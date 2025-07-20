@@ -61,6 +61,7 @@ Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.Framework
 Imports Microsoft.VisualBasic.Data.Framework.IO
 Imports Microsoft.VisualBasic.Language.Default
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MIME.Office.Excel.XLSX.Writer
 Imports csv = Microsoft.VisualBasic.Data.Framework.IO.File
 Imports XlsxFile = Microsoft.VisualBasic.MIME.Office.Excel.XLSX.File
@@ -162,9 +163,20 @@ Namespace XLSX
         End Sub
 
         <Extension>
-        Public Sub SaveToExcel(Of T)(data As IEnumerable(Of T), file As String, sheetName As String)
+        Public Sub SaveToExcel(Of T)(data As IEnumerable(Of T), file As String, sheetName As String, Optional metadata As String()() = Nothing)
             Dim str As csv = data.ToCsvDoc()
             Dim workbook As New Workbook(sheetName)
+            Dim sheet As Worksheet = workbook.CurrentWorksheet
+
+            If Not metadata Is Nothing Then
+                For Each row As String() In metadata
+                    For Each col As String In row.SafeQuery
+                        Call sheet.AddNextCell(col)
+                    Next
+
+                    Call sheet.GoToNextRow()
+                Next
+            End If
 
             Call workbook.WriteSheetTable(str)
             Call workbook.SaveAs(file)
