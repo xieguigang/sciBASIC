@@ -58,6 +58,7 @@
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.Data.Framework
 Imports Microsoft.VisualBasic.Data.Framework.IO
 Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.MIME.Office.Excel.XLSX.Writer
@@ -158,6 +159,15 @@ Namespace XLSX
 
                 Call sheet.GoToNextRow()
             Next
+        End Sub
+
+        <Extension>
+        Public Sub SaveToExcel(Of T)(data As IEnumerable(Of T), file As String, sheetName As String)
+            Dim str As csv = data.ToCsvDoc()
+            Dim workbook As New Workbook(sheetName)
+
+            Call workbook.WriteSheetTable(str)
+            Call workbook.SaveAs(file)
         End Sub
     End Module
 End Namespace

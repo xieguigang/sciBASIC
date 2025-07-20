@@ -658,14 +658,15 @@ Public Module Extensions
 
     ''' <summary>
     ''' Generate a csv document from a object collection.
-    ''' (从一个特定类型的数据集合之中生成一个Csv文件，非并行化的以保持数据原有的顺序)
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
     ''' <param name="source"></param>
     ''' <param name="strict">默认导出所有的可用属性</param>
     ''' <param name="metaBlank">对于字典对象之中，空缺下来的域键名的值使用什么来替代？默认使用空白字符串</param>
     ''' <returns></returns>
-    ''' <remarks></remarks>
+    ''' <remarks>
+    ''' (从一个特定类型的数据集合之中生成一个Csv文件，非并行化的以保持数据原有的顺序)
+    ''' </remarks>
     <Extension>
     Public Function ToCsvDoc(Of T)(source As IEnumerable(Of T),
                                    Optional strict As Boolean = False,
