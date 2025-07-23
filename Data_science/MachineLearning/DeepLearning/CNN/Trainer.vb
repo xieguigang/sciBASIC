@@ -190,6 +190,8 @@ Namespace CNN
                 Throw New InvalidProgramException("no neuron network model inside the trainer algorithm module, call SetKernel method before call this train method!")
             End If
 
+            Dim t0 = Now
+
             While t < max_loops AndAlso Not stopTrain
                 Dim epochsNum As Integer = trainset.Length / alg.batch_size
 
@@ -198,7 +200,7 @@ Namespace CNN
                 End If
 
                 Call log("")
-                Call log("(" & t.ToString() & $"th/{max_loops}) iter epochsNum: " & epochsNum.ToString())
+                Call log("(" & t.ToString() & $"th/{max_loops}) iter epochsNum: " & epochsNum.ToString() & $" [used time: {StringFormats.ReadableElapsedTime(Now - t0)}]")
                 Call TrainEpochs(trainset, epochsNum, right, count)
                 Call log("")
                 Call log("precision " & right.ToString() & "/" & count.ToString() & $"={(100 * right / count).ToString("F2")}%")
