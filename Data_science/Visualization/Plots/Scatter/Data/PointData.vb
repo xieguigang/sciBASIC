@@ -73,6 +73,7 @@ Public Structure PointData
     Public Statics#()
     Public color$
     Public stroke$
+    Public size As Single?
 
     ''' <summary>
     ''' 坐标轴的值模式为字符串模式的时候
