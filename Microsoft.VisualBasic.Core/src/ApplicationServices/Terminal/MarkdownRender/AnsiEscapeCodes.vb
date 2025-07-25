@@ -83,8 +83,12 @@ Namespace ApplicationServices.Terminal
 	''' </summary>
 	Public Module AnsiEscapeCodes
 
+		''' <summary>
+		''' ANSI 转义字符
+		''' </summary>
+		Public Const Escape As String = ChrW(&H1B)
+
 		Private Const EscapeChar As Char = ChrW(&H1B)
-		Private Const Escape As String = ChrW(&H1B)
 		Private Const ResetForegroundColor As String = "39"
 		Private Const ResetBackgroundColor As String = "49"
 		Private Const ResetChar As Char = "0"c
