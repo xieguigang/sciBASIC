@@ -185,7 +185,7 @@ Namespace ApplicationServices.Zip
 
             If file Is Nothing Then
                 Return Nothing
-            Else
+            ElseIf access = FileAccess.Read Then
                 Dim ms As New MemoryStream
                 Dim zip_buf = file.Open
 
@@ -195,6 +195,10 @@ Namespace ApplicationServices.Zip
                 Call ms.Seek(Scan0, SeekOrigin.Begin)
 
                 Return ms
+            ElseIf access = FileAccess.Write Then
+                Return file.Open
+            Else
+                Throw New NotSupportedException($"The file access mode '{access}' is not supported in the zip archive stream.")
             End If
         End Function
 
