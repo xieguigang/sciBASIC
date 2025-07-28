@@ -100,7 +100,7 @@ Namespace Graphic.Axis
                                         Optional w_min# = 0.1,
                                         Optional w_max# = 0.1) As Double()
 
-            Static smallNumber As New DoubleRange(1.0E-300, 0.00001)
+            Static smallNumber As New DoubleRange(1.0E-300, 0.005)
 
             If range.Length = 0 Then
                 Dim delta As Double = range.Max * 1.25 - range.Max
@@ -112,8 +112,8 @@ Namespace Graphic.Axis
                     Return {0, 1}
                 ElseIf range.Min = 0 AndAlso range.Max = 0 Then
                     Return {0, 1}
-                ElseIf smallNumber.IsInside(.Min) AndAlso smallNumber.IsInside(.Max) Then
-                    Dim v As New Vector({ .Min, .Max})
+                ElseIf smallNumber.IsInside(std.Abs(.Min)) AndAlso smallNumber.IsInside(std.Abs(.Max)) Then
+                    Dim v As New Vector(.MinMax)
                     Dim factor As Double = 1 / v.Min
 
                     v = v * factor
