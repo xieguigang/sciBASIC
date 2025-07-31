@@ -97,6 +97,10 @@ Namespace LinearAlgebra.Matrix
 
 #Region "Constructor"
 
+        Sub New(A As Double(,))
+            Call Me.New(New NumericMatrix(A))
+        End Sub
+
         ''' <summary>
         ''' Construct the singular value decomposition, returns Structure to access U, S and V.
         ''' </summary>
