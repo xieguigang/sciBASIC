@@ -64,7 +64,7 @@
 Imports System.Drawing
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Language
-Imports stdNum = System.Math
+Imports std = System.Math
 
 ' $Id: mxRectangle.java,v 1.1 2012/11/15 13:26:39 gaudenz Exp $
 ' Copyright (c) 2007-2010, Gaudenz Alder, David Benson
@@ -145,10 +145,10 @@ Namespace Imaging.LayoutModel
         ''' <returns> Returns a new rectangle for the bounds. </returns>
         Public Overridable ReadOnly Property Rectangle As RectangleF
             Get
-                Dim ix As Integer = CInt(Fix(stdNum.Round(X)))
-                Dim iy As Integer = CInt(Fix(stdNum.Round(Y)))
-                Dim iw As Integer = CInt(Fix(stdNum.Round(Width - ix + X)))
-                Dim ih As Integer = CInt(Fix(stdNum.Round(Height - iy + Y)))
+                Dim ix As Integer = CInt(Fix(std.Round(X)))
+                Dim iy As Integer = CInt(Fix(std.Round(Y)))
+                Dim iw As Integer = CInt(Fix(std.Round(Width - ix + X)))
+                Dim ih As Integer = CInt(Fix(std.Round(Height - iy + Y)))
 
                 Return New RectangleF(ix, iy, iw, ih)
             End Get
@@ -297,10 +297,10 @@ Namespace Imaging.LayoutModel
             End If
         End Sub
         Private Shared Function union(x#, y#, right#, bottom#, r As Rectangle2D) As (x#, y#, w#, h#)
-            Dim minX As Double = stdNum.Min(x, r.X)
-            Dim minY As Double = stdNum.Min(y, r.Y)
-            Dim maxX As Double = stdNum.Max(right, r.Right)
-            Dim maxY As Double = stdNum.Max(bottom, r.Bottom)
+            Dim minX As Double = std.Min(x, r.X)
+            Dim minY As Double = std.Min(y, r.Y)
+            Dim maxX As Double = std.Max(right, r.Right)
+            Dim maxY As Double = std.Max(bottom, r.Bottom)
 
             x = minX
             y = minY

@@ -58,7 +58,7 @@ Imports Microsoft.VisualBasic.Linq.Extensions
 Imports Microsoft.VisualBasic.Net.Http
 Imports Microsoft.VisualBasic.Text.Xml
 Imports Microsoft.VisualBasic.Text.Xml.Models
-Imports stdNum = System.Math
+Imports std = System.Math
 
 Namespace ComponentModel.Algorithm.DynamicProgramming.Levenshtein
 
@@ -192,7 +192,7 @@ Namespace ComponentModel.Algorithm.DynamicProgramming.Levenshtein
                 Dim r As New XmlBuilder
 
                 For j As Integer = 0 To Len(Hypotheses) - 1
-                    Dim c = stdNum.Round(matrix.DistTable(i)(j), 2)
+                    Dim c = std.Round(matrix.DistTable(i)(j), 2)
 
                     If dict.ContainsKey(i) AndAlso Array.IndexOf(dict(i), j) > -1 Then
                         r += <td style="background-color:green;color:white">

@@ -74,7 +74,7 @@ Imports System.Threading
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.Default
-Imports stdNum = System.Math
+Imports std = System.Math
 
 Namespace ComponentModel
 
@@ -105,7 +105,7 @@ Namespace ComponentModel
                 If Value > Me._length Then
                     Extend(Value - Me._length)
                 Else
-                    Me._length = stdNum.Max(0, Value)
+                    Me._length = std.Max(0, Value)
                 End If
             End Set
         End Property
@@ -703,7 +703,7 @@ Namespace ComponentModel
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Operator >>(a As BitSet, shift As Integer) As BitSet
-            Return New BitSet(a.ToArray().Take(stdNum.Max(0, a.Count - shift)).ToArray())
+            Return New BitSet(a.ToArray().Take(std.Max(0, a.Count - shift)).ToArray())
         End Operator
 
         Public Shared Operator =(a As BitSet, b As BitSet) As Boolean

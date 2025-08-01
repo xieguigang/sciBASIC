@@ -67,7 +67,7 @@ Imports System.Text.RegularExpressions
 Imports Microsoft.VisualBasic.Linq.Extensions
 Imports Microsoft.VisualBasic.Scripting.Runtime
 Imports Microsoft.VisualBasic.Text.Xml.Models
-Imports stdNum = System.Math
+Imports std = System.Math
 
 Namespace ComponentModel.Algorithm.DynamicProgramming.Levenshtein
 
@@ -208,7 +208,7 @@ Namespace ComponentModel.Algorithm.DynamicProgramming.Levenshtein
                 .Select(Function(row)
                             Dim values#() = row _
                                 .data _
-                                .Select(Function(n) stdNum.Round(n, l)) _
+                                .Select(Function(n) std.Round(n, l)) _
                                 .ToArray
 
                             Return New ArrayRow With {

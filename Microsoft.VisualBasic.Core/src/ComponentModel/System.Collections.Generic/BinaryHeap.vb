@@ -59,7 +59,7 @@
 #End Region
 
 Imports Microsoft.VisualBasic.Language
-Imports stdNum = System.Math
+Imports std = System.Math
 
 Namespace ComponentModel.Collection
 
@@ -170,7 +170,7 @@ Namespace ComponentModel.Collection
             ' When at 0, an element can not go up any further.
             Do While n > 0
                 ' Compute the parent element's index, and fetch it.
-                Dim parentN% = stdNum.Floor((n + 1) / 2) - 1
+                Dim parentN% = std.Floor((n + 1) / 2) - 1
                 Dim parent = content(parentN)
 
                 ' Swap the elements if the parent is greater.
