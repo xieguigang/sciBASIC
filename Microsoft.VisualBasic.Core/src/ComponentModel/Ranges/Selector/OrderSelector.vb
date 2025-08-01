@@ -160,7 +160,7 @@ Namespace ComponentModel.Ranges
         ''' <param name="n"></param>
         ''' <returns></returns>
         Public Iterator Function SelectUntilGreaterThan(n As T) As IEnumerable(Of T)
-            For Each x In source
+            For Each x As T In source
                 If Numeric.LessThanOrEquals(x, n) Then
                     Yield x
                 Else
@@ -176,7 +176,7 @@ Namespace ComponentModel.Ranges
         ''' <param name="n"></param>
         ''' <returns></returns>
         Public Iterator Function SelectUntilLessThan(n As T) As IEnumerable(Of T)
-            For Each x In source
+            For Each x As T In source
                 If Numeric.GreaterThanOrEquals(x, n) Then
                     Yield x
                 Else
