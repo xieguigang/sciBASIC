@@ -56,6 +56,9 @@ Imports System.Runtime.CompilerServices
 
 Namespace NDtw.Preprocessing
 
+    ''' <summary>
+    ''' signal processor for scale the signal intensity value
+    ''' </summary>
     Public MustInherit Class IPreprocessor
 
         ''' <summary>
