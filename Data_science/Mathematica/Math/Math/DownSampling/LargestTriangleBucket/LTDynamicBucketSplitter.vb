@@ -21,24 +21,9 @@ Namespace DownSampling.LargestTriangleBucket
         Implements BucketSplitter(Of LTWeightedBucket, WeightedEvent)
 
         Private fs As New FixedNumBucketSplitter(Of LTWeightedBucket, WeightedEvent)()
-        Private iterationRate_Conflict As Double = 0.1
-        Private maxIteration_Conflict As Integer = 500
 
-        Public Overridable Property IterationRate As Double
-            Get
-                Return iterationRate_Conflict
-            End Get
-            Set(iterationRate As Double)
-                Me.iterationRate_Conflict = iterationRate
-            End Set
-        End Property
-
-
-        Public Overridable WriteOnly Property MaxIteration As Integer
-            Set(maxIt As Integer)
-                Me.maxIteration_Conflict = maxIt
-            End Set
-        End Property
+        Public Overridable Property IterationRate As Double = 0.1
+        Public Overridable Property MaxIteration As Integer = 500
 
         Public Overridable Function split(factory As BucketFactory(Of LTWeightedBucket), data As IList(Of WeightedEvent), threshold As Integer) As IList(Of LTWeightedBucket) Implements BucketSplitter(Of LTWeightedBucket, WeightedEvent).split
             ' first split equally
@@ -54,9 +39,9 @@ Namespace DownSampling.LargestTriangleBucket
         End Function
 
         Private Function getItCount(total As Integer, threshold As Integer) As Integer
-            Dim itCount As Integer = CInt(std.Truncate(total / threshold * iterationRate_Conflict))
-            If itCount > maxIteration_Conflict Then
-                itCount = maxIteration_Conflict
+            Dim itCount As Integer = CInt(std.Truncate(total / threshold * IterationRate))
+            If itCount > MaxIteration Then
+                itCount = MaxIteration
             ElseIf itCount < 1 Then
                 itCount = 1
             End If

@@ -2,9 +2,7 @@
 
 Namespace DownSampling
 
-
-    Public Class WeightedEvent
-        Implements ITimeSignal
+    Public Class WeightedEvent : Implements ITimeSignal
 
         Public Sub New(time As Long, value As Double)
             Me.Event = New PlainEvent(time, value)

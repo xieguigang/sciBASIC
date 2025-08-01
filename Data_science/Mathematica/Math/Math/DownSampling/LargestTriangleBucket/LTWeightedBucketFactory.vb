@@ -2,8 +2,7 @@
 
 Namespace DownSampling.LargestTriangleBucket
 
-    Public Class LTWeightedBucketFactory
-        Implements BucketFactory(Of LTWeightedBucket)
+    Public Class LTWeightedBucketFactory : Implements BucketFactory(Of LTWeightedBucket)
 
         Public Overridable Function newBucket() As LTWeightedBucket Implements BucketFactory(Of LTWeightedBucket).newBucket
             Return New LTWeightedBucket()

@@ -2,7 +2,6 @@
 
 Namespace DownSampling.LargestTriangleBucket
 
-
     ''' <summary>
     ''' Largest Triangle Bucket Algorithm family.
     ''' <ul>
@@ -11,8 +10,7 @@ Namespace DownSampling.LargestTriangleBucket
     ''' <li>LTD: Largest Triangle Dynamic (three bucket)</li>
     ''' </ul>
     ''' </summary>
-    Public Class LTAlgorithm
-        Inherits BucketBasedAlgorithm(Of LTWeightedBucket, WeightedEvent)
+    Public Class LTAlgorithm : Inherits BucketBasedAlgorithm(Of LTWeightedBucket, WeightedEvent)
 
         Protected Friend triangle As New Triangle()
         Protected Friend wcalc_Conflict As LTWeightCalculator

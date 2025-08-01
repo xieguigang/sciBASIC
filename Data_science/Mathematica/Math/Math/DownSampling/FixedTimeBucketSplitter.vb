@@ -2,8 +2,6 @@
 
 Namespace DownSampling
 
-
-
     ''' <summary>
     ''' Split data into buckets with equal time span
     ''' </summary>

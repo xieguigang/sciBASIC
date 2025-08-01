@@ -2,7 +2,6 @@
 
 Namespace DownSampling
 
-
     ''' <summary>
     ''' Split up events into buckets
     ''' </summary>

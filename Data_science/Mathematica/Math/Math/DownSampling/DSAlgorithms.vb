@@ -28,7 +28,7 @@ Namespace DownSampling
         ''' Maximum and minimum value </summary>
         Public Shared ReadOnly MAXMIN As New DSAlgorithms("MAXMIN", InnerEnum.MAXMIN, New MMAlgorithm())
 
-        Private Shared ReadOnly valueList As IList(Of DSAlgorithms) = New List(Of DSAlgorithms)()
+        Shared ReadOnly valueList As New List(Of DSAlgorithms)()
 
         Shared Sub New()
             valueList.Add(PIPLOT)
@@ -53,7 +53,7 @@ Namespace DownSampling
 
         Private [delegate] As DownSamplingAlgorithm
 
-        Friend Sub New(name As String, thisInnerEnumValue As InnerEnum, [delegate] As DownSamplingAlgorithm)
+        Private Sub New(name As String, thisInnerEnumValue As InnerEnum, [delegate] As DownSamplingAlgorithm)
             Me.delegate = [delegate]
 
             nameValue = name
@@ -66,8 +66,7 @@ Namespace DownSampling
             Return [delegate].process(data, threshold)
         End Function
 
-
-        Public Shared Function values() As IList(Of DSAlgorithms)
+        Public Shared Function values() As IEnumerable(Of DSAlgorithms)
             Return valueList
         End Function
 
@@ -85,7 +84,8 @@ Namespace DownSampling
                     Return enumInstance
                 End If
             Next
-            Throw New System.ArgumentException(name)
+
+            Throw New ArgumentException(name)
         End Function
     End Class
 

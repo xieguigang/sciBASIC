@@ -2,14 +2,12 @@
 
 Namespace DownSampling.MaxMin
 
-
     ''' <summary>
     ''' Bucket that selects events with maximum or minimum value
     ''' </summary>
-    Public Class MMBucket
-        Implements Bucket
+    Public Class MMBucket : Implements Bucket
 
-        Protected Friend events As IList(Of ITimeSignal) = New List(Of ITimeSignal)()
+        Protected Friend events As New List(Of ITimeSignal)()
 
         Public Sub New()
         End Sub

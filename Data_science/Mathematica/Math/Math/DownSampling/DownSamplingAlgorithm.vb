@@ -2,8 +2,6 @@
 
 Namespace DownSampling
 
-
-
     ''' <summary>
     ''' Interface for downSampling algorithms
     ''' </summary>
