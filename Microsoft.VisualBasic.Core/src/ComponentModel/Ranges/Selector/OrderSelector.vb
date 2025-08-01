@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::295563325f2f3a759a427684768f3863, Microsoft.VisualBasic.Core\src\ComponentModel\Ranges\Selector\OrderSelector.vb"
+﻿#Region "Microsoft.VisualBasic::35a03a0627285e67e6d85bcaa6f9a75a, Microsoft.VisualBasic.Core\src\ComponentModel\Ranges\Selector\OrderSelector.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 92.86%
     ' 
     '   Blank Lines: 21 (12.88%)
-    '     File Size: 5.68 KB
+    '     File Size: 5.69 KB
 
 
     '     Class OrderSelector

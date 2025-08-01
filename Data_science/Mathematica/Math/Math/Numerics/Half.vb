@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::216ba640b8f32fbb45c0022a8705be67, Data_science\Mathematica\Math\Math\Numerics\Half.vb"
+﻿#Region "Microsoft.VisualBasic::e6cb52820656b650ae2cf99b04d671f4, Data_science\Mathematica\Math\Math\Numerics\Half.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 96.64%
     ' 
     '   Blank Lines: 136 (12.85%)
-    '     File Size: 51.14 KB
+    '     File Size: 51.11 KB
 
 
     '     Structure Half

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d74a5a24d8a1d7da6fe7b5324892b56f, Microsoft.VisualBasic.Core\src\ComponentModel\Algorithm\DynamicProgramming\Levenshtein\ResultVisualize.vb"
+﻿#Region "Microsoft.VisualBasic::9640ce47a52db63f7f1dae3fed621d5a, Microsoft.VisualBasic.Core\src\ComponentModel\Algorithm\DynamicProgramming\Levenshtein\ResultVisualize.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 19 (11.18%)
-    '     File Size: 6.60 KB
+    '     File Size: 6.59 KB
 
 
     '     Module ResultVisualize

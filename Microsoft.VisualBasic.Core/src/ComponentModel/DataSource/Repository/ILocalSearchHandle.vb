@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::09929e179249d4c83686a64dc8a55ad7, Microsoft.VisualBasic.Core\src\ComponentModel\DataSource\Repository\ILocalSearchHandle.vb"
+﻿#Region "Microsoft.VisualBasic::640a959ed06c4934bf9706d201c0765c, Microsoft.VisualBasic.Core\src\ComponentModel\DataSource\Repository\ILocalSearchHandle.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 88.68%
     ' 
     '   Blank Lines: 22 (13.17%)
-    '     File Size: 7.08 KB
+    '     File Size: 7.09 KB
 
 
     '     Interface ILocalSearchHandle
@@ -49,7 +49,7 @@
     ' 
     '     Module SearchFramework
     ' 
-    '         Function: GetUniqueNames, MultipleQuery, Query, (+3 Overloads) UniqueNames
+    '         Function: GetUniqueNames, MakeUniqueNames, MultipleQuery, Query, (+2 Overloads) UniqueNames
     ' 
     ' 
     ' /********************************************************************************/

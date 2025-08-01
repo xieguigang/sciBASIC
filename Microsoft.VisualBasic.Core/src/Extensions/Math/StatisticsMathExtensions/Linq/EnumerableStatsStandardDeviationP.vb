@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::73e6c24ead77663511c2fc53c9a8a278, Microsoft.VisualBasic.Core\src\Extensions\Math\StatisticsMathExtensions\Linq\EnumerableStatsStandardDeviationP.vb"
+﻿#Region "Microsoft.VisualBasic::68cb4b54d35a5c7e622b92281896a7fd, Microsoft.VisualBasic.Core\src\Extensions\Math\StatisticsMathExtensions\Linq\EnumerableStatsStandardDeviationP.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 545
-    '    Code Lines: 106 (19.45%)
-    ' Comment Lines: 432 (79.27%)
+    '   Total Lines: 544
+    '    Code Lines: 105 (19.30%)
+    ' Comment Lines: 432 (79.41%)
     '    - Xml Docs: 0.00%
     ' 
-    '   Blank Lines: 7 (1.28%)
-    '     File Size: 21.44 KB
+    '   Blank Lines: 7 (1.29%)
+    '     File Size: 21.41 KB
 
 
     '     Module EnumerableStatsStandardDeviationP

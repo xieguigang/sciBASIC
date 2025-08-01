@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e1ccd6abd0347058a0a3f8e1dd9e1c7d, Data_science\Mathematica\Math\Math\Numerics\BigDecimal.vb"
+﻿#Region "Microsoft.VisualBasic::436bf84e914e5ea97e324e5402b41178, Data_science\Mathematica\Math\Math\Numerics\BigDecimal.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 18.03%
     ' 
     '   Blank Lines: 55 (8.50%)
-    '     File Size: 26.84 KB
+    '     File Size: 26.83 KB
 
 
     '     Structure BigDecimal

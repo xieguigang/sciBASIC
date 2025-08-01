@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fc58dced97fb91b1899b7ac627c5805a, Microsoft.VisualBasic.Core\src\ComponentModel\DataStructures\BitMap\BitSet.vb"
+﻿#Region "Microsoft.VisualBasic::4b1d14eacb260d2f3dbad2f17ea71223, Microsoft.VisualBasic.Core\src\ComponentModel\DataStructures\BitMap\BitSet.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 90.74%
     ' 
     '   Blank Lines: 105 (15.62%)
-    '     File Size: 24.64 KB
+    '     File Size: 24.63 KB
 
 
     '     Class BitSet

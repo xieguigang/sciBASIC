@@ -1,54 +1,54 @@
-﻿#Region "Microsoft.VisualBasic::92789fc3f159cba49e8155950fb25b0d, Microsoft.VisualBasic.Core\src\Language\Language\Java\Collections.vb"
+﻿#Region "Microsoft.VisualBasic::93ebebd10806d275dc493f926a4518f0, Microsoft.VisualBasic.Core\src\Language\Language\Java\Collections.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 720
-'    Code Lines: 126 (17.50%)
-' Comment Lines: 551 (76.53%)
-'    - Xml Docs: 15.61%
-' 
-'   Blank Lines: 43 (5.97%)
-'     File Size: 36.63 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Module Collections
-' 
-'         Function: [get], (+2 Overloads) binarySearch, (+2 Overloads) indexedBinarySearch, (+2 Overloads) iteratorBinarySearch, put
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 278
+    '    Code Lines: 122 (43.88%)
+    ' Comment Lines: 132 (47.48%)
+    '    - Xml Docs: 65.15%
+    ' 
+    '   Blank Lines: 24 (8.63%)
+    '     File Size: 12.72 KB
+
+
+    '     Module Collections
+    ' 
+    '         Function: [get], (+2 Overloads) binarySearch, (+2 Overloads) indexedBinarySearch, (+2 Overloads) iteratorBinarySearch, put
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

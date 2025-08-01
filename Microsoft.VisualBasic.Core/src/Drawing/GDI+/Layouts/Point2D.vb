@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4c6e4bcaf43cd53cf190230a393b776e, Microsoft.VisualBasic.Core\src\Drawing\GDI+\Layouts\Point2D.vb"
+﻿#Region "Microsoft.VisualBasic::c8db612a6ca74159841b8ed5bc07ccc6, Microsoft.VisualBasic.Core\src\Drawing\GDI+\Layouts\Point2D.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 95.83%
     ' 
     '   Blank Lines: 22 (13.84%)
-    '     File Size: 5.67 KB
+    '     File Size: 5.65 KB
 
 
     '     Class Point2D

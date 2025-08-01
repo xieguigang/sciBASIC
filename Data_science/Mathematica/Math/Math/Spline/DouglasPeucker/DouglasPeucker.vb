@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::63dd99e780c4aaabda70492e8f2f9170, Data_science\Mathematica\Math\Math\Spline\DouglasPeucker\DouglasPeucker.vb"
+﻿#Region "Microsoft.VisualBasic::044ba96ff72de84bb72a1f3c8a3db2d3, Data_science\Mathematica\Math\Math\Spline\DouglasPeucker\DouglasPeucker.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 50.56%
     ' 
     '   Blank Lines: 30 (13.51%)
-    '     File Size: 8.75 KB
+    '     File Size: 8.73 KB
 
 
     '     Module DouglasPeucker

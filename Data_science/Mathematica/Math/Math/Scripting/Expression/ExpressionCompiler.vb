@@ -1,58 +1,58 @@
-﻿#Region "Microsoft.VisualBasic::4467fbc2496521ab61e69b72ae1e53f9, Data_science\Mathematica\Math\Math\Scripting\Expression\ExpressionCompiler.vb"
+﻿#Region "Microsoft.VisualBasic::4ce4370048c7eb29d6610ca219bfbd1f, Data_science\Mathematica\Math\Math\Scripting\Expression\ExpressionCompiler.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 95
-'    Code Lines: 76 (80.00%)
-' Comment Lines: 5 (5.26%)
-'    - Xml Docs: 100.00%
-' 
-'   Blank Lines: 14 (14.74%)
-'     File Size: 4.96 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Delegate Function
-' 
-' 
-'     Module ExpressionCompiler
-' 
-'         Function: CreateExpression, CreateLambda, MakeSymbolReference
-' 
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 118
+    '    Code Lines: 93 (78.81%)
+    ' Comment Lines: 9 (7.63%)
+    '    - Xml Docs: 55.56%
+    ' 
+    '   Blank Lines: 16 (13.56%)
+    '     File Size: 6.14 KB
+
+
+    '     Delegate Function
+    ' 
+    ' 
+    '     Module ExpressionCompiler
+    ' 
+    '         Function: CreateExpression, CreateLambda, MakeSymbolReference
+    ' 
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

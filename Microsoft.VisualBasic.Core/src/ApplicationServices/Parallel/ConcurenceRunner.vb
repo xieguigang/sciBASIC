@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::26dea816507842755458221131714056, Microsoft.VisualBasic.Core\src\ApplicationServices\Parallel\ConcurenceRunner.vb"
+﻿#Region "Microsoft.VisualBasic::3c081dee1904d6aaf3f9ebab5b343088, Microsoft.VisualBasic.Core\src\ApplicationServices\Parallel\ConcurenceRunner.vb"
 
     ' Author:
     ' 
@@ -34,16 +34,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 166
-    '    Code Lines: 75 (45.18%)
-    ' Comment Lines: 69 (41.57%)
+    '   Total Lines: 176
+    '    Code Lines: 84 (47.73%)
+    ' Comment Lines: 69 (39.20%)
     '    - Xml Docs: 98.55%
     ' 
-    '   Blank Lines: 22 (13.25%)
-    '     File Size: 6.29 KB
+    '   Blank Lines: 23 (13.07%)
+    '     File Size: 6.54 KB
 
 
     '     Class VectorTask
+    ' 
+    '         Properties: num_threads, span_size
     ' 
     '         Constructor: (+1 Overloads) Sub New
     ' 

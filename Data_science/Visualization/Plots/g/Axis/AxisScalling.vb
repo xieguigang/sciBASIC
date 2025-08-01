@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6d617069e2e5d9132afc5117637b1cb5, Data_science\Visualization\Plots\g\Axis\AxisScalling.vb"
+﻿#Region "Microsoft.VisualBasic::ab60407a5b62b624851ec7a83387c6fa, Data_science\Visualization\Plots\g\Axis\AxisScalling.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 45.83%
     ' 
     '   Blank Lines: 69 (16.01%)
-    '     File Size: 17.84 KB
+    '     File Size: 17.85 KB
 
 
     '     Module AxisScalling

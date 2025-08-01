@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f77f70aa0b16d42a4659547d3c4107e9, mime\application%json\Serializer\JSONWriter.vb"
+﻿#Region "Microsoft.VisualBasic::32ee08122c749372ad79e4038ee01479, mime\application%json\Serializer\JSONWriter.vb"
 
     ' Author:
     ' 
@@ -369,4 +369,3 @@ Friend Class JSONWriter : Implements IDisposable
         GC.SuppressFinalize(Me)
     End Sub
 End Class
-

@@ -1,58 +1,58 @@
-﻿#Region "Microsoft.VisualBasic::f096ded3302ef4c4695a0e3accc70ad3, mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\XLSX\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::ab3c9a9979a07dbf2f7b18972f31a871, mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\XLSX\Extensions.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 105
-'    Code Lines: 72 (68.57%)
-' Comment Lines: 20 (19.05%)
-'    - Xml Docs: 95.00%
-' 
-'   Blank Lines: 13 (12.38%)
-'     File Size: 3.92 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Module Extensions
-' 
-'         Properties: Sheet1
-' 
-'         Function: EnumerateTables, (+2 Overloads) FirstSheet, GetSheetNames, ReadTableAuto
-' 
-'         Sub: WriteSheetTable
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 135
+    '    Code Lines: 97 (71.85%)
+    ' Comment Lines: 20 (14.81%)
+    '    - Xml Docs: 95.00%
+    ' 
+    '   Blank Lines: 18 (13.33%)
+    '     File Size: 5.16 KB
+
+
+    '     Module Extensions
+    ' 
+    '         Properties: Sheet1
+    ' 
+    '         Function: EnumerateTables, (+2 Overloads) FirstSheet, GetSheetNames, ReadTableAuto
+    ' 
+    '         Sub: (+2 Overloads) SaveToExcel, WriteSheetTable
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

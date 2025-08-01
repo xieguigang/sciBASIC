@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fe996a3ea4511b3dee6c53146869a4da, Data_science\Mathematica\Math\Math\Algebra\LP\LPPSolver.vb"
+﻿#Region "Microsoft.VisualBasic::825861ae46a5371524279f904e7a28e1, Data_science\Mathematica\Math\Math\Algebra\LP\LPPSolver.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 423
-    '    Code Lines: 276 (65.25%)
-    ' Comment Lines: 63 (14.89%)
+    '   Total Lines: 421
+    '    Code Lines: 274 (65.08%)
+    ' Comment Lines: 63 (14.96%)
     '    - Xml Docs: 19.05%
     ' 
-    '   Blank Lines: 84 (19.86%)
-    '     File Size: 17.88 KB
+    '   Blank Lines: 84 (19.95%)
+    '     File Size: 17.79 KB
 
 
     '     Class LPPSolver

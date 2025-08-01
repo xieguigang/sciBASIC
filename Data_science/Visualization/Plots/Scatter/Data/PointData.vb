@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5beb4fe7bba87858a957e0f31d78fa62, Data_science\Visualization\Plots\Scatter\Data\PointData.vb"
+﻿#Region "Microsoft.VisualBasic::3747bf83729a76af7135bf2ce26beda4, Data_science\Visualization\Plots\Scatter\Data\PointData.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 43
-    '    Code Lines: 21 (48.84%)
-    ' Comment Lines: 15 (34.88%)
+    '   Total Lines: 44
+    '    Code Lines: 22 (50.00%)
+    ' Comment Lines: 15 (34.09%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 7 (16.28%)
-    '     File Size: 1.08 KB
+    '   Blank Lines: 7 (15.91%)
+    '     File Size: 1.11 KB
 
 
     ' Structure PointData

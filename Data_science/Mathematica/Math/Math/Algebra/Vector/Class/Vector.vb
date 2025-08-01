@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bd9be55b8053ef4bf1994680fac31a29, Data_science\Mathematica\Math\Math\Algebra\Vector\Class\Vector.vb"
+﻿#Region "Microsoft.VisualBasic::d848f28b675369d279c8dee7943af086, Data_science\Mathematica\Math\Math\Algebra\Vector\Class\Vector.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 1134
-    '    Code Lines: 484 (42.68%)
-    ' Comment Lines: 492 (43.39%)
-    '    - Xml Docs: 73.78%
+    '   Total Lines: 1146
+    '    Code Lines: 489 (42.67%)
+    ' Comment Lines: 498 (43.46%)
+    '    - Xml Docs: 74.10%
     ' 
-    '   Blank Lines: 158 (13.93%)
-    '     File Size: 41.12 KB
+    '   Blank Lines: 159 (13.87%)
+    '     File Size: 41.78 KB
 
 
     '     Class Vector
@@ -55,7 +55,7 @@
     '                   (+2 Overloads) rand, Scalar, ScaleToRange, seq, slice
     '                   SumMagnitudes, (+2 Overloads) ToString
     ' 
-    '         Sub: (+3 Overloads) CopyTo
+    '         Sub: CopyFrom, (+3 Overloads) CopyTo
     ' 
     '         Operators: (+4 Overloads) -, (+7 Overloads) *, (+3 Overloads) /, (+3 Overloads) ^, (+4 Overloads) +
     '                    <, (+3 Overloads) <=, (+2 Overloads) <>, (+2 Overloads) =, >

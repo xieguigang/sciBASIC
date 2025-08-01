@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::368320e34bad2f0bfc234ff45df43142, Data_science\Mathematica\Math\Math\Algebra\Matrix.NET\Decomposition\SingularValueDecomposition.vb"
+﻿#Region "Microsoft.VisualBasic::cb73f5f808198ed96ad08351ba4cec77, Data_science\Mathematica\Math\Math\Algebra\Matrix.NET\Decomposition\SingularValueDecomposition.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 562
-    '    Code Lines: 397 (70.64%)
-    ' Comment Lines: 91 (16.19%)
+    '   Total Lines: 566
+    '    Code Lines: 400 (70.67%)
+    ' Comment Lines: 91 (16.08%)
     '    - Xml Docs: 54.95%
     ' 
-    '   Blank Lines: 74 (13.17%)
-    '     File Size: 21.82 KB
+    '   Blank Lines: 75 (13.25%)
+    '     File Size: 21.92 KB
 
 
     '     Class SingularValueDecomposition
@@ -48,7 +48,7 @@
     '         Properties: Condition, Norm2, Rank, S, SingularValues
     '                     U, V
     ' 
-    '         Constructor: (+1 Overloads) Sub New
+    '         Constructor: (+2 Overloads) Sub New
     ' 
     ' 
     ' /********************************************************************************/

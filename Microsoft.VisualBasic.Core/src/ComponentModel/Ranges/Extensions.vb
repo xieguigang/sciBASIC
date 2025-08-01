@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ff2d9f205615bc4a164dc1077e830ca2, Microsoft.VisualBasic.Core\src\ComponentModel\Ranges\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::0cd8c6418cf0a3e4db0403d58a0246ff, Microsoft.VisualBasic.Core\src\ComponentModel\Ranges\Extensions.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 82.98%
     ' 
     '   Blank Lines: 25 (12.82%)
-    '     File Size: 7.29 KB
+    '     File Size: 7.28 KB
 
 
     '     Module Extensions

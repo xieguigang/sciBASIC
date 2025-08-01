@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::28afe06872bb1a08c0b996f3203f7be4, Data_science\Mathematica\SignalProcessing\SignalProcessing\NDtw\Preprocessing\IPreprocessor.vb"
+﻿#Region "Microsoft.VisualBasic::8a62dc22cdafd24a4aa21c8c20409ea4, Data_science\Mathematica\SignalProcessing\SignalProcessing\NDtw\Preprocessing\IPreprocessor.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 44
-    '    Code Lines: 29 (65.91%)
-    ' Comment Lines: 5 (11.36%)
+    '   Total Lines: 47
+    '    Code Lines: 29 (61.70%)
+    ' Comment Lines: 8 (17.02%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 10 (22.73%)
-    '     File Size: 1.43 KB
+    '   Blank Lines: 10 (21.28%)
+    '     File Size: 1.53 KB
 
 
     '     Class IPreprocessor

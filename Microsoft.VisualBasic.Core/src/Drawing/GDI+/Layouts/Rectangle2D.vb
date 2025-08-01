@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::90e1f348ec80fb51b47194ee7efff9e6, Microsoft.VisualBasic.Core\src\Drawing\GDI+\Layouts\Rectangle2D.vb"
+﻿#Region "Microsoft.VisualBasic::19818731c84e80a199ecfcbc30bc22a1, Microsoft.VisualBasic.Core\src\Drawing\GDI+\Layouts\Rectangle2D.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 90.23%
     ' 
     '   Blank Lines: 48 (12.12%)
-    '     File Size: 15.96 KB
+    '     File Size: 15.93 KB
 
 
     '     Class Rectangle2D
