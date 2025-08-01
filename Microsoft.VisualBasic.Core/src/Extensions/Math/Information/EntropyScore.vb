@@ -54,7 +54,7 @@
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Linq
-Imports stdNum = System.Math
+Imports std = System.Math
 
 Namespace Math.Information
 
@@ -84,7 +84,7 @@ Namespace Math.Information
             Dim SA = v1.Entropy
             Dim SB = v2.Entropy
             ' Unweighted entropy similarity
-            Dim s As Double = 1 - (2 * SAB - SA - SB) / stdNum.Log(4)
+            Dim s As Double = 1 - (2 * SAB - SA - SB) / std.Log(4)
 
             Return If(s < 0, 0, s)
         End Function

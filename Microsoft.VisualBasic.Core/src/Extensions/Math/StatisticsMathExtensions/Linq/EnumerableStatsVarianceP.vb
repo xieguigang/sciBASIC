@@ -53,7 +53,6 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
-Imports stdNum = System.Math
 
 Namespace Math.Statistics.Linq
 

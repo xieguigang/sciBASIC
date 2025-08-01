@@ -1,61 +1,61 @@
 ﻿#Region "Microsoft.VisualBasic::5a1cbb35698e8e1a743edec282f77569, Microsoft.VisualBasic.Core\src\Extensions\Math\Trigonometric\Trigonometric2.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 187
-    '    Code Lines: 65 (34.76%)
-    ' Comment Lines: 100 (53.48%)
-    '    - Xml Docs: 100.00%
-    ' 
-    '   Blank Lines: 22 (11.76%)
-    '     File Size: 7.18 KB
+' Summaries:
 
 
-    '     Module Trigonometric
-    ' 
-    '         Function: Arccos, Arccosec, Arccotan, Arcsec, Arcsin
-    '                   Cosec, Cotan, HArccos, HArccosec, HArccotan
-    '                   HArcsec, HArcsin, Harctan, HCos, HCosec
-    '                   HCotan, HSec, HSin, HTan, Sec
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 187
+'    Code Lines: 65 (34.76%)
+' Comment Lines: 100 (53.48%)
+'    - Xml Docs: 100.00%
+' 
+'   Blank Lines: 22 (11.76%)
+'     File Size: 7.18 KB
+
+
+'     Module Trigonometric
+' 
+'         Function: Arccos, Arccosec, Arccotan, Arcsec, Arcsin
+'                   Cosec, Cotan, HArccos, HArccosec, HArccotan
+'                   HArcsec, HArcsin, Harctan, HCos, HCosec
+'                   HCotan, HSec, HSin, HTan, Sec
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
-Imports stdNum = System.Math
+Imports std = System.Math
 
 Namespace Math
 
@@ -67,7 +67,7 @@ Namespace Math
         ''' <param name="x"></param>
         ''' <returns></returns>
         Public Function Sec(x As Double) As Double
-            Return 1 / stdNum.Cos(x)
+            Return 1 / std.Cos(x)
         End Function
 
         ''' <summary>
@@ -76,7 +76,7 @@ Namespace Math
         ''' <param name="x"></param>
         ''' <returns></returns>
         Public Function Cosec(x As Double) As Double
-            Return 1 / stdNum.Sin(x)
+            Return 1 / std.Sin(x)
         End Function
 
         ''' <summary>
@@ -85,7 +85,7 @@ Namespace Math
         ''' <param name="x"></param>
         ''' <returns></returns>
         Public Function Cotan(x As Double) As Double
-            Return 1 / stdNum.Tan(x)
+            Return 1 / std.Tan(x)
         End Function
 
         ''' <summary>
@@ -94,7 +94,7 @@ Namespace Math
         ''' <param name="x"></param>
         ''' <returns></returns>
         Public Function Arcsin(x As Double) As Double
-            Return Atn(x / stdNum.Sqrt(-x * x + 1))
+            Return Atn(x / std.Sqrt(-x * x + 1))
         End Function
 
         ''' <summary>
@@ -103,7 +103,7 @@ Namespace Math
         ''' <param name="x"></param>
         ''' <returns></returns>
         Public Function Arccos(x As Double) As Double
-            Return Atn(-x / stdNum.Sqrt(-x * x + 1)) + 2 * Atn(1)
+            Return Atn(-x / std.Sqrt(-x * x + 1)) + 2 * Atn(1)
         End Function
 
         ''' <summary>
@@ -112,7 +112,7 @@ Namespace Math
         ''' <param name="x"></param>
         ''' <returns></returns>
         Public Function Arcsec(x As Double) As Double
-            Return Atn(x / stdNum.Sqrt(x * x - 1)) + stdNum.Sign((x) - 1) * (2 * Atn(1))
+            Return Atn(x / std.Sqrt(x * x - 1)) + std.Sign((x) - 1) * (2 * Atn(1))
         End Function
 
         ''' <summary>
@@ -121,7 +121,7 @@ Namespace Math
         ''' <param name="x"></param>
         ''' <returns></returns>
         Public Function Arccosec(x As Double) As Double
-            Return Atn(x / stdNum.Sqrt(x * x - 1)) + (stdNum.Sign(x) - 1) * (2 * Atn(1))
+            Return Atn(x / std.Sqrt(x * x - 1)) + (std.Sign(x) - 1) * (2 * Atn(1))
         End Function
 
         ''' <summary>
@@ -139,7 +139,7 @@ Namespace Math
         ''' <param name="x"></param>
         ''' <returns></returns>
         Public Function HSin(x As Double) As Double
-            Return (stdNum.Exp(x) - stdNum.Exp(-x)) / 2
+            Return (std.Exp(x) - std.Exp(-x)) / 2
         End Function
 
         ''' <summary>
@@ -148,7 +148,7 @@ Namespace Math
         ''' <param name="x"></param>
         ''' <returns></returns>
         Public Function HCos(x As Double) As Double
-            Return (stdNum.Exp(x) + stdNum.Exp(-x)) / 2
+            Return (std.Exp(x) + std.Exp(-x)) / 2
         End Function
 
         ''' <summary>
@@ -157,7 +157,7 @@ Namespace Math
         ''' <param name="x"></param>
         ''' <returns></returns>
         Public Function HTan(x As Double) As Double
-            Return (stdNum.Exp(x) - stdNum.Exp(-x)) / (stdNum.Exp(x) + stdNum.Exp(-x))
+            Return (std.Exp(x) - std.Exp(-x)) / (std.Exp(x) + std.Exp(-x))
         End Function
 
         ''' <summary>
@@ -166,7 +166,7 @@ Namespace Math
         ''' <param name="x"></param>
         ''' <returns></returns>
         Public Function HSec(x As Double) As Double
-            Return 2 / (stdNum.Exp(x) + stdNum.Exp(-x))
+            Return 2 / (std.Exp(x) + std.Exp(-x))
         End Function
 
         ''' <summary>
@@ -175,7 +175,7 @@ Namespace Math
         ''' <param name="x"></param>
         ''' <returns></returns>
         Public Function HCosec(x As Double) As Double
-            Return 2 / (stdNum.Exp(x) - stdNum.Exp(-x))
+            Return 2 / (std.Exp(x) - std.Exp(-x))
         End Function
 
         ''' <summary>
@@ -184,7 +184,7 @@ Namespace Math
         ''' <param name="x"></param>
         ''' <returns></returns>
         Public Function HCotan(x As Double) As Double
-            Return (stdNum.Exp(x) + stdNum.Exp(-x)) / (stdNum.Exp(x) - stdNum.Exp(-x))
+            Return (std.Exp(x) + std.Exp(-x)) / (std.Exp(x) - std.Exp(-x))
         End Function
 
         ''' <summary>
@@ -193,7 +193,7 @@ Namespace Math
         ''' <param name="x"></param>
         ''' <returns></returns>
         Public Function HArcsin(x As Double) As Double
-            Return stdNum.Log(x + stdNum.Sqrt(x * x + 1))
+            Return std.Log(x + std.Sqrt(x * x + 1))
         End Function
 
         ''' <summary>
@@ -202,7 +202,7 @@ Namespace Math
         ''' <param name="x"></param>
         ''' <returns></returns>
         Public Function HArccos(x As Double) As Double
-            Return stdNum.Log(x + stdNum.Sqrt(x * x - 1))
+            Return std.Log(x + std.Sqrt(x * x - 1))
         End Function
 
         ''' <summary>
@@ -211,7 +211,7 @@ Namespace Math
         ''' <param name="x"></param>
         ''' <returns></returns>
         Public Function Harctan(x As Double) As Double
-            Return stdNum.Log((1 + x) / (1 - x)) / 2
+            Return std.Log((1 + x) / (1 - x)) / 2
         End Function
 
         ''' <summary>
@@ -220,7 +220,7 @@ Namespace Math
         ''' <param name="x"></param>
         ''' <returns></returns>
         Public Function HArcsec(x As Double) As Double
-            Return stdNum.Log((stdNum.Sqrt(-x * x + 1) + 1) / x)
+            Return std.Log((std.Sqrt(-x * x + 1) + 1) / x)
         End Function
 
         ''' <summary>
@@ -229,7 +229,7 @@ Namespace Math
         ''' <param name="x"></param>
         ''' <returns></returns>
         Public Function HArccosec(x As Double) As Double
-            Return stdNum.Log((stdNum.Sign(x) * stdNum.Sqrt(x * x + 1) + 1) / x)
+            Return std.Log((std.Sign(x) * std.Sqrt(x * x + 1) + 1) / x)
         End Function
 
         ''' <summary>
@@ -238,7 +238,7 @@ Namespace Math
         ''' <param name="x"></param>
         ''' <returns></returns>
         Public Function HArccotan(x As Double) As Double
-            Return stdNum.Log((x + 1) / (x - 1)) / 2
+            Return std.Log((x + 1) / (x - 1)) / 2
         End Function
     End Module
 End Namespace

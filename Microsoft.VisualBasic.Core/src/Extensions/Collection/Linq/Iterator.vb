@@ -55,7 +55,7 @@
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Language
-Imports stdNum = System.Math
+Imports std = System.Math
 
 Namespace Linq
 
@@ -126,7 +126,7 @@ Namespace Linq
         <Extension>
         Public Iterator Function SeqTuple(Of T1, T2)(tuple As (x As T1(), y As T2()), Optional offset% = 0) As IEnumerable(Of SeqValue(Of (a As T1, b As T2)))
             Dim value As (T1, T2)
-            Dim length% = stdNum.Max(tuple.x.Length, tuple.y.Length)
+            Dim length% = std.Max(tuple.x.Length, tuple.y.Length)
 
             For i As Integer = 0 To length - 1
                 value = (
