@@ -2,15 +2,13 @@
 
 Namespace DownSampling.MaxMin
 
-
     ''' <summary>
     ''' Select events with maximum or minimum value in bucket
     ''' </summary>
-    Public Class MMAlgorithm
-        Inherits BucketBasedAlgorithm(Of MMBucket, ITimeSignal)
+    Public Class MMAlgorithm : Inherits BucketBasedAlgorithm(Of MMBucket, ITimeSignal)
 
         Public Sub New()
-            BucketFactory = New MMBucketFactory()
+            BucketFactory(New MMBucketFactory)
             SetSpliter(New FixedTimeBucketSplitter(Of MMBucket, ITimeSignal))
         End Sub
 
@@ -27,5 +25,4 @@ Namespace DownSampling.MaxMin
         End Function
 
     End Class
-
 End Namespace
