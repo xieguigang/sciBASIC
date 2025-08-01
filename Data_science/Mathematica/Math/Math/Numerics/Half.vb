@@ -64,7 +64,7 @@
 #End Region
 
 Imports System.Globalization
-Imports stdNum = System.Math
+Imports std = System.Math
 
 Namespace Numerics
 
@@ -496,7 +496,7 @@ Namespace Numerics
         ''' <param name="value">A System.Half to convert.</param>
         ''' <returns>An 8-bit unsigned integer that represents the converted System.Half.</returns>
         Public Shared Narrowing Operator CType(value As Half) As Byte
-            Return CByte(stdNum.Truncate(CSng(value)))
+            Return CByte(std.Truncate(CSng(value)))
         End Operator
 
         ''' <summary>
@@ -514,7 +514,7 @@ Namespace Numerics
         ''' <param name="value">A System.Half to convert.</param>
         ''' <returns>A 16-bit signed integer that represents the converted System.Half.</returns>
         Public Shared Narrowing Operator CType(value As Half) As Short
-            Return CShort(stdNum.Truncate(CSng(value)))
+            Return CShort(std.Truncate(CSng(value)))
         End Operator
 
         ''' <summary>
@@ -523,7 +523,7 @@ Namespace Numerics
         ''' <param name="value">A System.Half to convert.</param>
         ''' <returns>A 32-bit signed integer that represents the converted System.Half.</returns>
         Public Shared Narrowing Operator CType(value As Half) As Integer
-            Return CInt(stdNum.Truncate(CSng(value)))
+            Return CInt(std.Truncate(CSng(value)))
         End Operator
 
         ''' <summary>
@@ -532,7 +532,7 @@ Namespace Numerics
         ''' <param name="value">A System.Half to convert.</param>
         ''' <returns>A 64-bit signed integer that represents the converted System.Half.</returns>
         Public Shared Narrowing Operator CType(value As Half) As Long
-            Return CLng(stdNum.Truncate(CSng(value)))
+            Return CLng(std.Truncate(CSng(value)))
         End Operator
 
         ''' <summary>
@@ -604,7 +604,7 @@ Namespace Numerics
         ''' <param name="value">A System.Half to convert.</param>
         ''' <returns>An 8-bit signed integer that represents the converted System.Half.</returns>
         Public Shared Narrowing Operator CType(value As Half) As SByte
-            Return CSByte(stdNum.Truncate(CSng(value)))
+            Return CSByte(std.Truncate(CSng(value)))
         End Operator
 
         ''' <summary>
@@ -613,7 +613,7 @@ Namespace Numerics
         ''' <param name="value">A System.Half to convert.</param>
         ''' <returns>A 16-bit unsigned integer that represents the converted System.Half.</returns>
         Public Shared Narrowing Operator CType(value As Half) As UShort
-            Return CUShort(stdNum.Truncate(CSng(value)))
+            Return CUShort(std.Truncate(CSng(value)))
         End Operator
 
         ''' <summary>
@@ -622,7 +622,7 @@ Namespace Numerics
         ''' <param name="value">A System.Half to convert.</param>
         ''' <returns>A 32-bit unsigned integer that represents the converted System.Half.</returns>
         Public Shared Narrowing Operator CType(value As Half) As UInteger
-            Return CUInt(stdNum.Truncate(CSng(value)))
+            Return CUInt(std.Truncate(CSng(value)))
         End Operator
 
         ''' <summary>
@@ -631,7 +631,7 @@ Namespace Numerics
         ''' <param name="value">A System.Half to convert.</param>
         ''' <returns>A 64-bit unsigned integer that represents the converted System.Half.</returns>
         Public Shared Narrowing Operator CType(value As Half) As ULong
-            Return CULng(stdNum.Truncate(CSng(value)))
+            Return CULng(std.Truncate(CSng(value)))
         End Operator
 
 #End Region

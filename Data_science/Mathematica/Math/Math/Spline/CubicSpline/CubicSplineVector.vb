@@ -60,7 +60,7 @@
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Serialization.JSON
-Imports stdNum = System.Math
+Imports std = System.Math
 
 Namespace Interpolation
 
@@ -164,7 +164,7 @@ Namespace Interpolation
             Dim cubicNum%, cubicPos!
 
             position = position * _cubics.Count
-            cubicNum = CInt(Fix(stdNum.Min(_cubics.Count - 1, position)))
+            cubicNum = CInt(Fix(std.Min(_cubics.Count - 1, position)))
             cubicPos = (position - cubicNum)
 
             Return _cubics(cubicNum).Eval(cubicPos)

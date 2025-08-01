@@ -59,8 +59,6 @@
 
 Imports System.Text
 Imports Microsoft.VisualBasic.ApplicationServices.Terminal.ProgressBar
-Imports Microsoft.VisualBasic.ComponentModel.Collection
-Imports stdNum = System.Math
 
 Namespace LinearAlgebra.LinearProgramming
 

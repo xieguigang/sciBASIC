@@ -67,7 +67,7 @@
 
 Imports System.Numerics
 Imports Microsoft.VisualBasic.My.FrameworkInternal
-Imports stdNum = System.Math
+Imports std = System.Math
 
 Namespace Numerics
 
@@ -481,7 +481,7 @@ Namespace Numerics
                                   Optional Precision As Integer = -1) As BigDecimal
             If Num2.value.IsZero Then Throw New DivideByZeroException
             Dim P As Integer = (Num1.MLen * Num2.MLen) + Num1.ILen + Num2.ILen + 1
-            Dim D As Integer = stdNum.Abs(Num1.MLen - Num2.MLen)
+            Dim D As Integer = std.Abs(Num1.MLen - Num2.MLen)
             If Precision > -1 Then P = Precision
             If Num1.MLen >= Num2.MLen Then
                 Num1.value = Pow10(Num1, P)
@@ -502,7 +502,7 @@ Namespace Numerics
                                Optional Precision As Integer = -1) As BigDecimal
             If Num2 = 0 Then Return One
             If Num2 < 0 Then
-                Num2 = stdNum.Abs(Num2)
+                Num2 = std.Abs(Num2)
                 Dim L As Integer = Num1.MLen * Num2
                 Dim R As BigDecimal = PowN10(BigInteger.Pow(Num1.value, Num2).ToString, L)
                 If Precision = -1 Then Precision = R.ILen + R.MLen
@@ -519,7 +519,7 @@ Namespace Numerics
             If Num2.ILen > Num1.ILen Then Return Num1
             If Num2.value.IsZero Then Throw New DivideByZeroException
             Dim L As Integer = Num1.MLen
-            Dim D As Integer = stdNum.Abs(Num1.MLen - Num2.MLen)
+            Dim D As Integer = std.Abs(Num1.MLen - Num2.MLen)
             If Num1.MLen >= Num2.MLen Then
                 Num2.value = Pow10(Num2, D)
             Else
@@ -652,7 +652,7 @@ Namespace Numerics
         Private Shared Function PowN10(Num As BigDecimal, exponent As Integer) As BigDecimal
             If exponent = 0 Then Return One
             Dim EXP As BigDecimal = ZeroPointOne
-            For i = 1 To stdNum.Abs(exponent) : EXP *= ZeroPointOne : Next
+            For i = 1 To std.Abs(exponent) : EXP *= ZeroPointOne : Next
             Return Num * EXP
         End Function
 

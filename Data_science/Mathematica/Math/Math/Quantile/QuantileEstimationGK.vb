@@ -57,7 +57,7 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
-Imports stdNum = System.Math
+Imports std = System.Math
 
 '
 '   Copyright 2012 Andrew Wang (andrew@umbrant.com)
@@ -151,7 +151,7 @@ Namespace Quantile
             If idx = 0 OrElse idx = sample.Count Then
                 delta = 0
             Else
-                delta = CInt(Fix(stdNum.Floor(2 * epsilon * count)))
+                delta = CInt(Fix(std.Floor(2 * epsilon * count)))
             End If
 
             Call sample.Insert(idx, New X(v, 1, delta))
@@ -176,7 +176,7 @@ Namespace Quantile
 
                 ' Merge the items together if we don't need it to maintain the
                 ' error bound
-                If x.g + x1.g + x1.delta <= stdNum.Floor(2 * epsilon * count) Then
+                If x.g + x1.g + x1.delta <= std.Floor(2 * epsilon * count) Then
                     x1.g += x.g
                     sample.RemoveAt(i)
                     removed += 1

@@ -75,7 +75,7 @@ Imports System.Threading
 Imports Microsoft.VisualBasic.ApplicationServices.Development
 Imports Microsoft.VisualBasic.Language
 Imports randf = Microsoft.VisualBasic.Math.RandomExtensions
-Imports stdNum = System.Math
+Imports std = System.Math
 
 Namespace ApplicationServices.Terminal.xConsole
 
@@ -544,7 +544,7 @@ Namespace ApplicationServices.Terminal.xConsole
             For Each cc As ConsoleColor In [Enum].GetValues(GetType(ConsoleColor))
                 Dim n = [Enum].GetName(GetType(ConsoleColor), cc)
                 Dim c = Color.FromName(If(n = "DarkYellow", "Orange", n))
-                Dim t = stdNum.Pow(c.R - rr, 2.0) + stdNum.Pow(c.G - gg, 2.0) + stdNum.Pow(c.B - bb, 2.0)
+                Dim t = std.Pow(c.R - rr, 2.0) + std.Pow(c.G - gg, 2.0) + std.Pow(c.B - bb, 2.0)
                 If t = 0.0 Then
                     Return cc
                 End If
