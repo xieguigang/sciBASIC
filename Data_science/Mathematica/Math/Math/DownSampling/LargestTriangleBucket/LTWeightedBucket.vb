@@ -75,7 +75,7 @@ Namespace DownSampling.LargestTriangleBucket
                     Dim timeSum As Long = 0
                     For i As Integer = 0 To index - 1
                         Dim e As ITimeSignal = events(i)
-                        valueSum += e.Value
+                        valueSum += e.intensity
                         timeSum += e.time
                     Next i
                     average_Conflict = New WeightedEvent(timeSum \ index, valueSum / index)
@@ -122,7 +122,7 @@ Namespace DownSampling.LargestTriangleBucket
                 Dim avg As Double = lastVal + nextVal
                 For i As Integer = 0 To index - 1
                     Dim e As ITimeSignal = events(i)
-                    avg += e.Value
+                    avg += e.intensity
                 Next i
                 avg = avg / (index + 2)
                 Dim lastSe As Double = sequarErrors(lastVal, avg)
@@ -130,7 +130,7 @@ Namespace DownSampling.LargestTriangleBucket
                 sse_Conflict = lastSe + nextSe
                 For i As Integer = 0 To index - 1
                     Dim e As ITimeSignal = events(i)
-                    sse_Conflict += sequarErrors(e.Value, avg)
+                    sse_Conflict += sequarErrors(e.intensity, avg)
                 Next i
             End If
             Return sse_Conflict

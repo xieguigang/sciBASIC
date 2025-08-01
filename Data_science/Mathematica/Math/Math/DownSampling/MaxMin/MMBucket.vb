@@ -32,14 +32,14 @@ Namespace DownSampling.MaxMin
             Dim max As Double = Double.Epsilon
             Dim min As Double = Double.MaxValue
             For Each e As ITimeSignal In events
-                Dim val As Double = e.Value
+                Dim val As Double = e.intensity
                 If val > max Then
                     maxEvt = e
-                    max = e.Value
+                    max = e.intensity
                 End If
                 If val < min Then
                     minEvt = e
-                    min = e.Value
+                    min = e.intensity
                 End If
             Next e
             If maxEvt IsNot Nothing AndAlso minEvt IsNot Nothing Then

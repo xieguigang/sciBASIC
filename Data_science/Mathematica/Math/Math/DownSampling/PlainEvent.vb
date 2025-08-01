@@ -2,34 +2,25 @@
 
 Namespace DownSampling
 
-
-    Public Class PlainEvent
-        Implements ITimeSignal
-
-        Private time_Conflict As Long
-        Private value_Conflict As Double
+    Public Class PlainEvent : Implements ITimeSignal
 
         Public Sub New(time As Long, value As Double)
-            Me.time_Conflict = time
-            Me.value_Conflict = value
+            Me.Time = time
+            Me.Value = value
         End Sub
 
-        Public Overridable ReadOnly Property Time As Long Implements ITimeSignal.time
-            Get
-                Return time_Conflict
-            End Get
-        End Property
+        Public Sub New(time As Double, value As Double)
+            Me.Time = time
+            Me.Value = value
+        End Sub
 
-        Public Overridable ReadOnly Property Value As Double Implements ITimeSignal.Value
-            Get
-                Return value_Conflict
-            End Get
-        End Property
+        Public Overridable ReadOnly Property Time As Double Implements ITimeSignal.time
+        Public Overridable ReadOnly Property Value As Double Implements ITimeSignal.intensity
 
         Public Overrides Function GetHashCode() As Integer
             Const prime As Integer = 31
             Dim result As Integer = 1
-            result = prime * result + CInt(time_Conflict Xor (CLng(CULng(time_Conflict) >> 32)))
+            result = prime * result + CInt(Time Xor (CLng(CULng(Time) >> 32)))
             Return result
         End Function
 
@@ -44,7 +35,7 @@ Namespace DownSampling
                 Return False
             End If
             Dim other As PlainEvent = DirectCast(obj, PlainEvent)
-            If time_Conflict <> other.time_Conflict Then
+            If Time <> other.Time Then
                 Return False
             End If
             Return True
