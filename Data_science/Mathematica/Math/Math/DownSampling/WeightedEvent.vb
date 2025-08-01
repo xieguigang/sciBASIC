@@ -1,35 +1,37 @@
-﻿Namespace DownSampling
+﻿Imports Microsoft.VisualBasic.ComponentModel.TagData
+
+Namespace DownSampling
 
 
     Public Class WeightedEvent
-        Implements [Event]
+        Implements ITimeSignal
 
-        Private event_Conflict As [Event]
+        Private event_Conflict As ITimeSignal
         Private weight_Conflict As Double
 
         Public Sub New(time As Long, value As Double)
             Me.event_Conflict = New PlainEvent(time, value)
         End Sub
 
-        Public Sub New(e As [Event])
+        Public Sub New(e As ITimeSignal)
             Me.event_Conflict = e
         End Sub
 
-        Public Overridable ReadOnly Property [Event] As [Event]
+        Public Overridable ReadOnly Property [Event] As ITimeSignal
             Get
                 Return event_Conflict
             End Get
         End Property
 
-        Public Overridable ReadOnly Property Time As Long Implements [Event].Time
+        Public Overridable ReadOnly Property Time As Double Implements ITimeSignal.time
             Get
-                Return event_Conflict.Time
+                Return event_Conflict.time
             End Get
         End Property
 
-        Public Overridable ReadOnly Property Value As Double Implements [Event].Value
+        Public Overridable ReadOnly Property Value As Double Implements ITimeSignal.intensity
             Get
-                Return event_Conflict.Value
+                Return event_Conflict.intensity
             End Get
         End Property
 
@@ -47,7 +49,7 @@
             If event_Conflict Is Nothing Then
                 Return "[null event]"
             End If
-            Return "[t=" & event_Conflict.Time & ", v=" & event_Conflict.Value & "]"
+            Return "[t=" & event_Conflict.time & ", v=" & event_Conflict.Value & "]"
         End Function
 
         Public Overrides Function GetHashCode() As Integer
@@ -56,7 +58,7 @@
             End If
             Const prime As Integer = 31
             Dim result As Integer = 1
-            result = prime * result + CInt(event_Conflict.Time Xor (CLng(CULng(event_Conflict.Time) >> 32)))
+            result = prime * result + CInt(event_Conflict.time Xor (CLng(CULng(event_Conflict.time) >> 32)))
             Dim temp As Long
             temp = System.BitConverter.DoubleToInt64Bits(event_Conflict.Value)
             result = prime * result + CInt(temp Xor (CLng(CULng(temp) >> 32)))
@@ -77,7 +79,7 @@
             If other.event_Conflict Is Nothing OrElse event_Conflict Is Nothing Then
                 Return False
             End If
-            If event_Conflict.Time <> other.event_Conflict.Time Then
+            If event_Conflict.time <> other.event_Conflict.time Then
                 Return False
             End If
             If event_Conflict.Value <> other.event_Conflict.Value Then

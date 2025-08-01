@@ -1,4 +1,5 @@
-﻿Imports Microsoft.VisualBasic.Math.DownSampling.LargestTriangleBucket
+﻿Imports Microsoft.VisualBasic.ComponentModel.TagData
+Imports Microsoft.VisualBasic.Math.DownSampling.LargestTriangleBucket
 Imports Microsoft.VisualBasic.Math.DownSampling.MaxMin
 
 Namespace DownSampling
@@ -61,7 +62,7 @@ Namespace DownSampling
             innerEnumValue = thisInnerEnumValue
         End Sub
 
-        Public Function process(data As IList(Of [Event]), threshold As Integer) As IList(Of [Event]) Implements DownSamplingAlgorithm.process
+        Public Function process(data As IList(Of ITimeSignal), threshold As Integer) As IList(Of ITimeSignal) Implements DownSamplingAlgorithm.process
             Return [delegate].process(data, threshold)
         End Function
 

@@ -1,4 +1,5 @@
-﻿Imports std = System.Math
+﻿Imports Microsoft.VisualBasic.ComponentModel.TagData
+Imports std = System.Math
 
 Namespace DownSampling.TimeGap
 
@@ -10,25 +11,25 @@ Namespace DownSampling.TimeGap
 
         Private rate As Double = 1
 
-        Public Overridable Function process(data As IList(Of [Event]), threshold As Integer) As IList(Of [Event]) Implements DownSamplingAlgorithm.process
+        Public Overridable Function process(data As IList(Of ITimeSignal), threshold As Integer) As IList(Of ITimeSignal) Implements DownSamplingAlgorithm.process
 
             If data.Count = 0 OrElse threshold >= data.Count Then
                 Return data
             End If
-            Dim result As New List(Of [Event])()
+            Dim result As New List(Of ITimeSignal)()
 
             Dim weighted As IList(Of WeightedEvent) = New List(Of WeightedEvent)()
-            Dim avg As Double = (data(data.Count - 1).Time - data(0).Time) * 1.0 / (data.Count - 1)
+            Dim avg As Double = (data(data.Count - 1).time - data(0).time) * 1.0 / (data.Count - 1)
             For i As Integer = 0 To data.Count - 1
                 Dim we As New WeightedEvent(data(i))
                 If i < data.Count - 1 Then
-                    Dim delta As Long = data(i + 1).Time - data(i).Time
+                    Dim delta As Long = data(i + 1).time - data(i).time
                     we.Weight = delta - avg
                 End If
                 weighted.Add(we)
             Next i
 
-            Dim [set] As ISet(Of [Event]) = New HashSet(Of [Event])()
+            Dim [set] As ISet(Of ITimeSignal) = New HashSet(Of ITimeSignal)()
             Dim max As Integer = CInt(std.Truncate(threshold * rate))
             Dim multiple As Integer = 1024
             Dim limit As Integer = Integer.MaxValue

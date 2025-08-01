@@ -1,20 +1,22 @@
-﻿Namespace DownSampling.MaxMin
+﻿Imports Microsoft.VisualBasic.ComponentModel.TagData
 
-	Public Class PIPlotBucketFactory
-		Implements BucketFactory(Of PIPlotBucket)
+Namespace DownSampling.MaxMin
 
-		Public Overridable Function newBucket() As PIPlotBucket Implements BucketFactory(Of PIPlotBucket).newBucket
-			Return New PIPlotBucket()
-		End Function
+    Public Class PIPlotBucketFactory
+        Implements BucketFactory(Of PIPlotBucket)
 
-		Public Overridable Function newBucket(size As Integer) As PIPlotBucket Implements BucketFactory(Of PIPlotBucket).newBucket
-			Return New PIPlotBucket(size)
-		End Function
+        Public Overridable Function newBucket() As PIPlotBucket Implements BucketFactory(Of PIPlotBucket).newBucket
+            Return New PIPlotBucket()
+        End Function
 
-		Public Overridable Function newBucket(e As [Event]) As PIPlotBucket Implements BucketFactory(Of PIPlotBucket).newBucket
-			Return New PIPlotBucket(e)
-		End Function
+        Public Overridable Function newBucket(size As Integer) As PIPlotBucket Implements BucketFactory(Of PIPlotBucket).newBucket
+            Return New PIPlotBucket(size)
+        End Function
 
-	End Class
+        Public Overridable Function newBucket(e As ITimeSignal) As PIPlotBucket Implements BucketFactory(Of PIPlotBucket).newBucket
+            Return New PIPlotBucket(e)
+        End Function
+
+    End Class
 
 End Namespace

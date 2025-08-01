@@ -1,16 +1,18 @@
-﻿Namespace DownSampling
+﻿Imports Microsoft.VisualBasic.ComponentModel.TagData
+
+Namespace DownSampling
 
 
 
-	''' <summary>
-	''' A bucket holds a subset of events and select significant events from it
-	''' </summary>
-	Public Interface Bucket
+    ''' <summary>
+    ''' A bucket holds a subset of events and select significant events from it
+    ''' </summary>
+    Public Interface Bucket
 
-		Sub selectInto(result As IList(Of [Event]))
+        Sub selectInto(result As IList(Of ITimeSignal))
 
-		Sub add(e As [Event])
+        Sub add(e As ITimeSignal)
 
-	End Interface
+    End Interface
 
 End Namespace

@@ -1,20 +1,22 @@
-﻿Namespace DownSampling.LargestTriangleBucket
+﻿Imports Microsoft.VisualBasic.ComponentModel.TagData
 
-	Public Class LTWeightedBucketFactory
-		Implements BucketFactory(Of LTWeightedBucket)
+Namespace DownSampling.LargestTriangleBucket
 
-		Public Overridable Function newBucket() As LTWeightedBucket Implements BucketFactory(Of LTWeightedBucket).newBucket
-			Return New LTWeightedBucket()
-		End Function
+    Public Class LTWeightedBucketFactory
+        Implements BucketFactory(Of LTWeightedBucket)
 
-		Public Overridable Function newBucket(size As Integer) As LTWeightedBucket Implements BucketFactory(Of LTWeightedBucket).newBucket
-			Return New LTWeightedBucket(size)
-		End Function
+        Public Overridable Function newBucket() As LTWeightedBucket Implements BucketFactory(Of LTWeightedBucket).newBucket
+            Return New LTWeightedBucket()
+        End Function
 
-		Public Overridable Function newBucket(e As [Event]) As LTWeightedBucket Implements BucketFactory(Of LTWeightedBucket).newBucket
-			Return New LTWeightedBucket(DirectCast(e, WeightedEvent))
-		End Function
+        Public Overridable Function newBucket(size As Integer) As LTWeightedBucket Implements BucketFactory(Of LTWeightedBucket).newBucket
+            Return New LTWeightedBucket(size)
+        End Function
 
-	End Class
+        Public Overridable Function newBucket(e As ITimeSignal) As LTWeightedBucket Implements BucketFactory(Of LTWeightedBucket).newBucket
+            Return New LTWeightedBucket(DirectCast(e, WeightedEvent))
+        End Function
+
+    End Class
 
 End Namespace

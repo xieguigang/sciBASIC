@@ -1,8 +1,10 @@
-﻿Namespace DownSampling
+﻿Imports Microsoft.VisualBasic.ComponentModel.TagData
+
+Namespace DownSampling
 
 
     Public Class PlainEvent
-        Implements [Event]
+        Implements ITimeSignal
 
         Private time_Conflict As Long
         Private value_Conflict As Double
@@ -12,13 +14,13 @@
             Me.value_Conflict = value
         End Sub
 
-        Public Overridable ReadOnly Property Time As Long Implements [Event].Time
+        Public Overridable ReadOnly Property Time As Long Implements ITimeSignal.time
             Get
                 Return time_Conflict
             End Get
         End Property
 
-        Public Overridable ReadOnly Property Value As Double Implements [Event].Value
+        Public Overridable ReadOnly Property Value As Double Implements ITimeSignal.Value
             Get
                 Return value_Conflict
             End Get

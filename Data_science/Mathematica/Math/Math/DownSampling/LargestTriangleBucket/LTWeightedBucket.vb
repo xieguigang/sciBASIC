@@ -1,4 +1,6 @@
-﻿Namespace DownSampling.LargestTriangleBucket
+﻿Imports Microsoft.VisualBasic.ComponentModel.TagData
+
+Namespace DownSampling.LargestTriangleBucket
 
 
     Public Class LTWeightedBucket
@@ -16,9 +18,9 @@
 
         End Sub
 
-        Public Sub New([event] As WeightedEvent)
+        Public Sub New(ITimeSignal As WeightedEvent)
             index = 1
-            events = New WeightedEvent() {[event]}
+            events = New WeightedEvent() {ITimeSignal}
         End Sub
 
         Public Sub New(size As Integer)
@@ -43,13 +45,13 @@
             End If
         End Sub
 
-        Public Overridable Sub selectInto(result As IList(Of [Event])) Implements Bucket.selectInto
+        Public Overridable Sub selectInto(result As IList(Of ITimeSignal)) Implements Bucket.selectInto
             For Each e As WeightedEvent In [select]()
                 result.Add(e.Event)
             Next e
         End Sub
 
-        Public Overridable Sub add(e As [Event]) Implements Bucket.add
+        Public Overridable Sub add(e As ITimeSignal) Implements Bucket.add
             If index < events.Length Then
                 events(index) = DirectCast(e, WeightedEvent)
                 index += 1
@@ -72,9 +74,9 @@
                     Dim valueSum As Double = 0
                     Dim timeSum As Long = 0
                     For i As Integer = 0 To index - 1
-                        Dim e As [Event] = events(i)
+                        Dim e As ITimeSignal = events(i)
                         valueSum += e.Value
-                        timeSum += e.Time
+                        timeSum += e.time
                     Next i
                     average_Conflict = New WeightedEvent(timeSum \ index, valueSum / index)
                 End If
@@ -119,7 +121,7 @@
                 Dim nextVal As Double = [next].get(0).Value
                 Dim avg As Double = lastVal + nextVal
                 For i As Integer = 0 To index - 1
-                    Dim e As [Event] = events(i)
+                    Dim e As ITimeSignal = events(i)
                     avg += e.Value
                 Next i
                 avg = avg / (index + 2)
@@ -127,7 +129,7 @@
                 Dim nextSe As Double = sequarErrors(nextVal, avg)
                 sse_Conflict = lastSe + nextSe
                 For i As Integer = 0 To index - 1
-                    Dim e As [Event] = events(i)
+                    Dim e As ITimeSignal = events(i)
                     sse_Conflict += sequarErrors(e.Value, avg)
                 Next i
             End If

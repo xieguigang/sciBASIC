@@ -9,9 +9,9 @@
 
 		Public Overridable Sub calcWeight(triangle As Triangle, buckets As IList(Of LTWeightedBucket)) Implements LTWeightCalculator.calcWeight
 			For Each bucket As LTWeightedBucket In buckets
-				For Each [event] As WeightedEvent In bucket
-					triangle.calc([event])
-				Next [event]
+				For Each ITimeSignal As WeightedEvent In bucket
+					triangle.calc(ITimeSignal)
+				Next ITimeSignal
 			Next bucket
 		End Sub
 

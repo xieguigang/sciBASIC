@@ -1,4 +1,6 @@
-﻿Namespace DownSampling.MaxMin
+﻿Imports Microsoft.VisualBasic.ComponentModel.TagData
+
+Namespace DownSampling.MaxMin
 
 
     ''' <summary>
@@ -14,14 +16,14 @@
             MyBase.New(size)
         End Sub
 
-        Public Sub New(e As [Event])
+        Public Sub New(e As ITimeSignal)
             MyBase.New(e)
         End Sub
 
-        Public Overrides Sub selectInto(result As IList(Of [Event]))
-            Dim temp As IList(Of [Event]) = New List(Of [Event])()
+        Public Overrides Sub selectInto(result As IList(Of ITimeSignal))
+            Dim temp As IList(Of ITimeSignal) = New List(Of ITimeSignal)()
             MyBase.selectInto(temp)
-            Dim [set] As New HashSet(Of [Event])()
+            Dim [set] As New HashSet(Of ITimeSignal)()
             If temp.Count > 0 Then
                 [set].Add(events(0))
 
@@ -31,7 +33,7 @@
 
                 [set].Add(events(events.Count - 1))
             End If
-            CType(result, List(Of [Event])).AddRange([set])
+            CType(result, List(Of ITimeSignal)).AddRange([set])
         End Sub
 
     End Class

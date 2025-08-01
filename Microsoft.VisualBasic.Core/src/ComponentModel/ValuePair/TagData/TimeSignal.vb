@@ -54,9 +54,20 @@
 
 Namespace ComponentModel.TagData
 
+    ''' <summary>
+    ''' Interface representing the time series data
+    ''' </summary>
     Public Interface ITimeSignal
 
+        ''' <summary>
+        ''' the time point data
+        ''' </summary>
+        ''' <returns></returns>
         ReadOnly Property time As Double
+        ''' <summary>
+        ''' the signal intensity value of current time point
+        ''' </summary>
+        ''' <returns></returns>
         ReadOnly Property intensity As Double
 
     End Interface
