@@ -45,7 +45,7 @@ Namespace DownSampling.LargestTriangleBucket
             ElseIf TypeOf Me.wcalc_Conflict Is LTThreeBucketWeightCalculator Then
                 name &= "T"
             End If
-            If TypeOf Me.spliter_Conflict Is LTDynamicBucketSplitter Then
+            If TypeOf Me.spliter Is LTDynamicBucketSplitter Then
                 name &= "D"
             Else
                 name &= "B"

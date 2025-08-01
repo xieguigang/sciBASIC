@@ -2,17 +2,16 @@
 
 Namespace DownSampling.LargestTriangleBucket
 
-
-    Public Class LTWeightedBucket
-        Implements IEnumerable(Of WeightedEvent), Bucket
+    Public Class LTWeightedBucket : Implements IEnumerable(Of WeightedEvent), Bucket
 
         Private index As Integer = 0
         Private events() As WeightedEvent
         Private selected As WeightedEvent
-        ' a virtual event represents the average value in next bucket
-        Private average_Conflict As WeightedEvent
-        ' -1 means SSE not calculated yet
-        Private sse_Conflict As Double = -1
+
+        ''' <summary>
+        ''' a virtual event represents the average value in next bucket
+        ''' </summary>
+        Private m_average As WeightedEvent
 
         Public Sub New()
 
@@ -66,10 +65,14 @@ Namespace DownSampling.LargestTriangleBucket
             Return index
         End Function
 
+        ''' <summary>
+        ''' a virtual event represents the average value in next bucket
+        ''' </summary>
+        ''' <returns></returns>
         Public Overridable Function average() As WeightedEvent
-            If Nothing Is average_Conflict Then
+            If Nothing Is m_average Then
                 If index = 1 Then
-                    average_Conflict = events(0)
+                    m_average = events(0)
                 Else
                     Dim valueSum As Double = 0
                     Dim timeSum As Long = 0
@@ -78,10 +81,10 @@ Namespace DownSampling.LargestTriangleBucket
                         valueSum += e.intensity
                         timeSum += e.time
                     Next i
-                    average_Conflict = New WeightedEvent(timeSum \ index, valueSum / index)
+                    m_average = New WeightedEvent(timeSum \ index, valueSum / index)
                 End If
             End If
-            Return average_Conflict
+            Return m_average
         End Function
 
         Public Overridable Function [select]() As WeightedEvent()
@@ -107,16 +110,18 @@ Namespace DownSampling.LargestTriangleBucket
             Return New WeightedEvent() {selected}
         End Function
 
-        Public Overridable Function sse() As Double
-            Return sse_Conflict
-        End Function
+        ''' <summary>
+        ''' -1 means SSE not calculated yet
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property sse() As Double
 
         ''' <summary>
         ''' Calculate sum of squared errors, with one event in adjacent buckets overlapping
         ''' 
         ''' </summary>
         Public Overridable Function calcSSE(last As LTWeightedBucket, [next] As LTWeightedBucket) As Double
-            If sse_Conflict = -1 Then
+            If sse <= -1 Then
                 Dim lastVal As Double = last.get(last.size() - 1).Value
                 Dim nextVal As Double = [next].get(0).Value
                 Dim avg As Double = lastVal + nextVal
@@ -127,13 +132,13 @@ Namespace DownSampling.LargestTriangleBucket
                 avg = avg / (index + 2)
                 Dim lastSe As Double = sequarErrors(lastVal, avg)
                 Dim nextSe As Double = sequarErrors(nextVal, avg)
-                sse_Conflict = lastSe + nextSe
+                _sse = lastSe + nextSe
                 For i As Integer = 0 To index - 1
                     Dim e As ITimeSignal = events(i)
-                    sse_Conflict += sequarErrors(e.intensity, avg)
+                    _sse += sequarErrors(e.intensity, avg)
                 Next i
             End If
-            Return sse_Conflict
+            Return sse
         End Function
 
         Public Overrides Function ToString() As String

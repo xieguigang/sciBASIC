@@ -2,8 +2,6 @@
 
 Namespace DownSampling
 
-
-
     ''' <summary>
     ''' General algorithm using buckets to downsample events:<br />
     ''' <ul>
@@ -18,8 +16,7 @@ Namespace DownSampling
     Public MustInherit Class BucketBasedAlgorithm(Of B As Bucket, E As ITimeSignal)
         Implements DownSamplingAlgorithm
 
-        Protected Friend spliter_Conflict As BucketSplitter(Of B, E)
-
+        Protected Friend spliter As BucketSplitter(Of B, E)
         Protected Friend factory As BucketFactory(Of B)
 
         ''' <summary>
@@ -33,38 +30,35 @@ Namespace DownSampling
         Protected Friend MustOverride Sub beforeSelect(buckets As IList(Of B), threshold As Integer)
 
         Public Overridable Function process(events As IList(Of ITimeSignal), threshold As Integer) As IList(Of ITimeSignal) Implements DownSamplingAlgorithm.process
-
             Dim dataSize As Integer = events.Count
+
             If threshold >= dataSize OrElse dataSize < 3 Then
                 Return events
             End If
 
             Dim preparedData As IList(Of E) = prepare(events)
-
-            Dim buckets As IList(Of B) = spliter_Conflict.split(factory, preparedData, threshold)
+            Dim buckets As IList(Of B) = spliter.split(factory, preparedData, threshold)
 
             ' calculating weight or something else
-            beforeSelect(buckets, threshold)
+            Call beforeSelect(buckets, threshold)
 
             Dim result As IList(Of ITimeSignal) = New List(Of ITimeSignal)(threshold)
 
             ' select from every bucket
             For Each bucket As Bucket In buckets
                 bucket.selectInto(result)
-            Next bucket
+            Next
+
             Return result
         End Function
 
-        Public Sub Spliter(value As BucketSplitter(Of B, E))
-            Me.spliter_Conflict = value
+        Public Sub SetSpliter(value As BucketSplitter(Of B, E))
+            Me.spliter = value
         End Sub
 
-        Public Overridable WriteOnly Property BucketFactory As BucketFactory(Of B)
-            Set(factory As BucketFactory(Of B))
-                Me.factory = factory
-            End Set
-        End Property
-
+        Public Sub BucketFactory(value As BucketFactory(Of B))
+            Me.factory = value
+        End Sub
     End Class
 
 End Namespace

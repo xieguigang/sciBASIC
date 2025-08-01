@@ -18,12 +18,12 @@
 		End Sub
 
 		Public Overridable Function fixed() As LTABuilder
-			lta.Spliter(S_FIXED)
+			lta.SetSpliter(S_FIXED)
 			Return Me
 		End Function
 
 		Public Overridable Function dynamic() As LTABuilder
-			lta.Spliter(S_DYNAMIC)
+			lta.SetSpliter(S_DYNAMIC)
 			Return Me
 		End Function
 

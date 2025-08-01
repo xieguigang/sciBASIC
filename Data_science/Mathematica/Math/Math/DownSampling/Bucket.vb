@@ -2,8 +2,6 @@
 
 Namespace DownSampling
 
-
-
     ''' <summary>
     ''' A bucket holds a subset of events and select significant events from it
     ''' </summary>
@@ -14,5 +12,4 @@ Namespace DownSampling
         Sub add(e As ITimeSignal)
 
     End Interface
-
 End Namespace

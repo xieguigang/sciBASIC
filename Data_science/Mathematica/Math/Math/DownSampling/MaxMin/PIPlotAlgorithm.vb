@@ -11,7 +11,7 @@ Namespace DownSampling.MaxMin
 
         Public Sub New()
             BucketFactory = New PIPlotBucketFactory()
-            Spliter(New FixedTimeBucketSplitter(Of PIPlotBucket, ITimeSignal))
+            SetSpliter(New FixedTimeBucketSplitter(Of PIPlotBucket, ITimeSignal))
         End Sub
 
         Protected Friend Overrides Function prepare(data As IList(Of ITimeSignal)) As IList(Of ITimeSignal)

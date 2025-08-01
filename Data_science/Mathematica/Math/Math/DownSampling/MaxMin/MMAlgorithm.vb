@@ -11,7 +11,7 @@ Namespace DownSampling.MaxMin
 
         Public Sub New()
             BucketFactory = New MMBucketFactory()
-            Spliter(New FixedTimeBucketSplitter(Of MMBucket, ITimeSignal))
+            SetSpliter(New FixedTimeBucketSplitter(Of MMBucket, ITimeSignal))
         End Sub
 
         Protected Friend Overrides Function prepare(data As IList(Of ITimeSignal)) As IList(Of ITimeSignal)
