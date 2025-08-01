@@ -1,63 +1,59 @@
 ﻿#Region "Microsoft.VisualBasic::92789fc3f159cba49e8155950fb25b0d, Microsoft.VisualBasic.Core\src\Language\Language\Java\Collections.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 720
-    '    Code Lines: 126 (17.50%)
-    ' Comment Lines: 551 (76.53%)
-    '    - Xml Docs: 15.61%
-    ' 
-    '   Blank Lines: 43 (5.97%)
-    '     File Size: 36.63 KB
+' Summaries:
 
 
-    '     Module Collections
-    ' 
-    '         Function: [get], (+2 Overloads) binarySearch, (+2 Overloads) indexedBinarySearch, (+2 Overloads) iteratorBinarySearch, put
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 720
+'    Code Lines: 126 (17.50%)
+' Comment Lines: 551 (76.53%)
+'    - Xml Docs: 15.61%
+' 
+'   Blank Lines: 43 (5.97%)
+'     File Size: 36.63 KB
+
+
+'     Module Collections
+' 
+'         Function: [get], (+2 Overloads) binarySearch, (+2 Overloads) indexedBinarySearch, (+2 Overloads) iteratorBinarySearch, put
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
-Imports System
-Imports System.Diagnostics
-Imports System.Collections
-Imports System.Collections.Generic
-Imports Microsoft.VisualBasic.Linq
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Linq
 
 '
 ' * Copyright (c) 1997, 2014, Oracle and/or its affiliates. All rights reserved.
@@ -187,16 +183,12 @@ Namespace Language.Java
             End If
         End Function
 
-        'JAVA TO VB CONVERTER TODO TASK: There is no .NET equivalent to the Java 'super' constraint:
-        'JAVA TO VB CONVERTER TODO TASK: Java wildcard generics are not converted to .NET:
         Private Function indexedBinarySearch(Of T, T1 As IComparable(Of T))(list As List(Of T1), key As T) As Integer
             Dim low As Integer = 0
             Dim high As Integer = list.Count - 1
 
             Do While low <= high
                 Dim mid As Integer = CInt(CUInt((low + high)) >> 1)
-                'JAVA TO VB CONVERTER TODO TASK: There is no .NET equivalent to the Java 'super' constraint:
-                'JAVA TO VB CONVERTER TODO TASK: Java wildcard generics are not converted to .NET:
                 Dim midVal As IComparable(Of T) = list(mid)
                 Dim cmp As Integer = midVal.CompareTo(key)
 
@@ -214,14 +206,10 @@ Namespace Language.Java
         Private Function iteratorBinarySearch(Of T, T1 As IComparable(Of T))(list As List(Of T1), key As T) As Integer
             Dim low As Integer = 0
             Dim high As Integer = list.Count - 1
-            'JAVA TO VB CONVERTER TODO TASK: There is no .NET equivalent to the Java 'super' constraint:
-            'JAVA TO VB CONVERTER TODO TASK: Java wildcard generics are not converted to .NET:
             Dim i As IEnumerator(Of IComparable(Of T)) = list.GetEnumerator()
 
             Do While low <= high
                 Dim mid As Integer = CInt(CUInt((low + high)) >> 1)
-                'JAVA TO VB CONVERTER TODO TASK: There is no .NET equivalent to the Java 'super' constraint:
-                'JAVA TO VB CONVERTER TODO TASK: Java wildcard generics are not converted to .NET:
                 Dim midVal As IComparable(Of T) = [get](i, mid)
                 Dim cmp As Integer = midVal.CompareTo(key)
 
@@ -300,7 +288,6 @@ Namespace Language.Java
             End If
         End Function
 
-        'JAVA TO VB CONVERTER TODO TASK: There is no .NET equivalent to the Java 'super' constraint:
         Private Function indexedBinarySearch(Of T)(l As List(Of T), key As T, c As IComparer(Of T)) As Integer
             Dim low As Integer = 0
             Dim high As Integer = l.Count - 1
@@ -321,7 +308,6 @@ Namespace Language.Java
             Return -(low + 1) ' key not found
         End Function
 
-        'JAVA TO VB CONVERTER TODO TASK: There is no .NET equivalent to the Java 'super' constraint:
         Private Function iteratorBinarySearch(Of T)(l As List(Of T), key As T, c As IComparer(Of T)) As Integer
             Dim low As Integer = 0
             Dim high As Integer = l.Count - 1
@@ -341,434 +327,6 @@ Namespace Language.Java
             Loop
             Return -(low + 1) ' key not found
         End Function
-
-        '		''' <summary>
-        '		''' Reverses the order of the elements in the specified list.<p>
-        '		''' 
-        '		''' This method runs in linear time.
-        '		''' </summary>
-        '		''' <param name="list"> the list whose elements are to be reversed. </param>
-        '		''' <exception cref="UnsupportedOperationException"> if the specified list or
-        '		'''         its list-iterator does not support the <tt>set</tt> operation. </exception>
-        ''JAVA TO VB CONVERTER TODO TASK: Most Java annotations will not have direct .NET equivalent attributes:
-        '		Public  Sub reverse(Of T1)(  list As List(Of T1))
-        '            Dim size As Integer = list.Count
-        '            If size < REVERSE_THRESHOLD OrElse TypeOf list Is RandomAccess Then
-        '				Dim i As Integer=0
-        '				Dim mid As Integer=size>>1
-        '				Dim j As Integer=size-1
-        '				Do While i<mid
-        '                    list.Swap(i, j)
-        '                    i += 1
-        '					j -= 1
-        '				Loop
-        '			Else
-        '				' instead of using a raw type here, it's possible to capture
-        '				' the wildcard but it will require a call to a supplementary
-        '				' private method
-        '				Dim fwd As ListIterator = list.GetEnumerator()
-        '				Dim rev As ListIterator = list.listIterator(size)
-        '				Dim i As Integer=0
-        '                Dim mid As Integer = list.Count >> 1
-        '                Do While i<mid
-        '					Dim tmp As Object = fwd.next()
-        '					fwd.set(rev.previous())
-        '					rev.set(tmp)
-        '					i += 1
-        '				Loop
-        '			End If
-        '		End Sub
-
-        '        ''' <summary>
-        '        ''' Randomly permutes the specified list using a default source of
-        '        ''' randomness.  All permutations occur with approximately equal
-        '        ''' likelihood.
-        '        ''' 
-        '        ''' <p>The hedge "approximately" is used in the foregoing description because
-        '        ''' default source of randomness is only approximately an unbiased source
-        '        ''' of independently chosen bits. If it were a perfect source of randomly
-        '        ''' chosen bits, then the algorithm would choose permutations with perfect
-        '        ''' uniformity.
-        '        ''' 
-        '        ''' <p>This implementation traverses the list backwards, from the last
-        '        ''' element up to the second, repeatedly swapping a randomly selected element
-        '        ''' into the "current position".  Elements are randomly selected from the
-        '        ''' portion of the list that runs from the first element to the current
-        '        ''' position, inclusive.
-        '        ''' 
-        '        ''' <p>This method runs in linear time.  If the specified list does not
-        '        ''' implement the <seealso cref="RandomAccess"/> interface and is large, this
-        '        ''' implementation dumps the specified list into an array before shuffling
-        '        ''' it, and dumps the shuffled array back into the list.  This avoids the
-        '        ''' quadratic behavior that would result from shuffling a "sequential
-        '        ''' access" list in place.
-        '        ''' </summary>
-        '        ''' <param name="list"> the list to be shuffled. </param>
-        '        ''' <exception cref="UnsupportedOperationException"> if the specified list or
-        '        '''         its list-iterator does not support the <tt>set</tt> operation. </exception>
-        '        Public  Sub shuffle(Of T1)(  list As List(Of T1))
-        '			Dim rnd As Random = r
-        '			If rnd Is Nothing Then
-        '					rnd = New Random
-        '					r = rnd
-        '			End If
-        '			shuffle(list, rnd)
-        '		End Sub
-
-        '		Private  r As Random
-
-        '		''' <summary>
-        '		''' Randomly permute the specified list using the specified source of
-        '		''' randomness.  All permutations occur with equal likelihood
-        '		''' assuming that the source of randomness is fair.<p>
-        '		''' 
-        '		''' This implementation traverses the list backwards, from the last element
-        '		''' up to the second, repeatedly swapping a randomly selected element into
-        '		''' the "current position".  Elements are randomly selected from the
-        '		''' portion of the list that runs from the first element to the current
-        '		''' position, inclusive.<p>
-        '		''' 
-        '		''' This method runs in linear time.  If the specified list does not
-        '		''' implement the <seealso cref="RandomAccess"/> interface and is large, this
-        '		''' implementation dumps the specified list into an array before shuffling
-        '		''' it, and dumps the shuffled array back into the list.  This avoids the
-        '		''' quadratic behavior that would result from shuffling a "sequential
-        '		''' access" list in place.
-        '		''' </summary>
-        '		''' <param name="list"> the list to be shuffled. </param>
-        '		''' <param name="rnd"> the source of randomness to use to shuffle the list. </param>
-        '		''' <exception cref="UnsupportedOperationException"> if the specified list or its
-        '		'''         list-iterator does not support the <tt>set</tt> operation. </exception>
-        ''JAVA TO VB CONVERTER TODO TASK: Most Java annotations will not have direct .NET equivalent attributes:
-        '		Public  Sub shuffle(Of T1)(  list As List(Of T1),   rnd As Random)
-        '			Dim size As Integer = list.size()
-        '			If size < SHUFFLE_THRESHOLD OrElse TypeOf list Is RandomAccess Then
-        '				For i As Integer = size To 2 Step -1
-        '					swap(list, i-1, rnd.Next(i))
-        '				Next i
-        '			Else
-        '				Dim arr As Object() = list.ToArray()
-
-        '				' Shuffle array
-        '				For i As Integer = size To 2 Step -1
-        '					swap(arr, i-1, rnd.Next(i))
-        '				Next i
-
-        '				' Dump array back into list
-        '				' instead of using a raw type here, it's possible to capture
-        '				' the wildcard but it will require a call to a supplementary
-        '				' private method
-        '				Dim it As ListIterator = list.GetEnumerator()
-        '				For i As Integer = 0 To arr.Length - 1
-        '					it.next()
-        '					it.set(arr(i))
-        '				Next i
-        '			End If
-        '		End Sub
-
-        '        ''' <summary>
-        '        ''' Replaces all of the elements of the specified list with the specified
-        '        ''' element. <p>
-        '        ''' 
-        '        ''' This method runs in linear time.
-        '        ''' </summary>
-        '        ''' @param  <T> the class of the objects in the list </param>
-        '        ''' <param name="list"> the list to be filled with the specified element. </param>
-        '        ''' <param name="obj"> The element with which to fill the specified list. </param>
-        '        ''' <exception cref="UnsupportedOperationException"> if the specified list or its
-        '        '''         list-iterator does not support the <tt>set</tt> operation. </exception>
-        '        'JAVA TO VB CONVERTER TODO TASK: There is no .NET equivalent to the Java 'super' constraint:
-        '        Public  Sub fill(Of T, T1)(  list As List(Of T1),   obj As T)
-        '            Dim size As Integer = list.Count
-
-        '            If size < FILL_THRESHOLD OrElse TypeOf list Is RandomAccess Then
-        '                For i As Integer = 0 To size - 1
-        '                    list(i) = obj
-        '                Next
-        '            Else
-        ''JAVA TO VB CONVERTER TODO TASK: There is no .NET equivalent to the Java 'super' constraint:
-        ''JAVA TO VB CONVERTER TODO TASK: Java wildcard generics are not converted to .NET:
-        '				Dim itr As ListIterator(Of ?) = list.GetEnumerator()
-        '                For i As Integer = 0 To size - 1
-        '                    itr.next()
-        '                    itr.set(obj)
-        '                Next
-        '            End If
-        '		End Sub
-
-        '        ''' <summary>
-        '        ''' Rotates the elements in the specified list by the specified distance.
-        '        ''' After calling this method, the element at index <tt>i</tt> will be
-        '        ''' the element previously at index <tt>(i - distance)</tt> mod
-        '        ''' <tt>list.size()</tt>, for all values of <tt>i</tt> between <tt>0</tt>
-        '        ''' and <tt>list.size()-1</tt>, inclusive.  (This method has no effect on
-        '        ''' the size of the list.)
-        '        ''' 
-        '        ''' <p>For example, suppose <tt>list</tt> comprises<tt> [t, a, n, k, s]</tt>.
-        '        ''' After invoking <tt>Collections.rotate(list, 1)</tt> (or
-        '        ''' <tt>Collections.rotate(list, -4)</tt>), <tt>list</tt> will comprise
-        '        ''' <tt>[s, t, a, n, k]</tt>.
-        '        ''' 
-        '        ''' <p>Note that this method can usefully be applied to sublists to
-        '        ''' move one or more elements within a list while preserving the
-        '        ''' order of the remaining elements.  For example, the following idiom
-        '        ''' moves the element at index <tt>j</tt> forward to position
-        '        ''' <tt>k</tt> (which must be greater than or equal to <tt>j</tt>):
-        '        ''' <pre>
-        '        '''     Collections.rotate(list.subList(j, k+1), -1);
-        '        ''' </pre>
-        '        ''' To make this concrete, suppose <tt>list</tt> comprises
-        '        ''' <tt>[a, b, c, d, e]</tt>.  To move the element at index <tt>1</tt>
-        '        ''' (<tt>b</tt>) forward two positions, perform the following invocation:
-        '        ''' <pre>
-        '        '''     Collections.rotate(l.subList(1, 4), -1);
-        '        ''' </pre>
-        '        ''' The resulting list is <tt>[a, c, d, b, e]</tt>.
-        '        ''' 
-        '        ''' <p>To move more than one element forward, increase the absolute value
-        '        ''' of the rotation distance.  To move elements backward, use a positive
-        '        ''' shift distance.
-        '        ''' 
-        '        ''' <p>If the specified list is small or implements the {@link
-        '        ''' RandomAccess} interface, this implementation exchanges the first
-        '        ''' element into the location it should go, and then repeatedly exchanges
-        '        ''' the displaced element into the location it should go until a displaced
-        '        ''' element is swapped into the first element.  If necessary, the process
-        '        ''' is repeated on the second and successive elements, until the rotation
-        '        ''' is complete.  If the specified list is large and doesn't implement the
-        '        ''' <tt>RandomAccess</tt> interface, this implementation breaks the
-        '        ''' list into two sublist views around index <tt>-distance mod size</tt>.
-        '        ''' Then the <seealso cref="#reverse(List)"/> method is invoked on each sublist view,
-        '        ''' and finally it is invoked on the entire list.  For a more complete
-        '        ''' description of both algorithms, see Section 2.3 of Jon Bentley's
-        '        ''' <i>Programming Pearls</i> (Addison-Wesley, 1986).
-        '        ''' </summary>
-        '        ''' <param name="list"> the list to be rotated. </param>
-        '        ''' <param name="distance"> the distance to rotate the list.  There are no
-        '        '''        constraints on this value; it may be zero, negative, or
-        '        '''        greater than <tt>list.size()</tt>. </param>
-        '        ''' <exception cref="UnsupportedOperationException"> if the specified list or
-        '        '''         its list-iterator does not support the <tt>set</tt> operation.
-        '        ''' @since 1.4 </exception>
-        '        Public  Sub rotate(Of T1)(  list As List(Of T1),   distance As Integer)
-        '			If TypeOf list Is RandomAccess OrElse list.size() < ROTATE_THRESHOLD Then
-        '				rotate1(list, distance)
-        '			Else
-        '				rotate2(list, distance)
-        '			End If
-        '		End Sub
-
-        '		Private  Sub rotate1(Of T)(  list As List(Of T),   distance As Integer)
-        '			Dim size As Integer = list.size()
-        '			If size = 0 Then Return
-        '			distance = distance Mod size
-        '			If distance < 0 Then distance += size
-        '			If distance = 0 Then Return
-
-        '			Dim cycleStart As Integer = 0
-        '			Dim nMoved As Integer = 0
-        '			Do While nMoved <> size
-        '				Dim displaced As T = list.get(cycleStart)
-        '				Dim i As Integer = cycleStart
-        '				Do
-        '					i += distance
-        '					If i >= size Then i -= size
-        '					displaced = list.set(i, displaced)
-        '					nMoved += 1
-        '				Loop While i <> cycleStart
-        '				cycleStart += 1
-        '			Loop
-        '		End Sub
-
-        '		Private  Sub rotate2(Of T1)(  list As List(Of T1),   distance As Integer)
-        '			Dim size As Integer = list.size()
-        '			If size = 0 Then Return
-        '			Dim mid As Integer = -distance Mod size
-        '			If mid < 0 Then mid += size
-        '			If mid = 0 Then Return
-
-        '			reverse(list.subList(0, mid))
-        '			reverse(list.subList(mid, size))
-        '			reverse(list)
-        '		End Sub
-
-        '		''' <summary>
-        '		''' Replaces all occurrences of one specified value in a list with another.
-        '		''' More formally, replaces with <tt>newVal</tt> each element <tt>e</tt>
-        '		''' in <tt>list</tt> such that
-        '		''' <tt>(oldVal==null ? e==null : oldVal.equals(e))</tt>.
-        '		''' (This method has no effect on the size of the list.)
-        '		''' </summary>
-        '		''' @param  <T> the class of the objects in the list </param>
-        '		''' <param name="list"> the list in which replacement is to occur. </param>
-        '		''' <param name="oldVal"> the old value to be replaced. </param>
-        '		''' <param name="newVal"> the new value with which <tt>oldVal</tt> is to be
-        '		'''        replaced. </param>
-        '		''' <returns> <tt>true</tt> if <tt>list</tt> contained one or more elements
-        '		'''         <tt>e</tt> such that
-        '		'''         <tt>(oldVal==null ?  e==null : oldVal.equals(e))</tt>. </returns>
-        '		''' <exception cref="UnsupportedOperationException"> if the specified list or
-        '		'''         its list-iterator does not support the <tt>set</tt> operation.
-        '		''' @since  1.4 </exception>
-        '		Public  Function replaceAll(Of T)(  list As List(Of T),   oldVal As T,   newVal As T) As Boolean
-        '			Dim result As Boolean = False
-        '			Dim size As Integer = list.size()
-        '			If size < REPLACEALL_THRESHOLD OrElse TypeOf list Is RandomAccess Then
-        '				If oldVal Is Nothing Then
-        '					For i As Integer = 0 To size - 1
-        '						If list.get(i) Is Nothing Then
-        '							list.set(i, newVal)
-        '							result = True
-        '						End If
-        '					Next i
-        '				Else
-        '					For i As Integer = 0 To size - 1
-        '						If oldVal.Equals(list.get(i)) Then
-        '							list.set(i, newVal)
-        '							result = True
-        '						End If
-        '					Next i
-        '				End If
-        '			Else
-        '				Dim itr As ListIterator(Of T)=list.GetEnumerator()
-        '				If oldVal Is Nothing Then
-        '					For i As Integer = 0 To size - 1
-        '						If itr.next() Is Nothing Then
-        '							itr.set(newVal)
-        '							result = True
-        '						End If
-        '					Next i
-        '				Else
-        '					For i As Integer = 0 To size - 1
-        '						If oldVal.Equals(itr.next()) Then
-        '							itr.set(newVal)
-        '							result = True
-        '						End If
-        '					Next i
-        '				End If
-        '			End If
-        '			Return result
-        '		End Function
-
-        '		''' <summary>
-        '		''' Returns the starting position of the first occurrence of the specified
-        '		''' target list within the specified source list, or -1 if there is no
-        '		''' such occurrence.  More formally, returns the lowest index <tt>i</tt>
-        '		''' such that {@code source.subList(i, i+target.size()).equals(target)},
-        '		''' or -1 if there is no such index.  (Returns -1 if
-        '		''' {@code target.size() > source.size()})
-        '		''' 
-        '		''' <p>This implementation uses the "brute force" technique of scanning
-        '		''' over the source list, looking for a match with the target at each
-        '		''' location in turn.
-        '		''' </summary>
-        '		''' <param name="source"> the list in which to search for the first occurrence
-        '		'''        of <tt>target</tt>. </param>
-        '		''' <param name="target"> the list to search for as a subList of <tt>source</tt>. </param>
-        '		''' <returns> the starting position of the first occurrence of the specified
-        '		'''         target list within the specified source list, or -1 if there
-        '		'''         is no such occurrence.
-        '		''' @since  1.4 </returns>
-        '		Public  Function indexOfSubList(Of T1, T2)(  source As List(Of T1),   target As List(Of T2)) As Integer
-        '			Dim sourceSize As Integer = source.size()
-        '			Dim targetSize As Integer = target.size()
-        '			Dim maxCandidate As Integer = sourceSize - targetSize
-
-        '			If sourceSize < INDEXOFSUBLIST_THRESHOLD OrElse (TypeOf source Is RandomAccess AndAlso TypeOf target Is RandomAccess) Then
-        '			nextCand:
-        '				For candidate As Integer = 0 To maxCandidate
-        '					Dim i As Integer=0
-        '					Dim j As Integer=candidate
-        '					Do While i<targetSize
-        '						If Not eq(target.get(i), source.get(j)) Then GoTo nextCand ' Element mismatch, try next cand
-        '						i += 1
-        '						j += 1
-        '					Loop
-        '					Return candidate ' All elements of candidate matched target
-        '				Next candidate ' Iterator version of above algorithm
-        '			Else
-        ''JAVA TO VB CONVERTER TODO TASK: Java wildcard generics are not converted to .NET:
-        '				Dim si As ListIterator(Of ?) = source.GetEnumerator()
-        '			nextCand:
-        '				For candidate As Integer = 0 To maxCandidate
-        ''JAVA TO VB CONVERTER TODO TASK: Java wildcard generics are not converted to .NET:
-        '					Dim ti As ListIterator(Of ?) = target.GetEnumerator()
-        '					For i As Integer = 0 To targetSize - 1
-        '						If Not eq(ti.next(), si.next()) Then
-        '							' Back up source iterator to next candidate
-        '							For j As Integer = 0 To i - 1
-        '								si.previous()
-        '							Next j
-        '							GoTo nextCand
-        '						End If
-        '					Next i
-        '					Return candidate
-        '				Next candidate
-        '			End If
-        '			Return -1 ' No candidate matched the target
-        '		End Function
-
-        '		''' <summary>
-        '		''' Returns the starting position of the last occurrence of the specified
-        '		''' target list within the specified source list, or -1 if there is no such
-        '		''' occurrence.  More formally, returns the highest index <tt>i</tt>
-        '		''' such that {@code source.subList(i, i+target.size()).equals(target)},
-        '		''' or -1 if there is no such index.  (Returns -1 if
-        '		''' {@code target.size() > source.size()})
-        '		''' 
-        '		''' <p>This implementation uses the "brute force" technique of iterating
-        '		''' over the source list, looking for a match with the target at each
-        '		''' location in turn.
-        '		''' </summary>
-        '		''' <param name="source"> the list in which to search for the last occurrence
-        '		'''        of <tt>target</tt>. </param>
-        '		''' <param name="target"> the list to search for as a subList of <tt>source</tt>. </param>
-        '		''' <returns> the starting position of the last occurrence of the specified
-        '		'''         target list within the specified source list, or -1 if there
-        '		'''         is no such occurrence.
-        '		''' @since  1.4 </returns>
-        '		Public  Function lastIndexOfSubList(Of T1, T2)(  source As List(Of T1),   target As List(Of T2)) As Integer
-        '			Dim sourceSize As Integer = source.size()
-        '			Dim targetSize As Integer = target.size()
-        '			Dim maxCandidate As Integer = sourceSize - targetSize
-
-        '			If sourceSize < INDEXOFSUBLIST_THRESHOLD OrElse TypeOf source Is RandomAccess Then ' Index access version
-        '			nextCand:
-        '				For candidate As Integer = maxCandidate To 0 Step -1
-        '					Dim i As Integer=0
-        '					Dim j As Integer=candidate
-        '					Do While i<targetSize
-        '						If Not eq(target.get(i), source.get(j)) Then GoTo nextCand ' Element mismatch, try next cand
-        '						i += 1
-        '						j += 1
-        '					Loop
-        '					Return candidate ' All elements of candidate matched target
-        '				Next candidate ' Iterator version of above algorithm
-        '			Else
-        '				If maxCandidate < 0 Then Return -1
-        ''JAVA TO VB CONVERTER TODO TASK: Java wildcard generics are not converted to .NET:
-        '				Dim si As ListIterator(Of ?) = source.listIterator(maxCandidate)
-        '			nextCand:
-        '				For candidate As Integer = maxCandidate To 0 Step -1
-        ''JAVA TO VB CONVERTER TODO TASK: Java wildcard generics are not converted to .NET:
-        '					Dim ti As ListIterator(Of ?) = target.GetEnumerator()
-        '					For i As Integer = 0 To targetSize - 1
-        '						If Not eq(ti.next(), si.next()) Then
-        '							If candidate <> 0 Then
-        '								' Back up source iterator to next candidate
-        '								For j As Integer = 0 To i+1
-        '									si.previous()
-        '								Next j
-        '							End If
-        '							GoTo nextCand
-        '						End If
-        '					Next i
-        '					Return candidate
-        '				Next candidate
-        '			End If
-        '			Return -1 ' No candidate matched the target
-        '		End Function
-
     End Module
 
 End Namespace
