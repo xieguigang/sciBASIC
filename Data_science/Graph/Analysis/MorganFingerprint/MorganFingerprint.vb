@@ -57,6 +57,7 @@
 
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Data.GraphTheory.Network
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.HashMaps
 
 Namespace Analysis.MorganFingerprint
@@ -123,34 +124,86 @@ Namespace Analysis.MorganFingerprint
             Return bytes
         End Function
 
+        Private Class UndirectEdgeIndex
+
+            Public graph As Dictionary(Of UInteger, E())
+            Public atoms As V()
+
+            Default Public ReadOnly Property Neighbors(v As V) As E()
+                Get
+                    Return graph(key:=CUInt(v.Index))
+                End Get
+            End Property
+
+            Public Shared Function Create(Of G As MorganGraph(Of V, E))(struct As G) As UndirectEdgeIndex
+                Dim atoms = struct.Atoms
+                Dim edges = struct.Graph _
+                    .Select(Iterator Function(l) As IEnumerable(Of (Integer, E))
+                                Yield (l.U, l)
+                                Yield (l.V, l)
+                            End Function) _
+                    .IteratesALL _
+                    .GroupBy(Function(l) l.Item1) _
+                    .ToDictionary(Function(i) CUInt(i.Key),
+                                  Function(i)
+                                      Return i.Select(Function(a) a.Item2) _
+                                          .Distinct _
+                                          .ToArray
+                                  End Function)
+
+                Return New UndirectEdgeIndex With {
+                    .graph = edges,
+                    .atoms = atoms
+                }
+            End Function
+        End Class
+
+        Private Iterator Function GetNeighbors(atom As V, struct As UndirectEdgeIndex, radius As Integer) As IEnumerable(Of E())
+            Dim layer As New List(Of V) From {atom}
+            Dim nextLayer As New List(Of E)
+
+            For i As Integer = 1 To radius
+                For Each v As V In layer
+                    Dim neighbors = struct(v)
+                    nextLayer.AddRange(neighbors)
+                    Yield neighbors
+                Next
+
+                layer = nextLayer _
+                    .Distinct _
+                    .Select(Function(v)
+                                Return {struct.atoms(v.U), struct.atoms(v.V)}
+                            End Function) _
+                    .IteratesALL _
+                    .Distinct _
+                    .ToList
+            Next
+        End Function
+
+        Private Function GenerateSubstructureHash(atom As V, struct As UndirectEdgeIndex, radius As Integer) As ULong
+            Dim neighbors = GetNeighbors(atom, struct, radius).IteratesALL.Distinct.ToArray
+            Dim checksum As ULong() = neighbors.Select(Function(i) HashEdge(struct.atoms, i, False)).ToArray
+            Dim hashcode = checksum.CalcHashCode
+            Dim int As ULong = BitConverter.ToUInt64(hashcode, Scan0)
+
+            Return int
+        End Function
+
         Public Function CalculateFingerprint(Of G As MorganGraph(Of V, E))(struct As G, Optional radius As Integer = 3) As BitArray
             Dim atoms As V() = struct.Atoms
 
             ' Initialize atom codes based on atom type
             For i As Integer = 0 To struct.Atoms.Length - 1
                 atoms(i).Code = CULng(HashAtom(struct.Atoms(i)))
-                atoms(i).Index = i
             Next
 
-            ' Perform iterations to expand the atom codes
-            For r As Integer = 0 To radius - 1
-                Dim newCodes As ULong() = New ULong(struct.Atoms.Length - 1) {}
-
-                For Each bound As E In struct.Graph
-                    newCodes(bound.U) = HashEdge(atoms, bound, flip:=False)
-                    newCodes(bound.V) = HashEdge(atoms, bound, flip:=True)
-                Next
-
-                For i As Integer = 0 To struct.Atoms.Length - 1
-                    atoms(i).Code = newCodes(i)
-                Next
-            Next
-
+            Dim graph As UndirectEdgeIndex = UndirectEdgeIndex.Create(struct)
+            Dim hashcode As ULong() = atoms.Select(Function(v) GenerateSubstructureHash(v, graph, radius)).ToArray
             ' Generate the final fingerprint
             Dim fingerprint As New BitArray(FingerprintLength)
 
-            For Each atom As IMorganAtom In atoms
-                Call fingerprint.Xor(position:=atom.Code Mod FingerprintLength)
+            For Each checksum As ULong In hashcode
+                Call fingerprint.Set(checksum Mod FingerprintLength, True)
             Next
 
             Return fingerprint

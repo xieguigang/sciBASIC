@@ -68,6 +68,9 @@ Namespace Network
         End Sub
     End Class
 
+    ''' <summary>
+    ''' an edge link: [u, v]
+    ''' </summary>
     Public Interface IndexEdge
 
         ''' <summary>
