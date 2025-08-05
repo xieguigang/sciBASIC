@@ -59,6 +59,7 @@ Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Data.GraphTheory.Network
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.HashMaps
+Imports Microsoft.VisualBasic.Serialization
 
 Namespace Analysis.MorganFingerprint
 
@@ -188,7 +189,16 @@ Namespace Analysis.MorganFingerprint
                 Return 0
             Else
                 Dim hashcode = checksum.CalcHashCode
-                Dim int As ULong = BitConverter.ToUInt64(hashcode, Scan0)
+                Dim int As ULong
+
+                ' 20250805 possible has less than 8 element hashcode result
+                ' should fill with some zero byte for convert to
+                ' ulong
+                If hashcode.Length < RawStream.INT64 Then
+                    hashcode = hashcode.Fill(0, RawStream.INT64 - hashcode.Length)
+                End If
+
+                int = BitConverter.ToUInt64(hashcode, Scan0)
 
                 Return int
             End If
