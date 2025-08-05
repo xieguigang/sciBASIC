@@ -183,10 +183,15 @@ Namespace Analysis.MorganFingerprint
         Private Function GenerateSubstructureHash(atom As V, struct As UndirectEdgeIndex, radius As Integer) As ULong
             Dim neighbors = GetNeighbors(atom, struct, radius).IteratesALL.Distinct.ToArray
             Dim checksum As ULong() = neighbors.Select(Function(i) HashEdge(struct.atoms, i, False)).ToArray
-            Dim hashcode = checksum.CalcHashCode
-            Dim int As ULong = BitConverter.ToUInt64(hashcode, Scan0)
 
-            Return int
+            If checksum.Length = 0 Then
+                Return 0
+            Else
+                Dim hashcode = checksum.CalcHashCode
+                Dim int As ULong = BitConverter.ToUInt64(hashcode, Scan0)
+
+                Return int
+            End If
         End Function
 
         Public Function CalculateFingerprint(Of G As MorganGraph(Of V, E))(struct As G, Optional radius As Integer = 3) As BitArray
