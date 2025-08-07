@@ -255,6 +255,12 @@ Namespace Imaging
             Call s.Flush()
         End Sub
 
+        Public Overloads Sub Save(filename As String)
+            Using s As Stream = filename.Open(FileMode.OpenOrCreate, doClear:=True)
+                Call Save(s, Nothing)
+            End Using
+        End Sub
+
         Public Function Clone() As Object
             Return New Bitmap(MemoryBuffer)
         End Function
