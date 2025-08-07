@@ -153,6 +153,13 @@ Namespace BSON
             Return ms
         End Function
 
+        ''' <summary>
+        ''' save json element in bson format
+        ''' </summary>
+        ''' <param name="obj">
+        ''' json object or json array
+        ''' </param>
+        ''' <param name="ms"></param>
         <Extension>
         Public Sub SafeWriteBuffer(obj As JsonElement, ms As Stream)
             If TypeOf obj Is JsonObject Then

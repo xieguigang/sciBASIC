@@ -121,6 +121,11 @@ Namespace BSON
             End Select
         End Sub
 
+        ''' <summary>
+        ''' save json object
+        ''' </summary>
+        ''' <param name="ms"></param>
+        ''' <param name="obj"></param>
         Public Sub encodeDocument(ms As Stream, obj As JsonObject)
             Dim dms As New MemoryStream()
 
@@ -134,6 +139,11 @@ Namespace BSON
             bw.Write(CByte(0))
         End Sub
 
+        ''' <summary>
+        ''' save json array as json object
+        ''' </summary>
+        ''' <param name="ms"></param>
+        ''' <param name="lst"></param>
         Public Sub encodeArray(ms As Stream, lst As JsonArray)
             Dim obj As New JsonObject()
 
