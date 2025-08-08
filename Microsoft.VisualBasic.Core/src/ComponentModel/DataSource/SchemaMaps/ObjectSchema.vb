@@ -279,7 +279,16 @@ Namespace ComponentModel.DataSourceModel.SchemaMaps
             End If
 
             Select Case serializer
-                Case Serializations.JSON : writers = GetJSONCLRWriters(schema)
+                Case Serializations.JSON
+                    writers = GetJSONCLRWriters(schema)
+
+                    For Each prop As PropertyInfo In writers.Values.ToArray
+                        Dim dataMember As DataMemberAttribute = prop.GetCustomAttribute(Of DataMemberAttribute)
+
+                        If Not dataMember Is Nothing Then
+                            writers(dataMember.Name) = prop
+                        End If
+                    Next
                 Case Serializations.XML : writers = GetXmlCLRWriters(schema)
                 Case Else
                     Throw New NotImplementedException(serializer.ToString)
