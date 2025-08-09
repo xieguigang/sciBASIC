@@ -400,12 +400,13 @@ Namespace Imaging.BitmapImage
         End Function
 
         Public Shared Function Unpack(pixels As Color(,), size As Size) As Byte()
-            Dim bytes As Byte() = New Byte(4 * pixels.Length - 1) {}
+            Dim channels As Integer = 4
+            Dim bytes As Byte() = New Byte(channels * pixels.Length - 1) {}
 
             For y As Integer = 0 To size.Height - 1
                 For x As Integer = 0 To size.Width - 1
                     Dim pixel As Color = pixels(y, x)
-                    Dim i As Integer = GetIndex(x, y, size.Width, size.Height)
+                    Dim i As Integer = GetIndex(x, y, size.Width, channels)
 
                     bytes(i) = pixel.A
                     bytes(i + 1) = pixel.R
