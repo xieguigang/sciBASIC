@@ -152,7 +152,7 @@ Namespace Drawing2D
 #If NET48 Then
             Call Effects.DropdownShadows(g, polygon, shadowColor, alphaLevels, gradientLevels)
 #Else
-            Throw New NotImplementedException
+            ' Throw New NotImplementedException
 #End If
         End Sub
 

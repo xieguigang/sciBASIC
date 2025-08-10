@@ -78,7 +78,10 @@ Namespace Plot3D
         End Function
 
         <Extension>
-        Public Function Plot3D(data As IEnumerable(Of FractionData), camera As Camera, Optional valueLabel As ValueLabels = ValueLabels.Percentage) As GraphicsData
+        Public Function Plot3D(data As IEnumerable(Of FractionData), camera As Camera,
+                               Optional valueLabel As ValueLabels = ValueLabels.Percentage,
+                               Optional driver As Drivers = Drivers.Default) As GraphicsData
+
             Dim start As New f64
             Dim sweep As New f64
             Dim alpha!
@@ -115,7 +118,9 @@ Namespace Plot3D
             Return g.GraphicsPlots(
                 camera.screen, g.DefaultPadding,
                 "white",
-                plot3DInternal)
+                plot3DInternal,
+                driver:=driver
+            )
         End Function
     End Module
 End Namespace

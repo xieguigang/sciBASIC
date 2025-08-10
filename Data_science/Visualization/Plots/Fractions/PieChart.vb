@@ -1,56 +1,56 @@
 ﻿#Region "Microsoft.VisualBasic::42f9a880c8872ae884f0c5504f24b226, Data_science\Visualization\Plots\Fractions\PieChart.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 378
-    '    Code Lines: 267 (70.63%)
-    ' Comment Lines: 70 (18.52%)
-    '    - Xml Docs: 80.00%
-    ' 
-    '   Blank Lines: 41 (10.85%)
-    '     File Size: 16.62 KB
+' Summaries:
 
 
-    '     Module PieChart
-    ' 
-    '         Function: Fractions, FromData, FromPercentages, Plot
-    ' 
-    '         Sub: PlotPie
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 378
+'    Code Lines: 267 (70.63%)
+' Comment Lines: 70 (18.52%)
+'    - Xml Docs: 80.00%
+' 
+'   Blank Lines: 41 (10.85%)
+'     File Size: 16.62 KB
+
+
+'     Module PieChart
+' 
+'         Function: Fractions, FromData, FromPercentages, Plot
+' 
+'         Sub: PlotPie
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -246,7 +246,8 @@ Namespace Fractions
                              Optional legendUnitSize$ = "60,50",
                              Optional shadowDistance# = 80,
                              Optional shadowAngle# = 35,
-                             Optional ppi As Integer = 100) As GraphicsData
+                             Optional ppi As Integer = 100,
+                             Optional driver As Drivers = Drivers.Default) As GraphicsData
 
             Dim margin As Padding = padding
 
@@ -266,7 +267,7 @@ Namespace Fractions
                     Dim css As CSSEnvirnment = g.LoadEnvironment
                     Dim gSize = region.PlotRegion(css).Size
                     Dim r# = std.Min(gSize.Width, gSize.Height - shadowDistance) / 2 ' 最大的半径值
-                    Dim font As Font = CSS.GetFont(CSSFont.TryParse(legendFont))
+                    Dim font As Font = css.GetFont(CSSFont.TryParse(legendFont))
                     Dim valueLabelFont As Font = css.GetFont(CSSFont.TryParse(valueLabelStyle))
                     Dim layoutRect As Rectangle
                     Dim layout As PaddingLayout = PaddingLayout.EvaluateFromCSS(css, region.Padding)
@@ -292,7 +293,7 @@ Namespace Fractions
                         Dim sweep! = 360 / data.Count
                         Dim maxp# = data.Max(Function(x) x.Percentage)
 #If DEBUG Then
-                             Dim list As New List(Of Rectangle)
+                        Dim list As New List(Of Rectangle)
 #End If
                         For Each x As FractionData In data
                             Dim r2# = minRadius + (r - minRadius) * (x.Percentage / maxp)
@@ -302,13 +303,13 @@ Namespace Fractions
 
                             Call g.FillPie(br, rect, (a = (a.Value + sweep)), sweep)
 #If DEBUG Then
-                                 list += rect
+                            list += rect
 #End If
                         Next
 #If DEBUG Then
-                             For Each rect In list
-                                 Call g.DrawRectangle(Pens.Red, rect)
-                             Next
+                        For Each rect In list
+                            Call g.DrawRectangle(Pens.Red, rect)
+                        Next
 #End If
                     End If
 
@@ -340,7 +341,7 @@ Namespace Fractions
                     End If
                 End Sub
 
-            Return g.GraphicsPlots(size.SizeParser, margin, bg, plotInternal)
+            Return g.GraphicsPlots(size.SizeParser, margin, bg, plotInternal, driver:=driver)
         End Function
 
         ''' <summary>
