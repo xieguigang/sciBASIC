@@ -84,7 +84,7 @@ Namespace Boids.Viewer
         End Sub
         Private Sub Reset()
             VectorTask.n_threads = 12
-            field = New Field(pictureBox1.Width, pictureBox1.Height, 10000)
+            field = New Field(pictureBox1.Width, pictureBox1.Height, 15000)
         End Sub
 
         Dim counter As New PerformanceCounter

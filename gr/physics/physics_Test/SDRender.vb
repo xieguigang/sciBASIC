@@ -65,7 +65,7 @@ Namespace Boids.Viewer
         Dim n As Integer = 30
 
         Sub New()
-            colors = Designer.GetColors(ScalerPalette.Jet.Description, n)
+            colors = Designer.GetColors(ScalerPalette.viridis.Description, n)
         End Sub
 
         Public Function RenderField(field As Field) As Bitmap
