@@ -134,7 +134,10 @@ Namespace Filters
         ''' <returns> 返回转换好的位图 </returns>
         ''' 
         <Extension>
-        Public Function ostuFilter(bitmap As BitmapBuffer, Optional flip As Boolean = False) As BitmapBuffer
+        Public Function ostuFilter(bitmap As BitmapBuffer,
+                                   Optional flip As Boolean = False,
+                                   Optional factor As Double = 0.65) As BitmapBuffer
+
             '获取源位图的宽、高,并创建一个等宽高的bitmap
             Dim width As Integer = bitmap.Width
             Dim height As Integer = bitmap.Height
@@ -149,7 +152,7 @@ Namespace Filters
             Dim alpha As Integer = &HFF << 24
             Dim black As Integer = If(flip, 255, 0)
             Dim white As Integer = If(flip, 0, 255)
-            Dim threshold As Integer = otsuThreshold(bitmap) * 0.65
+            Dim threshold As Integer = otsuThreshold(bitmap) * factor
 
             Call VBDebugger.EchoLine($"find threshold value for OSTU: {threshold}")
 

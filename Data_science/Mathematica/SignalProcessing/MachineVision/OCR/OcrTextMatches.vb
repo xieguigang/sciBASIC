@@ -73,7 +73,7 @@ Public Module OcrTextMatches
     ''' The score is calculated by Levenshtein distance, which is a measure of the similarity between two strings.
     ''' The distance is the number of single-character edits (insertions, deletions, or substitutions) required to change one string into the other.
     ''' </remarks>
-    ''' <seealso cref="Similarity.LevenshteinEvaluate(String, String, Func(Of Char, Char, Boolean))"/>
+    ''' <seealso cref="Similarity.LevenshteinEvaluate"/>
     ''' <seealso cref="ConfusionChars.Check(Char, Char)"/>
     <Extension>
     Public Iterator Function MatchGroup(group As Trajectory, target As String, Optional confusion As ConfusionChars = Nothing) As IEnumerable(Of Double)
