@@ -190,8 +190,8 @@ Namespace CCL
             Dim labelCount As Integer = 1
             Dim allLabels As New Dictionary(Of Integer, Label)()
 
-            For i = 1000 To _height - 1
-                For j = 2000 To _width - 1
+            For i = 0 To _height - 1
+                For j = 0 To _width - 1
                     Dim color = _input.GetPixel(j, i)
 
                     If color.Equals(background, tolerance:=tolerance) Then
