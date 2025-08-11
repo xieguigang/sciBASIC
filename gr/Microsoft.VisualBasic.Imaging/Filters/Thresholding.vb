@@ -149,7 +149,10 @@ Namespace Filters
             Dim alpha As Integer = &HFF << 24
             Dim black As Integer = If(flip, 255, 0)
             Dim white As Integer = If(flip, 0, 255)
-            Dim threshold As Integer = otsuThreshold(bitmap)
+            Dim threshold As Integer = otsuThreshold(bitmap) * 0.65
+
+            Call VBDebugger.EchoLine($"find threshold value for OSTU: {threshold}")
+
             black = alpha Or (black << 16) Or (black << 8) Or black
             white = alpha Or (white << 16) Or (white << 8) Or white
             For i As Integer = 0 To height - 1
