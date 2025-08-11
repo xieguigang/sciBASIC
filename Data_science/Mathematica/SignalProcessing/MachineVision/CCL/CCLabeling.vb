@@ -15,6 +15,15 @@ Namespace CCL
         Private _width As Integer
         Private _height As Integer
 
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="input"></param>
+        ''' <param name="background">
+        ''' the background color usually be white color
+        ''' </param>
+        ''' <param name="tolerance"></param>
+        ''' <returns></returns>
         Public Shared Function Process(input As BitmapBuffer,
                                        Optional background As Color? = Nothing,
                                        Optional tolerance As Integer = 3) As IDictionary(Of Integer, Polygon2D)
