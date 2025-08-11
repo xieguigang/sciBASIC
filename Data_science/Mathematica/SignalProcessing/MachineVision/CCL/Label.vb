@@ -14,27 +14,28 @@ Namespace CCL
         End Sub
 
         Public Function GetRoot() As Label
-            Dim thisObj = Me
-            Dim root = Me.Root
-
-            While thisObj IsNot root
-                thisObj = root
-                root = root.Root
-            End While
-
-            Me.Root = root
-            Return Me.Root
+            If Root IsNot Me Then
+                Root = Root.GetRoot() ' 路径压缩
+            End If
+            Return Root
         End Function
 
-        Public Sub Join(root2 As Label)
-            If root2.Rank < Rank Then 'is the rank of Root2 less than that of Root1 ?
-                root2.Root = Me 'yes! then Root1 is the parent of Root2 (since it has the higher rank)
-                'rank of Root2 is greater than or equal to that of Root1
+        Public Sub Join(other As Label)
+            Dim root1 = Me.GetRoot()
+            Dim root2 = other.GetRoot()
+
+            If root1.Name = root2.Name Then
+                Return ' 已在同一集合
+            End If
+
+            ' 按秩合并
+            If root1.Rank < root2.Rank Then
+                root1.Root = root2
+            ElseIf root1.Rank > root2.Rank Then
+                root2.Root = root1
             Else
-                Root = root2 'make Root2 the parent
-                If Rank = root2.Rank Then 'both ranks are equal ?
-                    root2.Rank += 1 'increment Root2, we need to reach a single root for the whole tree
-                End If
+                root2.Root = root1
+                root1.Rank += 1
             End If
         End Sub
 

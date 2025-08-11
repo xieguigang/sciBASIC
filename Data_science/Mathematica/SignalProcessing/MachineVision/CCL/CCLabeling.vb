@@ -15,6 +15,9 @@ Namespace CCL
         Private _width As Integer
         Private _height As Integer
 
+        Private Sub New()
+        End Sub
+
         ''' <summary>
         ''' 
         ''' </summary>
@@ -55,8 +58,8 @@ Namespace CCL
         End Function
 
         Private Function Find(background As Color, tolerance As Integer) As Dictionary(Of Integer, List(Of Point))
-            Dim labelCount = 1
-            Dim allLabels = New Dictionary(Of Integer, Label)()
+            Dim labelCount As Integer = 1
+            Dim allLabels As New Dictionary(Of Integer, Label)()
 
             For i = 0 To _height - 1
                 For j = 0 To _width - 1
@@ -75,12 +78,14 @@ Namespace CCL
                         allLabels.Add(currentLabel, New Label(currentLabel))
                         labelCount += 1
                     Else
-                        currentLabel = neighboringLabels.Min(Function(n) allLabels(n).GetRoot().Name)
-                        Dim root As Label = allLabels(currentLabel).GetRoot()
+                        Dim rootLabels = neighboringLabels.Select(Function(l) allLabels(l).GetRoot()).ToList()
+                        currentLabel = rootLabels.Min(Function(r) r.Name)
+                        Dim currentRoot As Label = allLabels(currentLabel).GetRoot()
 
-                        For Each neighbor In neighboringLabels
-                            If root.Name <> allLabels(neighbor).GetRoot().Name Then
-                                allLabels(neighbor).Join(allLabels(currentLabel))
+                        ' 合并所有其他根标签到当前根标签
+                        For Each root In rootLabels
+                            If root.Name <> currentRoot.Name Then
+                                root.Join(currentRoot)
                             End If
                         Next
                     End If
@@ -97,22 +102,32 @@ Namespace CCL
 
         Private Function GetNeighboringLabels(pix As Point) As IEnumerable(Of Integer)
             Dim neighboringLabels = New List(Of Integer)()
+            Dim x = pix.X
+            Dim y = pix.Y
 
-            Dim i = pix.Y - 1
+            ' 检查左上 (x-1, y-1)
+            If x > 0 AndAlso y > 0 Then
+                Dim label = _board(x - 1, y - 1)
+                If label <> 0 Then neighboringLabels.Add(label)
+            End If
 
-            While i <= pix.Y + 2 AndAlso i < _height - 1
-                Dim j = pix.X - 1
+            ' 检查上 (x, y-1)
+            If y > 0 Then
+                Dim label = _board(x, y - 1)
+                If label <> 0 Then neighboringLabels.Add(label)
+            End If
 
-                While j <= pix.X + 2 AndAlso j < _width - 1
-                    If i > -1 AndAlso j > -1 AndAlso _board(j, i) <> 0 Then
-                        neighboringLabels.Add(_board(j, i))
-                    End If
+            ' 检查右上 (x+1, y-1)
+            If x < _width - 1 AndAlso y > 0 Then
+                Dim label = _board(x + 1, y - 1)
+                If label <> 0 Then neighboringLabels.Add(label)
+            End If
 
-                    j += 1
-                End While
-
-                i += 1
-            End While
+            ' 检查左 (x-1, y)
+            If x > 0 Then
+                Dim label = _board(x - 1, y)
+                If label <> 0 Then neighboringLabels.Add(label)
+            End If
 
             Return neighboringLabels
         End Function
@@ -125,13 +140,15 @@ Namespace CCL
                     Dim patternNumber = _board(j, i)
 
                     If patternNumber <> 0 Then
-                        patternNumber = allLabels(patternNumber).GetRoot().Name
+                        ' 获取根标签
+                        Dim rootLabel = allLabels(patternNumber).GetRoot()
+                        Dim rootName = rootLabel.Name
 
-                        If Not patterns.ContainsKey(patternNumber) Then
-                            patterns(patternNumber) = New List(Of Point)()
+                        If Not patterns.ContainsKey(rootName) Then
+                            patterns(rootName) = New List(Of Point)()
                         End If
 
-                        patterns(patternNumber).Add(New Point(j, i))
+                        patterns(rootName).Add(New Point(j, i))
                     End If
                 Next
             Next
