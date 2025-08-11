@@ -134,7 +134,7 @@ Namespace Filters
         ''' <returns> 返回转换好的位图 </returns>
         ''' 
         <Extension>
-        Public Function ostuFilter(bitmap As BitmapBuffer) As BitmapBuffer
+        Public Function ostuFilter(bitmap As BitmapBuffer, Optional flip As Boolean = False) As BitmapBuffer
             '获取源位图的宽、高,并创建一个等宽高的bitmap
             Dim width As Integer = bitmap.Width
             Dim height As Integer = bitmap.Height
@@ -147,8 +147,8 @@ Namespace Filters
             '创建一个3*3的模板用来辅助计算均值
             Dim [module](8) As Integer
             Dim alpha As Integer = &HFF << 24
-            Dim black As Integer = 0
-            Dim white As Integer = 255
+            Dim black As Integer = If(flip, 255, 0)
+            Dim white As Integer = If(flip, 0, 255)
             Dim threshold As Integer = otsuThreshold(bitmap)
             black = alpha Or (black << 16) Or (black << 8) Or black
             white = alpha Or (white << 16) Or (white << 8) Or white
