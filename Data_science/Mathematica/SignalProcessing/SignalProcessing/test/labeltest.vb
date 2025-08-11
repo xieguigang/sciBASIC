@@ -2,14 +2,16 @@
 Imports Microsoft.VisualBasic.Drawing
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.BitmapImage
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.MachineVision.CCL
 
 Public Module labeltest
 
     Sub Main()
-        Dim img = "Z:\Untitled.bmp".LoadImage
+        Dim img = "Z:\aaa.bmp".LoadImage
         Dim CELLS = CCLabeling.Process(BitmapBuffer.FromImage(img), background:=Color.White, 0)
         Dim pen As New Pen(Color.Red, 2)
+        Dim pen2 As New SolidBrush(Color.Blue.Alpha(200))
 
         Using gfx As Graphics2D = Graphics2D.CreateDevice(img.Size)
             Call gfx.DrawImage(img, New Point)
@@ -18,10 +20,11 @@ Public Module labeltest
                 Dim rect = item.Value.GetRectangle
 
                 Call gfx.DrawRectangle(pen, rect)
+                Call gfx.FillPolygon(pen2, item.Value.AsEnumerable.ToArray)
             Next
 
             Call gfx.Flush()
-            Call gfx.ImageResource.SaveAs("Z:/label.png")
+            Call gfx.ImageResource.SaveAs("Z:/label2.png")
         End Using
     End Sub
 End Module

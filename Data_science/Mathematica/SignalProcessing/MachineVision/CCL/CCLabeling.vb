@@ -35,6 +35,9 @@ Namespace CCL
 
             For Each pattern In patterns
                 With pattern.Value
+                    ' get x and y axis data from the point collection
+                    ' for contruct a 2d polygon shape
+                    ' as the label target
                     Call images.Add(pattern.Key, New Polygon2D(.X, .Y))
                 End With
             Next
