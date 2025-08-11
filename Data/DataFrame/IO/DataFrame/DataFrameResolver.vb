@@ -811,6 +811,10 @@ Namespace IO
             Return value
         End Function
 
+        Public Function GetString(name As String) As String
+            Return GetString(GetOrdinal(name))
+        End Function
+
         Public Function GetDecimal(i As Integer) As Decimal Implements IDataRecord.GetDecimal
             Dim value As String = current.Column(i)
             Return Scripting.CTypeDynamic(Of Decimal)(value)
