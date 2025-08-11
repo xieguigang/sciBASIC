@@ -542,13 +542,19 @@ Namespace Imaging
                 Return False '  alpha值不相等，则颜色值肯定不相等
             End If
 
-            If std.Abs(a.B - b.B) > tolerance Then
+            ' 20250811 there is a bug about the byte math
+            ' due to the reason of byte is unsigned
+            ' so if a = 0 and b = 255
+            ' then will trigger overflow
+            ' the comparision with tolerance will not success
+            ' so we needs convert to short and then do math
+            If std.Abs(CShort(a.B) - CShort(b.B)) > tolerance Then
                 Return False
             End If
-            If std.Abs(a.G - b.G) > tolerance Then
+            If std.Abs(CShort(a.G) - CShort(b.G)) > tolerance Then
                 Return False
             End If
-            If std.Abs(a.R - b.R) > tolerance Then
+            If std.Abs(CShort(a.R) - CShort(b.R)) > tolerance Then
                 Return False
             End If
 
