@@ -7,7 +7,7 @@ Imports Microsoft.VisualBasic.Math.MachineVision.CCL
 Public Module labeltest
 
     Sub Main()
-        Dim img = "Z:\aaa.bmp".LoadImage
+        Dim img = "Z:\Untitled.bmp".LoadImage
         Dim CELLS = CCLabeling.Process(BitmapBuffer.FromImage(img), background:=Color.White, 0)
         Dim pen As New Pen(Color.Red, 2)
 
