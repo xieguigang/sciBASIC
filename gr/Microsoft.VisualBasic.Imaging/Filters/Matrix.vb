@@ -54,8 +54,6 @@
 #End Region
 
 Imports System.Drawing
-Imports System.Drawing.Imaging
-Imports System.Runtime.InteropServices
 Imports Microsoft.VisualBasic.Imaging.BitmapImage
 Imports std = System.Math
 

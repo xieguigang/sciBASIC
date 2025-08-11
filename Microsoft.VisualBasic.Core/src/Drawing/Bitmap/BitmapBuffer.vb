@@ -147,6 +147,10 @@ Namespace Imaging.BitmapImage
             _Height = size.Height
         End Sub
 
+        Sub New(width As Integer, height As Integer, Optional channels As Integer = 4)
+            Call Me.New(New Byte(width * height * channels - 1) {}, New Size(width, height), channels)
+        End Sub
+
         Sub New(pixels As Color(,), size As Size)
             Call MyBase.New(Unpack(pixels, size))
 
