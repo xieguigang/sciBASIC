@@ -103,6 +103,17 @@ Namespace Imaging.BitmapImage
         ''' </summary>
         ReadOnly channels As Integer
 
+        Public ReadOnly Property SortBins As Dictionary(Of Byte, Integer)
+            Get
+                Return buffer _
+                    .GroupBy(Function(b) b) _
+                    .ToDictionary(Function(b) b.Key,
+                                  Function(b)
+                                      Return b.Count
+                                  End Function)
+            End Get
+        End Property
+
 #If NET48 Then
         Protected Sub New(ptr As IntPtr,
                           byts%,
