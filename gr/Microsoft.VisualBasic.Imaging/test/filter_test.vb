@@ -5,7 +5,7 @@ Imports Microsoft.VisualBasic.Imaging.Filters
 Module filter_test
 
     Sub Main()
-        Dim img = "C:\Users\Administrator\Downloads\OtsuThresholding-master\ll.jpg".LoadImage
+        Dim img = "Z:\Capture.PNG".LoadImage
         Dim bitmap = BitmapBuffer.FromImage(img)
         Dim bin = bitmap.ostuFilter(flip:=True)
 

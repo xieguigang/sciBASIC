@@ -69,6 +69,7 @@ Imports System.Drawing.Imaging
 Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Language.Java
 Imports Microsoft.VisualBasic.Linq
 Imports BitsPerPixelEnum = Microsoft.VisualBasic.Imaging.BitmapImage.FileStream.BitsPerPixelEnum
 Imports MemoryBmp = Microsoft.VisualBasic.Imaging.BitmapImage.FileStream.Bitmap
@@ -192,6 +193,12 @@ Namespace Imaging.BitmapImage
         ''' may be not matched with width * pixel_size on .net 4.8 runtime
         ''' </returns>
         Public ReadOnly Property Stride As Integer
+
+        Public Shared Function White(width As Integer, height As Integer) As BitmapBuffer
+            Dim bytes As Byte() = New Byte(width * height * 4 - 1) {}
+            Call bytes.fill(255)
+            Return New BitmapBuffer(bytes, New Size(width, height), 4)
+        End Function
 
         ''' <summary>
         ''' get the pixel channels in memory buffer

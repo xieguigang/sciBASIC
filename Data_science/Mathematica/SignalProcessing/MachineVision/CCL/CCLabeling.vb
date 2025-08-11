@@ -131,7 +131,7 @@ Namespace CCL
             Dim width = maxX + 1 - minX
             Dim height = maxY + 1 - minY
 
-            Dim bmp As New BitmapBuffer(width, height)
+            Dim bmp As BitmapBuffer = BitmapBuffer.White(width, height)
 
             For Each pix In pattern
                 ' shift position by minX and minY
