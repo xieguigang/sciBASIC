@@ -164,9 +164,17 @@
       <Project>{653efd9c-de41-4f9a-8553-bb6c88853616}</Project>
       <Name>dataframework-netcore5</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\..\..\gr\Drawing-net4.8\Drawing-net4.8.vbproj">
+      <Project>{0c47f6e8-87bd-a5ba-4483-5beab4389f2f}</Project>
+      <Name>Drawing-net4.8</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\..\..\Microsoft.VisualBasic.Core\src\Core.vbproj">
       <Project>{d41c39b2-8f2d-472a-91ac-009d8dfc08fb}</Project>
       <Name>Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\..\..\mime\text%25html\html_netcore5.vbproj">
+      <Project>{a01ff4f8-1257-ca6b-a2d1-f4f26f1ebf03}</Project>
+      <Name>html_netcore5</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\..\Math\DataFittings\linear-netcore5.vbproj">
       <Project>{660aa958-ab0a-427a-853d-f53cf0d75678}</Project>

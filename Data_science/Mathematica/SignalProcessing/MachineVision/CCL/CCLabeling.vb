@@ -1,5 +1,7 @@
 ﻿Imports System.Drawing
+Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.BitmapImage
+Imports Microsoft.VisualBasic.Imaging.Math2D
 
 Namespace CCL
 
@@ -13,42 +15,46 @@ Namespace CCL
         Private _width As Integer
         Private _height As Integer
 
-        Public Shared Function Process(input As BitmapBuffer) As IDictionary(Of Integer, BitmapBuffer)
+        Public Shared Function Process(input As BitmapBuffer,
+                                       Optional background As Color? = Nothing,
+                                       Optional tolerance As Integer = 3) As IDictionary(Of Integer, Polygon2D)
+
             Dim ccl As New CCLabeling With {
                 ._input = input,
                 ._width = input.Width,
                 ._height = input.Height,
                 ._board = New Integer(._width - 1, ._height - 1) {}
             }
-            Dim patterns As Dictionary(Of Integer, List(Of Pixel)) = ccl.Find()
-            Dim images = New Dictionary(Of Integer, BitmapBuffer)()
+
+            If background Is Nothing Then
+                background = Color.White
+            End If
+
+            Dim patterns As Dictionary(Of Integer, List(Of Point)) = ccl.Find(background, tolerance)
+            Dim images = New Dictionary(Of Integer, Polygon2D)()
 
             For Each pattern In patterns
-                Call images.Add(pattern.Key, ccl.CreateBitmap(pattern.Value))
+                With pattern.Value
+                    Call images.Add(pattern.Key, New Polygon2D(.X, .Y))
+                End With
             Next
 
             Return images
         End Function
 
-        Protected Overridable Function CheckIsBackGround(currentPixel As Pixel) As Boolean
-            Return currentPixel.color.A = 255 AndAlso
-                currentPixel.color.R = 255 AndAlso
-                currentPixel.color.G = 255 AndAlso
-                currentPixel.color.B = 255
-        End Function
-
-        Private Function Find() As Dictionary(Of Integer, List(Of Pixel))
+        Private Function Find(background As Color, tolerance As Integer) As Dictionary(Of Integer, List(Of Point))
             Dim labelCount = 1
             Dim allLabels = New Dictionary(Of Integer, Label)()
 
             For i = 0 To _height - 1
                 For j = 0 To _width - 1
-                    Dim currentPixel As Pixel = New Pixel(New Point(j, i), _input.GetPixel(j, i))
+                    Dim color = _input.GetPixel(j, i)
 
-                    If CheckIsBackGround(currentPixel) Then
+                    If color.Equals(background, tolerance:=tolerance) Then
                         Continue For
                     End If
 
+                    Dim currentPixel As New Point(j, i)
                     Dim neighboringLabels = GetNeighboringLabels(currentPixel)
                     Dim currentLabel As Integer
 
@@ -77,15 +83,15 @@ Namespace CCL
             Return patterns
         End Function
 
-        Private Function GetNeighboringLabels(pix As Pixel) As IEnumerable(Of Integer)
+        Private Function GetNeighboringLabels(pix As Point) As IEnumerable(Of Integer)
             Dim neighboringLabels = New List(Of Integer)()
 
-            Dim i = pix.Position.Y - 1
+            Dim i = pix.Y - 1
 
-            While i <= pix.Position.Y + 2 AndAlso i < _height - 1
-                Dim j = pix.Position.X - 1
+            While i <= pix.Y + 2 AndAlso i < _height - 1
+                Dim j = pix.X - 1
 
-                While j <= pix.Position.X + 2 AndAlso j < _width - 1
+                While j <= pix.X + 2 AndAlso j < _width - 1
                     If i > -1 AndAlso j > -1 AndAlso _board(j, i) <> 0 Then
                         neighboringLabels.Add(_board(j, i))
                     End If
@@ -99,8 +105,8 @@ Namespace CCL
             Return neighboringLabels
         End Function
 
-        Private Function AggregatePatterns(allLabels As Dictionary(Of Integer, Label)) As Dictionary(Of Integer, List(Of Pixel))
-            Dim patterns = New Dictionary(Of Integer, List(Of Pixel))()
+        Private Function AggregatePatterns(allLabels As Dictionary(Of Integer, Label)) As Dictionary(Of Integer, List(Of Point))
+            Dim patterns = New Dictionary(Of Integer, List(Of Point))()
 
             For i = 0 To _height - 1
                 For j = 0 To _width - 1
@@ -110,35 +116,15 @@ Namespace CCL
                         patternNumber = allLabels(patternNumber).GetRoot().Name
 
                         If Not patterns.ContainsKey(patternNumber) Then
-                            patterns(patternNumber) = New List(Of Pixel)()
+                            patterns(patternNumber) = New List(Of Point)()
                         End If
 
-                        patterns(patternNumber).Add(New Pixel(New Point(j, i), Color.Black))
+                        patterns(patternNumber).Add(New Point(j, i))
                     End If
                 Next
             Next
 
             Return patterns
-        End Function
-
-        Private Function CreateBitmap(pattern As List(Of Pixel)) As BitmapBuffer
-            Dim minX = pattern.Min(Function(p) p.Position.X)
-            Dim maxX = pattern.Max(Function(p) p.Position.X)
-
-            Dim minY = pattern.Min(Function(p) p.Position.Y)
-            Dim maxY = pattern.Max(Function(p) p.Position.Y)
-
-            Dim width = maxX + 1 - minX
-            Dim height = maxY + 1 - minY
-
-            Dim bmp As BitmapBuffer = BitmapBuffer.White(width, height)
-
-            For Each pix In pattern
-                ' shift position by minX and minY
-                bmp.SetPixel(pix.Position.X - minX, pix.Position.Y - minY, pix.color)
-            Next
-
-            Return bmp
         End Function
     End Class
 End Namespace

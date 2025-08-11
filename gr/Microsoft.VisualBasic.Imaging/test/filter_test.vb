@@ -7,7 +7,7 @@ Module filter_test
     Sub Main()
         Dim img = "Z:\Capture.PNG".LoadImage
         Dim bitmap = BitmapBuffer.FromImage(img)
-        Dim bin = bitmap.ostuFilter(flip:=True)
+        Dim bin = bitmap.ostuFilter(flip:=False)
 
         Call bin.Save("Z:/aaa.bmp")
     End Sub
