@@ -1,4 +1,5 @@
-﻿Imports Microsoft.VisualBasic.Imaging.BitmapImage
+﻿Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Imaging.BitmapImage
 Imports std = System.Math
 
 Namespace Filters
@@ -131,6 +132,8 @@ Namespace Filters
         ''' </summary>
         ''' <param name="bitmap"> 位图 </param>
         ''' <returns> 返回转换好的位图 </returns>
+        ''' 
+        <Extension>
         Public Function ostuFilter(bitmap As BitmapBuffer) As BitmapBuffer
             '获取源位图的宽、高,并创建一个等宽高的bitmap
             Dim width As Integer = bitmap.Width

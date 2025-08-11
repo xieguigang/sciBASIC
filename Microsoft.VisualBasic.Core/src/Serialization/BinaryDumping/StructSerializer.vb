@@ -130,7 +130,7 @@ Namespace Serialization.BinaryDumping
         ''' 
         <Extension>
         Public Function StructureToByte(Of T As Structure)(struct As T) As Byte()
-            Dim size As Integer = Marshal.SizeOf(GetType(T))
+            Dim size As Integer = Marshal.SizeOf(struct)
             Dim buffer As Byte() = New Byte(size - 1) {}
             Dim bufferIntPtr As IntPtr = Marshal.AllocHGlobal(size)
             Try

@@ -6,7 +6,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{1A566414-428F-403B-84A6-6B9F36FB1117}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <StartupObject>Test.Project.cssPaddingTest</StartupObject>
+    <StartupObject>Test.Project.filter_test</StartupObject>
     <RootNamespace>Test.Project</RootNamespace>
     <AssemblyName>Test.Project</AssemblyName>
     <FileAlignment>512</FileAlignment>
@@ -130,6 +130,7 @@
     <Compile Include="gifTest.vb" />
     <Compile Include="imageSmoothTest.vb" />
     <Compile Include="cssPaddingTest.vb" />
+    <Compile Include="filter_test.vb" />
     <Compile Include="objReaderTest.vb" />
     <Compile Include="ShadowsTest.vb" />
     <Compile Include="SVGTest.vb" />
