@@ -136,7 +136,8 @@ Namespace Imaging.BitmapImage.FileStream
         ''' <param name="height"></param>
         ''' <param name="pixelData"></param>
         ''' <param name="bitsPerPixel"></param>
-        Public Sub New(width As Integer, height As Integer, pixelData As Byte(), Optional bitsPerPixel As BitsPerPixelEnum = BitsPerPixelEnum.RGB24)
+        Public Sub New(width As Integer, height As Integer, pixelData As Byte(),
+                       Optional bitsPerPixel As BitsPerPixelEnum = BitsPerPixelEnum.RGB24)
             Me.Width = width
             Me.Height = height
             Me.PixelData = pixelData
@@ -149,7 +150,9 @@ Namespace Imaging.BitmapImage.FileStream
                 Throw New ArgumentOutOfRangeException($"{NameOf(pixelData)} has invalid size.")
             End If
 
-            If bitsPerPixel = BitsPerPixelEnum.RGB24 Then InfoHeaderBytes = New BitmapInfoHeader(width, height, bitsPerPixel, rawImageSize).HeaderInfoBytes
+            If bitsPerPixel = BitsPerPixelEnum.RGB24 Then
+                InfoHeaderBytes = New BitmapInfoHeader(width, height, bitsPerPixel, rawImageSize).HeaderInfoBytes
+            End If
             If bitsPerPixel = BitsPerPixelEnum.RGBA32 Then
                 InfoHeaderBytes = New BitmapInfoHeaderRGBA(width, height, bitsPerPixel, rawImageSize).HeaderInfoBytes
             End If
@@ -169,7 +172,6 @@ Namespace Imaging.BitmapImage.FileStream
         End Function
 
         Public Sub Save(stream As Stream, Optional flipped As Boolean = False)
-            'using (var writer = new BinaryWriter( stream )) {
             Dim writer As New BinaryWriter(stream)
 
             writer.Write(FileHeader.HeaderBytes)
@@ -184,7 +186,11 @@ Namespace Imaging.BitmapImage.FileStream
             If paddingRequired Then
                 For counter = 0 To Height - 1
                     Dim rowBuffer = New Byte(BytesPerRow - 1) {}
-                    Buffer.BlockCopy(src:=pixData, srcOffset:=counter * bytesToCopy, dst:=rowBuffer, dstOffset:=0, count:=bytesToCopy)
+                    Buffer.BlockCopy(src:=pixData,
+                                     srcOffset:=counter * bytesToCopy,
+                                     dst:=rowBuffer,
+                                     dstOffset:=0,
+                                     count:=bytesToCopy)
                     writer.Write(rowBuffer)
                 Next
             Else

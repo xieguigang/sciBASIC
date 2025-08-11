@@ -1,74 +1,77 @@
 ﻿#Region "Microsoft.VisualBasic::ef093088d1783200ed4e6e47db01b43a, Microsoft.VisualBasic.Core\src\Drawing\Bitmap\BitmapBuffer.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 654
-    '    Code Lines: 380 (58.10%)
-    ' Comment Lines: 171 (26.15%)
-    '    - Xml Docs: 80.70%
-    ' 
-    '   Blank Lines: 103 (15.75%)
-    '     File Size: 21.89 KB
+' Summaries:
 
 
-    '     Class BitmapBuffer
-    ' 
-    '         Properties: Height, Size, Stride, Width
-    ' 
-    '         Constructor: (+4 Overloads) Sub New
-    ' 
-    '         Function: (+2 Overloads) FromBitmap, FromImage, GetAlpha, GetARGB, GetARGBStream
-    '                   GetBlue, GetColor, GetEnumerator, GetGreen, GetImage
-    '                   (+2 Overloads) GetIndex, (+3 Overloads) GetPixel, GetPixelChannels, GetPixelsAll, GetRed
-    '                   OutOfRange, ToPixel2D, ToString, Unpack
-    ' 
-    '         Sub: Dispose, SetAlpha, SetBlue, SetGreen, (+4 Overloads) SetPixel
-    '              SetRed, WriteARGBStream
-    ' 
-    '         Operators: +
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 654
+'    Code Lines: 380 (58.10%)
+' Comment Lines: 171 (26.15%)
+'    - Xml Docs: 80.70%
+' 
+'   Blank Lines: 103 (15.75%)
+'     File Size: 21.89 KB
+
+
+'     Class BitmapBuffer
+' 
+'         Properties: Height, Size, Stride, Width
+' 
+'         Constructor: (+4 Overloads) Sub New
+' 
+'         Function: (+2 Overloads) FromBitmap, FromImage, GetAlpha, GetARGB, GetARGBStream
+'                   GetBlue, GetColor, GetEnumerator, GetGreen, GetImage
+'                   (+2 Overloads) GetIndex, (+3 Overloads) GetPixel, GetPixelChannels, GetPixelsAll, GetRed
+'                   OutOfRange, ToPixel2D, ToString, Unpack
+' 
+'         Sub: Dispose, SetAlpha, SetBlue, SetGreen, (+4 Overloads) SetPixel
+'              SetRed, WriteARGBStream
+' 
+'         Operators: +
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Drawing
 Imports System.Drawing.Imaging
+Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
+Imports BitsPerPixelEnum = Microsoft.VisualBasic.Imaging.BitmapImage.FileStream.BitsPerPixelEnum
+Imports MemoryBmp = Microsoft.VisualBasic.Imaging.BitmapImage.FileStream.Bitmap
 Imports std = System.Math
 
 Namespace Imaging.BitmapImage
@@ -613,6 +616,28 @@ Namespace Imaging.BitmapImage
             Else
                 buffer(i + (2 - channel)) = val
             End If
+        End Sub
+
+        ''' <summary>
+        ''' save in-memory data as local bitmap file
+        ''' </summary>
+        ''' <param name="file"></param>
+        Public Sub Save(file As String)
+            Using s As Stream = file.Open(FileMode.OpenOrCreate, doClear:=True, [readOnly]:=False)
+                Call Save(s)
+            End Using
+        End Sub
+
+        ''' <summary>
+        ''' save in-memory data as bitmap file
+        ''' </summary>
+        ''' <param name="s"></param>
+        Public Sub Save(s As Stream)
+            Dim pixelFormat As BitsPerPixelEnum = If(GetPixelChannels() = 3, BitsPerPixelEnum.RGB24, BitsPerPixelEnum.RGBA32)
+            Dim writer As New MemoryBmp(Width, Height, RawBuffer, pixelFormat)
+
+            Call writer.Save(s, flipped:=True)
+            Call s.Flush()
         End Sub
 
         Public Overrides Function ToString() As String

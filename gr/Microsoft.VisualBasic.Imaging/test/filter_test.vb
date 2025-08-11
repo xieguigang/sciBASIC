@@ -1,5 +1,4 @@
-﻿Imports System.Drawing
-Imports Microsoft.VisualBasic.Imaging
+﻿Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.BitmapImage
 Imports Microsoft.VisualBasic.Imaging.Filters
 
@@ -10,6 +9,6 @@ Module filter_test
         Dim bitmap = BitmapBuffer.FromImage(img)
         Dim bin = bitmap.ostuFilter
 
-        Call bin.save()
+        Call bin.Save("Z:/aaa.bmp")
     End Sub
 End Module

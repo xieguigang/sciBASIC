@@ -55,9 +55,11 @@
 #End Region
 
 Imports System.IO
+Imports Microsoft.VisualBasic.Serialization.BinaryDumping
 Imports MemoryBmp = Microsoft.VisualBasic.Imaging.BitmapImage.FileStream.Bitmap
 
 Namespace Imaging.BitmapImage.FileStream
+
     Public Module BitmapFileHelper
 
         ''' <summary>
@@ -89,7 +91,7 @@ Namespace Imaging.BitmapImage.FileStream
         End Function
 
         Public Function ParseMemoryBitmap(fileStream As Stream) As Bitmap
-            Using bReader = New SafeBinaryReader(fileStream)
+            Using bReader As New LittleEndianReader(fileStream)
                 Dim headerBytes = bReader.ReadBytes(BitmapFileHeader.BitmapFileHeaderSizeInBytes)
                 Dim fileHeader = BitmapFileHeader.GetHeaderFromBytes(headerBytes)
 
@@ -117,7 +119,14 @@ Namespace Imaging.BitmapImage.FileStream
                     Dim bytesToCopy = width * bytesPerPixel
                     For counter = 0 To height - 1
                         Dim rowBuffer = bReader.ReadBytes(bytesPerRow)
-                        Buffer.BlockCopy(src:=rowBuffer, srcOffset:=0, dst:=pixelData, dstOffset:=counter * bytesToCopy, count:=bytesToCopy)
+
+                        Call System.Buffer.BlockCopy(
+                            src:=rowBuffer,
+                            srcOffset:=0,
+                            dst:=pixelData,
+                            dstOffset:=counter * bytesToCopy,
+                            count:=bytesToCopy
+                        )
                     Next
                 Else
                     Dim rowBuffer = bReader.ReadBytes(pixelData.Length)
@@ -130,12 +139,7 @@ Namespace Imaging.BitmapImage.FileStream
         End Function
 
         Public Sub SaveBitmapToFile(fileName As String, bitmap As Bitmap)
-            If bitmap Is Nothing Then Throw New ArgumentNullException(NameOf(bitmap))
-            If String.IsNullOrWhiteSpace(fileName) Then Throw New ArgumentNullException(NameOf(fileName))
-            Dim filePath = Path.GetDirectoryName(fileName)
-            If Not Directory.Exists(filePath) Then Throw New Exception($"Destination directory not found.")
-
-            Using fileStream = File.Create(fileName)
+            Using fileStream As Stream = fileName.Open(FileMode.OpenOrCreate, doClear:=True, [readOnly]:=False)
                 Using bmpStream = bitmap.GetBmpStream()
                     bmpStream.CopyTo(fileStream, bufferSize:=16 * 1024)
                 End Using

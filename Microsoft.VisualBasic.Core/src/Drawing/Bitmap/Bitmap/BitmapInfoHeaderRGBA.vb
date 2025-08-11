@@ -106,9 +106,6 @@ Namespace Imaging.BitmapImage.FileStream
 
                 ' get base array
                 MyBase.HeaderInfoBytes.CopyTo(byteArray, 0)
-
-
-
                 ' chage header size
                 Dim size = BitConverter.GetBytes(SizeInBytes)
 

@@ -7,8 +7,6 @@ Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "Core", "src\Core.vbproj", "
 EndProject
 Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "test", "test\test.vbproj", "{C8EB5BA6-C4AE-490A-B6F2-42ABCC2D56C5}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "framework", "framework", "{85EA3566-773F-481A-9600-DF1987C1D9FF}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -151,9 +149,6 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(NestedProjects) = preSolution
-		{DA9F10C2-A97B-49DA-9A76-D630BD977FDA} = {85EA3566-773F-481A-9600-DF1987C1D9FF}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {9613A9B5-4E6D-481A-8EF5-DA4C34BEE9F6}
