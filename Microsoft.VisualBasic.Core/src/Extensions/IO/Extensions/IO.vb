@@ -275,8 +275,14 @@ Public Module IOExtensions
             [readOnly] = True AndAlso
             App.MemoryLoad > My.FrameworkInternal.MemoryLoads.Light Then
 
+            Dim file_size As Long = path.FileLength
+
+            If file_size < 0 Then
+                Throw New InvalidDataException($"missing raw data file({path.GetFullPath(False)}) to read!")
+            End If
+
             ' should reads all data into memory!
-            If path.FileLength < size_2GB Then
+            If file_size < size_2GB Then
                 If verbose Then
                     Call VBDebugger.EchoLine($"read all binary data into memory for max performance! (size={StringFormats.Lanudry(path.FileLength)}) {path}")
                 End If
