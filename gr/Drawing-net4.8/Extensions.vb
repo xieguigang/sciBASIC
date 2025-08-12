@@ -182,13 +182,7 @@ Public Module Extensions
     ''' <param name="res">绘图的基础图像对象</param>
     ''' <returns></returns>
     Friend Function CreateObject(g As Graphics, res As System.Drawing.Image) As Graphics2D
-        Dim img As Image
-
-#If NET48 Then
-        img = res 
-#Else
-        Throw New NotImplementedException
-#End If
+        Dim img As Image = res
 
         g.InterpolationMode = InterpolationMode.HighQualityBicubic
         g.PixelOffsetMode = PixelOffsetMode.HighQuality

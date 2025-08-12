@@ -91,7 +91,7 @@ Public Module DrawingInterop
     ''' <returns></returns>
     <Extension>
     Public Function CTypePenObject(stroke As Pen) As System.Drawing.Pen
-        Throw New NotImplementedException
+        Return New System.Drawing.Pen(stroke.Color, stroke.Width)
     End Function
 
     ''' <summary>
