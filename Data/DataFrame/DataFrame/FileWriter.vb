@@ -93,6 +93,7 @@ Public Module FileWriter
 
             For offset As Integer = 0 To cols.Length - 1
                 row(offset + 1) = any.ToString(cols(offset)(i), null:=blank)
+                row(offset + 1) = If(row(offset + 1).StringEmpty, blank, row(offset + 1))
             Next
 
             Call s.WriteLine(New RowObject(row).AsLine)
