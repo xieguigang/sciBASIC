@@ -236,7 +236,8 @@ Public Module Extensions
     ''' any text data
     ''' </param>
     ''' <returns>
-    ''' a 32 bit md5 string in lower case
+    ''' a 32 bit md5 string in lower case, this function may returns empty hashcode string 
+    ''' if the given input string <paramref name="s"/> is empty.
     ''' </returns>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension> Public Function MD5(s$) As String

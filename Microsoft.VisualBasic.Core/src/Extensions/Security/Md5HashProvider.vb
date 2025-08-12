@@ -68,6 +68,13 @@ Namespace SecurityString
 
         ReadOnly md5Hash As MD5 = Security.Cryptography.MD5.Create()
 
+        ''' <summary>
+        ''' calculate string md5 hashcode
+        ''' </summary>
+        ''' <param name="input"></param>
+        ''' <returns>
+        ''' this function may returns empty hashcode string if the given <paramref name="input"/> string is empty.
+        ''' </returns>
         Public Function GetMd5Hash(input As String) As String
             If String.IsNullOrEmpty(input) Then
                 Return ""

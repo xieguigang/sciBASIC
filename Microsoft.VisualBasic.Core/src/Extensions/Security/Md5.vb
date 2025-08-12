@@ -83,7 +83,9 @@ Namespace SecurityString
         ''' Calculate md5 hash value for the input string.
         ''' </summary>
         ''' <param name="input"></param>
-        ''' <returns></returns>
+        ''' <returns>
+        ''' this function may returns empty hashcode string if the given <paramref name="input"/> string is empty.
+        ''' </returns>
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <ExportAPI("Md5")>
