@@ -278,7 +278,7 @@ Public Module IOExtensions
             Dim file_size As Long = path.FileLength
 
             If file_size < 0 Then
-                Throw New InvalidDataException($"missing raw data file({path.GetFullPath(False)}) to read!")
+                Throw New InvalidDataException($"missing raw data file({path}, fullpath={path.GetFullPath(False)}) to read!")
             End If
 
             ' should reads all data into memory!

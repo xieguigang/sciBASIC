@@ -615,7 +615,10 @@ Public Module PathExtensions
     Public Function FileLength(path As String) As Long
         If path.StringEmpty Then
             Return -1
-        ElseIf Not path.FileExists OrElse path.DirectoryExists Then
+        ElseIf Not path.FileExists Then
+            Call $"missing data file({path}, fullpath={path.GetFullPath(False)}) to measure file length, -1 will returns!".Warning
+            Return -1&
+        ElseIf path.DirectoryExists Then
             Return -1&
         Else
             Return FileIO.FileSystem.GetFileInfo(path).Length
@@ -666,6 +669,10 @@ Public Module PathExtensions
 
     <Extension>
     Public Function FileMove(source$, target$) As Boolean
+        If Not source.FileExists Then
+            Call $"missing file({source}, fullpath={source.GetFullPath(False)}) to move to new file location.".Warning
+            Return False
+        End If
         Try
             Call File.Move(source, target)
             Return True
