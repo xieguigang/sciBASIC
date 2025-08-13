@@ -22,7 +22,7 @@ Namespace Drawing2D.Math2D.DelaunayVoronoi
                            Dim tempIndex As Integer
 
                            If returnValue = -1 Then
-                               If s0.siteIndexField > s1.SiteIndex Then
+                               If s0.SiteIndex > s1.SiteIndex Then
                                    tempIndex = s0.SiteIndex
                                    s0.SiteIndex = s1.SiteIndex
                                    s1.SiteIndex = tempIndex
@@ -49,7 +49,7 @@ Namespace Drawing2D.Math2D.DelaunayVoronoi
             Dim tempIndex As Integer
 
             If returnValue = -1 Then
-                If siteIndexField > s1.SiteIndex Then
+                If SiteIndex > s1.SiteIndex Then
                     tempIndex = SiteIndex
                     SiteIndex = s1.SiteIndex
                     s1.SiteIndex = tempIndex
@@ -70,77 +70,53 @@ Namespace Drawing2D.Math2D.DelaunayVoronoi
             Return (p0 - p1).Length < EPSILON
         End Function
 
-        Private siteIndexField As Integer
-        Public Property SiteIndex As Integer
-            Get
-                Return siteIndexField
-            End Get
-            Set(value As Integer)
-                siteIndexField = value
-            End Set
-        End Property
 
-        Private coordField As Vector2D
+        Public Property SiteIndex As Integer
         Public Property Coord As Vector2D Implements ICoord.Coord
-            Get
-                Return coordField
-            End Get
-            Set(value As Vector2D)
-                coordField = value
-            End Set
-        End Property
 
         Public ReadOnly Property x As Single
             Get
-                Return coordField.X
+                Return Coord.x
             End Get
         End Property
         Public ReadOnly Property y As Single
             Get
-                Return coordField.Y
+                Return Coord.y
             End Get
         End Property
 
-        Private weigthField As Single
+
         Public ReadOnly Property Weigth As Single
-            Get
-                Return weigthField
-            End Get
-        End Property
 
         ' The edges that define this Site's Voronoi region:
-        Private edgesField As List(Of Edge)
         Public ReadOnly Property Edges As List(Of Edge)
-            Get
-                Return edgesField
-            End Get
-        End Property
+
         ' which end of each edge hooks up with the previous edge in edges:
         Private edgeOrientations As List(Of LR)
         ' ordered list of points that define the region clipped to bounds:
-        Private regionField As List(Of Vector2D)
+        Private regionShape As List(Of Vector2D)
 
         Public Sub New(p As Vector2D, index As Integer, weigth As Single)
             Init(p, index, weigth)
         End Sub
 
         Private Function Init(p As Vector2D, index As Integer, weigth As Single) As Site
-            coordField = p
-            siteIndexField = index
-            weigthField = weigth
-            edgesField = New List(Of Edge)()
-            regionField = Nothing
+            Coord = p
+            SiteIndex = index
+            _Weigth = weigth
+            _Edges = New List(Of Edge)()
+            regionShape = Nothing
 
             Return Me
         End Function
 
         Public Overrides Function ToString() As String
-            Return "Site " & siteIndexField.ToString() & ": " & coordField.ToString()
+            Return "Site " & SiteIndex.ToString() & ": " & Coord.ToString()
         End Function
 
         Private Sub Move(p As Vector2D)
             Clear()
-            coordField = p
+            Coord = p
         End Sub
 
         Public Sub Dispose()
@@ -149,38 +125,38 @@ Namespace Drawing2D.Math2D.DelaunayVoronoi
         End Sub
 
         Private Sub Clear()
-            If edgesField IsNot Nothing Then
-                edgesField.Clear()
-                edgesField = Nothing
+            If Edges IsNot Nothing Then
+                Edges.Clear()
+                _Edges = Nothing
             End If
             If edgeOrientations IsNot Nothing Then
                 edgeOrientations.Clear()
                 edgeOrientations = Nothing
             End If
-            If regionField IsNot Nothing Then
-                regionField.Clear()
-                regionField = Nothing
+            If regionShape IsNot Nothing Then
+                regionShape.Clear()
+                regionShape = Nothing
             End If
         End Sub
 
         Public Sub AddEdge(edge As Edge)
-            edgesField.Add(edge)
+            Edges.Add(edge)
         End Sub
 
         Public Function NearestEdge() As Edge
-            edgesField.Sort(New Comparison(Of Edge)(AddressOf Edge.CompareSitesDistances))
-            Return edgesField(0)
+            Edges.Sort(New Comparison(Of Edge)(AddressOf Edge.CompareSitesDistances))
+            Return Edges(0)
         End Function
 
         Public Function NeighborSites() As List(Of Site)
-            If edgesField Is Nothing OrElse edgesField.Count = 0 Then
+            If Edges Is Nothing OrElse Edges.Count = 0 Then
                 Return New List(Of Site)()
             End If
             If edgeOrientations Is Nothing Then
                 ReorderEdges()
             End If
             Dim list As List(Of Site) = New List(Of Site)()
-            For Each edge In edgesField
+            For Each edge In Edges
                 list.Add(NeighborSite(edge))
             Next
             Return list
@@ -197,35 +173,35 @@ Namespace Drawing2D.Math2D.DelaunayVoronoi
         End Function
 
         Public Function Region(clippingBounds As Rectf) As List(Of Vector2D)
-            If edgesField Is Nothing OrElse edgesField.Count = 0 Then
+            If Edges Is Nothing OrElse Edges.Count = 0 Then
                 Return New List(Of Vector2D)()
             End If
             If edgeOrientations Is Nothing Then
                 ReorderEdges()
             End If
-            If regionField Is Nothing Then
-                regionField = ClipToBounds(clippingBounds)
-                If (New Polygon(regionField)).PolyWinding() = Winding.CLOCKWISE Then
-                    regionField.Reverse()
+            If regionShape Is Nothing Then
+                regionShape = ClipToBounds(clippingBounds)
+                If (New Polygon(regionShape)).PolyWinding() = Winding.CLOCKWISE Then
+                    regionShape.Reverse()
                 End If
             End If
-            Return regionField
+            Return regionShape
         End Function
 
         Private Sub ReorderEdges()
-            Dim reorderer As EdgeReorderer = New EdgeReorderer(edgesField, GetType(Vertex))
-            edgesField = reorderer.Edges
+            Dim reorderer As New EdgeReorderer(Edges, GetType(Vertex))
+            _Edges = reorderer.Edges
             edgeOrientations = reorderer.EdgeOrientations
             reorderer.Dispose()
         End Sub
 
         Private Function ClipToBounds(bounds As Rectf) As List(Of Vector2D)
             Dim points As List(Of Vector2D) = New List(Of Vector2D)()
-            Dim n = edgesField.Count
+            Dim n = Edges.Count
             Dim i = 0
             Dim edge As Edge
 
-            While i < n AndAlso Not edgesField(i).Visible()
+            While i < n AndAlso Not Edges(i).Visible()
                 i += 1
             End While
 
@@ -233,13 +209,13 @@ Namespace Drawing2D.Math2D.DelaunayVoronoi
                 ' No edges visible
                 Return New List(Of Vector2D)()
             End If
-            edge = edgesField(i)
+            edge = Edges(i)
             Dim orientation = edgeOrientations(i)
             points.Add(edge.ClippedEnds(orientation))
             points.Add(edge.ClippedEnds(LR.Other(orientation)))
 
             For j = i + 1 To n - 1
-                edge = edgesField(j)
+                edge = Edges(j)
                 If Not edge.Visible() Then
                     Continue For
                 End If
@@ -253,7 +229,7 @@ Namespace Drawing2D.Math2D.DelaunayVoronoi
 
         Private Sub Connect(ByRef points As List(Of Vector2D), j As Integer, bounds As Rectf, Optional closingUp As Boolean = False)
             Dim rightPoint = points(points.Count - 1)
-            Dim newEdge = edgesField(j)
+            Dim newEdge = Edges(j)
             Dim newOrientation = edgeOrientations(j)
 
             ' The point that must be conected to rightPoint:

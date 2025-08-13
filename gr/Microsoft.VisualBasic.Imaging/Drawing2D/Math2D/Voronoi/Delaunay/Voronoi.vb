@@ -1,5 +1,6 @@
 ﻿Imports Microsoft.VisualBasic.Imaging.Math2D
 Imports std = System.Math
+Imports weigthDistributor = Microsoft.VisualBasic.Math.RandomExtensions
 
 Namespace Drawing2D.Math2D.DelaunayVoronoi
 
@@ -8,32 +9,17 @@ Namespace Drawing2D.Math2D.DelaunayVoronoi
         Private sites As SiteList
         Private triangles As List(Of Triangle)
 
-        Private edgesField As List(Of Edge)
         Public ReadOnly Property Edges As List(Of Edge)
-            Get
-                Return edgesField
-            End Get
-        End Property
 
-        ' TODO generalize this so it doesn't have to be a rectangle;
-        ' then we can make the fractal voronois-within-voronois
-        Private plotBoundsField As Rectf
+        ''' <summary>
+        ''' TODO generalize this so it doesn't have to be a rectangle;
+        ''' then we can make the fractal voronois-within-voronois
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property PlotBounds As Rectf
-            Get
-                Return plotBoundsField
-            End Get
-        End Property
-
-        Private sitesIndexedByLocationField As Dictionary(Of Vector2D, Site)
         Public ReadOnly Property SitesIndexedByLocation As Dictionary(Of Vector2D, Site)
-            Get
-                Return sitesIndexedByLocationField
-            End Get
-        End Property
 
-        Private weigthDistributor As Random
-
-        Public Sub Dispose()
+        Private Sub Reset()
             sites.Dispose()
             sites = Nothing
 
@@ -42,34 +28,32 @@ Namespace Drawing2D.Math2D.DelaunayVoronoi
             Next
             triangles.Clear()
 
-            For Each e In edgesField
+            For Each e In Edges
                 e.Dispose()
             Next
-            edgesField.Clear()
+            Edges.Clear()
 
-            plotBoundsField = Rectf.zero
-            sitesIndexedByLocationField.Clear()
-            sitesIndexedByLocationField = Nothing
+            _PlotBounds = Rectf.zero
+            _SitesIndexedByLocation.Clear()
+            _SitesIndexedByLocation = Nothing
         End Sub
 
         Public Sub New(points As List(Of Vector2D), plotBounds As Rectf)
-            weigthDistributor = New Random()
             Init(points, plotBounds)
         End Sub
 
         Public Sub New(points As List(Of Vector2D), plotBounds As Rectf, lloydIterations As Integer)
-            weigthDistributor = New Random()
             Init(points, plotBounds)
             LloydRelaxation(lloydIterations)
         End Sub
 
         Private Sub Init(points As List(Of Vector2D), plotBounds As Rectf)
             sites = New SiteList()
-            sitesIndexedByLocationField = New Dictionary(Of Vector2D, Site)()
+            _SitesIndexedByLocation = New Dictionary(Of Vector2D, Site)()
             AddSites(points)
-            plotBoundsField = plotBounds
+            _PlotBounds = plotBounds
             triangles = New List(Of Triangle)()
-            edgesField = New List(Of Edge)()
+            _Edges = New List(Of Edge)()
 
             FortunesAlgorithm()
         End Sub
@@ -82,24 +66,24 @@ Namespace Drawing2D.Math2D.DelaunayVoronoi
 
         Private Sub AddSite(p As Vector2D, index As Integer)
             Dim weigth As Single = CSng(weigthDistributor.NextDouble()) * 100
-            Dim site As Site = site.Create(p, index, weigth)
+            Dim site As Site = Site.Create(p, index, weigth)
             sites.Add(site)
-            sitesIndexedByLocationField(p) = site
+            SitesIndexedByLocation(p) = site
         End Sub
 
         Public Function Region(p As Vector2D) As List(Of Vector2D)
-            Dim site As Site
-            If sitesIndexedByLocationField.TryGetValue(p, site) Then
-                Return site.Region(plotBoundsField)
+            Dim site As Site = Nothing
+            If SitesIndexedByLocation.TryGetValue(p, site) Then
+                Return site.Region(PlotBounds)
             Else
                 Return New List(Of Vector2D)()
             End If
         End Function
 
         Public Function NeighborSitesForSite(coord As Vector2D) As List(Of Vector2D)
-            Dim points As List(Of Vector2D) = New List(Of Vector2D)()
-            Dim site As Site
-            If sitesIndexedByLocationField.TryGetValue(coord, site) Then
+            Dim points As New List(Of Vector2D)()
+            Dim site As Site = Nothing
+            If SitesIndexedByLocation.TryGetValue(coord, site) Then
                 Dim sites As List(Of Site) = site.NeighborSites()
                 For Each neighbor In sites
                     points.Add(neighbor.Coord)
@@ -114,26 +98,26 @@ Namespace Drawing2D.Math2D.DelaunayVoronoi
         End Function
 
         Public Function VoronoiBoundarayForSite(coord As Vector2D) As List(Of LineSegment)
-            Return LineSegment.VisibleLineSegments(Edge.SelectEdgesForSitePoint(coord, edgesField))
+            Return LineSegment.VisibleLineSegments(Edge.SelectEdgesForSitePoint(coord, Edges))
         End Function
         ' 
         Public Function VoronoiDiagram() As List(Of LineSegment)
-            Return LineSegment.VisibleLineSegments(edgesField)
+            Return LineSegment.VisibleLineSegments(Edges)
         End Function
 
         Public Function HullEdges() As List(Of Edge)
-            Return edgesField.FindAll(Function(edge) edge.IsPartOfConvexHull())
+            Return Edges.FindAll(Function(edge) edge.IsPartOfConvexHull())
         End Function
 
         Public Function HullPointsInOrder() As List(Of Vector2D)
             Dim hullEdges As List(Of Edge) = Me.HullEdges()
 
-            Dim points As List(Of Vector2D) = New List(Of Vector2D)()
+            Dim points As New List(Of Vector2D)()
             If hullEdges.Count = 0 Then
                 Return points
             End If
 
-            Dim reorderer As EdgeReorderer = New EdgeReorderer(hullEdges, GetType(Site))
+            Dim reorderer As New EdgeReorderer(hullEdges, GetType(Site))
             hullEdges = reorderer.Edges
             Dim orientations = reorderer.EdgeOrientations
             reorderer.Dispose()
@@ -152,7 +136,7 @@ Namespace Drawing2D.Math2D.DelaunayVoronoi
         ''' </summary>
         ''' <returns></returns>
         Public Iterator Function Regions() As IEnumerable(Of Polygon2D)
-            For Each shape As List(Of Vector2D) In sites.Regions(plotBoundsField)
+            For Each shape As List(Of Vector2D) In sites.Regions(PlotBounds)
                 If shape.Any Then
                     Yield New Polygon2D(shape)
                 End If
@@ -207,7 +191,7 @@ Namespace Drawing2D.Math2D.DelaunayVoronoi
                     ' Step 9
                     edge = Edge.CreateBisectingEdge(bottomSite, newSite)
                     'UnityEngine.Debug.Log("new edge: " + edge);
-                    edgesField.Add(edge)
+                    Edges.Add(edge)
 
                     bisector = Halfedge.Create(edge, LR.LEFT)
                     halfEdges.Add(bisector)
@@ -216,7 +200,8 @@ Namespace Drawing2D.Math2D.DelaunayVoronoi
                     edgeList.Insert(lbnd, bisector)
 
                     ' First half of Step 11:
-                    If CSharpImpl.__Assign(vertex, Vertex.Intersect(lbnd, bisector)) IsNot Nothing Then
+                    vertex = Vertex.Intersect(lbnd, bisector)
+                    If vertex IsNot Nothing Then
                         vertices.Add(vertex)
                         heap.Remove(lbnd)
                         lbnd.vertex = vertex
@@ -232,7 +217,8 @@ Namespace Drawing2D.Math2D.DelaunayVoronoi
                     edgeList.Insert(lbnd, bisector)
 
                     ' Second half of Step 11:
-                    If CSharpImpl.__Assign(vertex, Vertex.Intersect(bisector, rbnd)) IsNot Nothing Then
+                    vertex = Vertex.Intersect(bisector, rbnd)
+                    If vertex IsNot Nothing Then
                         vertices.Add(vertex)
                         bisector.vertex = vertex
                         bisector.ystar = vertex.y + newSite.Dist(vertex)
@@ -267,19 +253,21 @@ Namespace Drawing2D.Math2D.DelaunayVoronoi
                         leftRight = LR.RIGHT
                     End If
                     edge = Edge.CreateBisectingEdge(bottomSite, topSite)
-                    edgesField.Add(edge)
+                    Edges.Add(edge)
                     bisector = Halfedge.Create(edge, leftRight)
                     halfEdges.Add(bisector)
                     edgeList.Insert(llbnd, bisector)
                     edge.SetVertex(LR.Other(leftRight), v)
-                    If CSharpImpl.__Assign(vertex, Vertex.Intersect(llbnd, bisector)) IsNot Nothing Then
+                    vertex = Vertex.Intersect(llbnd, bisector)
+                    If vertex IsNot Nothing Then
                         vertices.Add(vertex)
                         heap.Remove(llbnd)
                         llbnd.vertex = vertex
                         llbnd.ystar = vertex.y + bottomSite.Dist(vertex)
                         heap.Insert(llbnd)
                     End If
-                    If CSharpImpl.__Assign(vertex, Vertex.Intersect(bisector, rrbnd)) IsNot Nothing Then
+                    vertex = Vertex.Intersect(bisector, rrbnd)
+                    If vertex IsNot Nothing Then
                         vertices.Add(vertex)
                         bisector.vertex = vertex
                         bisector.ystar = vertex.y + bottomSite.Dist(vertex)
@@ -300,8 +288,8 @@ Namespace Drawing2D.Math2D.DelaunayVoronoi
             halfEdges.Clear()
 
             ' we need the vertices to clip the edges
-            For Each e In edgesField
-                e.ClipVertices(plotBoundsField)
+            For Each e In Edges
+                e.ClipVertices(PlotBounds)
             Next
             ' But we don't actually ever use them again!
             For Each ve In vertices
@@ -320,7 +308,7 @@ Namespace Drawing2D.Math2D.DelaunayVoronoi
 
                 While site IsNot Nothing
                     ' Loop all corners of the site to calculate the centroid
-                    Dim region = site.Region(plotBoundsField)
+                    Dim region = site.Region(PlotBounds)
                     If region.Count < 1 Then
                         site = sites.Next()
                         Continue While
@@ -335,28 +323,28 @@ Namespace Drawing2D.Math2D.DelaunayVoronoi
                     Dim a As Single = 0
                     ' For all vertices except last
                     For j = 0 To region.Count - 1 - 1
-                        x0 = region(j).X
-                        y0 = region(j).Y
-                        x1 = region(j + 1).X
-                        y1 = region(j + 1).Y
+                        x0 = region(j).x
+                        y0 = region(j).y
+                        x1 = region(j + 1).x
+                        y1 = region(j + 1).y
                         a = x0 * y1 - x1 * y0
                         signedArea += a
-                        centroid.X += (x0 + x1) * a
-                        centroid.Y += (y0 + y1) * a
+                        centroid.x += (x0 + x1) * a
+                        centroid.y += (y0 + y1) * a
                     Next
                     ' Do last vertex
-                    x0 = region(region.Count - 1).X
-                    y0 = region(region.Count - 1).Y
-                    x1 = region(0).X
-                    y1 = region(0).Y
+                    x0 = region(region.Count - 1).x
+                    y0 = region(region.Count - 1).y
+                    x1 = region(0).x
+                    y1 = region(0).y
                     a = x0 * y1 - x1 * y0
                     signedArea += a
-                    centroid.X += (x0 + x1) * a
-                    centroid.Y += (y0 + y1) * a
+                    centroid.x += (x0 + x1) * a
+                    centroid.y += (y0 + y1) * a
 
                     signedArea *= 0.5F
-                    centroid.X /= 6 * signedArea
-                    centroid.Y /= 6 * signedArea
+                    centroid.x /= 6 * signedArea
+                    centroid.y /= 6 * signedArea
                     ' Move site to the centroid of its Voronoi cell
                     newPoints.Add(centroid)
                     site = sites.Next()
@@ -364,8 +352,8 @@ Namespace Drawing2D.Math2D.DelaunayVoronoi
 
                 ' Between each replacement of the cendroid of the cell,
                 ' we need to recompute Voronoi diagram:
-                Dim origPlotBounds = plotBoundsField
-                Dispose()
+                Dim origPlotBounds = PlotBounds
+                Reset()
                 Init(newPoints, origPlotBounds)
             Next
         End Sub
@@ -401,13 +389,5 @@ Namespace Drawing2D.Math2D.DelaunayVoronoi
             If s1.x > s2.x Then Return 1
             Return 0
         End Function
-
-        Private Class CSharpImpl
-            <Obsolete("Please refactor calling code to use normal Visual Basic assignment")>
-            Shared Function __Assign(Of T)(ByRef target As T, value As T) As T
-                target = value
-                Return value
-            End Function
-        End Class
     End Class
 End Namespace

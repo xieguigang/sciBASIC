@@ -1,7 +1,6 @@
-﻿Imports System
-Imports System.Collections.Generic
-Imports Microsoft.VisualBasic.Imaging.Math2D
+﻿Imports Microsoft.VisualBasic.Imaging.Math2D
 Imports std = System.Math
+
 Namespace Drawing2D.Math2D.DelaunayVoronoi
 
     Public Class SiteList

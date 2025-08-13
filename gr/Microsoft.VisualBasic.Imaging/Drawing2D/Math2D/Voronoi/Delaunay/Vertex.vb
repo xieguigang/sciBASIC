@@ -1,12 +1,9 @@
-﻿Imports System
-Imports System.Collections.Generic
-Imports Microsoft.VisualBasic.Imaging.Math2D
+﻿Imports Microsoft.VisualBasic.Imaging.Math2D
 Imports std = System.Math
 
 Namespace Drawing2D.Math2D.DelaunayVoronoi
 
-    Public Class Vertex
-        Implements ICoord
+    Public Class Vertex : Implements ICoord
 
         Public Shared ReadOnly VERTEX_AT_INFINITY As Vertex = New Vertex(Single.NaN, Single.NaN)
 

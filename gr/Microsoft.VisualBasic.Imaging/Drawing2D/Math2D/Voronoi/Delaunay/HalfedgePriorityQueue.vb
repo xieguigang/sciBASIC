@@ -1,5 +1,6 @@
 ﻿
 Imports Microsoft.VisualBasic.Imaging.Math2D
+Imports Microsoft.VisualBasic.Language
 
 Namespace Drawing2D.Math2D.DelaunayVoronoi
 
@@ -41,14 +42,15 @@ Namespace Drawing2D.Math2D.DelaunayVoronoi
         End Sub
 
         Public Sub Insert(halfedge As Halfedge)
-            Dim previous, [next] As Halfedge
+            Dim previous As Halfedge
+            Dim [next] As Value(Of Halfedge) = Value(Of Halfedge).Default
 
             Dim insertionBucket = Bucket(halfedge)
             If insertionBucket < minBucked Then
                 minBucked = insertionBucket
             End If
             previous = hash(insertionBucket)
-            While CSharpImpl.__Assign([next], previous.nextInPriorityQueue) IsNot Nothing AndAlso (halfedge.ystar > [next].ystar OrElse halfedge.ystar = [next].ystar AndAlso halfedge.vertex.x > [next].vertex.x)
+            While ([next] = previous.nextInPriorityQueue) IsNot Nothing AndAlso (halfedge.ystar > [next].Value.ystar OrElse halfedge.ystar = [next].Value.ystar AndAlso halfedge.vertex.x > [next].Value.vertex.x)
                 previous = [next]
             End While
             halfedge.nextInPriorityQueue = previous.nextInPriorityQueue
@@ -121,13 +123,5 @@ Namespace Drawing2D.Math2D.DelaunayVoronoi
 
             Return answer
         End Function
-
-        Private Class CSharpImpl
-            <Obsolete("Please refactor calling code to use normal Visual Basic assignment")>
-            Shared Function __Assign(Of T)(ByRef target As T, value As T) As T
-                target = value
-                Return value
-            End Function
-        End Class
     End Class
 End Namespace

@@ -4,6 +4,8 @@ Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.BitmapImage
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Math2D.DelaunayVoronoi
 Imports Microsoft.VisualBasic.Imaging.Filters
+Imports Microsoft.VisualBasic.Imaging.Math2D
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.Distributions
 
 Module filter_test
@@ -20,7 +22,7 @@ Module filter_test
 
     Sub testDraw()
         Dim size As New Size(1000, 800)
-        Dim points = PoissonDiskGenerator.Generate(30, 1000)
+        Dim points = PoissonDiskGenerator.Generate(50, 1000)
         Dim split As New Voronoi(points, New Rectf(0, 0, 1000, 800))
         Dim g As Graphics2D = size.CreateGDIDevice(Color.White)
 
@@ -30,8 +32,8 @@ Module filter_test
 
         Dim regions = split.Regions
 
-        For Each r In regions
-            Call g.DrawPolygon(Pens.Blue, r.Select(Function(v) New PointF(v.x, v.y)).ToArray)
+        For Each r As Polygon2D In regions
+            Call g.DrawPolygon(Pens.Blue, r.AsEnumerable.ToArray)
         Next
 
         Call g.Flush()
