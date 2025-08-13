@@ -92,6 +92,12 @@ Namespace Imaging.Math2D
             End Get
         End Property
 
+        Public Shared ReadOnly Property Zero As Vector2D
+            Get
+                Return New Vector2D
+            End Get
+        End Property
+
         Public Sub New()
             Me.New(0.0, 0.0)
         End Sub

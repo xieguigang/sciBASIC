@@ -1,4 +1,5 @@
-﻿Imports std = System.Math
+﻿Imports Microsoft.VisualBasic.Imaging.Math2D
+Imports std = System.Math
 
 Namespace Drawing2D.Math2D.DelaunayVoronoi
 
@@ -23,8 +24,8 @@ Namespace Drawing2D.Math2D.DelaunayVoronoi
             End Get
         End Property
 
-        Private sitesIndexedByLocationField As Dictionary(Of Vector2, Site)
-        Public ReadOnly Property SitesIndexedByLocation As Dictionary(Of Vector2, Site)
+        Private sitesIndexedByLocationField As Dictionary(Of Vector2D, Site)
+        Public ReadOnly Property SitesIndexedByLocation As Dictionary(Of Vector2D, Site)
             Get
                 Return sitesIndexedByLocationField
             End Get
@@ -51,20 +52,20 @@ Namespace Drawing2D.Math2D.DelaunayVoronoi
             sitesIndexedByLocationField = Nothing
         End Sub
 
-        Public Sub New(points As List(Of Vector2), plotBounds As Rectf)
+        Public Sub New(points As List(Of Vector2D), plotBounds As Rectf)
             weigthDistributor = New Random()
             Init(points, plotBounds)
         End Sub
 
-        Public Sub New(points As List(Of Vector2), plotBounds As Rectf, lloydIterations As Integer)
+        Public Sub New(points As List(Of Vector2D), plotBounds As Rectf, lloydIterations As Integer)
             weigthDistributor = New Random()
             Init(points, plotBounds)
             LloydRelaxation(lloydIterations)
         End Sub
 
-        Private Sub Init(points As List(Of Vector2), plotBounds As Rectf)
+        Private Sub Init(points As List(Of Vector2D), plotBounds As Rectf)
             sites = New SiteList()
-            sitesIndexedByLocationField = New Dictionary(Of Vector2, Site)()
+            sitesIndexedByLocationField = New Dictionary(Of Vector2D, Site)()
             AddSites(points)
             plotBoundsField = plotBounds
             triangles = New List(Of Triangle)()
@@ -73,30 +74,30 @@ Namespace Drawing2D.Math2D.DelaunayVoronoi
             FortunesAlgorithm()
         End Sub
 
-        Private Sub AddSites(points As List(Of Vector2))
+        Private Sub AddSites(points As List(Of Vector2D))
             For i = 0 To points.Count - 1
                 AddSite(points(i), i)
             Next
         End Sub
 
-        Private Sub AddSite(p As Vector2, index As Integer)
+        Private Sub AddSite(p As Vector2D, index As Integer)
             Dim weigth As Single = CSng(weigthDistributor.NextDouble()) * 100
-            Dim site As Site = Site.Create(p, index, weigth)
+            Dim site As Site = site.Create(p, index, weigth)
             sites.Add(site)
             sitesIndexedByLocationField(p) = site
         End Sub
 
-        Public Function Region(p As Vector2) As List(Of Vector2)
+        Public Function Region(p As Vector2D) As List(Of Vector2D)
             Dim site As Site
             If sitesIndexedByLocationField.TryGetValue(p, site) Then
                 Return site.Region(plotBoundsField)
             Else
-                Return New List(Of Vector2)()
+                Return New List(Of Vector2D)()
             End If
         End Function
 
-        Public Function NeighborSitesForSite(coord As Vector2) As List(Of Vector2)
-            Dim points As List(Of Vector2) = New List(Of Vector2)()
+        Public Function NeighborSitesForSite(coord As Vector2D) As List(Of Vector2D)
+            Dim points As List(Of Vector2D) = New List(Of Vector2D)()
             Dim site As Site
             If sitesIndexedByLocationField.TryGetValue(coord, site) Then
                 Dim sites As List(Of Site) = site.NeighborSites()
@@ -112,7 +113,7 @@ Namespace Drawing2D.Math2D.DelaunayVoronoi
             Return sites.Circles()
         End Function
 
-        Public Function VoronoiBoundarayForSite(coord As Vector2) As List(Of LineSegment)
+        Public Function VoronoiBoundarayForSite(coord As Vector2D) As List(Of LineSegment)
             Return LineSegment.VisibleLineSegments(Edge.SelectEdgesForSitePoint(coord, edgesField))
         End Function
         ' 
@@ -124,10 +125,10 @@ Namespace Drawing2D.Math2D.DelaunayVoronoi
             Return edgesField.FindAll(Function(edge) edge.IsPartOfConvexHull())
         End Function
 
-        Public Function HullPointsInOrder() As List(Of Vector2)
+        Public Function HullPointsInOrder() As List(Of Vector2D)
             Dim hullEdges As List(Of Edge) = Me.HullEdges()
 
-            Dim points As List(Of Vector2) = New List(Of Vector2)()
+            Dim points As List(Of Vector2D) = New List(Of Vector2D)()
             If hullEdges.Count = 0 Then
                 Return points
             End If
@@ -150,7 +151,7 @@ Namespace Drawing2D.Math2D.DelaunayVoronoi
         ''' [output] the generated region polygon data
         ''' </summary>
         ''' <returns></returns>
-        Public Function Regions() As List(Of List(Of Vector2))
+        Public Function Regions() As List(Of List(Of Vector2D))
             Return sites.Regions(plotBoundsField)
         End Function
 
@@ -158,14 +159,14 @@ Namespace Drawing2D.Math2D.DelaunayVoronoi
         ''' the input points
         ''' </summary>
         ''' <returns></returns>
-        Public Function SiteCoords() As List(Of Vector2)
+        Public Function SiteCoords() As List(Of Vector2D)
             Return sites.SiteCoords()
         End Function
 
         Private Sub FortunesAlgorithm()
             Dim newSite, bottomSite, topSite, tempSite As Site
             Dim v, vertex As Vertex
-            Dim newIntStar = Vector2.Zero
+            Dim newIntStar = Vector2D.Zero
             Dim leftRight As LR
             Dim lbnd, rbnd, llbnd, rrbnd, bisector As Halfedge
             Dim edge As Edge
@@ -308,7 +309,7 @@ Namespace Drawing2D.Math2D.DelaunayVoronoi
         Public Sub LloydRelaxation(nbIterations As Integer)
             ' Reapeat the whole process for the number of iterations asked
             For i = 0 To nbIterations - 1
-                Dim newPoints As List(Of Vector2) = New List(Of Vector2)()
+                Dim newPoints As List(Of Vector2D) = New List(Of Vector2D)()
                 ' Go thourgh all sites
                 sites.ResetListIndex()
                 Dim site As Site = sites.Next()
@@ -321,7 +322,7 @@ Namespace Drawing2D.Math2D.DelaunayVoronoi
                         Continue While
                     End If
 
-                    Dim centroid = Vector2.Zero
+                    Dim centroid = Vector2D.Zero
                     Dim signedArea As Single = 0
                     Dim x0 As Single = 0
                     Dim y0 As Single = 0
