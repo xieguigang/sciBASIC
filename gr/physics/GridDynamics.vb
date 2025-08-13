@@ -97,7 +97,12 @@ Public Module GridDynamics
 
     <Extension>
     Public Function EncodeGrid(Of T As Layout2D)(field As IContainer(Of T), radius As Single) As Grid(Of T())
-        Dim groups = field.Entity _
+        Return field.Entity.EncodeGrid(radius)
+    End Function
+
+    <Extension>
+    Public Function EncodeGrid(Of T As Layout2D)(field As IEnumerable(Of T), radius As Single) As Grid(Of T())
+        Dim groups = field _
             .Select(Function(a)
                         Dim cx As Integer = a.X / radius
                         Dim cy As Integer = a.Y / radius

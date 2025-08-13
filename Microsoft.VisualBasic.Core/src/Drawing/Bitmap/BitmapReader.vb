@@ -137,7 +137,7 @@ Namespace Imaging.BitmapImage
         End Function
 
         Private Function GetColorByteLocation(column As Integer, pixelByteLocation As Integer) As Integer
-            If BitsPerPixel = BitsPerPixel.TwentyFour Then
+            If BitsPerPixel = BitsPerPixel.TwentyFour OrElse BitsPerPixel = 32 Then
                 Return pixelByteLocation
             Else
                 s.BaseStream.Seek(pixelByteLocation, SeekOrigin.Begin)
@@ -167,6 +167,8 @@ Namespace Imaging.BitmapImage
                 Case BitsPerPixel.Eight : Return Offset + row * RowSize + column * 1
                 Case BitsPerPixel.TwentyFour
                     Return Offset + row * RowSize + column * 3
+                Case 32
+                    Return Offset + row * RowSize + column * 4
                 Case Else
                     Throw New InvalidDataException
             End Select
