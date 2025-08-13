@@ -4,6 +4,9 @@ Imports weigthDistributor = Microsoft.VisualBasic.Math.RandomExtensions
 
 Namespace Drawing2D.Math2D.DelaunayVoronoi
 
+    ''' <summary>
+    ''' https://github.com/jfg8/csDelaunay
+    ''' </summary>
     Public Class Voronoi
 
         Private sites As SiteList
