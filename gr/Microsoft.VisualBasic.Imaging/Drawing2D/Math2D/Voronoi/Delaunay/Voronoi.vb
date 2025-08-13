@@ -151,8 +151,12 @@ Namespace Drawing2D.Math2D.DelaunayVoronoi
         ''' [output] the generated region polygon data
         ''' </summary>
         ''' <returns></returns>
-        Public Function Regions() As List(Of List(Of Vector2D))
-            Return sites.Regions(plotBoundsField)
+        Public Iterator Function Regions() As IEnumerable(Of Polygon2D)
+            For Each shape As List(Of Vector2D) In sites.Regions(plotBoundsField)
+                If shape.Any Then
+                    Yield New Polygon2D(shape)
+                End If
+            Next
         End Function
 
         ''' <summary>

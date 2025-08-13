@@ -212,6 +212,10 @@ Namespace Imaging.Math2D
             Call Me.New(points.Select(Function(p) New PointF(p.X, p.Y)).ToArray)
         End Sub
 
+        Sub New(points As IEnumerable(Of Vector2D))
+            Call Me.New((From p As Vector2D In points.SafeQuery Select New PointF(p.x, p.y)).ToArray)
+        End Sub
+
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <DebuggerStepThrough>
         Sub New(rect As Rectangle)
