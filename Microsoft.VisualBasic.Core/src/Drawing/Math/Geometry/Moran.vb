@@ -157,6 +157,16 @@ Namespace Imaging.Math2D
             End Sub
         End Class
 
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="x">intensity value</param>
+        ''' <param name="c1">spatial x</param>
+        ''' <param name="c2">spatial y</param>
+        ''' <param name="parallel"></param>
+        ''' <returns>
+        ''' observed is the calculated moran-I value
+        ''' </returns>
         Public Function calc_moran(x As Double(), c1 As Double(), c2 As Double(), Optional parallel As Boolean = True) As (observed As Double, expected As Double, sd As Double)
             ' Easy variables to calculate
             Dim x_norm = normalize(x)

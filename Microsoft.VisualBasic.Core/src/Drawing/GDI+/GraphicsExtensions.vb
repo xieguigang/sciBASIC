@@ -415,6 +415,16 @@ Namespace Imaging
             Return (From pt As Point In pts Select yi = pt.Y).ToArray
         End Function
 
+        <Extension>
+        Public Function X(Of Point As Layout2D)(pts As IEnumerable(Of Point)) As Double()
+            Return (From pt As Point In pts Select yi = pt.Y).ToArray
+        End Function
+
+        <Extension>
+        Public Function Y(Of Point As Layout2D)(pts As IEnumerable(Of Point)) As Double()
+            Return (From pt As Point In pts Select yi = pt.Y).ToArray
+        End Function
+
         ''' <summary>
         ''' Load image from a file and then close the file handle.
         ''' (使用<see cref="Image.FromStream(Stream)"/>函数在加载完成图像到Dispose这段之间内都不会释放文件句柄，
