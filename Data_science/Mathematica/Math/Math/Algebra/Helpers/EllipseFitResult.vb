@@ -1,5 +1,6 @@
 ﻿Imports System.Drawing
 Imports System.Math
+Imports Microsoft.VisualBasic.Imaging.Math2D
 
 Namespace LinearAlgebra
 
@@ -9,9 +10,14 @@ Namespace LinearAlgebra
         Public Property SemiMinorAxis As Single ' 短半轴
         Public Property RotationAngle As Single ' 弧度制
 
+        Public Function CreateShape() As EllipseShape
+            Return New EllipseShape(SemiMajorAxis, SemiMinorAxis, Center)
+        End Function
+
         Public Shared Function FitEllipse(points As PointF()) As EllipseFitResult
             If points.Length < 5 Then
-                Throw New ArgumentException("至少需要5个点进行拟合")
+                Call "至少需要5个点进行拟合".Warning
+                Return Nothing
             End If
 
             ' 1. 构建矩阵 M 和向量 B
@@ -42,7 +48,8 @@ Namespace LinearAlgebra
             ' 4. 转换为几何参数
             Dim discriminant = 4 * A * C - Bp * Bp
             If discriminant <= 0 Then
-                Throw New InvalidOperationException("拟合结果非椭圆 (B²-4AC≥0)")
+                Call "拟合结果非椭圆 (B²-4AC≥0)".Warning
+                Return Nothing
             End If
 
             Dim x0 = (2 * C * D - Bp * E) / discriminant

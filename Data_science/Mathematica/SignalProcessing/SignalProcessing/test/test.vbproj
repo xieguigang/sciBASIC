@@ -168,6 +168,10 @@
       <Project>{0c47f6e8-87bd-a5ba-4483-5beab4389f2f}</Project>
       <Name>Drawing-net4.8</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\..\..\gr\Microsoft.VisualBasic.Imaging\imaging.NET5.vbproj">
+      <Project>{d18636cc-858a-5f6b-4d1f-f9110e7c9c3f}</Project>
+      <Name>imaging.NET5</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\..\..\Microsoft.VisualBasic.Core\src\Core.vbproj">
       <Project>{d41c39b2-8f2d-472a-91ac-009d8dfc08fb}</Project>
       <Name>Core</Name>
