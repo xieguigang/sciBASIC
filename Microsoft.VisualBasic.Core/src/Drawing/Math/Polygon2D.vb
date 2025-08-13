@@ -457,6 +457,14 @@ Namespace Imaging.Math2D
             Return area
         End Function
 
+        Public Function GetFillPoints() As IEnumerable(Of PointF)
+            Return PolygonFiller.FillPolygon(Me.AsEnumerable.ToPoints.ToList).PointF
+        End Function
+
+        ''' <summary>
+        ''' just populate all input points data
+        ''' </summary>
+        ''' <returns></returns>
         Public Iterator Function GenericEnumerator() As IEnumerator(Of PointF) Implements Enumeration(Of PointF).GenericEnumerator
             For i As Integer = 0 To length - 1
                 Yield New PointF(xpoints(i), ypoints(i))
