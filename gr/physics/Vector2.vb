@@ -89,7 +89,7 @@ Public Class Vector2 : Inherits Vector2D
         End Get
     End Property
 
-    Public Shared ReadOnly Property zero As Vector2
+    Public Overloads Shared ReadOnly Property zero As Vector2
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Get
             Return New Vector2(0, 0)

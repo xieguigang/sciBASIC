@@ -85,7 +85,7 @@ Namespace Quantile
     ''' 
     ''' > Greenwald and Khanna, "Space-efficient online computation of quantile summaries" in SIGMOD 2001
     ''' </summary>
-    Public Class QuantileEstimationGK : Implements QuantileQuery
+    Public Class QuantileEstimationGK : Implements QuantileQuery, IEnumerable(Of QuantileThreshold)
 
         ''' <summary>
         ''' Acceptable % error in percentile estimate
@@ -210,6 +210,19 @@ Namespace Quantile
 
             ' edge case of wanting max value
             Return sample(sample.Count - 1).value
+        End Function
+
+        Public Iterator Function GetEnumerator() As IEnumerator(Of QuantileThreshold) Implements IEnumerable(Of QuantileThreshold).GetEnumerator
+            For q As Double = 0 To 1 Step 0.1
+                Yield New QuantileThreshold With {
+                    .quantile = q,
+                    .sample = Query(q)
+                }
+            Next
+        End Function
+
+        Private Function IEnumerable_GetEnumerator() As IEnumerator Implements IEnumerable.GetEnumerator
+            Return GetEnumerator()
         End Function
     End Class
 End Namespace

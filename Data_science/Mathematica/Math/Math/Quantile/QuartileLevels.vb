@@ -62,4 +62,15 @@ Namespace Quantile
         Q2 = 2
         Q3 = 3
     End Enum
+
+    Public Structure QuantileThreshold
+
+        Dim quantile As Double
+        Dim sample As Double
+
+        Public Overrides Function ToString() As String
+            Return $"q:{quantile.ToString("F2")} ~ {sample.ToString("G3")}"
+        End Function
+
+    End Structure
 End Namespace
