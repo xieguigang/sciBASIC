@@ -390,11 +390,11 @@ Namespace Drawing2D.Math2D.DelaunayVoronoi
             Return 0
         End Function
 
-        Public Shared Function CompareByYThenX(s1 As Site, s2 As Vector2) As Integer
-            If s1.y < s2.Y Then Return -1
-            If s1.y > s2.Y Then Return 1
-            If s1.x < s2.X Then Return -1
-            If s1.x > s2.X Then Return 1
+        Public Shared Function CompareByYThenX(s1 As Site, s2 As Vector2D) As Integer
+            If s1.y < s2.y Then Return -1
+            If s1.y > s2.y Then Return 1
+            If s1.x < s2.x Then Return -1
+            If s1.x > s2.x Then Return 1
             Return 0
         End Function
 

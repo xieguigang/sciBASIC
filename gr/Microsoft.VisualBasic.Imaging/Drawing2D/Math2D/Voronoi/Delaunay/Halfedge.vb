@@ -1,4 +1,5 @@
 ﻿Imports System.Collections.Generic
+Imports Microsoft.VisualBasic.Imaging.Math2D
 
 Namespace Drawing2D.Math2D.DelaunayVoronoi
 
@@ -73,13 +74,13 @@ Namespace Drawing2D.Math2D.DelaunayVoronoi
             pool.Enqueue(Me)
         End Sub
 
-        Public Function IsLeftOf(p As Vector2) As Boolean
+        Public Function IsLeftOf(p As Vector2D) As Boolean
             Dim topSite As Site
             Dim rightOfSite, above, fast As Boolean
             Dim dxp, dyp, dxs, t1, t2, t3, y1 As Single
 
             topSite = edge.RightSite
-            rightOfSite = p.X > topSite.x
+            rightOfSite = p.x > topSite.x
             If rightOfSite AndAlso leftRight Is LR.LEFT Then
                 Return True
             End If
@@ -88,14 +89,14 @@ Namespace Drawing2D.Math2D.DelaunayVoronoi
             End If
 
             If edge.a = 1 Then
-                dyp = p.Y - topSite.y
-                dxp = p.X - topSite.x
+                dyp = p.y - topSite.y
+                dxp = p.x - topSite.x
                 fast = False
                 If Not rightOfSite AndAlso edge.b < 0 OrElse rightOfSite AndAlso edge.b >= 0 Then
                     above = dyp >= edge.b * dxp
                     fast = above
                 Else
-                    above = p.X + p.Y * edge.b > edge.c
+                    above = p.x + p.y * edge.b > edge.c
                     If edge.b < 0 Then
                         above = Not above
                     End If
@@ -111,9 +112,9 @@ Namespace Drawing2D.Math2D.DelaunayVoronoi
                     End If
                 End If
             Else
-                y1 = edge.c - edge.a * p.X
-                t1 = p.Y - y1
-                t2 = p.X - topSite.x
+                y1 = edge.c - edge.a * p.x
+                t1 = p.y - y1
+                t2 = p.x - topSite.x
                 t3 = y1 - topSite.y
                 above = t1 * t1 > t2 * t2 + t3 * t3
             End If

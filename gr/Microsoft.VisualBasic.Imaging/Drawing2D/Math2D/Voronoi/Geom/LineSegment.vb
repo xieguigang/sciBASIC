@@ -1,4 +1,4 @@
-﻿Imports System.Collections.Generic
+﻿Imports Microsoft.VisualBasic.Imaging.Math2D
 
 Namespace Drawing2D.Math2D.DelaunayVoronoi
 
@@ -34,10 +34,10 @@ Namespace Drawing2D.Math2D.DelaunayVoronoi
             Return -CompareLengths_MAX(edge0, edge1)
         End Function
 
-        Public p0 As Vector2
-        Public p1 As Vector2
+        Public p0 As Vector2D
+        Public p1 As Vector2D
 
-        Public Sub New(p0 As Vector2, p1 As Vector2)
+        Public Sub New(p0 As Vector2D, p1 As Vector2D)
             Me.p0 = p0
             Me.p1 = p1
         End Sub

@@ -1,4 +1,6 @@
 ﻿
+Imports Microsoft.VisualBasic.Imaging.Math2D
+
 Namespace Drawing2D.Math2D.DelaunayVoronoi
 
     Public Class EdgeList
@@ -83,12 +85,12 @@ Namespace Drawing2D.Math2D.DelaunayVoronoi
         ' * @param p
         ' * @return
 
-        Public Function EdgeListLeftNeighbor(p As Vector2) As Halfedge
+        Public Function EdgeListLeftNeighbor(p As Vector2D) As Halfedge
             Dim bucket As Integer
             Dim halfedge As Halfedge
 
             ' Use hash table to get close to desired halfedge
-            bucket = CInt((p.X - xmin) / deltaX * hashSize)
+            bucket = CInt((p.x - xmin) / deltaX * hashSize)
             If bucket < 0 Then
                 bucket = 0
             End If

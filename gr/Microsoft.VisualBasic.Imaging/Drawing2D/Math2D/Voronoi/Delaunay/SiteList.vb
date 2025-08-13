@@ -1,5 +1,6 @@
 ﻿Imports System
 Imports System.Collections.Generic
+Imports Microsoft.VisualBasic.Imaging.Math2D
 Imports std = System.Math
 Namespace Drawing2D.Math2D.DelaunayVoronoi
 
@@ -62,8 +63,8 @@ Namespace Drawing2D.Math2D.DelaunayVoronoi
             Return New Rectf(xmin, ymin, xmax - xmin, ymax - ymin)
         End Function
 
-        Public Function SiteCoords() As List(Of Vector2)
-            Dim coords As List(Of Vector2) = New List(Of Vector2)()
+        Public Function SiteCoords() As List(Of Vector2D)
+            Dim coords As List(Of Vector2D) = New List(Of Vector2D)()
             For Each site In sites
                 coords.Add(site.Coord)
             Next
@@ -88,8 +89,8 @@ Namespace Drawing2D.Math2D.DelaunayVoronoi
             Return lCircles
         End Function
 
-        Public Function Regions(plotBounds As Rectf) As List(Of List(Of Vector2))
-            Dim lRegions As List(Of List(Of Vector2)) = New List(Of List(Of Vector2))()
+        Public Function Regions(plotBounds As Rectf) As List(Of List(Of Vector2D))
+            Dim lRegions As List(Of List(Of Vector2D)) = New List(Of List(Of Vector2D))()
             For Each site In sites
                 lRegions.Add(site.Region(plotBounds))
             Next

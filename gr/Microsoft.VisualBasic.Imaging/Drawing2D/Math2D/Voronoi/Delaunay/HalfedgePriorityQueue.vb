@@ -1,4 +1,6 @@
 ﻿
+Imports Microsoft.VisualBasic.Imaging.Math2D
+
 Namespace Drawing2D.Math2D.DelaunayVoronoi
 
     ' Also know as heap
@@ -98,10 +100,10 @@ Namespace Drawing2D.Math2D.DelaunayVoronoi
         ' 
         ' * @return coordinates of the Halfedge's vertex in V*, the transformed Voronoi diagram
 
-        Public Function Min() As Vector2
+        Public Function Min() As Vector2D
             AdjustMinBucket()
             Dim answer = hash(minBucked).nextInPriorityQueue
-            Return New Vector2(answer.vertex.x, answer.ystar)
+            Return New Vector2D(answer.vertex.x, answer.ystar)
         End Function
 
         ' 

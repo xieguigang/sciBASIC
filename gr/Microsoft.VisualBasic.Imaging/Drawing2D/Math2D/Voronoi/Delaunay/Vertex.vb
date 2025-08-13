@@ -1,5 +1,6 @@
 ﻿Imports System
 Imports System.Collections.Generic
+Imports Microsoft.VisualBasic.Imaging.Math2D
 Imports std = System.Math
 
 Namespace Drawing2D.Math2D.DelaunayVoronoi
@@ -27,24 +28,24 @@ Namespace Drawing2D.Math2D.DelaunayVoronoi
 #End Region
 
 #Region "Object"
-        Private coordField As Vector2
-        Public Property Coord As Vector2 Implements ICoord.Coord
+        Private coordField As Vector2D
+        Public Property Coord As Vector2D Implements ICoord.Coord
             Get
                 Return coordField
             End Get
-            Set(value As Vector2)
+            Set(value As Vector2D)
                 coordField = value
             End Set
         End Property
 
         Public ReadOnly Property x As Single
             Get
-                Return coordField.X
+                Return coordField.x
             End Get
         End Property
         Public ReadOnly Property y As Single
             Get
-                Return coordField.Y
+                Return coordField.y
             End Get
         End Property
 
@@ -60,13 +61,13 @@ Namespace Drawing2D.Math2D.DelaunayVoronoi
         End Sub
 
         Private Function Init(x As Single, y As Single) As Vertex
-            coordField = New Vector2(x, y)
+            coordField = New Vector2D(x, y)
 
             Return Me
         End Function
 
         Public Sub Dispose()
-            coordField = Vector2.Zero
+            coordField = Vector2D.Zero
             pool.Enqueue(Me)
         End Sub
 

@@ -1,4 +1,5 @@
 ﻿Imports System.Collections.Generic
+Imports Microsoft.VisualBasic.Imaging.Math2D
 Imports std = System.Math
 
 Namespace Drawing2D.Math2D.DelaunayVoronoi
@@ -61,7 +62,7 @@ Namespace Drawing2D.Math2D.DelaunayVoronoi
         End Function
 #End Region
 
-        Public Shared Function SelectEdgesForSitePoint(coord As Vector2, edgesToTest As List(Of Edge)) As List(Of Edge)
+        Public Shared Function SelectEdgesForSitePoint(coord As Vector2D, edgesToTest As List(Of Edge)) As List(Of Edge)
             Return edgesToTest.FindAll(Function(e)
                                            If e.LeftSite IsNot Nothing Then
                                                If e.LeftSite.Coord Is coord Then Return True
@@ -132,8 +133,8 @@ Namespace Drawing2D.Math2D.DelaunayVoronoi
 
         ' Once clipVertices() is called, this Disctinary will hold two Points
         ' representing the clipped coordinates of the left and the right ends...
-        Private clippedVertices As LRCollection(Of Vector2)
-        Public ReadOnly Property ClippedEnds As LRCollection(Of Vector2)
+        Private clippedVertices As LRCollection(Of Vector2D)
+        Public ReadOnly Property ClippedEnds As LRCollection(Of Vector2D)
             Get
                 Return clippedVertices
             End Get
@@ -303,13 +304,13 @@ Namespace Drawing2D.Math2D.DelaunayVoronoi
                 End If
             End If
 
-            clippedVertices = New LRCollection(Of Vector2)()
+            clippedVertices = New LRCollection(Of Vector2D)()
             If vertex0 Is leftVertexField Then
-                clippedVertices(LR.LEFT) = New Vector2(x0, y0)
-                clippedVertices(LR.RIGHT) = New Vector2(x1, y1)
+                clippedVertices(LR.LEFT) = New Vector2D(x0, y0)
+                clippedVertices(LR.RIGHT) = New Vector2D(x1, y1)
             Else
-                clippedVertices(LR.RIGHT) = New Vector2(x0, y0)
-                clippedVertices(LR.LEFT) = New Vector2(x1, y1)
+                clippedVertices(LR.RIGHT) = New Vector2D(x0, y0)
+                clippedVertices(LR.LEFT) = New Vector2D(x1, y1)
             End If
         End Sub
 #End Region

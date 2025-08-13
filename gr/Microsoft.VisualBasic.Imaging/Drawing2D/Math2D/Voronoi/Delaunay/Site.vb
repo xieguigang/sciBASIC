@@ -1,4 +1,4 @@
-﻿Imports System.Collections.Generic
+﻿Imports Microsoft.VisualBasic.Imaging.Math2D
 
 Namespace Drawing2D.Math2D.DelaunayVoronoi
 
@@ -7,7 +7,7 @@ Namespace Drawing2D.Math2D.DelaunayVoronoi
 
         Private Shared pool As Queue(Of Site) = New Queue(Of Site)()
 
-        Public Shared Function Create(p As Vector2, index As Integer, weigth As Single) As Site
+        Public Shared Function Create(p As Vector2D, index As Integer, weigth As Single) As Site
             If pool.Count > 0 Then
                 Return pool.Dequeue().Init(p, index, weigth)
             Else
@@ -66,7 +66,7 @@ Namespace Drawing2D.Math2D.DelaunayVoronoi
         End Function
 
         Private Const EPSILON As Single = 0.005F
-        Private Shared Function CloseEnough(p0 As Vector2, p1 As Vector2) As Boolean
+        Private Shared Function CloseEnough(p0 As Vector2D, p1 As Vector2D) As Boolean
             Return (p0 - p1).Length < EPSILON
         End Function
 
@@ -80,12 +80,12 @@ Namespace Drawing2D.Math2D.DelaunayVoronoi
             End Set
         End Property
 
-        Private coordField As Vector2
-        Public Property Coord As Vector2 Implements ICoord.Coord
+        Private coordField As Vector2D
+        Public Property Coord As Vector2D Implements ICoord.Coord
             Get
                 Return coordField
             End Get
-            Set(value As Vector2)
+            Set(value As Vector2D)
                 coordField = value
             End Set
         End Property
@@ -118,13 +118,13 @@ Namespace Drawing2D.Math2D.DelaunayVoronoi
         ' which end of each edge hooks up with the previous edge in edges:
         Private edgeOrientations As List(Of LR)
         ' ordered list of points that define the region clipped to bounds:
-        Private regionField As List(Of Vector2)
+        Private regionField As List(Of Vector2D)
 
-        Public Sub New(p As Vector2, index As Integer, weigth As Single)
+        Public Sub New(p As Vector2D, index As Integer, weigth As Single)
             Init(p, index, weigth)
         End Sub
 
-        Private Function Init(p As Vector2, index As Integer, weigth As Single) As Site
+        Private Function Init(p As Vector2D, index As Integer, weigth As Single) As Site
             coordField = p
             siteIndexField = index
             weigthField = weigth
@@ -138,7 +138,7 @@ Namespace Drawing2D.Math2D.DelaunayVoronoi
             Return "Site " & siteIndexField.ToString() & ": " & coordField.ToString()
         End Function
 
-        Private Sub Move(p As Vector2)
+        Private Sub Move(p As Vector2D)
             Clear()
             coordField = p
         End Sub
@@ -196,9 +196,9 @@ Namespace Drawing2D.Math2D.DelaunayVoronoi
             Return Nothing
         End Function
 
-        Public Function Region(clippingBounds As Rectf) As List(Of Vector2)
+        Public Function Region(clippingBounds As Rectf) As List(Of Vector2D)
             If edgesField Is Nothing OrElse edgesField.Count = 0 Then
-                Return New List(Of Vector2)()
+                Return New List(Of Vector2D)()
             End If
             If edgeOrientations Is Nothing Then
                 ReorderEdges()
@@ -219,8 +219,8 @@ Namespace Drawing2D.Math2D.DelaunayVoronoi
             reorderer.Dispose()
         End Sub
 
-        Private Function ClipToBounds(bounds As Rectf) As List(Of Vector2)
-            Dim points As List(Of Vector2) = New List(Of Vector2)()
+        Private Function ClipToBounds(bounds As Rectf) As List(Of Vector2D)
+            Dim points As List(Of Vector2D) = New List(Of Vector2D)()
             Dim n = edgesField.Count
             Dim i = 0
             Dim edge As Edge
@@ -231,7 +231,7 @@ Namespace Drawing2D.Math2D.DelaunayVoronoi
 
             If i = n Then
                 ' No edges visible
-                Return New List(Of Vector2)()
+                Return New List(Of Vector2D)()
             End If
             edge = edgesField(i)
             Dim orientation = edgeOrientations(i)
@@ -251,7 +251,7 @@ Namespace Drawing2D.Math2D.DelaunayVoronoi
             Return points
         End Function
 
-        Private Sub Connect(ByRef points As List(Of Vector2), j As Integer, bounds As Rectf, Optional closingUp As Boolean = False)
+        Private Sub Connect(ByRef points As List(Of Vector2D), j As Integer, bounds As Rectf, Optional closingUp As Boolean = False)
             Dim rightPoint = points(points.Count - 1)
             Dim newEdge = edgesField(j)
             Dim newOrientation = edgeOrientations(j)
@@ -262,7 +262,7 @@ Namespace Drawing2D.Math2D.DelaunayVoronoi
             If Not CloseEnough(rightPoint, newPoint) Then
                 ' The points do not coincide, so they must have been clipped at the bounds;
                 ' see if they are on the same border of the bounds:
-                If rightPoint.X <> newPoint.X AndAlso rightPoint.Y <> newPoint.Y Then
+                If rightPoint.x <> newPoint.x AndAlso rightPoint.y <> newPoint.y Then
                     ' They are on different borders of the bounds;
                     ' insert one or two corners of bounds as needed to hook them up:
                     ' (NOTE this will not be correct if the region should take up more than
@@ -276,80 +276,80 @@ Namespace Drawing2D.Math2D.DelaunayVoronoi
 
                         If (newCheck And BoundsCheck.BOTTOM) <> 0 Then
                             py = bounds.bottom
-                            points.Add(New Vector2(px, py))
+                            points.Add(New Vector2D(px, py))
 
                         ElseIf (newCheck And BoundsCheck.TOP) <> 0 Then
                             py = bounds.top
-                            points.Add(New Vector2(px, py))
+                            points.Add(New Vector2D(px, py))
 
                         ElseIf (newCheck And BoundsCheck.LEFT) <> 0 Then
-                            If rightPoint.Y - bounds.y + newPoint.Y - bounds.y < bounds.height Then
+                            If rightPoint.y - bounds.y + newPoint.y - bounds.y < bounds.height Then
                                 py = bounds.top
                             Else
                                 py = bounds.bottom
                             End If
-                            points.Add(New Vector2(px, py))
-                            points.Add(New Vector2(bounds.left, py))
+                            points.Add(New Vector2D(px, py))
+                            points.Add(New Vector2D(bounds.left, py))
                         End If
                     ElseIf (rightCheck And BoundsCheck.LEFT) <> 0 Then
                         px = bounds.left
 
                         If (newCheck And BoundsCheck.BOTTOM) <> 0 Then
                             py = bounds.bottom
-                            points.Add(New Vector2(px, py))
+                            points.Add(New Vector2D(px, py))
 
                         ElseIf (newCheck And BoundsCheck.TOP) <> 0 Then
                             py = bounds.top
-                            points.Add(New Vector2(px, py))
+                            points.Add(New Vector2D(px, py))
 
                         ElseIf (newCheck And BoundsCheck.RIGHT) <> 0 Then
-                            If rightPoint.Y - bounds.y + newPoint.Y - bounds.y < bounds.height Then
+                            If rightPoint.y - bounds.y + newPoint.y - bounds.y < bounds.height Then
                                 py = bounds.top
                             Else
                                 py = bounds.bottom
                             End If
-                            points.Add(New Vector2(px, py))
-                            points.Add(New Vector2(bounds.right, py))
+                            points.Add(New Vector2D(px, py))
+                            points.Add(New Vector2D(bounds.right, py))
                         End If
                     ElseIf (rightCheck And BoundsCheck.TOP) <> 0 Then
                         py = bounds.top
 
                         If (newCheck And BoundsCheck.RIGHT) <> 0 Then
                             px = bounds.right
-                            points.Add(New Vector2(px, py))
+                            points.Add(New Vector2D(px, py))
 
                         ElseIf (newCheck And BoundsCheck.LEFT) <> 0 Then
                             px = bounds.left
-                            points.Add(New Vector2(px, py))
+                            points.Add(New Vector2D(px, py))
 
                         ElseIf (newCheck And BoundsCheck.BOTTOM) <> 0 Then
-                            If rightPoint.X - bounds.x + newPoint.X - bounds.x < bounds.width Then
+                            If rightPoint.x - bounds.x + newPoint.x - bounds.x < bounds.width Then
                                 px = bounds.left
                             Else
                                 px = bounds.right
                             End If
-                            points.Add(New Vector2(px, py))
-                            points.Add(New Vector2(px, bounds.bottom))
+                            points.Add(New Vector2D(px, py))
+                            points.Add(New Vector2D(px, bounds.bottom))
                         End If
                     ElseIf (rightCheck And BoundsCheck.BOTTOM) <> 0 Then
                         py = bounds.bottom
 
                         If (newCheck And BoundsCheck.RIGHT) <> 0 Then
                             px = bounds.right
-                            points.Add(New Vector2(px, py))
+                            points.Add(New Vector2D(px, py))
 
                         ElseIf (newCheck And BoundsCheck.LEFT) <> 0 Then
                             px = bounds.left
-                            points.Add(New Vector2(px, py))
+                            points.Add(New Vector2D(px, py))
 
                         ElseIf (newCheck And BoundsCheck.TOP) <> 0 Then
-                            If rightPoint.X - bounds.x + newPoint.X - bounds.x < bounds.width Then
+                            If rightPoint.x - bounds.x + newPoint.x - bounds.x < bounds.width Then
                                 px = bounds.left
                             Else
                                 px = bounds.right
                             End If
-                            points.Add(New Vector2(px, py))
-                            points.Add(New Vector2(px, bounds.top))
+                            points.Add(New Vector2D(px, py))
+                            points.Add(New Vector2D(px, bounds.top))
                         End If
                     End If
                 End If
@@ -382,18 +382,18 @@ Namespace Drawing2D.Math2D.DelaunayVoronoi
         ' * @param bounds
         ' * @return an int with the appropriate bits set if the Point lies on the corresponding bounds lines
 
-        Public Shared Function Check(point As Vector2, bounds As Rectf) As Integer
+        Public Shared Function Check(point As Vector2D, bounds As Rectf) As Integer
             Dim value = 0
-            If point.X = bounds.left Then
+            If point.x = bounds.left Then
                 value = value Or LEFT
             End If
-            If point.X = bounds.right Then
+            If point.x = bounds.right Then
                 value = value Or RIGHT
             End If
-            If point.Y = bounds.top Then
+            If point.y = bounds.top Then
                 value = value Or TOP
             End If
-            If point.Y = bounds.bottom Then
+            If point.y = bounds.bottom Then
                 value = value Or BOTTOM
             End If
 

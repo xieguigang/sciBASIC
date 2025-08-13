@@ -1,4 +1,6 @@
-﻿Namespace Drawing2D.Math2D.DelaunayVoronoi
+﻿Imports Microsoft.VisualBasic.Imaging.Math2D
+
+Namespace Drawing2D.Math2D.DelaunayVoronoi
     Public Structure Rectf
 
         Public Shared ReadOnly zero As Rectf = New Rectf(0, 0, 0, 0)
@@ -37,15 +39,15 @@
             End Get
         End Property
 
-        Public ReadOnly Property topLeft As Vector2
+        Public ReadOnly Property topLeft As Vector2D
             Get
-                Return New Vector2(left, top)
+                Return New Vector2D(left, top)
             End Get
         End Property
 
-        Public ReadOnly Property bottomRight As Vector2
+        Public ReadOnly Property bottomRight As Vector2D
             Get
-                Return New Vector2(right, bottom)
+                Return New Vector2D(right, bottom)
             End Get
         End Property
     End Structure

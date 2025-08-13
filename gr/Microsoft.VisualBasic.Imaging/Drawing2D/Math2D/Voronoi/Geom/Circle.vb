@@ -1,12 +1,14 @@
 ﻿
+Imports Microsoft.VisualBasic.Imaging.Math2D
+
 Namespace Drawing2D.Math2D.DelaunayVoronoi
     Public Class Circle
 
-        Public center As Vector2
+        Public center As Vector2D
         Public radius As Single
 
         Public Sub New(centerX As Single, centerY As Single, radius As Single)
-            center = New Vector2(centerX, centerY)
+            center = New Vector2D(centerX, centerY)
             Me.radius = radius
         End Sub
 
