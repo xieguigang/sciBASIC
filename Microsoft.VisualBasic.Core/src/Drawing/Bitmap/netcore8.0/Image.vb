@@ -189,6 +189,10 @@ Namespace Imaging
 
         Public ReadOnly Property MemoryBuffer As BitmapBuffer
 
+        Sub New(file As String)
+            Call Me.New(LoadMemory(file))
+        End Sub
+
         Sub New(data As BitmapBuffer)
             MemoryBuffer = data
         End Sub
@@ -240,6 +244,12 @@ Namespace Imaging
             Else
                 Return MemoryBuffer.ToString
             End If
+        End Function
+
+        Private Shared Function LoadMemory(file As String) As BitmapBuffer
+            Using s As Stream = file.Open(FileMode.Open, doClear:=False, [readOnly]:=True)
+                Return New BitmapReader(s).LoadMemory
+            End Using
         End Function
 
         ''' <summary>
