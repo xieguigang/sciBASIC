@@ -77,7 +77,8 @@ Namespace Drawing2D.Math2D.DelaunayVoronoi
             halfedge.edgeListLeftNeighbor.edgeListRightNeighbor = halfedge.edgeListRightNeighbor
             halfedge.edgeListRightNeighbor.edgeListLeftNeighbor = halfedge.edgeListLeftNeighbor
             halfedge.edge = Edge.DELETED
-            halfedge.edgeListLeftNeighbor = CSharpImpl.__Assign(halfedge.edgeListRightNeighbor, Nothing)
+            halfedge.edgeListRightNeighbor = Nothing
+            halfedge.edgeListLeftNeighbor = Nothing
         End Sub
 
         ' 
@@ -102,8 +103,10 @@ Namespace Drawing2D.Math2D.DelaunayVoronoi
                 Dim i = 0
 
                 While True
-                    If CSharpImpl.__Assign(halfedge, GetHash(bucket - i)) IsNot Nothing Then Exit While
-                    If CSharpImpl.__Assign(halfedge, GetHash(bucket + i)) IsNot Nothing Then Exit While
+                    halfedge = GetHash(bucket - i)
+                    If halfedge IsNot Nothing Then Exit While
+                    halfedge = GetHash(bucket + i)
+                    If halfedge IsNot Nothing Then Exit While
                     i += 1
                 End While
             End If
@@ -143,13 +146,5 @@ Namespace Drawing2D.Math2D.DelaunayVoronoi
                 Return halfedge
             End If
         End Function
-
-        Private Class CSharpImpl
-            <Obsolete("Please refactor calling code to use normal Visual Basic assignment")>
-            Shared Function __Assign(Of T)(ByRef target As T, value As T) As T
-                target = value
-                Return value
-            End Function
-        End Class
     End Class
 End Namespace
