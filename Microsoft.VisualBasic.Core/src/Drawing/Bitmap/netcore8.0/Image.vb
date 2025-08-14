@@ -89,6 +89,9 @@ Namespace Imaging
     ''' <summary>
     ''' the abstract image data model, example as gdi+ raster image bitmap, svg image, pdf image, etc
     ''' </summary>
+    ''' <remarks>
+    ''' the image model implements the interface <see cref="IRasterMemory"/>
+    ''' </remarks>
     Public MustInherit Class Image : Implements IDisposable, IRasterMemory
 
         Private disposedValue As Boolean
