@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ffb2e3bb5531c22f68ecd48e5bef1417, Microsoft.VisualBasic.Core\src\Drawing\Bitmap\netcore8.0\Image.vb"
+﻿#Region "Microsoft.VisualBasic::cbed2893d9dd9ce224ceb9ae4bd6f488, Microsoft.VisualBasic.Core\src\Drawing\Bitmap\netcore8.0\Image.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 293
-    '    Code Lines: 140 (47.78%)
-    ' Comment Lines: 97 (33.11%)
-    '    - Xml Docs: 47.42%
+    '   Total Lines: 321
+    '    Code Lines: 160 (49.84%)
+    ' Comment Lines: 100 (31.15%)
+    '    - Xml Docs: 49.00%
     ' 
-    '   Blank Lines: 56 (19.11%)
-    '     File Size: 11.32 KB
+    '   Blank Lines: 61 (19.00%)
+    '     File Size: 12.38 KB
 
 
     '     Class Image
@@ -51,16 +51,20 @@
     ' 
     '         Sub: (+2 Overloads) Dispose
     ' 
+    '     Interface IRasterMemory
+    ' 
+    '         Function: GetMemoryBuffer
+    ' 
     '     Class Bitmap
     ' 
     '         Properties: MemoryBuffer, Size
     ' 
-    '         Constructor: (+4 Overloads) Sub New
+    '         Constructor: (+5 Overloads) Sub New
     ' 
-    '         Function: Clone, ConvertToBitmapStream, GetMemoryBitmap, GetPixel, Resize
-    '                   ToString
+    '         Function: Clone, ConvertToBitmapStream, GetMemoryBitmap, GetMemoryBuffer, GetPixel
+    '                   LoadMemory, Resize, ToString
     ' 
-    '         Sub: Save, SetPixel
+    '         Sub: (+2 Overloads) Save, SetPixel
     ' 
     '     Enum PixelFormat
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::04b342d9f56f3d605704187928a05a50, Microsoft.VisualBasic.Core\src\ComponentModel\DataSource\SchemaMaps\ObjectSchema.vb"
+﻿#Region "Microsoft.VisualBasic::c8924477303238e777d257ef6b2f99eb, Microsoft.VisualBasic.Core\src\ComponentModel\DataSource\SchemaMaps\ObjectSchema.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 263
-    '    Code Lines: 173 (65.78%)
-    ' Comment Lines: 55 (20.91%)
+    '   Total Lines: 272
+    '    Code Lines: 180 (66.18%)
+    ' Comment Lines: 55 (20.22%)
     '    - Xml Docs: 89.09%
     ' 
-    '   Blank Lines: 35 (13.31%)
-    '     File Size: 10.48 KB
+    '   Blank Lines: 37 (13.60%)
+    '     File Size: 10.87 KB
 
 
     '     Enum Serializations

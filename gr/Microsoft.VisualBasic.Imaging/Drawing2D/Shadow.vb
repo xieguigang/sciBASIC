@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::608ef0eee1ae4063de3424bf3ff97794, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Shadow.vb"
+﻿#Region "Microsoft.VisualBasic::7e40308d678cc7a820efe320fae8cf34, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Shadow.vb"
 
     ' Author:
     ' 
@@ -35,9 +35,9 @@
     ' Code Statistics:
 
     '   Total Lines: 126
-    '    Code Lines: 90 (71.43%)
-    ' Comment Lines: 16 (12.70%)
-    '    - Xml Docs: 87.50%
+    '    Code Lines: 89 (70.63%)
+    ' Comment Lines: 17 (13.49%)
+    '    - Xml Docs: 82.35%
     ' 
     '   Blank Lines: 20 (15.87%)
     '     File Size: 4.84 KB

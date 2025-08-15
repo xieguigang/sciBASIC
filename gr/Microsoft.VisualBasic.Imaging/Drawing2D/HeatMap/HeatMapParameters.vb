@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2df0db7fbf438c857fb21a014a3802f1, gr\Microsoft.VisualBasic.Imaging\Drawing2D\HeatMap\HeatMapParameters.vb"
+﻿#Region "Microsoft.VisualBasic::774722c5db647c93961f6d71e0c57fc9, gr\Microsoft.VisualBasic.Imaging\Drawing2D\HeatMap\HeatMapParameters.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 110
-    '    Code Lines: 74 (67.27%)
-    ' Comment Lines: 16 (14.55%)
+    '   Total Lines: 111
+    '    Code Lines: 75 (67.57%)
+    ' Comment Lines: 16 (14.41%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 20 (18.18%)
-    '     File Size: 4.11 KB
+    '   Blank Lines: 20 (18.02%)
+    '     File Size: 4.19 KB
 
 
     '     Class HeatMapBrushes
@@ -52,7 +52,7 @@
     ' 
     '     Class HeatMapParameters
     ' 
-    '         Properties: colorSet, defaultFill, mapLevels, valueRange
+    '         Properties: alpha, colorSet, defaultFill, mapLevels, valueRange
     ' 
     '         Constructor: (+3 Overloads) Sub New
     '         Function: CreateBrushParameters, GetBrushes, GetColors, GetMapping, ToString
@@ -122,6 +122,7 @@ Namespace Drawing2D.HeatMap
         ''' </summary>
         ''' <returns></returns>
         Public Property valueRange As DoubleRange
+        Public Property alpha As Integer = 255
 
         Sub New(Optional colorSet As String = "YlGnBu:c8",
                 Optional mapLevels% = 25,
@@ -156,11 +157,11 @@ Namespace Drawing2D.HeatMap
         End Function
 
         Public Function GetColors() As Color()
-            Return Designer.GetColors(colorSet, mapLevels)
+            Return Designer.GetColors(colorSet, mapLevels, alpha:=alpha)
         End Function
 
         Public Function GetBrushes() As SolidBrush()
-            Return Designer.GetBrushes(colorSet, mapLevels)
+            Return Designer.GetBrushes(colorSet, mapLevels, alpha:=alpha)
         End Function
 
         Public Function CreateBrushParameters() As HeatMapBrushes

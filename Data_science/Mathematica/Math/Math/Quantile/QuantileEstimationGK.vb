@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::12719dc7463c2db2a892c8a5935e06ce, Data_science\Mathematica\Math\Math\Quantile\QuantileEstimationGK.vb"
+﻿#Region "Microsoft.VisualBasic::563567fc9ae96822dbb06b3ac7b5a82a, Data_science\Mathematica\Math\Math\Quantile\QuantileEstimationGK.vb"
 
     ' Author:
     ' 
@@ -34,20 +34,20 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 157
-    '    Code Lines: 78 (49.68%)
-    ' Comment Lines: 53 (33.76%)
+    '   Total Lines: 170
+    '    Code Lines: 89 (52.35%)
+    ' Comment Lines: 53 (31.18%)
     '    - Xml Docs: 60.38%
     ' 
-    '   Blank Lines: 26 (16.56%)
-    '     File Size: 5.20 KB
+    '   Blank Lines: 28 (16.47%)
+    '     File Size: 5.78 KB
 
 
     '     Class QuantileEstimationGK
     ' 
     '         Constructor: (+1 Overloads) Sub New
     ' 
-    '         Function: Query, ToString
+    '         Function: GetEnumerator, IEnumerable_GetEnumerator, Query, ToString
     ' 
     '         Sub: compress, (+2 Overloads) Insert
     ' 

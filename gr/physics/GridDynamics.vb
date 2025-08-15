@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e55e764b3b47258ebcc549bfbbe07ccc, gr\physics\GridDynamics.vb"
+﻿#Region "Microsoft.VisualBasic::1a28f8256dd59531cfd6c6a4a7abb850, gr\physics\GridDynamics.vb"
 
     ' Author:
     ' 
@@ -34,18 +34,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 71
-    '    Code Lines: 52 (73.24%)
-    ' Comment Lines: 3 (4.23%)
+    '   Total Lines: 76
+    '    Code Lines: 56 (73.68%)
+    ' Comment Lines: 3 (3.95%)
     '    - Xml Docs: 0.00%
     ' 
-    '   Blank Lines: 16 (22.54%)
-    '     File Size: 2.40 KB
+    '   Blank Lines: 17 (22.37%)
+    '     File Size: 2.59 KB
 
 
     ' Module GridDynamics
     ' 
-    '     Function: EncodeGrid, GetCell2D, HashCell, (+2 Overloads) SpatialLookup
+    '     Function: (+2 Overloads) EncodeGrid, GetCell2D, HashCell, (+2 Overloads) SpatialLookup
     ' 
     ' Interface IContainer
     ' 

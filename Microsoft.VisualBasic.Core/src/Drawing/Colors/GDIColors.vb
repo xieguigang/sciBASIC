@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::18a777b85ebee40dfaa05c87efd7d469, Microsoft.VisualBasic.Core\src\Drawing\Colors\GDIColors.vb"
+﻿#Region "Microsoft.VisualBasic::a1a4bbbc5f30abe4068b073a2cef7a95, Microsoft.VisualBasic.Core\src\Drawing\Colors\GDIColors.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 509
-    '    Code Lines: 268 (52.65%)
-    ' Comment Lines: 184 (36.15%)
-    '    - Xml Docs: 63.04%
+    '   Total Lines: 515
+    '    Code Lines: 268 (52.04%)
+    ' Comment Lines: 190 (36.89%)
+    '    - Xml Docs: 61.05%
     ' 
-    '   Blank Lines: 57 (11.20%)
-    '     File Size: 25.33 KB
+    '   Blank Lines: 57 (11.07%)
+    '     File Size: 25.70 KB
 
 
     '     Module GDIColors

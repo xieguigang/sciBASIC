@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::893a5c33e1b46ac7efb326b40986298e, Microsoft.VisualBasic.Core\src\Serialization\BinaryDumping\StructSerializer.vb"
+﻿#Region "Microsoft.VisualBasic::e70a1748a713ae51b7a3a3e7d0babe9a, Microsoft.VisualBasic.Core\src\Serialization\BinaryDumping\StructSerializer.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 109
-    '    Code Lines: 39 (35.78%)
-    ' Comment Lines: 63 (57.80%)
+    '   Total Lines: 105
+    '    Code Lines: 33 (31.43%)
+    ' Comment Lines: 63 (60.00%)
     '    - Xml Docs: 65.08%
     ' 
-    '   Blank Lines: 7 (6.42%)
-    '     File Size: 5.62 KB
+    '   Blank Lines: 9 (8.57%)
+    '     File Size: 5.82 KB
 
 
     '     Module StructSerializer

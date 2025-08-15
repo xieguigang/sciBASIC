@@ -1,58 +1,58 @@
-﻿#Region "Microsoft.VisualBasic::67431db459db2fdea34833ad4ad8b43c, Data_science\Mathematica\Math\Math\Quantile\DataQuartile.vb"
+﻿#Region "Microsoft.VisualBasic::2fca7f99fb68a19f1d18f2e05844e184, Data_science\Mathematica\Math\Math\Quantile\DataQuartile.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 61
-'    Code Lines: 27 (44.26%)
-' Comment Lines: 27 (44.26%)
-'    - Xml Docs: 100.00%
-' 
-'   Blank Lines: 7 (11.48%)
-'     File Size: 2.38 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Structure DataQuartile
-' 
-'         Properties: IQR, ModelSamples, Q1, Q2, Q3
-'                     range
-' 
-'         Constructor: (+1 Overloads) Sub New
-'         Function: Outlier, ToString
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 71
+    '    Code Lines: 35 (49.30%)
+    ' Comment Lines: 27 (38.03%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 9 (12.68%)
+    '     File Size: 3.00 KB
+
+
+    '     Structure DataQuartile
+    ' 
+    '         Properties: IQR, ModelSamples, Q1, Q2, Q3
+    '                     range
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    '         Function: GetEnumerator, IEnumerable_GetEnumerator, Outlier, ToString
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

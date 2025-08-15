@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f8b58d78574159fd85b552ec513c7ad8, Data_science\Graph\Analysis\MorganFingerprint\MorganFingerprint.vb"
+﻿#Region "Microsoft.VisualBasic::bc3d6acdc41a8df6a95cd9eef5157870, Data_science\Graph\Analysis\MorganFingerprint\MorganFingerprint.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 158
-    '    Code Lines: 53 (33.54%)
-    ' Comment Lines: 87 (55.06%)
-    '    - Xml Docs: 74.71%
+    '   Total Lines: 226
+    '    Code Lines: 109 (48.23%)
+    ' Comment Lines: 89 (39.38%)
+    '    - Xml Docs: 73.03%
     ' 
-    '   Blank Lines: 18 (11.39%)
-    '     File Size: 8.49 KB
+    '   Blank Lines: 28 (12.39%)
+    '     File Size: 11.35 KB
 
 
     '     Class GraphMorganFingerprint
@@ -48,7 +48,12 @@
     '         Properties: FingerprintLength
     ' 
     '         Constructor: (+1 Overloads) Sub New
-    '         Function: CalculateFingerprint, CalculateFingerprintCheckSum, HashLabelKey
+    '         Function: CalculateFingerprint, CalculateFingerprintCheckSum, GenerateSubstructureHash, GetNeighbors, HashLabelKey
+    '         Class UndirectEdgeIndex
+    ' 
+    '             Function: Create
+    ' 
+    ' 
     ' 
     ' 
     ' /********************************************************************************/

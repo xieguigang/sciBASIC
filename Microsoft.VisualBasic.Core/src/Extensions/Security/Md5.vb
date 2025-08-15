@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0a2c6f215e26c40a2672a3d77e899acd, Microsoft.VisualBasic.Core\src\Extensions\Security\Md5.vb"
+﻿#Region "Microsoft.VisualBasic::d62cad1193d1436bd75b60bd5dc86cbf, Microsoft.VisualBasic.Core\src\Extensions\Security\Md5.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 325
-    '    Code Lines: 171 (52.62%)
-    ' Comment Lines: 116 (35.69%)
-    '    - Xml Docs: 85.34%
+    '   Total Lines: 327
+    '    Code Lines: 171 (52.29%)
+    ' Comment Lines: 118 (36.09%)
+    '    - Xml Docs: 85.59%
     ' 
-    '   Blank Lines: 38 (11.69%)
-    '     File Size: 13.03 KB
+    '   Blank Lines: 38 (11.62%)
+    '     File Size: 13.16 KB
 
 
     '     Module MD5Hash

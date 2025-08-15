@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::db25f382e9449c3effa1709eb97797c1, Data_science\DataMining\UMAP\Components\SIMD\SIMD.vb"
+﻿#Region "Microsoft.VisualBasic::f35735eed3d7263cdad4da9ccc60769f, Data_science\DataMining\UMAP\Components\SIMD\SIMD.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 0.00%
     ' 
     '   Blank Lines: 49 (20.59%)
-    '     File Size: 8.16 KB
+    '     File Size: 8.15 KB
 
 
     ' Module SIMD
@@ -56,7 +56,7 @@
 Imports System.Numerics
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Math.SIMD
-Imports stdNum = System.Math
+Imports std = System.Math
 
 Friend Module SIMD
 
@@ -67,7 +67,7 @@ Friend Module SIMD
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function Magnitude(ByRef vec As Double()) As Double
-        Return stdNum.Sqrt(SIMD.DotProduct(vec, vec))
+        Return std.Sqrt(SIMD.DotProduct(vec, vec))
     End Function
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>

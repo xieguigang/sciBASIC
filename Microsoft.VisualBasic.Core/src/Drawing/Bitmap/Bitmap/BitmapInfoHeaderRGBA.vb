@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a6e5e531add1dd79d7e91da4f234f8ba, Microsoft.VisualBasic.Core\src\Drawing\Bitmap\Bitmap\BitmapInfoHeaderRGBA.vb"
+﻿#Region "Microsoft.VisualBasic::30878be2e2b04597aa6436398c2ec53d, Microsoft.VisualBasic.Core\src\Drawing\Bitmap\Bitmap\BitmapInfoHeaderRGBA.vb"
 
     ' Author:
     ' 
@@ -34,12 +34,12 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 128
-    '    Code Lines: 79 (61.72%)
-    ' Comment Lines: 23 (17.97%)
+    '   Total Lines: 125
+    '    Code Lines: 79 (63.20%)
+    ' Comment Lines: 23 (18.40%)
     '    - Xml Docs: 30.43%
     ' 
-    '   Blank Lines: 26 (20.31%)
+    '   Blank Lines: 23 (18.40%)
     '     File Size: 7.11 KB
 
 

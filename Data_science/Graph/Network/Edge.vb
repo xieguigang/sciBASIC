@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::585f212cba4963436ef4d6475a168109, Data_science\Graph\Network\Edge.vb"
+﻿#Region "Microsoft.VisualBasic::6fb4e0a7df136478bb06f391265b1dd0, Data_science\Graph\Network\Edge.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 27
-    '    Code Lines: 10 (37.04%)
-    ' Comment Lines: 12 (44.44%)
+    '   Total Lines: 30
+    '    Code Lines: 10 (33.33%)
+    ' Comment Lines: 15 (50.00%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 5 (18.52%)
-    '     File Size: 665 B
+    '   Blank Lines: 5 (16.67%)
+    '     File Size: 734 B
 
 
     '     Class Edge

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8b14e9c501370a5bb231d20dbd4fcfa8, Data_science\Mathematica\Math\Math\Quantile\QuartileLevels.vb"
+﻿#Region "Microsoft.VisualBasic::ccb7d51a3448f5c5c9880b17753fd352, Data_science\Mathematica\Math\Math\Quantile\QuartileLevels.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 8
-    '    Code Lines: 7 (87.50%)
+    '   Total Lines: 19
+    '    Code Lines: 14 (73.68%)
     ' Comment Lines: 0 (0.00%)
     '    - Xml Docs: 0.00%
     ' 
-    '   Blank Lines: 1 (12.50%)
-    '     File Size: 140 B
+    '   Blank Lines: 5 (26.32%)
+    '     File Size: 424 B
 
 
     '     Enum QuartileLevels
@@ -49,6 +49,10 @@
     '  
     ' 
     ' 
+    ' 
+    '     Structure QuantileThreshold
+    ' 
+    '         Function: ToString
     ' 
     ' 
     ' /********************************************************************************/

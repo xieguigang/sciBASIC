@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::17abeb043230ec6c68d117768de6e6b7, Data\DataFrame\DataFrame\FileWriter.vb"
+﻿#Region "Microsoft.VisualBasic::03ad41f6e7ad82c581fc5a6013687125, Data\DataFrame\DataFrame\FileWriter.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 37
-    '    Code Lines: 29 (78.38%)
-    ' Comment Lines: 0 (0.00%)
-    '    - Xml Docs: 0.00%
+    '   Total Lines: 51
+    '    Code Lines: 31 (60.78%)
+    ' Comment Lines: 12 (23.53%)
+    '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 8 (21.62%)
-    '     File Size: 1.17 KB
+    '   Blank Lines: 8 (15.69%)
+    '     File Size: 1.87 KB
 
 
     ' Module FileWriter

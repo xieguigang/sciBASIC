@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4232f8e1d3cbfafc89b5e7edb8dceda6, Data_science\Mathematica\SignalProcessing\MachineVision\OCR\OcrTextMatches.vb"
+﻿#Region "Microsoft.VisualBasic::efb1e4ae705bb3b49e1f221ace6bb446, Data_science\Mathematica\SignalProcessing\MachineVision\OCR\OcrTextMatches.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 4 (11.76%)
-    '     File Size: 1.54 KB
+    '     File Size: 1.49 KB
 
 
     ' Module OcrTextMatches

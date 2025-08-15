@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c0234e585d330d78da76bae1ab1d0765, Microsoft.VisualBasic.Core\src\Drawing\Math\Models\Vector2D.vb"
+﻿#Region "Microsoft.VisualBasic::2322dd0b1066c933df27280f3854c467, Microsoft.VisualBasic.Core\src\Drawing\Math\Models\Vector2D.vb"
 
     ' Author:
     ' 
@@ -34,18 +34,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 107
-    '    Code Lines: 56 (52.34%)
-    ' Comment Lines: 35 (32.71%)
+    '   Total Lines: 113
+    '    Code Lines: 61 (53.98%)
+    ' Comment Lines: 35 (30.97%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 16 (14.95%)
-    '     File Size: 3.20 KB
+    '   Blank Lines: 17 (15.04%)
+    '     File Size: 3.35 KB
 
 
     '     Class Vector2D
     ' 
-    '         Properties: Length, x, y
+    '         Properties: Length, x, y, Zero
     ' 
     '         Constructor: (+3 Overloads) Sub New
     '         Function: GetDistance, ToString

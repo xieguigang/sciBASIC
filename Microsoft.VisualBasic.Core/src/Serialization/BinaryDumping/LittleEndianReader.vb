@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::de4956e59caad240adc984f1a7d00ed2, Microsoft.VisualBasic.Core\src\Drawing\Bitmap\Bitmap\SafeBinaryReader.vb"
+﻿#Region "Microsoft.VisualBasic::ee2fc5404624d7bcf2cddcd249b6f463, Microsoft.VisualBasic.Core\src\Serialization\BinaryDumping\LittleEndianReader.vb"
 
     ' Author:
     ' 
@@ -43,7 +43,7 @@
     '     File Size: 1.35 KB
 
 
-    '     Class SafeBinaryReader
+    '     Class LittleEndianReader
     ' 
     '         Constructor: (+1 Overloads) Sub New
     '         Function: ReadInt16, ReadInt32, ReadInt64, ReadUInt16, ReadUInt32

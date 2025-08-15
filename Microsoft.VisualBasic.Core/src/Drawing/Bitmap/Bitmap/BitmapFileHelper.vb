@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7e43bc62de7d561a4f5773bd0a52123f, Microsoft.VisualBasic.Core\src\Drawing\Bitmap\Bitmap\BitmapFileHelper.vb"
+﻿#Region "Microsoft.VisualBasic::166c310bb48ea02608988b72c736266a, Microsoft.VisualBasic.Core\src\Drawing\Bitmap\Bitmap\BitmapFileHelper.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 89
-    '    Code Lines: 60 (67.42%)
-    ' Comment Lines: 13 (14.61%)
+    '   Total Lines: 93
+    '    Code Lines: 63 (67.74%)
+    ' Comment Lines: 13 (13.98%)
     '    - Xml Docs: 69.23%
     ' 
-    '   Blank Lines: 16 (17.98%)
-    '     File Size: 4.12 KB
+    '   Blank Lines: 17 (18.28%)
+    '     File Size: 4.07 KB
 
 
     '     Module BitmapFileHelper

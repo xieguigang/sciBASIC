@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::06a802d85c6be89f6198de83f8f1bd7f, mime\application%json\BSON\BSON.vb"
+﻿#Region "Microsoft.VisualBasic::79957566922cdc1580388d82965a0f42, mime\application%json\BSON\BSON.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 121
-    '    Code Lines: 85 (70.25%)
-    ' Comment Lines: 18 (14.88%)
-    '    - Xml Docs: 88.89%
+    '   Total Lines: 128
+    '    Code Lines: 85 (66.41%)
+    ' Comment Lines: 25 (19.53%)
+    '    - Xml Docs: 92.00%
     ' 
-    '   Blank Lines: 18 (14.88%)
-    '     File Size: 4.23 KB
+    '   Blank Lines: 18 (14.06%)
+    '     File Size: 4.46 KB
 
 
     '     Module BSONFormat

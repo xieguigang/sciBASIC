@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::07f6a681ead5752467993d9c9615f855, Data_science\Mathematica\Math\Math\DownSampling\MaxMin\MMAlgorithm.vb"
+﻿#Region "Microsoft.VisualBasic::8e3d188403e081d62c48a6ad0fa80767, Data_science\Mathematica\Math\Math\DownSampling\MaxMin\MMAlgorithm.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 8 (28.57%)
-    '     File Size: 877 B
+    '     File Size: 875 B
 
 
     '     Class MMAlgorithm
@@ -84,4 +84,3 @@ Namespace DownSampling.MaxMin
 
     End Class
 End Namespace
-

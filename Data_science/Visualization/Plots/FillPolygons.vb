@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::58c3f7269345d7cfa1e09d15d4d3882e, Library\graphics\Plot2D\FillPolygons.vb"
+﻿#Region "Microsoft.VisualBasic::558ff1ad688af49faf541352eea408c5, Data_science\Visualization\Plots\FillPolygons.vb"
 
     ' Author:
     ' 
@@ -34,15 +34,19 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 104
-    '    Code Lines: 88 (84.62%)
+    '   Total Lines: 123
+    '    Code Lines: 104 (84.55%)
     ' Comment Lines: 0 (0.00%)
     '    - Xml Docs: 0.00%
     ' 
-    '   Blank Lines: 16 (15.38%)
-    '     File Size: 4.29 KB
+    '   Blank Lines: 19 (15.45%)
+    '     File Size: 4.92 KB
 
 
+    ' Class PolygonGroup
+    ' 
+    '     Properties: label, size, subregions
+    ' 
     ' Class FillPolygons
     ' 
     '     Constructor: (+2 Overloads) Sub New
