@@ -99,7 +99,7 @@ Namespace Text.Xml.Models
         ''' <summary>
         ''' 在这个列表之中的元素数量的长度
         ''' </summary>
-        ''' <returns></returns>
+        ''' <returns>auto generated list size</returns>
         ''' <remarks>
         ''' 这个属性值会在进行XML序列化的时候自动生成，无需设置
         ''' </remarks>
