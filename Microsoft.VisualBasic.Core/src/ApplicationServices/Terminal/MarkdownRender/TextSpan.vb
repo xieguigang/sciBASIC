@@ -59,6 +59,9 @@ Imports System.Runtime.CompilerServices
 
 Namespace ApplicationServices.Terminal
 
+    ''' <summary>
+    ''' console print text with a specific styles
+    ''' </summary>
     Public Class TextSpan
 
         Public Property text As String
