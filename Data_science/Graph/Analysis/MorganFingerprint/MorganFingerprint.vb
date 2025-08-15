@@ -119,9 +119,21 @@ Namespace Analysis.MorganFingerprint
         End Sub
 
         Public Function CalculateFingerprintCheckSum(Of G As MorganGraph(Of V, E))(struct As G, Optional radius As Integer = 3) As Byte()
+            ' 20250815 do not aggregate the bit array to bytes
+            ' just make the boolean conversion at here
             Dim bits As BitArray = CalculateFingerprint(struct, radius)
-            Dim bytes = New Byte(FingerprintLength / 8 - 1) {}
-            bits.CopyTo(bytes, 0)
+            ' has bug about bits aggregate to bytes
+            ' Dim bytes = New Byte(FingerprintLength / 8 - 1) {}
+            ' bits.CopyTo(bytes, 0)
+            ' just make value copy of the fingerprint bits
+            Dim bytes As Byte() = New Byte(FingerprintLength - 1) {}
+
+            For i As Integer = 0 To bits.Length - 1
+                If bits.Get(i) Then
+                    bytes(i) = 1
+                End If
+            Next
+
             Return bytes
         End Function
 
