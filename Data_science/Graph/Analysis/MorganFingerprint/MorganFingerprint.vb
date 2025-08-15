@@ -149,7 +149,13 @@ Namespace Analysis.MorganFingerprint
 
             Default Public ReadOnly Property Neighbors(v As V) As E()
                 Get
-                    Return graph(key:=CUInt(v.Index))
+                    Dim uint As UInteger = CUInt(v.Index)
+
+                    If graph.ContainsKey(uint) Then
+                        Return graph(key:=uint)
+                    Else
+                        Return {}
+                    End If
                 End Get
             End Property
 
