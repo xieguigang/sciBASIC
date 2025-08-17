@@ -530,4 +530,8 @@ Public NotInheritable Class Umap : Inherits IDataEmbedding
 
         _optimizationState.EpochOfNextNegativeSample(i) += nNegSamples * _optimizationState.EpochsPerNegativeSample(i)
     End Sub
+
+    Public Shared Sub SetMaxTreeDepth(maxDepth As Integer)
+        Tree.maxDepth = maxDepth
+    End Sub
 End Class

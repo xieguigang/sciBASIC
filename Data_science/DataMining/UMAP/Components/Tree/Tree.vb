@@ -64,14 +64,13 @@ Namespace Tree
         ''' <summary>
         ''' max depth for make tree 
         ''' </summary>
-        Const maxDepth As Integer = 100000
+        Public maxDepth As Integer = 100000
 
         ''' <summary>
         ''' Construct a random projection tree based on ``data`` with leaves of size at most ``leafSize``
         ''' </summary>
         Public Function MakeTree(data As Double()(), leafSize As Integer, n As Integer, random As IProvideRandomValues) As RandomProjectionTreeNode
-            Dim indices = Enumerable.Range(0, data.Length).ToArray()
-            Return Tree.MakeEuclideanTree(data, indices, leafSize, n, 0, random)
+            Return Tree.MakeEuclideanTree(data, Enumerable.Range(0, data.Length).ToArray(), leafSize, n, 0, random)
         End Function
 
         Private Function MakeEuclideanTree(ByRef data As Double()(),
@@ -80,7 +79,6 @@ Namespace Tree
                                            q As Integer,
                                            depth As Integer,
                                            random As IProvideRandomValues) As RandomProjectionTreeNode
-
             ' 20250611 
             ' set max tree depth for avoid stack overflow
             If indices.Length > leafSize AndAlso depth < maxDepth Then
@@ -222,9 +220,15 @@ Namespace Tree
             If tree.IsLeaf Then
                 children(nodeNum)(0) = -leafNum
 
-                ' TODO[umap-js]: Triple check this operation corresponds to
-                ' indices[leafNum : tree.indices.shape[0]] = tree.indices
-                tree.Indices.CopyTo(indices(leafNum), 0)
+                If indices(leafNum).Length < tree.Indices.Length Then
+                    ' 20250817 fill with the size of indices(leafNum)?
+                    indices(leafNum) = tree.Indices.ToArray
+                Else
+                    ' TODO[umap-js]: Triple check this operation corresponds to
+                    ' indices[leafNum : tree.indices.shape[0]] = tree.indices
+                    tree.Indices.CopyTo(indices(leafNum), 0)
+                End If
+
                 leafNum += 1
                 Return (nodeNum, leafNum)
             Else
