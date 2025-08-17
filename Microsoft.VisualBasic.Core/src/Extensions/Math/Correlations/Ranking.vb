@@ -149,15 +149,15 @@ Namespace Math.Correlations
             Dim array = list _
                 .SeqIterator _
                 .ToDictionary(Function(x) x,
-                              Function(i) i.i)
-            Dim asc() = array _
-                .Keys _
+                              Function(i)
+                                  Return i.i
+                              End Function)
+            Dim asc() = array.Keys _
                 .Sort(Function(x) x.value, desc) _
                 .ToArray
             Dim ranks#() = New Double(asc.Length - 1) {}
             Dim rank% = 0
-            Dim gaps = array _
-                .Keys _
+            Dim gaps = array.Keys _
                 .GroupBy(Function(x) x.value) _
                 .ToDictionary(Function(x) x.First.value,
                               Function(g)
@@ -210,9 +210,10 @@ Namespace Math.Correlations
             Dim array = list _
                 .SeqIterator _
                 .ToDictionary(Function(x) x,
-                              Function(i) i.i)
-            Dim asc() = array _
-                .Keys _
+                              Function(i)
+                                  Return i.i
+                              End Function)
+            Dim asc() = array.Keys _
                 .Sort(Function(x) x.value, desc) _
                 .ToArray
             Dim ranks#() = New Double(asc.Length - 1) {}
@@ -256,9 +257,10 @@ Namespace Math.Correlations
             Dim array = list _
                 .SeqIterator _
                 .ToDictionary(Function(x) x,
-                              Function(i) i.i)
-            Dim asc() = array _
-                .Keys _
+                              Function(i)
+                                  Return i.i
+                              End Function)
+            Dim asc() = array.Keys _
                 .Sort(Function(x) x.value, desc) _
                 .ToArray
             Dim ranks#() = New Double(asc.Length - 1) {}
