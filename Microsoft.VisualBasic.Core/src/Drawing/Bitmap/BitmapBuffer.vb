@@ -78,7 +78,7 @@ Imports std = System.Math
 Namespace Imaging.BitmapImage
 
     ''' <summary>
-    ''' Unsafe memory pointer of the <see cref="Bitmap"/> data buffer.
+    ''' Unsafe memory pointer of the <see cref="Bitmap"/> data buffer. buffer image object in java
     ''' </summary>
     ''' <remarks>
     ''' (线程不安全的图片数据对象)
@@ -177,6 +177,9 @@ Namespace Imaging.BitmapImage
             _Width = size.Width
             _Height = size.Height
         End Sub
+
+        Public Const TYPE_INT_RGB As Integer = 3
+        Public Const TYPE_INT_ARGB As Integer = 4
 
         ''' <summary>
         ''' The dimension width of the current bitmap buffer object
