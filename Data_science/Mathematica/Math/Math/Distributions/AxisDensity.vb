@@ -75,7 +75,7 @@ Namespace Distributions
         End Function
 
         ''' <summary>
-        ''' MAD（Median Absolute Deviation，中位数绝对偏差）​是一种鲁棒的统计量，用于衡量单变量数据的离散程度。其核心思想是通过中位数计算偏差，避免异常值对结果的影响。数学定义为：
+        ''' MAD（Median Absolute Deviation，中位数绝对偏差）是一种鲁棒的统计量，用于衡量单变量数据的离散程度。其核心思想是通过中位数计算偏差，避免异常值对结果的影响。数学定义为：
         ''' 
         ''' ```
         ''' MAD=median(∣Xi−median(X)∣)
