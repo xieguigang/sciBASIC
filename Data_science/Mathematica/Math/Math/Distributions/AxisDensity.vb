@@ -55,7 +55,9 @@
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.ComponentModel.TagData
+Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Math.Quantile
+Imports Microsoft.VisualBasic.Math.Statistics.Linq
 
 Namespace Distributions
 
@@ -72,5 +74,26 @@ Namespace Distributions
             Next
         End Function
 
+        ''' <summary>
+        ''' MAD（Median Absolute Deviation，中位数绝对偏差）​是一种鲁棒的统计量，用于衡量单变量数据的离散程度。其核心思想是通过中位数计算偏差，避免异常值对结果的影响。数学定义为：
+        ''' 
+        ''' ```
+        ''' MAD=median(∣Xi−median(X)∣)
+        ''' ```
+        ''' 
+        ''' 其中 X表示基因在所有样本中的表达值向量，Xi为单个样本的表达值，median(X)是基因表达值的中位数。
+        ''' 与标准差不同，MAD使用中位数而非均值，因此不受极端值干扰。例如，若某基因在多数样本中表达稳定，但个别样本异常高/低，标准差会显著增大，而MAD几乎不变。
+        ''' 
+        ''' WGCNA等共表达网络分析中，需筛选高变异基因（如取MAD值最高的前5000个基因）。高MAD值表明基因表达在样本间波动大，可能具有生物学意义（如调控关键通路）。
+        ''' </summary>
+        ''' <param name="x"></param>
+        ''' <returns></returns>
+        <Extension>
+        Public Function MAD(x As Vector) As Double
+            Dim delta_median As Vector = (x - x.Median).Abs
+            Dim result As Double = delta_median.Median
+
+            Return result
+        End Function
     End Module
 End Namespace
