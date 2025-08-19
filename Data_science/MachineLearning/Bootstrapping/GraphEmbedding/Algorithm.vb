@@ -115,8 +115,9 @@ Namespace GraphEmbedding
                 .m_OutputIterSkip = args.skip
             }
             model.initialization(args.strNumRelation, args.strNumEntity, args.fnTrainTriples, args.fnValidTriples, args.fnTestTriples, args.fnAllTriples, args.other)
-            Console.WriteLine($"Start learning {model.DescriptionValue} (triple only) model")
+            VBDebugger.EchoLine($"Start learning {model.DescriptionValue} (triple only) model")
             model.learn()
+            Return Nothing
         End Function
 
         Public Shared Function complex_NNE(args As Arguments)

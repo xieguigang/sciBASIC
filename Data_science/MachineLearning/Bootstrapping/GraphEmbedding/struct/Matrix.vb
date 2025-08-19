@@ -67,6 +67,7 @@
 
 Imports System.IO
 Imports System.Text
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.MachineLearning.Bootstrapping.GraphEmbedding.util
 Imports Microsoft.VisualBasic.Math
 Imports std = System.Math
@@ -223,7 +224,7 @@ Namespace GraphEmbedding.struct
         Public Overridable Function load(fnInput As String) As Boolean
             Dim reader As StreamReader = New StreamReader(New FileStream(fnInput, FileMode.Open, FileAccess.Read), Encoding.UTF8)
 
-            Dim line = ""
+            Dim line As Value(Of String) = ""
             line = reader.ReadLine()
             Dim first_line = StringSplitter.RemoveEmptyEntries(StringSplitter.split(":; ", line))
             If iNumberOfRows <> Integer.Parse(first_line(1)) OrElse iNumberOfColumns <> Integer.Parse(first_line(3)) Then
@@ -231,7 +232,7 @@ Namespace GraphEmbedding.struct
             End If
 
             Dim iRowID = 0
-            While Not String.ReferenceEquals((CSharpImpl.__Assign(line, reader.ReadLine())), Nothing)
+            While Not (line = reader.ReadLine()) Is Nothing
                 Dim tokens = StringSplitter.RemoveEmptyEntries(StringSplitter.split(vbTab & " ", line))
                 If iRowID < 0 OrElse iRowID >= iNumberOfRows Then
                     Throw New Exception("load error in Matrix: RowID out of range")
@@ -272,14 +273,6 @@ Namespace GraphEmbedding.struct
             iNumberOfRows = 0
             iNumberOfColumns = 0
         End Sub
-
-        Private Class CSharpImpl
-            <Obsolete("Please refactor calling code to use normal Visual Basic assignment")>
-            Shared Function __Assign(Of T)(ByRef target As T, value As T) As T
-                target = value
-                Return value
-            End Function
-        End Class
     End Class
 
 End Namespace

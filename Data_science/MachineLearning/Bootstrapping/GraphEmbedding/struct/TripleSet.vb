@@ -63,6 +63,7 @@
 
 Imports System.IO
 Imports System.Text
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.MachineLearning.Bootstrapping.GraphEmbedding.util
 Imports randf = Microsoft.VisualBasic.Math.RandomExtensions
 
@@ -106,9 +107,10 @@ Namespace GraphEmbedding.struct
             Dim reader As StreamReader = New StreamReader(New FileStream(fnInput, FileMode.Open, FileAccess.Read), Encoding.UTF8)
             pTriple = New List(Of Triple)()
 
-            Dim line = ""
+            Dim line As Value(Of String) = ""
             Dim iCnt = 0
-            While Not String.ReferenceEquals((CSharpImpl.__Assign(line, reader.ReadLine())), Nothing)
+
+            While Not (line = reader.ReadLine()) Is Nothing
                 Dim tokens = StringSplitter.RemoveEmptyEntries(StringSplitter.split(vbTab & " ", line))
                 If tokens.Length <> 3 Then
                     Throw New Exception("load error in TripleSet: data format incorrect")
@@ -154,14 +156,6 @@ Namespace GraphEmbedding.struct
             iNumberOfTriples = pTriple.Count
             tmpMap.Clear()
         End Sub
-
-        Private Class CSharpImpl
-            <Obsolete("Please refactor calling code to use normal Visual Basic assignment")>
-            Shared Function __Assign(Of T)(ByRef target As T, value As T) As T
-                target = value
-                Return value
-            End Function
-        End Class
     End Class
 
 End Namespace
