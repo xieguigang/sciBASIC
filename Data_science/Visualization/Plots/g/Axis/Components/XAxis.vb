@@ -242,7 +242,7 @@ Namespace Graphic.Axis
                     'End If
 
                     yoffset = sz.Height * 1.5
-                    yoffset += ZERO.Y + d
+                    yoffset += ZERO.Y + d * 2
 
                     Call g.DrawString(labelText, tickFont, tickColor, x, yoffset, angle:=xRotate)
                 Else

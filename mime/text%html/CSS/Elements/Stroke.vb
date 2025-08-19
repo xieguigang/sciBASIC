@@ -82,6 +82,7 @@ Namespace CSS
 
         Public Const AxisStroke$ = "stroke: black; stroke-width: 2px; stroke-dash: solid;"
         Public Const AxisGridStroke$ = "stroke: lightgray; stroke-width: 2px; stroke-dash: dash;"
+        Public Const AxisGridMinorStroke$ = "stroke: lightgray; stroke-width: 1px; stroke-dash: dash;"
         Public Const HighlightStroke$ = "stroke: gray; stroke-width: 2px; stroke-dash: dash;"
         Public Const StrongHighlightStroke$ = "stroke: black; stroke-width: 2px; stroke-dash: dash;"
         Public Const ScatterLineStroke$ = "stroke: black; stroke-width: 2px; stroke-dash: solid;"
