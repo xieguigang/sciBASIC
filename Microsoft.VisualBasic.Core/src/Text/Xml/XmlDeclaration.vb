@@ -63,7 +63,8 @@
 #End Region
 
 Imports System.ComponentModel
-Imports System.Text.RegularExpressions
+Imports System.Runtime.CompilerServices
+Imports System.Text
 Imports Microsoft.VisualBasic.Language.Default
 Imports r = System.Text.RegularExpressions.Regex
 
@@ -121,6 +122,19 @@ Namespace Text.Xml
             End If
         End Function
 
+        Shared ReadOnly convert As New Dictionary(Of Encoding, XmlEncodings) From {
+            {System.Text.Encoding.UTF8, XmlEncodings.UTF8},
+            {System.Text.Encoding.Unicode, XmlEncodings.UTF16},
+            {System.Text.Encoding.BigEndianUnicode, XmlEncodings.UTF16},
+            {Encodings.GB2312.CodePage, XmlEncodings.GB2312}
+        }
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Function ToEncoding(enc As Encoding) As XmlEncodings
+            Return convert.TryGetValue(enc, [default]:=XmlEncodings.UTF8)
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Function XmlStandaloneString(standalone As Boolean) As String
             Return If(standalone, "yes", "no")
         End Function

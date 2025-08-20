@@ -1,55 +1,55 @@
 ﻿#Region "Microsoft.VisualBasic::a7968d67953fc77c9194e2b6a71927e0, Microsoft.VisualBasic.Core\src\Text\Xml\Linq\DataSetWriter.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 93
-    '    Code Lines: 50 (53.76%)
-    ' Comment Lines: 29 (31.18%)
-    '    - Xml Docs: 27.59%
-    ' 
-    '   Blank Lines: 14 (15.05%)
-    '     File Size: 3.90 KB
+' Summaries:
 
 
-    '     Class DataSetWriter
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    '         Sub: (+2 Overloads) Dispose, Flush, Write
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 93
+'    Code Lines: 50 (53.76%)
+' Comment Lines: 29 (31.18%)
+'    - Xml Docs: 27.59%
+' 
+'   Blank Lines: 14 (15.05%)
+'     File Size: 3.90 KB
+
+
+'     Class DataSetWriter
+' 
+'         Constructor: (+1 Overloads) Sub New
+'         Sub: (+2 Overloads) Dispose, Flush, Write
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -62,12 +62,43 @@ Namespace Text.Xml.Linq
     ''' <summary>
     ''' Write a very large dataset in Xml format
     ''' </summary>
+    ''' <remarks>
+    ''' usually be used for dump the database table data to a xml file
+    ''' 
+    ''' the output xml file format is compatible with the .NET DataSet xml format
+    ''' 
+    ''' see also: https://docs.microsoft.com/en-us/dotnet/api/system.data.dataset.writexml?view=net-5.0
+    ''' 
+    ''' example:
+    ''' 
+    ''' ```vb
+    ''' Dim writer As New DataSetWriter(Of biocad_registryModel.molecule)("molecules.xml")
+    ''' 
+    ''' For Each mol As biocad_registryModel.molecule In registry.molecule.all(Of biocad_registryModel.molecule)()
+    '''     Call writer.Write(mol)
+    ''' Next
+    ''' 
+    ''' Call writer.Dispose()
+    ''' ```
+    ''' </remarks>
     Public Class DataSetWriter(Of T) : Implements IDisposable
 
         Dim file As StreamWriter
         Dim indentBlank$ = "   "
+        Dim leaveOpen As Boolean = True
 
         Public Const DataSetPrefix$ = "XmlDataSetOf"
+
+        Sub New(file As StreamWriter, Optional leaveOpen As Boolean = True)
+            Me.leaveOpen = leaveOpen
+
+            Me.file = file
+            Me.file.WriteLine(NodeIterator.XmlDeclare.Replace("utf-16", XmlDeclaration.ToEncoding(file.Encoding).Description.ToLower))
+            Me.file.WriteLine($"<{DataSetPrefix}{GetType(T).Name} xmlns:xsd=""http://www.w3.org/2001/XMLSchema"" xmlns:xsi=""http://www.w3.org/2001/XMLSchema-instance"">")
+            Me.file.WriteLine(indentBlank & "<!--")
+            Me.file.WriteLine(XmlDataModel.GetTypeReferenceComment(GetType(T), 6))
+            Me.file.WriteLine(indentBlank & "-->")
+        End Sub
 
         ''' <summary>
         ''' Create a new xml dataset writer
@@ -82,12 +113,7 @@ Namespace Text.Xml.Linq
             '
             ' 下面的两行代码是专门用来处理编码问题来避免出现上面的错误
             '
-            Me.file = file.OpenWriter(encoding.TextEncoding)
-            Me.file.WriteLine(NodeIterator.XmlDeclare.Replace("utf-16", encoding.Description.ToLower))
-            Me.file.WriteLine($"<{DataSetPrefix}{GetType(T).Name} xmlns:xsd=""http://www.w3.org/2001/XMLSchema"" xmlns:xsi=""http://www.w3.org/2001/XMLSchema-instance"">")
-            Me.file.WriteLine(indentBlank & "<!--")
-            Me.file.WriteLine(XmlDataModel.GetTypeReferenceComment(GetType(T), 6))
-            Me.file.WriteLine(indentBlank & "-->")
+            Call Me.New(file.OpenWriter(encoding.TextEncoding), leaveOpen:=False)
         End Sub
 
         Public Sub Write(data As T)
@@ -119,8 +145,11 @@ Namespace Text.Xml.Linq
                     ' TODO: dispose managed state (managed objects).
                     Call file.WriteLine($"</{DataSetPrefix}{GetType(T).Name}>")
                     Call file.Flush()
-                    Call file.Close()
-                    Call file.Dispose()
+
+                    If Not leaveOpen Then
+                        Call file.Close()
+                        Call file.Dispose()
+                    End If
                 End If
 
                 ' TODO: free unmanaged resources (unmanaged objects) and override Finalize() below.
