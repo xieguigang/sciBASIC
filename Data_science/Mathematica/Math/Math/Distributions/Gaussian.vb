@@ -66,6 +66,12 @@ Namespace Distributions
     ''' </summary>
     Public Module Gaussian
 
+        Public Function GaussianDistribution(x As Single, sigma As Single) As Single
+            ' 计算高斯分布函数 (参考: https://en.wikipedia.org/wiki/Gaussian_blur)
+            ' 公式: (1 / √(2πσ²)) * e^(-(x²)/(2σ²))
+            Return CSng(1 / std.Sqrt(2 * std.PI * sigma * sigma) * std.Exp(-(x * x) / (2 * sigma * sigma)))
+        End Function
+
         ''' <summary>
         ''' 
         ''' </summary>
