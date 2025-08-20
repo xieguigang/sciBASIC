@@ -282,7 +282,9 @@ Public Module TextDoc
     ''' <param name="encoding">
     ''' Parameter value is set to <see cref="DefaultEncoding"/> if this parameter is not specific.
     ''' </param>
-    ''' <returns></returns>
+    ''' <returns>
+    ''' this function may returns empty string if the file is empty or not exists
+    ''' </returns>
     <Extension>
     Public Function ReadFirstLine(path$, Optional encoding As Encoding = Nothing) As String
         If path.FileLength <= 0 Then
