@@ -163,7 +163,7 @@ Namespace Drawing3D
             Return New Point3D(_X - vec.X, _Y - vec.Y, _Z - vec.Z)
         End Function
 
-        Public Function multiply(scalar As Single) As Point3D
+        Public Function multiply(scalar As Double) As Point3D
             Return New Point3D(_X * scalar, _Y * scalar, _Z * scalar)
         End Function
 
