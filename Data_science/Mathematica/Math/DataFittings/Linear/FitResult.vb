@@ -56,6 +56,7 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 
 ''' <summary>
@@ -96,6 +97,15 @@ Public Class FitResult : Implements IFitted
     ''' 保存拟合后的y值，在拟合时可设置为不保存节省内存
     ''' </summary>
     Public Property ErrorTest As IFitError() Implements IFitted.ErrorTest
+
+    Public ReadOnly Property Residuals As Double()
+        Get
+            Return ErrorTest _
+                .SafeQuery _
+                .Select(Function(e) e.Y - e.Yfit) _
+                .ToArray
+        End Get
+    End Property
 
     ''' <summary>
     ''' 根据x获取拟合方程的y值
