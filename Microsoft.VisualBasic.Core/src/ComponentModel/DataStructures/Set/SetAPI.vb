@@ -1,79 +1,80 @@
 ﻿#Region "Microsoft.VisualBasic::7a898878557e79b72bea8e70ca74066e, Microsoft.VisualBasic.Core\src\ComponentModel\DataStructures\Set\SetAPI.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 105
-    '    Code Lines: 74 (70.48%)
-    ' Comment Lines: 16 (15.24%)
-    '    - Xml Docs: 75.00%
-    ' 
-    '   Blank Lines: 15 (14.29%)
-    '     File Size: 4.52 KB
+' Summaries:
 
 
-    '     Class GenericLambda
-    ' 
-    ' 
-    '         Delegate Function
-    ' 
-    ' 
-    '         Delegate Function
-    ' 
-    ' 
-    ' 
-    '     Module SetAPI
-    ' 
-    '         Function: Contains, (+3 Overloads) Intersection
-    '         Structure __stringCompares
-    ' 
-    '             Constructor: (+1 Overloads) Sub New
-    '             Function: Equals
-    ' 
-    ' 
-    ' 
-    ' 
-    ' 
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 105
+'    Code Lines: 74 (70.48%)
+' Comment Lines: 16 (15.24%)
+'    - Xml Docs: 75.00%
+' 
+'   Blank Lines: 15 (14.29%)
+'     File Size: 4.52 KB
+
+
+'     Class GenericLambda
+' 
+' 
+'         Delegate Function
+' 
+' 
+'         Delegate Function
+' 
+' 
+' 
+'     Module SetAPI
+' 
+'         Function: Contains, (+3 Overloads) Intersection
+'         Structure __stringCompares
+' 
+'             Constructor: (+1 Overloads) Sub New
+'             Function: Equals
+' 
+' 
+' 
+' 
+' 
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.ComponentModel.Collection
 
 Namespace ComponentModel.DataStructures
 
@@ -174,5 +175,53 @@ Namespace ComponentModel.DataStructures
                 Return String.Equals(a, b, mode)
             End Function
         End Structure
+
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="groups"></param>
+        ''' <param name="commonIds">
+        ''' common ids in all groups, if you do not need this parameter, you can set it to <c>Nothing</c>.
+        ''' </param>
+        ''' <returns>
+        ''' exclusive ids in each groups
+        ''' </returns>
+        <Extension>
+        Public Function VennExclusiveSet(groups As Dictionary(Of String, String()), Optional ByRef commonIds As String() = Nothing) As Dictionary(Of String, String())
+            ' 统计每个ID出现的组数
+            Dim idOccurrence As New Dictionary(Of String, Integer)
+            ' 计算总组数
+            Dim totalGroups = groups.Count
+            ' 计算每个组特有的ID
+            Dim exclusiveIds As New Dictionary(Of String, String())
+
+            For Each group As KeyValuePair(Of String, String()) In groups
+                ' 对每个组的ID进行去重处理
+                For Each id As String In group.Value.Distinct()
+                    If idOccurrence.ContainsKey(id) Then
+                        idOccurrence(id) += 1
+                    Else
+                        idOccurrence(id) = 1
+                    End If
+                Next
+            Next
+
+            ' 计算所有组共有的ID
+            commonIds = idOccurrence _
+                .Where(Function(kv) kv.Value = totalGroups) _
+                .Keys
+
+            For Each group As KeyValuePair(Of String, String()) In groups
+                ' 找出只在该组出现的ID
+                Dim uniqueIds = group.Value _
+                    .Distinct() _
+                    .Where(Function(id) idOccurrence(id) = 1) _
+                    .ToArray
+
+                Call exclusiveIds.Add(group.Key, uniqueIds)
+            Next
+
+            Return exclusiveIds
+        End Function
     End Module
 End Namespace

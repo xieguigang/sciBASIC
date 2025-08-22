@@ -1,64 +1,64 @@
 ﻿#Region "Microsoft.VisualBasic::b2cd2d4a1c757ad07a7a9a2409c7ec4c, Microsoft.VisualBasic.Core\src\Extensions\Collection\KeyValuePair.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 964
-    '    Code Lines: 555 (57.57%)
-    ' Comment Lines: 301 (31.22%)
-    '    - Xml Docs: 94.68%
-    ' 
-    '   Blank Lines: 108 (11.20%)
-    '     File Size: 40.99 KB
+' Summaries:
 
 
-    '     Module KeyValuePairExtensions
-    ' 
-    '         Function: (+2 Overloads) [Select], (+2 Overloads) Add, AsEnumerable, AsNamedValueTuples, AsTable
-    '                   ComputeIfAbsent, (+3 Overloads) ContainsKey, (+2 Overloads) DescendingMap, DictionaryData, (+2 Overloads) EnumerateTuples
-    '                   EnumParser, FlatTable, (+2 Overloads) GetByKey, GetValueOrDefault, GroupByKey
-    '                   HaveData, IterateNameCollections, IterateNameValues, IteratesAll, Join
-    '                   KeyItem, (+3 Overloads) Keys, (+2 Overloads) NamedValues, (+3 Overloads) NameValueCollection, ParserDictionary
-    '                   Popout, RemoveAndGet, ReverseMaps, (+2 Overloads) Selects, SetOfKeyValuePairs
-    '                   (+2 Overloads) Subset, tableInternal, (+2 Overloads) Takes, (+3 Overloads) ToDictionary, ToLower
-    '                   ToUpper, Tsv, Tuple, TupleTable, (+3 Overloads) Values
-    '                   XMLModel
-    ' 
-    '         Sub: Add, SortByKey, SortByValue
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 964
+'    Code Lines: 555 (57.57%)
+' Comment Lines: 301 (31.22%)
+'    - Xml Docs: 94.68%
+' 
+'   Blank Lines: 108 (11.20%)
+'     File Size: 40.99 KB
+
+
+'     Module KeyValuePairExtensions
+' 
+'         Function: (+2 Overloads) [Select], (+2 Overloads) Add, AsEnumerable, AsNamedValueTuples, AsTable
+'                   ComputeIfAbsent, (+3 Overloads) ContainsKey, (+2 Overloads) DescendingMap, DictionaryData, (+2 Overloads) EnumerateTuples
+'                   EnumParser, FlatTable, (+2 Overloads) GetByKey, GetValueOrDefault, GroupByKey
+'                   HaveData, IterateNameCollections, IterateNameValues, IteratesAll, Join
+'                   KeyItem, (+3 Overloads) Keys, (+2 Overloads) NamedValues, (+3 Overloads) NameValueCollection, ParserDictionary
+'                   Popout, RemoveAndGet, ReverseMaps, (+2 Overloads) Selects, SetOfKeyValuePairs
+'                   (+2 Overloads) Subset, tableInternal, (+2 Overloads) Takes, (+3 Overloads) ToDictionary, ToLower
+'                   ToUpper, Tsv, Tuple, TupleTable, (+3 Overloads) Values
+'                   XMLModel
+' 
+'         Sub: Add, SortByKey, SortByValue
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -536,6 +536,11 @@ Namespace ComponentModel.Collection
                 .ToArray
         End Function
 
+        <Extension>
+        Public Function Keys(Of K, V)(source As IEnumerable(Of KeyValuePair(Of K, V))) As K()
+            Return (From t As KeyValuePair(Of K, V) In source Select t.Key).ToArray
+        End Function
+
         ''' <summary>
         ''' Get a specific item value from the target collction data using its UniqueID property，
         ''' (请注意，请尽量不要使用本方法，因为这个方法的效率有些低，对于获取<see cref="INamedValue">
@@ -556,7 +561,7 @@ Namespace ComponentModel.Collection
                                                   As T
 
             Dim find As T = LinqAPI.DefaultFirst(Of T) _
- _
+                                                       _
                 () <= From x As T
                       In source
                       Where String.Equals(uid, x.Key, ignoreCase)
