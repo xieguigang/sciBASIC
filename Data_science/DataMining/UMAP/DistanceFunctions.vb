@@ -1,67 +1,68 @@
 ﻿#Region "Microsoft.VisualBasic::e8c3c5134f82399f8b9c0717d5fa9ac8, Data_science\DataMining\UMAP\DistanceFunctions.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 102
-    '    Code Lines: 57 (55.88%)
-    ' Comment Lines: 32 (31.37%)
-    '    - Xml Docs: 87.50%
-    ' 
-    '   Blank Lines: 13 (12.75%)
-    '     File Size: 3.75 KB
+' Summaries:
 
 
-    ' Enum DistanceFunction
-    ' 
-    '     Cosine, Euclidean, NormalizedCosine, SpectralCosine, TanimotoFingerprint
-    ' 
-    '  
-    ' 
-    ' 
-    ' 
-    ' Class DistanceFunctions
-    ' 
-    '     Function: Cosine, CosineForNormalizedVectors, Euclidean, GetFunction, JaccardSimilarity
-    '               SpectralSimilarity
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 102
+'    Code Lines: 57 (55.88%)
+' Comment Lines: 32 (31.37%)
+'    - Xml Docs: 87.50%
+' 
+'   Blank Lines: 13 (12.75%)
+'     File Size: 3.75 KB
+
+
+' Enum DistanceFunction
+' 
+'     Cosine, Euclidean, NormalizedCosine, SpectralCosine, TanimotoFingerprint
+' 
+'  
+' 
+' 
+' 
+' Class DistanceFunctions
+' 
+'     Function: Cosine, CosineForNormalizedVectors, Euclidean, GetFunction, JaccardSimilarity
+'               SpectralSimilarity
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Math
+Imports Microsoft.VisualBasic.Math.Correlations
 Imports std = System.Math
 
 Public Enum DistanceFunction
@@ -70,6 +71,7 @@ Public Enum DistanceFunction
     SpectralCosine
     TanimotoFingerprint
     Euclidean
+    Pearson
 End Enum
 
 Public NotInheritable Class DistanceFunctions
@@ -81,9 +83,22 @@ Public NotInheritable Class DistanceFunctions
             Case DistanceFunction.SpectralCosine : Return AddressOf SpectralSimilarity
             Case DistanceFunction.TanimotoFingerprint : Return AddressOf JaccardSimilarity
             Case DistanceFunction.Euclidean : Return AddressOf Euclidean
+            Case DistanceFunction.Pearson : Return AddressOf PearsonCor
             Case Else
                 Return AddressOf Cosine
         End Select
+    End Function
+
+    Public Shared Function PearsonCor(lhs As Double(), rhs As Double()) As Double
+        Dim cor As Double = Correlations.GetPearson(lhs, rhs)
+
+        If Double.IsNaN(cor) Then
+            Return 1
+        ElseIf Double.IsInfinity(cor) Then
+            Return 0
+        Else
+            Return 1 - cor ^ 2
+        End If
     End Function
 
     ''' <summary>
