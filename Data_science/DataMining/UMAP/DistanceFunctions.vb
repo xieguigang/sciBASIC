@@ -72,6 +72,7 @@ Public Enum DistanceFunction
     TanimotoFingerprint
     Euclidean
     Pearson
+    AbsPearson
 End Enum
 
 Public NotInheritable Class DistanceFunctions
@@ -84,6 +85,7 @@ Public NotInheritable Class DistanceFunctions
             Case DistanceFunction.TanimotoFingerprint : Return AddressOf JaccardSimilarity
             Case DistanceFunction.Euclidean : Return AddressOf Euclidean
             Case DistanceFunction.Pearson : Return AddressOf PearsonCor
+            Case DistanceFunction.AbsPearson : Return AddressOf PearsonAbs
             Case Else
                 Return AddressOf Cosine
         End Select
@@ -99,6 +101,19 @@ Public NotInheritable Class DistanceFunctions
         Else
             ' pearson distance is defined as 1 - r ^ 2
             Return 1 - cor ^ 2
+        End If
+    End Function
+
+    Public Shared Function PearsonAbs(lhs As Double(), rhs As Double()) As Double
+        Dim cor As Double = Correlations.GetPearson(lhs, rhs)
+
+        If Double.IsNaN(cor) Then
+            Return 1
+        ElseIf Double.IsInfinity(cor) Then
+            Return 0
+        Else
+            ' pearson distance is defined as 1 - |r|
+            Return 1 - std.Abs(cor)
         End If
     End Function
 
