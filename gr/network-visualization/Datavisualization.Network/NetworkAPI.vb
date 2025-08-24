@@ -61,7 +61,7 @@ Imports Microsoft.VisualBasic.Linq
 Public Module NetworkAPI
 
     <Extension>
-    Public Iterator Function Neighborhood(adj As AdjacencySet(Of Graph.Edge)) As IEnumerable(Of Node)
+    Public Iterator Function Neighborhood(adj As AdjacencySet(Of Graph.Edge)) As IEnumerable(Of Graph.Node)
         For Each edge As Graph.Edge In adj.EnumerateAllEdges()
             If adj.U = edge.U.label Then
                 Yield edge.V
