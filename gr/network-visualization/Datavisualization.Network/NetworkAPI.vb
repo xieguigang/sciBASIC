@@ -155,7 +155,7 @@ Public Module NetworkAPI
         Dim node As Graph.Node = g.GetElementByID(v)
         Dim edges = node.directedVertex.AsEnumerable.ToList
 
-        For Each edge As Edge In edges
+        For Each edge As Edge In edges.ToArray
             If edge.U IsNot node Then
                 Call edges.AddRange(TakeSubEdges(g, edge.U.label, radius - 1))
             End If
