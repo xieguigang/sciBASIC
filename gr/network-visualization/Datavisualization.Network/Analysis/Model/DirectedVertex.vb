@@ -59,6 +59,7 @@
 #End Region
 
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
+Imports Microsoft.VisualBasic.Linq
 
 Namespace Analysis.Model
 
@@ -78,6 +79,38 @@ Namespace Analysis.Model
         ''' </summary>
         Friend ReadOnly incomingEdges As New HashSet(Of Edge)
 
+        Public ReadOnly Property outDegree As Integer
+            Get
+                Return outgoingEdges.Count
+            End Get
+        End Property
+
+        Public ReadOnly Property inDegree As Integer
+            Get
+                Return incomingEdges.Count
+            End Get
+        End Property
+
+        ''' <summary>
+        ''' summ all connected edge weights as weighted degree connectivity
+        ''' </summary>
+        ''' <returns></returns>
+        ''' <remarks>
+        ''' the edge weight data should be not missing!
+        ''' </remarks>
+        Public ReadOnly Property connectivity As Double
+            Get
+                Return Aggregate link As Edge
+                       In outgoingEdges.JoinIterates(incomingEdges)
+                       Into Sum(link.weight)
+            End Get
+        End Property
+
+        ''' <summary>
+        ''' create a new node edge connection collection object
+        ''' </summary>
+        ''' <param name="label">the node unique id</param>
+        ''' <exception cref="ArgumentNullException"></exception>
         Sub New(label As String)
             Me.label = label
 
