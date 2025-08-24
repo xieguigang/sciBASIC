@@ -176,6 +176,9 @@ Namespace Analysis.Model
             For Each edge As Edge In outgoingEdges
                 Yield edge
             Next
+            For Each edge As Edge In incomingEdges
+                Yield edge
+            Next
         End Function
 
         Private Iterator Function IEnumerable_GetEnumerator() As IEnumerator Implements IEnumerable.GetEnumerator

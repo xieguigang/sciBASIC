@@ -54,6 +54,7 @@
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Data.GraphTheory.Network
 Imports Microsoft.VisualBasic.Data.visualize.Network.Analysis.Model
+Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph.Abstract
 Imports Microsoft.VisualBasic.Linq
 
@@ -110,5 +111,21 @@ Public Module NetworkAPI
         Next
 
         Return graph
+    End Function
+
+    <Extension>
+    Public Function TakeSubGraph(g As NetworkGraph, v As IEnumerable(Of String), Optional radius As Integer = 1) As NetworkGraph
+
+    End Function
+
+    Private Function TakeSubEdges(g As NetworkGraph, v As String, radius As Integer) As IEnumerable(Of Edge)
+        If radius <= 0 Then
+            Return {}
+        End If
+
+        Dim node As Graph.Node = g.GetElementByID(v)
+        Dim edges = node.directedVertex.AsEnumerable.ToArray
+
+        Return edges
     End Function
 End Module
