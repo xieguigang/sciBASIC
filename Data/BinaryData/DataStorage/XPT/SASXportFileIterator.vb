@@ -6,6 +6,42 @@ Namespace Xpt
     ''' <summary>
     ''' SAS XPT file reader
     ''' </summary>
+    ''' <remarks>
+    ''' SAS XPT (SAS Transport File) is a standardized file format primarily used for transferring data 
+    ''' between different SAS software versions and systems, particularly in regulated environments 
+    ''' like clinical trials. Here are the key aspects based on the search results:
+    ''' 
+    ''' ### 1. **Core Purpose and Functionality**  
+    ''' 
+    ''' XPT files enable cross-version compatibility for SAS datasets, resolving issues when data is 
+    ''' shared between different SAS installations (e.g., SAS 9 and SAS Viya). This ensures seamless 
+    ''' data exchange without version conflicts .  
+    ''' 
+    ''' ### 2. **Structure and Naming Conventions**  
+    ''' 
+    ''' - Each XPT file corresponds to a single dataset.  
+    ''' - The dataset name must match the XPT filename exactly.  
+    ''' - Files use a standardized extension (e.g., `.xpt`), as specified in regulatory guidelines like 
+    '''   the *Drug Clinical Trial Data Submission Guideline* .  
+    '''   
+    ''' ### 3. **Regulatory and Industry Applications**  
+    ''' 
+    ''' XPT is the mandated format for submitting clinical trial data to regulatory agencies (e.g., 
+    ''' FDA, NMPA). Its structured format ensures data integrity and consistency during reviews .  
+    ''' 
+    ''' ### 4. **Interoperability with Other Tools**  
+    ''' 
+    ''' Beyond SAS, XPT files can be processed in other programming environments. For example, in R, 
+    ''' the `Hmisc` package's `sasxport.get` function imports XPT data for analysis, demonstrating 
+    ''' cross-platform utility .  
+    ''' 
+    ''' ### 5. **Key Advantages**  
+    ''' 
+    ''' - **Standardization**: Uniform structure simplifies data validation and regulatory submissions.  
+    ''' - **Compatibility**: Eliminates barriers between SAS versions and external systems.  
+    ''' - **Efficiency**: Streamlines data transfer in large-scale studies (e.g., pharmaceutical trials) .  
+    ''' 
+    ''' </remarks>
     Public Class SASXportFileIterator : Inherits SASXportConverter
 
         Private crecord As IEnumerable(Of Object)
