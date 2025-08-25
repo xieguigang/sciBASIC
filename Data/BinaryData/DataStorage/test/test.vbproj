@@ -135,17 +135,37 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\BinaryData\BinaryData.vbproj">
-      <Project>{487d7c92-d05a-4908-bf81-e6baba0bf592}</Project>
-      <Name>BinaryData</Name>
+    <ProjectReference Include="..\..\..\..\Data_science\Mathematica\Math\Math\Math.NET5.vbproj">
+      <Project>{1ab58239-13f7-b08f-f097-4c5f0d4c3764}</Project>
+      <Name>Math.NET5</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\..\Microsoft.VisualBasic.Core\src\47-dotnet_Microsoft.VisualBasic.vbproj">
-      <Project>{fecce1fd-e1d4-49e3-a668-60bb5e7aed99}</Project>
-      <Name>47-dotnet_Microsoft.VisualBasic</Name>
+    <ProjectReference Include="..\..\..\..\Microsoft.VisualBasic.Core\src\Core.vbproj">
+      <Project>{7c7d0129-8931-fdff-7c5a-c8a634b419a7}</Project>
+      <Name>Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\DataStorage.vbproj">
-      <Project>{3c79ae03-a766-4b61-bdc4-824d78481b53}</Project>
-      <Name>DataStorage</Name>
+    <ProjectReference Include="..\..\..\DataFrame\dataframework-netcore5.vbproj">
+      <Project>{bed849dd-d5f1-07f8-df66-63efc8a68b3f}</Project>
+      <Name>dataframework-netcore5</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\BinaryData\binarydata-netcore5.vbproj">
+      <Project>{223979fe-8188-81ec-9e00-52df2bbc87a8}</Project>
+      <Name>binarydata-netcore5</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Feather\FeatherFormat.vbproj">
+      <Project>{bb371fba-f3e4-2d5a-ba5c-d22441bd8bb5}</Project>
+      <Name>FeatherFormat</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\HDF5\HDF5.vbproj">
+      <Project>{7fa00a31-5039-ef2f-1ccf-1171208edc93}</Project>
+      <Name>HDF5</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\netCDF\netCDF.vbproj">
+      <Project>{97c2241c-9765-04e6-1624-9b6cce853715}</Project>
+      <Name>netCDF</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\datastorage-netcore5.vbproj">
+      <Project>{581ed230-3020-6363-ed96-8eebd8e8ad58}</Project>
+      <Name>datastorage-netcore5</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />

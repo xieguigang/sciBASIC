@@ -1,58 +1,58 @@
 ﻿#Region "Microsoft.VisualBasic::90047379c4788082f0d12f5454c90286, Data\BinaryData\DataStorage\test\Module1.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 75
-    '    Code Lines: 50 (66.67%)
-    ' Comment Lines: 0 (0.00%)
-    '    - Xml Docs: 0.00%
-    ' 
-    '   Blank Lines: 25 (33.33%)
-    '     File Size: 2.40 KB
+' Summaries:
 
 
-    ' Module Module1
-    ' 
-    '     Sub: Main, summary, testReaderDump, testWriter
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 75
+'    Code Lines: 50 (66.67%)
+' Comment Lines: 0 (0.00%)
+'    - Xml Docs: 0.00%
+' 
+'   Blank Lines: 25 (33.33%)
+'     File Size: 2.40 KB
+
+
+' Module Module1
+' 
+'     Sub: Main, summary, testReaderDump, testWriter
+' 
+' /********************************************************************************/
 
 #End Region
 
-Imports Microsoft.VisualBasic.Data.IO.netCDF
-Imports Microsoft.VisualBasic.Data.IO.netCDF.Components
+Imports Microsoft.VisualBasic.DataStorage.netCDF
+Imports Microsoft.VisualBasic.DataStorage.netCDF.Components
 Imports Microsoft.VisualBasic.Text
 
 Module Module1
@@ -108,7 +108,7 @@ Module Module1
         Dim massvalue = file.getDataVariable("mass_values")
         Dim scans = file.getDataVariable("actual_scan_number")
 
-        Call Xml.SaveAsXml(file, "./output_dump-writer.Xml")
+        Call Data.Xml.SaveAsXml(file, "./output_dump-writer.Xml")
 
         Pause()
     End Sub
@@ -122,7 +122,7 @@ Module Module1
 
         Dim massvalue = file.getDataVariable("mass_values")
 
-        Call Xml.SaveAsXml(file, "./output_dump.Xml")
+        Call Data.Xml.SaveAsXml(file, "./output_dump.Xml")
     End Sub
 
 End Module
