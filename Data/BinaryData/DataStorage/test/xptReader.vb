@@ -4,6 +4,7 @@ Imports Microsoft.VisualBasic.Serialization.JSON
 Module xptReader
 
     Const testfile = "G:\pixelArtist\src\framework\Data\data\ALQ_H.xpt"
+    Const test2222 = "G:\pixelArtist\src\framework\Data\data\test.xpt"
 
     Sub Main()
         Dim converter As SASXportConverter = New SASXportConverter(testfile)
