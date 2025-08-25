@@ -1,11 +1,14 @@
 ﻿Imports System.IO
+Imports System.Runtime.InteropServices
 Imports Microsoft.VisualBasic.Data.IO.Xpt.Types
+Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Serialization.JSON
+Imports Microsoft.VisualBasic.Text
 Imports std = System.Math
 
 Namespace Xpt
 
-    Public Class SASXportConverter
-        Implements IDisposable
+    Public Class SASXportConverter : Implements IDisposable
 
         Public Shared LINE_LEN As Integer = 80
 
@@ -51,8 +54,8 @@ Namespace Xpt
             readNextRecord()
         End Sub
 
-        Private Sub xport_read_record(record As Byte())
-            read_bytes(record, LINE_LEN)
+        Private Sub xport_read_record(<Out> ByRef record As Byte())
+            Call read_bytes(record, LINE_LEN)
         End Sub
 
         Private Function xport_read_header_record() As XPTHeader
@@ -161,7 +164,6 @@ Namespace Xpt
         End Function
 
         Private Function xport_expect_header_record(v5_name As String, v8_name As String) As XPTHeader
-
             Dim xrecord As XPTHeader = xport_read_header_record()
 
             If ctx.version = 5 AndAlso Not v5_name.Equals(xrecord.name, StringComparison.OrdinalIgnoreCase) Then
@@ -174,27 +176,27 @@ Namespace Xpt
         End Function
 
         Private Sub xport_read_table_name_record()
-
             Dim line As Byte() = createDefaultBuffer()
-            xport_read_record(line)
+
+            Call xport_read_record(line)
 
             Dim dst = createBuffer(129)
             Dim src_len = If(ctx.version = 5, 8, 32)
-            ctx.table_name = IO.readString(dst, 8, src_len)
+            ctx.table_name = Strings.Trim(IO.readString(dst, 8, src_len)).Trim(ASCII.NUL, " "c)
         End Sub
 
         Private Sub xport_read_file_label_record()
-
             Dim line As Byte() = createDefaultBuffer()
-            xport_read_record(line)
+
+            Call xport_read_record(line)
 
             Dim dst = createBuffer(161)
             Dim src_len = 40
-            ctx.file_label = IO.readString(dst, 32, src_len)
+
+            ctx.file_label = Strings.Trim(IO.readString(dst, 32, src_len)).Trim(" "c, ASCII.NUL)
         End Sub
 
         Private Sub xport_read_namestr_header_record()
-
             Dim xrecord As XPTHeader = xport_read_header_record()
 
             If ctx.version = 5 AndAlso Not "NAMESTR".Equals(xrecord.name, StringComparison.OrdinalIgnoreCase) Then
@@ -208,11 +210,10 @@ Namespace Xpt
         End Sub
 
         Private Function xport_read_variables() As IList(Of XPTNameString)
-
-            Dim nstr As IList(Of XPTNameString) = New List(Of XPTNameString)()
+            Dim nstr As New List(Of XPTNameString)()
             Dim read = 0
-            For i = 0 To ctx.var_count - 1
 
+            For i = 0 To ctx.var_count - 1
                 Dim buffer = New Byte(NAMESTR_LEN - 1) {}
                 Dim bytes = read_bytes(buffer, NAMESTR_LEN)
                 read += bytes
@@ -236,10 +237,10 @@ Namespace Xpt
                 nstr.Add(namestr)
             Next
 
-            xport_skip_rest_of_record(read)
+            Call xport_skip_rest_of_record(read)
 
             If ctx.version = 5 Then
-                xport_read_obs_header_record()
+                Call xport_read_obs_header_record()
             Else
                 Dim xrecord As XPTHeader = xport_read_header_record()
                 ' void 
@@ -441,15 +442,20 @@ Namespace Xpt
             Return False
         End Function
 
-        Private Function read_bytes(buffer As Byte(), len As Integer) As Integer
+        Private Function read_bytes(<Out> ByRef buffer As Byte(), len As Integer) As Integer
             Dim off = len
+
             Try
                 [in].BaseStream.Read(buffer, 0, len)
-            Catch __unusedException1__ As Exception
-                Console.WriteLine("!!WARN!! Reached EOF before read_fully, Offset: " & offsetField.ToString())
+            Catch ex As Exception
+                Call ("!!WARN!! Reached EOF before read_fully, Offset: " & offsetField.ToString()).Warning
+                Call App.LogException(ex)
+
                 Return -1
             End Try
+
             offsetField += off
+
             Return off
         End Function
 
@@ -522,7 +528,6 @@ Namespace Xpt
         End Sub
 
         Protected Friend Overridable Sub readNextRecord()
-
             If doneField Then
                 Return
             End If
@@ -557,14 +562,14 @@ Namespace Xpt
             End If
 
             processRecord(rowField, ctx.row_length)
+            ctx.parsed_row_count += 1
 
-            If Threading.Interlocked.Increment((ctx.parsed_row_count)) = ctx.row_limit Then
+            If ctx.parsed_row_count = ctx.row_limit Then
                 doneField = True
             End If
         End Sub
 
         Protected Friend Overridable Sub processRecord(row As Byte(), row_length As Integer)
-
             Dim pos = 0
             Dim [string] As String = Nothing
             recordField = New List(Of String)()
@@ -617,31 +622,34 @@ Namespace Xpt
         End Sub
 
         Public Overridable Sub readMeta()
-
             Dim header As XPTHeader = xport_read_library_record()
-            '  Console.WriteLine((new Gson()).toJson(header));
 
-            xport_skip_record()
+            Call VBDebugger.EchoLine(header.ToString)
+            Call xport_skip_record()
 
             Dim ts As TimeStamp = xport_read_timestamp_record()
-            '  Console.WriteLine((new Gson()).toJson(ts));
+
+            Call VBDebugger.EchoLine(ts.GetJson)
 
             Dim memberHeader = xport_expect_header_record("MEMBER", "MEMBV8")
-            ' Console.WriteLine((new Gson()).toJson(memberHeader));
+
+            Call VBDebugger.EchoLine(memberHeader.ToString)
 
             Dim descHeader = xport_expect_header_record("DSCRPTR", "DSCPTV8")
-            ' Console.WriteLine((new Gson()).toJson(descHeader));
+            Call VBDebugger.EchoLine(descHeader.ToString)
 
-            xport_read_table_name_record()
-
-            xport_read_file_label_record()
-
-            xport_read_namestr_header_record()
+            Call xport_read_table_name_record()
+            Call xport_read_file_label_record()
+            Call xport_read_namestr_header_record()
 
             Dim nstrs As IList(Of XPTNameString) = xport_read_variables()
-            '  Console.WriteLine((new Gson()).toJson(nstrs));
+            Dim i As i32 = 1
 
-            ' Console.WriteLine((new Gson()).toJson(ctx));
+            For Each var As XPTNameString In nstrs
+                Call VBDebugger.EchoLine($"#{++i}{vbTab}{var.ToString}")
+            Next
+
+            Call VBDebugger.EchoLine(ctx.ToString)
 
             If ctx.row_length = 0 Then
                 doneField = True

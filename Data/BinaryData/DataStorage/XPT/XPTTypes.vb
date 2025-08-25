@@ -63,6 +63,10 @@
 
         ' size 18 bytes
         Public rest As String
+
+        Public Overrides Function ToString() As String
+            Return $"{nname} ({nlabel})"
+        End Function
     End Class
 
     Public Class XPTContext
