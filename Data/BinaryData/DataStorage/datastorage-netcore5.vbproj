@@ -14,6 +14,10 @@
     <PackageProjectUrl>http://scibasic.net</PackageProjectUrl>
     <RepositoryUrl>https://github.com/xieguigang/sciBASIC</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
+    <UseApplicationFramework>True</UseApplicationFramework>
+    <DocumentationFile>Microsoft.VisualBasic.Data.Storage.xml</DocumentationFile>
+    <IncludeSymbols>True</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -100,6 +104,237 @@
     <DefineConstants>netcore5=1,UNIX=1</DefineConstants>
     <DefineTrace>true</DefineTrace>
   
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='nuget_release|net8.0-windows|AnyCPU'">
+    <RemoveIntegerChecks>True</RemoveIntegerChecks>
+    <DebugType>full</DebugType>
+    <DefineTrace>True</DefineTrace>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='nuget_release|net8.0|AnyCPU'">
+    <RemoveIntegerChecks>True</RemoveIntegerChecks>
+    <DebugType>full</DebugType>
+    <DefineTrace>True</DefineTrace>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='nuget_release|net48|AnyCPU'">
+    <RemoveIntegerChecks>True</RemoveIntegerChecks>
+    <DebugType>full</DebugType>
+    <DefineTrace>True</DefineTrace>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='gcmodeller_desktop|net8.0-windows|x64'">
+    <RemoveIntegerChecks>True</RemoveIntegerChecks>
+    <DebugType>full</DebugType>
+    <DefineTrace>True</DefineTrace>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='gcmodeller_desktop|net8.0|x64'">
+    <RemoveIntegerChecks>True</RemoveIntegerChecks>
+    <DebugType>full</DebugType>
+    <DefineTrace>True</DefineTrace>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='gcmodeller_desktop|net48|x64'">
+    <RemoveIntegerChecks>True</RemoveIntegerChecks>
+    <DebugType>full</DebugType>
+    <DefineTrace>True</DefineTrace>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='gcmodeller_desktop|net8.0-windows|AnyCPU'">
+    <RemoveIntegerChecks>True</RemoveIntegerChecks>
+    <DebugType>full</DebugType>
+    <DefineTrace>True</DefineTrace>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='gcmodeller_desktop|net8.0|AnyCPU'">
+    <RemoveIntegerChecks>True</RemoveIntegerChecks>
+    <DebugType>full</DebugType>
+    <DefineTrace>True</DefineTrace>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='gcmodeller_desktop|net48|AnyCPU'">
+    <RemoveIntegerChecks>True</RemoveIntegerChecks>
+    <DebugType>full</DebugType>
+    <DefineTrace>True</DefineTrace>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='mzkit_win32|net8.0-windows|AnyCPU'">
+    <RemoveIntegerChecks>True</RemoveIntegerChecks>
+    <DebugType>full</DebugType>
+    <DefineTrace>True</DefineTrace>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='mzkit_win32|net8.0|AnyCPU'">
+    <RemoveIntegerChecks>True</RemoveIntegerChecks>
+    <DebugType>full</DebugType>
+    <DefineTrace>True</DefineTrace>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='mzkit_win32|net48|AnyCPU'">
+    <RemoveIntegerChecks>True</RemoveIntegerChecks>
+    <DebugType>full</DebugType>
+    <DefineTrace>True</DefineTrace>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='mzkit|net8.0-windows|AnyCPU'">
+    <RemoveIntegerChecks>True</RemoveIntegerChecks>
+    <DebugType>full</DebugType>
+    <DefineTrace>True</DefineTrace>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='mzkit|net8.0|AnyCPU'">
+    <RemoveIntegerChecks>True</RemoveIntegerChecks>
+    <DebugType>full</DebugType>
+    <DefineTrace>True</DefineTrace>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='mzkit|net48|AnyCPU'">
+    <RemoveIntegerChecks>True</RemoveIntegerChecks>
+    <DebugType>full</DebugType>
+    <DefineTrace>True</DefineTrace>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Rsharp_app_release|net8.0-windows|AnyCPU'">
+    <RemoveIntegerChecks>True</RemoveIntegerChecks>
+    <DebugType>full</DebugType>
+    <DefineTrace>True</DefineTrace>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Rsharp_app_release|net8.0|AnyCPU'">
+    <RemoveIntegerChecks>True</RemoveIntegerChecks>
+    <DebugType>full</DebugType>
+    <DefineTrace>True</DefineTrace>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Rsharp_app_release|net48|AnyCPU'">
+    <RemoveIntegerChecks>True</RemoveIntegerChecks>
+    <DebugType>full</DebugType>
+    <DefineTrace>True</DefineTrace>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net8.0-windows|AnyCPU'">
+    <RemoveIntegerChecks>True</RemoveIntegerChecks>
+    <DebugType>full</DebugType>
+    <DefineTrace>True</DefineTrace>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net8.0|AnyCPU'">
+    <RemoveIntegerChecks>True</RemoveIntegerChecks>
+    <DebugType>full</DebugType>
+    <DefineTrace>True</DefineTrace>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net48|AnyCPU'">
+    <RemoveIntegerChecks>True</RemoveIntegerChecks>
+    <DebugType>full</DebugType>
+    <DefineTrace>True</DefineTrace>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net8.0-windows|AnyCPU'">
+    <DebugType>full</DebugType>
+    <DefineTrace>True</DefineTrace>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net8.0|AnyCPU'">
+    <DebugType>full</DebugType>
+    <DefineTrace>True</DefineTrace>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net48|AnyCPU'">
+    <DebugType>full</DebugType>
+    <DefineTrace>True</DefineTrace>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net8.0-windows|x64'">
+    <DebugType>full</DebugType>
+    <DefineTrace>True</DefineTrace>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net8.0|x64'">
+    <DebugType>full</DebugType>
+    <DefineTrace>True</DefineTrace>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net48|x64'">
+    <DebugType>full</DebugType>
+    <DefineTrace>True</DefineTrace>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net8.0-windows|x64'">
+    <DebugType>full</DebugType>
+    <DefineTrace>True</DefineTrace>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net8.0|x64'">
+    <DebugType>full</DebugType>
+    <DefineTrace>True</DefineTrace>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net48|x64'">
+    <DebugType>full</DebugType>
+    <DefineTrace>True</DefineTrace>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Rsharp_app_release|net8.0-windows|x64'">
+    <DebugType>full</DebugType>
+    <DefineTrace>True</DefineTrace>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Rsharp_app_release|net8.0|x64'">
+    <DebugType>full</DebugType>
+    <DefineTrace>True</DefineTrace>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Rsharp_app_release|net48|x64'">
+    <DebugType>full</DebugType>
+    <DefineTrace>True</DefineTrace>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='mzkit|net8.0-windows|x64'">
+    <DebugType>full</DebugType>
+    <DefineTrace>True</DefineTrace>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='mzkit|net8.0|x64'">
+    <DebugType>full</DebugType>
+    <DefineTrace>True</DefineTrace>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='mzkit|net48|x64'">
+    <DebugType>full</DebugType>
+    <DefineTrace>True</DefineTrace>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='mzkit_win32|net8.0-windows|x64'">
+    <DebugType>full</DebugType>
+    <DefineTrace>True</DefineTrace>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='mzkit_win32|net8.0|x64'">
+    <DebugType>full</DebugType>
+    <DefineTrace>True</DefineTrace>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='mzkit_win32|net48|x64'">
+    <DebugType>full</DebugType>
+    <DefineTrace>True</DefineTrace>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='nuget_release|net8.0-windows|x64'">
+    <DebugType>full</DebugType>
+    <DefineTrace>True</DefineTrace>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='nuget_release|net8.0|x64'">
+    <DebugType>full</DebugType>
+    <DefineTrace>True</DefineTrace>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='nuget_release|net48|x64'">
+    <DebugType>full</DebugType>
+    <DefineTrace>True</DefineTrace>
   </PropertyGroup>
 
   <ItemGroup>
