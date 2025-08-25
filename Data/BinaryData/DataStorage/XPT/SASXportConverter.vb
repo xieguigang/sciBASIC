@@ -56,11 +56,10 @@ Namespace Xpt
         End Sub
 
         Private Function xport_read_header_record() As XPTHeader
-
-            Dim header As XPTHeader = New XPTHeader()
+            Dim header As New XPTHeader()
             Dim line As Byte() = createDefaultBuffer()
 
-            xport_read_record(line)
+            Call xport_read_record(line)
 
             Dim offset = 20
             header.name = IO.readString(line, offset, 8)
@@ -81,16 +80,15 @@ Namespace Xpt
         End Function
 
         Private Function xport_read_library_record() As XPTHeader
-
             Dim xrecord As XPTHeader = xport_read_header_record()
 
-            If "LIBRARY".Equals(xrecord.name, StringComparison.OrdinalIgnoreCase) Then
-                ctx.version = 5
-            ElseIf "LIBV8".Equals(xrecord.name, StringComparison.OrdinalIgnoreCase) Then
-                ctx.version = 8
-            Else
-                Throw New InvalidDataException("Unknows XPT File Version - " & ctx.version.ToString())
-            End If
+            Select Case UCase(xrecord.name)
+                Case "LIBRARY" : ctx.version = 5
+                Case "LIBV8" : ctx.version = 8
+                Case Else
+                    Throw New NotSupportedException($"Unknows XPT File XRecord Name - {xrecord.name}")
+            End Select
+
             Return xrecord
         End Function
 
@@ -108,10 +106,8 @@ Namespace Xpt
         End Sub
 
         Private Function xport_read_timestamp_record() As TimeStamp
-
             Dim line As Byte() = createDefaultBuffer()
-
-            Dim ts As TimeStamp = New TimeStamp()
+            Dim ts As New TimeStamp()
             Dim month As String
 
             xport_read_record(line)
@@ -129,12 +125,16 @@ Namespace Xpt
             offset += 3
             ts.tm_sec = Short.Parse(IO.readString(line, offset, 2))
             offset += 3
-            For i As Short = 0 To XPTTypes.XPORT_MONTHS.Length - 1
-                If XPTTypes.XPORT_MONTHS(i).Equals(month, StringComparison.OrdinalIgnoreCase) Then
-                    ts.tm_mon = i
-                    Exit For
-                End If
-            Next
+            ts.tm_mon = XPTTypes.XPORT_MONTHS.IndexOf(UCase(month))
+
+            If ts.tm_mon < 0 Then
+                Throw New InvalidDataException($"Invalid month name: {month}!")
+            Else
+                ' indexof [0-11]
+                ' add 1 convert to month [1-12]
+                ts.tm_mon += 1
+            End If
+
             If ts.tm_year < 60 Then
                 ts.tm_year += 2000
             ElseIf ts.tm_year < 100 Then

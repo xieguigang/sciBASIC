@@ -24,6 +24,10 @@
         Public num4 As Integer
         Public num5 As Integer
         Public num6 As Integer
+
+        Public Overrides Function ToString() As String
+            Return name
+        End Function
     End Class
 
     Public Class XPTNameString
@@ -80,9 +84,14 @@
         Public version As Integer
 
         Public variables As ReadStatVariable()
+
+        Public Overrides Function ToString() As String
+            Return $"version {version}"
+        End Function
     End Class
 
     Public Class TimeStamp
+
         Public tm_isdst As Integer = -1
         Public tm_mday As Short
         Public tm_mon As Short
@@ -90,6 +99,7 @@
         Public tm_hour As Short
         Public tm_min As Short
         Public tm_sec As Short
+
     End Class
 
     Public Class ReadStatVariable
