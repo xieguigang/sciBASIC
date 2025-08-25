@@ -51,6 +51,8 @@
 
 #End Region
 
+Imports System.IO
+Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports Microsoft.VisualBasic.Data.Framework
 Imports Microsoft.VisualBasic.Data.IO.Xpt
@@ -105,13 +107,24 @@ Public Module FrameReader
     ''' </summary>
     ''' <param name="file"></param>
     ''' <returns></returns>
+    ''' 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function ReadSasXPT(file As String) As DataFrame
-        Using iterator As New SASXportFileIterator(file)
+        Return ReadSasXPT(file.Open(FileMode.Open, doClear:=False, [readOnly]:=True), filename:=file)
+    End Function
+
+    ''' <summary>
+    ''' read sas xpt file as dataframe
+    ''' </summary>
+    ''' <param name="buffer"></param>
+    ''' <returns></returns>
+    Public Function ReadSasXPT(buffer As Stream, Optional filename As String = Nothing) As DataFrame
+        Using iterator As New SASXportFileIterator(buffer)
             Dim cols As List(Of Object)() = New List(Of Object)(iterator.MetaData.var_count - 1) {}
             Dim row As Object()
             Dim tableName = If(
                 iterator.MetaData.table_name.StringEmpty(, True),
-                file.BaseName,
+                filename.BaseName(allowEmpty:=True),
                 iterator.MetaData.table_name)
 
             For i As Integer = 0 To cols.Length - 1
