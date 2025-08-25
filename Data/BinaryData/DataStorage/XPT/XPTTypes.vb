@@ -117,6 +117,10 @@
         Public decimals As Integer
         Public skip As Integer
         Public index_after_skipping As Integer
+
+        Public Overrides Function ToString() As String
+            Return $"{name}({label})"
+        End Function
     End Class
 
     Public Class ReadstatMissingness
@@ -132,6 +136,10 @@
         Friend tag As Byte
         Friend is_system_missing As Integer
         Friend is_tagged_missing As Integer
+
+        Public Overrides Function ToString() As String
+            Return type.ToString
+        End Function
     End Class
 
     Public Class ReadstatLabelSet

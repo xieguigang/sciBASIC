@@ -13,7 +13,7 @@ Namespace Xpt
 
         Public Shared SAS_COLUMN_TYPE_CHR As Short = &H2
 
-        Protected Friend debugField As Boolean = False
+
         Protected Friend processBlankRecords As Boolean = False
         Protected Friend doneField As Boolean = False
         Protected Friend convertDate9ToString As Boolean = True
@@ -454,14 +454,6 @@ Namespace Xpt
         End Function
 
         Public Overridable Property Debug As Boolean
-            Get
-                Return debugField
-            End Get
-            Set(value As Boolean)
-                debugField = value
-            End Set
-        End Property
-
 
         Public Overridable ReadOnly Property Done As Boolean
             Get
@@ -585,7 +577,7 @@ Namespace Xpt
 
                 If variable.type = ReadstatType.READSTAT_TYPE_STRING Then
                     [string] = IO.readString(row, pos, variable.storage_width)
-                    If debugField Then
+                    If Debug Then
                         Console.Write(" < " & [string] & " >, ")
                     End If
                     value.tvalue = [string]
@@ -612,14 +604,14 @@ Namespace Xpt
                         val = XPTReaderUtils.convertSASDate9ToString(variable.format.ToLower(), dval)
                     End If
                     recordField.Add(val)
-                    If debugField Then
+                    If Debug Then
                         Console.Write(value.value.ToString() & ", ")
                     End If
                 End If
                 primitiveRecordField.Add(value)
                 pos += variable.storage_width
             Next
-            If debugField Then
+            If Debug Then
                 Console.WriteLine()
             End If
         End Sub
