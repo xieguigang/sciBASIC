@@ -101,6 +101,7 @@
 '
 
 Imports System.Runtime.CompilerServices
+Imports System.Runtime.InteropServices
 Imports System.Runtime.Serialization
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Data.GraphTheory.Network
@@ -293,7 +294,7 @@ Namespace Graph
             Return AddEdge(u, v, weight, Nothing)
         End Function
 
-        Public Overloads Function AddEdge(u As String, v As String, weight As Double, ByRef getNewEdge As Edge) As NetworkGraph(Of Node, Edge)
+        Public Overloads Function AddEdge(u As String, v As String, weight As Double, <Out> ByRef getNewEdge As Edge) As NetworkGraph(Of Node, Edge)
             getNewEdge = New EdgeData With {
                 .bends = {},
                 .label = $"{u}->{v}"

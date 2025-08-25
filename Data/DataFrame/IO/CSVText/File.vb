@@ -719,12 +719,12 @@ B21,B22,B23,...
         End Operator
 
         ''' <summary>
-        ''' Load the csv data document from a given path.(从指定的文件路径之中加载一个CSV格式的数据文件)
+        ''' Load the csv data document from a given path.
         ''' </summary>
         ''' <param name="Path"></param>
         ''' <param name="encoding"></param>
         ''' <returns></returns>
-        ''' <remarks></remarks>
+        ''' <remarks>(从指定的文件路径之中加载一个CSV格式的数据文件)</remarks>
         Public Shared Function Load(path$,
                                     Optional encoding As Encoding = Nothing,
                                     Optional trimBlanks As Boolean = False,

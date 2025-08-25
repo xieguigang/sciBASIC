@@ -57,6 +57,7 @@
 Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports System.Text
+Imports Microsoft.VisualBasic.ApplicationServices.Terminal.ProgressBar.Tqdm
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.ComponentModel.Collection
@@ -217,15 +218,23 @@ Public Module TextDoc
     Public Function IterateAllLines(path$,
                                     Optional encoding As Encodings = Encodings.Default,
                                     Optional verbose As Boolean = True,
-                                    Optional unsafe As Boolean = False) As IEnumerable(Of String)
-
-        Return path.IterateAllLines(encoding.CodePage, verbose:=verbose, unsafe:=unsafe)
+                                    Optional unsafe As Boolean = False,
+                                    Optional tqdm_wrap As Boolean = False) As IEnumerable(Of String)
+        Return path.IterateAllLines(
+            encoding:=encoding.CodePage,
+            verbose:=verbose,
+            unsafe:=unsafe,
+            tqdm_wrap:=tqdm_wrap
+        )
     End Function
 
     ''' <summary>
     ''' Reading a super large size text file through stream method.
     ''' </summary>
     ''' <param name="path"></param>
+    ''' <param name="tqdm_wrap">
+    ''' show tqdm progress bar for the file reading process when deal with a large file?
+    ''' </param>
     ''' <returns>不存在的文件会返回空集合</returns>
     ''' <remarks>
     ''' (通过具有缓存的流对象读取文本数据，使用迭代器来读取文件之中的所有的行，大文件推荐使用这个方法进行读取操作)
@@ -233,7 +242,8 @@ Public Module TextDoc
     <Extension>
     Public Iterator Function IterateAllLines(path$, encoding As Encoding,
                                              Optional verbose As Boolean = True,
-                                             Optional unsafe As Boolean = False) As IEnumerable(Of String)
+                                             Optional unsafe As Boolean = False,
+                                             Optional tqdm_wrap As Boolean = False) As IEnumerable(Of String)
         If path.IsURLPattern Then
             ' get request a html page
             For Each line As String In path.GET.LineTokens
@@ -268,9 +278,27 @@ Public Module TextDoc
         ' path.Open is affects by the memory configuration
         Using fs As Stream = path.Open(FileMode.Open, doClear:=False, [readOnly]:=True, verbose:=verbose)
             Using reader As New StreamReader(fs, encoding Or DefaultEncoding)
-                Do While Not reader.EndOfStream
-                    Yield reader.ReadLine
-                Loop
+                If tqdm_wrap Then
+                    For Each line As String In TqdmWrapper.WrapStreamReader(Of String)(
+                        bytesOfStream:=fs.Length,
+                        request:=Function(ByRef offset, bar) As String
+                                     offset = reader.BaseStream.Position
+
+                                     If reader.EndOfStream Then
+                                         Call bar.Finish()
+                                         Return Nothing
+                                     Else
+                                         Return reader.ReadLine
+                                     End If
+                                 End Function)
+
+                        Yield line
+                    Next
+                Else
+                    Do While Not reader.EndOfStream
+                        Yield reader.ReadLine
+                    Loop
+                End If
             End Using
         End Using
     End Function

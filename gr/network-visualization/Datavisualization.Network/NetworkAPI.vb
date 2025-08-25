@@ -54,13 +54,14 @@
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Data.GraphTheory.Network
 Imports Microsoft.VisualBasic.Data.visualize.Network.Analysis.Model
+Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph.Abstract
 Imports Microsoft.VisualBasic.Linq
 
 Public Module NetworkAPI
 
     <Extension>
-    Public Iterator Function Neighborhood(adj As AdjacencySet(Of Graph.Edge)) As IEnumerable(Of Node)
+    Public Iterator Function Neighborhood(adj As AdjacencySet(Of Graph.Edge)) As IEnumerable(Of Graph.Node)
         For Each edge As Graph.Edge In adj.EnumerateAllEdges()
             If adj.U = edge.U.label Then
                 Yield edge.V
@@ -110,5 +111,59 @@ Public Module NetworkAPI
         Next
 
         Return graph
+    End Function
+
+    <Extension>
+    Public Function TakeSubGraph(g As NetworkGraph, v As IEnumerable(Of String), Optional radius As Integer = 1) As NetworkGraph
+        Dim edges As Edge() = TakeSubEdges(g, v, radius).IteratesALL.Distinct.ToArray
+        Dim nodes = edges _
+            .Select(Iterator Function(i) As IEnumerable(Of Graph.Node)
+                        Yield i.U
+                        Yield i.V
+                    End Function) _
+            .IteratesALL _
+            .Distinct _
+            .ToArray
+        Dim subg As New NetworkGraph
+
+        For Each node As Graph.Node In nodes
+            Call subg.AddNode(node.Clone)
+        Next
+        For Each edge As Edge In edges
+            Call subg.CreateEdge(
+                subg.GetElementByID(edge.U.label),
+                subg.GetElementByID(edge.V.label),
+                edge.weight,
+                edge.data.Clone
+            )
+        Next
+
+        Return subg
+    End Function
+
+    Private Iterator Function TakeSubEdges(g As NetworkGraph, v As IEnumerable(Of String), radius As Integer) As IEnumerable(Of Edge())
+        For Each vid As String In v
+            Yield TakeSubEdges(g, vid, radius).ToArray
+        Next
+    End Function
+
+    Private Function TakeSubEdges(g As NetworkGraph, v As String, radius As Integer) As IEnumerable(Of Edge)
+        If radius <= 0 Then
+            Return {}
+        End If
+
+        Dim node As Graph.Node = g.GetElementByID(v)
+        Dim edges = node.directedVertex.AsEnumerable.ToList
+
+        For Each edge As Edge In edges.ToArray
+            If edge.U IsNot node Then
+                Call edges.AddRange(TakeSubEdges(g, edge.U.label, radius - 1))
+            End If
+            If edge.V IsNot node Then
+                Call edges.AddRange(TakeSubEdges(g, edge.V.label, radius - 1))
+            End If
+        Next
+
+        Return edges
     End Function
 End Module

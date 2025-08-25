@@ -58,19 +58,19 @@ Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports number = System.Double
-Imports stdNum = System.Math
+Imports std = System.Math
 
 Namespace EdgeBundling.Mingle
 
     Public Module InternalMath
 
-        Public ReadOnly MINGLE_PHI As Double = (1 + stdNum.Sqrt(5)) / 2
+        Public ReadOnly MINGLE_PHI As Double = (1 + std.Sqrt(5)) / 2
 
         Public Function dist(a As number(), b As number()) As number
             Dim diffX = a(0) - b(0)
             Dim diffY = a(1) - b(1)
 
-            Return stdNum.Sqrt(diffX * diffX + diffY * diffY)
+            Return std.Sqrt(diffX * diffX + diffY * diffY)
         End Function
 
         Public Function lerp(a As Vector, b As Vector, delta As Double) As Vector
@@ -78,7 +78,7 @@ Namespace EdgeBundling.Mingle
         End Function
 
         Public Function norm(a As number()) As number
-            Return stdNum.Sqrt(a(0) * a(0) + a(1) * a(1))
+            Return std.Sqrt(a(0) * a(0) + a(1) * a(1))
         End Function
 
         <Extension>
