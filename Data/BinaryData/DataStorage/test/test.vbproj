@@ -96,6 +96,7 @@
     <Compile Include="Module1.vb" />
     <Compile Include="HDF5test.vb" />
     <Compile Include="demoCDFWrite.vb" />
+    <Compile Include="xptReader.vb" />
     <Compile Include="SQLParserTest.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">

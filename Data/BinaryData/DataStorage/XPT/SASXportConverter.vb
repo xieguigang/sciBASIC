@@ -40,9 +40,10 @@ Namespace Xpt
 
         Public Sub New([in] As Stream)
             rawin = [in]
+            init()
         End Sub
 
-        Protected Friend Overridable Sub init()
+        Private Sub init()
             [in] = New StreamReader(rawin)
             ctx = New XPTContext()
             PrimitiveUtils.memset(blank_row, AscW(" "c), ctx.row_length)
@@ -658,17 +659,5 @@ Namespace Xpt
                 blank_row = New Byte(ctx.row_length - 1) {}
             End If
         End Sub
-
-        Public Shared Sub Main(args As String())
-            Try
-                Dim converter As SASXportConverter = New SASXportConverter("/Users/ravi1/Downloads/test.sasxpt")
-                converter.init()
-                converter.Dispose()
-            Catch e As Exception
-                Console.WriteLine(e.ToString())
-                Console.Write(e.StackTrace)
-            End Try
-        End Sub
-
     End Class
 End Namespace
