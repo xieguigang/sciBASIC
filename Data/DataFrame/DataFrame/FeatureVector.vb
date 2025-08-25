@@ -139,6 +139,13 @@ Public Class FeatureVector : Implements IReadOnlyId
         type = GetType(String)
     End Sub
 
+    Sub New(name As String, factors As IEnumerable(Of Byte))
+        Call Me.New(name)
+
+        vector = factors.ToArray
+        type = GetType(Byte)
+    End Sub
+
     Sub New(name As String, floats As IEnumerable(Of Single))
         Call Me.New(name)
 

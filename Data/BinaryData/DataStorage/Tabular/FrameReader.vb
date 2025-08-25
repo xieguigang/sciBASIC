@@ -53,6 +53,7 @@
 
 Imports Microsoft.VisualBasic.Data.Framework
 Imports Microsoft.VisualBasic.Data.IO.Xpt
+Imports Microsoft.VisualBasic.Data.IO.Xpt.Types
 Imports Microsoft.VisualBasic.DataStorage
 Imports Microsoft.VisualBasic.Linq
 Imports any = Microsoft.VisualBasic.Scripting
@@ -123,7 +124,24 @@ Public Module FrameReader
             Dim features As New Dictionary(Of String, FeatureVector)
 
             For i As Integer = 0 To cols.Length - 1
+                Dim field As ReadStatVariable = iterator.MetaData.variables(i)
 
+                Select Case field.type
+                    Case ReadstatType.READSTAT_TYPE_DOUBLE
+                        Call features.Add(field.name, New FeatureVector(field.name, cols(i).Select(Function(s) CDbl(s))))
+                    Case ReadstatType.READSTAT_TYPE_FLOAT
+                        Call features.Add(field.name, New FeatureVector(field.name, cols(i).Select(Function(s) CSng(s))))
+                    Case ReadstatType.READSTAT_TYPE_INT16
+                        Call features.Add(field.name, New FeatureVector(field.name, cols(i).Select(Function(s) CShort(s))))
+                    Case ReadstatType.READSTAT_TYPE_INT32
+                        Call features.Add(field.name, New FeatureVector(field.name, cols(i).Select(Function(s) CInt(s))))
+                    Case ReadstatType.READSTAT_TYPE_INT8
+                        Call features.Add(field.name, New FeatureVector(field.name, cols(i).Select(Function(s) CByte(s))))
+                    Case ReadstatType.READSTAT_TYPE_STRING
+                        Call features.Add(field.name, New FeatureVector(field.name, cols(i).Select(Function(s) CStr(s))))
+                    Case Else
+                        Throw New NotImplementedException(field.type.ToString)
+                End Select
             Next
 
             Return New DataFrame With {
