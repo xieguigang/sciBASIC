@@ -1,4 +1,5 @@
-﻿Imports Microsoft.VisualBasic.Data.IO.Xpt
+﻿Imports Microsoft.VisualBasic.Data.IO
+Imports Microsoft.VisualBasic.Data.IO.Xpt
 Imports Microsoft.VisualBasic.Serialization.JSON
 
 Module xptReader
@@ -7,6 +8,10 @@ Module xptReader
     Const test2222 = "G:\pixelArtist\src\framework\Data\data\test.xpt"
 
     Sub Main()
+        Call tableReader()
+    End Sub
+
+    Sub fileTest()
         Dim converter As SASXportConverter = New SASXportConverter(testfile)
         converter.Dispose()
 
@@ -22,5 +27,11 @@ Module xptReader
         cal = New DateTime(1960, 1, 1)
         cal.AddDays(19778)
         Console.WriteLine(cal.ToString())
+    End Sub
+
+    Sub tableReader()
+        Dim tbl = FrameReader.ReadSasXPT(test2222)
+
+        Pause()
     End Sub
 End Module

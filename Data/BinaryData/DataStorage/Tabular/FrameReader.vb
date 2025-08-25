@@ -1,57 +1,58 @@
 ﻿#Region "Microsoft.VisualBasic::9fe7ed9b778ef3749dee7e889f7c58b8, Data\BinaryData\DataStorage\Tabular\FrameReader.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 47
-    '    Code Lines: 35 (74.47%)
-    ' Comment Lines: 5 (10.64%)
-    '    - Xml Docs: 100.00%
-    ' 
-    '   Blank Lines: 7 (14.89%)
-    '     File Size: 1.58 KB
+' Summaries:
 
 
-    ' Module FrameReader
-    ' 
-    '     Function: ReadFeatures
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 47
+'    Code Lines: 35 (74.47%)
+' Comment Lines: 5 (10.64%)
+'    - Xml Docs: 100.00%
+' 
+'   Blank Lines: 7 (14.89%)
+'     File Size: 1.58 KB
+
+
+' Module FrameReader
+' 
+'     Function: ReadFeatures
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports Microsoft.VisualBasic.Data.Framework
+Imports Microsoft.VisualBasic.Data.IO.Xpt
 Imports Microsoft.VisualBasic.DataStorage
 Imports Microsoft.VisualBasic.Linq
 Imports any = Microsoft.VisualBasic.Scripting
@@ -95,6 +96,40 @@ Public Module FrameReader
         End Using
 
         Return df
+    End Function
+
+    ''' <summary>
+    ''' read sas xpt file as dataframe
+    ''' </summary>
+    ''' <param name="file"></param>
+    ''' <returns></returns>
+    Public Function ReadSasXPT(file As String) As DataFrame
+        Using iterator As New SASXportFileIterator(file)
+            Dim cols As List(Of Object)() = New List(Of Object)(iterator.MetaData.var_count - 1) {}
+            Dim row As Object()
+
+            For i As Integer = 0 To cols.Length - 1
+                cols(i) = New List(Of Object)
+            Next
+
+            While iterator.hasNext()
+                row = iterator.next().ToArray
+
+                For i As Integer = 0 To cols.Length - 1
+                    Call cols(i).Add(row(i))
+                Next
+            End While
+
+            Dim features As New Dictionary(Of String, FeatureVector)
+
+            For i As Integer = 0 To cols.Length - 1
+
+            Next
+
+            Return New DataFrame With {
+                .features = features
+            }
+        End Using
     End Function
 
 End Module
