@@ -1,4 +1,5 @@
 ﻿Imports Microsoft.VisualBasic.Data.IO.Xpt
+Imports Microsoft.VisualBasic.Serialization.JSON
 
 Module xptReader
 
@@ -11,6 +12,7 @@ Module xptReader
         Dim iterator As SASXportFileIterator = New SASXportFileIterator(testfile)
         While iterator.hasNext()
             Dim row As IList(Of String) = iterator.next()
+            Call Console.WriteLine(row.GetJson)
         End While
         Console.WriteLine("Total Rows: " & iterator.RowCount.ToString())
         iterator.Dispose()
