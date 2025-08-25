@@ -16,9 +16,7 @@ Namespace Xpt
 
         Public Shared SAS_COLUMN_TYPE_CHR As Short = &H2
 
-
         Protected Friend processBlankRecords As Boolean = False
-        Protected Friend doneField As Boolean = False
         Protected Friend convertDate9ToString As Boolean = True
         Protected Friend rawin As Stream
 
@@ -51,6 +49,7 @@ Namespace Xpt
             ctx = New XPTContext()
             PrimitiveUtils.memset(blank_row, AscW(" "c), ctx.row_length)
             readMeta()
+            ' load the first record into memory
             readNextRecord()
         End Sub
 
@@ -465,12 +464,7 @@ Namespace Xpt
         End Function
 
         Public Overridable Property Debug As Boolean
-
         Public Overridable ReadOnly Property Done As Boolean
-            Get
-                Return doneField
-            End Get
-        End Property
 
         Public Overridable ReadOnly Property MetaData As XPTContext
             Get
@@ -509,7 +503,7 @@ Namespace Xpt
         End Property
 
         Public Overridable Sub Dispose() Implements IDisposable.Dispose
-            doneField = True
+            _Done = True
             If [in] Is Nothing Then
                 Return
             End If
@@ -524,7 +518,7 @@ Namespace Xpt
                 len = std.Min(ctx.row_length, offset)
                 Dim read = read_bytes(DUMMY_BUFFER, len)
                 If read <= 0 Then
-                    doneField = True
+                    _Done = True
                     Dispose()
                     Exit Do
                 End If
@@ -533,7 +527,7 @@ Namespace Xpt
         End Sub
 
         Protected Friend Overridable Sub readNextRecord()
-            If doneField Then
+            If Done Then
                 Return
             End If
 
@@ -541,7 +535,7 @@ Namespace Xpt
                 rowCountField += 1
                 Dim bytes_read = read_bytes(rowField, ctx.row_length)
                 If bytes_read < ctx.row_length Then
-                    doneField = True
+                    _Done = True
                     Exit While
                 End If
                 If isBlankRow(rowField) Then
@@ -551,7 +545,7 @@ Namespace Xpt
                     Exit While
                 End If
             End While
-            If doneField Then
+            If Done Then
                 Dispose()
                 Return
             End If
@@ -559,7 +553,7 @@ Namespace Xpt
                 While num_blank_rows > 0
                     processRecord(blank_row, ctx.row_length)
                     If Threading.Interlocked.Increment((ctx.parsed_row_count)) = ctx.row_limit Then
-                        doneField = True
+                        _Done = True
                         Throw New Exception("Invalid read situation.")
                     End If
                     num_blank_rows -= 1
@@ -570,7 +564,7 @@ Namespace Xpt
             ctx.parsed_row_count += 1
 
             If ctx.parsed_row_count = ctx.row_limit Then
-                doneField = True
+                _Done = True
             End If
         End Sub
 
@@ -657,12 +651,14 @@ Namespace Xpt
             Call VBDebugger.EchoLine(ctx.ToString)
 
             If ctx.row_length = 0 Then
-                doneField = True
+                _Done = True
                 Dispose()
             Else
                 rowField = New Byte(ctx.row_length - 1) {}
                 blank_row = New Byte(ctx.row_length - 1) {}
             End If
+
+            Call VBDebugger.WaitOutput()
         End Sub
     End Class
 End Namespace
