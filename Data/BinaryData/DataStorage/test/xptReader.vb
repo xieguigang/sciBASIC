@@ -12,8 +12,8 @@ Module xptReader
 
         Dim iterator As SASXportFileIterator = New SASXportFileIterator(test2222)
         While iterator.hasNext()
-            Dim row As IList(Of String) = iterator.next()
-            Call Console.WriteLine(row.GetJson)
+            Dim row As Object() = iterator.next().ToArray
+            Call Console.WriteLine(row.GetJson(knownTypes:={GetType(String), GetType(Integer), GetType(Double), GetType(Date), GetType(Single), GetType(Long), GetType(Boolean)}))
         End While
         Console.WriteLine("Total Rows: " & iterator.RowCount.ToString())
         iterator.Dispose()

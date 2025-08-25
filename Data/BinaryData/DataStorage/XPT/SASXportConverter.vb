@@ -470,7 +470,7 @@ Namespace Xpt
 
         Public Overridable ReadOnly Property RowCount As Integer
 
-        Public Overridable ReadOnly Property Record As IList(Of String)
+        Public Overridable ReadOnly Property Record As IList(Of Object)
         Public Overridable ReadOnly Property PrimitiveRecord As IList(Of ReadstatValue)
 
         Public Overridable Sub Dispose() Implements IDisposable.Dispose
@@ -543,7 +543,7 @@ Namespace Xpt
             Dim pos = 0
             Dim [string] As String = Nothing
 
-            _Record = New List(Of String)()
+            _Record = New List(Of Object)()
             _PrimitiveRecord = New List(Of ReadstatValue)()
 
             For i = 0 To ctx.var_count - 1
@@ -575,11 +575,13 @@ Namespace Xpt
                         End If
                     End If
                     value.value = dval
-                    Dim val As String = "" & dval.ToString()
+
                     If convertDate9ToString AndAlso dval <> 0 AndAlso variable.format.ToLower().Contains("date") Then
-                        val = XPTReaderUtils.convertSASDate9ToString(variable.format.ToLower(), dval)
+                        Call Record.Add(XPTReaderUtils.convertSASDate9ToString(variable.format.ToLower(), dval))
+                    Else
+                        Call Record.Add(dval)
                     End If
-                    Record.Add(val)
+
                     If Debug Then
                         Console.Write(value.value.ToString() & ", ")
                     End If

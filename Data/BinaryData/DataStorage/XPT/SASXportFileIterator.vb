@@ -6,11 +6,10 @@ Namespace Xpt
     ''' <summary>
     ''' SAS XPT file reader
     ''' </summary>
-    Public Class SASXportFileIterator
-        Inherits SASXportConverter
+    Public Class SASXportFileIterator : Inherits SASXportConverter
 
-        Private crecord As IList(Of String) = Nothing
-        Private cPrimitiveRecord As IList(Of ReadstatValue) = Nothing
+        Private crecord As IEnumerable(Of Object)
+        Private cPrimitiveRecord As IList(Of ReadstatValue)
         Private crow As Byte() = Nothing
 
         Public Sub New(fileName As String)
@@ -34,7 +33,7 @@ Namespace Xpt
         ''' read the data frame line by line
         ''' </summary>
         ''' <returns></returns>
-        Public Overridable Function [next]() As IList(Of String)
+        Public Overridable Function [next]() As IEnumerable(Of Object)
             crecord = MyBase.Record
             cPrimitiveRecord = MyBase.PrimitiveRecord
             crow = MyBase.Row
