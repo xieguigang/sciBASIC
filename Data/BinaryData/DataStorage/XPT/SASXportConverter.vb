@@ -25,15 +25,8 @@ Namespace Xpt
 
         Protected Friend DUMMY_BUFFER As Byte() = New Byte(LINE_LEN - 1) {}
 
-        Protected Friend offsetField As Long = 0
         Protected Friend num_blank_rows As Integer = 0
-        Protected Friend rowCountField As Integer = 0
-
-        Protected Friend rowField As Byte() = Nothing
         Protected Friend blank_row As Byte() = Nothing
-
-        Protected Friend recordField As IList(Of String) = Nothing
-        Protected Friend primitiveRecordField As IList(Of ReadstatValue) = Nothing
 
         Public Sub New(fileName As String)
             Me.New(New FileStream(fileName, FileMode.Open, FileAccess.Read))
@@ -452,13 +445,13 @@ Namespace Xpt
                     Return -1
                 End If
             Catch ex As Exception
-                Call ("!!WARN!! Reached EOF before read_fully, Offset: " & offsetField.ToString()).Warning
+                Call ("!!WARN!! Reached EOF before read_fully, Offset: " & Offset.ToString()).Warning
                 Call App.LogException(ex)
 
                 Return -1
             End Try
 
-            offsetField += off
+            _Offset += off
 
             Return off
         End Function
@@ -473,34 +466,12 @@ Namespace Xpt
         End Property
 
         Public Overridable ReadOnly Property Offset As Long
-            Get
-                Return offsetField
-            End Get
-        End Property
-
         Public Overridable ReadOnly Property Row As Byte()
-            Get
-                Return rowField
-            End Get
-        End Property
 
         Public Overridable ReadOnly Property RowCount As Integer
-            Get
-                Return rowCountField
-            End Get
-        End Property
 
         Public Overridable ReadOnly Property Record As IList(Of String)
-            Get
-                Return recordField
-            End Get
-        End Property
-
         Public Overridable ReadOnly Property PrimitiveRecord As IList(Of ReadstatValue)
-            Get
-                Return primitiveRecordField
-            End Get
-        End Property
 
         Public Overridable Sub Dispose() Implements IDisposable.Dispose
             _Done = True
@@ -532,13 +503,13 @@ Namespace Xpt
             End If
 
             While True
-                rowCountField += 1
-                Dim bytes_read = read_bytes(rowField, ctx.row_length)
+                _RowCount += 1
+                Dim bytes_read = read_bytes(Row, ctx.row_length)
                 If bytes_read < ctx.row_length Then
                     _Done = True
                     Exit While
                 End If
-                If isBlankRow(rowField) Then
+                If isBlankRow(Row) Then
                     num_blank_rows += 1
                     Continue While
                 Else
@@ -560,7 +531,7 @@ Namespace Xpt
                 End While
             End If
 
-            processRecord(rowField, ctx.row_length)
+            processRecord(Row, ctx.row_length)
             ctx.parsed_row_count += 1
 
             If ctx.parsed_row_count = ctx.row_limit Then
@@ -571,8 +542,9 @@ Namespace Xpt
         Protected Friend Overridable Sub processRecord(row As Byte(), row_length As Integer)
             Dim pos = 0
             Dim [string] As String = Nothing
-            recordField = New List(Of String)()
-            primitiveRecordField = New List(Of ReadstatValue)()
+
+            _Record = New List(Of String)()
+            _PrimitiveRecord = New List(Of ReadstatValue)()
 
             For i = 0 To ctx.var_count - 1
                 Dim variable = ctx.variables(i)
@@ -585,7 +557,7 @@ Namespace Xpt
                         Console.Write(" < " & [string] & " >, ")
                     End If
                     value.tvalue = [string]
-                    recordField.Add([string])
+                    Record.Add([string])
                 Else
                     Dim dval = 0.0R
                     If variable.storage_width <= XPTTypes.XPORT_MAX_DOUBLE_SIZE AndAlso variable.storage_width >= XPTTypes.XPORT_MIN_DOUBLE_SIZE Then
@@ -607,12 +579,12 @@ Namespace Xpt
                     If convertDate9ToString AndAlso dval <> 0 AndAlso variable.format.ToLower().Contains("date") Then
                         val = XPTReaderUtils.convertSASDate9ToString(variable.format.ToLower(), dval)
                     End If
-                    recordField.Add(val)
+                    Record.Add(val)
                     If Debug Then
                         Console.Write(value.value.ToString() & ", ")
                     End If
                 End If
-                primitiveRecordField.Add(value)
+                PrimitiveRecord.Add(value)
                 pos += variable.storage_width
             Next
             If Debug Then
@@ -654,7 +626,7 @@ Namespace Xpt
                 _Done = True
                 Dispose()
             Else
-                rowField = New Byte(ctx.row_length - 1) {}
+                _Row = New Byte(ctx.row_length - 1) {}
                 blank_row = New Byte(ctx.row_length - 1) {}
             End If
 

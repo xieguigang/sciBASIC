@@ -10,7 +10,7 @@ Module xptReader
         Dim converter As SASXportConverter = New SASXportConverter(testfile)
         converter.Dispose()
 
-        Dim iterator As SASXportFileIterator = New SASXportFileIterator(testfile)
+        Dim iterator As SASXportFileIterator = New SASXportFileIterator(test2222)
         While iterator.hasNext()
             Dim row As IList(Of String) = iterator.next()
             Call Console.WriteLine(row.GetJson)

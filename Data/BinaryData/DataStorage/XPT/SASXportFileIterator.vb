@@ -3,6 +3,9 @@ Imports Microsoft.VisualBasic.Data.IO.Xpt.Types
 
 Namespace Xpt
 
+    ''' <summary>
+    ''' SAS XPT file reader
+    ''' </summary>
     Public Class SASXportFileIterator
         Inherits SASXportConverter
 
@@ -27,6 +30,10 @@ Namespace Xpt
             Return Not MyBase.Done
         End Function
 
+        ''' <summary>
+        ''' read the data frame line by line
+        ''' </summary>
+        ''' <returns></returns>
         Public Overridable Function [next]() As IList(Of String)
             crecord = MyBase.Record
             cPrimitiveRecord = MyBase.PrimitiveRecord
