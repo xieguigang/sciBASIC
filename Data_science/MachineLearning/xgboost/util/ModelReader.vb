@@ -133,7 +133,7 @@ Namespace util
                 Throw New EOFException("Cannot read int value (shortage): " & numBytesRead)
             End If
 
-            Return ByteBuffer.wrap(buffer).order(byteOrder).getInt
+            Return ByteBuffer.wrap(buffer).order(byteOrder).int
         End Function
 
         Public Overridable Function readIntArray(numValues As Integer) As Integer()
@@ -147,7 +147,7 @@ Namespace util
             Dim result = New Integer(numValues - 1) {}
 
             For i = 0 To numValues - 1
-                result(i) = byteBuffer.getInt
+                result(i) = byteBuffer.int
             Next
 
             Return result
@@ -170,15 +170,15 @@ Namespace util
                 Throw New IOException("Cannot read long value (shortage): " & numBytesRead)
             End If
 
-            Return ByteBuffer.wrap(buffer).order(ByteOrder.LittleEndian).[getLong]
+            Return ByteBuffer.wrap(buffer).order(ByteOrder.LittleEndian).[long]
         End Function
 
         Public Overridable Function asFloat(bytes As SByte()) As Single
-            Return ByteBuffer.wrap(bytes).order(ByteOrder.LittleEndian).getFloat
+            Return ByteBuffer.wrap(bytes).order(ByteOrder.LittleEndian).float
         End Function
 
         Public Overridable Function asUnsignedInt(bytes As SByte()) As Integer
-            Dim result As Integer = ByteBuffer.wrap(bytes).order(ByteOrder.LittleEndian).getInt
+            Dim result As Integer = ByteBuffer.wrap(bytes).order(ByteOrder.LittleEndian).int
 
             If result < 0 Then
                 Throw New IOException("Cannot treat as unsigned int (overflow): " & result)
@@ -194,7 +194,7 @@ Namespace util
                 Throw New IOException("Cannot read float value (shortage): " & numBytesRead)
             End If
 
-            Return ByteBuffer.wrap(buffer).order(ByteOrder.LittleEndian).getFloat
+            Return ByteBuffer.wrap(buffer).order(ByteOrder.LittleEndian).float
         End Function
 
         Public Overridable Function readFloatArray(numValues As Integer) As Single()
@@ -208,7 +208,7 @@ Namespace util
             Dim result = New Single(numValues - 1) {}
 
             For i = 0 To numValues - 1
-                result(i) = byteBuffer.getFloat
+                result(i) = byteBuffer.float
             Next
 
             Return result
@@ -225,7 +225,7 @@ Namespace util
             Dim result = New Double(numValues - 1) {}
 
             For i = 0 To numValues - 1
-                result(i) = byteBuffer.[getDouble]
+                result(i) = byteBuffer.[double]
             Next
 
             Return result

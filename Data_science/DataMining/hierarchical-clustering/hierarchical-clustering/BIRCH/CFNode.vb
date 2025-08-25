@@ -352,9 +352,6 @@ Namespace BIRCH
         ''' </summary>
         ''' <param name="oldEntries1"> </param>
         ''' <param name="oldEntries2"> </param>
-        ''' <param name="cloePair"> </param>
-        ''' <param name="e1"> </param>
-        ''' <param name="e2"> </param>
         Protected Friend Overridable Sub redistributeEntries(oldEntries1 As List(Of CFEntry), oldEntries2 As List(Of CFEntry), closeEntries As CFEntryPair, newE1 As CFEntry, newE2 As CFEntry)
             Dim v As List(Of CFEntry) = New List(Of CFEntry)()
             v.AddRange(oldEntries1)
@@ -389,9 +386,6 @@ Namespace BIRCH
         ''' </summary>
         ''' <param name="oldEntries1"> </param>
         ''' <param name="oldEntries2"> </param>
-        ''' <param name="cloePair"> </param>
-        ''' <param name="e1"> </param>
-        ''' <param name="e2"> </param>
         Protected Friend Overridable Sub redistributeEntries(oldEntries1 As List(Of CFEntry), oldEntries2 As List(Of CFEntry), newE As CFEntry)
             Dim v As List(Of CFEntry) = New List(Of CFEntry)()
             v.AddRange(oldEntries1)
