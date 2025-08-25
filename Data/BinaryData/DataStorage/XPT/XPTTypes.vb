@@ -133,7 +133,7 @@
         Public index_after_skipping As Integer
 
         Public Overrides Function ToString() As String
-            Return $"{name}({label})"
+            Return $"{name}({label}, {type.ToString})"
         End Function
     End Class
 

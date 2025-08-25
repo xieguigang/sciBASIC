@@ -51,6 +51,7 @@
 
 #End Region
 
+Imports System.Text
 Imports Microsoft.VisualBasic.Data.Framework
 Imports Microsoft.VisualBasic.Data.IO.Xpt
 Imports Microsoft.VisualBasic.Data.IO.Xpt.Types
@@ -108,6 +109,10 @@ Public Module FrameReader
         Using iterator As New SASXportFileIterator(file)
             Dim cols As List(Of Object)() = New List(Of Object)(iterator.MetaData.var_count - 1) {}
             Dim row As Object()
+            Dim tableName = If(
+                iterator.MetaData.table_name.StringEmpty(, True),
+                file.BaseName,
+                iterator.MetaData.table_name)
 
             For i As Integer = 0 To cols.Length - 1
                 cols(i) = New List(Of Object)
@@ -122,6 +127,7 @@ Public Module FrameReader
             End While
 
             Dim features As New Dictionary(Of String, FeatureVector)
+            Dim desc As New StringBuilder
 
             For i As Integer = 0 To cols.Length - 1
                 Dim field As ReadStatVariable = iterator.MetaData.variables(i)
@@ -142,10 +148,18 @@ Public Module FrameReader
                     Case Else
                         Throw New NotImplementedException(field.type.ToString)
                 End Select
+
+                Call desc.AppendLine(field.ToString)
             Next
 
             Return New DataFrame With {
-                .features = features
+                .features = features,
+                .name = tableName,
+                .description = desc.ToString,
+                .rownames = Enumerable _
+                    .Range(1, iterator.RowCount - 1) _
+                    .Select(Function(i) $"#{i}") _
+                    .ToArray
             }
         End Using
     End Function
