@@ -6,7 +6,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{1ACC2F4D-BF0D-45E6-A75F-6233AA0DDF6E}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <StartupObject>test.demoCDFWrite</StartupObject>
+    <StartupObject>test.xptReader</StartupObject>
     <RootNamespace>test</RootNamespace>
     <AssemblyName>test</AssemblyName>
     <FileAlignment>512</FileAlignment>

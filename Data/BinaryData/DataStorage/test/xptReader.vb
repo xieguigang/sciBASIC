@@ -2,11 +2,13 @@
 
 Module xptReader
 
+    Const testfile = "G:\pixelArtist\src\framework\Data\data\ALQ_H.xpt"
+
     Sub Main()
-        Dim converter As SASXportConverter = New SASXportConverter("/Users/ravi1/Downloads/test.sasxpt")
+        Dim converter As SASXportConverter = New SASXportConverter(testfile)
         converter.Dispose()
 
-        Dim iterator As SASXportFileIterator = New SASXportFileIterator("/grid/data/xpt/test3.sasxpt")
+        Dim iterator As SASXportFileIterator = New SASXportFileIterator(testfile)
         While iterator.hasNext()
             Dim row As IList(Of String) = iterator.next()
         End While
