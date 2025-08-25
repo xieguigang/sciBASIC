@@ -446,7 +446,12 @@ Namespace Xpt
             Dim off = len
 
             Try
-                [in].BaseStream.Read(buffer, 0, len)
+                Dim reads = [in].BaseStream.Read(buffer, 0, len)
+
+                ' EOF
+                If reads < len Then
+                    Return -1
+                End If
             Catch ex As Exception
                 Call ("!!WARN!! Reached EOF before read_fully, Offset: " & offsetField.ToString()).Warning
                 Call App.LogException(ex)

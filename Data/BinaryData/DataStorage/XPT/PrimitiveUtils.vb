@@ -217,7 +217,7 @@
             Dim ieee = sign Or exponent << 52 Or mantissa
             Dim out = longToBytes(ieee)
 
-            Return toDouble(out)
+            Return toDouble(out.Reverse.ToArray)
         End Function
 
     End Class
