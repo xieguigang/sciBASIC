@@ -164,6 +164,10 @@
       <Project>{97c2241c-9765-04e6-1624-9b6cce853715}</Project>
       <Name>netCDF</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\SQLite3\SQLite3.vbproj">
+      <Project>{be4799d1-7dc5-3ff6-98bc-7b084f1ef79e}</Project>
+      <Name>SQLite3</Name>
+    </ProjectReference>
     <ProjectReference Include="..\datastorage-netcore5.vbproj">
       <Project>{581ed230-3020-6363-ed96-8eebd8e8ad58}</Project>
       <Name>datastorage-netcore5</Name>

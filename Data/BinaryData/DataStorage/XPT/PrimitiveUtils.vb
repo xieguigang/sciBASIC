@@ -52,9 +52,17 @@
         ''' <param name="value"> Value to byte swap. </param>
         ''' <returns> Byte swapped representation. </returns>
         Public Shared Function swap(value As Single) As Single
+#If NET48 Then
+            Dim buffer As Byte() = BitConverter.GetBytes(value)
+            Dim intValue As Integer = BitConverter.ToInt32(buffer, Scan0)
+            intValue = swap(intValue)
+            buffer = BitConverter.GetBytes(intValue)
+            Return BitConverter.ToSingle(buffer, Scan0)
+#Else
             Dim intValue = BitConverter.SingleToInt32Bits(value)
             intValue = swap(intValue)
             Return BitConverter.Int32BitsToSingle(intValue)
+#End If
         End Function
 
         ''' <summary>

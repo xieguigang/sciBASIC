@@ -23,6 +23,8 @@ Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "netCDF", "netCDF\netCDF.vbp
 EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "HDF5", "HDF5\HDF5.vbproj", "{7FA00A31-5039-EF2F-1CCF-1171208EDC93}"
 EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "SQLite3", "SQLite3\SQLite3.vbproj", "{BE4799D1-7DC5-3FF6-98BC-7B084F1EF79E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -293,6 +295,34 @@ Global
 		{7FA00A31-5039-EF2F-1CCF-1171208EDC93}.Rsharp_app_release|Any CPU.Build.0 = Rsharp_app_release|Any CPU
 		{7FA00A31-5039-EF2F-1CCF-1171208EDC93}.Rsharp_app_release|x64.ActiveCfg = Rsharp_app_release|x64
 		{7FA00A31-5039-EF2F-1CCF-1171208EDC93}.Rsharp_app_release|x64.Build.0 = Rsharp_app_release|x64
+		{BE4799D1-7DC5-3FF6-98BC-7B084F1EF79E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BE4799D1-7DC5-3FF6-98BC-7B084F1EF79E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BE4799D1-7DC5-3FF6-98BC-7B084F1EF79E}.Debug|x64.ActiveCfg = Debug|x64
+		{BE4799D1-7DC5-3FF6-98BC-7B084F1EF79E}.Debug|x64.Build.0 = Debug|x64
+		{BE4799D1-7DC5-3FF6-98BC-7B084F1EF79E}.gcmodeller_desktop|Any CPU.ActiveCfg = gcmodeller_desktop|Any CPU
+		{BE4799D1-7DC5-3FF6-98BC-7B084F1EF79E}.gcmodeller_desktop|Any CPU.Build.0 = gcmodeller_desktop|Any CPU
+		{BE4799D1-7DC5-3FF6-98BC-7B084F1EF79E}.gcmodeller_desktop|x64.ActiveCfg = gcmodeller_desktop|x64
+		{BE4799D1-7DC5-3FF6-98BC-7B084F1EF79E}.gcmodeller_desktop|x64.Build.0 = gcmodeller_desktop|x64
+		{BE4799D1-7DC5-3FF6-98BC-7B084F1EF79E}.mzkit_win32|Any CPU.ActiveCfg = mzkit_win32|Any CPU
+		{BE4799D1-7DC5-3FF6-98BC-7B084F1EF79E}.mzkit_win32|Any CPU.Build.0 = mzkit_win32|Any CPU
+		{BE4799D1-7DC5-3FF6-98BC-7B084F1EF79E}.mzkit_win32|x64.ActiveCfg = mzkit_win32|x64
+		{BE4799D1-7DC5-3FF6-98BC-7B084F1EF79E}.mzkit_win32|x64.Build.0 = mzkit_win32|x64
+		{BE4799D1-7DC5-3FF6-98BC-7B084F1EF79E}.mzkit|Any CPU.ActiveCfg = mzkit|Any CPU
+		{BE4799D1-7DC5-3FF6-98BC-7B084F1EF79E}.mzkit|Any CPU.Build.0 = mzkit|Any CPU
+		{BE4799D1-7DC5-3FF6-98BC-7B084F1EF79E}.mzkit|x64.ActiveCfg = mzkit|x64
+		{BE4799D1-7DC5-3FF6-98BC-7B084F1EF79E}.mzkit|x64.Build.0 = mzkit|x64
+		{BE4799D1-7DC5-3FF6-98BC-7B084F1EF79E}.nuget_release|Any CPU.ActiveCfg = nuget_release|Any CPU
+		{BE4799D1-7DC5-3FF6-98BC-7B084F1EF79E}.nuget_release|Any CPU.Build.0 = nuget_release|Any CPU
+		{BE4799D1-7DC5-3FF6-98BC-7B084F1EF79E}.nuget_release|x64.ActiveCfg = nuget_release|x64
+		{BE4799D1-7DC5-3FF6-98BC-7B084F1EF79E}.nuget_release|x64.Build.0 = nuget_release|x64
+		{BE4799D1-7DC5-3FF6-98BC-7B084F1EF79E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BE4799D1-7DC5-3FF6-98BC-7B084F1EF79E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BE4799D1-7DC5-3FF6-98BC-7B084F1EF79E}.Release|x64.ActiveCfg = Release|x64
+		{BE4799D1-7DC5-3FF6-98BC-7B084F1EF79E}.Release|x64.Build.0 = Release|x64
+		{BE4799D1-7DC5-3FF6-98BC-7B084F1EF79E}.Rsharp_app_release|Any CPU.ActiveCfg = Rsharp_app_release|Any CPU
+		{BE4799D1-7DC5-3FF6-98BC-7B084F1EF79E}.Rsharp_app_release|Any CPU.Build.0 = Rsharp_app_release|Any CPU
+		{BE4799D1-7DC5-3FF6-98BC-7B084F1EF79E}.Rsharp_app_release|x64.ActiveCfg = Rsharp_app_release|x64
+		{BE4799D1-7DC5-3FF6-98BC-7B084F1EF79E}.Rsharp_app_release|x64.Build.0 = Rsharp_app_release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -305,6 +335,7 @@ Global
 		{BB371FBA-F3E4-2D5A-BA5C-D22441BD8BB5} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 		{97C2241C-9765-04E6-1624-9B6CCE853715} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 		{7FA00A31-5039-EF2F-1CCF-1171208EDC93} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+		{BE4799D1-7DC5-3FF6-98BC-7B084F1EF79E} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {E9198D07-A8BB-4AAA-84CE-C6B5EBC7BBE2}
