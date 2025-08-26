@@ -132,7 +132,7 @@ Namespace Language.Java
         End Sub
 
         Public Function logDiff(x As Double, y As Double) As Double
-            Debug.Assert(x > y)
+            System.Diagnostics.Debug.Assert(x > y)
             Dim temp As Double = y - x
             If temp < -NATS OrElse y < logLimit Then Return x
             Return x + JavaMath.log1p(-sys.Exp(temp))

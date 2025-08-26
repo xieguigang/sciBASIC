@@ -850,7 +850,7 @@ Public Module App
     ''' The distance of time that this application running from start and to current time.
     ''' (当前距离应用程序启动所逝去的时间)
     ''' </summary>
-    ''' <returns></returns>
+    ''' <returns>ms timespan</returns>
     ''' <remarks>
     ''' 通过<see cref="App.UnixTimeStamp"/>以及<see cref="StartTime"/>得到的时间都是带小数的秒数
     ''' 所以在这里计算出当前时间点与启动时间点之间的差值之后，还需要乘以1000才可以得到毫秒数

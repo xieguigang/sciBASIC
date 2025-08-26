@@ -148,7 +148,7 @@ Namespace ManagedSqlite.Core.Internal
         End Function
 
         Friend Function CheckMagicBytes(toRead As UInteger, comparison As Byte(), Optional throwException As Boolean = True) As Boolean
-            Call Debug.Assert(toRead >= comparison.Length)
+            Call System.Diagnostics.Debug.Assert(toRead >= comparison.Length)
             Call CheckSize(toRead)
 
             Dim data As Byte() = stream.ReadFully(CInt(toRead))

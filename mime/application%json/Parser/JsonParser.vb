@@ -309,7 +309,7 @@ Public Class JsonParser
                     Dim message As String = $"in-complete json array: possible json syntax error on parse json array at line {t.span.line}."
 
                     Call message.Warning
-                    Call Debug.WriteLine(message)
+                    Call System.Diagnostics.Debug.WriteLine(message)
 
                     Exit Do
                 End If
@@ -330,7 +330,7 @@ Public Class JsonParser
                     back = True
 
                     Call message.Warning
-                    Call Debug.WriteLine(message)
+                    Call System.Diagnostics.Debug.WriteLine(message)
                 End If
             End If
         Loop

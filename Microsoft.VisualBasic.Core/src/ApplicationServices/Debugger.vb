@@ -1,65 +1,65 @@
 ﻿#Region "Microsoft.VisualBasic::4ea02042b52c8ba1d4a6eb26327adbba, Microsoft.VisualBasic.Core\src\ApplicationServices\Debugger.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 480
-    '    Code Lines: 274 (57.08%)
-    ' Comment Lines: 159 (33.12%)
-    '    - Xml Docs: 94.97%
-    ' 
-    '   Blank Lines: 47 (9.79%)
-    '     File Size: 19.66 KB
+' Summaries:
 
 
-    ' Module VBDebugger
-    ' 
-    '     Properties: debugMode
-    ' 
-    '     Function: die, LinqProc
-    '     Delegate Sub
-    ' 
-    '         Properties: ForceSTDError, Mute, UsingxConsole
-    ' 
-    '         Function: __DEBUG_ECHO, Assert, BENCHMARK, (+2 Overloads) PrintException, Warning
-    ' 
-    '         Sub: (+2 Overloads) __DEBUG_ECHO, __INFO_ECHO, (+3 Overloads) Assertion, AttachLoggingDriver, cat
-    '              (+4 Overloads) Echo, EchoLine, WaitOutput, WriteLine
-    ' 
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 480
+'    Code Lines: 274 (57.08%)
+' Comment Lines: 159 (33.12%)
+'    - Xml Docs: 94.97%
+' 
+'   Blank Lines: 47 (9.79%)
+'     File Size: 19.66 KB
+
+
+' Module VBDebugger
+' 
+'     Properties: debugMode
+' 
+'     Function: die, LinqProc
+'     Delegate Sub
+' 
+'         Properties: ForceSTDError, Mute, UsingxConsole
+' 
+'         Function: __DEBUG_ECHO, Assert, BENCHMARK, (+2 Overloads) PrintException, Warning
+' 
+'         Sub: (+2 Overloads) __DEBUG_ECHO, __INFO_ECHO, (+3 Overloads) Assertion, AttachLoggingDriver, cat
+'              (+4 Overloads) Echo, EchoLine, WaitOutput, WriteLine
+' 
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -200,6 +200,19 @@ Public Module VBDebugger
 
         Return ms
     End Function
+
+    <Extension>
+    Public Sub debug(msg As String, Optional mute As Boolean = False)
+        Dim elapsed As TimeSpan = TimeSpan.FromMilliseconds(App.ElapsedMilliseconds)
+        Dim elapsedFormatted As String = StringFormats.Lanudry(elapsed)
+        Dim header As String = $"debug, {elapsedFormatted} - "
+
+        If My.Log4VB.redirectDebug IsNot Nothing Then
+            Call My.Log4VB.redirectDebug(header, msg, MSG_TYPES.DEBUG)
+        ElseIf Not mute AndAlso Not VBDebugger.Mute AndAlso m_level < DebuggerLevels.Warning Then
+            Call Console.WriteLine(New TextSpan(header & msg, AnsiColor.Green))
+        End If
+    End Sub
 
     ''' <summary>
     ''' Output the full debug information while the project is debugging in debug mode.

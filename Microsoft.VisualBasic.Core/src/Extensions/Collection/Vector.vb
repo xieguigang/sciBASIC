@@ -435,7 +435,7 @@ Public Module VectorExtensions
     ''' <returns></returns>
     <Extension>
     Public Function Coalesce(Of T As Structure)(source As IEnumerable(Of T?)) As IEnumerable(Of T)
-        Debug.Assert(source IsNot Nothing)
+        System.Diagnostics.Debug.Assert(source IsNot Nothing)
         Return source.Where(Function(x) x.HasValue).[Select](Function(x) CType(x, T))
     End Function
 
