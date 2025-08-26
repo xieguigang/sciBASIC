@@ -103,11 +103,11 @@ Imports std = System.Math
         file += head
 
 #If DEBUG Then
-        Call $"len(x) = {df.x.Length}".__DEBUG_ECHO
+        Call $"len(x) = {df.x.Length}".debug
         Call Console.WriteLine()
 
         For Each y As NamedCollection(Of Double) In df.y.Values
-            Call $"len(y={y.Name}) = {y.Value.Length}".__DEBUG_ECHO
+            Call $"len(y={y.Name}) = {y.Value.Length}".debug
         Next
 #End If
 
