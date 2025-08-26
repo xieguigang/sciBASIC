@@ -366,11 +366,11 @@ Public Module NetworkVisualizer
                     )
                 End If
 
-                Call "Render network edges...".__INFO_ECHO
+                Call "Render network edges...".info
                 ' 首先在这里绘制出网络的框架：将所有的边绘制出来
                 labels += renderEdge.drawEdges(g, graph:=net)
 
-                Call "Render network elements...".__INFO_ECHO
+                Call "Render network elements...".info
                 ' 然后将网络之中的节点绘制出来，同时记录下节点的位置作为label text的锚点
                 ' 最后通过退火算法计算出合适的节点标签文本的位置之后，再使用一个循环绘制出
                 ' 所有的节点的标签文本
@@ -389,7 +389,7 @@ Public Module NetworkVisualizer
                 Call "Network canvas rendering job done!".__DEBUG_ECHO
             End Sub
 
-        Call "Start Render...".__INFO_ECHO
+        Call "Start Render...".info
 
         Return g.GraphicsPlots(frameSize.ToSize, margin, background, plotInternal, driver:=driver)
     End Function

@@ -359,7 +359,7 @@ Public Module VBDebugger
         If Not test = True Then
             If level = MSG_TYPES.DEBUG Then
                 If m_level < DebuggerLevels.Warning Then
-                    Call fails.__DEBUG_ECHO(memberName:=calls)
+                    Call fails.debug
                 End If
             ElseIf level = MSG_TYPES.ERR Then
                 If m_level <> DebuggerLevels.Off Then
@@ -398,27 +398,26 @@ Public Module VBDebugger
         Dim null = test Or die(message:=msg, caller:=calls)
     End Sub
 
-    Public Function Assert(test As Boolean,
-                           failed$,
+    Public Function Assert(test As Boolean, failed$,
                            Optional success$ = Nothing,
                            Optional failedLevel As MSG_TYPES = MSG_TYPES.ERR,
                            <CallerMemberName> Optional calls As String = "") As Boolean
         If test Then
             If Not String.IsNullOrEmpty(success) Then
-                Call success.__DEBUG_ECHO
+                Call success.debug
             End If
 
             Return True
         Else
             Select Case failedLevel
                 Case MSG_TYPES.DEBUG
-                    Call failed.__DEBUG_ECHO
+                    Call failed.debug
                 Case MSG_TYPES.ERR
                     Call failed.PrintException(calls)
                 Case MSG_TYPES.WRN
                     Call failed.warning(calls)
                 Case Else
-                    Call failed.Echo(calls)
+                    Call failed.info
             End Select
 
             Return False
@@ -429,19 +428,22 @@ Public Module VBDebugger
     ''' Output the full debug information while the project is debugging in debug mode.
     ''' (向标准终端和调试终端输出一些带有时间戳的调试信息)
     ''' </summary>
-    ''' <param name="MSG">The message fro output to the debugger console, this function will add a time stamp automaticly To the leading position Of the message.</param>
+    ''' <param name="msg">The message fro output to the debugger console, this function will add a time stamp automaticly To the leading position Of the message.</param>
     ''' <param name="Indent"></param>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    <Extension> Public Sub __DEBUG_ECHO(MSG As StringBuilder, Optional Indent As Integer = 0)
-        Call MSG.ToString.__DEBUG_ECHO(Indent)
+    <Extension>
+    Public Sub debug(msg As StringBuilder, Optional indent As Integer = 0)
+        Call (New String(" ", indent) & msg.ToString).debug
     End Sub
 
-    <Extension> Public Sub __DEBUG_ECHO(Of T)(value As T, <CallerMemberName> Optional memberName As String = "")
-        Call ($"<{memberName}> {Scripting.InputHandler.ToString(value)}").__DEBUG_ECHO
+    <Extension>
+    Public Sub debug(Of T)(value As T, <CallerMemberName> Optional memberName As String = "")
+        Call ($"<{memberName}> {Scripting.InputHandler.ToString(value)}").debug
     End Sub
 
-    <Extension> Public Sub Echo(Of T)(array As IEnumerable(Of T), <CallerMemberName> Optional memberName As String = "")
-        Call String.Join(", ", array.Select(Function(obj) Scripting.ToString(obj)).ToArray).__DEBUG_ECHO
+    <Extension>
+    Public Sub echo(Of T)(array As IEnumerable(Of T))
+        Call array.SafeQuery.Select(Function(x) Scripting.ToString(x)).JoinBy(", ").debug
     End Sub
 
     <Extension>
