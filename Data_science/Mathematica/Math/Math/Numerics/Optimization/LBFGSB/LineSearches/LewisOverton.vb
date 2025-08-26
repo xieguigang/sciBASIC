@@ -1,70 +1,70 @@
 ﻿#Region "Microsoft.VisualBasic::8ea3db0c09f604ce912a70196b59ac6c, Data_science\Mathematica\Math\Math\Numerics\Optimization\LBFGSB\LineSearches\LewisOverton.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 196
-    '    Code Lines: 143 (72.96%)
-    ' Comment Lines: 16 (8.16%)
-    '    - Xml Docs: 93.75%
-    ' 
-    '   Blank Lines: 37 (18.88%)
-    '     File Size: 6.34 KB
+' Summaries:
 
 
-    '     Class LewisOverton
-    ' 
-    ' 
-    '         Enum RESULT
-    ' 
-    '             CONVERGED, MAX_ITERS, NONE, STEPTOL, STPMAX
-    '             STPMIN, ZERODG
-    ' 
-    ' 
-    ' 
-    '         Class PhiDPhi
-    ' 
-    '             Constructor: (+1 Overloads) Sub New
-    '             Function: evaluate
-    ' 
-    '  
-    ' 
-    '     Constructor: (+1 Overloads) Sub New
-    '     Sub: finish
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 196
+'    Code Lines: 143 (72.96%)
+' Comment Lines: 16 (8.16%)
+'    - Xml Docs: 93.75%
+' 
+'   Blank Lines: 37 (18.88%)
+'     File Size: 6.34 KB
+
+
+'     Class LewisOverton
+' 
+' 
+'         Enum RESULT
+' 
+'             CONVERGED, MAX_ITERS, NONE, STEPTOL, STPMAX
+'             STPMIN, ZERODG
+' 
+' 
+' 
+'         Class PhiDPhi
+' 
+'             Constructor: (+1 Overloads) Sub New
+'             Function: evaluate
+' 
+'  
+' 
+'     Constructor: (+1 Overloads) Sub New
+'     Sub: finish
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -141,24 +141,24 @@ Namespace Framework.Optimization.LBFGSB.LineSearches
             _step = stp
             Me.info = info
 
-            If Debug.flag Then
-                Call Debug.debug("    step: " & stp.ToString())
-                Call Debug.debug("      fx: " & f.ToString())
-                Call Debug.debug("-"c, "leaving line search, dg = " & MyBase.dg.ToString())
+            If Debugger.flag Then
+                Call Debugger.debug("    step: " & stp.ToString())
+                Call Debugger.debug("      fx: " & f.ToString())
+                Call Debugger.debug("-"c, "leaving line search, dg = " & MyBase.dg.ToString())
             End If
         End Sub
 
         Public Sub New(fun As IGradFunction, param As Parameters, xp As Double(), drt As Double(), step_max As Double, _step As Double, _fx As Double, grad As Double(), _dg As Double, x As Double())
-            If Debug.flag Then
-                Debug.debug("-"c, "LewisOverton line search")
-                Debug.debug("      xp: ", xp)
-                Debug.debug("       x: ", x)
-                Call Debug.debug("      fx: " & _fx.ToString())
-                Debug.debug("    grad: ", grad)
-                Call Debug.debug("      dg: " & _dg.ToString())
-                Call Debug.debug("    step: " & _step.ToString())
-                Call Debug.debug("step_max: " & step_max.ToString())
-                Debug.debug("     drt: ", drt)
+            If Debugger.flag Then
+                Debugger.debug("-"c, "LewisOverton line search")
+                Debugger.debug("      xp: ", xp)
+                Debugger.debug("       x: ", x)
+                Call Debugger.debug("      fx: " & _fx.ToString())
+                Debugger.debug("    grad: ", grad)
+                Call Debugger.debug("      dg: " & _dg.ToString())
+                Call Debugger.debug("    step: " & _step.ToString())
+                Call Debugger.debug("step_max: " & step_max.ToString())
+                Debugger.debug("     drt: ", drt)
             End If
 
             MyBase._fx = _fx
@@ -197,15 +197,15 @@ Namespace Framework.Optimization.LBFGSB.LineSearches
                 MyBase._dg = phidphi.dg
             End While
 
-            If Debug.flag Then
-                Debug.debug(">"c, "entering loop")
-                Call Debug.debug("       stp: " & stp.ToString())
+            If Debugger.flag Then
+                Debugger.debug(">"c, "entering loop")
+                Call Debugger.debug("       stp: " & stp.ToString())
             End If
 
             Dim iter = 0
             While True
-                If Debug.flag Then
-                    Call Debug.debug("  line search iter:" & iter.ToString())
+                If Debugger.flag Then
+                    Call Debugger.debug("  line search iter:" & iter.ToString())
                 End If
 
                 f = phidphi.evaluate(stp)

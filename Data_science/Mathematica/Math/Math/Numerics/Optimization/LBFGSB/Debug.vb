@@ -56,7 +56,10 @@ Imports Microsoft.VisualBasic.Language.C.CLangStringFormatProvider
 
 Namespace Framework.Optimization.LBFGSB
 
-    Public Class Debug
+    ''' <summary>
+    ''' internal logger wrapper for echo debug message
+    ''' </summary>
+    Friend Class Debugger
 
         Public Shared flag As Boolean = False
 

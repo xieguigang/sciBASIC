@@ -147,16 +147,16 @@ Namespace Framework.Optimization.LBFGSB.LineSearches
         Public Shared ReadOnly iterfinitemax As Integer = -std.Log(eps) / std.Log(2.0)
 
         Public Sub New(fun As IGradFunction, param As Parameters, xp As Double(), drt As Double(), step_max As Double, _step As Double, _fx As Double, grad As Double(), _dg As Double, x As Double(), weak_wolfe As Boolean)
-            If Debug.flag Then
-                Debug.debug("-"c, "line search")
-                Debug.debug("      xp: ", xp)
-                Debug.debug("       x: ", x)
-                Call Debug.debug("      fx: " & _fx.ToString())
-                Debug.debug("    grad: ", grad)
-                Call Debug.debug("      dg: " & _dg.ToString())
-                Call Debug.debug("    step: " & _step.ToString())
-                Call Debug.debug("step_max: " & step_max.ToString())
-                Debug.debug("     drt: ", drt)
+            If Debugger.flag Then
+                Debugger.debug("-"c, "line search")
+                Debugger.debug("      xp: ", xp)
+                Debugger.debug("       x: ", x)
+                Call Debugger.debug("      fx: " & _fx.ToString())
+                Debugger.debug("    grad: ", grad)
+                Call Debugger.debug("      dg: " & _dg.ToString())
+                Call Debugger.debug("    step: " & _step.ToString())
+                Call Debugger.debug("step_max: " & step_max.ToString())
+                Debugger.debug("     drt: ", drt)
             End If
 
             MyBase._fx = _fx
@@ -210,10 +210,10 @@ Namespace Framework.Optimization.LBFGSB.LineSearches
                 iterfinite += 1
             End While
 
-            If Debug.flag Then
-                Debug.debug(">"c, "entering loop")
-                Call Debug.debug("       stp: " & stp.ToString())
-                Call Debug.debug("       stx: " & stx.ToString())
+            If Debugger.flag Then
+                Debugger.debug(">"c, "entering loop")
+                Call Debugger.debug("       stp: " & stp.ToString())
+                Call Debugger.debug("       stx: " & stx.ToString())
             End If
 
             Dim iter = 0
