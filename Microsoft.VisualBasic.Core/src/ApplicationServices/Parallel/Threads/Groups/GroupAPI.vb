@@ -66,7 +66,7 @@ Namespace Parallel
         ''' <param name="source"></param>
         ''' <returns></returns>
         <Extension> Public Function ParallelGroup(Of T, T_TAG)(source As IEnumerable(Of T), __getGuid As Func(Of T, T_TAG)) As GroupResult(Of T, T_TAG)()
-            Call $"Generating guid index...".__DEBUG_ECHO
+            Call $"Generating guid index...".debug
             Dim TAGS = (From x As T In source.AsParallel Select guid = __getGuid(x), x).ToArray
             Call Console.WriteLine($"[DEBUG {Now.ToString}] Start to create lquery partitions...")
             Dim Partitions = TAGS.Split(TAGS.Length / Environment.ProcessorCount)

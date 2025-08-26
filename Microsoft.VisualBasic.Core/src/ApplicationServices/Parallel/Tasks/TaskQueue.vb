@@ -144,7 +144,7 @@ Namespace Parallel.Tasks
             __tasks = New Queue(Of TaskWorker)(queueSize)
 
 #If DEBUG Then
-            Call $"Using default buffer_size={App.BufferSize}".__DEBUG_ECHO
+            Call $"Using default buffer_size={App.BufferSize}".debug
 #End If
             Call RunTask(AddressOf __taskQueueEXEC)
 

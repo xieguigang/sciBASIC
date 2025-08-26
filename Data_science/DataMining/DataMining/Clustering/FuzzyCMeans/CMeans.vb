@@ -170,7 +170,7 @@ Namespace FuzzyCMeans
                 If j_old <> -1 AndAlso membership_diff < threshold Then
                     Exit While
                 Else
-                    Call $"loop_{[loop]} membership_diff: |{j_new.ToString("G3")} - {j_old.ToString("G3")}| = {membership_diff.ToString("G4")}".__DEBUG_ECHO
+                    Call $"loop_{[loop]} membership_diff: |{j_new.ToString("G3")} - {j_old.ToString("G3")}| = {membership_diff.ToString("G4")}".debug
                 End If
 
                 j_old = j_new

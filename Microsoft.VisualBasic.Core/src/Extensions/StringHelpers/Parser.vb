@@ -407,7 +407,7 @@ Public Module PrimitiveParser
             Return booleans(str)
         Else
 #If DEBUG Then
-            Call $"""{str}"" {NameOf([Boolean])} (null_value_definition)  ==> False".__DEBUG_ECHO
+            Call $"""{str}"" {NameOf([Boolean])} (null_value_definition)  ==> False".debug
 #End If
             Return False
         End If

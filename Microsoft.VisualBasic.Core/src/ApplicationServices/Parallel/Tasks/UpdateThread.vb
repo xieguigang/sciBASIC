@@ -111,11 +111,11 @@ Namespace Parallel.Tasks
         End Sub
 
         Private Sub __updates()
-            Call $"Start running {Me.ToString}....".__DEBUG_ECHO
+            Call $"Start running {Me.ToString}....".debug
             Do While Running
                 Call __invoke()
             Loop
-            Call $"{Me.ToString} thread exit...".__DEBUG_ECHO
+            Call $"{Me.ToString} thread exit...".debug
         End Sub
 
         ''' <summary>

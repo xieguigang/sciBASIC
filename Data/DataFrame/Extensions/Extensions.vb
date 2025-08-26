@@ -558,7 +558,7 @@ Public Module Extensions
         Dim buffer As List(Of T)
         Dim fs$, ms&
 
-        Call "Start to load csv data....".__DEBUG_ECHO(mute:=mute)
+        Call "Start to load csv data....".debug(mute:=mute)
 
         With Stopwatch.StartNew
             buffer = Reflector.Load(Of T)(
@@ -578,7 +578,7 @@ Public Module Extensions
         Dim type$ = GetType(T).FullName
         Dim n% = buffer.Count
 
-        Call $"[CSV.Reflector::{type}]{vbLf}Load {n} lines of data from ""{path.ToFileURL}""! ...................{fs}".__DEBUG_ECHO(mute:=mute)
+        Call $"[CSV.Reflector::{type}]{vbLf}Load {n} lines of data from ""{path.ToFileURL}""! ...................{fs}".debug(mute:=mute)
 
         Return buffer
     End Function

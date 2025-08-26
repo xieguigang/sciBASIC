@@ -74,7 +74,7 @@ Namespace KMeans
         ''' }
         ''' Dim centroid#() = Kmeans.ClusterMean(cluster)
         '''
-        ''' Call $"<br/>Cluster mean Calc: {centroid}".__DEBUG_ECHO
+        ''' Call $"<br/>Cluster mean Calc: {centroid}".debug
         ''' ```
         ''' </summary>
         ''' <param name="cluster">

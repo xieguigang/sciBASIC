@@ -139,7 +139,7 @@ Friend Class NodeRendering
             End If
         End If
 
-        Call "Rendering nodes...".__DEBUG_ECHO
+        Call "Rendering nodes...".debug
 
         For Each n As Node In drawPoints
             For Each label As LayoutLabel In renderNode(n, g)

@@ -1292,7 +1292,7 @@ Public Module App
                                     executeFile As ExecuteFile,
                                     executeQuery As ExecuteQuery) As Integer
 #If DEBUG Then
-        Call args.__DEBUG_ECHO
+        Call args.debug
 #End If
         Call args.InitDebuggerEnvir(caller)
 

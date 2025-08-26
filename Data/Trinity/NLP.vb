@@ -140,7 +140,7 @@ Public Module NLPExtensions
             .OrderByDescending(Function(v) v.Value) _
             .ToDictionary _
             .GetJson(indent:=True) _
-            .__DEBUG_ECHO
+            .debug
 #End If
 
         Return textRank _

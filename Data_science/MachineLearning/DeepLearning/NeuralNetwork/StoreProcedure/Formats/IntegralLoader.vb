@@ -144,7 +144,7 @@ Namespace NeuralNetwork.StoreProcedure
                 .outputLayer = outputLayer', .neuronBucket = neurons
             }
 
-            Call "Job done!".info(silent:=mute)
+            Call "Job done!".info(mute)
 
             Return loader
         End Function
@@ -202,7 +202,7 @@ Namespace NeuralNetwork.StoreProcedure
                 .Select(Function(edge) edge.addLink(neurons)) _
                 .ToArray
 
-            Call "Job done!".info(silent:=mute)
+            Call "Job done!".info(mute)
 
             Return New Network(activations) With {
                 .LearnRate = model.learnRate,

@@ -195,7 +195,7 @@ Namespace CommandLine.Parsers
             Else
 #Const DEBUG = False
 #If DEBUG Then
-                Call CLI.__DEBUG_ECHO
+                Call CLI.debug
 #End If
             End If
 

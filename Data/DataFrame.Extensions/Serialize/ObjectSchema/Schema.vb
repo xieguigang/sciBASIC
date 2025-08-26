@@ -131,7 +131,7 @@ Namespace Serialize.ObjectSchema
             Dim elType As Type
 
 #If DEBUG Then
-            Call {type.FullName, parent, path}.GetJson.__DEBUG_ECHO
+            Call {type.FullName, parent, path}.GetJson.debug
 #End If
 
             For Each prop As PropertyInfo In props

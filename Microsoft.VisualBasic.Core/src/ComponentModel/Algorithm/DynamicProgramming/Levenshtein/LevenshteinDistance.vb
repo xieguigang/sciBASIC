@@ -334,7 +334,7 @@ Vladimir I",
                 End If
 
                 If css.Count > 1024 AndAlso css.Count - evolve.Count > 128 Then
-                    ' Call $"{reference} ==> {hypotheses} stack could not be solve, operation abort!".__DEBUG_ECHO
+                    ' Call $"{reference} ==> {hypotheses} stack could not be solve, operation abort!".debug
                     Return Nothing
                 End If
             End While

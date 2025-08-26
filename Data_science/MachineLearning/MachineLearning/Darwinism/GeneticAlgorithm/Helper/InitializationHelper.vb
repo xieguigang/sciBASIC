@@ -126,7 +126,7 @@ Namespace Darwinism.GAF.Helper
                 Call population.Add(base)
             End If
 
-            Call "Start to create the initial population...".__DEBUG_ECHO
+            Call "Start to create the initial population...".debug
 
             ' Each member of initial population
             ' is mutated clone of base chromosome
@@ -140,7 +140,7 @@ Namespace Darwinism.GAF.Helper
                 Call population.Add(chr)
             Next
 
-            Call $"Takes {DateTimeHelper.ReadableElapsedTime(App.ElapsedMilliseconds - time)} for intialize population.".__DEBUG_ECHO
+            Call $"Takes {DateTimeHelper.ReadableElapsedTime(App.ElapsedMilliseconds - time)} for intialize population.".debug
 
             Return population
         End Function

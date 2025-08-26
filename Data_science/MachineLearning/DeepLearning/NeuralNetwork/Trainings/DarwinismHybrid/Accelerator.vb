@@ -99,7 +99,7 @@ Namespace NeuralNetwork.DarwinismHybrid
                 .Threshold = 0.005
             }
 
-            Call "Run GA helper!".__DEBUG_ECHO
+            Call "Run GA helper!".debug
             Call engine.AttachReporter(AddressOf doPrint)
             Call engine.Train(parallel:=True)
 
@@ -107,7 +107,7 @@ Namespace NeuralNetwork.DarwinismHybrid
         End Function
 
         Private Sub doPrint(i%, e#, g As GeneticAlgorithm(Of NetworkIndividual))
-            Call EnvironmentDriver(Of NetworkIndividual).CreateReport(i, e, g).ToString.__DEBUG_ECHO
+            Call EnvironmentDriver(Of NetworkIndividual).CreateReport(i, e, g).ToString.debug
         End Sub
     End Module
 End Namespace

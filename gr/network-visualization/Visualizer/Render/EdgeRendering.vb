@@ -187,7 +187,7 @@ Friend Class EdgeRendering
 
         If (Not isNan) AndAlso drawEdgeBends AndAlso Not bends.IsNullOrEmpty Then
             If bends.Length <> edge.data.bends.Length Then
-                Call $"{edge.ID} removes {edge.data.bends.Length - bends.Length} bends points.".__DEBUG_ECHO
+                Call $"{edge.ID} removes {edge.data.bends.Length - bends.Length} bends points.".debug
             End If
 
             If bends.Length = 1 Then

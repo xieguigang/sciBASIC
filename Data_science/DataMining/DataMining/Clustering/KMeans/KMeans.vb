@@ -110,7 +110,7 @@ Namespace KMeans
             Dim rowCount As Integer = data.Length
 
             If debug Then
-                Call "Init assigned random clusters...".__DEBUG_ECHO
+                Call "Init assigned random clusters...".debug
             End If
 
             While clusterNumbers.Count < k
@@ -169,7 +169,7 @@ Namespace KMeans
                 [stop] = k * rowCount
             End If
             If n_threads > 1 Then
-                Call $"Kmeans have {n_threads} CPU core for parallel computing.".__DEBUG_ECHO
+                Call $"Kmeans have {n_threads} CPU core for parallel computing.".debug
             End If
 
             Return ClusterDataSetLoop(clusters, data, [stop])
@@ -189,7 +189,7 @@ Namespace KMeans
                 [stop] = k * rowCount
             End If
             If n_threads > 1 Then
-                Call $"Kmeans have {n_threads} CPU core for parallel computing.".__DEBUG_ECHO
+                Call $"Kmeans have {n_threads} CPU core for parallel computing.".debug
             End If
 
             Return ClusterDataSetLoop(clusters, data, [stop])
@@ -204,7 +204,7 @@ Namespace KMeans
             Dim iterationCount As Integer = 0
 
             If debug Then
-                Call "Start kmeans clustering....".__DEBUG_ECHO
+                Call "Start kmeans clustering....".debug
             End If
 
             While stableClustersCount <> clusters.NumOfCluster
@@ -241,7 +241,7 @@ Namespace KMeans
                     ' clusters = clusters.CrossOver
                 Else
                     If debug Then
-                        Call $"[{iterationCount}/{[stop]}] stable <> NumOfCluster -> {stableClustersCount} <> {clusters.NumOfCluster} = {stableClustersCount <> clusters.NumOfCluster}".__DEBUG_ECHO
+                        Call $"[{iterationCount}/{[stop]}] stable <> NumOfCluster -> {stableClustersCount} <> {clusters.NumOfCluster} = {stableClustersCount <> clusters.NumOfCluster}".debug
                     End If
                     If lastStables = stableClustersCount Then
                         hits += 1

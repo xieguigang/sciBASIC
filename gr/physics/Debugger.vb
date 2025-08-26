@@ -100,7 +100,7 @@ Public Module Debugger
         Dim a = m.Point.Vector2D.OffSet2D(offset)
 
         '#If DEBUG Then
-        '        Call $"Sum({F.JoinBy(", ")}) = {F.Sum}".__DEBUG_ECHO
+        '        Call $"Sum({F.JoinBy(", ")}) = {F.Sum}".debug
         '#End If
 
         With canvas

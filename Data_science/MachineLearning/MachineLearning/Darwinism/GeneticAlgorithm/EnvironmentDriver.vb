@@ -171,7 +171,7 @@ Namespace Darwinism.GAF
                 End With
             Next
 
-            Call "Exit GA training loop due to the reason of reach iteration Upbound...".__DEBUG_ECHO
+            Call "Exit GA training loop due to the reason of reach iteration Upbound...".debug
         End Sub
 
         Private Sub reset(fitness As Double)

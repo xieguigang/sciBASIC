@@ -686,7 +686,7 @@ B21,B22,B23,...
             Dim sw As Stopwatch = Stopwatch.StartNew
             Dim CSV As New File(__LINQ_LOAD(data:=Lines))
 
-            Call $"Csv load {Lines.Length} lines data in {sw.ElapsedMilliseconds}ms...".__DEBUG_ECHO ' //{LoadMethod.ToString}".__DEBUG_ECHO
+            Call $"Csv load {Lines.Length} lines data in {sw.ElapsedMilliseconds}ms...".debug ' //{LoadMethod.ToString}".debug
 
             Return CSV
         End Operator

@@ -1297,7 +1297,7 @@ Namespace Render.CSS
                         _fontFamily = Value
 #If DEBUG Then
                         If _fontFamily.TextEquals("Ubuntu") Then
-                            Call Me.ToString.__DEBUG_ECHO
+                            Call Me.ToString.debug
                         End If
 #End If
                         _fontFamily = FontFace.GetFontName(_fontFamily)

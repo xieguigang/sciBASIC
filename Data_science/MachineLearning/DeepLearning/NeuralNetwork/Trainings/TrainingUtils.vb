@@ -84,12 +84,12 @@ Namespace NeuralNetwork
         End Sub
 
         Protected Overrides Sub SaveSnapshot()
-            Call "save trained ANN model!".__DEBUG_ECHO
+            Call "save trained ANN model!".debug
 
             If Not snapshotSaveLocation.StringEmpty Then
                 Call TakeSnapshot.ScatteredStore(Directory.FromLocalFileSystem(snapshotSaveLocation))
             Else
-                Call "Snapshot location is empty, trained model will not saved...".__DEBUG_ECHO
+                Call "Snapshot location is empty, trained model will not saved...".debug
             End If
         End Sub
 

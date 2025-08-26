@@ -124,7 +124,7 @@ Namespace IO.CSVFile
                 End If
             End If
 
-            Call $"CSV data ""{path.ToFileURL}"" load done!   {sw.ElapsedMilliseconds}ms.".__DEBUG_ECHO
+            Call $"CSV data ""{path.ToFileURL}"" load done!   {sw.ElapsedMilliseconds}ms.".debug
 
             Return cData
         End Function

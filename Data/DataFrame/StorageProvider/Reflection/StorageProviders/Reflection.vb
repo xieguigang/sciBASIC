@@ -210,7 +210,7 @@ Namespace StorageProvider.Reflection
                 Call $"Csv file ""{path.ToFileURL}"" is empty!".Warning
                 Return {}
             Else
-                Call "Load data from filestream....".__DEBUG_ECHO(mute:=mute)
+                Call "Load data from filestream....".debug(mute:=mute)
             End If
 
             Dim buffer As IEnumerable(Of T)
@@ -224,9 +224,9 @@ Namespace StorageProvider.Reflection
                 Call reader.ChangeMapping(maps)
             End If
 
-            Call $"Reflector load data into type {GetType(T).FullName}".__DEBUG_ECHO(mute:=mute)
+            Call $"Reflector load data into type {GetType(T).FullName}".debug(mute:=mute)
             buffer = Reflector.Convert(Of T)(reader, Explicit, metaBlank, silent:=mute)
-            Call "[Job Done!]".__DEBUG_ECHO(mute:=mute)
+            Call "[Job Done!]".debug(mute:=mute)
 
             Return buffer
         End Function

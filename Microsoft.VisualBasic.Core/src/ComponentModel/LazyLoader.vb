@@ -126,7 +126,7 @@ Namespace ComponentModel
             Dim msg As String =
             String.Format(DATA_LOADED_MESSAGE, url, _innerData.GetType.FullName, method, ElapsedMilliseconds)
 
-            Call msg.__DEBUG_ECHO
+            Call msg.debug
         End Sub
 
         ''' <summary>

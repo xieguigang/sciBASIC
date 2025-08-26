@@ -88,9 +88,9 @@ This output result json is what we want. For load the dynamics json using deseri
 Dim t2 = LoadExtendedJson(Of NamedValue(Of Integer()), TestDynamicsObject)(json)
 
 ' [DEBUG 2016/11/9 20:46:09] [1,2,3,4,5,6,7,8]
-Call t2.Tarray.GetJson.__DEBUG_ECHO
+Call t2.Tarray.GetJson.debug
 ' [DEBUG 2016/11/9 20:46:10] ["xxoo","1234","6789","50"]
-Call t2.Tarray2.GetJson.__DEBUG_ECHO
+Call t2.Tarray2.GetJson.debug
 ```
 
 The dynamics data was loaded into the correctly properties.

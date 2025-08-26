@@ -100,7 +100,7 @@ Namespace NeuralNetwork
 
                 i = i32.GetHexInteger(individual.BaseName)
 
-                Call $"load component: {i}".__DEBUG_ECHO
+                Call $"load component: {i}".debug
             Next
 
             Return New ParallelNetwork With {

@@ -63,11 +63,7 @@ Namespace evolution.measure
         End Function
 
         Public Overridable Function getOverallError(ParamArray errors As Double()) As Double Implements Objective.getOverallError
-            Dim sum = 0.0
-            For Each [error] In errors
-                sum += [error]
-            Next
-            Return sum
+            Return errors.Sum
         End Function
 
     End Class

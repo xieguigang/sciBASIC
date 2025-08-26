@@ -262,7 +262,7 @@ Namespace IO.Linq
                                   Return x.ordinal
                               End Function)
 
-            Call $"{file.ToFileURL} handle opened...".__DEBUG_ECHO
+            Call $"{file.ToFileURL} handle opened...".debug
         End Sub
 
         Public Function GetOrdinal(name As String) As Integer Implements ISchema.GetOrdinal

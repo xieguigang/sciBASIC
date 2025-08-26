@@ -176,8 +176,8 @@ Namespace Scripting
             Dim x# = Shell(statement)
 
             If echo Then
-                Call statement.__DEBUG_ECHO
-                Call $" = {x}".__DEBUG_ECHO
+                Call statement.debug
+                Call $" = {x}".debug
             End If
 
             Return x

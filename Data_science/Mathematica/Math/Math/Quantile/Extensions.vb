@@ -102,7 +102,7 @@ Namespace Quantile
         '''     Dim actual As Long = Shuffle.actually(q)
         '''     Dim out As String = String.Format("Estimated {0:F2} quantile as {1:D} (actually {2:D})", q, estimate, actual)
         '''
-        '''     Call out.__DEBUG_ECHO
+        '''     Call out.debug
         ''' Next
         ''' ```
         ''' </summary>
@@ -299,7 +299,7 @@ Namespace Quantile
         '        Dim actual As Long = shuffle.actually(q)
         '        Dim out As String = String.Format("Estimated {0:F2} quantile as {1:D} (actually {2:D})", q, estimate, actual)
 
-        '        Call out.__DEBUG_ECHO
+        '        Call out.debug
         '    Next
         'End Sub
 
