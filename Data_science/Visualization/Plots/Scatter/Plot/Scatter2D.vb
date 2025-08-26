@@ -178,9 +178,10 @@ Namespace Plots
             End If
 
             If Not xlim.IsNullOrEmpty Then
-                If xlim.Length = 1 AndAlso XaxisAbsoluteScalling Then
+                If xlim.Length = 1 OrElse XaxisAbsoluteScalling Then
                     XTicks = xlim.JoinIterates({0.0}).CreateAxisTicks(decimalDigits:=theme.GetXAxisDecimals)
                 Else
+                    ' xlim is [min,max]
                     XTicks = xlim.CreateAxisTicks(decimalDigits:=theme.GetXAxisDecimals)
                 End If
             Else
@@ -192,9 +193,10 @@ Namespace Plots
             End If
 
             If Not ylim.IsNullOrEmpty Then
-                If ylim.Length = 1 AndAlso YaxisAbsoluteScalling Then
+                If ylim.Length = 1 OrElse YaxisAbsoluteScalling Then
                     YTicks = ylim.JoinIterates({0.0}).CreateAxisTicks(decimalDigits:=theme.GetYAxisDecimals)
                 Else
+                    ' ylim is [min,max]
                     YTicks = ylim.CreateAxisTicks(decimalDigits:=theme.GetYAxisDecimals)
                 End If
             Else

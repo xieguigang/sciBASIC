@@ -112,7 +112,7 @@ Namespace ApplicationServices.Terminal
         Public Sub printf(s As String, ParamArray args As Object())
             s = sprintf(s, args)
 
-            Console.Write(s)
+            Call VBDebugger.Echo(s)
             Call Trace.Write(s)
             Call System.Diagnostics.Debug.Write(s)
         End Sub
