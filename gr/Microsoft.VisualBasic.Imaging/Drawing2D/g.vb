@@ -139,7 +139,7 @@ Namespace Drawing2D
 #End If
 
             If VBDebugger.debugMode Then
-                Call $"The default graphics driver value is config as {Driver.DefaultGraphicsDevice.Description}({type}).".__INFO_ECHO
+                Call $"The default graphics driver value is config as {Driver.DefaultGraphicsDevice.Description}({type}).".info
             End If
         End Sub
 

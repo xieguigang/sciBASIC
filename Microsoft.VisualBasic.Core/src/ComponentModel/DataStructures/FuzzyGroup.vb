@@ -123,7 +123,7 @@ Namespace ComponentModel.Collection
                 buf.ToDictionary(Function(x) x, Function(x) Nothing)
 
             If parallel Then
-                Call "Fuzzy grouping running in parallel mode...".__DEBUG_ECHO
+                Call "Fuzzy grouping running in parallel mode...".debug
             End If
 
             Do While lhash.Count > 0

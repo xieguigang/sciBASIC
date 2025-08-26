@@ -184,7 +184,7 @@ Namespace IO.CSVFile
             End If
 
             If Not silent Then
-                Call $"Generate csv file document using time {stopwatch.ElapsedMilliseconds} ms.".__INFO_ECHO
+                Call $"Generate csv file document using time {stopwatch.ElapsedMilliseconds} ms.".info
             End If
 
             Return True

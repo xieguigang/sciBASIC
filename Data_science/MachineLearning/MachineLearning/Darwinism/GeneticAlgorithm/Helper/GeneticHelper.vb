@@ -71,13 +71,13 @@ Namespace Darwinism.GAF.Helper
         '
         ' With New Random
         '    For i As Integer = 0 To 100
-        '        Call .NextDouble.__DEBUG_ECHO
+        '        Call .NextDouble.debug
         '    Next
         '
-        '    Call "==============================================".__INFO_ECHO
+        '    Call "==============================================".info
         '
         '    For i As Integer = 0 To 100
-        '        Call New Random().NextDouble.__DEBUG_ECHO
+        '        Call New Random().NextDouble.debug
         '    Next
         ' End With
 

@@ -89,13 +89,13 @@ Namespace NeuralNetwork.StoreProcedure
 
             VBDebugger.Mute = mute
 
-            Call "Load network parts...".__DEBUG_ECHO
+            Call "Load network parts...".debug
 
             main.inputlayer = store.ReadAllText($"/{inputLayer}").LoadFromXml(Of NeuronLayer)
             main.hiddenlayers = store.ReadAllText($"/{hiddenLayer}").LoadFromXml(Of StoreProcedure.HiddenLayer)
             main.outputlayer = store.ReadAllText($"/{outputLayer}").LoadFromXml(Of NeuronLayer)
 
-            Call "Load neuron nodes...".__DEBUG_ECHO
+            Call "Load neuron nodes...".debug
 
             ' 因为下面的数据较大，所以需要使用流的方式进行读取
             ' 节点数据比较小
@@ -107,14 +107,14 @@ Namespace NeuralNetwork.StoreProcedure
                 .Select(Function(line) line.Split(","c).parseNode) _
                 .ToArray
 
-            Call "Load neuron synapse edges...".__DEBUG_ECHO
+            Call "Load neuron synapse edges...".debug
 
             main.connections = store _
                 .OpenFile($"/{edges}", FileMode.Open, FileAccess.Read) _
                 .parseEdges _
                 .ToArray
 
-            Call "Load neuron network model success!".__INFO_ECHO
+            Call "Load neuron network model success!".info
 
             VBDebugger.Mute = previousMuteConfig
 

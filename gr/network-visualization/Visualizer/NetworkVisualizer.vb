@@ -232,8 +232,8 @@ Public Module NetworkVisualizer
                 .Top = 100
             })
 
-        Call $"Canvas size expression '{canvasSize}' = [{frameSize.Width}, {frameSize.Height}]".__DEBUG_ECHO
-        Call $"Canvas padding [{margin.Top}, {margin.Right}, {margin.Bottom}, {margin.Left}]".__DEBUG_ECHO
+        Call $"Canvas size expression '{canvasSize}' = [{frameSize.Width}, {frameSize.Height}]".debug
+        Call $"Canvas padding [{margin.Top}, {margin.Right}, {margin.Bottom}, {margin.Left}]".debug
 
         ' 1. 先将网络图形对象置于输出的图像的中心位置
         ' 2. 进行矢量图放大
@@ -242,7 +242,7 @@ Public Module NetworkVisualizer
         ' 获取得到当前的这个网络对象相对于图像的中心点的位移值
         Dim scalePos As Dictionary(Of String, PointF) = CanvasScaler.CalculateNodePositions(net, frameSize, margin)
 
-        Call "Initialize gdi objects...".__INFO_ECHO
+        Call "Initialize gdi objects...".info
 
         Dim env As CSSEnvirnment = CSSEnvirnment.Empty(ppi)
         Dim stroke As Pen = env.GetPen(CSS.Stroke.TryParse(nodeStroke), allowNull:=True)
@@ -253,7 +253,7 @@ Public Module NetworkVisualizer
                 .style = FontStyle.Regular
             }))
 
-        Call "Initialize variables, done!".__INFO_ECHO
+        Call "Initialize variables, done!".info
 
         If edgeDashTypes Is Nothing Then
             edgeDashTypes = New Dictionary(Of String, DashStyle)
@@ -353,7 +353,7 @@ Public Module NetworkVisualizer
             Sub(ByRef g As IGraphics, region As GraphicsRegion)
 
                 If Not hullPolygonGroups.IsEmpty Then
-                    Call "Render hull polygon layer...".__DEBUG_ECHO
+                    Call "Render hull polygon layer...".debug
                     Call g.drawhullPolygon(
                         drawPoints:=drawPoints,
                         hullPolygonGroups:=hullPolygonGroups,
@@ -386,7 +386,7 @@ Public Module NetworkVisualizer
                     Call renderLabel.renderLabels(g, labels)
                 End If
 
-                Call "Network canvas rendering job done!".__DEBUG_ECHO
+                Call "Network canvas rendering job done!".debug
             End Sub
 
         Call "Start Render...".info
@@ -478,7 +478,7 @@ Public Module NetworkVisualizer
         For Each group In groups
             If group.Count > 2 AndAlso group.Key Like hullPolygon Then
 
-                Call $"[ConvexHull] render for {group.Key}".__DEBUG_ECHO
+                Call $"[ConvexHull] render for {group.Key}".debug
 
                 Dim positions = group _
                     .Select(Function(p) scalePos(p.label)) _

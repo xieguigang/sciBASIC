@@ -201,7 +201,7 @@ Namespace Net.Http
             Me.offlineMode = offline
 
             If offlineMode AndAlso debug Then
-                Call $"WebQuery of '{Me.GetType.Name}' running in offline mode!".__DEBUG_ECHO
+                Call $"WebQuery of '{Me.GetType.Name}' running in offline mode!".debug
             End If
 
             Me.url404 = cache.ReadAllText("/__404.txt").LineTokens.Indexing
@@ -345,7 +345,7 @@ Namespace Net.Http
 
                 hitCache = False
             ElseIf debug Then
-                Call "hit cache!".__DEBUG_ECHO
+                Call "hit cache!".debug
             End If
         End Sub
 

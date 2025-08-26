@@ -215,7 +215,7 @@ Namespace LinearAlgebra
             If Not precision.StringEmpty Then
                 SparseVector.Precision = precision.ParseDouble
 
-                Call $"The precision controls config of the sparse vector was set to {precision}".__INFO_ECHO
+                Call $"The precision controls config of the sparse vector was set to {precision}".info
             End If
         End Sub
 

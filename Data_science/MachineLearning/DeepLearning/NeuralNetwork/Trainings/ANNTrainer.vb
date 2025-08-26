@@ -292,7 +292,7 @@ Namespace NeuralNetwork
                 If App.IsConsoleApp Then
                     cancelSignal = New UserTaskCancelAction(
                         Sub()
-                            Call "User cancel of the training loop...".__DEBUG_ECHO
+                            Call "User cancel of the training loop...".debug
                             break.Value = True
                         End Sub)
                     saveSignal = New UserTaskSaveAction(AddressOf SaveSnapshot)
@@ -419,7 +419,7 @@ Namespace NeuralNetwork
             If App.IsConsoleApp Then
                 cancelSignal = New UserTaskCancelAction(
                         Sub()
-                            Call "User cancel of the training loop...".__DEBUG_ECHO
+                            Call "User cancel of the training loop...".debug
                             break = True
                         End Sub)
             End If
@@ -432,12 +432,12 @@ Namespace NeuralNetwork
                 progress = ((minimumError / [error]) * 100).ToString("F2")
 
                 If outputNames.IsNullOrEmpty Then
-                    Call $"{numEpochs}{ASCII.TAB}Error:=[{[errors].Select(Function(a) a.ToString("F3")).JoinBy(", ")}]{ASCII.TAB}progress:={progress}%".__DEBUG_ECHO
+                    Call $"{numEpochs}{ASCII.TAB}Error:=[{[errors].Select(Function(a) a.ToString("F3")).JoinBy(", ")}]{ASCII.TAB}progress:={progress}%".debug
                 Else
-                    Call $"{numEpochs}{ASCII.TAB}Error:=[{[errors].Average}]{ASCII.TAB}progress:={progress}%".__DEBUG_ECHO
+                    Call $"{numEpochs}{ASCII.TAB}Error:=[{[errors].Average}]{ASCII.TAB}progress:={progress}%".debug
 
                     For i As Integer = 0 To outputNames.Length - 1
-                        Call $"    {outputNames(i)}={errors(i)}".__INFO_ECHO
+                        Call $"    {outputNames(i)}={errors(i)}".info
                     Next
                 End If
 

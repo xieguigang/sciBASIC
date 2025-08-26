@@ -114,7 +114,7 @@ Namespace ApplicationServices.Terminal.Utility
             End If
 
             If ++current Mod delta = 0 Then
-                Call ToString.__DEBUG_ECHO
+                Call ToString.debug
             Else
                 Call out.Write(".")
             End If

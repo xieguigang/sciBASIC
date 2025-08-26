@@ -151,14 +151,14 @@ Namespace Darwinism.GAF.Population
 
         Private Shared Function GetParallelCompute(parallel As [Variant](Of ParallelComputeFitness(Of Chr), Boolean)) As ParallelComputeFitness(Of Chr)
             If parallel Is Nothing Then
-                Call "Parallel computing use internal GA_PLinq api by default, as the parallel parameter is not specific...".__DEBUG_ECHO
+                Call "Parallel computing use internal GA_PLinq api by default, as the parallel parameter is not specific...".debug
                 Return New ParallelDataSetCompute(Of Chr)
             End If
 
             If parallel Like GetType(Boolean) Then
                 Dim flag As Boolean = parallel
 
-                Call "Parallel computing use internal GA_PLinq api".__INFO_ECHO
+                Call "Parallel computing use internal GA_PLinq api".info
 
                 If flag Then
                     Return New ParallelPopulationCompute(Of Chr)
@@ -168,7 +168,7 @@ Namespace Darwinism.GAF.Population
             Else
                 Dim Pcompute = parallel.TryCast(Of ParallelComputeFitness(Of Chr))
 
-                Call $"Parallel computing use external api: {Pcompute.ToString}".__INFO_ECHO
+                Call $"Parallel computing use external api: {Pcompute.ToString}".info
 
                 Return Pcompute
             End If

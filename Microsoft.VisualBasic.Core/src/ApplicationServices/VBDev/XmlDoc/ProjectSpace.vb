@@ -126,7 +126,7 @@ Namespace ApplicationServices.Development.XmlDoc.Assembly
             For Each fi As FileInfo In files
                 Try
                     Call Me.LoadFile(fi)
-                    Call $"Loaded {fi}".__DEBUG_ECHO
+                    Call $"Loaded {fi}".debug
                 Catch ex As Exception
                     ' 可能有其他的不是CLR Assembly XML的文件在这里，忽略掉这个错误
                     ex = New Exception(fi.FullName, ex)

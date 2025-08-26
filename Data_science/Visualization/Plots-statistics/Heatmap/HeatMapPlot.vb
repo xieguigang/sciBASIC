@@ -150,7 +150,7 @@ Namespace Heatmap
                 ticks = globalRange.CreateAxisTicks(ticks:=5)
             End If
 
-            Call $"{globalRange.ToString} -> {ticks.GetJson}".__INFO_ECHO
+            Call $"{globalRange.ToString} -> {ticks.GetJson}".info
 
             Dim margin As PaddingLayout = PaddingLayout.EvaluateFromCSS(css, canvas.Padding)
             ' 根据布局计算出矩阵的大小和位置
@@ -343,7 +343,7 @@ Namespace Heatmap
                                 .Size = blockSize
                             }
 #If DEBUG Then
-                            ' Call $"{level} -> {b.Color.ToString}".__DEBUG_ECHO
+                            ' Call $"{level} -> {b.Color.ToString}".debug
 #End If
                     Call g.FillRectangle(b, rect)
 

@@ -280,7 +280,7 @@ Namespace Graphic.Axis
                     .Y = std.Max(y1, y2)
                 }
 
-                ' Call $"[X:={label}] {point.ToString}".__INFO_ECHO
+                ' Call $"[X:={label}] {point.ToString}".info
                 Call g.DrawString(label, font, labelColor, point)
             End If
         End Sub

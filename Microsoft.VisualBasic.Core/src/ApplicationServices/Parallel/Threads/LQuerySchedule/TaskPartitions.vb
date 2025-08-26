@@ -121,7 +121,7 @@ Namespace Parallel.Linq
             End If
 
             If echo Then
-                Call $"Large data_set(size:={count}) partitioning(partitions:={parts}) jobs done!".__DEBUG_ECHO
+                Call $"Large data_set(size:={count}) partitioning(partitions:={parts}) jobs done!".debug
             End If
         End Function
 

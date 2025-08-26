@@ -157,7 +157,7 @@ Namespace Quantile
             Dim quantile = array.Select(Function(o) o.x).GKQuantile
             Dim threshold# = quantile.Query(q)
 
-            Call $"quantile {q * 100}% => {threshold}".__INFO_ECHO
+            Call $"quantile {q * 100}% => {threshold}".info
 
             Return array _
                 .Where(Function(o) o.x >= threshold) _
@@ -178,7 +178,7 @@ Namespace Quantile
                     Throw New NotSupportedException("???" & name.ToString)
             End Select
 
-            Call $"quartile {name.ToString} => {q}".__INFO_ECHO
+            Call $"quartile {name.ToString} => {q}".info
 
             Return array _
                 .Where(Function(o) o.x >= q#) _
@@ -187,7 +187,7 @@ Namespace Quantile
 
         <Extension>
         Public Function SelectByRankAsc(Of T)(source As Provider(Of T), n%, desc As Boolean) As IEnumerable(Of T)
-            Call $"{If(desc, "desc", "asc")} => {n}".__INFO_ECHO
+            Call $"{If(desc, "desc", "asc")} => {n}".info
 
             Return source _
                 .CreateArray _

@@ -868,7 +868,7 @@ Public Module Extensions
             pre = dict(item.Key)
 
             Call dict.Remove(item.Key)
-            Call $"data was updated: {Scripting.ToString(pre)} -> {item.Key}".__DEBUG_ECHO
+            Call $"data was updated: {Scripting.ToString(pre)} -> {item.Key}".debug
         Else
             pre = item
         End If

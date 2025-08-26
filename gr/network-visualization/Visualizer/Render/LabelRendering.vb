@@ -101,7 +101,7 @@ Friend Class LabelRendering
 
         ' 小于等于零的时候表示不进行布局计算
         If iteration > 0 Then
-            Call $"Do node label layouts, iteration={iteration}".__INFO_ECHO
+            Call $"Do node label layouts, iteration={iteration}".info
             Call d3js _
                 .labeler(maxMove:=1, maxAngle:=1, w_len:=1, w_inter:=2, w_lab2:=10, w_lab_anc:=10, w_orient:=2) _
                 .MaxMoveDistance(0.05 * {g.Size.Width, g.Size.Height}.DistanceTo(0, 0)) _

@@ -465,7 +465,7 @@ Public Module EmitReflection
     <Extension>
     Public Function Collection2GenericIEnumerable(type As Type, Optional showDebugMsg As Boolean = True) As Type
         If Array.IndexOf(type.GetInterfaces, GetType(IEnumerable)) = -1 Then
-EXIT_:      If showDebugMsg Then Call $"[WARN] Target type ""{type.FullName}"" is not a collection type!".__DEBUG_ECHO
+EXIT_:      If showDebugMsg Then Call $"[WARN] Target type ""{type.FullName}"" is not a collection type!".debug
             Return type
         End If
 

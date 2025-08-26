@@ -231,7 +231,7 @@ Public Class Word2Vec
 
         '            futures.add(threadPool.submit(new Trainer(corpus)));
 
-        ' Call ("the task queue has been allocated completely, " & "please wait the thread pool (" & numOfThread & ") to process...").__INFO_ECHO
+        ' Call ("the task queue has been allocated completely, " & "please wait the thread pool (" & numOfThread & ") to process...").info
 
         ' 等待线程处理完语料
         Call trainer.run()

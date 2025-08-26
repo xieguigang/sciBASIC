@@ -158,7 +158,7 @@ Namespace Data.Repository
                                     Function(x) x.Value)
             End With
 
-            Call $"{NameOf(ProgramPathSearchTool)} load {res.Count} source entry...".__DEBUG_ECHO
+            Call $"{NameOf(ProgramPathSearchTool)} load {res.Count} source entry...".debug
 
             Return res
         End Function

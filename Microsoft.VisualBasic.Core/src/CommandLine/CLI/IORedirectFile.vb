@@ -202,12 +202,12 @@ Namespace CommandLine
 
             If debug Then
                 If isShellCommand Then
-                    Call $"""{file}"" {app_argv}".__DEBUG_ECHO
+                    Call $"""{file}"" {app_argv}".debug
                 Else
-                    Call $"""{file.ToFileURL}"" {app_argv}".__DEBUG_ECHO
+                    Call $"""{file.ToFileURL}"" {app_argv}".debug
                 End If
 
-                Call $"stdout_temp: {_TempRedirect}".__DEBUG_ECHO
+                Call $"stdout_temp: {_TempRedirect}".debug
             End If
         End Sub
 
@@ -261,8 +261,7 @@ Namespace CommandLine
             [Call](path, "", "")
 #End If
 #End If
-            Call path.__DEBUG_ECHO
-            ' Call path.DeleteFile
+            Call path.debug
 
             Return exitCode
         End Function
