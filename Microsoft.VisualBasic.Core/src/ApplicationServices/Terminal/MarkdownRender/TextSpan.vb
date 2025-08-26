@@ -106,5 +106,9 @@ Namespace ApplicationServices.Terminal
 
             Return AnsiEscapeCodes.ToAnsiEscapeSequenceSlow(span.style) & span.text
         End Operator
+
+        Public Shared Operator &(span As TextSpan, str As String) As String
+            Return CType(span, String) & str
+        End Operator
     End Class
 End Namespace

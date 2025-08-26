@@ -84,7 +84,7 @@ Namespace ComponentModel.Settings.Inf
         Public Function WriteProfile(Of T As Class)(x As T, path$) As Boolean
             Using ini As New IniFile(path)
                 Call x.WriteProfile(ini)
-                Call $"Ini profile data was saved at location: {path.GetFullPath}".__INFO_ECHO
+                Call $"Ini profile data was saved at location: {path.GetFullPath}".info
 
                 Return True
             End Using

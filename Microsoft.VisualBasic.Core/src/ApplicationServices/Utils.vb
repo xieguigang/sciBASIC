@@ -152,14 +152,13 @@ Namespace ApplicationServices
         ''' </param>
         ''' <returns>Returns the total executation time of the target <paramref name="work"/>. ms</returns>
         Public Function Time(work As Action) As Long
-            Dim startTick As Long = App.NanoTime
-
+            Dim startTick As DateTime = Now
             ' -------- start worker ---------
             Call work()
             ' --------- end worker ---------
+            Dim endTick As DateTime = Now
+            Dim t& = (endTick - startTick).TotalMilliseconds
 
-            Dim endTick As Long = App.NanoTime
-            Dim t& = (endTick - startTick) / TimeSpan.TicksPerMillisecond
             Return t
         End Function
 
@@ -183,26 +182,6 @@ Namespace ApplicationServices
             tick = False  ' 需要使用这个变量的变化来控制 tickTask 里面的过程
 
             Return value
-        End Function
-
-        ''' <summary>
-        ''' Format ``ms`` for content print.
-        ''' </summary>
-        ''' <param name="ms"></param>
-        ''' <returns></returns>
-        <Extension> Public Function FormatTicks(ms&) As String
-            If ms > 1000 Then
-                Dim s = ms / 1000
-
-                If s < 1000 Then
-                    Return s & "s"
-                Else
-                    Dim min = s \ 60
-                    Return $"{min}min{s Mod 60}s"
-                End If
-            Else
-                Return ms & "ms"
-            End If
         End Function
 
         Public Delegate Function TaskWaitHandle() As Boolean

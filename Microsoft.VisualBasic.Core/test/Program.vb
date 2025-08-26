@@ -55,6 +55,7 @@ Imports System
 
 Module Program
     Sub Main(args As String())
+        Call logprint()
         Call memoryTest.runTest()
         Call numberParserTest.Main1()
 

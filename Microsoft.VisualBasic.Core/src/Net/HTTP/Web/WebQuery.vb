@@ -134,7 +134,7 @@ Namespace Net.Http
 
             If debug Then
                 ' display debug info
-                Call $"WebQuery download worker for query context [{GetType(Context).FullName}] thread sleep interval is {interval}ms".__INFO_ECHO
+                Call $"WebQuery download worker for query context [{GetType(Context).FullName}] thread sleep interval is {interval}ms".info
             End If
         End Sub
 
@@ -340,7 +340,7 @@ Namespace Net.Http
                     Call Write404CacheList()
                     Call $"{url} 404 Not Found!".PrintException
                 ElseIf debug Then
-                    Call $"Worker thread sleep {sleepInterval}ms...".__INFO_ECHO
+                    Call $"Worker thread sleep {sleepInterval}ms...".info
                 End If
 
                 hitCache = False

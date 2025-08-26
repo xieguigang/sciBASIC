@@ -99,6 +99,6 @@ Public Module Globals
             .Select(Function(s) s.ReplaceMetaChars) _
             .JoinBy("")
 
-        Call strMsg.__INFO_ECHO
+        Call strMsg.info
     End Sub
 End Module

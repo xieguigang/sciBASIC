@@ -141,11 +141,11 @@ Namespace My.FrameworkInternal
             If Not disableLoadOptions AndAlso Not envir.IsNullOrEmpty Then
                 If envir.ContainsKey("proxy") Then
                     WebServiceUtils.Proxy = envir("proxy")
-                    Call $"[Config] webUtils_proxy={WebServiceUtils.Proxy}".__INFO_ECHO
+                    Call $"[Config] webUtils_proxy={WebServiceUtils.Proxy}".info
                 End If
                 If envir.ContainsKey("setwd") Then
                     App.CurrentDirectory = envir("setwd")
-                    Call $"[Config] current_work_directory={App.CurrentDirectory}".__INFO_ECHO
+                    Call $"[Config] current_work_directory={App.CurrentDirectory}".info
                 End If
                 If envir.ContainsKey("buffer_size") Then
                     Call App.SetBufferSize(envir!buffer_size)

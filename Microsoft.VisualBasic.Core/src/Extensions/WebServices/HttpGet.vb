@@ -275,7 +275,7 @@ Re0:
                 If timespan > 1000 Then
                     Call debug.Warning
                 Else
-                    Call debug.__INFO_ECHO
+                    Call debug.info
                 End If
             End If
 

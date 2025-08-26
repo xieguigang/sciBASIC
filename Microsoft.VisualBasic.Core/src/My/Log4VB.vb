@@ -97,6 +97,17 @@ Namespace My
         ''' </summary>
         Public redirectInfo As LoggingDriver
 
+        Public Function getLogger(level As MSG_TYPES) As LoggingDriver
+            Select Case level
+                Case MSG_TYPES.DEBUG : Return redirectDebug
+                Case MSG_TYPES.ERR : Return redirectError
+                Case MSG_TYPES.INF : Return redirectInfo
+                Case MSG_TYPES.WRN : Return redirectWarning
+                Case Else
+                    Return Nothing
+            End Select
+        End Function
+
         ''' <summary>
         ''' Translate <see cref="MSG_TYPES"/> to <see cref="ConsoleColor"/>
         ''' </summary>
@@ -185,7 +196,7 @@ Namespace My
             End If
 
 #If DEBUG Then
-            Call Debug.Write(msg)
+            Call System.Diagnostics.Debug.Write(msg)
 #End If
         End Sub
 
@@ -224,7 +235,7 @@ Namespace My
             End If
 
 #If DEBUG Then
-            Call Debug.WriteLine(msg)
+            Call System.Diagnostics.Debug.WriteLine(msg)
 #End If
         End Sub
     End Module
