@@ -112,6 +112,12 @@ Namespace IO.Linq
             End If
         End Function
 
+        <Extension>
+        Private Function debug(msg As String) As String
+            Call VBDebugger.debug(msg)
+            Return msg
+        End Function
+
         ''' <summary>
         ''' {<see cref="Path.GetFileNameWithoutExtension(String)"/>, <typeparamref name="T"/>()}
         ''' </summary>
