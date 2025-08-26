@@ -79,10 +79,10 @@ Namespace Framework.Optimization.LBFGSB
         End Function
 
         Public Sub New(bfgs As BFGSMat, x0 As Double(), g As Double(), lb As Double(), ub As Double())
-            If Debug.flag Then
-                Debug.debug("="c, "Cauchy")
-                Debug.debug("x0: ", x0)
-                Debug.debug(" g: ", g)
+            If Debugger.flag Then
+                Debugger.debug("="c, "Cauchy")
+                Debugger.debug("x0: ", x0)
+                Debugger.debug(" g: ", g)
             End If
 
             Dim n = x0.Length
@@ -120,18 +120,18 @@ Namespace Framework.Optimization.LBFGSB
             Dim nord = ord.Count
             Dim nfree = fv_set.Count
 
-            If Debug.flag Then
-                Debug.debug("    brk: ", brk)
-                Debug.debug("   vecd: ", vecd)
-                Call Debug.debug("   nord: " & nord.ToString())
-                Call Debug.debug("    ord: " & ord.GetJson())
-                Call Debug.debug("  nfree: " & nfree.ToString())
-                Call Debug.debug(" fv_set: " & fv_set.GetJson())
+            If Debugger.flag Then
+                Debugger.debug("    brk: ", brk)
+                Debugger.debug("   vecd: ", vecd)
+                Call Debugger.debug("   nord: " & nord.ToString())
+                Call Debugger.debug("    ord: " & ord.GetJson())
+                Call Debugger.debug("  nfree: " & nfree.ToString())
+                Call Debugger.debug(" fv_set: " & fv_set.GetJson())
             End If
 
             If nfree < 1 AndAlso nord < 1 Then
-                If Debug.flag Then
-                    Debug.debug("="c, "leaving Cauchy, nfree < 1 && nord < 1")
+                If Debugger.flag Then
+                    Debugger.debug("="c, "leaving Cauchy, nfree < 1 && nord < 1")
                 End If
                 Return
             End If
@@ -222,12 +222,12 @@ Namespace Framework.Optimization.LBFGSB
                 Next
             End If
 
-            If Debug.flag Then
-                Debug.debug("vecc: ", vecc)
-                Debug.debug("xcp: ", xcp)
-                Call Debug.debug("newact_set: " & newact_set.GetJson())
-                Call Debug.debug("fv_set: " & fv_set.GetJson())
-                Debug.debug("="c, "Cauchy - end")
+            If Debugger.flag Then
+                Debugger.debug("vecc: ", vecc)
+                Debugger.debug("xcp: ", xcp)
+                Call Debugger.debug("newact_set: " & newact_set.GetJson())
+                Call Debugger.debug("fv_set: " & fv_set.GetJson())
+                Debugger.debug("="c, "Cauchy - end")
             End If
         End Sub
     End Class

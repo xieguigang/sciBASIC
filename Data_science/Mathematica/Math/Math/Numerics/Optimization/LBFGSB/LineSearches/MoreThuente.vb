@@ -218,8 +218,8 @@ Namespace Framework.Optimization.LBFGSB.LineSearches
 
             Dim iter = 0
             While True
-                If Debug.flag Then
-                    Call Debug.debug("  line search iter:" & iter.ToString())
+                If Debugger.flag Then
+                    Call Debugger.debug("  line search iter:" & iter.ToString())
                 End If
 
                 f = phidphi.evaluate(stp)
@@ -230,12 +230,12 @@ Namespace Framework.Optimization.LBFGSB.LineSearches
                     Me._step = stp
                     Me._fx = f
 
-                    If Debug.flag Then
-                        Call Debug.debug("    step: " & stp.ToString())
-                        Call Debug.debug("      fx: " & f.ToString())
-                        Debug.debug("       x: ", x)
-                        Debug.debug("    grad: ", grad)
-                        Call Debug.debug("-"c, "leaving line search, dg = " & MyBase.dg.ToString())
+                    If Debugger.flag Then
+                        Call Debugger.debug("    step: " & stp.ToString())
+                        Call Debugger.debug("      fx: " & f.ToString())
+                        Debugger.debug("       x: ", x)
+                        Debugger.debug("    grad: ", grad)
+                        Call Debugger.debug("-"c, "leaving line search, dg = " & MyBase.dg.ToString())
                     End If
                     Return
                 End If
@@ -269,12 +269,12 @@ Namespace Framework.Optimization.LBFGSB.LineSearches
                     Me._step = stp
                     Me._fx = f
 
-                    If Debug.flag Then
-                        Call Debug.debug("    step: " & stp.ToString())
-                        Call Debug.debug("      fx: " & f.ToString())
-                        Debug.debug("       x: ", x)
-                        Debug.debug("    grad: ", grad)
-                        Call Debug.debug("-"c, "leaving line search, info = " & info.ToString())
+                    If Debugger.flag Then
+                        Call Debugger.debug("    step: " & stp.ToString())
+                        Call Debugger.debug("      fx: " & f.ToString())
+                        Debugger.debug("       x: ", x)
+                        Debugger.debug("    grad: ", grad)
+                        Call Debugger.debug("-"c, "leaving line search, info = " & info.ToString())
                     End If
                     Return
                 End If
@@ -360,17 +360,17 @@ Namespace Framework.Optimization.LBFGSB.LineSearches
                 stp = If(stp < stpmin, stpmin, stp)
                 stp = If(stp > stpmax, stpmax, stp)
 
-                If Debug.flag Then
-                    Call Debug.debug("  stmin: " & stmin.ToString())
-                    Call Debug.debug("  stmax: " & stmax.ToString())
-                    Call Debug.debug("  stp: " & stp.ToString())
+                If Debugger.flag Then
+                    Call Debugger.debug("  stmin: " & stmin.ToString())
+                    Call Debugger.debug("  stmax: " & stmax.ToString())
+                    Call Debugger.debug("  stp: " & stp.ToString())
                 End If
 
                 iter += 1
 
                 If bracketed.b AndAlso (stp <= stmin OrElse stp >= stmax) OrElse bracketed.b AndAlso stmax - stmin <= param.xtol * stmax OrElse iter >= param.max_linesearch Then
-                    If Debug.flag Then
-                        Call Debug.debug("  fallback to stx: " & stx.ToString())
+                    If Debugger.flag Then
+                        Call Debugger.debug("  fallback to stx: " & stx.ToString())
                     End If
                     stp = stx
                 End If
@@ -381,29 +381,29 @@ Namespace Framework.Optimization.LBFGSB.LineSearches
         Private Sub cstep(cs As CStepType, stpmin As Double, stpmax As Double)
             Dim sgnd = cs.dp * (cs.dx / std.Abs(cs.dx))
 
-            If Debug.flag Then
-                Debug.debug("<< cstep")
-                Call Debug.debug(" stx=" & cs.stx.ToString())
-                Call Debug.debug("  fx=" & cs.fx.ToString())
-                Call Debug.debug("  dx=" & cs.dx.ToString())
-                Call Debug.debug(" sty=" & cs.sty.ToString())
-                Call Debug.debug("  fy=" & cs.fy.ToString())
-                Call Debug.debug("  dy=" & cs.dy.ToString())
-                Call Debug.debug(" stp=" & cs.stp.ToString())
-                Call Debug.debug("  fp=" & cs.fp.ToString())
-                Call Debug.debug("  dp=" & cs.dp.ToString())
-                Call Debug.debug("  br=" & cs.bracketed.ToString())
-                Call Debug.debug(" min=" & stpmin.ToString())
-                Call Debug.debug(" max=" & stpmax.ToString())
-                Call Debug.debug("sgnd=" & sgnd.ToString())
+            If Debugger.flag Then
+                Debugger.debug("<< cstep")
+                Call Debugger.debug(" stx=" & cs.stx.ToString())
+                Call Debugger.debug("  fx=" & cs.fx.ToString())
+                Call Debugger.debug("  dx=" & cs.dx.ToString())
+                Call Debugger.debug(" sty=" & cs.sty.ToString())
+                Call Debugger.debug("  fy=" & cs.fy.ToString())
+                Call Debugger.debug("  dy=" & cs.dy.ToString())
+                Call Debugger.debug(" stp=" & cs.stp.ToString())
+                Call Debugger.debug("  fp=" & cs.fp.ToString())
+                Call Debugger.debug("  dp=" & cs.dp.ToString())
+                Call Debugger.debug("  br=" & cs.bracketed.ToString())
+                Call Debugger.debug(" min=" & stpmin.ToString())
+                Call Debugger.debug(" max=" & stpmax.ToString())
+                Call Debugger.debug("sgnd=" & sgnd.ToString())
             End If
 
             Dim stpf As Double
 
             If cs.fp > cs.fx Then
 
-                If Debug.flag Then
-                    Debug.debug("= Case 1")
+                If Debugger.flag Then
+                    Debugger.debug("= Case 1")
                 End If
 
                 Dim theta = 3.0 * (cs.fx - cs.fp) / (cs.stp - cs.stx) + cs.dx + cs.dp
@@ -423,13 +423,13 @@ Namespace Framework.Optimization.LBFGSB.LineSearches
                 Else
                     stpf = (stpc + stpq) / 2.0
                 End If
-                If Debug.flag Then
-                    Call Debug.debug("= stpf: " & stpf.ToString())
+                If Debugger.flag Then
+                    Call Debugger.debug("= stpf: " & stpf.ToString())
                 End If
                 cs.bracketed = True
             ElseIf sgnd < 0.0 Then
-                If Debug.flag Then
-                    Debug.debug("= Case 2")
+                If Debugger.flag Then
+                    Debugger.debug("= Case 2")
                 End If
 
                 Dim theta = 3.0 * (cs.fx - cs.fp) / (cs.stp - cs.stx) + cs.dx + cs.dp
@@ -449,13 +449,13 @@ Namespace Framework.Optimization.LBFGSB.LineSearches
                 Else
                     stpf = stpq
                 End If
-                If Debug.flag Then
-                    Call Debug.debug("= stpf: " & stpf.ToString())
+                If Debugger.flag Then
+                    Call Debugger.debug("= stpf: " & stpf.ToString())
                 End If
                 cs.bracketed = True
             ElseIf std.Abs(cs.dp) < std.Abs(cs.dx) Then
-                If Debug.flag Then
-                    Debug.debug("= Case 3")
+                If Debugger.flag Then
+                    Debugger.debug("= Case 3")
                 End If
 
                 Dim theta = 3.0 * (cs.fx - cs.fp) / (cs.stp - cs.stx) + cs.dx + cs.dp
@@ -503,12 +503,12 @@ Namespace Framework.Optimization.LBFGSB.LineSearches
                     End If
                     stpf = std.Min(std.Max(stpmin, stpf), stpmax)
                 End If
-                If Debug.flag Then
-                    Call Debug.debug("= stpf: " & stpf.ToString())
+                If Debugger.flag Then
+                    Call Debugger.debug("= stpf: " & stpf.ToString())
                 End If
             Else
-                If Debug.flag Then
-                    Debug.debug("= Case 4")
+                If Debugger.flag Then
+                    Debugger.debug("= Case 4")
                 End If
                 If cs.bracketed Then
                     Dim theta = 3.0 * (cs.fp - cs.fy) / (cs.sty - cs.stp) + cs.dy + cs.dp
@@ -528,8 +528,8 @@ Namespace Framework.Optimization.LBFGSB.LineSearches
                     stpf = stpmin
                 End If
 
-                If Debug.flag Then
-                    Call Debug.debug("= stpf: " & stpf.ToString())
+                If Debugger.flag Then
+                    Call Debugger.debug("= stpf: " & stpf.ToString())
                 End If
             End If
 
@@ -550,8 +550,8 @@ Namespace Framework.Optimization.LBFGSB.LineSearches
 
             cs.stp = stpf
 
-            If Debug.flag Then
-                Call Debug.debug("= [2]stp: " & cs.stp.ToString())
+            If Debugger.flag Then
+                Call Debugger.debug("= [2]stp: " & cs.stp.ToString())
             End If
         End Sub
     End Class
