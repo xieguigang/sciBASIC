@@ -95,7 +95,7 @@ Public Class Input3D : Inherits InputDevice
     '            Dim pos As AbstractVector = Canvas.fdgPhysics.GetPoint(node).position
     '            Call Point3D.Project(pos.x, pos.y, pos.z, rect.Width, rect.Height, 1, vd)
     '#If DEBUG Then
-    '            Call pos.__DEBUG_ECHO
+    '            Call pos.debug
     '#End If
     '        Next
     '    End Sub
