@@ -331,7 +331,7 @@ Namespace HoughCircles
             Return resultCube
         End Function
 
-        Public Function GetTableRow(rows As TableRow(), angle As Double) As TableRow
+        Private Function GetTableRow(rows As TableRow(), angle As Double) As TableRow
             For i = 0 To rows.Count - 1
                 If rows(i).Angle = angle Then
                     Return rows(i)

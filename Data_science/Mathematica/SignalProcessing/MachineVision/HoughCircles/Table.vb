@@ -1,10 +1,8 @@
-﻿Imports System
-Imports System.Collections.Generic
-Imports std = System.Math
+﻿Imports std = System.Math
 
 Namespace HoughCircles
 
-    Public Class TableRow
+    Friend Class TableRow
 
         Public Length As Double
         Public Angle As Double
@@ -15,7 +13,7 @@ Namespace HoughCircles
         End Sub
     End Class
 
-    Public Class Table
+    Friend Class Table
 
         Public Shared ReadOnly Square As TableRow() = {
             New TableRow(0, 1),
