@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::29823a2e61eb2388533610507705337a, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Math2D\Voronoi\Delaunay\Halfedge.vb"
+﻿#Region "Microsoft.VisualBasic::d51abe8092a6799efb192f295bf38322, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Math2D\Voronoi\Delaunay\Halfedge.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 0.00%
     ' 
     '   Blank Lines: 16 (12.80%)
-    '     File Size: 4.23 KB
+    '     File Size: 4.22 KB
 
 
     '     Class Halfedge
@@ -181,4 +181,3 @@ Namespace Drawing2D.Math2D.DelaunayVoronoi
 #End Region
     End Class
 End Namespace
-

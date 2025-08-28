@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b659f7d97f9bd3b03c366e48f01bf4f6, Microsoft.VisualBasic.Core\src\ApplicationServices\Utils.vb"
+﻿#Region "Microsoft.VisualBasic::757e64af3012ec097512ee3446223ea5, Microsoft.VisualBasic.Core\src\ApplicationServices\Utils.vb"
 
     ' Author:
     ' 
@@ -34,18 +34,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 263
-    '    Code Lines: 150 (57.03%)
-    ' Comment Lines: 79 (30.04%)
-    '    - Xml Docs: 88.61%
+    '   Total Lines: 242
+    '    Code Lines: 137 (56.61%)
+    ' Comment Lines: 74 (30.58%)
+    '    - Xml Docs: 87.84%
     ' 
-    '   Blank Lines: 34 (12.93%)
-    '     File Size: 10.22 KB
+    '   Blank Lines: 31 (12.81%)
+    '     File Size: 9.59 KB
 
 
     '     Module Utils
     ' 
-    '         Function: FormatTicks, Shell, TaskRun, (+2 Overloads) Time
+    '         Function: Shell, TaskRun, (+2 Overloads) Time
     ' 
     '         Sub: TryRun
     '         Delegate Function

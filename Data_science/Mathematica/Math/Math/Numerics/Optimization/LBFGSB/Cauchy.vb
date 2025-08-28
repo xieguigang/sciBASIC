@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::33f684f420861f4b3909c76d0b37df06, Data_science\Mathematica\Math\Math\Numerics\Optimization\LBFGSB\Cauchy.vb"
+﻿#Region "Microsoft.VisualBasic::1ad613b96dcaccb654490ca3508f749b, Data_science\Mathematica\Math\Math\Numerics\Optimization\LBFGSB\Cauchy.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 0.00%
     ' 
     '   Blank Lines: 31 (17.22%)
-    '     File Size: 6.42 KB
+    '     File Size: 6.47 KB
 
 
     '     Class Cauchy

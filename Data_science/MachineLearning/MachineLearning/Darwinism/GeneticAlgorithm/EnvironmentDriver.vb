@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fb74354153922bd8f8b90263e4c9f9c4, Data_science\MachineLearning\MachineLearning\Darwinism\GeneticAlgorithm\EnvironmentDriver.vb"
+﻿#Region "Microsoft.VisualBasic::4f228581cf6fd4b5457ed84b6431c138, Data_science\MachineLearning\MachineLearning\Darwinism\GeneticAlgorithm\EnvironmentDriver.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 61.54%
     ' 
     '   Blank Lines: 27 (14.84%)
-    '     File Size: 7.14 KB
+    '     File Size: 7.13 KB
 
 
     '     Class EnvironmentDriver

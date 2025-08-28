@@ -1,62 +1,63 @@
-﻿#Region "Microsoft.VisualBasic::8b96da5e7643a2f1028e70f7635a2572, Data\BinaryData\BinaryData\ByteBuffer.vb"
+﻿#Region "Microsoft.VisualBasic::6e23a3020bdcc00f7e40721e8eeac441, Data\BinaryData\BinaryData\ByteBuffer.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 358
-'    Code Lines: 283 (79.05%)
-' Comment Lines: 35 (9.78%)
-'    - Xml Docs: 45.71%
-' 
-'   Blank Lines: 40 (11.17%)
-'     File Size: 11.56 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-' Class ByteBuffer
-' 
-'     Constructor: (+2 Overloads) Sub New
-' 
-'     Function: (+2 Overloads) [get], allocate, allocateDirect, capacity, clear
-'               compact, Equals, flip, (+2 Overloads) getChar, (+2 Overloads) getDouble
-'               (+2 Overloads) getFloat, (+2 Overloads) getInt, (+2 Overloads) getLong, (+2 Overloads) getShort, hasRemaining
-'               limit, order, (+2 Overloads) position, (+2 Overloads) put, (+2 Overloads) putChar
-'               (+2 Overloads) putDouble, (+2 Overloads) putFloat, (+2 Overloads) putInt, (+2 Overloads) putLong, (+2 Overloads) putShort
-'               remaining, rewind, (+2 Overloads) wrap
-' 
-'     Sub: (+4 Overloads) [get], Finalize
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 370
+    '    Code Lines: 293 (79.19%)
+    ' Comment Lines: 35 (9.46%)
+    '    - Xml Docs: 45.71%
+    ' 
+    '   Blank Lines: 42 (11.35%)
+    '     File Size: 11.96 KB
+
+
+    ' Class ByteBuffer
+    ' 
+    '     Constructor: (+2 Overloads) Sub New
+    ' 
+    '     Function: [char], [double], [float], (+3 Overloads) [get], [int]
+    '               [long], [short], allocate, allocateDirect, capacity
+    '               clear, compact, Equals, flip, getChar
+    '               getDouble, getFloat, getInt, getLong, getShort
+    '               hasRemaining, limit, order, (+2 Overloads) position, (+2 Overloads) put
+    '               (+2 Overloads) putChar, (+2 Overloads) putDouble, (+2 Overloads) putFloat, (+2 Overloads) putInt, (+2 Overloads) putLong
+    '               (+2 Overloads) putShort, remaining, rewind, unsignedBytes, (+2 Overloads) wrap
+    ' 
+    '     Sub: (+4 Overloads) [get], Finalize
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

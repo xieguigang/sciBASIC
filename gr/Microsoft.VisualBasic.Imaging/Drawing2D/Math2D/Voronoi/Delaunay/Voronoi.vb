@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a0f5a9e4f9855dc69bcc5527accd174e, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Math2D\Voronoi\Delaunay\Voronoi.vb"
+﻿#Region "Microsoft.VisualBasic::e814ef9aab60c74deeccb5c3a49f4e5a, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Math2D\Voronoi\Delaunay\Voronoi.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 34.04%
     ' 
     '   Blank Lines: 53 (13.38%)
-    '     File Size: 15.91 KB
+    '     File Size: 15.90 KB
 
 
     '     Class Voronoi
@@ -457,4 +457,3 @@ Namespace Drawing2D.Math2D.DelaunayVoronoi
         End Function
     End Class
 End Namespace
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f73f89db3ab68ea37d96d5728325ecbe, Microsoft.VisualBasic.Core\src\CommandLine\Parsers\CLIParser.vb"
+﻿#Region "Microsoft.VisualBasic::73d4622107498a794ac2566e6091a38f, Microsoft.VisualBasic.Core\src\CommandLine\Parsers\CLIParser.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 93.10%
     ' 
     '   Blank Lines: 22 (14.19%)
-    '     File Size: 6.25 KB
+    '     File Size: 6.24 KB
 
 
     '     Module CLIParser

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ed249e016259b01ad5b068b074576b14, Data_science\Visualization\Plots\g\Axis\Components\XAxis.vb"
+﻿#Region "Microsoft.VisualBasic::a93a81aabf3b8eb06f2489130e4b5ebc, Data_science\Visualization\Plots\g\Axis\Components\XAxis.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 50.00%
     ' 
     '   Blank Lines: 27 (11.54%)
-    '     File Size: 8.90 KB
+    '     File Size: 8.89 KB
 
 
     '     Class XAxis

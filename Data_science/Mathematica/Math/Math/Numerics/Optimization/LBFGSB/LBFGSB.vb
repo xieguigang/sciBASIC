@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::64ce18d5e11fa8327acf972f9a37bc87, Data_science\Mathematica\Math\Math\Numerics\Optimization\LBFGSB\LBFGSB.vb"
+﻿#Region "Microsoft.VisualBasic::388ce9f9f23f1b28940155f84accba54, Data_science\Mathematica\Math\Math\Numerics\Optimization\LBFGSB\LBFGSB.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 64.86%
     ' 
     '   Blank Lines: 45 (17.24%)
-    '     File Size: 10.14 KB
+    '     File Size: 10.23 KB
 
 
     '     Class LBFGSB

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::008c42ac8b964dd675213c30150f2cf7, Data_science\Mathematica\SignalProcessing\MachineVision\CCL\Label.vb"
+﻿#Region "Microsoft.VisualBasic::1266256a06af799c5205aaeabafc055e, Data_science\Mathematica\SignalProcessing\MachineVision\CCL\Label.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 60
-    '    Code Lines: 46 (76.67%)
-    ' Comment Lines: 1 (1.67%)
+    '   Total Lines: 59
+    '    Code Lines: 46 (77.97%)
+    ' Comment Lines: 1 (1.69%)
     '    - Xml Docs: 0.00%
     ' 
-    '   Blank Lines: 13 (21.67%)
-    '     File Size: 1.58 KB
+    '   Blank Lines: 12 (20.34%)
+    '     File Size: 1.57 KB
 
 
     '     Class Label
@@ -57,7 +57,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 Namespace CCL
 
@@ -118,4 +117,3 @@ Namespace CCL
         End Function
     End Class
 End Namespace
-

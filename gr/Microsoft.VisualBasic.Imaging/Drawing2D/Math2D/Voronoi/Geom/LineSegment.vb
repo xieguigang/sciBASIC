@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a4592be5bb15ef1a9d9d8a168ccc971c, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Math2D\Voronoi\Geom\LineSegment.vb"
+﻿#Region "Microsoft.VisualBasic::0a758e5e25291b61c8a6db927a613f1e, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Math2D\Voronoi\Geom\LineSegment.vb"
 
     ' Author:
     ' 
@@ -98,4 +98,3 @@ Namespace Drawing2D.Math2D.DelaunayVoronoi
         End Sub
     End Class
 End Namespace
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d20306ac0094c9c0646fabd81e1c2151, Microsoft.VisualBasic.Core\src\ComponentModel\DataStructures\FuzzyGroup.vb"
+﻿#Region "Microsoft.VisualBasic::c8334a409b68385efde7e9696cffe94b, Microsoft.VisualBasic.Core\src\ComponentModel\DataStructures\FuzzyGroup.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 19 (13.01%)
-    '     File Size: 6.09 KB
+    '     File Size: 6.08 KB
 
 
     '     Module FuzzyGroup

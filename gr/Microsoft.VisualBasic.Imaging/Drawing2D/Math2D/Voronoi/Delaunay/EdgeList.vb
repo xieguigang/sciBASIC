@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ab775e9e7aef2c7f20527721d9f7ba30, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Math2D\Voronoi\Delaunay\EdgeList.vb"
+﻿#Region "Microsoft.VisualBasic::d6ddfde6f55390f312cbec220d939cd9, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Math2D\Voronoi\Delaunay\EdgeList.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 150
-    '    Code Lines: 110 (73.33%)
-    ' Comment Lines: 19 (12.67%)
+    '   Total Lines: 149
+    '    Code Lines: 110 (73.83%)
+    ' Comment Lines: 19 (12.75%)
     '    - Xml Docs: 0.00%
     ' 
-    '   Blank Lines: 21 (14.00%)
-    '     File Size: 5.47 KB
+    '   Blank Lines: 20 (13.42%)
+    '     File Size: 5.46 KB
 
 
     '     Class EdgeList
@@ -57,7 +57,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 Imports Microsoft.VisualBasic.Imaging.Math2D
 
@@ -208,4 +207,3 @@ Namespace Drawing2D.Math2D.DelaunayVoronoi
         End Function
     End Class
 End Namespace
-

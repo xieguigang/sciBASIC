@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::641d8223a430f10db6e719f6d9581699, Data_science\MachineLearning\Bootstrapping\GraphEmbedding\Algorithm.vb"
+﻿#Region "Microsoft.VisualBasic::97c1e113190f4224fbd8678df82fe333, Data_science\MachineLearning\Bootstrapping\GraphEmbedding\Algorithm.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 86
-    '    Code Lines: 44 (51.16%)
-    ' Comment Lines: 34 (39.53%)
+    '   Total Lines: 87
+    '    Code Lines: 45 (51.72%)
+    ' Comment Lines: 34 (39.08%)
     '    - Xml Docs: 79.41%
     ' 
-    '   Blank Lines: 8 (9.30%)
-    '     File Size: 3.89 KB
+    '   Blank Lines: 8 (9.20%)
+    '     File Size: 3.92 KB
 
 
     '     Class Algorithm

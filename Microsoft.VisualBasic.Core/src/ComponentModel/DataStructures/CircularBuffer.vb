@@ -1,4 +1,64 @@
-﻿Namespace ComponentModel.Collection
+﻿#Region "Microsoft.VisualBasic::d4c005bc2003c79169245380689a3152, Microsoft.VisualBasic.Core\src\ComponentModel\DataStructures\CircularBuffer.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 148
+    '    Code Lines: 75 (50.68%)
+    ' Comment Lines: 58 (39.19%)
+    '    - Xml Docs: 93.10%
+    ' 
+    '   Blank Lines: 15 (10.14%)
+    '     File Size: 6.03 KB
+
+
+    '     Class CircularBuffer
+    ' 
+    '         Properties: Capacity, Count, First, HeadIndex, Last
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
+    '         Function: GetEnumerator, IEnumerable_GetEnumerator
+    ' 
+    '         Sub: Add, Clear
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+Namespace ComponentModel.Collection
 
     ''' <summary>
     ''' Represents a fixed-capacity circular buffer (or ring list).

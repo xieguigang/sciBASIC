@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e5634466be71b82a0dd091232cad8a6a, gr\Microsoft.VisualBasic.Imaging\test\filter_test.vb"
+﻿#Region "Microsoft.VisualBasic::4aa299b44f9e644e102b93714eaab60f, gr\Microsoft.VisualBasic.Imaging\test\filter_test.vb"
 
     ' Author:
     ' 
@@ -95,4 +95,3 @@ Module filter_test
         Pause()
     End Sub
 End Module
-

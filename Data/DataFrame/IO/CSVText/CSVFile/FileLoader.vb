@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::299df2904a86bfc52564d8764cba25a4, Data\DataFrame\IO\CSVText\CSVFile\FileLoader.vb"
+﻿#Region "Microsoft.VisualBasic::e8a917c7416fd52db577b9ae24c3b5a0, Data\DataFrame\IO\CSVText\CSVFile\FileLoader.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 86.96%
     ' 
     '   Blank Lines: 20 (12.99%)
-    '     File Size: 7.26 KB
+    '     File Size: 7.25 KB
 
 
     '     Module FileLoader

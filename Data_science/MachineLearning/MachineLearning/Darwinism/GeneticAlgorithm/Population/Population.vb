@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f0b6c5a2e4a0e799bee380509e160ad9, Data_science\MachineLearning\MachineLearning\Darwinism\GeneticAlgorithm\Population\Population.vb"
+﻿#Region "Microsoft.VisualBasic::4b94522cd5ff0aa972886a5a98d31365, Data_science\MachineLearning\MachineLearning\Darwinism\GeneticAlgorithm\Population\Population.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 63.93%
     ' 
     '   Blank Lines: 24 (14.04%)
-    '     File Size: 7.00 KB
+    '     File Size: 6.98 KB
 
 
     '     Class Population

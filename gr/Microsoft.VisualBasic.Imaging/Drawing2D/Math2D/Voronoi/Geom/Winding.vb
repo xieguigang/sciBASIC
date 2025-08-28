@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::53ead39647f23992bbdae760b9edbc30, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Math2D\Voronoi\Geom\Winding.vb"
+﻿#Region "Microsoft.VisualBasic::ad096145a9855b8dec0b88f587fb58d5, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Math2D\Voronoi\Geom\Winding.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 0.00%
     ' 
     '   Blank Lines: 1 (12.50%)
-    '     File Size: 159 B
+    '     File Size: 157 B
 
 
     '     Enum Winding
@@ -64,4 +64,3 @@ Namespace Drawing2D.Math2D.DelaunayVoronoi
         NONE
     End Enum
 End Namespace
-

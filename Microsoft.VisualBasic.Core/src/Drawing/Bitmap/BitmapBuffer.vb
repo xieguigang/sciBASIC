@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::43ed9200d171c2d04c2acb1f82851a99, Microsoft.VisualBasic.Core\src\Drawing\Bitmap\BitmapBuffer.vb"
+﻿#Region "Microsoft.VisualBasic::01e34610147623751bc635c8e325c553, Microsoft.VisualBasic.Core\src\Drawing\Bitmap\BitmapBuffer.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 702
-    '    Code Lines: 414 (58.97%)
-    ' Comment Lines: 179 (25.50%)
+    '   Total Lines: 705
+    '    Code Lines: 416 (59.01%)
+    ' Comment Lines: 179 (25.39%)
     '    - Xml Docs: 81.56%
     ' 
-    '   Blank Lines: 109 (15.53%)
-    '     File Size: 23.93 KB
+    '   Blank Lines: 110 (15.60%)
+    '     File Size: 24.06 KB
 
 
     '     Class BitmapBuffer

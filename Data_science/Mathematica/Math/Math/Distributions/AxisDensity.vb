@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d2f8ce9168c23a4276783331ccc8c47c, Data_science\Mathematica\Math\Math\Distributions\AxisDensity.vb"
+﻿#Region "Microsoft.VisualBasic::99d7c36e9081a8fee529da57c2e54ccd, Data_science\Mathematica\Math\Math\Distributions\AxisDensity.vb"
 
     ' Author:
     ' 
@@ -34,18 +34,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 22
-    '    Code Lines: 17 (77.27%)
-    ' Comment Lines: 0 (0.00%)
-    '    - Xml Docs: 0.00%
+    '   Total Lines: 45
+    '    Code Lines: 25 (55.56%)
+    ' Comment Lines: 14 (31.11%)
+    '    - Xml Docs: 78.57%
     ' 
-    '   Blank Lines: 5 (22.73%)
-    '     File Size: 844 B
+    '   Blank Lines: 6 (13.33%)
+    '     File Size: 2.28 KB
 
 
     '     Module AxisDensity
     ' 
-    '         Function: GetClusters
+    '         Function: GetClusters, MAD
     ' 
     ' 
     ' /********************************************************************************/

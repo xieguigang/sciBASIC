@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a320dac69f99058840ad0f4a14860f0a, Data\BinaryData\SQLite3\Internal\ReaderBase.vb"
+﻿#Region "Microsoft.VisualBasic::776cd9ff189646d48d2a4a66f4494d4a, Data\BinaryData\SQLite3\Internal\ReaderBase.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 23.33%
     ' 
     '   Blank Lines: 70 (23.97%)
-    '     File Size: 9.63 KB
+    '     File Size: 9.65 KB
 
 
     '     Class ReaderBase

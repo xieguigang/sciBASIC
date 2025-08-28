@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::159dc3c420bce1628754b9de95801d69, Data_science\Mathematica\SignalProcessing\MachineVision\CCL\CCLabeling.vb"
+﻿#Region "Microsoft.VisualBasic::f428493c2cc711439ca28cf0df5e68cb, Data_science\Mathematica\SignalProcessing\MachineVision\CCL\CCLabeling.vb"
 
     ' Author:
     ' 
@@ -342,4 +342,3 @@ Namespace CCL
         End Function
     End Class
 End Namespace
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::36864ddc536a542cb425429ad099da8b, Microsoft.VisualBasic.Core\src\ApplicationServices\App.vb"
+﻿#Region "Microsoft.VisualBasic::e54d4dd4a66aa3f98951435155b4794d, Microsoft.VisualBasic.Core\src\ApplicationServices\App.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 83.41%
     ' 
     '   Blank Lines: 183 (11.60%)
-    '     File Size: 67.96 KB
+    '     File Size: 67.97 KB
 
 
     ' Module App

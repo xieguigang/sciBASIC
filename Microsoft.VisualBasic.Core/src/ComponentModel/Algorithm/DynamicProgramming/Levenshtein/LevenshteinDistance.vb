@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ba7941a7b445ddb37822d17e3df89105, Microsoft.VisualBasic.Core\src\ComponentModel\Algorithm\DynamicProgramming\Levenshtein\LevenshteinDistance.vb"
+﻿#Region "Microsoft.VisualBasic::d1341eaef0fcca86ccd7182a30f23c6c, Microsoft.VisualBasic.Core\src\ComponentModel\Algorithm\DynamicProgramming\Levenshtein\LevenshteinDistance.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 90.77%
     ' 
     '   Blank Lines: 50 (15.62%)
-    '     File Size: 14.67 KB
+    '     File Size: 14.66 KB
 
 
     '     Module LevenshteinDistance

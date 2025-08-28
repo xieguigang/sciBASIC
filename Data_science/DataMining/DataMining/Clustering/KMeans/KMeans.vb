@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e2228f5102c03f30e8ad7502ee5d1a00, Data_science\DataMining\DataMining\Clustering\KMeans\KMeans.vb"
+﻿#Region "Microsoft.VisualBasic::8e46cc06287480a1c8bc0e45597e5830, Data_science\DataMining\DataMining\Clustering\KMeans\KMeans.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 77.36%
     ' 
     '   Blank Lines: 51 (15.69%)
-    '     File Size: 13.87 KB
+    '     File Size: 13.84 KB
 
 
     '     Class KMeansAlgorithm

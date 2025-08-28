@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::944214fcc40f8789d88ab48937c35781, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Math2D\Voronoi\Delaunay\EdgeReorderer.vb"
+﻿#Region "Microsoft.VisualBasic::fd000eaa42bff7e7acf74c7987c32c3c, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Math2D\Voronoi\Delaunay\EdgeReorderer.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 0.00%
     ' 
     '   Blank Lines: 11 (9.57%)
-    '     File Size: 4.32 KB
+    '     File Size: 4.31 KB
 
 
     '     Class EdgeReorderer
@@ -173,4 +173,3 @@ Namespace Drawing2D.Math2D.DelaunayVoronoi
         End Function
     End Class
 End Namespace
-

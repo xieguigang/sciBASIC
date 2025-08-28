@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::10edf46d940fb59e3fbf640d2aea3ca2, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Math2D\Voronoi\Delaunay\HalfedgePriorityQueue.vb"
+﻿#Region "Microsoft.VisualBasic::738fa3f1aafb7ca8ec07fc2c117db85f, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Math2D\Voronoi\Delaunay\HalfedgePriorityQueue.vb"
 
     ' Author:
     ' 
@@ -34,12 +34,12 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 127
-    '    Code Lines: 93 (73.23%)
-    ' Comment Lines: 10 (7.87%)
+    '   Total Lines: 126
+    '    Code Lines: 93 (73.81%)
+    ' Comment Lines: 10 (7.94%)
     '    - Xml Docs: 0.00%
     ' 
-    '   Blank Lines: 24 (18.90%)
+    '   Blank Lines: 23 (18.25%)
     '     File Size: 4.39 KB
 
 
@@ -55,7 +55,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 Imports Microsoft.VisualBasic.Imaging.Math2D
 Imports Microsoft.VisualBasic.Language
@@ -183,4 +182,3 @@ Namespace Drawing2D.Math2D.DelaunayVoronoi
         End Function
     End Class
 End Namespace
-

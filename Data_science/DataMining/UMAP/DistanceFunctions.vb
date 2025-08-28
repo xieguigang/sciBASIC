@@ -1,62 +1,63 @@
-﻿#Region "Microsoft.VisualBasic::e8c3c5134f82399f8b9c0717d5fa9ac8, Data_science\DataMining\UMAP\DistanceFunctions.vb"
+﻿#Region "Microsoft.VisualBasic::ca2c67343c8e9ced63b1dcb652750039, Data_science\DataMining\UMAP\DistanceFunctions.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 102
-'    Code Lines: 57 (55.88%)
-' Comment Lines: 32 (31.37%)
-'    - Xml Docs: 87.50%
-' 
-'   Blank Lines: 13 (12.75%)
-'     File Size: 3.75 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-' Enum DistanceFunction
-' 
-'     Cosine, Euclidean, NormalizedCosine, SpectralCosine, TanimotoFingerprint
-' 
-'  
-' 
-' 
-' 
-' Class DistanceFunctions
-' 
-'     Function: Cosine, CosineForNormalizedVectors, Euclidean, GetFunction, JaccardSimilarity
-'               SpectralSimilarity
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 133
+    '    Code Lines: 82 (61.65%)
+    ' Comment Lines: 34 (25.56%)
+    '    - Xml Docs: 82.35%
+    ' 
+    '   Blank Lines: 17 (12.78%)
+    '     File Size: 4.81 KB
+
+
+    ' Enum DistanceFunction
+    ' 
+    '     AbsPearson, Cosine, Euclidean, NormalizedCosine, Pearson
+    '     SpectralCosine, TanimotoFingerprint
+    ' 
+    '  
+    ' 
+    ' 
+    ' 
+    ' Class DistanceFunctions
+    ' 
+    '     Function: Cosine, CosineForNormalizedVectors, Euclidean, GetFunction, JaccardSimilarity
+    '               PearsonAbs, PearsonCor, SpectralSimilarity
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

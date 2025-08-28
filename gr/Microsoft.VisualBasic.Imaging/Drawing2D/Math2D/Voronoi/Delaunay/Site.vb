@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a89a58f6c1db92c0a3d5ee08de86431e, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Math2D\Voronoi\Delaunay\Site.vb"
+﻿#Region "Microsoft.VisualBasic::904a626816b84010e01c8b40b396e586, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Math2D\Voronoi\Delaunay\Site.vb"
 
     ' Author:
     ' 
@@ -445,4 +445,3 @@ Namespace Drawing2D.Math2D.DelaunayVoronoi
         End Function
     End Class
 End Namespace
-

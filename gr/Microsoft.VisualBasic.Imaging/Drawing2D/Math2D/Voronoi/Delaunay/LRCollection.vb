@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::715fed5d61edceb5133af41bb96ca1f4, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Math2D\Voronoi\Delaunay\LRCollection.vb"
+﻿#Region "Microsoft.VisualBasic::41e72e1c26ddaf359700e89d920f3bc4, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Math2D\Voronoi\Delaunay\LRCollection.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 24
-    '    Code Lines: 22 (91.67%)
+    '   Total Lines: 23
+    '    Code Lines: 22 (95.65%)
     ' Comment Lines: 0 (0.00%)
     '    - Xml Docs: 0.00%
     ' 
-    '   Blank Lines: 2 (8.33%)
-    '     File Size: 653 B
+    '   Blank Lines: 1 (4.35%)
+    '     File Size: 649 B
 
 
     '     Class LRCollection
@@ -51,7 +51,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 Namespace Drawing2D.Math2D.DelaunayVoronoi
     Public Class LRCollection(Of T)
@@ -76,4 +75,3 @@ Namespace Drawing2D.Math2D.DelaunayVoronoi
         End Sub
     End Class
 End Namespace
-

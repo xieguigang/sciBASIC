@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::30f54801d3005f0f8ccfb2bec16fa26c, Data\DataFrame\StorageProvider\Reflection\StorageProviders\Reflection.vb"
+﻿#Region "Microsoft.VisualBasic::e68285c76096e9c20968f127b80a5336, Data\DataFrame\StorageProvider\Reflection\StorageProviders\Reflection.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 86.75%
     ' 
     '   Blank Lines: 39 (11.21%)
-    '     File Size: 16.73 KB
+    '     File Size: 16.71 KB
 
 
     '     Module Reflector

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d021def3aa282a2f6db359ba604c8c1d, Microsoft.VisualBasic.Core\src\Extensions\WebServices\WebServiceUtils.vb"
+﻿#Region "Microsoft.VisualBasic::1066efa9bc67714ce1590274dd1880e5, Microsoft.VisualBasic.Core\src\Extensions\WebServices\WebServiceUtils.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 89.87%
     ' 
     '   Blank Lines: 137 (14.05%)
-    '     File Size: 35.46 KB
+    '     File Size: 35.43 KB
 
 
     ' Module WebServiceUtils

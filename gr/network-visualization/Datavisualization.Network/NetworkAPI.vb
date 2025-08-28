@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::929af781aa9c68aa878aadcb86f6e299, gr\network-visualization\Datavisualization.Network\NetworkAPI.vb"
+﻿#Region "Microsoft.VisualBasic::f6c1db6f573e9ae463153f46855b181f, gr\network-visualization\Datavisualization.Network\NetworkAPI.vb"
 
     ' Author:
     ' 
@@ -34,18 +34,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 61
-    '    Code Lines: 47 (77.05%)
-    ' Comment Lines: 6 (9.84%)
+    '   Total Lines: 116
+    '    Code Lines: 94 (81.03%)
+    ' Comment Lines: 6 (5.17%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 8 (13.11%)
-    '     File Size: 2.33 KB
+    '   Blank Lines: 16 (13.79%)
+    '     File Size: 4.32 KB
 
 
     ' Module NetworkAPI
     ' 
-    '     Function: EndPoints, Neighborhood, RemoveDuplicated
+    '     Function: EndPoints, Neighborhood, RemoveDuplicated, (+2 Overloads) TakeSubEdges, TakeSubGraph
     ' 
     ' /********************************************************************************/
 
