@@ -1,14 +1,15 @@
 ﻿Imports System.Drawing
 Imports Microsoft.VisualBasic.Imaging.BitmapImage
+Imports Microsoft.VisualBasic.Imaging.Math2D
 Imports std = System.Math
 
 Namespace HoughCircles
 
     Public Module Algorithm
 
-        Public Function CircleHough(baseImage As BitmapBuffer, radius As Single) As Result()
+        Public Function CircleHough(baseImage As BitmapBuffer, radius As Single) As EllipseShape()
             ' the circle result
-            Dim pick As Result() = Nothing
+            Dim pick As EllipseShape() = Nothing
             Dim grayImg = CreateNegative(baseImage)
             Dim binarMap = DetectEdge(grayImg)
 
@@ -26,8 +27,8 @@ Namespace HoughCircles
             Return pick
         End Function
 
-        Public Function CircleVector(baseImage As BitmapBuffer, radius As Single) As Result()
-            Dim pick As Result() = Nothing
+        Public Function CircleVector(baseImage As BitmapBuffer, radius As Single) As EllipseShape()
+            Dim pick As EllipseShape() = Nothing
             Dim grayImg = CreateNegative(baseImage)
             Dim binarMap = DetectEdge(grayImg)
 
@@ -45,7 +46,7 @@ Namespace HoughCircles
             Return pick
         End Function
 
-        Public Function SquareVector(baseImage As BitmapBuffer) As Result()
+        Public Function SquareVector(baseImage As BitmapBuffer) As EllipseShape()
             Dim grayImg = CreateNegative(baseImage)
             Dim binarMap = DetectEdge(grayImg)
             Dim vSpace = CreateVectorVoteSpace(binarMap, grayImg, Table.Square)
@@ -117,56 +118,42 @@ Namespace HoughCircles
             Return resultCube
         End Function
 
-        ''' <summary>
-        ''' the circle detection result
-        ''' </summary>
-        Public Class Result
-            Public x As Short
-            Public y As Short
-            Public r As Short
-            Public value As Short
-        End Class
-
-        Private Function GetHighestVotes(accCube As Short(,,), Optional trashold As Integer = 254) As Result()
+        Private Function GetHighestVotes(accCube As Short(,,), Optional trashold As Integer = 254) As EllipseShape()
             Dim radius = accCube.GetLength(0)
             Dim height = accCube.GetLength(1)
             Dim width = accCube.GetLength(2)
 
-            Dim ResultList = New List(Of Result)()
+            Dim ResultList As New List(Of EllipseShape)()
             For r As Short = 1 To radius - 1
-                Dim result As Result = New Result()
+                Dim vx, vy As Single
+                Dim value As Double
+
                 For y As Short = 0 To height - 1
                     For x As Short = 0 To width - 1
-                        If accCube(r, y, x) > trashold AndAlso result.value < accCube(r, y, x) Then
-                            result.x = x
-                            result.y = y
-                            result.r = r
-                            result.value = accCube(r, y, x)
+                        If accCube(r, y, x) > trashold AndAlso value < accCube(r, y, x) Then
+                            vx = x
+                            vy = y
+                            value = accCube(r, y, x)
                         End If
                     Next
                 Next
 
-                If result.value <> 0 Then
-                    ResultList.Add(result)
+                If value <> 0 Then
+                    ResultList.Add(New EllipseShape(vx, vy, r) With {.value = value})
                 End If
             Next
             Return ResultList.ToArray()
         End Function
 
-        Private Function GetHighestVotes(accMatrix As Short(,), radius As Short, Optional trashold As Integer = 254) As Result()
+        Private Function GetHighestVotes(accMatrix As Short(,), radius As Short, Optional trashold As Integer = 254) As EllipseShape()
             Dim height = accMatrix.GetLength(0)
             Dim width = accMatrix.GetLength(1)
+            Dim results As New List(Of EllipseShape)()
 
-            Dim results = New List(Of Result)()
             For y As Short = 0 To height - 1
                 For x As Short = 0 To width - 1
                     If accMatrix(y, x) > trashold Then ' && result.value < accMatrix[y, x])
-                        Dim result As Result = New Result()
-                        result.x = x
-                        result.y = y
-                        result.r = radius
-                        result.value = accMatrix(y, x)
-                        results.Add(result)
+                        results.Add(New EllipseShape(x, y, radius) With {.value = accMatrix(y, x)})
                     End If
                 Next
             Next
@@ -233,38 +220,6 @@ Namespace HoughCircles
             Next
         End Sub
 
-        Private Function CreateBinarMap(negativeImage As BitmapBuffer, thrashold As Integer) As Boolean(,)
-            Dim binarMap = New Boolean(negativeImage.Height - 1, negativeImage.Width - 1) {}
-
-            For Y As Integer = 0 To negativeImage.Height - 1
-                For X As Integer = 0 To negativeImage.Width - 1
-                    Dim color = negativeImage.GetPixel(X, Y)
-                    If (color.R + color.G + color.B) / 3 > thrashold Then
-                        binarMap(Y, X) = True
-                    End If
-                Next
-            Next
-
-            Return binarMap
-        End Function
-
-        Private Function CreateImgFromMap(map As Boolean(,)) As BitmapBuffer
-            Dim height = map.GetLength(0)
-            Dim width = map.GetLength(1)
-            Dim img As New BitmapBuffer(width, height)
-
-            For Y As Integer = 0 To height - 1
-                For X As Integer = 0 To width - 1
-                    If map(Y, X) Then
-                        img.SetPixel(X, Y, Color.White)
-                    Else
-                        img.SetPixel(X, Y, Color.Black)
-                    End If
-                Next
-            Next
-            Return img
-        End Function
-
         Private Function CreateNegative(img As BitmapBuffer) As Short(,)
             Dim grayMatrix = ToGrayMatrix(img)
 
@@ -285,15 +240,8 @@ Namespace HoughCircles
             Dim width = binarImg.GetLength(1)
             Dim bb = New Boolean(height - 1, width - 1) {}
 
-            Dim gx = New Integer(,) {
-  {-1, 0, 1},
-  {-2, 0, 2},
-                  {-1, 0, 1}}
-
-            Dim gy = New Integer(,) {
-    {1, 2, 1},
-    {0, 0, 0},
-                {-1, -2, -1}}
+            Dim gx = New Integer(,) {{-1, 0, 1}, {-2, 0, 2}, {-1, 0, 1}}
+            Dim gy = New Integer(,) {{1, 2, 1}, {0, 0, 0}, {-1, -2, -1}}
 
             Dim limit = 128 * 128
 
