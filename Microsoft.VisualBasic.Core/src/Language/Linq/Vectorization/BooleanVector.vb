@@ -95,6 +95,12 @@ Namespace Language.Vectorization
             End Get
         End Property
 
+        Public ReadOnly Property Any As Boolean
+            Get
+                Return buffer.Any(Function(a) a)
+            End Get
+        End Property
+
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Sub New(b As IEnumerable(Of Boolean))
             MyBase.New(b)
@@ -108,7 +114,7 @@ Namespace Language.Vectorization
             Dim countTrue% = Linq.which(buffer).Count
             Dim countFalse% = Linq.which(Not Me).Count
 
-            Return $"ALL({Length}) = {countTrue} true + {countFalse} false"
+            Return $"all({Length}) = {countTrue}:true + {countFalse}:false"
         End Function
 
         ''' <summary>
@@ -142,9 +148,9 @@ Namespace Language.Vectorization
         ''' <param name="y"></param>
         ''' <returns></returns>
         ''' 
-        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overloads Shared Operator &(x As BooleanVector, y As BooleanVector) As BooleanVector
-            Return New BooleanVector(From i As SeqValue(Of Boolean) In x.SeqIterator Select i.value AndAlso y(i))
+            Dim vy = y.buffer
+            Return New BooleanVector(x.Select(Function(xi, i) xi AndAlso vy(i)))
         End Operator
 
         ''' <summary>
@@ -155,7 +161,7 @@ Namespace Language.Vectorization
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Operator Not(x As BooleanVector) As BooleanVector
-            Return New BooleanVector((From b As Boolean In x Select Not b).ToArray)
+            Return New BooleanVector(From b As Boolean In x Select Not b)
         End Operator
 
         ''' <summary>
@@ -213,7 +219,7 @@ Namespace Language.Vectorization
             If b.IsNullOrEmpty Then
                 Return False
             Else
-                Return Not b.Any(Function(x) x = False)
+                Return Not Enumerable.Any(b, Function(x) x = False)
             End If
         End Operator
 
