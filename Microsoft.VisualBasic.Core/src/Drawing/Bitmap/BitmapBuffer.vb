@@ -369,6 +369,66 @@ Namespace Imaging.BitmapImage
             End If
         End Function
 
+        Public Function A() As Byte()
+            Dim alpha As Byte() = New Byte(Width * Height - 1) {}
+
+            If channels = TYPE_INT_ARGB Then
+                Dim offset As Integer = 0
+
+                'ARGB
+                For i As Integer = 0 To buffer.Length - 1 Step 4
+                    alpha(offset) = buffer(i)
+                    offset += 1
+                Next
+            Else
+                ' RGB
+                For i As Integer = 0 To alpha.Length - 1
+                    alpha(i) = 255
+                Next
+            End If
+
+            Return alpha
+        End Function
+
+        Public Function R() As Byte()
+            Dim red As Byte() = New Byte(Width * Height - 1) {}
+            Dim pad As Integer = If(channels = TYPE_INT_ARGB, 1, 0)
+            Dim offset As Integer = 0
+
+            For i As Integer = 0 To buffer.Length - 1 Step channels
+                red(offset) = buffer(i + pad)
+                offset += 1
+            Next
+
+            Return red
+        End Function
+
+        Public Function G() As Byte()
+            Dim green As Byte() = New Byte(Width * Height - 1) {}
+            Dim pad As Integer = If(channels = TYPE_INT_ARGB, 2, 1)
+            Dim offset As Integer = 0
+
+            For i As Integer = 0 To buffer.Length - 1 Step channels
+                green(offset) = buffer(i + pad)
+                offset += 1
+            Next
+
+            Return green
+        End Function
+
+        Public Function B() As Byte()
+            Dim blue As Byte() = New Byte(Width * Height - 1) {}
+            Dim pad As Integer = If(channels = TYPE_INT_ARGB, 3, 2)
+            Dim offset As Integer = 0
+
+            For i As Integer = 0 To buffer.Length - 1 Step channels
+                blue(offset) = buffer(i + pad)
+                offset += 1
+            Next
+
+            Return blue
+        End Function
+
         ''' <summary>
         ''' get image data array in ARGB format
         ''' </summary>
