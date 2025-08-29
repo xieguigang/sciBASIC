@@ -5,20 +5,20 @@ Namespace HoughCircles
 
     Public Class HoughSpace : Inherits VectorTask
 
-        ReadOnly BinarEdgeMap As Boolean(,)
+        ReadOnly edges As Boolean(,)
         ReadOnly resultCube As Short(,,)
 
         ReadOnly binarHeight As Integer
         ReadOnly binarWidth As Integer
         ReadOnly radius As Integer
 
-        Public Sub New(BinarEdgeMap As Boolean(,), Optional verbose As Boolean = False, Optional workers As Integer? = Nothing)
-            MyBase.New(BinarEdgeMap.GetLength(0), verbose, workers)
+        Public Sub New(edges As Boolean(,), Optional verbose As Boolean = False, Optional workers As Integer? = Nothing)
+            MyBase.New(edges.GetLength(0), verbose, workers)
 
-            Me.BinarEdgeMap = BinarEdgeMap
+            Me.edges = edges
 
-            binarHeight = BinarEdgeMap.GetLength(0)
-            binarWidth = BinarEdgeMap.GetLength(1)
+            binarHeight = edges.GetLength(0)
+            binarWidth = edges.GetLength(1)
             radius = If(binarHeight < binarWidth, binarHeight, binarWidth)
             resultCube = New Short(radius - 1, binarHeight - 1, binarWidth - 1) {}
         End Sub
@@ -30,7 +30,7 @@ Namespace HoughCircles
         Protected Overrides Sub Solve(start As Integer, ends As Integer, cpu_id As Integer)
             For Y As Integer = start To ends
                 For X As Integer = 0 To binarWidth - 1
-                    If BinarEdgeMap(Y, X) Then
+                    If edges(Y, X) Then
                         UpdateHoughMatrix(resultCube, X, Y, radius)
                     End If
                 Next

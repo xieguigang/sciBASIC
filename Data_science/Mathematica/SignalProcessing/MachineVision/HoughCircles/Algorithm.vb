@@ -218,6 +218,12 @@ Namespace HoughCircles
             Return results.ToArray()
         End Function
 
+        Private Function CreateHoughSpace(binarMap As Boolean(,)) As Short(,,)
+            Dim houghSpace As New HoughSpace(binarMap)
+            houghSpace.Run()
+            Return houghSpace.getHoughSpace
+        End Function
+
         Private Function CreateHoughSpace(BinarEdgeMap As Boolean(,), radius As Integer) As Short(,)
             Dim binarHeight = BinarEdgeMap.GetLength(0)
             Dim binarWidth = BinarEdgeMap.GetLength(1)
