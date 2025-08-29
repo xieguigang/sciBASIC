@@ -55,11 +55,12 @@
 Namespace demo
     Friend Class Program
         Public Shared Sub Main()
-            ' Booth.Main5(null);
+            Booth.Main5(Nothing)
             ' Perm.Main14(Nothing)
             ' Michalewicz.Main11(Nothing)
             ' CrossInTray.Main7(Nothing)
-            Call Rosenbrock.Main15(Nothing)
+            ' Call Rosenbrock.Main15(Nothing)
+            ' Call Ackley.Main1(Nothing)
         End Sub
     End Class
 End Namespace
