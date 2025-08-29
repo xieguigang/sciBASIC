@@ -1,61 +1,62 @@
 ﻿#Region "Microsoft.VisualBasic::3d5dd94f45f42165a8aeea3592c8aefd, Data_science\Mathematica\Math\Math\Numerics\Optimization\LBFGSB\examples\Ackley.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 65
-    '    Code Lines: 43 (66.15%)
-    ' Comment Lines: 7 (10.77%)
-    '    - Xml Docs: 0.00%
-    ' 
-    '   Blank Lines: 15 (23.08%)
-    '     File Size: 2.19 KB
+' Summaries:
 
 
-    ' Class Ackley
-    ' 
-    '     Constructor: (+3 Overloads) Sub New
-    ' 
-    '     Function: evaluate
-    ' 
-    '     Sub: Main1
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 65
+'    Code Lines: 43 (66.15%)
+' Comment Lines: 7 (10.77%)
+'    - Xml Docs: 0.00%
+' 
+'   Blank Lines: 15 (23.08%)
+'     File Size: 2.19 KB
+
+
+' Class Ackley
+' 
+'     Constructor: (+3 Overloads) Sub New
+' 
+'     Function: evaluate
+' 
+'     Sub: Main1
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports Microsoft.VisualBasic.Math.Framework.Optimization.LBFGSB
+Imports Microsoft.VisualBasic.Serialization.JSON
 
 
 ' ACKLEY
@@ -95,7 +96,7 @@ Public Class Ackley
 
     Public Shared Sub Main1(args As String())
 
-        Debug.flag = True
+        ' Debugger.flag = True
 
         Dim param As Parameters = New Parameters()
         Dim lbfgsb As LBFGSB = New LBFGSB(param)
@@ -107,11 +108,11 @@ Public Class Ackley
             '					new double[] { 0, -10, 0, 0, 0 }, new double[] { 32, 32, 32, 32, 32 });
             Dim res As Double() = lbfgsb.minimize(New Ackley(10), New Double() {0.65, -0.5, 0.0, 0.5, 0.2, 0.2, 0.2, -0.2, -0.2, -0.5}, New Double() {-32, -32, -32, -32, 0, -32, -32, -32, -32, -32}, New Double() {32, 32, 32, 32, 32, 32, 32, 32, 32, 32})
 
-            Debug.debug("!"c, "RESULT")
-            Call Debug.debug("k = " & lbfgsb.k.ToString())
-            Debug.debug("x = ", res)
-            Call Debug.debug("fx = " & lbfgsb.fx.ToString())
-            Debug.debug("grad = ", lbfgsb.m_grad)
+            Call ("!RESULT").debug
+            Call ("k = " & lbfgsb.k.ToString()).debug
+            Call ("x = " & res.GetJson).debug
+            Call ("fx = " & lbfgsb.fx.ToString()).debug
+            Call ("grad = " & lbfgsb.m_grad.GetJson).debug
         Catch e As LBFGSBException
             Console.WriteLine(e.ToString())
             Console.Write(e.StackTrace)

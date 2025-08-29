@@ -97,7 +97,7 @@ Public Module LPPTest
         Dim lp As New LPP(OptimizationType.MAX, {"A", "B", "C"}, {1, 9, 1}, {{1, 2, 3}, {3, 2, 2}}, {"=", "="}, {0, 0})
         Dim result As LPPSolution = lp.solve
 
-        Call result.ToString.__DEBUG_ECHO
+        Call result.ToString.debug
 
         Pause()
     End Sub

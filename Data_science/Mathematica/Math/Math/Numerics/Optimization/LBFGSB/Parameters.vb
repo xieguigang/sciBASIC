@@ -73,7 +73,10 @@ Namespace Framework.Optimization.LBFGSB
         Public max_submin As Integer = 10
         Public max_linesearch As Integer = 20
         Public linesearch As LINESEARCH = LINESEARCH.MORETHUENTE_ORIG
-        Public xtol As Double = 0.00000001 ' MoreThuente
+        ''' <summary>
+        ''' More Thuente
+        ''' </summary>
+        Public xtol As Double = 0.00000001
         Public min_step As Double = 1.0E-20
         Public max_step As Double = 1.0E+20
         Public ftol As Double = 0.0001
