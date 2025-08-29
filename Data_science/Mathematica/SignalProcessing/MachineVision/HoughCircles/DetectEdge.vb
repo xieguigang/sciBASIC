@@ -5,8 +5,8 @@ Namespace HoughCircles
 
     Public Class DetectEdge : Inherits VectorTask
 
-        ReadOnly binarImg As Short(,)
-        ReadOnly bb As Boolean(,)
+        ReadOnly binary As Short(,)
+        ReadOnly edges As Boolean(,)
         ReadOnly width As Integer
         ReadOnly height As Integer
 
@@ -19,15 +19,15 @@ Namespace HoughCircles
 
             Call MyBase.New(binarImg.GetLength(0), verbose, workers)
 
-            Me.binarImg = binarImg
-            Me.width = bb.GetLength(1)
-            Me.height = bb.GetLength(0)
-            Me.bb = New Boolean(height - 1, width - 1) {}
+            Me.binary = binarImg
+            Me.width = binarImg.GetLength(1)
+            Me.height = binarImg.GetLength(0)
+            Me.edges = New Boolean(height - 1, width - 1) {}
         End Sub
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function getEdges() As Boolean(,)
-            Return bb
+            Return edges
         End Function
 
         Protected Overrides Sub Solve(start As Integer, ends As Integer, cpu_id As Integer)
@@ -43,15 +43,16 @@ Namespace HoughCircles
 
                     For hw = -1 To 1
                         For ww = -1 To 1
-                            c = binarImg(Y + hw, X + ww)
+                            c = binary(Y + hw, X + ww)
                             newX += gx(hw + 1, ww + 1) * c
                             newY += gy(hw + 1, ww + 1) * c
                         Next
                     Next
+
                     If newX * newX + newY * newY > limit Then
-                        bb(Y, X) = True
+                        edges(Y, X) = True
                     Else
-                        bb(Y, X) = False
+                        edges(Y, X) = False
                     End If
                 Next
             Next
