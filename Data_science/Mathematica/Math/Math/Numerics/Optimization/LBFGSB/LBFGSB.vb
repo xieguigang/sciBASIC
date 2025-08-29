@@ -122,10 +122,16 @@ Namespace Framework.Optimization.LBFGSB
         Public Sub New()
             Me.New(New Parameters())
         End Sub
+
         Public Sub New(param As Parameters)
             m_param = param
             m_bfgs = New BFGSMat()
         End Sub
+
+        Public Function maxit(n As Integer) As LBFGSB
+            m_param.max_iterations = n
+            Return Me
+        End Function
 
         Public Shared Sub force_bounds(x As Double(), lb As Double(), ub As Double())
             For i = 0 To x.Length - 1
