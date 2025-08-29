@@ -1472,8 +1472,8 @@ Public MustInherit Class GDICanvas : Inherits IGraphics
     ''' 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Overrides Sub DrawPolygon(pen As Pen, points() As PointF)
-        If points.IsNullOrEmpty Then
-            Call "one of the polygon shape data for draw is empty!".Warning
+        If points.IsNullOrEmpty OrElse points.Length < 3 Then
+            Call "one of the polygon shape data for draw is empty or invalid!".warning
             Return
         End If
 

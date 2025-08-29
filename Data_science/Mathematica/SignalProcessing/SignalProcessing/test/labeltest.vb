@@ -65,7 +65,7 @@ Imports Microsoft.VisualBasic.Math.MachineVision.CCL
 Public Module labeltest
 
     Sub Main()
-        Dim img = "Z:\aaa.bmp".LoadImage
+        Dim img = "G:\Erica\test\HE\cells_bin2.bmp".LoadImage
         Dim CELLS = CCLabeling.Process(BitmapBuffer.FromImage(img), background:=Color.White, 0).ToArray
         Dim pen As New Pen(Color.Red, 2)
         Dim pen2 As New Pen(Color.Blue, 2)
@@ -84,5 +84,9 @@ Public Module labeltest
             Call gfx.Flush()
             Call gfx.ImageResource.SaveAs("Z:/label6.png")
         End Using
+    End Sub
+
+    Sub circleTest()
+
     End Sub
 End Module
