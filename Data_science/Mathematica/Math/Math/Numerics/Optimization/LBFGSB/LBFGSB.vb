@@ -133,6 +133,11 @@ Namespace Framework.Optimization.LBFGSB
             Return Me
         End Function
 
+        Public Function debug(Optional opt As Boolean = True) As LBFGSB
+            Debugger.flag = opt
+            Return Me
+        End Function
+
         Public Shared Sub force_bounds(x As Double(), lb As Double(), ub As Double())
             For i = 0 To x.Length - 1
                 x(i) = std.Max(std.Min(x(i), ub(i)), lb(i))
