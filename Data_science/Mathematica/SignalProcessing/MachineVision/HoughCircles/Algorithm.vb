@@ -294,38 +294,9 @@ Namespace HoughCircles
         End Function
 
         Private Function DetectEdge(binarImg As Short(,)) As Boolean(,)
-            Dim height = binarImg.GetLength(0)
-            Dim width = binarImg.GetLength(1)
-            Dim bb = New Boolean(height - 1, width - 1) {}
-
-            Dim gx = New Integer(,) {{-1, 0, 1}, {-2, 0, 2}, {-1, 0, 1}}
-            Dim gy = New Integer(,) {{1, 2, 1}, {0, 0, 0}, {-1, -2, -1}}
-
-            Dim limit = 128 * 128
-
-            Dim newX = 0, newY = 0, c = 0
-            For Y As Integer = 1 To height - 1 - 1
-                For X As Integer = 1 To width - 1 - 1
-
-                    newX = 0
-                    newY = 0
-                    c = 0
-
-                    For hw = -1 To 1
-                        For ww = -1 To 1
-                            c = binarImg(Y + hw, X + ww)
-                            newX += gx(hw + 1, ww + 1) * c
-                            newY += gy(hw + 1, ww + 1) * c
-                        Next
-                    Next
-                    If newX * newX + newY * newY > limit Then
-                        bb(Y, X) = True
-                    Else
-                        bb(Y, X) = False
-                    End If
-                Next
-            Next
-            Return bb
+            Dim task As New DetectEdge(binarImg)
+            Call task.Run()
+            Return task.getEdges
         End Function
 
         Private Function GetGradAngle(grayImg As Short(,), x0 As Integer, y0 As Integer) As Double
