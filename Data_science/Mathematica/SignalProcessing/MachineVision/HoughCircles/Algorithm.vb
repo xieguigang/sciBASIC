@@ -219,32 +219,10 @@ Namespace HoughCircles
         End Function
 
         Private Function CreateHoughSpace(BinarEdgeMap As Boolean(,), radius As Integer) As Short(,)
-            Dim binarHeight = BinarEdgeMap.GetLength(0)
-            Dim binarWidth = BinarEdgeMap.GetLength(1)
-
-            Dim resultMatrix = New Short(binarHeight - 1, binarWidth - 1) {}
-            For Y As Integer = 0 To binarHeight - 1
-                For X As Integer = 0 To binarWidth - 1
-                    If BinarEdgeMap(Y, X) Then
-                        UpdateHoughMatrix(resultMatrix, X, Y, radius)
-                    End If
-                Next
-            Next
-            Return resultMatrix
+            Dim houghSpace As New HoughSpaceRadius(BinarEdgeMap, radius)
+            houghSpace.Run()
+            Return houghSpace.getHoughSpace
         End Function
-
-        Private Sub UpdateHoughMatrix(ByRef matrix As Short(,), x As Integer, y As Integer, radius As Integer)
-            For teta = 0 To 359
-                Dim a = CInt(x + radius * std.Cos(teta))
-                Dim b = CInt(y + radius * std.Sin(teta))
-
-                If a < 0 OrElse b < 0 OrElse b >= matrix.GetLength(0) OrElse a >= matrix.GetLength(1) Then
-                    Continue For
-                End If
-
-                matrix(b, a) += 1
-            Next
-        End Sub
 
         Private Function CreateNegative(img As BitmapBuffer) As Short(,)
             Dim grayMatrix = ToGrayMatrix(img)
