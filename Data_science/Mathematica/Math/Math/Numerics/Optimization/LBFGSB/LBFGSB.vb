@@ -169,7 +169,7 @@ Namespace Framework.Optimization.LBFGSB
             Return [step]
         End Function
 
-        Public Shared ReadOnly eps As Double = Microsoft.VisualBasic.Math.Ulp(1.0)
+        Public Shared ReadOnly eps As Double = Ulp(1.0)
 
         ''' <summary>
         ''' 
