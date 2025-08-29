@@ -57,13 +57,13 @@
 #End Region
 
 Imports System.Drawing
-Imports System.Drawing.Imaging
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Imaging.BitmapImage
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
 Imports Microsoft.VisualBasic.Imaging.Driver
 
 #If NET48 Then
+Imports System.Drawing.Imaging
 #Else
 Imports Bitmap = Microsoft.VisualBasic.Imaging.Bitmap
 #End If
