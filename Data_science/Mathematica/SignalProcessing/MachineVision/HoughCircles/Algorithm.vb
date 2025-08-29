@@ -233,23 +233,6 @@ Namespace HoughCircles
             Return resultMatrix
         End Function
 
-        Private Function CreateHoughSpace(BinarEdgeMap As Boolean(,)) As Short(,,)
-            Dim binarHeight = BinarEdgeMap.GetLength(0)
-            Dim binarWidth = BinarEdgeMap.GetLength(1)
-
-            Dim radius = If(binarHeight < binarWidth, binarHeight, binarWidth)
-
-            Dim resultCube = New Short(radius - 1, binarHeight - 1, binarWidth - 1) {}
-            For Y As Integer = 0 To binarHeight - 1
-                For X As Integer = 0 To binarWidth - 1
-                    If BinarEdgeMap(Y, X) Then
-                        UpdateHoughMatrix(resultCube, X, Y, radius)
-                    End If
-                Next
-            Next
-            Return resultCube
-        End Function
-
         Private Sub UpdateHoughMatrix(ByRef matrix As Short(,), x As Integer, y As Integer, radius As Integer)
             For teta = 0 To 359
                 Dim a = CInt(x + radius * std.Cos(teta))
@@ -260,21 +243,6 @@ Namespace HoughCircles
                 End If
 
                 matrix(b, a) += 1
-            Next
-        End Sub
-
-        Private Sub UpdateHoughMatrix(ByRef cube As Short(,,), x As Integer, y As Integer, maxRadius As Integer)
-            For radius = 1 To maxRadius - 1
-                For teta = 0 To 359
-                    Dim a = CInt(x + radius * std.Cos(teta))
-                    Dim b = CInt(y + radius * std.Sin(teta))
-
-                    If a < 0 OrElse b < 0 OrElse a >= cube.GetLength(0) OrElse b >= cube.GetLength(1) Then
-                        Continue For
-                    End If
-
-                    cube(radius, b, a) += 1
-                Next
             Next
         End Sub
 

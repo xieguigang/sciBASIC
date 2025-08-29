@@ -34,7 +34,7 @@ Namespace HoughCircles
             Dim limit = 128 * 128
             Dim newX = 0, newY = 0, c = 0
 
-            For Y As Integer = start + 1 To ends - 1 - 1
+            For Y As Integer = start + 1 To ends - 1
                 For X As Integer = 1 To width - 1 - 1
 
                     newX = 0
