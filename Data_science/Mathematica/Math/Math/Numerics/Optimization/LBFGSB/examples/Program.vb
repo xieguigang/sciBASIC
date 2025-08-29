@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::19035dc16bb6df930dceb12fe154d1a8, Data_science\Mathematica\Math\Math\Numerics\Optimization\LBFGSB\examples\Program.vb"
+﻿#Region "Microsoft.VisualBasic::f4bcfe03571feae6f4da0ff5e810ef30, Data_science\Mathematica\Math\Math\Numerics\Optimization\LBFGSB\examples\Program.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 9
-    '    Code Lines: 7 (77.78%)
-    ' Comment Lines: 2 (22.22%)
+    '   Total Lines: 12
+    '    Code Lines: 7 (58.33%)
+    ' Comment Lines: 5 (41.67%)
     '    - Xml Docs: 0.00%
     ' 
     '   Blank Lines: 0 (0.00%)
-    '     File Size: 232 B
+    '     File Size: 365 B
 
 
     '     Class Program

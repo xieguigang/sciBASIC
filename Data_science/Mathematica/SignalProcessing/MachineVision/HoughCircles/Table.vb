@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::10324b3574e8c2a8aaef67ff08dbf3b8, Data_science\Mathematica\SignalProcessing\MachineVision\HoughCircles\Table.vb"
+﻿#Region "Microsoft.VisualBasic::5893a984bcff556eda6bb1e3357f4d75, Data_science\Mathematica\SignalProcessing\MachineVision\HoughCircles\Table.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 0.00%
     ' 
     '   Blank Lines: 6 (20.69%)
-    '     File Size: 802 B
+    '     File Size: 800 B
 
 
     '     Class TableRow
@@ -85,4 +85,3 @@ Namespace HoughCircles
         }
     End Class
 End Namespace
-

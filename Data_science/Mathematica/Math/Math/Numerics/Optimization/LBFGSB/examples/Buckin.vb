@@ -1,55 +1,55 @@
-﻿#Region "Microsoft.VisualBasic::2f2b536d7802fc39795b762f588d13c9, Data_science\Mathematica\Math\Math\Numerics\Optimization\LBFGSB\examples\Buckin.vb"
+﻿#Region "Microsoft.VisualBasic::c31c4d5c700e5e5288feae511603709c, Data_science\Mathematica\Math\Math\Numerics\Optimization\LBFGSB\examples\Buckin.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 40
-'    Code Lines: 25 (62.50%)
-' Comment Lines: 4 (10.00%)
-'    - Xml Docs: 0.00%
-' 
-'   Blank Lines: 11 (27.50%)
-'     File Size: 1.21 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-' Class Buckin
-' 
-'     Function: evaluate
-' 
-'     Sub: Main6
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 41
+    '    Code Lines: 25 (60.98%)
+    ' Comment Lines: 5 (12.20%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 11 (26.83%)
+    '     File Size: 1.27 KB
+
+
+    ' Class Buckin
+    ' 
+    '     Function: evaluate
+    ' 
+    '     Sub: Main6
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

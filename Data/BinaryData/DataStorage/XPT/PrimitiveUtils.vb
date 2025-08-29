@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ba3e7d28f11cee0807718b06ba5ebbb8, Data\BinaryData\DataStorage\XPT\PrimitiveUtils.vb"
+﻿#Region "Microsoft.VisualBasic::ffe75645cf7132c6723455aabae2ba04, Data\BinaryData\DataStorage\XPT\PrimitiveUtils.vb"
 
     ' Author:
     ' 
@@ -280,4 +280,3 @@ Namespace Xpt
     End Class
 
 End Namespace
-

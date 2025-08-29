@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e99516a3274d3fdc75ebf210b7a3b5e9, Data_science\Mathematica\Math\Math\Numerics\Optimization\LBFGSB\examples\Parabola.vb"
+﻿#Region "Microsoft.VisualBasic::9188cd3b6addb2956141d75e1f16dfa3, Data_science\Mathematica\Math\Math\Numerics\Optimization\LBFGSB\examples\Parabola.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 41
-    '    Code Lines: 28 (68.29%)
-    ' Comment Lines: 3 (7.32%)
+    '   Total Lines: 42
+    '    Code Lines: 28 (66.67%)
+    ' Comment Lines: 4 (9.52%)
     '    - Xml Docs: 0.00%
     ' 
-    '   Blank Lines: 10 (24.39%)
-    '     File Size: 1.26 KB
+    '   Blank Lines: 10 (23.81%)
+    '     File Size: 1.31 KB
 
 
     ' Class Parabola

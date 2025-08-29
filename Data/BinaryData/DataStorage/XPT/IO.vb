@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c6b983009df1f7caca38199ebce7dc14, Data\BinaryData\DataStorage\XPT\IO.vb"
+﻿#Region "Microsoft.VisualBasic::ab07708db26cf614833ef8024ab85c3d, Data\BinaryData\DataStorage\XPT\IO.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 84.62%
     ' 
     '   Blank Lines: 16 (14.55%)
-    '     File Size: 4.25 KB
+    '     File Size: 4.24 KB
 
 
     '     Class IO
@@ -164,4 +164,3 @@ Namespace Xpt
     End Class
 
 End Namespace
-

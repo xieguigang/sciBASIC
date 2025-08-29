@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fceb752b00cc54e5bffa70b32fee407b, Data_science\Mathematica\Math\Math\Numerics\Optimization\LBFGSB\examples\Booth.vb"
+﻿#Region "Microsoft.VisualBasic::bf8c70ec30bb1e770fabcb37ff01a838, Data_science\Mathematica\Math\Math\Numerics\Optimization\LBFGSB\examples\Booth.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 50
-    '    Code Lines: 32 (64.00%)
-    ' Comment Lines: 4 (8.00%)
+    '   Total Lines: 51
+    '    Code Lines: 32 (62.75%)
+    ' Comment Lines: 5 (9.80%)
     '    - Xml Docs: 0.00%
     ' 
-    '   Blank Lines: 14 (28.00%)
-    '     File Size: 1.53 KB
+    '   Blank Lines: 14 (27.45%)
+    '     File Size: 1.59 KB
 
 
     ' Class Booth

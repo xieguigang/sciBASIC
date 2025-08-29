@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8c73037cfa58814205f5bf65cce889ea, Data\BinaryData\DataStorage\XPT\XPTReaderUtils.vb"
+﻿#Region "Microsoft.VisualBasic::2b37b4f4442b76c179f9d50a9e496df1, Data\BinaryData\DataStorage\XPT\XPTReaderUtils.vb"
 
     ' Author:
     ' 
@@ -149,4 +149,3 @@ Namespace Xpt
     End Class
 
 End Namespace
-

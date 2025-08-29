@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::380669d1f27dd326efd6dd5c609ece76, Data_science\Mathematica\Math\Math\Numerics\Optimization\LBFGSB\examples\Eggholder.vb"
+﻿#Region "Microsoft.VisualBasic::30d9ca27b9d2c939e3e28ca796ef3be5, Data_science\Mathematica\Math\Math\Numerics\Optimization\LBFGSB\examples\Eggholder.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 40
-    '    Code Lines: 26 (65.00%)
-    ' Comment Lines: 3 (7.50%)
+    '   Total Lines: 41
+    '    Code Lines: 26 (63.41%)
+    ' Comment Lines: 4 (9.76%)
     '    - Xml Docs: 0.00%
     ' 
-    '   Blank Lines: 11 (27.50%)
-    '     File Size: 1.26 KB
+    '   Blank Lines: 11 (26.83%)
+    '     File Size: 1.32 KB
 
 
     ' Class Eggholder

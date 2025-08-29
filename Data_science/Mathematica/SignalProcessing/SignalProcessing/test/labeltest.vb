@@ -1,53 +1,53 @@
-﻿#Region "Microsoft.VisualBasic::a186c272b22a362bb3255eaf143284ad, Data_science\Mathematica\SignalProcessing\SignalProcessing\test\labeltest.vb"
+﻿#Region "Microsoft.VisualBasic::184f25fa313afb997991d0aee140afdf, Data_science\Mathematica\SignalProcessing\SignalProcessing\test\labeltest.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 35
-'    Code Lines: 29 (82.86%)
-' Comment Lines: 1 (2.86%)
-'    - Xml Docs: 0.00%
-' 
-'   Blank Lines: 5 (14.29%)
-'     File Size: 1.37 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-' Module labeltest
-' 
-'     Sub: Main
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 62
+    '    Code Lines: 49 (79.03%)
+    ' Comment Lines: 2 (3.23%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 11 (17.74%)
+    '     File Size: 2.32 KB
+
+
+    ' Module labeltest
+    ' 
+    '     Sub: cclTest, circleTest, Main
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

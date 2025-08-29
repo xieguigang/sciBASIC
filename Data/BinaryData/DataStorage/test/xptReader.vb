@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7a2c7c1447958f9b88dc6823d4f76596, Data\BinaryData\DataStorage\test\xptReader.vb"
+﻿#Region "Microsoft.VisualBasic::85f43ab097f659daad9494c07cf4104a, Data\BinaryData\DataStorage\test\xptReader.vb"
 
     ' Author:
     ' 
@@ -88,4 +88,3 @@ Module xptReader
         Pause()
     End Sub
 End Module
-

@@ -1,55 +1,55 @@
-﻿#Region "Microsoft.VisualBasic::e6fcff6ad110e2f0b7a122909170458b, Data_science\Mathematica\Math\Math\Numerics\Optimization\LBFGSB\examples\GramacyLee.vb"
+﻿#Region "Microsoft.VisualBasic::1bab71198546e120a409c09a2a25f02f, Data_science\Mathematica\Math\Math\Numerics\Optimization\LBFGSB\examples\GramacyLee.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 40
-'    Code Lines: 27 (67.50%)
-' Comment Lines: 3 (7.50%)
-'    - Xml Docs: 0.00%
-' 
-'   Blank Lines: 10 (25.00%)
-'     File Size: 1.26 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-' Class GramacyLee
-' 
-'     Function: evaluate
-' 
-'     Sub: Main10
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 41
+    '    Code Lines: 27 (65.85%)
+    ' Comment Lines: 4 (9.76%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 10 (24.39%)
+    '     File Size: 1.32 KB
+
+
+    ' Class GramacyLee
+    ' 
+    '     Function: evaluate
+    ' 
+    '     Sub: Main10
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

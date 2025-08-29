@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::49fe83c9339dcc5eab9d1b49add00168, Data\BinaryData\DataStorage\XPT\XPTTypes.vb"
+﻿#Region "Microsoft.VisualBasic::1bde59906419f755d13d04629eab9ab4, Data\BinaryData\DataStorage\XPT\XPTTypes.vb"
 
     ' Author:
     ' 
@@ -320,4 +320,3 @@ Namespace Xpt.Types
         READSTAT_MEASURE_SCALE
     End Enum
 End Namespace
-

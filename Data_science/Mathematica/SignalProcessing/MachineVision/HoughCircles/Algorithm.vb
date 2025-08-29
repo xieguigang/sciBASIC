@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3e3b83442ec86a13374954a476ef6922, Data_science\Mathematica\SignalProcessing\MachineVision\HoughCircles\Algorithm.vb"
+﻿#Region "Microsoft.VisualBasic::dbc4ced7285777b322c169ed2014810c, Data_science\Mathematica\SignalProcessing\MachineVision\HoughCircles\Algorithm.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 344
-    '    Code Lines: 271 (78.78%)
-    ' Comment Lines: 9 (2.62%)
+    '   Total Lines: 261
+    '    Code Lines: 206 (78.93%)
+    ' Comment Lines: 9 (3.45%)
     '    - Xml Docs: 0.00%
     ' 
-    '   Blank Lines: 64 (18.60%)
-    '     File Size: 14.22 KB
+    '   Blank Lines: 46 (17.62%)
+    '     File Size: 11.15 KB
 
 
     '     Module Algorithm
@@ -48,8 +48,6 @@
     '         Function: CircleHough, CircleVector, (+2 Overloads) CreateHoughSpace, CreateNegative, (+3 Overloads) CreateVectorVoteSpace
     '                   DetectEdge, GetGradAngle, (+2 Overloads) GetHighestVotes, GetTableRow, SquareVector
     '                   ToGrayMatrix
-    ' 
-    '         Sub: (+2 Overloads) UpdateHoughMatrix
     ' 
     ' 
     ' /********************************************************************************/
@@ -317,4 +315,3 @@ Namespace HoughCircles
         End Function
     End Module
 End Namespace
-

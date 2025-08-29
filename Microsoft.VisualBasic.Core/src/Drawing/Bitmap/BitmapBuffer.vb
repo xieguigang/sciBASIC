@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::01e34610147623751bc635c8e325c553, Microsoft.VisualBasic.Core\src\Drawing\Bitmap\BitmapBuffer.vb"
+﻿#Region "Microsoft.VisualBasic::5b67fc39d74dfdbb9c0c65a2228b55fa, Microsoft.VisualBasic.Core\src\Drawing\Bitmap\BitmapBuffer.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 705
-    '    Code Lines: 416 (59.01%)
-    ' Comment Lines: 179 (25.39%)
-    '    - Xml Docs: 81.56%
+    '   Total Lines: 765
+    '    Code Lines: 461 (60.26%)
+    ' Comment Lines: 181 (23.66%)
+    '    - Xml Docs: 80.66%
     ' 
-    '   Blank Lines: 110 (15.60%)
-    '     File Size: 24.06 KB
+    '   Blank Lines: 123 (16.08%)
+    '     File Size: 25.97 KB
 
 
     '     Class BitmapBuffer
@@ -49,10 +49,11 @@
     ' 
     '         Constructor: (+5 Overloads) Sub New
     ' 
-    '         Function: (+2 Overloads) FromBitmap, FromImage, GetAlpha, GetARGB, GetARGBStream
-    '                   GetBlue, GetColor, GetEnumerator, GetGreen, GetImage
-    '                   (+2 Overloads) GetIndex, (+3 Overloads) GetPixel, GetPixelChannels, GetPixelsAll, GetRed
-    '                   OutOfRange, ToPixel2D, ToString, Unpack, White
+    '         Function: A, B, (+2 Overloads) FromBitmap, FromImage, G
+    '                   GetAlpha, GetARGB, GetARGBStream, GetBlue, GetColor
+    '                   GetEnumerator, GetGreen, GetImage, (+2 Overloads) GetIndex, (+3 Overloads) GetPixel
+    '                   GetPixelChannels, GetPixelsAll, GetRed, OutOfRange, R
+    '                   ToPixel2D, ToString, Unpack, White
     ' 
     '         Sub: Dispose, (+2 Overloads) Save, SetAlpha, SetBlue, SetGreen
     '              (+4 Overloads) SetPixel, SetRed, WriteARGBStream
