@@ -94,10 +94,12 @@ Public Module labeltest
 
     Sub circleTest()
         Dim img = "G:\Erica\test\HE\cells_bin2.bmp".LoadImage
-        Dim cells = HoughCircles.CircleHough(BitmapBuffer.FromImage(img), 30)
+        Dim cells = HoughCircles.CircleHough(BitmapBuffer.FromImage(img), 18)
         Dim pen As New Pen(Color.Red, 2)
         Dim pen2 As New Pen(Color.Blue, 2)
         Dim colors As LoopArray(Of Color) = Designer.GetColors("paper", 100)
+
+        Call "draw circles".info
 
         Using gfx As Graphics2D = Graphics2D.CreateDevice(img.Size)
             ' Call gfx.DrawImage(img, New Point)
