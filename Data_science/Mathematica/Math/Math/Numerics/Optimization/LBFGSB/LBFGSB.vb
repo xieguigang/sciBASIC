@@ -160,7 +160,14 @@ Namespace Framework.Optimization.LBFGSB
 
         Public Shared ReadOnly eps As Double = Microsoft.VisualBasic.Math.Ulp(1.0)
 
-        ' f -function, x - initial and final value, lb - lower bounds, ub - upper bounds 
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="f">function</param>
+        ''' <param name="[in]">initial and final value</param>
+        ''' <param name="lb">lower bounds</param>
+        ''' <param name="ub">upper bounds</param>
+        ''' <returns></returns>
         Public Function minimize(f As IGradFunction, [in] As Double(), lb As Double(), ub As Double()) As Double()
             If Debugger.flag Then
                 Debugger.debug("="c, "entering minimization")
