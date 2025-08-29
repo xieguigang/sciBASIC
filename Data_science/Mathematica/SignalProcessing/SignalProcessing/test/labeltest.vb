@@ -1,53 +1,53 @@
 ﻿#Region "Microsoft.VisualBasic::a186c272b22a362bb3255eaf143284ad, Data_science\Mathematica\SignalProcessing\SignalProcessing\test\labeltest.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 35
-    '    Code Lines: 29 (82.86%)
-    ' Comment Lines: 1 (2.86%)
-    '    - Xml Docs: 0.00%
-    ' 
-    '   Blank Lines: 5 (14.29%)
-    '     File Size: 1.37 KB
+' Summaries:
 
 
-    ' Module labeltest
-    ' 
-    '     Sub: Main
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 35
+'    Code Lines: 29 (82.86%)
+' Comment Lines: 1 (2.86%)
+'    - Xml Docs: 0.00%
+' 
+'   Blank Lines: 5 (14.29%)
+'     File Size: 1.37 KB
+
+
+' Module labeltest
+' 
+'     Sub: Main
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -58,13 +58,19 @@ Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.BitmapImage
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Math2D.ConcaveHull
+Imports Microsoft.VisualBasic.Imaging.Math2D
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
+Imports Microsoft.VisualBasic.Math.MachineVision
 Imports Microsoft.VisualBasic.Math.MachineVision.CCL
 
 Public Module labeltest
 
     Sub Main()
+        Call circleTest()
+    End Sub
+
+    Sub cclTest()
         Dim img = "G:\Erica\test\HE\cells_bin2.bmp".LoadImage
         Dim CELLS = CCLabeling.Process(BitmapBuffer.FromImage(img), background:=Color.White, 0).ToArray
         Dim pen As New Pen(Color.Red, 2)
@@ -87,6 +93,21 @@ Public Module labeltest
     End Sub
 
     Sub circleTest()
+        Dim img = "G:\Erica\test\HE\cells_bin2.bmp".LoadImage
+        Dim cells = HoughCircles.CircleHough(BitmapBuffer.FromImage(img), 30)
+        Dim pen As New Pen(Color.Red, 2)
+        Dim pen2 As New Pen(Color.Blue, 2)
+        Dim colors As LoopArray(Of Color) = Designer.GetColors("paper", 100)
 
+        Using gfx As Graphics2D = Graphics2D.CreateDevice(img.Size)
+            ' Call gfx.DrawImage(img, New Point)
+
+            For Each item As EllipseShape In cells
+                Call gfx.DrawCircle(item.center, item.radiusX, New Pen(++colors, 2))
+            Next
+
+            Call gfx.Flush()
+            Call gfx.ImageResource.SaveAs("Z:/label7.png")
+        End Using
     End Sub
 End Module

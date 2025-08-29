@@ -56,6 +56,7 @@
 #End Region
 
 Imports System.Drawing
+Imports System.Runtime.CompilerServices
 Imports std = System.Math
 
 Namespace Imaging.Math2D
@@ -65,9 +66,9 @@ Namespace Imaging.Math2D
     ''' </summary>
     Public Class EllipseShape
 
-        ReadOnly radiusX As Double
-        ReadOnly radiusY As Double
-        ReadOnly center As PointF
+        Public ReadOnly Property radiusX As Double
+        Public ReadOnly Property radiusY As Double
+        Public ReadOnly Property center As PointF
 
         ''' <summary>
         ''' any other tagged value with current circle model
@@ -91,6 +92,10 @@ Namespace Imaging.Math2D
             Call Me.New(r, r, New PointF(x, y))
         End Sub
 
+        ''' <summary>
+        ''' generates the ellipse or circle drawing path
+        ''' </summary>
+        ''' <returns></returns>
         Public Function GetPolygonPath() As Polygon2D
             Dim path As New List(Of PointF)
 
@@ -101,6 +106,7 @@ Namespace Imaging.Math2D
             Return New Polygon2D(path.ToArray)
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Private Shared Function EllipseDrawing(dHalfwidthEllipse As Double, dHalfheightEllipse As Double, origin As PointF, t As Integer) As PointF
             Return New PointF(
                 origin.X + dHalfwidthEllipse * std.Cos(t * std.PI / 180),
