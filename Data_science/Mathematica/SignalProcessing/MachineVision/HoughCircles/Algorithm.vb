@@ -65,40 +65,34 @@ Namespace HoughCircles
 
     Public Module Algorithm
 
-        Public Function CircleHough(baseImage As BitmapBuffer, radius As Single) As EllipseShape()
+        Public Function CircleHough(baseImage As BitmapBuffer, Optional radius As Single? = Nothing) As EllipseShape()
             ' the circle result
             Dim pick As EllipseShape() = Nothing
             Dim grayImg = CreateNegative(baseImage)
             Dim binarMap = DetectEdge(grayImg)
 
-            If String.IsNullOrEmpty(radius) Then
+            If radius Is Nothing Then
                 Dim houghMap = CreateHoughSpace(binarMap)
-
                 pick = GetHighestVotes(houghMap)
             Else
-                Dim r = Short.Parse(radius)
-                Dim houghMap = CreateHoughSpace(binarMap, r)
-
-                pick = GetHighestVotes(houghMap, r)
+                Dim houghMap = CreateHoughSpace(binarMap, radius)
+                pick = GetHighestVotes(houghMap, radius)
             End If
 
             Return pick
         End Function
 
-        Public Function CircleVector(baseImage As BitmapBuffer, radius As Single) As EllipseShape()
+        Public Function CircleVector(baseImage As BitmapBuffer, Optional radius As Single? = Nothing) As EllipseShape()
             Dim pick As EllipseShape() = Nothing
             Dim grayImg = CreateNegative(baseImage)
             Dim binarMap = DetectEdge(grayImg)
 
-            If String.IsNullOrEmpty(radius) Then
+            If radius Is Nothing Then
                 Dim vSpace = CreateVectorVoteSpace(binarMap, grayImg)
-
                 pick = GetHighestVotes(vSpace, 10)
             Else
-                Dim r = Short.Parse(radius)
-                Dim vSpace = CreateVectorVoteSpace(binarMap, r)
-
-                pick = GetHighestVotes(vSpace, r, 0)
+                Dim vSpace = CreateVectorVoteSpace(binarMap, radius)
+                pick = GetHighestVotes(vSpace, radius, 0)
             End If
 
             Return pick
