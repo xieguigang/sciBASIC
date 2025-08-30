@@ -126,7 +126,14 @@ Namespace ComponentModel.Collection
             End Get
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Set(value As V)
-                MyBase.Item(key) = value
+                If key Is Nothing Then
+                    Return
+                End If
+                If ContainsKey(key) Then
+                    Call Remove(key)
+                End If
+
+                Call Add(key, value)
             End Set
         End Property
 
