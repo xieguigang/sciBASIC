@@ -1,57 +1,57 @@
 ﻿#Region "Microsoft.VisualBasic::a0fa26df35d79fe666e6a9b610dbef71, Data_science\Mathematica\Math\Math\Extensions.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 362
-    '    Code Lines: 198 (54.70%)
-    ' Comment Lines: 122 (33.70%)
-    '    - Xml Docs: 95.08%
-    ' 
-    '   Blank Lines: 42 (11.60%)
-    '     File Size: 13.32 KB
+' Summaries:
 
 
-    ' Module Extensions
-    ' 
-    '     Function: [Shadows], AsSample, (+4 Overloads) AsVector, DoubleRange, FDR
-    '               FilterNaN, FirstDecrease, FirstIncrease, FlipCoin, IntRange
-    '               IsInside, Iterates, (+2 Overloads) Range, Reach, seq2
-    '               Sim, SSM, SSM_SIMD, Tanimoto, X
-    '               Y
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 362
+'    Code Lines: 198 (54.70%)
+' Comment Lines: 122 (33.70%)
+'    - Xml Docs: 95.08%
+' 
+'   Blank Lines: 42 (11.60%)
+'     File Size: 13.32 KB
+
+
+' Module Extensions
+' 
+'     Function: [Shadows], AsSample, (+4 Overloads) AsVector, DoubleRange, FDR
+'               FilterNaN, FirstDecrease, FirstIncrease, FlipCoin, IntRange
+'               IsInside, Iterates, (+2 Overloads) Range, Reach, seq2
+'               Sim, SSM, SSM_SIMD, Tanimoto, X
+'               Y
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -415,5 +415,10 @@ Imports std = System.Math
         Next
 
         Return m
+    End Function
+
+    <Extension>
+    Public Function ImputeNA(v As Vector, fill_as As Double) As Vector
+        Return New Vector(From xi As Double In v.Array Select If(xi.IsNaNImaginary, fill_as, xi))
     End Function
 End Module
