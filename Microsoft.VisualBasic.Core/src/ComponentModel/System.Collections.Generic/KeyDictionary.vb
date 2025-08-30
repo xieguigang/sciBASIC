@@ -129,6 +129,7 @@ Namespace ComponentModel.Collection
                 If key Is Nothing Then
                     Return
                 End If
+
                 If ContainsKey(key) Then
                     Call Remove(key)
                 End If
