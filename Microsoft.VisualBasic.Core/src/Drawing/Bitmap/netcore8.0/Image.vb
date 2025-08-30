@@ -136,7 +136,7 @@ Namespace Imaging
         ''' function for make bitmap object constructor
         ''' </remarks>
         Protected Friend MustOverride Function ConvertToBitmapStream() As MemoryStream
-        Protected Friend MustOverride Function GetMemoryBitmap() As BitmapBuffer Implements IRasterMemory.GetMemoryBuffer
+        Public MustOverride Function GetMemoryBitmap() As BitmapBuffer Implements IRasterMemory.GetMemoryBuffer
 
         ''' <summary>
         ''' Load bitmap image from file stream
@@ -294,7 +294,7 @@ Namespace Imaging
             Return ms
         End Function
 
-        Protected Friend Overrides Function GetMemoryBitmap() As BitmapBuffer
+        Public Overrides Function GetMemoryBitmap() As BitmapBuffer
             Return MemoryBuffer
         End Function
 
