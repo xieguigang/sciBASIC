@@ -1674,7 +1674,7 @@ Namespace Language.Java
         ''' Computes log(1-x) without losing precision for small values of x.
         ''' </summary>
         ''' 
-        Public Function Log1m(x As Double) As Double
+        Public Function log1m(x As Double) As Double
             If x >= 1.0 Then
                 Return [Double].NaN
             End If
