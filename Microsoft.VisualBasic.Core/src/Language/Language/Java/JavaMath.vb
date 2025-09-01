@@ -1,60 +1,60 @@
 ﻿#Region "Microsoft.VisualBasic::3f7bcb6306bcd8e9843770240b6e4549, Microsoft.VisualBasic.Core\src\Language\Language\Java\JavaMath.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 2216
-    '    Code Lines: 192 (8.66%)
-    ' Comment Lines: 1909 (86.15%)
-    '    - Xml Docs: 41.38%
-    ' 
-    '   Blank Lines: 115 (5.19%)
-    '     File Size: 110.45 KB
+' Summaries:
 
 
-    '     Module JavaMath
-    ' 
-    '         Function: (+4 Overloads) abs, acos, (+2 Overloads) addExact, asin, atan
-    '                   atan2, ceil, cos, cosh, (+2 Overloads) decrementExact
-    '                   exp, floor, (+2 Overloads) floorDiv, (+2 Overloads) floorMod, IEEEremainder
-    '                   (+2 Overloads) incrementExact, log, log10, Log1m, log1p
-    '                   (+2 Overloads) max, (+2 Overloads) min, (+2 Overloads) multiplyExact, (+2 Overloads) negateExact, pow
-    '                   random, sin, sinh, sqrt, (+2 Overloads) subtractExact
-    '                   tan, tanh, toDegrees, toIntExact, toRadians
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 2216
+'    Code Lines: 192 (8.66%)
+' Comment Lines: 1909 (86.15%)
+'    - Xml Docs: 41.38%
+' 
+'   Blank Lines: 115 (5.19%)
+'     File Size: 110.45 KB
+
+
+'     Module JavaMath
+' 
+'         Function: (+4 Overloads) abs, acos, (+2 Overloads) addExact, asin, atan
+'                   atan2, ceil, cos, cosh, (+2 Overloads) decrementExact
+'                   exp, floor, (+2 Overloads) floorDiv, (+2 Overloads) floorMod, IEEEremainder
+'                   (+2 Overloads) incrementExact, log, log10, Log1m, log1p
+'                   (+2 Overloads) max, (+2 Overloads) min, (+2 Overloads) multiplyExact, (+2 Overloads) negateExact, pow
+'                   random, sin, sinh, sqrt, (+2 Overloads) subtractExact
+'                   tan, tanh, toDegrees, toIntExact, toRadians
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -1665,7 +1665,7 @@ Namespace Language.Java
         ''' Computes log(1-x) without losing precision for small values of x.
         ''' </summary>
         ''' 
-        Public Function Log1m(x As Double) As Double
+        Public Function log1m(x As Double) As Double
             If x >= 1.0 Then
                 Return [Double].NaN
             End If
