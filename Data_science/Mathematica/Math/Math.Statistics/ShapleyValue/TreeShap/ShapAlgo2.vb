@@ -64,7 +64,7 @@
                 Dim io As Double = 1
 
                 Dim k = findFirst(m, j.splitFeatureIndex)
-                If k IsNot Nothing Then
+                If k > -1 Then
                     Dim mk = m(k)
                     iz = mk.zeroFraction
                     io = mk.oneFraction
@@ -81,13 +81,13 @@
 
         Private Function findFirst(m As IList(Of PathElement), splitFeatureIndex As Integer) As Integer
             Dim index = 0
-            For Each e In m
-                If e.featureIndex IsNot Nothing AndAlso e.featureIndex.Equals(splitFeatureIndex) Then
+            For Each e As PathElement In m
+                If e.featureIndex > -1 AndAlso e.featureIndex = splitFeatureIndex Then
                     Return index
                 End If
                 index += 1
             Next
-            Return Nothing
+            Return -1
         End Function
 
         Private Function extend(origM As IList(Of PathElement), pz As Double, po As Double, pi As Integer) As IList(Of PathElement)
@@ -97,7 +97,7 @@
             ' copy original
             Dim m = copy(origM)
             ' add new item
-            Dim e As PathElement = New PathElement()
+            Dim e As New PathElement()
             e.featureIndex = pi
             e.zeroFraction = pz
             e.oneFraction = po
@@ -127,8 +127,8 @@
 
         ''' <summary>
         ''' Removes i-th element of the path, and redistributes all weights </summary>
-        ''' <paramname="origM"> elements of decision path </param>
-        ''' <paramname="i">  zero-based index to be removed </param>
+        ''' <param name="origM"> elements of decision path </param>
+        ''' <param name="i">  zero-based index to be removed </param>
         ''' <returns> transformed decision path </returns>
         Private Shared Function unwind(origM As IList(Of PathElement), i As Integer) As IList(Of PathElement)
             Dim sz = origM.Count ' use "sz" rather than "l" which is optically too similar to "1" (one)
