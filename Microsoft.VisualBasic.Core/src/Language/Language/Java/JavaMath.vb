@@ -58,8 +58,8 @@
 
 #End Region
 
-Imports sys = System.Math
 Imports randf = Microsoft.VisualBasic.Math.RandomExtensions
+Imports std = System.Math
 
 '
 ' * Copyright (c) 1994, 2013, Oracle and/or its affiliates. All rights reserved.
@@ -188,7 +188,7 @@ Namespace Language.Java
         ''' <param name="a">   an angle, in radians. </param>
         ''' <returns>  the sine of the argument. </returns>
         Public Function sin(a As Double) As Double
-            Return sys.Sin(a) ' default impl. delegates to StrictMath
+            Return std.Sin(a) ' default impl. delegates to StrictMath
         End Function
 
         ''' <summary>
@@ -202,7 +202,7 @@ Namespace Language.Java
         ''' <param name="a">   an angle, in radians. </param>
         ''' <returns>  the cosine of the argument. </returns>
         Public Function cos(a As Double) As Double
-            Return sys.Cos(a) ' default impl. delegates to StrictMath
+            Return std.Cos(a) ' default impl. delegates to StrictMath
         End Function
 
         ''' <summary>
@@ -218,7 +218,7 @@ Namespace Language.Java
         ''' <param name="a">   an angle, in radians. </param>
         ''' <returns>  the tangent of the argument. </returns>
         Public Function tan(a As Double) As Double
-            Return sys.Tan(a) ' default impl. delegates to StrictMath
+            Return std.Tan(a) ' default impl. delegates to StrictMath
         End Function
 
         ''' <summary>
@@ -235,7 +235,7 @@ Namespace Language.Java
         ''' <param name="a">   the value whose arc sine is to be returned. </param>
         ''' <returns>  the arc sine of the argument. </returns>
         Public Function asin(a As Double) As Double
-            Return sys.Asin(a) ' default impl. delegates to StrictMath
+            Return std.Asin(a) ' default impl. delegates to StrictMath
         End Function
 
         ''' <summary>
@@ -250,7 +250,7 @@ Namespace Language.Java
         ''' <param name="a">   the value whose arc cosine is to be returned. </param>
         ''' <returns>  the arc cosine of the argument. </returns>
         Public Function acos(a As Double) As Double
-            Return sys.Acos(a) ' default impl. delegates to StrictMath
+            Return std.Acos(a) ' default impl. delegates to StrictMath
         End Function
 
         ''' <summary>
@@ -266,7 +266,7 @@ Namespace Language.Java
         ''' <param name="a">   the value whose arc tangent is to be returned. </param>
         ''' <returns>  the arc tangent of the argument. </returns>
         Public Function atan(a As Double) As Double
-            Return sys.Atan(a) ' default impl. delegates to StrictMath
+            Return std.Atan(a) ' default impl. delegates to StrictMath
         End Function
 
         ''' <summary>
@@ -313,7 +313,7 @@ Namespace Language.Java
         ''' <returns>  the value _e_{@code a},
         '''          where _e_ is the base of the natural logarithms. </returns>
         Public Function exp(a As Double) As Double
-            Return sys.Exp(a) ' default impl. delegates to StrictMath
+            Return std.Exp(a) ' default impl. delegates to StrictMath
         End Function
 
         ''' <summary>
@@ -333,7 +333,7 @@ Namespace Language.Java
         ''' <returns>  the value ln {@code a}, the natural logarithm of
         '''          {@code a}. </returns>
         Public Function log(a As Double) As Double
-            Return sys.Log(a) ' default impl. delegates to StrictMath
+            Return std.Log(a) ' default impl. delegates to StrictMath
         End Function
 
         ''' <summary>
@@ -357,7 +357,7 @@ Namespace Language.Java
         ''' <returns>  the base 10 logarithm of  {@code a}.
         ''' @since 1.5 </returns>
         Public Function log10(a As Double) As Double
-            Return sys.Log10(a) ' default impl. delegates to StrictMath
+            Return std.Log10(a) ' default impl. delegates to StrictMath
         End Function
 
         ''' <summary>
@@ -377,7 +377,7 @@ Namespace Language.Java
         ''' <returns>  the positive square root of {@code a}.
         '''          If the argument is NaN or less than zero, the result is NaN. </returns>
         Public Function sqrt(a As Double) As Double
-            Return sys.Sqrt(a) ' default impl. delegates to StrictMath
+            Return std.Sqrt(a) ' default impl. delegates to StrictMath
             ' Note that hardware sqrt instructions
             ' frequently can be directly used by JITs
             ' and should be much faster than doing
@@ -435,7 +435,7 @@ Namespace Language.Java
         ''' <returns>  the remainder when {@code f1} is divided by
         '''          {@code f2}. </returns>
         Public Function IEEEremainder(f1 As Double, f2 As Double) As Double
-            Return sys.IEEERemainder(f1, f2) ' delegate to StrictMath
+            Return std.IEEERemainder(f1, f2) ' delegate to StrictMath
         End Function
 
         ''' <summary>
@@ -457,7 +457,7 @@ Namespace Language.Java
         '''          floating-point value that is greater than or equal to
         '''          the argument and is equal to a mathematical  java.lang.[Integer]. </returns>
         Public Function ceil(a As Double) As Double
-            Return sys.Ceiling(a) ' default impl. delegates to StrictMath
+            Return std.Ceiling(a) ' default impl. delegates to StrictMath
         End Function
 
         ''' <summary>
@@ -475,7 +475,7 @@ Namespace Language.Java
         '''          floating-point value that less than or equal to the argument
         '''          and is equal to a mathematical  java.lang.[Integer]. </returns>
         Public Function floor(a As Double) As Double
-            Return sys.Floor(a) ' default impl. delegates to StrictMath
+            Return std.Floor(a) ' default impl. delegates to StrictMath
         End Function
 
         '''' <summary>
@@ -548,7 +548,7 @@ Namespace Language.Java
         '''          in polar coordinates that corresponds to the point
         '''          (_x_, _y_) in Cartesian coordinates. </returns>
         Public Function atan2(y As Double, x As Double) As Double
-            Return sys.Atan2(y, x) ' default impl. delegates to StrictMath
+            Return std.Atan2(y, x) ' default impl. delegates to StrictMath
         End Function
 
         ''' <summary>
@@ -674,7 +674,7 @@ Namespace Language.Java
         ''' <param name="b">   the exponent. </param>
         ''' <returns>  the value {@code a}<sup>{@code b}</sup>. </returns>
         Public Function pow(a As Double, b As Double) As Double
-            Return sys.Pow(a, b) ' default impl. delegates to StrictMath
+            Return std.Pow(a, b) ' default impl. delegates to StrictMath
         End Function
 
         '''' <summary>
@@ -880,8 +880,8 @@ Namespace Language.Java
         ''' @since 1.8 </exception>
         Public Function multiplyExact(x As Long, y As Long) As Long
             Dim r As Long = x * y
-            Dim ax As Long = sys.Abs(x)
-            Dim ay As Long = sys.Abs(y)
+            Dim ax As Long = std.Abs(x)
+            Dim ay As Long = std.Abs(y)
             If (CInt(CUInt((ax Or ay)) >> 31 <> 0)) Then
                 ' Some bits greater than 2^31 that might cause overflow
                 ' Check the result using the divide operator
@@ -1481,7 +1481,7 @@ Namespace Language.Java
         ''' <returns>  The hyperbolic sine of {@code x}.
         ''' @since 1.5 </returns>
         Public Function sinh(x As Double) As Double
-            Return sys.Sinh(x)
+            Return std.Sinh(x)
         End Function
 
         ''' <summary>
@@ -1508,7 +1508,7 @@ Namespace Language.Java
         ''' <returns>  The hyperbolic cosine of {@code x}.
         ''' @since 1.5 </returns>
         Public Function cosh(x As Double) As Double
-            Return sys.Cosh(x)
+            Return std.Cosh(x)
         End Function
 
         ''' <summary>
@@ -1546,7 +1546,7 @@ Namespace Language.Java
         ''' <returns>  The hyperbolic tangent of {@code x}.
         ''' @since 1.5 </returns>
         Public Function tanh(x As Double) As Double
-            Return sys.Tanh(x)
+            Return std.Tanh(x)
         End Function
 
         '''' <summary>
@@ -1577,42 +1577,46 @@ Namespace Language.Java
         '    Return sys.hypot(x, y)
         'End Function
 
-        '''' <summary>
-        '''' Returns _e_<sup>x</sup> -1.  Note that for values of
-        '''' _x_ near 0, the exact sum of
-        '''' {@code expm1(x)} + 1 is much closer to the true
-        '''' result of _e_<sup>x</sup> than {@code exp(x)}.
-        '''' 
-        '''' Special cases:
-        '''' 
-        '''' + If the argument is NaN, the result is NaN.
-        '''' 
-        '''' + If the argument is positive infinity, then the result is
-        '''' positive infinity.
-        '''' 
-        '''' + If the argument is negative infinity, then the result is
-        '''' -1.0.
-        '''' 
-        '''' + If the argument is zero, then the result is a zero with the
-        '''' same sign as the argument.
-        '''' 
-        '''' 
-        '''' 
-        '''' The computed result must be within 1 ulp of the exact result.
-        '''' Results must be semi-monotonic.  The result of
-        '''' {@code expm1} for any finite input must be greater than or
-        '''' equal to {@code -1.0}.  Note that once the exact result of
-        '''' _e_<sup>{@code x}</sup> - 1 is within 1/2
-        '''' ulp of the limit value -1, {@code -1.0} should be
-        '''' returned.
-        '''' </summary>
-        '''' <param name="x">   the exponent to raise _e_ to in the computation of
-        ''''              _e_<sup>{@code x}</sup> -1. </param>
-        '''' <returns>  the value _e_<sup>{@code x}</sup> - 1.
-        '''' @since 1.5 </returns>
-        'Public Function expm1(x As Double) As Double
-        '    Return sys.expm1(x)
-        'End Function
+        ''' <summary>
+        ''' Returns _e_<sup>x</sup> -1.  Note that for values of
+        ''' _x_ near 0, the exact sum of
+        ''' {@code expm1(x)} + 1 is much closer to the true
+        ''' result of _e_<sup>x</sup> than {@code exp(x)}.
+        ''' 
+        ''' Special cases:
+        ''' 
+        ''' + If the argument is NaN, the result is NaN.
+        ''' 
+        ''' + If the argument is positive infinity, then the result is
+        ''' positive infinity.
+        ''' 
+        ''' + If the argument is negative infinity, then the result is
+        ''' -1.0.
+        ''' 
+        ''' + If the argument is zero, then the result is a zero with the
+        ''' same sign as the argument.
+        ''' 
+        ''' 
+        ''' 
+        ''' The computed result must be within 1 ulp of the exact result.
+        ''' Results must be semi-monotonic.  The result of
+        ''' {@code expm1} for any finite input must be greater than or
+        ''' equal to {@code -1.0}.  Note that once the exact result of
+        ''' _e_<sup>{@code x}</sup> - 1 is within 1/2
+        ''' ulp of the limit value -1, {@code -1.0} should be
+        ''' returned.
+        ''' </summary>
+        ''' <param name="x">   the exponent to raise _e_ to in the computation of
+        '''              _e_<sup>{@code x}</sup> -1. </param>
+        ''' <returns>  the value _e_<sup>{@code x}</sup> - 1.
+        ''' @since 1.5 </returns>
+        Public Function Expm1(x As Double) As Double
+            If std.Abs(x) < 0.00001 Then
+                Return x + 0.5 * x * x
+            Else
+                Return std.Exp(x) - 1.0
+            End If
+        End Function
 
         ''' <summary>
         ''' Returns the natural logarithm of the sum of the argument and 1.
@@ -1652,14 +1656,19 @@ Namespace Language.Java
                 Return [Double].NaN
             End If
 
-            If sys.Abs(x) > 0.0001 Then
-                Return sys.Log(1.0 + x)
+            If std.Abs(x) > 0.0001 Then
+                Return std.Log(1.0 + x)
             End If
 
             ' Use Taylor approx. log(1 + x) = x - x^2/2 with error roughly x^3/3
             ' Since |x| < 10^-4, |x|^3 < 10^-12, relative error less than 10^-8
             Return (-0.5 * x + 1.0) * x
         End Function
+
+        'Public Function Log1p(x As Double) As Double
+        '    Dim y = x
+        '    Return If(1 + y = 1, y, y * (Math.Log(1 + y) / (1 + y - 1)))
+        'End Function
 
         ''' <summary>
         ''' Computes log(1-x) without losing precision for small values of x.
@@ -1670,8 +1679,8 @@ Namespace Language.Java
                 Return [Double].NaN
             End If
 
-            If sys.Abs(x) > 0.0001 Then
-                Return sys.Log(1.0 - x)
+            If std.Abs(x) > 0.0001 Then
+                Return std.Log(1.0 - x)
             End If
 
             ' Use Taylor approx. log(1 + x) = x - x^2/2 with error roughly x^3/3
