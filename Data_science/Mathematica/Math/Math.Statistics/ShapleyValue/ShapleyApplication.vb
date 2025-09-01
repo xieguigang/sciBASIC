@@ -21,11 +21,11 @@
         ''' complete the calculation of the Shapley value 
         ''' with the next set of coalitions choosen sequentially 
         ''' </summary>
-        ''' <paramname="nbCoalitions"> number of coalition taken in account for this calculation
+        ''' <param name="nbCoalitions"> number of coalition taken in account for this calculation
         ''' </param>
         ''' <returns> partial result of the Shapley value
         ''' </returns>
-        ''' <exceptioncref="ShapleyApplicationException"> when different strategy are mixed
+        ''' <exception cref="ShapleyApplicationException"> when different strategy are mixed
         '''  </exception>
         Function calculate(nbCoalitions As Long) As IDictionary(Of String, Double)
 
@@ -33,12 +33,12 @@
         ''' complete the calculation of the Shapley value 
         ''' with the next set of coalitions which may be choosen randomly
         ''' </summary>
-        ''' <paramname="nbCoalitions"> number of coalition taken in account for this calculation </param>
-        ''' <paramname="strategy"> way to choose the next coalitions (sequential or random)  
+        ''' <param name="nbCoalitions"> number of coalition taken in account for this calculation </param>
+        ''' <param name="strategy"> way to choose the next coalitions (sequential or random)  
         ''' </param>
         ''' <returns> partial result of the Shapley value
         ''' </returns>
-        ''' <exceptioncref="ShapleyApplicationException"> when different strategy are mixed
+        ''' <exception cref="ShapleyApplicationException"> when different strategy are mixed
         '''  </exception>
         Function calculate(nbCoalitions As Long, strategy As CoalitionStrategy) As IDictionary(Of String, Double)
 
@@ -46,7 +46,7 @@
         ''' check in the case of sequential strategy if the last coalition possible is reached
         ''' 
         ''' @return </summary>
-        ''' <exceptioncref="ShapleyApplicationException"> in the cas of non sequential strategy </exception>
+        ''' <exception cref="ShapleyApplicationException"> in the cas of non sequential strategy </exception>
         ReadOnly Property LastCoalitionReached As Boolean
 
     End Interface

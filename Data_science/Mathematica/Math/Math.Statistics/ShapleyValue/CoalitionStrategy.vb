@@ -1,4 +1,6 @@
-﻿Namespace ShapleyValue
+﻿Imports std = System.Math
+
+Namespace ShapleyValue
 
     ''' 
     ''' <summary>
@@ -33,7 +35,8 @@
 
         Private Sub New(name As String, innerEnum As InnerEnum)
             nameValue = name
-            ordinalValue = Math.Min(Threading.Interlocked.Increment(nextOrdinal), nextOrdinal - 1)
+            ordinalValue = nextOrdinal
+            nextOrdinal += 1
             innerEnumValue = innerEnum
         End Sub
 

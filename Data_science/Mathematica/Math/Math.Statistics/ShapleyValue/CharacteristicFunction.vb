@@ -13,21 +13,15 @@ Namespace ShapleyValue
     ''' </summary>
     Public Class CharacteristicFunction
 
-        Private nbPlayersField As Integer
-        Private v As IDictionary(Of ISet(Of Integer), Double)
+        Dim v As IDictionary(Of ISet(Of Integer), Double)
+
+        Public Overridable ReadOnly Property NbPlayers As Integer
 
         Private Sub New(builder As CharacteristicFunctionBuilder)
-            nbPlayersField = builder.nbPlayers
+            NbPlayers = builder.nbPlayers
             v = New Dictionary(Of ISet(Of Integer), Double)()
             v = builder.v
         End Sub
-
-
-        Public Overridable ReadOnly Property NbPlayers As Integer
-            Get
-                Return nbPlayersField
-            End Get
-        End Property
 
         Public Overridable Function getValue(ParamArray coalition As Integer?()) As Double
             Dim coalitionSet As ISet(Of Integer) = New HashSet(Of Integer)()
@@ -45,7 +39,7 @@ Namespace ShapleyValue
         End Function
 
         Public Overrides Function ToString() As String
-            Return "CharacteristicFunction [nbPlayers=" & nbPlayersField.ToString() & ", v=" & v.ToString() & "]"
+            Return "CharacteristicFunction [nbPlayers=" & NbPlayers.ToString() & ", v=" & v.ToString() & "]"
         End Function
 
         Public Class CharacteristicFunctionBuilder
@@ -83,19 +77,20 @@ Namespace ShapleyValue
 
                 coalitionSet = New HashSet(Of Integer)()
                 coalitionSet.AddAll(coalition)
-                coalitionSet.Add(nbPlayersField + 1)
+                coalitionSet.Add(NbPlayers + 1)
 
                 newV(coalitionSet) = v(coalition)
             Next
 
             coalitionSet = New HashSet(Of Integer)()
-            coalitionSet.Add(nbPlayersField + 1)
+            coalitionSet.Add(NbPlayers + 1)
             v(coalitionSet) = 0.0
 
             For Each coalition In newV.Keys
                 v(coalition) = newV(coalition)
             Next
-            nbPlayersField += 1
+
+            _NbPlayers += 1
         End Sub
 
     End Class
