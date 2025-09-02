@@ -1,4 +1,4 @@
-﻿Imports Microsoft.VisualBasic.MachineLearning.Transformer.Utils
+﻿Imports Microsoft.VisualBasic.MachineLearning.TensorFlow
 Imports randf = Microsoft.VisualBasic.Math.RandomExtensions
 
 Namespace Transformer
