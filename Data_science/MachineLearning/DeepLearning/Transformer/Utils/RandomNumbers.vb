@@ -1,4 +1,4 @@
-﻿Imports System
+﻿Imports std = System.Math
 
 Namespace Transformer
     Public NotInheritable Class RandomNumbers
@@ -26,7 +26,7 @@ Namespace Transformer
         Public Function GetNextNormalNumber() As Double
             Dim u1 As Double = 1.0 - _rand.NextDouble() 'uniform(0,1] random doubles
             Dim u2 As Double = 1.0 - _rand.NextDouble()
-            Dim randStdNormal = Math.Sqrt(-2.0 * Math.Log(u1)) * Math.Sin(2.0 * Math.PI * u2) 'random normal(0,1)
+            Dim randStdNormal = std.Sqrt(-2.0 * std.Log(u1)) * std.Sin(2.0 * std.PI * u2) 'random normal(0,1)
 
             Return randStdNormal
         End Function

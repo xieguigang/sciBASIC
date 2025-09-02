@@ -1,4 +1,4 @@
-﻿Imports System
+﻿Imports std = System.Math
 
 Namespace Transformer.Utils
     ''' <summary>
@@ -135,15 +135,15 @@ Namespace Transformer.Utils
         End Sub
 
         Public Function Pow(e As Double) As Rev
-            Return New Rev(Math.Pow(Magnitude, e), Sub(dx) CalculateDerivative(e * Math.Pow(Magnitude, e - 1) * dx))
+            Return New Rev(std.Pow(Magnitude, e), Sub(dx) CalculateDerivative(e * std.Pow(Magnitude, e - 1) * dx))
         End Function
 
         Public Function Exp() As Rev
-            Return New Rev(Math.Exp(Magnitude), Sub(dx) CalculateDerivative(Math.Exp(Magnitude) * dx))
+            Return New Rev(std.Exp(Magnitude), Sub(dx) CalculateDerivative(std.Exp(Magnitude) * dx))
         End Function
 
         Public Function Log() As Rev
-            Return New Rev(Math.Log(Magnitude), Sub(dx) CalculateDerivative(1.0 / Magnitude * dx))
+            Return New Rev(std.Log(Magnitude), Sub(dx) CalculateDerivative(1.0 / Magnitude * dx))
         End Function
 
 

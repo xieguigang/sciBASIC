@@ -1,5 +1,6 @@
 ﻿Imports System.Runtime.InteropServices
 Imports Microsoft.VisualBasic.MachineLearning.Transformer.Utils
+Imports std = System.Math
 
 Namespace Transformer
     Public Class MultiHeadAttention
@@ -71,7 +72,7 @@ Namespace Transformer
 
             For h = 0 To nr_heads - 1
                 Dim AttentionFilter As Tensor = Tensor.MatMul(Qf(h), Kf(h).Transpose())
-                Dim scaledAttentionFilter = AttentionFilter.Scale(1 / Math.Sqrt(dk))
+                Dim scaledAttentionFilter = AttentionFilter.Scale(1 / std.Sqrt(dk))
                 If mask Then scaledAttentionFilter.Mask()
                 AttentionHeads(h) = Tensor.MatMul(scaledAttentionFilter.Softmax(), Vf(h))
             Next

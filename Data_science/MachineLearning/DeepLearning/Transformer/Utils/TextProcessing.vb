@@ -1,5 +1,6 @@
 ﻿Imports System.IO
 Imports System.Runtime.InteropServices
+Imports std = System.Math
 
 Namespace Transformer
     Public Module TextProcessing
@@ -27,7 +28,7 @@ Namespace Transformer
                         End If
                         englishSentences.Add(New List(Of String)(split(0).Split()))
                         spanishSentences.Add(New List(Of String)(split(1).Split()))
-                        If Math.Min(Threading.Interlocked.Increment(s), s - 1) >= nrSentences Then Exit While
+                        If std.Min(Threading.Interlocked.Increment(s), s - 1) >= nrSentences Then Exit While
 
                         line = reader.ReadLine()
                     End While
@@ -62,8 +63,8 @@ Namespace Transformer
         Public Function CalculateSequenceLength(englishSentences As List(Of List(Of String)), spanishSentences As List(Of List(Of String))) As Integer
             Dim sequenceLength = 0
             For s = 0 To englishSentences.Count - 1
-                sequenceLength = Math.Max(sequenceLength, englishSentences(s).Count())
-                sequenceLength = Math.Max(sequenceLength, spanishSentences(s).Count())
+                sequenceLength = std.Max(sequenceLength, englishSentences(s).Count())
+                sequenceLength = std.Max(sequenceLength, spanishSentences(s).Count())
             Next
 
             Return sequenceLength
@@ -72,7 +73,7 @@ Namespace Transformer
         Public Function CalculateMaxSentenceLength(sentences As List(Of List(Of String))) As Integer
             Dim maxSentenceLength = 0
             For s = 0 To sentences.Count - 1
-                maxSentenceLength = Math.Max(maxSentenceLength, sentences(s).Count())
+                maxSentenceLength = std.Max(maxSentenceLength, sentences(s).Count())
             Next
 
             Return maxSentenceLength

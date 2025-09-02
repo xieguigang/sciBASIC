@@ -1,4 +1,4 @@
-﻿Imports System
+﻿Imports std = System.Math
 
 Namespace Transformer.Utils
     Public Class Tensor
@@ -59,9 +59,9 @@ Namespace Transformer.Utils
         ''' <summary>
         ''' Index parameter implementation
         ''' </summary>
-        ''' <paramname="keys"></param>
+        ''' <param name="keys"></param>
         ''' <returns></returns>
-        ''' <exceptioncref="ArgumentException"></exception>
+        ''' <exception cref="ArgumentException"></exception>
         Default Public Property Item(keys As Integer()) As Rev
             Get
                 Return getItem(keys)
@@ -74,9 +74,8 @@ Namespace Transformer.Utils
         ''' <summary>
         ''' Index parameter implementation
         ''' </summary>
-        ''' <paramname="keys"></param>
         ''' <returns></returns>
-        ''' <exceptioncref="ArgumentException"></exception>
+        ''' <exception cref="ArgumentException"></exception>
         Default Public Property Item(key As Integer) As Rev
             Get
                 Return getItem(key)
@@ -89,9 +88,8 @@ Namespace Transformer.Utils
         ''' <summary>
         ''' Index parameter implementation
         ''' </summary>
-        ''' <paramname="keys"></param>
         ''' <returns></returns>
-        ''' <exceptioncref="ArgumentException"></exception>
+        ''' <exception cref="ArgumentException"></exception>
         Default Public Property Item(a As Integer, b As Integer) As Rev
             Get
                 Return getItem(a, b)
@@ -104,9 +102,8 @@ Namespace Transformer.Utils
         ''' <summary>
         ''' Index parameter implementation
         ''' </summary>
-        ''' <paramname="keys"></param>
         ''' <returns></returns>
-        ''' <exceptioncref="ArgumentException"></exception>
+        ''' <exception cref="ArgumentException"></exception>
         Default Public Property Item(a As Integer, b As Integer, c As Integer) As Rev
             Get
                 Return getItem(a, b, c)
@@ -119,9 +116,9 @@ Namespace Transformer.Utils
         ''' <summary>
         ''' Constructor
         ''' </summary>
-        ''' <paramname="sizes"></param>
-        ''' <exceptioncref="ArgumentNullException"></exception>
-        ''' <exceptioncref="ArgumentException"></exception>
+        ''' <param name="sizes"></param>
+        ''' <exception cref="ArgumentNullException"></exception>
+        ''' <exception cref="ArgumentException"></exception>
         Public Sub New(ParamArray sizes As Integer())
             If sizes Is Nothing Then Throw New ArgumentNullException(NameOf(sizes))
             If sizes.Length = 0 Then Throw New ArgumentException(NameOf(sizes) & "Must have at least one dimension")
@@ -144,7 +141,7 @@ Namespace Transformer.Utils
         ''' <summary>
         ''' Copy constructor. Removes the derivatives and actions.
         ''' </summary>
-        ''' <paramname="T"></param>
+        ''' <param name="T"></param>
         Public Sub New(T As Tensor, Optional copy As Boolean = False)
             sizes = New Integer(T.Dimension - 1) {}
             Array.Copy(T.sizes, sizes, Dimension)
@@ -229,7 +226,7 @@ Namespace Transformer.Utils
         ''' <summary>
         ''' Scale all elements with a number
         ''' </summary>
-        ''' <paramname="s"></param>
+        ''' <param name="s"></param>
         Public Function Scale(s As Double) As Tensor
             Dim T As Tensor = New Tensor(Me, True)
 
@@ -243,7 +240,7 @@ Namespace Transformer.Utils
         ''' <summary>
         ''' Add a number to all elements
         ''' </summary>
-        ''' <paramname="s"></param>
+        ''' <param name="s"></param>
         Public Function Add(s As Double) As Tensor
             Dim T As Tensor = New Tensor(Me, True)
 
@@ -257,7 +254,7 @@ Namespace Transformer.Utils
         ''' <summary>
         ''' Element-wise power 
         ''' </summary>
-        ''' <paramname="e"></param>
+        ''' <param name="e"></param>
         ''' <returns></returns>
         Public Function Pow(e As Double) As Tensor
             Dim T As Tensor = New Tensor(Me, True)
@@ -277,7 +274,7 @@ Namespace Transformer.Utils
 
             Dim imax = sizes(Dimension - 2)
             For c = 0 To nrValues - 1
-                values(c) = New Rev(CDbl((RandomNumbers.Instance.GetNextNormalNumber() * Math.Sqrt(2.0 / imax))))
+                values(c) = New Rev(CDbl((RandomNumbers.Instance.GetNextNormalNumber() * std.Sqrt(2.0 / imax))))
             Next
         End Sub
 
@@ -306,7 +303,7 @@ Namespace Transformer.Utils
         ''' <summary>
         ''' Mask upper triangular part of the last two dimensions of a tensor
         ''' </summary>
-        ''' <exceptioncref="ArgumentException"></exception>
+        ''' <exception cref="ArgumentException"></exception>
         Public Sub Mask()
             If Dimension < 2 Then Throw New ArgumentException("Tensor must have dimension >= 2")
 
@@ -328,9 +325,8 @@ Namespace Transformer.Utils
         ''' <summary>
         ''' Zero out elemens of the last dimension of a tensor based on a masking array
         ''' </summary>
-        ''' <paramname="dropoutMask"></param>
-        ''' <paramname="isTraining"></param>
-        ''' <exceptioncref="ArgumentException"></exception>
+        ''' <param name="dropoutMask"></param>
+        ''' <exception cref="ArgumentException"></exception>
         Public Function Dropout(dropoutMask As Boolean(), dropoutRate As Double) As Tensor
             Dim imax = sizes(Dimension - 1)
             If imax <> dropoutMask.Length Then Throw New ArgumentException("Wrong length of fropout vector")
@@ -351,7 +347,7 @@ Namespace Transformer.Utils
         End Function
 
         ''' <summary>
-        ''' Set all elements </>
+        ''' Set all elements
         ''' </summary>
         Public Sub ReLU()
             For c = 0 To nrValues - 1
@@ -362,9 +358,8 @@ Namespace Transformer.Utils
         ''' <summary>
         ''' Flatten last two dimensions. 
         ''' </summary>
-        ''' <paramname="reduceDimension"></param>
         ''' <returns></returns>
-        ''' <exceptioncref="ArgumentException"></exception>
+        ''' <exception cref="ArgumentException"></exception>
         Public Function Flatten() As Tensor
             If Dimension < 2 Then Throw New ArgumentException("Tensor must have dimension >= 2")
 
@@ -382,7 +377,7 @@ Namespace Transformer.Utils
                 Dim ind = 0
                 For i = 0 To imax - 1
                     For j = 0 To jmax - 1
-                        C.values(offset + Math.Min(Threading.Interlocked.Increment(ind), ind - 1)) = values(offset + i * jmax + j)
+                        C.values(offset + std.Min(Threading.Interlocked.Increment(ind), ind - 1)) = values(offset + i * jmax + j)
                     Next
                 Next
             Next
@@ -394,7 +389,7 @@ Namespace Transformer.Utils
         ''' Only used for final output layer
         ''' </summary>
         ''' <returns></returns>
-        ''' <exceptioncref="InvalidOperationException"></exception>
+        ''' <exception cref="InvalidOperationException"></exception>
         Public Function GetMaxIndex() As Integer()
             If Dimension <> 3 Then Throw New InvalidOperationException("Tensor must have dimension = 3")
             If sizes(1) <> 1 Then Throw New InvalidOperationException("Second dimension must have size = 1")
@@ -421,7 +416,7 @@ Namespace Transformer.Utils
         ''' <summary>
         ''' Add a vector to the last dimension of the matrix
         ''' </summary>
-        ''' <paramname="v"></param>
+        ''' <param name="v"></param>
         Public Function VecAdd(v As Tensor) As Tensor
             Dim T As Tensor = New Tensor(Me, True)
 
@@ -445,8 +440,8 @@ Namespace Transformer.Utils
         ''' In place element-wise addition of the elemens of two tensors with identical shape.
         ''' Only used for optimizer.
         ''' </summary>
-        ''' <paramname="T"></param>
-        ''' <exceptioncref="ArgumentException"></exception>
+        ''' <param name="T"></param>
+        ''' <exception cref="ArgumentException"></exception>
         Public Sub MatAdd(T As Tensor)
             If Dimension <> T.Dimension Then Throw New ArgumentException("Tensors must have >= 2 dimensions")
             For [dim] = 0 To Dimension - 1
@@ -486,8 +481,8 @@ Namespace Transformer.Utils
         ''' Perform derivative calculations for all elements in a tensor with input values from 
         ''' the derivatives of another tensor with the same shape
         ''' </summary>
-        ''' <paramname="T"></param>
-        ''' <exceptioncref="ArgumentException"></exception>
+        ''' <param name="T"></param>
+        ''' <exception cref="ArgumentException"></exception>
         Public Sub TransferDerivatives(T As Tensor)
             If Dimension <> T.Dimension Then Throw New ArgumentException("Tensors must have the same number of dimensions")
             For [dim] = 0 To Dimension - 1
@@ -503,10 +498,10 @@ Namespace Transformer.Utils
         ''' <summary>
         ''' Element-wise addition of the elemens of two tensors with identical shape
         ''' </summary>
-        ''' <paramname="A"></param>
-        ''' <paramname="B"></param>
+        ''' <param name="A"></param>
+        ''' <param name="B"></param>
         ''' <returns></returns>
-        ''' <exceptioncref="ArgumentException"></exception>
+        ''' <exception cref="ArgumentException"></exception>
         Public Shared Function MatAdd(A As Tensor, B As Tensor) As Tensor
             If A.Dimension <> B.Dimension Then Throw New ArgumentException("Tensors must have >= 2 dimensions")
             For [dim] = 0 To A.Dimension - 1
@@ -525,8 +520,8 @@ Namespace Transformer.Utils
         ''' <summary>
         ''' Element-wise division of the elemens of two tensors with identical shape
         ''' </summary>
-        ''' <paramname="A"></param>
-        ''' <paramname="B"></param>
+         ''' <param name="A"></param>
+         ''' <param name="B"></param>
         ''' <returns></returns>
         Public Shared Function MatDivElementWise(A As Tensor, B As Tensor) As Tensor
             If A.Dimension <> B.Dimension Then Throw New ArgumentException("Tensors must have >= 2 dimensions")
@@ -546,8 +541,8 @@ Namespace Transformer.Utils
         ''' <summary>
         ''' Element-wise multiplication of the elemens of two tensors with identical shape
         ''' </summary>
-        ''' <paramname="A"></param>
-        ''' <paramname="B"></param>
+         ''' <param name="A"></param>
+         ''' <param name="B"></param>
         ''' <returns></returns>
         Public Shared Function MatMulElementWise(A As Tensor, B As Tensor) As Tensor
             If A.Dimension <> B.Dimension Then Throw New ArgumentException("Tensors must have >= 2 dimensions")
@@ -567,8 +562,8 @@ Namespace Transformer.Utils
         ''' <summary>
         ''' Matrix multiplication over the last two dimensions of two tensors
         ''' </summary>
-        ''' <paramname="A"></param>
-        ''' <paramname="B"></param>
+         ''' <param name="A"></param>
+         ''' <param name="B"></param>
         ''' <returns></returns>
         Public Shared Function MatMul(A As Tensor, B As Tensor) As Tensor
             If A.Dimension < 2 OrElse B.Dimension < 2 Then Throw New ArgumentException("Tensors must have >= 2 dimensions")
@@ -615,7 +610,7 @@ Namespace Transformer.Utils
         ''' <summary>
         ''' Concatenate an array of tensors of identical shape along its last dimension
         ''' </summary>
-        ''' <paramname="Tensors"></param>
+         ''' <param name="Tensors"></param>
         ''' <returns></returns>
         Public Shared Function Concat(Tensors As Tensor()) As Tensor
             For t = 1 To Tensors.Length - 1
@@ -649,8 +644,8 @@ Namespace Transformer.Utils
         ''' <summary>
         ''' Add two tensors and normalize over last dimension
         ''' </summary>
-        ''' <paramname="A"></param>
-        ''' <paramname="B"></param>
+         ''' <param name="A"></param>
+         ''' <param name="B"></param>
         ''' <returns></returns>
         Public Shared Function AddNorm(A As Tensor, B As Tensor) As Tensor
             If A.Dimension <> B.Dimension Then Throw New ArgumentException("Tensors must have the same number of dimensions")

@@ -5,6 +5,9 @@ Namespace Transformer
     ''' <summary>
     ''' Transformer architecture as described in "Attention is all you need"
     ''' </summary>
+    ''' <remarks>
+    ''' https://github.com/jaksc00p/Transformer/tree/master
+    ''' </remarks>
     Public Class TransformerModel
         Private sequenceLength As Integer
         Private dropout As Double

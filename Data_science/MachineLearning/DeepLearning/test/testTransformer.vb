@@ -1,4 +1,6 @@
-﻿Module testTransformer
+﻿Imports Microsoft.VisualBasic.MachineLearning.Transformer
+
+Module testTransformer
 
     Public Sub run()
         ' Load data

@@ -1,5 +1,6 @@
 ﻿Imports System.Runtime.InteropServices
 Imports Microsoft.VisualBasic.MachineLearning.Transformer.Utils
+Imports std = System.Math
 
 Namespace Transformer
     ''' <summary>
@@ -44,9 +45,9 @@ Namespace Transformer
         ''' <summary>
         ''' Constructor
         ''' </summary>
-        ''' <paramname="embeddingSize"></param>
-        ''' <paramname="sequenceLength"></param>
-        ''' <paramname="sentences"></param>
+        ''' <param name="embeddingSize"></param>
+        ''' <param name="sequenceLength"></param>
+        ''' <param name="sentences"></param>
         Public Sub New(embeddingSize As Integer, sequenceLength As Integer, sentences As List(Of List(Of String)))
             Me.EmbeddingSize = embeddingSize
             Me.SequenceLength = sequenceLength
@@ -63,8 +64,8 @@ Namespace Transformer
         ''' <summary>
         ''' Multiply the one-hot embeddings with the embedding layer to project onto a smaller space
         ''' </summary>
-        ''' <paramname="sentences"></param>
-        ''' <paramname="isTraining"></param>
+        ''' <param name="sentences"></param>
+        ''' <param name="isTraining"></param>
         ''' <returns></returns>
         Public Function Embed(sentences As List(Of List(Of String)), isTraining As Boolean) As Tensor
             Dim batchSize = sentences.Count
@@ -95,10 +96,10 @@ Namespace Transformer
         ''' Cross entropy loss function between the correct word in a sentence and the decoder output word.
         ''' For a batch of several sentences the loss is accumulated.
         ''' </summary>
-        ''' <paramname="filteredOutout"></param>
-        ''' <paramname="correctSpanishSentences"></param>
-        ''' <paramname="w"></param>
-        ''' <paramname="loss"></param>
+        ''' <param name="filteredOutout"></param>
+        ''' <param name="correctSpanishSentences"></param>
+        ''' <param name="w"></param>
+        ''' <param name="loss"></param>
         Public Sub CalculateLossFunction(filteredOutout As Tensor, correctSpanishSentences As List(Of List(Of String)), w As Integer, ByRef loss As Rev)
             For s = 0 To correctSpanishSentences.Count() - 1
                 If w >= correctSpanishSentences(s).Count() Then Continue For
@@ -113,7 +114,7 @@ Namespace Transformer
         ''' <summary>
         ''' Get a word based on its index in the dictionary
         ''' </summary>
-        ''' <paramname="indexes"></param>
+        ''' <param name="indexes"></param>
         ''' <returns></returns>
         Public Function GetWords(indexes As Integer()) As String()
             Dim words = New String(indexes.Length - 1) {}
@@ -127,7 +128,7 @@ Namespace Transformer
         ''' <summary>
         ''' Get the index of a specific word in a dictionary
         ''' </summary>
-        ''' <paramname="word"></param>
+        ''' <param name="word"></param>
         ''' <returns></returns>
         Public Function GetWordIndex(word As String) As Integer
             Return one_hot(word)
@@ -151,14 +152,14 @@ Namespace Transformer
         ''' <summary>
         ''' Encode all words in a dictionary with one-hot embedding
         ''' </summary>
-        ''' <paramname="sentences"></param>
+        ''' <param name="sentences"></param>
         Private Sub OneHotEmbedding(sentences As List(Of List(Of String)))
             Dim word_index = 0
             For Each sentence In sentences
                 For Each word In sentence
                     If Not one_hot.ContainsKey(word.ToLower()) Then
                         allWords.Add(word.ToLower())
-                        one_hot.Add(word.ToLower(), Math.Min(Threading.Interlocked.Increment(word_index), word_index - 1))
+                        one_hot.Add(word.ToLower(), std.Min(Threading.Interlocked.Increment(word_index), word_index - 1))
                     End If
                 Next
             Next
@@ -167,17 +168,17 @@ Namespace Transformer
         ''' <summary>
         ''' Add positional encoding to embedded words according to "Attention is all you need"
         ''' </summary>
-        ''' <paramname="wordEmbeddings"></param>
-        ''' <paramname="s"></param>
-        ''' <paramname="sentenceLength"></param>
+        ''' <param name="wordEmbeddings"></param>
+        ''' <param name="s"></param>
+        ''' <param name="sentenceLength"></param>
         Private Sub AddPositionalEncoding(wordEmbeddings As Tensor, s As Integer, sentenceLength As Integer)
             For pos = 0 To sentenceLength - 1
                 For i = 0 To EmbeddingSize - 1
                     Dim pe As Double
                     If i Mod 2 = 0 Then
-                        pe = Math.Sin(pos / Math.Pow(10000, i / EmbeddingSize))
+                        pe = std.Sin(pos / std.Pow(10000, i / EmbeddingSize))
                     Else
-                        pe = Math.Cos(pos / Math.Pow(10000, (i - 1) / EmbeddingSize))
+                        pe = std.Cos(pos / std.Pow(10000, (i - 1) / EmbeddingSize))
                     End If
                     wordEmbeddings(s, pos, i) += pe
                 Next
