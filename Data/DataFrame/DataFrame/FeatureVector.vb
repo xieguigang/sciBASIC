@@ -86,6 +86,8 @@ Public Class FeatureVector : Implements IReadOnlyId
     ''' <returns></returns>
     Public ReadOnly Property name As String Implements IReadOnlyId.Identity
 
+    Public Property attributes As Dictionary(Of String, String)
+
     ''' <summary>
     ''' does current vector has no data or just a single value?
     ''' </summary>
