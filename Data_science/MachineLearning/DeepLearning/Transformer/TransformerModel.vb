@@ -9,6 +9,7 @@ Namespace Transformer
     ''' https://github.com/jaksc00p/Transformer/tree/master
     ''' </remarks>
     Public Class TransformerModel
+
         Private sequenceLength As Integer
         Private dropout As Double
 
@@ -20,7 +21,10 @@ Namespace Transformer
 
         Private loss As Rev
 
-        Public Sub New(Nx As Integer, embeddingSize As Integer, dk As Integer, dv As Integer, h As Integer, dff As Integer, batchSize As Integer, dropout As Double, allEnglishSentences As List(Of List(Of String)), allSpanishSentences As List(Of List(Of String)))
+        Public Sub New(Nx As Integer, embeddingSize As Integer, dk As Integer, dv As Integer, h As Integer, dff As Integer, batchSize As Integer, dropout As Double,
+                       allEnglishSentences As List(Of List(Of String)),
+                       allSpanishSentences As List(Of List(Of String)))
+
             Me.dropout = dropout
 
             InsertStartAndStopCharacters(allSpanishSentences)
