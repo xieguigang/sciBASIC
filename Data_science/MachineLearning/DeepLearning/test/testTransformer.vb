@@ -4,12 +4,12 @@ Module testTransformer
 
     Public Sub run()
         ' Load data
-        Dim nrSentences = 100
+        Dim nrSentences = 1000
         Dim allEnglishSentences As List(Of List(Of String)) = Nothing, allSpanishSentences As List(Of List(Of String)) = Nothing
-        TextProcessing.Load("E:\GCModeller\src\runtime\sciBASIC#\Data_science\MachineLearning\DeepLearning\Transformer\TrainingData\english-spanish.txt", nrSentences, allEnglishSentences, allSpanishSentences)
+        TextProcessing.Load("\GCModeller\src\runtime\sciBASIC#\Data_science\MachineLearning\DeepLearning\Transformer\TrainingData\english-spanish.txt", nrSentences, allEnglishSentences, allSpanishSentences)
 
         ' Transformer setup
-        Dim batchSize = 10
+        Dim batchSize = 100
         Dim embeddingSize = 8
         Dim dk = 4
         Dim dv = 4
