@@ -4,10 +4,27 @@
 ''' Data type for automatic differentiation with reverse mode accumulation.
 ''' </summary>
 Public Class Rev
+
     Public Magnitude As Double
     Public Derivative As Double
 
     Public CalculateDerivative As Action(Of Double)
+
+    Public Sub New(y As Double)
+        Magnitude = y
+        Derivative = 0
+        CalculateDerivative = Sub(x) Derivative += x
+    End Sub
+
+    Private Sub New(y As Double, dy As Action(Of Double))
+        Magnitude = y
+        Derivative = 0
+        CalculateDerivative = dy
+    End Sub
+
+    Public Overrides Function ToString() As String
+        Return $"[magnitude:{Magnitude}, derivative:{Derivative}]"
+    End Function
 
     Public Shared Widening Operator CType(d As Rev) As Double
         Return d.Magnitude
@@ -120,18 +137,6 @@ Public Class Rev
                                                 End If
                                             End Sub)
     End Operator
-
-    Public Sub New(y As Double)
-        Magnitude = y
-        Derivative = 0
-        CalculateDerivative = Sub(x) Derivative += x
-    End Sub
-
-    Private Sub New(y As Double, dy As Action(Of Double))
-        Magnitude = y
-        Derivative = 0
-        CalculateDerivative = dy
-    End Sub
 
     Public Function Pow(e As Double) As Rev
         Return New Rev(std.Pow(Magnitude, e), Sub(dx) CalculateDerivative(e * std.Pow(Magnitude, e - 1) * dx))
