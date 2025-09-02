@@ -671,6 +671,10 @@ Namespace IO
             Return table(i)
         End Function
 
+        Public Function GetRow() As String()
+            Return If(current Is Nothing, Nothing, current.ToArray)
+        End Function
+
         ''' <summary>
         ''' Subset of the dataframe object by given column field names
         ''' </summary>
