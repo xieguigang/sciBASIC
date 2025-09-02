@@ -12,15 +12,15 @@ Namespace ShapleyValue
     ''' </summary>
     Public NotInheritable Class CoalitionStrategy
 
-        Public Shared ReadOnly SEQUENTIALField As CoalitionStrategy = New CoalitionStrategy("SEQUENTIAL", InnerEnum.SEQUENTIAL)
+        Public Shared ReadOnly SEQUENTIAL_STRATEGY As New CoalitionStrategy("SEQUENTIAL", InnerEnum.SEQUENTIAL)
 
-        Public Shared ReadOnly RANDOM As CoalitionStrategy = New CoalitionStrategy("RANDOM", InnerEnum.RANDOM)
+        Public Shared ReadOnly RANDOM_STRATEGY As New CoalitionStrategy("RANDOM", InnerEnum.RANDOM)
 
-        Private Shared ReadOnly valueList As List(Of CoalitionStrategy) = New List(Of CoalitionStrategy)()
+        Private Shared ReadOnly valueList As New List(Of CoalitionStrategy)()
 
         Shared Sub New()
-            valueList.Add(SEQUENTIALField)
-            valueList.Add(RANDOM)
+            valueList.Add(SEQUENTIAL_STRATEGY)
+            valueList.Add(RANDOM_STRATEGY)
         End Sub
 
         Public Enum InnerEnum
@@ -42,7 +42,7 @@ Namespace ShapleyValue
 
         Public ReadOnly Property Sequential As Boolean
             Get
-                Return Equals(SEQUENTIALField)
+                Return Equals(SEQUENTIAL_STRATEGY)
             End Get
         End Property
 
@@ -60,7 +60,7 @@ Namespace ShapleyValue
 
         Public Shared Function valueOf(name As String) As CoalitionStrategy
             For Each enumInstance In valueList
-                If Equals(enumInstance.nameValue, name) Then
+                If enumInstance.nameValue = name Then
                     Return enumInstance
                 End If
             Next

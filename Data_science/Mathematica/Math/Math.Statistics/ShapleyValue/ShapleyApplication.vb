@@ -25,7 +25,7 @@
         ''' </param>
         ''' <returns> partial result of the Shapley value
         ''' </returns>
-        ''' <exception cref="ShapleyApplicationException"> when different strategy are mixed
+        ''' <exception cref="Exception"> when different strategy are mixed
         '''  </exception>
         Function calculate(nbCoalitions As Long) As IDictionary(Of String, Double)
 
@@ -38,7 +38,7 @@
         ''' </param>
         ''' <returns> partial result of the Shapley value
         ''' </returns>
-        ''' <exception cref="ShapleyApplicationException"> when different strategy are mixed
+        ''' <exception cref="Exception"> when different strategy are mixed
         '''  </exception>
         Function calculate(nbCoalitions As Long, strategy As CoalitionStrategy) As IDictionary(Of String, Double)
 
@@ -46,7 +46,7 @@
         ''' check in the case of sequential strategy if the last coalition possible is reached
         ''' 
         ''' @return </summary>
-        ''' <exception cref="ShapleyApplicationException"> in the cas of non sequential strategy </exception>
+        ''' <exception cref="Exception"> in the cas of non sequential strategy </exception>
         ReadOnly Property LastCoalitionReached As Boolean
 
     End Interface

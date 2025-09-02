@@ -34,7 +34,6 @@ Namespace ShapleyValue
         End Function
 
         Public Overridable Function getValue(coalitionSet As ISet(Of Integer)) As Double
-
             Return v(coalitionSet)
         End Function
 
