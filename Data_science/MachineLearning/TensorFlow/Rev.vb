@@ -8,7 +8,7 @@ Public Class Rev
     Public Magnitude As Double
     Public Derivative As Double
 
-    Public CalculateDerivative As Action(Of Double)
+    Public CalculateDerivative As Differentiation
 
     Public Sub New(y As Double)
         Magnitude = y
@@ -16,7 +16,7 @@ Public Class Rev
         CalculateDerivative = Sub(x) Derivative += x
     End Sub
 
-    Private Sub New(y As Double, dy As Action(Of Double))
+    Private Sub New(y As Double, dy As Differentiation)
         Magnitude = y
         Derivative = 0
         CalculateDerivative = dy
@@ -31,28 +31,15 @@ Public Class Rev
     End Operator
 
     Public Shared Operator +(lhs As Rev, rhs As Rev) As Rev
-        Return New Rev(lhs.Magnitude + rhs.Magnitude, Sub(dx)
-                                                          If dx <> 0 Then
-                                                              lhs.CalculateDerivative(dx)
-                                                              rhs.CalculateDerivative(dx)
-                                                          End If
-                                                      End Sub)
+        Return New Rev(lhs.Magnitude + rhs.Magnitude, AddressOf New AddRevRev(lhs, rhs).Differentiation)
     End Operator
 
     Public Shared Operator +(lhs As Rev, rhs As Double) As Rev
-        Return New Rev(lhs.Magnitude + rhs, Sub(dx)
-                                                If dx <> 0 Then
-                                                    lhs.CalculateDerivative(dx)
-                                                End If
-                                            End Sub)
+        Return New Rev(lhs.Magnitude + rhs, AddressOf New AddRevDouble(lhs, rhs).Differentiation)
     End Operator
 
     Public Shared Operator +(lhs As Double, rhs As Rev) As Rev
-        Return New Rev(lhs + rhs.Magnitude, Sub(dx)
-                                                If dx <> 0 Then
-                                                    rhs.CalculateDerivative(dx)
-                                                End If
-                                            End Sub)
+        Return New Rev(lhs + rhs.Magnitude, AddressOf New AddDoubleRev(lhs, rhs).Differentiation)
     End Operator
 
     Public Shared Operator -(lhs As Rev, rhs As Rev) As Rev
