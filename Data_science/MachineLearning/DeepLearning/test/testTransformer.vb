@@ -1,6 +1,11 @@
 ﻿Imports Microsoft.VisualBasic.MachineLearning.Transformer
+Imports Microsoft.VisualBasic.Parallel
 
 Module testTransformer
+
+    Sub New()
+        VectorTask.n_threads = 16
+    End Sub
 
     Public Sub run()
         ' Load data

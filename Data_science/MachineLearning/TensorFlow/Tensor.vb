@@ -1,4 +1,5 @@
-﻿Imports Microsoft.VisualBasic.MachineLearning.TensorFlow.Parallel
+﻿Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.MachineLearning.TensorFlow.Parallel
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports randf = Microsoft.VisualBasic.Math.RandomExtensions
 Imports std = System.Math
@@ -576,46 +577,10 @@ Public Class Tensor
     ''' <param name="A"></param>
     ''' <param name="B"></param>
     ''' <returns></returns>
+    ''' 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Shared Function MatMul(A As Tensor, B As Tensor) As Tensor
-        If A.Dimension < 2 OrElse B.Dimension < 2 Then Throw New ArgumentException("Tensors must have >= 2 dimensions")
-        If A.sizes(A.Dimension - 1) <> B.sizes(B.Dimension - 2) Then Throw New ArgumentException("Wrong dimensions for matrix multiplication")
-
-        Dim imax = A.sizes(A.Dimension - 2)
-        Dim jmax = B.sizes(B.Dimension - 1)
-        Dim kmax = A.sizes(A.Dimension - 1)
-        Dim blockSizeA = imax * kmax
-        Dim blockSizeB = jmax * kmax
-        Dim blockSizeC = jmax * imax
-
-        If B.Dimension > 2 AndAlso A.nrValues / blockSizeA <> B.nrValues / blockSizeB Then Throw New ArgumentException("Wrong dimensions for matrix multiplication")
-
-        Dim sizes = New Integer(A.Dimension - 1) {}
-        A.sizes.CopyTo(sizes, 0)
-        sizes(A.Dimension - 2) = imax
-        sizes(A.Dimension - 1) = jmax
-        Dim C As New Tensor(sizes)
-
-        If B.Dimension = 2 Then blockSizeB = 0
-
-        Dim nrblocks As Integer = C.nrValues / (imax * jmax)
-        For block = 0 To nrblocks - 1
-            Dim offsetA = block * blockSizeA
-            Dim offsetB = block * blockSizeB
-            Dim offsetC = block * blockSizeC
-
-            For i = 0 To imax - 1
-                For j = 0 To jmax - 1
-                    For k = 0 To kmax - 1
-                        C.values(offsetC + i * jmax + j) += A.values(offsetA + i * kmax + k) * B.values(offsetB + k * jmax + j)
-                    Next
-                Next
-            Next
-        Next
-
-        C = Checkpoints.Instance.AddCheckpoint(C)
-
-        Return C
-
+        Return SIMDMatMul.Solve(A, B)
     End Function
 
     ''' <summary>
