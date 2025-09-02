@@ -221,7 +221,7 @@ Namespace Math
         ''' and less than 1.0.
         ''' </returns>
         ''' <remarks>
-        ''' <see cref="System.Random.NextDouble()"/>
+        ''' <see cref="System.Random.NextDouble()"/>, GetNextUniformNumber()
         ''' </remarks>
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -370,6 +370,14 @@ Namespace Math
             Dim rand_normal = mu + sigma * rand_std_normal
 
             Return rand_normal
+        End Function
+
+        Public Function GetNextNormalNumber() As Double
+            Dim u1 As Double = 1.0 - seeds.NextDouble() 'uniform(0,1] random doubles
+            Dim u2 As Double = 1.0 - seeds.NextDouble()
+            Dim randStdNormal As Double = std.Sqrt(-2.0 * std.Log(u1)) * std.Sin(2.0 * std.PI * u2) 'random normal(0,1)
+
+            Return randStdNormal
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>

@@ -1,4 +1,5 @@
 ﻿Imports Microsoft.VisualBasic.MachineLearning.Transformer.Utils
+Imports randf = Microsoft.VisualBasic.Math.RandomExtensions
 
 Namespace Transformer
     Public Class DecoderLayer
@@ -49,13 +50,13 @@ Namespace Transformer
 
             For i = 0 To embeddingSize - 1
                 dropoutMask1(i) = False
-                If RandomNumbers.Instance.GetNextUniformNumber() < dropoutRate Then dropoutMask1(i) = True
+                If randf.NextDouble < dropoutRate Then dropoutMask1(i) = True
 
                 dropoutMask2(i) = False
-                If RandomNumbers.Instance.GetNextUniformNumber() < dropoutRate Then dropoutMask2(i) = True
+                If randf.NextDouble < dropoutRate Then dropoutMask2(i) = True
 
                 dropoutMask3(i) = False
-                If RandomNumbers.Instance.GetNextUniformNumber() < dropoutRate Then dropoutMask3(i) = True
+                If randf.NextDouble < dropoutRate Then dropoutMask3(i) = True
             Next
         End Sub
 

@@ -1,5 +1,6 @@
 ﻿Imports System.Runtime.InteropServices
 Imports Microsoft.VisualBasic.MachineLearning.Transformer.Utils
+Imports randf = Microsoft.VisualBasic.Math.RandomExtensions
 Imports std = System.Math
 
 Namespace Transformer
@@ -192,7 +193,7 @@ Namespace Transformer
 
             For i = 0 To EmbeddingSize - 1
                 dropoutMask(i) = False
-                If RandomNumbers.Instance.GetNextUniformNumber() < dropoutRate Then dropoutMask(i) = True
+                If randf.NextDouble < dropoutRate Then dropoutMask(i) = True
             Next
         End Sub
 

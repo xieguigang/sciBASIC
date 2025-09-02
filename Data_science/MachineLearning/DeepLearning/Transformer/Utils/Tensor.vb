@@ -1,4 +1,5 @@
 ﻿Imports std = System.Math
+Imports randf = Microsoft.VisualBasic.Math.RandomExtensions
 
 Namespace Transformer.Utils
     Public Class Tensor
@@ -274,7 +275,7 @@ Namespace Transformer.Utils
 
             Dim imax = sizes(Dimension - 2)
             For c = 0 To nrValues - 1
-                values(c) = New Rev(CDbl((RandomNumbers.Instance.GetNextNormalNumber() * std.Sqrt(2.0 / imax))))
+                values(c) = New Rev(CDbl((randf.GetNextNormalNumber() * std.Sqrt(2.0 / imax))))
             Next
         End Sub
 
