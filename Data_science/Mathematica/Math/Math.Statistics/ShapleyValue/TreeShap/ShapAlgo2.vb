@@ -19,6 +19,9 @@
     ''' - [1] Consistent Individualized Feature Attribution for Tree Ensembles - https://arxiv.org/pdf/1802.03888.pdf
     ''' - [2] From local explanations to global understanding with explainable AI for trees, pages 65,66 - https://www.nature.com/articles/s42256-019-0138-9.epdf?shared_access_token=RCYPTVkiECUmc0CccSMgXtRgN0jAjWel9jnR3ZoTv0O81kV8DqPb2VXSseRmof0Pl8YSOZy4FHz5vMc3xsxcX6uT10EzEoWo7B-nZQAHJJvBYhQJTT1LnJmpsa48nlgUWrMkThFrEIvZstjQ7Xdc5g%3D%3D
     ''' </summary>
+    ''' <remarks>
+    ''' https://github.com/pkozelka/treeshap
+    ''' </remarks>
     Public Class ShapAlgo2
         Friend Shared DEBUG As Boolean = True
         Private indent As String = ""

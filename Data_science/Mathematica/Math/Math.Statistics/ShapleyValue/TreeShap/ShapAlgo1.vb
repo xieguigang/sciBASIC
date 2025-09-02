@@ -13,6 +13,9 @@
     ''' z' - for each feature, 0 if unknown, 1 if known
     ''' x - feature values
     ''' </summary>
+    ''' <remarks>
+    ''' https://github.com/pkozelka/treeshap
+    ''' </remarks>
     Friend Class ShapAlgo1
         Friend x As Double()
         Friend v As Double()
