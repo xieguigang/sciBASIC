@@ -30,7 +30,7 @@
         Private ReadOnly x As Double()
 
         Public Shared Function compute(x As Double(), tree As PkTree) As Double()
-            Dim shap As ShapAlgo2 = New ShapAlgo2(x)
+            Dim shap As New ShapAlgo2(x)
             shap.recurse(tree.root, New List(Of PathElement)(), 1.0, 1.0, Nothing)
             Return shap.phi
         End Function
@@ -186,10 +186,9 @@
         End Function
 
         Private Shared Function copy(origM As IList(Of PathElement)) As IList(Of PathElement)
-
-            Dim m As IList(Of PathElement) = New List(Of PathElement)()
-            For Each e In origM
-                Dim cloned As PathElement = New PathElement()
+            Dim m As New List(Of PathElement)()
+            For Each e As PathElement In origM
+                Dim cloned As New PathElement()
                 cloned.featureIndex = e.featureIndex
                 cloned.zeroFraction = e.zeroFraction
                 cloned.oneFraction = e.oneFraction
@@ -200,11 +199,7 @@
         End Function
 
         Private Shared Function sumWeight(m As IList(Of PathElement)) As Double
-            Dim sum As Double = 0
-            For Each e In m
-                sum += e.weight
-            Next
-            Return sum
+            Return Aggregate e As PathElement In m Into Sum(e.weight)
         End Function
     End Class
 
