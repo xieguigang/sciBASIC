@@ -1,15 +1,16 @@
-﻿Imports Microsoft.VisualBasic.Serialization.JSON
+﻿Imports Microsoft.VisualBasic.MachineLearning.TensorFlow.Parallel
+Imports Microsoft.VisualBasic.Serialization.JSON
 Imports randf = Microsoft.VisualBasic.Math.RandomExtensions
 Imports std = System.Math
 
 Public Class Tensor
 
-    ReadOnly nrValues As Integer
+    Friend ReadOnly nrValues As Integer
     ''' <summary>
     ''' dimension size
     ''' </summary>
-    ReadOnly sizes As Integer()
-    ReadOnly values As Rev()
+    Friend ReadOnly sizes As Integer()
+    Friend ReadOnly values As Rev()
 
     Public ReadOnly Property Dimension As Integer
         Get
@@ -237,13 +238,14 @@ Public Class Tensor
     ''' </summary>
     ''' <param name="s"></param>
     Public Function Scale(s As Double) As Tensor
-        Dim T As Tensor = New Tensor(Me, True)
+        'Dim T As New Tensor(Me, True)
 
-        For c = 0 To nrValues - 1
-            T.values(c) = values(c) * s
-        Next
+        'For c = 0 To nrValues - 1
+        '    T.values(c) = values(c) * s
+        'Next
 
-        Return T
+        'Return T
+        Return MultiplyScale.Scale(Me, s)
     End Function
 
     ''' <summary>
