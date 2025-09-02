@@ -76,7 +76,7 @@ Imports Microsoft.VisualBasic.Text
 ''' <summary>
 ''' R language liked dataframe object
 ''' </summary>
-Public Class DataFrame : Implements INumericMatrix, ILabeledMatrix
+Public Class DataFrame : Implements INumericMatrix, ILabeledMatrix, Enumeration(Of FeatureVector)
 
     ''' <summary>
     ''' the dataframe columns
@@ -472,5 +472,11 @@ Public Class DataFrame : Implements INumericMatrix, ILabeledMatrix
 
     Private Function GetLabels() As IEnumerable(Of String) Implements ILabeledMatrix.GetLabels
         Return rownames
+    End Function
+
+    Public Iterator Function GenericEnumerator() As IEnumerator(Of FeatureVector) Implements Enumeration(Of FeatureVector).GenericEnumerator
+        For Each col As FeatureVector In features.Values
+            Yield col
+        Next
     End Function
 End Class
