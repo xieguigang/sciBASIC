@@ -1,17 +1,25 @@
-﻿Imports std = System.Math
+﻿Imports Microsoft.VisualBasic.Serialization.JSON
 Imports randf = Microsoft.VisualBasic.Math.RandomExtensions
+Imports std = System.Math
 
 Public Class Tensor
 
-    Private nrValues As Integer
-    Private sizes As Integer()
-    Private values As Rev()
+    ReadOnly nrValues As Integer
+    ''' <summary>
+    ''' dimension size
+    ''' </summary>
+    ReadOnly sizes As Integer()
+    ReadOnly values As Rev()
 
     Public ReadOnly Property Dimension As Integer
         Get
             Return sizes.Length
         End Get
     End Property
+
+    Public Overrides Function ToString() As String
+        Return $"{sizes.GetJson}"
+    End Function
 
     Public Shared Operator *(T1 As Tensor, T2 As Tensor) As Tensor
         Return MatMulElementWise(T1, T2)
@@ -547,11 +555,11 @@ Public Class Tensor
     ''' <returns></returns>
     Public Shared Function MatMulElementWise(A As Tensor, B As Tensor) As Tensor
         If A.Dimension <> B.Dimension Then Throw New ArgumentException("Tensors must have >= 2 dimensions")
-        For [dim] = 0 To A.Dimension - 1
+        For [dim] As Integer = 0 To A.Dimension - 1
             If A.sizes([dim]) <> B.sizes([dim]) Then Throw New ArgumentException("Dimensions of tensors must be identical")
         Next
 
-        Dim lC As Tensor = New Tensor(A.sizes)
+        Dim lC As New Tensor(A.sizes)
         For c = 0 To lC.nrValues - 1
             lC.values(c) = A.values(c) * B.values(c)
         Next
@@ -583,7 +591,7 @@ Public Class Tensor
         A.sizes.CopyTo(sizes, 0)
         sizes(A.Dimension - 2) = imax
         sizes(A.Dimension - 1) = jmax
-        Dim C As Tensor = New Tensor(sizes)
+        Dim C As New Tensor(sizes)
 
         If B.Dimension = 2 Then blockSizeB = 0
 
@@ -653,18 +661,18 @@ Public Class Tensor
 
         Dim eps = 0.001
 
-        Dim C As Tensor = New Tensor(A)
+        Dim C As New Tensor(A)
 
         Dim imax = C.sizes(C.Dimension - 1)
         Dim nrBlocks As Integer = C.nrValues / imax
         For block = 0 To nrBlocks - 1
             Dim offset = block * imax
-            Dim mean As Rev = New Rev(0)
+            Dim mean As Rev = Rev.Zero
             For i = 0 To imax - 1
                 mean += (A.values(offset + i) + B.values(offset + i)) / imax
             Next
 
-            Dim var As Rev = New Rev(0)
+            Dim var As Rev = Rev.Zero
             For i = 0 To imax - 1
                 var += (A.values(offset + i) + B.values(offset + i) - mean).Pow(2) / imax
             Next
