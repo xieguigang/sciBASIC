@@ -6,7 +6,7 @@ Module testTransformer
         ' Load data
         Dim nrSentences = 100
         Dim allEnglishSentences As List(Of List(Of String)) = Nothing, allSpanishSentences As List(Of List(Of String)) = Nothing
-        TextProcessing.Load("F:\Transformer-master\Transformer\TrainingData\english-spanish.txt", nrSentences, allEnglishSentences, allSpanishSentences)
+        TextProcessing.Load("E:\GCModeller\src\runtime\sciBASIC#\Data_science\MachineLearning\DeepLearning\Transformer\TrainingData\english-spanish.txt", nrSentences, allEnglishSentences, allSpanishSentences)
 
         ' Transformer setup
         Dim batchSize = 10
