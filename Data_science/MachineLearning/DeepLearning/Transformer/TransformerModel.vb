@@ -92,6 +92,22 @@ Namespace Transformer
             End While
         End Sub
 
+        Public Function Infer(words As IEnumerable(Of String)) As List(Of List(Of String))
+            Dim from As New List(Of List(Of String)) From {New List(Of String)(words)}
+            Dim wrongWord As String = Nothing
+            Dim translatedSpanishSentence As List(Of List(Of String)) = Nothing
+
+            If Not englishEmbedding.AllWordsInDictionary(from, wrongWord) Then
+                Console.WriteLine(wrongWord & " not in dictionary")
+                Console.WriteLine()
+                Return Nothing
+            End If
+
+            Call Translate(1, False, from, Nothing, translatedSpanishSentence)
+
+            Return translatedSpanishSentence
+        End Function
+
         ''' <summary>
         ''' Translate a batch of sentenses by generating one word at a time for each sentence with the decoder until max 
         ''' length or stopping character.
