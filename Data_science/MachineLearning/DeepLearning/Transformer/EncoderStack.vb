@@ -1,9 +1,11 @@
 ﻿Imports Microsoft.VisualBasic.MachineLearning.TensorFlow
 
 Namespace Transformer
+
     Public Class EncoderStack
+
         Private Nx As Integer
-        Private encoderLayers As List(Of EncoderLayer) = New List(Of EncoderLayer)()
+        Private encoderLayers As New List(Of EncoderLayer)()
 
         Public Sub New(Nx As Integer, embeddingSize As Integer, dk As Integer, dv As Integer, h As Integer, dff As Integer)
             Me.Nx = Nx

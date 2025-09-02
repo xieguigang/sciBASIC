@@ -4,17 +4,21 @@ Imports randf = Microsoft.VisualBasic.Math.RandomExtensions
 Imports std = System.Math
 
 Namespace Transformer
+
     ''' <summary>
     ''' Use a learned embedding layer to reduce the size of the word embedding space.
     ''' </summary>
     Public Class Embedding
+
         Private _EmbeddingSize As Integer, _SequenceLength As Integer
         Private allWords As List(Of String) = New List(Of String)()
         Private one_hot As Dictionary(Of String, Integer) = New Dictionary(Of String, Integer)()
         Private dropoutMask As Boolean()
         Private dropoutRate As Double = 0
 
-        ' Learned linear embedding layer
+        ''' <summary>
+        ''' Learned linear embedding layer
+        ''' </summary>
         Private embeddingLayer As Tensor
 
         Private embeddingLayerOptimizer As Optimizer

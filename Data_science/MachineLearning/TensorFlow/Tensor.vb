@@ -2,6 +2,7 @@
 Imports randf = Microsoft.VisualBasic.Math.RandomExtensions
 
 Public Class Tensor
+
     Private nrValues As Integer
     Private sizes As Integer()
     Private values As Rev()
