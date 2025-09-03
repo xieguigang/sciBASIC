@@ -56,16 +56,39 @@
 
 Public Class JSONSerializerOptions
 
-    Public Property maskReadonly As Boolean = False
+#Region "json string format"
     Public Property indent As Boolean = False
     Public Property indent_width As Integer = 4
     Public Property enumToString As Boolean = True
     Public Property unixTimestamp As Boolean = True
-    Public Property digest As Dictionary(Of Type, Func(Of Object, Object))
     Public Property unicodeEscape As Boolean = True
+#End Region
+
+#Region "clr type schema parser"
+    Public Property maskReadonly As Boolean = False
+    ''' <summary>
+    ''' show xml comment text in json? this option usually be applied for generates the json config file
+    ''' </summary>
+    ''' <returns></returns>
+    Public Property comment As Boolean = False
+#End Region
+
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <returns></returns>
+    Public Property digest As Dictionary(Of Type, Func(Of Object, Object))
 
     Friend Function offsets(indent As Integer) As String
         Return New String(" "c, indent * indent_width)
+    End Function
+
+    ''' <summary>
+    ''' create unique reference key for make internal schema cache reference 
+    ''' </summary>
+    ''' <returns></returns>
+    Friend Function createUniqueKey() As String
+        Return $"{maskReadonly},{comment}"
     End Function
 
 End Class
