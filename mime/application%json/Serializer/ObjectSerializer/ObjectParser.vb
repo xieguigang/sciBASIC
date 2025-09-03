@@ -5,6 +5,7 @@ Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.MIME.application.json.Javascript
 Imports Microsoft.VisualBasic.ApplicationServices.Development.XmlDoc.Assembly.XmlDocs
 Imports Microsoft.VisualBasic.ApplicationServices.Development.XmlDoc.Assembly
+Imports Microsoft.VisualBasic.Linq
 
 Module ObjectParser
 
@@ -36,7 +37,7 @@ Module ObjectParser
     End Function
 
     <Extension>
-    Private Function LoadXmlDocs(schema As Type) As Project
+    Private Function LoadXmlDocs(schema As Type) As ProjectType
         Dim asmFile = schema.Assembly.Location
         Dim xmlfile As String
 
@@ -48,7 +49,11 @@ Module ObjectParser
         End If
 
         If xmlfile.FileExists Then
-            Return ProjectSpace.CreateDocProject(xmlfile)
+            Dim proj As Project = ProjectSpace.CreateDocProject(xmlfile)
+            Dim ns = proj.GetNamespace(schema.Namespace)
+            Dim schemaDoc = ns.GetType(schema.Name)
+
+            Return schemaDoc
         Else
             ' xml docs file is missing from the filesystem
             ' so no data for get comment text
@@ -99,11 +104,15 @@ Module ObjectParser
 
         Dim metadata As PropertyInfo = DynamicMetadataAttribute.GetMetadata(memberReaders.Select(Function(p) p.Value))
         Dim comment As String = Nothing
-        Dim docs As Project = If(opt.comment, schema.LoadXmlDocs, Nothing)
+        Dim docs As ProjectType = If(opt.comment, schema.LoadXmlDocs, Nothing)
 
         For Each reader As KeyValuePair(Of String, PropertyInfo) In memberReaders
             If opt.comment Then
-
+                comment = docs.GetProperties(reader.Value.Name) _
+                    .SafeQuery _
+                    .Select(Function(p) p.Summary) _
+                    .JoinBy(vbLf) _
+                    .Trim(" "c, vbLf, vbCr, vbTab)
             End If
 
             [property] = reader.Value
@@ -113,6 +122,8 @@ Module ObjectParser
             If metadata IsNot Nothing AndAlso [property] Is metadata Then
                 Dim js As IDictionary = TryCast(valObj, IDictionary)
 
+                ' expends current dictionary property value as 
+                ' object properties
                 ' handling of the dynamics metadata property
                 If Not js Is Nothing Then
                     For Each key As Object In js.Keys
@@ -129,6 +140,10 @@ Module ObjectParser
                             Call json.Add(keystr, value.GetType.GetJsonElement(value, opt))
                         End If
                     Next
+
+                    If opt.comment AndAlso Not comment.StringEmpty Then
+                        Call $"can not comment on the dynamics metadata property '{schema.Name}::{reader.Value.Name}' while required generates hjson style document.".warning
+                    End If
                 End If
             Else
                 If valueType.IsInterface OrElse
@@ -155,7 +170,7 @@ Module ObjectParser
                 End If
 
                 If Not jsonVal Is Nothing Then
-                    Call json.Add(reader.Key, jsonVal)
+                    Call json.Add(reader.Key, jsonVal, comment)
                 End If
             End If
         Next
