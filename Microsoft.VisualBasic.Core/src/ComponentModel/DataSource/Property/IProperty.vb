@@ -128,6 +128,11 @@ Namespace ComponentModel.DataSourceModel
             Return "This property is a metadata pack"
         End Function
 
+        ''' <summary>
+        ''' find the first <see cref="PropertyInfo"/> which is tagged with <see cref="DynamicMetadataAttribute"/>
+        ''' </summary>
+        ''' <param name="properties"></param>
+        ''' <returns></returns>
         Public Shared Function GetMetadata(properties As IEnumerable(Of PropertyInfo)) As PropertyInfo
             Dim find As PropertyInfo = properties _
                .Where(Function(t) t.GetCustomAttribute(Of DynamicMetadataAttribute) IsNot Nothing) _

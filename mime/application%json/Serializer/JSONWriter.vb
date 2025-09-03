@@ -154,18 +154,29 @@ Friend Class JSONWriter : Implements IDisposable
     ''' </summary>
     ''' <param name="obj"></param>
     Private Sub jsonObjectString(obj As JsonObject, indent As Integer)
+        Dim members As NamedValue(Of JsonElement)() = obj.ToArray
+
         If opts.indent Then
             Call json.WriteLine(opts.offsets(indent) & "{")
         Else
             Call json.Write("{")
         End If
 
-        Dim members = obj.ToArray
-
         For i As Integer = 0 To members.Length - 1
             Dim member As NamedValue(Of JsonElement) = members(i)
             Dim name As String = encodeString(member.Name)
             Dim isLiteral As Boolean = TypeOf member.Value Is JsonValue
+            Dim comment As String = obj.GetCommentText(member.Name)
+
+            If Not comment.StringEmpty Then
+                For Each line As String In comment.LineTokens
+                    If opts.indent Then
+                        Call json.WriteLine(opts.offsets(indent + 1) & $"// {line}")
+                    Else
+                        Call json.Write($"/* {line} */")
+                    End If
+                Next
+            End If
 
             If Not isLiteral Then
                 If TypeOf member.Value Is JsonArray Then

@@ -69,6 +69,10 @@ Public Module JSONSerializer
     ''' <param name="maskReadonly">
     ''' 如果这个参数为真，则不会序列化只读属性
     ''' </param>
+    ''' <param name="comment">
+    ''' add property xml comment summary as comment into the generated json text? 
+    ''' this option usually be apply to generates the config json file.
+    ''' </param>
     ''' <returns></returns>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
@@ -76,13 +80,15 @@ Public Module JSONSerializer
                                   Optional maskReadonly As Boolean = False,
                                   Optional indent As Boolean = False,
                                   Optional enumToStr As Boolean = True,
-                                  Optional unixTimestamp As Boolean = True) As String
+                                  Optional unixTimestamp As Boolean = True,
+                                  Optional comment As Boolean = False) As String
 
         Return New JSONSerializerOptions With {
             .indent = indent,
             .maskReadonly = maskReadonly,
             .enumToString = enumToStr,
-            .unixTimestamp = unixTimestamp
+            .unixTimestamp = unixTimestamp,
+            .comment = comment
         }.DoCall(Function(opts)
                      Return obj.GetType.GetJsonElement(obj, opts).BuildJsonString(opts)
                  End Function)

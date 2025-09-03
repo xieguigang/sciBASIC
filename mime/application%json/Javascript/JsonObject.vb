@@ -75,6 +75,7 @@ Namespace Javascript
         Implements IEnumerable(Of NamedValue(Of JsonElement))
 
         ReadOnly array As New Dictionary(Of String, JsonElement)
+        ReadOnly comments As New Dictionary(Of String, String)
 
         Private disposedValue As Boolean
 
@@ -142,8 +143,12 @@ Namespace Javascript
         End Property
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Sub Add(key As String, element As JsonElement)
+        Public Sub Add(key As String, element As JsonElement, Optional comment As String = Nothing)
             Call array.Add(key, element)
+
+            If Not comment Is Nothing Then
+                comments(key) = comment
+            End If
         End Sub
 
         ''' <summary>
@@ -154,9 +159,22 @@ Namespace Javascript
         ''' .NET clr runtime value, this parameter value should be a literal constant
         ''' </param>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Sub Add(key$, value As Object)
+        Public Sub Add(key$, value As Object, Optional comment As String = Nothing)
             Call array.Add(key, New JsonValue(value))
+
+            If Not comment Is Nothing Then
+                comments(key) = comment
+            End If
         End Sub
+
+        ''' <summary>
+        ''' get comment string about the associated property key, used for generates the Hjson style json output.
+        ''' </summary>
+        ''' <param name="key"></param>
+        ''' <returns></returns>
+        Public Function GetCommentText(key As String) As String
+            Return comments.TryGetValue(key)
+        End Function
 
         Public Function GetString(key As String) As String
             If array.ContainsKey(key) Then
