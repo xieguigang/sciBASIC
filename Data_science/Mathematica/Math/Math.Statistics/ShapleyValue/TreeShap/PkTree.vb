@@ -1,6 +1,10 @@
-﻿Namespace ShapleyValue.TreeShape
+﻿Imports System.IO
+Imports Microsoft.VisualBasic.ApplicationServices
+
+Namespace ShapleyValue.TreeShape
 
     Public Class PkTree
+
         Public ReadOnly root As PkNode
 
         Public Sub New(root As PkNode)

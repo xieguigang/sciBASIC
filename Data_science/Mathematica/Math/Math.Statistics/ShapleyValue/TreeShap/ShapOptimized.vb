@@ -1,4 +1,5 @@
 ﻿Imports System.Text
+Imports std = System.Math
 
 Namespace ShapleyValue.TreeShape
 
@@ -27,7 +28,7 @@ Namespace ShapleyValue.TreeShape
             If node.LeafProp Then
                 Return 0
             End If
-            Return Math.Max(maxDepth(node.yes) + 1, maxDepth(node.no) + 1)
+            Return std.Max(maxDepth(node.yes) + 1, maxDepth(node.no) + 1)
         End Function
 
         Private Shared Function createPathArray(capacity As Integer) As List(Of PathElement)
@@ -200,7 +201,7 @@ Namespace ShapleyValue.TreeShape
                 Threading.Interlocked.Decrement(i)
             End While
 
-            Dim i = pathIndex
+            i = pathIndex
 
             While i < uniqueDepth
                 Dim el = pathArray(uniquePathPtr + i)

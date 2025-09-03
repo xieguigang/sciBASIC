@@ -64,7 +64,7 @@
                 Dim io As Double = 1
 
                 Dim k = findFirst(m, j.splitFeatureIndex)
-                If k IsNot Nothing Then
+                If k > -1 Then
                     Dim mk = m(k)
                     iz = mk.zeroFraction
                     io = mk.oneFraction
@@ -82,12 +82,12 @@
         Private Function findFirst(m As IList(Of PathElement), splitFeatureIndex As Integer) As Integer
             Dim index = 0
             For Each e In m
-                If e.featureIndex IsNot Nothing AndAlso e.featureIndex.Equals(splitFeatureIndex) Then
+                If e.featureIndex > -1 AndAlso e.featureIndex.Equals(splitFeatureIndex) Then
                     Return index
                 End If
                 index += 1
             Next
-            Return Nothing
+            Return -1
         End Function
 
         Private Function extend(origM As IList(Of PathElement), pz As Double, po As Double, pi As Integer) As IList(Of PathElement)
