@@ -1,7 +1,7 @@
 ﻿Namespace ShapleyValue.TreeShape
 
     ''' <summary>
-    ''' Path element for use in <seealsocref="ShapAlgo2"/>
+    ''' Path element for use in <seealso cref="ShapAlgo2"/>
     ''' </summary>
     Public Class PathElement
         ''' <summary>

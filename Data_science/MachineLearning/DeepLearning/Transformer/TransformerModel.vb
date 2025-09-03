@@ -9,6 +9,7 @@ Namespace Transformer
     ''' https://github.com/jaksc00p/Transformer/tree/master
     ''' </remarks>
     Public Class TransformerModel
+
         Private sequenceLength As Integer
         Private dropout As Double
 
@@ -20,7 +21,10 @@ Namespace Transformer
 
         Private loss As Rev
 
-        Public Sub New(Nx As Integer, embeddingSize As Integer, dk As Integer, dv As Integer, h As Integer, dff As Integer, batchSize As Integer, dropout As Double, allEnglishSentences As List(Of List(Of String)), allSpanishSentences As List(Of List(Of String)))
+        Public Sub New(Nx As Integer, embeddingSize As Integer, dk As Integer, dv As Integer, h As Integer, dff As Integer, batchSize As Integer, dropout As Double,
+                       allEnglishSentences As List(Of List(Of String)),
+                       allSpanishSentences As List(Of List(Of String)))
+
             Me.dropout = dropout
 
             InsertStartAndStopCharacters(allSpanishSentences)
@@ -92,11 +96,31 @@ Namespace Transformer
             End While
         End Sub
 
+        Public Function Infer(words As IEnumerable(Of String)) As List(Of List(Of String))
+            Dim from As New List(Of List(Of String)) From {New List(Of String)(words)}
+            Dim wrongWord As String = Nothing
+            Dim translatedSpanishSentence As List(Of List(Of String)) = Nothing
+
+            If Not englishEmbedding.AllWordsInDictionary(from, wrongWord) Then
+                Console.WriteLine(wrongWord & " not in dictionary")
+                Console.WriteLine()
+                Return Nothing
+            End If
+
+            Call Translate(1, False, from, Nothing, translatedSpanishSentence)
+
+            Return translatedSpanishSentence
+        End Function
+
         ''' <summary>
-        ''' Translate a batch of sentenses by generating one word at a time for each sentence with the decoder until max 
-        ''' length or stopping character.
+        ''' Translate a batch of sentenses by generating one word at a time for each 
+        ''' sentence with the decoder until max length or stopping character.
         ''' </summary>
-        Private Function Translate(batchSize As Integer, isTraining As Boolean, englishSentences As List(Of List(Of String)), correctSpanishSentences As List(Of List(Of String)), <Out> ByRef translatedSpanishSentences As List(Of List(Of String))) As Double
+        Private Function Translate(batchSize As Integer, isTraining As Boolean,
+                                   englishSentences As List(Of List(Of String)),
+                                   correctSpanishSentences As List(Of List(Of String)),
+                                   <Out>
+                                   ByRef translatedSpanishSentences As List(Of List(Of String))) As Double
             loss = New Rev(0.0)
             Call Checkpoints.Instance.ClearCheckpoints()
 
@@ -110,7 +134,9 @@ Namespace Transformer
                 Dim decoder_output = decoder.Decode(encoderOutput, spanish_word_embeddings, isTraining)
                 Dim output = outputLayer.Output(decoder_output)
 
-                If isTraining Then spanishEmbedding.CalculateLossFunction(output, correctSpanishSentences, w, loss)
+                If isTraining Then
+                    spanishEmbedding.CalculateLossFunction(output, correctSpanishSentences, w, loss)
+                End If
 
                 Dim spanishWordIndexes As Integer() = output.GetMaxIndex()
                 Dim spanishWords = spanishEmbedding.GetWords(spanishWordIndexes)

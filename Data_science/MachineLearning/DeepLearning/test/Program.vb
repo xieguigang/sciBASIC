@@ -115,6 +115,7 @@
 Module Program
     Sub Main(args As String())
         ' RunCNN.runCnn()
+        ' Call testTransformer.seqGenerate()
         Call testTransformer.run()
     End Sub
 End Module

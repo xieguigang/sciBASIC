@@ -4,6 +4,7 @@ Imports std = System.Math
 Namespace ShapleyValue.TreeShape
 
     Public Class ShapOptimized
+
         Friend Shared DEBUG As Boolean = True
         Private indent As String = ""
 
@@ -11,7 +12,10 @@ Namespace ShapleyValue.TreeShape
         Private ReadOnly tree As PkTree
         Private ReadOnly expectedValue As Double
         Private ReadOnly pathArrayCapacity As Integer
-        ' temporary variables, for use inside recursion - minimizing number of passed parameters
+
+        ''' <summary>
+        ''' temporary variables, for use inside recursion - minimizing number of passed parameters
+        ''' </summary>
         Private pathArray As IList(Of PathElement)
         Private phi As Double()
 
@@ -154,7 +158,14 @@ Namespace ShapleyValue.TreeShape
             End While
         End Sub
 
-        ' extend our decision path with a fraction of one and zero extensions
+        ''' <summary>
+        ''' extend our decision path with a fraction of one and zero extensions
+        ''' </summary>
+        ''' <param name="uniquePathPtr"></param>
+        ''' <param name="uniqueDepth"></param>
+        ''' <param name="zeroFraction"></param>
+        ''' <param name="oneFraction"></param>
+        ''' <param name="featureIndex"></param>
         Private Sub extendPath(uniquePathPtr As Integer, uniqueDepth As Integer, zeroFraction As Double, oneFraction As Double, featureIndex As Integer)
             If DEBUG Then
                 Console.Write("{0}(+) 0f={1:F}, 1f={2:F}, Fi={3:D}  -->  ", indent, zeroFraction, oneFraction, If(featureIndex < 0, Nothing, featureIndex))
@@ -175,8 +186,12 @@ Namespace ShapleyValue.TreeShape
             End If
         End Sub
 
-        ' undo a previous extension of the decision path
-
+        ''' <summary>
+        ''' undo a previous extension of the decision path
+        ''' </summary>
+        ''' <param name="uniquePathPtr"></param>
+        ''' <param name="uniqueDepth"></param>
+        ''' <param name="pathIndex"></param>
         Private Sub unwindPath(uniquePathPtr As Integer, uniqueDepth As Integer, pathIndex As Integer)
             If DEBUG Then
                 Console.Write("{0}(-) Pi={1:D}  -->  ", indent, pathIndex)
@@ -215,9 +230,15 @@ Namespace ShapleyValue.TreeShape
                 Console.WriteLine(track(uniquePathPtr, uniqueDepth - 1))
             End If
         End Sub
-        ' determine what the total permutation weight would be if
-        ' we unwound a previous extension in the decision path
 
+        ''' <summary>
+        ''' determine what the total permutation weight would be if
+        ''' we unwound a previous extension in the decision path
+        ''' </summary>
+        ''' <param name="uniquePathPtr"></param>
+        ''' <param name="uniqueDepth"></param>
+        ''' <param name="pathIndex"></param>
+        ''' <returns></returns>
         Private Function unwoundPathSum(uniquePathPtr As Integer, uniqueDepth As Integer, pathIndex As Integer) As Double
             Dim oneFraction = pathArray(uniquePathPtr + pathIndex).oneFraction
             Dim zeroFraction = pathArray(uniquePathPtr + pathIndex).zeroFraction

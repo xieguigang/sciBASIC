@@ -19,6 +19,9 @@
     ''' - [1] Consistent Individualized Feature Attribution for Tree Ensembles - https://arxiv.org/pdf/1802.03888.pdf
     ''' - [2] From local explanations to global understanding with explainable AI for trees, pages 65,66 - https://www.nature.com/articles/s42256-019-0138-9.epdf?shared_access_token=RCYPTVkiECUmc0CccSMgXtRgN0jAjWel9jnR3ZoTv0O81kV8DqPb2VXSseRmof0Pl8YSOZy4FHz5vMc3xsxcX6uT10EzEoWo7B-nZQAHJJvBYhQJTT1LnJmpsa48nlgUWrMkThFrEIvZstjQ7Xdc5g%3D%3D
     ''' </summary>
+    ''' <remarks>
+    ''' https://github.com/pkozelka/treeshap
+    ''' </remarks>
     Public Class ShapAlgo2
         Friend Shared DEBUG As Boolean = True
         Private indent As String = ""
@@ -27,7 +30,7 @@
         Private ReadOnly x As Double()
 
         Public Shared Function compute(x As Double(), tree As PkTree) As Double()
-            Dim shap As ShapAlgo2 = New ShapAlgo2(x)
+            Dim shap As New ShapAlgo2(x)
             shap.recurse(tree.root, New List(Of PathElement)(), 1.0, 1.0, Nothing)
             Return shap.phi
         End Function
@@ -81,8 +84,8 @@
 
         Private Function findFirst(m As IList(Of PathElement), splitFeatureIndex As Integer) As Integer
             Dim index = 0
-            For Each e In m
-                If e.featureIndex > -1 AndAlso e.featureIndex.Equals(splitFeatureIndex) Then
+            For Each e As PathElement In m
+                If e.featureIndex > -1 AndAlso e.featureIndex = splitFeatureIndex Then
                     Return index
                 End If
                 index += 1
@@ -97,7 +100,7 @@
             ' copy original
             Dim m = copy(origM)
             ' add new item
-            Dim e As PathElement = New PathElement()
+            Dim e As New PathElement()
             e.featureIndex = pi
             e.zeroFraction = pz
             e.oneFraction = po
@@ -127,8 +130,8 @@
 
         ''' <summary>
         ''' Removes i-th element of the path, and redistributes all weights </summary>
-        ''' <paramname="origM"> elements of decision path </param>
-        ''' <paramname="i">  zero-based index to be removed </param>
+        ''' <param name="origM"> elements of decision path </param>
+        ''' <param name="i">  zero-based index to be removed </param>
         ''' <returns> transformed decision path </returns>
         Private Shared Function unwind(origM As IList(Of PathElement), i As Integer) As IList(Of PathElement)
             Dim sz = origM.Count ' use "sz" rather than "l" which is optically too similar to "1" (one)
@@ -183,10 +186,9 @@
         End Function
 
         Private Shared Function copy(origM As IList(Of PathElement)) As IList(Of PathElement)
-
-            Dim m As IList(Of PathElement) = New List(Of PathElement)()
-            For Each e In origM
-                Dim cloned As PathElement = New PathElement()
+            Dim m As New List(Of PathElement)()
+            For Each e As PathElement In origM
+                Dim cloned As New PathElement()
                 cloned.featureIndex = e.featureIndex
                 cloned.zeroFraction = e.zeroFraction
                 cloned.oneFraction = e.oneFraction
@@ -197,11 +199,7 @@
         End Function
 
         Private Shared Function sumWeight(m As IList(Of PathElement)) As Double
-            Dim sum As Double = 0
-            For Each e In m
-                sum += e.weight
-            Next
-            Return sum
+            Return Aggregate e As PathElement In m Into Sum(e.weight)
         End Function
     End Class
 

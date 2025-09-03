@@ -4,12 +4,8 @@
 ''' derivative calculations can be performed between.
 ''' </summary>
 Public NotInheritable Class Checkpoints
-    Private Shared ReadOnly instanceField As Checkpoints = New Checkpoints()
-    Public Shared ReadOnly Property Instance As Checkpoints
-        Get
-            Return instanceField
-        End Get
-    End Property
+
+    Public Shared ReadOnly Property Instance As New Checkpoints
 
     ' Explicit static constructor to tell C# compiler not to mark type as beforefieldinit
     Shared Sub New()
@@ -19,8 +15,8 @@ Public NotInheritable Class Checkpoints
     End Sub
 
     Private nr As Integer = 1
-    Private checkpoints_in As SortedDictionary(Of Integer, Tensor) = New SortedDictionary(Of Integer, Tensor)()
-    Private checkpoints_out As SortedDictionary(Of Integer, Tensor) = New SortedDictionary(Of Integer, Tensor)()
+    Private checkpoints_in As New SortedDictionary(Of Integer, Tensor)()
+    Private checkpoints_out As New SortedDictionary(Of Integer, Tensor)()
 
     Public Function AddCheckpoint(data As Tensor) As Tensor
         checkpoints_in(nr) = data
@@ -42,7 +38,7 @@ Public NotInheritable Class Checkpoints
     ''' the derivatives of another tensor with the same shape
     ''' </summary>
     Public Sub CalculateCheckpointGradients()
-        Dim checkpoint_numbers As List(Of Integer) = New List(Of Integer)(checkpoints_in.Keys)
+        Dim checkpoint_numbers As New List(Of Integer)(checkpoints_in.Keys)
         checkpoint_numbers.Sort()
         checkpoint_numbers.Reverse()
         For Each nr In checkpoint_numbers

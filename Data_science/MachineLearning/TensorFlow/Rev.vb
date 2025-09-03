@@ -10,6 +10,12 @@ Public Class Rev
 
     Public CalculateDerivative As Differentiation
 
+    Public Shared ReadOnly Property Zero As Rev
+        Get
+            Return New Rev(0.0)
+        End Get
+    End Property
+
     Public Sub New(y As Double)
         Magnitude = y
         Derivative = 0

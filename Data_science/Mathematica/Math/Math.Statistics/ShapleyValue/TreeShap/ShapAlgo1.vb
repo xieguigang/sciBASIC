@@ -13,13 +13,38 @@
     ''' z' - for each feature, 0 if unknown, 1 if known
     ''' x - feature values
     ''' </summary>
+    ''' <remarks>
+    ''' https://github.com/pkozelka/treeshap
+    ''' </remarks>
     Friend Class ShapAlgo1
+
+        ''' <summary>
+        ''' feature values
+        ''' </summary>
         Friend x As Double()
+        ''' <summary>
+        ''' vector of node values; = "internal" for internal nodes
+        ''' </summary>
         Friend v As Double()
+        ''' <summary>
+        ''' thresholds for each internal node
+        ''' </summary>
         Friend t As Double()
+        ''' <summary>
+        ''' cover of each node (ie. how many data samples fall in that sub-tree)
+        ''' </summary>
         Friend r As Single()
+        ''' <summary>
+        ''' left and right node indexes for each internal node
+        ''' </summary>
         Friend a As Integer()
+        ''' <summary>
+        ''' left and right node indexes for each internal node
+        ''' </summary>
         Friend b As Integer()
+        ''' <summary>
+        ''' indexes of the features used for splitting in internal nodes
+        ''' </summary>
         Friend d As Integer()
 
         ''' <summary>
