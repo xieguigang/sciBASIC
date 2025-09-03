@@ -3,6 +3,8 @@ Imports System.Runtime.CompilerServices
 Imports System.Runtime.Serialization
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.MIME.application.json.Javascript
+Imports Microsoft.VisualBasic.ApplicationServices.Development.XmlDoc.Assembly.XmlDocs
+Imports Microsoft.VisualBasic.ApplicationServices.Development.XmlDoc.Assembly
 
 Module ObjectParser
 
@@ -31,6 +33,27 @@ Module ObjectParser
         End If
 
         Return cache(key)
+    End Function
+
+    <Extension>
+    Private Function LoadXmlDocs(schema As Type) As Project
+        Dim asmFile = schema.Assembly.Location
+        Dim xmlfile As String
+
+        If asmFile.StringEmpty(, True) Then
+            ' is runtime in-memory generated clr assembly
+            Return Nothing
+        Else
+            xmlfile = asmFile.ChangeSuffix("xml")
+        End If
+
+        If xmlfile.FileExists Then
+            Return ProjectSpace.CreateDocProject(xmlfile)
+        Else
+            ' xml docs file is missing from the filesystem
+            ' so no data for get comment text
+            Return Nothing
+        End If
     End Function
 
     ''' <summary>
@@ -76,6 +99,7 @@ Module ObjectParser
 
         Dim metadata As PropertyInfo = DynamicMetadataAttribute.GetMetadata(memberReaders.Select(Function(p) p.Value))
         Dim comment As String = Nothing
+        Dim docs As Project = If(opt.comment, schema.LoadXmlDocs, Nothing)
 
         For Each reader As KeyValuePair(Of String, PropertyInfo) In memberReaders
             If opt.comment Then
