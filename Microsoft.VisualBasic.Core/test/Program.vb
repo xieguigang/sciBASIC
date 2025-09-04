@@ -55,6 +55,8 @@ Imports System
 
 Module Program
     Sub Main(args As String())
+        Call streamTest.dataUriStreamtest()
+
         Call logprint()
         Call memoryTest.runTest()
         Call numberParserTest.Main1()
