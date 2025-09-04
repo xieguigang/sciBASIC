@@ -399,19 +399,17 @@ Public Module CollectionValueGetter
         ' 直接返回默认值
         If table Is Nothing Then
 #If DEBUG Then
-            Call PrintException("Hash_table is nothing!")
+            Call "Hash_table is nothing!".error
 #End If
             Return [default]
         ElseIf index Is Nothing Then
 #If DEBUG Then
-            Call PrintException("Index key is nothing!")
+            Call "Index key is nothing!".error
 #End If
             Return [default]
         ElseIf Not table.ContainsKey(index) Then
 #If DEBUG Then
-            If Not mute Then
-                Call PrintException($"missing_index:={Scripting.ToString(index)}!", trace)
-            End If
+            Call $"missing_index:={Scripting.ToString(index)}!".error(mute:=mute)
 #End If
             Return [default]
         End If
