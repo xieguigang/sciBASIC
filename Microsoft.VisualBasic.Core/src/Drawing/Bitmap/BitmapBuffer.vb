@@ -744,7 +744,7 @@ Namespace Imaging.BitmapImage
 
             Return BitmapBuffer.FromBitmap(copy)
 #Else
-            Return FromBitmap(New Bitmap(res))
+            Return res.GetMemoryBitmap
 #End If
         End Function
 
