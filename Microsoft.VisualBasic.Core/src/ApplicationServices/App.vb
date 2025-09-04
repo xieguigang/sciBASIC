@@ -173,6 +173,12 @@ Public Module App
         End Get
     End Property
 
+    Public ReadOnly Property EnableAnsiColor As Boolean
+        Get
+            Return App.GetVariable("ansi_color", "TRUE").ParseBoolean
+        End Get
+    End Property
+
     ''' <summary>
     ''' Numbers of the CPU kernels on the current machine.
     ''' </summary>
