@@ -53,8 +53,18 @@
 
 Imports System.Text
 Imports Microsoft.VisualBasic.ApplicationServices
+Imports Microsoft.VisualBasic.Net.Http
 
 Module streamTest
+
+    Sub dataUriStreamtest()
+        Dim data As String = "Z:\New Text Document.txt".ReadAllText
+        Dim uri As DataURI = DataURI.URIParser(data)
+
+        Call uri.ToStream.FlushStream("Z:/aaa.png")
+
+        Pause()
+    End Sub
 
     Public Sub Main1()
         Dim demo As Byte() = New Byte(1024 * 5 + 6) {}
