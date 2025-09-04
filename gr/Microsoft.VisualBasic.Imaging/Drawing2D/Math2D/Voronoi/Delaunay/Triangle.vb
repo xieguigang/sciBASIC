@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::924d8d8016ae1951025322dfb18e0d5a, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Math2D\Voronoi\Delaunay\Triangle.vb"
+﻿#Region "Microsoft.VisualBasic::e663fcd63c5755ffe5242a83cb879fd3, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Math2D\Voronoi\Delaunay\Triangle.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 0.00%
     ' 
     '   Blank Lines: 5 (29.41%)
-    '     File Size: 408 B
+    '     File Size: 406 B
 
 
     '     Class Triangle
@@ -72,4 +72,3 @@ Namespace Drawing2D.Math2D.DelaunayVoronoi
         End Sub
     End Class
 End Namespace
-

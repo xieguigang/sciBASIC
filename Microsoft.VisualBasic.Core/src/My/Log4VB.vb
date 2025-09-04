@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9a96eebe53ccc7e496293a9b3e915a52, Microsoft.VisualBasic.Core\src\My\Log4VB.vb"
+﻿#Region "Microsoft.VisualBasic::08b579f7d7b37d1b1530b714278fd0fe, Microsoft.VisualBasic.Core\src\My\Log4VB.vb"
 
     ' Author:
     ' 
@@ -34,18 +34,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 175
-    '    Code Lines: 101 (57.71%)
-    ' Comment Lines: 51 (29.14%)
+    '   Total Lines: 186
+    '    Code Lines: 111 (59.68%)
+    ' Comment Lines: 51 (27.42%)
     '    - Xml Docs: 92.16%
     ' 
-    '   Blank Lines: 23 (13.14%)
-    '     File Size: 7.21 KB
+    '   Blank Lines: 24 (12.90%)
+    '     File Size: 7.70 KB
 
 
     '     Module Log4VB
     ' 
-    '         Function: getColor, Print
+    '         Function: getColor, getLogger, Print
     ' 
     '         Sub: Print, Println
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b1ad0481a4e44c0fecc059e882448bf7, Data_science\Mathematica\Math\Math\Numerics\Optimization\LBFGSB\Parameters.vb"
+﻿#Region "Microsoft.VisualBasic::ba3d6c975398a1f8141e409aa3eecc7c, Data_science\Mathematica\Math\Math\Numerics\Optimization\LBFGSB\Parameters.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 29
-    '    Code Lines: 24 (82.76%)
-    ' Comment Lines: 0 (0.00%)
-    '    - Xml Docs: 0.00%
+    '   Total Lines: 32
+    '    Code Lines: 24 (75.00%)
+    ' Comment Lines: 3 (9.38%)
+    '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 5 (17.24%)
-    '     File Size: 935 B
+    '   Blank Lines: 5 (15.62%)
+    '     File Size: 994 B
 
 
     '     Class Parameters
@@ -73,7 +73,10 @@ Namespace Framework.Optimization.LBFGSB
         Public max_submin As Integer = 10
         Public max_linesearch As Integer = 20
         Public linesearch As LINESEARCH = LINESEARCH.MORETHUENTE_ORIG
-        Public xtol As Double = 0.00000001 ' MoreThuente
+        ''' <summary>
+        ''' More Thuente
+        ''' </summary>
+        Public xtol As Double = 0.00000001
         Public min_step As Double = 1.0E-20
         Public max_step As Double = 1.0E+20
         Public ftol As Double = 0.0001

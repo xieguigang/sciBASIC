@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2f2b536d7802fc39795b762f588d13c9, Data_science\Mathematica\Math\Math\Numerics\Optimization\LBFGSB\examples\Buckin.vb"
+﻿#Region "Microsoft.VisualBasic::c31c4d5c700e5e5288feae511603709c, Data_science\Mathematica\Math\Math\Numerics\Optimization\LBFGSB\examples\Buckin.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 40
-    '    Code Lines: 25 (62.50%)
-    ' Comment Lines: 4 (10.00%)
+    '   Total Lines: 41
+    '    Code Lines: 25 (60.98%)
+    ' Comment Lines: 5 (12.20%)
     '    - Xml Docs: 0.00%
     ' 
-    '   Blank Lines: 11 (27.50%)
-    '     File Size: 1.21 KB
+    '   Blank Lines: 11 (26.83%)
+    '     File Size: 1.27 KB
 
 
     ' Class Buckin
@@ -54,6 +54,7 @@
 #End Region
 
 Imports Microsoft.VisualBasic.Math.Framework.Optimization.LBFGSB
+Imports Microsoft.VisualBasic.Serialization.JSON
 
 
 ' BUKIN FUNCTION N. 6
@@ -70,7 +71,7 @@ Public Class Buckin
 
     Public Shared Sub Main6(args As String())
 
-        Debug.flag = True
+        ' Debugger.flag = True
 
         Dim param As Parameters = New Parameters()
         Dim lbfgsb As LBFGSB = New LBFGSB(param)
@@ -80,11 +81,11 @@ Public Class Buckin
         Try
             Dim res As Double() = lbfgsb.minimize(New Buckin(), New Double() {-10.1, 1}, New Double() {-15, -3}, New Double() {-5, 3})
 
-            Debug.debug("!"c, "RESULT")
-            Call Debug.debug("k = " & lbfgsb.k.ToString())
-            Debug.debug("x = ", res)
-            Call Debug.debug("fx = " & lbfgsb.fx.ToString())
-            Debug.debug("grad = ", lbfgsb.m_grad)
+            Call ("!RESULT").debug
+            Call ("k = " & lbfgsb.k.ToString()).debug
+            Call ("x = " & res.GetJson).debug
+            Call ("fx = " & lbfgsb.fx.ToString()).debug
+            Call ("grad = " & lbfgsb.m_grad.GetJson).debug
         Catch e As LBFGSBException
             Console.WriteLine(e.ToString())
             Console.Write(e.StackTrace)

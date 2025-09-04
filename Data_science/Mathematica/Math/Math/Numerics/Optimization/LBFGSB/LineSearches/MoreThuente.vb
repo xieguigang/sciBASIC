@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::dcd9ad6aeb26539d3c7436cc21ba85bb, Data_science\Mathematica\Math\Math\Numerics\Optimization\LBFGSB\LineSearches\MoreThuente.vb"
+﻿#Region "Microsoft.VisualBasic::1ac62a5944d5e1ed62e8f96751d6a827, Data_science\Mathematica\Math\Math\Numerics\Optimization\LBFGSB\LineSearches\MoreThuente.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 0.00%
     ' 
     '   Blank Lines: 71 (14.76%)
-    '     File Size: 18.18 KB
+    '     File Size: 18.38 KB
 
 
     '     Class MoreThuente

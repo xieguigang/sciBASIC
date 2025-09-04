@@ -1,58 +1,58 @@
-﻿#Region "Microsoft.VisualBasic::bd11b362320914f0464b569903f720d3, Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\MarkdownRender\AnsiEscapeCodes.vb"
+﻿#Region "Microsoft.VisualBasic::9a0ea28a9a642d5ca90acec42537742e, Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\MarkdownRender\AnsiEscapeCodes.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 138
-'    Code Lines: 90 (65.22%)
-' Comment Lines: 32 (23.19%)
-'    - Xml Docs: 90.62%
-' 
-'   Blank Lines: 16 (11.59%)
-'     File Size: 5.06 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-' 	Module AnsiEscapeCodes
-' 
-' 	    Function: GetMoveCursorDown, GetMoveCursorLeft, GetMoveCursorRight, GetMoveCursorToColumn, GetMoveCursorUp
-'                ToAnsiEscapeSequence, ToAnsiEscapeSequenceSlow
-' 
-' 	    Sub: AppendAnsiEscapeSequence, AppendMoveCursorDown, AppendMoveCursorLeft, AppendMoveCursorRight, AppendMoveCursorToColumn
-'           AppendMoveCursorUp, MoveCursor
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 144
+    '    Code Lines: 90 (62.50%)
+    ' Comment Lines: 32 (22.22%)
+    '    - Xml Docs: 90.62%
+    ' 
+    '   Blank Lines: 22 (15.28%)
+    '     File Size: 5.95 KB
+
+
+    '     Module AnsiEscapeCodes
+    ' 
+    '         Function: GetMoveCursorDown, GetMoveCursorLeft, GetMoveCursorRight, GetMoveCursorToColumn, GetMoveCursorUp
+    '                   ToAnsiEscapeSequence, ToAnsiEscapeSequenceSlow
+    ' 
+    '         Sub: AppendAnsiEscapeSequence, AppendMoveCursorDown, AppendMoveCursorLeft, AppendMoveCursorRight, AppendMoveCursorToColumn
+    '              AppendMoveCursorUp, MoveCursor
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

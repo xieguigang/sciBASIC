@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::efa31075d2dbc8b20eeb98e806a08bf6, gr\network-visualization\network_layout\EdgeBundling\Mingle\InternalMath.vb"
+﻿#Region "Microsoft.VisualBasic::f24a3f591ef93d38be70aa5fa1f21a88, gr\network-visualization\network_layout\EdgeBundling\Mingle\InternalMath.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 0.00%
     ' 
     '   Blank Lines: 10 (20.41%)
-    '     File Size: 1.54 KB
+    '     File Size: 1.53 KB
 
 
     '     Module InternalMath

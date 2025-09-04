@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fceb752b00cc54e5bffa70b32fee407b, Data_science\Mathematica\Math\Math\Numerics\Optimization\LBFGSB\examples\Booth.vb"
+﻿#Region "Microsoft.VisualBasic::bf8c70ec30bb1e770fabcb37ff01a838, Data_science\Mathematica\Math\Math\Numerics\Optimization\LBFGSB\examples\Booth.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 50
-    '    Code Lines: 32 (64.00%)
-    ' Comment Lines: 4 (8.00%)
+    '   Total Lines: 51
+    '    Code Lines: 32 (62.75%)
+    ' Comment Lines: 5 (9.80%)
     '    - Xml Docs: 0.00%
     ' 
-    '   Blank Lines: 14 (28.00%)
-    '     File Size: 1.53 KB
+    '   Blank Lines: 14 (27.45%)
+    '     File Size: 1.59 KB
 
 
     ' Class Booth
@@ -54,6 +54,7 @@
 #End Region
 
 Imports Microsoft.VisualBasic.Math.Framework.Optimization.LBFGSB
+Imports Microsoft.VisualBasic.Serialization.JSON
 
 
 ' https://www.sfu.ca/~ssurjano/booth.html
@@ -81,7 +82,7 @@ Public Class Booth
 
     Public Shared Sub Main5(args As String())
 
-        Debug.flag = True
+        ' Debugger.flag = True
 
         Dim param As Parameters = New Parameters()
         Dim lbfgsb As LBFGSB = New LBFGSB(param)
@@ -90,11 +91,11 @@ Public Class Booth
             '		double[] res = lbfgsb.minimize(new Booth(), new double[] { -10,0.1 }, new double[] { -10, -10 },
             '				new double[] { 10, 10 });
             Dim res As Double() = lbfgsb.minimize(New Booth(), New Double() {-1, -10}, New Double() {-10, 3}, New Double() {10, 3.1})
-            Debug.debug("!"c, "RESULT")
-            Call Debug.debug("k = " & lbfgsb.k.ToString())
-            Debug.debug("x = ", res)
-            Call Debug.debug("fx = " & lbfgsb.fx.ToString())
-            Debug.debug("grad = ", lbfgsb.m_grad)
+            Call ("!RESULT").debug
+            Call ("k = " & lbfgsb.k.ToString()).debug
+            Call ("x = " & res.GetJson).debug
+            Call ("fx = " & lbfgsb.fx.ToString()).debug
+            Call ("grad = " & lbfgsb.m_grad.GetJson).debug
         Catch e As LBFGSBException
             Console.WriteLine(e.ToString())
             Console.Write(e.StackTrace)

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3c34d1c5989013cb66a1f74c4611b661, Data_science\Mathematica\Math\Math\Numerics\Optimization\LBFGSB\examples\DropWave.vb"
+﻿#Region "Microsoft.VisualBasic::056843a48160de302830dce977421400, Data_science\Mathematica\Math\Math\Numerics\Optimization\LBFGSB\examples\DropWave.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 42
-    '    Code Lines: 26 (61.90%)
-    ' Comment Lines: 3 (7.14%)
+    '   Total Lines: 43
+    '    Code Lines: 26 (60.47%)
+    ' Comment Lines: 4 (9.30%)
     '    - Xml Docs: 0.00%
     ' 
-    '   Blank Lines: 13 (30.95%)
-    '     File Size: 1.19 KB
+    '   Blank Lines: 13 (30.23%)
+    '     File Size: 1.24 KB
 
 
     ' Class DropWave
@@ -54,6 +54,7 @@
 #End Region
 
 Imports Microsoft.VisualBasic.Math.Framework.Optimization.LBFGSB
+Imports Microsoft.VisualBasic.Serialization.JSON
 
 
 
@@ -74,7 +75,7 @@ Public Class DropWave
 
     Public Shared Sub Main8(args As String())
 
-        Debug.flag = True
+        ' Debugger.flag = True
 
         Dim param As Parameters = New Parameters()
         Dim lbfgsb As LBFGSB = New LBFGSB(param)
@@ -82,11 +83,11 @@ Public Class DropWave
         Try
             Dim res As Double() = lbfgsb.minimize(New DropWave(), New Double() {-0.1, 0.1}, New Double() {-5, -5}, New Double() {5, 5})
 
-            Debug.debug("!"c, "RESULT")
-            Call Debug.debug("k = " & lbfgsb.k.ToString())
-            Debug.debug("x = ", res)
-            Call Debug.debug("fx = " & lbfgsb.fx.ToString())
-            Debug.debug("grad = ", lbfgsb.m_grad)
+            Call ("!RESULT").debug
+            Call ("k = " & lbfgsb.k.ToString()).debug
+            Call ("x = " & res.GetJson).debug
+            Call ("fx = " & lbfgsb.fx.ToString()).debug
+            Call ("grad = " & lbfgsb.m_grad.GetJson).debug
         Catch e As LBFGSBException
             Console.WriteLine(e.ToString())
             Console.Write(e.StackTrace)

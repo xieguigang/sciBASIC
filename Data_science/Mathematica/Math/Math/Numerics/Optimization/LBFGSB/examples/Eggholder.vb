@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::380669d1f27dd326efd6dd5c609ece76, Data_science\Mathematica\Math\Math\Numerics\Optimization\LBFGSB\examples\Eggholder.vb"
+﻿#Region "Microsoft.VisualBasic::30d9ca27b9d2c939e3e28ca796ef3be5, Data_science\Mathematica\Math\Math\Numerics\Optimization\LBFGSB\examples\Eggholder.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 40
-    '    Code Lines: 26 (65.00%)
-    ' Comment Lines: 3 (7.50%)
+    '   Total Lines: 41
+    '    Code Lines: 26 (63.41%)
+    ' Comment Lines: 4 (9.76%)
     '    - Xml Docs: 0.00%
     ' 
-    '   Blank Lines: 11 (27.50%)
-    '     File Size: 1.26 KB
+    '   Blank Lines: 11 (26.83%)
+    '     File Size: 1.32 KB
 
 
     ' Class Eggholder
@@ -54,6 +54,7 @@
 #End Region
 
 Imports Microsoft.VisualBasic.Math.Framework.Optimization.LBFGSB
+Imports Microsoft.VisualBasic.Serialization.JSON
 
 ' EGGHOLDER
 ' https://www.sfu.ca/~ssurjano/egg.html
@@ -72,7 +73,7 @@ Public Class Eggholder
 
     Public Shared Sub Main9(args As String())
 
-        Debug.flag = True
+        ' Debugger.flag = True
 
         Dim param As Parameters = New Parameters()
         Dim lbfgsb As LBFGSB = New LBFGSB(param)
@@ -80,11 +81,11 @@ Public Class Eggholder
         Try
             Dim res As Double() = lbfgsb.minimize(New Eggholder(), New Double() {500, 350}, New Double() {-512, -512}, New Double() {512, 512})
 
-            Debug.debug("!"c, "RESULT")
-            Call Debug.debug("k = " & lbfgsb.k.ToString())
-            Debug.debug("x = ", res)
-            Call Debug.debug("fx = " & lbfgsb.fx.ToString())
-            Debug.debug("grad = ", lbfgsb.m_grad)
+            Call ("!RESULT").debug
+            Call ("k = " & lbfgsb.k.ToString()).debug
+            Call ("x = " & res.GetJson).debug
+            Call ("fx = " & lbfgsb.fx.ToString()).debug
+            Call ("grad = " & lbfgsb.m_grad.GetJson).debug
         Catch e As LBFGSBException
             Console.WriteLine(e.ToString())
             Console.Write(e.StackTrace)

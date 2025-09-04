@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::36864ddc536a542cb425429ad099da8b, Microsoft.VisualBasic.Core\src\ApplicationServices\App.vb"
+﻿#Region "Microsoft.VisualBasic::e54d4dd4a66aa3f98951435155b4794d, Microsoft.VisualBasic.Core\src\ApplicationServices\App.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 83.41%
     ' 
     '   Blank Lines: 183 (11.60%)
-    '     File Size: 67.96 KB
+    '     File Size: 67.97 KB
 
 
     ' Module App
@@ -566,7 +566,7 @@ Public Module App
 
 #Region "这里的环境变量方法主要是操作从命令行之中所传递进来的额外的参数的"
 
-    Dim m_joinedVariables As New Dictionary(Of NamedValue(Of String))
+    ReadOnly m_joinedVariables As New Dictionary(Of NamedValue(Of String))
 
     ''' <summary>
     ''' add/update the environment variable in sciBASIC.NET framework.
@@ -582,10 +582,12 @@ Public Module App
     ''' (如果给定的当前这个参数名称存在于当前框架环境中，则会更新原来的值)</param>
     ''' <param name="value"></param>
     Public Sub JoinVariable(name$, value$)
-        m_joinedVariables(name) = New NamedValue(Of String) With {
-            .Name = name,
-            .Value = value
-        }
+        SyncLock m_joinedVariables
+            m_joinedVariables(name) = New NamedValue(Of String) With {
+                .Name = name,
+                .Value = value
+            }
+        End SyncLock
     End Sub
 
     ''' <summary>
@@ -594,7 +596,9 @@ Public Module App
     ''' <param name="vars"></param>
     Public Sub JoinVariables(ParamArray vars As NamedValue(Of String)())
         For Each v As NamedValue(Of String) In vars
-            m_joinedVariables(v.Name) = v
+            SyncLock m_joinedVariables
+                m_joinedVariables(v.Name) = v
+            End SyncLock
         Next
     End Sub
 
@@ -622,15 +626,17 @@ Public Module App
     ''' </param>
     ''' <returns>当没有查找到相对应的环境变量的时候会返回空值</returns>
     Public Function GetVariable(<CallerMemberName> Optional name$ = Nothing, Optional defaultValue$ = Nothing) As String
-        If m_joinedVariables.ContainsKey(name) Then
-            Return m_joinedVariables(name).Value
-        Else
-            For Each v As NamedValue(Of String) In m_joinedVariables.Values
-                If v.Name.TextEquals(name) Then
-                    Return v.Value
-                End If
-            Next
-        End If
+        SyncLock m_joinedVariables
+            If m_joinedVariables.ContainsKey(name) Then
+                Return m_joinedVariables(name).Value
+            Else
+                For Each v As NamedValue(Of String) In m_joinedVariables.Values
+                    If v.Name.TextEquals(name) Then
+                        Return v.Value
+                    End If
+                Next
+            End If
+        End SyncLock
 
         Return defaultValue
     End Function

@@ -124,9 +124,9 @@ Module HalfTest
         t3 = App.ElapsedMilliseconds - start
 
 
-        Call $"Takes {t1}ms to allocate {HeapSizeOf.MeasureSize(vector) / 1024 / 1024} MB".__DEBUG_ECHO
-        Call $"Takes {t2}ms to allocate {HeapSizeOf.MeasureSize(sparse) / 1024 / 1024} MB".__DEBUG_ECHO
-        Call $"Takes {t3}ms to allocate {HeapSizeOf.MeasureSize(halfs) / 1024 / 1024} MB".__DEBUG_ECHO
+        Call $"Takes {t1}ms to allocate {HeapSizeOf.MeasureSize(vector) / 1024 / 1024} MB".debug
+        Call $"Takes {t2}ms to allocate {HeapSizeOf.MeasureSize(sparse) / 1024 / 1024} MB".debug
+        Call $"Takes {t3}ms to allocate {HeapSizeOf.MeasureSize(halfs) / 1024 / 1024} MB".debug
 
         Pause()
     End Sub

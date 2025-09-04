@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f4d1dde0dabb4626c436b260895819d2, mime\text%html\CSS\Elements\Stroke.vb"
+﻿#Region "Microsoft.VisualBasic::6dd3c56751187e45fd6f6fee086b6f65, mime\text%html\CSS\Elements\Stroke.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 200
-    '    Code Lines: 116 (58.00%)
-    ' Comment Lines: 61 (30.50%)
+    '   Total Lines: 201
+    '    Code Lines: 117 (58.21%)
+    ' Comment Lines: 61 (30.35%)
     '    - Xml Docs: 98.36%
     ' 
-    '   Blank Lines: 23 (11.50%)
-    '     File Size: 6.77 KB
+    '   Blank Lines: 23 (11.44%)
+    '     File Size: 6.87 KB
 
 
     '     Class Stroke

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c03d69d2bc41f73530fed4c393cdc48e, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Math2D\Voronoi\Delaunay\Vertex.vb"
+﻿#Region "Microsoft.VisualBasic::4b8b2d2f54e8f1ad9d91a3692f0a70c8, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Math2D\Voronoi\Delaunay\Vertex.vb"
 
     ' Author:
     ' 
@@ -185,4 +185,3 @@ Namespace Drawing2D.Math2D.DelaunayVoronoi
 #End Region
     End Class
 End Namespace
-

@@ -1,73 +1,73 @@
-﻿#Region "Microsoft.VisualBasic::7a898878557e79b72bea8e70ca74066e, Microsoft.VisualBasic.Core\src\ComponentModel\DataStructures\Set\SetAPI.vb"
+﻿#Region "Microsoft.VisualBasic::67da914564a61281e77141cf63782804, Microsoft.VisualBasic.Core\src\ComponentModel\DataStructures\Set\SetAPI.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 105
-'    Code Lines: 74 (70.48%)
-' Comment Lines: 16 (15.24%)
-'    - Xml Docs: 75.00%
-' 
-'   Blank Lines: 15 (14.29%)
-'     File Size: 4.52 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Class GenericLambda
-' 
-' 
-'         Delegate Function
-' 
-' 
-'         Delegate Function
-' 
-' 
-' 
-'     Module SetAPI
-' 
-'         Function: Contains, (+3 Overloads) Intersection
-'         Structure __stringCompares
-' 
-'             Constructor: (+1 Overloads) Sub New
-'             Function: Equals
-' 
-' 
-' 
-' 
-' 
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 154
+    '    Code Lines: 101 (65.58%)
+    ' Comment Lines: 32 (20.78%)
+    '    - Xml Docs: 65.62%
+    ' 
+    '   Blank Lines: 21 (13.64%)
+    '     File Size: 6.48 KB
+
+
+    '     Class GenericLambda
+    ' 
+    ' 
+    '         Delegate Function
+    ' 
+    ' 
+    '         Delegate Function
+    ' 
+    ' 
+    ' 
+    '     Module SetAPI
+    ' 
+    '         Function: Contains, (+3 Overloads) Intersection, VennExclusiveSet
+    '         Structure __stringCompares
+    ' 
+    '             Constructor: (+1 Overloads) Sub New
+    '             Function: Equals
+    ' 
+    ' 
+    ' 
+    ' 
+    ' 
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

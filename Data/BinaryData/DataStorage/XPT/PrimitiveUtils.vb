@@ -1,4 +1,61 @@
-﻿Namespace Xpt
+﻿#Region "Microsoft.VisualBasic::ffe75645cf7132c6723455aabae2ba04, Data\BinaryData\DataStorage\XPT\PrimitiveUtils.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 225
+    '    Code Lines: 144 (64.00%)
+    ' Comment Lines: 50 (22.22%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 31 (13.78%)
+    '     File Size: 8.21 KB
+
+
+    '     Class PrimitiveUtils
+    ' 
+    '         Function: intToBytes, longToBytes, memcmp, (+5 Overloads) swap, toDouble
+    '                   toLong, toLongLittle, xpt2ieeeSimple
+    ' 
+    '         Sub: memcpy, memreverse, memset, (+5 Overloads) swap
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+Namespace Xpt
 
     Public Class PrimitiveUtils
 

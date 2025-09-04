@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::45d59ca154ce76a6a4d19c8fd6ac156a, Data_science\Mathematica\Math\Math\Numerics\Optimization\LBFGSB\examples\Bohachevsky3.vb"
+﻿#Region "Microsoft.VisualBasic::8e0e3da6f9fd5bc1bbdfad19965ed040, Data_science\Mathematica\Math\Math\Numerics\Optimization\LBFGSB\examples\Bohachevsky3.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 43
-    '    Code Lines: 30 (69.77%)
-    ' Comment Lines: 1 (2.33%)
+    '   Total Lines: 44
+    '    Code Lines: 30 (68.18%)
+    ' Comment Lines: 2 (4.55%)
     '    - Xml Docs: 0.00%
     ' 
-    '   Blank Lines: 12 (27.91%)
-    '     File Size: 1.49 KB
+    '   Blank Lines: 12 (27.27%)
+    '     File Size: 1.54 KB
 
 
     ' Class Bohachevsky3
@@ -54,6 +54,7 @@
 #End Region
 
 Imports Microsoft.VisualBasic.Math.Framework.Optimization.LBFGSB
+Imports Microsoft.VisualBasic.Serialization.JSON
 
 ' https://www.sfu.ca/~ssurjano/boha.html
 
@@ -75,7 +76,7 @@ Public Class Bohachevsky3
 
     Public Shared Sub Main4(args As String())
 
-        Debug.flag = True
+        ' Debugger.flag = True
 
         Dim param As Parameters = New Parameters()
         Dim lbfgsb As LBFGSB = New LBFGSB(param)
@@ -83,11 +84,11 @@ Public Class Bohachevsky3
         Try
             Dim res As Double() = lbfgsb.minimize(New Bohachevsky3(), New Double() {0, 0.1}, New Double() {-100, -100}, New Double() {100, 100})
 
-            Debug.debug("!"c, "RESULT")
-            Call Debug.debug("k = " & lbfgsb.k.ToString())
-            Debug.debug("x = ", res)
-            Call Debug.debug("fx = " & lbfgsb.fx.ToString())
-            Debug.debug("grad = ", lbfgsb.m_grad)
+            Call ("!RESULT").debug
+            Call ("k = " & lbfgsb.k.ToString()).debug
+            Call ("x = " & res.GetJson).debug
+            Call ("fx = " & lbfgsb.fx.ToString()).debug
+            Call ("grad = " & lbfgsb.m_grad.GetJson).debug
         Catch e As LBFGSBException
             Console.WriteLine(e.ToString())
             Console.Write(e.StackTrace)

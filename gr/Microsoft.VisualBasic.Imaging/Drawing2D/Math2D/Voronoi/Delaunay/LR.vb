@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d894b493d960035667bdddf34789f692, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Math2D\Voronoi\Delaunay\LR.vb"
+﻿#Region "Microsoft.VisualBasic::4f0fed6219090b2018b6a4137e3c0e65, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Math2D\Voronoi\Delaunay\LR.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 0.00%
     ' 
     '   Blank Lines: 6 (27.27%)
-    '     File Size: 587 B
+    '     File Size: 585 B
 
 
     '     Class LR
@@ -75,4 +75,3 @@ Namespace Drawing2D.Math2D.DelaunayVoronoi
         End Function
     End Class
 End Namespace
-

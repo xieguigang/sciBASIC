@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3bbcd5999c731c098ef051b1464af64d, Microsoft.VisualBasic.Core\src\ApplicationServices\Parallel\Tasks\UpdateThread.vb"
+﻿#Region "Microsoft.VisualBasic::1d0f61c84b92ddde8df7be66f454597f, Microsoft.VisualBasic.Core\src\ApplicationServices\Parallel\Tasks\UpdateThread.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 75.00%
     ' 
     '   Blank Lines: 19 (12.50%)
-    '     File Size: 5.62 KB
+    '     File Size: 5.61 KB
 
 
     '     Class UpdateThread

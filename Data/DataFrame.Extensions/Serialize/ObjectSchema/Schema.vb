@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::09d2293b3edf323abcce6196ec162a5a, Data\DataFrame.Extensions\Serialize\ObjectSchema\Schema.vb"
+﻿#Region "Microsoft.VisualBasic::77be300e0e125fe1d0f06356b464d004, Data\DataFrame.Extensions\Serialize\ObjectSchema\Schema.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 78.95%
     ' 
     '   Blank Lines: 17 (15.60%)
-    '     File Size: 4.32 KB
+    '     File Size: 4.31 KB
 
 
     '     Class Schema

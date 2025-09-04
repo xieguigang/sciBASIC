@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9e14a4dc536b4bb4c499f16e53b69d5d, gr\network-visualization\NetworkCanvas\Canvas3D\Input3D.vb"
+﻿#Region "Microsoft.VisualBasic::b0108d9dec14f19f1b58746da57e8d7c, gr\network-visualization\NetworkCanvas\Canvas3D\Input3D.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 21.43%
     ' 
     '   Blank Lines: 11 (22.92%)
-    '     File Size: 1.44 KB
+    '     File Size: 1.43 KB
 
 
     ' Class Input3D
@@ -95,7 +95,7 @@ Public Class Input3D : Inherits InputDevice
     '            Dim pos As AbstractVector = Canvas.fdgPhysics.GetPoint(node).position
     '            Call Point3D.Project(pos.x, pos.y, pos.z, rect.Width, rect.Height, 1, vd)
     '#If DEBUG Then
-    '            Call pos.__DEBUG_ECHO
+    '            Call pos.debug
     '#End If
     '        Next
     '    End Sub

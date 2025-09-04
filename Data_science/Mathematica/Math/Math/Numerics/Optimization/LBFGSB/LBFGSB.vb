@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::64ce18d5e11fa8327acf972f9a37bc87, Data_science\Mathematica\Math\Math\Numerics\Optimization\LBFGSB\LBFGSB.vb"
+﻿#Region "Microsoft.VisualBasic::388ce9f9f23f1b28940155f84accba54, Data_science\Mathematica\Math\Math\Numerics\Optimization\LBFGSB\LBFGSB.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 64.86%
     ' 
     '   Blank Lines: 45 (17.24%)
-    '     File Size: 10.14 KB
+    '     File Size: 10.23 KB
 
 
     '     Class LBFGSB
@@ -122,10 +122,21 @@ Namespace Framework.Optimization.LBFGSB
         Public Sub New()
             Me.New(New Parameters())
         End Sub
+
         Public Sub New(param As Parameters)
             m_param = param
             m_bfgs = New BFGSMat()
         End Sub
+
+        Public Function maxit(n As Integer) As LBFGSB
+            m_param.max_iterations = n
+            Return Me
+        End Function
+
+        Public Function debug(Optional opt As Boolean = True) As LBFGSB
+            Debugger.flag = opt
+            Return Me
+        End Function
 
         Public Shared Sub force_bounds(x As Double(), lb As Double(), ub As Double())
             For i = 0 To x.Length - 1
@@ -158,9 +169,16 @@ Namespace Framework.Optimization.LBFGSB
             Return [step]
         End Function
 
-        Public Shared ReadOnly eps As Double = Microsoft.VisualBasic.Math.Ulp(1.0)
+        Public Shared ReadOnly eps As Double = Ulp(1.0)
 
-        ' f -function, x - initial and final value, lb - lower bounds, ub - upper bounds 
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="f">function</param>
+        ''' <param name="[in]">initial and final value</param>
+        ''' <param name="lb">lower bounds</param>
+        ''' <param name="ub">upper bounds</param>
+        ''' <returns></returns>
         Public Function minimize(f As IGradFunction, [in] As Double(), lb As Double(), ub As Double()) As Double()
             If Debugger.flag Then
                 Debugger.debug("="c, "entering minimization")

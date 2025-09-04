@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::83f98671bd3f0d9b978494fb56de9ae8, Data_science\Mathematica\Math\Math\Numerics\Optimization\LBFGSB\Debug.vb"
+﻿#Region "Microsoft.VisualBasic::6e0b243e81f4fb98d4ca6bdfcc835b5a, Data_science\Mathematica\Math\Math\Numerics\Optimization\LBFGSB\Debug.vb"
 
     ' Author:
     ' 
@@ -34,16 +34,16 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 72
-    '    Code Lines: 54 (75.00%)
-    ' Comment Lines: 3 (4.17%)
-    '    - Xml Docs: 0.00%
+    '   Total Lines: 75
+    '    Code Lines: 54 (72.00%)
+    ' Comment Lines: 6 (8.00%)
+    '    - Xml Docs: 50.00%
     ' 
-    '   Blank Lines: 15 (20.83%)
-    '     File Size: 2.12 KB
+    '   Blank Lines: 15 (20.00%)
+    '     File Size: 2.22 KB
 
 
-    '     Class Debug
+    '     Class Debugger
     ' 
     '         Sub: (+6 Overloads) debug
     ' 

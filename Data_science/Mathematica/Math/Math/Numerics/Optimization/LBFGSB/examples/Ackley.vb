@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3d5dd94f45f42165a8aeea3592c8aefd, Data_science\Mathematica\Math\Math\Numerics\Optimization\LBFGSB\examples\Ackley.vb"
+﻿#Region "Microsoft.VisualBasic::0487a1e1a7195baab75f28e37abafe3a, Data_science\Mathematica\Math\Math\Numerics\Optimization\LBFGSB\examples\Ackley.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 65
-    '    Code Lines: 43 (66.15%)
-    ' Comment Lines: 7 (10.77%)
+    '   Total Lines: 66
+    '    Code Lines: 43 (65.15%)
+    ' Comment Lines: 8 (12.12%)
     '    - Xml Docs: 0.00%
     ' 
-    '   Blank Lines: 15 (23.08%)
-    '     File Size: 2.19 KB
+    '   Blank Lines: 15 (22.73%)
+    '     File Size: 2.25 KB
 
 
     ' Class Ackley
@@ -56,6 +56,7 @@
 #End Region
 
 Imports Microsoft.VisualBasic.Math.Framework.Optimization.LBFGSB
+Imports Microsoft.VisualBasic.Serialization.JSON
 
 
 ' ACKLEY
@@ -95,7 +96,7 @@ Public Class Ackley
 
     Public Shared Sub Main1(args As String())
 
-        Debug.flag = True
+        ' Debugger.flag = True
 
         Dim param As Parameters = New Parameters()
         Dim lbfgsb As LBFGSB = New LBFGSB(param)
@@ -107,11 +108,11 @@ Public Class Ackley
             '					new double[] { 0, -10, 0, 0, 0 }, new double[] { 32, 32, 32, 32, 32 });
             Dim res As Double() = lbfgsb.minimize(New Ackley(10), New Double() {0.65, -0.5, 0.0, 0.5, 0.2, 0.2, 0.2, -0.2, -0.2, -0.5}, New Double() {-32, -32, -32, -32, 0, -32, -32, -32, -32, -32}, New Double() {32, 32, 32, 32, 32, 32, 32, 32, 32, 32})
 
-            Debug.debug("!"c, "RESULT")
-            Call Debug.debug("k = " & lbfgsb.k.ToString())
-            Debug.debug("x = ", res)
-            Call Debug.debug("fx = " & lbfgsb.fx.ToString())
-            Debug.debug("grad = ", lbfgsb.m_grad)
+            Call ("!RESULT").debug
+            Call ("k = " & lbfgsb.k.ToString()).debug
+            Call ("x = " & res.GetJson).debug
+            Call ("fx = " & lbfgsb.fx.ToString()).debug
+            Call ("grad = " & lbfgsb.m_grad.GetJson).debug
         Catch e As LBFGSBException
             Console.WriteLine(e.ToString())
             Console.Write(e.StackTrace)

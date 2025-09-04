@@ -1,0 +1,119 @@
+﻿#Region "Microsoft.VisualBasic::de3516c0fe09bcbbc223e5400bf569b1, Data_science\Mathematica\SignalProcessing\MachineVision\HoughCircles\DetectEdge.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 61
+    '    Code Lines: 48 (78.69%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 13 (21.31%)
+    '     File Size: 2.10 KB
+
+
+    '     Class DetectEdge
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
+    '         Function: getEdges
+    ' 
+    '         Sub: Solve
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Parallel
+
+Namespace HoughCircles
+
+    Public Class DetectEdge : Inherits VectorTask
+
+        ReadOnly binary As Short(,)
+        ReadOnly edges As Boolean(,)
+        ReadOnly width As Integer
+        ReadOnly height As Integer
+
+        Shared ReadOnly gx As Integer(,) = New Integer(,) {{-1, 0, 1}, {-2, 0, 2}, {-1, 0, 1}}
+        Shared ReadOnly gy As Integer(,) = New Integer(,) {{1, 2, 1}, {0, 0, 0}, {-1, -2, -1}}
+
+        Public Sub New(binarImg As Short(,),
+                       Optional verbose As Boolean = False,
+                       Optional workers As Integer? = Nothing)
+
+            Call MyBase.New(binarImg.GetLength(0), verbose, workers)
+
+            Me.binary = binarImg
+            Me.width = binarImg.GetLength(1)
+            Me.height = binarImg.GetLength(0)
+            Me.edges = New Boolean(height - 1, width - 1) {}
+        End Sub
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function getEdges() As Boolean(,)
+            Return edges
+        End Function
+
+        Protected Overrides Sub Solve(start As Integer, ends As Integer, cpu_id As Integer)
+            Dim limit = 128 * 128
+            Dim newX = 0, newY = 0, c = 0
+
+            For Y As Integer = start + 1 To ends - 1
+                For X As Integer = 1 To width - 1 - 1
+
+                    newX = 0
+                    newY = 0
+                    c = 0
+
+                    For hw = -1 To 1
+                        For ww = -1 To 1
+                            c = binary(Y + hw, X + ww)
+                            newX += gx(hw + 1, ww + 1) * c
+                            newY += gy(hw + 1, ww + 1) * c
+                        Next
+                    Next
+
+                    If newX * newX + newY * newY > limit Then
+                        edges(Y, X) = True
+                    Else
+                        edges(Y, X) = False
+                    End If
+                Next
+            Next
+        End Sub
+    End Class
+End Namespace

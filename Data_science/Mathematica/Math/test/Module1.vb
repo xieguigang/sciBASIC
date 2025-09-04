@@ -84,7 +84,7 @@ Module Module1
         Dim x = 1.25
         Dim p = Distributions.AboveStandardDistribution(x, 10000000, 0, 1)
 
-        Call p.__DEBUG_ECHO
+        Call p.debug
 
         Pause()
     End Sub
@@ -101,7 +101,7 @@ Module Module1
         Dim order = x.Order
 
         ' 5 8 4 3 2 1 7 6
-        Call order.GetJson.__DEBUG_ECHO
+        Call order.GetJson.debug
 
         Pause()
     End Sub

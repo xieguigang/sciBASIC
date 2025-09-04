@@ -383,6 +383,7 @@
     <ProjectReference Include="..\..\DataMining\DataMining\DataMining.NET5.vbproj" />
     <ProjectReference Include="..\..\Mathematica\Math\Math\Math.NET5.vbproj" />
     <ProjectReference Include="..\MachineLearning\machine_learning-netcore5.vbproj" />
+    <ProjectReference Include="..\TensorFlow\TensorFlow.vbproj" />
   </ItemGroup>
 
 </Project>

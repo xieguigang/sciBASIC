@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::44c1cf8dfb01f3ba75e59325edd57a75, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Math2D\Voronoi\Geom\Circle.vb"
+﻿#Region "Microsoft.VisualBasic::de830a1ddf5b692d346745c7172087ba, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Math2D\Voronoi\Geom\Circle.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 19
-    '    Code Lines: 14 (73.68%)
+    '   Total Lines: 18
+    '    Code Lines: 14 (77.78%)
     ' Comment Lines: 0 (0.00%)
     '    - Xml Docs: 0.00%
     ' 
-    '   Blank Lines: 5 (26.32%)
-    '     File Size: 583 B
+    '   Blank Lines: 4 (22.22%)
+    '     File Size: 579 B
 
 
     '     Class Circle
@@ -52,7 +52,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 Imports Microsoft.VisualBasic.Imaging.Math2D
 
@@ -72,4 +71,3 @@ Namespace Drawing2D.Math2D.DelaunayVoronoi
         End Function
     End Class
 End Namespace
-

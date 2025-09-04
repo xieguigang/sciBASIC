@@ -190,7 +190,8 @@ Namespace Filters
         <Extension>
         Public Function ostuFilter(bitmap As BitmapBuffer,
                                    Optional flip As Boolean = False,
-                                   Optional factor As Double = 0.65) As BitmapBuffer
+                                   Optional factor As Double = 0.65,
+                                   Optional verbose As Boolean = True) As BitmapBuffer
 
             '获取源位图的宽、高,并创建一个等宽高的bitmap
             Dim width As Integer = bitmap.Width
@@ -208,7 +209,9 @@ Namespace Filters
             Dim white As Integer = If(flip, 0, 255)
             Dim threshold As Integer = otsuThreshold(bitmap) * factor
 
-            Call VBDebugger.EchoLine($"find threshold value for OSTU: {threshold}")
+            If verbose Then
+                Call VBDebugger.EchoLine($"find threshold value for OSTU: {threshold}")
+            End If
 
             black = alpha Or (black << 16) Or (black << 8) Or black
             white = alpha Or (white << 16) Or (white << 8) Or white

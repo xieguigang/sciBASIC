@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f791c82963c241cece84669d01eedd87, gr\network-visualization\Visualizer\CanvasScaler.vb"
+﻿#Region "Microsoft.VisualBasic::88c04bff2c1c0d96bfae25a7ea16bb4f, gr\network-visualization\Visualizer\CanvasScaler.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 35.21%
     ' 
     '   Blank Lines: 14 (11.02%)
-    '     File Size: 5.11 KB
+    '     File Size: 5.10 KB
 
 
     ' Module CanvasScaler

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::541405d84eb9ff4781798072076a4dc2, Data\word2vec\Word2Vec.vb"
+﻿#Region "Microsoft.VisualBasic::3002503ff49cdbbf7d47832bad212cb4, Data\word2vec\Word2Vec.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 54.76%
     ' 
     '   Blank Lines: 67 (17.77%)
-    '     File Size: 12.81 KB
+    '     File Size: 12.80 KB
 
 
     ' Class Word2Vec

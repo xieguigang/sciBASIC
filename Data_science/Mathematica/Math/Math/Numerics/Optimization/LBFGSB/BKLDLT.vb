@@ -1,78 +1,78 @@
-﻿#Region "Microsoft.VisualBasic::b25bd2fb6ec6891ff1d736118cc5ba06, Data_science\Mathematica\Math\Math\Numerics\Optimization\LBFGSB\BKLDLT.vb"
+﻿#Region "Microsoft.VisualBasic::bcca21672a9eb69b39dcfc781097e636, Data_science\Mathematica\Math\Math\Numerics\Optimization\LBFGSB\BKLDLT.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 464
-'    Code Lines: 351 (75.65%)
-' Comment Lines: 24 (5.17%)
-'    - Xml Docs: 50.00%
-' 
-'   Blank Lines: 89 (19.18%)
-'     File Size: 14.35 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Class BKLDLT
-' 
-' 
-'         Enum Info
-' 
-'             NOT_COMPUTED, NUMERICAL_ISSUE, SUCCESSFUL
-' 
-' 
-' 
-'         Class Pair
-' 
-'             Constructor: (+1 Overloads) Sub New
-'             Function: ToString
-' 
-'         Class IndexType
-' 
-'             Constructor: (+1 Overloads) Sub New
-' 
-'  
-' 
-'     Constructor: (+2 Overloads) Sub New
-' 
-'     Function: coeff, diag_coeff, find_lambda, find_sigma, gaussian_elimination_1x1
-'               gaussian_elimination_2x2, index, permutate_mat, solve
-' 
-'     Sub: compress_permutation, compute, compute_pointer, copy_data, interchange_rows
-'          pivoting_1x1, pivoting_2x2, solve_inplace, swap, swap_ranges
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 464
+    '    Code Lines: 351 (75.65%)
+    ' Comment Lines: 24 (5.17%)
+    '    - Xml Docs: 50.00%
+    ' 
+    '   Blank Lines: 89 (19.18%)
+    '     File Size: 14.38 KB
+
+
+    '     Class BKLDLT
+    ' 
+    ' 
+    '         Enum Info
+    ' 
+    '             NOT_COMPUTED, NUMERICAL_ISSUE, SUCCESSFUL
+    ' 
+    ' 
+    ' 
+    '         Class Pair
+    ' 
+    '             Constructor: (+1 Overloads) Sub New
+    '             Function: ToString
+    ' 
+    '         Class IndexType
+    ' 
+    '             Constructor: (+1 Overloads) Sub New
+    ' 
+    '  
+    ' 
+    '     Constructor: (+2 Overloads) Sub New
+    ' 
+    '     Function: coeff, diag_coeff, find_lambda, find_sigma, gaussian_elimination_1x1
+    '               gaussian_elimination_2x2, index, permutate_mat, solve
+    ' 
+    '     Sub: compress_permutation, compute, compute_pointer, copy_data, interchange_rows
+    '          pivoting_1x1, pivoting_2x2, solve_inplace, swap, swap_ranges
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

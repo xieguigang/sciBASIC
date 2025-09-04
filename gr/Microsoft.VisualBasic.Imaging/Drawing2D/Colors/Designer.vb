@@ -1,67 +1,67 @@
-﻿#Region "Microsoft.VisualBasic::7a8c6a83bc5ccbc5176d010888ef5a1f, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Colors\Designer.vb"
+﻿#Region "Microsoft.VisualBasic::b76598bc16af2e8177635e9b25dc5617, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Colors\Designer.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 623
-'    Code Lines: 316 (50.72%)
-' Comment Lines: 242 (38.84%)
-'    - Xml Docs: 88.43%
-' 
-'   Blank Lines: 65 (10.43%)
-'     File Size: 34.18 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Module Designer
-' 
-'         Properties: AvailableInterpolates, Category31, ColorBrewer, ConsoleColors, MaterialPalette
-'                     Typhoon
-' 
-'         Constructor: (+1 Overloads) Sub New
-' 
-'         Function: ConsoleColor, FromConsoleColor, GetColors, getColorsInternal, IsColorNameList
-'                   ParseAvailableInterpolates, ParseColorBrewer, SplitColorList
-' 
-'         Sub: (+2 Overloads) Register
-'         Delegate Function
-' 
-'             Function: Colors, CubicSpline, FromNames, FromSchema, GetBrushes
-'                       GetColors, internalFills, rangeConstraint
-' 
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 623
+    '    Code Lines: 316 (50.72%)
+    ' Comment Lines: 242 (38.84%)
+    '    - Xml Docs: 88.43%
+    ' 
+    '   Blank Lines: 65 (10.43%)
+    '     File Size: 34.20 KB
+
+
+    '     Module Designer
+    ' 
+    '         Properties: AvailableInterpolates, Category31, ColorBrewer, ConsoleColors, MaterialPalette
+    '                     Typhoon
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
+    '         Function: ConsoleColor, FromConsoleColor, GetColors, getColorsInternal, IsColorNameList
+    '                   ParseAvailableInterpolates, ParseColorBrewer, SplitColorList
+    ' 
+    '         Sub: (+2 Overloads) Register
+    '         Delegate Function
+    ' 
+    '             Function: Colors, CubicSpline, FromNames, FromSchema, GetBrushes
+    '                       GetColors, internalFills, rangeConstraint
+    ' 
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

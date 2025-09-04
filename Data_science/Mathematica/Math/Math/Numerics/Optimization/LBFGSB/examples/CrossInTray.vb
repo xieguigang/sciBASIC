@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::65a6cc1a93ecfd310f2b5a67a80923a9, Data_science\Mathematica\Math\Math\Numerics\Optimization\LBFGSB\examples\CrossInTray.vb"
+﻿#Region "Microsoft.VisualBasic::11506a7d26ea7aa2153978b3dd5ead3b, Data_science\Mathematica\Math\Math\Numerics\Optimization\LBFGSB\examples\CrossInTray.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 39
-    '    Code Lines: 25 (64.10%)
-    ' Comment Lines: 3 (7.69%)
+    '   Total Lines: 40
+    '    Code Lines: 25 (62.50%)
+    ' Comment Lines: 4 (10.00%)
     '    - Xml Docs: 0.00%
     ' 
-    '   Blank Lines: 11 (28.21%)
-    '     File Size: 1.28 KB
+    '   Blank Lines: 11 (27.50%)
+    '     File Size: 1.33 KB
 
 
     ' Class CrossInTray
@@ -54,6 +54,7 @@
 #End Region
 
 Imports Microsoft.VisualBasic.Math.Framework.Optimization.LBFGSB
+Imports Microsoft.VisualBasic.Serialization.JSON
 
 ' CROSS-IN-TRAY
 ' https://www.sfu.ca/~ssurjano/crossit.html
@@ -71,7 +72,7 @@ Public Class CrossInTray
 
     Public Shared Sub Main7(args As String())
 
-        Debug.flag = True
+        ' Debugger.flag = True
 
         Dim param As Parameters = New Parameters()
         Dim lbfgsb As LBFGSB = New LBFGSB(param)
@@ -79,11 +80,11 @@ Public Class CrossInTray
         Try
             Dim res As Double() = lbfgsb.minimize(New CrossInTray(), New Double() {3, -3}, New Double() {-10, -10}, New Double() {10, 10})
 
-            Debug.debug("!"c, "RESULT")
-            Call Debug.debug("k = " & lbfgsb.k.ToString())
-            Debug.debug("x = ", res)
-            Call Debug.debug("fx = " & lbfgsb.fx.ToString())
-            Debug.debug("grad = ", lbfgsb.m_grad)
+            Call ("!RESULT").debug
+            Call ("k = " & lbfgsb.k.ToString()).debug
+            Call ("x = " & res.GetJson).debug
+            Call ("fx = " & lbfgsb.fx.ToString()).debug
+            Call ("grad = " & lbfgsb.m_grad.GetJson).debug
         Catch e As LBFGSBException
             Console.WriteLine(e.ToString())
             Console.Write(e.StackTrace)

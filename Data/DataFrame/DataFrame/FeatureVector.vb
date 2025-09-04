@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3470a423d67c3a4ce0952b7e9b65178d, Data\DataFrame\DataFrame\FeatureVector.vb"
+﻿#Region "Microsoft.VisualBasic::cb4e8d8b36602b68a3f602fe69cfc2bf, Data\DataFrame\DataFrame\FeatureVector.vb"
 
     ' Author:
     ' 
@@ -34,20 +34,20 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 226
-    '    Code Lines: 159 (70.35%)
-    ' Comment Lines: 29 (12.83%)
+    '   Total Lines: 233
+    '    Code Lines: 164 (70.39%)
+    ' Comment Lines: 29 (12.45%)
     '    - Xml Docs: 96.55%
     ' 
-    '   Blank Lines: 38 (16.81%)
-    '     File Size: 7.65 KB
+    '   Blank Lines: 40 (17.17%)
+    '     File Size: 7.82 KB
 
 
     ' Class FeatureVector
     ' 
     '     Properties: isScalar, name, size, type, vector
     ' 
-    '     Constructor: (+10 Overloads) Sub New
+    '     Constructor: (+11 Overloads) Sub New
     '     Function: [TryCast], CastTo, CheckSupports, FromGeneral, GetScalarValue
     '               Getter, ToString
     ' 
@@ -85,6 +85,8 @@ Public Class FeatureVector : Implements IReadOnlyId
     ''' </summary>
     ''' <returns></returns>
     Public ReadOnly Property name As String Implements IReadOnlyId.Identity
+
+    Public Property attributes As Dictionary(Of String, String)
 
     ''' <summary>
     ''' does current vector has no data or just a single value?

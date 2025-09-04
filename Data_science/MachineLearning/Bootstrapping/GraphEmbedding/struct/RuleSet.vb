@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c98ef8615c153e31e0772ac20b50ea3b, Data_science\MachineLearning\Bootstrapping\GraphEmbedding\struct\RuleSet.vb"
+﻿#Region "Microsoft.VisualBasic::0960ccc55aef6e7a6bd5b63360367fd0, Data_science\MachineLearning\Bootstrapping\GraphEmbedding\struct\RuleSet.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 60
-    '    Code Lines: 49 (81.67%)
+    '   Total Lines: 52
+    '    Code Lines: 43 (82.69%)
     ' Comment Lines: 0 (0.00%)
     '    - Xml Docs: 0.00%
     ' 
-    '   Blank Lines: 11 (18.33%)
-    '     File Size: 2.10 KB
+    '   Blank Lines: 9 (17.31%)
+    '     File Size: 1.78 KB
 
 
     '     Class RuleSet
@@ -50,11 +50,6 @@
     '         Function: GenericEnumerator
     ' 
     '         Sub: load
-    '         Class CSharpImpl
-    ' 
-    '             Function: __Assign
-    ' 
-    ' 
     ' 
     ' 
     ' /********************************************************************************/

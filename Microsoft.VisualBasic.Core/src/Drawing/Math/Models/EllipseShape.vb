@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b630c74357d21b3825fc00d3de3ba967, Microsoft.VisualBasic.Core\src\Drawing\Math\Models\EllipseShape.vb"
+﻿#Region "Microsoft.VisualBasic::5be62aff17cdb2d20d72d0bea6aeec1c, Microsoft.VisualBasic.Core\src\Drawing\Math\Models\EllipseShape.vb"
 
     ' Author:
     ' 
@@ -34,18 +34,20 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 42
-    '    Code Lines: 30 (71.43%)
-    ' Comment Lines: 3 (7.14%)
+    '   Total Lines: 64
+    '    Code Lines: 36 (56.25%)
+    ' Comment Lines: 17 (26.56%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 9 (21.43%)
-    '     File Size: 1.36 KB
+    '   Blank Lines: 11 (17.19%)
+    '     File Size: 2.16 KB
 
 
     '     Class EllipseShape
     ' 
-    '         Constructor: (+1 Overloads) Sub New
+    '         Properties: center, radiusX, radiusY, value
+    ' 
+    '         Constructor: (+2 Overloads) Sub New
     '         Function: EllipseDrawing, GetPolygonPath, ToString
     ' 
     ' 
@@ -54,6 +56,7 @@
 #End Region
 
 Imports System.Drawing
+Imports System.Runtime.CompilerServices
 Imports std = System.Math
 
 Namespace Imaging.Math2D
@@ -63,9 +66,15 @@ Namespace Imaging.Math2D
     ''' </summary>
     Public Class EllipseShape
 
-        ReadOnly radiusX As Double
-        ReadOnly radiusY As Double
-        ReadOnly center As PointF
+        Public ReadOnly Property radiusX As Double
+        Public ReadOnly Property radiusY As Double
+        Public ReadOnly Property center As PointF
+
+        ''' <summary>
+        ''' any other tagged value with current circle model
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property value As Double
 
         Sub New(radiusX As Double, radiusY As Double, center As PointF)
             Me.center = center
@@ -73,6 +82,20 @@ Namespace Imaging.Math2D
             Me.radiusY = radiusY
         End Sub
 
+        ''' <summary>
+        ''' create a new circle model
+        ''' </summary>
+        ''' <param name="x"></param>
+        ''' <param name="y"></param>
+        ''' <param name="r"></param>
+        Sub New(x As Single, y As Single, r As Double)
+            Call Me.New(r, r, New PointF(x, y))
+        End Sub
+
+        ''' <summary>
+        ''' generates the ellipse or circle drawing path
+        ''' </summary>
+        ''' <returns></returns>
         Public Function GetPolygonPath() As Polygon2D
             Dim path As New List(Of PointF)
 
@@ -83,6 +106,7 @@ Namespace Imaging.Math2D
             Return New Polygon2D(path.ToArray)
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Private Shared Function EllipseDrawing(dHalfwidthEllipse As Double, dHalfheightEllipse As Double, origin As PointF, t As Integer) As PointF
             Return New PointF(
                 origin.X + dHalfwidthEllipse * std.Cos(t * std.PI / 180),

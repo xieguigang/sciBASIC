@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::272331e97bb5a9243714f4e883ce01cc, Data_science\Mathematica\SignalProcessing\SignalProcessing\test\labeltest.vb"
+﻿#Region "Microsoft.VisualBasic::184f25fa313afb997991d0aee140afdf, Data_science\Mathematica\SignalProcessing\SignalProcessing\test\labeltest.vb"
 
     ' Author:
     ' 
@@ -34,18 +34,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 35
-    '    Code Lines: 29 (82.86%)
-    ' Comment Lines: 1 (2.86%)
+    '   Total Lines: 62
+    '    Code Lines: 49 (79.03%)
+    ' Comment Lines: 2 (3.23%)
     '    - Xml Docs: 0.00%
     ' 
-    '   Blank Lines: 5 (14.29%)
-    '     File Size: 1.37 KB
+    '   Blank Lines: 11 (17.74%)
+    '     File Size: 2.32 KB
 
 
     ' Module labeltest
     ' 
-    '     Sub: Main
+    '     Sub: cclTest, circleTest, Main
     ' 
     ' /********************************************************************************/
 
@@ -58,14 +58,20 @@ Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.BitmapImage
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Math2D.ConcaveHull
+Imports Microsoft.VisualBasic.Imaging.Math2D
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
+Imports Microsoft.VisualBasic.Math.MachineVision
 Imports Microsoft.VisualBasic.Math.MachineVision.CCL
 
 Public Module labeltest
 
     Sub Main()
-        Dim img = "Z:\aaa.bmp".LoadImage
+        Call circleTest()
+    End Sub
+
+    Sub cclTest()
+        Dim img = "G:\Erica\test\HE\cells_bin2.bmp".LoadImage
         Dim CELLS = CCLabeling.Process(BitmapBuffer.FromImage(img), background:=Color.White, 0).ToArray
         Dim pen As New Pen(Color.Red, 2)
         Dim pen2 As New Pen(Color.Blue, 2)
@@ -85,5 +91,25 @@ Public Module labeltest
             Call gfx.ImageResource.SaveAs("Z:/label6.png")
         End Using
     End Sub
-End Module
 
+    Sub circleTest()
+        Dim img = "G:\Erica\test\HE\cells_bin2.bmp".LoadImage
+        Dim cells = HoughCircles.CircleHough(BitmapBuffer.FromImage(img), 18)
+        Dim pen As New Pen(Color.Red, 2)
+        Dim pen2 As New Pen(Color.Blue, 2)
+        Dim colors As LoopArray(Of Color) = Designer.GetColors("paper", 100)
+
+        Call "draw circles".info
+
+        Using gfx As Graphics2D = Graphics2D.CreateDevice(img.Size)
+            ' Call gfx.DrawImage(img, New Point)
+
+            For Each item As EllipseShape In cells
+                Call gfx.DrawCircle(item.center, item.radiusX, New Pen(++colors, 2))
+            Next
+
+            Call gfx.Flush()
+            Call gfx.ImageResource.SaveAs("Z:/label7.png")
+        End Using
+    End Sub
+End Module

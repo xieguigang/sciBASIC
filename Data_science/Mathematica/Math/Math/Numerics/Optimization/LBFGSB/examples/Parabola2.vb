@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c2254b2a668292e3943bfffbd377fd29, Data_science\Mathematica\Math\Math\Numerics\Optimization\LBFGSB\examples\Parabola2.vb"
+﻿#Region "Microsoft.VisualBasic::5340ed2eb92abba4630db96ee8c3d602, Data_science\Mathematica\Math\Math\Numerics\Optimization\LBFGSB\examples\Parabola2.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 37
-    '    Code Lines: 29 (78.38%)
-    ' Comment Lines: 1 (2.70%)
+    '   Total Lines: 38
+    '    Code Lines: 29 (76.32%)
+    ' Comment Lines: 2 (5.26%)
     '    - Xml Docs: 0.00%
     ' 
-    '   Blank Lines: 7 (18.92%)
-    '     File Size: 1.25 KB
+    '   Blank Lines: 7 (18.42%)
+    '     File Size: 1.31 KB
 
 
     ' Class Parabola2
@@ -54,6 +54,7 @@
 #End Region
 
 Imports Microsoft.VisualBasic.Math.Framework.Optimization.LBFGSB
+Imports Microsoft.VisualBasic.Serialization.JSON
 
 Public Class Parabola2
     Inherits IGradFunction
@@ -63,14 +64,14 @@ Public Class Parabola2
         Dim y = [in](1)
         Dim t = x * x + y * y
         If x < 1.0 OrElse y < 1.0 Then
-            Debug.debug("W"c, "outside " & "[" & String.Join(", ", [in]) & "]")
+            Call ("W"c & "outside " & "[" & String.Join(", ", [in]) & "]").debug
         End If
         Return t + Math.Sin(t) * Math.Sin(t)
     End Function
 
     Public Shared Sub Main13(args As String())
 
-        Debug.flag = True
+        ' Debugger.flag = True
 
         Dim param As Parameters = New Parameters()
         Dim lbfgsb As LBFGSB = New LBFGSB(param)
@@ -78,11 +79,11 @@ Public Class Parabola2
         ' converges to global minimum
         Try
             Dim res As Double() = lbfgsb.minimize(New Parabola2(), New Double() {3, 3}, New Double() {1, 1}, New Double() {5, 5})
-            Debug.debug("!"c, "RESULT")
-            Call Debug.debug("k = " & lbfgsb.k.ToString())
-            Debug.debug("x = ", res)
-            Call Debug.debug("fx = " & lbfgsb.fx.ToString())
-            Debug.debug("grad = ", lbfgsb.m_grad)
+            Call ("!RESULT").debug
+            Call ("k = " & lbfgsb.k.ToString()).debug
+            Call ("x = " & res.GetJson).debug
+            Call ("fx = " & lbfgsb.fx.ToString()).debug
+            Call ("grad = " & lbfgsb.m_grad.GetJson).debug
         Catch e As LBFGSBException
             Console.WriteLine(e.ToString())
             Console.Write(e.StackTrace)

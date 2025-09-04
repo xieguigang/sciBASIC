@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9ebcd1e667a37b88ea0cd0cf52c620b0, Microsoft.VisualBasic.Core\src\ApplicationServices\VBDev\XmlDoc\ProjectSpace.vb"
+﻿#Region "Microsoft.VisualBasic::7ab08dc39c9433fd58725bf89c4212d5, Microsoft.VisualBasic.Core\src\ApplicationServices\VBDev\XmlDoc\ProjectSpace.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 61.11%
     ' 
     '   Blank Lines: 30 (19.48%)
-    '     File Size: 5.73 KB
+    '     File Size: 5.72 KB
 
 
     '     Class ProjectSpace

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::371e1d40dc8f2053e8f8e4285457532f, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Math2D\Voronoi\Delaunay\Edge.vb"
+﻿#Region "Microsoft.VisualBasic::654deb26fffaea13a7845e4182454f71, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Math2D\Voronoi\Delaunay\Edge.vb"
 
     ' Author:
     ' 
@@ -379,4 +379,3 @@ Namespace Drawing2D.Math2D.DelaunayVoronoi
 #End Region
     End Class
 End Namespace
-

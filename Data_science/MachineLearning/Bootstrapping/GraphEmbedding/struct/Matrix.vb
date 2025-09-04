@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f3416147a6e97e361c0f3cfd4daa06d7, Data_science\MachineLearning\Bootstrapping\GraphEmbedding\struct\Matrix.vb"
+﻿#Region "Microsoft.VisualBasic::688ba6c548734ba1b715968e1a8984ea, Data_science\MachineLearning\Bootstrapping\GraphEmbedding\struct\Matrix.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 218
-    '    Code Lines: 191 (87.61%)
+    '   Total Lines: 211
+    '    Code Lines: 185 (87.68%)
     ' Comment Lines: 0 (0.00%)
     '    - Xml Docs: 0.00%
     ' 
-    '   Blank Lines: 27 (12.39%)
-    '     File Size: 8.47 KB
+    '   Blank Lines: 26 (12.32%)
+    '     File Size: 8.17 KB
 
 
     '     Class Matrix
@@ -54,11 +54,6 @@
     ' 
     '         Sub: [set], initializeGaussian, initializeNunif, initializeUnif, output
     '              releaseMemory, rescaleByRow, truncate, truncate_row
-    '         Class CSharpImpl
-    ' 
-    '             Function: __Assign
-    ' 
-    ' 
     ' 
     ' 
     ' /********************************************************************************/

@@ -1,68 +1,70 @@
-﻿#Region "Microsoft.VisualBasic::b659f7d97f9bd3b03c366e48f01bf4f6, Microsoft.VisualBasic.Core\src\ApplicationServices\Utils.vb"
+﻿#Region "Microsoft.VisualBasic::757e64af3012ec097512ee3446223ea5, Microsoft.VisualBasic.Core\src\ApplicationServices\Utils.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-    ' /********************************************************************************/
-
-    ' Summaries:
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-    ' Code Statistics:
 
-    '   Total Lines: 263
-    '    Code Lines: 150 (57.03%)
-    ' Comment Lines: 79 (30.04%)
-    '    - Xml Docs: 88.61%
-    ' 
-    '   Blank Lines: 34 (12.93%)
-    '     File Size: 10.22 KB
+' /********************************************************************************/
+
+' Summaries:
 
 
-    '     Module Utils
-    ' 
-    '         Function: FormatTicks, Shell, TaskRun, (+2 Overloads) Time
-    ' 
-    '         Sub: TryRun
-    '         Delegate Function
-    ' 
-    '             Function: CLIPath, CLIToken, FileMimeType, GetMIMEDescrib
-    ' 
-    '             Sub: (+2 Overloads) Wait
-    ' 
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 242
+'    Code Lines: 137 (56.61%)
+' Comment Lines: 74 (30.58%)
+'    - Xml Docs: 87.84%
+' 
+'   Blank Lines: 31 (12.81%)
+'     File Size: 9.59 KB
+
+
+'     Module Utils
+' 
+'         Function: Shell, TaskRun, (+2 Overloads) Time
+' 
+'         Sub: TryRun
+'         Delegate Function
+' 
+'             Function: CLIPath, CLIToken, FileMimeType, GetMIMEDescrib
+' 
+'             Sub: (+2 Overloads) Wait
+' 
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
+Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports System.Threading
 Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports Microsoft.VisualBasic.Language.C
 Imports Microsoft.VisualBasic.Net.Protocols.ContentTypes
 Imports Microsoft.VisualBasic.Parallel.Tasks
 Imports Microsoft.VisualBasic.Text.Parser
@@ -118,7 +120,7 @@ Namespace ApplicationServices
             Try
                 Call task()
             Catch ex As Exception
-                Call $"[{stack}] {task.Method.ToString} failure!".Warning
+                Call $"[{stack}] {task.Method.ToString} failure!".warning
                 Call App.LogException(ex)
             End Try
         End Sub
@@ -130,7 +132,8 @@ Namespace ApplicationServices
         ''' <param name="task"></param>
         ''' <param name="stack">进行调用堆栈的上一层的栈名称</param>
         ''' <returns></returns>
-        <Extension> Public Function TaskRun(task As Action, <CallerMemberName> Optional stack$ = Nothing) As AsyncHandle(Of Exception)
+        <Extension>
+        Public Function TaskRun(task As Action, <CallerMemberName> Optional stack$ = Nothing) As AsyncHandle(Of Exception)
             Dim handle = Function() As Exception
                              Try
                                  Call task()
@@ -178,7 +181,7 @@ Namespace ApplicationServices
             Dim value As T
             Dim task As Action = Sub() value = work()
 
-            task.BENCHMARK(trace)
+            task.benchmark(trace)
             tick = False  ' 需要使用这个变量的变化来控制 tickTask 里面的过程
 
             Return value
@@ -300,5 +303,15 @@ Namespace ApplicationServices
         Public Function FileMimeType(path As String, Optional defaultUnknown As Boolean = True) As ContentType
             Return ("*." & path.ExtensionSuffix).GetMIMEDescrib(defaultUnknown)
         End Function
+
+        <Extension>
+        Public Sub printf(dev As TextWriter, format$, ParamArray args As Object())
+            Call dev.Write(sprintf(format, args))
+        End Sub
+
+        <Extension>
+        Public Sub print(dev As TextWriter, line As String)
+            Call dev.Write(line)
+        End Sub
     End Module
 End Namespace

@@ -66,11 +66,11 @@ Imports Microsoft.VisualBasic.Serialization.JSON
 Module Program
 
     Sub RankingTest()
-        Call {1, 2, 2, 3}.StandardCompetitionRanking.GetJson.__DEBUG_ECHO
-        Call {1, 2, 2, 3}.ModifiedCompetitionRanking.GetJson.__DEBUG_ECHO
-        Call {1, 2, 2, 3}.OrdinalRanking.GetJson.__DEBUG_ECHO
-        Call {1, 2, 2, 3}.DenseRanking.GetJson.__DEBUG_ECHO
-        Call {1.0, 1.0, 2.0, 3.0, 3.0, 4.0, 5.0, 5.0, 5.0}.FractionalRanking.GetJson.__DEBUG_ECHO
+        Call {1, 2, 2, 3}.StandardCompetitionRanking.GetJson.debug
+        Call {1, 2, 2, 3}.ModifiedCompetitionRanking.GetJson.debug
+        Call {1, 2, 2, 3}.OrdinalRanking.GetJson.debug
+        Call {1, 2, 2, 3}.DenseRanking.GetJson.debug
+        Call {1.0, 1.0, 2.0, 3.0, 3.0, 4.0, 5.0, 5.0, 5.0}.FractionalRanking.GetJson.debug
     End Sub
 
     Public Function Hash(key$) As Long
@@ -123,9 +123,9 @@ Module Program
         ' Dim uid As New Uid
 
 
-        Call blizzard.HashBlizzard("XC_1183").ToString.__INFO_ECHO
-        Call blizzard.HashBlizzard("XC_1184").ToString.__INFO_ECHO
-        Call blizzard.HashBlizzard("XC_2252").ToString.__INFO_ECHO
+        Call blizzard.HashBlizzard("XC_1183").ToString.info
+        Call blizzard.HashBlizzard("XC_1184").ToString.info
+        Call blizzard.HashBlizzard("XC_2252").ToString.info
 
         Pause()
 
@@ -146,8 +146,8 @@ Module Program
 
         Dim hash = blizzard.HashBlizzard("unitneutralacritter.grp")
 
-        Call unchecked(&HA26067F3).uncheckedULong.ToString.__INFO_ECHO
-        Call hash.ToString.__INFO_ECHO
+        Call unchecked(&HA26067F3).uncheckedULong.ToString.info
+        Call hash.ToString.info
 
         Pause()
 
@@ -196,6 +196,6 @@ Module Program
 
         Dim after = {a, b, c, x, y, z}
 
-        'Call json.__DEBUG_ECHO
+        'Call json.debug
     End Sub
 End Module

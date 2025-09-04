@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5f2492c0796ad85ab891091031fad3f0, Microsoft.VisualBasic.Core\src\ComponentModel\LazyLoader.vb"
+﻿#Region "Microsoft.VisualBasic::3a77694e7dafebe4cd0276c06a2ca095, Microsoft.VisualBasic.Core\src\ComponentModel\LazyLoader.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 23 (15.23%)
-    '     File Size: 4.85 KB
+    '     File Size: 4.84 KB
 
 
     '     Class LazyLoader

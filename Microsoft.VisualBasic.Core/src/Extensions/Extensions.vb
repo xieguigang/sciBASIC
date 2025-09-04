@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::290a68801375534a689a09afab1e2300, Microsoft.VisualBasic.Core\src\Extensions\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::bfaa10817c9c0f32787061b7f00bf2fb, Microsoft.VisualBasic.Core\src\Extensions\Extensions.vb"
 
     ' Author:
     ' 
@@ -1070,7 +1070,8 @@ Public Module Extensions
     <Extension>
     Public Function IsNaNImaginary(n As Double) As Boolean
 #Else
-    <Extension> Public Function Is_NA_UHandle(n As Double) As Boolean
+    <Extension> 
+    Public Function IsNaNImaginary(n As Double) As Boolean
 #End If
         Return Double.IsNaN(n) OrElse
             Double.IsInfinity(n) OrElse
@@ -1079,12 +1080,14 @@ Public Module Extensions
     End Function
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    <Extension> Public Function IsNaNImaginary(n As Single) As Boolean
+    <Extension>
+    Public Function IsNaNImaginary(n As Single) As Boolean
         Return Single.IsNaN(n) OrElse
             Single.IsInfinity(n) OrElse
             Single.IsNegativeInfinity(n) OrElse
             Single.IsPositiveInfinity(n)
     End Function
+
 #If FRAMEWORD_CORE Then
 
     ''' <summary>

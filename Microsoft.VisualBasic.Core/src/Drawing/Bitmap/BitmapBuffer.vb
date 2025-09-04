@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::43ed9200d171c2d04c2acb1f82851a99, Microsoft.VisualBasic.Core\src\Drawing\Bitmap\BitmapBuffer.vb"
+﻿#Region "Microsoft.VisualBasic::5b67fc39d74dfdbb9c0c65a2228b55fa, Microsoft.VisualBasic.Core\src\Drawing\Bitmap\BitmapBuffer.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 702
-    '    Code Lines: 414 (58.97%)
-    ' Comment Lines: 179 (25.50%)
-    '    - Xml Docs: 81.56%
+    '   Total Lines: 765
+    '    Code Lines: 461 (60.26%)
+    ' Comment Lines: 181 (23.66%)
+    '    - Xml Docs: 80.66%
     ' 
-    '   Blank Lines: 109 (15.53%)
-    '     File Size: 23.93 KB
+    '   Blank Lines: 123 (16.08%)
+    '     File Size: 25.97 KB
 
 
     '     Class BitmapBuffer
@@ -49,10 +49,11 @@
     ' 
     '         Constructor: (+5 Overloads) Sub New
     ' 
-    '         Function: (+2 Overloads) FromBitmap, FromImage, GetAlpha, GetARGB, GetARGBStream
-    '                   GetBlue, GetColor, GetEnumerator, GetGreen, GetImage
-    '                   (+2 Overloads) GetIndex, (+3 Overloads) GetPixel, GetPixelChannels, GetPixelsAll, GetRed
-    '                   OutOfRange, ToPixel2D, ToString, Unpack, White
+    '         Function: A, B, (+2 Overloads) FromBitmap, FromImage, G
+    '                   GetAlpha, GetARGB, GetARGBStream, GetBlue, GetColor
+    '                   GetEnumerator, GetGreen, GetImage, (+2 Overloads) GetIndex, (+3 Overloads) GetPixel
+    '                   GetPixelChannels, GetPixelsAll, GetRed, OutOfRange, R
+    '                   ToPixel2D, ToString, Unpack, White
     ' 
     '         Sub: Dispose, (+2 Overloads) Save, SetAlpha, SetBlue, SetGreen
     '              (+4 Overloads) SetPixel, SetRed, WriteARGBStream
@@ -367,6 +368,66 @@ Namespace Imaging.BitmapImage
             Else
                 Return buffer(i + 0)
             End If
+        End Function
+
+        Public Function A() As Byte()
+            Dim alpha As Byte() = New Byte(Width * Height - 1) {}
+
+            If channels = TYPE_INT_ARGB Then
+                Dim offset As Integer = 0
+
+                'ARGB
+                For i As Integer = 0 To buffer.Length - 1 Step 4
+                    alpha(offset) = buffer(i)
+                    offset += 1
+                Next
+            Else
+                ' RGB
+                For i As Integer = 0 To alpha.Length - 1
+                    alpha(i) = 255
+                Next
+            End If
+
+            Return alpha
+        End Function
+
+        Public Function R() As Byte()
+            Dim red As Byte() = New Byte(Width * Height - 1) {}
+            Dim pad As Integer = If(channels = TYPE_INT_ARGB, 1, 0)
+            Dim offset As Integer = 0
+
+            For i As Integer = 0 To buffer.Length - 1 Step channels
+                red(offset) = buffer(i + pad)
+                offset += 1
+            Next
+
+            Return red
+        End Function
+
+        Public Function G() As Byte()
+            Dim green As Byte() = New Byte(Width * Height - 1) {}
+            Dim pad As Integer = If(channels = TYPE_INT_ARGB, 2, 1)
+            Dim offset As Integer = 0
+
+            For i As Integer = 0 To buffer.Length - 1 Step channels
+                green(offset) = buffer(i + pad)
+                offset += 1
+            Next
+
+            Return green
+        End Function
+
+        Public Function B() As Byte()
+            Dim blue As Byte() = New Byte(Width * Height - 1) {}
+            Dim pad As Integer = If(channels = TYPE_INT_ARGB, 3, 2)
+            Dim offset As Integer = 0
+
+            For i As Integer = 0 To buffer.Length - 1 Step channels
+                blue(offset) = buffer(i + pad)
+                offset += 1
+            Next
+
+            Return blue
         End Function
 
         ''' <summary>

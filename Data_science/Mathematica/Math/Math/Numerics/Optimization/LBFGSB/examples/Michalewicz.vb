@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b40ab42a33cd4ea4760fe03c53836ee4, Data_science\Mathematica\Math\Math\Numerics\Optimization\LBFGSB\examples\Michalewicz.vb"
+﻿#Region "Microsoft.VisualBasic::1b05bf664982771546cb1341416c18da, Data_science\Mathematica\Math\Math\Numerics\Optimization\LBFGSB\examples\Michalewicz.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 55
-    '    Code Lines: 41 (74.55%)
-    ' Comment Lines: 2 (3.64%)
+    '   Total Lines: 56
+    '    Code Lines: 41 (73.21%)
+    ' Comment Lines: 3 (5.36%)
     '    - Xml Docs: 0.00%
     ' 
-    '   Blank Lines: 12 (21.82%)
-    '     File Size: 1.66 KB
+    '   Blank Lines: 12 (21.43%)
+    '     File Size: 1.72 KB
 
 
     ' Class Michalewicz
@@ -56,6 +56,7 @@
 #End Region
 
 Imports Microsoft.VisualBasic.Math.Framework.Optimization.LBFGSB
+Imports Microsoft.VisualBasic.Serialization.JSON
 
 Public Class Michalewicz
     Inherits IGradFunction
@@ -87,7 +88,7 @@ Public Class Michalewicz
 
     Public Shared Sub Main11(args As String())
 
-        Debug.flag = True
+        ' Debugger.flag = True
 
         Dim param As Parameters = New Parameters()
         Dim lbfgsb As LBFGSB = New LBFGSB(param)
@@ -99,11 +100,11 @@ Public Class Michalewicz
             '	double[] res = lbfgsb.minimize(new Michalewicz(), new double[] { 2,2,2,2,2 }, new double[] { 0,0,0,0,0 }, new double[] { pi,pi,pi,pi,pi });
             Dim res As Double() = lbfgsb.minimize(New Michalewicz(2), New Double() {2, 2}, New Double() {0, 0}, New Double() {pi, pi})
 
-            Debug.debug("!"c, "RESULT")
-            Call Debug.debug("k = " & lbfgsb.k.ToString())
-            Debug.debug("x = ", res)
-            Call Debug.debug("fx = " & lbfgsb.fx.ToString())
-            Debug.debug("grad = ", lbfgsb.m_grad)
+            Call ("!RESULT").debug
+            Call ("k = " & lbfgsb.k.ToString()).debug
+            Call ("x = " & res.GetJson).debug
+            Call ("fx = " & lbfgsb.fx.ToString()).debug
+            Call ("grad = " & lbfgsb.m_grad.GetJson).debug
         Catch e As LBFGSBException
             Console.WriteLine(e.ToString())
             Console.Write(e.StackTrace)

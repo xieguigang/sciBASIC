@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e6fcff6ad110e2f0b7a122909170458b, Data_science\Mathematica\Math\Math\Numerics\Optimization\LBFGSB\examples\GramacyLee.vb"
+﻿#Region "Microsoft.VisualBasic::1bab71198546e120a409c09a2a25f02f, Data_science\Mathematica\Math\Math\Numerics\Optimization\LBFGSB\examples\GramacyLee.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 40
-    '    Code Lines: 27 (67.50%)
-    ' Comment Lines: 3 (7.50%)
+    '   Total Lines: 41
+    '    Code Lines: 27 (65.85%)
+    ' Comment Lines: 4 (9.76%)
     '    - Xml Docs: 0.00%
     ' 
-    '   Blank Lines: 10 (25.00%)
-    '     File Size: 1.26 KB
+    '   Blank Lines: 10 (24.39%)
+    '     File Size: 1.32 KB
 
 
     ' Class GramacyLee
@@ -54,6 +54,7 @@
 #End Region
 
 Imports Microsoft.VisualBasic.Math.Framework.Optimization.LBFGSB
+Imports Microsoft.VisualBasic.Serialization.JSON
 ' Gramacy & Lee (2012)
 ' https://www.sfu.ca/~ssurjano/grlee12.html
 
@@ -69,7 +70,7 @@ Public Class GramacyLee
 
     Public Shared Sub Main10(args As String())
 
-        Debug.flag = True
+        ' Debugger.flag = True
 
         Dim param As Parameters = New Parameters()
         param.weak_wolfe = True
@@ -81,11 +82,11 @@ Public Class GramacyLee
         Try
             Dim res As Double() = lbfgsb.minimize(New GramacyLee(), New Double() {0.55}, New Double() {0.5}, New Double() {2.5})
 
-            Debug.debug("!"c, "RESULT")
-            Call Debug.debug("k = " & lbfgsb.k.ToString())
-            Debug.debug("x = ", res)
-            Call Debug.debug("fx = " & lbfgsb.fx.ToString())
-            Debug.debug("grad = ", lbfgsb.m_grad)
+            Call ("!RESULT").debug
+            Call ("k = " & lbfgsb.k.ToString()).debug
+            Call ("x = " & res.GetJson).debug
+            Call ("fx = " & lbfgsb.fx.ToString()).debug
+            Call ("grad = " & lbfgsb.m_grad.GetJson).debug
         Catch e As LBFGSBException
             Console.WriteLine(e.ToString())
             Console.Write(e.StackTrace)

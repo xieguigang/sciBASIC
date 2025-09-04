@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6d42548a2570bfa2c18e954ec8a0f03f, Data_science\Mathematica\Math\DataFittings\Linear\FitResult.vb"
+﻿#Region "Microsoft.VisualBasic::b868dc5ba7e21f617abf808c018b2c7f, Data_science\Mathematica\Math\DataFittings\Linear\FitResult.vb"
 
     ' Author:
     ' 
@@ -34,20 +34,20 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 136
-    '    Code Lines: 58 (42.65%)
-    ' Comment Lines: 66 (48.53%)
+    '   Total Lines: 146
+    '    Code Lines: 67 (45.89%)
+    ' Comment Lines: 66 (45.21%)
     '    - Xml Docs: 95.45%
     ' 
-    '   Blank Lines: 12 (8.82%)
-    '     File Size: 4.75 KB
+    '   Blank Lines: 13 (8.90%)
+    '     File Size: 5.03 KB
 
 
     ' Class FitResult
     ' 
     '     Properties: AdjustR_square, ErrorTest, FactorSize, Intercept, IsPolyFit
-    '                 Polynomial, R_square, RMSE, Slope, SSE
-    '                 SSR
+    '                 Polynomial, R_square, Residuals, RMSE, Slope
+    '                 SSE, SSR
     ' 
     '     Function: IFitted_GetY, ToString
     ' 

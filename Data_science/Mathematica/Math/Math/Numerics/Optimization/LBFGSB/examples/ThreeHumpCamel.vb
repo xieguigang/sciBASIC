@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::aa48f3489ef81d76dc358e8de98bc0c2, Data_science\Mathematica\Math\Math\Numerics\Optimization\LBFGSB\examples\ThreeHumpCamel.vb"
+﻿#Region "Microsoft.VisualBasic::59ad921a786655fb5c1f7ea8a2430a8f, Data_science\Mathematica\Math\Math\Numerics\Optimization\LBFGSB\examples\ThreeHumpCamel.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 53
-    '    Code Lines: 32 (60.38%)
-    ' Comment Lines: 6 (11.32%)
+    '   Total Lines: 54
+    '    Code Lines: 32 (59.26%)
+    ' Comment Lines: 7 (12.96%)
     '    - Xml Docs: 0.00%
     ' 
-    '   Blank Lines: 15 (28.30%)
-    '     File Size: 1.67 KB
+    '   Blank Lines: 15 (27.78%)
+    '     File Size: 1.72 KB
 
 
     ' Class ThreeHumpCamel
@@ -54,6 +54,7 @@
 #End Region
 
 Imports Microsoft.VisualBasic.Math.Framework.Optimization.LBFGSB
+Imports Microsoft.VisualBasic.Serialization.JSON
 
 
 ' THREE-HUMP CAMEL FUNCTION
@@ -82,7 +83,7 @@ Public NotInheritable Class ThreeHumpCamel
 
     Public Shared Sub Main16(args As String())
 
-        Debug.flag = True
+        ' Debugger.flag = True
 
         Dim param As Parameters = New Parameters()
         Dim lbfgsb As LBFGSB = New LBFGSB(param)
@@ -93,11 +94,11 @@ Public NotInheritable Class ThreeHumpCamel
             '					new double[] { 5, 5 });
             Dim res As Double() = lbfgsb.minimize(New ThreeHumpCamel(), New Double() {2, 2}, New Double() {0, -5}, New Double() {1, 1})
 
-            Debug.debug("!"c, "RESULT")
-            Call Debug.debug("k = " & lbfgsb.k.ToString())
-            Debug.debug("x = ", res)
-            Call Debug.debug("fx = " & lbfgsb.fx.ToString())
-            Debug.debug("grad = ", lbfgsb.m_grad)
+            Call ("!RESULT").debug
+            Call ("k = " & lbfgsb.k.ToString()).debug
+            Call ("x = " & res.GetJson).debug
+            Call ("fx = " & lbfgsb.fx.ToString()).debug
+            Call ("grad = " & lbfgsb.m_grad.GetJson).debug
         Catch e As LBFGSBException
             Console.WriteLine(e.ToString())
             Console.Write(e.StackTrace)

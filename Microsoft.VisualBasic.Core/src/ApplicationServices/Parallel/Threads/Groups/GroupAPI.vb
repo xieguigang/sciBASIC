@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::91c0c7bf05f5cc78570c51304351cd2d, Microsoft.VisualBasic.Core\src\ApplicationServices\Parallel\Threads\Groups\GroupAPI.vb"
+﻿#Region "Microsoft.VisualBasic::af43210cdb5848eddfa1d8f9136a0a35, Microsoft.VisualBasic.Core\src\ApplicationServices\Parallel\Threads\Groups\GroupAPI.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 3 (6.82%)
-    '     File Size: 2.79 KB
+    '     File Size: 2.78 KB
 
 
     '     Module GroupAPI

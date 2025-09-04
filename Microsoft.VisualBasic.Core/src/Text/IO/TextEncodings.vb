@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5570e8ead7dba840e30030ee81edcc02, Microsoft.VisualBasic.Core\src\Text\IO\TextEncodings.vb"
+﻿#Region "Microsoft.VisualBasic::0e2a5d0fefefe8e9a97b74701e06b1e4, Microsoft.VisualBasic.Core\src\Text\IO\TextEncodings.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 85.29%
     ' 
     '   Blank Lines: 31 (11.31%)
-    '     File Size: 13.43 KB
+    '     File Size: 13.42 KB
 
 
     '     Module TextEncodings

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::aef095a0cceef03b321955f6389f1fda, Data_science\MachineLearning\Bootstrapping\GraphEmbedding\struct\TripleSet.vb"
+﻿#Region "Microsoft.VisualBasic::d0744134559fc70e1dc3a304d8856d4a, Data_science\MachineLearning\Bootstrapping\GraphEmbedding\struct\TripleSet.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 104
-    '    Code Lines: 89 (85.58%)
+    '   Total Lines: 98
+    '    Code Lines: 83 (84.69%)
     ' Comment Lines: 0 (0.00%)
     '    - Xml Docs: 0.00%
     ' 
-    '   Blank Lines: 15 (14.42%)
-    '     File Size: 4.32 KB
+    '   Blank Lines: 15 (15.31%)
+    '     File Size: 4.02 KB
 
 
     '     Class TripleSet
@@ -50,11 +50,6 @@
     '         Function: [get], entities, relations, triples
     ' 
     '         Sub: load, randomShuffle
-    '         Class CSharpImpl
-    ' 
-    '             Function: __Assign
-    ' 
-    ' 
     ' 
     ' 
     ' /********************************************************************************/

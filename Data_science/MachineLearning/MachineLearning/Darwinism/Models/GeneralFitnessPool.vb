@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::737b9a7ab097fdd23295973e1bf844c9, Data_science\MachineLearning\MachineLearning\Darwinism\Models\GeneralFitnessPool.vb"
+﻿#Region "Microsoft.VisualBasic::051f97cb403a58668588554d00fa186e, Data_science\MachineLearning\MachineLearning\Darwinism\Models\GeneralFitnessPool.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 84.00%
     ' 
     '   Blank Lines: 19 (16.81%)
-    '     File Size: 4.23 KB
+    '     File Size: 4.22 KB
 
 
     '     Class GeneralFitnessPool

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bc3d6acdc41a8df6a95cd9eef5157870, Data_science\Graph\Analysis\MorganFingerprint\MorganFingerprint.vb"
+﻿#Region "Microsoft.VisualBasic::7d3401f34c5425366b1e372ec8dfeb8d, Data_science\Graph\Analysis\MorganFingerprint\MorganFingerprint.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 226
-    '    Code Lines: 109 (48.23%)
-    ' Comment Lines: 89 (39.38%)
-    '    - Xml Docs: 73.03%
+    '   Total Lines: 244
+    '    Code Lines: 118 (48.36%)
+    ' Comment Lines: 95 (38.93%)
+    '    - Xml Docs: 68.42%
     ' 
-    '   Blank Lines: 28 (12.39%)
-    '     File Size: 11.35 KB
+    '   Blank Lines: 31 (12.70%)
+    '     File Size: 12.02 KB
 
 
     '     Class GraphMorganFingerprint

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::291906b7da015c19f17d87f0bca9bbac, Microsoft.VisualBasic.Core\src\Text\SearchEngine\TextIndexing\TextIndexing.vb"
+﻿#Region "Microsoft.VisualBasic::b1583e6415793d896e13bce6241bacf7, Microsoft.VisualBasic.Core\src\Text\SearchEngine\TextIndexing\TextIndexing.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 86.05%
     ' 
     '   Blank Lines: 30 (14.71%)
-    '     File Size: 8.59 KB
+    '     File Size: 8.57 KB
 
 
     '     Class TextIndexing

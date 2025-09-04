@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d24b98fe3d16ba62414111fa114dcf46, Data_science\MachineLearning\DeepLearning\NeuralNetwork\StoreProcedure\Formats\Scattered.vb"
+﻿#Region "Microsoft.VisualBasic::8b507da50bb29682ef6d61212438c6c0, Data_science\MachineLearning\DeepLearning\NeuralNetwork\StoreProcedure\Formats\Scattered.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 82.14%
     ' 
     '   Blank Lines: 28 (16.87%)
-    '     File Size: 6.83 KB
+    '     File Size: 6.80 KB
 
 
     '     Module Scattered

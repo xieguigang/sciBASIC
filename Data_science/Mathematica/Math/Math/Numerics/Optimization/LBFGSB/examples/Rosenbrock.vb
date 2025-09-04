@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e72b31e4ccf8e6d883a8d218af6a24db, Data_science\Mathematica\Math\Math\Numerics\Optimization\LBFGSB\examples\Rosenbrock.vb"
+﻿#Region "Microsoft.VisualBasic::fd542ed792b70a923362cb38d093e3d1, Data_science\Mathematica\Math\Math\Numerics\Optimization\LBFGSB\examples\Rosenbrock.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 65
-    '    Code Lines: 47 (72.31%)
-    ' Comment Lines: 4 (6.15%)
+    '   Total Lines: 66
+    '    Code Lines: 47 (71.21%)
+    ' Comment Lines: 5 (7.58%)
     '    - Xml Docs: 0.00%
     ' 
-    '   Blank Lines: 14 (21.54%)
-    '     File Size: 2.01 KB
+    '   Blank Lines: 14 (21.21%)
+    '     File Size: 2.07 KB
 
 
     ' Class Rosenbrock
@@ -56,6 +56,7 @@
 #End Region
 
 Imports Microsoft.VisualBasic.Math.Framework.Optimization.LBFGSB
+Imports Microsoft.VisualBasic.Serialization.JSON
 
 ' ROSENBROCK
 ' https://www.sfu.ca/~ssurjano/rosen.html
@@ -95,7 +96,7 @@ Public Class Rosenbrock
 
     Public Shared Sub Main15(args As String())
 
-        Debug.flag = True
+        ' Debugger.flag = True
 
         Dim param As Parameters = New Parameters()
         Dim lbfgsb As LBFGSB = New LBFGSB(param)
@@ -103,11 +104,11 @@ Public Class Rosenbrock
         ' converges to global minimum
         Try
             Dim res As Double() = lbfgsb.minimize(New Rosenbrock(), New Double() {2, -4, 2, 4, -2}, New Double() {-5, -5, -5, -5, -5}, New Double() {10, 10, 10, 10, 10})
-            Debug.debug("!"c, "RESULT")
-            Call Debug.debug("k = " & lbfgsb.k.ToString())
-            Debug.debug("x = ", res)
-            Call Debug.debug("fx = " & lbfgsb.fx.ToString())
-            Debug.debug("grad = ", lbfgsb.m_grad)
+            Call ("!RESULT").debug
+            Call ("k = " & lbfgsb.k.ToString()).debug
+            Call ("x = " & res.GetJson).debug
+            Call ("fx = " & lbfgsb.fx.ToString()).debug
+            Call ("grad = " & lbfgsb.m_grad.GetJson).debug
         Catch e As LBFGSBException
             Console.WriteLine(e.ToString())
             Console.Write(e.StackTrace)
@@ -115,7 +116,7 @@ Public Class Rosenbrock
 
         Dim f As Rosenbrock = New Rosenbrock()
         Dim g = New Double(4) {}
-        Call Debug.debug("res=" & f.eval(New Double() {2, -4, 2, 4, -2}, g).ToString())
+        Call ("res=" & f.eval(New Double() {2, -4, 2, 4, -2}, g).ToString()).debug
 
     End Sub
 

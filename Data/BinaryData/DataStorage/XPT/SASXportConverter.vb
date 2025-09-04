@@ -1,4 +1,69 @@
-﻿Imports System.IO
+﻿#Region "Microsoft.VisualBasic::c2a78d1832e5569eb1b36cb9b0c9ab18, Data\BinaryData\DataStorage\XPT\SASXportConverter.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 638
+    '    Code Lines: 507 (79.47%)
+    ' Comment Lines: 7 (1.10%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 124 (19.44%)
+    '     File Size: 24.05 KB
+
+
+    '     Class SASXportConverter
+    ' 
+    '         Properties: Debug, Done, MetaData, Offset, PrimitiveRecord
+    '                     Record, Row, RowCount
+    ' 
+    '         Constructor: (+2 Overloads) Sub New
+    ' 
+    '         Function: createBuffer, createDefaultBuffer, createTS, isBlankRow, read_bytes
+    '                   sas_validate_tag, xport_construct_format, xport_expect_header_record, xport_namestr_bswap, xport_read_header_record
+    '                   xport_read_library_record, xport_read_obs_header_record, xport_read_timestamp_record, xport_read_variables
+    ' 
+    '         Sub: Dispose, init, processRecord, readMeta, readNextRecord
+    '              readstat_convert, seek, xport_read_file_label_record, xport_read_labels_v8, xport_read_labels_v9
+    '              xport_read_namestr_header_record, xport_read_record, xport_read_table_name_record, xport_skip_record, xport_skip_rest_of_record
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+Imports System.IO
 Imports System.Runtime.InteropServices
 Imports Microsoft.VisualBasic.Data.IO.Xpt.Types
 Imports Microsoft.VisualBasic.Language

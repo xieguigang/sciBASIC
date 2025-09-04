@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ee4d4f9c70f635277026cabc87e5e750, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Math2D\Voronoi\Delaunay\ICoord.vb"
+﻿#Region "Microsoft.VisualBasic::73c4a61f780a75bec65dbc09bfb769ce, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Math2D\Voronoi\Delaunay\ICoord.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 9
-    '    Code Lines: 6 (66.67%)
+    '   Total Lines: 8
+    '    Code Lines: 6 (75.00%)
     ' Comment Lines: 0 (0.00%)
     '    - Xml Docs: 0.00%
     ' 
-    '   Blank Lines: 3 (33.33%)
-    '     File Size: 195 B
+    '   Blank Lines: 2 (25.00%)
+    '     File Size: 191 B
 
 
     '     Interface ICoord
@@ -52,7 +52,6 @@
 
 #End Region
 
-
 Imports Microsoft.VisualBasic.Imaging.Math2D
 
 Namespace Drawing2D.Math2D.DelaunayVoronoi
@@ -61,4 +60,3 @@ Namespace Drawing2D.Math2D.DelaunayVoronoi
         Property Coord As Vector2D
     End Interface
 End Namespace
-

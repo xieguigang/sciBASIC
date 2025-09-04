@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f5ffaa212a15688e3a71ccc3557e4332, Data_science\Mathematica\Math\Math\Numerics\Optimization\LBFGSB\examples\Perm.vb"
+﻿#Region "Microsoft.VisualBasic::be12023f318ad0f7bc5c11f767f50b6b, Data_science\Mathematica\Math\Math\Numerics\Optimization\LBFGSB\examples\Perm.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 71
-    '    Code Lines: 56 (78.87%)
-    ' Comment Lines: 1 (1.41%)
+    '   Total Lines: 72
+    '    Code Lines: 56 (77.78%)
+    ' Comment Lines: 2 (2.78%)
     '    - Xml Docs: 0.00%
     ' 
-    '   Blank Lines: 14 (19.72%)
-    '     File Size: 2.06 KB
+    '   Blank Lines: 14 (19.44%)
+    '     File Size: 2.12 KB
 
 
     ' Class Perm
@@ -57,6 +57,7 @@
 
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Math.Framework.Optimization.LBFGSB
+Imports Microsoft.VisualBasic.Serialization.JSON
 
 
 Public Class Perm
@@ -100,7 +101,7 @@ Public Class Perm
 
     Public Shared Sub Main14(args As String())
 
-        Debug.flag = True
+        ' Debugger.flag = True
 
         Dim param As Parameters = New Parameters()
         Dim lbfgsb As LBFGSB = New LBFGSB(param)
@@ -109,16 +110,16 @@ Public Class Perm
 
         Dim z = New Double() {0, 0, 0}
         Dim f As Perm = New Perm(d)
-        Call Debug.debug("res = " & f.evaluate(z).ToString())
+        Call ("res = " & f.evaluate(z).ToString()).debug
 
         ' converges to global minimum
         Try
             Dim res As Double() = lbfgsb.minimize(New Perm(d), New Double() {1, -1, -3}, New Double() {-d, -d, -d}, New Double() {d, d, d})
-            Debug.debug("!"c, "RESULT")
-            Call Debug.debug("k = " & lbfgsb.k.ToString())
-            Debug.debug("x = ", res)
-            Call Debug.debug("fx = " & lbfgsb.fx.ToString())
-            Debug.debug("grad = ", lbfgsb.m_grad)
+            Call ("!RESULT").debug
+            Call ("k = " & lbfgsb.k.ToString()).debug
+            Call ("x = " & res.GetJson).debug
+            Call ("fx = " & lbfgsb.fx.ToString()).debug
+            Call ("grad = " & lbfgsb.m_grad.GetJson).debug
         Catch e As LBFGSBException
             Console.WriteLine(e.ToString())
             Console.Write(e.StackTrace)

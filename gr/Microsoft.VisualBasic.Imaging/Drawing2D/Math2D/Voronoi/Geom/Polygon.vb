@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b0377f748a7e558b2d84adb40d4842b7, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Math2D\Voronoi\Geom\Polygon.vb"
+﻿#Region "Microsoft.VisualBasic::cdb6317f59bc112da3eed8020d859471, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Math2D\Voronoi\Geom\Polygon.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 0.00%
     ' 
     '   Blank Lines: 8 (18.18%)
-    '     File Size: 1.41 KB
+    '     File Size: 1.40 KB
 
 
     '     Class Polygon
@@ -97,4 +97,3 @@ Namespace Drawing2D.Math2D.DelaunayVoronoi
         End Function
     End Class
 End Namespace
-

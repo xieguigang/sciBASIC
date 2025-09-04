@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::beca9a13ff9d7df42c346d72618855f6, Data_science\DataMining\UMAP\Umap.vb"
+﻿#Region "Microsoft.VisualBasic::4043dce4f12f61534e9bffaa53cb878e, Data_science\DataMining\UMAP\Umap.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 473
-    '    Code Lines: 294 (62.16%)
-    ' Comment Lines: 105 (22.20%)
+    '   Total Lines: 477
+    '    Code Lines: 297 (62.26%)
+    ' Comment Lines: 105 (22.01%)
     '    - Xml Docs: 64.76%
     ' 
-    '   Blank Lines: 74 (15.64%)
-    '     File Size: 20.07 KB
+    '   Blank Lines: 75 (15.72%)
+    '     File Size: 20.18 KB
 
 
     ' Class Umap
@@ -53,6 +53,7 @@
     '               GetNEpochs, InitializeFit, InitializeFitImpl, InitializeSimplicialSetEmbedding, MakeEpochsPerSample
     ' 
     '     Sub: InitializeOptimization, Iterate, OptimizeLayoutStep, PrepareForOptimizationLoop, RunIterate
+    '          SetMaxTreeDepth
     ' 
     ' /********************************************************************************/
 

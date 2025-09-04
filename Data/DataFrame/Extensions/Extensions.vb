@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a191abc24c7d61ec20c5d7ded9c37bfb, Data\DataFrame\Extensions\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::fba111033402b1987638e18fe2eb12c3, Data\DataFrame\Extensions\Extensions.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 92.96%
     ' 
     '   Blank Lines: 74 (11.08%)
-    '     File Size: 28.89 KB
+    '     File Size: 28.88 KB
 
 
     ' Module Extensions
