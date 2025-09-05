@@ -178,19 +178,36 @@ Namespace Net.Http
         End Function
 
         Public Shared Function URIParser(uri As String) As DataURI
-            Dim tokens As Dictionary(Of String, String) = uri _
+            Dim parsed = Strings.Trim(uri) _
+                .Trim(" "c, """"c, vbTab) _
                 .Split(";"c) _
                 .Select(Function(p) p.StringSplit("[:=,]")) _
+                .ToArray
+            Dim tokens As Dictionary(Of String, String) = parsed _
                 .ToDictionary(Function(k) k(0).ToLower,
                               Function(value)
                                   Return value(1)
                               End Function)
 
             Return New DataURI(
-                base64:=tokens.TryGetValue("base64"),
+                base64:=StringFormatter(tokens.TryGetValue("base64")),
                 charset:=tokens.TryGetValue("charset"),
                 mime:=tokens.TryGetValue("data")
             )
+        End Function
+
+        Private Shared Function StringFormatter(base64 As String) As String
+            ' 2. 处理URL安全Base64变体：将 '-' 替换为 '+'，将 '_' 替换为 '/'
+            base64 = base64.Replace("-", "+").Replace("_", "/")
+
+            ' 3. 检查并修复长度问题：确保字符串长度是4的倍数
+            Dim paddingNeeded As Integer = base64.Length Mod 4
+
+            If paddingNeeded > 0 Then
+                base64 = base64.PadRight(base64.Length + (4 - paddingNeeded), "="c)
+            End If
+
+            Return base64
         End Function
 
         ''' <summary>

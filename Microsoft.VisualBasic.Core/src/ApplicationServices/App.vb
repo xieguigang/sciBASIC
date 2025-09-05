@@ -173,6 +173,13 @@ Public Module App
         End Get
     End Property
 
+    Public ReadOnly Property EnableAnsiColor As Boolean
+        Get
+            Return App.GetVariable("ansi_color", "TRUE").ParseBoolean AndAlso
+                Not App.GetVariable("internal_pipeline", "false").ParseBoolean
+        End Get
+    End Property
+
     ''' <summary>
     ''' Numbers of the CPU kernels on the current machine.
     ''' </summary>
@@ -1517,7 +1524,7 @@ Public Module App
         End SyncLock
     End Sub
 
-    Public Const FlagInternalPipeline As String = "--internal_pipeline"
+    Public Const FlagInternalPipeline As String = "internal_pipeline"
 
     ''' <summary>
     ''' 自动停止GC当前程序的线程

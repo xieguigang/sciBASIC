@@ -167,7 +167,7 @@ Namespace BSON
             ElseIf TypeOf obj Is JsonArray Then
                 Call New Encoder().encodeArray(ms, obj)
             Else
-                Throw New NotSupportedException
+                Throw New NotSupportedException(obj.GetType.FullName)
             End If
         End Sub
 

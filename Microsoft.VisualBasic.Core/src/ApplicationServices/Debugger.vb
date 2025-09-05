@@ -243,7 +243,12 @@ Public Module VBDebugger
         If log4vb IsNot Nothing Then
             Call log4vb(header, msg, level)
         ElseIf Not mute AndAlso Not VBDebugger.Mute AndAlso m_level <= MapLevels(level) Then
-            Call Console.WriteLine(New TextSpan(header & msg, color) & AnsiEscapeCodes.Reset)
+            If Console.IsOutputRedirected OrElse Not App.EnableAnsiColor Then
+                ' just output the plain text
+                Call Console.WriteLine(header & msg)
+            Else
+                Call Console.WriteLine(New TextSpan(header & msg, color) & AnsiEscapeCodes.Reset)
+            End If
         End If
     End Sub
 
