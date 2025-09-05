@@ -175,7 +175,8 @@ Public Module App
 
     Public ReadOnly Property EnableAnsiColor As Boolean
         Get
-            Return App.GetVariable("ansi_color", "TRUE").ParseBoolean
+            Return App.GetVariable("ansi_color", "TRUE").ParseBoolean AndAlso
+                Not App.GetVariable("internal_pipeline", "false").ParseBoolean
         End Get
     End Property
 
@@ -1523,7 +1524,7 @@ Public Module App
         End SyncLock
     End Sub
 
-    Public Const FlagInternalPipeline As String = "--internal_pipeline"
+    Public Const FlagInternalPipeline As String = "internal_pipeline"
 
     ''' <summary>
     ''' 自动停止GC当前程序的线程
