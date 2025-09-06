@@ -380,8 +380,8 @@ Imports std = System.Math
     ''' x·y是x和y共同具有的属性数，而xy是x具有的属性数与y具有的属性数的几何均值。于是，sim(x,y)是公共属性相
     ''' 对拥有的一种度量。
     ''' </summary>
-    ''' <param name="x"></param>
-    ''' <param name="y"></param>
+    ''' <param name="x">vector of elements of 0 or 1 binary data</param>
+    ''' <param name="y">vector of elements of 0 or 1 binary data</param>
     ''' <returns></returns>
     ''' <remarks>
     ''' http://xiao5461.blog.163.com/blog/static/22754562201211237567238/
