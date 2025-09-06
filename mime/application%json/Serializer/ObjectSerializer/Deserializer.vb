@@ -97,8 +97,8 @@ Public Module Deserializer
     ''' <returns></returns>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
-    Public Function CreateObject(Of T As Class)(json As JsonElement, Optional decodeMetachar As Boolean = True) As Object
-        Return json.CreateObject(Nothing, GetType(T), decodeMetachar)
+    Public Function CreateObject(Of T As Class)(json As JsonElement, Optional decodeMetachar As Boolean = True) As T
+        Return DirectCast(json.CreateObject(Nothing, GetType(T), decodeMetachar), T)
     End Function
 
     <Extension>
