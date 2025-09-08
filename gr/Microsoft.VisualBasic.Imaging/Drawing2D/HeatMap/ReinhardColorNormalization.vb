@@ -3,6 +3,43 @@ Imports std = System.Math
 
 Namespace Drawing2D.HeatMap
 
+    ''' <summary>
+    ''' The Reinhard Color Normalization algorithm, developed by Reinhard et al., is a classical method 
+    ''' for color transfer between images. Its core principles and implementation are as follows:
+    ''' 
+    ''' ### 1 Fundamental Principle  
+    ''' 
+    ''' The algorithm leverages the **LAB color space**, where the L (lightness), A (green-red), and B 
+    ''' (blue-yellow) channels are statistically uncorrelated. This independence allows for separate processing 
+    ''' of each channel. The core idea involves deriving a **linear transformation** based on statistical 
+    ''' analysis (mean and standard deviation) of the source and target images. By aligning the color 
+    ''' distributions of the source image to match those of the target image, effective color migration 
+    ''' is achieved .
+    ''' 
+    ''' ### 2 Implementation Approach  
+    ''' 
+    ''' In practical applications (e.g., MATLAB), the algorithm follows these steps:  
+    ''' 
+    ''' 1. **Color Space Conversion**: Convert both source and target images from RGB to LAB using functions like `rgb2lab` .  
+    ''' 2. **Statistical Calculation**: Compute the mean (μ) and standard deviation (σ) for each LAB channel in both images.  
+    ''' 3. **Linear Transformation**: For each channel, apply the transformation:  
+    ''' 
+    ''' \[
+    ''' \text{output\_channel} = \left( \frac{\text{source\_channel} - \mu_{\text{source}}}{\sigma_{\text{source}}} \right) \times \sigma_{\text{target}} + \mu_{\text{target}}
+    ''' \]  
+    ''' 
+    ''' This scales and shifts the source channel's distribution to match the target's statistics.  
+    ''' 
+    ''' 4. **Reconversion**: Convert the transformed LAB image back to RGB using `lab2rgb` to produce the final color-normalized result .  
+    ''' 
+    ''' ### 3 Key Advantages  
+    ''' 
+    ''' - **Channel Independence**: Processing LAB channels separately avoids cross-channel interference, enhancing accuracy .  
+    ''' - **Simplicity**: The linear transformation is computationally efficient and easy to implement.  
+    ''' - **Effectiveness**: Preserves structural details while adapting colors, making it suitable for 
+    '''                      applications like photo stylization and medical imaging.  
+    '''
+    ''' </summary>
     Public Class ReinhardColorNormalization
 
         Public Shared Sub Normalize(ByRef targetImage As BitmapBuffer, ByRef sourceImage As BitmapBuffer)
