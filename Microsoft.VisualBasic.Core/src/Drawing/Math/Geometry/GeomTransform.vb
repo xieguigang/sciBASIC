@@ -635,5 +635,77 @@ Namespace Imaging.Math2D
 
             Return New PointF(left - xo, top - yo)
         End Function
+
+        ''' <summary>
+        ''' 绕多边形自身中心旋转指定弧度
+        ''' </summary>
+        ''' <param name="theta">旋转角度（弧度），逆时针为正</param>
+        Public Sub Rotate(ByRef xpoints As Double(), ByRef ypoints As Double(), theta As Double)
+            ' 1. 计算多边形中心点
+            Dim cx As Double = 0
+            Dim cy As Double = 0
+            Dim length As Integer = xpoints.Length
+
+            For i As Integer = 0 To length - 1
+                cx += xpoints(i)
+                cy += ypoints(i)
+            Next
+            cx /= length
+            cy /= length
+
+            ' 2. 对每个顶点应用绕中心点的旋转变换
+            For i As Integer = 0 To length - 1
+                ' 平移至原点
+                Dim xTranslated As Double = xpoints(i) - cx
+                Dim yTranslated As Double = ypoints(i) - cy
+
+                ' 旋转
+                Dim xRotated As Double = xTranslated * Cos(theta) - yTranslated * Sin(theta)
+                Dim yRotated As Double = xTranslated * Sin(theta) + yTranslated * Cos(theta)
+
+                ' 平移回原位置
+                xpoints(i) = xRotated + cx
+                ypoints(i) = yRotated + cy
+            Next
+        End Sub
+
+        ''' <summary>
+        ''' 平移多边形
+        ''' </summary>
+        ''' <param name="tx">X轴平移量</param>
+        ''' <param name="ty">Y轴平移量</param>
+        Public Sub Translate(ByRef xpoints As Double(), ByRef ypoints As Double(), tx As Double, ty As Double)
+            Dim length As Integer = xpoints.Length
+
+            For i As Integer = 0 To length - 1
+                xpoints(i) += tx
+                ypoints(i) += ty
+            Next
+        End Sub
+
+        ''' <summary>
+        ''' 缩放多边形
+        ''' </summary>
+        ''' <param name="sx">X轴缩放因子</param>
+        ''' <param name="sy">Y轴缩放因子</param>
+        Public Sub Scale(ByRef xpoints As Double(), ByRef ypoints As Double(), sx As Double, sy As Double)
+            Dim length As Integer = xpoints.Length
+            ' 计算多边形中心点作为缩放参考点
+            Dim cx As Double = 0
+            Dim cy As Double = 0
+            For i As Integer = 0 To length - 1
+                cx += xpoints(i)
+                cy += ypoints(i)
+            Next
+            cx /= length
+            cy /= length
+
+            ' 对每个顶点进行缩放
+            For i As Integer = 0 To length - 1
+                ' 相对于中心点缩放
+                xpoints(i) = cx + (xpoints(i) - cx) * sx
+                ypoints(i) = cy + (ypoints(i) - cy) * sy
+            Next
+        End Sub
     End Module
 End Namespace

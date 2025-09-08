@@ -3,17 +3,11 @@ Imports Microsoft.VisualBasic.Math.MachineVision
 
 Module TestPolygonAlignment
 
-    Sub MainAlignment()
+    Sub Main()
 
         ' 创建两个多边形
-        Dim sourcePoly As New Polygon2D()
-        sourcePoly.xpoints = {0, 1, 1, 0}
-        sourcePoly.ypoints = {0, 0, 1, 1}
-
-        Dim targetPoly As New Polygon2D()
-        targetPoly.xpoints = {2, 3, 3, 2}
-        targetPoly.ypoints = {1, 1, 2, 2}
-
+        Dim sourcePoly As New Polygon2D({0, 1, 1, 0}, {0, 0, 1, 1})
+        Dim targetPoly As New Polygon2D({2, 3, 3, 2}, {1, 1, 2, 2})
         ' 执行对齐
         Dim args As (theta As Double, tx As Double, ty As Double, scale As Double) = RANSACPointAlignment.AlignPolygons(
     sourcePoly,
