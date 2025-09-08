@@ -64,6 +64,14 @@ Namespace BSON
 
     Public Module BSONFormat
 
+        Public Function SafeLoadArrayList(buf As Byte()) As JsonArray
+            Try
+                Return Load(buf).ToJsonArray
+            Catch ex As Exception
+                Return App.LogException(ex)
+            End Try
+        End Function
+
         ''' <summary>
         ''' 解析BSON
         ''' </summary>
