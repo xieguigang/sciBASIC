@@ -60,7 +60,6 @@
 
 Imports Microsoft.VisualBasic.Language.Java
 Imports Microsoft.VisualBasic.MachineLearning.CNN.data
-Imports Microsoft.VisualBasic.MachineLearning.Convolutional
 Imports std = System.Math
 
 Namespace CNN.layers

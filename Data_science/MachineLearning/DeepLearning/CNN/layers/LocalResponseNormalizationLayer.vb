@@ -114,7 +114,7 @@ Namespace CNN.layers
         Public Sub New(n As Integer)
             ' checks
             If n Mod 2 = 0 Then
-                VBDebugger.EchoLine("WARNING: n should be odd for LRN layer")
+                Call "LocalResponseNormalizationLayer_WARNING: n should be odd for LRN layer".warning
             End If
 
             Me.n = n
