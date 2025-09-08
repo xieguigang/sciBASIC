@@ -324,12 +324,16 @@ Namespace Distributions
         ''' <summary>
         ''' #### normal-pdf
         ''' 
-        ''' Normal Distribution.(正态分布)
+        ''' Gaussian PDF function,
+        ''' Normal Distribution.
         ''' </summary>
         ''' <param name="x"></param>
         ''' <param name="m">Mean</param>
         ''' <param name="sd"></param>
         ''' <returns>Get normal distribution density value at a point.</returns>
+        ''' <remarks>
+        ''' (正态分布)
+        ''' </remarks>
         Public Function ProbabilityDensity(x#, m#, sd#) As Double
             ' 1 / (sd * sqrt(2 * PI)) * exp(-(x - u)^2 / (2* sd ^ 2))
 
