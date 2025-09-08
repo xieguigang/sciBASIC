@@ -120,6 +120,7 @@
     <Compile Include="DataSeriesFactory.vb" />
     <Compile Include="demo_data1.vb" />
     <Compile Include="KalmanFilterDemotest.vb" />
+    <Compile Include="TestPolygonAlignment.vb" />
     <Compile Include="TrajectoryTest.vb" />
     <Compile Include="MultivariateDataSeriesRepository.vb" />
     <Compile Include="Program.vb" />

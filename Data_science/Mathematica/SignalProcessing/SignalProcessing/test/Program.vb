@@ -60,6 +60,7 @@ Imports Microsoft.VisualBasic.Math.SignalProcessing.PeakFinding
 Module Program
 
     Sub Main()
+        Call TestPolygonAlignment.MainAlignment()
         Call peakFinding()
         Dim signal As TimeSignal() = TimeSignal.SignalSequence(Source.bumps(10000, 5).AsVector.Log(base:=10) * 100).ToArray
 
