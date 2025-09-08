@@ -116,12 +116,18 @@ Namespace CNN.layers
             Dim V = in_act.clearGradient() ' we need to set dw of this
             Dim V2 = out_act
             Dim N = V.Weights.Length
+            Dim Vw = V.Weights ' 获取前向传播的输入值
 
             For i As Integer = 0 To N - 1
-                If V2.getWeight(i) <= threshold Then
-                    V.setGradient(i, threshold) ' threshold
+                'If V2.getWeight(i) <= threshold Then
+                '    V.setGradient(i, threshold) ' threshold
+                'Else
+                '    V.setGradient(i, V2.getGradient(i))
+                'End If
+                If Vw(i) <= 0 Then ' 如果原始输入 <= 0
+                    V.setGradient(i, 0.0) ' 则梯度为 0
                 Else
-                    V.setGradient(i, V2.getGradient(i))
+                    V.setGradient(i, V2.getGradient(i)) ' 如果原始输入 > 0，则梯度 = 上游传来的梯度
                 End If
             Next
         End Sub
