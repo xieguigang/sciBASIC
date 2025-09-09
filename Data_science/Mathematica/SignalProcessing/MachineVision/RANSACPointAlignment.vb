@@ -7,13 +7,23 @@ Public Class RANSACPointAlignment
     Dim centerSource As (cx As Double, cy As Double)
     Dim centerTarget As (cx As Double, cy As Double)
 
+    Dim sourcePoly As Polygon2D
+    Dim targetPoly As Polygon2D
+
+    ''' <summary>
+    ''' the distance threshold
+    ''' </summary>
+    Dim threshold As Double = 0.1
+
     ' 主对齐函数：返回包含独立缩放因子的元组
     Public Shared Function AlignPolygons(sourcePoly As Polygon2D, targetPoly As Polygon2D, Optional iterations As Integer = 1000, Optional distanceThreshold As Double = 0.1) As Transform
-
         ' 计算源和目标多边形的中心点
         Dim ransac As New RANSACPointAlignment With {
             .centerSource = CalculateCenter(sourcePoly),
-            .centerTarget = CalculateCenter(targetPoly)
+            .centerTarget = CalculateCenter(targetPoly),
+            .sourcePoly = sourcePoly,
+            .targetPoly = targetPoly,
+            .threshold = distanceThreshold
         }
         ' 初始化最佳参数
         Dim bestTheta As Double = 0
@@ -33,7 +43,10 @@ Public Class RANSACPointAlignment
             ' 随机选择两个点
             Dim idx1 = rand.Next(sourcePoly.length)
             Dim idx2 = rand.Next(sourcePoly.length)
-            If idx1 = idx2 Then Continue For
+
+            If idx1 = idx2 Then
+                Continue For
+            End If
 
             Dim p1 = (sourcePoly.xpoints(idx1), sourcePoly.ypoints(idx1))
             Dim p2 = (sourcePoly.xpoints(idx2), sourcePoly.ypoints(idx2))
@@ -45,7 +58,7 @@ Public Class RANSACPointAlignment
             Dim transformParams = ransac.ComputeSimilarityTransform(p1, p2, q1, q2)
 
             ' 统计内点数量
-            Dim inliers = ransac.CountInliers(sourcePoly, targetPoly, transformParams.theta, transformParams.tx, transformParams.ty, transformParams.scalex, transformParams.scaley, distanceThreshold)
+            Dim inliers = ransac.CountInliers(transformParams.theta, transformParams.tx, transformParams.ty, transformParams.scalex, transformParams.scaley)
 
             ' 更新最佳变换
             If inliers > maxInliers Then
@@ -60,7 +73,7 @@ Public Class RANSACPointAlignment
 
         ' 用所有内点重新精炼变换
         If maxInliers > 0 Then
-            Return ransac.RefineTransform(sourcePoly, targetPoly, bestTheta, bestTx, bestTy, bestScalex, bestScaley, distanceThreshold)
+            Return ransac.RefineTransform(bestTheta, bestTx, bestTy, bestScalex, bestScaley)
         End If
 
         Return (bestTheta, bestTx, bestTy, bestScalex, bestScaley)
@@ -68,15 +81,7 @@ Public Class RANSACPointAlignment
 
     ' 计算多边形中心点
     Private Shared Function CalculateCenter(poly As Polygon2D) As (cx As Double, cy As Double)
-        Dim cx As Double = 0
-        Dim cy As Double = 0
-        For i As Integer = 0 To poly.length - 1
-            cx += poly.xpoints(i)
-            cy += poly.ypoints(i)
-        Next
-        cx /= poly.length
-        cy /= poly.length
-        Return (cx, cy)
+        Return (poly.xpoints.Average, poly.ypoints.Average)
     End Function
 
     ' 在目标多边形中找最近邻点（保持不变）
@@ -105,13 +110,7 @@ Public Class RANSACPointAlignment
     End Function
 
     ' 计算相似变换参数（独立缩放因子）
-    Private Function ComputeSimilarityTransform(
-        p1 As (Double, Double),
-        p2 As (Double, Double),
-        q1 As (Double, Double),
-        q2 As (Double, Double)
-    ) As (theta As Double, tx As Double, ty As Double, scalex As Double, scaley As Double)
-
+    Private Function ComputeSimilarityTransform(p1 As (Double, Double), p2 As (Double, Double), q1 As (Double, Double), q2 As (Double, Double)) As Transform
         ' 计算源向量和目标向量
         Dim vSourceX = p2.Item1 - p1.Item1
         Dim vSourceY = p2.Item2 - p1.Item2
@@ -166,23 +165,13 @@ Public Class RANSACPointAlignment
     End Function
 
     ' 统计内点数量（应用绕中心点的变换）
-    Private Function CountInliers(
-        sourcePoly As Polygon2D,
-        targetPoly As Polygon2D,
-        theta As Double,
-        tx As Double,
-        ty As Double,
-        scalex As Double,
-        scaley As Double,
-        threshold As Double
-    ) As Integer
-
+    Private Function CountInliers(theta As Double, tx As Double, ty As Double, scalex As Double, scaley As Double) As Integer
         Dim inliers = 0
         Dim cosTheta = std.Cos(theta)
         Dim sinTheta = std.Sin(theta)
         Dim thresholdSq = threshold * threshold
 
-        For i = 0 To sourcePoly.length - 1
+        For i As Integer = 0 To sourcePoly.length - 1
             ' 绕中心点缩放
             Dim xScaled = centerSource.cx + (sourcePoly.xpoints(i) - centerSource.cx) * scalex
             Dim yScaled = centerSource.cy + (sourcePoly.ypoints(i) - centerSource.cy) * scaley
@@ -212,17 +201,7 @@ Public Class RANSACPointAlignment
     End Function
 
     ' 用所有内点重新精炼变换（最小二乘优化，考虑独立缩放因子）
-    Private Function RefineTransform(
-        sourcePoly As Polygon2D,
-        targetPoly As Polygon2D,
-        initTheta As Double,
-        initTx As Double,
-        initTy As Double,
-        initScalex As Double,
-        initScaley As Double,
-        threshold As Double
-    ) As (theta As Double, tx As Double, ty As Double, scalex As Double, scaley As Double)
-
+    Private Function RefineTransform(initTheta As Double, initTx As Double, initTy As Double, initScalex As Double, initScaley As Double) As Transform
         ' 收集所有内点对
         Dim inlierPairs As New List(Of (sx As Double, sy As Double, tx As Double, ty As Double))
         Dim cosTheta = std.Cos(initTheta)

@@ -30,7 +30,7 @@ Module TestPolygonAlignment
         ' 输出结果
         Console.WriteLine($"旋转角度: {args.theta} 弧度 ~ {std.PI / 3}")
         Console.WriteLine($"平移量: tx={args.tx}, ty={args.ty}")
-        Console.WriteLine($"缩放因子: sx={args.sx}, sy={args.sy}")
+        Console.WriteLine($"缩放因子: sx={args.scalex}, sy={args.scaley}")
 
         Dim plot1 As New Bitmap(200, 200)
 
