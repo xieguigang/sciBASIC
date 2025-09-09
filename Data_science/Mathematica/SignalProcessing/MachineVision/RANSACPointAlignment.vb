@@ -132,49 +132,41 @@ Public Class RANSACPointAlignment
         Dim vTargetX = q2.x - q1.x
         Dim vTargetY = q2.y - q1.y
 
-        ' 计算旋转角度
-        Dim dot = vSourceX * vTargetX + vSourceY * vTargetY
-        Dim cross = vSourceX * vTargetY - vSourceY * vTargetX
-        Dim theta = std.Atan2(cross, dot)
+        ' 计算旋转角度（修正计算方式）
+        Dim theta = std.Atan2(vTargetY, vTargetX) - std.Atan2(vSourceY, vSourceX)
 
-        ' 计算独立缩放因子：分别处理X和Y方向
-        Dim scalex = 1.0
-        Dim scaley = 1.0
+        ' 将角度归一化到[-π, π]
+        While theta > std.PI
+            theta -= 2 * std.PI
+        End While
+        While theta < -std.PI
+            theta += 2 * std.PI
+        End While
 
-        ' 计算源点和目标点相对于各自中心点的坐标
-        Dim s1x = p1.x - centerSource.x
-        Dim s1y = p1.y - centerSource.y
-        Dim s2x = p2.x - centerSource.x
-        Dim s2y = p2.y - centerSource.y
+        ' 计算缩放因子（修正计算方式）
+        Dim sourceLength = std.Sqrt(vSourceX * vSourceX + vSourceY * vSourceY)
+        Dim targetLength = std.Sqrt(vTargetX * vTargetX + vTargetY * vTargetY)
 
-        Dim t1x = q1.x - centerTarget.x
-        Dim t1y = q1.y - centerTarget.y
-        Dim t2x = q2.x - centerTarget.x
-        Dim t2y = q2.y - centerTarget.y
+        Dim scale = 1.0
+        If sourceLength > 0.0000001 Then
+            scale = targetLength / sourceLength
+        End If
 
-        ' 将目标点旋转-theta角度，对齐到源点方向
-        Dim cosNegTheta = std.Cos(-theta)
-        Dim sinNegTheta = std.Sin(-theta)
-        Dim rotatedT1x = t1x * cosNegTheta - t1y * sinNegTheta
-        Dim rotatedT1y = t1x * sinNegTheta + t1y * cosNegTheta
-        Dim rotatedT2x = t2x * cosNegTheta - t2y * sinNegTheta
-        Dim rotatedT2y = t2x * sinNegTheta + t2y * cosNegTheta
+        ' 使用相同的缩放因子（或根据需要独立计算）
+        Dim scalex = scale
+        Dim scaley = scale
 
-        ' 计算缩放因子（避免除零）
-        If std.Abs(s1x) > 0.0000000001 Then scalex = rotatedT1x / s1x
-        If std.Abs(s2x) > 0.0000000001 Then scalex = (scalex + rotatedT2x / s2x) / 2
-        If std.Abs(s1y) > 0.0000000001 Then scaley = rotatedT1y / s1y
-        If std.Abs(s2y) > 0.0000000001 Then scaley = (scaley + rotatedT2y / s2y) / 2
-
-        ' 计算平移量：目标中心 - 变换后的源中心
-        Dim transformedCenterX = centerSource.x * scalex
-        Dim transformedCenterY = centerSource.y * scaley
+        ' 计算平移量（修正计算方式）
+        ' 先将p1点应用旋转和缩放
         Dim cosTheta = std.Cos(theta)
         Dim sinTheta = std.Sin(theta)
-        Dim rotatedCenterX = transformedCenterX * cosTheta - transformedCenterY * sinTheta
-        Dim rotatedCenterY = transformedCenterX * sinTheta + transformedCenterY * cosTheta
-        Dim tx = centerTarget.x - rotatedCenterX
-        Dim ty = centerTarget.y - rotatedCenterY
+
+        Dim transformedX = p1.x * scalex * cosTheta - p1.y * scaley * sinTheta
+        Dim transformedY = p1.x * scalex * sinTheta + p1.y * scaley * cosTheta
+
+        ' 计算平移量：目标点 - 变换后的源点
+        Dim tx = q1.x - transformedX
+        Dim ty = q1.y - transformedY
 
         Return (theta, tx, ty, scalex, scaley)
     End Function
@@ -187,17 +179,17 @@ Public Class RANSACPointAlignment
         Dim thresholdSq = threshold * threshold
 
         For i As Integer = 0 To sourcePoly.length - 1
-            ' 绕中心点缩放
-            Dim xScaled = centerSource.x + (sourcePoly.xpoints(i) - centerSource.x) * t.scalex
-            Dim yScaled = centerSource.y + (sourcePoly.ypoints(i) - centerSource.y) * t.scaley
+            ' 获取源点
+            Dim x = sourcePoly.xpoints(i)
+            Dim y = sourcePoly.ypoints(i)
 
-            ' 绕中心点旋转
-            Dim xRel = xScaled - centerSource.x
-            Dim yRel = yScaled - centerSource.y
-            Dim xRotated = centerSource.x + (xRel * cosTheta - yRel * sinTheta)
-            Dim yRotated = centerSource.y + (xRel * sinTheta + yRel * cosTheta)
+            ' 应用变换：先缩放，再旋转，最后平移
+            Dim xScaled = x * t.scalex
+            Dim yScaled = y * t.scaley
 
-            ' 平移
+            Dim xRotated = xScaled * cosTheta - yScaled * sinTheta
+            Dim yRotated = xScaled * sinTheta + yScaled * cosTheta
+
             Dim xTrans = xRotated + t.tx
             Dim yTrans = yRotated + t.ty
 
@@ -227,13 +219,11 @@ Public Class RANSACPointAlignment
             Dim sx = sourcePoly.xpoints(i)
             Dim sy = sourcePoly.ypoints(i)
 
-            ' 应用初始变换（绕中心点缩放和旋转，然后平移）
-            Dim xScaled = centerSource.x + (sx - centerSource.x) * init.scalex
-            Dim yScaled = centerSource.y + (sy - centerSource.y) * init.scaley
-            Dim xRel = xScaled - centerSource.x
-            Dim yRel = yScaled - centerSource.y
-            Dim xRotated = centerSource.x + (xRel * cosTheta - yRel * sinTheta)
-            Dim yRotated = centerSource.y + (xRel * sinTheta + yRel * cosTheta)
+            ' 应用初始变换
+            Dim xScaled = sx * init.scalex
+            Dim yScaled = sy * init.scaley
+            Dim xRotated = xScaled * cosTheta - yScaled * sinTheta
+            Dim yRotated = xScaled * sinTheta + yScaled * cosTheta
             Dim xTrans = xRotated + init.tx
             Dim yTrans = yRotated + init.ty
 
@@ -249,35 +239,59 @@ Public Class RANSACPointAlignment
 
         ' 使用所有内点对，通过最小二乘法重新计算相似变换参数
         If inlierPairs.Count >= 2 Then
-            Dim sumTheta = 0.0
-            Dim sumTx = 0.0
-            Dim sumTy = 0.0
-            Dim sumScalex = 0.0
-            Dim sumScaley = 0.0
+            ' 计算中心点
+            Dim sourceCenterX = inlierPairs.Select(Function(p) p.sx).Average()
+            Dim sourceCenterY = inlierPairs.Select(Function(p) p.sy).Average()
+            Dim targetCenterX = inlierPairs.Select(Function(p) p.tx).Average()
+            Dim targetCenterY = inlierPairs.Select(Function(p) p.ty).Average()
+
+            ' 计算旋转角度和缩放因子
+            Dim sumNumerator = 0.0
+            Dim sumDenominator = 0.0
+            Dim sumScaleX = 1.0
+            Dim sumScaleY = 1.0
             Dim count = 0
 
-            For i = 0 To inlierPairs.Count - 2
-                For j = i + 1 To inlierPairs.Count - 1
-                    Dim pair1 = inlierPairs(i)
-                    Dim pair2 = inlierPairs(j)
-                    Dim p1 As New Point(pair1.sx, pair1.sy)
-                    Dim p2 As New Point(pair2.sx, pair2.sy)
-                    Dim q1 As New Point(pair1.tx, pair1.ty)
-                    Dim q2 As New Point(pair2.tx, pair2.ty)
+            For Each pair In inlierPairs
+                ' 相对于中心点的坐标
+                Dim sxRel = pair.sx - sourceCenterX
+                Dim syRel = pair.sy - sourceCenterY
+                Dim txRel = pair.tx - targetCenterX
+                Dim tyRel = pair.ty - targetCenterY
 
-                    Dim params = ComputeSimilarityTransform(p1, p2, q1, q2)
-                    sumTheta += params.theta
-                    sumTx += params.tx
-                    sumTy += params.ty
-                    sumScalex += params.scalex
-                    sumScaley += params.scaley
+                ' 计算旋转角度的分子和分母
+                sumNumerator += sxRel * tyRel - syRel * txRel
+                sumDenominator += sxRel * txRel + syRel * tyRel
+
+                ' 计算缩放因子
+                If std.Abs(sxRel) > 0.0000001 Then
+                    sumScaleX += std.Abs(txRel / sxRel)
                     count += 1
-                Next
+                End If
+                If std.Abs(syRel) > 0.0000001 Then
+                    sumScaleY += std.Abs(tyRel / syRel)
+                    count += 1
+                End If
             Next
 
-            If count > 0 Then
-                Return (sumTheta / count, sumTx / count, sumTy / count, sumScalex / count, sumScaley / count)
-            End If
+            ' 计算旋转角度
+            Dim theta = std.Atan2(sumNumerator, sumDenominator)
+
+            ' 计算平均缩放因子
+            Dim scalex = If(count > 0, sumScaleX / (count / 2), 1.0)
+            Dim scaley = If(count > 0, sumScaleY / (count / 2), 1.0)
+
+            ' 计算平移量
+            cosTheta = std.Cos(theta)
+            sinTheta = std.Sin(theta)
+
+            Dim transformedCenterX = sourceCenterX * scalex * cosTheta - sourceCenterY * scaley * sinTheta
+            Dim transformedCenterY = sourceCenterX * scalex * sinTheta + sourceCenterY * scaley * cosTheta
+
+            Dim tx = targetCenterX - transformedCenterX
+            Dim ty = targetCenterY - transformedCenterY
+
+            Return (theta, tx, ty, scalex, scaley)
         End If
 
         Return init
