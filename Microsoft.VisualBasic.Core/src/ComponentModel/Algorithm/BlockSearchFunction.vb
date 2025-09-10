@@ -107,11 +107,13 @@ Namespace ComponentModel.Algorithm
             Return Function(source, target)
                        ' target is the input data to search
                        Dim x As Double = target.min
+                       Dim checkRange As Boolean = x >= source.min AndAlso x <= source.max
 
                        ' 20240809 fix bug for matches when source block contains only one element
                        ' needs a tolerance window for make matches!
-                       If (x > source.min AndAlso x < source.max) OrElse
-                            (source.zero AndAlso std.Abs(source.min - x) <= fuzzy) Then
+                       If checkRange Then
+                           Return 0
+                       ElseIf source.zero AndAlso fuzzy > 0 AndAlso (std.Abs(source.min - x) <= fuzzy OrElse std.Abs(source.max - x) <= fuzzy) Then
                            Return 0
                        ElseIf source.min < x Then
                            Return -1
