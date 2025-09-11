@@ -60,6 +60,7 @@
 
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.MachineLearning.QLearning.DataModel
+Imports randf = Microsoft.VisualBasic.Math.RandomExtensions
 
 Namespace QLearning
 
@@ -73,8 +74,6 @@ Namespace QLearning
     ''' </summary>
     Public MustInherit Class QTable(Of T As ICloneable)
         Implements IQTable
-
-        ReadOnly randomGenerator As Random
 
         ''' <summary>
         ''' the table variable stores the Q-table, where the state is saved
@@ -156,7 +155,6 @@ Namespace QLearning
         End Sub
 
         Private Sub New()
-            randomGenerator = Math.seeds
         End Sub
 
         ''' <summary>
@@ -170,7 +168,7 @@ Namespace QLearning
         Public Overridable Function NextAction(map As T) As Integer
             previousState = CType(map.Clone(), T)
 
-            If randomGenerator.NextDouble() < ExplorationChance Then
+            If randf.NextDouble() < ExplorationChance Then
                 previousAction = explore()
             Else
                 previousAction = getBestAction(map)
@@ -217,7 +215,7 @@ Namespace QLearning
         ''' <returns> index of action to take </returns>
         ''' <remarks>在这里得到可能的下一步的动作的在动作列表里面编号值， Index</remarks>
         Protected Function explore() As Integer
-            Return (New Random(Me.randomGenerator.Next(ActionRange + 100 * previousAction))).Next(ActionRange)
+            Return (New Random(randf.Next(ActionRange + 100 * previousAction))).Next(ActionRange)
         End Function
 
         ''' <summary>
