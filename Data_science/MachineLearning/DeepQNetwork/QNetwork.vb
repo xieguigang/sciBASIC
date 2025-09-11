@@ -1,4 +1,5 @@
 Imports Microsoft.VisualBasic.MachineLearning.CNN
+Imports Microsoft.VisualBasic.MachineLearning.CNN.trainers
 
 ''' <summary>
 ''' Create Q-learning model based on a deep full connected network
@@ -7,6 +8,8 @@ Public Class QNetwork
 
     ReadOnly DNN As ConvolutionalNN
     ReadOnly actionSet As Array
+
+    Dim ada As TrainerAlgorithm
 
     ''' <summary>
     ''' Create a new Q-learning model
@@ -22,13 +25,18 @@ Public Class QNetwork
     ''' </param>
     Sub New(statSize As Integer, actions As Type, Optional hiddens As Integer() = Nothing)
         Call Me.New(actions)
+        DNN = buildModel(statSize, defaultShape(hiddens, statSize, actionSet.Length), actionSet.Length)
+        ada = New AdaGradTrainer(5, 0.001)
+        ada.SetKernel(DNN)
+    End Sub
 
+    Private Shared Function defaultShape(hiddens As Integer(), statSize As Integer, actionSize As Integer) As Integer()
         If hiddens.IsNullOrEmpty Then
-            hiddens = {statSize * 8, statSize * 16, actionSet.Length * 2}
+            hiddens = {statSize * 8, statSize * 16, actionSize * 2}
         End If
 
-        DNN = buildModel(statSize, hiddens, actionSet.Length)
-    End Sub
+        Return hiddens
+    End Function
 
     Private Shared Function buildModel(statSize As Integer, hiddens As Integer(), output As Integer) As ConvolutionalNN
         Dim builder As New LayerBuilder
@@ -57,6 +65,8 @@ Public Class QNetwork
     Sub New(Q As ConvolutionalNN, actions As Type)
         Call Me.New(actions)
         DNN = Q
+        ada = New AdaGradTrainer(5, 0.001)
+        ada.SetKernel(DNN)
     End Sub
 
 End Class
