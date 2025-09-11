@@ -1,56 +1,56 @@
 ﻿#Region "Microsoft.VisualBasic::b6dcc2d82510ca74bf8725b48f7d6085, Microsoft.VisualBasic.Core\src\Extensions\Doc\Text.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 582
-    '    Code Lines: 351 (60.31%)
-    ' Comment Lines: 168 (28.87%)
-    '    - Xml Docs: 91.67%
-    ' 
-    '   Blank Lines: 63 (10.82%)
-    '     File Size: 22.48 KB
+' Summaries:
 
 
-    ' Module TextDoc
-    ' 
-    '     Function: ForEachChar, IsTextFile, (+2 Overloads) IterateAllLines, LineIterators, LoadTextDoc
-    '               OpenWriter, (+2 Overloads) ReadAllLines, ReadAllText, ReadFirstLine, SaveHTML
-    '               SaveJson, (+4 Overloads) SaveTo, SaveTSV, SaveWithHTMLEncoding, SolveStream
-    '               TsvHeaders
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 582
+'    Code Lines: 351 (60.31%)
+' Comment Lines: 168 (28.87%)
+'    - Xml Docs: 91.67%
+' 
+'   Blank Lines: 63 (10.82%)
+'     File Size: 22.48 KB
+
+
+' Module TextDoc
+' 
+'     Function: ForEachChar, IsTextFile, (+2 Overloads) IterateAllLines, LineIterators, LoadTextDoc
+'               OpenWriter, (+2 Overloads) ReadAllLines, ReadAllText, ReadFirstLine, SaveHTML
+'               SaveJson, (+4 Overloads) SaveTo, SaveTSV, SaveWithHTMLEncoding, SolveStream
+'               TsvHeaders
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -257,7 +257,7 @@ Public Module TextDoc
                     Throw New InvalidProgramException($"in-valid! ({path})")
                 Else
                     If verbose Then
-                        Call $"the given path is a text paragraph? ({path})".Warning
+                        Call $"the given path is a text paragraph? ({path})".warning
                     End If
 
                     ' returns an empty string collection
@@ -268,7 +268,7 @@ Public Module TextDoc
             End If
 
             If verbose Then
-                Call $"the given path ({display_str}) is not exists on your file system!".Warning
+                Call $"the given path ({display_str}) is not exists on your file system!".warning
             End If
 
             ' returns an empty string collection
@@ -444,10 +444,10 @@ Public Module TextDoc
                 .ToArray
         Else
             If path.StringEmpty Then
-                Call "empty file path!".Warning
+                Call "empty file path!".warning
             Else
                 Try
-                    Call $"missing text file: {path.GetFullPath}!".Warning
+                    Call $"missing text file: {path.GetFullPath}!".warning
                 Catch ex As Exception
 
                 End Try
