@@ -1,5 +1,5 @@
 ﻿Imports System.Runtime.CompilerServices
-Imports Microsoft.VisualBasic.Serialization.JSON
+Imports std = System.Math
 
 Namespace Imaging.Math2D
 
@@ -33,6 +33,35 @@ Namespace Imaging.Math2D
 
         Public Overrides Function ToString() As String
             Return $"rotate_theta:{theta.ToString("F2")}, translate=({tx.ToString("F2")},{ty.ToString("F2")}), scale=({scalex.ToString("F2")},{scaley.ToString("F2")})"
+        End Function
+
+        Public Function ApplyTo(polygon As Polygon2D) As Polygon2D
+            '应用变换到多边形[5](@ref)
+            Dim transformed As New Polygon2D()
+            transformed.xpoints = New Double(polygon.length - 1) {}
+            transformed.ypoints = New Double(polygon.length - 1) {}
+
+            Dim cosTheta As Double = std.Cos(theta)
+            Dim sinTheta As Double = std.Sin(theta)
+
+            For i As Integer = 0 To polygon.length - 1
+                Dim x As Double = polygon.xpoints(i)
+                Dim y As Double = polygon.ypoints(i)
+
+                ' 缩放
+                x *= scalex
+                y *= scaley
+
+                ' 旋转
+                Dim xRotated As Double = x * cosTheta - y * sinTheta
+                Dim yRotated As Double = x * sinTheta + y * cosTheta
+
+                ' 平移
+                transformed.xpoints(i) = xRotated + tx
+                transformed.ypoints(i) = yRotated + ty
+            Next
+
+            Return transformed
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>

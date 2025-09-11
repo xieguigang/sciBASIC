@@ -138,6 +138,16 @@ Namespace Imaging.Math2D
             End Set
         End Property
 
+        Public ReadOnly Property centroid As PointF
+            Get
+                If length = 0 Then
+                    Return Nothing
+                End If
+
+                Return New PointF(xpoints.Average, ypoints.Average)
+            End Get
+        End Property
+
         Sub New()
         End Sub
 
