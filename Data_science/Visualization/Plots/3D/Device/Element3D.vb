@@ -249,6 +249,10 @@ Namespace Plot3D.Device
             Call Me.__init()
         End Sub
 
+        Sub New(a As PointF3D, b As PointF3D)
+            Call Me.New(New Point3D(a), New Point3D(b))
+        End Sub
+
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Private Sub __init()
             Me.Location = New Point3D With {
@@ -302,8 +306,8 @@ Namespace Plot3D.Device
             End Get
         End Property
 
-        Public Overrides Function EnumeratePath() As IEnumerable(Of Point3D)
-            Return {Location}
+        Public Overrides Iterator Function EnumeratePath() As IEnumerable(Of Point3D)
+            Yield Location
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
