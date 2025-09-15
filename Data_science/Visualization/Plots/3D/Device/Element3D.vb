@@ -126,18 +126,16 @@ Namespace Plot3D.Device
     ''' 因为先绘制坐标轴再绘制系列点，会没有太多层次感，所以在这里首先需要将这些需要绘制的原件转换为这个元素对象，然后做一次Z排序生成绘图顺序
     ''' 最后再调用<see cref="Draw"/>方法进行3D图表的绘制
     ''' </summary>
+    ''' <remarks>
+    ''' An abstract model of the 3d <see cref="Location"/>
+    ''' </remarks>
     Public MustInherit Class Element3D
 
         Public Property Location As Point3D
 
         Public MustOverride Sub Draw(g As IGraphics, rect As GraphicsRegion, scaleX As d3js.scale.LinearScale, scaleY As d3js.scale.LinearScale)
         Public MustOverride Function EnumeratePath() As IEnumerable(Of Point3D)
-
-        <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Overridable Function Transform(camera As Camera) As Element3D
-            Location = camera.Project(camera.Rotate(Location))
-            Return Me
-        End Function
+        Public MustOverride Function Transform(camera As Camera) As Element3D
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function GetPosition(frameSize As Size) As PointF
@@ -235,6 +233,15 @@ Namespace Plot3D.Device
 
             Call g.DrawString(Text, font, Color, pscale)
         End Sub
+
+        Public Overrides Function Transform(camera As Camera) As Element3D
+            Return New Label With {
+                .Color = Color,
+                .FontCss = FontCss,
+                .Location = camera.Project(camera.Rotate(Me.Location)),
+                .Text = Text
+            }
+        End Function
     End Class
 
     Public Class Line : Inherits Element3D
@@ -324,5 +331,18 @@ Namespace Plot3D.Device
 
             Call g.DrawLegendShape(pscale, Size, Style, Fill)
         End Sub
+
+        Public Overrides Function Transform(camera As Camera) As Element3D
+            Dim location = camera.Project(camera.Rotate(Me.Location))
+            Dim norm As New ShapePoint With {
+                .Fill = Fill,
+                .Label = Label,
+                .Location = location,
+                .Size = Size,
+                .Style = Style
+            }
+
+            Return norm
+        End Function
     End Class
 End Namespace
