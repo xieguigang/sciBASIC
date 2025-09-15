@@ -295,7 +295,7 @@ Namespace Plot3D.Device
             Dim list = camera.Project(camera.Rotate({Me.A, Me.B})).ToArray
             Dim a = list(0)
             Dim b = list(1)
-            Dim norm As New Line(a, b)
+            Dim norm As New Line(a, b) With {.Stroke = Stroke}
             Call norm.__init()
             Return norm
         End Function
