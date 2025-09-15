@@ -1,59 +1,59 @@
 ﻿#Region "Microsoft.VisualBasic::ca39b4b0281ca0f66410eb0139d601bf, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Text\Nudge\CloudOfTextRectangle.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 260
-    '    Code Lines: 154 (59.23%)
-    ' Comment Lines: 71 (27.31%)
-    '    - Xml Docs: 77.46%
-    ' 
-    '   Blank Lines: 35 (13.46%)
-    '     File Size: 10.79 KB
+' Summaries:
 
 
-    '     Class CloudOfTextRectangle
-    ' 
-    '         Constructor: (+2 Overloads) Sub New
-    ' 
-    '         Function: arrange_text, conflicts_with, get_conflicts, get_tree_leaves, new_config_cloud
-    '                   ToString, treat_conflicts
-    ' 
-    '         Sub: add_label, moveArrows, remove_label
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 260
+'    Code Lines: 154 (59.23%)
+' Comment Lines: 71 (27.31%)
+'    - Xml Docs: 77.46%
+' 
+'   Blank Lines: 35 (13.46%)
+'     File Size: 10.79 KB
+
+
+'     Class CloudOfTextRectangle
+' 
+'         Constructor: (+2 Overloads) Sub New
+' 
+'         Function: arrange_text, conflicts_with, get_conflicts, get_tree_leaves, new_config_cloud
+'                   ToString, treat_conflicts
+' 
+'         Sub: add_label, moveArrows, remove_label
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
