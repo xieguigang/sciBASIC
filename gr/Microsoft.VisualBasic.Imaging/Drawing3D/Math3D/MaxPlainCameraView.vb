@@ -78,7 +78,7 @@ Namespace Drawing3D.Math3D
         ''' <summary>
         ''' 通过SVD计算平面法向量
         ''' </summary>
-        Private Shared Function CalculatePlaneNormalViaSVD(covarianceMatrix As Matrix3x3) As Vector3
+        Private Shared Function CalculatePlaneNormalViaSVD(covarianceMatrix As Matrix3x3) As Point3D
             ' 简化版SVD实现 - 实际应用中可能需要完整的SVD库
             ' 这里使用特征值分解近似求解最小特征值对应的特征向量
 
@@ -100,18 +100,13 @@ Namespace Drawing3D.Math3D
             If eigenvalues(2) < eigenvalues(minIndex) Then minIndex = 2
 
             ' 返回对应的特征向量（平面法向量）
-            Return New Vector3(eigenvectors(0, minIndex), eigenvectors(1, minIndex), eigenvectors(2, minIndex))
+            Return New Point3D(eigenvectors(0, minIndex), eigenvectors(1, minIndex), eigenvectors(2, minIndex))
         End Function
 
         ''' <summary>
         ''' 计算摄像头位置
         ''' </summary>
-        Private Shared Function CalculateCameraPosition(centroid As Point3D, normal As Vector3, points As List(Of Point3D), distanceScale As Double) As Point3D
-            ' 确保法向量朝上（如果主要平面是水平的）
-            If normal.Y < 0 Then
-                normal = New Vector3(-normal.X, -normal.Y, -normal.Z)
-            End If
-
+        Private Shared Function CalculateCameraPosition(centroid As Point3D, normal As Point3D, points As List(Of Point3D), distanceScale As Double) As Point3D
             ' 计算点云的范围大小
             Dim minX = points.Min(Function(p) p.X)
             Dim maxX = points.Max(Function(p) p.X)
@@ -146,19 +141,6 @@ Namespace Drawing3D.Math3D
             eigenvectors = svd.V.ArrayPack.ToMatrix
         End Sub
     End Class
-
-    ' 辅助结构和类
-    Public Structure Vector3
-        Public X As Double
-        Public Y As Double
-        Public Z As Double
-
-        Public Sub New(x As Double, y As Double, z As Double)
-            Me.X = x
-            Me.Y = y
-            Me.Z = z
-        End Sub
-    End Structure
 
     Public Structure Matrix3x3
         Public M11 As Double
