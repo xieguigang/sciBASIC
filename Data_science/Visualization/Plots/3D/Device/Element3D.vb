@@ -134,9 +134,10 @@ Namespace Plot3D.Device
         Public MustOverride Function EnumeratePath() As IEnumerable(Of Point3D)
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Overridable Sub Transform(camera As Camera)
+        Public Overridable Function Transform(camera As Camera) As Element3D
             Location = camera.Project(camera.Rotate(Location))
-        End Sub
+            Return Me
+        End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function GetPosition(frameSize As Size) As PointF
@@ -156,10 +157,16 @@ Namespace Plot3D.Device
         Public Property Path As Point3D()
         Public Property Brush As Brush
 
-        Public Overrides Sub Transform(camera As Camera)
-            Path = Path.Select(Function(p) camera.Project(camera.Rotate(p))).ToArray
-            Location = Path.Center
-        End Sub
+        Public Overrides Function Transform(camera As Camera) As Element3D
+            Dim path = Me.Path.Select(Function(p) camera.Project(camera.Rotate(p))).ToArray
+            Dim location = path.Center
+
+            Return New Polygon With {
+                .Brush = Brush,
+                .Location = location,
+                .Path = path
+            }
+        End Function
 
         Public Overrides Function EnumeratePath() As IEnumerable(Of Point3D)
             Return Path.AsEnumerable
@@ -277,14 +284,14 @@ Namespace Plot3D.Device
             Call g.DrawLine(Stroke, p1, p2)
         End Sub
 
-        Public Overrides Sub Transform(camera As Camera)
-            Dim list = camera.Project(camera.Rotate({A, B})).ToArray
-
-            _A = list(0)
-            _B = list(1)
-
-            Call Me.__init()
-        End Sub
+        Public Overrides Function Transform(camera As Camera) As Element3D
+            Dim list = camera.Project(camera.Rotate({Me.A, Me.B})).ToArray
+            Dim a = list(0)
+            Dim b = list(1)
+            Dim norm As New Line(a, b)
+            Call norm.__init()
+            Return norm
+        End Function
     End Class
 
     Public Class ShapePoint : Inherits Element3D
