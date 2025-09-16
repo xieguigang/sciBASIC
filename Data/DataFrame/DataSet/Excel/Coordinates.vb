@@ -99,20 +99,19 @@ Namespace Excel
         ''' <returns></returns>
         <Extension>
         Public Function YValue(x As IEnumerable(Of Char)) As Integer
-            Dim value#
-            Dim power% = 0
-            Dim offset As Integer = 0
+            Dim value As Integer = 0
+            Dim power As Integer = 0
 
-            ' power = 0, offset = 0
-            ' power > 0, offset = 1
-
-            For Each c As Char In x.Reverse
-                value += (Asc(c) - ZERO) + (26 * power - offset)
+            ' 从右向左遍历每个字母（从最低位到最高位）
+            For Each c As Char In x.Reverse()
+                ' 计算当前字母对应的数值 (A=1, B=2, ..., Z=26)
+                Dim charValue As Integer = Asc(c) - Asc("A"c) + 1
+                ' 将数值乘以26的power次方，并累加到总和中
+                value += charValue * CInt(26 ^ power)
                 power += 1
-                offset = 1
             Next
 
-            Return CInt(value)
+            Return value
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
