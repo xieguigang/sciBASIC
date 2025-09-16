@@ -60,7 +60,6 @@
 
 Imports Microsoft.VisualBasic.MachineLearning.CNN.data
 Imports Microsoft.VisualBasic.Math.Distributions
-Imports std = System.Math
 
 Namespace CNN.layers
 
@@ -98,17 +97,43 @@ Namespace CNN.layers
         End Sub
 
         Public Sub backward() Implements Layer.backward
-            Dim V = in_act.clearGradient
-            Dim chain_grad = out_act.dw
-            Dim mu_dw = mu.dw
-            Dim sigma_dw = sigma.dw
-            Dim biases_dw = biases.dw
+            Dim dL_dy() As Double = out_act.dw ' 上游梯度 ∂L/∂y
+            Dim x() As Double = in_act.w
+            Dim mu_vals() As Double = mu.w
+            Dim sigma_vals() As Double = sigma.w
 
-            For i As Integer = 0 To chain_grad.Length - 1
-                V.addGradient(i, chain_grad(i) * std.Exp(mu_dw(i)) * 2 * sigma_dw(i) ^ -4)
-                mu.addGradient(i, V.w(i) * chain_grad(i))
-                sigma.addGradient(i, V.w(i) * chain_grad(i))
-                biases.addGradient(i, chain_grad(i))
+            ' 初始化本层参数的梯度
+            Dim dL_dmu(sigma_vals.Length - 1) As Double
+            Dim dL_dsigma(sigma_vals.Length - 1) As Double
+            Dim dL_dbias(sigma_vals.Length - 1) As Double
+            Dim dL_dx(sigma_vals.Length - 1) As Double ' 传向上一层的梯度
+
+            For i As Integer = 0 To dL_dy.Length - 1
+                ' 计算前向传播时的高斯函数输出f(x)
+                Dim fx As Double = pnorm.ProbabilityDensity(x(i), mu_vals(i), sigma_vals(i))
+
+                ' 计算中间导数 ∂f/∂μ, ∂f/∂σ, ∂f/∂x
+                Dim diff As Double = (x(i) - mu_vals(i))
+                Dim sigma_sq As Double = sigma_vals(i) * sigma_vals(i)
+                Dim sigma_cubed As Double = sigma_sq * sigma_vals(i)
+
+                Dim df_dmu As Double = fx * (diff / sigma_sq)
+                Dim df_dsigma As Double = fx * ((diff * diff / sigma_cubed) - (1.0 / sigma_vals(i)))
+                Dim df_dx As Double = -fx * (diff / sigma_sq) ' 注意负号
+
+                ' 应用链式法则 ∂L/∂θ = (∂L/∂y) * (∂y/∂θ)
+                dL_dbias(i) = dL_dy(i) * 1.0 ' ∂y/∂bias = 1
+                dL_dmu(i) = dL_dy(i) * df_dmu
+                dL_dsigma(i) = dL_dy(i) * df_dsigma
+                dL_dx(i) = dL_dy(i) * df_dx ' 注意：如果前向是 y = x + f(x) + b, 则 ∂y/∂x = 1 + ∂f/∂x
+
+                ' 将梯度存储到相应的DataBlock中
+                mu.addGradient(i, dL_dmu(i))
+                sigma.addGradient(i, dL_dsigma(i))
+                biases.addGradient(i, dL_dbias(i))
+                in_act.addGradient(i, dL_dx(i)) ' 注意：这里需要根据前向传播的实际公式调整。
+                ' 如果前向是 y = f(x) + b, 则 dL_dx(i) 如上所述。
+                ' 如果前向是 y = x + f(x) + b, 则 dL_dx(i) = dL_dy(i) * (1 + df_dx)
             Next
         End Sub
 
@@ -123,7 +148,7 @@ Namespace CNN.layers
             Dim bias As Double() = Me.biases.w
 
             For i As Integer = 0 To w.Length - 1
-                w(i) += pnorm.ProbabilityDensity(x(i), mu(i), sigma(i)) + bias(i)
+                w(i) = pnorm.ProbabilityDensity(x(i), mu(i), sigma(i)) + bias(i)
             Next
 
             Return out_act

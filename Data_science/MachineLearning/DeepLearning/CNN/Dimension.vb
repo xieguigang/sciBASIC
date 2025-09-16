@@ -72,6 +72,12 @@ Namespace CNN
         ''' </summary>
         Public ReadOnly y As Integer
 
+        Public Shared ReadOnly Property One As Dimension
+            Get
+                Return New Dimension(1, 1)
+            End Get
+        End Property
+
         Public Sub New(x As Integer, y As Integer)
             Me.x = x
             Me.y = y

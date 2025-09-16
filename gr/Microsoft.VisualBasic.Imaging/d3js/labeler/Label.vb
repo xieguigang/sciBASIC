@@ -178,6 +178,15 @@ Namespace d3js.Layout
             Call Me.New(label, pos.PointF, size)
         End Sub
 
+        ''' <summary>
+        ''' make value copy of the text label data
+        ''' </summary>
+        ''' <param name="copy"></param>
+        Sub New(copy As Label)
+            Me.New(copy.text, copy.location, New SizeF(copy.width, copy.height))
+            Me.pinned = copy.pinned
+        End Sub
+
         Public Overrides Function ToString() As String
             Return $"[{X.ToString("F2")},{Y.ToString("F2")}] [{If(pinned, "pinned", "**unpin")}] {text}"
         End Function

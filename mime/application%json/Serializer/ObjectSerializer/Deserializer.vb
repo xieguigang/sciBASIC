@@ -89,16 +89,18 @@ Public Module Deserializer
     End Function
 
     ''' <summary>
-    ''' 
+    ''' Cast the json element data as specific clr type object
     ''' </summary>
     ''' <typeparam name="T">add know types for object by using the <see cref="KnownTypeAttribute"/>.</typeparam>
     ''' <param name="json"></param>
     ''' <param name="decodeMetachar"></param>
-    ''' <returns></returns>
+    ''' <returns>
+    ''' this function will returns nothing if the input json element is nothing
+    ''' </returns>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
-    Public Function CreateObject(Of T As Class)(json As JsonElement, Optional decodeMetachar As Boolean = True) As Object
-        Return json.CreateObject(Nothing, GetType(T), decodeMetachar)
+    Public Function CreateObject(Of T As Class)(json As JsonElement, Optional decodeMetachar As Boolean = True) As T
+        Return DirectCast(json.CreateObject(Nothing, GetType(T), decodeMetachar), T)
     End Function
 
     <Extension>

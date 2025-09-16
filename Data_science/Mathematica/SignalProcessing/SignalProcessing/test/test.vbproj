@@ -6,7 +6,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{70DD1DBE-6F3F-467A-BE71-E78300CF1B0E}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <StartupObject>test.labeltest</StartupObject>
+    <StartupObject>test.TestPolygonAlignment</StartupObject>
     <RootNamespace>test</RootNamespace>
     <AssemblyName>test</AssemblyName>
     <FileAlignment>512</FileAlignment>
@@ -120,6 +120,7 @@
     <Compile Include="DataSeriesFactory.vb" />
     <Compile Include="demo_data1.vb" />
     <Compile Include="KalmanFilterDemotest.vb" />
+    <Compile Include="TestPolygonAlignment.vb" />
     <Compile Include="TrajectoryTest.vb" />
     <Compile Include="MultivariateDataSeriesRepository.vb" />
     <Compile Include="Program.vb" />

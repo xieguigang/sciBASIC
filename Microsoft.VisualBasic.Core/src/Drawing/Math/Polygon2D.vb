@@ -138,6 +138,16 @@ Namespace Imaging.Math2D
             End Set
         End Property
 
+        Public ReadOnly Property centroid As PointF
+            Get
+                If length = 0 Then
+                    Return Nothing
+                End If
+
+                Return New PointF(xpoints.Average, ypoints.Average)
+            End Get
+        End Property
+
         Sub New()
         End Sub
 
@@ -218,12 +228,49 @@ Namespace Imaging.Math2D
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <DebuggerStepThrough>
-        Sub New(rect As Rectangle)
-            Call Me.New(
-                x:={rect.Left, rect.Right, rect.Right, rect.Left},
-                y:={rect.Top, rect.Top, rect.Bottom, rect.Bottom}
-            )
+        Sub New(ParamArray rect As Rectangle())
+            Call Me.New(x:=rectanglesX(rect), y:=rectanglesY(rect))
         End Sub
+
+        Private Shared Function rectanglesX(rect As Rectangle()) As Double()
+            Dim vec As New List(Of Double)
+
+            For Each r As Rectangle In rect
+                Call vec.AddRange({r.Left, r.Right, r.Right, r.Left})
+            Next
+
+            Return vec.ToArray
+        End Function
+
+        Private Shared Function rectanglesY(rect As Rectangle()) As Double()
+            Dim vec As New List(Of Double)
+
+            For Each r As Rectangle In rect
+                Call vec.AddRange({r.Top, r.Top, r.Bottom, r.Bottom})
+            Next
+
+            Return vec.ToArray
+        End Function
+
+        Private Shared Function rectanglesX(rect As RectangleF()) As Double()
+            Dim vec As New List(Of Double)
+
+            For Each r As RectangleF In rect
+                Call vec.AddRange({r.Left, r.Right, r.Right, r.Left})
+            Next
+
+            Return vec.ToArray
+        End Function
+
+        Private Shared Function rectanglesY(rect As RectangleF()) As Double()
+            Dim vec As New List(Of Double)
+
+            For Each r As RectangleF In rect
+                Call vec.AddRange({r.Top, r.Top, r.Bottom, r.Bottom})
+            Next
+
+            Return vec.ToArray
+        End Function
 
         ''' <summary>
         ''' 
@@ -234,11 +281,8 @@ Namespace Imaging.Math2D
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <DebuggerStepThrough>
-        Sub New(rect As RectangleF)
-            Call Me.New(
-                x:={rect.Left, rect.Right, rect.Right, rect.Left},
-                y:={rect.Top, rect.Top, rect.Bottom, rect.Bottom}
-            )
+        Sub New(ParamArray rect As RectangleF())
+            Call Me.New(x:=rectanglesX(rect), y:=rectanglesY(rect))
         End Sub
 
         ''' <summary>

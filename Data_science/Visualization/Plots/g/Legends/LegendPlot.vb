@@ -177,8 +177,8 @@ Namespace Graphic.Legend
                 Case LegendStyles.Circle
                     Dim r As Single = std.Min(gSize.Height, gSize.Width) / 2
                     Dim c As New Point With {
-                        .X = pos.X + gSize.Height,
-                        .Y = pos.Y + gSize.Height / 2
+                        .X = pos.X + r,
+                        .Y = pos.Y + r
                     }
 
                     labelPos = New PointF With {

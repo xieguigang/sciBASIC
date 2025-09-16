@@ -149,6 +149,10 @@ Namespace Imaging
             _Width = width
         End Sub
 
+        Public Overrides Function ToString() As String
+            Return $"{Width}px {DashStyle.ToString.ToLower} ({Color.ToHtmlColor})"
+        End Function
+
         Protected Overridable Sub Dispose(disposing As Boolean)
             If Not disposedValue Then
                 If disposing Then

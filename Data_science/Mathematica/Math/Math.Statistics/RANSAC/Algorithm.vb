@@ -56,7 +56,7 @@
 
 Imports System.Runtime.InteropServices
 Imports Microsoft.VisualBasic.Language
-Imports stdNum = System.Math
+Imports std = System.Math
 
 Namespace RANSAC
 
@@ -114,7 +114,7 @@ Namespace RANSAC
             Dim bestSupport As Integer = 0
             Dim bestPlane = New Double(3) {}
             Dim bestStd = Double.PositiveInfinity
-            Dim trials As Integer = stdNum.Round(stdNum.Log(1 - alpha) / stdNum.Log(1 - stdNum.Pow(w, 3)), MidpointRounding.AwayFromZero)
+            Dim trials As Integer = std.Round(std.Log(1 - alpha) / std.Log(1 - std.Pow(w, 3)), MidpointRounding.AwayFromZero)
             Dim rng As New Random(seed)
             Dim j As i32 = 0
             'getting all valid points, as well as their distances to the plane
@@ -179,7 +179,7 @@ Namespace RANSAC
             plane(3) = -n.x * point1.x - n.y * point1.y - n.z * point1.z
 
             For i = 0 To 3
-                plane(i) *= -If(plane(3) <> 0, stdNum.Sign(plane(3)), 1) / n.magnitude
+                plane(i) *= -If(plane(3) <> 0, std.Sign(plane(3)), 1) / n.magnitude
             Next
 
             Return plane
@@ -190,7 +190,7 @@ Namespace RANSAC
             Dim validDistances As List(Of Double) = New List(Of Double)()
 
             For i = 0 To points.Length - 1
-                Dim distance = stdNum.Abs(plane(0) * points(i).x + plane(1) * points(i).y + plane(2) * points(i).z + plane(3)) / stdNum.Sqrt(stdNum.Pow(plane(0), 2) + stdNum.Pow(plane(1), 2) + stdNum.Pow(plane(2), 2))
+                Dim distance = std.Abs(plane(0) * points(i).x + plane(1) * points(i).y + plane(2) * points(i).z + plane(3)) / std.Sqrt(std.Pow(plane(0), 2) + std.Pow(plane(1), 2) + std.Pow(plane(2), 2))
 
                 If distance <= threshold Then
                     validPoints.Add(points(i))
@@ -211,11 +211,11 @@ Namespace RANSAC
             mean /= [set].Length
 
             For i = 0 To [set].Length - 1
-                variance += stdNum.Pow([set](i) - mean, 2)
+                variance += std.Pow([set](i) - mean, 2)
             Next
             variance /= [set].Length - 1
 
-            Return stdNum.Sqrt(variance)
+            Return std.Sqrt(variance)
         End Function
 
         Public Function GetBounds(plane As Double()) As Tuple(Of Double, Double, Double, Double, Double, Double)
@@ -273,7 +273,7 @@ Namespace RANSAC
                     p(k) = If((j And 1) = 1, -100, 100)
                     p(k Xor sum) = -(plane(k) * p(k) + plane(3)) / plane(k Xor sum)
 
-                    If stdNum.Abs(p(k Xor sum)) <= 100 Then bounds.Add(New Point(p))
+                    If std.Abs(p(k Xor sum)) <= 100 Then bounds.Add(New Point(p))
                 Next
             End If
 

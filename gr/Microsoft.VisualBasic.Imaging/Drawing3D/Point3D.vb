@@ -105,6 +105,12 @@ Namespace Drawing3D
             Me.Z = z
         End Sub
 
+        Sub New(x#, y#, Optional z# = 0)
+            Me.X = x
+            Me.Y = y
+            Me.Z = z
+        End Sub
+
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Sub New(p As PointF, Optional z! = 0.0)
             Me.X = p.X

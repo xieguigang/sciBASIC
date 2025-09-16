@@ -105,7 +105,6 @@ Imports Microsoft.VisualBasic.Imaging.Drawing2D.Math2D
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Math2D.ConvexHull
 Imports Microsoft.VisualBasic.Imaging.Drawing3D
 Imports Microsoft.VisualBasic.Imaging.Drawing3D.Math3D
-Imports Microsoft.VisualBasic.Imaging.Math2D
 Imports Microsoft.VisualBasic.MIME.Html.CSS
 Imports Microsoft.VisualBasic.MIME.Html.Render
 
@@ -127,17 +126,16 @@ Namespace Plot3D.Device
     ''' 因为先绘制坐标轴再绘制系列点，会没有太多层次感，所以在这里首先需要将这些需要绘制的原件转换为这个元素对象，然后做一次Z排序生成绘图顺序
     ''' 最后再调用<see cref="Draw"/>方法进行3D图表的绘制
     ''' </summary>
+    ''' <remarks>
+    ''' An abstract model of the 3d <see cref="Location"/>
+    ''' </remarks>
     Public MustInherit Class Element3D
 
         Public Property Location As Point3D
 
         Public MustOverride Sub Draw(g As IGraphics, rect As GraphicsRegion, scaleX As d3js.scale.LinearScale, scaleY As d3js.scale.LinearScale)
         Public MustOverride Function EnumeratePath() As IEnumerable(Of Point3D)
-
-        <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Overridable Sub Transform(camera As Camera)
-            Location = camera.Project(camera.Rotate(Location))
-        End Sub
+        Public MustOverride Function Transform(camera As Camera) As Element3D
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function GetPosition(frameSize As Size) As PointF
@@ -157,10 +155,16 @@ Namespace Plot3D.Device
         Public Property Path As Point3D()
         Public Property Brush As Brush
 
-        Public Overrides Sub Transform(camera As Camera)
-            Path = Path.Select(Function(p) camera.Project(camera.Rotate(p))).ToArray
-            Location = Path.Center
-        End Sub
+        Public Overrides Function Transform(camera As Camera) As Element3D
+            Dim path = Me.Path.Select(Function(p) camera.Project(camera.Rotate(p))).ToArray
+            Dim location = path.Center
+
+            Return New Polygon With {
+                .Brush = Brush,
+                .Location = location,
+                .Path = path
+            }
+        End Function
 
         Public Overrides Function EnumeratePath() As IEnumerable(Of Point3D)
             Return Path.AsEnumerable
@@ -229,6 +233,15 @@ Namespace Plot3D.Device
 
             Call g.DrawString(Text, font, Color, pscale)
         End Sub
+
+        Public Overrides Function Transform(camera As Camera) As Element3D
+            Return New Label With {
+                .Color = Color,
+                .FontCss = FontCss,
+                .Location = camera.Project(camera.Rotate(Me.Location)),
+                .Text = Text
+            }
+        End Function
     End Class
 
     Public Class Line : Inherits Element3D
@@ -248,6 +261,10 @@ Namespace Plot3D.Device
             Me.B = b
 
             Call Me.__init()
+        End Sub
+
+        Sub New(a As PointF3D, b As PointF3D)
+            Call Me.New(New Point3D(a), New Point3D(b))
         End Sub
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -274,14 +291,14 @@ Namespace Plot3D.Device
             Call g.DrawLine(Stroke, p1, p2)
         End Sub
 
-        Public Overrides Sub Transform(camera As Camera)
-            Dim list = camera.Project(camera.Rotate({A, B})).ToArray
-
-            _A = list(0)
-            _B = list(1)
-
-            Call Me.__init()
-        End Sub
+        Public Overrides Function Transform(camera As Camera) As Element3D
+            Dim list = camera.Project(camera.Rotate({Me.A, Me.B})).ToArray
+            Dim a = list(0)
+            Dim b = list(1)
+            Dim norm As New Line(a, b) With {.Stroke = Stroke}
+            Call norm.__init()
+            Return norm
+        End Function
     End Class
 
     Public Class ShapePoint : Inherits Element3D
@@ -303,8 +320,8 @@ Namespace Plot3D.Device
             End Get
         End Property
 
-        Public Overrides Function EnumeratePath() As IEnumerable(Of Point3D)
-            Return {Location}
+        Public Overrides Iterator Function EnumeratePath() As IEnumerable(Of Point3D)
+            Yield Location
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -314,5 +331,18 @@ Namespace Plot3D.Device
 
             Call g.DrawLegendShape(pscale, Size, Style, Fill)
         End Sub
+
+        Public Overrides Function Transform(camera As Camera) As Element3D
+            Dim location = camera.Project(camera.Rotate(Me.Location))
+            Dim norm As New ShapePoint With {
+                .Fill = Fill,
+                .Label = Label,
+                .Location = location,
+                .Size = Size,
+                .Style = Style
+            }
+
+            Return norm
+        End Function
     End Class
 End Namespace

@@ -1,0 +1,78 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.14.36429.23 d17.14
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "DeepQNetwork", "DeepQNetwork.vbproj", "{A63F3CC5-C8BB-29F6-A671-CD65C893E2A8}"
+EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Core", "..\..\..\Microsoft.VisualBasic.Core\src\Core.vbproj", "{466296CB-E19B-F73C-A306-D88960A5A16D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "framework", "framework", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
+EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "machine_learning-netcore5", "..\MachineLearning\machine_learning-netcore5.vbproj", "{9A851A91-4D44-B988-24A3-D2FD741DF19A}"
+EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "DeepLearning.NET6", "..\DeepLearning\DeepLearning.NET6.vbproj", "{33CA26DA-4D95-FD50-EF03-901E575B151E}"
+EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "TensorFlow", "..\TensorFlow\TensorFlow.vbproj", "{C068B603-12D6-6B55-BF36-E35E961F9BEE}"
+EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "DataMining.NET5", "..\..\DataMining\DataMining\DataMining.NET5.vbproj", "{6025EBEC-2EC2-D439-1A7C-7235714359B8}"
+EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Math.NET5", "..\..\Mathematica\Math\Math\Math.NET5.vbproj", "{DA17305D-8D30-63A7-9437-D24F31F7CBB1}"
+EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "stats-netcore5", "..\..\Mathematica\Math\Math.Statistics\stats-netcore5.vbproj", "{BB934B95-E18B-5F21-973D-38AC59572EA9}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A63F3CC5-C8BB-29F6-A671-CD65C893E2A8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A63F3CC5-C8BB-29F6-A671-CD65C893E2A8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A63F3CC5-C8BB-29F6-A671-CD65C893E2A8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A63F3CC5-C8BB-29F6-A671-CD65C893E2A8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{466296CB-E19B-F73C-A306-D88960A5A16D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{466296CB-E19B-F73C-A306-D88960A5A16D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{466296CB-E19B-F73C-A306-D88960A5A16D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{466296CB-E19B-F73C-A306-D88960A5A16D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9A851A91-4D44-B988-24A3-D2FD741DF19A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9A851A91-4D44-B988-24A3-D2FD741DF19A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9A851A91-4D44-B988-24A3-D2FD741DF19A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9A851A91-4D44-B988-24A3-D2FD741DF19A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{33CA26DA-4D95-FD50-EF03-901E575B151E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{33CA26DA-4D95-FD50-EF03-901E575B151E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{33CA26DA-4D95-FD50-EF03-901E575B151E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{33CA26DA-4D95-FD50-EF03-901E575B151E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C068B603-12D6-6B55-BF36-E35E961F9BEE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C068B603-12D6-6B55-BF36-E35E961F9BEE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C068B603-12D6-6B55-BF36-E35E961F9BEE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C068B603-12D6-6B55-BF36-E35E961F9BEE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6025EBEC-2EC2-D439-1A7C-7235714359B8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6025EBEC-2EC2-D439-1A7C-7235714359B8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6025EBEC-2EC2-D439-1A7C-7235714359B8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6025EBEC-2EC2-D439-1A7C-7235714359B8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DA17305D-8D30-63A7-9437-D24F31F7CBB1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DA17305D-8D30-63A7-9437-D24F31F7CBB1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DA17305D-8D30-63A7-9437-D24F31F7CBB1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DA17305D-8D30-63A7-9437-D24F31F7CBB1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BB934B95-E18B-5F21-973D-38AC59572EA9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BB934B95-E18B-5F21-973D-38AC59572EA9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BB934B95-E18B-5F21-973D-38AC59572EA9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BB934B95-E18B-5F21-973D-38AC59572EA9}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{466296CB-E19B-F73C-A306-D88960A5A16D} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+		{9A851A91-4D44-B988-24A3-D2FD741DF19A} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+		{33CA26DA-4D95-FD50-EF03-901E575B151E} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+		{C068B603-12D6-6B55-BF36-E35E961F9BEE} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+		{6025EBEC-2EC2-D439-1A7C-7235714359B8} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+		{DA17305D-8D30-63A7-9437-D24F31F7CBB1} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+		{BB934B95-E18B-5F21-973D-38AC59572EA9} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {05519093-17C3-4E9B-A60C-E3E9E8AC9A27}
+	EndGlobalSection
+EndGlobal

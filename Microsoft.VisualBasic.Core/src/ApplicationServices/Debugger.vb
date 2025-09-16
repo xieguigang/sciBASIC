@@ -204,6 +204,10 @@ Public Module VBDebugger
         Return ms
     End Function
 
+    Public Function redirectWarning() As Boolean
+        Return My.Log4VB.getLogger(MSG_TYPES.WRN) IsNot Nothing
+    End Function
+
     ''' <summary>
     ''' Display the wraning level(YELLOW color) message on the console.
     ''' </summary>
