@@ -92,6 +92,29 @@ Namespace Excel
             Return New Point(X, Y.YValue)
         End Function
 
+        ''' <summary>
+        ''' 也就是获取得到列的顶点编号
+        ''' </summary>
+        ''' <param name="x"></param>
+        ''' <returns></returns>
+        <Extension>
+        Public Function YValue(x As IEnumerable(Of Char)) As Integer
+            Dim value#
+            Dim power% = 0
+            Dim offset As Integer = 0
+
+            ' power = 0, offset = 0
+            ' power > 0, offset = 1
+
+            For Each c As Char In x.Reverse
+                value += (Asc(c) - ZERO) + (26 * power - offset)
+                power += 1
+                offset = 1
+            Next
+
+            Return CInt(value)
+        End Function
+
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function ColumnIndex(i%) As String
@@ -120,29 +143,6 @@ Namespace Excel
             bottom += 1
 
             Return $"{left.ColumnIndex}{top}:{right.ColumnIndex}{bottom}"
-        End Function
-
-        ''' <summary>
-        ''' 也就是获取得到列的顶点编号
-        ''' </summary>
-        ''' <param name="x"></param>
-        ''' <returns></returns>
-        <Extension>
-        Public Function YValue(x As IEnumerable(Of Char)) As Integer
-            Dim value#
-            Dim power% = 0
-            Dim offset As Integer = 0
-
-            ' power = 0, offset = 0
-            ' power > 0, offset = 1
-
-            For Each c As Char In x.Reverse
-                value += (Asc(c) - ZERO) + (26 * power - offset)
-                power += 1
-                offset = 1
-            Next
-
-            Return CInt(value)
         End Function
 
         <Extension>
