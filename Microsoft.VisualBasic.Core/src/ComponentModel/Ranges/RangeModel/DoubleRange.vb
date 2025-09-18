@@ -384,15 +384,42 @@ Namespace ComponentModel.Ranges.Model
         ''' <summary>
         ''' Transform a numeric value in this <see cref="DoubleRange"/> into 
         ''' target numeric range: ``<paramref name="valueRange"/>``.
-        ''' (将当前的范围内的一个实数映射到另外的一个范围内的实数区间之中)
         ''' </summary>
-        ''' <param name="x#">A numeric value in this <see cref="DoubleRange"/></param>
+        ''' <param name="x">A numeric value in this <see cref="DoubleRange"/></param>
         ''' <param name="valueRange"></param>
         ''' <returns></returns>
+        ''' <remarks>
+        ''' (将当前的范围内的一个实数映射到另外的一个范围内的实数区间之中)
+        ''' </remarks>
         Public Function ScaleMapping(x#, valueRange As DoubleRange) As Double
+            If Length = 0.0 Then
+                Return valueRange.Min
+            End If
+
             Dim percent# = (x - Min) / Length
             Dim value# = percent * valueRange.Length + valueRange.Min
             Return value
+        End Function
+
+        Public Function ScaleMapping(x As IEnumerable(Of Double), valueRange As DoubleRange) As Double()
+            If x Is Nothing Then
+                Return New Double() {}
+            End If
+
+            Dim length As Double = Me.Length
+            Dim mapLen As Double = valueRange.Length
+
+            If Length = 0.0 Then
+                Return x.Select(Function(a) valueRange.Min).ToArray
+            End If
+
+            Dim percent As IEnumerable(Of Double) = From xi As Double In x Select (xi - Min) / length
+            Dim value As IEnumerable(Of Double) = From pct As Double
+                                                  In percent
+                                                  Select pct * mapLen + valueRange.Min
+            Dim result As Double() = value.ToArray
+
+            Return result
         End Function
 
         ''' <summary>
@@ -403,6 +430,9 @@ Namespace ComponentModel.Ranges.Model
         ''' <param name="valueRange">levels in integer values.</param>
         ''' <returns></returns>
         Public Function ScaleMapping(x As Double, valueRange As IntRange) As Integer
+            If Length = 0.0 Then
+                Return valueRange.Min
+            End If
             Dim percent# = (x - Min) / Length
             Dim value# = percent * valueRange.Interval + valueRange.Min
             Return CInt(value)
