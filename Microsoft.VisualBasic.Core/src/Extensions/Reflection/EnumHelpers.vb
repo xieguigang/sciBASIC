@@ -133,7 +133,13 @@ Public Module EnumHelpers
     ''' <param name="deli">
     ''' a delimiter string for join multiple flag enumeration value theirs enum string
     ''' </param>
-    ''' <returns></returns>
+    ''' <returns>
+    ''' this function always returns a non-null string value:
+    ''' 
+    ''' for thoese enum member which it has been tagged with <see cref="DescriptionAttribute"/>, 
+    ''' the description data string will returns from this function;
+    ''' otherwise the string value from the enum member its toString() function will be returned.
+    ''' </returns>
     ''' <remarks>
     ''' this extension function has an internal cache table for get the description
     ''' text of a given enum value
