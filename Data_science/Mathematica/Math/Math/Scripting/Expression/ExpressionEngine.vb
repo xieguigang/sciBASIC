@@ -149,6 +149,12 @@ Namespace Scripting.MathExpression
             Return functions(name)
         End Function
 
+        ''' <summary>
+        ''' set the symbol value
+        ''' </summary>
+        ''' <param name="symbol"></param>
+        ''' <param name="value"></param>
+        ''' <returns></returns>
         Public Function SetSymbol(symbol As String, value As Double) As ExpressionEngine
             symbols(symbol) = value
             Return Me
