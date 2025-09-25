@@ -78,5 +78,9 @@ Namespace Symbolic
         Public Overrides Function ToString() As String
             Return $"{[operator]}{value}"
         End Function
+
+        Public Overrides Function GetVariableSymbols() As IEnumerable(Of String)
+            Return value.GetVariableSymbols
+        End Function
     End Class
 End Namespace
