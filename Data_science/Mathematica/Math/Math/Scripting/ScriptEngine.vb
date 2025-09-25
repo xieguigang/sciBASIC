@@ -57,6 +57,7 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.Scripting.MathExpression
@@ -209,5 +210,49 @@ Namespace Scripting
                 Return Nothing
             End Try
         End Function
+
+        ''' <summary>
+        ''' check of the formula symbol dependency
+        ''' </summary>
+        ''' <param name="formulas">
+        ''' a collection of the symbol value assigned expression: [symbol &lt;- expression]
+        ''' </param>
+        ''' <param name="ignores"></param>
+        ''' <returns>
+        ''' the given formula dependency result list is sorted via the dependency order
+        ''' </returns>
+        <Extension>
+        Public Function CheckFormulaDependency(formulas As Dictionary(Of String, Expression), Optional ignores As Index(Of String) = Nothing) As FormulaDependency()
+            Dim check As New List(Of FormulaDependency)
+
+            If ignores Is Nothing Then
+                ignores = New String() {}
+            End If
+
+            For Each symbol As KeyValuePair(Of String, Expression) In formulas
+                Call check.Add(New FormulaDependency With {
+                    .symbol = symbol.Key,
+                    .formula = symbol.Value,
+                    .dependency = .formula _
+                        .GetVariableSymbols _
+                        .Where(Function(x) Not x Like ignores) _
+                        .ToArray
+                })
+            Next
+
+            Return FormulaDependency.Sort(check).ToArray
+        End Function
     End Module
+
+    Public Class FormulaDependency
+
+        Public Property symbol As String
+        Public Property formula As Expression
+        Public Property dependency As String()
+
+        Public Shared Function Sort(formulas As IEnumerable(Of FormulaDependency)) As IEnumerable(Of FormulaDependency)
+
+        End Function
+
+    End Class
 End Namespace
