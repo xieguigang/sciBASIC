@@ -240,7 +240,7 @@ Namespace Scripting
                 })
             Next
 
-            Return FormulaDependency.Sort(check).ToArray
+            Return FormulaDependency.Sort(check)
         End Function
     End Module
 
@@ -248,10 +248,35 @@ Namespace Scripting
 
         Public Property symbol As String
         Public Property formula As Expression
+
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <returns></returns>
         Public Property dependency As String()
 
-        Public Shared Function Sort(formulas As IEnumerable(Of FormulaDependency)) As IEnumerable(Of FormulaDependency)
+        ''' <summary>
+        ''' sort of the given formula list via the formula <see cref="dependency"/>
+        ''' </summary>
+        ''' <param name="formulas"></param>
+        ''' <returns></returns>
+        Public Shared Function Sort(formulas As IEnumerable(Of FormulaDependency)) As FormulaDependency()
+            Dim formulaIndex As Dictionary(Of String, FormulaDependency) = formulas.ToDictionary(Function(x) x.symbol)
+            Dim order As FormulaDependency() = formulaIndex.Values.ToArray
 
+            ' sort the formula via dependency numbers in asc order
+            ' no dependency: zero
+            ' dependency reference to other formula target symbol: n
+            ' sort in asc order: zero -> n
+            ' example dependency sort order:
+            '
+            ' dependency.length, dependency
+            ' [0] {}
+            ' [1] x
+            ' [1] y
+            ' [2] {x, y}
+
+            Return order
         End Function
 
     End Class
