@@ -99,5 +99,14 @@ Namespace Scripting.MathExpression.Impl
         Public Shared Function Power(x As Expression, y As Integer) As Expression
             Return New BinaryExpression(x, New Literal(y), "^"c)
         End Function
+
+        Public Overrides Iterator Function GetVariableSymbols() As IEnumerable(Of String)
+            For Each name As String In left.GetVariableSymbols
+                Yield name
+            Next
+            For Each name As String In right.GetVariableSymbols
+                Yield name
+            Next
+        End Function
     End Class
 End Namespace

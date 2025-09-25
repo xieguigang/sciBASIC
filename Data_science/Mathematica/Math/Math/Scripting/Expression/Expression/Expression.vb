@@ -62,6 +62,7 @@ Namespace Scripting.MathExpression.Impl
     Public MustInherit Class Expression
 
         Public MustOverride Function Evaluate(env As ExpressionEngine) As Double
+        Public MustOverride Function GetVariableSymbols() As IEnumerable(Of String)
 
         ''' <summary>
         ''' Parse a given math formula expression code as the math expression model

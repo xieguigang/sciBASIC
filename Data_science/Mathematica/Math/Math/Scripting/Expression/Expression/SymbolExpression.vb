@@ -75,5 +75,9 @@ Namespace Scripting.MathExpression.Impl
         Public Overrides Function ToString() As String
             Return symbolName
         End Function
+
+        Public Overrides Iterator Function GetVariableSymbols() As IEnumerable(Of String)
+            Yield symbolName
+        End Function
     End Class
 End Namespace

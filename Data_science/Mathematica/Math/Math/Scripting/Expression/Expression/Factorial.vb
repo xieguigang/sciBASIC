@@ -62,22 +62,24 @@ Namespace Scripting.MathExpression.Impl
     ''' </summary>
     Public Class Factorial : Inherits Expression
 
-        Public ReadOnly Property factor As Integer
+        Public ReadOnly Property factor As Expression
 
         Sub New(factor As String)
-            Me.factor = Val(factor)
+            Me.factor = Expression.Parse(factor)
         End Sub
 
         Public Overrides Function Evaluate(env As ExpressionEngine) As Double
-            Return VBMath.Factorial(factor)
+            Dim factor As Double = env.Evaluate(factor)
+            Dim result = VBMath.Factorial(CInt(factor))
+            Return result
         End Function
 
         Public Overrides Function ToString() As String
-            If factor < 0 Then
-                Return $"({factor})!"
-            Else
-                Return $"{factor}!"
-            End If
+            Return $"({factor})!"
+        End Function
+
+        Public Overrides Function GetVariableSymbols() As IEnumerable(Of String)
+            Return factor.GetVariableSymbols
         End Function
     End Class
 End Namespace

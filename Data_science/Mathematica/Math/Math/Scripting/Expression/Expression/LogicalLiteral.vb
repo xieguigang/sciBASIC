@@ -72,5 +72,9 @@ Namespace Scripting.MathExpression.Impl
         Public Overrides Function ToString() As String
             Return logical.ToString
         End Function
+
+        Public Overrides Iterator Function GetVariableSymbols() As IEnumerable(Of String)
+            ' no variable reference for literal constant value
+        End Function
     End Class
 End Namespace

@@ -64,5 +64,9 @@ Namespace Scripting.MathExpression.Impl
             Dim val As Double = value.Evaluate(env)
             Return If(val = 0.0, 1, 0)
         End Function
+
+        Public Overrides Function GetVariableSymbols() As IEnumerable(Of String)
+            Return value.GetVariableSymbols
+        End Function
     End Class
 End Namespace

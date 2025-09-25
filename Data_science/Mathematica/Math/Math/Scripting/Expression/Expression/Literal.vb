@@ -146,5 +146,9 @@ Namespace Scripting.MathExpression.Impl
         Public Overloads Shared Operator <>(literal As Literal, num As Double) As Boolean
             Return Not (literal = num)
         End Operator
+
+        Public Overrides Iterator Function GetVariableSymbols() As IEnumerable(Of String)
+            ' no variable reference for literal constant value
+        End Function
     End Class
 End Namespace
