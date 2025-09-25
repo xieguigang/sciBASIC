@@ -213,7 +213,7 @@ Namespace Scripting
         End Function
 
         ''' <summary>
-        ''' check of the formula symbol dependency
+        ''' check of the formula symbol dependency and sort the formulas in asc order by dependency list
         ''' </summary>
         ''' <param name="formulas">
         ''' a collection of the symbol value assigned expression: [symbol &lt;- expression]
