@@ -268,7 +268,7 @@ Namespace Plot3D.Device
         End Sub
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Private Sub __init()
+        Protected Sub __init()
             Me.Location = New Point3D With {
                 .X = (A.X + B.X) / 2,
                 .Y = (A.Y + B.Y) / 2,

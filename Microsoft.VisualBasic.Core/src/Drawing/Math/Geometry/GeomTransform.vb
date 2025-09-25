@@ -352,6 +352,12 @@ Namespace Imaging.Math2D
             Return std.Sqrt((a.X - b.X) ^ 2 + (a.Y - b.Y) ^ 2)
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function DistanceTo3D(Of T As PointF3D)(a As T, b As T) As Double
+            Return std.Sqrt((a.X - b.X) ^ 2 + (a.Y - b.Y) ^ 2 + (a.Z - b.Z) ^ 2)
+        End Function
+
         ''' <summary>
         ''' 计算两个二维坐标的欧几里得距离
         ''' </summary>
