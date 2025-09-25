@@ -18,6 +18,10 @@ Namespace Scripting
         ''' <returns></returns>
         Public Property dependency As String()
 
+        Public Overrides Function ToString() As String
+            Return $"{symbol} = {dependency.JoinBy(" ~ ")}"
+        End Function
+
         ''' <summary>
         ''' sort of the given formula list via the formula <see cref="dependency"/>
         ''' </summary>

@@ -198,6 +198,16 @@ Namespace Scripting
             Call Expression.SetSymbol(name, value)
         End Sub
 
+        ''' <summary>
+        ''' Parse the given expression string as the math expression
+        ''' </summary>
+        ''' <param name="expression"></param>
+        ''' <param name="throwEx">
+        ''' throw exception if the parser error occured.
+        ''' </param>
+        ''' <returns>
+        ''' this function will returns nothing if the expression parser error and also not throw exception
+        ''' </returns>
         Public Function ParseExpression(expression As String, Optional throwEx As Boolean = True) As Expression
             Try
                 Dim tokenSet = New ExpressionTokenIcer(expression) _
