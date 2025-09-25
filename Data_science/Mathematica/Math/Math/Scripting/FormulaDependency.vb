@@ -19,6 +19,10 @@ Namespace Scripting
         Public Property dependency As String()
 
         Public Overrides Function ToString() As String
+            If dependency.IsNullOrEmpty Then
+                Return $"{symbol} = None"
+            End If
+
             Return $"{symbol} = {dependency.JoinBy(" ~ ")}"
         End Function
 
@@ -42,27 +46,45 @@ Namespace Scripting
             ' [1] y
             ' [2] {x, y}
 
-            ' 使用拓扑排序算法处理依赖关系
+            ' 1. 构建后继图：graph(key: 符号, value: 该符号的后继符号列表)
+            Dim graph As New Dictionary(Of String, List(Of String))()
+
+            For Each symbol As String In formulaIndex.Keys
+                graph(symbol) = New List(Of String)()
+            Next
+
+            For Each fd In formulas
+                If fd.dependency IsNot Nothing Then
+                    For Each dep In fd.dependency
+                        If formulaIndex.ContainsKey(dep) Then
+                            ' 如果公式fd依赖dep，则dep是前驱，fd.symbol是dep的后继
+                            graph(dep).Add(fd.symbol)
+                        End If
+                    Next
+                End If
+            Next
+
+            ' 2. 初始化DFS标记
             Dim visited As New Dictionary(Of String, Boolean)()
             Dim tempMark As New Dictionary(Of String, Boolean)()
             Dim result As New List(Of FormulaDependency)()
 
-            ' 初始化访问标记
             For Each formula As FormulaDependency In formulaIndex.Values
                 visited(formula.symbol) = False
                 tempMark(formula.symbol) = False
             Next
 
-            ' 对每个未访问的节点进行深度优先搜索
+            ' 3. 对每个未访问节点执行DFS
             For Each formula As FormulaDependency In formulaIndex.Values
                 If Not visited(formula.symbol) Then
-                    If Not Visit(formula, formulaIndex, visited, tempMark, result) Then
+                    If Not Visit(formula, formulaIndex, graph, visited, tempMark, result) Then
                         Throw New InvalidOperationException("A circular symbol dependency has been detected, and sorting cannot be performed.")
                     End If
                 End If
             Next
 
-            Return result.AsEnumerable.Reverse().ToArray()
+            ' 4. 反转后序序列得到拓扑顺序
+            Return result.AsEnumerable().Reverse().ToArray()
         End Function
 
         ''' <summary>
@@ -70,40 +92,36 @@ Namespace Scripting
         ''' </summary>
         Private Shared Function Visit(ByRef node As FormulaDependency,
                                       ByRef index As Dictionary(Of String, FormulaDependency),
+                                      ByRef graph As Dictionary(Of String, List(Of String)),
                                       ByRef visited As Dictionary(Of String, Boolean),
                                       ByRef tempMark As Dictionary(Of String, Boolean),
                                       ByRef result As List(Of FormulaDependency)) As Boolean
 
             If tempMark(node.symbol) Then
-                ' 发现循环依赖
-                Return False
+                Return False ' 发现循环依赖
             End If
 
             If visited(node.symbol) Then
-                Return True
+                Return True ' 已访问过，跳过
             End If
 
-            ' 标记为临时访问
-            tempMark(node.symbol) = True
+            tempMark(node.symbol) = True ' 标记为临时访问
 
-            ' 递归访问所有依赖项
-            If node.dependency IsNot Nothing Then
-                For Each depSymbol In node.dependency
-                    If index.ContainsKey(depSymbol) Then
-                        Dim depNode As FormulaDependency = index(depSymbol)
-
-                        If Not Visit(depNode, index, visited, tempMark, result) Then
+            ' 遍历当前节点的后继节点（从graph中获取）
+            If graph.ContainsKey(node.symbol) Then
+                For Each nextSymbol In graph(node.symbol)
+                    If index.ContainsKey(nextSymbol) Then
+                        Dim nextNode As FormulaDependency = index(nextSymbol)
+                        If Not Visit(nextNode, index, graph, visited, tempMark, result) Then
                             Return False
                         End If
                     End If
                 Next
             End If
 
-            ' 取消临时标记，标记为永久访问
+            ' 完成后继遍历，标记为永久访问并添加节点到结果
             tempMark(node.symbol) = False
             visited(node.symbol) = True
-
-            ' 将节点添加到结果列表
             result.Add(node)
 
             Return True
