@@ -241,6 +241,10 @@ Namespace Emit.Marshal
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function PeekNext() As T
+            If buffer.Length - 1 <= index Then
+                Return Nothing
+            End If
+
             Return buffer(index + 1)
         End Function
 
