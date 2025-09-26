@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::559bd4389a172c80f4756d87dbe2fdc4, Data_science\Mathematica\Math\MathLambda\Symbolic\UnaryExpression.vb"
+﻿#Region "Microsoft.VisualBasic::f381983867dd24bed0334ff80ccce79d, Data_science\Mathematica\Math\MathLambda\Symbolic\UnaryExpression.vb"
 
     ' Author:
     ' 
@@ -34,20 +34,20 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 26
-    '    Code Lines: 20 (76.92%)
+    '   Total Lines: 30
+    '    Code Lines: 23 (76.67%)
     ' Comment Lines: 0 (0.00%)
     '    - Xml Docs: 0.00%
     ' 
-    '   Blank Lines: 6 (23.08%)
-    '     File Size: 851 B
+    '   Blank Lines: 7 (23.33%)
+    '     File Size: 1002 B
 
 
     '     Class UnaryExpression
     ' 
     '         Properties: [operator], value
     ' 
-    '         Function: Evaluate, ToString
+    '         Function: Evaluate, GetVariableSymbols, ToString
     ' 
     ' 
     ' /********************************************************************************/

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fb3ffd987afdd22e2c65c8445308b841, Microsoft.VisualBasic.Core\src\ApplicationServices\Debugger.vb"
+﻿#Region "Microsoft.VisualBasic::2fd26806ed4e2d8f40e7b0366ca2ce07, Microsoft.VisualBasic.Core\src\ApplicationServices\Debugger.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 444
-    '    Code Lines: 256 (57.66%)
-    ' Comment Lines: 145 (32.66%)
-    '    - Xml Docs: 94.48%
+    '   Total Lines: 453
+    '    Code Lines: 263 (58.06%)
+    ' Comment Lines: 146 (32.23%)
+    '    - Xml Docs: 93.84%
     ' 
-    '   Blank Lines: 43 (9.68%)
-    '     File Size: 18.09 KB
+    '   Blank Lines: 44 (9.71%)
+    '     File Size: 18.44 KB
 
 
     ' Module VBDebugger
@@ -52,7 +52,7 @@
     ' 
     '         Properties: ForceSTDError, Mute, UsingxConsole
     ' 
-    '         Function: Assert, benchmark, (+2 Overloads) PrintException
+    '         Function: Assert, benchmark, (+2 Overloads) PrintException, redirectWarning
     ' 
     '         Sub: [error], (+3 Overloads) Assertion, AttachLoggingDriver, cat, (+3 Overloads) debug
     '              echo, (+3 Overloads) Echo, EchoLine, info, log

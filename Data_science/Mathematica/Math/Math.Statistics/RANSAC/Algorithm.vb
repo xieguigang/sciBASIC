@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::85f4b640b545c8825d0d5ce4d1c50ef6, Data_science\Mathematica\Math\Math.Statistics\RANSAC\Algorithm.vb"
+﻿#Region "Microsoft.VisualBasic::1d7f6f6ac8123c8ea642283382d27bef, Data_science\Mathematica\Math\Math.Statistics\RANSAC\Algorithm.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 70.97%
     ' 
     '   Blank Lines: 41 (17.75%)
-    '     File Size: 9.74 KB
+    '     File Size: 9.70 KB
 
 
     '     Class Algorithm

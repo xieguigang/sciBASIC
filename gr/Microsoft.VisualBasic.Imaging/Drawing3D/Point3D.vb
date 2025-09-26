@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6cdb8eb1fcd03bf8f56916c55ccdadab, gr\Microsoft.VisualBasic.Imaging\Drawing3D\Point3D.vb"
+﻿#Region "Microsoft.VisualBasic::37c42981c3c2a11778e5d9a66873d374, gr\Microsoft.VisualBasic.Imaging\Drawing3D\Point3D.vb"
 
     ' Author:
     ' 
@@ -34,20 +34,20 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 280
-    '    Code Lines: 178 (63.57%)
-    ' Comment Lines: 54 (19.29%)
+    '   Total Lines: 286
+    '    Code Lines: 183 (63.99%)
+    ' Comment Lines: 54 (18.88%)
     '    - Xml Docs: 85.19%
     ' 
-    '   Blank Lines: 48 (17.14%)
-    '     File Size: 11.04 KB
+    '   Blank Lines: 49 (17.13%)
+    '     File Size: 11.17 KB
 
 
     '     Structure Point3D
     ' 
     '         Properties: Depth, X, Y, Z
     ' 
-    '         Constructor: (+6 Overloads) Sub New
+    '         Constructor: (+7 Overloads) Sub New
     ' 
     '         Function: add, Clone, Cross, distance, divide
     '                   Dot, length, lerp, (+2 Overloads) multiply, normalize

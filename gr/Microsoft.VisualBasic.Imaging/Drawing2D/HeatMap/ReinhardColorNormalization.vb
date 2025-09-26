@@ -1,4 +1,60 @@
-﻿Imports Microsoft.VisualBasic.Imaging.BitmapImage
+﻿#Region "Microsoft.VisualBasic::9ecf8f46145459fb43bb95d4ddd82522, gr\Microsoft.VisualBasic.Imaging\Drawing2D\HeatMap\ReinhardColorNormalization.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 193
+    '    Code Lines: 115 (59.59%)
+    ' Comment Lines: 51 (26.42%)
+    '    - Xml Docs: 50.98%
+    ' 
+    '   Blank Lines: 27 (13.99%)
+    '     File Size: 10.22 KB
+
+
+    '     Class ReinhardColorNormalization
+    ' 
+    '         Function: RGBToLab
+    ' 
+    '         Sub: ApplyTransformation, CalculateStats, LabToRGB, Normalize
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+Imports Microsoft.VisualBasic.Imaging.BitmapImage
 Imports std = System.Math
 
 Namespace Drawing2D.HeatMap

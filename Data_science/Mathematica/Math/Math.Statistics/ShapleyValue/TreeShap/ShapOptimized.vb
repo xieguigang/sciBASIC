@@ -1,4 +1,68 @@
-﻿Imports System.Text
+﻿#Region "Microsoft.VisualBasic::aad69cd923a89563d6306508621863a8, Data_science\Mathematica\Math\Math.Statistics\ShapleyValue\TreeShap\ShapOptimized.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 302
+    '    Code Lines: 222 (73.51%)
+    ' Comment Lines: 44 (14.57%)
+    '    - Xml Docs: 65.91%
+    ' 
+    '   Blank Lines: 36 (11.92%)
+    '     File Size: 14.03 KB
+
+
+    '     Class ShapOptimized
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
+    '         Function: calculateContributions, createPathArray, findFeatureSplit, maxDepth, track
+    '                   unwoundPathSum
+    ' 
+    '         Sub: extendPath, stdcopy, treeShap, unwindPath
+    '         Class PathElement
+    ' 
+    '             Function: ToString, toStringComparable
+    ' 
+    ' 
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+Imports System.Text
 Imports std = System.Math
 
 Namespace ShapleyValue.TreeShape
@@ -300,3 +364,4 @@ Namespace ShapleyValue.TreeShape
     End Class
 
 End Namespace
+

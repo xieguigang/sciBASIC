@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::350c143046d13673e3f6d3018abbed3d, Microsoft.VisualBasic.Core\src\Drawing\Math\Geometry\GeomTransform.vb"
+﻿#Region "Microsoft.VisualBasic::1033273133f1ae816ef42437424eb7cb, Microsoft.VisualBasic.Core\src\Drawing\Math\Geometry\GeomTransform.vb"
 
     ' Author:
     ' 
@@ -34,21 +34,23 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 582
-    '    Code Lines: 317 (54.47%)
-    ' Comment Lines: 206 (35.40%)
-    '    - Xml Docs: 95.63%
+    '   Total Lines: 660
+    '    Code Lines: 363 (55.00%)
+    ' Comment Lines: 228 (34.55%)
+    '    - Xml Docs: 92.54%
     ' 
-    '   Blank Lines: 59 (10.14%)
-    '     File Size: 21.84 KB
+    '   Blank Lines: 69 (10.45%)
+    '     File Size: 24.85 KB
 
 
     '     Module GeomTransform
     ' 
     '         Function: Angle, (+2 Overloads) Area, (+2 Overloads) CalculateAngle, CenterAlign, (+2 Overloads) CentralOffset
-    '                   (+4 Overloads) Centre, CircleRectangle, (+6 Overloads) Distance, (+2 Overloads) DistanceTo, (+2 Overloads) GetBounds
-    '                   GetCenter, (+2 Overloads) InRegion, MirrorX, MirrorY, (+9 Overloads) OffSet2D
-    '                   (+2 Overloads) Offsets, (+5 Overloads) Scale, ShapePoints, SquareSize
+    '                   (+4 Overloads) Centre, CircleRectangle, (+6 Overloads) Distance, (+2 Overloads) DistanceTo, DistanceTo3D
+    '                   (+2 Overloads) GetBounds, GetCenter, (+2 Overloads) InRegion, MirrorX, MirrorY
+    '                   (+9 Overloads) OffSet2D, (+2 Overloads) Offsets, (+5 Overloads) Scale, ShapePoints, SquareSize
+    ' 
+    '         Sub: Rotate, Scale, Translate
     ' 
     ' 
     ' /********************************************************************************/

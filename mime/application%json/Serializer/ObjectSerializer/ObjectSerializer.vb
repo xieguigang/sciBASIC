@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::43762dcced4dff24e981eaef4b884424, mime\application%json\Serializer\ObjectSerializer\ObjectSerializer.vb"
+﻿#Region "Microsoft.VisualBasic::814525a3d02a6d43c646a88bceb01db7, mime\application%json\Serializer\ObjectSerializer\ObjectSerializer.vb"
 
     ' Author:
     ' 
@@ -34,18 +34,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 234
-    '    Code Lines: 177 (75.64%)
-    ' Comment Lines: 24 (10.26%)
-    '    - Xml Docs: 79.17%
+    '   Total Lines: 119
+    '    Code Lines: 91 (76.47%)
+    ' Comment Lines: 15 (12.61%)
+    '    - Xml Docs: 86.67%
     ' 
-    '   Blank Lines: 33 (14.10%)
-    '     File Size: 9.04 KB
+    '   Blank Lines: 13 (10.92%)
+    '     File Size: 4.54 KB
 
 
     ' Module ObjectSerializer
     ' 
-    '     Function: GetJsonElement, populateArrayJson, populateObjectJson, populateTableJson
+    '     Function: GetJsonElement, populateArrayJson, populateTableJson
     ' 
     ' /********************************************************************************/
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f69148cdaf90d330fd3222af16235968, Microsoft.VisualBasic.Core\src\Drawing\Math\Polygon2D.vb"
+﻿#Region "Microsoft.VisualBasic::d4cb7ce340b81945e3d77ac949b860d4, Microsoft.VisualBasic.Core\src\Drawing\Math\Polygon2D.vb"
 
     ' Author:
     ' 
@@ -34,24 +34,25 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 437
-    '    Code Lines: 262 (59.95%)
-    ' Comment Lines: 113 (25.86%)
+    '   Total Lines: 481
+    '    Code Lines: 292 (60.71%)
+    ' Comment Lines: 113 (23.49%)
     '    - Xml Docs: 87.61%
     ' 
-    '   Blank Lines: 62 (14.19%)
-    '     File Size: 15.89 KB
+    '   Blank Lines: 76 (15.80%)
+    '     File Size: 17.25 KB
 
 
     '     Class Polygon2D
     ' 
-    '         Properties: height, length, width, xpoints, ypoints
+    '         Properties: centroid, height, length, width, xpoints
+    '                     ypoints
     ' 
     '         Constructor: (+11 Overloads) Sub New
     ' 
     '         Function: boundingInside, checkInside, GenericEnumerator, GetArea, GetDimension
     '                   GetFillPoints, GetRandomPoint, GetRectangle, GetShoelaceArea, GetSize
-    '                   GetSizeF, (+4 Overloads) inside
+    '                   GetSizeF, (+4 Overloads) inside, (+2 Overloads) rectanglesX, (+2 Overloads) rectanglesY
     ' 
     '         Sub: calculateBounds
     ' 

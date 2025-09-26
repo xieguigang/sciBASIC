@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::488a1c77c02c4f87f8c635a0d2f9afb2, Data_science\MachineLearning\DeepLearning\CNN\Layers\MaxoutLayer.vb"
+﻿#Region "Microsoft.VisualBasic::8478a0169e82d5464268927c724eda02, Data_science\MachineLearning\DeepLearning\CNN\Layers\MaxoutLayer.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 130
-    '    Code Lines: 101 (77.69%)
-    ' Comment Lines: 14 (10.77%)
+    '   Total Lines: 129
+    '    Code Lines: 100 (77.52%)
+    ' Comment Lines: 14 (10.85%)
     '    - Xml Docs: 42.86%
     ' 
-    '   Blank Lines: 15 (11.54%)
-    '     File Size: 4.90 KB
+    '   Blank Lines: 15 (11.63%)
+    '     File Size: 4.84 KB
 
 
     '     Class MaxoutLayer

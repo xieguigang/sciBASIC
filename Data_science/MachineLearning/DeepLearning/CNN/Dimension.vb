@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2fa501cd5287fb2768444148da4a1d73, Data_science\MachineLearning\DeepLearning\CNN\Dimension.vb"
+﻿#Region "Microsoft.VisualBasic::16664688b37c6530f12a4000d3e9f4c5, Data_science\MachineLearning\DeepLearning\CNN\Dimension.vb"
 
     ' Author:
     ' 
@@ -34,16 +34,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 50
-    '    Code Lines: 28 (56.00%)
-    ' Comment Lines: 12 (24.00%)
+    '   Total Lines: 56
+    '    Code Lines: 33 (58.93%)
+    ' Comment Lines: 12 (21.43%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 10 (20.00%)
-    '     File Size: 1.43 KB
+    '   Blank Lines: 11 (19.64%)
+    '     File Size: 1.59 KB
 
 
     '     Class Dimension
+    ' 
+    '         Properties: One
     ' 
     '         Constructor: (+2 Overloads) Sub New
     '         Function: divide, subtract, ToString

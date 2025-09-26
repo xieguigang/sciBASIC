@@ -1,62 +1,62 @@
-﻿#Region "Microsoft.VisualBasic::757e64af3012ec097512ee3446223ea5, Microsoft.VisualBasic.Core\src\ApplicationServices\Utils.vb"
+﻿#Region "Microsoft.VisualBasic::15771871aee69b9c82b72f91dcebade0, Microsoft.VisualBasic.Core\src\ApplicationServices\Utils.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 242
-'    Code Lines: 137 (56.61%)
-' Comment Lines: 74 (30.58%)
-'    - Xml Docs: 87.84%
-' 
-'   Blank Lines: 31 (12.81%)
-'     File Size: 9.59 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Module Utils
-' 
-'         Function: Shell, TaskRun, (+2 Overloads) Time
-' 
-'         Sub: TryRun
-'         Delegate Function
-' 
-'             Function: CLIPath, CLIToken, FileMimeType, GetMIMEDescrib
-' 
-'             Sub: (+2 Overloads) Wait
-' 
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 255
+    '    Code Lines: 148 (58.04%)
+    ' Comment Lines: 74 (29.02%)
+    '    - Xml Docs: 87.84%
+    ' 
+    '   Blank Lines: 33 (12.94%)
+    '     File Size: 9.97 KB
+
+
+    '     Module Utils
+    ' 
+    '         Function: Shell, TaskRun, (+2 Overloads) Time
+    ' 
+    '         Sub: TryRun
+    '         Delegate Function
+    ' 
+    '             Function: CLIPath, CLIToken, FileMimeType, GetMIMEDescrib
+    ' 
+    '             Sub: print, printf, (+2 Overloads) Wait
+    ' 
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

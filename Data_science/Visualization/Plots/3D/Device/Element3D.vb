@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a06f125d1122adce6edc4768acc6d582, Data_science\Visualization\Plots\3D\Device\Element3D.vb"
+﻿#Region "Microsoft.VisualBasic::997871042e069501e15cc23b4331355a, Data_science\Visualization\Plots\3D\Device\Element3D.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 220
-    '    Code Lines: 159 (72.27%)
-    ' Comment Lines: 18 (8.18%)
+    '   Total Lines: 250
+    '    Code Lines: 184 (73.60%)
+    ' Comment Lines: 21 (8.40%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 43 (19.55%)
-    '     File Size: 8.17 KB
+    '   Blank Lines: 45 (18.00%)
+    '     File Size: 9.29 KB
 
 
     '     Class Element3D
@@ -49,15 +49,13 @@
     ' 
     '         Function: GetPosition, ToString
     ' 
-    '         Sub: Transform
-    ' 
     '     Class Polygon
     ' 
     '         Properties: Brush, Path
     ' 
-    '         Function: EnumeratePath
+    '         Function: EnumeratePath, Transform
     ' 
-    '         Sub: Draw, Transform
+    '         Sub: Draw
     ' 
     '     Class ConvexHullPolygon
     ' 
@@ -69,7 +67,7 @@
     ' 
     '         Properties: Color, FontCss, Text
     ' 
-    '         Function: EnumeratePath
+    '         Function: EnumeratePath, Transform
     ' 
     '         Sub: Draw
     ' 
@@ -77,17 +75,17 @@
     ' 
     '         Properties: A, B, Stroke
     ' 
-    '         Constructor: (+1 Overloads) Sub New
+    '         Constructor: (+2 Overloads) Sub New
     ' 
-    '         Function: EnumeratePath
+    '         Function: EnumeratePath, Transform
     ' 
-    '         Sub: __init, Draw, Transform
+    '         Sub: __init, Draw
     ' 
     '     Class ShapePoint
     ' 
     '         Properties: Fill, Label, Point2D, Size, Style
     ' 
-    '         Function: EnumeratePath
+    '         Function: EnumeratePath, Transform
     ' 
     '         Sub: Draw
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a5e1e748745572157845a3a1a46d7126, Data_science\Mathematica\Math\Math\Scripting\ScriptEngine.vb"
+﻿#Region "Microsoft.VisualBasic::37d6d762a063d3871a2a4d8ff8f6fb33, Data_science\Mathematica\Math\Math\Scripting\ScriptEngine.vb"
 
     ' Author:
     ' 
@@ -34,20 +34,20 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 155
-    '    Code Lines: 78 (50.32%)
-    ' Comment Lines: 54 (34.84%)
-    '    - Xml Docs: 83.33%
+    '   Total Lines: 199
+    '    Code Lines: 98 (49.25%)
+    ' Comment Lines: 74 (37.19%)
+    '    - Xml Docs: 87.84%
     ' 
-    '   Blank Lines: 23 (14.84%)
-    '     File Size: 5.71 KB
+    '   Blank Lines: 27 (13.57%)
+    '     File Size: 7.58 KB
 
 
     '     Module ScriptEngine
     ' 
     '         Properties: Expression, Scripts, StatementEngine
     ' 
-    '         Function: Evaluate, ParseExpression, Shell
+    '         Function: CheckFormulaDependency, Evaluate, ParseExpression, Shell
     ' 
     '         Sub: setFunction, SetFunction, setSymbol, (+2 Overloads) SetVariable
     ' 

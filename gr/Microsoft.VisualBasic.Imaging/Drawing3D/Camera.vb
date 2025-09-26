@@ -1,59 +1,59 @@
-﻿#Region "Microsoft.VisualBasic::5747ffa2c423f7b4bba5ba4cb671349d, gr\Microsoft.VisualBasic.Imaging\Drawing3D\Camera.vb"
+﻿#Region "Microsoft.VisualBasic::f0ab42f8169e83657048a4f40eebf61a, gr\Microsoft.VisualBasic.Imaging\Drawing3D\Camera.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 189
-'    Code Lines: 135 (71.43%)
-' Comment Lines: 19 (10.05%)
-'    - Xml Docs: 100.00%
-' 
-'   Blank Lines: 35 (18.52%)
-'     File Size: 6.52 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Class Camera
-' 
-'         Constructor: (+3 Overloads) Sub New
-' 
-'         Function: Lighting, (+2 Overloads) Project, (+4 Overloads) Rotate, (+2 Overloads) RotateX, (+2 Overloads) RotateY
-'                   (+2 Overloads) RotateZ, ToString
-' 
-'         Sub: Draw
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 197
+    '    Code Lines: 141 (71.57%)
+    ' Comment Lines: 19 (9.64%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 37 (18.78%)
+    '     File Size: 6.81 KB
+
+
+    '     Class Camera
+    ' 
+    '         Constructor: (+4 Overloads) Sub New
+    ' 
+    '         Function: Lighting, (+2 Overloads) Project, (+4 Overloads) Rotate, (+2 Overloads) RotateX, (+2 Overloads) RotateY
+    '                   (+2 Overloads) RotateZ, ToString
+    ' 
+    '         Sub: Draw
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

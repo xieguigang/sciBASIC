@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ee531c649a540cf95a155ede211caae1, Data\DataFrame\Extensions\Write_csv.vb"
+﻿#Region "Microsoft.VisualBasic::694f747ac96984bb8e811df93aa1ab33, Data\DataFrame\Extensions\Write_csv.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 144
-    '    Code Lines: 98 (68.06%)
-    ' Comment Lines: 31 (21.53%)
+    '   Total Lines: 145
+    '    Code Lines: 98 (67.59%)
+    ' Comment Lines: 32 (22.07%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 15 (10.42%)
-    '     File Size: 6.23 KB
+    '   Blank Lines: 15 (10.34%)
+    '     File Size: 6.24 KB
 
 
     ' Module Write_csv

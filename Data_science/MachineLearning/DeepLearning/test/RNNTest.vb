@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3193ccb49a5bbe785c0c7c34b59116ce, Data_science\MachineLearning\DeepLearning\test\RNNTest.vb"
+﻿#Region "Microsoft.VisualBasic::8a1a89051504b76c3e804d791826e7e9, Data_science\MachineLearning\DeepLearning\test\RNNTest.vb"
 
     ' Author:
     ' 
@@ -40,12 +40,12 @@
     '    - Xml Docs: 0.00%
     ' 
     '   Blank Lines: 5 (35.71%)
-    '     File Size: 376 B
+    '     File Size: 377 B
 
 
     ' Module RNNTest
     ' 
-    '     Sub: Main
+    '     Sub: Main2
     ' 
     ' /********************************************************************************/
 

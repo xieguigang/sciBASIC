@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7faa7450815cc60d5d3acd322146f6b4, Data\DataFrame\IO\DataFrame\DataFrameResolver.vb"
+﻿#Region "Microsoft.VisualBasic::66913d29950542c7101d67f681b98996, Data\DataFrame\IO\DataFrame\DataFrameResolver.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 801
-    '    Code Lines: 515 (64.29%)
-    ' Comment Lines: 167 (20.85%)
+    '   Total Lines: 805
+    '    Code Lines: 518 (64.35%)
+    ' Comment Lines: 167 (20.75%)
     '    - Xml Docs: 82.63%
     ' 
-    '   Blank Lines: 119 (14.86%)
-    '     File Size: 32.33 KB
+    '   Blank Lines: 120 (14.91%)
+    '     File Size: 32.47 KB
 
 
     '     Class DataFrameResolver
@@ -57,7 +57,7 @@
     '                   GetChars, (+2 Overloads) getColumnList, GetColumnVectors, GetData, GetDataTypeName
     '                   GetDateTime, GetDecimal, GetDouble, GetEnumerator, GetEnumerator2
     '                   GetFieldType, GetFloat, GetGuid, GetInt16, GetInt32
-    '                   GetInt64, GetName, (+2 Overloads) GetOrdinal, GetOrdinalSchema, GetRow
+    '                   GetInt64, GetName, (+2 Overloads) GetOrdinal, GetOrdinalSchema, (+2 Overloads) GetRow
     '                   GetSchemaTable, (+2 Overloads) GetString, GetValue, GetValueLambda, GetValues
     '                   IDataRecord_GetValue, IsDBNull, (+2 Overloads) Load, LoadDataSet, MeasureTypeSchema
     '                   Parse, Read, Slice, ToString

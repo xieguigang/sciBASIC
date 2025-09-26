@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::32ee08122c749372ad79e4038ee01479, mime\application%json\Serializer\JSONWriter.vb"
+﻿#Region "Microsoft.VisualBasic::2856b71a32e19338ea4d3323e278cd5a, mime\application%json\Serializer\JSONWriter.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 314
-    '    Code Lines: 231 (73.57%)
-    ' Comment Lines: 36 (11.46%)
+    '   Total Lines: 325
+    '    Code Lines: 241 (74.15%)
+    ' Comment Lines: 36 (11.08%)
     '    - Xml Docs: 44.44%
     ' 
-    '   Blank Lines: 47 (14.97%)
-    '     File Size: 11.12 KB
+    '   Blank Lines: 48 (14.77%)
+    '     File Size: 11.61 KB
 
 
     ' Class JSONWriter

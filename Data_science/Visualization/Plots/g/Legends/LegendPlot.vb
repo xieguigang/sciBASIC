@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ce64ba3f7adb48422b0da783e59c4e85, Data_science\Visualization\Plots\g\Legends\LegendPlot.vb"
+﻿#Region "Microsoft.VisualBasic::7bc4c1998264a7059cb44457df968ecc, Data_science\Visualization\Plots\g\Legends\LegendPlot.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 89.09%
     ' 
     '   Blank Lines: 61 (15.29%)
-    '     File Size: 16.48 KB
+    '     File Size: 16.45 KB
 
 
     '     Module LegendPlotExtensions

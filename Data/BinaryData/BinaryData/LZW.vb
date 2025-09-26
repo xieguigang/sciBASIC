@@ -1,4 +1,72 @@
-﻿Imports System.IO
+﻿#Region "Microsoft.VisualBasic::a8e7592b49be1f155b22e6fef38e0986, Data\BinaryData\BinaryData\LZW.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 229
+    '    Code Lines: 139 (60.70%)
+    ' Comment Lines: 43 (18.78%)
+    '    - Xml Docs: 93.02%
+    ' 
+    '   Blank Lines: 47 (20.52%)
+    '     File Size: 8.59 KB
+
+
+    '     Class LZW
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    '         Function: Compress, Decompress
+    ' 
+    '     Class Encoder
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
+    '         Function: Compress, FindMatch
+    ' 
+    '         Sub: WriteCode
+    ' 
+    '     Class Decoder
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    '         Function: Decompress, ReadCode
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+Imports System.IO
 
 Namespace LZW
 

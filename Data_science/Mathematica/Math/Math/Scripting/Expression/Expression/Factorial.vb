@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::abe3cac3961783196c91ac2613042994, Data_science\Mathematica\Math\Math\Scripting\Expression\Expression\Factorial.vb"
+﻿#Region "Microsoft.VisualBasic::e0bd8b6504246b7ee457cea621b5d248, Data_science\Mathematica\Math\Math\Scripting\Expression\Expression\Factorial.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 26
-    '    Code Lines: 18 (69.23%)
-    ' Comment Lines: 3 (11.54%)
+    '   Total Lines: 28
+    '    Code Lines: 19 (67.86%)
+    ' Comment Lines: 3 (10.71%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 5 (19.23%)
-    '     File Size: 691 B
+    '   Blank Lines: 6 (21.43%)
+    '     File Size: 844 B
 
 
     '     Class Factorial
@@ -48,7 +48,7 @@
     '         Properties: factor
     ' 
     '         Constructor: (+1 Overloads) Sub New
-    '         Function: Evaluate, ToString
+    '         Function: Evaluate, GetVariableSymbols, ToString
     ' 
     ' 
     ' /********************************************************************************/

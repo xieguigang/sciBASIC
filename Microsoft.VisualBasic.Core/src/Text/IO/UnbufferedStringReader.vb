@@ -1,60 +1,68 @@
-﻿#Region "Microsoft.VisualBasic::540155b329abd3b8ecbedfa74c26e597, Microsoft.VisualBasic.Core\src\Text\IO\UnbufferedStringReader.vb"
+﻿#Region "Microsoft.VisualBasic::f235a938c0ab940c93a57f0bf2b7467a, Microsoft.VisualBasic.Core\src\Text\IO\UnbufferedStringReader.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 166
-'    Code Lines: 114 (68.67%)
-' Comment Lines: 39 (23.49%)
-'    - Xml Docs: 100.00%
-' 
-'   Blank Lines: 13 (7.83%)
-'     File Size: 5.87 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Class UnbufferedStringReader
-' 
-'         Properties: Position
-' 
-'         Constructor: (+1 Overloads) Sub New
-' 
-'         Function: Peek, (+2 Overloads) Read, ReadLine, ReadToEnd
-' 
-'         Sub: Close, Dispose
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 288
+    '    Code Lines: 190 (65.97%)
+    ' Comment Lines: 71 (24.65%)
+    '    - Xml Docs: 84.51%
+    ' 
+    '   Blank Lines: 27 (9.38%)
+    '     File Size: 11.38 KB
+
+
+    '     Class UnbufferedStreamReader
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
+    '         Function: ReadLine, ReadLineInternal
+    ' 
+    '         Sub: Dispose
+    ' 
+    '     Class UnbufferedStringReader
+    ' 
+    '         Properties: Position
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
+    '         Function: Peek, (+2 Overloads) Read, ReadLine, ReadToEnd
+    ' 
+    '         Sub: Close, Dispose
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

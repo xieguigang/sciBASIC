@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::dd97186ced904da0bec33fd8bd7f7fa4, Microsoft.VisualBasic.Core\test\test\streamTest.vb"
+﻿#Region "Microsoft.VisualBasic::e4e4e2c871dbae038c683fdf78177500, Microsoft.VisualBasic.Core\test\test\streamTest.vb"
 
     ' Author:
     ' 
@@ -34,18 +34,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 82
-    '    Code Lines: 55 (67.07%)
-    ' Comment Lines: 5 (6.10%)
+    '   Total Lines: 92
+    '    Code Lines: 62 (67.39%)
+    ' Comment Lines: 5 (5.43%)
     '    - Xml Docs: 0.00%
     ' 
-    '   Blank Lines: 22 (26.83%)
-    '     File Size: 2.24 KB
+    '   Blank Lines: 25 (27.17%)
+    '     File Size: 2.52 KB
 
 
     ' Module streamTest
     ' 
-    '     Sub: Main1
+    '     Sub: dataUriStreamtest, Main1
     ' 
     ' /********************************************************************************/
 

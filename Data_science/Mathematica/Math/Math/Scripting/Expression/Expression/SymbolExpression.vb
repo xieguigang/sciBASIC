@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bac0b2173c35d3b5e32a69163a0bc3b5, Data_science\Mathematica\Math\Math\Scripting\Expression\Expression\SymbolExpression.vb"
+﻿#Region "Microsoft.VisualBasic::d11a3e9326f4af208403f18aa42f9af6, Data_science\Mathematica\Math\Math\Scripting\Expression\Expression\SymbolExpression.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 22
-    '    Code Lines: 14 (63.64%)
-    ' Comment Lines: 3 (13.64%)
+    '   Total Lines: 26
+    '    Code Lines: 17 (65.38%)
+    ' Comment Lines: 3 (11.54%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 5 (22.73%)
-    '     File Size: 605 B
+    '   Blank Lines: 6 (23.08%)
+    '     File Size: 750 B
 
 
     '     Class SymbolExpression
@@ -48,7 +48,7 @@
     '         Properties: symbolName
     ' 
     '         Constructor: (+1 Overloads) Sub New
-    '         Function: Evaluate, ToString
+    '         Function: Evaluate, GetVariableSymbols, ToString
     ' 
     ' 
     ' /********************************************************************************/
