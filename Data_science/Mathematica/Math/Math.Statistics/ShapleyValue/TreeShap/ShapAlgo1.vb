@@ -1,4 +1,58 @@
-﻿Namespace ShapleyValue.TreeShape
+﻿#Region "Microsoft.VisualBasic::5bf8c9c86beaff621843d83e451577f1, Data_science\Mathematica\Math\Math.Statistics\ShapleyValue\TreeShap\ShapAlgo1.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 98
+    '    Code Lines: 40 (40.82%)
+    ' Comment Lines: 44 (44.90%)
+    '    - Xml Docs: 93.18%
+    ' 
+    '   Blank Lines: 14 (14.29%)
+    '     File Size: 3.65 KB
+
+
+    '     Class ShapAlgo1
+    ' 
+    '         Function: (+2 Overloads) expValue, (+2 Overloads) g, isLeaf
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+Namespace ShapleyValue.TreeShape
 
     ''' <summary>
     ''' See https://arxiv.org/pdf/1802.03888.pdf - Chapter 3.1, Algorithm 1.
@@ -96,3 +150,4 @@
     End Class
 
 End Namespace
+

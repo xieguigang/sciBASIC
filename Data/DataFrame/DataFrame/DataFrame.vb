@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::beac83e454e5f53f590d6362bf14496b, Data\DataFrame\DataFrame\DataFrame.vb"
+﻿#Region "Microsoft.VisualBasic::d6df7d355fc49fddb20d5645f1d30ce8, Data\DataFrame\DataFrame\DataFrame.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 414
-    '    Code Lines: 247 (59.66%)
-    ' Comment Lines: 112 (27.05%)
+    '   Total Lines: 420
+    '    Code Lines: 252 (60.00%)
+    ' Comment Lines: 112 (26.67%)
     '    - Xml Docs: 93.75%
     ' 
-    '   Blank Lines: 55 (13.29%)
-    '     File Size: 14.89 KB
+    '   Blank Lines: 56 (13.33%)
+    '     File Size: 15.18 KB
 
 
     ' Class DataFrame
@@ -50,9 +50,9 @@
     ' 
     '     Constructor: (+4 Overloads) Sub New
     ' 
-    '     Function: (+6 Overloads) add, ArrayPack, delete, foreachRow, GetLabels
-    '               (+2 Overloads) read_arff, (+2 Overloads) read_csv, row, slice, ToString
-    '               Union
+    '     Function: (+6 Overloads) add, ArrayPack, delete, foreachRow, GenericEnumerator
+    '               GetLabels, (+2 Overloads) read_arff, (+2 Overloads) read_csv, row, slice
+    '               ToString, Union
     ' 
     '     Sub: (+2 Overloads) write_arff
     ' 

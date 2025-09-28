@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b22c5474fc198962904e205c001af781, mime\application%json\Serializer\ObjectSerializer\Deserializer.vb"
+﻿#Region "Microsoft.VisualBasic::074ed72406f465c5f3fad830f3e75ca0, mime\application%json\Serializer\ObjectSerializer\Deserializer.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 180
-    '    Code Lines: 128 (71.11%)
-    ' Comment Lines: 34 (18.89%)
-    '    - Xml Docs: 61.76%
+    '   Total Lines: 182
+    '    Code Lines: 128 (70.33%)
+    ' Comment Lines: 36 (19.78%)
+    '    - Xml Docs: 66.67%
     ' 
-    '   Blank Lines: 18 (10.00%)
-    '     File Size: 7.68 KB
+    '   Blank Lines: 18 (9.89%)
+    '     File Size: 7.83 KB
 
 
     ' Module Deserializer

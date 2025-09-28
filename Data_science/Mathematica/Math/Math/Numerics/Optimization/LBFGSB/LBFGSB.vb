@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::388ce9f9f23f1b28940155f84accba54, Data_science\Mathematica\Math\Math\Numerics\Optimization\LBFGSB\LBFGSB.vb"
+﻿#Region "Microsoft.VisualBasic::896109c7389126b8dc821b28a6141d52, Data_science\Mathematica\Math\Math\Numerics\Optimization\LBFGSB\LBFGSB.vb"
 
     ' Author:
     ' 
@@ -34,20 +34,20 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 261
-    '    Code Lines: 179 (68.58%)
-    ' Comment Lines: 37 (14.18%)
-    '    - Xml Docs: 64.86%
+    '   Total Lines: 279
+    '    Code Lines: 187 (67.03%)
+    ' Comment Lines: 44 (15.77%)
+    '    - Xml Docs: 70.45%
     ' 
-    '   Blank Lines: 45 (17.24%)
-    '     File Size: 10.23 KB
+    '   Blank Lines: 48 (17.20%)
+    '     File Size: 10.71 KB
 
 
     '     Class LBFGSB
     ' 
     '         Constructor: (+2 Overloads) Sub New
     ' 
-    '         Function: max_step_size, minimize, proj_grad_norm
+    '         Function: debug, max_step_size, maxit, minimize, proj_grad_norm
     ' 
     '         Sub: force_bounds, reset
     ' 

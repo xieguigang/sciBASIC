@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ccf641a705133e0fc1daa4e2c5e0ff01, mime\application%json\Serializer\JSONSerializer.vb"
+﻿#Region "Microsoft.VisualBasic::572062dfcf57f17eb965667949a2bb72, mime\application%json\Serializer\JSONSerializer.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 83
-    '    Code Lines: 62 (74.70%)
-    ' Comment Lines: 9 (10.84%)
-    '    - Xml Docs: 88.89%
+    '   Total Lines: 89
+    '    Code Lines: 64 (71.91%)
+    ' Comment Lines: 13 (14.61%)
+    '    - Xml Docs: 92.31%
     ' 
-    '   Blank Lines: 12 (14.46%)
-    '     File Size: 3.07 KB
+    '   Blank Lines: 12 (13.48%)
+    '     File Size: 3.38 KB
 
 
     ' Module JSONSerializer

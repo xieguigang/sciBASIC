@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bcf92ea39b2d00d39d400f74de35edd4, Data_science\Mathematica\Math\Math\Scripting\Expression\ExpressionEngine.vb"
+﻿#Region "Microsoft.VisualBasic::1b76807b6b5e80ab3e2ef8d487dcf83d, Data_science\Mathematica\Math\Math\Scripting\Expression\ExpressionEngine.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 128
-    '    Code Lines: 100 (78.12%)
-    ' Comment Lines: 9 (7.03%)
-    '    - Xml Docs: 88.89%
+    '   Total Lines: 134
+    '    Code Lines: 100 (74.63%)
+    ' Comment Lines: 15 (11.19%)
+    '    - Xml Docs: 93.33%
     ' 
-    '   Blank Lines: 19 (14.84%)
-    '     File Size: 5.58 KB
+    '   Blank Lines: 19 (14.18%)
+    '     File Size: 5.78 KB
 
 
     '     Class ExpressionEngine

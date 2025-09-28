@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bfaa10817c9c0f32787061b7f00bf2fb, Microsoft.VisualBasic.Core\src\Extensions\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::df9c150fadf9fc1adfef4c42ff83e4ba, Microsoft.VisualBasic.Core\src\Extensions\Extensions.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 1551
-    '    Code Lines: 855 (55.13%)
-    ' Comment Lines: 554 (35.72%)
+    '   Total Lines: 1554
+    '    Code Lines: 857 (55.15%)
+    ' Comment Lines: 554 (35.65%)
     '    - Xml Docs: 91.88%
     ' 
-    '   Blank Lines: 142 (9.16%)
-    '     File Size: 57.59 KB
+    '   Blank Lines: 143 (9.20%)
+    '     File Size: 57.60 KB
 
 
     ' Module Extensions
@@ -51,14 +51,14 @@
     '     Function: [Set], Add, (+5 Overloads) AddRange, AsRange, (+2 Overloads) Average
     '               CheckDuplicated, Constrain, DateToString, DescriptionValue, DriverRun
     '               FuzzyMatching, IndexOf, (+2 Overloads) InlineCopy, InsertOrUpdate, Invoke
-    '               InvokeSet, is_empty, Is_NA_UHandle, (+2 Overloads) IsNaNImaginary, (+2 Overloads) JoinBy
-    '               (+2 Overloads) LongSeq, MatrixToUltraLargeVector, MatrixTranspose, MatrixTransposeIgnoredDimensionAgreement, MD5
-    '               ModifyValue, (+2 Overloads) Offset, Range, Remove, RemoveDuplicates
-    '               RemoveFirst, (+2 Overloads) RemoveLast, Second, SeqRandom, (+3 Overloads) Sequence
-    '               (+11 Overloads) ShadowCopy, Shell, Shuffles, Slice, (+2 Overloads) SplitMV
-    '               Sum, (+2 Overloads) ToArray, ToBoolean, ToDictionary, ToNormalizedPathString
-    '               ToString, ToStringArray, ToVector, (+3 Overloads) TrimNull, TryCount
-    '               Unlist, WriteAddress
+    '               InvokeSet, is_empty, (+3 Overloads) IsNaNImaginary, (+2 Overloads) JoinBy, (+2 Overloads) LongSeq
+    '               MatrixToUltraLargeVector, MatrixTranspose, MatrixTransposeIgnoredDimensionAgreement, MD5, ModifyValue
+    '               (+2 Overloads) Offset, Range, Remove, RemoveDuplicates, RemoveFirst
+    '               (+2 Overloads) RemoveLast, Second, SeqRandom, (+3 Overloads) Sequence, (+11 Overloads) ShadowCopy
+    '               Shell, Shuffles, Slice, (+2 Overloads) SplitMV, Sum
+    '               (+2 Overloads) ToArray, ToBoolean, ToDictionary, ToNormalizedPathString, ToString
+    '               ToStringArray, ToVector, (+3 Overloads) TrimNull, TryCount, Unlist
+    '               WriteAddress
     ' 
     '     Sub: Add, Removes, (+2 Overloads) Swap, SwapItem
     ' 

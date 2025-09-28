@@ -62,6 +62,7 @@
 
 Imports System.Runtime.CompilerServices
 Imports System.Text.RegularExpressions
+Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Language
 
 Namespace Text.Parser
@@ -394,6 +395,22 @@ Namespace Text.Parser
                 Return 0 < size
             Else
                 Return buf.buffer.Count < size
+            End If
+        End Operator
+
+        Public Shared Narrowing Operator CType(chr As CharBuffer) As Char
+            If chr > 0 Then
+                Return chr.buffer(0)
+            Else
+                Return Nothing
+            End If
+        End Operator
+
+        Public Shared Operator Like(buf As CharBuffer, [set] As Index(Of Char)) As Boolean
+            If buf <> 1 Then
+                Return False
+            Else
+                Return CChar(buf) Like [set]
             End If
         End Operator
 

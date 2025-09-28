@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4ffc81a523eea8551656486a0f0747d2, Microsoft.VisualBasic.Core\src\ComponentModel\System.Collections.Generic\KeyDictionary.vb"
+﻿#Region "Microsoft.VisualBasic::4c4e89da23784dab598c5f99b1e5d76f, Microsoft.VisualBasic.Core\src\ComponentModel\System.Collections.Generic\KeyDictionary.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 358
-    '    Code Lines: 207 (57.82%)
-    ' Comment Lines: 107 (29.89%)
+    '   Total Lines: 366
+    '    Code Lines: 213 (58.20%)
+    ' Comment Lines: 107 (29.23%)
     '    - Xml Docs: 90.65%
     ' 
-    '   Blank Lines: 44 (12.29%)
-    '     File Size: 13.37 KB
+    '   Blank Lines: 46 (12.57%)
+    '     File Size: 13.56 KB
 
 
     '     Class HashTable

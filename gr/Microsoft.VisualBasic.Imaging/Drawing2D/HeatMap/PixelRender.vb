@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4838c00b823a656036916c3ac0fa08de, gr\Microsoft.VisualBasic.Imaging\Drawing2D\HeatMap\PixelRender.vb"
+﻿#Region "Microsoft.VisualBasic::a36b90f5b37de6088d219908c9dc801b, gr\Microsoft.VisualBasic.Imaging\Drawing2D\HeatMap\PixelRender.vb"
 
     ' Author:
     ' 

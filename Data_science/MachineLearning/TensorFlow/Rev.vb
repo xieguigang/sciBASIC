@@ -1,4 +1,61 @@
-﻿Imports std = System.Math
+﻿#Region "Microsoft.VisualBasic::aa2efa81624081b34a6426f473b15af6, Data_science\MachineLearning\TensorFlow\Rev.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 145
+    '    Code Lines: 118 (81.38%)
+    ' Comment Lines: 3 (2.07%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 24 (16.55%)
+    '     File Size: 6.47 KB
+
+
+    ' Class Rev
+    ' 
+    '     Properties: Zero
+    ' 
+    '     Constructor: (+2 Overloads) Sub New
+    '     Function: Exp, Log, Pow, ToString
+    '     Operators: (+4 Overloads) -, (+3 Overloads) *, (+3 Overloads) /, (+3 Overloads) +
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+Imports std = System.Math
 
 ''' <summary>
 ''' Data type for automatic differentiation with reverse mode accumulation.
@@ -143,3 +200,4 @@ Public Class Rev
         Return New Rev(std.Log(Magnitude), Sub(dx) CalculateDerivative(1.0 / Magnitude * dx))
     End Function
 End Class
+

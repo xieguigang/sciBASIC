@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5b67fc39d74dfdbb9c0c65a2228b55fa, Microsoft.VisualBasic.Core\src\Drawing\Bitmap\BitmapBuffer.vb"
+﻿#Region "Microsoft.VisualBasic::94cecb09dbae1239c817776d485f4928, Microsoft.VisualBasic.Core\src\Drawing\Bitmap\BitmapBuffer.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 80.66%
     ' 
     '   Blank Lines: 123 (16.08%)
-    '     File Size: 25.97 KB
+    '     File Size: 25.96 KB
 
 
     '     Class BitmapBuffer

@@ -1,4 +1,60 @@
-﻿Imports System.Text
+﻿#Region "Microsoft.VisualBasic::da8d7406b3156d7b3257ed8fea61d173, Microsoft.VisualBasic.Core\src\Extensions\Math\Information\LempelZivComplexity.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 196
+    '    Code Lines: 101 (51.53%)
+    ' Comment Lines: 73 (37.24%)
+    '    - Xml Docs: 75.34%
+    ' 
+    '   Blank Lines: 22 (11.22%)
+    '     File Size: 11.17 KB
+
+
+    '     Class LempelZivComplexity
+    ' 
+    '         Properties: Complexity, NormalizedComplexity, Zero
+    ' 
+    '         Function: ComputeLZC, ComputeLZCString, ConvertToBinarySequence, ConvertToDecimalSequence, ConvertToHexadecimalSequence
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+Imports System.Text
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Math.Statistics.Linq
 Imports std = System.Math

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::30db7b7c419ae2a4e16c4a528cb5f39c, Microsoft.VisualBasic.Core\src\Drawing\Bitmap\netcore8.0\Pen.vb"
+﻿#Region "Microsoft.VisualBasic::820050434d007b701f6908ac21255825, Microsoft.VisualBasic.Core\src\Drawing\Bitmap\netcore8.0\Pen.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 200
-    '    Code Lines: 97 (48.50%)
-    ' Comment Lines: 62 (31.00%)
+    '   Total Lines: 204
+    '    Code Lines: 100 (49.02%)
+    ' Comment Lines: 62 (30.39%)
     '    - Xml Docs: 33.87%
     ' 
-    '   Blank Lines: 41 (20.50%)
-    '     File Size: 6.49 KB
+    '   Blank Lines: 42 (20.59%)
+    '     File Size: 6.66 KB
 
 
     '     Class Pen
@@ -50,6 +50,9 @@
     '                     StartCap, Width
     ' 
     '         Constructor: (+2 Overloads) Sub New
+    ' 
+    '         Function: ToString
+    ' 
     '         Sub: (+2 Overloads) Dispose
     ' 
     '     Enum DashCap

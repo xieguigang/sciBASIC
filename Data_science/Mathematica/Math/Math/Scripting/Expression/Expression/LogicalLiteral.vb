@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::459dc16373ca2103b5fa0d331acef90b, Data_science\Mathematica\Math\Math\Scripting\Expression\Expression\LogicalLiteral.vb"
+﻿#Region "Microsoft.VisualBasic::a7fdc71af5d640f44c51b2900fc5d01a, Data_science\Mathematica\Math\Math\Scripting\Expression\Expression\LogicalLiteral.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 19
-    '    Code Lines: 14 (73.68%)
-    ' Comment Lines: 0 (0.00%)
+    '   Total Lines: 23
+    '    Code Lines: 16 (69.57%)
+    ' Comment Lines: 1 (4.35%)
     '    - Xml Docs: 0.00%
     ' 
-    '   Blank Lines: 5 (26.32%)
-    '     File Size: 523 B
+    '   Blank Lines: 6 (26.09%)
+    '     File Size: 702 B
 
 
     '     Class LogicalLiteral
@@ -48,7 +48,7 @@
     '         Properties: logical
     ' 
     '         Constructor: (+1 Overloads) Sub New
-    '         Function: Evaluate, ToString
+    '         Function: Evaluate, GetVariableSymbols, ToString
     ' 
     ' 
     ' /********************************************************************************/

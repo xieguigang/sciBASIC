@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::873e1965e63335164cb2a33b2f76dc37, Microsoft.VisualBasic.Core\src\Language\Linq\Vectorization\BooleanVector.vb"
+﻿#Region "Microsoft.VisualBasic::75f16a6a70a56c81268945cdee446fc0, Microsoft.VisualBasic.Core\src\Language\Linq\Vectorization\BooleanVector.vb"
 
     ' Author:
     ' 
@@ -34,18 +34,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 171
-    '    Code Lines: 86 (50.29%)
-    ' Comment Lines: 65 (38.01%)
+    '   Total Lines: 177
+    '    Code Lines: 91 (51.41%)
+    ' Comment Lines: 65 (36.72%)
     '    - Xml Docs: 83.08%
     ' 
-    '   Blank Lines: 20 (11.70%)
-    '     File Size: 6.04 KB
+    '   Blank Lines: 21 (11.86%)
+    '     File Size: 6.14 KB
 
 
     '     Class BooleanVector
     ' 
-    '         Properties: [False], [True], IsLogical
+    '         Properties: [False], [True], Any, IsLogical
     ' 
     '         Constructor: (+1 Overloads) Sub New
     '         Function: (+2 Overloads) Sum, ToString

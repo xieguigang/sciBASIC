@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::74120adecb82a3ffa9af9babbfdf31a0, Data_science\Mathematica\Math\Math\Scripting\Expression\Expression\BinaryExpression.vb"
+﻿#Region "Microsoft.VisualBasic::023ef54d1c648b94a1b70852033aeb3f, Data_science\Mathematica\Math\Math\Scripting\Expression\Expression\BinaryExpression.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 46
-    '    Code Lines: 24 (52.17%)
-    ' Comment Lines: 15 (32.61%)
+    '   Total Lines: 55
+    '    Code Lines: 32 (58.18%)
+    ' Comment Lines: 15 (27.27%)
     '    - Xml Docs: 93.33%
     ' 
-    '   Blank Lines: 7 (15.22%)
-    '     File Size: 1.57 KB
+    '   Blank Lines: 8 (14.55%)
+    '     File Size: 1.91 KB
 
 
     '     Class BinaryExpression
@@ -48,7 +48,7 @@
     '         Properties: [operator], left, right
     ' 
     '         Constructor: (+1 Overloads) Sub New
-    '         Function: Evaluate, Power, ToString
+    '         Function: Evaluate, GetVariableSymbols, Power, ToString
     ' 
     ' 
     ' /********************************************************************************/

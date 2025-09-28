@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d4db37b73c74a963bb749c2f19e7ed92, gr\Microsoft.VisualBasic.Imaging\d3js\labeler\Label.vb"
+﻿#Region "Microsoft.VisualBasic::28bc4075f87d8c49e09196b31f6080c8, gr\Microsoft.VisualBasic.Imaging\d3js\labeler\Label.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 145
-    '    Code Lines: 86 (59.31%)
-    ' Comment Lines: 39 (26.90%)
+    '   Total Lines: 154
+    '    Code Lines: 90 (58.44%)
+    ' Comment Lines: 43 (27.92%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 20 (13.79%)
-    '     File Size: 4.63 KB
+    '   Blank Lines: 21 (13.64%)
+    '     File Size: 4.95 KB
 
 
     '     Class Label
@@ -48,7 +48,7 @@
     '         Properties: height, location, pinned, rectangle, text
     '                     width, X, Y
     ' 
-    '         Constructor: (+6 Overloads) Sub New
+    '         Constructor: (+7 Overloads) Sub New
     '         Function: distanceTo, ToString
     ' 
     ' 
