@@ -1,5 +1,4 @@
 ﻿Imports System.Xml.Serialization
-Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 
 Namespace Resource
 
@@ -19,7 +18,7 @@ Namespace Resource
 
     Public Class element
 
-        <XmlAttribute> Public Property name As IStringGetter
+        <XmlAttribute> Public Property name As String
         <XmlAttribute> Public Property IsDataSet As Boolean
         Public Property type As String
 
