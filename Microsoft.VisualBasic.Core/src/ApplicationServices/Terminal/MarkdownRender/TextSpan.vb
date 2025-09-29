@@ -110,5 +110,9 @@ Namespace ApplicationServices.Terminal
         Public Shared Operator &(span As TextSpan, str As String) As String
             Return CType(span, String) & str
         End Operator
+
+        Public Shared Operator &(str As String, span As TextSpan) As String
+            Return str & CType(span, String)
+        End Operator
     End Class
 End Namespace
