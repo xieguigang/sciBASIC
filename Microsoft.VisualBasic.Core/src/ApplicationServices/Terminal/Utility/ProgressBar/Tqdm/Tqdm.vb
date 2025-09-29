@@ -218,7 +218,7 @@ Namespace ApplicationServices.Terminal.ProgressBar.Tqdm
             ' bytes of stream in different unit which is converted via page_unit
             ' so needs convert the offset in same page_unit factor scale
             Do While (offset / page_unit) < bytesOfStream
-                Call bar.Progress(offset / page_unit, bytesOfStream)
+                Call bar.Progress(CInt(offset / page_unit), CInt(bytesOfStream))
                 Call bar.SetLabel(StringFormats.Lanudry(offset / (bar.ElapsedSeconds + 1)) & "/s")
 
                 Yield request(offset, bar)
@@ -257,7 +257,7 @@ Namespace ApplicationServices.Terminal.ProgressBar.Tqdm
                        Dim line As String = str.ReadLine
                        Dim offset As Long = str.BaseStream.Position
 
-                       Call bar.Progress(offset / page_unit, bytesOfStream)
+                       Call bar.Progress(CInt(offset / page_unit), CInt(bytesOfStream))
                        Call bar.SetLabel(StringFormats.Lanudry(offset / (bar.ElapsedSeconds + 1)) & "/s")
 
                        Return line
