@@ -293,10 +293,9 @@ Namespace Language
 
         ''' <summary>
         ''' Auto increment value with step 1 and then returns the previous value.
-        ''' (自增1然后返回之前的值)
         ''' </summary>
         ''' <param name="x"></param>
-        ''' <returns></returns>
+        ''' <returns>自增1然后返回之前的值</returns>
         Public Overloads Shared Operator +(x As i32) As Integer
             Dim i As Integer = x.Value
             x.Value += 1
