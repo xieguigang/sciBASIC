@@ -1,65 +1,67 @@
 ﻿#Region "Microsoft.VisualBasic::a9f5c18001b720bcb73b0a2e64d00d02, gr\Drawing-net4.8\Extensions.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 237
-    '    Code Lines: 157 (66.24%)
-    ' Comment Lines: 49 (20.68%)
-    '    - Xml Docs: 89.80%
-    ' 
-    '   Blank Lines: 31 (13.08%)
-    '     File Size: 9.08 KB
+' Summaries:
 
 
-    ' Module Extensions
-    ' 
-    '     Function: CanvasCreateFromImageFile, CreateCanvas2D, (+4 Overloads) CreateGDIDevice, CreateObject, (+2 Overloads) GetIcon
-    '               GetStringPath, SaveIcon
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 237
+'    Code Lines: 157 (66.24%)
+' Comment Lines: 49 (20.68%)
+'    - Xml Docs: 89.80%
+' 
+'   Blank Lines: 31 (13.08%)
+'     File Size: 9.08 KB
+
+
+' Module Extensions
+' 
+'     Function: CanvasCreateFromImageFile, CreateCanvas2D, (+4 Overloads) CreateGDIDevice, CreateObject, (+2 Overloads) GetIcon
+'               GetStringPath, SaveIcon
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Drawing
 Imports System.Drawing.Drawing2D
+Imports System.Drawing.Imaging
 Imports System.Drawing.Text
 Imports System.IO
 Imports System.Reflection
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Imaging
+Imports Microsoft.VisualBasic.Imaging.BitmapImage
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Scripting.Runtime
 Imports Bitmap = System.Drawing.Bitmap
@@ -68,7 +70,43 @@ Imports GraphicsPath = System.Drawing.Drawing2D.GraphicsPath
 Imports Image = System.Drawing.Image
 Imports Pens = System.Drawing.Pens
 
+#If WINDOWS Then
+Imports std = System.Math
+#End If
+
 Public Module Extensions
+
+    <Extension>
+    Public Function CreateBuffer(bmp As System.Drawing.Bitmap) As BitmapBuffer
+#If WINDOWS Then
+        ' Lock the bitmap's bits.  
+        Dim rect As New Rectangle(0, 0, bmp.Width, bmp.Height)
+        Dim bmpData As BitmapData = bmp.LockBits(
+            rect:=rect,
+            flags:=ImageLockMode.ReadWrite,
+            format:=bmp.PixelFormat
+        )
+
+        ' Get the address of the first line.
+        Dim ptr As IntPtr = bmpData.Scan0
+        ' Declare an array to hold the bytes of the bitmap.
+        Dim bytes As Integer = std.Abs(bmpData.Stride) * bmp.Height
+        Dim pixels As Integer = bmp.Width * bmp.Height
+        Dim channels As Integer
+
+        If bytes = pixels * 3 Then
+            channels = 3
+        ElseIf bytes = pixels * 4 Then
+            channels = 4
+        Else
+            Throw New NotImplementedException
+        End If
+
+        Return New BitmapBuffer(ptr, bytes, bmp.Size, bmpData.Stride, channels)
+#Else
+        Return BitmapBuffer.FromBitmap(bmp)
+#End If
+    End Function
 
     <Extension>
     Public Function SaveIcon(ico As Icon, path$) As Boolean
@@ -99,11 +137,10 @@ Public Module Extensions
     ''' <returns></returns>
     <Extension>
     Public Function CreateCanvas2D(res As Image,
-                                       Optional directAccess As Boolean = False,
-                                       Optional bg As String = Nothing,
-                                       <CallerMemberName>
-                                       Optional caller$ = "") As Graphics2D
-
+                                   Optional directAccess As Boolean = False,
+                                   Optional bg As String = Nothing,
+                                   <CallerMemberName>
+                                   Optional caller$ = "") As Graphics2D
         If directAccess Then
             Return Graphics2D.CreateObject(Graphics.FromImage(res), res)
         Else

@@ -57,7 +57,6 @@ Imports System.Drawing
 Imports System.Drawing.Imaging
 Imports System.IO
 Imports System.Runtime.CompilerServices
-Imports Microsoft.VisualBasic.Imaging
 
 Public Module ImageExtensions
 
