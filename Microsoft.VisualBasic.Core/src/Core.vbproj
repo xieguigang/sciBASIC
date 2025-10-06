@@ -28,7 +28,10 @@
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
     <IncludeSymbols>True</IncludeSymbols>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
-    <ApplicationManifest>My Project\app.manifest</ApplicationManifest>    
+    <ApplicationManifest>My Project\app.manifest</ApplicationManifest>
+
+    <NoWarn>$(NoWarn);SYSLIB0003</NoWarn>
+    <NoWarn>$(NoWarn);SYSLIB0004</NoWarn>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">

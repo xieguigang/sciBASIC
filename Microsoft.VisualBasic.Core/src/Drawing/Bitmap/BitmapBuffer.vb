@@ -116,11 +116,20 @@ Namespace Imaging.BitmapImage
         End Property
 
 #If NET48 Then
-        Protected Sub New(ptr As IntPtr,
-                          byts%,
-                          raw As Bitmap,
-                          handle As BitmapData,
-                          channel As Integer)
+
+        ''' <summary>
+        ''' constructor for gdi+ image data object
+        ''' </summary>
+        ''' <param name="ptr"></param>
+        ''' <param name="byts%"></param>
+        ''' <param name="raw"></param>
+        ''' <param name="handle"></param>
+        ''' <param name="channel"></param>
+        Public Sub New(ptr As IntPtr,
+                       byts%,
+                       raw As Bitmap,
+                       handle As BitmapData,
+                       channel As Integer)
 
             Call MyBase.New(ptr, byts)
 
