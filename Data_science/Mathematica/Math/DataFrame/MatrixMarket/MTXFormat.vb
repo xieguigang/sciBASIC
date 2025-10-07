@@ -95,6 +95,12 @@ Namespace MatrixMarket
     ''' </summary>
     Public Class MTXFormat
 
+        Public Shared Function ReadMatrix(filepath As String) As SparseMatrix
+            Using s As Stream = filepath.Open(FileMode.Open, doClear:=False, [readOnly]:=True)
+                Return ReadMatrix(s)
+            End Using
+        End Function
+
         Public Shared Function ReadMatrix(file As Stream) As SparseMatrix
             Using reader As New StreamReader(file)
                 Return ReadMatrix(reader)

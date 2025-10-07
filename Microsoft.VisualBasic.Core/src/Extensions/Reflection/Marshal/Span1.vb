@@ -106,7 +106,7 @@ Namespace Emit.Marshal
             buffer = raw
         End Sub
 
-        Private Sub New(ByRef raw As T(), start As Integer, length As Integer)
+        Public Sub New(ByRef raw As T(), start As Integer, length As Integer)
             Me.buffer = raw
             Me.start = start
             Me.span_size = length
