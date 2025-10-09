@@ -132,7 +132,7 @@ Namespace Language.Java
         '     * (The first word of each tuning parameter name is the algorithm to which
         '     * it applies.)
         '     
-        Private Const BINARYSEARCH_THRESHOLD As Integer = 5000
+        Private Const BINARYSEARCH_THRESHOLD As Integer = 50000
         Private Const REVERSE_THRESHOLD As Integer = 18
         Private Const SHUFFLE_THRESHOLD As Integer = 5
         Private Const FILL_THRESHOLD As Integer = 25
@@ -175,17 +175,17 @@ Namespace Language.Java
         '''         that this guarantees that the return value will be &gt;= 0 if
         '''         and only if the key is found. 
         ''' </returns>
-        Public Function binarySearch(Of T As IComparable(Of T))(list As List(Of T), key As T) As Integer
-            If list.Count < BINARYSEARCH_THRESHOLD Then
+        Public Function binarySearch(Of T As IComparable(Of T))(list As T(), key As T) As Integer
+            If list.Length < BINARYSEARCH_THRESHOLD Then
                 Return Collections.indexedBinarySearch(list, key)
             Else
                 Return Collections.iteratorBinarySearch(list, key)
             End If
         End Function
 
-        Private Function indexedBinarySearch(Of T, T1 As IComparable(Of T))(list As List(Of T1), key As T) As Integer
+        Private Function indexedBinarySearch(Of T, T1 As IComparable(Of T))(list As T1(), key As T) As Integer
             Dim low As Integer = 0
-            Dim high As Integer = list.Count - 1
+            Dim high As Integer = list.Length - 1
 
             Do While low <= high
                 Dim mid As Integer = CInt(CUInt((low + high)) >> 1)
@@ -203,9 +203,9 @@ Namespace Language.Java
             Return -(low + 1) ' key not found
         End Function
 
-        Private Function iteratorBinarySearch(Of T, T1 As IComparable(Of T))(list As List(Of T1), key As T) As Integer
+        Private Function iteratorBinarySearch(Of T, T1 As IComparable(Of T))(list As T1(), key As T) As Integer
             Dim low As Integer = 0
-            Dim high As Integer = list.Count - 1
+            Dim high As Integer = list.Length - 1
             Dim i As IEnumerator(Of IComparable(Of T)) = list.GetEnumerator()
 
             Do While low <= high
@@ -278,23 +278,24 @@ Namespace Language.Java
         '''         elements in the list are less than the specified key.  Note
         '''         that this guarantees that the return value will be &gt;= 0 if
         '''         and only if the key is found. </returns>
-        Public Function binarySearch(Of T As IComparable(Of T))(list As List(Of T), key As T, c As IComparer(Of T)) As Integer
+        <Extension>
+        Public Function binarySearch(Of T As IComparable(Of T))(list As T(), key As T, c As IComparer(Of T)) As Integer
             If c Is Nothing Then Return binarySearch(list, key)
 
-            If list.Count < BINARYSEARCH_THRESHOLD Then
+            If list.Length < BINARYSEARCH_THRESHOLD Then
                 Return Collections.indexedBinarySearch(list, key, c)
             Else
                 Return Collections.iteratorBinarySearch(list, key, c)
             End If
         End Function
 
-        Private Function indexedBinarySearch(Of T)(l As List(Of T), key As T, c As IComparer(Of T)) As Integer
+        Private Function indexedBinarySearch(Of T)(l As T(), key As T, c As IComparer(Of T)) As Integer
             Dim low As Integer = 0
-            Dim high As Integer = l.Count - 1
+            Dim high As Integer = l.Length - 1
 
             Do While low <= high
                 Dim mid As Integer = CInt(CUInt((low + high)) >> 1)
-                Dim midVal As T = l.Get(mid)
+                Dim midVal As T = l(mid)
                 Dim cmp As Integer = c.Compare(midVal, key)
 
                 If cmp < 0 Then
@@ -308,9 +309,9 @@ Namespace Language.Java
             Return -(low + 1) ' key not found
         End Function
 
-        Private Function iteratorBinarySearch(Of T)(l As List(Of T), key As T, c As IComparer(Of T)) As Integer
+        Private Function iteratorBinarySearch(Of T)(l As T(), key As T, c As IComparer(Of T)) As Integer
             Dim low As Integer = 0
-            Dim high As Integer = l.Count - 1
+            Dim high As Integer = l.Length - 1
 
             Do While low <= high
                 Dim mid As Integer = CInt(CUInt((low + high)) >> 1)
