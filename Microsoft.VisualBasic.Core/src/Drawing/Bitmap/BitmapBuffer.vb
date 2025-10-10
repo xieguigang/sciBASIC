@@ -90,8 +90,12 @@ Namespace Imaging.BitmapImage
 
 #If NET48 Then
         Protected raw As Bitmap
-        Protected handle As BitmapData
 #End If
+
+        ''' <summary>
+        ''' BitmapData
+        ''' </summary>
+        Protected handle As Object
 
         ''' <summary>
         ''' current bitmap data is construct from a pixel data array, not read from memory via pointer.
@@ -145,7 +149,7 @@ Namespace Imaging.BitmapImage
         End Sub
 #End If
 
-        Sub New(ptr As IntPtr, byts%, size As Size, stride As Integer, channel As Integer)
+        Sub New(ptr As IntPtr, byts%, size As Size, stride As Integer, channel As Integer, Optional handle As Object = Nothing)
             Call MyBase.New(ptr, byts)
 
             Me.Stride = stride
@@ -154,6 +158,7 @@ Namespace Imaging.BitmapImage
             Me.Size = size
             Me.channels = channel
             Me.memoryBuffer = False
+            Me.handle = handle
         End Sub
 
         ''' <summary>
@@ -233,6 +238,10 @@ Namespace Imaging.BitmapImage
             Dim bytes As Byte() = New Byte(width * height * 4 - 1) {}
             Call bytes.fill(255)
             Return New BitmapBuffer(bytes, New Size(width, height), 4)
+        End Function
+
+        Public Function GetHandleObject() As Object
+            Return handle
         End Function
 
         ''' <summary>
@@ -826,7 +835,9 @@ Namespace Imaging.BitmapImage
                 Call Write()
             End If
 #If NET48 Then
-            Call raw.UnlockBits(handle)
+            If TypeOf handle Is BitmapData Then
+                Call raw.UnlockBits(DirectCast(handle, BitmapData))
+            End If
 #End If
         End Sub
 
