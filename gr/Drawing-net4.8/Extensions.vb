@@ -102,7 +102,7 @@ Public Module Extensions
             Throw New NotImplementedException
         End If
 
-        Return New BitmapBuffer(ptr, bytes, bmp.Size, bmpData.Stride, channels)
+        Return New BitmapBuffer(ptr, bytes, bmp.Size, bmpData.Stride, channels, handle:=bmpData)
 #Else
         Return BitmapBuffer.FromBitmap(bmp)
 #End If
