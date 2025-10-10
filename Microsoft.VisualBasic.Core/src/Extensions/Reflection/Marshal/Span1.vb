@@ -68,7 +68,7 @@ Namespace Emit.Marshal
         ReadOnly span_size As Integer
 
         ''' <summary>
-        ''' the span size
+        ''' current span view size
         ''' </summary>
         ''' <returns></returns>
         Public ReadOnly Property Length As Integer
@@ -102,6 +102,16 @@ Namespace Emit.Marshal
             End Set
         End Property
 
+        ''' <summary>
+        ''' the offset ends in the raw input buffer
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property OffsetEnds As Integer
+            Get
+                Return start + Length
+            End Get
+        End Property
+
         Sub New(ByRef raw As T())
             buffer = raw
         End Sub
@@ -123,7 +133,7 @@ Namespace Emit.Marshal
         End Function
 
         Public Overrides Function ToString() As String
-            Return $"Dim Span As {GetType(T).Name}[] = new {GetType(T).Name}[{ArrayLength - 1}][&{start}:&{start + span_size}]"
+            Return $"Dim Span As {GetType(T).Name}[] = new {GetType(T).Name}[{ArrayLength - 1}][ span_view={start}:{OffsetEnds}, span_size={Length} ]"
         End Function
 
         Public Shared Widening Operator CType(raw As T()) As Span(Of T)
