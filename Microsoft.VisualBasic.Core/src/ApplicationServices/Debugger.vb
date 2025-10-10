@@ -200,7 +200,7 @@ Public Module VBDebugger
     Public Function benchmark(test As Action, <CallerMemberName> Optional trace$ = Nothing) As Long
         Dim ms& = Utils.Time(test)
         Dim str$ = $"{trace} -> {CStrSafe(test.Target, "null")}::{test.Method.Name}"
-        Call log(str, "benchmark", AnsiColor.BrightMagenta, MSG_TYPES.INF, Mute, $" + {StringFormats.ReadableElapsedTime(TimeSpan.FromMilliseconds(ms))}")
+        Call log(str, "benchmark", AnsiColor.BrightMagenta, MSG_TYPES.INF, Mute, $" cost +{StringFormats.ReadableElapsedTime(TimeSpan.FromMilliseconds(ms))}")
         Return ms
     End Function
 
