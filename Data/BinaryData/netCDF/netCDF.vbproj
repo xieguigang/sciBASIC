@@ -6,7 +6,7 @@
 
     <TargetFrameworks>net8.0-windows;net8.0;net48</TargetFrameworks>
 	  <Platforms>AnyCPU;x64</Platforms>
-	  <Configurations>Debug;Release;LipidSearch;PlantMAT;mzkit;NPSearch;Rsharp_app_release;gcmodeller_desktop;nuget_release</Configurations>
+	  <Configurations>Debug;Release;LipidSearch;PlantMAT;mzkit;NPSearch;Rsharp_app_release;gcmodeller_desktop;nuget_release;MEMI-Desktop</Configurations>
 	  <AutoGenerateBindingRedirects>True</AutoGenerateBindingRedirects>
 	  <GenerateDocumentationFile>True</GenerateDocumentationFile>
 	  <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
