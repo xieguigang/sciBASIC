@@ -54,7 +54,7 @@
 Imports System.Drawing
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Math
-Imports stdNum = System.Math
+Imports std = System.Math
 
 Public Module LowessFittings
 
@@ -64,7 +64,7 @@ Public Module LowessFittings
         If d = 0.0 Then
             Return 0
         Else
-            Return stdNum.Sign(d)
+            Return std.Sign(d)
         End If
     End Function
 
@@ -78,14 +78,15 @@ Public Module LowessFittings
     <Extension>
     Public Function Lowess(sample As IEnumerable(Of PointF),
                            Optional f As Double = 2 / 3,
-                           Optional nsteps As Integer = 3) As (x As Double(), y As Double())
+                           Optional nsteps As Integer = 3) As (x As Double(), yfit As Double(), y As Double())
 
         Dim data As PointF() = sample.OrderBy(Function(p) p.X).ToArray
         Dim x = data.Select(Function(p) CDbl(p.X)).ToArray
         Dim y = data.Select(Function(p) CDbl(p.Y)).ToArray
         Dim delta As Double = Interpolation.Range(data.Length, x, 1)
+        Dim fit = LowessFittings.Lowess(x, y, data.Length, f, nsteps, delta)
 
-        Return LowessFittings.Lowess(x, y, data.Length, f, nsteps, delta)
+        Return (fit.x, fit.y, y)
     End Function
 
     ''' <summary>
@@ -140,7 +141,7 @@ Public Module LowessFittings
         End If
 
         ' Use at least two and at most n points:
-        ns = stdNum.Max(stdNum.Min(stdNum.Floor(f * n), n), 2)
+        ns = std.Max(std.Min(std.Floor(f * n), n), 2)
 
         ' Robustness iterations:
         For iter = 1 To nsteps + 1
@@ -193,7 +194,7 @@ Public Module LowessFittings
                     End If
                 Next
 
-                i = stdNum.Max(last + 1, i - 1)
+                i = std.Max(last + 1, i - 1)
             Loop While last < n - 1
 
             ' Calculate Residuals:
@@ -207,19 +208,19 @@ Public Module LowessFittings
             End If
 
             For i = 0 To n - 1
-                rw(i) = stdNum.Abs(res(i))
+                rw(i) = std.Abs(res(i))
             Next
 
             Call Array.Sort(rw, AddressOf ascending)
 
-            m1 = stdNum.Floor(n / 2.0)
+            m1 = std.Floor(n / 2.0)
             m2 = n - m1 - 1.0
             cmad = 3.0 * (rw(m1) + rw(m2))
             c9 = 0.999 * cmad
             c1 = 0.001 * cmad
 
             For i = 0 To n - 1
-                r = stdNum.Abs(res(i))
+                r = std.Abs(res(i))
 
                 If r <= c1 Then
                     ' near 0, avoid underflow
@@ -228,7 +229,7 @@ Public Module LowessFittings
                     ' near 1, avoid underflow
                     rw(i) = 0.0
                 Else
-                    rw(i) = stdNum.Pow(1.0 - stdNum.Pow(r / cmad, 2.0), 2.0)
+                    rw(i) = std.Pow(1.0 - std.Pow(r / cmad, 2.0), 2.0)
                 End If
             Next
         Next
@@ -274,7 +275,7 @@ Public Module LowessFittings
         Dim r As Double
         Dim j As Integer
         Dim range As Double = x(n - 1) - x(0)
-        Dim h As Double = stdNum.Max(xs - x(nleft), x(nright) - xs)
+        Dim h As Double = std.Max(xs - x(nleft), x(nright) - xs)
         Dim h9 As Double = 0.999 * h
         Dim h1 As Double = 0.001 * h
 
@@ -284,12 +285,12 @@ Public Module LowessFittings
 
         For j = nleft To n - 1
             w(j) = 0.0
-            r = stdNum.Abs(x(j) - xs)
+            r = std.Abs(x(j) - xs)
 
             ' small enough for non-zero weight
             If r <= h9 Then
                 If r > h1 Then
-                    w(j) = stdNum.Pow(1.0 - stdNum.Pow(r / h, 3.0), 3.0)
+                    w(j) = std.Pow(1.0 - std.Pow(r / h, 3.0), 3.0)
                 Else
                     w(j) = 1.0
                 End If
@@ -330,10 +331,10 @@ Public Module LowessFittings
             c = 0.0
 
             For j = nleft To nrt
-                c += w(j) * stdNum.Pow(x(j) - a, 2.0)
+                c += w(j) * std.Pow(x(j) - a, 2.0)
             Next
 
-            If stdNum.Sqrt(c) > 0.001 * range Then
+            If std.Sqrt(c) > 0.001 * range Then
                 ' Points are spread out enough to compute slope:
                 b /= c
 
