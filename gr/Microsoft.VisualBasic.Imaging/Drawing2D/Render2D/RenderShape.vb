@@ -55,8 +55,11 @@
 #End Region
 
 Imports System.Drawing
-Imports System.Drawing.Drawing2D
 Imports std = System.Math
+
+#If NET48 Then
+Imports System.Drawing.Drawing2D
+#End If
 
 Namespace Drawing2D
 
