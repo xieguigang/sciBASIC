@@ -15,6 +15,9 @@ Namespace ComponentModel.Collection.Generic
             End Get
         End Property
 
+        Sub New()
+        End Sub
+
         Sub New(buckets As IEnumerable(Of IEnumerable(Of T)))
             For Each block As IEnumerable(Of T) In buckets
                 Call Me.buckets.Add(block.ToArray)
