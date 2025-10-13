@@ -277,7 +277,7 @@ Namespace Filters
             ' 统计每个像素占整幅图像中的比例
             For i As Integer = 0 To 255
                 pixelPro(i) = CSng(pixelCount(i) / size)
-            Next i
+            Next
 
             '遍历灰度级[0,255]
             Dim w0 As Single, w1 As Single, u0tmp As Single, u1tmp As Single, u0 As Single, u1 As Single, u As Single, deltaTmp As Single, deltaMax As Single = 0
