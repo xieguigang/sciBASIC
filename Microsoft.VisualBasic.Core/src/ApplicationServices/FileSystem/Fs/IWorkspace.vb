@@ -79,7 +79,10 @@ Namespace ApplicationServices
 
         Sub New(fs As IFileSystemEnvironment, subdir As String)
             Me.fs = fs
-            Me.Workspace = subdir
+            Me.Workspace = Strings.Trim(subdir) _
+                .Replace("\", "/") _
+                .StringReplace("/{2,}", "/") _
+                .Trim("/"c)
         End Sub
 
         Public Sub Close() Implements IFileSystemEnvironment.Close
@@ -132,17 +135,23 @@ Namespace ApplicationServices
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function GetFiles() As IEnumerable(Of String) Implements IFileSystemEnvironment.GetFiles
-            Return fs.GetFiles(Workspace)
+            Return relativeToView(fs.GetFiles(Workspace))
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function GetFiles(subdir As String, ParamArray exts() As String) As IEnumerable(Of String) Implements IFileSystemEnvironment.GetFiles
-            Return fs.GetFiles($"{Workspace}/{subdir}", exts)
+            Return relativeToView(fs.GetFiles($"{Workspace}/{subdir}", exts))
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function EnumerateFiles(subdir As String, ParamArray exts() As String) As IEnumerable(Of String) Implements IFileSystemEnvironment.EnumerateFiles
-            Return fs.EnumerateFiles($"{Workspace}/{subdir}", exts)
+            Return relativeToView(fs.EnumerateFiles($"{Workspace}/{subdir}", exts))
+        End Function
+
+        Private Iterator Function relativeToView(files As IEnumerable(Of String)) As IEnumerable(Of String)
+            For Each file As String In files
+                Yield "/" & file.Replace(Workspace, "/").Trim
+            Next
         End Function
     End Class
 End Namespace
