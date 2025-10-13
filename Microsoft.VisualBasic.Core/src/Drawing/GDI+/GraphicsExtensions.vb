@@ -391,8 +391,7 @@ Namespace Imaging
         ''' <returns></returns>
         <Extension>
         Public Function EntireImage(img As Image) As Rectangle
-            Dim size As Size = img.Size
-            Return New Rectangle(New Point, size)
+            Return New Rectangle(New Point, size:=img.Size)
         End Function
 
         ''' <summary>
@@ -417,7 +416,7 @@ Namespace Imaging
 
         <Extension>
         Public Function X(Of Point As Layout2D)(pts As IEnumerable(Of Point)) As Double()
-            Return (From pt As Point In pts Select yi = pt.Y).ToArray
+            Return (From pt As Point In pts Select xi = pt.X).ToArray
         End Function
 
         <Extension>

@@ -75,7 +75,7 @@ Public Module GridDynamics
         Dim cx = tar.x
         Dim cy = tar.y
 
-        For Each dxdy In lookups
+        For Each dxdy As (dx As Integer, dy As Integer) In lookups
             q = grid(cx + dxdy.dx, cy + dxdy.dy)
 
             If Not q Is Nothing Then
