@@ -114,9 +114,9 @@ Namespace Drawing2D
             ' 计算矢量的原始长度
             Dim originalLength As Double = std.Sqrt(vx * vx + vy * vy)
             Dim pen As New Pen(color, w)
-
             ' 确定缩放比例和实际终点坐标
             Dim scaleFactor As Double
+
             If originalLength > maxL Then
                 scaleFactor = maxL / originalLength
             Else
@@ -129,15 +129,13 @@ Namespace Drawing2D
             Dim endY As Double = y + scaledVy
 
             ' 1. 绘制箭头主线
-            gfx.DrawLine(pen, CInt(x), CInt(y), CInt(endX), CInt(endY))
+            gfx.DrawLine(pen, x, y, CSng(endX), CSng(endY))
 
             ' 2. 绘制箭头头部（三角形）
             Dim headLength As Double = 10.0 ' 箭头头部长度，可根据需要调整
             Dim headWidth As Double = 7.0   ' 箭头头部宽度，可根据需要调整
-
             ' 计算矢量的角度（弧度）
             Dim angle As Double = std.Atan2(scaledVy, scaledVx)
-
             ' 计算箭头头部的两个侧点
             Dim headPoint1 As New PointF(
                 CSng(endX - headLength * std.Cos(angle) + headWidth * std.Sin(angle)),
@@ -149,9 +147,9 @@ Namespace Drawing2D
             )
 
             ' 绘制头部三角形（从终点连接到两个侧点）
-            gfx.DrawLine(pen, CInt(endX), CInt(endY), CInt(headPoint1.X), CInt(headPoint1.Y))
-            gfx.DrawLine(pen, CInt(endX), CInt(endY), CInt(headPoint2.X), CInt(headPoint2.Y))
-            gfx.DrawLine(pen, CInt(headPoint1.X), CInt(headPoint1.Y), CInt(headPoint2.X), CInt(headPoint2.Y))
+            gfx.DrawLine(pen, CSng(endX), CSng(endY), CSng(headPoint1.X), CSng(headPoint1.Y))
+            gfx.DrawLine(pen, CSng(endX), CSng(endY), CSng(headPoint2.X), CSng(headPoint2.Y))
+            gfx.DrawLine(pen, CSng(headPoint1.X), CSng(headPoint1.Y), CSng(headPoint2.X), CSng(headPoint2.Y))
         End Sub
     End Class
 End Namespace
