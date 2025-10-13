@@ -55,158 +55,161 @@
 #End Region
 
 Imports System.Drawing
-Imports System.Math
 Imports Microsoft.VisualBasic.Imaging.Math2D
+Imports Microsoft.VisualBasic.Math.LinearAlgebra.Matrix
+Imports std = System.Math
 
 Namespace LinearAlgebra
 
     Public Class EllipseFitResult
+
+        ''' <summary>
+        ''' 椭圆的中心点（h,k）
+        ''' </summary>
+        ''' <returns></returns>
         Public Property Center As PointF
-        Public Property SemiMajorAxis As Single ' 长半轴
-        Public Property SemiMinorAxis As Single ' 短半轴
-        Public Property RotationAngle As Single ' 弧度制
+        ''' <summary>
+        ''' 长半轴
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property SemiMajorAxis As Single
+        ''' <summary>
+        ''' 短半轴
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property SemiMinorAxis As Single
+        ''' <summary>
+        ''' 旋转角度（弧度）
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property RotationAngle As Single
+        ''' <summary>
+        ''' 原始系数向量 [A, B, C, D, E, F]
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property Coefficients As Double()
 
         Public Function CreateShape() As EllipseShape
             Return New EllipseShape(SemiMajorAxis, SemiMinorAxis, Center)
         End Function
 
         Public Shared Function FitEllipse(points As PointF()) As EllipseFitResult
-            If points.Length < 5 Then
-                Call "至少需要5个点进行拟合".Warning
-                Return Nothing
-            End If
+            ' 步骤1：构建设计矩阵M
+            Dim M As NumericMatrix = BuildDesignMatrix(points)
+            ' 步骤2：对M进行SVD分解[1,6](@ref)
+            Dim svd As New SingularValueDecomposition(M)
+            ' 步骤3：取V的最后一列作为椭圆系数向量[2](@ref)
+            Dim V As NumericMatrix = svd.V.Transpose()
+            Dim coefficients As Vector = V(V.ColumnDimension - 1, byRow:=False)
 
-            ' 1. 构建矩阵 M 和向量 B
-            Dim n As Integer = points.Length
-            Dim M(n - 1, 5) As Double
-            Dim B(n - 1) As Double
+            ' 步骤4：从系数向量提取椭圆几何参数
+            Return ExtractEllipseParameters(coefficients)
+        End Function
 
-            For i As Integer = 0 To n - 1
-                Dim x = points(i).X, y = points(i).Y
-                M(i, 0) = x * x    ' x²
-                M(i, 1) = x * y    ' xy
-                M(i, 2) = y * y    ' y²
-                M(i, 3) = x        ' x
-                M(i, 4) = y        ' y
-                M(i, 5) = 1        ' 常数项
-                B(i) = -x * x      ' -x² (用于构造B向量)
+        ''' <summary>
+        ''' 构建设计矩阵 M = [x², xy, y², x, y, 1]
+        ''' </summary>
+        Private Shared Function BuildDesignMatrix(points As PointF()) As NumericMatrix
+            Dim rowCount As Integer = points.Length
+            Dim M As New NumericMatrix(rowCount, 6)
+
+            For i As Integer = 0 To points.Count - 1
+                Dim x As Double = points(i).X
+                Dim y As Double = points(i).Y
+
+                M(i, 0) = x * x      ' x²
+                M(i, 1) = x * y      ' xy
+                M(i, 2) = y * y      ' y²
+                M(i, 3) = x          ' x
+                M(i, 4) = y          ' y
+                M(i, 5) = 1.0        ' 常数项
             Next
 
-            ' 2. 解线性方程组 (MᵀM)V = MᵀB
-            Dim MT = MatrixTranspose(M)
-            Dim MTM = MatrixMultiply(MT, M)
-            Dim MTB = MatrixMultiply(MT, B)
-            Dim V = SolveLinearSystem(MTM, MTB) ' 解出参数向量V=[A,B,C,D,E,F]
+            Return M
+        End Function
 
-            ' 3. 提取参数
-            Dim A = V(0), Bp = V(1), C = V(2), D = V(3), E = V(4), F = V(5)
+        ''' <summary>
+        ''' 从系数向量提取椭圆几何参数[1](@ref)
+        ''' </summary>
+        Private Shared Function ExtractEllipseParameters(coefficients As Vector) As EllipseFitResult
+            ' 提取系数：v = [A, B, C, D, E, F]^T
+            Dim A As Double = coefficients(0)
+            Dim B As Double = coefficients(1)
+            Dim C As Double = coefficients(2)
+            Dim D As Double = coefficients(3)
+            Dim E As Double = coefficients(4)
+            Dim F As Double = coefficients(5)
 
-            ' 4. 转换为几何参数
-            Dim discriminant = 4 * A * C - Bp * Bp
-            If discriminant <= 0 Then
-                Call "拟合结果非椭圆 (B²-4AC≥0)".Warning
-                Return Nothing
+            ' 验证是否为椭圆 (B² - 4AC < 0)
+            Dim discriminant As Double = B * B - 4 * A * C
+            If discriminant >= 0 Then
+                Throw New InvalidOperationException("拟合结果不是椭圆（可能是双曲线或抛物线）")
             End If
 
-            Dim x0 = (2 * C * D - Bp * E) / discriminant
-            Dim y0 = (2 * A * E - Bp * D) / discriminant
+            ' 步骤4.1：计算中心点 (h, k)[1](@ref)
+            Dim denominator As Double = B * B - 4 * A * C
+            Dim h As Double = (2 * C * D - B * E) / denominator
+            Dim k As Double = (2 * A * E - B * D) / denominator
 
-            ' 计算长短半轴
-            Dim numerator = 2 * (A * E * E + C * D * D - Bp * D * E + discriminant * F - A * C * F)
-            Dim term1 = A + C
-            Dim term2 = Sqrt((A - C) * (A - C) + Bp * Bp)
-            ' 计算旋转角 (弧度)
-            Dim angle = 0.5 * Atan2(Bp, A - C)
+            ' 步骤4.2：计算旋转角度 θ[1](@ref)
+            Dim theta As Double = 0.5 * std.Atan2(B, A - C)
 
-            Dim ra = Sqrt(numerator / (discriminant * (term2 - term1)))
-            Dim rb = Sqrt(numerator / (discriminant * (-term2 - term1)))
+            ' 步骤4.3：计算平移后的常数项 F'
+            Dim F_prime As Double = A * h * h + B * h * k + C * k * k + D * h + E * k + F
 
-            ' 确保a为长半轴，b为短半轴
-            If ra < rb Then
-                Dim temp = ra : ra = rb : rb = temp
+            ' 步骤4.4：计算二次型矩阵的特征值[1](@ref)
+            Dim Q As New NumericMatrix(2, 2)
+            Q(0, 0) = A
+            Q(0, 1) = B / 2
+            Q(1, 0) = B / 2
+            Q(1, 1) = C
+
+            Dim eigenValues As New EigenvalueDecomposition(Q)
+            Dim eigenReals As Double() = eigenValues.RealEigenvalues
+            Dim lambda1 As Double = eigenReals(0)
+            Dim lambda2 As Double = eigenReals(1)
+
+            ' 确保特征值顺序正确（λ1 ≤ λ2）
+            If lambda1 > lambda2 Then
+                Dim temp As Double = lambda1
+                lambda1 = lambda2
+                lambda2 = temp
             End If
+
+            ' 步骤4.5：计算长轴和短轴[1](@ref)
+            Dim semiMajorAxis As Double = std.Sqrt(-F_prime / lambda1)  ' 长轴
+            Dim semiMinorAxis As Double = std.Sqrt(-F_prime / lambda2)  ' 短轴
+
+            ' 确保长轴≥短轴
+            If semiMajorAxis < semiMinorAxis Then
+                Dim temp As Double = semiMajorAxis
+                semiMajorAxis = semiMinorAxis
+                semiMinorAxis = temp
+                ' 调整角度（长轴方向）
+                theta += std.PI / 2
+            End If
+
+            ' 规范化角度到 [0, π) 范围
+            theta = NormalizeAngle(theta)
 
             Return New EllipseFitResult With {
-        .Center = New PointF(x0, y0),
-        .SemiMajorAxis = ra,
-        .SemiMinorAxis = rb,
-        .RotationAngle = angle
-    }
+                .Center = New PointF(CSng(h), CSng(k)),
+                .SemiMajorAxis = semiMajorAxis,
+                .SemiMinorAxis = semiMinorAxis,
+                .RotationAngle = theta,
+                .Coefficients = coefficients
+            }
         End Function
 
-        ' --- 以下为辅助数学函数 ---
-        Private Shared Function MatrixTranspose(matrix As Double(,)) As Double(,)
-            Dim rows = matrix.GetLength(0), cols = matrix.GetLength(1)
-            Dim result(cols - 1, rows - 1) As Double
-            For i = 0 To rows - 1
-                For j = 0 To cols - 1
-                    result(j, i) = matrix(i, j)
-                Next
-            Next
-            Return result
-        End Function
-
-        Private Shared Function MatrixMultiply(matrix1 As Double(,), matrix2 As Double()) As Double()
-            Dim rows = matrix1.GetLength(0), cols = matrix1.GetLength(1)
-            Dim result(rows - 1) As Double
-            For i = 0 To rows - 1
-                Dim sum = 0.0
-                For k = 0 To cols - 1
-                    sum += matrix1(i, k) * matrix2(k)
-                Next
-                result(i) = sum
-            Next
-            Return result
-        End Function
-
-        Private Shared Function MatrixMultiply(matrix1 As Double(,), matrix2 As Double(,)) As Double(,)
-            Dim m = matrix1.GetLength(0), n = matrix1.GetLength(1), p = matrix2.GetLength(1)
-            Dim result(m - 1, p - 1) As Double
-            For i = 0 To m - 1
-                For j = 0 To p - 1
-                    Dim sum = 0.0
-                    For k = 0 To n - 1
-                        sum += matrix1(i, k) * matrix2(k, j)
-                    Next
-                    result(i, j) = sum
-                Next
-            Next
-            Return result
-        End Function
-
-        Private Shared Function SolveLinearSystem(A As Double(,), b As Double()) As Double()
-            ' 使用高斯消元法求解 Ax = b
-            Dim n = b.Length
-            Dim augmented(n - 1, n) As Double
-
-            ' 构造增广矩阵
-            For i = 0 To n - 1
-                For j = 0 To n - 1
-                    augmented(i, j) = A(i, j)
-                Next
-                augmented(i, n) = b(i)
-            Next
-
-            ' 前向消元
-            For pivot = 0 To n - 2
-                For row = pivot + 1 To n - 1
-                    Dim factor = augmented(row, pivot) / augmented(pivot, pivot)
-                    For col = pivot To n
-                        augmented(row, col) -= factor * augmented(pivot, col)
-                    Next
-                Next
-            Next
-
-            ' 回代求解
-            Dim x(n - 1) As Double
-            For i = n - 1 To 0 Step -1
-                Dim sum = augmented(i, n)
-                For j = i + 1 To n - 1
-                    sum -= augmented(i, j) * x(j)
-                Next
-                x(i) = sum / augmented(i, i)
-            Next
-            Return x
+        ''' <summary>
+        ''' 规范化角度到 [0, π) 范围
+        ''' </summary>
+        Private Shared Function NormalizeAngle(angle As Double) As Double
+            Dim normalized As Double = angle Mod std.PI
+            If normalized < 0 Then
+                normalized += std.PI
+            End If
+            Return normalized
         End Function
     End Class
 End Namespace
