@@ -55,6 +55,7 @@
 #End Region
 
 Imports System.Drawing
+Imports System.Net
 Imports std = System.Math
 
 #If NET48 Then
@@ -103,39 +104,54 @@ Namespace Drawing2D
         ''' <summary>
         ''' Arrow drawing for the .net core console application
         ''' </summary>
+        ''' <param name="maxL">max length of the force</param>
+        ''' <param name="w">
+        ''' the pen width
+        ''' </param>
         Public Shared Sub RenderBoid(gfx As IGraphics, x As Single, y As Single, vx As Single, vy As Single, color As Color,
-                                     Optional l As Single = 8,
+                                     Optional maxL As Single = 8,
                                      Optional w As Single = 3)
-            ' 计算单位方向向量
-            Dim length As Single = std.Sqrt(vx * vx + vy * vy)
-            Dim ux As Single = vx / length
-            Dim uy As Single = vy / length
+            ' 计算矢量的原始长度
+            Dim originalLength As Double = std.Sqrt(vx * vx + vy * vy)
+            Dim pen As New Pen(color, w)
 
-            ' 计算箭头的终点
-            Dim endX As Single = x + l * ux
-            Dim endY As Single = y + l * uy
+            ' 确定缩放比例和实际终点坐标
+            Dim scaleFactor As Double
+            If originalLength > maxL Then
+                scaleFactor = maxL / originalLength
+            Else
+                scaleFactor = 1.0
+            End If
 
-            ' 定义箭头的头部大小
-            Dim arrowHeadSize As Single = 10
+            Dim scaledVx As Double = vx * scaleFactor
+            Dim scaledVy As Double = vy * scaleFactor
+            Dim endX As Double = x + scaledVx
+            Dim endY As Double = y + scaledVy
 
-            ' 计算箭头两翼的顶点
-            Dim wing1X As Single = endX - arrowHeadSize * uy
-            Dim wing1Y As Single = endY + arrowHeadSize * ux
-            Dim wing2X As Single = endX - arrowHeadSize * uy
-            Dim wing2Y As Single = endY - arrowHeadSize * ux
+            ' 1. 绘制箭头主线
+            gfx.DrawLine(pen, CInt(x), CInt(y), CInt(endX), CInt(endY))
 
-            ' 绘制箭身
-            Call gfx.DrawLine(Pens.Black, x, y, endX, endY)
+            ' 2. 绘制箭头头部（三角形）
+            Dim headLength As Double = 10.0 ' 箭头头部长度，可根据需要调整
+            Dim headWidth As Double = 7.0   ' 箭头头部宽度，可根据需要调整
 
-            ' 定义三角形的三个顶点
-            Dim points As PointF() = {
-                New PointF(endX, endY),
-                New PointF(wing1X, wing1Y),
-                New PointF(wing2X, wing2Y)
-            }
+            ' 计算矢量的角度（弧度）
+            Dim angle As Double = std.Atan2(scaledVy, scaledVx)
 
-            ' 绘制实心黑色三角形作为箭头
-            Call gfx.FillPolygon(Brushes.Black, points)
+            ' 计算箭头头部的两个侧点
+            Dim headPoint1 As New PointF(
+                CSng(endX - headLength * std.Cos(angle) + headWidth * std.Sin(angle)),
+                CSng(endY - headLength * std.Sin(angle) - headWidth * std.Cos(angle))
+            )
+            Dim headPoint2 As New PointF(
+                CSng(endX - headLength * std.Cos(angle) - headWidth * std.Sin(angle)),
+                CSng(endY - headLength * std.Sin(angle) + headWidth * std.Cos(angle))
+            )
+
+            ' 绘制头部三角形（从终点连接到两个侧点）
+            gfx.DrawLine(pen, CInt(endX), CInt(endY), CInt(headPoint1.X), CInt(headPoint1.Y))
+            gfx.DrawLine(pen, CInt(endX), CInt(endY), CInt(headPoint2.X), CInt(headPoint2.Y))
+            gfx.DrawLine(pen, CInt(headPoint1.X), CInt(headPoint1.Y), CInt(headPoint2.X), CInt(headPoint2.Y))
         End Sub
     End Class
 End Namespace
