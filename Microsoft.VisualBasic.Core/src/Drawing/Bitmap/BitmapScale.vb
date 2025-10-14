@@ -301,6 +301,7 @@ Namespace Imaging.BitmapImage
             Dim iR As Integer = 0 ' Red
             Dim iG As Integer = 0 ' Green
             Dim iB As Integer = 0 ' Blue
+            Dim luma%
 
             ' Set every third value to 255. A 24bpp bitmap will binarization.  
             Do While Not byts.NullEnd(3)
@@ -311,7 +312,8 @@ Namespace Imaging.BitmapImage
                 ' Get the blue channel
                 iB = byts(0)
 
-                Dim luma% = GrayScale(iR, iG, iB, wr, wg, wb)
+                luma = GrayScale(iR, iG, iB, wr, wg, wb)
+
                 ' gray pixel
                 byts(2) = luma
                 byts(1) = luma
