@@ -60,7 +60,6 @@
 #End Region
 
 Imports System.Drawing
-Imports System.Drawing.Imaging
 Imports System.IO
 
 Namespace Imaging.BitmapImage
