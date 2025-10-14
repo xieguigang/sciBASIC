@@ -116,6 +116,9 @@ Namespace Filters
                     .ToMatrix
 
                 Yield New BitmapBuffer(raster, tile.Size)
+
+                Erase scales
+                Erase raster
             Next
         End Function
 
