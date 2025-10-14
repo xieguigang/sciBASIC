@@ -1,8 +1,10 @@
 ﻿Imports System.Drawing
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Collection
+Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Imaging.BitmapImage
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.Distributions
 
 Namespace Filters
@@ -50,6 +52,47 @@ Namespace Filters
                 .ToMatrix
 
             Return New BitmapBuffer(raster, grayscale.Size)
+        End Function
+
+        ''' <summary>
+        ''' A help function for better processing of the dzi image
+        ''' </summary>
+        ''' <param name="tiles"></param>
+        ''' <param name="wr"></param>
+        ''' <param name="wg"></param>
+        ''' <param name="wb"></param>
+        ''' <returns></returns>
+        <Extension>
+        Public Iterator Function GlobalTileScales(tiles As IEnumerable(Of BitmapBuffer),
+                                                  Optional wr As Single = 0.3,
+                                                  Optional wg As Single = 0.59,
+                                                  Optional wb As Single = 0.11) As IEnumerable(Of BitmapBuffer)
+
+            Dim pull As BitmapBuffer() = tiles.ToArray
+            Dim heatmap As New BucketSet(Of Integer)
+
+            For Each tile As BitmapBuffer In pull
+                Call heatmap.Add(From pixel As Color
+                                 In tile.GetPixelsAll
+                                 Select BitmapScale.GrayScale(
+                                     pixel.R, pixel.G, pixel.B,
+                                     wr, wg, wb)
+                                 )
+            Next
+
+            Dim hist = heatmap.GroupBy(Function(b) CInt(b / 20)).OrderBy(Function(a) a.Key).ToArray
+            Dim maxN As Integer = which.Max(hist.Select(Function(a) a.Count))
+            Dim resample As DoubleRange
+
+            If maxN = 0 Then
+                resample = New DoubleRange(vector:=hist(Scan0).AsList + hist(1).AsEnumerable)
+            ElseIf maxN = hist.Length - 1 Then
+                resample = New DoubleRange(vector:=hist(hist.Length - 1).AsList + hist(hist.Length - 2).AsEnumerable)
+            Else
+                resample = New DoubleRange(vector:=hist(maxN - 1).AsList + hist(maxN).AsEnumerable + hist(maxN + 1).AsEnumerable)
+            End If
+
+
         End Function
 
     End Module
