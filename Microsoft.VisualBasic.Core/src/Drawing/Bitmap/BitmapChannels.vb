@@ -20,8 +20,8 @@ Namespace Imaging.BitmapImage
             Dim b As Color(,) = New Color(h - 1, w - 1) {}
             Dim size As New Size(w, h)
 
-            For y As Integer = 0 To h
-                For x As Integer = 0 To w
+            For y As Integer = 0 To h - 1
+                For x As Integer = 0 To w - 1
                     Dim pixel As Color = pixels(y, x)
 
                     r(y, x) = Color.FromArgb(pixel.R, 0, 0)
