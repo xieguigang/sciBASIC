@@ -3,6 +3,7 @@ Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
+Imports Microsoft.VisualBasic.ComponentModel.TagData
 Imports Microsoft.VisualBasic.Imaging.BitmapImage
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.Distributions
@@ -81,16 +82,26 @@ Namespace Filters
                                  )
             Next
 
-            Dim hist = heatmap.GroupBy(Function(b) CInt(b / 20)).OrderBy(Function(a) a.Key).ToArray
-            Dim maxN As Integer = which.Max(hist.Select(Function(a) a.Count))
+            Dim hist = heatmap.ForEachBucket _
+                .AsParallel _
+                .Select(Function(tile)
+                            Return tile.GroupBy(Function(b) CInt(b / 20)).ToArray
+                        End Function) _
+                .ToArray _
+                .IteratesALL _
+                .GroupBy(Function(a) a.Key) _
+                .Select(Function(a) New IntegerTagged(Of Integer())(a.Key, a.IteratesALL.ToArray)) _
+                .OrderBy(Function(a) a.Tag) _
+                .ToArray
+            Dim maxN As Integer = which.Max(hist.Select(Function(a) a.Value.Length))
             Dim resample As DoubleRange
 
             If maxN = 0 Then
-                resample = New DoubleRange(vector:=hist(Scan0).AsList + hist(1).AsEnumerable)
+                resample = New DoubleRange(vector:=hist(Scan0).Value.AsList + hist(1).Value)
             ElseIf maxN = hist.Length - 1 Then
-                resample = New DoubleRange(vector:=hist(hist.Length - 1).AsList + hist(hist.Length - 2).AsEnumerable)
+                resample = New DoubleRange(vector:=hist(hist.Length - 1).Value.AsList + hist(hist.Length - 2).Value)
             Else
-                resample = New DoubleRange(vector:=hist(maxN - 1).AsList + hist(maxN).AsEnumerable + hist(maxN + 1).AsEnumerable)
+                resample = New DoubleRange(vector:=hist(maxN - 1).Value.AsList + hist(maxN).Value + hist(maxN + 1).Value)
             End If
 
             Dim i As Integer = 0
