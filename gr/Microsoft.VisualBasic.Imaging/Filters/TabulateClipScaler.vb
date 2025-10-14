@@ -6,6 +6,7 @@ Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Imaging.BitmapImage
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.Distributions
+Imports Microsoft.VisualBasic.Scripting.Runtime
 
 Namespace Filters
 
@@ -92,7 +93,19 @@ Namespace Filters
                 resample = New DoubleRange(vector:=hist(maxN - 1).AsList + hist(maxN).AsEnumerable + hist(maxN + 1).AsEnumerable)
             End If
 
+            Dim i As Integer = 0
+            Dim bin As Double() = resample.MinMax
 
+            For Each grayscale As Integer() In heatmap.ForEachBucket
+                Dim tile As BitmapBuffer = pull(i)
+                Dim scales As Byte() = grayscale.AsDouble.ClipScale(bin).ToArray
+                Dim raster As Color(,) = scales _
+                    .Select(Function(si) Color.FromArgb(si, si, si)) _
+                    .Split(tile.Width) _
+                    .ToMatrix
+
+                Yield New BitmapBuffer(raster, tile.Size)
+            Next
         End Function
 
     End Module

@@ -24,6 +24,10 @@ Namespace ComponentModel.Collection.Generic
             Next
         End Sub
 
+        Public Function ForEachBucket() As IEnumerable(Of T())
+            Return buckets.AsEnumerable
+        End Function
+
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Sub Add(block As IEnumerable(Of T))
             Call buckets.Add(block.ToArray)
