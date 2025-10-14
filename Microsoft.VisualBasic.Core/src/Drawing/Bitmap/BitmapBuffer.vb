@@ -188,14 +188,14 @@ Namespace Imaging.BitmapImage
             _Height = size.Height
         End Sub
 
-        Sub New(width As Integer, height As Integer, Optional channels As Integer = 4)
+        Sub New(width As Integer, height As Integer, Optional channels As Integer = TYPE_INT_ARGB)
             Call Me.New(New Byte(width * height * channels - 1) {}, New Size(width, height), channels)
         End Sub
 
         Sub New(pixels As Color(,), size As Size)
             Call MyBase.New(Unpack(pixels, size))
 
-            channels = 4 ' argb
+            channels = TYPE_INT_ARGB  ' argb
             memoryBuffer = True
 
             _Stride = size.Width * channels
@@ -517,19 +517,33 @@ Namespace Imaging.BitmapImage
             Return color
         End Function
 
+        ''' <summary>
+        ''' argb channels=4
+        ''' </summary>
+        ''' <param name="pixels"></param>
+        ''' <param name="size"></param>
+        ''' <returns></returns>
         Public Shared Function Unpack(pixels As Color(,), size As Size) As Byte()
-            Dim channels As Integer = 4
-            Dim bytes As Byte() = New Byte(channels * pixels.Length - 1) {}
+            Dim bytes As Byte() = New Byte(TYPE_INT_ARGB * pixels.Length - 1) {}
+
+            ' If channels = TYPE_INT_ARGB Then
+            '    iA = buffer(i + 3)
+            ' End If
+
+            ' Dim iR As Byte = buffer(i + 2)
+            ' Dim iG As Byte = buffer(i + 1)
+            ' Dim iB As Byte = buffer(i + 0)
 
             For y As Integer = 0 To size.Height - 1
                 For x As Integer = 0 To size.Width - 1
                     Dim pixel As Color = pixels(y, x)
-                    Dim i As Integer = GetIndex(x, y, size.Width, channels)
+                    Dim i As Integer = GetIndex(x, y, size.Width, TYPE_INT_ARGB)
 
-                    bytes(i) = pixel.A
-                    bytes(i + 1) = pixel.R
-                    bytes(i + 2) = pixel.G
-                    bytes(i + 3) = pixel.B
+                    bytes(i + 3) = pixel.A
+
+                    bytes(i + 2) = pixel.R
+                    bytes(i + 1) = pixel.G
+                    bytes(i + 0) = pixel.B
                 Next
             Next
 
@@ -543,8 +557,8 @@ Namespace Imaging.BitmapImage
         Public Sub WriteARGBStream(ints As UInteger())
             Dim p As i32 = 0
 
-            If channels = 4 Then
-                For i As Integer = 0 To buffer.Length - 1 Step 4
+            If channels = TYPE_INT_ARGB Then
+                For i As Integer = 0 To buffer.Length - 1 Step TYPE_INT_ARGB
                     Dim uint As Byte() = BitConverter.GetBytes(ints(++p))
 
                     buffer(i) = uint(0)  ' A
@@ -554,7 +568,7 @@ Namespace Imaging.BitmapImage
                 Next
             Else
                 ' channels = 3
-                For i As Integer = 0 To buffer.Length - 1 Step 3
+                For i As Integer = 0 To buffer.Length - 1 Step TYPE_INT_RGB
                     Dim uint As Byte() = BitConverter.GetBytes(ints(++p))
 
                     buffer(i) = uint(1)  ' R
@@ -594,7 +608,7 @@ Namespace Imaging.BitmapImage
             Dim i As Integer = GetIndex(x, y)
 
             If channel = 3 Then
-                If channels = 4 Then
+                If channels = TYPE_INT_ARGB Then
                     Return buffer(i + 3)
                 Else
                     Return 255
