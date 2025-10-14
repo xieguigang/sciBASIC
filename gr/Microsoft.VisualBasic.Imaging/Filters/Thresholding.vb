@@ -55,42 +55,10 @@
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.Imaging.BitmapImage
-Imports std = System.Math
 
 Namespace Filters
 
     Public Module Thresholding
-
-        ''' <summary>
-        ''' 将彩色图转换为灰度图
-        ''' </summary>
-        ''' <param name="bitmap"> 位图 </param>
-        ''' <returns> 返回转换好的位图 </returns>
-        Public Function convertToGray(bitmap As BitmapBuffer) As BitmapBuffer
-            Dim width As Integer = bitmap.Width
-            Dim height As Integer = bitmap.Height
-            Dim result As New BitmapBuffer(width, height, 4)
-            '根据宽高创建像素点数组,并将bitmap的rgb值赋给它
-            Dim pixels As UInteger() = bitmap.GetARGBStream
-            Dim alpha As Integer = &HFF << 24
-
-            For i As Integer = 0 To height - 1
-                For j As Integer = 0 To width - 1
-                    '获取当前元素rgb值并以此修改为灰度化后的值
-                    Dim rgb As Integer = pixels(width * i + j)
-                    Dim red As Integer = (rgb And &HFF0000) >> 16
-                    Dim green As Integer = (rgb And &HFF00) >> 8
-                    Dim blue As Integer = rgb And &HFF
-                    Dim grey As Integer = CInt(std.Truncate(CSng(red) * 0.299 + CSng(green) * 0.587 + CSng(blue) * 0.114))
-                    grey = alpha Or (grey << 16) Or (grey << 8) Or grey
-                    pixels(width * i + j) = grey
-                Next
-            Next
-
-            result.WriteARGBStream(pixels)
-
-            Return result
-        End Function
 
         ''' <summary>
         ''' 通过中值滤波去噪

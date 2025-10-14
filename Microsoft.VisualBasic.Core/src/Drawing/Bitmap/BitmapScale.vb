@@ -286,9 +286,17 @@ Namespace Imaging.BitmapImage
             Return curBitmap
         End Function
 
+        ''' <summary>
+        ''' 将彩色图转换为灰度图
+        ''' </summary>
+        ''' <param name="source"></param>
+        ''' <returns></returns>
         <Extension>
-        Public Function Grayscale(ByRef source As BitmapBuffer) As BitmapBuffer
-            Call BitmapScale.scanInternal(source)
+        Public Function Grayscale(ByRef source As BitmapBuffer,
+                                  Optional wr As Single = 0.3,
+                                  Optional wg As Single = 0.59,
+                                  Optional wb As Single = 0.11) As BitmapBuffer
+            Call BitmapScale.scanInternal(source, wr, wg, wb)
             Return source
         End Function
 

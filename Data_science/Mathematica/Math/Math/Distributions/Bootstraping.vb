@@ -315,8 +315,8 @@ Namespace Distributions
                     Return .ByRef
                 End If
 
-                Dim hist = .Hist([step]:=steps).ToArray
-                Dim maxN = which.Max(hist.Select(Function(bin) bin.Count))
+                Dim hist As DataBinBox(Of Double)() = .Hist([step]:=steps).ToArray
+                Dim maxN As Integer = which.Max(hist.Select(Function(bin) bin.Count))
                 Dim resample As Double()
 
                 If topBin Then
