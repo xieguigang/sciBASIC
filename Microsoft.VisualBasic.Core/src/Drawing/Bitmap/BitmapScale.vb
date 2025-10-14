@@ -131,7 +131,7 @@ Namespace Imaging.BitmapImage
             ' Unlock the bits.
             Call curBitmap.UnlockBits(bmpData)
 #Else
-            Throw New NotImplementedException
+            Call scan(curBitmap.MemoryBuffer)
 #End If
 
         End Sub
@@ -258,6 +258,12 @@ Namespace Imaging.BitmapImage
             Dim scanInternal As PixelScanPointer = AddressOf BitmapScale.scanInternal
             Call curBitmap.BitmapPixelScans(scanInternal)
             Return curBitmap
+        End Function
+
+        <Extension>
+        Public Function Grayscale(ByRef source As BitmapBuffer) As BitmapBuffer
+            Call BitmapScale.scanInternal(source)
+            Return source
         End Function
 
         <Extension>

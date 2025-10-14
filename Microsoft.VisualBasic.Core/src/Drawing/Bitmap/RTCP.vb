@@ -237,8 +237,8 @@ Namespace Imaging.BitmapImage
             Marshal.Copy(bpData.Scan0, bpBuffer, 0, bpBuffer.Length)
             bp.UnlockBits(bpData)
 #Else
-            bpBuffer = inBitmap.MemoryBuffer.RawBuffer
-            stride = inBitmap.MemoryBuffer.Stride
+            bpBuffer = inBitmap.memoryBuffer.RawBuffer
+            stride = inBitmap.memoryBuffer.Stride
 #End If
 
             Call VBDebugger.EchoLine($"image_src_dims: [{inBitmap.Width},{inBitmap.Height}]")
@@ -260,27 +260,15 @@ Namespace Imaging.BitmapImage
         ''' <returns></returns>
         ''' <remarks></remarks>
         Public Function RTCPGray(inBitmap As Bitmap, Optional sigma As Single = 0.05!) As Bitmap
-#If net48 Then
-
-            Dim bp As Bitmap = inBitmap.Clone
-            Dim bpData = bp.LockBits(New Rectangle(0, 0, bp.Width, bp.Height), ImageLockMode.ReadWrite, PixelFormat.Format32bppArgb)
+            Dim copyBitmap As New Bitmap(inBitmap)
             Dim w = MeasureGlobalWeight(inBitmap, sigma)
+            Dim bpData As BitmapBuffer = BitmapBuffer.FromBitmap(copyBitmap)
 
-            Using rgbValues As Emit.Marshal.Byte = New Emit.Marshal.Byte(
-                p:=bpData.Scan0,
-                chunkSize:=std.Abs(bpData.Stride) * bpData.Height
-            )
-                ' Calls unmanaged memory write when this 
-                ' memory pointer was disposed
-                Call rgbValues.scanInternal(w.r, w.g, w.b)
-            End Using
-
-            Call bp.UnlockBits(bpData)
-
-            Return bp
-#Else
-            Throw New NotImplementedException
+            Call bpData.scanInternal(w.r, w.g, w.b)
+#If NET48 Then
+            Call bpData.Dispose()
 #End If
+            Return copyBitmap
         End Function
     End Module
 End Namespace

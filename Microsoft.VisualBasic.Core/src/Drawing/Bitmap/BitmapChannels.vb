@@ -25,9 +25,9 @@ Namespace Imaging.BitmapImage
                     Dim pixel As Color = pixels(y, x)
 
                     If flip Then
-                        r(y, x) = Color.FromArgb(255 - pixel.R, 255 - pixel.R, 255 - pixel.R)
-                        g(y, x) = Color.FromArgb(255 - pixel.G, 255 - pixel.G, 255 - pixel.G)
-                        b(y, x) = Color.FromArgb(255 - pixel.B, 255 - pixel.B, 255 - pixel.B)
+                        r(y, x) = Color.FromArgb(255 - pixel.R, 255, 255)
+                        g(y, x) = Color.FromArgb(255, 255 - pixel.G, 255)
+                        b(y, x) = Color.FromArgb(255, 255, 255 - pixel.B)
                     Else
                         r(y, x) = Color.FromArgb(pixel.R, 0, 0)
                         g(y, x) = Color.FromArgb(0, pixel.G, 0)
