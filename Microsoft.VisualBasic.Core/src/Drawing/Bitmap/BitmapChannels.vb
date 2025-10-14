@@ -11,7 +11,7 @@ Namespace Imaging.BitmapImage
         ''' <param name="bitmap"></param>
         ''' <returns></returns>
         <Extension>
-        Public Function RGB(bitmap As BitmapBuffer) As (R As BitmapBuffer, G As BitmapBuffer, B As BitmapBuffer)
+        Public Function RGB(bitmap As BitmapBuffer, Optional flip As Boolean = False) As (R As BitmapBuffer, G As BitmapBuffer, B As BitmapBuffer)
             Dim h = bitmap.Height
             Dim w = bitmap.Width
             Dim pixels As Color(,) = bitmap.GetARGB
@@ -24,9 +24,15 @@ Namespace Imaging.BitmapImage
                 For x As Integer = 0 To w - 1
                     Dim pixel As Color = pixels(y, x)
 
-                    r(y, x) = Color.FromArgb(pixel.R, 0, 0)
-                    g(y, x) = Color.FromArgb(0, pixel.G, 0)
-                    b(y, x) = Color.FromArgb(0, 0, pixel.B)
+                    If flip Then
+                        r(y, x) = Color.FromArgb(255 - pixel.R, 255 - pixel.R, 255 - pixel.R)
+                        g(y, x) = Color.FromArgb(255 - pixel.G, 255 - pixel.G, 255 - pixel.G)
+                        b(y, x) = Color.FromArgb(255 - pixel.B, 255 - pixel.B, 255 - pixel.B)
+                    Else
+                        r(y, x) = Color.FromArgb(pixel.R, 0, 0)
+                        g(y, x) = Color.FromArgb(0, pixel.G, 0)
+                        b(y, x) = Color.FromArgb(0, 0, pixel.B)
+                    End If
                 Next
             Next
 
