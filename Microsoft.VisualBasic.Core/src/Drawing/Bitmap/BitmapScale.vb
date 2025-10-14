@@ -1,64 +1,64 @@
 ﻿#Region "Microsoft.VisualBasic::b76d7450136b9e84cb0aaa9ec5c8ca77, Microsoft.VisualBasic.Core\src\Drawing\Bitmap\BitmapScale.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 308
-    '    Code Lines: 168 (54.55%)
-    ' Comment Lines: 99 (32.14%)
-    '    - Xml Docs: 75.76%
-    ' 
-    '   Blank Lines: 41 (13.31%)
-    '     File Size: 11.37 KB
+' Summaries:
 
 
-    '     Module BitmapScale
-    ' 
-    '         Function: GetBinaryBitmap
-    '         Enum BinarizationStyles
-    ' 
-    ' 
-    ' 
-    ' 
-    '         Delegate Sub
-    ' 
-    '             Function: ByteLength, Colors, Grayscale, (+2 Overloads) GrayScale, GrayScaleF
-    ' 
-    '             Sub: AdjustContrast, Binarization, BitmapPixelScans, (+2 Overloads) scanInternal
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 308
+'    Code Lines: 168 (54.55%)
+' Comment Lines: 99 (32.14%)
+'    - Xml Docs: 75.76%
+' 
+'   Blank Lines: 41 (13.31%)
+'     File Size: 11.37 KB
+
+
+'     Module BitmapScale
+' 
+'         Function: GetBinaryBitmap
+'         Enum BinarizationStyles
+' 
+' 
+' 
+' 
+'         Delegate Sub
+' 
+'             Function: ByteLength, Colors, Grayscale, (+2 Overloads) GrayScale, GrayScaleF
+' 
+'             Sub: AdjustContrast, Binarization, BitmapPixelScans, (+2 Overloads) scanInternal
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -233,6 +233,24 @@ Namespace Imaging.BitmapImage
         ''' </remarks>
         <Extension>
         Public Sub AdjustContrast(ByRef bmp As Bitmap, contrast#)
+            Using bitmapdata As BitmapBuffer = BitmapBuffer.FromBitmap(bmp)
+                Call bitmapdata.AdjustContrast(contrast)
+            End Using
+        End Sub
+
+        ''' <summary>
+        ''' Adjust the contrast of an image.
+        ''' (调整图像的对比度)
+        ''' </summary>
+        ''' <param name="destPixels">target bitmap data buffer for make contrast processing.</param>
+        ''' <param name="contrast">
+        ''' Used to set the contrast (-100 to 100)
+        ''' </param>
+        ''' <remarks>
+        ''' https://stackoverflow.com/questions/3115076/adjust-the-contrast-of-an-image-in-c-sharp-efficiently
+        ''' </remarks>
+        <Extension>
+        Public Sub AdjustContrast(ByRef destPixels As BitmapBuffer, contrast#)
             Dim contrastLookup As Byte()
             Dim key As String = contrast.ToString("F4")
 
@@ -240,23 +258,19 @@ Namespace Imaging.BitmapImage
 
             contrastLookup = lookups.ComputeIfAbsent(key, Function() BitmapScale.ContrastLookup(contrast))
 
-            Using bitmapdata As BitmapBuffer = BitmapBuffer.FromBitmap(bmp)
-                Dim destPixels As BitmapBuffer = bitmapdata
+            For y As Integer = 0 To destPixels.Height - 1
+                destPixels += destPixels.Stride
 
-                For y As Integer = 0 To bitmapdata.Height - 1
-                    destPixels += bitmapdata.Stride
+                For x As Integer = 0 To destPixels.Width - 1
+                    Dim i As Integer = x * PixelSize
 
-                    For x As Integer = 0 To bitmapdata.Width - 1
-                        Dim i As Integer = x * PixelSize
-
-                        If i + destPixels.Position < destPixels.Length Then
-                            destPixels(i) = contrastLookup(destPixels(i))
-                            destPixels(i + 1) = contrastLookup(destPixels(i + 1))
-                            destPixels(i + 2) = contrastLookup(destPixels(i + 2))
-                        End If
-                    Next
+                    If i + destPixels.Position < destPixels.Length Then
+                        destPixels(i) = contrastLookup(destPixels(i))
+                        destPixels(i + 1) = contrastLookup(destPixels(i + 1))
+                        destPixels(i + 2) = contrastLookup(destPixels(i + 2))
+                    End If
                 Next
-            End Using
+            Next
         End Sub
 
         ''' <summary>
