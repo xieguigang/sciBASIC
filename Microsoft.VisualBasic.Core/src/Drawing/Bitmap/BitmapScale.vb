@@ -66,6 +66,7 @@ Imports System.Drawing
 Imports System.Drawing.Imaging
 Imports System.Math
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Emit
 Imports std = System.Math
 
@@ -191,20 +192,8 @@ Namespace Imaging.BitmapImage
             Loop
         End Sub
 
-        ''' <summary>
-        ''' Adjust the contrast of an image.
-        ''' (调整图像的对比度)
-        ''' </summary>
-        ''' <param name="bmp"></param>
-        ''' <param name="contrast">
-        ''' Used to set the contrast (-100 to 100)
-        ''' </param>
-        ''' <remarks>
-        ''' https://stackoverflow.com/questions/3115076/adjust-the-contrast-of-an-image-in-c-sharp-efficiently
-        ''' </remarks>
-        <Extension>
-        Public Sub AdjustContrast(ByRef bmp As Bitmap, contrast#)
-            Dim contrastLookup As Byte() = New Byte(255) {}
+        Private Function ContrastLookup(contrast As Double) As Byte()
+            Dim lookups As Byte() = New Byte(255) {}
             Dim newValue As Double = 0
             Dim c As Double = (100.0 + contrast) / 100.0
 
@@ -225,8 +214,31 @@ Namespace Imaging.BitmapImage
                     newValue = 255
                 End If
 
-                contrastLookup(i) = CByte(Truncate(newValue))
+                lookups(i) = CByte(Truncate(newValue))
             Next
+
+            Return lookups
+        End Function
+
+        ''' <summary>
+        ''' Adjust the contrast of an image.
+        ''' (调整图像的对比度)
+        ''' </summary>
+        ''' <param name="bmp"></param>
+        ''' <param name="contrast">
+        ''' Used to set the contrast (-100 to 100)
+        ''' </param>
+        ''' <remarks>
+        ''' https://stackoverflow.com/questions/3115076/adjust-the-contrast-of-an-image-in-c-sharp-efficiently
+        ''' </remarks>
+        <Extension>
+        Public Sub AdjustContrast(ByRef bmp As Bitmap, contrast#)
+            Dim contrastLookup As Byte()
+            Dim key As String = contrast.ToString("F4")
+
+            Static lookups As New Dictionary(Of String, Byte())
+
+            contrastLookup = lookups.ComputeIfAbsent(key, Function() BitmapScale.ContrastLookup(contrast))
 
             Using bitmapdata As BitmapBuffer = BitmapBuffer.FromBitmap(bmp)
                 Dim destPixels As BitmapBuffer = bitmapdata
