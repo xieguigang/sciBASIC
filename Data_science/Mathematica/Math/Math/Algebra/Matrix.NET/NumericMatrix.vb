@@ -231,6 +231,10 @@ Namespace LinearAlgebra.Matrix
             buffer = RectangularArray.Matrix(m, n, s)
         End Sub
 
+        Sub New(A As IEnumerable(Of IEnumerable(Of Double)))
+            Call Me.New(A.Select(Function(i) i.ToArray))
+        End Sub
+
         ''' <summary>Construct a matrix from a 2-D array.</summary>
         ''' <param name="A">Two-dimensional array of doubles.
         ''' </param>
@@ -1763,18 +1767,49 @@ Namespace LinearAlgebra.Matrix
         ''' </param>
         ''' <returns>     An m-by-n matrix with ones on the diagonal and zeros elsewhere.
         ''' </returns>
-
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Function Identity(m As Integer, n As Integer) As NumericMatrix
+            Return Diagonal(m, n, 1.0)
+        End Function
+
+        Public Shared Function Diagonal(m As Integer, n As Integer, xi As Double) As NumericMatrix
             Dim A As New NumericMatrix(m, n)
             Dim X As Double()() = A.Array
             For i As Integer = 0 To m - 1
                 For j As Integer = 0 To n - 1
-                    X(i)(j) = (If(i = j, 1.0, 0.0))
+                    X(i)(j) = (If(i = j, xi, 0.0))
                 Next
             Next
             Return A
         End Function
 
+        Public Shared Function Diagonal(m As Integer, n As Integer, v As IEnumerable(Of Double)) As NumericMatrix
+            Dim A As New NumericMatrix(m, n)
+            Dim X As Double()() = A.Array
+            Dim itr = v.GetEnumerator
+            Dim getter As Func(Of Double) = Function() As Double
+                                                itr.MoveNext()
+                                                Return itr.Current
+                                            End Function
+
+            For i As Integer = 0 To m - 1
+                For j As Integer = 0 To n - 1
+                    If i = j Then
+                        X(i)(j) = getter()
+                    Else
+                        X(i)(j) = 0.0
+                    End If
+                Next
+            Next
+
+            Return A
+        End Function
+
+        ''' <summary>
+        ''' Create [m,m] identity matrix
+        ''' </summary>
+        ''' <param name="m"></param>
+        ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Function Identity(m As Integer) As NumericMatrix
             Return Identity(m, m)
