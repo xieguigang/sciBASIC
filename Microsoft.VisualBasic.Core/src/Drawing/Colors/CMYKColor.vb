@@ -121,5 +121,14 @@ Namespace Imaging
             Return Color.FromArgb(255, R, G, B)
         End Function
 
+        Public Shared Narrowing Operator CType(color As CMYKColor) As Color
+            Return color.ToRGB
+        End Operator
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Widening Operator CType(color As Color) As CMYKColor
+            Return FromRGB(color)
+        End Operator
+
     End Class
 End Namespace
