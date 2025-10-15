@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9791e233fa9c26a52b72dc06d993d1ca, Data_science\MachineLearning\DeepQNetwork\QNetwork.vb"
+﻿#Region "Microsoft.VisualBasic::a9a46aba165865ebdf3898fcd7a46bcb, Data_science\MachineLearning\DeepQNetwork\QNetwork.vb"
 
     ' Author:
     ' 
@@ -124,4 +124,3 @@ Public Class QNetwork
     End Sub
 
 End Class
-

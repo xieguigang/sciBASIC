@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b76fc85e206fb5f0190c0a35a2e5b4ed, Data_science\Mathematica\Math\Math.Statistics\ShapleyValue\Powerset.vb"
+﻿#Region "Microsoft.VisualBasic::60d4bc060f6817a34dc8a7c31d79583b, Data_science\Mathematica\Math\Math.Statistics\ShapleyValue\Powerset.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 0.00%
     ' 
     '   Blank Lines: 7 (35.00%)
-    '     File Size: 536 B
+    '     File Size: 534 B
 
 
     '     Class Powerset
@@ -72,4 +72,3 @@ Namespace ShapleyValue
 
     End Class
 End Namespace
-

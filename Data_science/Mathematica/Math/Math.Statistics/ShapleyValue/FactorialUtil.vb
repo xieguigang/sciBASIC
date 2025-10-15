@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1193edbf9a7bc38c0c5b7af8203fbfd1, Data_science\Mathematica\Math\Math.Statistics\ShapleyValue\FactorialUtil.vb"
+﻿#Region "Microsoft.VisualBasic::6c1edd4ad1cabefac0768926157d860a, Data_science\Mathematica\Math\Math.Statistics\ShapleyValue\FactorialUtil.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 0.00%
     ' 
     '   Blank Lines: 2 (16.67%)
-    '     File Size: 373 B
+    '     File Size: 371 B
 
 
     '     Class FactorialUtil
@@ -64,4 +64,3 @@ Namespace ShapleyValue
         End Function
     End Class
 End Namespace
-

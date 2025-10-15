@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::61dad072d8751f422f586f5a5f871d6a, Data_science\Mathematica\Math\DataFrame\MathFormula.vb"
+﻿#Region "Microsoft.VisualBasic::b25104f28f1129d36998351f37d7d0a5, Data_science\Mathematica\Math\DataFrame\MathFormula.vb"
 
     ' Author:
     ' 
@@ -119,4 +119,3 @@ Public Module MathFormula
         End If
     End Function
 End Module
-

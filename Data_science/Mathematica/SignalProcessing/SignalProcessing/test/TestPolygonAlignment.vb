@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b341e61332302558bae1cf78f23a706b, Data_science\Mathematica\SignalProcessing\SignalProcessing\test\TestPolygonAlignment.vb"
+﻿#Region "Microsoft.VisualBasic::e039f36f6b18c388296533c8a49dfd05, Data_science\Mathematica\SignalProcessing\SignalProcessing\test\TestPolygonAlignment.vb"
 
     ' Author:
     ' 
@@ -105,4 +105,3 @@ Module TestPolygonAlignment
         Pause()
     End Sub
 End Module
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2d14c75dd20f9151efdb77eb52b8746b, Data_science\Mathematica\Math\Math.Statistics\ShapleyValue\RandomPermutations.vb"
+﻿#Region "Microsoft.VisualBasic::f696cdc61d0ccdb46a84f2680afd61be, Data_science\Mathematica\Math\Math.Statistics\ShapleyValue\RandomPermutations.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 0.00%
     ' 
     '   Blank Lines: 9 (28.12%)
-    '     File Size: 970 B
+    '     File Size: 968 B
 
 
     '     Class RandomPermutations
@@ -84,4 +84,3 @@ Namespace ShapleyValue
     End Class
 
 End Namespace
-

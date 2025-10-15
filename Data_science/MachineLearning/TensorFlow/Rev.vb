@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::aa2efa81624081b34a6426f473b15af6, Data_science\MachineLearning\TensorFlow\Rev.vb"
+﻿#Region "Microsoft.VisualBasic::7888f068942a0e219624eaa9925585e8, Data_science\MachineLearning\TensorFlow\Rev.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 24 (16.55%)
-    '     File Size: 6.47 KB
+    '     File Size: 6.46 KB
 
 
     ' Class Rev
@@ -200,4 +200,3 @@ Public Class Rev
         Return New Rev(std.Log(Magnitude), Sub(dx) CalculateDerivative(1.0 / Magnitude * dx))
     End Function
 End Class
-

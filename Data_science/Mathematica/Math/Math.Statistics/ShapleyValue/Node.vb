@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::12e2a75265d81d3406c1a9d365a411ab, Data_science\Mathematica\Math\Math.Statistics\ShapleyValue\Node.vb"
+﻿#Region "Microsoft.VisualBasic::4d0d9f1fe37cc9d019946083d89d37c4, Data_science\Mathematica\Math\Math.Statistics\ShapleyValue\Node.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 28
-    '    Code Lines: 22 (78.57%)
+    '   Total Lines: 27
+    '    Code Lines: 22 (81.48%)
     ' Comment Lines: 0 (0.00%)
     '    - Xml Docs: 0.00%
     ' 
-    '   Blank Lines: 6 (21.43%)
-    '     File Size: 906 B
+    '   Blank Lines: 5 (18.52%)
+    '     File Size: 902 B
 
 
     '     Class Node
@@ -57,7 +57,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 Namespace ShapleyValue
 
@@ -86,4 +85,3 @@ Namespace ShapleyValue
         End Function
     End Class
 End Namespace
-

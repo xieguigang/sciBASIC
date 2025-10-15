@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f5c2b82ffb892a42a9426f2a1c41a65a, Data_science\MachineLearning\TensorFlow\Tensor.vb"
+﻿#Region "Microsoft.VisualBasic::977ecfddd8763bd9d982d151c0a30952, Data_science\MachineLearning\TensorFlow\Tensor.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 95.83%
     ' 
     '   Blank Lines: 114 (17.35%)
-    '     File Size: 22.01 KB
+    '     File Size: 22.00 KB
 
 
     ' Class Tensor
@@ -720,4 +720,3 @@ Public Class Tensor
     End Function
 
 End Class
-

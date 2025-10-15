@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c9492e12360a6fadcf25c670f9477a27, Microsoft.VisualBasic.Core\src\Text\Parser\CharBuffer.vb"
+﻿#Region "Microsoft.VisualBasic::81de054f5b866c9f73705040cbfa625d, Microsoft.VisualBasic.Core\src\Text\Parser\CharBuffer.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 350
-    '    Code Lines: 201 (57.43%)
-    ' Comment Lines: 104 (29.71%)
+    '   Total Lines: 367
+    '    Code Lines: 216 (58.86%)
+    ' Comment Lines: 104 (28.34%)
     '    - Xml Docs: 93.27%
     ' 
-    '   Blank Lines: 45 (12.86%)
-    '     File Size: 11.43 KB
+    '   Blank Lines: 47 (12.81%)
+    '     File Size: 11.99 KB
 
 
     '     Class CharBuffer
@@ -53,7 +53,7 @@
     '         Sub: Clear
     ' 
     '         Operators: *, (+3 Overloads) +, <, (+3 Overloads) <>, (+3 Overloads) =
-    '                    >, (+2 Overloads) Like
+    '                    >, (+4 Overloads) Like
     ' 
     ' 
     ' /********************************************************************************/

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d16d718703edc78a2cd0651f423fe6a1, Data_science\Mathematica\Math\DataFittings\Logistic\LogisticFit.vb"
+﻿#Region "Microsoft.VisualBasic::9af27ab260647b89731babeada3a2abb, Data_science\Mathematica\Math\DataFittings\Logistic\LogisticFit.vb"
 
     ' Author:
     ' 
@@ -34,20 +34,21 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 43
-    '    Code Lines: 36 (83.72%)
+    '   Total Lines: 45
+    '    Code Lines: 37 (82.22%)
     ' Comment Lines: 0 (0.00%)
     '    - Xml Docs: 0.00%
     ' 
-    '   Blank Lines: 7 (16.28%)
-    '     File Size: 1.50 KB
+    '   Blank Lines: 8 (17.78%)
+    '     File Size: 1.66 KB
 
 
-    ' Class LogisticFit
+    '     Class LogisticFit
     ' 
-    '     Properties: ErrorTest, Polynomial, R2
+    '         Properties: ErrorTest, Polynomial, R2
     ' 
-    '     Function: CreateFit, GetY
+    '         Function: CreateFit, GetY
+    ' 
     ' 
     ' /********************************************************************************/
 

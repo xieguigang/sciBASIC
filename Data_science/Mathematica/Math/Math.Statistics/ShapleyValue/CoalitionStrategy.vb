@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1dec163e5968ffbd408f0cea3e1c7b4a, Data_science\Mathematica\Math\Math.Statistics\ShapleyValue\CoalitionStrategy.vb"
+﻿#Region "Microsoft.VisualBasic::a7d96b15832acde99a354a6a2cf8ca38, Data_science\Mathematica\Math\Math.Statistics\ShapleyValue\CoalitionStrategy.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 62.50%
     ' 
     '   Blank Lines: 15 (21.13%)
-    '     File Size: 2.09 KB
+    '     File Size: 2.08 KB
 
 
     '     Class CoalitionStrategy
@@ -135,4 +135,3 @@ Namespace ShapleyValue
     End Class
 
 End Namespace
-

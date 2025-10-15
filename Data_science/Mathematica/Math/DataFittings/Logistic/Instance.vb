@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::74999d925b1135b696144ab7cd4b30b8, Data_science\Mathematica\Math\DataFittings\Logistic\Instance.vb"
+﻿#Region "Microsoft.VisualBasic::a7e1e778fac94762f42be3ec3ea7a616, Data_science\Mathematica\Math\DataFittings\Logistic\Instance.vb"
 
     ' Author:
     ' 
@@ -34,21 +34,22 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 74
-    '    Code Lines: 44 (59.46%)
-    ' Comment Lines: 19 (25.68%)
+    '   Total Lines: 77
+    '    Code Lines: 46 (59.74%)
+    ' Comment Lines: 19 (24.68%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 11 (14.86%)
-    '     File Size: 2.25 KB
+    '   Blank Lines: 12 (15.58%)
+    '     File Size: 2.52 KB
 
 
-    ' Class Instance
+    '     Class Instance
     ' 
-    '     Properties: featureSize, label, x
+    '         Properties: featureSize, label, x
     ' 
-    '     Constructor: (+3 Overloads) Sub New
-    '     Function: Load, ToString, ZScore
+    '         Constructor: (+3 Overloads) Sub New
+    '         Function: Load, ToString, ZScore
+    ' 
     ' 
     ' /********************************************************************************/
 

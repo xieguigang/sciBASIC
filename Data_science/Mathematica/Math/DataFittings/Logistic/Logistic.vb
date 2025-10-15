@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d43b2b6c7c5ee19e21a69d21649af9f9, Data_science\Mathematica\Math\DataFittings\Logistic\Logistic.vb"
+﻿#Region "Microsoft.VisualBasic::9591d64384ccf462256fd63e332873e2, Data_science\Mathematica\Math\DataFittings\Logistic\Logistic.vb"
 
     ' Author:
     ' 
@@ -34,21 +34,22 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 100
-    '    Code Lines: 58 (58.00%)
-    ' Comment Lines: 24 (24.00%)
+    '   Total Lines: 102
+    '    Code Lines: 59 (57.84%)
+    ' Comment Lines: 24 (23.53%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 18 (18.00%)
-    '     File Size: 3.57 KB
+    '   Blank Lines: 19 (18.63%)
+    '     File Size: 3.86 KB
 
 
-    ' Class Logistic
+    '     Class Logistic
     ' 
-    '     Properties: ALPHA, ITERATIONS
+    '         Properties: ALPHA, ITERATIONS
     ' 
-    '     Constructor: (+2 Overloads) Sub New
-    '     Function: computeCost, predict, (+2 Overloads) sigmoid, train
+    '         Constructor: (+2 Overloads) Sub New
+    '         Function: computeCost, predict, (+2 Overloads) sigmoid, train
+    ' 
     ' 
     ' /********************************************************************************/
 

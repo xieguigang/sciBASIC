@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c3b46c455610451506db052ab45cd5ab, Data_science\MachineLearning\TensorFlow\Checkpoints.vb"
+﻿#Region "Microsoft.VisualBasic::4ee180d5170f9f13ba45aabf49d1a002, Data_science\MachineLearning\TensorFlow\Checkpoints.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 50
-    '    Code Lines: 30 (60.00%)
-    ' Comment Lines: 9 (18.00%)
+    '   Total Lines: 49
+    '    Code Lines: 30 (61.22%)
+    ' Comment Lines: 9 (18.37%)
     '    - Xml Docs: 88.89%
     ' 
-    '   Blank Lines: 11 (22.00%)
-    '     File Size: 1.54 KB
+    '   Blank Lines: 10 (20.41%)
+    '     File Size: 1.53 KB
 
 
     ' Class Checkpoints
@@ -56,7 +56,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 ''' <summary>
 ''' Increases performence by saving states that the backtracking 
@@ -107,4 +106,3 @@ Public NotInheritable Class Checkpoints
 
 
 End Class
-

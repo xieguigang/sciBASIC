@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::93ebebd10806d275dc493f926a4518f0, Microsoft.VisualBasic.Core\src\Language\Language\Java\Collections.vb"
+﻿#Region "Microsoft.VisualBasic::364591f18033b4c5517ec87c20ed67ed, Microsoft.VisualBasic.Core\src\Language\Language\Java\Collections.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 278
-    '    Code Lines: 122 (43.88%)
-    ' Comment Lines: 132 (47.48%)
+    '   Total Lines: 279
+    '    Code Lines: 123 (44.09%)
+    ' Comment Lines: 132 (47.31%)
     '    - Xml Docs: 65.15%
     ' 
-    '   Blank Lines: 24 (8.63%)
-    '     File Size: 12.72 KB
+    '   Blank Lines: 24 (8.60%)
+    '     File Size: 12.71 KB
 
 
     '     Module Collections

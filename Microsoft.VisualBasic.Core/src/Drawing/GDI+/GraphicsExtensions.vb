@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::350d12f70552c33ad55699f6dc55f744, Microsoft.VisualBasic.Core\src\Drawing\GDI+\GraphicsExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::16b92d457ca1f52156564814b5827bf9, Microsoft.VisualBasic.Core\src\Drawing\GDI+\GraphicsExtensions.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 544
-    '    Code Lines: 346 (63.60%)
-    ' Comment Lines: 133 (24.45%)
+    '   Total Lines: 543
+    '    Code Lines: 345 (63.54%)
+    ' Comment Lines: 133 (24.49%)
     '    - Xml Docs: 96.24%
     ' 
-    '   Blank Lines: 65 (11.95%)
-    '     File Size: 20.55 KB
+    '   Blank Lines: 65 (11.97%)
+    '     File Size: 20.52 KB
 
 
     '     Module GraphicsExtensions

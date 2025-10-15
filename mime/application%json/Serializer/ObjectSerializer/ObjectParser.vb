@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c20ffe0556581cc0323649b7c02f1d41, mime\application%json\Serializer\ObjectSerializer\ObjectParser.vb"
+﻿#Region "Microsoft.VisualBasic::77fea387eebfabda8cf5fe11a3bf6021, mime\application%json\Serializer\ObjectSerializer\ObjectParser.vb"
 
     ' Author:
     ' 
@@ -232,4 +232,3 @@ Module ObjectParser
     End Function
 
 End Module
-

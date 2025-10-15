@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b30139a34561afe7f31098843230298f, Data_science\MachineLearning\DeepLearning\Transformer\DecoderStack.vb"
+﻿#Region "Microsoft.VisualBasic::631548cac3a8398f11ef5e33abc4ee8d, Data_science\MachineLearning\DeepLearning\Transformer\DecoderStack.vb"
 
     ' Author:
     ' 
@@ -94,4 +94,3 @@ Namespace Transformer
 
     End Class
 End Namespace
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a7727464c82c66ebb751db6173fac9ac, Data_science\Mathematica\Math\Math.Statistics\ShapleyValue\PermutationLinkList.vb"
+﻿#Region "Microsoft.VisualBasic::6d96cd2f21ae792a271c09513e8f2bfa, Data_science\Mathematica\Math\Math.Statistics\ShapleyValue\PermutationLinkList.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 0.00%
     ' 
     '   Blank Lines: 22 (21.78%)
-    '     File Size: 3.31 KB
+    '     File Size: 3.30 KB
 
 
     '     Class PermutationLinkList
@@ -156,4 +156,3 @@ Namespace ShapleyValue
     End Class
 
 End Namespace
-

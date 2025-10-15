@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0af630391a215da560683e3677f51374, Microsoft.VisualBasic.Core\src\Drawing\Colors\CMYKColor.vb"
+﻿#Region "Microsoft.VisualBasic::d75b6388da07421349e7203d4d9d561f, Microsoft.VisualBasic.Core\src\Drawing\Colors\CMYKColor.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 68
-    '    Code Lines: 43 (63.24%)
-    ' Comment Lines: 14 (20.59%)
+    '   Total Lines: 93
+    '    Code Lines: 50 (53.76%)
+    ' Comment Lines: 30 (32.26%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 11 (16.18%)
-    '     File Size: 2.12 KB
+    '   Blank Lines: 13 (13.98%)
+    '     File Size: 2.85 KB
 
 
     '     Class CMYKColor

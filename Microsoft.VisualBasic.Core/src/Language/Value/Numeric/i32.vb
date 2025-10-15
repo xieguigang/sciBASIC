@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f4f1881a88ecf1b1364c300fdc3fbe52, Microsoft.VisualBasic.Core\src\Language\Value\Numeric\i32.vb"
+﻿#Region "Microsoft.VisualBasic::0b8b1e06ea0bdf9299711d820870690d, Microsoft.VisualBasic.Core\src\Language\Value\Numeric\i32.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 313
-    '    Code Lines: 178 (56.87%)
-    ' Comment Lines: 94 (30.03%)
-    '    - Xml Docs: 94.68%
+    '   Total Lines: 312
+    '    Code Lines: 178 (57.05%)
+    ' Comment Lines: 93 (29.81%)
+    '    - Xml Docs: 94.62%
     ' 
-    '   Blank Lines: 41 (13.10%)
-    '     File Size: 11.23 KB
+    '   Blank Lines: 41 (13.14%)
+    '     File Size: 11.22 KB
 
 
     '     Class i32

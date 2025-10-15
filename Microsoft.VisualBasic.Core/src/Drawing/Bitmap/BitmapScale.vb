@@ -1,64 +1,65 @@
-﻿#Region "Microsoft.VisualBasic::b76d7450136b9e84cb0aaa9ec5c8ca77, Microsoft.VisualBasic.Core\src\Drawing\Bitmap\BitmapScale.vb"
+﻿#Region "Microsoft.VisualBasic::b7890cc9e4914d312c3b27738e90c39e, Microsoft.VisualBasic.Core\src\Drawing\Bitmap\BitmapScale.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 308
-'    Code Lines: 168 (54.55%)
-' Comment Lines: 99 (32.14%)
-'    - Xml Docs: 75.76%
-' 
-'   Blank Lines: 41 (13.31%)
-'     File Size: 11.37 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Module BitmapScale
-' 
-'         Function: GetBinaryBitmap
-'         Enum BinarizationStyles
-' 
-' 
-' 
-' 
-'         Delegate Sub
-' 
-'             Function: ByteLength, Colors, Grayscale, (+2 Overloads) GrayScale, GrayScaleF
-' 
-'             Sub: AdjustContrast, Binarization, BitmapPixelScans, (+2 Overloads) scanInternal
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 350
+    '    Code Lines: 188 (53.71%)
+    ' Comment Lines: 115 (32.86%)
+    '    - Xml Docs: 79.13%
+    ' 
+    '   Blank Lines: 47 (13.43%)
+    '     File Size: 12.99 KB
+
+
+    '     Module BitmapScale
+    ' 
+    '         Function: GetBinaryBitmap
+    '         Enum BinarizationStyles
+    ' 
+    ' 
+    ' 
+    ' 
+    '         Delegate Sub
+    ' 
+    '             Function: ByteLength, Colors, ContrastLookup, (+2 Overloads) Grayscale, (+2 Overloads) GrayScale
+    '                       GrayScaleF
+    ' 
+    '             Sub: (+2 Overloads) AdjustContrast, Binarization, BitmapPixelScans, (+2 Overloads) scanInternal
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

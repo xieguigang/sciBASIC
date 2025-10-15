@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::36836e7c1139636a45284575a1f8d556, Data_science\Mathematica\Math\Math.Statistics\ShapleyValue\CharacteristicFunction.vb"
+﻿#Region "Microsoft.VisualBasic::c679ca846d99451f6b570739ce553aef, Data_science\Mathematica\Math\Math.Statistics\ShapleyValue\CharacteristicFunction.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 77.78%
     ' 
     '   Blank Lines: 26 (26.80%)
-    '     File Size: 3.26 KB
+    '     File Size: 3.25 KB
 
 
     '     Class CharacteristicFunction
@@ -161,4 +161,3 @@ Namespace ShapleyValue
     End Class
 
 End Namespace
-

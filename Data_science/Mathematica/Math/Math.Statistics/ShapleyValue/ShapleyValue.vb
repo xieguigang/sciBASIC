@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::035b8acfe505e675a98b11195c8779cf, Data_science\Mathematica\Math\Math.Statistics\ShapleyValue\ShapleyValue.vb"
+﻿#Region "Microsoft.VisualBasic::2234344f6ce18f0f54762084bab017e1, Data_science\Mathematica\Math\Math.Statistics\ShapleyValue\ShapleyValue.vb"
 
     ' Author:
     ' 
@@ -160,4 +160,3 @@ Namespace ShapleyValue
     End Class
 
 End Namespace
-

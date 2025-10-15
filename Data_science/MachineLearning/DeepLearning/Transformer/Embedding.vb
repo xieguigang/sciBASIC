@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6f4c32f8ad3b9f3af53da81213b88819, Data_science\MachineLearning\DeepLearning\Transformer\Embedding.vb"
+﻿#Region "Microsoft.VisualBasic::dde31c436e55f11da2bc81ab2c824a57, Data_science\MachineLearning\DeepLearning\Transformer\Embedding.vb"
 
     ' Author:
     ' 
@@ -267,4 +267,3 @@ Namespace Transformer
 
     End Class
 End Namespace
-

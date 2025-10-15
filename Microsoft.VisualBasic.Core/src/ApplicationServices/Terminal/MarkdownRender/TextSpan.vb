@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cc116a7356cd74c724259a67056359db, Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\MarkdownRender\TextSpan.vb"
+﻿#Region "Microsoft.VisualBasic::e582f274f1c318c3224dcb568715bfb7, Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\MarkdownRender\TextSpan.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 57
-    '    Code Lines: 37 (64.91%)
-    ' Comment Lines: 7 (12.28%)
+    '   Total Lines: 61
+    '    Code Lines: 40 (65.57%)
+    ' Comment Lines: 7 (11.48%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 13 (22.81%)
-    '     File Size: 1.81 KB
+    '   Blank Lines: 14 (22.95%)
+    '     File Size: 1.96 KB
 
 
     '     Class TextSpan

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::41e3f1cd59408701b3b83411178175f4, Data_science\MachineLearning\DeepLearning\Transformer\MultiHeadAttention.vb"
+﻿#Region "Microsoft.VisualBasic::480e8d1deb8502b075e96a3c27b02e7f, Data_science\MachineLearning\DeepLearning\Transformer\MultiHeadAttention.vb"
 
     ' Author:
     ' 
@@ -185,4 +185,3 @@ Namespace Transformer
 
     End Class
 End Namespace
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ad77adc5d9789cfc42788e15abdb646d, Microsoft.VisualBasic.Core\src\Drawing\Bitmap\SaveGdiBitmap.vb"
+﻿#Region "Microsoft.VisualBasic::c40b59eb3751a09aed73a8d10cb5f1d7, Microsoft.VisualBasic.Core\src\Drawing\Bitmap\SaveGdiBitmap.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 23
-    '    Code Lines: 14 (60.87%)
-    ' Comment Lines: 5 (21.74%)
+    '   Total Lines: 22
+    '    Code Lines: 13 (59.09%)
+    ' Comment Lines: 5 (22.73%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 4 (17.39%)
-    '     File Size: 561 B
+    '   Blank Lines: 4 (18.18%)
+    '     File Size: 529 B
 
 
     '     Interface SaveGdiBitmap

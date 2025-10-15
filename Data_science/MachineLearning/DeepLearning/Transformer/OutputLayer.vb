@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4bf0cd53eb9ced52ed26f92d7272ac60, Data_science\MachineLearning\DeepLearning\Transformer\OutputLayer.vb"
+﻿#Region "Microsoft.VisualBasic::0045ad6fa6ef7e7ba5261d3a7f86fee5, Data_science\MachineLearning\DeepLearning\Transformer\OutputLayer.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 8 (25.00%)
-    '     File Size: 1.10 KB
+    '     File Size: 1.09 KB
 
 
     '     Class OutputLayer
@@ -88,4 +88,3 @@ Namespace Transformer
 
     End Class
 End Namespace
-

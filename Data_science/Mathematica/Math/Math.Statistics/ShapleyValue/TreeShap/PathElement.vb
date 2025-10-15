@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e4e159a0178522c2ed52db9132e96a5a, Data_science\Mathematica\Math\Math.Statistics\ShapleyValue\TreeShap\PathElement.vb"
+﻿#Region "Microsoft.VisualBasic::9c125591dfd2e9f45a2cc3c75978b4ad, Data_science\Mathematica\Math\Math.Statistics\ShapleyValue\TreeShap\PathElement.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 3 (10.34%)
-    '     File Size: 908 B
+    '     File Size: 906 B
 
 
     '     Class PathElement
@@ -81,4 +81,3 @@ Namespace ShapleyValue.TreeShape
     End Class
 
 End Namespace
-

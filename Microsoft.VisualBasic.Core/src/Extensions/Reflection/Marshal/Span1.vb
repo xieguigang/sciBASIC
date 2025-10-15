@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e0edd21a496943541d9f5950948fa921, Microsoft.VisualBasic.Core\src\Extensions\Reflection\Marshal\Span1.vb"
+﻿#Region "Microsoft.VisualBasic::df001eecc22389649d2e0afe308f5f02, Microsoft.VisualBasic.Core\src\Extensions\Reflection\Marshal\Span1.vb"
 
     ' Author:
     ' 
@@ -34,18 +34,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 80
-    '    Code Lines: 55 (68.75%)
-    ' Comment Lines: 12 (15.00%)
+    '   Total Lines: 90
+    '    Code Lines: 60 (66.67%)
+    ' Comment Lines: 16 (17.78%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 13 (16.25%)
-    '     File Size: 2.39 KB
+    '   Blank Lines: 14 (15.56%)
+    '     File Size: 2.71 KB
 
 
     '     Class Span
     ' 
-    '         Properties: ArrayLength, Length, SpanView
+    '         Properties: ArrayLength, Length, OffsetEnds, SpanView
     ' 
     '         Constructor: (+2 Overloads) Sub New
     '         Function: Slice, SpanCopy, ToString

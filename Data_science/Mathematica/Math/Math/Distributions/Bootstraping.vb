@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::836e2f0c99bcb08f40aa581a25436c21, Data_science\Mathematica\Math\Math\Distributions\Bootstraping.vb"
+﻿#Region "Microsoft.VisualBasic::14c8a09f1ef65bccc3e7033e7d663ada, Data_science\Mathematica\Math\Math\Distributions\Bootstraping.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 88.24%
     ' 
     '   Blank Lines: 29 (10.07%)
-    '     File Size: 12.21 KB
+    '     File Size: 12.25 KB
 
 
     '     Module Bootstraping

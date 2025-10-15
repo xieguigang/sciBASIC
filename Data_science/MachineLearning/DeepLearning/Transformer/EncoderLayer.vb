@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5db851105dbb0a55d98da6a468600cb6, Data_science\MachineLearning\DeepLearning\Transformer\EncoderLayer.vb"
+﻿#Region "Microsoft.VisualBasic::2a5786482568a028326dcac0339b4f74, Data_science\MachineLearning\DeepLearning\Transformer\EncoderLayer.vb"
 
     ' Author:
     ' 
@@ -114,4 +114,3 @@ Namespace Transformer
 
     End Class
 End Namespace
-

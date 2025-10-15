@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2a98f43dfec1427e6fb574557495e313, Data_science\Mathematica\Math\Math\Algebra\Helpers\EllipseFitResult.vb"
+﻿#Region "Microsoft.VisualBasic::5e2207ef052650bc107020cd9663e47d, Data_science\Mathematica\Math\Math\Algebra\Helpers\EllipseFitResult.vb"
 
     ' Author:
     ' 
@@ -34,20 +34,20 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 156
-    '    Code Lines: 123 (78.85%)
-    ' Comment Lines: 12 (7.69%)
-    '    - Xml Docs: 0.00%
+    '   Total Lines: 159
+    '    Code Lines: 92 (57.86%)
+    ' Comment Lines: 44 (27.67%)
+    '    - Xml Docs: 65.91%
     ' 
-    '   Blank Lines: 21 (13.46%)
-    '     File Size: 5.78 KB
+    '   Blank Lines: 23 (14.47%)
+    '     File Size: 6.09 KB
 
 
     '     Class EllipseFitResult
     ' 
-    '         Properties: Center, RotationAngle, SemiMajorAxis, SemiMinorAxis
+    '         Properties: Center, Coefficients, RotationAngle, SemiMajorAxis, SemiMinorAxis
     ' 
-    '         Function: CreateShape, FitEllipse, (+2 Overloads) MatrixMultiply, MatrixTranspose, SolveLinearSystem
+    '         Function: BuildDesignMatrix, CreateShape, ExtractEllipseParameters, FitEllipse, NormalizeAngle
     ' 
     ' 
     ' /********************************************************************************/

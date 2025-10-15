@@ -1,54 +1,54 @@
-﻿#Region "Microsoft.VisualBasic::febdee27da34b1840e5021e4a6112972, gr\Microsoft.VisualBasic.Imaging\Filters\Thresholding.vb"
+﻿#Region "Microsoft.VisualBasic::db26bab93bd5c55c877228380770cf85, gr\Microsoft.VisualBasic.Imaging\Filters\Thresholding.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 253
-'    Code Lines: 179 (70.75%)
-' Comment Lines: 44 (17.39%)
-'    - Xml Docs: 56.82%
-' 
-'   Blank Lines: 30 (11.86%)
-'     File Size: 11.21 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Module Thresholding
-' 
-'         Function: AverageFilter, convertToGray, MedianFilter, ostuFilter, otsuThreshold
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 239
+    '    Code Lines: 166 (69.46%)
+    ' Comment Lines: 47 (19.67%)
+    '    - Xml Docs: 63.83%
+    ' 
+    '   Blank Lines: 26 (10.88%)
+    '     File Size: 10.43 KB
+
+
+    '     Module Thresholding
+    ' 
+    '         Function: AverageFilter, MedianFilter, (+2 Overloads) ostuFilter, (+2 Overloads) otsuThreshold
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

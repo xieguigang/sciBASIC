@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::45fb7ef629fb542c0dec1ee419c19ce4, Data_science\Mathematica\Math\DataFrame\MatrixMarket\MTXFormat.vb"
+﻿#Region "Microsoft.VisualBasic::fc6c2c4ea3a846fe7a840447d93eed03, Data_science\Mathematica\Math\DataFrame\MatrixMarket\MTXFormat.vb"
 
     ' Author:
     ' 
@@ -34,18 +34,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 74
-    '    Code Lines: 29 (39.19%)
-    ' Comment Lines: 36 (48.65%)
+    '   Total Lines: 80
+    '    Code Lines: 34 (42.50%)
+    ' Comment Lines: 36 (45.00%)
     '    - Xml Docs: 97.22%
     ' 
-    '   Blank Lines: 9 (12.16%)
-    '     File Size: 3.06 KB
+    '   Blank Lines: 10 (12.50%)
+    '     File Size: 3.32 KB
 
 
     '     Class MTXFormat
     ' 
-    '         Function: (+2 Overloads) ReadMatrix
+    '         Function: (+3 Overloads) ReadMatrix
     ' 
     ' 
     ' /********************************************************************************/
