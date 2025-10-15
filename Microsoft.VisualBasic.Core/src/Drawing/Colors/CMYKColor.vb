@@ -72,9 +72,25 @@ Namespace Imaging
     ''' </remarks>
     Public Class CMYKColor
 
+        ''' <summary>
+        ''' cyan
+        ''' </summary>
+        ''' <returns></returns>
         Public Property C As Single
+        ''' <summary>
+        ''' magenta
+        ''' </summary>
+        ''' <returns></returns>
         Public Property M As Single
+        ''' <summary>
+        ''' yellow
+        ''' </summary>
+        ''' <returns></returns>
         Public Property Y As Single
+        ''' <summary>
+        ''' key (black)
+        ''' </summary>
+        ''' <returns></returns>
         Public Property K As Single
 
         Sub New()
