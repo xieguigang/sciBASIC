@@ -89,10 +89,10 @@ Namespace Interpolation
 
             If parallel Then
                 LQuery = LinqAPI.Exec(Of SeqValue(Of Double())) <=
- _
+                                                                  _
                     From win
                     In slideWindows.AsParallel
-                    Let value = doInterpolation(
+                    Let value = Interpolation(
                         win.Items, iteration)
                     Select x = New SeqValue(Of Double()) With {
                         .i = win.Index,
@@ -101,10 +101,10 @@ Namespace Interpolation
                     Order By x.i Ascending
             Else
                 LQuery = LinqAPI.Exec(Of SeqValue(Of Double())) <=
- _
+                                                                  _
                     From win As SlideWindow(Of Double)
                     In slideWindows
-                    Let value = doInterpolation(
+                    Let value = Interpolation(
                         win.Items, iteration)
                     Select x = New SeqValue(Of Double()) With {
                         .i = win.Index,
@@ -128,7 +128,7 @@ Namespace Interpolation
         ''' <param name="iteration"></param>
         ''' <returns></returns>
         ''' <remarks></remarks>
-        Private Function doInterpolation(X#(), iteration%) As Double()
+        Private Function Interpolation(X#(), iteration%) As Double()
             Dim data As Double() = New Double(2) {}
 
             data(0) = X(Scan0)
