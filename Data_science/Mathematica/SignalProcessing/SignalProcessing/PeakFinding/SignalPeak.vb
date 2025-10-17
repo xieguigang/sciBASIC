@@ -86,27 +86,42 @@ Namespace PeakFinding
 
         Public ReadOnly Property rt As Double
             Get
+                If region.IsNullOrEmpty Then
+                    Return 0
+                End If
+
                 Return region _
                     .OrderByDescending(Function(a) a.intensity) _
-                    .FirstOrDefault _
-                    .time
+                    .FirstOrDefault.time
             End Get
         End Property
 
         Public ReadOnly Property rtmin As Double
             Get
+                If region.IsNullOrEmpty Then
+                    Return 0
+                End If
+
                 Return region.First.time
             End Get
         End Property
 
         Public ReadOnly Property rtmax As Double
             Get
+                If region.IsNullOrEmpty Then
+                    Return 0
+                End If
+
                 Return region.Last.time
             End Get
         End Property
 
         Public ReadOnly Property signalMax As Double
             Get
+                If region.IsNullOrEmpty Then
+                    Return 0
+                End If
+
                 Return Aggregate tick As ITimeSignal
                        In region
                        Let data As Double = tick.intensity
