@@ -66,6 +66,14 @@ Namespace Interpolation
         Public Property degree As Single = 2
         Public Property resolution As Integer = 10
 
+        Sub New()
+        End Sub
+
+        Sub New(degree As Single, resolution As Integer)
+            Me.degree = degree
+            Me.resolution = resolution
+        End Sub
+
     End Class
 
     ''' <summary>
