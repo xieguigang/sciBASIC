@@ -295,16 +295,16 @@ Namespace CommandLine
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Sub Start(Optional procExitCallback As Action = Nothing)
-            Call New Tasks.Task(Of Action)(procExitCallback, AddressOf __processExitHandle).Start()
+            Call New Tasks.Task(Of Action)(procExitCallback, AddressOf ProcessExitHandle).Start()
         End Sub
 
-        Private Sub __processExitHandle(ProcessExitCallback As Action)
-            Dim ExitCode = Run()
+        Private Sub ProcessExitHandle(callback As Action)
+            Dim exitCode As Integer = Run()
 
-            RaiseEvent ProcessExit(ExitCode, Now.ToString)
+            RaiseEvent ProcessExit(exitCode, Now.ToString)
 
-            If Not ProcessExitCallback Is Nothing Then
-                Call ProcessExitCallback()
+            If Not callback Is Nothing Then
+                Call callback()
             End If
         End Sub
 
