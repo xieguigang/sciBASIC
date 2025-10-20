@@ -91,8 +91,12 @@ Namespace Imaging.Math2D
             Return $"rotate_theta:{theta.ToString("F2")}, translate=({tx.ToString("F2")},{ty.ToString("F2")}), scale=({scalex.ToString("F2")},{scaley.ToString("F2")})"
         End Function
 
+        ''' <summary>
+        ''' Apply the current transformation parameters to the target polygon object.
+        ''' </summary>
+        ''' <param name="polygon"></param>
+        ''' <returns></returns>
         Public Function ApplyTo(polygon As Polygon2D) As Polygon2D
-            '应用变换到多边形[5](@ref)
             Dim transformed As New Polygon2D()
             transformed.xpoints = New Double(polygon.length - 1) {}
             transformed.ypoints = New Double(polygon.length - 1) {}

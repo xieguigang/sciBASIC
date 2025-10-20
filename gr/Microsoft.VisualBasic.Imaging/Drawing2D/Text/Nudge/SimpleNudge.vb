@@ -77,11 +77,11 @@ Namespace Drawing2D.Text.Nudge
                 Dim hasOverlap = False
 
                 For i = 0 To optimizedLabels.Count - 1
-                    ' 跳过已固定的标签[1](@ref)
+                    ' 跳过已固定的标签
                     If optimizedLabels(i).pinned Then Continue For
 
                     For j = i + 1 To optimizedLabels.Count - 1
-                        ' 检查两个标签是否重叠[6](@ref)
+                        ' 检查两个标签是否重叠
                         If CheckOverlap(optimizedLabels(i), optimizedLabels(j)) Then
                             hasOverlap = True
                             ' 计算调整向量
@@ -104,11 +104,11 @@ Namespace Drawing2D.Text.Nudge
         ''' 检查两个标签是否重叠
         ''' </summary>
         Private Shared Function CheckOverlap(label1 As Label, label2 As Label) As Boolean
-            ' 获取两个标签的矩形区域[6](@ref)
+            ' 获取两个标签的矩形区域
             Dim rect1 As New RectangleF(CSng(label1.X), CSng(label1.Y), CSng(label1.width), CSng(label1.height))
             Dim rect2 As New RectangleF(CSng(label2.X), CSng(label2.Y), CSng(label2.width), CSng(label2.height))
 
-            ' 检查矩形是否相交[6](@ref)
+            ' 检查矩形是否相交
             Return rect1.IntersectsWith(rect2)
         End Function
 
@@ -146,7 +146,7 @@ Namespace Drawing2D.Text.Nudge
         ''' 应用位置调整到标签
         ''' </summary>
         Private Shared Sub ApplyAdjustment(label As Label, adjustment As PointF)
-            ' 更新标签位置[1](@ref)
+            ' 更新标签位置
             label.X += adjustment.X
             label.Y += adjustment.Y
         End Sub

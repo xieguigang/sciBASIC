@@ -96,9 +96,9 @@ Namespace LinearAlgebra
         Public Shared Function FitEllipse(points As PointF()) As EllipseFitResult
             ' 步骤1：构建设计矩阵M
             Dim M As NumericMatrix = BuildDesignMatrix(points)
-            ' 步骤2：对M进行SVD分解[1,6](@ref)
+            ' 步骤2：对M进行SVD分解
             Dim svd As New SingularValueDecomposition(M)
-            ' 步骤3：取V的最后一列作为椭圆系数向量[2](@ref)
+            ' 步骤3：取V的最后一列作为椭圆系数向量
             Dim V As NumericMatrix = svd.V.Transpose()
             Dim coefficients As Vector = V(V.ColumnDimension - 1, byRow:=False)
 
@@ -129,7 +129,7 @@ Namespace LinearAlgebra
         End Function
 
         ''' <summary>
-        ''' 从系数向量提取椭圆几何参数[1](@ref)
+        ''' 从系数向量提取椭圆几何参数
         ''' </summary>
         Private Shared Function ExtractEllipseParameters(coefficients As Vector) As EllipseFitResult
             ' 提取系数：v = [A, B, C, D, E, F]^T
@@ -143,21 +143,21 @@ Namespace LinearAlgebra
             ' 验证是否为椭圆 (B² - 4AC < 0)
             Dim discriminant As Double = B * B - 4 * A * C
             If discriminant >= 0 Then
-                Throw New InvalidOperationException("拟合结果不是椭圆（可能是双曲线或抛物线）")
+                Throw New InvalidOperationException("The fitting result is not an ellipse (it could be a hyperbola or a parabola).")
             End If
 
-            ' 步骤4.1：计算中心点 (h, k)[1](@ref)
+            ' 步骤4.1：计算中心点 (h, k)
             Dim denominator As Double = B * B - 4 * A * C
             Dim h As Double = (2 * C * D - B * E) / denominator
             Dim k As Double = (2 * A * E - B * D) / denominator
 
-            ' 步骤4.2：计算旋转角度 θ[1](@ref)
+            ' 步骤4.2：计算旋转角度 θ
             Dim theta As Double = 0.5 * std.Atan2(B, A - C)
 
             ' 步骤4.3：计算平移后的常数项 F'
             Dim F_prime As Double = A * h * h + B * h * k + C * k * k + D * h + E * k + F
 
-            ' 步骤4.4：计算二次型矩阵的特征值[1](@ref)
+            ' 步骤4.4：计算二次型矩阵的特征值
             Dim Q As New NumericMatrix(2, 2)
             Q(0, 0) = A
             Q(0, 1) = B / 2
@@ -176,7 +176,7 @@ Namespace LinearAlgebra
                 lambda2 = temp
             End If
 
-            ' 步骤4.5：计算长轴和短轴[1](@ref)
+            ' 步骤4.5：计算长轴和短轴
             Dim semiMajorAxis As Double = std.Sqrt(-F_prime / lambda1)  ' 长轴
             Dim semiMinorAxis As Double = std.Sqrt(-F_prime / lambda2)  ' 短轴
 

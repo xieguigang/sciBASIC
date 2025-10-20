@@ -113,7 +113,7 @@ Public Class Tracker : Implements Enumeration(Of Trajectory)
             Next
         Next
 
-        ' 应用匈牙利算法[7](@ref)
+        ' 应用匈牙利算法
         ' size of the assignments vector is equals to the current trajectories
         Dim assignments As Integer() = HungarianAlgorithm.FindAssignments(costMatrix)
 
