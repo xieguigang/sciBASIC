@@ -902,6 +902,14 @@ Public Module App
     ''' <returns></returns>
     Public ReadOnly Property SysTemp As String = TempFileSystem.__sysTEMP
 
+    Public Sub SetSystemTemp(Optional dir As String = Nothing)
+        If dir Is Nothing Then
+            dir = TempFileSystem.__sysTEMP
+        End If
+
+        _SysTemp = dir
+    End Sub
+
     ''' <summary>
     ''' Application temp data directory in the system temp root: %<see cref="App.SysTemp"/>%/<see cref="App.AssemblyName"/>
     ''' </summary>
