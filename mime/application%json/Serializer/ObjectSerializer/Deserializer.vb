@@ -192,6 +192,7 @@ Public Module Deserializer
         If metadata IsNot Nothing Then
             metaObj2 = Activator.CreateInstance(metadata.PropertyType)
             metaVal = metadata.PropertyType.GetGenericArguments()(1)
+            metadata.SetValue(obj, metaObj2)
         End If
 
         ' write property value at here
