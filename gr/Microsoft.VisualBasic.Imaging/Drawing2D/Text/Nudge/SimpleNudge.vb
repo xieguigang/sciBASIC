@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::71928c218dca0e4777dc47e8e8944840, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Text\Nudge\SimpleNudge.vb"
+﻿#Region "Microsoft.VisualBasic::d1f8739d753d753338187056eb562e79, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Text\Nudge\SimpleNudge.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 57.14%
     ' 
     '   Blank Lines: 17 (17.35%)
-    '     File Size: 4.20 KB
+    '     File Size: 4.15 KB
 
 
     '     Class SimpleNudge

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3ab1f48a3d6e685ca15d403a7154cecd, Microsoft.VisualBasic.Core\src\CommandLine\CLI\IORedirectFile.vb"
+﻿#Region "Microsoft.VisualBasic::a47f5ff6836b99b584893d13c745b300, Microsoft.VisualBasic.Core\src\CommandLine\CLI\IORedirectFile.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 60.00%
     ' 
     '   Blank Lines: 40 (13.75%)
-    '     File Size: 14.33 KB
+    '     File Size: 14.30 KB
 
 
     '     Class IORedirectFile
@@ -51,7 +51,7 @@
     ' 
     '         Function: CopyRedirect, Run, (+2 Overloads) Start, ToString, writeScript
     ' 
-    '         Sub: __processExitHandle, (+2 Overloads) Dispose, Start
+    '         Sub: (+2 Overloads) Dispose, ProcessExitHandle, Start
     ' 
     ' 
     ' /********************************************************************************/

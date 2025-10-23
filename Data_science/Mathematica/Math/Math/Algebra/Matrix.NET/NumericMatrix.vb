@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8519a5dc6fa7f86e25528fe470991037, Data_science\Mathematica\Math\Math\Algebra\Matrix.NET\NumericMatrix.vb"
+﻿#Region "Microsoft.VisualBasic::ef42b4d06bf19e5b8e3454794c2eb083, Data_science\Mathematica\Math\Math\Algebra\Matrix.NET\NumericMatrix.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 1975
-    '    Code Lines: 1062 (53.77%)
-    ' Comment Lines: 647 (32.76%)
-    '    - Xml Docs: 93.51%
+    '   Total Lines: 2010
+    '    Code Lines: 1088 (54.13%)
+    ' Comment Lines: 652 (32.44%)
+    '    - Xml Docs: 93.56%
     ' 
-    '   Blank Lines: 266 (13.47%)
-    '     File Size: 71.79 KB
+    '   Blank Lines: 270 (13.43%)
+    '     File Size: 73.16 KB
 
 
     '     Class NumericMatrix
@@ -48,20 +48,20 @@
     '         Properties: ColumnDimension, ColumnPackedCopy, DiagonalVector, Dimension, RowDimension
     '                     RowPackedCopy
     ' 
-    '         Constructor: (+12 Overloads) Sub New
+    '         Constructor: (+13 Overloads) Sub New
     ' 
     '         Function: Abs, Add, AddEquals, ArrayLeftDivide, ArrayLeftDivideEquals
     '                   ArrayMultiply, ArrayMultiplyEquals, ArrayPack, ArrayRightDivide, ArrayRightDivideEquals
     '                   Block, chol, Clone, ColWise, Condition
-    '                   ConvertJaggedToRectangularFlexible, Copy, (+2 Overloads) Create, Determinant, DotMultiply
-    '                   DotProduct, Eigen, Gauss, (+4 Overloads) GetMatrix, GetRectangularArray
-    '                   (+2 Overloads) Identity, Inverse, Log, LUD, max
-    '                   Max, Min, (+3 Overloads) Multiply, MultiplyEquals, Norm1
-    '                   Norm2, NormF, NormInf, Number, One
-    '                   Power, QRD, random, Rank, Resize
-    '                   RowApply, RowVectors, RowWise, (+2 Overloads) Solve, SolveTranspose
-    '                   (+2 Overloads) Subtract, SubtractEquals, SVD, ToString, Trace
-    '                   Transpose, Zero
+    '                   ConvertJaggedToRectangularFlexible, Copy, (+2 Overloads) Create, Determinant, (+2 Overloads) Diagonal
+    '                   DotMultiply, DotProduct, Eigen, Gauss, (+4 Overloads) GetMatrix
+    '                   GetRectangularArray, (+2 Overloads) Identity, Inverse, Log, LUD
+    '                   max, Max, Min, (+3 Overloads) Multiply, MultiplyEquals
+    '                   Norm1, Norm2, NormF, NormInf, Number
+    '                   One, Power, QRD, random, Rank
+    '                   Resize, RowApply, RowVectors, RowWise, (+2 Overloads) Solve
+    '                   SolveTranspose, (+2 Overloads) Subtract, SubtractEquals, SVD, ToString
+    '                   Trace, Transpose, Zero
     ' 
     '         Sub: CheckMatrixDimensions, (+2 Overloads) Dispose, Finalize, (+4 Overloads) SetMatrix
     ' 
