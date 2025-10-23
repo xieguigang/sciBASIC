@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2f5677fc939c1d00c157e404ebd3fd52, Microsoft.VisualBasic.Core\src\ApplicationServices\App.vb"
+﻿#Region "Microsoft.VisualBasic::674afa6aed98f44cbd9440720ffb09c3, Microsoft.VisualBasic.Core\src\ApplicationServices\App.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 1590
-    '    Code Lines: 773 (48.62%)
-    ' Comment Lines: 633 (39.81%)
+    '   Total Lines: 1598
+    '    Code Lines: 779 (48.75%)
+    ' Comment Lines: 633 (39.61%)
     '    - Xml Docs: 83.41%
     ' 
-    '   Blank Lines: 184 (11.57%)
-    '     File Size: 68.47 KB
+    '   Blank Lines: 186 (11.64%)
+    '     File Size: 68.67 KB
 
 
     ' Module App
@@ -67,7 +67,7 @@
     ' 
     '     Sub: __GCThreadInvoke, __removesTEMP, [Stop], AddExitCleanHook, (+2 Overloads) DoNothing
     '          FlushMemory, Free, JoinVariable, (+2 Overloads) JoinVariables, Pause
-    '          (+2 Overloads) println, SetBufferSize, StartGC, StopGC
+    '          (+2 Overloads) println, SetBufferSize, SetSystemTemp, StartGC, StopGC
     ' 
     ' /********************************************************************************/
 
