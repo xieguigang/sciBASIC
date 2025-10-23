@@ -271,7 +271,7 @@ Public Module CurveAnalysis
     End Function
 
     ''' <summary>
-    ''' Return a new point, p3, which is on the same line as p1 and p2, but <dist> away from p2.
+    ''' Return a new point, p3, which is on the same line as p1 and p2, but dist away from p2.
     ''' p1, p2, p3 will always lie on the line in that order (as long as dist is positive).
     ''' </summary>
     ''' <param name="p1">The first point defining the line.</param>
