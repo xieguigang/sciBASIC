@@ -75,7 +75,7 @@ Namespace Interpolation
         Sub New()
         End Sub
 
-        Sub New(degree As Single, resolution As Integer)
+        Sub New(degree As Single, Optional resolution As Integer = 5)
             Me.degree = degree
             Me.resolution = resolution
         End Sub
