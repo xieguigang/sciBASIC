@@ -94,6 +94,15 @@ Public Module JSONSerializer
                  End Function)
     End Function
 
+    ''' <summary>
+    ''' Convet any clr object into a <see cref="JsonElement"/> based instance.
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    ''' <param name="obj"></param>
+    ''' <param name="maskReadonly"></param>
+    ''' <param name="enumToStr"></param>
+    ''' <param name="unixTimestamp"></param>
+    ''' <returns></returns>
     <Extension>
     Public Function CreateJSONElement(Of T)(obj As T,
                                             Optional maskReadonly As Boolean = False,
