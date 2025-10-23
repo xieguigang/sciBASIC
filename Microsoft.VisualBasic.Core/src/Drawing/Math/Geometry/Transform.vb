@@ -55,6 +55,7 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports System.Xml.Serialization
 Imports std = System.Math
 
 Namespace Imaging.Math2D
@@ -65,27 +66,27 @@ Namespace Imaging.Math2D
         ''' angle for rotation
         ''' </summary>
         ''' <returns></returns>
-        Public Property theta As Double
+        <XmlAttribute> Public Property theta As Double
         ''' <summary>
         ''' translate x
         ''' </summary>
         ''' <returns></returns>
-        Public Property tx As Double
+        <XmlAttribute> Public Property tx As Double
         ''' <summary>
         ''' translate y
         ''' </summary>
         ''' <returns></returns>
-        Public Property ty As Double
+        <XmlAttribute> Public Property ty As Double
         ''' <summary>
         ''' scale x [1 means no scale]
         ''' </summary>
         ''' <returns></returns>
-        Public Property scalex As Double = 1
+        <XmlAttribute> Public Property scalex As Double = 1
         ''' <summary>
         ''' scale y [1 means no scale]
         ''' </summary>
         ''' <returns></returns>
-        Public Property scaley As Double = 1
+        <XmlAttribute> Public Property scaley As Double = 1
 
         Public Overrides Function ToString() As String
             Return $"rotate_theta:{theta.ToString("F2")}, translate=({tx.ToString("F2")},{ty.ToString("F2")}), scale=({scalex.ToString("F2")},{scaley.ToString("F2")})"

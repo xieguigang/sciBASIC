@@ -65,6 +65,7 @@
 
 Imports System.Drawing
 Imports System.Runtime.CompilerServices
+Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
 Imports randf = Microsoft.VisualBasic.Math.RandomExtensions
@@ -86,8 +87,8 @@ Namespace Imaging.Math2D
         ''' <returns></returns>
         Public ReadOnly Property length As Integer = 0
 
-        Public Property xpoints As Double() = New Double(3) {}
-        Public Property ypoints As Double() = New Double(3) {}
+        <XmlAttribute> Public Property xpoints As Double() = New Double(3) {}
+        <XmlAttribute> Public Property ypoints As Double() = New Double(3) {}
 
         ''' <summary>
         ''' [left, top]
