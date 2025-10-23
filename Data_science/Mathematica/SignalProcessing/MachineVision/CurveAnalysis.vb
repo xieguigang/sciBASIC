@@ -15,7 +15,7 @@ Public Module CurveAnalysis
 
         Public Sub New()
         End Sub
-        Public Sub New(ByVal collection As IEnumerable(Of Point))
+        Public Sub New(collection As IEnumerable(Of Point))
             MyBase.New(collection)
         End Sub
     End Class
@@ -63,28 +63,28 @@ Public Module CurveAnalysis
     ''' <summary>
     ''' Sums all elements in a list of numbers.
     ''' </summary>
-    Private Function ArrSum(ByVal list As IList(Of Double)) As Double
+    Private Function ArrSum(list As IList(Of Double)) As Double
         Return list.Sum()
     End Function
 
     ''' <summary>
     ''' Calculates the average of a list of numbers.
     ''' </summary>
-    Private Function ArrAverage(ByVal list As IList(Of Double)) As Double
+    Private Function ArrAverage(list As IList(Of Double)) As Double
         Return list.Average()
     End Function
 
     ''' <summary>
     ''' Subtracts point v2 from v1.
     ''' </summary>
-    Private Function Subtract(ByVal v1 As Point, ByVal v2 As Point) As Point
+    Private Function Subtract(v1 As Point, v2 As Point) As Point
         Return New Point(v1.X - v2.X, v1.Y - v2.Y)
     End Function
 
     ''' <summary>
     ''' Calculates the magnitude (length) of a vector from the origin.
     ''' </summary>
-    Private Function Magnitude(ByVal point As Point) As Double
+    Private Function Magnitude(point As Point) As Double
         Return std.Sqrt(point.X * point.X + point.Y * point.Y)
     End Function
 
@@ -93,7 +93,7 @@ Public Module CurveAnalysis
     ''' Based on http://www.kr.tuwien.ac.at/staff/eiter/et-archive/cdtr9464.pdf
     ''' Modified to be iterative and have better memory usage.
     ''' </summary>
-    Private Function FrechetDist(ByVal curve1 As Curve, ByVal curve2 As Curve) As Double
+    Private Function FrechetDist(curve1 As Curve, curve2 As Curve) As Double
         Dim longCurve As Curve = If(curve1.Count >= curve2.Count, curve1, curve2)
         Dim shortCurve As Curve = If(curve1.Count >= curve2.Count, curve2, curve1)
         Dim prevResultsCol = New List(Of Double)()
@@ -112,7 +112,7 @@ Public Module CurveAnalysis
         Return prevResultsCol.Last()
     End Function
 
-    Private Function CalcVal(ByVal shortCurve As Curve, ByVal longCurve As Curve, ByVal i As Integer, ByVal j As Integer, ByVal prevResultsCol As IList(Of Double), ByVal curResultsCol As IList(Of Double)) As Double
+    Private Function CalcVal(shortCurve As Curve, longCurve As Curve, i As Integer, j As Integer, prevResultsCol As IList(Of Double), curResultsCol As IList(Of Double)) As Double
         If i = 0 AndAlso j = 0 Then
             Return PointDistance(longCurve(0), shortCurve(0))
         End If
@@ -139,7 +139,7 @@ Public Module CurveAnalysis
     ''' <param name="curve2">The second curve.</param>
     ''' <param name="options">Options for the similarity calculation.</param>
     ''' <returns>A value between 1 and 0 depending on how similar the shapes are, where 1 means identical.</returns>
-    Public Function ShapeSimilarity(ByVal curve1 As Curve, ByVal curve2 As Curve, Optional ByVal options As ShapeSimilarityOpts = Nothing) As Double
+    Public Function ShapeSimilarity(curve1 As Curve, curve2 As Curve, Optional options As ShapeSimilarityOpts = Nothing) As Double
         options = If(options, New ShapeSimilarityOpts())
 
         If std.Abs(options.RestrictRotationAngle) > std.PI Then
@@ -193,7 +193,7 @@ Public Module CurveAnalysis
     ''' <param name="curve">The curve to normalize.</param>
     ''' <param name="options">Options for normalization.</param>
     ''' <returns>The normalized curve.</returns>
-    Public Function ProcrustesNormalizeCurve(ByVal curve As Curve, Optional ByVal options As ProcrustesNormalizeCurveOpts = Nothing) As Curve
+    Public Function ProcrustesNormalizeCurve(curve As Curve, Optional options As ProcrustesNormalizeCurveOpts = Nothing) As Curve
         options = If(options, New ProcrustesNormalizeCurveOpts())
 
         Dim balancedCurve = If(options.Rebalance, RebalanceCurve(curve, New RebalanceCurveOpts With {.NumPoints = options.EstimationPoints}), curve)
@@ -216,7 +216,7 @@ Public Module CurveAnalysis
     ''' <param name="curve">The curve to rotate.</param>
     ''' <param name="relativeCurve">The curve to match rotation with.</param>
     ''' <returns>The rotation angle in radians.</returns>
-    Public Function FindProcrustesRotationAngle(ByVal curve As Curve, ByVal relativeCurve As Curve) As Double
+    Public Function FindProcrustesRotationAngle(curve As Curve, relativeCurve As Curve) As Double
         If curve.Count <> relativeCurve.Count Then
             Throw New ArgumentException("curve and relativeCurve must have the same length")
         End If
@@ -236,7 +236,7 @@ Public Module CurveAnalysis
     ''' <param name="curve">The curve to rotate.</param>
     ''' <param name="relativeCurve">The curve to match rotation with.</param>
     ''' <returns>The rotated curve.</returns>
-    Public Function ProcrustesNormalizeRotation(ByVal curve As Curve, ByVal relativeCurve As Curve) As Curve
+    Public Function ProcrustesNormalizeRotation(curve As Curve, relativeCurve As Curve) As Curve
         Dim angle = FindProcrustesRotationAngle(curve, relativeCurve)
         Return RotateCurve(curve, angle)
     End Function
@@ -247,7 +247,7 @@ Public Module CurveAnalysis
     ''' <param name="point1">The first point.</param>
     ''' <param name="point2">The second point.</param>
     ''' <returns>The Euclidean distance.</returns>
-    Public Function PointDistance(ByVal point1 As Point, ByVal point2 As Point) As Double
+    Public Function PointDistance(point1 As Point, point2 As Point) As Double
         Return Magnitude(Subtract(point1, point2))
     End Function
 
@@ -256,7 +256,7 @@ Public Module CurveAnalysis
     ''' </summary>
     ''' <param name="points">The curve as a list of points.</param>
     ''' <returns>The total length of the curve.</returns>
-    Public Function CurveLength(ByVal points As Curve) As Double
+    Public Function CurveLength(points As Curve) As Double
         If points.Count < 2 Then
             Return 0
         End If
@@ -278,7 +278,7 @@ Public Module CurveAnalysis
     ''' <param name="p2">The second point defining the line.</param>
     ''' <param name="dist">The distance from p2 to the new point.</param>
     ''' <returns>The new point.</returns>
-    Public Function ExtendPointOnLine(ByVal p1 As Point, ByVal p2 As Point, ByVal dist As Double) As Point
+    Public Function ExtendPointOnLine(p1 As Point, p2 As Point, dist As Double) As Point
         Dim vect = Subtract(p2, p1)
         Dim norm = dist / Magnitude(vect)
         Return New Point(p2.X + norm * vect.X, p2.Y + norm * vect.Y)
@@ -290,7 +290,7 @@ Public Module CurveAnalysis
     ''' <param name="curve">The input curve.</param>
     ''' <param name="options">Options for subdivision.</param>
     ''' <returns>The subdivided curve.</returns>
-    Public Function SubdivideCurve(ByVal curve As Curve, Optional ByVal options As SubdivideCurveOpts = Nothing) As Curve
+    Public Function SubdivideCurve(curve As Curve, Optional options As SubdivideCurveOpts = Nothing) As Curve
         options = If(options, New SubdivideCurveOpts())
 
         Dim newCurve = New Curve(curve.Take(1))
@@ -317,7 +317,7 @@ Public Module CurveAnalysis
     ''' <param name="curve">The input curve.</param>
     ''' <param name="options">Options for rebalancing.</param>
     ''' <returns>The rebalanced curve.</returns>
-    Public Function RebalanceCurve(ByVal curve As Curve, ByVal options As RebalanceCurveOpts) As Curve
+    Public Function RebalanceCurve(curve As Curve, options As RebalanceCurveOpts) As Curve
         Dim curveLen = CurveLength(curve)
         Dim segmentLen = curveLen / (options.NumPoints - 1)
         Dim outlinePoints = New Curve From {curve(0)}
@@ -353,7 +353,7 @@ Public Module CurveAnalysis
     ''' <param name="curve">The curve to rotate.</param>
     ''' <param name="theta">The angle to rotate by, in radians.</param>
     ''' <returns>The rotated curve.</returns>
-    Public Function RotateCurve(ByVal curve As Curve, ByVal theta As Double) As Curve
+    Public Function RotateCurve(curve As Curve, theta As Double) As Curve
         Dim cosTheta = std.Cos(-theta)
         Dim sinTheta = std.Sin(-theta)
         Return New Curve(curve.Select(Function(p) New Point(cosTheta * p.X - sinTheta * p.Y, sinTheta * p.X + cosTheta * p.Y)))

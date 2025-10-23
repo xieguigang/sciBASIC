@@ -70,7 +70,7 @@ Namespace NDtw.Examples
             Get
                 Return _Title
             End Get
-            Private Set(ByVal value As String)
+            Private Set(value As String)
                 _Title = value
             End Set
         End Property
@@ -78,12 +78,12 @@ Namespace NDtw.Examples
         'values by entity and variable: Dictionary<entity, Dictionary<variable, values>>
         Private ReadOnly _valuesDict As Dictionary(Of String, Dictionary(Of String, IList(Of Double)))
 
-        Public Sub New(ByVal title As String)
+        Public Sub New(title As String)
             Me.Title = title
             _valuesDict = New Dictionary(Of String, Dictionary(Of String, IList(Of Double)))()
         End Sub
 
-        Public Sub AddValues(ByVal entity As String, ByVal variable As String, ByVal values As IList(Of Double))
+        Public Sub AddValues(entity As String, variable As String, values As IList(Of Double))
             _validated = False
 
             If Not _valuesDict.ContainsKey(entity) Then _valuesDict(entity) = New Dictionary(Of String, IList(Of Double))()
@@ -96,7 +96,7 @@ Namespace NDtw.Examples
         ''' <summary>
         ''' Get values for given entity and variable.
         ''' </summary>
-        Public Function GetValues(ByVal entity As String, ByVal variable As String) As IList(Of Double)
+        Public Function GetValues(entity As String, variable As String) As IList(Of Double)
             If Not _validated Then Validate()
 
             Return _valuesDict(entity)(variable)
