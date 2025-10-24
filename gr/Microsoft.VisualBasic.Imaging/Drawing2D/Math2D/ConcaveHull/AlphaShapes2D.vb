@@ -80,6 +80,7 @@ Namespace Drawing2D.Math2D.ConcaveHull
 
         ReadOnly points As PointF()
         ReadOnly distanceMap As Double(,)
+        ReadOnly triangles As New List(Of Triangle)
 
         Public Sub New(pointList As IEnumerable(Of PointF))
             Me.points = pointList.ToArray
@@ -111,10 +112,13 @@ Namespace Drawing2D.Math2D.ConcaveHull
         ''' <param name="alpha">Alpha参数，控制轮廓的紧密度</param>
         ''' <returns>轮廓点列表，按顺序排列</returns>
         Public Function ComputeAlphaShape(alpha As Double) As List(Of PointF)
-            If points.Count < 3 Then Return points.ToList()
+            If points.Length < 3 Then
+                Return points.ToList()
+            Else
+                Call BuildDelaunayTriangulation()
+            End If
 
             ' 步骤1：构建Delaunay三角网
-            Dim triangles As List(Of Triangle) = BuildDelaunayTriangulation()
             If triangles Is Nothing OrElse triangles.Count = 0 Then
                 Return New List(Of PointF)()
             End If
@@ -129,27 +133,27 @@ Namespace Drawing2D.Math2D.ConcaveHull
         ''' <summary>
         ''' 使用Bowyer-Watson算法构建Delaunay三角网
         ''' </summary>
-        Private Function BuildDelaunayTriangulation() As List(Of Triangle)
-            If points.Count < 3 Then Return New List(Of Triangle)()
+        Private Sub BuildDelaunayTriangulation()
+            If points.Length > 3 AndAlso Me.triangles.IsNullOrEmpty Then
+                ' 创建超级三角形，包含所有点
+                Dim triangles As New List(Of Triangle) From {
+                    CreateSuperTriangle()
+                }
 
-            Dim triangles As New List(Of Triangle)()
+                ' 逐点插入
+                For Each i As Integer In TqdmWrapper.Range(0, points.Length)
+                    triangles = InsertPoint(triangles, i)
+                Next
 
-            ' 创建超级三角形，包含所有点
-            Dim superTriangle As Triangle = CreateSuperTriangle()
-            triangles.Add(superTriangle)
+                ' 移除与超级三角形相关的三角形
+                Call triangles _
+                    .RemoveAll(Function(t)
+                                   Return t.Vertices.Any(Function(v) v >= points.Count)
+                               End Function)
 
-            ' 逐点插入
-            For Each i As Integer In TqdmWrapper.Range(0, points.Length)
-                triangles = InsertPoint(triangles, i)
-            Next
-
-            ' 移除与超级三角形相关的三角形
-            triangles.RemoveAll(Function(t)
-                                    Return t.Vertices.Any(Function(v) v >= points.Count)
-                                End Function)
-
-            Return triangles
-        End Function
+                Call Me.triangles.AddRange(triangles)
+            End If
+        End Sub
 
         ''' <summary>
         ''' 创建包含所有点的超级三角形
@@ -388,14 +392,23 @@ Namespace Drawing2D.Math2D.ConcaveHull
         ''' 自动计算推荐的Alpha值
         ''' </summary>
         Public Function ComputeOptimalAlpha() As Double
-            If points.Count < 3 Then Return 0.0
+            If points.Count < 3 Then
+                Return 0.0
+            Else
+                Call BuildDelaunayTriangulation()
+            End If
 
-            Dim triangles = BuildDelaunayTriangulation()
-            If triangles.Count = 0 Then Return 0.0
+            If triangles.Count = 0 Then
+                Return 0.0
+            End If
 
             ' 计算所有三角形外接圆半径的中位数作为推荐Alpha值
-            Dim radii = triangles.Select(Function(t) t.CalculateCircumradius(points)).OrderBy(Function(r) r).ToList()
-            Dim medianRadius As Double = radii(radii.Count \ 2)
+            Dim radii As Double() = triangles _
+                .AsParallel _
+                .Select(Function(t) t.CalculateCircumradius(points)) _
+                .OrderBy(Function(r) r) _
+                .ToArray
+            Dim medianRadius As Double = radii(radii.Length \ 2)
 
             Return medianRadius * 1.5
         End Function

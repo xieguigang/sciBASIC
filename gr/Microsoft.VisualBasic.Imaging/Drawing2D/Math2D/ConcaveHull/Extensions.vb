@@ -96,7 +96,8 @@ Namespace Drawing2D.Math2D.ConcaveHull
                     r# = .ComputeOptimalAlpha
                 End If
 
-                Return .ComputeAlphaShape(r).ToArray
+                Return .ComputeAlphaShape(r) _
+                       .ToArray
             End With
         End Function
     End Module
