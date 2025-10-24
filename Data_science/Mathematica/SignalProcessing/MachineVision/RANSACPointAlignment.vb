@@ -67,6 +67,7 @@ Imports std = System.Math
 ''' This version is optimized for correctness and includes a proper least-squares refinement step.
 ''' </summary>
 Public NotInheritable Class RANSACPointAlignment
+
     Private Sub New()
         ' Prevent instantiation of this static class
     End Sub
