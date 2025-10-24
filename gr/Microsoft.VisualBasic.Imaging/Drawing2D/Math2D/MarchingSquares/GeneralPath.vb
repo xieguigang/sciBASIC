@@ -62,6 +62,7 @@
 
 Imports System.Drawing
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.Interpolation
 
 Namespace Drawing2D.Math2D.MarchingSquares
@@ -74,6 +75,10 @@ Namespace Drawing2D.Math2D.MarchingSquares
         Friend ReadOnly polygons As New List(Of PointF())
         Friend ReadOnly temp As New List(Of PointF)
 
+        ''' <summary>
+        ''' the z-index liked heatmap level, used for color rendering
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property level As Double
         Public Property dimension As Size
 
@@ -86,6 +91,12 @@ Namespace Drawing2D.Math2D.MarchingSquares
             polygons = contour.shapes _
                 .Select(Function(p) p.ToArray) _
                 .AsList
+        End Sub
+
+        Sub New(ParamArray polygons As Imaging.Math2D.Polygon2D())
+            For Each layer As Imaging.Math2D.Polygon2D In polygons
+                Call Me.polygons.Add(layer.AsEnumerable.ToArray)
+            Next
         End Sub
 
         Public Function GetContour() As ContourLayer
