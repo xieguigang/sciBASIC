@@ -111,13 +111,22 @@ Namespace Drawing2D.Math2D.ConcaveHull
             End Get
         End Property
 
+        ReadOnly flags As Boolean()
+        ReadOnly points As Vector2D()
+        ReadOnly distanceMap As Double(,)
+        ReadOnly rNeigbourList As List(Of Integer)()
+
         Public Sub New(list As IEnumerable(Of PointF))
-            Me.points = list _
+            points = list _
                 .OrderBy(Function(p) p.X * CDbl(p.Y)) _
                 .Select(Function(p) New Vector2D(p)) _
                 .ToArray
-            '  points.Sort()
-            flags = New Boolean(points.Length - 1) {}
+
+            Dim n As Integer = points.Length
+
+            flags = New Boolean(n - 1) {}
+            distanceMap = New Double(n - 1, n - 1) {}
+            rNeigbourList = New List(Of Integer)(n - 1) {}
 
             For i As Integer = 0 To flags.Length - 1
                 flags(i) = False
@@ -127,13 +136,7 @@ Namespace Drawing2D.Math2D.ConcaveHull
             InitNearestList()
         End Sub
 
-        Private flags As Boolean()
-        Private points As Vector2D()
-        Private distanceMap As Double(,)
-        Private rNeigbourList As List(Of Integer)()
-
         Private Sub InitNearestList()
-            rNeigbourList = New List(Of Integer)(points.Length - 1) {}
             For i As Integer = 0 To rNeigbourList.Length - 1
                 rNeigbourList(i) = GetSortedNeighbours(i)
             Next
@@ -141,8 +144,6 @@ Namespace Drawing2D.Math2D.ConcaveHull
 
         Private Sub InitDistanceMap()
             Dim n As Integer = points.Length
-
-            distanceMap = New Double(n - 1, n - 1) {}
 
             For i As Integer = 0 To n - 1
                 For j As Integer = 0 To n - 1
@@ -153,8 +154,8 @@ Namespace Drawing2D.Math2D.ConcaveHull
 
         Public Function GetMinEdgeLength() As Double
             Dim min As Double = Double.MaxValue
-            For i As Integer = 0 To points.Count - 1
-                For j As Integer = 0 To points.Count - 1
+            For i As Integer = 0 To points.Length - 1
+                For j As Integer = 0 To points.Length - 1
                     If i < j Then
                         If distanceMap(i, j) < min Then
                             min = distanceMap(i, j)
@@ -331,13 +332,12 @@ Namespace Drawing2D.Math2D.ConcaveHull
         End Function
 
         Public Function GetInRNeighbourList(radius As Double) As List(Of Integer)()
-            Dim adjs As List(Of Integer)() = New List(Of Integer)(points.Count - 1) {}
-            For i As Integer = 0 To points.Count - 1.0F
+            Dim adjs As List(Of Integer)() = New List(Of Integer)(points.Length - 1) {}
+            For i As Integer = 0 To points.Length - 1.0F
                 adjs(i) = New List(Of Integer)()
             Next
-            For i As Integer = 0 To points.Count - 1
-
-                For j As Integer = 0 To points.Count - 1
+            For i As Integer = 0 To points.Length - 1
+                For j As Integer = 0 To points.Length - 1
                     If i < j AndAlso distanceMap(i, j) < radius Then
                         adjs(i).Add(j)
                         adjs(j).Add(i)
@@ -348,8 +348,8 @@ Namespace Drawing2D.Math2D.ConcaveHull
         End Function
 
         Private Function GetSortedNeighbours(index As Integer) As List(Of Integer)
-            Dim infos As New List(Of Point2dInfo)(points.Count)
-            For i As Integer = 0 To points.Count - 1
+            Dim infos As New List(Of Point2dInfo)(points.Length)
+            For i As Integer = 0 To points.Length - 1
                 infos.Add(New Point2dInfo(points(i), i, distanceMap(index, i)))
             Next
             infos.Sort()
