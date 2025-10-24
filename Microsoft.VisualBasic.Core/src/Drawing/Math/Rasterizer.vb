@@ -1,5 +1,6 @@
 ﻿Imports System.Drawing
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
+Imports Microsoft.VisualBasic.Linq
 Imports std = System.Math
 
 Namespace Imaging.Math2D
@@ -8,12 +9,27 @@ Namespace Imaging.Math2D
     ''' 栅格化结果容器：每个栅格存储该区域内点的列表
     ''' </summary>
     Public Class RasterData
+
         Public Property Grid As List(Of List(Of List(Of PointF)))
         Public Property Resolution As Double
         Public Property MinX As Double
         Public Property MinY As Double
         Public Property GridWidth As Integer
         Public Property GridHeight As Integer
+
+        Default Public ReadOnly Property Cell(i As Integer, j As Integer) As List(Of PointF)
+            Get
+                Return Grid(i)(j)
+            End Get
+        End Property
+
+        Public ReadOnly Property MeanDensity As Double
+            Get
+                Return Aggregate cell As List(Of PointF)
+                       In Grid.IteratesALL
+                       Into Average(cell.Count)
+            End Get
+        End Property
 
         Public Sub New(resolution As Double, minX As Double, minY As Double, gridWidth As Integer, gridHeight As Integer)
             Me.Resolution = resolution
@@ -31,6 +47,22 @@ Namespace Imaging.Math2D
                 Grid.Add(row)
             Next
         End Sub
+
+        Public Function GetRasterPolygon(n As Integer) As Polygon2D
+            Dim x As New List(Of Double)
+            Dim y As New List(Of Double)
+
+            For i As Integer = 0 To GridHeight - 1
+                For j As Integer = 0 To GridWidth - 1
+                    If Me(i, j).Count > n Then
+                        Call x.Add(j + 1)
+                        Call y.Add(i + 1)
+                    End If
+                Next
+            Next
+
+            Return New Polygon2D(x.ToArray, y.ToArray)
+        End Function
     End Class
 
     Public Module Rasterizer
