@@ -67,7 +67,6 @@
 #End Region
 
 Imports System.Drawing
-Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Imaging.Math2D
 Imports std = System.Math
 
@@ -81,11 +80,11 @@ Namespace Drawing2D.Math2D.ConcaveHull
 
         Private Structure Point2dInfo : Implements IComparable(Of Point2dInfo)
 
-            Public Point As PointF
+            Public Point As Vector2D
             Public Index As Integer
             Public DistanceTo As Double
 
-            Public Sub New(p As PointF, i As Integer, dis As Double)
+            Public Sub New(p As Vector2D, i As Integer, dis As Double)
                 Me.Point = p
                 Me.Index = i
                 Me.DistanceTo = dis
@@ -103,7 +102,7 @@ Namespace Drawing2D.Math2D.ConcaveHull
         Public ReadOnly Property RecomandedRadius() As Double
             Get
                 Dim r As Double = Double.MinValue
-                For i As Integer = 0 To points.Count - 1
+                For i As Integer = 0 To points.Length - 1
                     If distanceMap(i, rNeigbourList(i)(1)) > r Then
                         r = distanceMap(i, rNeigbourList(i)(1))
                     End If
@@ -115,33 +114,39 @@ Namespace Drawing2D.Math2D.ConcaveHull
         Public Sub New(list As IEnumerable(Of PointF))
             Me.points = list _
                 .OrderBy(Function(p) p.X * CDbl(p.Y)) _
-                .ToList
+                .Select(Function(p) New Vector2D(p)) _
+                .ToArray
             '  points.Sort()
-            flags = New Boolean(points.Count - 1) {}
+            flags = New Boolean(points.Length - 1) {}
+
             For i As Integer = 0 To flags.Length - 1
                 flags(i) = False
             Next
+
             InitDistanceMap()
             InitNearestList()
         End Sub
 
         Private flags As Boolean()
-        Private points As List(Of PointF)
+        Private points As Vector2D()
         Private distanceMap As Double(,)
         Private rNeigbourList As List(Of Integer)()
 
         Private Sub InitNearestList()
-            rNeigbourList = New List(Of Integer)(points.Count - 1) {}
+            rNeigbourList = New List(Of Integer)(points.Length - 1) {}
             For i As Integer = 0 To rNeigbourList.Length - 1
                 rNeigbourList(i) = GetSortedNeighbours(i)
             Next
         End Sub
 
         Private Sub InitDistanceMap()
-            distanceMap = New Double(points.Count - 1, points.Count - 1) {}
-            For i As Integer = 0 To points.Count - 1
-                For j As Integer = 0 To points.Count - 1
-                    distanceMap(i, j) = points(i).Distance(points(j))
+            Dim n As Integer = points.Length
+
+            distanceMap = New Double(n - 1, n - 1) {}
+
+            For i As Integer = 0 To n - 1
+                For j As Integer = 0 To n - 1
+                    distanceMap(i, j) = points(i).DistanceTo(points(j))
                 Next
             Next
         End Sub
@@ -160,8 +165,8 @@ Namespace Drawing2D.Math2D.ConcaveHull
             Return min
         End Function
 
-        Public Function GetConcave_Ball(radius As Double) As List(Of PointF)
-            Dim ret As New List(Of PointF)() From {points(0)}
+        Public Function GetConcave_Ball(radius As Double) As IEnumerable(Of PointF)
+            Dim ret As New List(Of Vector2D)() From {points(0)}
             Dim adjs As List(Of Integer)() = GetInRNeighbourList(2 * radius)
 
             'flags[0] = true;
@@ -172,18 +177,18 @@ Namespace Drawing2D.Math2D.ConcaveHull
                 If j = -1 Then
                     Exit While
                 End If
-                Dim p As PointF = BallConcave.GetCircleCenter(points(i), points(j), radius)
+                Dim p As Vector2D = BallConcave.GetCircleCenter(points(i), points(j), radius)
                 ret.Add(points(j))
                 flags(j) = True
                 prev = i
                 i = j
             End While
 
-            Return ret
+            Return From v As Vector2D In ret Select New PointF(v.x, v.y)
         End Function
 
         Public Function GetConcave_Edge(radius As Double) As List(Of PointF)
-            Dim ret As New List(Of PointF)()
+            Dim ret As New List(Of Vector2D)()
             Dim adjs As List(Of Integer)() = GetInRNeighbourList(2 * radius)
             ret.Add(points(0))
             Dim i As Integer = 0, j As Integer = -1, prev As Integer = -1
@@ -198,39 +203,29 @@ Namespace Drawing2D.Math2D.ConcaveHull
                 prev = i
                 i = j
             End While
-            Return ret
+            Return From v As Vector2D In ret Select New PointF(v.x, v.y)
         End Function
 
-        Private Function CheckValid(adjs As List(Of Integer)()) As Boolean
-            For i As Integer = 0 To adjs.Length - 1
-                If adjs(i).Count < 2 Then
-                    Return False
-                End If
-            Next
-            Return True
-        End Function
-
-        Public Function CompareAngel(a As PointF, b As PointF, m_origin As PointF, m_dreference As PointF) As Boolean
-
-            Dim da As New PointF(a.X - m_origin.X, a.Y - m_origin.Y)
-            Dim db As New PointF(b.X - m_origin.X, b.Y - m_origin.Y)
-            Dim detb As Double = GetCross(m_dreference, db)
+        Private Function CompareAngel(a As Vector2D, b As Vector2D, m_origin As Vector2D, m_dreference As Vector2D) As Boolean
+            Dim da As New Vector2D(a.x - m_origin.x, a.y - m_origin.y)
+            Dim db As New Vector2D(b.x - m_origin.x, b.y - m_origin.y)
+            Dim detb As Double = m_dreference.GetCross(db)
 
             ' nothing is less than zero degrees
-            If detb = 0 AndAlso db.X * m_dreference.X + db.Y * m_dreference.Y >= 0 Then
+            If detb = 0.0 AndAlso db.x * m_dreference.x + db.y * m_dreference.y >= 0 Then
                 Return False
             End If
 
-            Dim deta As Double = GetCross(m_dreference, da)
+            Dim deta As Double = m_dreference.GetCross(da)
 
             ' zero degrees is less than anything else
-            If deta = 0 AndAlso da.X * m_dreference.X + da.Y * m_dreference.Y >= 0 Then
+            If deta = 0.0 AndAlso da.x * m_dreference.x + da.y * m_dreference.y >= 0 Then
                 Return True
             End If
 
             If deta * detb >= 0 Then
                 ' both on same side of reference, compare to each other
-                Return GetCross(da, db) > 0
+                Return da.GetCross(db) > 0
             End If
 
             ' vectors "less than" zero degrees are actually large, near 2 pi
@@ -241,13 +236,13 @@ Namespace Drawing2D.Math2D.ConcaveHull
             If list.Count = 2 AndAlso prev <> -1 Then
                 Return list(0) + list(1) - prev
             End If
-            Dim dp As PointF
+            Dim dp As Vector2D
             If prev = -1 Then
-                dp = New PointF(1, 0)
+                dp = New Vector2D(1, 0)
             Else
-                dp = New PointF With {
-                    .X = points(prev).X - points(current).X,
-                    .Y = points(prev).Y - points(current).Y
+                dp = New Vector2D With {
+                    .x = points(prev).x - points(current).x,
+                    .y = points(prev).y - points(current).y
                 }
             End If
             Dim min As Integer = -1
@@ -256,8 +251,8 @@ Namespace Drawing2D.Math2D.ConcaveHull
                     If min = -1 Then
                         min = list(j)
                     Else
-                        Dim t As PointF = points(list(j))
-                        If CompareAngel(points(min), t, points(current), dp) AndAlso t.Distance(points(current)) < radius Then
+                        Dim t As Vector2D = points(list(j))
+                        If CompareAngel(points(min), t, points(current), dp) AndAlso t.DistanceTo(points(current)) < radius Then
                             min = list(j)
                         End If
                     End If
@@ -276,8 +271,8 @@ Namespace Drawing2D.Math2D.ConcaveHull
                 End If
 
                 Dim adjIndex As Integer = list(j)
-                Dim xianp As PointF = points(adjIndex)
-                Dim rightCirleCenter As PointF = GetCircleCenter(points(current), xianp, radius)
+                Dim xianp As Vector2D = points(adjIndex)
+                Dim rightCirleCenter As Vector2D = GetCircleCenter(points(current), xianp, radius)
 
                 If Not HasPointsInCircle(list, rightCirleCenter, radius, adjIndex) Then
                     Return list(j)
@@ -287,12 +282,12 @@ Namespace Drawing2D.Math2D.ConcaveHull
         End Function
 
         Private Sub SortAdjListByAngel(list As List(Of Integer), prev As Integer, current As Integer)
-            Dim origin As PointF = points(current)
-            Dim df As PointF
+            Dim origin As Vector2D = points(current)
+            Dim df As Vector2D
             If prev <> -1 Then
-                df = New PointF(points(prev).X - origin.X, points(prev).Y - origin.Y)
+                df = New Vector2D(points(prev).x - origin.x, points(prev).y - origin.y)
             Else
-                df = New PointF(1, 0)
+                df = New Vector2D(1, 0)
             End If
             Dim temp As Integer = 0
             For i As Integer = list.Count To 1 Step -1
@@ -306,7 +301,7 @@ Namespace Drawing2D.Math2D.ConcaveHull
             Next
         End Sub
 
-        Private Function HasPointsInCircle(adjPoints As List(Of Integer), center As PointF, radius As Double, adjIndex As Integer) As Boolean
+        Private Function HasPointsInCircle(adjPoints As List(Of Integer), center As Vector2D, radius As Double, adjIndex As Integer) As Boolean
             For k As Integer = 0 To adjPoints.Count - 1
                 If adjPoints(k) <> adjIndex Then
                     Dim index2 As Integer = adjPoints(k)
@@ -318,26 +313,26 @@ Namespace Drawing2D.Math2D.ConcaveHull
             Return False
         End Function
 
-        Public Shared Function GetCircleCenter(a As PointF, b As PointF, r As Double) As PointF
-            Dim dx As Double = b.X - a.X
-            Dim dy As Double = b.Y - a.Y
-            Dim cx As Double = 0.5 * (b.X + a.X)
-            Dim cy As Double = 0.5 * (b.Y + a.Y)
+        Public Shared Function GetCircleCenter(a As Vector2D, b As Vector2D, r As Double) As Vector2D
+            Dim dx As Double = b.x - a.x
+            Dim dy As Double = b.y - a.y
+            Dim cx As Double = 0.5 * (b.x + a.x)
+            Dim cy As Double = 0.5 * (b.y + a.y)
             If r * r / (dx * dx + dy * dy) - 0.25 < 0 Then
-                Return New PointF(-1, -1)
+                Return New Vector2D(-1, -1)
             End If
             Dim sqrt As Double = std.Sqrt(r * r / (dx * dx + dy * dy) - 0.25)
-            Return New PointF(cx - dy * sqrt, cy + dx * sqrt)
+            Return New Vector2D(cx - dy * sqrt, cy + dx * sqrt)
         End Function
 
-        Public Shared Function IsInCircle(p As PointF, center As PointF, r As Double) As Boolean
-            Dim dis2 As Double = (p.X - center.X) * (p.X - center.X) + (p.Y - center.Y) * (p.Y - center.Y)
+        Public Shared Function IsInCircle(p As Vector2D, center As Vector2D, r As Double) As Boolean
+            Dim dis2 As Double = (p.x - center.x) * (p.x - center.x) + (p.y - center.y) * (p.y - center.y)
             Return dis2 < r * r
         End Function
 
         Public Function GetInRNeighbourList(radius As Double) As List(Of Integer)()
             Dim adjs As List(Of Integer)() = New List(Of Integer)(points.Count - 1) {}
-            For i As Integer = 0 To points.Count - 1
+            For i As Integer = 0 To points.Count - 1.0F
                 adjs(i) = New List(Of Integer)()
             Next
             For i As Integer = 0 To points.Count - 1
@@ -363,11 +358,6 @@ Namespace Drawing2D.Math2D.ConcaveHull
                 adj.Add(infos(i).Index)
             Next
             Return adj
-        End Function
-
-        <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Shared Function GetCross(a As PointF, b As PointF) As Double
-            Return a.X * b.Y - a.Y * b.X
         End Function
     End Class
 End Namespace

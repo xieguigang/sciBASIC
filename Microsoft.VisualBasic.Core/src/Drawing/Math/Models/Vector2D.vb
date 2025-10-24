@@ -102,6 +102,10 @@ Namespace Imaging.Math2D
             Me.New(0.0, 0.0)
         End Sub
 
+        Sub New(pt As PointF)
+            Me.New(pt.X, pt.Y)
+        End Sub
+
         Public Sub New(x As Double, y As Double)
             Me.x = x
             Me.y = y
@@ -166,6 +170,21 @@ Namespace Imaging.Math2D
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function GetDistance(v As Layout2D) As Double
             Return GeomTransform.Distance(x, y, v.X, v.Y)
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function GetCross(b As PointF) As Double
+            Return x * b.Y - y * b.X
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Function GetCross(a As PointF, b As PointF) As Double
+            Return a.X * b.Y - a.Y * b.X
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Function GetCross(a As Layout2D, b As Layout2D) As Double
+            Return a.X * b.Y - a.Y * b.X
         End Function
     End Class
 End Namespace

@@ -348,6 +348,13 @@ Namespace Imaging.Math2D
             Return std.Sqrt(std.Pow(x1 - x2, 2) + std.Pow(y1 - y2, 2))
         End Function
 
+        ''' <summary>
+        ''' Euclidean distance
+        ''' </summary>
+        ''' <typeparam name="T"></typeparam>
+        ''' <param name="a"></param>
+        ''' <param name="b"></param>
+        ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function DistanceTo(Of T As Layout2D)(a As T, b As T) As Double
