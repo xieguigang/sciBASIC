@@ -220,7 +220,9 @@ Re0:
             Next
         End If
         If Not String.IsNullOrEmpty(proxy) Then
-            Call webRequest.SetProxy(proxy)
+            webRequest.SetProxy(proxy)
+        Else
+            webRequest.Proxy = Nothing
         End If
 
         Return webRequest
