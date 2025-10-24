@@ -116,64 +116,11 @@ Namespace Imaging.Math2D
         ''' </summary>
         ''' <param name="pointCloud">输入的点云数据</param>
         ''' <returns>估算出的平均点间距（分辨率）</returns>
-        Public Function EstimateResolution(pointCloud As Polygon2D) As Double
-            If pointCloud.xpoints Is Nothing OrElse pointCloud.xpoints.Length < 2 Then
-                Throw New ArgumentException("点云至少需要包含2个点才能计算分辨率")
-            End If
+        Public Function EstimateResolution(pointCloud As Polygon2D, size As Integer) As Double
+            Dim x As New DoubleRange(pointCloud.xpoints)
+            Dim y As New DoubleRange(pointCloud.ypoints)
 
-            Dim totalDistance As Double = 0.0
-            Dim validPoints As Integer = 0
-
-            ' 遍历点云中的每个点
-            For i As Integer = 0 To pointCloud.xpoints.Length - 1
-                Dim minDistance As Double = Double.MaxValue
-
-                ' 寻找当前点(i)的最近邻点（排除自身）
-                For j As Integer = 0 To pointCloud.xpoints.Length - 1
-                    If i = j Then Continue For ' 跳过自身
-
-                    ' 计算两点之间的欧氏距离
-                    Dim dx As Double = pointCloud.xpoints(i) - pointCloud.xpoints(j)
-                    Dim dy As Double = pointCloud.ypoints(i) - pointCloud.ypoints(j)
-                    Dim distance As Double = std.Sqrt(dx * dx + dy * dy)
-
-                    ' 更新最小距离
-                    If distance < minDistance Then
-                        minDistance = distance
-                    End If
-                Next j
-
-                ' 累加有效点的最小距离
-                If minDistance < Double.MaxValue Then
-                    totalDistance += minDistance
-                    validPoints += 1
-                End If
-            Next i
-
-            If validPoints = 0 Then
-                Return 0.0
-            End If
-
-            ' 返回平均最近邻距离作为基础分辨率
-            Return totalDistance / validPoints
-        End Function
-
-        ''' <summary>
-        ''' 提供推荐栅格大小的两种策略
-        ''' </summary>
-        ''' <param name="pointCloud">输入的点云数据</param>
-        ''' <param name="strategy">策略选择：0-保守，1-精细</param>
-        ''' <returns>推荐的最佳栅格大小</returns>
-        Public Function GetRecommendedResolution(pointCloud As Polygon2D, Optional strategy As Integer = 0) As Double
-            Dim baseResolution As Double = EstimateResolution(pointCloud)
-
-            ' 策略选择
-            Select Case strategy
-                Case 1 ' 精细模式：略高于基础分辨率，确保每个栅格有适量点
-                    Return baseResolution * 1.3
-                Case Else ' 保守模式（默认）：等于或略低于基础分辨率，确保捕捉细节
-                    Return baseResolution
-            End Select
+            Return ((x.Length / size) + (y.Length / size)) / 2
         End Function
     End Module
 End Namespace
