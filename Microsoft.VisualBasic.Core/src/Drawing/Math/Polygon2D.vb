@@ -81,14 +81,38 @@ Namespace Imaging.Math2D
     ''' </remarks>
     Public Class Polygon2D : Implements Enumeration(Of PointF)
 
-        ''' <summary>
-        ''' the size of the polygon points collection
-        ''' </summary>
-        ''' <returns></returns>
-        Public ReadOnly Property length As Integer = 0
-
         <XmlAttribute> Public Property xpoints As Double() = New Double(3) {}
         <XmlAttribute> Public Property ypoints As Double() = New Double(3) {}
+
+        ''' <summary>
+        ''' get/set the point data by a given index
+        ''' </summary>
+        ''' <param name="index"></param>
+        ''' <returns></returns>
+        Default Public Property Item(index As Integer) As PointF
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
+            Get
+                Return New PointF(xpoints(index), ypoints(index))
+            End Get
+            Set(value As PointF)
+                xpoints(index) = value.X
+                ypoints(index) = value.Y
+            End Set
+        End Property
+
+        ''' <summary>
+        ''' get centroid point of this 2d polygon shape
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property centroid As PointF
+            Get
+                If length = 0 Then
+                    Return Nothing
+                End If
+
+                Return New PointF(xpoints.Average, ypoints.Average)
+            End Get
+        End Property
 
         ''' <summary>
         ''' [left, top]
@@ -98,6 +122,12 @@ Namespace Imaging.Math2D
         ''' [right, bottom]
         ''' </summary>
         Protected Friend bounds2 As Vector2D = Nothing
+
+        ''' <summary>
+        ''' the size of the polygon points collection
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property length As Integer = 0
 
         ''' <summary>
         ''' max y - min y
@@ -126,27 +156,6 @@ Namespace Imaging.Math2D
                 Else
                     Return xpoints.Max - xpoints.Min
                 End If
-            End Get
-        End Property
-
-        Default Public Property Item(index As Integer) As PointF
-            <MethodImpl(MethodImplOptions.AggressiveInlining)>
-            Get
-                Return New PointF(xpoints(index), ypoints(index))
-            End Get
-            Set(value As PointF)
-                xpoints(index) = value.X
-                ypoints(index) = value.Y
-            End Set
-        End Property
-
-        Public ReadOnly Property centroid As PointF
-            Get
-                If length = 0 Then
-                    Return Nothing
-                End If
-
-                Return New PointF(xpoints.Average, ypoints.Average)
             End Get
         End Property
 
