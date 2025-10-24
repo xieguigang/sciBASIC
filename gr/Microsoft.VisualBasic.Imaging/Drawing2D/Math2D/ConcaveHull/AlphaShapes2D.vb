@@ -68,6 +68,8 @@
 
 Imports System.Drawing
 Imports System.Xml.Serialization
+Imports Microsoft.VisualBasic.ApplicationServices.Terminal.ProgressBar.Tqdm
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Scripting.Expressions
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports std = System.Math
@@ -75,25 +77,28 @@ Imports std = System.Math
 Namespace Drawing2D.Math2D.ConcaveHull
 
     Public Class AlphaShapes2D
-        Private points As PointF()
-        Private distanceMap As Double(,)
+
+        ReadOnly points As PointF()
+        ReadOnly distanceMap As Double(,)
 
         Public Sub New(pointList As IEnumerable(Of PointF))
             Me.points = pointList.ToArray
-            PrecomputeDistances()
+            Me.distanceMap = New Double(points.Length - 1, points.Length - 1) {}
+
+            Call PrecomputeDistances()
         End Sub
 
         ''' <summary>
         ''' 预计算所有点对之间的距离平方，优化性能
         ''' </summary>
         Private Sub PrecomputeDistances()
-            Dim n As Integer = points.Count
-            distanceMap = New Double(n - 1, n - 1) {}
+            Dim n As Integer = points.Length
 
             For i As Integer = 0 To n - 1
                 For j As Integer = i + 1 To n - 1
                     Dim dx As Double = points(i).X - points(j).X
                     Dim dy As Double = points(i).Y - points(j).Y
+
                     distanceMap(i, j) = dx * dx + dy * dy
                     distanceMap(j, i) = distanceMap(i, j)
                 Next
@@ -134,7 +139,7 @@ Namespace Drawing2D.Math2D.ConcaveHull
             triangles.Add(superTriangle)
 
             ' 逐点插入
-            For i As Integer = 0 To points.Count - 1
+            For Each i As Integer In TqdmWrapper.Range(0, points.Length)
                 triangles = InsertPoint(triangles, i)
             Next
 
@@ -176,30 +181,29 @@ Namespace Drawing2D.Math2D.ConcaveHull
         ''' 向三角网中插入新点
         ''' </summary>
         Private Function InsertPoint(triangles As List(Of Triangle), pointIndex As Integer) As List(Of Triangle)
-            Dim badTriangles As New List(Of Triangle)()
             Dim polygon As New HashSet(Of Edge)(New EdgeEqualityComparer())
+            Dim badTriangles As Triangle() = (From tri As Triangle
+                                              In triangles.AsParallel
+                                              Where IsPointInCircumcircle(tri, pointIndex)).ToArray
 
             ' 查找包含新点的坏三角形（外接圆包含新点）
-            For Each tri In triangles
-                If IsPointInCircumcircle(tri, pointIndex) Then
-                    badTriangles.Add(tri)
-                End If
-            Next
+            ' For Each tri In triangles
+            '    If IsPointInCircumcircle(tri, pointIndex) Then
+            '        badTriangles.Add(tri)
+            '    End If
+            ' Next
+
+            Dim shareds = badTriangles _
+                .AsParallel _
+                .Select(Function(tri)
+                            Return FindSharedEdges(badTriangles, tri).ToArray
+                        End Function) _
+                .IteratesALL _
+                .ToArray
 
             ' 构建多边形边界
-            For Each tri In badTriangles
-                For Each edge In tri.GetEdges()
-                    Dim isShared As Boolean = False
-                    For Each otherTri In badTriangles
-                        If otherTri IsNot tri AndAlso otherTri.GetEdges().Contains(edge, New EdgeEqualityComparer()) Then
-                            isShared = True
-                            Exit For
-                        End If
-                    Next
-                    If Not isShared Then
-                        polygon.Add(edge)
-                    End If
-                Next
+            For Each edge As Edge In shareds
+                Call polygon.Add(edge)
             Next
 
             ' 移除坏三角形
@@ -211,6 +215,23 @@ Namespace Drawing2D.Math2D.ConcaveHull
             Next
 
             Return triangles
+        End Function
+
+        Private Iterator Function FindSharedEdges(badTriangles As Triangle(), tri As Triangle) As IEnumerable(Of Edge)
+            Dim test As New EdgeEqualityComparer()
+
+            For Each edge As Edge In tri.GetEdges()
+                Dim isShared As Boolean = False
+                For Each otherTri As Triangle In badTriangles
+                    If otherTri IsNot tri AndAlso otherTri.GetEdges().Contains(edge, test) Then
+                        isShared = True
+                        Exit For
+                    End If
+                Next
+                If Not isShared Then
+                    Yield edge
+                End If
+            Next
         End Function
 
         ''' <summary>
@@ -393,12 +414,10 @@ Namespace Drawing2D.Math2D.ConcaveHull
                 Return Vertices.GetJson
             End Function
 
-            Public Function GetEdges() As List(Of Edge)
-                Return New List(Of Edge) From {
-                    New Edge(Vertices(0), Vertices(1)),
-                    New Edge(Vertices(1), Vertices(2)),
-                    New Edge(Vertices(2), Vertices(0))
-                }
+            Public Iterator Function GetEdges() As IEnumerable(Of Edge)
+                Yield New Edge(Vertices(0), Vertices(1))
+                Yield New Edge(Vertices(1), Vertices(2))
+                Yield New Edge(Vertices(2), Vertices(0))
             End Function
 
             ''' <summary>
