@@ -67,414 +67,307 @@
 #End Region
 
 Imports System.Drawing
-Imports System.Xml.Serialization
-Imports Microsoft.VisualBasic.ApplicationServices.Terminal.ProgressBar.Tqdm
-Imports Microsoft.VisualBasic.Linq
-Imports Microsoft.VisualBasic.Scripting.Expressions
-Imports Microsoft.VisualBasic.Serialization.JSON
+Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Imaging.Math2D
 Imports std = System.Math
 
 Namespace Drawing2D.Math2D.ConcaveHull
 
-    Public Class AlphaShapes2D
-
-        ReadOnly points As PointF()
-        ReadOnly distanceMap As Double(,)
-        ReadOnly triangles As New List(Of Triangle)
-
-        Public Sub New(pointList As IEnumerable(Of PointF))
-            Me.points = pointList.ToArray
-            Me.distanceMap = New Double(points.Length - 1, points.Length - 1) {}
-
-            Call PrecomputeDistances()
-        End Sub
-
-        ''' <summary>
-        ''' 预计算所有点对之间的距离平方，优化性能
-        ''' </summary>
-        Private Sub PrecomputeDistances()
-            Dim n As Integer = points.Length
-
-            For i As Integer = 0 To n - 1
-                For j As Integer = i + 1 To n - 1
-                    Dim dx As Double = points(i).X - points(j).X
-                    Dim dy As Double = points(i).Y - points(j).Y
-
-                    distanceMap(i, j) = dx * dx + dy * dy
-                    distanceMap(j, i) = distanceMap(i, j)
-                Next
-            Next
-        End Sub
-
-        ''' <summary>
-        ''' 基于Delaunay三角网的高效Alpha Shapes实现
-        ''' </summary>
-        ''' <param name="alpha">Alpha参数，控制轮廓的紧密度</param>
-        ''' <returns>轮廓点列表，按顺序排列</returns>
-        Public Function ComputeAlphaShape(alpha As Double) As List(Of PointF)
-            If points.Length < 3 Then
-                Return points.ToList()
-            Else
-                Call BuildDelaunayTriangulation()
-            End If
-
-            ' 步骤1：构建Delaunay三角网
-            If triangles Is Nothing OrElse triangles.Count = 0 Then
-                Return New List(Of PointF)()
-            End If
-
-            ' 步骤2：根据Alpha值筛选边界边
-            Dim alphaEdges As HashSet(Of Edge) = GetAlphaEdges(triangles, alpha)
-
-            ' 步骤3：从边界边构建轮廓多边形
-            Return BuildContourFromEdges(alphaEdges)
-        End Function
-
-        ''' <summary>
-        ''' 使用Bowyer-Watson算法构建Delaunay三角网
-        ''' </summary>
-        Private Sub BuildDelaunayTriangulation()
-            If points.Length > 3 AndAlso Me.triangles.IsNullOrEmpty Then
-                ' 创建超级三角形，包含所有点
-                Dim triangles As New List(Of Triangle) From {
-                    CreateSuperTriangle()
-                }
-
-                ' 逐点插入
-                For Each i As Integer In TqdmWrapper.Range(0, points.Length)
-                    triangles = InsertPoint(triangles, i)
-                Next
-
-                ' 移除与超级三角形相关的三角形
-                Call triangles _
-                    .RemoveAll(Function(t)
-                                   Return t.Vertices.Any(Function(v) v >= points.Count)
-                               End Function)
-
-                Call Me.triangles.AddRange(triangles)
-            End If
-        End Sub
-
-        ''' <summary>
-        ''' 创建包含所有点的超级三角形
-        ''' </summary>
-        Private Function CreateSuperTriangle() As Triangle
-            Dim minX As Double = points.Min(Function(p) p.X)
-            Dim maxX As Double = points.Max(Function(p) p.X)
-            Dim minY As Double = points.Min(Function(p) p.Y)
-            Dim maxY As Double = points.Max(Function(p) p.Y)
-
-            Dim dx As Double = maxX - minX
-            Dim dy As Double = maxY - minY
-            Dim deltaMax As Double = std.Max(dx, dy) * 10
-
-            ' 超级三角形的顶点（使用虚拟索引，大于实际点数）
-            Dim p1 As New PointF(minX - deltaMax, minY - deltaMax)
-            Dim p2 As New PointF(maxX + deltaMax, minY - deltaMax)
-            Dim p3 As New PointF(minX + dx / 2, maxY + deltaMax)
-
-            ' 将超级三角形的点添加到点集末尾
-            points.Add(p1)
-            points.Add(p2)
-            points.Add(p3)
-
-            Return New Triangle(points.Count - 3, points.Count - 2, points.Count - 1)
-        End Function
-
-        ''' <summary>
-        ''' 向三角网中插入新点
-        ''' </summary>
-        Private Function InsertPoint(triangles As List(Of Triangle), pointIndex As Integer) As List(Of Triangle)
-            Dim polygon As New HashSet(Of Edge)(New EdgeEqualityComparer())
-            Dim badTriangles As Triangle() = (From tri As Triangle
-                                              In triangles.AsParallel
-                                              Where IsPointInCircumcircle(tri, pointIndex)).ToArray
-
-            ' 查找包含新点的坏三角形（外接圆包含新点）
-            ' For Each tri In triangles
-            '    If IsPointInCircumcircle(tri, pointIndex) Then
-            '        badTriangles.Add(tri)
-            '    End If
-            ' Next
-
-            Dim shareds = badTriangles _
-                .AsParallel _
-                .Select(Function(tri)
-                            Return FindSharedEdges(badTriangles, tri).ToArray
-                        End Function) _
-                .IteratesALL _
-                .ToArray
-
-            ' 构建多边形边界
-            For Each edge As Edge In shareds
-                Call polygon.Add(edge)
-            Next
-
-            ' 移除坏三角形
-            triangles.RemoveAll(Function(t) badTriangles.Contains(t))
-
-            ' 创建新三角形
-            For Each edge In polygon
-                triangles.Add(New Triangle(edge.Point1, edge.Point2, pointIndex))
-            Next
-
-            Return triangles
-        End Function
-
-        Private Iterator Function FindSharedEdges(badTriangles As Triangle(), tri As Triangle) As IEnumerable(Of Edge)
-            Dim test As New EdgeEqualityComparer()
-
-            For Each edge As Edge In tri.GetEdges()
-                Dim isShared As Boolean = False
-                For Each otherTri As Triangle In badTriangles
-                    If otherTri IsNot tri AndAlso otherTri.GetEdges().Contains(edge, test) Then
-                        isShared = True
-                        Exit For
-                    End If
-                Next
-                If Not isShared Then
-                    Yield edge
-                End If
-            Next
-        End Function
-
-        ''' <summary>
-        ''' 判断点是否在三角形的外接圆内
-        ''' </summary>
-        Private Function IsPointInCircumcircle(tri As Triangle, pointIndex As Integer) As Boolean
-            Dim A As PointF = points(tri.Vertices(0))
-            Dim B As PointF = points(tri.Vertices(1))
-            Dim C As PointF = points(tri.Vertices(2))
-            Dim P As PointF = points(pointIndex)
-
-            Dim d As Double = (A.X * (B.Y - C.Y) + B.X * (C.Y - A.Y) + C.X * (A.Y - B.Y)) * 2
-
-            If std.Abs(d) < 0.0000000001 Then Return False
-
-            Dim centerX As Double = ((A.X * A.X + A.Y * A.Y) * (B.Y - C.Y) +
-                               (B.X * B.X + B.Y * B.Y) * (C.Y - A.Y) +
-                               (C.X * C.X + C.Y * C.Y) * (A.Y - B.Y)) / d
-
-            Dim centerY As Double = ((A.X * A.X + A.Y * A.Y) * (C.X - B.X) +
-                               (B.X * B.X + B.Y * B.Y) * (A.X - C.X) +
-                               (C.X * C.X + C.Y * C.Y) * (B.X - A.X)) / d
-
-            Dim radius As Double = std.Sqrt((centerX - A.X) ^ 2 + (centerY - A.Y) ^ 2)
-            Dim dist As Double = std.Sqrt((centerX - P.X) ^ 2 + (centerY - P.Y) ^ 2)
-
-            Return dist <= radius
-        End Function
-
-        ''' <summary>
-        ''' 根据Alpha值从三角网中提取边界边
-        ''' </summary>
-        Private Function GetAlphaEdges(triangles As List(Of Triangle), alpha As Double) As HashSet(Of Edge)
-            Dim alphaEdges As New HashSet(Of Edge)(New EdgeEqualityComparer())
-            Dim edgeCount As New Dictionary(Of Edge, Integer)(New EdgeEqualityComparer())
-
-            ' 统计每条边被多少个三角形共享
-            For Each triangle In triangles
-                For Each edge In triangle.GetEdges()
-                    If edgeCount.ContainsKey(edge) Then
-                        edgeCount(edge) += 1
-                    Else
-                        edgeCount(edge) = 1
-                    End If
-                Next
-            Next
-
-            ' 筛选边界边（只被一个三角形共享）或外接圆半径大于Alpha的边
-            For Each triangle In triangles
-                For Each edge In triangle.GetEdges()
-                    Dim isBoundary As Boolean = edgeCount(edge) = 1
-                    Dim circumRadius As Double = triangle.CalculateCircumradius(points)
-
-                    ' Alpha Shapes核心条件：边长小于2*alpha或为边界边
-                    Dim edgeLength As Double = std.Sqrt(distanceMap(edge.Point1, edge.Point2))
-                    If isBoundary OrElse edgeLength < 2 * alpha Then
-                        alphaEdges.Add(edge)
-                    End If
-                Next
-            Next
-
-            Return alphaEdges
-        End Function
-
-        ''' <summary>
-        ''' 从边界边构建有序的轮廓多边形
-        ''' </summary>
-        Private Function BuildContourFromEdges(edges As HashSet(Of Edge)) As List(Of PointF)
-            If edges.Count = 0 Then Return New List(Of PointF)()
-
-            Dim edgeDict As New Dictionary(Of Integer, List(Of Integer))()
-            Dim pointIndexMap As New Dictionary(Of Integer, Integer)()
-
-            ' 构建邻接表
-            For Each edge In edges
-                If Not edgeDict.ContainsKey(edge.Point1) Then
-                    edgeDict(edge.Point1) = New List(Of Integer)()
-                End If
-                If Not edgeDict.ContainsKey(edge.Point2) Then
-                    edgeDict(edge.Point2) = New List(Of Integer)()
-                End If
-
-                edgeDict(edge.Point1).Add(edge.Point2)
-                edgeDict(edge.Point2).Add(edge.Point1)
-            Next
-
-            ' 找到轮廓起点（度数最小的点）
-            Dim startPoint As Integer = edgeDict.OrderBy(Function(kv) kv.Value.Count).First().Key
-
-            ' 追踪轮廓
-            Dim contour As New List(Of PointF)()
-            Dim visited As New HashSet(Of Integer)()
-            Dim current As Integer = startPoint
-
-            Do While True
-                contour.Add(points(current))
-                visited.Add(current)
-
-                Dim neighbors = edgeDict(current).Where(Function(n) Not visited.Contains(n)).ToList()
-                If neighbors.Count = 0 Then Exit Do
-
-                ' 选择角度最小的邻居（保证顺时针顺序）
-                Dim nextPoint As Integer = GetNextContourPoint(neighbors, current, If(contour.Count < 2, Nothing, contour(contour.Count - 2)), contour)
-                current = nextPoint
-
-                If current = startPoint OrElse visited.Contains(current) Then Exit Do
-            Loop
-
-            ' 闭合轮廓
-            If contour.Count > 2 AndAlso contour.First() <> contour.Last() Then
-                contour.Add(contour.First())
-            End If
-
-            Return contour
-        End Function
-
-        ''' <summary>
-        ''' 选择下一个轮廓点（基于向量角度）
-        ''' </summary>
-        Private Function GetNextContourPoint(neighbors As List(Of Integer), current As Integer,
-                                       previous As PointF?, contour As List(Of PointF)) As Integer
-            If neighbors.Count = 1 Then Return neighbors(0)
-
-            Dim currentPoint As PointF = points(current)
-            Dim prevPoint As PointF = If(previous.HasValue, previous.Value,
-                                   New PointF(currentPoint.X - 1, currentPoint.Y))
-
-            ' 计算参考向量（从前一点到当前点）
-            Dim refVector As New PointF(currentPoint.X - prevPoint.X, currentPoint.Y - prevPoint.Y)
-            Dim refAngle As Double = std.Atan2(refVector.Y, refVector.X)
-
-            Dim bestNeighbor As Integer = neighbors(0)
-            Dim minAngleDiff As Double = Double.MaxValue
-
-            For Each neighbor In neighbors
-                Dim neighborPoint As PointF = points(neighbor)
-                Dim toNeighbor As New PointF(neighborPoint.X - currentPoint.X, neighborPoint.Y - currentPoint.Y)
-                Dim neighborAngle As Double = std.Atan2(toNeighbor.Y, toNeighbor.X)
-
-                ' 计算角度差（确保顺时针方向）
-                Dim angleDiff As Double = refAngle - neighborAngle
-                If angleDiff < 0 Then angleDiff += 2 * std.PI
-
-                If angleDiff < minAngleDiff Then
-                    minAngleDiff = angleDiff
-                    bestNeighbor = neighbor
-                End If
-            Next
-
-            Return bestNeighbor
-        End Function
-
-        ''' <summary>
-        ''' 自动计算推荐的Alpha值
-        ''' </summary>
-        Public Function ComputeOptimalAlpha() As Double
-            If points.Count < 3 Then
-                Return 0.0
-            Else
-                Call BuildDelaunayTriangulation()
-            End If
-
-            If triangles.Count = 0 Then
-                Return 0.0
-            End If
-
-            ' 计算所有三角形外接圆半径的中位数作为推荐Alpha值
-            Dim radii As Double() = triangles _
-                .AsParallel _
-                .Select(Function(t) t.CalculateCircumradius(points)) _
-                .OrderBy(Function(r) r) _
-                .ToArray
-            Dim medianRadius As Double = radii(radii.Length \ 2)
-
-            Return medianRadius * 1.5
-        End Function
-
-        ' 辅助类：三角形
-        Public Class Triangle
-
-            <XmlAttribute> Public Property Vertices As Integer()
-
-            Public Sub New(v1 As Integer, v2 As Integer, v3 As Integer)
-                Vertices = {v1, v2, v3}
-                Array.Sort(Vertices)
+    ''' <summary>
+    ''' + http://www.tuicool.com/articles/iUvMjm
+    ''' + http://www.ian-ko.com/ET_GeoWizards/UserGuide/concaveHull.htm
+    ''' </summary>
+    Public Class BallConcave
+
+        Private Structure Point2dInfo : Implements IComparable(Of Point2dInfo)
+
+            Public Point As PointF
+            Public Index As Integer
+            Public DistanceTo As Double
+
+            Public Sub New(p As PointF, i As Integer, dis As Double)
+                Me.Point = p
+                Me.Index = i
+                Me.DistanceTo = dis
             End Sub
+
+            Public Function CompareTo(other As Point2dInfo) As Integer Implements IComparable(Of Point2dInfo).CompareTo
+                Return DistanceTo.CompareTo(other.DistanceTo)
+            End Function
 
             Public Overrides Function ToString() As String
-                Return Vertices.GetJson
+                Return Convert.ToString(Point) & "," & Index & "," & DistanceTo
             End Function
+        End Structure
 
-            Public Iterator Function GetEdges() As IEnumerable(Of Edge)
-                Yield New Edge(Vertices(0), Vertices(1))
-                Yield New Edge(Vertices(1), Vertices(2))
-                Yield New Edge(Vertices(2), Vertices(0))
-            End Function
+        Public ReadOnly Property RecomandedRadius() As Double
+            Get
+                Dim r As Double = Double.MinValue
+                For i As Integer = 0 To points.Count - 1
+                    If distanceMap(i, rNeigbourList(i)(1)) > r Then
+                        r = distanceMap(i, rNeigbourList(i)(1))
+                    End If
+                Next
+                Return r
+            End Get
+        End Property
 
-            ''' <summary>
-            ''' 计算三角形外接圆半径
-            ''' </summary>
-            Public Function CalculateCircumradius(points As PointF()) As Double
-                Dim pA As PointF = points(Vertices(0))
-                Dim pB As PointF = points(Vertices(1))
-                Dim pC As PointF = points(Vertices(2))
+        Public Sub New(list As IEnumerable(Of PointF))
+            Me.points = list _
+                .OrderBy(Function(p) p.X * CDbl(p.Y)) _
+                .ToList
+            '  points.Sort()
+            flags = New Boolean(points.Count - 1) {}
+            For i As Integer = 0 To flags.Length - 1
+                flags(i) = False
+            Next
+            InitDistanceMap()
+            InitNearestList()
+        End Sub
 
-                Dim a As Double = std.Sqrt((pB.X - pC.X) ^ 2 + (pB.Y - pC.Y) ^ 2)
-                Dim b As Double = std.Sqrt((pA.X - pC.X) ^ 2 + (pA.Y - pC.Y) ^ 2)
-                Dim c As Double = std.Sqrt((pA.X - pB.X) ^ 2 + (pA.Y - pB.Y) ^ 2)
+        Private flags As Boolean()
+        Private points As List(Of PointF)
+        Private distanceMap As Double(,)
+        Private rNeigbourList As List(Of Integer)()
 
-                Dim area As Double = std.Abs((pB.X - pA.X) * (pC.Y - pA.Y) - (pC.X - pA.X) * (pB.Y - pA.Y)) / 2
+        Private Sub InitNearestList()
+            rNeigbourList = New List(Of Integer)(points.Count - 1) {}
+            For i As Integer = 0 To rNeigbourList.Length - 1
+                rNeigbourList(i) = GetSortedNeighbours(i)
+            Next
+        End Sub
 
-                If area < 0.0000000001 Then Return Double.MaxValue
+        Private Sub InitDistanceMap()
+            distanceMap = New Double(points.Count - 1, points.Count - 1) {}
+            For i As Integer = 0 To points.Count - 1
+                For j As Integer = 0 To points.Count - 1
+                    distanceMap(i, j) = points(i).Distance(points(j))
+                Next
+            Next
+        End Sub
 
-                Return (a * b * c) / (4 * area)
-            End Function
-        End Class
+        Public Function GetMinEdgeLength() As Double
+            Dim min As Double = Double.MaxValue
+            For i As Integer = 0 To points.Count - 1
+                For j As Integer = 0 To points.Count - 1
+                    If i < j Then
+                        If distanceMap(i, j) < min Then
+                            min = distanceMap(i, j)
+                        End If
+                    End If
+                Next
+            Next
+            Return min
+        End Function
 
-        ' 辅助类：边
-        Public Class Edge
+        Public Function GetConcave_Ball(radius As Double) As List(Of PointF)
+            Dim ret As New List(Of PointF)() From {points(0)}
+            Dim adjs As List(Of Integer)() = GetInRNeighbourList(2 * radius)
 
-            <XmlAttribute> Public Property Point1 As Integer
-            <XmlAttribute> Public Property Point2 As Integer
+            'flags[0] = true;
+            Dim i As Integer = 0, j As Integer = -1, prev As Integer = -1
 
-            Public Sub New(p1 As Integer, p2 As Integer)
-                Point1 = std.Min(p1, p2)
-                Point2 = std.Max(p1, p2)
-            End Sub
-        End Class
+            While True
+                j = GetNextPoint_BallPivoting(prev, i, adjs(i), radius)
+                If j = -1 Then
+                    Exit While
+                End If
+                Dim p As PointF = BallConcave.GetCircleCenter(points(i), points(j), radius)
+                ret.Add(points(j))
+                flags(j) = True
+                prev = i
+                i = j
+            End While
 
-        ' 边比较器
-        Public Class EdgeEqualityComparer : Implements IEqualityComparer(Of Edge)
+            Return ret
+        End Function
 
-            Public Overloads Function Equals(x As Edge, y As Edge) As Boolean Implements IEqualityComparer(Of Edge).Equals
-                Return x.Point1 = y.Point1 AndAlso x.Point2 = y.Point2
-            End Function
+        Public Function GetConcave_Edge(radius As Double) As List(Of PointF)
+            Dim ret As New List(Of PointF)()
+            Dim adjs As List(Of Integer)() = GetInRNeighbourList(2 * radius)
+            ret.Add(points(0))
+            Dim i As Integer = 0, j As Integer = -1, prev As Integer = -1
+            While True
+                j = GetNextPoint_EdgePivoting(prev, i, adjs(i), radius)
+                If j = -1 Then
+                    Exit While
+                End If
+                'Point2d p = BallConcave.GetCircleCenter(points[i], points[j], radius);
+                ret.Add(points(j))
+                flags(j) = True
+                prev = i
+                i = j
+            End While
+            Return ret
+        End Function
 
-            Public Overloads Function GetHashCode(obj As Edge) As Integer Implements IEqualityComparer(Of Edge).GetHashCode
-                Return obj.Point1.GetHashCode() Xor obj.Point2.GetHashCode()
-            End Function
-        End Class
+        Private Function CheckValid(adjs As List(Of Integer)()) As Boolean
+            For i As Integer = 0 To adjs.Length - 1
+                If adjs(i).Count < 2 Then
+                    Return False
+                End If
+            Next
+            Return True
+        End Function
+
+        Public Function CompareAngel(a As PointF, b As PointF, m_origin As PointF, m_dreference As PointF) As Boolean
+
+            Dim da As New PointF(a.X - m_origin.X, a.Y - m_origin.Y)
+            Dim db As New PointF(b.X - m_origin.X, b.Y - m_origin.Y)
+            Dim detb As Double = GetCross(m_dreference, db)
+
+            ' nothing is less than zero degrees
+            If detb = 0 AndAlso db.X * m_dreference.X + db.Y * m_dreference.Y >= 0 Then
+                Return False
+            End If
+
+            Dim deta As Double = GetCross(m_dreference, da)
+
+            ' zero degrees is less than anything else
+            If deta = 0 AndAlso da.X * m_dreference.X + da.Y * m_dreference.Y >= 0 Then
+                Return True
+            End If
+
+            If deta * detb >= 0 Then
+                ' both on same side of reference, compare to each other
+                Return GetCross(da, db) > 0
+            End If
+
+            ' vectors "less than" zero degrees are actually large, near 2 pi
+            Return deta > 0
+        End Function
+
+        Public Function GetNextPoint_EdgePivoting(prev As Integer, current As Integer, list As List(Of Integer), radius As Double) As Integer
+            If list.Count = 2 AndAlso prev <> -1 Then
+                Return list(0) + list(1) - prev
+            End If
+            Dim dp As PointF
+            If prev = -1 Then
+                dp = New PointF(1, 0)
+            Else
+                dp = New PointF With {
+                    .X = points(prev).X - points(current).X,
+                    .Y = points(prev).Y - points(current).Y
+                }
+            End If
+            Dim min As Integer = -1
+            For j As Integer = 0 To list.Count - 1
+                If Not flags(list(j)) Then
+                    If min = -1 Then
+                        min = list(j)
+                    Else
+                        Dim t As PointF = points(list(j))
+                        If CompareAngel(points(min), t, points(current), dp) AndAlso t.Distance(points(current)) < radius Then
+                            min = list(j)
+                        End If
+                    End If
+                End If
+            Next
+
+            Return min
+        End Function
+
+        Public Function GetNextPoint_BallPivoting(prev As Integer, current As Integer, list As List(Of Integer), radius As Double) As Integer
+            SortAdjListByAngel(list, prev, current)
+
+            For j As Integer = 0 To list.Count - 1
+                If flags(list(j)) Then
+                    Continue For
+                End If
+
+                Dim adjIndex As Integer = list(j)
+                Dim xianp As PointF = points(adjIndex)
+                Dim rightCirleCenter As PointF = GetCircleCenter(points(current), xianp, radius)
+
+                If Not HasPointsInCircle(list, rightCirleCenter, radius, adjIndex) Then
+                    Return list(j)
+                End If
+            Next
+            Return -1
+        End Function
+
+        Private Sub SortAdjListByAngel(list As List(Of Integer), prev As Integer, current As Integer)
+            Dim origin As PointF = points(current)
+            Dim df As PointF
+            If prev <> -1 Then
+                df = New PointF(points(prev).X - origin.X, points(prev).Y - origin.Y)
+            Else
+                df = New PointF(1, 0)
+            End If
+            Dim temp As Integer = 0
+            For i As Integer = list.Count To 1 Step -1
+                For j As Integer = 0 To i - 2
+                    If CompareAngel(points(list(j)), points(list(j + 1)), origin, df) Then
+                        temp = list(j)
+                        list(j) = list(j + 1)
+                        list(j + 1) = temp
+                    End If
+                Next
+            Next
+        End Sub
+
+        Private Function HasPointsInCircle(adjPoints As List(Of Integer), center As PointF, radius As Double, adjIndex As Integer) As Boolean
+            For k As Integer = 0 To adjPoints.Count - 1
+                If adjPoints(k) <> adjIndex Then
+                    Dim index2 As Integer = adjPoints(k)
+                    If IsInCircle(points(index2), center, radius) Then
+                        Return True
+                    End If
+                End If
+            Next
+            Return False
+        End Function
+
+        Public Shared Function GetCircleCenter(a As PointF, b As PointF, r As Double) As PointF
+            Dim dx As Double = b.X - a.X
+            Dim dy As Double = b.Y - a.Y
+            Dim cx As Double = 0.5 * (b.X + a.X)
+            Dim cy As Double = 0.5 * (b.Y + a.Y)
+            If r * r / (dx * dx + dy * dy) - 0.25 < 0 Then
+                Return New PointF(-1, -1)
+            End If
+            Dim sqrt As Double = std.Sqrt(r * r / (dx * dx + dy * dy) - 0.25)
+            Return New PointF(cx - dy * sqrt, cy + dx * sqrt)
+        End Function
+
+        Public Shared Function IsInCircle(p As PointF, center As PointF, r As Double) As Boolean
+            Dim dis2 As Double = (p.X - center.X) * (p.X - center.X) + (p.Y - center.Y) * (p.Y - center.Y)
+            Return dis2 < r * r
+        End Function
+
+        Public Function GetInRNeighbourList(radius As Double) As List(Of Integer)()
+            Dim adjs As List(Of Integer)() = New List(Of Integer)(points.Count - 1) {}
+            For i As Integer = 0 To points.Count - 1
+                adjs(i) = New List(Of Integer)()
+            Next
+            For i As Integer = 0 To points.Count - 1
+
+                For j As Integer = 0 To points.Count - 1
+                    If i < j AndAlso distanceMap(i, j) < radius Then
+                        adjs(i).Add(j)
+                        adjs(j).Add(i)
+                    End If
+                Next
+            Next
+            Return adjs
+        End Function
+
+        Private Function GetSortedNeighbours(index As Integer) As List(Of Integer)
+            Dim infos As New List(Of Point2dInfo)(points.Count)
+            For i As Integer = 0 To points.Count - 1
+                infos.Add(New Point2dInfo(points(i), i, distanceMap(index, i)))
+            Next
+            infos.Sort()
+            Dim adj As New List(Of Integer)()
+            For i As Integer = 1 To infos.Count - 1
+                adj.Add(infos(i).Index)
+            Next
+            Return adj
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Function GetCross(a As PointF, b As PointF) As Double
+            Return a.X * b.Y - a.Y * b.X
+        End Function
     End Class
 End Namespace
