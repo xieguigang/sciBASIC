@@ -132,8 +132,15 @@ Namespace ComponentModel.Ranges.Model
                 Min = Double.NaN
                 Max = Double.NaN
             Else
-                Min = data.Min
-                Max = data.Max
+                Min = Double.MaxValue
+                Max = Double.MinValue
+
+                For i As Integer = 0 To data.Length - 1
+                    Dim xi As Double = data(i)
+
+                    If xi > Max Then Max = xi
+                    If xi < Min Then Min = xi
+                Next
             End If
         End Sub
 
@@ -142,8 +149,15 @@ Namespace ComponentModel.Ranges.Model
                 Min = Double.NaN
                 Max = Double.NaN
             Else
-                Min = data.Min
-                Max = data.Max
+                Min = Double.MaxValue
+                Max = Double.MinValue
+
+                For i As Integer = 0 To data.Length - 1
+                    Dim xi As Double = data(i)
+
+                    If xi > Max Then Max = xi
+                    If xi < Min Then Min = xi
+                Next
             End If
         End Sub
 
@@ -152,23 +166,33 @@ Namespace ComponentModel.Ranges.Model
         ''' </summary>
         ''' <param name="vector"></param>
         Sub New(vector As IEnumerable(Of Double))
-            Call Me.New(data:=vector.ToArray)
+            Min = Double.MaxValue
+            Max = Double.MinValue
+
+            For Each xi As Double In vector
+                If xi > Max Then Max = xi
+                If xi < Min Then Min = xi
+            Next
         End Sub
 
         Sub New(vector As IEnumerable(Of Single))
-            Call Me.New(data:=vector.Select(Function(f) CDbl(f)).ToArray)
+            Min = Double.MaxValue
+            Max = Double.MinValue
+
+            For Each xi As Single In vector
+                If xi > Max Then Max = xi
+                If xi < Min Then Min = xi
+            Next
         End Sub
 
         Sub New(vector As IEnumerable(Of Integer))
-            With vector.ToArray
-                If .Length = 0 Then
-                    Min = Double.NaN
-                    Max = Double.NaN
-                Else
-                    Min = .Min
-                    Max = .Max
-                End If
-            End With
+            Min = Double.MaxValue
+            Max = Double.MinValue
+
+            For Each xi As Integer In vector
+                If xi > Max Then Max = xi
+                If xi < Min Then Min = xi
+            Next
         End Sub
 
         Sub New(range As IntRange)
