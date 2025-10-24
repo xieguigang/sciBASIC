@@ -1,200 +1,172 @@
 ﻿#Region "Microsoft.VisualBasic::35999816b815180c76fc6c230c289bb7, Data_science\Mathematica\SignalProcessing\MachineVision\RANSACPointAlignment.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 299
-    '    Code Lines: 200 (66.89%)
-    ' Comment Lines: 40 (13.38%)
-    '    - Xml Docs: 7.50%
-    ' 
-    '   Blank Lines: 59 (19.73%)
-    '     File Size: 10.92 KB
+' Summaries:
 
 
-    ' Class RANSACPointAlignment
-    ' 
-    '     Function: AlignPolygons, CalculateCenter, ComputeSimilarityTransform, CountInliers, FindClosestPoint
-    '               RefineTransform
-    '     Structure Point
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    ' 
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 299
+'    Code Lines: 200 (66.89%)
+' Comment Lines: 40 (13.38%)
+'    - Xml Docs: 7.50%
+' 
+'   Blank Lines: 59 (19.73%)
+'     File Size: 10.92 KB
+
+
+' Class RANSACPointAlignment
+' 
+'     Function: AlignPolygons, CalculateCenter, ComputeSimilarityTransform, CountInliers, FindClosestPoint
+'               RefineTransform
+'     Structure Point
+' 
+'         Constructor: (+1 Overloads) Sub New
+' 
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
+Imports System.Drawing
 Imports Microsoft.VisualBasic.Imaging.Math2D
 Imports rand = Microsoft.VisualBasic.Math.RandomExtensions
 Imports std = System.Math
 
-Public Class RANSACPointAlignment
-
-    Dim centerSource As Point
-    Dim centerTarget As Point
-
-    Dim sourcePoly As Polygon2D
-    Dim targetPoly As Polygon2D
+''' <summary>
+''' A static utility class for aligning two 2D polygons using the RANSAC algorithm.
+''' This version is optimized for correctness and includes a proper least-squares refinement step.
+''' </summary>
+Public NotInheritable Class RANSACPointAlignment
+    Private Sub New()
+        ' Prevent instantiation of this static class
+    End Sub
 
     ''' <summary>
-    ''' the distance threshold
+    ''' Aligns a source polygon to a target polygon using RANSAC.
     ''' </summary>
-    Dim threshold As Double = 0.1
-
-    Private Structure Point
-
-        Dim x As Double
-        Dim y As Double
-
-        Sub New(x As Double, y As Double)
-            Me.x = x
-            Me.y = y
-        End Sub
-    End Structure
-
-    ' 主对齐函数：返回包含独立缩放因子的元组
+    ''' <param name="sourcePoly">The polygon to be transformed.</param>
+    ''' <param name="targetPoly">The polygon to align to.</param>
+    ''' <param name="iterations">The number of RANSAC iterations.</param>
+    ''' <param name="distanceThreshold">The distance threshold to consider a point an inlier.</param>
+    ''' <returns>The best-fit Transform object.</returns>
     Public Shared Function AlignPolygons(sourcePoly As Polygon2D,
                                          targetPoly As Polygon2D,
                                          Optional iterations As Integer = 1000,
                                          Optional distanceThreshold As Double = 0.1) As Transform
-        ' 计算源和目标多边形的中心点
-        Dim ransac As New RANSACPointAlignment With {
-            .centerSource = CalculateCenter(sourcePoly),
-            .centerTarget = CalculateCenter(targetPoly),
-            .sourcePoly = sourcePoly,
-            .targetPoly = targetPoly,
-            .threshold = distanceThreshold
-        }
-        ' 初始化最佳参数
-        Dim bestTheta As Double = 0
-        Dim bestTx As Double = 0
-        Dim bestTy As Double = 0
-        Dim bestScalex As Double = 1.0
-        Dim bestScaley As Double = 1.0
-        Dim maxInliers As Integer = 0
-
         ' 预检查：点数不足时返回单位变换
         If sourcePoly.length < 2 OrElse targetPoly.length < 2 Then
-            Return (0, 0, 0, 1.0, 1.0)
+            Return New Transform()
         End If
+
+        Dim bestTransform As New Transform()
+        Dim maxInliers As Integer = 0
 
         ' RANSAC 迭代
         For iter As Integer = 1 To iterations
-            ' 随机选择两个点
-            Dim idx1 = rand.Next(sourcePoly.length)
-            Dim idx2 = rand.Next(sourcePoly.length)
+            ' 1. 随机选择两个不同的点
+            Dim idx1, idx2 As Integer
+            Do
+                idx1 = rand.Next(sourcePoly.length)
+                idx2 = rand.Next(sourcePoly.length)
+            Loop While idx1 = idx2
 
-            If idx1 = idx2 Then
-                Continue For
-            End If
+            Dim p1 = sourcePoly(idx1)
+            Dim p2 = sourcePoly(idx2)
 
-            Dim p1 As New Point(sourcePoly.xpoints(idx1), sourcePoly.ypoints(idx1))
-            Dim p2 As New Point(sourcePoly.xpoints(idx2), sourcePoly.ypoints(idx2))
+            ' 2. 在目标多边形中找到对应的最近邻点
+            Dim q1 = FindClosestPoint(targetPoly, p1)
+            Dim q2 = FindClosestPoint(targetPoly, p2)
 
-            Dim q1 = FindClosestPoint(targetPoly, p1.x, p1.y)
-            Dim q2 = FindClosestPoint(targetPoly, p2.x, p2.y)
+            ' 3. 计算初始变换参数
+            ' 注意：这里我们计算一个相似变换（均匀缩放）作为初始估计
+            Dim initialTransform = ComputeSimilarityTransform(p1, p2, q1, q2)
 
-            ' 计算相似变换参数（包括独立缩放因子）
-            Dim transformParams As Transform = ransac.ComputeSimilarityTransform(p1, p2, q1, q2)
+            ' 4. 统计内点数量
+            Dim inliers = CountInliers(sourcePoly, targetPoly, initialTransform, distanceThreshold)
 
-            ' 统计内点数量
-            Dim inliers = ransac.CountInliers(transformParams)
-
-            ' 更新最佳变换
+            ' 5. 更新最佳变换
             If inliers > maxInliers Then
                 maxInliers = inliers
-                bestTheta = transformParams.theta
-                bestTx = transformParams.tx
-                bestTy = transformParams.ty
-                bestScalex = transformParams.scalex
-                bestScaley = transformParams.scaley
+                bestTransform = initialTransform
             End If
         Next
 
-        ' 用所有内点重新精炼变换
+        ' 6. 使用所有内点重新精炼变换（关键优化）
         If maxInliers > 0 Then
-            Return ransac.RefineTransform((bestTheta, bestTx, bestTy, bestScalex, bestScaley))
+            Return RefineTransform(sourcePoly, targetPoly, bestTransform, distanceThreshold)
         End If
 
-        Return (bestTheta, bestTx, bestTy, bestScalex, bestScaley)
+        ' 如果没有找到好的匹配，返回默认或最佳估计
+        Return bestTransform
     End Function
 
-    ' 计算多边形中心点
-    Private Shared Function CalculateCenter(poly As Polygon2D) As Point
-        Return New Point(poly.xpoints.Average, poly.ypoints.Average)
-    End Function
+    ''' <summary>
+    ''' Finds the closest point in a polygon to a given point.
+    ''' </summary>
+    ''' <remarks>This is a performance bottleneck. For large polygons, a spatial index (e.g., KD-Tree) is recommended.</remarks>
+    Private Shared Function FindClosestPoint(poly As Polygon2D, pt As PointF) As PointF
+        Dim minDistSq As Double = Double.PositiveInfinity
+        Dim closestPt As PointF
 
-    ' 在目标多边形中找最近邻点（保持不变）
-    Private Shared Function FindClosestPoint(
-        poly As Polygon2D,
-        x As Double,
-        y As Double
-    ) As Point
+        For i As Integer = 0 To poly.length - 1
+            Dim polyPt As PointF = poly(i)
+            Dim dx = polyPt.X - pt.X
+            Dim dy = polyPt.Y - pt.Y
+            Dim distSq = dx * dx + dy * dy
 
-        Dim minDist = Double.PositiveInfinity
-        Dim closestX = 0.0
-        Dim closestY = 0.0
-
-        For i = 0 To poly.length - 1
-            Dim dx = poly.xpoints(i) - x
-            Dim dy = poly.ypoints(i) - y
-            Dim dist = dx * dx + dy * dy ' 避免开方优化性能
-
-            If dist < minDist Then
-                minDist = dist
-                closestX = poly.xpoints(i)
-                closestY = poly.ypoints(i)
+            If distSq < minDistSq Then
+                minDistSq = distSq
+                closestPt = polyPt
             End If
         Next
 
-        Return New Point(closestX, closestY)
+        Return closestPt
     End Function
 
-    ' 计算相似变换参数（独立缩放因子）
-    Private Function ComputeSimilarityTransform(p1 As Point, p2 As Point, q1 As Point, q2 As Point) As Transform
-        ' 计算源向量和目标向量
-        Dim vSourceX = p2.x - p1.x
-        Dim vSourceY = p2.y - p1.y
-        Dim vTargetX = q2.x - q1.x
-        Dim vTargetY = q2.y - q1.y
+    ''' <summary>
+    ''' Computes a similarity transform (uniform scale, rotation, translation) from two point pairs.
+    ''' </summary>
+    Private Shared Function ComputeSimilarityTransform(p1 As PointF, p2 As PointF, q1 As PointF, q2 As PointF) As Transform
+        ' Translate points so that p1 is at the origin
+        Dim p2_trans As New PointF(p2.X - p1.X, p2.Y - p1.Y)
+        Dim q2_trans As New PointF(q2.X - q1.X, q2.Y - q1.Y)
 
-        ' 计算旋转角度（修正计算方式）
-        Dim theta = std.Atan2(vTargetY, vTargetX) - std.Atan2(vSourceY, vSourceX)
+        ' Compute rotation angle
+        Dim angleSource = std.Atan2(p2_trans.Y, p2_trans.X)
+        Dim angleTarget = std.Atan2(q2_trans.Y, q2_trans.X)
+        Dim theta = angleTarget - angleSource
 
-        ' 将角度归一化到[-π, π]
+        ' Normalize angle to [-PI, PI]
         While theta > std.PI
             theta -= 2 * std.PI
         End While
@@ -202,63 +174,52 @@ Public Class RANSACPointAlignment
             theta += 2 * std.PI
         End While
 
-        ' 计算缩放因子（修正计算方式）
-        Dim sourceLength = std.Sqrt(vSourceX * vSourceX + vSourceY * vSourceY)
-        Dim targetLength = std.Sqrt(vTargetX * vTargetX + vTargetY * vTargetY)
+        ' Compute uniform scale
+        Dim sourceLen = std.Sqrt(p2_trans.X * p2_trans.X + p2_trans.Y * p2_trans.Y)
+        Dim targetLen = std.Sqrt(q2_trans.X * q2_trans.X + q2_trans.Y * q2_trans.Y)
+        Dim scale = If(sourceLen > 0.000001, targetLen / sourceLen, 1.0)
 
-        Dim scale = 1.0
-        If sourceLength > 0.0000001 Then
-            scale = targetLength / sourceLength
-        End If
+        ' Compute translation
+        ' The translation is simply the difference between q1 and the transformed p1
+        Dim tx = q1.X - (p1.X * scale * std.Cos(theta) - p1.Y * scale * std.Sin(theta))
+        Dim ty = q1.Y - (p1.X * scale * std.Sin(theta) + p1.Y * scale * std.Cos(theta))
 
-        ' 使用相同的缩放因子（或根据需要独立计算）
-        Dim scalex = scale
-        Dim scaley = scale
-
-        ' 计算平移量（修正计算方式）
-        ' 先将p1点应用旋转和缩放
-        Dim cosTheta = std.Cos(theta)
-        Dim sinTheta = std.Sin(theta)
-
-        Dim transformedX = p1.x * scalex * cosTheta - p1.y * scaley * sinTheta
-        Dim transformedY = p1.x * scalex * sinTheta + p1.y * scaley * cosTheta
-
-        ' 计算平移量：目标点 - 变换后的源点
-        Dim tx = q1.x - transformedX
-        Dim ty = q1.y - transformedY
-
-        Return (theta, tx, ty, scalex, scaley)
+        Return New Transform With {
+            .theta = theta,
+            .scalex = scale,
+            .scaley = scale, ' Uniform scale for initial estimate
+            .tx = tx,
+            .ty = ty
+        }
     End Function
 
-    ' 统计内点数量（应用绕中心点的变换）
-    Private Function CountInliers(t As Transform) As Integer
+    ''' <summary>
+    ''' Counts the number of inlier points after applying a transformation.
+    ''' </summary>
+    Private Shared Function CountInliers(sourcePoly As Polygon2D, targetPoly As Polygon2D, t As Transform, threshold As Double) As Integer
         Dim inliers = 0
         Dim cosTheta = std.Cos(t.theta)
         Dim sinTheta = std.Sin(t.theta)
         Dim thresholdSq = threshold * threshold
 
         For i As Integer = 0 To sourcePoly.length - 1
-            ' 获取源点
-            Dim x = sourcePoly.xpoints(i)
-            Dim y = sourcePoly.ypoints(i)
+            Dim sourcePt = sourcePoly(i)
 
-            ' 应用变换：先缩放，再旋转，最后平移
-            Dim xScaled = x * t.scalex
-            Dim yScaled = y * t.scaley
+            ' Apply transformation: Scale -> Rotate -> Translate
+            Dim xScaled = sourcePt.X * t.scalex
+            Dim yScaled = sourcePt.Y * t.scaley
 
             Dim xRotated = xScaled * cosTheta - yScaled * sinTheta
             Dim yRotated = xScaled * sinTheta + yScaled * cosTheta
 
-            Dim xTrans = xRotated + t.tx
-            Dim yTrans = yRotated + t.ty
+            Dim transformedPt As New PointF(xRotated + t.tx, yRotated + t.ty)
 
-            ' 找最近邻并计算距离平方
-            Dim close = FindClosestPoint(targetPoly, xTrans, yTrans)
-            Dim dx = xTrans - close.x
-            Dim dy = yTrans - close.y
-            Dim distSq = dx * dx + dy * dy
+            ' Find nearest neighbor in target and check distance
+            Dim closestTargetPt = FindClosestPoint(targetPoly, transformedPt)
+            Dim dx = transformedPt.X - closestTargetPt.X
+            Dim dy = transformedPt.Y - closestTargetPt.Y
 
-            If distSq <= thresholdSq Then
+            If dx * dx + dy * dy <= thresholdSq Then
                 inliers += 1
             End If
         Next
@@ -266,93 +227,133 @@ Public Class RANSACPointAlignment
         Return inliers
     End Function
 
-    ' 用所有内点重新精炼变换（最小二乘优化，考虑独立缩放因子）
-    Private Function RefineTransform(init As Transform) As Transform
-        ' 收集所有内点对
-        Dim inlierPairs As New List(Of (sx As Double, sy As Double, tx As Double, ty As Double))
-        Dim cosTheta = std.Cos(init.theta)
-        Dim sinTheta = std.Sin(init.theta)
+    ''' <summary>
+    ''' Refines the transformation using all inliers with a least-squares fit for an affine transform.
+    ''' </summary>
+    ''' <remarks>
+    ''' This is the most critical optimization. It solves for the best-fit affine parameters
+    ''' (a, b, c, d, e, f) in the equations:
+    ''' x' = a*x + b*y + c
+    ''' y' = d*x + e*y + f
+    ''' Then, it decomposes these parameters back into rotation, scale, and translation.
+    ''' </remarks>
+    Private Shared Function RefineTransform(sourcePoly As Polygon2D, targetPoly As Polygon2D, initialTransform As Transform, threshold As Double) As Transform
+        Dim inlierPairs As New List(Of (source As PointF, target As PointF))
+        Dim cosTheta = std.Cos(initialTransform.theta)
+        Dim sinTheta = std.Sin(initialTransform.theta)
         Dim thresholdSq = threshold * threshold
 
+        ' 1. Collect all inlier point pairs based on the initial transform
         For i As Integer = 0 To sourcePoly.length - 1
-            Dim sx = sourcePoly.xpoints(i)
-            Dim sy = sourcePoly.ypoints(i)
+            Dim sourcePt = sourcePoly(i)
 
-            ' 应用初始变换
-            Dim xScaled = sx * init.scalex
-            Dim yScaled = sy * init.scaley
+            Dim xScaled = sourcePt.X * initialTransform.scalex
+            Dim yScaled = sourcePt.Y * initialTransform.scaley
             Dim xRotated = xScaled * cosTheta - yScaled * sinTheta
             Dim yRotated = xScaled * sinTheta + yScaled * cosTheta
-            Dim xTrans = xRotated + init.tx
-            Dim yTrans = yRotated + init.ty
+            Dim transformedPt As New PointF(xRotated + initialTransform.tx, yRotated + initialTransform.ty)
 
-            Dim close = FindClosestPoint(targetPoly, xTrans, yTrans)
-            Dim dx = xTrans - close.x
-            Dim dy = yTrans - close.y
-            Dim distSq = dx * dx + dy * dy
+            Dim closestTargetPt = FindClosestPoint(targetPoly, transformedPt)
+            Dim dx = transformedPt.X - closestTargetPt.X
+            Dim dy = transformedPt.Y - closestTargetPt.Y
 
-            If distSq <= thresholdSq Then
-                inlierPairs.Add((sx, sy, close.x, close.y))
+            If dx * dx + dy * dy <= thresholdSq Then
+                inlierPairs.Add((sourcePt, closestTargetPt))
             End If
         Next
 
-        ' 使用所有内点对，通过最小二乘法重新计算相似变换参数
-        If inlierPairs.Count >= 2 Then
-            ' 计算中心点
-            Dim sourceCenterX = inlierPairs.Select(Function(p) p.sx).Average()
-            Dim sourceCenterY = inlierPairs.Select(Function(p) p.sy).Average()
-            Dim targetCenterX = inlierPairs.Select(Function(p) p.tx).Average()
-            Dim targetCenterY = inlierPairs.Select(Function(p) p.ty).Average()
-
-            ' 计算旋转角度和缩放因子
-            Dim sumNumerator = 0.0
-            Dim sumDenominator = 0.0
-            Dim sumScaleX = 1.0
-            Dim sumScaleY = 1.0
-            Dim count = 0
-
-            For Each pair In inlierPairs
-                ' 相对于中心点的坐标
-                Dim sxRel = pair.sx - sourceCenterX
-                Dim syRel = pair.sy - sourceCenterY
-                Dim txRel = pair.tx - targetCenterX
-                Dim tyRel = pair.ty - targetCenterY
-
-                ' 计算旋转角度的分子和分母
-                sumNumerator += sxRel * tyRel - syRel * txRel
-                sumDenominator += sxRel * txRel + syRel * tyRel
-
-                ' 计算缩放因子
-                If std.Abs(sxRel) > 0.0000001 Then
-                    sumScaleX += std.Abs(txRel / sxRel)
-                    count += 1
-                End If
-                If std.Abs(syRel) > 0.0000001 Then
-                    sumScaleY += std.Abs(tyRel / syRel)
-                    count += 1
-                End If
-            Next
-
-            ' 计算旋转角度
-            Dim theta = std.Atan2(sumNumerator, sumDenominator)
-
-            ' 计算平均缩放因子
-            Dim scalex = If(count > 0, sumScaleX / (count / 2), 1.0)
-            Dim scaley = If(count > 0, sumScaleY / (count / 2), 1.0)
-
-            ' 计算平移量
-            cosTheta = std.Cos(theta)
-            sinTheta = std.Sin(theta)
-
-            Dim transformedCenterX = sourceCenterX * scalex * cosTheta - sourceCenterY * scaley * sinTheta
-            Dim transformedCenterY = sourceCenterX * scalex * sinTheta + sourceCenterY * scaley * cosTheta
-
-            Dim tx = targetCenterX - transformedCenterX
-            Dim ty = targetCenterY - transformedCenterY
-
-            Return (theta, tx, ty, scalex, scaley)
+        If inlierPairs.Count < 3 Then
+            ' Not enough points for a stable affine fit
+            Return initialTransform
         End If
 
-        Return init
+        ' 2. Solve for affine parameters using Least Squares
+        ' We want to solve A * p = b, where p = [a, b, c, d, e, f]'
+        Dim a, b, c, d, e, f As Double
+        SolveLeastSquaresAffine(inlierPairs, a, b, c, d, e, f)
+
+        ' 3. Decompose the affine matrix to get rotation, scale, and translation
+        ' The affine matrix is:
+        ' | a b |
+        ' | d e |
+        ' Using polar decomposition: A = R * S, where R is rotation and S is scale/shear
+        ' For a pure rotation+scale (no shear), we can extract:
+        Dim scaleX = std.Sqrt(a * a + d * d)
+        Dim scaleY = std.Sqrt(b * b + e * e)
+        Dim theta = std.Atan2(d, a) ' Rotation from the first column
+
+        ' Translation is simply c and f
+        Dim tx = c
+        Dim ty = f
+
+        Return New Transform With {
+            .theta = theta,
+            .scalex = scaleX,
+            .scaley = scaleY,
+            .tx = tx,
+            .ty = ty
+        }
     End Function
+
+    ''' <summary>
+    ''' Solves the least-squares problem for affine transformation parameters.
+    ''' </summary>
+    Private Shared Sub SolveLeastSquaresAffine(points As List(Of (source As PointF, target As PointF)), ByRef a As Double, ByRef b As Double, ByRef c As Double, ByRef d As Double, ByRef e As Double, ByRef f As Double)
+        ' This implementation uses the normal equations: (A'A)p = A'b
+        ' For robustness, a library like MathNet.Numerics is recommended.
+        Dim n = points.Count
+        Dim sumX, sumY, sumX2, sumY2, sumXY, sumXp, sumYp, sumXpX, sumXpY, sumYpX, sumYpY As Double
+
+        For Each pair In points
+            Dim x = pair.source.X
+            Dim y = pair.source.Y
+            Dim xp = pair.target.X
+            Dim yp = pair.target.Y
+
+            sumX += x : sumY += y
+            sumX2 += x * x : sumY2 += y * y : sumXY += x * y
+            sumXp += xp : sumYp += yp
+            sumXpX += xp * x : sumXpY += xp * y
+            sumYpX += yp * x : sumYpY += yp * y
+        Next
+
+        ' Matrix A'A and vector A'b
+        Dim ata_00 = sumX2, ata_01 = sumXY, ata_02 = sumX
+        Dim ata_10 = sumXY, ata_11 = sumY2, ata_12 = sumY
+        Dim ata_20 = sumX, ata_21 = sumY, ata_22 = n
+
+        Dim atb_0 = sumXpX, atb_1 = sumXpY, atb_2 = sumXp
+        Dim atb_3 = sumYpX, atb_4 = sumYpY, atb_5 = sumYp
+
+        ' Solve two 3x3 systems (one for x', one for y')
+        ' Inverting a 3x3 matrix manually:
+        Dim det = ata_00 * (ata_11 * ata_22 - ata_12 * ata_21) -
+                  ata_01 * (ata_10 * ata_22 - ata_12 * ata_20) +
+                  ata_02 * (ata_10 * ata_21 - ata_11 * ata_20)
+
+        If std.Abs(det) < 0.000000001 Then
+            ' Matrix is singular, cannot solve
+            Return
+        End If
+        Dim invDet = 1.0 / det
+
+        Dim inv_00 = (ata_11 * ata_22 - ata_12 * ata_21) * invDet
+        Dim inv_01 = (ata_02 * ata_21 - ata_01 * ata_22) * invDet
+        Dim inv_02 = (ata_01 * ata_12 - ata_02 * ata_11) * invDet
+        Dim inv_10 = (ata_12 * ata_20 - ata_10 * ata_22) * invDet
+        Dim inv_11 = (ata_00 * ata_22 - ata_02 * ata_20) * invDet
+        Dim inv_12 = (ata_02 * ata_10 - ata_00 * ata_12) * invDet
+        Dim inv_20 = (ata_10 * ata_21 - ata_11 * ata_20) * invDet
+        Dim inv_21 = (ata_01 * ata_20 - ata_00 * ata_21) * invDet
+        Dim inv_22 = (ata_00 * ata_11 - ata_01 * ata_10) * invDet
+
+        ' p = inv(A'A) * A'b
+        a = inv_00 * atb_0 + inv_01 * atb_1 + inv_02 * atb_2
+        b = inv_10 * atb_0 + inv_11 * atb_1 + inv_12 * atb_2
+        c = inv_20 * atb_0 + inv_21 * atb_1 + inv_22 * atb_2
+
+        d = inv_00 * atb_3 + inv_01 * atb_4 + inv_02 * atb_5
+        e = inv_10 * atb_3 + inv_11 * atb_4 + inv_12 * atb_5
+        f = inv_20 * atb_3 + inv_21 * atb_4 + inv_22 * atb_5
+    End Sub
 End Class

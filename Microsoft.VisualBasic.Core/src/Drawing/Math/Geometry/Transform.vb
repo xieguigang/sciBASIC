@@ -60,6 +60,9 @@ Imports std = System.Math
 
 Namespace Imaging.Math2D
 
+    ''' <summary>
+    ''' 2D transformation parameters
+    ''' </summary>
     Public Class Transform
 
         ''' <summary>
