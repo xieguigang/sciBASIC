@@ -67,7 +67,9 @@
 #End Region
 
 Imports System.Drawing
+Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.Scripting.Expressions
+Imports Microsoft.VisualBasic.Serialization.JSON
 Imports std = System.Math
 
 Namespace Drawing2D.Math2D.ConcaveHull
@@ -379,12 +381,17 @@ Namespace Drawing2D.Math2D.ConcaveHull
 
         ' 辅助类：三角形
         Public Class Triangle
-            Public Property Vertices As Integer()
+
+            <XmlAttribute> Public Property Vertices As Integer()
 
             Public Sub New(v1 As Integer, v2 As Integer, v3 As Integer)
                 Vertices = {v1, v2, v3}
                 Array.Sort(Vertices)
             End Sub
+
+            Public Overrides Function ToString() As String
+                Return Vertices.GetJson
+            End Function
 
             Public Function GetEdges() As List(Of Edge)
                 Return New List(Of Edge) From {
@@ -416,8 +423,9 @@ Namespace Drawing2D.Math2D.ConcaveHull
 
         ' 辅助类：边
         Public Class Edge
-            Public Property Point1 As Integer
-            Public Property Point2 As Integer
+
+            <XmlAttribute> Public Property Point1 As Integer
+            <XmlAttribute> Public Property Point2 As Integer
 
             Public Sub New(p1 As Integer, p2 As Integer)
                 Point1 = std.Min(p1, p2)
@@ -426,8 +434,7 @@ Namespace Drawing2D.Math2D.ConcaveHull
         End Class
 
         ' 边比较器
-        Public Class EdgeEqualityComparer
-            Implements IEqualityComparer(Of Edge)
+        Public Class EdgeEqualityComparer : Implements IEqualityComparer(Of Edge)
 
             Public Overloads Function Equals(x As Edge, y As Edge) As Boolean Implements IEqualityComparer(Of Edge).Equals
                 Return x.Point1 = y.Point1 AndAlso x.Point2 = y.Point2
