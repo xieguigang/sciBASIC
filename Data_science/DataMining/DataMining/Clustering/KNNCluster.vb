@@ -42,10 +42,12 @@ Namespace Clustering
 
             If filter.Length >= p Then
                 For Each p As DbscanPoint(Of T) In filter
-                    p.ClusterId = seedPoint.ClusterId
-                    p.IsVisited = True
+                    If Not p.IsVisited Then
+                        p.ClusterId = seedPoint.ClusterId
+                        p.IsVisited = True
 
-                    Call ExpandCluster(p)
+                        Call ExpandCluster(p)
+                    End If
                 Next
             End If
         End Sub
