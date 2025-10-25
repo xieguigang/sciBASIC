@@ -13,6 +13,12 @@ Namespace ComponentModel.Algorithm.base
             End Get
         End Property
 
+        Default Public ReadOnly Property Distance(i As IIndexOf(Of Integer), j As IIndexOf(Of Integer)) As Double
+            Get
+                Return distanceMap(i.Address)(j.Address)
+            End Get
+        End Property
+
         Sub New(points As IEnumerable(Of T), metric As Func(Of T, T, Double))
             Dim pool As T() = points.SafeQuery.ToArray
             Dim n As Integer = pool.Length

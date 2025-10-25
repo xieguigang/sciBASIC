@@ -1,5 +1,6 @@
 ﻿Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ApplicationServices.Terminal.ProgressBar.Tqdm
+Imports Microsoft.VisualBasic.ComponentModel.Algorithm.base
 Imports Microsoft.VisualBasic.DataMining.DBSCAN
 Imports Microsoft.VisualBasic.DataMining.KMeans
 Imports Microsoft.VisualBasic.Language
@@ -14,13 +15,13 @@ Namespace Clustering
         ReadOnly points As DbscanPoint(Of T)()
         ReadOnly k As Integer
         ReadOnly p As Integer
-        ReadOnly metric As Func(Of T, T, Double)
+        ReadOnly distanceMap As DistanceMap(Of DbscanPoint(Of T))
 
         Sub New(data As IEnumerable(Of T), metricFunc As Func(Of T, T, Double), knn As Integer, Optional threshold As Double = 0.8)
-            points = data.SafeQuery.Select(Function(a) New DbscanPoint(Of T)(a)).ToArray
+            points = data.SafeQuery.Select(Function(a, i) New DbscanPoint(Of T)(a, i)).ToArray
             k = knn
             p = threshold * knn
-            metric = metricFunc
+            distanceMap = New DistanceMap(Of DbscanPoint(Of T))(points, Function(a, b) metricFunc(a.ClusterPoint, b.ClusterPoint))
         End Sub
 
         Public Function AssignClusterId() As IEnumerable(Of DbscanPoint(Of T))
@@ -67,8 +68,8 @@ Namespace Clustering
         Private Function FindKNearestNeighbors(targetPoint As DbscanPoint(Of T)) As IEnumerable(Of (dist As Double, p As DbscanPoint(Of T)))
             Return From p As DbscanPoint(Of T)
                    In points.AsParallel
-                   Where p IsNot targetPoint AndAlso Not p.IsVisited
-                   Let d As Double = metric(targetPoint.ClusterPoint, p.ClusterPoint)
+                   Where p IsNot targetPoint
+                   Let d As Double = distanceMap(targetPoint.Index, p.Index)
                    Order By d
                    Select (d, p)
                    Take k
