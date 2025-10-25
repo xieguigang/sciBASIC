@@ -44,10 +44,10 @@ Namespace Clustering
                                                                  In points
                                                                  Where a.ClusterId = point.ClusterId).ToArray
                     Dim density = clusterMembers.Select(Function(a) Me.density(a.Index)).ToArray
-                    Dim cutoff As Double = density.GKQuantile.Query(0.8)
+                    Dim cutoff As Double = density.GKQuantile.Query(0.95)
 
                     For Each p As DbscanPoint(Of T) In clusterMembers
-                        If density(p.Index) > cutoff Then
+                        If Me.density(p.Index) > cutoff Then
                             p.ClusterId = ClusterIDs.Noise
                             p.IsVisited = False
                         End If
