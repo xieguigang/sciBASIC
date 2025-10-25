@@ -71,7 +71,7 @@ Namespace DBSCAN
 
         Public IsVisited As Boolean
         Public ClusterPoint As T
-        Public ClusterId As Integer
+        Public ClusterId As Integer = ClusterIDs.Noise
 
         Public Sub New(x As T)
             ClusterPoint = x

@@ -63,6 +63,9 @@ Imports Parallels = System.Threading.Tasks.Parallel
 
 Namespace Clustering
 
+    ''' <summary>
+    ''' KNN classifier
+    ''' </summary>
     Public Class KNN
 
         ''' <summary>
