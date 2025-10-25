@@ -46,7 +46,7 @@ Namespace Clustering
                 seedPoint = pool.Pop
 
                 Dim knn() = FindKNearestNeighbors(seedPoint).ToArray
-                Dim cutoff As Double = knn.Select(Function(a) a.dist).Median
+                Dim cutoff As Double = If(knn.Length = 0, Double.MaxValue, knn.Select(Function(a) a.dist).Median)
                 Dim filter = (From a As (dist As Double, p As DbscanPoint(Of T))
                               In knn
                               Where a.dist <= cutoff
