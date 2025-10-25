@@ -67,6 +67,7 @@
 #End Region
 
 Imports System.Drawing
+Imports Microsoft.VisualBasic.ComponentModel.Algorithm.base
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Imaging.Math2D
 Imports std = System.Math
@@ -104,8 +105,8 @@ Namespace Drawing2D.Math2D.ConcaveHull
             Get
                 Dim r As Double = Double.MinValue
                 For i As Integer = 0 To points.Length - 1
-                    If distanceMap(i)(rNeigbourList(i)(1)) > r Then
-                        r = distanceMap(i)(rNeigbourList(i)(1))
+                    If distanceMap(i, rNeigbourList(i)(1)) > r Then
+                        r = distanceMap(i, rNeigbourList(i)(1))
                     End If
                 Next
                 Return r
@@ -114,7 +115,7 @@ Namespace Drawing2D.Math2D.ConcaveHull
 
         ReadOnly flags As Boolean()
         ReadOnly points As Vector2D()
-        ReadOnly distanceMap As Double()()
+        ReadOnly distanceMap As DistanceMap(Of Vector2D)
         ReadOnly rNeigbourList As List(Of Integer)()
 
         Public Sub New(list As IEnumerable(Of PointF))
@@ -126,14 +127,13 @@ Namespace Drawing2D.Math2D.ConcaveHull
             Dim n As Integer = points.Length
 
             flags = New Boolean(n - 1) {}
-            distanceMap = RectangularArray.Matrix(Of Double)(n, n)
+            distanceMap = New DistanceMap(Of Vector2D)(points, Function(a, b) a.DistanceTo(b))
             rNeigbourList = New List(Of Integer)(n - 1) {}
 
             For i As Integer = 0 To flags.Length - 1
                 flags(i) = False
             Next
 
-            InitDistanceMap()
             InitNearestList()
         End Sub
 
@@ -143,23 +143,13 @@ Namespace Drawing2D.Math2D.ConcaveHull
             Next
         End Sub
 
-        Private Sub InitDistanceMap()
-            Dim n As Integer = points.Length
-
-            For i As Integer = 0 To n - 1
-                For j As Integer = 0 To n - 1
-                    distanceMap(i)(j) = points(i).DistanceTo(points(j))
-                Next
-            Next
-        End Sub
-
         Public Function GetMinEdgeLength() As Double
             Dim min As Double = Double.MaxValue
             For i As Integer = 0 To points.Length - 1
                 For j As Integer = 0 To points.Length - 1
                     If i < j Then
-                        If distanceMap(i)(j) < min Then
-                            min = distanceMap(i)(j)
+                        If distanceMap(i, j) < min Then
+                            min = distanceMap(i, j)
                         End If
                     End If
                 Next
@@ -339,7 +329,7 @@ Namespace Drawing2D.Math2D.ConcaveHull
             Next
             For i As Integer = 0 To points.Length - 1
                 For j As Integer = 0 To points.Length - 1
-                    If i < j AndAlso distanceMap(i)(j) < radius Then
+                    If i < j AndAlso distanceMap(i, j) < radius Then
                         adjs(i).Add(j)
                         adjs(j).Add(i)
                     End If
@@ -351,7 +341,7 @@ Namespace Drawing2D.Math2D.ConcaveHull
         Private Function GetSortedNeighbours(index As Integer) As List(Of Integer)
             Dim infos As New List(Of Point2dInfo)(points.Length)
             For i As Integer = 0 To points.Length - 1
-                infos.Add(New Point2dInfo(points(i), i, distanceMap(index)(i)))
+                infos.Add(New Point2dInfo(points(i), i, distanceMap(index, i)))
             Next
             infos.Sort()
             Dim adj As New List(Of Integer)()
