@@ -1,6 +1,9 @@
-﻿Imports Microsoft.VisualBasic.DataMining.DBSCAN
+﻿Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.DataMining.DBSCAN
+Imports Microsoft.VisualBasic.DataMining.KMeans
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Math.Correlations
 Imports Microsoft.VisualBasic.Math.Statistics.Linq
 
 Namespace Clustering
@@ -62,4 +65,17 @@ Namespace Clustering
                    Take k
         End Function
     End Class
+
+    Public Module KNNClusterRunner
+
+        <Extension>
+        Public Iterator Function MakeKNNCluster(data As IEnumerable(Of ClusterEntity), Optional k As Integer = 32, Optional p As Double = 0.8) As IEnumerable(Of ClusterEntity)
+            Dim knn As New KNNCluster(Of ClusterEntity)(data, Function(a, b) a.SquareDistance(b), k, p)
+
+            For Each point As DbscanPoint(Of ClusterEntity) In knn.AssignClusterId
+                point.ClusterPoint.cluster = point.ClusterId
+                Yield point.ClusterPoint
+            Next
+        End Function
+    End Module
 End Namespace
