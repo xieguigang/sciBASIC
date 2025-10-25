@@ -67,9 +67,9 @@ Namespace Clustering
 
         Private Function FindKNearestNeighbors(targetPoint As DbscanPoint(Of T)) As IEnumerable(Of (dist As Double, p As DbscanPoint(Of T)))
             Return From p As DbscanPoint(Of T)
-                   In points.AsParallel
+                   In points
                    Where p IsNot targetPoint
-                   Let d As Double = distanceMap(targetPoint.Index, p.Index)
+                   Let d As Double = distanceMap(targetPoint, p)
                    Order By d
                    Select (d, p)
                    Take k

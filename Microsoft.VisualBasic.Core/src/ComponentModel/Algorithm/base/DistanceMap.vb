@@ -19,23 +19,35 @@ Namespace ComponentModel.Algorithm.base
             End Get
         End Property
 
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="points"></param>
+        ''' <param name="metric">
+        ''' 具有对称性的距离计算公式，通常为欧几里得距离
+        ''' </param>
         Sub New(points As IEnumerable(Of T), metric As Func(Of T, T, Double))
             Dim pool As T() = points.SafeQuery.ToArray
             Dim n As Integer = pool.Length
+            ' create NxN matrix
             Dim matrix As Double()() = RectangularArray.Matrix(Of Double)(n, n)
 
-            For i As Integer = 0 To n - 1
-                ' 对角线元素：点到自身的距离（通常为0，仍需计算一次）
-                matrix(i)(i) = metric(points(i), points(i))
+            ' 使用 Parallel.For 并行化外层循环（遍历行索引 i）
+            System.Threading.Tasks.Parallel.For(0, n,
+                Sub(i)
+                    Dim dist As Double = 0
+                    Dim vec As Double() = matrix(i)
 
-                ' 仅计算上三角部分（j > i），避免重复计算
-                For j As Integer = i + 1 To n - 1
-                    Dim dist As Double = metric(points(i), points(j))
+                    ' 对角线元素：点到自身的距离（每个线程独立计算自己的 i）
+                    vec(i) = metric(pool(i), pool(i))
 
-                    matrix(i)(j) = dist
-                    matrix(j)(i) = dist  ' 利用对称性直接赋值
-                Next
-            Next
+                    ' 上三角部分（j > i）：仅计算当前行 i 的对应列
+                    For j As Integer = i + 1 To n - 1
+                        dist = metric(pool(i), pool(j))
+                        vec(j) = dist
+                        matrix(j)(i) = dist ' 利用对称性赋值下三角
+                    Next
+                End Sub)
 
             distanceMap = matrix
         End Sub
