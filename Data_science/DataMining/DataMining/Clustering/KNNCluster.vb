@@ -1,4 +1,5 @@
 ﻿Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.ApplicationServices.Terminal.ProgressBar.Tqdm
 Imports Microsoft.VisualBasic.DataMining.DBSCAN
 Imports Microsoft.VisualBasic.DataMining.KMeans
 Imports Microsoft.VisualBasic.Language
@@ -25,7 +26,7 @@ Namespace Clustering
         Public Function AssignClusterId() As IEnumerable(Of DbscanPoint(Of T))
             Dim cluster_id As i32 = 1
 
-            For Each point As DbscanPoint(Of T) In points
+            For Each point As DbscanPoint(Of T) In TqdmWrapper.Wrap(points, wrap_console:=App.EnableTqdm)
                 If Not point.IsVisited Then
                     point.ClusterId = ++cluster_id
                     ExpandCluster(point)
