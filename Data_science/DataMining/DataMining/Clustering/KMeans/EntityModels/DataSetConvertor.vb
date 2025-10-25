@@ -89,6 +89,10 @@ Namespace KMeans
             Next
         End Function
 
+        Public Function CreateObject(Of T As ClusterEntity)(x As T) As EntityClusterModel
+            Return x.ToDataModel(maps)
+        End Function
+
         Public Iterator Function GetObjects(Of T As ClusterEntity)(cluster As IEnumerable(Of T), setClass As Integer) As IEnumerable(Of EntityClusterModel)
             Dim yi As EntityClusterModel
 
