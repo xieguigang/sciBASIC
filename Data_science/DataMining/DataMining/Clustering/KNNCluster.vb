@@ -1,4 +1,5 @@
 ﻿Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.ApplicationServices.Terminal.ProgressBar
 Imports Microsoft.VisualBasic.ApplicationServices.Terminal.ProgressBar.Tqdm
 Imports Microsoft.VisualBasic.ComponentModel.Algorithm.base
 Imports Microsoft.VisualBasic.DataMining.DBSCAN
@@ -26,11 +27,14 @@ Namespace Clustering
 
         Public Function AssignClusterId() As IEnumerable(Of DbscanPoint(Of T))
             Dim cluster_id As i32 = 1
+            Dim bar As Tqdm.ProgressBar = Nothing
 
-            For Each point As DbscanPoint(Of T) In TqdmWrapper.Wrap(points, wrap_console:=App.EnableTqdm)
+            For Each point As DbscanPoint(Of T) In TqdmWrapper.Wrap(points, bar:=bar, wrap_console:=App.EnableTqdm)
                 If Not point.IsVisited Then
                     point.ClusterId = ++cluster_id
-                    ExpandCluster(point)
+
+                    Call bar.SetLabel($"processing cluster {point.ClusterId}...")
+                    Call ExpandCluster(point)
                 End If
             Next
 
