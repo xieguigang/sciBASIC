@@ -37,29 +37,37 @@ Namespace Clustering
         End Function
 
         Private Sub ExpandCluster(seedPoint As DbscanPoint(Of T))
-            Dim knn() = FindKNearestNeighbors(seedPoint).ToArray
-            Dim cutoff As Double = knn.Select(Function(a) a.dist).Median
-            Dim filter = (From a As (dist As Double, p As DbscanPoint(Of T))
-                          In knn
-                          Where a.dist <= cutoff
-                          Select a.p).ToArray
+            Dim pool As New Stack(Of DbscanPoint(Of T))
 
-            If filter.Length >= p Then
-                For Each p As DbscanPoint(Of T) In filter
-                    If Not p.IsVisited Then
-                        p.ClusterId = seedPoint.ClusterId
-                        p.IsVisited = True
+            pool.Push(seedPoint)
+            seedPoint.IsVisited = True
 
-                        Call ExpandCluster(p)
-                    End If
-                Next
-            End If
+            Do While pool.Count > 0
+                seedPoint = pool.Pop
+
+                Dim knn() = FindKNearestNeighbors(seedPoint).ToArray
+                Dim cutoff As Double = knn.Select(Function(a) a.dist).Median
+                Dim filter = (From a As (dist As Double, p As DbscanPoint(Of T))
+                              In knn
+                              Where a.dist <= cutoff
+                              Select a.p).ToArray
+
+                If filter.Length >= p Then
+                    For Each neighborPoint As DbscanPoint(Of T) In filter
+                        If Not neighborPoint.IsVisited Then
+                            neighborPoint.ClusterId = seedPoint.ClusterId
+                            neighborPoint.IsVisited = True
+                            pool.Push(neighborPoint)
+                        End If
+                    Next
+                End If
+            Loop
         End Sub
 
         Private Function FindKNearestNeighbors(targetPoint As DbscanPoint(Of T)) As IEnumerable(Of (dist As Double, p As DbscanPoint(Of T)))
             Return From p As DbscanPoint(Of T)
                    In points.AsParallel
-                   Where Not p Is targetPoint
+                   Where p IsNot targetPoint AndAlso Not p.IsVisited
                    Let d As Double = metric(targetPoint.ClusterPoint, p.ClusterPoint)
                    Order By d
                    Select (d, p)
