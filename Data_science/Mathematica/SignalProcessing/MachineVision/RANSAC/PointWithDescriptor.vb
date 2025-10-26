@@ -21,13 +21,9 @@ Public Structure PointWithDescriptor
         End If
 
         ' Calculate centroid (using only valid points)
-        Dim centroidX As Double = 0, centroidY As Double = 0
-        For i As Integer = 0 To poly.length - 1
-            centroidX += poly.xpoints(i)
-            centroidY += poly.ypoints(i)
-        Next
-        centroidX /= poly.length
-        centroidY /= poly.length
+        Dim centroid As PointF = poly.centroid
+        Dim centroidX As Double = centroid.X
+        Dim centroidY As Double = centroid.Y
 
         ' Compute descriptor for each point
         For i As Integer = 0 To poly.length - 1
@@ -37,7 +33,9 @@ Public Structure PointWithDescriptor
             Dim r = std.Sqrt(dx * dx + dy * dy)
             Dim theta = std.Atan2(dy, dx)
 
-            Yield New PointWithDescriptor With {.Pt = pt, .Descriptor = (r, theta)}
+            Yield New PointWithDescriptor With {
+                .Pt = pt, .Descriptor = (r, theta)
+            }
         Next
     End Function
 End Structure
