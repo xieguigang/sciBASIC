@@ -112,11 +112,23 @@ Namespace Math
             Return std.Atan2(p.Y, p.X)
         End Function
 
+        ''' <summary>
+        ''' Calculate the Euclidean distance between two points.
+        ''' </summary>
+        ''' <param name="a"></param>
+        ''' <param name="b"></param>
+        ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Distance(a As Point, b As Point) As Double
             Return std.Sqrt((a.X - b.X) ^ 2 + (a.Y - b.Y) ^ 2)
         End Function
 
+        ''' <summary>
+        ''' Calculate the Euclidean distance between two points.
+        ''' </summary>
+        ''' <param name="a"></param>
+        ''' <param name="b"></param>
+        ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Distance(a As PointF, b As PointF) As Double
             Return std.Sqrt((a.X - b.X) ^ 2 + (a.Y - b.Y) ^ 2)

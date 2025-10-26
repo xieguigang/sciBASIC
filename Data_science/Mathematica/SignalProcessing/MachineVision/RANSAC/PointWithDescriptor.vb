@@ -6,6 +6,7 @@ Imports std = System.Math
 ''' A point structure that includes its feature descriptor.
 ''' </summary>
 Public Structure PointWithDescriptor
+
     Public Pt As PointF
     ''' <summary>
     ''' (distance to centroid, angle)

@@ -19,6 +19,12 @@ Namespace ComponentModel.Algorithm.base
             End Get
         End Property
 
+        Public ReadOnly Property GetMap As Double()()
+            Get
+                Return distanceMap.ToArray
+            End Get
+        End Property
+
         ''' <summary>
         ''' NxN distance matrix
         ''' </summary>

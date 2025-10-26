@@ -60,8 +60,11 @@
 Imports System.Drawing
 Imports Microsoft.VisualBasic.ApplicationServices.Terminal.ProgressBar
 Imports Microsoft.VisualBasic.ApplicationServices.Terminal.ProgressBar.Tqdm
+Imports Microsoft.VisualBasic.ComponentModel.Algorithm.base
 Imports Microsoft.VisualBasic.Imaging.Math2D
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Math.SignalProcessing.HungarianAlgorithm
 Imports rand = Microsoft.VisualBasic.Math.RandomExtensions
 Imports std = System.Math
 
@@ -70,6 +73,13 @@ Imports std = System.Math
 ''' This version is optimized for correctness and includes a proper least-squares refinement step.
 ''' </summary>
 Public Module RANSACPointAlignment
+
+    Public Function MakeHungarianAssignment(sourcePoly As Polygon2D, targetPoly As Polygon2D, t As AffineTransform) As Integer()
+        Dim distanceMap As New DistanceMap(Of PointF)(t.ApplyTo(sourcePoly).AsEnumerable, targetPoly.AsEnumerable, AddressOf Distance)
+        Dim assignMap As Integer() = HungarianAlgorithm.FindAssignments(distanceMap.GetMap)
+
+        Return assignMap
+    End Function
 
     ''' <summary>
     ''' Aligns a source polygon to a target polygon using RANSAC.
