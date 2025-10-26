@@ -196,6 +196,7 @@ Public NotInheritable Class RANSACPointAlignment
     Private Shared Function RefineTransformWithLeastSquares(sourcePoly As Polygon2D, targetPoly As Polygon2D, initialTransform As AffineTransform, threshold As Double) As AffineTransform
         Dim inlierPairs As New List(Of (source As PointF, target As PointF))
         Dim thresholdSq = threshold * threshold
+        Dim errors As New List(Of Double)
 
         ' 1. Collect all inlier point pairs based on the initial transform
         For i As Integer = 0 To sourcePoly.length - 1
@@ -205,8 +206,11 @@ Public NotInheritable Class RANSACPointAlignment
             Dim transformedSourcePt = initialTransform.ApplyToPoint(sourcePt)
             Dim dx = transformedSourcePt.X - targetPt.X
             Dim dy = transformedSourcePt.Y - targetPt.Y
+            Dim dSq As Double = dx * dx + dy * dy
 
-            If dx * dx + dy * dy <= thresholdSq Then
+            Call errors.Add(dSq)
+
+            If dSq <= thresholdSq Then
                 inlierPairs.Add((sourcePt, targetPt))
             End If
         Next
@@ -214,6 +218,8 @@ Public NotInheritable Class RANSACPointAlignment
         If inlierPairs.Count < 3 Then
             ' Not enough points for a stable affine fit
             Return initialTransform
+        Else
+            Call $"error of this RANSAC alignment: {errors.Average}".debug
         End If
 
         ' 2. Solve for affine parameters using Least Squares
