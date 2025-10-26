@@ -60,10 +60,21 @@ Imports std = System.Math
 
 Namespace Imaging.Math2D
 
+    Public Interface GeometryTransform
+
+        ''' <summary>
+        ''' Apply the current transformation parameters to the target polygon object.
+        ''' </summary>
+        ''' <param name="polygon"></param>
+        ''' <returns></returns>
+        Function ApplyTo(polygon As Polygon2D) As Polygon2D
+
+    End Interface
+
     ''' <summary>
     ''' 2D transformation parameters
     ''' </summary>
-    Public Class Transform
+    Public Class Transform : Implements GeometryTransform
 
         ''' <summary>
         ''' angle for rotation
@@ -100,7 +111,7 @@ Namespace Imaging.Math2D
         ''' </summary>
         ''' <param name="polygon"></param>
         ''' <returns></returns>
-        Public Function ApplyTo(polygon As Polygon2D) As Polygon2D
+        Public Function ApplyTo(polygon As Polygon2D) As Polygon2D Implements GeometryTransform.ApplyTo
             Dim tx = New Double(polygon.length - 1) {}
             Dim ty = New Double(polygon.length - 1) {}
             Dim cosTheta As Double = std.Cos(theta)

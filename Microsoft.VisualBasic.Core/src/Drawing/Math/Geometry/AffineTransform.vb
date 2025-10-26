@@ -1,5 +1,6 @@
 ﻿Imports System.Drawing
 Imports System.Xml.Serialization
+Imports Microsoft.VisualBasic.Linq
 
 Namespace Imaging.Math2D
 
@@ -9,7 +10,7 @@ Namespace Imaging.Math2D
     ''' x' = ax + by + c
     ''' y' = dx + ey + f
     ''' </summary>
-    Public Class AffineTransform
+    Public Class AffineTransform : Implements GeometryTransform
 
         ''' <summary>
         ''' The ‘a’ parameter in x’ = ax + by + c
@@ -48,6 +49,10 @@ Namespace Imaging.Math2D
         Public Sub New()
         End Sub
 
+        Public Overrides Function ToString() As String
+            Return $"2D Affine Transform {{ x' = {a.ToString("F4")} x + {b.ToString("F4")} y + {c.ToString("F4")}; y' = {d.ToString("F4")} x + {e.ToString("F4")} y + {f.ToString("F4")} }}"
+        End Function
+
         ''' <summary>
         ''' Applies this transform to a point.
         ''' </summary>
@@ -56,6 +61,14 @@ Namespace Imaging.Math2D
                 a * pt.X + b * pt.Y + c,
                 d * pt.X + e * pt.Y + f
             )
+        End Function
+
+        Public Function ApplyTo(polygon As Polygon2D) As Polygon2D Implements GeometryTransform.ApplyTo
+            Dim t = polygon.AsEnumerable.Select(Function(pt) ApplyToPoint(pt)).ToArray
+            Dim x As Double() = t.Select(Function(pt) CDbl(pt.X)).ToArray
+            Dim y As Double() = t.Select(Function(pt) CDbl(pt.Y)).ToArray
+
+            Return New Polygon2D(x, y)
         End Function
     End Class
 End Namespace
