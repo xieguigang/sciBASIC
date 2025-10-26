@@ -86,10 +86,15 @@ Public NotInheritable Class RANSACPointAlignment
                                          targetPoly As Polygon2D,
                                          Optional iterations As Integer = 1000,
                                          Optional distanceThreshold As Double = 0.1) As AffineTransform
-        ' 预检查：点数不足时返回单位变换
+
+        ' Pre-check: need at least 3 points
         If sourcePoly.length < 2 OrElse targetPoly.length < 2 Then
             Return New AffineTransform
         End If
+
+        ' 1. Compute descriptors for all points in both polygons
+        Dim sourceDescriptors = PointWithDescriptor.ComputeDescriptors(sourcePoly).ToArray
+        Dim targetDescriptors = PointWithDescriptor.ComputeDescriptors(targetPoly).ToArray
 
         Dim bestTransform As New AffineTransform
         Dim maxInliers As Integer = 0
