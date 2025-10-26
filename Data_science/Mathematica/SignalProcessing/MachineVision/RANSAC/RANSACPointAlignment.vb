@@ -69,11 +69,7 @@ Imports std = System.Math
 ''' A static utility class for aligning two 2D polygons using the RANSAC algorithm.
 ''' This version is optimized for correctness and includes a proper least-squares refinement step.
 ''' </summary>
-Public NotInheritable Class RANSACPointAlignment
-
-    Private Sub New()
-        ' Prevent instantiation of this static class
-    End Sub
+Public Module RANSACPointAlignment
 
     ''' <summary>
     ''' Aligns a source polygon to a target polygon using RANSAC.
@@ -83,10 +79,10 @@ Public NotInheritable Class RANSACPointAlignment
     ''' <param name="iterations">The number of RANSAC iterations.</param>
     ''' <param name="distanceThreshold">The distance threshold to consider a point an inlier.</param>
     ''' <returns>The best-fit Transform object.</returns>
-    Public Shared Function AlignPolygons(sourcePoly As Polygon2D,
-                                         targetPoly As Polygon2D,
-                                         Optional iterations As Integer = 1000,
-                                         Optional distanceThreshold As Double = 0.1) As AffineTransform
+    Public Function AlignPolygons(sourcePoly As Polygon2D,
+                                  targetPoly As Polygon2D,
+                                  Optional iterations As Integer = 1000,
+                                  Optional distanceThreshold As Double = 0.1) As AffineTransform
 
         ' Pre-check: need at least 3 points
         If sourcePoly.length < 2 OrElse targetPoly.length < 2 Then
@@ -156,7 +152,7 @@ Public NotInheritable Class RANSACPointAlignment
     ''' <summary>
     ''' Generates a list of candidate matches by finding the nearest neighbor in descriptor space.
     ''' </summary>
-    Private Shared Function GenerateCandidateMatches(ByRef sourceDesc As PointWithDescriptor(), ByRef targetDesc As PointWithDescriptor()) As List(Of (source As PointF, target As PointF))
+    Private Function GenerateCandidateMatches(ByRef sourceDesc As PointWithDescriptor(), ByRef targetDesc As PointWithDescriptor()) As List(Of (source As PointF, target As PointF))
         Dim matches As New List(Of (source As PointF, target As PointF))()
 
         Call $"Generates a list of candidate matches by finding the nearest neighbor in descriptor space.".debug
@@ -195,8 +191,8 @@ Public NotInheritable Class RANSACPointAlignment
     ''' <summary>
     ''' Computes an affine transform from exactly three point pairs.
     ''' </summary>
-    Private Shared Function ComputeAffineFrom3Pairs(p1 As PointF, p2 As PointF, p3 As PointF,
-                                               q1 As PointF, q2 As PointF, q3 As PointF) As AffineTransform
+    Private Function ComputeAffineFrom3Pairs(p1 As PointF, p2 As PointF, p3 As PointF,
+                                             q1 As PointF, q2 As PointF, q3 As PointF) As AffineTransform
         ' Solve the linear system for 6 parameters (a,b,c,d,e,f)
         ' |x1 y1 1 0  0  0|   |a|   |x'1|
         ' |x2 y2 1 0  0  0|   |b|   |x'2|
@@ -205,25 +201,31 @@ Public NotInheritable Class RANSACPointAlignment
         ' |0  0  0 x2 y2 1|   |e|   |y'2|
         ' |0  0  0 x3 y3 1|   |f|   |y'3|
         ' We can solve this by splitting it into two 3x3 systems.
-        Dim sourceX = {p1.X, p2.X, p3.X}
-        Dim sourceY = {p1.Y, p2.Y, p3.Y}
-        Dim targetX = {q1.X, q2.X, q3.X}
-        Dim targetY = {q1.Y, q2.Y, q3.Y}
+        ' Dim sourceX = {p1.X, p2.X, p3.X}
+        ' Dim sourceY = {p1.Y, p2.Y, p3.Y}
+        ' Dim targetX = {q1.X, q2.X, q3.X}
+        ' Dim targetY = {q1.Y, q2.Y, q3.Y}
 
         ' Using the same least squares solver for the exact case
-        Dim pairs As New List(Of (source As PointF, target As PointF)) From {
-        (p1, q1), (p2, q2), (p3, q3)
-    }
+        Dim pairs As (source As PointF, target As PointF)() = {(p1, q1), (p2, q2), (p3, q3)}
         Dim a, b, c, d, e, f As Double
-        SolveLeastSquaresAffine(pairs, a, b, c, d, e, f)
 
-        Return New AffineTransform With {.a = a, .b = b, .c = c, .d = d, .e = e, .f = f}
+        Call SolveLeastSquaresAffine(pairs, a, b, c, d, e, f)
+
+        Return New AffineTransform With {
+            .a = a,
+            .b = b,
+            .c = c,
+            .d = d,
+            .e = e,
+            .f = f
+        }
     End Function
 
     ''' <summary>
     ''' Refines the transformation using all inliers with a least-squares fit for an affine transform.
     ''' </summary>
-    Private Shared Function RefineTransformWithLeastSquares(candidateMatches As List(Of (source As PointF, target As PointF)), initialTransform As AffineTransform, threshold As Double) As AffineTransform
+    Private Function RefineTransformWithLeastSquares(candidateMatches As List(Of (source As PointF, target As PointF)), initialTransform As AffineTransform, threshold As Double) As AffineTransform
         Dim inlierPairs As New List(Of (source As PointF, target As PointF))
         Dim thresholdSq = threshold * threshold
         Dim errors As New List(Of Double)
@@ -248,23 +250,32 @@ Public NotInheritable Class RANSACPointAlignment
         End If
 
         Dim a, b, c, d, e, f As Double
-        SolveLeastSquaresAffine(inlierPairs, a, b, c, d, e, f)
-        Return New AffineTransform With {.a = a, .b = b, .c = c, .d = d, .e = e, .f = f}
+
+        Call SolveLeastSquaresAffine(inlierPairs.ToArray, a, b, c, d, e, f)
+
+        Return New AffineTransform With {
+            .a = a,
+            .b = b,
+            .c = c,
+            .d = d,
+            .e = e,
+            .f = f
+        }
     End Function
 
     ''' <summary>
     ''' Solves the least-squares problem for affine transformation parameters.
     ''' This function is unchanged from your original, as it was mathematically correct.
     ''' </summary>
-    Private Shared Sub SolveLeastSquaresAffine(points As List(Of (source As PointF, target As PointF)), ByRef a As Double, ByRef b As Double, ByRef c As Double, ByRef d As Double, ByRef e As Double, ByRef f As Double)
-        Dim n = points.Count
+    Private Sub SolveLeastSquaresAffine(ByRef points As (source As PointF, target As PointF)(), ByRef a As Double, ByRef b As Double, ByRef c As Double, ByRef d As Double, ByRef e As Double, ByRef f As Double)
+        Dim n As Integer = points.Length
         Dim sumX, sumY, sumX2, sumY2, sumXY, sumXp, sumYp, sumXpX, sumXpY, sumYpX, sumYpY As Double
 
         For Each pair In points
-            Dim x = pair.source.X
-            Dim y = pair.source.Y
-            Dim xp = pair.target.X
-            Dim yp = pair.target.Y
+            Dim x As Double = pair.source.X
+            Dim y As Double = pair.source.Y
+            Dim xp As Double = pair.target.X
+            Dim yp As Double = pair.target.Y
 
             sumX += x : sumY += y
             sumX2 += x * x : sumY2 += y * y : sumXY += x * y
@@ -283,15 +294,17 @@ Public NotInheritable Class RANSACPointAlignment
 
         ' Solve two 3x3 systems (one for x', one for y')
         Dim det = ata_00 * (ata_11 * ata_22 - ata_12 * ata_21) -
-              ata_01 * (ata_10 * ata_22 - ata_12 * ata_20) +
-              ata_02 * (ata_10 * ata_21 - ata_11 * ata_20)
+                  ata_01 * (ata_10 * ata_22 - ata_12 * ata_20) +
+                  ata_02 * (ata_10 * ata_21 - ata_11 * ata_20)
 
         If std.Abs(det) < 0.000000001 Then
             ' Matrix is singular, cannot solve, return identity
             a = 1 : b = 0 : c = 0
             d = 0 : e = 1 : f = 0
+
             Return
         End If
+
         Dim invDet = 1.0 / det
 
         Dim inv_00 = (ata_11 * ata_22 - ata_12 * ata_21) * invDet
@@ -313,4 +326,4 @@ Public NotInheritable Class RANSACPointAlignment
         e = inv_10 * atb_3 + inv_11 * atb_4 + inv_12 * atb_5
         f = inv_20 * atb_3 + inv_21 * atb_4 + inv_22 * atb_5
     End Sub
-End Class
+End Module
