@@ -101,10 +101,8 @@ Namespace Imaging.Math2D
         ''' <param name="polygon"></param>
         ''' <returns></returns>
         Public Function ApplyTo(polygon As Polygon2D) As Polygon2D
-            Dim transformed As New Polygon2D() With {
-                .xpoints = New Double(polygon.length - 1) {},
-                .ypoints = New Double(polygon.length - 1) {}
-            }
+            Dim tx = New Double(polygon.length - 1) {}
+            Dim ty = New Double(polygon.length - 1) {}
             Dim cosTheta As Double = std.Cos(theta)
             Dim sinTheta As Double = std.Sin(theta)
 
@@ -121,11 +119,11 @@ Namespace Imaging.Math2D
                 Dim yRotated As Double = x * sinTheta + y * cosTheta
 
                 ' 平移
-                transformed.xpoints(i) = xRotated + tx
-                transformed.ypoints(i) = yRotated + ty
+                tx(i) = xRotated + Me.tx
+                ty(i) = yRotated + Me.ty
             Next
 
-            Return transformed
+            Return New Polygon2D(tx, ty)
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
