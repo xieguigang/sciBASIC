@@ -128,7 +128,7 @@ Public NotInheritable Class RANSACPointAlignment
                 maxInliers = inliers
                 bestTransform = initialTransform
 
-                Call bar.SetLabel($"max-inliers: {inliers}; best-transform: {bestTransform.GetJson}")
+                Call bar.SetLabel($"max-inliers: {inliers}; best-transform: {bestTransform}")
             End If
         Next
 
