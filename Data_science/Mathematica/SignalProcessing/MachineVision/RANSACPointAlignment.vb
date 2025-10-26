@@ -58,7 +58,10 @@
 #End Region
 
 Imports System.Drawing
+Imports Microsoft.VisualBasic.ApplicationServices.Terminal.ProgressBar
+Imports Microsoft.VisualBasic.ApplicationServices.Terminal.ProgressBar.Tqdm
 Imports Microsoft.VisualBasic.Imaging.Math2D
+Imports Microsoft.VisualBasic.Serialization.JSON
 Imports rand = Microsoft.VisualBasic.Math.RandomExtensions
 Imports std = System.Math
 
@@ -96,8 +99,10 @@ Public NotInheritable Class RANSACPointAlignment
         Dim maxIndex = std.Min(sourcePoly.length, targetPoly.length) - 1
         If maxIndex < 1 Then Return New Transform() ' 不足一对点
 
+        Dim bar As Tqdm.ProgressBar = Nothing
+
         ' RANSAC 迭代
-        For iter As Integer = 1 To iterations
+        For Each iter As Integer In TqdmWrapper.Range(0, iterations, bar:=bar, wrap_console:=App.EnableTqdm)
             ' 1. 随机选择两个不同的点
             Dim idx1, idx2 As Integer
             Do
@@ -122,6 +127,8 @@ Public NotInheritable Class RANSACPointAlignment
             If inliers > maxInliers Then
                 maxInliers = inliers
                 bestTransform = initialTransform
+
+                Call bar.SetLabel($"max-inliers: {inliers}; best-transform: {bestTransform.GetJson}")
             End If
         Next
 
