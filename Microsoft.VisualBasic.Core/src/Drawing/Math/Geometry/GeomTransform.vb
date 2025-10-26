@@ -157,7 +157,8 @@ Namespace Imaging.Math2D
         ''' <returns></returns>
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        <Extension> Public Function GetCenter(size As Size) As Point
+        <Extension>
+        Public Function GetCenter(size As Size) As Point
             Return New Point(size.Width / 2, size.Height / 2)
         End Function
 
@@ -259,7 +260,8 @@ Namespace Imaging.Math2D
         ''' <param name="y!"></param>
         ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        <Extension> Public Function OffSet2D(pt As PointF, x!, y!) As PointF
+        <Extension>
+        Public Function OffSet2D(pt As PointF, x!, y!) As PointF
             With pt
                 Return New PointF(x + .X, y + .Y)
             End With
