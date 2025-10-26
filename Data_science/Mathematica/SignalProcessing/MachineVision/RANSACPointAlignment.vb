@@ -122,7 +122,7 @@ Public NotInheritable Class RANSACPointAlignment
             ' A better hypothesis is to use 3 point pairs.
             Dim idx3 As Integer
             Do
-                idx3 = rand.Next(sourcePoly.length)
+                idx3 = rand.Next(maxIndex + 1)
             Loop While idx3 = idx1 OrElse idx3 = idx2
 
             Dim p3 = sourcePoly(idx3)
@@ -132,7 +132,7 @@ Public NotInheritable Class RANSACPointAlignment
 
             ' 4. Count inliers for this hypothesis
             Dim currentInliers As Integer = 0
-            For i As Integer = 0 To sourcePoly.length - 1
+            For i As Integer = 0 To maxIndex
                 Dim sourcePt = sourcePoly(i)
                 Dim targetPt = targetPoly(i)
 
@@ -156,7 +156,12 @@ Public NotInheritable Class RANSACPointAlignment
 
         ' 6. Refine the best transform using all inliers with Least Squares
         If maxInliers >= 3 Then
-            Return RefineTransformWithLeastSquares(sourcePoly, targetPoly, bestTransform, distanceThreshold)
+            Return RefineTransformWithLeastSquares(
+                sourcePoly, targetPoly,
+                bestTransform,
+                distanceThreshold,
+                maxIndex:=maxIndex
+            )
         End If
 
         Return bestTransform
@@ -193,13 +198,13 @@ Public NotInheritable Class RANSACPointAlignment
     ''' <summary>
     ''' Refines the transformation using all inliers with a least-squares fit for an affine transform.
     ''' </summary>
-    Private Shared Function RefineTransformWithLeastSquares(sourcePoly As Polygon2D, targetPoly As Polygon2D, initialTransform As AffineTransform, threshold As Double) As AffineTransform
+    Private Shared Function RefineTransformWithLeastSquares(sourcePoly As Polygon2D, targetPoly As Polygon2D, initialTransform As AffineTransform, threshold As Double, maxIndex As Integer) As AffineTransform
         Dim inlierPairs As New List(Of (source As PointF, target As PointF))
         Dim thresholdSq = threshold * threshold
         Dim errors As New List(Of Double)
 
         ' 1. Collect all inlier point pairs based on the initial transform
-        For i As Integer = 0 To sourcePoly.length - 1
+        For i As Integer = 0 To maxIndex
             Dim sourcePt = sourcePoly(i)
             Dim targetPt = targetPoly(i)
 
