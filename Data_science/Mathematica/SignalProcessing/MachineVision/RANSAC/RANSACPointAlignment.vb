@@ -61,6 +61,7 @@ Imports System.Drawing
 Imports Microsoft.VisualBasic.ApplicationServices.Terminal.ProgressBar
 Imports Microsoft.VisualBasic.ApplicationServices.Terminal.ProgressBar.Tqdm
 Imports Microsoft.VisualBasic.Imaging.Math2D
+Imports Microsoft.VisualBasic.Language
 Imports rand = Microsoft.VisualBasic.Math.RandomExtensions
 Imports std = System.Math
 
@@ -96,55 +97,40 @@ Public NotInheritable Class RANSACPointAlignment
         Dim sourceDescriptors = PointWithDescriptor.ComputeDescriptors(sourcePoly).ToArray
         Dim targetDescriptors = PointWithDescriptor.ComputeDescriptors(targetPoly).ToArray
 
+        ' 2. Generate candidate matches based on descriptor similarity
+        Dim candidateMatches = GenerateCandidateMatches(sourceDescriptors, targetDescriptors)
+
+        If candidateMatches.Count < 3 Then
+            ' Not enough candidate matches to proceed
+            Return New AffineTransform
+        End If
+
         Dim bestTransform As New AffineTransform
         Dim maxInliers As Integer = 0
         Dim thresholdSq = distanceThreshold * distanceThreshold
-
-        ' 确保不越界
-        Dim maxIndex = std.Min(sourcePoly.length, targetPoly.length) - 1
-        If maxIndex < 1 Then Return New AffineTransform ' 不足一对点
-
         Dim bar As Tqdm.ProgressBar = Nothing
+        Dim updateHits As i32 = 0
 
         ' RANSAC 迭代
         For Each iter As Integer In TqdmWrapper.Range(0, iterations, bar:=bar, wrap_console:=App.EnableTqdm)
-            ' 1. Randomly select two different point indices
-            Dim idx1, idx2 As Integer
-            Do
-                idx1 = rand.Next(maxIndex + 1)
-                idx2 = rand.Next(maxIndex + 1)
-            Loop While idx1 = idx2
+            ' Randomly select 3 different matches from the candidate list
+            If candidateMatches.Count < 3 Then Exit For
 
-            ' 2. Get the corresponding point pairs (ASSUMING CORRESPONDENCE)
-            Dim p1 = sourcePoly(idx1)
-            Dim p2 = sourcePoly(idx2)
-            Dim q1 = targetPoly(idx1)
-            Dim q2 = targetPoly(idx2)
+            Dim matches = candidateMatches.OrderBy(Function(x) rand.NextDouble()).Take(3).ToArray()
 
-            ' 3. Compute an affine transform from these two pairs
-            ' A 2-point pair is not enough to uniquely define a full affine transform (6 DOF).
-            ' However, it's enough for a similarity transform (4 DOF). We can use it as a hypothesis.
-            ' A better hypothesis is to use 3 point pairs.
-            Dim idx3 As Integer
-            Do
-                idx3 = rand.Next(maxIndex + 1)
-            Loop While idx3 = idx1 OrElse idx3 = idx2
+            Dim p1 = matches(0).source, q1 = matches(0).target
+            Dim p2 = matches(1).source, q2 = matches(1).target
+            Dim p3 = matches(2).source, q3 = matches(2).target
 
-            Dim p3 = sourcePoly(idx3)
-            Dim q3 = targetPoly(idx3)
-
+            ' Compute a transform hypothesis from these 3 matches
             Dim hypothesisTransform = ComputeAffineFrom3Pairs(p1, p2, p3, q1, q2, q3)
 
-            ' 4. Count inliers for this hypothesis
+            ' Count inliers for this hypothesis across ALL candidate matches
             Dim currentInliers As Integer = 0
-            For i As Integer = 0 To maxIndex
-                Dim sourcePt = sourcePoly(i)
-                Dim targetPt = targetPoly(i)
-
-                Dim transformedSourcePt = hypothesisTransform.ApplyToPoint(sourcePt)
-                Dim dx = transformedSourcePt.X - targetPt.X
-                Dim dy = transformedSourcePt.Y - targetPt.Y
-
+            For Each pair In candidateMatches
+                Dim transformedSourcePt = hypothesisTransform.ApplyToPoint(pair.source)
+                Dim dx = transformedSourcePt.X - pair.target.X
+                Dim dy = transformedSourcePt.Y - pair.target.Y
                 If dx * dx + dy * dy <= thresholdSq Then
                     currentInliers += 1
                 End If
@@ -155,21 +141,50 @@ Public NotInheritable Class RANSACPointAlignment
                 maxInliers = currentInliers
                 bestTransform = hypothesisTransform
 
-                Call bar.SetLabel($"max-inliers: {currentInliers}; best-transform: {bestTransform}")
+                Call bar.SetLabel($"UPDATE[{++updateHits}] inliers: {currentInliers}; best-transform: {bestTransform}")
             End If
         Next
 
         ' 6. Refine the best transform using all inliers with Least Squares
         If maxInliers >= 3 Then
-            Return RefineTransformWithLeastSquares(
-                sourcePoly, targetPoly,
-                bestTransform,
-                distanceThreshold,
-                maxIndex:=maxIndex
-            )
+            Return RefineTransformWithLeastSquares(candidateMatches, bestTransform, distanceThreshold)
         End If
 
         Return bestTransform
+    End Function
+
+    ''' <summary>
+    ''' Generates a list of candidate matches by finding the nearest neighbor in descriptor space.
+    ''' </summary>
+    Private Shared Function GenerateCandidateMatches(ByRef sourceDesc As PointWithDescriptor(), ByRef targetDesc As PointWithDescriptor()) As List(Of (source As PointF, target As PointF))
+        Dim matches As New List(Of (source As PointF, target As PointF))()
+
+        For Each sPt In sourceDesc
+            Dim minDist As Double = Double.PositiveInfinity
+            Dim bestMatch As PointWithDescriptor
+
+            For Each tPt In targetDesc
+                ' Simple Euclidean distance in descriptor space (r, theta)
+                ' We might want to weight angle more than distance, but this is a start.
+                Dim dr = sPt.Descriptor.r - tPt.Descriptor.r
+                Dim dtheta = sPt.Descriptor.theta - tPt.Descriptor.theta
+                ' Normalize angle difference
+                While dtheta > std.PI : dtheta -= 2 * std.PI : End While
+                While dtheta < -std.PI : dtheta += 2 * std.PI : End While
+
+                Dim distSq = dr * dr + dtheta * dtheta
+                If distSq < minDist Then
+                    minDist = distSq
+                    bestMatch = tPt
+                End If
+            Next
+
+            If minDist <> Double.PositiveInfinity Then
+                matches.Add((sPt.Pt, bestMatch.Pt))
+            End If
+        Next
+
+        Return matches
     End Function
 
     ''' <summary>
@@ -203,39 +218,32 @@ Public NotInheritable Class RANSACPointAlignment
     ''' <summary>
     ''' Refines the transformation using all inliers with a least-squares fit for an affine transform.
     ''' </summary>
-    Private Shared Function RefineTransformWithLeastSquares(sourcePoly As Polygon2D, targetPoly As Polygon2D, initialTransform As AffineTransform, threshold As Double, maxIndex As Integer) As AffineTransform
+    Private Shared Function RefineTransformWithLeastSquares(candidateMatches As List(Of (source As PointF, target As PointF)), initialTransform As AffineTransform, threshold As Double) As AffineTransform
         Dim inlierPairs As New List(Of (source As PointF, target As PointF))
         Dim thresholdSq = threshold * threshold
         Dim errors As New List(Of Double)
 
-        ' 1. Collect all inlier point pairs based on the initial transform
-        For i As Integer = 0 To maxIndex
-            Dim sourcePt = sourcePoly(i)
-            Dim targetPt = targetPoly(i)
-
-            Dim transformedSourcePt = initialTransform.ApplyToPoint(sourcePt)
-            Dim dx = transformedSourcePt.X - targetPt.X
-            Dim dy = transformedSourcePt.Y - targetPt.Y
+        For Each pair In candidateMatches
+            Dim transformedSourcePt = initialTransform.ApplyToPoint(pair.source)
+            Dim dx = transformedSourcePt.X - pair.target.X
+            Dim dy = transformedSourcePt.Y - pair.target.Y
             Dim dSq As Double = dx * dx + dy * dy
 
             Call errors.Add(dSq)
 
             If dSq <= thresholdSq Then
-                inlierPairs.Add((sourcePt, targetPt))
+                inlierPairs.Add(pair)
             End If
         Next
 
         If inlierPairs.Count < 3 Then
-            ' Not enough points for a stable affine fit
             Return initialTransform
         Else
             Call $"error of this RANSAC alignment: {errors.Average}".debug
         End If
 
-        ' 2. Solve for affine parameters using Least Squares
         Dim a, b, c, d, e, f As Double
         SolveLeastSquaresAffine(inlierPairs, a, b, c, d, e, f)
-
         Return New AffineTransform With {.a = a, .b = b, .c = c, .d = d, .e = e, .f = f}
     End Function
 
