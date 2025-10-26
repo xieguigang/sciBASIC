@@ -159,11 +159,14 @@ Public NotInheritable Class RANSACPointAlignment
     Private Shared Function GenerateCandidateMatches(ByRef sourceDesc As PointWithDescriptor(), ByRef targetDesc As PointWithDescriptor()) As List(Of (source As PointF, target As PointF))
         Dim matches As New List(Of (source As PointF, target As PointF))()
 
-        For Each sPt In sourceDesc
+        Call $"Generates a list of candidate matches by finding the nearest neighbor in descriptor space.".debug
+        Call $"matrix size: {sourceDesc.Length}x{targetDesc.Length}".info
+
+        For Each sPt As PointWithDescriptor In Tqdm.Wrap(sourceDesc, wrap_console:=App.EnableTqdm)
             Dim minDist As Double = Double.PositiveInfinity
             Dim bestMatch As PointWithDescriptor
 
-            For Each tPt In targetDesc
+            For Each tPt As PointWithDescriptor In targetDesc
                 ' Simple Euclidean distance in descriptor space (r, theta)
                 ' We might want to weight angle more than distance, but this is a start.
                 Dim dr = sPt.Descriptor.r - tPt.Descriptor.r
@@ -183,6 +186,8 @@ Public NotInheritable Class RANSACPointAlignment
                 matches.Add((sPt.Pt, bestMatch.Pt))
             End If
         Next
+
+        Call $"find {matches.Count} candidate matches!".debug
 
         Return matches
     End Function
