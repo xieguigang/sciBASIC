@@ -1,4 +1,5 @@
 ﻿Imports System.Drawing
+Imports Microsoft.VisualBasic.Imaging.Math2D
 Imports std = System.Math
 
 ''' <summary>
@@ -120,13 +121,7 @@ Public NotInheritable Class FPFHCalculator
 
     ' --- 辅助函数 ---
     Private Shared Function FindNeighbors(query As PointWithNormal, points As List(Of PointWithNormal), radius As Double) As List(Of PointWithNormal)
-        Return points.Where(Function(p) p.Pt <> query.Pt AndAlso Distance(query.Pt, p.Pt) <= radius).ToList()
-    End Function
-
-    Private Shared Function Distance(p1 As PointF, p2 As PointF) As Double
-        Dim dx = p1.X - p2.X
-        Dim dy = p1.Y - p2.Y
-        Return std.Sqrt(dx * dx + dy * dy)
+        Return points.Where(Function(p) p.Pt <> query.Pt AndAlso query.Pt.Distance(p.Pt) <= radius).ToList()
     End Function
 
     Private Shared Function AngleBetween(v1 As PointF, v2 As PointF) As Double
