@@ -157,12 +157,14 @@ Namespace Drawing2D.Math2D.ConcaveHull
             Return min
         End Function
 
-        Public Function GetConcave_Ball(radius As Double) As IEnumerable(Of PointF)
+        Public Function GetConcave_Ball(radius As Double, Optional verbose As Boolean = True) As IEnumerable(Of PointF)
             Dim ret As New List(Of Vector2D)() From {points(0)}
             Dim adjs As List(Of Integer)() = GetInRNeighbourList(2 * radius)
             Dim i As Integer = 0, j As Integer = -1, prev As Integer = -1
 
-            Call $"compute alpha shapes with circle radius: {radius}".debug
+            If verbose Then
+                Call $"compute alpha shapes with circle radius: {radius}".debug
+            End If
 
             While True
                 j = GetNextPoint_BallPivoting(prev, i, adjs(i), radius)

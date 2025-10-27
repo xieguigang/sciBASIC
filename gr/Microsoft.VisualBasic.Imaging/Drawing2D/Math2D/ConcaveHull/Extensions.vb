@@ -92,21 +92,21 @@ Namespace Drawing2D.Math2D.ConcaveHull
         ''' <param name="r">the ball radius</param>
         ''' <returns></returns>
         <Extension>
-        Public Function ConcaveHull(points As IEnumerable(Of PointF), Optional r# = -1) As PointF()
+        Public Function ConcaveHull(points As IEnumerable(Of PointF), Optional r# = -1, Optional verbose As Boolean = True) As PointF()
             With New BallConcave(points)
                 If r# <= 0 Then
                     r# = .RecomandedRadius
                 End If
 
-                Return .GetConcave_Ball(r) _
+                Return .GetConcave_Ball(r, verbose) _
                        .ToArray
             End With
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
-        Public Function ConcaveHull(points As Polygon2D, Optional r# = -1) As PointF()
-            Return points.AsEnumerable.ConcaveHull(r#)
+        Public Function ConcaveHull(points As Polygon2D, Optional r# = -1, Optional verbose As Boolean = True) As PointF()
+            Return points.AsEnumerable.ConcaveHull(r#, verbose)
         End Function
     End Module
 End Namespace
