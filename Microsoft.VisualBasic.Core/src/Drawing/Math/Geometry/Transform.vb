@@ -60,6 +60,9 @@ Imports std = System.Math
 
 Namespace Imaging.Math2D
 
+    ''' <summary>
+    ''' make geometry transform of a given <see cref="Polygon2D"/> with given <see cref="Transform"/> or <see cref="AffineTransform"/> parameters.
+    ''' </summary>
     Public Interface GeometryTransform
 
         ''' <summary>
