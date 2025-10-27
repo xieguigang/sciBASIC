@@ -989,12 +989,12 @@ Public Module App
     ''' <returns></returns>
     <Extension>
     Public Function FormatTime(time As DateTime, Optional sep$ = ":") As String
-        Dim yy = Format(time.Year, "0000")
-        Dim mm = Format(time.Month, "00")
-        Dim dd = Format(time.Day, "00")
-        Dim hh = Format(time.Hour, "00")
-        Dim mi = Format(time.Minute, "00")
-        Dim ss = Format(time.Second, "00")
+        Dim yy = Strings.Format(time.Year, "0000")
+        Dim mm = Strings.Format(time.Month, "00")
+        Dim dd = Strings.Format(time.Day, "00")
+        Dim hh = Strings.Format(time.Hour, "00")
+        Dim mi = Strings.Format(time.Minute, "00")
+        Dim ss = Strings.Format(time.Second, "00")
 
         Return $"{yy}-{mm}-{dd}, {hh}{sep}{mi}{sep}{ss}"
     End Function
