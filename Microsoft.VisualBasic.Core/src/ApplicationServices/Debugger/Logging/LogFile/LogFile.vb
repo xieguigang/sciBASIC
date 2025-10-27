@@ -103,7 +103,13 @@ Namespace ApplicationServices.Debugging.Logging
         ''' <remarks></remarks>
         Public Shared ReadOnly Property NowTimeNormalizedString As String
             Get
-                Return $"{Format(Now.Month, "00")}{ Format(Now.Day, "00")}{Format(Now.Hour, "00")}{Format(Now.Minute, "00")}{Format(Now.Second, "00")}"
+                With Now
+                    Return New Integer() { .Month, .Day, .Hour, .Minute, .Second} _
+                        .Select(Function(i32)
+                                    Return i32.ToString.PadLeft(2, "0"c)
+                                End Function) _
+                        .JoinBy("")
+                End With
             End Get
         End Property
 
