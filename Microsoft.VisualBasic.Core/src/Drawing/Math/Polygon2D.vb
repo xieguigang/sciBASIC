@@ -512,6 +512,10 @@ Namespace Imaging.Math2D
             Return area
         End Function
 
+        ''' <summary>
+        ''' Get scan line result for fill the space inside of this polygon object
+        ''' </summary>
+        ''' <returns></returns>
         Public Function GetFillPoints() As IEnumerable(Of PointF)
             Return PolygonFiller.FillPolygon(Me.AsEnumerable.ToPoints.ToList).PointF
         End Function

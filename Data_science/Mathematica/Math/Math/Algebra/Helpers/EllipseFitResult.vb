@@ -89,21 +89,38 @@ Namespace LinearAlgebra
         ''' <returns></returns>
         Public Property Coefficients As Double()
 
+        ''' <summary>
+        ''' 计算并返回椭圆的面积。
+        ''' </summary>
+        ''' <returns>椭圆的面积，类型为 Double。</returns>
+        Public ReadOnly Property Area As Double
+            Get
+                ' 椭圆面积公式: π * a * b
+                ' 使用 Math.PI 获取高精度的圆周率
+                ' 结果使用 Double 类型以保证精度
+                Return std.PI * Me.SemiMajorAxis * Me.SemiMinorAxis
+            End Get
+        End Property
+
         Public Function CreateShape() As EllipseShape
             Return New EllipseShape(SemiMajorAxis, SemiMinorAxis, Center)
         End Function
 
-        Public Shared Function FitEllipse(points As PointF()) As EllipseFitResult
-            ' 步骤1：构建设计矩阵M
-            Dim M As NumericMatrix = BuildDesignMatrix(points)
-            ' 步骤2：对M进行SVD分解
-            Dim svd As New SingularValueDecomposition(M)
-            ' 步骤3：取V的最后一列作为椭圆系数向量
-            Dim V As NumericMatrix = svd.V.Transpose()
-            Dim coefficients As Vector = V(V.ColumnDimension - 1, byRow:=False)
+        Public Shared Function FitEllipse(points As PointF(), Optional strict As Boolean = True) As EllipseFitResult
+            If points.TryCount < 6 Then
+                Return Nothing
+            Else
+                ' 步骤1：构建设计矩阵M
+                Dim M As NumericMatrix = BuildDesignMatrix(points)
+                ' 步骤2：对M进行SVD分解
+                Dim svd As New SingularValueDecomposition(M)
+                ' 步骤3：取V的最后一列作为椭圆系数向量
+                Dim V As NumericMatrix = svd.V.Transpose()
+                Dim coefficients As Vector = V(V.ColumnDimension - 1, byRow:=False)
 
-            ' 步骤4：从系数向量提取椭圆几何参数
-            Return ExtractEllipseParameters(coefficients)
+                ' 步骤4：从系数向量提取椭圆几何参数
+                Return ExtractEllipseParameters(coefficients, strict)
+            End If
         End Function
 
         ''' <summary>
@@ -113,25 +130,27 @@ Namespace LinearAlgebra
             Dim rowCount As Integer = points.Length
             Dim M As New NumericMatrix(rowCount, 6)
 
-            For i As Integer = 0 To points.Count - 1
+            For i As Integer = 0 To rowCount - 1
                 Dim x As Double = points(i).X
                 Dim y As Double = points(i).Y
 
-                M(i, 0) = x * x      ' x²
-                M(i, 1) = x * y      ' xy
-                M(i, 2) = y * y      ' y²
-                M(i, 3) = x          ' x
-                M(i, 4) = y          ' y
-                M(i, 5) = 1.0        ' 常数项
+                M(i, 0) = x * x ' x²
+                M(i, 1) = x * y ' xy
+                M(i, 2) = y * y ' y²
+                M(i, 3) = x     ' x
+                M(i, 4) = y     ' y
+                M(i, 5) = 1.0   ' 常数项
             Next
 
             Return M
         End Function
 
+        Const InvalidEllipseFit As String = "The fitting result of {0} is not an ellipse (it could be a hyperbola or a parabola)."
+
         ''' <summary>
         ''' 从系数向量提取椭圆几何参数
         ''' </summary>
-        Private Shared Function ExtractEllipseParameters(coefficients As Vector) As EllipseFitResult
+        Private Shared Function ExtractEllipseParameters(coefficients As Vector, strict As Boolean) As EllipseFitResult
             ' 提取系数：v = [A, B, C, D, E, F]^T
             Dim A As Double = coefficients(0)
             Dim B As Double = coefficients(1)
@@ -142,8 +161,16 @@ Namespace LinearAlgebra
 
             ' 验证是否为椭圆 (B² - 4AC < 0)
             Dim discriminant As Double = B * B - 4 * A * C
+
             If discriminant >= 0 Then
-                Throw New InvalidOperationException("The fitting result is not an ellipse (it could be a hyperbola or a parabola).")
+                Dim msg As String = String.Format(InvalidEllipseFit, $"v = [{coefficients.JoinBy(", ")}]^T")
+
+                If strict Then
+                    Throw New InvalidOperationException(msg)
+                Else
+                    Call msg.warning
+                    Return Nothing
+                End If
             End If
 
             ' 步骤4.1：计算中心点 (h, k)
