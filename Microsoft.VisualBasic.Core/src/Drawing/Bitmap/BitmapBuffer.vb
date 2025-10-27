@@ -234,12 +234,19 @@ Namespace Imaging.BitmapImage
         ''' </returns>
         Public ReadOnly Property Stride As Integer
 
+        ''' <summary>
+        ''' Create a new blank bitmap data with all pixel fill with color white
+        ''' </summary>
+        ''' <param name="width"></param>
+        ''' <param name="height"></param>
+        ''' <returns></returns>
         Public Shared Function White(width As Integer, height As Integer) As BitmapBuffer
             Dim bytes As Byte() = New Byte(width * height * 4 - 1) {}
             Call bytes.fill(255)
             Return New BitmapBuffer(bytes, New Size(width, height), 4)
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function GetHandleObject() As Object
             Return handle
         End Function
@@ -458,6 +465,13 @@ Namespace Imaging.BitmapImage
 
             Return blue
         End Function
+
+        Public Shared ReadOnly Property UInt32White As UInteger = BitConverter.ToUInt32({
+            255, ' A
+            255, ' R
+            255, ' G
+            255  ' B
+        }, 0)
 
         ''' <summary>
         ''' get image data array in ARGB format

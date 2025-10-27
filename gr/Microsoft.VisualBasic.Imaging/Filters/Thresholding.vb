@@ -160,10 +160,11 @@ Namespace Filters
         Public Function ostuFilter(bitmap As BitmapBuffer,
                                    Optional flip As Boolean = False,
                                    Optional factor As Double = 0.65,
+                                   Optional ignore_white As Boolean = True,
                                    Optional verbose As Boolean = True) As BitmapBuffer
 
             Return bitmap.ostuFilter(
-                threshold:=otsuThreshold(bitmap) * factor,
+                threshold:=otsuThreshold(bitmap, ignoreWhite:=ignore_white) * factor,
                 flip:=flip,
                 verbose:=verbose
             )
@@ -221,8 +222,8 @@ Namespace Filters
         ''' <returns> 返回阈值大小 </returns>
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Function otsuThreshold(bitmap As BitmapBuffer) As Integer
-            Return otsuThreshold(New BucketSet(Of UInteger)(New UInteger()() {bitmap.GetARGBStream}))
+        Public Function otsuThreshold(bitmap As BitmapBuffer, Optional ignoreWhite As Boolean = True) As Integer
+            Return otsuThreshold(New BucketSet(Of UInteger)(New UInteger()() {bitmap.GetARGBStream}), ignoreWhite)
         End Function
 
         ''' <summary>
@@ -230,21 +231,26 @@ Namespace Filters
         ''' </summary>
         ''' <param name="bitmap"> 位图 </param>
         ''' <returns> 返回阈值大小 </returns>
-        Public Function otsuThreshold(bitmap As BucketSet(Of UInteger)) As Integer
+        Public Function otsuThreshold(bitmap As BucketSet(Of UInteger), Optional ignoreWhite As Boolean = True) As Integer
             ' 创建两个大小为256的数组，用来保存灰度级中每个像素
             ' 在整幅图像中的个数和在图中所占比例,先暂时初始为0
             Dim pixelCount(255) As Long
             Dim pixelPro(255) As Single
             Dim size As Long = bitmap.Count
+            Dim white As Integer = 0
 
             ' 统计每个像素在整幅图像中的个数
             For Each rgb As UInteger In bitmap
-                pixelCount(rgb And &HFF) += 1
+                If ignoreWhite AndAlso rgb <> BitmapBuffer.UInt32White Then
+                    pixelCount(rgb And &HFF) += 1
+                Else
+                    white += 1
+                End If
             Next
 
             ' 统计每个像素占整幅图像中的比例
             For i As Integer = 0 To 255
-                pixelPro(i) = CSng(pixelCount(i) / size)
+                pixelPro(i) = CSng(pixelCount(i) / (size - white))
             Next
 
             '遍历灰度级[0,255]
