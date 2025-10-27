@@ -54,9 +54,24 @@
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ApplicationServices.Terminal
 Imports Microsoft.VisualBasic.Language.C
+Imports Microsoft.VisualBasic.Linq
 Imports std = System.Math
 
 Public Module StringFormats
+
+    ''' <summary>
+    ''' Format the given number collection with a given <paramref name="numberFormat"/> string.
+    ''' </summary>
+    ''' <param name="x"></param>
+    ''' <param name="numberFormat"></param>
+    ''' <returns></returns>
+    <Extension>
+    Public Function Format(x As IEnumerable(Of Double), numberFormat As String) As IEnumerable(Of String)
+        Return From xi As Double
+               In x.SafeQuery
+               Let str As String = xi.ToString(numberFormat)
+               Select str
+    End Function
 
     Public Function nsize(x As Double) As String
         If x <= 0 Then
