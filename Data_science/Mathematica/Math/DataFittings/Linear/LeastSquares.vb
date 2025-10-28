@@ -89,6 +89,13 @@ Public Module LeastSquares
         Return LinearFit(x.ToArray, y.ToArray, SeriesLength(x, y))
     End Function
 
+    ''' <summary>
+    ''' Least squares resolve the linear fitting
+    ''' </summary>
+    ''' <param name="x">x axis</param>
+    ''' <param name="y">y axis</param>
+    ''' <param name="length">length of the vector of x or y</param>
+    ''' <returns></returns>
     Public Function LinearFit(x As Double(), y As Double(), length As Integer) As FitResult
         Dim t1 As Double = 0, t2 As Double = 0, t3 As Double = 0, t4 As Double = 0
         Dim factor#() = New Double(1) {}

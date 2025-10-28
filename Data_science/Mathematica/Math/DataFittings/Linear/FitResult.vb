@@ -98,34 +98,6 @@ Public Class FitResult : Implements IFitted
     ''' </summary>
     Public Property ErrorTest As IFitError() Implements IFitted.ErrorTest
 
-    Public ReadOnly Property Residuals As Double()
-        Get
-            Return ErrorTest _
-                .SafeQuery _
-                .Select(Function(e) e.Y - e.Yfit) _
-                .ToArray
-        End Get
-    End Property
-
-    ''' <summary>
-    ''' 根据x获取拟合方程的y值
-    ''' </summary>
-    ''' <param name="x"></param>
-    ''' <returns></returns>
-    Default Public ReadOnly Property GetY(x As Double) As Double
-        <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Get
-            Return DirectCast(Polynomial, Polynomial).F(x)
-        End Get
-    End Property
-
-    Public ReadOnly Property IsPolyFit As Boolean
-        <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Get
-            Return Not DirectCast(Polynomial, Polynomial).IsLinear
-        End Get
-    End Property
-
     ''' <summary>
     ''' 获取斜率
     ''' </summary>
@@ -173,6 +145,34 @@ Public Class FitResult : Implements IFitted
             Dim p As Integer = FactorSize - 1
 
             Return 1 - (1 - R_square) * (n - 1) / (n - p - 1)
+        End Get
+    End Property
+
+    Public ReadOnly Property Residuals As Double()
+        Get
+            Return ErrorTest _
+                .SafeQuery _
+                .Select(Function(e) e.Y - e.Yfit) _
+                .ToArray
+        End Get
+    End Property
+
+    ''' <summary>
+    ''' 根据x获取拟合方程的y值
+    ''' </summary>
+    ''' <param name="x"></param>
+    ''' <returns></returns>
+    Default Public ReadOnly Property GetY(x As Double) As Double
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Get
+            Return DirectCast(Polynomial, Polynomial).F(x)
+        End Get
+    End Property
+
+    Public ReadOnly Property IsPolyFit As Boolean
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Get
+            Return Not DirectCast(Polynomial, Polynomial).IsLinear
         End Get
     End Property
 
