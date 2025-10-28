@@ -140,10 +140,12 @@ Namespace Filters
                                  )
             Next
 
-            Dim hist = heatmap.ForEachBucket _
+            Dim hist As IntegerTagged(Of Integer())() = heatmap.ForEachBucket _
                 .AsParallel _
                 .Select(Function(tile)
-                            Return tile.GroupBy(Function(b) CInt(b / 20)).ToArray
+                            ' 255/5 = 51
+                            ' split into 6 bins
+                            Return tile.GroupBy(Function(b) CInt(b / 50)).ToArray
                         End Function) _
                 .ToArray _
                 .IteratesALL _
