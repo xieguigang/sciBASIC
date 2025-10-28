@@ -361,7 +361,7 @@ Namespace KdTree
         ''' <param name="maxNodes">
         ''' k
         ''' </param>
-        ''' <returns></returns>
+        ''' <returns>KNN search result</returns>
         Public Iterator Function nearest(point As T, maxNodes As Integer, Optional maxDistance As Double? = Nothing) As IEnumerable(Of KdNodeHeapItem(Of T))
             Dim bestNodes As New List(Of KdNodeHeapItem(Of T))
             Dim query As New KdTreeNode(Of T)(point, 0, Nothing)
