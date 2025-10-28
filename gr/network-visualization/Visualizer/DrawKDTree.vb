@@ -106,7 +106,7 @@ Public Class DrawKDTree : Inherits Plot
         If Not query.IsNullOrEmpty Then
             For Each q As NamedValue(Of PointF) In query
                 Dim pos As PointF = scaler.Translate(q.Value.X, q.Value.Y)
-                Dim color As Pen = New Pen(q.Description.TranslateColor, 4)
+                Dim color As Pen = New Pen(q.Description.TranslateColor, 6)
                 Dim point2 As PointF() = tree _
                     .nearest(New Point2D(q.Value), k) _
                     .Select(Function(knn)
@@ -118,7 +118,7 @@ Public Class DrawKDTree : Inherits Plot
                 Dim poly = point2.JarvisMatch.Enlarge(1.125)
 
                 Call g.FillPolygon(New SolidBrush(color.Color.Alpha(120)), poly)
-                Call g.DrawCircle(pos, theme.pointSize, color, fill:=True)
+                Call g.DrawCircle(pos, theme.pointSize * 5, color, fill:=True)
 
                 For Each knn In point2
                     Call g.DrawCircle(knn, theme.pointSize, color, fill:=False)

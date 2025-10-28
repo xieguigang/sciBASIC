@@ -368,14 +368,7 @@ Namespace KdTree
             ' 20210920 似乎在这里必须要保证足够大的采样集大小才可以找到正确的解
             Call nearestSearch(query, root, 0, bestNodes, maxNodes)
 
-            Dim bestOutput = bestNodes _
-                .GroupBy(Function(i) i.node.data) _
-                .Select(Function(i) i.First) _
-                .OrderBy(Function(i) access.metric(i.node.data, point)) _
-                .Take(maxNodes) _
-                .ToArray
-
-            For Each node As KdNodeHeapItem(Of T) In bestOutput
+            For Each node As KdNodeHeapItem(Of T) In bestNodes
                 If Not maxDistance Is Nothing Then
                     If node.distance <= maxDistance Then
                         Yield New KdNodeHeapItem(Of T)(node.node, node.distance)
