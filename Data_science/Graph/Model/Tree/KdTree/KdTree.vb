@@ -64,7 +64,7 @@ Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.Python
 Imports Microsoft.VisualBasic.Linq
-Imports stdNum = System.Math
+Imports std = System.Math
 
 Namespace KdTree
 
@@ -97,7 +97,7 @@ Namespace KdTree
 
         Public ReadOnly Property balanceFactor() As Double
             Get
-                Return height(root) / (stdNum.Log(count(root)) / stdNum.Log(2))
+                Return height(root) / (std.Log(count(root)) / std.Log(2))
             End Get
         End Property
 
@@ -170,7 +170,7 @@ Namespace KdTree
                             End Function)
 
                 _counts += 1
-                median = stdNum.Floor(points.Length / 2)
+                median = std.Floor(points.Length / 2)
             End If
 
             Dim left = points.slice(0, median).ToArray
@@ -450,7 +450,7 @@ Namespace KdTree
             If node Is Nothing Then
                 Return 0
             Else
-                Return stdNum.Max(height(node.left), height(node.right)) + 1
+                Return std.Max(height(node.left), height(node.right)) + 1
             End If
         End Function
 
