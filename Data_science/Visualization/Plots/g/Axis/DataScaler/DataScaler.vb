@@ -141,6 +141,11 @@ Namespace Graphic.Axis
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function Translate(point As Layout2D) As PointF
+            Return Translate(point.X, point.Y)
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Translate(point As PointData) As PointF
             Dim x As Single
 
