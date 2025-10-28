@@ -117,7 +117,9 @@ Namespace Filters
         ''' <param name="wr"></param>
         ''' <param name="wg"></param>
         ''' <param name="wb"></param>
-        ''' <returns></returns>
+        ''' <returns>
+        ''' grayscale image data set
+        ''' </returns>
         <Extension>
         Public Iterator Function GlobalTileScales(tiles As IEnumerable(Of BitmapBuffer),
                                                   Optional wr As Single = 0.3,
@@ -127,6 +129,7 @@ Namespace Filters
             Dim pull As BitmapBuffer() = tiles.ToArray
             Dim heatmap As New BucketSet(Of Integer)
 
+            ' convert color pixel to grayscale pixel
             For Each tile As BitmapBuffer In pull
                 Call heatmap.Add(From pixel As Color
                                  In tile.GetPixelsAll
