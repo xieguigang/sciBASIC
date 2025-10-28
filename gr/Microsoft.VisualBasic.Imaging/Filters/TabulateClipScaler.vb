@@ -63,6 +63,7 @@ Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.Distributions
 Imports Microsoft.VisualBasic.Scripting.Runtime
+Imports std = System.Math
 
 Namespace Filters
 
@@ -145,7 +146,7 @@ Namespace Filters
                 .Select(Function(tile)
                             ' 255/5 = 51
                             ' split into 6 bins
-                            Return tile.GroupBy(Function(b) CInt(b / 50)).ToArray
+                            Return tile.GroupBy(Function(b) CInt(b / 20)).ToArray
                         End Function) _
                 .ToArray _
                 .IteratesALL _
@@ -154,16 +155,7 @@ Namespace Filters
                 .OrderBy(Function(a) a.Tag) _
                 .ToArray
             Dim maxN As Integer = which.Max(hist.Select(Function(a) a.Value.Length))
-            Dim resample As DoubleRange
-
-            If maxN = 0 Then
-                resample = New DoubleRange(vector:=hist(Scan0).Value.AsList + hist(1).Value)
-            ElseIf maxN = hist.Length - 1 Then
-                resample = New DoubleRange(vector:=hist(hist.Length - 1).Value.AsList + hist(hist.Length - 2).Value)
-            Else
-                resample = New DoubleRange(vector:=hist(maxN - 1).Value.AsList + hist(maxN).Value + hist(maxN + 1).Value)
-            End If
-
+            Dim resample As New DoubleRange(hist.TakeBags(maxN, nbags:=5).IteratesALL)
             Dim i As i32 = 0
             Dim bin As Double() = resample.MinMax
 
@@ -180,6 +172,26 @@ Namespace Filters
                 Erase scales
                 Erase raster
             Next
+        End Function
+
+        <Extension>
+        Private Iterator Function TakeBags(hist As IntegerTagged(Of Integer())(), maxN As Integer, nbags As Integer) As IEnumerable(Of Integer())
+            If maxN <= nbags Then
+                For i As Integer = 0 To std.min(nbags, hist.Length) - 1
+                    Yield hist(i).Value
+                Next
+            ElseIf maxN >= hist.Length - nbags Then
+                For i As Integer = hist.Length - 1 To std.Max(hist.Length - nbags, 0) Step -1
+                    Yield hist(i).Value
+                Next
+            Else
+                Dim start As Integer = maxN - nbags \ 2
+                Dim ends As Integer = maxN + nbags \ 2
+
+                For i As Integer = std.Max(0, start) To std.Min(hist.Length - 1, ends)
+                    Yield hist(i).Value
+                Next
+            End If
         End Function
 
     End Module
