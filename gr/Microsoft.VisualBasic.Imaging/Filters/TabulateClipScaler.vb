@@ -54,6 +54,7 @@
 
 Imports System.Drawing
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.ApplicationServices.Terminal.ProgressBar.Tqdm
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
@@ -62,6 +63,7 @@ Imports Microsoft.VisualBasic.Imaging.BitmapImage
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.Distributions
 Imports Microsoft.VisualBasic.Scripting.Runtime
+Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace Filters
 
@@ -129,8 +131,10 @@ Namespace Filters
             Dim pull As BitmapBuffer() = tiles.ToArray
             Dim heatmap As New BucketSet(Of Integer)
 
+            Call "processing the global grayscale image...".info
+
             ' convert color pixel to grayscale pixel
-            For Each tile As BitmapBuffer In pull
+            For Each tile As BitmapBuffer In TqdmWrapper.Wrap(pull)
                 Call heatmap.Add(From pixel As Color
                                  In tile.GetPixelsAll
                                  Select BitmapScale.GrayScale(
@@ -138,6 +142,8 @@ Namespace Filters
                                      wr, wg, wb)
                                  )
             Next
+
+            Call "create global heatmap bins".info
 
             Dim hist = heatmap.ForEachBucket _
                 .AsParallel _
@@ -161,10 +167,12 @@ Namespace Filters
                 resample = New DoubleRange(vector:=hist(maxN - 1).Value.AsList + hist(maxN).Value + hist(maxN + 1).Value)
             End If
 
+            Call $"resample of the grayscale heatmap with histogram range {resample.MinMax.GetJson}.".debug
+
             Dim i As Integer = 0
             Dim bin As Double() = resample.MinMax
 
-            For Each grayscale As Integer() In heatmap.ForEachBucket
+            For Each grayscale As Integer() In TqdmWrapper.Wrap(heatmap.ForEachBucket.ToArray)
                 Dim tile As BitmapBuffer = pull(i)
                 Dim scales As Byte() = grayscale.AsDouble.ClipScale(bin).ToArray
                 Dim raster As Color(,) = scales _
