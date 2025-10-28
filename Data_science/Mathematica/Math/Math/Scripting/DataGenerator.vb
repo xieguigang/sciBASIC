@@ -65,6 +65,7 @@
 
 Imports System.Drawing
 Imports System.Xml.Serialization
+Imports Microsoft.VisualBasic.Imaging
 
 Namespace Scripting
 
@@ -80,10 +81,10 @@ Namespace Scripting
 
     End Module
 
-    Public Class DataPoint
+    Public Class DataPoint : Implements Layout2D
 
-        <XmlAttribute("x")> Public Property X As Double
-        <XmlAttribute("y")> Public Overridable Property Y As Double
+        <XmlAttribute("x")> Public Property X As Double Implements Layout2D.X
+        <XmlAttribute("y")> Public Overridable Property Y As Double Implements Layout2D.Y
 
         Sub New()
         End Sub
