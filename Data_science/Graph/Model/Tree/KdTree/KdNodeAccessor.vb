@@ -54,6 +54,10 @@
 
 Namespace KdTree
 
+    ''' <summary>
+    ''' Helper class for access the node data by different dimensions
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
     Public MustInherit Class KdNodeAccessor(Of T)
 
         Default Public Property DimensionAccess(x As T, dimName As String) As Double

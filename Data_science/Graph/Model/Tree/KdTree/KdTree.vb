@@ -278,6 +278,7 @@ Namespace KdTree
             nextObj = nextNode.data
             Call removeNode(nextNode)
             node.data = nextObj
+            node.dimension = (node.parent.dimension + 1) Mod dimensions.Length  ' 更新维度
         End Sub
 
         Private Function findMax(node As KdTreeNode(Of T), [dim] As Integer) As KdTreeNode(Of T)
@@ -403,7 +404,7 @@ Namespace KdTree
             Dim addNode As Boolean = False
 
             If result = 0 Then
-                result.Push(New KdNodeHeapItem(Of T)(node, distance))
+                result.Add(New KdNodeHeapItem(Of T)(node, distance))
                 addNode = True
             End If
 
