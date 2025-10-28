@@ -965,6 +965,7 @@
       <Pack>True</Pack>
       <PackagePath>\</PackagePath>
     </None>
+    <None Include="Model\Tree\KdTree\KdUtils.vb" />
   </ItemGroup>
 
   <ItemGroup>
