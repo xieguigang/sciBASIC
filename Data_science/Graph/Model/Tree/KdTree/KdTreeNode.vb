@@ -83,7 +83,7 @@ Namespace KdTree
 
         Public ReadOnly Property isLeaf As Boolean
             Get
-                Return Not left Is Nothing
+                Return left Is Nothing AndAlso right Is Nothing
             End Get
         End Property
 

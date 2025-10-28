@@ -82,7 +82,7 @@ Namespace KdTree.ApproximateNearNeighbor
         End Sub
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Overrides Sub setByDimensin(x As TagVector, dimName As String, value As Double)
+        Public Overrides Sub setByDimension(x As TagVector, dimName As String, value As Double)
             x.vector(dims(dimName)) = value
         End Sub
 

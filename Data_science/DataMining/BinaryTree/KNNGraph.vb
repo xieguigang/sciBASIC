@@ -249,7 +249,7 @@ Public Class KNNGraph
         End Sub
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Overrides Sub setByDimensin(x As ClusterEntity, dimName As String, value As Double)
+        Public Overrides Sub setByDimension(x As ClusterEntity, dimName As String, value As Double)
             x.entityVector(dims(dimName)) = value
         End Sub
 

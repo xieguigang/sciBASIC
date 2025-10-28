@@ -65,7 +65,7 @@ Namespace EdgeBundling.Mingle
             Return {"x", "y", "z", "w"}
         End Function
 
-        Public Overrides Sub setByDimensin(x As GraphKdNode, dimName As String, value As Double)
+        Public Overrides Sub setByDimension(x As GraphKdNode, dimName As String, value As Double)
             Select Case dimName
                 Case "x" : x.x = value
                 Case "y" : x.y = value

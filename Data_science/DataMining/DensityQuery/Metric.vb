@@ -74,7 +74,7 @@ Public Class Metric : Inherits KdNodeAccessor(Of ClusterEntity)
         Me.dimNames = Me.dims.Keys.ToArray
     End Sub
 
-    Public Overrides Sub setByDimensin(x As ClusterEntity, dimName As String, value As Double)
+    Public Overrides Sub setByDimension(x As ClusterEntity, dimName As String, value As Double)
         x(dims(dimName)) = value
     End Sub
 

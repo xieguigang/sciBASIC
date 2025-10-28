@@ -77,7 +77,7 @@ Namespace KNN.KDTreeMethod
         End Sub
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Overrides Sub setByDimensin(x As KDPoint, dimName As String, value As Double)
+        Public Overrides Sub setByDimension(x As KDPoint, dimName As String, value As Double)
             x.vector(indexMaps(dimName)) = value
         End Sub
 
