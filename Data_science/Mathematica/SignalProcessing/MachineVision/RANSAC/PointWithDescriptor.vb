@@ -51,7 +51,7 @@ Public Structure PointWithDescriptor
                             While dtheta > std.PI : dtheta -= 2 * std.PI : End While
                             While dtheta < -std.PI : dtheta += 2 * std.PI : End While
 
-                            Dim distSq = dr * dr + dtheta * dtheta + pd
+                            Dim distSq = dr * dr + dtheta * dtheta + pd * 0.5
 
                             Return (distSq, tPt)
                         End Function) _
