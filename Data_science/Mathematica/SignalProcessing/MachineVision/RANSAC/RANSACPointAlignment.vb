@@ -62,6 +62,7 @@ Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ApplicationServices.Terminal.ProgressBar
 Imports Microsoft.VisualBasic.ApplicationServices.Terminal.ProgressBar.Tqdm
 Imports Microsoft.VisualBasic.ComponentModel.Algorithm.base
+Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Math2D
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
@@ -80,6 +81,41 @@ Public Module RANSACPointAlignment
         Dim assignMap As Integer() = HungarianAlgorithm.FindAssignments(distanceMap.GetMap)
 
         Return assignMap
+    End Function
+
+    ''' <summary>
+    ''' Aligns a source polygon to a target polygon using RANSAC.
+    ''' </summary>
+    ''' <param name="sourcePoly">The polygon to be transformed.</param>
+    ''' <param name="targetPoly">The polygon to align to.</param>
+    ''' <param name="iterations">The number of RANSAC iterations.</param>
+    ''' <param name="distanceThreshold">The distance threshold to consider a point an inlier.</param>
+    ''' <returns>The best-fit Transform object.</returns>
+    Public Function AlignPolygons(Of T As Layout2D)(sourcePoly As T(),
+                                                    targetPoly As T(),
+                                                    properties As Func(Of T, Double()),
+                                                    Optional iterations As Integer = 1000,
+                                                    Optional distanceThreshold As Double = 0.1) As AffineTransform
+        ' Pre-check: need at least 3 points
+        If sourcePoly.Length < 2 OrElse targetPoly.Length < 2 Then
+            Return New AffineTransform
+        End If
+
+        ' 1. Compute descriptors for all points in both polygons
+        Dim sourceDescriptors = PointWithDescriptor.ComputeDescriptors(sourcePoly, properties).ToArray
+        Dim targetDescriptors = PointWithDescriptor.ComputeDescriptors(targetPoly, properties).ToArray
+
+        ' 2. Generate candidate matches based on descriptor similarity
+        Dim candidateMatches As (source As PointF, target As PointF)() = PointWithDescriptor _
+            .GenerateCandidateMatches(sourceDescriptors, targetDescriptors) _
+            .ToArray
+
+        If candidateMatches.Length < 3 Then
+            ' Not enough candidate matches to proceed
+            Return New AffineTransform
+        Else
+            Return candidateMatches.MakeAlignment(iterations, distanceThreshold)
+        End If
     End Function
 
     ''' <summary>
