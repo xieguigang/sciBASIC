@@ -98,6 +98,13 @@ Public Structure PointWithDescriptor
         Next
     End Function
 
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    ''' <param name="shape"></param>
+    ''' <param name="getMetadata">should be normalized to [0,1]</param>
+    ''' <returns></returns>
     Public Shared Iterator Function ComputeDescriptors(Of T As Layout2D)(shape As IEnumerable(Of T), getMetadata As Func(Of T, Double())) As IEnumerable(Of PointWithDescriptor)
         Dim pool As T() = shape.SafeQuery.ToArray
 
@@ -123,5 +130,29 @@ Public Structure PointWithDescriptor
                 .properties = getMetadata(pool(i))
             }
         Next
+    End Function
+
+    Public Shared Function NormalizeProperties(points As PointWithDescriptor()) As PointWithDescriptor()
+        Dim max As Double() = New Double(points(0).properties.Length - 1) {}
+
+        For Each pt As PointWithDescriptor In points
+            Dim v As Double() = pt.properties
+
+            For i As Integer = 0 To v.Length - 1
+                If v(i) > max(i) Then
+                    max(i) = v(i)
+                End If
+            Next
+        Next
+
+        For i As Integer = 0 To points.Length - 1
+            points(i) = New PointWithDescriptor With {
+                .Descriptor = points(i).Descriptor,
+                .Pt = points(i).Pt,
+                .properties = SIMD.Divide.f64_op_divide_f64(points(i).properties, max)
+            }
+        Next
+
+        Return points
     End Function
 End Structure
