@@ -284,6 +284,17 @@ Namespace Math.Correlations
         ''' <summary>
         ''' SUM((a - v) ^ 2)
         ''' </summary>
+        ''' <param name="v"></param>
+        ''' <returns></returns>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function SquareDistance(x As Double(), v As Double()) As Double
+            Return SIMD.Exponent.f64_op_exponent_f64_scalar(SIMD.Subtract.f64_op_subtract_f64(x, v), 2).Sum
+        End Function
+
+        ''' <summary>
+        ''' SUM((a - v) ^ 2)
+        ''' </summary>
         ''' <param name="a"></param>
         ''' <param name="v"></param>
         ''' <returns></returns>

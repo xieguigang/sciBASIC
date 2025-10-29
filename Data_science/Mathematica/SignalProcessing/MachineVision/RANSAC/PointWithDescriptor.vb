@@ -1,7 +1,9 @@
 ﻿Imports System.Drawing
+Imports Microsoft.VisualBasic.ApplicationServices.Terminal.ProgressBar
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Math2D
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Math.Correlations
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports std = System.Math
 
@@ -24,6 +26,48 @@ Public Structure PointWithDescriptor
 
     Public Overrides Function ToString() As String
         Return $"({Pt.X},{Pt.Y}) radius:{Descriptor.r}, theta:{Descriptor.theta}, properties:{properties.GetJson}"
+    End Function
+
+    ''' <summary>
+    ''' Generates a list of candidate matches by finding the nearest neighbor in descriptor space.
+    ''' </summary>
+    Public Shared Function GenerateCandidateMatches(ByRef sourceDesc As PointWithDescriptor(), ByRef targetDesc As PointWithDescriptor()) As List(Of (source As PointF, target As PointF))
+        Dim matches As New List(Of (source As PointF, target As PointF))()
+
+        Call $"Generates a list of candidate matches by finding the nearest neighbor in descriptor space.".debug
+        Call $"matrix size: {sourceDesc.Length}x{targetDesc.Length}".info
+
+        For Each sPt As PointWithDescriptor In Tqdm.Wrap(sourceDesc, wrap_console:=App.EnableTqdm)
+            Dim minDist As Double = Double.PositiveInfinity
+            Dim bestMatch As PointWithDescriptor
+
+            For Each tPt As PointWithDescriptor In targetDesc
+                ' Simple Euclidean distance in descriptor space (r, theta)
+                ' We might want to weight angle more than distance, but this is a start.
+                Dim dr = sPt.Descriptor.r - tPt.Descriptor.r
+                Dim dtheta = sPt.Descriptor.theta - tPt.Descriptor.theta
+                Dim pd As Double = If(sPt.properties.IsNullOrEmpty OrElse tPt.properties.IsNullOrEmpty, 0, sPt.properties.SquareDistance(tPt.properties))
+
+                ' Normalize angle difference
+                While dtheta > std.PI : dtheta -= 2 * std.PI : End While
+                While dtheta < -std.PI : dtheta += 2 * std.PI : End While
+
+                Dim distSq = dr * dr + dtheta * dtheta + pd
+
+                If distSq < minDist Then
+                    minDist = distSq
+                    bestMatch = tPt
+                End If
+            Next
+
+            If minDist <> Double.PositiveInfinity Then
+                matches.Add((sPt.Pt, bestMatch.Pt))
+            End If
+        Next
+
+        Call $"find {matches.Count} candidate matches!".debug
+
+        Return matches
     End Function
 
     ''' <summary>
