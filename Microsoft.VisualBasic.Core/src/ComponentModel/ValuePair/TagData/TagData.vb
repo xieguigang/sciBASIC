@@ -80,6 +80,7 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.ApplicationServices.Debugging
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.Repository
 Imports Microsoft.VisualBasic.Language
@@ -147,6 +148,10 @@ Namespace ComponentModel.TagData
             Tag = i
             Value = val
         End Sub
+
+        Public Overrides Function ToString() As String
+            Return $"({Tag}) {InspectObject.ToInspectString(Value)}"
+        End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overloads Shared Widening Operator CType(tagged As (Integer, T)) As IntegerTagged(Of T)

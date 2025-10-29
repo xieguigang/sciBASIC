@@ -1,54 +1,54 @@
 ﻿#Region "Microsoft.VisualBasic::6c7a65e4a824fa9a33739f564d7e3221, gr\Microsoft.VisualBasic.Imaging\Filters\TabulateClipScaler.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 126
-    '    Code Lines: 96 (76.19%)
-    ' Comment Lines: 11 (8.73%)
-    '    - Xml Docs: 100.00%
-    ' 
-    '   Blank Lines: 19 (15.08%)
-    '     File Size: 5.27 KB
+' Summaries:
 
 
-    '     Module TabulateClipScaler
-    ' 
-    '         Function: AdjustGrayscale, ClipScale, GlobalTileScales
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 126
+'    Code Lines: 96 (76.19%)
+' Comment Lines: 11 (8.73%)
+'    - Xml Docs: 100.00%
+' 
+'   Blank Lines: 19 (15.08%)
+'     File Size: 5.27 KB
+
+
+'     Module TabulateClipScaler
+' 
+'         Function: AdjustGrayscale, ClipScale, GlobalTileScales
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -60,10 +60,12 @@ Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.ComponentModel.TagData
 Imports Microsoft.VisualBasic.Imaging.BitmapImage
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.Distributions
 Imports Microsoft.VisualBasic.Scripting.Runtime
 Imports Microsoft.VisualBasic.Serialization.JSON
+Imports std = System.Math
 
 Namespace Filters
 
@@ -144,10 +146,12 @@ Namespace Filters
             Next
 
             Call "create global heatmap bins".info
-
-            Dim hist = heatmap.ForEachBucket _
+            
+            Dim hist As IntegerTagged(Of Integer())() = heatmap.ForEachBucket _
                 .AsParallel _
                 .Select(Function(tile)
+                            ' 255/5 = 51
+                            ' split into 6 bins
                             Return tile.GroupBy(Function(b) CInt(b / 20)).ToArray
                         End Function) _
                 .ToArray _
@@ -157,23 +161,12 @@ Namespace Filters
                 .OrderBy(Function(a) a.Tag) _
                 .ToArray
             Dim maxN As Integer = which.Max(hist.Select(Function(a) a.Value.Length))
-            Dim resample As DoubleRange
-
-            If maxN = 0 Then
-                resample = New DoubleRange(vector:=hist(Scan0).Value.AsList + hist(1).Value)
-            ElseIf maxN = hist.Length - 1 Then
-                resample = New DoubleRange(vector:=hist(hist.Length - 1).Value.AsList + hist(hist.Length - 2).Value)
-            Else
-                resample = New DoubleRange(vector:=hist(maxN - 1).Value.AsList + hist(maxN).Value + hist(maxN + 1).Value)
-            End If
-
-            Call $"resample of the grayscale heatmap with histogram range {resample.MinMax.GetJson}.".debug
-
-            Dim i As Integer = 0
+            Dim resample As New DoubleRange(hist.TakeBags(maxN, nbags:=5).IteratesALL)
+            Dim i As i32 = 0
             Dim bin As Double() = resample.MinMax
 
-            For Each grayscale As Integer() In TqdmWrapper.Wrap(heatmap.ForEachBucket.ToArray)
-                Dim tile As BitmapBuffer = pull(i)
+            For Each grayscale As Integer() In heatmap.ForEachBucket
+                Dim tile As BitmapBuffer = pull(++i)
                 Dim scales As Byte() = grayscale.AsDouble.ClipScale(bin).ToArray
                 Dim raster As Color(,) = scales _
                     .Select(Function(si) Color.FromArgb(si, si, si)) _
@@ -185,6 +178,26 @@ Namespace Filters
                 Erase scales
                 Erase raster
             Next
+        End Function
+
+        <Extension>
+        Private Iterator Function TakeBags(hist As IntegerTagged(Of Integer())(), maxN As Integer, nbags As Integer) As IEnumerable(Of Integer())
+            If maxN <= nbags Then
+                For i As Integer = 0 To std.min(nbags, hist.Length) - 1
+                    Yield hist(i).Value
+                Next
+            ElseIf maxN >= hist.Length - nbags Then
+                For i As Integer = hist.Length - 1 To std.Max(hist.Length - nbags, 0) Step -1
+                    Yield hist(i).Value
+                Next
+            Else
+                Dim start As Integer = maxN - nbags \ 2
+                Dim ends As Integer = maxN + nbags \ 2
+
+                For i As Integer = std.Max(0, start) To std.Min(hist.Length - 1, ends)
+                    Yield hist(i).Value
+                Next
+            End If
         End Function
 
     End Module

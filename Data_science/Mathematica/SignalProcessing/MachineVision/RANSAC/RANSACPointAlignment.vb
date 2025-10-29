@@ -58,9 +58,11 @@
 #End Region
 
 Imports System.Drawing
+Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ApplicationServices.Terminal.ProgressBar
 Imports Microsoft.VisualBasic.ApplicationServices.Terminal.ProgressBar.Tqdm
 Imports Microsoft.VisualBasic.ComponentModel.Algorithm.base
+Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Math2D
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
@@ -89,6 +91,41 @@ Public Module RANSACPointAlignment
     ''' <param name="iterations">The number of RANSAC iterations.</param>
     ''' <param name="distanceThreshold">The distance threshold to consider a point an inlier.</param>
     ''' <returns>The best-fit Transform object.</returns>
+    Public Function AlignPolygons(Of T As Layout2D)(sourcePoly As T(),
+                                                    targetPoly As T(),
+                                                    properties As Func(Of T, Double()),
+                                                    Optional iterations As Integer = 1000,
+                                                    Optional distanceThreshold As Double = 0.1) As AffineTransform
+        ' Pre-check: need at least 3 points
+        If sourcePoly.Length < 2 OrElse targetPoly.Length < 2 Then
+            Return New AffineTransform
+        End If
+
+        ' 1. Compute descriptors for all points in both polygons
+        Dim sourceDescriptors = PointWithDescriptor.ComputeDescriptors(sourcePoly, properties).ToArray
+        Dim targetDescriptors = PointWithDescriptor.ComputeDescriptors(targetPoly, properties).ToArray
+
+        ' 2. Generate candidate matches based on descriptor similarity
+        Dim candidateMatches As (source As PointF, target As PointF)() = PointWithDescriptor _
+            .GenerateCandidateMatches(sourceDescriptors, targetDescriptors) _
+            .ToArray
+
+        If candidateMatches.Length < 3 Then
+            ' Not enough candidate matches to proceed
+            Return New AffineTransform
+        Else
+            Return candidateMatches.MakeAlignment(iterations, distanceThreshold)
+        End If
+    End Function
+
+    ''' <summary>
+    ''' Aligns a source polygon to a target polygon using RANSAC.
+    ''' </summary>
+    ''' <param name="sourcePoly">The polygon to be transformed.</param>
+    ''' <param name="targetPoly">The polygon to align to.</param>
+    ''' <param name="iterations">The number of RANSAC iterations.</param>
+    ''' <param name="distanceThreshold">The distance threshold to consider a point an inlier.</param>
+    ''' <returns>The best-fit Transform object.</returns>
     Public Function AlignPolygons(sourcePoly As Polygon2D,
                                   targetPoly As Polygon2D,
                                   Optional iterations As Integer = 1000,
@@ -104,13 +141,26 @@ Public Module RANSACPointAlignment
         Dim targetDescriptors = PointWithDescriptor.ComputeDescriptors(targetPoly).ToArray
 
         ' 2. Generate candidate matches based on descriptor similarity
-        Dim candidateMatches = GenerateCandidateMatches(sourceDescriptors, targetDescriptors)
+        Dim candidateMatches As (source As PointF, target As PointF)() = PointWithDescriptor _
+            .GenerateCandidateMatches(sourceDescriptors, targetDescriptors) _
+            .ToArray
 
-        If candidateMatches.Count < 3 Then
+        If candidateMatches.Length < 3 Then
             ' Not enough candidate matches to proceed
             Return New AffineTransform
+        Else
+            Return candidateMatches.MakeAlignment(iterations, distanceThreshold)
         End If
+    End Function
 
+    ''' <summary>
+    ''' Aligns a source polygon to a target polygon using RANSAC.
+    ''' </summary>
+    ''' <param name="iterations">The number of RANSAC iterations.</param>
+    ''' <param name="distanceThreshold">The distance threshold to consider a point an inlier.</param>
+    ''' <returns>The best-fit Transform object.</returns>
+    <Extension>
+    Private Function MakeAlignment(candidateMatches As (source As PointF, target As PointF)(), iterations As Integer, distanceThreshold As Double) As AffineTransform
         Dim bestTransform As New AffineTransform
         Dim maxInliers As Integer = 0
         Dim thresholdSq = distanceThreshold * distanceThreshold
@@ -119,9 +169,7 @@ Public Module RANSACPointAlignment
 
         ' RANSAC 迭代
         For Each iter As Integer In TqdmWrapper.Range(0, iterations, bar:=bar, wrap_console:=App.EnableTqdm)
-            ' Randomly select 3 different matches from the candidate list
-            If candidateMatches.Count < 3 Then Exit For
-
+            ' make sampling of 3 data points from the generated candidate matches
             Dim matches = candidateMatches.OrderBy(Function(x) rand.NextDouble()).Take(3).ToArray()
 
             Dim p1 = matches(0).source, q1 = matches(0).target
@@ -129,14 +177,15 @@ Public Module RANSACPointAlignment
             Dim p3 = matches(2).source, q3 = matches(2).target
 
             ' Compute a transform hypothesis from these 3 matches
-            Dim hypothesisTransform = ComputeAffineFrom3Pairs(p1, p2, p3, q1, q2, q3)
-
+            Dim hypothesisTransform As AffineTransform = ComputeAffineFrom3Pairs(p1, p2, p3, q1, q2, q3)
             ' Count inliers for this hypothesis across ALL candidate matches
             Dim currentInliers As Integer = 0
-            For Each pair In candidateMatches
+
+            For Each pair As (source As PointF, target As PointF) In candidateMatches
                 Dim transformedSourcePt = hypothesisTransform.ApplyToPoint(pair.source)
                 Dim dx = transformedSourcePt.X - pair.target.X
                 Dim dy = transformedSourcePt.Y - pair.target.Y
+
                 If dx * dx + dy * dy <= thresholdSq Then
                     currentInliers += 1
                 End If
@@ -157,45 +206,6 @@ Public Module RANSACPointAlignment
         End If
 
         Return bestTransform
-    End Function
-
-    ''' <summary>
-    ''' Generates a list of candidate matches by finding the nearest neighbor in descriptor space.
-    ''' </summary>
-    Private Function GenerateCandidateMatches(ByRef sourceDesc As PointWithDescriptor(), ByRef targetDesc As PointWithDescriptor()) As List(Of (source As PointF, target As PointF))
-        Dim matches As New List(Of (source As PointF, target As PointF))()
-
-        Call $"Generates a list of candidate matches by finding the nearest neighbor in descriptor space.".debug
-        Call $"matrix size: {sourceDesc.Length}x{targetDesc.Length}".info
-
-        For Each sPt As PointWithDescriptor In Tqdm.Wrap(sourceDesc, wrap_console:=App.EnableTqdm)
-            Dim minDist As Double = Double.PositiveInfinity
-            Dim bestMatch As PointWithDescriptor
-
-            For Each tPt As PointWithDescriptor In targetDesc
-                ' Simple Euclidean distance in descriptor space (r, theta)
-                ' We might want to weight angle more than distance, but this is a start.
-                Dim dr = sPt.Descriptor.r - tPt.Descriptor.r
-                Dim dtheta = sPt.Descriptor.theta - tPt.Descriptor.theta
-                ' Normalize angle difference
-                While dtheta > std.PI : dtheta -= 2 * std.PI : End While
-                While dtheta < -std.PI : dtheta += 2 * std.PI : End While
-
-                Dim distSq = dr * dr + dtheta * dtheta
-                If distSq < minDist Then
-                    minDist = distSq
-                    bestMatch = tPt
-                End If
-            Next
-
-            If minDist <> Double.PositiveInfinity Then
-                matches.Add((sPt.Pt, bestMatch.Pt))
-            End If
-        Next
-
-        Call $"find {matches.Count} candidate matches!".debug
-
-        Return matches
     End Function
 
     ''' <summary>
@@ -235,12 +245,12 @@ Public Module RANSACPointAlignment
     ''' <summary>
     ''' Refines the transformation using all inliers with a least-squares fit for an affine transform.
     ''' </summary>
-    Private Function RefineTransformWithLeastSquares(candidateMatches As List(Of (source As PointF, target As PointF)), initialTransform As AffineTransform, threshold As Double) As AffineTransform
+    Private Function RefineTransformWithLeastSquares(candidateMatches As (source As PointF, target As PointF)(), initialTransform As AffineTransform, threshold As Double) As AffineTransform
         Dim inlierPairs As New List(Of (source As PointF, target As PointF))
         Dim thresholdSq = threshold * threshold
         Dim errors As New List(Of Double)
 
-        For Each pair In candidateMatches
+        For Each pair As (source As PointF, target As PointF) In candidateMatches
             Dim transformedSourcePt = initialTransform.ApplyToPoint(pair.source)
             Dim dx = transformedSourcePt.X - pair.target.X
             Dim dy = transformedSourcePt.Y - pair.target.Y

@@ -75,6 +75,12 @@ Namespace ComponentModel.Collection.Generic
             End Get
         End Property
 
+        Public ReadOnly Property PackSize As Integer()
+            Get
+                Return buckets.Select(Function(p) p.Length).ToArray
+            End Get
+        End Property
+
         Sub New()
         End Sub
 
@@ -84,6 +90,10 @@ Namespace ComponentModel.Collection.Generic
             Next
         End Sub
 
+        ''' <summary>
+        ''' populate each pack data from the bucket data
+        ''' </summary>
+        ''' <returns></returns>
         Public Function ForEachBucket() As IEnumerable(Of T())
             Return buckets.AsEnumerable
         End Function
@@ -97,6 +107,10 @@ Namespace ComponentModel.Collection.Generic
         Public Sub Add(getData As Func(Of IEnumerable(Of T)))
             Call Add(getData())
         End Sub
+
+        Public Overrides Function ToString() As String
+            Return $"with {buckets.Count} buckets data"
+        End Function
 
         Public Iterator Function GetEnumerator() As IEnumerator(Of T) Implements IEnumerable(Of T).GetEnumerator
             For Each block As T() In buckets

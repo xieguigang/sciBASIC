@@ -186,6 +186,8 @@ Namespace Filters
             Dim height As Integer = bitmap.Height
             Dim result As New BitmapBuffer(width, height)
 
+            If threshold < 0 Then threshold = otsuThreshold(bitmap)
+
             '根据宽高创建像素点数组,并将bitmap的rgb值赋给它，同时创建一个空的等大数组
             Dim pixels As UInteger() = bitmap.GetARGBStream
             Dim newpixels As UInteger() = result.GetARGBStream
