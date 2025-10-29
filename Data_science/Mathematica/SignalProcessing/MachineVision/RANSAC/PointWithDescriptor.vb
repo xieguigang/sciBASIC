@@ -51,9 +51,12 @@ Public Structure PointWithDescriptor
                             While dtheta > std.PI : dtheta -= 2 * std.PI : End While
                             While dtheta < -std.PI : dtheta += 2 * std.PI : End While
 
-                            Dim distSq = dr * dr + dtheta * dtheta + pd * 0.5
+                            dr = dr ^ 2
+                            dtheta = dtheta ^ 2
 
-                            Return (distSq, tPt)
+                            Dim distSq = dr + dtheta + pd * 0.5
+
+                            Return (distSq, tPt, dr, dtheta, pd)
                         End Function) _
                 .ToArray
             Dim min = q.OrderBy(Function(a) a.distSq).First

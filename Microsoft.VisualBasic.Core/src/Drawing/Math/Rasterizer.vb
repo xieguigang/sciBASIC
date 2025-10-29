@@ -1,5 +1,6 @@
 ﻿Imports System.Drawing
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
+Imports Microsoft.VisualBasic.ComponentModel.TagData
 Imports Microsoft.VisualBasic.Linq
 Imports std = System.Math
 
@@ -47,6 +48,18 @@ Namespace Imaging.Math2D
                 Grid.Add(row)
             Next
         End Sub
+
+        Public Iterator Function RasterDensity() As IEnumerable(Of DoubleTagged(Of PointF))
+            For i As Integer = 0 To GridHeight - 1
+                For j As Integer = 0 To GridWidth - 1
+                    Dim n As Integer = Me(i, j).Count
+
+                    If n > 0 Then
+                        Yield New DoubleTagged(Of PointF)(n, New PointF(j + 1, i + 1))
+                    End If
+                Next
+            Next
+        End Function
 
         Public Function GetRasterPolygon(n As Integer) As Polygon2D
             Dim x As New List(Of Double)
