@@ -165,7 +165,7 @@ Namespace Filters
             Dim i As i32 = 0
             Dim bin As Double() = resample.MinMax
 
-            For Each grayscale As Integer() In heatmap.ForEachBucket
+            For Each grayscale As Integer() In TqdmWrapper.Wrap(heatmap.ForEachBucket.ToArray)
                 Dim tile As BitmapBuffer = pull(++i)
                 Dim scales As Byte() = grayscale.AsDouble.ClipScale(bin).ToArray
                 Dim raster As Color(,) = scales _
