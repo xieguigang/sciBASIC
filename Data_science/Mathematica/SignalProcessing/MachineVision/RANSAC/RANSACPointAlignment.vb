@@ -102,8 +102,8 @@ Public Module RANSACPointAlignment
         End If
 
         ' 1. Compute descriptors for all points in both polygons
-        Dim sourceDescriptors = PointWithDescriptor.ComputeDescriptors(sourcePoly, properties).ToArray
-        Dim targetDescriptors = PointWithDescriptor.ComputeDescriptors(targetPoly, properties).ToArray
+        Dim sourceDescriptors = PointWithDescriptor.NormalizeProperties(PointWithDescriptor.ComputeDescriptors(sourcePoly, properties).ToArray)
+        Dim targetDescriptors = PointWithDescriptor.NormalizeProperties(PointWithDescriptor.ComputeDescriptors(targetPoly, properties).ToArray)
 
         ' 2. Generate candidate matches based on descriptor similarity
         Dim candidateMatches As (source As PointF, target As PointF)() = PointWithDescriptor _
