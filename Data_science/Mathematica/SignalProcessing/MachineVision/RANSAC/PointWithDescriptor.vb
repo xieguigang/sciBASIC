@@ -33,35 +33,38 @@ Public Structure PointWithDescriptor
     ''' </summary>
     Public Shared Function GenerateCandidateMatches(ByRef sourceDesc As PointWithDescriptor(), ByRef targetDesc As PointWithDescriptor()) As List(Of (source As PointF, target As PointF))
         Dim matches As New List(Of (source As PointF, target As PointF))()
+        Dim bar As Tqdm.ProgressBar = Nothing
 
         Call $"Generates a list of candidate matches by finding the nearest neighbor in descriptor space.".debug
         Call $"matrix size: [{sourceDesc.Length} x {targetDesc.Length}]".info
 
-        For Each sPt As PointWithDescriptor In Tqdm.Wrap(sourceDesc, wrap_console:=App.EnableTqdm)
-            Dim minDist As Double = Double.PositiveInfinity
-            Dim bestMatch As PointWithDescriptor
+        For Each sPt As PointWithDescriptor In Tqdm.Wrap(sourceDesc, bar:=bar, wrap_console:=App.EnableTqdm)
+            Dim q = targetDesc.AsParallel _
+                .Select(Function(tPt As PointWithDescriptor)
+                            ' Simple Euclidean distance in descriptor space (r, theta)
+                            ' We might want to weight angle more than distance, but this is a start.
+                            Dim dr = sPt.Descriptor.r - tPt.Descriptor.r
+                            Dim dtheta = sPt.Descriptor.theta - tPt.Descriptor.theta
+                            Dim pd As Double = If(sPt.properties.IsNullOrEmpty OrElse tPt.properties.IsNullOrEmpty, 0, sPt.properties.SquareDistance(tPt.properties))
 
-            For Each tPt As PointWithDescriptor In targetDesc
-                ' Simple Euclidean distance in descriptor space (r, theta)
-                ' We might want to weight angle more than distance, but this is a start.
-                Dim dr = sPt.Descriptor.r - tPt.Descriptor.r
-                Dim dtheta = sPt.Descriptor.theta - tPt.Descriptor.theta
-                Dim pd As Double = If(sPt.properties.IsNullOrEmpty OrElse tPt.properties.IsNullOrEmpty, 0, sPt.properties.SquareDistance(tPt.properties))
+                            ' Normalize angle difference
+                            While dtheta > std.PI : dtheta -= 2 * std.PI : End While
+                            While dtheta < -std.PI : dtheta += 2 * std.PI : End While
 
-                ' Normalize angle difference
-                While dtheta > std.PI : dtheta -= 2 * std.PI : End While
-                While dtheta < -std.PI : dtheta += 2 * std.PI : End While
+                            Dim distSq = dr * dr + dtheta * dtheta + pd
 
-                Dim distSq = dr * dr + dtheta * dtheta + pd
+                            Return (distSq, tPt)
+                        End Function) _
+                .ToArray _
+                .OrderBy(Function(a) a.distSq) _
+                .First
 
-                If distSq < minDist Then
-                    minDist = distSq
-                    bestMatch = tPt
-                End If
-            Next
+            Dim minDist As Double = q.distSq
+            Dim bestMatch As PointWithDescriptor = q.tPt
 
-            If minDist <> Double.PositiveInfinity Then
-                matches.Add((sPt.Pt, bestMatch.Pt))
+            If Not minDist.IsNaNImaginary Then
+                Call matches.Add((sPt.Pt, bestMatch.Pt))
+                Call bar.SetLabel($"({sPt.Pt.X},{sPt.Pt.Y}) = ({bestMatch.Pt.X},{bestMatch.Pt.Y}) [min sq_dist:{minDist}]")
             End If
         Next
 
