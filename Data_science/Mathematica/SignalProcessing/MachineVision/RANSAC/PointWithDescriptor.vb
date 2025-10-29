@@ -55,12 +55,10 @@ Public Structure PointWithDescriptor
 
                             Return (distSq, tPt)
                         End Function) _
-                .ToArray _
-                .OrderBy(Function(a) a.distSq) _
-                .First
-
-            Dim minDist As Double = q.distSq
-            Dim bestMatch As PointWithDescriptor = q.tPt
+                .ToArray
+            Dim min = q.OrderBy(Function(a) a.distSq).First
+            Dim minDist As Double = min.distSq
+            Dim bestMatch As PointWithDescriptor = min.tPt
 
             If Not minDist.IsNaNImaginary Then
                 Call matches.Add((sPt.Pt, bestMatch.Pt))
