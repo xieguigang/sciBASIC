@@ -54,6 +54,7 @@
 
 Imports System.Drawing
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.ApplicationServices.Terminal.ProgressBar.Tqdm
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
@@ -63,6 +64,7 @@ Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.Distributions
 Imports Microsoft.VisualBasic.Scripting.Runtime
+Imports Microsoft.VisualBasic.Serialization.JSON
 Imports std = System.Math
 
 Namespace Filters
@@ -131,8 +133,10 @@ Namespace Filters
             Dim pull As BitmapBuffer() = tiles.ToArray
             Dim heatmap As New BucketSet(Of Integer)
 
+            Call "processing the global grayscale image...".info
+
             ' convert color pixel to grayscale pixel
-            For Each tile As BitmapBuffer In pull
+            For Each tile As BitmapBuffer In TqdmWrapper.Wrap(pull)
                 Call heatmap.Add(From pixel As Color
                                  In tile.GetPixelsAll
                                  Select BitmapScale.GrayScale(
@@ -140,6 +144,8 @@ Namespace Filters
                                      wr, wg, wb)
                                  )
             Next
+
+            Call "create global heatmap bins".info
 
             Dim hist As IntegerTagged(Of Integer())() = heatmap.ForEachBucket _
                 .AsParallel _
@@ -159,7 +165,9 @@ Namespace Filters
             Dim i As i32 = 0
             Dim bin As Double() = resample.MinMax
 
-            For Each grayscale As Integer() In heatmap.ForEachBucket
+            Call $"re-sampling heatmap grayscale range for make value clip: {bin.GetJson}".debug
+
+            For Each grayscale As Integer() In TqdmWrapper.Wrap(heatmap.ForEachBucket.ToArray)            
                 Dim tile As BitmapBuffer = pull(++i)
                 Dim scales As Byte() = grayscale.AsDouble.ClipScale(bin).ToArray
                 Dim raster As Color(,) = scales _
