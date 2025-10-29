@@ -35,7 +35,7 @@ Public Structure PointWithDescriptor
         Dim matches As New List(Of (source As PointF, target As PointF))()
 
         Call $"Generates a list of candidate matches by finding the nearest neighbor in descriptor space.".debug
-        Call $"matrix size: {sourceDesc.Length}x{targetDesc.Length}".info
+        Call $"matrix size: [{sourceDesc.Length} x {targetDesc.Length}]".info
 
         For Each sPt As PointWithDescriptor In Tqdm.Wrap(sourceDesc, wrap_console:=App.EnableTqdm)
             Dim minDist As Double = Double.PositiveInfinity
