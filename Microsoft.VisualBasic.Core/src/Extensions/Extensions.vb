@@ -641,13 +641,13 @@ Public Module Extensions
     End Function
 
     ''' <summary>
-    ''' Value assignment to the target variable.(将<paramref name="value"/>参数里面的值赋值给<paramref name="var"/>参数然后返回<paramref name="value"/>)
+    ''' Value assignment to the target variable.
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
     ''' <param name="var"></param>
     ''' <param name="value"></param>
     ''' <returns></returns>
-    ''' <remarks></remarks>
+    ''' <remarks>(将<paramref name="value"/>参数里面的值赋值给<paramref name="var"/>参数然后返回<paramref name="value"/>)</remarks>
     ''' 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension> Public Function InlineCopy(Of T)(ByRef var As T, value As T) As T
