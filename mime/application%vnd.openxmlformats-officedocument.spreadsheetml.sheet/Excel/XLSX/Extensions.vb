@@ -163,8 +163,21 @@ Namespace XLSX
             Next
         End Sub
 
+        ''' <summary>
+        ''' Save target object collection into a given xlsx table file
+        ''' </summary>
+        ''' <typeparam name="T"></typeparam>
+        ''' <param name="data"></param>
+        ''' <param name="file"></param>
+        ''' <param name="sheetName"></param>
+        ''' <param name="metadata">metadata rows</param>
+        ''' <param name="cols">these cols will be selected from the object and save to file</param>
         <Extension>
-        Public Sub SaveToExcel(Of T)(data As IEnumerable(Of T), file As Stream, sheetName As String, Optional metadata As String()() = Nothing)
+        Public Sub SaveToExcel(Of T)(data As IEnumerable(Of T), file As Stream,
+                                     Optional sheetName As String = "Sheet1",
+                                     Optional metadata As String()() = Nothing,
+                                     Optional cols As String() = Nothing)
+
             Dim str As csv = data.ToCsvDoc()
             Dim workbook As New Workbook(sheetName)
             Dim sheet As Worksheet = workbook.CurrentWorksheet
@@ -179,14 +192,32 @@ Namespace XLSX
                 Next
             End If
 
+            If Not cols.IsNullOrEmpty Then
+                ' make column projection
+                str = str.Project(cols)
+            End If
+
             Call workbook.WriteSheetTable(str)
             Call workbook.SaveAsStream(file)
         End Sub
 
+        ''' <summary>
+        ''' Save target object collection into a given xlsx table file
+        ''' </summary>
+        ''' <typeparam name="T"></typeparam>
+        ''' <param name="data"></param>
+        ''' <param name="file"></param>
+        ''' <param name="sheetName"></param>
+        ''' <param name="metadata">metadata rows</param>
+        ''' <param name="cols">these cols will be selected from the object and save to file</param>
         <Extension>
-        Public Sub SaveToExcel(Of T)(data As IEnumerable(Of T), file As String, sheetName As String, Optional metadata As String()() = Nothing)
+        Public Sub SaveToExcel(Of T)(data As IEnumerable(Of T), file As String,
+                                     Optional sheetName As String = "Sheet1",
+                                     Optional metadata As String()() = Nothing,
+                                     Optional cols As IEnumerable(Of String) = Nothing)
+
             Using s As Stream = file.Open(FileMode.OpenOrCreate, doClear:=True, [readOnly]:=False)
-                Call data.SaveToExcel(s, sheetName, metadata)
+                Call data.SaveToExcel(s, sheetName, metadata, cols.SafeQuery.ToArray)
             End Using
         End Sub
     End Module
