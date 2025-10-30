@@ -473,6 +473,20 @@ Namespace Imaging.BitmapImage
             255  ' B
         }, 0)
 
+        Public Shared ReadOnly Property UInt32Black1 As UInteger = BitConverter.ToUInt32({
+            0, ' A
+            0, ' R
+            0, ' G
+            0  ' B
+        }, 0)
+
+        Public Shared ReadOnly Property UInt32Black2 As UInteger = BitConverter.ToUInt32({
+            255, ' A
+            0, ' R
+            0, ' G
+            0  ' B
+        }, 0)
+
         ''' <summary>
         ''' get image data array in ARGB format
         ''' </summary>
