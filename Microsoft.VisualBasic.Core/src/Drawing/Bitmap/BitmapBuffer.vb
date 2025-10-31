@@ -204,6 +204,18 @@ Namespace Imaging.BitmapImage
             _Height = size.Height
         End Sub
 
+        Sub New(pixels As Color(), size As Size)
+            Call MyBase.New(Unpack(pixels, size))
+
+            channels = TYPE_INT_ARGB  ' argb
+            memoryBuffer = True
+
+            _Stride = size.Width * channels
+            _Size = size
+            _Width = size.Width
+            _Height = size.Height
+        End Sub
+
         Public Const TYPE_INT_RGB As Integer = 3
         Public Const TYPE_INT_ARGB As Integer = 4
 
@@ -543,6 +555,36 @@ Namespace Imaging.BitmapImage
             Dim color As Color = Color.FromArgb(bytes(0), bytes(1), bytes(2), bytes(3))
 
             Return color
+        End Function
+
+        ''' <summary>
+        ''' argb channels=4
+        ''' </summary>
+        ''' <param name="pixels"></param>
+        ''' <param name="size"></param>
+        ''' <returns></returns>
+        Public Shared Function Unpack(pixels As Color(), size As Size) As Byte()
+            Dim bytes As Byte() = New Byte(TYPE_INT_ARGB * size.Width * size.Height - 1) {}
+
+            ' If channels = TYPE_INT_ARGB Then
+            '    iA = buffer(i + 3)
+            ' End If
+
+            ' Dim iR As Byte = buffer(i + 2)
+            ' Dim iG As Byte = buffer(i + 1)
+            ' Dim iB As Byte = buffer(i + 0)
+
+            For i As Integer = 0 To pixels.Length - 1 Step TYPE_INT_ARGB
+                Dim pixel As Color = pixels(i)
+
+                bytes(i + 3) = pixel.A
+
+                bytes(i + 2) = pixel.R
+                bytes(i + 1) = pixel.G
+                bytes(i + 0) = pixel.B
+            Next
+
+            Return bytes
         End Function
 
         ''' <summary>
