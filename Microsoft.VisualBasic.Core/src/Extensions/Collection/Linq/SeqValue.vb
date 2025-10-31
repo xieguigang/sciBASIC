@@ -122,11 +122,21 @@ Namespace Linq
             Return $"[{i}] {Me.value.GetJson(False)}"
         End Function
 
+        ''' <summary>
+        ''' get value from the indexed object
+        ''' </summary>
+        ''' <param name="x"></param>
+        ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Narrowing Operator CType(x As SeqValue(Of T)) As T
             Return x.value
         End Operator
 
+        ''' <summary>
+        ''' get ordinal index offset from the given indexed object.
+        ''' </summary>
+        ''' <param name="x"></param>
+        ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Narrowing Operator CType(x As SeqValue(Of T)) As Integer
             Return x.i

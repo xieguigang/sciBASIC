@@ -205,6 +205,7 @@ Namespace IO
                 .SeqIterator _
                 .ToDictionary(Function(i) i.value,
                               Function(i)
+                                  ' 0-based ordinal offset
                                   Return i.i
                               End Function)
         End Function
