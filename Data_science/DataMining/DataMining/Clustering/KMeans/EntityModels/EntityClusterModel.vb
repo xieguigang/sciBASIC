@@ -57,6 +57,7 @@
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.SchemaMaps
 
 Namespace KMeans
 
@@ -75,6 +76,7 @@ Namespace KMeans
         ''' 聚类结果的类编号
         ''' </summary>
         ''' <returns></returns>
+        <Column("class")>
         Public Property Cluster As String
 
         ''' <summary>
