@@ -483,7 +483,7 @@ Namespace Scripting
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function [DirectCast](array As IEnumerable, type As Type) As Array
-            Return Runtime.Extensions.CreateArray(data:=array, type)
+            Return Runtime.ClrConversion.CreateArray(data:=array, type)
         End Function
 
         ''' <summary>
