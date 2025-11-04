@@ -115,6 +115,12 @@ Namespace Imaging.Driver
             End If
         End Function
 
+        ''' <summary>
+        ''' A helper function for measure string size
+        ''' </summary>
+        ''' <param name="text"></param>
+        ''' <param name="font"></param>
+        ''' <returns></returns>
         Public Function MeasureTextSize(text As String, font As Font) As SizeF
             If measureString Is Nothing Then
                 Throw New InvalidProgramException("missing text size measurement driver!")
