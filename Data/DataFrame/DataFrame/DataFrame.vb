@@ -354,7 +354,7 @@ Public Class DataFrame : Implements INumericMatrix, ILabeledMatrix, Enumeration(
             firstValue = (From xi As Object In dataArray Where Not xi Is Nothing).FirstOrDefault
 
             If Not firstValue Is Nothing Then
-                dataArray = CreateArray(dataArray, dataArray(0).GetType)
+                dataArray = ClrConversion.CreateArray(dataArray, dataArray(0).GetType)
             Else
                 ' 20240428 all is nothing
                 '
