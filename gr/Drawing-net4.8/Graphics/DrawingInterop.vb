@@ -149,19 +149,5 @@ Public Module DrawingInterop
 
         Return g
     End Function
-
-    <Extension>
-    Public Function CTypeImage(image As Image) As System.Drawing.Image
-        If TypeOf image Is Bitmap Then
-            Return DirectCast(image, Bitmap).CTypeBitmap
-        Else
-            Throw New NotImplementedException
-        End If
-    End Function
-
-    <Extension>
-    Public Function CTypeBitmap(bitmap As Bitmap) As System.Drawing.Bitmap
-        Throw New NotImplementedException
-    End Function
 End Module
 #End If

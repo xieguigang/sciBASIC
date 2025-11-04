@@ -781,7 +781,7 @@ Public MustInherit Class GDICanvas : Inherits IGraphics
     '     image is null.
     Public Overrides Sub DrawImage(image As Image, rect As RectangleF)
 #If NET8_0_OR_GREATER Then
-        Call Graphics.DrawImage(image.CTypeImage, rect)
+        Call Graphics.DrawImage(image.CTypeGdiImage, rect)
 #Else
         Call Graphics.DrawImage(image, rect)
 #End If
@@ -811,7 +811,7 @@ Public MustInherit Class GDICanvas : Inherits IGraphics
     '     image is null.
     Public Overrides Sub DrawImage(image As Image, rect As Rectangle)
 #If NET8_0_OR_GREATER Then
-        Call Graphics.DrawImage(image.CTypeImage, rect)
+        Call Graphics.DrawImage(image.CTypeGdiImage, rect)
 #Else
         Call Graphics.DrawImage(image, rect)
 #End If
@@ -833,7 +833,7 @@ Public MustInherit Class GDICanvas : Inherits IGraphics
     '     image is null.
     Public Overrides Sub DrawImage(image As Image, destPoints() As Point)
 #If NET8_0_OR_GREATER Then
-        Call Graphics.DrawImage(image.CTypeImage, destPoints)
+        Call Graphics.DrawImage(image.CTypeGdiImage, destPoints)
 #Else
         Call Graphics.DrawImage(image, destPoints)
 #End If
@@ -855,7 +855,7 @@ Public MustInherit Class GDICanvas : Inherits IGraphics
     '     image is null.
     Public Overrides Sub DrawImage(image As Image, destPoints() As PointF)
 #If NET8_0_OR_GREATER Then
-        Call Graphics.DrawImage(image.CTypeImage, destPoints)
+        Call Graphics.DrawImage(image.CTypeGdiImage, destPoints)
 #Else
         Call Graphics.DrawImage(image, destPoints)
 #End If
@@ -870,7 +870,7 @@ Public MustInherit Class GDICanvas : Inherits IGraphics
     ''' corner of the drawn image.</param>
     Public Overrides Sub DrawImage(image As Image, point As Point)
 #If NET8_0_OR_GREATER Then
-        Call Graphics.DrawImage(image.CTypeImage, Point)
+        Call Graphics.DrawImage(image.CTypeGdiImage, point)
 #Else
         Call Graphics.DrawImage(image, point)
 #End If
@@ -893,7 +893,7 @@ Public MustInherit Class GDICanvas : Inherits IGraphics
     '     image is null.
     Public Overrides Sub DrawImage(image As Image, point As PointF)
 #If NET8_0_OR_GREATER Then
-        Call Graphics.DrawImage(image.CTypeImage, Point)
+        Call Graphics.DrawImage(image.CTypeGdiImage, point)
 #Else
         Call Graphics.DrawImage(image, point)
 #End If
@@ -918,7 +918,7 @@ Public MustInherit Class GDICanvas : Inherits IGraphics
     '     image is null.
     Public Overrides Sub DrawImage(image As Image, x As Integer, y As Integer)
 #If NET8_0_OR_GREATER Then
-        Call Graphics.DrawImage(image.CTypeImage,x,y)
+        Call Graphics.DrawImage(image.CTypeGdiImage, x, y)
 #Else
         Call Graphics.DrawImage(image, x, y)
 #End If
@@ -943,7 +943,7 @@ Public MustInherit Class GDICanvas : Inherits IGraphics
     '     image is null.
     Public Overrides Sub DrawImage(image As Image, x As Single, y As Single)
 #If NET8_0_OR_GREATER Then
-        Call Graphics.DrawImage(image.CTypeImage,x,y)
+        Call Graphics.DrawImage(image.CTypeGdiImage, x, y)
 #Else
         Call Graphics.DrawImage(image, x, y)
 #End If
@@ -960,7 +960,7 @@ Public MustInherit Class GDICanvas : Inherits IGraphics
     ''' <param name="height">Height of the drawn image.</param>
     Public Overrides Sub DrawImage(image As Image, x As Integer, y As Integer, width As Integer, height As Integer)
 #If NET8_0_OR_GREATER Then
-        Call Graphics.DrawImage(image.CTypeImage,x,y,width,height)
+        Call Graphics.DrawImage(image.CTypeGdiImage, x, y, width, height)
 #Else
         Call Graphics.DrawImage(image, x, y, width, height)
 #End If
@@ -1006,7 +1006,7 @@ Public MustInherit Class GDICanvas : Inherits IGraphics
     '     image is null.
     Public Overrides Sub DrawImage(image As Image, x As Single, y As Single, width As Single, height As Single)
 #If NET8_0_OR_GREATER Then
-        Call Graphics.DrawImage(image.CTypeImage, x, y, width, height)
+        Call Graphics.DrawImage(image.CTypeGdiImage, x, y, width, height)
 #Else
         Call Graphics.DrawImage(image, x, y, width, height)
 #End If
@@ -1030,7 +1030,7 @@ Public MustInherit Class GDICanvas : Inherits IGraphics
     '     image is null.
     Public Overrides Sub DrawImageUnscaled(image As Image, rect As Rectangle)
 #If NET8_0_OR_GREATER Then
-        Call Graphics.DrawImageUnscaled(image.CTypeImage, rect)
+        Call Graphics.DrawImageUnscaled(image.CTypeGdiImage, rect)
 #Else
         Call Graphics.DrawImageUnscaled(image, rect)
 #End If
@@ -1046,7 +1046,7 @@ Public MustInherit Class GDICanvas : Inherits IGraphics
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Overrides Sub DrawImageUnscaled(image As Image, point As Point)
 #If NET8_0_OR_GREATER Then
-        Call Graphics.DrawImageUnscaled(image.CTypeImage, point)
+        Call Graphics.DrawImageUnscaled(image.CTypeGdiImage, point)
 #Else
         Call Graphics.DrawImageUnscaled(image, point)
 #End If
@@ -1067,7 +1067,7 @@ Public MustInherit Class GDICanvas : Inherits IGraphics
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Overrides Sub DrawImageUnscaled(image As Image, x As Integer, y As Integer)
 #If NET8_0_OR_GREATER Then
-        Call Graphics.DrawImageUnscaled(image.CTypeImage, x, y)
+        Call Graphics.DrawImageUnscaled(image.CTypeGdiImage, x, y)
 #Else
         Call Graphics.DrawImageUnscaled(image, x,y)
 #End If
@@ -1083,7 +1083,7 @@ Public MustInherit Class GDICanvas : Inherits IGraphics
     ''' <param name="height"></param>
     Public Overrides Sub DrawImageUnscaled(image As Image, x As Integer, y As Integer, width As Integer, height As Integer)
 #If NET8_0_OR_GREATER Then
-        Call Graphics.DrawImageUnscaled(image.CTypeImage, x, y, width, height)
+        Call Graphics.DrawImageUnscaled(image.CTypeGdiImage, x, y, width, height)
 #Else
         Call Graphics.DrawImageUnscaled(image, x,y,width ,height )
 #End If
@@ -1097,7 +1097,7 @@ Public MustInherit Class GDICanvas : Inherits IGraphics
     ''' <param name="rect">The <see cref="Rectangle"/> in which to draw the image.</param>
     Public Overrides Sub DrawImageUnscaledAndClipped(image As Image, rect As Rectangle)
 #If NET8_0_OR_GREATER Then
-        Call Graphics.DrawImageUnscaledAndClipped(image.CTypeImage, rect)
+        Call Graphics.DrawImageUnscaledAndClipped(image.CTypeGdiImage, rect)
 #Else
         Call Graphics.DrawImageUnscaledAndClipped(image, rect)
 #End If

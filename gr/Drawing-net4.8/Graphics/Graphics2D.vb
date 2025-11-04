@@ -115,7 +115,7 @@ Public Class Graphics2D : Inherits GDICanvas
             Throw New NotImplementedException
         End Get
         Protected Friend Set(value As Image)
-            innerImage = value.CTypeImage
+            innerImage = value.CTypeGdiImage
             innerSet()
         End Set
     End Property
