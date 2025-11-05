@@ -82,6 +82,12 @@ Namespace ComponentModel.Collection.Generic
             End Get
         End Property
 
+        Public ReadOnly Property Chunks As Integer
+            Get
+                Return buckets.Count
+            End Get
+        End Property
+
         Sub New()
         End Sub
 
