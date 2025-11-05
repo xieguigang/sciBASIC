@@ -237,8 +237,11 @@ Namespace SmithWaterman
         ''' Build the score matrix using dynamic programming.
         ''' Note: The indel scores must be negative. Otherwise, the
         ''' part handling the first row and column has to be
-        ''' modified.(进行局部最佳比对)
+        ''' modified.
         ''' </summary>
+        ''' <remarks>
+        ''' 进行局部最佳比对，初始化了score矩阵
+        ''' </remarks>
         Public Function BuildMatrix() As GSW(Of T)
             If INDEL_SCORE >= 0 Then
                 Throw New Exception("Indel score must be negative")
