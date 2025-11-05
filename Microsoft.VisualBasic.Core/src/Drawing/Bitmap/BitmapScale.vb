@@ -292,6 +292,9 @@ Namespace Imaging.BitmapImage
         ''' </summary>
         ''' <param name="source"></param>
         ''' <returns></returns>
+        ''' <remarks>
+        ''' 这个函数会直接改变输入数据的值，如果不想对输入的位图对象做修改，请先复制一份，再使用这个函数进行灰度处理
+        ''' </remarks>
         <Extension>
         Public Function Grayscale(ByRef source As BitmapBuffer,
                                   Optional wr As Single = 0.3,

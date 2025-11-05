@@ -192,6 +192,14 @@ Namespace Imaging.BitmapImage
             Call Me.New(New Byte(width * height * channels - 1) {}, New Size(width, height), channels)
         End Sub
 
+        ''' <summary>
+        ''' make in-memory data copy
+        ''' </summary>
+        ''' <param name="source"></param>
+        Sub New(source As BitmapBuffer)
+            Call Me.New(source.buffer.ToArray, source.Size, source.channels)
+        End Sub
+
         Sub New(pixels As Color(,), size As Size)
             Call MyBase.New(Unpack(pixels, size))
 

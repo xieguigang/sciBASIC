@@ -143,6 +143,24 @@ Namespace Linq
         End Function
 
         ''' <summary>
+        ''' make array data copy
+        ''' </summary>
+        ''' <typeparam name="T"></typeparam>
+        ''' <param name="source"></param>
+        ''' <returns></returns>
+        ''' 
+        <Extension>
+        Public Function ToArray(Of T)(source As T()) As T()
+            If source.IsNullOrEmpty Then
+                Return New T() {}
+            Else
+                Dim copy As T() = New T(source.Length - 1) {}
+                Call Array.ConstrainedCopy(source, Scan0, copy, Scan0, copy.Length)
+                Return copy
+            End If
+        End Function
+
+        ''' <summary>
         ''' A query proxy function makes your linq not so easily crashed due to the 
         ''' unexpected null reference collection as linq source.
         ''' </summary>
