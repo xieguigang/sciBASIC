@@ -64,7 +64,7 @@ Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Text.Xml.Models
-Imports stdNum = System.Math
+Imports std = System.Math
 
 Namespace SmithWaterman
 
@@ -253,7 +253,7 @@ Namespace SmithWaterman
                     Dim upScore As Double = score(i)(j - 1) + similarity(0, j)
                     Dim leftScore As Double = score(i - 1)(j) + similarity(i, 0)
 
-                    score(i)(j) = stdNum.Max(diagScore, stdNum.Max(upScore, stdNum.Max(leftScore, 0)))
+                    score(i)(j) = std.Max(diagScore, std.Max(upScore, std.Max(leftScore, 0)))
                     prevCells(i)(j) = 0
 
                     ' find the directions that give the maximum scores.
