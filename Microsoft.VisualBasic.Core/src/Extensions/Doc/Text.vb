@@ -293,6 +293,10 @@ Public Module TextDoc
                                  End Function)
 
                         Yield line
+
+                        If reader.EndOfStream Then
+                            Exit For
+                        End If
                     Next
                 Else
                     Do While Not reader.EndOfStream
