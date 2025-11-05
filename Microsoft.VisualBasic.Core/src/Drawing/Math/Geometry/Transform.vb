@@ -61,20 +61,6 @@ Imports std = System.Math
 Namespace Imaging.Math2D
 
     ''' <summary>
-    ''' make geometry transform of a given <see cref="Polygon2D"/> with given <see cref="Transform"/> or <see cref="AffineTransform"/> parameters.
-    ''' </summary>
-    Public Interface GeometryTransform
-
-        ''' <summary>
-        ''' Apply the current transformation parameters to the target polygon object.
-        ''' </summary>
-        ''' <param name="polygon"></param>
-        ''' <returns></returns>
-        Function ApplyTo(polygon As Polygon2D) As Polygon2D
-
-    End Interface
-
-    ''' <summary>
     ''' 2D transformation parameters
     ''' </summary>
     Public Class Transform : Implements GeometryTransform
