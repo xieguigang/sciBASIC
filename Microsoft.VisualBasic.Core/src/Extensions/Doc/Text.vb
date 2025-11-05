@@ -294,6 +294,7 @@ Public Module TextDoc
 
                         Yield line
 
+                        ' 20251106 break the possible dead loop at here
                         If reader.EndOfStream Then
                             Exit For
                         End If
