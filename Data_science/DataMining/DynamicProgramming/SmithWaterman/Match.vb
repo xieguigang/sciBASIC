@@ -133,7 +133,7 @@ Namespace SmithWaterman
         End Function
 
         Public Overrides Function ToString() As String
-            Return $"[query: {{{fromA}, {toA}}}, ref: {{{fromB}, {toB}}}], score:={score}"
+            Return $"[query: {{{fromA}, {toA}; len:{toA - fromA}}}, ref: {{{fromB}, {toB}; len:{toB - fromB}}}], score={score}"
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>

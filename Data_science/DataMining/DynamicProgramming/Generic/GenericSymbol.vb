@@ -79,6 +79,10 @@ Public Class GenericSymbol(Of T)
         Return m_viewChar(t)
     End Function
 
+    Public Function equalsTo(x As T, y As T) As Boolean
+        Return m_equals(x, y)
+    End Function
+
     Public Function getEquals() As IEquals(Of T)
         Return Function(x, y) m_equals(x, y)
     End Function
