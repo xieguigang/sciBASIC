@@ -62,7 +62,7 @@
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ApplicationServices.Terminal.ProgressBar
 Imports randf = Microsoft.VisualBasic.Math.RandomExtensions
-Imports stdNum = System.Math
+Imports std = System.Math
 
 Namespace d3js.Layout
 
@@ -120,7 +120,7 @@ Namespace d3js.Layout
                 dy = m_anchors(index).y - m_labels(index).Y
 
             ' 标签与anchor锚点之间的距离
-            Dim dist = stdNum.Sqrt(dx * dx + dy * dy),
+            Dim dist = std.Sqrt(dx * dx + dy * dy),
                 overlap = True,
                 amount = 0
 
@@ -167,8 +167,8 @@ Namespace d3js.Layout
                     y11 = m_labels(i).Y - m_labels(i).height + 2.0
                     x12 = m_labels(i).X + m_labels(i).width
                     y12 = m_labels(i).Y + 2.0
-                    x_overlap = stdNum.Max(0, stdNum.Min(x12, x22) - stdNum.Max(x11, x21))
-                    y_overlap = stdNum.Max(0, stdNum.Min(y12, y22) - stdNum.Max(y11, y21))
+                    x_overlap = std.Max(0, std.Min(x12, x22) - std.Max(x11, x21))
+                    y_overlap = std.Max(0, std.Min(y12, y22) - std.Max(y11, y21))
                     overlap_area = x_overlap * y_overlap
                     ener += (overlap_area * w_lab2)
                 End If
@@ -179,8 +179,8 @@ Namespace d3js.Layout
                 x12 = m_anchors(i).x + m_anchors(i).r
                 y12 = m_anchors(i).y + m_anchors(i).r
 
-                x_overlap = stdNum.Max(0, stdNum.Min(x12, x22) - stdNum.Max(x11, x21))
-                y_overlap = stdNum.Max(0, stdNum.Min(y12, y22) - stdNum.Max(y11, y21))
+                x_overlap = std.Max(0, std.Min(x12, x22) - std.Max(x11, x21))
+                y_overlap = std.Max(0, std.Min(y12, y22) - std.Max(y11, y21))
 
                 overlap_area = x_overlap * y_overlap
                 ener += (overlap_area * w_lab_anc)
@@ -234,7 +234,7 @@ Namespace d3js.Layout
 
         Private Sub MonteCarlo(currT#, action As Action(Of Integer))
             ' select a random label which is not pinned
-            Dim i As Integer = unpinnedLabels(stdNum.Floor(randf.NextDouble * unpinnedLabels.Length))
+            Dim i As Integer = unpinnedLabels(std.Floor(randf.NextDouble * unpinnedLabels.Length))
             Dim label As Label = m_labels(i)
             Dim anchor As Anchor = m_anchors(i)
 
@@ -266,7 +266,7 @@ Namespace d3js.Layout
 
             ' the lower of the delta energy
             ' the higher chance to accept current change
-            If (randf.NextDouble < stdNum.Exp(-delta_energy / currT)) Then
+            If (randf.NextDouble < std.Exp(-delta_energy / currT)) Then
                 acc += 1
             Else
                 ' move back to old coordinates
@@ -283,8 +283,8 @@ Namespace d3js.Layout
             ' random angle
             Dim angle = (randf.NextDouble - 0.5) * maxAngle
 
-            Dim s = stdNum.Sin(angle)
-            Dim c = stdNum.Cos(angle)
+            Dim s = std.Sin(angle)
+            Dim c = std.Cos(angle)
 
             ' translate label (relative to anchor at origin):
             m_labels(i).X -= m_anchors(i).x
@@ -341,8 +341,6 @@ Namespace d3js.Layout
         Public Overrides Function Start(Optional nsweeps% = 2000, Optional showProgress As Boolean = True) As DataLabeler
             Dim moves As Action(Of Integer) = AddressOf mclMove
             Dim rotat As Action(Of Integer) = AddressOf mclRotate
-            Dim progress As ProgressBar = Nothing
-            Dim tick As Action(Of Double)
 
             ' 在计算之前需要将label的坐标赋值为anchor的值，否则会无法正常的生成label的最终位置
             For i As Integer = 0 To m_labels.Length - 1
@@ -353,26 +351,15 @@ Namespace d3js.Layout
             Next
 
             If unpinnedLabels.Length = 0 Then
-                Call "No unpinned label to be re-layout!".Warning
+                Call "no unpinned label to be re-layout!".warning
                 Return Me
-            End If
-
-            If showProgress Then
-                Dim tickProvider As ProgressProvider
-                Dim p#
-
-                progress = New ProgressBar("Labels layouting...")
-                tickProvider = New ProgressProvider(progress, nsweeps)
-                tick = Sub(currT#)
-                           p = tickProvider.StepProgress
-                           progress.SetProgress(p, "Current temperature: " & currT.ToString("F2"))
-                       End Sub
             Else
-                tick = Sub()
-                       End Sub
+                Call "labels layouting...".info
             End If
 
-            For i As Integer = 0 To nsweeps
+            Dim bar As Tqdm.ProgressBar = Nothing
+
+            For Each i As Integer In Tqdm.Range(0, nsweeps, bar:=bar, wrap_console:=showProgress)
                 For j As Integer = 0 To m_labels.Length
                     ' choose rotate or move action based on the 
                     ' random states
@@ -384,10 +371,8 @@ Namespace d3js.Layout
                 Next
 
                 T = definedCoolingSchedule(T, initialT, nsweeps)
-                tick(T)
+                bar.SetLabel($"temperature: {T:F2}")
             Next
-
-            Call progress?.Dispose()
 
             Return Me
         End Function

@@ -54,7 +54,6 @@
 
 Imports System.Drawing
 Imports System.Runtime.CompilerServices
-Imports Microsoft.VisualBasic.ApplicationServices.Terminal
 Imports Microsoft.VisualBasic.ApplicationServices.Terminal.ProgressBar
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
@@ -205,30 +204,6 @@ Namespace Plot3D
             Next
         End Function
 
-        Private Function __progressProvider(total%, yLen%, ysteps#, x As DoubleRange) As Action(Of Double)
-            If App.IsConsoleApp Then
-                Dim msg$ = $"Populates data points...(Estimates size: {total * (yLen / ysteps)}...)"
-                Dim prog As New ProgressBar(msg, 1, CLS:=True)
-                Dim tick As New ProgressProvider(prog, total)
-
-                Call tick.StepProgress()
-
-                Return Sub(xi#)
-                           Dim leftTime As String = tick _
-                               .ETA() _
-                               .FormatTime
-
-                           Call prog.SetProgress(
-                                tick.StepProgress,
-                                $" {xi} ({x.Min}, {x.Max}),  ETA {leftTime}")
-                       End Sub
-            Else
-                Return Sub()
-                           ' DO_NOTHING
-                       End Sub
-            End If
-        End Function
-
         <Extension>
         Private Iterator Function __2DIterates(Of Tout)([in] As Func(Of Double, Double, Tout),
                                                         x As DoubleRange,
@@ -236,9 +211,11 @@ Namespace Plot3D
                                                         xsteps!, ysteps!,
                                                         parallel As Boolean) As IEnumerable(Of List(Of (x#, y#, z As Tout)))
 
-            Dim tick As Action(Of Double) = __progressProvider(x.Length / xsteps, y.Length, ysteps, x)
+            Dim ticks As Double() = seq(x.Min, x.Max, by:=xsteps).ToArray
 
-            For xi# = x.Min To x.Max Step xsteps!
+            Call "populates 2d grid data points...".info
+
+            For Each xi As Double In Tqdm.Wrap(ticks)
                 If parallel Then
                     Dim dy As New List(Of Double)
                     Dim x0# = xi
@@ -265,8 +242,6 @@ Namespace Plot3D
 
                     Yield out
                 End If
-
-                Call tick(xi)
             Next
         End Function
 
