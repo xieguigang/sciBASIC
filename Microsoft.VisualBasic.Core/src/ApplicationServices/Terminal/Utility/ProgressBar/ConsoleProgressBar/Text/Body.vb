@@ -6,6 +6,8 @@
 ' Copyright (c) 2021, iluvadev, and released under MIT License.
 '
 
+Imports Microsoft.VisualBasic.ApplicationServices.Terminal.ProgressBar.ConsoleProgressBar.Extensions
+
 Namespace ApplicationServices.Terminal.ProgressBar.ConsoleProgressBar
     Partial Public Class Text
         ''' <summary>
@@ -115,20 +117,22 @@ Namespace ApplicationServices.Terminal.ProgressBar.ConsoleProgressBar
             ''' Ctor
             ''' </summary>
             Public Sub New()
-                Processing.SetValue(Function(pb)
-                                        Return If(pb.HasProgress,
-                                        $"{pb.Value} of {pb.Maximum} in {pb.TimeProcessing.ToStringWithAllHours()}, remaining: {pb.TimeRemaining.ToStringAsSumarizedRemainingText()}",
-                                        $"Processing... ({pb.Value} in {pb.TimeProcessing.ToStringWithAllHours()})")
-                                    End Function).SetForegroundColor(ConsoleColor.Cyan)
-
-                Paused.SetValue(Function(pb)
-                                    Return If(pb.HasProgress,
-                                    $"Paused... Running time: {pb.TimeProcessing.ToStringWithAllHours()}",
-                                    $"{pb.Value} of {pb.Maximum} in {pb.TimeProcessing.ToStringWithAllHours()} (paused)")
-                                End Function).SetForegroundColor(ConsoleColor.DarkCyan)
-
+                Processing.SetValue(AddressOf GetProgressText).SetForegroundColor(ConsoleColor.Cyan)
+                Paused.SetValue(AddressOf GetPauseText).SetForegroundColor(ConsoleColor.DarkCyan)
                 Done.SetValue("Done!").SetForegroundColor(ConsoleColor.DarkYellow)
             End Sub
+
+            Private Function GetPauseText(pb As ProgressBar) As String
+                Return If(pb.HasProgress,
+                    $"Paused... Running time: {pb.TimeProcessing.ToStringWithAllHours()}",
+                    $"{pb.Value} of {pb.Maximum} in {pb.TimeProcessing.ToStringWithAllHours()} (paused)")
+            End Function
+
+            Private Function GetProgressText(pb As ProgressBar) As String
+                Return If(pb.HasProgress,
+                    $"{pb.Value} of {pb.Maximum} in {pb.TimeProcessing.ToStringWithAllHours()}, remaining: {pb.TimeRemaining.ToStringAsSumarizedRemainingText()}",
+                    $"Processing... ({pb.Value} in {pb.TimeProcessing.ToStringWithAllHours()})")
+            End Function
 
             ''' <summary>
             ''' Gets the current Text Body definition by the ProgressBar context ("Processing", "Paused" or "Done")

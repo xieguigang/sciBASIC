@@ -6,6 +6,8 @@
 ' Copyright (c) 2021, iluvadev, and released under MIT License.
 '
 
+Imports Microsoft.VisualBasic.ApplicationServices.Terminal.ProgressBar.ConsoleProgressBar.Extensions
+
 Namespace ApplicationServices.Terminal.ProgressBar.ConsoleProgressBar
     Partial Public Class Text
         ''' <summary>
@@ -37,13 +39,14 @@ Namespace ApplicationServices.Terminal.ProgressBar.ConsoleProgressBar
             ''' </summary>
             Public Sub New()
                 Processing.AddNew().SetValue(Function(pb) pb.ElementName).SetVisible(Function(pb) Not String.IsNullOrEmpty(pb.ElementName)).SetForegroundColor(ConsoleColor.DarkYellow)
-
                 Paused.AddNew().SetValue("[Paused]").SetForegroundColor(ConsoleColor.DarkCyan)
-
-                Done.AddNew().SetValue(Function(pb) $"{pb.Value} in {pb.TimeProcessing.ToStringWithAllHours()} ({pb.TimePerElement.ToStringWithAllHours()} each one)").SetForegroundColor(ConsoleColor.DarkGray)
-
+                Done.AddNew().SetValue(AddressOf FinishedText).SetForegroundColor(ConsoleColor.DarkGray)
                 Indentation.SetValue("  -> ").SetForegroundColor(ConsoleColor.DarkBlue)
             End Sub
+
+            Private Function FinishedText(pb As ProgressBar) As String
+                Return $"{pb.Value} in {pb.TimeProcessing.ToStringWithAllHours()} ({pb.TimePerElement.ToStringWithAllHours()} each one)"
+            End Function
 
             ''' <summary>
             ''' Clears Description Lines
