@@ -64,7 +64,7 @@ Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Text.Xml.Models
-Imports stdNum = System.Math
+Imports std = System.Math
 
 Namespace SmithWaterman
 
@@ -237,8 +237,11 @@ Namespace SmithWaterman
         ''' Build the score matrix using dynamic programming.
         ''' Note: The indel scores must be negative. Otherwise, the
         ''' part handling the first row and column has to be
-        ''' modified.(进行局部最佳比对)
+        ''' modified.
         ''' </summary>
+        ''' <remarks>
+        ''' 进行局部最佳比对，初始化了score矩阵
+        ''' </remarks>
         Public Function BuildMatrix() As GSW(Of T)
             If INDEL_SCORE >= 0 Then
                 Throw New Exception("Indel score must be negative")
@@ -253,7 +256,7 @@ Namespace SmithWaterman
                     Dim upScore As Double = score(i)(j - 1) + similarity(0, j)
                     Dim leftScore As Double = score(i - 1)(j) + similarity(i, 0)
 
-                    score(i)(j) = stdNum.Max(diagScore, stdNum.Max(upScore, stdNum.Max(leftScore, 0)))
+                    score(i)(j) = std.Max(diagScore, std.Max(upScore, std.Max(leftScore, 0)))
                     prevCells(i)(j) = 0
 
                     ' find the directions that give the maximum scores.

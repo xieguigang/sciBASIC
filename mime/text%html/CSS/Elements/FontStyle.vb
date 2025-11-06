@@ -208,6 +208,13 @@ Namespace CSS
             size = fontSize
         End Sub
 
+        Sub New(fontName As String, fontSize As Single, Optional fontStyle As FontStyle = FontStyle.Regular, Optional fill As Brush = Nothing)
+            family = fontName
+            size = fontSize
+            style = fontStyle
+            color = If(fill Is Nothing, "black", DirectCast(fill, SolidBrush).Color.ToHtmlColor)
+        End Sub
+
         Sub New(font As Font, fill As Brush)
             Call Me.New(font)
             color = DirectCast(fill, SolidBrush).Color.ToHtmlColor

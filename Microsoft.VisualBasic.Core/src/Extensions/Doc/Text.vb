@@ -292,7 +292,12 @@ Public Module TextDoc
                                      End If
                                  End Function)
 
-                        Yield line
+                        ' 20251106 break the possible dead loop at here
+                        If line Is Nothing Then
+                            Exit For
+                        Else
+                            Yield line
+                        End If
                     Next
                 Else
                     Do While Not reader.EndOfStream

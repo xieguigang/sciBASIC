@@ -59,6 +59,7 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports std = System.Math
 
 Namespace ComponentModel.Collection.Generic
 
@@ -78,6 +79,12 @@ Namespace ComponentModel.Collection.Generic
         Public ReadOnly Property PackSize As Integer()
             Get
                 Return buckets.Select(Function(p) p.Length).ToArray
+            End Get
+        End Property
+
+        Public ReadOnly Property Chunks As Integer
+            Get
+                Return buckets.Count
             End Get
         End Property
 
@@ -107,6 +114,60 @@ Namespace ComponentModel.Collection.Generic
         Public Sub Add(getData As Func(Of IEnumerable(Of T)))
             Call Add(getData())
         End Sub
+
+        ''' <summary>
+        ''' 根据全局索引获取元素
+        ''' </summary>
+        ''' <param name="index">全局索引（从0开始）</param>
+        ''' <returns>指定索引处的元素</returns>
+        Public Function GetItemByGlobalIndex(index As Long) As T
+            If index < 0 OrElse index >= Count Then
+                Throw New ArgumentOutOfRangeException(NameOf(index), "索引超出范围")
+            End If
+
+            Dim currentIndex As Long = 0
+            For Each block In buckets
+                If index < currentIndex + block.Length Then
+                    Return block(index - currentIndex)
+                End If
+                currentIndex += block.Length
+            Next
+
+            Throw New ArgumentOutOfRangeException(NameOf(index), "索引超出范围")
+        End Function
+
+        ''' <summary>
+        ''' 根据全局索引范围获取元素序列
+        ''' </summary>
+        ''' <param name="startIndex">起始索引（包含，从0开始）</param>
+        ''' <param name="endIndex">结束索引（包含，从0开始）</param>
+        ''' <returns>指定范围内的元素序列</returns>
+        Public Iterator Function GetRange(startIndex As Long, endIndex As Long) As IEnumerable(Of T)
+            If startIndex < 0 OrElse endIndex >= Count OrElse startIndex > endIndex Then
+                Throw New ArgumentOutOfRangeException("索引范围无效")
+            End If
+
+            Dim currentIndex As Long = 0
+            For Each block In buckets
+                Dim blockStart As Long = currentIndex
+                Dim blockEnd As Long = currentIndex + block.Length - 1
+
+                ' 检查当前块是否与目标范围有重叠
+                If blockEnd >= startIndex AndAlso blockStart <= endIndex Then
+                    Dim startInBlock As Integer = std.Max(0, CInt(startIndex - blockStart))
+                    Dim endInBlock As Integer = std.Min(block.Length - 1, CInt(endIndex - blockStart))
+
+                    For i As Integer = startInBlock To endInBlock
+                        Yield block(i)
+                    Next
+                End If
+
+                currentIndex += block.Length
+                If currentIndex > endIndex Then
+                    Exit For
+                End If
+            Next
+        End Function
 
         Public Overrides Function ToString() As String
             Return $"with {buckets.Count} buckets data"
