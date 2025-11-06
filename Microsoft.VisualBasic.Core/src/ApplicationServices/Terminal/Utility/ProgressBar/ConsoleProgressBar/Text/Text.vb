@@ -5,12 +5,11 @@
 '
 ' Copyright (c) 2021, iluvadev, and released under MIT License.
 '
-
-Namespace iluvadev.ConsoleProgressBar
+Namespace ApplicationServices.Terminal.ProgressBar.ConsoleProgressBar
     ''' <summary>
     ''' Definitions for Texts in a ProgressBar
     ''' </summary>
-    Public Partial Class Text
+    Partial Public Class Text
         ''' <summary>
         ''' Definition of the text in the same line as ProgressBar (Body)
         ''' </summary>

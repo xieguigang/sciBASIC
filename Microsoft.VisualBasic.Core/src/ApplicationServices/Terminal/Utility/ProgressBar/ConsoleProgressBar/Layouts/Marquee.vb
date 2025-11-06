@@ -6,11 +6,9 @@
 ' Copyright (c) 2021, iluvadev, and released under MIT License.
 '
 
-Imports System
+Namespace ApplicationServices.Terminal.ProgressBar.ConsoleProgressBar
 
-Namespace iluvadev.ConsoleProgressBar
-
-    Public Partial Class Layout
+    Partial Public Class Layout
         ''' <summary>
         ''' Definition for the Marquee
         ''' The Marquee is a char that moves around the ProgressBar
@@ -26,7 +24,7 @@ Namespace iluvadev.ConsoleProgressBar
             '          
             '      Without Progress available (don't have Maximum):
             '          [·······■············] -> Marquee is always displayed
-            
+
             ''' <summary>
             ''' Marquee definition when it moves over 'Pending' section
             ''' </summary>

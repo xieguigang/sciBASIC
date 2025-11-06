@@ -6,10 +6,9 @@
 ' Copyright (c) 2021, iluvadev, and released under MIT License.
 '
 
-Imports System
 Imports System.Runtime.CompilerServices
 
-Namespace iluvadev.ConsoleProgressBar.Extensions
+Namespace ApplicationServices.Terminal.ProgressBar.ConsoleProgressBar.Extensions
     ''' <summary>
     ''' Extensions for String
     ''' </summary>

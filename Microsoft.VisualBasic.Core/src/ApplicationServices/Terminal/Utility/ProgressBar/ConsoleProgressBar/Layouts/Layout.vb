@@ -6,26 +6,22 @@
 ' Copyright (c) 2021, iluvadev, and released under MIT License.
 '
 
-Imports iluvadev.ConsoleProgressBar.Extensions
-Imports System
-Imports System.Collections.Generic
-
-Namespace iluvadev.ConsoleProgressBar
+Namespace ApplicationServices.Terminal.ProgressBar.ConsoleProgressBar
     ''' <summary>
     ''' Definition of a Layout for a ProgressBar representation
     ''' </summary>
-    Public Partial Class Layout
+    Partial Public Class Layout
         ' Examples of ProgressBar:
-         '      - Marquee is a Character moving around the ProgressBar
-         '      
-         '      With Progress available (Maximum defined):
-         '          [■■■■■■■■■■■■········] -> Without Marquee
-         '          [■■■■■■■■■■■■····+···] -> With Marquee (in pending space) 
-         '          [■■■■■■■■#■■■········] -> With Marquee (in progress space)
-         '          
-         '      Without Progress available (don't have Maximum):
-         '          [·······■············] -> Marquee is always displayed
-         
+        '      - Marquee is a Character moving around the ProgressBar
+        '      
+        '      With Progress available (Maximum defined):
+        '          [■■■■■■■■■■■■········] -> Without Marquee
+        '          [■■■■■■■■■■■■····+···] -> With Marquee (in pending space) 
+        '          [■■■■■■■■#■■■········] -> With Marquee (in progress space)
+        '          
+        '      Without Progress available (don't have Maximum):
+        '          [·······■············] -> Marquee is always displayed
+
 
         ''' <summary>
         ''' Layout definition for Margins
@@ -69,7 +65,7 @@ Namespace iluvadev.ConsoleProgressBar
             Dim list = New List(Of Action)()
 
             Dim innerWidth = GetInnerWidth(progressBar)
-            Dim progressLenght = If(progressBar.HasProgress, Convert.ToInt32(progressBar.Percentage / (100F / innerWidth)), 0)
+            Dim progressLenght = If(progressBar.HasProgress, Convert.ToInt32(progressBar.Percentage / (100.0F / innerWidth)), 0)
             Dim pendingLenght = innerWidth - progressLenght
 
             Dim marqueeInProgress = progressBar.HasProgress AndAlso progressBar.MarqueePosition >= 0 AndAlso progressBar.MarqueePosition < progressLenght AndAlso Marquee.OverProgress.GetVisible(progressBar)

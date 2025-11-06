@@ -7,9 +7,10 @@
 '
 
 Imports System.Threading
-Imports iluvadev.ConsoleProgressBar.Extensions
+Imports Microsoft.VisualBasic.ApplicationServices.Terminal.ProgressBar.ConsoleProgressBar.Extensions
+Imports std = System.Math
 
-Namespace iluvadev.ConsoleProgressBar
+Namespace ApplicationServices.Terminal.ProgressBar.ConsoleProgressBar
     ''' <summary>
     ''' A ProgressBar for Console
     ''' </summary>
@@ -214,7 +215,7 @@ Namespace iluvadev.ConsoleProgressBar
                 Dim currentElementTicks = currentTicks - TicksCompletedElements.Value
                 Dim elementTicks As Long = If(currentElementTicks <= TicksPerElement.Value, TicksPerElement.Value, currentTicks / (Value + 1))
                 Dim totalTicks = elementTicks * Maximum.Value
-                Return Math.Max(totalTicks - currentTicks, 0)
+                Return std.Max(totalTicks - currentTicks, 0)
             End Get
         End Property
 
@@ -405,7 +406,7 @@ Namespace iluvadev.ConsoleProgressBar
                     '    _ConsoleRow = oldCursorTop + 2;
                     '}
 
-                    Dim scrollMargin As Integer = Math.Max((Console.WindowHeight - _NumberLastLinesWritten) / 3, 2)
+                    Dim scrollMargin As Integer = std.Max((Console.WindowHeight - _NumberLastLinesWritten) / 3, 2)
                     If _ConsoleRow - oldCursorTop <= scrollMargin / 2 Then
                         'oldCursorTop is near or over: Keep a margin between Text and ProgressBar (avoid flickering)
                         Console.SetCursorPosition(0, oldCursorTop)
@@ -448,7 +449,7 @@ Namespace iluvadev.ConsoleProgressBar
                 Console.CursorVisible = False
 
                 Dim initialRow = _ConsoleRow
-                If FixedInBottom Then initialRow = Math.Max(_ConsoleRow, oldCursorTop)
+                If FixedInBottom Then initialRow = std.Max(_ConsoleRow, oldCursorTop)
 
                 'Position
                 Console.SetCursorPosition(0, initialRow)

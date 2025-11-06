@@ -6,10 +6,8 @@
 ' Copyright (c) 2021, iluvadev, and released under MIT License.
 '
 
-Imports System
-
-Namespace iluvadev.ConsoleProgressBar
-    Public Partial Class Layout
+Namespace ApplicationServices.Terminal.ProgressBar.ConsoleProgressBar
+    Partial Public Class Layout
         ''' <summary>
         ''' Definition of the Layout used to Render the Margins of the ProgressBar
         ''' </summary>
@@ -24,7 +22,7 @@ Namespace iluvadev.ConsoleProgressBar
             '          
             '      Without Progress available (don't have Maximum):
             '          [·······■············] -> Marquee is always displayed
-            
+
             ''' <summary>
             ''' Element to show at the Margin Left (Start of the ProgressBar) 
             ''' </summary>

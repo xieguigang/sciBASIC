@@ -6,11 +6,8 @@
 ' Copyright (c) 2021, iluvadev, and released under MIT License.
 '
 
-Imports iluvadev.ConsoleProgressBar.Extensions
-Imports System
-
-Namespace iluvadev.ConsoleProgressBar
-    Public Partial Class Text
+Namespace ApplicationServices.Terminal.ProgressBar.ConsoleProgressBar
+    Partial Public Class Text
         ''' <summary>
         ''' Definition for the Texts in a ProgressBar
         ''' </summary>

@@ -6,9 +6,7 @@
 ' Copyright (c) 2021, iluvadev, and released under MIT License.
 '
 
-Imports System
-
-Namespace iluvadev.ConsoleProgressBar
+Namespace ApplicationServices.Terminal.ProgressBar.ConsoleProgressBar
     ''' <summary>
     ''' An element of a ProgressBar
     ''' </summary>

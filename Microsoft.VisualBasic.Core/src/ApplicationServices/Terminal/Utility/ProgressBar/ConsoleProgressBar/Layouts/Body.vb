@@ -6,25 +6,23 @@
 ' Copyright (c) 2021, iluvadev, and released under MIT License.
 '
 
-Imports System
-
-Namespace iluvadev.ConsoleProgressBar
-    Public Partial Class Layout
+Namespace ApplicationServices.Terminal.ProgressBar.ConsoleProgressBar
+    Partial Public Class Layout
         ''' <summary>
         ''' Definition of the Layout used to Render the Body of the ProgressBar
         ''' </summary>
         Public Class LayoutBody
             ' Examples of ProgressBar:
-             '      - Marquee is a Character moving around the ProgressBar
-             '      
-             '      With Progress available (Maximum defined):
-             '          [■■■■■■■■■■■■········] -> Without Marquee
-             '          [■■■■■■■■■■■■····+···] -> With Marquee (in pending space) 
-             '          [■■■■■■■■#■■■········] -> With Marquee (in progress space)
-             '          
-             '      Without Progress available (don't have Maximum):
-             '          [·······■············] -> Marquee is always displayed
-             
+            '      - Marquee is a Character moving around the ProgressBar
+            '      
+            '      With Progress available (Maximum defined):
+            '          [■■■■■■■■■■■■········] -> Without Marquee
+            '          [■■■■■■■■■■■■····+···] -> With Marquee (in pending space) 
+            '          [■■■■■■■■#■■■········] -> With Marquee (in progress space)
+            '          
+            '      Without Progress available (don't have Maximum):
+            '          [·······■············] -> Marquee is always displayed
+
             ''' <summary>
             ''' Element To show in Pending Section
             ''' </summary>

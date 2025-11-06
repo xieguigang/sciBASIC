@@ -6,11 +6,10 @@
 ' Copyright (c) 2021, iluvadev, and released under MIT License.
 '
 
-Imports System
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Language
 
-Namespace iluvadev.ConsoleProgressBar.Extensions
+Namespace ApplicationServices.Terminal.ProgressBar.ConsoleProgressBar.Extensions
     ''' <summary>
     ''' TimeSpan extensions
     ''' </summary>
