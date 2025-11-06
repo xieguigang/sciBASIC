@@ -333,12 +333,6 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-	  <Compile Remove="ApplicationServices\Terminal\Utility\ProgressBar\ShellProgressBar\ShellProgressBar.Example\**" />
-	  <EmbeddedResource Remove="ApplicationServices\Terminal\Utility\ProgressBar\ShellProgressBar\ShellProgressBar.Example\**" />
-	  <None Remove="ApplicationServices\Terminal\Utility\ProgressBar\ShellProgressBar\ShellProgressBar.Example\**" />
-	</ItemGroup>
-
-	<ItemGroup>
 		<None Remove="Resources\scripts\runNet5.sh" />
 	</ItemGroup>
 
