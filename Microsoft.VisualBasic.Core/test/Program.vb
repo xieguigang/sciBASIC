@@ -55,6 +55,7 @@ Imports System
 
 Module Program
     Sub Main(args As String())
+        Call progrsssBarTest.testLoop()
         Call streamTest.dataUriStreamtest()
 
         Call logprint()
