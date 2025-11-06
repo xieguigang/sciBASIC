@@ -117,8 +117,10 @@ Namespace Imaging.Math2D
                     activeEdges.AddRange(edgeTable(y))
                 End If
 
+                Dim yi As Integer = y
+
                 ' 4.2 移除不再相交的边（YMax <= 当前Y）
-                activeEdges.RemoveAll(Function(e) e.YMax <= y)
+                activeEdges.RemoveAll(Function(e) e.YMax <= yi)
 
                 ' 4.3 按当前X坐标排序活性边表
                 activeEdges.Sort(Function(e1, e2) e1.X.CompareTo(e2.X))

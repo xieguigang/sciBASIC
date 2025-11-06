@@ -8,6 +8,7 @@
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Language
+Imports std = System.Math
 
 Namespace ApplicationServices.Terminal.ProgressBar.ConsoleProgressBar.Extensions
     ''' <summary>
@@ -33,21 +34,21 @@ Namespace ApplicationServices.Terminal.ProgressBar.ConsoleProgressBar.Extensions
         Public Function ToStringAsSumarizedRemainingText(ts As TimeSpan) As String
             Dim units As Value(Of Integer) = 0
 
-            If (units = Convert.ToInt32(Math.Round(ts.TotalDays))) > 1 Then
+            If (units = Convert.ToInt32(std.Round(ts.TotalDays))) > 1 Then
                 Return $"{units} days"
-            ElseIf Convert.ToInt32(Math.Floor(ts.TotalDays)) = 1 Then
+            ElseIf Convert.ToInt32(std.Floor(ts.TotalDays)) = 1 Then
                 Return $"a day"
-            ElseIf (units = Convert.ToInt32(Math.Round(ts.TotalHours))) > 1 Then
+            ElseIf (units = Convert.ToInt32(std.Round(ts.TotalHours))) > 1 Then
                 Return $"{units} hours"
-            ElseIf Convert.ToInt32(Math.Floor(ts.TotalHours)) = 1 Then
+            ElseIf Convert.ToInt32(std.Floor(ts.TotalHours)) = 1 Then
                 Return $"an hour"
-            ElseIf (units = Convert.ToInt32(Math.Round(ts.TotalMinutes))) > 1 Then
+            ElseIf (units = Convert.ToInt32(std.Round(ts.TotalMinutes))) > 1 Then
                 Return $"{units} minutes"
-            ElseIf Convert.ToInt32(Math.Floor(ts.TotalMinutes)) = 1 Then
+            ElseIf Convert.ToInt32(std.Floor(ts.TotalMinutes)) = 1 Then
                 Return $"a minute"
-            ElseIf (units = Convert.ToInt32(Math.Round(ts.TotalSeconds))) > 1 Then
+            ElseIf (units = Convert.ToInt32(std.Round(ts.TotalSeconds))) > 1 Then
                 Return $"{units} seconds"
-            ElseIf Convert.ToInt32(Math.Floor(ts.TotalSeconds)) = 1 Then
+            ElseIf Convert.ToInt32(std.Floor(ts.TotalSeconds)) = 1 Then
                 Return $"a second"
             Else
                 Return "a moment"

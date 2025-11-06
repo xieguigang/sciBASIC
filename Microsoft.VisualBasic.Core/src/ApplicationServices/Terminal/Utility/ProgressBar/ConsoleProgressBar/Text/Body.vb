@@ -15,17 +15,17 @@ Namespace ApplicationServices.Terminal.ProgressBar.ConsoleProgressBar
             ''' <summary>
             ''' Text in Body definition when ProgressBar is "Processing"
             ''' </summary>
-            Public ReadOnly Property Processing As Element(Of String) = New Element(Of String)()
+            Public ReadOnly Property Processing As New Element(Of String)()
 
             ''' <summary>
             ''' Text in Body definition when ProgressBar is "Paused"
             ''' </summary>
-            Public ReadOnly Property Paused As Element(Of String) = New Element(Of String)()
+            Public ReadOnly Property Paused As New Element(Of String)()
 
             ''' <summary>
             ''' Text in Body definition when ProgressBar is "Done"
             ''' </summary>
-            Public ReadOnly Property Done As Element(Of String) = New Element(Of String)()
+            Public ReadOnly Property Done As New Element(Of String)()
 
             ''' <summary>
             ''' Sets the Body Text visibility
@@ -115,9 +115,17 @@ Namespace ApplicationServices.Terminal.ProgressBar.ConsoleProgressBar
             ''' Ctor
             ''' </summary>
             Public Sub New()
-                Processing.SetValue(Function(pb) If(pb.HasProgress, $"{pb.Value} of {pb.Maximum} in {pb.TimeProcessing.ToStringWithAllHours()}, remaining: {pb.TimeRemaining.ToStringAsSumarizedRemainingText()}", $"Processing... ({pb.Value} in {pb.TimeProcessing.ToStringWithAllHours()})")).SetForegroundColor(ConsoleColor.Cyan)
+                Processing.SetValue(Function(pb)
+                                        Return If(pb.HasProgress,
+                                        $"{pb.Value} of {pb.Maximum} in {pb.TimeProcessing.ToStringWithAllHours()}, remaining: {pb.TimeRemaining.ToStringAsSumarizedRemainingText()}",
+                                        $"Processing... ({pb.Value} in {pb.TimeProcessing.ToStringWithAllHours()})")
+                                    End Function).SetForegroundColor(ConsoleColor.Cyan)
 
-                Paused.SetValue(Function(pb) If(pb.HasProgress, $"Paused... Running time: {pb.TimeProcessing.ToStringWithAllHours()}", $"{pb.Value} of {pb.Maximum} in {pb.TimeProcessing.ToStringWithAllHours()} (paused)")).SetForegroundColor(ConsoleColor.DarkCyan)
+                Paused.SetValue(Function(pb)
+                                    Return If(pb.HasProgress,
+                                    $"Paused... Running time: {pb.TimeProcessing.ToStringWithAllHours()}",
+                                    $"{pb.Value} of {pb.Maximum} in {pb.TimeProcessing.ToStringWithAllHours()} (paused)")
+                                End Function).SetForegroundColor(ConsoleColor.DarkCyan)
 
                 Done.SetValue("Done!").SetForegroundColor(ConsoleColor.DarkYellow)
             End Sub

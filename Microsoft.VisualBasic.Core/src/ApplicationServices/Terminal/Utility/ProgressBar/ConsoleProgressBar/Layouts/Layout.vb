@@ -6,6 +6,9 @@
 ' Copyright (c) 2021, iluvadev, and released under MIT License.
 '
 
+Imports Microsoft.VisualBasic.ApplicationServices.Terminal.ProgressBar.ConsoleProgressBar.Extensions
+Imports std = System.Math
+
 Namespace ApplicationServices.Terminal.ProgressBar.ConsoleProgressBar
     ''' <summary>
     ''' Definition of a Layout for a ProgressBar representation
@@ -49,7 +52,7 @@ Namespace ApplicationServices.Terminal.ProgressBar.ConsoleProgressBar
         ''' Gets the internal Width of the ProgressBar
         ''' </summary>
         Public Function GetInnerWidth(progressBar As ProgressBar) As Integer
-            Return Math.Max(ProgressBarWidth - Margins.GetLength(progressBar), 0)
+            Return std.Max(ProgressBarWidth - Margins.GetLength(progressBar), 0)
         End Function
 
         ''' <summary>

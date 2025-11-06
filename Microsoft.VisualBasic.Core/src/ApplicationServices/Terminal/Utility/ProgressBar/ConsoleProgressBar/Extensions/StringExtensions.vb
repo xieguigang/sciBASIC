@@ -7,6 +7,7 @@
 '
 
 Imports System.Runtime.CompilerServices
+Imports std = System.Math
 
 Namespace ApplicationServices.Terminal.ProgressBar.ConsoleProgressBar.Extensions
     ''' <summary>
@@ -27,7 +28,7 @@ Namespace ApplicationServices.Terminal.ProgressBar.ConsoleProgressBar.Extensions
             Dim maxWidth = Console.BufferWidth
 
             If allowMultipleLines Then
-                maxWidth *= Math.DivRem(value.Length, maxWidth, Nothing) + 1
+                maxWidth *= std.DivRem(value.Length, maxWidth, Nothing) + 1
             End If
 
             Return value.AdaptToMaxWidth(maxWidth)

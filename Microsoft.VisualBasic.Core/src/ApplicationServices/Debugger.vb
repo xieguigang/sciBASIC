@@ -332,18 +332,10 @@ Public Module VBDebugger
     End Sub
 
     ''' <summary>
-    ''' 使用<see cref="xConsole"/>输出消息
+    ''' 输出的终端消息带有指定的终端颜色色彩
     ''' </summary>
-    ''' <returns></returns>
-    Public Property UsingxConsole As Boolean = False
-
-    ''' <summary>
-    ''' 输出的终端消息带有指定的终端颜色色彩，当<see cref="UsingxConsole"/>为True的时候，
-    ''' <paramref name="msg"/>参数之中的文本字符串兼容<see cref="xConsole"/>语法，
-    ''' 而<paramref name="color"/>将会被<see cref="xConsole"/>覆盖而不会起作用
-    ''' </summary>
-    ''' <param name="msg">兼容<see cref="xConsole"/>语法</param>
-    ''' <param name="color">当<see cref="UsingxConsole"/>参数为True的时候，这个函数参数将不会起作用</param>
+    ''' <param name="msg"></param>
+    ''' <param name="color"></param>
     ''' <remarks>
     ''' works based on <see cref="My.Log4VB.redirectInfo"/>
     ''' </remarks>
