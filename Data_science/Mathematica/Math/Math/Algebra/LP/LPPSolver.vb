@@ -1,64 +1,65 @@
 ﻿#Region "Microsoft.VisualBasic::825861ae46a5371524279f904e7a28e1, Data_science\Mathematica\Math\Math\Algebra\LP\LPPSolver.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 421
-    '    Code Lines: 274 (65.08%)
-    ' Comment Lines: 63 (14.96%)
-    '    - Xml Docs: 19.05%
-    ' 
-    '   Blank Lines: 84 (19.95%)
-    '     File Size: 17.79 KB
+' Summaries:
 
 
-    '     Class LPPSolver
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    ' 
-    '         Function: choosePivotConstraint, choosePivotVar, findInitialBasicVariables, isFeasible, runIteration
-    '                   Solve
-    ' 
-    '         Sub: pivot
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 421
+'    Code Lines: 274 (65.08%)
+' Comment Lines: 63 (14.96%)
+'    - Xml Docs: 19.05%
+' 
+'   Blank Lines: 84 (19.95%)
+'     File Size: 17.79 KB
+
+
+'     Class LPPSolver
+' 
+'         Constructor: (+1 Overloads) Sub New
+' 
+'         Function: choosePivotConstraint, choosePivotVar, findInitialBasicVariables, isFeasible, runIteration
+'                   Solve
+' 
+'         Sub: pivot
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Text
 Imports Microsoft.VisualBasic.ApplicationServices.Terminal.ProgressBar
+Imports Microsoft.VisualBasic.ApplicationServices.Terminal.ProgressBar.ConsoleProgressBar
 
 Namespace LinearAlgebra.LinearProgramming
 
@@ -205,67 +206,48 @@ Namespace LinearAlgebra.LinearProgramming
 
             ' Pivot until optimal solution
             Dim go As Boolean = True
-            Dim limiter As Integer = 1
-            Dim tick As Action
-            Dim progress As ProgressBar = Nothing
+            Dim limiter As Integer = 0
 
-            If showProgress Then
-                progress = New ProgressBar("Run LPP Solution Iterations...")
-
-                With New ProgressProvider(progress, LPP.PIVOT_ITERATION_LIMIT)
-                    Dim ETA$, msg$
-
-                    tick = Sub()
-                               limiter += 1
-                               ETA = .ETA().FormatTime
-                               msg = $"Iteration {limiter}/{LPP.PIVOT_ITERATION_LIMIT}, ETA={ETA}"
-                               progress.SetProgress(.StepProgress, msg)
-                           End Sub
-                End With
-            Else
-                tick = Sub() limiter += 1
-            End If
+            Call "Run LPP Solution Iterations...".info
 
             'LaTeXString += latex.LPPtoLaTeX.beginTableaus(Input);
 
-            Do While go
+            'Create the ProgressBar
+            ' Maximum: The Max value in ProgressBar (Default is 100)
+            Using pb = New ProgressBar() With {.Maximum = Nothing}
+                Do While go
+                    ' Get next variable to pivot on
+                    Dim n As Integer = choosePivotVar(artificialVariables)
+                    Dim [next] As Integer = choosePivotConstraint(n)
 
-                ' Get next variable to pivot on
-                Dim n As Integer = choosePivotVar(artificialVariables)
-                Dim [next] As Integer = choosePivotConstraint(n)
+                    ' If optimal solution reached, end 'while' statement
+                    'LaTeXString += latex.LPPtoLaTeX.makeTableau(Input, BasicVars, limiter);
+                    limiter += 1
 
-                ' If optimal solution reached, end 'while' statement
-                'LaTeXString += latex.LPPtoLaTeX.makeTableau(Input, BasicVars, limiter);
+                    If n = -1 Then
+                        ' Found a solution.  Stop pivoting.
+                        go = False
 
-                If n = -1 Then
-                    ' Found a solution.  Stop pivoting.
-                    go = False
+                    ElseIf limiter = LPP.PIVOT_ITERATION_LIMIT Then
+                        Call "Max iteration reached...".warning
+                        ' Check iteration limit not exceeded.
+                        Return New LPPSolution("The pivot max iteration cap was exceeded.", solutionLog.ToString, feasibleSolutionTime)
+                    ElseIf [next] = -1 Then
+                        Call "LPP is unbounded!".warning
+                        ' Check for unboundedness.
+                        Return New LPPSolution("The given LPP is unbounded.", solutionLog.ToString, feasibleSolutionTime)
 
-                ElseIf limiter = LPP.PIVOT_ITERATION_LIMIT Then
-                    Call progress?.SetProgress(100, "Max iteration reached...")
-                    Call progress?.Dispose()
-                    ' Check iteration limit not exceeded.
-                    Return New LPPSolution("The pivot max iteration cap was exceeded.", solutionLog.ToString, feasibleSolutionTime)
+                    Else
+                        ' Get pivot constraint, continue.
+                        Call pivot(n, [next])
 
-                ElseIf [next] = -1 Then
-                    Call progress?.SetProgress(100, "LPP is unbounded!")
-                    Call progress?.Dispose()
-                    ' Check for unboundedness.
-                    Return New LPPSolution("The given LPP is unbounded.", solutionLog.ToString, feasibleSolutionTime)
+                        basicVariables([next]) = n
+                        solutionLog.AppendLine("Pivot at " & n & ", " & [next])
+                    End If
 
-                Else
-                    ' Get pivot constraint, continue.
-                    Call pivot(n, [next])
-
-                    basicVariables([next]) = n
-                    solutionLog.AppendLine("Pivot at " & n & ", " & [next])
-                End If
-
-                Call tick()
-            Loop
-
-            Call progress?.SetProgress(100, "Complete!")
-            Call progress?.Dispose()
+                    Call pb.PerformStep()
+                Loop
+            End Using
 
             Return Nothing
         End Function
