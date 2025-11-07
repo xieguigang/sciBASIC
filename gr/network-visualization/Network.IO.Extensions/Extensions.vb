@@ -1,62 +1,62 @@
 ﻿#Region "Microsoft.VisualBasic::decd68a23e8432690347a647562b1801, gr\network-visualization\Network.IO.Extensions\Extensions.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 131
-    '    Code Lines: 90 (68.70%)
-    ' Comment Lines: 29 (22.14%)
-    '    - Xml Docs: 96.55%
-    ' 
-    '   Blank Lines: 12 (9.16%)
-    '     File Size: 4.80 KB
+' Summaries:
 
 
-    ' Module Extensions
-    ' 
-    '     Function: GetConnections, GetNextConnects, RemoveDuplicated, RemoveSelfLoop, SearchIndex
-    '               Trim
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 131
+'    Code Lines: 90 (68.70%)
+' Comment Lines: 29 (22.14%)
+'    - Xml Docs: 96.55%
+' 
+'   Blank Lines: 12 (9.16%)
+'     File Size: 4.80 KB
+
+
+' Module Extensions
+' 
+'     Function: GetConnections, GetNextConnects, RemoveDuplicated, RemoveSelfLoop, SearchIndex
+'               Trim
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.Collection
+Imports Microsoft.VisualBasic.Data.GraphTheory.Network
 Imports Microsoft.VisualBasic.Data.visualize.Network.FileStream
-Imports Microsoft.VisualBasic.Data.visualize.Network.Graph.Abstract
 Imports Microsoft.VisualBasic.Language
 
 <HideModuleName>
@@ -120,7 +120,7 @@ Public Module Extensions
     <Extension>
     Public Function RemoveSelfLoop(Of T As NetworkEdge)(edges As IEnumerable(Of T)) As T()
         Dim LQuery = LinqAPI.Exec(Of T) <=
- _
+                                          _
                 From x As T
                 In edges
                 Where Not x.selfLoop
@@ -138,7 +138,7 @@ Public Module Extensions
     <Extension, ExportAPI("GetConnections")>
     Public Function GetConnections(source As IEnumerable(Of FileStream.NetworkEdge), node As String) As FileStream.NetworkEdge()
         Dim LQuery = LinqAPI.Exec(Of FileStream.NetworkEdge) <=
- _
+                                                               _
             From x As FileStream.NetworkEdge
             In source.AsParallel
             Where Not String.IsNullOrEmpty(x.GetConnectedNode(node))
@@ -158,7 +158,7 @@ Public Module Extensions
     <Extension>
     Public Function GetNextConnects(source As IEnumerable(Of FileStream.NetworkEdge), from As String) As FileStream.NetworkEdge()
         Dim LQuery = LinqAPI.Exec(Of FileStream.NetworkEdge) <=
- _
+                                                               _
             From x As FileStream.NetworkEdge
             In source.AsParallel
             Where from.TextEquals(x.fromNode)

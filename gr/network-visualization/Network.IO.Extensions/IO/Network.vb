@@ -1,69 +1,69 @@
 ﻿#Region "Microsoft.VisualBasic::0c743ea783cb6fed433036c92b290897, gr\network-visualization\Network.IO.Extensions\IO\Network.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 227
-    '    Code Lines: 142 (62.56%)
-    ' Comment Lines: 54 (23.79%)
-    '    - Xml Docs: 96.30%
-    ' 
-    '   Blank Lines: 31 (13.66%)
-    '     File Size: 8.20 KB
+' Summaries:
 
 
-    '     Class Network
-    ' 
-    '         Properties: edges, IsEmpty, meta, nodes
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    ' 
-    '         Function: GetNode, HaveNode
-    ' 
-    '         Sub: RemoveDuplicated, RemoveSelfLoop, RemovesIsolatedNodes
-    ' 
-    '         Operators: (+4 Overloads) -, (+2 Overloads) ^, (+4 Overloads) +, <=, >=
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 227
+'    Code Lines: 142 (62.56%)
+' Comment Lines: 54 (23.79%)
+'    - Xml Docs: 96.30%
+' 
+'   Blank Lines: 31 (13.66%)
+'     File Size: 8.20 KB
+
+
+'     Class Network
+' 
+'         Properties: edges, IsEmpty, meta, nodes
+' 
+'         Constructor: (+1 Overloads) Sub New
+' 
+'         Function: GetNode, HaveNode
+' 
+'         Sub: RemoveDuplicated, RemoveSelfLoop, RemovesIsolatedNodes
+' 
+'         Operators: (+4 Overloads) -, (+2 Overloads) ^, (+4 Overloads) +, <=, >=
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
-Imports Microsoft.VisualBasic.Data.visualize.Network.Graph.Abstract
+Imports Microsoft.VisualBasic.Data.GraphTheory.Network
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 
@@ -158,7 +158,7 @@ Namespace FileStream.Generic
         ''' <remarks></remarks>
         Public Sub RemoveSelfLoop()
             Dim LQuery = LinqAPI.Exec(Of T_Edge) _
- _
+                                                 _
                 () <= From x As T_Edge
                       In edges
                       Where Not x.selfLoop
