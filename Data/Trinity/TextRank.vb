@@ -222,10 +222,11 @@ Public Module TextRank
     ''' <summary>
     ''' Using for generate article's <see cref="NLPExtensions.Abstract(WeightedPRGraph, Integer, Double)"/>
     ''' </summary>
-    ''' <param name="text$"></param>
-    ''' <param name="similarityCut#"></param>
+    ''' <param name="text"></param>
+    ''' <param name="similarityCut"></param>
     ''' <returns></returns>
-    <Extension> Public Function TextGraph(text$, Optional similarityCut# = 0.05) As WeightedPRGraph
+    <Extension>
+    Public Function TextGraph(text$, Optional similarityCut# = 0.05) As WeightedPRGraph
         Dim list$() = text.StripMessy.Sentences.ToArray
         Dim words$()() = list _
             .Select(AddressOf LCase) _
@@ -237,37 +238,29 @@ Public Module TextRank
             Call g.AddVertex(sentence)
         Next
 
-        Using progress As New ProgressBar("Build Text Graph...", 1, CLS:=True)
-            Dim tick As New ProgressProvider(progress, words.Length)
-            Dim ETA$, msg$
+        Call "build text graph...".info
 
-            For x As Integer = 0 To words.Length - 1
-                Dim refIndex = x
-                Dim vector = seq(x, words.Length - 1, by:=1) _
-                    .Select(Function(y)
-                                Dim i% = CInt(y)
-                                Dim similarity# = TextRank.Similarity(words(refIndex), words(i))
-                                Return (y:=i, similarity:=similarity)
-                            End Function) _
-                    .AsParallel _
-                    .ToArray
+        For Each x As Integer In Tqdm.Range(0, words.Length)
+            Dim refIndex = x
+            Dim vector = seq(x, words.Length - 1, by:=1) _
+                .Select(Function(y)
+                            Dim i% = CInt(y)
+                            Dim similarity# = TextRank.Similarity(words(refIndex), words(i))
+                            Return (y:=i, similarity:=similarity)
+                        End Function) _
+                .AsParallel _
+                .ToArray
 
-                For Each sentence As (i%, similarity#) In vector
-                    Dim similarity = sentence.similarity
-                    Dim i% = sentence.i
+            For Each sentence As (i%, similarity#) In vector
+                Dim similarity = sentence.similarity
+                Dim i% = sentence.i
 
-                    If similarity >= similarityCut Then
-                        Call g.AddEdge(list(x), list(i), weight:=similarity)
-                        Call g.AddEdge(list(i), list(x), weight:=similarity)
-                    End If
-                Next
-
-                ETA = tick.ETA().FormatTime
-                msg = list(x) & " " & ETA
-
-                Call progress.SetProgress(tick.StepProgress, details:=msg)
+                If similarity >= similarityCut Then
+                    Call g.AddEdge(list(x), list(i), weight:=similarity)
+                    Call g.AddEdge(list(i), list(x), weight:=similarity)
+                End If
             Next
-        End Using
+        Next
 
         Return g
     End Function

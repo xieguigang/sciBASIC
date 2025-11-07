@@ -1,62 +1,62 @@
 ﻿#Region "Microsoft.VisualBasic::447b6369203cb4064d32a2494f83bfbb, Data_science\MachineLearning\DeepLearning\NeuralNetwork\Trainings\ANNTrainer.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 449
-    '    Code Lines: 288 (64.14%)
-    ' Comment Lines: 95 (21.16%)
-    '    - Xml Docs: 87.37%
-    ' 
-    '   Blank Lines: 66 (14.70%)
-    '     File Size: 17.66 KB
+' Summaries:
 
 
-    '     Class ANNTrainer
-    ' 
-    '         Properties: dropOutRate, ErrorThreshold, MinError, NeuronNetwork, Selective
-    '                     TrainingSet, TrainingType, Truncate, XP
-    ' 
-    '         Constructor: (+2 Overloads) Sub New
-    ' 
-    '         Function: CalculateError, errorSum, SetDropOut, SetLayerNormalize, SetOutputNames
-    '                   SetSelective, SetSnapshotLocation, trainingImpl
-    ' 
-    '         Sub: (+2 Overloads) Add, (+2 Overloads) Corrects, RemoveLast, (+3 Overloads) Train, TrainInternal
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 449
+'    Code Lines: 288 (64.14%)
+' Comment Lines: 95 (21.16%)
+'    - Xml Docs: 87.37%
+' 
+'   Blank Lines: 66 (14.70%)
+'     File Size: 17.66 KB
+
+
+'     Class ANNTrainer
+' 
+'         Properties: dropOutRate, ErrorThreshold, MinError, NeuronNetwork, Selective
+'                     TrainingSet, TrainingType, Truncate, XP
+' 
+'         Constructor: (+2 Overloads) Sub New
+' 
+'         Function: CalculateError, errorSum, SetDropOut, SetLayerNormalize, SetOutputNames
+'                   SetSelective, SetSnapshotLocation, trainingImpl
+' 
+'         Sub: (+2 Overloads) Add, (+2 Overloads) Corrects, RemoveLast, (+3 Overloads) Train, TrainInternal
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -283,42 +283,39 @@ Namespace NeuralNetwork
 
 #Region "-- Training --"
         Public Overloads Sub Train(numEpochs As Integer, Optional parallel As Boolean = False)
-            Using progress As New ProgressBar("Training ANN...")
-                Dim tick As New ProgressProvider(progress, numEpochs)
-                Dim break As Value(Of Boolean) = False
-                Dim cancelSignal As UserTaskCancelAction = Nothing
-                Dim saveSignal As UserTaskSaveAction = Nothing
+            Dim break As Value(Of Boolean) = False
+            Dim cancelSignal As UserTaskCancelAction = Nothing
+            Dim saveSignal As UserTaskSaveAction = Nothing
 
-                If App.IsConsoleApp Then
-                    cancelSignal = New UserTaskCancelAction(
-                        Sub()
-                            Call "User cancel of the training loop...".debug
-                            break.Value = True
-                        End Sub)
-                    saveSignal = New UserTaskSaveAction(AddressOf SaveSnapshot)
-                End If
+            If App.IsConsoleApp Then
+                cancelSignal = New UserTaskCancelAction(
+                    Sub()
+                        Call "User cancel of the training loop...".debug
+                        break.Value = True
+                    End Sub)
+                saveSignal = New UserTaskSaveAction(AddressOf SaveSnapshot)
+            End If
 
-                Call TrainInternal(numEpochs, parallel, tick, break, progress)
+            Call "training ANN network...".info
+            Call TrainInternal(numEpochs, parallel, break)
 
-                If Not cancelSignal Is Nothing Then
-                    Call cancelSignal.Dispose()
-                End If
-                If Not saveSignal Is Nothing Then
-                    Call saveSignal.Dispose()
-                End If
-            End Using
+            If Not cancelSignal Is Nothing Then
+                Call cancelSignal.Dispose()
+            End If
+            If Not saveSignal Is Nothing Then
+                Call saveSignal.Dispose()
+            End If
         End Sub
 
-        Private Sub TrainInternal(numEpochs As Integer, parallel As Boolean, tick As ProgressProvider, break As Value(Of Boolean), progress As ProgressBar)
-            Dim msg$
-            Dim ETA$
+        Private Sub TrainInternal(numEpochs As Integer, parallel As Boolean, break As Value(Of Boolean))
             Dim muErr As Double
+            Dim bar As Tqdm.ProgressBar = Nothing
 
-            For i As Integer = 0 To numEpochs - 1
+            For Each i As Integer In Tqdm.Range(0, numEpochs, bar:=bar)
                 errors = runTraining(parallel)
-                ETA = $"ETA: {tick.ETA.FormatTime}"
                 muErr = errors.Average
-                msg = $"Iterations: [{i}/{numEpochs}], errors={muErr}{vbTab}learn_rate={network.LearnRate} {ETA}"
+
+                Call bar.SetLabel($"iterations: [{i}/{numEpochs}], errors={muErr.ToString("G3")}{vbTab}learn_rate={network.LearnRate}")
 
                 If muErr < ErrorThreshold Then
                     Exit For
