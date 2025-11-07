@@ -282,14 +282,15 @@ Public Module TextDoc
                     For Each line As String In TqdmWrapper.WrapStreamReader(Of String)(
                         bytesOfStream:=fs.Length,
                         request:=Function(ByRef offset, bar) As String
+                                     Dim s As String = reader.ReadLine
+
                                      offset = reader.BaseStream.Position
 
-                                     If reader.EndOfStream Then
+                                     If s Is Nothing Then
                                          Call bar.Finish()
-                                         Return Nothing
-                                     Else
-                                         Return reader.ReadLine
                                      End If
+
+                                     Return s
                                  End Function)
 
                         ' 20251106 break the possible dead loop at here
