@@ -130,11 +130,12 @@ Namespace IO.Linq
         Public Function OpenHandle(fileName$,
                                    Optional encoding As Encoding = Nothing,
                                    Optional tsv As Boolean = False,
-                                   Optional maps As Dictionary(Of String, String) = Nothing) As (schema As SchemaReader, table As IEnumerable(Of RowObject))
+                                   Optional maps As Dictionary(Of String, String) = Nothing,
+                                   Optional tqdm_wrap As Boolean = True) As (schema As SchemaReader, table As IEnumerable(Of RowObject))
 
             Dim schema As New SchemaReader(fileName, encoding, tsv)
             Dim source As IEnumerable(Of RowObject) = fileName _
-                .IterateAllLines _
+                .IterateAllLines(tqdm_wrap:=tqdm_wrap) _
                 .Skip(1) _
                 .Select(Function(line)
                             Return New RowObject(line, tsv)
