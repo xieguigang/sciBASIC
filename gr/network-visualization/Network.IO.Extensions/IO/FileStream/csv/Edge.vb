@@ -70,9 +70,9 @@ Imports Microsoft.VisualBasic.Data.visualize.Network.FileStream.Generic
 Namespace FileStream
 
     ''' <summary>
-    ''' The edge between the two nodes in the network.(节点与节点之间的相互关系)
+    ''' The edge between the two nodes in the network.
     ''' </summary>
-    ''' <remarks></remarks>
+    ''' <remarks>(节点与节点之间的相互关系)</remarks>
     <XmlType("VisualizeNode")>
     Public Class NetworkEdge : Inherits IDynamicsTable
         Implements IInteraction, INetworkEdge
