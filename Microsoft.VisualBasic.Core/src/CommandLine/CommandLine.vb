@@ -1,69 +1,69 @@
 ﻿#Region "Microsoft.VisualBasic::85c2c17cc1d069e22803ee5d177402fa, Microsoft.VisualBasic.Core\src\CommandLine\CommandLine.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 879
-    '    Code Lines: 457 (51.99%)
-    ' Comment Lines: 321 (36.52%)
-    '    - Xml Docs: 89.72%
-    ' 
-    '   Blank Lines: 101 (11.49%)
-    '     File Size: 37.33 KB
+' Summaries:
 
 
-    '     Class CommandLine
-    ' 
-    '         Properties: BoolFlags, cli, Count, EnvironmentVariables, IsNothing
-    '                     IsNullOrEmpty, IsReadOnly, Keys, Name, ParameterList
-    '                     Parameters, SingleValue, Tokens
-    ' 
-    '         Function: Assert, (+2 Overloads) BuildFromArguments, CheckMissingRequiredArguments, CheckMissingRequiredParameters, Contains
-    '                   ContainsParameter, GetDataReader, GetDictionary, GetEnumerator, GetEnumerator1
-    '                   GetFullDIRPath, GetFullFilePath, GetObject, GetOrdinal, GetSize
-    '                   (+2 Overloads) GetString, GetValue, hasKey, HavebFlag, IsTrue
-    '                   MoveNext, OpenHandle, OpenStreamInput, OpenStreamOutput, Parse
-    '                   ParseTokens, ReadInput, (+2 Overloads) Remove, ToArgumentVector, ToString
-    '                   TrimNamePrefix
-    ' 
-    '         Sub: (+2 Overloads) Add, Clear, CopyTo
-    ' 
-    '         Operators: (+4 Overloads) -, ^, +, <, (+2 Overloads) <=
-    '                    >, (+2 Overloads) >=
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 879
+'    Code Lines: 457 (51.99%)
+' Comment Lines: 321 (36.52%)
+'    - Xml Docs: 89.72%
+' 
+'   Blank Lines: 101 (11.49%)
+'     File Size: 37.33 KB
+
+
+'     Class CommandLine
+' 
+'         Properties: BoolFlags, cli, Count, EnvironmentVariables, IsNothing
+'                     IsNullOrEmpty, IsReadOnly, Keys, Name, ParameterList
+'                     Parameters, SingleValue, Tokens
+' 
+'         Function: Assert, (+2 Overloads) BuildFromArguments, CheckMissingRequiredArguments, CheckMissingRequiredParameters, Contains
+'                   ContainsParameter, GetDataReader, GetDictionary, GetEnumerator, GetEnumerator1
+'                   GetFullDIRPath, GetFullFilePath, GetObject, GetOrdinal, GetSize
+'                   (+2 Overloads) GetString, GetValue, hasKey, HavebFlag, IsTrue
+'                   MoveNext, OpenHandle, OpenStreamInput, OpenStreamOutput, Parse
+'                   ParseTokens, ReadInput, (+2 Overloads) Remove, ToArgumentVector, ToString
+'                   TrimNamePrefix
+' 
+'         Sub: (+2 Overloads) Add, Clear, CopyTo
+' 
+'         Operators: (+4 Overloads) -, ^, +, <, (+2 Overloads) <=
+'                    >, (+2 Overloads) >=
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -329,6 +329,16 @@ Namespace CommandLine
             Dim path$ = Me(name)
             path = FixPath(path)
             Return FileIO.FileSystem.GetFileInfo(path).FullName
+        End Function
+
+        Public Function Required(name As String, error$) As String
+            Dim val As String = Me(name)
+
+            If String.IsNullOrEmpty(val) Then
+                Throw New InvalidProgramException([error])
+            Else
+                Return val
+            End If
         End Function
 
         ''' <summary>
