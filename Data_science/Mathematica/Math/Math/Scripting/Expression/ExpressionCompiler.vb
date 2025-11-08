@@ -1,58 +1,58 @@
 ﻿#Region "Microsoft.VisualBasic::4ce4370048c7eb29d6610ca219bfbd1f, Data_science\Mathematica\Math\Math\Scripting\Expression\ExpressionCompiler.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 118
-    '    Code Lines: 93 (78.81%)
-    ' Comment Lines: 9 (7.63%)
-    '    - Xml Docs: 55.56%
-    ' 
-    '   Blank Lines: 16 (13.56%)
-    '     File Size: 6.14 KB
+' Summaries:
 
 
-    '     Delegate Function
-    ' 
-    ' 
-    '     Module ExpressionCompiler
-    ' 
-    '         Function: CreateExpression, CreateLambda, MakeSymbolReference
-    ' 
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 118
+'    Code Lines: 93 (78.81%)
+' Comment Lines: 9 (7.63%)
+'    - Xml Docs: 55.56%
+' 
+'   Blank Lines: 16 (13.56%)
+'     File Size: 6.14 KB
+
+
+'     Delegate Function
+' 
+' 
+'     Module ExpressionCompiler
+' 
+'         Function: CreateExpression, CreateLambda, MakeSymbolReference
+' 
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -64,6 +64,7 @@ Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.Scripting.MathExpression.Impl
 Imports ScriptExpression = Microsoft.VisualBasic.Math.Scripting.MathExpression.Impl.Expression
+Imports std = System.Math
 
 Namespace Scripting.MathExpression
 
@@ -126,18 +127,26 @@ Namespace Scripting.MathExpression
                         .ToArray
 
                     Select Case name.ToLower
-                        Case "abs"
-                            Dim absMethod As MethodInfo = GetType(System.Math).GetMethod("Abs", {GetType(Double)})
-                            Dim callAbs As MethodCallExpression = Expressions.Expression.Call(absMethod, args(0))
-                            Return callAbs
+                        Case "abs" : Return GetDoubleMathFunction(NameOf(std.Abs), args(0))
+                        Case "exp" : Return GetDoubleMathFunction(NameOf(std.Exp), args(0))
+                        Case "pow" : Return GetDoubleMathFunction(NameOf(std.Pow), args(0))
+                        Case "cos" : Return GetDoubleMathFunction(NameOf(std.Cos), args(0))
+                        Case "sin" : Return GetDoubleMathFunction(NameOf(std.Sin), args(0))
+                        Case "tan" : Return GetDoubleMathFunction(NameOf(std.Tan), args(0))
+                        Case "log" : Return GetDoubleMathFunction(NameOf(std.Log), args(0))
                         Case Else
                             Throw New NotImplementedException($"the function call of '{name}' is not implemented!")
                     End Select
 
-
                 Case Else
                     Throw New InvalidProgramException(model.GetType.FullName)
             End Select
+        End Function
+
+        Private Function GetDoubleMathFunction(name$, num As Expressions.Expression) As MethodCallExpression
+            Dim absMethod As MethodInfo = GetType(System.Math).GetMethod(name, {GetType(Double)})
+            Dim callAbs As MethodCallExpression = Expressions.Expression.Call(absMethod, num)
+            Return callAbs
         End Function
 
         <Extension>
@@ -162,7 +171,7 @@ Namespace Scripting.MathExpression
                     .FirstOrDefault
 
                     If Not .Value Is Nothing Then
-                        Call $"the missing {symbolName} is replaced by un-applied '{ .Key}'!".Warning
+                        Call $"the missing {symbolName} is replaced by un-applied '{ .Key}'!".warning
 
                         applied += .Key
                         Return .Value
