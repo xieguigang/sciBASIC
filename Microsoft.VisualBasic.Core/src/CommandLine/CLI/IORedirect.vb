@@ -194,7 +194,7 @@ Namespace CommandLine
                        Optional IOredirect As Boolean = True,
                        Optional hide As Boolean = True)
 
-            Dim program$ = exe.Trim(ASCII.Quot, " "c)
+            Dim program$ = exe.Trim(ASCII.Quot, " "c).Trim("'", " ").Trim
             Dim pInfo As New ProcessStartInfo(program, args.TrimNewLine.Trim) With {
                 .UseShellExecute = False
             }
@@ -206,10 +206,8 @@ Namespace CommandLine
                 pInfo.RedirectStandardInput = True
             End If
 
-            pInfo.RedirectStandardInput = True
-            pInfo.ErrorDialog = False
-
             If hide Then
+                pInfo.ErrorDialog = False
                 pInfo.WindowStyle = ProcessWindowStyle.Hidden
                 pInfo.CreateNoWindow = True
             End If
@@ -305,15 +303,18 @@ Namespace CommandLine
             End Try
 
             processIsRunning = True
-            input = processInfo.StandardInput
 
-            If Not pushingData.IsNullOrEmpty Then
-                For Each line As String In pushingData
-                    Call input.WriteLine(line)
-                    Call input.Flush()
+            If IOredirect Then
+                input = processInfo.StandardInput
 
-                    Call VBDebugger.EchoLine("  >>>   " & line)
-                Next
+                If Not pushingData.IsNullOrEmpty Then
+                    For Each line As String In pushingData
+                        Call input.WriteLine(line)
+                        Call input.Flush()
+
+                        Call VBDebugger.EchoLine("  >>>   " & line)
+                    Next
+                End If
             End If
 
             If waitForExit Then
