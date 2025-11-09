@@ -204,6 +204,8 @@ Namespace ComponentModel.DataSourceModel.Repository
             End If
 
             For Each name As String In names
+                ' 20251109 null value will be safely treated as empty string at here
+                name = If(name, "")
 RE0:
                 If nameUniques.ContainsKey(name) Then
                     nameUniques(name).Hit()
