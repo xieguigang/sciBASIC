@@ -66,9 +66,10 @@ Namespace ComponentModel.DataSourceModel.Repository
         ''' <summary>
         ''' 基于q-gram重叠度查找相似字符串
         ''' </summary>
-        Public Function FindSimilar(query As String, threshold As Double) As List(Of (String, Double, Integer))
-            Dim results = New List(Of (String, Double, Integer))()
-            If String.IsNullOrEmpty(query) Then Return results
+        Public Function FindSimilar(query As String, threshold As Double) As IEnumerable(Of FindResult)
+            If String.IsNullOrEmpty(query) Then
+                Return New FindResult() {}
+            End If
 
             Dim queryGrams = GenerateQGrams(query)
             Dim candidateCounts = New Dictionary(Of Integer, Integer)()
@@ -86,6 +87,8 @@ Namespace ComponentModel.DataSourceModel.Repository
                 End If
             Next
 
+            Dim results As New List(Of FindResult)
+
             ' 计算Jaccard相似度并筛选结果
             For Each kvp In candidateCounts
                 Dim strIndex = kvp.Key
@@ -99,11 +102,11 @@ Namespace ComponentModel.DataSourceModel.Repository
                     Dim dist = LevenshteinDistance.ComputeDistance(query, _strings(strIndex))
                     Dim distance = If(dist Is Nothing, Double.PositiveInfinity, dist.Distance)
 
-                    Call results.Add((_strings(strIndex), similarity, distance))
+                    Call results.Add(New FindResult(_strings(strIndex), similarity, distance) With {.index = strIndex})
                 End If
             Next
 
-            Return results.OrderByDescending(Function(r) r.Item2).ToList()
+            Return results.OrderByDescending(Function(r) r.similarity)
         End Function
 
         ''' <summary>
@@ -111,6 +114,27 @@ Namespace ComponentModel.DataSourceModel.Repository
         ''' </summary>
         Public Function GetIndexStats() As (Integer, Integer, Integer)
             Return (_strings.Count, _index.Count, _index.Sum(Function(x) x.Value.Count))
+        End Function
+    End Class
+
+    Public Class FindResult
+
+        Public Property text As String
+        Public Property similarity As Double
+        Public Property levenshtein As Double
+        Public Property index As Integer
+
+        Sub New()
+        End Sub
+
+        Sub New(text As String, similairty As Double, levenshtein As Double)
+            _text = text
+            _similarity = similairty
+            _levenshtein = levenshtein
+        End Sub
+
+        Public Overrides Function ToString() As String
+            Return $"[{index}] {text} = {similarity}"
         End Function
     End Class
 End Namespace
