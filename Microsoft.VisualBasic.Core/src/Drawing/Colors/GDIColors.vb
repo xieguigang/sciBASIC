@@ -325,6 +325,7 @@ Namespace Imaging
             End If
 
             If str.StartsWith("rgba") Then
+                ' 20251112 html rgba color
                 Dim rgba_str As String = str.GetStackValue("(", ")")
                 Dim rgba_val As Double() = rgba_str.StringSplit("\s*,\s*").Select(AddressOf Strings.Trim).AsDouble
                 Dim r As Integer = If(rgba_val(0) > 1, rgba_val(0), 255 * rgba_val(0))
