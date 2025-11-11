@@ -132,7 +132,7 @@ Namespace Interpolation
         ''' 
         <Extension>
         Public Iterator Function Compute(controlPoints As IEnumerable(Of PointF), Optional degree! = 5, Optional RESOLUTION% = 10) As IEnumerable(Of PointF)
-            Dim ctrlPts = controlPoints.ToArray
+            Dim ctrlPts As PointF() = controlPoints.ToArray
             Dim p As PointF?
 
             If ctrlPts.Length > 1 Then
