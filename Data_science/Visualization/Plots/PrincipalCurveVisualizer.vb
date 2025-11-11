@@ -1,7 +1,8 @@
 ﻿Imports System.Drawing
-Imports System.Drawing.Drawing2D
 Imports Microsoft.VisualBasic.Imaging
+Imports Microsoft.VisualBasic.Math.Interpolation
 Imports Microsoft.VisualBasic.Scripting.Expressions
+Imports std = System.Math
 
 Public Class PrincipalCurveVisualizer
     Private _dataPoints As List(Of DataPoint)
@@ -33,22 +34,19 @@ Public Class PrincipalCurveVisualizer
                                 CSng(maxX - minX + 2 * marginX), CSng(maxY - minY + 2 * marginY))
     End Sub
 
-    ' 在Graphics对象上绘制[3,5](@ref)
-    Public Sub Draw(g As Graphics, width As Integer, height As Integer)
+    ' 在Graphics对象上绘制
+    Public Sub Draw(g As IGraphics, width As Integer, height As Integer)
         If _dataPoints.Count = 0 Then Return
 
         ' 计算缩放和偏移
         Dim scaleX = width / _bounds.Width
         Dim scaleY = height / _bounds.Height
-        Dim scale = Math.Min(scaleX, scaleY) * 0.9 ' 保留边距
+        Dim scale = std.Min(scaleX, scaleY) * 0.9 ' 保留边距
 
         Dim offsetX = -_bounds.Left + (width / scale - _bounds.Width) / 2
         Dim offsetY = -_bounds.Top + (height / scale - _bounds.Height) / 2
 
-        ' 设置高质量渲染
-        g.SmoothingMode = SmoothingMode.AntiAlias
-
-        ' 绘制数据点[5](@ref)
+        ' 绘制数据点
         Dim pointBrush As New SolidBrush(Color.Blue)
         Dim pointRadius As Single = 3
 
@@ -59,7 +57,7 @@ Public Class PrincipalCurveVisualizer
                          pointRadius * 2, pointRadius * 2)
         Next
 
-        ' 绘制主曲线[3](@ref)
+        ' 绘制主曲线
         If _curvePoints.Count > 1 Then
             Dim curvePen As New Pen(Color.Red, 2)
             Dim curvePoints = _curvePoints.Select(Function(p)
@@ -71,18 +69,5 @@ Public Class PrincipalCurveVisualizer
         End If
 
         pointBrush.Dispose()
-    End Sub
-
-    ' 在PictureBox中显示结果
-    Public Sub DrawToPictureBox(pictureBox As PictureBox)
-        If pictureBox.Width = 0 OrElse pictureBox.Height = 0 Then Return
-
-        Using bmp As New Bitmap(pictureBox.Width, pictureBox.Height)
-            Using g As Graphics = Graphics.FromImage(bmp)
-                g.Clear(Color.White)
-                Draw(g, pictureBox.Width, pictureBox.Height)
-            End Using
-            pictureBox.Image = bmp.Clone()
-        End Using
     End Sub
 End Class

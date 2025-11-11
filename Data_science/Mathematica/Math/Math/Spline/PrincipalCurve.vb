@@ -154,7 +154,7 @@ Namespace Interpolation
             Return initialCurve
         End Function
 
-        ' 主曲线拟合算法[6,7](@ref)
+        ' 主曲线拟合算法
         Public Sub Fit()
             ' 初始化曲线
             _curvePoints = InitializeCurve()
@@ -184,7 +184,7 @@ Namespace Interpolation
             Next
         End Sub
 
-        ' 将数据点投影到曲线上[7](@ref)
+        ' 将数据点投影到曲线上
         Private Function ProjectDataToCurve() As List(Of ProjectionInfo)
             Dim projections = New List(Of ProjectionInfo)()
 
@@ -231,7 +231,7 @@ Namespace Interpolation
             Return projections
         End Function
 
-        ' 根据投影重新构建曲线[6](@ref)
+        ' 根据投影重新构建曲线
         Private Sub ReconstructCurve(projections As List(Of ProjectionInfo))
             If projections.Count = 0 Then Return
 
