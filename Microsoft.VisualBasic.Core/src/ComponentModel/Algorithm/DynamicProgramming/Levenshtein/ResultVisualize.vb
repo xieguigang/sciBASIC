@@ -71,7 +71,7 @@ Namespace ComponentModel.Algorithm.DynamicProgramming.Levenshtein
         <Extension>
         Public Function HTMLVisualize(result As DistResult) As String
             Try
-                Return result.doVisualizeHTML().FormatHTML
+                Return result.CreateVisualizeHTML().FormatHTML
             Catch ex As Exception
                 Call App.LogException(ex)
                 Return _
@@ -87,7 +87,7 @@ Namespace ComponentModel.Algorithm.DynamicProgramming.Levenshtein
         End Function
 
         <Extension>
-        Private Function doVisualizeHTML(dist As DistResult) As String
+        Private Function CreateVisualizeHTML(dist As DistResult) As String
             Dim html As New XmlBuilder()
             Dim edits$ = dist.DistEdits
 

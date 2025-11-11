@@ -124,6 +124,10 @@ Namespace ComponentModel.Algorithm.DynamicProgramming.Levenshtein
             Return LQuery > 50
         End Function
 
+        ''' <summary>
+        ''' the edit distance
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property Distance As Double
             Get
                 If DistTable.IsNullOrEmpty Then

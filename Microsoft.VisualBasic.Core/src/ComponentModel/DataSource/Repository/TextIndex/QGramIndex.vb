@@ -1,4 +1,6 @@
-﻿Namespace ComponentModel.DataSourceModel.Repository
+﻿Imports Microsoft.VisualBasic.ComponentModel.Algorithm.DynamicProgramming.Levenshtein
+
+Namespace ComponentModel.DataSourceModel.Repository
 
     Public Class QGramIndex
 
@@ -94,8 +96,10 @@
                 Dim similarity = commonGrams / CDbl(unionGrams)
                 If similarity >= threshold Then
                     ' 计算编辑距离作为二次验证
-                    Dim distance = ComputeLevenshtein(query, _strings(strIndex))
-                    results.Add((_strings(strIndex), similarity, distance))
+                    Dim dist = LevenshteinDistance.ComputeDistance(query, _strings(strIndex))
+                    Dim distance = If(dist Is Nothing, Double.PositiveInfinity, dist.Distance)
+
+                    Call results.Add((_strings(strIndex), similarity, distance))
                 End If
             Next
 
