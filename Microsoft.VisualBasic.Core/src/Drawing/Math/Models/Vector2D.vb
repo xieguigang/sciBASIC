@@ -85,7 +85,7 @@ Namespace Imaging.Math2D
         ''' <summary>
         ''' distance to zero [0,0]
         ''' </summary>
-        ''' <returns></returns>
+        ''' <returns>Magnitude of the vector</returns>
         Public ReadOnly Property Length As Double
             Get
                 Return std.Sqrt(x ^ 2 + y ^ 2)
@@ -115,6 +115,12 @@ Namespace Imaging.Math2D
             Me.x = x
             Me.y = y
         End Sub
+
+        Public Function Normalize() As Vector2D
+            Dim mag As Double = Length
+            If mag = 0 Then Return New Vector2D(0, 0)
+            Return New Vector2D(x / mag, y / mag)
+        End Function
 
         Public Overrides Function ToString() As String
             Return $"[{x}, {y}]"

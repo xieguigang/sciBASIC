@@ -1,15 +1,16 @@
 ﻿Imports System.Drawing
 Imports Microsoft.VisualBasic.Imaging
+Imports Microsoft.VisualBasic.Imaging.Math2D
 Imports Microsoft.VisualBasic.Math.Interpolation
 Imports Microsoft.VisualBasic.Scripting.Expressions
 Imports std = System.Math
 
 Public Class PrincipalCurveVisualizer
-    Private _dataPoints As List(Of DataPoint)
-    Private _curvePoints As List(Of DataPoint)
+    Private _dataPoints As List(Of Vector2D)
+    Private _curvePoints As List(Of Vector2D)
     Private _bounds As RectangleF
 
-    Public Sub New(dataPoints As List(Of DataPoint), curvePoints As List(Of DataPoint))
+    Public Sub New(dataPoints As List(Of Vector2D), curvePoints As List(Of Vector2D))
         Me._dataPoints = dataPoints
         Me._curvePoints = curvePoints
         CalculateBounds()

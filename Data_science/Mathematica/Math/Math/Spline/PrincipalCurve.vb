@@ -1,62 +1,26 @@
-﻿Imports std = System.Math
+﻿Imports Microsoft.VisualBasic.Imaging.Math2D
+Imports std = System.Math
 
 Namespace Interpolation
-
-    ' 二维数据点结构
-    Public Structure DataPoint
-        Public X As Double
-        Public Y As Double
-
-        Public Sub New(x As Double, y As Double)
-            Me.X = x
-            Me.Y = y
-        End Sub
-
-        Public Shared Operator -(a As DataPoint, b As DataPoint) As DataPoint
-            Return New DataPoint(a.X - b.X, a.Y - b.Y)
-        End Operator
-
-        Public Shared Operator +(a As DataPoint, b As DataPoint) As DataPoint
-            Return New DataPoint(a.X + b.X, a.Y + b.Y)
-        End Operator
-
-        Public Shared Operator *(scalar As Double, point As DataPoint) As DataPoint
-            Return New DataPoint(scalar * point.X, scalar * point.Y)
-        End Operator
-
-        Public Function DistanceTo(other As DataPoint) As Double
-            Return std.Sqrt((X - other.X) ^ 2 + (Y - other.Y) ^ 2)
-        End Function
-
-        Public Function Magnitude() As Double
-            Return std.Sqrt(X ^ 2 + Y ^ 2)
-        End Function
-
-        Public Function Normalize() As DataPoint
-            Dim mag = Magnitude()
-            If mag = 0 Then Return New DataPoint(0, 0)
-            Return New DataPoint(X / mag, Y / mag)
-        End Function
-    End Structure
 
     ' 数学计算工具类
     Public Class MathUtils
         ' 计算两点之间的欧氏距离
-        Public Shared Function EuclideanDistance(p1 As DataPoint, p2 As DataPoint) As Double
-            Return std.Sqrt((p1.X - p2.X) ^ 2 + (p1.Y - p2.Y) ^ 2)
+        Public Shared Function EuclideanDistance(p1 As Vector2D, p2 As Vector2D) As Double
+            Return std.Sqrt((p1.x - p2.x) ^ 2 + (p1.y - p2.y) ^ 2)
         End Function
 
         ' 计算点到线段的距离
-        Public Shared Function DistanceToSegment(point As DataPoint, segStart As DataPoint, segEnd As DataPoint) As Double
+        Public Shared Function DistanceToSegment(point As Vector2D, segStart As Vector2D, segEnd As Vector2D) As Double
             Dim l2 = EuclideanDistance(segStart, segEnd) ^ 2
             If l2 = 0 Then Return EuclideanDistance(point, segStart)
 
-            Dim t = std.Max(0, std.Min(1, ((point.X - segStart.X) * (segEnd.X - segStart.X) +
-                               (point.Y - segStart.Y) * (segEnd.Y - segStart.Y)) / l2))
+            Dim t = std.Max(0, std.Min(1, ((point.x - segStart.x) * (segEnd.x - segStart.x) +
+                               (point.y - segStart.y) * (segEnd.y - segStart.y)) / l2))
 
-            Dim projection As New DataPoint(
-            segStart.X + t * (segEnd.X - segStart.X),
-            segStart.Y + t * (segEnd.Y - segStart.Y)
+            Dim projection As New Vector2D(
+            segStart.x + t * (segEnd.x - segStart.x),
+            segStart.y + t * (segEnd.y - segStart.y)
         )
 
             Return EuclideanDistance(point, projection)
@@ -69,13 +33,13 @@ Namespace Interpolation
     End Class
 
     Public Class PrincipalCurve
-        Private _dataPoints As List(Of DataPoint)
-        Private _curvePoints As List(Of DataPoint)
+        Private _dataPoints As List(Of Vector2D)
+        Private _curvePoints As List(Of Vector2D)
         Private _bandwidth As Double
         Private _maxIterations As Integer
         Private _tolerance As Double
 
-        Public Sub New(dataPoints As IEnumerable(Of DataPoint),
+        Public Sub New(dataPoints As IEnumerable(Of Vector2D),
                   Optional bandwidth As Double = 1.0,
                   Optional maxIterations As Integer = 100,
                   Optional tolerance As Double = 0.001)
@@ -83,32 +47,32 @@ Namespace Interpolation
             Me._bandwidth = bandwidth
             Me._maxIterations = maxIterations
             Me._tolerance = tolerance
-            Me._curvePoints = New List(Of DataPoint)()
+            Me._curvePoints = New List(Of Vector2D)()
         End Sub
 
         ' 获取主曲线点
-        Public ReadOnly Property CurvePoints As List(Of DataPoint)
+        Public ReadOnly Property CurvePoints As List(Of Vector2D)
             Get
                 Return _curvePoints
             End Get
         End Property
 
         ' 初始化曲线（使用线性主成分）
-        Private Function InitializeCurve() As List(Of DataPoint)
+        Private Function InitializeCurve() As List(Of Vector2D)
             Dim points = _dataPoints.ToArray()
             Dim n = points.Length
 
             ' 计算数据中心点
-            Dim meanX = points.Average(Function(p) p.X)
-            Dim meanY = points.Average(Function(p) p.Y)
-            Dim center As New DataPoint(meanX, meanY)
+            Dim meanX = points.Average(Function(p) p.x)
+            Dim meanY = points.Average(Function(p) p.y)
+            Dim center As New Vector2D(meanX, meanY)
 
             ' 计算协方差矩阵
             Dim covXX = 0.0, covXY = 0.0, covYY = 0.0
             For Each p In points
-                covXX += (p.X - meanX) * (p.X - meanX)
-                covXY += (p.X - meanX) * (p.Y - meanY)
-                covYY += (p.Y - meanY) * (p.Y - meanY)
+                covXX += (p.x - meanX) * (p.x - meanX)
+                covXY += (p.x - meanX) * (p.y - meanY)
+                covYY += (p.y - meanY) * (p.y - meanY)
             Next
 
             covXX /= n : covXY /= n : covYY /= n
@@ -140,13 +104,13 @@ Namespace Interpolation
             Dim stdY = std.Sqrt(covYY)
             Dim curveLength = 3 * std.Max(stdX, stdY) ' 3倍标准差
 
-            Dim initialCurve = New List(Of DataPoint)()
+            Dim initialCurve = New List(Of Vector2D)()
             Dim steps = 20
             For i = 0 To steps - 1
                 Dim t = (i - steps / 2) * curveLength / steps
-                Dim point As New DataPoint(
-                center.X + t * eigenVectorX,
-                center.Y + t * eigenVectorY
+                Dim point As New Vector2D(
+                center.x + t * eigenVectorX,
+                center.y + t * eigenVectorY
             )
                 initialCurve.Add(point)
             Next
@@ -192,7 +156,7 @@ Namespace Interpolation
                 Dim minDistance = Double.MaxValue
                 Dim closestSegmentIndex = -1
                 Dim closestT As Double = 0
-                Dim closestPoint As DataPoint
+                Dim closestPoint As Vector2D = Nothing
 
                 ' 找到曲线上最近的点
                 For i = 0 To _curvePoints.Count - 2
@@ -201,7 +165,7 @@ Namespace Interpolation
 
                     ' 计算点到线段的距离和投影参数
                     Dim segmentVector = segEnd - segStart
-                    Dim segmentLength = segmentVector.Magnitude()
+                    Dim segmentLength = segmentVector.Length
 
                     If segmentLength = 0 Then Continue For
 
@@ -263,7 +227,7 @@ Namespace Interpolation
                 Next
 
                 If totalWeight > 0 Then
-                    _curvePoints(i) = New DataPoint(weightedSumX / totalWeight, weightedSumY / totalWeight)
+                    _curvePoints(i) = New Vector2D(weightedSumX / totalWeight, weightedSumY / totalWeight)
                 End If
             Next
         End Sub
@@ -272,14 +236,14 @@ Namespace Interpolation
         Private Sub SmoothCurve()
             If _curvePoints.Count < 3 Then Return
 
-            Dim smoothedPoints = New List(Of DataPoint)()
+            Dim smoothedPoints = New List(Of Vector2D)()
             smoothedPoints.Add(_curvePoints(0)) ' 保持起点不变
 
             For i = 1 To _curvePoints.Count - 2
                 ' 简单移动平均平滑
                 Dim smoothedX = (_curvePoints(i - 1).X + _curvePoints(i).X + _curvePoints(i + 1).X) / 3
                 Dim smoothedY = (_curvePoints(i - 1).Y + _curvePoints(i).Y + _curvePoints(i + 1).Y) / 3
-                smoothedPoints.Add(New DataPoint(smoothedX, smoothedY))
+                smoothedPoints.Add(New Vector2D(smoothedX, smoothedY))
             Next
 
             smoothedPoints.Add(_curvePoints(_curvePoints.Count - 1)) ' 保持终点不变
@@ -294,12 +258,12 @@ Namespace Interpolation
 
         ' 投影信息辅助类
         Private Class ProjectionInfo
-            Public Property DataPoint As DataPoint
-            Public Property ProjectionPoint As DataPoint
+            Public Property DataPoint As Vector2D
+            Public Property ProjectionPoint As Vector2D
             Public Property CurveParameter As Double
             Public Property Distance As Double
 
-            Public Sub New(dataPoint As DataPoint, projectionPoint As DataPoint,
+            Public Sub New(dataPoint As Vector2D, projectionPoint As Vector2D,
                       curveParameter As Double, distance As Double)
                 Me.DataPoint = dataPoint
                 Me.ProjectionPoint = projectionPoint
