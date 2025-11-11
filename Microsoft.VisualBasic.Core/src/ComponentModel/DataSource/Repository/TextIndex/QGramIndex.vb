@@ -7,9 +7,10 @@ Namespace ComponentModel.DataSourceModel.Repository
         ''' <summary>
         ''' q-gram的长度
         ''' </summary>
-        Private ReadOnly _q As Integer
-        Private ReadOnly _index As Dictionary(Of String, HashSet(Of Integer))
-        Private ReadOnly _strings As List(Of String)
+        ReadOnly _q As Integer
+        ReadOnly _index As Dictionary(Of String, HashSet(Of Integer))
+        ReadOnly _strings As List(Of String)
+        ReadOnly _counts As New Dictionary(Of String, Integer)
 
         Public Sub New(q As Integer)
             _q = q
@@ -23,12 +24,14 @@ Namespace ComponentModel.DataSourceModel.Repository
         Public Sub AddString(s As String)
             If String.IsNullOrEmpty(s) Then Return
 
-            Dim stringIndex = _strings.Count
-            _strings.Add(s)
-
             ' 生成q-grams
             Dim grams = GenerateQGrams(s)
-            For Each gram In grams
+            Dim stringIndex = _strings.Count
+
+            _strings.Add(s)
+            _counts(s) = grams.Count
+
+            For Each gram As String In grams
                 If Not _index.ContainsKey(gram) Then
                     _index(gram) = New HashSet(Of Integer)()
                 End If
@@ -90,10 +93,10 @@ Namespace ComponentModel.DataSourceModel.Repository
             Dim results As New List(Of FindResult)
 
             ' 计算Jaccard相似度并筛选结果
-            For Each kvp In candidateCounts
+            For Each kvp As KeyValuePair(Of Integer, Integer) In candidateCounts
                 Dim strIndex = kvp.Key
                 Dim commonGrams = kvp.Value
-                Dim targetGrams = GenerateQGrams(_strings(strIndex)).Count
+                Dim targetGrams = _counts(_strings(strIndex))
                 Dim unionGrams = queryGrams.Count + targetGrams - commonGrams
 
                 Dim similarity = commonGrams / CDbl(unionGrams)
