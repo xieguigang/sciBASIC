@@ -240,7 +240,8 @@ Public Module Extensions
     ''' if the given input string <paramref name="s"/> is empty.
     ''' </returns>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    <Extension> Public Function MD5(s$) As String
+    <Extension>
+    Public Function MD5(s$) As String
         Return s.GetMd5Hash.ToLower
     End Function
 
@@ -253,7 +254,8 @@ Public Module Extensions
     ''' <typeparam name="T"></typeparam>
     ''' <param name="source"></param>
     ''' <returns></returns>
-    <Extension> Public Function Second(Of T)(source As IEnumerable(Of T), Optional suppressError As Boolean = False, Optional [default] As T = Nothing) As T
+    <Extension>
+    Public Function Second(Of T)(source As IEnumerable(Of T), Optional suppressError As Boolean = False, Optional [default] As T = Nothing) As T
         For Each x As SeqValue(Of T) In source.SeqIterator
             If x.i = 1 Then
                 Return x.value
