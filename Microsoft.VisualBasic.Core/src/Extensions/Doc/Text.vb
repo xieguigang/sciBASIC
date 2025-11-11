@@ -279,26 +279,8 @@ Public Module TextDoc
         Using fs As Stream = path.Open(FileMode.Open, doClear:=False, [readOnly]:=True, verbose:=verbose)
             Using reader As New StreamReader(fs, encoding Or DefaultEncoding)
                 If tqdm_wrap Then
-                    For Each line As String In TqdmWrapper.WrapStreamReader(Of String)(
-                        bytesOfStream:=fs.Length,
-                        request:=Function(ByRef offset, bar) As String
-                                     Dim s As String = reader.ReadLine
-
-                                     offset = reader.BaseStream.Position
-
-                                     If s Is Nothing Then
-                                         Call bar.Finish()
-                                     End If
-
-                                     Return s
-                                 End Function)
-
-                        ' 20251106 break the possible dead loop at here
-                        If line Is Nothing Then
-                            Exit For
-                        Else
-                            Yield line
-                        End If
+                    For Each line As String In ReadLines(reader)
+                        Yield line
                     Next
                 Else
                     Do While Not reader.EndOfStream
@@ -307,6 +289,33 @@ Public Module TextDoc
                 End If
             End Using
         End Using
+    End Function
+
+    <Extension>
+    Public Iterator Function ReadLines(reader As StreamReader) As IEnumerable(Of String)
+        Dim fs As Stream = reader.BaseStream
+
+        For Each line As String In TqdmWrapper.WrapStreamReader(Of String)(
+            bytesOfStream:=fs.Length,
+            request:=Function(ByRef offset, bar) As String
+                         Dim s As String = reader.ReadLine
+
+                         offset = reader.BaseStream.Position
+
+                         If s Is Nothing Then
+                             Call bar.Finish()
+                         End If
+
+                         Return s
+                     End Function)
+
+            ' 20251106 break the possible dead loop at here
+            If line Is Nothing Then
+                Exit For
+            Else
+                Yield line
+            End If
+        Next
     End Function
 
     ''' <summary>
