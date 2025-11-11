@@ -11,6 +11,13 @@ Namespace Interpolation
         Private _maxIterations As Integer
         Private _tolerance As Double
 
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="dataPoints">the input scatter data points</param>
+        ''' <param name="bandwidth"></param>
+        ''' <param name="maxIterations"></param>
+        ''' <param name="tolerance"></param>
         Public Sub New(dataPoints As IEnumerable(Of Vector2D),
                   Optional bandwidth As Double = 1.0,
                   Optional maxIterations As Integer = 100,
