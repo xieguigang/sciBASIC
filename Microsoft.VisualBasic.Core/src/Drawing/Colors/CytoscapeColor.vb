@@ -139,7 +139,7 @@ Namespace Imaging
             End If
 
             For i As Integer = 0 To number.Length - 1
-                If Not ([Char].IsDigit(number(i))) Then
+                If Not (Char.IsDigit(number(i))) Then
                     Return False
                 End If
             Next
@@ -153,7 +153,7 @@ Namespace Imaging
             End If
 
             For i As Integer = 0 To hexadecimal.Length - 1
-                If Not (([Char].IsDigit(hexadecimal(i))) OrElse
+                If Not ((Char.IsDigit(hexadecimal(i))) OrElse
                     (hexadecimal(i) = "A"c) OrElse
                     (hexadecimal(i) = "B"c) OrElse
                     (hexadecimal(i) = "C"c) OrElse

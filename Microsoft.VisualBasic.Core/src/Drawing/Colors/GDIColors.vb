@@ -67,6 +67,7 @@ Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Math.Correlations
+Imports Microsoft.VisualBasic.Scripting.Runtime
 Imports std = System.Math
 
 Namespace Imaging
@@ -217,6 +218,26 @@ Namespace Imaging
             End With
         End Function
 
+        ''' <summary>
+        ''' html rgba color
+        ''' </summary>
+        ''' <param name="c"></param>
+        ''' <returns></returns>
+        ''' <remarks>
+        ''' |RGBA 成分|含义|取值范围|
+        ''' |---------|----|--------|
+        ''' |R (Red)|​红色通道的强度|0 - 255 的整数 或 0% - 100% 的百分比|
+        ''' |G (Green)|​绿色通道的强度|0 - 255 的整数 或 0% - 100% 的百分比|
+        ''' |B (Blue)|​蓝色通道的强度|0 - 255 的整数 或 0% - 100% 的百分比|
+        ''' |A (Alpha)|​透明度（或不透明度）|0.0（完全透明）到 1.0（完全不透明）之间的小数| 
+        ''' </remarks>
+        <Extension>
+        Public Function Rgba(c As Color) As String
+            With c
+                Return $"rgba({ .R},{ .G},{ .B},{ .A / 255})"
+            End With
+        End Function
+
 #If NET_40 = 0 Then
 
         ''' <summary>
@@ -301,6 +322,17 @@ Namespace Imaging
             ElseIf str.TextEquals("transparent") Then
                 success = True
                 Return Color.Transparent
+            End If
+
+            If str.StartsWith("rgba") Then
+                Dim rgba_str As String = str.GetStackValue("(", ")")
+                Dim rgba_val As Double() = rgba_str.StringSplit("\s*,\s*").Select(AddressOf Strings.Trim).AsDouble
+                Dim r As Integer = If(rgba_val(0) > 1, rgba_val(0), 255 * rgba_val(0))
+                Dim g As Integer = If(rgba_val(1) > 1, rgba_val(1), 255 * rgba_val(1))
+                Dim b As Integer = If(rgba_val(2) > 1, rgba_val(2), 255 * rgba_val(2))
+                Dim a As Integer = If(rgba_val(3) > 1, rgba_val(3), 255 * rgba_val(3))
+
+                Return Color.FromArgb(a, r, g, b)
             End If
 
             Dim s As String = Regex.Match(str, rgbExprValues).Value
