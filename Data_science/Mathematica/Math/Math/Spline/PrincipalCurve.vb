@@ -1,36 +1,8 @@
 ﻿Imports Microsoft.VisualBasic.Imaging.Math2D
+Imports Microsoft.VisualBasic.Math.Distributions
 Imports std = System.Math
 
 Namespace Interpolation
-
-    ' 数学计算工具类
-    Public Class MathUtils
-        ' 计算两点之间的欧氏距离
-        Public Shared Function EuclideanDistance(p1 As Vector2D, p2 As Vector2D) As Double
-            Return std.Sqrt((p1.x - p2.x) ^ 2 + (p1.y - p2.y) ^ 2)
-        End Function
-
-        ' 计算点到线段的距离
-        Public Shared Function DistanceToSegment(point As Vector2D, segStart As Vector2D, segEnd As Vector2D) As Double
-            Dim l2 = EuclideanDistance(segStart, segEnd) ^ 2
-            If l2 = 0 Then Return EuclideanDistance(point, segStart)
-
-            Dim t = std.Max(0, std.Min(1, ((point.x - segStart.x) * (segEnd.x - segStart.x) +
-                               (point.y - segStart.y) * (segEnd.y - segStart.y)) / l2))
-
-            Dim projection As New Vector2D(
-            segStart.x + t * (segEnd.x - segStart.x),
-            segStart.y + t * (segEnd.y - segStart.y)
-        )
-
-            Return EuclideanDistance(point, projection)
-        End Function
-
-        ' 高斯核函数
-        Public Shared Function GaussianKernel(distance As Double, bandwidth As Double) As Double
-            Return std.Exp(-0.5 * (distance / bandwidth) ^ 2)
-        End Function
-    End Class
 
     Public Class PrincipalCurve
         Private _dataPoints As List(Of Vector2D)
@@ -172,7 +144,7 @@ Namespace Interpolation
                     Dim toPoint = dataPoint - segStart
                     Dim segmentDirection = segmentVector.Normalize()
 
-                    Dim t = (toPoint.X * segmentDirection.X + toPoint.Y * segmentDirection.Y) / segmentLength
+                    Dim t = (toPoint.x * segmentDirection.x + toPoint.y * segmentDirection.y) / segmentLength
                     t = std.Max(0, std.Min(1, t)) ' 限制在[0,1]范围内
 
                     Dim projectionPoint = segStart + t * segmentVector
@@ -213,17 +185,17 @@ Namespace Interpolation
                 For Each proj In sortedProjections
                     ' 使用高斯核计算权重（基于参数距离）
                     Dim paramDistance = std.Abs(proj.CurveParameter - curveParam)
-                    Dim weight = MathUtils.GaussianKernel(paramDistance, _bandwidth)
+                    Dim weight = Gaussian.StandadizedGaussianFunction(paramDistance, _bandwidth)
 
                     ' 也考虑数据点到当前曲线点的距离
                     Dim spatialDistance = _curvePoints(i).DistanceTo(proj.DataPoint)
-                    Dim spatialWeight = MathUtils.GaussianKernel(spatialDistance, _bandwidth * 2)
+                    Dim spatialWeight = Gaussian.StandadizedGaussianFunction(spatialDistance, _bandwidth * 2)
 
                     Dim totalWeightHere = weight * spatialWeight
 
                     totalWeight += totalWeightHere
-                    weightedSumX += totalWeightHere * proj.DataPoint.X
-                    weightedSumY += totalWeightHere * proj.DataPoint.Y
+                    weightedSumX += totalWeightHere * proj.DataPoint.x
+                    weightedSumY += totalWeightHere * proj.DataPoint.y
                 Next
 
                 If totalWeight > 0 Then
@@ -241,8 +213,8 @@ Namespace Interpolation
 
             For i = 1 To _curvePoints.Count - 2
                 ' 简单移动平均平滑
-                Dim smoothedX = (_curvePoints(i - 1).X + _curvePoints(i).X + _curvePoints(i + 1).X) / 3
-                Dim smoothedY = (_curvePoints(i - 1).Y + _curvePoints(i).Y + _curvePoints(i + 1).Y) / 3
+                Dim smoothedX = (_curvePoints(i - 1).x + _curvePoints(i).x + _curvePoints(i + 1).x) / 3
+                Dim smoothedY = (_curvePoints(i - 1).y + _curvePoints(i).y + _curvePoints(i + 1).y) / 3
                 smoothedPoints.Add(New Vector2D(smoothedX, smoothedY))
             Next
 

@@ -192,5 +192,27 @@ Namespace Imaging.Math2D
         Public Shared Function GetCross(a As Layout2D, b As Layout2D) As Double
             Return a.X * b.Y - a.Y * b.X
         End Function
+
+        ''' <summary>
+        ''' 计算点到线段的距离
+        ''' </summary>
+        ''' <param name="point">target 2d point</param>
+        ''' <param name="segStart">target 2d line start</param>
+        ''' <param name="segEnd">target 2d line ends</param>
+        ''' <returns></returns>
+        Public Shared Function DistanceToSegment(point As Vector2D, segStart As Vector2D, segEnd As Vector2D) As Double
+            Dim l2 = segStart.GetDistance(segEnd) ^ 2
+            If l2 = 0 Then Return point.GetDistance(segStart)
+
+            Dim t = std.Max(0, std.Min(1, ((point.x - segStart.x) * (segEnd.x - segStart.x) +
+                               (point.y - segStart.y) * (segEnd.y - segStart.y)) / l2))
+
+            Dim projection As New Vector2D(
+            segStart.x + t * (segEnd.x - segStart.x),
+            segStart.y + t * (segEnd.y - segStart.y)
+        )
+
+            Return point.GetDistance(projection)
+        End Function
     End Class
 End Namespace

@@ -97,6 +97,17 @@ Namespace Distributions
             Return gauss
         End Function
 
+        ''' <summary>
+        ''' the Gaussian Kernel
+        ''' </summary>
+        ''' <param name="diff"></param>
+        ''' <param name="devi">
+        ''' the bandwidth
+        ''' </param>
+        ''' <returns></returns>
+        ''' <remarks>
+        ''' 高斯核函数
+        ''' </remarks>
         Public Function StandadizedGaussianFunction(diff As Double, devi As Double) As Double
             ' exp(-(diff/devi)^2 / 2)
             Dim result = std.Exp(-0.5 * std.Pow(diff / devi, 2))
