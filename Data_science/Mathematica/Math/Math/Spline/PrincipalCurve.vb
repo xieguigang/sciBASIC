@@ -2,73 +2,71 @@
 
 Namespace Interpolation
 
-    Namespace PrincipalCurveAnalysis
-        ' 二维数据点结构
-        Public Structure DataPoint
-            Public X As Double
-            Public Y As Double
+    ' 二维数据点结构
+    Public Structure DataPoint
+        Public X As Double
+        Public Y As Double
 
-            Public Sub New(x As Double, y As Double)
-                Me.X = x
-                Me.Y = y
-            End Sub
+        Public Sub New(x As Double, y As Double)
+            Me.X = x
+            Me.Y = y
+        End Sub
 
-            Public Shared Operator -(a As DataPoint, b As DataPoint) As DataPoint
-                Return New DataPoint(a.X - b.X, a.Y - b.Y)
-            End Operator
+        Public Shared Operator -(a As DataPoint, b As DataPoint) As DataPoint
+            Return New DataPoint(a.X - b.X, a.Y - b.Y)
+        End Operator
 
-            Public Shared Operator +(a As DataPoint, b As DataPoint) As DataPoint
-                Return New DataPoint(a.X + b.X, a.Y + b.Y)
-            End Operator
+        Public Shared Operator +(a As DataPoint, b As DataPoint) As DataPoint
+            Return New DataPoint(a.X + b.X, a.Y + b.Y)
+        End Operator
 
-            Public Shared Operator *(scalar As Double, point As DataPoint) As DataPoint
-                Return New DataPoint(scalar * point.X, scalar * point.Y)
-            End Operator
+        Public Shared Operator *(scalar As Double, point As DataPoint) As DataPoint
+            Return New DataPoint(scalar * point.X, scalar * point.Y)
+        End Operator
 
-            Public Function DistanceTo(other As DataPoint) As Double
-                Return std.Sqrt((X - other.X) ^ 2 + (Y - other.Y) ^ 2)
-            End Function
+        Public Function DistanceTo(other As DataPoint) As Double
+            Return std.Sqrt((X - other.X) ^ 2 + (Y - other.Y) ^ 2)
+        End Function
 
-            Public Function Magnitude() As Double
-                Return std.Sqrt(X ^ 2 + Y ^ 2)
-            End Function
+        Public Function Magnitude() As Double
+            Return std.Sqrt(X ^ 2 + Y ^ 2)
+        End Function
 
-            Public Function Normalize() As DataPoint
-                Dim mag = Magnitude()
-                If mag = 0 Then Return New DataPoint(0, 0)
-                Return New DataPoint(X / mag, Y / mag)
-            End Function
-        End Structure
+        Public Function Normalize() As DataPoint
+            Dim mag = Magnitude()
+            If mag = 0 Then Return New DataPoint(0, 0)
+            Return New DataPoint(X / mag, Y / mag)
+        End Function
+    End Structure
 
-        ' 数学计算工具类
-        Public Class MathUtils
-            ' 计算两点之间的欧氏距离
-            Public Shared Function EuclideanDistance(p1 As DataPoint, p2 As DataPoint) As Double
-                Return std.Sqrt((p1.X - p2.X) ^ 2 + (p1.Y - p2.Y) ^ 2)
-            End Function
+    ' 数学计算工具类
+    Public Class MathUtils
+        ' 计算两点之间的欧氏距离
+        Public Shared Function EuclideanDistance(p1 As DataPoint, p2 As DataPoint) As Double
+            Return std.Sqrt((p1.X - p2.X) ^ 2 + (p1.Y - p2.Y) ^ 2)
+        End Function
 
-            ' 计算点到线段的距离
-            Public Shared Function DistanceToSegment(point As DataPoint, segStart As DataPoint, segEnd As DataPoint) As Double
-                Dim l2 = EuclideanDistance(segStart, segEnd) ^ 2
-                If l2 = 0 Then Return EuclideanDistance(point, segStart)
+        ' 计算点到线段的距离
+        Public Shared Function DistanceToSegment(point As DataPoint, segStart As DataPoint, segEnd As DataPoint) As Double
+            Dim l2 = EuclideanDistance(segStart, segEnd) ^ 2
+            If l2 = 0 Then Return EuclideanDistance(point, segStart)
 
-                Dim t = std.Max(0, std.Min(1, ((point.X - segStart.X) * (segEnd.X - segStart.X) +
-                                   (point.Y - segStart.Y) * (segEnd.Y - segStart.Y)) / l2))
+            Dim t = std.Max(0, std.Min(1, ((point.X - segStart.X) * (segEnd.X - segStart.X) +
+                               (point.Y - segStart.Y) * (segEnd.Y - segStart.Y)) / l2))
 
-                Dim projection As New DataPoint(
-                segStart.X + t * (segEnd.X - segStart.X),
-                segStart.Y + t * (segEnd.Y - segStart.Y)
-            )
+            Dim projection As New DataPoint(
+            segStart.X + t * (segEnd.X - segStart.X),
+            segStart.Y + t * (segEnd.Y - segStart.Y)
+        )
 
-                Return EuclideanDistance(point, projection)
-            End Function
+            Return EuclideanDistance(point, projection)
+        End Function
 
-            ' 高斯核函数
-            Public Shared Function GaussianKernel(distance As Double, bandwidth As Double) As Double
-                Return std.Exp(-0.5 * (distance / bandwidth) ^ 2)
-            End Function
-        End Class
-    End Namespace
+        ' 高斯核函数
+        Public Shared Function GaussianKernel(distance As Double, bandwidth As Double) As Double
+            Return std.Exp(-0.5 * (distance / bandwidth) ^ 2)
+        End Function
+    End Class
 
     Public Class PrincipalCurve
         Private _dataPoints As List(Of DataPoint)
@@ -118,14 +116,14 @@ Namespace Interpolation
             ' 计算主成分方向（特征向量）
             Dim trace = covXX + covYY
             Dim determinant = covXX * covYY - covXY * covXY
-            Dim discriminant = Sqrt((trace / 2) ^ 2 - determinant)
+            Dim discriminant = std.Sqrt((trace / 2) ^ 2 - determinant)
 
             Dim lambda1 = trace / 2 + discriminant
             Dim lambda2 = trace / 2 - discriminant
 
             ' 主特征向量
             Dim eigenVectorX As Double, eigenVectorY As Double
-            If Abs(covXY) > 0.0001 Then
+            If std.Abs(covXY) > 0.0001 Then
                 eigenVectorX = lambda1 - covYY
                 eigenVectorY = covXY
             Else
@@ -133,14 +131,14 @@ Namespace Interpolation
                 eigenVectorY = 0
             End If
 
-            Dim magnitude = Sqrt(eigenVectorX ^ 2 + eigenVectorY ^ 2)
+            Dim magnitude = std.Sqrt(eigenVectorX ^ 2 + eigenVectorY ^ 2)
             eigenVectorX /= magnitude
             eigenVectorY /= magnitude
 
             ' 生成初始曲线点（沿主成分方向）
-            Dim stdX = Sqrt(covXX)
-            Dim stdY = Sqrt(covYY)
-            Dim curveLength = 3 * Max(stdX, stdY) ' 3倍标准差
+            Dim stdX = std.Sqrt(covXX)
+            Dim stdY = std.Sqrt(covYY)
+            Dim curveLength = 3 * std.Max(stdX, stdY) ' 3倍标准差
 
             Dim initialCurve = New List(Of DataPoint)()
             Dim steps = 20
@@ -178,7 +176,7 @@ Namespace Interpolation
                 currentError = CalculateReconstructionError(projections)
 
                 ' 检查收敛
-                If iter > 0 AndAlso Abs(previousError - currentError) < _tolerance Then
+                If iter > 0 AndAlso std.Abs(previousError - currentError) < _tolerance Then
                     Exit For
                 End If
 
@@ -211,7 +209,7 @@ Namespace Interpolation
                     Dim segmentDirection = segmentVector.Normalize()
 
                     Dim t = (toPoint.X * segmentDirection.X + toPoint.Y * segmentDirection.Y) / segmentLength
-                    t = Max(0, Min(1, t)) ' 限制在[0,1]范围内
+                    t = std.Max(0, std.Min(1, t)) ' 限制在[0,1]范围内
 
                     Dim projectionPoint = segStart + t * segmentVector
                     Dim distance = dataPoint.DistanceTo(projectionPoint)
@@ -250,7 +248,7 @@ Namespace Interpolation
 
                 For Each proj In sortedProjections
                     ' 使用高斯核计算权重（基于参数距离）
-                    Dim paramDistance = Abs(proj.CurveParameter - curveParam)
+                    Dim paramDistance = std.Abs(proj.CurveParameter - curveParam)
                     Dim weight = MathUtils.GaussianKernel(paramDistance, _bandwidth)
 
                     ' 也考虑数据点到当前曲线点的距离
