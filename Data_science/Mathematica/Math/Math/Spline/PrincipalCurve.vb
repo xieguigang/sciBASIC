@@ -1,4 +1,5 @@
-﻿Imports Microsoft.VisualBasic.Imaging.Math2D
+﻿Imports Microsoft.VisualBasic.Imaging
+Imports Microsoft.VisualBasic.Imaging.Math2D
 Imports Microsoft.VisualBasic.Math.Distributions
 Imports std = System.Math
 
@@ -28,6 +29,16 @@ Namespace Interpolation
             Me._tolerance = tolerance
             Me._curvePoints = New List(Of Vector2D)()
         End Sub
+
+        Public Shared Function Fit(Of T As IReadOnlyPoint)(dataPoints As IEnumerable(Of T),
+                  Optional bandwidth As Double = 1.0,
+                  Optional maxIterations As Integer = 100,
+                  Optional tolerance As Double = 0.001) As IEnumerable(Of Vector2D)
+
+            Dim pc As New PrincipalCurve(dataPoints.Select(Function(p) New Vector2D(p)), bandwidth, maxIterations, tolerance)
+            pc.Fit()
+            Return pc.CurvePoints
+        End Function
 
         ' 获取主曲线点
         Public ReadOnly Property CurvePoints As List(Of Vector2D)

@@ -106,6 +106,16 @@ Namespace Imaging.Math2D
             Me.New(pt.X, pt.Y)
         End Sub
 
+        Sub New(p As IReadOnlyPoint)
+            Me.x = p.X
+            Me.y = p.Y
+        End Sub
+
+        Sub New(p As Layout2D)
+            Me.x = p.X
+            Me.y = p.Y
+        End Sub
+
         Public Sub New(x As Double, y As Double)
             Me.x = x
             Me.y = y

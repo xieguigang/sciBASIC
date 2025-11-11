@@ -134,6 +134,24 @@ Namespace Imaging
     End Interface
 
     ''' <summary>
+    ''' a float 2d point
+    ''' </summary>
+    Public Interface IReadOnlyPoint
+
+        ''' <summary>
+        ''' the x axis data
+        ''' </summary>
+        ''' <returns></returns>
+        ReadOnly Property X As Double
+        ''' <summary>
+        ''' the y axis data
+        ''' </summary>
+        ''' <returns></returns>
+        ReadOnly Property Y As Double
+
+    End Interface
+
+    ''' <summary>
     ''' [x,y] tuple
     ''' </summary>
     Public Interface RasterPixel

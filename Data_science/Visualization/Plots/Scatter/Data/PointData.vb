@@ -53,11 +53,12 @@
 #End Region
 
 Imports System.Drawing
+Imports Microsoft.VisualBasic.Imaging
 
 ''' <summary>
 ''' 绘图的点的数据
 ''' </summary>
-Public Structure PointData
+Public Structure PointData : Implements IReadOnlyPoint
 
     ''' <summary>
     ''' 坐标数据不需要进行额外的转换，绘图函数内部会自动进行mapping转换的
@@ -79,6 +80,18 @@ Public Structure PointData
     ''' 坐标轴的值模式为字符串模式的时候
     ''' </summary>
     Public axisLabel As String
+
+    Public ReadOnly Property X As Double Implements IReadOnlyPoint.X
+        Get
+            Return pt.X
+        End Get
+    End Property
+
+    Public ReadOnly Property Y As Double Implements IReadOnlyPoint.Y
+        Get
+            Return pt.Y
+        End Get
+    End Property
 
     Sub New(x!, y!)
         pt = New PointF(x, y)
