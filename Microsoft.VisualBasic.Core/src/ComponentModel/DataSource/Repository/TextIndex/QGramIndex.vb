@@ -69,7 +69,7 @@ Namespace ComponentModel.DataSourceModel.Repository
         ''' <summary>
         ''' 基于q-gram重叠度查找相似字符串
         ''' </summary>
-        Public Function FindSimilar(query As String, threshold As Double) As IEnumerable(Of FindResult)
+        Public Function FindSimilar(query As String, Optional threshold As Double = 0) As IEnumerable(Of FindResult)
             If String.IsNullOrEmpty(query) Then
                 Return New FindResult() {}
             End If
@@ -100,7 +100,8 @@ Namespace ComponentModel.DataSourceModel.Repository
                 Dim unionGrams = queryGrams.Count + targetGrams - commonGrams
 
                 Dim similarity = commonGrams / CDbl(unionGrams)
-                If similarity >= threshold Then
+
+                If similarity > threshold Then
                     ' 计算编辑距离作为二次验证
                     Dim dist = LevenshteinDistance.ComputeDistance(query, _strings(strIndex))
                     Dim distance = If(dist Is Nothing, Double.PositiveInfinity, dist.Distance)
