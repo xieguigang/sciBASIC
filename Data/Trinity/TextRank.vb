@@ -65,7 +65,7 @@ Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Text
 Imports r = System.Text.RegularExpressions.Regex
-Imports stdNum = System.Math
+Imports std = System.Math
 
 ''' <summary>
 ''' This module implements TextRank, an unsupervised keyword
@@ -233,14 +233,15 @@ Public Module TextRank
             .Select(AddressOf TextRank.Words) _
             .ToArray
         Dim g As New WeightedPRGraph
+        Dim bar As Tqdm.ProgressBar = Nothing
 
         For Each sentence As String In list
             Call g.AddVertex(sentence)
         Next
 
-        Call "build text graph...".info
+        Call "Build Text Graph...".info
 
-        For Each x As Integer In Tqdm.Range(0, words.Length)
+        For Each x As Integer In Tqdm.Range(0, words.Length, bar:=bar)
             Dim refIndex = x
             Dim vector = seq(x, words.Length - 1, by:=1) _
                 .Select(Function(y)
@@ -260,6 +261,8 @@ Public Module TextRank
                     Call g.AddEdge(list(i), list(x), weight:=similarity)
                 End If
             Next
+
+            Call bar.SetLabel(list(x))
         Next
 
         Return g
@@ -286,9 +289,9 @@ Public Module TextRank
             Return 0
         End If
 
-        Dim denominator = stdNum.Log(wordList1.Count) + stdNum.Log(wordList2.Count)
+        Dim denominator = std.Log(wordList1.Count) + std.Log(wordList2.Count)
 
-        If stdNum.Abs(denominator) = 0R Then
+        If std.Abs(denominator) = 0R Then
             Return 0
         End If
 
