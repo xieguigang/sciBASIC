@@ -59,6 +59,7 @@ Imports System.IO
 Imports System.Xml
 Imports System.Xml.Schema
 Imports Microsoft.VisualBasic.ApplicationServices.Terminal.ProgressBar
+Imports Microsoft.VisualBasic.ComponentModel.Ranges.Unit
 Imports Microsoft.VisualBasic.Language
 
 Namespace Text.Xml.Linq
@@ -171,6 +172,10 @@ Namespace Text.Xml.Linq
                 ' do nothing
                 offset = documentText.Position
             ElseIf Not bar Is Nothing Then
+                ' 20251113 there is a bug about EOF when read
+                ' xml file on NAS storage?
+                ' add 1MB to move file pointer to outside of the file for force make EOF detection
+                offset = documentText.Length + ByteSize.MB
                 bar.Finish()
             End If
 
