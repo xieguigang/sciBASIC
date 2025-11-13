@@ -128,13 +128,13 @@ Namespace Document
         End Property
 
         ''' <summary>
-        ''' 
+        ''' get attribute value by attribute name
         ''' </summary>
         ''' <param name="name">case insensitive</param>
         ''' <returns>
         ''' this property returns nothing if the attribute is not found from the current element node
         ''' </returns>
-        Default Public Property Attribute(name As String) As ValueAttribute
+        Default Public Property Element(name As String) As ValueAttribute
             Get
                 Return attrs.TryGetValue(LCase(name))
             End Get
@@ -147,6 +147,12 @@ Namespace Document
                     Call attrs.Add(name, value)
                 End If
             End Set
+        End Property
+
+        Default Public ReadOnly Property Element(i As Integer) As InnerPlantText
+            Get
+                Return HtmlElements.ElementAtOrDefault(i)
+            End Get
         End Property
 
         Public Overrides ReadOnly Property IsPlantText As Boolean
