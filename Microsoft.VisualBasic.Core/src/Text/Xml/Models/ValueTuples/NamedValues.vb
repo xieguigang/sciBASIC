@@ -102,7 +102,7 @@ Namespace Text.Xml.Models
         <XmlText>
         Public Property text As String Implements Value(Of String).IValueOf.Value
 
-        Sub New(name$, value$)
+        Sub New(name$, Optional value$ = Nothing)
             Me.name = name
             Me.text = value
         End Sub
