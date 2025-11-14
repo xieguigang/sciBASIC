@@ -273,7 +273,7 @@ Namespace Text.Parser.HtmlParser
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function GetValue(html As String) As String
-            Return html.GetStackValue(">", "<")
+            Return If(html Is Nothing, "", html.GetStackValue(">", "<"))
         End Function
 
         <Extension>
