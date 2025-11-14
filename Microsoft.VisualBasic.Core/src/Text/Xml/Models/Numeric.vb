@@ -1,9 +1,31 @@
-﻿Imports System.Xml.Serialization
+﻿Imports System.Runtime.CompilerServices
+Imports System.Xml.Serialization
+Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace Text.Xml.Models
 
     Public Class ints
+
         <XmlAttribute> Public Property ints As Integer()
+
+        Sub New()
+        End Sub
+
+        Sub New(ints As IEnumerable(Of Integer))
+            If ints IsNot Nothing Then
+                _ints = ints.ToArray
+            End If
+        End Sub
+
+        Public Overrides Function ToString() As String
+            Return ints.GetJson
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Narrowing Operator CType(xml As ints) As Integer()
+            Return If(xml Is Nothing, Nothing, xml.ints)
+        End Operator
     End Class
 
     Public Class uints
