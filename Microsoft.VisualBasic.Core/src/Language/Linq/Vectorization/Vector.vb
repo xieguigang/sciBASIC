@@ -326,7 +326,7 @@ Namespace Language.Vectorization
         ''' <param name="booleans"></param>
         ''' <returns></returns>
         Public Iterator Function Subset(booleans As IEnumerable(Of Boolean)) As IEnumerable(Of T)
-            For Each index In booleans.SeqIterator
+            For Each index As SeqValue(Of Boolean) In booleans.SeqIterator
                 If index.value = True Then
                     Yield buffer(index.i)
                 End If

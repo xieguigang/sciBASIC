@@ -167,7 +167,7 @@ Namespace ComponentModel.Collection.Deque
         ''' </summary>
         ''' <returns>e zero-based index of the first occurrence of item within the entire Deque(Of T), if found; otherwise, -1.</returns>
         Public Function IndexOf(item As T) As Integer Implements IList(Of T).IndexOf
-            For index = 0 To Count - 1
+            For index As Integer = 0 To Count - 1
                 If Equals(Me(index), item) Then
                     Return index
                 End If
