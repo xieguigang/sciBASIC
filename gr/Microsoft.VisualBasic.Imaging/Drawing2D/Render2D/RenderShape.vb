@@ -101,6 +101,56 @@ Namespace Drawing2D
 #Enable Warning
 #End If
 
+        Public Shared Sub RenderForceVector(g As IGraphics, startPoint As PointF, vector As PointF, color As Color,
+                                            Optional scale As Single = 5,
+                                            Optional w As Single = 3)
+            ' 应用缩放
+            Dim scaledFx As Single = vector.X * scale
+            Dim scaledFy As Single = vector.Y * scale
+
+            ' 计算箭头终点
+            Dim endPoint As PointF = New PointF(startPoint.X + scaledFx, startPoint.Y + scaledFy)
+            ' 定义箭头样式
+            Dim arrowThickness As Integer = w
+            Using arrowPen As New Pen(color, arrowThickness)
+                ' 绘制箭头主体（一条直线）
+                g.DrawLine(arrowPen, startPoint, endPoint)
+
+                ' 计算并绘制箭头头部
+                DrawArrowHead(g, arrowPen, startPoint, endPoint)
+            End Using
+        End Sub
+
+        ''' <summary>
+        ''' 在指定终点绘制箭头头部
+        ''' </summary>
+        Private Shared Sub DrawArrowHead(g As IGraphics, pen As Pen, startPoint As PointF, endPoint As PointF)
+            Dim dx As Single = endPoint.X - startPoint.X
+            Dim dy As Single = endPoint.Y - startPoint.Y
+
+            ' 如果矢量长度为0，则不绘制箭头
+            If dx = 0 AndAlso dy = 0 Then Return
+
+            Dim angle As Single = std.Atan2(dy, dx) ' 计算主线角度（弧度）
+            Dim headLength As Single = 15.0F          ' 箭头头部的长度
+            Dim headAngle As Single = 25 * std.PI / 180.0F ' 箭头张角的一半（弧度）
+
+            ' 计算箭头头部两个侧翼点的坐标
+            Dim p1 As PointF = New PointF(
+            endPoint.X - headLength * std.Cos(angle - headAngle),
+            endPoint.Y - headLength * std.Sin(angle - headAngle)
+        )
+
+            Dim p2 As PointF = New PointF(
+            endPoint.X - headLength * std.Cos(angle + headAngle),
+            endPoint.Y - headLength * std.Sin(angle + headAngle)
+        )
+
+            ' 绘制箭头的两条侧翼线
+            g.DrawLine(pen, endPoint, p1)
+            g.DrawLine(pen, endPoint, p2)
+        End Sub
+
         ''' <summary>
         ''' Arrow drawing for the .net core console application
         ''' </summary>
