@@ -170,7 +170,10 @@ Namespace Text.Xml.Models
         End Function
     End Class
 
-    Public Class TermsVector : Implements Enumeration(Of Double)
+    ''' <summary>
+    ''' a collection of the string terms 
+    ''' </summary>
+    Public Class TermsVector : Implements Enumeration(Of String)
 
         <XmlAttribute>
         Public Property terms As String()
@@ -179,7 +182,7 @@ Namespace Text.Xml.Models
             Return terms.GetJson
         End Function
 
-        Public Function GenericEnumerator() As IEnumerator(Of Double) Implements Enumeration(Of Double).GenericEnumerator
+        Public Function GenericEnumerator() As IEnumerator(Of String) Implements Enumeration(Of String).GenericEnumerator
             Return terms.AsEnumerable.GetEnumerator
         End Function
     End Class
