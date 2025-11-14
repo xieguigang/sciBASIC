@@ -62,8 +62,6 @@ Imports randf2 = Microsoft.VisualBasic.Math.RandomExtensions
 
 Public Class Score
 
-
-
     Public ReadOnly Property pwm As String
         Get
             Return Mid(seq, start + 1, len)

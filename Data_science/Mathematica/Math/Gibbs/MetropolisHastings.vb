@@ -54,7 +54,6 @@
 #End Region
 
 Imports System.IO
-Imports Microsoft.VisualBasic.ComponentModel.Collection
 
 Public Class MetropolisHastings
 
