@@ -260,11 +260,20 @@ Namespace Graphic
             End If
         End Sub
 
+        ''' <summary>
+        ''' draw main title upon the chart plot region
+        ''' </summary>
+        ''' <param name="g"></param>
+        ''' <param name="plotRegion">the chart plot region</param>
+        ''' <param name="offsetFactor"></param>
+        ''' <param name="commentText"></param>
         Protected Sub DrawMainTitle(g As IGraphics, plotRegion As Rectangle, Optional offsetFactor As Double = 1.125, Optional commentText As Boolean = False)
             If Not main.StringEmpty Then
                 Dim css As CSSEnvirnment = g.LoadEnvironment
                 Dim fontOfTitle As Font = css.GetFont(CSSFont.TryParse(theme.mainCSS))
                 Dim titleSize As SizeF = g.MeasureString(main, fontOfTitle)
+                ' middle of the X axis
+                ' middle of the padding top
                 Dim position As New PointF With {
                     .X = plotRegion.X + (plotRegion.Width - titleSize.Width) / 2,
                     .Y = plotRegion.Y - titleSize.Height * offsetFactor
