@@ -152,11 +152,7 @@ Namespace Imaging.BitmapImage
             Dim top%, left%
 
             Try
-#If NET48 Then
                 bmp = BitmapBuffer.FromImage(res)
-#Else
-                Throw New NotImplementedException
-#End If
             Catch ex As Exception
 
                 ' 2017-9-21 ???

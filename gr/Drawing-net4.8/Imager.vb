@@ -175,19 +175,5 @@ Namespace Imaging.BitmapImage
 
             Return res
         End Function
-
-        ''' <summary>
-        ''' Crop an image 
-        ''' </summary>
-        ''' <param name="img">image to crop</param>
-        ''' <param name="cropArea">rectangle to crop</param>
-        ''' <returns>resulting image</returns>
-        ''' 
-        <Extension>
-        Public Function ImageCrop(img As Image, cropArea As Rectangle) As Image
-            Dim bmpImage = New Bitmap(img)
-            Dim bmpCrop = bmpImage.Clone(cropArea, bmpImage.PixelFormat)
-            Return bmpCrop
-        End Function
     End Module
 End Namespace
