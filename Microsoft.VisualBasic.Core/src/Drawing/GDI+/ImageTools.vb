@@ -76,6 +76,8 @@ Namespace Imaging
                                   <CallerMemberName>
                                   Optional trace$ = Nothing) As Image
 
+            Dim isTransparent As Boolean = False
+
             If blankColor.IsNullOrEmpty Then
                 blankColor = Color.White
             ElseIf blankColor.Name = NameOf(Color.Transparent) Then
@@ -83,9 +85,10 @@ Namespace Imaging
                 ' 但是bitmap之中的transparent为 0,0,0,0
                 ' 在这里要变换一下
                 blankColor = New Color
+                isTransparent = True
             End If
 
-            Return res.CorpBlankInternal(margin, blankColor, trace)
+            Return res.CorpBlankInternal(margin, blankColor, isTransparent, trace)
         End Function
 
         Private Function BufferInternal(res As Bitmap, trace As String) As BitmapBuffer
@@ -110,7 +113,7 @@ Namespace Imaging
         ''' <param name="blankColor">默认白色为空白色</param>
         ''' <returns></returns>
         <Extension>
-        Private Function CorpBlankInternal(res As Bitmap, margin%, blankColor As Color, trace$) As Image
+        Private Function CorpBlankInternal(res As Bitmap, margin%, blankColor As Color, isTransparent As Boolean, trace$) As Image
             Dim bmp As BitmapBuffer = BufferInternal(res, trace)
             Dim top%, left%
 
@@ -224,7 +227,7 @@ Namespace Imaging
 
             If margin > 0 Then
                 Dim paddedSize As New Size(res.Width + margin * 2, res.Height + margin * 2)
-                Dim gfx As IGraphics = DriverLoad.CreateGraphicsDevice(paddedSize, fill:=blankColor.Rgba, driver:=Drivers.GDI)
+                Dim gfx As IGraphics = DriverLoad.CreateDefaultRasterGraphics(paddedSize, If(isTransparent, Color.Transparent, blankColor))
 
                 Call gfx.Clear(blankColor)
                 Call gfx.DrawImage(res, New Point(margin, margin))
