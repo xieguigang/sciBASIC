@@ -52,7 +52,7 @@ Namespace Imaging.BitmapImage
                 Call Array.Copy(sourceBuffer.RawBuffer, sourceStartIndex, newBuffer, destStartIndex, destStride)
             Next
 
-            Return newBuffer
+            Return New BitmapBuffer(newBuffer, New Size(newWidth, newHeight), channel:=4)
         End Function
 
         ''' <summary>
