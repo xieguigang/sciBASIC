@@ -272,17 +272,9 @@ Namespace Graphic
                 Dim css As CSSEnvirnment = g.LoadEnvironment
                 Dim fontOfTitle As Font = css.GetFont(CSSFont.TryParse(theme.mainCSS))
                 Dim titleSize As SizeF = g.MeasureString(main, fontOfTitle)
-                ' middle of the X axis
-                ' middle of the padding top
-                Dim position As New PointF With {
-                    .X = plotRegion.X + (plotRegion.Width - titleSize.Width) / 2,
-                    .Y = plotRegion.Y - titleSize.Height * offsetFactor
-                }
                 Dim color As Brush = Brushes.Black
 
-                If position.Y < 0 Then
-                    position = New PointF(position.X, 10)
-                End If
+
                 If Not theme.mainTextColor.StringEmpty Then
                     color = theme.mainTextColor.GetBrush
                 End If
@@ -293,6 +285,17 @@ Namespace Graphic
 
                     Call DrawMultipleLineTitle(g, plotRegion, fontOfTitle, color, maxChars, offsetFactor)
                 Else
+                    ' middle of the X axis
+                    ' middle of the padding top
+                    Dim position As New PointF With {
+                        .X = plotRegion.X + (plotRegion.Width - titleSize.Width) / 2,
+                        .Y = plotRegion.Y - titleSize.Height * offsetFactor
+                    }
+
+                    If position.Y < 0 Then
+                        position = New PointF(position.X, 10)
+                    End If
+
                     Call g.DrawString(main, fontOfTitle, color, position)
                 End If
 
