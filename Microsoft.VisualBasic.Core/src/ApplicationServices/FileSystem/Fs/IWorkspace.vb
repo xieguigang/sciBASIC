@@ -82,6 +82,9 @@ Namespace ApplicationServices
 
     End Interface
 
+    ''' <summary>
+    ''' A data view wrapper that used a specific subdir as workfolder
+    ''' </summary>
     Public Class FileSystemView : Implements IWorkspace, IFileSystemEnvironment
 
         Public ReadOnly Property Workspace As String Implements IWorkspace.Workspace
@@ -89,6 +92,11 @@ Namespace ApplicationServices
 
         ReadOnly fs As IFileSystemEnvironment
 
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="fs">the root workspace model</param>
+        ''' <param name="subdir">a specific sub-dir for create a wrapper view of the workspace</param>
         Sub New(fs As IFileSystemEnvironment, subdir As String)
             Me.fs = fs
             Me.Workspace = Strings.Trim(subdir) _

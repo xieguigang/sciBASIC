@@ -65,6 +65,10 @@ Namespace ApplicationServices
     ''' </summary>
     Public Class FileSystemTree : Implements Enumeration(Of String)
 
+        ''' <summary>
+        ''' the filename/folder name of this filesystem tree node
+        ''' </summary>
+        ''' <returns></returns>
         Public Property Name As String
         Public Property Files As Dictionary(Of String, FileSystemTree)
         ''' <summary>
@@ -72,6 +76,10 @@ Namespace ApplicationServices
         ''' </summary>
         ''' <returns></returns>
         Public Property Parent As FileSystemTree
+        ''' <summary>
+        ''' the tagged data that associated with this file node
+        ''' </summary>
+        ''' <returns></returns>
         Public Property data As Object
 
         ''' <summary>
@@ -85,6 +93,12 @@ Namespace ApplicationServices
                 Else
                     Return $"{Parent}/{Name}"
                 End If
+            End Get
+        End Property
+
+        Public ReadOnly Property IsDirectory As Boolean
+            Get
+                Return Not Files.IsNullOrEmpty
             End Get
         End Property
 
