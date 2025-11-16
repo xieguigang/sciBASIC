@@ -577,8 +577,6 @@ Public Module App
 
     ''' <summary>
     ''' add/update the environment variable in sciBASIC.NET framework.
-    ''' 
-    ''' (添加参数到应用程序的环境变量之中)
     ''' </summary>
     ''' <param name="name">
     ''' if target variable symbol name is exists in the framework, 
@@ -588,6 +586,9 @@ Public Module App
     ''' 
     ''' (如果给定的当前这个参数名称存在于当前框架环境中，则会更新原来的值)</param>
     ''' <param name="value"></param>
+    ''' <remarks>
+    ''' (添加参数到应用程序的环境变量之中)
+    ''' </remarks>
     Public Sub JoinVariable(name$, value$)
         SyncLock m_joinedVariables
             m_joinedVariables(name) = New NamedValue(Of String) With {
