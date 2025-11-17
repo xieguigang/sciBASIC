@@ -696,7 +696,7 @@ Namespace IO
             If current Is Nothing Then
                 Return Nothing
             Else
-                Return ParseRowData(current.ToArray)
+                Return ParseRowData(current.ToArray).ToArray
             End If
         End Function
 
