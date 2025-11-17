@@ -146,6 +146,11 @@ Namespace IO.CSVFile
             Return Not LQuery > 50
         End Function
 
+        ''' <summary>
+        ''' get all column data
+        ''' </summary>
+        ''' <param name="table"></param>
+        ''' <returns></returns>
         <Extension>
         Public Iterator Function GetColumns(table As ICollection(Of RowObject)) As IEnumerable(Of String())
             Dim width As Integer = 0

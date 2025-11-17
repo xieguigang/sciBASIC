@@ -182,6 +182,10 @@ Namespace IO
             Return columnList.AddAttribute(Name)
         End Function
 
+        ''' <summary>
+        ''' make measuring of the possible column data type
+        ''' </summary>
+        ''' <returns></returns>
         Public Function MeasureTypeSchema() As DataFrameResolver
             Dim types As New List(Of Type)
 
