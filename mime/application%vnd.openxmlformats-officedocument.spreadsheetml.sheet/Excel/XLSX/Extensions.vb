@@ -111,11 +111,16 @@ Namespace XLSX
         End Function
 
         ''' <summary>
-        ''' 
+        ''' Read table file auto
         ''' </summary>
         ''' <param name="path$">*.csv/*.xlsx</param>
-        ''' <param name="sheetName$">如果传入的名称是空值的话，则总是会返回第一张表</param>
+        ''' <param name="sheetName">如果传入的名称是空值的话，则总是会返回第一张表</param>
         ''' <returns></returns>
+        ''' <remarks>
+        ''' if the sheet name is an valid integer value andalso there is no sheet name is equals to 
+        ''' this number in text compares, then this integer value will be treated as integer index 
+        ''' value for get the (n-1) sheet name as the sheet name for read the table data.
+        ''' </remarks>
         <Extension>
         Public Function ReadTableAuto(path$, Optional sheetName$ = "Sheet1") As csv
             With path.ExtensionSuffix.ToLower
@@ -125,6 +130,8 @@ Namespace XLSX
                     Using Xlsx As XlsxFile = File.Open(path)
                         If sheetName.StringEmpty Then
                             sheetName = Xlsx.SheetNames.FirstOrDefault
+                        ElseIf sheetName.IsInteger AndAlso Not Xlsx.SheetNames.Any(Function(name) name = sheetName) Then
+                            sheetName = Xlsx.SheetNames.ElementAtOrDefault(CInt(sheetName) - 1)
                         End If
                         If sheetName.StringEmpty Then
                             Throw New NullReferenceException($"[{path}] didn't contains any sheet table!")

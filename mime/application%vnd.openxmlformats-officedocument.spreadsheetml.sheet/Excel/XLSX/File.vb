@@ -205,6 +205,9 @@ Namespace XLSX
         ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function SheetNames() As IEnumerable(Of String)
+            If xl.workbook.sheets Is Nothing Then
+                Return New String() {}
+            End If
             Return xl.workbook.sheets.Select(Function(s) s.name)
         End Function
 
