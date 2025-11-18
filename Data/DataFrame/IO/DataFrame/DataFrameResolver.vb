@@ -75,6 +75,7 @@ Imports System.Reflection
 Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.Repository
 Imports Microsoft.VisualBasic.Data.Framework.IO.CSVFile
 Imports Microsoft.VisualBasic.Data.Framework.StorageProvider.ComponentModels
 Imports Microsoft.VisualBasic.Language
@@ -339,7 +340,7 @@ Namespace IO
         ''' </param>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Sub New(ParamArray columns As ArgumentReference())
-            Call Initialize(ColumnRows(columns).AsList, Me)
+            Call Initialize(ColumnRows(columns).AsList, Me, strict:=True)
         End Sub
 
         Public Function GetColumnVectors() As IEnumerable(Of String())
@@ -459,7 +460,7 @@ Namespace IO
             Dim colnames As List(Of String) = table.FirstOrDefault.AsList
 
             If colnames.IsNullOrEmpty Then
-                Call "empty table data!".Warning
+                Call "empty table data!".warning
             Else
                 colnames = getColumnList(colnames)
             End If
@@ -500,7 +501,7 @@ Namespace IO
                     warnings.Add($"there are column headers that padding with whitespace in left or right: {whitespace_padding.Select(Function(c) $"[{c.Item2}] '{c.Item1}'").JoinBy(", ")}. these may caused the ``GetOrder()`` function execute failure!")
                 End If
 
-                Call warnings.JoinBy("").Warning
+                Call warnings.JoinBy("").warning
             End If
 
             Return colnames
@@ -513,8 +514,8 @@ Namespace IO
         ''' <returns></returns>
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Overloads Shared Function CreateObject(file As File) As DataFrameResolver
-            Return createObjectInternal(file)
+        Public Overloads Shared Function CreateObject(file As File, Optional strict As Boolean = True) As DataFrameResolver
+            Return createObjectInternal(file, strict)
         End Function
 
         ''' <summary>
@@ -536,14 +537,26 @@ Namespace IO
         ''' </summary>
         ''' <param name="table"></param>
         ''' <param name="dataframe"></param>
-        Private Shared Sub Initialize(table As List(Of RowObject), ByRef dataframe As DataFrameResolver)
+        Private Shared Sub Initialize(table As List(Of RowObject), ByRef dataframe As DataFrameResolver, strict As Boolean)
+            Dim headers As String() = getColumnList(table).ToArray
+
+            If Not strict Then
+                Dim check As String() = Nothing
+
+                headers = headers.UniqueNames(duplicated:=check)
+
+                If Not check.IsNullOrEmpty Then
+                    Call $"found duplicated headers: {check.GetJson}".warning
+                End If
+            End If
+
             dataframe.table = table.Skip(1).AsList
-            dataframe.columnList = New HeaderSchema(getColumnList(table))
+            dataframe.columnList = New HeaderSchema(headers)
         End Sub
 
-        Private Shared Function createObjectInternal(file As File) As DataFrameResolver
+        Private Shared Function createObjectInternal(file As File, strict As Boolean) As DataFrameResolver
             Dim dataframe As New DataFrameResolver
-            Call Initialize(file._innerTable, dataframe)
+            Call Initialize(file._innerTable, dataframe, strict)
             Return dataframe
         End Function
 
