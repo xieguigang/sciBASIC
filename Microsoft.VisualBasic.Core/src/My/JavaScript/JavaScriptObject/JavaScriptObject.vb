@@ -314,6 +314,12 @@ Namespace My.JavaScript
             Return DynamicType.Create(obj)
         End Function
 
+        ''' <summary>
+        ''' Create runtime object and then assign the property value
+        ''' </summary>
+        ''' <param name="dynamic"></param>
+        ''' <param name="values"></param>
+        ''' <returns></returns>
         Public Shared Function CreateDynamicObject(dynamic As Type, values As IEnumerable(Of KeyValuePair(Of String, Object))) As Object
             Dim obj As Object = Activator.CreateInstance(dynamic)
             Dim schema = DataFramework.Schema(dynamic, flag:=PropertyAccess.Writeable, nonIndex:=True)
