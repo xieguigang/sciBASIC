@@ -21,12 +21,12 @@ Namespace ComponentModel.DataSourceModel.Repository
         ''' <summary>
         ''' 向索引中添加字符串
         ''' </summary>
-        Public Sub AddString(s As String)
+        Public Sub AddString(s As String, Optional index As Integer? = Nothing)
             If String.IsNullOrEmpty(s) Then Return
 
             ' 生成q-grams
             Dim grams = GenerateQGrams(s)
-            Dim stringIndex = _strings.Count
+            Dim stringIndex As Integer = If(index, _strings.Count)
 
             _strings.Add(s)
             _counts(s) = grams.Count
