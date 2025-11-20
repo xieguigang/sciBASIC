@@ -169,7 +169,7 @@ Namespace TabularRender
 
         <Extension>
         Public Function LoadBarData(csv As DataFrameResolver, colors As Color()) As BarDataGroup
-            Dim header As RowObject = csv.Headers
+            Dim header As String() = csv.HeadTitles
             Dim names$() = header.Skip(1).ToArray
             Dim clData As Color()
 

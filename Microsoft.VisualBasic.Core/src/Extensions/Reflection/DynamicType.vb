@@ -142,12 +142,13 @@ Public Class DynamicType
     Public Shared Function GetTypeBuilder(Optional name As String = Nothing,
                                           Optional inheritsFrom As Type = Nothing,
                                           Optional isAbstract As Boolean = False,
-                                          Optional sealed As Boolean = False) As TypeBuilder
+                                          Optional sealed As Boolean = False,
+                                          Optional asm_module$ = "Main") As TypeBuilder
 
         Dim newTypeName As String = Guid.NewGuid.ToString
         Dim assemblyName = New AssemblyName(newTypeName)
         Dim dynamicAssembly = AssemblyBuilder.DefineDynamicAssembly(assemblyName, AssemblyBuilderAccess.Run)
-        Dim dynamicModule = dynamicAssembly.DefineDynamicModule("Main")
+        Dim dynamicModule = dynamicAssembly.DefineDynamicModule(asm_module)
         Dim flag As TypeAttributes = DynamicType.flag
 
         If isAbstract Then
@@ -160,8 +161,14 @@ Public Class DynamicType
         Return dynamicModule.DefineType(If(name, newTypeName), flag, inheritsFrom)
     End Function
 
-    Public Function Create() As DynamicType
-        Dim dynamicType As TypeBuilder = GetTypeBuilder(Nothing, inheritsFrom)
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="name">the generated clr type name</param>
+    ''' <param name="asm_module">the assembly module name</param>
+    ''' <returns></returns>
+    Public Function Create(Optional name As String = Nothing, Optional asm_module$ = "Main") As DynamicType
+        Dim dynamicType As TypeBuilder = GetTypeBuilder(name, inheritsFrom, asm_module:=asm_module)
 
         Call dynamicType.DefineDefaultConstructor(MethodAttributes.Public Or
                                                   MethodAttributes.SpecialName Or

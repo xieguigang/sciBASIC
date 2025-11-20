@@ -183,6 +183,10 @@ Namespace IO
             Return columnList.AddAttribute(Name)
         End Function
 
+        ''' <summary>
+        ''' make measuring of the possible column data type
+        ''' </summary>
+        ''' <returns></returns>
         Public Function MeasureTypeSchema() As DataFrameResolver
             Dim types As New List(Of Type)
 
@@ -234,11 +238,13 @@ Namespace IO
 
         Public Iterator Function EnumerateRowObjects() As IEnumerable(Of Object())
             For Each row As RowObject In table
-                Yield row _
-                    .Select(Function(str, i)
-                                Return Scripting.CTypeDynamic(str, typeSchema(i))
-                            End Function) _
-                    .ToArray
+                Yield ParseRowData(row.ToArray).ToArray
+            Next
+        End Function
+
+        Private Iterator Function ParseRowData(row As String()) As IEnumerable(Of Object)
+            For i As Integer = 0 To row.Length - 1
+                Yield Scripting.CTypeDynamic(row(i), typeSchema(i))
             Next
         End Function
 
@@ -256,9 +262,20 @@ Namespace IO
         ''' The column headers in the csv file first row.
         ''' </summary>
         ''' <returns></returns>
-        Public ReadOnly Property Headers As RowObject
+        Public ReadOnly Property Headers As NamedValue(Of Type)()
             Get
-                Return New RowObject(columnList.Headers)
+                Dim headerNames As String() = HeadTitles
+                Dim cols As NamedValue(Of Type)() = New NamedValue(Of Type)(headerNames.Length - 1) {}
+
+                If typeSchema Is Nothing Then
+                    Throw New InvalidProgramException($"missing column type schema data, please call {NameOf(MeasureTypeSchema)} method at first!")
+                Else
+                    For i As Integer = 0 To typeSchema.Length - 1
+                        cols(i) = New NamedValue(Of Type)(headerNames(i), typeSchema(i))
+                    Next
+                End If
+
+                Return cols
             End Get
         End Property
 
@@ -684,6 +701,22 @@ Namespace IO
             Return table(i)
         End Function
 
+        ''' <summary>
+        ''' get current row data vector
+        ''' </summary>
+        ''' <returns></returns>
+        Public Function GetRowData() As Object()
+            If current Is Nothing Then
+                Return Nothing
+            Else
+                Return ParseRowData(current.ToArray).ToArray
+            End If
+        End Function
+
+        ''' <summary>
+        ''' get current row string vector
+        ''' </summary>
+        ''' <returns></returns>
         Public Function GetRow() As String()
             Return If(current Is Nothing, Nothing, current.ToArray)
         End Function

@@ -391,7 +391,7 @@ Public Module DocumentExtensions
     ''' </returns>
     <Extension>
     Public Function GetColumnValues(csv As DataFrameResolver, column$) As IEnumerable(Of String)
-        Dim index As Integer = csv.Headers.IndexOf(column)
+        Dim index As Integer = csv.GetOrdinal(column)
         Dim out As New List(Of String)
 
         If index = -1 Then
