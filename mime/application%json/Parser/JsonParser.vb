@@ -68,11 +68,8 @@ Imports System.Data
 Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports System.Text
-Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MIME.application.json.Javascript
-Imports Microsoft.VisualBasic.Scripting.TokenIcer
-Imports Microsoft.VisualBasic.Text.Parser
 Imports ASCII = Microsoft.VisualBasic.Text.ASCII
 
 ''' <summary>
@@ -164,7 +161,7 @@ Public Class JsonParser
     ''' this function will returns nothing if the given json string is empty string or "null" literal.
     ''' </returns>
     Public Shared Function Parse(json As String, Optional strictVectorSyntax As Boolean = True) As JsonElement
-        If json.StringEmpty Then
+        If json.StringEmpty(, True) Then
             Return Nothing
         Else
             Return New JsonParser(json, strictVectorSyntax:=strictVectorSyntax).OpenJSON()

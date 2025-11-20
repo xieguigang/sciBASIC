@@ -82,6 +82,9 @@ Public Module JSONSerializer
                                   Optional enumToStr As Boolean = True,
                                   Optional unixTimestamp As Boolean = True,
                                   Optional comment As Boolean = False) As String
+        If obj Is Nothing Then
+            Return "null"
+        End If
 
         Return New JSONSerializerOptions With {
             .indent = indent,
