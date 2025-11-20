@@ -346,6 +346,11 @@ Namespace ComponentModel.Collection
         ''' </summary>
         ''' <param name="x"></param>
         ''' <returns></returns>
+        ''' <remarks>
+        ''' Please note that this function is a iterator function. <b>which means your MUST
+        ''' call the ToArray or ToList method to execute this function</b>, <span style="color: red;">or the items
+        ''' will not be added into current index object.</span>
+        ''' </remarks>
         Public Iterator Function Add(x As T()) As IEnumerable(Of Integer)
             For Each xi As T In x
                 Yield Add(xi)
