@@ -1,4 +1,5 @@
 ﻿Imports System.Drawing
+Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.ComponentModel.TagData
 Imports Microsoft.VisualBasic.Linq
@@ -134,6 +135,23 @@ Namespace Imaging.Math2D
             Dim y As New DoubleRange(pointCloud.ypoints)
 
             Return ((x.Length / size) + (y.Length / size)) / 2
+        End Function
+
+        <Extension>
+        Public Function MeasureRasterRange(Of T As Layout2D)(data As IEnumerable(Of T)) As (width As DoubleRange, height As DoubleRange)
+            Dim wmin As Double = Double.MaxValue
+            Dim wmax As Double = Double.MinValue
+            Dim hmin As Double = Double.MaxValue
+            Dim hmax As Double = Double.MinValue
+
+            For Each p As T In data
+                If p.X > wmax Then wmax = p.X
+                If p.X < wmin Then wmin = p.X
+                If p.Y > hmax Then hmax = p.Y
+                If p.Y < hmin Then hmin = p.Y
+            Next
+
+            Return (New DoubleRange(wmin, wmax), New DoubleRange(hmin, hmax))
         End Function
     End Module
 End Namespace
