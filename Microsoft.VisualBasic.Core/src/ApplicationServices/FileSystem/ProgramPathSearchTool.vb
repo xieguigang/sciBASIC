@@ -102,7 +102,7 @@ Namespace ApplicationServices
         ''' <summary>
         ''' 
         ''' </summary>
-        ''' <param name="ENV$">
+        ''' <param name="ENV">
         ''' 环境变量名称列表，如果不赋值这个参数，则会默认使用Program Files和Program Files(x86)这两个文件夹
         ''' </param>
         Sub New(ParamArray ENV$())
@@ -191,7 +191,7 @@ Namespace ApplicationServices
                 extNameAssert = Function(path) True
             End If
 
-            Return searchImpl(dir, {scriptFileNameRule}).Where(Function(file) extNameAssert(file))
+            Return SearchDirWithRulesImpl(dir, {scriptFileNameRule}).Where(Function(file) extNameAssert(file))
         End Function
 
         Private Shared Function safeGetFiles(dir$, rules$()) As IEnumerable(Of String)
@@ -202,7 +202,7 @@ Namespace ApplicationServices
             End If
         End Function
 
-        Private Shared Iterator Function searchImpl(dir$, rules$()) As IEnumerable(Of String)
+        Private Shared Iterator Function SearchDirWithRulesImpl(dir$, rules$()) As IEnumerable(Of String)
             Dim files As IEnumerable(Of String) = safeGetFiles(dir, rules)
             Dim binDIR As String = $"{dir}/bin/"
             Dim programDIR As String = $"{dir}/Program"
@@ -228,8 +228,6 @@ Namespace ApplicationServices
         ''' <returns></returns>
         ''' <remarks></remarks>
         '''
-        <ExportAPI("DIR.Search.Program_Directory")>
-        <Description("Search for the directories which its name was matched the keyword pattern.")>
         Public Shared Iterator Function SearchDirectory(keyword$, Optional specificDrive$ = Nothing) As IEnumerable(Of String)
             Dim drives As ReadOnlyCollection(Of DriveInfo)
 
@@ -252,7 +250,7 @@ Namespace ApplicationServices
             End If
 
             Dim driveName$ = drive.RootDirectory.FullName
-            Dim driveRoot = FileIO.FileSystem.GetDirectories(driveName, SearchOption.SearchTopLevelOnly, keyword).AsList + BranchRule(driveName, keyword)
+            Dim driveRoot = FileIO.FileSystem.GetDirectories(driveName, SearchOption.SearchTopLevelOnly, keyword).JoinIterates(BranchRule(driveName, keyword)).ToArray
             Dim files As New List(Of String)
             Dim ProgramFiles As String = String.Format("{0}/Program Files", drive.RootDirectory.FullName)
 
@@ -274,14 +272,11 @@ Namespace ApplicationServices
 
         ''' <summary>
         ''' Invoke the search session for the program file using a specific keyword string value.
-        ''' (使用某个关键词来搜索目标应用程序)
         ''' </summary>
         ''' <param name="DIR"></param>
         ''' <param name="Keyword"></param>
         ''' <returns></returns>
-        ''' <remarks></remarks>
-        <ExportAPI("File.Search.Program")>
-        <Description("Invoke the search session for the program file using a specific keyword string value.")>
+        ''' <remarks>(使用某个关键词来搜索目标应用程序)</remarks>
         Public Shared Function SearchProgram(dir$, keyword$, Optional includeDll As Boolean = True) As IEnumerable(Of String)
             Dim exeNameRule As String = $"*{keyword}*.exe"
             Dim dllNameRule As String = $"*{keyword}*.dll"
@@ -293,7 +288,7 @@ Namespace ApplicationServices
                 rules = {exeNameRule}
             End If
 
-            Return searchImpl(dir, rules)
+            Return SearchDirWithRulesImpl(dir, rules)
         End Function
 #End Region
 
