@@ -854,6 +854,10 @@ Public Module PathExtensions
     <ExportAPI(NameOf(ParentPath))>
     <Extension>
     Public Function ParentPath(file$, Optional full As Boolean = True) As String
+        If file.StringEmpty Then
+            Return ""
+        End If
+
         Dim isUNCpath As Boolean = file.CheckUNCNetworkPath
         Dim isHttpUrl As Boolean = file.IsURLPattern
 
