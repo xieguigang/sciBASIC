@@ -76,7 +76,7 @@ Public Module GdiInterop
         Return image
 #Else
         Using ms As New MemoryStream
-            Call image.Save(ms, ImageFormats.Bmp)
+            Call image.Save(ms, ImageFormats.Png)
             Call ms.Seek(Scan0, SeekOrigin.Begin)
 
             Return System.Drawing.Image.FromStream(ms)

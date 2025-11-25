@@ -141,8 +141,8 @@ Namespace Imaging
                     Throw New NotImplementedException
                 ElseIf format = ImageFormats.Base64 Then
                     Return res _
-                    .ToBase64String _
-                    .SaveTo(path, Encodings.ASCII.CodePage)
+                        .ToBase64String _
+                        .SaveTo(path, Encodings.ASCII.CodePage)
                 Else
                     Using s As Stream = path.Open(FileMode.OpenOrCreate, doClear:=True, [readOnly]:=False)
                         Call res.Save(s, format)
