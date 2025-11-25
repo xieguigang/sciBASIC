@@ -60,6 +60,7 @@ Imports System.IO
 Imports System.Runtime.InteropServices
 Imports System.Text
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Linq
 
 Namespace ApplicationServices
 
@@ -71,16 +72,23 @@ Namespace ApplicationServices
     ''' </remarks>
     Public Class ProgramPathSearchTool
 
+        ReadOnly customDirectories As String()
+
+        Sub New(ParamArray customDirectories As String())
+            Me.customDirectories = customDirectories
+        End Sub
+
         ''' <summary>
         ''' linux ``which`` liked file search tool 
         ''' </summary>
         ''' <param name="name"></param>
         ''' <returns></returns>
-        Public Shared Function Which(name As String) As String
+        Public Shared Function Which(name As String, Optional customDirectories As IEnumerable(Of String) = Nothing) As String
             Dim foundPath As String
+            Dim programFiles As New ProgramPathSearchTool(customDirectories.SafeQuery.ToArray)
 
             If RuntimeInformation.IsOSPlatform(OSPlatform.Windows) Then
-                foundPath = FindExecutableOnWindows(name)
+                foundPath = programFiles.FindExecutableOnWindows(name)
             Else
                 foundPath = FindExecutableOnUnix(name)
             End If
@@ -93,7 +101,7 @@ Namespace ApplicationServices
         ''' <summary>
         ''' 在 Windows 系统上查找可执行文件。
         ''' </summary>
-        Private Shared Function FindExecutableOnWindows(name As String) As String
+        Private Function FindExecutableOnWindows(name As String) As String
             Dim pathExt As String()
             Dim pathDirs As String()
 
@@ -120,7 +128,7 @@ Namespace ApplicationServices
             End If
 
             ' 在 PATH 环境变量中搜索
-            pathDirs = GetPathDirectories()
+            pathDirs = GetPathDirectories().JoinIterates(customDirectories).ToArray
             pathExt = GetPathExtensions()
 
             For Each dir As String In pathDirs
@@ -140,7 +148,7 @@ Namespace ApplicationServices
         ''' <summary>
         ''' 获取 PATH 环境变量中的目录列表。
         ''' </summary>
-        Private Shared Function GetPathDirectories() As String()
+        Private Function GetPathDirectories() As String()
             Dim pathEnv As String = Environment.GetEnvironmentVariable("PATH")
             If String.IsNullOrEmpty(pathEnv) Then
                 Return Array.Empty(Of String)()
