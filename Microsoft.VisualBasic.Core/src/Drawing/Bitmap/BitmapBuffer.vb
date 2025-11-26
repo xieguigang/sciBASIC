@@ -601,7 +601,8 @@ Namespace Imaging.BitmapImage
         ''' <param name="size"></param>
         ''' <returns></returns>
         Public Shared Function Unpack(pixels As Color(), size As Size) As Byte()
-            Dim bytes As Byte() = New Byte(TYPE_INT_ARGB * size.Width * size.Height - 1) {}
+            Dim totalBytes As Integer = TYPE_INT_ARGB * size.Width * size.Height
+            Dim bytes As Byte() = New Byte(totalBytes - 1) {}
 
             ' If channels = TYPE_INT_ARGB Then
             '    iA = buffer(i + 3)
@@ -611,14 +612,16 @@ Namespace Imaging.BitmapImage
             ' Dim iG As Byte = buffer(i + 1)
             ' Dim iB As Byte = buffer(i + 0)
 
-            For i As Integer = 0 To pixels.Length - 1 Step TYPE_INT_ARGB
+            For i As Integer = 0 To pixels.Length - 1
                 Dim pixel As Color = pixels(i)
+                ' 计算当前像素在字节数组中的起始位置
+                Dim byteIndex As Integer = i * TYPE_INT_ARGB
 
-                bytes(i + 3) = pixel.A
-
-                bytes(i + 2) = pixel.R
-                bytes(i + 1) = pixel.G
-                bytes(i + 0) = pixel.B
+                ' 按照 BGRA 顺序写入字节
+                bytes(byteIndex + 0) = pixel.B ' B
+                bytes(byteIndex + 1) = pixel.G ' G
+                bytes(byteIndex + 2) = pixel.R ' R
+                bytes(byteIndex + 3) = pixel.A ' A
             Next
 
             Return bytes
