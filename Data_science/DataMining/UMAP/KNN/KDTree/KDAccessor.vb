@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ebd13525e66a69595b4417d8928f7fd6, Data_science\DataMining\UMAP\KNN\KDTree\KDAccessor.vb"
+﻿#Region "Microsoft.VisualBasic::c3755fef8d9cea06934f8bddf5dd789c, Data_science\DataMining\UMAP\KNN\KDTree\KDAccessor.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 0.00%
     ' 
     '   Blank Lines: 10 (19.61%)
-    '     File Size: 1.91 KB
+    '     File Size: 1.92 KB
 
 
     '     Class KDAccessor
@@ -49,7 +49,7 @@
     ' 
     '         Function: activate, getByDimension, GetDimensions, metric, nodeIs
     ' 
-    '         Sub: setByDimensin
+    '         Sub: setByDimension
     ' 
     ' 
     ' /********************************************************************************/

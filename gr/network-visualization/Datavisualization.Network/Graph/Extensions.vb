@@ -1,56 +1,56 @@
-﻿#Region "Microsoft.VisualBasic::bdfdc07efe2d1f278531d3772a6701b7, gr\network-visualization\Datavisualization.Network\Graph\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::2538b527fce362593471b090d1ba93a2, gr\network-visualization\Datavisualization.Network\Graph\Extensions.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 58
-'    Code Lines: 36 (62.07%)
-' Comment Lines: 15 (25.86%)
-'    - Xml Docs: 100.00%
-' 
-'   Blank Lines: 7 (12.07%)
-'     File Size: 2.19 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Module Extensions
-' 
-'         Function: GetNeighbours, NodesID
-' 
-'         Sub: ApplyAnalysis
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 59
+    '    Code Lines: 37 (62.71%)
+    ' Comment Lines: 15 (25.42%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 7 (11.86%)
+    '     File Size: 2.25 KB
+
+
+    '     Module Extensions
+    ' 
+    '         Function: GetNeighbours, NodesID
+    ' 
+    '         Sub: ApplyAnalysis
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

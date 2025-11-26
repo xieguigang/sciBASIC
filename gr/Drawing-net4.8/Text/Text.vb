@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1a1b9b51ee1a4bea62677860eccb1f88, gr\Drawing-net4.8\Text\Text.vb"
+﻿#Region "Microsoft.VisualBasic::f5481115b5f7d55ea2ed41c0bd179c7f, gr\Drawing-net4.8\Text\Text.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 75
-    '    Code Lines: 49 (65.33%)
-    ' Comment Lines: 18 (24.00%)
+    '   Total Lines: 78
+    '    Code Lines: 53 (67.95%)
+    ' Comment Lines: 18 (23.08%)
     '    - Xml Docs: 94.44%
     ' 
-    '   Blank Lines: 8 (10.67%)
-    '     File Size: 2.56 KB
+    '   Blank Lines: 7 (8.97%)
+    '     File Size: 2.62 KB
 
 
     '     Module TextRender

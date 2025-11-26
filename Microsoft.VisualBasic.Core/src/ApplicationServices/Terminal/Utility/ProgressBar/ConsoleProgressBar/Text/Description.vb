@@ -1,4 +1,66 @@
-﻿' Description: ProgressBar for Console Applications, with advanced features.
+﻿#Region "Microsoft.VisualBasic::c9713ab667707a154b2e97da11cf256c, Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\Utility\ProgressBar\ConsoleProgressBar\Text\Description.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 83
+    '    Code Lines: 39 (46.99%)
+    ' Comment Lines: 34 (40.96%)
+    '    - Xml Docs: 79.41%
+    ' 
+    '   Blank Lines: 10 (12.05%)
+    '     File Size: 3.70 KB
+
+
+    '     Class Text
+    ' 
+    ' 
+    '         Class TextDescription
+    ' 
+    '             Properties: Done, Indentation, Paused, Processing
+    ' 
+    '             Constructor: (+1 Overloads) Sub New
+    '             Function: Clear, FinishedText, GetCurrentDefinitionList
+    ' 
+    ' 
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+' Description: ProgressBar for Console Applications, with advanced features.
 ' Project site: https://github.com/iluvadev/ConsoleProgressBar
 ' Issues: https://github.com/iluvadev/ConsoleProgressBar/issues
 ' License (MIT): https://github.com/iluvadev/ConsoleProgressBar/blob/main/LICENSE
@@ -81,3 +143,4 @@ Namespace ApplicationServices.Terminal.ProgressBar.ConsoleProgressBar
 
     End Class
 End Namespace
+

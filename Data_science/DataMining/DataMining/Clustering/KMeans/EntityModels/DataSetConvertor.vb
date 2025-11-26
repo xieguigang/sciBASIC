@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d54ac1ed316e767c411e27de3a501a6b, Data_science\DataMining\DataMining\Clustering\KMeans\EntityModels\DataSetConvertor.vb"
+﻿#Region "Microsoft.VisualBasic::30fc0ee17185fcd084961756a203b87b, Data_science\DataMining\DataMining\Clustering\KMeans\EntityModels\DataSetConvertor.vb"
 
     ' Author:
     ' 
@@ -34,19 +34,19 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 52
-    '    Code Lines: 41 (78.85%)
+    '   Total Lines: 56
+    '    Code Lines: 44 (78.57%)
     ' Comment Lines: 0 (0.00%)
     '    - Xml Docs: 0.00%
     ' 
-    '   Blank Lines: 11 (21.15%)
-    '     File Size: 1.83 KB
+    '   Blank Lines: 12 (21.43%)
+    '     File Size: 1.99 KB
 
 
     '     Class DataSetConvertor
     ' 
     '         Constructor: (+1 Overloads) Sub New
-    '         Function: (+2 Overloads) GetObjects, GetPoints, GetVectors, ToString
+    '         Function: CreateObject, (+2 Overloads) GetObjects, GetPoints, GetVectors, ToString
     ' 
     ' 
     ' /********************************************************************************/

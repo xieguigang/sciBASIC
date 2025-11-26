@@ -1,58 +1,56 @@
-﻿#Region "Microsoft.VisualBasic::3027b843c983021fe8daff25ac82e847, Microsoft.VisualBasic.Core\src\ApplicationServices\FileSystem\ProgramPathSearchTool.vb"
+﻿#Region "Microsoft.VisualBasic::18f7dd2c63c2c303f9eb617936860324, Microsoft.VisualBasic.Core\src\ApplicationServices\FileSystem\ProgramPathSearchTool.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 243
-'    Code Lines: 156 (64.20%)
-' Comment Lines: 50 (20.58%)
-'    - Xml Docs: 90.00%
-' 
-'   Blank Lines: 37 (15.23%)
-'     File Size: 10.25 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Class ProgramPathSearchTool
-' 
-'         Properties: CustomDirectories, Directories
-' 
-'         Constructor: (+1 Overloads) Sub New
-'         Function: BranchRule, FindProgram, FindScript, safeGetFiles, SearchDirectory
-'                   SearchDrive, searchImpl, SearchProgram, SearchScriptFile
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 203
+    '    Code Lines: 129 (63.55%)
+    ' Comment Lines: 42 (20.69%)
+    '    - Xml Docs: 76.19%
+    ' 
+    '   Blank Lines: 32 (15.76%)
+    '     File Size: 7.99 KB
+
+
+    '     Class ProgramPathSearchTool
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    '         Function: FindExecutableOnUnix, FindExecutableOnWindows, GetPathDirectories, GetPathExtensions, GetShortPathName
+    '                   IsValidWindowsExecutable, ToShortPathName, Which
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

@@ -1,4 +1,81 @@
-﻿Imports std = System.Math
+﻿#Region "Microsoft.VisualBasic::4e1a0499a8977fb21ae4b62abd602ab1, Data_science\Mathematica\SignalProcessing\MachineVision\CurveAnalysis.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 363
+    '    Code Lines: 205 (56.47%)
+    ' Comment Lines: 111 (30.58%)
+    '    - Xml Docs: 96.40%
+    ' 
+    '   Blank Lines: 47 (12.95%)
+    '     File Size: 15.70 KB
+
+
+    ' Module CurveAnalysis
+    ' 
+    '     Function: ArrAverage, ArrSum, CalcVal, CurveLength, ExtendPointOnLine
+    '               FindProcrustesRotationAngle, FrechetDist, Magnitude, PointDistance, ProcrustesNormalizeCurve
+    '               ProcrustesNormalizeRotation, RebalanceCurve, RotateCurve, ShapeSimilarity, SubdivideCurve
+    '               Subtract
+    '     Class Curve
+    ' 
+    '         Constructor: (+2 Overloads) Sub New
+    ' 
+    '     Class ShapeSimilarityOpts
+    ' 
+    '         Properties: CheckRotations, EstimationPoints, RestrictRotationAngle, Rotations
+    ' 
+    '     Class ProcrustesNormalizeCurveOpts
+    ' 
+    '         Properties: EstimationPoints, Rebalance
+    ' 
+    '     Class SubdivideCurveOpts
+    ' 
+    '         Properties: MaxLen
+    ' 
+    '     Class RebalanceCurveOpts
+    ' 
+    '         Properties: NumPoints
+    ' 
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+Imports std = System.Math
 Imports System.Drawing
 
 ''' <summary>
@@ -361,3 +438,4 @@ Public Module CurveAnalysis
 
 #End Region
 End Module
+

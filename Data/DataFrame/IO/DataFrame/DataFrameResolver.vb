@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::66913d29950542c7101d67f681b98996, Data\DataFrame\IO\DataFrame\DataFrameResolver.vb"
+﻿#Region "Microsoft.VisualBasic::14381b80ecb38ab7593ee9f6b9c56e91, Data\DataFrame\IO\DataFrame\DataFrameResolver.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 805
-    '    Code Lines: 518 (64.35%)
-    ' Comment Lines: 167 (20.75%)
-    '    - Xml Docs: 82.63%
+    '   Total Lines: 851
+    '    Code Lines: 544 (63.92%)
+    ' Comment Lines: 179 (21.03%)
+    '    - Xml Docs: 83.80%
     ' 
-    '   Blank Lines: 120 (14.91%)
-    '     File Size: 32.47 KB
+    '   Blank Lines: 128 (15.04%)
+    '     File Size: 34.31 KB
 
 
     '     Class DataFrameResolver
@@ -58,9 +58,10 @@
     '                   GetDateTime, GetDecimal, GetDouble, GetEnumerator, GetEnumerator2
     '                   GetFieldType, GetFloat, GetGuid, GetInt16, GetInt32
     '                   GetInt64, GetName, (+2 Overloads) GetOrdinal, GetOrdinalSchema, (+2 Overloads) GetRow
-    '                   GetSchemaTable, (+2 Overloads) GetString, GetValue, GetValueLambda, GetValues
-    '                   IDataRecord_GetValue, IsDBNull, (+2 Overloads) Load, LoadDataSet, MeasureTypeSchema
-    '                   Parse, Read, Slice, ToString
+    '                   GetRowData, GetSchemaTable, (+2 Overloads) GetString, GetValue, GetValueLambda
+    '                   GetValues, IDataRecord_GetValue, IsDBNull, (+2 Overloads) Load, LoadDataSet
+    '                   MeasureTypeSchema, Parse, ParseRowData, Read, Slice
+    '                   ToString
     ' 
     '         Sub: ChangeMapping, Close, CopyFrom, (+2 Overloads) Dispose, Initialize
     '              Reset

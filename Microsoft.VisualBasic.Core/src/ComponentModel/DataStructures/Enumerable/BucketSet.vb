@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::475bbcdeba38cbc62842319b1137f8b4, Microsoft.VisualBasic.Core\src\ComponentModel\DataStructures\Enumerable\BucketSet.vb"
+﻿#Region "Microsoft.VisualBasic::433f761d1fc328eefd155c115b2b31c0, Microsoft.VisualBasic.Core\src\ComponentModel\DataStructures\Enumerable\BucketSet.vb"
 
     ' Author:
     ' 
@@ -34,22 +34,23 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 53
-    '    Code Lines: 42 (79.25%)
-    ' Comment Lines: 0 (0.00%)
-    '    - Xml Docs: 0.00%
+    '   Total Lines: 128
+    '    Code Lines: 90 (70.31%)
+    ' Comment Lines: 16 (12.50%)
+    '    - Xml Docs: 93.75%
     ' 
-    '   Blank Lines: 11 (20.75%)
-    '     File Size: 1.74 KB
+    '   Blank Lines: 22 (17.19%)
+    '     File Size: 4.75 KB
 
 
     '     Class BucketSet
     ' 
-    '         Properties: Count
+    '         Properties: Chunks, Count, PackSize
     ' 
     '         Constructor: (+2 Overloads) Sub New
     ' 
-    '         Function: ForEachBucket, GetEnumerator, IEnumerable_GetEnumerator
+    '         Function: ForEachBucket, GetEnumerator, GetItemByGlobalIndex, GetRange, IEnumerable_GetEnumerator
+    '                   ToString
     ' 
     '         Sub: (+2 Overloads) Add
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c81de7d28766adcab2033a1b346fa61d, Microsoft.VisualBasic.Core\src\Drawing\Bitmap\netcore8.0\Brush.vb"
+﻿#Region "Microsoft.VisualBasic::64b0b0474220a3cd8e302874e398dd35, Microsoft.VisualBasic.Core\src\Drawing\netcore8.0\Brush.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 181
-    '    Code Lines: 140 (77.35%)
-    ' Comment Lines: 10 (5.52%)
+    '   Total Lines: 182
+    '    Code Lines: 141 (77.47%)
+    ' Comment Lines: 10 (5.49%)
     '    - Xml Docs: 0.00%
     ' 
-    '   Blank Lines: 31 (17.13%)
-    '     File Size: 5.60 KB
+    '   Blank Lines: 31 (17.03%)
+    '     File Size: 5.68 KB
 
 
     '     Class Brush
@@ -63,10 +63,10 @@
     ' 
     '     Class Brushes
     ' 
-    '         Properties: Black, Blue, BlueViolet, Brown, DarkGreen
-    '                     DarkOliveGreen, Gray, Green, LightGray, Orange
-    '                     Red, SkyBlue, Transparent, Violet, White
-    '                     Yellow
+    '         Properties: Black, Blue, BlueViolet, Brown, DarkCyan
+    '                     DarkGreen, DarkOliveGreen, Gray, Green, LightGray
+    '                     Orange, Red, SkyBlue, Transparent, Violet
+    '                     White, Yellow
     ' 
     '         Constructor: (+1 Overloads) Sub New
     ' 

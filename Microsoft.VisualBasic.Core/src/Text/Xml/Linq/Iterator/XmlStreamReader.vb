@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::27fa66000b5b0ba0e8bf0bc79d6f9ef1, Microsoft.VisualBasic.Core\src\Text\Xml\Linq\Iterator\XmlStreamReader.vb"
+﻿#Region "Microsoft.VisualBasic::f0af1775832c731e45e4924406860845, Microsoft.VisualBasic.Core\src\Text\Xml\Linq\Iterator\XmlStreamReader.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 144
-    '    Code Lines: 89 (61.81%)
-    ' Comment Lines: 35 (24.31%)
-    '    - Xml Docs: 11.43%
+    '   Total Lines: 149
+    '    Code Lines: 91 (61.07%)
+    ' Comment Lines: 38 (25.50%)
+    '    - Xml Docs: 10.53%
     ' 
-    '   Blank Lines: 20 (13.89%)
-    '     File Size: 6.86 KB
+    '   Blank Lines: 20 (13.42%)
+    '     File Size: 7.18 KB
 
 
     '     Class XmlStreamReader

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9d287dbb974f2a713f2313051ce17b3d, Data_science\Mathematica\Math\Math\Scripting\DataGenerator.vb"
+﻿#Region "Microsoft.VisualBasic::47dd11ec46eb25f6179c98400f3ae2e3, Data_science\Mathematica\Math\Math\Scripting\DataGenerator.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 39
-    '    Code Lines: 28 (71.79%)
+    '   Total Lines: 40
+    '    Code Lines: 29 (72.50%)
     ' Comment Lines: 0 (0.00%)
     '    - Xml Docs: 0.00%
     ' 
-    '   Blank Lines: 11 (28.21%)
-    '     File Size: 1.14 KB
+    '   Blank Lines: 11 (27.50%)
+    '     File Size: 1.24 KB
 
 
     '     Module DataGenerator

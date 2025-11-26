@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::51f572f6cf8766b30293e7396b4afc7f, Data_science\Mathematica\Math\Math.Statistics\Distributions\MethodOfMoments\Normal.vb"
+﻿#Region "Microsoft.VisualBasic::4185e91815d174b1d162ae8fbad15119, Data_science\Mathematica\Math\Math.Statistics\Distributions\MethodOfMoments\Normal.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 187
-    '    Code Lines: 150 (80.21%)
-    ' Comment Lines: 20 (10.70%)
-    '    - Xml Docs: 65.00%
+    '   Total Lines: 188
+    '    Code Lines: 150 (79.79%)
+    ' Comment Lines: 21 (11.17%)
+    '    - Xml Docs: 66.67%
     ' 
-    '   Blank Lines: 17 (9.09%)
-    '     File Size: 6.97 KB
+    '   Blank Lines: 17 (9.04%)
+    '     File Size: 6.94 KB
 
 
     '     Class Normal

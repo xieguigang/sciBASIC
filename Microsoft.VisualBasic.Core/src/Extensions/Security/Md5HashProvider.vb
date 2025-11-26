@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::93998a4011296851374100104e58dac4, Microsoft.VisualBasic.Core\src\Extensions\Security\Md5HashProvider.vb"
+﻿#Region "Microsoft.VisualBasic::5b52993acfd72454fd2bfbe7c3b1caca, Microsoft.VisualBasic.Core\src\Extensions\Security\Md5HashProvider.vb"
 
     ' Author:
     ' 
@@ -34,18 +34,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 110
-    '    Code Lines: 52 (47.27%)
-    ' Comment Lines: 41 (37.27%)
+    '   Total Lines: 120
+    '    Code Lines: 61 (50.83%)
+    ' Comment Lines: 41 (34.17%)
     '    - Xml Docs: 51.22%
     ' 
-    '   Blank Lines: 17 (15.45%)
-    '     File Size: 4.04 KB
+    '   Blank Lines: 18 (15.00%)
+    '     File Size: 4.43 KB
 
 
     '     Class Md5HashProvider
     ' 
-    '         Function: GetMd5Bytes, (+2 Overloads) GetMd5Hash, GetMd5hashLong
+    '         Function: ComputeMD5Hash, GetMd5Bytes, (+2 Overloads) GetMd5Hash, GetMd5hashLong
     ' 
     '         Sub: (+2 Overloads) Dispose
     ' 

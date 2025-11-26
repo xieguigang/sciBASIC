@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::07e2dc5059722e3266cd7888ab0012b2, Microsoft.VisualBasic.Core\src\ComponentModel\DataStructures\BitMap\HashModel.vb"
+﻿#Region "Microsoft.VisualBasic::67ca5a7fb418ba734bbc85f564de42de, Microsoft.VisualBasic.Core\src\ComponentModel\DataStructures\BitMap\HashModel.vb"
 
     ' Author:
     ' 
@@ -34,22 +34,24 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 71
-    '    Code Lines: 40 (56.34%)
-    ' Comment Lines: 18 (25.35%)
+    '   Total Lines: 73
+    '    Code Lines: 42 (57.53%)
+    ' Comment Lines: 18 (24.66%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 13 (18.31%)
-    '     File Size: 2.56 KB
+    '   Blank Lines: 13 (17.81%)
+    '     File Size: 2.65 KB
 
 
     '     Interface IAddressOf
     ' 
     ' 
     ' 
-    '     Interface IAddress
+    '     Interface IIndexOf
     ' 
     '         Properties: Address
+    ' 
+    '     Interface IAddress
     ' 
     '         Sub: Assign
     ' 

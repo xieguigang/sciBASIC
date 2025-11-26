@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c76faeeffaffa49db0d6fc6ed5245184, gr\Drawing-net4.8\Imager.vb"
+﻿#Region "Microsoft.VisualBasic::27b53e7dada2e1b3b32b9839713ae298, gr\Drawing-net4.8\Imager.vb"
 
     ' Author:
     ' 
@@ -34,19 +34,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 138
-    '    Code Lines: 66 (47.83%)
-    ' Comment Lines: 55 (39.86%)
-    '    - Xml Docs: 96.36%
+    '   Total Lines: 124
+    '    Code Lines: 60 (48.39%)
+    ' Comment Lines: 48 (38.71%)
+    '    - Xml Docs: 97.92%
     ' 
-    '   Blank Lines: 17 (12.32%)
-    '     File Size: 5.92 KB
+    '   Blank Lines: 16 (12.90%)
+    '     File Size: 5.40 KB
 
 
     '     Module Imager
     ' 
-    '         Function: GetEncoderInfo, ImageCrop, PutOnCanvas, PutOnWhiteCanvas, Resize
-    '                   (+2 Overloads) ResizeScaled
+    '         Function: GetEncoderInfo, PutOnCanvas, PutOnWhiteCanvas, Resize, (+2 Overloads) ResizeScaled
     ' 
     ' 
     ' /********************************************************************************/

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::aeb972e76b7445d1254fc12f75f9bad1, gr\Drawing-net4.8\Utils.vb"
+﻿#Region "Microsoft.VisualBasic::5c3db3283c8a30f237d5f59a7e9d32d5, gr\Drawing-net4.8\Utils.vb"
 
     ' Author:
     ' 
@@ -34,18 +34,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 255
-    '    Code Lines: 173 (67.84%)
-    ' Comment Lines: 34 (13.33%)
-    '    - Xml Docs: 50.00%
+    '   Total Lines: 73
+    '    Code Lines: 51 (69.86%)
+    ' Comment Lines: 10 (13.70%)
+    '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 48 (18.82%)
-    '     File Size: 8.84 KB
+    '   Blank Lines: 12 (16.44%)
+    '     File Size: 2.75 KB
 
 
     '     Module Utils
     ' 
-    '         Function: CorpBlank, ResizeUnscaled, ResizeUnscaledByHeight, TrimRoundAvatar
+    '         Function: ResizeUnscaled, ResizeUnscaledByHeight, TrimRoundAvatar
     ' 
     ' 
     ' /********************************************************************************/

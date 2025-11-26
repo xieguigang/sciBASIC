@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::71259577c5cc09adcd8c9ee1e57207b5, Data_science\Graph\Model\Tree\KdTree\KdTreeNode.vb"
+﻿#Region "Microsoft.VisualBasic::8616d2c6fb2e46f7422796cdc47077b4, Data_science\Graph\Model\Tree\KdTree\KdTreeNode.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 92.31%
     ' 
     '   Blank Lines: 10 (18.87%)
-    '     File Size: 1.57 KB
+    '     File Size: 1.59 KB
 
 
     '     Class KdTreeNode

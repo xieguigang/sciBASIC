@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::50bbc96e336f3b3716dbcdacf99cf754, Microsoft.VisualBasic.Core\src\Drawing\Bitmap\netcore8.0\GraphicsPath.vb"
+﻿#Region "Microsoft.VisualBasic::50bbc96e336f3b3716dbcdacf99cf754, Microsoft.VisualBasic.Core\src\Drawing\netcore8.0\GraphicsPath.vb"
 
     ' Author:
     ' 

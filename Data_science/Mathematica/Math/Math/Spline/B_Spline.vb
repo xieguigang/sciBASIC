@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0af1795855bfdc7bdf4fabfaad752591, Data_science\Mathematica\Math\Math\Spline\B_Spline.vb"
+﻿#Region "Microsoft.VisualBasic::59fd13c0d3f1d7a28c589e31dd31439d, Data_science\Mathematica\Math\Math\Spline\B_Spline.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 92.50%
     ' 
     '   Blank Lines: 26 (16.15%)
-    '     File Size: 5.56 KB
+    '     File Size: 5.58 KB
 
 
     '     Class BSpline

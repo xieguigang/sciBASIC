@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3747bf83729a76af7135bf2ce26beda4, Data_science\Visualization\Plots\Scatter\Data\PointData.vb"
+﻿#Region "Microsoft.VisualBasic::a13ef7b88ee156a684e975bf27a4dd1c, Data_science\Visualization\Plots\Scatter\Data\PointData.vb"
 
     ' Author:
     ' 
@@ -34,16 +34,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 44
-    '    Code Lines: 22 (50.00%)
-    ' Comment Lines: 15 (34.09%)
+    '   Total Lines: 57
+    '    Code Lines: 33 (57.89%)
+    ' Comment Lines: 15 (26.32%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 7 (15.91%)
-    '     File Size: 1.11 KB
+    '   Blank Lines: 9 (15.79%)
+    '     File Size: 1.47 KB
 
 
     ' Structure PointData
+    ' 
+    '     Properties: X, Y
     ' 
     '     Constructor: (+3 Overloads) Sub New
     '     Function: ToString

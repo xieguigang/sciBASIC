@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8a213793d892e2bab4ae22fd3490fdb6, Data_science\Mathematica\Math\Gibbs\MetropolisHastings.vb"
+﻿#Region "Microsoft.VisualBasic::86d015acbd1990790619f225567a7bd1, Data_science\Mathematica\Math\Gibbs\MetropolisHastings.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 162
-    '    Code Lines: 102 (62.96%)
-    ' Comment Lines: 26 (16.05%)
+    '   Total Lines: 161
+    '    Code Lines: 101 (62.73%)
+    ' Comment Lines: 26 (16.15%)
     '    - Xml Docs: 42.31%
     ' 
-    '   Blank Lines: 34 (20.99%)
-    '     File Size: 4.74 KB
+    '   Blank Lines: 34 (21.12%)
+    '     File Size: 4.69 KB
 
 
     ' Class MetropolisHastings

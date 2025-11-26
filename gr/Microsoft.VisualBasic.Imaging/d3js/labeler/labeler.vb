@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8ae1ef56973285f40debcbacc2185252, gr\Microsoft.VisualBasic.Imaging\d3js\labeler\labeler.vb"
+﻿#Region "Microsoft.VisualBasic::1c86359fb4135bfd4f83e2c6093ac26a, gr\Microsoft.VisualBasic.Imaging\d3js\labeler\labeler.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 354
-    '    Code Lines: 210 (59.32%)
-    ' Comment Lines: 86 (24.29%)
+    '   Total Lines: 339
+    '    Code Lines: 197 (58.11%)
+    ' Comment Lines: 86 (25.37%)
     '    - Xml Docs: 70.93%
     ' 
-    '   Blank Lines: 58 (16.38%)
-    '     File Size: 13.35 KB
+    '   Blank Lines: 56 (16.52%)
+    '     File Size: 12.79 KB
 
 
     '     Delegate Function

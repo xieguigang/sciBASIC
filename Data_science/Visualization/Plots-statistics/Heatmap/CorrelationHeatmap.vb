@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0013e6c4f48d50ab203c71837efe23ec, Data_science\Visualization\Plots-statistics\Heatmap\CorrelationHeatmap.vb"
+﻿#Region "Microsoft.VisualBasic::0013e6c4f48d50ab203c71837efe23ec, Data_science\Visualization\Plots-statistics\HeatMap\CorrelationHeatmap.vb"
 
     ' Author:
     ' 

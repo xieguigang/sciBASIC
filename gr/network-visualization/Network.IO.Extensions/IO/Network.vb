@@ -1,62 +1,62 @@
-﻿#Region "Microsoft.VisualBasic::0c743ea783cb6fed433036c92b290897, gr\network-visualization\Network.IO.Extensions\IO\Network.vb"
+﻿#Region "Microsoft.VisualBasic::d9e4ad19de992e4b9e16362111f41274, gr\network-visualization\Network.IO.Extensions\IO\Network.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 227
-'    Code Lines: 142 (62.56%)
-' Comment Lines: 54 (23.79%)
-'    - Xml Docs: 96.30%
-' 
-'   Blank Lines: 31 (13.66%)
-'     File Size: 8.20 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Class Network
-' 
-'         Properties: edges, IsEmpty, meta, nodes
-' 
-'         Constructor: (+1 Overloads) Sub New
-' 
-'         Function: GetNode, HaveNode
-' 
-'         Sub: RemoveDuplicated, RemoveSelfLoop, RemovesIsolatedNodes
-' 
-'         Operators: (+4 Overloads) -, (+2 Overloads) ^, (+4 Overloads) +, <=, >=
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 227
+    '    Code Lines: 142 (62.56%)
+    ' Comment Lines: 54 (23.79%)
+    '    - Xml Docs: 96.30%
+    ' 
+    '   Blank Lines: 31 (13.66%)
+    '     File Size: 8.23 KB
+
+
+    '     Class Network
+    ' 
+    '         Properties: edges, IsEmpty, meta, nodes
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
+    '         Function: GetNode, HaveNode
+    ' 
+    '         Sub: RemoveDuplicated, RemoveSelfLoop, RemovesIsolatedNodes
+    ' 
+    '         Operators: (+4 Overloads) -, (+2 Overloads) ^, (+4 Overloads) +, <=, >=
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

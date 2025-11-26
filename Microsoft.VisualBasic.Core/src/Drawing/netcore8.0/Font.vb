@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f6a7fb47d94f6cd5e8873e3ad21ce7e3, Microsoft.VisualBasic.Core\src\Drawing\Bitmap\netcore8.0\Font.vb"
+﻿#Region "Microsoft.VisualBasic::f6a7fb47d94f6cd5e8873e3ad21ce7e3, Microsoft.VisualBasic.Core\src\Drawing\netcore8.0\Font.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0631a83b30393e8fddc62c429ce88104, Microsoft.VisualBasic.Core\src\Language\Linq\Vectorization\Vector.vb"
+﻿#Region "Microsoft.VisualBasic::5447a902b4729a0a994719bfa9b9af46, Microsoft.VisualBasic.Core\src\Language\Linq\Vectorization\Vector.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 79.39%
     ' 
     '   Blank Lines: 39 (9.58%)
-    '     File Size: 15.05 KB
+    '     File Size: 15.08 KB
 
 
     '     Class Vector

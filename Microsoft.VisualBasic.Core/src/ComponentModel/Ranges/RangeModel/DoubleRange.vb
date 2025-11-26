@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b8b63d35c6fdddae55a68c78e8641f05, Microsoft.VisualBasic.Core\src\ComponentModel\Ranges\RangeModel\DoubleRange.vb"
+﻿#Region "Microsoft.VisualBasic::7ba46b3e05b49a5dcacf5a2740301d5d, Microsoft.VisualBasic.Core\src\ComponentModel\Ranges\RangeModel\DoubleRange.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 416
-    '    Code Lines: 227 (54.57%)
-    ' Comment Lines: 135 (32.45%)
+    '   Total Lines: 440
+    '    Code Lines: 244 (55.45%)
+    ' Comment Lines: 135 (30.68%)
     '    - Xml Docs: 79.26%
     ' 
-    '   Blank Lines: 54 (12.98%)
-    '     File Size: 15.35 KB
+    '   Blank Lines: 61 (13.86%)
+    '     File Size: 16.09 KB
 
 
     '     Class DoubleRange

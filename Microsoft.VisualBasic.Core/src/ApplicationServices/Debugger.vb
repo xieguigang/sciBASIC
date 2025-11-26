@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1e4c0f23e3b9cc2cf46bdd90661dc0ec, Microsoft.VisualBasic.Core\src\ApplicationServices\Debugger.vb"
+﻿#Region "Microsoft.VisualBasic::d5dc9ee493c76ad45422b3b02c40b890, Microsoft.VisualBasic.Core\src\ApplicationServices\Debugger.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 453
-    '    Code Lines: 263 (58.06%)
-    ' Comment Lines: 146 (32.23%)
-    '    - Xml Docs: 93.84%
+    '   Total Lines: 445
+    '    Code Lines: 262 (58.88%)
+    ' Comment Lines: 140 (31.46%)
+    '    - Xml Docs: 93.57%
     ' 
-    '   Blank Lines: 44 (9.71%)
-    '     File Size: 18.45 KB
+    '   Blank Lines: 43 (9.66%)
+    '     File Size: 17.90 KB
 
 
     ' Module VBDebugger
@@ -50,7 +50,7 @@
     '     Function: die, LinqProc, MapLevels
     '     Delegate Sub
     ' 
-    '         Properties: ForceSTDError, Mute, UsingxConsole
+    '         Properties: ForceSTDError, Mute
     ' 
     '         Function: Assert, benchmark, (+2 Overloads) PrintException, redirectWarning
     ' 

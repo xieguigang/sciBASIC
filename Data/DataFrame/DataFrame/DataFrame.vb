@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d6df7d355fc49fddb20d5645f1d30ce8, Data\DataFrame\DataFrame\DataFrame.vb"
+﻿#Region "Microsoft.VisualBasic::534842e47bb7fd7256cab3e5be2a3cd4, Data\DataFrame\DataFrame\DataFrame.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 93.75%
     ' 
     '   Blank Lines: 56 (13.33%)
-    '     File Size: 15.18 KB
+    '     File Size: 15.19 KB
 
 
     ' Class DataFrame

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::da46817d009da8c2d846ea7796fbecc1, Data_science\Mathematica\SignalProcessing\SignalProcessing\test\MultivariateDataSeriesRepository.vb"
+﻿#Region "Microsoft.VisualBasic::0f40a6105f0b07280da3818dfc7754e0, Data_science\Mathematica\SignalProcessing\SignalProcessing\test\MultivariateDataSeriesRepository.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 90.00%
     ' 
     '   Blank Lines: 18 (24.32%)
-    '     File Size: 2.96 KB
+    '     File Size: 2.91 KB
 
 
     '     Class MultivariateDataSeriesRepository

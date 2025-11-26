@@ -1,4 +1,61 @@
-﻿Imports Microsoft.VisualBasic.ComponentModel.Collection
+﻿#Region "Microsoft.VisualBasic::33c49b9db4261394205b041d38184368, Microsoft.VisualBasic.Core\src\ComponentModel\Algorithm\base\DistanceMap.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 95
+    '    Code Lines: 58 (61.05%)
+    ' Comment Lines: 20 (21.05%)
+    '    - Xml Docs: 65.00%
+    ' 
+    '   Blank Lines: 17 (17.89%)
+    '     File Size: 3.72 KB
+
+
+    '     Class DistanceMap
+    ' 
+    '         Properties: GetMap
+    ' 
+    '         Constructor: (+2 Overloads) Sub New
+    '         Function: MakeMxN, MakeNxN
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Linq
 
 Namespace ComponentModel.Algorithm.base

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9922ea4307eb0104ea3a77a5ed1d1cd7, Microsoft.VisualBasic.Core\src\ComponentModel\ValuePair\TagData\TagData.vb"
+﻿#Region "Microsoft.VisualBasic::2f3bb4e9e9e9273456328c6b939969bb, Microsoft.VisualBasic.Core\src\ComponentModel\ValuePair\TagData\TagData.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 127
-    '    Code Lines: 60 (47.24%)
-    ' Comment Lines: 41 (32.28%)
+    '   Total Lines: 132
+    '    Code Lines: 64 (48.48%)
+    ' Comment Lines: 41 (31.06%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 26 (20.47%)
-    '     File Size: 4.09 KB
+    '   Blank Lines: 27 (20.45%)
+    '     File Size: 4.30 KB
 
 
     '     Class TagData
@@ -50,6 +50,7 @@
     '     Class IntegerTagged
     ' 
     '         Constructor: (+2 Overloads) Sub New
+    '         Function: ToString
     ' 
     '     Class DoubleTagged
     ' 

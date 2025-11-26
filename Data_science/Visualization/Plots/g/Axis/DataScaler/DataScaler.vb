@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1d52b7625780fd40d1eb70373fbb7b40, Data_science\Visualization\Plots\g\Axis\DataScaler\DataScaler.vb"
+﻿#Region "Microsoft.VisualBasic::2b8830411e0982be8ed87f175f9ad14e, Data_science\Visualization\Plots\g\Axis\DataScaler\DataScaler.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 158
-    '    Code Lines: 107 (67.72%)
-    ' Comment Lines: 26 (16.46%)
+    '   Total Lines: 163
+    '    Code Lines: 111 (68.10%)
+    ' Comment Lines: 26 (15.95%)
     '    - Xml Docs: 96.15%
     ' 
-    '   Blank Lines: 25 (15.82%)
-    '     File Size: 5.38 KB
+    '   Blank Lines: 26 (15.95%)
+    '     File Size: 5.57 KB
 
 
     '     Class DataScaler
@@ -49,7 +49,7 @@
     '                     ymax, ymin
     ' 
     '         Constructor: (+2 Overloads) Sub New
-    '         Function: (+3 Overloads) Translate, (+2 Overloads) TranslateSize, TranslateWidth, (+2 Overloads) TranslateX
+    '         Function: (+4 Overloads) Translate, (+2 Overloads) TranslateSize, TranslateWidth, (+2 Overloads) TranslateX
     ' 
     '     Module DataScalerExtensions
     ' 

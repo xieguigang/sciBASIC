@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c17a52d58fc4aa77f745583e0c8db4c1, Microsoft.VisualBasic.Core\src\Drawing\Math\PolygonFiller.vb"
+﻿#Region "Microsoft.VisualBasic::03d672a89b3e0489b977e50f8c627d8f, Microsoft.VisualBasic.Core\src\Drawing\Math\PolygonFiller.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 97
-    '    Code Lines: 60 (61.86%)
-    ' Comment Lines: 19 (19.59%)
+    '   Total Lines: 99
+    '    Code Lines: 61 (61.62%)
+    ' Comment Lines: 19 (19.19%)
     '    - Xml Docs: 26.32%
     ' 
-    '   Blank Lines: 18 (18.56%)
-    '     File Size: 4.01 KB
+    '   Blank Lines: 19 (19.19%)
+    '     File Size: 4.05 KB
 
 
     '     Class PolygonFiller

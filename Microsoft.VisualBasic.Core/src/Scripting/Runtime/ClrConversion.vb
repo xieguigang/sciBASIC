@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::69a29390b6e4d3dc3214a473ebe3aa97, Microsoft.VisualBasic.Core\src\Scripting\Runtime\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::83d6084bef6bead81c08511139d5444a, Microsoft.VisualBasic.Core\src\Scripting\Runtime\ClrConversion.vb"
 
     ' Author:
     ' 
@@ -34,16 +34,16 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 98
-    '    Code Lines: 75 (76.53%)
-    ' Comment Lines: 13 (13.27%)
+    '   Total Lines: 101
+    '    Code Lines: 75 (74.26%)
+    ' Comment Lines: 16 (15.84%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 10 (10.20%)
-    '     File Size: 3.86 KB
+    '   Blank Lines: 10 (9.90%)
+    '     File Size: 3.96 KB
 
 
-    '     Module Extensions
+    '     Module ClrConversion
     ' 
     '         Properties: Numerics
     ' 

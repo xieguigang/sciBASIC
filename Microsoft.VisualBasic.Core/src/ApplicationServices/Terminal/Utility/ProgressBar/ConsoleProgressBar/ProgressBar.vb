@@ -1,4 +1,70 @@
-﻿' Description: ProgressBar for Console Applications, with advanced features.
+﻿#Region "Microsoft.VisualBasic::57b8e6f9ad7e783a5a61bdcb1bb264c1, Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\Utility\ProgressBar\ConsoleProgressBar\ProgressBar.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 526
+    '    Code Lines: 305 (57.98%)
+    ' Comment Lines: 157 (29.85%)
+    '    - Xml Docs: 78.98%
+    ' 
+    '   Blank Lines: 64 (12.17%)
+    '     File Size: 21.41 KB
+
+
+    '     Class ProgressBar
+    ' 
+    '         Properties: [Step], CancelThread, Delay, ElementName, FixedInBottom
+    '                     HasProgress, IsDone, IsPaused, IsStarted, Layout
+    '                     MarqueeIncrement, MarqueePosition, Maximum, Percentage, ProgressStopwatch
+    '                     Tag, Text, TicksCompletedElements, TicksPerElement, TicksRemaining
+    '                     TimePerElement, TimeProcessing, TimeRemaining, Value
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
+    '         Function: GetRenderActionsForProgressBarAndText
+    ' 
+    '         Sub: [Resume], Dispose, Pause, (+2 Overloads) PerformStep, Render
+    '              SetValue, Start, ThreadAction, Unrender, UpdateMarqueePosition
+    '              (+4 Overloads) WriteLine
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+' Description: ProgressBar for Console Applications, with advanced features.
 ' Project site: https://github.com/iluvadev/ConsoleProgressBar
 ' Issues: https://github.com/iluvadev/ConsoleProgressBar/issues
 ' License (MIT): https://github.com/iluvadev/ConsoleProgressBar/blob/main/LICENSE
@@ -524,3 +590,4 @@ Namespace ApplicationServices.Terminal.ProgressBar.ConsoleProgressBar
         End Sub
     End Class
 End Namespace
+

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0e4e5f843232eb29e85bce863518ccd3, gr\network-visualization\network_layout\EdgeBundling\Mingle\Accessor.vb"
+﻿#Region "Microsoft.VisualBasic::5550ac909adf75fab9e21673745ad1cc, gr\network-visualization\network_layout\EdgeBundling\Mingle\Accessor.vb"
 
     ' Author:
     ' 
@@ -47,7 +47,7 @@
     ' 
     '         Function: activate, getByDimension, GetDimensions, metric, nodeIs
     ' 
-    '         Sub: setByDimensin
+    '         Sub: setByDimension
     ' 
     ' 
     ' /********************************************************************************/

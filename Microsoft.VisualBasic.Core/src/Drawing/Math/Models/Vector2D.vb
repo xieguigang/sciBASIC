@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2322dd0b1066c933df27280f3854c467, Microsoft.VisualBasic.Core\src\Drawing\Math\Models\Vector2D.vb"
+﻿#Region "Microsoft.VisualBasic::10563ea539dd9f2d98ed58849967a19d, Microsoft.VisualBasic.Core\src\Drawing\Math\Models\Vector2D.vb"
 
     ' Author:
     ' 
@@ -34,21 +34,21 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 113
-    '    Code Lines: 61 (53.98%)
-    ' Comment Lines: 35 (30.97%)
+    '   Total Lines: 170
+    '    Code Lines: 100 (58.82%)
+    ' Comment Lines: 42 (24.71%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 17 (15.04%)
-    '     File Size: 3.35 KB
+    '   Blank Lines: 28 (16.47%)
+    '     File Size: 5.44 KB
 
 
     '     Class Vector2D
     ' 
     '         Properties: Length, x, y, Zero
     ' 
-    '         Constructor: (+3 Overloads) Sub New
-    '         Function: GetDistance, ToString
+    '         Constructor: (+6 Overloads) Sub New
+    '         Function: DistanceToSegment, (+3 Overloads) GetCross, GetDistance, Normalize, ToString
     '         Operators: (+2 Overloads) -, (+2 Overloads) *, +
     ' 
     ' 

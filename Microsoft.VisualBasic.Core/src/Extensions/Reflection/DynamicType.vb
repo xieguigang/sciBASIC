@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a2dc9c6db73beb0c669f2a77e651fd0a, Microsoft.VisualBasic.Core\src\Extensions\Reflection\DynamicType.vb"
+﻿#Region "Microsoft.VisualBasic::fae0cd90d1e5a06de9ba1a7fea02d37f, Microsoft.VisualBasic.Core\src\Extensions\Reflection\DynamicType.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 256
-    '    Code Lines: 170 (66.41%)
-    ' Comment Lines: 44 (17.19%)
-    '    - Xml Docs: 97.73%
+    '   Total Lines: 263
+    '    Code Lines: 171 (65.02%)
+    ' Comment Lines: 50 (19.01%)
+    '    - Xml Docs: 96.00%
     ' 
-    '   Blank Lines: 42 (16.41%)
-    '     File Size: 10.62 KB
+    '   Blank Lines: 42 (15.97%)
+    '     File Size: 10.99 KB
 
 
     ' Class DynamicType

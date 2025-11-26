@@ -1,4 +1,60 @@
-﻿' Description: ProgressBar for Console Applications, with advanced features.
+﻿#Region "Microsoft.VisualBasic::8d9f9f5bf152621a39aba3937d1952e9, Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\Utility\ProgressBar\ConsoleProgressBar\Element.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 150
+    '    Code Lines: 55 (36.67%)
+    ' Comment Lines: 80 (53.33%)
+    '    - Xml Docs: 91.25%
+    ' 
+    '   Blank Lines: 15 (10.00%)
+    '     File Size: 6.19 KB
+
+
+    '     Class Element
+    ' 
+    '         Constructor: (+2 Overloads) Sub New
+    '         Function: GetBackgroundColor, GetForegroundColor, GetValue, GetVisible, (+2 Overloads) SetBackgroundColor
+    '                   (+2 Overloads) SetForegroundColor, (+2 Overloads) SetValue, (+2 Overloads) SetVisible
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+' Description: ProgressBar for Console Applications, with advanced features.
 ' Project site: https://github.com/iluvadev/ConsoleProgressBar
 ' Issues: https://github.com/iluvadev/ConsoleProgressBar/issues
 ' License (MIT): https://github.com/iluvadev/ConsoleProgressBar/blob/main/LICENSE
@@ -148,3 +204,4 @@ Namespace ApplicationServices.Terminal.ProgressBar.ConsoleProgressBar
     End Class
 
 End Namespace
+

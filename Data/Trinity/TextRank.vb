@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bba5a8d8a1df3c9f1069f946038617da, Data\Trinity\TextRank.vb"
+﻿#Region "Microsoft.VisualBasic::e3a01d8ff5bd73aeac48dbd5bf84ef49, Data\Trinity\TextRank.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 248
-    '    Code Lines: 163 (65.73%)
-    ' Comment Lines: 50 (20.16%)
+    '   Total Lines: 244
+    '    Code Lines: 160 (65.57%)
+    ' Comment Lines: 50 (20.49%)
     '    - Xml Docs: 82.00%
     ' 
-    '   Blank Lines: 35 (14.11%)
-    '     File Size: 9.74 KB
+    '   Blank Lines: 34 (13.93%)
+    '     File Size: 9.44 KB
 
 
     ' Module TextRank

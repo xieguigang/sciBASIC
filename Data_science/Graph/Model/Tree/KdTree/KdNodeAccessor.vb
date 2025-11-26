@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fa5b3394adfdf3433efd9aa46d1dc435, Data_science\Graph\Model\Tree\KdTree\KdNodeAccessor.vb"
+﻿#Region "Microsoft.VisualBasic::49783c0bae02265413605700a8c86d63, Data_science\Graph\Model\Tree\KdTree\KdNodeAccessor.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 40
-    '    Code Lines: 18 (45.00%)
-    ' Comment Lines: 16 (40.00%)
+    '   Total Lines: 44
+    '    Code Lines: 18 (40.91%)
+    ' Comment Lines: 20 (45.45%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 6 (15.00%)
-    '     File Size: 1.38 KB
+    '   Blank Lines: 6 (13.64%)
+    '     File Size: 1.53 KB
 
 
     '     Class KdNodeAccessor

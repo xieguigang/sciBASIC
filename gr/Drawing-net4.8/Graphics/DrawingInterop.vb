@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a08b74163238eacf188812ddb23b9168, gr\Drawing-net4.8\Graphics\DrawingInterop.vb"
+﻿#Region "Microsoft.VisualBasic::f7b101b261fe8dad0da78b849a84de9a, gr\Drawing-net4.8\Graphics\DrawingInterop.vb"
 
     ' Author:
     ' 
@@ -34,19 +34,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 112
-    '    Code Lines: 67 (59.82%)
-    ' Comment Lines: 33 (29.46%)
+    '   Total Lines: 98
+    '    Code Lines: 55 (56.12%)
+    ' Comment Lines: 33 (33.67%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 12 (10.71%)
-    '     File Size: 4.14 KB
+    '   Blank Lines: 10 (10.20%)
+    '     File Size: 3.70 KB
 
 
     ' Module DrawingInterop
     ' 
-    '     Function: CTypeBitmap, (+3 Overloads) CTypeBrushObject, CTypeFontObject, CTypeGraphicsPath, CTypeImage
-    '               CTypePenObject
+    '     Function: (+3 Overloads) CTypeBrushObject, CTypeFontObject, CTypeGraphicsPath, CTypePenObject
     ' 
     ' 
     ' /********************************************************************************/

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::69f493b45b970c2f28c37f588f506790, gr\network-visualization\Datavisualization.Network\Graph\Abstract.vb"
+﻿#Region "Microsoft.VisualBasic::bddab4d6d6c8a40594e1d26ef72f929d, gr\network-visualization\Datavisualization.Network\Graph\Abstract.vb"
 
     ' Author:
     ' 
@@ -34,27 +34,15 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 83
-    '    Code Lines: 60 (72.29%)
-    ' Comment Lines: 13 (15.66%)
-    '    - Xml Docs: 84.62%
+    '   Total Lines: 7
+    '    Code Lines: 4 (57.14%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
     ' 
-    '   Blank Lines: 10 (12.05%)
-    '     File Size: 3.01 KB
+    '   Blank Lines: 3 (42.86%)
+    '     File Size: 146 B
 
 
-    '     Interface INode
-    ' 
-    '         Properties: Id, NodeType
-    ' 
-    '     Interface INetworkEdge
-    ' 
-    '         Properties: Interaction, value
-    ' 
-    '     Module ExtensionsAPI
-    ' 
-    '         Function: Contains, Equals, GetConnectedNode, GetDirectedGuid, GetNullDirectedGuid
-    ' 
     ' 
     ' /********************************************************************************/
 

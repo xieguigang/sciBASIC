@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3cd829278b61636ed7b387469991f70c, Data_science\Graph\Model\Tree\KdTree\ApproximateNearNeighbor\VectorAccessor.vb"
+﻿#Region "Microsoft.VisualBasic::a5a9acbb446dd9bbd6e5d120252e777b, Data_science\Graph\Model\Tree\KdTree\ApproximateNearNeighbor\VectorAccessor.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 10 (18.18%)
-    '     File Size: 2.09 KB
+    '     File Size: 2.10 KB
 
 
     '     Class VectorAccessor
@@ -49,7 +49,7 @@
     ' 
     '         Function: activate, getByDimension, GetDimensions, metric, nodeIs
     ' 
-    '         Sub: setByDimensin
+    '         Sub: setByDimension
     ' 
     ' 
     ' /********************************************************************************/

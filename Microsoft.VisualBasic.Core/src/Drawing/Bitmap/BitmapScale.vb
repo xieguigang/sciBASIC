@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b7890cc9e4914d312c3b27738e90c39e, Microsoft.VisualBasic.Core\src\Drawing\Bitmap\BitmapScale.vb"
+﻿#Region "Microsoft.VisualBasic::a9f3ea0751f276ac2c8e8d86776080cd, Microsoft.VisualBasic.Core\src\Drawing\Bitmap\BitmapScale.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 350
-    '    Code Lines: 188 (53.71%)
-    ' Comment Lines: 115 (32.86%)
-    '    - Xml Docs: 79.13%
+    '   Total Lines: 353
+    '    Code Lines: 188 (53.26%)
+    ' Comment Lines: 118 (33.43%)
+    '    - Xml Docs: 79.66%
     ' 
-    '   Blank Lines: 47 (13.43%)
-    '     File Size: 12.99 KB
+    '   Blank Lines: 47 (13.31%)
+    '     File Size: 13.21 KB
 
 
     '     Module BitmapScale

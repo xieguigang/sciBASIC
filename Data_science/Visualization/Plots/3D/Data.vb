@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c3fd1eb92225da5a6cf473bea1d269ea, Data_science\Visualization\Plots\3D\Data.vb"
+﻿#Region "Microsoft.VisualBasic::5335e479730c60f7b2efecd7b40bc8b0, Data_science\Visualization\Plots\3D\Data.vb"
 
     ' Author:
     ' 
@@ -34,18 +34,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 338
-    '    Code Lines: 241 (71.30%)
-    ' Comment Lines: 53 (15.68%)
-    '    - Xml Docs: 83.02%
+    '   Total Lines: 313
+    '    Code Lines: 221 (70.61%)
+    ' Comment Lines: 52 (16.61%)
+    '    - Xml Docs: 84.62%
     ' 
-    '   Blank Lines: 44 (13.02%)
-    '     File Size: 14.38 KB
+    '   Blank Lines: 40 (12.78%)
+    '     File Size: 13.35 KB
 
 
     '     Module DataProvider
     ' 
-    '         Function: __2DIterates, __progressProvider, (+2 Overloads) Evaluate, (+2 Overloads) Grid, (+3 Overloads) Surface
+    '         Function: __2DIterates, (+2 Overloads) Evaluate, (+2 Overloads) Grid, (+3 Overloads) Surface
     ' 
     ' 
     ' /********************************************************************************/

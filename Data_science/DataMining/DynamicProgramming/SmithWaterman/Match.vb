@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5d6c752f4b496aa2afd2493c3ee7ab95, Data_science\DataMining\DynamicProgramming\SmithWaterman\Match.vb"
+﻿#Region "Microsoft.VisualBasic::819b44723a97d503fc5dc9eda5dc63cb, Data_science\DataMining\DynamicProgramming\SmithWaterman\Match.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 96.67%
     ' 
     '   Blank Lines: 14 (15.22%)
-    '     File Size: 2.87 KB
+    '     File Size: 2.90 KB
 
 
     '     Class Match

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ac83eab55793c9e35564ac7ab37731b2, Microsoft.VisualBasic.Core\src\Drawing\Math\Geometry\Transform.vb"
+﻿#Region "Microsoft.VisualBasic::e8977ae285ef00118b510bb073463960, Microsoft.VisualBasic.Core\src\Drawing\Math\Geometry\Transform.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 84
-    '    Code Lines: 44 (52.38%)
-    ' Comment Lines: 28 (33.33%)
-    '    - Xml Docs: 89.29%
+    '   Total Lines: 85
+    '    Code Lines: 42 (49.41%)
+    ' Comment Lines: 31 (36.47%)
+    '    - Xml Docs: 90.32%
     ' 
-    '   Blank Lines: 12 (14.29%)
-    '     File Size: 2.98 KB
+    '   Blank Lines: 12 (14.12%)
+    '     File Size: 3.02 KB
 
 
     '     Class Transform

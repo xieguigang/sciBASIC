@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9640ce47a52db63f7f1dae3fed621d5a, Microsoft.VisualBasic.Core\src\ComponentModel\Algorithm\DynamicProgramming\Levenshtein\ResultVisualize.vb"
+﻿#Region "Microsoft.VisualBasic::8ffb84c19a3f9896534db734afb42e76, Microsoft.VisualBasic.Core\src\ComponentModel\Algorithm\DynamicProgramming\Levenshtein\ResultVisualize.vb"
 
     ' Author:
     ' 
@@ -40,12 +40,12 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 19 (11.18%)
-    '     File Size: 6.59 KB
+    '     File Size: 6.60 KB
 
 
     '     Module ResultVisualize
     ' 
-    '         Function: doVisualizeHTML, HTMLVisualize, internalMatrix
+    '         Function: CreateVisualizeHTML, HTMLVisualize, internalMatrix
     ' 
     ' 
     ' /********************************************************************************/

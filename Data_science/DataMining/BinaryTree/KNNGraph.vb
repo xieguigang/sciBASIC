@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fa691dc2c7d96d17bcfe98969f60c811, Data_science\DataMining\BinaryTree\KNNGraph.vb"
+﻿#Region "Microsoft.VisualBasic::a0ba457c570feba96ca50ca6e0a1525c, Data_science\DataMining\BinaryTree\KNNGraph.vb"
 
     ' Author:
     ' 
@@ -58,7 +58,7 @@
     ' 
     '         Function: activate, getByDimension, GetDimensions, metric, nodeIs
     ' 
-    '         Sub: setByDimensin
+    '         Sub: setByDimension
     ' 
     ' 
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5af578c2c5b265e9d6f3d6150f7babcc, Microsoft.VisualBasic.Core\src\Scripting\InputHandler.vb"
+﻿#Region "Microsoft.VisualBasic::6f13bd011f1b0845035ab6ad579c873b, Microsoft.VisualBasic.Core\src\Scripting\InputHandler.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 91.24%
     ' 
     '   Blank Lines: 48 (10.41%)
-    '     File Size: 20.22 KB
+    '     File Size: 20.21 KB
 
 
     '     Module InputHandler

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::221c4057ff78fba14b9d927e6b2aeb7c, Data_science\Visualization\Plots-statistics\Heatmap\DataScaler.vb"
+﻿#Region "Microsoft.VisualBasic::221c4057ff78fba14b9d927e6b2aeb7c, Data_science\Visualization\Plots-statistics\HeatMap\DataScaler.vb"
 
     ' Author:
     ' 

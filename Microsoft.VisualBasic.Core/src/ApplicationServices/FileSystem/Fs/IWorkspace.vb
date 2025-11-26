@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5a803806777a34d69bbd44b88ff1c95b, Microsoft.VisualBasic.Core\src\ApplicationServices\FileSystem\Fs\IWorkspace.vb"
+﻿#Region "Microsoft.VisualBasic::1999cd9cd1d1c891d443bd1a68c6a25f, Microsoft.VisualBasic.Core\src\ApplicationServices\FileSystem\Fs\IWorkspace.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 103
-    '    Code Lines: 74 (71.84%)
-    ' Comment Lines: 7 (6.80%)
-    '    - Xml Docs: 100.00%
+    '   Total Lines: 111
+    '    Code Lines: 74 (66.67%)
+    ' Comment Lines: 15 (13.51%)
+    '    - Xml Docs: 93.33%
     ' 
-    '   Blank Lines: 22 (21.36%)
-    '     File Size: 4.61 KB
+    '   Blank Lines: 22 (19.82%)
+    '     File Size: 4.95 KB
 
 
     '     Interface IWorkspace

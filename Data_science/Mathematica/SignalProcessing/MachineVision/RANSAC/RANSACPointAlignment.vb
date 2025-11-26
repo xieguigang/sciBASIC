@@ -1,59 +1,55 @@
-﻿#Region "Microsoft.VisualBasic::35999816b815180c76fc6c230c289bb7, Data_science\Mathematica\SignalProcessing\MachineVision\RANSACPointAlignment.vb"
+﻿#Region "Microsoft.VisualBasic::6ccfb1eab3d01a894045ae39ce60b8d4, Data_science\Mathematica\SignalProcessing\MachineVision\RANSAC\RANSACPointAlignment.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 299
-'    Code Lines: 200 (66.89%)
-' Comment Lines: 40 (13.38%)
-'    - Xml Docs: 7.50%
-' 
-'   Blank Lines: 59 (19.73%)
-'     File Size: 10.92 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-' Class RANSACPointAlignment
-' 
-'     Function: AlignPolygons, CalculateCenter, ComputeSimilarityTransform, CountInliers, FindClosestPoint
-'               RefineTransform
-'     Structure Point
-' 
-'         Constructor: (+1 Overloads) Sub New
-' 
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 290
+    '    Code Lines: 177 (61.03%)
+    ' Comment Lines: 67 (23.10%)
+    '    - Xml Docs: 53.73%
+    ' 
+    '   Blank Lines: 46 (15.86%)
+    '     File Size: 13.42 KB
+
+
+    ' Module RANSACPointAlignment
+    ' 
+    '     Function: (+2 Overloads) AlignPolygons, ComputeAffineFrom3Pairs, MakeAlignment, MakeHungarianAssignment, RefineTransformWithLeastSquares
+    ' 
+    '     Sub: SolveLeastSquaresAffine
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

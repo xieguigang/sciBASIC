@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b9fa072e40e08745bb22c987cc3e8263, Data_science\Graph\Model\Tree\KdTree\KdTree.vb"
+﻿#Region "Microsoft.VisualBasic::1ed8b10e1738631acb9020993683b87b, Data_science\Graph\Model\Tree\KdTree\KdTree.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 403
-    '    Code Lines: 270 (67.00%)
-    ' Comment Lines: 66 (16.38%)
-    '    - Xml Docs: 71.21%
+    '   Total Lines: 399
+    '    Code Lines: 266 (66.67%)
+    ' Comment Lines: 68 (17.04%)
+    '    - Xml Docs: 72.06%
     ' 
-    '   Blank Lines: 67 (16.63%)
-    '     File Size: 15.03 KB
+    '   Blank Lines: 65 (16.29%)
+    '     File Size: 14.90 KB
 
 
     '     Class KdTree

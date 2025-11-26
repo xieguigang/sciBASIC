@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d0c2dba6f7d7e1af3e6568c6d471738a, Microsoft.VisualBasic.Core\src\Text\Xml\Models\Vector.vb"
+﻿#Region "Microsoft.VisualBasic::c3d4bd573259f24cbf8340b36d432070, Microsoft.VisualBasic.Core\src\Text\Xml\Models\Vector.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 123
-    '    Code Lines: 84 (68.29%)
-    ' Comment Lines: 20 (16.26%)
+    '   Total Lines: 126
+    '    Code Lines: 84 (66.67%)
+    ' Comment Lines: 23 (18.25%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 19 (15.45%)
-    '     File Size: 4.36 KB
+    '   Blank Lines: 19 (15.08%)
+    '     File Size: 4.44 KB
 
 
     '     Class NumericVector

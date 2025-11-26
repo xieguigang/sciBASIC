@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8eb9c478161cc10da46fc191567ea6e4, Microsoft.VisualBasic.Core\src\My\JavaScript\JavaScriptObject\JavaScriptObject.vb"
+﻿#Region "Microsoft.VisualBasic::48c45a138c700d1c909cc38a0d9bbfc5, Microsoft.VisualBasic.Core\src\My\JavaScript\JavaScriptObject\JavaScriptObject.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 320
-    '    Code Lines: 230 (71.88%)
-    ' Comment Lines: 37 (11.56%)
-    '    - Xml Docs: 91.89%
+    '   Total Lines: 326
+    '    Code Lines: 230 (70.55%)
+    ' Comment Lines: 43 (13.19%)
+    '    - Xml Docs: 93.02%
     ' 
-    '   Blank Lines: 53 (16.56%)
-    '     File Size: 12.79 KB
+    '   Blank Lines: 53 (16.26%)
+    '     File Size: 13.03 KB
 
 
     '     Class JavaScriptObject

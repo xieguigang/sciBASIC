@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::db1ed90f65cc216904c8299da69303a2, Microsoft.VisualBasic.Core\src\Text\Parser\HtmlParser\HtmlStrips.vb"
+﻿#Region "Microsoft.VisualBasic::f9395293d748376999a1e560db1ef0df, Microsoft.VisualBasic.Core\src\Text\Parser\HtmlParser\HtmlStrips.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 84.62%
     ' 
     '   Blank Lines: 51 (12.29%)
-    '     File Size: 15.64 KB
+    '     File Size: 15.66 KB
 
 
     '     Module HtmlStrips

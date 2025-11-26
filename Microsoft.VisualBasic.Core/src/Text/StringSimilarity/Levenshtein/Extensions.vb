@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::91fdbd5ab073e0638d3ad0552d11a05c, Microsoft.VisualBasic.Core\src\Text\StringSimilarity\Levenshtein\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::53612205edb07d9609c819b8144a762d, Microsoft.VisualBasic.Core\src\Text\StringSimilarity\Levenshtein\Extensions.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 58
-    '    Code Lines: 40 (68.97%)
-    ' Comment Lines: 7 (12.07%)
+    '   Total Lines: 59
+    '    Code Lines: 41 (69.49%)
+    ' Comment Lines: 7 (11.86%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 11 (18.97%)
-    '     File Size: 2.19 KB
+    '   Blank Lines: 11 (18.64%)
+    '     File Size: 2.20 KB
 
 
     '     Module LevExtensions

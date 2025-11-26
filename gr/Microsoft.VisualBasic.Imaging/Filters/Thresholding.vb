@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::db26bab93bd5c55c877228380770cf85, gr\Microsoft.VisualBasic.Imaging\Filters\Thresholding.vb"
+﻿#Region "Microsoft.VisualBasic::052ad289565a6380925d246769df10e0, gr\Microsoft.VisualBasic.Imaging\Filters\Thresholding.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 239
-    '    Code Lines: 166 (69.46%)
-    ' Comment Lines: 47 (19.67%)
+    '   Total Lines: 247
+    '    Code Lines: 173 (70.04%)
+    ' Comment Lines: 47 (19.03%)
     '    - Xml Docs: 63.83%
     ' 
-    '   Blank Lines: 26 (10.88%)
-    '     File Size: 10.43 KB
+    '   Blank Lines: 27 (10.93%)
+    '     File Size: 10.90 KB
 
 
     '     Module Thresholding

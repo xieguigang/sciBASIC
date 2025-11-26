@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c76fec6abb4bf34f6795ac2ba125c205, Data_science\DataMining\DensityQuery\Metric.vb"
+﻿#Region "Microsoft.VisualBasic::453b0a0fab09415b7343d1090b9c8344, Data_science\DataMining\DensityQuery\Metric.vb"
 
     ' Author:
     ' 
@@ -49,7 +49,7 @@
     ' 
     '     Function: activate, getByDimension, GetDimensions, metric, nodeIs
     ' 
-    '     Sub: setByDimensin
+    '     Sub: setByDimension
     ' 
     ' /********************************************************************************/
 

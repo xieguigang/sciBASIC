@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::820050434d007b701f6908ac21255825, Microsoft.VisualBasic.Core\src\Drawing\Bitmap\netcore8.0\Pen.vb"
+﻿#Region "Microsoft.VisualBasic::820050434d007b701f6908ac21255825, Microsoft.VisualBasic.Core\src\Drawing\netcore8.0\Pen.vb"
 
     ' Author:
     ' 

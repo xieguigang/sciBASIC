@@ -1,4 +1,66 @@
-﻿Imports System.Drawing
+﻿#Region "Microsoft.VisualBasic::1f8b57ee4367c5f3277d841ede40dc80, Microsoft.VisualBasic.Core\src\Drawing\Math\Rasterizer.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 157
+    '    Code Lines: 111 (70.70%)
+    ' Comment Lines: 21 (13.38%)
+    '    - Xml Docs: 66.67%
+    ' 
+    '   Blank Lines: 25 (15.92%)
+    '     File Size: 6.28 KB
+
+
+    '     Class RasterData
+    ' 
+    '         Properties: Grid, GridHeight, GridWidth, MeanDensity, MinX
+    '                     MinY, Resolution
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    '         Function: GetRasterPolygon, RasterDensity
+    ' 
+    '     Module Rasterizer
+    ' 
+    '         Function: EstimateResolution, MeasureRasterRange, Rasterize
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+Imports System.Drawing
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.ComponentModel.TagData

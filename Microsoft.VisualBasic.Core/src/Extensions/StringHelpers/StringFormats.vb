@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2d006d7ad3af901d81a1d8bd003c4b1f, Microsoft.VisualBasic.Core\src\Extensions\StringHelpers\StringFormats.vb"
+﻿#Region "Microsoft.VisualBasic::55b1faa5c11c0ee6e407799cf5799640, Microsoft.VisualBasic.Core\src\Extensions\StringHelpers\StringFormats.vb"
 
     ' Author:
     ' 
@@ -34,18 +34,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 137
-    '    Code Lines: 94 (68.61%)
-    ' Comment Lines: 26 (18.98%)
-    '    - Xml Docs: 92.31%
+    '   Total Lines: 152
+    '    Code Lines: 102 (67.11%)
+    ' Comment Lines: 32 (21.05%)
+    '    - Xml Docs: 93.75%
     ' 
-    '   Blank Lines: 17 (12.41%)
-    '     File Size: 4.82 KB
+    '   Blank Lines: 18 (11.84%)
+    '     File Size: 5.40 KB
 
 
     ' Module StringFormats
     ' 
-    '     Function: FormatTime, (+2 Overloads) Lanudry, nsize, (+2 Overloads) ReadableElapsedTime
+    '     Function: Format, FormatTime, (+2 Overloads) Lanudry, nsize, (+2 Overloads) ReadableElapsedTime
     ' 
     ' /********************************************************************************/
 

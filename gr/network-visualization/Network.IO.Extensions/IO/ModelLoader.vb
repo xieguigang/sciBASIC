@@ -1,54 +1,54 @@
-﻿#Region "Microsoft.VisualBasic::ff2cb9a2c5c506bab361bed529388279, gr\network-visualization\Network.IO.Extensions\IO\ModelLoader.vb"
+﻿#Region "Microsoft.VisualBasic::0dbdfe35b03016fd0c0a7c9f09b1c25f, gr\network-visualization\Network.IO.Extensions\IO\ModelLoader.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 151
-'    Code Lines: 122 (80.79%)
-' Comment Lines: 16 (10.60%)
-'    - Xml Docs: 81.25%
-' 
-'   Blank Lines: 13 (8.61%)
-'     File Size: 8.22 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Module ModelLoader
-' 
-'         Function: CreateGraph, CreateGraphGeneric, getEdgeGuid
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 151
+    '    Code Lines: 122 (80.79%)
+    ' Comment Lines: 16 (10.60%)
+    '    - Xml Docs: 81.25%
+    ' 
+    '   Blank Lines: 13 (8.61%)
+    '     File Size: 8.21 KB
+
+
+    '     Module ModelLoader
+    ' 
+    '         Function: CreateGraph, CreateGraphGeneric, getEdgeGuid
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

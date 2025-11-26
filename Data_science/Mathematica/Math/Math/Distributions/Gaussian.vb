@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::21334a0ecfa954efae5389e1ff556d20, Data_science\Mathematica\Math\Math\Distributions\Gaussian.vb"
+﻿#Region "Microsoft.VisualBasic::f5f30a698f09583edad2bde41e3c0f14, Data_science\Mathematica\Math\Math\Distributions\Gaussian.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 74
-    '    Code Lines: 39 (52.70%)
-    ' Comment Lines: 27 (36.49%)
-    '    - Xml Docs: 77.78%
+    '   Total Lines: 85
+    '    Code Lines: 39 (45.88%)
+    ' Comment Lines: 38 (44.71%)
+    '    - Xml Docs: 84.21%
     ' 
-    '   Blank Lines: 8 (10.81%)
-    '     File Size: 3.24 KB
+    '   Blank Lines: 8 (9.41%)
+    '     File Size: 3.55 KB
 
 
     '     Module Gaussian

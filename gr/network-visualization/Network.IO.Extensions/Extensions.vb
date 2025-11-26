@@ -1,54 +1,54 @@
-﻿#Region "Microsoft.VisualBasic::decd68a23e8432690347a647562b1801, gr\network-visualization\Network.IO.Extensions\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::c43fee621bcfc1786585c2ce1253e623, gr\network-visualization\Network.IO.Extensions\Extensions.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 131
-'    Code Lines: 90 (68.70%)
-' Comment Lines: 29 (22.14%)
-'    - Xml Docs: 96.55%
-' 
-'   Blank Lines: 12 (9.16%)
-'     File Size: 4.80 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-' Module Extensions
-' 
-'     Function: GetConnections, GetNextConnects, RemoveDuplicated, RemoveSelfLoop, SearchIndex
-'               Trim
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 131
+    '    Code Lines: 90 (68.70%)
+    ' Comment Lines: 29 (22.14%)
+    '    - Xml Docs: 96.55%
+    ' 
+    '   Blank Lines: 12 (9.16%)
+    '     File Size: 4.95 KB
+
+
+    ' Module Extensions
+    ' 
+    '     Function: GetConnections, GetNextConnects, RemoveDuplicated, RemoveSelfLoop, SearchIndex
+    '               Trim
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

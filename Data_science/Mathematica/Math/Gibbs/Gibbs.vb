@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b88d4b5164143ecfce104a2c120bd46a, Data_science\Mathematica\Math\Gibbs\Gibbs.vb"
+﻿#Region "Microsoft.VisualBasic::702cc5b02024cc6467f3639a78b8da27, Data_science\Mathematica\Math\Gibbs\Gibbs.vb"
 
     ' Author:
     ' 
@@ -34,12 +34,12 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 215
-    '    Code Lines: 128 (59.53%)
-    ' Comment Lines: 59 (27.44%)
+    '   Total Lines: 213
+    '    Code Lines: 128 (60.09%)
+    ' Comment Lines: 59 (27.70%)
     '    - Xml Docs: 86.44%
     ' 
-    '   Blank Lines: 28 (13.02%)
+    '   Blank Lines: 26 (12.21%)
     '     File Size: 8.18 KB
 
 

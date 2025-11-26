@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::61c1e954ab5b1b2692e6084b6ac0215e, Data_science\DataMining\DynamicProgramming\Generic\GenericSymbol.vb"
+﻿#Region "Microsoft.VisualBasic::f06449f6b9154804dae421d013f7ba88, Data_science\DataMining\DynamicProgramming\Generic\GenericSymbol.vb"
 
     ' Author:
     ' 
@@ -34,19 +34,19 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 37
-    '    Code Lines: 29 (78.38%)
+    '   Total Lines: 41
+    '    Code Lines: 32 (78.05%)
     ' Comment Lines: 0 (0.00%)
     '    - Xml Docs: 0.00%
     ' 
-    '   Blank Lines: 8 (21.62%)
-    '     File Size: 1.18 KB
+    '   Blank Lines: 9 (21.95%)
+    '     File Size: 1.29 KB
 
 
     ' Class GenericSymbol
     ' 
     '     Constructor: (+1 Overloads) Sub New
-    '     Function: getEmpty, getEquals, ToChar
+    '     Function: equalsTo, getEmpty, getEquals, ToChar
     ' 
     ' /********************************************************************************/
 

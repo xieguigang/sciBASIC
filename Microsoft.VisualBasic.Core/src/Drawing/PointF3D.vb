@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a53892c1bde09fad590c0526ebf9f4da, Microsoft.VisualBasic.Core\src\Drawing\PointF3D.vb"
+﻿#Region "Microsoft.VisualBasic::fed865f13bf45a9c8ffde369f3464e8a, Microsoft.VisualBasic.Core\src\Drawing\PointF3D.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 118
-    '    Code Lines: 48 (40.68%)
-    ' Comment Lines: 47 (39.83%)
-    '    - Xml Docs: 95.74%
+    '   Total Lines: 136
+    '    Code Lines: 52 (38.24%)
+    ' Comment Lines: 58 (42.65%)
+    '    - Xml Docs: 96.55%
     ' 
-    '   Blank Lines: 23 (19.49%)
-    '     File Size: 3.02 KB
+    '   Blank Lines: 26 (19.12%)
+    '     File Size: 3.44 KB
 
 
     '     Interface PointF3D
@@ -56,6 +56,10 @@
     '         Properties: X, Y, Z
     ' 
     '     Interface Layout2D
+    ' 
+    '         Properties: X, Y
+    ' 
+    '     Interface IReadOnlyPoint
     ' 
     '         Properties: X, Y
     ' 

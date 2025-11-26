@@ -1,59 +1,59 @@
-﻿#Region "Microsoft.VisualBasic::825861ae46a5371524279f904e7a28e1, Data_science\Mathematica\Math\Math\Algebra\LP\LPPSolver.vb"
+﻿#Region "Microsoft.VisualBasic::ea31524756bca8aa776f8a8f83b11efe, Data_science\Mathematica\Math\Math\Algebra\LP\LPPSolver.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 421
-'    Code Lines: 274 (65.08%)
-' Comment Lines: 63 (14.96%)
-'    - Xml Docs: 19.05%
-' 
-'   Blank Lines: 84 (19.95%)
-'     File Size: 17.79 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Class LPPSolver
-' 
-'         Constructor: (+1 Overloads) Sub New
-' 
-'         Function: choosePivotConstraint, choosePivotVar, findInitialBasicVariables, isFeasible, runIteration
-'                   Solve
-' 
-'         Sub: pivot
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 403
+    '    Code Lines: 259 (64.27%)
+    ' Comment Lines: 65 (16.13%)
+    '    - Xml Docs: 18.46%
+    ' 
+    '   Blank Lines: 79 (19.60%)
+    '     File Size: 17.28 KB
+
+
+    '     Class LPPSolver
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
+    '         Function: choosePivotConstraint, choosePivotVar, findInitialBasicVariables, isFeasible, runIteration
+    '                   Solve
+    ' 
+    '         Sub: pivot
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 
