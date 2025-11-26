@@ -555,32 +555,34 @@ Namespace Imaging.BitmapImage
         End Function
 
         Public Iterator Function GetPixelsAll() As IEnumerable(Of Color)
+            Dim uint As Byte() = New Byte(TYPE_INT_ARGB - 1) {}
+
             If channels = TYPE_INT_ARGB Then
                 For i As Integer = 0 To buffer.Length - 1 Step TYPE_INT_ARGB
-                    'ints(i) = buffer(i + 3) ' A
-                    'ints(i + 1) = buffer(i + 2) ' R
-                    'ints(i + 2) = buffer(i + 1) ' G
-                    'ints(i + 3) = buffer(i + 0) ' B
+                    uint(0) = buffer(i) ' A
+                    uint(1) = buffer(i + 1) ' R
+                    uint(2) = buffer(i + 2) ' G
+                    uint(3) = buffer(i + 3) ' B
 
                     Yield Color.FromArgb(
-                        buffer(i),     ' A
-                        buffer(i + 1), ' R
-                        buffer(i + 2), ' G
-                        buffer(i + 3)) ' B
+                        uint(0), ' A
+                        uint(1), ' R
+                        uint(2), ' G
+                        uint(3)) ' B
                 Next
             Else
                 ' channels = 3
                 For i As Integer = 0 To buffer.Length - 1 Step TYPE_INT_RGB
-                    'ints(i) = 255 ' A
-                    'ints(i + 1) = buffer(i + 2) ' R
-                    'ints(i + 2) = buffer(i + 1) ' G
-                    'ints(i + 3) = buffer(i + 0) ' B
+                    uint(0) = 255 ' A
+                    uint(1) = buffer(i) ' R
+                    uint(2) = buffer(i + 1) ' G
+                    uint(3) = buffer(i + 2) ' B
 
                     Yield Color.FromArgb(
-                        255,           ' A
-                        buffer(i),     ' R
-                        buffer(i + 1), ' G
-                        buffer(i + 2)) ' B
+                        255,     ' A
+                        uint(0), ' R
+                        uint(1), ' G
+                        uint(2)) ' B
                 Next
             End If
         End Function
