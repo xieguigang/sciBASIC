@@ -555,43 +555,28 @@ Namespace Imaging.BitmapImage
         End Function
 
         Public Iterator Function GetPixelsAll() As IEnumerable(Of Color)
-            Dim uint As Byte() = New Byte(TYPE_INT_ARGB - 1) {}
-
             If channels = TYPE_INT_ARGB Then
                 For i As Integer = 0 To buffer.Length - 1 Step TYPE_INT_ARGB
-                    uint(0) = buffer(i) ' A
-                    uint(1) = buffer(i + 1) ' R
-                    uint(2) = buffer(i + 2) ' G
-                    uint(3) = buffer(i + 3) ' B
+                    ' 按照 BGRA 顺序从 buffer 读取
+                    Dim b As Byte = buffer(i)       ' B
+                    Dim g As Byte = buffer(i + 1)   ' G
+                    Dim r As Byte = buffer(i + 2)   ' R
+                    Dim a As Byte = buffer(i + 3)   ' A
 
-                    Yield Color.FromArgb(
-                        uint(0), ' A
-                        uint(1), ' R
-                        uint(2), ' G
-                        uint(3)) ' B
+                    ' Color.FromArgb 的标准参数顺序是 A, R, G, B
+                    Yield Color.FromArgb(a, r, g, b)
                 Next
             Else
                 ' channels = 3
                 For i As Integer = 0 To buffer.Length - 1 Step TYPE_INT_RGB
-                    uint(0) = 255 ' A
-                    uint(1) = buffer(i) ' R
-                    uint(2) = buffer(i + 1) ' G
-                    uint(3) = buffer(i + 2) ' B
+                    Dim r As Byte = buffer(i)       ' R
+                    Dim g As Byte = buffer(i + 1)   ' G
+                    Dim b As Byte = buffer(i + 2)   ' B
+                    Dim a As Byte = 255             ' A (不透明)
 
-                    Yield Color.FromArgb(
-                        255,     ' A
-                        uint(0), ' R
-                        uint(1), ' G
-                        uint(2)) ' B
+                    Yield Color.FromArgb(a, r, g, b)
                 Next
             End If
-        End Function
-
-        Public Shared Function GetColor(uint As UInteger) As Color
-            Dim bytes As Byte() = BitConverter.GetBytes(uint)
-            Dim color As Color = Color.FromArgb(bytes(0), bytes(1), bytes(2), bytes(3))
-
-            Return color
         End Function
 
         ''' <summary>
@@ -625,6 +610,13 @@ Namespace Imaging.BitmapImage
             Next
 
             Return bytes
+        End Function
+
+        Public Shared Function GetColor(uint As UInteger) As Color
+            Dim bytes As Byte() = BitConverter.GetBytes(uint)
+            Dim color As Color = Color.FromArgb(bytes(0), bytes(1), bytes(2), bytes(3))
+
+            Return color
         End Function
 
         ''' <summary>
