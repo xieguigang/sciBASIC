@@ -517,12 +517,12 @@ Namespace Imaging.BitmapImage
         ''' helper function for hqx algorithm module
         ''' </remarks>
         Public Function GetARGBStream() As UInteger()
-            Dim ints As UInteger() = New UInteger(buffer.Length / 4 - 1) {}
-            Dim uint As Byte() = New Byte(4 - 1) {}
+            Dim ints As UInteger() = New UInteger(buffer.Length / TYPE_INT_ARGB - 1) {}
+            Dim uint As Byte() = New Byte(TYPE_INT_ARGB - 1) {}
             Dim p As i32 = 0
 
-            If channels = 4 Then
-                For i As Integer = 0 To buffer.Length - 1 Step 4
+            If channels = TYPE_INT_ARGB Then
+                For i As Integer = 0 To buffer.Length - 1 Step TYPE_INT_ARGB
                     'ints(i) = buffer(i + 3) ' A
                     'ints(i + 1) = buffer(i + 2) ' R
                     'ints(i + 2) = buffer(i + 1) ' G
@@ -536,7 +536,7 @@ Namespace Imaging.BitmapImage
                 Next
             Else
                 ' channels = 3
-                For i As Integer = 0 To buffer.Length - 1 Step 3
+                For i As Integer = 0 To buffer.Length - 1 Step TYPE_INT_RGB
                     'ints(i) = 255 ' A
                     'ints(i + 1) = buffer(i + 2) ' R
                     'ints(i + 2) = buffer(i + 1) ' G
@@ -554,8 +554,35 @@ Namespace Imaging.BitmapImage
             Return ints
         End Function
 
-        Public Function GetPixelsAll() As IEnumerable(Of Color)
-            Return GetPixel(New Rectangle(New Point, Size)).IteratesALL
+        Public Iterator Function GetPixelsAll() As IEnumerable(Of Color)
+            If channels = TYPE_INT_ARGB Then
+                For i As Integer = 0 To buffer.Length - 1 Step TYPE_INT_ARGB
+                    'ints(i) = buffer(i + 3) ' A
+                    'ints(i + 1) = buffer(i + 2) ' R
+                    'ints(i + 2) = buffer(i + 1) ' G
+                    'ints(i + 3) = buffer(i + 0) ' B
+
+                    Yield Color.FromArgb(
+                        buffer(i),     ' A
+                        buffer(i + 1), ' R
+                        buffer(i + 2), ' G
+                        buffer(i + 3)) ' B
+                Next
+            Else
+                ' channels = 3
+                For i As Integer = 0 To buffer.Length - 1 Step TYPE_INT_RGB
+                    'ints(i) = 255 ' A
+                    'ints(i + 1) = buffer(i + 2) ' R
+                    'ints(i + 2) = buffer(i + 1) ' G
+                    'ints(i + 3) = buffer(i + 0) ' B
+
+                    Yield Color.FromArgb(
+                        255,           ' A
+                        buffer(i),     ' R
+                        buffer(i + 1), ' G
+                        buffer(i + 2)) ' B
+                Next
+            End If
         End Function
 
         Public Shared Function GetColor(uint As UInteger) As Color
