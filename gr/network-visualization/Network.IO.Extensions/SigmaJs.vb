@@ -1,9 +1,13 @@
-﻿''' <summary>
+﻿Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
+
+''' <summary>
 ''' Create json for sigma.js
 ''' </summary>
 Public Module SigmaJs
 
-    Public Function AsGraphology() As graphology.graph
+    <Extension>
+    Public Function AsGraphology(g As NetworkGraph) As graphology.graph
 
     End Function
 
