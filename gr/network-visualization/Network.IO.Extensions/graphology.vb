@@ -26,6 +26,14 @@
         Public Property nodes As node()
         Public Property edges As edge()
 
+        Sub New()
+        End Sub
+
+        Sub New(nodes As IEnumerable(Of node), edges As IEnumerable(Of edge))
+            _nodes = nodes.ToArray
+            _edges = edges.ToArray
+        End Sub
+
     End Class
 
 End Namespace
