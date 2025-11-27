@@ -5,6 +5,7 @@ Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
 #If NET48 Then
 #Else
 Imports Microsoft.VisualBasic.Imaging
+Imports Microsoft.VisualBasic.Language
 #End If
 
 ''' <summary>
@@ -35,7 +36,13 @@ Public Module SigmaJs
 
     <Extension>
     Private Iterator Function graphologyEdges(g As NetworkGraph) As IEnumerable(Of graphology.edge)
+        Dim i As i32 = 1
 
+        For Each link As Edge In g.graphEdges
+            Yield New graphology.edge With {
+                .id = link.
+            }
+        Next
     End Function
 
 End Module
