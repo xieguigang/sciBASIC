@@ -39,8 +39,15 @@ Public Module SigmaJs
         Dim i As i32 = 1
 
         For Each link As Edge In g.graphEdges
+            Dim pen As Pen = link.data.style
+            Dim color As Color = pen?.Color
+
             Yield New graphology.edge With {
-                .id = link.
+                .id = $"e{++i}",
+                .source = link.U.label,
+                .target = link.V.label,
+                .color = color.ToHtmlColor,
+                .size = If(pen Is Nothing, 1, pen.Width)
             }
         Next
     End Function
