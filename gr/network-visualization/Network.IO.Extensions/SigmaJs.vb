@@ -1,12 +1,8 @@
 ﻿Imports System.Drawing
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
-
-#If NET48 Then
-#Else
-Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Language
-#End If
+Imports Microsoft.VisualBasic.Imaging
 
 ''' <summary>
 ''' Create json for sigma.js
