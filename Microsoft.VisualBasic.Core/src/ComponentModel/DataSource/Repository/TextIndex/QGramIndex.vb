@@ -87,7 +87,9 @@ Namespace ComponentModel.DataSourceModel.Repository
         ''' 向索引中添加字符串
         ''' </summary>
         Public Sub AddString(s As String, Optional index As Integer? = Nothing)
-            If String.IsNullOrEmpty(s) Then Return
+            If String.IsNullOrEmpty(s) Then
+                Return
+            End If
 
             ' 生成q-grams
             Dim grams = GenerateQGrams(s)
@@ -111,7 +113,7 @@ Namespace ComponentModel.DataSourceModel.Repository
             Dim grams = New List(Of String)()
 
             ' 对短于q的字符串添加首尾填充
-            Dim padded = PadString(s)
+            Dim padded = PadString(s.ToLower)
 
             For i As Integer = 0 To padded.Length - _q
                 grams.Add(padded.Substring(i, _q))
