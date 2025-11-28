@@ -74,13 +74,13 @@ Namespace ComponentModel.DataSourceModel.Repository
         ''' </summary>
         ReadOnly _q As Integer
         ReadOnly _index As Dictionary(Of String, HashSet(Of Integer))
-        ReadOnly _strings As List(Of String)
+        ReadOnly _strings As List(Of (str As String, id As Integer))
         ReadOnly _counts As New Dictionary(Of String, Integer)
 
         Public Sub New(q As Integer)
             _q = q
             _index = New Dictionary(Of String, HashSet(Of Integer))(StringComparer.OrdinalIgnoreCase)
-            _strings = New List(Of String)()
+            _strings = New List(Of (String, Integer))
         End Sub
 
         ''' <summary>
@@ -93,9 +93,10 @@ Namespace ComponentModel.DataSourceModel.Repository
 
             ' 生成q-grams
             Dim grams = GenerateQGrams(s)
-            Dim stringIndex As Integer = If(index, _strings.Count)
+            Dim id As Integer = If(index, _strings.Count)
+            Dim stringIndex As Integer = _strings.Count
 
-            _strings.Add(s)
+            _strings.Add((s, id))
             _counts(s) = grams.Count
 
             For Each gram As String In grams
@@ -163,17 +164,17 @@ Namespace ComponentModel.DataSourceModel.Repository
             For Each kvp As KeyValuePair(Of Integer, Integer) In candidateCounts
                 Dim strIndex = kvp.Key
                 Dim commonGrams = kvp.Value
-                Dim targetGrams = _counts(_strings(strIndex))
+                Dim targetGrams = _counts(_strings(strIndex).str)
                 Dim unionGrams = queryGrams.Count + targetGrams - commonGrams
 
                 Dim similarity = commonGrams / CDbl(unionGrams)
 
                 If similarity > threshold Then
                     ' 计算编辑距离作为二次验证
-                    Dim dist = LevenshteinDistance.ComputeDistance(query, _strings(strIndex))
+                    Dim dist = LevenshteinDistance.ComputeDistance(query, _strings(strIndex).str)
                     Dim distance = If(dist Is Nothing, Double.PositiveInfinity, dist.Distance)
 
-                    Call results.Add(New FindResult(_strings(strIndex), similarity, distance) With {.index = strIndex})
+                    Call results.Add(New FindResult(_strings(strIndex).str, similarity, distance) With {.index = _strings(strIndex).id})
                 End If
             Next
 
