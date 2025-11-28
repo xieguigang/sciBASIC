@@ -98,7 +98,7 @@ Namespace Analysis.Dijkstra
         Public q As PairingHeap(Of Node)
     End Class
 
-    Class QueueEntry
+    Public Class QueueEntry
 
         Public node As Node
         Public prev As QueueEntry

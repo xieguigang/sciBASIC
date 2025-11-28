@@ -139,10 +139,12 @@ Namespace Analysis.Dijkstra
 
         ''' <summary>
         ''' Calculates the shortest route to all the other locations.
-        ''' (这个函数会枚举出从出发点<paramref name="startPos"/>到网络之中的所有节点的最短路径)
         ''' </summary>
         ''' <param name="startPos"></param>
         ''' <returns>List of all locations and their shortest route</returns>
+        ''' <remarks>
+        ''' (这个函数会枚举出从出发点<paramref name="startPos"/>到网络之中的所有节点的最短路径)
+        ''' </remarks>
         Public Function CalculateMinCost(startPos As Vertex) As Dictionary(Of Vertex, Route)
             ' Initialise a new empty route list
             Dim shortestPaths As New Dictionary(Of Vertex, Route)()
