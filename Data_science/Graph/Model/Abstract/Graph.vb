@@ -76,7 +76,8 @@ Public MustInherit Class Graph(Of V As {New, TV}, Edge As {New, Edge(Of V)}, G A
     Implements IEnumerable(Of Edge)
 
 #Region "Let G=(V, E) be a simple graph"
-    Dim edges As New List(Of Edge)
+
+    ReadOnly edges As New Dictionary(Of String, Edge)
 
     ''' <summary>
     ''' directed edge index
@@ -133,7 +134,7 @@ Public MustInherit Class Graph(Of V As {New, TV}, Edge As {New, Edge(Of V)}, G A
     Public ReadOnly Property graphEdges As IEnumerable(Of Edge)
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Get
-            Return edges
+            Return edges.Values
         End Get
     End Property
 
@@ -169,7 +170,7 @@ Public MustInherit Class Graph(Of V As {New, TV}, Edge As {New, Edge(Of V)}, G A
     ''' <returns></returns>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function GetConnectedVertex() As V()
-        Return edges _
+        Return edges.Values _
             .Select(Function(e) {e.U, e.V}) _
             .IteratesALL _
             .Distinct _
@@ -278,7 +279,7 @@ Public MustInherit Class Graph(Of V As {New, TV}, Edge As {New, Edge(Of V)}, G A
         End If
 
         linkIndex(u.label)(v.label) = edge
-        edges += edge
+        edges.Add(edge.ID, edge)
 
         If Not vertices.ContainsKey(u.label) Then
             vertices += u
@@ -324,12 +325,12 @@ Public MustInherit Class Graph(Of V As {New, TV}, Edge As {New, Edge(Of V)}, G A
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Overridable Function AddEdge(i%, j%, Optional weight# = 0) As G
-        edges += New Edge With {
+        Dim newLink As New Edge With {
             .U = buffer(key:=CUInt(i)),
             .V = buffer(key:=CUInt(j)),
             .weight = weight
         }
-
+        Call edges.Add(newLink.ID, newLink)
         Return Me
     End Function
 
@@ -341,7 +342,8 @@ Public MustInherit Class Graph(Of V As {New, TV}, Edge As {New, Edge(Of V)}, G A
     ''' <param name="weight#"></param>
     ''' <returns></returns>
     Public Overridable Function AddEdge(u$, v$, Optional weight# = 0) As G
-        edges += CreateEdge(u, v, weight)
+        Dim newLink As Edge = CreateEdge(u, v, weight)
+        Call edges.Add(newLink.ID, newLink)
         Return Me
     End Function
 
@@ -389,7 +391,7 @@ Public MustInherit Class Graph(Of V As {New, TV}, Edge As {New, Edge(Of V)}, G A
     Public Function Delete(u$, v$) As G
         If linkIndex.ContainsKey(u) Then
             If linkIndex(u).ContainsKey(v) Then
-                Call edges.Remove(linkIndex(u)(v))
+                Call edges.Remove(linkIndex(u)(v).ID)
                 Call linkIndex(u).Remove(v)
             End If
         End If
@@ -410,7 +412,7 @@ Public MustInherit Class Graph(Of V As {New, TV}, Edge As {New, Edge(Of V)}, G A
     ''' </summary>
     ''' <returns></returns>
     Public Iterator Function GetEnumerator() As IEnumerator(Of Edge) Implements IEnumerable(Of Edge).GetEnumerator
-        For Each edge As Edge In edges
+        For Each edge As Edge In edges.Values
             Yield edge
         Next
     End Function
