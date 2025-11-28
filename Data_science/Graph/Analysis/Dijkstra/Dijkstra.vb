@@ -97,6 +97,18 @@ Namespace Analysis.Dijkstra
         Private Sub New()
         End Sub
 
+        ''' <summary>
+        ''' Create a router object from the network graph object
+        ''' </summary>
+        ''' <typeparam name="TNode"></typeparam>
+        ''' <typeparam name="TEdge"></typeparam>
+        ''' <param name="g"></param>
+        ''' <param name="undirected"></param>
+        ''' <returns></returns>
+        ''' <remarks>
+        ''' this function keeps the raw vector node object, but the edge is replaced as <see cref="VertexEdge"/>. 
+        ''' but the edge still can be get from the source graph via its unique reference <see cref="VertexEdge.ID"/>
+        ''' </remarks>
         Public Shared Function FromNetwork(Of TNode As {New, Network.Node}, TEdge As {New, Network.Edge(Of TNode)})(g As NetworkGraph(Of TNode, TEdge), Optional undirected As Boolean = False) As DijkstraRouter
             Dim router As New DijkstraRouter
 
