@@ -211,7 +211,60 @@ Namespace Analysis.Dijkstra
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function CalculateMinCost(startPos As Vertex, endPos As Vertex) As Route
-            Return CalculateMinCost(startPos)(endPos)
+            ' 边界条件检查
+            If startPos Is Nothing OrElse endPos Is Nothing Then Return Nothing
+            If startPos.Equals(endPos) Then Return New Route(endPos.label) With {.Cost = 0}
+
+            ' 初始化数据结构
+            Dim shortestPaths As New Dictionary(Of Vertex, Route)()
+            Dim handledLocations As New HashList(Of Vertex)(points.Length)
+            Dim cost#
+
+            ' 初始化所有节点的路径
+            For Each location As Vertex In points
+                shortestPaths.Add(location, New Route(location.label))
+            Next
+            shortestPaths(startPos).Cost = 0
+
+            ' 主循环：当未处理完所有节点且未找到终点时
+            While handledLocations.Count <> points.Length AndAlso Not handledLocations.Contains(endPos)
+                ' 找到当前未处理节点中代价最小的
+                Dim locationToProcess As Vertex = Nothing
+                Dim minCost As Double = Double.MaxValue
+
+                For Each kvp In shortestPaths
+                    If Not handledLocations.Contains(kvp.Key) AndAlso kvp.Value.Cost < minCost Then
+                        minCost = kvp.Value.Cost
+                        locationToProcess = kvp.Key
+                    End If
+                Next
+
+                ' 如果没有可达节点，提前终止
+                If locationToProcess Is Nothing OrElse minCost = Integer.MaxValue Then
+                    Exit While
+                End If
+
+                ' 处理当前节点的所有出边
+                Dim selectedConnections = From c In links
+                                          Where c.U Is locationToProcess
+                                          Select c
+
+                For Each conn As VertexEdge In selectedConnections
+                    cost = conn.weight + shortestPaths(conn.U).Cost
+
+                    If shortestPaths(conn.V).Cost > cost Then
+                        shortestPaths(conn.V).SetValue(shortestPaths(conn.U).Connections)
+                        shortestPaths(conn.V).Add(conn)
+                        shortestPaths(conn.V).Cost = cost
+                    End If
+                Next
+
+                ' 标记当前节点为已处理
+                handledLocations.Replace(locationToProcess)
+            End While
+
+            ' 返回结果
+            Return If(shortestPaths.ContainsKey(endPos), shortestPaths(endPos), Nothing)
         End Function
 
         Public Function CalculateMinCost(startVertex As String) As Dictionary(Of Vertex, Route)
