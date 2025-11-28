@@ -1,68 +1,69 @@
 ﻿#Region "Microsoft.VisualBasic::73abc9c60d325e1996ef4fdbbe04c802, Microsoft.VisualBasic.Core\src\ComponentModel\DataSource\Repository\TextIndex\QGramIndex.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 144
-    '    Code Lines: 91 (63.19%)
-    ' Comment Lines: 24 (16.67%)
-    '    - Xml Docs: 75.00%
-    ' 
-    '   Blank Lines: 29 (20.14%)
-    '     File Size: 5.19 KB
+' Summaries:
 
 
-    '     Class QGramIndex
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    ' 
-    '         Function: FindSimilar, GenerateQGrams, GetIndexStats, PadString
-    ' 
-    '         Sub: AddString
-    ' 
-    '     Class FindResult
-    ' 
-    '         Properties: index, levenshtein, similarity, text
-    ' 
-    '         Constructor: (+2 Overloads) Sub New
-    '         Function: ToString
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 144
+'    Code Lines: 91 (63.19%)
+' Comment Lines: 24 (16.67%)
+'    - Xml Docs: 75.00%
+' 
+'   Blank Lines: 29 (20.14%)
+'     File Size: 5.19 KB
+
+
+'     Class QGramIndex
+' 
+'         Constructor: (+1 Overloads) Sub New
+' 
+'         Function: FindSimilar, GenerateQGrams, GetIndexStats, PadString
+' 
+'         Sub: AddString
+' 
+'     Class FindResult
+' 
+'         Properties: index, levenshtein, similarity, text
+' 
+'         Constructor: (+2 Overloads) Sub New
+'         Function: ToString
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
+Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Algorithm.DynamicProgramming.Levenshtein
 
 Namespace ComponentModel.DataSourceModel.Repository
@@ -146,9 +147,9 @@ Namespace ComponentModel.DataSourceModel.Repository
             Dim candidateCounts = New Dictionary(Of Integer, Integer)()
 
             ' 统计每个候选字符串的匹配q-gram数量
-            For Each gram In queryGrams
+            For Each gram As String In queryGrams
                 If _index.ContainsKey(gram) Then
-                    For Each strIndex In _index(gram)
+                    For Each strIndex As Integer In _index(gram)
                         If candidateCounts.ContainsKey(strIndex) Then
                             candidateCounts(strIndex) += 1
                         Else
@@ -174,7 +175,9 @@ Namespace ComponentModel.DataSourceModel.Repository
                     Dim dist = LevenshteinDistance.ComputeDistance(query, _strings(strIndex).str)
                     Dim distance = If(dist Is Nothing, Double.PositiveInfinity, dist.Distance)
 
-                    Call results.Add(New FindResult(_strings(strIndex).str, similarity, distance) With {.index = _strings(strIndex).id})
+                    Call results.Add(New FindResult(_strings(strIndex).str, similarity, distance) With {
+                         .index = _strings(strIndex).id
+                    })
                 End If
             Next
 
@@ -184,6 +187,8 @@ Namespace ComponentModel.DataSourceModel.Repository
         ''' <summary>
         ''' 获取索引统计信息
         ''' </summary>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function GetIndexStats() As (Integer, Integer, Integer)
             Return (_strings.Count, _index.Count, _index.Sum(Function(x) x.Value.Count))
         End Function
