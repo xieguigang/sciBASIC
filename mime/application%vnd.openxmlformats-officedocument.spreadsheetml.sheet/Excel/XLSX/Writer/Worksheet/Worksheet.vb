@@ -620,6 +620,19 @@ Namespace XLSX.Writer
         End Function
 
         ''' <summary>
+        ''' this function will add the given collection of data as row and then goto next row
+        ''' </summary>
+        ''' <param name="data"></param>
+        ''' <returns></returns>
+        Public Function AddDataRow(ParamArray data As Object()) As Worksheet
+            For Each item As Object In data
+                Call AddNextCell(item)
+            Next
+
+            Return Me.GoToNextRow
+        End Function
+
+        ''' <summary>
         ''' Adds an object to the next cell position. If the type of the value does not match with one of the supported data types, it will be casted to a String. A prepared object of the type Cell will not be casted but adjusted
         ''' </summary>
         ''' <param name="value">Unspecified value to insert.</param>
