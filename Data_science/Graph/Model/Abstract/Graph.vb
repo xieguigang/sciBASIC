@@ -232,6 +232,14 @@ Public MustInherit Class Graph(Of V As {New, TV}, Edge As {New, Edge(Of V)}, G A
         End If
     End Function
 
+    Public Function GetEdge(u As V, v As V) As Edge
+        If Not linkIndex.ContainsKey(u.label) Then
+            Return Nothing
+        Else
+            Return linkIndex(u.label).TryGetValue(v.label)
+        End If
+    End Function
+
     ''' <summary>
     ''' query edge item exists or not by edge id
     ''' </summary>

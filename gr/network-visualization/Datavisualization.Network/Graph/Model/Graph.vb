@@ -560,7 +560,7 @@ Namespace Graph
         ''' </summary>
         ''' <param name="label"></param>
         ''' <returns></returns>
-        Public Function GetEdge(label As String) As Edge
+        Public Overloads Function GetEdge(label As String) As Edge
             Dim retEdge As Edge = graphEdges.FirstOrDefault(Function(e) e.data.label = label)
             Return retEdge
         End Function
