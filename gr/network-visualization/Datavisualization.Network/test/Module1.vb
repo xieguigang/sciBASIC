@@ -69,8 +69,8 @@ Module Module1
 
         Dim treeModel As New GraphTree(graph)
 
-        Call graph.ToString.__DEBUG_ECHO
-        Call treeModel.ToString.__DEBUG_ECHO
+        Call graph.ToString.debug
+        Call treeModel.ToString.debug
 
         Pause()
 

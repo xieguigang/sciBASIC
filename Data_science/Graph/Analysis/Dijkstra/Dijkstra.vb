@@ -250,7 +250,7 @@ Namespace Analysis.Dijkstra
                                           Select c
 
                 For Each conn As VertexEdge In selectedConnections
-                    cost = conn.weight + shortestPaths(conn.U).Cost
+                    cost = conn.weight + shortestPaths(conn.U).Cost + 1
 
                     If shortestPaths(conn.V).Cost > cost Then
                         shortestPaths(conn.V).SetValue(shortestPaths(conn.U).Connections)

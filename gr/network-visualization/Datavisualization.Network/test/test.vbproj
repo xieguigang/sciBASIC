@@ -6,7 +6,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{23A002A3-DEA8-4823-946B-D0C8CE113F67}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <StartupObject>GraphTesting.LouvainTest</StartupObject>
+    <StartupObject>GraphTesting.testRouter</StartupObject>
     <RootNamespace>GraphTesting</RootNamespace>
     <AssemblyName>GraphTesting</AssemblyName>
     <FileAlignment>512</FileAlignment>
@@ -97,6 +97,7 @@
     <Compile Include="endPointTest.vb" />
     <Compile Include="ColaTest.vb" />
     <Compile Include="LouvainTest.vb" />
+    <Compile Include="testRouter.vb" />
     <Compile Include="OrthogonalTest.vb" />
     <Compile Include="subnetworkTest.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
