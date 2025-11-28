@@ -165,6 +165,17 @@ Public MustInherit Class Graph(Of V As {New, TV}, Edge As {New, Edge(Of V)}, G A
     End Function
 
     ''' <summary>
+    ''' get a edge object by its unique reference id
+    ''' </summary>
+    ''' <param name="id"></param>
+    ''' <returns></returns>
+    ''' 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    Public Function GetEdgeByID(id As String) As Edge
+        Return edges.TryGetValue(id)
+    End Function
+
+    ''' <summary>
     ''' 返回所有至少具有一条边连接的节点的集合
     ''' </summary>
     ''' <returns></returns>
@@ -304,8 +315,8 @@ Public MustInherit Class Graph(Of V As {New, TV}, Edge As {New, Edge(Of V)}, G A
     ''' <summary>
     ''' 这个函数使用起来比较方便，但是要求节点都必须要存在于列表之中
     ''' </summary>
-    ''' <param name="src$"></param>
-    ''' <param name="targets$"></param>
+    ''' <param name="src"></param>
+    ''' <param name="targets">a collection of the target vertex id</param>
     ''' <returns></returns>
     Public Function AddEdges(src$, targets$()) As G
         Dim U As V = vertices(src)
@@ -337,9 +348,9 @@ Public MustInherit Class Graph(Of V As {New, TV}, Edge As {New, Edge(Of V)}, G A
     ''' <summary>
     ''' <paramref name="u"/> and <paramref name="v"/> is the property ``<see cref="Data.GraphTheory.Vertex.label"/>``
     ''' </summary>
-    ''' <param name="u$"></param>
-    ''' <param name="v$"></param>
-    ''' <param name="weight#"></param>
+    ''' <param name="u"></param>
+    ''' <param name="v"></param>
+    ''' <param name="weight"></param>
     ''' <returns></returns>
     Public Overridable Function AddEdge(u$, v$, Optional weight# = 0) As G
         Dim newLink As Edge = CreateEdge(u, v, weight)
