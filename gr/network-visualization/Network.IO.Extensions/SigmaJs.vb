@@ -17,7 +17,8 @@ Public Module SigmaJs
     <Extension>
     Private Iterator Function graphologyNodes(g As NetworkGraph) As IEnumerable(Of graphology.node)
         For Each v As Node In g.vertex
-            Dim color As Color = TryCast(v.data.color, SolidBrush)?.Color
+            Dim fill As SolidBrush = TryCast(v.data.color, SolidBrush)
+            Dim color As Color = If(fill Is Nothing, Color.Brown, fill.Color)
 
             Yield New graphology.node With {
                 .id = v.label,
@@ -36,7 +37,7 @@ Public Module SigmaJs
 
         For Each link As Edge In g.graphEdges
             Dim pen As Pen = link.data.style
-            Dim color As Color = pen?.Color
+            Dim color As Color = If(pen Is Nothing, Color.LightGray, pen.Color)
 
             Yield New graphology.edge With {
                 .id = $"e{++i}",
