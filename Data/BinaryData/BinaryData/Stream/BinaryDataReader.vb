@@ -103,6 +103,10 @@ Public Class BinaryDataReader : Inherits BinaryReader
         Me.New(input, New UTF8Encoding(), False)
     End Sub
 
+    ''' <summary>
+    ''' Create binary data reader from the in-memory data buffer
+    ''' </summary>
+    ''' <param name="data"></param>
     Sub New(data As IEnumerable(Of Byte))
         Call Me.New(New MemoryStream(data.ToArray))
     End Sub
