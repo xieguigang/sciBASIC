@@ -168,7 +168,7 @@ Namespace LinearAlgebra.LinearProgramming
             For j As Integer = 0 To lpp.constraintTypes.Length - 1
                 If lpp.constraintTypes(j) = "=" Then
                     slack(j) = 0
-                    shadowPrice(j) = -1 * lpp.objectiveFunctionCoefficients(artificialVariables(j))
+                    shadowPrice(j) = -1 * lpp.objectiveFunctionCoefficients.ElementAtOrDefault(artificialVariables(j))
                     ' This had the double 0.0 or -0.0 check.
                 ElseIf lpp.objectiveFunctionCoefficients(varNum) = 0.0 Then
                     slack(j) = lpp.constraintRightHandSides(j)
