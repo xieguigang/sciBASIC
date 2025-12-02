@@ -86,7 +86,7 @@ Namespace LinearAlgebra.LinearProgramming
             ' ArrayList<String> varNames = Input.VariableNames;
             ' String LaTeXString = latex.LPPtoLaTeX.displayLPP(Input)+'\n';
             If showProgress Then
-                Call Console.WriteLine("Make Standard Form...")
+                Call VBDebugger.EchoLine("Make Standard Form...")
             End If
 
             Call solutionLog.AppendLine("Make Standard Form")
@@ -95,14 +95,14 @@ Namespace LinearAlgebra.LinearProgramming
             Dim startTime As Long = App.ElapsedMilliseconds
 
             If showProgress Then
-                Call Console.WriteLine("Add artificial variables to the LPP...")
+                Call VBDebugger.EchoLine("Add artificial variables to the LPP...")
             End If
 
             ' Add artificial variables to the LPP
             Call lpp.addArtificialVariables(artificialVariables)
 
             If showProgress Then
-                Call Console.WriteLine("Search for Basic Feasible Solution...")
+                Call VBDebugger.EchoLine("Search for Basic Feasible Solution...")
             End If
 
             ' Search for Basic Feasible Solution
@@ -207,7 +207,7 @@ Namespace LinearAlgebra.LinearProgramming
             Dim go As Boolean = True
             Dim limiter As Integer = 0
 
-            Call "Run LPP Solution Iterations...".info
+            Call "Run LPP solution iterations...".info
 
             'LaTeXString += latex.LPPtoLaTeX.beginTableaus(Input);
 
@@ -228,14 +228,13 @@ Namespace LinearAlgebra.LinearProgramming
                         go = False
 
                     ElseIf limiter = LPP.PIVOT_ITERATION_LIMIT Then
-                        Call "Max iteration reached...".warning
+                        Call "max iteration reached...".warning
                         ' Check iteration limit not exceeded.
                         Return New LPPSolution("The pivot max iteration cap was exceeded.", solutionLog.ToString, feasibleSolutionTime)
                     ElseIf [next] = -1 Then
                         Call "LPP is unbounded!".warning
                         ' Check for unboundedness.
                         Return New LPPSolution("The given LPP is unbounded.", solutionLog.ToString, feasibleSolutionTime)
-
                     Else
                         ' Get pivot constraint, continue.
                         Call pivot(n, [next])

@@ -77,17 +77,16 @@ Imports Microsoft.VisualBasic.ApplicationServices.Terminal.ProgressBar.ConsolePr
 Imports std = System.Math
 
 Namespace ApplicationServices.Terminal.ProgressBar.ConsoleProgressBar
+
     ''' <summary>
     ''' A ProgressBar for Console
     ''' </summary>
-    Public Class ProgressBar
-        Implements IDisposable
+    Public Class ProgressBar : Implements IDisposable
 
         ''' <summary>
         ''' True if ProgressBar is Started
         ''' </summary>
-        Private _IsStarted As Boolean
-
+        Dim _IsStarted As Boolean
         ''' <summary>
         ''' True if ProgressBar is Paused
         ''' </summary>
@@ -288,6 +287,8 @@ Namespace ApplicationServices.Terminal.ProgressBar.ConsoleProgressBar
         Private _ConsoleRow As Integer = -1
         Private _NumberLastLinesWritten As Integer = -1
 
+        Dim threadExit As Boolean = False
+
         ''' <summary>
         ''' Creates an instance of ConsoleProgressBar
         ''' </summary>
@@ -315,7 +316,8 @@ Namespace ApplicationServices.Terminal.ProgressBar.ConsoleProgressBar
         Private Sub ThreadAction()
             ProgressStopwatch.Start()
             IsStarted = True
-            While Not CancelThread
+            threadExit = False
+            While App.Running AndAlso Not CancelThread
                 If Not IsPaused Then
                     Try
                         UpdateMarqueePosition()
@@ -325,6 +327,16 @@ Namespace ApplicationServices.Terminal.ProgressBar.ConsoleProgressBar
                     End Try
                 End If
             End While
+            threadExit = True
+        End Sub
+
+        ''' <summary>
+        ''' wait for <see cref="ThreadAction()"/> exit
+        ''' </summary>
+        Private Sub WaitForExit()
+            Do While App.Running
+                Call Thread.Sleep(10)
+            Loop
         End Sub
 
         ''' <summary>
@@ -357,7 +369,7 @@ Namespace ApplicationServices.Terminal.ProgressBar.ConsoleProgressBar
             _Value = value
             TicksCompletedElements = If(value > 0, ProgressStopwatch.ElapsedTicks, CType(Nothing, Long?))
 
-            If Not Equals(elementName, Nothing) Then Me.ElementName = elementName
+            If Not elementName Is Nothing Then Me.ElementName = elementName
             If tag IsNot Nothing Then Me.Tag = tag
         End Sub
 
@@ -377,7 +389,7 @@ Namespace ApplicationServices.Terminal.ProgressBar.ConsoleProgressBar
         ''' <param name="elementName">The name of the new Element</param>
         ''' <param name="tag"></param>
         Public Sub PerformStep([step] As Integer, Optional elementName As String = Nothing, Optional tag As Object = Nothing)
-            If Not Equals(elementName, Nothing) Then Me.ElementName = elementName
+            If Not elementName Is Nothing Then Me.ElementName = elementName
             If tag IsNot Nothing Then Me.Tag = tag
             Value += [step]
         End Sub
@@ -410,7 +422,7 @@ Namespace ApplicationServices.Terminal.ProgressBar.ConsoleProgressBar
         ''' <param name="backgroundColor"></param>
         ''' <param name="truncateToOneLine"></param>
         Public Sub WriteLine(value As String, Optional foregroundColor As ConsoleColor? = Nothing, Optional backgroundColor As ConsoleColor? = Nothing, Optional truncateToOneLine As Boolean = True)
-            Dim actions = New List(Of Action)()
+            Dim actions As New List(Of Action)()
 
             If foregroundColor.HasValue Then actions.Add(Sub() Console.ForegroundColor = foregroundColor.Value)
             If backgroundColor.HasValue Then actions.Add(Sub() Console.BackgroundColor = backgroundColor.Value)
@@ -570,7 +582,9 @@ Namespace ApplicationServices.Terminal.ProgressBar.ConsoleProgressBar
 
         Private Sub UpdateMarqueePosition()
             Dim newProgressPosition = MarqueePosition + MarqueeIncrement
-            If newProgressPosition < 0 OrElse newProgressPosition >= Layout.GetInnerWidth(Me) Then MarqueeIncrement *= -1
+            If newProgressPosition < 0 OrElse newProgressPosition >= Layout.GetInnerWidth(Me) Then
+                MarqueeIncrement *= -1
+            End If
 
             MarqueePosition += MarqueeIncrement
         End Sub
@@ -583,10 +597,17 @@ Namespace ApplicationServices.Terminal.ProgressBar.ConsoleProgressBar
             Layout.Marquee.SetVisible(False)
             'UpdateRemainingTime();
             Render()
-            If FixedInBottom AndAlso _NumberLastLinesWritten > 0 AndAlso _ConsoleRow >= 0 Then Console.CursorTop = _ConsoleRow + _NumberLastLinesWritten
+            If FixedInBottom AndAlso _NumberLastLinesWritten > 0 AndAlso _ConsoleRow >= 0 Then
+                Console.CursorTop = _ConsoleRow + _NumberLastLinesWritten
+            End If
 
-            If ProgressStopwatch.IsRunning Then ProgressStopwatch.Stop()
+            If ProgressStopwatch.IsRunning Then
+                ProgressStopwatch.Stop()
+            End If
             ProgressStopwatch.Reset()
+
+            ' wait for progress bar finished the render task
+            Call WaitForExit()
         End Sub
     End Class
 End Namespace
