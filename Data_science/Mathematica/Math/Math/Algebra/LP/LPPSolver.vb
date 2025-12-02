@@ -58,7 +58,6 @@
 #End Region
 
 Imports System.Text
-Imports Microsoft.VisualBasic.ApplicationServices.Terminal.ProgressBar
 Imports Microsoft.VisualBasic.ApplicationServices.Terminal.ProgressBar.ConsoleProgressBar
 
 Namespace LinearAlgebra.LinearProgramming
@@ -214,7 +213,7 @@ Namespace LinearAlgebra.LinearProgramming
 
             'Create the ProgressBar
             ' Maximum: The Max value in ProgressBar (Default is 100)
-            Using pb = New ProgressBar() With {.Maximum = Nothing}
+            Using progBar = New ProgressBar() With {.Maximum = Nothing}
                 Do While go
                     ' Get next variable to pivot on
                     Dim n As Integer = choosePivotVar(artificialVariables)
@@ -245,7 +244,7 @@ Namespace LinearAlgebra.LinearProgramming
                         solutionLog.AppendLine("Pivot at " & n & ", " & [next])
                     End If
 
-                    Call pb.PerformStep()
+                    Call progBar.PerformStep()
                 Loop
             End Using
 

@@ -115,6 +115,10 @@ Namespace LinearAlgebra.LinearProgramming
             Call Me.New(opt.Description, variableNames, objectiveFunctionCoefficients, constraintCoefficients.ToVectorList, constraintTypes, constraintRightHandSides, objectiveFunctionValue)
         End Sub
 
+        ''' <summary>
+        ''' 从一个模型的xml反序列化结果对象中的数据创建当前的这个LPP算法
+        ''' </summary>
+        ''' <param name="lppModel"></param>
         Sub New(lppModel As LPPModel)
             Call Me.New(
                 objectiveFunctionType:=lppModel.objectiveFunctionType,
@@ -130,7 +134,7 @@ Namespace LinearAlgebra.LinearProgramming
         ''' <summary>
         ''' 
         ''' </summary>
-        ''' <param name="objectiveFunctionType$">目标函数的类型，是求取极大值还是极小值</param>
+        ''' <param name="objectiveFunctionType">目标函数的类型，是求取极大值还是极小值</param>
         ''' <param name="variableNames">方程之中的未知变量的名称，可以省略这个函数，程序会默认会自动使用x1, x2, x3...等来自动命名</param>
         ''' <param name="objectiveFunctionCoefficients">目标函数之中每一个未知变量所对应的系数</param>
         ''' <param name="constraintCoefficients">方程组的左边：系数矩阵</param>
