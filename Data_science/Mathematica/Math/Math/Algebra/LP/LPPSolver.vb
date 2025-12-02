@@ -69,8 +69,6 @@ Namespace LinearAlgebra.LinearProgramming
 
         ReadOnly lpp As LPP
 
-        Const EPSILON As Double = 0.0000000001
-
         Sub New(problem As LPP)
             lpp = problem
         End Sub

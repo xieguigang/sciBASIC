@@ -70,7 +70,7 @@ Namespace LinearAlgebra.LinearProgramming
     ''' </remarks>
     Public Class LPP
 
-        Friend ReadOnly objectiveFunctionType As OptimizationType
+        Friend objectiveFunctionType As OptimizationType
         ''' <summary>
         ''' 这个变量名称列表之中会添加拓展的新的变量名称
         ''' 
@@ -84,10 +84,16 @@ Namespace LinearAlgebra.LinearProgramming
         Friend ReadOnly originalVariableCount As Integer
 
         Friend objectiveFunctionValue As Double
+        ''' <summary>
+        ''' 添加字段保存原始约束类型
+        ''' </summary>
+        Friend originalConstraintTypes As String()
 
         Public Shared Property PIVOT_ITERATION_LIMIT As Integer = 1000
         Public Shared Property USE_SUBSCRIPT_UNICODE As Boolean = False
         Public Shared Property DecimalFormat As String = "G5"
+
+        Friend ReadOnly artificialVariable As New Index(Of String)
 
         Public ReadOnly Property ObjectFunctionVariables As String()
             Get
@@ -172,6 +178,8 @@ Namespace LinearAlgebra.LinearProgramming
                 End If
             Next
 
+            ' 保存原始约束类型
+            Me.originalConstraintTypes = constraintTypes.ToArray()
             Me.originalVariableCount = objectiveFunctionCoefficients.Length  ' 记录原始变量数量
             Me.objectiveFunctionType = objectiveFunctionType.ParseType
             Me.variableNames = variableNames.ToList
@@ -250,6 +258,14 @@ Namespace LinearAlgebra.LinearProgramming
             Return assignments
         End Function
 
+        Friend Function addArtificialVariable(j As Integer) As Integer
+            If j <> -1 Then
+                Me.addVariableAt(j, 1)
+            End If
+
+            Return variableNames.Count - 1
+        End Function
+
         Friend Sub addArtificialVariables(artificialVariables As List(Of Integer))
             For j As Integer = 0 To constraintTypes.Length - 1
                 If artificialVariables(j) <> -1 Then
@@ -266,6 +282,7 @@ Namespace LinearAlgebra.LinearProgramming
         Private Sub addVariableAt(constraintIndex As Integer, value As Double)
             variableNames.Add("v" & subscriptN(variableNames.Count + 1))
             objectiveFunctionCoefficients.Add(0)
+            artificialVariable.Add(variableNames.Last)
 
             For j As Integer = 0 To constraintCoefficients.Length - 1
                 constraintCoefficients(j).Add(If(j <> constraintIndex, 0, value))

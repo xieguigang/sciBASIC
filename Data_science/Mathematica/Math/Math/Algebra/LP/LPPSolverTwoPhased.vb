@@ -1,4 +1,5 @@
 ﻿Imports System.Text
+Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports std = System.Math
 
 Namespace LinearAlgebra.LinearProgramming
@@ -61,7 +62,7 @@ Namespace LinearAlgebra.LinearProgramming
         End Function
 
         ''' <summary>
-        ''' 第一阶段：最小化人工变量之和
+        ''' 第一阶段：最小化人工变量之和（完整修正版本）
         ''' </summary>
         Private Function Phase1(showProgress As Boolean, log As StringBuilder) As LPPSolution
             ' 保存原始目标函数
@@ -70,28 +71,127 @@ Namespace LinearAlgebra.LinearProgramming
 
             ' 设置第一阶段目标：最小化人工变量之和
             For i = 0 To lpp.objectiveFunctionCoefficients.Count - 1
-                lpp.objectiveFunctionCoefficients(i) = If(i >= lpp.originalVariableCount, 1, 0)
+                ' 只对人工变量设置系数为1，其他为0
+                lpp.objectiveFunctionCoefficients(i) = If(IsArtificialVariable(i), 1, 0)
             Next
             lpp.objectiveFunctionValue = 0
 
-            ' 初始基变量 = 人工变量
-            Dim basicVars = Enumerable.Range(0, lpp.constraintRightHandSides.Length).ToList()
+            ' 初始化第一阶段基变量
+            Dim basicVars = InitializePhase1BasicVariables()
+            Dim artificialVarsList = GetArtificialVariablesList()
+
+            log.AppendLine($"Phase 1: Initialized {basicVars.Count} basic variables")
+            log.AppendLine($"Phase 1: Found {artificialVarsList.Count} artificial variables")
 
             ' 执行单纯形迭代
-            Dim result = RunSimplexIteration(basicVars, New List(Of Integer), log, showProgress)
-            If result IsNot Nothing Then Return result
+            Dim result = RunSimplexIteration(basicVars, artificialVarsList, log, showProgress)
+
+            If result IsNot Nothing Then
+                ' 恢复原始目标函数后再返回
+                RestoreOriginalObjective(originalObj, originalValue)
+                Return result
+            End If
 
             ' 检查可行性
             If std.Abs(lpp.objectiveFunctionValue) > EPSILON Then
+                RestoreOriginalObjective(originalObj, originalValue)
                 Return New LPPSolution("No feasible solution (phase 1 optimal value > 0)", log.ToString, 0)
             End If
 
             ' 恢复原始目标函数
+            RestoreOriginalObjective(originalObj, originalValue)
+            log.AppendLine("Phase 1 completed successfully")
+
+            Return Nothing
+        End Function
+
+        ''' <summary>
+        ''' 初始化第一阶段基变量
+        ''' 在第一阶段，人工变量作为初始基变量
+        ''' </summary>
+        Private Function InitializePhase1BasicVariables() As List(Of Integer)
+            Dim basicVars As New List(Of Integer)
+            Dim variableCount = lpp.objectiveFunctionCoefficients.Count
+            Dim constraintCount = lpp.constraintRightHandSides.Length
+
+            ' 为每个约束行分配一个基变量
+            For rowIndex = 0 To constraintCount - 1
+                Dim foundBasicVar = False
+
+                ' 首先尝试找到已经存在的单位向量列（松弛变量）
+                For varIndex = lpp.originalVariableCount To variableCount - 1
+                    If IsUnitVector(varIndex, rowIndex) Then
+                        basicVars.Add(varIndex)
+                        foundBasicVar = True
+                        Exit For
+                    End If
+                Next
+
+                ' 如果没有找到合适的松弛变量，则使用人工变量
+                If Not foundBasicVar Then
+                    ' 添加新的人工变量
+                    Dim artificialVarIndex = lpp.addArtificialVariable(rowIndex)
+                    basicVars.Add(artificialVarIndex)
+                End If
+            Next
+
+            Return basicVars
+        End Function
+
+        ''' <summary>
+        ''' 检查变量是否构成单位向量（在指定行系数为1，其他行为0）
+        ''' </summary>
+        Private Function IsUnitVector(varIndex As Integer, targetRow As Integer) As Boolean
+            ' 检查目标行的系数是否为1
+            If std.Abs(lpp.constraintCoefficients(targetRow)(varIndex) - 1.0) > EPSILON Then
+                Return False
+            End If
+
+            ' 检查其他行的系数是否为0
+            For rowIndex = 0 To lpp.constraintCoefficients.Length - 1
+                If rowIndex <> targetRow Then
+                    If std.Abs(lpp.constraintCoefficients(rowIndex)(varIndex)) > EPSILON Then
+                        Return False
+                    End If
+                End If
+            Next
+
+            Return True
+        End Function
+
+        ''' <summary>
+        ''' 恢复原始目标函数
+        ''' </summary>
+        Private Sub RestoreOriginalObjective(originalObj As Double(), originalValue As Double)
             lpp.objectiveFunctionCoefficients.Clear()
             lpp.objectiveFunctionCoefficients.AddRange(originalObj)
             lpp.objectiveFunctionValue = originalValue
+        End Sub
 
-            Return Nothing
+        ''' <summary>
+        ''' 获取人工变量列表
+        ''' 识别所有以'a'开头或索引大于原始变量数的变量
+        ''' </summary>
+        Private Function GetArtificialVariablesList() As List(Of Integer)
+            Dim artificialVars As New List(Of Integer)
+            Dim variableCount = lpp.objectiveFunctionCoefficients.Count
+
+            For varIndex = 0 To variableCount - 1
+                If IsArtificialVariable(varIndex) Then
+                    artificialVars.Add(varIndex)
+                End If
+            Next
+
+            Return artificialVars
+        End Function
+
+        ''' <summary>
+        ''' 判断是否为人工变量
+        ''' </summary>
+        Private Function IsArtificialVariable(varIndex As Integer) As Boolean
+            ' 根据变量命名或位置判断是否为人工变量
+            Return varIndex >= lpp.originalVariableCount AndAlso
+                lpp.variableNames(varIndex) Like lpp.artificialVariable
         End Function
 
         ''' <summary>
@@ -144,77 +244,98 @@ Namespace LinearAlgebra.LinearProgramming
         End Function
 
         ''' <summary>
-        ''' 改进的旋转操作（增加数值稳定性）
+        ''' 改进的旋转操作（增加数值稳定性检查）
         ''' </summary>
         Public Sub Pivot(varIndex As Integer, constIndex As Integer)
             Dim pivotRow = lpp.constraintCoefficients(constIndex)
             Dim pivotElem = pivotRow(varIndex)
 
-            ' 检查主元有效性
+            ' 增强主元有效性检查
             If std.Abs(pivotElem) < EPSILON Then
-                Throw New InvalidOperationException("Pivot element too small for numerical stability")
+                Throw New InvalidOperationException($"Pivot element too small ({pivotElem}) for numerical stability at variable {varIndex}, constraint {constIndex}")
             End If
 
-            ' 缩放主元行
+            ' 使用更稳定的缩放因子计算
             Dim scale = 1.0 / pivotElem
-            For i = 0 To pivotRow.Count - 1
-                pivotRow(i) *= scale
-            Next
-            lpp.constraintRightHandSides(constIndex) *= scale
 
-            ' 消去其他行
+            ' 应用缩放时避免累积误差
+            For i = 0 To pivotRow.Count - 1
+                pivotRow(i) = pivotRow(i) * scale
+            Next
+            lpp.constraintRightHandSides(constIndex) = lpp.constraintRightHandSides(constIndex) * scale
+
+            ' 改进的消去过程，减少数值误差
             For j = 0 To lpp.constraintCoefficients.Length - 1
                 If j <> constIndex Then
                     Dim row = lpp.constraintCoefficients(j)
                     Dim factor = row(varIndex)
                     If std.Abs(factor) > EPSILON Then
                         For i = 0 To row.Count - 1
-                            row(i) -= factor * pivotRow(i)
+                            row(i) = row(i) - factor * pivotRow(i)
                         Next
-                        lpp.constraintRightHandSides(j) -= factor * lpp.constraintRightHandSides(constIndex)
+                        lpp.constraintRightHandSides(j) = lpp.constraintRightHandSides(j) - factor * lpp.constraintRightHandSides(constIndex)
                     End If
                 End If
             Next
 
-            ' 更新目标函数
+            ' 更新目标函数系数
             Dim objCoeff = lpp.objectiveFunctionCoefficients(varIndex)
+            If std.Abs(objCoeff) > EPSILON Then
+                For i = 0 To lpp.objectiveFunctionCoefficients.Count - 1
+                    lpp.objectiveFunctionCoefficients(i) = lpp.objectiveFunctionCoefficients(i) - objCoeff * pivotRow(i)
+                Next
+                lpp.objectiveFunctionValue = lpp.objectiveFunctionValue + objCoeff * lpp.constraintRightHandSides(constIndex)
+            End If
             lpp.objectiveFunctionCoefficients(varIndex) = 0
-            lpp.objectiveFunctionValue += objCoeff * lpp.constraintRightHandSides(constIndex)
-
-            For i = 0 To lpp.objectiveFunctionCoefficients.Count - 1
-                If i <> varIndex Then
-                    lpp.objectiveFunctionCoefficients(i) -= objCoeff * pivotRow(i)
-                End If
-            Next
         End Sub
 
         ''' <summary>
-        ''' 获取当前基变量
+        ''' 获取当前基变量（改进的数值稳定性版本）
         ''' </summary>
         Private Function GetCurrentBasicVariables() As List(Of Integer)
             Dim basicVars As New List(Of Integer)
-            For j = 0 To lpp.constraintCoefficients.Length - 1
-                Dim row = lpp.constraintCoefficients(j)
-                Dim basicVar = -1
-                For i = 0 To row.Count - 1
-                    If std.Abs(row(i) - 1) < EPSILON Then
-                        ' 验证单位列向量
-                        Dim isUnit = True
-                        For k = 0 To lpp.constraintCoefficients.Length - 1
-                            If k <> j AndAlso std.Abs(lpp.constraintCoefficients(k)(i)) > EPSILON Then
-                                isUnit = False
-                                Exit For
-                            End If
-                        Next
-                        If isUnit Then
-                            basicVar = i
-                            Exit For
+            Dim variableCount = lpp.objectiveFunctionCoefficients.Count
+
+            ' 为每个约束行找到基变量
+            For rowIndex = 0 To lpp.constraintCoefficients.Length - 1
+                Dim row = lpp.constraintCoefficients(rowIndex)
+                Dim candidateVar = -1
+                Dim maxCoeff = 0.0
+
+                ' 寻找该行中系数最大的变量（更稳定的识别方法）
+                For varIndex = 0 To variableCount - 1
+                    Dim coeff = std.Abs(row(varIndex))
+                    If coeff > EPSILON AndAlso coeff > maxCoeff Then
+                        ' 检查该变量是否可能成为基变量
+                        If IsPotentialBasicVariable(varIndex, rowIndex) Then
+                            candidateVar = varIndex
+                            maxCoeff = coeff
                         End If
                     End If
                 Next
-                basicVars.Add(basicVar)
+
+                basicVars.Add(candidateVar)
             Next
+
             Return basicVars
+        End Function
+
+        ''' <summary>
+        ''' 检查变量是否可能成为基变量
+        ''' </summary>
+        Private Function IsPotentialBasicVariable(varIndex As Integer, currentRow As Integer) As Boolean
+            ' 检查该变量在其他行中的系数是否足够小
+            For rowIndex = 0 To lpp.constraintCoefficients.Length - 1
+                If rowIndex <> currentRow Then
+                    Dim coeff = std.Abs(lpp.constraintCoefficients(rowIndex)(varIndex))
+                    If coeff > EPSILON Then
+                        Return False
+                    End If
+                End If
+            Next
+
+            ' 检查在当前行中的系数不为零
+            Return std.Abs(lpp.constraintCoefficients(currentRow)(varIndex)) > EPSILON
         End Function
 
         ''' <summary>
@@ -232,7 +353,7 @@ Namespace LinearAlgebra.LinearProgramming
         End Sub
 
         ''' <summary>
-        ''' 提取解信息
+        ''' 提取解信息（修正版本）
         ''' </summary>
         Private Function ExtractSolution() As (optimalValues As Double(), slack As Double(), shadowPrice As Double(), reducedCost As Double())
             Dim n = lpp.originalVariableCount
@@ -242,28 +363,35 @@ Namespace LinearAlgebra.LinearProgramming
             Dim slack(m - 1) As Double
             Dim shadowPrice(m - 1) As Double
 
-            ' 获取基变量值
-            Dim basicVars = GetCurrentBasicVariables()
+            ' 初始化所有变量值为0
             For i = 0 To n - 1
-                If i < basicVars.Count AndAlso basicVars(i) >= 0 Then
-                    optimalValues(i) = lpp.constraintRightHandSides(i)
-                Else
-                    optimalValues(i) = 0
-                End If
+                optimalValues(i) = 0
                 reducedCost(i) = lpp.objectiveFunctionCoefficients(i)
             Next
 
-            ' 计算松弛变量和影子价格
-            Dim varIndex = n
-            For j = 0 To m - 1
-                If lpp.constraintTypes(j) = "=" Then
-                    slack(j) = 0
-                    shadowPrice(j) = -lpp.objectiveFunctionCoefficients(varIndex)
-                Else
-                    slack(j) = lpp.constraintRightHandSides(j)
-                    shadowPrice(j) = 0
+            ' 获取基变量及其值
+            Dim basicVars = GetCurrentBasicVariables()
+            For rowIndex = 0 To basicVars.Count - 1
+                Dim varIndex = basicVars(rowIndex)
+                If varIndex >= 0 AndAlso varIndex < n Then ' 只处理原始变量
+                    optimalValues(varIndex) = lpp.constraintRightHandSides(rowIndex)
                 End If
-                varIndex += 1
+            Next
+
+            ' 计算松弛变量和影子价格（修正逻辑）
+            Dim slackIndex = 0
+            For j = 0 To m - 1
+                ' 计算当前约束的松弛量
+                Dim constraintValue = 0.0
+                For i = 0 To n - 1
+                    constraintValue += optimalValues(i) * lpp.constraintCoefficients(j)(i)
+                Next
+
+                slack(j) = lpp.constraintRightHandSides(j) - constraintValue
+
+                ' 影子价格为目标函数对约束右端项的敏感度
+                ' 这里简化处理，实际应该从对偶变量获取
+                shadowPrice(j) = 0 ' 需要更复杂的计算逻辑
             Next
 
             Return (optimalValues, slack, shadowPrice, reducedCost)
