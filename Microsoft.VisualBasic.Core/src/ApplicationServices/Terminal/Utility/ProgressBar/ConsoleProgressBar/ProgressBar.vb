@@ -334,7 +334,7 @@ Namespace ApplicationServices.Terminal.ProgressBar.ConsoleProgressBar
         ''' wait for <see cref="ThreadAction()"/> exit
         ''' </summary>
         Private Sub WaitForExit()
-            Do While App.Running
+            Do While App.Running AndAlso Not threadExit
                 Call Thread.Sleep(10)
             Loop
         End Sub
