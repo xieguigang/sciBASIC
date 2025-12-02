@@ -81,6 +81,7 @@ Namespace LinearAlgebra.LinearProgramming
         Friend ReadOnly constraintCoefficients() As List(Of Double)
         Friend ReadOnly constraintTypes() As String
         Friend ReadOnly constraintRightHandSides() As Double
+        Friend ReadOnly originalVariableCount As Integer
 
         Friend objectiveFunctionValue As Double
 
@@ -171,6 +172,7 @@ Namespace LinearAlgebra.LinearProgramming
                 End If
             Next
 
+            Me.originalVariableCount = objectiveFunctionCoefficients.Length  ' 记录原始变量数量
             Me.objectiveFunctionType = objectiveFunctionType.ParseType
             Me.variableNames = variableNames.ToList
             Me.objectiveFunctionCoefficients = objectiveFunctionCoefficients.ToList
@@ -222,19 +224,29 @@ Namespace LinearAlgebra.LinearProgramming
             Return artificialVariables
         End Function
 
+        ''' <summary>
+        ''' 根据约束类型和添加的变量系数判断是否需要人工变量
+        ''' </summary>
+        ''' <returns></returns>
         Friend Function ArtificialVariableAssignments() As List(Of Integer)
             Dim assignments As New List(Of Integer)()
             Dim k As Integer = 0
-
             For j As Integer = 0 To constraintTypes.Length - 1
-                If constraintTypes(j) = "=" Then
-                    assignments.Add(objectiveFunctionCoefficients.Count + k)
+                ' 检查是否添加了松弛/剩余变量
+                If constraintCoefficients(j).Count > originalVariableCount Then
+                    Dim lastCoeff As Double = constraintCoefficients(j).Last
+                    ' "≥"约束需要人工变量（系数为-1）
+                    If lastCoeff = -1 Then
+                        assignments.Add(originalVariableCount + k)
+                        k += 1
+                    Else ' "≤"约束不需要人工变量
+                        assignments.Add(-1)
+                    End If
+                Else ' 原始等式约束需要人工变量
+                    assignments.Add(originalVariableCount + k)
                     k += 1
-                Else
-                    assignments.Add(-1)
                 End If
             Next
-
             Return assignments
         End Function
 
