@@ -69,6 +69,8 @@ Namespace LinearAlgebra.LinearProgramming
 
         ReadOnly lpp As LPP
 
+        Const EPSILON As Double = 0.0000000001
+
         Sub New(problem As LPP)
             lpp = problem
         End Sub
@@ -78,21 +80,18 @@ Namespace LinearAlgebra.LinearProgramming
             ' Point badness if we are going to be incrementing this later?
             Dim solutionLog As New StringBuilder
             Dim varNum As Integer = lpp.variableNames.Count
+            Dim startTime As Long = App.ElapsedMilliseconds
+
+            If showProgress Then
+                Call VBDebugger.EchoLine("Make Standard Form...")
+            End If
 
             Call lpp.makeStandardForm()
 
             Dim artificialVariables As List(Of Integer) = lpp.ArtificialVariableAssignments
 
-            ' ArrayList<String> varNames = Input.VariableNames;
-            ' String LaTeXString = latex.LPPtoLaTeX.displayLPP(Input)+'\n';
-            If showProgress Then
-                Call VBDebugger.EchoLine("Make Standard Form...")
-            End If
-
             Call solutionLog.AppendLine("Make Standard Form")
             Call lpp.makeStandardForm(artificialVariables)
-
-            Dim startTime As Long = App.ElapsedMilliseconds
 
             If showProgress Then
                 Call VBDebugger.EchoLine("Add artificial variables to the LPP...")
@@ -209,9 +208,9 @@ Namespace LinearAlgebra.LinearProgramming
 
             Call "Run LPP solution iterations...".info
 
-            'LaTeXString += latex.LPPtoLaTeX.beginTableaus(Input);
+            ' LaTeXString += latex.LPPtoLaTeX.beginTableaus(Input);
 
-            'Create the ProgressBar
+            ' Create the ProgressBar
             ' Maximum: The Max value in ProgressBar (Default is 100)
             Using progBar = New ProgressBar() With {.Maximum = Nothing}
                 Do While go
@@ -316,10 +315,8 @@ Namespace LinearAlgebra.LinearProgramming
 
             ' eliminate the pivot variable from the other constraints
             For j As Integer = 0 To lpp.constraintCoefficients.Length - 1
-
                 ' check constraint j != pivot constraint
                 If j <> constIndex Then
-
                     ' make constraint local variables
                     Dim constraint As List(Of Double) = lpp.constraintCoefficients(j)
                     Dim constraintRHS As Double = lpp.constraintRightHandSides(j)

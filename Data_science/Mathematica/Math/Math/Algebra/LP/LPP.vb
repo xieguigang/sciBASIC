@@ -273,7 +273,8 @@ Namespace LinearAlgebra.LinearProgramming
         End Sub
 
         Public Function solve(Optional showProgress As Boolean = True) As LPPSolution
-            Return New LPPSolver(Me).Solve(showProgress)
+            ' Return New LPPSolver(Me).Solve(showProgress)
+            Return New LPPSolverTwoPhased(Me).Solve(showProgress)
         End Function
     End Class
 End Namespace
