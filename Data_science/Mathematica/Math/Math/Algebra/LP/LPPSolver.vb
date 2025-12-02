@@ -247,6 +247,8 @@ Namespace LinearAlgebra.LinearProgramming
                 Loop
             End Using
 
+            Call Console.WriteLine()
+
             Return Nothing
         End Function
 
