@@ -248,6 +248,8 @@ Namespace LinearAlgebra.LinearProgramming
             End Using
 
             Call Console.WriteLine()
+            Call Console.WriteLine()
+            Call Console.WriteLine()
 
             Return Nothing
         End Function
