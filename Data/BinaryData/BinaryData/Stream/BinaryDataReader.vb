@@ -107,8 +107,9 @@ Public Class BinaryDataReader : Inherits BinaryReader
     ''' Create binary data reader from the in-memory data buffer
     ''' </summary>
     ''' <param name="data"></param>
-    Sub New(data As IEnumerable(Of Byte))
-        Call Me.New(New MemoryStream(data.ToArray))
+    Sub New(data As IEnumerable(Of Byte), Optional byteOrder As ByteOrder = ByteOrder.LittleEndian)
+        Me.New(New MemoryStream(data.ToArray))
+        Me.ByteOrder = byteOrder
     End Sub
 
     Sub New(data As RequestStream)
