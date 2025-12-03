@@ -22,10 +22,11 @@
             Dim length As Integer = data.Length
             Dim h As UInteger = seed
             Dim i As Integer = 0
+            Dim k As UInteger = 0
 
             ' --- 处理主体部分（4字节块） ---
             While length - i >= 4
-                Dim k As UInteger = CUInt(data(i)) Or
+                k = CUInt(data(i)) Or
                                CUInt(data(i + 1)) << 8 Or
                                CUInt(data(i + 2)) << 16 Or
                                CUInt(data(i + 3)) << 24
@@ -41,7 +42,7 @@
             End While
 
             ' --- 处理尾部剩余字节（修正部分） ---
-            Dim k As UInteger = 0
+            k = 0
             Select Case length - i
                 Case 3
                     k = k Xor CUInt(data(i + 2)) << 16

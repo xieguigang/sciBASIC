@@ -1,4 +1,5 @@
-﻿Imports System.Collections
+﻿Imports System.Text
+Imports Microsoft.VisualBasic.Data.Repository
 Imports std = System.Math
 
 Namespace ComponentModel.DataSourceModel.Repository
@@ -120,24 +121,36 @@ Namespace ComponentModel.DataSourceModel.Repository
         End Function
 
         ''' <summary>
+        ''' Knuth's multiplicative constant
+        ''' </summary>
+        Public Const prime As Integer = 2654435761
+
+        ''' <summary>
         ''' 获取元素在位数组中映射的 k 个位置。
         ''' 这里使用双哈希技术来生成 k 个独立的哈希值。
         ''' </summary>
         ''' <param name="item">要哈希的元素。</param>
         ''' <returns>包含 k 个位置的整数数组。</returns>
         Private Function GetHashPositions(item As String) As Integer()
-            ' 使用 String.GetHashCode() 作为第一个哈希函数
-            ' 使用一个质数乘以第一个哈希值来模拟第二个独立的哈希函数
-            ' 这是一个常用且有效的技巧
-            Dim h1 As Integer = std.Abs(item.GetHashCode())
-            Const prime As Integer = 2654435761 ' Knuth's multiplicative constant
-            Dim h2 As Integer = std.Abs((item.GetHashCode() * prime) Mod Integer.MaxValue)
+            ' 1. 将字符串转换为字节数组
+            Dim data As Byte() = Encoding.UTF8.GetBytes(item)
 
+            ' 2. 使用两个不同的种子进行双哈希
+            Dim h1 As UInteger = MurmurHash.MurmurHash332(data, 0) ' 种子 0
+            Dim h2 As UInteger = MurmurHash.MurmurHash332(data, &HFFFFFFFFUI) ' 种子 FFFFFFFF
             Dim positions(_k - 1) As Integer
+
+            ' 3. 组合哈希以生成 k 个位置
             For i As Integer = 0 To _k - 1
                 ' 组合哈希：Hash_i = (h1 + i * h2) mod m
+                ' 确保 h2 不为 0，以避免所有位置都相同
+                If h2 = 0 Then
+                    h2 = 1
+                End If
+
                 positions(i) = (h1 + i * h2) Mod _m
             Next
+
             Return positions
         End Function
     End Class
