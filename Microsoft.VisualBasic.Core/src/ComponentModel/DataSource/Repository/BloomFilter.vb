@@ -12,11 +12,24 @@ Namespace ComponentModel.DataSourceModel.Repository
     Public Class BloomFilter
 
         ' 使用 BitArray 来高效地存储位数组
-        Private ReadOnly _bitArray As BitArray
+        ReadOnly _bitArray As BitArray
         ' 位数组的长度
-        Private ReadOnly _m As Integer
+        ReadOnly _m As Integer
         ' 哈希函数的数量
-        Private ReadOnly _k As Integer
+        ReadOnly _k As Integer
+
+        ''' <summary>
+        ''' 获取当前布隆过滤器的理论假阳性率。
+        ''' </summary>
+        ''' <param name="currentItemCount">当前已插入的元素数量。</param>
+        ''' <returns>理论假阳性率。</returns>
+        Public ReadOnly Property FalsePositiveRate(currentItemCount As Integer) As Double
+            Get
+                If currentItemCount < 0 Then Throw New ArgumentOutOfRangeException(NameOf(currentItemCount))
+                ' 公式: (1 - e^(-k*n/m))^k
+                Return std.Pow((1.0 - std.Exp(-_k * currentItemCount / _m)), _k)
+            End Get
+        End Property
 
         ''' <summary>
         ''' 使用指定的位数组大小和哈希函数数量初始化 BloomFilter 类的新实例。
@@ -86,19 +99,6 @@ Namespace ComponentModel.DataSourceModel.Repository
         End Function
 
         ''' <summary>
-        ''' 获取当前布隆过滤器的理论假阳性率。
-        ''' </summary>
-        ''' <param name="currentItemCount">当前已插入的元素数量。</param>
-        ''' <returns>理论假阳性率。</returns>
-        Public ReadOnly Property FalsePositiveRate(currentItemCount As Integer) As Double
-            Get
-                If currentItemCount < 0 Then Throw New ArgumentOutOfRangeException(NameOf(currentItemCount))
-                ' 公式: (1 - e^(-k*n/m))^k
-                Return std.Pow((1.0 - std.Exp(-_k * currentItemCount / _m)), _k)
-            End Get
-        End Property
-
-        ''' <summary>
         ''' 根据给定的元素数量和假阳性率，计算最优的位数组大小。
         ''' </summary>
         ''' <param name="n">预计插入的元素数量。</param>
@@ -136,8 +136,8 @@ Namespace ComponentModel.DataSourceModel.Repository
             Dim data As Byte() = Encoding.UTF8.GetBytes(item)
 
             ' 2. 使用两个不同的种子进行双哈希
-            Dim h1 As UInteger = MurmurHash.MurmurHash332(data, 0) ' 种子 0
-            Dim h2 As UInteger = MurmurHash.MurmurHash332(data, &HFFFFFFFFUI) ' 种子 FFFFFFFF
+            Dim h1 As UInteger = MurmurHash.MurmurHashCode3_x86_32(data, 0) ' 种子 0
+            Dim h2 As UInteger = MurmurHash.MurmurHashCode3_x86_32(data, &HFFFFFFFFUI) ' 种子 FFFFFFFF
             Dim positions(_k - 1) As Integer
 
             ' 3. 组合哈希以生成 k 个位置
