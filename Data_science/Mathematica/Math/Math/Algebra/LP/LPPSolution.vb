@@ -58,6 +58,7 @@
 
 Imports System.Runtime.CompilerServices
 Imports System.Text
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 
 <Assembly: InternalsVisibleTo("Rlapack")>
 
@@ -118,6 +119,12 @@ Namespace LinearAlgebra.LinearProgramming
         Public Iterator Function GetSolution(names As String()) As IEnumerable(Of Double)
             For Each name As String In names
                 Yield solution(variableNames.IndexOf(name))
+            Next
+        End Function
+
+        Public Iterator Function GetSolution() As IEnumerable(Of NamedValue(Of Double))
+            For i As Integer = 0 To variableNames.Length - 1
+                Yield New NamedValue(Of Double)(variableNames(i), solution(i))
             Next
         End Function
 
