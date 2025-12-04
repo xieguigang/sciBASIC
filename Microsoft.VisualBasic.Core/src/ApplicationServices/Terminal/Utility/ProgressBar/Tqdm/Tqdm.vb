@@ -227,6 +227,15 @@ Namespace ApplicationServices.Terminal.ProgressBar.Tqdm
             Call bar.Finish()
         End Function
 
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="str"></param>
+        ''' <returns>
+        ''' this function returns a string line populator function,
+        ''' each time call this result function pointer will populate a new line and move to next line. 
+        ''' if this function returns nothing, that it means read the end of the stream.
+        ''' </returns>
         Public Function StreamReader(str As StreamReader) As Func(Of String)
             Dim page_unit As ByteSize = ByteSize.B
             Dim bytesOfStream As Long = str.BaseStream.Length
