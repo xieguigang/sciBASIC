@@ -737,7 +737,8 @@ Namespace ComponentModel.Collection
             Return nc
         End Function
 
-        <Extension> Public Sub SortByValue(Of V, T)(ByRef table As Dictionary(Of V, T), Optional desc As Boolean = False)
+        <Extension>
+        Public Sub SortByValue(Of V, T)(ByRef table As Dictionary(Of V, T), Optional desc As Boolean = False)
             Dim orders As KeyValuePair(Of V, T)()
             Dim out As New Dictionary(Of V, T)
 
@@ -763,7 +764,8 @@ Namespace ComponentModel.Collection
         ''' <typeparam name="T"></typeparam>
         ''' <param name="table"></param>
         ''' <param name="desc">默认为从小到大的升序排序</param>
-        <Extension> Public Sub SortByKey(Of V, T)(ByRef table As Dictionary(Of V, T), Optional desc As Boolean = False)
+        <Extension>
+        Public Sub SortByKey(Of V, T)(ByRef table As Dictionary(Of V, T), Optional desc As Boolean = False)
             Dim orders As V()
             Dim out As New Dictionary(Of V, T)
 
@@ -950,7 +952,8 @@ Namespace ComponentModel.Collection
                                       Function(item) item.Value.Value)
         End Function
 
-        <Extension> Public Function Add(Of TKey, TValue)(ByRef list As List(Of KeyValuePair(Of TKey, TValue)), key As TKey, value As TValue) As List(Of KeyValuePair(Of TKey, TValue))
+        <Extension>
+        Public Function Add(Of TKey, TValue)(ByRef list As List(Of KeyValuePair(Of TKey, TValue)), key As TKey, value As TValue) As List(Of KeyValuePair(Of TKey, TValue))
             If list Is Nothing Then
                 list = New List(Of KeyValuePair(Of TKey, TValue))
             End If
@@ -967,7 +970,8 @@ Namespace ComponentModel.Collection
         ''' <param name="key"></param>
         ''' <param name="value"></param>
         ''' <returns></returns>
-        <Extension> Public Function Add(Of TKey, TValue)(ByRef list As List(Of KeyValuePairObject(Of TKey, TValue)), key As TKey, value As TValue) As List(Of KeyValuePairObject(Of TKey, TValue))
+        <Extension>
+        Public Function Add(Of TKey, TValue)(ByRef list As List(Of KeyValuePairObject(Of TKey, TValue)), key As TKey, value As TValue) As List(Of KeyValuePairObject(Of TKey, TValue))
             If list Is Nothing Then
                 list = New List(Of KeyValuePairObject(Of TKey, TValue))
             End If
