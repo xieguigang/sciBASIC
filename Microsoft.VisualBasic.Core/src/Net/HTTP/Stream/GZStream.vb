@@ -105,7 +105,6 @@ Namespace Net.Http
             Return Convert.FromBase64String(base64).UnGzipStream
         End Function
 
-
         ''' <summary>
         ''' 将输入的流数据进行gzip解压缩
         ''' </summary>
@@ -113,7 +112,7 @@ Namespace Net.Http
         ''' 使用这个函数得到的结果需要注意进行<see cref="IDisposable.Dispose()"/>,否则很容易造成内存泄漏
         ''' </remarks>
         ''' <param name="stream"></param>
-        ''' <returns></returns>
+        ''' <returns>a memory stream object that has file position reset to scan0</returns>
         <Extension>
         Public Function UnGzipStream(stream As Stream) As MemoryStream
             Using gz As New GZipStream(stream, CompressionMode.Decompress)
