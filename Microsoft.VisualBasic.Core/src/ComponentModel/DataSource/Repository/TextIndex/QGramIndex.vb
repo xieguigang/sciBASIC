@@ -74,8 +74,17 @@ Namespace ComponentModel.DataSourceModel.Repository
         ''' q-gram的长度
         ''' </summary>
         ReadOnly _q As Integer
+        ''' <summary>
+        ''' the q-gram index set
+        ''' </summary>
         ReadOnly _index As Dictionary(Of String, HashSet(Of Integer))
+        ''' <summary>
+        ''' the raw input string collection
+        ''' </summary>
         ReadOnly _strings As List(Of (str As String, id As Integer))
+        ''' <summary>
+        ''' the q-gram count for each raw input string
+        ''' </summary>
         ReadOnly _counts As New Dictionary(Of String, Integer)
 
         Public Sub New(q As Integer)
