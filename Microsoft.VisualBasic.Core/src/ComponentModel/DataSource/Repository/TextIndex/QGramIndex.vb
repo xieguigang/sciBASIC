@@ -87,6 +87,13 @@ Namespace ComponentModel.DataSourceModel.Repository
         ''' </summary>
         ReadOnly _counts As New Dictionary(Of String, Integer)
 
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="q"></param>
+        ''' <remarks>
+        ''' for make search index of the metabolite/chemical/gene/protein name, q = 3 is recommended as the name size is vary from short to long
+        ''' </remarks>
         Public Sub New(q As Integer)
             _q = q
             _index = New Dictionary(Of String, HashSet(Of Integer))(StringComparer.OrdinalIgnoreCase)
@@ -147,6 +154,8 @@ Namespace ComponentModel.DataSourceModel.Repository
         ''' <summary>
         ''' 基于q-gram重叠度查找相似字符串
         ''' </summary>
+        ''' <remarks>大小写不敏感</remarks>
+        ''' <returns>the returns similarity text search result has already been sorted via <see cref="FindResult.similarity"/> in descending order.</returns>
         Public Function FindSimilar(query As String, Optional threshold As Double = 0) As IEnumerable(Of FindResult)
             If String.IsNullOrEmpty(query) Then
                 Return New FindResult() {}

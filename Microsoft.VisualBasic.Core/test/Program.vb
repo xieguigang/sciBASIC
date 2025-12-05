@@ -55,6 +55,7 @@ Imports System
 
 Module Program
     Sub Main(args As String())
+        Call qgramTestSearch.Run()
         Call progrsssBarTest.testLoop()
         Call streamTest.dataUriStreamtest()
 
