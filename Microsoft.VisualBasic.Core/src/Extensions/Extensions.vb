@@ -413,7 +413,7 @@ Public Module Extensions
     End Function
 
     ''' <summary>
-    ''' 
+    ''' merge the given data key-value pair data into current directory and then returns the current directory object
     ''' </summary>
     ''' <typeparam name="TKey"></typeparam>
     ''' <typeparam name="TValue"></typeparam>
