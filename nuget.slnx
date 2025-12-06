@@ -1,0 +1,2516 @@
+<Solution>
+  <Configurations>
+    <BuildType Name="Biodeep" />
+    <BuildType Name="Biostack" />
+    <BuildType Name="CFD_win32" />
+    <BuildType Name="Debug" />
+    <BuildType Name="Docker" />
+    <BuildType Name="GCModeller(Release_X64)" />
+    <BuildType Name="GCModeller(UNIX-Release_X64)" />
+    <BuildType Name="gcmodeller_desktop" />
+    <BuildType Name="installer_x64" />
+    <BuildType Name="LipidSearch" />
+    <BuildType Name="mzkit" />
+    <BuildType Name="mzkit_win32" />
+    <BuildType Name="NPSearch" />
+    <BuildType Name="nuget_release" />
+    <BuildType Name="PlantMAT" />
+    <BuildType Name="Publish" />
+    <BuildType Name="Release" />
+    <BuildType Name="RsharpDev" />
+    <BuildType Name="Rsharp_app_release" />
+    <BuildType Name="Yilia-Release_x64" />
+    <Platform Name="Any CPU" />
+    <Platform Name="ARM32" />
+    <Platform Name="x64" />
+    <Platform Name="x86" />
+  </Configurations>
+  <Folder Name="/packages/" />
+  <Folder Name="/packages/data/">
+    <Project Path="Data/BinaryData/BinaryData/binarydata-netcore5.vbproj">
+      <BuildType Solution="Biodeep|Any CPU" Project="Rsharp_app_release" />
+      <BuildType Solution="Biodeep|ARM32" Project="mzkit" />
+      <BuildType Solution="Biodeep|x64" Project="Rsharp_app_release" />
+      <BuildType Solution="Biodeep|x86" Project="Rsharp_app_release" />
+      <BuildType Solution="Biostack|Any CPU" Project="Rsharp_app_release" />
+      <BuildType Solution="Biostack|ARM32" Project="mzkit" />
+      <BuildType Solution="Biostack|x64" Project="Rsharp_app_release" />
+      <BuildType Solution="Biostack|x86" Project="Rsharp_app_release" />
+      <BuildType Solution="Docker|Any CPU" Project="Debug" />
+      <BuildType Solution="Docker|x64" Project="Debug" />
+      <BuildType Solution="Docker|x86" Project="Debug" />
+      <BuildType Solution="GCModeller(Release_X64)|Any CPU" Project="Release" />
+      <BuildType Solution="GCModeller(Release_X64)|ARM32" Project="gcmodeller_desktop" />
+      <BuildType Solution="GCModeller(Release_X64)|x64" Project="Release" />
+      <BuildType Solution="GCModeller(Release_X64)|x86" Project="Release" />
+      <BuildType Solution="GCModeller(UNIX-Release_X64)|Any CPU" Project="Release" />
+      <BuildType Solution="GCModeller(UNIX-Release_X64)|ARM32" Project="gcmodeller_desktop" />
+      <BuildType Solution="GCModeller(UNIX-Release_X64)|x64" Project="Release" />
+      <BuildType Solution="GCModeller(UNIX-Release_X64)|x86" Project="Release" />
+      <BuildType Solution="installer_x64|Any CPU" Project="nuget_release" />
+      <BuildType Solution="installer_x64|ARM32" Project="nuget_release" />
+      <BuildType Solution="installer_x64|x64" Project="mzkit" />
+      <BuildType Solution="installer_x64|x86" Project="nuget_release" />
+      <BuildType Solution="mzkit|Any CPU" Project="Rsharp_app_release" />
+      <BuildType Solution="mzkit|x64" Project="Rsharp_app_release" />
+      <BuildType Solution="mzkit|x86" Project="Rsharp_app_release" />
+      <BuildType Solution="nuget_release|Any CPU" Project="Rsharp_app_release" />
+      <BuildType Solution="nuget_release|ARM32" Project="mzkit_win32" />
+      <BuildType Solution="nuget_release|x86" Project="Rsharp_app_release" />
+      <BuildType Solution="Publish|*" Project="PlantMAT" />
+      <BuildType Solution="RsharpDev|*" Project="Rsharp_app_release" />
+      <BuildType Solution="Rsharp_app_release|Any CPU" Project="Release" />
+      <BuildType Solution="Yilia-Release_x64|*" Project="Release" />
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="Data/BinaryData/DataStorage/datastorage-netcore5.vbproj">
+      <BuildType Solution="Biodeep|Any CPU" Project="Rsharp_app_release" />
+      <BuildType Solution="Biodeep|ARM32" Project="mzkit" />
+      <BuildType Solution="Biodeep|x64" Project="Rsharp_app_release" />
+      <BuildType Solution="Biodeep|x86" Project="Rsharp_app_release" />
+      <BuildType Solution="Biostack|Any CPU" Project="Rsharp_app_release" />
+      <BuildType Solution="Biostack|ARM32" Project="mzkit" />
+      <BuildType Solution="Biostack|x64" Project="Rsharp_app_release" />
+      <BuildType Solution="Biostack|x86" Project="Rsharp_app_release" />
+      <BuildType Solution="CFD_win32|*" Project="mzkit" />
+      <BuildType Solution="Docker|*" Project="Debug" />
+      <BuildType Solution="GCModeller(Release_X64)|Any CPU" Project="Release" />
+      <BuildType Solution="GCModeller(Release_X64)|ARM32" Project="gcmodeller_desktop" />
+      <BuildType Solution="GCModeller(Release_X64)|x64" Project="Release" />
+      <BuildType Solution="GCModeller(Release_X64)|x86" Project="Release" />
+      <BuildType Solution="GCModeller(UNIX-Release_X64)|Any CPU" Project="Release" />
+      <BuildType Solution="GCModeller(UNIX-Release_X64)|ARM32" Project="gcmodeller_desktop" />
+      <BuildType Solution="GCModeller(UNIX-Release_X64)|x64" Project="Release" />
+      <BuildType Solution="GCModeller(UNIX-Release_X64)|x86" Project="Release" />
+      <BuildType Solution="installer_x64|*" Project="nuget_release" />
+      <BuildType Solution="LipidSearch|Any CPU" Project="Debug" />
+      <BuildType Solution="LipidSearch|ARM32" Project="mzkit" />
+      <BuildType Solution="LipidSearch|x64" Project="Debug" />
+      <BuildType Solution="LipidSearch|x86" Project="Rsharp_app_release" />
+      <BuildType Solution="mzkit|Any CPU" Project="Rsharp_app_release" />
+      <BuildType Solution="mzkit|x64" Project="Rsharp_app_release" />
+      <BuildType Solution="mzkit|x86" Project="Rsharp_app_release" />
+      <BuildType Solution="NPSearch|*" Project="mzkit" />
+      <BuildType Solution="nuget_release|Any CPU" Project="Rsharp_app_release" />
+      <BuildType Solution="nuget_release|ARM32" Project="mzkit_win32" />
+      <BuildType Solution="nuget_release|x86" Project="Rsharp_app_release" />
+      <BuildType Solution="PlantMAT|*" Project="mzkit" />
+      <BuildType Solution="Publish|*" Project="nuget_release" />
+      <BuildType Solution="RsharpDev|*" Project="Rsharp_app_release" />
+      <BuildType Solution="Rsharp_app_release|Any CPU" Project="Release" />
+      <BuildType Solution="Yilia-Release_x64|*" Project="Release" />
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="Data/BinaryData/Feather/FeatherFormat.vbproj">
+      <BuildType Solution="Biodeep|*" Project="Debug" />
+      <BuildType Solution="Biostack|*" Project="Debug" />
+      <BuildType Solution="CFD_win32|*" Project="Debug" />
+      <BuildType Solution="Docker|*" Project="Debug" />
+      <BuildType Solution="GCModeller(Release_X64)|*" Project="Release" />
+      <BuildType Solution="GCModeller(UNIX-Release_X64)|*" Project="Release" />
+      <BuildType Solution="gcmodeller_desktop|*" Project="Debug" />
+      <BuildType Solution="installer_x64|*" Project="Debug" />
+      <BuildType Solution="LipidSearch|*" Project="Debug" />
+      <BuildType Solution="mzkit_win32|*" Project="Debug" />
+      <BuildType Solution="mzkit|*" Project="Debug" />
+      <BuildType Solution="NPSearch|*" Project="Debug" />
+      <BuildType Solution="nuget_release|Any CPU" Project="Debug" />
+      <BuildType Solution="nuget_release|ARM32" Project="Debug" />
+      <BuildType Solution="nuget_release|x86" Project="Debug" />
+      <BuildType Solution="PlantMAT|*" Project="Debug" />
+      <BuildType Solution="Publish|*" Project="Debug" />
+      <BuildType Solution="RsharpDev|*" Project="Rsharp_app_release" />
+      <BuildType Solution="Yilia-Release_x64|*" Project="Release" />
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="Data/BinaryData/HDF5/HDF5.vbproj">
+      <BuildType Solution="Biodeep|Any CPU" Project="Debug" />
+      <BuildType Solution="Biodeep|ARM32" Project="Rsharp_app_release" />
+      <BuildType Solution="Biodeep|x64" Project="Debug" />
+      <BuildType Solution="Biodeep|x86" Project="Debug" />
+      <BuildType Solution="Biostack|Any CPU" Project="Debug" />
+      <BuildType Solution="Biostack|ARM32" Project="Rsharp_app_release" />
+      <BuildType Solution="Biostack|x64" Project="Debug" />
+      <BuildType Solution="Biostack|x86" Project="Debug" />
+      <BuildType Solution="CFD_win32|*" Project="Rsharp_app_release" />
+      <BuildType Solution="Docker|*" Project="Debug" />
+      <BuildType Solution="GCModeller(Release_X64)|Any CPU" Project="Release" />
+      <BuildType Solution="GCModeller(Release_X64)|ARM32" Project="gcmodeller_desktop" />
+      <BuildType Solution="GCModeller(Release_X64)|x64" Project="Release" />
+      <BuildType Solution="GCModeller(Release_X64)|x86" Project="Release" />
+      <BuildType Solution="GCModeller(UNIX-Release_X64)|Any CPU" Project="Release" />
+      <BuildType Solution="GCModeller(UNIX-Release_X64)|ARM32" Project="gcmodeller_desktop" />
+      <BuildType Solution="GCModeller(UNIX-Release_X64)|x64" Project="Release" />
+      <BuildType Solution="GCModeller(UNIX-Release_X64)|x86" Project="Release" />
+      <BuildType Solution="installer_x64|Any CPU" Project="nuget_release" />
+      <BuildType Solution="installer_x64|ARM32" Project="nuget_release" />
+      <BuildType Solution="installer_x64|x64" Project="PlantMAT" />
+      <BuildType Solution="installer_x64|x86" Project="nuget_release" />
+      <BuildType Solution="nuget_release|Any CPU" Project="mzkit_win32" />
+      <BuildType Solution="nuget_release|ARM32" Project="mzkit_win32" />
+      <BuildType Solution="nuget_release|x86" Project="mzkit_win32" />
+      <BuildType Solution="Publish|*" Project="PlantMAT" />
+      <BuildType Solution="RsharpDev|*" Project="Rsharp_app_release" />
+      <BuildType Solution="Yilia-Release_x64|*" Project="Release" />
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="Data/BinaryData/HDSPack/HDSPack.vbproj">
+      <BuildType Solution="Biodeep|Any CPU" Project="Debug" />
+      <BuildType Solution="Biodeep|ARM32" Project="CFD_win32" />
+      <BuildType Solution="Biodeep|x64" Project="Debug" />
+      <BuildType Solution="Biodeep|x86" Project="Debug" />
+      <BuildType Solution="Biostack|Any CPU" Project="Debug" />
+      <BuildType Solution="Biostack|ARM32" Project="CFD_win32" />
+      <BuildType Solution="Biostack|x64" Project="Debug" />
+      <BuildType Solution="Biostack|x86" Project="Debug" />
+      <BuildType Solution="Docker|*" Project="Debug" />
+      <BuildType Solution="GCModeller(Release_X64)|Any CPU" Project="Release" />
+      <BuildType Solution="GCModeller(Release_X64)|ARM32" Project="gcmodeller_desktop" />
+      <BuildType Solution="GCModeller(Release_X64)|x64" Project="Release" />
+      <BuildType Solution="GCModeller(Release_X64)|x86" Project="Release" />
+      <BuildType Solution="GCModeller(UNIX-Release_X64)|Any CPU" Project="Release" />
+      <BuildType Solution="GCModeller(UNIX-Release_X64)|ARM32" Project="gcmodeller_desktop" />
+      <BuildType Solution="GCModeller(UNIX-Release_X64)|x64" Project="Release" />
+      <BuildType Solution="GCModeller(UNIX-Release_X64)|x86" Project="Release" />
+      <BuildType Solution="installer_x64|Any CPU" Project="nuget_release" />
+      <BuildType Solution="installer_x64|ARM32" Project="nuget_release" />
+      <BuildType Solution="installer_x64|x64" Project="Rsharp_app_release" />
+      <BuildType Solution="installer_x64|x86" Project="nuget_release" />
+      <BuildType Solution="nuget_release|Any CPU" Project="mzkit_win32" />
+      <BuildType Solution="nuget_release|ARM32" Project="mzkit_win32" />
+      <BuildType Solution="nuget_release|x86" Project="mzkit_win32" />
+      <BuildType Solution="Publish|*" Project="PlantMAT" />
+      <BuildType Solution="RsharpDev|*" Project="Rsharp_app_release" />
+      <BuildType Solution="Yilia-Release_x64|*" Project="Release" />
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="Data/BinaryData/msgpack/msgpack-netcore5.vbproj">
+      <BuildType Solution="Biodeep|Any CPU" Project="Debug" />
+      <BuildType Solution="Biodeep|ARM32" Project="mzkit" />
+      <BuildType Solution="Biodeep|x64" Project="Debug" />
+      <BuildType Solution="Biodeep|x86" Project="Debug" />
+      <BuildType Solution="Biostack|Any CPU" Project="Debug" />
+      <BuildType Solution="Biostack|ARM32" Project="mzkit" />
+      <BuildType Solution="Biostack|x64" Project="Debug" />
+      <BuildType Solution="Biostack|x86" Project="Debug" />
+      <BuildType Solution="Docker|Any CPU" Project="Debug" />
+      <BuildType Solution="Docker|x64" Project="Debug" />
+      <BuildType Solution="Docker|x86" Project="Debug" />
+      <BuildType Solution="GCModeller(Release_X64)|Any CPU" Project="Release" />
+      <BuildType Solution="GCModeller(Release_X64)|ARM32" Project="gcmodeller_desktop" />
+      <BuildType Solution="GCModeller(Release_X64)|x64" Project="Release" />
+      <BuildType Solution="GCModeller(Release_X64)|x86" Project="Release" />
+      <BuildType Solution="GCModeller(UNIX-Release_X64)|Any CPU" Project="Release" />
+      <BuildType Solution="GCModeller(UNIX-Release_X64)|ARM32" Project="gcmodeller_desktop" />
+      <BuildType Solution="GCModeller(UNIX-Release_X64)|x64" Project="Release" />
+      <BuildType Solution="GCModeller(UNIX-Release_X64)|x86" Project="Release" />
+      <BuildType Solution="installer_x64|Any CPU" Project="nuget_release" />
+      <BuildType Solution="installer_x64|ARM32" Project="nuget_release" />
+      <BuildType Solution="installer_x64|x64" Project="mzkit" />
+      <BuildType Solution="installer_x64|x86" Project="nuget_release" />
+      <BuildType Solution="mzkit|Any CPU" Project="Debug" />
+      <BuildType Solution="mzkit|x64" Project="Debug" />
+      <BuildType Solution="mzkit|x86" Project="Debug" />
+      <BuildType Solution="nuget_release|Any CPU" Project="Debug" />
+      <BuildType Solution="nuget_release|ARM32" Project="mzkit_win32" />
+      <BuildType Solution="nuget_release|x86" Project="Debug" />
+      <BuildType Solution="Publish|*" Project="PlantMAT" />
+      <BuildType Solution="RsharpDev|*" Project="Rsharp_app_release" />
+      <BuildType Solution="Yilia-Release_x64|*" Project="Release" />
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="Data/BinaryData/netCDF/netCDF.vbproj">
+      <BuildType Solution="Biodeep|Any CPU" Project="Debug" />
+      <BuildType Solution="Biodeep|ARM32" Project="Rsharp_app_release" />
+      <BuildType Solution="Biodeep|x64" Project="Debug" />
+      <BuildType Solution="Biodeep|x86" Project="Debug" />
+      <BuildType Solution="Biostack|Any CPU" Project="Debug" />
+      <BuildType Solution="Biostack|ARM32" Project="Rsharp_app_release" />
+      <BuildType Solution="Biostack|x64" Project="Debug" />
+      <BuildType Solution="Biostack|x86" Project="Debug" />
+      <BuildType Solution="CFD_win32|*" Project="Rsharp_app_release" />
+      <BuildType Solution="Docker|*" Project="Debug" />
+      <BuildType Solution="GCModeller(Release_X64)|Any CPU" Project="Release" />
+      <BuildType Solution="GCModeller(Release_X64)|ARM32" Project="gcmodeller_desktop" />
+      <BuildType Solution="GCModeller(Release_X64)|x64" Project="Release" />
+      <BuildType Solution="GCModeller(Release_X64)|x86" Project="Release" />
+      <BuildType Solution="GCModeller(UNIX-Release_X64)|Any CPU" Project="Release" />
+      <BuildType Solution="GCModeller(UNIX-Release_X64)|ARM32" Project="gcmodeller_desktop" />
+      <BuildType Solution="GCModeller(UNIX-Release_X64)|x64" Project="Release" />
+      <BuildType Solution="GCModeller(UNIX-Release_X64)|x86" Project="Release" />
+      <BuildType Solution="installer_x64|Any CPU" Project="nuget_release" />
+      <BuildType Solution="installer_x64|ARM32" Project="nuget_release" />
+      <BuildType Solution="installer_x64|x64" Project="PlantMAT" />
+      <BuildType Solution="installer_x64|x86" Project="nuget_release" />
+      <BuildType Solution="mzkit_win32|*" Project="mzkit" />
+      <BuildType Solution="nuget_release|Any CPU" Project="mzkit" />
+      <BuildType Solution="nuget_release|ARM32" Project="mzkit" />
+      <BuildType Solution="nuget_release|x86" Project="mzkit" />
+      <BuildType Solution="Publish|*" Project="PlantMAT" />
+      <BuildType Solution="RsharpDev|*" Project="Rsharp_app_release" />
+      <BuildType Solution="Yilia-Release_x64|*" Project="Release" />
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="Data/BinaryData/SQLite3/SQLite3.vbproj">
+      <BuildType Solution="Biodeep|Any CPU" Project="Debug" />
+      <BuildType Solution="Biodeep|ARM32" Project="Rsharp_app_release" />
+      <BuildType Solution="Biodeep|x64" Project="Debug" />
+      <BuildType Solution="Biodeep|x86" Project="Debug" />
+      <BuildType Solution="Biostack|Any CPU" Project="Debug" />
+      <BuildType Solution="Biostack|ARM32" Project="Rsharp_app_release" />
+      <BuildType Solution="Biostack|x64" Project="Debug" />
+      <BuildType Solution="Biostack|x86" Project="Debug" />
+      <BuildType Solution="CFD_win32|*" Project="Rsharp_app_release" />
+      <BuildType Solution="Docker|*" Project="Debug" />
+      <BuildType Solution="GCModeller(Release_X64)|Any CPU" Project="Release" />
+      <BuildType Solution="GCModeller(Release_X64)|ARM32" Project="gcmodeller_desktop" />
+      <BuildType Solution="GCModeller(Release_X64)|x64" Project="Release" />
+      <BuildType Solution="GCModeller(Release_X64)|x86" Project="Release" />
+      <BuildType Solution="GCModeller(UNIX-Release_X64)|Any CPU" Project="Release" />
+      <BuildType Solution="GCModeller(UNIX-Release_X64)|ARM32" Project="gcmodeller_desktop" />
+      <BuildType Solution="GCModeller(UNIX-Release_X64)|x64" Project="Release" />
+      <BuildType Solution="GCModeller(UNIX-Release_X64)|x86" Project="Release" />
+      <BuildType Solution="installer_x64|*" Project="nuget_release" />
+      <BuildType Solution="LipidSearch|Any CPU" Project="Debug" />
+      <BuildType Solution="LipidSearch|ARM32" Project="Rsharp_app_release" />
+      <BuildType Solution="LipidSearch|x64" Project="Debug" />
+      <BuildType Solution="LipidSearch|x86" Project="Debug" />
+      <BuildType Solution="NPSearch|Any CPU" Project="Debug" />
+      <BuildType Solution="NPSearch|ARM32" Project="Rsharp_app_release" />
+      <BuildType Solution="NPSearch|x64" Project="Debug" />
+      <BuildType Solution="NPSearch|x86" Project="Debug" />
+      <BuildType Solution="nuget_release|Any CPU" Project="mzkit_win32" />
+      <BuildType Solution="nuget_release|ARM32" Project="mzkit_win32" />
+      <BuildType Solution="nuget_release|x86" Project="mzkit_win32" />
+      <BuildType Solution="PlantMAT|Any CPU" Project="Debug" />
+      <BuildType Solution="PlantMAT|ARM32" Project="Rsharp_app_release" />
+      <BuildType Solution="PlantMAT|x64" Project="Debug" />
+      <BuildType Solution="PlantMAT|x86" Project="Debug" />
+      <BuildType Solution="Publish|*" Project="nuget_release" />
+      <BuildType Solution="RsharpDev|*" Project="Rsharp_app_release" />
+      <BuildType Solution="Yilia-Release_x64|*" Project="Release" />
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="Data/DataFrame.Extensions/DataFramework.Extensions-netcore5.vbproj">
+      <BuildType Solution="Biodeep|Any CPU" Project="Rsharp_app_release" />
+      <BuildType Solution="Biodeep|ARM32" Project="mzkit_win32" />
+      <BuildType Solution="Biodeep|x64" Project="Rsharp_app_release" />
+      <BuildType Solution="Biodeep|x86" Project="Rsharp_app_release" />
+      <BuildType Solution="Biostack|Any CPU" Project="Rsharp_app_release" />
+      <BuildType Solution="Biostack|ARM32" Project="mzkit_win32" />
+      <BuildType Solution="Biostack|x64" Project="Rsharp_app_release" />
+      <BuildType Solution="Biostack|x86" Project="Rsharp_app_release" />
+      <BuildType Solution="CFD_win32|*" Project="mzkit_win32" />
+      <BuildType Solution="Docker|*" Project="Debug" />
+      <BuildType Solution="GCModeller(Release_X64)|Any CPU" Project="Release" />
+      <BuildType Solution="GCModeller(Release_X64)|ARM32" Project="gcmodeller_desktop" />
+      <BuildType Solution="GCModeller(Release_X64)|x64" Project="Release" />
+      <BuildType Solution="GCModeller(Release_X64)|x86" Project="Release" />
+      <BuildType Solution="GCModeller(UNIX-Release_X64)|Any CPU" Project="Release" />
+      <BuildType Solution="GCModeller(UNIX-Release_X64)|ARM32" Project="gcmodeller_desktop" />
+      <BuildType Solution="GCModeller(UNIX-Release_X64)|x64" Project="Release" />
+      <BuildType Solution="GCModeller(UNIX-Release_X64)|x86" Project="Release" />
+      <BuildType Solution="installer_x64|*" Project="nuget_release" />
+      <BuildType Solution="mzkit|Any CPU" Project="Rsharp_app_release" />
+      <BuildType Solution="mzkit|ARM32" Project="mzkit_win32" />
+      <BuildType Solution="mzkit|x64" Project="Rsharp_app_release" />
+      <BuildType Solution="mzkit|x86" Project="Rsharp_app_release" />
+      <BuildType Solution="NPSearch|Any CPU" Project="LipidSearch" />
+      <BuildType Solution="NPSearch|ARM32" Project="mzkit_win32" />
+      <BuildType Solution="NPSearch|x64" Project="LipidSearch" />
+      <BuildType Solution="NPSearch|x86" Project="LipidSearch" />
+      <BuildType Solution="nuget_release|Any CPU" Project="Rsharp_app_release" />
+      <BuildType Solution="nuget_release|ARM32" Project="mzkit_win32" />
+      <BuildType Solution="nuget_release|x86" Project="Rsharp_app_release" />
+      <BuildType Solution="PlantMAT|Any CPU" Project="LipidSearch" />
+      <BuildType Solution="PlantMAT|ARM32" Project="mzkit_win32" />
+      <BuildType Solution="PlantMAT|x64" Project="LipidSearch" />
+      <BuildType Solution="PlantMAT|x86" Project="LipidSearch" />
+      <BuildType Solution="Publish|*" Project="nuget_release" />
+      <BuildType Solution="RsharpDev|*" Project="Rsharp_app_release" />
+      <BuildType Solution="Rsharp_app_release|Any CPU" Project="Release" />
+      <BuildType Solution="Yilia-Release_x64|*" Project="Release" />
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="Data/DataFrame/dataframework-netcore5.vbproj">
+      <BuildType Solution="Biodeep|Any CPU" Project="Rsharp_app_release" />
+      <BuildType Solution="Biodeep|ARM32" Project="mzkit" />
+      <BuildType Solution="Biodeep|x64" Project="Rsharp_app_release" />
+      <BuildType Solution="Biodeep|x86" Project="Rsharp_app_release" />
+      <BuildType Solution="Biostack|Any CPU" Project="Rsharp_app_release" />
+      <BuildType Solution="Biostack|ARM32" Project="mzkit" />
+      <BuildType Solution="Biostack|x64" Project="Rsharp_app_release" />
+      <BuildType Solution="Biostack|x86" Project="Rsharp_app_release" />
+      <BuildType Solution="CFD_win32|*" Project="mzkit" />
+      <BuildType Solution="Docker|*" Project="Debug" />
+      <BuildType Solution="GCModeller(Release_X64)|Any CPU" Project="Release" />
+      <BuildType Solution="GCModeller(Release_X64)|ARM32" Project="gcmodeller_desktop" />
+      <BuildType Solution="GCModeller(Release_X64)|x64" Project="Release" />
+      <BuildType Solution="GCModeller(Release_X64)|x86" Project="Release" />
+      <BuildType Solution="GCModeller(UNIX-Release_X64)|Any CPU" Project="Release" />
+      <BuildType Solution="GCModeller(UNIX-Release_X64)|ARM32" Project="gcmodeller_desktop" />
+      <BuildType Solution="GCModeller(UNIX-Release_X64)|x64" Project="Release" />
+      <BuildType Solution="GCModeller(UNIX-Release_X64)|x86" Project="Release" />
+      <BuildType Solution="installer_x64|Any CPU" Project="nuget_release" />
+      <BuildType Solution="installer_x64|ARM32" Project="nuget_release" />
+      <BuildType Solution="installer_x64|x64" Project="PlantMAT" />
+      <BuildType Solution="installer_x64|x86" Project="nuget_release" />
+      <BuildType Solution="mzkit|Any CPU" Project="Rsharp_app_release" />
+      <BuildType Solution="mzkit|x64" Project="Rsharp_app_release" />
+      <BuildType Solution="mzkit|x86" Project="Rsharp_app_release" />
+      <BuildType Solution="nuget_release|Any CPU" Project="Rsharp_app_release" />
+      <BuildType Solution="nuget_release|ARM32" Project="mzkit_win32" />
+      <BuildType Solution="nuget_release|x86" Project="Rsharp_app_release" />
+      <BuildType Solution="Publish|*" Project="PlantMAT" />
+      <BuildType Solution="RsharpDev|*" Project="Rsharp_app_release" />
+      <BuildType Solution="Yilia-Release_x64|*" Project="Release" />
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="Data/GraphQuery/GraphQuery.NET5.vbproj">
+      <BuildType Solution="Biodeep|Any CPU" Project="Debug" />
+      <BuildType Solution="Biodeep|ARM32" Project="Rsharp_app_release" />
+      <BuildType Solution="Biodeep|x64" Project="Debug" />
+      <BuildType Solution="Biodeep|x86" Project="Debug" />
+      <BuildType Solution="Biostack|Any CPU" Project="Debug" />
+      <BuildType Solution="Biostack|ARM32" Project="Rsharp_app_release" />
+      <BuildType Solution="Biostack|x64" Project="Debug" />
+      <BuildType Solution="Biostack|x86" Project="Debug" />
+      <BuildType Solution="CFD_win32|*" Project="Rsharp_app_release" />
+      <BuildType Solution="Docker|*" Project="Debug" />
+      <BuildType Solution="GCModeller(Release_X64)|Any CPU" Project="Release" />
+      <BuildType Solution="GCModeller(Release_X64)|ARM32" Project="gcmodeller_desktop" />
+      <BuildType Solution="GCModeller(Release_X64)|x64" Project="Release" />
+      <BuildType Solution="GCModeller(Release_X64)|x86" Project="Release" />
+      <BuildType Solution="GCModeller(UNIX-Release_X64)|Any CPU" Project="Release" />
+      <BuildType Solution="GCModeller(UNIX-Release_X64)|ARM32" Project="gcmodeller_desktop" />
+      <BuildType Solution="GCModeller(UNIX-Release_X64)|x64" Project="Release" />
+      <BuildType Solution="GCModeller(UNIX-Release_X64)|x86" Project="Release" />
+      <BuildType Solution="installer_x64|Any CPU" Project="nuget_release" />
+      <BuildType Solution="installer_x64|ARM32" Project="nuget_release" />
+      <BuildType Solution="installer_x64|x64" Project="PlantMAT" />
+      <BuildType Solution="installer_x64|x86" Project="nuget_release" />
+      <BuildType Solution="nuget_release|Any CPU" Project="mzkit" />
+      <BuildType Solution="nuget_release|ARM32" Project="mzkit_win32" />
+      <BuildType Solution="nuget_release|x86" Project="mzkit" />
+      <BuildType Solution="Publish|*" Project="PlantMAT" />
+      <BuildType Solution="RsharpDev|*" Project="Rsharp_app_release" />
+      <BuildType Solution="Yilia-Release_x64|*" Project="Release" />
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="Data_science/Mathematica/SignalProcessing/Signal.IO/signal_io-netcore5.vbproj">
+      <BuildType Solution="Biodeep|Any CPU" Project="Debug" />
+      <BuildType Solution="Biodeep|ARM32" Project="Rsharp_app_release" />
+      <BuildType Solution="Biodeep|x64" Project="Debug" />
+      <BuildType Solution="Biodeep|x86" Project="Debug" />
+      <BuildType Solution="Biostack|Any CPU" Project="Debug" />
+      <BuildType Solution="Biostack|ARM32" Project="Rsharp_app_release" />
+      <BuildType Solution="Biostack|x64" Project="Debug" />
+      <BuildType Solution="Biostack|x86" Project="Debug" />
+      <BuildType Solution="CFD_win32|*" Project="Rsharp_app_release" />
+      <BuildType Solution="Docker|*" Project="Debug" />
+      <BuildType Solution="GCModeller(Release_X64)|*" Project="Release" />
+      <BuildType Solution="GCModeller(UNIX-Release_X64)|*" Project="Release" />
+      <BuildType Solution="gcmodeller_desktop|Any CPU" Project="mzkit_win32" />
+      <BuildType Solution="gcmodeller_desktop|ARM32" Project="Rsharp_app_release" />
+      <BuildType Solution="gcmodeller_desktop|x64" Project="mzkit_win32" />
+      <BuildType Solution="gcmodeller_desktop|x86" Project="mzkit_win32" />
+      <BuildType Solution="installer_x64|*" Project="nuget_release" />
+      <BuildType Solution="mzkit_win32|Any CPU" Project="mzkit" />
+      <BuildType Solution="mzkit_win32|x64" Project="mzkit" />
+      <BuildType Solution="mzkit_win32|x86" Project="mzkit" />
+      <BuildType Solution="NPSearch|Any CPU" Project="Debug" />
+      <BuildType Solution="NPSearch|ARM32" Project="Rsharp_app_release" />
+      <BuildType Solution="NPSearch|x64" Project="Debug" />
+      <BuildType Solution="NPSearch|x86" Project="Debug" />
+      <BuildType Solution="nuget_release|Any CPU" Project="mzkit" />
+      <BuildType Solution="nuget_release|ARM32" Project="mzkit_win32" />
+      <BuildType Solution="nuget_release|x86" Project="mzkit" />
+      <BuildType Solution="PlantMAT|Any CPU" Project="Debug" />
+      <BuildType Solution="PlantMAT|ARM32" Project="Rsharp_app_release" />
+      <BuildType Solution="PlantMAT|x64" Project="Debug" />
+      <BuildType Solution="PlantMAT|x86" Project="Debug" />
+      <BuildType Solution="Publish|*" Project="nuget_release" />
+      <BuildType Solution="RsharpDev|*" Project="Rsharp_app_release" />
+      <BuildType Solution="Yilia-Release_x64|*" Project="Release" />
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="Data_science/Mathematica/SignalProcessing/wav/wav/waveFile-netcore5.vbproj">
+      <BuildType Solution="Biodeep|Any CPU" Project="Debug" />
+      <BuildType Solution="Biodeep|ARM32" Project="mzkit_win32" />
+      <BuildType Solution="Biodeep|x64" Project="Debug" />
+      <BuildType Solution="Biodeep|x86" Project="Debug" />
+      <BuildType Solution="Biostack|Any CPU" Project="Debug" />
+      <BuildType Solution="Biostack|ARM32" Project="mzkit_win32" />
+      <BuildType Solution="Biostack|x64" Project="Debug" />
+      <BuildType Solution="Biostack|x86" Project="Debug" />
+      <BuildType Solution="CFD_win32|*" Project="mzkit_win32" />
+      <BuildType Solution="Docker|*" Project="Debug" />
+      <BuildType Solution="GCModeller(Release_X64)|*" Project="Release" />
+      <BuildType Solution="GCModeller(UNIX-Release_X64)|*" Project="Release" />
+      <BuildType Solution="gcmodeller_desktop|Any CPU" Project="Rsharp_app_release" />
+      <BuildType Solution="gcmodeller_desktop|ARM32" Project="mzkit_win32" />
+      <BuildType Solution="gcmodeller_desktop|x64" Project="Rsharp_app_release" />
+      <BuildType Solution="gcmodeller_desktop|x86" Project="Rsharp_app_release" />
+      <BuildType Solution="installer_x64|*" Project="nuget_release" />
+      <BuildType Solution="LipidSearch|Any CPU" Project="Debug" />
+      <BuildType Solution="LipidSearch|ARM32" Project="mzkit_win32" />
+      <BuildType Solution="LipidSearch|x64" Project="Debug" />
+      <BuildType Solution="LipidSearch|x86" Project="Debug" />
+      <BuildType Solution="mzkit|Any CPU" Project="Debug" />
+      <BuildType Solution="mzkit|ARM32" Project="mzkit_win32" />
+      <BuildType Solution="mzkit|x64" Project="Debug" />
+      <BuildType Solution="mzkit|x86" Project="Debug" />
+      <BuildType Solution="NPSearch|Any CPU" Project="Debug" />
+      <BuildType Solution="NPSearch|ARM32" Project="mzkit_win32" />
+      <BuildType Solution="NPSearch|x64" Project="Debug" />
+      <BuildType Solution="NPSearch|x86" Project="Debug" />
+      <BuildType Solution="nuget_release|Any CPU" Project="Debug" />
+      <BuildType Solution="nuget_release|ARM32" Project="mzkit_win32" />
+      <BuildType Solution="nuget_release|x86" Project="Debug" />
+      <BuildType Solution="PlantMAT|Any CPU" Project="Debug" />
+      <BuildType Solution="PlantMAT|ARM32" Project="mzkit_win32" />
+      <BuildType Solution="PlantMAT|x64" Project="Debug" />
+      <BuildType Solution="PlantMAT|x86" Project="Debug" />
+      <BuildType Solution="Publish|*" Project="nuget_release" />
+      <BuildType Solution="RsharpDev|*" Project="Rsharp_app_release" />
+      <BuildType Solution="Yilia-Release_x64|*" Project="Release" />
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+  </Folder>
+  <Folder Name="/packages/machine_learning/">
+    <Project Path="Data_science/DataMining/BinaryTree/btree-netcore5.vbproj">
+      <BuildType Solution="Biodeep|Any CPU" Project="Debug" />
+      <BuildType Solution="Biodeep|ARM32" Project="Rsharp_app_release" />
+      <BuildType Solution="Biodeep|x64" Project="Debug" />
+      <BuildType Solution="Biodeep|x86" Project="Debug" />
+      <BuildType Solution="Biostack|Any CPU" Project="Debug" />
+      <BuildType Solution="Biostack|ARM32" Project="Rsharp_app_release" />
+      <BuildType Solution="Biostack|x64" Project="Debug" />
+      <BuildType Solution="Biostack|x86" Project="Debug" />
+      <BuildType Solution="CFD_win32|*" Project="Rsharp_app_release" />
+      <BuildType Solution="Docker|*" Project="Debug" />
+      <BuildType Solution="GCModeller(Release_X64)|Any CPU" Project="Release" />
+      <BuildType Solution="GCModeller(Release_X64)|ARM32" Project="gcmodeller_desktop" />
+      <BuildType Solution="GCModeller(Release_X64)|x64" Project="Release" />
+      <BuildType Solution="GCModeller(Release_X64)|x86" Project="Release" />
+      <BuildType Solution="GCModeller(UNIX-Release_X64)|Any CPU" Project="Release" />
+      <BuildType Solution="GCModeller(UNIX-Release_X64)|ARM32" Project="gcmodeller_desktop" />
+      <BuildType Solution="GCModeller(UNIX-Release_X64)|x64" Project="Release" />
+      <BuildType Solution="GCModeller(UNIX-Release_X64)|x86" Project="Release" />
+      <BuildType Solution="installer_x64|*" Project="nuget_release" />
+      <BuildType Solution="mzkit|Any CPU" Project="Debug" />
+      <BuildType Solution="mzkit|ARM32" Project="mzkit_win32" />
+      <BuildType Solution="mzkit|x64" Project="Debug" />
+      <BuildType Solution="mzkit|x86" Project="Debug" />
+      <BuildType Solution="NPSearch|*" Project="Rsharp_app_release" />
+      <BuildType Solution="nuget_release|Any CPU" Project="Debug" />
+      <BuildType Solution="nuget_release|ARM32" Project="mzkit_win32" />
+      <BuildType Solution="nuget_release|x86" Project="Debug" />
+      <BuildType Solution="PlantMAT|*" Project="Rsharp_app_release" />
+      <BuildType Solution="Publish|*" Project="nuget_release" />
+      <BuildType Solution="RsharpDev|*" Project="Rsharp_app_release" />
+      <BuildType Solution="Yilia-Release_x64|*" Project="Release" />
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="Data_science/DataMining/DataMining/DataMining.NET5.vbproj">
+      <BuildType Solution="Biodeep|Any CPU" Project="Debug" />
+      <BuildType Solution="Biodeep|ARM32" Project="Rsharp_app_release" />
+      <BuildType Solution="Biodeep|x64" Project="Debug" />
+      <BuildType Solution="Biodeep|x86" Project="Debug" />
+      <BuildType Solution="Biostack|Any CPU" Project="Debug" />
+      <BuildType Solution="Biostack|ARM32" Project="Rsharp_app_release" />
+      <BuildType Solution="Biostack|x64" Project="Debug" />
+      <BuildType Solution="Biostack|x86" Project="Debug" />
+      <BuildType Solution="CFD_win32|*" Project="Rsharp_app_release" />
+      <BuildType Solution="Docker|*" Project="Debug" />
+      <BuildType Solution="GCModeller(Release_X64)|Any CPU" Project="Release" />
+      <BuildType Solution="GCModeller(Release_X64)|ARM32" Project="gcmodeller_desktop" />
+      <BuildType Solution="GCModeller(Release_X64)|x64" Project="Release" />
+      <BuildType Solution="GCModeller(Release_X64)|x86" Project="Release" />
+      <BuildType Solution="GCModeller(UNIX-Release_X64)|Any CPU" Project="Release" />
+      <BuildType Solution="GCModeller(UNIX-Release_X64)|ARM32" Project="gcmodeller_desktop" />
+      <BuildType Solution="GCModeller(UNIX-Release_X64)|x64" Project="Release" />
+      <BuildType Solution="GCModeller(UNIX-Release_X64)|x86" Project="Release" />
+      <BuildType Solution="installer_x64|*" Project="nuget_release" />
+      <BuildType Solution="NPSearch|Any CPU" Project="Debug" />
+      <BuildType Solution="NPSearch|ARM32" Project="Rsharp_app_release" />
+      <BuildType Solution="NPSearch|x64" Project="Debug" />
+      <BuildType Solution="NPSearch|x86" Project="Debug" />
+      <BuildType Solution="nuget_release|Any CPU" Project="mzkit" />
+      <BuildType Solution="nuget_release|ARM32" Project="mzkit_win32" />
+      <BuildType Solution="nuget_release|x86" Project="mzkit" />
+      <BuildType Solution="PlantMAT|Any CPU" Project="Debug" />
+      <BuildType Solution="PlantMAT|ARM32" Project="Rsharp_app_release" />
+      <BuildType Solution="PlantMAT|x64" Project="Debug" />
+      <BuildType Solution="PlantMAT|x86" Project="Debug" />
+      <BuildType Solution="Publish|*" Project="nuget_release" />
+      <BuildType Solution="RsharpDev|*" Project="Rsharp_app_release" />
+      <BuildType Solution="Yilia-Release_x64|*" Project="Release" />
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="Data_science/DataMining/DensityQuery/DensityQuery.NET5.vbproj">
+      <BuildType Solution="Biodeep|Any CPU" Project="Debug" />
+      <BuildType Solution="Biodeep|ARM32" Project="Rsharp_app_release" />
+      <BuildType Solution="Biodeep|x64" Project="Debug" />
+      <BuildType Solution="Biodeep|x86" Project="Debug" />
+      <BuildType Solution="Biostack|Any CPU" Project="Debug" />
+      <BuildType Solution="Biostack|ARM32" Project="Rsharp_app_release" />
+      <BuildType Solution="Biostack|x64" Project="Debug" />
+      <BuildType Solution="Biostack|x86" Project="Debug" />
+      <BuildType Solution="CFD_win32|*" Project="Rsharp_app_release" />
+      <BuildType Solution="Docker|*" Project="Debug" />
+      <BuildType Solution="GCModeller(Release_X64)|Any CPU" Project="Release" />
+      <BuildType Solution="GCModeller(Release_X64)|ARM32" Project="gcmodeller_desktop" />
+      <BuildType Solution="GCModeller(Release_X64)|x64" Project="Release" />
+      <BuildType Solution="GCModeller(Release_X64)|x86" Project="Release" />
+      <BuildType Solution="GCModeller(UNIX-Release_X64)|Any CPU" Project="Release" />
+      <BuildType Solution="GCModeller(UNIX-Release_X64)|ARM32" Project="gcmodeller_desktop" />
+      <BuildType Solution="GCModeller(UNIX-Release_X64)|x64" Project="Release" />
+      <BuildType Solution="GCModeller(UNIX-Release_X64)|x86" Project="Release" />
+      <BuildType Solution="installer_x64|*" Project="nuget_release" />
+      <BuildType Solution="NPSearch|Any CPU" Project="Debug" />
+      <BuildType Solution="NPSearch|ARM32" Project="Rsharp_app_release" />
+      <BuildType Solution="NPSearch|x64" Project="Debug" />
+      <BuildType Solution="NPSearch|x86" Project="Debug" />
+      <BuildType Solution="nuget_release|Any CPU" Project="mzkit" />
+      <BuildType Solution="nuget_release|ARM32" Project="mzkit_win32" />
+      <BuildType Solution="nuget_release|x86" Project="mzkit" />
+      <BuildType Solution="PlantMAT|Any CPU" Project="Debug" />
+      <BuildType Solution="PlantMAT|ARM32" Project="Rsharp_app_release" />
+      <BuildType Solution="PlantMAT|x64" Project="Debug" />
+      <BuildType Solution="PlantMAT|x86" Project="Debug" />
+      <BuildType Solution="Publish|*" Project="nuget_release" />
+      <BuildType Solution="RsharpDev|*" Project="Rsharp_app_release" />
+      <BuildType Solution="Yilia-Release_x64|*" Project="Release" />
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="Data_science/DataMining/DynamicProgramming/DynamicProgramming.NET5.vbproj">
+      <BuildType Solution="Biodeep|Any CPU" Project="Debug" />
+      <BuildType Solution="Biodeep|ARM32" Project="gcmodeller_desktop" />
+      <BuildType Solution="Biodeep|x64" Project="Debug" />
+      <BuildType Solution="Biodeep|x86" Project="Debug" />
+      <BuildType Solution="Biostack|Any CPU" Project="Debug" />
+      <BuildType Solution="Biostack|ARM32" Project="gcmodeller_desktop" />
+      <BuildType Solution="Biostack|x64" Project="Debug" />
+      <BuildType Solution="Biostack|x86" Project="Debug" />
+      <BuildType Solution="CFD_win32|*" Project="gcmodeller_desktop" />
+      <BuildType Solution="Docker|*" Project="Debug" />
+      <BuildType Solution="GCModeller(Release_X64)|Any CPU" Project="Release" />
+      <BuildType Solution="GCModeller(Release_X64)|ARM32" Project="gcmodeller_desktop" />
+      <BuildType Solution="GCModeller(Release_X64)|x64" Project="Release" />
+      <BuildType Solution="GCModeller(Release_X64)|x86" Project="Release" />
+      <BuildType Solution="GCModeller(UNIX-Release_X64)|Any CPU" Project="Release" />
+      <BuildType Solution="GCModeller(UNIX-Release_X64)|ARM32" Project="gcmodeller_desktop" />
+      <BuildType Solution="GCModeller(UNIX-Release_X64)|x64" Project="Release" />
+      <BuildType Solution="GCModeller(UNIX-Release_X64)|x86" Project="Release" />
+      <BuildType Solution="gcmodeller_desktop|Any CPU" Project="Debug" />
+      <BuildType Solution="gcmodeller_desktop|x64" Project="Debug" />
+      <BuildType Solution="gcmodeller_desktop|x86" Project="Debug" />
+      <BuildType Solution="installer_x64|Any CPU" Project="nuget_release" />
+      <BuildType Solution="installer_x64|ARM32" Project="nuget_release" />
+      <BuildType Solution="installer_x64|x64" Project="Rsharp_app_release" />
+      <BuildType Solution="installer_x64|x86" Project="nuget_release" />
+      <BuildType Solution="LipidSearch|Any CPU" Project="Debug" />
+      <BuildType Solution="LipidSearch|ARM32" Project="gcmodeller_desktop" />
+      <BuildType Solution="LipidSearch|x64" Project="Debug" />
+      <BuildType Solution="LipidSearch|x86" Project="Debug" />
+      <BuildType Solution="mzkit|*" Project="mzkit_win32" />
+      <BuildType Solution="NPSearch|Any CPU" Project="Debug" />
+      <BuildType Solution="NPSearch|ARM32" Project="gcmodeller_desktop" />
+      <BuildType Solution="NPSearch|x64" Project="Debug" />
+      <BuildType Solution="NPSearch|x86" Project="Debug" />
+      <BuildType Solution="nuget_release|Any CPU" Project="mzkit_win32" />
+      <BuildType Solution="nuget_release|ARM32" Project="mzkit_win32" />
+      <BuildType Solution="nuget_release|x86" Project="mzkit_win32" />
+      <BuildType Solution="PlantMAT|Any CPU" Project="Debug" />
+      <BuildType Solution="PlantMAT|ARM32" Project="gcmodeller_desktop" />
+      <BuildType Solution="PlantMAT|x64" Project="Debug" />
+      <BuildType Solution="PlantMAT|x86" Project="Debug" />
+      <BuildType Solution="Publish|Any CPU" Project="nuget_release" />
+      <BuildType Solution="Publish|ARM32" Project="nuget_release" />
+      <BuildType Solution="Publish|x64" Project="Rsharp_app_release" />
+      <BuildType Solution="Publish|x86" Project="nuget_release" />
+      <BuildType Solution="RsharpDev|*" Project="Rsharp_app_release" />
+      <BuildType Solution="Yilia-Release_x64|*" Project="Release" />
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="Data_science/DataMining/FeatureFrame/FeatureFrame.vbproj">
+      <BuildType Solution="Biodeep|Any CPU" Project="Debug" />
+      <BuildType Solution="Biodeep|ARM32" Project="Rsharp_app_release" />
+      <BuildType Solution="Biodeep|x64" Project="Debug" />
+      <BuildType Solution="Biodeep|x86" Project="Debug" />
+      <BuildType Solution="Biostack|Any CPU" Project="Debug" />
+      <BuildType Solution="Biostack|ARM32" Project="Rsharp_app_release" />
+      <BuildType Solution="Biostack|x64" Project="Debug" />
+      <BuildType Solution="Biostack|x86" Project="Debug" />
+      <BuildType Solution="CFD_win32|*" Project="Rsharp_app_release" />
+      <BuildType Solution="Docker|*" Project="Debug" />
+      <BuildType Solution="GCModeller(Release_X64)|Any CPU" Project="Release" />
+      <BuildType Solution="GCModeller(Release_X64)|ARM32" Project="gcmodeller_desktop" />
+      <BuildType Solution="GCModeller(Release_X64)|x64" Project="Release" />
+      <BuildType Solution="GCModeller(Release_X64)|x86" Project="Release" />
+      <BuildType Solution="GCModeller(UNIX-Release_X64)|Any CPU" Project="Release" />
+      <BuildType Solution="GCModeller(UNIX-Release_X64)|ARM32" Project="gcmodeller_desktop" />
+      <BuildType Solution="GCModeller(UNIX-Release_X64)|x64" Project="Release" />
+      <BuildType Solution="GCModeller(UNIX-Release_X64)|x86" Project="Release" />
+      <BuildType Solution="installer_x64|*" Project="nuget_release" />
+      <BuildType Solution="NPSearch|Any CPU" Project="Debug" />
+      <BuildType Solution="NPSearch|ARM32" Project="Rsharp_app_release" />
+      <BuildType Solution="NPSearch|x64" Project="Debug" />
+      <BuildType Solution="NPSearch|x86" Project="Debug" />
+      <BuildType Solution="nuget_release|Any CPU" Project="mzkit_win32" />
+      <BuildType Solution="nuget_release|ARM32" Project="mzkit_win32" />
+      <BuildType Solution="nuget_release|x86" Project="mzkit_win32" />
+      <BuildType Solution="PlantMAT|Any CPU" Project="Debug" />
+      <BuildType Solution="PlantMAT|ARM32" Project="Rsharp_app_release" />
+      <BuildType Solution="PlantMAT|x64" Project="Debug" />
+      <BuildType Solution="PlantMAT|x86" Project="Debug" />
+      <BuildType Solution="Publish|*" Project="nuget_release" />
+      <BuildType Solution="RsharpDev|*" Project="Rsharp_app_release" />
+      <BuildType Solution="Yilia-Release_x64|*" Project="Release" />
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="Data_science/DataMining/hierarchical-clustering/hierarchical-clustering/hctree.NET5.vbproj">
+      <BuildType Solution="Biodeep|Any CPU" Project="Debug" />
+      <BuildType Solution="Biodeep|ARM32" Project="Rsharp_app_release" />
+      <BuildType Solution="Biodeep|x64" Project="Debug" />
+      <BuildType Solution="Biodeep|x86" Project="Debug" />
+      <BuildType Solution="Biostack|Any CPU" Project="Debug" />
+      <BuildType Solution="Biostack|ARM32" Project="Rsharp_app_release" />
+      <BuildType Solution="Biostack|x64" Project="Debug" />
+      <BuildType Solution="Biostack|x86" Project="Debug" />
+      <BuildType Solution="CFD_win32|*" Project="Rsharp_app_release" />
+      <BuildType Solution="Docker|*" Project="Debug" />
+      <BuildType Solution="GCModeller(Release_X64)|Any CPU" Project="Release" />
+      <BuildType Solution="GCModeller(Release_X64)|ARM32" Project="gcmodeller_desktop" />
+      <BuildType Solution="GCModeller(Release_X64)|x64" Project="Release" />
+      <BuildType Solution="GCModeller(Release_X64)|x86" Project="Release" />
+      <BuildType Solution="GCModeller(UNIX-Release_X64)|Any CPU" Project="Release" />
+      <BuildType Solution="GCModeller(UNIX-Release_X64)|ARM32" Project="gcmodeller_desktop" />
+      <BuildType Solution="GCModeller(UNIX-Release_X64)|x64" Project="Release" />
+      <BuildType Solution="GCModeller(UNIX-Release_X64)|x86" Project="Release" />
+      <BuildType Solution="installer_x64|*" Project="nuget_release" />
+      <BuildType Solution="mzkit|Any CPU" Project="Debug" />
+      <BuildType Solution="mzkit|x64" Project="Debug" />
+      <BuildType Solution="mzkit|x86" Project="Debug" />
+      <BuildType Solution="NPSearch|Any CPU" Project="mzkit" />
+      <BuildType Solution="NPSearch|ARM32" Project="Rsharp_app_release" />
+      <BuildType Solution="NPSearch|x64" Project="mzkit" />
+      <BuildType Solution="NPSearch|x86" Project="mzkit" />
+      <BuildType Solution="nuget_release|Any CPU" Project="Debug" />
+      <BuildType Solution="nuget_release|ARM32" Project="mzkit_win32" />
+      <BuildType Solution="nuget_release|x86" Project="Debug" />
+      <BuildType Solution="PlantMAT|Any CPU" Project="mzkit" />
+      <BuildType Solution="PlantMAT|ARM32" Project="Rsharp_app_release" />
+      <BuildType Solution="PlantMAT|x64" Project="mzkit" />
+      <BuildType Solution="PlantMAT|x86" Project="mzkit" />
+      <BuildType Solution="Publish|*" Project="nuget_release" />
+      <BuildType Solution="RsharpDev|*" Project="Rsharp_app_release" />
+      <BuildType Solution="Yilia-Release_x64|*" Project="Release" />
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="Data_science/DataMining/HMM/HMM.NET5.vbproj">
+      <BuildType Solution="Biodeep|Any CPU" Project="Debug" />
+      <BuildType Solution="Biodeep|ARM32" Project="Rsharp_app_release" />
+      <BuildType Solution="Biodeep|x64" Project="Debug" />
+      <BuildType Solution="Biodeep|x86" Project="Debug" />
+      <BuildType Solution="Biostack|Any CPU" Project="Debug" />
+      <BuildType Solution="Biostack|ARM32" Project="Rsharp_app_release" />
+      <BuildType Solution="Biostack|x64" Project="Debug" />
+      <BuildType Solution="Biostack|x86" Project="Debug" />
+      <BuildType Solution="CFD_win32|*" Project="Rsharp_app_release" />
+      <BuildType Solution="Docker|*" Project="Debug" />
+      <BuildType Solution="GCModeller(Release_X64)|Any CPU" Project="Release" />
+      <BuildType Solution="GCModeller(Release_X64)|ARM32" Project="gcmodeller_desktop" />
+      <BuildType Solution="GCModeller(Release_X64)|x64" Project="Release" />
+      <BuildType Solution="GCModeller(Release_X64)|x86" Project="Release" />
+      <BuildType Solution="GCModeller(UNIX-Release_X64)|Any CPU" Project="Release" />
+      <BuildType Solution="GCModeller(UNIX-Release_X64)|ARM32" Project="gcmodeller_desktop" />
+      <BuildType Solution="GCModeller(UNIX-Release_X64)|x64" Project="Release" />
+      <BuildType Solution="GCModeller(UNIX-Release_X64)|x86" Project="Release" />
+      <BuildType Solution="installer_x64|*" Project="nuget_release" />
+      <BuildType Solution="LipidSearch|Any CPU" Project="Debug" />
+      <BuildType Solution="LipidSearch|ARM32" Project="Rsharp_app_release" />
+      <BuildType Solution="LipidSearch|x64" Project="Debug" />
+      <BuildType Solution="LipidSearch|x86" Project="Debug" />
+      <BuildType Solution="mzkit|Any CPU" Project="Debug" />
+      <BuildType Solution="mzkit|ARM32" Project="mzkit_win32" />
+      <BuildType Solution="mzkit|x64" Project="Debug" />
+      <BuildType Solution="mzkit|x86" Project="Debug" />
+      <BuildType Solution="NPSearch|Any CPU" Project="Rsharp_app_release" />
+      <BuildType Solution="NPSearch|ARM32" Project="Rsharp_app_release" />
+      <BuildType Solution="NPSearch|x64" Project="Release" />
+      <BuildType Solution="NPSearch|x86" Project="Rsharp_app_release" />
+      <BuildType Solution="nuget_release|Any CPU" Project="Debug" />
+      <BuildType Solution="nuget_release|ARM32" Project="mzkit_win32" />
+      <BuildType Solution="nuget_release|x86" Project="Debug" />
+      <BuildType Solution="PlantMAT|Any CPU" Project="Rsharp_app_release" />
+      <BuildType Solution="PlantMAT|ARM32" Project="Rsharp_app_release" />
+      <BuildType Solution="PlantMAT|x64" Project="Release" />
+      <BuildType Solution="PlantMAT|x86" Project="Rsharp_app_release" />
+      <BuildType Solution="Publish|*" Project="nuget_release" />
+      <BuildType Solution="RsharpDev|Any CPU" Project="Release" />
+      <BuildType Solution="RsharpDev|ARM32" Project="Rsharp_app_release" />
+      <BuildType Solution="RsharpDev|x64" Project="Release" />
+      <BuildType Solution="RsharpDev|x86" Project="Release" />
+      <BuildType Solution="Rsharp_app_release|Any CPU" Project="Release" />
+      <BuildType Solution="Rsharp_app_release|x86" Project="Release" />
+      <BuildType Solution="Yilia-Release_x64|*" Project="Release" />
+      <Platform Solution="CFD_win32|x64" Project="x64" />
+      <Platform Solution="Debug|x64" Project="x64" />
+      <Platform Solution="gcmodeller_desktop|x64" Project="x64" />
+      <Platform Solution="installer_x64|x64" Project="x64" />
+      <Platform Solution="mzkit_win32|x64" Project="x64" />
+      <Platform Solution="NPSearch|x64" Project="x64" />
+      <Platform Solution="nuget_release|x64" Project="x64" />
+      <Platform Solution="PlantMAT|x64" Project="x64" />
+      <Platform Solution="Publish|x64" Project="x64" />
+      <Platform Solution="Rsharp_app_release|x64" Project="x64" />
+      <Platform Solution="Yilia-Release_x64|x64" Project="x64" />
+    </Project>
+    <Project Path="Data_science/DataMining/UMAP/UMAP.NET5.vbproj">
+      <BuildType Solution="Biodeep|Any CPU" Project="Debug" />
+      <BuildType Solution="Biodeep|ARM32" Project="Rsharp_app_release" />
+      <BuildType Solution="Biodeep|x64" Project="Debug" />
+      <BuildType Solution="Biodeep|x86" Project="Debug" />
+      <BuildType Solution="Biostack|Any CPU" Project="Debug" />
+      <BuildType Solution="Biostack|ARM32" Project="Rsharp_app_release" />
+      <BuildType Solution="Biostack|x64" Project="Debug" />
+      <BuildType Solution="Biostack|x86" Project="Debug" />
+      <BuildType Solution="CFD_win32|*" Project="Rsharp_app_release" />
+      <BuildType Solution="Docker|*" Project="Debug" />
+      <BuildType Solution="GCModeller(Release_X64)|Any CPU" Project="Release" />
+      <BuildType Solution="GCModeller(Release_X64)|ARM32" Project="gcmodeller_desktop" />
+      <BuildType Solution="GCModeller(Release_X64)|x64" Project="Release" />
+      <BuildType Solution="GCModeller(Release_X64)|x86" Project="Release" />
+      <BuildType Solution="GCModeller(UNIX-Release_X64)|Any CPU" Project="Release" />
+      <BuildType Solution="GCModeller(UNIX-Release_X64)|ARM32" Project="gcmodeller_desktop" />
+      <BuildType Solution="GCModeller(UNIX-Release_X64)|x64" Project="Release" />
+      <BuildType Solution="GCModeller(UNIX-Release_X64)|x86" Project="Release" />
+      <BuildType Solution="installer_x64|*" Project="nuget_release" />
+      <BuildType Solution="mzkit_win32|*" Project="mzkit" />
+      <BuildType Solution="mzkit|Any CPU" Project="Debug" />
+      <BuildType Solution="mzkit|x64" Project="Debug" />
+      <BuildType Solution="mzkit|x86" Project="Debug" />
+      <BuildType Solution="NPSearch|Any CPU" Project="mzkit" />
+      <BuildType Solution="NPSearch|ARM32" Project="Rsharp_app_release" />
+      <BuildType Solution="NPSearch|x64" Project="mzkit" />
+      <BuildType Solution="NPSearch|x86" Project="mzkit" />
+      <BuildType Solution="nuget_release|Any CPU" Project="Debug" />
+      <BuildType Solution="nuget_release|ARM32" Project="mzkit" />
+      <BuildType Solution="nuget_release|x86" Project="Debug" />
+      <BuildType Solution="PlantMAT|Any CPU" Project="mzkit" />
+      <BuildType Solution="PlantMAT|ARM32" Project="Rsharp_app_release" />
+      <BuildType Solution="PlantMAT|x64" Project="mzkit" />
+      <BuildType Solution="PlantMAT|x86" Project="mzkit" />
+      <BuildType Solution="Publish|*" Project="nuget_release" />
+      <BuildType Solution="RsharpDev|*" Project="Rsharp_app_release" />
+      <BuildType Solution="Yilia-Release_x64|*" Project="Release" />
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="Data_science/MachineLearning/DeepLearning/DeepLearning.NET6.vbproj">
+      <BuildType Solution="Biodeep|Any CPU" Project="Debug" />
+      <BuildType Solution="Biodeep|ARM32" Project="Rsharp_app_release" />
+      <BuildType Solution="Biodeep|x64" Project="Debug" />
+      <BuildType Solution="Biodeep|x86" Project="Debug" />
+      <BuildType Solution="Biostack|Any CPU" Project="Debug" />
+      <BuildType Solution="Biostack|ARM32" Project="Rsharp_app_release" />
+      <BuildType Solution="Biostack|x64" Project="Debug" />
+      <BuildType Solution="Biostack|x86" Project="Debug" />
+      <BuildType Solution="CFD_win32|*" Project="Rsharp_app_release" />
+      <BuildType Solution="Docker|*" Project="Debug" />
+      <BuildType Solution="GCModeller(Release_X64)|Any CPU" Project="Release" />
+      <BuildType Solution="GCModeller(Release_X64)|ARM32" Project="gcmodeller_desktop" />
+      <BuildType Solution="GCModeller(Release_X64)|x64" Project="Release" />
+      <BuildType Solution="GCModeller(Release_X64)|x86" Project="Release" />
+      <BuildType Solution="GCModeller(UNIX-Release_X64)|Any CPU" Project="Release" />
+      <BuildType Solution="GCModeller(UNIX-Release_X64)|ARM32" Project="gcmodeller_desktop" />
+      <BuildType Solution="GCModeller(UNIX-Release_X64)|x64" Project="Release" />
+      <BuildType Solution="GCModeller(UNIX-Release_X64)|x86" Project="Release" />
+      <BuildType Solution="installer_x64|*" Project="nuget_release" />
+      <BuildType Solution="NPSearch|Any CPU" Project="Debug" />
+      <BuildType Solution="NPSearch|ARM32" Project="Rsharp_app_release" />
+      <BuildType Solution="NPSearch|x64" Project="Debug" />
+      <BuildType Solution="NPSearch|x86" Project="Debug" />
+      <BuildType Solution="nuget_release|Any CPU" Project="mzkit_win32" />
+      <BuildType Solution="nuget_release|ARM32" Project="mzkit_win32" />
+      <BuildType Solution="nuget_release|x86" Project="mzkit_win32" />
+      <BuildType Solution="PlantMAT|Any CPU" Project="Debug" />
+      <BuildType Solution="PlantMAT|ARM32" Project="Rsharp_app_release" />
+      <BuildType Solution="PlantMAT|x64" Project="Debug" />
+      <BuildType Solution="PlantMAT|x86" Project="Debug" />
+      <BuildType Solution="Publish|*" Project="nuget_release" />
+      <BuildType Solution="RsharpDev|*" Project="Rsharp_app_release" />
+      <BuildType Solution="Yilia-Release_x64|*" Project="Release" />
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="Data_science/MachineLearning/MachineLearning.Data.Extensions/MachineLearning.Data.Extensions.vbproj">
+      <BuildType Solution="Biodeep|Any CPU" Project="Debug" />
+      <BuildType Solution="Biodeep|ARM32" Project="Rsharp_app_release" />
+      <BuildType Solution="Biodeep|x64" Project="Debug" />
+      <BuildType Solution="Biodeep|x86" Project="Debug" />
+      <BuildType Solution="Biostack|Any CPU" Project="Debug" />
+      <BuildType Solution="Biostack|ARM32" Project="Rsharp_app_release" />
+      <BuildType Solution="Biostack|x64" Project="Debug" />
+      <BuildType Solution="Biostack|x86" Project="Debug" />
+      <BuildType Solution="CFD_win32|*" Project="Rsharp_app_release" />
+      <BuildType Solution="Docker|*" Project="Debug" />
+      <BuildType Solution="GCModeller(Release_X64)|Any CPU" Project="Release" />
+      <BuildType Solution="GCModeller(Release_X64)|ARM32" Project="gcmodeller_desktop" />
+      <BuildType Solution="GCModeller(Release_X64)|x64" Project="Release" />
+      <BuildType Solution="GCModeller(Release_X64)|x86" Project="Release" />
+      <BuildType Solution="GCModeller(UNIX-Release_X64)|Any CPU" Project="Release" />
+      <BuildType Solution="GCModeller(UNIX-Release_X64)|ARM32" Project="gcmodeller_desktop" />
+      <BuildType Solution="GCModeller(UNIX-Release_X64)|x64" Project="Release" />
+      <BuildType Solution="GCModeller(UNIX-Release_X64)|x86" Project="Release" />
+      <BuildType Solution="installer_x64|*" Project="nuget_release" />
+      <BuildType Solution="mzkit|*" Project="mzkit_win32" />
+      <BuildType Solution="NPSearch|Any CPU" Project="Debug" />
+      <BuildType Solution="NPSearch|ARM32" Project="Rsharp_app_release" />
+      <BuildType Solution="NPSearch|x64" Project="Debug" />
+      <BuildType Solution="NPSearch|x86" Project="Debug" />
+      <BuildType Solution="nuget_release|Any CPU" Project="mzkit_win32" />
+      <BuildType Solution="nuget_release|ARM32" Project="mzkit_win32" />
+      <BuildType Solution="nuget_release|x86" Project="mzkit_win32" />
+      <BuildType Solution="PlantMAT|Any CPU" Project="Debug" />
+      <BuildType Solution="PlantMAT|ARM32" Project="Rsharp_app_release" />
+      <BuildType Solution="PlantMAT|x64" Project="Debug" />
+      <BuildType Solution="PlantMAT|x86" Project="Debug" />
+      <BuildType Solution="Publish|*" Project="nuget_release" />
+      <BuildType Solution="RsharpDev|*" Project="Rsharp_app_release" />
+      <BuildType Solution="Yilia-Release_x64|*" Project="Release" />
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="Data_science/MachineLearning/MachineLearning/machine_learning-netcore5.vbproj">
+      <BuildType Solution="Biodeep|Any CPU" Project="Debug" />
+      <BuildType Solution="Biodeep|ARM32" Project="Rsharp_app_release" />
+      <BuildType Solution="Biodeep|x64" Project="Debug" />
+      <BuildType Solution="Biodeep|x86" Project="Debug" />
+      <BuildType Solution="Biostack|Any CPU" Project="Debug" />
+      <BuildType Solution="Biostack|ARM32" Project="Rsharp_app_release" />
+      <BuildType Solution="Biostack|x64" Project="Debug" />
+      <BuildType Solution="Biostack|x86" Project="Debug" />
+      <BuildType Solution="CFD_win32|*" Project="Rsharp_app_release" />
+      <BuildType Solution="Docker|*" Project="Debug" />
+      <BuildType Solution="GCModeller(Release_X64)|Any CPU" Project="Release" />
+      <BuildType Solution="GCModeller(Release_X64)|ARM32" Project="gcmodeller_desktop" />
+      <BuildType Solution="GCModeller(Release_X64)|x64" Project="Release" />
+      <BuildType Solution="GCModeller(Release_X64)|x86" Project="Release" />
+      <BuildType Solution="GCModeller(UNIX-Release_X64)|Any CPU" Project="Release" />
+      <BuildType Solution="GCModeller(UNIX-Release_X64)|ARM32" Project="gcmodeller_desktop" />
+      <BuildType Solution="GCModeller(UNIX-Release_X64)|x64" Project="Release" />
+      <BuildType Solution="GCModeller(UNIX-Release_X64)|x86" Project="Release" />
+      <BuildType Solution="installer_x64|*" Project="nuget_release" />
+      <BuildType Solution="mzkit|Any CPU" Project="Debug" />
+      <BuildType Solution="mzkit|x64" Project="Debug" />
+      <BuildType Solution="mzkit|x86" Project="Debug" />
+      <BuildType Solution="NPSearch|Any CPU" Project="mzkit" />
+      <BuildType Solution="NPSearch|ARM32" Project="Rsharp_app_release" />
+      <BuildType Solution="NPSearch|x64" Project="mzkit" />
+      <BuildType Solution="NPSearch|x86" Project="mzkit" />
+      <BuildType Solution="nuget_release|Any CPU" Project="Debug" />
+      <BuildType Solution="nuget_release|ARM32" Project="mzkit_win32" />
+      <BuildType Solution="nuget_release|x86" Project="Debug" />
+      <BuildType Solution="PlantMAT|Any CPU" Project="mzkit" />
+      <BuildType Solution="PlantMAT|ARM32" Project="Rsharp_app_release" />
+      <BuildType Solution="PlantMAT|x64" Project="mzkit" />
+      <BuildType Solution="PlantMAT|x86" Project="mzkit" />
+      <BuildType Solution="Publish|*" Project="nuget_release" />
+      <BuildType Solution="RsharpDev|*" Project="Rsharp_app_release" />
+      <BuildType Solution="Yilia-Release_x64|*" Project="Release" />
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="Data_science/MachineLearning/MLDataStorage/MLDataStorage.vbproj">
+      <BuildType Solution="Biodeep|Any CPU" Project="Debug" />
+      <BuildType Solution="Biodeep|ARM32" Project="Rsharp_app_release" />
+      <BuildType Solution="Biodeep|x64" Project="Debug" />
+      <BuildType Solution="Biodeep|x86" Project="Debug" />
+      <BuildType Solution="Biostack|Any CPU" Project="Debug" />
+      <BuildType Solution="Biostack|ARM32" Project="Rsharp_app_release" />
+      <BuildType Solution="Biostack|x64" Project="Debug" />
+      <BuildType Solution="Biostack|x86" Project="Debug" />
+      <BuildType Solution="CFD_win32|*" Project="Rsharp_app_release" />
+      <BuildType Solution="Docker|*" Project="Debug" />
+      <BuildType Solution="GCModeller(Release_X64)|*" Project="gcmodeller_desktop" />
+      <BuildType Solution="GCModeller(UNIX-Release_X64)|*" Project="gcmodeller_desktop" />
+      <BuildType Solution="installer_x64|Any CPU" Project="nuget_release" />
+      <BuildType Solution="installer_x64|ARM32" Project="nuget_release" />
+      <BuildType Solution="installer_x64|x64" Project="Release" />
+      <BuildType Solution="installer_x64|x86" Project="nuget_release" />
+      <BuildType Solution="NPSearch|Any CPU" Project="Debug" />
+      <BuildType Solution="NPSearch|ARM32" Project="Rsharp_app_release" />
+      <BuildType Solution="NPSearch|x64" Project="Debug" />
+      <BuildType Solution="NPSearch|x86" Project="Debug" />
+      <BuildType Solution="nuget_release|Any CPU" Project="mzkit_win32" />
+      <BuildType Solution="nuget_release|ARM32" Project="mzkit_win32" />
+      <BuildType Solution="nuget_release|x86" Project="mzkit_win32" />
+      <BuildType Solution="PlantMAT|Any CPU" Project="Debug" />
+      <BuildType Solution="PlantMAT|ARM32" Project="Rsharp_app_release" />
+      <BuildType Solution="PlantMAT|x64" Project="Debug" />
+      <BuildType Solution="PlantMAT|x86" Project="Debug" />
+      <BuildType Solution="Publish|Any CPU" Project="nuget_release" />
+      <BuildType Solution="Publish|ARM32" Project="nuget_release" />
+      <BuildType Solution="Publish|x64" Project="Release" />
+      <BuildType Solution="Publish|x86" Project="nuget_release" />
+      <BuildType Solution="RsharpDev|*" Project="Rsharp_app_release" />
+      <BuildType Solution="Yilia-Release_x64|*" Project="Release" />
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="Data_science/MachineLearning/MLDebugger/ML_debugger-netcore5.vbproj">
+      <BuildType Solution="Biodeep|Any CPU" Project="Debug" />
+      <BuildType Solution="Biodeep|ARM32" Project="Rsharp_app_release" />
+      <BuildType Solution="Biodeep|x64" Project="Debug" />
+      <BuildType Solution="Biodeep|x86" Project="Debug" />
+      <BuildType Solution="Biostack|Any CPU" Project="Debug" />
+      <BuildType Solution="Biostack|ARM32" Project="Rsharp_app_release" />
+      <BuildType Solution="Biostack|x64" Project="Debug" />
+      <BuildType Solution="Biostack|x86" Project="Debug" />
+      <BuildType Solution="CFD_win32|*" Project="Rsharp_app_release" />
+      <BuildType Solution="Docker|*" Project="Debug" />
+      <BuildType Solution="GCModeller(Release_X64)|Any CPU" Project="Release" />
+      <BuildType Solution="GCModeller(Release_X64)|ARM32" Project="gcmodeller_desktop" />
+      <BuildType Solution="GCModeller(Release_X64)|x64" Project="Release" />
+      <BuildType Solution="GCModeller(Release_X64)|x86" Project="Release" />
+      <BuildType Solution="GCModeller(UNIX-Release_X64)|Any CPU" Project="Release" />
+      <BuildType Solution="GCModeller(UNIX-Release_X64)|ARM32" Project="gcmodeller_desktop" />
+      <BuildType Solution="GCModeller(UNIX-Release_X64)|x64" Project="Release" />
+      <BuildType Solution="GCModeller(UNIX-Release_X64)|x86" Project="Release" />
+      <BuildType Solution="installer_x64|*" Project="nuget_release" />
+      <BuildType Solution="mzkit|Any CPU" Project="Debug" />
+      <BuildType Solution="mzkit|ARM32" Project="mzkit_win32" />
+      <BuildType Solution="mzkit|x64" Project="Debug" />
+      <BuildType Solution="mzkit|x86" Project="Debug" />
+      <BuildType Solution="NPSearch|*" Project="Rsharp_app_release" />
+      <BuildType Solution="nuget_release|Any CPU" Project="Debug" />
+      <BuildType Solution="nuget_release|ARM32" Project="mzkit_win32" />
+      <BuildType Solution="nuget_release|x86" Project="Debug" />
+      <BuildType Solution="PlantMAT|*" Project="Rsharp_app_release" />
+      <BuildType Solution="Publish|*" Project="nuget_release" />
+      <BuildType Solution="RsharpDev|*" Project="Rsharp_app_release" />
+      <BuildType Solution="Yilia-Release_x64|*" Project="Release" />
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="Data_science/MachineLearning/t-SNE/t-SNE.NET5.vbproj">
+      <BuildType Solution="Biodeep|Any CPU" Project="Debug" />
+      <BuildType Solution="Biodeep|ARM32" Project="Rsharp_app_release" />
+      <BuildType Solution="Biodeep|x64" Project="Debug" />
+      <BuildType Solution="Biodeep|x86" Project="Debug" />
+      <BuildType Solution="Biostack|Any CPU" Project="Debug" />
+      <BuildType Solution="Biostack|ARM32" Project="Rsharp_app_release" />
+      <BuildType Solution="Biostack|x64" Project="Debug" />
+      <BuildType Solution="Biostack|x86" Project="Debug" />
+      <BuildType Solution="CFD_win32|Any CPU" Project="Rsharp_app_release" />
+      <BuildType Solution="CFD_win32|ARM32" Project="Rsharp_app_release" />
+      <BuildType Solution="CFD_win32|x64" Project="Release" />
+      <BuildType Solution="CFD_win32|x86" Project="Rsharp_app_release" />
+      <BuildType Solution="Docker|*" Project="Debug" />
+      <BuildType Solution="GCModeller(Release_X64)|Any CPU" Project="Release" />
+      <BuildType Solution="GCModeller(Release_X64)|ARM32" Project="gcmodeller_desktop" />
+      <BuildType Solution="GCModeller(Release_X64)|x64" Project="Release" />
+      <BuildType Solution="GCModeller(Release_X64)|x86" Project="Release" />
+      <BuildType Solution="GCModeller(UNIX-Release_X64)|Any CPU" Project="Release" />
+      <BuildType Solution="GCModeller(UNIX-Release_X64)|ARM32" Project="gcmodeller_desktop" />
+      <BuildType Solution="GCModeller(UNIX-Release_X64)|x64" Project="Release" />
+      <BuildType Solution="GCModeller(UNIX-Release_X64)|x86" Project="Release" />
+      <BuildType Solution="installer_x64|Any CPU" Project="nuget_release" />
+      <BuildType Solution="installer_x64|ARM32" Project="nuget_release" />
+      <BuildType Solution="installer_x64|x64" Project="Rsharp_app_release" />
+      <BuildType Solution="installer_x64|x86" Project="nuget_release" />
+      <BuildType Solution="LipidSearch|Any CPU" Project="Debug" />
+      <BuildType Solution="LipidSearch|ARM32" Project="Rsharp_app_release" />
+      <BuildType Solution="LipidSearch|x64" Project="Debug" />
+      <BuildType Solution="LipidSearch|x86" Project="Debug" />
+      <BuildType Solution="mzkit|Any CPU" Project="Debug" />
+      <BuildType Solution="mzkit|ARM32" Project="mzkit_win32" />
+      <BuildType Solution="mzkit|x64" Project="Debug" />
+      <BuildType Solution="mzkit|x86" Project="Debug" />
+      <BuildType Solution="NPSearch|Any CPU" Project="Debug" />
+      <BuildType Solution="NPSearch|ARM32" Project="Rsharp_app_release" />
+      <BuildType Solution="NPSearch|x64" Project="Debug" />
+      <BuildType Solution="NPSearch|x86" Project="Debug" />
+      <BuildType Solution="nuget_release|Any CPU" Project="Debug" />
+      <BuildType Solution="nuget_release|ARM32" Project="mzkit_win32" />
+      <BuildType Solution="nuget_release|x86" Project="Debug" />
+      <BuildType Solution="PlantMAT|Any CPU" Project="Debug" />
+      <BuildType Solution="PlantMAT|ARM32" Project="Rsharp_app_release" />
+      <BuildType Solution="PlantMAT|x64" Project="Debug" />
+      <BuildType Solution="PlantMAT|x86" Project="Debug" />
+      <BuildType Solution="Publish|Any CPU" Project="nuget_release" />
+      <BuildType Solution="Publish|ARM32" Project="nuget_release" />
+      <BuildType Solution="Publish|x64" Project="Rsharp_app_release" />
+      <BuildType Solution="Publish|x86" Project="nuget_release" />
+      <BuildType Solution="RsharpDev|Any CPU" Project="Release" />
+      <BuildType Solution="RsharpDev|ARM32" Project="Rsharp_app_release" />
+      <BuildType Solution="RsharpDev|x64" Project="Release" />
+      <BuildType Solution="RsharpDev|x86" Project="Release" />
+      <BuildType Solution="Rsharp_app_release|Any CPU" Project="Release" />
+      <BuildType Solution="Rsharp_app_release|x86" Project="Release" />
+      <BuildType Solution="Yilia-Release_x64|*" Project="Release" />
+      <Platform Solution="CFD_win32|x64" Project="x64" />
+      <Platform Solution="Debug|x64" Project="x64" />
+      <Platform Solution="gcmodeller_desktop|x64" Project="x64" />
+      <Platform Solution="installer_x64|x64" Project="x64" />
+      <Platform Solution="mzkit_win32|x64" Project="x64" />
+      <Platform Solution="nuget_release|x64" Project="x64" />
+      <Platform Solution="Publish|x64" Project="x64" />
+      <Platform Solution="Rsharp_app_release|x64" Project="x64" />
+      <Platform Solution="Yilia-Release_x64|x64" Project="x64" />
+    </Project>
+    <Project Path="Data_science/MachineLearning/TensorFlow/TensorFlow.vbproj">
+      <BuildType Solution="Biodeep|Any CPU" Project="Debug" />
+      <BuildType Solution="Biodeep|ARM32" Project="Rsharp_app_release" />
+      <BuildType Solution="Biodeep|x64" Project="Debug" />
+      <BuildType Solution="Biodeep|x86" Project="Debug" />
+      <BuildType Solution="Biostack|Any CPU" Project="Debug" />
+      <BuildType Solution="Biostack|ARM32" Project="Rsharp_app_release" />
+      <BuildType Solution="Biostack|x64" Project="Debug" />
+      <BuildType Solution="Biostack|x86" Project="Debug" />
+      <BuildType Solution="CFD_win32|*" Project="Rsharp_app_release" />
+      <BuildType Solution="Docker|*" Project="Debug" />
+      <BuildType Solution="GCModeller(Release_X64)|*" Project="gcmodeller_desktop" />
+      <BuildType Solution="GCModeller(UNIX-Release_X64)|*" Project="gcmodeller_desktop" />
+      <BuildType Solution="installer_x64|Any CPU" Project="nuget_release" />
+      <BuildType Solution="installer_x64|ARM32" Project="nuget_release" />
+      <BuildType Solution="installer_x64|x64" Project="Release" />
+      <BuildType Solution="installer_x64|x86" Project="nuget_release" />
+      <BuildType Solution="NPSearch|Any CPU" Project="Debug" />
+      <BuildType Solution="NPSearch|ARM32" Project="Rsharp_app_release" />
+      <BuildType Solution="NPSearch|x64" Project="Debug" />
+      <BuildType Solution="NPSearch|x86" Project="Debug" />
+      <BuildType Solution="nuget_release|Any CPU" Project="mzkit_win32" />
+      <BuildType Solution="nuget_release|ARM32" Project="mzkit_win32" />
+      <BuildType Solution="nuget_release|x86" Project="mzkit_win32" />
+      <BuildType Solution="PlantMAT|Any CPU" Project="Debug" />
+      <BuildType Solution="PlantMAT|ARM32" Project="Rsharp_app_release" />
+      <BuildType Solution="PlantMAT|x64" Project="Debug" />
+      <BuildType Solution="PlantMAT|x86" Project="Debug" />
+      <BuildType Solution="Publish|Any CPU" Project="nuget_release" />
+      <BuildType Solution="Publish|ARM32" Project="nuget_release" />
+      <BuildType Solution="Publish|x64" Project="Release" />
+      <BuildType Solution="Publish|x86" Project="nuget_release" />
+      <BuildType Solution="RsharpDev|*" Project="Rsharp_app_release" />
+      <BuildType Solution="Yilia-Release_x64|*" Project="Release" />
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="Data_science/MachineLearning/VAE/VAE.vbproj">
+      <BuildType Solution="Biodeep|Any CPU" Project="Debug" />
+      <BuildType Solution="Biodeep|ARM32" Project="LipidSearch" />
+      <BuildType Solution="Biodeep|x64" Project="Debug" />
+      <BuildType Solution="Biodeep|x86" Project="Debug" />
+      <BuildType Solution="Biostack|Any CPU" Project="Debug" />
+      <BuildType Solution="Biostack|ARM32" Project="LipidSearch" />
+      <BuildType Solution="Biostack|x64" Project="Debug" />
+      <BuildType Solution="Biostack|x86" Project="Debug" />
+      <BuildType Solution="CFD_win32|Any CPU" Project="LipidSearch" />
+      <BuildType Solution="CFD_win32|ARM32" Project="LipidSearch" />
+      <BuildType Solution="CFD_win32|x64" Project="Debug" />
+      <BuildType Solution="CFD_win32|x86" Project="LipidSearch" />
+      <BuildType Solution="Docker|*" Project="Debug" />
+      <BuildType Solution="GCModeller(Release_X64)|Any CPU" Project="Release" />
+      <BuildType Solution="GCModeller(Release_X64)|ARM32" Project="gcmodeller_desktop" />
+      <BuildType Solution="GCModeller(Release_X64)|x64" Project="Release" />
+      <BuildType Solution="GCModeller(Release_X64)|x86" Project="Release" />
+      <BuildType Solution="GCModeller(UNIX-Release_X64)|Any CPU" Project="Release" />
+      <BuildType Solution="GCModeller(UNIX-Release_X64)|ARM32" Project="gcmodeller_desktop" />
+      <BuildType Solution="GCModeller(UNIX-Release_X64)|x64" Project="Release" />
+      <BuildType Solution="GCModeller(UNIX-Release_X64)|x86" Project="Release" />
+      <BuildType Solution="gcmodeller_desktop|Any CPU" Project="Debug" />
+      <BuildType Solution="gcmodeller_desktop|x64" Project="Debug" />
+      <BuildType Solution="gcmodeller_desktop|x86" Project="Debug" />
+      <BuildType Solution="installer_x64|Any CPU" Project="nuget_release" />
+      <BuildType Solution="installer_x64|ARM32" Project="nuget_release" />
+      <BuildType Solution="installer_x64|x64" Project="Release" />
+      <BuildType Solution="installer_x64|x86" Project="nuget_release" />
+      <BuildType Solution="LipidSearch|Any CPU" Project="Debug" />
+      <BuildType Solution="LipidSearch|x64" Project="Debug" />
+      <BuildType Solution="LipidSearch|x86" Project="Debug" />
+      <BuildType Solution="mzkit_win32|Any CPU" Project="Debug" />
+      <BuildType Solution="mzkit_win32|x64" Project="Debug" />
+      <BuildType Solution="mzkit_win32|x86" Project="Debug" />
+      <BuildType Solution="mzkit|Any CPU" Project="Debug" />
+      <BuildType Solution="mzkit|x64" Project="Debug" />
+      <BuildType Solution="mzkit|x86" Project="Debug" />
+      <BuildType Solution="NPSearch|Any CPU" Project="Debug" />
+      <BuildType Solution="NPSearch|ARM32" Project="LipidSearch" />
+      <BuildType Solution="NPSearch|x64" Project="Debug" />
+      <BuildType Solution="NPSearch|x86" Project="Debug" />
+      <BuildType Solution="nuget_release|Any CPU" Project="Debug" />
+      <BuildType Solution="nuget_release|ARM32" Project="mzkit_win32" />
+      <BuildType Solution="nuget_release|x86" Project="Debug" />
+      <BuildType Solution="PlantMAT|Any CPU" Project="Debug" />
+      <BuildType Solution="PlantMAT|ARM32" Project="LipidSearch" />
+      <BuildType Solution="PlantMAT|x64" Project="Debug" />
+      <BuildType Solution="PlantMAT|x86" Project="Debug" />
+      <BuildType Solution="Publish|Any CPU" Project="nuget_release" />
+      <BuildType Solution="Publish|ARM32" Project="nuget_release" />
+      <BuildType Solution="Publish|x64" Project="Release" />
+      <BuildType Solution="Publish|x86" Project="nuget_release" />
+      <BuildType Solution="RsharpDev|Any CPU" Project="Release" />
+      <BuildType Solution="RsharpDev|ARM32" Project="Rsharp_app_release" />
+      <BuildType Solution="RsharpDev|x64" Project="Release" />
+      <BuildType Solution="RsharpDev|x86" Project="Release" />
+      <BuildType Solution="Rsharp_app_release|Any CPU" Project="Release" />
+      <BuildType Solution="Rsharp_app_release|x86" Project="Release" />
+      <BuildType Solution="Yilia-Release_x64|*" Project="Release" />
+      <Platform Solution="CFD_win32|x64" Project="x64" />
+      <Platform Solution="Debug|x64" Project="x64" />
+      <Platform Solution="installer_x64|x64" Project="x64" />
+      <Platform Solution="nuget_release|x64" Project="x64" />
+      <Platform Solution="Publish|x64" Project="x64" />
+      <Platform Solution="Rsharp_app_release|x64" Project="x64" />
+      <Platform Solution="Yilia-Release_x64|x64" Project="x64" />
+    </Project>
+    <Project Path="Data_science/MachineLearning/xgboost/xgboost.vbproj">
+      <BuildType Solution="Biodeep|Any CPU" Project="Debug" />
+      <BuildType Solution="Biodeep|ARM32" Project="Rsharp_app_release" />
+      <BuildType Solution="Biodeep|x64" Project="Debug" />
+      <BuildType Solution="Biodeep|x86" Project="Debug" />
+      <BuildType Solution="Biostack|Any CPU" Project="Debug" />
+      <BuildType Solution="Biostack|ARM32" Project="Rsharp_app_release" />
+      <BuildType Solution="Biostack|x64" Project="Debug" />
+      <BuildType Solution="Biostack|x86" Project="Debug" />
+      <BuildType Solution="CFD_win32|*" Project="Rsharp_app_release" />
+      <BuildType Solution="Docker|*" Project="Debug" />
+      <BuildType Solution="GCModeller(Release_X64)|Any CPU" Project="Release" />
+      <BuildType Solution="GCModeller(Release_X64)|ARM32" Project="gcmodeller_desktop" />
+      <BuildType Solution="GCModeller(Release_X64)|x64" Project="Release" />
+      <BuildType Solution="GCModeller(Release_X64)|x86" Project="Release" />
+      <BuildType Solution="GCModeller(UNIX-Release_X64)|Any CPU" Project="Release" />
+      <BuildType Solution="GCModeller(UNIX-Release_X64)|ARM32" Project="gcmodeller_desktop" />
+      <BuildType Solution="GCModeller(UNIX-Release_X64)|x64" Project="Release" />
+      <BuildType Solution="GCModeller(UNIX-Release_X64)|x86" Project="Release" />
+      <BuildType Solution="installer_x64|*" Project="nuget_release" />
+      <BuildType Solution="LipidSearch|Any CPU" Project="Debug" />
+      <BuildType Solution="LipidSearch|ARM32" Project="Rsharp_app_release" />
+      <BuildType Solution="LipidSearch|x64" Project="Debug" />
+      <BuildType Solution="LipidSearch|x86" Project="Debug" />
+      <BuildType Solution="mzkit|Any CPU" Project="Debug" />
+      <BuildType Solution="mzkit|ARM32" Project="mzkit_win32" />
+      <BuildType Solution="mzkit|x64" Project="Debug" />
+      <BuildType Solution="mzkit|x86" Project="Debug" />
+      <BuildType Solution="NPSearch|Any CPU" Project="Debug" />
+      <BuildType Solution="NPSearch|ARM32" Project="Rsharp_app_release" />
+      <BuildType Solution="NPSearch|x64" Project="Debug" />
+      <BuildType Solution="NPSearch|x86" Project="Debug" />
+      <BuildType Solution="nuget_release|Any CPU" Project="Debug" />
+      <BuildType Solution="nuget_release|ARM32" Project="mzkit_win32" />
+      <BuildType Solution="nuget_release|x86" Project="Debug" />
+      <BuildType Solution="PlantMAT|Any CPU" Project="Debug" />
+      <BuildType Solution="PlantMAT|ARM32" Project="Rsharp_app_release" />
+      <BuildType Solution="PlantMAT|x64" Project="Debug" />
+      <BuildType Solution="PlantMAT|x86" Project="Debug" />
+      <BuildType Solution="Publish|*" Project="nuget_release" />
+      <BuildType Solution="RsharpDev|Any CPU" Project="Release" />
+      <BuildType Solution="RsharpDev|ARM32" Project="Rsharp_app_release" />
+      <BuildType Solution="RsharpDev|x64" Project="Release" />
+      <BuildType Solution="RsharpDev|x86" Project="Release" />
+      <BuildType Solution="Rsharp_app_release|Any CPU" Project="Release" />
+      <BuildType Solution="Rsharp_app_release|x86" Project="Release" />
+      <BuildType Solution="Yilia-Release_x64|*" Project="Release" />
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="Data_science/MachineLearning/XGBoostDataSet/XGBoostDataSet.vbproj">
+      <BuildType Solution="Biodeep|Any CPU" Project="Debug" />
+      <BuildType Solution="Biodeep|ARM32" Project="Rsharp_app_release" />
+      <BuildType Solution="Biodeep|x64" Project="Debug" />
+      <BuildType Solution="Biodeep|x86" Project="Debug" />
+      <BuildType Solution="Biostack|Any CPU" Project="Debug" />
+      <BuildType Solution="Biostack|ARM32" Project="Rsharp_app_release" />
+      <BuildType Solution="Biostack|x64" Project="Debug" />
+      <BuildType Solution="Biostack|x86" Project="Debug" />
+      <BuildType Solution="CFD_win32|Any CPU" Project="Rsharp_app_release" />
+      <BuildType Solution="CFD_win32|ARM32" Project="Rsharp_app_release" />
+      <BuildType Solution="CFD_win32|x64" Project="Release" />
+      <BuildType Solution="CFD_win32|x86" Project="Rsharp_app_release" />
+      <BuildType Solution="Docker|*" Project="Debug" />
+      <BuildType Solution="GCModeller(Release_X64)|Any CPU" Project="Release" />
+      <BuildType Solution="GCModeller(Release_X64)|ARM32" Project="gcmodeller_desktop" />
+      <BuildType Solution="GCModeller(Release_X64)|x64" Project="Release" />
+      <BuildType Solution="GCModeller(Release_X64)|x86" Project="Release" />
+      <BuildType Solution="GCModeller(UNIX-Release_X64)|Any CPU" Project="Release" />
+      <BuildType Solution="GCModeller(UNIX-Release_X64)|ARM32" Project="gcmodeller_desktop" />
+      <BuildType Solution="GCModeller(UNIX-Release_X64)|x64" Project="Release" />
+      <BuildType Solution="GCModeller(UNIX-Release_X64)|x86" Project="Release" />
+      <BuildType Solution="installer_x64|Any CPU" Project="nuget_release" />
+      <BuildType Solution="installer_x64|ARM32" Project="nuget_release" />
+      <BuildType Solution="installer_x64|x64" Project="Rsharp_app_release" />
+      <BuildType Solution="installer_x64|x86" Project="nuget_release" />
+      <BuildType Solution="LipidSearch|Any CPU" Project="Debug" />
+      <BuildType Solution="LipidSearch|ARM32" Project="Rsharp_app_release" />
+      <BuildType Solution="LipidSearch|x64" Project="Debug" />
+      <BuildType Solution="LipidSearch|x86" Project="Debug" />
+      <BuildType Solution="mzkit|Any CPU" Project="Debug" />
+      <BuildType Solution="mzkit|ARM32" Project="mzkit_win32" />
+      <BuildType Solution="mzkit|x64" Project="Debug" />
+      <BuildType Solution="mzkit|x86" Project="Debug" />
+      <BuildType Solution="NPSearch|Any CPU" Project="Debug" />
+      <BuildType Solution="NPSearch|ARM32" Project="Rsharp_app_release" />
+      <BuildType Solution="NPSearch|x64" Project="Debug" />
+      <BuildType Solution="NPSearch|x86" Project="Debug" />
+      <BuildType Solution="nuget_release|Any CPU" Project="Debug" />
+      <BuildType Solution="nuget_release|ARM32" Project="mzkit_win32" />
+      <BuildType Solution="nuget_release|x86" Project="Debug" />
+      <BuildType Solution="PlantMAT|Any CPU" Project="Debug" />
+      <BuildType Solution="PlantMAT|ARM32" Project="Rsharp_app_release" />
+      <BuildType Solution="PlantMAT|x64" Project="Debug" />
+      <BuildType Solution="PlantMAT|x86" Project="Debug" />
+      <BuildType Solution="Publish|Any CPU" Project="nuget_release" />
+      <BuildType Solution="Publish|ARM32" Project="nuget_release" />
+      <BuildType Solution="Publish|x64" Project="Rsharp_app_release" />
+      <BuildType Solution="Publish|x86" Project="nuget_release" />
+      <BuildType Solution="RsharpDev|Any CPU" Project="Release" />
+      <BuildType Solution="RsharpDev|ARM32" Project="Rsharp_app_release" />
+      <BuildType Solution="RsharpDev|x64" Project="Release" />
+      <BuildType Solution="RsharpDev|x86" Project="Release" />
+      <BuildType Solution="Rsharp_app_release|Any CPU" Project="Release" />
+      <BuildType Solution="Rsharp_app_release|x86" Project="Release" />
+      <BuildType Solution="Yilia-Release_x64|*" Project="Release" />
+      <Platform Solution="CFD_win32|x64" Project="x64" />
+      <Platform Solution="Debug|x64" Project="x64" />
+      <Platform Solution="gcmodeller_desktop|x64" Project="x64" />
+      <Platform Solution="installer_x64|x64" Project="x64" />
+      <Platform Solution="mzkit_win32|x64" Project="x64" />
+      <Platform Solution="nuget_release|x64" Project="x64" />
+      <Platform Solution="Publish|x64" Project="x64" />
+      <Platform Solution="Rsharp_app_release|x64" Project="x64" />
+      <Platform Solution="Yilia-Release_x64|x64" Project="x64" />
+    </Project>
+  </Folder>
+  <Folder Name="/packages/machine_learning/nlp/">
+    <Project Path="Data/Trinity/Trinity.NET5.vbproj">
+      <BuildType Solution="Biodeep|Any CPU" Project="Debug" />
+      <BuildType Solution="Biodeep|ARM32" Project="Rsharp_app_release" />
+      <BuildType Solution="Biodeep|x64" Project="Debug" />
+      <BuildType Solution="Biodeep|x86" Project="Debug" />
+      <BuildType Solution="Biostack|Any CPU" Project="Debug" />
+      <BuildType Solution="Biostack|ARM32" Project="Rsharp_app_release" />
+      <BuildType Solution="Biostack|x64" Project="Debug" />
+      <BuildType Solution="Biostack|x86" Project="Debug" />
+      <BuildType Solution="CFD_win32|*" Project="Rsharp_app_release" />
+      <BuildType Solution="Docker|*" Project="Debug" />
+      <BuildType Solution="GCModeller(Release_X64)|Any CPU" Project="Release" />
+      <BuildType Solution="GCModeller(Release_X64)|ARM32" Project="gcmodeller_desktop" />
+      <BuildType Solution="GCModeller(Release_X64)|x64" Project="Release" />
+      <BuildType Solution="GCModeller(Release_X64)|x86" Project="Release" />
+      <BuildType Solution="GCModeller(UNIX-Release_X64)|Any CPU" Project="Release" />
+      <BuildType Solution="GCModeller(UNIX-Release_X64)|ARM32" Project="gcmodeller_desktop" />
+      <BuildType Solution="GCModeller(UNIX-Release_X64)|x64" Project="Release" />
+      <BuildType Solution="GCModeller(UNIX-Release_X64)|x86" Project="Release" />
+      <BuildType Solution="installer_x64|*" Project="nuget_release" />
+      <BuildType Solution="mzkit_win32|*" Project="mzkit" />
+      <BuildType Solution="nuget_release|Any CPU" Project="mzkit" />
+      <BuildType Solution="nuget_release|ARM32" Project="mzkit" />
+      <BuildType Solution="nuget_release|x86" Project="mzkit" />
+      <BuildType Solution="PlantMAT|Any CPU" Project="Debug" />
+      <BuildType Solution="PlantMAT|ARM32" Project="Rsharp_app_release" />
+      <BuildType Solution="PlantMAT|x64" Project="Debug" />
+      <BuildType Solution="PlantMAT|x86" Project="Debug" />
+      <BuildType Solution="Publish|*" Project="nuget_release" />
+      <BuildType Solution="RsharpDev|*" Project="Rsharp_app_release" />
+      <BuildType Solution="Yilia-Release_x64|*" Project="Release" />
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="Data/word2vec/word2vec.vbproj">
+      <BuildType Solution="Biodeep|*" Project="Debug" />
+      <BuildType Solution="Biostack|*" Project="Debug" />
+      <BuildType Solution="GCModeller(Release_X64)|*" Project="gcmodeller_desktop" />
+      <BuildType Solution="GCModeller(UNIX-Release_X64)|*" Project="gcmodeller_desktop" />
+      <BuildType Solution="installer_x64|*" Project="Rsharp_app_release" />
+      <BuildType Solution="Publish|*" Project="PlantMAT" />
+      <BuildType Solution="RsharpDev|*" Project="Rsharp_app_release" />
+      <BuildType Solution="Yilia-Release_x64|*" Project="Release" />
+      <Platform Solution="*|x64" Project="x64" />
+      <Platform Solution="*|x86" Project="x86" />
+    </Project>
+    <Project Path="Data_science/NLP/NLP.NET.vbproj">
+      <BuildType Solution="Biodeep|*" Project="Debug" />
+      <BuildType Solution="Biostack|*" Project="Debug" />
+      <BuildType Solution="CFD_win32|*" Project="Debug" />
+      <BuildType Solution="Docker|*" Project="Debug" />
+      <BuildType Solution="GCModeller(Release_X64)|*" Project="Release" />
+      <BuildType Solution="GCModeller(UNIX-Release_X64)|*" Project="Release" />
+      <BuildType Solution="gcmodeller_desktop|*" Project="Debug" />
+      <BuildType Solution="installer_x64|Any CPU" Project="nuget_release" />
+      <BuildType Solution="installer_x64|ARM32" Project="nuget_release" />
+      <BuildType Solution="installer_x64|x64" Project="Rsharp_app_release" />
+      <BuildType Solution="installer_x64|x86" Project="nuget_release" />
+      <BuildType Solution="LipidSearch|*" Project="Debug" />
+      <BuildType Solution="mzkit|*" Project="mzkit_win32" />
+      <BuildType Solution="NPSearch|*" Project="Debug" />
+      <BuildType Solution="nuget_release|Any CPU" Project="Debug" />
+      <BuildType Solution="nuget_release|ARM32" Project="Debug" />
+      <BuildType Solution="nuget_release|x86" Project="Debug" />
+      <BuildType Solution="PlantMAT|*" Project="Debug" />
+      <BuildType Solution="Publish|Any CPU" Project="nuget_release" />
+      <BuildType Solution="Publish|ARM32" Project="nuget_release" />
+      <BuildType Solution="Publish|x64" Project="Rsharp_app_release" />
+      <BuildType Solution="Publish|x86" Project="nuget_release" />
+      <BuildType Solution="RsharpDev|*" Project="Rsharp_app_release" />
+      <BuildType Solution="Yilia-Release_x64|*" Project="Release" />
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+  </Folder>
+  <Folder Name="/packages/math.dll/">
+    <Project Path="Data_science/Mathematica/Math/ANOVA/ANOVA.vbproj">
+      <BuildType Solution="Biodeep|Any CPU" Project="Debug" />
+      <BuildType Solution="Biodeep|ARM32" Project="Rsharp_app_release" />
+      <BuildType Solution="Biodeep|x64" Project="Debug" />
+      <BuildType Solution="Biodeep|x86" Project="Debug" />
+      <BuildType Solution="Biostack|Any CPU" Project="Debug" />
+      <BuildType Solution="Biostack|ARM32" Project="Rsharp_app_release" />
+      <BuildType Solution="Biostack|x64" Project="Debug" />
+      <BuildType Solution="Biostack|x86" Project="Debug" />
+      <BuildType Solution="CFD_win32|*" Project="Rsharp_app_release" />
+      <BuildType Solution="Docker|*" Project="Debug" />
+      <BuildType Solution="GCModeller(Release_X64)|Any CPU" Project="Release" />
+      <BuildType Solution="GCModeller(Release_X64)|ARM32" Project="gcmodeller_desktop" />
+      <BuildType Solution="GCModeller(Release_X64)|x64" Project="Release" />
+      <BuildType Solution="GCModeller(Release_X64)|x86" Project="Release" />
+      <BuildType Solution="GCModeller(UNIX-Release_X64)|Any CPU" Project="Release" />
+      <BuildType Solution="GCModeller(UNIX-Release_X64)|ARM32" Project="gcmodeller_desktop" />
+      <BuildType Solution="GCModeller(UNIX-Release_X64)|x64" Project="Release" />
+      <BuildType Solution="GCModeller(UNIX-Release_X64)|x86" Project="Release" />
+      <BuildType Solution="installer_x64|*" Project="nuget_release" />
+      <BuildType Solution="LipidSearch|Any CPU" Project="Debug" />
+      <BuildType Solution="LipidSearch|ARM32" Project="Rsharp_app_release" />
+      <BuildType Solution="LipidSearch|x64" Project="Debug" />
+      <BuildType Solution="LipidSearch|x86" Project="Debug" />
+      <BuildType Solution="mzkit|*" Project="mzkit_win32" />
+      <BuildType Solution="NPSearch|Any CPU" Project="Debug" />
+      <BuildType Solution="NPSearch|ARM32" Project="Rsharp_app_release" />
+      <BuildType Solution="NPSearch|x64" Project="Debug" />
+      <BuildType Solution="NPSearch|x86" Project="Debug" />
+      <BuildType Solution="nuget_release|Any CPU" Project="mzkit_win32" />
+      <BuildType Solution="nuget_release|ARM32" Project="mzkit_win32" />
+      <BuildType Solution="nuget_release|x86" Project="mzkit_win32" />
+      <BuildType Solution="PlantMAT|Any CPU" Project="Debug" />
+      <BuildType Solution="PlantMAT|ARM32" Project="Rsharp_app_release" />
+      <BuildType Solution="PlantMAT|x64" Project="Debug" />
+      <BuildType Solution="PlantMAT|x86" Project="Debug" />
+      <BuildType Solution="Publish|*" Project="nuget_release" />
+      <BuildType Solution="RsharpDev|*" Project="Rsharp_app_release" />
+      <BuildType Solution="Yilia-Release_x64|*" Project="Release" />
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="Data_science/Mathematica/Math/DataFittings/linear-netcore5.vbproj">
+      <BuildType Solution="Biodeep|Any CPU" Project="Rsharp_app_release" />
+      <BuildType Solution="Biodeep|ARM32" Project="mzkit" />
+      <BuildType Solution="Biodeep|x64" Project="Rsharp_app_release" />
+      <BuildType Solution="Biodeep|x86" Project="Rsharp_app_release" />
+      <BuildType Solution="Biostack|Any CPU" Project="Rsharp_app_release" />
+      <BuildType Solution="Biostack|ARM32" Project="mzkit" />
+      <BuildType Solution="Biostack|x64" Project="Rsharp_app_release" />
+      <BuildType Solution="Biostack|x86" Project="Rsharp_app_release" />
+      <BuildType Solution="CFD_win32|*" Project="mzkit" />
+      <BuildType Solution="Docker|*" Project="Debug" />
+      <BuildType Solution="GCModeller(Release_X64)|Any CPU" Project="Release" />
+      <BuildType Solution="GCModeller(Release_X64)|ARM32" Project="gcmodeller_desktop" />
+      <BuildType Solution="GCModeller(Release_X64)|x64" Project="Release" />
+      <BuildType Solution="GCModeller(Release_X64)|x86" Project="Release" />
+      <BuildType Solution="GCModeller(UNIX-Release_X64)|Any CPU" Project="Release" />
+      <BuildType Solution="GCModeller(UNIX-Release_X64)|ARM32" Project="gcmodeller_desktop" />
+      <BuildType Solution="GCModeller(UNIX-Release_X64)|x64" Project="Release" />
+      <BuildType Solution="GCModeller(UNIX-Release_X64)|x86" Project="Release" />
+      <BuildType Solution="installer_x64|*" Project="nuget_release" />
+      <BuildType Solution="mzkit|Any CPU" Project="Rsharp_app_release" />
+      <BuildType Solution="mzkit|x64" Project="Rsharp_app_release" />
+      <BuildType Solution="mzkit|x86" Project="Rsharp_app_release" />
+      <BuildType Solution="NPSearch|*" Project="mzkit" />
+      <BuildType Solution="nuget_release|Any CPU" Project="Rsharp_app_release" />
+      <BuildType Solution="nuget_release|ARM32" Project="mzkit_win32" />
+      <BuildType Solution="nuget_release|x86" Project="Rsharp_app_release" />
+      <BuildType Solution="PlantMAT|*" Project="mzkit" />
+      <BuildType Solution="Publish|*" Project="nuget_release" />
+      <BuildType Solution="RsharpDev|*" Project="Rsharp_app_release" />
+      <BuildType Solution="Yilia-Release_x64|*" Project="Release" />
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="Data_science/Mathematica/Math/DataFrame/dataframeUtils-netcore5.vbproj">
+      <BuildType Solution="Biodeep|Any CPU" Project="Rsharp_app_release" />
+      <BuildType Solution="Biodeep|ARM32" Project="mzkit" />
+      <BuildType Solution="Biodeep|x64" Project="Rsharp_app_release" />
+      <BuildType Solution="Biodeep|x86" Project="Rsharp_app_release" />
+      <BuildType Solution="Biostack|Any CPU" Project="Rsharp_app_release" />
+      <BuildType Solution="Biostack|ARM32" Project="mzkit" />
+      <BuildType Solution="Biostack|x64" Project="Rsharp_app_release" />
+      <BuildType Solution="Biostack|x86" Project="Rsharp_app_release" />
+      <BuildType Solution="CFD_win32|*" Project="mzkit" />
+      <BuildType Solution="Docker|*" Project="Debug" />
+      <BuildType Solution="GCModeller(Release_X64)|Any CPU" Project="Release" />
+      <BuildType Solution="GCModeller(Release_X64)|ARM32" Project="gcmodeller_desktop" />
+      <BuildType Solution="GCModeller(Release_X64)|x64" Project="Release" />
+      <BuildType Solution="GCModeller(Release_X64)|x86" Project="Release" />
+      <BuildType Solution="GCModeller(UNIX-Release_X64)|Any CPU" Project="Release" />
+      <BuildType Solution="GCModeller(UNIX-Release_X64)|ARM32" Project="gcmodeller_desktop" />
+      <BuildType Solution="GCModeller(UNIX-Release_X64)|x64" Project="Release" />
+      <BuildType Solution="GCModeller(UNIX-Release_X64)|x86" Project="Release" />
+      <BuildType Solution="installer_x64|*" Project="nuget_release" />
+      <BuildType Solution="mzkit|Any CPU" Project="Rsharp_app_release" />
+      <BuildType Solution="mzkit|x64" Project="Rsharp_app_release" />
+      <BuildType Solution="mzkit|x86" Project="Rsharp_app_release" />
+      <BuildType Solution="NPSearch|*" Project="mzkit" />
+      <BuildType Solution="nuget_release|Any CPU" Project="Rsharp_app_release" />
+      <BuildType Solution="nuget_release|ARM32" Project="mzkit_win32" />
+      <BuildType Solution="nuget_release|x86" Project="Rsharp_app_release" />
+      <BuildType Solution="PlantMAT|*" Project="mzkit" />
+      <BuildType Solution="Publish|*" Project="nuget_release" />
+      <BuildType Solution="RsharpDev|*" Project="Rsharp_app_release" />
+      <BuildType Solution="Yilia-Release_x64|*" Project="Release" />
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="Data_science/Mathematica/Math/Math.Statistics/stats-netcore5.vbproj">
+      <BuildType Solution="Biodeep|Any CPU" Project="Rsharp_app_release" />
+      <BuildType Solution="Biodeep|ARM32" Project="mzkit" />
+      <BuildType Solution="Biodeep|x64" Project="Rsharp_app_release" />
+      <BuildType Solution="Biodeep|x86" Project="Rsharp_app_release" />
+      <BuildType Solution="Biostack|Any CPU" Project="Rsharp_app_release" />
+      <BuildType Solution="Biostack|ARM32" Project="mzkit" />
+      <BuildType Solution="Biostack|x64" Project="Rsharp_app_release" />
+      <BuildType Solution="Biostack|x86" Project="Rsharp_app_release" />
+      <BuildType Solution="CFD_win32|*" Project="mzkit" />
+      <BuildType Solution="Docker|*" Project="Debug" />
+      <BuildType Solution="GCModeller(Release_X64)|Any CPU" Project="Release" />
+      <BuildType Solution="GCModeller(Release_X64)|ARM32" Project="gcmodeller_desktop" />
+      <BuildType Solution="GCModeller(Release_X64)|x64" Project="Release" />
+      <BuildType Solution="GCModeller(Release_X64)|x86" Project="Release" />
+      <BuildType Solution="GCModeller(UNIX-Release_X64)|Any CPU" Project="Release" />
+      <BuildType Solution="GCModeller(UNIX-Release_X64)|ARM32" Project="gcmodeller_desktop" />
+      <BuildType Solution="GCModeller(UNIX-Release_X64)|x64" Project="Release" />
+      <BuildType Solution="GCModeller(UNIX-Release_X64)|x86" Project="Release" />
+      <BuildType Solution="installer_x64|*" Project="nuget_release" />
+      <BuildType Solution="mzkit_win32|*" Project="mzkit" />
+      <BuildType Solution="mzkit|Any CPU" Project="Rsharp_app_release" />
+      <BuildType Solution="mzkit|x64" Project="Rsharp_app_release" />
+      <BuildType Solution="mzkit|x86" Project="Rsharp_app_release" />
+      <BuildType Solution="NPSearch|*" Project="mzkit" />
+      <BuildType Solution="nuget_release|Any CPU" Project="Rsharp_app_release" />
+      <BuildType Solution="nuget_release|ARM32" Project="mzkit" />
+      <BuildType Solution="nuget_release|x86" Project="Rsharp_app_release" />
+      <BuildType Solution="PlantMAT|*" Project="mzkit" />
+      <BuildType Solution="Publish|*" Project="nuget_release" />
+      <BuildType Solution="RsharpDev|*" Project="Rsharp_app_release" />
+      <BuildType Solution="Rsharp_app_release|Any CPU" Project="Release" />
+      <BuildType Solution="Yilia-Release_x64|*" Project="Release" />
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="Data_science/Mathematica/Math/Math/Math.NET5.vbproj">
+      <BuildType Solution="Biodeep|Any CPU" Project="Debug" />
+      <BuildType Solution="Biodeep|ARM32" Project="CFD_win32" />
+      <BuildType Solution="Biodeep|x64" Project="Debug" />
+      <BuildType Solution="Biodeep|x86" Project="Debug" />
+      <BuildType Solution="Biostack|Any CPU" Project="Debug" />
+      <BuildType Solution="Biostack|ARM32" Project="CFD_win32" />
+      <BuildType Solution="Biostack|x64" Project="Debug" />
+      <BuildType Solution="Biostack|x86" Project="Debug" />
+      <BuildType Solution="Docker|*" Project="Debug" />
+      <BuildType Solution="GCModeller(Release_X64)|Any CPU" Project="Release" />
+      <BuildType Solution="GCModeller(Release_X64)|ARM32" Project="gcmodeller_desktop" />
+      <BuildType Solution="GCModeller(Release_X64)|x64" Project="Release" />
+      <BuildType Solution="GCModeller(Release_X64)|x86" Project="Release" />
+      <BuildType Solution="GCModeller(UNIX-Release_X64)|Any CPU" Project="Release" />
+      <BuildType Solution="GCModeller(UNIX-Release_X64)|ARM32" Project="gcmodeller_desktop" />
+      <BuildType Solution="GCModeller(UNIX-Release_X64)|x64" Project="Release" />
+      <BuildType Solution="GCModeller(UNIX-Release_X64)|x86" Project="Release" />
+      <BuildType Solution="installer_x64|Any CPU" Project="nuget_release" />
+      <BuildType Solution="installer_x64|ARM32" Project="nuget_release" />
+      <BuildType Solution="installer_x64|x64" Project="Rsharp_app_release" />
+      <BuildType Solution="installer_x64|x86" Project="nuget_release" />
+      <BuildType Solution="nuget_release|Any CPU" Project="mzkit" />
+      <BuildType Solution="nuget_release|ARM32" Project="mzkit_win32" />
+      <BuildType Solution="nuget_release|x86" Project="mzkit" />
+      <BuildType Solution="Publish|*" Project="PlantMAT" />
+      <BuildType Solution="RsharpDev|*" Project="Rsharp_app_release" />
+      <BuildType Solution="Yilia-Release_x64|*" Project="Release" />
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="Data_science/Mathematica/Math/MathLambda/symbolic-netcore5.vbproj">
+      <BuildType Solution="Biodeep|Any CPU" Project="Rsharp_app_release" />
+      <BuildType Solution="Biodeep|ARM32" Project="mzkit_win32" />
+      <BuildType Solution="Biodeep|x64" Project="Rsharp_app_release" />
+      <BuildType Solution="Biodeep|x86" Project="Rsharp_app_release" />
+      <BuildType Solution="Biostack|Any CPU" Project="Rsharp_app_release" />
+      <BuildType Solution="Biostack|ARM32" Project="mzkit_win32" />
+      <BuildType Solution="Biostack|x64" Project="Rsharp_app_release" />
+      <BuildType Solution="Biostack|x86" Project="Rsharp_app_release" />
+      <BuildType Solution="CFD_win32|*" Project="mzkit_win32" />
+      <BuildType Solution="Docker|*" Project="Debug" />
+      <BuildType Solution="GCModeller(Release_X64)|Any CPU" Project="Release" />
+      <BuildType Solution="GCModeller(Release_X64)|ARM32" Project="gcmodeller_desktop" />
+      <BuildType Solution="GCModeller(Release_X64)|x64" Project="Release" />
+      <BuildType Solution="GCModeller(Release_X64)|x86" Project="Release" />
+      <BuildType Solution="GCModeller(UNIX-Release_X64)|Any CPU" Project="Release" />
+      <BuildType Solution="GCModeller(UNIX-Release_X64)|ARM32" Project="gcmodeller_desktop" />
+      <BuildType Solution="GCModeller(UNIX-Release_X64)|x64" Project="Release" />
+      <BuildType Solution="GCModeller(UNIX-Release_X64)|x86" Project="Release" />
+      <BuildType Solution="installer_x64|*" Project="nuget_release" />
+      <BuildType Solution="mzkit|Any CPU" Project="Rsharp_app_release" />
+      <BuildType Solution="mzkit|ARM32" Project="mzkit_win32" />
+      <BuildType Solution="mzkit|x64" Project="Rsharp_app_release" />
+      <BuildType Solution="mzkit|x86" Project="Rsharp_app_release" />
+      <BuildType Solution="NPSearch|Any CPU" Project="LipidSearch" />
+      <BuildType Solution="NPSearch|ARM32" Project="mzkit_win32" />
+      <BuildType Solution="NPSearch|x64" Project="LipidSearch" />
+      <BuildType Solution="NPSearch|x86" Project="LipidSearch" />
+      <BuildType Solution="nuget_release|Any CPU" Project="Rsharp_app_release" />
+      <BuildType Solution="nuget_release|ARM32" Project="mzkit_win32" />
+      <BuildType Solution="nuget_release|x86" Project="Rsharp_app_release" />
+      <BuildType Solution="PlantMAT|Any CPU" Project="LipidSearch" />
+      <BuildType Solution="PlantMAT|ARM32" Project="mzkit_win32" />
+      <BuildType Solution="PlantMAT|x64" Project="LipidSearch" />
+      <BuildType Solution="PlantMAT|x86" Project="LipidSearch" />
+      <BuildType Solution="Publish|*" Project="nuget_release" />
+      <BuildType Solution="RsharpDev|*" Project="Rsharp_app_release" />
+      <BuildType Solution="Yilia-Release_x64|*" Project="Release" />
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="Data_science/Mathematica/Math/ODE/odes-netcore5.vbproj">
+      <BuildType Solution="Biodeep|Any CPU" Project="Rsharp_app_release" />
+      <BuildType Solution="Biodeep|ARM32" Project="mzkit" />
+      <BuildType Solution="Biodeep|x64" Project="Rsharp_app_release" />
+      <BuildType Solution="Biodeep|x86" Project="Rsharp_app_release" />
+      <BuildType Solution="Biostack|Any CPU" Project="Rsharp_app_release" />
+      <BuildType Solution="Biostack|ARM32" Project="mzkit" />
+      <BuildType Solution="Biostack|x64" Project="Rsharp_app_release" />
+      <BuildType Solution="Biostack|x86" Project="Rsharp_app_release" />
+      <BuildType Solution="CFD_win32|*" Project="mzkit" />
+      <BuildType Solution="Docker|*" Project="Debug" />
+      <BuildType Solution="GCModeller(Release_X64)|Any CPU" Project="Release" />
+      <BuildType Solution="GCModeller(Release_X64)|ARM32" Project="gcmodeller_desktop" />
+      <BuildType Solution="GCModeller(Release_X64)|x64" Project="Release" />
+      <BuildType Solution="GCModeller(Release_X64)|x86" Project="Release" />
+      <BuildType Solution="GCModeller(UNIX-Release_X64)|Any CPU" Project="Release" />
+      <BuildType Solution="GCModeller(UNIX-Release_X64)|ARM32" Project="gcmodeller_desktop" />
+      <BuildType Solution="GCModeller(UNIX-Release_X64)|x64" Project="Release" />
+      <BuildType Solution="GCModeller(UNIX-Release_X64)|x86" Project="Release" />
+      <BuildType Solution="installer_x64|*" Project="nuget_release" />
+      <BuildType Solution="mzkit_win32|*" Project="mzkit" />
+      <BuildType Solution="mzkit|Any CPU" Project="Rsharp_app_release" />
+      <BuildType Solution="mzkit|x64" Project="Rsharp_app_release" />
+      <BuildType Solution="mzkit|x86" Project="Rsharp_app_release" />
+      <BuildType Solution="NPSearch|*" Project="mzkit" />
+      <BuildType Solution="nuget_release|Any CPU" Project="Rsharp_app_release" />
+      <BuildType Solution="nuget_release|ARM32" Project="mzkit" />
+      <BuildType Solution="nuget_release|x86" Project="Rsharp_app_release" />
+      <BuildType Solution="PlantMAT|*" Project="mzkit" />
+      <BuildType Solution="Publish|*" Project="nuget_release" />
+      <BuildType Solution="RsharpDev|*" Project="Rsharp_app_release" />
+      <BuildType Solution="Yilia-Release_x64|*" Project="Release" />
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="Data_science/Mathematica/Math/Randomizer/randomizer-netcore5.vbproj">
+      <BuildType Solution="Biodeep|Any CPU" Project="Debug" />
+      <BuildType Solution="Biodeep|ARM32" Project="mzkit_win32" />
+      <BuildType Solution="Biodeep|x64" Project="Debug" />
+      <BuildType Solution="Biodeep|x86" Project="Debug" />
+      <BuildType Solution="Biostack|Any CPU" Project="Debug" />
+      <BuildType Solution="Biostack|ARM32" Project="mzkit_win32" />
+      <BuildType Solution="Biostack|x64" Project="Debug" />
+      <BuildType Solution="Biostack|x86" Project="Debug" />
+      <BuildType Solution="CFD_win32|*" Project="mzkit_win32" />
+      <BuildType Solution="Docker|*" Project="Debug" />
+      <BuildType Solution="GCModeller(Release_X64)|Any CPU" Project="Release" />
+      <BuildType Solution="GCModeller(Release_X64)|ARM32" Project="gcmodeller_desktop" />
+      <BuildType Solution="GCModeller(Release_X64)|x64" Project="Release" />
+      <BuildType Solution="GCModeller(Release_X64)|x86" Project="Release" />
+      <BuildType Solution="GCModeller(UNIX-Release_X64)|Any CPU" Project="Release" />
+      <BuildType Solution="GCModeller(UNIX-Release_X64)|ARM32" Project="gcmodeller_desktop" />
+      <BuildType Solution="GCModeller(UNIX-Release_X64)|x64" Project="Release" />
+      <BuildType Solution="GCModeller(UNIX-Release_X64)|x86" Project="Release" />
+      <BuildType Solution="installer_x64|Any CPU" Project="nuget_release" />
+      <BuildType Solution="installer_x64|ARM32" Project="nuget_release" />
+      <BuildType Solution="installer_x64|x64" Project="Rsharp_app_release" />
+      <BuildType Solution="installer_x64|x86" Project="nuget_release" />
+      <BuildType Solution="LipidSearch|Any CPU" Project="Debug" />
+      <BuildType Solution="LipidSearch|ARM32" Project="mzkit_win32" />
+      <BuildType Solution="LipidSearch|x64" Project="Debug" />
+      <BuildType Solution="LipidSearch|x86" Project="Debug" />
+      <BuildType Solution="mzkit_win32|Any CPU" Project="mzkit" />
+      <BuildType Solution="mzkit_win32|x64" Project="mzkit" />
+      <BuildType Solution="mzkit_win32|x86" Project="mzkit" />
+      <BuildType Solution="mzkit|Any CPU" Project="Debug" />
+      <BuildType Solution="mzkit|x64" Project="Debug" />
+      <BuildType Solution="mzkit|x86" Project="Debug" />
+      <BuildType Solution="NPSearch|Any CPU" Project="mzkit" />
+      <BuildType Solution="NPSearch|ARM32" Project="mzkit_win32" />
+      <BuildType Solution="NPSearch|x64" Project="mzkit" />
+      <BuildType Solution="NPSearch|x86" Project="mzkit" />
+      <BuildType Solution="nuget_release|Any CPU" Project="Debug" />
+      <BuildType Solution="nuget_release|ARM32" Project="mzkit_win32" />
+      <BuildType Solution="nuget_release|x86" Project="Debug" />
+      <BuildType Solution="PlantMAT|Any CPU" Project="mzkit" />
+      <BuildType Solution="PlantMAT|ARM32" Project="mzkit_win32" />
+      <BuildType Solution="PlantMAT|x64" Project="mzkit" />
+      <BuildType Solution="PlantMAT|x86" Project="mzkit" />
+      <BuildType Solution="Publish|Any CPU" Project="nuget_release" />
+      <BuildType Solution="Publish|ARM32" Project="nuget_release" />
+      <BuildType Solution="Publish|x64" Project="Rsharp_app_release" />
+      <BuildType Solution="Publish|x86" Project="nuget_release" />
+      <BuildType Solution="RsharpDev|*" Project="Rsharp_app_release" />
+      <BuildType Solution="Yilia-Release_x64|*" Project="Release" />
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+  </Folder>
+  <Folder Name="/packages/mime/">
+    <Project Path="mime/application%json/JSON-netcore5.vbproj">
+      <BuildType Solution="Biodeep|Any CPU" Project="Rsharp_app_release" />
+      <BuildType Solution="Biodeep|ARM32" Project="LipidSearch" />
+      <BuildType Solution="Biodeep|x64" Project="Rsharp_app_release" />
+      <BuildType Solution="Biodeep|x86" Project="Rsharp_app_release" />
+      <BuildType Solution="Biostack|Any CPU" Project="Rsharp_app_release" />
+      <BuildType Solution="Biostack|ARM32" Project="LipidSearch" />
+      <BuildType Solution="Biostack|x64" Project="Rsharp_app_release" />
+      <BuildType Solution="Biostack|x86" Project="Rsharp_app_release" />
+      <BuildType Solution="CFD_win32|*" Project="LipidSearch" />
+      <BuildType Solution="Docker|Any CPU" Project="Debug" />
+      <BuildType Solution="Docker|x64" Project="Debug" />
+      <BuildType Solution="Docker|x86" Project="Debug" />
+      <BuildType Solution="GCModeller(Release_X64)|Any CPU" Project="Release" />
+      <BuildType Solution="GCModeller(Release_X64)|ARM32" Project="gcmodeller_desktop" />
+      <BuildType Solution="GCModeller(Release_X64)|x64" Project="Release" />
+      <BuildType Solution="GCModeller(Release_X64)|x86" Project="Release" />
+      <BuildType Solution="GCModeller(UNIX-Release_X64)|Any CPU" Project="Release" />
+      <BuildType Solution="GCModeller(UNIX-Release_X64)|ARM32" Project="gcmodeller_desktop" />
+      <BuildType Solution="GCModeller(UNIX-Release_X64)|x64" Project="Release" />
+      <BuildType Solution="GCModeller(UNIX-Release_X64)|x86" Project="Release" />
+      <BuildType Solution="installer_x64|Any CPU" Project="nuget_release" />
+      <BuildType Solution="installer_x64|ARM32" Project="nuget_release" />
+      <BuildType Solution="installer_x64|x64" Project="Docker" />
+      <BuildType Solution="installer_x64|x86" Project="nuget_release" />
+      <BuildType Solution="LipidSearch|Any CPU" Project="Debug" />
+      <BuildType Solution="LipidSearch|x64" Project="Debug" />
+      <BuildType Solution="LipidSearch|x86" Project="Rsharp_app_release" />
+      <BuildType Solution="mzkit|Any CPU" Project="Rsharp_app_release" />
+      <BuildType Solution="mzkit|ARM32" Project="mzkit_win32" />
+      <BuildType Solution="mzkit|x64" Project="Rsharp_app_release" />
+      <BuildType Solution="mzkit|x86" Project="Rsharp_app_release" />
+      <BuildType Solution="nuget_release|Any CPU" Project="Rsharp_app_release" />
+      <BuildType Solution="nuget_release|ARM32" Project="mzkit_win32" />
+      <BuildType Solution="nuget_release|x86" Project="Rsharp_app_release" />
+      <BuildType Solution="Publish|*" Project="PlantMAT" />
+      <BuildType Solution="RsharpDev|*" Project="Rsharp_app_release" />
+      <BuildType Solution="Rsharp_app_release|Any CPU" Project="Release" />
+      <BuildType Solution="Yilia-Release_x64|*" Project="Release" />
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="mime/application%rdf+xml/rdf_xml-netcore5.vbproj">
+      <BuildType Solution="Biodeep|Any CPU" Project="Debug" />
+      <BuildType Solution="Biodeep|ARM32" Project="gcmodeller_desktop" />
+      <BuildType Solution="Biodeep|x64" Project="Debug" />
+      <BuildType Solution="Biodeep|x86" Project="Debug" />
+      <BuildType Solution="Biostack|Any CPU" Project="Debug" />
+      <BuildType Solution="Biostack|ARM32" Project="gcmodeller_desktop" />
+      <BuildType Solution="Biostack|x64" Project="Debug" />
+      <BuildType Solution="Biostack|x86" Project="Debug" />
+      <BuildType Solution="CFD_win32|*" Project="gcmodeller_desktop" />
+      <BuildType Solution="Docker|*" Project="Debug" />
+      <BuildType Solution="GCModeller(Release_X64)|Any CPU" Project="Release" />
+      <BuildType Solution="GCModeller(Release_X64)|ARM32" Project="gcmodeller_desktop" />
+      <BuildType Solution="GCModeller(Release_X64)|x64" Project="Release" />
+      <BuildType Solution="GCModeller(Release_X64)|x86" Project="Release" />
+      <BuildType Solution="GCModeller(UNIX-Release_X64)|Any CPU" Project="Release" />
+      <BuildType Solution="GCModeller(UNIX-Release_X64)|ARM32" Project="gcmodeller_desktop" />
+      <BuildType Solution="GCModeller(UNIX-Release_X64)|x64" Project="Release" />
+      <BuildType Solution="GCModeller(UNIX-Release_X64)|x86" Project="Release" />
+      <BuildType Solution="gcmodeller_desktop|Any CPU" Project="Debug" />
+      <BuildType Solution="gcmodeller_desktop|x64" Project="Debug" />
+      <BuildType Solution="gcmodeller_desktop|x86" Project="Debug" />
+      <BuildType Solution="installer_x64|Any CPU" Project="nuget_release" />
+      <BuildType Solution="installer_x64|ARM32" Project="nuget_release" />
+      <BuildType Solution="installer_x64|x64" Project="Rsharp_app_release" />
+      <BuildType Solution="installer_x64|x86" Project="nuget_release" />
+      <BuildType Solution="mzkit|*" Project="mzkit_win32" />
+      <BuildType Solution="NPSearch|Any CPU" Project="Debug" />
+      <BuildType Solution="NPSearch|ARM32" Project="gcmodeller_desktop" />
+      <BuildType Solution="NPSearch|x64" Project="Debug" />
+      <BuildType Solution="NPSearch|x86" Project="Debug" />
+      <BuildType Solution="nuget_release|Any CPU" Project="mzkit_win32" />
+      <BuildType Solution="nuget_release|ARM32" Project="mzkit_win32" />
+      <BuildType Solution="nuget_release|x86" Project="mzkit_win32" />
+      <BuildType Solution="PlantMAT|Any CPU" Project="Debug" />
+      <BuildType Solution="PlantMAT|ARM32" Project="gcmodeller_desktop" />
+      <BuildType Solution="PlantMAT|x64" Project="Debug" />
+      <BuildType Solution="PlantMAT|x86" Project="Debug" />
+      <BuildType Solution="Publish|Any CPU" Project="nuget_release" />
+      <BuildType Solution="Publish|ARM32" Project="nuget_release" />
+      <BuildType Solution="Publish|x64" Project="Rsharp_app_release" />
+      <BuildType Solution="Publish|x86" Project="nuget_release" />
+      <BuildType Solution="RsharpDev|*" Project="Rsharp_app_release" />
+      <BuildType Solution="Yilia-Release_x64|*" Project="Release" />
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="mime/application%vnd.openxmlformats-officedocument.spreadsheetml.sheet/Excel/xlsx-netcore5.vbproj">
+      <BuildType Solution="Biodeep|Any CPU" Project="Rsharp_app_release" />
+      <BuildType Solution="Biodeep|ARM32" Project="mzkit" />
+      <BuildType Solution="Biodeep|x64" Project="Rsharp_app_release" />
+      <BuildType Solution="Biodeep|x86" Project="Rsharp_app_release" />
+      <BuildType Solution="Biostack|Any CPU" Project="Rsharp_app_release" />
+      <BuildType Solution="Biostack|ARM32" Project="mzkit" />
+      <BuildType Solution="Biostack|x64" Project="Rsharp_app_release" />
+      <BuildType Solution="Biostack|x86" Project="Rsharp_app_release" />
+      <BuildType Solution="CFD_win32|*" Project="mzkit" />
+      <BuildType Solution="Docker|*" Project="Debug" />
+      <BuildType Solution="GCModeller(Release_X64)|Any CPU" Project="Release" />
+      <BuildType Solution="GCModeller(Release_X64)|ARM32" Project="gcmodeller_desktop" />
+      <BuildType Solution="GCModeller(Release_X64)|x64" Project="Release" />
+      <BuildType Solution="GCModeller(Release_X64)|x86" Project="Release" />
+      <BuildType Solution="GCModeller(UNIX-Release_X64)|Any CPU" Project="Release" />
+      <BuildType Solution="GCModeller(UNIX-Release_X64)|ARM32" Project="gcmodeller_desktop" />
+      <BuildType Solution="GCModeller(UNIX-Release_X64)|x64" Project="Release" />
+      <BuildType Solution="GCModeller(UNIX-Release_X64)|x86" Project="Release" />
+      <BuildType Solution="installer_x64|*" Project="nuget_release" />
+      <BuildType Solution="mzkit_win32|*" Project="mzkit" />
+      <BuildType Solution="mzkit|Any CPU" Project="Rsharp_app_release" />
+      <BuildType Solution="mzkit|x64" Project="Rsharp_app_release" />
+      <BuildType Solution="mzkit|x86" Project="Rsharp_app_release" />
+      <BuildType Solution="NPSearch|*" Project="mzkit" />
+      <BuildType Solution="nuget_release|Any CPU" Project="Rsharp_app_release" />
+      <BuildType Solution="nuget_release|ARM32" Project="mzkit" />
+      <BuildType Solution="nuget_release|x86" Project="Rsharp_app_release" />
+      <BuildType Solution="PlantMAT|*" Project="mzkit" />
+      <BuildType Solution="Publish|*" Project="nuget_release" />
+      <BuildType Solution="RsharpDev|*" Project="Rsharp_app_release" />
+      <BuildType Solution="Rsharp_app_release|Any CPU" Project="Release" />
+      <BuildType Solution="Yilia-Release_x64|*" Project="Release" />
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="mime/application%xml/xml-netcore5.vbproj">
+      <BuildType Solution="Biodeep|Any CPU" Project="Rsharp_app_release" />
+      <BuildType Solution="Biodeep|ARM32" Project="mzkit_win32" />
+      <BuildType Solution="Biodeep|x64" Project="Rsharp_app_release" />
+      <BuildType Solution="Biodeep|x86" Project="Rsharp_app_release" />
+      <BuildType Solution="Biostack|Any CPU" Project="Rsharp_app_release" />
+      <BuildType Solution="Biostack|ARM32" Project="mzkit_win32" />
+      <BuildType Solution="Biostack|x64" Project="Rsharp_app_release" />
+      <BuildType Solution="Biostack|x86" Project="Rsharp_app_release" />
+      <BuildType Solution="CFD_win32|*" Project="mzkit_win32" />
+      <BuildType Solution="Docker|*" Project="Debug" />
+      <BuildType Solution="GCModeller(Release_X64)|Any CPU" Project="Release" />
+      <BuildType Solution="GCModeller(Release_X64)|ARM32" Project="gcmodeller_desktop" />
+      <BuildType Solution="GCModeller(Release_X64)|x64" Project="Release" />
+      <BuildType Solution="GCModeller(Release_X64)|x86" Project="Release" />
+      <BuildType Solution="GCModeller(UNIX-Release_X64)|Any CPU" Project="Release" />
+      <BuildType Solution="GCModeller(UNIX-Release_X64)|ARM32" Project="gcmodeller_desktop" />
+      <BuildType Solution="GCModeller(UNIX-Release_X64)|x64" Project="Release" />
+      <BuildType Solution="GCModeller(UNIX-Release_X64)|x86" Project="Release" />
+      <BuildType Solution="installer_x64|*" Project="nuget_release" />
+      <BuildType Solution="mzkit|Any CPU" Project="Rsharp_app_release" />
+      <BuildType Solution="mzkit|ARM32" Project="mzkit_win32" />
+      <BuildType Solution="mzkit|x64" Project="Rsharp_app_release" />
+      <BuildType Solution="mzkit|x86" Project="Rsharp_app_release" />
+      <BuildType Solution="NPSearch|Any CPU" Project="LipidSearch" />
+      <BuildType Solution="NPSearch|ARM32" Project="mzkit_win32" />
+      <BuildType Solution="NPSearch|x64" Project="LipidSearch" />
+      <BuildType Solution="NPSearch|x86" Project="LipidSearch" />
+      <BuildType Solution="nuget_release|Any CPU" Project="Rsharp_app_release" />
+      <BuildType Solution="nuget_release|ARM32" Project="mzkit_win32" />
+      <BuildType Solution="nuget_release|x86" Project="Rsharp_app_release" />
+      <BuildType Solution="PlantMAT|Any CPU" Project="LipidSearch" />
+      <BuildType Solution="PlantMAT|ARM32" Project="mzkit_win32" />
+      <BuildType Solution="PlantMAT|x64" Project="LipidSearch" />
+      <BuildType Solution="PlantMAT|x86" Project="LipidSearch" />
+      <BuildType Solution="Publish|*" Project="nuget_release" />
+      <BuildType Solution="RsharpDev|*" Project="Rsharp_app_release" />
+      <BuildType Solution="Rsharp_app_release|Any CPU" Project="Release" />
+      <BuildType Solution="Yilia-Release_x64|*" Project="Release" />
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="mime/text%html/html_netcore5.vbproj">
+      <BuildType Solution="Biodeep|Any CPU" Project="LipidSearch" />
+      <BuildType Solution="Biodeep|ARM32" Project="CFD_win32" />
+      <BuildType Solution="Biodeep|x64" Project="LipidSearch" />
+      <BuildType Solution="Biodeep|x86" Project="LipidSearch" />
+      <BuildType Solution="Biostack|Any CPU" Project="LipidSearch" />
+      <BuildType Solution="Biostack|ARM32" Project="CFD_win32" />
+      <BuildType Solution="Biostack|x64" Project="LipidSearch" />
+      <BuildType Solution="Biostack|x86" Project="LipidSearch" />
+      <BuildType Solution="Docker|*" Project="Debug" />
+      <BuildType Solution="GCModeller(Release_X64)|Any CPU" Project="Release" />
+      <BuildType Solution="GCModeller(Release_X64)|ARM32" Project="gcmodeller_desktop" />
+      <BuildType Solution="GCModeller(Release_X64)|x64" Project="Release" />
+      <BuildType Solution="GCModeller(Release_X64)|x86" Project="Release" />
+      <BuildType Solution="GCModeller(UNIX-Release_X64)|Any CPU" Project="Release" />
+      <BuildType Solution="GCModeller(UNIX-Release_X64)|ARM32" Project="gcmodeller_desktop" />
+      <BuildType Solution="GCModeller(UNIX-Release_X64)|x64" Project="Release" />
+      <BuildType Solution="GCModeller(UNIX-Release_X64)|x86" Project="Release" />
+      <BuildType Solution="installer_x64|Any CPU" Project="nuget_release" />
+      <BuildType Solution="installer_x64|ARM32" Project="nuget_release" />
+      <BuildType Solution="installer_x64|x64" Project="mzkit" />
+      <BuildType Solution="installer_x64|x86" Project="nuget_release" />
+      <BuildType Solution="LipidSearch|Any CPU" Project="Rsharp_app_release" />
+      <BuildType Solution="LipidSearch|x64" Project="Rsharp_app_release" />
+      <BuildType Solution="mzkit|Any CPU" Project="LipidSearch" />
+      <BuildType Solution="mzkit|x64" Project="LipidSearch" />
+      <BuildType Solution="mzkit|x86" Project="LipidSearch" />
+      <BuildType Solution="nuget_release|Any CPU" Project="LipidSearch" />
+      <BuildType Solution="nuget_release|ARM32" Project="mzkit_win32" />
+      <BuildType Solution="nuget_release|x86" Project="LipidSearch" />
+      <BuildType Solution="PlantMAT|Any CPU" Project="mzkit" />
+      <BuildType Solution="PlantMAT|ARM32" Project="CFD_win32" />
+      <BuildType Solution="PlantMAT|x64" Project="mzkit" />
+      <BuildType Solution="PlantMAT|x86" Project="mzkit" />
+      <BuildType Solution="Publish|Any CPU" Project="nuget_release" />
+      <BuildType Solution="Publish|ARM32" Project="nuget_release" />
+      <BuildType Solution="Publish|x64" Project="mzkit" />
+      <BuildType Solution="Publish|x86" Project="nuget_release" />
+      <BuildType Solution="RsharpDev|*" Project="Rsharp_app_release" />
+      <BuildType Solution="Rsharp_app_release|Any CPU" Project="Release" />
+      <BuildType Solution="Yilia-Release_x64|*" Project="Release" />
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="mime/text%markdown/markdown.NET5.vbproj">
+      <BuildType Solution="Biodeep|Any CPU" Project="Debug" />
+      <BuildType Solution="Biodeep|ARM32" Project="Rsharp_app_release" />
+      <BuildType Solution="Biodeep|x64" Project="Debug" />
+      <BuildType Solution="Biodeep|x86" Project="Debug" />
+      <BuildType Solution="Biostack|Any CPU" Project="Debug" />
+      <BuildType Solution="Biostack|ARM32" Project="Rsharp_app_release" />
+      <BuildType Solution="Biostack|x64" Project="Debug" />
+      <BuildType Solution="Biostack|x86" Project="Debug" />
+      <BuildType Solution="CFD_win32|*" Project="Rsharp_app_release" />
+      <BuildType Solution="Docker|*" Project="Debug" />
+      <BuildType Solution="GCModeller(Release_X64)|Any CPU" Project="Release" />
+      <BuildType Solution="GCModeller(Release_X64)|ARM32" Project="gcmodeller_desktop" />
+      <BuildType Solution="GCModeller(Release_X64)|x64" Project="Release" />
+      <BuildType Solution="GCModeller(Release_X64)|x86" Project="Release" />
+      <BuildType Solution="GCModeller(UNIX-Release_X64)|Any CPU" Project="Release" />
+      <BuildType Solution="GCModeller(UNIX-Release_X64)|ARM32" Project="gcmodeller_desktop" />
+      <BuildType Solution="GCModeller(UNIX-Release_X64)|x64" Project="Release" />
+      <BuildType Solution="GCModeller(UNIX-Release_X64)|x86" Project="Release" />
+      <BuildType Solution="installer_x64|*" Project="nuget_release" />
+      <BuildType Solution="mzkit|Any CPU" Project="Debug" />
+      <BuildType Solution="mzkit|ARM32" Project="mzkit_win32" />
+      <BuildType Solution="mzkit|x64" Project="Debug" />
+      <BuildType Solution="mzkit|x86" Project="Debug" />
+      <BuildType Solution="NPSearch|Any CPU" Project="Debug" />
+      <BuildType Solution="NPSearch|ARM32" Project="Rsharp_app_release" />
+      <BuildType Solution="NPSearch|x64" Project="Debug" />
+      <BuildType Solution="NPSearch|x86" Project="Debug" />
+      <BuildType Solution="nuget_release|Any CPU" Project="Debug" />
+      <BuildType Solution="nuget_release|ARM32" Project="mzkit_win32" />
+      <BuildType Solution="nuget_release|x86" Project="Debug" />
+      <BuildType Solution="PlantMAT|Any CPU" Project="Debug" />
+      <BuildType Solution="PlantMAT|ARM32" Project="Rsharp_app_release" />
+      <BuildType Solution="PlantMAT|x64" Project="Debug" />
+      <BuildType Solution="PlantMAT|x86" Project="Debug" />
+      <BuildType Solution="Publish|*" Project="nuget_release" />
+      <BuildType Solution="RsharpDev|*" Project="Rsharp_app_release" />
+      <BuildType Solution="Yilia-Release_x64|*" Project="Release" />
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="mime/text%yaml/text.yaml.vbproj">
+      <BuildType Solution="Biodeep|*" Project="Biostack" />
+      <BuildType Solution="CFD_win32|*" Project="Debug" />
+      <BuildType Solution="Docker|*" Project="Debug" />
+      <BuildType Solution="gcmodeller_desktop|*" Project="GCModeller(Release_X64)" />
+      <BuildType Solution="LipidSearch|*" Project="Debug" />
+      <BuildType Solution="mzkit_win32|*" Project="Debug" />
+      <BuildType Solution="mzkit|*" Project="Debug" />
+      <BuildType Solution="NPSearch|*" Project="Debug" />
+      <BuildType Solution="nuget_release|Any CPU" Project="Debug" />
+      <BuildType Solution="nuget_release|ARM32" Project="Debug" />
+      <BuildType Solution="nuget_release|x86" Project="Debug" />
+      <BuildType Solution="PlantMAT|*" Project="Publish" />
+      <BuildType Solution="RsharpDev|*" Project="Release" />
+      <BuildType Solution="Rsharp_app_release|*" Project="Release" />
+      <Platform Solution="*|x64" Project="x64" />
+      <Platform Solution="*|x86" Project="x86" />
+    </Project>
+  </Folder>
+  <Folder Name="/packages/network_graph/">
+    <Project Path="Data_science/Graph/graph-netcore5.vbproj">
+      <BuildType Solution="Biodeep|Any CPU" Project="Debug" />
+      <BuildType Solution="Biodeep|ARM32" Project="CFD_win32" />
+      <BuildType Solution="Biodeep|x64" Project="Debug" />
+      <BuildType Solution="Biodeep|x86" Project="Debug" />
+      <BuildType Solution="Biostack|Any CPU" Project="Debug" />
+      <BuildType Solution="Biostack|ARM32" Project="CFD_win32" />
+      <BuildType Solution="Biostack|x64" Project="Debug" />
+      <BuildType Solution="Biostack|x86" Project="Debug" />
+      <BuildType Solution="Docker|*" Project="Debug" />
+      <BuildType Solution="GCModeller(Release_X64)|Any CPU" Project="Release" />
+      <BuildType Solution="GCModeller(Release_X64)|ARM32" Project="gcmodeller_desktop" />
+      <BuildType Solution="GCModeller(Release_X64)|x64" Project="Release" />
+      <BuildType Solution="GCModeller(Release_X64)|x86" Project="Release" />
+      <BuildType Solution="GCModeller(UNIX-Release_X64)|Any CPU" Project="Release" />
+      <BuildType Solution="GCModeller(UNIX-Release_X64)|ARM32" Project="gcmodeller_desktop" />
+      <BuildType Solution="GCModeller(UNIX-Release_X64)|x64" Project="Release" />
+      <BuildType Solution="GCModeller(UNIX-Release_X64)|x86" Project="Release" />
+      <BuildType Solution="installer_x64|Any CPU" Project="nuget_release" />
+      <BuildType Solution="installer_x64|ARM32" Project="nuget_release" />
+      <BuildType Solution="installer_x64|x64" Project="Rsharp_app_release" />
+      <BuildType Solution="installer_x64|x86" Project="nuget_release" />
+      <BuildType Solution="mzkit|Any CPU" Project="Debug" />
+      <BuildType Solution="mzkit|x64" Project="Debug" />
+      <BuildType Solution="mzkit|x86" Project="Debug" />
+      <BuildType Solution="nuget_release|Any CPU" Project="Debug" />
+      <BuildType Solution="nuget_release|ARM32" Project="mzkit_win32" />
+      <BuildType Solution="nuget_release|x86" Project="Debug" />
+      <BuildType Solution="PlantMAT|Any CPU" Project="mzkit" />
+      <BuildType Solution="PlantMAT|ARM32" Project="CFD_win32" />
+      <BuildType Solution="PlantMAT|x64" Project="mzkit" />
+      <BuildType Solution="PlantMAT|x86" Project="mzkit" />
+      <BuildType Solution="Publish|Any CPU" Project="nuget_release" />
+      <BuildType Solution="Publish|ARM32" Project="nuget_release" />
+      <BuildType Solution="Publish|x64" Project="Rsharp_app_release" />
+      <BuildType Solution="Publish|x86" Project="nuget_release" />
+      <BuildType Solution="RsharpDev|*" Project="Rsharp_app_release" />
+      <BuildType Solution="Yilia-Release_x64|*" Project="Release" />
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="gr/network-visualization/Datavisualization.Network/network_graph-netcore5.vbproj">
+      <BuildType Solution="Biodeep|Any CPU" Project="Debug" />
+      <BuildType Solution="Biodeep|ARM32" Project="Rsharp_app_release" />
+      <BuildType Solution="Biodeep|x64" Project="Debug" />
+      <BuildType Solution="Biodeep|x86" Project="Debug" />
+      <BuildType Solution="Biostack|Any CPU" Project="Debug" />
+      <BuildType Solution="Biostack|ARM32" Project="Rsharp_app_release" />
+      <BuildType Solution="Biostack|x64" Project="Debug" />
+      <BuildType Solution="Biostack|x86" Project="Debug" />
+      <BuildType Solution="CFD_win32|*" Project="Rsharp_app_release" />
+      <BuildType Solution="Docker|*" Project="Debug" />
+      <BuildType Solution="GCModeller(Release_X64)|Any CPU" Project="Release" />
+      <BuildType Solution="GCModeller(Release_X64)|ARM32" Project="gcmodeller_desktop" />
+      <BuildType Solution="GCModeller(Release_X64)|x64" Project="Release" />
+      <BuildType Solution="GCModeller(Release_X64)|x86" Project="Release" />
+      <BuildType Solution="GCModeller(UNIX-Release_X64)|Any CPU" Project="Release" />
+      <BuildType Solution="GCModeller(UNIX-Release_X64)|ARM32" Project="gcmodeller_desktop" />
+      <BuildType Solution="GCModeller(UNIX-Release_X64)|x64" Project="Release" />
+      <BuildType Solution="GCModeller(UNIX-Release_X64)|x86" Project="Release" />
+      <BuildType Solution="installer_x64|*" Project="nuget_release" />
+      <BuildType Solution="mzkit_win32|*" Project="mzkit" />
+      <BuildType Solution="mzkit|Any CPU" Project="Debug" />
+      <BuildType Solution="mzkit|x64" Project="Debug" />
+      <BuildType Solution="mzkit|x86" Project="Debug" />
+      <BuildType Solution="nuget_release|Any CPU" Project="Debug" />
+      <BuildType Solution="nuget_release|ARM32" Project="mzkit" />
+      <BuildType Solution="nuget_release|x86" Project="Debug" />
+      <BuildType Solution="PlantMAT|Any CPU" Project="mzkit" />
+      <BuildType Solution="PlantMAT|ARM32" Project="Rsharp_app_release" />
+      <BuildType Solution="PlantMAT|x64" Project="mzkit" />
+      <BuildType Solution="PlantMAT|x86" Project="mzkit" />
+      <BuildType Solution="Publish|*" Project="nuget_release" />
+      <BuildType Solution="RsharpDev|*" Project="Rsharp_app_release" />
+      <BuildType Solution="Yilia-Release_x64|*" Project="Release" />
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="gr/network-visualization/Network.IO.Extensions/network_io-netcore5.vbproj">
+      <BuildType Solution="Biodeep|Any CPU" Project="Debug" />
+      <BuildType Solution="Biodeep|ARM32" Project="Rsharp_app_release" />
+      <BuildType Solution="Biodeep|x64" Project="Debug" />
+      <BuildType Solution="Biodeep|x86" Project="Debug" />
+      <BuildType Solution="Biostack|Any CPU" Project="Debug" />
+      <BuildType Solution="Biostack|ARM32" Project="Rsharp_app_release" />
+      <BuildType Solution="Biostack|x64" Project="Debug" />
+      <BuildType Solution="Biostack|x86" Project="Debug" />
+      <BuildType Solution="CFD_win32|*" Project="Rsharp_app_release" />
+      <BuildType Solution="Docker|*" Project="Debug" />
+      <BuildType Solution="GCModeller(Release_X64)|Any CPU" Project="Release" />
+      <BuildType Solution="GCModeller(Release_X64)|ARM32" Project="gcmodeller_desktop" />
+      <BuildType Solution="GCModeller(Release_X64)|x64" Project="Release" />
+      <BuildType Solution="GCModeller(Release_X64)|x86" Project="Release" />
+      <BuildType Solution="GCModeller(UNIX-Release_X64)|Any CPU" Project="Release" />
+      <BuildType Solution="GCModeller(UNIX-Release_X64)|ARM32" Project="gcmodeller_desktop" />
+      <BuildType Solution="GCModeller(UNIX-Release_X64)|x64" Project="Release" />
+      <BuildType Solution="GCModeller(UNIX-Release_X64)|x86" Project="Release" />
+      <BuildType Solution="installer_x64|*" Project="nuget_release" />
+      <BuildType Solution="mzkit|Any CPU" Project="Debug" />
+      <BuildType Solution="mzkit|ARM32" Project="mzkit_win32" />
+      <BuildType Solution="mzkit|x64" Project="Debug" />
+      <BuildType Solution="mzkit|x86" Project="Debug" />
+      <BuildType Solution="nuget_release|Any CPU" Project="Debug" />
+      <BuildType Solution="nuget_release|ARM32" Project="mzkit_win32" />
+      <BuildType Solution="nuget_release|x86" Project="Debug" />
+      <BuildType Solution="PlantMAT|Any CPU" Project="NPSearch" />
+      <BuildType Solution="PlantMAT|ARM32" Project="Rsharp_app_release" />
+      <BuildType Solution="PlantMAT|x64" Project="NPSearch" />
+      <BuildType Solution="PlantMAT|x86" Project="NPSearch" />
+      <BuildType Solution="Publish|*" Project="nuget_release" />
+      <BuildType Solution="RsharpDev|*" Project="Rsharp_app_release" />
+      <BuildType Solution="Yilia-Release_x64|*" Project="Release" />
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="gr/network-visualization/network_layout/network_layout.vbproj">
+      <BuildType Solution="Biodeep|Any CPU" Project="Debug" />
+      <BuildType Solution="Biodeep|ARM32" Project="mzkit_win32" />
+      <BuildType Solution="Biodeep|x64" Project="Debug" />
+      <BuildType Solution="Biodeep|x86" Project="Debug" />
+      <BuildType Solution="Biostack|Any CPU" Project="Debug" />
+      <BuildType Solution="Biostack|ARM32" Project="mzkit_win32" />
+      <BuildType Solution="Biostack|x64" Project="Debug" />
+      <BuildType Solution="Biostack|x86" Project="Debug" />
+      <BuildType Solution="CFD_win32|*" Project="mzkit_win32" />
+      <BuildType Solution="Docker|*" Project="Debug" />
+      <BuildType Solution="GCModeller(Release_X64)|*" Project="Release" />
+      <BuildType Solution="GCModeller(UNIX-Release_X64)|*" Project="Release" />
+      <BuildType Solution="gcmodeller_desktop|Any CPU" Project="Debug" />
+      <BuildType Solution="gcmodeller_desktop|ARM32" Project="mzkit_win32" />
+      <BuildType Solution="gcmodeller_desktop|x64" Project="Debug" />
+      <BuildType Solution="gcmodeller_desktop|x86" Project="Debug" />
+      <BuildType Solution="installer_x64|Any CPU" Project="nuget_release" />
+      <BuildType Solution="installer_x64|ARM32" Project="nuget_release" />
+      <BuildType Solution="installer_x64|x64" Project="Rsharp_app_release" />
+      <BuildType Solution="installer_x64|x86" Project="nuget_release" />
+      <BuildType Solution="LipidSearch|Any CPU" Project="Debug" />
+      <BuildType Solution="LipidSearch|ARM32" Project="mzkit_win32" />
+      <BuildType Solution="LipidSearch|x64" Project="Debug" />
+      <BuildType Solution="LipidSearch|x86" Project="Debug" />
+      <BuildType Solution="mzkit_win32|Any CPU" Project="Debug" />
+      <BuildType Solution="mzkit_win32|x64" Project="Debug" />
+      <BuildType Solution="mzkit_win32|x86" Project="Debug" />
+      <BuildType Solution="mzkit|Any CPU" Project="Debug" />
+      <BuildType Solution="mzkit|ARM32" Project="mzkit_win32" />
+      <BuildType Solution="mzkit|x64" Project="Debug" />
+      <BuildType Solution="mzkit|x86" Project="Debug" />
+      <BuildType Solution="NPSearch|Any CPU" Project="Debug" />
+      <BuildType Solution="NPSearch|ARM32" Project="mzkit_win32" />
+      <BuildType Solution="NPSearch|x64" Project="Debug" />
+      <BuildType Solution="NPSearch|x86" Project="Debug" />
+      <BuildType Solution="nuget_release|Any CPU" Project="Debug" />
+      <BuildType Solution="nuget_release|ARM32" Project="mzkit_win32" />
+      <BuildType Solution="nuget_release|x86" Project="Debug" />
+      <BuildType Solution="PlantMAT|Any CPU" Project="Debug" />
+      <BuildType Solution="PlantMAT|ARM32" Project="mzkit_win32" />
+      <BuildType Solution="PlantMAT|x64" Project="Debug" />
+      <BuildType Solution="PlantMAT|x86" Project="Debug" />
+      <BuildType Solution="Publish|Any CPU" Project="nuget_release" />
+      <BuildType Solution="Publish|ARM32" Project="nuget_release" />
+      <BuildType Solution="Publish|x64" Project="Rsharp_app_release" />
+      <BuildType Solution="Publish|x86" Project="nuget_release" />
+      <BuildType Solution="RsharpDev|*" Project="Rsharp_app_release" />
+      <BuildType Solution="Yilia-Release_x64|*" Project="Release" />
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="gr/network-visualization/Visualizer/networkVisualizer.NET5.vbproj">
+      <BuildType Solution="Biodeep|Any CPU" Project="Debug" />
+      <BuildType Solution="Biodeep|ARM32" Project="Rsharp_app_release" />
+      <BuildType Solution="Biodeep|x64" Project="Debug" />
+      <BuildType Solution="Biodeep|x86" Project="Debug" />
+      <BuildType Solution="Biostack|Any CPU" Project="Debug" />
+      <BuildType Solution="Biostack|ARM32" Project="Rsharp_app_release" />
+      <BuildType Solution="Biostack|x64" Project="Debug" />
+      <BuildType Solution="Biostack|x86" Project="Debug" />
+      <BuildType Solution="CFD_win32|*" Project="Rsharp_app_release" />
+      <BuildType Solution="Docker|*" Project="Debug" />
+      <BuildType Solution="GCModeller(Release_X64)|Any CPU" Project="Release" />
+      <BuildType Solution="GCModeller(Release_X64)|ARM32" Project="gcmodeller_desktop" />
+      <BuildType Solution="GCModeller(Release_X64)|x64" Project="Release" />
+      <BuildType Solution="GCModeller(Release_X64)|x86" Project="Release" />
+      <BuildType Solution="GCModeller(UNIX-Release_X64)|Any CPU" Project="Release" />
+      <BuildType Solution="GCModeller(UNIX-Release_X64)|ARM32" Project="gcmodeller_desktop" />
+      <BuildType Solution="GCModeller(UNIX-Release_X64)|x64" Project="Release" />
+      <BuildType Solution="GCModeller(UNIX-Release_X64)|x86" Project="Release" />
+      <BuildType Solution="installer_x64|*" Project="nuget_release" />
+      <BuildType Solution="mzkit|Any CPU" Project="Debug" />
+      <BuildType Solution="mzkit|ARM32" Project="mzkit_win32" />
+      <BuildType Solution="mzkit|x64" Project="Debug" />
+      <BuildType Solution="mzkit|x86" Project="Debug" />
+      <BuildType Solution="nuget_release|Any CPU" Project="Debug" />
+      <BuildType Solution="nuget_release|ARM32" Project="mzkit_win32" />
+      <BuildType Solution="nuget_release|x86" Project="Debug" />
+      <BuildType Solution="PlantMAT|Any CPU" Project="NPSearch" />
+      <BuildType Solution="PlantMAT|ARM32" Project="Rsharp_app_release" />
+      <BuildType Solution="PlantMAT|x64" Project="NPSearch" />
+      <BuildType Solution="PlantMAT|x86" Project="NPSearch" />
+      <BuildType Solution="Publish|*" Project="nuget_release" />
+      <BuildType Solution="RsharpDev|*" Project="Rsharp_app_release" />
+      <BuildType Solution="Yilia-Release_x64|*" Project="Release" />
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="gr/physics/physics-netcore5.vbproj">
+      <BuildType Solution="Biodeep|Any CPU" Project="Debug" />
+      <BuildType Solution="Biodeep|ARM32" Project="CFD_win32" />
+      <BuildType Solution="Biodeep|x64" Project="Debug" />
+      <BuildType Solution="Biodeep|x86" Project="Debug" />
+      <BuildType Solution="Biostack|Any CPU" Project="Debug" />
+      <BuildType Solution="Biostack|ARM32" Project="CFD_win32" />
+      <BuildType Solution="Biostack|x64" Project="Debug" />
+      <BuildType Solution="Biostack|x86" Project="Debug" />
+      <BuildType Solution="Docker|*" Project="Debug" />
+      <BuildType Solution="GCModeller(Release_X64)|Any CPU" Project="Release" />
+      <BuildType Solution="GCModeller(Release_X64)|ARM32" Project="gcmodeller_desktop" />
+      <BuildType Solution="GCModeller(Release_X64)|x64" Project="Release" />
+      <BuildType Solution="GCModeller(Release_X64)|x86" Project="Release" />
+      <BuildType Solution="GCModeller(UNIX-Release_X64)|Any CPU" Project="Release" />
+      <BuildType Solution="GCModeller(UNIX-Release_X64)|ARM32" Project="gcmodeller_desktop" />
+      <BuildType Solution="GCModeller(UNIX-Release_X64)|x64" Project="Release" />
+      <BuildType Solution="GCModeller(UNIX-Release_X64)|x86" Project="Release" />
+      <BuildType Solution="installer_x64|Any CPU" Project="nuget_release" />
+      <BuildType Solution="installer_x64|ARM32" Project="nuget_release" />
+      <BuildType Solution="installer_x64|x64" Project="Rsharp_app_release" />
+      <BuildType Solution="installer_x64|x86" Project="nuget_release" />
+      <BuildType Solution="mzkit_win32|*" Project="mzkit" />
+      <BuildType Solution="mzkit|Any CPU" Project="Debug" />
+      <BuildType Solution="mzkit|x64" Project="Debug" />
+      <BuildType Solution="mzkit|x86" Project="Debug" />
+      <BuildType Solution="nuget_release|Any CPU" Project="Debug" />
+      <BuildType Solution="nuget_release|ARM32" Project="mzkit" />
+      <BuildType Solution="nuget_release|x86" Project="Debug" />
+      <BuildType Solution="PlantMAT|Any CPU" Project="mzkit" />
+      <BuildType Solution="PlantMAT|ARM32" Project="CFD_win32" />
+      <BuildType Solution="PlantMAT|x64" Project="mzkit" />
+      <BuildType Solution="PlantMAT|x86" Project="mzkit" />
+      <BuildType Solution="Publish|Any CPU" Project="nuget_release" />
+      <BuildType Solution="Publish|ARM32" Project="nuget_release" />
+      <BuildType Solution="Publish|x64" Project="Rsharp_app_release" />
+      <BuildType Solution="Publish|x86" Project="nuget_release" />
+      <BuildType Solution="RsharpDev|*" Project="Rsharp_app_release" />
+      <BuildType Solution="Yilia-Release_x64|*" Project="Release" />
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+  </Folder>
+  <Folder Name="/packages/utils/">
+    <Project Path="Data_science/Mathematica/SignalProcessing/SignalProcessing/signalprocessing-netcore5.vbproj">
+      <BuildType Solution="Biodeep|Any CPU" Project="Debug" />
+      <BuildType Solution="Biodeep|ARM32" Project="PlantMAT" />
+      <BuildType Solution="Biodeep|x64" Project="Debug" />
+      <BuildType Solution="Biodeep|x86" Project="Debug" />
+      <BuildType Solution="Biostack|Any CPU" Project="Debug" />
+      <BuildType Solution="Biostack|ARM32" Project="PlantMAT" />
+      <BuildType Solution="Biostack|x64" Project="Debug" />
+      <BuildType Solution="Biostack|x86" Project="Debug" />
+      <BuildType Solution="CFD_win32|*" Project="PlantMAT" />
+      <BuildType Solution="Docker|*" Project="Debug" />
+      <BuildType Solution="GCModeller(Release_X64)|*" Project="Release" />
+      <BuildType Solution="GCModeller(UNIX-Release_X64)|*" Project="Release" />
+      <BuildType Solution="gcmodeller_desktop|Any CPU" Project="Rsharp_app_release" />
+      <BuildType Solution="gcmodeller_desktop|ARM32" Project="PlantMAT" />
+      <BuildType Solution="gcmodeller_desktop|x64" Project="Rsharp_app_release" />
+      <BuildType Solution="gcmodeller_desktop|x86" Project="Rsharp_app_release" />
+      <BuildType Solution="installer_x64|*" Project="nuget_release" />
+      <BuildType Solution="mzkit_win32|*" Project="mzkit" />
+      <BuildType Solution="nuget_release|Any CPU" Project="mzkit" />
+      <BuildType Solution="nuget_release|ARM32" Project="mzkit" />
+      <BuildType Solution="nuget_release|x86" Project="mzkit" />
+      <BuildType Solution="Publish|*" Project="PlantMAT" />
+      <BuildType Solution="RsharpDev|*" Project="Rsharp_app_release" />
+      <BuildType Solution="Yilia-Release_x64|*" Project="Release" />
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="vs_solutions/dev/VisualStudio/VisualStudio.NET5.vbproj">
+      <BuildType Solution="Biodeep|Any CPU" Project="Debug" />
+      <BuildType Solution="Biodeep|ARM32" Project="mzkit_win32" />
+      <BuildType Solution="Biodeep|x64" Project="Debug" />
+      <BuildType Solution="Biodeep|x86" Project="Debug" />
+      <BuildType Solution="Biostack|Any CPU" Project="Debug" />
+      <BuildType Solution="Biostack|ARM32" Project="mzkit_win32" />
+      <BuildType Solution="Biostack|x64" Project="Debug" />
+      <BuildType Solution="Biostack|x86" Project="Debug" />
+      <BuildType Solution="CFD_win32|*" Project="mzkit_win32" />
+      <BuildType Solution="Docker|*" Project="Debug" />
+      <BuildType Solution="GCModeller(Release_X64)|*" Project="Release" />
+      <BuildType Solution="GCModeller(UNIX-Release_X64)|*" Project="Release" />
+      <BuildType Solution="gcmodeller_desktop|Any CPU" Project="Rsharp_app_release" />
+      <BuildType Solution="gcmodeller_desktop|ARM32" Project="mzkit_win32" />
+      <BuildType Solution="gcmodeller_desktop|x64" Project="Rsharp_app_release" />
+      <BuildType Solution="gcmodeller_desktop|x86" Project="Rsharp_app_release" />
+      <BuildType Solution="installer_x64|*" Project="nuget_release" />
+      <BuildType Solution="LipidSearch|Any CPU" Project="Debug" />
+      <BuildType Solution="LipidSearch|ARM32" Project="mzkit_win32" />
+      <BuildType Solution="LipidSearch|x64" Project="Debug" />
+      <BuildType Solution="LipidSearch|x86" Project="Debug" />
+      <BuildType Solution="mzkit|Any CPU" Project="Debug" />
+      <BuildType Solution="mzkit|ARM32" Project="mzkit_win32" />
+      <BuildType Solution="mzkit|x64" Project="Debug" />
+      <BuildType Solution="mzkit|x86" Project="Debug" />
+      <BuildType Solution="NPSearch|Any CPU" Project="Debug" />
+      <BuildType Solution="NPSearch|ARM32" Project="mzkit_win32" />
+      <BuildType Solution="NPSearch|x64" Project="Debug" />
+      <BuildType Solution="NPSearch|x86" Project="Debug" />
+      <BuildType Solution="nuget_release|Any CPU" Project="Debug" />
+      <BuildType Solution="nuget_release|ARM32" Project="mzkit_win32" />
+      <BuildType Solution="nuget_release|x86" Project="Debug" />
+      <BuildType Solution="PlantMAT|Any CPU" Project="Debug" />
+      <BuildType Solution="PlantMAT|ARM32" Project="mzkit_win32" />
+      <BuildType Solution="PlantMAT|x64" Project="Debug" />
+      <BuildType Solution="PlantMAT|x86" Project="Debug" />
+      <BuildType Solution="Publish|*" Project="nuget_release" />
+      <BuildType Solution="RsharpDev|*" Project="Rsharp_app_release" />
+      <BuildType Solution="Yilia-Release_x64|*" Project="Release" />
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+  </Folder>
+  <Folder Name="/packages/visualize/">
+    <Project Path="Data_science/DataMining/hierarchical-clustering/HCTreePlot/HCTreePlot.vbproj">
+      <BuildType Solution="Biodeep|Any CPU" Project="Debug" />
+      <BuildType Solution="Biodeep|ARM32" Project="Rsharp_app_release" />
+      <BuildType Solution="Biodeep|x64" Project="Debug" />
+      <BuildType Solution="Biodeep|x86" Project="Debug" />
+      <BuildType Solution="Biostack|Any CPU" Project="Debug" />
+      <BuildType Solution="Biostack|ARM32" Project="Rsharp_app_release" />
+      <BuildType Solution="Biostack|x64" Project="Debug" />
+      <BuildType Solution="Biostack|x86" Project="Debug" />
+      <BuildType Solution="CFD_win32|Any CPU" Project="Rsharp_app_release" />
+      <BuildType Solution="CFD_win32|ARM32" Project="Rsharp_app_release" />
+      <BuildType Solution="CFD_win32|x64" Project="Debug" />
+      <BuildType Solution="CFD_win32|x86" Project="Rsharp_app_release" />
+      <BuildType Solution="Docker|*" Project="Debug" />
+      <BuildType Solution="GCModeller(Release_X64)|*" Project="Release" />
+      <BuildType Solution="GCModeller(UNIX-Release_X64)|*" Project="Release" />
+      <BuildType Solution="gcmodeller_desktop|Any CPU" Project="Debug" />
+      <BuildType Solution="gcmodeller_desktop|ARM32" Project="Rsharp_app_release" />
+      <BuildType Solution="gcmodeller_desktop|x64" Project="Debug" />
+      <BuildType Solution="gcmodeller_desktop|x86" Project="Debug" />
+      <BuildType Solution="installer_x64|Any CPU" Project="nuget_release" />
+      <BuildType Solution="installer_x64|ARM32" Project="nuget_release" />
+      <BuildType Solution="installer_x64|x64" Project="Release" />
+      <BuildType Solution="installer_x64|x86" Project="nuget_release" />
+      <BuildType Solution="LipidSearch|Any CPU" Project="Debug" />
+      <BuildType Solution="LipidSearch|ARM32" Project="Rsharp_app_release" />
+      <BuildType Solution="LipidSearch|x64" Project="Debug" />
+      <BuildType Solution="LipidSearch|x86" Project="Debug" />
+      <BuildType Solution="mzkit_win32|Any CPU" Project="Debug" />
+      <BuildType Solution="mzkit_win32|ARM32" Project="Rsharp_app_release" />
+      <BuildType Solution="mzkit_win32|x64" Project="Debug" />
+      <BuildType Solution="mzkit_win32|x86" Project="Debug" />
+      <BuildType Solution="mzkit|Any CPU" Project="Debug" />
+      <BuildType Solution="mzkit|ARM32" Project="Rsharp_app_release" />
+      <BuildType Solution="mzkit|x64" Project="Debug" />
+      <BuildType Solution="mzkit|x86" Project="Debug" />
+      <BuildType Solution="NPSearch|Any CPU" Project="Debug" />
+      <BuildType Solution="NPSearch|ARM32" Project="Rsharp_app_release" />
+      <BuildType Solution="NPSearch|x64" Project="Debug" />
+      <BuildType Solution="NPSearch|x86" Project="Debug" />
+      <BuildType Solution="nuget_release|Any CPU" Project="Debug" />
+      <BuildType Solution="nuget_release|ARM32" Project="Rsharp_app_release" />
+      <BuildType Solution="nuget_release|x86" Project="Debug" />
+      <BuildType Solution="PlantMAT|Any CPU" Project="Debug" />
+      <BuildType Solution="PlantMAT|ARM32" Project="Rsharp_app_release" />
+      <BuildType Solution="PlantMAT|x64" Project="Debug" />
+      <BuildType Solution="PlantMAT|x86" Project="Debug" />
+      <BuildType Solution="Publish|Any CPU" Project="nuget_release" />
+      <BuildType Solution="Publish|ARM32" Project="nuget_release" />
+      <BuildType Solution="Publish|x64" Project="Release" />
+      <BuildType Solution="Publish|x86" Project="nuget_release" />
+      <BuildType Solution="RsharpDev|Any CPU" Project="Release" />
+      <BuildType Solution="RsharpDev|ARM32" Project="Rsharp_app_release" />
+      <BuildType Solution="RsharpDev|x64" Project="Release" />
+      <BuildType Solution="RsharpDev|x86" Project="Release" />
+      <BuildType Solution="Rsharp_app_release|Any CPU" Project="Release" />
+      <BuildType Solution="Rsharp_app_release|x86" Project="Release" />
+      <BuildType Solution="Yilia-Release_x64|*" Project="Release" />
+      <Platform Solution="CFD_win32|x64" Project="x64" />
+      <Platform Solution="Debug|x64" Project="x64" />
+      <Platform Solution="installer_x64|x64" Project="x64" />
+      <Platform Solution="nuget_release|x64" Project="x64" />
+      <Platform Solution="Publish|x64" Project="x64" />
+      <Platform Solution="Rsharp_app_release|x64" Project="x64" />
+      <Platform Solution="Yilia-Release_x64|x64" Project="x64" />
+    </Project>
+    <Project Path="Data_science/Visualization/Plots-statistics/plots_extensions-netcore5.vbproj">
+      <BuildType Solution="Biodeep|Any CPU" Project="Debug" />
+      <BuildType Solution="Biodeep|ARM32" Project="Rsharp_app_release" />
+      <BuildType Solution="Biodeep|x64" Project="Debug" />
+      <BuildType Solution="Biodeep|x86" Project="Debug" />
+      <BuildType Solution="Biostack|Any CPU" Project="Debug" />
+      <BuildType Solution="Biostack|ARM32" Project="Rsharp_app_release" />
+      <BuildType Solution="Biostack|x64" Project="Debug" />
+      <BuildType Solution="Biostack|x86" Project="Debug" />
+      <BuildType Solution="CFD_win32|*" Project="Rsharp_app_release" />
+      <BuildType Solution="Docker|*" Project="Debug" />
+      <BuildType Solution="GCModeller(Release_X64)|Any CPU" Project="Release" />
+      <BuildType Solution="GCModeller(Release_X64)|ARM32" Project="gcmodeller_desktop" />
+      <BuildType Solution="GCModeller(Release_X64)|x64" Project="Release" />
+      <BuildType Solution="GCModeller(Release_X64)|x86" Project="Release" />
+      <BuildType Solution="GCModeller(UNIX-Release_X64)|Any CPU" Project="Release" />
+      <BuildType Solution="GCModeller(UNIX-Release_X64)|ARM32" Project="gcmodeller_desktop" />
+      <BuildType Solution="GCModeller(UNIX-Release_X64)|x64" Project="Release" />
+      <BuildType Solution="GCModeller(UNIX-Release_X64)|x86" Project="Release" />
+      <BuildType Solution="installer_x64|*" Project="nuget_release" />
+      <BuildType Solution="mzkit_win32|*" Project="mzkit" />
+      <BuildType Solution="mzkit|Any CPU" Project="Debug" />
+      <BuildType Solution="mzkit|x64" Project="Debug" />
+      <BuildType Solution="mzkit|x86" Project="Debug" />
+      <BuildType Solution="NPSearch|Any CPU" Project="mzkit" />
+      <BuildType Solution="NPSearch|ARM32" Project="Rsharp_app_release" />
+      <BuildType Solution="NPSearch|x64" Project="mzkit" />
+      <BuildType Solution="NPSearch|x86" Project="mzkit" />
+      <BuildType Solution="nuget_release|Any CPU" Project="Debug" />
+      <BuildType Solution="nuget_release|ARM32" Project="mzkit" />
+      <BuildType Solution="nuget_release|x86" Project="Debug" />
+      <BuildType Solution="PlantMAT|Any CPU" Project="mzkit" />
+      <BuildType Solution="PlantMAT|ARM32" Project="Rsharp_app_release" />
+      <BuildType Solution="PlantMAT|x64" Project="mzkit" />
+      <BuildType Solution="PlantMAT|x86" Project="mzkit" />
+      <BuildType Solution="Publish|*" Project="nuget_release" />
+      <BuildType Solution="RsharpDev|*" Project="Rsharp_app_release" />
+      <BuildType Solution="Yilia-Release_x64|*" Project="Release" />
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="Data_science/Visualization/Plots/plots-netcore5.vbproj">
+      <BuildType Solution="Biodeep|Any CPU" Project="Debug" />
+      <BuildType Solution="Biodeep|ARM32" Project="Rsharp_app_release" />
+      <BuildType Solution="Biodeep|x64" Project="Debug" />
+      <BuildType Solution="Biodeep|x86" Project="Debug" />
+      <BuildType Solution="Biostack|Any CPU" Project="Debug" />
+      <BuildType Solution="Biostack|ARM32" Project="Rsharp_app_release" />
+      <BuildType Solution="Biostack|x64" Project="Debug" />
+      <BuildType Solution="Biostack|x86" Project="Debug" />
+      <BuildType Solution="CFD_win32|*" Project="Rsharp_app_release" />
+      <BuildType Solution="Docker|*" Project="Debug" />
+      <BuildType Solution="GCModeller(Release_X64)|Any CPU" Project="Release" />
+      <BuildType Solution="GCModeller(Release_X64)|ARM32" Project="gcmodeller_desktop" />
+      <BuildType Solution="GCModeller(Release_X64)|x64" Project="Release" />
+      <BuildType Solution="GCModeller(Release_X64)|x86" Project="Release" />
+      <BuildType Solution="GCModeller(UNIX-Release_X64)|Any CPU" Project="Release" />
+      <BuildType Solution="GCModeller(UNIX-Release_X64)|ARM32" Project="gcmodeller_desktop" />
+      <BuildType Solution="GCModeller(UNIX-Release_X64)|x64" Project="Release" />
+      <BuildType Solution="GCModeller(UNIX-Release_X64)|x86" Project="Release" />
+      <BuildType Solution="installer_x64|*" Project="nuget_release" />
+      <BuildType Solution="mzkit_win32|*" Project="mzkit" />
+      <BuildType Solution="mzkit|Any CPU" Project="Debug" />
+      <BuildType Solution="mzkit|x64" Project="Debug" />
+      <BuildType Solution="mzkit|x86" Project="Debug" />
+      <BuildType Solution="NPSearch|Any CPU" Project="mzkit" />
+      <BuildType Solution="NPSearch|ARM32" Project="Rsharp_app_release" />
+      <BuildType Solution="NPSearch|x64" Project="mzkit" />
+      <BuildType Solution="NPSearch|x86" Project="mzkit" />
+      <BuildType Solution="nuget_release|Any CPU" Project="Debug" />
+      <BuildType Solution="nuget_release|ARM32" Project="mzkit" />
+      <BuildType Solution="nuget_release|x86" Project="Debug" />
+      <BuildType Solution="PlantMAT|Any CPU" Project="mzkit" />
+      <BuildType Solution="PlantMAT|ARM32" Project="Rsharp_app_release" />
+      <BuildType Solution="PlantMAT|x64" Project="mzkit" />
+      <BuildType Solution="PlantMAT|x86" Project="mzkit" />
+      <BuildType Solution="Publish|*" Project="nuget_release" />
+      <BuildType Solution="RsharpDev|*" Project="Rsharp_app_release" />
+      <BuildType Solution="Yilia-Release_x64|*" Project="Release" />
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="Data_science/Visualization/Visualization/data_visualize-netcore5.vbproj">
+      <BuildType Solution="Biodeep|Any CPU" Project="Debug" />
+      <BuildType Solution="Biodeep|ARM32" Project="Rsharp_app_release" />
+      <BuildType Solution="Biodeep|x64" Project="Debug" />
+      <BuildType Solution="Biodeep|x86" Project="Debug" />
+      <BuildType Solution="Biostack|Any CPU" Project="Debug" />
+      <BuildType Solution="Biostack|ARM32" Project="Rsharp_app_release" />
+      <BuildType Solution="Biostack|x64" Project="Debug" />
+      <BuildType Solution="Biostack|x86" Project="Debug" />
+      <BuildType Solution="CFD_win32|*" Project="Rsharp_app_release" />
+      <BuildType Solution="Docker|*" Project="Debug" />
+      <BuildType Solution="GCModeller(Release_X64)|Any CPU" Project="Release" />
+      <BuildType Solution="GCModeller(Release_X64)|ARM32" Project="gcmodeller_desktop" />
+      <BuildType Solution="GCModeller(Release_X64)|x64" Project="Release" />
+      <BuildType Solution="GCModeller(Release_X64)|x86" Project="Release" />
+      <BuildType Solution="GCModeller(UNIX-Release_X64)|Any CPU" Project="Release" />
+      <BuildType Solution="GCModeller(UNIX-Release_X64)|ARM32" Project="gcmodeller_desktop" />
+      <BuildType Solution="GCModeller(UNIX-Release_X64)|x64" Project="Release" />
+      <BuildType Solution="GCModeller(UNIX-Release_X64)|x86" Project="Release" />
+      <BuildType Solution="installer_x64|*" Project="nuget_release" />
+      <BuildType Solution="mzkit|Any CPU" Project="Debug" />
+      <BuildType Solution="mzkit|ARM32" Project="mzkit_win32" />
+      <BuildType Solution="mzkit|x64" Project="Debug" />
+      <BuildType Solution="mzkit|x86" Project="Debug" />
+      <BuildType Solution="NPSearch|*" Project="Rsharp_app_release" />
+      <BuildType Solution="nuget_release|Any CPU" Project="Debug" />
+      <BuildType Solution="nuget_release|ARM32" Project="mzkit_win32" />
+      <BuildType Solution="nuget_release|x86" Project="Debug" />
+      <BuildType Solution="PlantMAT|*" Project="Rsharp_app_release" />
+      <BuildType Solution="Publish|*" Project="nuget_release" />
+      <BuildType Solution="RsharpDev|*" Project="Rsharp_app_release" />
+      <BuildType Solution="Yilia-Release_x64|*" Project="Release" />
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="gr/Drawing-net4.8/Drawing-net4.8.vbproj">
+      <BuildType Solution="Biodeep|*" Project="Debug" />
+      <BuildType Solution="Biostack|*" Project="Debug" />
+      <BuildType Solution="CFD_win32|*" Project="Debug" />
+      <BuildType Solution="Docker|*" Project="Debug" />
+      <BuildType Solution="GCModeller(Release_X64)|*" Project="Release" />
+      <BuildType Solution="GCModeller(UNIX-Release_X64)|*" Project="Release" />
+      <BuildType Solution="gcmodeller_desktop|*" Project="Debug" />
+      <BuildType Solution="installer_x64|*" Project="Debug" />
+      <BuildType Solution="LipidSearch|*" Project="Debug" />
+      <BuildType Solution="mzkit_win32|*" Project="Debug" />
+      <BuildType Solution="mzkit|*" Project="Debug" />
+      <BuildType Solution="NPSearch|*" Project="Debug" />
+      <BuildType Solution="nuget_release|Any CPU" Project="Debug" />
+      <BuildType Solution="nuget_release|ARM32" Project="Debug" />
+      <BuildType Solution="nuget_release|x86" Project="Debug" />
+      <BuildType Solution="PlantMAT|*" Project="Debug" />
+      <BuildType Solution="Publish|*" Project="Debug" />
+      <BuildType Solution="RsharpDev|*" Project="Release" />
+      <BuildType Solution="Rsharp_app_release|*" Project="Release" />
+      <BuildType Solution="Yilia-Release_x64|*" Project="Release" />
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="gr/Microsoft.VisualBasic.Imaging/imaging.NET5.vbproj">
+      <BuildType Solution="Biodeep|Any CPU" Project="Debug" />
+      <BuildType Solution="Biodeep|ARM32" Project="CFD_win32" />
+      <BuildType Solution="Biodeep|x64" Project="Debug" />
+      <BuildType Solution="Biodeep|x86" Project="Debug" />
+      <BuildType Solution="Biostack|Any CPU" Project="Debug" />
+      <BuildType Solution="Biostack|ARM32" Project="CFD_win32" />
+      <BuildType Solution="Biostack|x64" Project="Debug" />
+      <BuildType Solution="Biostack|x86" Project="Debug" />
+      <BuildType Solution="Docker|*" Project="Debug" />
+      <BuildType Solution="GCModeller(Release_X64)|Any CPU" Project="Release" />
+      <BuildType Solution="GCModeller(Release_X64)|ARM32" Project="gcmodeller_desktop" />
+      <BuildType Solution="GCModeller(Release_X64)|x64" Project="Release" />
+      <BuildType Solution="GCModeller(Release_X64)|x86" Project="Release" />
+      <BuildType Solution="GCModeller(UNIX-Release_X64)|Any CPU" Project="Release" />
+      <BuildType Solution="GCModeller(UNIX-Release_X64)|ARM32" Project="gcmodeller_desktop" />
+      <BuildType Solution="GCModeller(UNIX-Release_X64)|x64" Project="Release" />
+      <BuildType Solution="GCModeller(UNIX-Release_X64)|x86" Project="Release" />
+      <BuildType Solution="installer_x64|Any CPU" Project="nuget_release" />
+      <BuildType Solution="installer_x64|ARM32" Project="nuget_release" />
+      <BuildType Solution="installer_x64|x64" Project="Rsharp_app_release" />
+      <BuildType Solution="installer_x64|x86" Project="nuget_release" />
+      <BuildType Solution="nuget_release|Any CPU" Project="mzkit" />
+      <BuildType Solution="nuget_release|ARM32" Project="mzkit_win32" />
+      <BuildType Solution="nuget_release|x86" Project="mzkit" />
+      <BuildType Solution="PlantMAT|Any CPU" Project="Debug" />
+      <BuildType Solution="PlantMAT|ARM32" Project="CFD_win32" />
+      <BuildType Solution="PlantMAT|x64" Project="Debug" />
+      <BuildType Solution="PlantMAT|x86" Project="Debug" />
+      <BuildType Solution="Publish|Any CPU" Project="nuget_release" />
+      <BuildType Solution="Publish|ARM32" Project="nuget_release" />
+      <BuildType Solution="Publish|x64" Project="Rsharp_app_release" />
+      <BuildType Solution="Publish|x86" Project="nuget_release" />
+      <BuildType Solution="RsharpDev|*" Project="Rsharp_app_release" />
+      <BuildType Solution="Yilia-Release_x64|*" Project="Release" />
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+  </Folder>
+  <Folder Name="/tools/" />
+  <Project Path="Microsoft.VisualBasic.Core/src/Core.vbproj">
+    <BuildType Solution="Biodeep|Any CPU" Project="LipidSearch" />
+    <BuildType Solution="Biodeep|ARM32" Project="mzkit" />
+    <BuildType Solution="Biodeep|x64" Project="LipidSearch" />
+    <BuildType Solution="Biodeep|x86" Project="LipidSearch" />
+    <BuildType Solution="Biostack|Any CPU" Project="LipidSearch" />
+    <BuildType Solution="Biostack|ARM32" Project="mzkit" />
+    <BuildType Solution="Biostack|x64" Project="LipidSearch" />
+    <BuildType Solution="Biostack|x86" Project="LipidSearch" />
+    <BuildType Solution="Docker|Any CPU" Project="Debug" />
+    <BuildType Solution="Docker|x64" Project="Debug" />
+    <BuildType Solution="Docker|x86" Project="Debug" />
+    <BuildType Solution="GCModeller(Release_X64)|Any CPU" Project="Release" />
+    <BuildType Solution="GCModeller(Release_X64)|ARM32" Project="gcmodeller_desktop" />
+    <BuildType Solution="GCModeller(Release_X64)|x64" Project="Release" />
+    <BuildType Solution="GCModeller(Release_X64)|x86" Project="Release" />
+    <BuildType Solution="GCModeller(UNIX-Release_X64)|Any CPU" Project="Release" />
+    <BuildType Solution="GCModeller(UNIX-Release_X64)|ARM32" Project="gcmodeller_desktop" />
+    <BuildType Solution="GCModeller(UNIX-Release_X64)|x64" Project="Release" />
+    <BuildType Solution="GCModeller(UNIX-Release_X64)|x86" Project="Release" />
+    <BuildType Solution="installer_x64|Any CPU" Project="nuget_release" />
+    <BuildType Solution="installer_x64|ARM32" Project="nuget_release" />
+    <BuildType Solution="installer_x64|x64" Project="mzkit" />
+    <BuildType Solution="installer_x64|x86" Project="Debug" />
+    <BuildType Solution="LipidSearch|Any CPU" Project="Rsharp_app_release" />
+    <BuildType Solution="LipidSearch|x64" Project="Rsharp_app_release" />
+    <BuildType Solution="mzkit|Any CPU" Project="LipidSearch" />
+    <BuildType Solution="mzkit|x64" Project="LipidSearch" />
+    <BuildType Solution="mzkit|x86" Project="LipidSearch" />
+    <BuildType Solution="nuget_release|Any CPU" Project="LipidSearch" />
+    <BuildType Solution="nuget_release|ARM32" Project="mzkit_win32" />
+    <BuildType Solution="nuget_release|x86" Project="LipidSearch" />
+    <BuildType Solution="Publish|*" Project="PlantMAT" />
+    <BuildType Solution="RsharpDev|*" Project="Rsharp_app_release" />
+    <BuildType Solution="Yilia-Release_x64|*" Project="Release" />
+    <Platform Solution="*|x64" Project="x64" />
+    <Platform Solution="CFD_win32|x86" Project="x86" />
+    <Platform Solution="installer_x64|x86" Project="x86" />
+    <Platform Solution="Publish|x86" Project="x86" />
+    <Platform Solution="Yilia-Release_x64|x86" Project="x86" />
+  </Project>
+</Solution>
