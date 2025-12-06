@@ -301,9 +301,24 @@ Namespace CommandLine
             Return exit_code
         End Function
 
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="target"></param>
+        ''' <returns>
+        ''' returns true if the given <paramref name="target"/> is local file path or http/https/ftp url
+        ''' </returns>
+        Private Shared Function IsPossibleRequestFile(target As String) As Boolean
+            If target.FileExists OrElse target.DirectoryExists Then
+                Return True
+            Else
+                Return target.isURL
+            End If
+        End Function
+
         Private Function apiInvokeEtc(commandName$, cli As CommandLine) As Integer
             ' 命令行的名称和上面的都不符合，但是可以在文件系统之中找得到一个相应的文件，则执行文件句柄
-            If (commandName.FileExists OrElse commandName.DirectoryExists) AndAlso Not Me.ExecuteFile Is Nothing Then
+            If ExecuteFile IsNot Nothing AndAlso IsPossibleRequestFile(commandName) Then
                 Return runShellScriptFile(commandName, cli)
             ElseIf Not ExecuteNotFound Is Nothing Then
                 Try
