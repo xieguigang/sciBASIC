@@ -1,8 +1,0 @@
-{
-  "profiles": {
-    "rundll32": {
-      "commandName": "Project",
-      "commandLineArgs": "\"E:\\mzkit\\dist\\bin\\Rstudio\\host\\ServiceHub.dll\""
-    }
-  }
-}
