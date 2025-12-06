@@ -18,7 +18,7 @@ Namespace Net.WebClient
         Private Shared lockObject As New Object()
 
         <STAThread>
-        Public Async Sub Download(url As String, fileName As String, Optional nThreads As Integer? = Nothing)
+        Public Async Function Download(url As String, fileName As String, Optional nThreads As Integer? = Nothing) As Task
             Dim threadCount As Integer = If(nThreads, DefaultThreadCount)
 
             If threadCount <= 0 Then
@@ -31,7 +31,7 @@ Namespace Net.WebClient
 
             ' 2. 异步执行下载任务
             Await DownloadFileAsync(url, fileName, threadCount)
-        End Sub
+        End Function
 
         Private Async Function DownloadFileAsync(url As String, fileName As String, threadCount As Integer) As Task
             Using httpClient As New HttpClient()

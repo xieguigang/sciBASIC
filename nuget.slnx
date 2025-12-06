@@ -2471,7 +2471,28 @@
       <Platform Solution="*|x64" Project="x64" />
     </Project>
   </Folder>
-  <Folder Name="/tools/" />
+  <Folder Name="/tools/">
+    <Project Path="www/axel/axel.vbproj" Id="84978ace-67aa-40da-b808-655ef36f0f28">
+      <BuildType Solution="Biodeep|*" Project="Release" />
+      <BuildType Solution="Biostack|*" Project="Release" />
+      <BuildType Solution="CFD_win32|*" Project="Release" />
+      <BuildType Solution="Docker|*" Project="Release" />
+      <BuildType Solution="GCModeller(Release_X64)|*" Project="Release" />
+      <BuildType Solution="GCModeller(UNIX-Release_X64)|*" Project="Release" />
+      <BuildType Solution="gcmodeller_desktop|*" Project="Release" />
+      <BuildType Solution="installer_x64|*" Project="Debug" />
+      <BuildType Solution="LipidSearch|*" Project="Debug" />
+      <BuildType Solution="mzkit_win32|*" Project="Release" />
+      <BuildType Solution="mzkit|*" Project="Debug" />
+      <BuildType Solution="NPSearch|*" Project="Debug" />
+      <BuildType Solution="nuget_release|*" Project="Release" />
+      <BuildType Solution="PlantMAT|*" Project="Release" />
+      <BuildType Solution="Publish|*" Project="Release" />
+      <BuildType Solution="RsharpDev|*" Project="Debug" />
+      <BuildType Solution="Rsharp_app_release|*" Project="Release" />
+      <BuildType Solution="Yilia-Release_x64|*" Project="Release" />
+    </Project>
+  </Folder>
   <Project Path="Microsoft.VisualBasic.Core/src/Core.vbproj">
     <BuildType Solution="Biodeep|Any CPU" Project="LipidSearch" />
     <BuildType Solution="Biodeep|ARM32" Project="mzkit" />
