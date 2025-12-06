@@ -5,7 +5,7 @@
     <RootNamespace>axelTool</RootNamespace>
     <TargetFramework>net10.0</TargetFramework>
     <PublishAot>true</PublishAot>
-    <InvariantGlobalization>true</InvariantGlobalization>
+    <InvariantGlobalization>false</InvariantGlobalization>
     <Platforms>AnyCPU;x64</Platforms>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
     <OutputPath>../../tools/</OutputPath>

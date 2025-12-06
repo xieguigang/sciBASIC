@@ -29,7 +29,7 @@
     <IncludeSymbols>True</IncludeSymbols>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
     <ApplicationManifest>My Project\app.manifest</ApplicationManifest>
-
+    <InvariantGlobalization>false</InvariantGlobalization>
     <NoWarn>$(NoWarn);SYSLIB0003</NoWarn>
     <NoWarn>$(NoWarn);SYSLIB0004</NoWarn>
 	</PropertyGroup>
