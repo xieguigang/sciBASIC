@@ -1,5 +1,7 @@
 ﻿Imports System.IO
 Imports System.Net.Http
+Imports System.Threading
+Imports Microsoft.VisualBasic.ApplicationServices.Terminal.ProgressBar.ConsoleProgressBar
 
 Namespace Net.WebClient
 
@@ -74,13 +76,13 @@ Namespace Net.WebClient
                 Next
 
                 ' 6. 等待所有下载任务完成，并显示进度
-                Dim progressTask = Task.Run(AddressOf ShowProgress)
+                Call Task.Run(AddressOf ShowProgress)
+
                 Await Task.WhenAll(downloadTasks)
                 ' 确保进度显示任务完成
                 ' (在实际应用中，可以用 CancellationTokenSource 来更优雅地停止)
                 ' 这里简单等待一下，让进度条显示100%
-                System.Threading.Thread.Sleep(500)
-
+                Await Task.Delay(1000)
 
                 ' 7. 合并文件
                 Console.WriteLine(vbCrLf & "所有分块下载完成，正在合并文件...")
@@ -134,20 +136,14 @@ Namespace Net.WebClient
         End Function
 
         Private Sub ShowProgress()
-            Dim cursorTop = Console.CursorTop
-            While totalBytesDownloaded < totalFileSize
-                Dim progress = CInt((totalBytesDownloaded / totalFileSize) * 100)
-                Dim downloadedSize = StringFormats.Lanudry(totalBytesDownloaded)
-                Dim speed = "N/A" ' 简化版，不计算实时速度
+            Using bar As New ProgressBar With {.Maximum = totalFileSize}
+                Call bar.Text.Description.Processing.AddNew.SetValue(Function(b) $"[{b.Value}/{StringFormats.Lanudry(totalFileSize)}]")
 
-                Dim progressText = $"[{progress}%] [{downloadedSize}/{StringFormats.Lanudry(totalFileSize)}] [Speed: {speed}]"
-
-                ' 使用 \r 回到行首，实现进度条更新效果
-                Console.SetCursorPosition(0, cursorTop)
-                Console.Write(progressText.PadRight(Console.WindowWidth - 1))
-
-                System.Threading.Thread.Sleep(200) ' 每200ms更新一次
-            End While
+                While totalBytesDownloaded < totalFileSize
+                    Thread.Sleep(500) ' 每200ms更新一次
+                    bar.SetValue(totalBytesDownloaded)
+                End While
+            End Using
         End Sub
     End Class
 
