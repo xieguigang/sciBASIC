@@ -1,12 +1,11 @@
-Imports System
 Imports Microsoft.VisualBasic.CommandLine
 Imports Microsoft.VisualBasic.Net.WebClient
 
 Module Program
 
     <STAThread>
-    Async Sub Main(args As String())
-        Await Download(App.CommandLine)
+    Sub Main(args As String())
+        Call Download(App.CommandLine).Wait()
     End Sub
 
     ' url/files.txt [--filename <save_filename>] [--download_to <directory_path>]
