@@ -2491,6 +2491,7 @@
       <BuildType Solution="RsharpDev|*" Project="Debug" />
       <BuildType Solution="Rsharp_app_release|*" Project="Release" />
       <BuildType Solution="Yilia-Release_x64|*" Project="Release" />
+      <Platform Solution="nuget_release|x64" Project="x64" />
     </Project>
   </Folder>
   <Project Path="Microsoft.VisualBasic.Core/src/Core.vbproj">
