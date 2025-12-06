@@ -1,26 +1,23 @@
 Imports Microsoft.VisualBasic.CommandLine
+Imports Microsoft.VisualBasic.CommandLine.InteropService.SharedORM
 Imports Microsoft.VisualBasic.Net.WebClient
 
+<CLI>
 Module Program
 
     <STAThread>
-    Sub Main(args As String())
-        Call Download(App.CommandLine).Wait()
-    End Sub
+    Public Function Main(args As String()) As Integer
+        Return GetType(Program).RunCLI(App.Command, executeFile:=AddressOf Download)
+    End Function
 
     ' url/files.txt [--filename <save_filename>] [--download_to <directory_path>]
-    Private Async Function Download(args As CommandLine) As Task
-        Dim target As String = args.Name
-        Dim targetList As String()
-
+    Private Function Download(target As String, args As CommandLine) As Integer
         If target.FileExists Then
             Dim downloads As String = args("--download_to")
 
             ' is local file of target download file list
-            targetList = target.ReadAllLines
-
-            For Each url As String In targetList
-                Await New Axel().Download(url, $"{downloads}/{url.FileName}")
+            For Each url As String In target.ReadAllLines
+                Call New Axel().Download(url, $"{downloads}/{url.FileName}").Wait()
             Next
         Else
             Dim filename As String = args("--filename")
@@ -29,7 +26,9 @@ Module Program
                 filename = $"./{target.FileName}"
             End If
 
-            Await New Axel().Download(target, filename)
+            Call New Axel().Download(target, filename).Wait()
         End If
+
+        Return 0
     End Function
 End Module
