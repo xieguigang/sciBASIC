@@ -684,3 +684,4 @@ storage.ide-wal
 .nuget/Microsoft.VisualBasic.ApplicationServices.Development.VisualStudio.1.0.0.nupkg
 mime/application%vnd.openxmlformats-officedocument.spreadsheetml.sheet/.vscode/settings.json
 mime/application%vnd.openxmlformats-officedocument.spreadsheetml.sheet/R-xlsx/.vscode/settings.json
+*.exe
