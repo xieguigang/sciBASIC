@@ -685,3 +685,4 @@ storage.ide-wal
 mime/application%vnd.openxmlformats-officedocument.spreadsheetml.sheet/.vscode/settings.json
 mime/application%vnd.openxmlformats-officedocument.spreadsheetml.sheet/R-xlsx/.vscode/settings.json
 *.exe
+/tools
