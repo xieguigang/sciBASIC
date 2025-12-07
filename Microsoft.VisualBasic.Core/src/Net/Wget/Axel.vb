@@ -39,12 +39,31 @@ Namespace Net.WebClient
             Using httpClient As New HttpClient()
                 ' 3. 获取文件信息
                 Dim response = Await httpClient.GetAsync(url, HttpCompletionOption.ResponseHeadersRead)
-                response.EnsureSuccessStatusCode()
+
+                ' --- 需求1: 处理非200 HTTP错误 ---
+                If Not response.IsSuccessStatusCode Then
+                    Console.WriteLine($"[错误] 下载失败: {url}")
+                    Console.WriteLine($"        状态码: {CInt(response.StatusCode)} ({response.StatusCode})")
+                    Console.WriteLine($"        原因: {response.ReasonPhrase}")
+                    ' 记录日志后跳过，直接返回
+                    Return
+                End If
 
                 totalFileSize = response.Content.Headers.ContentLength.GetValueOrDefault()
                 If totalFileSize = 0 Then
                     Console.WriteLine("错误: 无法获取文件大小或文件为空。")
                     Return
+                End If
+
+                ' --- 需求2: 验证已存在文件 ---
+                If File.Exists(fileName) Then
+                    Dim existingFileInfo As New FileInfo(fileName)
+                    If existingFileInfo.Length = totalFileSize Then
+                        Console.WriteLine($"[跳过] 文件已存在且大小匹配，跳过下载: {Path.GetFileName(fileName)}")
+                        Return
+                    Else
+                        Console.WriteLine($"[信息] 文件已存在但大小不匹配 (本地: {StringFormats.Lanudry(existingFileInfo.Length)}, 远程: {StringFormats.Lanudry(totalFileSize)})，将重新下载。")
+                    End If
                 End If
 
                 ' 检查服务器是否支持范围请求
