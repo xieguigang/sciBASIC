@@ -159,7 +159,7 @@ Namespace Net.WebClient
                 Call bar.Text.Description.Processing.AddNew.SetValue(Function(b) $"[{b.Value}/{StringFormats.Lanudry(totalFileSize)}]")
 
                 While totalBytesDownloaded < totalFileSize
-                    Thread.Sleep(500) ' 每200ms更新一次
+                    Thread.Sleep(10) ' 每200ms更新一次
                     bar.SetValue(totalBytesDownloaded)
                 End While
             End Using
