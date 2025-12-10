@@ -118,6 +118,11 @@ Public Class DynamicType
         Me.properties = New List(Of PropertyInfo)(properties)
     End Sub
 
+    Sub New(base As Type, ParamArray properties As PropertyInfo())
+        Me.New(properties)
+        Me.inheritsFrom = base
+    End Sub
+
     Public Function Add(name As String, type As Type,
                         Optional description As String = Nothing,
                         Optional displayName As String = Nothing) As DynamicType
