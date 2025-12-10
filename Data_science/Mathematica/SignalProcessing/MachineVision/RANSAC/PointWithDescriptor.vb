@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::017629e570f5808fffea57bf3adc3ab1, Data_science\Mathematica\SignalProcessing\MachineVision\RANSAC\PointWithDescriptor.vb"
+﻿#Region "Microsoft.VisualBasic::61f9dacf766cd74ea6af7a33f6bb3538, Data_science\Mathematica\SignalProcessing\MachineVision\RANSAC\PointWithDescriptor.vb"
 
     ' Author:
     ' 
@@ -212,4 +212,3 @@ Public Structure PointWithDescriptor
         Return points
     End Function
 End Structure
-

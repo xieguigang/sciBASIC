@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9112ea286380d2267631b98a13f2e6b3, Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\Utility\ProgressBar\ConsoleProgressBar\ElementList.vb"
+﻿#Region "Microsoft.VisualBasic::3ff8ce6e5807d0c7d2b7ec2bfe5670e5, Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\Utility\ProgressBar\ConsoleProgressBar\ElementList.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 68.18%
     ' 
     '   Blank Lines: 4 (10.00%)
-    '     File Size: 1.36 KB
+    '     File Size: 1.35 KB
 
 
     '     Class ElementList
@@ -94,4 +94,3 @@ Namespace ApplicationServices.Terminal.ProgressBar.ConsoleProgressBar
     End Class
 
 End Namespace
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c9713ab667707a154b2e97da11cf256c, Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\Utility\ProgressBar\ConsoleProgressBar\Text\Description.vb"
+﻿#Region "Microsoft.VisualBasic::068b12194bdd47408192e7d659c846f4, Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\Utility\ProgressBar\ConsoleProgressBar\Text\Description.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 79.41%
     ' 
     '   Blank Lines: 10 (12.05%)
-    '     File Size: 3.70 KB
+    '     File Size: 3.69 KB
 
 
     '     Class Text
@@ -143,4 +143,3 @@ Namespace ApplicationServices.Terminal.ProgressBar.ConsoleProgressBar
 
     End Class
 End Namespace
-

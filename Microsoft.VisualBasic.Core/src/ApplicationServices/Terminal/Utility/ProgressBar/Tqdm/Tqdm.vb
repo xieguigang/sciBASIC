@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::aed6e2f6f2f465245ddfbc625164a237, Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\Utility\ProgressBar\Tqdm\Tqdm.vb"
+﻿#Region "Microsoft.VisualBasic::569b0051fd5d247ab9d6ce14c1d13cda, Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\Utility\ProgressBar\Tqdm\Tqdm.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 240
-    '    Code Lines: 141 (58.75%)
-    ' Comment Lines: 66 (27.50%)
-    '    - Xml Docs: 80.30%
+    '   Total Lines: 249
+    '    Code Lines: 141 (56.63%)
+    ' Comment Lines: 75 (30.12%)
+    '    - Xml Docs: 81.33%
     ' 
-    '   Blank Lines: 33 (13.75%)
-    '     File Size: 12.26 KB
+    '   Blank Lines: 33 (13.25%)
+    '     File Size: 12.67 KB
 
 
     '     Module TqdmWrapper

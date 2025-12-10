@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::df8d10f74a715345ad368fbfeb96e567, Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\Utility\ProgressBar\ConsoleProgressBar\Text\Text.vb"
+﻿#Region "Microsoft.VisualBasic::e880499fd20d7808227f2d3bb42750f4, Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\Utility\ProgressBar\ConsoleProgressBar\Text\Text.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 56.25%
     ' 
     '   Blank Lines: 1 (4.35%)
-    '     File Size: 992 B
+    '     File Size: 990 B
 
 
     '     Class Text
@@ -75,4 +75,3 @@ Namespace ApplicationServices.Terminal.ProgressBar.ConsoleProgressBar
         Public ReadOnly Property Description As TextDescription = New TextDescription()
     End Class
 End Namespace
-

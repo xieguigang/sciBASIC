@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9a08d2b59f74e8ac57c17b94ebd00fd4, Data\BinaryData\BinaryData\Stream\BinaryDataReader.vb"
+﻿#Region "Microsoft.VisualBasic::1930b4cb08347739378917be6eeb5d49, Data\BinaryData\BinaryData\Stream\BinaryDataReader.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 739
-    '    Code Lines: 370 (50.07%)
-    ' Comment Lines: 293 (39.65%)
-    '    - Xml Docs: 89.08%
+    '   Total Lines: 744
+    '    Code Lines: 371 (49.87%)
+    ' Comment Lines: 297 (39.92%)
+    '    - Xml Docs: 89.23%
     ' 
-    '   Blank Lines: 76 (10.28%)
-    '     File Size: 32.51 KB
+    '   Blank Lines: 76 (10.22%)
+    '     File Size: 32.73 KB
 
 
     ' Class BinaryDataReader

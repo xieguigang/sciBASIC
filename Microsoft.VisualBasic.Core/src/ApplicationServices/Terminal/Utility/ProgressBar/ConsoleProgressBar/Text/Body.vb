@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bba54e2d03b32551d6198df4c123ce42, Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\Utility\ProgressBar\ConsoleProgressBar\Text\Body.vb"
+﻿#Region "Microsoft.VisualBasic::9132d07cf07e1a5c1a824c7a29ce96ed, Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\Utility\ProgressBar\ConsoleProgressBar\Text\Body.vb"
 
     ' Author:
     ' 
@@ -219,4 +219,3 @@ Namespace ApplicationServices.Terminal.ProgressBar.ConsoleProgressBar
 
     End Class
 End Namespace
-

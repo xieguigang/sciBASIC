@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::90b7519a642dddafca81c5c7653c7290, Data_science\Mathematica\SignalProcessing\MachineVision\RANSAC\ShapeContextDescriptor.vb"
+﻿#Region "Microsoft.VisualBasic::6165114f6bcc27173946f5857836e2b6, Data_science\Mathematica\SignalProcessing\MachineVision\RANSAC\ShapeContextDescriptor.vb"
 
     ' Author:
     ' 
@@ -34,12 +34,12 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 106
-    '    Code Lines: 68 (64.15%)
-    ' Comment Lines: 21 (19.81%)
+    '   Total Lines: 105
+    '    Code Lines: 68 (64.76%)
+    ' Comment Lines: 21 (20.00%)
     '    - Xml Docs: 61.90%
     ' 
-    '   Blank Lines: 17 (16.04%)
+    '   Blank Lines: 16 (15.24%)
     '     File Size: 4.08 KB
 
 
@@ -53,7 +53,6 @@
     ' 
     '     Constructor: (+1 Overloads) Sub New
     '     Function: ComputeDescriptors
-    ' 
     ' 
     ' /********************************************************************************/
 
@@ -164,5 +163,3 @@ Public NotInheritable Class ShapeContextCalculator
         Return descriptors
     End Function
 End Class
-
-

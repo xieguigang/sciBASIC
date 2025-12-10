@@ -1,65 +1,65 @@
-﻿#Region "Microsoft.VisualBasic::73abc9c60d325e1996ef4fdbbe04c802, Microsoft.VisualBasic.Core\src\ComponentModel\DataSource\Repository\TextIndex\QGramIndex.vb"
+﻿#Region "Microsoft.VisualBasic::69080d37ac7ee5457d0a48cca218251c, Microsoft.VisualBasic.Core\src\ComponentModel\DataSource\Repository\TextIndex\QGramIndex.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 144
-'    Code Lines: 91 (63.19%)
-' Comment Lines: 24 (16.67%)
-'    - Xml Docs: 75.00%
-' 
-'   Blank Lines: 29 (20.14%)
-'     File Size: 5.19 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Class QGramIndex
-' 
-'         Constructor: (+1 Overloads) Sub New
-' 
-'         Function: FindSimilar, GenerateQGrams, GetIndexStats, PadString
-' 
-'         Sub: AddString
-' 
-'     Class FindResult
-' 
-'         Properties: index, levenshtein, similarity, text
-' 
-'         Constructor: (+2 Overloads) Sub New
-'         Function: ToString
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 170
+    '    Code Lines: 98 (57.65%)
+    ' Comment Lines: 43 (25.29%)
+    '    - Xml Docs: 81.40%
+    ' 
+    '   Blank Lines: 29 (17.06%)
+    '     File Size: 6.31 KB
+
+
+    '     Class QGramIndex
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
+    '         Function: FindSimilar, GenerateQGrams, GetIndexStats, PadString
+    ' 
+    '         Sub: AddString
+    ' 
+    '     Class FindResult
+    ' 
+    '         Properties: index, levenshtein, similarity, text
+    ' 
+    '         Constructor: (+2 Overloads) Sub New
+    '         Function: ToString
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

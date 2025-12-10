@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::09cf0386909c7d6c7aeb72b408dc869d, Microsoft.VisualBasic.Core\src\CommandLine\Interpreters\Interpreter.vb"
+﻿#Region "Microsoft.VisualBasic::bb433a1856b13e88156d95709b78e8a0, Microsoft.VisualBasic.Core\src\CommandLine\Interpreters\Interpreter.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 723
-    '    Code Lines: 416 (57.54%)
-    ' Comment Lines: 214 (29.60%)
-    '    - Xml Docs: 82.71%
+    '   Total Lines: 738
+    '    Code Lines: 423 (57.32%)
+    ' Comment Lines: 221 (29.95%)
+    '    - Xml Docs: 82.81%
     ' 
-    '   Blank Lines: 93 (12.86%)
-    '     File Size: 31.63 KB
+    '   Blank Lines: 94 (12.74%)
+    '     File Size: 32.14 KB
 
 
     '     Class Interpreter
@@ -54,8 +54,9 @@
     '         Function: __getsAllCommands, apiInvoke, apiInvokeEtc, Contains, CreateEmptyCLIObject
     '                   (+3 Overloads) CreateInstance, doExecuteNonCLIInput, doLoadApiInternal, exec_shell_script_internal, (+3 Overloads) Execute
     '                   ExistsCommand, GetAllCommands, getAPI, GetEnumerator, GetEnumerator1
-    '                   GetPossibleCommand, Help, invokeSpecial, ListingRelated, (+2 Overloads) Remove
-    '                   runShellScriptFile, SDKdocs, ToDictionary, ToString, TryGetValue
+    '                   GetPossibleCommand, Help, invokeSpecial, IsPossibleRequestFile, ListingRelated
+    '                   (+2 Overloads) Remove, runShellScriptFile, SDKdocs, ToDictionary, ToString
+    '                   TryGetValue
     ' 
     '         Sub: (+2 Overloads) Add, AddCommand, Clear, CopyTo, (+2 Overloads) Dispose
     ' 

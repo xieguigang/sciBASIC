@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::57b8e6f9ad7e783a5a61bdcb1bb264c1, Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\Utility\ProgressBar\ConsoleProgressBar\ProgressBar.vb"
+﻿#Region "Microsoft.VisualBasic::d6540046021c907f04f4511532959096, Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\Utility\ProgressBar\ConsoleProgressBar\ProgressBar.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 526
-    '    Code Lines: 305 (57.98%)
-    ' Comment Lines: 157 (29.85%)
-    '    - Xml Docs: 78.98%
+    '   Total Lines: 547
+    '    Code Lines: 319 (58.32%)
+    ' Comment Lines: 161 (29.43%)
+    '    - Xml Docs: 78.88%
     ' 
-    '   Blank Lines: 64 (12.17%)
-    '     File Size: 21.41 KB
+    '   Blank Lines: 67 (12.25%)
+    '     File Size: 21.99 KB
 
 
     '     Class ProgressBar
@@ -57,7 +57,7 @@
     ' 
     '         Sub: [Resume], Dispose, Pause, (+2 Overloads) PerformStep, Render
     '              SetValue, Start, ThreadAction, Unrender, UpdateMarqueePosition
-    '              (+4 Overloads) WriteLine
+    '              WaitForExit, (+4 Overloads) WriteLine
     ' 
     ' 
     ' /********************************************************************************/
@@ -611,4 +611,3 @@ Namespace ApplicationServices.Terminal.ProgressBar.ConsoleProgressBar
         End Sub
     End Class
 End Namespace
-

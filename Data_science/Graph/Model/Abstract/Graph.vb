@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4b7c943653c066c886291c569d56d1b4, Data_science\Graph\Model\Abstract\Graph.vb"
+﻿#Region "Microsoft.VisualBasic::240c2bad7264329eb70396ca96ef0ebb, Data_science\Graph\Model\Abstract\Graph.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 360
-    '    Code Lines: 193 (53.61%)
-    ' Comment Lines: 121 (33.61%)
-    '    - Xml Docs: 97.52%
+    '   Total Lines: 381
+    '    Code Lines: 206 (54.07%)
+    ' Comment Lines: 127 (33.33%)
+    '    - Xml Docs: 96.85%
     ' 
-    '   Blank Lines: 46 (12.78%)
-    '     File Size: 12.53 KB
+    '   Blank Lines: 48 (12.60%)
+    '     File Size: 13.30 KB
 
 
     ' Class Graph
@@ -50,8 +50,8 @@
     '     Constructor: (+1 Overloads) Sub New
     ' 
     '     Function: Add, (+3 Overloads) AddEdge, AddEdges, (+2 Overloads) AddVertex, CreateEdge
-    '               (+4 Overloads) Delete, (+2 Overloads) ExistEdge, ExistVertex, GetConnectedVertex, GetEnumerator
-    '               IEnumerable_GetEnumerator, Insert, QueryEdge
+    '               (+4 Overloads) Delete, (+2 Overloads) ExistEdge, ExistVertex, GetConnectedVertex, GetEdge
+    '               GetEdgeByID, GetEnumerator, IEnumerable_GetEnumerator, Insert, QueryEdge
     ' 
     '     Sub: clearEdges
     ' 

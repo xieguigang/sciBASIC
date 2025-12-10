@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b1ff0f0229bbb02f4c5bb2006949e174, Data_science\Mathematica\Math\Math\Algebra\LP\LPP.vb"
+﻿#Region "Microsoft.VisualBasic::9bdde28156ac8c05acd9c3373240b283, Data_science\Mathematica\Math\Math\Algebra\LP\LPP.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 203
-    '    Code Lines: 132 (65.02%)
-    ' Comment Lines: 45 (22.17%)
-    '    - Xml Docs: 88.89%
+    '   Total Lines: 237
+    '    Code Lines: 150 (63.29%)
+    ' Comment Lines: 60 (25.32%)
+    '    - Xml Docs: 85.00%
     ' 
-    '   Blank Lines: 26 (12.81%)
-    '     File Size: 9.78 KB
+    '   Blank Lines: 27 (11.39%)
+    '     File Size: 11.47 KB
 
 
     '     Class LPP
@@ -49,7 +49,7 @@
     ' 
     '         Constructor: (+3 Overloads) Sub New
     ' 
-    '         Function: ArtificialVariableAssignments, increaseArtificialVariableIndices, solve, ToString
+    '         Function: addArtificialVariable, ArtificialVariableAssignments, increaseArtificialVariableIndices, solve, ToString
     ' 
     '         Sub: addArtificialVariables, addVariableAt, (+2 Overloads) makeStandardForm
     ' 

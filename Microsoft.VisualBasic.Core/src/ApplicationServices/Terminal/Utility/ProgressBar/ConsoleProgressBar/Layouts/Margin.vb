@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6de8c99dbe96f78cb21b5e3a267cda04, Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\Utility\ProgressBar\ConsoleProgressBar\Layouts\Margin.vb"
+﻿#Region "Microsoft.VisualBasic::1a94473c42166f426192891db5a2caa6, Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\Utility\ProgressBar\ConsoleProgressBar\Layouts\Margin.vb"
 
     ' Author:
     ' 
@@ -195,4 +195,3 @@ Namespace ApplicationServices.Terminal.ProgressBar.ConsoleProgressBar
 
     End Class
 End Namespace
-

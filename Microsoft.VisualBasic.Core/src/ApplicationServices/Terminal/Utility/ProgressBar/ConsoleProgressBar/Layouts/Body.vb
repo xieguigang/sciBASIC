@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f7796f78e35953e885b09fe3e1285994, Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\Utility\ProgressBar\ConsoleProgressBar\Layouts\Body.vb"
+﻿#Region "Microsoft.VisualBasic::63224f11017ac6549041d85b9b123373, Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\Utility\ProgressBar\ConsoleProgressBar\Layouts\Body.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 72.58%
     ' 
     '   Blank Lines: 10 (9.09%)
-    '     File Size: 5.08 KB
+    '     File Size: 5.07 KB
 
 
     '     Class Layout
@@ -170,4 +170,3 @@ Namespace ApplicationServices.Terminal.ProgressBar.ConsoleProgressBar
 
     End Class
 End Namespace
-

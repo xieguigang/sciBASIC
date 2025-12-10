@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4e1a0499a8977fb21ae4b62abd602ab1, Data_science\Mathematica\SignalProcessing\MachineVision\CurveAnalysis.vb"
+﻿#Region "Microsoft.VisualBasic::06829aeccc0c9ded4aae8cacbe265216, Data_science\Mathematica\SignalProcessing\MachineVision\CurveAnalysis.vb"
 
     ' Author:
     ' 
@@ -438,4 +438,3 @@ Public Module CurveAnalysis
 
 #End Region
 End Module
-

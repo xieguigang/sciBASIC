@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a974c81a7c38d73255be010ba3e777b5, Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\Utility\ProgressBar\ConsoleProgressBar\Extensions\TimeSpanExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::8632ad96cf6afb127bb85c9a5aed68c8, Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\Utility\ProgressBar\ConsoleProgressBar\Extensions\TimeSpanExtensions.vb"
 
     ' Author:
     ' 
@@ -132,4 +132,3 @@ Namespace ApplicationServices.Terminal.ProgressBar.ConsoleProgressBar.Extensions
         End Function
     End Module
 End Namespace
-

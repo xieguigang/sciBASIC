@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3d1550c24ae5d0eb0be5300ca032bb6e, Data_science\Graph\Network\NetworkInterface.vb"
+﻿#Region "Microsoft.VisualBasic::f3b822ac5e58a5ddb6f2285cc8317e30, Data_science\Graph\Network\NetworkInterface.vb"
 
     ' Author:
     ' 
@@ -34,12 +34,12 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 84
-    '    Code Lines: 60 (71.43%)
-    ' Comment Lines: 13 (15.48%)
+    '   Total Lines: 83
+    '    Code Lines: 60 (72.29%)
+    ' Comment Lines: 13 (15.66%)
     '    - Xml Docs: 84.62%
     ' 
-    '   Blank Lines: 11 (13.10%)
+    '   Blank Lines: 10 (12.05%)
     '     File Size: 3.00 KB
 
 
@@ -59,7 +59,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Data.GraphTheory.SparseGraph

@@ -1,65 +1,64 @@
-﻿#Region "Microsoft.VisualBasic::abb1f44460101a4c04d6f44e10d206a9, Microsoft.VisualBasic.Core\src\ComponentModel\DataStructures\HashDictionary.vb"
+﻿#Region "Microsoft.VisualBasic::aae64cbfb9cb8aef2d1ae683c7fa4ba7, Microsoft.VisualBasic.Core\src\ComponentModel\DataStructures\HashDictionary.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 236
-'    Code Lines: 164 (69.49%)
-' Comment Lines: 38 (16.10%)
-'    - Xml Docs: 60.53%
-' 
-'   Blank Lines: 34 (14.41%)
-'     File Size: 9.36 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Class HashDictionary
-' 
-'         Properties: __keys, __values, (+2 Overloads) Count, IsReadOnly, Keys
-'                     Values
-' 
-'         Constructor: (+2 Overloads) Sub New
-' 
-'         Function: Contains, (+2 Overloads) ContainsKey, GetEnumerator, GetEnumerator1, (+2 Overloads) Remove
-'                   (+2 Overloads) TryGetValue
-' 
-'         Sub: (+2 Overloads) Add, Clear, CopyTo, (+2 Overloads) Dispose
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 233
+    '    Code Lines: 162 (69.53%)
+    ' Comment Lines: 38 (16.31%)
+    '    - Xml Docs: 60.53%
+    ' 
+    '   Blank Lines: 33 (14.16%)
+    '     File Size: 9.28 KB
+
+
+    '     Class HashDictionary
+    ' 
+    '         Properties: __keys, __values, (+2 Overloads) Count, IsReadOnly, Keys
+    '                     Values
+    ' 
+    '         Constructor: (+2 Overloads) Sub New
+    ' 
+    '         Function: Contains, (+2 Overloads) ContainsKey, GetEnumerator, GetEnumerator1, (+2 Overloads) Remove
+    '                   (+2 Overloads) TryGetValue
+    ' 
+    '         Sub: (+2 Overloads) Add, Clear, CopyTo, (+2 Overloads) Dispose
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
-
 
 Namespace ComponentModel.Collection.Generic
 

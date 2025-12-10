@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5ffae2fc81e0cebcad133a84e826310f, Data_science\Mathematica\Math\Math\Algebra\LP\LPPSolution.vb"
+﻿#Region "Microsoft.VisualBasic::8d00b240ee94b3e992f6a6c9fe0acbd9, Data_science\Mathematica\Math\Math\Algebra\LP\LPPSolution.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 128
-    '    Code Lines: 102 (79.69%)
-    ' Comment Lines: 3 (2.34%)
+    '   Total Lines: 135
+    '    Code Lines: 108 (80.00%)
+    ' Comment Lines: 3 (2.22%)
     '    - Xml Docs: 0.00%
     ' 
-    '   Blank Lines: 23 (17.97%)
-    '     File Size: 5.21 KB
+    '   Blank Lines: 24 (17.78%)
+    '     File Size: 5.55 KB
 
 
     '     Class LPPSolution
@@ -49,7 +49,7 @@
     '                     SolutionLog, SolveTime
     ' 
     '         Constructor: (+2 Overloads) Sub New
-    '         Function: coefficientSensitivityString, constraintSensitivityString, GetReducedCost, (+2 Overloads) GetSolution, ToString
+    '         Function: coefficientSensitivityString, constraintSensitivityString, GetReducedCost, (+3 Overloads) GetSolution, ToString
     ' 
     ' 
     ' /********************************************************************************/

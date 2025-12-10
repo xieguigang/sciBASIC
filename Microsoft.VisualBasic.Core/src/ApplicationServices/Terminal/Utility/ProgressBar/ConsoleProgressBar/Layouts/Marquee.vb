@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c6743986b328d9cb6f33b01e94604586, Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\Utility\ProgressBar\ConsoleProgressBar\Layouts\Marquee.vb"
+﻿#Region "Microsoft.VisualBasic::13f7d251c4fb36937ef4df0c3eea470f, Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\Utility\ProgressBar\ConsoleProgressBar\Layouts\Marquee.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 75.71%
     ' 
     '   Blank Lines: 14 (10.94%)
-    '     File Size: 6.11 KB
+    '     File Size: 6.10 KB
 
 
     '     Class Layout
@@ -188,4 +188,3 @@ Namespace ApplicationServices.Terminal.ProgressBar.ConsoleProgressBar
         End Class
     End Class
 End Namespace
-

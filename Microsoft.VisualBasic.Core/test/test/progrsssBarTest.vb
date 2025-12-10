@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5313052c839e1bc7f4587e15cc27e402, Microsoft.VisualBasic.Core\test\test\progrsssBarTest.vb"
+﻿#Region "Microsoft.VisualBasic::e7af76e93f1b302ff39bb9c11ca2bef1, Microsoft.VisualBasic.Core\test\test\progrsssBarTest.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 0.00%
     ' 
     '   Blank Lines: 4 (19.05%)
-    '     File Size: 596 B
+    '     File Size: 594 B
 
 
     ' Module progrsssBarTest
@@ -72,4 +72,3 @@ Module progrsssBarTest
         Pause()
     End Sub
 End Module
-
