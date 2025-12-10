@@ -224,7 +224,7 @@ Namespace CommandLine
                 Case "man"
                     Call ExecuteImpl.HandleProgramManual(Me, args)
                 Case "/linux-bash"
-                    Call My.UNIX.BashShell()
+                    Call My.UNIX.BashShell(install_root:=args("--install_root"))
                 Case "/cli.dev"
                     Call Me.CreateCLIPipelineFile(args)
                 Case Else
