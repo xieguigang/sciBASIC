@@ -1,63 +1,64 @@
 ﻿#Region "Microsoft.VisualBasic::5f4fb5d76a4f4edca3d938f781746071, Microsoft.VisualBasic.Core\src\ComponentModel\DataSource\Repository\BloomFilter.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 157
-    '    Code Lines: 71 (45.22%)
-    ' Comment Lines: 65 (41.40%)
-    '    - Xml Docs: 76.92%
-    ' 
-    '   Blank Lines: 21 (13.38%)
-    '     File Size: 7.18 KB
+' Summaries:
 
 
-    '     Class BloomFilter
-    ' 
-    '         Properties: FalsePositiveRate
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    ' 
-    '         Function: Contains, Create, GetHashPositions, OptimalK, OptimalM
-    ' 
-    '         Sub: Add
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 157
+'    Code Lines: 71 (45.22%)
+' Comment Lines: 65 (41.40%)
+'    - Xml Docs: 76.92%
+' 
+'   Blank Lines: 21 (13.38%)
+'     File Size: 7.18 KB
+
+
+'     Class BloomFilter
+' 
+'         Properties: FalsePositiveRate
+' 
+'         Constructor: (+1 Overloads) Sub New
+' 
+'         Function: Contains, Create, GetHashPositions, OptimalK, OptimalM
+' 
+'         Sub: Add
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
+Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports Microsoft.VisualBasic.Data.Repository
 Imports std = System.Math
@@ -71,12 +72,21 @@ Namespace ComponentModel.DataSourceModel.Repository
     ''' </summary>
     Public Class BloomFilter
 
-        ' 使用 BitArray 来高效地存储位数组
+        ''' <summary>
+        ''' 使用 BitArray 来高效地存储位数组
+        ''' </summary>
         ReadOnly _bitArray As BitArray
-        ' 位数组的长度
-        ReadOnly _m As Integer
-        ' 哈希函数的数量
-        ReadOnly _k As Integer
+
+        ''' <summary>
+        ''' length of the <see cref="BitArray"/> 
+        ''' </summary>
+        ''' <returns>位数组的长度</returns>
+        Public ReadOnly Property m As Integer
+        ''' <summary>
+        ''' 哈希函数的数量
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property k As Integer
 
         ''' <summary>
         ''' 获取当前布隆过滤器的理论假阳性率。
@@ -85,9 +95,12 @@ Namespace ComponentModel.DataSourceModel.Repository
         ''' <returns>理论假阳性率。</returns>
         Public ReadOnly Property FalsePositiveRate(currentItemCount As Integer) As Double
             Get
-                If currentItemCount < 0 Then Throw New ArgumentOutOfRangeException(NameOf(currentItemCount))
-                ' 公式: (1 - e^(-k*n/m))^k
-                Return std.Pow((1.0 - std.Exp(-_k * currentItemCount / _m)), _k)
+                If currentItemCount < 0 Then
+                    Throw New ArgumentOutOfRangeException(NameOf(currentItemCount))
+                Else
+                    ' 公式: (1 - e^(-k*n/m))^k
+                    Return std.Pow((1.0 - std.Exp(-_k * currentItemCount / _m)), _k)
+                End If
             End Get
         End Property
 
@@ -131,10 +144,9 @@ Namespace ComponentModel.DataSourceModel.Repository
         ''' </summary>
         ''' <param name="item">要添加的元素。不能为 Nothing。</param>
         Public Sub Add(item As String)
-            If item Is Nothing Then Throw New ArgumentNullException(NameOf(item))
-
             Dim positions = GetHashPositions(item)
-            For Each pos In positions
+
+            For Each pos As Integer In positions
                 _bitArray(pos) = True
             Next
         End Sub
@@ -145,15 +157,15 @@ Namespace ComponentModel.DataSourceModel.Repository
         ''' <param name="item">要检查的元素。不能为 Nothing。</param>
         ''' <returns>如果元素可能存在，则为 true；如果元素绝对不存在，则为 false。</returns>
         Public Function Contains(item As String) As Boolean
-            If item Is Nothing Then Throw New ArgumentNullException(NameOf(item))
-
             Dim positions = GetHashPositions(item)
-            For Each pos In positions
+
+            For Each pos As Integer In positions
                 ' 只要有一个哈希位置不为1，就说明元素绝对不存在
                 If Not _bitArray(pos) Then
                     Return False
                 End If
             Next
+
             ' 如果所有位置都为1，则元素可能存在（存在假阳性可能）
             Return True
         End Function
@@ -164,6 +176,8 @@ Namespace ComponentModel.DataSourceModel.Repository
         ''' <param name="n">预计插入的元素数量。</param>
         ''' <param name="p">期望的假阳性率。</param>
         ''' <returns>最优的位数组大小。</returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Function OptimalM(n As Integer, p As Double) As Integer
             ' 公式: m = - (n * ln(p)) / (ln(2))^2
             Return CInt(-n * std.Log(p) / (std.Log(2) ^ 2))
@@ -175,6 +189,8 @@ Namespace ComponentModel.DataSourceModel.Repository
         ''' <param name="m">位数组的大小。</param>
         ''' <param name="n">预计插入的元素数量。</param>
         ''' <returns>最优的哈希函数数量。</returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Function OptimalK(m As Integer, n As Integer) As Integer
             ' 公式: k = (m/n) * ln(2)
             Return CInt((m / n) * std.Log(2))
