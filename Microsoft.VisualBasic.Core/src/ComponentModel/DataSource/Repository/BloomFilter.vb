@@ -143,7 +143,7 @@ Namespace ComponentModel.DataSourceModel.Repository
 
         Public Function ToArray() As Byte()
             ' 将 BitArray 转换为字节数组并写入
-            Dim bytes As Byte() = New Byte((_m \ 8) - 1) {}
+            Dim bytes As Byte() = New Byte((_bitArray.Length + 7) \ 8 - 1) {}
             _bitArray.CopyTo(bytes, 0)
             Return bytes
         End Function
