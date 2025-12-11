@@ -317,7 +317,7 @@ Public Module PrimitiveParser
 
         Static empty_output As Index(Of String) = {"false", "na", "null", "n/a", "nan"}
 
-        If s.ToLower Like empty_output Then
+        If s Is Nothing OrElse s = "" OrElse s.ToLower Like empty_output Then
             Return Nothing
         End If
         If s.IsSimpleNumber Then
