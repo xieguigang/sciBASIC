@@ -210,7 +210,9 @@ Namespace ComponentModel.DataSourceModel.Repository
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Function OptimalM(n As Integer, p As Double) As Integer
             ' 公式: m = - (n * ln(p)) / (ln(2))^2
-            Return CInt(-n * std.Log(p) / (std.Log(2) ^ 2))
+            Dim m As Double = -n * std.Log(p) / (std.Log(2) ^ 2)
+            Dim mint As Integer = CInt(m)
+            Return mint
         End Function
 
         ''' <summary>
@@ -223,7 +225,9 @@ Namespace ComponentModel.DataSourceModel.Repository
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Function OptimalK(m As Integer, n As Integer) As Integer
             ' 公式: k = (m/n) * ln(2)
-            Return CInt((m / n) * std.Log(2))
+            Dim k As Double = (m / n) * std.Log(2)
+            Dim kint As Integer = CInt(k)
+            Return kint
         End Function
 
         ''' <summary>
