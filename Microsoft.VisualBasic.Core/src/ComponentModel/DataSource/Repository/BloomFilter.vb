@@ -125,9 +125,9 @@ Namespace ComponentModel.DataSourceModel.Repository
             _bitArray = New BitArray(m)
         End Sub
 
-        Sub New(bytes As Byte(), k As Integer)
+        Sub New(bytes As Byte(), m As Integer, k As Integer)
             _bitArray = New BitArray(bytes)
-            _m = _bitArray.Length
+            _m = m
             _k = k
         End Sub
 
