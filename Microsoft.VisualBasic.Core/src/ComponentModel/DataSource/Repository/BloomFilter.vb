@@ -88,6 +88,13 @@ Namespace ComponentModel.DataSourceModel.Repository
         ''' <returns></returns>
         Public ReadOnly Property k As Integer
 
+        Default Public ReadOnly Property CheckItem(item As String) As Boolean
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
+            Get
+                Return Contains(item)
+            End Get
+        End Property
+
         ''' <summary>
         ''' 获取当前布隆过滤器的理论假阳性率。
         ''' </summary>
