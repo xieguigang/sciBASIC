@@ -109,7 +109,7 @@ Namespace ComponentModel.DataSourceModel.Repository
         ''' </summary>
         ''' <param name="m">位数组的大小。必须为正数。</param>
         ''' <param name="k">哈希函数的数量。必须为正数。</param>
-        Public Sub New(m As Integer, k As Integer)
+        Private Sub New(m As Integer, k As Integer)
             If m <= 0 Then Throw New ArgumentOutOfRangeException(NameOf(m), "位数组大小必须为正数。")
             If k <= 0 Then Throw New ArgumentOutOfRangeException(NameOf(k), "哈希函数数量必须为正数。")
 
@@ -117,6 +117,29 @@ Namespace ComponentModel.DataSourceModel.Repository
             _k = k
             _bitArray = New BitArray(m)
         End Sub
+
+        Sub New(bytes As Byte(), k As Integer)
+            _bitArray = New BitArray(bytes)
+            _m = _bitArray.Length
+            _k = k
+        End Sub
+
+        Sub New(bits As Boolean(), k As Integer)
+            _bitArray = New BitArray(bits.Length)
+            _m = bits.Length
+            _k = k
+
+            For i As Integer = 0 To bits.Length - 1
+                _bitArray.Set(i, True)
+            Next
+        End Sub
+
+        Public Function ToArray() As Byte()
+            ' 将 BitArray 转换为字节数组并写入
+            Dim bytes As Byte() = New Byte((_m \ 8) - 1) {}
+            _bitArray.CopyTo(bytes, 0)
+            Return bytes
+        End Function
 
         ''' <summary>
         ''' 根据期望的元素数量和目标假阳性率，自动计算最优参数并初始化 BloomFilter 类的新实例。
