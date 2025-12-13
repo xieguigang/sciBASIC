@@ -139,6 +139,16 @@ Public Module Extensions
         Return New StreamReader(pack.OpenBlock(file), encoding.CodePage).ReadToEnd
     End Function
 
+    <Extension>
+    Public Function LoadStream(pack As StreamPack, file As StreamBlock) As MemoryStream
+        Dim s As Stream = pack.OpenBlock(file)
+        Dim ms As New MemoryStream
+        Call s.CopyTo(ms)
+        Call ms.Flush()
+        Call ms.Seek(Scan0, SeekOrigin.Begin)
+        Return ms
+    End Function
+
     ''' <summary>
     ''' Get in-memory stream buffer data from the archive
     ''' </summary>
@@ -154,11 +164,7 @@ Public Module Extensions
         If pack.GetObject(filename) Is Nothing Then
             Return Nothing
         Else
-            Dim s As Stream = pack.OpenBlock(filename)
-            Dim ms As New MemoryStream
-            Call s.CopyTo(ms)
-            Call ms.Flush()
-            Return ms
+            Return pack.LoadStream(pack.GetObject(filename))
         End If
     End Function
 End Module
