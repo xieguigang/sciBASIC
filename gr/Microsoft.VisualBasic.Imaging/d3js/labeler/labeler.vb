@@ -371,7 +371,7 @@ Namespace d3js.Layout
                 Next
 
                 T = definedCoolingSchedule(T, initialT, nsweeps)
-                bar.SetLabel($"temperature: {T:F2}")
+                bar?.SetLabel($"temperature: {T:F2}")
             Next
 
             Return Me
