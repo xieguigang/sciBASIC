@@ -319,17 +319,31 @@ Namespace FuzzyCMeans
             Next
         End Function
 
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="m">fuzzification</param>
+        ''' <param name="u"></param>
+        ''' <param name="centers"></param>
+        ''' <param name="entities"></param>
+        ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function J(m As Double, u As Double()(), centers As Double()(), entities As ClusterEntity()) As Double
-            Return centers _
-                .Select(Function(x, i)
-                            Return entities _
-                                .Select(Function(y, j1)
-                                            Return (u(j1)(i) ^ m) * y.SquareDistance(x)
-                                        End Function) _
-                                .Sum()
-                        End Function) _
-                .Sum()
+            Dim jsum As Double = 0
+
+            For i As Integer = 0 To centers.Length - 1
+                Dim offset As Integer = i
+                Dim x = centers(i)
+                Dim sum As Double = entities _
+                    .Select(Function(y, j1)
+                                Return (u(j1)(offset) ^ m) * y.SquareDistance(x)
+                            End Function) _
+                    .Sum()
+
+                jsum += sum
+            Next
+
+            Return jsum
         End Function
     End Module
 End Namespace
