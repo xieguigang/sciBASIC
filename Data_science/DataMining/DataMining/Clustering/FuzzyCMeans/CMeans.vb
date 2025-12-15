@@ -300,21 +300,26 @@ Namespace FuzzyCMeans
         End Function
 
         Public Iterator Function GetCenters(classCount As Integer, m As Double, u As Double()(), entities As ClusterEntity(), width As Integer) As IEnumerable(Of Double())
-            Dim entityIndex As Integer() = Enumerable.Range(0, entities.Count).ToArray
+            Dim entityIndex As Integer() = Enumerable.Range(0, entities.Length).ToArray
 
             For Each i As Integer In Enumerable.Range(0, classCount)
+                ' for each data dimension
                 Yield Enumerable.Range(0, width) _
-                    .[Select](Function(x)
-                                  Dim prow As Double() = (From j As Integer In entityIndex Let xi = u(j)(i) ^ m Select If(xi.IsNaNImaginary, 0, xi)).ToArray
-                                  Dim v As Double() = (From j As Integer In entityIndex Let yi = entities(j)(x) Select If(yi.IsNaNImaginary, 0, yi)).ToArray
-                                  Dim sumAll = Aggregate j As Integer
-                                               In entityIndex
-                                               Let val As Double = prow(j)
-                                               Into Sum(val * v(j))
-                                  Dim bValue = prow.Sum
+                    .Select(Function(x)
+                                Dim prow As Double() = (From j As Integer In entityIndex Let xi = u(j)(i) ^ m Select If(xi.IsNaNImaginary, 0, xi)).ToArray
+                                Dim v As Double() = (From j As Integer In entityIndex Let yi = entities(j)(x) Select If(yi.IsNaNImaginary, 0, yi)).ToArray
+                                Dim sumAll = Aggregate j As Integer
+                                             In entityIndex
+                                             Let val As Double = prow(j)
+                                             Into Sum(val * v(j))
+                                Dim bValue = prow.Sum
 
-                                  Return sumAll / bValue
-                              End Function) _
+                                If bValue = 0.0 Then
+                                    Return 0
+                                End If
+
+                                Return sumAll / bValue
+                            End Function) _
                     .ToArray()
             Next
         End Function
