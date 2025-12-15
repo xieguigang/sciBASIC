@@ -315,7 +315,7 @@ Namespace FuzzyCMeans
                                 Dim bValue = prow.Sum
 
                                 If bValue = 0.0 Then
-                                    Return 0
+                                    Return 10000
                                 End If
 
                                 Return sumAll / bValue
