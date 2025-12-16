@@ -9,12 +9,22 @@
     <Platforms>AnyCPU;x64</Platforms>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <PackageId>Microsoft.VisualBasic.Drawing.Windows</PackageId>
-    <Title>System.Drawing gdi+ drawing wrapper on windows</Title>
+    <Title>System.Drawing Gdi+ Drawing Wrapper For Windows Form Application</Title>
     <Authors>xieguigang</Authors>
-    <Company>scibasic.net</Company>
+    <Company>sciBASIC#</Company>
     <Product>scibasic.net</Product>
     <Configurations>Debug;Release;nuget_release;Rsharp_app_release;MEMI-Desktop</Configurations>
     <Description>This package provides a gdi+ drawing wrapper on windows platform, for make keeps the compability between then skiasharp and system.drawing.common for .NET 8.0 abd .NET 8.0-windows</Description>
+    <AssemblyTitle>Gdi+ Image Drawing Helper for Windows Form Project</AssemblyTitle>
+    <ApplicationIcon>sciBASIC#.ico</ApplicationIcon>
+    <PackageIcon>logo-knot.png</PackageIcon>
+    <PackageProjectUrl>http://scibasic.net/</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/xieguigang/sciBASIC</RepositoryUrl>
+    <Copyright>xieguigang</Copyright>
+    <RepositoryType>git</RepositoryType>
+    <PackageTags>gdi+;windows;</PackageTags>
+    <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
+    <PackageLicenseExpression>GPL3</PackageLicenseExpression>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -167,6 +177,17 @@
     <Compile Remove="HtmlRender\**" />
     <EmbeddedResource Remove="HtmlRender\**" />
     <None Remove="HtmlRender\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="sciBASIC#.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\..\vs_solutions\logo-knot.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
   </ItemGroup>
 
   <ItemGroup>
