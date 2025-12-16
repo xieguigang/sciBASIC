@@ -13,7 +13,7 @@
     <Title>Graph and Tree algorithm provider</Title>
     <Description>Graph and Tree algorithm provider</Description>
     <Copyright>Copyright © xieguigang 2023</Copyright>
-    <PackageIcon>logo.png</PackageIcon>
+    <PackageIcon>logo-knot.png</PackageIcon>
     <RepositoryType>git</RepositoryType>
     <AutoGenerateBindingRedirects>True</AutoGenerateBindingRedirects>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
@@ -658,7 +658,7 @@
       <Pack>True</Pack>
       <PackagePath></PackagePath>
     </None>
-    <None Include="..\..\Microsoft.VisualBasic.Core\logo.png">
+    <None Include="..\..\vs_solutions\logo-knot.png">
       <Pack>True</Pack>
       <PackagePath>\</PackagePath>
     </None>
