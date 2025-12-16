@@ -67,4 +67,10 @@ Namespace Math.Statistics
         ReadOnly Property pValue As Double
 
     End Interface
+
+    Public Interface IStatFDR : Inherits IStatPvalue
+
+        Property adjPVal As Double
+
+    End Interface
 End Namespace

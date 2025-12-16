@@ -65,6 +65,7 @@ Imports Microsoft.VisualBasic.Math.Correlations
 Imports Microsoft.VisualBasic.Math.Distributions
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Math.Scripting
+Imports Microsoft.VisualBasic.Math.Statistics
 Imports std = System.Math
 
 ' i++
@@ -218,6 +219,17 @@ Imports std = System.Math
         Dim fdr_result = (If(n, x.Dim) * x) / x.FractionalRanking
 
         Return fdr_result
+    End Function
+
+    <Extension>
+    Public Iterator Function FDR(Of T As IStatFDR)(result As IEnumerable(Of T)) As IEnumerable(Of T)
+        Dim sortPval As T() = result.OrderBy(Function(a) a.pValue).ToArray
+        Dim fdrVal As Vector = sortPval.Select(Function(a) a.pValue).FDR
+
+        For i As Integer = 0 To sortPval.Length - 1
+            sortPval(i).adjPVal = fdrVal(i)
+            Yield sortPval(i)
+        Next
     End Function
 
     ''' <summary>

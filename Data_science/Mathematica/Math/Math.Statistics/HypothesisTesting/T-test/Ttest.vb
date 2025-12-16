@@ -311,7 +311,7 @@ Namespace Hypothesis
         End Function
 
         Public Function Pvalue(t As IEnumerable(Of Double), df As Integer, Optional hyp As Hypothesis = Hypothesis.TwoSided) As Double()
-            Return t.SafeQuery.Select(Function(ti) Pvalue(ti, df, hyp)).ToArray
+            Return Vector.Abs(t.SafeQuery.Select(Function(ti) Pvalue(ti, df, hyp))).ToArray
         End Function
 
         Const d128_one As Double = 1.0

@@ -209,6 +209,11 @@ Namespace LinearAlgebra
             Return New Vector(From d As Double In x Select sys.Abs(d))
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Function Abs(x As IEnumerable(Of Double)) As Vector
+            Return New Vector(From d As Double In x Select sys.Abs(d))
+        End Function
+
         ''' <summary>
         ''' Bessel Functions of integer and fractional order, of first and second kind, J(nu) and Y(nu), 
         ''' and Modified Bessel functions (of first and third kind), I(nu) and K(nu).
