@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5abb5b209986a8c9c104bdea1eb6c4a9, gr\network-visualization\Network.IO.Extensions\graphology.vb"
+﻿#Region "Microsoft.VisualBasic::76cd66c0e33777567b88feb548f12386, gr\network-visualization\Network.IO.Extensions\graphology.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 0.00%
     ' 
     '   Blank Lines: 12 (30.77%)
-    '     File Size: 899 B
+    '     File Size: 897 B
 
 
     '     Class node
@@ -102,4 +102,3 @@ Namespace graphology
     End Class
 
 End Namespace
-

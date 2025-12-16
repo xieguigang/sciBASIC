@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::be86ebb43cca1cc032796451150506e6, Microsoft.VisualBasic.Core\test\test\qgramTestSearch.vb"
+﻿#Region "Microsoft.VisualBasic::89226f8089c7c4279fd677213eabe200, Microsoft.VisualBasic.Core\test\test\qgramTestSearch.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 0.00%
     ' 
     '   Blank Lines: 5 (17.86%)
-    '     File Size: 834 B
+    '     File Size: 832 B
 
 
     ' Module qgramTestSearch
@@ -79,4 +79,3 @@ Module qgramTestSearch
         Pause()
     End Sub
 End Module
-

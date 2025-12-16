@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1f0199651004c6a14e4a340ca5cdc743, Data_science\Mathematica\Math\Math.Statistics\HypothesisTesting\T-test\Ttest.vb"
+﻿#Region "Microsoft.VisualBasic::cf7ad25ecb762dd624eb6635b1e903bb, Data_science\Mathematica\Math\Math.Statistics\HypothesisTesting\T-test\Ttest.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 56.94%
     ' 
     '   Blank Lines: 30 (9.62%)
-    '     File Size: 18.24 KB
+    '     File Size: 18.25 KB
 
 
     '     Module t

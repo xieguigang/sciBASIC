@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::09c9603933db6fe67fb1701d16970ce6, Data\BinaryData\HDSPack\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::296725b55d0cb3cce28ecb9bcacf287a, Data\BinaryData\HDSPack\Extensions.vb"
 
     ' Author:
     ' 
@@ -34,18 +34,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 111
-    '    Code Lines: 74 (66.67%)
-    ' Comment Lines: 20 (18.02%)
+    '   Total Lines: 117
+    '    Code Lines: 79 (67.52%)
+    ' Comment Lines: 20 (17.09%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 17 (15.32%)
-    '     File Size: 4.01 KB
+    '   Blank Lines: 18 (15.38%)
+    '     File Size: 4.22 KB
 
 
     ' Module Extensions
     ' 
-    '     Function: ReadBinary, (+2 Overloads) ReadText, (+2 Overloads) WriteText
+    '     Function: LoadStream, ReadBinary, (+2 Overloads) ReadText, (+2 Overloads) WriteText
     ' 
     ' /********************************************************************************/
 

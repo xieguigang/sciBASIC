@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bd7ecbb2b3981780121a0b14af24d75a, gr\network-visualization\Network.IO.Extensions\SigmaJs.vb"
+﻿#Region "Microsoft.VisualBasic::83ef6e9a2f3ad63ef048251adcff0ac9, gr\network-visualization\Network.IO.Extensions\SigmaJs.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 8 (15.38%)
-    '     File Size: 1.82 KB
+    '     File Size: 1.81 KB
 
 
     ' Module SigmaJs
@@ -103,4 +103,3 @@ Public Module SigmaJs
     End Function
 
 End Module
-

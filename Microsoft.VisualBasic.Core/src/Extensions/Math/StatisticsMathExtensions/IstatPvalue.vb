@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::574a83a379d7fd501a8d4d57732dd0c9, Microsoft.VisualBasic.Core\src\Extensions\Math\StatisticsMathExtensions\IstatPvalue.vb"
+﻿#Region "Microsoft.VisualBasic::84796e74042cc8fafd8687b2a91ee6a0, Microsoft.VisualBasic.Core\src\Extensions\Math\StatisticsMathExtensions\IstatPvalue.vb"
 
     ' Author:
     ' 
@@ -34,18 +34,22 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 16
-    '    Code Lines: 5 (31.25%)
-    ' Comment Lines: 8 (50.00%)
+    '   Total Lines: 22
+    '    Code Lines: 8 (36.36%)
+    ' Comment Lines: 8 (36.36%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 3 (18.75%)
-    '     File Size: 427 B
+    '   Blank Lines: 6 (27.27%)
+    '     File Size: 542 B
 
 
     '     Interface IStatPvalue
     ' 
     '         Properties: pValue
+    ' 
+    '     Interface IStatFDR
+    ' 
+    '         Properties: adjPVal
     ' 
     ' 
     ' /********************************************************************************/

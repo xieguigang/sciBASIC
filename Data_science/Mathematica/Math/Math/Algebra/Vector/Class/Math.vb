@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ba653ddbaaf9da899fee0fe5a19283e6, Data_science\Mathematica\Math\Math\Algebra\Vector\Class\Math.vb"
+﻿#Region "Microsoft.VisualBasic::3cbd4aafa3c0176e4382f69f51cab34c, Data_science\Mathematica\Math\Math\Algebra\Vector\Class\Math.vb"
 
     ' Author:
     ' 
@@ -34,18 +34,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 222
-    '    Code Lines: 130 (58.56%)
-    ' Comment Lines: 62 (27.93%)
+    '   Total Lines: 227
+    '    Code Lines: 134 (59.03%)
+    ' Comment Lines: 62 (27.31%)
     '    - Xml Docs: 93.55%
     ' 
-    '   Blank Lines: 30 (13.51%)
-    '     File Size: 9.60 KB
+    '   Blank Lines: 31 (13.66%)
+    '     File Size: 9.83 KB
 
 
     '     Class Vector
     ' 
-    '         Function: Abs, BesselI, (+2 Overloads) Exp, floor, (+2 Overloads) Log
+    '         Function: (+2 Overloads) Abs, BesselI, (+2 Overloads) Exp, floor, (+2 Overloads) Log
     '                   (+2 Overloads) Log10, (+3 Overloads) Max, (+3 Overloads) Min, Order, pchisq
     '                   Quantile, round, Sign, Sinh, Sqrt
     '                   Trunc

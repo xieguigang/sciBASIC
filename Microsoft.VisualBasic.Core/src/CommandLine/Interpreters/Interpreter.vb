@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bb433a1856b13e88156d95709b78e8a0, Microsoft.VisualBasic.Core\src\CommandLine\Interpreters\Interpreter.vb"
+﻿#Region "Microsoft.VisualBasic::ba5d294cab94ceed8e43bf546961c940, Microsoft.VisualBasic.Core\src\CommandLine\Interpreters\Interpreter.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 82.81%
     ' 
     '   Blank Lines: 94 (12.74%)
-    '     File Size: 32.14 KB
+    '     File Size: 32.17 KB
 
 
     '     Class Interpreter
