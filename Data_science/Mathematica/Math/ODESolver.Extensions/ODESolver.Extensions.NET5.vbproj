@@ -16,7 +16,7 @@
 		<PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 		<Description>LAPACK (Linear Algebra PACKage)</Description>
-		<Configurations>Debug;Release;Rsharp_app_release;LipidSearch;mzkit</Configurations>
+		<Configurations>Debug;Release;Rsharp_app_release;LipidSearch;mzkit;nuget_release</Configurations>
 		<RepositoryType>git</RepositoryType>
 	</PropertyGroup>
 
@@ -51,6 +51,10 @@
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='LipidSearch|AnyCPU'">
+	  <DocumentationFile>Microsoft.VisualBasic.Math.ODEsSolver.Extensions.xml</DocumentationFile>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='nuget_release|AnyCPU'">
 	  <DocumentationFile>Microsoft.VisualBasic.Math.ODEsSolver.Extensions.xml</DocumentationFile>
 	</PropertyGroup>
 
@@ -91,6 +95,18 @@
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='LipidSearch|x64'">
+	  <DocumentationFile>Microsoft.VisualBasic.Math.ODEsSolver.Extensions.xml</DocumentationFile>
+	  <DefineConstants>netcore5=1,UNIX=1</DefineConstants>
+	  <RemoveIntegerChecks>true</RemoveIntegerChecks>
+	  <Optimize>false</Optimize>
+	  <DebugSymbols>true</DebugSymbols>
+	  <DebugType>full</DebugType>
+	  <DefineDebug>false</DefineDebug>
+	  <DefineTrace>true</DefineTrace>
+	  <BaseAddress>4194304</BaseAddress>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='nuget_release|x64'">
 	  <DocumentationFile>Microsoft.VisualBasic.Math.ODEsSolver.Extensions.xml</DocumentationFile>
 	  <DefineConstants>netcore5=1,UNIX=1</DefineConstants>
 	  <RemoveIntegerChecks>true</RemoveIntegerChecks>
