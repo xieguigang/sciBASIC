@@ -20,6 +20,7 @@
     <PackageProjectUrl>http://scibasic.net</PackageProjectUrl>
     <RepositoryUrl>https://github.com/xieguigang/sciBASIC</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
+    <PackageIcon>logo-knot.png</PackageIcon>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='nuget_release|x64'">
@@ -108,6 +109,13 @@
 
   <ItemGroup>
     <Import Include="System.Data" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\..\vs_solutions\logo-knot.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
   </ItemGroup>
 
   <ItemGroup>

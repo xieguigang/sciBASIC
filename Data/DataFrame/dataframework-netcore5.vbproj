@@ -28,6 +28,7 @@
     <RepositoryUrl>https://github.com/xieguigang/sciBASIC</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <UseApplicationFramework>True</UseApplicationFramework>
+    <PackageIcon>logo-knot.png</PackageIcon>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='nuget_release|x64'">
@@ -421,6 +422,13 @@
   <ItemGroup>
     <Import Include="System.Data" />
     <Import Include="System.Data.Common" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\..\vs_solutions\logo-knot.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
   </ItemGroup>
 
 </Project>

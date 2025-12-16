@@ -25,7 +25,7 @@
 
 		<PackageReadmeFile>README.md</PackageReadmeFile>
 
-		<PackageIcon>logo.png</PackageIcon>
+		<PackageIcon>logo-knot.png</PackageIcon>
 
 		<RepositoryUrl>https://github.com/xieguigang/sciBASIC.git</RepositoryUrl>
 
@@ -854,7 +854,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <None Include="..\..\Microsoft.VisualBasic.Core\logo.png">
+	  <None Include="..\..\vs_solutions\logo-knot.png">
 	    <Pack>True</Pack>
 	    <PackagePath>\</PackagePath>
 	  </None>
