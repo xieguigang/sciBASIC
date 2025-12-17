@@ -76,7 +76,7 @@ Namespace ComponentModel.DataSourceModel.Repository
         ''' <summary>
         ''' 使用 BitArray 来高效地存储位数组
         ''' </summary>
-        ReadOnly _bitArray As BitArray
+        ReadOnly bitmap As BitArray
 
         ''' <summary>
         ''' length of the <see cref="BitArray"/> 
@@ -123,29 +123,29 @@ Namespace ComponentModel.DataSourceModel.Repository
 
             _m = m
             _k = k
-            _bitArray = New BitArray(m)
+            bitmap = New BitArray(m)
         End Sub
 
         Sub New(bytes As Byte(), m As Integer, k As Integer)
-            _bitArray = New BitArray(bytes)
+            bitmap = New BitArray(bytes)
             _m = m
             _k = k
         End Sub
 
         Sub New(bits As Boolean(), k As Integer)
-            _bitArray = New BitArray(bits.Length)
+            bitmap = New BitArray(bits.Length)
             _m = bits.Length
             _k = k
 
             For i As Integer = 0 To bits.Length - 1
-                _bitArray.Set(i, True)
+                bitmap.Set(i, True)
             Next
         End Sub
 
         Public Function ToArray() As Byte()
             ' 将 BitArray 转换为字节数组并写入
-            Dim bytes As Byte() = New Byte((_bitArray.Length + 7) \ 8 - 1) {}
-            _bitArray.CopyTo(bytes, 0)
+            Dim bytes As Byte() = New Byte((bitmap.Length + 7) \ 8 - 1) {}
+            bitmap.CopyTo(bytes, 0)
             Return bytes
         End Function
 
@@ -178,7 +178,7 @@ Namespace ComponentModel.DataSourceModel.Repository
             Dim positions = GetHashPositions(item)
 
             For Each pos As Integer In positions
-                _bitArray(pos) = True
+                bitmap(pos) = True
             Next
         End Sub
 
@@ -192,7 +192,7 @@ Namespace ComponentModel.DataSourceModel.Repository
 
             For Each pos As Integer In positions
                 ' 只要有一个哈希位置不为1，就说明元素绝对不存在
-                If Not _bitArray(pos) Then
+                If Not bitmap(pos) Then
                     Return False
                 End If
             Next
