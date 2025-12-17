@@ -81,9 +81,9 @@ Namespace Data.Repository
             ' --- 处理主体部分（4字节块） ---
             While length - i >= 4
                 k = CUInt(data(i)) Or
-                               CUInt(data(i + 1)) << 8 Or
-                               CUInt(data(i + 2)) << 16 Or
-                               CUInt(data(i + 3)) << 24
+                            CUInt(data(i + 1)) << 8 Or
+                            CUInt(data(i + 2)) << 16 Or
+                            CUInt(data(i + 3)) << 24
 
                 k *= c1
                 k = (k << r1) Or (k >> (32 - r1))
