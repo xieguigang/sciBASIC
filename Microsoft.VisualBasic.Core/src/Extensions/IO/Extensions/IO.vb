@@ -311,6 +311,7 @@ Public Module IOExtensions
     ''' 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Sub ClearFileBytes(path As String)
+        Call path.ParentPath.MakeDir
         Call IO.File.WriteAllBytes(path, New Byte() {})
     End Sub
 
