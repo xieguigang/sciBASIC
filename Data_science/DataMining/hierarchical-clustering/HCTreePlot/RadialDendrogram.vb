@@ -188,7 +188,6 @@ Public Class RadialDendrogram : Inherits DendrogramPanel
 
             ' 文本对齐逻辑：根据角度调整绘制起点
             Dim textPos As PointF
-            Dim format As StringFormat = New StringFormat()
 
             ' 将角度规范化到 0-2PI
             Dim normAngle As Double = currentAngle Mod (2 * std.PI)
@@ -197,15 +196,13 @@ Public Class RadialDendrogram : Inherits DendrogramPanel
             ' 简单的对齐逻辑：左侧圆文本右对齐，右侧圆文本左对齐，上方/下方居中
             If normAngle > std.PI / 2 AndAlso normAngle < 3 * std.PI / 2 Then
                 ' 左半圆
-                format.Alignment = StringAlignment.Far
                 textPos = New PointF(labelPt.X - 2, labelPt.Y - lsize.Height / 2)
             Else
                 ' 右半圆
-                format.Alignment = StringAlignment.Near
                 textPos = New PointF(labelPt.X + 2, labelPt.Y - lsize.Height / 2)
             End If
 
-            Call g.DrawString(partition.Name, labelFont, Brushes.Black, textPos, format)
+            Call g.DrawString(partition.Name, labelFont, Brushes.Black, textPos)
 
             ' 绘制class颜色块
             If partition.isLeaf Then
