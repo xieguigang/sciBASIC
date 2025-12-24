@@ -237,7 +237,7 @@ Public Class MarkdownRender
             key = $";;;codeblock;;{hash}"
             codeblocks(key) = m.Value
             hash += 1
-            text = text.Replace(m.Value, key)
+            text = text.Replace(m.Value, vbLf & key & vbLf)
         Next
     End Sub
 
