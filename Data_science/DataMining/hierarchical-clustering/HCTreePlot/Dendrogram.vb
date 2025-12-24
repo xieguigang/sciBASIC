@@ -106,7 +106,7 @@ Public Module Dendrogram
         Select Case layout
             Case Layouts.Vertical : Return New DendrogramPanelV2(hist, theme, colors, classinfo).Plot(size)
             Case Layouts.Horizon : Return New Horizon(hist, theme, colors, classinfo).Plot(size)
-            Case Layouts.Radial : Return New RadialDendrogram(hist, theme, colors, classinfo).Plot(size)
+            Case Layouts.Radial : Return New RadialDendrogram(hist, theme, colors, classinfo, showRuler:=False).Plot(size)
             Case Else
                 Throw New NotImplementedException(layout.ToString)
         End Select

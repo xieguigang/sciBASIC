@@ -87,7 +87,7 @@ Public Class RadialDendrogram : Inherits DendrogramPanel
         End If
 
         ' 每个叶节点占用的角度 (弧度)
-        Dim unitAngle As Double = 2 * std.PI / hist.Leafs
+        Dim unitAngle As Double = std.PI / hist.Leafs
 
         ' 开始递归绘制
         ' 初始参数：当前节点=hist, 起始角度=0, 父节点位置=Nothing, 父节点半径=0
