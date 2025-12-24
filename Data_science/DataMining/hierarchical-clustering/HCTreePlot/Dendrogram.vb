@@ -103,12 +103,12 @@ Public Module Dendrogram
                 .ToArray
         End If
 
-        If layout = Layouts.Vertical Then
-            Return New DendrogramPanelV2(hist, theme, colors, classinfo).Plot(size)
-        ElseIf layout = Layouts.Horizon Then
-            Return New Horizon(hist, theme, colors, classinfo).Plot(size)
-        Else
-            Throw New NotImplementedException(layout.ToString)
-        End If
+        Select Case layout
+            Case Layouts.Vertical : Return New DendrogramPanelV2(hist, theme, colors, classinfo).Plot(size)
+            Case Layouts.Horizon : Return New Horizon(hist, theme, colors, classinfo).Plot(size)
+            Case Layouts.Radial : Return New RadialDendrogram(hist, theme, colors, classinfo).Plot(size)
+            Case Else
+                Throw New NotImplementedException(layout.ToString)
+        End Select
     End Function
 End Module
