@@ -14,6 +14,8 @@ Imports std = System.Math
 ''' </summary>
 Public Class RadialDendrogram : Inherits DendrogramPanel
 
+    ReadOnly maxRadial As Double = 2 * std.PI
+
     Public Sub New(hist As Cluster, theme As Theme,
                    Optional classes() As ColorClass = Nothing,
                    Optional classinfo As Dictionary(Of String, String) = Nothing,
@@ -21,9 +23,11 @@ Public Class RadialDendrogram : Inherits DendrogramPanel
                    Optional showAllNodes As Boolean = False,
                    Optional pointColor As String = "red",
                    Optional showRuler As Boolean = True,
-                   Optional showLeafLabels As Boolean = True)
+                   Optional showLeafLabels As Boolean = True,
+                   Optional maxRadial As Double = 2 * std.PI)
 
         MyBase.New(hist, theme, classes, classinfo, showAllLabels, showAllNodes, pointColor, showLeafLabels, showRuler)
+        Me.maxRadial = maxRadial
     End Sub
 
     Protected Overrides Sub PlotInternal(ByRef g As IGraphics, canvas As GraphicsRegion)
@@ -94,7 +98,7 @@ Public Class RadialDendrogram : Inherits DendrogramPanel
 
         ' 每个叶节点占用的角度 (弧度)
         ' 修改为 2 * PI 以绘制完整的圆形树（原代码是 PI，即半圆）
-        Dim unitAngle As Double = (2 * std.PI) / hist.Leafs
+        Dim unitAngle As Double = maxRadial / hist.Leafs
 
         ' 开始递归绘制
         ' 初始参数：当前节点=hist, 起始角度=0, 父节点位置=Nothing, 父节点半径=0

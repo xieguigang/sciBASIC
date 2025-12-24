@@ -59,6 +59,7 @@ Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
 Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.MIME.Html.CSS
+Imports std = System.Math
 
 Public Module Dendrogram
 
@@ -106,7 +107,7 @@ Public Module Dendrogram
         Select Case layout
             Case Layouts.Vertical : Return New DendrogramPanelV2(hist, theme, colors, classinfo).Plot(size)
             Case Layouts.Horizon : Return New Horizon(hist, theme, colors, classinfo).Plot(size)
-            Case Layouts.Radial : Return New RadialDendrogram(hist, theme, colors, classinfo).Plot(size)
+            Case Layouts.Radial : Return New RadialDendrogram(hist, theme, colors, classinfo, maxRadial:=std.PI).Plot(size)
             Case Else
                 Throw New NotImplementedException(layout.ToString)
         End Select
