@@ -61,6 +61,7 @@
 #End Region
 
 Imports System.Text.RegularExpressions
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Text
 
@@ -363,6 +364,19 @@ Public Class MarkdownRender
     ReadOnly h3 As New Regex("^[#]{3}.+$", RegexOptions.Compiled Or RegexOptions.Multiline)
     ReadOnly h2 As New Regex("^[#]{2}.+$", RegexOptions.Compiled Or RegexOptions.Multiline)
     ReadOnly h1 As New Regex("^[#]{1}.+$", RegexOptions.Compiled Or RegexOptions.Multiline)
+
+    Shared ReadOnly headers As New Regex("^[#]+.+$", RegexOptions.Compiled Or RegexOptions.Multiline)
+
+    ''' <summary>
+    ''' parse TOC from markdown document
+    ''' </summary>
+    ''' <param name="md"></param>
+    ''' <returns></returns>
+    Public Shared Iterator Function GetTOC(md As String) As IEnumerable(Of NamedValue(Of Integer))
+        For Each level As String In headers.Matches(md).ToArray
+            Yield New NamedValue(Of Integer)(level.Trim(" "c, "#"c), level.TakeWhile(Function(c) c = "#"c).Count)
+        Next
+    End Function
 
     Private Sub RunHeader()
         text = h6.Replace(text, Function(m) vbLf & render.Header(TrimHeader(m.Value), 6) & vbLf)
