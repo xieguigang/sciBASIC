@@ -71,5 +71,5 @@ Public Enum Layouts As Byte
     ''' 水平布局样式 右到左
     ''' </summary>
     HorizonRightToLeft
-    Circular
+    Radial
 End Enum
