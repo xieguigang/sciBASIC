@@ -100,7 +100,7 @@ Public Class BufferRegion
     End Sub
 
     Public Overrides Function ToString() As String
-        Return $"&{position} [{size} bytes]"
+        Return $"&{StringFormats.Lanudry(position)} [{StringFormats.Lanudry(size)} bytes]"
     End Function
 
 End Class
