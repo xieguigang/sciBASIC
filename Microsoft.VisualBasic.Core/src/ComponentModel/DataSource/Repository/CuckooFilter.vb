@@ -35,6 +35,13 @@ Namespace ComponentModel.DataSourceModel.Repository
         ''' </summary>
         Public ReadOnly Property MaxKicks As Integer
 
+        Default Public ReadOnly Property CheckItem(item As String) As Boolean
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
+            Get
+                Return Contains(item)
+            End Get
+        End Property
+
         ''' <summary>
         ''' 使用指定的期望容量和桶参数初始化 CuckooFilter 类的新实例。
         ''' </summary>
