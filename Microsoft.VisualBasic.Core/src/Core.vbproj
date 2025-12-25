@@ -2367,8 +2367,4 @@
 		</None>
 	</ItemGroup>
 
-	<ItemGroup>
-	  <Folder Include="Net\NewFolder\" />
-	</ItemGroup>
-
 </Project>
