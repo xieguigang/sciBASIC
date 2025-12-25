@@ -118,6 +118,9 @@ Namespace ComponentModel.Collection
         ''' 请注意，这里的数据源请尽量使用Distinct的，否则对于重复的数据，只会记录下第一个位置
         ''' </summary>
         ''' <param name="source"></param>
+        ''' <remarks>
+        ''' this constructor will create an empty index object if the given <paramref name="source"/> input is nothing.
+        ''' </remarks>
         Sub New(source As IEnumerable(Of T), Optional base% = 0)
             If source Is Nothing Then
                 source = {}
