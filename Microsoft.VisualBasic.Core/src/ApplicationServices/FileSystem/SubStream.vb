@@ -139,6 +139,10 @@ Namespace ApplicationServices
             m_position = offset
         End Sub
 
+        Public Overrides Function ToString() As String
+            Return $"sub-stream of '{s}' from {StringFormats.Lanudry(offset)} with span size {StringFormats.Lanudry(Length)}"
+        End Function
+
         ''' <summary>
         ''' commit data to the base stream
         ''' </summary>
