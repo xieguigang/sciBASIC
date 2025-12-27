@@ -141,15 +141,15 @@ Public Module NetworkFileIO
     ''' </summary>
     ''' <param name="dir"></param>
     ''' <returns></returns>
-    Public Function Load(dir$, Optional cytoscapeFormat As Boolean = False) As NetworkTables
+    Public Function Load(dir$, Optional cytoscapeFormat As Boolean = False, Optional verbose As Boolean = True) As NetworkTables
         Dim tables = NetworkTables.SearchNetworkTable(directory:=dir)
 
         If cytoscapeFormat Then
             Return Cytoscape.CytoscapeExportAsTable(tables.edges, tables.nodes)
         Else
             Return New NetworkTables With {
-                .edges = tables.edges.LoadCsv(Of NetworkEdge)(mute:=True),
-                .nodes = tables.nodes.LoadCsv(Of Node)(mute:=True),
+                .edges = tables.edges.LoadCsv(Of NetworkEdge)(mute:=Not verbose),
+                .nodes = tables.nodes.LoadCsv(Of Node)(mute:=Not verbose),
                 .meta = loadMetaJson(localDir.FromLocalFileSystem(dir))
             }
         End If
