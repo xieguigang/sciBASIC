@@ -139,18 +139,18 @@ Public Module NetworkFileIO
     ''' <summary>
     ''' Load network graph data from a saved network data direcotry.
     ''' </summary>
-    ''' <param name="DIR"></param>
+    ''' <param name="dir"></param>
     ''' <returns></returns>
-    Public Function Load(DIR$, Optional cytoscapeFormat As Boolean = False) As NetworkTables
-        Dim tables = NetworkTables.SearchNetworkTable(directory:=DIR)
+    Public Function Load(dir$, Optional cytoscapeFormat As Boolean = False) As NetworkTables
+        Dim tables = NetworkTables.SearchNetworkTable(directory:=dir)
 
         If cytoscapeFormat Then
             Return Cytoscape.CytoscapeExportAsTable(tables.edges, tables.nodes)
         Else
             Return New NetworkTables With {
-                .edges = tables.edges.LoadCsv(Of NetworkEdge),
-                .nodes = tables.nodes.LoadCsv(Of Node),
-                .meta = loadMetaJson(localDir.FromLocalFileSystem(DIR))
+                .edges = tables.edges.LoadCsv(Of NetworkEdge)(mute:=True),
+                .nodes = tables.nodes.LoadCsv(Of Node)(mute:=True),
+                .meta = loadMetaJson(localDir.FromLocalFileSystem(dir))
             }
         End If
     End Function
