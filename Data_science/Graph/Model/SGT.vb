@@ -321,8 +321,8 @@ Public Class SequenceGraphTransform
         'Return U.Zip(V, Function(i, j) (i, j)).Where(Function(ij) ij.j > ij.i)
 
         ' just find for pattern AB in current tuple graph
-        Return From ai In U
-               From bj In V
+        Return From ai As Integer In U
+               From bj As Integer In V
                Where bj = ai + 1
                Select (i:=ai, j:=bj)
     End Function
@@ -367,11 +367,7 @@ Public Class SequenceGraphTransform
         Dim Wk As NumericMatrix = NumericMatrix.Zero(size, size)
         Dim positions = get_positions(sequence, alphabets)
         Dim alphabets_in_sequence = sequence.Distinct.ToArray
-        Dim combine As Combine = If(
-            mode = Modes.Full,
-            New Combine(AddressOf CombineFull),
-            New Combine(AddressOf CombinePartial)
-        )
+        Dim combine As Combine = If(mode = Modes.Full, New Combine(AddressOf CombineFull), New Combine(AddressOf CombinePartial))
         Dim cu, cv As Vector
         Dim c As (i As Integer, j As Integer)()
         Dim V2 As Integer()
@@ -390,7 +386,7 @@ Public Class SequenceGraphTransform
                 If positions.ContainsKey(v) Then
                     V2 = positions(v)
                 Else
-                    Call $"KeyNotFound: The given key '{v}' was not present in the dictionary.".Warning
+                    Call $"KeyNotFound: The given key '{v}' was not present in the dictionary.".warning
                     V2 = {}
                 End If
 
@@ -415,7 +411,7 @@ Public Class SequenceGraphTransform
         End If
 
         ' avoid divide by 0
-        W0(W0 = 0.0) = 10000000.0
+        W0(W0 = 0.0) = 1.0E-18
 
         Dim sgt = (Wk / W0) ^ (1 / kappa)
         Dim sgtv As Double() = sgt.ArrayPack.IteratesALL.ToArray
