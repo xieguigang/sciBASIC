@@ -371,11 +371,18 @@ Public Class SequenceGraphTransform
         Dim cu, cv As Vector
         Dim c As (i As Integer, j As Integer)()
         Dim V2 As Integer()
+        Dim Upos As Integer()
 
         For Each char_i As SeqValue(Of Char) In alphabets_in_sequence.SeqIterator
             Dim i As Integer = char_i.i
             Dim u As Char = char_i.value
-            Dim Upos As Integer() = positions(u)
+
+            If positions.ContainsKey(u) Then
+                Upos = positions(u)
+            Else
+                Call $"KeyNotFound: The given key '{u}' was not present in the dictionary.".warning
+                Continue For
+            End If
 
             For Each char_j As SeqValue(Of Char) In alphabets_in_sequence.SeqIterator
                 Dim j As Integer = char_j.i
