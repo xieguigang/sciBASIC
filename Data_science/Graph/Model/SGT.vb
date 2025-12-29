@@ -290,8 +290,8 @@ Public Class SequenceGraphTransform
     End Function
 
     Private Shared Function CombineFull(U As Integer(), V As Integer()) As IEnumerable(Of (i As Integer, j As Integer))
-        Return From ai In U
-               From bj In V
+        Return From ai As Integer In U
+               From bj As Integer In V
                Where bj > ai
                Select (i:=ai, j:=bj)
     End Function
