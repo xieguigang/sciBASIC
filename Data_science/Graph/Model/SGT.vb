@@ -411,7 +411,7 @@ Public Class SequenceGraphTransform
         End If
 
         ' avoid divide by 0
-        W0(W0 = 0.0) = 1.0E-18
+        W0(W0 = 0.0) = W0.Max
 
         Dim sgt = (Wk / W0) ^ (1 / kappa)
         Dim sgtv As Double() = sgt.ArrayPack.IteratesALL.ToArray
