@@ -388,6 +388,11 @@ Public Class SequenceGraphTransform
                 Else
                     Call $"KeyNotFound: The given key '{v}' was not present in the dictionary.".warning
                     V2 = {}
+
+                    ' 20251230 pos_j = -1
+                    ' W0(pos_i, pos_j) and WK(pos_i, pos_j) will throw index outside error
+                    ' try to avoid such error
+                    Continue For
                 End If
 
                 If mode = Modes.Fast Then
@@ -411,7 +416,7 @@ Public Class SequenceGraphTransform
         End If
 
         ' avoid divide by 0
-        W0(W0 = 0.0) = W0.Max
+        W0(W0 = 0.0) = 10000000.0
 
         Dim sgt = (Wk / W0) ^ (1 / kappa)
         Dim sgtv As Double() = sgt.ArrayPack.IteratesALL.ToArray
