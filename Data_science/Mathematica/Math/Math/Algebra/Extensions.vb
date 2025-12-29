@@ -223,7 +223,6 @@ Namespace LinearAlgebra
         ''' <param name="b"></param>
         ''' <param name="symmetrize"></param>
         ''' <returns></returns>
-        ''' 
         <Extension>
         Public Function jaccard_coeff(a As String(), b As String(), Optional symmetrize As Boolean = True) As Double
             Dim u As Double = a.Intersect(b).Count

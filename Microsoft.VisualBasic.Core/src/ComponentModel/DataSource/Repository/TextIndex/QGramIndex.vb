@@ -185,7 +185,7 @@ Namespace ComponentModel.DataSourceModel.Repository
                 Dim commonGrams = kvp.Value
                 Dim targetGrams = _counts(_strings(strIndex).str)
                 Dim unionGrams = queryGrams.Count + targetGrams - commonGrams
-
+                ' jaccard similarity
                 Dim similarity = commonGrams / CDbl(unionGrams)
 
                 If similarity > threshold Then
