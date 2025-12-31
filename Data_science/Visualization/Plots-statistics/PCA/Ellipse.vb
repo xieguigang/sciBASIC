@@ -86,42 +86,76 @@ Imports Bitmap = Microsoft.VisualBasic.Imaging.Bitmap
 Imports GraphicsPath = Microsoft.VisualBasic.Imaging.GraphicsPath
 Imports TextureBrush = Microsoft.VisualBasic.Imaging.TextureBrush
 #End If
-
 Namespace PCA
 
+    ''' <summary>
+    ''' PCA 统计椭圆类，用于表示基于协方差的置信椭圆
+    ''' </summary>
     Public Class Ellipse
 
-        Public Property cx As Double
-        Public Property cy As Double
-        Public Property rx As Double
-        Public Property ry As Double
         ''' <summary>
-        ''' angle
+        ''' 椭圆的中心点 X 坐标
         ''' </summary>
-        ''' <returns></returns>
-        Public Property theta As Double
+        Public Property CenterX As Double
 
+        ''' <summary>
+        ''' 椭圆的中心点 Y 坐标
+        ''' </summary>
+        Public Property CenterY As Double
+
+        ''' <summary>
+        ''' 长半轴长度 (对应较大的特征值)
+        ''' </summary>
+        Public Property SemiMajorAxis As Double
+
+        ''' <summary>
+        ''' 短半轴长度 (对应较小的特征值)
+        ''' </summary>
+        Public Property SemiMinorAxis As Double
+
+        ''' <summary>
+        ''' 旋转角度（弧度），表示长轴相对于 X 轴的旋转角
+        ''' </summary>
+        Public Property RotationAngle As Double
+
+        ''' <summary>
+        ''' 构建椭圆的绘图路径
+        ''' </summary>
+        ''' <param name="k">步长精度，默认0.1</param>
+        ''' <returns></returns>
         Public Function BuildPath(Optional k As Double = 0.1) As GraphicsPath
-            Dim ellipse As New GraphicsPath
-            Dim a = cx
-            Dim b = cy
-            Dim meanX = rx
-            Dim meanY = ry
+            Dim path As New GraphicsPath
             Dim points As New List(Of PointF)
 
-            For t As Double = 0 To 2 * std.PI Step k
-                Dim x = a * std.Cos(t) * std.Cos(theta) - b * std.Sin(t) * std.Sin(theta) + meanX
-                Dim y = a * std.Cos(t) * std.Sin(theta) + b * std.Sin(t) * std.Cos(theta) + meanY
+            ' 使用语义清晰的属性名称
+            Dim a As Double = Me.SemiMajorAxis
+            Dim b As Double = Me.SemiMinorAxis
+            Dim theta As Double = Me.RotationAngle
+            Dim meanX As Double = Me.CenterX
+            Dim meanY As Double = Me.CenterY
 
-                Call points.Add(New PointF(x, y))
+            For t As Double = 0 To 2 * std.PI Step k
+                ' 参数方程：先在未旋转坐标系下计算，再应用旋转矩阵，最后平移
+                Dim x_local As Double = a * std.Cos(t)
+                Dim y_local As Double = b * std.Sin(t)
+
+                ' 旋转矩阵变换
+                Dim x_rot As Double = x_local * std.Cos(theta) - y_local * std.Sin(theta)
+                Dim y_rot As Double = x_local * std.Sin(theta) + y_local * std.Cos(theta)
+
+                ' 平移到中心点
+                Call points.Add(New PointF(x_rot + meanX, y_rot + meanY))
             Next
 
-            Call ellipse.AddPolygon(points.ToArray)
-            Call ellipse.CloseAllFigures()
+            Call path.AddPolygon(points.ToArray)
+            Call path.CloseAllFigures()
 
-            Return ellipse
+            Return path
         End Function
 
+        ''' <summary>
+        ''' 计算协方差
+        ''' </summary>
         Private Shared Function Covariance(x As Double(), meanX As Double, y As Double(), meanY As Double) As Double
             Dim diff As Vector = (New Vector(x) - meanX) * (New Vector(y) - meanY)
             Dim cov As Double = diff.Sum / (x.Length - 1)
@@ -129,33 +163,53 @@ Namespace PCA
         End Function
 
         ''' <summary>
-        ''' 
+        ''' 计算置信椭圆（静态工厂方法）
         ''' </summary>
-        ''' <param name="data"></param>
-        ''' <param name="level"></param>
+        ''' <param name="data">二维点数据（Polygon2D）</param>
+        ''' <param name="level">置信水平</param>
         ''' <returns></returns>
         Public Shared Function ConfidenceEllipse(data As Polygon2D, Optional level As ChiSquareTest.ConfidenceLevels = ChiSquareTest.ConfidenceLevels.C95) As Ellipse
             Dim pc1 = data.xpoints
             Dim pc2 = data.ypoints
+
+            ' 1. 计算均值
             Dim meanX As Double = pc1.Average
             Dim meanY As Double = pc2.Average
+
+            ' 2. 计算协方差
             Dim covXX = Covariance(pc1, meanX, pc1, meanX)
             Dim covYY = Covariance(pc2, meanY, pc2, meanY)
             Dim covXY = Covariance(pc1, meanX, pc2, meanY)
-            Dim lambda1 = 0.5 * (covXX + covYY + std.Sqrt((covXX - covYY) * (covXX - covYY) + 4 * covXY * covXY))
-            Dim lambda2 = 0.5 * (covXX + covYY - std.Sqrt((covXX - covYY) * (covXX - covYY) + 4 * covXY * covXY))
+
+            ' 3. 计算特征值 (2x2 对称矩阵的特征值解析解)
+            ' trace = covXX + covYY
+            ' determinant = covXX * covYY - covXY^2
+            Dim trace As Double = covXX + covYY
+            Dim det As Double = covXX * covYY - covXY * covXY
+            Dim delta As Double = std.Sqrt(trace * trace - 4 * det)
+
+            Dim lambda1 As Double = 0.5 * (trace + delta) ' 较大特征值 (主轴方向)
+            Dim lambda2 As Double = 0.5 * (trace - delta) ' 较小特征值
+
+            ' 4. 计算缩放因子 (基于卡方分布)
             Dim chiSquareValue As Double = ChiSquareTest.ChiSquareValue(level)
-            Dim a = std.Sqrt(chiSquareValue * lambda1)
-            Dim b = std.Sqrt(chiSquareValue * lambda2)
-            Dim theta = 0.5 * std.Atan(2 * covXY / (covXX - covYY))
+
+            ' 5. 计算半轴长度
+            Dim semiMajor As Double = std.Sqrt(chiSquareValue * lambda1)
+            Dim semiMinor As Double = std.Sqrt(chiSquareValue * lambda2)
+
+            ' 6. 计算旋转角度 (使用 Atan2 修正象限问题)
+            ' 对应最大特征值 lambda1 的特征向量方向
+            Dim theta As Double = 0.5 * std.Atan2(2 * covXY, covXX - covYY)
 
             Return New Ellipse With {
-                .cx = a,
-                .cy = b,
-                .theta = theta,
-                .rx = meanX,
-                .ry = meanY
+                .CenterX = meanX,
+                .CenterY = meanY,
+                .SemiMajorAxis = semiMajor,
+                .SemiMinorAxis = semiMinor,
+                .RotationAngle = theta
             }
         End Function
     End Class
 End Namespace
+
