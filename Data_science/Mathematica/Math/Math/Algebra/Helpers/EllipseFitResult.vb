@@ -107,6 +107,15 @@ Namespace LinearAlgebra
             Return New EllipseShape(SemiMajorAxis, SemiMinorAxis, Center)
         End Function
 
+        ''' <summary>
+        ''' 这个模块实现的是代数拟合椭圆（Algebraic ellipse fitting），通过 SVD 对给定点集拟合一条二次曲线，使其在最小二乘意义下逼近这些点。
+        ''' </summary>
+        ''' <param name="points"></param>
+        ''' <param name="strict"></param>
+        ''' <returns></returns>
+        ''' <remarks>
+        ''' 不适用于PCA的统计椭圆的拟合
+        ''' </remarks>
         Public Shared Function FitEllipse(points As PointF(), Optional strict As Boolean = True) As EllipseFitResult
             If points.TryCount < 6 Then
                 Return Nothing

@@ -106,7 +106,6 @@
 
 Imports System.Text
 Imports System.Xml.Serialization
-Imports Microsoft.VisualBasic
 
 Namespace Kernel.BayesianBeliefNetwork
 

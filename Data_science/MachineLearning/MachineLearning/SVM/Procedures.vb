@@ -72,7 +72,7 @@ Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Microsoft.VisualBasic.Text
 Imports randf = Microsoft.VisualBasic.Math.RandomExtensions
-Imports stdNum = System.Math
+Imports std = System.Math
 
 Namespace SVM
 
@@ -139,10 +139,10 @@ Namespace SVM
             For i = 0 To l - 1
 
                 If y(i) = +1 Then
-                    alpha(i) = stdNum.Min(1.0, sum_pos)
+                    alpha(i) = std.Min(1.0, sum_pos)
                     sum_pos -= alpha(i)
                 Else
-                    alpha(i) = stdNum.Min(1.0, sum_neg)
+                    alpha(i) = std.Min(1.0, sum_neg)
                     sum_neg -= alpha(i)
                 End If
             Next
@@ -218,7 +218,7 @@ Namespace SVM
 
             For i = 0 To l - 1
                 alpha(i) = alpha2(i) - alpha2(i + l)
-                sum_alpha += stdNum.Abs(alpha(i))
+                sum_alpha += std.Abs(alpha(i))
             Next
 
             Logging.info("nu = " & sum_alpha / (param.c * l) & ASCII.LF)
@@ -234,7 +234,7 @@ Namespace SVM
             Dim sum = C * param.nu * l / 2
 
             For i = 0 To l - 1
-                alpha2(i + l) = stdNum.Min(sum, C)
+                alpha2(i + l) = std.Min(sum, C)
                 alpha2(i) = alpha2(i + l)
                 sum -= alpha2(i)
                 linear_term(i) = -prob.Y(i)
@@ -290,15 +290,15 @@ Namespace SVM
 
             For i = 0 To prob.count - 1
 
-                If stdNum.Abs(alpha(i)) > 0 Then
+                If std.Abs(alpha(i)) > 0 Then
                     nSV += 1
 
                     If prob.Y(i) > 0 Then
-                        If stdNum.Abs(alpha(i)) >= si.upper_bound_p Then
+                        If std.Abs(alpha(i)) >= si.upper_bound_p Then
                             nBSV += 1
                         End If
                     Else
-                        If stdNum.Abs(alpha(i)) >= si.upper_bound_n Then
+                        If std.Abs(alpha(i)) >= si.upper_bound_n Then
                             nBSV += 1
                         End If
                     End If
@@ -346,7 +346,7 @@ Namespace SVM
 
             ' Initial Point and Initial Fun Value
             A = 0.0
-            B = stdNum.Log((prior0 + 1.0) / (prior1 + 1.0))
+            B = std.Log((prior0 + 1.0) / (prior1 + 1.0))
             Dim fval = 0.0
 
             For i = 0 To l - 1
@@ -360,9 +360,9 @@ Namespace SVM
                 fApB = dec_values(i) * A + B
 
                 If fApB >= 0 Then
-                    fval += t(i) * fApB + stdNum.Log(1 + stdNum.Exp(-fApB))
+                    fval += t(i) * fApB + std.Log(1 + std.Exp(-fApB))
                 Else
-                    fval += (t(i) - 1) * fApB + stdNum.Log(1 + stdNum.Exp(fApB))
+                    fval += (t(i) - 1) * fApB + std.Log(1 + std.Exp(fApB))
                 End If
             Next
 
@@ -378,11 +378,11 @@ Namespace SVM
                     fApB = dec_values(i) * A + B
 
                     If fApB >= 0 Then
-                        p = stdNum.Exp(-fApB) / (1.0 + stdNum.Exp(-fApB))
-                        q = 1.0 / (1.0 + stdNum.Exp(-fApB))
+                        p = std.Exp(-fApB) / (1.0 + std.Exp(-fApB))
+                        q = 1.0 / (1.0 + std.Exp(-fApB))
                     Else
-                        p = 1.0 / (1.0 + stdNum.Exp(fApB))
-                        q = stdNum.Exp(fApB) / (1.0 + stdNum.Exp(fApB))
+                        p = 1.0 / (1.0 + std.Exp(fApB))
+                        q = std.Exp(fApB) / (1.0 + std.Exp(fApB))
                     End If
 
                     d2 = p * q
@@ -395,7 +395,7 @@ Namespace SVM
                 Next
 
                 ' Stopping Criteria
-                If stdNum.Abs(g1) < eps AndAlso stdNum.Abs(g2) < eps Then
+                If std.Abs(g1) < eps AndAlso std.Abs(g2) < eps Then
                     Exit For
                 End If
 
@@ -417,9 +417,9 @@ Namespace SVM
                         fApB = dec_values(i) * newA + newB
 
                         If fApB >= 0 Then
-                            newf += t(i) * fApB + stdNum.Log(1 + stdNum.Exp(-fApB))
+                            newf += t(i) * fApB + std.Log(1 + std.Exp(-fApB))
                         Else
-                            newf += (t(i) - 1) * fApB + stdNum.Log(1 + stdNum.Exp(fApB))
+                            newf += (t(i) - 1) * fApB + std.Log(1 + std.Exp(fApB))
                         End If
                     Next
                     ' Check sufficient decrease
@@ -451,9 +451,9 @@ Namespace SVM
             Dim fApB = decision_value * A + B
 
             If fApB >= 0 Then
-                Return stdNum.Exp(-fApB) / (1.0 + stdNum.Exp(-fApB))
+                Return std.Exp(-fApB) / (1.0 + std.Exp(-fApB))
             Else
-                Return 1.0 / (1 + stdNum.Exp(fApB))
+                Return 1.0 / (1 + std.Exp(fApB))
             End If
         End Function
 
@@ -465,7 +465,7 @@ Namespace SVM
         ''' <param name="p"></param>
         Private Sub multiclass_probability(k As Integer, r As Double(,), p As Double())
             Dim t, j As Integer
-            Dim iter = 0, max_iter = stdNum.Max(100, k)
+            Dim iter = 0, max_iter = std.Max(100, k)
             Dim Q = New Double(k - 1, k - 1) {}
             Dim Qp = New Double(k - 1) {}
             Dim pQp As Double, eps = 0.005 / k
@@ -502,7 +502,7 @@ Namespace SVM
                 Dim max_error As Double = 0
 
                 For t = 0 To k - 1
-                    Dim [error] = stdNum.Abs(Qp(t) - pQp)
+                    Dim [error] = std.Abs(Qp(t) - pQp)
                     If [error] > max_error Then max_error = [error]
                 Next
 
@@ -644,20 +644,20 @@ Namespace SVM
 
             For i = 0 To prob.count - 1
                 ymv(i) = New SVMPrediction With {.unifyValue = prob.Y(i) - ymv(i).unifyValue}
-                mae += stdNum.Abs(ymv(i).unifyValue)
+                mae += std.Abs(ymv(i).unifyValue)
             Next
 
             mae /= prob.count
-            Dim std = stdNum.Sqrt(2 * mae * mae)
+            Dim stde = std.Sqrt(2 * mae * mae)
             Dim count = 0
             mae = 0
 
             For i = 0 To prob.count - 1
 
-                If stdNum.Abs(ymv(i).unifyValue) > 5 * std Then
+                If std.Abs(ymv(i).unifyValue) > 5 * stde Then
                     count = count + 1
                 Else
-                    mae += stdNum.Abs(ymv(i).unifyValue)
+                    mae += std.Abs(ymv(i).unifyValue)
                 End If
             Next
 
@@ -799,7 +799,7 @@ Namespace SVM
             model.rho(0) = f.rho
 
             For i = 0 To prob.count - 1
-                If stdNum.Abs(f.alpha(i)) > 0 Then
+                If std.Abs(f.alpha(i)) > 0 Then
                     nSV += 1
                 End If
             Next
@@ -812,7 +812,7 @@ Namespace SVM
 
             For i = 0 To prob.count - 1
 
-                If stdNum.Abs(f.alpha(i)) > 0 Then
+                If std.Abs(f.alpha(i)) > 0 Then
                     model.supportVectors(j) = prob.X(i)
                     model.supportVectorCoefficients(0)(j) = f.alpha(i)
                     model.supportVectorIndices(j) = i + 1
@@ -860,7 +860,7 @@ Namespace SVM
             For i = 0 To nr_class - 1
 
                 If Not param.weights.ContainsKey(label(i)) Then
-                    Call $"WARNING: class label {label(i)} specified in weight is not found".Warning
+                    Call $"WARNING: class label {label(i)} specified in weight is not found".warning
                 Else
                     weighted_C(i) *= param.weights(label(i))
                 End If
@@ -914,11 +914,11 @@ Namespace SVM
                     f(p) = svm_train_one(sub_prob, param, weighted_C(i), weighted_C(j))
 
                     For k = 0 To ci - 1
-                        If Not nonzero(si + k) AndAlso stdNum.Abs(f(p).alpha(k)) > 0 Then nonzero(si + k) = True
+                        If Not nonzero(si + k) AndAlso std.Abs(f(p).alpha(k)) > 0 Then nonzero(si + k) = True
                     Next
 
                     For k = 0 To cj - 1
-                        If Not nonzero(sj + k) AndAlso stdNum.Abs(f(p).alpha(ci + k)) > 0 Then nonzero(sj + k) = True
+                        If Not nonzero(sj + k) AndAlso std.Abs(f(p).alpha(ci + k)) > 0 Then nonzero(sj + k) = True
                     Next
 
                     p += 1
@@ -1392,7 +1392,7 @@ Namespace SVM
                 For i = 0 To nr_class - 1
 
                     For j = i + 1 To nr_class - 1
-                        pairwise_prob(i, j) = stdNum.Min(stdNum.Max(sigmoid_predict(dec_values(k), model.pairwiseProbabilityA(k), model.pairwiseProbabilityB(k)), min_prob), 1 - min_prob)
+                        pairwise_prob(i, j) = std.Min(std.Max(sigmoid_predict(dec_values(k), model.pairwiseProbabilityA(k), model.pairwiseProbabilityB(k)), min_prob), 1 - min_prob)
                         pairwise_prob(j, i) = 1 - pairwise_prob(i, j)
                         k += 1
                     Next
@@ -1493,7 +1493,7 @@ Namespace SVM
                     For j = i + 1 To nr_class - 1
                         Dim n2 = count(j)
 
-                        If param.nu * (n1 + n2) / 2 > stdNum.Min(n1, n2) Then
+                        If param.nu * (n1 + n2) / 2 > std.Min(n1, n2) Then
                             Return "specified nu is infeasible"
                         End If
                     Next
