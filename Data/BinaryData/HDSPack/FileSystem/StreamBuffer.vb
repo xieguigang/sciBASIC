@@ -222,6 +222,8 @@ Namespace FileSystem
             Return intptr
         End Function
 
+        Dim disposedFlag As Boolean = False
+
         ''' <summary>
         ''' write the in-memory content data into 
         ''' the base file stream, and then update 
@@ -251,9 +253,17 @@ Namespace FileSystem
         ''' </summary>
         ''' <param name="disposing"></param>
         Protected Overrides Sub Dispose(disposing As Boolean)
-            writeBuffer()
-            buffer.Dispose()
-            MyBase.Dispose(disposing)
+            If Not disposedFlag Then
+                ' avoid unexpected multiple action calls 
+                disposedFlag = True
+
+                ' flush current data to file stream
+                Call writeBuffer()
+                ' release the memory buffer
+                Call buffer.Dispose()
+                ' release base data
+                Call MyBase.Dispose(disposing)
+            End If
         End Sub
     End Class
 End Namespace
