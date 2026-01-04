@@ -71,6 +71,7 @@ Namespace ComponentModel.Ranges.Unit
         GB = MB * 1024
         TB = GB * 1024
         PB = TB * 1024
+        EB = PB * 1024
     End Enum
 
     <HideModuleName>
