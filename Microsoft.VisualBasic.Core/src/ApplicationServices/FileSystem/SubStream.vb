@@ -251,5 +251,10 @@ Namespace ApplicationServices
         Public Overrides Sub SetLength(value As Long)
             Throw New NotSupportedException("sub stream is not allowed to modified its buffer size!")
         End Sub
+
+        Protected Overrides Sub Dispose(disposing As Boolean)
+            ' 20260104 do nothing at here for try to avoid 
+            ' close the base stream object unexpected
+        End Sub
     End Class
 End Namespace
