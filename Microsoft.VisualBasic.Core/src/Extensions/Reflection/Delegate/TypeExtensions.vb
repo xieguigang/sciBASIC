@@ -127,6 +127,17 @@ Namespace Emit.Delegates
             Return cache(source)(interfaceType)
         End Function
 
+        <Extension>
+        Public Function ImplementAnyInterfaces(source As Type, anyInterfaceTypes As Type()) As Boolean
+            For Each type As Type In anyInterfaceTypes
+                If source.ImplementInterface(type) Then
+                    Return True
+                End If
+            Next
+
+            Return False
+        End Function
+
         Private Function ImplementInterfaceAssertInternal(source As Type, interfaceType As Type) As Boolean
             While source IsNot Nothing
                 Dim interfaces = source.GetInterfaces()
