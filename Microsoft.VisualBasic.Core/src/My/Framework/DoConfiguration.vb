@@ -140,6 +140,7 @@ Namespace My.FrameworkInternal
             ' 但是环境变量任然会进行加载设置
             If Not disableLoadOptions AndAlso Not envir.IsNullOrEmpty Then
                 If envir.ContainsKey("proxy") Then
+                    ' /@set proxy=http://127.0.0.1:10809
                     WebServiceUtils.Proxy = envir("proxy")
                     Call $"[Config] webUtils_proxy={WebServiceUtils.Proxy}".info
                 End If
