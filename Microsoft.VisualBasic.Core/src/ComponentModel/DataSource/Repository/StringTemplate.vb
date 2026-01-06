@@ -26,7 +26,7 @@ Namespace ComponentModel.DataSourceModel.Repository
         Sub New(template As String, Optional defaults As Dictionary(Of String, String) = Nothing)
             Me.template = template
             Me.defaults = If(defaults, New Dictionary(Of String, String))
-            Me.keys = ParseKeys(template)
+            Me.keys = ParseKeys(template).ToArray
         End Sub
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
