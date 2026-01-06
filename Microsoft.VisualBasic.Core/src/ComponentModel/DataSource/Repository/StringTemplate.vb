@@ -21,7 +21,7 @@ Namespace ComponentModel.DataSourceModel.Repository
 
         ReadOnly template As String
         ReadOnly defaults As Dictionary(Of String, String)
-        ReadOnly keys As String()
+        ReadOnly keys As NamedValue(Of String)()
 
         Sub New(template As String, Optional defaults As Dictionary(Of String, String) = Nothing)
             Me.template = template
@@ -30,8 +30,10 @@ Namespace ComponentModel.DataSourceModel.Repository
         End Sub
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Private Shared Function ParseKeys(template As String) As IEnumerable(Of String)
-            Return template.Matches("[<].*?[>]", RegexICSng)
+        Private Shared Iterator Function ParseKeys(template As String) As IEnumerable(Of NamedValue(Of String))
+            For Each placeholder As String In template.Matches("[<].*?[>]", RegexICSng)
+                Yield New NamedValue(Of String)(placeholder.GetStackValue("<", ">"), placeholder)
+            Next
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -49,14 +51,14 @@ Namespace ComponentModel.DataSourceModel.Repository
             Dim str As New StringBuilder(template)
             Dim value As String
 
-            For Each key As String In keys
-                value = i.GetData(key)
+            For Each placeholder As NamedValue(Of String) In keys
+                value = i.GetData(placeholder.Name)
 
                 If value.StringEmpty Then
-                    value = defaults.TryGetValue(key, default:="unknown")
+                    value = defaults.TryGetValue(placeholder.Name, default:="unknown")
                 End If
 
-                Call str.Replace(key, value)
+                Call str.Replace(placeholder.Value, value)
             Next
 
             Return str.ToString
