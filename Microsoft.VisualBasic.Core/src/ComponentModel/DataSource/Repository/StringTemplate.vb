@@ -34,6 +34,11 @@ Namespace ComponentModel.DataSourceModel.Repository
             Return template.Matches("[<].*?[>]", RegexICSng)
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Sub SetDefaultKey(key As String, data As String)
+            defaults(key) = data
+        End Sub
+
         ''' <summary>
         ''' Create a string based on the given template
         ''' </summary>
