@@ -66,6 +66,7 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.Repository
 Imports Microsoft.VisualBasic.Scripting
 Imports Microsoft.VisualBasic.Text
 
@@ -120,7 +121,7 @@ Namespace ComponentModel.DataSourceModel
 
     End Interface
 
-    Friend Class DictionaryWrapper : Implements IStringGetter
+    Friend Class DictionaryWrapper : Implements IStringGetter, IKeyDataReader
 
         ReadOnly dict As Dictionary(Of String, String)
         ReadOnly keys As String()
@@ -134,7 +135,7 @@ Namespace ComponentModel.DataSourceModel
             Return dict.ContainsKey(name)
         End Function
 
-        Public Function GetString(name As String) As String Implements IStringGetter.GetString
+        Public Function GetString(name As String) As String Implements IStringGetter.GetString, IKeyDataReader.GetData
             Return dict(name)
         End Function
 
@@ -155,7 +156,7 @@ Namespace ComponentModel.DataSourceModel
         End Function
     End Class
 
-    Public Class StringReader
+    Public Class StringReader : Implements IKeyDataReader
 
         ReadOnly getter As IStringGetter
 
@@ -310,7 +311,7 @@ Namespace ComponentModel.DataSourceModel
         ''' <returns></returns>
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Function GetString(parameter As String) As String
+        Public Function GetString(parameter As String) As String Implements IKeyDataReader.GetData
             Return getter.GetString(parameter)
         End Function
 
