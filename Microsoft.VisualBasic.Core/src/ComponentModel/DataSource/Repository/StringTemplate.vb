@@ -56,7 +56,7 @@ Namespace ComponentModel.DataSourceModel.Repository
                     value = defaults.TryGetValue(key, default:="unknown")
                 End If
 
-                Call str.Replace($"<{key}>", value)
+                Call str.Replace(key, value)
             Next
 
             Return str.ToString
