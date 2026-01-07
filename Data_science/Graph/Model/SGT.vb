@@ -233,7 +233,7 @@ Public Class SequenceGraphTransform
     ''' </returns>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Private Function __set_feature_name(alphabets As Char()) As String()
-        Return CombinationExtensions.FullCombination(alphabets) _
+        Return CartesianProduct.FullCombination(alphabets) _
             .Select(Function(t) $"{t.a},{t.b}") _
             .ToArray
     End Function
