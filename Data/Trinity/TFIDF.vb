@@ -40,7 +40,7 @@ Public Class TFIDF
                               Return a.Count
                           End Function)
 
-        Call vecs.Add(id, seq)
+        Call vecs.Add(id, counter)
     End Sub
 
     ''' <summary>
