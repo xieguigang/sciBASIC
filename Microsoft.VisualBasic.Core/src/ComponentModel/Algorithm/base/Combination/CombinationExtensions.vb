@@ -54,8 +54,6 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
-Imports Microsoft.VisualBasic.Language
-Imports Microsoft.VisualBasic.Linq
 
 Namespace ComponentModel.Algorithm.base
 
@@ -66,36 +64,14 @@ Namespace ComponentModel.Algorithm.base
     Public Module CombinationExtensions
 
         ''' <summary>
-        ''' create a vs b vs c ...
+        ''' wrapper call for <see cref="NDimensionCartesianProduct.CreateMultiCartesianProduct"/>
         ''' </summary>
         ''' <typeparam name="T"></typeparam>
         ''' <param name="source"></param>
         ''' <returns></returns>
-        <Extension>
-        Public Iterator Function Iteration(Of T)(source As T()()) As IEnumerable(Of T())
-            Dim first As T() = source.First
-
-            ' 只剩下两个的时候，会退出递归操作
-            If source.Length = 2 Then
-                Dim last As T() = source.Last
-
-                For Each x As T In first
-                    For Each _item As T In last
-                        Yield {x, _item}
-                    Next
-                Next
-            Else
-                For Each x As T In first
-                    ' 递归组合迭代
-                    For Each subArray As T() In source.Skip(1).ToArray.Iteration
-                        Yield New List(Of T)(x) + subArray
-                    Next
-                Next
-            End If
-        End Function
-
-        Public Function Generate(Of T)(source As T()()) As T()()
-            Return source.Iteration.ToArray
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function Generate(Of T)(source As T()()) As IEnumerable(Of T())
+            Return NDimensionCartesianProduct.CreateMultiCartesianProduct(Of T)(source)
         End Function
 
         <Extension>
