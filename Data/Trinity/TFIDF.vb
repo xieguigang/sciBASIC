@@ -5,6 +5,9 @@ Imports std = System.Math
 
 Public Class TFIDF
 
+    ''' <summary>
+    ''' 存储 序列ID -> {K-mer: 出现次数}
+    ''' </summary>
     ReadOnly vecs As New Dictionary(Of String, Dictionary(Of String, Integer))
 
     Dim m_words As String()
@@ -37,12 +40,15 @@ Public Class TFIDF
     End Sub
 
     ''' <summary>
-    ''' 
+    ''' One example: processing sequence embedding with kmers, set all alphabet combination of the kmer words for sequence
+    ''' (the input sequence kmer collection may be just a part subset of the input <paramref name="externalWords"/>). 
+    ''' so the generated vector could be comparable with the result of another batch of the sequence processing result.
     ''' </summary>
     ''' <param name="externalWords"></param>
     ''' <returns></returns>
     ''' <remarks>
-    ''' 
+    ''' each time the <see cref="Add"/> method is call in this module, the words cache will be cleared. 
+    ''' this function should be called after all sequence has already been added into this generator.
     ''' </remarks>
     Public Function SetWords(externalWords As IEnumerable(Of String)) As TFIDF
         m_words = externalWords.ToArray
