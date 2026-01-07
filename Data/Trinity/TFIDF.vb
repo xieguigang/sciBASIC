@@ -7,6 +7,8 @@ Public Class TFIDF
 
     ReadOnly vecs As New Dictionary(Of String, Dictionary(Of String, Integer))
 
+    Dim m_words As String()
+
     ''' <summary>
     ''' get N sequence
     ''' </summary>
@@ -21,16 +23,42 @@ Public Class TFIDF
     ''' get all unique words inside the sequence collection
     ''' </summary>
     ''' <returns></returns>
-    Public ReadOnly Property Words As IEnumerable(Of String)
+    Public ReadOnly Property Words As String()
         Get
-            Return (From seq As Dictionary(Of String, Integer)
-                    In vecs.Values
-                    Select seq.Keys).IteratesALL.Distinct
+            If m_words Is Nothing Then
+                m_words = WordsFromDocument.ToArray
+            End If
+
+            Return m_words
         End Get
     End Property
 
     Sub New()
     End Sub
+
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="externalWords"></param>
+    ''' <returns></returns>
+    ''' <remarks>
+    ''' 
+    ''' </remarks>
+    Public Function SetWords(externalWords As IEnumerable(Of String)) As TFIDF
+        m_words = externalWords.ToArray
+        Return Me
+    End Function
+
+    Private Function WordsFromDocument() As IEnumerable(Of String)
+        Dim pull = From seq As Dictionary(Of String, Integer)
+                   In vecs.Values
+                   Select seq.Keys
+
+        Return From word As String
+               In pull.IteratesALL
+               Distinct
+               Order By word
+    End Function
 
     Public Sub Add(id As String, seq As IEnumerable(Of String))
         Dim counter As Dictionary(Of String, Integer) = seq _
@@ -40,7 +68,8 @@ Public Class TFIDF
                               Return a.Count
                           End Function)
 
-        Call vecs.Add(id, counter)
+        m_words = Nothing
+        vecs.Add(id, counter)
     End Sub
 
     ''' <summary>
@@ -92,6 +121,11 @@ Public Class TFIDF
         Return m
     End Function
 
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="v"></param>
+    ''' <returns></returns>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function DF(v As String) As Integer
         Return Aggregate seq As Dictionary(Of String, Integer)
@@ -99,6 +133,11 @@ Public Class TFIDF
                Into Count(seq.ContainsKey(v))
     End Function
 
+    ''' <summary>
+    ''' IDF (Inverse Document Frequency)
+    ''' </summary>
+    ''' <param name="v"></param>
+    ''' <returns></returns>
     Public Function IDF(v As String) As Double
         Return std.Log((N + 1) / (DF(v) + 1)) + 1
     End Function
