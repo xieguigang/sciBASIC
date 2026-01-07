@@ -66,33 +66,6 @@ Namespace ComponentModel.Algorithm.base
     Public Module CombinationExtensions
 
         ''' <summary>
-        ''' 生成两个序列的两两组合 ``{<paramref name="seq_1"/> -> <paramref name="seq_2"/>}()``
-        ''' </summary>
-        ''' <typeparam name="TA"></typeparam>
-        ''' <typeparam name="TB"></typeparam>
-        ''' <param name="seq_1"></param>
-        ''' <param name="seq_2"></param>
-        ''' <returns></returns>
-        <Extension>
-        Public Iterator Function CreateCombos(Of TA, TB)(seq_1 As IEnumerable(Of TA), seq_2 As IEnumerable(Of TB)) As IEnumerable(Of (a As TA, b As TB))
-            Dim b As TB() = seq_2.ToArray
-
-            For Each i As TA In seq_1
-                For Each j As TB In b
-                    Yield (i, j)
-                Next
-            Next
-        End Function
-
-        <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        <Extension>
-        Public Function FullCombination(Of T)(seq As IEnumerable(Of T)) As IEnumerable(Of (a As T, b As T))
-            With seq.ToArray
-                Return .CreateCombos(.ByRef)
-            End With
-        End Function
-
-        ''' <summary>
         ''' create a vs b vs c ...
         ''' </summary>
         ''' <typeparam name="T"></typeparam>

@@ -62,7 +62,7 @@ Namespace ComponentModel.Algorithm.base
 
     Public Class Permutation(Of tT As IComparable)
 
-        Private dataField As tT()
+        Private m_data As tT()
         Private K As Integer = -1
         Private L As Integer = -1
         Private first As Boolean = True
@@ -75,13 +75,13 @@ Namespace ComponentModel.Algorithm.base
 
         Public ReadOnly Property Data As tT()
             Get
-                Return dataField
+                Return m_data
             End Get
         End Property
 
         Public Sub New(data As tT())
-            dataField = data
-            Array.Sort(dataField)
+            m_data = data
+            Array.Sort(m_data)
         End Sub
 
         Private Sub FindIndices()
@@ -89,8 +89,8 @@ Namespace ComponentModel.Algorithm.base
 
             Me.K = -1
 
-            While k + 1 < dataField.Length
-                If dataField(k).CompareTo(dataField(k + 1)) < 0 Then
+            While k + 1 < m_data.Length
+                If m_data(k).CompareTo(m_data(k + 1)) < 0 Then
                     Me.K = k
                 End If
 
@@ -98,9 +98,9 @@ Namespace ComponentModel.Algorithm.base
             End While
 
             If Me.K >= 0 Then
-                For L = Me.K + 1 To dataField.Length - 1
+                For L = Me.K + 1 To m_data.Length - 1
 
-                    If dataField(Me.K).CompareTo(dataField(L)) < 0 Then
+                    If m_data(Me.K).CompareTo(m_data(L)) < 0 Then
                         Me.L = L
                     End If
                 Next
@@ -116,9 +116,9 @@ Namespace ComponentModel.Algorithm.base
         End Sub
 
         Private Sub Swap(a As Integer, b As Integer)
-            Dim t = dataField(a)
-            dataField(a) = dataField(b)
-            dataField(b) = t
+            Dim t = m_data(a)
+            m_data(a) = m_data(b)
+            m_data(b) = t
         End Sub
 
         Public Sub Permutate()
@@ -133,7 +133,7 @@ Namespace ComponentModel.Algorithm.base
             End If
 
             Swap(K, L)
-            Reverse(K + 1, dataField.Length - 1)
+            Reverse(K + 1, m_data.Length - 1)
             FindIndices()
         End Sub
 
