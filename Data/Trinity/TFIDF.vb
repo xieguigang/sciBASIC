@@ -69,7 +69,28 @@ Public Class TFIDF
         Return m
     End Function
 
+    ''' <summary>
+    ''' n-gram One-hot(Bag-of-n-grams)
+    ''' </summary>
+    ''' <returns></returns>
+    Public Function OneHotVectorizer() As DataFrame
+        Dim m As New DataFrame With {
+            .rownames = vecs.Keys.ToArray
+        }
+        Dim seqs As Dictionary(Of String, Integer)() = m.rownames _
+            .Select(Function(id) vecs(id)) _
+            .ToArray
 
+        For Each v As String In Words
+            ' add column
+            ' row is sequence id
+            Call m.add(v, From seq As Dictionary(Of String, Integer)
+                          In seqs
+                          Select If(seq.ContainsKey(v), 1, 0))
+        Next
+
+        Return m
+    End Function
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function DF(v As String) As Integer
