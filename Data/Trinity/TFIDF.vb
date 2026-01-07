@@ -1,6 +1,8 @@
 ﻿Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.Framework
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports std = System.Math
 
 Public Class TFIDF
@@ -84,7 +86,7 @@ Public Class TFIDF
     ''' <returns>
     ''' A dataframe object with row is sequence and column is word data
     ''' </returns>
-    Public Function TfidfVectorizer() As DataFrame
+    Public Function TfidfVectorizer(Optional L2normalized As Boolean = False) As DataFrame
         Dim m As New DataFrame With {
             .rownames = vecs.Keys.ToArray
         }
@@ -100,6 +102,21 @@ Public Class TFIDF
                           Let tf As Integer = seq.TryGetValue(v, [default]:=0)
                           Select tf * IDF(v))
         Next
+
+        If L2normalized Then
+            ' data populated by rows
+            Dim rows As NamedCollection(Of Double)() = m _
+                .foreachRow(Function(r)
+                                Dim vec As New Vector(From xi As Object In r Select CDbl(xi))
+                                Dim norm As Double = std.Sqrt((vec ^ 2).Sum)
+
+                                ' get normalized sequence row data vector
+                                Return New NamedCollection(Of Double)(r.name, vec / norm)
+                            End Function) _
+                .ToArray
+
+            m = DataFrame.FromRows(rows, m.featureNames)
+        End If
 
         Return m
     End Function
