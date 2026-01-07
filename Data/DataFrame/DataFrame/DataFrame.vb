@@ -179,6 +179,13 @@ Public Class DataFrame : Implements INumericMatrix, ILabeledMatrix, Enumeration(
         End Get
     End Property
 
+    Public ReadOnly Property featureSet As FeatureVector()
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Get
+            Return features.Values.ToArray
+        End Get
+    End Property
+
     Sub New()
     End Sub
 

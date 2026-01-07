@@ -1,4 +1,5 @@
 ﻿Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.ApplicationServices.Terminal.ProgressBar.Tqdm
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.Framework
 Imports Microsoft.VisualBasic.Linq
@@ -94,7 +95,7 @@ Public Class TFIDF
             .Select(Function(id) vecs(id)) _
             .ToArray
 
-        For Each v As String In Words
+        For Each v As String In TqdmWrapper.Wrap(Words)
             ' add column
             ' row is sequence id
             Call m.add(v, From seq As Dictionary(Of String, Integer)
