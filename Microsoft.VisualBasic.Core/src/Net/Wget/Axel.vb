@@ -56,6 +56,7 @@ Imports System.IO
 Imports System.Net.Http
 Imports System.Threading
 Imports Microsoft.VisualBasic.ApplicationServices.Terminal.ProgressBar.ConsoleProgressBar
+Imports Microsoft.VisualBasic.Language
 
 Namespace Net.WebClient
 
@@ -99,9 +100,15 @@ Namespace Net.WebClient
             Await DownloadFileAsync(url, fileName, threadCount)
         End Function
 
+        Dim check As i32 = 1
+
         Private Sub MarkFlag(filename As String)
             If Not hashcode Is Nothing Then
                 Call hashcode.Add(filename)
+
+                If ++check > 5 Then
+                    Call hashcode.Save()
+                End If
             End If
         End Sub
 

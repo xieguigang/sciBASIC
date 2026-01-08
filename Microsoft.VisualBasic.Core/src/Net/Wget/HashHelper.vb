@@ -6,6 +6,7 @@ Namespace Net.WebClient
     Public Class HashHelper
 
         Dim hashcode As New Dictionary(Of String, (checksum As String, size As Long))
+        Dim dbfile As String
 
         Public Sub Add(filepath As String)
             hashcode(filepath.ToLower.MD5) = (FileHashCheckSum.ComputeHash(filepath), filepath.FileLength)
@@ -26,6 +27,10 @@ Namespace Net.WebClient
             End With
         End Function
 
+        Public Sub Save()
+            Call Save(dbfile)
+        End Sub
+
         Public Sub Save(filepath As String)
             Using bin As New BinaryWriter(filepath.Open(FileMode.OpenOrCreate, doClear:=True, [readOnly]:=False))
                 Call bin.Write(hashcode.Count)
@@ -40,7 +45,7 @@ Namespace Net.WebClient
 
         Public Shared Function Load(filepath As String) As HashHelper
             If Not filepath.FileExists(True) Then
-                Return New HashHelper
+                Return New HashHelper With {.dbfile = filepath}
             End If
 
             Using bin As New BinaryReader(filepath.Open(FileMode.Open, doClear:=False, [readOnly]:=True))
@@ -55,7 +60,10 @@ Namespace Net.WebClient
                     hashset(key) = (checksum, len)
                 Next
 
-                Return New HashHelper With {.hashcode = hashset}
+                Return New HashHelper With {
+                    .hashcode = hashset,
+                    .dbfile = filepath
+                }
             End Using
         End Function
 

@@ -84,6 +84,8 @@ Module Program
             Call New Axel(hashset).Download(target, filename).Wait()
         End If
 
+        Call hashset.Save($"{App.ProductProgramData}/downloads.db")
+
         Return 0
     End Function
 End Module
