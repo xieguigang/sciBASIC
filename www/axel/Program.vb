@@ -88,8 +88,12 @@ Module Program
                 Dim downloadfile As String = $"{downloads}/{url.FileName}"
 
                 If Not hashset.Check(downloadfile) Then
-                    Call New Axel().Download(url, downloadfile).Wait()
-                    Call MarkFlag(downloadfile)
+                    Try
+                        Call New Axel().Download(url, downloadfile).Wait()
+                        Call MarkFlag(downloadfile)
+                    Catch ex As Exception
+                        Call ex.Message.warning
+                    End Try
                 Else
                     Call Console.WriteLine($"跳过已经成功下载并且校验成功的文件：{downloadfile.GetFullPath}")
                 End If
