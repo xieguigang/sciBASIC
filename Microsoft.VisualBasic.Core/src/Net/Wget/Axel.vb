@@ -56,7 +56,6 @@ Imports System.IO
 Imports System.Net.Http
 Imports System.Threading
 Imports Microsoft.VisualBasic.ApplicationServices.Terminal.ProgressBar.ConsoleProgressBar
-Imports Microsoft.VisualBasic.Language
 
 Namespace Net.WebClient
 
@@ -74,22 +73,12 @@ Namespace Net.WebClient
         Private Shared totalFileSize As Long = 0
         Private Shared lockObject As New Object()
 
-        ReadOnly hashcode As HashHelper
-
-        Sub New(hashcode As HashHelper)
-            Me.hashcode = hashcode
-        End Sub
-
         <STAThread>
         Public Async Function Download(url As String, fileName As String, Optional nThreads As Integer? = Nothing) As Task
             Dim threadCount As Integer = If(nThreads, DefaultThreadCount)
 
             If threadCount <= 0 Then
                 threadCount = DefaultThreadCount
-            End If
-            If hashcode IsNot Nothing AndAlso hashcode.Check(fileName) Then
-                Call Console.WriteLine("本地文件已经存在并且校验成功，跳过下载。。。")
-                Return
             End If
 
             Console.WriteLine($"准备下载: {url}")
@@ -99,18 +88,6 @@ Namespace Net.WebClient
             ' 2. 异步执行下载任务
             Await DownloadFileAsync(url, fileName, threadCount)
         End Function
-
-        Dim check As i32 = 1
-
-        Private Sub MarkFlag(filename As String)
-            If Not hashcode Is Nothing Then
-                Call hashcode.Add(filename)
-
-                If ++check > 5 Then
-                    Call hashcode.Save()
-                End If
-            End If
-        End Sub
 
         Private Async Function DownloadFileAsync(url As String, fileName As String, threadCount As Integer) As Task
             Using httpClient As New HttpClient()
@@ -136,7 +113,6 @@ Namespace Net.WebClient
                 If File.Exists(fileName) Then
                     Dim existingFileInfo As New FileInfo(fileName)
                     If existingFileInfo.Length = totalFileSize Then
-                        Call MarkFlag(fileName)
                         Call Console.WriteLine($"[跳过] 文件已存在且大小匹配，跳过下载: {Path.GetFileName(fileName)}")
 
                         Return
@@ -186,7 +162,6 @@ Namespace Net.WebClient
                 Console.WriteLine(vbCrLf & "所有分块下载完成，正在合并文件...")
                 Await MergeFilesAsync(tempFiles, fileName)
 
-                Call MarkFlag(fileName)
                 Call Console.WriteLine("文件合并完成！")
 
                 ' 8. 清理临时文件
