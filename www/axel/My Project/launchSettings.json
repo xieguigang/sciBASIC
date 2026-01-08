@@ -2,7 +2,7 @@
   "profiles": {
     "axel": {
       "commandName": "Project",
-      "commandLineArgs": "\"https://mxdver0.jijiagames.com/221/Data22108.cab\""
+      "commandLineArgs": "\"D:\\datapool\\ncbi_genbank\\http.txt\" --download_to D:\\datapool\\ncbi_genbank\\"
     }
   }
 }
