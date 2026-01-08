@@ -57,8 +57,13 @@ Imports Microsoft.VisualBasic.ComponentModel.Collection
 Public Class KBandSearch
 
     ReadOnly globalAlign$()
+    ''' <summary>
+    ''' k-band 带宽
+    ''' </summary>
+    ReadOnly K As Integer
 
-    Sub New(ByRef globalAlign$())
+    Sub New(ByRef globalAlign$(), k As Integer)
+        Me.K = k
         Me.globalAlign = globalAlign
     End Sub
 
@@ -76,16 +81,22 @@ Public Class KBandSearch
     Public Function CalculateEditDistance(seq1$, seq2$) As Integer
         Dim l1 = seq1.Length
         Dim l2 = seq2.Length
-        Dim direction%
 
-        If (seq1 = seq2) Then
+        If seq1 = seq2 Then
+            globalAlign(0) = seq1
+            globalAlign(1) = seq2
             Return 0
         End If
+
+        ' K-Band 只计算 |i - j| <= K 的区域
+        ' 为了代码简单，我们仍然分配 l1+1 * l2+1 的矩阵，但只更新带内区域
+        ' 如果追求极致空间优化，可以使用偏移量映射的二维数组，但实现较复杂
 
         Dim i, j, k As Integer
         Dim score()() = RectangularArray.Matrix(Of Integer)(l1 + 1, l2 + 1)
         Dim trace()() = RectangularArray.Matrix(Of Integer)(l1 + 1, l2 + 1)
         Dim match = 0
+        Dim direction%
 
         score(0)(0) = 0
         trace(0)(0) = 0
