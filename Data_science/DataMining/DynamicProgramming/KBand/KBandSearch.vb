@@ -53,7 +53,6 @@
 #End Region
 
 Imports System.Text
-Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports std = System.Math
 
 Public Class KBandSearch
@@ -180,8 +179,12 @@ Public Class KBandSearch
 
         If score(l1, l2) = Integer.MaxValue Then
             Throw New Exception("K-Band width is too small to align these sequences.")
+        Else
+            Return Backtrace(score, trace, l1, l2, seq1, seq2)
         End If
+    End Function
 
+    Private Function Backtrace(score As Integer(,), trace As Integer(,), l1 As Integer, l2 As Integer, seq1$, seq2$) As Integer
         Dim i As Integer = l1
         Dim j As Integer = l2
         Dim len As Integer = l1 + l2 ' 最大可能长度
@@ -215,6 +218,7 @@ Public Class KBandSearch
         ' 反转字符串
         Dim sb1 As New StringBuilder()
         Dim sb2 As New StringBuilder()
+
         For k As Integer = pos - 1 To 0 Step -1
             sb1.Append(align1(k))
             sb2.Append(align2(k))
