@@ -90,6 +90,8 @@ Module Program
                 If Not hashset.Check(downloadfile) Then
                     Call New Axel().Download(url, downloadfile).Wait()
                     Call MarkFlag(downloadfile)
+                Else
+                    Call Console.WriteLine($"跳过已经成功下载并且校验成功的文件：{downloadfile.GetFullPath}")
                 End If
             Next
         Else
@@ -99,8 +101,12 @@ Module Program
                 filename = $"./{target.FileName}"
             End If
 
-            Call New Axel().Download(target, filename).Wait()
-            Call MarkFlag(filename)
+            If Not hashset.Check(filename) Then
+                Call New Axel().Download(target, filename).Wait()
+                Call MarkFlag(filename)
+            Else
+                Call Console.WriteLine($"跳过已经成功下载并且校验成功的文件：{filename.GetFullPath}")
+            End If
         End If
 
         Call hashset.Save($"{App.ProductProgramData}/downloads.db")
