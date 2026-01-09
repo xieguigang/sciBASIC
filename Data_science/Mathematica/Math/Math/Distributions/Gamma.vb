@@ -1,54 +1,54 @@
 ﻿#Region "Microsoft.VisualBasic::6e3a824633483da99a9d1758a675b37c, Data_science\Mathematica\Math\Math\Distributions\Gamma.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 150
-    '    Code Lines: 86 (57.33%)
-    ' Comment Lines: 43 (28.67%)
-    '    - Xml Docs: 93.02%
-    ' 
-    '   Blank Lines: 21 (14.00%)
-    '     File Size: 4.76 KB
+' Summaries:
 
 
-    '     Module MathGamma
-    ' 
-    '         Function: (+2 Overloads) gamma, lngamm, lngamma
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 150
+'    Code Lines: 86 (57.33%)
+' Comment Lines: 43 (28.67%)
+'    - Xml Docs: 93.02%
+' 
+'   Blank Lines: 21 (14.00%)
+'     File Size: 4.76 KB
+
+
+'     Module MathGamma
+' 
+'         Function: (+2 Overloads) gamma, lngamm, lngamma
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -61,6 +61,15 @@ Namespace Distributions
     ''' <summary>
     ''' gamma function (Γ) from mathematics
     ''' </summary>
+    ''' <remarks>
+    ''' |特性|lngamm函数|lngamma函数|
+    ''' |----|----------|-----------|
+    ''' |实现的方法|Lanczos 近似|Spouge 近似​|
+    ''' |核心注释|引用 Lanczos 1964 年的论文，翻译自 Alan Miller 的 FORTRAN 代码。|注释标明适用于大参数（large arguments）。|
+    ''' |系数数组|使用数组 p|使用数组 p_ln|
+    ''' |函数定义|标准函数|扩展方法（带有 Extension 属性）|
+    ''' |主要适用场景|通用的高精度计算|特别适合处理较大的参数值|
+    ''' </remarks>
     Public Module MathGamma
 
         Const g = 7
@@ -97,6 +106,16 @@ Namespace Distributions
             0.0000036899182659531625
         }
 
+        ' 下面的两个函数 lngamm和 lngamma都实现了计算伽马函数的自然对数（LogGamma）的功能，但它们基于不同的数学近似方法。
+
+        ' |特性|lngamm函数|lngamma函数|
+        ' |----|----------|-----------|
+        ' |实现的方法|Lanczos 近似|Spouge 近似​|
+        ' |核心注释|引用 Lanczos 1964 年的论文，翻译自 Alan Miller 的 FORTRAN 代码。|注释标明适用于大参数（large arguments）。|
+        ' |系数数组|使用数组 p|使用数组 p_ln|
+        ' |函数定义|标准函数|扩展方法（带有 <Extension>属性）|
+        ' |主要适用场景|通用的高精度计算|特别适合处理较大的参数值|
+
         ''' <summary>
         ''' Reference: "Lanczos, C. 'A precision approximation
         ''' of the gamma function', J. SIAM Numer. Anal., B, 1, 86-96, 1964."
@@ -105,6 +124,15 @@ Namespace Distributions
         ''' </summary>
         ''' <param name="Z"></param>
         ''' <returns></returns>
+        ''' <remarks>
+        ''' Lanczos 近似算法实现的log gamma函数，是一个通用的高精度计算方法
+        '''
+        ''' 参考资料：
+        ''' 
+        ''' - Lanczos, C. "A precision approximation of the gamma function", J. SIAM Numer. Anal., B, 1, 86-96, 1964.
+        ''' - Alan Miller的FORTRAN实现翻译
+        ''' - [http://lib.stat.cmu.edu/apstat/245](http://lib.stat.cmu.edu/apstat/245)
+        ''' </remarks>
         Public Function lngamm(Z As Double) As Double
             Dim x As Double = 0.0
 
@@ -127,6 +155,9 @@ Namespace Distributions
         ''' <param name="z"></param>
         ''' <returns></returns>
         ''' <remarks>
+        ''' Spouge 近似算法实现的log gamma函数，适用于大参数
+        '''
+        ''' 参考资料：
         ''' http://lib.stat.cmu.edu/apstat/245
         ''' </remarks>
         <Extension>

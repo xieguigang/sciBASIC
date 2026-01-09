@@ -73,21 +73,33 @@ Namespace Analysis.Model
         ''' <summary>
         ''' me to target
         ''' </summary>
-        Friend ReadOnly outgoingEdges As New HashSet(Of Edge)
+        Friend ReadOnly m_outgoingEdges As New HashSet(Of Edge)
         ''' <summary>
         ''' source to me
         ''' </summary>
-        Friend ReadOnly incomingEdges As New HashSet(Of Edge)
+        Friend ReadOnly m_incomingEdges As New HashSet(Of Edge)
 
         Public ReadOnly Property outDegree As Integer
             Get
-                Return outgoingEdges.Count
+                Return m_outgoingEdges.Count
             End Get
         End Property
 
         Public ReadOnly Property inDegree As Integer
             Get
-                Return incomingEdges.Count
+                Return m_incomingEdges.Count
+            End Get
+        End Property
+
+        Public ReadOnly Property outgoingEdges As IEnumerable(Of Edge)
+            Get
+                Return m_outgoingEdges.AsEnumerable
+            End Get
+        End Property
+
+        Public ReadOnly Property incomingEdges As IEnumerable(Of Edge)
+            Get
+                Return m_incomingEdges.AsEnumerable
             End Get
         End Property
 
@@ -101,7 +113,7 @@ Namespace Analysis.Model
         Public ReadOnly Property connectivity As Double
             Get
                 Return Aggregate link As Edge
-                       In outgoingEdges.JoinIterates(incomingEdges)
+                       In m_outgoingEdges.JoinIterates(m_incomingEdges)
                        Into Sum(link.weight)
             End Get
         End Property
@@ -124,7 +136,7 @@ Namespace Analysis.Model
         ''' </summary>
         ''' <param name="edge"></param>
         Public Sub addOutgoingEdge(edge As Edge)
-            Call outgoingEdges.Add(edge)
+            Call m_outgoingEdges.Add(edge)
         End Sub
 
         ''' <summary>
@@ -132,7 +144,7 @@ Namespace Analysis.Model
         ''' </summary>
         ''' <param name="e"></param>
         Public Sub addIncomingEdge(e As Edge)
-            Call incomingEdges.Add(e)
+            Call m_incomingEdges.Add(e)
         End Sub
 
         ''' <summary>
@@ -159,7 +171,7 @@ Namespace Analysis.Model
         ''' <param name="v2">target to</param>
         ''' <returns></returns>
         Public Function getEdgeTo(v2 As DirectedVertex) As Edge
-            For Each edge As Edge In outgoingEdges
+            For Each edge As Edge In m_outgoingEdges
                 If edge.V.label = v2.label Then
                     Return edge
                 End If
@@ -173,10 +185,10 @@ Namespace Analysis.Model
         End Function
 
         Public Iterator Function GetEnumerator() As IEnumerator(Of Edge) Implements IEnumerable(Of Edge).GetEnumerator
-            For Each edge As Edge In outgoingEdges
+            For Each edge As Edge In m_outgoingEdges
                 Yield edge
             Next
-            For Each edge As Edge In incomingEdges
+            For Each edge As Edge In m_incomingEdges
                 Yield edge
             Next
         End Function

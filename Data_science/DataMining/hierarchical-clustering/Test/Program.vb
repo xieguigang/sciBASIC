@@ -94,6 +94,14 @@ Module Program
 
         Call img2.SaveAs("../../dendrogram-visualize-vertical.png")
 
+        Dim img3 = cluster.Plot(
+            classinfo:=info,
+            layout:=Layouts.Radial,
+            padding:="padding:200px 300px 300px 200px;",
+            linkStroke:="stroke: black; stroke-width: 10px; stroke-dash: dash;").AsGDIImage
+
+        Call img3.SaveAs("../../dendrogram-visualize-radial.png")
+
         Pause()
     End Sub
 

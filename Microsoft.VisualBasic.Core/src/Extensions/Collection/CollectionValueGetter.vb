@@ -369,6 +369,21 @@ Public Module CollectionValueGetter
         End If
     End Function
 
+    <Extension>
+    Public Function TryGetValue(Of TKey, TValue)(table As IDictionary(Of TKey, TValue), synonyms As TKey(), Optional [default] As TValue = Nothing) As TValue
+        If table Is Nothing OrElse synonyms Is Nothing Then
+            Return [default]
+        Else
+            For Each key As TKey In synonyms
+                If table.ContainsKey(key) Then
+                    Return table(key)
+                End If
+            Next
+
+            Return [default]
+        End If
+    End Function
+
     ''' <summary>
     ''' 假若不存在目标键名，则返回空值，默认值为空值
     ''' </summary>

@@ -54,7 +54,7 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
-Imports stdNum = System.Math
+Imports std = System.Math
 
 Namespace Knapsack
 
@@ -117,7 +117,7 @@ Namespace Knapsack
                     If item.Weight > col Then
                         table(row, col) = table(row - 1, col)
                     Else
-                        table(row, col) = stdNum.Max(table(row - 1, col), table(row - 1, col - item.Weight) + item.Value)
+                        table(row, col) = std.Max(table(row - 1, col), table(row - 1, col - item.Weight) + item.Value)
                     End If
                 Next
             Next

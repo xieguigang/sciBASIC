@@ -55,6 +55,7 @@
 Imports System.Net
 Imports System.Net.NetworkInformation
 Imports System.Net.Sockets
+Imports System.Runtime.CompilerServices
 Imports randf = Microsoft.VisualBasic.Math.RandomExtensions
 
 Namespace Net.Tcp
@@ -164,6 +165,22 @@ Namespace Net.Tcp
             Next
 
             Return True
+        End Function
+
+        <Extension>
+        Public Function CheckIsSocketException(ex As Exception) As Boolean
+            Do While Not TypeOf ex Is SocketException
+                If ex.InnerException Is Nothing Then
+                    Exit Do
+                End If
+                If TypeOf ex.InnerException Is SocketException Then
+                    Return True
+                Else
+                    ex = ex.InnerException
+                End If
+            Loop
+
+            Return False
         End Function
     End Module
 End Namespace

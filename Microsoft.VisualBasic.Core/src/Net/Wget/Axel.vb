@@ -113,7 +113,8 @@ Namespace Net.WebClient
                 If File.Exists(fileName) Then
                     Dim existingFileInfo As New FileInfo(fileName)
                     If existingFileInfo.Length = totalFileSize Then
-                        Console.WriteLine($"[跳过] 文件已存在且大小匹配，跳过下载: {Path.GetFileName(fileName)}")
+                        Call Console.WriteLine($"[跳过] 文件已存在且大小匹配，跳过下载: {Path.GetFileName(fileName)}")
+
                         Return
                     Else
                         Console.WriteLine($"[信息] 文件已存在但大小不匹配 (本地: {StringFormats.Lanudry(existingFileInfo.Length)}, 远程: {StringFormats.Lanudry(totalFileSize)})，将重新下载。")
@@ -160,7 +161,8 @@ Namespace Net.WebClient
                 ' 7. 合并文件
                 Console.WriteLine(vbCrLf & "所有分块下载完成，正在合并文件...")
                 Await MergeFilesAsync(tempFiles, fileName)
-                Console.WriteLine("文件合并完成！")
+
+                Call Console.WriteLine("文件合并完成！")
 
                 ' 8. 清理临时文件
                 For Each tempFile In tempFiles

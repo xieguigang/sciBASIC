@@ -77,7 +77,7 @@ Namespace Analysis.Model
         End Sub
 
         Public Overridable Function edges(v As DirectedVertex) As ISet(Of Edge) Implements EdgeTraversalPolicy.edges
-            Return v.outgoingEdges
+            Return v.m_outgoingEdges
         End Function
 
         Public Overridable Function vertex(e As Edge) As Node Implements EdgeTraversalPolicy.vertex
@@ -91,7 +91,7 @@ Namespace Analysis.Model
         End Sub
 
         Public Overridable Function edges(v As DirectedVertex) As ISet(Of Edge) Implements EdgeTraversalPolicy.edges
-            Return v.incomingEdges
+            Return v.m_incomingEdges
         End Function
 
         Public Overridable Function vertex(e As Edge) As Node Implements EdgeTraversalPolicy.vertex

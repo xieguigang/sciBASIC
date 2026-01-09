@@ -1,62 +1,63 @@
 ﻿#Region "Microsoft.VisualBasic::428c0b7e7483866e25b8b7fe4284e7c3, Data_science\DataMining\DynamicProgramming\CenterStar\CenterStar.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 210
-    '    Code Lines: 147 (70.00%)
-    ' Comment Lines: 33 (15.71%)
-    '    - Xml Docs: 78.79%
-    ' 
-    '   Blank Lines: 30 (14.29%)
-    '     File Size: 7.08 KB
+' Summaries:
 
 
-    ' Class CenterStar
-    ' 
-    '     Properties: NameList
-    ' 
-    '     Constructor: (+2 Overloads) Sub New
-    ' 
-    '     Function: calculateTotalCost, Compute, computeInternal
-    ' 
-    '     Sub: findStarIndex, multipleAlignmentImpl
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 210
+'    Code Lines: 147 (70.00%)
+' Comment Lines: 33 (15.71%)
+'    - Xml Docs: 78.79%
+' 
+'   Blank Lines: 30 (14.29%)
+'     File Size: 7.08 KB
+
+
+' Class CenterStar
+' 
+'     Properties: NameList
+' 
+'     Constructor: (+2 Overloads) Sub New
+' 
+'     Function: calculateTotalCost, Compute, computeInternal
+' 
+'     Sub: findStarIndex, multipleAlignmentImpl
+' 
+' /********************************************************************************/
 
 #End Region
 
+Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports Microsoft.VisualBasic.ComponentModel.Algorithm.DynamicProgramming
 Imports Microsoft.VisualBasic.ComponentModel.Collection
@@ -86,7 +87,6 @@ Public Class CenterStar
     Dim globalAlign$() = New String(2) {}
     Dim multipleAlign$()
     Dim sequence$()
-    Dim totalScore# = 0
     Dim names$()
     Dim kband As KBandSearch
 
@@ -96,7 +96,7 @@ Public Class CenterStar
         End Get
     End Property
 
-    Sub New(input As IEnumerable(Of NamedValue(Of String)))
+    Sub New(input As IEnumerable(Of NamedValue(Of String)), Optional kband As Integer = 32)
         With input.ToArray
             sequence = .Select(Function(fa) fa.Value) _
                        .ToArray
@@ -104,13 +104,12 @@ Public Class CenterStar
                     .ToArray
         End With
 
-        kband = New KBandSearch(globalAlign)
+        Me.kband = New KBandSearch(globalAlign, kband)
     End Sub
 
-    Sub New(input As IEnumerable(Of String))
-        sequence = input.ToArray
-        names = sequence.Select(Function(s, i) "seq" & i).ToArray
-        kband = New KBandSearch(globalAlign)
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    Sub New(input As IEnumerable(Of String), Optional kband As Integer = 32)
+        Call Me.New(input.Select(Function(seq, i) New NamedValue(Of String)($"seq{i + 1}", seq)), kband)
     End Sub
 
     ''' <summary>
@@ -159,6 +158,7 @@ Public Class CenterStar
     ''' 
     Private Function calculateTotalCost(matrix As IScore(Of Char), n%) As Double
         Dim length = multipleAlign(0).Length
+        Dim totalScore# = 0
 
         For i As Integer = 0 To n - 1
             For j As Integer = 0 To n - 1
@@ -181,7 +181,7 @@ Public Class CenterStar
     ''' </summary>
     Private Sub multipleAlignmentImpl()
         Dim centerString2$ = centerString
-        Dim n = sequence.Length
+        Dim n As Integer = sequence.Length
 
         For i As Integer = 0 To n - 1
             If (i = starIndex) Then
@@ -189,7 +189,7 @@ Public Class CenterStar
                 Continue For
             End If
 
-            kband.CalculateEditDistance(centerString, sequence(i))
+            ' kband.CalculateEditDistance(centerString2, sequence(i))
             multipleAlign(i) = globalAlign(1)
 
             If (globalAlign(0).Length > centerString2.Length) Then

@@ -124,6 +124,35 @@ Namespace Math.Correlations
         End Function
 
         ''' <summary>
+        ''' The Jaccard index, also known as Intersection over Union and the Jaccard similarity coefficient 
+        ''' (originally coined coefficient de communauté by Paul Jaccard), is a statistic used for comparing 
+        ''' the similarity and diversity of sample sets. The Jaccard coefficient measures similarity between 
+        ''' finite sample sets, and is defined as the size of the intersection divided by the size of the 
+        ''' union of the sample sets.
+        ''' 
+        ''' https://en.wikipedia.org/wiki/Jaccard_index
+        ''' </summary>
+        ''' <param name="a"></param>
+        ''' <param name="b"></param>
+        ''' <returns></returns>
+        <Extension>
+        Public Function JaccardIndex(a As IReadOnlyCollection(Of String), b As IReadOnlyCollection(Of String)) As Double
+            ' 1. 计算交集的大小
+            Dim intersectionCount As Double = a.Intersect(b).Count()
+            ' 2. 计算并集的大小
+            ' 公式: |A| + |B| - |A ∩ B|
+            Dim unionCount As Double = a.Count + b.Count - intersectionCount
+
+            ' 3. 防止除以零（如果两个集合都为空）
+            If unionCount = 0 Then
+                Return 1.0 ' 两个空集合通常被认为完全相似
+            End If
+
+            ' 4. 计算比率
+            Return intersectionCount / unionCount
+        End Function
+
+        ''' <summary>
         ''' Sandelin-Wasserman similarity function.
         ''' (假若所有的元素都是0-1之间的话，结果除以2可以得到相似度)
         ''' </summary>

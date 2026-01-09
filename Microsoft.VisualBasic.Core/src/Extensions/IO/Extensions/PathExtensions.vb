@@ -766,7 +766,8 @@ Public Module PathExtensions
     ''' 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <ExportAPI("File.IsOpened")>
-    <Extension> Public Function FileOpened(FileName As String) As Boolean
+    <Extension>
+    Public Function FileOpened(FileName As String) As Boolean
         Try
             Using FileOpenDetect As New FileStream(
                 path:=FileName,
@@ -783,12 +784,18 @@ Public Module PathExtensions
         End Try
     End Function
 
+    <Extension>
+    Public Function BaseName(fsObj As IEnumerable(Of String), Optional allowEmpty As Boolean = False) As IEnumerable(Of String)
+        Return From path As String
+               In fsObj.SafeQuery
+               Select path.BaseName(allowEmpty)
+    End Function
+
     ''' <summary>
     ''' Gets the name of the target file or directory, if the target is a file, then the name without 
     ''' the extension suffix name.
-    ''' (获取目标文件夹的名称或者文件的不包含拓展名的名称)
     ''' </summary>
-    ''' <returns></returns>
+    ''' <returns>获取目标文件夹的名称或者文件的不包含拓展名的名称</returns>
     ''' <remarks>
     ''' ###### 2017-2-14 
     ''' 
@@ -797,7 +804,8 @@ Public Module PathExtensions
     ''' 进行截取
     ''' </remarks>
     <ExportAPI(NameOf(BaseName))>
-    <Extension> Public Function BaseName(fsObj$, Optional allowEmpty As Boolean = False) As String
+    <Extension>
+    Public Function BaseName(fsObj$, Optional allowEmpty As Boolean = False) As String
         If fsObj.StringEmpty Then
             If allowEmpty Then
                 Return ""

@@ -136,6 +136,12 @@ Namespace Graph
         Public Property data As EdgeData Implements Selector.IGraphValueContainer(Of EdgeData).data
         Public Property isDirected As Boolean
 
+        Default Public ReadOnly Property metadata(name As String) As String
+            Get
+                Return data.Properties(name)
+            End Get
+        End Property
+
 #Region "Implements IInteraction"
 
         ''' <summary>

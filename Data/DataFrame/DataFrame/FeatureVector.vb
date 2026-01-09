@@ -251,7 +251,7 @@ Public Class FeatureVector : Implements IReadOnlyId
     End Function
 
     Public Overrides Function ToString() As String
-        Return $"[{type.Name}] {vector.Length} elements"
+        Return $"[{type.Name.ToLower} 1 x {vector.Length}] [{vector.AsObjectEnumerator.Take(9).JoinBy(", ")}"
     End Function
 
     Public Shared Function CheckSupports(type As Type) As Boolean

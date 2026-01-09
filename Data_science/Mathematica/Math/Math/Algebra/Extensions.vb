@@ -78,6 +78,32 @@ Namespace LinearAlgebra
     <HideModuleName>
     Public Module HelperExtensions
 
+        ''' <summary>
+        ''' 从二维数组中提取指定的一列
+        ''' </summary>
+        ''' <param name="matrix">二维矩阵</param>
+        ''' <param name="columnIndex">要提取的列索引（0表示第一列）</param>
+        ''' <returns>包含该列数据的一维数组</returns>
+        ''' 
+        <Extension>
+        Public Function GetColumn(matrix As Double(,), columnIndex As Integer) As Double()
+            If matrix Is Nothing Then Return Nothing
+            Dim rows As Integer = matrix.GetLength(0)
+            Dim cols As Integer = matrix.GetLength(1)
+
+            ' 检查列索引是否越界
+            If columnIndex < 0 OrElse columnIndex >= cols Then
+                Throw New ArgumentOutOfRangeException(NameOf(columnIndex), "列索引超出范围")
+            End If
+
+            Dim result(rows - 1) As Double
+            For i As Integer = 0 To rows - 1
+                result(i) = matrix(i, columnIndex)
+            Next
+            Return result
+        End Function
+
+
         <Extension>
         Public Function AsMatrix(d As IEnumerable(Of Double())) As NumericMatrix
             Return New NumericMatrix(d.ToArray)
@@ -223,7 +249,6 @@ Namespace LinearAlgebra
         ''' <param name="b"></param>
         ''' <param name="symmetrize"></param>
         ''' <returns></returns>
-        ''' 
         <Extension>
         Public Function jaccard_coeff(a As String(), b As String(), Optional symmetrize As Boolean = True) As Double
             Dim u As Double = a.Intersect(b).Count

@@ -1,62 +1,62 @@
 ﻿#Region "Microsoft.VisualBasic::534842e47bb7fd7256cab3e5be2a3cd4, Data\DataFrame\DataFrame\DataFrame.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 420
-    '    Code Lines: 252 (60.00%)
-    ' Comment Lines: 112 (26.67%)
-    '    - Xml Docs: 93.75%
-    ' 
-    '   Blank Lines: 56 (13.33%)
-    '     File Size: 15.19 KB
+' Summaries:
 
 
-    ' Class DataFrame
-    ' 
-    '     Properties: description, dims, featureNames, features, name
-    '                 nfeatures, nsamples, rownames
-    ' 
-    '     Constructor: (+4 Overloads) Sub New
-    ' 
-    '     Function: (+6 Overloads) add, ArrayPack, delete, foreachRow, GenericEnumerator
-    '               GetLabels, (+2 Overloads) read_arff, (+2 Overloads) read_csv, row, slice
-    '               ToString, Union
-    ' 
-    '     Sub: (+2 Overloads) write_arff
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 420
+'    Code Lines: 252 (60.00%)
+' Comment Lines: 112 (26.67%)
+'    - Xml Docs: 93.75%
+' 
+'   Blank Lines: 56 (13.33%)
+'     File Size: 15.19 KB
+
+
+' Class DataFrame
+' 
+'     Properties: description, dims, featureNames, features, name
+'                 nfeatures, nsamples, rownames
+' 
+'     Constructor: (+4 Overloads) Sub New
+' 
+'     Function: (+6 Overloads) add, ArrayPack, delete, foreachRow, GenericEnumerator
+'               GetLabels, (+2 Overloads) read_arff, (+2 Overloads) read_csv, row, slice
+'               ToString, Union
+' 
+'     Sub: (+2 Overloads) write_arff
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -176,6 +176,13 @@ Public Class DataFrame : Implements INumericMatrix, ILabeledMatrix, Enumeration(
                                       Return Me(c)
                                   End Function)
             }
+        End Get
+    End Property
+
+    Public ReadOnly Property featureSet As FeatureVector()
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Get
+            Return features.Values.ToArray
         End Get
     End Property
 
@@ -301,6 +308,12 @@ Public Class DataFrame : Implements INumericMatrix, ILabeledMatrix, Enumeration(
                 data:=cols.Select(Function(v) v(i))
             )
 #Enable Warning
+        Next
+    End Function
+
+    Public Iterator Function foreachRow(Of T)(apply As Func(Of NamedCollection(Of Object), NamedCollection(Of T))) As IEnumerable(Of NamedCollection(Of T))
+        For Each row As NamedCollection(Of Object) In foreachRow()
+            Yield apply(row)
         Next
     End Function
 
@@ -478,5 +491,23 @@ Public Class DataFrame : Implements INumericMatrix, ILabeledMatrix, Enumeration(
         For Each col As FeatureVector In features.Values
             Yield col
         Next
+    End Function
+
+    Public Shared Function FromRows(Of T)(rows As IEnumerable(Of NamedCollection(Of T)), colnames As IEnumerable(Of String)) As DataFrame
+        Dim rowSet As NamedCollection(Of T)() = rows.ToArray
+        Dim df As New DataFrame With {
+            .rownames = rowSet.Keys.ToArray
+        }
+        Dim offset As Integer = 0
+
+        For Each name As String In colnames
+            Dim col As T() = rowSet.Select(Function(r) r(offset)).ToArray
+            Dim feature As FeatureVector = FeatureVector.FromGeneral(name, col)
+
+            offset += 1
+            df.add(feature)
+        Next
+
+        Return df
     End Function
 End Class

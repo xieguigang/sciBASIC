@@ -71,11 +71,13 @@ Namespace Distributions.MethodOfMoments
 
         Private _Alpha As Double
         Private _Beta As Double
+
         Public Sub New()
             'for reflection
             _Alpha = 0
             _Beta = 0
         End Sub
+
         Public Sub New(data As Double())
             'http://www.itl.nist.gov/div898/handbook/eda/section3/eda366b.htm
             Dim BPM As New MomentFunctions.BasicProductMoments(data)
@@ -83,10 +85,12 @@ Namespace Distributions.MethodOfMoments
             _Beta = 1 / (BPM.StDev() / BPM.Mean())
             PeriodOfRecord = (BPM.SampleSize())
         End Sub
+
         Public Sub New(Alpha As Double, Beta As Double)
             _Alpha = Alpha
             _Beta = Beta
         End Sub
+
         Public Overrides Function GetInvCDF(probability As Double) As Double
             Dim xn As Double = _Alpha / _Beta
             Dim testvalue As Double = GetCDF(xn)
@@ -98,12 +102,15 @@ Namespace Distributions.MethodOfMoments
             Loop While std.Abs(testvalue - probability) <= 0.00000000000001 Or i = 100
             Return xn
         End Function
+
         Public Overrides Function GetCDF(value As Double) As Double
             Return SpecialFunctions.IncompleteGamma(_Alpha, _Beta * value) / std.Exp(SpecialFunctions.gammaln(_Alpha))
         End Function
+
         Public Overrides Function GetPDF(value As Double) As Double
             Return (((std.Pow(_Beta, _Alpha)) * ((std.Pow(value, _Alpha - 1)) * std.Exp(-_Beta * value)) / std.Exp(SpecialFunctions.gammaln(_Alpha))))
         End Function
+
         Public Overrides Iterator Function Validate() As IEnumerable(Of Exception)
             If _Beta <= 0 Then Yield New Exception("Beta must be greater than 0")
         End Function

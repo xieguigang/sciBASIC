@@ -300,7 +300,12 @@ Public Module TextDoc
             request:=Function(ByRef offset, bar) As String
                          Dim s As String = reader.ReadLine
 
-                         offset = reader.BaseStream.Position
+                         ' 20251221 the streamreader is a buffered reader
+                         ' so that if the offset move to the end of the stream, but due to the reason of
+                         ' buffered reader, the text line data that buffred inside memeory still not read to end
+                         ' so we needs to substract 1 from the current position to avoid early exit of the wrapper reader loop
+                         ' if not, buffred data will be lost
+                         offset = reader.BaseStream.Position - 1
 
                          If s Is Nothing Then
                              Call bar.Finish()

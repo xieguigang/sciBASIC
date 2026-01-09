@@ -233,7 +233,7 @@ Public Class SequenceGraphTransform
     ''' </returns>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Private Function __set_feature_name(alphabets As Char()) As String()
-        Return CombinationExtensions.FullCombination(alphabets) _
+        Return CartesianProduct.FullCombination(alphabets) _
             .Select(Function(t) $"{t.a},{t.b}") _
             .ToArray
     End Function
@@ -290,8 +290,8 @@ Public Class SequenceGraphTransform
     End Function
 
     Private Shared Function CombineFull(U As Integer(), V As Integer()) As IEnumerable(Of (i As Integer, j As Integer))
-        Return From ai In U
-               From bj In V
+        Return From ai As Integer In U
+               From bj As Integer In V
                Where bj > ai
                Select (i:=ai, j:=bj)
     End Function
@@ -321,8 +321,8 @@ Public Class SequenceGraphTransform
         'Return U.Zip(V, Function(i, j) (i, j)).Where(Function(ij) ij.j > ij.i)
 
         ' just find for pattern AB in current tuple graph
-        Return From ai In U
-               From bj In V
+        Return From ai As Integer In U
+               From bj As Integer In V
                Where bj = ai + 1
                Select (i:=ai, j:=bj)
     End Function
@@ -367,19 +367,22 @@ Public Class SequenceGraphTransform
         Dim Wk As NumericMatrix = NumericMatrix.Zero(size, size)
         Dim positions = get_positions(sequence, alphabets)
         Dim alphabets_in_sequence = sequence.Distinct.ToArray
-        Dim combine As Combine = If(
-            mode = Modes.Full,
-            New Combine(AddressOf CombineFull),
-            New Combine(AddressOf CombinePartial)
-        )
+        Dim combine As Combine = If(mode = Modes.Full, New Combine(AddressOf CombineFull), New Combine(AddressOf CombinePartial))
         Dim cu, cv As Vector
         Dim c As (i As Integer, j As Integer)()
         Dim V2 As Integer()
+        Dim Upos As Integer()
 
         For Each char_i As SeqValue(Of Char) In alphabets_in_sequence.SeqIterator
             Dim i As Integer = char_i.i
             Dim u As Char = char_i.value
-            Dim Upos As Integer() = positions(u)
+
+            If positions.ContainsKey(u) Then
+                Upos = positions(u)
+            Else
+                Call $"KeyNotFound: The given key '{u}' was not present in the dictionary.".warning
+                Continue For
+            End If
 
             For Each char_j As SeqValue(Of Char) In alphabets_in_sequence.SeqIterator
                 Dim j As Integer = char_j.i
@@ -390,8 +393,13 @@ Public Class SequenceGraphTransform
                 If positions.ContainsKey(v) Then
                     V2 = positions(v)
                 Else
-                    Call $"KeyNotFound: The given key '{v}' was not present in the dictionary.".Warning
+                    Call $"KeyNotFound: The given key '{v}' was not present in the dictionary.".warning
                     V2 = {}
+
+                    ' 20251230 pos_j = -1
+                    ' W0(pos_i, pos_j) and WK(pos_i, pos_j) will throw index outside error
+                    ' try to avoid such error
+                    Continue For
                 End If
 
                 If mode = Modes.Fast Then
