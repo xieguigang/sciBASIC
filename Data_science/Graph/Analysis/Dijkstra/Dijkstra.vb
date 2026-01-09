@@ -221,6 +221,12 @@ Namespace Analysis.Dijkstra
             Return shortestPaths
         End Function
 
+        ''' <summary>
+        ''' 查找两点之间的最短路径
+        ''' </summary>
+        ''' <param name="startPos"></param>
+        ''' <param name="endPos"></param>
+        ''' <returns>当函数找不到路径的时候会返回空值</returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function CalculateMinCost(startPos As Vertex, endPos As Vertex) As Route
             ' 边界条件检查
