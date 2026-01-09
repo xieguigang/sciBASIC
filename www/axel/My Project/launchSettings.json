@@ -1,8 +1,0 @@
-{
-  "profiles": {
-    "axel": {
-      "commandName": "Project",
-      "commandLineArgs": "\"D:\\datapool\\ncbi_genbank\\http.txt\" --download_to D:\\datapool\\ncbi_genbank\\"
-    }
-  }
-}

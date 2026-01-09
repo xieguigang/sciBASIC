@@ -63,7 +63,12 @@ Module Program
 
     <STAThread>
     Public Function Main(args As String()) As Integer
-        Return GetType(Program).RunCLI(App.Command, executeFile:=AddressOf Download)
+        Return GetType(Program).RunCLI(App.Command, executeFile:=AddressOf Download, executeEmpty:=AddressOf ShowHelp)
+    End Function
+
+    Private Function ShowHelp() As Integer
+        Call Console.WriteLine("axel url/files.txt [--filename <save_filename>] [--download_to <directory_path>]")
+        Return 0
     End Function
 
     Dim check As i32 = 1
