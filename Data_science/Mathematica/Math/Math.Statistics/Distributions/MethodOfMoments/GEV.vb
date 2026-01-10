@@ -1,60 +1,60 @@
 ﻿#Region "Microsoft.VisualBasic::a44ed6387d2d0ee2994a535ede7ec810, Data_science\Mathematica\Math\Math.Statistics\Distributions\MethodOfMoments\GEV.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 78
-    '    Code Lines: 60 (76.92%)
-    ' Comment Lines: 13 (16.67%)
-    '    - Xml Docs: 46.15%
-    ' 
-    '   Blank Lines: 5 (6.41%)
-    '     File Size: 3.02 KB
+' Summaries:
 
 
-    '     Class GEV
-    ' 
-    '         Constructor: (+2 Overloads) Sub New
-    '         Function: GetCDF, GetInvCDF, GetPDF, T, Tinv
-    '                   Validate
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 78
+'    Code Lines: 60 (76.92%)
+' Comment Lines: 13 (16.67%)
+'    - Xml Docs: 46.15%
+' 
+'   Blank Lines: 5 (6.41%)
+'     File Size: 3.02 KB
+
+
+'     Class GEV
+' 
+'         Constructor: (+2 Overloads) Sub New
+'         Function: GetCDF, GetInvCDF, GetPDF, T, Tinv
+'                   Validate
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
-Imports stdNum = System.Math
+Imports std = System.Math
 
 '
 ' * To change this license header, choose License Headers in Project Properties.
@@ -102,27 +102,27 @@ Namespace Distributions.MethodOfMoments
         Public Overrides Function GetCDF(value As Double) As Double
             If _Xi > 0 AndAlso value <= _Mu - _Sigma / _Xi Then Return 0
             If _Xi < 0 AndAlso value >= _Mu - _Sigma / _Xi Then Return 1
-            Return stdNum.Exp(-T(value))
+            Return std.Exp(-T(value))
         End Function
 
         Public Overrides Function GetPDF(value As Double) As Double
             If _Xi > 0 AndAlso value <= _Mu - _Sigma / _Xi Then Return 0
             If _Xi < 0 AndAlso value >= _Mu - _Sigma / _Xi Then Return 0
             Dim tx As Double = T(value)
-            Return (1 / _Sigma) * stdNum.Pow(tx, _Xi + 1) * stdNum.Exp(-tx)
+            Return (1 / _Sigma) * std.Pow(tx, _Xi + 1) * std.Exp(-tx)
         End Function
         Private Function T(x As Double) As Double
             If _Xi <> 0 Then
-                Return stdNum.Pow((1 + ((x - _Mu) / _Sigma) * _Xi), -1 / _Xi)
+                Return std.Pow((1 + ((x - _Mu) / _Sigma) * _Xi), -1 / _Xi)
             Else
-                Return stdNum.Exp(-(x - _Mu) / _Sigma)
+                Return std.Exp(-(x - _Mu) / _Sigma)
             End If
         End Function
         Private Function Tinv(probability As Double) As Double
             If _Xi <> 0 Then
-                Return _Mu - _Sigma * (stdNum.Pow(stdNum.Log(1 / probability), _Xi) - 1) / _Xi
+                Return _Mu - _Sigma * (std.Pow(std.Log(1 / probability), _Xi) - 1) / _Xi
             Else
-                Return _Mu - _Sigma * stdNum.Log(stdNum.Log(1 / probability))
+                Return _Mu - _Sigma * std.Log(std.Log(1 / probability))
             End If
         End Function
         Public Overrides Iterator Function Validate() As IEnumerable(Of Exception)

@@ -1,56 +1,56 @@
 ﻿#Region "Microsoft.VisualBasic::219844aa92422a1346ae9a7d55782134, Data\BinaryData\BinaryData\Bzip2\Math\HuffmanAllocator.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 198
-    '    Code Lines: 123 (62.12%)
-    ' Comment Lines: 43 (21.72%)
-    '    - Xml Docs: 23.26%
-    ' 
-    '   Blank Lines: 32 (16.16%)
-    '     File Size: 8.12 KB
+' Summaries:
 
 
-    '     Module HuffmanAllocator
-    ' 
-    '         Function: FindNodesToRelocate, First, SignificantBits
-    ' 
-    '         Sub: AllocateHuffmanCodeLengths, AllocateNodeLengths, AllocateNodeLengthsWithRelocation, SetExtendedParentPointers
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 198
+'    Code Lines: 123 (62.12%)
+' Comment Lines: 43 (21.72%)
+'    - Xml Docs: 23.26%
+' 
+'   Blank Lines: 32 (16.16%)
+'     File Size: 8.12 KB
+
+
+'     Module HuffmanAllocator
+' 
+'         Function: FindNodesToRelocate, First, SignificantBits
+' 
+'         Sub: AllocateHuffmanCodeLengths, AllocateNodeLengths, AllocateNodeLengthsWithRelocation, SetExtendedParentPointers
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -59,7 +59,7 @@
 ' Location: http://github.com/jaime-olivares/bzip2
 ' Ported from the Java implementation by Matthew Francis: https://github.com/MateuszBartosiewicz/bzip2
 
-Imports stdNum = System.Math
+Imports std = System.Math
 
 Namespace Bzip2.Math
     ''' <summary>An in-place, length restricted Canonical Huffman code length allocator</summary>
@@ -116,7 +116,7 @@ Namespace Bzip2.Math
                 i -= limit - i + 1
             End While
 
-            i = stdNum.Max(nodesToMove - 1, i)
+            i = std.Max(nodesToMove - 1, i)
 
             While k > i + 1
                 Dim temp = i + k >> 1
@@ -145,16 +145,16 @@ Namespace Bzip2.Math
 
                 If topNode >= length OrElse array(headNode) < array(topNode) Then
                     temp = array(headNode)
-                    array(stdNum.Min(Threading.Interlocked.Increment(headNode), headNode - 1)) = tailNode
+                    array(std.Min(Threading.Interlocked.Increment(headNode), headNode - 1)) = tailNode
                 Else
-                    temp = array(stdNum.Min(Threading.Interlocked.Increment(topNode), topNode - 1))
+                    temp = array(std.Min(Threading.Interlocked.Increment(topNode), topNode - 1))
                 End If
 
                 If topNode >= length OrElse headNode < tailNode AndAlso array(headNode) < array(topNode) Then
                     temp += array(headNode)
-                    array(stdNum.Min(Threading.Interlocked.Increment(headNode), headNode - 1)) = tailNode + length
+                    array(std.Min(Threading.Interlocked.Increment(headNode), headNode - 1)) = tailNode + length
                 Else
-                    temp += array(stdNum.Min(Threading.Interlocked.Increment(topNode), topNode - 1))
+                    temp += array(std.Min(Threading.Interlocked.Increment(topNode), topNode - 1))
                 End If
 
                 array(tailNode) = temp
@@ -194,7 +194,7 @@ Namespace Bzip2.Math
                 firstNode = First(array, lastNode - 1, 0)
 
                 For i = availableNodes - (lastNode - firstNode) To 0 + 1 Step -1
-                    array(stdNum.Max(Threading.Interlocked.Decrement(nextNode), nextNode + 1)) = currentDepth
+                    array(std.Max(Threading.Interlocked.Decrement(nextNode), nextNode + 1)) = currentDepth
                 Next
 
                 availableNodes = lastNode - firstNode << 1
@@ -222,14 +222,14 @@ Namespace Bzip2.Math
                 Dim offset = 0
 
                 If currentDepth >= insertDepth Then
-                    offset = stdNum.Min(nodesLeftToMove, 1 << currentDepth - insertDepth)
+                    offset = std.Min(nodesLeftToMove, 1 << currentDepth - insertDepth)
                 ElseIf currentDepth = insertDepth - 1 Then
                     offset = 1
                     If array(firstNode) = lastNode Then firstNode += 1
                 End If
 
                 For i = availableNodes - (lastNode - firstNode + offset) To 0 + 1 Step -1
-                    array(stdNum.Max(Threading.Interlocked.Decrement(nextNode), nextNode + 1)) = currentDepth
+                    array(std.Max(Threading.Interlocked.Decrement(nextNode), nextNode + 1)) = currentDepth
                 Next
 
                 nodesLeftToMove -= offset

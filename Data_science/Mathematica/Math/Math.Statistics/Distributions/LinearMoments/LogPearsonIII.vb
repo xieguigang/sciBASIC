@@ -1,59 +1,59 @@
 ﻿#Region "Microsoft.VisualBasic::b64d15deba6af2bcdfc36d5a0d9e90c3, Data_science\Mathematica\Math\Math.Statistics\Distributions\LinearMoments\LogPearsonIII.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 76
-    '    Code Lines: 54 (71.05%)
-    ' Comment Lines: 17 (22.37%)
-    '    - Xml Docs: 17.65%
-    ' 
-    '   Blank Lines: 5 (6.58%)
-    '     File Size: 3.47 KB
+' Summaries:
 
 
-    '     Class LogPearsonIII
-    ' 
-    '         Constructor: (+3 Overloads) Sub New
-    '         Function: GetCDF, GetInvCDF, GetPDF, Validate
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 76
+'    Code Lines: 54 (71.05%)
+' Comment Lines: 17 (22.37%)
+'    - Xml Docs: 17.65%
+' 
+'   Blank Lines: 5 (6.58%)
+'     File Size: 3.47 KB
+
+
+'     Class LogPearsonIII
+' 
+'         Constructor: (+3 Overloads) Sub New
+'         Function: GetCDF, GetInvCDF, GetPDF, Validate
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
-Imports stdNum = System.Math
+Imports std = System.Math
 
 '
 ' * To change this license header, choose License Headers in Project Properties.
@@ -84,22 +84,22 @@ Namespace Distributions.LinearMoments
             PeriodOfRecord = (LM.SampleSize())
             Dim z As Double = 0
             Dim a As Double = 0
-            Dim abst3 As Double = stdNum.Abs(LM.T3())
+            Dim abst3 As Double = std.Abs(LM.T3())
             If abst3 > 0 AndAlso abst3 < (1 \ 3) Then
-                z = 3 * stdNum.PI * (LM.T3() * LM.T3())
+                z = 3 * std.PI * (LM.T3() * LM.T3())
                 a = ((1 + (0.2906 * z)) / (z + (0.1882 * (z * z)) + (0.0442 * (z * z * z))))
             ElseIf abst3 < 1 Then
-                z = 1 - stdNum.Abs(LM.T3())
+                z = 1 - std.Abs(LM.T3())
                 a = ((0.36067 * z - (0.59567 * (z * z)) + (0.25361 * (z * z * z))) / (1 - 2.78861 * z + (2.56096 * (z * z)) - (0.77045 * (z * z * z))))
             Else
                 'no solution because t3 is greater than or equal to 1.
             End If
-            Dim gamma As Double = (2 / stdNum.Sqrt(a)) * stdNum.Sign(LM.T3())
-            Dim sigma As Double = (12 * stdNum.Sqrt(stdNum.PI) * stdNum.Sqrt(a) * stdNum.Exp(SpecialFunctions.gammaln(a))) / stdNum.Exp(SpecialFunctions.gammaln(a + 0.5)) 'need gammaln
+            Dim gamma As Double = (2 / std.Sqrt(a)) * std.Sign(LM.T3())
+            Dim sigma As Double = (12 * std.Sqrt(std.PI) * std.Sqrt(a) * std.Exp(SpecialFunctions.gammaln(a))) / std.Exp(SpecialFunctions.gammaln(a + 0.5)) 'need gammaln
             If gamma <> 0 Then
                 _Alpha = 4 / (gamma * gamma)
                 _Xi = LM.L1() - ((2 * sigma) / gamma)
-                _Beta = 0.5 * sigma * stdNum.Abs(gamma)
+                _Beta = 0.5 * sigma * std.Abs(gamma)
             Else
                 'normal distribution fits better.
             End If
@@ -113,7 +113,7 @@ Namespace Distributions.LinearMoments
             Throw New System.NotSupportedException("Not supported yet.") 'To change body of generated methods, choose Tools | Templates.
         End Function
         Public Overrides Function GetCDF(value As Double) As Double
-            Return 1 - (SpecialFunctions.IncompleteGamma(_Alpha, ((_Xi - value) / _Beta)) / stdNum.Exp(SpecialFunctions.gammaln(_Alpha)))
+            Return 1 - (SpecialFunctions.IncompleteGamma(_Alpha, ((_Xi - value) / _Beta)) / std.Exp(SpecialFunctions.gammaln(_Alpha)))
             '        If _gamma < 0 Then
             '            Return 1 - (incompletegammalower(_alpha, ((_xi - value) / _beta)) / stdNum.Exp(gammaln(_alpha)))
             '        Else

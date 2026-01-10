@@ -1,58 +1,58 @@
 ﻿#Region "Microsoft.VisualBasic::cb2f420a4d5d6740e4f87388029535ba, Data\BinaryData\BinaryData\Bzip2\Algorithm\BZip2HuffmanStageDecoder.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 163
-    '    Code Lines: 79 (48.47%)
-    ' Comment Lines: 49 (30.06%)
-    '    - Xml Docs: 6.12%
-    ' 
-    '   Blank Lines: 35 (21.47%)
-    '     File Size: 7.04 KB
+' Summaries:
 
 
-    '     Class BZip2HuffmanStageDecoder
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    ' 
-    '         Function: NextSymbol
-    ' 
-    '         Sub: CreateHuffmanDecodingTables
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 163
+'    Code Lines: 79 (48.47%)
+' Comment Lines: 49 (30.06%)
+'    - Xml Docs: 6.12%
+' 
+'   Blank Lines: 35 (21.47%)
+'     File Size: 7.04 KB
+
+
+'     Class BZip2HuffmanStageDecoder
+' 
+'         Constructor: (+1 Overloads) Sub New
+' 
+'         Function: NextSymbol
+' 
+'         Sub: CreateHuffmanDecodingTables
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -61,7 +61,7 @@
 ' Location: http://github.com/jaime-olivares/bzip2
 ' Ported from the Java implementation by Matthew Francis: https://github.com/MateuszBartosiewicz/bzip2
 
-Imports stdNum = System.Math
+Imports std = System.Math
 
 Namespace Bzip2
     ''' <summary>
@@ -135,7 +135,7 @@ Namespace Bzip2
             If Threading.Interlocked.Increment(groupPosition) Mod BZip2HuffmanStageEncoder.HUFFMAN_GROUP_RUN_LENGTH = 0 Then
                 groupIndex += 1
                 If groupIndex = selectors.Length Then Throw New Exception("Error decoding BZip2 block")
-                currentTable = selectors(groupIndex) And &HfF
+                currentTable = selectors(groupIndex) And &HFF
             End If
 
             Dim codeLength = minimumLengths(currentTable)
@@ -174,8 +174,8 @@ Namespace Bzip2
 
                 ' Find the minimum and maximum code length for the table
                 For i = 0 To alphabetSize - 1
-                    maximumLength = stdNum.Max(tableCodeLengths(table, i), maximumLength)
-                    minimumLength = stdNum.Min(tableCodeLengths(table, i), minimumLength)
+                    maximumLength = std.Max(tableCodeLengths(table, i), maximumLength)
+                    minimumLength = std.Min(tableCodeLengths(table, i), minimumLength)
                 Next
 
                 minimumLengths(table) = minimumLength
@@ -209,7 +209,7 @@ Namespace Bzip2
                 While bitLength <= maximumLength
 
                     For symbol = 0 To alphabetSize - 1
-                        If tableCodeLengths(table, symbol) = bitLength Then codeSymbols(table, stdNum.Min(Threading.Interlocked.Increment(codeIndex), codeIndex - 1)) = symbol
+                        If tableCodeLengths(table, symbol) = bitLength Then codeSymbols(table, std.Min(Threading.Interlocked.Increment(codeIndex), codeIndex - 1)) = symbol
                     Next
 
                     bitLength += 1

@@ -82,7 +82,7 @@
 ' Ported from the Java implementation by Matthew Francis: https://github.com/MateuszBartosiewicz/bzip2
 
 Imports Microsoft.VisualBasic.Language
-Imports stdNum = System.Math
+Imports std = System.Math
 
 Namespace Bzip2
     ''' <summary>
@@ -281,7 +281,7 @@ Namespace Bzip2
             c = T(Td + Me.SA(PA + v)) And &HFF
 
             While (j = 2 * i + 1) < size
-                k = stdNum.Min(Threading.Interlocked.Increment(j.Value), CInt(j) - 1)
+                k = std.Min(Threading.Interlocked.Increment(j.Value), CInt(j) - 1)
 
                 Dim d = T(Td + Me.SA(PA + Me.SA(sa + k))) And &HFF
                 Dim e As Integer = T(Td + Me.SA(PA + Me.SA(sa + CInt(j)))) And &HFF
@@ -500,7 +500,7 @@ Namespace Bzip2
 
                 Dim Td = depth
 
-                If stdNum.Max(Threading.Interlocked.Decrement(limit), limit + 1) = 0 Then
+                If std.Max(Threading.Interlocked.Decrement(limit), limit + 1) = 0 Then
                     ssHeapSort(Td, PA, first, last - first)
                 End If
 
@@ -533,7 +533,7 @@ Namespace Bzip2
 
                     If a - first <= last - a Then
                         If 1 < a - first Then
-                            stack(stdNum.Min(Threading.Interlocked.Increment(ssize), ssize - 1)) = New StackEntry(a, last, depth, -1)
+                            stack(std.Min(Threading.Interlocked.Increment(ssize), ssize - 1)) = New StackEntry(a, last, depth, -1)
                             last = a
                             depth += 1
                             limit = ssLog(a - first)
@@ -544,7 +544,7 @@ Namespace Bzip2
                     Else
 
                         If 1 < last - a Then
-                            stack(stdNum.Min(Threading.Interlocked.Increment(ssize), ssize - 1)) = New StackEntry(first, a, depth + 1, ssLog(a - first))
+                            stack(std.Min(Threading.Interlocked.Increment(ssize), ssize - 1)) = New StackEntry(first, a, depth + 1, ssLog(a - first))
                             first = a
                             limit = -1
                         Else
@@ -669,16 +669,16 @@ Namespace Bzip2
 
                     If a - first <= last - c Then
                         If last - c <= c - b Then
-                            stack(stdNum.Min(Threading.Interlocked.Increment(ssize), ssize - 1)) = New StackEntry(b, c, depth + 1, ssLog(c - b))
-                            stack(stdNum.Min(Threading.Interlocked.Increment(ssize), ssize - 1)) = New StackEntry(c, last, depth, limit)
+                            stack(std.Min(Threading.Interlocked.Increment(ssize), ssize - 1)) = New StackEntry(b, c, depth + 1, ssLog(c - b))
+                            stack(std.Min(Threading.Interlocked.Increment(ssize), ssize - 1)) = New StackEntry(c, last, depth, limit)
                             last = a
                         ElseIf a - first <= c - b Then
-                            stack(stdNum.Min(Threading.Interlocked.Increment(ssize), ssize - 1)) = New StackEntry(c, last, depth, limit)
-                            stack(stdNum.Min(Threading.Interlocked.Increment(ssize), ssize - 1)) = New StackEntry(b, c, depth + 1, ssLog(c - b))
+                            stack(std.Min(Threading.Interlocked.Increment(ssize), ssize - 1)) = New StackEntry(c, last, depth, limit)
+                            stack(std.Min(Threading.Interlocked.Increment(ssize), ssize - 1)) = New StackEntry(b, c, depth + 1, ssLog(c - b))
                             last = a
                         Else
-                            stack(stdNum.Min(Threading.Interlocked.Increment(ssize), ssize - 1)) = New StackEntry(c, last, depth, limit)
-                            stack(stdNum.Min(Threading.Interlocked.Increment(ssize), ssize - 1)) = New StackEntry(first, a, depth, limit)
+                            stack(std.Min(Threading.Interlocked.Increment(ssize), ssize - 1)) = New StackEntry(c, last, depth, limit)
+                            stack(std.Min(Threading.Interlocked.Increment(ssize), ssize - 1)) = New StackEntry(first, a, depth, limit)
                             first = b
                             last = c
                             depth += 1
@@ -687,16 +687,16 @@ Namespace Bzip2
                     Else
 
                         If a - first <= c - b Then
-                            stack(stdNum.Min(Threading.Interlocked.Increment(ssize), ssize - 1)) = New StackEntry(b, c, depth + 1, ssLog(c - b))
-                            stack(stdNum.Min(Threading.Interlocked.Increment(ssize), ssize - 1)) = New StackEntry(first, a, depth, limit)
+                            stack(std.Min(Threading.Interlocked.Increment(ssize), ssize - 1)) = New StackEntry(b, c, depth + 1, ssLog(c - b))
+                            stack(std.Min(Threading.Interlocked.Increment(ssize), ssize - 1)) = New StackEntry(first, a, depth, limit)
                             first = c
                         ElseIf last - c <= c - b Then
-                            stack(stdNum.Min(Threading.Interlocked.Increment(ssize), ssize - 1)) = New StackEntry(first, a, depth, limit)
-                            stack(stdNum.Min(Threading.Interlocked.Increment(ssize), ssize - 1)) = New StackEntry(b, c, depth + 1, ssLog(c - b))
+                            stack(std.Min(Threading.Interlocked.Increment(ssize), ssize - 1)) = New StackEntry(first, a, depth, limit)
+                            stack(std.Min(Threading.Interlocked.Increment(ssize), ssize - 1)) = New StackEntry(b, c, depth + 1, ssLog(c - b))
                             first = c
                         Else
-                            stack(stdNum.Min(Threading.Interlocked.Increment(ssize), ssize - 1)) = New StackEntry(first, a, depth, limit)
-                            stack(stdNum.Min(Threading.Interlocked.Increment(ssize), ssize - 1)) = New StackEntry(c, last, depth, limit)
+                            stack(std.Min(Threading.Interlocked.Increment(ssize), ssize - 1)) = New StackEntry(first, a, depth, limit)
+                            stack(std.Min(Threading.Interlocked.Increment(ssize), ssize - 1)) = New StackEntry(c, last, depth, limit)
                             first = b
                             last = c
                             depth += 1
@@ -746,25 +746,25 @@ Namespace Bzip2
 
                 If r < 0 Then
                     Do
-                        SA(stdNum.Min(Threading.Interlocked.Increment(i), i - 1)) = buf(j)
+                        SA(std.Min(Threading.Interlocked.Increment(i), i - 1)) = buf(j)
 
                         If bufend <= j Then
                             buf(j) = t
                             Return
                         End If
 
-                        buf(stdNum.Min(Threading.Interlocked.Increment(j), j - 1)) = SA(i)
+                        buf(std.Min(Threading.Interlocked.Increment(j), j - 1)) = SA(i)
                     Loop While buf(j) < 0
                 ElseIf r > 0 Then
 
                     Do
-                        SA(stdNum.Min(Threading.Interlocked.Increment(i), i - 1)) = SA(k)
-                        SA(stdNum.Min(Threading.Interlocked.Increment(k), k - 1)) = SA(i)
+                        SA(std.Min(Threading.Interlocked.Increment(i), i - 1)) = SA(k)
+                        SA(std.Min(Threading.Interlocked.Increment(k), k - 1)) = SA(i)
 
                         If last <= k Then
                             While j < bufend
-                                SA(stdNum.Min(Threading.Interlocked.Increment(i), i - 1)) = buf(j)
-                                buf(stdNum.Min(Threading.Interlocked.Increment(j), j - 1)) = SA(i)
+                                SA(std.Min(Threading.Interlocked.Increment(i), i - 1)) = buf(j)
+                                buf(std.Min(Threading.Interlocked.Increment(j), j - 1)) = SA(i)
                             End While
 
                             SA(i) = buf(j)
@@ -776,24 +776,24 @@ Namespace Bzip2
                     SA(k) = Not SA(k)
 
                     Do
-                        SA(stdNum.Min(Threading.Interlocked.Increment(i), i - 1)) = buf(j)
+                        SA(std.Min(Threading.Interlocked.Increment(i), i - 1)) = buf(j)
 
                         If bufend <= j Then
                             buf(j) = t
                             Return
                         End If
 
-                        buf(stdNum.Min(Threading.Interlocked.Increment(j), j - 1)) = SA(i)
+                        buf(std.Min(Threading.Interlocked.Increment(j), j - 1)) = SA(i)
                     Loop While buf(j) < 0
 
                     Do
-                        SA(stdNum.Min(Threading.Interlocked.Increment(i), i - 1)) = SA(k)
-                        SA(stdNum.Min(Threading.Interlocked.Increment(k), k - 1)) = SA(i)
+                        SA(std.Min(Threading.Interlocked.Increment(i), i - 1)) = SA(k)
+                        SA(std.Min(Threading.Interlocked.Increment(k), k - 1)) = SA(i)
 
                         If last <= k Then
                             While j < bufend
-                                SA(stdNum.Min(Threading.Interlocked.Increment(i), i - 1)) = buf(j)
-                                buf(stdNum.Min(Threading.Interlocked.Increment(j), j - 1)) = SA(i)
+                                SA(std.Min(Threading.Interlocked.Increment(i), i - 1)) = buf(j)
+                                buf(std.Min(Threading.Interlocked.Increment(j), j - 1)) = SA(i)
                             End While
 
                             SA(i) = buf(j)
@@ -838,21 +838,21 @@ Namespace Bzip2
                 If r > 0 Then
                     If (x And 1) <> 0 Then
                         Do
-                            SA(stdNum.Max(Threading.Interlocked.Decrement(i), i + 1)) = buf(j)
-                            buf(stdNum.Max(Threading.Interlocked.Decrement(j), j + 1)) = SA(i)
+                            SA(std.Max(Threading.Interlocked.Decrement(i), i + 1)) = buf(j)
+                            buf(std.Max(Threading.Interlocked.Decrement(j), j + 1)) = SA(i)
                         Loop While buf(j) < 0
 
                         x = x Xor 1
                     End If
 
-                    SA(stdNum.Max(Threading.Interlocked.Decrement(i), i + 1)) = buf(j)
+                    SA(std.Max(Threading.Interlocked.Decrement(i), i + 1)) = buf(j)
 
                     If j <= bufoffset Then
                         buf(j) = t
                         Return
                     End If
 
-                    buf(stdNum.Max(Threading.Interlocked.Decrement(j), j + 1)) = SA(i)
+                    buf(std.Max(Threading.Interlocked.Decrement(j), j + 1)) = SA(i)
 
                     If buf(j) < 0 Then
                         x = x Or 1
@@ -864,20 +864,20 @@ Namespace Bzip2
 
                     If (x And 2) <> 0 Then
                         Do
-                            SA(stdNum.Max(Threading.Interlocked.Decrement(i), i + 1)) = SA(k)
-                            SA(stdNum.Max(Threading.Interlocked.Decrement(k), k + 1)) = SA(i)
+                            SA(std.Max(Threading.Interlocked.Decrement(i), i + 1)) = SA(k)
+                            SA(std.Max(Threading.Interlocked.Decrement(k), k + 1)) = SA(i)
                         Loop While SA(k) < 0
 
                         x = x Xor 2
                     End If
 
-                    SA(stdNum.Max(Threading.Interlocked.Decrement(i), i + 1)) = SA(k)
-                    SA(stdNum.Max(Threading.Interlocked.Decrement(k), k + 1)) = SA(i)
+                    SA(std.Max(Threading.Interlocked.Decrement(i), i + 1)) = SA(k)
+                    SA(std.Max(Threading.Interlocked.Decrement(k), k + 1)) = SA(i)
 
                     If k < first Then
                         While bufoffset < j
-                            SA(stdNum.Max(Threading.Interlocked.Decrement(i), i + 1)) = buf(j)
-                            buf(stdNum.Max(Threading.Interlocked.Decrement(j), j + 1)) = SA(i)
+                            SA(std.Max(Threading.Interlocked.Decrement(i), i + 1)) = buf(j)
+                            buf(std.Max(Threading.Interlocked.Decrement(j), j + 1)) = SA(i)
                         End While
 
                         SA(i) = buf(j)
@@ -895,38 +895,38 @@ Namespace Bzip2
 
                     If (x And 1) <> 0 Then
                         Do
-                            SA(stdNum.Max(Threading.Interlocked.Decrement(i), i + 1)) = buf(j)
-                            buf(stdNum.Max(Threading.Interlocked.Decrement(j), j + 1)) = SA(i)
+                            SA(std.Max(Threading.Interlocked.Decrement(i), i + 1)) = buf(j)
+                            buf(std.Max(Threading.Interlocked.Decrement(j), j + 1)) = SA(i)
                         Loop While buf(j) < 0
 
                         x = x Xor 1
                     End If
 
-                    SA(stdNum.Max(Threading.Interlocked.Decrement(i), i + 1)) = Not buf(j)
+                    SA(std.Max(Threading.Interlocked.Decrement(i), i + 1)) = Not buf(j)
 
                     If j <= bufoffset Then
                         buf(j) = t
                         Return
                     End If
 
-                    buf(stdNum.Max(Threading.Interlocked.Decrement(j), j + 1)) = SA(i)
+                    buf(std.Max(Threading.Interlocked.Decrement(j), j + 1)) = SA(i)
 
                     If (x And 2) <> 0 Then
                         Do
-                            SA(stdNum.Max(Threading.Interlocked.Decrement(i), i + 1)) = SA(k)
-                            SA(stdNum.Max(Threading.Interlocked.Decrement(k), k + 1)) = SA(i)
+                            SA(std.Max(Threading.Interlocked.Decrement(i), i + 1)) = SA(k)
+                            SA(std.Max(Threading.Interlocked.Decrement(k), k + 1)) = SA(i)
                         Loop While SA(k) < 0
 
                         x = x Xor 2
                     End If
 
-                    SA(stdNum.Max(Threading.Interlocked.Decrement(i), i + 1)) = SA(k)
-                    SA(stdNum.Max(Threading.Interlocked.Decrement(k), k + 1)) = SA(i)
+                    SA(std.Max(Threading.Interlocked.Decrement(i), i + 1)) = SA(k)
+                    SA(std.Max(Threading.Interlocked.Decrement(k), k + 1)) = SA(i)
 
                     If k < first Then
                         While bufoffset < j
-                            SA(stdNum.Max(Threading.Interlocked.Decrement(i), i + 1)) = buf(j)
-                            buf(stdNum.Max(Threading.Interlocked.Decrement(j), j + 1)) = SA(i)
+                            SA(std.Max(Threading.Interlocked.Decrement(i), i + 1)) = buf(j)
+                            buf(std.Max(Threading.Interlocked.Decrement(j), j + 1)) = SA(i)
                         End While
 
                         SA(i) = buf(j)
@@ -1018,7 +1018,7 @@ Namespace Bzip2
                 Dim len As Integer
                 Dim half As Integer
                 m = 0
-                len = stdNum.Min(middle - first, last - middle)
+                len = std.Min(middle - first, last - middle)
                 half = len >> 1
 
                 While 0 < len
@@ -1057,7 +1057,7 @@ Namespace Bzip2
                     End If
 
                     If i - first <= last - j Then
-                        stack(stdNum.Min(Threading.Interlocked.Increment(ssize), ssize - 1)) = New StackEntry(j, middle + m, last, check And 2 Or [next] And 1)
+                        stack(std.Min(Threading.Interlocked.Increment(ssize), ssize - 1)) = New StackEntry(j, middle + m, last, check And 2 Or [next] And 1)
                         middle -= m
                         last = i
                         check = check And 1
@@ -1067,7 +1067,7 @@ Namespace Bzip2
                             [next] <<= 1
                         End If
 
-                        stack(stdNum.Min(Threading.Interlocked.Increment(ssize), ssize - 1)) = New StackEntry(first, middle - m, i, check And 1 Or [next] And 2)
+                        stack(std.Min(Threading.Interlocked.Increment(ssize), ssize - 1)) = New StackEntry(first, middle - m, i, check And 1 Or [next] And 2)
                         first = j
                         middle += m
                         check = check And 2 Or [next] And 1
@@ -1179,7 +1179,7 @@ Namespace Bzip2
             c = trGetC(ISA, ISAd, ISAn, v)
 
             While (j = 2 * i + 1) < size
-                k = stdNum.Min(Threading.Interlocked.Increment(j.Value), CInt(j) - 1)
+                k = std.Min(Threading.Interlocked.Increment(j.Value), CInt(j) - 1)
 
                 Dim d = trGetC(ISA, ISAd, ISAn, Me.SA(sa + k))
                 Dim e As Integer = trGetC(ISA, ISAd, ISAn, Me.SA(sa + CInt(j)))
@@ -1447,7 +1447,7 @@ Namespace Bzip2
                 Dim a As Integer
                 Dim b As Integer
 
-                If stdNum.Max(Threading.Interlocked.Decrement(limit), limit + 1) = 0 Then
+                If std.Max(Threading.Interlocked.Decrement(limit), limit + 1) = 0 Then
                     trHeapSort(ISA, ISAd, ISAn, first, last - first)
                     a = last - 1
 
@@ -1594,7 +1594,7 @@ Namespace Bzip2
 
                     If a - first <= last - b Then
                         If first < a Then
-                            stack(stdNum.Min(Threading.Interlocked.Increment(ssize), ssize - 1)) = New StackEntry(b, last, limit, 0)
+                            stack(std.Min(Threading.Interlocked.Increment(ssize), ssize - 1)) = New StackEntry(b, last, limit, 0)
                             last = a
                         Else
                             first = b
@@ -1602,7 +1602,7 @@ Namespace Bzip2
                     Else
 
                         If b < last Then
-                            stack(stdNum.Min(Threading.Interlocked.Increment(ssize), ssize - 1)) = New StackEntry(first, a, limit, 0)
+                            stack(std.Min(Threading.Interlocked.Increment(ssize), ssize - 1)) = New StackEntry(first, a, limit, 0)
                             first = b
                         Else
                             last = a
@@ -1865,12 +1865,12 @@ Namespace Bzip2
                                 End While
                             End If
 
-                            stack(stdNum.Min(Threading.Interlocked.Increment(ssize), ssize - 1)) = New StackEntry(0, a, b, 0)
-                            stack(stdNum.Min(Threading.Interlocked.Increment(ssize), ssize - 1)) = New StackEntry(ISAd - 1, first, last, -2)
+                            stack(std.Min(Threading.Interlocked.Increment(ssize), ssize - 1)) = New StackEntry(0, a, b, 0)
+                            stack(std.Min(Threading.Interlocked.Increment(ssize), ssize - 1)) = New StackEntry(ISAd - 1, first, last, -2)
 
                             If a - first <= last - b Then
                                 If 1 < a - first Then
-                                    stack(stdNum.Min(Threading.Interlocked.Increment(ssize), ssize - 1)) = New StackEntry(ISAd, b, last, trLog(last - b))
+                                    stack(std.Min(Threading.Interlocked.Increment(ssize), ssize - 1)) = New StackEntry(ISAd, b, last, trLog(last - b))
                                     last = a
                                     limit = trLog(a - first)
                                 ElseIf 1 < last - b Then
@@ -1887,7 +1887,7 @@ Namespace Bzip2
                             Else
 
                                 If 1 < last - b Then
-                                    stack(stdNum.Min(Threading.Interlocked.Increment(ssize), ssize - 1)) = New StackEntry(ISAd, first, a, trLog(a - first))
+                                    stack(std.Min(Threading.Interlocked.Increment(ssize), ssize - 1)) = New StackEntry(ISAd, first, a, trLog(a - first))
                                     first = b
                                     limit = trLog(last - b)
                                 ElseIf 1 < a - first Then
@@ -1959,14 +1959,14 @@ Namespace Bzip2
                             End If
 
                             If a - first <= last - a Then
-                                stack(stdNum.Min(Threading.Interlocked.Increment(ssize), ssize - 1)) = New StackEntry(ISAd, a, last, -3)
+                                stack(std.Min(Threading.Interlocked.Increment(ssize), ssize - 1)) = New StackEntry(ISAd, a, last, -3)
                                 ISAd += 1
                                 last = a
                                 limit = [next]
                             Else
 
                                 If 1 < last - a Then
-                                    stack(stdNum.Min(Threading.Interlocked.Increment(ssize), ssize - 1)) = New StackEntry(ISAd + 1, first, a, [next])
+                                    stack(std.Min(Threading.Interlocked.Increment(ssize), ssize - 1)) = New StackEntry(ISAd + 1, first, a, [next])
                                     first = a
                                     limit = -3
                                 Else
@@ -1995,7 +1995,7 @@ Namespace Bzip2
                     Continue While
                 End If
 
-                If stdNum.Max(Threading.Interlocked.Decrement(limit), limit + 1) = 0 Then
+                If std.Max(Threading.Interlocked.Decrement(limit), limit + 1) = 0 Then
                     If Not budget.update(size, last - first) Then Exit While
                     trHeapSort(ISA, ISAd, ISAn, first, last - first)
                     a = last - 1
@@ -2137,11 +2137,11 @@ Namespace Bzip2
                     If a - first <= last - b Then
                         If last - b <= b - a Then
                             If 1 < a - first Then
-                                stack(stdNum.Min(Threading.Interlocked.Increment(ssize), ssize - 1)) = New StackEntry(ISAd + 1, a, b, [next])
-                                stack(stdNum.Min(Threading.Interlocked.Increment(ssize), ssize - 1)) = New StackEntry(ISAd, b, last, limit)
+                                stack(std.Min(Threading.Interlocked.Increment(ssize), ssize - 1)) = New StackEntry(ISAd + 1, a, b, [next])
+                                stack(std.Min(Threading.Interlocked.Increment(ssize), ssize - 1)) = New StackEntry(ISAd, b, last, limit)
                                 last = a
                             ElseIf 1 < last - b Then
-                                stack(stdNum.Min(Threading.Interlocked.Increment(ssize), ssize - 1)) = New StackEntry(ISAd + 1, a, b, [next])
+                                stack(std.Min(Threading.Interlocked.Increment(ssize), ssize - 1)) = New StackEntry(ISAd + 1, a, b, [next])
                                 first = b
                             ElseIf 1 < b - a Then
                                 ISAd += 1
@@ -2159,11 +2159,11 @@ Namespace Bzip2
                         ElseIf a - first <= b - a Then
 
                             If 1 < a - first Then
-                                stack(stdNum.Min(Threading.Interlocked.Increment(ssize), ssize - 1)) = New StackEntry(ISAd, b, last, limit)
-                                stack(stdNum.Min(Threading.Interlocked.Increment(ssize), ssize - 1)) = New StackEntry(ISAd + 1, a, b, [next])
+                                stack(std.Min(Threading.Interlocked.Increment(ssize), ssize - 1)) = New StackEntry(ISAd, b, last, limit)
+                                stack(std.Min(Threading.Interlocked.Increment(ssize), ssize - 1)) = New StackEntry(ISAd + 1, a, b, [next])
                                 last = a
                             ElseIf 1 < b - a Then
-                                stack(stdNum.Min(Threading.Interlocked.Increment(ssize), ssize - 1)) = New StackEntry(ISAd, b, last, limit)
+                                stack(std.Min(Threading.Interlocked.Increment(ssize), ssize - 1)) = New StackEntry(ISAd, b, last, limit)
                                 ISAd += 1
                                 first = a
                                 last = b
@@ -2174,14 +2174,14 @@ Namespace Bzip2
                         Else
 
                             If 1 < b - a Then
-                                stack(stdNum.Min(Threading.Interlocked.Increment(ssize), ssize - 1)) = New StackEntry(ISAd, b, last, limit)
-                                stack(stdNum.Min(Threading.Interlocked.Increment(ssize), ssize - 1)) = New StackEntry(ISAd, first, a, limit)
+                                stack(std.Min(Threading.Interlocked.Increment(ssize), ssize - 1)) = New StackEntry(ISAd, b, last, limit)
+                                stack(std.Min(Threading.Interlocked.Increment(ssize), ssize - 1)) = New StackEntry(ISAd, first, a, limit)
                                 ISAd += 1
                                 first = a
                                 last = b
                                 limit = [next]
                             Else
-                                stack(stdNum.Min(Threading.Interlocked.Increment(ssize), ssize - 1)) = New StackEntry(ISAd, b, last, limit)
+                                stack(std.Min(Threading.Interlocked.Increment(ssize), ssize - 1)) = New StackEntry(ISAd, b, last, limit)
                                 last = a
                             End If
                         End If
@@ -2189,11 +2189,11 @@ Namespace Bzip2
 
                         If a - first <= b - a Then
                             If 1 < last - b Then
-                                stack(stdNum.Min(Threading.Interlocked.Increment(ssize), ssize - 1)) = New StackEntry(ISAd + 1, a, b, [next])
-                                stack(stdNum.Min(Threading.Interlocked.Increment(ssize), ssize - 1)) = New StackEntry(ISAd, first, a, limit)
+                                stack(std.Min(Threading.Interlocked.Increment(ssize), ssize - 1)) = New StackEntry(ISAd + 1, a, b, [next])
+                                stack(std.Min(Threading.Interlocked.Increment(ssize), ssize - 1)) = New StackEntry(ISAd, first, a, limit)
                                 first = b
                             ElseIf 1 < a - first Then
-                                stack(stdNum.Min(Threading.Interlocked.Increment(ssize), ssize - 1)) = New StackEntry(ISAd + 1, a, b, [next])
+                                stack(std.Min(Threading.Interlocked.Increment(ssize), ssize - 1)) = New StackEntry(ISAd + 1, a, b, [next])
                                 last = a
                             ElseIf 1 < b - a Then
                                 ISAd += 1
@@ -2201,16 +2201,16 @@ Namespace Bzip2
                                 last = b
                                 limit = [next]
                             Else
-                                stack(stdNum.Min(Threading.Interlocked.Increment(ssize), ssize - 1)) = New StackEntry(ISAd, first, last, limit)
+                                stack(std.Min(Threading.Interlocked.Increment(ssize), ssize - 1)) = New StackEntry(ISAd, first, last, limit)
                             End If
                         ElseIf last - b <= b - a Then
 
                             If 1 < last - b Then
-                                stack(stdNum.Min(Threading.Interlocked.Increment(ssize), ssize - 1)) = New StackEntry(ISAd, first, a, limit)
-                                stack(stdNum.Min(Threading.Interlocked.Increment(ssize), ssize - 1)) = New StackEntry(ISAd + 1, a, b, [next])
+                                stack(std.Min(Threading.Interlocked.Increment(ssize), ssize - 1)) = New StackEntry(ISAd, first, a, limit)
+                                stack(std.Min(Threading.Interlocked.Increment(ssize), ssize - 1)) = New StackEntry(ISAd + 1, a, b, [next])
                                 first = b
                             ElseIf 1 < b - a Then
-                                stack(stdNum.Min(Threading.Interlocked.Increment(ssize), ssize - 1)) = New StackEntry(ISAd, first, a, limit)
+                                stack(std.Min(Threading.Interlocked.Increment(ssize), ssize - 1)) = New StackEntry(ISAd, first, a, limit)
                                 ISAd += 1
                                 first = a
                                 last = b
@@ -2221,14 +2221,14 @@ Namespace Bzip2
                         Else
 
                             If 1 < b - a Then
-                                stack(stdNum.Min(Threading.Interlocked.Increment(ssize), ssize - 1)) = New StackEntry(ISAd, first, a, limit)
-                                stack(stdNum.Min(Threading.Interlocked.Increment(ssize), ssize - 1)) = New StackEntry(ISAd, b, last, limit)
+                                stack(std.Min(Threading.Interlocked.Increment(ssize), ssize - 1)) = New StackEntry(ISAd, first, a, limit)
+                                stack(std.Min(Threading.Interlocked.Increment(ssize), ssize - 1)) = New StackEntry(ISAd, b, last, limit)
                                 ISAd += 1
                                 first = a
                                 last = b
                                 limit = [next]
                             Else
-                                stack(stdNum.Min(Threading.Interlocked.Increment(ssize), ssize - 1)) = New StackEntry(ISAd, first, a, limit)
+                                stack(std.Min(Threading.Interlocked.Increment(ssize), ssize - 1)) = New StackEntry(ISAd, first, a, limit)
                                 first = b
                             End If
                         End If
