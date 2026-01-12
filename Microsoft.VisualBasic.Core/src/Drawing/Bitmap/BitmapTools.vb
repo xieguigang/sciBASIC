@@ -79,7 +79,7 @@ Namespace Imaging.BitmapImage
                 Throw New ArgumentException("裁剪区域尺寸无效")
             End If
 
-            ' 确保裁剪区域在源图像范围内[4,5](@ref)
+            ' 确保裁剪区域在源图像范围内
             cropRect = GetValidCropRectangle(cropRect, sourceBuffer.Width, sourceBuffer.Height)
 
             If cropRect.Width <= 0 OrElse cropRect.Height <= 0 Then
