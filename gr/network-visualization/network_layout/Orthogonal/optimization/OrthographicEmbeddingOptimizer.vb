@@ -83,12 +83,11 @@ Namespace Orthogonal.optimization
             Dim change As Boolean
             Do
                 change = False
-                '            System.out.println("New optimization round...");
+
                 For v = 0 To n - 1
                     Dim o2 = optimizeVertex(v, o, graph, comparator)
                     If o2 IsNot o Then
                         change = True
-                        '                    System.out.println("Change in vertex " + v);
                     End If
                     o = o2
                 Next
@@ -164,7 +163,6 @@ Namespace Orthogonal.optimization
             For i1 = 0 To n2 - 1
                 For i2 = 0 To n2 - 1
                     If o.edges(i1)(i2) AndAlso Not edgesToIgnore(i1)(i2) Then
-                        '                    System.out.println("adding " + i1 + "->" + i2);
                         Dim x1 As Integer = o.x(i1)
                         Dim y1 As Integer = o.y(i1)
                         Dim x2 As Integer = o.x(i2)
@@ -356,8 +354,6 @@ Namespace Orthogonal.optimization
             ' create the new variables:
             Dim n2 = o.x.Length
             Dim newn2 = n2 - verticesToDelete.Count + n_new_segments
-            '        System.out.println("n2 = " + n2);
-            '        System.out.println("newn2 = " + n2 + " - " + verticesToDelete.size() + " + " + n_new_segments + " = " + newn2);
             Dim nodeIndexes2 = New Integer(newn2 - 1) {}
             Dim x2 = New Double(newn2 - 1) {}
             Dim y2 = New Double(newn2 - 1) {}
@@ -565,7 +561,6 @@ Namespace Orthogonal.optimization
 
             path.RemoveAll(toDelete)
             ' now remove the start and end points:
-            '        if (DEBUG>=1) System.out.println(path);
             path.RemoveAt(0)
             path.RemoveAt(path.Count - 1)
             If DEBUG >= 1 Then

@@ -189,7 +189,6 @@ Namespace Orthogonal
             Next
             For Each i In trivialBlocks
                 b(i) = std.Min(Threading.Interlocked.Increment(nextBlock), nextBlock - 1)
-                ' System.out.println("trivial block!!!");
             Next
 
             ' translate the blocks and cutedges:

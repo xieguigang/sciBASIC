@@ -717,7 +717,7 @@ Namespace Orthogonal
                     End If
 
                     For Each edge In vertexEdges(v)
-                        ' System.out.println(v + " considering edge " + edge);
+
                         If first Then
                             first = False
                             horizontal_x2(v) = vertical_x(edge)

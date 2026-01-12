@@ -121,7 +121,6 @@ Namespace Orthogonal
             ' add the basic nodes:
             Dim idx = 0
             For v = 0 To embedding.Length - 1
-                '            System.out.println("index " + idx + " is node " + v);
                 nodeIndexes(idx) = embedding(v).v
                 x(idx) = embedding(v).x
                 y(idx) = embedding(v).y
@@ -145,7 +144,6 @@ Namespace Orthogonal
                         Next
 
                         If oev.bends = 0 AndAlso oew.bends = 0 Then
-                            '                        System.out.println("  edge.");
                             edges(v)(w) = True
                         Else
                             ' handle the bends:
@@ -167,7 +165,6 @@ Namespace Orthogonal
                             If oev.bends + oew.bends = 1 Then
                                 nodeIndexes(idx) = -1
                                 If oev.angle = OEElement.LEFT OrElse oev.angle = OEElement.RIGHT Then
-                                    '                                System.out.println("midpoints assigned to " + oev.v + " -> " + oew.v + " by method 1a");
                                     x(idx) = endx
                                     If oew.angle = OEElement.DOWN Then
                                         If starty > endy + 0.01 Then
@@ -184,7 +181,6 @@ Namespace Orthogonal
                                     End If
                                     y(idx) = starty
                                 Else
-                                    '                                System.out.println("midpoints assigned to " + oev.v + " -> " + oew.v + " by method 1b");
                                     x(idx) = startx
                                     If oev.angle = OEElement.DOWN Then
                                         If endy > starty + 0.01 Then
@@ -256,10 +252,8 @@ Namespace Orthogonal
                                     If std.Abs(startx - endx) < 0.001 Then
                                         edges(v)(w) = True
                                     Else
-                                        '                                System.out.println(v + " -> " + w + " startx: " + startx + ", endx: " + endx);
                                         If std.Abs(intermediate_x - startx) < 0.001 Then
                                             If oew.angle = OEElement.UP Then ' up from the end
-                                                '                                        System.out.println("up from the end");
                                                 x(idx) = startx
                                                 y(idx) = endy - separation
                                                 x(idx + 1) = endx
@@ -272,13 +266,11 @@ Namespace Orthogonal
                                             End If
                                         Else
                                             If oev.angle = OEElement.UP Then ' up from the start
-                                                '                                        System.out.println("up from the start");
                                                 x(idx) = startx
                                                 y(idx) = starty - separation
                                                 x(idx + 1) = endx
                                                 y(idx + 1) = starty - separation ' down from the start
                                             Else
-                                                '                                        System.out.println("down from the start");
                                                 x(idx) = startx
                                                 y(idx) = starty + separation
                                                 x(idx + 1) = endx
@@ -1023,8 +1015,6 @@ Namespace Orthogonal
 
             yvalues.RemoveAll(toDelete)
 
-            '        if (DEBUG>=1) System.out.println("gridAlign: X = " + xvalues);
-            '        if (DEBUG>=1) System.out.println("gridAlign: Y = " + yvalues);
             For i = 0 To y.Length - 1
                 y(i) = indexOfClosest(y(i), yvalues) * [step]
             Next

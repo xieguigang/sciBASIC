@@ -81,7 +81,6 @@ Namespace Orthogonal.optimization
 
             Do
                 change = False
-                '            System.out.println("New optimization round...");
                 Dim verticesAlreadyConsidered As IList(Of Integer) = New List(Of Integer)()
                 For v = 0 To n - 1
                     If verticesAlreadyConsidered.Contains(v) Then
@@ -91,7 +90,6 @@ Namespace Orthogonal.optimization
                     Dim o2 = optimizeVertex(v, o, graph, comparator, verticesAlreadyConsidered)
                     If o2 IsNot o Then
                         change = True
-                        '                    System.out.println("Change in vertex " + v);
                     End If
                     o = o2
                 Next
@@ -102,7 +100,6 @@ Namespace Orthogonal.optimization
 
         Private Shared Function optimizeVertex(v As Integer, o As OrthographicEmbeddingResult, graph As Integer()(), comparator As EmbeddingComparator, verticesAlreadyConsidered As IList(Of Integer)) As OrthographicEmbeddingResult
             ' 1) find the whole path of the vertex 
-            '        System.out.println("1) o.nodeIndexes.length = " + o.nodeIndexes.length + ", o.embedding.length " + (o.embedding != null ? o.embedding.length : "-"));
             Dim pathIndexes As List(Of Integer) = New List(Of Integer)()
             Dim open As List(Of Integer) = New List(Of Integer)()
             Dim pathNodesWithMoreThan2Neighbors As IList(Of Integer) = New List(Of Integer)()
@@ -133,7 +130,6 @@ Namespace Orthogonal.optimization
             End If
 
             ' 2) Sort the path:
-            '        System.out.println("2) o.nodeIndexes.length = " + o.nodeIndexes.length + ", o.embedding.length " + (o.embedding != null ? o.embedding.length : "-"));
             If True Then
                 Dim sortedPath As List(Of Integer) = New List(Of Integer)()
                 sortedPath.Add(pathIndexes.PopAt(0))
@@ -181,7 +177,6 @@ Namespace Orthogonal.optimization
             Next
 
             ' 3) Find all the elements in the path, and calculate path length:
-            '        System.out.println("3) o.nodeIndexes.length = " + o.nodeIndexes.length + ", o.embedding.length " + (o.embedding != null ? o.embedding.length : "-"));
             Dim pathLength = 0
             Dim necessaryElements As IList(Of Integer) = New List(Of Integer)()
             Dim nElements = 0
@@ -207,7 +202,6 @@ Namespace Orthogonal.optimization
 
 
             ' 4) Find the shortest path that is equivalent
-            '        System.out.println("4) o.nodeIndexes.length = " + o.nodeIndexes.length + ", o.embedding.length " + (o.embedding != null ? o.embedding.length : "-"));
             Dim dx = 0
             Dim dy = 0
             For i = 0 To o.x.Length - 1
@@ -281,7 +275,6 @@ Namespace Orthogonal.optimization
             End If
 
             ' 5) if all the components fit, replace it!
-            '        System.out.println("5) o.nodeIndexes.length = " + o.nodeIndexes.length + ", o.embedding.length " + (o.embedding != null ? o.embedding.length : "-"));
             If path2 Is Nothing Then
                 Return o
             End If
@@ -293,7 +286,6 @@ Namespace Orthogonal.optimization
             End If
 
             ' 6) Remove the old auxiliary points, and the previous path:
-            '        System.out.println("6) o.nodeIndexes.length = " + o.nodeIndexes.length + ", o.embedding.length " + (o.embedding != null ? o.embedding.length : "-"));
             If True Then
                 Dim toRemove As List(Of Integer) = New List(Of Integer)()
                 For i = 0 To pathIndexes.Count - 1
@@ -323,7 +315,6 @@ Namespace Orthogonal.optimization
             End If
 
             ' 7) Leave only the path important and elbow points:
-            '        System.out.println("7) o.nodeIndexes.length = " + o.nodeIndexes.length + ", o.embedding.length " + (o.embedding != null ? o.embedding.length : "-"));
             Dim nextAuxiliar = o.nodeIndexes.Length
             If DEBUG >= 1 Then
                 Console.WriteLine("nextAuxiliar: " & nextAuxiliar.ToString())
@@ -354,7 +345,6 @@ Namespace Orthogonal.optimization
 
 
             ' 8) create new arrays with less nodes, and replace the originals:
-            '        System.out.println("8) o.nodeIndexes.length = " + o.nodeIndexes.length + ", o.embedding.length " + (o.embedding != null ? o.embedding.length : "-"));
             Dim nAuxiliar = path3.Count - 2 - nElements
             If nAuxiliar > 0 Then
                 o = o.addVertices(nAuxiliar)
@@ -370,7 +360,6 @@ Namespace Orthogonal.optimization
 
             Next
 
-            '        System.out.println("end) o.nodeIndexes.length = " + o.nodeIndexes.length + ", o.embedding.length " + (o.embedding != null ? o.embedding.length : "-"));
             Return o
         End Function
 
@@ -391,7 +380,6 @@ Namespace Orthogonal.optimization
             open.Add(sx + sy * w)
             closed(sx)(sy) = -1
             While open.Count > 0
-                '            System.out.println("    " + open.size());
                 Dim current = open.PopAt(0)
                 cx = current Mod w
                 cy = current / w
@@ -413,7 +401,6 @@ Namespace Orthogonal.optimization
                     End If
                 Next
             End While
-            '        System.out.println("    done");
 
             If closed(ex)(ey) = 0 Then
                 Return Nothing
@@ -429,7 +416,6 @@ Namespace Orthogonal.optimization
                 If parent = -2 Then
                     Return Nothing ' no path!
                 End If
-                '            System.out.println("    RP: " + parent);
             End While
 
             path.Insert(0, New Pair(Of Integer, Integer)(sx, sy))

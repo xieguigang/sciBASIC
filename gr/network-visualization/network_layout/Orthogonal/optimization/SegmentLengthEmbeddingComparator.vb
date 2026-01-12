@@ -74,12 +74,13 @@ Namespace Orthogonal.optimization
             Return compare(resultScore(oer1), resultScore(oer2))
         End Function
 
-
-        ' true is s1 is better than s2:
+        ''' <summary>
+        ''' true is s1 is better than s2
+        ''' </summary>
+        ''' <param name="s1"></param>
+        ''' <param name="s2"></param>
+        ''' <returns></returns>
         Public Overridable Function compare(s1 As Pair(Of Double, Integer), s2 As Pair(Of Double, Integer)) As Integer
-
-            '        System.out.println("<" + s1.m_a + "," + s1.m_b + "> vs <" + s2.m_a + "," + s2.m_b + ">");
-
             Dim tmp = s1.m_a.CompareTo(s2.m_a)
             If tmp <> 0 Then
                 Return tmp
@@ -87,8 +88,11 @@ Namespace Orthogonal.optimization
             Return s1.m_b.CompareTo(s2.m_b)
         End Function
 
-
-        ' the score of a result is a pair with the accumulated length of the segments and the number of segments
+        ''' <summary>
+        ''' the score of a result is a pair with the accumulated length of the segments and the number of segments
+        ''' </summary>
+        ''' <param name="o"></param>
+        ''' <returns></returns>
         Public Overridable Function resultScore(o As OrthographicEmbeddingResult) As Pair(Of Double, Integer)
             Dim length As Double = 0
             Dim nsegments = 0
@@ -105,7 +109,6 @@ Namespace Orthogonal.optimization
 
             Return New Pair(Of Double, Integer)(length, nsegments)
         End Function
-
 
     End Class
 

@@ -56,8 +56,8 @@
 
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ListExtensions
-Imports std = System.Math
 Imports randf = Microsoft.VisualBasic.Math.RandomExtensions
+Imports std = System.Math
 
 ' 
 '  To change this license header, choose License Headers in Project Properties.
@@ -78,54 +78,7 @@ Namespace Orthogonal
         ' S. Even and R. E. Tarjan, Computing an st-numbering, Theoret. Comput. Sci. 2, (1976), 339-344.
 
         Public Shared Function stNumbering(graph As Integer()()) As Integer()
-            '        int n = graph.length;
             Return Orthogonal.STNumbering.stNumbering(graph, randf.Next(graph.Length))
-            ' 
-            ' 	        if (DEBUG>=1) {
-            ' 	            System.out.println("Computing stNumebring of graph:");
-            ' 	            for(int i = 0;i<graph.length;i++) {            
-            ' 	                for(int j = 0;j<graph.length;j++) {
-            ' 	                    System.out.print(graph[i][j] + ",");
-            ' 	                }
-            ' 	                System.out.println("");
-            ' 	            }
-            ' 	        }
-            ' 	        
-            ' 	        // Part 1: Create a minimum spanning tree, preorder and L:
-            ' 	        int [][]treeGraph = new int[n][n];
-            ' 	        int [][]ancestors = new int[n][n];
-            ' 	        int T[] = new int[n];
-            ' 	        int preorder[] = new int[n];
-            ' 	        int L[] = new int[n];
-            ' 	        int t = 0;
-            ' 	        int s = -1;
-            ' 	        depthFirstSpanningTree(graph, treeGraph, ancestors, T, preorder, L, s, t);
-            ' 	        for(int i = 0;i<n;i++) {
-            ' 	            if (T[i]==t && i!=t) {
-            ' 	                s = i;
-            ' 	                break;
-            ' 	            }
-            ' 	        }
-            ' 	        if (s==-1) {
-            ' 	            System.err.println("WVisibility2Connected: spanning tree is malformed!");
-            ' 	            return null;
-            ' 	        }
-            ' 	        if (DEBUG>=1) System.out.println("(s,t) = (" + s + "," + t + ")");
-            ' 	
-            ' 	        // Part 3: run the STNUMBER algorithm (part 2 is inside of STNUMBER)
-            ' 	        int stnumbers[] = STNUMBER(s,t,graph,treeGraph, ancestors, preorder, L);
-            ' 	        if (DEBUG>=1) System.out.println("st-numbers: " + Arrays.toString(stnumbers));
-            ' 	        
-            ' 	        if (DEBUG>=1) {
-            ' 	            if (verifySTNumbering(graph, stnumbers)) {
-            ' 	                System.out.println("STNumbering: st-numbering is correct!");
-            ' 	            } else {
-            ' 	                System.out.println("STNumbering: st-numbering has errors!");
-            ' 	            }
-            ' 	        }
-            ' 	        
-            ' 	        return stnumbers;
-            ' 	        
         End Function
 
         Public Shared Function allSTNumberings(graph As Integer()()) As IList(Of Integer())
@@ -313,12 +266,6 @@ Namespace Orthogonal
             Dim n = graph.Length
             ' if there is a new cycle edge {v,w} with w -*-> v:
             For w = 0 To n - 1
-                ' 
-                ' 				if (graph[v][w]==1)
-                ' 				    System.out.println("a) {" + v + "," + w + "} : " + 
-                ' 				                       (oldEdges[v][w] ? "old":"new") + " " + 
-                ' 				                       (ancestors[w][v]==1 ? (w + "-*->" + "v"):""));
-                ' 				
                 If Not oldEdges(v)(w) AndAlso graph(v)(w) = 1 AndAlso ancestors(w)(v) = 1 Then
                     If Orthogonal.STNumbering.DEBUG >= 2 Then
                         Console.WriteLine("* PATHFINDER a)")
@@ -431,11 +378,11 @@ Namespace Orthogonal
             Next
             stack.Add(pT)
             parents.Add(pT)
-            ' if (s!=-1) System.out.println("s->t: " + graph[t][s]);
+
             While stack.Count > 0
                 Dim current = stack.PopAt(stack.Count - 1)
                 Dim parent = parents.PopAt(parents.Count - 1)
-                ' System.out.println("DFST: " + current + " -> " + parent);
+
                 If T(current) = -1 Then
                     T(current) = parent
                     For [Next] As Integer = graph.Length - 1 To 0 Step -1
@@ -504,7 +451,7 @@ Namespace Orthogonal
                     ' if (w is a descendant of v)
                     ' and w is connected to u through an edge that is NOT in the spanning tree
                     If ancestors(v)(w) = 1 Then
-                        '                    System.out.println(w + " is a descendant of " + v);
+
                         For u = 0 To n - 1
                             If graph(w)(u) = 1 AndAlso treeGraph(w)(u) = 0 Then
                                 If preorder(u) < L(v) Then

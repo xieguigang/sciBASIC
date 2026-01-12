@@ -139,7 +139,6 @@ Namespace Orthogonal.optimization
             ' 2) find a path of 0s from left to right:
             Dim path = findPathToTheRight(map, 0, dy - 1, 0)
             If path IsNot Nothing Then
-                '            System.out.println("Found path (width "+path.m_a+"): " + path.m_b); 
                 removePath(o, path)
                 Return True
             End If
@@ -148,7 +147,6 @@ Namespace Orthogonal.optimization
         End Function
 
         Private Shared Function findPathToTheRight(map As Integer()(), y1 As Integer, y2 As Integer, x As Integer) As Pair(Of Integer, IList(Of Integer))
-            '        System.out.println(x + ":" + y1 + "-" + y2);
             If x = map.Length Then
                 Return New Pair(Of Integer, IList(Of Integer))(map(0).Length, New List(Of Integer)())
             End If
