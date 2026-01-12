@@ -141,32 +141,32 @@ Namespace Orthogonal
     Public Class OrthographicEmbedding
 
         Public Shared Function orthographicEmbedding(graph As Integer()(), simplify As Boolean, fixNonOrthogonal As Boolean) As OrthographicEmbeddingResult
-            Dim n = graph.Length
+            Dim n As Integer = graph.Length
             Dim embedding = New OEVertex(n - 1) {}
 
             ' Algorithm from: "Planar Grid Embedding in Linear Time" Tamasia and Tollis
             ' Step 1: Construct a visibility representation Gamma for the graph
-            Dim Gamma As New Visibility(graph)
-            If Not Gamma.WVisibility() Then
+            Dim gamma As New Visibility(graph)
+            If Not gamma.WVisibility() Then
                 Return Nothing
             End If
-            Gamma.reorganize()
+            gamma.reorganize()
 
             ' from this point on, we assume that the result is aligned with a grid size od 1.0
             ' Step 2: Transform Gamma into an orthogonal embedding G' by substituting each vertex segment
             '         with one of the structures shown in Fig. 5
-            For v = 0 To n - 1
-                embedding(v) = vertexOrtographicEmbedding(v, graph, Gamma, embedding)
+            For v As Integer = 0 To n - 1
+                embedding(v) = vertexOrtographicEmbedding(v, graph, gamma, embedding)
             Next
 
             '        if (simplify) attemptCompleteSimplification(embedding);
             If simplify Then
-                Return cautiousSimplification(embedding, Gamma, fixNonOrthogonal)
+                Return cautiousSimplification(embedding, gamma, fixNonOrthogonal)
             Else
                 ' Step 4: Let H' be the orthogonal representation so obtained. 
                 '         Construct from H' a grid embedding for G using the compaction algorithm of Lemma 1        
                 ' (I ignore that, and just provide my own algorihtm for it)
-                Return New OrthographicEmbeddingResult(embedding, Gamma, fixNonOrthogonal)
+                Return New OrthographicEmbeddingResult(embedding, gamma, fixNonOrthogonal)
             End If
         End Function
 
@@ -175,13 +175,13 @@ Namespace Orthogonal
         ' 2d algorithm generates graphs that are correct:
 
         Public Shared Function cautiousSimplification(embedding As OEVertex(), Gamma As Visibility, fixNonOrthogonal As Boolean) As OrthographicEmbeddingResult
-            Dim n = embedding.Length
+            Dim n As Integer = embedding.Length
             Dim best As New OrthographicEmbeddingResult(embedding, Gamma, fixNonOrthogonal)
             Dim current As OrthographicEmbeddingResult = Nothing
 
             ' Step 3: Let H be the orthogonal representation of G'. 
             '         Simplify H by means of the bend-stretching transformations
-            For v = 0 To n - 1
+            For v As Integer = 0 To n - 1
                 For Each oev As OEElement In embedding(v).embedding
                     Dim w As Integer = oev.dest
                     Dim oew As OEElement = sym(oev, embedding)
@@ -205,7 +205,7 @@ Namespace Orthogonal
                 Next
             Next
 
-            For v = 0 To n - 1
+            For v As Integer = 0 To n - 1
                 ' Apply T2: (case 1)
                 Dim min = -1
                 For Each oev As OEElement In embedding(v).embedding
