@@ -294,7 +294,7 @@ Namespace ComponentModel.Collection
         ''' <param name="source"></param>
         ''' <param name="key"></param>
         ''' <returns>
-        ''' nothing will be return if the <paramref name="key"/> is not exists
+        ''' nothing will be return if the <paramref name="key"/> is not exists or source sequence is nothing
         ''' </returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
