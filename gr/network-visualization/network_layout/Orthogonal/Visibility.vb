@@ -260,8 +260,10 @@ Namespace Orthogonal
             Return best
         End Function
 
-
-        ' W-Visibility algorithm (reference)
+        ''' <summary>
+        ''' W-Visibility algorithm (reference)
+        ''' </summary>
+        ''' <returns></returns>
         Public Overridable Function WVisibility() As Boolean
             If Visibility.DEBUG >= 1 Then
                 Console.WriteLine("Blocks and cutnodes (for a graph with " & graph.Length.ToString() & " nodes)")

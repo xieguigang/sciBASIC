@@ -74,7 +74,7 @@ Namespace Orthogonal
             Dim blocks As New Dictionary(Of Integer, IList(Of Integer))()
             Dim cutNodes As New Dictionary(Of Integer, IList(Of Integer))()
             Dim l As New List(Of Integer)() From {1}
-            VBDebugger.EchoLine("Blocks: special case of a graph with a single node.")
+            ' VBDebugger.EchoLine("Blocks: special case of a graph with a single node.")
             blocks(0) = l
             Return New Pair(Of Dictionary(Of Integer, IList(Of Integer)), Dictionary(Of Integer, IList(Of Integer)))(blocks, cutNodes)
         End Function
@@ -146,7 +146,7 @@ Namespace Orthogonal
                     End If
                 Next
                 If lL > 0 Then
-                    VBDebugger.EchoLine("  Consolidating...")
+                    ' VBDebugger.EchoLine("  Consolidating...")
 
                     Dim k = v
                     Dim l = 0
