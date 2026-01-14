@@ -99,6 +99,15 @@ Namespace Orthogonal
             Return graph
         End Function
 
+        ''' <summary>
+        ''' do orthogonal layout and then write node layout position information into network graph
+        ''' </summary>
+        ''' <param name="g"></param>
+        ''' <param name="numberOfAttempts"></param>
+        ''' <param name="optimize"></param>
+        ''' <param name="simplify"></param>
+        ''' <param name="fixNonOrthogonal"></param>
+        ''' <returns></returns>
         <Extension>
         Public Function DoLayout(<Out> ByRef g As NetworkGraph,
                                  Optional numberOfAttempts As Integer = 10,
