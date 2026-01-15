@@ -18,13 +18,16 @@ Namespace Orthogonal
 
             For Each v As Node In g.vertex
                 ' 解析你的数据结构
-                Dim pos As FDGVector2 = v.data.initialPostion
+                Dim pos As AbstractVector = v.data.initialPostion
+                Dim w As Integer = 5 ' v.data.size(0)
+                Dim h As Integer = 5 ' v.data.size.ElementAtOrDefault(1, v.data.size(0))
+
                 ' 假设节点宽高为 40
-                obstacleRects.Add(New Rectangle(pos.x - 20, pos.y - 20, 40, 40))
+                Call obstacleRects.Add(New Rectangle(pos.x - w / 2, pos.y - h / 2, w, h))
             Next
 
             ' 2. 初始化路由器
-            Dim router As New OrthogonalRouter(Of Node)(obstacleRects)
+            Dim router As New OrthogonalRouter(obstacleRects, gridSize:=5)
 
             ' 3. 计算每一条边
             For Each edge As Edge In g.graphEdges

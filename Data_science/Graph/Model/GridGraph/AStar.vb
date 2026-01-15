@@ -1,18 +1,19 @@
 ﻿Imports System.Drawing
-Imports Microsoft.VisualBasic.Imaging
 Imports std = System.Math
 
 Namespace GridGraph
 
-    Public Class OrthogonalRouter(Of T)
+    Public Class OrthogonalRouter
+
         ' 网格大小（像素），决定了路径的精细程度
-        Private _gridSize As Integer = 10
-
+        Dim _gridSize As Integer = 10
         ' 障碍物集合，存储被节点占据的区域
-        Private _obstacles As HashSet(Of GridCell(Of T))
+        Dim _obstacles As HashSet(Of GridCell(Of Rectangle))
 
-        Public Sub New(obstacleRects As List(Of Rectangle))
-            _obstacles = New HashSet(Of GridCell(Of T))()
+        Public Sub New(obstacleRects As List(Of Rectangle), Optional gridSize As Integer = 10)
+            _gridSize = gridSize
+            _obstacles = New HashSet(Of GridCell(Of Rectangle))()
+
             ' 将节点矩形区域转换为网格点并加入障碍物集合
             For Each rect In obstacleRects
                 FillObstacles(rect)
@@ -29,7 +30,7 @@ Namespace GridGraph
 
             For x As Integer = startX To endX - 1
                 For y As Integer = startY To endY - 1
-                    _obstacles.Add(New GridCell(Of T)(x, y))
+                    _obstacles.Add(New GridCell(Of Rectangle)(x, y, rect))
                 Next
             Next
         End Sub
@@ -38,20 +39,20 @@ Namespace GridGraph
         ' startPt, endPt: 像素坐标
         Public Function FindPath(startPt As Point, endPt As Point) As List(Of Point)
             ' 1. 坐标离散化（转为网格坐标）
-            Dim startGrid As New GridCell(Of T)(std.Floor(startPt.X / _gridSize), std.Floor(startPt.Y / _gridSize))
-            Dim endGrid As New GridCell(Of T)(std.Floor(endPt.X / _gridSize), std.Floor(endPt.Y / _gridSize))
+            Dim startGrid As New GridCell(Of Rectangle)(std.Floor(startPt.X / _gridSize), std.Floor(startPt.Y / _gridSize))
+            Dim endGrid As New GridCell(Of Rectangle)(std.Floor(endPt.X / _gridSize), std.Floor(endPt.Y / _gridSize))
 
             ' 2. 初始化Open和Closed列表
-            Dim openList As New List(Of PathNode(Of T))()
-            Dim closedList As New HashSet(Of GridCell(Of T))()
+            Dim openList As New List(Of PathNode(Of Rectangle))()
+            Dim closedList As New HashSet(Of GridCell(Of Rectangle))()
 
-            Dim startNode As New PathNode(Of T)(startGrid)
+            Dim startNode As New PathNode(Of Rectangle)(startGrid)
             openList.Add(startNode)
 
             ' 3. A* 主循环
             While openList.Count > 0
                 ' 获取F值最小的节点 (简单的排序模拟优先队列，数据量大时建议用优先队列)
-                Dim currentNode As PathNode(Of T) = openList.OrderBy(Function(n) n.F).First()
+                Dim currentNode As PathNode(Of Rectangle) = openList.OrderBy(Function(n) n.F).First()
 
                 ' 移出OpenList，加入ClosedList
                 openList.Remove(currentNode)
@@ -63,11 +64,11 @@ Namespace GridGraph
                 End If
 
                 ' 4. 探索邻居 (上下左右)
-                Dim neighbors As GridCell(Of T)() = {
-                    New GridCell(Of T)(currentNode.Position.X, currentNode.Position.Y - 1), ' 上
-                    New GridCell(Of T)(currentNode.Position.X, currentNode.Position.Y + 1), ' 下
-                    New GridCell(Of T)(currentNode.Position.X - 1, currentNode.Position.Y), ' 左
-                    New GridCell(Of T)(currentNode.Position.X + 1, currentNode.Position.Y)  ' 右
+                Dim neighbors As GridCell(Of Rectangle)() = {
+                    New GridCell(Of Rectangle)(currentNode.Position.X, currentNode.Position.Y - 1), ' 上
+                    New GridCell(Of Rectangle)(currentNode.Position.X, currentNode.Position.Y + 1), ' 下
+                    New GridCell(Of Rectangle)(currentNode.Position.X - 1, currentNode.Position.Y), ' 左
+                    New GridCell(Of Rectangle)(currentNode.Position.X + 1, currentNode.Position.Y)  ' 右
                 }
 
                 For Each neighborPos In neighbors
@@ -92,11 +93,11 @@ Namespace GridGraph
                     Dim tentativeG As Integer = currentNode.G + movementCost
 
                     ' 检查邻居是否已在OpenList中
-                    Dim existingNode As PathNode(Of T) = openList.FirstOrDefault(Function(n) n.Position.Equals(neighborPos))
+                    Dim existingNode As PathNode(Of Rectangle) = openList.FirstOrDefault(Function(n) n.Position.Equals(neighborPos))
 
                     If existingNode Is Nothing Then
                         ' 是新节点
-                        Dim neighborNode As New PathNode(Of T)(neighborPos)
+                        Dim neighborNode As New PathNode(Of Rectangle)(neighborPos)
                         neighborNode.Parent = currentNode
                         neighborNode.G = tentativeG
                         neighborNode.H = std.Abs(neighborPos.X - endGrid.X) + std.Abs(neighborPos.Y - endGrid.Y) ' 曼哈顿距离
@@ -117,9 +118,9 @@ Namespace GridGraph
         End Function
 
         ' 回溯路径
-        Private Function ReconstructPath(node As PathNode(Of T)) As List(Of Point)
+        Private Function ReconstructPath(node As PathNode(Of Rectangle)) As List(Of Point)
             Dim path As New List(Of Point)()
-            Dim curr As PathNode(Of T) = node
+            Dim curr As PathNode(Of Rectangle) = node
             While curr IsNot Nothing
                 ' 转换回像素坐标（取网格中心点）
                 path.Add(New Point(curr.Position.X * _gridSize + _gridSize / 2, curr.Position.Y * _gridSize + _gridSize / 2))
