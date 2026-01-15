@@ -121,7 +121,7 @@ Namespace Drawing2D
 #If NET48 Then
             Call Effects.DropdownShadows(g, rectangle, shadowColor, alphaLevels, gradientLevels)
 #Else
-            Throw New NotImplementedException
+            Call "draw round rectangle dropdown shadow has not been implemented".warning
 #End If
         End Sub
 
