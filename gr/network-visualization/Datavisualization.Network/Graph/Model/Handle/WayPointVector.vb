@@ -85,7 +85,7 @@ Namespace Graph.EdgeBundling
     ''' <summary>
     ''' 相对于<see cref="Handle"/>模型，这个矢量模型则是单纯的以xy偏移比例来进行矢量比例缩放
     ''' </summary>
-    Public Class XYMetaHandle
+    Public Class WayPointVector
 
         ' 定义一个很小的浮点数用于判断是否重合
         Const TOLERANCE As Double = 0.0001
@@ -123,7 +123,7 @@ Namespace Graph.EdgeBundling
         ''' make value copy
         ''' </summary>
         ''' <param name="clone"></param>
-        Sub New(clone As XYMetaHandle)
+        Sub New(clone As WayPointVector)
             xoffsetscale = clone.xoffsetscale
             yoffsetscale = clone.yoffsetscale
             xabsoluteshift = clone.xabsoluteshift
@@ -196,13 +196,13 @@ Namespace Graph.EdgeBundling
         ''' <param name="hx">the location x of the turn point</param>
         ''' <param name="hy">the location x of the turn point</param>
         ''' <returns></returns>
-        Public Shared Function CreateVector(ps As PointF, pt As PointF, hx!, hy!) As XYMetaHandle
+        Public Shared Function CreateVector(ps As PointF, pt As PointF, hx!, hy!) As WayPointVector
             Dim dx = pt.X - ps.X
             Dim dy = pt.Y - ps.Y
             Dim offsetX = hx - ps.X
             Dim offsetY = hy - ps.Y
 
-            Dim handle As New XYMetaHandle()
+            Dim handle As New WayPointVector()
 
             ' --- 处理 X 轴 ---
             If std.Abs(dx) < TOLERANCE Then
@@ -236,7 +236,7 @@ Namespace Graph.EdgeBundling
         ''' <param name="pt">location of target vertex</param>
         ''' <param name="handle">当前的这个需要进行矢量化描述的未知点坐标数据</param>
         ''' <returns></returns>
-        Public Shared Function CreateVector(ps As PointF, pt As PointF, [handle] As PointF) As XYMetaHandle
+        Public Shared Function CreateVector(ps As PointF, pt As PointF, [handle] As PointF) As WayPointVector
             Return CreateVector(ps, pt, handle.X, handle.Y)
         End Function
     End Class

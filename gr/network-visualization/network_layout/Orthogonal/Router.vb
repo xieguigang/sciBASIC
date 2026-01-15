@@ -40,7 +40,7 @@ Namespace Orthogonal
 
                 edge.data.bends = pathPoints _
                     .Select(Function(p)
-                                Return XYMetaHandle.CreateVector(ps, pt, p.PointF)
+                                Return WayPointVector.CreateVector(ps, pt, p.PointF)
                             End Function) _
                     .ToArray
             Next

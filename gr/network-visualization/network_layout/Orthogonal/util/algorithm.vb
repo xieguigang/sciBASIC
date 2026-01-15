@@ -191,7 +191,7 @@ Namespace Orthogonal
                                     Exit For
                                 Else
                                     ' [x1,y1] is an edge turn point
-                                    edge.data.bends = {XYMetaHandle.CreateVector(pu, pv, x1, y1)}
+                                    edge.data.bends = {WayPointVector.CreateVector(pu, pv, x1, y1)}
                                     Exit For
                                 End If
                             ElseIf std.Abs(pu.X - x1) < 0.1 AndAlso std.Abs(pu.Y - y1) < 0.1 Then
@@ -203,7 +203,7 @@ Namespace Orthogonal
                                     Exit For
                                 Else
                                     ' [x0,y0] is an edge turn point
-                                    edge.data.bends = {XYMetaHandle.CreateVector(pu, pv, x0, y0)}
+                                    edge.data.bends = {WayPointVector.CreateVector(pu, pv, x0, y0)}
                                     Exit For
                                 End If
                             Else

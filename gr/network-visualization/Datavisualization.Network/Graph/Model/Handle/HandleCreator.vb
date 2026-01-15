@@ -55,7 +55,7 @@
 Imports System.Drawing
 Imports System.Runtime.CompilerServices
 Imports geometry = Microsoft.VisualBasic.Imaging.Math2D
-Imports stdNum = System.Math
+Imports std = System.Math
 
 Namespace Graph.EdgeBundling
 
@@ -135,12 +135,12 @@ Namespace Graph.EdgeBundling
                 End If
 
                 ' Theta Is the angle between v1 And v2
-                Dim theta = stdNum.Acos(handle.cosTheta)
-                handle.sinTheta = stdNum.Sin(theta)
+                Dim theta = std.Acos(handle.cosTheta)
+                handle.sinTheta = std.Sin(theta)
 
                 Dim validate = handle.convert(sX, sY, tX, tY)
 
-                If (stdNum.Abs(validate.X - hx) > 2 OrElse stdNum.Abs(validate.Y - hy) > 2) Then
+                If (std.Abs(validate.X - hx) > 2 OrElse std.Abs(validate.Y - hy) > 2) Then
                     handle.sinTheta = -handle.sinTheta
                 End If
 

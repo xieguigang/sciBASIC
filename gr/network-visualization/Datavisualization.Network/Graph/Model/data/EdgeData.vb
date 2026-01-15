@@ -96,7 +96,7 @@ Namespace Graph
         ''' </summary>
         ''' <returns></returns>
         Public Property length As Double
-        Public Property bends As XYMetaHandle()
+        Public Property bends As WayPointVector()
 
         ''' <summary>
         ''' [color, width, dash]
@@ -125,10 +125,10 @@ Namespace Graph
         End Function
 
         Public Function Clone() As EdgeData
-            Dim bendList As XYMetaHandle() = bends _
+            Dim bendList As WayPointVector() = bends _
                 .SafeQuery _
                 .Select(Function(a)
-                            Return New XYMetaHandle(a)
+                            Return New WayPointVector(a)
                         End Function) _
                 .ToArray
             Dim styleCopy As Pen = Nothing

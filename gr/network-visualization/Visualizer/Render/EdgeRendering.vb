@@ -182,7 +182,7 @@ Friend Class EdgeRendering
             .edgeShadowDistance = edgeShadowDistance,
             .lineColor = lineColor
         }
-        Dim bends As XYMetaHandle() = edge.data.bends.SafeQuery.ToArray
+        Dim bends As WayPointVector() = edge.data.bends.SafeQuery.ToArray
         Dim isNan As Boolean = bends.Any(Function(bend) bend.isNaN)
 
         If (Not isNan) AndAlso drawEdgeBends AndAlso Not bends.IsNullOrEmpty Then
@@ -196,7 +196,7 @@ Friend Class EdgeRendering
                 Dim segmentTuples = bends.SlideWindows(2).ToArray
 
                 For i As Integer = 0 To segmentTuples.Length - 1
-                    Dim line As SlideWindow(Of XYMetaHandle) = segmentTuples(i)
+                    Dim line As SlideWindow(Of WayPointVector) = segmentTuples(i)
                     Dim pta = line(Scan0).GetPoint(a.X, a.Y, b.X, b.Y)
                     Dim ptb = line(1).GetPoint(a.X, a.Y, b.X, b.Y)
 
