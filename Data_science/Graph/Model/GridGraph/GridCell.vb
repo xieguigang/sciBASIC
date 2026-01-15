@@ -81,13 +81,13 @@ Namespace GridGraph
         End Property
 
 #Region "Implements IPoint2D, Layout2D"
-        Private ReadOnly Property X As Integer Implements IPoint2D.X
+        Friend ReadOnly Property X As Integer Implements IPoint2D.X
             Get
                 Return index.X
             End Get
         End Property
 
-        Private ReadOnly Property Y As Integer Implements IPoint2D.Y
+        Friend ReadOnly Property Y As Integer Implements IPoint2D.Y
             Get
                 Return index.Y
             End Get
@@ -120,13 +120,27 @@ Namespace GridGraph
             data = x
         End Sub
 
-        Sub New(x As Integer, y As Integer, data As T)
+        Sub New(x As Integer, y As Integer, Optional data As T = Nothing)
             index = New Point(x, y)
             m_data = data
         End Sub
 
         Public Overrides Function ToString() As String
             Return $"[{index.X}, {index.Y}] {data.ToString}"
+        End Function
+
+        Public Overrides Function Equals(obj As Object) As Boolean
+            If Not TypeOf obj Is GridCell(Of T) Then Return False
+            Dim p = DirectCast(obj, GridCell(Of T))
+            Return p.X = X AndAlso p.Y = Y
+        End Function
+
+        ''' <summary>
+        ''' hashcode overrides for A-star algorithm
+        ''' </summary>
+        ''' <returns></returns>
+        Public Overrides Function GetHashCode() As Integer
+            Return (X << 2) Xor Y
         End Function
 
     End Class
