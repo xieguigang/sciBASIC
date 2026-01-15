@@ -256,7 +256,13 @@ Namespace Drawing2D.Colors
                 Call sb.Replace($"""{n}""", $"""c{n}""")
             Next
 
-            Return sb.ToString.LoadJSON(Of Dictionary(Of String, ColorBrewer))
+            Dim [set] = sb.ToString.LoadJSON(Of Dictionary(Of String, ColorBrewer))
+
+            For Each key As String In [set].Keys.ToArray
+                [set](key.ToLower) = [set](key)
+            Next
+
+            Return [set]
         End Function
 
         Private Function ParseAvailableInterpolates() As Dictionary(Of Color, Color())
@@ -427,6 +433,16 @@ Namespace Drawing2D.Colors
             Designer.external = external
         End Sub
 
+        Private Function TryGetColorBrewer(ref As NamedValue(Of String)) As Color()
+            If ColorBrewer.ContainsKey(ref.Name) Then
+                Return ColorBrewer(ref.Name).GetColors(ref.Value)
+            ElseIf ref.Name = "" AndAlso ColorBrewer.ContainsKey(ref.Value) Then
+                Return ColorBrewer(ref.Value).GetColors(Nothing)
+            End If
+
+            Return Nothing
+        End Function
+
         ''' <summary>
         ''' a unify method for get color maps
         ''' </summary>
@@ -438,11 +454,10 @@ Namespace Drawing2D.Colors
             End If
 
             Dim key As NamedValue(Of String) = Drawing2D.Colors.ColorBrewer.ParseName(term)
+            Dim colorBrewer = TryGetColorBrewer(key)
 
-            If ColorBrewer.ContainsKey(key.Name) Then
-                Return ColorBrewer(key.Name).GetColors(key.Value)
-            ElseIf key.Name = "" AndAlso ColorBrewer.ContainsKey(key.Value) Then
-                Return ColorBrewer(key.Value).GetColors(Nothing)
+            If colorBrewer IsNot Nothing Then
+                Return colorBrewer
             End If
 
             Select Case Strings.LCase(term).Trim

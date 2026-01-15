@@ -66,6 +66,7 @@
 
 Imports System.Runtime.CompilerServices
 Imports System.Xml.Serialization
+Imports Microsoft.VisualBasic.Linq
 
 ''' <summary>
 ''' property value with data type
@@ -128,17 +129,24 @@ Public Class EntityProperty
     ''' string array.
     ''' </remarks>
     <XmlText>
-    Public Property value As String
+    Public Property value As String()
 
     Sub New()
     End Sub
 
     Sub New(value As Object, Optional res As String = Nothing)
         If value Is Nothing Then
-            Me.value = ""
+            Me.value = {}
             Me.dataType = DataTypes.dtString
+        ElseIf value.GetType.IsArray Then
+            Me.value = DirectCast(value, Array).AsEnumerable _
+                .Select(Function(o)
+                            Return Scripting.ToString(o)
+                        End Function) _
+                .ToArray
+            Me.dataType = DataTypes.SchemaDataType(value.GetType)
         Else
-            Me.value = Scripting.ToString(value)
+            Me.value = {Scripting.ToString(value)}
             Me.dataType = DataTypes.SchemaDataType(value.GetType)
         End If
 
@@ -166,7 +174,7 @@ Public Class EntityProperty
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Shared Narrowing Operator CType(res As EntityProperty) As String
-        Return res?.value
+        Return res?.value.JoinBy(vbCrLf)
     End Operator
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -174,7 +182,7 @@ Public Class EntityProperty
         If res Is Nothing Then
             Return False
         Else
-            Return Boolean.Parse(res.value)
+            Return Boolean.Parse(res.value(0))
         End If
     End Operator
 
@@ -184,7 +192,7 @@ Public Class EntityProperty
             Return 0
         End If
 
-        Return Double.Parse(res.value)
+        Return Double.Parse(res.value(0))
     End Operator
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -193,16 +201,16 @@ Public Class EntityProperty
             Return 0
         End If
 
-        Return Integer.Parse(res.value)
+        Return Integer.Parse(res.value(0))
     End Operator
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Shared Operator =(res As EntityProperty, str As String) As Boolean
-        Return res.value = str
+        Return res.value(0) = str
     End Operator
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Shared Operator <>(res As EntityProperty, str As String) As Boolean
-        Return res.value <> str
+        Return res.value(0) <> str
     End Operator
 End Class

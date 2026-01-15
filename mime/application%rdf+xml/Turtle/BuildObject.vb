@@ -90,7 +90,7 @@ Namespace Turtle
                     .Select(Function(ti) ti.objs) _
                     .IteratesALL
 
-                    Call data.Add(++i, New RDFEntity With {.value = val})
+                    Call data.Add(++i, New RDFEntity With {.value = {val}})
                 Next
 
                 objData(tuple.Key) = New RDFEntity With {

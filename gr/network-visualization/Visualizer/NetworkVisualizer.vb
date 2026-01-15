@@ -438,7 +438,7 @@ Public Module NetworkVisualizer
                          Return n.data(hullPolygonGroups.Name)
                      End Function) _
             .ToArray
-        Dim colors As LoopArray(Of Color) = Designer.GetColors(hullPolygonGroups.Description Or "set1:c8".AsDefault)
+        Dim colors As LoopArray(Of Color) = Designer.GetColors(hullPolygonGroups.Description Or "set1".AsDefault)
         Dim css As CSSEnvirnment = g.LoadEnvironment
         Dim convexHullLabelFont As Font = css.GetFont(CSSFont.TryParse(convexHullLabelFontCSS$))
         Dim singleGroupKey As String = Nothing
