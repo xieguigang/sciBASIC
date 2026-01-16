@@ -292,11 +292,10 @@ Namespace Net.WebClient
 
         Private Sub ShowProgress()
             Dim t0 As Double = Now.UnixTimeStamp
+            Dim dt As Double
+            Dim speed As Double
 
             Using bar As New ProgressBar With {.Maximum = totalFileSize}
-                Dim dt As Double = (Now.UnixTimeStamp - t0) + 0.00001
-                Dim speed As Double = totalBytesDownloaded / dt
-
                 Call bar.Text.Description.Processing _
                     .AddNew _
                     .SetValue(Function(b)
@@ -306,6 +305,8 @@ Namespace Net.WebClient
                 While totalBytesDownloaded < totalFileSize
                     Thread.Sleep(300)
                     bar.SetValue(totalBytesDownloaded)
+                    dt = (Now.UnixTimeStamp - t0) + 0.00001
+                    speed = totalBytesDownloaded / dt
                 End While
             End Using
         End Sub
