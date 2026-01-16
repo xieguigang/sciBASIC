@@ -18,7 +18,7 @@ Namespace Net.WebClient
         Public Property bufferSize As Integer = 4 * ByteSize.KB
 
         Sub New(host As Axel, startByte As Long, endByte As Long, destinationPath As String)
-            Me.url = url
+            Me.url = host.url
             Me.startByte = startByte
             Me.endByte = endByte
             Me.destinationPath = destinationPath
@@ -77,52 +77,56 @@ Namespace Net.WebClient
                         response.EnsureSuccessStatusCode()
 
                         Using contentStream = Await response.Content.ReadAsStreamAsync()
-                            ' FileMode.Create 确保每次重试都会覆盖之前未完成的文件
-                            Using fileStream As New FileStream(destinationPath, FileMode.Create, FileAccess.Write, FileShare.None, 8192, True)
-                                Dim buffer As Byte() = New Byte(bufferSize - 1) {}
-                                ' 计算目标大小（用于循环判断，或者用于校验）
-                                Dim bytesRemaining As Long = bytesToDownload
-                                Dim bytesRead As Integer
-
-                                ' 循环直到读取完毕
-                                Do While bytesRemaining > 0
-                                    ' 计算本次最多能读多少字节
-                                    ' 不能超过 buffer 大小，也不能超过剩余需要的字节数
-                                    ' 这样可以防止 ReadAsync 读取超出 Range 范围的数据（如果有）
-                                    Dim bytesToRead As Integer = CInt(std.Min(bufferSize, bytesRemaining))
-
-                                    ' 使用 bytesToRead 进行读取，而不是 bufferSize
-                                    bytesRead = Await contentStream.ReadAsync(buffer, Scan0, bytesToRead)
-                                    ' 如果读取到0字节，说明流已结束，必须退出循环
-                                    If bytesRead = 0 Then
-                                        Exit Do
-                                    End If
-
-                                    ' 只写入实际读取到的字节数，而不是 bufferSize
-                                    Await fileStream.WriteAsync(buffer, Scan0, bytesRead)
-
-                                    ' 更新剩余字节数
-                                    bytesRemaining -= bytesRead
-                                    ' 更新已下载字节数（用于进度条）
-                                    ' 进度增加量也必须是实际读取量
-                                    SyncLock host.lockObject
-                                        host.totalBytesDownloaded += bytesRead
-                                    End SyncLock
-                                Loop
-
-                                If bytesRemaining > 0 Then
-                                    ' bytesRead = 0 的时候提前退出了
-                                    downloadSuccess = False
-                                Else
-                                    downloadSuccess = True
-                                End If
-                            End Using
+                            downloadSuccess = Await CopyStream(contentStream)
                         End Using
                     End Using
                 End Using
             End Using
 
             Return downloadSuccess
+        End Function
+
+        Private Async Function CopyStream(contentStream As Stream) As Task(Of Boolean)
+            Dim buffer As Byte() = New Byte(bufferSize - 1) {}
+            ' 计算目标大小（用于循环判断，或者用于校验）
+            Dim bytesRemaining As Long = bytesToDownload
+            Dim bytesRead As Integer
+
+            ' FileMode.Create 确保每次重试都会覆盖之前未完成的文件
+            Using fileStream As New FileStream(destinationPath, FileMode.Create, FileAccess.Write, FileShare.None, 8192, True)
+                ' 循环直到读取完毕
+                Do While bytesRemaining > 0
+                    ' 计算本次最多能读多少字节
+                    ' 不能超过 buffer 大小，也不能超过剩余需要的字节数
+                    ' 这样可以防止 ReadAsync 读取超出 Range 范围的数据（如果有）
+                    Dim bytesToRead As Integer = CInt(std.Min(bufferSize, bytesRemaining))
+
+                    ' 使用 bytesToRead 进行读取，而不是 bufferSize
+                    bytesRead = Await contentStream.ReadAsync(Buffer, Scan0, bytesToRead)
+                    ' 如果读取到0字节，说明流已结束，必须退出循环
+                    If bytesRead = 0 Then
+                        Exit Do
+                    End If
+
+                    ' 只写入实际读取到的字节数，而不是 bufferSize
+                    Await fileStream.WriteAsync(Buffer, Scan0, bytesRead)
+
+                    ' 更新剩余字节数
+                    bytesRemaining -= bytesRead
+                    ' 更新已下载字节数（用于进度条）
+                    ' 进度增加量也必须是实际读取量
+                    SyncLock host.lockObject
+                        host.totalBytesDownloaded += bytesRead
+                    End SyncLock
+                Loop
+            End Using
+
+            If bytesRemaining > 0 Then
+                ' bytesRead = 0 的时候提前退出了
+                Return False
+            Else
+                Return True
+            End If
         End Function
 
     End Class

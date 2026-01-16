@@ -73,10 +73,15 @@ Namespace Net.WebClient
         Friend totalBytesDownloaded As Long = 0
         Friend totalFileSize As Long = 0
 
+        Friend ReadOnly url As String
         Friend ReadOnly lockObject As New Object()
 
+        Sub New(url As String)
+            Me.url = url
+        End Sub
+
         <STAThread>
-        Public Async Function Download(url As String, fileName As String, Optional nThreads As Integer? = Nothing) As Task
+        Public Async Function Download(fileName As String, Optional nThreads As Integer? = Nothing) As Task
             Dim threadCount As Integer = If(nThreads, DefaultThreadCount)
 
             If threadCount <= 0 Then
@@ -88,10 +93,10 @@ Namespace Net.WebClient
             Console.WriteLine("正在获取文件信息...")
 
             ' 2. 异步执行下载任务
-            Await DownloadFileAsync(url, fileName, threadCount)
+            Await DownloadFileAsync(fileName, threadCount)
         End Function
 
-        Private Async Function DownloadFileAsync(url As String, fileName As String, threadCount As Integer) As Task
+        Private Async Function DownloadFileAsync(fileName As String, threadCount As Integer) As Task
             Using httpClient As New HttpClient()
                 ' 3. 获取文件信息
                 Dim response = Await httpClient.GetAsync(url, HttpCompletionOption.ResponseHeadersRead)
@@ -138,17 +143,18 @@ Namespace Net.WebClient
 
                 ' 5. 创建并启动下载任务
                 Dim chunkSize As Long = totalFileSize \ threadCount
+
                 For i As Integer = 0 To threadCount - 1
                     Dim startByte As Long = i * chunkSize
                     Dim endByte As Long = If(i = threadCount - 1, totalFileSize - 1, (i + 1) * chunkSize - 1)
 
                     ' 为每个分块创建一个临时文件
                     Dim tempFile = Path.Combine(Path.GetTempPath(), $"{Path.GetFileNameWithoutExtension(fileName)}.part{i}{Path.GetExtension(fileName)}")
-                    tempFiles.Add(tempFile)
+                    Dim task As New AxelTask(Me, startByte, endByte, tempFile)
 
+                    Call tempFiles.Add(tempFile)
                     ' 启动异步下载任务
-                    Dim downloadTask = DownloadChunkAsync(url, startByte, endByte, tempFile)
-                    downloadTasks.Add(downloadTask)
+                    Call downloadTasks.Add(task.DownloadChunkAsync())
                 Next
 
                 ' 6. 等待所有下载任务完成，并显示进度
