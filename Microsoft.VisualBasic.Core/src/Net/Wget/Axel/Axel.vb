@@ -196,7 +196,7 @@ Namespace Net.WebClient
             Dim dt As Double
             Dim speed As Double
 
-            Using bar As New ProgressBar With {.Maximum = totalFileSize}
+            Using bar As New ProgressBar With {.Maximum = totalFileSize, .Delay = 400}
                 Call bar.Text.Description.Processing _
                     .AddNew _
                     .SetValue(Function(b)
