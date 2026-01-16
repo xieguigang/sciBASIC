@@ -70,11 +70,15 @@ Namespace Language
     Public Module FormatHelpers
 
         <Extension>
-        Public Function LoadJSON(Of T)(json As Value(Of String)) As T
+        Public Function LoadJSON(Of T)(json As Value(Of String),
+                                       Optional simpleDict As Boolean = True,
+                                       Optional knownTypes As IEnumerable(Of Type) = Nothing,
+                                       Optional throwEx As Boolean = True) As T
+
             If json Is Nothing OrElse json.Value.StringEmpty(, True) Then
                 Return Nothing
             Else
-                Return CStr(json).LoadJSON(Of T)(throwEx:=False)
+                Return CStr(json).LoadJSON(Of T)(throwEx:=throwEx, simpleDict:=simpleDict, knownTypes:=knownTypes)
             End If
         End Function
 
