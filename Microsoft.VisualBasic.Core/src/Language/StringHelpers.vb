@@ -60,6 +60,7 @@
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Language.C
 Imports Microsoft.VisualBasic.Language.[Default]
+Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace Language
 
@@ -67,6 +68,15 @@ Namespace Language
     ''' ``<see cref="sprintf"/>`` syntax helpers
     ''' </summary>
     Public Module FormatHelpers
+
+        <Extension>
+        Public Function LoadJSON(Of T)(json As Value(Of String)) As T
+            If json Is Nothing OrElse json.Value.StringEmpty(, True) Then
+                Return Nothing
+            Else
+                Return CStr(json).LoadJSON(Of T)(throwEx:=False)
+            End If
+        End Function
 
         ''' <summary>
         ''' Determines whether the beginning of this string instance matches the specified
