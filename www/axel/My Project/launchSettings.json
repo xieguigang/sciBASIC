@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "axel": {
+      "commandName": "Project",
+      "commandLineArgs": "https://autopatchcn.bhsr.com/client/cn/20251126183400_yvLQxEpk9CTuJjg6/gw_PC/StarRail_setup_1.12.0.exe"
+    }
+  }
+}

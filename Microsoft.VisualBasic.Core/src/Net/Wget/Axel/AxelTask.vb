@@ -21,6 +21,7 @@ Namespace Net.WebClient
         Dim downloadBytes As Long
 
         Sub New(host As Axel, startByte As Long, endByte As Long, destinationPath As String)
+            Me.host = host
             Me.url = host.url
             Me.startByte = startByte
             Me.endByte = endByte
