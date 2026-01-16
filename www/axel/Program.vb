@@ -67,7 +67,7 @@ Module Program
     End Function
 
     Private Function ShowHelp() As Integer
-        Call Console.WriteLine("axel url/files.txt [--filename <save_filename>] [--download_to <directory_path>]")
+        Call Console.WriteLine("axel url/files.txt [--filename <save_filename>] [--download_to <directory_path> --n_threads <default=4>]")
         Return 0
     End Function
 
@@ -83,8 +83,10 @@ Module Program
         End If
     End Sub
 
-    ' url/files.txt [--filename <save_filename>] [--download_to <directory_path>]
+    ' url/files.txt [--filename <save_filename>] [--download_to <directory_path> --n_threads <default=4>]
     Private Function Download(target As String, args As CommandLine) As Integer
+        Dim n_threads As Integer = args("--n_threads") Or 4
+
         If target.FileExists Then
             Dim downloads As String = args("--download_to")
 
@@ -94,7 +96,7 @@ Module Program
 
                 If Not hashset.Check(downloadfile) Then
                     Try
-                        Call New Axel(url).Download(downloadfile).Wait()
+                        Call New Axel(url).Download(downloadfile, n_threads).Wait()
                         Call MarkFlag(downloadfile)
                     Catch ex As Exception
                         Call ex.Message.warning
@@ -111,7 +113,7 @@ Module Program
             End If
 
             If Not hashset.Check(filename) Then
-                Call New Axel(url:=target).Download(filename).Wait()
+                Call New Axel(url:=target).Download(filename, n_threads).Wait()
                 Call MarkFlag(filename)
             Else
                 Call Console.WriteLine($"跳过已经成功下载并且校验成功的文件：{filename.GetFullPath}")
