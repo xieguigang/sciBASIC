@@ -56,6 +56,8 @@ Imports System.IO
 Imports System.Net.Http
 Imports System.Threading
 Imports Microsoft.VisualBasic.ApplicationServices.Terminal.ProgressBar.ConsoleProgressBar
+Imports Microsoft.VisualBasic.ComponentModel.Ranges.Unit
+Imports std = System.Math
 
 Namespace Net.WebClient
 
@@ -181,10 +183,14 @@ Namespace Net.WebClient
             ' 配置参数
             Dim maxRetries As Integer = 9
             Dim connectionTimeoutSeconds As Integer = 30
+            Dim bufferSize As Integer = 4 * ByteSize.KB
+            Dim bytesToDownload As Long = endByte - startByte + 1
 
             ' --- 重试循环开始 ---
             For retryCount As Integer = 1 To maxRetries
                 Try
+                    Dim downloadSuccess As Boolean = False
+
                     Using httpClient As New HttpClient()
                         ' 1. 设置连接超时为30秒
                         httpClient.Timeout = TimeSpan.FromSeconds(connectionTimeoutSeconds)
@@ -202,12 +208,43 @@ Namespace Net.WebClient
                                 Using contentStream = Await response.Content.ReadAsStreamAsync()
                                     ' FileMode.Create 确保每次重试都会覆盖之前未完成的文件
                                     Using fileStream As New FileStream(destinationPath, FileMode.Create, FileAccess.Write, FileShare.None, 8192, True)
-                                        Await contentStream.CopyToAsync(fileStream)
+                                        Dim buffer As Byte() = New Byte(bufferSize - 1) {}
+                                        ' 计算目标大小（用于循环判断，或者用于校验）
+                                        Dim bytesRemaining As Long = bytesToDownload
+                                        Dim bytesRead As Integer
 
-                                        ' 更新已下载字节数（用于进度条）
-                                        SyncLock lockObject
-                                            totalBytesDownloaded += (endByte - startByte + 1)
-                                        End SyncLock
+                                        ' 循环直到读取完毕
+                                        Do While bytesRemaining > 0
+                                            ' 计算本次最多能读多少字节
+                                            ' 不能超过 buffer 大小，也不能超过剩余需要的字节数
+                                            ' 这样可以防止 ReadAsync 读取超出 Range 范围的数据（如果有）
+                                            Dim bytesToRead As Integer = CInt(std.Min(bufferSize, bytesRemaining))
+
+                                            ' 使用 bytesToRead 进行读取，而不是 bufferSize
+                                            bytesRead = Await contentStream.ReadAsync(buffer, Scan0, bytesToRead)
+                                            ' 如果读取到0字节，说明流已结束，必须退出循环
+                                            If bytesRead = 0 Then
+                                                Exit Do
+                                            End If
+
+                                            ' 只写入实际读取到的字节数，而不是 bufferSize
+                                            Await fileStream.WriteAsync(buffer, Scan0, bytesRead)
+
+                                            ' 更新剩余字节数
+                                            bytesRemaining -= bytesRead
+                                            ' 更新已下载字节数（用于进度条）
+                                            ' 进度增加量也必须是实际读取量
+                                            SyncLock lockObject
+                                                totalBytesDownloaded += bytesRead
+                                            End SyncLock
+                                        Loop
+
+                                        If bytesRemaining > 0 Then
+                                            ' bytesRead = 0 的时候提前退出了
+                                            downloadSuccess = False
+                                        Else
+                                            downloadSuccess = True
+                                        End If
                                     End Using
                                 End Using
                             End Using
