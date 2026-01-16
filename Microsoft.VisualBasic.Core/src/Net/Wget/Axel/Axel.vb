@@ -99,93 +99,79 @@ Namespace Net.WebClient
         End Function
 
         Private Async Function DownloadFileAsync(fileName As String, threadCount As Integer) As Task
-            Using httpClient As New HttpClient()
-                ' 3. 获取文件信息
-                Dim response = Await httpClient.GetAsync(url, HttpCompletionOption.ResponseHeadersRead)
+            Dim info As AxelRequest = Await New AxelRequest(url).RequestInfo
 
-                ' --- 需求1: 处理非200 HTTP错误 ---
-                If Not response.IsSuccessStatusCode Then
-                    Console.WriteLine($"[错误] 下载失败: {url}")
-                    Console.WriteLine($"        状态码: {CInt(response.StatusCode)} ({response.StatusCode})")
-                    Console.WriteLine($"        原因: {response.ReasonPhrase}")
-                    ' 记录日志后跳过，直接返回
-                    Return
-                End If
+            If info.RequestError Then
+                Return
+            Else
+                totalFileSize = info.TotalFileBytes
 
-                totalFileSize = response.Content.Headers.ContentLength.GetValueOrDefault()
-                If totalFileSize = 0 Then
-                    Console.WriteLine("错误: 无法获取文件大小或文件为空。")
-                    Return
-                End If
-
-                ' --- 需求2: 验证已存在文件 ---
-                If File.Exists(fileName) Then
-                    Dim existingFileInfo As New FileInfo(fileName)
-                    If existingFileInfo.Length = totalFileSize Then
-                        Call Console.WriteLine($"[跳过] 文件已存在且大小匹配，跳过下载: {Path.GetFileName(fileName)}")
-
-                        Return
-                    Else
-                        Console.WriteLine($"[信息] 文件已存在但大小不匹配 (本地: {StringFormats.Lanudry(existingFileInfo.Length)}, 远程: {StringFormats.Lanudry(totalFileSize)})，将重新下载。")
-                    End If
-                End If
-
-                ' 检查服务器是否支持范围请求
-                If Not response.Headers.AcceptRanges.Contains("bytes") Then
-                    Console.WriteLine("警告: 服务器不支持多线程下载，将使用单线程下载。")
+                If Not info.SupportsMultipleConnection Then
                     threadCount = 1
                 End If
+            End If
 
-                Console.WriteLine($"文件名: {fileName}")
-                Console.WriteLine($"文件大小: {StringFormats.Lanudry(totalFileSize)}")
-                Console.WriteLine("-------------------------------------")
+            ' --- 需求2: 验证已存在文件 ---
+            If File.Exists(fileName) Then
+                Dim existingFileInfo As New FileInfo(fileName)
 
-                Dim tempFiles As New List(Of String)
-                Dim downloadTasks As New List(Of Task)
+                If existingFileInfo.Length = totalFileSize Then
+                    Call Console.WriteLine($"[跳过] 文件已存在且大小匹配，跳过下载: {Path.GetFileName(fileName)}")
+                    Return
+                Else
+                    Console.WriteLine($"[信息] 文件已存在但大小不匹配 (本地: {StringFormats.Lanudry(existingFileInfo.Length)}, 远程: {StringFormats.Lanudry(totalFileSize)})，将重新下载。")
+                End If
+            End If
 
-                ' 5. 创建并启动下载任务
-                Dim chunkSize As Long = totalFileSize \ threadCount
+            Console.WriteLine($"文件名: {fileName}")
+            Console.WriteLine($"文件大小: {StringFormats.Lanudry(totalFileSize)}")
+            Console.WriteLine("-------------------------------------")
 
-                For i As Integer = 0 To threadCount - 1
-                    Dim startByte As Long = i * chunkSize
-                    Dim endByte As Long = If(i = threadCount - 1, totalFileSize - 1, (i + 1) * chunkSize - 1)
+            Dim tempFiles As New List(Of String)
+            Dim downloadTasks As New List(Of Task)
 
-                    ' 为每个分块创建一个临时文件
-                    Dim tempFile = Path.Combine(Path.GetTempPath(), $"{Path.GetFileNameWithoutExtension(fileName)}.part{i}{Path.GetExtension(fileName)}")
-                    Dim task As New AxelTask(Me, startByte, endByte, tempFile)
+            ' 5. 创建并启动下载任务
+            Dim chunkSize As Long = totalFileSize \ threadCount
 
-                    Call tempFiles.Add(tempFile)
-                    Call axelTasks.Add(task)
-                    ' 启动异步下载任务
-                    Call downloadTasks.Add(task.DownloadChunkAsync())
-                Next
+            For i As Integer = 0 To threadCount - 1
+                Dim startByte As Long = i * chunkSize
+                Dim endByte As Long = If(i = threadCount - 1, totalFileSize - 1, (i + 1) * chunkSize - 1)
 
-                ' 6. 等待所有下载任务完成，并显示进度
-                Call Task.Run(AddressOf ShowProgress)
+                ' 为每个分块创建一个临时文件
+                Dim tempFile = Path.Combine(Path.GetTempPath(), $"{Path.GetFileNameWithoutExtension(fileName)}.part{i}{Path.GetExtension(fileName)}")
+                Dim task As New AxelTask(Me, startByte, endByte, tempFile)
 
-                Await Task.WhenAll(downloadTasks)
-                ' 确保进度显示任务完成
-                ' (在实际应用中，可以用 CancellationTokenSource 来更优雅地停止)
-                ' 这里简单等待一下，让进度条显示100%
-                Await Task.Delay(1000)
+                Call tempFiles.Add(tempFile)
+                Call axelTasks.Add(task)
+                ' 启动异步下载任务
+                Call downloadTasks.Add(task.DownloadChunkAsync())
+            Next
 
-                ' 7. 合并文件
-                Console.WriteLine(vbCrLf & "所有分块下载完成，正在合并文件...")
-                Await MergeFilesAsync(tempFiles, fileName)
+            ' 6. 等待所有下载任务完成，并显示进度
+            Call Task.Run(AddressOf ShowProgress)
 
-                Call Console.WriteLine("文件合并完成！")
+            Await Task.WhenAll(downloadTasks)
+            ' 确保进度显示任务完成
+            ' (在实际应用中，可以用 CancellationTokenSource 来更优雅地停止)
+            ' 这里简单等待一下，让进度条显示100%
+            Await Task.Delay(1000)
 
-                ' 8. 清理临时文件
-                For Each tempFile As String In tempFiles
-                    Try
-                        File.Delete(tempFile)
-                    Catch
-                        ' 忽略清理错误
-                    End Try
-                Next
+            ' 7. 合并文件
+            Console.WriteLine(vbCrLf & "所有分块下载完成，正在合并文件...")
+            Await MergeFilesAsync(tempFiles, fileName)
 
-                Console.WriteLine($"下载完成: {Path.GetFullPath(fileName)}")
-            End Using
+            Call Console.WriteLine("文件合并完成！")
+
+            ' 8. 清理临时文件
+            For Each tempFile As String In tempFiles
+                Try
+                    File.Delete(tempFile)
+                Catch
+                    ' 忽略清理错误
+                End Try
+            Next
+
+            Console.WriteLine($"下载完成: {Path.GetFullPath(fileName)}")
         End Function
 
         Private Async Function MergeFilesAsync(sourceFiles As List(Of String), destinationPath As String) As Task
@@ -218,11 +204,27 @@ Namespace Net.WebClient
                                   End Function)
                 Next
 
+                Dim previousBytes As Long = totalBytesDownloaded
+                Dim t1 As Date
+
                 While totalBytesDownloaded < totalFileSize
                     Thread.Sleep(300)
                     bar.SetValue(totalBytesDownloaded)
                     dt = (Now.UnixTimeStamp - t0) + 0.00001
                     speed = totalBytesDownloaded / dt
+
+                    If previousBytes = totalBytesDownloaded Then
+                        ' no download data
+                        Dim zerospan As TimeSpan = Now - t1
+
+                        If zerospan.TotalSeconds > 30 Then
+                            ' TODO: 超过30秒没有下载进度，则在这里中断所有任务，进行重试
+
+                        End If
+                    Else
+                        previousBytes = totalBytesDownloaded
+                        t1 = Now
+                    End If
                 End While
             End Using
         End Sub
