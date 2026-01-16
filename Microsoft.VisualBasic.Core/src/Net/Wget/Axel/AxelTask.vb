@@ -16,6 +16,7 @@ Namespace Net.WebClient
         ReadOnly host As Axel
 
         Public Property bufferSize As Integer = 4 * ByteSize.KB
+        Public ReadOnly Property DownloadSuccess As Boolean = False
 
         Dim finished As Boolean = False
         Dim downloadBytes As Long
@@ -30,12 +31,14 @@ Namespace Net.WebClient
         End Sub
 
         Public Async Function DownloadChunkAsync(Optional maxRetries As Integer = 9, Optional connectionTimeoutSeconds As Integer = 30) As Task
+            _DownloadSuccess = False
+
             ' --- 重试循环开始 ---
             For retryCount As Integer = 1 To maxRetries
                 Try
-                    Dim downloadSuccess As Boolean = Await TryDownload(connectionTimeoutSeconds)
+                    _DownloadSuccess = Await TryDownload(connectionTimeoutSeconds)
 
-                    If downloadSuccess Then
+                    If DownloadSuccess Then
                         ' 如果代码执行到这里，说明下载成功，退出重试循环
                         Exit For
                     End If
@@ -110,14 +113,14 @@ Namespace Net.WebClient
                     Dim bytesToRead As Integer = CInt(std.Min(bufferSize, bytesRemaining))
 
                     ' 使用 bytesToRead 进行读取，而不是 bufferSize
-                    bytesRead = Await contentStream.ReadAsync(Buffer, Scan0, bytesToRead)
+                    bytesRead = Await contentStream.ReadAsync(buffer, Scan0, bytesToRead)
                     ' 如果读取到0字节，说明流已结束，必须退出循环
                     If bytesRead = 0 Then
                         Exit Do
                     End If
 
                     ' 只写入实际读取到的字节数，而不是 bufferSize
-                    Await fileStream.WriteAsync(Buffer, Scan0, bytesRead)
+                    Await fileStream.WriteAsync(buffer, Scan0, bytesRead)
 
                     ' 更新剩余字节数
                     bytesRemaining -= bytesRead
@@ -141,7 +144,7 @@ Namespace Net.WebClient
 
         Public Overrides Function ToString() As String
             If finished Then
-                Return $"Range({StringFormats.Lanudry(startByte)}-{StringFormats.Lanudry(endByte)}) Finished!"
+                Return $"Range({StringFormats.Lanudry(startByte)}-{StringFormats.Lanudry(endByte)}) {If(DownloadSuccess, "Finished!", "Error!")}"
             Else
                 Return $"Range({StringFormats.Lanudry(startByte)}-{StringFormats.Lanudry(endByte)}) Downloading {StringFormats.Lanudry(downloadBytes)}"
             End If
