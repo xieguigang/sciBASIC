@@ -144,7 +144,7 @@ Namespace Net.WebClient
                 Call tempFiles.Add(tempFile)
                 Call axelTasks.Add(task)
                 ' 启动异步下载任务
-                Call downloadTasks.Add(task.DownloadChunkAsync())
+                Call downloadTasks.Add(task.DownloadChunkAsync(maxRetries:=30))
             Next
 
             ' 6. 等待所有下载任务完成，并显示进度
@@ -156,22 +156,26 @@ Namespace Net.WebClient
             ' 这里简单等待一下，让进度条显示100%
             Await Task.Delay(1000)
 
-            ' 7. 合并文件
-            Console.WriteLine(vbCrLf & "所有分块下载完成，正在合并文件...")
-            Await MergeFilesAsync(tempFiles, fileName)
+            If axelTasks.All(Function(t) t.DownloadSuccess) Then
+                ' 7. 合并文件
+                Console.WriteLine(vbCrLf & "所有分块下载完成，正在合并文件...")
+                Await MergeFilesAsync(tempFiles, fileName)
 
-            Call Console.WriteLine("文件合并完成！")
+                Call Console.WriteLine("文件合并完成！")
 
-            ' 8. 清理临时文件
-            For Each tempFile As String In tempFiles
-                Try
-                    File.Delete(tempFile)
-                Catch
-                    ' 忽略清理错误
-                End Try
-            Next
+                ' 8. 清理临时文件
+                For Each tempFile As String In tempFiles
+                    Try
+                        File.Delete(tempFile)
+                    Catch
+                        ' 忽略清理错误
+                    End Try
+                Next
 
-            Console.WriteLine($"下载完成: {Path.GetFullPath(fileName)}")
+                Console.WriteLine($"下载完成: {Path.GetFullPath(fileName)}")
+            Else
+                Call Console.WriteLine("文件下载错误！")
+            End If
         End Function
 
         Private Async Function MergeFilesAsync(sourceFiles As List(Of String), destinationPath As String) As Task
@@ -183,6 +187,9 @@ Namespace Net.WebClient
                 Next
             End Using
         End Function
+
+        ' 取消令牌源，用于控制任务的取消
+        Friend cts As New CancellationTokenSource()
 
         Private Sub ShowProgress()
             Dim t0 As Double = Now.UnixTimeStamp
@@ -205,7 +212,7 @@ Namespace Net.WebClient
                 Next
 
                 Dim previousBytes As Long = totalBytesDownloaded
-                Dim t1 As Date
+                Dim t1 As Date = Now
 
                 While totalBytesDownloaded < totalFileSize
                     Thread.Sleep(300)
@@ -219,7 +226,12 @@ Namespace Net.WebClient
 
                         If zerospan.TotalSeconds > 30 Then
                             ' TODO: 超过30秒没有下载进度，则在这里中断所有任务，进行重试
-
+                            Console.WriteLine("[警告] 检测到下载停滞超过30秒，正在中断未完成的任务并重试...")
+                            cts.Cancel()
+                            Thread.Sleep(1000)
+                            cts.Dispose()
+                            cts = New CancellationTokenSource()
+                            t1 = Now
                         End If
                     Else
                         previousBytes = totalBytesDownloaded

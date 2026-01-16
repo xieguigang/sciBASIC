@@ -1,6 +1,7 @@
 ﻿
 Imports System.IO
 Imports System.Net.Http
+Imports System.Threading
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Unit
 Imports std = System.Math
 
@@ -100,6 +101,7 @@ Namespace Net.WebClient
             Dim bytesRead As Integer
             ' 计算目标大小（用于循环判断，或者用于校验）
             Dim bytesRemaining = bytesToDownload
+            Dim cancellationToken As CancellationToken = host.cts.Token
 
             downloadBytes = 0
 
@@ -111,9 +113,9 @@ Namespace Net.WebClient
                     ' 不能超过 buffer 大小，也不能超过剩余需要的字节数
                     ' 这样可以防止 ReadAsync 读取超出 Range 范围的数据（如果有）
                     Dim bytesToRead As Integer = CInt(std.Min(bufferSize, bytesRemaining))
-
                     ' 使用 bytesToRead 进行读取，而不是 bufferSize
-                    bytesRead = Await contentStream.ReadAsync(buffer, Scan0, bytesToRead)
+                    bytesRead = Await contentStream.ReadAsync(buffer, Scan0, bytesToRead, cancellationToken)
+
                     ' 如果读取到0字节，说明流已结束，必须退出循环
                     If bytesRead = 0 Then
                         Exit Do
