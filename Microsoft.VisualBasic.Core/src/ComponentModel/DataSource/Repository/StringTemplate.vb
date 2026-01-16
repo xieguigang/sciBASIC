@@ -21,7 +21,11 @@ Namespace ComponentModel.DataSourceModel.Repository
 
         ReadOnly template As String
         ReadOnly defaults As Dictionary(Of String, String)
+        ''' <summary>
+        ''' a collection mapping of [key -> &lt;key>] for get value and make string template interpolation
+        ''' </summary>
         ReadOnly keys As NamedValue(Of String)()
+        ReadOnly missing As New List(Of String)
 
         Sub New(template As String, Optional defaults As Dictionary(Of String, String) = Nothing)
             Me.template = template
@@ -41,6 +45,10 @@ Namespace ComponentModel.DataSourceModel.Repository
             defaults(key) = data
         End Sub
 
+        Public Function GetLastMissingKeys() As IEnumerable(Of String)
+            Return missing
+        End Function
+
         ''' <summary>
         ''' Create a string based on the given template
         ''' </summary>
@@ -51,11 +59,18 @@ Namespace ComponentModel.DataSourceModel.Repository
             Dim str As New StringBuilder(template)
             Dim value As String
 
+            Call missing.Clear()
+            Const unknown As String = "unknown"
+
             For Each placeholder As NamedValue(Of String) In keys
                 value = i.GetData(placeholder.Name)
 
                 If value.StringEmpty Then
-                    value = defaults.TryGetValue(placeholder.Name, default:="unknown")
+                    value = defaults.TryGetValue(placeholder.Name, default:=unknown)
+
+                    If value = unknown Then
+                        Call missing.Add(placeholder.Name)
+                    End If
                 End If
 
                 Call str.Replace(placeholder.Value, value)
