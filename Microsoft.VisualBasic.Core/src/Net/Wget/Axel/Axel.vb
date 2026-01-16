@@ -210,6 +210,14 @@ Namespace Net.WebClient
                                   Return $"下载进度 {(b.Value / totalFileSize * 100).ToString("F2")}%  {StringFormats.Lanudry(speed)}/s  [{StringFormats.Lanudry(b.Value)}/{StringFormats.Lanudry(totalFileSize)}]"
                               End Function)
 
+                For Each task As AxelTask In axelTasks
+                    Call bar.Text.Description.Processing _
+                        .AddNew _
+                        .SetValue(Function(b)
+                                      Return task.ToString
+                                  End Function)
+                Next
+
                 While totalBytesDownloaded < totalFileSize
                     Thread.Sleep(300)
                     bar.SetValue(totalBytesDownloaded)

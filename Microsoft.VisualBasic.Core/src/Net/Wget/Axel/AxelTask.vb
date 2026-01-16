@@ -140,9 +140,9 @@ Namespace Net.WebClient
 
         Public Overrides Function ToString() As String
             If finished Then
-                Return $"Finished!"
+                Return $"Range({StringFormats.Lanudry(startByte)}-{StringFormats.Lanudry(endByte)}) Finished!"
             Else
-                Return $"Downloading {StringFormats.Lanudry(downloadBytes)}"
+                Return $"Range({StringFormats.Lanudry(startByte)}-{StringFormats.Lanudry(endByte)}) Downloading {StringFormats.Lanudry(downloadBytes)}"
             End If
         End Function
 
