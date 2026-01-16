@@ -17,6 +17,9 @@ Namespace Net.WebClient
 
         Public Property bufferSize As Integer = 4 * ByteSize.KB
 
+        Dim finished As Boolean = False
+        Dim downloadBytes As Long
+
         Sub New(host As Axel, startByte As Long, endByte As Long, destinationPath As String)
             Me.url = host.url
             Me.startByte = startByte
@@ -57,6 +60,8 @@ Namespace Net.WebClient
                 ' 等待1秒后进行下一次重试，避免立即重试导致系统资源浪费或被服务器封禁
                 Await Task.Delay(1000)
             Next
+
+            finished = True
         End Function
 
         Private Async Function TryDownload(connectionTimeoutSeconds As Integer) As Task(Of Boolean)
@@ -88,9 +93,11 @@ Namespace Net.WebClient
 
         Private Async Function CopyStream(contentStream As Stream) As Task(Of Boolean)
             Dim buffer As Byte() = New Byte(bufferSize - 1) {}
-            ' 计算目标大小（用于循环判断，或者用于校验）
-            Dim bytesRemaining As Long = bytesToDownload
             Dim bytesRead As Integer
+            ' 计算目标大小（用于循环判断，或者用于校验）
+            Dim bytesRemaining = bytesToDownload
+
+            downloadBytes = 0
 
             ' FileMode.Create 确保每次重试都会覆盖之前未完成的文件
             Using fileStream As New FileStream(destinationPath, FileMode.Create, FileAccess.Write, FileShare.None, 8192, True)
@@ -113,6 +120,8 @@ Namespace Net.WebClient
 
                     ' 更新剩余字节数
                     bytesRemaining -= bytesRead
+                    downloadBytes += bytesRead
+
                     ' 更新已下载字节数（用于进度条）
                     ' 进度增加量也必须是实际读取量
                     SyncLock host.lockObject
@@ -126,6 +135,14 @@ Namespace Net.WebClient
                 Return False
             Else
                 Return True
+            End If
+        End Function
+
+        Public Overrides Function ToString() As String
+            If finished Then
+                Return $"Finished!"
+            Else
+                Return $"Downloading {StringFormats.Lanudry(downloadBytes)}"
             End If
         End Function
 

@@ -76,6 +76,8 @@ Namespace Net.WebClient
         Friend ReadOnly url As String
         Friend ReadOnly lockObject As New Object()
 
+        Dim axelTasks As New List(Of AxelTask)
+
         Sub New(url As String)
             Me.url = url
         End Sub
@@ -153,6 +155,7 @@ Namespace Net.WebClient
                     Dim task As New AxelTask(Me, startByte, endByte, tempFile)
 
                     Call tempFiles.Add(tempFile)
+                    Call axelTasks.Add(task)
                     ' 启动异步下载任务
                     Call downloadTasks.Add(task.DownloadChunkAsync())
                 Next
@@ -173,7 +176,7 @@ Namespace Net.WebClient
                 Call Console.WriteLine("文件合并完成！")
 
                 ' 8. 清理临时文件
-                For Each tempFile In tempFiles
+                For Each tempFile As String In tempFiles
                     Try
                         File.Delete(tempFile)
                     Catch

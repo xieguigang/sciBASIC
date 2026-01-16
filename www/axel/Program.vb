@@ -94,7 +94,7 @@ Module Program
 
                 If Not hashset.Check(downloadfile) Then
                     Try
-                        Call New Axel().Download(url, downloadfile).Wait()
+                        Call New Axel(url).Download(downloadfile).Wait()
                         Call MarkFlag(downloadfile)
                     Catch ex As Exception
                         Call ex.Message.warning
@@ -111,7 +111,7 @@ Module Program
             End If
 
             If Not hashset.Check(filename) Then
-                Call New Axel().Download(target, filename).Wait()
+                Call New Axel(url:=target).Download(filename).Wait()
                 Call MarkFlag(filename)
             Else
                 Call Console.WriteLine($"跳过已经成功下载并且校验成功的文件：{filename.GetFullPath}")
