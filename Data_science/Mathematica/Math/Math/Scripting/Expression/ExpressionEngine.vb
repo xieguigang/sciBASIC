@@ -79,7 +79,7 @@ Namespace Scripting.MathExpression
             {"asin", Function(args) std.Asin(args(Scan0))},
             {"atan", Function(args) std.Atan(args(Scan0))},
             {"atan2", Function(args) std.Atan2(args(Scan0), args(1))},
-            {"bigmul", Function(args) std.BigMul(args(Scan0), args(1))},
+            {"bigmul", Function(args) std.BigMul(CLng(args(Scan0)), CLng(args(1)))},
             {"ceiling", Function(args) std.Ceiling(args(Scan0))},
             {"cos", Function(args) std.Cos(args(Scan0))},
             {"cosh", Function(args) std.Cosh(args(Scan0))},
