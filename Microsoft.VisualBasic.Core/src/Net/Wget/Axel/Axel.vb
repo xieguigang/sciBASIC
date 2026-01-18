@@ -172,7 +172,7 @@ Namespace Net.WebClient
                     End Try
                 Next
 
-                Console.WriteLine($"下载完成: {Path.GetFullPath(fileName)}")
+                Console.WriteLine($"[{Now.ToString}] 下载完成: {Path.GetFullPath(fileName)}")
             Else
                 Call Console.WriteLine("文件下载错误！")
             End If
@@ -238,6 +238,8 @@ Namespace Net.WebClient
                         t1 = Now
                     End If
                 End While
+
+                Call Console.WriteLine($"[{Now.ToString} 下载成功！]")
             End Using
         End Sub
     End Class
