@@ -131,7 +131,7 @@ Namespace ComponentModel.Algorithm.DynamicProgramming
             Do While l > 1
                 p = -1
                 q = -1
-                finalStr = runIteration(l, seqs, p, q)
+                finalStr = RunIteration(l, seqs, p, q)
                 l -= 1
                 seqs(p) = finalStr
                 seqs(q) = seqs(l)
@@ -140,7 +140,7 @@ Namespace ComponentModel.Algorithm.DynamicProgramming
             Return seqs.ElementAtOrDefault(Scan0)
         End Function
 
-        Private Function runIteration(l As Integer, seqs As String(), ByRef p%, ByRef q%) As String
+        Private Function RunIteration(l As Integer, seqs As String(), ByRef p%, ByRef q%) As String
             Dim currMax As Integer = Integer.MinValue
             Dim finalStr As String = Nothing
 
