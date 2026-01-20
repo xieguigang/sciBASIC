@@ -55,7 +55,6 @@ Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Data.GraphTheory.Analysis.PageRank
 Imports Microsoft.VisualBasic.Language
-Imports Microsoft.VisualBasic.Serialization.JSON
 
 ''' <summary>
 ''' 从现有的理论和技术现状看，通用的、高质量的自然语言处理系统，仍然是较长期的努力目标，
@@ -116,7 +115,8 @@ Public Module NLPExtensions
     End Function
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    <Extension> Public Function KeyWords(text As GraphMatrix) As Dictionary(Of String, Double)
+    <Extension>
+    Public Function KeyWords(text As GraphMatrix) As Dictionary(Of String, Double)
         Dim result = text.TranslateVector(New PageRank(text).ComputePageRank, True)
         Return result
     End Function
@@ -128,7 +128,8 @@ Public Module NLPExtensions
     ''' <returns></returns>
     ''' 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    <Extension> Public Function Abstract(text As WeightedPRGraph, Optional minWords% = 6, Optional minWeight# = 0.05) As Dictionary(Of String, Double)
+    <Extension>
+    Public Function Abstract(text As WeightedPRGraph, Optional minWords% = 6, Optional minWeight# = 0.05) As Dictionary(Of String, Double)
         Return text.Rank.AbstractFilter(minWords, minWeight)
     End Function
 
