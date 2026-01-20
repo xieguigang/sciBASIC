@@ -138,7 +138,7 @@ Namespace Graph
 
         Default Public ReadOnly Property metadata(name As String) As String
             Get
-                Return data.Properties(name)
+                Return data(name:=name)
             End Get
         End Property
 

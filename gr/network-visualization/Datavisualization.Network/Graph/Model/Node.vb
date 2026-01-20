@@ -178,6 +178,16 @@ Namespace Graph
             Return label.GetHashCode()
         End Function
 
+        Public Sub SetMetadata(name As String, value As String)
+            If data Is Nothing Then
+                data = New NodeData With {
+                    .Properties = New Dictionary(Of String, String)
+                }
+            End If
+
+            data(name) = value
+        End Sub
+
         ''' <summary>
         ''' 枚举出所有的与当前节点直接相邻接的节点列表
         ''' </summary>
