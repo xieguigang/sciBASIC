@@ -35,7 +35,7 @@
         ''' <param name="graph"></param>
         ''' <param name="startIndex"></param>
         ''' <returns></returns>
-        Public Function DistanceFinder(graph As Integer(,), vertices As Integer, startIndex As Integer) As List(Of Node)
+        Public Shared Function DistanceFinder(graph As Integer(,), vertices As Integer, startIndex As Integer) As List(Of Node)
             Dim nodes As New List(Of Node)()
             ' 初始化节点
             For i As Integer = 0 To vertices - 1

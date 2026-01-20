@@ -66,12 +66,33 @@ Imports Connection = Microsoft.VisualBasic.Data.GraphTheory.VertexEdge
 
 Namespace Analysis.Dijkstra
 
+    Public MustInherit Class RoutePathway : Implements IReadOnlyId
+
+        Public ReadOnly Property id As String Implements IReadOnlyId.Identity
+
+        ''' <summary>
+        ''' sum edge weight as cost
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property Cost As Double
+
+        ''' <summary>
+        ''' size/length of the route path
+        ''' </summary>
+        ''' <returns></returns>
+        Public MustOverride ReadOnly Property Count As Integer
+
+        Sub New(id As String)
+            Me.id = id
+        End Sub
+
+    End Class
+
     ''' <summary>
     ''' 从出发点到终点所经过的路径
     ''' </summary>
-    Public Class Route : Implements IReadOnlyId, Enumeration(Of Connection)
-
-        Public ReadOnly Property id As String Implements IReadOnlyId.Identity
+    Public Class Route : Inherits RoutePathway
+        Implements Enumeration(Of Connection)
 
         ReadOnly route As List(Of Connection)
         ReadOnly vertex As New HashList(Of Vertex)
@@ -91,26 +112,17 @@ Namespace Analysis.Dijkstra
             End Set
         End Property
 
-        ''' <summary>
-        ''' sum edge weight as cost
-        ''' </summary>
-        ''' <returns></returns>
-        Public Property Cost As Double
-
-        ''' <summary>
-        ''' size/length of the route path
-        ''' </summary>
-        ''' <returns></returns>
-        Public ReadOnly Property Count As Integer
+        Public Overrides ReadOnly Property Count As Integer
             Get
                 Return route.Count
             End Get
         End Property
 
         Public Sub New(name As String)
+            Call MyBase.New(name)
+
             Cost = Integer.MaxValue
             route = New List(Of Connection)()
-            id = name
         End Sub
 
         Public Function ContainsNode(index As Integer) As Boolean
