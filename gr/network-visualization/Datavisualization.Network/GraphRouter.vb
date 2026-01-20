@@ -23,6 +23,10 @@ Public Class GraphRouter
         End Sub
     End Class
 
+    Public Function FindPath(start As Node, ends As Node) As Route
+
+    End Function
+
     Public Iterator Function FindPath(start As Node) As IEnumerable(Of Route)
         Dim i As Integer = nodes.TryGetValue(start, [default]:=-1)
 
