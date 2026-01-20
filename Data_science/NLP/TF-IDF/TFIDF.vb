@@ -82,6 +82,20 @@ Public Class TFIDF
     End Sub
 
     ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="id">the sequence id</param>
+    ''' <returns></returns>
+    Public Function TfidfVectorizer(id As String) As Double()
+        Dim terms As Dictionary(Of String, Integer) = vecs(id)
+        Dim vec As IEnumerable(Of Double) = From v As String
+                                            In Words
+                                            Let tf As Integer = terms.TryGetValue(v, [default]:=0)
+                                            Select tf * IDF(v)
+        Return vec.ToArray
+    End Function
+
+    ''' <summary>
     ''' generates the TF-IDF matrix
     ''' </summary>
     ''' <returns>
