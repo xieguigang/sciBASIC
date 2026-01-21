@@ -172,6 +172,51 @@ Namespace LinearAlgebra.Matrix
             Call Me.New(v.Row, v.Col, v.X)
         End Sub
 
+        Sub New(m As Double()())
+            ' 1. 基本的参数检查
+            If m Is Nothing Then
+                Throw New ArgumentNullException(NameOf(m))
+            End If
+
+            ' 2. 初始化矩阵维度
+            Me.m = m.Length    ' 获取行数
+
+            ' 处理空矩阵的情况，避免访问 m(0) 时报错
+            If Me.m = 0 Then
+                Me.n = 0
+                Return
+            End If
+
+            ' 假设矩阵是规则的，所有行的长度都等于第一行的长度
+            ' (注意：如果传入的是锯齿状数组，可能需要额外的逻辑)
+            Me.n = m(0).Length ' 获取列数
+
+            ' 3. 遍历稠密矩阵，提取非零元素填充稀疏结构
+            ' 使用 UInteger 以匹配 Dictionary 的键类型
+            For i As UInteger = 0 To CUInt(Me.m) - 1
+                Dim rowData As Double() = m(i)
+
+                ' 安全检查：如果某一行是空的，跳过
+                If rowData Is Nothing Then Continue For
+
+                For j As UInteger = 0 To CUInt(Me.n) - 1
+                    Dim val As Double = rowData(j)
+
+                    ' 核心逻辑：只存储非零元素
+                    If val <> 0 Then
+                        ' 检查外层字典（行索引）是否存在
+                        If Not Me.rows.ContainsKey(i) Then
+                            ' 如果不存在，为这一行创建一个新的字典
+                            Me.rows(i) = New Dictionary(Of UInteger, Double)()
+                        End If
+
+                        ' 将值存入内层字典（列索引 -> 值）
+                        Me.rows(i)(j) = val
+                    End If
+                Next
+            Next
+        End Sub
+
         Public Function Multiply(x As Double()) As Double()
             ' 1. 边界检查：确保输入向量 x 的长度与矩阵的列数 n 一致
             If x Is Nothing Then
