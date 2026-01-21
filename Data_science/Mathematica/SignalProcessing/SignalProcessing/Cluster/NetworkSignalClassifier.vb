@@ -1,6 +1,6 @@
 ﻿Imports std = System.Math
 
-Public Module MetaboliteSignalClassifier
+Public Module NetworkSignalClassifier
 
     ' 参数配置
     Private Const FLAT_THRESHOLD As Double = 0.001
@@ -11,7 +11,7 @@ Public Module MetaboliteSignalClassifier
     ''' <summary>
     ''' 主分类函数：返回枚举类型的分类结果
     ''' </summary>
-    Public Function ClassifyMetaboliteSignal(data As Double()) As MetaboliteSignalType
+    Public Function ClassifyMetaboliteSignal(data As Double()) As NetworkSignalType
         Dim n As Integer = data.Length
         Dim minVal As Double = data.Min()
         Dim maxVal As Double = data.Max()
@@ -24,7 +24,7 @@ Public Module MetaboliteSignalClassifier
         If rangeVal < 0.000000001 OrElse (rangeVal / meanAbsVal) < FLAT_THRESHOLD Then
             isFlat = True
         End If
-        If isFlat Then Return MetaboliteSignalType.Isolated
+        If isFlat Then Return NetworkSignalType.Isolated
 
         ' --- 趋势分析 ---
         Dim slope As Double = CalculateSlope(data)
@@ -42,13 +42,13 @@ Public Module MetaboliteSignalClassifier
         ' --- 2. 递增信号检测 ---
         ' 斜率为正且预期变化显著，且下降点很少
         If slope > 0 AndAlso (expectedChange > rangeVal * TREND_SIGNIFICANCE_RATIO) AndAlso (decreaseCount < n * 0.3) Then
-            Return MetaboliteSignalType.Increasing
+            Return NetworkSignalType.Increasing
         End If
 
         ' --- 3. 递减信号检测 ---
         ' 斜率为负且预期变化显著，且上升点很少
         If slope < 0 AndAlso (std.Abs(expectedChange) > rangeVal * TREND_SIGNIFICANCE_RATIO) AndAlso (increaseCount < n * 0.3) Then
-            Return MetaboliteSignalType.Decreasing
+            Return NetworkSignalType.Decreasing
         End If
 
         ' --- 震荡 vs 随机 ---
@@ -79,7 +79,7 @@ Public Module MetaboliteSignalClassifier
                     Dim cv As Double = stdInterval / avgInterval
                     ' 变异系数小，间隔规律
                     If cv < OSCILLATION_REGULARITY_THRESHOLD AndAlso avgInterval > 2 Then
-                        Return MetaboliteSignalType.Oscillating
+                        Return NetworkSignalType.Oscillating
                     End If
                 End If
             End If
@@ -87,7 +87,7 @@ Public Module MetaboliteSignalClassifier
 
         ' --- 5. 随机信号 ---
         ' 排除以上所有情况
-        Return MetaboliteSignalType.RandomSignal
+        Return NetworkSignalType.RandomSignal
     End Function
 
     ' --- 辅助计算函数 ---

@@ -1,6 +1,6 @@
 ﻿Imports System.ComponentModel
 
-Public Enum MetaboliteSignalType
+Public Enum NetworkSignalType
 
     ''' <summary>
     ''' 孤立节点信息（异常数据）
