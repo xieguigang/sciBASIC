@@ -79,6 +79,8 @@
                     Exit While
                 ElseIf endIndex IsNot Nothing AndAlso currentNode.Index = endIndexValue Then
                     ' 如果当前确定的节点就是目标终点，说明我们已经找到了最短路径，直接退出循环
+                    ' 找到终点，先标记为 Fixed，再退出
+                    currentNode.IsFixed = True
                     Exit While
                 End If
 
