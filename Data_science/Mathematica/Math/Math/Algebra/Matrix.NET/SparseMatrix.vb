@@ -172,6 +172,10 @@ Namespace LinearAlgebra.Matrix
             Call Me.New(v.Row, v.Col, v.X)
         End Sub
 
+        Public Function Multiply(x As Double()) As Double()
+
+        End Function
+
         ''' <summary>
         ''' 
         ''' </summary>
