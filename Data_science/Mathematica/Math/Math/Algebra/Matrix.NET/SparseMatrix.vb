@@ -173,7 +173,43 @@ Namespace LinearAlgebra.Matrix
         End Sub
 
         Public Function Multiply(x As Double()) As Double()
+            ' 1. 边界检查：确保输入向量 x 的长度与矩阵的列数 n 一致
+            If x Is Nothing Then
+                Throw New ArgumentNullException(NameOf(x))
+            End If
 
+            If x.Length <> Me.n Then
+                Throw New ArgumentException($"输入向量的长度 ({x.Length}) 必须与矩阵的列数 ({Me.n}) 相等。")
+            End If
+
+            ' 2. 初始化结果向量
+            ' 创建一个长度为 m (行数) 的数组，默认值即为 0.0
+            Dim result(Me.m - 1) As Double
+
+            ' 3. 执行稀疏矩阵乘法
+            ' 遍历所有包含非零元素的行
+            ' rows 是一个 Dictionary，Key 是行号，Value 是该行的非零元素字典
+            For Each rowPair In Me.rows
+                Dim rowIndex As Integer = rowPair.Key          ' 获取当前行索引
+                Dim currentRow As Dictionary(Of UInteger, Double) = rowPair.Value ' 获取该行的列数据
+
+                Dim rowSum As Double = 0
+
+                ' 遍历当前行中所有包含非零元素的列
+                For Each colPair In currentRow
+                    Dim colIndex As Integer = colPair.Key      ' 获取当前列索引
+                    Dim matrixValue As Double = colPair.Value  ' 获取矩阵元素值 A[i, j]
+
+                    ' 核心计算：乘法并累加
+                    ' result[rowIndex] += matrixValue * x[colIndex]
+                    rowSum += matrixValue * x(colIndex)
+                Next
+
+                ' 将该行的计算结果存入结果向量
+                result(rowIndex) = rowSum
+            Next
+
+            Return result
         End Function
 
         ''' <summary>
