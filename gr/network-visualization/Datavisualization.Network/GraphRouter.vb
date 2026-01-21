@@ -1,10 +1,11 @@
-﻿Imports Microsoft.VisualBasic.Data.GraphTheory.Analysis
+﻿Imports Microsoft.VisualBasic.ComponentModel.Collection
+Imports Microsoft.VisualBasic.Data.GraphTheory.Analysis
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
 Imports Microsoft.VisualBasic.Language
 
 Public Class GraphRouter
 
-    Dim matrix As Integer(,)
+    Dim matrix As Integer()()
     Dim nodes As Dictionary(Of Node, Integer)
     Dim nodeSet As Node()
 
@@ -24,7 +25,27 @@ Public Class GraphRouter
     End Class
 
     Public Function FindPath(start As Node, ends As Node) As Route
+        Dim i As Integer = nodes.TryGetValue(start, [default]:=-1)
+        Dim j As Integer = nodes.TryGetValue(ends, [default]:=-1)
 
+        If i < 0 OrElse j < 0 Then
+            Return Nothing
+        Else
+            Return CastRoute(Dijkstra.DijkstraAlgoritm.FindPath(matrix, nodes.Count, startIndex:=i, endIndex:=j))
+        End If
+    End Function
+
+    Private Function CastRoute(routeNode As Dijkstra.DijkstraAlgoritm.Node) As Route
+        If routeNode Is Nothing Then
+            Return Nothing
+        End If
+
+        Return New Route(nodeSet(routeNode.Index).label) With {
+            .Cost = routeNode.TotalDistance,
+            .PathwayNodes = routeNode.Path _
+                .Select(Function(idx) nodeSet(idx)) _
+                .ToArray()
+        }
     End Function
 
     Public Iterator Function FindPath(start As Node) As IEnumerable(Of Route)
@@ -35,12 +56,7 @@ Public Class GraphRouter
         End If
 
         For Each route As Dijkstra.DijkstraAlgoritm.Node In Dijkstra.DijkstraAlgoritm.DistanceFinder(matrix, nodes.Count, startIndex:=i)
-            Yield New Route(nodeSet(route.Index).label) With {
-                .Cost = route.TotalDistance,
-                .PathwayNodes = route.Path _
-                    .Select(Function(idx) nodeSet(idx)) _
-                    .ToArray()
-            }
+            Yield CastRoute(route)
         Next
     End Function
 
@@ -55,14 +71,14 @@ Public Class GraphRouter
 
         If nodeCount = 0 Then
             Return New GraphRouter With {
-                .matrix = New Integer(0, 0) {},
+                .matrix = {},
                 .nodes = New Dictionary(Of Node, Integer),
                 .nodeSet = {}
             }
         End If
 
         ' 2. 初始化矩阵，所有位置默认为 0 (表示无连接)
-        Dim matrix(nodeCount - 1, nodeCount - 1) As Integer
+        Dim matrix As Integer()() = RectangularArray.Matrix(Of Integer)(nodeCount, nodeCount)
         ' 3. 建立 Node 对象到矩阵索引的映射 (Dictionary)
         ' 这样我们可以根据 Node 对象快速找到它在数组中的位置 (0, 1, 2...)
         Dim nodeIndexMap As New Dictionary(Of Node, Integer)()
@@ -84,10 +100,10 @@ Public Class GraphRouter
                 ' 将权重填入矩阵
                 ' 注意：这里假设图是有向图。如果是无向图（双向道路），
                 If undirected Then
-                    matrix(vIndex, uIndex) = edge.weight
+                    matrix(vIndex)(uIndex) = edge.weight
                 End If
 
-                matrix(uIndex, vIndex) = edge.weight
+                matrix(uIndex)(vIndex) = edge.weight
             End If
         Next
 
