@@ -56,7 +56,6 @@
 
 Imports Microsoft.VisualBasic.Data.GraphTheory.Network
 Imports Microsoft.VisualBasic.Linq
-Imports std = System.Math
 
 Namespace Analysis.Louvain
 
@@ -77,7 +76,8 @@ Namespace Analysis.Louvain
             global_edge(global_top).v = v
             global_edge(global_top).weight = weight
             global_edge(global_top).next = global_head(u)
-            global_head(u) = std.Min(Threading.Interlocked.Increment(global_top), global_top - 1)
+            global_head(u) = global_top
+            global_top += 1
         End Sub
 
         Friend Overridable Sub addEdge(ByRef louvain As LouvainCommunity,
@@ -92,12 +92,13 @@ Namespace Analysis.Louvain
             louvain.edge(louvain.top).v = v
             louvain.edge(louvain.top).weight = weight
             louvain.edge(louvain.top).next = louvain.head(u)
-            louvain.head(u) = std.Min(Threading.Interlocked.Increment(louvain.top), louvain.top - 1)
+            louvain.head(u) = louvain.top
+            louvain.top += 1
         End Sub
 
         Public Shared Function Load(Of Node As {New, Network.Node},
-                                        Edge As {New, Network.Edge(Of Node)})(g As NetworkGraph(Of Node, Edge),
-                                                                              Optional eps As Double = 0.00000001) As LouvainCommunity
+                                       Edge As {New, Network.Edge(Of Node)})(g As NetworkGraph(Of Node, Edge), Optional eps As Double = 0.00000001) As LouvainCommunity
+
             Dim louvain As New LouvainCommunity(eps:=eps) With {
                 .n = g.size.vertex,
                 .global_n = .n,
@@ -134,9 +135,10 @@ Namespace Analysis.Louvain
         End Function
 
         Private Shared Sub loadGraphMatrix(Of Node As {New, Network.Node},
-                                               Edge As {New, Network.Edge(Of Node)})(ByRef louvain As LouvainCommunity,
-                                                                                     builder As Builder,
-                                                                                     g As NetworkGraph(Of Node, Edge))
+                                              Edge As {New, Network.Edge(Of Node)})(ByRef louvain As LouvainCommunity,
+                                                                                    builder As Builder,
+                                                                                    g As NetworkGraph(Of Node, Edge))
+
             Dim hasWeight As Boolean = g.graphEdges.Any(Function(l) l.weight <> 0.0)
 
             For Each link As Edge In g.graphEdges

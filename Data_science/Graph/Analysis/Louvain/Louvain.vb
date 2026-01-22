@@ -162,7 +162,8 @@ Namespace Analysis.Louvain
             new_edge(new_top).v = v
             new_edge(new_top).weight = weight
             new_edge(new_top).next = new_head(u)
-            new_head(u) = std.Min(Threading.Interlocked.Increment(new_top), new_top - 1)
+            new_head(u) = new_top
+            new_top += 1
         End Sub
 
         Friend Overridable Sub setCluster0()
@@ -252,7 +253,8 @@ Namespace Analysis.Louvain
                 End If
 
                 vis(cluster(i)) = True
-                change(std.Min(Threading.Interlocked.Increment(change_size), change_size - 1)) = cluster(i)
+                change(change_size) = cluster(i)
+                change_size += 1
             Next
 
             ' index[i]代表 i号簇在新图中的结点编号

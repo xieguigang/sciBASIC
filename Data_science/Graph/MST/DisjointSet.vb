@@ -118,7 +118,7 @@ Namespace MinimumSpanningTree
                     End If
                 End If
 
-                Threading.Interlocked.Increment(i)
+                i += 1
             End While
             djSets.printSets()
         End Sub
