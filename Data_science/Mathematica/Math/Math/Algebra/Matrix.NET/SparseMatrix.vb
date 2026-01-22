@@ -154,18 +154,17 @@ Namespace LinearAlgebra.Matrix
         End Sub
 
         Sub New(row As Integer(), col As Integer(), x As Double())
-            Me.rows = row _
-                .Select(Function(ri, i)
-                            Return (ri, ci:=col(i), xi:=x(i))
-                        End Function) _
-                .GroupBy(Function(r) r.ri) _
-                .ToDictionary(Function(r) CUInt(r.Key),
-                              Function(r)
-                                  Return r.ToDictionary(Function(c) CUInt(c.ci),
-                                                        Function(c)
-                                                            Return c.xi
-                                                        End Function)
-                              End Function)
+            For i As Integer = 0 To row.Length - 1
+                Dim r As UInteger = CUInt(row(i))
+                Dim c As UInteger = CUInt(col(i))
+                Dim val As Double = x(i)
+
+                If Not rows.ContainsKey(r) Then
+                    rows(r) = New Dictionary(Of UInteger, Double)()
+                End If
+
+                rows(r)(c) = val
+            Next
         End Sub
 
         Sub New(v As IndexVector)
