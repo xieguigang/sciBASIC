@@ -3,7 +3,6 @@ Imports Microsoft.VisualBasic.Data.GraphTheory.Analysis
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Math.LinearAlgebra.Matrix
-Imports Microsoft.VisualBasic.Text.Xml.Models
 
 Public Class GraphRouter
 
