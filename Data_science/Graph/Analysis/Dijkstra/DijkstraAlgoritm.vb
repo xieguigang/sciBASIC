@@ -11,7 +11,7 @@ Namespace Analysis.Dijkstra
 
             Public Property Index As Integer
             Public Property Parent As Integer
-            Public Property TotalDistance As Integer
+            Public Property TotalDistance As Double
             Public Property IsFixed As Boolean
             Public Property Path As List(Of Integer)
 
@@ -67,9 +67,9 @@ Namespace Analysis.Dijkstra
                 End If
 
                 Dim currentNode As Node = Nothing
-                Dim minDist As Integer = Integer.MaxValue
+                Dim minDist As Double = Integer.MaxValue
 
-                For Each n In candidates
+                For Each n As Node In candidates
                     If n.TotalDistance < minDist Then
                         minDist = n.TotalDistance
                         currentNode = n
@@ -94,7 +94,7 @@ Namespace Analysis.Dijkstra
                     If Not neighbor.IsFixed AndAlso graph(currentNode.Index, neighbor.Index) <> 0 Then
                         ' 检查防溢出：如果当前节点距离已经是Max，则不更新
                         If currentNode.TotalDistance <> Integer.MaxValue Then
-                            Dim newDist As Integer = currentNode.TotalDistance + graph(currentNode.Index, neighbor.Index)
+                            Dim newDist As Double = currentNode.TotalDistance + graph(currentNode.Index, neighbor.Index)
 
                             If newDist < neighbor.TotalDistance Then
                                 neighbor.TotalDistance = newDist

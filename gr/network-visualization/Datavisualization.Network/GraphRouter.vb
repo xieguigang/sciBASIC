@@ -97,7 +97,8 @@ Public Class GraphRouter
     Public Shared Function ConvertToMatrix(networkGraph As NetworkGraph,
                                            Optional undirected As Boolean = False,
                                            Optional ByRef nodeSet As List(Of Node) = Nothing,
-                                           Optional ByRef nodeIndexMap As Dictionary(Of Node, Integer) = Nothing) As SparseMatrix
+                                           Optional ByRef nodeIndexMap As Dictionary(Of Node, Integer) = Nothing,
+                                           Optional eval As Func(Of Edge, Double) = Nothing) As SparseMatrix
         ' 1. 获取节点总数
         Dim nodeCount As Integer = networkGraph.vertex.Count
 
@@ -130,7 +131,7 @@ Public Class GraphRouter
             If nodeIndexMap.ContainsKey(edge.U) AndAlso nodeIndexMap.ContainsKey(edge.V) Then
                 Dim uIndex As Integer = nodeIndexMap(edge.U)
                 Dim vIndex As Integer = nodeIndexMap(edge.V)
-                Dim weight As Double = edge.weight
+                Dim weight As Double = If(eval Is Nothing, edge.weight, eval(edge))
 
                 ' 添加正向边 U -> V
                 Call row.Add(uIndex)
