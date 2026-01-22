@@ -120,6 +120,14 @@ Namespace Graph
             Me.Properties = New Dictionary(Of String, String)(copy.Properties)
         End Sub
 
+        Sub New(metadata As Dictionary(Of String, String))
+            If metadata Is Nothing Then
+                Properties = New Dictionary(Of String, String)
+            Else
+                Properties = New Dictionary(Of String, String)(metadata)
+            End If
+        End Sub
+
         Public Overrides Function ToString() As String
             Return Me.GetJson
         End Function

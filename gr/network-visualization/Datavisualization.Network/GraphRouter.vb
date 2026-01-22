@@ -67,7 +67,7 @@ Public Class GraphRouter
     ''' </summary>
     ''' <param name="networkGraph">自定义的网络图对象</param>
     ''' <returns>邻接矩阵</returns>
-    Public Shared Function ConvertToMatrix(networkGraph As NetworkGraph, Optional undirected As Boolean = False) As GraphRouter
+    Public Shared Function LoadMatrix(networkGraph As NetworkGraph, Optional undirected As Boolean = False) As GraphRouter
         ' 1. 获取节点总数
         Dim nodeCount As Integer = networkGraph.vertex.Count
 
@@ -77,6 +77,36 @@ Public Class GraphRouter
                 .nodes = New Dictionary(Of Node, Integer),
                 .nodeSet = {}
             }
+        Else
+            Dim nodeSet As New List(Of Node)
+            Dim nodeIndexMap As New Dictionary(Of Node, Integer)()
+            Dim matrix As SparseMatrix = ConvertToMatrix(networkGraph, undirected, nodeSet)
+
+            Return New GraphRouter With {
+                .matrix = matrix,
+                .nodes = nodeIndexMap,
+                .nodeSet = nodeSet.ToArray()
+            }
+        End If
+    End Function
+
+    ''' <summary>
+    ''' 将自定义的Graph对象转换为Dijkstra算法所需的二维整数矩阵。
+    ''' </summary>
+    ''' <param name="networkGraph">自定义的网络图对象</param>
+    ''' <returns>邻接矩阵</returns>
+    Public Shared Function ConvertToMatrix(networkGraph As NetworkGraph,
+                                           Optional undirected As Boolean = False,
+                                           Optional ByRef nodeSet As List(Of Node) = Nothing,
+                                           Optional ByRef nodeIndexMap As Dictionary(Of Node, Integer) = Nothing) As SparseMatrix
+        ' 1. 获取节点总数
+        Dim nodeCount As Integer = networkGraph.vertex.Count
+
+        If nodeCount = 0 Then
+            Return SparseMatrix.Empty
+        Else
+            nodeSet = If(nodeSet, New List(Of Node))
+            nodeIndexMap = If(nodeIndexMap, New Dictionary(Of Node, Integer))
         End If
 
         ' 2. 初始化矩阵，所有位置默认为 0 (表示无连接)
@@ -86,10 +116,7 @@ Public Class GraphRouter
 
         ' 3. 建立 Node 对象到矩阵索引的映射 (Dictionary)
         ' 这样我们可以根据 Node 对象快速找到它在数组中的位置 (0, 1, 2...)
-        Dim nodeIndexMap As New Dictionary(Of Node, Integer)()
         Dim i As i32 = 0
-        Dim nodeSet As New List(Of Node)
-
         ' nodeIndexMap(v) start from zero
         ' vb.net中 ++i 等价于i++
         ' i = 0 1 2 3 4 ...
@@ -121,10 +148,6 @@ Public Class GraphRouter
             End If
         Next
 
-        Return New GraphRouter With {
-            .matrix = New SparseMatrix(row.ToArray, col.ToArray, w.ToArray),
-            .nodes = nodeIndexMap,
-            .nodeSet = nodeSet.ToArray()
-        }
+        Return New SparseMatrix(row.ToArray, col.ToArray, w.ToArray)
     End Function
 End Class
