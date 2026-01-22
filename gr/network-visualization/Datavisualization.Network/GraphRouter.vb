@@ -78,6 +78,7 @@ Public Class GraphRouter
         End If
 
         ' 2. 初始化矩阵，所有位置默认为 0 (表示无连接)
+        ' RectangularArray.Matrix 返回(N-1) x (N-1)大小的矩阵
         Dim matrix As Integer()() = RectangularArray.Matrix(Of Integer)(nodeCount, nodeCount)
         ' 3. 建立 Node 对象到矩阵索引的映射 (Dictionary)
         ' 这样我们可以根据 Node 对象快速找到它在数组中的位置 (0, 1, 2...)
@@ -85,6 +86,9 @@ Public Class GraphRouter
         Dim i As i32 = 0
         Dim nodeSet As New List(Of Node)
 
+        ' nodeIndexMap(v) start from zero
+        ' vb.net中 ++i 等价于i++
+        ' i = 0 1 2 3 4 ...
         For Each v As Node In networkGraph.vertex
             nodeIndexMap(v) = ++i
             nodeSet.Add(v)
