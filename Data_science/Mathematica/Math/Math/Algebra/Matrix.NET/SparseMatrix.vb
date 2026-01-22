@@ -153,7 +153,10 @@ Namespace LinearAlgebra.Matrix
             Me.n = n
         End Sub
 
-        Sub New(row As Integer(), col As Integer(), x As Double())
+        Sub New(row As Integer(), col As Integer(), x As Double(), Optional m As Integer = -1, Optional n As Integer = -1)
+            Dim maxR As Integer = Integer.MinValue
+            Dim maxC As Integer = Integer.MinValue
+
             For i As Integer = 0 To row.Length - 1
                 Dim r As UInteger = CUInt(row(i))
                 Dim c As UInteger = CUInt(col(i))
@@ -163,8 +166,22 @@ Namespace LinearAlgebra.Matrix
                     rows(r) = New Dictionary(Of UInteger, Double)()
                 End If
 
+                If maxR < r Then maxR = r
+                If maxC < c Then maxC = c
+
                 rows(r)(c) = val
             Next
+
+            If m < 0 Then
+                Me.m = maxR + 1
+            Else
+                Me.m = m
+            End If
+            If n < 0 Then
+                Me.n = maxC + 1
+            Else
+                Me.n = n
+            End If
         End Sub
 
         Sub New(v As IndexVector)

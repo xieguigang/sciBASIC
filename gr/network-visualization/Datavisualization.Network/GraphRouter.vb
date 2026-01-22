@@ -148,6 +148,6 @@ Public Class GraphRouter
             End If
         Next
 
-        Return New SparseMatrix(row.ToArray, col.ToArray, w.ToArray)
+        Return New SparseMatrix(row.ToArray, col.ToArray, w.ToArray, m:=nodeCount, n:=nodeCount)
     End Function
 End Class
