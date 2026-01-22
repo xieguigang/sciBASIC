@@ -77,9 +77,9 @@ Public Class GraphRouter
                 .nodeSet = {}
             }
         Else
-            Dim nodeSet As New List(Of Node)
-            Dim nodeIndexMap As New Dictionary(Of Node, Integer)()
-            Dim matrix As SparseMatrix = ConvertToMatrix(networkGraph, undirected, nodeSet)
+            Dim nodeSet As List(Of Node) = Nothing
+            Dim nodeIndexMap As Dictionary(Of Node, Integer) = Nothing
+            Dim matrix As SparseMatrix = ConvertToMatrix(networkGraph, undirected, nodeSet, nodeIndexMap)
 
             Return New GraphRouter With {
                 .matrix = matrix,
