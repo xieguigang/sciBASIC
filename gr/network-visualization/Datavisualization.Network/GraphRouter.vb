@@ -2,10 +2,12 @@
 Imports Microsoft.VisualBasic.Data.GraphTheory.Analysis
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Math.LinearAlgebra.Matrix
+Imports Microsoft.VisualBasic.Text.Xml.Models
 
 Public Class GraphRouter
 
-    Dim matrix As Integer()()
+    Dim matrix As SparseMatrix
     Dim nodes As Dictionary(Of Node, Integer)
     Dim nodeSet As Node()
 
@@ -71,15 +73,17 @@ Public Class GraphRouter
 
         If nodeCount = 0 Then
             Return New GraphRouter With {
-                .matrix = {},
+                .matrix = SparseMatrix.Empty,
                 .nodes = New Dictionary(Of Node, Integer),
                 .nodeSet = {}
             }
         End If
 
         ' 2. 初始化矩阵，所有位置默认为 0 (表示无连接)
-        ' RectangularArray.Matrix 返回(N-1) x (N-1)大小的矩阵
-        Dim matrix As Integer()() = RectangularArray.Matrix(Of Integer)(nodeCount, nodeCount)
+        Dim row As New List(Of Integer)
+        Dim col As New List(Of Integer)
+        Dim w As New List(Of Double)
+
         ' 3. 建立 Node 对象到矩阵索引的映射 (Dictionary)
         ' 这样我们可以根据 Node 对象快速找到它在数组中的位置 (0, 1, 2...)
         Dim nodeIndexMap As New Dictionary(Of Node, Integer)()
@@ -100,19 +104,25 @@ Public Class GraphRouter
             If nodeIndexMap.ContainsKey(edge.U) AndAlso nodeIndexMap.ContainsKey(edge.V) Then
                 Dim uIndex As Integer = nodeIndexMap(edge.U)
                 Dim vIndex As Integer = nodeIndexMap(edge.V)
+                Dim weight As Double = edge.weight
+
+                ' 添加正向边 U -> V
+                Call row.Add(uIndex)
+                Call col.Add(vIndex)
+                Call w.Add(weight)
 
                 ' 将权重填入矩阵
                 ' 注意：这里假设图是有向图。如果是无向图（双向道路），
                 If undirected Then
-                    matrix(vIndex)(uIndex) = edge.weight
+                    Call row.Add(vIndex)
+                    Call col.Add(uIndex)
+                    Call w.Add(weight)
                 End If
-
-                matrix(uIndex)(vIndex) = edge.weight
             End If
         Next
 
         Return New GraphRouter With {
-            .matrix = matrix,
+            .matrix = New SparseMatrix(row.ToArray, col.ToArray, w.ToArray),
             .nodes = nodeIndexMap,
             .nodeSet = nodeSet.ToArray()
         }

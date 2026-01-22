@@ -1,4 +1,6 @@
-﻿Namespace Analysis.Dijkstra
+﻿Imports Microsoft.VisualBasic.Math.LinearAlgebra.Matrix
+
+Namespace Analysis.Dijkstra
 
     Public Class DijkstraAlgoritm
 
@@ -35,7 +37,7 @@
         ''' <param name="graph"></param>
         ''' <param name="startIndex"></param>
         ''' <returns></returns>
-        Public Shared Function DistanceFinder(ByRef graph As Integer()(), vertices As Integer, startIndex As Integer) As Node()
+        Public Shared Function DistanceFinder(ByRef graph As SparseMatrix, vertices As Integer, startIndex As Integer) As Node()
             Return DistanceFinderInternal(graph, vertices, startIndex, endIndex:=Nothing)
         End Function
 
@@ -45,7 +47,7 @@
         ''' <param name="graph"></param>
         ''' <param name="startIndex"></param>
         ''' <returns></returns>
-        Private Shared Function DistanceFinderInternal(ByRef graph As Integer()(), vertices As Integer, startIndex As Integer, endIndex As Integer?) As Node()
+        Private Shared Function DistanceFinderInternal(ByRef graph As SparseMatrix, vertices As Integer, startIndex As Integer, endIndex As Integer?) As Node()
             Dim nodes As Node() = New Node(vertices - 1) {}
             Dim endIndexValue As Integer = If(endIndex.HasValue, endIndex.Value, -1)
 
@@ -89,10 +91,10 @@
 
                 ' 3. 松弛操作：更新所有邻居的距离
                 For Each neighbor As Node In nodes
-                    If Not neighbor.IsFixed AndAlso graph(currentNode.Index)(neighbor.Index) <> 0 Then
+                    If Not neighbor.IsFixed AndAlso graph(currentNode.Index, neighbor.Index) <> 0 Then
                         ' 检查防溢出：如果当前节点距离已经是Max，则不更新
                         If currentNode.TotalDistance <> Integer.MaxValue Then
-                            Dim newDist As Integer = currentNode.TotalDistance + graph(currentNode.Index)(neighbor.Index)
+                            Dim newDist As Integer = currentNode.TotalDistance + graph(currentNode.Index, neighbor.Index)
 
                             If newDist < neighbor.TotalDistance Then
                                 neighbor.TotalDistance = newDist
@@ -118,7 +120,7 @@
         ''' <param name="startIndex">The starting node index.</param>
         ''' <param name="endIndex">The target node index.</param>
         ''' <returns>Returns the target Node containing path and distance info. Returns Nothing if path not found.</returns>
-        Public Shared Function FindPath(ByRef graph As Integer()(), vertices As Integer, startIndex As Integer, endIndex As Integer) As Node
+        Public Shared Function FindPath(ByRef graph As SparseMatrix, vertices As Integer, startIndex As Integer, endIndex As Integer) As Node
             Dim find = DistanceFinderInternal(graph, vertices, startIndex, endIndex)
             Dim targetNode As Node = find(endIndex)
             Return targetNode

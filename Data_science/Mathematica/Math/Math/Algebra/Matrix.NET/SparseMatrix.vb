@@ -217,6 +217,10 @@ Namespace LinearAlgebra.Matrix
             Next
         End Sub
 
+        Public Shared Function Empty() As SparseMatrix
+            Return New SparseMatrix(New Dictionary(Of UInteger, Dictionary(Of UInteger, Double)), 0, 0)
+        End Function
+
         Public Function Multiply(x As Double()) As Double()
             ' 1. 边界检查：确保输入向量 x 的长度与矩阵的列数 n 一致
             If x Is Nothing Then
