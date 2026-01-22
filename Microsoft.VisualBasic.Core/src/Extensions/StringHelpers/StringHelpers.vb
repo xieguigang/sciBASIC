@@ -526,7 +526,7 @@ Public Module StringHelpers
     ''' <summary>
     ''' NA, n/a, NULL, null, N/A, -
     ''' </summary>
-    ReadOnly empty_factor As Index(Of String) = {"NA", "n/a", "NULL", "null", "N/A", "-", "/", "#n/a", "#N/A", "#NA"}
+    ReadOnly empty_factor As Index(Of String) = {"NA", "n/a", "NULL", "null", "N/A", "-", "/", "#n/a", "#N/A", "#NA", "--", "---", "----", "-----"}
 
     ''' <summary>
     ''' Shortcuts for method <see cref="String.Equals"/>
