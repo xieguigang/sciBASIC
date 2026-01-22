@@ -247,9 +247,18 @@ Namespace Graph
         ''' 查找失败会返回空值
         ''' </returns>
         Public Function GetElementByID(labelID$, Optional dataLabel As Boolean = False) As Node
-            If Not dataLabel AndAlso vertices.ContainsKey(labelID) Then
+            If Not dataLabel Then
+                ' do not search via node data label
+                ' use the unique id indexer directly
+                If vertices.ContainsKey(labelID) Then
+                    Return vertices(labelID)
+                Else
+                    Return Nothing
+                End If
+            ElseIf vertices.ContainsKey(labelID) Then
                 Return vertices(labelID)
             Else
+                ' try to search via node data label string matches as a candidate options
                 Return vertex.AsParallel _
                     .Where(Function(n)
                                Return n.data.label = labelID
