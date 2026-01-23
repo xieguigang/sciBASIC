@@ -68,11 +68,15 @@ Namespace LinearAlgebra.LinearProgramming
     ''' 使用两阶段法改进的单纯形法求解器
     ''' </summary>
     Public Class LPPSolverTwoPhased
+
         ReadOnly lpp As LPP
+        ReadOnly strict As Boolean
+
         Const EPSILON As Double = 0.0000000001
 
-        Sub New(problem As LPP)
-            lpp = problem
+        Sub New(problem As LPP, strict As Boolean)
+            Me.lpp = problem
+            Me.strict = strict
         End Sub
 
         Public Function Solve(Optional showProgress As Boolean = True) As LPPSolution
@@ -297,7 +301,13 @@ Namespace LinearAlgebra.LinearProgramming
             Loop
 
             If iteration = LPP.PIVOT_ITERATION_LIMIT Then
-                Return New LPPSolution("Iteration limit exceeded", log.ToString, 0)
+                Dim msg As String = $"Iteration limit exceeded upper bound {LPP.PIVOT_ITERATION_LIMIT}"
+
+                If strict Then
+                    Return New LPPSolution(msg, log.ToString, 0)
+                Else
+                    Call ("[LPP_SOLVER] " & msg).warning
+                End If
             End If
 
             Return Nothing

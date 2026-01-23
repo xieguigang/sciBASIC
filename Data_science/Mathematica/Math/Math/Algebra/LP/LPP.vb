@@ -289,9 +289,9 @@ Namespace LinearAlgebra.LinearProgramming
             Next
         End Sub
 
-        Public Function solve(Optional showProgress As Boolean = True) As LPPSolution
+        Public Function solve(Optional showProgress As Boolean = True, Optional strict As Boolean = True) As LPPSolution
             ' Return New LPPSolver(Me).Solve(showProgress)
-            Return New LPPSolverTwoPhased(Me).Solve(showProgress)
+            Return New LPPSolverTwoPhased(Me, strict).Solve(showProgress)
         End Function
     End Class
 End Namespace
