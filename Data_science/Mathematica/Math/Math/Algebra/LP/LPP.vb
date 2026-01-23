@@ -89,7 +89,7 @@ Namespace LinearAlgebra.LinearProgramming
         ''' </summary>
         Friend originalConstraintTypes As String()
 
-        Public Shared Property PIVOT_ITERATION_LIMIT As Integer = 1000
+        Public Shared Property PIVOT_ITERATION_LIMIT As Integer = 3000
         Public Shared Property USE_SUBSCRIPT_UNICODE As Boolean = False
         Public Shared Property DecimalFormat As String = "G5"
 
