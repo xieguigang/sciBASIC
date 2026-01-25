@@ -163,7 +163,7 @@ Namespace ComponentModel.Collection
             Return Me.subheaps.All(Function(h) lessThan(Me.elem, h.elem) AndAlso h.isHeap(lessThan))
         End Function
 
-        Public Function Insert(obj As T, lessThan As Func(Of T, T, Boolean)) As PairingHeap(Of T)
+        Public Function insert(obj As T, lessThan As Func(Of T, T, Boolean)) As PairingHeap(Of T)
             Return Me.merge(New PairingHeap(Of T)(obj), lessThan)
         End Function
 
