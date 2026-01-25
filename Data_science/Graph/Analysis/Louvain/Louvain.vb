@@ -58,7 +58,6 @@
 
 Imports System.Runtime.CompilerServices
 Imports randf = Microsoft.VisualBasic.Math.RandomExtensions
-Imports std = System.Math
 
 Namespace Analysis.Louvain
 

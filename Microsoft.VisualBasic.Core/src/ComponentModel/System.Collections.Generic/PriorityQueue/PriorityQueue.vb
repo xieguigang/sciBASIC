@@ -77,6 +77,9 @@ Namespace ComponentModel.Collection
         ''' <returns></returns>
         Public ReadOnly Property count() As Integer
             Get
+                If root Is Nothing Then
+                    Return 0
+                End If
                 Return Me.root.count()
             End Get
         End Property
@@ -110,6 +113,9 @@ Namespace ComponentModel.Collection
         ''' <returns>true if queue is in valid state</returns>
         Public ReadOnly Property isHeap() As Boolean
             Get
+                If root Is Nothing Then
+                    Return False
+                End If
                 Return Me.root.isHeap(Me.lessThan)
             End Get
         End Property
@@ -143,7 +149,7 @@ Namespace ComponentModel.Collection
             Dim lastNode As PairingHeap(Of T) = Nothing
 
             For i As Integer = 0 To args.Length - 1
-                arg = args(i - 1)
+                arg = args(i)
                 pairingNode = New PairingHeap(Of T)(arg)
 
                 If Me.empty Then
