@@ -50,6 +50,7 @@ Namespace Analysis.Dijkstra
         Private Shared Function DistanceFinderInternal(graph As SparseMatrix, vertices As Integer, startIndex As Integer, endIndex As Integer?) As Node()
             Dim nodes As Node() = New Node(vertices - 1) {}
             Dim endIndexValue As Integer = If(endIndex.HasValue, endIndex.Value, -1)
+            Dim currentNode As Node
 
             ' 初始化节点
             For i As Integer = 0 To vertices - 1
@@ -59,22 +60,17 @@ Namespace Analysis.Dijkstra
             ' 使用循环代替递归，防止堆栈溢出
             While True
                 ' 1. 寻找当前未确定的最短距离节点
-                Dim candidates = nodes.Where(Function(n) Not n.IsFixed).ToList()
+                Dim candidates As List(Of Node) = (From v As Node
+                                                   In nodes
+                                                   Where Not v.IsFixed
+                                                   Order By v.TotalDistance Ascending).ToList()
 
                 ' 如果没有候选节点，或者所有剩余节点都是不可达的，则退出
                 If candidates.Count = 0 Then
                     Exit While
+                Else
+                    currentNode = candidates.First
                 End If
-
-                Dim currentNode As Node = Nothing
-                Dim minDist As Double = Integer.MaxValue
-
-                For Each n As Node In candidates
-                    If n.TotalDistance < minDist Then
-                        minDist = n.TotalDistance
-                        currentNode = n
-                    End If
-                Next
 
                 ' 如果剩下的最小距离是无穷大，说明剩余节点都不可达，退出
                 If currentNode Is Nothing OrElse currentNode.TotalDistance = Integer.MaxValue Then
