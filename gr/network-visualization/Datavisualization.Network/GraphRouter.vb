@@ -32,7 +32,10 @@ Public Class GraphRouter
         If i < 0 OrElse j < 0 Then
             Return Nothing
         Else
-            Return CastRoute(Dijkstra.DijkstraAlgoritm.FindPathBiDirectional(matrix, nodes.Count, startIndex:=i, endIndex:=j))
+            Dim path = Dijkstra.DijkstraAlgoritm.FindPathBiDirectional(matrix, nodes.Count, startIndex:=i, endIndex:=j)
+            Dim route = CastRoute(path)
+
+            Return route
         End If
     End Function
 
@@ -56,7 +59,9 @@ Public Class GraphRouter
             Return
         End If
 
-        For Each route As Dijkstra.DijkstraAlgoritm.Node In Dijkstra.DijkstraAlgoritm.DistanceFinder(matrix, nodes.Count, startIndex:=i)
+        Dim result = Dijkstra.DijkstraAlgoritm.DistanceFinder(matrix, nodes.Count, startIndex:=i)
+
+        For Each route As Dijkstra.DijkstraAlgoritm.Node In result
             Yield CastRoute(route)
         Next
     End Function
