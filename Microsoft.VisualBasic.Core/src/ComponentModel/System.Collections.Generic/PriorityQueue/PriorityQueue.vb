@@ -59,7 +59,6 @@
 
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Serialization
-Imports any = System.Object
 
 Namespace ComponentModel.Collection
 
@@ -71,6 +70,49 @@ Namespace ComponentModel.Collection
 
         Dim root As PairingHeap(Of T)
         Dim lessThan As Func(Of T, T, Boolean)
+
+        ''' <summary>
+        ''' number of elements in queue
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property count() As Integer
+            Get
+                Return Me.root.count()
+            End Get
+        End Property
+
+        ''' <summary>
+        ''' the top element (the min element as defined by lessThan)
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property top() As T
+            Get
+                If Me.empty() Then
+                    Return Nothing
+                End If
+                Return Me.root.elem
+            End Get
+        End Property
+
+        ''' <summary>
+        ''' true if no more elements in queue
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property empty() As Boolean
+            Get
+                Return Me.root Is Nothing OrElse Me.root.elem Is Nothing
+            End Get
+        End Property
+
+        ''' <summary>
+        ''' check heap condition (for testing)
+        ''' </summary>
+        ''' <returns>true if queue is in valid state</returns>
+        Public ReadOnly Property isHeap() As Boolean
+            Get
+                Return Me.root.isHeap(Me.lessThan)
+            End Get
+        End Property
 
         ''' <summary>
         ''' ```
@@ -91,27 +133,16 @@ Namespace ComponentModel.Collection
         End Sub
 
         ''' <summary>
-        ''' the top element (the min element as defined by lessThan)
-        ''' </summary>
-        ''' <returns></returns>
-        Public Function top() As T
-            If Me.empty() Then
-                Return Nothing
-            End If
-            Return Me.root.elem
-        End Function
-
-        ''' <summary>
         ''' put things on the heap
         ''' </summary>
         ''' <param name="args"></param>
         ''' <returns></returns>
         Public Function push(ParamArray args As T()) As PairingHeap(Of T)
-            Dim pairingNode As any = Nothing
-            Dim i As Integer = 0
+            Dim pairingNode As PairingHeap(Of T) = Nothing
             Dim arg As T
+            Dim lastNode As PairingHeap(Of T) = Nothing
 
-            While i > -1
+            For i As Integer = 0 To args.Length - 1
                 arg = args(i - 1)
                 pairingNode = New PairingHeap(Of T)(arg)
 
@@ -121,26 +152,11 @@ Namespace ComponentModel.Collection
                     root = root.merge(pairingNode, Me.lessThan)
                 End If
 
-                i += 1
-            End While
+                lastNode = pairingNode
+            Next
 
-            Return pairingNode
-        End Function
-
-        ''' <summary>
-        ''' true if no more elements in queue
-        ''' </summary>
-        ''' <returns></returns>
-        Public Function empty() As Boolean
-            Return Me.root Is Nothing OrElse Me.root.elem Is Nothing
-        End Function
-
-        ''' <summary>
-        ''' check heap condition (for testing)
-        ''' </summary>
-        ''' <returns>true if queue is in valid state</returns>
-        Public Function isHeap() As Boolean
-            Return Me.root.isHeap(Me.lessThan)
+            ' 返回最后插入的节点句柄
+            Return lastNode
         End Function
 
         ''' <summary>
@@ -176,14 +192,6 @@ Namespace ComponentModel.Collection
 
         Public Overloads Function ToString(selector As IToString(Of T)) As String
             Return Me.root.ToString(selector)
-        End Function
-
-        ''' <summary>
-        ''' number of elements in queue
-        ''' </summary>
-        ''' <returns></returns>
-        Public Function count() As Double
-            Return Me.root.count()
         End Function
 
     End Class
