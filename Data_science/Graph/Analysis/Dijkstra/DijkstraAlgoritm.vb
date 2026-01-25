@@ -31,31 +31,40 @@ Namespace Analysis.Dijkstra
 
         End Class
 
+        ReadOnly graph As SparseMatrix
+        ReadOnly vertices As Integer
+        ReadOnly nodes As Node()
+
+        ''' <param name="graph">The adjacency matrix of the graph.</param>
+        ''' <param name="vertices">Total number of vertices.</param>
+        Sub New(graph As SparseMatrix, vertices As Integer)
+            Me.graph = graph
+            Me.vertices = vertices
+            Me.nodes = New Node(vertices - 1) {}
+
+            ' 初始化节点
+            For i As Integer = 0 To vertices - 1
+                nodes(i) = New Node(i, isStartNode:=True)
+            Next
+        End Sub
+
         ''' <summary>
         ''' Calculates the minimum possible distance from root node to all other nodes.
         ''' </summary>
-        ''' <param name="graph"></param>
         ''' <param name="startIndex"></param>
         ''' <returns></returns>
-        Public Shared Function DistanceFinder(ByRef graph As SparseMatrix, vertices As Integer, startIndex As Integer) As Node()
-            Return DistanceFinderInternal(graph, vertices, startIndex, endIndex:=Nothing)
+        Public Function DistanceFinder(startIndex As Integer) As Node()
+            Return DistanceFinderInternal(startIndex, endIndex:=Nothing)
         End Function
 
         ''' <summary>
         ''' Calculates the minimum possible distance from root node to all other nodes.
         ''' </summary>
-        ''' <param name="graph"></param>
         ''' <param name="startIndex"></param>
         ''' <returns></returns>
-        Private Shared Function DistanceFinderInternal(graph As SparseMatrix, vertices As Integer, startIndex As Integer, endIndex As Integer?) As Node()
-            Dim nodes As Node() = New Node(vertices - 1) {}
+        Private Function DistanceFinderInternal(startIndex As Integer, endIndex As Integer?) As Node()
             Dim endIndexValue As Integer = If(endIndex.HasValue, endIndex.Value, -1)
             Dim currentNode As Node
-
-            ' 初始化节点
-            For i As Integer = 0 To vertices - 1
-                nodes(i) = New Node(i, i = startIndex)
-            Next
 
             ' 使用循环代替递归，防止堆栈溢出
             While True
@@ -252,13 +261,11 @@ Namespace Analysis.Dijkstra
         ''' <summary>
         ''' Calculates the shortest path from startIndex to endIndex specifically.
         ''' </summary>
-        ''' <param name="graph">The adjacency matrix of the graph.</param>
-        ''' <param name="vertices">Total number of vertices.</param>
         ''' <param name="startIndex">The starting node index.</param>
         ''' <param name="endIndex">The target node index.</param>
         ''' <returns>Returns the target Node containing path and distance info. Returns Nothing if path not found.</returns>
-        Public Shared Function FindPath(ByRef graph As SparseMatrix, vertices As Integer, startIndex As Integer, endIndex As Integer) As Node
-            Dim find = DistanceFinderInternal(graph, vertices, startIndex, endIndex)
+        Public Function FindPath(startIndex As Integer, endIndex As Integer) As Node
+            Dim find = DistanceFinderInternal(startIndex, endIndex)
             Dim targetNode As Node = find(endIndex)
             Return targetNode
         End Function

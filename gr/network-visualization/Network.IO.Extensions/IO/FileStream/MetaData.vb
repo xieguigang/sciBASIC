@@ -69,7 +69,7 @@ Namespace FileStream
         Public Property additionals As Dictionary(Of String, String)
 
         Public Shared Function Union(a As MetaData, b As MetaData) As MetaData
-
+            Throw New NotImplementedException
         End Function
     End Class
 End Namespace

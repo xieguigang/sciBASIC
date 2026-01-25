@@ -1,14 +1,15 @@
 ﻿Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Data.GraphTheory.Analysis
+Imports Microsoft.VisualBasic.Data.GraphTheory.Analysis.Dijkstra
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Math.LinearAlgebra.Matrix
 
 Public Class GraphRouter
 
-    Dim matrix As SparseMatrix
-    Dim nodes As Dictionary(Of Node, Integer)
-    Dim nodeSet As Node()
+    Dim dijkstra As DijkstraAlgoritm
+    Dim nodes As Dictionary(Of Network.Graph.Node, Integer)
+    Dim nodeSet As Network.Graph.Node()
 
     Public Class Route : Inherits Dijkstra.RoutePathway
 
@@ -18,28 +19,34 @@ Public Class GraphRouter
             End Get
         End Property
 
-        Public Property PathwayNodes As Node()
+        Public Property PathwayNodes As Network.Graph.Node()
 
         Public Sub New(id As String)
             MyBase.New(id)
         End Sub
     End Class
 
-    Public Function FindPath(start As Node, ends As Node) As Route
+    Private Sub New(matrix As SparseMatrix, nodes As Dictionary(Of Network.Graph.Node, Integer), nodeSet As Network.Graph.Node())
+        Me.dijkstra = New DijkstraAlgoritm(matrix, nodeSet.Length)
+        Me.nodes = nodes
+        Me.nodeSet = nodeSet
+    End Sub
+
+    Public Function FindPath(start As Network.Graph.Node, ends As Network.Graph.Node) As Route
         Dim i As Integer = nodes.TryGetValue(start, [default]:=-1)
         Dim j As Integer = nodes.TryGetValue(ends, [default]:=-1)
 
         If i < 0 OrElse j < 0 Then
             Return Nothing
         Else
-            Dim path = Dijkstra.DijkstraAlgoritm.FindPathBiDirectional(matrix, nodes.Count, startIndex:=i, endIndex:=j)
+            Dim path = dijkstra.FindPath(startIndex:=i, endIndex:=j)
             Dim route = CastRoute(path)
 
             Return route
         End If
     End Function
 
-    Private Function CastRoute(routeNode As Dijkstra.DijkstraAlgoritm.Node) As Route
+    Private Function CastRoute(routeNode As DijkstraAlgoritm.Node) As Route
         If routeNode Is Nothing Then
             Return Nothing
         End If
@@ -52,15 +59,15 @@ Public Class GraphRouter
         }
     End Function
 
-    Public Function FindPath(start As Node) As Route()
+    Public Function FindPath(start As Network.Graph.Node) As Route()
         Dim i As Integer = nodes.TryGetValue(start, [default]:=-1)
 
         If i < 0 Then
             Return {}
         End If
 
-        Dim result = Dijkstra.DijkstraAlgoritm.DistanceFinder(matrix, nodes.Count, startIndex:=i)
-        Dim routes As Route() = (From route As Dijkstra.DijkstraAlgoritm.Node
+        Dim result = dijkstra.DistanceFinder(startIndex:=i)
+        Dim routes As Route() = (From route As DijkstraAlgoritm.Node
                                  In result.AsParallel
                                  Where Not route.Path.IsNullOrEmpty
                                  Select CastRoute(route)).ToArray
@@ -77,21 +84,21 @@ Public Class GraphRouter
         Dim nodeCount As Integer = networkGraph.vertex.Count
 
         If nodeCount = 0 Then
-            Return New GraphRouter With {
-                .matrix = SparseMatrix.Empty,
-                .nodes = New Dictionary(Of Node, Integer),
-                .nodeSet = {}
-            }
+            Return New GraphRouter(
+                matrix:=SparseMatrix.Empty,
+                nodes:=New Dictionary(Of Network.Graph.Node, Integer),
+                nodeSet:={}
+            )
         Else
-            Dim nodeSet As List(Of Node) = Nothing
-            Dim nodeIndexMap As Dictionary(Of Node, Integer) = Nothing
+            Dim nodeSet As List(Of Network.Graph.Node) = Nothing
+            Dim nodeIndexMap As Dictionary(Of Network.Graph.Node, Integer) = Nothing
             Dim matrix As SparseMatrix = ConvertToMatrix(networkGraph, undirected, nodeSet, nodeIndexMap)
 
-            Return New GraphRouter With {
-                .matrix = matrix,
-                .nodes = nodeIndexMap,
-                .nodeSet = nodeSet.ToArray()
-            }
+            Return New GraphRouter(
+                matrix:=matrix,
+                nodes:=nodeIndexMap,
+                nodeSet:=nodeSet.ToArray()
+            )
         End If
     End Function
 
@@ -102,8 +109,8 @@ Public Class GraphRouter
     ''' <returns>邻接矩阵</returns>
     Public Shared Function ConvertToMatrix(networkGraph As NetworkGraph,
                                            Optional undirected As Boolean = False,
-                                           Optional ByRef nodeSet As List(Of Node) = Nothing,
-                                           Optional ByRef nodeIndexMap As Dictionary(Of Node, Integer) = Nothing,
+                                           Optional ByRef nodeSet As List(Of Network.Graph.Node) = Nothing,
+                                           Optional ByRef nodeIndexMap As Dictionary(Of Network.Graph.Node, Integer) = Nothing,
                                            Optional eval As Func(Of Edge, Double) = Nothing) As SparseMatrix
         ' 1. 获取节点总数
         Dim nodeCount As Integer = networkGraph.vertex.Count
@@ -111,8 +118,8 @@ Public Class GraphRouter
         If nodeCount = 0 Then
             Return SparseMatrix.Empty
         Else
-            nodeSet = If(nodeSet, New List(Of Node))
-            nodeIndexMap = If(nodeIndexMap, New Dictionary(Of Node, Integer))
+            nodeSet = If(nodeSet, New List(Of Network.Graph.Node))
+            nodeIndexMap = If(nodeIndexMap, New Dictionary(Of Network.Graph.Node, Integer))
         End If
 
         ' 2. 初始化矩阵，所有位置默认为 0 (表示无连接)
@@ -126,7 +133,7 @@ Public Class GraphRouter
         ' nodeIndexMap(v) start from zero
         ' vb.net中 ++i 等价于i++
         ' i = 0 1 2 3 4 ...
-        For Each v As Node In networkGraph.vertex
+        For Each v As Network.Graph.Node In networkGraph.vertex
             nodeIndexMap(v) = ++i
             nodeSet.Add(v)
         Next
