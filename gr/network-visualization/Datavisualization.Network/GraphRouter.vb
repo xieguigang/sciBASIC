@@ -46,24 +46,25 @@ Public Class GraphRouter
 
         Return New Route(nodeSet(routeNode.Index).label) With {
             .Cost = routeNode.TotalDistance,
-            .PathwayNodes = routeNode.Path _
-                .Select(Function(idx) nodeSet(idx)) _
-                .ToArray()
+            .PathwayNodes = (From idx As Integer
+                             In routeNode.Path
+                             Select nodeSet(idx)).ToArray()
         }
     End Function
 
-    Public Iterator Function FindPath(start As Node) As IEnumerable(Of Route)
+    Public Function FindPath(start As Node) As Route()
         Dim i As Integer = nodes.TryGetValue(start, [default]:=-1)
 
         If i < 0 Then
-            Return
+            Return {}
         End If
 
         Dim result = Dijkstra.DijkstraAlgoritm.DistanceFinder(matrix, nodes.Count, startIndex:=i)
-
-        For Each route As Dijkstra.DijkstraAlgoritm.Node In result
-            Yield CastRoute(route)
-        Next
+        Dim routes As Route() = (From route As Dijkstra.DijkstraAlgoritm.Node
+                                 In result.AsParallel
+                                 Where Not route.Path.IsNullOrEmpty
+                                 Select CastRoute(route)).ToArray
+        Return routes
     End Function
 
     ''' <summary>
