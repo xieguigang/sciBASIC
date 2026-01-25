@@ -399,7 +399,7 @@ Namespace Analysis.Louvain
                 Dim p As Integer = Scan0
 
                 Call VBDebugger.EchoLine("")
-                Call VBDebugger.EchoLine($" [loop_{count}] Progress: ")
+                Call VBDebugger.Echo($" [loop_{count}] Progress: ")
 
                 Do
                     Dim i As Integer = order(point)
@@ -422,7 +422,7 @@ Namespace Analysis.Louvain
                         If p = deltaP Then
                             p = 0
 
-                            VBDebugger.EchoLine(vbTab & $"{CInt(100 * (max - maxLoop) / max)}%")
+                            VBDebugger.Echo(vbTab & $"{CInt(100 * (max - maxLoop) / max)}%")
                         End If
                     End If
                 Loop While enum_time < n
@@ -436,6 +436,8 @@ Namespace Analysis.Louvain
                 rebuildGraph()
                 setCluster0()
             Loop While True
+
+            Call VBDebugger.EchoLine("")
 
             Return Me
         End Function

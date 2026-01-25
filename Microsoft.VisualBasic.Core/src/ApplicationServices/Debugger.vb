@@ -472,6 +472,10 @@ Public Module VBDebugger
         End If
     End Sub
 
+    ''' <summary>
+    ''' wrapper for console.write
+    ''' </summary>
+    ''' <param name="str"></param>
     Public Sub Echo(str As String)
         If Not Mute Then
             Call My.InnerQueue.AddToQueue(
