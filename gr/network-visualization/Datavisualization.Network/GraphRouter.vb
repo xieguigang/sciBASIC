@@ -32,7 +32,7 @@ Public Class GraphRouter
         If i < 0 OrElse j < 0 Then
             Return Nothing
         Else
-            Return CastRoute(Dijkstra.DijkstraAlgoritm.FindPath(matrix, nodes.Count, startIndex:=i, endIndex:=j))
+            Return CastRoute(Dijkstra.DijkstraAlgoritm.FindPathBiDirectional(matrix, nodes.Count, startIndex:=i, endIndex:=j))
         End If
     End Function
 
