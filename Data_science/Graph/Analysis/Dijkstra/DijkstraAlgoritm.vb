@@ -23,7 +23,7 @@ Namespace Analysis.Dijkstra
 
             Public Sub New(index As Integer, Optional isStartNode As Boolean = False)
                 Me.Index = index
-                IsFixed = If(isStartNode, True, False)
+                IsFixed = False
                 TotalDistance = If(isStartNode, 0, Integer.MaxValue)
                 Parent = -1
                 Path = New List(Of Integer)()

@@ -61,6 +61,7 @@ Imports Microsoft.VisualBasic.ApplicationServices.Terminal.ProgressBar.Tqdm
 Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.ComponentModel.Collection
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.Serialization.JSON
@@ -283,8 +284,10 @@ Public Module TextDoc
                         Yield line
                     Next
                 Else
-                    Do While Not reader.EndOfStream
-                        Yield reader.ReadLine
+                    Dim line As Value(Of String) = ""
+
+                    Do While (line = reader.ReadLine) IsNot Nothing
+                        Yield CStr(line)
                     Loop
                 End If
             End Using
