@@ -47,7 +47,7 @@ Namespace Analysis.Dijkstra
         ''' <param name="graph"></param>
         ''' <param name="startIndex"></param>
         ''' <returns></returns>
-        Private Shared Function DistanceFinderInternal(ByRef graph As SparseMatrix, vertices As Integer, startIndex As Integer, endIndex As Integer?) As Node()
+        Private Shared Function DistanceFinderInternal(graph As SparseMatrix, vertices As Integer, startIndex As Integer, endIndex As Integer?) As Node()
             Dim nodes As Node() = New Node(vertices - 1) {}
             Dim endIndexValue As Integer = If(endIndex.HasValue, endIndex.Value, -1)
 
@@ -90,23 +90,27 @@ Namespace Analysis.Dijkstra
                 currentNode.IsFixed = True
 
                 ' 3. 松弛操作：更新所有邻居的距离
-                For Each neighbor As Node In nodes
-                    If Not neighbor.IsFixed AndAlso graph(currentNode.Index, neighbor.Index) <> 0 Then
-                        ' 检查防溢出：如果当前节点距离已经是Max，则不更新
-                        If currentNode.TotalDistance <> Integer.MaxValue Then
-                            Dim newDist As Double = currentNode.TotalDistance + graph(currentNode.Index, neighbor.Index)
+                ' 使用 Parallel.For 循环处理邻居更新
+                System.Threading.Tasks.Parallel.For(0, vertices,
+                    Sub(i)
+                        Dim neighbor As Node = nodes(i)
 
-                            If newDist < neighbor.TotalDistance Then
-                                neighbor.TotalDistance = newDist
-                                neighbor.Parent = currentNode.Index
-                                ' 更新路径
-                                neighbor.Path.Clear()
-                                neighbor.Path.AddRange(currentNode.Path)
-                                neighbor.Path.Add(currentNode.Index)
+                        If Not neighbor.IsFixed AndAlso graph(currentNode.Index, neighbor.Index) <> 0 Then
+                            ' 检查防溢出：如果当前节点距离已经是Max，则不更新
+                            If currentNode.TotalDistance <> Integer.MaxValue Then
+                                Dim newDist As Double = currentNode.TotalDistance + graph(currentNode.Index, neighbor.Index)
+
+                                If newDist < neighbor.TotalDistance Then
+                                    neighbor.TotalDistance = newDist
+                                    neighbor.Parent = currentNode.Index
+                                    ' 更新路径
+                                    neighbor.Path.Clear()
+                                    neighbor.Path.AddRange(currentNode.Path)
+                                    neighbor.Path.Add(currentNode.Index)
+                                End If
                             End If
                         End If
-                    End If
-                Next
+                    End Sub)
             End While
 
             Return nodes
