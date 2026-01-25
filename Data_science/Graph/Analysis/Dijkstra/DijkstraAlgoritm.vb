@@ -44,7 +44,7 @@ Namespace Analysis.Dijkstra
 
             ' 初始化节点
             For i As Integer = 0 To vertices - 1
-                nodes(i) = New Node(i, isStartNode:=True)
+                nodes(i) = New Node(i, isStartNode:=False)
             Next
         End Sub
 
@@ -65,6 +65,10 @@ Namespace Analysis.Dijkstra
         Private Function DistanceFinderInternal(startIndex As Integer, endIndex As Integer?) As Node()
             Dim endIndexValue As Integer = If(endIndex.HasValue, endIndex.Value, -1)
             Dim currentNode As Node
+
+            If Not nodes(startIndex).IsFixed Then
+                nodes(startIndex).TotalDistance = 0
+            End If
 
             ' 使用循环代替递归，防止堆栈溢出
             While True
