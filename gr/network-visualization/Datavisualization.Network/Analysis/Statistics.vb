@@ -145,7 +145,7 @@ Namespace Analysis
         Public Function ComputeNodeDegrees(ByRef g As NetworkGraph, Optional base% = 0) As Dictionary(Of String, Integer)
             Dim connectNodes As Dictionary(Of String, Integer) = g.ConnectedDegrees
             Dim d%
-            Dim dt As (Integer, Integer)
+            Dim dt As NodeDegree
             Dim degreeList = g.graphEdges.ComputeDegreeData
             Dim sumAllOut As Double = degreeList.Out.Values.Sum + base * g.vertex.Count
             Dim sumAllDegree As Double = connectNodes.Values.Sum + base * g.vertex.Count
@@ -160,20 +160,20 @@ Namespace Analysis
                     node.data.SetValue(names.REFLECTION_ID_MAPPING_RELATIVE_OUTDEGREE_CENTRALITY, base / sumAllOut)
                 Else
                     d = connectNodes(node.label)
-                    dt = (0, 0)
+                    dt = New NodeDegree
                     node.data.SetValue(names.REFLECTION_ID_MAPPING_DEGREE, d)
                     node.data.SetValue(names.REFLECTION_ID_MAPPING_RELATIVE_DEGREE_CENTRALITY, d / sumAllDegree)
 
                     If degreeList.In.ContainsKey(node.label) Then
                         d = degreeList.In(node.label)
                         node.data.SetValue(names.REFLECTION_ID_MAPPING_DEGREE_IN, d)
-                        dt = (d, 0)
+                        dt = New NodeDegree(d, 0)
                     End If
                     If degreeList.Out.ContainsKey(node.label) Then
                         d = degreeList.Out(node.label)
                         node.data.SetValue(names.REFLECTION_ID_MAPPING_DEGREE_OUT, d)
                         node.data.SetValue(names.REFLECTION_ID_MAPPING_RELATIVE_OUTDEGREE_CENTRALITY, d / sumAllOut)
-                        dt = (dt.Item1, d)
+                        dt = New NodeDegree(dt.In, d)
                     End If
 
                     node.degree = dt

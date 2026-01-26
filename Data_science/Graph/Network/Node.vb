@@ -80,6 +80,14 @@ Namespace Network
             End Get
         End Property
 
+        Sub New()
+        End Sub
+
+        Sub New(in%, out%)
+            Me.In = [in]
+            Me.Out = out
+        End Sub
+
         Public Overrides Function ToString() As String
             Return Me.GetJson
         End Function

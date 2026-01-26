@@ -161,7 +161,9 @@ Namespace FileStream
                            Next
                        End Sub)
                 Select New Graph.Node(id, data) With {
-                    .degree = (CInt(Val(n(names.REFLECTION_ID_MAPPING_DEGREE_IN))), CInt(Val(n(names.REFLECTION_ID_MAPPING_DEGREE_OUT))))
+                    .degree = New NodeDegree(
+                        CInt(Val(n(names.REFLECTION_ID_MAPPING_DEGREE_IN))),
+                        CInt(Val(n(names.REFLECTION_ID_MAPPING_DEGREE_OUT))))
                 }
 
             Dim nodeTable As New Dictionary(Of Graph.Node)(nodes)
