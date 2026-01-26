@@ -225,8 +225,9 @@ Namespace Analysis
 
             Dim uniques = clusters.Distinct.ToArray
 
+            Call $"get {uniques.Length} sub-network clusters:".debug
+
             If uniques.Length <= 13 Then
-                Call $"get {uniques.Length} sub-network clusters:".debug
                 Call uniques.JoinBy(vbTab).debug
             End If
 
