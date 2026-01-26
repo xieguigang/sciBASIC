@@ -150,7 +150,7 @@ Namespace Analysis
                                 End If
 
                                 Dim ku = u.degree.In + u.degree.Out
-                                Dim kv = v.degree.In + u.degree.Out
+                                Dim kv = v.degree.In + v.degree.Out
                                 Dim subQ As Double = auv - ((ku * kv) / (2 * m))
 
                                 q += subQ
