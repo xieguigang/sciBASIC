@@ -223,6 +223,13 @@ Namespace Analysis
                 v.data(slotName) = clusters(v.ID)
             Next
 
+            Dim uniques = clusters.Distinct.ToArray
+
+            If uniques.Length <= 13 Then
+                Call $"get {uniques.Length} sub-network clusters:".debug
+                Call uniques.JoinBy(vbTab).debug
+            End If
+
             Return g
         End Function
     End Class
