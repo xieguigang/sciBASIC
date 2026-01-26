@@ -97,10 +97,19 @@
 '
 
 Imports System.Runtime.CompilerServices
+Imports System.Runtime.Serialization
+Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.visualize.Network.Analysis.Model
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Serialization
+
+#If NET48 Then
+Imports Microsoft.VisualBasic.Serialization.JSON
+#Else
+Imports System.Text.Json.Serialization
+#End If
 
 Namespace Graph
 
@@ -118,14 +127,36 @@ Namespace Graph
         ''' Get all of the edge collection that connect to current node object
         ''' </summary>
         ''' <returns></returns>
+        <IgnoreDataMember>
+        <DataIgnored>
+        <JsonIgnore>
+        <SoapIgnore>
+        <XmlIgnore>
         Public Property adjacencies As AdjacencySet(Of Edge)
+        <IgnoreDataMember>
+        <DataIgnored>
+        <JsonIgnore>
+        <SoapIgnore>
+        <XmlIgnore>
         Public Property directedVertex As DirectedVertex
 
         ''' <summary>
         ''' 这个节点是被钉住的？在进行布局计算的时候，钉住的节点将不会更新位置
         ''' </summary>
         ''' <returns></returns>
+        ''' 
+        <IgnoreDataMember>
+        <DataIgnored>
+        <JsonIgnore>
+        <SoapIgnore>
+        <XmlIgnore>
         Public Property pinned As Boolean
+
+        <IgnoreDataMember>
+        <DataIgnored>
+        <JsonIgnore>
+        <SoapIgnore>
+        <XmlIgnore>
         Public Property visited As Boolean
 
         Public ReadOnly Property text As String

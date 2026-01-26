@@ -60,6 +60,14 @@ Imports System.Drawing
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts
 Imports Microsoft.VisualBasic.Linq
+Imports System.Runtime.Serialization
+Imports System.Xml.Serialization
+
+#If NET48 Then
+Imports Microsoft.VisualBasic.Serialization.JSON
+#Else
+Imports System.Text.Json.Serialization
+#End If
 
 #If NET48 Then
 Imports Pen = System.Drawing.Pen
@@ -123,14 +131,31 @@ Namespace Graph
         ''' For 2d layout <see cref="FDGVector2"/> / 3d layout <see cref="FDGVector3"/>
         ''' </summary>
         ''' <returns></returns>
+        ''' 
+        <IgnoreDataMember>
+        <DataIgnored>
+        <JsonIgnore>
+        <SoapIgnore>
+        <XmlIgnore>
         Public Property initialPostion As AbstractVector
         Public Property origID As String
+
+        <IgnoreDataMember>
+        <DataIgnored>
+        <JsonIgnore>
+        <SoapIgnore>
+        <XmlIgnore>
         Public Property force As Point
 
         ''' <summary>
         ''' 颜色<see cref="SolidBrush"/>或者绘图<see cref="TextureBrush"/>
         ''' </summary>
         ''' <returns></returns>
+        <IgnoreDataMember>
+        <DataIgnored>
+        <JsonIgnore>
+        <SoapIgnore>
+        <XmlIgnore>
         <ScriptIgnore>
         Public Property color As Brush
 
