@@ -151,6 +151,8 @@ Namespace Analysis
             Dim sumAllDegree As Double = connectNodes.Values.Sum + base * g.vertex.Count
 
             For Each node As Graph.Node In g.vertex
+                dt = New NodeDegree
+
                 If Not connectNodes.ContainsKey(node.label) Then
                     ' 这个节点是孤立的节点，度为零
                     node.data.SetValue(names.REFLECTION_ID_MAPPING_DEGREE, base)
@@ -160,7 +162,7 @@ Namespace Analysis
                     node.data.SetValue(names.REFLECTION_ID_MAPPING_RELATIVE_OUTDEGREE_CENTRALITY, base / sumAllOut)
                 Else
                     d = connectNodes(node.label)
-                    dt = New NodeDegree
+
                     node.data.SetValue(names.REFLECTION_ID_MAPPING_DEGREE, d)
                     node.data.SetValue(names.REFLECTION_ID_MAPPING_RELATIVE_DEGREE_CENTRALITY, d / sumAllDegree)
 
@@ -175,9 +177,9 @@ Namespace Analysis
                         node.data.SetValue(names.REFLECTION_ID_MAPPING_RELATIVE_OUTDEGREE_CENTRALITY, d / sumAllOut)
                         dt = New NodeDegree(dt.In, d)
                     End If
-
-                    node.degree = dt
                 End If
+
+                node.degree = dt
             Next
 
             Return connectNodes
