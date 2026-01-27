@@ -1,71 +1,63 @@
 ﻿#Region "Microsoft.VisualBasic::571f539d0e274c412c3b7d16f11c45ae, Microsoft.VisualBasic.Core\src\ApplicationServices\Tools\Resources.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 352
-    '    Code Lines: 130 (36.93%)
-    ' Comment Lines: 189 (53.69%)
-    '    - Xml Docs: 41.80%
-    ' 
-    '   Blank Lines: 33 (9.38%)
-    '     File Size: 17.05 KB
+' Summaries:
 
 
-    '     Class ResourcesSatellite
-    ' 
-    '         Properties: FileName, MyResource, Resources
-    ' 
-    '         Constructor: (+5 Overloads) Sub New
-    ' 
-    '         Function: DirectLoadFrom, findResourceAssemblyFileName, (+2 Overloads) GetObject, (+2 Overloads) GetStream, (+3 Overloads) GetString
-    '                   LoadMy
-    ' 
-    '         Sub: doLoad, resourceAssemblyParser
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 352
+'    Code Lines: 130 (36.93%)
+' Comment Lines: 189 (53.69%)
+'    - Xml Docs: 41.80%
+' 
+'   Blank Lines: 33 (9.38%)
+'     File Size: 17.05 KB
+
+
+'     Class ResourcesSatellite
+' 
+'         Properties: FileName, MyResource, Resources
+' 
+'         Constructor: (+5 Overloads) Sub New
+' 
+'         Function: DirectLoadFrom, findResourceAssemblyFileName, (+2 Overloads) GetObject, (+2 Overloads) GetStream, (+3 Overloads) GetString
+'                   LoadMy
+' 
+'         Sub: doLoad, resourceAssemblyParser
+' 
+' 
+' /********************************************************************************/
 
 #End Region
-
-#If Not NET48 Then
-Imports System.Composition
-#End If
-
-#If NET48 Then
-Imports System.ComponentModel.Composition
-#End If
 
 Imports System.Globalization
 Imports System.IO
@@ -76,6 +68,12 @@ Imports System.Runtime.InteropServices
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Text
+
+#If NET48 Then
+Imports System.ComponentModel.Composition
+#Else
+Imports System.Composition
+#End If
 
 Namespace ApplicationServices
 
