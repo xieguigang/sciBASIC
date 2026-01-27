@@ -361,7 +361,8 @@ Namespace CommandLine
                                Optional [in] As String = "",
                                Optional debug As Boolean = False,
                                Optional ByRef stdErr As String = Nothing,
-                               Optional ByRef exitCode As Integer = 0) As String
+                               Optional ByRef exitCode As Integer = 0,
+                               Optional shell As Boolean = False) As String
 
             Dim stdout As New List(Of String)
             Dim readLine As Action(Of String)
@@ -375,7 +376,7 @@ Namespace CommandLine
                 readLine = AddressOf stdout.Add
             End If
 
-            exitCode = ExecSub(app, args, readLine, [in], stdErr)
+            exitCode = ExecSub(app, args, readLine, [in], stdErr, shell:=shell)
 
             Return stdout.JoinBy(vbCrLf)
         End Function
