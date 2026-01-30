@@ -71,6 +71,7 @@ Imports System.Runtime.InteropServices
 Imports System.Text
 Imports Microsoft.VisualBasic.Parallel
 Imports Microsoft.VisualBasic.Text
+Imports Microsoft.VisualBasic.ValueTypes
 
 ''' <summary>
 ''' Represents an extended <see cref="BinaryReader"/> supporting special file format data types.
@@ -285,6 +286,29 @@ Public Class BinaryDataReader : Inherits BinaryReader
         Return MyBase.ReadSByte()
     End Function
 #End Region
+
+    Public Overloads Function Read(type As TypeCode) As Object
+        Select Case type
+            Case TypeCode.Boolean : Return ReadByte() <> 0
+            Case TypeCode.Byte : Return ReadByte()
+            Case TypeCode.Char : Return ChrW(ReadInt32)
+            Case TypeCode.DateTime : Return DateTimeHelper.FromUnixTimeStamp(ReadDouble)
+            Case TypeCode.Decimal : Return ReadDecimal()
+            Case TypeCode.Double : Return ReadDouble()
+            Case TypeCode.Int16 : Return ReadInt16()
+            Case TypeCode.Int32 : Return ReadInt32()
+            Case TypeCode.Int64 : Return ReadInt64()
+            Case TypeCode.SByte : Return ReadSByte()
+            Case TypeCode.Single : Return ReadSingle()
+            Case TypeCode.String : Return ReadString()
+            Case TypeCode.UInt16 : Return ReadUInt16()
+            Case TypeCode.UInt32 : Return ReadUInt32()
+            Case TypeCode.UInt64 : Return ReadUInt64()
+
+            Case Else
+                Throw New NotImplementedException(type.ToString)
+        End Select
+    End Function
 
     ''' <summary>
     ''' Reads a <see cref="DateTime"/> from the current stream. The <see cref="DateTime"/> is available in the

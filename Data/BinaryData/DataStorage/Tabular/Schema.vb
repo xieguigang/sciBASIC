@@ -110,4 +110,16 @@ Public Class VectorSchema
     Sub New()
     End Sub
 
+    Public Overrides Function ToString() As String
+        Return $"[{StringFormats.Lanudry(offset)}] {type.ToString}"
+    End Function
+
+    Public Function GetTypeInfo() As Type
+        Return type.CreatePrimitiveType
+    End Function
+
+    Public Function CreateEmpty() As Array
+        Return Array.CreateInstance(GetTypeInfo, 0)
+    End Function
+
 End Class

@@ -59,9 +59,49 @@ Imports Microsoft.VisualBasic.Data.IO.Xpt
 Imports Microsoft.VisualBasic.Data.IO.Xpt.Types
 Imports Microsoft.VisualBasic.DataStorage
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Serialization.JSON
 Imports any = Microsoft.VisualBasic.Scripting
 
 Public Module FrameReader
+
+    Public Function ReadFrame(file As String) As DataFrame
+        Dim df As New DataFrame With {
+            .features = New Dictionary(Of String, FeatureVector)
+        }
+        Dim bin As New BinaryDataReader(file.Open(FileMode.Open, doClear:=False, [readOnly]:=True)) With {
+            .ByteOrder = ByteOrder.BigEndian
+        }
+
+        If Not FrameWriter.magic.SequenceEqual(bin.ReadBytes(FrameWriter.magic.Count)) Then
+            Throw New InvalidDataException("invalid data magic header for binary dataframe file!")
+        End If
+
+        Dim jump As Long = bin.ReadInt64
+
+        Call bin.Seek(jump, Scan0)
+
+        Dim metadata As Schema = bin.ReadString(BinaryStringFormat.DwordLengthPrefix).LoadJSON(Of Schema)
+
+        Call bin.Seek(FrameWriter.magic.Count + 8, SeekOrigin.Begin)
+
+        For Each name As String In metadata.ordinals
+            jump = metadata(name).offset
+
+            If metadata(name).isScalar Then
+                Dim flag As Integer = bin.ReadInt32
+
+                If flag = 0 Then
+                    df.add(FeatureVector.FromGeneral(name, metadata(name).CreateEmpty))
+                Else
+                    df.add(FeatureVector.FromScalar(name, bin.Read(metadata(name).type)))
+                End If
+            Else
+                Dim size As Integer = bin.ReadInt32
+
+
+            End If
+        Next
+    End Function
 
     ''' <summary>
     ''' read the feather file as dataframe

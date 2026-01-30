@@ -98,9 +98,10 @@ Public Module FrameWriter
         offset = wr.Position
 
         ' write metadata offset at the begining and ends of stream
-        Call wr.Write(metadata.GetJson)
+        Call wr.Write(metadata.GetJson, BinaryStringFormat.DwordLengthPrefix)
         Call wr.Write(offset)
         Call wr.Flush()
+        ' jump to the start of the file data
         Call wr.Seek(magic.Count, SeekOrigin.Begin)
         Call wr.Write(offset)
         Call wr.Flush()

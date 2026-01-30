@@ -264,6 +264,24 @@ Public Class FeatureVector : Implements IReadOnlyId
         Return type Like primitiveSupports
     End Function
 
+    Public Shared Function FromScalar(Of T)(name As String, val As T) As FeatureVector
+        If val Is Nothing Then
+            Return FromGeneral(name, New T() {})
+        Else
+            Return FromGeneral(name, New T() {val})
+        End If
+    End Function
+
+    Public Shared Function FromScalar(name As String, val As Object) As FeatureVector
+        If val Is Nothing Then
+            Return FromGeneral(name, New String() {})
+        Else
+            Dim scalar As Array = Array.CreateInstance(val.GetType, 1)
+            Call scalar.SetValue(val, 0)
+            Return FromGeneral(name, scalar)
+        End If
+    End Function
+
     Public Shared Function FromGeneral(name As String, vec As Array) As FeatureVector
         Select Case vec.GetType.GetElementType
             Case GetType(Integer) : Return New FeatureVector(name, DirectCast(vec, Integer()))

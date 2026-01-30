@@ -68,4 +68,14 @@ Namespace Math.Correlations
             End Select
         End Function
     End Module
+
+    Public Class CorrelationNetwork
+
+        Public Property u As String
+        Public Property v As String
+        Public Property cor As Double
+        Public Property pvalue As Double
+        Public Property z As Double
+
+    End Class
 End Namespace
