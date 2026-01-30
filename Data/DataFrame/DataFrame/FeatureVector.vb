@@ -308,4 +308,32 @@ Public Class FeatureVector : Implements IReadOnlyId
         Return New StringVector(From xi As Object In col.vector Select any.ToString(xi))
     End Operator
 
+    Public Shared Narrowing Operator CType(col As FeatureVector) As String()
+        If col Is Nothing Then
+            Return Nothing
+        End If
+        Return col.TryCast(Of String)
+    End Operator
+
+    Public Shared Narrowing Operator CType(col As FeatureVector) As Double()
+        If col Is Nothing Then
+            Return Nothing
+        End If
+        Return col.TryCast(Of Double)
+    End Operator
+
+    Public Shared Narrowing Operator CType(col As FeatureVector) As Integer()
+        If col Is Nothing Then
+            Return Nothing
+        End If
+        Return col.TryCast(Of Integer)
+    End Operator
+
+    Public Shared Narrowing Operator CType(col As FeatureVector) As Date()
+        If col Is Nothing Then
+            Return Nothing
+        End If
+        Return col.TryCast(Of Date)
+    End Operator
+
 End Class
