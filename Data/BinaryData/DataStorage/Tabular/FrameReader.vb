@@ -65,8 +65,14 @@ Imports any = Microsoft.VisualBasic.Scripting
 Public Module FrameReader
 
     Public Function ReadFrame(file As String) As DataFrame
+        Using s As Stream = file.Open(FileMode.Open, doClear:=False, [readOnly]:=True)
+            Return ReadFrame(s)
+        End Using
+    End Function
+
+    Public Function ReadFrame(file As Stream) As DataFrame
         Dim df As New Dictionary(Of String, FeatureVector)
-        Dim bin As New BinaryDataReader(file.Open(FileMode.Open, doClear:=False, [readOnly]:=True)) With {
+        Dim bin As New BinaryDataReader(file) With {
             .ByteOrder = ByteOrder.BigEndian
         }
 
