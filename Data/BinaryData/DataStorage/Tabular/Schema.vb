@@ -68,6 +68,9 @@ Public Class Schema
     Public Property cols As Dictionary(Of String, VectorSchema)
     Public Property dims As Integer()
 
+    Public Property name As String
+    Public Property description As String
+
     ''' <summary>
     ''' the orders of the feature names(keys of the <see cref="cols"/>)
     ''' </summary>
@@ -92,6 +95,8 @@ Public Class Schema
                               Return New VectorSchema(f.Value)
                           End Function)
         ordinals = df.featureNames
+        name = df.name
+        description = df.description
     End Sub
 
 End Class
@@ -101,10 +106,12 @@ Public Class VectorSchema
     Public Property type As TypeCode
     Public Property isScalar As Boolean
     Public Property offset As Long
+    Public Property attrs As Dictionary(Of String, String)
 
     Sub New(feature As FeatureVector)
         type = feature.type.PrimitiveTypeCode
         isScalar = feature.isScalar
+        attrs = feature.attributes
     End Sub
 
     Sub New()

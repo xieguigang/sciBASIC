@@ -1,53 +1,53 @@
 ﻿#Region "Microsoft.VisualBasic::825c03582e8ac98cbacea3fd7ec1445e, Data\BinaryData\DataStorage\Tabular\FrameReader.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 127
-    '    Code Lines: 94 (74.02%)
-    ' Comment Lines: 16 (12.60%)
-    '    - Xml Docs: 93.75%
-    ' 
-    '   Blank Lines: 17 (13.39%)
-    '     File Size: 5.14 KB
+' Summaries:
 
 
-    ' Module FrameReader
-    ' 
-    '     Function: ReadFeatures, (+2 Overloads) ReadSasXPT
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 127
+'    Code Lines: 94 (74.02%)
+' Comment Lines: 16 (12.60%)
+'    - Xml Docs: 93.75%
+' 
+'   Blank Lines: 17 (13.39%)
+'     File Size: 5.14 KB
+
+
+' Module FrameReader
+' 
+'     Function: ReadFeatures, (+2 Overloads) ReadSasXPT
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -65,42 +65,46 @@ Imports any = Microsoft.VisualBasic.Scripting
 Public Module FrameReader
 
     Public Function ReadFrame(file As String) As DataFrame
-        Dim df As New DataFrame With {
-            .features = New Dictionary(Of String, FeatureVector)
-        }
+        Dim df As New Dictionary(Of String, FeatureVector)
         Dim bin As New BinaryDataReader(file.Open(FileMode.Open, doClear:=False, [readOnly]:=True)) With {
             .ByteOrder = ByteOrder.BigEndian
         }
 
         If Not FrameWriter.magic.SequenceEqual(bin.ReadBytes(FrameWriter.magic.Count)) Then
             Throw New InvalidDataException("invalid data magic header for binary dataframe file!")
+        Else
+            Call bin.Seek(bin.ReadInt64, Scan0)
         End If
-
-        Dim jump As Long = bin.ReadInt64
-
-        Call bin.Seek(jump, Scan0)
 
         Dim metadata As Schema = bin.ReadString(BinaryStringFormat.DwordLengthPrefix).LoadJSON(Of Schema)
 
-        Call bin.Seek(FrameWriter.magic.Count + 8, SeekOrigin.Begin)
-
         For Each name As String In metadata.ordinals
-            jump = metadata(name).offset
+            Call bin.Seek(metadata(name).offset, SeekOrigin.Begin)
 
             If metadata(name).isScalar Then
                 Dim flag As Integer = bin.ReadInt32
 
                 If flag = 0 Then
-                    df.add(FeatureVector.FromGeneral(name, metadata(name).CreateEmpty))
+                    df.Add(name, FeatureVector.FromGeneral(name, metadata(name).CreateEmpty))
                 Else
-                    df.add(FeatureVector.FromScalar(name, bin.Read(metadata(name).type)))
+                    df.Add(name, FeatureVector.FromScalar(name, VectorStream.ReadScalar(bin, metadata(name).type)))
                 End If
             Else
                 Dim size As Integer = bin.ReadInt32
+                Dim vec As Array = VectorStream.ReadVector(bin, metadata(name).type, size)
 
-
+                Call df.Add(name, FeatureVector.FromGeneral(name, vec))
             End If
+
+            df(name).attributes = metadata(name).attrs
         Next
+
+        Return New DataFrame With {
+            .name = metadata.name,
+            .description = metadata.description,
+            .features = df,
+            .rownames = metadata.rownames
+        }
     End Function
 
     ''' <summary>

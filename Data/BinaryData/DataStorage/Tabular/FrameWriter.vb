@@ -60,7 +60,6 @@ Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports Microsoft.VisualBasic.Data.Framework
 Imports Microsoft.VisualBasic.Serialization.JSON
-Imports Microsoft.VisualBasic.ValueTypes
 
 Public Module FrameWriter
 
@@ -111,13 +110,7 @@ Public Module FrameWriter
 
     Private Sub WriteVector(wr As BinaryDataWriter, v As FeatureVector, code As TypeCode)
         Call wr.Write(v.size)
-
-        Select Case code
-            Case TypeCode.Boolean : wr.Write(v.TryCast(Of Boolean).Select(Function(f) CByte(f)).ToArray)
-
-            Case Else
-                Throw New NotImplementedException(code.ToString)
-        End Select
+        Call VectorStream.WriteVector(wr, v.vector, code)
     End Sub
 
     Private Sub WriteScalar(wr As BinaryDataWriter, obj As Object, code As TypeCode)
@@ -126,28 +119,8 @@ Public Module FrameWriter
             Return
         Else
             Call wr.Write(1%)
+            Call VectorStream.WriteScalar(wr, obj, code)
         End If
-
-        Select Case code
-            Case TypeCode.Boolean : If CBool(obj) Then wr.Write(CByte(1)) Else wr.Write(CByte(0))
-            Case TypeCode.Byte : wr.Write(CByte(obj))
-            Case TypeCode.Char : wr.Write(AscW(CChar(obj)))
-            Case TypeCode.DateTime : wr.Write(CDate(obj).UnixTimeStamp)
-            Case TypeCode.Decimal : wr.Write(CDec(obj))
-            Case TypeCode.Double : wr.Write(CDbl(obj))
-            Case TypeCode.Int16 : wr.Write(CShort(obj))
-            Case TypeCode.Int32 : wr.Write(CInt(obj))
-            Case TypeCode.Int64 : wr.Write(CLng(obj))
-            Case TypeCode.SByte : wr.Write(CSByte(obj))
-            Case TypeCode.Single : wr.Write(CSng(obj))
-            Case TypeCode.String : wr.Write(CStr(obj))
-            Case TypeCode.UInt16 : wr.Write(CUShort(obj))
-            Case TypeCode.UInt32 : wr.Write(CUInt(obj))
-            Case TypeCode.UInt64 : wr.Write(CULng(obj))
-
-            Case Else
-                Throw New NotImplementedException(code.ToString)
-        End Select
     End Sub
 
 End Module
