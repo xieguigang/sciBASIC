@@ -491,7 +491,9 @@ Namespace IO
             Dim whitespace_padding As New List(Of (String, Integer))
 
             For i As Integer = 0 To colnames.Count - 1
-                If colnames(i).StringEmpty(whitespaceAsEmpty:=True) Then
+                ' 20260131 第一列的标题可能是空字符串，这个对于csv第一列作为行标题是比较常见的
+                ' 在这里忽略掉这个可能的警告消息
+                If i > 0 AndAlso colnames(i).StringEmpty(whitespaceAsEmpty:=True) Then
                     Call empty_ordinal.Add(i)
                 Else
                     Dim lc As Char = colnames(i).First
