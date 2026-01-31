@@ -493,8 +493,11 @@ Namespace IO
             For i As Integer = 0 To colnames.Count - 1
                 ' 20260131 第一列的标题可能是空字符串，这个对于csv第一列作为行标题是比较常见的
                 ' 在这里忽略掉这个可能的警告消息
-                If i > 0 AndAlso colnames(i).StringEmpty(whitespaceAsEmpty:=True) Then
-                    Call empty_ordinal.Add(i)
+                If colnames(i).StringEmpty(whitespaceAsEmpty:=True) Then
+                    ' make ignores of the first column
+                    If i > 0 Then
+                        Call empty_ordinal.Add(i)
+                    End If
                 Else
                     Dim lc As Char = colnames(i).First
                     Dim rc As Char = colnames(i).Last
