@@ -1,11 +1,14 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <OptionInfer>On</OptionInfer>
-    <TargetFramework>net10.0</TargetFramework>
+    <TargetFrameworks>net10.0;net8.0</TargetFrameworks>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <Platforms>AnyCPU;x64</Platforms>
     <DefaultItemExcludes>$(DefaultItemExcludes);$(ProjectDir)**\*.cs</DefaultItemExcludes>
+    <AssemblyName>Microsoft.VisualBasic.DataMining.DynamicBayesianNetwork</AssemblyName>
+    <AssemblyTitle>Dynamic Bayesian Networks</AssemblyTitle>
+    <RootNamespace>Microsoft.VisualBasic.DataMining.DynamicBayesianNetwork</RootNamespace>
   </PropertyGroup>
   <ItemGroup>
     <Compile Remove="test\**" />

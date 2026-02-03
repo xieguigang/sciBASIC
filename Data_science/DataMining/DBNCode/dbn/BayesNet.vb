@@ -1,7 +1,8 @@
 ﻿Imports System.Text
-Imports DBNCode.utils
 Imports Microsoft.VisualBasic.ComponentModel.Collection
+Imports Microsoft.VisualBasic.DataMining.DynamicBayesianNetwork.utils
 Imports Microsoft.VisualBasic.Language.Java
+Imports std = System.Math
 
 Namespace dbn
 
@@ -123,7 +124,7 @@ Namespace dbn
             Dim childNodes As IList(Of IList(Of Integer)) = New List(Of IList(Of Integer))(n)
             Dim i = n
 
-            While Math.Max(Threading.Interlocked.Decrement(i), i + 1) > 0
+            While std.Max(Threading.Interlocked.Decrement(i), i + 1) > 0
                 childNodes.Add(New List(Of Integer)(n))
             End While
 
@@ -169,7 +170,7 @@ Namespace dbn
             ' sort for when applying configuration mask
             i = n
 
-            While Math.Max(Threading.Interlocked.Decrement(i), i + 1) > 0
+            While std.Max(Threading.Interlocked.Decrement(i), i + 1) > 0
                 parentNodes(i) = New List(Of Integer)(parentNodes(i).Sort())
             End While
 
@@ -193,7 +194,7 @@ Namespace dbn
                     Dim range = c.ChildRange
                     parametersField(i)(New Configuration(c)) = generateProbabilities(range)
                 Else
-                    parametersField.Add(New Dictionary(Of Configuration, IList(Of Double))(Math.Ceiling(parentsRange / 0.75)))
+                    parametersField.Add(New Dictionary(Of Configuration, IList(Of Double))(std.Ceiling(parentsRange / 0.75)))
 
                     Do
                         Dim range = c.ChildRange
@@ -243,7 +244,7 @@ Namespace dbn
                     ' count for all except one of possible child values
                     Dim j = range - 1
 
-                    While Math.Max(Threading.Interlocked.Decrement(j), j + 1) > 0
+                    While std.Max(Threading.Interlocked.Decrement(j), j + 1) > 0
                         Dim Nijk = o.count(c, transition)
                         probabilities.Add(1.0 * Nijk / o.numObservations(transition))
                         c.nextChild()
@@ -253,7 +254,7 @@ Namespace dbn
                     c.resetChild()
                     parametersField(i)(New Configuration(c)) = probabilities
                 Else
-                    parametersField.Add(New Dictionary(Of Configuration, IList(Of Double))(Math.Ceiling(parentsRange / 0.75)))
+                    parametersField.Add(New Dictionary(Of Configuration, IList(Of Double))(std.Ceiling(parentsRange / 0.75)))
 
                     Do
                         c.ConsiderChild = False
@@ -267,7 +268,7 @@ Namespace dbn
                         If Nij = 0 Then
                             Dim j = range - 1
 
-                            While Math.Max(Threading.Interlocked.Decrement(j), j + 1) > 0
+                            While std.Max(Threading.Interlocked.Decrement(j), j + 1) > 0
                                 ' assume uniform distribution
                                 probabilities.Add(1.0 / range)
                             End While
@@ -275,7 +276,7 @@ Namespace dbn
                             ' count for all except one of possible child values
                             Dim j = range - 1
 
-                            While Math.Max(Threading.Interlocked.Decrement(j), j + 1) > 0
+                            While std.Max(Threading.Interlocked.Decrement(j), j + 1) > 0
                                 Dim Nijk = o.count(c, transition)
                                 probabilities.Add(1.0 * Nijk / Nij)
                                 c.nextChild()
@@ -340,7 +341,7 @@ Namespace dbn
                 values.Add(0.0)
                 Dim j = numValues - 1
 
-                While Math.Max(Threading.Interlocked.Decrement(j), j + 1) > 0
+                While std.Max(Threading.Interlocked.Decrement(j), j + 1) > 0
                     values.Add(r.NextDouble())
                 End While
 

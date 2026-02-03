@@ -1,4 +1,5 @@
 ﻿Imports System.Text
+Imports std = System.Math
 
 Namespace utils
 
@@ -27,40 +28,11 @@ Namespace utils
             childrenField.Add(childNode)
         End Sub
 
-
-        '	/* target must be a leaf 
-        '	public List<TreeNode<T>> deleteDown(TreeNode<T> target) throws IllegalArgumentException {
-        '		if (this == target){
-        '			//assert this.isLeaf();
-        '			if (!this.isLeaf()){
-        '				throw new IllegalArgumentException("Target is not a leaf node.");
-        '			}
-        '			return new LinkedList<TreeNode<T>>();
-        '		}
-        '		
-        '		List<TreeNode<T>> orphanChildren = null;
-        '		for (Iterator<TreeNode<T>> iter = this.children.iterator(); iter.hasNext(); ) {
-        '			TreeNode<T> childNode = iter.next();
-        '			orphanChildren = childNode.deleteDown(target);
-        '			if (orphanChildren != null){
-        '				iter.remove();
-        '				break;
-        '			}
-        '		}
-        '		
-        '		if (orphanChildren == null){
-        '			return null;
-        '		}
-        '		
-        '		for (TreeNode<T> childNode : this.children){
-        '			childNode.parent = null;
-        '			orphanChildren.add(childNode);
-        '		}
-        '		
-        '		return orphanChildren;
-        '	}
-
-        ' target must be a leaf 
+        ''' <summary>
+        ''' target must be a leaf 
+        ''' </summary>
+        ''' <param name="roots"></param>
+        ''' <returns></returns>
         Public Overridable Function deleteUp(roots As IDictionary(Of T, TreeNode(Of T))) As IList(Of TreeNode(Of T))
 
             If Not Leaf Then
@@ -123,7 +95,7 @@ Namespace utils
 
             Dim i = level
 
-            While Math.Max(Threading.Interlocked.Decrement(i), i + 1) > 0
+            While std.Max(Threading.Interlocked.Decrement(i), i + 1) > 0
                 sb.Append(vbTab)
             End While
             sb.Append("-- " & Data.ToString() & ls)

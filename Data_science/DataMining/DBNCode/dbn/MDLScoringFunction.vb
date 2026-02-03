@@ -1,7 +1,9 @@
-﻿Namespace dbn
+﻿Imports std = System.Math
 
-    Public Class MDLScoringFunction
-        Inherits LLScoringFunction
+Namespace dbn
+
+    Public Class MDLScoringFunction : Inherits LLScoringFunction
+
         Private epsilon As Double = 0.0000000001
 
         Public Overrides Function evaluate(observations As Observations, transition As Integer, parentNodesPast As IList(Of Integer), parentNodePresent As Integer?, childNode As Integer) As Double
@@ -11,7 +13,7 @@
             Dim score = MyBase.evaluate(observations, transition, parentNodesPast, parentNodePresent, childNode)
 
             ' regularizer term
-            score -= 0.5 * Math.Log(observations.numObservations(transition) + epsilon) * c.NumParameters
+            score -= 0.5 * std.Log(observations.numObservations(transition) + epsilon) * c.NumParameters
             Return score
         End Function
 
@@ -22,7 +24,7 @@
             Dim score = MyBase.evaluate_2(observations, transition, parentNodesPast, parentNodePresent, childNode)
 
             ' regularizer term
-            score -= 0.5 * Math.Log(observations.numObservations(transition) + epsilon) * c.NumParameters
+            score -= 0.5 * std.Log(observations.numObservations(transition) + epsilon) * c.NumParameters
 
             Return score
         End Function

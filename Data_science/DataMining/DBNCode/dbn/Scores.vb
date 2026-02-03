@@ -1,7 +1,7 @@
 ﻿Imports System.Text
-Imports DBNCode.utils
 Imports Microsoft.VisualBasic.ComponentModel.Collection
-
+Imports Microsoft.VisualBasic.DataMining.DynamicBayesianNetwork.utils
+Imports std = System.Math
 
 Namespace dbn
 
@@ -137,7 +137,7 @@ Namespace dbn
             Dim numBestScores = RectangularArray.Matrix(Of Integer)(n, n)
 
             Dim cores = CPUCoreNumbers
-            Dim aux_sum As Integer = Math.Ceiling(n / cores)
+            Dim aux_sum As Integer = std.Ceiling(n / cores)
             Dim Threads = New ScoreCalculationThread(cores - 1) {}
 
             For t = 0 To numTransitions - 1
@@ -271,7 +271,7 @@ Namespace dbn
                             Do
                                 Dim Nijk = observations.count(c, t)
                                 If Nijk <> 0 AndAlso Nijk <> Nij Then
-                                    score += Math.Log(Nijk) - Math.Log(Nij)
+                                    score += std.Log(Nijk) - std.Log(Nij)
                                 End If
                             Loop While c.nextChild()
                         Loop While c.nextParents()

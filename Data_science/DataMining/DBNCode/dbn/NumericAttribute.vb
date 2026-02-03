@@ -1,4 +1,4 @@
-﻿Imports DBNCode.utils
+﻿Imports Microsoft.VisualBasic.DataMining.DynamicBayesianNetwork.utils
 
 Namespace dbn
 
@@ -7,7 +7,7 @@ Namespace dbn
 
         Private nameField As String
 
-        Private values As BidirectionalArray(Of Single) = New BidirectionalArray(Of Single)()
+        Private values As New BidirectionalArray(Of Single)()
 
         Public Overridable ReadOnly Property Numeric As Boolean Implements Attribute.Numeric
             Get

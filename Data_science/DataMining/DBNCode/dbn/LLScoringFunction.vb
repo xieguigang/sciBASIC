@@ -1,7 +1,8 @@
-﻿Namespace dbn
+﻿Imports std = System.Math
 
-    Public Class LLScoringFunction
-        Implements ScoringFunction
+Namespace dbn
+
+    Public Class LLScoringFunction : Implements ScoringFunction
 
         Public Overridable Function evaluate(observations As Observations, transition As Integer, parentNodesPast As IList(Of Integer), childNode As Integer) As Double Implements ScoringFunction.evaluate
             Return evaluate(observations, transition, parentNodesPast, Nothing, childNode)
@@ -24,8 +25,8 @@
 
                     Dim Nijk = observations.count(c, transition)
                     '				System.out.println("Configuration: " + c + " NIJK: " + Nijk);
-                    If CLng(Math.Round(Nijk * 1000.0R, MidpointRounding.AwayFromZero)) / 1000.0R <> 0 AndAlso Nijk <> Nij Then
-                        score += Nijk * (Math.Log(Nijk) - Math.Log(Nij))
+                    If CLng(std.Round(Nijk * 1000.0R, MidpointRounding.AwayFromZero)) / 1000.0R <> 0 AndAlso Nijk <> Nij Then
+                        score += Nijk * (std.Log(Nijk) - std.Log(Nij))
                         '					if(Double.isNaN(score)) {
                         '						System.out.println("nijk: " + Nijk + " nij:" + Nij);
                         '					}
@@ -49,8 +50,8 @@
                 c.ConsiderChild = True
                 Do
                     Dim Nijk = observations.count(c, transition)
-                    If CLng(Math.Round(Nijk * 1000.0R, MidpointRounding.AwayFromZero)) / 1000.0R <> 0 AndAlso Nijk <> Nij Then
-                        score += Nijk * (Math.Log(Nijk) - Math.Log(Nij))
+                    If CLng(std.Round(Nijk * 1000.0R, MidpointRounding.AwayFromZero)) / 1000.0R <> 0 AndAlso Nijk <> Nij Then
+                        score += Nijk * (std.Log(Nijk) - std.Log(Nij))
                     End If
                 Loop While c.nextChild()
             Loop While c.nextParents()

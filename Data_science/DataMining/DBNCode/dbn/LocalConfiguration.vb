@@ -1,4 +1,6 @@
-﻿Namespace dbn
+﻿Imports std = System.Math
+
+Namespace dbn
 
     Public Class LocalConfiguration
         Inherits Configuration
@@ -39,13 +41,13 @@
             If parentNodesPast IsNot Nothing Then
                 ' parentNodesPast ints are already shifted
                 For Each parentNode As Integer? In parentNodesPast
-                    parentIndices(Math.Min(Threading.Interlocked.Increment(i), i - 1)) = parentNode.Value
+                    parentIndices(std.Min(Threading.Interlocked.Increment(i), i - 1)) = parentNode.Value
                 Next
             End If
 
             If parentNodesPresent IsNot Nothing Then
                 For Each parentNode As Integer? In parentNodesPresent
-                    parentIndices(Math.Min(Threading.Interlocked.Increment(i), i - 1)) = parentNode.Value + markovLag * n
+                    parentIndices(std.Min(Threading.Interlocked.Increment(i), i - 1)) = parentNode.Value + markovLag * n
                 Next
             End If
 

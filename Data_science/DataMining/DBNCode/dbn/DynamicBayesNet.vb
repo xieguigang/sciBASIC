@@ -1,6 +1,7 @@
 ﻿Imports System.Text
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Language.Java
+Imports std = System.Math
 
 Namespace dbn
 
@@ -339,11 +340,11 @@ Namespace dbn
             Dim sum As Double = 0
 
             For i = 0 To obs.Length - 1
-                sum += Math.Pow(obs(i) - mean, 2)
+                sum += std.Pow(obs(i) - mean, 2)
 
             Next
             sum = sum / obs.Length
-            sum = Math.Sqrt(sum) / Math.Sqrt(obs.Length) * 1.96
+            sum = std.Sqrt(sum) / std.Sqrt(obs.Length) * 1.96
             Return sum
         End Function
 

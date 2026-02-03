@@ -1,6 +1,7 @@
 ﻿Imports System.Text
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Language.Java
+Imports std = System.Math
 
 Namespace dbn
 
@@ -178,7 +179,7 @@ Namespace dbn
                 i = 0
                 For Each classData In stratifiedData
                     For j = 0 To classData.Length - 1
-                        classData(j)((m + 1) * lN) = foldIds(Math.Min(Threading.Interlocked.Increment(i), i - 1))
+                        classData(j)((m + 1) * lN) = foldIds(std.Min(Threading.Interlocked.Increment(i), i - 1))
                     Next
                 Next
             End If
@@ -302,9 +303,9 @@ Namespace dbn
                             i += 1
                         Else
                             If c = 0 Then
-                                trainingData_0(0)(Math.Min(Threading.Interlocked.Increment(j), j - 1)) = copyOf(row, (m + 1) * n)
+                                trainingData_0(0)(std.Min(Threading.Interlocked.Increment(j), j - 1)) = CopyOf(row, (m + 1) * n)
                             Else
-                                trainingData_1(0)(Math.Min(Threading.Interlocked.Increment(j), j - 1)) = copyOf(row, (m + 1) * n)
+                                trainingData_1(0)(std.Min(Threading.Interlocked.Increment(j), j - 1)) = CopyOf(row, (m + 1) * n)
                             End If
                         End If
                     Next
@@ -659,7 +660,7 @@ Namespace dbn
                             testPassiveData(i) = copyOf(classPassiveData(k), (m + 1) * nPassive)
                             i += 1
                         Else
-                            trainingData(0)(Math.Min(Threading.Interlocked.Increment(j), j - 1)) = copyOf(row, (m + 1) * n)
+                            trainingData(0)(std.Min(Threading.Interlocked.Increment(j), j - 1)) = CopyOf(row, (m + 1) * n)
                         End If
                     Next
                 Next

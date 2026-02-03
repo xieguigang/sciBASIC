@@ -8,9 +8,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\..\Microsoft.VisualBasic.Core\src\Core.vbproj" />
+    <ProjectReference Include="..\..\..\Graph\graph-netcore5.vbproj" />
+    <ProjectReference Include="..\..\..\Mathematica\Math\Math\Math.NET5.vbproj" />
     <ProjectReference Include="..\DBNCode.vbproj" />
-    <ProjectReference Include="G:\GCModeller\src\runtime\sciBASIC#\Data\DataFrame\dataframework-netcore5.vbproj" />
-    <ProjectReference Include="G:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj" />
   </ItemGroup>
 
 </Project>

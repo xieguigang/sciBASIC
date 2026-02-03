@@ -1,4 +1,4 @@
-﻿Imports DBNCode.dbn
+﻿Imports Microsoft.VisualBasic.DataMining.DynamicBayesianNetwork.dbn
 
 Namespace utils
 

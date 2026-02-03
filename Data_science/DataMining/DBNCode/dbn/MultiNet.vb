@@ -1,5 +1,6 @@
 ﻿Imports System.Text
 Imports Microsoft.VisualBasic.ComponentModel.Collection
+Imports std = System.Math
 
 Namespace dbn
 
@@ -73,7 +74,7 @@ Namespace dbn
             Dim newClustering = RectangularArray.Cubic(Of Double)(numTransitions, numSubjects, numClusters)
             Dim cluster As Integer
             Dim decimal_places As Double = 5
-            Dim epsilon = Math.Pow(10, -decimal_places)
+            Dim epsilon = std.Pow(10, -decimal_places)
             Dim max_cluster As Integer
             Dim alpha = getAlpha(clustering)
 
@@ -87,9 +88,9 @@ Namespace dbn
                     For t = 0 To numTransitions - 1
                         For n = 0 To numAttributes - 1
                             If stationaryProcess Then
-                                probabilityAux += Math.Log(dbn.transitionNets(0).getParameters(n, observations(t)(s))(0))
+                                probabilityAux += std.Log(dbn.transitionNets(0).getParameters(n, observations(t)(s))(0))
                             Else
-                                probabilityAux += Math.Log(dbn.transitionNets(t).getParameters(n, observations(t)(s))(0))
+                                probabilityAux += std.Log(dbn.transitionNets(t).getParameters(n, observations(t)(s))(0))
                             End If
                         Next
                     Next
@@ -106,8 +107,8 @@ Namespace dbn
 
                 For c = 0 To numClusters - 1
                     For t = 0 To numTransitions - 1
-                        If newClustering(t)(s)(c) - probabilityMax >= Math.Log(epsilon) - Math.Log(numClusters) Then
-                            newClustering(t)(s)(c) = Math.Exp(newClustering(t)(s)(c) - probabilityMax)
+                        If newClustering(t)(s)(c) - probabilityMax >= std.Log(epsilon) - std.Log(numClusters) Then
+                            newClustering(t)(s)(c) = std.Exp(newClustering(t)(s)(c) - probabilityMax)
                         Else
                             newClustering(t)(s)(c) = 0
                         End If
@@ -116,7 +117,7 @@ Namespace dbn
 
                 probabilitySum = 0
                 For c = 0 To numClusters - 1
-                    probabilitySum += alpha(c) * Math.Ceiling(newClustering(0)(s)(c) * 1000000000000000R) / 1000000000000000R
+                    probabilitySum += alpha(c) * std.Ceiling(newClustering(0)(s)(c) * 1.0E+15R) / 1.0E+15R
 
                 Next
                 For c = 0 To numClusters - 1
@@ -288,7 +289,7 @@ Namespace dbn
                 Next
 
                 '		System.out.println("LL: " + score + " Penalizing Term: " + Math.log(o.getNumSubjects()));
-                score -= numParam * Math.Log(o.NumSubjects)
+                score -= numParam * std.Log(o.NumSubjects)
                 Return score
             End Get
         End Property
@@ -319,7 +320,7 @@ Namespace dbn
                 For s = 0 To numSubjects - 1
                     count += clustering(0)(s)(c)
                 Next
-                netscore2 += count * Math.Log(alpha(c))
+                netscore2 += count * std.Log(alpha(c))
             Next
 
             Return netscore1 + netscore2

@@ -1,5 +1,5 @@
-﻿Imports DBNCode.utils
-Imports Microsoft.VisualBasic.ComponentModel.Collection
+﻿Imports Microsoft.VisualBasic.ComponentModel.Collection
+Imports Microsoft.VisualBasic.DataMining.DynamicBayesianNetwork.utils
 Imports Microsoft.VisualBasic.Language.Java
 
 Namespace dbn
