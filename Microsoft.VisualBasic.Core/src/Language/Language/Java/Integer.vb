@@ -3,7 +3,7 @@ Imports System.Runtime.CompilerServices
 
 Namespace Language.Java
 
-    Module [Integer]
+    Public Module [Integer]
 
         <Extension>
         Public Function bitCount(i As Integer) As Integer

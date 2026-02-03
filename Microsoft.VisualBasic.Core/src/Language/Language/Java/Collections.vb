@@ -362,6 +362,26 @@ Namespace Language.Java
             ' 5. 如果数量变了，说明发生了移除操作，返回 True
             Return source.Count <> originalCount
         End Function
+
+        Public Sub shuffle(Of T)(list As IList(Of T), r As Random)
+
+            ' 基本的空引用检查
+            If list Is Nothing Then Return
+
+            ' Fisher-Yates 洗牌算法
+            ' 从列表的最后一个元素开始，向前遍历到第二个元素（索引 1）
+            For i As Integer = list.Count - 1 To 1 Step -1
+
+                ' 生成一个 0 到 i 之间的随机索引 j（包含 i）
+                ' 注意：Random.Next(maxValue) 是不包含 maxValue 的，所以用 i + 1
+                Dim j As Integer = r.Next(i + 1)
+
+                ' 交换 list(i) 和 list(j)
+                Dim temp As T = list(i)
+                list(i) = list(j)
+                list(j) = temp
+            Next
+        End Sub
     End Module
 
 End Namespace

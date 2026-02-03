@@ -81,6 +81,10 @@ Namespace Language.Java
             Next
         End Sub
 
+        Public Function copyOf(Of T)(matrix As T(), start As Integer) As T()
+            Return copyOfRange(matrix, start, matrix.Length - start)
+        End Function
+
         Public Function copyOfRange(Of T)(matrix As T(), start As Integer, length As Integer) As T()
             Dim out As T() = New T(length - 1) {}
             Call Array.Copy(matrix, start, out, Scan0, length)
@@ -123,6 +127,22 @@ Namespace Language.Java
 
         Public Function toString(Of T)(x As IEnumerable(Of T)) As String
             Return x.JoinBy(", ")
+        End Function
+
+        Public Function hashCode(ints As Integer()) As Integer
+            ' 1. 处理空数组引用
+            If ints Is Nothing Then Return 0
+
+            ' 2. 初始化哈希值 (非零种子可以防止全零数组的哈希冲突过于简单)
+            Dim hash As Integer = 1
+
+            ' 3. 遍历数组，使用公式：hash = 31 * hash + element
+            ' 这里利用了整数溢出自动回绕的特性，不需要手动处理
+            For Each num As Integer In ints
+                hash = hash * 31 + num
+            Next
+
+            Return hash
         End Function
     End Module
 End Namespace
