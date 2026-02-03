@@ -120,5 +120,9 @@ Namespace Language.Java
         Public Function Max(Of T As IComparable(Of T))(source As IEnumerable(Of T)) As T
             Return Enumerable.Max(source)
         End Function
+
+        Public Function toString(Of T)(x As IEnumerable(Of T)) As String
+            Return x.JoinBy(", ")
+        End Function
     End Module
 End Namespace

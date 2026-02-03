@@ -92,6 +92,8 @@ Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.SecurityString
 Imports Microsoft.VisualBasic.Text.Similarity
 Imports any = Microsoft.VisualBasic.Scripting
+Imports System.Numerics
+
 
 #If DEBUG Then
 Imports Microsoft.VisualBasic.Serialization.JSON
