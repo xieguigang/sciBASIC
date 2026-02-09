@@ -69,16 +69,19 @@ Public Class TFIDF
                Order By word
     End Function
 
+    Public Sub Add(id As String, counter As Dictionary(Of String, Integer))
+        m_words = Nothing
+        vecs.Add(id, counter)
+    End Sub
+
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Sub Add(id As String, seq As IEnumerable(Of String))
-        Dim counter As Dictionary(Of String, Integer) = seq _
+        Call Add(id, seq _
             .GroupBy(Function(a) a) _
             .ToDictionary(Function(a) a.Key,
                           Function(a)
                               Return a.Count
-                          End Function)
-
-        m_words = Nothing
-        vecs.Add(id, counter)
+                          End Function))
     End Sub
 
     ''' <summary>
