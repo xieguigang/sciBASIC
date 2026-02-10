@@ -108,17 +108,21 @@ Public Class TFIDF
         Dim m As New DataFrame With {
             .rownames = vecs.Keys.ToArray
         }
-        Dim seqs As Dictionary(Of String, Integer)() = m.rownames _
+        Dim seqs As SeqValue(Of Dictionary(Of String, Integer))() = m.rownames _
             .Select(Function(id) vecs(id)) _
+            .SeqIterator _
             .ToArray
 
         For Each v As String In TqdmWrapper.Wrap(Words)
             ' add column
             ' row is sequence id
-            Call m.add(v, From seq As Dictionary(Of String, Integer)
-                          In seqs
-                          Let tf As Integer = seq.TryGetValue(v, [default]:=0)
-                          Select tf * IDF(v))
+            Call m.add(v, From seq As SeqValue(Of Dictionary(Of String, Integer))
+                          In seqs.AsParallel
+                          Let tf As Integer = seq.value.TryGetValue(v, [default]:=0)
+                          Let ordinal As Integer = seq.i
+                          Let embedding As Double = tf * IDF(v)
+                          Order By ordinal Ascending
+                          Select embedding)
         Next
 
         If L2normalized Then
@@ -171,7 +175,8 @@ Public Class TFIDF
     Public Function DF(v As String) As Integer
         Return Aggregate seq As Dictionary(Of String, Integer)
                In vecs.Values
-               Into Count(seq.ContainsKey(v))
+               Where seq.ContainsKey(v)
+               Into Count
     End Function
 
     ''' <summary>
