@@ -167,9 +167,9 @@ Public Class TFIDF
     End Function
 
     ''' <summary>
-    ''' 
+    ''' get number of document which contains term <paramref name="v"/>
     ''' </summary>
-    ''' <param name="v"></param>
+    ''' <param name="v">term for count documents</param>
     ''' <returns></returns>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function DF(v As String) As Integer
