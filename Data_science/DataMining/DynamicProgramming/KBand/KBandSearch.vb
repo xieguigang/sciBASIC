@@ -86,6 +86,7 @@ Public Class KBandSearch
         If seq1 = seq2 Then
             globalAlign(0) = seq1
             globalAlign(1) = seq2
+
             Return 0
         End If
 
@@ -175,6 +176,7 @@ Public Class KBandSearch
                 ' Left (i, j-1)
                 ' 检查 i - (j-1) 是否在带内 => |i - (j-1)| <= K
                 Dim leftScore As Integer = Integer.MaxValue
+
                 If std.Abs(i - (j - 1)) <= K Then
                     leftScore = score(i, j - 1)
                 End If
@@ -243,30 +245,5 @@ Public Class KBandSearch
         globalAlign(1) = sb2.ToString()
 
         Return score(l1, l2)
-    End Function
-
-    ''' <summary>
-    ''' This Function calculates the minimum choice of three choices in the next move
-    ''' </summary>
-    ''' <param name="diagonal"></param>
-    ''' <param name="left"></param>
-    ''' <param name="up"></param>
-    ''' <returns></returns>
-    Public Function calculateMinimum(diagonal%, left%, up%, ByRef direction%) As Integer
-        Dim temp = diagonal
-
-        direction = 0
-
-        If (temp > left) Then
-            temp = left
-            direction = 1
-        End If
-
-        If (temp > up) Then
-            temp = up
-            direction = 2
-        End If
-
-        Return temp
     End Function
 End Class

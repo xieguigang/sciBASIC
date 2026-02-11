@@ -62,7 +62,6 @@ Imports System.Text
 Imports Microsoft.VisualBasic.ComponentModel.Algorithm.DynamicProgramming
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
-Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 
 ''' <summary>
@@ -95,6 +94,8 @@ Public Class CenterStar
             Return names
         End Get
     End Property
+
+    Public Const GapChar As Char = "-"c
 
     Sub New(input As IEnumerable(Of NamedValue(Of String)), Optional kband As Integer = 32)
         With input.ToArray
@@ -202,7 +203,7 @@ Public Class CenterStar
                                 Into Max(a.Length)
 
         For i As Integer = 0 To multipleAlign.Length - 1
-            multipleAlign(i) = multipleAlign(i).PadRight(maxLen, "-"c)
+            multipleAlign(i) = multipleAlign(i).PadRight(maxLen, GapChar)
         Next
     End Sub
 
@@ -241,7 +242,7 @@ Public Class CenterStar
                 ' 字符匹配：移动双指针
                 iOld += 1
                 iNew += 1
-            ElseIf newCenter(iNew) = "-"c Then
+            ElseIf newCenter(iNew) = GapChar Then
                 ' 新中心序列在此处有空格：记录在旧序列的当前指针前插入
                 positions.Add(iOld)
                 iNew += 1
@@ -254,7 +255,7 @@ Public Class CenterStar
 
         ' 处理新中心序列末尾剩余的空格
         While iNew < newCenter.Length
-            If newCenter(iNew) = "-"c Then
+            If newCenter(iNew) = GapChar Then
                 positions.Add(iOld) ' 在旧序列末尾插入
             End If
 
@@ -276,9 +277,9 @@ Public Class CenterStar
 
             For Each pos As Integer In sortedGaps
                 If pos <= sb.Length Then
-                    sb.Insert(pos, "-"c)
+                    Call sb.Insert(pos, GapChar)
                 Else
-                    sb.Append("-"c) ' 位置超出时在末尾追加
+                    Call sb.Append(GapChar) ' 位置超出时在末尾追加
                 End If
             Next
 
