@@ -214,51 +214,84 @@ Public Class CenterStar
         Next
     End Sub
 
+    ''' <summary>
+    ''' 同步所有序列的空格插入位置，以新中心序列为基准统一对齐
+    ''' </summary>
+    ''' <param name="alignments">待同步的序列数组</param>
+    ''' <param name="centerIndex">中心序列的索引</param>
+    ''' <param name="i">当前新序列的索引</param>
     Private Sub SyncGaps(ByRef alignments As String(), centerIndex As Integer, i As Integer)
-        If kband.globalAlign(0).Length > alignments(centerIndex).Length Then
-            Dim j2 = 0
+        Dim oldCenter As String = alignments(centerIndex)
+        Dim newCenter As String = kband.globalAlign(0)
+        Dim newSeq As String = kband.globalAlign(1)
+        ' 1. 计算旧中心序列到新中心序列的空格插入位置
+        Dim gapPositions As List(Of Integer) = FindGapInsertPositions(oldCenter, newCenter)
 
-            For j1 As Integer = 0 To kband.globalAlign(0).Length - 1
-                If (alignments(centerIndex).CharAtOrDefault(j2, "-"c) <> kband.globalAlign(0)(j1)) Then
-                    Dim a As StringBuilder
-
-                    For k As Integer = 0 To i - 1
-                        With multipleAlign(k)
-                            If .Length > j1 Then
-                                a = New StringBuilder(multipleAlign(k))
-                                a.Insert(j1, "-"c)
-                                multipleAlign(k) = a.ToString
-                            Else
-                                multipleAlign(k) = .ToString & New String("-"c, j1 - .Length)
-                            End If
-                        End With
-                    Next
-
-                Else
-                    j2 += 1
-                End If
-            Next
-            alignments(centerIndex) = kband.globalAlign(0)
-        Else
-            Dim j2 = 0
-            Dim globalAlign0 = kband.globalAlign(Scan0)
-
-            For j1 As Integer = 0 To alignments(centerIndex).Length - 1
-                If (alignments(centerIndex)(j1) <> globalAlign0.CharAtOrDefault(j2)) Then
-                    With multipleAlign(i)
-                        If .Length > j1 Then
-                            Dim a As New StringBuilder(multipleAlign(i))
-                            a.Insert(j1, "-"c)
-                            multipleAlign(i) = a.ToString()
-                        Else
-                            multipleAlign(i) = .ToString & New String("-"c, j1 - .Length)
-                        End If
-                    End With
-                Else
-                    j2 += 1
-                End If
-            Next
+        If gapPositions.Count > 0 Then
+            ' 2. 将所有序列（包括新序列）在指定位置插入空格
+            Call ApplyGapInsertions(alignments, gapPositions, i)
         End If
+
+        ' 3. 更新中心序列为新比对结果
+        alignments(centerIndex) = newCenter
+    End Sub
+
+    ''' <summary>
+    ''' 比较新旧中心序列，找出需要插入空格的位置
+    ''' </summary>
+    Private Function FindGapInsertPositions(oldCenter As String, newCenter As String) As List(Of Integer)
+        Dim positions As New List(Of Integer)()
+        Dim iOld As Integer = 0
+        Dim iNew As Integer = 0
+
+        While iOld < oldCenter.Length AndAlso iNew < newCenter.Length
+            If iOld < oldCenter.Length AndAlso oldCenter(iOld) = newCenter(iNew) Then
+                ' 字符匹配：移动双指针
+                iOld += 1
+                iNew += 1
+            ElseIf newCenter(iNew) = "-"c Then
+                ' 新中心序列在此处有空格：记录在旧序列的当前指针前插入
+                positions.Add(iOld)
+                iNew += 1
+            Else
+                ' 字符不匹配（理论上不应出现，出于鲁棒性保留）：同步移动指针
+                iOld += 1
+                iNew += 1
+            End If
+        End While
+
+        ' 处理新中心序列末尾剩余的空格
+        While iNew < newCenter.Length
+            If newCenter(iNew) = "-"c Then
+                positions.Add(iOld) ' 在旧序列末尾插入
+            End If
+
+            iNew += 1
+        End While
+
+        Return positions
+    End Function
+
+    ''' <summary>
+    ''' 将所有序列在指定位置插入空格（从后向前处理避免索引偏移）
+    ''' </summary>
+    Private Sub ApplyGapInsertions(alignments As String(), gapPositions As List(Of Integer), i As Integer)
+        ' 按位置降序排序，避免插入时索引变动
+        Dim sortedGaps As List(Of Integer) = gapPositions.OrderByDescending(Function(p) p).ToList()
+
+        For index As Integer = 0 To i ' 遍历已比对的序列（包括新序列）
+            Dim sb As New StringBuilder(alignments(index))
+
+            For Each pos As Integer In sortedGaps
+                If pos <= sb.Length Then
+                    sb.Insert(pos, "-"c)
+                Else
+                    sb.Append("-"c) ' 位置超出时在末尾追加
+                End If
+            Next
+
+            alignments(index) = sb.ToString()
+        Next
     End Sub
 
     ''' <summary>
