@@ -218,22 +218,24 @@ Public Class CenterStar
         Dim newCenter As String = kband.globalAlign(0)
         Dim newSeq As String = kband.globalAlign(1)
         ' 1. 计算旧中心序列到新中心序列的空格插入位置
-        Dim gapPositions As List(Of Integer) = FindGapInsertPositions(oldCenter, newCenter)
+        '    按位置降序排序，避免插入时索引变动
+        Dim gapPositions As Integer() = FindGapInsertPositions(oldCenter, newCenter) _
+            .OrderByDescending(Function(p) p) _
+            .ToArray
 
-        If gapPositions.Count > 0 Then
+        If gapPositions.Length > 0 Then
             ' 2. 将所有序列（包括新序列）在指定位置插入空格
             Call ApplyGapInsertions(alignments, gapPositions, i)
         End If
 
-        ' 3. 更新中心序列为新比对结果
-        alignments(centerIndex) = newCenter
+        ' 3. 不更新中心序列，只更新当前序列i
+        alignments(i) = newSeq
     End Sub
 
     ''' <summary>
     ''' 比较新旧中心序列，找出需要插入空格的位置
     ''' </summary>
-    Private Function FindGapInsertPositions(oldCenter As String, newCenter As String) As List(Of Integer)
-        Dim positions As New List(Of Integer)()
+    Private Shared Iterator Function FindGapInsertPositions(oldCenter As String, newCenter As String) As IEnumerable(Of Integer)
         Dim iOld As Integer = 0
         Dim iNew As Integer = 0
 
@@ -243,11 +245,13 @@ Public Class CenterStar
                 iOld += 1
                 iNew += 1
             ElseIf newCenter(iNew) = GapChar Then
-                ' 新中心序列在此处有空格：记录在旧序列的当前指针前插入
-                positions.Add(iOld)
+                ' 修复：避免在位置0插入gap，防止序列开头出现gap
+                If iOld > 0 Then
+                    Yield iOld
+                End If
                 iNew += 1
             Else
-                ' 字符不匹配（理论上不应出现，出于鲁棒性保留）：同步移动指针
+                ' 字符不匹配：同步移动指针
                 iOld += 1
                 iNew += 1
             End If
@@ -256,34 +260,34 @@ Public Class CenterStar
         ' 处理新中心序列末尾剩余的空格
         While iNew < newCenter.Length
             If newCenter(iNew) = GapChar Then
-                positions.Add(iOld) ' 在旧序列末尾插入
+                ' 在旧序列末尾插入
+                Yield iOld
             End If
 
             iNew += 1
         End While
-
-        Return positions
     End Function
 
     ''' <summary>
     ''' 将所有序列在指定位置插入空格（从后向前处理避免索引偏移）
     ''' </summary>
-    Private Sub ApplyGapInsertions(alignments As String(), gapPositions As List(Of Integer), i As Integer)
-        ' 按位置降序排序，避免插入时索引变动
-        Dim sortedGaps As List(Of Integer) = gapPositions.OrderByDescending(Function(p) p).ToList()
+    Private Sub ApplyGapInsertions(alignments As String(), sortedGaps As Integer(), i As Integer)
+        ' 修复：只对其他序列（非中心序列）插入gap，保持中心序列固定
+        For index As Integer = 0 To i
+            ' 跳过中心序列
+            If index <> starIndex Then
+                Dim sb As New StringBuilder(alignments(index))
 
-        For index As Integer = 0 To i ' 遍历已比对的序列（包括新序列）
-            Dim sb As New StringBuilder(alignments(index))
+                For Each pos As Integer In sortedGaps
+                    If pos <= sb.Length Then
+                        sb.Insert(pos, GapChar)
+                    Else
+                        sb.Append(GapChar)
+                    End If
+                Next
 
-            For Each pos As Integer In sortedGaps
-                If pos <= sb.Length Then
-                    Call sb.Insert(pos, GapChar)
-                Else
-                    Call sb.Append(GapChar) ' 位置超出时在末尾追加
-                End If
-            Next
-
-            alignments(index) = sb.ToString()
+                alignments(index) = sb.ToString()
+            End If
         Next
     End Sub
 
