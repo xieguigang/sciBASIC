@@ -228,8 +228,8 @@ Public Class CenterStar
             Call ApplyGapInsertions(alignments, gapPositions, i)
         End If
 
-        ' 3. 不更新中心序列，只更新当前序列i
-        alignments(i) = newSeq
+        ' 3. 更新中心序列为新比对结果
+        alignments(centerIndex) = newCenter
     End Sub
 
     ''' <summary>
