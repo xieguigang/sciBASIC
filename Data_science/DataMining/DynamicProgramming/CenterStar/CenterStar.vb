@@ -88,6 +88,7 @@ Public Class CenterStar
     Dim sequence$()
     Dim names$()
     Dim kband As KBandSearch
+    Dim editScores As Integer()
 
     Public ReadOnly Property NameList As String()
         Get
@@ -104,6 +105,7 @@ Public Class CenterStar
         End With
 
         Me.kband = New KBandSearch(globalAlign:=New String(2) {}, kband)
+        Me.editScores = New Integer(sequence.Length - 1) {}
     End Sub
 
     ''' <summary>
@@ -161,12 +163,12 @@ Public Class CenterStar
     ''' <returns></returns>
     ''' 
     Private Function calculateTotalCost(matrix As IScore(Of Char), n%) As Double
-        Dim length = multipleAlign(0).Length
+        Dim length As Integer = multipleAlign(0).Length
         Dim totalScore# = 0
 
         For i As Integer = 0 To n - 1
             For j As Integer = 0 To n - 1
-                If (j > i) Then
+                If j > i Then
                     For k As Integer = 0 To length - 1
                         Dim ic As Char = multipleAlign(i)(k)
                         Dim jc As Char = multipleAlign(j)(k)
@@ -192,7 +194,7 @@ Public Class CenterStar
             End If
 
             ' 执行双序列比对
-            kband.CalculateEditDistance(multipleAlign(starIndex), sequence(i))
+            editScores(i) = kband.CalculateEditDistance(multipleAlign(starIndex), sequence(i))
             multipleAlign(i) = kband.globalAlign(1)
 
             ' 统一处理空格插入，确保所有序列长度一致'
