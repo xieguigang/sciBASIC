@@ -57,11 +57,11 @@ Imports std = System.Math
 
 Public Class KBandSearch
 
-    ReadOnly globalAlign$()
     ''' <summary>
     ''' k-band 带宽
     ''' </summary>
-    ReadOnly K As Integer
+    Friend ReadOnly K As Integer
+    Friend ReadOnly globalAlign As String()
 
     Sub New(ByRef globalAlign$(), k As Integer)
         Me.K = k
@@ -233,9 +233,9 @@ Public Class KBandSearch
     ''' <summary>
     ''' This Function calculates the minimum choice of three choices in the next move
     ''' </summary>
-    ''' <param name="diagonal%"></param>
-    ''' <param name="left%"></param>
-    ''' <param name="up%"></param>
+    ''' <param name="diagonal"></param>
+    ''' <param name="left"></param>
+    ''' <param name="up"></param>
     ''' <returns></returns>
     Public Function calculateMinimum(diagonal%, left%, up%, ByRef direction%) As Integer
         Dim temp = diagonal

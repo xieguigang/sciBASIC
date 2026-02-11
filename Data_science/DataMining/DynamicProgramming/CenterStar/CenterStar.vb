@@ -84,7 +84,6 @@ Public Class CenterStar
 
     Dim starIndex%
     Dim centerString$
-    Dim globalAlign$() = New String(2) {}
     Dim multipleAlign$()
     Dim sequence$()
     Dim names$()
@@ -104,7 +103,7 @@ Public Class CenterStar
                     .ToArray
         End With
 
-        Me.kband = New KBandSearch(globalAlign, kband)
+        Me.kband = New KBandSearch(globalAlign:=New String(2) {}, kband)
     End Sub
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -191,7 +190,7 @@ Public Class CenterStar
 
             ' 执行双序列比对
             kband.CalculateEditDistance(multipleAlign(starIndex), sequence(i))
-            multipleAlign(i) = globalAlign(1)
+            multipleAlign(i) = kband.globalAlign(1)
 
             ' 统一处理空格插入，确保所有序列长度一致'
             Call SyncGaps(multipleAlign, starIndex, i)
@@ -207,11 +206,11 @@ Public Class CenterStar
     End Sub
 
     Private Sub SyncGaps(ByRef alignments As String(), centerIndex As Integer, i As Integer)
-        If (globalAlign(0).Length > alignments(centerIndex).Length) Then
+        If kband.globalAlign(0).Length > alignments(centerIndex).Length Then
             Dim j2 = 0
 
-            For j1 As Integer = 0 To globalAlign(0).Length - 1
-                If (alignments(centerIndex).CharAtOrDefault(j2, "-"c) <> globalAlign(0)(j1)) Then
+            For j1 As Integer = 0 To kband.globalAlign(0).Length - 1
+                If (alignments(centerIndex).CharAtOrDefault(j2, "-"c) <> kband.globalAlign(0)(j1)) Then
                     Dim a As StringBuilder
 
                     For k As Integer = 0 To i - 1
@@ -230,10 +229,10 @@ Public Class CenterStar
                     j2 += 1
                 End If
             Next
-            alignments(centerIndex) = globalAlign(0)
+            alignments(centerIndex) = kband.globalAlign(0)
         Else
             Dim j2 = 0
-            Dim globalAlign0 = globalAlign(Scan0)
+            Dim globalAlign0 = kband.globalAlign(Scan0)
 
             For j1 As Integer = 0 To alignments(centerIndex).Length - 1
                 If (alignments(centerIndex)(j1) <> globalAlign0.CharAtOrDefault(j2)) Then
