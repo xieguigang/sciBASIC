@@ -280,8 +280,9 @@ Public Class CenterStar
         Dim n = sequence.Length
 
         For i As Integer = 0 To n - 1
-            For j As Integer = 0 To n - 1
+            For j As Integer = i + 1 To n - 1 ' 避免重复计算
                 editDist += kband.CalculateEditDistance(sequence(i), sequence(j))
+                editDist += kband.CalculateEditDistance(sequence(j), sequence(i))
             Next
 
             If (editDist < minEditDist) Then
