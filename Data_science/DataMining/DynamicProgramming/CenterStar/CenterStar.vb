@@ -123,13 +123,16 @@ Public Class CenterStar
     ''' </summary>
     ''' <param name="matrix">得分矩阵</param>
     ''' <returns></returns>
-    Public Function Compute(matrix As IScore(Of Char), ByRef alignment As String()) As Double
+    Public Function Compute(matrix As IScore(Of Char),
+                            ByRef alignment As String(),
+                            ByRef Optional edits As Integer() = Nothing) As Double
         Dim totalCost#
 
         If sequence.All(Function(s) s = sequence(Scan0)) Then
             ' 所输入的序列全部都是一样的？？
             alignment = sequence.ToArray
             totalCost = 0
+            edits = New Integer(alignment.Length - 1) {}
         Else
 #If DEBUG Then
             totalCost = computeInternal(matrix) 
@@ -140,6 +143,7 @@ Public Class CenterStar
                 Throw New Exception(sequence.JoinBy(vbCrLf), ex)
             End Try
 #End If
+            edits = editScores.ToArray
             alignment = multipleAlign.ToArray
         End If
 
