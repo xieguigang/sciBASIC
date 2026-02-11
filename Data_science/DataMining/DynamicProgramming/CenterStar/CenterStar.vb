@@ -106,6 +106,11 @@ Public Class CenterStar
         Me.kband = New KBandSearch(globalAlign:=New String(2) {}, kband)
     End Sub
 
+    ''' <summary>
+    ''' auto encode sequence with title in format seq_id
+    ''' </summary>
+    ''' <param name="input"></param>
+    ''' <param name="kband"></param>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Sub New(input As IEnumerable(Of String), Optional kband As Integer = 32)
         Call Me.New(input.Select(Function(seq, i) New NamedValue(Of String)($"seq{i + 1}", seq)), kband)
