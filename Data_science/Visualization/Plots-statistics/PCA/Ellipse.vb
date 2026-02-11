@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::178d03dd7ec1ccdc6c96f65ca2c4a791, Data_science\Visualization\Plots-statistics\PCA\Ellipse.vb"
+﻿#Region "Microsoft.VisualBasic::41275b729b68bd3e1c7ef9fcc3535d3b, Data_science\Visualization\Plots-statistics\PCA\Ellipse.vb"
 
     ' Author:
     ' 
@@ -34,18 +34,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 105
-    '    Code Lines: 83 (79.05%)
-    ' Comment Lines: 10 (9.52%)
-    '    - Xml Docs: 90.00%
+    '   Total Lines: 158
+    '    Code Lines: 89 (56.33%)
+    ' Comment Lines: 45 (28.48%)
+    '    - Xml Docs: 71.11%
     ' 
-    '   Blank Lines: 12 (11.43%)
-    '     File Size: 4.23 KB
+    '   Blank Lines: 24 (15.19%)
+    '     File Size: 6.32 KB
 
 
     '     Class Ellipse
     ' 
-    '         Properties: cx, cy, rx, ry, theta
+    '         Properties: CenterX, CenterY, RotationAngle, SemiMajorAxis, SemiMinorAxis
     ' 
     '         Function: BuildPath, ConfidenceEllipse, Covariance
     ' 
@@ -212,4 +212,3 @@ Namespace PCA
         End Function
     End Class
 End Namespace
-

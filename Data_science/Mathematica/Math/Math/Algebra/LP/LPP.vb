@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9bdde28156ac8c05acd9c3373240b283, Data_science\Mathematica\Math\Math\Algebra\LP\LPP.vb"
+﻿#Region "Microsoft.VisualBasic::f31fd3c470dde253c1583e30fe8a46c2, Data_science\Mathematica\Math\Math\Algebra\LP\LPP.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 85.00%
     ' 
     '   Blank Lines: 27 (11.39%)
-    '     File Size: 11.47 KB
+    '     File Size: 11.51 KB
 
 
     '     Class LPP

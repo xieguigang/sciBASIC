@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7e855b536e19f80ada9a37d393a320d0, mime\application%rdf+xml\Turtle\BuildObject.vb"
+﻿#Region "Microsoft.VisualBasic::683409d253c45d404a140a7ba3eb46a3, mime\application%rdf+xml\Turtle\BuildObject.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 11 (20.37%)
-    '     File Size: 1.78 KB
+    '     File Size: 1.79 KB
 
 
     '     Module BuildObject

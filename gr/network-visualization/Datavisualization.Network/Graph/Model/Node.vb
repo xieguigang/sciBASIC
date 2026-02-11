@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::55f74083a751b9ef7421ccc24d32715c, gr\network-visualization\Datavisualization.Network\Graph\Model\Node.vb"
+﻿#Region "Microsoft.VisualBasic::8d0a45fb1c8793135624aef88508b7f1, gr\network-visualization\Datavisualization.Network\Graph\Model\Node.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 235
-    '    Code Lines: 120 (51.06%)
-    ' Comment Lines: 93 (39.57%)
-    '    - Xml Docs: 51.61%
+    '   Total Lines: 276
+    '    Code Lines: 156 (56.52%)
+    ' Comment Lines: 94 (34.06%)
+    '    - Xml Docs: 51.06%
     ' 
-    '   Blank Lines: 22 (9.36%)
-    '     File Size: 8.65 KB
+    '   Blank Lines: 26 (9.42%)
+    '     File Size: 9.70 KB
 
 
     '     Class Node
@@ -49,8 +49,12 @@
     '                     visited
     ' 
     '         Constructor: (+2 Overloads) Sub New
+    ' 
     '         Function: adjacentTo, Clone, EnumerateAdjacencies, (+2 Overloads) Equals, GetHashCode
     '                   ToString
+    ' 
+    '         Sub: SetMetadata
+    ' 
     '         Operators: <>, =
     ' 
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6c8befff0fb96c113421c9f7df31eaa3, Microsoft.VisualBasic.Core\src\Drawing\Bitmap\BitmapTools.vb"
+﻿#Region "Microsoft.VisualBasic::88da93c810c5307cf5a031d55aaa99e5, Microsoft.VisualBasic.Core\src\Drawing\Bitmap\BitmapTools.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 56.25%
     ' 
     '   Blank Lines: 14 (20.00%)
-    '     File Size: 3.08 KB
+    '     File Size: 3.07 KB
 
 
     '     Class BitmapTools

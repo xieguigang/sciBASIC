@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::40fcdd93bd53a18c85c6237922eda14d, Microsoft.VisualBasic.Core\src\ComponentModel\DataSource\Repository\BloomFilter.vb"
+﻿#Region "Microsoft.VisualBasic::fdb9f637b45a623a91c7c63e48a58708, Microsoft.VisualBasic.Core\src\ComponentModel\DataSource\Repository\BloomFilter.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 80.26%
     ' 
     '   Blank Lines: 28 (13.53%)
-    '     File Size: 8.69 KB
+    '     File Size: 8.67 KB
 
 
     '     Class BloomFilter

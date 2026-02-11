@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::54d2b716351d134572452f2b4d3a484a, Data_science\DataMining\hierarchical-clustering\HCTreePlot\Layouts.vb"
+﻿#Region "Microsoft.VisualBasic::c684fab95e8adc0cff480043727d93f2, Data_science\DataMining\hierarchical-clustering\HCTreePlot\Layouts.vb"
 
     ' Author:
     ' 
@@ -40,12 +40,12 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 0 (0.00%)
-    '     File Size: 396 B
+    '     File Size: 394 B
 
 
     ' Enum Layouts
     ' 
-    '     Circular, Horizon, HorizonRightToLeft
+    '     Horizon, HorizonRightToLeft, Radial
     ' 
     '  
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a215a1c7e41f499e01a89060c010d388, Data_science\Mathematica\Math\Math\Algebra\Helpers\EllipseFitResult.vb"
+﻿#Region "Microsoft.VisualBasic::0bddd93159e35de3964cd187cf4629d9, Data_science\Mathematica\Math\Math\Algebra\Helpers\EllipseFitResult.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 186
-    '    Code Lines: 108 (58.06%)
-    ' Comment Lines: 51 (27.42%)
-    '    - Xml Docs: 64.71%
+    '   Total Lines: 195
+    '    Code Lines: 108 (55.38%)
+    ' Comment Lines: 60 (30.77%)
+    '    - Xml Docs: 70.00%
     ' 
-    '   Blank Lines: 27 (14.52%)
-    '     File Size: 7.07 KB
+    '   Blank Lines: 27 (13.85%)
+    '     File Size: 7.53 KB
 
 
     '     Class EllipseFitResult

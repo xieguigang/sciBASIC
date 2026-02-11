@@ -1,53 +1,53 @@
-﻿#Region "Microsoft.VisualBasic::825c03582e8ac98cbacea3fd7ec1445e, Data\BinaryData\DataStorage\Tabular\FrameReader.vb"
+﻿#Region "Microsoft.VisualBasic::695cd5df8683449754febbeef4ccda74, Data\BinaryData\DataStorage\Tabular\FrameReader.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 127
-'    Code Lines: 94 (74.02%)
-' Comment Lines: 16 (12.60%)
-'    - Xml Docs: 93.75%
-' 
-'   Blank Lines: 17 (13.39%)
-'     File Size: 5.14 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-' Module FrameReader
-' 
-'     Function: ReadFeatures, (+2 Overloads) ReadSasXPT
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 177
+    '    Code Lines: 134 (75.71%)
+    ' Comment Lines: 16 (9.04%)
+    '    - Xml Docs: 93.75%
+    ' 
+    '   Blank Lines: 27 (15.25%)
+    '     File Size: 7.11 KB
+
+
+    ' Module FrameReader
+    ' 
+    '     Function: ReadFeatures, (+2 Overloads) ReadFrame, (+2 Overloads) ReadSasXPT
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

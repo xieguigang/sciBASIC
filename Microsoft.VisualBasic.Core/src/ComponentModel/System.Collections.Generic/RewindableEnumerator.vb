@@ -1,4 +1,68 @@
-﻿Imports System.Runtime.CompilerServices
+﻿#Region "Microsoft.VisualBasic::0491aaecf2db63ea83f9be8e90c6f1db, Microsoft.VisualBasic.Core\src\ComponentModel\System.Collections.Generic\RewindableEnumerator.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 80
+    '    Code Lines: 58 (72.50%)
+    ' Comment Lines: 8 (10.00%)
+    '    - Xml Docs: 37.50%
+    ' 
+    '   Blank Lines: 14 (17.50%)
+    '     File Size: 2.71 KB
+
+
+    '     Class RewindableEnumerator
+    ' 
+    '         Properties: Current, Current_NonGeneric
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
+    '         Function: MoveNext
+    ' 
+    '         Sub: Dispose, Previous, Reset
+    ' 
+    '     Module EnumeratorExtensions
+    ' 
+    '         Function: AsRewindable
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+Imports System.Runtime.CompilerServices
 
 Namespace ComponentModel.Collection
 

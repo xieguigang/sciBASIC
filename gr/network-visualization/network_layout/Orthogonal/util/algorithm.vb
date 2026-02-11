@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::84cfd0fb9fe8fe7fd87a58c8e4e50592, gr\network-visualization\network_layout\Orthogonal\util\algorithm.vb"
+﻿#Region "Microsoft.VisualBasic::1e7ba082a8c5add9600ea86f40e1fcc2, gr\network-visualization\network_layout\Orthogonal\util\algorithm.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 225
-    '    Code Lines: 165 (73.33%)
-    ' Comment Lines: 27 (12.00%)
-    '    - Xml Docs: 33.33%
+    '   Total Lines: 234
+    '    Code Lines: 165 (70.51%)
+    ' Comment Lines: 36 (15.38%)
+    '    - Xml Docs: 50.00%
     ' 
-    '   Blank Lines: 33 (14.67%)
-    '     File Size: 9.70 KB
+    '   Blank Lines: 33 (14.10%)
+    '     File Size: 10.12 KB
 
 
     '     Module algorithm

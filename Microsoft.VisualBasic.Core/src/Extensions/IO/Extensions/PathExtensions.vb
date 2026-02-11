@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f3b83db63511fc42574ce1a56c2d80df, Microsoft.VisualBasic.Core\src\Extensions\IO\Extensions\PathExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::8c08a3074603c4317de15dce58faadb3, Microsoft.VisualBasic.Core\src\Extensions\IO\Extensions\PathExtensions.vb"
 
     ' Author:
     ' 
@@ -34,18 +34,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 1118
-    '    Code Lines: 630 (56.35%)
-    ' Comment Lines: 370 (33.09%)
-    '    - Xml Docs: 83.78%
+    '   Total Lines: 1126
+    '    Code Lines: 638 (56.66%)
+    ' Comment Lines: 369 (32.77%)
+    '    - Xml Docs: 83.74%
     ' 
-    '   Blank Lines: 118 (10.55%)
-    '     File Size: 43.92 KB
+    '   Blank Lines: 119 (10.57%)
+    '     File Size: 44.21 KB
 
 
     ' Module PathExtensions
     ' 
-    '     Function: BaseName, ChangeSuffix, CheckUNCNetworkPath, DeleteFile, DIR
+    '     Function: (+2 Overloads) BaseName, ChangeSuffix, CheckUNCNetworkPath, DeleteFile, DIR
     '               DirectoryExists, DirectoryName, EnumerateFiles, (+2 Overloads) ExtensionSuffix, FileCopy
     '               FileExists, FileLength, FileMove, FileName, FileOpened
     '               GetDirectoryFullPath, GetFullPath, ListDirectory, ListFiles, Long2Short

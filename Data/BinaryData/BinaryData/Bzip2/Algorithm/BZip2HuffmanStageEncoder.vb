@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::27e4d64dbbbef61a33e1639125d46c0a, Data\BinaryData\BinaryData\Bzip2\Algorithm\BZip2HuffmanStageEncoder.vb"
+﻿#Region "Microsoft.VisualBasic::e349a5841f7f4372b08ba09d5157a79b, Data\BinaryData\BinaryData\Bzip2\Algorithm\BZip2HuffmanStageEncoder.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 3.66%
     ' 
     '   Blank Lines: 68 (20.54%)
-    '     File Size: 14.72 KB
+    '     File Size: 14.70 KB
 
 
     '     Class BZip2HuffmanStageEncoder

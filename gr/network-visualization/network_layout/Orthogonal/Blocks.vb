@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::79a4285e7236b8627f55679ae444eacc, gr\network-visualization\network_layout\Orthogonal\Blocks.vb"
+﻿#Region "Microsoft.VisualBasic::ea292c033d33e18d92dc437f7f0596b5, gr\network-visualization\network_layout\Orthogonal\Blocks.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 176
-    '    Code Lines: 140 (79.55%)
-    ' Comment Lines: 22 (12.50%)
-    '    - Xml Docs: 13.64%
+    '   Total Lines: 175
+    '    Code Lines: 138 (78.86%)
+    ' Comment Lines: 23 (13.14%)
+    '    - Xml Docs: 13.04%
     ' 
-    '   Blank Lines: 14 (7.95%)
-    '     File Size: 7.62 KB
+    '   Blank Lines: 14 (8.00%)
+    '     File Size: 7.57 KB
 
 
     '     Class Blocks

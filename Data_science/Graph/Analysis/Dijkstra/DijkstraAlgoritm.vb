@@ -1,4 +1,67 @@
-﻿Imports Microsoft.VisualBasic.Math.LinearAlgebra.Matrix
+﻿#Region "Microsoft.VisualBasic::c88e4dbf2cdd821633a9d353d79d050a, Data_science\Graph\Analysis\Dijkstra\DijkstraAlgoritm.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 277
+    '    Code Lines: 168 (60.65%)
+    ' Comment Lines: 66 (23.83%)
+    '    - Xml Docs: 43.94%
+    ' 
+    '   Blank Lines: 43 (15.52%)
+    '     File Size: 13.41 KB
+
+
+    '     Class DijkstraAlgoritm
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    '         Function: DistanceFinder, DistanceFinderInternal, FindPath, FindPathBiDirectional
+    '         Class Node
+    ' 
+    '             Properties: Index, IsFixed, Parent, Path, PathToString
+    '                         TotalDistance
+    ' 
+    '             Constructor: (+1 Overloads) Sub New
+    ' 
+    ' 
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+Imports Microsoft.VisualBasic.Math.LinearAlgebra.Matrix
 
 Namespace Analysis.Dijkstra
 

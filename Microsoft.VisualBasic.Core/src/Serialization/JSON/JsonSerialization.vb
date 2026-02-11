@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::249fe0faf6818c2e599a294af8421fa7, Microsoft.VisualBasic.Core\src\Serialization\JSON\JsonSerialization.vb"
+﻿#Region "Microsoft.VisualBasic::3b5c44c7d5e52d8fb5c46f24c7b07bee, Microsoft.VisualBasic.Core\src\Serialization\JSON\JsonSerialization.vb"
 
     ' Author:
     ' 
@@ -34,19 +34,20 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 324
-    '    Code Lines: 207 (63.89%)
-    ' Comment Lines: 80 (24.69%)
-    '    - Xml Docs: 96.25%
+    '   Total Lines: 350
+    '    Code Lines: 220 (62.86%)
+    ' Comment Lines: 90 (25.71%)
+    '    - Xml Docs: 96.67%
     ' 
-    '   Blank Lines: 37 (11.42%)
-    '     File Size: 13.79 KB
+    '   Blank Lines: 40 (11.43%)
+    '     File Size: 15.03 KB
 
 
     '     Module JsonContract
     ' 
     '         Function: EnsureDate, GetJson, (+2 Overloads) GetObjectJson, LoadJSON, LoadJsonFile
-    '                   LoadJSONObject, (+2 Overloads) LoadObject, MatrixJson, RemoveJsonNullItems, WriteLargeJson
+    '                   LoadJSONL, LoadJSONObject, (+2 Overloads) LoadObject, MatrixJson, RemoveJsonNullItems
+    '                   WriteLargeJson
     ' 
     '         Sub: writeJson
     ' 

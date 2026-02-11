@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::51191e156ba984bcf6cce0b401f268b8, Microsoft.VisualBasic.Core\src\Data\Repository\MurmurHash.vb"
+﻿#Region "Microsoft.VisualBasic::8f88bdbdf3970d9d5895dd74b82a1462, Microsoft.VisualBasic.Core\src\Data\Repository\MurmurHash.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 46.15%
     ' 
     '   Blank Lines: 11 (13.92%)
-    '     File Size: 2.71 KB
+    '     File Size: 2.70 KB
 
 
     '     Module MurmurHash

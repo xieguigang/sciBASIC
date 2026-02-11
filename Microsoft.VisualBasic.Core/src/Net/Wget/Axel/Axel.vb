@@ -1,54 +1,55 @@
-﻿#Region "Microsoft.VisualBasic::9d387955ccd0aa2103114c275a1d6e20, Microsoft.VisualBasic.Core\src\Net\Wget\Axel.vb"
+﻿#Region "Microsoft.VisualBasic::23e3976c6aa9ba3a7b38923fab61aa2a, Microsoft.VisualBasic.Core\src\Net\Wget\Axel\Axel.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 169
-'    Code Lines: 115 (68.05%)
-' Comment Lines: 24 (14.20%)
-'    - Xml Docs: 12.50%
-' 
-'   Blank Lines: 30 (17.75%)
-'     File Size: 8.10 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Class Axel
-' 
-'         Sub: ShowProgress
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 193
+    '    Code Lines: 133 (68.91%)
+    ' Comment Lines: 21 (10.88%)
+    '    - Xml Docs: 14.29%
+    ' 
+    '   Blank Lines: 39 (20.21%)
+    '     File Size: 8.11 KB
+
+
+    '     Class Axel
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    '         Sub: ShowProgress
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

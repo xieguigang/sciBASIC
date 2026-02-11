@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fca476e9ed75a604f2449bf91a2cc37b, gr\network-visualization\Datavisualization.Network\Graph\Model\Handle\XYMetaHandle.vb"
+﻿#Region "Microsoft.VisualBasic::0e832b585e6d0d9e381e4fd00d830a2d, gr\network-visualization\Datavisualization.Network\Graph\Model\Handle\WayPointVector.vb"
 
     ' Author:
     ' 
@@ -34,18 +34,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 88
-    '    Code Lines: 44 (50.00%)
-    ' Comment Lines: 30 (34.09%)
-    '    - Xml Docs: 93.33%
+    '   Total Lines: 186
+    '    Code Lines: 73 (39.25%)
+    ' Comment Lines: 89 (47.85%)
+    '    - Xml Docs: 58.43%
     ' 
-    '   Blank Lines: 14 (15.91%)
-    '     File Size: 3.16 KB
+    '   Blank Lines: 24 (12.90%)
+    '     File Size: 7.43 KB
 
 
-    '     Class XYMetaHandle
+    '     Class WayPointVector
     ' 
-    '         Properties: isNaN, xoffsetscale, yoffsetscale
+    '         Properties: isNaN, xabsoluteshift, xoffsetscale, yabsoluteshift, yoffsetscale
     ' 
     '         Constructor: (+2 Overloads) Sub New
     '         Function: (+2 Overloads) CreateVector, (+2 Overloads) GetPoint, ToString

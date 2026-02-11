@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::02eaff2795999ff2ced63c10326f3796, Data\DataFrame\DataFrame\FeatureVector.vb"
+﻿#Region "Microsoft.VisualBasic::830a9a578c1cf70329e08ffddafbddfe, Data\DataFrame\DataFrame\FeatureVector.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 235
-    '    Code Lines: 165 (70.21%)
-    ' Comment Lines: 29 (12.34%)
+    '   Total Lines: 281
+    '    Code Lines: 205 (72.95%)
+    ' Comment Lines: 29 (10.32%)
     '    - Xml Docs: 96.55%
     ' 
-    '   Blank Lines: 41 (17.45%)
-    '     File Size: 7.89 KB
+    '   Blank Lines: 47 (16.73%)
+    '     File Size: 9.45 KB
 
 
     ' Class FeatureVector
@@ -49,8 +49,8 @@
     '                 vector
     ' 
     '     Constructor: (+11 Overloads) Sub New
-    '     Function: [TryCast], CastTo, CheckSupports, FromGeneral, GetScalarValue
-    '               Getter, ToString
+    '     Function: [TryCast], CastTo, CheckSupports, FromGeneral, (+2 Overloads) FromScalar
+    '               GetScalarValue, Getter, ToString
     ' 
     ' /********************************************************************************/
 

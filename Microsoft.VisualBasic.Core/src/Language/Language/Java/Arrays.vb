@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b12fd4bd45ec42d9f26eafdc45f9be8c, Microsoft.VisualBasic.Core\src\Language\Language\Java\Arrays.vb"
+﻿#Region "Microsoft.VisualBasic::a6c585387925b37b0445a01cc30952d4, Microsoft.VisualBasic.Core\src\Language\Language\Java\Arrays.vb"
 
     ' Author:
     ' 
@@ -34,18 +34,19 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 68
-    '    Code Lines: 36 (52.94%)
-    ' Comment Lines: 24 (35.29%)
-    '    - Xml Docs: 95.83%
+    '   Total Lines: 92
+    '    Code Lines: 50 (54.35%)
+    ' Comment Lines: 28 (30.43%)
+    '    - Xml Docs: 82.14%
     ' 
-    '   Blank Lines: 8 (11.76%)
-    '     File Size: 2.79 KB
+    '   Blank Lines: 14 (15.22%)
+    '     File Size: 3.71 KB
 
 
     '     Module Arrays
     ' 
-    '         Function: copyOfRange, Max, Min, shuffle, subList
+    '         Function: copyOf, copyOfRange, hashCode, Max, Min
+    '                   shuffle, subList, toString
     ' 
     '         Sub: fill
     ' 

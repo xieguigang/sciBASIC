@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::affd933f07bdc9dcdabf4cfea36c7abd, Microsoft.VisualBasic.Core\src\ComponentModel\DataSource\StringReader.vb"
+﻿#Region "Microsoft.VisualBasic::55411485032d856bc7ce74af046fa285, Microsoft.VisualBasic.Core\src\ComponentModel\DataSource\StringReader.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 268
-    '    Code Lines: 126 (47.01%)
-    ' Comment Lines: 105 (39.18%)
+    '   Total Lines: 269
+    '    Code Lines: 127 (47.21%)
+    ' Comment Lines: 105 (39.03%)
     '    - Xml Docs: 88.57%
     ' 
-    '   Blank Lines: 37 (13.81%)
-    '     File Size: 9.71 KB
+    '   Blank Lines: 37 (13.75%)
+    '     File Size: 9.89 KB
 
 
     '     Interface IStringGetter

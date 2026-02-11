@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::35b219b31e619b294a88d8c972a67094, Microsoft.VisualBasic.Core\src\ComponentModel\Algorithm\base\Combination\Permutation.vb"
+﻿#Region "Microsoft.VisualBasic::8be10d7fd3eb73ecdbc65cefc2ee6071, Microsoft.VisualBasic.Core\src\ComponentModel\Algorithm\base\Combination\Permutation.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 0.00%
     ' 
     '   Blank Lines: 22 (20.95%)
-    '     File Size: 2.99 KB
+    '     File Size: 2.95 KB
 
 
     '     Class Permutation

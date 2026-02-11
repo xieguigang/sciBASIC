@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4bfe7e54f1d234c29139b11a17abf47e, gr\network-visualization\network_layout\Orthogonal\optimization\OrthographicEmbeddingPathOptimizer.vb"
+﻿#Region "Microsoft.VisualBasic::99dd2a6522e1d52fa02e9693076abe09, gr\network-visualization\network_layout\Orthogonal\optimization\OrthographicEmbeddingPathOptimizer.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 388
-    '    Code Lines: 315 (81.19%)
-    ' Comment Lines: 39 (10.05%)
-    '    - Xml Docs: 7.69%
+    '   Total Lines: 374
+    '    Code Lines: 315 (84.22%)
+    ' Comment Lines: 25 (6.68%)
+    '    - Xml Docs: 12.00%
     ' 
-    '   Blank Lines: 34 (8.76%)
-    '     File Size: 18.17 KB
+    '   Blank Lines: 34 (9.09%)
+    '     File Size: 16.25 KB
 
 
     '     Class OrthographicEmbeddingPathOptimizer

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::32af0b308973af49e20866b81dfc1064, Microsoft.VisualBasic.Core\src\ComponentModel\System.Collections.Generic\IndexOf.vb"
+﻿#Region "Microsoft.VisualBasic::cf4d84be2b93cd7c75a611a0787ed968, Microsoft.VisualBasic.Core\src\ComponentModel\System.Collections.Generic\IndexOf.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 504
-    '    Code Lines: 266 (52.78%)
-    ' Comment Lines: 182 (36.11%)
-    '    - Xml Docs: 96.70%
+    '   Total Lines: 507
+    '    Code Lines: 266 (52.47%)
+    ' Comment Lines: 185 (36.49%)
+    '    - Xml Docs: 96.76%
     ' 
-    '   Blank Lines: 56 (11.11%)
-    '     File Size: 18.81 KB
+    '   Blank Lines: 56 (11.05%)
+    '     File Size: 18.98 KB
 
 
     '     Class Index

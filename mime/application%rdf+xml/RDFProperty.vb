@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0dca58c11282e1b9b981a08528e1228e, mime\application%rdf+xml\RDFProperty.vb"
+﻿#Region "Microsoft.VisualBasic::a79041c1cea0abcf4eac0a1f23ebb02b, mime\application%rdf+xml\RDFProperty.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 142
-    '    Code Lines: 87 (61.27%)
-    ' Comment Lines: 31 (21.83%)
+    '   Total Lines: 150
+    '    Code Lines: 95 (63.33%)
+    ' Comment Lines: 31 (20.67%)
     '    - Xml Docs: 90.32%
     ' 
-    '   Blank Lines: 24 (16.90%)
-    '     File Size: 4.07 KB
+    '   Blank Lines: 24 (16.00%)
+    '     File Size: 4.47 KB
 
 
     ' Class RDFProperty

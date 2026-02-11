@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::336812ba0ee4cb7922ac0816501c65ad, Data_science\Graph\Model\GridGraph\GridCell.vb"
+﻿#Region "Microsoft.VisualBasic::8f5913536bb30fbe944ab05e7939c704, Data_science\Graph\Model\GridGraph\GridCell.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 75
-    '    Code Lines: 57 (76.00%)
-    ' Comment Lines: 4 (5.33%)
+    '   Total Lines: 89
+    '    Code Lines: 65 (73.03%)
+    ' Comment Lines: 8 (8.99%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 14 (18.67%)
-    '     File Size: 1.94 KB
+    '   Blank Lines: 16 (17.98%)
+    '     File Size: 2.46 KB
 
 
     '     Class GridCell
@@ -49,7 +49,7 @@
     '                     Y
     ' 
     '         Constructor: (+3 Overloads) Sub New
-    '         Function: ToString
+    '         Function: Equals, GetHashCode, ToString
     ' 
     ' 
     ' /********************************************************************************/

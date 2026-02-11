@@ -1,4 +1,63 @@
-﻿Imports System.Text
+﻿#Region "Microsoft.VisualBasic::30861de212105830185a42612ed76ee2, Data_science\DataMining\DBNCode\dbn\Scores.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 761
+    '    Code Lines: 408 (53.61%)
+    ' Comment Lines: 188 (24.70%)
+    '    - Xml Docs: 12.77%
+    ' 
+    '   Blank Lines: 165 (21.68%)
+    '     File Size: 29.52 KB
+
+
+    '     Class Scores
+    ' 
+    '         Constructor: (+3 Overloads) Sub New
+    ' 
+    '         Function: Best_Past_Parents, evaluate, getScoresMatrix, prob, (+2 Overloads) to_bcDBN
+    '                   (+2 Overloads) to_cDBN, (+3 Overloads) toDBN, ToString
+    ' 
+    '         Sub: generateCombinations
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+Imports System.Text
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.DataMining.DynamicBayesianNetwork.utils
 Imports std = System.Math
@@ -759,3 +818,4 @@ Namespace dbn
     End Class
 
 End Namespace
+

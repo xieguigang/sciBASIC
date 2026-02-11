@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2a89d0958f4ba036d69e790e9716be35, gr\network-visualization\Datavisualization.Network\Graph\Model\data\EdgeData.vb"
+﻿#Region "Microsoft.VisualBasic::cd290acf913b0aabe08ffaff0d2dbf9c, gr\network-visualization\Datavisualization.Network\Graph\Model\data\EdgeData.vb"
 
     ' Author:
     ' 
@@ -34,20 +34,20 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 94
-    '    Code Lines: 70 (74.47%)
-    ' Comment Lines: 12 (12.77%)
+    '   Total Lines: 102
+    '    Code Lines: 77 (75.49%)
+    ' Comment Lines: 12 (11.76%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 12 (12.77%)
-    '     File Size: 3.31 KB
+    '   Blank Lines: 13 (12.75%)
+    '     File Size: 3.61 KB
 
 
     '     Class EdgeData
     ' 
     '         Properties: bends, length, style
     ' 
-    '         Constructor: (+2 Overloads) Sub New
+    '         Constructor: (+3 Overloads) Sub New
     '         Function: Clone, ToString
     ' 
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::45c57171fba87e0cdef1d0eca8d4738b, mime\text%markdown\MarkdownRender.vb"
+﻿#Region "Microsoft.VisualBasic::d4c3e75deee975b4f4de7f15b8ed99b7, mime\text%markdown\MarkdownRender.vb"
 
     ' Author:
     ' 
@@ -34,22 +34,22 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 410
-    '    Code Lines: 297 (72.44%)
-    ' Comment Lines: 25 (6.10%)
-    '    - Xml Docs: 80.00%
+    '   Total Lines: 424
+    '    Code Lines: 304 (71.70%)
+    ' Comment Lines: 30 (7.08%)
+    '    - Xml Docs: 83.33%
     ' 
-    '   Blank Lines: 88 (21.46%)
-    '     File Size: 15.54 KB
+    '   Blank Lines: 90 (21.23%)
+    '     File Size: 16.18 KB
 
 
     ' Class MarkdownRender
     ' 
     '     Constructor: (+2 Overloads) Sub New
     ' 
-    '     Function: AnchorTag, AutoLink, ImageTag, Paragraph, TableBlock
-    '               Transform, TrimBlockquote, TrimBold, TrimCodeSpan, TrimHeader
-    '               TrimListItems, TrimOrderListItems
+    '     Function: AnchorTag, AutoLink, GetTOC, ImageTag, Paragraph
+    '               TableBlock, Transform, TrimBlockquote, TrimBold, TrimCodeSpan
+    '               TrimHeader, TrimListItems, TrimOrderListItems
     ' 
     '     Sub: AutoParagraph, hideCodeBlock, hideCodeSpan, hideImage, hideUrl
     '          RunAutoLink, RunBold, RunCodeBlock, RunCodeSpan, RunHeader

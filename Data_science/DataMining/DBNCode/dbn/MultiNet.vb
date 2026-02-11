@@ -1,4 +1,65 @@
-﻿Imports System.Text
+﻿#Region "Microsoft.VisualBasic::d72748e2ed796cb18021257d52733619, Data_science\DataMining\DBNCode\dbn\MultiNet.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 437
+    '    Code Lines: 298 (68.19%)
+    ' Comment Lines: 68 (15.56%)
+    '    - Xml Docs: 2.94%
+    ' 
+    '   Blank Lines: 71 (16.25%)
+    '     File Size: 17.20 KB
+
+
+    '     Class MultiNet
+    ' 
+    '         Properties: BICScore, Networks
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
+    '         Function: computeClusters, getAlpha, getScore, selectCluster, ToString
+    '                   trainNetworks
+    ' 
+    '         Sub: clust, writeToFile
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+Imports System.Text
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports std = System.Math
 
@@ -435,3 +496,4 @@ Namespace dbn
 
     End Class
 End Namespace
+

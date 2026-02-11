@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::702cc5b02024cc6467f3639a78b8da27, Data_science\Mathematica\Math\Gibbs\Gibbs.vb"
+﻿#Region "Microsoft.VisualBasic::b221ccc3fc894d61968ceff2d266cfee, Data_science\Mathematica\Math\Gibbs\Gibbs.vb"
 
     ' Author:
     ' 
@@ -34,21 +34,15 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 213
-    '    Code Lines: 128 (60.09%)
-    ' Comment Lines: 59 (27.70%)
+    '   Total Lines: 195
+    '    Code Lines: 115 (58.97%)
+    ' Comment Lines: 59 (30.26%)
     '    - Xml Docs: 86.44%
     ' 
-    '   Blank Lines: 26 (12.21%)
-    '     File Size: 8.18 KB
+    '   Blank Lines: 21 (10.77%)
+    '     File Size: 7.80 KB
 
 
-    ' Class Score
-    ' 
-    '     Properties: len, pwm, seq, start
-    ' 
-    '     Function: ToString
-    ' 
     ' Class Gibbs
     ' 
     '     Constructor: (+1 Overloads) Sub New

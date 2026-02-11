@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5ce222a451f35de546b671a8bdc72fad, Microsoft.VisualBasic.Core\src\CommandLine\CLI\PipelineProcess.vb"
+﻿#Region "Microsoft.VisualBasic::54a322791f31657e3e2f8cc6f8a441b6, Microsoft.VisualBasic.Core\src\CommandLine\CLI\PipelineProcess.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 353
-    '    Code Lines: 190 (53.82%)
-    ' Comment Lines: 112 (31.73%)
+    '   Total Lines: 354
+    '    Code Lines: 191 (53.95%)
+    ' Comment Lines: 112 (31.64%)
     '    - Xml Docs: 83.04%
     ' 
-    '   Blank Lines: 51 (14.45%)
-    '     File Size: 13.65 KB
+    '   Blank Lines: 51 (14.41%)
+    '     File Size: 13.74 KB
 
 
     '     Module PipelineProcess

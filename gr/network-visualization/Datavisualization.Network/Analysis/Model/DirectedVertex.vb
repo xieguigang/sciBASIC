@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::236ae7a4520520e5e3a8dadb7beec4cb, gr\network-visualization\Datavisualization.Network\Analysis\Model\DirectedVertex.vb"
+﻿#Region "Microsoft.VisualBasic::55c409264bc7b5e3d4216cf3722b90c8, gr\network-visualization\Datavisualization.Network\Analysis\Model\DirectedVertex.vb"
 
     ' Author:
     ' 
@@ -34,18 +34,19 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 128
-    '    Code Lines: 69 (53.91%)
-    ' Comment Lines: 42 (32.81%)
+    '   Total Lines: 140
+    '    Code Lines: 79 (56.43%)
+    ' Comment Lines: 42 (30.00%)
     '    - Xml Docs: 90.48%
     ' 
-    '   Blank Lines: 17 (13.28%)
-    '     File Size: 4.28 KB
+    '   Blank Lines: 19 (13.57%)
+    '     File Size: 4.68 KB
 
 
     '     Class DirectedVertex
     ' 
-    '         Properties: connectivity, inDegree, label, outDegree
+    '         Properties: connectivity, incomingEdges, inDegree, label, outDegree
+    '                     outgoingEdges
     ' 
     '         Constructor: (+1 Overloads) Sub New
     ' 

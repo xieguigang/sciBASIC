@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4ef819db819e4dced64a93bc199b629a, Microsoft.VisualBasic.Core\src\Language\StringHelpers.vb"
+﻿#Region "Microsoft.VisualBasic::afcb81da557cecfad25821ec564f8b86, Microsoft.VisualBasic.Core\src\Language\StringHelpers.vb"
 
     ' Author:
     ' 
@@ -34,18 +34,19 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 149
-    '    Code Lines: 66 (44.30%)
-    ' Comment Lines: 67 (44.97%)
+    '   Total Lines: 163
+    '    Code Lines: 78 (47.85%)
+    ' Comment Lines: 67 (41.10%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 16 (10.74%)
-    '     File Size: 6.21 KB
+    '   Blank Lines: 18 (11.04%)
+    '     File Size: 6.88 KB
 
 
     '     Module FormatHelpers
     ' 
-    '         Function: (+2 Overloads) Split, StartsWith, StringFormat, Trim, xFormat
+    '         Function: LoadJSON, (+2 Overloads) Split, StartsWith, StringFormat, Trim
+    '                   xFormat
     ' 
     '     Structure FormatHelper
     ' 

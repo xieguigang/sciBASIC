@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::15212ac95fdcdbed47ab25bdb12bebf7, gr\network-visualization\network_layout\Orthogonal\Visibility.vb"
+﻿#Region "Microsoft.VisualBasic::05c27ff82be7d7f5a4979a8091909ed7, gr\network-visualization\network_layout\Orthogonal\Visibility.vb"
 
     ' Author:
     ' 
@@ -34,12 +34,12 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 1019
-    '    Code Lines: 823 (80.77%)
-    ' Comment Lines: 96 (9.42%)
-    '    - Xml Docs: 8.33%
+    '   Total Lines: 1021
+    '    Code Lines: 823 (80.61%)
+    ' Comment Lines: 98 (9.60%)
+    '    - Xml Docs: 12.24%
     ' 
-    '   Blank Lines: 100 (9.81%)
+    '   Blank Lines: 100 (9.79%)
     '     File Size: 49.46 KB
 
 

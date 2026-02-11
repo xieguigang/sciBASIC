@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::190df25fbad54e34a7d42666819ef248, gr\network-visualization\Datavisualization.Network\Analysis\Model\EdgeTraversalPolicy.vb"
+﻿#Region "Microsoft.VisualBasic::c2489a21f6c1562c734f930c4bec4e37, gr\network-visualization\Datavisualization.Network\Analysis\Model\EdgeTraversalPolicy.vb"
 
     ' Author:
     ' 

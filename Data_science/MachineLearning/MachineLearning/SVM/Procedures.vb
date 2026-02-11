@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::767a7858e8c26a9083614a49b9ef8afb, Data_science\MachineLearning\MachineLearning\SVM\Procedures.vb"
+﻿#Region "Microsoft.VisualBasic::326cb29fe10c9b0c046c8d0018dbdbac, Data_science\MachineLearning\MachineLearning\SVM\Procedures.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 65.00%
     ' 
     '   Blank Lines: 284 (19.57%)
-    '     File Size: 52.88 KB
+    '     File Size: 52.76 KB
 
 
     '     Module Procedures

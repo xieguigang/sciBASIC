@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0bf8e44c72b2dd4574a2756d274da959, Microsoft.VisualBasic.Core\src\Extensions\Collection\Enumerable.vb"
+﻿#Region "Microsoft.VisualBasic::c220ae65481804afdd1e929ee7a1b078, Microsoft.VisualBasic.Core\src\Extensions\Collection\Enumerable.vb"
 
     ' Author:
     ' 
@@ -34,21 +34,21 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 326
-    '    Code Lines: 229 (70.25%)
-    ' Comment Lines: 51 (15.64%)
+    '   Total Lines: 305
+    '    Code Lines: 211 (69.18%)
+    ' Comment Lines: 51 (16.72%)
     '    - Xml Docs: 98.04%
     ' 
-    '   Blank Lines: 46 (14.11%)
-    '     File Size: 13.30 KB
+    '   Blank Lines: 43 (14.10%)
+    '     File Size: 12.50 KB
 
 
     ' Module IEnumerations
     ' 
-    '     Function: [Next], CartesianProduct, ContainsAll, CreateDictionary, (+2 Overloads) Differ
-    '               ExceptType, (+2 Overloads) FindByItemKey, FindByItemValue, (+2 Overloads) GetItem, GetItems
-    '               OfType, Permutations, Take, (+2 Overloads) Takes, ToDictionary
-    '               ToEntryDictionary, Zip
+    '     Function: [Next], ContainsAll, CreateDictionary, (+2 Overloads) Differ, ExceptType
+    '               (+2 Overloads) FindByItemKey, FindByItemValue, (+2 Overloads) GetItem, GetItems, OfType
+    '               Permutations, Take, (+2 Overloads) Takes, ToDictionary, ToEntryDictionary
+    '               Zip
     ' 
     ' 
     ' /********************************************************************************/

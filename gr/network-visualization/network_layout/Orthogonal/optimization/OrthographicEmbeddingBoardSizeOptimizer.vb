@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a778b3ef61208e0dc64c8bbfb10ab93c, gr\network-visualization\network_layout\Orthogonal\optimization\OrthographicEmbeddingBoardSizeOptimizer.vb"
+﻿#Region "Microsoft.VisualBasic::6d20bb17234193558defa94e8c5617dd, gr\network-visualization\network_layout\Orthogonal\optimization\OrthographicEmbeddingBoardSizeOptimizer.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 147
-    '    Code Lines: 115 (78.23%)
-    ' Comment Lines: 16 (10.88%)
-    '    - Xml Docs: 18.75%
+    '   Total Lines: 145
+    '    Code Lines: 115 (79.31%)
+    ' Comment Lines: 14 (9.66%)
+    '    - Xml Docs: 21.43%
     ' 
-    '   Blank Lines: 16 (10.88%)
-    '     File Size: 5.62 KB
+    '   Blank Lines: 16 (11.03%)
+    '     File Size: 5.45 KB
 
 
     '     Class OrthographicEmbeddingBoardSizeOptimizer

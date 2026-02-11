@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::577036fccb7e44589b404dc2681907e1, gr\network-visualization\network_layout\Orthogonal\optimization\SegmentLengthEmbeddingComparator.vb"
+﻿#Region "Microsoft.VisualBasic::75d6f343835efd673390ecb620138d7e, gr\network-visualization\network_layout\Orthogonal\optimization\SegmentLengthEmbeddingComparator.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 58
-    '    Code Lines: 30 (51.72%)
-    ' Comment Lines: 12 (20.69%)
-    '    - Xml Docs: 25.00%
+    '   Total Lines: 61
+    '    Code Lines: 30 (49.18%)
+    ' Comment Lines: 20 (32.79%)
+    '    - Xml Docs: 70.00%
     ' 
-    '   Blank Lines: 16 (27.59%)
-    '     File Size: 2.00 KB
+    '   Blank Lines: 11 (18.03%)
+    '     File Size: 2.16 KB
 
 
     '     Class SegmentLengthEmbeddingComparator

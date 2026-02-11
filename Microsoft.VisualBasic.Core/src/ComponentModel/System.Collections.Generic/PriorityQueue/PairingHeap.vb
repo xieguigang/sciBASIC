@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::68cd2215a0190dd396794899d2ff0a68, Microsoft.VisualBasic.Core\src\ComponentModel\System.Collections.Generic\PriorityQueue\PairingHeap.vb"
+﻿#Region "Microsoft.VisualBasic::ea471c810a5cba8a33755fb2df814644, Microsoft.VisualBasic.Core\src\ComponentModel\System.Collections.Generic\PriorityQueue\PairingHeap.vb"
 
     ' Author:
     ' 
@@ -49,7 +49,7 @@
     ' 
     '         Constructor: (+1 Overloads) Sub New
     ' 
-    '         Function: contains, decreaseKey, Insert, isHeap, merge
+    '         Function: contains, decreaseKey, insert, isHeap, merge
     '                   mergePairs, removeMin, ToString
     ' 
     '         Sub: forEach

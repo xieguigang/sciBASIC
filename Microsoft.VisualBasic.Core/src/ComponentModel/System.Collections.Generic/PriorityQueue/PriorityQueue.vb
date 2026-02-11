@@ -1,59 +1,60 @@
-﻿#Region "Microsoft.VisualBasic::e0c2dc7b9025bba44357f067ec3e5789, Microsoft.VisualBasic.Core\src\ComponentModel\System.Collections.Generic\PriorityQueue\PriorityQueue.vb"
+﻿#Region "Microsoft.VisualBasic::8495bc221db380fbe4f7690501b8a1ed, Microsoft.VisualBasic.Core\src\ComponentModel\System.Collections.Generic\PriorityQueue\PriorityQueue.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 127
-'    Code Lines: 67 (52.76%)
-' Comment Lines: 40 (31.50%)
-'    - Xml Docs: 35.00%
-' 
-'   Blank Lines: 20 (15.75%)
-'     File Size: 3.86 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Class PriorityQueue
-' 
-'         Constructor: (+2 Overloads) Sub New
-' 
-'         Function: count, empty, isHeap, pop, push
-'                   top, ToString
-' 
-'         Sub: forEach, reduceKey
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 145
+    '    Code Lines: 79 (54.48%)
+    ' Comment Lines: 46 (31.72%)
+    '    - Xml Docs: 97.83%
+    ' 
+    '   Blank Lines: 20 (13.79%)
+    '     File Size: 4.61 KB
+
+
+    '     Class PriorityQueue
+    ' 
+    '         Properties: count, empty, isHeap, top
+    ' 
+    '         Constructor: (+2 Overloads) Sub New
+    ' 
+    '         Function: pop, push, ToString
+    ' 
+    '         Sub: forEach, reduceKey
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

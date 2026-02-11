@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::69080d37ac7ee5457d0a48cca218251c, Microsoft.VisualBasic.Core\src\ComponentModel\DataSource\Repository\TextIndex\QGramIndex.vb"
+﻿#Region "Microsoft.VisualBasic::b3cce53f6e4378f507ef50581da9a96c, Microsoft.VisualBasic.Core\src\ComponentModel\DataSource\Repository\TextIndex\QGramIndex.vb"
 
     ' Author:
     ' 
@@ -36,11 +36,11 @@
 
     '   Total Lines: 170
     '    Code Lines: 98 (57.65%)
-    ' Comment Lines: 43 (25.29%)
-    '    - Xml Docs: 81.40%
+    ' Comment Lines: 44 (25.88%)
+    '    - Xml Docs: 79.55%
     ' 
-    '   Blank Lines: 29 (17.06%)
-    '     File Size: 6.31 KB
+    '   Blank Lines: 28 (16.47%)
+    '     File Size: 6.35 KB
 
 
     '     Class QGramIndex

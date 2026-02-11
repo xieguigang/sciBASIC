@@ -1,4 +1,64 @@
-﻿Imports System.Runtime.CompilerServices
+﻿#Region "Microsoft.VisualBasic::761ba573236d8fe276c0b0ec412f848d, Data_science\NLP\TF-IDF\TFIDF.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 191
+    '    Code Lines: 113 (59.16%)
+    ' Comment Lines: 53 (27.75%)
+    '    - Xml Docs: 86.79%
+    ' 
+    '   Blank Lines: 25 (13.09%)
+    '     File Size: 6.82 KB
+
+
+    ' Class TFIDF
+    ' 
+    '     Properties: N, Words
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    ' 
+    '     Function: DF, IDF, OneHotVectorizer, SetWords, (+2 Overloads) TfidfVectorizer
+    '               WordsFromDocument
+    ' 
+    '     Sub: (+2 Overloads) Add
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ApplicationServices.Terminal.ProgressBar.Tqdm
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.Framework
@@ -189,3 +249,4 @@ Public Class TFIDF
     End Function
 
 End Class
+

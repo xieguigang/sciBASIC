@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::827a4e281df612eb04044ede91a72ff8, Data\BinaryData\BinaryData\Bzip2\Algorithm\BZip2BlockCompressor.vb"
+﻿#Region "Microsoft.VisualBasic::67a6ac76884f99f87d136b158a7bb42b, Data\BinaryData\BinaryData\Bzip2\Algorithm\BZip2BlockCompressor.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 14.47%
     ' 
     '   Blank Lines: 49 (18.49%)
-    '     File Size: 10.23 KB
+    '     File Size: 10.22 KB
 
 
     '     Class BZip2BlockCompressor

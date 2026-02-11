@@ -1,55 +1,55 @@
-﻿#Region "Microsoft.VisualBasic::f671736e3a1117fc6a2d91a451354882, Data_science\Mathematica\Math\Math.Statistics\Distributions\MethodOfMoments\LogNormal.vb"
+﻿#Region "Microsoft.VisualBasic::46b1ea6012d4bb05af1f6e53888b8584, Data_science\Mathematica\Math\Math.Statistics\Distributions\MethodOfMoments\LogNormal.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 74
-'    Code Lines: 56 (75.68%)
-' Comment Lines: 13 (17.57%)
-'    - Xml Docs: 46.15%
-' 
-'   Blank Lines: 5 (6.76%)
-'     File Size: 3.22 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Class LogNormal
-' 
-'         Constructor: (+3 Overloads) Sub New
-'         Function: Bullentin17BConfidenceLimit, GetCDF, GetInvCDF, GetPDF, Validate
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 74
+    '    Code Lines: 56 (75.68%)
+    ' Comment Lines: 13 (17.57%)
+    '    - Xml Docs: 46.15%
+    ' 
+    '   Blank Lines: 5 (6.76%)
+    '     File Size: 3.19 KB
+
+
+    '     Class LogNormal
+    ' 
+    '         Constructor: (+3 Overloads) Sub New
+    '         Function: Bullentin17BConfidenceLimit, GetCDF, GetInvCDF, GetPDF, Validate
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

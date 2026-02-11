@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4f1786fdf09aeb31c8db081568025076, Data_science\Graph\Model\SGT.vb"
+﻿#Region "Microsoft.VisualBasic::7fd87051a5f279976281396190127e2b, Data_science\Graph\Model\SGT.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 358
-    '    Code Lines: 196 (54.75%)
-    ' Comment Lines: 110 (30.73%)
-    '    - Xml Docs: 85.45%
+    '   Total Lines: 366
+    '    Code Lines: 199 (54.37%)
+    ' Comment Lines: 113 (30.87%)
+    '    - Xml Docs: 83.19%
     ' 
-    '   Blank Lines: 52 (14.53%)
-    '     File Size: 13.01 KB
+    '   Blank Lines: 54 (14.75%)
+    '     File Size: 13.45 KB
 
 
     ' Class SequenceGraphTransform

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ba048a3609228246dd2149107db7c01c, gr\network-visualization\Datavisualization.Network\Graph\Model\Handle\HandleCreator.vb"
+﻿#Region "Microsoft.VisualBasic::44663e529912fafd2a7264db1e3740cd, gr\network-visualization\Datavisualization.Network\Graph\Model\Handle\HandleCreator.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 37.04%
     ' 
     '   Blank Lines: 16 (15.69%)
-    '     File Size: 3.84 KB
+    '     File Size: 3.83 KB
 
 
     '     Module HandleCreator

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::95e9a5d2639b986e60b7195530e82041, gr\network-visualization\network_layout\Orthogonal\OrthographicEmbedding.vb"
+﻿#Region "Microsoft.VisualBasic::a567c7ebd0f24a721134c0cb356b110e, gr\network-visualization\network_layout\Orthogonal\OrthographicEmbedding.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 56.88%
     ' 
     '   Blank Lines: 69 (10.15%)
-    '     File Size: 31.96 KB
+    '     File Size: 32.02 KB
 
 
     '     Class OrthographicEmbedding

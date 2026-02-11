@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ee7ae9e9c706b6b711041aabcd15093c, Microsoft.VisualBasic.Core\src\ComponentModel\Algorithm\DynamicProgramming\SCS.vb"
+﻿#Region "Microsoft.VisualBasic::4e24b7653986af4af1e240cc82a401e1, Microsoft.VisualBasic.Core\src\ComponentModel\Algorithm\DynamicProgramming\SCS.vb"
 
     ' Author:
     ' 
@@ -45,7 +45,7 @@
 
     '     Module SCS
     ' 
-    '         Function: Coverage, MaxPrefixLength, runIteration, ShortestCommonSuperString
+    '         Function: Coverage, MaxPrefixLength, RunIteration, ShortestCommonSuperString
     ' 
     '         Sub: TableView
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0a9cf150a0c573f5fff03811159eb8f9, Data\BinaryData\BinaryData\Bzip2\Algorithm\BZip2DivSufSort.vb"
+﻿#Region "Microsoft.VisualBasic::8c3a197de0d95a07d049feed96ac08a1, Data\BinaryData\BinaryData\Bzip2\Algorithm\BZip2DivSufSort.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 29.63%
     ' 
     '   Blank Lines: 512 (20.02%)
-    '     File Size: 94.86 KB
+    '     File Size: 94.62 KB
 
 
     '     Class BZip2DivSufSort

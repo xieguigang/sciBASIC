@@ -1,4 +1,59 @@
-﻿Imports Microsoft.VisualBasic.ValueTypes
+﻿#Region "Microsoft.VisualBasic::72a286452fb9a68ed8a2a43270e42ceb, Data\BinaryData\BinaryData\Stream\VectorStream.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 109
+    '    Code Lines: 95 (87.16%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 14 (12.84%)
+    '     File Size: 5.52 KB
+
+
+    ' Module VectorStream
+    ' 
+    '     Function: ReadScalar, ReadVector
+    ' 
+    '     Sub: WriteScalar, WriteVector
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+Imports Microsoft.VisualBasic.ValueTypes
 
 Public Module VectorStream
 
@@ -107,3 +162,4 @@ Public Module VectorStream
         End Select
     End Function
 End Module
+

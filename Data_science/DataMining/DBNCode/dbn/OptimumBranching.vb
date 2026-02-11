@@ -1,4 +1,64 @@
-﻿Imports Microsoft.VisualBasic.ComponentModel.Collection
+﻿#Region "Microsoft.VisualBasic::f6d7b946fc2f4ce0156cfdca93dc2937, Data_science\DataMining\DBNCode\dbn\OptimumBranching.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 504
+    '    Code Lines: 297 (58.93%)
+    ' Comment Lines: 68 (13.49%)
+    '    - Xml Docs: 16.18%
+    ' 
+    '   Blank Lines: 139 (27.58%)
+    '     File Size: 17.83 KB
+
+
+    '     Class OptimumBranching
+    ' 
+    '         Properties: Branching
+    ' 
+    '         Constructor: (+2 Overloads) Sub New
+    ' 
+    '         Function: Anc, ancestors, merge, Subsets
+    ' 
+    '         Sub: BFS, Ckg
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.DataMining.DynamicBayesianNetwork.utils
 Imports Microsoft.VisualBasic.Language.Java
 
@@ -502,3 +562,4 @@ Namespace dbn
     End Class
 
 End Namespace
+

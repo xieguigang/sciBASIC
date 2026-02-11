@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c35791ae5a5057c4038352448034a017, Data\BinaryData\DataStorage\Tabular\Schema.vb"
+﻿#Region "Microsoft.VisualBasic::b4e70a383d833406bc3fa9ada21d4a71, Data\BinaryData\DataStorage\Tabular\Schema.vb"
 
     ' Author:
     ' 
@@ -34,26 +34,28 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 52
-    '    Code Lines: 36 (69.23%)
-    ' Comment Lines: 4 (7.69%)
+    '   Total Lines: 71
+    '    Code Lines: 51 (71.83%)
+    ' Comment Lines: 4 (5.63%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 12 (23.08%)
-    '     File Size: 1.36 KB
+    '   Blank Lines: 16 (22.54%)
+    '     File Size: 1.96 KB
 
 
     ' Class Schema
     ' 
-    '     Properties: cols, dims, ordinals, rownames
+    '     Properties: cols, description, dims, name, ordinals
+    '                 rownames
     ' 
     '     Constructor: (+2 Overloads) Sub New
     ' 
     ' Class VectorSchema
     ' 
-    '     Properties: isScalar, offset, type
+    '     Properties: attrs, isScalar, offset, type
     ' 
     '     Constructor: (+2 Overloads) Sub New
+    '     Function: CreateEmpty, GetTypeInfo, ToString
     ' 
     ' /********************************************************************************/
 

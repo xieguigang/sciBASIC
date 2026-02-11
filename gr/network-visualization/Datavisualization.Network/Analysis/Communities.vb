@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::55f97632107091f0512eb5cae7958894, gr\network-visualization\Datavisualization.Network\Analysis\Communities.vb"
+﻿#Region "Microsoft.VisualBasic::fde14f1cc3e4ccfd36373744c69138e1, gr\network-visualization\Datavisualization.Network\Analysis\Communities.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 174
-    '    Code Lines: 102 (58.62%)
-    ' Comment Lines: 40 (22.99%)
+    '   Total Lines: 182
+    '    Code Lines: 107 (58.79%)
+    ' Comment Lines: 40 (21.98%)
     '    - Xml Docs: 95.00%
     ' 
-    '   Blank Lines: 32 (18.39%)
-    '     File Size: 6.94 KB
+    '   Blank Lines: 35 (19.23%)
+    '     File Size: 7.18 KB
 
 
     '     Class Communities

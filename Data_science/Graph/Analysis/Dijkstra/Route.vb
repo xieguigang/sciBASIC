@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d3f44fd3885ac1660ef8600868c1abb3, Data_science\Graph\Analysis\Dijkstra\Route.vb"
+﻿#Region "Microsoft.VisualBasic::c12fbec1c647a6d319a8c765923fca00, Data_science\Graph\Analysis\Dijkstra\Route.vb"
 
     ' Author:
     ' 
@@ -34,18 +34,24 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 84
-    '    Code Lines: 58 (69.05%)
-    ' Comment Lines: 11 (13.10%)
+    '   Total Lines: 96
+    '    Code Lines: 65 (67.71%)
+    ' Comment Lines: 11 (11.46%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 15 (17.86%)
-    '     File Size: 2.65 KB
+    '   Blank Lines: 20 (20.83%)
+    '     File Size: 2.92 KB
 
 
+    '     Class RoutePathway
+    ' 
+    '         Properties: Cost, id
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
     '     Class Route
     ' 
-    '         Properties: Connections, Cost, Count, id
+    '         Properties: Connections, Count
     ' 
     '         Constructor: (+1 Overloads) Sub New
     ' 

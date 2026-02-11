@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0492e6ad4f8a21703b3c07201657441b, Data_science\Graph\Analysis\Louvain\Louvain.vb"
+﻿#Region "Microsoft.VisualBasic::fa53b3e6c3008aa0a5026125ab429967, Data_science\Graph\Analysis\Louvain\Louvain.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 383
-    '    Code Lines: 225 (58.75%)
-    ' Comment Lines: 89 (23.24%)
+    '   Total Lines: 386
+    '    Code Lines: 227 (58.81%)
+    ' Comment Lines: 89 (23.06%)
     '    - Xml Docs: 79.78%
     ' 
-    '   Blank Lines: 69 (18.02%)
-    '     File Size: 12.41 KB
+    '   Blank Lines: 70 (18.13%)
+    '     File Size: 12.37 KB
 
 
     '     Class LouvainCommunity

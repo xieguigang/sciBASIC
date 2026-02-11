@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0dbdfe35b03016fd0c0a7c9f09b1c25f, gr\network-visualization\Network.IO.Extensions\IO\ModelLoader.vb"
+﻿#Region "Microsoft.VisualBasic::bd700e3489018143d2ad6b3c016ca0f1, gr\network-visualization\Network.IO.Extensions\IO\ModelLoader.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 151
-    '    Code Lines: 122 (80.79%)
-    ' Comment Lines: 16 (10.60%)
+    '   Total Lines: 153
+    '    Code Lines: 124 (81.05%)
+    ' Comment Lines: 16 (10.46%)
     '    - Xml Docs: 81.25%
     ' 
-    '   Blank Lines: 13 (8.61%)
-    '     File Size: 8.21 KB
+    '   Blank Lines: 13 (8.50%)
+    '     File Size: 8.28 KB
 
 
     '     Module ModelLoader

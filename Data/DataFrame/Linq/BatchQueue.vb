@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c9020d42b94ccf3cffa33cd555ded2dd, Data\DataFrame\Linq\BatchQueue.vb"
+﻿#Region "Microsoft.VisualBasic::06952fd19d2352624edd82b33da6d833, Data\DataFrame\Linq\BatchQueue.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 156
-    '    Code Lines: 88 (56.41%)
-    ' Comment Lines: 46 (29.49%)
-    '    - Xml Docs: 65.22%
+    '   Total Lines: 133
+    '    Code Lines: 86 (64.66%)
+    ' Comment Lines: 30 (22.56%)
+    '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 22 (14.10%)
-    '     File Size: 6.54 KB
+    '   Blank Lines: 17 (12.78%)
+    '     File Size: 5.69 KB
 
 
     '     Module BatchQueue

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e78888f1aa90042cb53284fbc4694fe1, gr\network-visualization\network_layout\Orthogonal\STNumbering.vb"
+﻿#Region "Microsoft.VisualBasic::f90747019b5fcbba702a7922f8f4d34c, gr\network-visualization\network_layout\Orthogonal\STNumbering.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 465
-    '    Code Lines: 340 (73.12%)
-    ' Comment Lines: 92 (19.78%)
-    '    - Xml Docs: 3.26%
+    '   Total Lines: 412
+    '    Code Lines: 340 (82.52%)
+    ' Comment Lines: 36 (8.74%)
+    '    - Xml Docs: 8.33%
     ' 
-    '   Blank Lines: 33 (7.10%)
-    '     File Size: 21.01 KB
+    '   Blank Lines: 36 (8.74%)
+    '     File Size: 17.99 KB
 
 
     '     Class STNumbering

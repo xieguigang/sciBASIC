@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9523457bca59367853ec37aa0c515dbc, gr\network-visualization\network_layout\Orthogonal\optimization\OrthographicEmbeddingOptimizer.vb"
+﻿#Region "Microsoft.VisualBasic::3be0110a9b99d4d20282c133b0dab1e8, gr\network-visualization\network_layout\Orthogonal\optimization\OrthographicEmbeddingOptimizer.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 525
-    '    Code Lines: 422 (80.38%)
-    ' Comment Lines: 50 (9.52%)
-    '    - Xml Docs: 6.00%
+    '   Total Lines: 520
+    '    Code Lines: 422 (81.15%)
+    ' Comment Lines: 44 (8.46%)
+    '    - Xml Docs: 6.82%
     ' 
-    '   Blank Lines: 53 (10.10%)
-    '     File Size: 23.18 KB
+    '   Blank Lines: 54 (10.38%)
+    '     File Size: 22.66 KB
 
 
     '     Class OrthographicEmbeddingOptimizer

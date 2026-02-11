@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c1eaccce035d47d732c6b880e75f8f14, Data\BinaryData\DataStorage\Tabular\FrameWriter.vb"
+﻿#Region "Microsoft.VisualBasic::f3b17e1d3d181b1b6b2f5fa7ae9125ce, Data\BinaryData\DataStorage\Tabular\FrameWriter.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 95
-    '    Code Lines: 70 (73.68%)
-    ' Comment Lines: 8 (8.42%)
-    '    - Xml Docs: 75.00%
+    '   Total Lines: 69
+    '    Code Lines: 47 (68.12%)
+    ' Comment Lines: 9 (13.04%)
+    '    - Xml Docs: 66.67%
     ' 
-    '   Blank Lines: 17 (17.89%)
-    '     File Size: 3.44 KB
+    '   Blank Lines: 13 (18.84%)
+    '     File Size: 2.30 KB
 
 
     ' Module FrameWriter

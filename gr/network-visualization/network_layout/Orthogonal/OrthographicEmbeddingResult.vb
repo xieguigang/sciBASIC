@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4cdfbaac11eb6aa8ced30a946d0216af, gr\network-visualization\network_layout\Orthogonal\OrthographicEmbeddingResult.vb"
+﻿#Region "Microsoft.VisualBasic::601a4022dc290a0713f4833c44fbcc30, gr\network-visualization\network_layout\Orthogonal\OrthographicEmbeddingResult.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 1327
-    '    Code Lines: 1145 (86.28%)
-    ' Comment Lines: 89 (6.71%)
-    '    - Xml Docs: 10.11%
+    '   Total Lines: 1317
+    '    Code Lines: 1145 (86.94%)
+    ' Comment Lines: 79 (6.00%)
+    '    - Xml Docs: 11.39%
     ' 
-    '   Blank Lines: 93 (7.01%)
-    '     File Size: 64.02 KB
+    '   Blank Lines: 93 (7.06%)
+    '     File Size: 62.82 KB
 
 
     '     Class OrthographicEmbeddingResult

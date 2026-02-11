@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::df0b0c1889460db79326c0b1c9812b72, Microsoft.VisualBasic.Core\src\ComponentModel\Algorithm\base\Combination\CombinationExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::32ea7225156f9c941327a5a9f0f2a7c5, Microsoft.VisualBasic.Core\src\ComponentModel\Algorithm\base\Combination\CombinationExtensions.vb"
 
     ' Author:
     ' 
@@ -34,19 +34,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 98
-    '    Code Lines: 64 (65.31%)
-    ' Comment Lines: 20 (20.41%)
-    '    - Xml Docs: 90.00%
+    '   Total Lines: 47
+    '    Code Lines: 29 (61.70%)
+    ' Comment Lines: 10 (21.28%)
+    '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 14 (14.29%)
-    '     File Size: 3.43 KB
+    '   Blank Lines: 8 (17.02%)
+    '     File Size: 1.64 KB
 
 
     '     Module CombinationExtensions
     ' 
-    '         Function: AllCombinations, CreateCombos, FullCombination, Generate, (+2 Overloads) Iterates
-    '                   Iteration
+    '         Function: AllCombinations, Generate, (+2 Overloads) Iterates
     ' 
     ' 
     ' /********************************************************************************/

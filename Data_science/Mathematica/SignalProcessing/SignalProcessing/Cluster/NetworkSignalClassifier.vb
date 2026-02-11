@@ -1,4 +1,57 @@
-﻿Imports std = System.Math
+﻿#Region "Microsoft.VisualBasic::ba4b3e584043f9fa69f5c65703fe47d4, Data_science\Mathematica\SignalProcessing\SignalProcessing\Cluster\NetworkSignalClassifier.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 109
+    '    Code Lines: 74 (67.89%)
+    ' Comment Lines: 18 (16.51%)
+    '    - Xml Docs: 16.67%
+    ' 
+    '   Blank Lines: 17 (15.60%)
+    '     File Size: 4.48 KB
+
+
+    ' Module NetworkSignalClassifier
+    ' 
+    '     Function: CalculateSlope, CalculateStandardDeviation, ClassifyMetaboliteSignal
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+Imports std = System.Math
 
 Public Module NetworkSignalClassifier
 

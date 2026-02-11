@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5e6825ff8fbfb62ffcc0437133ed2b86, Microsoft.VisualBasic.Core\src\ApplicationServices\FileSystem\SubStream.vb"
+﻿#Region "Microsoft.VisualBasic::49d089a2579081c16ff22d6cf27a383b, Microsoft.VisualBasic.Core\src\ApplicationServices\FileSystem\SubStream.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 190
-    '    Code Lines: 132 (69.47%)
-    ' Comment Lines: 22 (11.58%)
-    '    - Xml Docs: 77.27%
+    '   Total Lines: 199
+    '    Code Lines: 137 (68.84%)
+    ' Comment Lines: 24 (12.06%)
+    '    - Xml Docs: 70.83%
     ' 
-    '   Blank Lines: 36 (18.95%)
-    '     File Size: 5.75 KB
+    '   Blank Lines: 38 (19.10%)
+    '     File Size: 6.16 KB
 
 
     '     Class SubStream
@@ -50,9 +50,9 @@
     ' 
     '         Constructor: (+1 Overloads) Sub New
     ' 
-    '         Function: Read, ReadByte, Seek
+    '         Function: Read, ReadByte, Seek, ToString
     ' 
-    '         Sub: Flush, SetLength, Write
+    '         Sub: Dispose, Flush, SetLength, Write
     ' 
     ' 
     ' /********************************************************************************/

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::25b23436fc2946f08a6563a0a68d9f6f, Data_science\Graph\Analysis\Louvain\Builder.vb"
+﻿#Region "Microsoft.VisualBasic::8615a2aa78b17622744db8a47b44baba, Data_science\Graph\Analysis\Louvain\Builder.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 111
-    '    Code Lines: 86 (77.48%)
-    ' Comment Lines: 3 (2.70%)
+    '   Total Lines: 113
+    '    Code Lines: 86 (76.11%)
+    ' Comment Lines: 3 (2.65%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 22 (19.82%)
-    '     File Size: 4.47 KB
+    '   Blank Lines: 24 (21.24%)
+    '     File Size: 4.30 KB
 
 
     '     Class Builder

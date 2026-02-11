@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::364591f18033b4c5517ec87c20ed67ed, Microsoft.VisualBasic.Core\src\Language\Language\Java\Collections.vb"
+﻿#Region "Microsoft.VisualBasic::e31a383d5f434320e8d55029ea8e2c24, Microsoft.VisualBasic.Core\src\Language\Language\Java\Collections.vb"
 
     ' Author:
     ' 
@@ -34,18 +34,21 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 279
-    '    Code Lines: 123 (44.09%)
-    ' Comment Lines: 132 (47.31%)
-    '    - Xml Docs: 65.15%
+    '   Total Lines: 333
+    '    Code Lines: 145 (43.54%)
+    ' Comment Lines: 154 (46.25%)
+    '    - Xml Docs: 61.69%
     ' 
-    '   Blank Lines: 24 (8.60%)
-    '     File Size: 12.71 KB
+    '   Blank Lines: 34 (10.21%)
+    '     File Size: 15.24 KB
 
 
     '     Module Collections
     ' 
     '         Function: [get], (+2 Overloads) binarySearch, (+2 Overloads) indexedBinarySearch, (+2 Overloads) iteratorBinarySearch, put
+    '                   retainAll
+    ' 
+    '         Sub: shuffle
     ' 
     ' 
     ' /********************************************************************************/

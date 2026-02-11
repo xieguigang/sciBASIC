@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6d24b5ce1c3d1c163b6ee47f6960ccf9, Microsoft.VisualBasic.Core\src\Net\Tcp\TCPExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::0472f25c2aad373b044e32b0cbfa6350, Microsoft.VisualBasic.Core\src\Net\Tcp\TCPExtensions.vb"
 
     ' Author:
     ' 
@@ -34,18 +34,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 115
-    '    Code Lines: 59 (51.30%)
-    ' Comment Lines: 38 (33.04%)
+    '   Total Lines: 132
+    '    Code Lines: 74 (56.06%)
+    ' Comment Lines: 38 (28.79%)
     '    - Xml Docs: 76.32%
     ' 
-    '   Blank Lines: 18 (15.65%)
-    '     File Size: 4.99 KB
+    '   Blank Lines: 20 (15.15%)
+    '     File Size: 5.56 KB
 
 
     '     Module TCPExtensions
     ' 
-    '         Function: ConnectSocket, GetFirstAvailablePort, PortIsAvailable, PortIsUsed
+    '         Function: CheckIsSocketException, ConnectSocket, GetFirstAvailablePort, PortIsAvailable, PortIsUsed
     ' 
     ' 
     ' /********************************************************************************/

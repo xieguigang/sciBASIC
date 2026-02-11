@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b76598bc16af2e8177635e9b25dc5617, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Colors\Designer.vb"
+﻿#Region "Microsoft.VisualBasic::c8012f2694ef96afbec56d66cd5d334f, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Colors\Designer.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 623
-    '    Code Lines: 316 (50.72%)
-    ' Comment Lines: 242 (38.84%)
+    '   Total Lines: 638
+    '    Code Lines: 327 (51.25%)
+    ' Comment Lines: 242 (37.93%)
     '    - Xml Docs: 88.43%
     ' 
-    '   Blank Lines: 65 (10.43%)
-    '     File Size: 34.20 KB
+    '   Blank Lines: 69 (10.82%)
+    '     File Size: 34.65 KB
 
 
     '     Module Designer
@@ -51,7 +51,7 @@
     '         Constructor: (+1 Overloads) Sub New
     ' 
     '         Function: ConsoleColor, FromConsoleColor, GetColors, getColorsInternal, IsColorNameList
-    '                   ParseAvailableInterpolates, ParseColorBrewer, SplitColorList
+    '                   ParseAvailableInterpolates, ParseColorBrewer, SplitColorList, TryGetColorBrewer
     ' 
     '         Sub: (+2 Overloads) Register
     '         Delegate Function

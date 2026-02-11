@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b61fd06af1c8b233085c9cfcf8bb9b8b, Microsoft.VisualBasic.Core\src\Extensions\Reflection\Delegate\TypeExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::aa9f4a3d714a142c84a8d60a775c67b2, Microsoft.VisualBasic.Core\src\Extensions\Reflection\Delegate\TypeExtensions.vb"
 
     ' Author:
     ' 
@@ -34,18 +34,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 93
-    '    Code Lines: 55 (59.14%)
-    ' Comment Lines: 22 (23.66%)
+    '   Total Lines: 104
+    '    Code Lines: 64 (61.54%)
+    ' Comment Lines: 22 (21.15%)
     '    - Xml Docs: 95.45%
     ' 
-    '   Blank Lines: 16 (17.20%)
-    '     File Size: 3.56 KB
+    '   Blank Lines: 18 (17.31%)
+    '     File Size: 3.92 KB
 
 
     '     Module TypeExtensions
     ' 
-    '         Function: CanBeAssignedFrom, (+2 Overloads) ImplementInterface, ImplementInterfaceAssertInternal
+    '         Function: CanBeAssignedFrom, ImplementAnyInterfaces, (+2 Overloads) ImplementInterface, ImplementInterfaceAssertInternal
     ' 
     ' 
     ' /********************************************************************************/

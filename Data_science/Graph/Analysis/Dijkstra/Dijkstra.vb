@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::71962ad46831f5b2c3f16abc157d7065, Data_science\Graph\Analysis\Dijkstra\Dijkstra.vb"
+﻿#Region "Microsoft.VisualBasic::da91a08fb1a715c6a403e329cbd2902f, Data_science\Graph\Analysis\Dijkstra\Dijkstra.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 235
-    '    Code Lines: 136 (57.87%)
-    ' Comment Lines: 62 (26.38%)
-    '    - Xml Docs: 59.68%
+    '   Total Lines: 241
+    '    Code Lines: 136 (56.43%)
+    ' Comment Lines: 68 (28.22%)
+    '    - Xml Docs: 63.24%
     ' 
-    '   Blank Lines: 37 (15.74%)
-    '     File Size: 9.97 KB
+    '   Blank Lines: 37 (15.35%)
+    '     File Size: 10.23 KB
 
 
     '     Class DijkstraRouter

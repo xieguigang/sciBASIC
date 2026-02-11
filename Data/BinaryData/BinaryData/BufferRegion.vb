@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::61c29c0d89064b9523a21ab96d3c2013, Data\BinaryData\BinaryData\BufferRegion.vb"
+﻿#Region "Microsoft.VisualBasic::f5da74d30a4d7a2c63910c0f8c52befa, Data\BinaryData\BinaryData\BufferRegion.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 8 (16.00%)
-    '     File Size: 1.21 KB
+    '     File Size: 1.25 KB
 
 
     ' Class BufferRegion

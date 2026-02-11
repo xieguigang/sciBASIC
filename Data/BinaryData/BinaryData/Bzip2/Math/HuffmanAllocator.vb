@@ -1,56 +1,56 @@
-﻿#Region "Microsoft.VisualBasic::219844aa92422a1346ae9a7d55782134, Data\BinaryData\BinaryData\Bzip2\Math\HuffmanAllocator.vb"
+﻿#Region "Microsoft.VisualBasic::95302308c59f36fc428044bd6dd3b8d5, Data\BinaryData\BinaryData\Bzip2\Math\HuffmanAllocator.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 198
-'    Code Lines: 123 (62.12%)
-' Comment Lines: 43 (21.72%)
-'    - Xml Docs: 23.26%
-' 
-'   Blank Lines: 32 (16.16%)
-'     File Size: 8.12 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Module HuffmanAllocator
-' 
-'         Function: FindNodesToRelocate, First, SignificantBits
-' 
-'         Sub: AllocateHuffmanCodeLengths, AllocateNodeLengths, AllocateNodeLengthsWithRelocation, SetExtendedParentPointers
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 198
+    '    Code Lines: 123 (62.12%)
+    ' Comment Lines: 43 (21.72%)
+    '    - Xml Docs: 23.26%
+    ' 
+    '   Blank Lines: 32 (16.16%)
+    '     File Size: 8.09 KB
+
+
+    '     Module HuffmanAllocator
+    ' 
+    '         Function: FindNodesToRelocate, First, SignificantBits
+    ' 
+    '         Sub: AllocateHuffmanCodeLengths, AllocateNodeLengths, AllocateNodeLengthsWithRelocation, SetExtendedParentPointers
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

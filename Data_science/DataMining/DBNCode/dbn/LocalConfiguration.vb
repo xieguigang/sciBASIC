@@ -1,4 +1,64 @@
-﻿Imports std = System.Math
+﻿#Region "Microsoft.VisualBasic::507cd97007f1ff892e98d2800a8cde67, Data_science\DataMining\DBNCode\dbn\LocalConfiguration.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 195
+    '    Code Lines: 117 (60.00%)
+    ' Comment Lines: 46 (23.59%)
+    '    - Xml Docs: 97.83%
+    ' 
+    '   Blank Lines: 32 (16.41%)
+    '     File Size: 7.66 KB
+
+
+    '     Class LocalConfiguration
+    ' 
+    '         Properties: ChildRange, ConsiderChild, NumParameters, ParentsRange
+    ' 
+    '         Constructor: (+3 Overloads) Sub New
+    ' 
+    '         Function: matches, nextChild, nextParents
+    ' 
+    '         Sub: resetChild, resetParents
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+Imports std = System.Math
 
 Namespace dbn
 
@@ -193,3 +253,4 @@ Namespace dbn
     End Class
 
 End Namespace
+

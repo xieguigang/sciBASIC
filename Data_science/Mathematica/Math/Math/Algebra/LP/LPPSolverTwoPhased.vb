@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b7754380b348c34c1308be8cad41152f, Data_science\Mathematica\Math\Math\Algebra\LP\LPPSolverTwoPhased.vb"
+﻿#Region "Microsoft.VisualBasic::eab4956987e1b8a632183df2eb61ae8b, Data_science\Mathematica\Math\Math\Algebra\LP\LPPSolverTwoPhased.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 442
-    '    Code Lines: 284 (64.25%)
-    ' Comment Lines: 92 (20.81%)
+    '   Total Lines: 452
+    '    Code Lines: 291 (64.38%)
+    ' Comment Lines: 92 (20.35%)
     '    - Xml Docs: 54.35%
     ' 
-    '   Blank Lines: 66 (14.93%)
-    '     File Size: 18.61 KB
+    '   Blank Lines: 69 (15.27%)
+    '     File Size: 18.93 KB
 
 
     '     Class LPPSolverTwoPhased
