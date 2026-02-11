@@ -180,62 +180,21 @@ Public Class CenterStar
     ''' The Function do the multiple alignment according to the center string 
     ''' </summary>
     Private Sub multipleAlignmentImpl()
-        Dim centerString2$ = centerString
         Dim n As Integer = sequence.Length
 
+        multipleAlign(starIndex) = centerString
+
         For i As Integer = 0 To n - 1
-            If (i = starIndex) Then
-                multipleAlign(i) = centerString2
+            If i = starIndex Then
                 Continue For
             End If
 
-            ' kband.CalculateEditDistance(centerString2, sequence(i))
+            ' 执行双序列比对
+            kband.CalculateEditDistance(multipleAlign(starIndex), sequence(i))
             multipleAlign(i) = globalAlign(1)
 
-            If (globalAlign(0).Length > centerString2.Length) Then
-                Dim j2 = 0
-
-                For j1 As Integer = 0 To globalAlign(0).Length - 1
-                    If (centerString2.CharAtOrDefault(j2, "-"c) <> globalAlign(0)(j1)) Then
-                        Dim a As StringBuilder
-
-                        For k As Integer = 0 To i - 1
-                            With multipleAlign(k)
-                                If .Length > j1 Then
-                                    a = New StringBuilder(multipleAlign(k))
-                                    a.Insert(j1, "-"c)
-                                    multipleAlign(k) = a.ToString
-                                Else
-                                    multipleAlign(k) = .ToString & New String("-"c, j1 - .Length)
-                                End If
-                            End With
-                        Next
-
-                    Else
-                        j2 += 1
-                    End If
-                Next
-                centerString2 = globalAlign(0)
-            Else
-                Dim j2 = 0
-                Dim globalAlign0 = globalAlign(Scan0)
-
-                For j1 As Integer = 0 To centerString2.Length - 1
-                    If (centerString2(j1) <> globalAlign0.CharAtOrDefault(j2)) Then
-                        With multipleAlign(i)
-                            If .Length > j1 Then
-                                Dim a As New StringBuilder(multipleAlign(i))
-                                a.Insert(j1, "-"c)
-                                multipleAlign(i) = a.ToString()
-                            Else
-                                multipleAlign(i) = .ToString & New String("-"c, j1 - .Length)
-                            End If
-                        End With
-                    Else
-                        j2 += 1
-                    End If
-                Next
-            End If
+            ' 统一处理空格插入，确保所有序列长度一致'
+            Call SyncGaps(multipleAlign, starIndex, i)
         Next
 
         Dim maxLen As Integer = Aggregate a As String
@@ -243,7 +202,68 @@ Public Class CenterStar
                                 Into Max(a.Length)
 
         For i As Integer = 0 To multipleAlign.Length - 1
-            multipleAlign(i) &= New String("-"c, maxLen - multipleAlign(i).Length)
+            multipleAlign(i) = multipleAlign(i).PadRight(maxLen, "-"c)
+        Next
+    End Sub
+
+    Private Sub SyncGaps(ByRef alignments As String(), centerIndex As Integer, i As Integer)
+        If (globalAlign(0).Length > alignments(centerIndex).Length) Then
+            Dim j2 = 0
+
+            For j1 As Integer = 0 To globalAlign(0).Length - 1
+                If (alignments(centerIndex).CharAtOrDefault(j2, "-"c) <> globalAlign(0)(j1)) Then
+                    Dim a As StringBuilder
+
+                    For k As Integer = 0 To i - 1
+                        With multipleAlign(k)
+                            If .Length > j1 Then
+                                a = New StringBuilder(multipleAlign(k))
+                                a.Insert(j1, "-"c)
+                                multipleAlign(k) = a.ToString
+                            Else
+                                multipleAlign(k) = .ToString & New String("-"c, j1 - .Length)
+                            End If
+                        End With
+                    Next
+
+                Else
+                    j2 += 1
+                End If
+            Next
+            alignments(centerIndex) = globalAlign(0)
+        Else
+            Dim j2 = 0
+            Dim globalAlign0 = globalAlign(Scan0)
+
+            For j1 As Integer = 0 To alignments(centerIndex).Length - 1
+                If (alignments(centerIndex)(j1) <> globalAlign0.CharAtOrDefault(j2)) Then
+                    With multipleAlign(i)
+                        If .Length > j1 Then
+                            Dim a As New StringBuilder(multipleAlign(i))
+                            a.Insert(j1, "-"c)
+                            multipleAlign(i) = a.ToString()
+                        Else
+                            multipleAlign(i) = .ToString & New String("-"c, j1 - .Length)
+                        End If
+                    End With
+                Else
+                    j2 += 1
+                End If
+            Next
+        End If
+    End Sub
+
+    Private Sub SyncGapsAtPosition(pos As Integer)
+        For idx As Integer = 0 To multipleAlign.Length - 1
+            If multipleAlign(idx) IsNot Nothing AndAlso multipleAlign(idx).Length < pos Then
+                ' 如果序列长度不足，在末尾补足空格直到该位置'
+                multipleAlign(idx) = multipleAlign(idx).PadRight(pos, "-"c)
+            ElseIf multipleAlign(idx) IsNot Nothing Then
+                ' 在指定位置插入空格'
+                Dim sb As New StringBuilder(multipleAlign(idx))
+                sb.Insert(pos, "-"c)
+                multipleAlign(idx) = sb.ToString()
+            End If
         Next
     End Sub
 
