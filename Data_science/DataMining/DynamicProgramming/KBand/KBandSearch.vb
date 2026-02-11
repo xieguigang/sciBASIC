@@ -125,6 +125,32 @@ Public Class KBandSearch
         Next
 
         ' 填充带状区域
+        Call FillBand(seq1, seq2, score, trace)
+
+        ' 回溯
+        ' 从 (l1, l2) 开始。如果最优路径跑出了带宽，这个单元格可能是 MaxValue。
+        ' 简单处理：如果 (l1,l2) 是 MaxValue，说明 K 太小了。
+        ' 实际应用中可能需要动态增大 K 重算，这里为了简单，如果不可达就抛出异常或回退到最近的可行点（不推荐）。
+        ' 我们假设 K 足够大以至于 (l1, l2) 可达。
+
+        If score(l1, l2) = Integer.MaxValue Then
+            Throw New Exception("K-Band width is too small to align these sequences.")
+        Else
+            Return Backtrace(score, trace, l1, l2, seq1, seq2)
+        End If
+    End Function
+
+    ''' <summary>
+    ''' 填充带状区域
+    ''' </summary>
+    ''' <param name="seq1"></param>
+    ''' <param name="seq2"></param>
+    ''' <param name="score"></param>
+    ''' <param name="trace"></param>
+    Private Sub FillBand(seq1$, seq2$, ByRef score As Integer(,), ByRef trace As Integer(,))
+        Dim l1 = seq1.Length
+        Dim l2 = seq2.Length
+
         For i As Integer = 1 To l1
             ' 确定 j 的范围: [max(1, i-K), min(l2, i+K)]
             Dim jStart As Integer = std.Max(1, i - K)
@@ -170,19 +196,7 @@ Public Class KBandSearch
                 trace(i, j) = direction
             Next
         Next
-
-        ' 回溯
-        ' 从 (l1, l2) 开始。如果最优路径跑出了带宽，这个单元格可能是 MaxValue。
-        ' 简单处理：如果 (l1,l2) 是 MaxValue，说明 K 太小了。
-        ' 实际应用中可能需要动态增大 K 重算，这里为了简单，如果不可达就抛出异常或回退到最近的可行点（不推荐）。
-        ' 我们假设 K 足够大以至于 (l1, l2) 可达。
-
-        If score(l1, l2) = Integer.MaxValue Then
-            Throw New Exception("K-Band width is too small to align these sequences.")
-        Else
-            Return Backtrace(score, trace, l1, l2, seq1, seq2)
-        End If
-    End Function
+    End Sub
 
     Private Function Backtrace(score As Integer(,), trace As Integer(,), l1 As Integer, l2 As Integer, seq1$, seq2$) As Integer
         Dim i As Integer = l1
@@ -212,6 +226,7 @@ Public Class KBandSearch
                 ' 不应该发生，除非从错误的地方开始回溯
                 Exit While
             End If
+
             pos += 1
         End While
 

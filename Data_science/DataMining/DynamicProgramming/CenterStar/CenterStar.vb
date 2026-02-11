@@ -63,6 +63,7 @@ Imports Microsoft.VisualBasic.ComponentModel.Algorithm.DynamicProgramming
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Linq
 
 ''' <summary>
 ''' ##### Multiple-sequence-alignment
@@ -83,7 +84,6 @@ Imports Microsoft.VisualBasic.Language
 Public Class CenterStar
 
     Dim starIndex%
-    Dim centerString$
     Dim multipleAlign$()
     Dim sequence$()
     Dim names$()
@@ -147,10 +147,10 @@ Public Class CenterStar
     Private Function computeInternal(matrix As IScore(Of Char)) As Double
         Dim n As Integer = sequence.Length
 
-        findStarIndex()
-        centerString = sequence(starIndex)
         multipleAlign = New String(n - 1) {}
-        multipleAlignmentImpl()
+
+        Call FindStarIndex(n)
+        Call MultipleAlignment(n)
 
         Return calculateTotalCost(matrix, n)
     End Function
@@ -183,10 +183,8 @@ Public Class CenterStar
     ''' <summary>
     ''' The Function do the multiple alignment according to the center string 
     ''' </summary>
-    Private Sub multipleAlignmentImpl()
-        Dim n As Integer = sequence.Length
-
-        multipleAlign(starIndex) = centerString
+    Private Sub MultipleAlignment(n As Integer)
+        multipleAlign(starIndex) = sequence(starIndex)
 
         For i As Integer = 0 To n - 1
             If i = starIndex Then
@@ -257,41 +255,30 @@ Public Class CenterStar
         End If
     End Sub
 
-    Private Sub SyncGapsAtPosition(pos As Integer)
-        For idx As Integer = 0 To multipleAlign.Length - 1
-            If multipleAlign(idx) IsNot Nothing AndAlso multipleAlign(idx).Length < pos Then
-                ' 如果序列长度不足，在末尾补足空格直到该位置'
-                multipleAlign(idx) = multipleAlign(idx).PadRight(pos, "-"c)
-            ElseIf multipleAlign(idx) IsNot Nothing Then
-                ' 在指定位置插入空格'
-                Dim sb As New StringBuilder(multipleAlign(idx))
-                sb.Insert(pos, "-"c)
-                multipleAlign(idx) = sb.ToString()
-            End If
-        Next
-    End Sub
-
     ''' <summary>
     ''' This Function finds the minimum star cost from all sequences
     ''' </summary>
-    Private Sub findStarIndex()
-        Dim editDist = 0
-        Dim minEditDist = Integer.MaxValue
-        Dim n = sequence.Length
+    Private Sub FindStarIndex(n As Integer)
+        Dim editDists As Integer() = New Integer(n - 1) {}
+        Dim k As Integer = Me.kband.K
 
-        For i As Integer = 0 To n - 1
-            For j As Integer = i + 1 To n - 1 ' 避免重复计算
-                editDist += kband.CalculateEditDistance(sequence(i), sequence(j))
-                editDist += kband.CalculateEditDistance(sequence(j), sequence(i))
-            Next
+        Call System.Threading.Tasks.Parallel.For(0, n,
+            Sub(i)
+                Dim editDist As Integer = 0
+                Dim kband As New KBandSearch(globalAlign:=New String(2) {}, k)
 
-            If (editDist < minEditDist) Then
-                minEditDist = editDist
-                starIndex = i
-            End If
+                For j As Integer = i + 1 To n - 1 ' 避免重复计算
+                    editDist += kband.CalculateEditDistance(sequence(i), sequence(j))
+                    editDist += kband.CalculateEditDistance(sequence(j), sequence(i))
+                Next
 
-            editDist = 0
-        Next
+                SyncLock editDists
+                    editDists(i) = editDist
+                End SyncLock
+            End Sub)
+
+        ' use the index of min score as the star index
+        starIndex = which.Min(editDists)
 
         Call VBDebugger.EchoLine($"use [#{starIndex + 1}]{names(starIndex)} sequence as the start center sequence for make alignment!")
     End Sub
