@@ -134,15 +134,7 @@ Public Class CenterStar
             totalCost = 0
             edits = New Integer(alignment.Length - 1) {}
         Else
-#If DEBUG Then
-            totalCost = computeInternal(matrix) 
-#Else
-            Try
-                totalCost = computeInternal(matrix)
-            Catch ex As Exception
-                Throw New Exception(sequence.JoinBy(vbCrLf), ex)
-            End Try
-#End If
+            totalCost = computeInternal(matrix)
             edits = editScores.ToArray
             alignment = multipleAlign.ToArray
         End If
