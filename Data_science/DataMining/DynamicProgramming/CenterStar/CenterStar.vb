@@ -59,6 +59,7 @@
 
 Imports System.Runtime.CompilerServices
 Imports System.Text
+Imports Microsoft.VisualBasic.ApplicationServices.Terminal.ProgressBar.Tqdm
 Imports Microsoft.VisualBasic.ComponentModel.Algorithm.DynamicProgramming
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
@@ -183,11 +184,15 @@ Public Class CenterStar
     ''' The Function do the multiple alignment according to the center string 
     ''' </summary>
     Private Sub MultipleAlignment(n As Integer)
+        Dim bar As ProgressBar = Nothing
+
         multipleAlign(starIndex) = sequence(starIndex)
 
-        For i As Integer = 0 To n - 1
+        For Each i As Integer In TqdmWrapper.Range(0, n)
             If i = starIndex Then
                 Continue For
+            Else
+                Call bar.SetLabel(names(i))
             End If
 
             ' 执行双序列比对
