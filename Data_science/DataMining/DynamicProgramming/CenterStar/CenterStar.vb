@@ -206,7 +206,7 @@ Public Class CenterStar
                                     a.Insert(j1, "-"c)
                                     multipleAlign(k) = a.ToString
                                 Else
-                                    multipleAlign(k) = .ByRef & New String("-"c, j1 - .Length)
+                                    multipleAlign(k) = .ToString & New String("-"c, j1 - .Length)
                                 End If
                             End With
                         Next
@@ -216,7 +216,7 @@ Public Class CenterStar
                     End If
                 Next
                 centerString2 = globalAlign(0)
-            ElseIf (globalAlign(0).Length < centerString2.Length) Then
+            Else
                 Dim j2 = 0
                 Dim globalAlign0 = globalAlign(Scan0)
 
@@ -228,7 +228,7 @@ Public Class CenterStar
                                 a.Insert(j1, "-"c)
                                 multipleAlign(i) = a.ToString()
                             Else
-                                multipleAlign(i) = .ByRef & New String("-"c, j1 - .Length)
+                                multipleAlign(i) = .ToString & New String("-"c, j1 - .Length)
                             End If
                         End With
                     Else
@@ -238,7 +238,9 @@ Public Class CenterStar
             End If
         Next
 
-        Dim maxLen = Aggregate a In multipleAlign Into Max(a.Length)
+        Dim maxLen As Integer = Aggregate a As String
+                                In multipleAlign
+                                Into Max(a.Length)
 
         For i As Integer = 0 To multipleAlign.Length - 1
             multipleAlign(i) &= New String("-"c, maxLen - multipleAlign(i).Length)
@@ -265,5 +267,7 @@ Public Class CenterStar
 
             editDist = 0
         Next
+
+        Call VBDebugger.EchoLine($"use [#{starIndex + 1}]{names(starIndex)} sequence as the start center sequence for make alignment!")
     End Sub
 End Class
