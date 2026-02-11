@@ -220,12 +220,12 @@ Public Class KBandSearch
                 i -= 1
                 j -= 1
             ElseIf t = 1 Then ' Left
-                align1(pos) = "-"c
+                align1(pos) = CenterStar.GapChar
                 align2(pos) = seq2(j - 1)
                 j -= 1
             ElseIf t = 2 Then ' Up
                 align1(pos) = seq1(i - 1)
-                align2(pos) = "-"c
+                align2(pos) = CenterStar.GapChar
                 i -= 1
             Else
                 ' 不应该发生，除非从错误的地方开始回溯
