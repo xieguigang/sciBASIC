@@ -188,6 +188,18 @@ Namespace ComponentModel.DataSourceModel
             Call propertyTable.Add(propertyName, value)
         End Sub
 
+        Public Sub Add(data As IDictionary(Of String, T))
+            If data Is Nothing Then
+                Return
+            ElseIf propertyTable Is Nothing Then
+                propertyTable = New Dictionary(Of String, T)
+            End If
+
+            For Each keyVal As KeyValuePair(Of String, T) In data
+                propertyTable(keyVal.Key) = keyVal.Value
+            Next
+        End Sub
+
         Public Sub SetValue(propertyName$, value As T)
             If propertyTable Is Nothing Then
                 propertyTable = New Dictionary(Of String, T)
