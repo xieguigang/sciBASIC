@@ -1,4 +1,5 @@
 ﻿Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Data.visualize.Network.FileStream.Generic
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
 
 Public Module ClusterViz
@@ -18,9 +19,11 @@ Public Module ClusterViz
     Private Sub PullTreeGraph(tree As BTreeCluster, g As NetworkGraph, metadata As Func(Of String, Dictionary(Of String, String)))
         Dim root As Node = g.CreateNode(tree.uuid)
         Call root.data.Add(metadata(root.label))
+        Call root.data.Add(NamesOf.REFLECTION_ID_MAPPING_NODETYPE, root.label)
         For Each id As String In tree.members
             Dim v As Node = g.CreateNode(id)
             Call v.data.Add(metadata(id))
+            Call v.data.Add(NamesOf.REFLECTION_ID_MAPPING_NODETYPE, root.label)
             Call g.CreateEdge(root, v)
         Next
 
