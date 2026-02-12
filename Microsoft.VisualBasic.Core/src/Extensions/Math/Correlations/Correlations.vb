@@ -178,18 +178,24 @@ Namespace Math.Correlations
         ''' <param name="Q"></param>
         ''' <returns></returns>
         Public Function JSD(P As Double(), Q As Double()) As Double
+            ' 计算混合分布 M
             Dim M As Double() = P.Select(Function(pi, i) 0.5 * (pi + Q(i))).ToArray
+            ' 计算 JSD = 0.5 * KLD(P, M) + 0.5 * KLD(Q, M)
+            ' 注意：KLD 现在是非对称的，顺序很重要
             Dim divergence = 0.5 * KLD(P, M) + 0.5 * KLD(Q, M)
 
             Return divergence
         End Function
 
         ''' <summary>
-        ''' Kullback-Leibler divergence, <paramref name="x"/>和<paramref name="y"/>必须是等长的
+        ''' Kullback-Leibler divergence, (KL散度/相对熵)
         ''' </summary>
-        ''' <param name="x"></param>
+        ''' <param name="x"><paramref name="x"/>和<paramref name="y"/>必须是等长的</param>
         ''' <param name="y"></param>
         ''' <returns></returns>
+        ''' <remarks>
+        ''' 计算 D_KL(P || Q) = Σ P(i) * ln(P(i) / Q(i))
+        ''' </remarks>
         Public Function KLD(x As Double(), y As Double()) As Double
             Dim a, b As Double
 
