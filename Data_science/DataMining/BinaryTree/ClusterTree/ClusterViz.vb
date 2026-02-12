@@ -21,10 +21,12 @@ Public Module ClusterViz
         Call root.data.Add(metadata(root.label))
         Call root.data.Add(NamesOf.REFLECTION_ID_MAPPING_NODETYPE, root.label)
         For Each id As String In tree.members
-            Dim v As Node = g.CreateNode(id)
-            Call v.data.Add(metadata(id))
-            Call v.data.Add(NamesOf.REFLECTION_ID_MAPPING_NODETYPE, root.label)
-            Call g.CreateEdge(root, v)
+            If id <> root.label Then
+                Dim v As Node = g.CreateNode(id)
+                Call v.data.Add(metadata(id))
+                Call v.data.Add(NamesOf.REFLECTION_ID_MAPPING_NODETYPE, root.label)
+                Call g.CreateEdge(root, v)
+            End If
         Next
 
         Call tree.left.PullTreeGraph(g, metadata)
