@@ -1,9 +1,21 @@
 ﻿Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Data.visualize.Network.FileStream.Generic
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
 
 Public Module ClusterViz
 
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="tree"></param>
+    ''' <param name="metadata">
+    ''' there are some special metadata key:
+    ''' 
+    ''' 1. text - for node data label
+    ''' 2. value - for node data mass weight
+    ''' </param>
+    ''' <returns></returns>
     <Extension>
     Public Function MakeTreeGraph(tree As BTreeCluster, Optional metadata As Func(Of String, Dictionary(Of String, String)) = Nothing) As NetworkGraph
         Dim g As New NetworkGraph
@@ -19,15 +31,21 @@ Public Module ClusterViz
     Private Sub PullTreeGraph(tree As BTreeCluster, g As NetworkGraph, metadata As Func(Of String, Dictionary(Of String, String)))
         Dim root As Node = g.CreateNode(tree.uuid)
 
-        Call root.data.Add(metadata(root.label))
-        Call root.data.Add(NamesOf.REFLECTION_ID_MAPPING_NODETYPE, root.label)
+        root.data.Add(metadata(root.label))
+        root.data.Add(NamesOf.REFLECTION_ID_MAPPING_NODETYPE, root.label)
+        root.data.label = root.data.Properties.Popout("text")
+        root.data.mass = Val(root.data.Properties.Popout("value"))
 
         For Each id As String In tree.members
             If id <> root.label Then
                 Dim v As Node = g.CreateNode(id)
-                Call v.data.Add(metadata(id))
-                Call v.data.Add(NamesOf.REFLECTION_ID_MAPPING_NODETYPE, root.label)
-                Call g.CreateEdge(root, v)
+
+                v.data.Add(metadata(id))
+                v.data.Add(NamesOf.REFLECTION_ID_MAPPING_NODETYPE, root.label)
+                v.data.label = v.data.Properties.Popout("text")
+                v.data.mass = Val(v.data.Properties.Popout("value"))
+
+                g.CreateEdge(root, v)
             End If
         Next
 
