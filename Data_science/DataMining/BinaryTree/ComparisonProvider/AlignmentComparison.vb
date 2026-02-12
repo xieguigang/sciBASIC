@@ -151,7 +151,4 @@ Public Class AlignmentComparison : Inherits ComparisonProvider
     End Function
 End Class
 
-Public Enum CompareMethods
-    SpectrumDotProduct
-    RelativeDistance
-End Enum
+
