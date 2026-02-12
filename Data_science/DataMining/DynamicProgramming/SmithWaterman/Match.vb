@@ -62,7 +62,7 @@ Imports System.Xml.Serialization
 Namespace SmithWaterman
 
     ''' <summary>
-    '''  Match class defintion
+    ''' the smith-waterman HSP match class defintion
     ''' </summary>
     Public Class Match
 
