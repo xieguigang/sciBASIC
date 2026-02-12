@@ -229,17 +229,19 @@ Namespace IO
         Public Shared Function LoadDataSet(Of T As {New, INamedValue, DynamicPropertyBase(Of Double)})(path$,
                                                             Optional uidMap$ = Nothing,
                                                             Optional encoding As Encoding = Nothing,
-                                                            Optional isTsv As Boolean = False) As IEnumerable(Of T)
+                                                            Optional isTsv As Boolean = False,
+                                                            Optional mute As Boolean = False) As IEnumerable(Of T)
 
             Dim mapFrom$ = FileFormat.SolveDataSetIDMapping(path, uidMap, isTsv, encoding)
 
             If isTsv Then
-                Return path.LoadTsv(Of T)(encoding, {{mapFrom, NameOf(DataSet.ID)}})
+                Return path.LoadTsv(Of T)(encoding, {{mapFrom, NameOf(DataSet.ID)}}, mute:=mute)
             Else
                 Return path.LoadCsv(Of T)(
                     explicit:=False,
                     maps:={{mapFrom, NameOf(DataSet.ID)}},
-                    encoding:=encoding
+                    encoding:=encoding,
+                    mute:=mute
                 )
             End If
         End Function

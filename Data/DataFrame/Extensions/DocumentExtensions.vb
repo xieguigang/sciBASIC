@@ -261,6 +261,28 @@ Public Module DocumentExtensions
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
     Public Function LoadTsv(Of T As Class)(path$,
+                                           Optional encoding As Encoding = Nothing,
+                                           Optional nameMaps As NameMapping = Nothing,
+                                           Optional mute As Boolean = False) As IEnumerable(Of T)
+        Return [Imports](Of T)(path,
+                               delimiter:=ASCII.TAB,
+                               encoding:=encoding,
+                               nameMaps:=nameMaps,
+                               mute:=mute)
+    End Function
+
+    ''' <summary>
+    ''' Load a .NET collection from a tsv file which is specific by <paramref name="path"/> value.
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    ''' <param name="path$"></param>
+    ''' <param name="encoding"></param>
+    ''' <param name="nameMaps"></param>
+    ''' <returns></returns>
+    ''' 
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    <Extension>
+    Public Function LoadTsv(Of T As Class)(path$,
                                            Optional encoding As Encodings = Encodings.Default,
                                            Optional nameMaps As NameMapping = Nothing,
                                            Optional mute As Boolean = False) As IEnumerable(Of T)
