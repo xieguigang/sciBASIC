@@ -146,5 +146,11 @@ Namespace SmithWaterman
                 .toB = match.toB - offset
             }
         End Operator
+
+        Public Shared Operator /(match As Match, norm As Double) As Match
+            Return New Match(match) With {
+                .score = match.score / norm
+            }
+        End Operator
     End Class
 End Namespace
