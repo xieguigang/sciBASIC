@@ -18,8 +18,10 @@ Public Module ClusterViz
     <Extension>
     Private Sub PullTreeGraph(tree As BTreeCluster, g As NetworkGraph, metadata As Func(Of String, Dictionary(Of String, String)))
         Dim root As Node = g.CreateNode(tree.uuid)
+
         Call root.data.Add(metadata(root.label))
         Call root.data.Add(NamesOf.REFLECTION_ID_MAPPING_NODETYPE, root.label)
+
         For Each id As String In tree.members
             If id <> root.label Then
                 Dim v As Node = g.CreateNode(id)
@@ -29,10 +31,13 @@ Public Module ClusterViz
             End If
         Next
 
-        Call tree.left.PullTreeGraph(g, metadata)
-        Call tree.right.PullTreeGraph(g, metadata)
-
-        Call g.CreateEdge(root, g.GetElementByID(tree.left.uuid))
-        Call g.CreateEdge(root, g.GetElementByID(tree.right.uuid))
+        If tree.left IsNot Nothing Then
+            Call tree.left.PullTreeGraph(g, metadata)
+            Call g.CreateEdge(root, g.GetElementByID(tree.left.uuid))
+        End If
+        If tree.right IsNot Nothing Then
+            Call tree.right.PullTreeGraph(g, metadata)
+            Call g.CreateEdge(root, g.GetElementByID(tree.right.uuid))
+        End If
     End Sub
 End Module
