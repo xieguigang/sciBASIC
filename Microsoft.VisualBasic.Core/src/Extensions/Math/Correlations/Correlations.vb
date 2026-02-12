@@ -191,20 +191,24 @@ Namespace Math.Correlations
         ''' <param name="y"></param>
         ''' <returns></returns>
         Public Function KLD(x As Double(), y As Double()) As Double
-            Dim index As Integer() = x.Sequence.ToArray
-            Dim a As Double = Aggregate i As Integer In index Into Sum(KLDi(x(i), y(i)))
-            Dim b As Double = Aggregate i As Integer In index Into Sum(KLDi(y(i), x(i)))
+            Dim a, b As Double
+
+            For i As Integer = 0 To x.Length - 1
+                a += KLD(x(i), y(i))
+                b += KLD(y(i), x(i))
+            Next
+
             Dim value As Double = (a + b) / 2
             Return value
         End Function
 
-        Private Function KLDi(Xa#, Ya#) As Double
-            If Xa = 0R Then
+        Private Function KLD(Pi As Double, Qi As Double) As Double
+            If Pi = 0R Then
                 ' 0 * n = 0
                 Return 0R
             Else
                 ' KLD(P||Q) = Σ[P(i)*ln(P(i)/Q(i))]
-                Dim value As Double = Xa * std.Log(Xa / Ya)
+                Dim value As Double = Pi * std.Log(Pi / Qi)
                 Return value
             End If
         End Function
