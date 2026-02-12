@@ -176,7 +176,9 @@ Namespace Math.Correlations
         ''' </summary>
         ''' <param name="P"></param>
         ''' <param name="Q"></param>
-        ''' <returns></returns>
+        ''' <returns>
+        ''' jsd value is not in range [0,1], value maybe in any real number.
+        ''' </returns>
         Public Function JSD(P As Double(), Q As Double()) As Double
             ' 计算混合分布 M
             Dim M As Double() = P.Select(Function(pi, i) 0.5 * (pi + Q(i))).ToArray
