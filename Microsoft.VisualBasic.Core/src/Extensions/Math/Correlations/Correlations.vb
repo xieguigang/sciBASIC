@@ -178,9 +178,7 @@ Namespace Math.Correlations
         ''' <param name="Q"></param>
         ''' <returns></returns>
         Public Function JSD(P As Double(), Q As Double()) As Double
-            Dim M As Double() = (From i As Integer
-                                 In P.Sequence
-                                 Select 0.5 * (P(i) + Q(i))).ToArray
+            Dim M As Double() = P.Select(Function(pi, i) 0.5 * (pi + Q(i))).ToArray
             Dim divergence = 0.5 * KLD(P, M) + 0.5 * KLD(Q, M)
 
             Return divergence
