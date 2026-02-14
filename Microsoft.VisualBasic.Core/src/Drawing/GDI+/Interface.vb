@@ -66,10 +66,13 @@
 
 Imports System.ComponentModel
 Imports System.Drawing
-Imports System.Drawing.Drawing2D
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Imaging.Driver
 Imports std = System.Math
+
+#If NET48 Then
+Imports System.Drawing.Drawing2D
+#End If
 
 Namespace Imaging
 
