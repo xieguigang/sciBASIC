@@ -57,6 +57,7 @@ Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports Microsoft.VisualBasic.ApplicationServices
 Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.Text
 Imports ASCII = Microsoft.VisualBasic.Text.ASCII
@@ -102,13 +103,11 @@ Public Module LargeTextFile
     <Extension>
     Public Function IteratesTableData(path$, ByRef title$, Optional skip% = -1, Optional encoding As Encodings = Encodings.ASCII) As IEnumerable(Of String)
         Using reader As StreamReader = path.OpenReader(encoding.CodePage)
-            Dim i% = skip
-
-            ' skip lines
-            Do While i > 0
-                reader.ReadLine()
-                i -= 1
-            Loop
+            For i As Integer = 1 To skip
+                ' read line and discard the data
+                ' implements the skip lines action
+                Call reader.ReadLine()
+            Next
 
             title = reader.ReadLine
 
@@ -126,8 +125,10 @@ Public Module LargeTextFile
     ''' </returns>
     <Extension>
     Public Iterator Function IteratesStream(s As StreamReader) As IEnumerable(Of String)
-        Do While Not s.EndOfStream
-            Yield s.ReadLine
+        Dim line As Value(Of String) = ""
+
+        Do While (line = s.ReadLine) IsNot Nothing
+            Yield CStr(line)
         Loop
     End Function
 
