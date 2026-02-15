@@ -294,6 +294,11 @@ Public Module TextDoc
         End Using
     End Function
 
+    ''' <summary>
+    ''' Read large text file lines with tqdm progress bar
+    ''' </summary>
+    ''' <param name="reader"></param>
+    ''' <returns></returns>
     <Extension>
     Public Iterator Function ReadLines(reader As StreamReader) As IEnumerable(Of String)
         Dim fs As Stream = reader.BaseStream
