@@ -103,6 +103,11 @@ Public MustInherit Class DendrogramPanel : Inherits Chart
         Me.showRuler = showRuler
     End Sub
 
+    ''' <summary>
+    ''' get by <see cref="classinfo"/>
+    ''' </summary>
+    ''' <param name="id"></param>
+    ''' <returns></returns>
     Protected Function GetColor(id As String) As Color
         If classinfo Is Nothing OrElse Not classinfo.ContainsKey(id) Then
             Return Nothing

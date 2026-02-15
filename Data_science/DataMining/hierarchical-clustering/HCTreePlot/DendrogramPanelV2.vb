@@ -194,18 +194,16 @@ Public Class DendrogramPanelV2 : Inherits DendrogramPanel
             Call g.DrawString(partition.Name, labelFont, Brushes.Black, lpos)
         End If
 
-        If partition.isLeaf Then
-            If showLeafLabels Then
-                ' 绘制class颜色块
-                Dim color As New SolidBrush(GetColor(partition.Name))
-                Dim d As Double = std.Max(charWidth / 2, theme.pointSize)
-                Dim layout As New Rectangle With {
-                    .Location = New Point(x + d, y - unitWidth / 2),
-                    .Size = New Size(labelPadding - d * 1.25, unitWidth)
-                }
+        If partition.isLeaf AndAlso Not classinfo.IsNullOrEmpty Then
+            ' 绘制class颜色块
+            Dim color As New SolidBrush(GetColor(partition.Name))
+            Dim d As Double = std.Max(charWidth / 2, theme.pointSize)
+            Dim layout As New Rectangle With {
+                .Location = New Point(x + d, y - unitWidth / 2),
+                .Size = New Size(labelPadding - d * 1.25, unitWidth)
+            }
 
-                Call g.FillRectangle(color, layout)
-            End If
+            Call g.FillRectangle(color, layout)
         Else
             Dim n As Integer = 0
 
