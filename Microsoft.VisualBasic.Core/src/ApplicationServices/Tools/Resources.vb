@@ -1,64 +1,65 @@
 ﻿#Region "Microsoft.VisualBasic::1a12449b5df017d4005bb825f417e6be, Microsoft.VisualBasic.Core\src\ApplicationServices\Tools\Resources.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 350
-    '    Code Lines: 129 (36.86%)
-    ' Comment Lines: 189 (54.00%)
-    '    - Xml Docs: 41.80%
-    ' 
-    '   Blank Lines: 32 (9.14%)
-    '     File Size: 17.02 KB
+' Summaries:
 
 
-    '     Class ResourcesSatellite
-    ' 
-    '         Properties: FileName, MyResource, Resources
-    ' 
-    '         Constructor: (+5 Overloads) Sub New
-    ' 
-    '         Function: DirectLoadFrom, findResourceAssemblyFileName, (+2 Overloads) GetObject, (+2 Overloads) GetStream, (+3 Overloads) GetString
-    '                   LoadMy
-    ' 
-    '         Sub: doLoad, resourceAssemblyParser
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 350
+'    Code Lines: 129 (36.86%)
+' Comment Lines: 189 (54.00%)
+'    - Xml Docs: 41.80%
+' 
+'   Blank Lines: 32 (9.14%)
+'     File Size: 17.02 KB
+
+
+'     Class ResourcesSatellite
+' 
+'         Properties: FileName, MyResource, Resources
+' 
+'         Constructor: (+5 Overloads) Sub New
+' 
+'         Function: DirectLoadFrom, findResourceAssemblyFileName, (+2 Overloads) GetObject, (+2 Overloads) GetStream, (+3 Overloads) GetString
+'                   LoadMy
+' 
+'         Sub: doLoad, resourceAssemblyParser
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
+Imports System.Composition
 Imports System.Globalization
 Imports System.IO
 Imports System.Reflection
@@ -68,12 +69,6 @@ Imports System.Runtime.InteropServices
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Text
-
-#If NET48 Then
-Imports System.ComponentModel.Composition
-#Else
-Imports System.Composition
-#End If
 
 Namespace ApplicationServices
 
