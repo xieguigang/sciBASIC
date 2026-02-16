@@ -349,7 +349,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="System.Composition" Version="11.0.0-preview.1.26104.118" />
+		<PackageReference Include="System.Composition" Version="10.0.3" />
 		<PackageReference Include="System.Diagnostics.DiagnosticSource" Version="11.0.0-preview.1.26104.118" />
 
 		<PackageReference Include="System.Drawing.Primitives" Version="4.3.0" />
@@ -359,7 +359,6 @@
 		<PackageReference Include="System.Net.Requests" Version="4.3.0" />
 		<PackageReference Include="System.Net.WebHeaderCollection" Version="4.3.0" />
 		<PackageReference Include="System.Private.Uri" Version="4.3.2" />
-		<PackageReference Include="System.Resources.Extensions" Version="11.0.0-preview.1.26104.118" />
 		<PackageReference Include="System.Runtime" Version="4.3.1" />
 		<PackageReference Include="System.Text.Encoding.CodePages" Version="11.0.0-preview.1.26104.118" />
 		<PackageReference Include="System.Text.Encodings.Web" Version="11.0.0-preview.1.26104.118" />
