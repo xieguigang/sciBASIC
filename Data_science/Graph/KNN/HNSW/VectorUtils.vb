@@ -23,7 +23,7 @@ Namespace KNearNeighbors.HNSW
 
             While i < vector.Count
                 lMagnitude += vector(i) * vector(i)
-                Threading.Interlocked.Increment(i)
+                i = i + 1
             End While
 
             Return std.Sqrt(lMagnitude)
@@ -39,7 +39,7 @@ Namespace KNearNeighbors.HNSW
 
             While i < vector.Count
                 vector(i) *= normFactor
-                Threading.Interlocked.Increment(i)
+                i = i + 1
             End While
         End Sub
 
@@ -67,7 +67,7 @@ Namespace KNearNeighbors.HNSW
 
             While i < vector.Length
                 magnitude += vector(i) * vector(i)
-                Threading.Interlocked.Increment(i)
+                i = i + 1
             End While
 
             Return std.Sqrt(magnitude)
@@ -97,7 +97,7 @@ Namespace KNearNeighbors.HNSW
 
             While i < vector.Length
                 vector(i) *= normFactor
-                Threading.Interlocked.Increment(i)
+                i = i + 1
             End While
         End Sub
     End Module

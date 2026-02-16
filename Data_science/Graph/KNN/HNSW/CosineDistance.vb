@@ -43,7 +43,7 @@ Namespace KNearNeighbors.HNSW
                 dot += u(i) * v(i)
                 nru += u(i) * u(i)
                 nrv += v(i) * v(i)
-                Threading.Interlocked.Increment(i)
+                i = i + 1
             End While
 
             Dim similarity = dot / CSng(std.Sqrt(nru) * std.Sqrt(nrv))
@@ -66,7 +66,7 @@ Namespace KNearNeighbors.HNSW
 
             While i < u.Count
                 dot += u(i) * v(i)
-                Threading.Interlocked.Increment(i)
+                i = i + 1
             End While
 
             Return 1 - dot
@@ -107,7 +107,7 @@ Namespace KNearNeighbors.HNSW
                 dot += u(i) * v(i)
                 norm.X += u(i) * u(i)
                 norm.Y += v(i) * v(i)
-                Threading.Interlocked.Increment(i)
+                i = i + 1
             End While
 
             norm = Vector2.SquareRoot(norm)
@@ -145,7 +145,7 @@ Namespace KNearNeighbors.HNSW
 
             While i < u.Length
                 dot += u(i) * v(i)
-                Threading.Interlocked.Increment(i)
+                i = i + 1
             End While
 
             Return 1 - dot

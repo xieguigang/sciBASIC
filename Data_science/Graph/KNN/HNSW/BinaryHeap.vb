@@ -46,7 +46,7 @@ Namespace KNearNeighbors.HNSW
 
             While i < Me.Buffer.Count
                 SiftUp(i)
-                Threading.Interlocked.Increment(i)
+                i=i+1
             End While
         End Sub
 
