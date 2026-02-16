@@ -405,7 +405,6 @@
 
     <PackageReference Include="System.Linq.Queryable" Version="4.3.0" />
 	  <PackageReference Include="System.Runtime" Version="4.3.1" />
-	  <PackageReference Include="System.Composition" Version="10.0.3" />
   </ItemGroup>
 
   <ItemGroup>

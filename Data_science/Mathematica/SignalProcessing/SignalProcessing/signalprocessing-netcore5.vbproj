@@ -142,10 +142,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="System.Composition" Version="10.0.3" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\..\..\..\Microsoft.VisualBasic.Core\src\Core.vbproj" />
     <ProjectReference Include="..\..\Math\DataFittings\linear-netcore5.vbproj" />
     <ProjectReference Include="..\..\Math\Math\Math.NET5.vbproj" />
