@@ -56,6 +56,7 @@
 #End Region
 
 Imports System.Runtime.InteropServices
+Imports Microsoft.VisualBasic.Language.Java
 Imports Microsoft.VisualBasic.Linq
 
 Namespace ApplicationServices.Debugging.Diagnostics
@@ -154,5 +155,41 @@ Namespace ApplicationServices.Debugging.Diagnostics
                 }
             }
         End Function
+
+        ''' <summary>
+        ''' 计算当前堆栈帧位置的哈希值，用于断点匹配。
+        ''' 哈希计算基于：标准化后的文件路径 + 行号。
+        ''' 如果文件路径为空，则回退到 Method 全名 + 行号。
+        ''' </summary>
+        ''' <returns>一个整数哈希值，可用于 HashSet 或 Dictionary 的 Key</returns>
+        Public Function GetBreakpointHashCode() As Integer
+            Dim hash As New List(Of Integer) From {17}
+
+            ' 1. 优先使用文件路径定位
+            ' 这是最准确的断点定位方式
+            If Not String.IsNullOrEmpty(Me.File) Then
+                ' 【关键步骤】标准化文件路径：
+                ' A. 统一分隔符为 '\'
+                ' B. 统一转为小写 (Windows环境不区分大小写，确保 "C:\A.vb" 和 "c:\a.vb" 命中同一断点)
+                Call hash.Add(Me.File.Replace("/"c, "\"c).ToLowerInvariant().GetHashCode)
+            Else
+                ' 2. 如果没有文件路径（例如 REPL 环境或动态代码），则使用 Method 信息
+                ' 依靠 Method.ToString() 返回的完整命名空间路径
+                If Me.Method IsNot Nothing Then
+                    Call hash.Add(Me.Method.ToString().GetHashCode)
+                End If
+            End If
+
+            ' 3. 加入行号
+            ' Line 属性是 String 类型，建议去除首尾空白以防解析误差
+            If Not String.IsNullOrEmpty(Me.Line) Then
+                ' 如果确定 Line 总是数字，也可以用 Integer.Parse(Me.Line).GetHashCode()
+                ' 但为了稳健性，直接使用字符串哈希更安全
+                Call hash.Add(Me.Line.Trim().GetHashCode)
+            End If
+
+            Return Arrays.hashCode(hash)
+        End Function
+
     End Class
 End Namespace

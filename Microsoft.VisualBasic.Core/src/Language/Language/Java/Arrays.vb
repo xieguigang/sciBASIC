@@ -130,20 +130,22 @@ Namespace Language.Java
             Return x.JoinBy(", ")
         End Function
 
-        Public Function hashCode(ints As Integer()) As Integer
+        Public Function hashCode(ints As IEnumerable(Of Integer)) As Integer
             ' 1. 处理空数组引用
-            If ints Is Nothing Then Return 0
+            If Not ints Is Nothing Then
+                ' 2. 初始化哈希值 (非零种子可以防止全零数组的哈希冲突过于简单)
+                Dim hash As Integer = 1
 
-            ' 2. 初始化哈希值 (非零种子可以防止全零数组的哈希冲突过于简单)
-            Dim hash As Integer = 1
+                ' 3. 遍历数组，使用公式：hash = 31 * hash + element
+                ' 这里利用了整数溢出自动回绕的特性，不需要手动处理
+                For Each num As Integer In ints
+                    hash = hash * 31 + num
+                Next
 
-            ' 3. 遍历数组，使用公式：hash = 31 * hash + element
-            ' 这里利用了整数溢出自动回绕的特性，不需要手动处理
-            For Each num As Integer In ints
-                hash = hash * 31 + num
-            Next
-
-            Return hash
+                Return hash
+            Else
+                Return 0
+            End If
         End Function
     End Module
 End Namespace
