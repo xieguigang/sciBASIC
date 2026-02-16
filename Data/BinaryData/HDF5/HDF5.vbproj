@@ -3,7 +3,7 @@
   <PropertyGroup>
     <RootNamespace>Microsoft.VisualBasic.Data.IO.HDF5</RootNamespace>
 	  <AssemblyName>Microsoft.VisualBasic.Data.IO.HDF5</AssemblyName>
-    <TargetFrameworks>net8.0-windows;net8.0;net48</TargetFrameworks>
+    <TargetFrameworks>net10.0-windows;net10.0</TargetFrameworks>
 	  <Platforms>AnyCPU;x64</Platforms>
 	  <Configurations>Debug;Release;LipidSearch;Rsharp_app_release;mzkit;PlantMAT;NPSearch;mzkit_win32;gcmodeller_desktop;nuget_release</Configurations>
 	  <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
