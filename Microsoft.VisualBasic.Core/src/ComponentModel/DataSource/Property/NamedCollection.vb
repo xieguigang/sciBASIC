@@ -104,6 +104,7 @@ Namespace ComponentModel.DataSourceModel
         Implements IEnumerable(Of T)
         Implements IGrouping(Of String, T)
         Implements IsEmpty
+        Implements IReadOnlyCollection(Of T)
 
         ''' <summary>
         ''' 这个集合对象的标识符名称
@@ -163,7 +164,7 @@ Namespace ComponentModel.DataSourceModel
         ''' <remarks>
         ''' this is a safe property getter, null value will returns ZERO always
         ''' </remarks>
-        Public ReadOnly Property Length As Integer
+        Public ReadOnly Property Length As Integer Implements IReadOnlyCollection(Of T).Count
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 If value Is Nothing Then
@@ -264,7 +265,7 @@ Namespace ComponentModel.DataSourceModel
 
         <DebuggerStepThrough>
         Public Shared Operator =(list As NamedCollection(Of T), count As Integer) As Boolean
-            Return list.Count = count
+            Return list.Length = count
         End Operator
 
         <DebuggerStepThrough>
