@@ -16,7 +16,7 @@ Namespace KNearNeighbors.HNSW
         ''' <summary>
         ''' Gets a default sort order comparer for the type specified by the generic argument.
         ''' </summary>
-        Public Shared ReadOnly [Default] As ReverseComparer(Of T) = New ReverseComparer(Of T)(Generic.Comparer(Of T).Default)
+        Public Shared ReadOnly [Default] As New ReverseComparer(Of T)(Generic.Comparer(Of T).Default)
 
         Private ReadOnly comparer As IComparer(Of T) = [Default]
 

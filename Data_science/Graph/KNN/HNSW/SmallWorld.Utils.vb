@@ -50,9 +50,9 @@ Namespace KNearNeighbors.HNSW
         ''' <param name="entryPoint">The entry point.</param>
         ''' <param name="level">The level of the graph where to run BFS.</param>
         ''' <param name="visitAction">The action to perform on each node.</param>
-        Friend Shared Sub BFS(entryPoint As Node, level As Integer, visitAction As Action(Of Node))
+        Friend Shared Sub BFS(entryPoint As Node(Of TItem, TDistance), level As Integer, visitAction As Action(Of Node(Of TItem, TDistance)))
             Dim visitedIds = New HashSet(Of Integer)()
-            Dim expansionQueue = New Queue(Of Node)({entryPoint})
+            Dim expansionQueue = New Queue(Of Node(Of TItem, TDistance))({entryPoint})
 
             While expansionQueue.Any()
                 Dim currentNode = expansionQueue.Dequeue()

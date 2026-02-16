@@ -3,9 +3,6 @@
 ' Licensed under the MIT License.
 ' </copyright>
 
-Imports System.Diagnostics.CodeAnalysis
-Imports std = System.Math
-
 Namespace KNearNeighbors.HNSW
 
     ''' <summary>
@@ -22,7 +19,7 @@ Namespace KNearNeighbors.HNSW
         ''' <summary>
         ''' The hierarchical small world graph instance.
         ''' </summary>
-        Private graphField As Graph
+        Private graphField As Graph(Of TItem, TDistance)
 
         ''' <summary>
         ''' Initializes a new instance of the <see cref="SmallWorld(Of TItem,TDistance)"/> class.
@@ -33,30 +30,13 @@ Namespace KNearNeighbors.HNSW
         End Sub
 
         ''' <summary>
-        ''' Type of heuristic to select best neighbours for a node.
-        ''' </summary>
-        Public Enum NeighbourSelectionHeuristic
-            ''' <summary>
-            ''' Marker for the Algorithm 3 (SELECT-NEIGHBORS-SIMPLE) from the article.
-            ''' Implemented in <see cref="SmallWorld(Of TItem,TDistance).NodeAlg3"/>
-            ''' </summary>
-            SelectSimple
-
-            ''' <summary>
-            ''' Marker for the Algorithm 4 (SELECT-NEIGHBORS-HEURISTIC) from the article.
-            ''' Implemented in <see cref="SmallWorld(Of TItem,TDistance).NodeAlg4"/>
-            ''' </summary>
-            SelectHeuristic
-        End Enum
-
-        ''' <summary>
         ''' Builds hnsw graph from the items.
         ''' </summary>
         ''' <param name="items">The items to connect into the graph.</param>
         ''' <param name="generator">The random number generator for building graph.</param>
         ''' <param name="parameters">Parameters of the algorithm.</param>
-        Public Sub BuildGraph(items As IList(Of TItem), generator As Random, parameters As Parameters)
-            Dim graph = New Graph(distance, parameters)
+        Public Sub BuildGraph(items As IList(Of TItem), generator As Random, parameters As Parameters(Of TItem, TDistance))
+            Dim graph = New Graph(Of TItem, TDistance)(distance, parameters)
             graph.Create(items, generator)
             graphField = graph
         End Sub
@@ -67,10 +47,10 @@ Namespace KNearNeighbors.HNSW
         ''' <param name="item">The item to search nearest neighbours.</param>
         ''' <param name="k">The number of nearest neighbours.</param>
         ''' <returns>The list of found nearest neighbours.</returns>
-        Public Function KNNSearch(item As TItem, k As Integer) As IList(Of KNNSearchResult)
+        Public Function KNNSearch(item As TItem, k As Integer) As IList(Of KNNSearchResult(Of TItem, TDistance))
             Dim destination = graphField.NewNode(-1, item, 0)
             Dim neighbourhood = graphField.KNearest(destination, k)
-            Return neighbourhood.[Select](Function(n) New KNNSearchResult With {
+            Return neighbourhood.[Select](Function(n) New KNNSearchResult(Of TItem, TDistance) With {
 .Id = n.Id,
 .Item = n.Item,
 .Distance = destination.TravelingCosts.From(n)
@@ -124,82 +104,5 @@ Namespace KNearNeighbors.HNSW
         Friend Function Print() As String
             Return graphField.Print()
         End Function
-
-        ''' <summary>
-        ''' Parameters of the algorithm.
-        ''' </summary>
-        <SuppressMessage("Design", "CA1034:Nested types should not be visible", Justification:="By Design")>
-        <Serializable>
-        Public Class Parameters
-            ''' <summary>
-            ''' Initializes a new instance of the <see cref="Parameters"/> class.
-            ''' </summary>
-            Public Sub New()
-                M = 10
-                LevelLambda = 1 / std.Log(M)
-                NeighbourHeuristic = NeighbourSelectionHeuristic.SelectSimple
-                ConstructionPruning = 200
-                ExpandBestSelection = False
-                KeepPrunedConnections = True
-            End Sub
-
-            ''' <summary>
-            ''' Gets or sets the parameter which defines the maximum number of neighbors in the zero and above-zero layers.
-            ''' The maximum number of neighbors for the zero layer is 2 * M.
-            ''' The maximum number of neighbors for higher layers is M.
-            ''' </summary>
-            Public Property M As Integer
-
-            ''' <summary>
-            ''' Gets or sets the max level decay parameter.
-            ''' https://en.wikipedia.org/wiki/Exponential_distribution
-            ''' See 'mL' parameter in the HNSW article.
-            ''' </summary>
-            Public Property LevelLambda As Double
-
-            ''' <summary>
-            ''' Gets or sets parameter which specifies the type of heuristic to use for best neighbours selection.
-            ''' </summary>
-            Public Property NeighbourHeuristic As NeighbourSelectionHeuristic
-
-            ''' <summary>
-            ''' Gets or sets the number of candidates to consider as neighbousr for a given node at the graph construction phase.
-            ''' See 'efConstruction' parameter in the article.
-            ''' </summary>
-            Public Property ConstructionPruning As Integer
-
-            ''' <summary>
-            ''' Gets or sets a value indicating whether to expand candidates if <see cref="NeighbourSelectionHeuristic.SelectHeuristic"/> is used.
-            ''' See 'extendCandidates' parameter in the article.
-            ''' </summary>
-            Public Property ExpandBestSelection As Boolean
-
-            ''' <summary>
-            ''' Gets or sets a value indicating whether to keep pruned candidates if <see cref="NeighbourSelectionHeuristic.SelectHeuristic"/> is used.
-            ''' See 'keepPrunedConnections' parameter in the article.
-            ''' </summary>
-            Public Property KeepPrunedConnections As Boolean
-        End Class
-
-        ''' <summary>
-        ''' Representation of knn search result.
-        ''' </summary>
-        <SuppressMessage("Design", "CA1034:Nested types should not be visible", Justification:="By Design")>
-        Public Class KNNSearchResult
-            ''' <summary>
-            ''' Gets or sets the id of the item = rank of the item in source collection.
-            ''' </summary>
-            Public Property Id As Integer
-
-            ''' <summary>
-            ''' Gets or sets the item itself.
-            ''' </summary>
-            Public Property Item As TItem
-
-            ''' <summary>
-            ''' Gets or sets the distance between the item and the knn search query.
-            ''' </summary>
-            Public Property Distance As TDistance
-        End Class
     End Class
 End Namespace
