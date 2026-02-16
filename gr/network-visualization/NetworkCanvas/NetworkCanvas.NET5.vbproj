@@ -21,7 +21,7 @@
 	  <PackageLicenseExpression>GPL3</PackageLicenseExpression>
 	  <GenerateDocumentationFile>True</GenerateDocumentationFile>
 	  <MyType>WindowsForms</MyType>
-
+    <NoWarn>$(NoWarn);WFO1000</NoWarn>
 
   </PropertyGroup>
 
