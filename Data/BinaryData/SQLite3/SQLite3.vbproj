@@ -165,11 +165,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="System.Buffers" Version="4.6.1" />
-    <PackageReference Include="System.Numerics.Vectors" Version="4.6.1" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\..\..\Microsoft.VisualBasic.Core\src\Core.vbproj" />
     <ProjectReference Include="..\..\DataFrame\dataframework-netcore5.vbproj" />
     <ProjectReference Include="..\BinaryData\binarydata-netcore5.vbproj" />
