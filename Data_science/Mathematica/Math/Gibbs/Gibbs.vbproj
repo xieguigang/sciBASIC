@@ -45,9 +45,6 @@
     <None Remove="README.md" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="System.Numerics.Vectors" Version="4.6.1" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\..\..\..\Microsoft.VisualBasic.Core\src\Core.vbproj" />
     <ProjectReference Include="..\Math.Statistics\stats-netcore5.vbproj" />
     <ProjectReference Include="..\Math\Math.NET5.vbproj" />
