@@ -19,7 +19,7 @@ Namespace KNearNeighbors.HNSW
         ''' <summary>
         ''' The hierarchical small world graph instance.
         ''' </summary>
-        Private graphField As Graph(Of TItem, TDistance)
+        Private graph As Graph(Of TItem, TDistance)
 
         ''' <summary>
         ''' Initializes a new instance of the <see cref="SmallWorld(Of TItem,TDistance)"/> class.
@@ -36,9 +36,8 @@ Namespace KNearNeighbors.HNSW
         ''' <param name="generator">The random number generator for building graph.</param>
         ''' <param name="parameters">Parameters of the algorithm.</param>
         Public Sub BuildGraph(items As IList(Of TItem), generator As Random, parameters As Parameters(Of TItem, TDistance))
-            Dim graph = New Graph(Of TItem, TDistance)(distance, parameters)
+            graph = New Graph(Of TItem, TDistance)(distance, parameters)
             graph.Create(items, generator)
-            graphField = graph
         End Sub
 
         ''' <summary>
@@ -48,8 +47,8 @@ Namespace KNearNeighbors.HNSW
         ''' <param name="k">The number of nearest neighbours.</param>
         ''' <returns>The list of found nearest neighbours.</returns>
         Public Function KNNSearch(item As TItem, k As Integer) As IList(Of KNNSearchResult(Of TItem, TDistance))
-            Dim destination = graphField.NewNode(-1, item, 0)
-            Dim neighbourhood = graphField.KNearest(destination, k)
+            Dim destination = graph.NewNode(-1, item, 0)
+            Dim neighbourhood = graph.KNearest(destination, k)
             Return neighbourhood.[Select](Function(n) New KNNSearchResult(Of TItem, TDistance) With {
 .Id = n.Id,
 .Item = n.Item,
@@ -62,7 +61,7 @@ Namespace KNearNeighbors.HNSW
         ''' </summary>
         ''' <returns>Bytes representing the graph.</returns>
         Public Function SerializeGraph() As Byte()
-            If graphField Is Nothing Then
+            If graph Is Nothing Then
                 Throw New InvalidOperationException("The graph does not exist")
             End If
 
@@ -102,7 +101,7 @@ Namespace KNearNeighbors.HNSW
         ''' </summary>
         ''' <returns>String representation of the graph's edges.</returns>
         Friend Function Print() As String
-            Return graphField.Print()
+            Return graph.Print()
         End Function
     End Class
 End Namespace

@@ -8,6 +8,8 @@ Imports std = System.Math
 
 Namespace KNearNeighbors.HNSW
 
+    Public Delegate Function CreateNewNode(Of TItem, TDistance As IComparable(Of TDistance))(id As Integer, item As TItem, level As Integer) As Node(Of TItem, TDistance)
+
     ''' <summary>
     ''' The layered graph implementation.
     ''' </summary>
@@ -24,7 +26,7 @@ Namespace KNearNeighbors.HNSW
         ''' 2nd: TItem -> the item to attach to the node;
         ''' 3rd: int -> the level of the node.
         ''' </summary>
-        Dim _NewNode As System.Func(Of Integer, TItem, Integer, Node(Of TItem, TDistance))
+        Dim _NewNode As CreateNewNode(Of TItem, TDistance)
         Private entryPoint As Node(Of TItem, TDistance)
 
         ''' <summary>
@@ -51,11 +53,11 @@ Namespace KNearNeighbors.HNSW
             End Set
         End Property
 
-        Public Property NewNode As Func(Of Integer, TItem, Integer, Node(Of TItem, TDistance))
+        Public Property NewNode As CreateNewNode(Of TItem, TDistance)
             Get
                 Return _NewNode
             End Get
-            Private Set(value As Func(Of Integer, TItem, Integer, Node(Of TItem, TDistance)))
+            Private Set(value As CreateNewNode(Of TItem, TDistance))
                 _NewNode = value
             End Set
         End Property
