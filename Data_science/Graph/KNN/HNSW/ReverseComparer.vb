@@ -3,11 +3,9 @@
 ' Licensed under the MIT License.
 ' </copyright>
 
-Imports System.Collections.Generic
-Imports System.Diagnostics.CodeAnalysis
 Imports System.Runtime.CompilerServices
 
-Namespace HNSW.Net
+Namespace KNearNeighbors.HNSW
 
     ''' <summary>
     ''' Reverses the order of the nested comparer.

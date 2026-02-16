@@ -3,11 +3,7 @@
 ' Licensed under the MIT License.
 ' </copyright>
 
-Imports System
-Imports System.Collections.Generic
-Imports System.Linq
-
-Namespace HNSW.Net
+Namespace KNearNeighbors.HNSW
 
     ' <content>
     ' The part with the implementaion of a node in the hnsw graph.

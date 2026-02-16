@@ -3,21 +3,16 @@
 ' Licensed under the MIT License.
 ' </copyright>
 
-Imports System
-Imports System.Collections.Generic
 Imports System.Diagnostics.CodeAnalysis
-Imports System.IO
-Imports System.Linq
-Imports System.Runtime.Serialization.Formatters.Binary
 
-Namespace HNSW.Net
+Namespace KNearNeighbors.HNSW
 
     ''' <summary>
     ''' <see href="https://arxiv.org/abs/1603.09320">Hierarchical Navigable Small World Graphs</see>.
     ''' </summary>
     ''' <typeparam name="TItem">The type of items to connect into small world.</typeparam>
     ''' <typeparam name="TDistance">The type of distance between items (expect any numeric type: float, double, decimal, int, ...).</typeparam>
-    Public Partial Class SmallWorld(Of TItem, TDistance As IComparable(Of TDistance))
+    Partial Public Class SmallWorld(Of TItem, TDistance As IComparable(Of TDistance))
         ''' <summary>
         ''' The distance function in the items space.
         ''' </summary>

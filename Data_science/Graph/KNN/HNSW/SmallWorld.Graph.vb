@@ -3,14 +3,9 @@
 ' Licensed under the MIT License.
 ' </copyright>
 
-Imports System
-Imports System.Collections.Generic
-Imports System.IO
-Imports System.Linq
-Imports System.Runtime.Serialization.Formatters.Binary
 Imports System.Text
 
-Namespace HNSW.Net
+Namespace KNearNeighbors.HNSW
 
     ' <content>
     ' The part with the implemnation of a hierarchical small world graph.

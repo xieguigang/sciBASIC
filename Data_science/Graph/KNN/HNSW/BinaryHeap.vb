@@ -3,11 +3,7 @@
 ' Licensed under the MIT License.
 ' </copyright>
 
-Imports System
-Imports System.Collections.Generic
-Imports System.Linq
-
-Namespace HNSW.Net
+Namespace KNearNeighbors.HNSW
 
     ''' <summary>
     ''' Binary heap wrapper around the <see cref="IList(Of T)"/>

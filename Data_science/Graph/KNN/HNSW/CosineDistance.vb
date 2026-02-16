@@ -3,11 +3,9 @@
 ' Licensed under the MIT License.
 ' </copyright>
 
-Imports System
-Imports System.Collections.Generic
 Imports System.Numerics
 
-Namespace HNSW.Net
+Namespace KNearNeighbors.HNSW
 
     ''' <summary>
     ''' Calculates cosine similarity.

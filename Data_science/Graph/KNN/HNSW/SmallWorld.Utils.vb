@@ -3,12 +3,9 @@
 ' Licensed under the MIT License.
 ' </copyright>
 
-Imports System
-Imports System.Collections.Generic
 Imports System.Diagnostics.CodeAnalysis
-Imports System.Linq
 
-Namespace HNSW.Net
+Namespace KNearNeighbors.HNSW
 
     ' <content>
     ' The part with the auxiliary tools for hnsw algorithm.

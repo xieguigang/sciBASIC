@@ -3,11 +3,9 @@
 ' Licensed under the MIT License.
 ' </copyright>
 
-Imports System
 Imports System.Collections.Concurrent
-Imports System.Collections.Generic
 
-Namespace HNSW.Net
+Namespace KNearNeighbors.HNSW
 
     ''' <summary>
     ''' Implementation of distance calculation from an arbitrary point to the given destination.
