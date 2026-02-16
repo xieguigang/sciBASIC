@@ -4,6 +4,7 @@
 ' </copyright>
 
 Imports System.Text
+Imports std = System.Math
 
 Namespace KNearNeighbors.HNSW
 
@@ -19,7 +20,7 @@ Namespace KNearNeighbors.HNSW
             ''' <summary>
             ''' Gets parameters of the algorithm.
             ''' </summary>
-            Private _Parameters As HNSW.Net.SmallWorld(Of TItem, TDistance).Parameters
+            Private _Parameters As SmallWorld(Of TItem, TDistance).Parameters
             ''' <summary>
             ''' Gets the node factory associated with the graph.
             ''' The node construction arguments are:
@@ -27,7 +28,7 @@ Namespace KNearNeighbors.HNSW
             ''' 2nd: TItem -> the item to attach to the node;
             ''' 3rd: int -> the level of the node.
             ''' </summary>
-            Dim _NewNode As System.Func(Of Integer, TItem, Integer, HNSW.Net.SmallWorld(Of TItem, TDistance).Node)
+            Dim _NewNode As System.Func(Of Integer, TItem, Integer, SmallWorld(Of TItem, TDistance).Node)
             Private entryPoint As Node
 
             ''' <summary>
@@ -113,7 +114,7 @@ Namespace KNearNeighbors.HNSW
                     End While
 
                     ' connecting new node to the small world
-                    level = Math.Min(newNode.MaxLevel, entryPoint.MaxLevel)
+                    level = std.Min(newNode.MaxLevel, entryPoint.MaxLevel)
 
                     While level >= 0
                         Dim potentialNeighbours = KNearestAtLevel(bestPeer, newNode, Parameters.ConstructionPruning, level)
@@ -332,7 +333,7 @@ Namespace KNearNeighbors.HNSW
             ''' <param name="lambda">Poisson lambda.</param>
             ''' <returns>The level value.</returns>
             Private Shared Function RandomLevel(generator As Random, lambda As Double) As Integer
-                Dim r = -Math.Log(generator.NextDouble()) * lambda
+                Dim r = -std.Log(generator.NextDouble()) * lambda
                 Return r
             End Function
         End Class

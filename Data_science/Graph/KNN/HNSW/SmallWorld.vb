@@ -4,6 +4,7 @@
 ' </copyright>
 
 Imports System.Diagnostics.CodeAnalysis
+Imports std = System.Math
 
 Namespace KNearNeighbors.HNSW
 
@@ -135,7 +136,7 @@ Namespace KNearNeighbors.HNSW
             ''' </summary>
             Public Sub New()
                 M = 10
-                LevelLambda = 1 / Math.Log(M)
+                LevelLambda = 1 / std.Log(M)
                 NeighbourHeuristic = NeighbourSelectionHeuristic.SelectSimple
                 ConstructionPruning = 200
                 ExpandBestSelection = False

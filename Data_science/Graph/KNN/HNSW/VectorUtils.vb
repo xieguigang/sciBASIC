@@ -4,6 +4,7 @@
 ' </copyright>
 
 Imports System.Numerics
+Imports std = System.Math
 
 Namespace KNearNeighbors.HNSW
 
@@ -25,7 +26,7 @@ Namespace KNearNeighbors.HNSW
                 Threading.Interlocked.Increment(i)
             End While
 
-            Return Math.Sqrt(lMagnitude)
+            Return std.Sqrt(lMagnitude)
         End Function
 
         ''' <summary>
@@ -69,7 +70,7 @@ Namespace KNearNeighbors.HNSW
                 Threading.Interlocked.Increment(i)
             End While
 
-            Return Math.Sqrt(magnitude)
+            Return std.Sqrt(magnitude)
         End Function
 
         ''' <summary>

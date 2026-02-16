@@ -4,6 +4,7 @@
 ' </copyright>
 
 Imports System.Numerics
+Imports std = System.Math
 
 Namespace KNearNeighbors.HNSW
 
@@ -45,7 +46,7 @@ Namespace KNearNeighbors.HNSW
                 Threading.Interlocked.Increment(i)
             End While
 
-            Dim similarity = dot / CSng(Math.Sqrt(nru) * Math.Sqrt(nrv))
+            Dim similarity = dot / CSng(std.Sqrt(nru) * std.Sqrt(nrv))
             Return 1 - similarity
         End Function
 

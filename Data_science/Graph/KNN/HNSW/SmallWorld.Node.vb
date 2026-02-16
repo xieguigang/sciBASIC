@@ -33,16 +33,16 @@ Namespace KNearNeighbors.HNSW
             ''' <summary>
             ''' Gets traveling costs from any other node to this one.
             ''' </summary>
-            Dim _TravelingCosts As HNSW.Net.TravelingCosts(Of HNSW.Net.SmallWorld(Of TItem, TDistance).Node, TDistance)
+            Dim _TravelingCosts As TravelingCosts(Of SmallWorld(Of TItem, TDistance).Node, TDistance)
             ''' <summary>
             ''' Gets parameters of the algorithm.
             ''' </summary>
-            Dim _Parameters As HNSW.Net.SmallWorld(Of TItem, TDistance).Parameters
+            Dim _Parameters As SmallWorld(Of TItem, TDistance).Parameters
             ''' <summary>
             ''' Gets all connections of the node on all layers.
             ''' </summary>
             ''' 
-            Dim _Connections As System.Collections.Generic.IList(Of System.Collections.Generic.IList(Of HNSW.Net.SmallWorld(Of TItem, TDistance).Node))
+            Dim _Connections As System.Collections.Generic.IList(Of System.Collections.Generic.IList(Of SmallWorld(Of TItem, TDistance).Node))
 
             ''' <summary>
             ''' Initializes a new instance of the <see cref="Node"/> class.
