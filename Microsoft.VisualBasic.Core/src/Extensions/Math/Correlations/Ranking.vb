@@ -112,6 +112,10 @@ Namespace Math.Correlations
                                                      Optional strategy As Strategies = Strategies.OrdinalRanking,
                                                      Optional desc As Boolean = False) As Double()
 
+            If list Is Nothing Then
+                Return Nothing
+            End If
+
             If strategy = Strategies.OrdinalRanking Then
                 Return list.OrdinalRanking(desc)
             ElseIf strategy = Strategies.DenseRanking Then
