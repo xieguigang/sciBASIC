@@ -1,73 +1,73 @@
 ﻿#Region "Microsoft.VisualBasic::268424d38819f93bbf2f9309bbffa09d, Microsoft.VisualBasic.Core\src\ComponentModel\DataSource\SchemaMaps\DataSource.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 264
-    '    Code Lines: 148 (56.06%)
-    ' Comment Lines: 80 (30.30%)
-    '    - Xml Docs: 93.75%
-    ' 
-    '   Blank Lines: 36 (13.64%)
-    '     File Size: 10.83 KB
+' Summaries:
 
 
-    '     Class ColumnAttribute
-    ' 
-    '         Properties: [alias], Name
-    ' 
-    '         Constructor: (+2 Overloads) Sub New
-    '         Function: ToString
-    ' 
-    '     Class Field
-    ' 
-    '         Constructor: (+2 Overloads) Sub New
-    ' 
-    '     Class DataFrameColumnAttribute
-    ' 
-    '         Properties: Description, Index, Name
-    ' 
-    '         Constructor: (+4 Overloads) Sub New
-    '         Function: __attrs, __attrsAll, __source, GetIndex, GetMapping
-    '                   (+2 Overloads) LoadMapping, SetNameValue, ToString
-    ' 
-    '     Class DataFrameIO
-    ' 
-    ' 
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 264
+'    Code Lines: 148 (56.06%)
+' Comment Lines: 80 (30.30%)
+'    - Xml Docs: 93.75%
+' 
+'   Blank Lines: 36 (13.64%)
+'     File Size: 10.83 KB
+
+
+'     Class ColumnAttribute
+' 
+'         Properties: [alias], Name
+' 
+'         Constructor: (+2 Overloads) Sub New
+'         Function: ToString
+' 
+'     Class Field
+' 
+'         Constructor: (+2 Overloads) Sub New
+' 
+'     Class DataFrameColumnAttribute
+' 
+'         Properties: Description, Index, Name
+' 
+'         Constructor: (+4 Overloads) Sub New
+'         Function: __attrs, __attrsAll, __source, GetIndex, GetMapping
+'                   (+2 Overloads) LoadMapping, SetNameValue, ToString
+' 
+'     Class DataFrameIO
+' 
+' 
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -112,8 +112,8 @@ Namespace ComponentModel.DataSourceModel.SchemaMaps
         ''' <param name="FieldName">The name.</param>
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Sub New(FieldName As String)
-            Call MyBase.New(FieldName)
+        Public Sub New(fieldName As String)
+            Call MyBase.New(fieldName)
         End Sub
 
         Sub New(ordinal As Integer)
@@ -244,7 +244,7 @@ Namespace ComponentModel.DataSourceModel.SchemaMaps
             Dim ignoreList$() = If(ignores Is Nothing, {}, ignores)
             Dim source As IEnumerable(Of FieldTuple) = __source(typeInfo, ignoreList, mapsAll)
             Dim LQuery = LinqAPI.Exec(Of BindProperty(Of DataFrameColumnAttribute)) _
- _
+                                                                                    _
                 () <= From pInfo As FieldTuple
                       In source
                       Let Mapping As DataFrameColumnAttribute = GetMapping(pInfo)
@@ -281,7 +281,7 @@ Namespace ComponentModel.DataSourceModel.SchemaMaps
         ''' <returns></returns>
         Private Shared Iterator Function __source(type As Type, ignores$(), mapsAll As Boolean) As IEnumerable(Of FieldTuple)
             Dim props As IEnumerable(Of PropertyInfo) =
- _
+                                                       _
                 From p As PropertyInfo
                 In type.GetProperties(BindingFlags.Public Or BindingFlags.Instance)
                 Where Array.IndexOf(ignores, p.Name) = -1
