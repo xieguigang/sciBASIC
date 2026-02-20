@@ -121,6 +121,12 @@ Public Class JsonParser
         Me.ps = New StreamTokenIcer(s, strictVectorSyntax, tqdm)
     End Sub
 
+    Public Shared Function OpenStream(s As Stream, Optional strictVectorSyntax As Boolean = True, Optional tqdm As Boolean = True) As JsonElement
+        Using sr As New StreamReader(s)
+            Return New JsonParser(sr, strictVectorSyntax:=strictVectorSyntax, tqdm:=tqdm).OpenJSON
+        End Using
+    End Function
+
     ''' <summary>
     ''' parse a json file
     ''' </summary>
