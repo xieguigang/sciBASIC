@@ -304,7 +304,7 @@ Namespace Scripting.Runtime
         Public Function ParseNumeric(s As String) As Double
             s = Strings.Trim(s)
 
-            If String.IsNullOrEmpty(s) Then
+            If s.StringEmpty(, True) Then
                 Return 0R
             ElseIf String.Equals(s, "NaN", StringComparison.OrdinalIgnoreCase) OrElse
                 String.Equals(s, "NA", StringComparison.OrdinalIgnoreCase) Then
