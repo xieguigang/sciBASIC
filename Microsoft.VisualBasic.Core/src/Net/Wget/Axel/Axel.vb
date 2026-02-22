@@ -218,6 +218,8 @@ Namespace Net.WebClient
                 Dim previousBytes As Long = totalBytesDownloaded
                 Dim t1 As Date = Now
 
+                Call bar.SetLocation(0, Console.CursorTop)
+
                 While totalBytesDownloaded < totalFileSize
                     Thread.Sleep(300)
                     bar.SetValue(totalBytesDownloaded)
