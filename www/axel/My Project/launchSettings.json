@@ -2,7 +2,7 @@
   "profiles": {
     "axel": {
       "commandName": "Project",
-      "commandLineArgs": "https://ftp.ncbi.nlm.nih.gov/genomes/all/GCA/002/095/695/GCA_002095695.1_ASM209569v1/GCA_002095695.1_ASM209569v1_genomic.gbff.gz"
+      "commandLineArgs": " \"D:\\datapool\\ncbi_genbank\\http.txt\" --download_to  D:\\datapool\\ncbi_genbank  --n_threads 8"
     }
   }
 }

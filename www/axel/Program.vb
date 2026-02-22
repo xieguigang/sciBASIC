@@ -98,7 +98,7 @@ Module Program
 
                 If Not hashset.Check(downloadfile) Then
                     Try
-                        If New Axel(url).Download(downloadfile, n_threads).Wait(TimeSpan.FromMinutes(10)) Then
+                        If New Axel(url).Download(downloadfile, n_threads).Wait(TimeSpan.FromMinutes(5)) Then
                             Call MarkFlag(downloadfile)
                         End If
                     Catch ex As Exception
