@@ -84,7 +84,7 @@ Namespace Net.WebClient
         End Sub
 
         <STAThread>
-        Public Async Function Download(fileName As String, Optional nThreads As Integer? = Nothing) As Task
+        Public Async Function Download(fileName As String, Optional nThreads As Integer? = Nothing) As Task(Of Boolean)
             Dim threadCount As Integer = If(nThreads, DefaultThreadCount)
 
             If threadCount <= 0 Then
@@ -96,14 +96,14 @@ Namespace Net.WebClient
             Console.WriteLine("正在获取文件信息...")
 
             ' 2. 异步执行下载任务
-            Await DownloadFileAsync(fileName, threadCount)
+            Return Await DownloadFileAsync(fileName, threadCount)
         End Function
 
-        Private Async Function DownloadFileAsync(fileName As String, threadCount As Integer) As Task
+        Private Async Function DownloadFileAsync(fileName As String, threadCount As Integer) As Task(Of Boolean)
             Dim info As AxelRequest = Await New AxelRequest(url).RequestInfo
 
             If info.RequestError Then
-                Return
+                Return False
             Else
                 totalFileSize = info.TotalFileBytes
 
@@ -118,7 +118,7 @@ Namespace Net.WebClient
 
                 If existingFileInfo.Length = totalFileSize Then
                     Call Console.WriteLine($"[跳过] 文件已存在且大小匹配，跳过下载: {Path.GetFileName(fileName)}")
-                    Return
+                    Return True
                 Else
                     Console.WriteLine($"[信息] 文件已存在但大小不匹配 (本地: {StringFormats.Lanudry(existingFileInfo.Length)}, 远程: {StringFormats.Lanudry(totalFileSize)})，将重新下载。")
                 End If
@@ -174,8 +174,11 @@ Namespace Net.WebClient
                 Next
 
                 Console.WriteLine($"[{Now.ToString}] 下载完成: {Path.GetFullPath(fileName)}")
+
+                Return True
             Else
                 Call Console.WriteLine("文件下载错误！")
+                Return False
             End If
         End Function
 

@@ -76,7 +76,7 @@ Module Program
     Dim check As i32 = 1
 
     Private Sub MarkFlag(filename As String)
-        If Not hashset Is Nothing Then
+        If filename.FileLength > 0 AndAlso Not hashset Is Nothing Then
             Call hashset.Add(filename)
 
             If ++check > 5 Then
@@ -98,8 +98,9 @@ Module Program
 
                 If Not hashset.Check(downloadfile) Then
                     Try
-                        Call New Axel(url).Download(downloadfile, n_threads).Wait()
-                        Call MarkFlag(downloadfile)
+                        If New Axel(url).Download(downloadfile, n_threads).Wait(TimeSpan.FromMinutes(10)) Then
+                            Call MarkFlag(downloadfile)
+                        End If
                     Catch ex As Exception
                         Call ex.Message.warning
                     End Try
