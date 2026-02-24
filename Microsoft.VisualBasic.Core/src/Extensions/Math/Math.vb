@@ -359,6 +359,111 @@ Namespace Math
         End Function
 
         ''' <summary>
+        ''' 计算加权中位数
+        ''' </summary>
+        ''' <param name="values">数据值数组</param>
+        ''' <param name="weights">对应的权重数组</param>
+        ''' <returns>加权中位数</returns>
+        Public Function WeightedMedian(values As Double(), weights As Double()) As Double
+            ' 参数验证
+            If values Is Nothing OrElse weights Is Nothing Then
+                Throw New ArgumentNullException("输入数组不能为空")
+            End If
+
+            If values.Length <> weights.Length Then
+                Throw New ArgumentException("数据值和权重数组长度必须相同")
+            End If
+
+            If values.Length = 0 Then
+                Throw New ArgumentException("输入数组不能为空")
+            End If
+
+            ' 检查权重是否为负
+            For i As Integer = 0 To weights.Length - 1
+                If weights(i) < 0 Then
+                    Throw New ArgumentException("权重不能为负数")
+                End If
+            Next
+
+            ' 如果只有一个数据点
+            If values.Length = 1 Then
+                Return values(0)
+            End If
+
+            ' 创建索引数组并排序
+            Dim indices As Integer() = Enumerable.Range(0, values.Length).ToArray()
+
+            ' 按数据值排序索引
+            Array.Sort(indices, Function(i, j) values(i).CompareTo(values(j)))
+
+            ' 计算总权重
+            Dim totalWeight As Double = weights.Sum()
+
+            ' 检查总权重是否为0
+            If totalWeight <= 0 Then
+                Throw New ArgumentException("总权重必须大于0")
+            End If
+
+            Dim halfWeight As Double = totalWeight / 2.0
+            Dim cumulativeWeight As Double = 0.0
+
+            ' 查找加权中位数
+            For i As Integer = 0 To indices.Length - 1
+                Dim idx As Integer = indices(i)
+                cumulativeWeight += weights(idx)
+
+                ' 当累计权重大于等于一半总权重时
+                If cumulativeWeight >= halfWeight Then
+                    ' 处理累计权重恰好等于一半的情况（精确匹配）
+                    If std.Abs(cumulativeWeight - halfWeight) < 0.0000001 Then
+                        ' 如果还有下一个数据点，取平均值
+                        If i < indices.Length - 1 Then
+                            Dim nextIdx As Integer = indices(i + 1)
+                            Return (values(idx) + values(nextIdx)) / 2.0
+                        Else
+                            Return values(idx)
+                        End If
+                    End If
+
+                    Return values(idx)
+                End If
+            Next
+
+            ' 理论上不会执行到这里
+            Return values(indices.Last())
+        End Function
+
+        ''' <summary>
+        ''' 更高效的加权中位数计算（使用Value-Weight对结构）
+        ''' </summary>
+        Public Function WeightedMedianOptimized(values As Double(), weights As Double()) As Double
+            ' 创建值-权重对列表
+            Dim pairs As List(Of (Value As Double, Weight As Double)) = New List(Of (Double, Double))()
+
+            For i As Integer = 0 To values.Length - 1
+                pairs.Add((values(i), weights(i)))
+            Next
+
+            ' 按值排序
+            pairs.Sort(Function(a, b) a.Value.CompareTo(b.Value))
+
+            ' 计算总权重
+            Dim totalWeight As Double = pairs.Sum(Function(p) p.Weight)
+            Dim halfWeight As Double = totalWeight / 2.0
+            Dim cumulativeWeight As Double = 0.0
+
+            For i As Integer = 0 To pairs.Count - 1
+                cumulativeWeight += pairs(i).Weight
+
+                If cumulativeWeight >= halfWeight Then
+                    Return pairs(i).Value
+                End If
+            Next
+
+            Return pairs.Last().Value
+        End Function
+
+        ''' <summary>
         ''' [Sequence Generation] Generate regular sequences. seq is a standard generic with a default method.
         ''' </summary>
         ''' <param name="From">
