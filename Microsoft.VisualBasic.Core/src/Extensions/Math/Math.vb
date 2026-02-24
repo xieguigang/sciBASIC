@@ -364,6 +364,8 @@ Namespace Math
         ''' <param name="values">数据值数组</param>
         ''' <param name="weights">对应的权重数组</param>
         ''' <returns>加权中位数</returns>
+        ''' 
+        <Extension>
         Public Function WeightedMedian(values As Double(), weights As Double()) As Double
             ' 参数验证
             If values Is Nothing OrElse weights Is Nothing Then
