@@ -119,14 +119,25 @@ Public Class DataMatrix : Implements IBucketVector, INumericMatrix, ILabeledMatr
         Me.names = names
         Me.matrix = matrix
 
-        If Me.names.Count <> matrix.Length Then
-            Throw New InvalidConstraintException("the given member names is not equals to the matrix size!")
-        End If
+        Call CheckDimensionInternal()
+    End Sub
+
+    Sub New(names As IEnumerable(Of String), matrix As IEnumerable(Of Double()))
+        Me.names = names.ToArray
+        Me.matrix = matrix.ToArray
+
+        Call CheckDimensionInternal()
     End Sub
 
     Sub New(M%, N%)
         Me.matrix = RectangularArray.Matrix(Of Double)(M, N)
         Me.names = New Index(Of String)
+    End Sub
+
+    Private Sub CheckDimensionInternal()
+        If Me.names.Count <> matrix.Length Then
+            Throw New InvalidConstraintException("the given member names is not equals to the matrix size!")
+        End If
     End Sub
 
     Public Function Visit(Of DataSet As {New, INamedValue, DynamicPropertyBase(Of Double)})(projectName As String, direction As MatrixVisit) As DataSet
