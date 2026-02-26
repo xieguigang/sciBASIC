@@ -266,6 +266,12 @@ Namespace Javascript
             Return DirectCast(CreateObject(type:=GetType(T), decodeMetachar), T)
         End Function
 
+        ''' <summary>
+        ''' Create clr object from this json object
+        ''' </summary>
+        ''' <param name="type"></param>
+        ''' <param name="decodeMetachar"></param>
+        ''' <returns></returns>
         Public Function CreateObject(type As Type, decodeMetachar As Boolean) As Object
             If type.IsArray AndAlso Me.isArray Then
                 Dim itemType As Type = type.GetElementType
@@ -275,6 +281,17 @@ Namespace Javascript
             Else
                 Return Me.createObject(parent:=Nothing, schema:=type, decodeMetachar)
             End If
+        End Function
+
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="obj"></param>
+        ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Function Create(Of T)(obj As T) As JsonObject
+            Return JSONSerializer.CreateJSONElement(obj)
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
