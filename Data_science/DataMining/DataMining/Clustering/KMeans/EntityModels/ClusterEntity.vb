@@ -64,6 +64,7 @@ Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Linq.Extensions
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
+Imports Microsoft.VisualBasic.Scripting.Runtime
 
 Namespace KMeans
 
@@ -118,6 +119,11 @@ Namespace KMeans
         Sub New(id As String, data As Double())
             uid = id
             entityVector = data
+        End Sub
+
+        Sub New(id As String, data As Integer())
+            uid = id
+            entityVector = data.AsDouble
         End Sub
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
