@@ -57,6 +57,10 @@
 
 Imports System.Drawing
 Imports System.Runtime.CompilerServices
+Imports System.Runtime.Serialization
+Imports System.Text.Json.Serialization
+Imports System.Xml.Serialization
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Math.Correlations
 Imports std = System.Math
 
@@ -111,12 +115,14 @@ Namespace Imaging.LayoutModel
         ''' Returns the coordinates as a new point.
         ''' </summary>
         ''' <returns> Returns a new point for the location. </returns>
+        <IgnoreDataMember, DataIgnored, ScriptIgnore, JsonIgnore, SoapIgnore, XmlIgnore>
         Public Overridable ReadOnly Property Point As Point
             Get
                 Return New Point(CInt(Fix(std.Round(X))), CInt(Fix(std.Round(Y))))
             End Get
         End Property
 
+        <IgnoreDataMember, DataIgnored, ScriptIgnore, JsonIgnore, SoapIgnore, XmlIgnore>
         Public ReadOnly Property PointF As PointF
             Get
                 Return New PointF(X, Y)
