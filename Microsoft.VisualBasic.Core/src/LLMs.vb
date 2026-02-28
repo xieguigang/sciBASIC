@@ -64,15 +64,15 @@ Public Module LLMs
     ''' <summary>
     ''' A proxy function for LLMs talk in framework runtime
     ''' </summary>
-    ''' <param name="msg"></param>
+    ''' <param name="prompt">the LLMs prompt text</param>
     ''' <returns>
     ''' this proxy function will returns nothing if there is no ollama client is hooked
     ''' </returns>
-    Public Function LLMsTalk(msg As String) As String
+    Public Function LLMsTalk(prompt As String) As String
         If ollama Is Nothing Then
             Return Nothing
         Else
-            Return ollama(msg)
+            Return ollama(prompt)
         End If
     End Function
 End Module
