@@ -191,6 +191,14 @@ Namespace ComponentModel.DataSourceModel
                 .JoinBy("; ")
         End Sub
 
+        ''' <summary>
+        ''' Create from the linq group output
+        ''' </summary>
+        ''' <param name="group"></param>
+        Sub New(group As IGrouping(Of String, T))
+            Call Me.New(group.Key, group)
+        End Sub
+
         Sub New(xmlNode As NamedVector(Of T))
             With xmlNode
                 name = .name
@@ -204,6 +212,12 @@ Namespace ComponentModel.DataSourceModel
             Me.description = val.Description
         End Sub
 
+        ''' <summary>
+        ''' make the given <paramref name="data"/> collection with a label <paramref name="name"/>.
+        ''' </summary>
+        ''' <param name="name"></param>
+        ''' <param name="data"></param>
+        ''' <param name="description"></param>
         Sub New(name$, data As IEnumerable(Of T), Optional description$ = Nothing)
             Call Me.New(name, data.SafeQuery.ToArray, description)
         End Sub
