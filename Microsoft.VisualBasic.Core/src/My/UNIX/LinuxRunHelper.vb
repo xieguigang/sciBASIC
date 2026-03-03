@@ -72,7 +72,7 @@ Namespace My.UNIX
         End Function
 
         Private Function getRunnerBash() As Byte()
-#If netcore5 = 1 Then
+#If NETCOREAPP Then
             Return My.Resources.runNet5
 #Else
             Return My.Resources.runMono
@@ -114,6 +114,10 @@ Namespace My.UNIX
 
             If install_root Then
                 path = $"/usr/local/bin/{App.ExecutablePath.BaseName}"
+                bash = {
+                    $"!/bin/bash",
+                    $"dotnet ""{App.HOME}/{App.AssemblyName}.dll"" $@"
+                }.JoinBy(ASCII.LF)
             End If
 
             Console.WriteLine("Bash script save at:")

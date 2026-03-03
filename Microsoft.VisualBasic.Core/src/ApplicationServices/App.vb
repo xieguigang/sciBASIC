@@ -296,6 +296,9 @@ Public Module App
     ''' Gets the name, without the extension, of the assembly file for the application.
     ''' </summary>
     ''' <returns></returns>
+    ''' <remarks>
+    ''' get <see cref="BaseName(String, Boolean)"/> of the <see cref="ExecutablePath"/>.
+    ''' </remarks>
     Public ReadOnly Property AssemblyName As String
     Public ReadOnly Property ProductName As String
 
