@@ -115,7 +115,7 @@ Namespace My.UNIX
             If install_root Then
                 path = $"/usr/local/bin/{App.ExecutablePath.BaseName}"
                 bash_run = {
-                    $"!/bin/bash",
+                    $"#!/bin/bash",
                     $"dotnet ""{App.HOME}/{App.AssemblyName}.dll"" $@"
                 }.JoinBy(ASCII.LF)
             End If
