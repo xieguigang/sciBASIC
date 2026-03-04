@@ -108,13 +108,13 @@ Namespace My.UNIX
         ''' <returns></returns>
         Public Function BashShell(Optional install_root As Boolean = False) As Integer
             Dim path As String = App.ExecutablePath.TrimSuffix
-            Dim bash As String = BashRun().LineTokens.JoinBy(ASCII.LF)
+            Dim bash_run As String = BashRun().LineTokens.JoinBy(ASCII.LF)
             Dim dir As String = path.ParentPath
             Dim bashfile As String = dir & "/help"
 
             If install_root Then
                 path = $"/usr/local/bin/{App.ExecutablePath.BaseName}"
-                bash = {
+                bash_run = {
                     $"!/bin/bash",
                     $"dotnet ""{App.HOME}/{App.AssemblyName}.dll"" $@"
                 }.JoinBy(ASCII.LF)
@@ -128,7 +128,7 @@ Namespace My.UNIX
             ' 同时写入man命令帮助脚本
             ' Call My.Resources.help.FlushStream(bashfile)
             ' bash run script of current application
-            Call BashRun _
+            Call bash_run _
                 .LineTokens _
                 .JoinBy(ASCII.LF) _
                 .SaveTo(path, Encodings.UTF8WithoutBOM.CodePage)
