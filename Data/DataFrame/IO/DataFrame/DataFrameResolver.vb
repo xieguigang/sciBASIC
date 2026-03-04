@@ -102,7 +102,7 @@ Namespace IO
         ''' <summary>
         ''' <see cref="current"></see>在<see cref="table"></see>之中的位置
         ''' </summary>
-        ''' <remarks></remarks>
+        ''' <remarks>the initialize value of this pointer is -1</remarks>
         Dim p% = -1
         Dim current As RowObject
 
@@ -323,7 +323,7 @@ Namespace IO
             Dim df As New DataFrameResolver With {
                 .columnList = columnList,
                 .current = Nothing,
-                .p = Nothing,
+                .p = -1,
                 .table = subset,
                 .typeSchema = typeSchema
             }
