@@ -5,7 +5,6 @@
     ''' </summary>
     Public Class SequenceItem
         Public Property ID As Integer
-        Public Property Content As String
         ''' <summary>
         ''' 最终生成的MinHash签名
         ''' </summary>

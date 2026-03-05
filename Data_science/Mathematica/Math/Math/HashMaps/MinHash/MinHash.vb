@@ -1,4 +1,5 @@
-﻿Imports System.Text
+﻿Imports System.Runtime.CompilerServices
+Imports System.Text
 Imports Microsoft.VisualBasic.Data.Repository
 
 Namespace HashMaps.MinHash
@@ -32,6 +33,20 @@ Namespace HashMaps.MinHash
             Next
 
             Return signature
+        End Function
+
+        <Extension>
+        Public Function CreateSequenceData(items As IEnumerable(Of String), id As Integer) As SequenceItem
+            Dim shingles As New HashSet(Of String)
+
+            For Each item As String In items
+                Call shingles.Add(item)
+            Next
+
+            Return New SequenceItem With {
+                .ID = id,
+                .Signature = MinHash.GenerateMinHashSignature(shingles)
+            }
         End Function
     End Module
 End Namespace

@@ -1,4 +1,5 @@
-﻿Imports Microsoft.VisualBasic.Data.Repository
+﻿Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Data.Repository
 Imports std = System.Math
 
 Namespace HashMaps.MinHash
@@ -6,17 +7,14 @@ Namespace HashMaps.MinHash
     Public Structure SimilarityIndex
 
         Dim U, V As Integer
-        Dim Jaccard As Double
+        Dim Similarity As Double
 
     End Structure
 
     Public Module LSH
 
-        ''' <summary>
-        ''' LSH 处理过程：将数据分桶，找出相似候选对
-        ''' </summary>
-        ''' <param name="allSequences"></param>
-        Public Iterator Function FindSimilarItems(allSequences As List(Of SequenceItem)) As IEnumerable(Of SimilarityIndex)
+        <Extension>
+        Public Function BuildLSHBuckets(allSequences As IEnumerable(Of SequenceItem)) As Dictionary(Of UInteger, List(Of Integer))
             ' 桶结构：Key = “波段索引_波段内签名的哈希”, Value = 序列ID列表
             Dim buckets As New Dictionary(Of UInteger, List(Of Integer))()
             ' 辅助变量：用于BitConverter的中间变量
@@ -51,6 +49,16 @@ Namespace HashMaps.MinHash
                 Next
             Next
 
+            Return buckets
+        End Function
+
+        ''' <summary>
+        ''' LSH 处理过程：将数据分桶，找出相似候选对
+        ''' </summary>
+        ''' <param name="allSequences"></param>
+        Public Iterator Function FindSimilarItems(allSequences As SequenceItem()) As IEnumerable(Of SimilarityIndex)
+            Dim buckets As Dictionary(Of UInteger, List(Of Integer)) = allSequences.BuildLSHBuckets
+
             For Each bucket As List(Of Integer) In buckets.Values
                 ' 如果一个桶里有多个序列，说明它们在某个波段完全匹配，是相似候选
                 If bucket.Count > 1 Then
@@ -64,7 +72,7 @@ Namespace HashMaps.MinHash
                             Yield New SimilarityIndex With {
                                 .U = u,
                                 .V = v,
-                                .Jaccard = CalculateSimilarity(allSequences(u).Signature, allSequences(v).Signature)
+                                .Similarity = CalculateSimilarity(allSequences(u).Signature, allSequences(v).Signature)
                             }
                         Next
                     Next
@@ -72,8 +80,13 @@ Namespace HashMaps.MinHash
             Next
         End Function
 
-        ' 辅助：计算两个签名的相似度 (海明距离或匹配度)
-        Public Function CalculateSimilarity(sig1 As UInteger(), sig2 As UInteger()) As Double
+        ''' <summary>
+        ''' 辅助：计算两个签名的相似度 (海明距离或匹配度)
+        ''' </summary>
+        ''' <param name="sig1"></param>
+        ''' <param name="sig2"></param>
+        ''' <returns></returns>
+        Private Function CalculateSimilarity(ByRef sig1 As UInteger(), ByRef sig2 As UInteger()) As Double
             Dim matches As Integer = 0
             For i As Integer = 0 To sig1.Length - 1
                 If sig1(i) = sig2(i) Then matches += 1
