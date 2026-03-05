@@ -14,22 +14,22 @@ Namespace HashMaps.MinHash
     Public Module LSH
 
         <Extension>
-        Public Function BuildLSHBuckets(allSequences As IEnumerable(Of SequenceItem)) As Dictionary(Of UInteger, List(Of Integer))
+        Public Function BuildLSHBuckets(allSequences As IEnumerable(Of SequenceItem), Num_Bands As Integer, Rows_Per_Band As Integer) As Dictionary(Of UInteger, List(Of Integer))
             ' 桶结构：Key = “波段索引_波段内签名的哈希”, Value = 序列ID列表
             Dim buckets As New Dictionary(Of UInteger, List(Of Integer))()
             ' 辅助变量：用于BitConverter的中间变量
             ' UInteger 是 4 字节
-            Dim buffer As Byte() = New Byte(Config.Rows_Per_Band * 4 - 1) {}
+            Dim buffer As Byte() = New Byte(Rows_Per_Band * 4 - 1) {}
 
             ' 1. 分桶过程：将所有序列放入桶中
             For Each seq As SequenceItem In allSequences
                 ' 遍历每个波段
-                For bandIndex As Integer = 0 To Config.Num_Bands - 1
-                    Dim startIdx As Integer = bandIndex * Config.Rows_Per_Band
+                For bandIndex As Integer = 0 To Num_Bands - 1
+                    Dim startIdx As Integer = bandIndex * Rows_Per_Band
 
                     ' A. 将当前波段的 UInteger 签名复制到 buffer 字节数组中
                     '    这比字符串拼接快得多，且内存占用极小
-                    For r As Integer = 0 To Config.Rows_Per_Band - 1
+                    For r As Integer = 0 To Rows_Per_Band - 1
                         Dim val As UInteger = seq.Signature(startIdx + r)
                         Dim offset As Integer = r * 4
 
@@ -61,8 +61,14 @@ Namespace HashMaps.MinHash
         ''' LSH 处理过程：将数据分桶，找出相似候选对
         ''' </summary>
         ''' <param name="allSequences"></param>
-        Public Iterator Function FindSimilarItems(allSequences As SequenceItem()) As IEnumerable(Of SimilarityIndex)
-            Dim buckets As Dictionary(Of UInteger, List(Of Integer)) = allSequences.BuildLSHBuckets
+        ''' <param name="Num_Bands">
+        ''' LSH波段数
+        ''' </param>
+        ''' <param name="Rows_Per_Band">
+        ''' 每个波段的行数 (100 / 20 = 5)
+        ''' </param>
+        Public Iterator Function FindSimilarItems(allSequences As SequenceItem(), Optional Num_Bands As Integer = 20, Optional Rows_Per_Band As Integer = 5) As IEnumerable(Of SimilarityIndex)
+            Dim buckets As Dictionary(Of UInteger, List(Of Integer)) = allSequences.BuildLSHBuckets(Num_Bands, Rows_Per_Band)
             ' 用于去重
             Dim alreadyFound As New HashSet(Of (Integer, Integer))()
 
