@@ -76,11 +76,13 @@ Namespace Language.Java
         ''' this function will not break the given vector its class reference
         ''' </remarks>
         <Extension>
-        Public Sub fill(Of T)(<Out> ByRef a As T(), val As T)
+        Public Function fill(Of T)(<Out> ByRef a As T(), val As T) As T()
             For i% = 0 To a.Length - 1
                 a(i%) = val
             Next
-        End Sub
+
+            Return a
+        End Function
 
         Public Function copyOf(Of T)(matrix As T(), start As Integer) As T()
             Return copyOfRange(matrix, start, matrix.Length - start)

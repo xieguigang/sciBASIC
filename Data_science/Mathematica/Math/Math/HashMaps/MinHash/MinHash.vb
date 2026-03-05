@@ -1,6 +1,7 @@
 ﻿Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports Microsoft.VisualBasic.Data.Repository
+Imports Microsoft.VisualBasic.Language.Java
 
 Namespace HashMaps.MinHash
 
@@ -12,7 +13,7 @@ Namespace HashMaps.MinHash
         ''' <param name="shingles"></param>
         ''' <returns></returns>
         Public Function GenerateMinHashSignature(shingles As HashSet(Of String)) As UInteger()
-            Dim signature As UInteger() = New UInteger(Config.Num_HashFunctions - 1) {}
+            Dim signature As UInteger() = New UInteger(Config.Num_HashFunctions - 1) {}.fill(UInteger.MaxValue)
             Dim shingleBytesList As New List(Of Byte())()
             For Each shingle In shingles
                 shingleBytesList.Add(Encoding.UTF8.GetBytes(shingle))
