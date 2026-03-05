@@ -39,7 +39,7 @@ Namespace HashMaps.MinHash
                     ' B. 计算 Bucket Key
                     '    使用 bandIndex 作为种子，确保不同波段的相同值不会碰撞
                     '    API 调用：MurmurHash.MurmurHashCode3_x86_32(字节数组, 种子)
-                    Dim bucketKey As Integer = CInt(MurmurHash.MurmurHashCode3_x86_32(buffer, CUInt(bandIndex)))
+                    Dim bucketKey As UInteger = MurmurHash.MurmurHashCode3_x86_32(buffer, CUInt(bandIndex))
 
                     ' C. 入桶
                     If Not buckets.ContainsKey(bucketKey) Then

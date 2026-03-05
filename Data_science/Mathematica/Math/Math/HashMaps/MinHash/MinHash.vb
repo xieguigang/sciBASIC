@@ -35,6 +35,12 @@ Namespace HashMaps.MinHash
             Return signature
         End Function
 
+        ''' <summary>
+        ''' Compute minhash for a given sequence
+        ''' </summary>
+        ''' <param name="items">the items inside a sequence</param>
+        ''' <param name="id">sequence id</param>
+        ''' <returns></returns>
         <Extension>
         Public Function CreateSequenceData(items As IEnumerable(Of String), id As Integer) As SequenceItem
             Dim shingles As New HashSet(Of String)
