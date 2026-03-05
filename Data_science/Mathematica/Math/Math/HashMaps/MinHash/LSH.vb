@@ -17,6 +17,14 @@ Namespace HashMaps.MinHash
             Return Similarity < 0 AndAlso V = Integer.MinValue
         End Function
 
+        Public Overrides Function ToString() As String
+            If IsUniqueHit() Then
+                Return $"{U} is a unique hit"
+            Else
+                Return $"{U}-{V} similarity={Similarity}"
+            End If
+        End Function
+
     End Structure
 
     Public Module LSH
