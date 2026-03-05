@@ -14,7 +14,7 @@ Namespace HashMaps.MinHash
         ''' </summary>
         ''' <returns></returns>
         Public Function IsUniqueHit() As Boolean
-            Return Similarity = -1 AndAlso V = Integer.MinValue
+            Return Similarity < 0 AndAlso V = Integer.MinValue
         End Function
 
     End Structure
