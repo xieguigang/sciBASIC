@@ -1,5 +1,4 @@
 ﻿Imports Microsoft.VisualBasic.Data.Repository
-Imports Microsoft.VisualBasic.Math.Framework.Optimization.LBFGSB.BKLDLT
 Imports std = System.Math
 
 Namespace HashMaps.MinHash
@@ -36,7 +35,7 @@ Namespace HashMaps.MinHash
                         Dim val As UInteger = seq.Signature(startIdx + r)
                         ' 使用 BitConverter 将整数转为字节填入 buffer
                         ' 注意：这里假设是小端序，通常对哈希结果无影响，只要一致即可
-                        Array.ConstrainedCopy(BitConverter.GetBytes(val), 0, buffer, r * 4, 4)
+                        Array.Copy(BitConverter.GetBytes(val), 0, buffer, r * 4, 4)
                     Next
 
                     ' B. 计算 Bucket Key
@@ -76,10 +75,10 @@ Namespace HashMaps.MinHash
         ' 辅助：计算两个签名的相似度 (海明距离或匹配度)
         Public Function CalculateSimilarity(sig1 As UInteger(), sig2 As UInteger()) As Double
             Dim matches As Integer = 0
-            For i As Integer = 0 To sig1.Count - 1
+            For i As Integer = 0 To sig1.Length - 1
                 If sig1(i) = sig2(i) Then matches += 1
             Next
-            Return matches / sig1.Count
+            Return matches / sig1.Length
         End Function
     End Module
 End Namespace
