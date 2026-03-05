@@ -58,6 +58,8 @@ Namespace HashMaps.MinHash
         ''' <param name="allSequences"></param>
         Public Iterator Function FindSimilarItems(allSequences As SequenceItem()) As IEnumerable(Of SimilarityIndex)
             Dim buckets As Dictionary(Of UInteger, List(Of Integer)) = allSequences.BuildLSHBuckets
+            ' 用于去重
+            Dim alreadyFound As New HashSet(Of (Integer, Integer))()
 
             For Each bucket As List(Of Integer) In buckets.Values
                 ' 如果一个桶里有多个序列，说明它们在某个波段完全匹配，是相似候选
@@ -68,12 +70,18 @@ Namespace HashMaps.MinHash
                             ' 记录候选对 (ID1, ID2)，确保ID小的在前防止重复
                             Dim u = std.Min(bucket(i), bucket(j))
                             Dim v = std.Max(bucket(i), bucket(j))
+                            Dim pairKey = (u, v)
 
-                            Yield New SimilarityIndex With {
-                                .U = u,
-                                .V = v,
-                                .Similarity = CalculateSimilarity(allSequences(u).Signature, allSequences(v).Signature)
-                            }
+                            ' HashSet 的 Add 方法返回 Boolean，指示是否添加成功
+                            ' 如果添加成功 说明之前不存在，即这是一个新的候选对
+                            ' 这种写法比 Contains + Add 更高效（只需一次哈希查找）
+                            If alreadyFound.Add(pairKey) Then
+                                Yield New SimilarityIndex With {
+                                    .U = u,
+                                    .V = v,
+                                    .Similarity = CalculateSimilarity(allSequences(u).Signature, allSequences(v).Signature)
+                                }
+                            End If
                         Next
                     Next
                 End If

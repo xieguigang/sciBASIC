@@ -39,7 +39,7 @@ Namespace HashMaps.MinHash
         ''' <summary>
         ''' Compute minhash for a given sequence
         ''' </summary>
-        ''' <param name="items">the items inside a sequence</param>
+        ''' <param name="items">对字符串序列进行n-gram切片后的结果</param>
         ''' <param name="id">sequence id</param>
         ''' <returns></returns>
         <Extension>
