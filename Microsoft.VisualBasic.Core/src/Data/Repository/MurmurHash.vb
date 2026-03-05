@@ -71,8 +71,6 @@ Namespace Data.Repository
         ''' <param name="seed">哈希种子。</param>
         ''' <returns>32位无符号哈希值。</returns>
         Public Function MurmurHashCode3_x86_32(data As Byte(), seed As UInteger) As UInteger
-            If data Is Nothing Then Throw New ArgumentNullException(NameOf(data))
-
             Dim length As Integer = data.Length
             Dim h As UInteger = seed
             Dim i As Integer = 0
