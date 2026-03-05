@@ -14,13 +14,12 @@ Namespace HashMaps.MinHash
         ''' <returns></returns>
         Public Function GenerateMinHashSignature(shingles As HashSet(Of String)) As UInteger()
             Dim signature As UInteger() = New UInteger(Config.Num_HashFunctions - 1) {}.fill(UInteger.MaxValue)
-            Dim shingleBytesList As New List(Of Byte())()
-            For Each shingle In shingles
-                shingleBytesList.Add(Encoding.UTF8.GetBytes(shingle))
-            Next
+
             ' 3. 计算 MinHash
             '    遍历每一个 Shingle 的字节数据
-            For Each bytesData In shingleBytesList
+            For Each shingle As String In shingles
+                Dim bytesData As Byte() = Encoding.UTF8.GetBytes(shingle)
+
                 ' 遍历每一个哈希函数 (由 seed 0 到 N-1 代表)
                 For i As Integer = 0 To Config.Num_HashFunctions - 1
                     ' 使用索引 i 作为种子，相当于第 i 个哈希函数

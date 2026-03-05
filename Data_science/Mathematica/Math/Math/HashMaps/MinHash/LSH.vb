@@ -31,9 +31,14 @@ Namespace HashMaps.MinHash
                     '    这比字符串拼接快得多，且内存占用极小
                     For r As Integer = 0 To Config.Rows_Per_Band - 1
                         Dim val As UInteger = seq.Signature(startIdx + r)
-                        ' 使用 BitConverter 将整数转为字节填入 buffer
-                        ' 注意：这里假设是小端序，通常对哈希结果无影响，只要一致即可
-                        Array.Copy(BitConverter.GetBytes(val), 0, buffer, r * 4, 4)
+                        Dim offset As Integer = r * 4
+
+                        ' 使用位移操作代替 BitConverter.GetBytes
+                        ' 注意：这会生成 Little-Endian (小端序) 数据，与 BitConverter 默认行为一致
+                        buffer(offset) = CByte(val)               ' 第0字节 (低8位)
+                        buffer(offset + 1) = CByte(val >> 8)      ' 第1字节
+                        buffer(offset + 2) = CByte(val >> 16)     ' 第2字节
+                        buffer(offset + 3) = CByte(val >> 24)     ' 第3字节 (高8位)
                     Next
 
                     ' B. 计算 Bucket Key
