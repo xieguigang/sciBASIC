@@ -2,6 +2,11 @@
 
     Public Module MinHash
 
+        ''' <summary>
+        ''' 一个大素数
+        ''' </summary>
+        Const primeP As Integer = 2147483647
+
         ' 生成MinHash签名
         Public Function GenerateMinHashSignature(shingles As HashSet(Of String)) As List(Of Integer)
             Dim signature As New List(Of Integer)(Enumerable.Repeat(Integer.MaxValue, Config.Num_HashFunctions))
@@ -10,10 +15,9 @@
             ' 这里用简单的系数模拟 N 个不同的哈希函数
             Dim hashCoeffsA As Integer() = Enumerable.Range(1, Config.Num_HashFunctions).ToArray()
             Dim hashCoeffsB As Integer() = Enumerable.Range(100, Config.Num_HashFunctions).ToArray()
-            Dim primeP As Integer = 2147483647 ' 一个大素数
 
             ' 遍历集合中的每一个 Shingle
-            For Each shingle In shingles
+            For Each shingle As String In shingles
                 ' 1. 将Shingle转为整数 (作为哈希函数的输入x)
                 Dim rawHash As Integer = shingle.GetHashCode() ' 简单起见用系统哈希
 
