@@ -89,6 +89,8 @@ Namespace HashMaps.MinHash
                             End If
                         Next
                     Next
+                Else
+                    ' count = 1 is unique item
                 End If
             Next
         End Function
