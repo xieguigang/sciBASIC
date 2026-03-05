@@ -1,33 +1,28 @@
-﻿Namespace HashMaps.MinHash
+﻿Imports System.Text
+Imports Microsoft.VisualBasic.Data.Repository
+
+Namespace HashMaps.MinHash
 
     Public Module MinHash
 
         ''' <summary>
-        ''' 一个大素数
+        ''' 生成MinHash签名
         ''' </summary>
-        Const primeP As Integer = 2147483647
-
-        ' 生成MinHash签名
-        Public Function GenerateMinHashSignature(shingles As HashSet(Of String)) As List(Of Integer)
-            Dim signature As New List(Of Integer)(Enumerable.Repeat(Integer.MaxValue, Config.Num_HashFunctions))
-
-            ' 预定义哈希函数的系数 (实际应用中应随机生成并固定)
-            ' 这里用简单的系数模拟 N 个不同的哈希函数
-            Dim hashCoeffsA As Integer() = Enumerable.Range(1, Config.Num_HashFunctions).ToArray()
-            Dim hashCoeffsB As Integer() = Enumerable.Range(100, Config.Num_HashFunctions).ToArray()
-
-            ' 遍历集合中的每一个 Shingle
-            For Each shingle As String In shingles
-                ' 1. 将Shingle转为整数 (作为哈希函数的输入x)
-                Dim rawHash As Integer = shingle.GetHashCode() ' 简单起见用系统哈希
-
-                ' 2. 对每一个哈希函数计算值，并更新最小值
+        ''' <param name="shingles"></param>
+        ''' <returns></returns>
+        Public Function GenerateMinHashSignature(shingles As HashSet(Of String)) As UInteger()
+            Dim signature As UInteger() = New UInteger(Config.Num_HashFunctions - 1) {}
+            Dim shingleBytesList As New List(Of Byte())()
+            For Each shingle In shingles
+                shingleBytesList.Add(Encoding.UTF8.GetBytes(shingle))
+            Next
+            ' 3. 计算 MinHash
+            '    遍历每一个 Shingle 的字节数据
+            For Each bytesData In shingleBytesList
+                ' 遍历每一个哈希函数 (由 seed 0 到 N-1 代表)
                 For i As Integer = 0 To Config.Num_HashFunctions - 1
-                    ' 模拟第 i 个哈希函数: h_i(x) = (a*x + b) % p
-                    Dim hashVal As Integer = (hashCoeffsA(i) * rawHash + hashCoeffsB(i)) Mod primeP
-
-                    ' 保持取绝对值 (VB.NET Mod可能返回负数)
-                    If hashVal < 0 Then hashVal += primeP
+                    ' 使用索引 i 作为种子，相当于第 i 个哈希函数
+                    Dim hashVal As UInteger = MurmurHash.MurmurHashCode3_x86_32(bytesData, CUInt(i))
 
                     ' 更新签名中对应位置的最小值
                     If hashVal < signature(i) Then
