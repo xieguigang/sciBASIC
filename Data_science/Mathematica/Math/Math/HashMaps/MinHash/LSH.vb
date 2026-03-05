@@ -9,6 +9,14 @@ Namespace HashMaps.MinHash
         Dim U, V As Integer
         Dim Similarity As Double
 
+        ''' <summary>
+        ''' Check of the sequence <see cref="U"/> is a unique hit?
+        ''' </summary>
+        ''' <returns></returns>
+        Public Function IsUniqueHit() As Boolean
+            Return Similarity = -1 AndAlso V = Integer.MinValue
+        End Function
+
     End Structure
 
     Public Module LSH
@@ -67,11 +75,17 @@ Namespace HashMaps.MinHash
         ''' <param name="Rows_Per_Band">
         ''' 每个波段的行数 (100 / 20 = 5)
         ''' </param>
-        Public Iterator Function FindSimilarItems(allSequences As SequenceItem(), Optional Num_Bands As Integer = 20, Optional Rows_Per_Band As Integer = 5) As IEnumerable(Of SimilarityIndex)
+        Public Iterator Function FindSimilarItems(allSequences As SequenceItem(),
+                                                  Optional Num_Bands As Integer = 20,
+                                                  Optional Rows_Per_Band As Integer = 5,
+                                                  Optional produceUniqueHit As Boolean = False) As IEnumerable(Of SimilarityIndex)
+
             Dim buckets As Dictionary(Of UInteger, List(Of Integer)) = allSequences.BuildLSHBuckets(Num_Bands, Rows_Per_Band)
             ' 用于去重
             Dim alreadyFound As New HashSet(Of (Integer, Integer))()
+            Dim seqIndex = allSequences.ToDictionary(Function(s) s.ID)
 
+            ' for each bucket of the sequnece id
             For Each bucket As List(Of Integer) In buckets.Values
                 ' 如果一个桶里有多个序列，说明它们在某个波段完全匹配，是相似候选
                 If bucket.Count > 1 Then
@@ -90,13 +104,23 @@ Namespace HashMaps.MinHash
                                 Yield New SimilarityIndex With {
                                     .U = u,
                                     .V = v,
-                                    .Similarity = CalculateSimilarity(allSequences(u).Signature, allSequences(v).Signature)
+                                    .Similarity = CalculateSimilarity(
+                                        seqIndex(u).Signature,
+                                        seqIndex(v).Signature
+                                    )
                                 }
                             End If
                         Next
                     Next
-                Else
+                ElseIf produceUniqueHit Then
                     ' count = 1 is unique item
+                    Dim key As Integer = bucket(0)
+
+                    Yield New SimilarityIndex With {
+                        .U = key,
+                        .Similarity = -1,
+                        .V = Integer.MinValue
+                    }
                 End If
             Next
         End Function
