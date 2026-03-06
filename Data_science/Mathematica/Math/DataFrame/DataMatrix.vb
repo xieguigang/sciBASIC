@@ -170,17 +170,36 @@ Public Class DataMatrix : Implements IBucketVector, INumericMatrix, ILabeledMatr
     ''' <returns></returns>
     Public Iterator Function PopulateRowObjects(Of DataSet As {New, INamedValue, DynamicPropertyBase(Of Double)})() As IEnumerable(Of DataSet)
         Dim names As String() = Me.names.Objects
+        Dim width As Integer = matrix(0).Length
 
-        For Each item As SeqValue(Of String) In names.SeqIterator
-            Yield New DataSet With {
-                .Key = item,
-                .Properties = names _
-                    .ToDictionary(Function(a) a,
-                                  Function(a)
-                                      Return Me(a, item.value)
-                                  End Function)
-            }
-        Next
+        If names.Length = width Then
+            ' is NxN matrix
+            For Each dims As String In names
+                Yield New DataSet With {
+                    .Key = dims,
+                    .Properties = names _
+                        .ToDictionary(Function(a) a,
+                                      Function(a)
+                                          Return Me(a, dims)
+                                      End Function)
+                }
+            Next
+        Else
+            ' is MxN table
+            For Each dims As String In names
+                Dim vec As New Dictionary(Of String, Double)
+                Dim row = matrix(Me.names(dims))
+
+                For i As Integer = 0 To row.Length - 1
+                    vec($"dim{i + 1}") = row(i)
+                Next
+
+                Yield New DataSet With {
+                    .Key = dims,
+                    .Properties = vec
+                }
+            Next
+        End If
     End Function
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
