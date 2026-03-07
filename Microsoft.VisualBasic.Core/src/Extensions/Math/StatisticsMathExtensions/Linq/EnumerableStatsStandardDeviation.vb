@@ -53,7 +53,7 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
-Imports sys = System.Math
+Imports std = System.Math
 
 Namespace Math.Statistics.Linq
 
@@ -133,42 +133,23 @@ Namespace Math.Statistics.Linq
 
             Return Nothing
         End Function
-        '
-        ' Summary:
-        '     Computes the StandardDeviation of a sequence of System.Double values.
-        '
-        ' Parameters:
-        '   source:
-        '     A sequence of System.Double values to calculate the StandardDeviation of.
-        '
-        ' Returns:
-        '     The StandardDeviation of the sequence of values.
-        '
-        ' Exceptions:
-        '   System.ArgumentNullException:
-        '     source is null.
-        '
-        '   System.InvalidOperationException:
-        '     source contains no elements.
+
+        ''' <summary>
+        ''' Computes the StandardDeviation of a sequence of System.Double values.
+        ''' </summary>
+        ''' <param name="source">A sequence of System.Double values to calculate the StandardDeviation of.</param>
+        ''' <returns>The StandardDeviation of the sequence of values.</returns>
         <Extension>
         Public Function StandardDeviation(source As IEnumerable(Of Double)) As Double
-            Return sys.Sqrt(source.Variance())
+            Return std.Sqrt(source.Variance())
         End Function
-        '
-        ' Summary:
-        '     Computes the StandardDeviation of a sequence of nullable System.Single values.
-        '
-        ' Parameters:
-        '   source:
-        '     A sequence of nullable System.Single values to calculate the StandardDeviation of.
-        '
-        ' Returns:
-        '     The StandardDeviation of the sequence of values, or null if the source sequence is
-        '     empty or contains only values that are null.
-        '
-        ' Exceptions:
-        '   System.ArgumentNullException:
-        '     source is null.
+
+        ''' <summary>
+        ''' Computes the StandardDeviation of a sequence of nullable System.Single values.
+        ''' </summary>
+        ''' <param name="source">A sequence of nullable System.Single values to calculate the StandardDeviation of.</param>
+        ''' <returns>The StandardDeviation of the sequence of values, or null if the source sequence is
+        '''     empty or contains only values that are null.</returns>
         <Extension>
         Public Function StandardDeviation(source As IEnumerable(Of Single?)) As Single
             Dim values As IEnumerable(Of Single) = source.Coalesce()
