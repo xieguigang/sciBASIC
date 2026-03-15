@@ -1002,7 +1002,7 @@
 
 	<ItemGroup>
 		<PackageReference Include="System.Drawing.Primitives" Version="4.3.0" />
-		<PackageReference Include="System.Resources.Extensions" Version="10.0.3" />
+		<PackageReference Include="System.Resources.Extensions" Version="10.0.5" />
 	</ItemGroup>
   
 	<ItemGroup>
