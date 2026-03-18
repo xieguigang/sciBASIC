@@ -106,86 +106,61 @@ Public Class Rev
     End Operator
 
     Public Shared Operator -(lhs As Rev, rhs As Rev) As Rev
-        Return New Rev(lhs.Magnitude - rhs.Magnitude, Sub(dx)
-                                                          If dx <> 0 Then
-                                                              lhs.CalculateDerivative(dx)
-                                                              rhs.CalculateDerivative(-dx)
-                                                          End If
-                                                      End Sub)
+        Return New Rev(lhs.Magnitude - rhs.Magnitude,
+            dy:=Sub(dx)
+                    If dx <> 0 Then
+                        lhs.CalculateDerivative(dx)
+                        rhs.CalculateDerivative(-dx)
+                    End If
+                End Sub)
     End Operator
 
     Public Shared Operator -(lhs As Rev, rhs As Double) As Rev
-        Return New Rev(lhs.Magnitude - rhs, Sub(dx)
-                                                If dx <> 0 Then
-                                                    lhs.CalculateDerivative(dx)
-                                                End If
-                                            End Sub)
+        Return New Rev(lhs.Magnitude - rhs, Sub(dx) If dx <> 0 Then lhs.CalculateDerivative(dx))
     End Operator
 
     Public Shared Operator -(lhs As Double, rhs As Rev) As Rev
-        Return New Rev(lhs - rhs.Magnitude, Sub(dx)
-                                                If dx <> 0 Then
-                                                    rhs.CalculateDerivative(-dx)
-                                                End If
-                                            End Sub)
+        Return New Rev(lhs - rhs.Magnitude, Sub(dx) If dx <> 0 Then rhs.CalculateDerivative(-dx))
     End Operator
 
     Public Shared Operator -(lhs As Rev) As Rev
-        Return New Rev(-lhs.Magnitude, Sub(dx)
-                                           If dx <> 0 Then
-                                               lhs.CalculateDerivative(-dx)
-                                           End If
-                                       End Sub)
+        Return New Rev(-lhs.Magnitude, Sub(dx) If dx <> 0 Then lhs.CalculateDerivative(-dx))
     End Operator
 
     Public Shared Operator *(lhs As Rev, rhs As Rev) As Rev
-        Return New Rev(lhs.Magnitude * rhs.Magnitude, Sub(dx)
-                                                          If dx <> 0 Then
-                                                              lhs.CalculateDerivative(dx * rhs.Magnitude)
-                                                              rhs.CalculateDerivative(dx * lhs.Magnitude)
-                                                          End If
-                                                      End Sub)
+        Return New Rev(lhs.Magnitude * rhs.Magnitude,
+            dy:=Sub(dx)
+                    If dx <> 0 Then
+                        lhs.CalculateDerivative(dx * rhs.Magnitude)
+                        rhs.CalculateDerivative(dx * lhs.Magnitude)
+                    End If
+                End Sub)
     End Operator
 
     Public Shared Operator *(lhs As Rev, rhs As Double) As Rev
-        Return New Rev(lhs.Magnitude * rhs, Sub(dx)
-                                                If dx <> 0 Then
-                                                    lhs.CalculateDerivative(dx * rhs)
-                                                End If
-                                            End Sub)
+        Return New Rev(lhs.Magnitude * rhs, Sub(dx) If dx <> 0 Then lhs.CalculateDerivative(dx * rhs))
     End Operator
 
     Public Shared Operator *(lhs As Double, rhs As Rev) As Rev
-        Return New Rev(lhs * rhs.Magnitude, Sub(dx)
-                                                If dx <> 0 Then
-                                                    rhs.CalculateDerivative(dx * lhs)
-                                                End If
-                                            End Sub)
+        Return New Rev(lhs * rhs.Magnitude, Sub(dx) If dx <> 0 Then rhs.CalculateDerivative(dx * lhs))
     End Operator
 
     Public Shared Operator /(lhs As Rev, rhs As Rev) As Rev
-        Return New Rev(lhs.Magnitude / rhs.Magnitude, Sub(dx)
-                                                          If dx <> 0 Then
-                                                              lhs.CalculateDerivative(dx / rhs.Magnitude)
-                                                              rhs.CalculateDerivative(-dx * lhs.Magnitude / (rhs.Magnitude * rhs.Magnitude))
-                                                          End If
-                                                      End Sub)
+        Return New Rev(lhs.Magnitude / rhs.Magnitude,
+            dy:=Sub(dx)
+                    If dx <> 0 Then
+                        lhs.CalculateDerivative(dx / rhs.Magnitude)
+                        rhs.CalculateDerivative(-dx * lhs.Magnitude / (rhs.Magnitude * rhs.Magnitude))
+                    End If
+                End Sub)
     End Operator
 
     Public Shared Operator /(lhs As Rev, rhs As Double) As Rev
-        Return New Rev(lhs.Magnitude / rhs, Sub(dx)
-                                                If dx <> 0 Then
-                                                    lhs.CalculateDerivative(dx / rhs)
-                                                End If
-                                            End Sub)
+        Return New Rev(lhs.Magnitude / rhs, Sub(dx) If dx <> 0 Then lhs.CalculateDerivative(dx / rhs))
     End Operator
 
     Public Shared Operator /(lhs As Double, rhs As Rev) As Rev
-        Return New Rev(lhs / rhs.Magnitude, Sub(dx)
-                                                If dx <> 0 Then
-                                                    rhs.CalculateDerivative(-dx * lhs / (rhs.Magnitude * rhs.Magnitude))
-                                                End If
-                                            End Sub)
+        Return New Rev(lhs / rhs.Magnitude, Sub(dx) If dx <> 0 Then rhs.CalculateDerivative(-dx * lhs / (rhs.Magnitude * rhs.Magnitude)))
     End Operator
 
     Public Function Pow(e As Double) As Rev
