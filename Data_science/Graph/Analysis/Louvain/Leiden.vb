@@ -1,6 +1,5 @@
-﻿Imports System.Runtime.CompilerServices
-Imports System.Collections.Generic
-Imports randf = Microsoft.VisualBasic.Math.RandomExtensions
+﻿Imports randf = Microsoft.VisualBasic.Math.RandomExtensions
+Imports std = System.Math
 
 Namespace Analysis.Louvain
 
@@ -174,7 +173,7 @@ Namespace Analysis.Louvain
             ' 进度显示
             Dim maxLoop As Integer = n * 50
             Dim processed As Integer = 0
-            Dim deltaP As Integer = Math.Max(1, maxLoop \ 25)
+            Dim deltaP As Integer = std.Max(1, maxLoop \ 25)
 
             Call VBDebugger.EchoLine("")
             Call VBDebugger.Echo(" [Leiden_Move] Progress: ")
@@ -366,7 +365,7 @@ Namespace Analysis.Louvain
                 End If
 
                 ' 进度显示
-                If processedCommunities Mod Math.Max(1, totalCommunities \ 10) = 0 Then
+                If processedCommunities Mod std.Max(1, totalCommunities \ 10) = 0 Then
                     VBDebugger.Echo(vbTab & $"{CInt(100 * processedCommunities / totalCommunities)}%")
                 End If
             Next
