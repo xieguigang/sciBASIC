@@ -23,6 +23,10 @@ Namespace Analysis.Louvain
         ''' </summary>
         Private communityNodes As Dictionary(Of Integer, List(Of Integer))
 
+        ' 类级别字段，复用visited数组
+        Private visited As Boolean()
+        Private stack As Stack(Of Integer)
+
         ''' <summary>
         ''' 初始化Leiden算法
         ''' </summary>
@@ -33,7 +37,10 @@ Namespace Analysis.Louvain
                 Optional refineIterations As Integer = 2,
                 Optional eps As Double = 0.00000000000001)
             MyBase.New(maxIterations, eps)
+
             Me.refineIterations = refineIterations
+            visited = New Boolean(16383) {}  ' 预分配足够大的数组
+            stack = New Stack(Of Integer)(1024)
         End Sub
 
         ''' <summary>
@@ -96,34 +103,44 @@ Namespace Analysis.Louvain
         ''' </summary>
         Private Function MoveNodesFast() As Boolean
             Dim moved As Boolean = False
-            Dim order = GenerateRandomOrder(n)
-            Dim iterations = 0
-            Dim maxIter = n * 10  ' 最大内部迭代次数
 
-            ' 构建社区邻接关系
-            BuildCommunityAdjacency()
+            ' 使用队列存储需要检查的节点
+            Dim queue = New Queue(Of Integer)()
+            Dim inQueue = New Boolean(n - 1) {}
 
-            Do
-                Dim anyMove As Boolean = False
+            ' 初始时所有节点入队
+            For i = 0 To n - 1
+                queue.Enqueue(i)
+                inQueue(i) = True
+            Next
 
-                For Each i In order
-                    Dim bestCommunity = FindBestCommunityFast(i)
+            While queue.Count > 0
+                Dim i = queue.Dequeue()
+                inQueue(i) = False
 
-                    If bestCommunity <> cluster(i) Then
-                        ' 执行移动
-                        cluster_weight(cluster(i)) -= node_weight(i)
-                        cluster(i) = bestCommunity
-                        cluster_weight(bestCommunity) += node_weight(i)
-                        anyMove = True
-                        moved = True
-                    End If
-                Next
+                Dim oldCommunity = cluster(i)
+                Dim bestCommunity = FindBestCommunityFast(i)
 
-                iterations += 1
-                If iterations >= maxIter OrElse Not anyMove Then
-                    Exit Do
+                If bestCommunity <> oldCommunity Then
+                    ' 执行移动
+                    cluster_weight(oldCommunity) -= node_weight(i)
+                    cluster(i) = bestCommunity
+                    cluster_weight(bestCommunity) += node_weight(i)
+
+                    moved = True
+
+                    ' 将邻居节点加入队列
+                    Dim j = head(i)
+                    While j <> -1
+                        Dim neighbor = edge(j).v
+                        If Not inQueue(neighbor) Then
+                            queue.Enqueue(neighbor)
+                            inQueue(neighbor) = True
+                        End If
+                        j = edge(j).next
+                    End While
                 End If
-            Loop
+            End While
 
             Return moved
         End Function
@@ -177,27 +194,30 @@ Namespace Analysis.Louvain
         ''' </summary>
         Private Function CalculateDeltaQ(node As Integer, targetCommunity As Integer) As Double
             Dim currentCommunity = cluster(node)
-            If currentCommunity = targetCommunity Then
-                Return 0.0
-            End If
+            If currentCommunity = targetCommunity Then Return 0.0
 
             ' 计算与目标社区连接的边权总和
-            Dim sumWeightsToCommunity = 0.0
+            Dim kiIn = 0.0  ' 节点i与目标社区的连接权重
             Dim j = head(node)
             While j <> -1
                 If cluster(edge(j).v) = targetCommunity Then
-                    sumWeightsToCommunity += edge(j).weight
+                    kiIn += edge(j).weight
                 End If
                 j = edge(j).next
             End While
 
-            ' 计算模块度变化
             Dim ki = node_weight(node)
-            Dim sigma_tot = cluster_weight(targetCommunity)
+            Dim sigmaTotTarget = cluster_weight(targetCommunity)
+            Dim sigmaTotCurrent = cluster_weight(currentCommunity) - ki
 
-            ' ΔQ = [Σ_in + k_i,in]/2m - [Σ_tot + k_i]²/4m² - [Σ_in/2m - (Σ_tot)²/4m² - (k_i)²/4m²]
-            ' 简化为: ΔQ = (k_i,in - k_i * Σ_tot * resolution)
-            Dim deltaQ = sumWeightsToCommunity - ki * sigma_tot * resolution
+            ' 模块度增量 = 加入目标社区的增益 - 离开原社区的损失
+            ' 加入目标社区: kiIn - ki * sigmaTotTarget / (2m)
+            ' 离开原社区: -(0 - ki * sigmaTotCurrent / (2m)) = ki * sigmaTotCurrent / (2m)
+            ' 总增量 = kiIn - ki * sigmaTotTarget / (2m) + ki * sigmaTotCurrent / (2m)
+            ' 简化: deltaQ = kiIn - ki * (sigmaTotTarget - sigmaTotCurrent) / (2m)
+
+            ' 你的resolution = 1 / (2m)，所以：
+            Dim deltaQ = kiIn - ki * (sigmaTotTarget - sigmaTotCurrent) * resolution
 
             Return deltaQ
         End Function
@@ -208,34 +228,59 @@ Namespace Analysis.Louvain
         ''' </summary>
         Private Function RefineCommunities() As Boolean
             Dim refined As Boolean = False
-            UpdateCommunityNodes()
 
-            ' 对每个社区进行细化
+            ' 为每个社区的节点创建子社区（初始时每个节点一个子社区）
+            Dim subCommunities = New Dictionary(Of Integer, Dictionary(Of Integer, Integer))()
+
+            ' 对每个社区进行处理
             For Each communityId In communityNodes.Keys
                 Dim nodesInCommunity = communityNodes(communityId)
+                If nodesInCommunity.Count <= 1 Then Continue For
 
-                If nodesInCommunity.Count <= 1 Then
-                    Continue For
-                End If
+                ' 步骤1: 初始化子社区（每个节点一个）
+                Dim subComm = New Dictionary(Of Integer, Integer)()
+                Dim subCommWeight = New Dictionary(Of Integer, Double)()
 
-                ' 检查社区连通性
-                Dim connectedComponents = FindConnectedComponents(nodesInCommunity)
+                For Each node In nodesInCommunity
+                    subComm(node) = node  ' 初始时节点ID即子社区ID
+                    subCommWeight(node) = node_weight(node)
+                Next
 
-                ' 如果社区不连通，需要细化
-                If connectedComponents.Count > 1 Then
-                    ' 重新分配不连通的组件到新社区
-                    Dim newCommunityId = GetNextCommunityId()
+                ' 步骤2: 在社区内运行局部移动
+                Dim subCommChanged = True
+                Dim iterations = 0
+                Dim maxIter = nodesInCommunity.Count * 10
 
-                    ' 第一个组件保持原社区ID，其他组件分配新ID
-                    For compIdx = 1 To connectedComponents.Count - 1
-                        For Each nodeId In connectedComponents(compIdx)
-                            cluster(nodeId) = newCommunityId
-                            cluster_weight(newCommunityId) += node_weight(nodeId)
-                            cluster_weight(communityId) -= node_weight(nodeId)
-                        Next
-                        newCommunityId = GetNextCommunityId()
-                        refined = True
+                While subCommChanged AndAlso iterations < maxIter
+                    subCommChanged = False
+                    iterations += 1
+
+                    ' 随机顺序遍历社区内节点
+                    For Each node In nodesInCommunity.OrderBy(Function(x) randf.seeds.Next())
+                        ' 找最佳子社区（只考虑邻居节点所在的子社区）
+                        Dim bestSubComm = FindBestSubCommunity(node, subComm, subCommWeight, nodesInCommunity)
+
+                        If bestSubComm <> subComm(node) Then
+                            ' 移动节点到新子社区
+                            subCommWeight(subComm(node)) -= node_weight(node)
+                            subComm(node) = bestSubComm
+
+                            If Not subCommWeight.ContainsKey(bestSubComm) Then
+                                subCommWeight(bestSubComm) = 0.0
+                            End If
+                            subCommWeight(bestSubComm) += node_weight(node)
+
+                            subCommChanged = True
+                        End If
                     Next
+                End While
+
+                ' 步骤3: 合并子社区（贪心策略）
+                ' 这里需要实现子社区合并逻辑，保证连通性
+                ' ... 详见完整实现
+
+                If MergeSubCommunities(subComm, subCommWeight, nodesInCommunity) Then
+                    refined = True
                 End If
             Next
 
@@ -247,38 +292,50 @@ Namespace Analysis.Louvain
         ''' </summary>
         Private Function FindConnectedComponents(nodes As List(Of Integer)) As List(Of List(Of Integer))
             Dim components = New List(Of List(Of Integer))()
-            Dim visited = New Boolean(n) {}
+
+            ' 使用HashSet提高查找效率
+            Dim nodeSet = New HashSet(Of Integer)(nodes)
+
+            ' 清空visited（只清空需要的部分）
+            For Each node In nodes
+                If node < visited.Length Then
+                    visited(node) = False
+                End If
+            Next
+
+            stack.Clear()
 
             For Each node In nodes
-                If Not visited(node) Then
-                    Dim component = New List(Of Integer)()
-                    Dim stack = New Stack(Of Integer)()
+                If node < visited.Length AndAlso visited(node) Then Continue For
 
-                    stack.Push(node)
+                Dim component = New List(Of Integer)()
+                stack.Push(node)
+
+                If node < visited.Length Then
                     visited(node) = True
-
-                    While stack.Count > 0
-                        Dim currentNode = stack.Pop()
-                        component.Add(currentNode)
-
-                        ' 遍历当前节点的邻居
-                        Dim j = head(currentNode)
-                        While j <> -1
-                            Dim neighbor = edge(j).v
-
-                            ' 只考虑在同一社区内且未被访问的邻居
-                            If cluster(neighbor) = cluster(node) AndAlso
-                               nodes.Contains(neighbor) AndAlso
-                               Not visited(neighbor) Then
-                                visited(neighbor) = True
-                                stack.Push(neighbor)
-                            End If
-                            j = edge(j).next
-                        End While
-                    End While
-
-                    components.Add(component)
                 End If
+
+                While stack.Count > 0
+                    Dim currentNode = stack.Pop()
+                    component.Add(currentNode)
+
+                    Dim j = head(currentNode)
+                    While j <> -1
+                        Dim neighbor = edge(j).v
+                        ' 使用HashSet进行O(1)查找
+                        If cluster(neighbor) = cluster(currentNode) AndAlso
+                   nodeSet.Contains(neighbor) AndAlso
+                   (neighbor >= visited.Length OrElse Not visited(neighbor)) Then
+                            If neighbor < visited.Length Then
+                                visited(neighbor) = True
+                            End If
+                            stack.Push(neighbor)
+                        End If
+                        j = edge(j).next
+                    End While
+                End While
+
+                components.Add(component)
             Next
 
             Return components
@@ -343,6 +400,11 @@ Namespace Analysis.Louvain
 
             Return order
         End Function
+
+        ' 类级别缓冲数组
+        Private buffer_nodeInCluster As List(Of Integer)()
+        Private buffer_edgeWeights As Double()
+        Private buffer_visindex As Boolean()
 
         ''' <summary>
         ''' 重写重建图方法，添加调试信息
