@@ -1,5 +1,4 @@
-﻿Imports System
-Imports System.Linq
+﻿Imports std = System.Math
 
 Namespace PaCMAP
     ''' <summary>
@@ -151,11 +150,11 @@ Namespace PaCMAP
                     u1 = random.NextDouble()
                 End While
 
-                Dim z0 = Math.Sqrt(-2.0 * Math.Log(u1)) * Math.Cos(2.0 * Math.PI * u2)
+                Dim z0 = std.Sqrt(-2.0 * std.Log(u1)) * std.Cos(2.0 * std.PI * u2)
                 tensor._data(i) = z0 * stdDev + mean
 
                 If i + 1 < tensor._data.Length Then
-                    Dim z1 = Math.Sqrt(-2.0 * Math.Log(u1)) * Math.Sin(2.0 * Math.PI * u2)
+                    Dim z1 = std.Sqrt(-2.0 * std.Log(u1)) * std.Sin(2.0 * std.PI * u2)
                     tensor._data(i + 1) = z1 * stdDev + mean
                 End If
             Next

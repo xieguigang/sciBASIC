@@ -1,7 +1,5 @@
-﻿Imports System
-Imports System.Collections.Generic
-Imports System.Linq
-Imports System.Runtime.CompilerServices
+﻿Imports System.Runtime.CompilerServices
+Imports std = System.Math
 
 Namespace PaCMAP
     ''' <summary>
@@ -45,7 +43,7 @@ Namespace PaCMAP
         Public Function Sqrt(a As Tensor) As Tensor
             Dim result = New Tensor(a.Shape)
             For i As Integer = 0 To a.Length - 1
-                result.Data(i) = Math.Sqrt(a.Data(i))
+                result.Data(i) = std.Sqrt(a.Data(i))
             Next
             Return result
         End Function
@@ -276,7 +274,7 @@ Namespace PaCMAP
                 If i = axis Then
                     newShape(i) = 1
                 Else
-                    newShape(i) = a.Shape(Math.Min(Threading.Interlocked.Increment(j), j - 1))
+                    newShape(i) = a.Shape(std.Min(Threading.Interlocked.Increment(j), j - 1))
                 End If
             Next
 
@@ -311,7 +309,7 @@ Namespace PaCMAP
         <Extension()>
         Public Function Tile(a As Tensor, reps As Integer()) As Tensor
             ' 计算新形状
-            Dim newShape = New Integer(Math.Max(a.Rank, reps.Length) - 1) {}
+            Dim newShape = New Integer(std.Max(a.Rank, reps.Length) - 1) {}
 
             For i = 0 To newShape.Length - 1
                 Dim aDim = If(i < a.Rank, a.Shape(a.Rank - 1 - i), 1)
@@ -489,7 +487,7 @@ Namespace PaCMAP
                 If i = axis Then
                     newShape(i) = tensors.Length
                 Else
-                    newShape(i) = first.Shape(Math.Min(Threading.Interlocked.Increment(j), j - 1))
+                    newShape(i) = first.Shape(std.Min(Threading.Interlocked.Increment(j), j - 1))
                 End If
             Next
 
@@ -504,7 +502,7 @@ Namespace PaCMAP
                         If k = axis Then
                             newIndices(k) = t
                         Else
-                            newIndices(k) = indices(Math.Min(Threading.Interlocked.Increment(j), j - 1))
+                            newIndices(k) = indices(std.Min(Threading.Interlocked.Increment(j), j - 1))
                         End If
                     Next
                     result.SetValue(tensors(t).Data(i), newIndices)
@@ -873,9 +871,9 @@ Namespace PaCMAP
             ElseIf t.Rank = 2 Then
                 Dim rows As Integer = t.Shape(0)
                 Dim cols As Integer = t.Shape(1)
-                For i = 0 To Math.Min(5, rows) - 1
+                For i = 0 To std.Min(5, rows) - 1
                     Console.Write("[")
-                    For j = 0 To Math.Min(5, cols) - 1
+                    For j = 0 To std.Min(5, cols) - 1
                         Console.Write($"{t.Data(i * cols + j):F4}")
                         If j < cols - 1 Then Console.Write(", ")
                     Next

@@ -1,6 +1,4 @@
-﻿Imports System
-Imports System.Collections.Generic
-Imports System.Linq
+﻿Imports std = System.Math
 
 Namespace PaCMAP
     ''' <summary>
@@ -153,14 +151,14 @@ Namespace PaCMAP
                 If N <= 10000 Then
                     actualNumNeighbourPairs = 10
                 Else
-                    actualNumNeighbourPairs = CInt(Math.Round(10 + 15 * (Math.Log10(N) - 4)))
+                    actualNumNeighbourPairs = CInt(std.Round(10 + 15 * (std.Log10(N) - 4)))
                 End If
             Else
                 actualNumNeighbourPairs = NumNeighbourPairs.Value
             End If
 
-            numMidNearPairs = CInt(Math.Round(actualNumNeighbourPairs * RatioMidNearPairs))
-            numFurtherPairs = CInt(Math.Round(actualNumNeighbourPairs * RatioFurtherPairs))
+            numMidNearPairs = CInt(std.Round(actualNumNeighbourPairs * RatioMidNearPairs))
+            numFurtherPairs = CInt(std.Round(actualNumNeighbourPairs * RatioFurtherPairs))
 
             If actualNumNeighbourPairs < 1 Then
                 Throw New ArgumentException("The number of nearest neighbors can't be less than 1")
@@ -210,7 +208,7 @@ Namespace PaCMAP
                         Do
                             random = _random.Next(N)
                         Loop While random = i
-                        indices(Math.Min(Threading.Interlocked.Increment(idx), idx - 1)) = random
+                        indices(std.Min(Threading.Interlocked.Increment(idx), idx - 1)) = random
                     Next
                 Next
                 samples.Add(New Tensor(indices.[Select](Function(x) CDbl(x)).ToArray(), New Integer() {5, 6, 1}))
@@ -503,7 +501,7 @@ Namespace PaCMAP
 
             For i As Integer = 0 To parameters.Length - 1
                 _accumulatedSquaredGradients.Data(i) += gradients.Data(i) * gradients.Data(i)
-                parameters.Data(i) -= _learningRate * gradients.Data(i) / (Math.Sqrt(_accumulatedSquaredGradients.Data(i)) + epsilon)
+                parameters.Data(i) -= _learningRate * gradients.Data(i) / (std.Sqrt(_accumulatedSquaredGradients.Data(i)) + epsilon)
             Next
         End Sub
     End Class

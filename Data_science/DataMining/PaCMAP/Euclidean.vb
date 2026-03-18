@@ -1,5 +1,5 @@
-﻿Imports System
-Imports System.Runtime.CompilerServices
+﻿Imports System.Runtime.CompilerServices
+Imports std = System.Math
 
 Namespace PaCMAP
     ''' <summary>
@@ -54,7 +54,7 @@ Namespace PaCMAP
                         Dim diff As Double = a.Data(i * d + k) - b.Data(j * d + k)
                         sumSq += diff * diff
                     Next
-                    result.Data(i * m + j) = Math.Sqrt(sumSq)
+                    result.Data(i * m + j) = std.Sqrt(sumSq)
                 Next
             Next
 
