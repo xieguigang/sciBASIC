@@ -133,7 +133,7 @@ Namespace Analysis.Louvain
         ''' <summary>
         ''' 最大迭代次数
         ''' </summary>
-        ReadOnly maxIterations As Integer = 3
+        Protected ReadOnly maxIterations As Integer = 3
 
         Sub New(Optional maxIterations As Integer = 3, Optional eps As Double = 0.00000000000001)
             Me.eps = eps
