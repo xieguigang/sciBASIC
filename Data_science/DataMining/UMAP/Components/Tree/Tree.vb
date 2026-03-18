@@ -114,7 +114,7 @@ Namespace Tree
             Dim hyperplanes = Utils.Range(nNodes).Select(Function(__) New Double(tree.Hyperplane.Length - 1) {}).ToArray()
             Dim offsets = New Double(nNodes - 1) {}
             Dim children = Utils.Range(nNodes).Select(Function(__) {-1, -1}).ToArray()
-            Dim indices = Utils.Range(nLeaves).Select(Function(__) Utils.Range(leafSize).[Select](Function(____) -1).ToArray()).ToArray()
+            Dim indices = Utils.Range(nLeaves).Select(Function(__) Utils.Range(leafSize).Select(Function(____) -1).ToArray()).ToArray()
 
             Call RecursiveFlatten(tree, hyperplanes, offsets, children, indices, 0, 0)
 
@@ -150,7 +150,7 @@ Namespace Tree
             Dim hyperplaneOffset = 0F
             Dim hyperplaneVector = New Double([dim] - 1) {}
 
-            For i = 0 To hyperplaneVector.Length - 1
+            For i As Integer = 0 To hyperplaneVector.Length - 1
                 hyperplaneVector(i) = data(left)(i) - data(right)(i)
                 hyperplaneOffset -= hyperplaneVector(i) * (data(left)(i) + data(right)(i)) / 2
             Next
@@ -163,7 +163,7 @@ Namespace Tree
             Dim nRight = 0
             Dim side = New Integer(indices.Length - 1) {}
 
-            For i = 0 To indices.Length - 1
+            For i As Integer = 0 To indices.Length - 1
                 Dim margin = hyperplaneOffset
 
                 For d = 0 To [dim] - 1
@@ -196,7 +196,7 @@ Namespace Tree
             nLeft = 0
             nRight = 0
 
-            For i = 0 To side.Length - 1
+            For i As Integer = 0 To side.Length - 1
 
                 If side(i) = 0 Then
                     indicesLeft(nLeft) = indices(i)
