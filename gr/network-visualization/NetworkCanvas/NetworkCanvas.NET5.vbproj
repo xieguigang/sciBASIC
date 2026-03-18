@@ -7,7 +7,7 @@
     <AssemblyName>Microsoft.VisualBasic.Data.visualize.Network.Canvas</AssemblyName>
    
     <Platforms>AnyCPU;x64</Platforms>
-    <Configurations>Debug;Release;Rsharp_app_release;mzkit;mzkit_win32</Configurations>
+    <Configurations>Debug;Release;Rsharp_app_release;mzkit;mzkit_win32;CellaLAB-Desktop</Configurations>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
 	  <AssemblyVersion>2.33.*</AssemblyVersion>
 	  <Deterministic>false</Deterministic>

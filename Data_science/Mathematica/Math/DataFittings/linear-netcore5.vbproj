@@ -16,7 +16,7 @@
 		<PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 		<Description>LAPACK (Linear Algebra PACKage)</Description>
-		<Configurations>Debug;Release;Rsharp_app_release;LipidSearch;mzkit;mzkit_win32;gcmodeller_desktop;nuget_release;PlantMAT</Configurations>
+		<Configurations>Debug;Release;Rsharp_app_release;LipidSearch;mzkit;mzkit_win32;gcmodeller_desktop;nuget_release;PlantMAT;CellaLAB-Desktop</Configurations>
 		<AutoGenerateBindingRedirects>True</AutoGenerateBindingRedirects>
 		<GenerateDocumentationFile>True</GenerateDocumentationFile>
 	</PropertyGroup>
@@ -52,6 +52,10 @@
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='gcmodeller_desktop|AnyCPU'">
+	  <DocumentationFile>Microsoft.VisualBasic.Data.Bootstrapping.Fittings.xml</DocumentationFile>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='CellaLAB-Desktop|AnyCPU'">
 	  <DocumentationFile>Microsoft.VisualBasic.Data.Bootstrapping.Fittings.xml</DocumentationFile>
 	</PropertyGroup>
 
@@ -101,6 +105,19 @@
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='gcmodeller_desktop|x64'">
+	  <DocumentationFile>Microsoft.VisualBasic.Data.Bootstrapping.Fittings.xml</DocumentationFile>
+	  <DefineConstants>netcore5=1,UNIX=1</DefineConstants>
+	  <RemoveIntegerChecks>true</RemoveIntegerChecks>
+	  <Optimize>false</Optimize>
+	  <DebugSymbols>true</DebugSymbols>
+	  <DebugType>full</DebugType>
+	  <DefineDebug>false</DefineDebug>
+	  <DefineTrace>true</DefineTrace>
+	  <BaseAddress>4194304</BaseAddress>
+	  <OutputPath>../../../../../../\R-sharp\App\</OutputPath>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='CellaLAB-Desktop|x64'">
 	  <DocumentationFile>Microsoft.VisualBasic.Data.Bootstrapping.Fittings.xml</DocumentationFile>
 	  <DefineConstants>netcore5=1,UNIX=1</DefineConstants>
 	  <RemoveIntegerChecks>true</RemoveIntegerChecks>

@@ -5,7 +5,7 @@
     <TargetFrameworks>net10.0-windows;net10.0</TargetFrameworks>
     <AssemblyName>Microsoft.VisualBasic.MIME.application.rdf_xml</AssemblyName>
     <Platforms>AnyCPU;x64</Platforms>
-    <Configurations>Debug;Release;Rsharp_app_release;mzkit_win32;gcmodeller_desktop;nuget_release;Desktop;MEMI-Desktop</Configurations>
+    <Configurations>Debug;Release;Rsharp_app_release;mzkit_win32;gcmodeller_desktop;nuget_release;Desktop;MEMI-Desktop;CellaLAB-Desktop</Configurations>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <Authors>xieguigang&lt;I@xieguigang.me&gt;</Authors>
     <Product>sciBASIC#</Product>

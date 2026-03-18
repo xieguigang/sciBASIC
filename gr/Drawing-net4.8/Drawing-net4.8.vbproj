@@ -13,7 +13,7 @@
     <Authors>xieguigang</Authors>
     <Company>sciBASIC#</Company>
     <Product>scibasic.net</Product>
-    <Configurations>Debug;Release;nuget_release;Rsharp_app_release;MEMI-Desktop</Configurations>
+    <Configurations>Debug;Release;nuget_release;Rsharp_app_release;MEMI-Desktop;CellaLAB-Desktop</Configurations>
     <Description>This package provides a gdi+ drawing wrapper on windows platform, for make keeps the compability between then skiasharp and system.drawing.common for .NET 8.0 abd .NET 8.0-windows</Description>
     <AssemblyTitle>Gdi+ Image Drawing Helper for Windows Form Project</AssemblyTitle>
     <ApplicationIcon>sciBASIC#.ico</ApplicationIcon>
@@ -51,6 +51,10 @@
     <RemoveIntegerChecks>True</RemoveIntegerChecks>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='CellaLAB-Desktop|AnyCPU'">
+    <RemoveIntegerChecks>True</RemoveIntegerChecks>
+  </PropertyGroup>
+
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <RemoveIntegerChecks>True</RemoveIntegerChecks>
   </PropertyGroup>
@@ -65,6 +69,11 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Rsharp_app_release|x64'">
+    <RemoveIntegerChecks>True</RemoveIntegerChecks>
+    <OutputPath>../../.nuget/</OutputPath>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='CellaLAB-Desktop|x64'">
     <RemoveIntegerChecks>True</RemoveIntegerChecks>
     <OutputPath>../../.nuget/</OutputPath>
   </PropertyGroup>
@@ -127,12 +136,22 @@
     <DebugType>full</DebugType>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='CellaLAB-Desktop|net48|AnyCPU'">
+    <DefineTrace>True</DefineTrace>
+    <DebugType>full</DebugType>
+  </PropertyGroup>
+
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='nuget_release|net8.0-windows|AnyCPU'">
     <DefineTrace>True</DefineTrace>
     <DebugType>full</DebugType>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Rsharp_app_release|net8.0-windows|AnyCPU'">
+    <DefineTrace>True</DefineTrace>
+    <DebugType>full</DebugType>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='CellaLAB-Desktop|net8.0-windows|AnyCPU'">
     <DefineTrace>True</DefineTrace>
     <DebugType>full</DebugType>
   </PropertyGroup>
@@ -147,12 +166,22 @@
     <DebugType>full</DebugType>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='CellaLAB-Desktop|net48|x64'">
+    <DefineTrace>True</DefineTrace>
+    <DebugType>full</DebugType>
+  </PropertyGroup>
+
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='nuget_release|net8.0-windows|x64'">
     <DefineTrace>True</DefineTrace>
     <DebugType>full</DebugType>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Rsharp_app_release|net8.0-windows|x64'">
+    <DefineTrace>True</DefineTrace>
+    <DebugType>full</DebugType>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='CellaLAB-Desktop|net8.0-windows|x64'">
     <DefineTrace>True</DefineTrace>
     <DebugType>full</DebugType>
   </PropertyGroup>
