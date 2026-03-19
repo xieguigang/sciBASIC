@@ -1,13 +1,8 @@
-﻿Imports System
-Imports System.Linq
-
-Namespace GNNSharp
-
-    ''' <summary>
-    ''' 张量类 - GNN中所有数值计算的基础数据结构
-    ''' 支持多维数组的存储和基本数学运算
-    ''' </summary>
-    Public Class Tensor
+﻿''' <summary>
+''' 张量类 - GNN中所有数值计算的基础数据结构
+''' 支持多维数组的存储和基本数学运算
+''' </summary>
+Public Class Tensor
         ''' <summary>
         ''' 存储张量数据的一维数组（行优先顺序）
         ''' </summary>
@@ -452,4 +447,4 @@ Namespace GNNSharp
             Return $"Tensor({String.Join(", ", Shape)})"
         End Function
     End Class
-End Namespace
+

@@ -2,11 +2,13 @@
   <PropertyGroup>
     <OptionInfer>On</OptionInfer>
     <OutputType>Library</OutputType>
-    <TargetFramework>net10.0</TargetFramework>
+    <TargetFrameworks>net10.0;net10.0-windows</TargetFrameworks>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <LangVersion>17.13</LangVersion>
     <DefaultItemExcludes>$(DefaultItemExcludes);$(ProjectDir)**\*.cs</DefaultItemExcludes>
     <Platforms>AnyCPU;x64</Platforms>
+    <AssemblyName>Microsoft.VisualBasic.DeepLearning.GNN</AssemblyName>
+    <RootNamespace>Microsoft.VisualBasic.DeepLearning.GNN</RootNamespace>
   </PropertyGroup>
 </Project>
