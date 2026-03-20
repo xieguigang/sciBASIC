@@ -1,6 +1,7 @@
 ﻿Imports System
 Imports System.Collections.Generic
-Imports System.Linq
+Imports std = System.Math
+Imports Microsoft.VisualBasic.MachineLearning.TensorFlow
 
 
 ''' <summary>
@@ -181,11 +182,11 @@ Public Class AdamOptimizer
                 v(j) = Beta2 * v(j) + (1 - Beta2) * g * g
 
                 ' 偏差修正
-                Dim mHat = m(j) / (1 - CSng(Math.Pow(Beta1, _t)))
-                Dim vHat = v(j) / (1 - CSng(Math.Pow(Beta2, _t)))
+                Dim mHat = m(j) / (1 - CSng(std.Pow(Beta1, _t)))
+                Dim vHat = v(j) / (1 - CSng(std.Pow(Beta2, _t)))
 
                 ' 参数更新
-                param(j) -= LearningRate * mHat / (CSng(Math.Sqrt(vHat)) + Epsilon)
+                param(j) -= LearningRate * mHat / (CSng(std.Sqrt(vHat)) + Epsilon)
             Next
         Next
     End Sub
@@ -487,7 +488,7 @@ Public Class Trainer
             ' 对于Softmax + CrossEntropy，梯度 = probs - one_hot(label)
             For j = 0 To probs.Shape(1) - 1
                 If j = labels(i) Then
-                    totalLoss -= CSng(Math.Log(Math.Max(probs(i, j), 0.0000001F)))
+                    totalLoss -= CSng(std.Log(std.Max(probs(i, j), 0.0000001F)))
                     gradient(i, j) = probs(i, j) - 1
                 Else
                     gradient(i, j) = probs(i, j)
@@ -605,7 +606,7 @@ Public Class GraphClassificationTrainer
 
             For j = 0 To probs.Shape(1) - 1
                 If j = label Then
-                    loss = -CSng(Math.Log(Math.Max(probs(0, j), 0.0000001F)))
+                    loss = -CSng(std.Log(std.Max(probs(0, j), 0.0000001F)))
                     gradient(0, j) = probs(0, j) - 1
                 Else
                     gradient(0, j) = probs(0, j)

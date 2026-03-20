@@ -1,8 +1,11 @@
+
+Imports Microsoft.VisualBasic.MachineLearning.TensorFlow
+Imports std = System.Math
+
 ''' <summary>
 ''' 时序图神经网络模型
 ''' 结合GNN和RNN的能力，处理动态图的时间序列数据
 ''' </summary>
-
 ''' <summary>
 ''' 时序GNN模型基类
 ''' </summary>
@@ -310,7 +313,7 @@ Public Class A3TGCNModel
             For i = 0 To _gruLayer.HiddenSize - 1
                 score += _gruAllHidden(t, 0, i) * _attentionWeights(i)
             Next
-            _attentionScores(t) = CSng(Math.Exp(score)) ' softmax的分子
+            _attentionScores(t) = CSng(std.Exp(score)) ' softmax的分子
             scoreSum += _attentionScores(t)
         Next
 
@@ -542,14 +545,14 @@ Public Class TimeSeriesUtils
                                 Dim diff = nodeFeatures(i, f) - nodeFeatures(j, f)
                                 dist += diff * diff
                             Next
-                            distances.Add((j, CSng(Math.Sqrt(dist))))
+                            distances.Add((j, CSng(std.Sqrt(dist))))
                         End If
                     Next
 
                     distances.Sort(Function(a, b) a.dist.CompareTo(b.dist))
-                    For k = 0 To Math.Min(knnK - 1, distances.Count - 1)
+                    For k = 0 To std.Min(knnK - 1, distances.Count - 1)
                         Dim j = distances(k).index
-                        Dim weight = CSng(Math.Exp(-distances(k).dist / 2))
+                        Dim weight = CSng(std.Exp(-distances(k).dist / 2))
                         graph.AddUndirectedEdge(i, j, weight)
                     Next
                 Next
@@ -575,7 +578,7 @@ Public Class TimeSeriesUtils
     Public Shared Function MAE(predicted As Tensor, target As Tensor) As Single
         Dim sum As Single = 0
         For i = 0 To predicted.Length - 1
-            sum += Math.Abs(predicted(i) - target(i))
+            sum += std.Abs(predicted(i) - target(i))
         Next
         Return sum / predicted.Length
     End Function
@@ -589,7 +592,7 @@ Public Class TimeSeriesUtils
             Dim diff = predicted(i) - target(i)
             sumSquares += diff * diff
         Next
-        Return CSng(Math.Sqrt(sumSquares / predicted.Length))
+        Return CSng(std.Sqrt(sumSquares / predicted.Length))
     End Function
 
     ''' <summary>
@@ -600,8 +603,8 @@ Public Class TimeSeriesUtils
         Dim count As Integer = 0
 
         For i = 0 To predicted.Length - 1
-            If Math.Abs(target(i)) > 0.0001F Then
-                sum += Math.Abs((predicted(i) - target(i)) / target(i))
+            If std.Abs(target(i)) > 0.0001F Then
+                sum += std.Abs((predicted(i) - target(i)) / target(i))
                 count += 1
             End If
         Next

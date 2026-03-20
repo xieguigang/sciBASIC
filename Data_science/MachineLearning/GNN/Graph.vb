@@ -1,4 +1,7 @@
-﻿''' <summary>
+﻿Imports Microsoft.VisualBasic.MachineLearning.TensorFlow
+Imports std = System.Math
+
+''' <summary>
 ''' 图的边结构
 ''' 表示图中两个节点之间的连接关系
 ''' </summary>
@@ -204,7 +207,7 @@ Public Class Graph
         ' 计算D^(-1/2)
         Dim dInvSqrt = New Single(NumNodes - 1) {}
         For i = 0 To NumNodes - 1
-            dInvSqrt(i) = If(degree(i) > 0, CSng(1.0 / Math.Sqrt(degree(i))), 0)
+            dInvSqrt(i) = If(degree(i) > 0, CSng(1.0 / std.Sqrt(degree(i))), 0)
         Next
 
         ' 计算 D^(-1/2) * A * D^(-1/2)

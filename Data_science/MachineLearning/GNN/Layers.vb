@@ -1,4 +1,7 @@
-﻿''' <summary>
+﻿Imports Microsoft.VisualBasic.MachineLearning.TensorFlow
+Imports std = System.Math
+
+''' <summary>
 ''' 神经网络层基类
 ''' 定义了所有层必须实现的接口
 ''' </summary>
@@ -530,11 +533,11 @@ Public Class GATLayer
 
                 Dim sumExp As Single = 0
                 For Each j In neighbors
-                    sumExp += CSng(Math.Exp(_attentionWeights(j, i, h) - maxScore))
+                    sumExp += CSng(std.Exp(_attentionWeights(j, i, h) - maxScore))
                 Next
 
                 For Each j In neighbors
-                    Dim expScore As Single = Math.Exp(_attentionWeights(j, i, h) - maxScore)
+                    Dim expScore As Single = std.Exp(_attentionWeights(j, i, h) - maxScore)
                     normalizedAttention(j, i, h) = expScore / sumExp
                 Next
             Next

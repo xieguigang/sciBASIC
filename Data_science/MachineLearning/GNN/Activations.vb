@@ -1,4 +1,7 @@
-﻿''' <summary>
+﻿Imports Microsoft.VisualBasic.MachineLearning.TensorFlow
+Imports std = System.Math
+
+''' <summary>
 ''' 激活函数集合
 ''' 激活函数为神经网络引入非线性，使网络能够学习复杂的模式
 ''' </summary>
@@ -9,7 +12,7 @@ Public Module Activation
     ''' 缺点：存在"死亡ReLU"问题（负值永远为0）
     ''' </summary>
     Public Function ReLU(x As Single) As Single
-        Return Math.Max(0, x)
+        Return std.Max(0, x)
     End Function
 
     ''' <summary>
@@ -28,7 +31,7 @@ Public Module Activation
         ' 防止数值溢出
         If x > 20 Then Return 1.0F
         If x < -20 Then Return 0.0F
-        Return 1.0F / (1.0F + CSng(Math.Exp(-x)))
+        Return 1.0F / (1.0F + CSng(std.Exp(-x)))
     End Function
 
     ''' <summary>
@@ -45,7 +48,7 @@ Public Module Activation
     ''' 零中心化，收敛速度通常比sigmoid快
     ''' </summary>
     Public Function Tanh(x As Single) As Single
-        Return Math.Tanh(x)
+        Return std.Tanh(x)
     End Function
 
     ''' <summary>
@@ -85,7 +88,7 @@ Public Module Activation
         Dim sumExp As Single = 0
 
         For i = 0 To input.Length - 1
-            expValues(i) = CSng(Math.Exp(input(i) - maxVal))
+            expValues(i) = CSng(std.Exp(input(i) - maxVal))
             sumExp += expValues(i)
         Next
 
@@ -214,8 +217,8 @@ Public Module Loss
         Dim epsilon = 0.0000001F ' 防止log(0)
 
         For i = 0 To predicted.Length - 1
-            Dim p = Math.Max(Math.Min(predicted(i), 1 - epsilon), epsilon)
-            loss -= target(i) * CSng(Math.Log(p))
+            Dim p = std.Max(std.Min(predicted(i), 1 - epsilon), epsilon)
+            loss -= target(i) * CSng(std.Log(p))
         Next
 
         Return loss / predicted.Shape(0) ' 平均每个样本的损失
@@ -227,8 +230,8 @@ Public Module Loss
     ''' </summary>
     Public Function BinaryCrossEntropy(predicted As Single, target As Single) As Single
         Dim epsilon = 0.0000001F
-        Dim p = Math.Max(Math.Min(predicted, 1 - epsilon), epsilon)
-        Return -(target * CSng(Math.Log(p)) + (1 - target) * CSng(Math.Log(1 - p)))
+        Dim p = std.Max(std.Min(predicted, 1 - epsilon), epsilon)
+        Return -(target * CSng(std.Log(p)) + (1 - target) * CSng(std.Log(1 - p)))
     End Function
 
     ''' <summary>
@@ -244,10 +247,10 @@ Public Module Loss
 
         Dim sumExp As Single = 0
         For i = 0 To logits.Shape(1) - 1
-            sumExp += CSng(Math.Exp(logits(0, i) - maxLogit))
+            sumExp += CSng(std.Exp(logits(0, i) - maxLogit))
         Next
 
-        Dim logSumExp = maxLogit + CSng(Math.Log(sumExp))
+        Dim logSumExp = maxLogit + CSng(std.Log(sumExp))
         Return logSumExp - logits(0, targetClass)
     End Function
 

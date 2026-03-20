@@ -1,3 +1,6 @@
+Imports Microsoft.VisualBasic.MachineLearning.TensorFlow
+Imports std = System.Math
+
 ''' <summary>
 ''' 时序图数据结构
 ''' 支持动态图的时间序列表示，每个时间步对应一个图快照
@@ -375,16 +378,16 @@ Public Class TemporalGraphBuilder
                         Dim diff = avgFeatures(i, d) - avgFeatures(j, d)
                         dist += diff * diff
                     Next
-                    distances.Add((j, CSng(Math.Sqrt(dist))))
+                    distances.Add((j, CSng(std.Sqrt(dist))))
                 End If
             Next
 
             ' 选择k个最近邻
             distances.Sort(Function(a, b) a.dist.CompareTo(b.dist))
-            For idx = 0 To Math.Min(k - 1, distances.Count - 1)
+            For idx = 0 To std.Min(k - 1, distances.Count - 1)
                 Dim j = distances(idx).index
                 ' 使用高斯核函数计算边权重
-                Dim weight = CSng(Math.Exp(-distances(idx).dist * distances(idx).dist / 2))
+                Dim weight = CSng(std.Exp(-distances(idx).dist * distances(idx).dist / 2))
                 adj(i, j) = weight
                 adj(j, i) = weight ' 无向图
             Next

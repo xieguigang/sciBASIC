@@ -1,8 +1,11 @@
+
+Imports Microsoft.VisualBasic.MachineLearning.TensorFlow
+Imports std = System.Math
+
 ''' <summary>
 ''' 循环神经网络层
 ''' 实现RNN、GRU等循环层，用于处理时间序列数据
 ''' </summary>
-
 ''' <summary>
 ''' GRU层（门控循环单元）
 ''' 论文: Learning Phrase Representations using RNN Encoder-Decoder (Cho et al., 2014)
@@ -83,7 +86,7 @@ Public Class GRULayer
         MyBase.Name = If(name, $"GRU_{inputSize}_{hiddenSize}")
 
         ' 初始化权重（使用Xavier初始化）
-        Dim stdDev = Math.Sqrt(2.0 / (inputSize + hiddenSize))
+        Dim stdDev = std.Sqrt(2.0 / (inputSize + hiddenSize))
 
         ' 更新门权重
         _Wz = Tensor.RandomNormal(New Integer() {hiddenSize, inputSize}, 0, CSng(stdDev))
@@ -391,13 +394,13 @@ Public Class GRULayer
         Return x.Apply(Function(v)
                            If v > 20 Then Return 1.0F
                            If v < -20 Then Return 0.0F
-                           Return CSng(1.0 / (1.0 + Math.Exp(-v)))
+                           Return CSng(1.0 / (1.0 + std.Exp(-v)))
                        End Function)
     End Function
 
     Private Function SigmoidDerivative(x As Tensor) As Tensor
         Return x.Apply(Function(v)
-                           Dim s = If(v > 20, 1.0F, If(v < -20, 0.0F, CSng(1.0 / (1.0 + Math.Exp(-v)))))
+                           Dim s = If(v > 20, 1.0F, If(v < -20, 0.0F, CSng(1.0 / (1.0 + std.Exp(-v)))))
                            Return s * (1 - s)
                        End Function)
     End Function
@@ -406,12 +409,12 @@ Public Class GRULayer
     ''' Tanh激活函数
     ''' </summary>
     Private Function Tanh(x As Tensor) As Tensor
-        Return x.Apply(Function(v) CSng(Math.Tanh(v)))
+        Return x.Apply(Function(v) CSng(std.Tanh(v)))
     End Function
 
     Private Function TanhDerivative(x As Tensor) As Tensor
         Return x.Apply(Function(v)
-                           Dim t = CSng(Math.Tanh(v))
+                           Dim t = CSng(std.Tanh(v))
                            Return 1 - t * t
                        End Function)
     End Function
@@ -491,7 +494,7 @@ Public Class SimpleRNNLayer
         Me.HiddenSize = hiddenSize
         MyBase.Name = If(name, $"RNN_{inputSize}_{hiddenSize}")
 
-        Dim stdDev = Math.Sqrt(2.0 / (inputSize + hiddenSize))
+        Dim stdDev = std.Sqrt(2.0 / (inputSize + hiddenSize))
         _W = Tensor.RandomNormal(New Integer() {hiddenSize, inputSize}, 0, CSng(stdDev))
         _U = Tensor.RandomNormal(New Integer() {hiddenSize, hiddenSize}, 0, CSng(stdDev))
         _b = New Tensor(hiddenSize)
@@ -541,7 +544,7 @@ Public Class SimpleRNNLayer
             h = New Tensor(batchSize, HiddenSize)
             For i = 0 To batchSize - 1
                 For j = 0 To HiddenSize - 1
-                    h(i, j) = CSng(Math.Tanh(Wx(i, j) + Uh(i, j) + _b(j)))
+                    h(i, j) = CSng(std.Tanh(Wx(i, j) + Uh(i, j) + _b(j)))
                 Next
             Next
 

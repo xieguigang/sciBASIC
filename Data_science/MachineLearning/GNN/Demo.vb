@@ -1,3 +1,6 @@
+Imports Microsoft.VisualBasic.MachineLearning.TensorFlow
+Imports std = System.Math
+
 ''' <summary>
 ''' 时序图神经网络演示程序
 ''' 展示如何使用T-GCN模型进行时间序列预测
@@ -211,7 +214,7 @@ Public Module TemporalGNNDemo
         For t = 0 To numTimeSteps - 1
             For n = 0 To numNodes - 1
                 ' 基础流量 + 周期性变化 + 随机噪声
-                Dim periodic = 30 * Math.Sin(2 * Math.PI * (t + phases(n)) / periods(n))
+                Dim periodic = 30 * std.Sin(2 * std.PI * (t + phases(n)) / periods(n))
                 Dim noise = (CSng(random.NextDouble()) - 0.5F) * 20
                 data(t, n) = baseFlows(n) + CSng(periodic) + noise
             Next
@@ -261,7 +264,7 @@ Public Module TemporalGNNDemo
         For t = 0 To numTimeSteps - 1
             For s = 0 To numSensors - 1
                 ' 日周期性变化
-                Dim daily = 5 * Math.Sin(2 * Math.PI * t / 24)
+                Dim daily = 5 * std.Sin(2 * std.PI * t / 24)
                 ' 传感器间的相关性
                 Dim correlation = If(s > 0, 0.3F * (data(t, s - 1) - baseTemps(s - 1)), 0)
                 ' 随机噪声
@@ -289,7 +292,7 @@ Public Module TemporalGNNDemo
         Dim count As Integer = 0
 
         ' 评估最后10个样本
-        Dim evalStart = Math.Max(0, dataset.Count - 10)
+        Dim evalStart = std.Max(0, dataset.Count - 10)
 
         For i = evalStart To dataset.Count - 1
             Dim graph = dataset(i)

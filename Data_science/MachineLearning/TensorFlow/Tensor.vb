@@ -1,4 +1,6 @@
-﻿''' <summary>
+﻿Imports std = System.Math
+
+''' <summary>
 ''' 张量类 - GNN中所有数值计算的基础数据结构
 ''' 支持多维数组的存储和基本数学运算
 ''' </summary>
@@ -152,7 +154,7 @@ Public Class Tensor
             ' Box-Muller变换生成正态分布随机数
             Dim u1 As Double = 1.0 - random.NextDouble()
             Dim u2 As Double = 1.0 - random.NextDouble()
-            Dim randStdNormal = Math.Sqrt(-2.0 * Math.Log(u1)) * Math.Sin(2.0 * Math.PI * u2)
+            Dim randStdNormal = std.Sqrt(-2.0 * std.Log(u1)) * std.Sin(2.0 * std.PI * u2)
             tensor._data(i) = CSng(mean + stdDev * randStdNormal)
         Next
         Return tensor
@@ -162,7 +164,7 @@ Public Class Tensor
     ''' Xavier初始化 - 适用于sigmoid/tanh激活函数
     ''' </summary>
     Public Shared Function XavierInit(fanIn As Integer, fanOut As Integer, Optional seed As Integer? = Nothing) As Tensor
-        Dim stdDev As Single = Math.Sqrt(2.0 / (fanIn + fanOut))
+        Dim stdDev As Single = std.Sqrt(2.0 / (fanIn + fanOut))
         Return RandomNormal(New Integer() {fanIn, fanOut}, 0.0F, stdDev, seed)
     End Function
 
@@ -170,7 +172,7 @@ Public Class Tensor
     ''' He初始化 - 适用于ReLU激活函数
     ''' </summary>
     Public Shared Function HeInit(fanIn As Integer, fanOut As Integer, Optional seed As Integer? = Nothing) As Tensor
-        Dim stdDev As Single = Math.Sqrt(2.0 / fanIn)
+        Dim stdDev As Single = std.Sqrt(2.0 / fanIn)
         Return RandomNormal(New Integer() {fanIn, fanOut}, 0.0F, stdDev, seed)
     End Function
 
@@ -352,7 +354,7 @@ Public Class Tensor
         For i = 0 To Length - 1
             sumSquares += _data(i) * _data(i)
         Next
-        Return Math.Sqrt(sumSquares)
+        Return std.Sqrt(sumSquares)
     End Function
 
 #End Region
