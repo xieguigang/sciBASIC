@@ -1,4 +1,5 @@
-﻿Imports std = System.Math
+﻿Imports Microsoft.VisualBasic.MachineLearning.TensorFlow
+Imports std = System.Math
 
 Namespace PaCMAP
     ''' <summary>
@@ -400,7 +401,7 @@ Namespace PaCMAP
         ''' Compute numerical gradient
         ''' </summary>
         Private Function ComputeNumericalGradient(loss As Tensor) As Tensor
-            Const epsilon = 1e-5
+            Const epsilon = 0.00001
             Dim gradients = New Tensor(Y.Shape)
 
             For i As Integer = 0 To Y.Length - 1
@@ -497,7 +498,7 @@ Namespace PaCMAP
             ' Adagrad更新规则:
             ' accumulated_sq_grad += gradient^2
             ' parameter -= learning_rate * gradient / sqrt(accumulated_sq_grad + epsilon)
-            Const epsilon = 1e-8
+            Const epsilon = 0.00000001
 
             For i As Integer = 0 To parameters.Length - 1
                 _accumulatedSquaredGradients.Data(i) += gradients.Data(i) * gradients.Data(i)
