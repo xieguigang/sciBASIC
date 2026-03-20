@@ -4,6 +4,7 @@
     <RootNamespace>Microsoft.VisualBasic.DeepLearning.LiquidNeuralNetwork</RootNamespace>
     <TargetFramework>net10.0</TargetFramework>
     <AssemblyName>Microsoft.VisualBasic.DeepLearning.LNN</AssemblyName>
+    <Platforms>AnyCPU;x64</Platforms>
   </PropertyGroup>
 
   <ItemGroup>
