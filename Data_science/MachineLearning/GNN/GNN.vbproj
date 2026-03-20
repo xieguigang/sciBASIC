@@ -11,4 +11,7 @@
     <AssemblyName>Microsoft.VisualBasic.DeepLearning.GNN</AssemblyName>
     <RootNamespace>Microsoft.VisualBasic.DeepLearning.GNN</RootNamespace>
   </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\TensorFlow\TensorFlow.vbproj" />
+  </ItemGroup>
 </Project>
