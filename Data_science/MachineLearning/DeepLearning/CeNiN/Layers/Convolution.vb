@@ -1,66 +1,66 @@
 ﻿#Region "Microsoft.VisualBasic::c26a2fd5bf5c2949f129a0feb960cc82, Data_science\MachineLearning\DeepLearning\CeNiN\Layers\Convolution.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 150
-    '    Code Lines: 116 (77.33%)
-    ' Comment Lines: 1 (0.67%)
-    '    - Xml Docs: 0.00%
-    ' 
-    '   Blank Lines: 33 (22.00%)
-    '     File Size: 5.36 KB
+' Summaries:
 
 
-    '     Class Convolution
-    ' 
-    '         Properties: type
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    ' 
-    '         Function: layerFeedNext
-    ' 
-    '         Sub: setOutputDims
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 150
+'    Code Lines: 116 (77.33%)
+' Comment Lines: 1 (0.67%)
+'    - Xml Docs: 0.00%
+' 
+'   Blank Lines: 33 (22.00%)
+'     File Size: 5.36 KB
+
+
+'     Class Convolution
+' 
+'         Properties: type
+' 
+'         Constructor: (+1 Overloads) Sub New
+' 
+'         Function: layerFeedNext
+' 
+'         Sub: setOutputDims
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Threading
 Imports Microsoft.VisualBasic.Language
-Imports Microsoft.VisualBasic.Math.LinearAlgebra
+Imports Microsoft.VisualBasic.MachineLearning.TensorFlow
 Imports std = System.Math
 
 Namespace Convolutional
@@ -104,7 +104,7 @@ Namespace Convolutional
             Dim i = 0
 
             While i < mCountH
-                possibleH.data(++j) = i
+                possibleH.Data(++j) = i
                 i += stride(0)
             End While
 
@@ -114,7 +114,7 @@ Namespace Convolutional
             i = 0
 
             While i < mCountW
-                possibleW.data(++j) = i
+                possibleW.Data(++j) = i
                 i += stride(1)
             End While
 
@@ -125,20 +125,20 @@ Namespace Convolutional
             possibleH = New Tensor(New Integer() {filterHeight, 1})
 
             For i = 0 To filterHeight - 1
-                possibleH.data(i) = i
+                possibleH.Data(i) = i
             Next
 
             possibleW = New Tensor(New Integer() {1, filterWidth})
 
             For i = 0 To filterWidth - 1
-                possibleW.data(i) = i
+                possibleW.Data(i) = i
             Next
 
             Dim offsets = possibleW + possibleH * inputWidth
             possibleH.Dispose()
             possibleW.Dispose()
-            startingIndexes.reshape(New Integer() {startingIndexes.TotalLength, 1})
-            offsets.reshape(New Integer() {1, offsets.TotalLength})
+            startingIndexes.Reshape(New Integer() {startingIndexes.TotalLength, 1})
+            offsets.Reshape(New Integer() {1, offsets.TotalLength})
             Dim allIndexes = startingIndexes + offsets
             startingIndexes.Dispose()
             offsets.Dispose()
@@ -162,14 +162,14 @@ Namespace Convolutional
                     aioInd = (fH_fW_ch + m) * outputH_W
 
                     For k = 0 To outputH_W - 1
-                        tmp = CInt(allIndexes.data(++aiInd)) + h_W_ch
-                        allInOne.data(++aioInd) = inputTensor.data(tmp)
+                        tmp = CInt(allIndexes.Data(++aiInd)) + h_W_ch
+                        allInOne.Data(++aioInd) = inputTensor.Data(tmp)
                     Next
                 Next
             Next
 
             allIndexes.Dispose()
-            nextLayer.inputTensor.reshape(New Integer() {allInOne.Dimensions(0), filterCount})
+            nextLayer.inputTensor.Reshape(New Integer() {allInOne.Dimensions(0), filterCount})
 
             Dim x = allInOne.Dimensions(1)
             Dim y = filterCount
@@ -188,18 +188,18 @@ Namespace Convolutional
                          For h = 0 To x - 1
                              aioInd_ = h * z + g
                              weightsInd_ = f * x + h
-                             sum += weights.data(weightsInd_) * allInOne.data(aioInd_)
+                             sum += weights.Data(weightsInd_) * allInOne.Data(aioInd_)
                          Next
 
                          outputInd_ = f * z + g
 
-                         SyncLock nextLayer.inputTensor.data
-                             nextLayer.inputTensor.data(outputInd_) = sum + biases.data(f)
+                         SyncLock nextLayer.inputTensor.Data
+                             nextLayer.inputTensor.Data(outputInd_) = sum + biases.Data(f)
                          End SyncLock
                      Next
                  End Sub)
 
-            Call nextLayer.inputTensor.reshape(outputDims)
+            Call nextLayer.inputTensor.Reshape(outputDims)
             Call allInOne.Dispose()
 
             Call disposeInputTensor()

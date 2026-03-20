@@ -1,64 +1,64 @@
 ﻿#Region "Microsoft.VisualBasic::5e957d215ed83b17cea435b04555b244, Data_science\MachineLearning\DeepLearning\CeNiN\CeNiN.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 208
-    '    Code Lines: 148 (71.15%)
-    ' Comment Lines: 11 (5.29%)
-    '    - Xml Docs: 100.00%
-    ' 
-    '   Blank Lines: 49 (23.56%)
-    '     File Size: 6.83 KB
+' Summaries:
 
 
-    '     Class CeNiN
-    ' 
-    '         Properties: inputSize
-    ' 
-    '         Constructor: (+2 Overloads) Sub New
-    '         Function: loadConvolutionLayer, (+2 Overloads) LoadFile, loadModel, loadPoolLayer, ToString
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 208
+'    Code Lines: 148 (71.15%)
+' Comment Lines: 11 (5.29%)
+'    - Xml Docs: 100.00%
+' 
+'   Blank Lines: 49 (23.56%)
+'     File Size: 6.83 KB
+
+
+'     Class CeNiN
+' 
+'         Properties: inputSize
+' 
+'         Constructor: (+2 Overloads) Sub New
+'         Function: loadConvolutionLayer, (+2 Overloads) LoadFile, loadModel, loadPoolLayer, ToString
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports System.Text
-Imports Microsoft.VisualBasic.Math.LinearAlgebra
+Imports Microsoft.VisualBasic.MachineLearning.TensorFlow
 
 Namespace Convolutional
 
@@ -128,14 +128,14 @@ Namespace Convolutional
             cLayer.weights = New Tensor(dims)
 
             For i = 0 To cLayer.weights.TotalLength - 1
-                cLayer.weights.data(i) = br.ReadSingle()
+                cLayer.weights.Data(i) = br.ReadSingle()
             Next
 
             totalWeightCount += cLayer.weights.TotalLength
             cLayer.biases = New Tensor(New Integer() {dims(3)})
 
             For i = 0 To cLayer.biases.TotalLength - 1
-                cLayer.biases.data(i) = br.ReadSingle()
+                cLayer.biases.Data(i) = br.ReadSingle()
             Next
 
             totalBiasCount += cLayer.biases.TotalLength

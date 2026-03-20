@@ -56,7 +56,7 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
-Imports stdNum = System.Math
+Imports std = System.Math
 
 Namespace Convolutional
 
@@ -77,16 +77,16 @@ Namespace Convolutional
             Dim max = Single.MinValue
 
             For i As Integer = 0 To inputTensor.TotalLength - 1
-                If inputTensor.data(i) > max Then
-                    max = inputTensor.data(i)
+                If inputTensor.Data(i) > max Then
+                    max = inputTensor.Data(i)
                 End If
             Next
 
             Dim sum As Single = 0
-            Dim nLMR As Single() = nextLayer.inputTensor.data
+            Dim nLMR As Double() = nextLayer.inputTensor.Data
 
             For i As Integer = 0 To inputTensor.TotalLength - 1
-                nLMR(i) = CSng(stdNum.Exp(inputTensor.data(i) - max))
+                nLMR(i) = std.Exp(inputTensor.Data(i) - max)
                 sum += nLMR(i)
             Next
 
