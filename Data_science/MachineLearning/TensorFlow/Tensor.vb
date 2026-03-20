@@ -4,16 +4,27 @@
 ''' 张量类 - GNN中所有数值计算的基础数据结构
 ''' 支持多维数组的存储和基本数学运算
 ''' </summary>
-Public Class Tensor
+Public Class Tensor : Implements ICloneable, IDisposable
+
     ''' <summary>
     ''' 存储张量数据的一维数组（行优先顺序）
     ''' </summary>
-    Private ReadOnly _data As Single()
+    ReadOnly _data As Single()
 
     ''' <summary>
     ''' 张量的形状（各维度大小）
     ''' </summary>
     Public ReadOnly Property Shape As Integer()
+
+    ''' <summary>
+    ''' 底层数据数组
+    ''' Underlying data array
+    ''' </summary>
+    Public ReadOnly Property Data As Single()
+        Get
+            Return _data
+        End Get
+    End Property
 
     ''' <summary>
     ''' 张量的维度数
@@ -77,6 +88,18 @@ Public Class Tensor
     End Property
 
     ''' <summary>
+    ''' 是否为变量（可训练）
+    ''' Whether this is a variable (trainable)
+    ''' </summary>
+    Public Property IsVariable As Boolean = False
+
+    ''' <summary>
+    ''' 梯度（用于反向传播）
+    ''' Gradient for backpropagation
+    ''' </summary>
+    Public Property Gradient As Tensor
+
+    ''' <summary>
     ''' 创建指定形状的张量，并用零初始化
     ''' </summary>
     ''' <param name="shape">张量的形状</param>
@@ -94,6 +117,28 @@ Public Class Tensor
     Public Sub New(data As Single(), ParamArray shape As Integer())
         Me.Shape = CType(shape.Clone(), Integer())
         _data = CType(data.Clone(), Single())
+
+        Dim expectedSize = shape.Aggregate(1, Function(a, b) a * b)
+        If data.Length <> expectedSize Then
+            Throw New ArgumentException($"Data length {data.Length} does not match shape {String.Join(",", shape)}")
+        End If
+    End Sub
+
+    ''' <summary>
+    ''' 从二维数组创建张量
+    ''' Create tensor from 2D array
+    ''' </summary>
+    Public Sub New(data As Double(,))
+        Dim rows = data.GetLength(0)
+        Dim cols = data.GetLength(1)
+        _Shape = New Integer() {rows, cols}
+        _data = New Double(rows * cols - 1) {}
+
+        For i = 0 To rows - 1
+            For j = 0 To cols - 1
+                _data(i * cols + j) = data(i, j)
+            Next
+        Next
     End Sub
 
     ''' <summary>
@@ -109,6 +154,84 @@ Public Class Tensor
             Next
         Next
         Return result
+    End Function
+
+    ''' <summary>
+    ''' 克隆张量
+    ''' Clone tensor
+    ''' </summary>
+    ''' <remarks>
+    ''' <see cref="Tensor"/>
+    ''' </remarks>
+    Public Function Clone() As Object Implements ICloneable.Clone
+        Return New Tensor(CType(_data.Clone(), Double()), CType(_Shape.Clone(), Integer()))
+    End Function
+
+    ''' <summary>
+    ''' 获取指定索引的值
+    ''' Get value at specified indices
+    ''' </summary>
+    Public Function GetValue(ParamArray indices As Integer()) As Double
+        Dim flatIndex = GetFlatIndex(indices)
+        Return _data(flatIndex)
+    End Function
+
+    ''' <summary>
+    ''' 设置指定索引的值
+    ''' Set value at specified indices
+    ''' </summary>
+    Public Sub SetValue(value As Double, ParamArray indices As Integer())
+        Dim flatIndex = GetFlatIndex(indices)
+        _data(flatIndex) = value
+    End Sub
+
+    ''' <summary>
+    ''' 创建变量张量
+    ''' Create variable tensor
+    ''' </summary>
+    Public Shared Function Variable(value As Tensor) As Tensor
+        Dim lVariable = CType(value.Clone(), Tensor)
+        lVariable.IsVariable = True
+        Return lVariable
+    End Function
+
+    ''' <summary>
+    ''' 将多维索引转换为扁平索引
+    ''' Convert multi-dimensional indices to flat index
+    ''' </summary>
+    Public Function GetFlatIndex(ParamArray indices As Integer()) As Integer
+        If indices.Length <> Rank Then
+            Throw New ArgumentException($"Expected {Rank} indices, got {indices.Length}")
+        End If
+
+        Dim flatIndex = 0
+        Dim multiplier = 1
+
+        For i = Rank - 1 To 0 Step -1
+            If indices(i) < 0 OrElse indices(i) >= _Shape(i) Then
+                Throw New IndexOutOfRangeException($"Index {indices(i)} out of bounds for dimension {i} with size {_Shape(i)}")
+            End If
+            flatIndex += indices(i) * multiplier
+            multiplier *= _Shape(i)
+        Next
+
+        Return flatIndex
+    End Function
+
+    ''' <summary>
+    ''' 将扁平索引转换为多维索引
+    ''' Convert flat index to multi-dimensional indices
+    ''' </summary>
+    Public Function GetIndices(flatIndex As Integer) As Integer()
+        Dim indices = New Integer(Rank - 1) {}
+        Dim remaining = flatIndex
+
+        For i = Rank - 1 To 0 Step -1
+            indices(i) = remaining Mod _Shape(i)
+            remaining /= _Shape(i)
+        Next
+
+        Return indices
     End Function
 
     ''' <summary>
@@ -134,6 +257,9 @@ Public Class Tensor
     ''' <summary>
     ''' 创建随机张量（均匀分布）
     ''' </summary>
+    ''' <remarks>
+    ''' RandomUniform
+    ''' </remarks>
     Public Shared Function Random(shape As Integer(), Optional min As Single = -1.0F, Optional max As Single = 1.0F, Optional seed As Integer? = Nothing) As Tensor
         Dim lRandom = If(seed.HasValue, New Random(seed.Value), New Random())
         Dim tensor = New Tensor(shape)
@@ -157,6 +283,22 @@ Public Class Tensor
             Dim randStdNormal = std.Sqrt(-2.0 * std.Log(u1)) * std.Sin(2.0 * std.PI * u2)
             tensor._data(i) = CSng(mean + stdDev * randStdNormal)
         Next
+        Return tensor
+    End Function
+
+
+    ''' <summary>
+    ''' 创建整数范围张量
+    ''' Create integer range tensor
+    ''' </summary>
+    Public Shared Function Range(start As Integer, [end] As Integer, Optional [step] As Integer = 1) As Tensor
+        Dim count As Integer = ([end] - start + [step] - 1) / [step]
+        Dim tensor = New Tensor(New Integer() {count})
+
+        For i = 0 To count - 1
+            tensor._data(i) = start + i * [step]
+        Next
+
         Return tensor
     End Function
 
@@ -374,13 +516,6 @@ Public Class Tensor
 #End Region
 
     ''' <summary>
-    ''' 深拷贝
-    ''' </summary>
-    Public Function Clone() As Tensor
-        Return New Tensor(_data, Shape)
-    End Function
-
-    ''' <summary>
     ''' 获取原始数据数组的副本
     ''' </summary>
     Public Function ToArray() As Single()
@@ -445,8 +580,55 @@ Public Class Tensor
         End If
     End Sub
 
-    Public Overrides Function ToString() As String
-        Return $"Tensor({String.Join(", ", Shape)})"
+    ''' <summary>
+    ''' 创建标量张量
+    ''' Create scalar tensor
+    ''' </summary>
+    Public Shared Function Scalar(value As Double) As Tensor
+        Dim tensor = New Tensor(New Integer() {1})
+        tensor._data(0) = value
+        Return tensor
     End Function
+
+    ''' <summary>
+    ''' 创建全零张量
+    ''' Create zero tensor
+    ''' </summary>
+    Public Shared Function Zeros(shape As Integer()) As Tensor
+        Return New Tensor(shape)
+    End Function
+
+    ''' <summary>
+    ''' 创建全一张量
+    ''' Create ones tensor
+    ''' </summary>
+    Public Shared Function Ones(shape As Integer()) As Tensor
+        Dim tensor = New Tensor(shape)
+        Array.Fill(tensor._data, 1.0)
+        Return tensor
+    End Function
+
+    ''' <summary>
+    ''' 转换为字符串表示
+    ''' Convert to string representation
+    ''' </summary>
+    Public Overrides Function ToString() As String
+        Return $"Tensor(shape=[{String.Join(",", _Shape)}])"
+    End Function
+
+    Private _disposed As Boolean = False
+
+    ''' <summary>
+    ''' 释放资源
+    ''' Dispose resources
+    ''' </summary>
+    Public Sub Dispose() Implements IDisposable.Dispose
+        If Not _disposed Then
+            _data = Nothing
+            _Shape = Nothing
+            Gradient?.Dispose()
+            _disposed = True
+        End If
+    End Sub
 End Class
 
