@@ -69,7 +69,8 @@ Namespace Algorithm.HMMAlgorithm
         Public Function viterbiAlgorithm(obSequence As Chain) As viterbiSequence
             Dim viterbi As New viterbiFactory(HMM, obSequence)
             Dim initTrellis = viterbi.initViterbi()
-            ' Initialization Of psi arrays Is equal To 0, but I use null because 0 could later represent a state index
+            ' Initialization Of psi arrays Is equal To 0,
+            ' but I use null because 0 could later represent a state index
             Dim psiArrays As New PsiArray(HMM.states.map(Function(s) New List(Of Integer)))
             Dim recTrellisPsi = viterbi.recViterbi(initTrellis.ToArray, 1, psiArrays, New List(Of Double()) From {initTrellis.ToArray})
             Dim pTerm = viterbi.termViterbi(recTrellisPsi)

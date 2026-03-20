@@ -94,4 +94,24 @@ Namespace Models
         End Function
 
     End Class
+
+    ''' <summary>
+    ''' alpha and alpha matrix
+    ''' </summary>
+    Public Class Alpha
+
+        Public Property alphaF As Double
+        Public Property alphas As List(Of List(Of Double))
+
+    End Class
+
+    ''' <summary>
+    ''' beta and beta matrix
+    ''' </summary>
+    Public Class Beta
+
+        Public Property betas As Double()()
+        Public Property betaF As Double
+
+    End Class
 End Namespace
