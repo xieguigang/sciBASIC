@@ -57,7 +57,7 @@
 #End Region
 
 Imports System.Runtime.InteropServices
-Imports Microsoft.VisualBasic.MachineLearning.TensorFlow
+Imports Microsoft.VisualBasic.MachineLearning.TensorFlow.AutomaticDifferentiation
 
 Namespace Transformer
     ''' <summary>
