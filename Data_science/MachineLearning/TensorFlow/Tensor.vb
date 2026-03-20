@@ -6,10 +6,41 @@
 ''' </summary>
 Public Class Tensor : Implements ICloneable, IDisposable
 
+#Region "私有字段"
+
+    ''' <summary>
+    ''' 底层数据数组
+    ''' </summary>
+    Private _Data As Double()
+
+    ''' <summary>
+    ''' 张量的形状（各维度大小）
+    ''' </summary>
+    Private _Shape As Integer()
+
+    ''' <summary>
+    ''' 维度乘积数组，用于快速计算多维索引
+    ''' dimProds(i) = dims(0) * dims(1) * ... * dims(i-1)
+    ''' </summary>
+    Private _DimProds As Integer()
+
+    ''' <summary>
+    ''' 是否已释放资源
+    ''' </summary>
+    Private _disposed As Boolean = False
+
+#End Region
+
+#Region "属性"
+
     ''' <summary>
     ''' 张量的形状（各维度大小）
     ''' </summary>
     Public ReadOnly Property Shape As Integer()
+        Get
+            Return _Shape
+        End Get
+    End Property
 
     ''' <summary>
     ''' 底层数据数组
@@ -19,13 +50,17 @@ Public Class Tensor : Implements ICloneable, IDisposable
     ''' 存储张量数据的一维数组（行优先顺序）
     ''' </remarks>
     Public ReadOnly Property Data As Double()
+        Get
+            Return _Data
+        End Get
+    End Property
 
     ''' <summary>
     ''' 张量的维度数
     ''' </summary>
     Public ReadOnly Property Rank As Integer
         Get
-            Return Shape.Length
+            Return _Shape.Length
         End Get
     End Property
 
@@ -37,6 +72,40 @@ Public Class Tensor : Implements ICloneable, IDisposable
             Return _Data.Length
         End Get
     End Property
+
+    ''' <summary>
+    ''' 张量中元素的总数（兼容旧版本）
+    ''' </summary>
+    Public ReadOnly Property TotalLength As Integer
+        Get
+            Return _Data.Length
+        End Get
+    End Property
+
+    ''' <summary>
+    ''' 张量的维度数组（兼容旧版本）
+    ''' </summary>
+    Public ReadOnly Property Dimensions As Integer()
+        Get
+            Return _Shape
+        End Get
+    End Property
+
+    ''' <summary>
+    ''' 是否为变量（可训练）
+    ''' Whether this is a variable (trainable)
+    ''' </summary>
+    Public Property IsVariable As Boolean = False
+
+    ''' <summary>
+    ''' 梯度（用于反向传播）
+    ''' Gradient for backpropagation
+    ''' </summary>
+    Public Property Gradient As Tensor
+
+#End Region
+
+#Region "索引器"
 
     ''' <summary>
     ''' 获取或设置指定索引处的元素值（一维访问）
@@ -55,10 +124,10 @@ Public Class Tensor : Implements ICloneable, IDisposable
     ''' </summary>
     Default Public Property Item(row As Integer, col As Integer) As Double
         Get
-            Return _Data(row * Shape(1) + col)
+            Return _Data(row * _Shape(1) + col)
         End Get
         Set
-            _Data(row * Shape(1) + col) = Value
+            _Data(row * _Shape(1) + col) = Value
         End Set
     End Property
 
@@ -74,33 +143,43 @@ Public Class Tensor : Implements ICloneable, IDisposable
         ' col * Shape[2]：在当前平面中，跳过前 col 行，每行有 Shape[2] 个元素
         ' depth：当前行内的具体位置
         Get
-            Return _Data(row * Shape(1) * Shape(2) + col * Shape(2) + depth)
+            Return _Data(row * _Shape(1) * _Shape(2) + col * _Shape(2) + depth)
         End Get
         Set
-            _Data(row * Shape(1) * Shape(2) + col * Shape(2) + depth) = Value
+            _Data(row * _Shape(1) * _Shape(2) + col * _Shape(2) + depth) = Value
         End Set
     End Property
 
     ''' <summary>
-    ''' 是否为变量（可训练）
-    ''' Whether this is a variable (trainable)
+    ''' 获取或设置指定位置处的元素值（多维数组索引访问）
+    ''' 支持任意维度的索引访问
     ''' </summary>
-    Public Property IsVariable As Boolean = False
+    Default Public Property Item(ParamArray indexes As Integer()) As Double
+        Get
+            Dim ind = Get1DInd(indexes)
+            Return _Data(ind)
+        End Get
+        Set
+            Dim ind = Get1DInd(indexes)
+            _Data(ind) = Value
+        End Set
+    End Property
 
-    ''' <summary>
-    ''' 梯度（用于反向传播）
-    ''' Gradient for backpropagation
-    ''' </summary>
-    Public Property Gradient As Tensor
+#End Region
+
+#Region "构造函数"
 
     ''' <summary>
     ''' 创建指定形状的张量，并用零初始化
     ''' </summary>
     ''' <param name="shape">张量的形状</param>
     Public Sub New(ParamArray shape As Integer())
-        Me.Shape = CType(shape.Clone(), Integer())
+        Me._Shape = CType(shape.Clone(), Integer())
         Dim totalSize = shape.Aggregate(1, Function(a, b) a * b)
         _Data = New Double(totalSize - 1) {}
+
+        ' 初始化维度乘积数组
+        Call UpdateDimProds()
     End Sub
 
     ''' <summary>
@@ -109,28 +188,34 @@ Public Class Tensor : Implements ICloneable, IDisposable
     ''' <param name="data">初始数据</param>
     ''' <param name="shape">张量形状</param>
     Public Sub New(data As Double(), ParamArray shape As Integer())
-        Me.Shape = CType(shape.Clone(), Integer())
+        Me._Shape = CType(shape.Clone(), Integer())
         _Data = DirectCast(data.Clone(), Double())
 
         Dim expectedSize = shape.Aggregate(1, Function(a, b) a * b)
         If data.Length <> expectedSize Then
             Throw New ArgumentException($"Data length {data.Length} does not match shape {String.Join(",", shape)}")
         End If
+
+        ' 初始化维度乘积数组
+        Call UpdateDimProds()
     End Sub
 
     ''' <summary>
-    ''' 使用指定数据创建张量
+    ''' 使用指定数据创建张量（Single版本，兼容旧代码）
     ''' </summary>
     ''' <param name="data">初始数据</param>
     ''' <param name="shape">张量形状</param>
     Public Sub New(data As Single(), ParamArray shape As Integer())
-        Me.Shape = CType(shape.Clone(), Integer())
-        _Data = (From f As Single In data Select CDbl(f)).ToArray
+        Me._Shape = CType(shape.Clone(), Integer())
+        _Data = (From f As Single In data Select CDbl(f)).ToArray()
 
         Dim expectedSize = shape.Aggregate(1, Function(a, b) a * b)
         If data.Length <> expectedSize Then
             Throw New ArgumentException($"Data length {data.Length} does not match shape {String.Join(",", shape)}")
         End If
+
+        ' 初始化维度乘积数组
+        Call UpdateDimProds()
     End Sub
 
     ''' <summary>
@@ -148,7 +233,116 @@ Public Class Tensor : Implements ICloneable, IDisposable
                 _Data(i * cols + j) = data(i, j)
             Next
         Next
+
+        ' 初始化维度乘积数组
+        Call UpdateDimProds()
     End Sub
+
+#End Region
+
+#Region "私有辅助方法"
+
+    ''' <summary>
+    ''' 更新维度乘积数组
+    ''' 用于快速计算多维索引到一维索引的转换
+    ''' </summary>
+    Private Sub UpdateDimProds()
+        _DimProds = New Integer(_Shape.Length - 1) {}
+        _DimProds(0) = 1
+
+        For i = 1 To _Shape.Length - 1
+            _DimProds(i) = _DimProds(i - 1) * _Shape(i - 1)
+        Next
+    End Sub
+
+    ''' <summary>
+    ''' 将多维索引转换为一维索引（来自旧版本）
+    ''' </summary>
+    ''' <param name="indexes">多维索引数组</param>
+    ''' <returns>一维数组索引</returns>
+    Private Function Get1DInd(ParamArray indexes As Integer()) As Integer
+        If indexes.Length <> _Shape.Length Then
+            Throw New ArgumentException($"Expected {_Shape.Length} indices, got {indexes.Length}")
+        End If
+
+        Dim ind = indexes(0)
+
+        For i = 1 To indexes.Length - 1
+            ind += _DimProds(i) * indexes(i)
+        Next
+
+        If ind < 0 OrElse ind >= _Data.Length Then
+            Throw New IndexOutOfRangeException($"Index {ind} out of bounds for tensor with {_Data.Length} elements")
+        End If
+
+        Return ind
+    End Function
+
+    ''' <summary>
+    ''' 计算数组所有元素的乘积（来自旧版本）
+    ''' </summary>
+    ''' <param name="array">整数数组</param>
+    ''' <returns>所有元素的乘积</returns>
+    Private Shared Function MultAll(array As Integer()) As Integer
+        Dim mul = 1
+
+        For i = 0 To array.Length - 1
+            mul *= array(i)
+        Next
+
+        Return mul
+    End Function
+
+    ''' <summary>
+    ''' 比较两个张量的维度是否相等（来自旧版本）
+    ''' </summary>
+    ''' <param name="t1">第一个张量</param>
+    ''' <param name="t2">第二个张量</param>
+    ''' <returns>如果维度相等返回True，否则返回False</returns>
+    Private Shared Function DimsEqual(t1 As Tensor, t2 As Tensor) As Boolean
+        If t1._Shape.Length <> t2._Shape.Length Then
+            Return False
+        End If
+
+        For i = 0 To t1._Shape.Length - 1
+            If t1._Shape(i) <> t2._Shape(i) Then
+                Return False
+            End If
+        Next
+
+        Return True
+    End Function
+
+    ''' <summary>
+    ''' 广播加法（来自旧版本）
+    ''' 当两个向量进行加法时，生成一个矩阵，其中每个元素是两个向量对应元素的和
+    ''' </summary>
+    ''' <param name="t1">第一个张量（行向量）</param>
+    ''' <param name="t2">第二个张量（列向量）</param>
+    ''' <returns>广播加法结果矩阵</returns>
+    Private Shared Function BroadcastedAddition(t1 As Tensor, t2 As Tensor) As Tensor
+        Dim dim1 = t1._Data.Length
+        Dim dim2 = t2._Data.Length
+        Dim t As New Tensor(New Integer() {dim1, dim2})
+        Dim ind = New Integer() {0, 0}
+
+        While ind(0) < dim1
+            ind(1) = 0
+
+            While ind(1) < dim2
+                t(ind) = t1._Data(ind(0)) + t2._Data(ind(1))
+                ind(1) += 1
+            End While
+
+            ind(0) += 1
+        End While
+
+        Return t
+    End Function
+
+#End Region
+
+#Region "静态工厂方法"
 
     ''' <summary>
     ''' 从二维数组创建张量
@@ -166,6 +360,121 @@ Public Class Tensor : Implements ICloneable, IDisposable
     End Function
 
     ''' <summary>
+    ''' 创建填充指定值的张量
+    ''' </summary>
+    Public Shared Function Filled(shape As Integer(), value As Single) As Tensor
+        Dim tensor = New Tensor(shape)
+        Array.Fill(tensor._Data, value)
+        Return tensor
+    End Function
+
+    ''' <summary>
+    ''' 创建单位矩阵
+    ''' </summary>
+    Public Shared Function Identity(size As Integer) As Tensor
+        Dim result = New Tensor(size, size)
+        For i = 0 To size - 1
+            result(i, i) = 1.0F
+        Next
+        Return result
+    End Function
+
+    ''' <summary>
+    ''' 创建随机张量（均匀分布）
+    ''' </summary>
+    ''' <remarks>
+    ''' RandomUniform
+    ''' </remarks>
+    Public Shared Function Random(shape As Integer(), Optional min As Single = -1.0F, Optional max As Single = 1.0F, Optional seed As Integer? = Nothing) As Tensor
+        Dim lRandom = If(seed.HasValue, New Random(seed.Value), New Random())
+        Dim tensor = New Tensor(shape)
+        For i = 0 To tensor.Length - 1
+            tensor._Data(i) = CSng((lRandom.NextDouble() * (max - min) + min))
+        Next
+        Return tensor
+    End Function
+
+    ''' <summary>
+    ''' 创建随机张量（正态分布，Xavier初始化）
+    ''' 用于神经网络权重初始化，有助于梯度流动
+    ''' </summary>
+    Public Shared Function RandomNormal(shape As Integer(), Optional mean As Single = 0.0F, Optional stdDev As Single = 1.0F, Optional seed As Integer? = Nothing) As Tensor
+        Dim random = If(seed.HasValue, New Random(seed.Value), New Random())
+        Dim tensor = New Tensor(shape)
+        For i = 0 To tensor.Length - 1
+            ' Box-Muller变换生成正态分布随机数
+            Dim u1 As Double = 1.0 - random.NextDouble()
+            Dim u2 As Double = 1.0 - random.NextDouble()
+            Dim randStdNormal = std.Sqrt(-2.0 * std.Log(u1)) * std.Sin(2.0 * std.PI * u2)
+            tensor._Data(i) = CSng(mean + stdDev * randStdNormal)
+        Next
+        Return tensor
+    End Function
+
+    ''' <summary>
+    ''' 创建整数范围张量
+    ''' Create integer range tensor
+    ''' </summary>
+    Public Shared Function Range(start As Integer, [end] As Integer, Optional [step] As Integer = 1) As Tensor
+        Dim count As Integer = ([end] - start + [step] - 1) / [step]
+        Dim tensor = New Tensor(New Integer() {count})
+
+        For i = 0 To count - 1
+            tensor._Data(i) = start + i * [step]
+        Next
+
+        Return tensor
+    End Function
+
+    ''' <summary>
+    ''' Xavier初始化 - 适用于sigmoid/tanh激活函数
+    ''' </summary>
+    Public Shared Function XavierInit(fanIn As Integer, fanOut As Integer, Optional seed As Integer? = Nothing) As Tensor
+        Dim stdDev As Single = std.Sqrt(2.0 / (fanIn + fanOut))
+        Return RandomNormal(New Integer() {fanIn, fanOut}, 0.0F, stdDev, seed)
+    End Function
+
+    ''' <summary>
+    ''' He初始化 - 适用于ReLU激活函数
+    ''' </summary>
+    Public Shared Function HeInit(fanIn As Integer, fanOut As Integer, Optional seed As Integer? = Nothing) As Tensor
+        Dim stdDev As Single = std.Sqrt(2.0 / fanIn)
+        Return RandomNormal(New Integer() {fanIn, fanOut}, 0.0F, stdDev, seed)
+    End Function
+
+    ''' <summary>
+    ''' 创建标量张量
+    ''' Create scalar tensor
+    ''' </summary>
+    Public Shared Function Scalar(value As Double) As Tensor
+        Dim tensor = New Tensor(New Integer() {1})
+        tensor._Data(0) = value
+        Return tensor
+    End Function
+
+    ''' <summary>
+    ''' 创建全零张量
+    ''' Create zero tensor
+    ''' </summary>
+    Public Shared Function Zeros(shape As Integer()) As Tensor
+        Return New Tensor(shape)
+    End Function
+
+    ''' <summary>
+    ''' 创建全一张量
+    ''' Create ones tensor
+    ''' </summary>
+    Public Shared Function Ones(shape As Integer()) As Tensor
+        Dim tensor = New Tensor(shape)
+        Array.Fill(tensor._Data, 1.0)
+        Return tensor
+    End Function
+
+#End Region
+
+#Region "张量操作方法"
+
+    ''' <summary>
     ''' 克隆张量
     ''' Clone tensor
     ''' </summary>
@@ -174,6 +483,24 @@ Public Class Tensor : Implements ICloneable, IDisposable
     ''' </remarks>
     Public Function Clone() As Object Implements ICloneable.Clone
         Return New Tensor(CType(_Data.Clone(), Double()), CType(_Shape.Clone(), Integer()))
+    End Function
+
+    ''' <summary>
+    ''' 重塑张量形状（来自旧版本）
+    ''' 改变张量的维度结构，但不改变数据
+    ''' </summary>
+    ''' <param name="newDims">新的维度数组</param>
+    ''' <returns>如果重塑成功返回True，否则返回False</returns>
+    Public Function Reshape(newDims As Integer()) As Boolean
+        If MultAll(_Shape) <> MultAll(newDims) Then
+            Return False
+        Else
+            _Shape = CType(newDims.Clone(), Integer())
+        End If
+
+        Call UpdateDimProds()
+
+        Return True
     End Function
 
     ''' <summary>
@@ -237,103 +564,30 @@ Public Class Tensor : Implements ICloneable, IDisposable
 
         For i = Rank - 1 To 0 Step -1
             indices(i) = remaining Mod _Shape(i)
-            remaining /= _Shape(i)
+            remaining = CInt(Math.Floor(remaining / _Shape(i)))
         Next
 
         Return indices
     End Function
 
-    ''' <summary>
-    ''' 创建填充指定值的张量
-    ''' </summary>
-    Public Shared Function Filled(shape As Integer(), value As Single) As Tensor
-        Dim tensor = New Tensor(shape)
-        Array.Fill(tensor._Data, value)
-        Return tensor
-    End Function
+#End Region
 
-    ''' <summary>
-    ''' 创建单位矩阵
-    ''' </summary>
-    Public Shared Function Identity(size As Integer) As Tensor
-        Dim result = New Tensor(size, size)
-        For i = 0 To size - 1
-            result(i, i) = 1.0F
-        Next
-        Return result
-    End Function
-
-    ''' <summary>
-    ''' 创建随机张量（均匀分布）
-    ''' </summary>
-    ''' <remarks>
-    ''' RandomUniform
-    ''' </remarks>
-    Public Shared Function Random(shape As Integer(), Optional min As Single = -1.0F, Optional max As Single = 1.0F, Optional seed As Integer? = Nothing) As Tensor
-        Dim lRandom = If(seed.HasValue, New Random(seed.Value), New Random())
-        Dim tensor = New Tensor(shape)
-        For i = 0 To tensor.Length - 1
-            tensor._Data(i) = CSng((lRandom.NextDouble() * (max - min) + min))
-        Next
-        Return tensor
-    End Function
-
-    ''' <summary>
-    ''' 创建随机张量（正态分布，Xavier初始化）
-    ''' 用于神经网络权重初始化，有助于梯度流动
-    ''' </summary>
-    Public Shared Function RandomNormal(shape As Integer(), Optional mean As Single = 0.0F, Optional stdDev As Single = 1.0F, Optional seed As Integer? = Nothing) As Tensor
-        Dim random = If(seed.HasValue, New Random(seed.Value), New Random())
-        Dim tensor = New Tensor(shape)
-        For i = 0 To tensor.Length - 1
-            ' Box-Muller变换生成正态分布随机数
-            Dim u1 As Double = 1.0 - random.NextDouble()
-            Dim u2 As Double = 1.0 - random.NextDouble()
-            Dim randStdNormal = std.Sqrt(-2.0 * std.Log(u1)) * std.Sin(2.0 * std.PI * u2)
-            tensor._Data(i) = CSng(mean + stdDev * randStdNormal)
-        Next
-        Return tensor
-    End Function
-
-
-    ''' <summary>
-    ''' 创建整数范围张量
-    ''' Create integer range tensor
-    ''' </summary>
-    Public Shared Function Range(start As Integer, [end] As Integer, Optional [step] As Integer = 1) As Tensor
-        Dim count As Integer = ([end] - start + [step] - 1) / [step]
-        Dim tensor = New Tensor(New Integer() {count})
-
-        For i = 0 To count - 1
-            tensor._Data(i) = start + i * [step]
-        Next
-
-        Return tensor
-    End Function
-
-    ''' <summary>
-    ''' Xavier初始化 - 适用于sigmoid/tanh激活函数
-    ''' </summary>
-    Public Shared Function XavierInit(fanIn As Integer, fanOut As Integer, Optional seed As Integer? = Nothing) As Tensor
-        Dim stdDev As Single = std.Sqrt(2.0 / (fanIn + fanOut))
-        Return RandomNormal(New Integer() {fanIn, fanOut}, 0.0F, stdDev, seed)
-    End Function
-
-    ''' <summary>
-    ''' He初始化 - 适用于ReLU激活函数
-    ''' </summary>
-    Public Shared Function HeInit(fanIn As Integer, fanOut As Integer, Optional seed As Integer? = Nothing) As Tensor
-        Dim stdDev As Single = std.Sqrt(2.0 / fanIn)
-        Return RandomNormal(New Integer() {fanIn, fanOut}, 0.0F, stdDev, seed)
-    End Function
-
-#Region "基本数学运算"
+#Region "基本数学运算 - 运算符重载"
 
     ''' <summary>
     ''' 张量加法（逐元素）
     ''' </summary>
     Public Shared Operator +(a As Tensor, b As Tensor) As Tensor
-        If Not a.Shape.SequenceEqual(b.Shape) Then Throw New ArgumentException("张量形状必须相同才能相加")
+        ' 检查是否可以进行广播加法（来自旧版本）
+        If a.Rank = 2 AndAlso b.Rank = 2 AndAlso
+            (a._Shape(0) = 1 AndAlso b._Shape(1) = 1 OrElse a._Shape(1) = 1 AndAlso b._Shape(0) = 1) Then
+            Return BroadcastedAddition(a, b)
+        End If
+
+        ' 普通逐元素加法
+        If Not a.Shape.SequenceEqual(b.Shape) Then
+            Throw New ArgumentException("张量形状必须相同才能相加")
+        End If
 
         Dim result = New Tensor(a.Shape)
         For i = 0 To a.Length - 1
@@ -343,16 +597,38 @@ Public Class Tensor : Implements ICloneable, IDisposable
     End Operator
 
     ''' <summary>
+    ''' 张量加标量（来自旧版本）
+    ''' </summary>
+    Public Shared Operator +(t1 As Tensor, f As Single) As Tensor
+        Dim t As New Tensor(t1._Shape)
+
+        For i = 0 To t.Length - 1
+            t._Data(i) = t1._Data(i) + f
+        Next
+
+        Return t
+    End Operator
+
+    ''' <summary>
     ''' 张量减法（逐元素）
     ''' </summary>
     Public Shared Operator -(a As Tensor, b As Tensor) As Tensor
-        If Not a.Shape.SequenceEqual(b.Shape) Then Throw New ArgumentException("张量形状必须相同才能相减")
+        If Not a.Shape.SequenceEqual(b.Shape) Then
+            Throw New ArgumentException("张量形状必须相同才能相减")
+        End If
 
         Dim result = New Tensor(a.Shape)
         For i = 0 To a.Length - 1
             result._Data(i) = a._Data(i) - b._Data(i)
         Next
         Return result
+    End Operator
+
+    ''' <summary>
+    ''' 张量减标量（来自旧版本）
+    ''' </summary>
+    Public Shared Operator -(t1 As Tensor, f As Single) As Tensor
+        Return t1 + (-f)
     End Operator
 
     ''' <summary>
@@ -378,10 +654,59 @@ Public Class Tensor : Implements ICloneable, IDisposable
     End Operator
 
     ''' <summary>
+    ''' 矩阵乘法运算符（来自旧版本）
+    ''' 两个二维张量进行矩阵乘法
+    ''' </summary>
+    Public Shared Operator *(t1 As Tensor, t2 As Tensor) As Tensor
+        ' 检查是否为二维张量
+        If t1.Rank <> 2 OrElse t2.Rank <> 2 Then
+            Throw New ArgumentException("矩阵乘法需要二维张量")
+        End If
+
+        ' 检查维度是否匹配
+        If t1._Shape(1) <> t2._Shape(0) Then
+            Throw New ArgumentException($"矩阵维度不匹配: {t1._Shape(1)} != {t2._Shape(0)}")
+        End If
+
+        Dim t As New Tensor(New Integer() {t1._Shape(0), t2._Shape(1)})
+        Dim sum As Double
+        Dim ind1 = New Integer() {0, 0}
+        Dim ind2 = New Integer() {0, 0}
+        Dim ind3 = New Integer() {0, 0}
+
+        For i = 0 To t1._Shape(0) - 1
+            ind1(0) = i
+            ind3(0) = i
+
+            For k = 0 To t2._Shape(1) - 1
+                ind2(1) = k
+                ind3(1) = k
+                sum = 0
+
+                For j = 0 To t1._Shape(1) - 1
+                    ind1(1) = j
+                    ind2(0) = j
+                    sum += t1(ind1) * t2(ind2)
+                Next
+
+                t(ind3) = sum
+            Next
+        Next
+
+        Return t
+    End Operator
+
+#End Region
+
+#Region "矩阵运算方法"
+
+    ''' <summary>
     ''' 逐元素乘法（Hadamard积）
     ''' </summary>
     Public Function ElementwiseMultiply(other As Tensor) As Tensor
-        If Not Shape.SequenceEqual(other.Shape) Then Throw New ArgumentException("张量形状必须相同")
+        If Not Shape.SequenceEqual(other.Shape) Then
+            Throw New ArgumentException("张量形状必须相同")
+        End If
 
         Dim result = New Tensor(Shape)
         For i = 0 To Length - 1
@@ -395,9 +720,13 @@ Public Class Tensor : Implements ICloneable, IDisposable
     ''' 这是GNN消息传递的核心运算
     ''' </summary>
     Public Function MatMul(other As Tensor) As Tensor
-        If Rank <> 2 OrElse other.Rank <> 2 Then Throw New ArgumentException("矩阵乘法需要二维张量")
+        If Rank <> 2 OrElse other.Rank <> 2 Then
+            Throw New ArgumentException("矩阵乘法需要二维张量")
+        End If
 
-        If Shape(1) <> other.Shape(0) Then Throw New ArgumentException($"矩阵维度不匹配: {Shape(1)} != {other.Shape(0)}")
+        If Shape(1) <> other.Shape(0) Then
+            Throw New ArgumentException($"矩阵维度不匹配: {Shape(1)} != {other.Shape(0)}")
+        End If
 
         Dim m = Shape(0)
         Dim n = other.Shape(1)
@@ -422,7 +751,9 @@ Public Class Tensor : Implements ICloneable, IDisposable
     ''' 转置
     ''' </summary>
     Public Function Transpose() As Tensor
-        If Rank <> 2 Then Throw New ArgumentException("只支持二维张量转置")
+        If Rank <> 2 Then
+            Throw New ArgumentException("只支持二维张量转置")
+        End If
 
         Dim result = New Tensor(Shape(1), Shape(0))
         For i = 0 To Shape(0) - 1
@@ -441,7 +772,9 @@ Public Class Tensor : Implements ICloneable, IDisposable
     ''' 沿指定轴求和
     ''' </summary>
     Public Function Sum(axis As Integer) As Tensor
-        If Rank <> 2 Then Throw New ArgumentException("当前只支持二维张量的轴求和")
+        If Rank <> 2 Then
+            Throw New ArgumentException("当前只支持二维张量的轴求和")
+        End If
 
         If axis = 0 Then
             ' 沿行方向求和，结果是一行
@@ -476,7 +809,7 @@ Public Class Tensor : Implements ICloneable, IDisposable
     Public Function TotalSum() As Single
         Dim sum As Single = 0
         For i = 0 To Length - 1
-            sum += _Data(i)
+            sum += CSng(_Data(i))
         Next
         Return sum
     End Function
@@ -503,7 +836,7 @@ Public Class Tensor : Implements ICloneable, IDisposable
     Public Function L2Norm() As Single
         Dim sumSquares As Single = 0
         For i = 0 To Length - 1
-            sumSquares += _Data(i) * _Data(i)
+            sumSquares += CSng(_Data(i) * _Data(i))
         Next
         Return std.Sqrt(sumSquares)
     End Function
@@ -518,26 +851,66 @@ Public Class Tensor : Implements ICloneable, IDisposable
     Public Function Apply(func As Func(Of Single, Single)) As Tensor
         Dim result = New Tensor(Shape)
         For i = 0 To Length - 1
+            result._Data(i) = func(CSng(_Data(i)))
+        Next
+        Return result
+    End Function
+
+    ''' <summary>
+    ''' 对每个元素应用函数（Double版本）
+    ''' </summary>
+    Public Function ApplyDouble(func As Func(Of Double, Double)) As Tensor
+        Dim result = New Tensor(Shape)
+        For i = 0 To Length - 1
             result._Data(i) = func(_Data(i))
         Next
         Return result
     End Function
+
 #End Region
 
+#Region "数据转换方法"
+
     ''' <summary>
-    ''' 获取原始数据数组的副本
+    ''' 获取原始数据数组的副本（Single版本）
     ''' </summary>
     Public Function ToArray() As Single()
-        Return CType(_Data.Clone(), Single())
+        Return (From d In _Data Select CSng(d)).ToArray()
+    End Function
+
+    ''' <summary>
+    ''' 获取原始数据数组的副本（Double版本）
+    ''' </summary>
+    Public Function ToDoubleArray() As Double()
+        Return CType(_Data.Clone(), Double())
     End Function
 
     ''' <summary>
     ''' 转换为二维数组
     ''' </summary>
     Public Function To2DArray() As Single(,)
-        If Rank <> 2 Then Throw New InvalidOperationException("只能将二维张量转换为二维数组")
+        If Rank <> 2 Then
+            Throw New InvalidOperationException("只能将二维张量转换为二维数组")
+        End If
 
         Dim result = New Single(Shape(0) - 1, Shape(1) - 1) {}
+        For i = 0 To Shape(0) - 1
+            For j = 0 To Shape(1) - 1
+                result(i, j) = CSng(Me(i, j))
+            Next
+        Next
+        Return result
+    End Function
+
+    ''' <summary>
+    ''' 转换为二维数组（Double版本）
+    ''' </summary>
+    Public Function To2DArrayDouble() As Double(,)
+        If Rank <> 2 Then
+            Throw New InvalidOperationException("只能将二维张量转换为二维数组")
+        End If
+
+        Dim result = New Double(Shape(0) - 1, Shape(1) - 1) {}
         For i = 0 To Shape(0) - 1
             For j = 0 To Shape(1) - 1
                 result(i, j) = Me(i, j)
@@ -545,6 +918,10 @@ Public Class Tensor : Implements ICloneable, IDisposable
         Next
         Return result
     End Function
+
+#End Region
+
+#Region "行列操作"
 
     ''' <summary>
     ''' 获取指定行
@@ -568,11 +945,17 @@ Public Class Tensor : Implements ICloneable, IDisposable
         Return result
     End Function
 
+#End Region
+
+#Region "调试和显示"
+
     ''' <summary>
     ''' 打印张量内容（用于调试）
     ''' </summary>
     Public Sub Print(Optional name As String = Nothing)
-        If Not Equals(name, Nothing) Then Console.WriteLine($"{name}:")
+        If Not Equals(name, Nothing) Then
+            Console.WriteLine($"{name}:")
+        End If
 
         If Rank = 1 Then
             Console.WriteLine($"[{String.Join(", ", _Data.Select(Function(v) v.ToString("F4")))}]")
@@ -590,34 +973,6 @@ Public Class Tensor : Implements ICloneable, IDisposable
     End Sub
 
     ''' <summary>
-    ''' 创建标量张量
-    ''' Create scalar tensor
-    ''' </summary>
-    Public Shared Function Scalar(value As Double) As Tensor
-        Dim tensor = New Tensor(New Integer() {1})
-        tensor._Data(0) = value
-        Return tensor
-    End Function
-
-    ''' <summary>
-    ''' 创建全零张量
-    ''' Create zero tensor
-    ''' </summary>
-    Public Shared Function Zeros(shape As Integer()) As Tensor
-        Return New Tensor(shape)
-    End Function
-
-    ''' <summary>
-    ''' 创建全一张量
-    ''' Create ones tensor
-    ''' </summary>
-    Public Shared Function Ones(shape As Integer()) As Tensor
-        Dim tensor = New Tensor(shape)
-        Array.Fill(tensor._Data, 1.0)
-        Return tensor
-    End Function
-
-    ''' <summary>
     ''' 转换为字符串表示
     ''' Convert to string representation
     ''' </summary>
@@ -625,7 +980,9 @@ Public Class Tensor : Implements ICloneable, IDisposable
         Return $"Tensor(shape=[{String.Join(",", _Shape)}])"
     End Function
 
-    Private _disposed As Boolean = False
+#End Region
+
+#Region "IDisposable 实现"
 
     ''' <summary>
     ''' 释放资源
@@ -635,6 +992,7 @@ Public Class Tensor : Implements ICloneable, IDisposable
         If Not _disposed Then
             Erase _Data
             Erase _Shape
+            Erase _DimProds
 
             If Gradient IsNot Nothing Then
                 Call Gradient.Dispose()
@@ -643,5 +1001,14 @@ Public Class Tensor : Implements ICloneable, IDisposable
             _disposed = True
         End If
     End Sub
-End Class
 
+    ''' <summary>
+    ''' 析构函数
+    ''' </summary>
+    Protected Overrides Sub Finalize()
+        Dispose()
+    End Sub
+
+#End Region
+
+End Class
