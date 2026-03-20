@@ -11,6 +11,7 @@
     <ProjectReference Include="..\..\..\..\Microsoft.VisualBasic.Core\src\Core.vbproj" />
     <ProjectReference Include="..\..\..\DataMining\DataMining\DataMining.NET5.vbproj" />
     <ProjectReference Include="..\..\..\Mathematica\Math\Math\Math.NET5.vbproj" />
+    <ProjectReference Include="..\..\LNN\LNN.vbproj" />
     <ProjectReference Include="..\..\MachineLearning\machine_learning-netcore5.vbproj" />
     <ProjectReference Include="..\DeepLearning.NET6.vbproj" />
   </ItemGroup>
