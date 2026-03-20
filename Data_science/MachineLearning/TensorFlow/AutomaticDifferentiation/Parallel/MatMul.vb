@@ -58,7 +58,7 @@
 
 Imports Microsoft.VisualBasic.Parallel
 
-Namespace Parallel
+Namespace AutomaticDifferentiation.Parallel
 
     Public Class SIMDMatMul : Inherits VectorTask
 
