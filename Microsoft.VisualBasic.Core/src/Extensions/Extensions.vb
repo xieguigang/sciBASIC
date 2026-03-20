@@ -92,7 +92,7 @@ Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.SecurityString
 Imports Microsoft.VisualBasic.Text.Similarity
 Imports any = Microsoft.VisualBasic.Scripting
-Imports System.Numerics
+Imports Microsoft.VisualBasic.ApplicationServices
 
 
 #If DEBUG Then
@@ -1328,8 +1328,6 @@ Public Module Extensions
         Call list.Insert(idx_2, obj_2)
     End Sub
 
-#If FRAMEWORD_CORE Then
-
     ''' <summary>
     ''' Add array location index value for the <see cref="IAddressOf"/> elements in the sequence.
     ''' (为列表中的对象添加对象句柄值)
@@ -1350,7 +1348,11 @@ Public Module Extensions
 
         Return list
     End Function
-#End If
+
+    <Extension>
+    Public Sub WriteLines(fs As IFileSystemEnvironment, lines As IEnumerable(Of String), file As String)
+        Call fs.WriteText(lines.JoinBy(vbLf), path:=file)
+    End Sub
 
 #If FRAMEWORD_CORE Then
     ''' <summary>
