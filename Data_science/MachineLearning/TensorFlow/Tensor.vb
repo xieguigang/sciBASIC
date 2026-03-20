@@ -154,7 +154,7 @@ Public Class Tensor : Implements ICloneable, IDisposable
     ''' 获取或设置指定位置处的元素值（多维数组索引访问）
     ''' 支持任意维度的索引访问
     ''' </summary>
-    Default Public Property Item(ParamArray indexes As Integer()) As Double
+    Default Public Property Item(indexes As Integer()) As Double
         Get
             Dim ind = Get1DInd(indexes)
             Return _Data(ind)
@@ -564,7 +564,7 @@ Public Class Tensor : Implements ICloneable, IDisposable
 
         For i = Rank - 1 To 0 Step -1
             indices(i) = remaining Mod _Shape(i)
-            remaining = CInt(Math.Floor(remaining / _Shape(i)))
+            remaining = CInt(std.Floor(remaining / _Shape(i)))
         Next
 
         Return indices
@@ -859,7 +859,7 @@ Public Class Tensor : Implements ICloneable, IDisposable
     ''' <summary>
     ''' 对每个元素应用函数（Double版本）
     ''' </summary>
-    Public Function ApplyDouble(func As Func(Of Double, Double)) As Tensor
+    Public Function Apply(func As Func(Of Double, Double)) As Tensor
         Dim result = New Tensor(Shape)
         For i = 0 To Length - 1
             result._Data(i) = func(_Data(i))
