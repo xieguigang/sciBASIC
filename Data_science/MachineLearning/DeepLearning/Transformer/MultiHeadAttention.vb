@@ -61,6 +61,7 @@ Imports Microsoft.VisualBasic.MachineLearning.TensorFlow
 Imports std = System.Math
 
 Namespace Transformer
+
     Public Class MultiHeadAttention
         Private mask As Boolean
         Private embeddingSize As Integer
