@@ -7,11 +7,6 @@
 Public Class Tensor : Implements ICloneable, IDisposable
 
     ''' <summary>
-    ''' 存储张量数据的一维数组（行优先顺序）
-    ''' </summary>
-    ReadOnly _data As Single()
-
-    ''' <summary>
     ''' 张量的形状（各维度大小）
     ''' </summary>
     Public ReadOnly Property Shape As Integer()
@@ -20,11 +15,10 @@ Public Class Tensor : Implements ICloneable, IDisposable
     ''' 底层数据数组
     ''' Underlying data array
     ''' </summary>
-    Public ReadOnly Property Data As Single()
-        Get
-            Return _data
-        End Get
-    End Property
+    ''' <remarks>
+    ''' 存储张量数据的一维数组（行优先顺序）
+    ''' </remarks>
+    Public ReadOnly Property Data As Double()
 
     ''' <summary>
     ''' 张量的维度数
@@ -40,31 +34,31 @@ Public Class Tensor : Implements ICloneable, IDisposable
     ''' </summary>
     Public ReadOnly Property Length As Integer
         Get
-            Return _data.Length
+            Return _Data.Length
         End Get
     End Property
 
     ''' <summary>
     ''' 获取或设置指定索引处的元素值（一维访问）
     ''' </summary>
-    Default Public Property Item(index As Integer) As Single
+    Default Public Property Item(index As Integer) As Double
         Get
-            Return _data(index)
+            Return _Data(index)
         End Get
-        Set(value As Single)
-            _data(index) = value
+        Set
+            _Data(index) = Value
         End Set
     End Property
 
     ''' <summary>
     ''' 获取或设置指定位置处的元素值（二维访问）
     ''' </summary>
-    Default Public Property Item(row As Integer, col As Integer) As Single
+    Default Public Property Item(row As Integer, col As Integer) As Double
         Get
-            Return _data(row * Shape(1) + col)
+            Return _Data(row * Shape(1) + col)
         End Get
-        Set(value As Single)
-            _data(row * Shape(1) + col) = value
+        Set
+            _Data(row * Shape(1) + col) = Value
         End Set
     End Property
 
@@ -74,16 +68,16 @@ Public Class Tensor : Implements ICloneable, IDisposable
     ''' <param name="row">第0维索引（通常对应行/高）</param>
     ''' <param name="col">第1维索引（通常对应列/宽）</param>
     ''' <param name="depth">第2维索引（通常对应深度/通道）</param>
-    Default Public Property Item(row As Integer, col As Integer, depth As Integer) As Single
+    Default Public Property Item(row As Integer, col As Integer, depth As Integer) As Double
         ' 计算一维数组索引：
         ' row * Shape[1] * Shape[2]：跳过前 row 个平面，每个平面有 Shape[1]*Shape[2] 个元素
         ' col * Shape[2]：在当前平面中，跳过前 col 行，每行有 Shape[2] 个元素
         ' depth：当前行内的具体位置
         Get
-            Return _data(row * Shape(1) * Shape(2) + col * Shape(2) + depth)
+            Return _Data(row * Shape(1) * Shape(2) + col * Shape(2) + depth)
         End Get
-        Set(value As Single)
-            _data(row * Shape(1) * Shape(2) + col * Shape(2) + depth) = value
+        Set
+            _Data(row * Shape(1) * Shape(2) + col * Shape(2) + depth) = Value
         End Set
     End Property
 
@@ -106,7 +100,22 @@ Public Class Tensor : Implements ICloneable, IDisposable
     Public Sub New(ParamArray shape As Integer())
         Me.Shape = CType(shape.Clone(), Integer())
         Dim totalSize = shape.Aggregate(1, Function(a, b) a * b)
-        _data = New Single(totalSize - 1) {}
+        _Data = New Double(totalSize - 1) {}
+    End Sub
+
+    ''' <summary>
+    ''' 使用指定数据创建张量
+    ''' </summary>
+    ''' <param name="data">初始数据</param>
+    ''' <param name="shape">张量形状</param>
+    Public Sub New(data As Double(), ParamArray shape As Integer())
+        Me.Shape = CType(shape.Clone(), Integer())
+        _Data = DirectCast(data.Clone(), Double())
+
+        Dim expectedSize = shape.Aggregate(1, Function(a, b) a * b)
+        If data.Length <> expectedSize Then
+            Throw New ArgumentException($"Data length {data.Length} does not match shape {String.Join(",", shape)}")
+        End If
     End Sub
 
     ''' <summary>
@@ -116,7 +125,7 @@ Public Class Tensor : Implements ICloneable, IDisposable
     ''' <param name="shape">张量形状</param>
     Public Sub New(data As Single(), ParamArray shape As Integer())
         Me.Shape = CType(shape.Clone(), Integer())
-        _data = CType(data.Clone(), Single())
+        _Data = (From f As Single In data Select CDbl(f)).ToArray
 
         Dim expectedSize = shape.Aggregate(1, Function(a, b) a * b)
         If data.Length <> expectedSize Then
@@ -132,11 +141,11 @@ Public Class Tensor : Implements ICloneable, IDisposable
         Dim rows = data.GetLength(0)
         Dim cols = data.GetLength(1)
         _Shape = New Integer() {rows, cols}
-        _data = New Double(rows * cols - 1) {}
+        _Data = New Double(rows * cols - 1) {}
 
         For i = 0 To rows - 1
             For j = 0 To cols - 1
-                _data(i * cols + j) = data(i, j)
+                _Data(i * cols + j) = data(i, j)
             Next
         Next
     End Sub
@@ -164,7 +173,7 @@ Public Class Tensor : Implements ICloneable, IDisposable
     ''' <see cref="Tensor"/>
     ''' </remarks>
     Public Function Clone() As Object Implements ICloneable.Clone
-        Return New Tensor(CType(_data.Clone(), Double()), CType(_Shape.Clone(), Integer()))
+        Return New Tensor(CType(_Data.Clone(), Double()), CType(_Shape.Clone(), Integer()))
     End Function
 
     ''' <summary>
@@ -173,7 +182,7 @@ Public Class Tensor : Implements ICloneable, IDisposable
     ''' </summary>
     Public Function GetValue(ParamArray indices As Integer()) As Double
         Dim flatIndex = GetFlatIndex(indices)
-        Return _data(flatIndex)
+        Return _Data(flatIndex)
     End Function
 
     ''' <summary>
@@ -182,7 +191,7 @@ Public Class Tensor : Implements ICloneable, IDisposable
     ''' </summary>
     Public Sub SetValue(value As Double, ParamArray indices As Integer())
         Dim flatIndex = GetFlatIndex(indices)
-        _data(flatIndex) = value
+        _Data(flatIndex) = value
     End Sub
 
     ''' <summary>
@@ -239,7 +248,7 @@ Public Class Tensor : Implements ICloneable, IDisposable
     ''' </summary>
     Public Shared Function Filled(shape As Integer(), value As Single) As Tensor
         Dim tensor = New Tensor(shape)
-        Array.Fill(tensor._data, value)
+        Array.Fill(tensor._Data, value)
         Return tensor
     End Function
 
@@ -264,7 +273,7 @@ Public Class Tensor : Implements ICloneable, IDisposable
         Dim lRandom = If(seed.HasValue, New Random(seed.Value), New Random())
         Dim tensor = New Tensor(shape)
         For i = 0 To tensor.Length - 1
-            tensor._data(i) = CSng((lRandom.NextDouble() * (max - min) + min))
+            tensor._Data(i) = CSng((lRandom.NextDouble() * (max - min) + min))
         Next
         Return tensor
     End Function
@@ -281,7 +290,7 @@ Public Class Tensor : Implements ICloneable, IDisposable
             Dim u1 As Double = 1.0 - random.NextDouble()
             Dim u2 As Double = 1.0 - random.NextDouble()
             Dim randStdNormal = std.Sqrt(-2.0 * std.Log(u1)) * std.Sin(2.0 * std.PI * u2)
-            tensor._data(i) = CSng(mean + stdDev * randStdNormal)
+            tensor._Data(i) = CSng(mean + stdDev * randStdNormal)
         Next
         Return tensor
     End Function
@@ -296,7 +305,7 @@ Public Class Tensor : Implements ICloneable, IDisposable
         Dim tensor = New Tensor(New Integer() {count})
 
         For i = 0 To count - 1
-            tensor._data(i) = start + i * [step]
+            tensor._Data(i) = start + i * [step]
         Next
 
         Return tensor
@@ -328,7 +337,7 @@ Public Class Tensor : Implements ICloneable, IDisposable
 
         Dim result = New Tensor(a.Shape)
         For i = 0 To a.Length - 1
-            result._data(i) = a._data(i) + b._data(i)
+            result._Data(i) = a._Data(i) + b._Data(i)
         Next
         Return result
     End Operator
@@ -341,7 +350,7 @@ Public Class Tensor : Implements ICloneable, IDisposable
 
         Dim result = New Tensor(a.Shape)
         For i = 0 To a.Length - 1
-            result._data(i) = a._data(i) - b._data(i)
+            result._Data(i) = a._Data(i) - b._Data(i)
         Next
         Return result
     End Operator
@@ -352,7 +361,7 @@ Public Class Tensor : Implements ICloneable, IDisposable
     Public Shared Operator *(a As Tensor, scalar As Single) As Tensor
         Dim result = New Tensor(a.Shape)
         For i = 0 To a.Length - 1
-            result._data(i) = a._data(i) * scalar
+            result._Data(i) = a._Data(i) * scalar
         Next
         Return result
     End Operator
@@ -363,7 +372,7 @@ Public Class Tensor : Implements ICloneable, IDisposable
     Public Shared Operator /(a As Tensor, scalar As Single) As Tensor
         Dim result = New Tensor(a.Shape)
         For i = 0 To a.Length - 1
-            result._data(i) = a._data(i) / scalar
+            result._Data(i) = a._Data(i) / scalar
         Next
         Return result
     End Operator
@@ -376,7 +385,7 @@ Public Class Tensor : Implements ICloneable, IDisposable
 
         Dim result = New Tensor(Shape)
         For i = 0 To Length - 1
-            result._data(i) = _data(i) * other._data(i)
+            result._Data(i) = _Data(i) * other._Data(i)
         Next
         Return result
     End Function
@@ -467,7 +476,7 @@ Public Class Tensor : Implements ICloneable, IDisposable
     Public Function TotalSum() As Single
         Dim sum As Single = 0
         For i = 0 To Length - 1
-            sum += _data(i)
+            sum += _Data(i)
         Next
         Return sum
     End Function
@@ -494,7 +503,7 @@ Public Class Tensor : Implements ICloneable, IDisposable
     Public Function L2Norm() As Single
         Dim sumSquares As Single = 0
         For i = 0 To Length - 1
-            sumSquares += _data(i) * _data(i)
+            sumSquares += _Data(i) * _Data(i)
         Next
         Return std.Sqrt(sumSquares)
     End Function
@@ -509,7 +518,7 @@ Public Class Tensor : Implements ICloneable, IDisposable
     Public Function Apply(func As Func(Of Single, Single)) As Tensor
         Dim result = New Tensor(Shape)
         For i = 0 To Length - 1
-            result._data(i) = func(_data(i))
+            result._Data(i) = func(_Data(i))
         Next
         Return result
     End Function
@@ -519,7 +528,7 @@ Public Class Tensor : Implements ICloneable, IDisposable
     ''' 获取原始数据数组的副本
     ''' </summary>
     Public Function ToArray() As Single()
-        Return CType(_data.Clone(), Single())
+        Return CType(_Data.Clone(), Single())
     End Function
 
     ''' <summary>
@@ -566,7 +575,7 @@ Public Class Tensor : Implements ICloneable, IDisposable
         If Not Equals(name, Nothing) Then Console.WriteLine($"{name}:")
 
         If Rank = 1 Then
-            Console.WriteLine($"[{String.Join(", ", _data.Select(Function(v) v.ToString("F4")))}]")
+            Console.WriteLine($"[{String.Join(", ", _Data.Select(Function(v) v.ToString("F4")))}]")
         ElseIf Rank = 2 Then
             Console.WriteLine("[")
             For i As Integer = 0 To Shape(0) - 1
@@ -586,7 +595,7 @@ Public Class Tensor : Implements ICloneable, IDisposable
     ''' </summary>
     Public Shared Function Scalar(value As Double) As Tensor
         Dim tensor = New Tensor(New Integer() {1})
-        tensor._data(0) = value
+        tensor._Data(0) = value
         Return tensor
     End Function
 
@@ -604,7 +613,7 @@ Public Class Tensor : Implements ICloneable, IDisposable
     ''' </summary>
     Public Shared Function Ones(shape As Integer()) As Tensor
         Dim tensor = New Tensor(shape)
-        Array.Fill(tensor._data, 1.0)
+        Array.Fill(tensor._Data, 1.0)
         Return tensor
     End Function
 
@@ -624,9 +633,13 @@ Public Class Tensor : Implements ICloneable, IDisposable
     ''' </summary>
     Public Sub Dispose() Implements IDisposable.Dispose
         If Not _disposed Then
-            _data = Nothing
-            _Shape = Nothing
-            Gradient?.Dispose()
+            Erase _Data
+            Erase _Shape
+
+            If Gradient IsNot Nothing Then
+                Call Gradient.Dispose()
+            End If
+
             _disposed = True
         End If
     End Sub
