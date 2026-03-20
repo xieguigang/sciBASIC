@@ -7,6 +7,208 @@ Imports Microsoft.VisualBasic.DeepLearning.LiquidNeuralNetwork
 Imports Microsoft.VisualBasic.MachineLearning.TensorFlow
 Imports std = System.Math
 
+
+
+#Region "示例和测试"
+
+''' <summary>
+''' 液态神经网络示例和测试
+''' </summary>
+Public Module LNNExamples
+
+    ''' <summary>
+    ''' 运行基础时间序列预测示例
+    ''' </summary>
+    Public Sub RunBasicTimeSeriesExample()
+        Console.WriteLine("=== 液态神经网络 - 时间序列预测示例 ===")
+        Console.WriteLine()
+
+        ' 1. 生成示例数据
+        Console.WriteLine("1. 生成正弦波时间序列数据...")
+        Dim data = TimeSeriesUtils.GenerateSineWave(500, 0.05, 1.0, 0.0, 0.05)
+        Console.WriteLine($"   数据长度: {data.Length}")
+
+        ' 2. 归一化数据
+        Console.WriteLine("2. 归一化数据...")
+        Dim normalizedData = TimeSeriesUtils.Normalize(data)
+
+        ' 3. 创建滑动窗口数据集
+        Console.WriteLine("3. 创建滑动窗口数据集...")
+        Dim windowSize = 20
+        Dim forecastHorizon = 5
+        Dim dataset = TimeSeriesUtils.CreateSlidingWindowDataset(normalizedData.normalized, windowSize, forecastHorizon)
+        Console.WriteLine($"   窗口大小: {windowSize}, 预测步长: {forecastHorizon}")
+        Console.WriteLine($"   样本数量: {dataset.inputs.Count}")
+
+        ' 4. 划分训练集和测试集
+        Console.WriteLine("4. 划分训练集和测试集...")
+        Dim splitIndex = CInt(dataset.inputs.Count * 0.8)
+        Dim trainInputs = dataset.inputs.Take(splitIndex).ToList()
+        Dim trainTargets = dataset.targets.Take(splitIndex).ToList()
+        Dim testInputs = dataset.inputs.Skip(splitIndex).ToList()
+        Dim testTargets = dataset.targets.Skip(splitIndex).ToList()
+        Console.WriteLine($"   训练样本: {trainInputs.Count}, 测试样本: {testInputs.Count}")
+
+        ' 5. 创建液态神经网络
+        Console.WriteLine("5. 创建液态神经网络...")
+        Dim lnn As New LiquidNeuralNetwork(
+            inputSize:=windowSize,
+            hiddenSize:=32,
+            outputSize:=forecastHorizon,
+            numLiquidLayers:=2,
+            activationType:="tanh",
+            outputActivation:="tanh",
+            seed:=42
+        )
+        lnn.DefaultDt = 0.1
+        lnn.SolverType = "rk4"
+        Console.WriteLine($"   参数总数: {lnn.GetParameterCount()}")
+
+        ' 6. 创建训练器
+        Console.WriteLine("6. 创建训练器...")
+        Dim trainer As New LNNTrainer(lnn, 0.005)
+        trainer.OptimizerType = "adam"
+        trainer.UseGradientClipping = True
+
+        ' 7. 训练模型
+        Console.WriteLine("7. 开始训练...")
+        Dim epochs = 50
+
+        ' 将数据转换为序列格式
+        Dim trainSequences As New List(Of Tensor)()
+        Dim targetSequences As New List(Of Tensor)()
+
+        For i = 0 To trainInputs.Count - 1
+            ' 将输入reshape为序列格式
+            Dim inputSeq = New Tensor(1, windowSize)
+            For j = 0 To windowSize - 1
+                inputSeq(0, j) = trainInputs(i)(j)
+            Next
+            trainSequences.Add(inputSeq)
+
+            ' 目标已经是正确的形状
+            targetSequences.Add(trainTargets(i))
+        Next
+
+        Dim losses = trainer.Fit(trainSequences, targetSequences, epochs)
+
+        ' 8. 评估模型
+        Console.WriteLine()
+        Console.WriteLine("8. 评估模型...")
+        Dim allPredictions As New List(Of Double)()
+        Dim allActuals As New List(Of Double)()
+
+        lnn.ResetState()
+        For i = 0 To std.Min(testInputs.Count - 1, 50)
+            Dim inputSeq = New Tensor(1, windowSize)
+            For j = 0 To windowSize - 1
+                inputSeq(0, j) = testInputs(i)(j)
+            Next
+
+            Dim predicted = lnn.Forward(testInputs(i))
+            Dim actual = testTargets(i)
+
+            allPredictions.Add(predicted(0))
+            allActuals.Add(actual(0))
+        Next
+
+        ' 9. 计算评估指标
+        Console.WriteLine("9. 计算评估指标...")
+        Dim metrics = TimeSeriesUtils.CalculateMetrics(allPredictions.ToArray(), allActuals.ToArray())
+        Console.WriteLine($"   MSE: {metrics.mse:F6}")
+        Console.WriteLine($"   MAE: {metrics.mae:F6}")
+        Console.WriteLine($"   RMSE: {metrics.rmse:F6}")
+        Console.WriteLine($"   MAPE: {metrics.mape:F2}%")
+
+        ' 10. 输出一些预测示例
+        Console.WriteLine()
+        Console.WriteLine("10. 预测示例（前5个）:")
+        For i = 0 To std.Min(4, allPredictions.Count - 1)
+            Console.WriteLine($"   预测: {allPredictions(i):F4}, 实际: {allActuals(i):F4}, 误差: { std.Abs(allPredictions(i) - allActuals(i)):F4}")
+        Next
+
+        Console.WriteLine()
+        Console.WriteLine("=== 示例完成 ===")
+
+        lnn.Dispose()
+    End Sub
+
+    ''' <summary>
+    ''' 运行ODE求解器测试
+    ''' </summary>
+    Public Sub TestODESolvers()
+        Console.WriteLine("=== ODE求解器测试 ===")
+
+        ' 测试简单的指数衰减: dx/dt = -x
+        ' 解析解: x(t) = x0 * e^(-t)
+        Dim initialState = Tensor.Ones({1})
+        initialState(0) = 1.0
+
+        Dim decayFunc As ODESolver.ODEFunction = Function(state, input, time)
+                                                     Dim derivative = Tensor.Zeros(state.Shape)
+                                                     derivative(0) = -state(0)
+                                                     Return derivative
+                                                 End Function
+
+        Dim dt = 0.1
+        Dim steps = 50
+        Dim t = 0.0
+
+        ' 欧拉法
+        Dim stateEuler = CType(initialState.Clone(), Tensor)
+        For i = 1 To steps
+            stateEuler = ODESolver.EulerStep(decayFunc, stateEuler, Nothing, t, dt)
+            t += dt
+        Next
+        Console.WriteLine($"欧拉法结果: {stateEuler(0):F6} (解析解: {std.Exp(-steps * dt):F6})")
+
+        ' RK4法
+        t = 0.0
+        Dim stateRK4 = CType(initialState.Clone(), Tensor)
+        For i = 1 To steps
+            stateRK4 = ODESolver.RK4Step(decayFunc, stateRK4, Nothing, t, dt)
+            t += dt
+        Next
+        Console.WriteLine($"RK4法结果: {stateRK4(0):F6} (解析解: {std.Exp(-steps * dt):F6})")
+
+        Console.WriteLine("=== 测试完成 ===")
+    End Sub
+
+    ''' <summary>
+    ''' 测试单个LiquidCell
+    ''' </summary>
+    Public Sub TestLiquidCell()
+        Console.WriteLine("=== LiquidCell测试 ===")
+
+        ' 创建一个简单的液态神经元
+        Dim cell As New LiquidCell(hiddenSize:=4, inputSize:=2, activationType:="tanh", seed:=42)
+
+        ' 创建输入
+        Dim input = New Tensor(2)
+        input(0) = 0.5
+        input(1) = -0.3
+
+        Console.WriteLine($"输入: [{input(0):F4}, {input(1):F4}]")
+        Console.WriteLine($"初始状态: [{cell.State(0):F4}, {cell.State(1):F4}, {cell.State(2):F4}, {cell.State(3):F4}]")
+
+        ' 模拟多个时间步
+        Dim dt = 0.1
+        Console.WriteLine()
+        Console.WriteLine("时间演化:")
+        For i = 1 To 10
+            Dim newState = cell.Forward(input, dt, "rk4")
+            Console.WriteLine($"  t={i * dt:F1}: [{newState(0):F4}, {newState(1):F4}, {newState(2):F4}, {newState(3):F4}]")
+        Next
+
+        cell.Dispose()
+        Console.WriteLine("=== 测试完成 ===")
+    End Sub
+
+End Module
+
+#End Region
+
+
 Public Class LNNUsageExamples
 
     ''' <summary>
