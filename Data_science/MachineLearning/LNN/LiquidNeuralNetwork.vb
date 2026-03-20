@@ -1,5 +1,4 @@
 Imports Microsoft.VisualBasic.MachineLearning.TensorFlow
-Imports std = System.Math
 
 ''' <summary>
 ''' 液态神经网络模块 (Liquid Neural Networks, LNN)
