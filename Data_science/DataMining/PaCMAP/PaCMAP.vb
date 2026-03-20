@@ -324,8 +324,8 @@ Namespace PaCMAP
         ''' 拟合数据
         ''' Fit the model to data
         ''' </summary>
-        ''' <paramname="X">输入数据，形状 [N, D]</param>
-        ''' <paramname="init">初始化方式 ("random" 或其他)</param>
+        ''' <param name="X">输入数据，形状 [N, D]</param>
+        ''' <param name="init">初始化方式 ("random" 或其他)</param>
         ''' <returns>投影后的坐标，形状 [N, nDimensions]</returns>
         Public Function Fit(X As Double(,), Optional init As String = "random") As Double(,)
             ' 转换输入数据为Tensor

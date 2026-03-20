@@ -67,10 +67,10 @@ Public Class SGDOptimizer
     ''' <summary>
     ''' 创建SGD优化器
     ''' </summary>
-    ''' <paramname="parameters">需要优化的参数</param>
-    ''' <paramname="gradients">参数对应的梯度</param>
-    ''' <paramname="learningRate">学习率</param>
-    ''' <paramname="momentum">动量系数（0表示不使用动量）</param>
+    ''' <param name="parameters">需要优化的参数</param>
+    ''' <param name="gradients">参数对应的梯度</param>
+    ''' <param name="learningRate">学习率</param>
+    ''' <param name="momentum">动量系数（0表示不使用动量）</param>
     Public Sub New(parameters As List(Of Tensor), gradients As List(Of Tensor), Optional learningRate As Single = 0.01F, Optional momentum As Single = 0.0F)
 
         MyBase.New(parameters, gradients, learningRate)
@@ -291,10 +291,10 @@ Public Class GCNModel
     ''' <summary>
     ''' 创建GCN模型
     ''' </summary>
-    ''' <paramname="inputDim">输入特征维度</param>
-    ''' <paramname="hiddenDim">隐藏层维度</param>
-    ''' <paramname="outputDim">输出维度（类别数）</param>
-    ''' <paramname="dropout">Dropout率</param>
+    ''' <param name="inputDim">输入特征维度</param>
+    ''' <param name="hiddenDim">隐藏层维度</param>
+    ''' <param name="outputDim">输出维度（类别数）</param>
+    ''' <param name="dropout">Dropout率</param>
     Public Sub New(inputDim As Integer, hiddenDim As Integer, outputDim As Integer, Optional dropout As Single = 0.5F)
         Name = "GCN"
 
@@ -371,9 +371,9 @@ Public Class GraphClassificationModel
     ''' <summary>
     ''' 创建图分类模型
     ''' </summary>
-    ''' <paramname="inputDim">输入特征维度</param>
-    ''' <paramname="hiddenDim">隐藏层维度</param>
-    ''' <paramname="numClasses">类别数</param>
+    ''' <param name="inputDim">输入特征维度</param>
+    ''' <param name="hiddenDim">隐藏层维度</param>
+    ''' <param name="numClasses">类别数</param>
     Public Sub New(inputDim As Integer, hiddenDim As Integer, numClasses As Integer)
         Name = "GraphClassifier"
 
@@ -460,9 +460,9 @@ Public Class Trainer
     ''' <summary>
     ''' 训练一个epoch
     ''' </summary>
-    ''' <paramname="graph">图数据</param>
-    ''' <paramname="labels">节点标签</param>
-    ''' <paramname="trainMask">训练集掩码（标记哪些节点用于训练）</param>
+    ''' <param name="graph">图数据</param>
+    ''' <param name="labels">节点标签</param>
+    ''' <param name="trainMask">训练集掩码（标记哪些节点用于训练）</param>
     ''' <returns>平均训练损失</returns>
     Public Function TrainEpoch(graph As Graph, labels As Integer(), trainMask As Boolean()) As Single
         _model.SetTraining(True)
@@ -510,9 +510,9 @@ Public Class Trainer
     ''' <summary>
     ''' 评估模型
     ''' </summary>
-    ''' <paramname="graph">图数据</param>
-    ''' <paramname="labels">节点标签</param>
-    ''' <paramname="evalMask">评估集掩码</param>
+    ''' <param name="graph">图数据</param>
+    ''' <param name="labels">节点标签</param>
+    ''' <param name="evalMask">评估集掩码</param>
     ''' <returns>准确率</returns>
     Public Function Evaluate(graph As Graph, labels As Integer(), evalMask As Boolean()) As Single
         _model.SetTraining(False)

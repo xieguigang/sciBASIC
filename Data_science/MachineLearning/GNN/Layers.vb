@@ -93,10 +93,10 @@ Public Class LinearLayer
     ''' <summary>
     ''' 创建线性层
     ''' </summary>
-    ''' <paramname="inFeatures">输入特征维度</param>
-    ''' <paramname="outFeatures">输出特征维度</param>
-    ''' <paramname="useBias">是否使用偏置</param>
-    ''' <paramname="name">层名称</param>
+    ''' <param name="inFeatures">输入特征维度</param>
+    ''' <param name="outFeatures">输出特征维度</param>
+    ''' <param name="useBias">是否使用偏置</param>
+    ''' <param name="name">层名称</param>
     Public Sub New(inFeatures As Integer, outFeatures As Integer, Optional useBias As Boolean = True, Optional name As String = Nothing)
         Me.InFeatures = inFeatures
         Me.OutFeatures = outFeatures
@@ -334,11 +334,11 @@ Public Class GCNConvLayer
     ''' <summary>
     ''' 创建GCN卷积层
     ''' </summary>
-    ''' <paramname="inFeatures">输入特征维度</param>
-    ''' <paramname="outFeatures">输出特征维度</param>
-    ''' <paramname="activation">激活函数类型</param>
-    ''' <paramname="useBias">是否使用偏置</param>
-    ''' <paramname="name">层名称</param>
+    ''' <param name="inFeatures">输入特征维度</param>
+    ''' <param name="outFeatures">输出特征维度</param>
+    ''' <param name="activation">激活函数类型</param>
+    ''' <param name="useBias">是否使用偏置</param>
+    ''' <param name="name">层名称</param>
     Public Sub New(inFeatures As Integer, outFeatures As Integer, Optional activation As ActivationType = ActivationType.ReLU, Optional useBias As Boolean = True, Optional name As String = Nothing)
 
         _linear = New LinearLayer(inFeatures, outFeatures, useBias)
@@ -349,8 +349,8 @@ Public Class GCNConvLayer
     ''' <summary>
     ''' 前向传播
     ''' </summary>
-    ''' <paramname="input">节点特征矩阵 [numNodes, inFeatures]</param>
-    ''' <paramname="graph">图结构（用于获取邻接矩阵）</param>
+    ''' <param name="input">节点特征矩阵 [numNodes, inFeatures]</param>
+    ''' <param name="graph">图结构（用于获取邻接矩阵）</param>
     ''' <returns>更新后的节点特征 [numNodes, outFeatures]</returns>
     Public Overloads Function Forward(input As Tensor, graph As Graph) As Tensor
         _lastInput = input
@@ -457,10 +457,10 @@ Public Class GATLayer
     ''' <summary>
     ''' 创建图注意力层
     ''' </summary>
-    ''' <paramname="inFeatures">输入特征维度</param>
-    ''' <paramname="outFeatures">输出特征维度（每个头）</param>
-    ''' <paramname="numHeads">注意力头数量</param>
-    ''' <paramname="leakyReluSlope">LeakyReLU的负斜率</param>
+    ''' <param name="inFeatures">输入特征维度</param>
+    ''' <param name="outFeatures">输出特征维度（每个头）</param>
+    ''' <param name="numHeads">注意力头数量</param>
+    ''' <param name="leakyReluSlope">LeakyReLU的负斜率</param>
     Public Sub New(inFeatures As Integer, outFeatures As Integer, Optional numHeads As Integer = 1, Optional leakyReluSlope As Single = 0.2F, Optional name As String = Nothing)
         Me.InFeatures = inFeatures
         _outFeaturesPerHead = outFeatures
@@ -611,7 +611,7 @@ Public Class GlobalPoolingLayer
     ''' <summary>
     ''' 前向传播：将节点特征聚合为图级别特征
     ''' </summary>
-    ''' <paramname="input">节点特征 [numNodes, features]</param>
+    ''' <param name="input">节点特征 [numNodes, features]</param>
     ''' <returns>图特征 [1, features]</returns>
     Public Overrides Function Forward(input As Tensor) As Tensor
         _lastInput = input

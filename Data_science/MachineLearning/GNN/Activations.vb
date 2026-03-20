@@ -76,7 +76,7 @@ Public Module Activation
     ''' 将向量转换为概率分布，所有元素和为1
     ''' 常用于多分类问题的输出层
     ''' </summary>
-    ''' <paramname="input">输入向量</param>
+    ''' <param name="input">输入向量</param>
     ''' <returns>概率分布向量</returns>
     Public Function Softmax(input As Single()) As Single()
         ' 数值稳定性：减去最大值

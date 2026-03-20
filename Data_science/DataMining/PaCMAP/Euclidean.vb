@@ -25,8 +25,8 @@ Namespace PaCMAP
         ''' 
         ''' 结果是距离矩阵，其中 result[i,j] = ||a[i] - b[j]||_2
         ''' </summary>
-        ''' <paramname="a">第一个张量，形状 [N, D]</param>
-        ''' <paramname="b">第二个张量，形状 [M, D]</param>
+        ''' <param name="a">第一个张量，形状 [N, D]</param>
+        ''' <param name="b">第二个张量，形状 [M, D]</param>
         ''' <returns>距离矩阵，形状 [N, M]</returns>
         Public Function Compute(a As Tensor, b As Tensor) As Tensor
             If a.Rank <> 2 OrElse b.Rank <> 2 Then

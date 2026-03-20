@@ -58,9 +58,9 @@ Public Class Tensor
     ''' <summary>
     ''' 获取或设置指定位置处的元素值（三维访问）
     ''' </summary>
-    ''' <paramname="row">第0维索引（通常对应行/高）</param>
-    ''' <paramname="col">第1维索引（通常对应列/宽）</param>
-    ''' <paramname="depth">第2维索引（通常对应深度/通道）</param>
+    ''' <param name="row">第0维索引（通常对应行/高）</param>
+    ''' <param name="col">第1维索引（通常对应列/宽）</param>
+    ''' <param name="depth">第2维索引（通常对应深度/通道）</param>
     Default Public Property Item(row As Integer, col As Integer, depth As Integer) As Single
         ' 计算一维数组索引：
         ' row * Shape[1] * Shape[2]：跳过前 row 个平面，每个平面有 Shape[1]*Shape[2] 个元素
@@ -77,7 +77,7 @@ Public Class Tensor
     ''' <summary>
     ''' 创建指定形状的张量，并用零初始化
     ''' </summary>
-    ''' <paramname="shape">张量的形状</param>
+    ''' <param name="shape">张量的形状</param>
     Public Sub New(ParamArray shape As Integer())
         Me.Shape = CType(shape.Clone(), Integer())
         Dim totalSize = shape.Aggregate(1, Function(a, b) a * b)
@@ -87,8 +87,8 @@ Public Class Tensor
     ''' <summary>
     ''' 使用指定数据创建张量
     ''' </summary>
-    ''' <paramname="data">初始数据</param>
-    ''' <paramname="shape">张量形状</param>
+    ''' <param name="data">初始数据</param>
+    ''' <param name="shape">张量形状</param>
     Public Sub New(data As Single(), ParamArray shape As Integer())
         Me.Shape = CType(shape.Clone(), Integer())
         _data = CType(data.Clone(), Single())

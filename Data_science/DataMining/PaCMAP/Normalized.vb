@@ -39,7 +39,7 @@ Namespace PaCMAP
         ''' 4. 计算 sigma = avg * avg^T (外积)
         ''' 5. 返回 distances^2 / sigma
         ''' </summary>
-        ''' <paramname="distances">距离矩阵，形状 [N, N]</param>
+        ''' <param name="distances">距离矩阵，形状 [N, N]</param>
         ''' <returns>归一化距离矩阵，形状 [N, N]</returns>
         Public Function Compute(distances As Tensor) As Tensor
             Const k = 7

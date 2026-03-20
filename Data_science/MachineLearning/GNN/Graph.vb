@@ -93,8 +93,8 @@ Public Class Graph
     ''' <summary>
     ''' 创建一个空图
     ''' </summary>
-    ''' <paramname="numNodes">节点数量</param>
-    ''' <paramname="featureDim">节点特征维度</param>
+    ''' <param name="numNodes">节点数量</param>
+    ''' <param name="featureDim">节点特征维度</param>
     Public Sub New(numNodes As Integer, featureDim As Integer)
         Me.NumNodes = numNodes
         NodeFeatures = New Tensor(numNodes, featureDim)
@@ -111,7 +111,7 @@ Public Class Graph
     ''' <summary>
     ''' 使用给定的节点特征创建图
     ''' </summary>
-    ''' <paramname="nodeFeatures">节点特征矩阵 [NumNodes, FeatureDim]</param>
+    ''' <param name="nodeFeatures">节点特征矩阵 [NumNodes, FeatureDim]</param>
     Public Sub New(nodeFeatures As Tensor)
         If nodeFeatures.Rank <> 2 Then Throw New ArgumentException("节点特征必须是二维张量")
 
@@ -130,9 +130,9 @@ Public Class Graph
     ''' <summary>
     ''' 添加一条边
     ''' </summary>
-    ''' <paramname="source">源节点</param>
-    ''' <paramname="target">目标节点</param>
-    ''' <paramname="weight">边权重</param>
+    ''' <param name="source">源节点</param>
+    ''' <param name="target">目标节点</param>
+    ''' <param name="weight">边权重</param>
     Public Sub AddEdge(source As Integer, target As Integer, Optional weight As Single = 1.0F)
         If source < 0 OrElse source >= NumNodes OrElse target < 0 OrElse target >= NumNodes Then Throw New ArgumentException("节点索引超出范围")
 
