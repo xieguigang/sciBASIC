@@ -119,6 +119,7 @@ Module Program
     Sub Main(args As String())
         ' RunCNN.runCnn()
         ' Call testTransformer.seqGenerate()
+        Call LNNUsageExamples.RunAllExamples()
         Call testTransformer.run()
     End Sub
 End Module
