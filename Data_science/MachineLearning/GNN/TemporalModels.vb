@@ -10,7 +10,8 @@ Imports std = System.Math
 ''' 时序GNN模型基类
 ''' </summary>
 Public MustInherit Class TemporalGNNModel
-    Protected _layers As List(Of Layer) = New List(Of Layer)()
+
+    Protected _layers As New List(Of Layer)()
 
     Public Property Name As String
 
@@ -64,8 +65,8 @@ End Class
 ''' 
 ''' 论文参考: T-GCN: A Temporal Graph Convolutional Network for Traffic Prediction (Zhao et al., 2019)
 ''' </summary>
-Public Class TGCNModel
-    Inherits TemporalGNNModel
+Public Class TGCNModel : Inherits TemporalGNNModel
+
     Private ReadOnly _gcnLayer As GCNConvLayer
     Private ReadOnly _gruLayer As GRULayer
     Private ReadOnly _outputLayer As LinearLayer

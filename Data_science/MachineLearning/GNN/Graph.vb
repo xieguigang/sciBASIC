@@ -37,11 +37,11 @@ Public Class Graph
     ''' <summary>
     ''' 图中的节点数量
     ''' </summary>
-
+    Dim _NumNodes As Integer
     ''' <summary>
     ''' 边列表
     ''' </summary>
-    Private _NumNodes As Integer, _Edges As System.Collections.Generic.List(Of Edge)
+    Dim _Edges As System.Collections.Generic.List(Of Edge)
 
     Public Property NumNodes As Integer
         Get
