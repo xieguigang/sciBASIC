@@ -1,7 +1,5 @@
-﻿Imports System
-Imports System.Collections.Generic
+﻿Imports Microsoft.VisualBasic.MachineLearning.TensorFlow
 Imports std = System.Math
-Imports Microsoft.VisualBasic.MachineLearning.TensorFlow
 
 
 ''' <summary>

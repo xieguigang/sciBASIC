@@ -1,3 +1,4 @@
+Imports Microsoft.VisualBasic.DeepLearning.GNN
 Imports Microsoft.VisualBasic.MachineLearning.TensorFlow
 Imports std = System.Math
 

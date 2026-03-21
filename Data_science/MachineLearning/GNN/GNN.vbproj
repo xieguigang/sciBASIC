@@ -12,6 +12,14 @@
     <RootNamespace>Microsoft.VisualBasic.DeepLearning.GNN</RootNamespace>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Remove="test\**" />
+    <EmbeddedResource Remove="test\**" />
+    <None Remove="test\**" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Microsoft.VisualBasic.Core\src\Core.vbproj" />
+    <ProjectReference Include="..\..\Graph\graph-netcore5.vbproj" />
+    <ProjectReference Include="..\..\Mathematica\Math\Math\Math.NET5.vbproj" />
     <ProjectReference Include="..\TensorFlow\TensorFlow.vbproj" />
   </ItemGroup>
 </Project>
