@@ -173,5 +173,10 @@ Namespace ComponentModel.DataSourceModel.Repository
             Return CreateDefaultString()
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Widening Operator CType(template As String) As StringTemplate
+            Return New StringTemplate(template)
+        End Operator
+
     End Class
 End Namespace
