@@ -1,62 +1,62 @@
 ﻿#Region "Microsoft.VisualBasic::771b6c85dbf85e38ca3957b29febb5a0, Microsoft.VisualBasic.Core\src\ComponentModel\DataSource\Repository\StringTemplate.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 83
-    '    Code Lines: 48 (57.83%)
-    ' Comment Lines: 17 (20.48%)
-    '    - Xml Docs: 88.24%
-    ' 
-    '   Blank Lines: 18 (21.69%)
-    '     File Size: 2.83 KB
+' Summaries:
 
 
-    '     Interface IKeyDataReader
-    ' 
-    '         Function: GetData
-    ' 
-    '     Class StringTemplate
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    ' 
-    '         Function: CreateString, GetLastMissingKeys, ParseKeys
-    ' 
-    '         Sub: SetDefaultKey
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 83
+'    Code Lines: 48 (57.83%)
+' Comment Lines: 17 (20.48%)
+'    - Xml Docs: 88.24%
+' 
+'   Blank Lines: 18 (21.69%)
+'     File Size: 2.83 KB
+
+
+'     Interface IKeyDataReader
+' 
+'         Function: GetData
+' 
+'     Class StringTemplate
+' 
+'         Constructor: (+1 Overloads) Sub New
+' 
+'         Function: CreateString, GetLastMissingKeys, ParseKeys
+' 
+'         Sub: SetDefaultKey
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -112,6 +112,30 @@ Namespace ComponentModel.DataSourceModel.Repository
         End Function
 
         ''' <summary>
+        ''' Create a string based on the given template with default key value
+        ''' </summary>
+        ''' <returns></returns>
+        Public Function CreateDefaultString() As String
+            Dim str As New StringBuilder(template)
+            Dim value As String
+
+            Call missing.Clear()
+            Const unknown As String = "unknown"
+
+            For Each placeholder As NamedValue(Of String) In keys
+                value = defaults.TryGetValue(placeholder.Name, default:=unknown)
+
+                If value = unknown Then
+                    Call missing.Add(placeholder.Name)
+                End If
+
+                Call str.Replace(placeholder.Value, value)
+            Next
+
+            Return str.ToString
+        End Function
+
+        ''' <summary>
         ''' Create a string based on the given template
         ''' </summary>
         ''' <typeparam name="T"></typeparam>
@@ -139,6 +163,14 @@ Namespace ComponentModel.DataSourceModel.Repository
             Next
 
             Return str.ToString
+        End Function
+
+        ''' <summary>
+        ''' Create a string based on the given template with default key value
+        ''' </summary>
+        ''' <returns><see cref="CreateDefaultString"/></returns>
+        Public Overrides Function ToString() As String
+            Return CreateDefaultString()
         End Function
 
     End Class
