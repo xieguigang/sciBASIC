@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::39013ea2985734bb926bee6cfb4047f9, Data_science\DataMining\DBNCode\dbn\RandomScoringFunction.vb"
+﻿#Region "Microsoft.VisualBasic::d6486503fb8fa77bc143f7afdfe8cb92, Data_science\DataMining\DBNCode\dbn\RandomScoringFunction.vb"
 
     ' Author:
     ' 
@@ -91,4 +91,3 @@ Namespace dbn
     End Class
 
 End Namespace
-

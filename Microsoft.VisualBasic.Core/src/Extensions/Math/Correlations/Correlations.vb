@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::80a08adfffd989f2df5e315dc6e4c757, Microsoft.VisualBasic.Core\src\Extensions\Math\Correlations\Correlations.vb"
+﻿#Region "Microsoft.VisualBasic::285776ec6ae851c8c6de66c0a5e3ec14, Microsoft.VisualBasic.Core\src\Extensions\Math\Correlations\Correlations.vb"
 
     ' Author:
     ' 
@@ -34,21 +34,21 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 557
-    '    Code Lines: 309 (55.48%)
-    ' Comment Lines: 163 (29.26%)
-    '    - Xml Docs: 87.73%
+    '   Total Lines: 567
+    '    Code Lines: 309 (54.50%)
+    ' Comment Lines: 171 (30.16%)
+    '    - Xml Docs: 86.55%
     ' 
-    '   Blank Lines: 85 (15.26%)
-    '     File Size: 21.60 KB
+    '   Blank Lines: 87 (15.34%)
+    '     File Size: 21.86 KB
 
 
     '     Module Correlations
     ' 
     '         Properties: PearsonDefault
     ' 
-    '         Function: (+2 Overloads) GetPearson, (+2 Overloads) JaccardIndex, JSD, kendallTauBeta, KLD
-    '                   KLDi, rankKendallTauBeta, SW
+    '         Function: (+2 Overloads) GetPearson, (+2 Overloads) JaccardIndex, JSD, kendallTauBeta, (+2 Overloads) KLD
+    '                   rankKendallTauBeta, SW
     ' 
     '         Sub: TestStats
     '         Structure Pearson

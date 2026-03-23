@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9a704d11122c1b96d9e4937d28080fb5, Data_science\DataMining\DBNCode\dbn\BayesNet.vb"
+﻿#Region "Microsoft.VisualBasic::605790c2318c7705306f2dbef011d2e9, Data_science\DataMining\DBNCode\dbn\BayesNet.vb"
 
     ' Author:
     ' 
@@ -651,4 +651,3 @@ Namespace dbn
     End Class
 
 End Namespace
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b209bd5bb7a51c99dd4881cb701a5d86, Data_science\DataMining\DBNCode\utils\Utils.vb"
+﻿#Region "Microsoft.VisualBasic::25b68534911302f528e49288a3e0ab49, Data_science\DataMining\DBNCode\utils\Utils.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 0.00%
     ' 
     '   Blank Lines: 15 (23.08%)
-    '     File Size: 2.06 KB
+    '     File Size: 2.05 KB
 
 
     '     Class Utils
@@ -119,4 +119,3 @@ Namespace utils
     End Class
 
 End Namespace
-

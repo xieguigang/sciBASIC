@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d4a3474e7593e69b470afca3570201da, Data_science\DataMining\HMM\Models\Objects.vb"
+﻿#Region "Microsoft.VisualBasic::333f36ad900b2fd75705bf92e57e7080, Data_science\DataMining\HMM\Models\Objects.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 35
-    '    Code Lines: 18 (51.43%)
-    ' Comment Lines: 8 (22.86%)
+    '   Total Lines: 55
+    '    Code Lines: 26 (47.27%)
+    ' Comment Lines: 14 (25.45%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 9 (25.71%)
-    '     File Size: 941 B
+    '   Blank Lines: 15 (27.27%)
+    '     File Size: 1.36 KB
 
 
     '     Class StatesObject
@@ -54,6 +54,14 @@
     '         Properties: obs, prob
     ' 
     '         Function: ToString
+    ' 
+    '     Class Alpha
+    ' 
+    '         Properties: alphaF, alphas
+    ' 
+    '     Class Beta
+    ' 
+    '         Properties: betaF, betas
     ' 
     ' 
     ' /********************************************************************************/

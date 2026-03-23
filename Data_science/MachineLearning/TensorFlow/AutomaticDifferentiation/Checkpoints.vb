@@ -1,59 +1,60 @@
-﻿#Region "Microsoft.VisualBasic::4ee180d5170f9f13ba45aabf49d1a002, Data_science\MachineLearning\TensorFlow\Checkpoints.vb"
+﻿#Region "Microsoft.VisualBasic::1848692b3c1d5598ea6fa6aca5d895f7, Data_science\MachineLearning\TensorFlow\AutomaticDifferentiation\Checkpoints.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 49
-'    Code Lines: 30 (61.22%)
-' Comment Lines: 9 (18.37%)
-'    - Xml Docs: 88.89%
-' 
-'   Blank Lines: 10 (20.41%)
-'     File Size: 1.53 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-' Class Checkpoints
-' 
-'     Properties: Instance
-' 
-'     Constructor: (+2 Overloads) Sub New
-' 
-'     Function: AddCheckpoint
-' 
-'     Sub: CalculateCheckpointGradients, ClearCheckpoints
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 50
+    '    Code Lines: 32 (64.00%)
+    ' Comment Lines: 9 (18.00%)
+    '    - Xml Docs: 88.89%
+    ' 
+    '   Blank Lines: 9 (18.00%)
+    '     File Size: 1.74 KB
+
+
+    '     Class Checkpoints
+    ' 
+    '         Properties: Instance
+    ' 
+    '         Constructor: (+2 Overloads) Sub New
+    ' 
+    '         Function: AddCheckpoint
+    ' 
+    '         Sub: CalculateCheckpointGradients, ClearCheckpoints
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

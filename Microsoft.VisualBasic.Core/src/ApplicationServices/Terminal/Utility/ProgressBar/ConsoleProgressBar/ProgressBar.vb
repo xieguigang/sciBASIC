@@ -1,66 +1,66 @@
-﻿#Region "Microsoft.VisualBasic::d6540046021c907f04f4511532959096, Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\Utility\ProgressBar\ConsoleProgressBar\ProgressBar.vb"
+﻿#Region "Microsoft.VisualBasic::23601b999b7639f87678dd8cbbd220bd, Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\Utility\ProgressBar\ConsoleProgressBar\ProgressBar.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 547
-'    Code Lines: 319 (58.32%)
-' Comment Lines: 161 (29.43%)
-'    - Xml Docs: 78.88%
-' 
-'   Blank Lines: 67 (12.25%)
-'     File Size: 21.99 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Class ProgressBar
-' 
-'         Properties: [Step], CancelThread, Delay, ElementName, FixedInBottom
-'                     HasProgress, IsDone, IsPaused, IsStarted, Layout
-'                     MarqueeIncrement, MarqueePosition, Maximum, Percentage, ProgressStopwatch
-'                     Tag, Text, TicksCompletedElements, TicksPerElement, TicksRemaining
-'                     TimePerElement, TimeProcessing, TimeRemaining, Value
-' 
-'         Constructor: (+1 Overloads) Sub New
-' 
-'         Function: GetRenderActionsForProgressBarAndText
-' 
-'         Sub: [Resume], Dispose, Pause, (+2 Overloads) PerformStep, Render
-'              SetValue, Start, ThreadAction, Unrender, UpdateMarqueePosition
-'              WaitForExit, (+4 Overloads) WriteLine
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 563
+    '    Code Lines: 333 (59.15%)
+    ' Comment Lines: 161 (28.60%)
+    '    - Xml Docs: 78.88%
+    ' 
+    '   Blank Lines: 69 (12.26%)
+    '     File Size: 22.50 KB
+
+
+    '     Class ProgressBar
+    ' 
+    '         Properties: [Step], CancelThread, Delay, ElementName, FixedInBottom
+    '                     HasProgress, IsDone, IsPaused, IsStarted, Layout
+    '                     MarqueeIncrement, MarqueePosition, Maximum, Percentage, ProgressStopwatch
+    '                     Tag, Text, TicksCompletedElements, TicksPerElement, TicksRemaining
+    '                     TimePerElement, TimeProcessing, TimeRemaining, Value
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
+    '         Function: GetRenderActionsForProgressBarAndText, GetRenderLocation
+    ' 
+    '         Sub: [Resume], Dispose, Pause, (+2 Overloads) PerformStep, Render
+    '              SetLocation, SetValue, Start, ThreadAction, Unrender
+    '              UpdateMarqueePosition, WaitForExit, (+4 Overloads) WriteLine
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

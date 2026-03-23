@@ -1,4 +1,64 @@
-﻿' <copyright file="BinaryHeap.cs" company="Microsoft">
+﻿#Region "Microsoft.VisualBasic::9ad96fe7f514f7e32f5034e54be44e7f, Data_science\Graph\KNN\HNSW\BinaryHeap.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 149
+    '    Code Lines: 81 (54.36%)
+    ' Comment Lines: 48 (32.21%)
+    '    - Xml Docs: 91.67%
+    ' 
+    '   Blank Lines: 20 (13.42%)
+    '     File Size: 5.15 KB
+
+
+    '     Class BinaryHeap
+    ' 
+    '         Properties: Buffer, Comparer
+    ' 
+    '         Constructor: (+2 Overloads) Sub New
+    ' 
+    '         Function: Pop
+    ' 
+    '         Sub: Push, SiftDown, SiftUp, Swap
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+' <copyright file="BinaryHeap.cs" company="Microsoft">
 ' Copyright (c) Microsoft Corporation. All rights reserved.
 ' Licensed under the MIT License.
 ' </copyright>
@@ -147,3 +207,4 @@ Namespace KNearNeighbors.HNSW
         End Sub
     End Class
 End Namespace
+

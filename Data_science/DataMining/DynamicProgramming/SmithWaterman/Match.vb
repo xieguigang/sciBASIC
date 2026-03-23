@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::819b44723a97d503fc5dc9eda5dc63cb, Data_science\DataMining\DynamicProgramming\SmithWaterman\Match.vb"
+﻿#Region "Microsoft.VisualBasic::0a942b2149a4c264329a55853954876c, Data_science\DataMining\DynamicProgramming\SmithWaterman\Match.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 92
-    '    Code Lines: 48 (52.17%)
-    ' Comment Lines: 30 (32.61%)
+    '   Total Lines: 98
+    '    Code Lines: 53 (54.08%)
+    ' Comment Lines: 30 (30.61%)
     '    - Xml Docs: 96.67%
     ' 
-    '   Blank Lines: 14 (15.22%)
-    '     File Size: 2.90 KB
+    '   Blank Lines: 15 (15.31%)
+    '     File Size: 3.13 KB
 
 
     '     Class Match
@@ -49,7 +49,7 @@
     ' 
     '         Constructor: (+3 Overloads) Sub New
     '         Function: isChainable, notOverlap, ToString
-    '         Operators: -
+    '         Operators: -, /
     ' 
     ' 
     ' /********************************************************************************/

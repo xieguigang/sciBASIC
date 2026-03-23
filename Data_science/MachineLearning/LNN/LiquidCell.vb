@@ -1,4 +1,66 @@
-﻿Imports Microsoft.VisualBasic.MachineLearning.TensorFlow
+﻿#Region "Microsoft.VisualBasic::28e37c5092ba38cf83fb1ecf79ece4f3, Data_science\MachineLearning\LNN\LiquidCell.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 357
+    '    Code Lines: 171 (47.90%)
+    ' Comment Lines: 126 (35.29%)
+    '    - Xml Docs: 87.30%
+    ' 
+    '   Blank Lines: 60 (16.81%)
+    '     File Size: 11.56 KB
+
+
+    ' Class LiquidCell
+    ' 
+    '     Properties: ActivationType, Bias, BiasGradient, HiddenSize, InputSize
+    '                 State, Tau, TauGradient, TauMax, TauMin
+    '                 UseBoundedTau, WeightInput, WeightInputGradient, WeightRecurrent, WeightRecurrentGradient
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    ' 
+    '     Function: ApplyActivation, ApplyActivationDerivative, ComputeDerivative, Forward, GetEffectiveTau
+    '               GetGradients, GetParameters
+    ' 
+    '     Sub: Dispose, ResetState, SetState
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+Imports Microsoft.VisualBasic.MachineLearning.TensorFlow
 Imports std = System.Math
 
 ''' <summary>
@@ -355,3 +417,4 @@ Public Class LiquidCell
 #End Region
 
 End Class
+

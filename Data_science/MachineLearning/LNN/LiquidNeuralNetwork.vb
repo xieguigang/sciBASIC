@@ -1,3 +1,65 @@
+﻿#Region "Microsoft.VisualBasic::5e8c3b6fb7c1aeef992866f102f5923a, Data_science\MachineLearning\LNN\LiquidNeuralNetwork.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 283
+    '    Code Lines: 126 (44.52%)
+    ' Comment Lines: 101 (35.69%)
+    '    - Xml Docs: 80.20%
+    ' 
+    '   Blank Lines: 56 (19.79%)
+    '     File Size: 8.22 KB
+
+
+    ' Class LiquidNeuralNetwork
+    ' 
+    '     Properties: DefaultDt, HiddenSize, InputSize, LiquidLayer, NumLiquidLayers
+    '                 OutputActivation, OutputBias, OutputBiasGradient, OutputSize, OutputWeight
+    '                 OutputWeightGradient, RecordHistory, SolverType, StateHistory
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    ' 
+    '     Function: ComputeOutput, Forward, GetParameterCount, GetParameters, ProcessSequence
+    ' 
+    '     Sub: Dispose, ResetState
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
 Imports Microsoft.VisualBasic.MachineLearning.TensorFlow
 
 ''' <summary>
@@ -280,4 +342,5 @@ Public Class LiquidNeuralNetwork
 #End Region
 
 End Class
+
 

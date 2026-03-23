@@ -31,13 +31,13 @@ G:/GCModeller/src/runtime/sciBASIC#/Data/BinaryData/BinaryData/binarydata-netcor
 G:/GCModeller/src/runtime/sciBASIC#/Data/BinaryData/BinaryData/binarydata-netcore5.vbproj,Stream/Helpers.vb,49,0,13,36,2,2,0,2,0,1137,1.14 KB
 G:/GCModeller/src/runtime/sciBASIC#/Data/BinaryData/BinaryData/binarydata-netcore5.vbproj,Stream/Offset.vb,39,21,3,15,1,2,2,0,0,1581,1.58 KB
 G:/GCModeller/src/runtime/sciBASIC#/Data/BinaryData/BinaryData/binarydata-netcore5.vbproj,Stream/SeekTask.vb,42,21,5,16,1,2,2,1,0,1799,1.80 KB
-G:/GCModeller/src/runtime/sciBASIC#/Data/BinaryData/BinaryData/binarydata-netcore5.vbproj,Stream/VectorStream.vb,109,0,14,95,1,0,2,2,0,5521,5.52 KB
+G:/GCModeller/src/runtime/sciBASIC#/Data/BinaryData/BinaryData/binarydata-netcore5.vbproj,Stream/VectorStream.vb,109,0,14,95,1,0,2,2,0,5519,5.52 KB
 G:/GCModeller/src/runtime/sciBASIC#/Data/BinaryData/BinaryData/binarydata-netcore5.vbproj,Stream/StreamReader/BindAttribute.vb,18,3,3,12,1,2,1,1,0,529,529 B
 G:/GCModeller/src/runtime/sciBASIC#/Data/BinaryData/BinaryData/binarydata-netcore5.vbproj,Stream/StreamReader/FieldAttribute.vb,74,17,11,46,1,3,1,2,0,2458,2.46 KB
 G:/GCModeller/src/runtime/sciBASIC#/Data/BinaryData/BinaryData/binarydata-netcore5.vbproj,Stream/StreamReader/ReaderProvider.vb,215,55,28,132,1,3,8,2,0,7681,7.68 KB
 G:/GCModeller/src/runtime/sciBASIC#/Data/BinaryData/BinaryData/binarydata-netcore5.vbproj,XDR/Unpacker.vb,50,0,10,40,1,2,1,4,0,1564,1.56 KB
 G:/GCModeller/src/runtime/sciBASIC#/Data/BinaryData/BinaryData/binarydata-netcore5.vbproj,XDR/XdrEncoding.vb,171,52,22,97,1,0,6,10,0,6151,6.15 KB
-G:/GCModeller/src/runtime/sciBASIC#/Data/BinaryData/BinaryData/binarydata-netcore5.vbproj,<project>,8273,1628,1365,5280,47,50,159,217,0,324870,324.87 KB
+G:/GCModeller/src/runtime/sciBASIC#/Data/BinaryData/BinaryData/binarydata-netcore5.vbproj,<project>,8273,1628,1365,5280,47,50,159,217,0,324868,324.87 KB
 G:/GCModeller/src/runtime/sciBASIC#/Data/BinaryData/DataStorage/datastorage-netcore5.vbproj,ASN.1/Extensions.vb,26,0,8,18,1,0,0,2,0,1064,1.06 KB
 G:/GCModeller/src/runtime/sciBASIC#/Data/BinaryData/DataStorage/datastorage-netcore5.vbproj,ASN.1/Index.vb,8,0,2,6,1,0,0,0,0,188,188 B
 G:/GCModeller/src/runtime/sciBASIC#/Data/BinaryData/DataStorage/datastorage-netcore5.vbproj,ASN.1/StreamReader.vb,190,18,36,136,1,1,1,8,0,6076,6.08 KB
@@ -294,8 +294,8 @@ G:/GCModeller/src/runtime/sciBASIC#/Data/DataFrame/dataframework-netcore5.vbproj
 G:/GCModeller/src/runtime/sciBASIC#/Data/DataFrame/dataframework-netcore5.vbproj,DataSet/Excel/Extensions.vb,93,34,11,48,1,0,1,4,0,3626,3.63 KB
 G:/GCModeller/src/runtime/sciBASIC#/Data/DataFrame/dataframework-netcore5.vbproj,DataSet/Excel/Functions/Numerics.vb,17,0,4,13,1,0,0,2,0,495,495 B
 G:/GCModeller/src/runtime/sciBASIC#/Data/DataFrame/dataframework-netcore5.vbproj,Extensions/DataImports.vb,212,81,21,110,1,0,0,11,0,8739,8.74 KB
-G:/GCModeller/src/runtime/sciBASIC#/Data/DataFrame/dataframework-netcore5.vbproj,Extensions/DocumentExtensions.vb,496,129,69,298,1,0,0,24,0,18421,18.42 KB
-G:/GCModeller/src/runtime/sciBASIC#/Data/DataFrame/dataframework-netcore5.vbproj,Extensions/Extensions.vb,668,213,74,381,1,0,3,30,0,28878,28.88 KB
+G:/GCModeller/src/runtime/sciBASIC#/Data/DataFrame/dataframework-netcore5.vbproj,Extensions/DocumentExtensions.vb,518,138,70,310,1,0,0,25,0,19417,19.42 KB
+G:/GCModeller/src/runtime/sciBASIC#/Data/DataFrame/dataframework-netcore5.vbproj,Extensions/Extensions.vb,668,213,74,381,1,0,3,30,0,28890,28.89 KB
 G:/GCModeller/src/runtime/sciBASIC#/Data/DataFrame/dataframework-netcore5.vbproj,Extensions/Math.vb,34,3,4,27,1,0,0,3,0,1204,1.20 KB
 G:/GCModeller/src/runtime/sciBASIC#/Data/DataFrame/dataframework-netcore5.vbproj,Extensions/PipeStream.vb,87,17,10,60,1,0,0,6,0,3336,3.34 KB
 G:/GCModeller/src/runtime/sciBASIC#/Data/DataFrame/dataframework-netcore5.vbproj,Extensions/ProfileStreams.vb,54,18,6,30,1,0,0,3,0,2110,2.11 KB
@@ -311,9 +311,9 @@ G:/GCModeller/src/runtime/sciBASIC#/Data/DataFrame/dataframework-netcore5.vbproj
 G:/GCModeller/src/runtime/sciBASIC#/Data/DataFrame/dataframework-netcore5.vbproj,IO/CSVText/CSVFile/RowTokenizer.vb,148,26,29,93,1,0,4,5,0,4834,4.83 KB
 G:/GCModeller/src/runtime/sciBASIC#/Data/DataFrame/dataframework-netcore5.vbproj,IO/CSVText/CSVFile/StreamIO.vb,139,35,18,86,1,0,0,5,0,5885,5.88 KB
 G:/GCModeller/src/runtime/sciBASIC#/Data/DataFrame/dataframework-netcore5.vbproj,IO/CSVText/CSVFile/Tokenizer.vb,88,23,16,49,1,0,1,3,0,2868,2.87 KB
-G:/GCModeller/src/runtime/sciBASIC#/Data/DataFrame/dataframework-netcore5.vbproj,IO/DataFrame/DataFrameResolver.vb,856,182,128,546,1,11,10,57,0,34629,34.63 KB
+G:/GCModeller/src/runtime/sciBASIC#/Data/DataFrame/dataframework-netcore5.vbproj,IO/DataFrame/DataFrameResolver.vb,856,182,128,546,1,11,10,57,0,34666,34.67 KB
 G:/GCModeller/src/runtime/sciBASIC#/Data/DataFrame/dataframework-netcore5.vbproj,IO/DataFrame/HeaderSchema.vb,153,26,23,104,1,3,2,4,0,6178,6.18 KB
-G:/GCModeller/src/runtime/sciBASIC#/Data/DataFrame/dataframework-netcore5.vbproj,IO/Generic/DataSet.vb,237,71,27,139,1,3,3,8,0,10007,10.01 KB
+G:/GCModeller/src/runtime/sciBASIC#/Data/DataFrame/dataframework-netcore5.vbproj,IO/Generic/DataSet.vb,239,71,27,141,1,3,3,8,0,10147,10.15 KB
 G:/GCModeller/src/runtime/sciBASIC#/Data/DataFrame/dataframework-netcore5.vbproj,IO/Generic/EntityObject.vb,216,63,22,131,1,1,4,8,0,8892,8.89 KB
 G:/GCModeller/src/runtime/sciBASIC#/Data/DataFrame/dataframework-netcore5.vbproj,IO/Generic/Extensions.vb,312,85,27,200,1,0,0,17,0,13430,13.43 KB
 G:/GCModeller/src/runtime/sciBASIC#/Data/DataFrame/dataframework-netcore5.vbproj,IO/Generic/Table.vb,128,31,16,81,2,0,0,5,0,5110,5.11 KB
@@ -356,7 +356,7 @@ G:/GCModeller/src/runtime/sciBASIC#/Data/DataFrame/dataframework-netcore5.vbproj
 G:/GCModeller/src/runtime/sciBASIC#/Data/DataFrame/dataframework-netcore5.vbproj,test/My Project/Settings.Designer.vb,73,9,13,51,2,2,1,0,0,2966,2.97 KB
 G:/GCModeller/src/runtime/sciBASIC#/Data/DataFrame/dataframework-netcore5.vbproj,test/Outlining/Class1.vb,47,0,7,40,2,28,0,0,0,2014,2.01 KB
 G:/GCModeller/src/runtime/sciBASIC#/Data/DataFrame/dataframework-netcore5.vbproj,test/Outlining/OutliningTest.vb,11,0,4,7,1,0,1,0,0,259,259 B
-G:/GCModeller/src/runtime/sciBASIC#/Data/DataFrame/dataframework-netcore5.vbproj,<project>,13550,3147,1921,8482,115,177,154,547,12,542758,542.76 KB
+G:/GCModeller/src/runtime/sciBASIC#/Data/DataFrame/dataframework-netcore5.vbproj,<project>,13574,3156,1922,8496,115,177,154,548,12,543943,543.94 KB
 G:/GCModeller/src/runtime/sciBASIC#/Data/DataFrame.Extensions/DataFramework.Extensions-netcore5.vbproj,DataTableStream.vb,209,54,21,134,1,0,1,2,0,9648,9.65 KB
 G:/GCModeller/src/runtime/sciBASIC#/Data/DataFrame.Extensions/DataFramework.Extensions-netcore5.vbproj,My Project/Resources.Designer.vb,63,23,8,32,1,2,0,0,0,2801,2.80 KB
 G:/GCModeller/src/runtime/sciBASIC#/Data/DataFrame.Extensions/DataFramework.Extensions-netcore5.vbproj,Outlining/NamespaceDoc.vb,8,3,1,4,1,0,0,0,0,195,195 B
@@ -397,7 +397,7 @@ G:/GCModeller/src/runtime/sciBASIC#/Data/GraphQuery/GraphQuery.NET5.vbproj,TextP
 G:/GCModeller/src/runtime/sciBASIC#/Data/GraphQuery/GraphQuery.NET5.vbproj,TextParser/FunctionModel/ParserFunction.vb,38,0,9,29,3,0,0,1,0,1400,1.40 KB
 G:/GCModeller/src/runtime/sciBASIC#/Data/GraphQuery/GraphQuery.NET5.vbproj,<project>,1338,153,207,978,24,17,15,51,0,48615,48.62 KB
 G:/GCModeller/src/runtime/sciBASIC#/Data/Trinity/Trinity.NET5.vbproj,Bigram.vb,82,14,13,55,1,3,2,4,0,2580,2.58 KB
-G:/GCModeller/src/runtime/sciBASIC#/Data/Trinity/Trinity.NET5.vbproj,NLP.vb,99,22,12,65,1,0,0,4,0,3730,3.73 KB
+G:/GCModeller/src/runtime/sciBASIC#/Data/Trinity/Trinity.NET5.vbproj,NLP.vb,103,22,13,68,1,0,0,4,0,3807,3.81 KB
 G:/GCModeller/src/runtime/sciBASIC#/Data/Trinity/Trinity.NET5.vbproj,StopWords.vb,411,12,9,390,1,2,1,3,0,11243,11.24 KB
 G:/GCModeller/src/runtime/sciBASIC#/Data/Trinity/Trinity.NET5.vbproj,TextRank.vb,244,50,34,160,1,0,1,8,0,9442,9.44 KB
 G:/GCModeller/src/runtime/sciBASIC#/Data/Trinity/Trinity.NET5.vbproj,Html/Article.vb,41,15,7,19,1,4,0,2,0,1107,1.11 KB
@@ -417,7 +417,7 @@ G:/GCModeller/src/runtime/sciBASIC#/Data/Trinity/Trinity.NET5.vbproj,Test/My Pro
 G:/GCModeller/src/runtime/sciBASIC#/Data/Trinity/Trinity.NET5.vbproj,Test/My Project/AssemblyInfo.vb,35,15,7,13,0,0,0,0,0,1143,1.14 KB
 G:/GCModeller/src/runtime/sciBASIC#/Data/Trinity/Trinity.NET5.vbproj,Test/My Project/Resources.Designer.vb,63,23,8,32,1,2,0,0,0,2769,2.77 KB
 G:/GCModeller/src/runtime/sciBASIC#/Data/Trinity/Trinity.NET5.vbproj,Test/My Project/Settings.Designer.vb,73,9,13,51,2,2,1,0,0,2954,2.95 KB
-G:/GCModeller/src/runtime/sciBASIC#/Data/Trinity/Trinity.NET5.vbproj,<project>,2133,360,298,1475,21,27,33,55,0,73364,73.36 KB
+G:/GCModeller/src/runtime/sciBASIC#/Data/Trinity/Trinity.NET5.vbproj,<project>,2137,360,299,1478,21,27,33,55,0,73441,73.44 KB
 G:/GCModeller/src/runtime/sciBASIC#/Data/word2vec/word2vec.vbproj,Trainer.vb,103,7,18,78,1,0,4,1,0,4458,4.46 KB
 G:/GCModeller/src/runtime/sciBASIC#/Data/word2vec/word2vec.vbproj,TrainMethod.vb,33,29,0,4,1,0,0,0,0,2160,2.16 KB
 G:/GCModeller/src/runtime/sciBASIC#/Data/word2vec/word2vec.vbproj,VectorModel.vb,198,45,39,114,1,3,2,6,0,6611,6.61 KB
@@ -444,12 +444,14 @@ G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/BinaryTree/btree-net
 G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/BinaryTree/btree-netcore5.vbproj,AffinityPropagation/SimilarityMatrix.vb,40,7,6,27,1,0,0,2,0,1500,1.50 KB
 G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/BinaryTree/btree-netcore5.vbproj,ClusterTree/BTreeCluster.vb,86,19,11,56,1,5,1,3,0,3116,3.12 KB
 G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/BinaryTree/btree-netcore5.vbproj,ClusterTree/ClusterTree.vb,134,49,17,68,3,1,2,4,0,4692,4.69 KB
-G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/BinaryTree/btree-netcore5.vbproj,ComparisonProvider/AlignmentComparison.vb,95,0,18,77,2,0,3,3,0,3575,3.58 KB
+G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/BinaryTree/btree-netcore5.vbproj,ClusterTree/ClusterViz.vb,61,11,9,41,1,0,1,2,0,2370,2.37 KB
+G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/BinaryTree/btree-netcore5.vbproj,ComparisonProvider/AlignmentComparison.vb,90,0,17,73,1,0,3,3,0,3489,3.49 KB
+G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/BinaryTree/btree-netcore5.vbproj,ComparisonProvider/CompareMethods.vb,4,0,0,4,1,0,0,0,0,82,82 B
 G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/BinaryTree/btree-netcore5.vbproj,ComparisonProvider/Comparison.vb,25,3,5,17,1,0,1,2,0,802,802 B
 G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/BinaryTree/btree-netcore5.vbproj,ComparisonProvider/ComparisonProvider.vb,48,11,8,29,1,0,1,2,0,1545,1.54 KB
 G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/BinaryTree/btree-netcore5.vbproj,test/AffinityPropagationDemo.vb,26,1,6,19,1,0,1,1,0,670,670 B
 G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/BinaryTree/btree-netcore5.vbproj,test/Program.vb,17,9,3,5,1,0,1,0,0,693,693 B
-G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/BinaryTree/btree-netcore5.vbproj,<project>,1622,346,265,1011,24,13,24,48,0,60549,60.55 KB
+G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/BinaryTree/btree-netcore5.vbproj,<project>,1682,357,273,1052,25,13,25,50,0,62915,62.91 KB
 G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/BinaryTree/test/test.vbproj,AffinityPropagationDemo.vb,26,1,6,19,1,0,1,1,0,670,670 B
 G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/BinaryTree/test/test.vbproj,Program.vb,17,9,3,5,1,0,1,0,0,693,693 B
 G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/BinaryTree/test/test.vbproj,<project>,43,10,9,24,2,0,2,1,0,1363,1.36 KB
@@ -504,7 +506,7 @@ G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/DataMining/DataMinin
 G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/DataMining/DataMining.NET5.vbproj,Clustering/KMeans/Extensions.vb,117,22,11,84,1,0,0,5,0,5329,5.33 KB
 G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/DataMining/DataMining.NET5.vbproj,Clustering/KMeans/KMeans.vb,325,53,51,221,1,0,1,10,0,13835,13.84 KB
 G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/DataMining/DataMining.NET5.vbproj,Clustering/KMeans/Kmedoids.vb,159,42,28,89,1,0,0,3,0,6155,6.16 KB
-G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/DataMining/DataMining.NET5.vbproj,Clustering/KMeans/EntityModels/ClusterEntity.vb,152,57,16,79,1,3,4,4,2,5465,5.46 KB
+G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/DataMining/DataMining.NET5.vbproj,Clustering/KMeans/EntityModels/ClusterEntity.vb,158,57,17,84,1,3,5,4,2,5647,5.65 KB
 G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/DataMining/DataMining.NET5.vbproj,Clustering/KMeans/EntityModels/DataSetConvertor.vb,56,0,12,44,1,0,1,6,0,1986,1.99 KB
 G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/DataMining/DataMining.NET5.vbproj,Clustering/KMeans/EntityModels/EntityClusterModel.vb,84,16,9,59,1,2,0,5,0,3489,3.49 KB
 G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/DataMining/DataMining.NET5.vbproj,Clustering/KMeans/EntityModels/Metric.vb,20,0,6,14,1,0,1,1,0,597,597 B
@@ -570,33 +572,33 @@ G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/DataMining/DataMinin
 G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/DataMining/DataMining.NET5.vbproj,test/My Project/AssemblyInfo.vb,35,15,7,13,0,0,0,0,0,1162,1.16 KB
 G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/DataMining/DataMining.NET5.vbproj,test/My Project/Resources.Designer.vb,63,23,8,32,1,2,0,0,0,2772,2.77 KB
 G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/DataMining/DataMining.NET5.vbproj,test/My Project/Settings.Designer.vb,73,9,13,51,2,2,1,0,0,2960,2.96 KB
-G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/DataMining/DataMining.NET5.vbproj,<project>,11789,2670,1980,7139,160,166,156,347,20,467267,467.27 KB
-G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/DBNCode/DBNCode.vbproj,dbn/Attribute.vb,58,34,12,12,1,3,0,5,0,2441,2.44 KB
-G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/DBNCode/DBNCode.vbproj,dbn/BayesNet.vb,592,125,101,366,1,4,8,9,0,25422,25.42 KB
-G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/DBNCode/DBNCode.vbproj,dbn/Configuration.vb,90,3,17,70,1,0,4,4,0,3080,3.08 KB
-G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/DBNCode/DBNCode.vbproj,dbn/CrossValidation.vb,817,66,321,430,3,1,3,7,0,26291,26.29 KB
-G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/DBNCode/DBNCode.vbproj,dbn/DynamicBayesNet.vb,356,13,85,258,1,3,3,17,0,14127,14.13 KB
-G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/DBNCode/DBNCode.vbproj,dbn/LLScoringFunction.vb,76,5,22,49,1,0,0,6,0,3969,3.97 KB
-G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/DBNCode/DBNCode.vbproj,dbn/LocalConfiguration.vb,195,46,32,117,1,4,5,3,0,7661,7.66 KB
-G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/DBNCode/DBNCode.vbproj,dbn/MDLScoringFunction.vb,34,2,14,18,1,0,0,2,0,1549,1.55 KB
-G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/DBNCode/DBNCode.vbproj,dbn/MultiNet.vb,437,68,71,298,1,2,3,6,0,17205,17.20 KB
-G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/DBNCode/DBNCode.vbproj,dbn/MutableConfiguration.vb,54,12,8,34,1,0,2,1,0,2076,2.08 KB
-G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/DBNCode/DBNCode.vbproj,dbn/NominalAttribute.vb,56,0,15,41,1,3,0,5,0,1707,1.71 KB
-G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/DBNCode/DBNCode.vbproj,dbn/NumericAttribute.vb,86,0,19,67,1,3,0,7,0,2779,2.78 KB
-G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/DBNCode/DBNCode.vbproj,dbn/Observations.vb,1061,261,138,662,1,8,9,18,0,48996,49.00 KB
-G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/DBNCode/DBNCode.vbproj,dbn/OptimumBranching.vb,504,68,139,297,1,1,4,4,0,17827,17.83 KB
-G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/DBNCode/DBNCode.vbproj,dbn/RandomScoringFunction.vb,38,1,10,27,1,0,1,6,0,2227,2.23 KB
-G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/DBNCode/DBNCode.vbproj,dbn/Scores.vb,761,188,165,408,1,0,4,12,0,29515,29.52 KB
-G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/DBNCode/DBNCode.vbproj,dbn/ScoringFunction.vb,36,9,17,10,1,0,0,6,0,1410,1.41 KB
-G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/DBNCode/DBNCode.vbproj,test/Program.vb,7,0,1,6,1,0,1,0,0,134,134 B
-G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/DBNCode/DBNCode.vbproj,utils/BidirectionalArray.vb,46,9,7,30,1,0,0,6,0,1707,1.71 KB
-G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/DBNCode/DBNCode.vbproj,utils/DisjointSets.vb,82,52,8,22,1,0,2,1,0,3200,3.20 KB
-G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/DBNCode/DBNCode.vbproj,utils/Edge.vb,70,2,11,57,1,4,2,4,0,2306,2.31 KB
-G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/DBNCode/DBNCode.vbproj,utils/Forest.vb,104,39,13,52,1,2,1,2,0,3949,3.95 KB
-G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/DBNCode/DBNCode.vbproj,utils/ScoreCalculationThread.vb,110,19,23,68,1,0,2,0,0,4522,4.52 KB
-G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/DBNCode/DBNCode.vbproj,utils/TreeNode.vb,112,5,23,84,1,5,2,3,0,3558,3.56 KB
-G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/DBNCode/DBNCode.vbproj,utils/Utils.vb,65,3,15,47,1,0,2,4,0,2056,2.06 KB
-G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/DBNCode/DBNCode.vbproj,<project>,5847,1030,1287,3530,27,43,58,138,0,229714,229.71 KB
+G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/DataMining/DataMining.NET5.vbproj,<project>,11795,2670,1981,7144,160,166,157,347,20,467449,467.45 KB
+G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/DBNCode/DBNCode.vbproj,dbn/Attribute.vb,58,34,12,12,1,3,0,5,0,2439,2.44 KB
+G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/DBNCode/DBNCode.vbproj,dbn/BayesNet.vb,592,125,101,366,1,4,8,9,0,25420,25.42 KB
+G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/DBNCode/DBNCode.vbproj,dbn/Configuration.vb,90,3,17,70,1,0,4,4,0,3078,3.08 KB
+G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/DBNCode/DBNCode.vbproj,dbn/CrossValidation.vb,817,66,321,430,3,1,3,7,0,26289,26.29 KB
+G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/DBNCode/DBNCode.vbproj,dbn/DynamicBayesNet.vb,356,13,85,258,1,3,3,17,0,14125,14.12 KB
+G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/DBNCode/DBNCode.vbproj,dbn/LLScoringFunction.vb,76,5,22,49,1,0,0,6,0,3967,3.97 KB
+G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/DBNCode/DBNCode.vbproj,dbn/LocalConfiguration.vb,195,46,32,117,1,4,5,3,0,7659,7.66 KB
+G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/DBNCode/DBNCode.vbproj,dbn/MDLScoringFunction.vb,34,2,14,18,1,0,0,2,0,1547,1.55 KB
+G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/DBNCode/DBNCode.vbproj,dbn/MultiNet.vb,437,68,71,298,1,2,3,6,0,17203,17.20 KB
+G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/DBNCode/DBNCode.vbproj,dbn/MutableConfiguration.vb,54,12,8,34,1,0,2,1,0,2074,2.07 KB
+G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/DBNCode/DBNCode.vbproj,dbn/NominalAttribute.vb,56,0,15,41,1,3,0,5,0,1705,1.71 KB
+G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/DBNCode/DBNCode.vbproj,dbn/NumericAttribute.vb,86,0,19,67,1,3,0,7,0,2777,2.78 KB
+G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/DBNCode/DBNCode.vbproj,dbn/Observations.vb,1061,261,138,662,1,8,9,18,0,48994,48.99 KB
+G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/DBNCode/DBNCode.vbproj,dbn/OptimumBranching.vb,504,68,139,297,1,1,4,4,0,17825,17.82 KB
+G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/DBNCode/DBNCode.vbproj,dbn/RandomScoringFunction.vb,38,1,10,27,1,0,1,6,0,2225,2.23 KB
+G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/DBNCode/DBNCode.vbproj,dbn/Scores.vb,761,188,165,408,1,0,4,12,0,29513,29.51 KB
+G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/DBNCode/DBNCode.vbproj,dbn/ScoringFunction.vb,36,9,17,10,1,0,0,6,0,1408,1.41 KB
+G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/DBNCode/DBNCode.vbproj,test/Program.vb,7,0,1,6,1,0,1,0,0,132,132 B
+G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/DBNCode/DBNCode.vbproj,utils/BidirectionalArray.vb,46,9,7,30,1,0,0,6,0,1705,1.71 KB
+G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/DBNCode/DBNCode.vbproj,utils/DisjointSets.vb,81,52,7,22,1,0,2,1,0,3196,3.20 KB
+G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/DBNCode/DBNCode.vbproj,utils/Edge.vb,70,2,11,57,1,4,2,4,0,2304,2.30 KB
+G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/DBNCode/DBNCode.vbproj,utils/Forest.vb,104,39,13,52,1,2,1,2,0,3947,3.95 KB
+G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/DBNCode/DBNCode.vbproj,utils/ScoreCalculationThread.vb,110,19,23,68,1,0,2,0,0,4520,4.52 KB
+G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/DBNCode/DBNCode.vbproj,utils/TreeNode.vb,112,5,23,84,1,5,2,3,0,3556,3.56 KB
+G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/DBNCode/DBNCode.vbproj,utils/Utils.vb,65,3,15,47,1,0,2,4,0,2054,2.05 KB
+G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/DBNCode/DBNCode.vbproj,<project>,5846,1030,1286,3530,27,43,58,138,0,229662,229.66 KB
 G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/DBNCode/test/test.vbproj,Program.vb,7,0,1,6,1,0,1,0,0,132,132 B
 G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/DBNCode/test/test.vbproj,<project>,7,0,1,6,1,0,1,0,0,132,132 B
 G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/DensityQuery/DensityQuery.NET5.vbproj,Density2D.vb,73,13,11,49,1,0,0,3,0,2897,2.90 KB
@@ -606,10 +608,10 @@ G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/DensityQuery/Density
 G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/DensityQuery/DensityQuery.NET5.vbproj,SLIC.vb,174,19,24,131,2,4,3,5,0,7045,7.04 KB
 G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/DensityQuery/DensityQuery.NET5.vbproj,<project>,369,33,60,276,6,4,7,16,0,14027,14.03 KB
 G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/DynamicProgramming/DynamicProgramming.NET5.vbproj,Extensions.vb,33,6,3,24,1,0,0,2,0,1195,1.20 KB
-G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/DynamicProgramming/DynamicProgramming.NET5.vbproj,CenterStar/CenterStar.vb,262,64,40,158,1,1,6,4,0,9498,9.50 KB
+G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/DynamicProgramming/DynamicProgramming.NET5.vbproj,CenterStar/CenterStar.vb,267,64,41,162,1,1,6,4,0,9701,9.70 KB
 G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/DynamicProgramming/DynamicProgramming.NET5.vbproj,Generic/GenericSequence.vb,75,0,13,62,1,1,2,3,2,2367,2.37 KB
 G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/DynamicProgramming/DynamicProgramming.NET5.vbproj,Generic/GenericSymbol.vb,41,0,9,32,1,0,1,4,0,1292,1.29 KB
-G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/DynamicProgramming/DynamicProgramming.NET5.vbproj,KBand/KBandSearch.vb,195,47,34,114,1,0,2,2,0,6474,6.47 KB
+G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/DynamicProgramming/DynamicProgramming.NET5.vbproj,KBand/KBandSearch.vb,195,47,34,114,1,0,2,2,0,6502,6.50 KB
 G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/DynamicProgramming/DynamicProgramming.NET5.vbproj,Knapsack/Item.vb,22,0,5,17,1,3,1,1,0,668,668 B
 G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/DynamicProgramming/DynamicProgramming.NET5.vbproj,Knapsack/KnapsackSolution.vb,24,0,5,19,1,3,0,2,0,879,879 B
 G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/DynamicProgramming/DynamicProgramming.NET5.vbproj,Knapsack/KnapsackSolver.vb,73,0,16,57,1,0,1,5,0,2409,2.41 KB
@@ -620,7 +622,7 @@ G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/DynamicProgramming/D
 G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/DynamicProgramming/DynamicProgramming.NET5.vbproj,SmithWaterman/Directions.vb,28,17,3,8,1,0,0,0,0,723,723 B
 G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/DynamicProgramming/DynamicProgramming.NET5.vbproj,SmithWaterman/GSW.vb,376,118,48,210,1,8,3,6,0,14878,14.88 KB
 G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/DynamicProgramming/DynamicProgramming.NET5.vbproj,SmithWaterman/LocalHSPMatch.vb,85,24,15,46,1,6,1,3,0,2786,2.79 KB
-G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/DynamicProgramming/DynamicProgramming.NET5.vbproj,SmithWaterman/Match.vb,92,30,14,48,1,5,3,3,1,2905,2.90 KB
+G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/DynamicProgramming/DynamicProgramming.NET5.vbproj,SmithWaterman/Match.vb,98,30,15,53,1,5,3,3,2,3130,3.13 KB
 G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/DynamicProgramming/DynamicProgramming.NET5.vbproj,SmithWaterman/SimpleChaining.vb,197,35,27,135,3,1,1,5,0,7689,7.69 KB
 G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/DynamicProgramming/DynamicProgramming.NET5.vbproj,SmithWaterman/Workspace.vb,34,0,5,29,1,0,0,2,0,1274,1.27 KB
 G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/DynamicProgramming/DynamicProgramming.NET5.vbproj,test/Module1.vb,44,18,10,16,1,0,2,0,0,1668,1.67 KB
@@ -628,7 +630,7 @@ G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/DynamicProgramming/D
 G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/DynamicProgramming/DynamicProgramming.NET5.vbproj,test/My Project/AssemblyInfo.vb,35,15,7,13,0,0,0,0,0,1161,1.16 KB
 G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/DynamicProgramming/DynamicProgramming.NET5.vbproj,test/My Project/Resources.Designer.vb,63,23,8,32,1,2,0,0,0,2796,2.80 KB
 G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/DynamicProgramming/DynamicProgramming.NET5.vbproj,test/My Project/Settings.Designer.vb,73,9,13,51,2,2,1,0,0,2966,2.97 KB
-G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/DynamicProgramming/DynamicProgramming.NET5.vbproj,<project>,2184,527,346,1311,24,43,33,51,3,79533,79.53 KB
+G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/DynamicProgramming/DynamicProgramming.NET5.vbproj,<project>,2195,527,348,1320,24,43,33,51,4,79989,79.99 KB
 G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/FeatureFrame/FeatureFrame.vbproj,Encoder.vb,80,24,12,44,1,0,1,3,0,2659,2.66 KB
 G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/FeatureFrame/FeatureFrame.vbproj,FeatureEncoder.vb,18,3,3,12,1,0,0,1,0,590,590 B
 G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/FeatureFrame/FeatureFrame.vbproj,Encoder/EnumEncoder.vb,33,3,5,25,1,0,0,1,0,1140,1.14 KB
@@ -638,13 +640,13 @@ G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/FeatureFrame/Feature
 G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/FeatureFrame/FeatureFrame.vbproj,<project>,220,33,38,149,6,0,2,9,0,7590,7.59 KB
 G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/hierarchical-clustering/HCTreePlot/HCTreePlot.vbproj,Circular.vb,145,5,24,116,1,0,3,0,0,6383,6.38 KB
 G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/hierarchical-clustering/HCTreePlot/HCTreePlot.vbproj,Dendrogram.vb,62,0,6,56,1,0,0,1,0,2778,2.78 KB
-G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/hierarchical-clustering/HCTreePlot/HCTreePlot.vbproj,DendrogramPanel.vb,57,3,9,45,1,1,1,1,0,2174,2.17 KB
-G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/hierarchical-clustering/HCTreePlot/HCTreePlot.vbproj,DendrogramPanelV2.vb,163,8,27,128,1,0,3,1,0,7232,7.23 KB
+G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/hierarchical-clustering/HCTreePlot/HCTreePlot.vbproj,DendrogramPanel.vb,62,8,9,45,1,1,1,1,0,2317,2.32 KB
+G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/hierarchical-clustering/HCTreePlot/HCTreePlot.vbproj,DendrogramPanelV2.vb,162,8,27,127,1,0,3,1,0,7210,7.21 KB
 G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/hierarchical-clustering/HCTreePlot/HCTreePlot.vbproj,Horizon.vb,148,5,24,119,1,0,3,0,0,6634,6.63 KB
 G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/hierarchical-clustering/HCTreePlot/HCTreePlot.vbproj,HorizonRightToLeft.vb,103,13,18,72,1,8,2,0,0,4215,4.21 KB
 G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/hierarchical-clustering/HCTreePlot/HCTreePlot.vbproj,Layouts.vb,18,12,0,6,1,0,0,0,0,394,394 B
-G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/hierarchical-clustering/HCTreePlot/HCTreePlot.vbproj,RadialDendrogram.vb,261,69,47,145,1,0,3,2,0,12260,12.26 KB
-G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/hierarchical-clustering/HCTreePlot/HCTreePlot.vbproj,<project>,957,115,155,687,8,9,15,5,0,42070,42.07 KB
+G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/hierarchical-clustering/HCTreePlot/HCTreePlot.vbproj,RadialDendrogram.vb,261,69,47,145,1,0,3,2,0,12258,12.26 KB
+G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/hierarchical-clustering/HCTreePlot/HCTreePlot.vbproj,<project>,961,120,155,686,8,9,15,5,0,42189,42.19 KB
 G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/hierarchical-clustering/hierarchical-clustering/hctree.NET5.vbproj,PrintHelper.vb,49,9,8,32,1,0,2,1,0,1630,1.63 KB
 G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/hierarchical-clustering/hierarchical-clustering/hctree.NET5.vbproj,BIRCH/CFEntry.vb,360,45,67,248,1,4,6,10,0,12458,12.46 KB
 G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/hierarchical-clustering/hierarchical-clustering/hctree.NET5.vbproj,BIRCH/CFEntryPair.vb,76,26,16,34,1,0,2,2,0,2211,2.21 KB
@@ -672,23 +674,21 @@ G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/HMM/HMM.NET5.vbproj,
 G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/HMM/HMM.NET5.vbproj,Algorithm/HMMAlgorithm/Bayes.vb,26,0,5,21,1,0,1,1,0,965,965 B
 G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/HMM/HMM.NET5.vbproj,Algorithm/HMMAlgorithm/Forward.vb,23,0,5,18,1,0,1,1,0,838,838 B
 G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/HMM/HMM.NET5.vbproj,Algorithm/HMMAlgorithm/HMMAlgorithm.vb,12,0,4,8,1,0,1,0,0,206,206 B
-G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/HMM/HMM.NET5.vbproj,Algorithm/HMMAlgorithm/Viterbi.vb,30,1,5,24,1,0,1,1,0,1380,1.38 KB
+G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/HMM/HMM.NET5.vbproj,Algorithm/HMMAlgorithm/Viterbi.vb,31,2,5,24,1,0,1,1,0,1395,1.40 KB
 G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/HMM/HMM.NET5.vbproj,Algorithm/HMMChainAlgorithm/backwardFactory.vb,50,0,12,38,1,0,1,2,0,2010,2.01 KB
 G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/HMM/HMM.NET5.vbproj,Algorithm/HMMChainAlgorithm/EM.vb,78,0,21,57,1,0,1,5,0,3060,3.06 KB
 G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/HMM/HMM.NET5.vbproj,Algorithm/HMMChainAlgorithm/forwardFactory.vb,46,0,8,38,1,0,1,3,0,1974,1.97 KB
 G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/HMM/HMM.NET5.vbproj,Algorithm/HMMChainAlgorithm/HMMChainAlgorithm.vb,13,0,4,9,1,0,1,0,0,331,331 B
 G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/HMM/HMM.NET5.vbproj,Algorithm/HMMChainAlgorithm/viterbiFactory.vb,87,0,15,72,1,0,1,4,0,3938,3.94 KB
-G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/HMM/HMM.NET5.vbproj,Models/Alpha.vb,12,3,3,6,1,2,0,0,0,249,249 B
-G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/HMM/HMM.NET5.vbproj,Models/Beta.vb,12,3,3,6,1,2,0,0,0,230,230 B
-G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/HMM/HMM.NET5.vbproj,Models/Objects.vb,35,8,9,18,2,4,0,2,0,941,941 B
-G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/HMM/HMM.NET5.vbproj,Models/Psi.vb,21,0,7,14,3,6,0,0,0,458,458 B
-G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/HMM/HMM.NET5.vbproj,Models/PsiArray.vb,42,0,11,31,2,3,4,0,0,1147,1.15 KB
+G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/HMM/HMM.NET5.vbproj,Models/Objects.vb,55,14,15,26,4,8,0,2,0,1358,1.36 KB
+G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/HMM/HMM.NET5.vbproj,Models/Psi.vb,60,0,17,43,5,9,4,0,0,1572,1.57 KB
 G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/HMM/HMM.NET5.vbproj,test/Program.vb,74,9,18,47,1,0,3,0,0,3116,3.12 KB
-G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/HMM/HMM.NET5.vbproj,test/My Project/Application.Designer.vb,12,9,1,2,0,0,0,0,0,434,434 B
-G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/HMM/HMM.NET5.vbproj,test/My Project/AssemblyInfo.vb,35,15,7,13,0,0,0,0,0,1019,1019 B
-G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/HMM/HMM.NET5.vbproj,test/My Project/Resources.Designer.vb,62,23,8,31,1,2,0,0,0,2766,2.77 KB
-G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/HMM/HMM.NET5.vbproj,test/My Project/Settings.Designer.vb,73,9,13,51,2,2,1,0,0,2966,2.97 KB
-G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/HMM/HMM.NET5.vbproj,<project>,1036,99,212,725,29,23,23,35,0,38806,38.81 KB
+G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/HMM/HMM.NET5.vbproj,<project>,848,44,182,622,26,19,22,35,0,31541,31.54 KB
+G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/PaCMAP/PaCMAP.vbproj,Euclidean.vb,160,62,21,77,2,0,0,4,0,6376,6.38 KB
+G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/PaCMAP/PaCMAP.vbproj,Normalized.vb,81,46,10,25,1,0,0,2,0,3493,3.49 KB
+G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/PaCMAP/PaCMAP.vbproj,PaCMAP.vb,509,172,88,249,2,6,7,10,0,18927,18.93 KB
+G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/PaCMAP/PaCMAP.vbproj,TensorExtensions.vb,890,146,138,606,3,2,7,26,0,32957,32.96 KB
+G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/PaCMAP/PaCMAP.vbproj,<project>,1640,426,257,957,8,8,14,42,0,61753,61.75 KB
 G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/UMAP/UMAP.NET5.vbproj,DistanceFunctions.vb,133,34,17,82,2,0,0,8,0,4806,4.81 KB
 G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/UMAP/UMAP.NET5.vbproj,OptimizationState.vb,39,12,4,23,1,0,0,1,0,1364,1.36 KB
 G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/UMAP/UMAP.NET5.vbproj,Umap.vb,477,105,75,297,1,1,7,11,0,20179,20.18 KB
@@ -704,7 +704,7 @@ G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/UMAP/UMAP.NET5.vbpro
 G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/UMAP/UMAP.NET5.vbproj,Components/SparseMatrix/SparseMatrix.vb,275,21,52,202,1,1,6,17,0,10348,10.35 KB
 G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/UMAP/UMAP.NET5.vbproj,Components/Tree/FlatTree.vb,9,0,1,8,1,4,0,0,0,281,281 B
 G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/UMAP/UMAP.NET5.vbproj,Components/Tree/RandomProjectionTreeNode.vb,11,0,1,10,1,6,0,0,0,410,410 B
-G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/UMAP/UMAP.NET5.vbproj,Components/Tree/Tree.vb,268,46,39,183,1,0,0,10,0,11824,11.82 KB
+G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/UMAP/UMAP.NET5.vbproj,Components/Tree/Tree.vb,268,46,39,183,1,0,0,10,0,11855,11.86 KB
 G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/UMAP/UMAP.NET5.vbproj,KNN/KNearestNeighbour.vb,100,29,17,54,1,0,1,3,0,4214,4.21 KB
 G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/UMAP/UMAP.NET5.vbproj,KNN/KNNArguments.vb,32,4,7,21,1,4,1,1,0,888,888 B
 G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/UMAP/UMAP.NET5.vbproj,KNN/KNNState.vb,17,7,4,6,1,2,0,0,0,416,416 B
@@ -722,7 +722,7 @@ G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/UMAP/UMAP.NET5.vbpro
 G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/UMAP/UMAP.NET5.vbproj,test/My Project/AssemblyInfo.vb,35,15,7,13,0,0,0,0,0,1143,1.14 KB
 G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/UMAP/UMAP.NET5.vbproj,test/My Project/Resources.Designer.vb,62,23,8,31,1,2,0,0,0,2760,2.76 KB
 G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/UMAP/UMAP.NET5.vbproj,test/My Project/Settings.Designer.vb,73,9,13,51,2,2,1,0,0,2954,2.95 KB
-G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/UMAP/UMAP.NET5.vbproj,<project>,3157,505,545,2107,34,38,41,87,0,122661,122.66 KB
+G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/UMAP/UMAP.NET5.vbproj,<project>,3157,505,545,2107,34,38,41,87,0,122692,122.69 KB
 G:/GCModeller/src/runtime/sciBASIC#/Data_science/Graph/graph-netcore5.vbproj,Extensions.vb,130,41,15,74,1,0,0,7,0,4533,4.53 KB
 G:/GCModeller/src/runtime/sciBASIC#/Data_science/Graph/graph-netcore5.vbproj,NamespaceDoc.vb,6,3,1,2,1,0,0,0,0,195,195 B
 G:/GCModeller/src/runtime/sciBASIC#/Data_science/Graph/graph-netcore5.vbproj,PQTree.vb,973,96,68,809,1,0,5,17,0,43923,43.92 KB
@@ -740,7 +740,8 @@ G:/GCModeller/src/runtime/sciBASIC#/Data_science/Graph/graph-netcore5.vbproj,Ana
 G:/GCModeller/src/runtime/sciBASIC#/Data_science/Graph/graph-netcore5.vbproj,Analysis/FastUnfolding/Utils.vb,48,8,9,31,1,0,0,1,0,1463,1.46 KB
 G:/GCModeller/src/runtime/sciBASIC#/Data_science/Graph/graph-netcore5.vbproj,Analysis/Louvain/Builder.vb,113,3,24,86,1,0,3,1,0,4302,4.30 KB
 G:/GCModeller/src/runtime/sciBASIC#/Data_science/Graph/graph-netcore5.vbproj,Analysis/Louvain/Edge.vb,22,6,4,12,1,0,1,1,0,576,576 B
-G:/GCModeller/src/runtime/sciBASIC#/Data_science/Graph/graph-netcore5.vbproj,Analysis/Louvain/Louvain.vb,386,89,70,227,1,0,4,4,0,12368,12.37 KB
+G:/GCModeller/src/runtime/sciBASIC#/Data_science/Graph/graph-netcore5.vbproj,Analysis/Louvain/Leiden.vb,839,213,155,471,1,0,4,14,0,31511,31.51 KB
+G:/GCModeller/src/runtime/sciBASIC#/Data_science/Graph/graph-netcore5.vbproj,Analysis/Louvain/Louvain.vb,386,89,70,227,1,0,4,4,0,12378,12.38 KB
 G:/GCModeller/src/runtime/sciBASIC#/Data_science/Graph/graph-netcore5.vbproj,Analysis/MorganFingerprint/MorganAtom.vb,14,4,3,7,1,3,0,0,0,317,317 B
 G:/GCModeller/src/runtime/sciBASIC#/Data_science/Graph/graph-netcore5.vbproj,Analysis/MorganFingerprint/MorganFingerprint.vb,244,95,31,118,3,1,1,6,0,12021,12.02 KB
 G:/GCModeller/src/runtime/sciBASIC#/Data_science/Graph/graph-netcore5.vbproj,Analysis/MorganFingerprint/MorganGraph.vb,19,8,4,7,1,2,0,0,0,542,542 B
@@ -762,6 +763,18 @@ G:/GCModeller/src/runtime/sciBASIC#/Data_science/Graph/graph-netcore5.vbproj,EMD
 G:/GCModeller/src/runtime/sciBASIC#/Data_science/Graph/graph-netcore5.vbproj,KNN/Cosine.vb,17,0,5,12,1,0,0,2,0,463,463 B
 G:/GCModeller/src/runtime/sciBASIC#/Data_science/Graph/graph-netcore5.vbproj,KNN/KNN.vb,69,14,12,43,1,0,1,3,0,2706,2.71 KB
 G:/GCModeller/src/runtime/sciBASIC#/Data_science/Graph/graph-netcore5.vbproj,KNN/ScoreMetric.vb,21,7,5,9,1,1,0,1,0,620,620 B
+G:/GCModeller/src/runtime/sciBASIC#/Data_science/Graph/graph-netcore5.vbproj,KNN/HNSW/BinaryHeap.vb,149,48,20,81,1,2,6,1,0,5151,5.15 KB
+G:/GCModeller/src/runtime/sciBASIC#/Data_science/Graph/graph-netcore5.vbproj,KNN/HNSW/CosineDistance.vb,154,42,24,88,1,0,0,4,0,5699,5.70 KB
+G:/GCModeller/src/runtime/sciBASIC#/Data_science/Graph/graph-netcore5.vbproj,KNN/HNSW/Graph.vb,338,152,49,137,3,2,3,5,0,15866,15.87 KB
+G:/GCModeller/src/runtime/sciBASIC#/Data_science/Graph/graph-netcore5.vbproj,KNN/HNSW/NeighbourSelectionHeuristic.vb,19,11,2,6,1,0,0,0,0,625,625 B
+G:/GCModeller/src/runtime/sciBASIC#/Data_science/Graph/graph-netcore5.vbproj,KNN/HNSW/Node.vb,171,63,19,89,1,6,2,2,0,7496,7.50 KB
+G:/GCModeller/src/runtime/sciBASIC#/Data_science/Graph/graph-netcore5.vbproj,KNN/HNSW/NodeAlgorithm34.vb,134,63,17,54,2,0,2,2,0,6695,6.70 KB
+G:/GCModeller/src/runtime/sciBASIC#/Data_science/Graph/graph-netcore5.vbproj,KNN/HNSW/Parameters.vb,82,43,11,28,2,9,1,0,0,3343,3.34 KB
+G:/GCModeller/src/runtime/sciBASIC#/Data_science/Graph/graph-netcore5.vbproj,KNN/HNSW/ReverseComparer.vb,52,25,7,20,2,0,1,2,0,2060,2.06 KB
+G:/GCModeller/src/runtime/sciBASIC#/Data_science/Graph/graph-netcore5.vbproj,KNN/HNSW/SmallWorld.Utils.vb,69,31,7,31,1,0,1,3,0,3064,3.06 KB
+G:/GCModeller/src/runtime/sciBASIC#/Data_science/Graph/graph-netcore5.vbproj,KNN/HNSW/SmallWorld.vb,107,59,14,34,1,0,3,3,0,4674,4.67 KB
+G:/GCModeller/src/runtime/sciBASIC#/Data_science/Graph/graph-netcore5.vbproj,KNN/HNSW/TravelingCosts.vb,80,41,11,28,1,0,1,2,0,3144,3.14 KB
+G:/GCModeller/src/runtime/sciBASIC#/Data_science/Graph/graph-netcore5.vbproj,KNN/HNSW/VectorUtils.vb,104,25,18,61,1,0,2,2,0,3553,3.55 KB
 G:/GCModeller/src/runtime/sciBASIC#/Data_science/Graph/graph-netcore5.vbproj,Model/SGT.vb,366,113,54,199,3,2,1,12,0,13453,13.45 KB
 G:/GCModeller/src/runtime/sciBASIC#/Data_science/Graph/graph-netcore5.vbproj,Model/Abstract/Edge.vb,68,31,7,30,1,4,0,2,0,2268,2.27 KB
 G:/GCModeller/src/runtime/sciBASIC#/Data_science/Graph/graph-netcore5.vbproj,Model/Abstract/General.vb,31,5,7,19,2,0,2,1,0,905,905 B
@@ -812,7 +825,7 @@ G:/GCModeller/src/runtime/sciBASIC#/Data_science/Graph/graph-netcore5.vbproj,tes
 G:/GCModeller/src/runtime/sciBASIC#/Data_science/Graph/graph-netcore5.vbproj,test/My Project/AssemblyInfo.vb,35,15,7,13,0,0,0,0,0,1049,1.05 KB
 G:/GCModeller/src/runtime/sciBASIC#/Data_science/Graph/graph-netcore5.vbproj,test/My Project/Resources.Designer.vb,63,23,8,32,1,2,0,0,0,2799,2.80 KB
 G:/GCModeller/src/runtime/sciBASIC#/Data_science/Graph/graph-netcore5.vbproj,test/My Project/Settings.Designer.vb,73,9,13,51,2,2,1,0,0,2973,2.97 KB
-G:/GCModeller/src/runtime/sciBASIC#/Data_science/Graph/graph-netcore5.vbproj,<project>,9943,2072,1529,6342,130,131,139,282,0,369621,369.62 KB
+G:/GCModeller/src/runtime/sciBASIC#/Data_science/Graph/graph-netcore5.vbproj,<project>,12241,2888,1883,7470,148,150,165,322,0,462512,462.51 KB
 G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/Bootstrapping/Bootstrapping.vbproj,Graph2Vec.vb,65,0,13,52,1,0,1,2,0,2395,2.40 KB
 G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/Bootstrapping/Bootstrapping.vbproj,GraphEmbedding/Algorithm.vb,87,34,8,45,1,0,0,5,0,3918,3.92 KB
 G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/Bootstrapping/Bootstrapping.vbproj,GraphEmbedding/Arguments.vb,29,0,6,23,1,6,0,0,0,1352,1.35 KB
@@ -847,18 +860,18 @@ G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/Bootstrapping/B
 G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/Bootstrapping/Bootstrapping.vbproj,Node2Vec/Graph.vb,244,58,22,164,1,0,4,7,0,10272,10.27 KB
 G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/Bootstrapping/Bootstrapping.vbproj,Node2Vec/Solver.vb,96,34,15,47,1,0,0,2,0,3836,3.84 KB
 G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/Bootstrapping/Bootstrapping.vbproj,<project>,3491,234,399,2858,33,14,69,40,0,171994,171.99 KB
-G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/DeepLearning/DeepLearning.NET6.vbproj,CeNiN/CeNiN.vb,208,11,49,148,1,1,2,6,0,6833,6.83 KB
+G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/DeepLearning/DeepLearning.NET6.vbproj,CeNiN/CeNiN.vb,208,11,49,148,1,1,2,6,0,6841,6.84 KB
 G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/DeepLearning/DeepLearning.NET6.vbproj,CeNiN/ImageProcessor.vb,62,0,13,49,2,0,0,3,0,2355,2.35 KB
 G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/DeepLearning/DeepLearning.NET6.vbproj,CeNiN/NamespaceDoc.vb,10,5,1,4,1,0,0,0,0,247,247 B
 G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/DeepLearning/DeepLearning.NET6.vbproj,CeNiN/SaveModel.vb,111,4,17,90,1,0,6,1,0,3801,3.80 KB
 G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/DeepLearning/DeepLearning.NET6.vbproj,CeNiN/Solver.vb,88,0,16,72,1,0,0,1,0,3506,3.51 KB
-G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/DeepLearning/DeepLearning.NET6.vbproj,CeNiN/Layers/Convolution.vb,150,1,33,116,1,1,2,1,0,5364,5.36 KB
+G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/DeepLearning/DeepLearning.NET6.vbproj,CeNiN/Layers/Convolution.vb,150,1,33,116,1,1,2,1,0,5372,5.37 KB
 G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/DeepLearning/DeepLearning.NET6.vbproj,CeNiN/Layers/Input.vb,128,11,18,99,1,2,2,3,0,4669,4.67 KB
-G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/DeepLearning/DeepLearning.NET6.vbproj,CeNiN/Layers/Layer.vb,125,20,24,81,1,1,10,2,0,4451,4.45 KB
+G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/DeepLearning/DeepLearning.NET6.vbproj,CeNiN/Layers/Layer.vb,125,20,24,81,1,1,10,2,0,4459,4.46 KB
 G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/DeepLearning/DeepLearning.NET6.vbproj,CeNiN/Layers/Output.vb,54,4,12,38,1,3,1,4,0,1952,1.95 KB
 G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/DeepLearning/DeepLearning.NET6.vbproj,CeNiN/Layers/Pool.vb,88,0,22,66,1,1,2,1,0,2759,2.76 KB
 G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/DeepLearning/DeepLearning.NET6.vbproj,CeNiN/Layers/ReLU.vb,51,0,14,37,1,1,1,1,0,1419,1.42 KB
-G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/DeepLearning/DeepLearning.NET6.vbproj,CeNiN/Layers/SoftMax.vb,45,0,11,34,1,1,1,1,0,1330,1.33 KB
+G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/DeepLearning/DeepLearning.NET6.vbproj,CeNiN/Layers/SoftMax.vb,45,0,11,34,1,1,1,1,0,1318,1.32 KB
 G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/DeepLearning/DeepLearning.NET6.vbproj,CNN/ConvolutionalNN.vb,222,58,39,125,1,5,3,8,0,7630,7.63 KB
 G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/DeepLearning/DeepLearning.NET6.vbproj,CNN/DataLink.vb,19,7,4,8,1,0,0,0,0,559,559 B
 G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/DeepLearning/DeepLearning.NET6.vbproj,CNN/Dimension.vb,56,12,11,33,1,1,2,3,0,1594,1.59 KB
@@ -949,31 +962,53 @@ G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/DeepLearning/De
 G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/DeepLearning/DeepLearning.NET6.vbproj,RNN/net/interfaces/TrainingSet.vb,17,6,4,7,1,0,1,2,0,444,444 B
 G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/DeepLearning/DeepLearning.NET6.vbproj,test/Class1.vb,20,15,5,0,0,0,0,0,0,760,760 B
 G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/DeepLearning/DeepLearning.NET6.vbproj,test/Dataset.vb,99,0,18,81,1,1,5,6,0,3206,3.21 KB
+G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/DeepLearning/DeepLearning.NET6.vbproj,test/LNN_Examples.vb,682,93,140,449,2,0,9,0,0,23756,23.76 KB
 G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/DeepLearning/DeepLearning.NET6.vbproj,test/MnistTest.vb,203,169,34,0,0,0,0,0,0,8412,8.41 KB
-G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/DeepLearning/DeepLearning.NET6.vbproj,test/Program.vb,71,56,10,5,1,0,1,0,0,2725,2.73 KB
+G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/DeepLearning/DeepLearning.NET6.vbproj,test/Program.vb,72,56,10,6,1,0,1,0,0,2773,2.77 KB
 G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/DeepLearning/DeepLearning.NET6.vbproj,test/RNNTest.vb,14,0,5,9,1,0,1,0,0,377,377 B
 G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/DeepLearning/DeepLearning.NET6.vbproj,test/testTransformer.vb,94,7,13,74,1,0,3,0,0,3320,3.32 KB
-G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/DeepLearning/DeepLearning.NET6.vbproj,Transformer/DecoderLayer.vb,70,3,17,50,1,0,3,1,0,3305,3.31 KB
-G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/DeepLearning/DeepLearning.NET6.vbproj,Transformer/DecoderStack.vb,38,0,8,30,1,0,3,1,0,1401,1.40 KB
-G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/DeepLearning/DeepLearning.NET6.vbproj,Transformer/Embedding.vb,209,47,33,129,1,3,6,4,0,8151,8.15 KB
-G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/DeepLearning/DeepLearning.NET6.vbproj,Transformer/EncoderLayer.vb,58,2,15,41,1,0,3,1,0,2468,2.47 KB
-G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/DeepLearning/DeepLearning.NET6.vbproj,Transformer/EncoderStack.vb,40,0,10,30,1,0,3,1,0,1326,1.33 KB
-G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/DeepLearning/DeepLearning.NET6.vbproj,Transformer/FeedForwardNetwork.vb,47,2,10,35,1,0,3,1,0,1612,1.61 KB
-G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/DeepLearning/DeepLearning.NET6.vbproj,Transformer/MultiHeadAttention.vb,129,3,26,100,1,0,6,3,0,5286,5.29 KB
-G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/DeepLearning/DeepLearning.NET6.vbproj,Transformer/Optimizer.vb,33,3,6,24,1,0,2,0,0,1088,1.09 KB
-G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/DeepLearning/DeepLearning.NET6.vbproj,Transformer/OutputLayer.vb,32,3,8,21,1,0,2,1,0,1094,1.09 KB
-G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/DeepLearning/DeepLearning.NET6.vbproj,Transformer/TransformerModel.vb,176,10,35,131,1,0,6,2,0,8364,8.36 KB
+G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/DeepLearning/DeepLearning.NET6.vbproj,Transformer/DecoderLayer.vb,70,3,17,50,1,0,3,1,0,3330,3.33 KB
+G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/DeepLearning/DeepLearning.NET6.vbproj,Transformer/DecoderStack.vb,38,0,8,30,1,0,3,1,0,1426,1.43 KB
+G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/DeepLearning/DeepLearning.NET6.vbproj,Transformer/Embedding.vb,209,47,33,129,1,3,6,4,0,8176,8.18 KB
+G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/DeepLearning/DeepLearning.NET6.vbproj,Transformer/EncoderLayer.vb,58,2,15,41,1,0,3,1,0,2493,2.49 KB
+G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/DeepLearning/DeepLearning.NET6.vbproj,Transformer/EncoderStack.vb,40,0,10,30,1,0,3,1,0,1351,1.35 KB
+G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/DeepLearning/DeepLearning.NET6.vbproj,Transformer/FeedForwardNetwork.vb,47,2,10,35,1,0,3,1,0,1637,1.64 KB
+G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/DeepLearning/DeepLearning.NET6.vbproj,Transformer/MultiHeadAttention.vb,130,3,27,100,1,0,6,3,0,5313,5.31 KB
+G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/DeepLearning/DeepLearning.NET6.vbproj,Transformer/Optimizer.vb,33,3,6,24,1,0,2,0,0,1113,1.11 KB
+G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/DeepLearning/DeepLearning.NET6.vbproj,Transformer/OutputLayer.vb,32,3,8,21,1,0,2,1,0,1119,1.12 KB
+G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/DeepLearning/DeepLearning.NET6.vbproj,Transformer/TransformerModel.vb,176,10,35,131,1,0,6,2,0,8389,8.39 KB
 G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/DeepLearning/DeepLearning.NET6.vbproj,Transformer/Utils/TextProcessing.vb,110,0,20,90,1,0,3,5,0,5143,5.14 KB
-G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/DeepLearning/DeepLearning.NET6.vbproj,<project>,11803,2265,2122,7416,136,181,298,309,0,429904,429.90 KB
+G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/DeepLearning/DeepLearning.NET6.vbproj,<project>,12487,2358,2263,7866,138,181,307,309,0,453972,453.97 KB
 G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/DeepLearning/test/test.vbproj,Class1.vb,20,15,5,0,0,0,0,0,0,760,760 B
 G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/DeepLearning/test/test.vbproj,Dataset.vb,99,0,18,81,1,1,5,6,0,3206,3.21 KB
+G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/DeepLearning/test/test.vbproj,LNN_Examples.vb,682,93,140,449,2,0,9,0,0,23755,23.75 KB
 G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/DeepLearning/test/test.vbproj,MnistTest.vb,203,169,34,0,0,0,0,0,0,8412,8.41 KB
-G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/DeepLearning/test/test.vbproj,Program.vb,71,56,10,5,1,0,1,0,0,2725,2.73 KB
+G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/DeepLearning/test/test.vbproj,Program.vb,72,56,10,6,1,0,1,0,0,2773,2.77 KB
 G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/DeepLearning/test/test.vbproj,RNNTest.vb,14,0,5,9,1,0,1,0,0,377,377 B
 G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/DeepLearning/test/test.vbproj,testTransformer.vb,94,7,13,74,1,0,3,0,0,3320,3.32 KB
-G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/DeepLearning/test/test.vbproj,<project>,501,247,85,169,4,1,10,6,0,18800,18.80 KB
+G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/DeepLearning/test/test.vbproj,<project>,1184,340,225,619,6,1,19,6,0,42603,42.60 KB
 G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/DeepQNetwork/DeepQNetwork.vbproj,QNetwork.vb,72,20,14,38,1,0,3,2,0,2482,2.48 KB
 G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/DeepQNetwork/DeepQNetwork.vbproj,<project>,72,20,14,38,1,0,3,2,0,2482,2.48 KB
+G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/GNN/GNN.vbproj,Activations.vb,303,103,38,162,6,0,0,20,0,10395,10.39 KB
+G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/GNN/GNN.vbproj,Graph.vb,327,113,46,168,3,12,8,7,0,9976,9.98 KB
+G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/GNN/GNN.vbproj,Layers.vb,687,195,111,381,8,9,6,32,0,23021,23.02 KB
+G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/GNN/GNN.vbproj,Models.vb,698,200,134,364,8,10,14,11,0,22347,22.35 KB
+G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/GNN/GNN.vbproj,RecurrentLayers.vb,748,167,129,452,3,5,7,27,0,26380,26.38 KB
+G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/GNN/GNN.vbproj,TemporalGraph.vb,431,104,61,266,3,5,7,11,0,14251,14.25 KB
+G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/GNN/GNN.vbproj,TemporalModels.vb,652,127,127,398,5,3,5,17,0,21736,21.74 KB
+G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/GNN/GNN.vbproj,test/Demo.vb,396,84,81,231,2,0,6,3,0,13438,13.44 KB
+G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/GNN/GNN.vbproj,<project>,4242,1093,727,2422,38,44,53,128,0,141544,141.54 KB
+G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/GNN/test/test.vbproj,Demo.vb,396,84,81,231,2,0,6,3,0,13437,13.44 KB
+G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/GNN/test/test.vbproj,<project>,396,84,81,231,2,0,6,3,0,13437,13.44 KB
+G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/LNN/LNN.vbproj,ActivationFunctions.vb,90,30,14,46,1,0,0,8,0,2819,2.82 KB
+G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/LNN/LNN.vbproj,Documentation.vb,279,259,20,0,0,0,0,0,0,10217,10.22 KB
+G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/LNN/LNN.vbproj,LiquidCell.vb,357,126,60,171,1,15,4,7,0,11559,11.56 KB
+G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/LNN/LNN.vbproj,LiquidLayer.vb,206,64,39,103,1,8,3,5,0,5874,5.87 KB
+G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/LNN/LNN.vbproj,LiquidNeuralNetwork.vb,283,101,56,126,1,14,3,5,0,8223,8.22 KB
+G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/LNN/LNN.vbproj,LNNTrainer.vb,429,124,81,224,1,8,9,6,0,13541,13.54 KB
+G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/LNN/LNN.vbproj,ODESolver.vb,127,50,24,53,3,0,0,4,0,4866,4.87 KB
+G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/LNN/LNN.vbproj,TimeSeriesUtils.vb,131,30,23,78,1,0,0,7,0,4644,4.64 KB
+G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/LNN/LNN.vbproj,<project>,1902,784,317,801,9,45,19,42,0,61743,61.74 KB
 G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/MachineLearning/machine_learning-netcore5.vbproj,Extensions.vb,83,32,9,42,1,0,0,3,0,3176,3.18 KB
 G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/MachineLearning/machine_learning-netcore5.vbproj,IterationReporter.vb,33,14,7,12,5,0,0,1,0,987,987 B
 G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/MachineLearning/machine_learning-netcore5.vbproj,ComponentModel/Status0.vb,67,0,17,50,3,3,2,6,0,2046,2.05 KB
@@ -1143,16 +1178,17 @@ G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/t-SNE/t-SNE.NET
 G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/t-SNE/t-SNE.NET5.vbproj,RandomHelper.vb,108,26,25,57,1,0,1,4,0,2848,2.85 KB
 G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/t-SNE/t-SNE.NET5.vbproj,tSNE.vb,165,41,27,97,1,1,4,2,0,4970,4.97 KB
 G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/t-SNE/t-SNE.NET5.vbproj,<project>,525,111,104,310,4,2,7,10,0,15428,15.43 KB
-G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/TensorFlow/TensorFlow.vbproj,Checkpoints.vb,49,9,10,30,1,1,4,1,0,1535,1.53 KB
 G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/TensorFlow/TensorFlow.vbproj,linear.vb,13,0,4,9,1,0,0,2,0,469,469 B
 G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/TensorFlow/TensorFlow.vbproj,Math.vb,30,0,7,23,1,0,0,6,0,762,762 B
 G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/TensorFlow/TensorFlow.vbproj,nn.vb,26,0,5,21,1,0,0,2,0,962,962 B
-G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/TensorFlow/TensorFlow.vbproj,Rev.vb,145,3,24,118,1,1,2,4,13,6465,6.46 KB
-G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/TensorFlow/TensorFlow.vbproj,Tensor.vb,657,144,114,399,1,1,9,18,11,22005,22.00 KB
-G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/TensorFlow/TensorFlow.vbproj,AutomaticDifferentiation/AutomaticDifferentiation.vb,59,4,14,41,8,0,7,0,0,1476,1.48 KB
-G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/TensorFlow/TensorFlow.vbproj,Parallel/MatMul.vb,84,6,17,61,1,0,2,1,0,3101,3.10 KB
-G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/TensorFlow/TensorFlow.vbproj,Parallel/Multiply.vb,45,6,9,30,1,0,2,1,0,1355,1.35 KB
-G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/TensorFlow/TensorFlow.vbproj,<project>,1108,172,204,732,16,3,26,35,24,38130,38.13 KB
+G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/TensorFlow/TensorFlow.vbproj,Tensor.vb,1014,282,157,575,1,8,9,38,7,30886,30.89 KB
+G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/TensorFlow/TensorFlow.vbproj,AutomaticDifferentiation/AutomaticDifferentiation.vb,62,4,15,43,8,0,7,0,0,1709,1.71 KB
+G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/TensorFlow/TensorFlow.vbproj,AutomaticDifferentiation/Checkpoints.vb,50,9,9,32,1,1,4,1,0,1740,1.74 KB
+G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/TensorFlow/TensorFlow.vbproj,AutomaticDifferentiation/Rev.vb,123,3,25,95,1,1,2,4,13,4850,4.85 KB
+G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/TensorFlow/TensorFlow.vbproj,AutomaticDifferentiation/Tensor.vb,660,144,115,401,1,1,9,18,11,24235,24.23 KB
+G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/TensorFlow/TensorFlow.vbproj,AutomaticDifferentiation/Parallel/MatMul.vb,84,6,17,61,1,0,2,1,0,3126,3.13 KB
+G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/TensorFlow/TensorFlow.vbproj,AutomaticDifferentiation/Parallel/Multiply.vb,45,6,9,30,1,0,2,1,0,1380,1.38 KB
+G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/TensorFlow/TensorFlow.vbproj,<project>,2107,454,363,1290,17,11,35,73,31,70119,70.12 KB
 G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/VAE/VAE.vbproj,GMM/Math.vb,57,5,10,42,1,0,0,5,0,2090,2.09 KB
 G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/VAE/VAE.vbproj,GMM/1D/Component.vb,16,0,4,12,1,3,1,0,0,414,414 B
 G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/VAE/VAE.vbproj,GMM/1D/DataSet.vb,90,8,15,67,1,3,2,5,0,2772,2.77 KB
@@ -1267,7 +1303,7 @@ G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/DataFittings/l
 G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/DataFittings/linear-netcore5.vbproj,<project>,3902,946,580,2376,41,76,31,102,0,143558,143.56 KB
 G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/DataFittings/test/test.vbproj,Program.vb,22,0,3,19,1,0,1,0,0,786,786 B
 G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/DataFittings/test/test.vbproj,<project>,22,0,3,19,1,0,1,0,0,786,786 B
-G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/DataFrame/dataframeUtils-netcore5.vbproj,DataMatrix.vb,177,12,28,137,1,2,3,9,0,6303,6.30 KB
+G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/DataFrame/dataframeUtils-netcore5.vbproj,DataMatrix.vb,207,14,33,160,1,2,5,9,0,7231,7.23 KB
 G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/DataFrame/dataframeUtils-netcore5.vbproj,DataType.vb,5,0,0,5,1,0,0,0,0,77,77 B
 G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/DataFrame/dataframeUtils-netcore5.vbproj,Impute.vb,94,7,14,73,1,0,0,5,0,3833,3.83 KB
 G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/DataFrame/dataframeUtils-netcore5.vbproj,InferMethods.vb,7,3,0,4,1,0,0,0,0,123,123 B
@@ -1285,7 +1321,7 @@ G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/DataFrame/data
 G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/DataFrame/dataframeUtils-netcore5.vbproj,MatrixMarket/MTXFormat.vb,80,36,10,34,1,0,0,3,0,3320,3.32 KB
 G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/DataFrame/dataframeUtils-netcore5.vbproj,MatrixMarket/RUAFormat.vb,6,0,2,4,1,0,0,0,0,84,84 B
 G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/DataFrame/dataframeUtils-netcore5.vbproj,My Project/Resources.Designer.vb,63,23,8,32,1,2,0,0,0,2801,2.80 KB
-G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/DataFrame/dataframeUtils-netcore5.vbproj,<project>,1451,197,204,1050,18,8,8,60,1,54260,54.26 KB
+G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/DataFrame/dataframeUtils-netcore5.vbproj,<project>,1481,199,209,1073,18,8,10,60,1,55188,55.19 KB
 G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/GeneticProgramming/GeneticProgramming.vbproj,Utils.vb,19,0,4,15,1,0,2,0,0,450,450 B
 G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/GeneticProgramming/GeneticProgramming.vbproj,evolution/Configuration.vb,60,19,15,26,1,0,0,2,0,2248,2.25 KB
 G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/GeneticProgramming/GeneticProgramming.vbproj,evolution/Evolution.vb,220,16,39,165,2,1,4,5,0,9241,9.24 KB
@@ -1355,9 +1391,8 @@ G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/Math/Math.NET5
 G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/Math/Math.NET5.vbproj,NumberExtension.vb,656,151,89,416,1,0,9,19,0,23709,23.71 KB
 G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/Math/Math.NET5.vbproj,Algebra/Extensions.vb,243,79,35,129,5,0,2,11,0,9723,9.72 KB
 G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/Math/Math.NET5.vbproj,Algebra/SVD.vb,360,28,57,275,1,0,1,2,0,12377,12.38 KB
-G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/Math/Math.NET5.vbproj,Algebra/Tensor.vb,245,3,57,185,1,2,4,6,5,7028,7.03 KB
 G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/Math/Math.NET5.vbproj,Algebra/Helpers/EllipseFitResult.vb,195,60,27,108,1,6,0,5,0,7530,7.53 KB
-G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/Math/Math.NET5.vbproj,Algebra/Helpers/PCAEllipseResult.vb,389,117,61,211,4,11,0,9,0,14764,14.76 KB
+G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/Math/Math.NET5.vbproj,Algebra/Helpers/PCAEllipseResult.vb,389,117,61,211,4,11,0,9,0,14762,14.76 KB
 G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/Math/Math.NET5.vbproj,Algebra/LP/Extensions.vb,81,5,12,64,1,0,0,4,0,2698,2.70 KB
 G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/Math/Math.NET5.vbproj,Algebra/LP/LPP.vb,237,60,27,150,1,4,7,5,0,11510,11.51 KB
 G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/Math/Math.NET5.vbproj,Algebra/LP/LPPDebugView.vb,51,0,10,41,1,0,0,2,0,2065,2.06 KB
@@ -1463,6 +1498,10 @@ G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/Math/Math.NET5
 G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/Math/Math.NET5.vbproj,HashMaps/HashBlizzard.vb,98,34,12,52,2,0,2,2,0,3559,3.56 KB
 G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/Math/Math.NET5.vbproj,HashMaps/HashMap.vb,432,77,74,281,1,0,0,27,0,15731,15.73 KB
 G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/Math/Math.NET5.vbproj,HashMaps/JenkinsHash.vb,212,74,29,109,1,0,1,9,0,7921,7.92 KB
+G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/Math/Math.NET5.vbproj,HashMaps/MinHash/LSH.vb,150,42,20,88,2,0,0,5,0,7043,7.04 KB
+G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/Math/Math.NET5.vbproj,HashMaps/MinHash/LSHParameterEstimator.vb,73,26,12,35,1,0,0,3,0,3271,3.27 KB
+G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/Math/Math.NET5.vbproj,HashMaps/MinHash/MinHash.vb,61,19,10,32,1,0,0,2,0,2375,2.38 KB
+G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/Math/Math.NET5.vbproj,HashMaps/MinHash/SequenceItem.vb,22,7,5,10,1,2,0,1,0,582,582 B
 G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/Math/Math.NET5.vbproj,Numerics/BigDecimal.vb,647,61,55,531,1,7,16,14,13,26830,26.83 KB
 G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/Math/Math.NET5.vbproj,Numerics/GenericVector(Of T).vb,150,36,19,95,1,4,6,0,2,5586,5.59 KB
 G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/Math/Math.NET5.vbproj,Numerics/Half.vb,1058,535,136,387,1,0,7,50,20,51113,51.11 KB
@@ -1553,7 +1592,7 @@ G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/Math/Math.NET5
 G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/Math/Math.NET5.vbproj,Spline/CubicSpline/CubicSpline.vb,126,26,22,78,1,1,4,6,0,4875,4.88 KB
 G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/Math/Math.NET5.vbproj,Spline/CubicSpline/CubicSplineVector.vb,123,16,28,79,1,1,5,4,0,4200,4.20 KB
 G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/Math/Math.NET5.vbproj,Spline/DouglasPeucker/DouglasPeucker.vb,222,89,30,103,1,0,0,6,0,8728,8.73 KB
-G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/Math/Math.NET5.vbproj,<project>,33428,7241,4662,21525,264,269,397,941,130,1273561,1.27 MB
+G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/Math/Math.NET5.vbproj,<project>,33489,7332,4652,21505,268,269,393,946,125,1279802,1.28 MB
 G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/Math/Numerics/Optimization/LBFGSB/examples/demo.vbproj,Ackley.vb,66,8,15,43,1,0,4,1,0,2252,2.25 KB
 G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/Math/Numerics/Optimization/LBFGSB/examples/demo.vbproj,Bohachevsky1.vb,46,2,14,30,1,0,1,2,0,1526,1.53 KB
 G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/Math/Math/Numerics/Optimization/LBFGSB/examples/demo.vbproj,Bohachevsky2.vb,39,2,11,26,1,0,1,1,0,1303,1.30 KB
@@ -1730,7 +1769,7 @@ G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/SignalProcessing/Si
 G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/SignalProcessing/SignalProcessing/signalprocessing-netcore5.vbproj,Signal.vb,57,10,9,38,1,2,3,1,1,2032,2.03 KB
 G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/SignalProcessing/SignalProcessing/signalprocessing-netcore5.vbproj,TimeSignals.vb,58,7,9,42,1,2,3,2,0,1637,1.64 KB
 G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/SignalProcessing/SignalProcessing/signalprocessing-netcore5.vbproj,Cluster/NetworkSignalClassifier.vb,109,18,17,74,1,0,0,3,0,4483,4.48 KB
-G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/SignalProcessing/SignalProcessing/signalprocessing-netcore5.vbproj,Cluster/NetworkSignalType.vb,34,15,6,13,1,0,0,0,0,863,863 B
+G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/SignalProcessing/SignalProcessing/signalprocessing-netcore5.vbproj,Cluster/NetworkSignalType.vb,34,15,6,13,1,0,0,0,0,861,861 B
 G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/SignalProcessing/SignalProcessing/signalprocessing-netcore5.vbproj,Cluster/SignalClustering.vb,52,3,10,39,1,0,1,3,0,1704,1.70 KB
 G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/SignalProcessing/SignalProcessing/signalprocessing-netcore5.vbproj,COW/CowAlignment.vb,319,39,49,231,1,0,1,5,0,17109,17.11 KB
 G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/SignalProcessing/SignalProcessing/signalprocessing-netcore5.vbproj,COW/CowParameter.vb,62,12,11,39,1,3,0,2,0,2786,2.79 KB
@@ -1797,7 +1836,7 @@ G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/SignalProcessing/Si
 G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/SignalProcessing/SignalProcessing/signalprocessing-netcore5.vbproj,WaveletTransform/Constructors/Daubechies.vb,134,0,3,131,1,0,1,1,0,11459,11.46 KB
 G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/SignalProcessing/SignalProcessing/signalprocessing-netcore5.vbproj,WaveletTransform/Constructors/Symlets.vb,38,0,3,35,1,0,1,1,0,3186,3.19 KB
 G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/SignalProcessing/SignalProcessing/signalprocessing-netcore5.vbproj,WaveletTransform/Constructors/WaveletConstructor.vb,24,0,6,18,1,0,1,2,0,759,759 B
-G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/SignalProcessing/SignalProcessing/signalprocessing-netcore5.vbproj,<project>,20037,2114,1405,16518,91,69,190,157,1,712058,712.06 KB
+G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/SignalProcessing/SignalProcessing/signalprocessing-netcore5.vbproj,<project>,20037,2114,1405,16518,91,69,190,157,1,712056,712.06 KB
 G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/SignalProcessing/wav/wav/waveFile-netcore5.vbproj,WaveFile.vb,104,54,14,36,1,5,2,1,0,3759,3.76 KB
 G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/SignalProcessing/wav/wav/waveFile-netcore5.vbproj,SubChunk/Data.vb,137,2,28,107,3,1,2,8,0,4637,4.64 KB
 G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/SignalProcessing/wav/wav/waveFile-netcore5.vbproj,SubChunk/Enums.vb,33,15,2,16,3,0,0,0,0,652,652 B
@@ -1818,8 +1857,8 @@ G:/GCModeller/src/runtime/sciBASIC#/Data_science/NLP/NLP.NET.vbproj,My Project/R
 G:/GCModeller/src/runtime/sciBASIC#/Data_science/NLP/NLP.NET.vbproj,test/Module1.vb,86,13,10,63,1,0,2,0,0,4215,4.21 KB
 G:/GCModeller/src/runtime/sciBASIC#/Data_science/NLP/NLP.NET.vbproj,test/Program.vb,47,4,8,35,1,0,3,0,0,1753,1.75 KB
 G:/GCModeller/src/runtime/sciBASIC#/Data_science/NLP/NLP.NET.vbproj,TF-IDF/DocumentTFIDF.vb,138,86,13,39,1,1,1,3,0,5975,5.97 KB
-G:/GCModeller/src/runtime/sciBASIC#/Data_science/NLP/NLP.NET.vbproj,TF-IDF/TFIDF.vb,191,53,25,113,1,2,3,7,0,6823,6.82 KB
-G:/GCModeller/src/runtime/sciBASIC#/Data_science/NLP/NLP.NET.vbproj,<project>,2292,612,301,1379,16,14,36,37,0,82517,82.52 KB
+G:/GCModeller/src/runtime/sciBASIC#/Data_science/NLP/NLP.NET.vbproj,TF-IDF/TFIDF.vb,191,53,25,113,1,2,3,7,0,6821,6.82 KB
+G:/GCModeller/src/runtime/sciBASIC#/Data_science/NLP/NLP.NET.vbproj,<project>,2292,612,301,1379,16,14,36,37,0,82515,82.52 KB
 G:/GCModeller/src/runtime/sciBASIC#/Data_science/NLP/test/test.vbproj,Module1.vb,86,13,10,63,1,0,2,0,0,4215,4.21 KB
 G:/GCModeller/src/runtime/sciBASIC#/Data_science/NLP/test/test.vbproj,Program.vb,47,4,8,35,1,0,3,0,0,1753,1.75 KB
 G:/GCModeller/src/runtime/sciBASIC#/Data_science/NLP/test/test.vbproj,<project>,133,17,18,98,2,0,5,0,0,5968,5.97 KB
@@ -2347,7 +2386,7 @@ G:/GCModeller/src/runtime/sciBASIC#/gr/Microsoft.VisualBasic.Imaging/imaging.NET
 G:/GCModeller/src/runtime/sciBASIC#/gr/Microsoft.VisualBasic.Imaging/imaging.NET5.vbproj,test/My Project/Resources.Designer.vb,63,23,8,32,1,2,0,0,0,2777,2.78 KB
 G:/GCModeller/src/runtime/sciBASIC#/gr/Microsoft.VisualBasic.Imaging/imaging.NET5.vbproj,test/My Project/Settings.Designer.vb,74,9,12,53,2,2,1,0,0,2999,3.00 KB
 G:/GCModeller/src/runtime/sciBASIC#/gr/Microsoft.VisualBasic.Imaging/imaging.NET5.vbproj,<project>,40516,6633,5435,28448,362,585,838,870,8,1816609,1.82 MB
-G:/GCModeller/src/runtime/sciBASIC#/gr/network-visualization/Datavisualization.Network/network_graph-netcore5.vbproj,GraphRouter.vb,166,23,26,117,3,2,2,5,0,6734,6.73 KB
+G:/GCModeller/src/runtime/sciBASIC#/gr/network-visualization/Datavisualization.Network/network_graph-netcore5.vbproj,GraphRouter.vb,166,23,26,117,3,2,2,5,0,6732,6.73 KB
 G:/GCModeller/src/runtime/sciBASIC#/gr/network-visualization/Datavisualization.Network/network_graph-netcore5.vbproj,IDynamicsTable.vb,23,7,3,13,1,1,0,0,0,816,816 B
 G:/GCModeller/src/runtime/sciBASIC#/gr/network-visualization/Datavisualization.Network/network_graph-netcore5.vbproj,NamespaceDoc.vb,6,3,1,2,1,0,0,0,0,173,173 B
 G:/GCModeller/src/runtime/sciBASIC#/gr/network-visualization/Datavisualization.Network/network_graph-netcore5.vbproj,NetworkAPI.vb,116,6,16,94,1,0,0,6,0,4320,4.32 KB
@@ -2399,7 +2438,7 @@ G:/GCModeller/src/runtime/sciBASIC#/gr/network-visualization/Datavisualization.N
 G:/GCModeller/src/runtime/sciBASIC#/gr/network-visualization/Datavisualization.Network/network_graph-netcore5.vbproj,TreeAPI/Operations.vb,120,49,20,51,1,0,1,6,0,4970,4.97 KB
 G:/GCModeller/src/runtime/sciBASIC#/gr/network-visualization/Datavisualization.Network/network_graph-netcore5.vbproj,TreeAPI/TREE.vb,46,0,12,34,4,1,3,2,0,1276,1.28 KB
 G:/GCModeller/src/runtime/sciBASIC#/gr/network-visualization/Datavisualization.Network/network_graph-netcore5.vbproj,TreeAPI/TreeGraph.vb,50,0,11,39,1,0,1,1,0,2360,2.36 KB
-G:/GCModeller/src/runtime/sciBASIC#/gr/network-visualization/Datavisualization.Network/network_graph-netcore5.vbproj,<project>,7405,1864,1167,4374,85,98,123,250,31,269007,269.01 KB
+G:/GCModeller/src/runtime/sciBASIC#/gr/network-visualization/Datavisualization.Network/network_graph-netcore5.vbproj,<project>,7405,1864,1167,4374,85,98,123,250,31,269005,269.00 KB
 G:/GCModeller/src/runtime/sciBASIC#/gr/network-visualization/Network.IO.Extensions/network_io-netcore5.vbproj,Analysis.vb,102,32,11,59,1,0,0,4,0,4242,4.24 KB
 G:/GCModeller/src/runtime/sciBASIC#/gr/network-visualization/Network.IO.Extensions/network_io-netcore5.vbproj,CorrelationGraph.vb,96,12,13,71,1,0,0,1,0,3455,3.46 KB
 G:/GCModeller/src/runtime/sciBASIC#/gr/network-visualization/Network.IO.Extensions/network_io-netcore5.vbproj,Extensions.vb,131,29,12,90,1,0,0,6,0,4949,4.95 KB
@@ -2608,9 +2647,9 @@ G:/GCModeller/src/runtime/sciBASIC#/gr/physics/physics-netcore5.vbproj,physics_T
 G:/GCModeller/src/runtime/sciBASIC#/gr/physics/physics-netcore5.vbproj,<project>,4300,1079,734,2487,58,50,107,65,22,155981,155.98 KB
 G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src/Core.vbproj,Globals.vb,51,27,8,16,1,0,1,0,0,1515,1.51 KB
 G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src/Core.vbproj,LICENSE.vb,41,23,4,14,1,1,1,0,0,1457,1.46 KB
-G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src/Core.vbproj,LLMs.vb,23,7,3,13,1,0,1,1,0,639,639 B
+G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src/Core.vbproj,LLMs.vb,23,7,3,13,1,0,1,1,0,666,666 B
 G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src/Core.vbproj,NamespaceDoc.vb,5,3,0,2,1,0,0,0,0,122,122 B
-G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src/Core.vbproj,ApplicationServices/App.vb,1602,634,186,782,1,49,19,44,0,68737,68.74 KB
+G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src/Core.vbproj,ApplicationServices/App.vb,1605,637,186,782,1,49,19,44,0,68866,68.87 KB
 G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src/Core.vbproj,ApplicationServices/Application.vb,59,11,9,39,1,4,1,0,0,1784,1.78 KB
 G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src/Core.vbproj,ApplicationServices/Clock.vb,74,0,18,56,1,1,5,4,0,1954,1.95 KB
 G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src/Core.vbproj,ApplicationServices/Debugger.vb,449,144,43,262,3,3,20,8,0,18013,18.01 KB
@@ -2623,7 +2662,7 @@ G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src/Core.vbproj,A
 G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src/Core.vbproj,ApplicationServices/Debugger/Exception/ExceptionData.vb,90,12,12,66,1,4,1,7,0,3311,3.31 KB
 G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src/Core.vbproj,ApplicationServices/Debugger/Exception/ExceptionExtensions.vb,24,10,4,10,3,0,0,1,0,844,844 B
 G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src/Core.vbproj,ApplicationServices/Debugger/Exception/MethodFrame.vb,30,0,7,23,1,3,2,1,0,854,854 B
-G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src/Core.vbproj,ApplicationServices/Debugger/Exception/StackFrame.vb,101,22,12,67,1,3,2,4,0,3335,3.33 KB
+G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src/Core.vbproj,ApplicationServices/Debugger/Exception/StackFrame.vb,138,39,17,82,1,3,2,5,0,5228,5.23 KB
 G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src/Core.vbproj,ApplicationServices/Debugger/Exception/TraceBuffer.vb,87,0,21,66,1,1,3,3,0,3000,3.00 KB
 G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src/Core.vbproj,ApplicationServices/Debugger/Exception/VisualBasicAppException.vb,44,20,6,18,1,3,2,1,0,1625,1.62 KB
 G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src/Core.vbproj,ApplicationServices/Debugger/Exception/netcoreApp/ObjectNotFoundException.vb,9,0,2,7,1,0,1,0,0,239,239 B
@@ -2726,7 +2765,7 @@ G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src/Core.vbproj,A
 G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src/Core.vbproj,ApplicationServices/Terminal/Utility/ProgressBar/SwayBar.vb,107,24,21,62,2,0,6,1,0,3240,3.24 KB
 G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src/Core.vbproj,ApplicationServices/Terminal/Utility/ProgressBar/ConsoleProgressBar/Element.vb,150,80,15,55,1,0,2,12,0,6191,6.19 KB
 G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src/Core.vbproj,ApplicationServices/Terminal/Utility/ProgressBar/ConsoleProgressBar/ElementList.vb,40,22,4,14,1,1,0,2,0,1354,1.35 KB
-G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src/Core.vbproj,ApplicationServices/Terminal/Utility/ProgressBar/ConsoleProgressBar/ProgressBar.vb,547,161,67,319,1,24,17,1,0,21988,21.99 KB
+G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src/Core.vbproj,ApplicationServices/Terminal/Utility/ProgressBar/ConsoleProgressBar/ProgressBar.vb,563,161,69,333,1,24,18,2,0,22505,22.50 KB
 G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src/Core.vbproj,ApplicationServices/Terminal/Utility/ProgressBar/ConsoleProgressBar/Extensions/ElementExtensions.vb,71,24,15,32,1,0,0,2,0,3288,3.29 KB
 G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src/Core.vbproj,ApplicationServices/Terminal/Utility/ProgressBar/ConsoleProgressBar/Extensions/StringExtensions.vb,60,26,6,28,1,0,0,2,0,2607,2.61 KB
 G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src/Core.vbproj,ApplicationServices/Terminal/Utility/ProgressBar/ConsoleProgressBar/Extensions/TimeSpanExtensions.vb,80,32,6,42,1,0,0,4,0,3542,3.54 KB
@@ -2747,7 +2786,7 @@ G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src/Core.vbproj,A
 G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src/Core.vbproj,ApplicationServices/Terminal/Utility/UnixMan/ManFile/UnixManPage.vb,83,43,8,32,1,18,0,3,0,2963,2.96 KB
 G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src/Core.vbproj,ApplicationServices/Tools/OSVersionInfo.vb,1099,249,191,659,8,12,2,8,0,48332,48.33 KB
 G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src/Core.vbproj,ApplicationServices/Tools/PerformanceCounter.vb,109,24,18,67,2,6,0,7,0,3373,3.37 KB
-G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src/Core.vbproj,ApplicationServices/Tools/Resources.vb,350,189,32,129,1,3,7,10,0,17024,17.02 KB
+G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src/Core.vbproj,ApplicationServices/Tools/Resources.vb,345,189,31,125,1,3,7,10,0,16947,16.95 KB
 G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src/Core.vbproj,ApplicationServices/Tools/TarGzFileSystem.vb,176,9,39,128,1,1,3,12,0,6859,6.86 KB
 G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src/Core.vbproj,ApplicationServices/Tools/Plugin/Loader.vb,39,6,6,27,1,0,0,1,0,1606,1.61 KB
 G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src/Core.vbproj,ApplicationServices/Tools/Plugin/PluginAttribute.vb,16,0,4,12,1,1,1,1,0,482,482 B
@@ -2878,11 +2917,11 @@ G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src/Core.vbproj,C
 G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src/Core.vbproj,ComponentModel/DataSource/Iterator.vb,172,52,28,92,2,3,6,4,0,6224,6.22 KB
 G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src/Core.vbproj,ComponentModel/DataSource/StringReader.vb,269,105,37,127,3,0,2,29,0,9890,9.89 KB
 G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src/Core.vbproj,ComponentModel/DataSource/TemplateAttribute.vb,17,0,5,12,1,0,2,0,0,375,375 B
-G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src/Core.vbproj,ComponentModel/DataSource/Property/DynamicProperty.vb,234,71,26,137,1,2,4,7,0,9453,9.45 KB
+G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src/Core.vbproj,ComponentModel/DataSource/Property/DynamicProperty.vb,246,71,28,147,1,2,5,7,0,9869,9.87 KB
 G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src/Core.vbproj,ComponentModel/DataSource/Property/Extensions.vb,35,0,8,27,1,0,0,1,0,1376,1.38 KB
 G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src/Core.vbproj,ComponentModel/DataSource/Property/GenericProperty.vb,54,13,8,33,1,0,2,1,1,1832,1.83 KB
 G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src/Core.vbproj,ComponentModel/DataSource/Property/IProperty.vb,86,34,17,35,4,1,3,7,0,3054,3.05 KB
-G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src/Core.vbproj,ComponentModel/DataSource/Property/NamedCollection.vb,217,63,26,128,1,5,5,4,2,10185,10.19 KB
+G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src/Core.vbproj,ComponentModel/DataSource/Property/NamedCollection.vb,232,73,27,132,1,5,6,4,2,10802,10.80 KB
 G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src/Core.vbproj,ComponentModel/DataSource/Property/NamedValue.vb,218,50,28,140,1,5,2,3,4,8417,8.42 KB
 G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src/Core.vbproj,ComponentModel/DataSource/Property/PropertyValue.vb,142,51,17,74,1,2,3,7,0,5669,5.67 KB
 G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src/Core.vbproj,ComponentModel/DataSource/Repository/BloomFilter.vb,207,76,28,103,1,3,4,6,0,8666,8.67 KB
@@ -2893,11 +2932,11 @@ G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src/Core.vbproj,C
 G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src/Core.vbproj,ComponentModel/DataSource/Repository/QueryCache.vb,91,29,12,50,1,0,2,5,0,3734,3.73 KB
 G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src/Core.vbproj,ComponentModel/DataSource/Repository/Repository.vb,204,134,30,40,7,4,4,5,0,7754,7.75 KB
 G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src/Core.vbproj,ComponentModel/DataSource/Repository/SearchFramework.vb,151,42,20,89,1,0,0,6,0,6450,6.45 KB
-G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src/Core.vbproj,ComponentModel/DataSource/Repository/StringTemplate.vb,83,17,18,48,2,0,2,4,0,2830,2.83 KB
+G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src/Core.vbproj,ComponentModel/DataSource/Repository/StringTemplate.vb,120,25,26,69,2,0,2,6,0,4163,4.16 KB
 G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src/Core.vbproj,ComponentModel/DataSource/Repository/TextIndex/QGramIndex.vb,170,44,28,98,2,4,4,5,0,6350,6.35 KB
 G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src/Core.vbproj,ComponentModel/DataSource/Repository/TextIndex/SimHashIndex.vb,206,39,37,130,1,0,2,7,0,7493,7.49 KB
 G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src/Core.vbproj,ComponentModel/DataSource/SchemaMaps/BindProperty.vb,201,85,26,90,1,2,8,3,0,8441,8.44 KB
-G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src/Core.vbproj,ComponentModel/DataSource/SchemaMaps/DataSource.vb,264,80,36,148,4,5,8,10,0,10832,10.83 KB
+G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src/Core.vbproj,ComponentModel/DataSource/SchemaMaps/DataSource.vb,264,80,36,148,4,5,8,10,0,10969,10.97 KB
 G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src/Core.vbproj,ComponentModel/DataSource/SchemaMaps/Mappings.vb,243,68,33,142,1,0,0,9,0,9856,9.86 KB
 G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src/Core.vbproj,ComponentModel/DataSource/SchemaMaps/ObjectSchema.vb,272,55,37,180,2,0,2,10,0,10869,10.87 KB
 G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src/Core.vbproj,ComponentModel/DataSource/SchemaMaps/PropertyValue.vb,109,25,18,66,2,4,4,1,0,3949,3.95 KB
@@ -3004,7 +3043,7 @@ G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src/Core.vbproj,D
 G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src/Core.vbproj,Data/Repository/BKDRHash.vb,83,19,15,49,1,0,1,4,0,3009,3.01 KB
 G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src/Core.vbproj,Data/Repository/FileHashCheckSum.vb,94,27,14,53,2,0,0,2,0,4106,4.11 KB
 G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src/Core.vbproj,Data/Repository/FNV1a.vb,114,25,17,72,1,0,2,7,0,4230,4.23 KB
-G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src/Core.vbproj,Data/Repository/MurmurHash.vb,79,13,11,55,1,0,0,1,0,2697,2.70 KB
+G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src/Core.vbproj,Data/Repository/MurmurHash.vb,77,13,10,54,1,0,0,1,0,2612,2.61 KB
 G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src/Core.vbproj,Data/Repository/Nilsimsa.vb,313,100,44,169,1,0,1,15,0,11906,11.91 KB
 G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src/Core.vbproj,Data/Repository/RepositoryFileSystem.vb,217,59,24,134,1,0,0,7,0,9841,9.84 KB
 G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src/Core.vbproj,Data/Repository/SnowflakeIdGenerator.vb,47,21,6,20,1,0,1,1,0,2521,2.52 KB
@@ -3049,13 +3088,13 @@ G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src/Core.vbproj,D
 G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src/Core.vbproj,Drawing/GDI+/GdiRasterGraphics.vb,84,26,17,41,3,2,0,2,0,2660,2.66 KB
 G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src/Core.vbproj,Drawing/GDI+/GraphicsExtensions.vb,543,133,65,345,1,0,6,31,0,20529,20.53 KB
 G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src/Core.vbproj,Drawing/GDI+/ImageTools.vb,241,52,44,145,1,0,0,6,0,9134,9.13 KB
-G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src/Core.vbproj,Drawing/GDI+/Interface.vb,1871,1582,85,204,1,6,10,4,0,82507,82.51 KB
+G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src/Core.vbproj,Drawing/GDI+/Interface.vb,1874,1582,86,206,1,6,10,4,0,82534,82.53 KB
 G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src/Core.vbproj,Drawing/GDI+/Driver/DeviceInterop.vb,32,17,6,9,1,0,0,0,0,1301,1.30 KB
 G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src/Core.vbproj,Drawing/GDI+/Driver/DriverLoad.vb,196,17,32,147,1,1,4,10,0,8845,8.85 KB
 G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src/Core.vbproj,Drawing/GDI+/Driver/Drivers.vb,90,56,5,29,2,0,0,1,0,5418,5.42 KB
 G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src/Core.vbproj,Drawing/GDI+/Layouts/Abstract.vb,22,4,5,13,2,4,0,0,0,543,543 B
 G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src/Core.vbproj,Drawing/GDI+/Layouts/ColaExtensions.vb,48,8,8,32,1,0,0,2,0,1818,1.82 KB
-G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src/Core.vbproj,Drawing/GDI+/Layouts/Point2D.vb,159,48,22,89,1,4,5,7,0,5652,5.65 KB
+G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src/Core.vbproj,Drawing/GDI+/Layouts/Point2D.vb,165,48,22,95,1,4,5,7,0,6006,6.01 KB
 G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src/Core.vbproj,Drawing/GDI+/Layouts/Rectangle2D.vb,396,133,48,215,1,7,10,13,0,15928,15.93 KB
 G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src/Core.vbproj,Drawing/Math/Line2D.vb,356,253,15,88,2,0,0,9,0,20545,20.55 KB
 G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src/Core.vbproj,Drawing/Math/NamespaceDoc.vb,33,28,1,4,1,0,0,0,0,2390,2.39 KB
@@ -3082,7 +3121,7 @@ G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src/Core.vbproj,D
 G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src/Core.vbproj,Drawing/netcore8.0/Image.vb,321,100,61,160,4,4,10,11,0,12355,12.36 KB
 G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src/Core.vbproj,Drawing/netcore8.0/Pen.vb,204,62,42,100,9,19,6,1,0,6655,6.66 KB
 G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src/Core.vbproj,Extensions/CompareMethod.vb,17,11,0,6,1,0,0,0,0,550,550 B
-G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src/Core.vbproj,Extensions/Extensions.vb,1558,554,144,860,3,0,5,79,0,57747,57.75 KB
+G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src/Core.vbproj,Extensions/Extensions.vb,1560,554,144,862,3,0,6,79,0,57934,57.93 KB
 G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src/Core.vbproj,Extensions/MsgBoxStyle.vb,137,103,1,33,2,0,0,0,0,4353,4.35 KB
 G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src/Core.vbproj,Extensions/Collection/AnonymousTypeHelper.vb,36,18,4,14,1,0,0,2,0,1527,1.53 KB
 G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src/Core.vbproj,Extensions/Collection/BucketOperators.vb,114,54,12,48,1,0,0,6,0,4333,4.33 KB
@@ -3111,10 +3150,10 @@ G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src/Core.vbproj,E
 G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src/Core.vbproj,Extensions/Collection/Linq/VectorAssertExtensions.vb,62,22,7,33,1,0,0,3,0,2377,2.38 KB
 G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src/Core.vbproj,Extensions/Collection/Linq/VectorAssertor.vb,52,6,8,38,1,0,0,1,4,1797,1.80 KB
 G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src/Core.vbproj,Extensions/Collection/Linq/WhichIndex.vb,229,94,26,109,2,1,1,14,0,9221,9.22 KB
-G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src/Core.vbproj,Extensions/Doc/LargeTextFile.vb,203,79,26,98,1,0,0,8,0,7828,7.83 KB
+G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src/Core.vbproj,Extensions/Doc/LargeTextFile.vb,204,80,26,98,1,0,0,8,0,7971,7.97 KB
 G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src/Core.vbproj,Extensions/Doc/PartitionedStream.vb,127,23,25,79,5,3,5,3,0,4606,4.61 KB
-G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src/Core.vbproj,Extensions/Doc/Text.vb,605,174,68,363,1,0,0,22,0,23356,23.36 KB
-G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src/Core.vbproj,Extensions/Doc/XmlExtensions.vb,453,117,55,281,1,1,2,11,0,18078,18.08 KB
+G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src/Core.vbproj,Extensions/Doc/Text.vb,610,179,68,363,1,0,0,22,0,23522,23.52 KB
+G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src/Core.vbproj,Extensions/Doc/XmlExtensions.vb,461,117,56,288,1,1,2,11,0,18446,18.45 KB
 G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src/Core.vbproj,Extensions/IO/FileModeDescriptor.vb,48,32,6,10,1,0,0,0,0,2580,2.58 KB
 G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src/Core.vbproj,Extensions/IO/IOStream.vb,53,0,12,41,2,0,3,2,1,1625,1.62 KB
 G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src/Core.vbproj,Extensions/IO/SearchOption.vb,20,9,3,8,1,0,0,0,0,564,564 B
@@ -3134,7 +3173,7 @@ G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src/Core.vbproj,E
 G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src/Core.vbproj,Extensions/IO/SymLinker/HardLink.vb,14,3,3,8,1,0,0,1,0,443,443 B
 G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src/Core.vbproj,Extensions/IO/SymLinker/JunctionPoint.vb,384,99,61,224,6,0,3,6,0,16659,16.66 KB
 G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src/Core.vbproj,Extensions/IO/SymLinker/SymbolicLink.vb,138,11,29,98,3,0,2,6,0,5921,5.92 KB
-G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src/Core.vbproj,Extensions/Math/Math.vb,841,269,94,478,1,0,0,44,0,29208,29.21 KB
+G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src/Core.vbproj,Extensions/Math/Math.vb,948,294,115,539,1,0,0,46,0,33311,33.31 KB
 G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src/Core.vbproj,Extensions/Math/Matrix.vb,77,29,8,40,2,0,0,3,0,3257,3.26 KB
 G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src/Core.vbproj,Extensions/Math/NumberEqualityComparer.vb,51,11,10,30,1,1,2,4,0,1763,1.76 KB
 G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src/Core.vbproj,Extensions/Math/NumberGroups.vb,440,107,53,280,3,2,0,16,0,17284,17.28 KB
@@ -3142,9 +3181,9 @@ G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src/Core.vbproj,E
 G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src/Core.vbproj,Extensions/Math/Percentage.vb,204,29,35,140,1,6,1,23,2,8001,8.00 KB
 G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src/Core.vbproj,Extensions/Math/ScaleMaps.vb,205,46,31,128,1,0,0,11,0,9121,9.12 KB
 G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src/Core.vbproj,Extensions/Math/Correlations/Beta.vb,148,0,33,115,1,0,0,4,0,4495,4.50 KB
-G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src/Core.vbproj,Extensions/Math/Correlations/Correlations.vb,557,163,85,309,5,2,2,16,0,21603,21.60 KB
+G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src/Core.vbproj,Extensions/Math/Correlations/Correlations.vb,567,171,87,309,5,2,2,16,0,21864,21.86 KB
 G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src/Core.vbproj,Extensions/Math/Correlations/DistanceMethods.vb,319,118,41,160,1,0,0,21,0,11946,11.95 KB
-G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src/Core.vbproj,Extensions/Math/Correlations/Ranking.vb,333,152,28,153,2,0,0,7,0,17166,17.17 KB
+G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src/Core.vbproj,Extensions/Math/Correlations/Ranking.vb,337,152,29,156,2,0,0,7,0,17257,17.26 KB
 G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src/Core.vbproj,Extensions/Math/Correlations/RankOrder.vb,85,22,14,49,1,0,0,3,0,2918,2.92 KB
 G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src/Core.vbproj,Extensions/Math/Correlations/Ranks.vb,78,16,11,51,5,3,0,3,0,3099,3.10 KB
 G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src/Core.vbproj,Extensions/Math/Correlations/Scripting.vb,27,0,5,22,2,5,0,1,0,842,842 B
@@ -3177,7 +3216,7 @@ G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src/Core.vbproj,E
 G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src/Core.vbproj,Extensions/Math/StatisticsMathExtensions/Linq/EnumerableStatsMode.vb,81,0,16,65,1,0,0,6,0,2743,2.74 KB
 G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src/Core.vbproj,Extensions/Math/StatisticsMathExtensions/Linq/EnumerableStatsPearson.vb,531,413,10,108,1,0,0,20,0,21375,21.38 KB
 G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src/Core.vbproj,Extensions/Math/StatisticsMathExtensions/Linq/EnumerableStatsRange.vb,544,432,7,105,1,0,0,20,0,20017,20.02 KB
-G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src/Core.vbproj,Extensions/Math/StatisticsMathExtensions/Linq/EnumerableStatsStandardDeviation.vb,545,432,7,106,1,0,0,20,0,21374,21.37 KB
+G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src/Core.vbproj,Extensions/Math/StatisticsMathExtensions/Linq/EnumerableStatsStandardDeviation.vb,526,411,9,106,1,0,0,20,0,21006,21.01 KB
 G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src/Core.vbproj,Extensions/Math/StatisticsMathExtensions/Linq/EnumerableStatsStandardDeviationP.vb,544,432,7,105,1,0,0,20,0,21408,21.41 KB
 G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src/Core.vbproj,Extensions/Math/StatisticsMathExtensions/Linq/EnumerableStatsVariance.vb,554,435,8,111,1,0,0,20,0,21806,21.81 KB
 G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src/Core.vbproj,Extensions/Math/StatisticsMathExtensions/Linq/EnumerableStatsVarianceP.vb,549,432,7,110,1,0,0,20,0,20887,20.89 KB
@@ -3233,7 +3272,7 @@ G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src/Core.vbproj,L
 G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src/Core.vbproj,Language/Language/C/File.vb,32,15,4,13,1,0,1,0,0,1138,1.14 KB
 G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src/Core.vbproj,Language/Language/C/RandomNumbers.vb,65,32,9,24,1,0,3,2,0,2697,2.70 KB
 G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src/Core.vbproj,Language/Language/C/Vector.vb,50,17,5,28,1,0,2,0,0,1822,1.82 KB
-G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src/Core.vbproj,Language/Language/Java/Arrays.vb,92,28,14,50,1,0,1,8,0,3707,3.71 KB
+G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src/Core.vbproj,Language/Language/Java/Arrays.vb,96,28,14,54,1,0,0,9,0,3851,3.85 KB
 G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src/Core.vbproj,Language/Language/Java/Collections.vb,333,154,34,145,1,0,1,9,0,15245,15.24 KB
 G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src/Core.vbproj,Language/Language/Java/Integer.vb,36,8,8,20,1,0,0,1,0,1188,1.19 KB
 G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src/Core.vbproj,Language/Language/Java/JavaMath.vb,2225,1910,116,199,1,0,0,49,0,110719,110.72 KB
@@ -3309,7 +3348,7 @@ G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src/Core.vbproj,M
 G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src/Core.vbproj,My/JavaScript/JavaScriptObject/Descriptor.vb,11,0,3,8,1,4,0,0,0,270,270 B
 G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src/Core.vbproj,My/JavaScript/JavaScriptObject/JavaScriptObject.vb,326,43,53,230,1,3,5,13,0,13028,13.03 KB
 G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src/Core.vbproj,My/JavaScript/JavaScriptObject/JavaScriptValue.vb,91,25,15,51,1,3,3,3,0,2864,2.86 KB
-G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src/Core.vbproj,My/UNIX/LinuxRunHelper.vb,129,35,18,76,1,0,0,6,0,4720,4.72 KB
+G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src/Core.vbproj,My/UNIX/LinuxRunHelper.vb,133,35,18,80,1,0,0,6,0,4898,4.90 KB
 G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src/Core.vbproj,My/UNIX/PathMapper.vb,112,47,15,50,1,1,0,2,0,5460,5.46 KB
 G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src/Core.vbproj,My Project/Resources.Designer.vb,181,89,16,76,1,10,0,0,0,8244,8.24 KB
 G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src/Core.vbproj,Net/Abstract.vb,51,30,7,14,2,4,0,2,0,2360,2.36 KB
@@ -3347,9 +3386,9 @@ G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src/Core.vbproj,N
 G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src/Core.vbproj,Net/Wget/wget.vb,185,33,37,115,1,0,11,4,0,7047,7.05 KB
 G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src/Core.vbproj,Net/Wget/wgetTask.vb,261,51,42,168,1,8,8,2,0,9920,9.92 KB
 G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src/Core.vbproj,Net/Wget/WriteData.vb,89,11,15,63,1,1,6,1,0,2775,2.77 KB
-G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src/Core.vbproj,Net/Wget/Axel/Axel.vb,193,21,39,133,1,0,2,0,0,8114,8.11 KB
+G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src/Core.vbproj,Net/Wget/Axel/Axel.vb,198,21,41,136,1,0,2,0,0,8279,8.28 KB
 G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src/Core.vbproj,Net/Wget/Axel/AxelRequest.vb,53,4,12,37,1,4,1,0,0,2059,2.06 KB
-G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src/Core.vbproj,Net/Wget/Axel/AxelTask.vb,156,26,28,102,1,2,1,1,0,7255,7.25 KB
+G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src/Core.vbproj,Net/Wget/Axel/AxelTask.vb,155,26,27,102,1,2,1,1,0,7253,7.25 KB
 G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src/Core.vbproj,Net/Wget/Axel/HashHelper.vb,71,0,17,54,1,0,3,2,0,2415,2.42 KB
 G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src/Core.vbproj,Scripting/Abstract.vb,38,25,4,9,11,0,0,0,0,1497,1.50 KB
 G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src/Core.vbproj,Scripting/Actives.vb,181,31,19,131,1,0,0,7,0,7187,7.19 KB
@@ -3373,7 +3412,7 @@ G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src/Core.vbproj,S
 G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src/Core.vbproj,Scripting/Runtime/OverloadsFunction.vb,67,6,15,46,1,1,1,3,0,2244,2.24 KB
 G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src/Core.vbproj,Scripting/Runtime/Where.vb,121,34,16,71,2,0,0,5,0,3922,3.92 KB
 G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src/Core.vbproj,Scripting/Runtime/CType/Abstract.vb,23,13,4,6,1,0,0,2,0,667,667 B
-G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src/Core.vbproj,Scripting/Runtime/CType/Casting.vb,415,126,43,246,1,0,0,30,0,15926,15.93 KB
+G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src/Core.vbproj,Scripting/Runtime/CType/Casting.vb,415,126,43,246,1,0,0,30,0,15924,15.92 KB
 G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src/Core.vbproj,Scripting/Runtime/CType/CastStringVector.vb,214,95,19,100,1,0,0,17,0,8691,8.69 KB
 G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src/Core.vbproj,Scripting/Runtime/CType/ICTypeVector.vb,12,0,3,9,1,0,0,5,0,306,306 B
 G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src/Core.vbproj,Scripting/Runtime/CType/ImplictCType.vb,107,28,17,62,3,0,0,6,0,4400,4.40 KB
@@ -3409,7 +3448,7 @@ G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src/Core.vbproj,S
 G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src/Core.vbproj,Serialization/ConfigMappings/DynamicsConfiguration.vb,83,15,16,52,1,0,0,7,0,3326,3.33 KB
 G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src/Core.vbproj,Serialization/JSON/AnonymousJSON.vb,99,40,11,48,1,0,0,6,0,3867,3.87 KB
 G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src/Core.vbproj,Serialization/JSON/JsonFormatter.vb,34,15,5,14,1,0,0,2,0,1433,1.43 KB
-G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src/Core.vbproj,Serialization/JSON/JsonIgnoreAttribute.vb,10,1,3,6,1,0,0,0,0,225,225 B
+G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src/Core.vbproj,Serialization/JSON/JsonIgnoreAttribute.vb,10,1,3,6,1,0,0,0,0,223,223 B
 G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src/Core.vbproj,Serialization/JSON/JsonSerialization.vb,350,90,40,220,1,0,1,13,0,15034,15.03 KB
 G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src/Core.vbproj,Serialization/JSON/Formatter/FormatterScopeState.vb,38,0,9,29,2,2,2,1,0,1032,1.03 KB
 G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src/Core.vbproj,Serialization/JSON/Formatter/ICharacterStrategy.vb,8,0,2,6,1,1,1,0,0,244,244 B
@@ -3495,7 +3534,7 @@ G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src/Core.vbproj,T
 G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src/Core.vbproj,Text/Xml/OpenXml/Content_Types.vb,40,4,7,29,2,5,0,2,0,1244,1.24 KB
 G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src/Core.vbproj,Text/Xml/OpenXml/rels.vb,44,0,8,36,2,5,0,1,0,1506,1.51 KB
 G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src/Core.vbproj,Text/Xml/Serialization/XmlComment.vb,54,0,12,42,2,1,1,3,0,1825,1.82 KB
-G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src/Core.vbproj,<project>,137802,41427,18290,78085,1424,1564,1781,4711,436,5445294,5.45 MB
+G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/src/Core.vbproj,<project>,138054,41483,18335,78236,1424,1564,1784,4718,436,5456014,5.46 MB
 G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/test/test.vbproj,Program.vb,25,0,6,19,1,0,1,0,0,623,623 B
 G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/test/test.vbproj,test/devTest.vb,31,0,9,22,1,0,2,0,0,859,859 B
 G:/GCModeller/src/runtime/sciBASIC#/Microsoft.VisualBasic.Core/test/test.vbproj,test/enumeratorTest.vb,28,0,7,21,2,0,1,1,0,691,691 B
@@ -3532,7 +3571,7 @@ G:/GCModeller/src/runtime/sciBASIC#/mime/application%json/JSON-netcore5.vbproj,B
 G:/GCModeller/src/runtime/sciBASIC#/mime/application%json/JSON-netcore5.vbproj,Javascript/JsonArray.vb,182,21,30,131,1,3,8,6,0,6257,6.26 KB
 G:/GCModeller/src/runtime/sciBASIC#/mime/application%json/JSON-netcore5.vbproj,Javascript/JsonElement.vb,50,16,7,27,1,0,0,4,0,1843,1.84 KB
 G:/GCModeller/src/runtime/sciBASIC#/mime/application%json/JSON-netcore5.vbproj,Javascript/JsonModel.vb,38,3,5,30,1,0,1,0,0,1251,1.25 KB
-G:/GCModeller/src/runtime/sciBASIC#/mime/application%json/JSON-netcore5.vbproj,Javascript/JsonObject.vb,273,57,44,172,1,4,5,15,0,9746,9.75 KB
+G:/GCModeller/src/runtime/sciBASIC#/mime/application%json/JSON-netcore5.vbproj,Javascript/JsonObject.vb,290,69,45,176,1,4,5,16,0,10330,10.33 KB
 G:/GCModeller/src/runtime/sciBASIC#/mime/application%json/JSON-netcore5.vbproj,Javascript/JsonValue.vb,158,33,19,106,1,6,2,4,0,5314,5.31 KB
 G:/GCModeller/src/runtime/sciBASIC#/mime/application%json/JSON-netcore5.vbproj,Javascript/NamespaceDoc.vb,8,3,1,4,1,0,0,0,0,171,171 B
 G:/GCModeller/src/runtime/sciBASIC#/mime/application%json/JSON-netcore5.vbproj,JSONLogic/jsonLogic.vb,118,17,19,82,1,0,0,4,0,4764,4.76 KB
@@ -3548,7 +3587,7 @@ G:/GCModeller/src/runtime/sciBASIC#/mime/application%json/JSON-netcore5.vbproj,J
 G:/GCModeller/src/runtime/sciBASIC#/mime/application%json/JSON-netcore5.vbproj,JSONtest/My Project/AssemblyInfo.vb,35,15,7,13,0,0,0,0,0,1155,1.16 KB
 G:/GCModeller/src/runtime/sciBASIC#/mime/application%json/JSON-netcore5.vbproj,JSONtest/My Project/Resources.Designer.vb,63,23,8,32,1,2,0,0,0,2800,2.80 KB
 G:/GCModeller/src/runtime/sciBASIC#/mime/application%json/JSON-netcore5.vbproj,JSONtest/My Project/Settings.Designer.vb,73,9,13,51,2,2,1,0,0,2974,2.97 KB
-G:/GCModeller/src/runtime/sciBASIC#/mime/application%json/JSON-netcore5.vbproj,Parser/JsonParser.vb,344,74,49,221,1,1,2,8,0,12182,12.18 KB
+G:/GCModeller/src/runtime/sciBASIC#/mime/application%json/JSON-netcore5.vbproj,Parser/JsonParser.vb,350,74,50,226,1,1,2,9,0,12509,12.51 KB
 G:/GCModeller/src/runtime/sciBASIC#/mime/application%json/JSON-netcore5.vbproj,Parser/Token.vb,59,7,7,45,2,0,2,2,0,1785,1.78 KB
 G:/GCModeller/src/runtime/sciBASIC#/mime/application%json/JSON-netcore5.vbproj,Parser/TokenIcer.vb,226,27,27,172,3,0,4,6,0,7382,7.38 KB
 G:/GCModeller/src/runtime/sciBASIC#/mime/application%json/JSON-netcore5.vbproj,Serializer/ExtendedDictionary.vb,113,19,22,72,1,0,0,3,0,3825,3.83 KB
@@ -3559,7 +3598,7 @@ G:/GCModeller/src/runtime/sciBASIC#/mime/application%json/JSON-netcore5.vbproj,S
 G:/GCModeller/src/runtime/sciBASIC#/mime/application%json/JSON-netcore5.vbproj,Serializer/ObjectSerializer/Deserializer.vb,183,36,18,129,1,0,0,6,0,7878,7.88 KB
 G:/GCModeller/src/runtime/sciBASIC#/mime/application%json/JSON-netcore5.vbproj,Serializer/ObjectSerializer/ObjectParser.vb,181,14,32,135,1,0,0,3,0,7178,7.18 KB
 G:/GCModeller/src/runtime/sciBASIC#/mime/application%json/JSON-netcore5.vbproj,Serializer/ObjectSerializer/ObjectSerializer.vb,119,15,13,91,1,0,0,3,0,4538,4.54 KB
-G:/GCModeller/src/runtime/sciBASIC#/mime/application%json/JSON-netcore5.vbproj,<project>,4137,624,620,2893,41,43,72,117,2,150302,150.30 KB
+G:/GCModeller/src/runtime/sciBASIC#/mime/application%json/JSON-netcore5.vbproj,<project>,4160,636,622,2902,41,43,72,119,2,151213,151.21 KB
 G:/GCModeller/src/runtime/sciBASIC#/mime/application%pdf/Pdf.NET5.vbproj,PdfFileWriter/Flags.vb,314,200,42,72,9,0,0,0,0,5476,5.48 KB
 G:/GCModeller/src/runtime/sciBASIC#/mime/application%pdf/Pdf.NET5.vbproj,PdfFileWriter/LocationMarker.vb,181,114,18,49,3,0,3,1,0,7589,7.59 KB
 G:/GCModeller/src/runtime/sciBASIC#/mime/application%pdf/Pdf.NET5.vbproj,PdfFileWriter/ObjectCode.vb,19,4,1,14,2,0,0,0,0,286,286 B
@@ -3976,8 +4015,8 @@ G:/GCModeller/src/runtime/sciBASIC#/vs_solutions/dev/VisualStudio/VisualStudio.N
 G:/GCModeller/src/runtime/sciBASIC#/vs_solutions/dev/VisualStudio/VisualStudio.NET5.vbproj,VersionControl/svn.vb,16,0,5,11,1,0,0,1,0,405,405 B
 G:/GCModeller/src/runtime/sciBASIC#/vs_solutions/dev/VisualStudio/VisualStudio.NET5.vbproj,VersionControl/git/log.vb,57,13,5,39,1,4,0,2,0,2136,2.14 KB
 G:/GCModeller/src/runtime/sciBASIC#/vs_solutions/dev/VisualStudio/VisualStudio.NET5.vbproj,<project>,3405,745,538,2122,69,208,19,81,0,133433,133.43 KB
-G:/GCModeller/src/runtime/sciBASIC#/www/axel/axel.vbproj,Program.vb,74,2,15,57,1,0,1,3,0,2760,2.76 KB
-G:/GCModeller/src/runtime/sciBASIC#/www/axel/axel.vbproj,<project>,74,2,15,57,1,0,1,3,0,2760,2.76 KB
+G:/GCModeller/src/runtime/sciBASIC#/www/axel/axel.vbproj,Program.vb,75,2,15,58,1,0,1,3,0,2854,2.85 KB
+G:/GCModeller/src/runtime/sciBASIC#/www/axel/axel.vbproj,<project>,75,2,15,58,1,0,1,3,0,2854,2.85 KB
 G:/GCModeller/src/runtime/sciBASIC#/www/Microsoft.VisualBasic.Webservices.Bing/Bing.NET5.vbproj,DOI/Response.vb,28,0,4,24,4,14,0,0,0,796,796 B
 G:/GCModeller/src/runtime/sciBASIC#/www/Microsoft.VisualBasic.Webservices.Bing/Bing.NET5.vbproj,MicrosoftBing/BingImage.vb,85,7,11,67,1,0,1,1,0,3359,3.36 KB
 G:/GCModeller/src/runtime/sciBASIC#/www/Microsoft.VisualBasic.Webservices.Bing/Bing.NET5.vbproj,MicrosoftBing/SearchEngine.vb,110,24,16,70,1,0,0,5,0,4113,4.11 KB
@@ -3995,4 +4034,4 @@ G:/GCModeller/src/runtime/sciBASIC#/www/Microsoft.VisualBasic.Webservices.Bing/B
 G:/GCModeller/src/runtime/sciBASIC#/www/Microsoft.VisualBasic.Webservices.Bing/Bing.NET5.vbproj,test/My Project/Resources.Designer.vb,63,23,8,32,1,2,0,0,0,2781,2.78 KB
 G:/GCModeller/src/runtime/sciBASIC#/www/Microsoft.VisualBasic.Webservices.Bing/Bing.NET5.vbproj,test/My Project/Settings.Designer.vb,73,9,13,51,2,2,1,0,0,2966,2.97 KB
 G:/GCModeller/src/runtime/sciBASIC#/www/Microsoft.VisualBasic.Webservices.Bing/Bing.NET5.vbproj,<project>,1040,152,152,736,22,51,7,27,0,38473,38.47 KB
-../,<root>,1092670,245636,158470,688564,10954,14780,16906,28204,1456,42748388,42.75 MB
+../,<root>,1118932,253240,162870,702822,11118,15020,17200,28824,1462,43682814,43.68 MB

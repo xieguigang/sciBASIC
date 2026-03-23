@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5e95bd57a6db455bdd8ffe1db0d3cb88, Data_science\DataMining\DBNCode\utils\DisjointSets.vb"
+﻿#Region "Microsoft.VisualBasic::4319c0730bace02ffbd648fa36fbfaa1, Data_science\DataMining\DBNCode\utils\DisjointSets.vb"
 
     ' Author:
     ' 
@@ -34,12 +34,12 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 82
-    '    Code Lines: 22 (26.83%)
-    ' Comment Lines: 52 (63.41%)
+    '   Total Lines: 81
+    '    Code Lines: 22 (27.16%)
+    ' Comment Lines: 52 (64.20%)
     '    - Xml Docs: 59.62%
     ' 
-    '   Blank Lines: 8 (9.76%)
+    '   Blank Lines: 7 (8.64%)
     '     File Size: 3.20 KB
 
 
@@ -55,7 +55,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 Namespace utils
     ''' <summary>
@@ -138,4 +137,3 @@ Namespace utils
     End Class
 
 End Namespace
-

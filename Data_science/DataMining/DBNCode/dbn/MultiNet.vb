@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d72748e2ed796cb18021257d52733619, Data_science\DataMining\DBNCode\dbn\MultiNet.vb"
+﻿#Region "Microsoft.VisualBasic::e4e3e1db29c9bbd7296b59fc43143315, Data_science\DataMining\DBNCode\dbn\MultiNet.vb"
 
     ' Author:
     ' 
@@ -496,4 +496,3 @@ Namespace dbn
 
     End Class
 End Namespace
-

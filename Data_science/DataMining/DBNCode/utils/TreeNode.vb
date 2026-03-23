@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0cc9eaaa6358c600cb15106fa2096e9b, Data_science\DataMining\DBNCode\utils\TreeNode.vb"
+﻿#Region "Microsoft.VisualBasic::4127d53efc22b20ffeb3415bfac5df92, Data_science\DataMining\DBNCode\utils\TreeNode.vb"
 
     ' Author:
     ' 
@@ -170,4 +170,3 @@ Namespace utils
     End Class
 
 End Namespace
-

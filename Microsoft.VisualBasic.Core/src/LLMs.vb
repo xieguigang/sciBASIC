@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2d44365a2057b1d4acd515b8950d5639, Microsoft.VisualBasic.Core\src\LLMs.vb"
+﻿#Region "Microsoft.VisualBasic::60bdb996f045f0da269919026b97b80d, Microsoft.VisualBasic.Core\src\LLMs.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 3 (13.04%)
-    '     File Size: 639 B
+    '     File Size: 666 B
 
 
     ' Module LLMs
@@ -76,4 +76,3 @@ Public Module LLMs
         End If
     End Function
 End Module
-

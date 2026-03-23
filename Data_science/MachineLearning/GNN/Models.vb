@@ -1,4 +1,113 @@
-﻿Imports Microsoft.VisualBasic.MachineLearning.TensorFlow
+﻿#Region "Microsoft.VisualBasic::1e19a89cc9a9ffdc77d59305c1aac05c, Data_science\MachineLearning\GNN\Models.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 698
+    '    Code Lines: 364 (52.15%)
+    ' Comment Lines: 200 (28.65%)
+    '    - Xml Docs: 78.00%
+    ' 
+    '   Blank Lines: 134 (19.20%)
+    '     File Size: 22.35 KB
+
+
+    ' Class Optimizer
+    ' 
+    '     Properties: LearningRate
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    '     Sub: ZeroGrad
+    ' 
+    ' Class SGDOptimizer
+    ' 
+    '     Properties: Momentum
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    '     Sub: [Step]
+    ' 
+    ' Class AdamOptimizer
+    ' 
+    '     Properties: Beta1, Beta2, Epsilon
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    '     Sub: [Step]
+    ' 
+    ' Class GNNModel
+    ' 
+    '     Properties: Name
+    ' 
+    '     Function: GetGradients, GetParameters
+    ' 
+    '     Sub: PrintModelInfo, SetTraining
+    ' 
+    ' Class GCNModel
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    '     Function: Backward, Forward, ForwardLogits
+    ' 
+    ' Class GraphClassificationModel
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    '     Function: Backward, Forward
+    ' 
+    ' Class Trainer
+    ' 
+    '     Properties: TrainLossHistory, ValAccuracyHistory
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    ' 
+    '     Function: Evaluate, TrainEpoch
+    ' 
+    '     Sub: Train
+    ' 
+    ' Class GraphClassificationTrainer
+    ' 
+    '     Properties: TrainLossHistory, ValAccuracyHistory
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    ' 
+    '     Function: Evaluate, TrainEpoch
+    ' 
+    '     Sub: Train
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+Imports Microsoft.VisualBasic.MachineLearning.TensorFlow
 Imports std = System.Math
 
 
@@ -695,4 +804,5 @@ Public Class GraphClassificationTrainer
         Console.WriteLine("训练完成！")
     End Sub
 End Class
+
 

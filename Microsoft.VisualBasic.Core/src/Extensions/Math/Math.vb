@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fc5d93f3bb2b6e5ca310c6848426ee88, Microsoft.VisualBasic.Core\src\Extensions\Math\Math.vb"
+﻿#Region "Microsoft.VisualBasic::6086283d20e86d53604668ddd2051244, Microsoft.VisualBasic.Core\src\Extensions\Math\Math.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 841
-    '    Code Lines: 478 (56.84%)
-    ' Comment Lines: 269 (31.99%)
-    '    - Xml Docs: 87.36%
+    '   Total Lines: 948
+    '    Code Lines: 539 (56.86%)
+    ' Comment Lines: 294 (31.01%)
+    '    - Xml Docs: 82.99%
     ' 
-    '   Blank Lines: 94 (11.18%)
-    '     File Size: 29.21 KB
+    '   Blank Lines: 115 (12.13%)
+    '     File Size: 33.31 KB
 
 
     '     Module VBMath
@@ -50,7 +50,7 @@
     '                   LeastCommonMultiple, (+2 Overloads) Log2, LogN, (+2 Overloads) Max, Permut
     '                   PoissonPDF, Pow2, (+3 Overloads) ProductALL, (+3 Overloads) RangesAt, RMS
     '                   RMSE, (+2 Overloads) RSD, (+4 Overloads) SD, (+2 Overloads) seq, SteinGcd
-    '                   (+5 Overloads) Sum, WeighedAverage
+    '                   (+5 Overloads) Sum, WeighedAverage, WeightedMedian, WeightedMedianOptimized
     ' 
     ' 
     ' /********************************************************************************/

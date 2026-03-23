@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3cad01111d931db59ddb926f0c39d2d9, Data_science\Mathematica\SignalProcessing\SignalProcessing\Cluster\NetworkSignalType.vb"
+﻿#Region "Microsoft.VisualBasic::b6e38a8630cc0b1ec32bc5cdc31b3860, Data_science\Mathematica\SignalProcessing\SignalProcessing\Cluster\NetworkSignalType.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 6 (17.65%)
-    '     File Size: 863 B
+    '     File Size: 861 B
 
 
     ' Enum NetworkSignalType
@@ -88,4 +88,3 @@ Public Enum NetworkSignalType
     <Description("随机信号（好数据）")>
     RandomSignal = 5
 End Enum
-

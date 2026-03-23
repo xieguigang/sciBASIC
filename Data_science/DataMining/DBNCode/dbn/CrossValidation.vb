@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::233d44f7112ae657f026c13f52f6e065, Data_science\DataMining\DBNCode\dbn\CrossValidation.vb"
+﻿#Region "Microsoft.VisualBasic::5890273f2e34ba70915fd4ab2e4d22cc, Data_science\DataMining\DBNCode\dbn\CrossValidation.vb"
 
     ' Author:
     ' 
@@ -881,4 +881,3 @@ Namespace dbn
 
     End Class
 End Namespace
-

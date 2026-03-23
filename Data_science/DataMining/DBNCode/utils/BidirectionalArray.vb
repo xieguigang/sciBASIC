@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::968e95bde615aa86de03710ccdeb199e, Data_science\DataMining\DBNCode\utils\BidirectionalArray.vb"
+﻿#Region "Microsoft.VisualBasic::ac3d7ed8a18989cd48bae106ffed4372, Data_science\DataMining\DBNCode\utils\BidirectionalArray.vb"
 
     ' Author:
     ' 
@@ -99,4 +99,3 @@ Namespace utils
         End Function
     End Class
 End Namespace
-

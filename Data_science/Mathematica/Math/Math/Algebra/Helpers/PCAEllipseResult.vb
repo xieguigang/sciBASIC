@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e7d467520d817e014f4f748dc57c40a7, Data_science\Mathematica\Math\Math\Algebra\Helpers\PCAEllipseResult.vb"
+﻿#Region "Microsoft.VisualBasic::1864a2f93dd00f3fe4df5b55d57b4e32, Data_science\Mathematica\Math\Math\Algebra\Helpers\PCAEllipseResult.vb"
 
     ' Author:
     ' 
@@ -462,4 +462,3 @@ Namespace LinearAlgebra
     End Class
 
 End Namespace
-

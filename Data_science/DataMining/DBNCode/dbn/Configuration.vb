@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::83d211382804daee7536b91fd788827b, Data_science\DataMining\DBNCode\dbn\Configuration.vb"
+﻿#Region "Microsoft.VisualBasic::b5e047174d2f06f5fd51ef14a62a3c73, Data_science\DataMining\DBNCode\dbn\Configuration.vb"
 
     ' Author:
     ' 
@@ -146,4 +146,3 @@ Namespace dbn
     End Class
 
 End Namespace
-

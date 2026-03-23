@@ -1,4 +1,70 @@
-﻿Imports System.Runtime.CompilerServices
+﻿#Region "Microsoft.VisualBasic::4a7799070306a3a8a361870d548f120d, Data_science\DataMining\PaCMAP\TensorExtensions.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 890
+    '    Code Lines: 606 (68.09%)
+    ' Comment Lines: 146 (16.40%)
+    '    - Xml Docs: 76.71%
+    ' 
+    '   Blank Lines: 138 (15.51%)
+    '     File Size: 32.96 KB
+
+
+    '     Module TensorExtensions
+    ' 
+    '         Function: (+2 Overloads) [Sub], (+2 Overloads) Add, BroadcastSub, Concat, (+2 Overloads) Div
+    '                   ExpandDims, Gather, GatherND, MatMul, (+2 Overloads) Mul
+    '                   Neg, RandInt, Reshape, Slice, Sqrt
+    '                   Square, Squeeze, Stack, Sum, SumKeepDims
+    '                   Tile, TopK
+    ' 
+    '         Sub: CopyAlongAxis, CopyToTiledPositions, GatherAlongAxis, PrintTensor, SliceRecursive
+    '              SumAlongAxis, TileRecursive
+    '         Class TopKResult
+    ' 
+    '             Properties: Indices, Values
+    ' 
+    ' 
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.MachineLearning.TensorFlow
 Imports std = System.Math
 
@@ -888,3 +954,4 @@ Namespace PaCMAP
         End Sub
     End Module
 End Namespace
+

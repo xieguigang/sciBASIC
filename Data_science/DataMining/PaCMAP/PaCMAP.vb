@@ -1,4 +1,71 @@
-﻿Imports Microsoft.VisualBasic.MachineLearning.TensorFlow
+﻿#Region "Microsoft.VisualBasic::54e46a0334b1ee51dbb21e6c4d92ddbe, Data_science\DataMining\PaCMAP\PaCMAP.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 509
+    '    Code Lines: 249 (48.92%)
+    ' Comment Lines: 172 (33.79%)
+    '    - Xml Docs: 79.07%
+    ' 
+    '   Blank Lines: 88 (17.29%)
+    '     File Size: 18.93 KB
+
+
+    '     Class PaCMAP
+    ' 
+    '         Properties: LearningRate, NDimensions, NumIterations, NumNeighbourPairs, RatioFurtherPairs
+    '                     RatioMidNearPairs
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
+    '         Function: ComputeNumericalGradient, ComputeTotalLoss, FindFurtherPairs, FindMidNearPairs, FindNeighbourPairs
+    '                   Fit, GetResult, LossFurtherPairs, LossMidNearPairs, LossNeighbourPairs
+    ' 
+    '         Sub: ComputeGradientsAndUpdate, DecideNumPairs, Dispose, FindPairs
+    ' 
+    '     Class AdagradOptimizer
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    '         Sub: Update
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+Imports Microsoft.VisualBasic.MachineLearning.TensorFlow
 Imports std = System.Math
 
 Namespace PaCMAP
@@ -507,3 +574,4 @@ Namespace PaCMAP
         End Sub
     End Class
 End Namespace
+

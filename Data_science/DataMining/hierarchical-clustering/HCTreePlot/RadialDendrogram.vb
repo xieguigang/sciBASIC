@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e6d5b05ec6cf53df2512b7d87cdac7b8, Data_science\DataMining\hierarchical-clustering\HCTreePlot\RadialDendrogram.vb"
+﻿#Region "Microsoft.VisualBasic::3252ca651b6db7797969cfe16e944d7c, Data_science\DataMining\hierarchical-clustering\HCTreePlot\RadialDendrogram.vb"
 
     ' Author:
     ' 
@@ -316,4 +316,3 @@ Public Class RadialDendrogram : Inherits DendrogramPanel
     End Function
 
 End Class
-

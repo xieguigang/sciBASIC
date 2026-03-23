@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ef531feb2f06454cb463d08d553ad5b9, Data_science\DataMining\DBNCode\dbn\MutableConfiguration.vb"
+﻿#Region "Microsoft.VisualBasic::eb98ee0c8cd27c8761eb7359dea646d6, Data_science\DataMining\DBNCode\dbn\MutableConfiguration.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 83.33%
     ' 
     '   Blank Lines: 8 (14.81%)
-    '     File Size: 2.08 KB
+    '     File Size: 2.07 KB
 
 
     '     Class MutableConfiguration
@@ -110,4 +110,3 @@ Namespace dbn
     End Class
 
 End Namespace
-

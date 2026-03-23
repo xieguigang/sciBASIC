@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::761ba573236d8fe276c0b0ec412f848d, Data_science\NLP\TF-IDF\TFIDF.vb"
+﻿#Region "Microsoft.VisualBasic::0e39f56d3591543a5d17fa6ec0eb87af, Data_science\NLP\TF-IDF\TFIDF.vb"
 
     ' Author:
     ' 
@@ -249,4 +249,3 @@ Public Class TFIDF
     End Function
 
 End Class
-

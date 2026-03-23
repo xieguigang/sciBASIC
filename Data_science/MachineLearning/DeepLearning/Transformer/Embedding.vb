@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::dde31c436e55f11da2bc81ab2c824a57, Data_science\MachineLearning\DeepLearning\Transformer\Embedding.vb"
+﻿#Region "Microsoft.VisualBasic::ee8aa68c9d679037ff90e4f264f009bb, Data_science\MachineLearning\DeepLearning\Transformer\Embedding.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 97.87%
     ' 
     '   Blank Lines: 33 (15.79%)
-    '     File Size: 8.15 KB
+    '     File Size: 8.18 KB
 
 
     '     Class Embedding

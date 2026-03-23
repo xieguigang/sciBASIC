@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3721934bf93c24e02da3df37b7e92023, Microsoft.VisualBasic.Core\src\ApplicationServices\Debugger\Exception\StackFrame.vb"
+﻿#Region "Microsoft.VisualBasic::898934693968bd6be91c4fa603d40e8b, Microsoft.VisualBasic.Core\src\ApplicationServices\Debugger\Exception\StackFrame.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 101
-    '    Code Lines: 67 (66.34%)
-    ' Comment Lines: 22 (21.78%)
-    '    - Xml Docs: 90.91%
+    '   Total Lines: 138
+    '    Code Lines: 82 (59.42%)
+    ' Comment Lines: 39 (28.26%)
+    '    - Xml Docs: 66.67%
     ' 
-    '   Blank Lines: 12 (11.88%)
-    '     File Size: 3.33 KB
+    '   Blank Lines: 17 (12.32%)
+    '     File Size: 5.23 KB
 
 
     '     Class StackFrame
@@ -48,7 +48,7 @@
     '         Properties: File, Line, Method
     ' 
     '         Constructor: (+2 Overloads) Sub New
-    '         Function: FromUnknownLocation, Parser, parserImpl, ToString
+    '         Function: FromUnknownLocation, GetBreakpointHashCode, Parser, parserImpl, ToString
     ' 
     ' 
     ' /********************************************************************************/

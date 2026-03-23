@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::72a286452fb9a68ed8a2a43270e42ceb, Data\BinaryData\BinaryData\Stream\VectorStream.vb"
+﻿#Region "Microsoft.VisualBasic::2b803b1c3760e471809fc6a9d413f46b, Data\BinaryData\BinaryData\Stream\VectorStream.vb"
 
     ' Author:
     ' 
@@ -162,4 +162,3 @@ Public Module VectorStream
         End Select
     End Function
 End Module
-

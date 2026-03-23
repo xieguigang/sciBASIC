@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::81825a7ddf3b89eb29fcff0dbd9b57a1, Microsoft.VisualBasic.Core\src\Net\Wget\Axel\AxelTask.vb"
+﻿#Region "Microsoft.VisualBasic::36009939e87b0ab1b350a6f9f92f09ba, Microsoft.VisualBasic.Core\src\Net\Wget\Axel\AxelTask.vb"
 
     ' Author:
     ' 
@@ -34,12 +34,12 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 156
-    '    Code Lines: 102 (65.38%)
-    ' Comment Lines: 26 (16.67%)
+    '   Total Lines: 155
+    '    Code Lines: 102 (65.81%)
+    ' Comment Lines: 26 (16.77%)
     '    - Xml Docs: 0.00%
     ' 
-    '   Blank Lines: 28 (17.95%)
+    '   Blank Lines: 27 (17.42%)
     '     File Size: 7.25 KB
 
 
@@ -54,7 +54,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 Imports System.IO
 Imports System.Net.Http

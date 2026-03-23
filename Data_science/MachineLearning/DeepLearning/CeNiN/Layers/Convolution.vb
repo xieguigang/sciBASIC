@@ -1,60 +1,60 @@
-﻿#Region "Microsoft.VisualBasic::c26a2fd5bf5c2949f129a0feb960cc82, Data_science\MachineLearning\DeepLearning\CeNiN\Layers\Convolution.vb"
+﻿#Region "Microsoft.VisualBasic::7be5dc6114764537639233a7cf51c9eb, Data_science\MachineLearning\DeepLearning\CeNiN\Layers\Convolution.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 150
-'    Code Lines: 116 (77.33%)
-' Comment Lines: 1 (0.67%)
-'    - Xml Docs: 0.00%
-' 
-'   Blank Lines: 33 (22.00%)
-'     File Size: 5.36 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Class Convolution
-' 
-'         Properties: type
-' 
-'         Constructor: (+1 Overloads) Sub New
-' 
-'         Function: layerFeedNext
-' 
-'         Sub: setOutputDims
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 150
+    '    Code Lines: 116 (77.33%)
+    ' Comment Lines: 1 (0.67%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 33 (22.00%)
+    '     File Size: 5.37 KB
+
+
+    '     Class Convolution
+    ' 
+    '         Properties: type
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
+    '         Function: layerFeedNext
+    ' 
+    '         Sub: setOutputDims
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

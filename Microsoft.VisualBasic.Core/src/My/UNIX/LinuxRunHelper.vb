@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6a5d42a32b9dc70fc60f08e3cd54d675, Microsoft.VisualBasic.Core\src\My\UNIX\LinuxRunHelper.vb"
+﻿#Region "Microsoft.VisualBasic::bfd3ac764bb5e440ba993c96553b02c4, Microsoft.VisualBasic.Core\src\My\UNIX\LinuxRunHelper.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 129
-    '    Code Lines: 76 (58.91%)
-    ' Comment Lines: 35 (27.13%)
+    '   Total Lines: 133
+    '    Code Lines: 80 (60.15%)
+    ' Comment Lines: 35 (26.32%)
     '    - Xml Docs: 77.14%
     ' 
-    '   Blank Lines: 18 (13.95%)
-    '     File Size: 4.72 KB
+    '   Blank Lines: 18 (13.53%)
+    '     File Size: 4.90 KB
 
 
     '     Module LinuxRunHelper

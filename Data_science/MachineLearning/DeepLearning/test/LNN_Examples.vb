@@ -1,3 +1,61 @@
+﻿#Region "Microsoft.VisualBasic::b8d702a566df838c0cc9a99bf0a06b59, Data_science\MachineLearning\DeepLearning\test\LNN_Examples.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 682
+    '    Code Lines: 449 (65.84%)
+    ' Comment Lines: 93 (13.64%)
+    '    - Xml Docs: 36.56%
+    ' 
+    '   Blank Lines: 140 (20.53%)
+    '     File Size: 23.75 KB
+
+
+    ' Module LNNExamples
+    ' 
+    '     Sub: RunBasicTimeSeriesExample, TestLiquidCell, TestODESolvers
+    ' 
+    ' Class LNNUsageExamples
+    ' 
+    '     Sub: BasicTimeSeriesPrediction, CompareActivationFunctions, CompareODESolvers, MultiStepForecast, RunAllExamples
+    '          StateHistoryExample
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
 ''' <summary>
 ''' 液态神经网络(LNN)使用示例
 ''' 展示如何使用LiquidNeuralNetwork模块进行时间序列分析

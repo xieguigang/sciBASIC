@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::316a67159d297f302f4878ec66ccfc68, Data_science\MachineLearning\TensorFlow\Parallel\Multiply.vb"
+﻿#Region "Microsoft.VisualBasic::cd0ed6f7ea87cc4f36be5c420f1d8cc0, Data_science\MachineLearning\TensorFlow\AutomaticDifferentiation\Parallel\Multiply.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 9 (20.00%)
-    '     File Size: 1.35 KB
+    '     File Size: 1.38 KB
 
 
     '     Class MultiplyScale

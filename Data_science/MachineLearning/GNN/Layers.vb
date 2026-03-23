@@ -1,4 +1,102 @@
-﻿Imports Microsoft.VisualBasic.MachineLearning.TensorFlow
+﻿#Region "Microsoft.VisualBasic::b51812c646bfff6193ea0ee1194ac196, Data_science\MachineLearning\GNN\Layers.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 687
+    '    Code Lines: 381 (55.46%)
+    ' Comment Lines: 195 (28.38%)
+    '    - Xml Docs: 76.92%
+    ' 
+    '   Blank Lines: 111 (16.16%)
+    '     File Size: 23.02 KB
+
+
+    ' Class Layer
+    ' 
+    '     Properties: IsTraining, Name
+    ' 
+    ' Class LinearLayer
+    ' 
+    '     Properties: InFeatures, OutFeatures, UseBias
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    '     Function: Backward, Forward, GetBias, GetGradients, GetParameters
+    '               GetWeights
+    ' 
+    ' Class ActivationLayer
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    '     Function: Backward, Forward, GetGradients, GetParameters
+    ' 
+    ' Class DropoutLayer
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    '     Function: Backward, Forward, GetGradients, GetParameters
+    ' 
+    ' Class GCNConvLayer
+    ' 
+    '     Properties: InFeatures, OutFeatures
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    '     Function: (+2 Overloads) Backward, (+3 Overloads) Forward, GetGradients, GetParameters
+    ' 
+    ' Class GATLayer
+    ' 
+    '     Properties: InFeatures, OutFeatures
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    '     Function: Backward, (+2 Overloads) Forward, GetGradients, GetParameters, LeakyReLU
+    ' 
+    ' Class GlobalPoolingLayer
+    ' 
+    ' 
+    '     Enum PoolingType
+    ' 
+    ' 
+    ' 
+    ' 
+    '  
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    '     Function: Backward, Forward, GetGradients, GetParameters, MaxPooling
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+Imports Microsoft.VisualBasic.MachineLearning.TensorFlow
 Imports std = System.Math
 
 ''' <summary>
@@ -685,3 +783,4 @@ Public Class GlobalPoolingLayer
         Return New List(Of Tensor)()
     End Function
 End Class
+

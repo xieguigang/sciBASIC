@@ -1,58 +1,58 @@
-﻿#Region "Microsoft.VisualBasic::03d524fa3932cada33f604d405e51e91, Microsoft.VisualBasic.Core\src\Extensions\Doc\XmlExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::ac64b90a402025a4e2d131149a5f34f3, Microsoft.VisualBasic.Core\src\Extensions\Doc\XmlExtensions.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 453
-'    Code Lines: 281 (62.03%)
-' Comment Lines: 117 (25.83%)
-'    - Xml Docs: 88.89%
-' 
-'   Blank Lines: 55 (12.14%)
-'     File Size: 18.08 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-' Module XmlExtensions
-' 
-'     Properties: XmlParser
-' 
-'     Function: CreateObjectFromXml, CreateObjectFromXmlFragment, (+2 Overloads) GetXml, (+2 Overloads) LoadFromXml, LoadFromXmlStream
-'               (+2 Overloads) LoadXml, SafeLoadXml, SaveAsXml
-' 
-'     Sub: WriteXml, WriteXML
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 461
+    '    Code Lines: 288 (62.47%)
+    ' Comment Lines: 117 (25.38%)
+    '    - Xml Docs: 88.89%
+    ' 
+    '   Blank Lines: 56 (12.15%)
+    '     File Size: 18.45 KB
+
+
+    ' Module XmlExtensions
+    ' 
+    '     Properties: XmlParser
+    ' 
+    '     Function: CreateObjectFromXml, CreateObjectFromXmlFragment, (+2 Overloads) GetXml, (+2 Overloads) LoadFromXml, LoadFromXmlStream
+    '               (+2 Overloads) LoadXml, SafeLoadXml, SaveAsXml
+    ' 
+    '     Sub: WriteXml, WriteXML
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

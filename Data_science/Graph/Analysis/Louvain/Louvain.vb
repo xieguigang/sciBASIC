@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fa53b3e6c3008aa0a5026125ab429967, Data_science\Graph\Analysis\Louvain\Louvain.vb"
+﻿#Region "Microsoft.VisualBasic::9ffcc282f13fae69f3103fbb70d8a166, Data_science\Graph\Analysis\Louvain\Louvain.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 79.78%
     ' 
     '   Blank Lines: 70 (18.13%)
-    '     File Size: 12.37 KB
+    '     File Size: 12.38 KB
 
 
     '     Class LouvainCommunity

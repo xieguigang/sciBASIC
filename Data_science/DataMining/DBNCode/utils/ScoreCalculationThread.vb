@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ee44f17860b92b7a6e463178d7362386, Data_science\DataMining\DBNCode\utils\ScoreCalculationThread.vb"
+﻿#Region "Microsoft.VisualBasic::88dc5894970fcdee96efa2fcd384632d, Data_science\DataMining\DBNCode\utils\ScoreCalculationThread.vb"
 
     ' Author:
     ' 
@@ -163,4 +163,3 @@ Namespace utils
 
     End Class
 End Namespace
-

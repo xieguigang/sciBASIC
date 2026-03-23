@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2d329b01613edca30b00ebd427b2eff7, Data_science\DataMining\DBNCode\dbn\Observations.vb"
+﻿#Region "Microsoft.VisualBasic::726b228d5f6e1186a377d9ef6f1adf89, Data_science\DataMining\DBNCode\dbn\Observations.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 59.00%
     ' 
     '   Blank Lines: 138 (13.01%)
-    '     File Size: 49.00 KB
+    '     File Size: 48.99 KB
 
 
     '     Class Observations
@@ -1123,4 +1123,3 @@ Namespace dbn
     End Class
 
 End Namespace
-

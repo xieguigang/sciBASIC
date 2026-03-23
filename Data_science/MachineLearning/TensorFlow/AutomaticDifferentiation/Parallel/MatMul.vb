@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::955a0763bd81097adf5739773c3b3db8, Data_science\MachineLearning\TensorFlow\Parallel\MatMul.vb"
+﻿#Region "Microsoft.VisualBasic::0950127f22aedf8aa146afa5105e901c, Data_science\MachineLearning\TensorFlow\AutomaticDifferentiation\Parallel\MatMul.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 17 (20.24%)
-    '     File Size: 3.10 KB
+    '     File Size: 3.13 KB
 
 
     '     Class SIMDMatMul

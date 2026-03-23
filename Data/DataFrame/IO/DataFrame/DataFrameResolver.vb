@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1b9fc5243df608ff380eec2f7b9d9a39, Data\DataFrame\IO\DataFrame\DataFrameResolver.vb"
+﻿#Region "Microsoft.VisualBasic::742ca27b7b67646d02e21d75607a7846, Data\DataFrame\IO\DataFrame\DataFrameResolver.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 82.42%
     ' 
     '   Blank Lines: 128 (14.95%)
-    '     File Size: 34.63 KB
+    '     File Size: 34.67 KB
 
 
     '     Class DataFrameResolver

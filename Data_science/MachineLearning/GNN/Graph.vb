@@ -1,4 +1,78 @@
-﻿Imports Microsoft.VisualBasic.MachineLearning.TensorFlow
+﻿#Region "Microsoft.VisualBasic::ef1983f65954455948d0ede1c8b01030, Data_science\MachineLearning\GNN\Graph.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 327
+    '    Code Lines: 168 (51.38%)
+    ' Comment Lines: 113 (34.56%)
+    '    - Xml Docs: 95.58%
+    ' 
+    '   Blank Lines: 46 (14.07%)
+    '     File Size: 9.98 KB
+
+
+    ' Class Edge
+    ' 
+    '     Properties: Source, Target, Weight
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    ' 
+    ' Class Graph
+    ' 
+    '     Properties: EdgeFeatures, Edges, NodeFeatures, NumEdges, NumNodes
+    ' 
+    '     Constructor: (+2 Overloads) Sub New
+    ' 
+    '     Function: GetAdjacencyMatrix, GetDegreeMatrix, GetInNeighbors, GetLaplacianMatrix, GetNeighbors
+    '               GetNormalizedAdjacencyMatrix, GetNormalizedLaplacian
+    ' 
+    '     Sub: AddEdge, AddUndirectedEdge, PrintInfo
+    ' 
+    ' Class GraphDataset
+    ' 
+    '     Properties: Count, Graphs, Labels, NumClasses
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    '     Sub: Add
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+Imports Microsoft.VisualBasic.MachineLearning.TensorFlow
 Imports std = System.Math
 
 ''' <summary>
@@ -324,4 +398,5 @@ Public Class GraphDataset
         End Get
     End Property
 End Class
+
 

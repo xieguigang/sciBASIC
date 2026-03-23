@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::edf41763fa59764d514da90e85ab0f5f, Data_science\DataMining\DBNCode\utils\Forest.vb"
+﻿#Region "Microsoft.VisualBasic::2d11855b0e4185f8ecc32c2e3de8553c, Data_science\DataMining\DBNCode\utils\Forest.vb"
 
     ' Author:
     ' 
@@ -160,4 +160,3 @@ Namespace utils
     End Class
 
 End Namespace
-

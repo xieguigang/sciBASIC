@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::49f0f4887b5eebffbc531ec2865dec8f, Data_science\DataMining\DBNCode\dbn\ScoringFunction.vb"
+﻿#Region "Microsoft.VisualBasic::e6e5041ec701f32e2426f79e373a1213, Data_science\DataMining\DBNCode\dbn\ScoringFunction.vb"
 
     ' Author:
     ' 
@@ -88,4 +88,3 @@ Namespace dbn
     End Interface
 
 End Namespace
-

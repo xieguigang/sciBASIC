@@ -1,3 +1,83 @@
+﻿#Region "Microsoft.VisualBasic::de3e328a50f8ccf0aeaa4ddc042aff9e, Data_science\MachineLearning\GNN\RecurrentLayers.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 748
+    '    Code Lines: 452 (60.43%)
+    ' Comment Lines: 167 (22.33%)
+    '    - Xml Docs: 62.28%
+    ' 
+    '   Blank Lines: 129 (17.25%)
+    '     File Size: 26.38 KB
+
+
+    ' Class GRULayer
+    ' 
+    '     Properties: HiddenSize, InputSize
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    ' 
+    '     Function: Backward, BackwardLinear, BackwardLinearThroughReset, BackwardSequence, (+2 Overloads) Forward
+    '               ForwardSequence, GetGradients, GetInitialHidden, GetParameters, LinearTransform
+    '               Sigmoid, SigmoidDerivative, Tanh, TanhDerivative
+    ' 
+    '     Sub: AccumulateBiasGradient, AccumulateGradient, ResetGradients
+    ' 
+    ' Class SimpleRNNLayer
+    ' 
+    '     Properties: HiddenSize, InputSize
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    ' 
+    '     Function: Backward, BackwardSequence, Forward, ForwardSequence, GetGradients
+    '               GetParameters
+    ' 
+    '     Sub: ResetGradients
+    ' 
+    ' Class BidirectionalRNNLayer
+    ' 
+    '     Properties: HiddenSize
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    '     Function: Backward, Forward, ForwardSequence, GetGradients, GetParameters
+    '               ReverseSequence
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
 
 Imports Microsoft.VisualBasic.MachineLearning.TensorFlow
 Imports std = System.Math
@@ -746,3 +826,4 @@ Public Class BidirectionalRNNLayer
         Return grads
     End Function
 End Class
+

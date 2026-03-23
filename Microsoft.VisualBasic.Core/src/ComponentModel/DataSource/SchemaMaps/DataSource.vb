@@ -1,73 +1,73 @@
-﻿#Region "Microsoft.VisualBasic::268424d38819f93bbf2f9309bbffa09d, Microsoft.VisualBasic.Core\src\ComponentModel\DataSource\SchemaMaps\DataSource.vb"
+﻿#Region "Microsoft.VisualBasic::d1c7ae16fd1b009167f7b65d9459f997, Microsoft.VisualBasic.Core\src\ComponentModel\DataSource\SchemaMaps\DataSource.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 264
-'    Code Lines: 148 (56.06%)
-' Comment Lines: 80 (30.30%)
-'    - Xml Docs: 93.75%
-' 
-'   Blank Lines: 36 (13.64%)
-'     File Size: 10.83 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Class ColumnAttribute
-' 
-'         Properties: [alias], Name
-' 
-'         Constructor: (+2 Overloads) Sub New
-'         Function: ToString
-' 
-'     Class Field
-' 
-'         Constructor: (+2 Overloads) Sub New
-' 
-'     Class DataFrameColumnAttribute
-' 
-'         Properties: Description, Index, Name
-' 
-'         Constructor: (+4 Overloads) Sub New
-'         Function: __attrs, __attrsAll, __source, GetIndex, GetMapping
-'                   (+2 Overloads) LoadMapping, SetNameValue, ToString
-' 
-'     Class DataFrameIO
-' 
-' 
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 264
+    '    Code Lines: 148 (56.06%)
+    ' Comment Lines: 80 (30.30%)
+    '    - Xml Docs: 93.75%
+    ' 
+    '   Blank Lines: 36 (13.64%)
+    '     File Size: 10.97 KB
+
+
+    '     Class ColumnAttribute
+    ' 
+    '         Properties: [alias], Name
+    ' 
+    '         Constructor: (+2 Overloads) Sub New
+    '         Function: ToString
+    ' 
+    '     Class Field
+    ' 
+    '         Constructor: (+2 Overloads) Sub New
+    ' 
+    '     Class DataFrameColumnAttribute
+    ' 
+    '         Properties: Description, Index, Name
+    ' 
+    '         Constructor: (+4 Overloads) Sub New
+    '         Function: __attrs, __attrsAll, __source, GetIndex, GetMapping
+    '                   (+2 Overloads) LoadMapping, SetNameValue, ToString
+    ' 
+    '     Class DataFrameIO
+    ' 
+    ' 
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

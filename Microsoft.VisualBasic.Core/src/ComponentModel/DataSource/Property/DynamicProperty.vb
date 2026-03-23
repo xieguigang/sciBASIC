@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::34faabfc636e3c266b1fe96a5397c8f5, Microsoft.VisualBasic.Core\src\ComponentModel\DataSource\Property\DynamicProperty.vb"
+﻿#Region "Microsoft.VisualBasic::51e7740ecaefc7d45376aac93e1fa694, Microsoft.VisualBasic.Core\src\ComponentModel\DataSource\Property\DynamicProperty.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 234
-    '    Code Lines: 137 (58.55%)
-    ' Comment Lines: 71 (30.34%)
+    '   Total Lines: 246
+    '    Code Lines: 147 (59.76%)
+    ' Comment Lines: 71 (28.86%)
     '    - Xml Docs: 97.18%
     ' 
-    '   Blank Lines: 26 (11.11%)
-    '     File Size: 9.45 KB
+    '   Blank Lines: 28 (11.38%)
+    '     File Size: 9.87 KB
 
 
     '     Class DynamicPropertyBase
@@ -50,7 +50,7 @@
     '         Function: EnumerateKeys, GetEnumerator, GetItemValue, GetNames, HasProperty
     '                   IDynamicsObject_GetItemValue, ToString
     ' 
-    '         Sub: (+2 Overloads) Add, (+2 Overloads) SetValue
+    '         Sub: (+3 Overloads) Add, (+2 Overloads) SetValue
     ' 
     ' 
     ' /********************************************************************************/

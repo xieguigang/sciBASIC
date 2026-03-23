@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::13031076e28d4842280b3073479610e8, Data_science\DataMining\BinaryTree\ComparisonProvider\AlignmentComparison.vb"
+﻿#Region "Microsoft.VisualBasic::f6250858459276aa285712c39f357524, Data_science\DataMining\BinaryTree\ComparisonProvider\AlignmentComparison.vb"
 
     ' Author:
     ' 
@@ -34,27 +34,19 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 95
-    '    Code Lines: 77 (81.05%)
+    '   Total Lines: 90
+    '    Code Lines: 73 (81.11%)
     ' Comment Lines: 0 (0.00%)
     '    - Xml Docs: 0.00%
     ' 
-    '   Blank Lines: 18 (18.95%)
-    '     File Size: 3.58 KB
+    '   Blank Lines: 17 (18.89%)
+    '     File Size: 3.49 KB
 
 
     ' Class AlignmentComparison
     ' 
     '     Constructor: (+3 Overloads) Sub New
     '     Function: FromMatrix, GetObject, GetSimilarity
-    ' 
-    ' Enum CompareMethods
-    ' 
-    '     RelativeDistance, SpectrumDotProduct
-    ' 
-    '  
-    ' 
-    ' 
     ' 
     ' /********************************************************************************/
 
@@ -150,5 +142,3 @@ Public Class AlignmentComparison : Inherits ComparisonProvider
         Return dataIndex(id)
     End Function
 End Class
-
-

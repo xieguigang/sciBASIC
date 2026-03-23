@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::dd55b7ba0702db4c51ddcf542504db2a, www\axel\Program.vb"
+﻿#Region "Microsoft.VisualBasic::5f8ed0e3cbb558fffac6815db4c38790, www\axel\Program.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 74
-    '    Code Lines: 57 (77.03%)
-    ' Comment Lines: 2 (2.70%)
+    '   Total Lines: 75
+    '    Code Lines: 58 (77.33%)
+    ' Comment Lines: 2 (2.67%)
     '    - Xml Docs: 0.00%
     ' 
-    '   Blank Lines: 15 (20.27%)
-    '     File Size: 2.76 KB
+    '   Blank Lines: 15 (20.00%)
+    '     File Size: 2.85 KB
 
 
     ' Module Program

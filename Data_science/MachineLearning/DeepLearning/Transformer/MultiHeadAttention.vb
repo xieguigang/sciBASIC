@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::480e8d1deb8502b075e96a3c27b02e7f, Data_science\MachineLearning\DeepLearning\Transformer\MultiHeadAttention.vb"
+﻿#Region "Microsoft.VisualBasic::dbf1c340dd2e42921b7c9fa07e4b3ea8, Data_science\MachineLearning\DeepLearning\Transformer\MultiHeadAttention.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 129
-    '    Code Lines: 100 (77.52%)
-    ' Comment Lines: 3 (2.33%)
+    '   Total Lines: 130
+    '    Code Lines: 100 (76.92%)
+    ' Comment Lines: 3 (2.31%)
     '    - Xml Docs: 0.00%
     ' 
-    '   Blank Lines: 26 (20.16%)
-    '     File Size: 5.29 KB
+    '   Blank Lines: 27 (20.77%)
+    '     File Size: 5.31 KB
 
 
     '     Class MultiHeadAttention

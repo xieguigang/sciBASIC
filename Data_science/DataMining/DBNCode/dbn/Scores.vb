@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::30861de212105830185a42612ed76ee2, Data_science\DataMining\DBNCode\dbn\Scores.vb"
+﻿#Region "Microsoft.VisualBasic::8a2ca49b182d73f184cb2f0237957cc0, Data_science\DataMining\DBNCode\dbn\Scores.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 12.77%
     ' 
     '   Blank Lines: 165 (21.68%)
-    '     File Size: 29.52 KB
+    '     File Size: 29.51 KB
 
 
     '     Class Scores
@@ -818,4 +818,3 @@ Namespace dbn
     End Class
 
 End Namespace
-

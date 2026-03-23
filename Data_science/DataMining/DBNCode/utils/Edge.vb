@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8d57b5ca19659ecbf15691ebf31ccf10, Data_science\DataMining\DBNCode\utils\Edge.vb"
+﻿#Region "Microsoft.VisualBasic::84610496f8e2b110f170d516906cda6b, Data_science\DataMining\DBNCode\utils\Edge.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 0.00%
     ' 
     '   Blank Lines: 11 (15.71%)
-    '     File Size: 2.31 KB
+    '     File Size: 2.30 KB
 
 
     '     Class Edge
@@ -125,4 +125,3 @@ Namespace utils
     End Class
 
 End Namespace
-

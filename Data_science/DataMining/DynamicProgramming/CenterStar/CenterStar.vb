@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ab116980782924511ba809a437906245, Data_science\DataMining\DynamicProgramming\CenterStar\CenterStar.vb"
+﻿#Region "Microsoft.VisualBasic::34285ea8a7eda68ca35e950b25a852bd, Data_science\DataMining\DynamicProgramming\CenterStar\CenterStar.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 262
-    '    Code Lines: 158 (60.31%)
-    ' Comment Lines: 64 (24.43%)
+    '   Total Lines: 267
+    '    Code Lines: 162 (60.67%)
+    ' Comment Lines: 64 (23.97%)
     '    - Xml Docs: 67.19%
     ' 
-    '   Blank Lines: 40 (15.27%)
-    '     File Size: 9.50 KB
+    '   Blank Lines: 41 (15.36%)
+    '     File Size: 9.70 KB
 
 
     ' Class CenterStar

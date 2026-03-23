@@ -1,58 +1,58 @@
-﻿#Region "Microsoft.VisualBasic::83b7a25318d9a58e0a0ef903732cc23a, Data_science\MachineLearning\DeepLearning\Transformer\EncoderStack.vb"
+﻿#Region "Microsoft.VisualBasic::289993723fc2eafc1067b01207ed1d03, Data_science\MachineLearning\DeepLearning\Transformer\EncoderStack.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 40
-'    Code Lines: 30 (75.00%)
-' Comment Lines: 0 (0.00%)
-'    - Xml Docs: 0.00%
-' 
-'   Blank Lines: 10 (25.00%)
-'     File Size: 1.33 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Class EncoderStack
-' 
-'         Constructor: (+1 Overloads) Sub New
-' 
-'         Function: Encode
-' 
-'         Sub: MakeTrainingStep, SetDropoutNodes
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 40
+    '    Code Lines: 30 (75.00%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 10 (25.00%)
+    '     File Size: 1.35 KB
+
+
+    '     Class EncoderStack
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
+    '         Function: Encode
+    ' 
+    '         Sub: MakeTrainingStep, SetDropoutNodes
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

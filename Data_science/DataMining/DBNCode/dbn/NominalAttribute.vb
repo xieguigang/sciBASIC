@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e4b1bc5d7e4b417407f1c95a9422bfbd, Data_science\DataMining\DBNCode\dbn\NominalAttribute.vb"
+﻿#Region "Microsoft.VisualBasic::ff6e86578bfc763b7d88ddab73ef5278, Data_science\DataMining\DBNCode\dbn\NominalAttribute.vb"
 
     ' Author:
     ' 
@@ -110,4 +110,3 @@ Namespace dbn
     End Class
 
 End Namespace
-

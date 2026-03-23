@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ff6705646d75334dd171413b3d22f8ad, Data_science\MachineLearning\DeepLearning\CeNiN\Layers\SoftMax.vb"
+﻿#Region "Microsoft.VisualBasic::0d4e33708e6ae833dfb7ea9e853afb94, Data_science\MachineLearning\DeepLearning\CeNiN\Layers\SoftMax.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 0.00%
     ' 
     '   Blank Lines: 11 (24.44%)
-    '     File Size: 1.33 KB
+    '     File Size: 1.32 KB
 
 
     '     Class SoftMax

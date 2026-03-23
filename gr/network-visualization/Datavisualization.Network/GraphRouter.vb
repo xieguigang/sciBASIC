@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f7c7fdcfcaf8b797c4cd3cc36c32e63b, gr\network-visualization\Datavisualization.Network\GraphRouter.vb"
+﻿#Region "Microsoft.VisualBasic::bfaca29738c0b80c2e154f118cecd963, gr\network-visualization\Datavisualization.Network\GraphRouter.vb"
 
     ' Author:
     ' 
@@ -225,4 +225,3 @@ Public Class GraphRouter
         Return New SparseMatrix(row.ToArray, col.ToArray, w.ToArray, m:=nodeCount, n:=nodeCount)
     End Function
 End Class
-

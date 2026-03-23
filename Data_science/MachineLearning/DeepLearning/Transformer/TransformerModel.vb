@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::046cdc9b846c158ec99f041ae9ac29ce, Data_science\MachineLearning\DeepLearning\Transformer\TransformerModel.vb"
+﻿#Region "Microsoft.VisualBasic::6cfe452e20b4602f6a65c30fbb657ea5, Data_science\MachineLearning\DeepLearning\Transformer\TransformerModel.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 35 (19.89%)
-    '     File Size: 8.36 KB
+    '     File Size: 8.39 KB
 
 
     '     Class TransformerModel

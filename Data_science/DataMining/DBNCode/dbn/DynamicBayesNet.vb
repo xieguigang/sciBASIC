@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::39786cc1ad6e4d390f94e465765cecd4, Data_science\DataMining\DBNCode\dbn\DynamicBayesNet.vb"
+﻿#Region "Microsoft.VisualBasic::8a80ecad529c23604d9f2c569b5d64a6, Data_science\DataMining\DBNCode\dbn\DynamicBayesNet.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 0.00%
     ' 
     '   Blank Lines: 85 (23.88%)
-    '     File Size: 14.13 KB
+    '     File Size: 14.12 KB
 
 
     '     Class DynamicBayesNet
@@ -416,4 +416,3 @@ Namespace dbn
 
 
 End Namespace
-

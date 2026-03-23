@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::96930286c1a46d14d3227f47044e5657, Data_science\MachineLearning\DeepLearning\test\Program.vb"
+﻿#Region "Microsoft.VisualBasic::7066f38abafe742d64fed355a1b18ea7, Data_science\MachineLearning\DeepLearning\test\Program.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 71
-    '    Code Lines: 5 (7.04%)
-    ' Comment Lines: 56 (78.87%)
+    '   Total Lines: 72
+    '    Code Lines: 6 (8.33%)
+    ' Comment Lines: 56 (77.78%)
     '    - Xml Docs: 0.00%
     ' 
-    '   Blank Lines: 10 (14.08%)
-    '     File Size: 2.73 KB
+    '   Blank Lines: 10 (13.89%)
+    '     File Size: 2.77 KB
 
 
     ' Module Program

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f6d7b946fc2f4ce0156cfdca93dc2937, Data_science\DataMining\DBNCode\dbn\OptimumBranching.vb"
+﻿#Region "Microsoft.VisualBasic::55add12729901e3ee35c0cdc4d2c7ee4, Data_science\DataMining\DBNCode\dbn\OptimumBranching.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 16.18%
     ' 
     '   Blank Lines: 139 (27.58%)
-    '     File Size: 17.83 KB
+    '     File Size: 17.82 KB
 
 
     '     Class OptimumBranching
@@ -562,4 +562,3 @@ Namespace dbn
     End Class
 
 End Namespace
-

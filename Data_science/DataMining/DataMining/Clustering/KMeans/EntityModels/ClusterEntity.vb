@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d60bbd5d9d698fbbc7fb1c926aaa8130, Data_science\DataMining\DataMining\Clustering\KMeans\EntityModels\ClusterEntity.vb"
+﻿#Region "Microsoft.VisualBasic::7124bd310c53cb49e2cd10c00ad3f3b7, Data_science\DataMining\DataMining\Clustering\KMeans\EntityModels\ClusterEntity.vb"
 
     ' Author:
     ' 
@@ -34,20 +34,20 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 152
-    '    Code Lines: 79 (51.97%)
-    ' Comment Lines: 57 (37.50%)
+    '   Total Lines: 158
+    '    Code Lines: 84 (53.16%)
+    ' Comment Lines: 57 (36.08%)
     '    - Xml Docs: 92.98%
     ' 
-    '   Blank Lines: 16 (10.53%)
-    '     File Size: 5.46 KB
+    '   Blank Lines: 17 (10.76%)
+    '     File Size: 5.65 KB
 
 
     '     Class ClusterEntity
     ' 
     '         Properties: cluster, entityVector, uid
     ' 
-    '         Constructor: (+4 Overloads) Sub New
+    '         Constructor: (+5 Overloads) Sub New
     '         Function: Equals, (+2 Overloads) ToDataModel, ToString
     '         Operators: <>, =
     ' 

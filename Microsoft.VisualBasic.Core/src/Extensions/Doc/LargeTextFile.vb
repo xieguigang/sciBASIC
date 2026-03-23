@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3953142193b6cb92626110d369623e87, Microsoft.VisualBasic.Core\src\Extensions\Doc\LargeTextFile.vb"
+﻿#Region "Microsoft.VisualBasic::d650c537d0aac3c0200c949afbc67388, Microsoft.VisualBasic.Core\src\Extensions\Doc\LargeTextFile.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 203
-    '    Code Lines: 98 (48.28%)
-    ' Comment Lines: 79 (38.92%)
-    '    - Xml Docs: 94.94%
+    '   Total Lines: 204
+    '    Code Lines: 98 (48.04%)
+    ' Comment Lines: 80 (39.22%)
+    '    - Xml Docs: 93.75%
     ' 
-    '   Blank Lines: 26 (12.81%)
-    '     File Size: 7.83 KB
+    '   Blank Lines: 26 (12.75%)
+    '     File Size: 7.97 KB
 
 
     ' Module LargeTextFile

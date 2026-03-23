@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::286a6726630555146bbfe87067b1bb80, Data_science\DataMining\UMAP\Components\Tree\Tree.vb"
+﻿#Region "Microsoft.VisualBasic::0f8fbf3961c9a092cdd14b5c49db0ffa, Data_science\DataMining\UMAP\Components\Tree\Tree.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 65.22%
     ' 
     '   Blank Lines: 39 (14.55%)
-    '     File Size: 11.82 KB
+    '     File Size: 11.86 KB
 
 
     '     Module Tree

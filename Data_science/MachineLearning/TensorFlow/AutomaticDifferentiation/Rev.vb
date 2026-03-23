@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7888f068942a0e219624eaa9925585e8, Data_science\MachineLearning\TensorFlow\Rev.vb"
+﻿#Region "Microsoft.VisualBasic::443858745840aa9067ff12dd0a4fb0ad, Data_science\MachineLearning\TensorFlow\AutomaticDifferentiation\Rev.vb"
 
     ' Author:
     ' 
@@ -34,22 +34,23 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 145
-    '    Code Lines: 118 (81.38%)
-    ' Comment Lines: 3 (2.07%)
+    '   Total Lines: 123
+    '    Code Lines: 95 (77.24%)
+    ' Comment Lines: 3 (2.44%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 24 (16.55%)
-    '     File Size: 6.46 KB
+    '   Blank Lines: 25 (20.33%)
+    '     File Size: 4.85 KB
 
 
-    ' Class Rev
+    '     Class Rev
     ' 
-    '     Properties: Zero
+    '         Properties: Zero
     ' 
-    '     Constructor: (+2 Overloads) Sub New
-    '     Function: Exp, Log, Pow, ToString
-    '     Operators: (+4 Overloads) -, (+3 Overloads) *, (+3 Overloads) /, (+3 Overloads) +
+    '         Constructor: (+2 Overloads) Sub New
+    '         Function: Exp, Log, Pow, ToString
+    '         Operators: (+4 Overloads) -, (+3 Overloads) *, (+3 Overloads) /, (+3 Overloads) +
+    ' 
     ' 
     ' /********************************************************************************/
 

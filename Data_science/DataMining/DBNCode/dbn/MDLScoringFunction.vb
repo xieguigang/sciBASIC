@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::111dca337d6bfc06ba83364679db88a2, Data_science\DataMining\DBNCode\dbn\MDLScoringFunction.vb"
+﻿#Region "Microsoft.VisualBasic::a1007454c18d9522489b68bf6b8cc398, Data_science\DataMining\DBNCode\dbn\MDLScoringFunction.vb"
 
     ' Author:
     ' 
@@ -86,4 +86,3 @@ Namespace dbn
     End Class
 
 End Namespace
-
