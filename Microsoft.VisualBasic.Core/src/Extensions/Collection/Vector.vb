@@ -216,7 +216,6 @@ Public Module VectorExtensions
     ''' <remarks>
     ''' (注意：不推荐使用这个函数来频繁的向数组中添加元素，这个函数会频繁的分配内存，效率非常低)
     ''' </remarks>
-    <Extension>
     Public Sub Add(Of T)(ByRef vector As T(), value As T)
         If vector.IsNullOrEmpty Then
             vector = {value}
@@ -234,7 +233,6 @@ Public Module VectorExtensions
     ''' <typeparam name="T"></typeparam>
     ''' <param name="vector"></param>
     ''' <param name="values"></param>
-    <Extension>
     Public Sub Add(Of T)(ByRef vector As T(), values As IEnumerable(Of T))
         Dim data = values.SafeQuery.ToArray
         Dim appendBuffer As T() = New T(vector.Length + data.Length - 1) {}
@@ -260,7 +258,6 @@ Public Module VectorExtensions
     ''' <remarks>
     ''' (会自动跳过空集合，这个方法是安全的)
     ''' </remarks>
-    <Extension>
     Public Sub Add(Of T)(ByRef vector As T(), ParamArray value As T())
         If value.IsNullOrEmpty Then
             Return
@@ -288,7 +285,7 @@ Public Module VectorExtensions
             Return value.ToArray
         End If
 
-        Call buffer.Add(value.ToArray)
+        Call Add(buffer, value.ToArray)
         Return buffer
     End Function
 
