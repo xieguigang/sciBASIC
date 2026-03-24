@@ -216,7 +216,9 @@ Public Module VectorExtensions
     ''' <remarks>
     ''' (注意：不推荐使用这个函数来频繁的向数组中添加元素，这个函数会频繁的分配内存，效率非常低)
     ''' </remarks>
-    Public Sub Add(Of T)(ByRef vector As T(), value As T)
+    ''' 
+    <Extension>
+    Public Sub Append(Of T)(ByRef vector As T(), value As T)
         If vector.IsNullOrEmpty Then
             vector = {value}
         Else
@@ -233,7 +235,9 @@ Public Module VectorExtensions
     ''' <typeparam name="T"></typeparam>
     ''' <param name="vector"></param>
     ''' <param name="values"></param>
-    Public Sub Add(Of T)(ByRef vector As T(), values As IEnumerable(Of T))
+    ''' 
+    <Extension>
+    Public Sub Append(Of T)(ByRef vector As T(), values As IEnumerable(Of T))
         Dim data = values.SafeQuery.ToArray
         Dim appendBuffer As T() = New T(vector.Length + data.Length - 1) {}
 
@@ -258,7 +262,9 @@ Public Module VectorExtensions
     ''' <remarks>
     ''' (会自动跳过空集合，这个方法是安全的)
     ''' </remarks>
-    Public Sub Add(Of T)(ByRef vector As T(), ParamArray value As T())
+    ''' 
+    <Extension>
+    Public Sub Append(Of T)(ByRef vector As T(), ParamArray value As T())
         If value.IsNullOrEmpty Then
             Return
         End If
@@ -273,23 +279,6 @@ Public Module VectorExtensions
     End Sub
 
     ''' <summary>
-    ''' Add given elements into an array object and then returns the target array object <paramref name="buffer"/>.
-    ''' </summary>
-    ''' <typeparam name="T"></typeparam>
-    ''' <param name="buffer"></param>
-    ''' <param name="value"></param>
-    ''' <returns></returns>
-    <Extension>
-    Public Function Append(Of T)(buffer As T(), value As IEnumerable(Of T)) As T()
-        If buffer Is Nothing Then
-            Return value.ToArray
-        End If
-
-        Call Add(buffer, value.ToArray)
-        Return buffer
-    End Function
-
-    ''' <summary>
     ''' Add given elements into an array object.
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
@@ -298,8 +287,8 @@ Public Module VectorExtensions
     ''' 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
-    Public Sub Add(Of T)(ByRef array As T(), value As List(Of T))
-        Call Add(Of T)(array, value.ToArray)
+    Public Sub Append(Of T)(ByRef array As T(), value As List(Of T))
+        Call Append(Of T)(array, value.ToArray)
     End Sub
 
     ''' <summary>
