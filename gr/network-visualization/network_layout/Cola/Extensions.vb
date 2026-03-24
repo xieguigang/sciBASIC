@@ -217,15 +217,15 @@ Namespace Cola
             rightMostSize = spans(n - 1).size / 2
             Dim vLower As Variable = Nothing, vUpper As Variable = Nothing
 
-            If (lowerBound) Then
+            If lowerBound Then
                 vLower = New Variable(lowerBound, leftMost.weight * 1000)
-                vs.Add(vLower)
+                vs.Append(vLower)
                 cs.Add(New Constraint(vLower, leftMost, leftMostSize))
             End If
 
-            If (upperBound) Then
+            If upperBound Then
                 vUpper = New Variable(upperBound, rightMost.weight * 1000)
-                vs.Add(vUpper)
+                vs.Append(vUpper)
                 cs.Add(New Constraint(rightMost, vUpper, rightMostSize))
             End If
 

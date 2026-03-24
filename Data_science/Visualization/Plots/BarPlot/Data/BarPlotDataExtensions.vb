@@ -146,7 +146,7 @@ Namespace BarPlot.Data
                 .ToArray
 
             For i As Integer = 0 To groups.Length - 1
-                Call groups(i).data.Add(merges(i))
+                Call groups(i).data.Append(merges(i))
             Next
 
             Dim colors = data _

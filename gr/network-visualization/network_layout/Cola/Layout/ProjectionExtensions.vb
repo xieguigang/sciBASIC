@@ -142,8 +142,8 @@ Namespace Cola
                               v.cIn = {}
                           End Sub)
                 cs.DoEach(Sub(c)
-                              c.left.cOut.Add(c)
-                              c.right.cIn.Add(c)
+                              c.left.cOut.Append(c)
+                              c.right.cIn.Append(c)
                           End Sub)
                 root.groups.DoEach(Sub(g)
                                        Dim gapAdjustment = (g.padding - f.getSize(g.bounds)) / 2

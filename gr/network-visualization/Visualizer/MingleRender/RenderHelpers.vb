@@ -150,7 +150,7 @@ Module RenderHelpers
             posItem = createPosItem(node, {coords(2), coords(3)}, 0, 1)
             a.Add(posItem)
 
-            collect.Add(a.ToArray)
+            collect.Append(a.ToArray)
         End If
     End Sub
 

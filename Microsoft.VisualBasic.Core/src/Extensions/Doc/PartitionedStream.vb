@@ -140,7 +140,7 @@ Namespace Text
             End If
 
             Call _readerStream.Read(chunkBuffer, _Current, chunkBuffer.Length)
-            Call previous.Add(chunkBuffer)
+            Call previous.Append(chunkBuffer)
 
             Dim Text As String = _encoding.GetString(previous)
             Dim rtvl = Me._partitions(Text, Text)

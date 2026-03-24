@@ -214,7 +214,7 @@ Public Module VectorExtensions
     ''' <param name="vector"></param>
     ''' <param name="value"></param>
     ''' <remarks>
-    ''' (注意：不推荐使用这个函数来频繁的向数组中添加元素，这个函数会频繁的分配内存，效率非常低)
+    ''' (注意：不推荐使用这个函数来频繁的向数组中添加元素，这个函数会频繁的分配内存，效率非常低，<strong>这个函数会修改原始的<paramref name="vector"/>输入</strong>)
     ''' </remarks>
     ''' 
     <Extension>
@@ -235,7 +235,9 @@ Public Module VectorExtensions
     ''' <typeparam name="T"></typeparam>
     ''' <param name="vector"></param>
     ''' <param name="values"></param>
-    ''' 
+    ''' <remarks>
+    ''' <strong>这个函数会修改原始的<paramref name="vector"/>输入</strong>
+    ''' </remarks>
     <Extension>
     Public Sub Append(Of T)(ByRef vector As T(), values As IEnumerable(Of T))
         Dim data = values.SafeQuery.ToArray
@@ -260,7 +262,7 @@ Public Module VectorExtensions
     ''' <param name="vector"></param>
     ''' <param name="value"></param>
     ''' <remarks>
-    ''' (会自动跳过空集合，这个方法是安全的)
+    ''' (会自动跳过空集合，这个方法是安全的，<strong>这个函数会修改原始的<paramref name="vector"/>输入</strong>)
     ''' </remarks>
     ''' 
     <Extension>
@@ -284,7 +286,9 @@ Public Module VectorExtensions
     ''' <typeparam name="T"></typeparam>
     ''' <param name="array"></param>
     ''' <param name="value"></param>
-    ''' 
+    ''' <remarks>
+    ''' <strong>这个函数会修改原始的<paramref name="array"/>输入</strong>
+    ''' </remarks>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
     Public Sub Append(Of T)(ByRef array As T(), value As List(Of T))

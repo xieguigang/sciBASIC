@@ -87,7 +87,7 @@ Namespace Scripting
             End Get
             Set(value As T)
                 If Not index.ContainsKey(name) Then
-                    Call buffer.Add(value)
+                    Call buffer.Append(value)
                     Call index.Add(name, buffer.Length - 1)
                 Else
                     buffer(index(name)) = value

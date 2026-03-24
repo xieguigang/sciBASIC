@@ -153,8 +153,8 @@ Namespace Analysis.Dijkstra
                 Dim v = getTargetIndex(e)
                 Dim d = getLength(e)
 
-                Me.neighbours(u).neighbours.Add(New Neighbour(v, d))
-                Me.neighbours(v).neighbours.Add(New Neighbour(u, d))
+                Me.neighbours(u).neighbours.Append(New Neighbour(v, d))
+                Me.neighbours(v).neighbours.Append(New Neighbour(u, d))
             End While
         End Sub
 

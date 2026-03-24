@@ -780,7 +780,7 @@ Namespace Cola
                 Me._groups.ForEach(Sub(g, i)
                                        If g.leaves IsNot Nothing Then
                                            g.leaves.DoEach(Sub(v)
-                                                               edges.Add(New PowerEdge(Of Integer) With {
+                                                               edges.Append(New PowerEdge(Of Integer) With {
                                            .source = g.index,
                                            .target = CType(v, Node).index
                                        })
@@ -788,7 +788,7 @@ Namespace Cola
                                        End If
                                        If g.groups IsNot Nothing Then
                                            g.groups.DoEach(Sub(gg)
-                                                               edges.Add(New PowerEdge(Of Integer) With {
+                                                               edges.Append(New PowerEdge(Of Integer) With {
                                            .source = g.index,
                                            .target = CType(gg, Node).index
                                        })

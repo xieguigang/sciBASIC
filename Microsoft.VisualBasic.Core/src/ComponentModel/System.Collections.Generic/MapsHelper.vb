@@ -269,7 +269,7 @@ Namespace ComponentModel
             If t.Length = 0 Then
                 Return New IDMap
             ElseIf t.Length = 1 Then
-                t.Add("")
+                t.Append("")
             End If
 
             Return New IDMap With {

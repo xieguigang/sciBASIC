@@ -87,7 +87,7 @@ Namespace Language.Vectorization
             If x.buffer Is Nothing Then
                 x.buffer = {obj}
             Else
-                x.Array.Add(obj)
+                x.Array.Append(obj)
             End If
 
             Return x

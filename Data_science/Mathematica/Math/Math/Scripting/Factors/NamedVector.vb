@@ -81,7 +81,7 @@ Namespace Scripting
             End If
 
             Call index.Add(factor, buffer.Length)
-            Call buffer.Add(value)
+            Call buffer.Append(value)
         End Sub
 
         Public Overloads Function GetJson(format As String) As String

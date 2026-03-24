@@ -509,7 +509,7 @@ Public Class RegressionPlot : Inherits Plot
         Dim legendLabelFont As Font = css.GetFont(CSSFont.TryParse(linearDetailsFontCSS))
 
         If hasPredictedSamples Then
-            legends.Add(New LegendObject With {.color = "green", .fontstyle = legendLabelFontCSS, .style = LegendStyles.Circle, .title = SamplesLabel})
+            legends.Append(New LegendObject With {.color = "green", .fontstyle = legendLabelFontCSS, .style = LegendStyles.Circle, .title = SamplesLabel})
         End If
 
         Dim border As Stroke = Stroke.ScatterLineStroke

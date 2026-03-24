@@ -89,8 +89,8 @@ Namespace Cola
                           End Sub)
             Me.cs = cs.ToList
             Me.cs.ForEach(Sub(C, i)
-                              C.left.cOut.Add(C)
-                              C.right.cIn.Add(C)
+                              C.left.cOut.Append(C)
+                              C.right.cIn.Append(C)
                           End Sub)
 
             inactive = Me.cs _

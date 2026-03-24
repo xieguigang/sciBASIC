@@ -98,7 +98,7 @@ Namespace XLSX.Model
                 }
             }
 
-            worksheet.conditionalFormattings.Add(format)
+            worksheet.conditionalFormattings.Append(format)
 
             With "worksheet.update"
                 If xlsx.modify(.ByRef) = -1 Then
