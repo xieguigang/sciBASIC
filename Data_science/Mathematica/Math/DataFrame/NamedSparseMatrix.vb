@@ -1,7 +1,16 @@
 ﻿Public Class NamedSparseMatrix
 
+    ''' <summary>
+    ''' 使用 Dictionary 存储稀疏数据
+    ''' </summary>
     ReadOnly data As New Dictionary(Of String, Dictionary(Of String, Double))
+    ''' <summary>
+    ''' 维护 ID 到索引的映射列表
+    ''' </summary>
     ReadOnly names As New List(Of String)
+    ''' <summary>
+    ''' 快速查找 ID 是否存在
+    ''' </summary>
     ReadOnly hash As New HashSet(Of String)
 
     Default Public Property Value(i As String, j As String) As Double
@@ -29,38 +38,47 @@
     End Property
 
     ''' <summary>
+    ''' 检查指定的节点ID是否存在于矩阵维度中
+    ''' </summary>
+    Public Function ContainsNode(nodeId As String) As Boolean
+        Return hash.Contains(nodeId)
+    End Function
+
+    ''' <summary>
     ''' Check of the edge connection is existsed inside this matrix?
     ''' </summary>
     ''' <param name="i"></param>
     ''' <param name="j"></param>
-    ''' <returns></returns>
+    ''' <returns>检查指定的边 (i -> j) 是否显式定义（非零值或在字典中存在键）</returns>
     Public Function CheckElement(i As String, j As String) As Boolean
         Return hash.Contains(i) AndAlso hash.Contains(j)
     End Function
 
     Public Function GetDirectedValue(i As String, j As String) As Double
-        If Not data.ContainsKey(i) Then
-            Return 0
-        Else
-            If data(i).ContainsKey(j) Then
-                Return data(i)(j)
-            Else
-                Return 0
-            End If
+        If data.ContainsKey(i) AndAlso data(i).ContainsKey(j) Then
+            Return data(i)(j)
         End If
+        Return 0.0
     End Function
 
     Public Sub SetValue(i As String, j As String, value As Double)
-        If Not data.ContainsKey(i) Then
-            data.Add(i, New Dictionary(Of String, Double))
+        ' 修复逻辑：基于 hash 判断是否为新节点，而不是基于 data
+        If Not hash.Contains(i) Then
             names.Add(i)
             hash.Add(i)
         End If
-        If Not data(i).ContainsKey(j) Then
+
+        If Not hash.Contains(j) Then
             names.Add(j)
             hash.Add(j)
         End If
 
+        ' 初始化行字典
+        If Not data.ContainsKey(i) Then
+            data.Add(i, New Dictionary(Of String, Double))
+        End If
+
+        ' 赋值
         data(i)(j) = value
     End Sub
 
