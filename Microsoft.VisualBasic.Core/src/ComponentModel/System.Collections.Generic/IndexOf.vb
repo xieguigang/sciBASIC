@@ -558,6 +558,10 @@ Namespace ComponentModel.Collection
             Dim i As Integer = Scan0
             Dim index As New Dictionary(Of T, Integer)
 
+            If data Is Nothing Then
+                Return index
+            End If
+
             For Each item As T In data
                 If Not index.ContainsKey(item) Then
                     index.Add(item, i)
