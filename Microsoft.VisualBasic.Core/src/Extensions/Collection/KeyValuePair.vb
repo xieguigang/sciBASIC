@@ -631,16 +631,12 @@ Namespace ComponentModel.Collection
         ''' <returns></returns>
         Public Function EnumParser(Of T As Structure)(Optional lcaseKey As Boolean = True, Optional usingDescription As Boolean = False) As Dictionary(Of String, T)
             Dim values As [Enum]() = Enums(Of T)().Select(Function(e) DirectCast(CType(e, Object), [Enum])).ToArray
-            Dim [case] = If(lcaseKey, Function(key$) LCase(key), Function(key$) key)
+            Dim [case] As Func(Of String, String) = If(lcaseKey, Function(key$) If(key, "").ToLower, Function(key$) key)
 
             If usingDescription Then
-                Return values.ToDictionary(
-                    Function(e) [case](key:=e.Description),
-                    Function(e) DirectCast(CType(e, Object), T))
+                Return values.ToDictionary(Function(e) [case](e.Description), Function(e) DirectCast(CType(e, Object), T))
             Else
-                Return values.ToDictionary(
-                    Function(e) [case](key:=e.ToString),
-                    Function(e) DirectCast(CType(e, Object), T))
+                Return values.ToDictionary(Function(e) [case](e.ToString), Function(e) DirectCast(CType(e, Object), T))
             End If
         End Function
 

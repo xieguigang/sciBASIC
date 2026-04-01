@@ -301,7 +301,7 @@ Namespace CommandLine
         Private Sub ProcessExitHandle(callback As Action)
             Dim exitCode As Integer = Run()
 
-            RaiseEvent ProcessExit(exitCode, Now.ToString)
+            RaiseEvent ProcessExit(exitCode, DateTime.UtcNow.ToString)
 
             If Not callback Is Nothing Then
                 Call callback()

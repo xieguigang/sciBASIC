@@ -66,7 +66,7 @@ Namespace ApplicationServices
 
     Public Class PerformanceCounter
 
-        Dim t0 As Date = Now
+        Dim t0 As Date = DateTime.UtcNow
         Dim spans As New List(Of TimeCounter)
         Dim checkpoint As Date
 
@@ -96,8 +96,8 @@ Namespace ApplicationServices
         ''' <returns></returns>
         <DebuggerStepThrough>
         Public Function [Set]() As PerformanceCounter
-            t0 = Now
-            checkpoint = Now
+            t0 = DateTime.UtcNow
+            checkpoint = DateTime.UtcNow
             spans.Clear()
             Return Me
         End Function
@@ -110,11 +110,11 @@ Namespace ApplicationServices
             Dim _checkpoint As New TimeCounter With {
                 .task = title,
                 .start = checkpoint,
-                .span0 = Now - t0,
-                .span1 = Now - checkpoint
+                .span0 = DateTime.UtcNow - t0,
+                .span1 = DateTime.UtcNow - checkpoint
             }
             spans.Add(_checkpoint)
-            checkpoint = Now
+            checkpoint = DateTime.UtcNow
 
             Return _checkpoint
         End Function
@@ -124,7 +124,7 @@ Namespace ApplicationServices
         ''' </summary>
         ''' <returns></returns>
         Public Function Mark() As PerformanceCounter
-            checkpoint = Now
+            checkpoint = DateTime.UtcNow
             Return Me
         End Function
 

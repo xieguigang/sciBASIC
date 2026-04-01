@@ -73,7 +73,7 @@ Namespace SecurityString
 
         <ExportAPI("Uid")>
         Public Function NewUid() As String
-            Dim input As String = Guid.NewGuid.ToString & Now.ToString
+            Dim input As String = Guid.NewGuid.ToString & DateTime.UtcNow.ToString
             Return GetMd5Hash(input)
         End Function
 

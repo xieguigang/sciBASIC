@@ -156,7 +156,7 @@ Namespace Net.Http
         Public Shared Function ScanAllFiles(wwwroot$, host$, Optional fileTypes$() = Nothing, Optional changefreq As changefreqs = changefreqs.monthly) As sitemap
             Dim url As New List(Of url)
             Dim freq$ = changefreq.ToString
-            Dim lastmod$ = $"{Now.Year}-{FillDateZero(Now.Month)}-{FillDateZero(Now.Day)}"
+            Dim lastmod$ = $"{DateTime.UtcNow.Year}-{FillDateZero(DateTime.UtcNow.Month)}-{FillDateZero(DateTime.UtcNow.Day)}"
 
             wwwroot = wwwroot.GetDirectoryFullPath
             host = host.TrimDIR

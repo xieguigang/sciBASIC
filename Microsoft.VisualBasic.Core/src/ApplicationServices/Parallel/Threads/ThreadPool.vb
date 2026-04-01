@@ -363,7 +363,7 @@ Namespace Parallel.Threads
         Public Overrides Function ToString() As String
             Dim sb As New StringBuilder
 
-            Call sb.AppendLine($"   ------========== {Now.ToString} ==========------")
+            Call sb.AppendLine($"   ------========== {DateTime.UtcNow.ToString} ==========------")
             Call sb.AppendLine($"{NameOf(Me.FullCapacity)}: {FullCapacity}")
             Call sb.AppendLine($"{NameOf(Me.NumOfThreads)}: {NumOfThreads}")
             Call sb.AppendLine($"{NameOf(Me.WorkingThreads)}: {WorkingThreads}")

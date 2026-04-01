@@ -88,7 +88,7 @@ Imports MemoryBmp = Microsoft.VisualBasic.Imaging.BitmapImage.FileStream.Bitmap
 
 Namespace Imaging
 
-#If NET8_0_OR_GREATER Then
+#If NET8_0_OR_GREATER Or NETSTANDARD2_0_OR_GREATER Then
 
     ''' <summary>
     ''' the abstract image data model, example as gdi+ raster image bitmap, svg image, pdf image, etc

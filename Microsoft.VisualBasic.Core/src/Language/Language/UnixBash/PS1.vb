@@ -1,60 +1,61 @@
 ﻿#Region "Microsoft.VisualBasic::fe79dc9907f00af89005ab4d3bed2e97, Microsoft.VisualBasic.Core\src\Language\Language\UnixBash\PS1.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 195
-    '    Code Lines: 99 (50.77%)
-    ' Comment Lines: 69 (35.38%)
-    '    - Xml Docs: 97.10%
-    ' 
-    '   Blank Lines: 27 (13.85%)
-    '     File Size: 6.26 KB
+' Summaries:
 
 
-    '     Class PS1
-    ' 
-    '         Constructor: (+2 Overloads) Sub New
-    '         Function: A, d, Fedora12, n, r
-    '                   T, tl, ToString, u, v
-    '                   W, wl
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 195
+'    Code Lines: 99 (50.77%)
+' Comment Lines: 69 (35.38%)
+'    - Xml Docs: 97.10%
+' 
+'   Blank Lines: 27 (13.85%)
+'     File Size: 6.26 KB
+
+
+'     Class PS1
+' 
+'         Constructor: (+2 Overloads) Sub New
+'         Function: A, d, Fedora12, n, r
+'                   T, tl, ToString, u, v
+'                   W, wl
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
+Imports System.IO
 Imports System.Text
 Imports System.Text.RegularExpressions
 Imports Microsoft.VisualBasic.ApplicationServices.Development
@@ -130,7 +131,7 @@ Namespace Language.UnixBash
 
         ReadOnly __pss As Dictionary(Of String, Func(Of String)) =
             New Dictionary(Of String, Func(Of String)) From {
- _
+                                                             _
                 {"\d", AddressOf d},
                 {"\H", Function() H},
                 {"\h", Function() hl},
@@ -169,7 +170,7 @@ Namespace Language.UnixBash
         ''' </summary>
         ''' <returns></returns>
         Public Shared Function r() As String
-            Dim wk As String = FileIO.FileSystem.CurrentDirectory
+            Dim wk As String = Directory.GetCurrentDirectory()
             If String.Equals(wk, "/") OrElse String.Equals(wk, "C:\", StringComparison.OrdinalIgnoreCase) Then
                 Return "#"
             Else
@@ -182,7 +183,7 @@ Namespace Language.UnixBash
         ''' </summary>
         ''' <returns></returns>
         Public Shared Function T() As String
-            Dim dt As Date = Now
+            Dim dt As Date = DateTime.UtcNow
             Return $"{dt.Hour}:{dt.Minute}:{dt.Second}"
         End Function
 
@@ -191,7 +192,7 @@ Namespace Language.UnixBash
         ''' </summary>
         ''' <returns></returns>
         Public Shared Function tl() As String
-            Dim dt As Date = Now
+            Dim dt As Date = DateTime.UtcNow
             Return $"{dt.Hour}:{dt.Minute}:{dt.Second}"
         End Function
 
@@ -200,7 +201,7 @@ Namespace Language.UnixBash
         ''' </summary>
         ''' <returns></returns>
         Public Shared Function A() As String
-            Dim dt As Date = Now
+            Dim dt As Date = DateTime.UtcNow
             Return $"{dt.Hour}:{dt.Minute}"
         End Function
 
@@ -227,7 +228,7 @@ Namespace Language.UnixBash
         ''' </summary>
         ''' <returns></returns>
         Public Shared Function wl() As String
-            Return FileIO.FileSystem.CurrentDirectory
+            Return Directory.GetCurrentDirectory()
         End Function
 
         ''' <summary>
@@ -235,7 +236,7 @@ Namespace Language.UnixBash
         ''' </summary>
         ''' <returns></returns>
         Public Shared Function W() As String
-            Return FileIO.FileSystem.CurrentDirectory.BaseName
+            Return Directory.GetCurrentDirectory().BaseName
         End Function
 
         ''' <summary>
@@ -243,10 +244,11 @@ Namespace Language.UnixBash
         ''' </summary>
         ''' <returns></returns>
         Public Shared Function d() As String
-            Dim dt As Date = Now
-            Dim w As String = WeekdayName(Weekday(dt), FirstDayOfWeekValue:=FirstDayOfWeek.Sunday)
-            Dim m As String = MonthName(dt.Month)
-            Return $"{w} {m} {dt.Day}"
+            ' "ddd" 代表缩写的星期 (Mon, Tue...)
+            ' "MMM" 代表缩写的月份 (Jan, Aug...)
+            ' "d"  代表不补零的日期数字 (1, 2... 31)
+            ' 使用 CultureInfo.InvariantCulture 确保无论服务器在哪个国家，输出的永远是英文格式
+            Return DateTime.UtcNow.ToString("ddd MMM d", Globalization.CultureInfo.InvariantCulture)
         End Function
     End Class
 End Namespace

@@ -132,7 +132,7 @@ Namespace ComponentModel.Collection.Deque
 
         Public Property Count As Integer = 0
 
-        Dim data = New S(1)() {}
+        Dim data As S()() = New S(1)() {}
 
         Public Sub New()
             data(0) = New S(sizeOfBlock - 1) {}

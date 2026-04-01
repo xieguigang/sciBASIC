@@ -110,7 +110,7 @@ Imports System.Drawing
 
 Namespace Imaging
 
-#If NET8_0_OR_GREATER Then
+#If NET8_0_OR_GREATER Or NETSTANDARD2_0_OR_GREATER Then
 
     Public MustInherit Class Brush : Implements IDisposable
 

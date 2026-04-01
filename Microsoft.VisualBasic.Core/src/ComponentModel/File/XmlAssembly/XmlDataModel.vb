@@ -144,7 +144,7 @@ Namespace ComponentModel
                 $"{indentBlank} version:   " & devtools.AssemblyVersion & vbCrLf &
                 $"{indentBlank} built:     " & devtools.BuiltTime.ToString & vbCrLf &
                 $"{indentBlank} md5:       " & md5 & vbCrLf &
-                $"{indentBlank} timestamp: " & Now.ToString & vbCrLf &
+                $"{indentBlank} timestamp: " & DateTime.UtcNow.ToString & vbCrLf &
                 "  "
 
             Return traceInfo

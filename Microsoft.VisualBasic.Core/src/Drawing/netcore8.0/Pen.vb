@@ -118,7 +118,7 @@ Imports System.Drawing
 
 Namespace Imaging
 
-#If NET8_0_OR_GREATER Then
+#If NET8_0_OR_GREATER Or NETSTANDARD2_0_OR_GREATER Then
 
     ''' <summary>
     ''' The stroke pen wrapper for .net 8.0

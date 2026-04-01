@@ -108,7 +108,7 @@ Namespace Net.WebClient
 
             If Not task.isDownloading Then
                 Call Console.WriteLine()
-                Call Console.WriteLine($"{Now.ToString} ({StringFormats.Lanudry(task.downloadSpeed)}/s) - '{task.saveFile}' saved [{task.StreamSize}]")
+                Call Console.WriteLine($"{DateTime.UtcNow.ToString} ({StringFormats.Lanudry(task.downloadSpeed)}/s) - '{task.saveFile}' saved [{task.StreamSize}]")
                 Call Console.WriteLine()
 
                 Call task.Dispose()
@@ -149,7 +149,7 @@ Namespace Net.WebClient
 
             Call Console.WriteLine()
 
-            Call ClearLine() : Console.WriteLine($"--{Now.ToString}--  {task.url}")
+            Call ClearLine() : Console.WriteLine($"--{DateTime.UtcNow.ToString}--  {task.url}")
             Call ClearLine() : Console.WriteLine($"     => '{task.saveFile}'")
             Call ClearLine() : Console.WriteLine()
             Call ClearLine() : Console.WriteLine($"Resolving {resp.ResponseUri.Host} ({domain})... {remote}")

@@ -1372,8 +1372,8 @@ Namespace Text
 
         Public Iterator Function SplitZhChars(str As String) As IEnumerable(Of String)
             Dim tmp As New List(Of Char)
-            Dim zero As Char = Chr(0)
-            Dim max As Char = Chr(255)
+            Dim zero As Char = ChrW(0)
+            Dim max As Char = ChrW(255)
 
             If str Is Nothing OrElse str = "" Then
                 Return

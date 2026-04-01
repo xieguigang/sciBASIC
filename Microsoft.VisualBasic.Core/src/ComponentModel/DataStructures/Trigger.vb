@@ -142,11 +142,11 @@ Namespace ComponentModel.Triggers
         End Sub
 
         Sub New(hh As Integer, mm As Integer, task As Action, Optional interval As Integer = 100)
-            MyBase.New(New Date(Now.Year, Now.Month, Now.Day, hh, mm, 0), task, interval)
+            MyBase.New(New Date(DateTime.UtcNow.Year, DateTime.UtcNow.Month, DateTime.UtcNow.Day, hh, mm, 0), task, interval)
         End Sub
 
         Protected Overrides Function __test() As Boolean
-            Dim d As Date = Now
+            Dim d As Date = DateTime.UtcNow
 
             If d.Hour <> Time.Hour OrElse d.Minute <> Time.Minute Then
                 Return False
@@ -203,7 +203,7 @@ Namespace ComponentModel.Triggers
         ''' </summary>
         ''' <returns></returns>
         Protected Overrides Function __test() As Boolean
-            Dim d As Date = Now
+            Dim d As Date = DateTime.UtcNow
 
             If d.Year <> Time.Year Then
                 Return False

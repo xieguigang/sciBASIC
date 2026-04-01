@@ -173,7 +173,7 @@ Namespace Net.WebClient
                     End Try
                 Next
 
-                Console.WriteLine($"[{Now.ToString}] 下载完成: {Path.GetFullPath(fileName)}")
+                Console.WriteLine($"[{DateTime.UtcNow.ToString}] 下载完成: {Path.GetFullPath(fileName)}")
 
                 Return True
             Else
@@ -196,7 +196,7 @@ Namespace Net.WebClient
         Friend cts As New CancellationTokenSource()
 
         Private Sub ShowProgress()
-            Dim t0 As Double = Now.UnixTimeStamp
+            Dim t0 As Double = DateTime.UtcNow.UnixTimeStamp
             Dim dt As Double
             Dim speed As Double
 
@@ -216,19 +216,19 @@ Namespace Net.WebClient
                 Next
 
                 Dim previousBytes As Long = totalBytesDownloaded
-                Dim t1 As Date = Now
+                Dim t1 As Date = DateTime.UtcNow
 
                 Call bar.SetLocation(0, Console.CursorTop)
 
                 While totalBytesDownloaded < totalFileSize
                     Thread.Sleep(300)
                     bar.SetValue(totalBytesDownloaded)
-                    dt = (Now.UnixTimeStamp - t0) + 0.00001
+                    dt = (DateTime.UtcNow.UnixTimeStamp - t0) + 0.00001
                     speed = totalBytesDownloaded / dt
 
                     If previousBytes = totalBytesDownloaded Then
                         ' no download data
-                        Dim zerospan As TimeSpan = Now - t1
+                        Dim zerospan As TimeSpan = DateTime.UtcNow - t1
 
                         If zerospan.TotalSeconds > 30 Then
                             ' TODO: 超过30秒没有下载进度，则在这里中断所有任务，进行重试
@@ -237,15 +237,15 @@ Namespace Net.WebClient
                             Thread.Sleep(1000)
                             cts.Dispose()
                             cts = New CancellationTokenSource()
-                            t1 = Now
+                            t1 = DateTime.UtcNow
                         End If
                     Else
                         previousBytes = totalBytesDownloaded
-                        t1 = Now
+                        t1 = DateTime.UtcNow
                     End If
                 End While
 
-                Call Console.WriteLine($"[{Now.ToString} 下载成功！]")
+                Call Console.WriteLine($"[{DateTime.UtcNow.ToString} 下载成功！]")
             End Using
         End Sub
     End Class

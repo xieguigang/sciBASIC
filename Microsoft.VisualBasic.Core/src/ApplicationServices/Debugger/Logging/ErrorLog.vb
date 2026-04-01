@@ -109,7 +109,7 @@ Namespace ApplicationServices.Debugging.Logging
                 .StringSplit("\s[-]{3}>\s")
 
             Return New StringBuilder() _
-                .AppendLine("TIME:  " & Now.ToString) _
+                .AppendLine("TIME:  " & DateTime.UtcNow.ToString) _
                 .AppendLine("TRACE: " & trace) _
                 .AppendLine(EnvironmentInfo) _
                 .AppendLine() _

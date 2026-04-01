@@ -105,7 +105,7 @@ Namespace CommandLine
 
         Private Sub wait(proc As Process)
             Call proc.WaitForExit()
-            RaiseEvent ProcessExit(proc.ExitCode, Now.ToString)
+            RaiseEvent ProcessExit(proc.ExitCode, DateTime.UtcNow.ToString)
         End Sub
     End Structure
 End Namespace

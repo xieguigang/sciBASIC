@@ -292,7 +292,7 @@ Namespace ApplicationServices.Terminal
             If String.IsNullOrEmpty(input) Then
                 Return False
             Else
-                Return Asc(input.First) = Asc(compare)
+                Return AscW(input.First) = AscW(compare)
             End If
         End Function
 

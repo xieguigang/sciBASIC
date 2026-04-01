@@ -93,7 +93,7 @@ Namespace ApplicationServices.Debugging.Logging
                 .message = message,
                 .[object] = header,
                 .level = level,
-                .time = Now
+                .time = DateTime.UtcNow
             }.ToString
         End Function
     End Structure

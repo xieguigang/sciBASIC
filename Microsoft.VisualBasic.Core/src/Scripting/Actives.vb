@@ -134,7 +134,7 @@ Namespace Scripting
             End If
             If type.Equals(GetType(Date)) OrElse
                 type.Equals(GetType(DateTime)) Then
-                Return Now
+                Return DateTime.UtcNow
             End If
             If __examples.ContainsKey(type) Then
                 Return __examples(type)

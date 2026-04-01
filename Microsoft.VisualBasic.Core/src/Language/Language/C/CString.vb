@@ -117,7 +117,7 @@ Namespace Language.C
                 Dim a = s.Substring(i, 5)
                 Dim n = CByte(a.Replace("\a", ""))
 
-                s = s.Replace(a, Strings.Chr(n))
+                s = s.Replace(a, Strings.ChrW(n))
             Loop
 
             Return s

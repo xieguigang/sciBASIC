@@ -724,7 +724,7 @@ Public Module WebServiceUtils
         End If
 
         If verbose Then
-            Call VBDebugger.EchoLine($"[POST@{Now.ToString}] {url}....")
+            Call VBDebugger.EchoLine($"[POST@{DateTime.UtcNow.ToString}] {url}....")
         End If
 
         ' post data Is sent as a stream

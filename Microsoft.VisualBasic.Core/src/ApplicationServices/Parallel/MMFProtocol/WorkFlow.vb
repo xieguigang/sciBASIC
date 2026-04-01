@@ -82,7 +82,7 @@ Namespace Parallel.MMFProtocol
                                                writer As Func(Of TIn, Byte()),
                                                reader As Func(Of Byte(), TOut)) As TOut
             Dim data As Byte() = writer([in])
-            Dim uid As String = (Now.ToString & [in].ToString & CLI).GetMd5Hash
+            Dim uid As String = (DateTime.UtcNow.ToString & [in].ToString & CLI).GetMd5Hash
             Dim socket As New MSWriter(uid, data.Length + 1024)
             CLI = CLI & $" {map} {uid}"
             socket.WriteStream(data)

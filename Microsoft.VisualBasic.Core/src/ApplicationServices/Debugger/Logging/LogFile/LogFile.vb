@@ -103,7 +103,7 @@ Namespace ApplicationServices.Debugging.Logging
         ''' <remarks></remarks>
         Public Shared ReadOnly Property NowTimeNormalizedString As String
             Get
-                With Now
+                With DateTime.UtcNow
                     Return New Integer() { .Month, .Day, .Hour, .Minute, .Second} _
                         .Select(Function(i32)
                                     Return i32.ToString.PadLeft(2, "0"c)
@@ -139,11 +139,11 @@ Namespace ApplicationServices.Debugging.Logging
             }
 
             If appendHeader Then
-                Me.buffer.WriteLine(value:=$"//{vbTab}[{Now.ToString}]{vbTab}{New String("=", 25)}  START WRITE LOGGING SECTION  {New String("=", 25)}")
+                Me.buffer.WriteLine(value:=$"//{vbTab}[{DateTime.UtcNow.ToString}]{vbTab}{New String("=", 25)}  START WRITE LOGGING SECTION  {New String("=", 25)}")
                 Me.buffer.WriteLine()
             End If
 
-            Me.filePath = FileIO.FileSystem.GetFileInfo(path).FullName
+            Me.filePath = path.GetFullPath
             Me.split = split
         End Sub
 
@@ -226,7 +226,7 @@ Namespace ApplicationServices.Debugging.Logging
             Dim log As New LogEntry With {
                 .message = msg,
                 .[object] = obj,
-                .time = Now,
+                .time = DateTime.UtcNow,
                 .level = type
             }
 

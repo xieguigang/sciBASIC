@@ -104,7 +104,7 @@ Namespace Data.Trinity.NLP
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function ToLower() As String
-            Return Strings.LCase(str)
+            Return If(str, "").ToLower
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>

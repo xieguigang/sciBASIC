@@ -107,7 +107,7 @@ Namespace ApplicationServices.Terminal
 
         Sub New()
             LastHistory = New History With {
-                .Date = Now.ToString,
+                .Date = DateTime.UtcNow.ToString,
                 .Histories = New List(Of String)
             }
         End Sub

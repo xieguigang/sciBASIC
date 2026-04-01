@@ -204,7 +204,7 @@ Vladimir I",
             If hypotheses Is Nothing Then hypotheses = ""
             If reference Is Nothing Then reference = New Integer() {}
 
-            Dim distTable#(,) = CreateTable(Of Integer)(reference, hypotheses.Select(Function(ch) Asc(ch)).ToArray, DynamicProgramming.Cost(Of Integer).DefaultCost(cost), If(checkInt, checkIntDefault))
+            Dim distTable#(,) = CreateTable(Of Integer)(reference, hypotheses.Select(Function(ch) AscW(ch)).ToArray, DynamicProgramming.Cost(Of Integer).DefaultCost(cost), If(checkInt, checkIntDefault))
             Dim i As Integer = reference.Length
             Dim j As Integer = hypotheses.Length
             Dim result As New DistResult With {

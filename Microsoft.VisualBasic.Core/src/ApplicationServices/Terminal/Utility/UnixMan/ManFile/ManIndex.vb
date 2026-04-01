@@ -63,12 +63,12 @@ Namespace ApplicationServices.Terminal.Utility
 
         Public Property index As String
         Public Property category As Integer
-        Public Property [date] As Date = Now
+        Public Property [date] As Date = DateTime.UtcNow
         Public Property keyword As String
         Public Property title As String
 
         Public Overrides Function ToString() As String
-            Return $".TH {Strings.UCase(index)} {category} {[date].ToString("yyyy-MMM")} ""{keyword}"" ""{title}"""
+            Return $".TH {If(index, "").ToUpper} {category} {[date].ToString("yyyy-MMM")} ""{keyword}"" ""{title}"""
         End Function
 
     End Class

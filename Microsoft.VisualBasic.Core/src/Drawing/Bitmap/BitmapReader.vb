@@ -75,8 +75,8 @@ Namespace Imaging.BitmapImage
 
         Dim disposedValue As Boolean
 
-        Const B As Integer = Asc("B")
-        Const M As Integer = Asc("M")
+        Const B As Integer = AscW("B")
+        Const M As Integer = AscW("M")
 
         Public ReadOnly Property FileSizeInBytes As Integer
         Public ReadOnly Property Reserved As Integer

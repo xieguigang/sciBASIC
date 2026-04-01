@@ -115,7 +115,7 @@ Namespace ComponentModel.Collection
                                                             Select New __groupHelper(Of T) With {
                                                                 .cut = cut,
                                                                 .key = s_key,
-                                                                .keyASC = s_key.Select(AddressOf Asc).ToArray,
+                                                                .keyASC = s_key.Select(AddressOf AscW).ToArray,
                                                                 .x = x
                                                             }
             Dim out As GroupResult(Of T, String)
@@ -192,7 +192,7 @@ Namespace ComponentModel.Collection
                 Dim edits As DistResult = ComputeDistance(
                     keyASC, x.keyASC,
                     Function(a, b) a = b,
-                    AddressOf Strings.Chr)
+                    AddressOf Strings.ChrW)
 
                 If edits Is Nothing Then
                     Return False

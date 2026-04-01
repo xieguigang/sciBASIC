@@ -198,7 +198,7 @@ Namespace ComponentModel.DataSourceModel
 
             If lower Then
                 Return headers _
-                    .Select(AddressOf Strings.LCase) _
+                    .Select(Function(si) If(si, "").ToLower) _
                     .Indexing
             Else
                 Return New Index(Of String)(headers)

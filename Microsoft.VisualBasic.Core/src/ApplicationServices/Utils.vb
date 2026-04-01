@@ -155,11 +155,11 @@ Namespace ApplicationServices
         ''' </param>
         ''' <returns>Returns the total executation time of the target <paramref name="work"/>. ms</returns>
         Public Function Time(work As Action) As Long
-            Dim startTick As DateTime = Now
+            Dim startTick As DateTime = DateTime.UtcNow
             ' -------- start worker ---------
             Call work()
             ' --------- end worker ---------
-            Dim endTick As DateTime = Now
+            Dim endTick As DateTime = DateTime.UtcNow
             Dim t& = (endTick - startTick).TotalMilliseconds
 
             Return t

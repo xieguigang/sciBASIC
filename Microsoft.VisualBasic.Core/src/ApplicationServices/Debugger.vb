@@ -305,7 +305,7 @@ Public Module VBDebugger
                                    Optional enableRedirect As Boolean = True) As Boolean
 
         If My.Log4VB.redirectError Is Nothing OrElse Not enableRedirect Then
-            Return My.Log4VB.Print($"ERROR {Now.ToString}", $"<{memberName}>::{msg}", ConsoleColor.Red, MSG_TYPES.ERR)
+            Return My.Log4VB.Print($"ERROR {DateTime.UtcNow.ToString}", $"<{memberName}>::{msg}", ConsoleColor.Red, MSG_TYPES.ERR)
         Else
             Call My.Log4VB.redirectError(memberName, msg, MSG_TYPES.ERR)
             Return False
@@ -343,7 +343,7 @@ Public Module VBDebugger
     <Extension>
     Public Sub WriteLine(msg$, Optional color As ConsoleColor = ConsoleColor.White)
         If Not My.redirectInfo Is Nothing Then
-            My.Log4VB.redirectInfo(Now.ToString, msg, MSG_TYPES.INF)
+            My.Log4VB.redirectInfo(DateTime.UtcNow.ToString, msg, MSG_TYPES.INF)
         Else
             My.Log4VB.Println(msg, color)
         End If
@@ -481,7 +481,7 @@ Public Module VBDebugger
             Call My.InnerQueue.AddToQueue(
                 Sub()
                     If Not My.redirectInfo Is Nothing Then
-                        My.Log4VB.redirectInfo(Now.ToString, str & vbBack, MSG_TYPES.INF)
+                        My.Log4VB.redirectInfo(DateTime.UtcNow.ToString, str & vbBack, MSG_TYPES.INF)
                     Else
                         My.Log4VB.Print(str, ConsoleColor.White)
                     End If

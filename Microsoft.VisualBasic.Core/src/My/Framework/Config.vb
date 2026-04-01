@@ -81,7 +81,7 @@ Namespace My.FrameworkInternal
 
         Public Property updates As Date
             Get
-                Return Now
+                Return DateTime.UtcNow
             End Get
             Set(value As Date)
                 ' readonly do nothing

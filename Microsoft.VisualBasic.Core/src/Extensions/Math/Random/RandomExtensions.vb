@@ -155,7 +155,7 @@ Namespace Math
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <DebuggerStepThrough>
         Public Function Seed() As Integer
-            Return std.Abs(CInt(std.Log10(Rnd() * Now.ToBinary + 1) + 1) * (100 + 10000 * Rnd()))
+            Return std.Abs(CInt(std.Log10(Rnd() * DateTime.UtcNow.ToBinary + 1) + 1) * (100 + 10000 * Rnd()))
         End Function
 
         ''' <summary>

@@ -299,7 +299,7 @@ Namespace Net.Http
         Private Function isTimeExpired(cache_path As String) As Boolean
             If expired IsNot Nothing Then
                 Dim modified As Date = cache.FileModifyTime(cache_path)
-                Dim dt As TimeSpan = Now - modified
+                Dim dt As TimeSpan = DateTime.UtcNow - modified
 
                 Return dt > expired
             Else
