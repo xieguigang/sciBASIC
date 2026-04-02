@@ -60,6 +60,7 @@ Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports System.Runtime.InteropServices
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Unit
+Imports Microsoft.VisualBasic.Linq
 
 Namespace ApplicationServices.Terminal.ProgressBar.Tqdm
 
@@ -134,6 +135,16 @@ Namespace ApplicationServices.Terminal.ProgressBar.Tqdm
                 Return Wrap(collection, collection.Count, bar, width, printsPerSecond, useColor,
                             wrap_console:=wrap_console)
             End If
+        End Function
+
+        <Extension>
+        Public Function WrapIterator(Of T)(enumerable As IEnumerable(Of T), <Out> ByRef bar As ProgressBar,
+                                           Optional width As Integer = 40,
+                                           Optional printsPerSecond As Integer = 10,
+                                           Optional useColor As Boolean = False,
+                                           Optional wrap_console As Boolean = True) As IEnumerable(Of T)
+
+            Return enumerable.SafeQuery.ToList.Wrap(bar, width, printsPerSecond, useColor, wrap_console)
         End Function
 
         ''' <summary>
