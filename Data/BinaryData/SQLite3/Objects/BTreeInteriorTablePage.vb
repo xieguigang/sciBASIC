@@ -64,11 +64,13 @@ Imports Microsoft.VisualBasic.Data.IO.ManagedSqlite.Core.Internal
 Imports Microsoft.VisualBasic.Data.IO.ManagedSqlite.Core.Objects.Headers
 
 Namespace ManagedSqlite.Core.Objects
+
     ''' <summary>
     ''' SQLite B-Tree datastructure that contains other Interior / Leaf pages
     ''' </summary>
     Friend Class BTreeInteriorTablePage
         Inherits BTreePage
+
         Public Property Cells() As Cell()
 
         Public Sub New(reader As ReaderBase, page As UInteger, header As BTreeHeader, cellOffsets As UShort())

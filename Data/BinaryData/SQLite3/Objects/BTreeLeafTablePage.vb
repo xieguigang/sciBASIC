@@ -64,11 +64,11 @@ Imports Microsoft.VisualBasic.Data.IO.ManagedSqlite.Core.Internal
 Imports Microsoft.VisualBasic.Data.IO.ManagedSqlite.Core.Objects.Headers
 
 Namespace ManagedSqlite.Core.Objects
+
     ''' <summary>
     ''' SQLite B-Tree datastructure that cells with data
     ''' </summary>
-    Friend Class BTreeLeafTablePage
-        Inherits BTreePage
+    Friend Class BTreeLeafTablePage : Inherits BTreePage
 
         Public Property Cells() As Cell()
 
@@ -81,63 +81,66 @@ Namespace ManagedSqlite.Core.Objects
 
             For i As Integer = 0 To Cells.Length - 1
                 Reader.SeekPage(Page, CellOffsets(i))
-
-                Dim bytesSize As Byte
-                Dim rowIdSize As Byte
-
-                Dim bytes As Long = Reader.ReadVarInt(bytesSize)
-                Dim rowId As Long = Reader.ReadVarInt(rowIdSize)
-
-                Dim overflowPage As UInteger = 0
-
-                ' Calculate overflow size
-                Dim P As Long = bytes
-
-                ' let U be the usable size of a database page, the total page size less the reserved space at the end of each page
-                Dim U As Integer = Reader.PageSize - Reader.ReservedSpace
-
-                ' X is U-35 for table btree leaf pages or ((U-12)*64/255)-23 for index pages.
-                Dim X As Integer = U - 35
-
-                ' M is always ((U-12)*32/255)-23.
-                Dim M As Integer = (U - 12) * 32 \ 255 - 23
-
-                ' Let K be M+((P-M)%(U-4)).
-                Dim K As Integer = CInt(M + ((P - M) Mod (U - 4)))
-
-                ' If P<=X then all P bytes of payload are stored directly on the btree page without overflow.
-                ' If P>X and K<=X then the first K bytes of P are stored on the btree page and the remaining P-K bytes are stored on overflow pages.
-                ' If P>X and K>X then the first M bytes of P are stored on the btree page and the remaining P-M bytes are stored on overflow pages.
-                ' The number of bytes stored on the leaf page is never less than M.
-
-                Dim bytesInCell As UShort
-
-                If P <= X Then
-                    ' All data is in cell
-                    bytesInCell = CUShort(P)
-                ElseIf P > X AndAlso K <= X Then
-                    bytesInCell = CUShort(K)
-                ElseIf P > X AndAlso K > X Then
-                    bytesInCell = CUShort(M)
-                Else
-                    Throw New InvalidOperationException("We're not supposed to be here")
-                End If
-
-                If bytes > bytesInCell Then
-                    ' We have overflow
-                    Reader.Skip(bytesInCell)
-                    overflowPage = Reader.ReadUInt32()
-                End If
-
-                Cells(i) = New Cell() With {
-                     .CellHeaderSize = CByte(bytesSize + rowIdSize),
-                     .DataSize = bytes,
-                     .DataSizeInCell = bytesInCell,
-                     .RowId = rowId,
-                     .FirstOverflowPage = overflowPage
-                }
+                Cells(i) = ParseCellInternal()
             Next
         End Sub
+
+        Private Function ParseCellInternal() As Cell
+            Dim bytesSize As Byte
+            Dim rowIdSize As Byte
+
+            Dim bytes As Long = Reader.ReadVarInt(bytesSize)
+            Dim rowId As Long = Reader.ReadVarInt(rowIdSize)
+
+            Dim overflowPage As UInteger = 0
+
+            ' Calculate overflow size
+            Dim P As Long = bytes
+
+            ' let U be the usable size of a database page, the total page size less the reserved space at the end of each page
+            Dim U As Integer = Reader.PageSize - Reader.ReservedSpace
+
+            ' X is U-35 for table btree leaf pages or ((U-12)*64/255)-23 for index pages.
+            Dim X As Integer = U - 35
+
+            ' M is always ((U-12)*32/255)-23.
+            Dim M As Integer = (U - 12) * 32 \ 255 - 23
+
+            ' Let K be M+((P-M)%(U-4)).
+            Dim K As Integer = CInt(M + ((P - M) Mod (U - 4)))
+
+            ' If P<=X then all P bytes of payload are stored directly on the btree page without overflow.
+            ' If P>X and K<=X then the first K bytes of P are stored on the btree page and the remaining P-K bytes are stored on overflow pages.
+            ' If P>X and K>X then the first M bytes of P are stored on the btree page and the remaining P-M bytes are stored on overflow pages.
+            ' The number of bytes stored on the leaf page is never less than M.
+
+            Dim bytesInCell As UShort
+
+            If P <= X Then
+                ' All data is in cell
+                bytesInCell = CUShort(P)
+            ElseIf P > X AndAlso K <= X Then
+                bytesInCell = CUShort(K)
+            ElseIf P > X AndAlso K > X Then
+                bytesInCell = CUShort(M)
+            Else
+                Throw New InvalidOperationException("We're not supposed to be here")
+            End If
+
+            If bytes > bytesInCell Then
+                ' We have overflow
+                Reader.Skip(bytesInCell)
+                overflowPage = Reader.ReadUInt32()
+            End If
+
+            Return New Cell() With {
+                .CellHeaderSize = CByte(bytesSize + rowIdSize),
+                .DataSize = bytes,
+                .DataSizeInCell = bytesInCell,
+                .RowId = rowId,
+                .FirstOverflowPage = overflowPage
+            }
+        End Function
 
         Public Structure Cell
             ''' <summary>

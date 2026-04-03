@@ -61,8 +61,7 @@ Imports Microsoft.VisualBasic.Data.IO.ManagedSqlite.Core.Objects
 
 Namespace ManagedSqlite.Core.Helpers
 
-    Friend Class SqliteDataStream
-        Inherits ReadonlyStream
+    Friend Class SqliteDataStream : Inherits ReadonlyStream
 
         ReadOnly _reader As ReaderBase
 

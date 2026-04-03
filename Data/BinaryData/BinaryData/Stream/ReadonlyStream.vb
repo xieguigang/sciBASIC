@@ -56,25 +56,36 @@
 
 Imports System.IO
 
-Namespace ManagedSqlite.Core.Helpers
-    Friend MustInherit Class ReadonlyStream
-        Inherits Stream
-        Public Overrides Sub Flush()
-            Throw New NotImplementedException()
-        End Sub
+Public MustInherit Class ReadonlyStream : Inherits Stream
 
-        Public Overrides Sub SetLength(value As Long)
-            Throw New NotImplementedException()
-        End Sub
+    Public Overrides ReadOnly Property CanWrite() As Boolean
+        Get
+            Return False
+        End Get
+    End Property
 
-        Public Overrides Sub Write(buffer As Byte(), offset As Integer, count As Integer)
-            Throw New NotImplementedException()
-        End Sub
+    ''' <summary>
+    ''' do nothing at here 
+    ''' </summary>
+    Public Overrides Sub Flush()
+        Call "readonly stream not supports of flash stream data".warning
+    End Sub
 
-        Public Overrides ReadOnly Property CanWrite() As Boolean
-            Get
-                Return False
-            End Get
-        End Property
-    End Class
-End Namespace
+    ''' <summary>
+    ''' do nothing at here
+    ''' </summary>
+    ''' <param name="value"></param>
+    Public Overrides Sub SetLength(value As Long)
+        Call "readonly stream not supports of modify stream size, this action just be ignored".error
+    End Sub
+
+    ''' <summary>
+    ''' do nothing at here
+    ''' </summary>
+    ''' <param name="buffer"></param>
+    ''' <param name="offset"></param>
+    ''' <param name="count"></param>
+    Public Overrides Sub Write(buffer As Byte(), offset As Integer, count As Integer)
+        Call "readonly stream not supports of modify stream data, this action just be ignored".error
+    End Sub
+End Class

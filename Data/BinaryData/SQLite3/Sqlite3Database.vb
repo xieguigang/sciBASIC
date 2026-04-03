@@ -64,7 +64,7 @@ Imports Microsoft.VisualBasic.Data.IO.ManagedSqlite.Core.Internal
 Imports Microsoft.VisualBasic.Data.IO.ManagedSqlite.Core.Objects
 Imports Microsoft.VisualBasic.Data.IO.ManagedSqlite.Core.Objects.Headers
 Imports Microsoft.VisualBasic.Data.IO.ManagedSqlite.Core.Tables
-Imports stdNum = System.Math
+Imports std = System.Math
 
 Namespace ManagedSqlite.Core
 
@@ -118,7 +118,7 @@ Namespace ManagedSqlite.Core
             ' https://www.sqlite.org/fileformat.html#in_header_database_size
             expectedPages = CUInt(_reader.Length \ Header.PageSize)
             ' TODO: Warn on mismatch
-            _sizeInPages = stdNum.Max(expectedPages, Header.DatabaseSizeInPages)
+            _sizeInPages = std.Max(expectedPages, Header.DatabaseSizeInPages)
             _reader.ApplySqliteDatabaseHeader(Header)
         End Sub
 
