@@ -83,6 +83,8 @@ Namespace StorageProvider
             End Get
         End Property
 
+        Public ReadOnly Property SchemaType As Dictionary(Of String, String)
+
         Public ReadOnly Property Headers As String()
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
@@ -96,6 +98,13 @@ Namespace StorageProvider
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Sub New(headers As IEnumerable(Of String))
             SchemaOridinal = createSchemaOridinal(headers)
+        End Sub
+
+        Sub New(fields As IEnumerable(Of NamedValue(Of String)))
+            Dim cols As NamedValue(Of String)() = fields.ToArray
+
+            SchemaOridinal = createSchemaOridinal(cols.Keys)
+            SchemaType = cols.ToDictionary(Function(c) c.Name, Function(c) c.Value)
         End Sub
 
         Public Function GetName(i As Integer) As String

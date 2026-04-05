@@ -1,60 +1,61 @@
 ﻿#Region "Microsoft.VisualBasic::9faf9e3e6de9036dababf6420bd15464, Data\BinaryData\SQLite3\Tables\Sqlite3Row.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 59
-    '    Code Lines: 44 (74.58%)
-    ' Comment Lines: 1 (1.69%)
-    '    - Xml Docs: 0.00%
-    ' 
-    '   Blank Lines: 14 (23.73%)
-    '     File Size: 1.88 KB
+' Summaries:
 
 
-    '     Class Sqlite3Row
-    ' 
-    '         Properties: ColumnData, ReadIndex, RowId, Table
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    '         Function: ToString, (+2 Overloads) TryGetOrdinal
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 59
+'    Code Lines: 44 (74.58%)
+' Comment Lines: 1 (1.69%)
+'    - Xml Docs: 0.00%
+' 
+'   Blank Lines: 14 (23.73%)
+'     File Size: 1.88 KB
+
+
+'     Class Sqlite3Row
+' 
+'         Properties: ColumnData, ReadIndex, RowId, Table
+' 
+'         Constructor: (+1 Overloads) Sub New
+'         Function: ToString, (+2 Overloads) TryGetOrdinal
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
+Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace ManagedSqlite.Core.Tables
@@ -76,7 +77,7 @@ Namespace ManagedSqlite.Core.Tables
 
         Default Public ReadOnly Property Item(field As String) As Object
             Get
-
+                Return Me(field:=Table.schema.GetOrdinal(field))
             End Get
         End Property
 
@@ -89,6 +90,11 @@ Namespace ManagedSqlite.Core.Tables
 
         Public Overrides Function ToString() As String
             Return $"#{ReadIndex} [{RowId}] = {ColumnData.Select(AddressOf Scripting.ToString).GetJson}"
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function GetOrdinal(name As String) As Integer
+            Return Table.schema.GetOrdinal(name)
         End Function
 
         Public Function TryGetOrdinal(index As UShort, ByRef value As Object) As Boolean

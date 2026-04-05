@@ -58,6 +58,7 @@
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.Data.Framework.StorageProvider
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Serialization.JSON
 
@@ -65,35 +66,25 @@ Namespace ManagedSqlite.Core.SQLSchema
 
     Public Class Schema : Implements Enumeration(Of NamedValue(Of String))
 
-        Public Property columns As NamedValue(Of String)()
+        Public ReadOnly Property columns As NamedValue(Of String)()
+            Get
+                Return (From col In Schema.SchemaType Select New NamedValue(Of String)(col)).ToArray
+            End Get
+        End Property
+
         Public Property tableName As String
-
-        ReadOnly fieldSchema As New Dictionary(Of String, Integer)
-
         Public ReadOnly Property RawSql As String
+        Public ReadOnly Property Schema As HeaderSchema
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Sub New(sql$, Optional removeNameEscape As Boolean = True)
             Me.RawSql = sql
-            Me.columns = ParseColumns(sql, removeNameEscape).ToArray
-
-            For Each col As NamedValue(Of String) In columns
-                Call fieldSchema.Add(col.Name, fieldSchema.Count)
-            Next
+            Me.Schema = New HeaderSchema(ParseColumns(sql, removeNameEscape))
         End Sub
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function GetOrdinal(column As String) As Integer
-            If fieldSchema.ContainsKey(column) Then
-                Return fieldSchema(column)
-            End If
-
-            For i As Integer = 0 To columns.Length - 1
-                If column = columns(i).Name Then
-                    Return i
-                End If
-            Next
-
-            Return -1
+            Return Schema.GetOrdinal(column)
         End Function
 
         Private Iterator Function ParseColumns(sql$, removeNameEscape As Boolean) As IEnumerable(Of NamedValue(Of String))
@@ -159,7 +150,7 @@ Namespace ManagedSqlite.Core.SQLSchema
         End Function
 
         Public Overrides Function ToString() As String
-            Return columns.Keys.GetJson
+            Return Schema.Headers.GetJson
         End Function
 
         Public Iterator Function GenericEnumerator() As IEnumerator(Of NamedValue(Of String)) Implements Enumeration(Of NamedValue(Of String)).GenericEnumerator
