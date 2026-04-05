@@ -215,7 +215,7 @@ Namespace StorageProvider.Reflection
 
             Dim buffer As IEnumerable(Of T)
             ' read csv data
-            Dim reader As DataFrameResolver = IO.DataFrameResolver.Load(path, encoding, fast, skipWhile,
+            Dim reader As DataFrameResolver = DataFrameResolver.Load(path, encoding, fast, skipWhile,
                                                         simpleRowIterators:=simpleRowIterators,
                                                         tsv:=tsv)
 

@@ -1,59 +1,59 @@
 ﻿#Region "Microsoft.VisualBasic::df4fbe550d41a1331c11a92275ea0d6c, Data\DataFrame\Extensions\Extensions.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 668
-    '    Code Lines: 381 (57.04%)
-    ' Comment Lines: 213 (31.89%)
-    '    - Xml Docs: 92.96%
-    ' 
-    '   Blank Lines: 74 (11.08%)
-    '     File Size: 28.89 KB
+' Summaries:
 
 
-    ' Module Extensions
-    ' 
-    '     Constructor: (+1 Overloads) Sub New
-    ' 
-    '     Function: (+4 Overloads) AsDataSource, AsLinq, (+5 Overloads) DataFrame, GetLocusMapName, IsEmptyTable
-    '               (+3 Overloads) LoadCsv, LoadDataFrame, LoadDblVector, LoadStream, LoadTsv
-    '               SaveDataSet, (+2 Overloads) SaveTable, (+6 Overloads) SaveTo, TabExport, ToCsvDoc
-    ' 
-    '     Sub: Cable, ForEach
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 668
+'    Code Lines: 381 (57.04%)
+' Comment Lines: 213 (31.89%)
+'    - Xml Docs: 92.96%
+' 
+'   Blank Lines: 74 (11.08%)
+'     File Size: 28.89 KB
+
+
+' Module Extensions
+' 
+'     Constructor: (+1 Overloads) Sub New
+' 
+'     Function: (+4 Overloads) AsDataSource, AsLinq, (+5 Overloads) DataFrame, GetLocusMapName, IsEmptyTable
+'               (+3 Overloads) LoadCsv, LoadDataFrame, LoadDblVector, LoadStream, LoadTsv
+'               SaveDataSet, (+2 Overloads) SaveTable, (+6 Overloads) SaveTo, TabExport, ToCsvDoc
+' 
+'     Sub: Cable, ForEach
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -67,6 +67,7 @@ Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.Framework.IO
 Imports Microsoft.VisualBasic.Data.Framework.IO.CSVFile
 Imports Microsoft.VisualBasic.Data.Framework.IO.Linq
+Imports Microsoft.VisualBasic.Data.Framework.StorageProvider
 Imports Microsoft.VisualBasic.Data.Framework.StorageProvider.ComponentModels
 Imports Microsoft.VisualBasic.Data.Framework.StorageProvider.Reflection
 Imports Microsoft.VisualBasic.Language
@@ -325,7 +326,7 @@ Public Module Extensions
 
     <Extension>
     Public Function DataFrame(Of T)(source As IEnumerable(Of T)) As EntityObject()
-        Return IO.DataFrameResolver.CreateObject(source.ToCsvDoc).AsDataSource(Of EntityObject)(False).ToArray
+        Return DataFrameResolver.CreateObject(source.ToCsvDoc).AsDataSource(Of EntityObject)(False).ToArray
     End Function
 
     <Extension>
@@ -457,7 +458,7 @@ Public Module Extensions
             sheet = dataSet
         End If
 
-        Return IO.DataFrameResolver _
+        Return DataFrameResolver _
             .CreateObject(file:=sheet) _
             .AsDataSource(Of T)(strict, maps, silent:=silent)
     End Function
@@ -499,7 +500,7 @@ Public Module Extensions
                                                 Optional explicit As Boolean = True,
                                                 Optional silent As Boolean = False) As T()
 
-        Dim df As DataFrameResolver = IO.DataFrameResolver.CreateObject([Imports](importsFile, delimiter))
+        Dim df As DataFrameResolver = DataFrameResolver.CreateObject([Imports](importsFile, delimiter))
         Dim data As T() = Reflector.Convert(Of T)(df, explicit, silent:=silent).ToArray
 
         Return data

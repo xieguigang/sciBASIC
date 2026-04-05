@@ -89,8 +89,7 @@ Namespace DATA
 
         Default Public Property Item([property] As String) As String()
             Get
-                Return entityList _
-                    .Values _
+                Return entityList.Values _
                     .Select(Function(d) d([property])) _
                     .ToArray
             End Get
@@ -182,7 +181,7 @@ Namespace DATA
         End Function
 
         Public Iterator Function GetEnumerator() As IEnumerator(Of EntityObject) Implements IEnumerable(Of EntityObject).GetEnumerator
-            For Each x In entityList.Values
+            For Each x As EntityObject In entityList.Values
                 Yield x
             Next
         End Function
@@ -222,31 +221,28 @@ Namespace DATA
         ''' <param name="multiple"></param>
         ''' <param name="unique"></param>
         ''' <returns></returns>
-        Public Shared Function Append(multiple As IEnumerable(Of EntityObject),
-                                      unique As DataRows,
-                                      Optional allowNothing As Boolean = False) As IEnumerable(Of EntityObject)
-            Return multiple _
-                .Select(Function(query)
-                            Dim id As String
+        Public Shared Iterator Function Append(multiple As IEnumerable(Of EntityObject), unique As DataRows, Optional allowNothing As Boolean = False) As IEnumerable(Of EntityObject)
+            For Each query In multiple
+                Dim id As String
 
-                            If allowNothing Then
-                                id = query.ID Or EmptyString
-                            Else
-                                id = query.ID
-                            End If
+                If allowNothing Then
+                    id = query.ID Or EmptyString
+                Else
+                    id = query.ID
+                End If
 
-                            If Not unique.entityList.ContainsKey(id) Then
-                                Return query
-                            Else
-                                With unique.entityList(id)
-                                    For Each [property] In .Properties
-                                        query.Properties([property].Key) = [property].Value
-                                    Next
-                                End With
+                If Not unique.entityList.ContainsKey(id) Then
+                    Yield query
+                Else
+                    With unique.entityList(id)
+                        For Each [property] In .Properties
+                            query.Properties([property].Key) = [property].Value
+                        Next
+                    End With
 
-                                Return query
-                            End If
-                        End Function)
+                    Yield query
+                End If
+            Next
         End Function
     End Class
 End Namespace

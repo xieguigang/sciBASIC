@@ -65,7 +65,7 @@ Namespace DATA
     ''' </summary>
     Public Module RDataFrameHelpers
 
-        Private Function processValue(map As KeyValuePair(Of String, Double), replaceAs$) As String
+        Private Function ProcessValue(map As KeyValuePair(Of String, Double), replaceAs$) As String
             Dim s As String = map.Value.ToString
 
             If isNaN(s) Then
@@ -78,11 +78,10 @@ Namespace DATA
         <Extension>
         Public Iterator Function InvalidsAsRLangNA(source As IEnumerable(Of DataSet), Optional replaceAs$ = "NA") As IEnumerable(Of EntityObject)
             For Each data As DataSet In source
-                Dim values = data _
-                    .Properties _
+                Dim values = data.Properties _
                     .ToDictionary(Function(map) map.Key,
                                   Function(map)
-                                      Return processValue(map, replaceAs)
+                                      Return ProcessValue(map, replaceAs)
                                   End Function)
 
                 Yield New EntityObject With {

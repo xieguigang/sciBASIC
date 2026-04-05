@@ -74,16 +74,6 @@ Imports Microsoft.VisualBasic.Linq.Extensions
 
 Namespace StorageProvider.ComponentModels
 
-    Public Interface ISchema
-
-        ''' <summary>
-        ''' 从数据源之中解析出来得到的域列表
-        ''' </summary>
-        ''' <returns></returns>
-        ReadOnly Property SchemaOridinal As Dictionary(Of String, Integer)
-        Function GetOrdinal(name As String) As Integer
-    End Interface
-
     ''' <summary>
     ''' 这个是用于将Csv文件之中的行数据转换为.NET对象的
     ''' </summary>

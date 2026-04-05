@@ -1,73 +1,73 @@
 ﻿#Region "Microsoft.VisualBasic::742ca27b7b67646d02e21d75607a7846, Data\DataFrame\IO\DataFrame\DataFrameResolver.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 856
-    '    Code Lines: 546 (63.79%)
-    ' Comment Lines: 182 (21.26%)
-    '    - Xml Docs: 82.42%
-    ' 
-    '   Blank Lines: 128 (14.95%)
-    '     File Size: 34.67 KB
+' Summaries:
 
 
-    '     Class DataFrameResolver
-    ' 
-    '         Properties: Depth, FieldCount, Headers, HeadTitles, IDataRecord_Item
-    '                     IsClosed, Item, Nrows, RecordsAffected, Rows
-    '                     SchemaOridinal
-    ' 
-    '         Constructor: (+3 Overloads) Sub New
-    ' 
-    '         Function: __createTableVector, [Select], AddAttribute, AppendLine, ColumnRows
-    '                   CreateDataSource, (+2 Overloads) CreateObject, createObjectInternal, csv, EnumerateData
-    '                   EnumerateRowObjects, GetBoolean, GetByte, GetBytes, GetChar
-    '                   GetChars, (+2 Overloads) getColumnList, GetColumnVectors, GetData, GetDataTypeName
-    '                   GetDateTime, GetDecimal, GetDouble, GetEnumerator, GetEnumerator2
-    '                   GetFieldType, GetFloat, GetGuid, GetInt16, GetInt32
-    '                   GetInt64, GetName, (+2 Overloads) GetOrdinal, GetOrdinalSchema, (+2 Overloads) GetRow
-    '                   GetRowData, GetSchemaTable, (+2 Overloads) GetString, GetValue, GetValueLambda
-    '                   GetValues, IDataRecord_GetValue, IsDBNull, (+2 Overloads) Load, LoadDataSet
-    '                   MeasureTypeSchema, Parse, ParseRowData, Read, Slice
-    '                   ToString
-    ' 
-    '         Sub: ChangeMapping, Close, CopyFrom, (+2 Overloads) Dispose, Initialize
-    '              Reset
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 856
+'    Code Lines: 546 (63.79%)
+' Comment Lines: 182 (21.26%)
+'    - Xml Docs: 82.42%
+' 
+'   Blank Lines: 128 (14.95%)
+'     File Size: 34.67 KB
+
+
+'     Class DataFrameResolver
+' 
+'         Properties: Depth, FieldCount, Headers, HeadTitles, IDataRecord_Item
+'                     IsClosed, Item, Nrows, RecordsAffected, Rows
+'                     SchemaOridinal
+' 
+'         Constructor: (+3 Overloads) Sub New
+' 
+'         Function: __createTableVector, [Select], AddAttribute, AppendLine, ColumnRows
+'                   CreateDataSource, (+2 Overloads) CreateObject, createObjectInternal, csv, EnumerateData
+'                   EnumerateRowObjects, GetBoolean, GetByte, GetBytes, GetChar
+'                   GetChars, (+2 Overloads) getColumnList, GetColumnVectors, GetData, GetDataTypeName
+'                   GetDateTime, GetDecimal, GetDouble, GetEnumerator, GetEnumerator2
+'                   GetFieldType, GetFloat, GetGuid, GetInt16, GetInt32
+'                   GetInt64, GetName, (+2 Overloads) GetOrdinal, GetOrdinalSchema, (+2 Overloads) GetRow
+'                   GetRowData, GetSchemaTable, (+2 Overloads) GetString, GetValue, GetValueLambda
+'                   GetValues, IDataRecord_GetValue, IsDBNull, (+2 Overloads) Load, LoadDataSet
+'                   MeasureTypeSchema, Parse, ParseRowData, Read, Slice
+'                   ToString
+' 
+'         Sub: ChangeMapping, Close, CopyFrom, (+2 Overloads) Dispose, Initialize
+'              Reset
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -77,6 +77,7 @@ Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.Repository
+Imports Microsoft.VisualBasic.Data.Framework.IO
 Imports Microsoft.VisualBasic.Data.Framework.IO.CSVFile
 Imports Microsoft.VisualBasic.Data.Framework.StorageProvider.ComponentModels
 Imports Microsoft.VisualBasic.Language
@@ -85,7 +86,7 @@ Imports Microsoft.VisualBasic.Linq.Extensions
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports ASCII = Microsoft.VisualBasic.Text.ASCII
 
-Namespace IO
+Namespace StorageProvider
 
     ''' <summary>
     ''' The dynamics data frame object which its first line is not contains the but using for the title property.
@@ -201,10 +202,10 @@ Namespace IO
         End Function
 
         ''' <summary>
-        ''' Get the lines data for the convinent data operation.(为了保持一致的顺序，这个函数是非并行化的)
+        ''' Get the lines data for the convinent data operation.
         ''' </summary>
         ''' <returns></returns>
-        ''' <remarks></remarks>
+        ''' <remarks>(为了保持一致的顺序，这个函数是非并行化的)</remarks>
         Public Function CreateDataSource() As DynamicObjectLoader()
             Dim rowNumbers = table.Count.Sequence
             Dim LQuery As DynamicObjectLoader() = LinqAPI.Exec(Of DynamicObjectLoader) _
@@ -335,8 +336,8 @@ Namespace IO
         ''' Convert this dataframe object as a csv document object
         ''' </summary>
         ''' <returns></returns>
-        Public Function csv() As File
-            Dim file As New File
+        Public Function csv() As IO.File
+            Dim file As New IO.File
             file += New RowObject(columnList.Headers)
             file += DirectCast(table, IEnumerable(Of RowObject))
             Return file
@@ -426,12 +427,12 @@ Namespace IO
                                               Optional skipWhile As NamedValue(Of Func(Of String, Boolean)) = Nothing,
                                               Optional simpleRowIterators As Boolean = True,
                                               Optional tsv As Boolean = False) As DataFrameResolver
-            Dim file As File
+            Dim file As IO.File
 
             If fast Then
                 file = FileLoader.FastLoad(path, True, encoding, skipWhile, tsv:=tsv)
             Else
-                file = File.Load(path, encoding, , skipWhile,
+                file = file.Load(path, encoding, , skipWhile,
                                  simpleRowIterator:=simpleRowIterators,
                                  isTsv:=tsv)
             End If
@@ -442,8 +443,8 @@ Namespace IO
         Public Overloads Shared Function Load(stream As Stream,
                                               Optional encoding As Encoding = Nothing,
                                               Optional isTsv As Boolean = False) As DataFrameResolver
-            Dim file As New File With {
-                ._innerTable = File.loads(
+            Dim file As New IO.File With {
+                ._innerTable = file.loads(
                     file:=stream,
                     encoding:=If(encoding, Encoding.Default),
                     trimBlanks:=False,
@@ -463,7 +464,7 @@ Namespace IO
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overloads Shared Function Parse(Of T As Class)(content As String) As IEnumerable(Of T)
-            Return File.Parse(content).AsDataSource(Of T)
+            Return IO.File.Parse(content).AsDataSource(Of T)
         End Function
 
         ''' <summary>
@@ -537,7 +538,7 @@ Namespace IO
         ''' <returns></returns>
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Overloads Shared Function CreateObject(file As File, Optional strict As Boolean = True) As DataFrameResolver
+        Public Overloads Shared Function CreateObject(file As IO.File, Optional strict As Boolean = True) As DataFrameResolver
             Return createObjectInternal(file, strict)
         End Function
 
@@ -577,7 +578,7 @@ Namespace IO
             dataframe.columnList = New HeaderSchema(headers)
         End Sub
 
-        Private Shared Function createObjectInternal(file As File, strict As Boolean) As DataFrameResolver
+        Private Shared Function createObjectInternal(file As IO.File, strict As Boolean) As DataFrameResolver
             Dim dataframe As New DataFrameResolver
             Call Initialize(file._innerTable, dataframe, strict)
             Return dataframe
@@ -688,7 +689,7 @@ Namespace IO
         ''' </summary>
         ''' <param name="source"></param>
         ''' <remarks></remarks>
-        Public Sub CopyFrom(source As File)
+        Public Sub CopyFrom(source As IO.File)
             table = source._innerTable.Skip(1).AsList
             columnList = New HeaderSchema(source._innerTable.First)
         End Sub
