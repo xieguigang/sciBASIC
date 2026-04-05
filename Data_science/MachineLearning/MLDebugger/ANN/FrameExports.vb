@@ -52,7 +52,7 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
-Imports Microsoft.VisualBasic.Data.Framework.IO
+Imports Microsoft.VisualBasic.Data.Framework.StorageProvider
 Imports Microsoft.VisualBasic.DataMining.ComponentModel.Normalizer
 Imports Microsoft.VisualBasic.DataStorage.netCDF
 Imports Microsoft.VisualBasic.DataStorage.netCDF.Components
