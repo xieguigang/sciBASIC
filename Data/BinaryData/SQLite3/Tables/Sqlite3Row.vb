@@ -97,6 +97,56 @@ Namespace ManagedSqlite.Core.Tables
             Return Table.schema.GetOrdinal(name)
         End Function
 
+        Public Function GetBoolean(i As Integer) As Boolean
+            Dim tmp As Object = Nothing
+
+            If Not TryGetOrdinal(i, tmp) Then
+                Return False
+            Else
+                Return CBool(tmp)
+            End If
+        End Function
+
+        Public Function GetDouble(i As Integer) As Double
+            Dim tmp As Object = Nothing
+
+            If Not TryGetOrdinal(i, tmp) Then
+                Return False
+            Else
+                Return CDbl(tmp)
+            End If
+        End Function
+
+        Public Function GetInt32(i As Integer) As Integer
+            Dim tmp As Object = Nothing
+
+            If Not TryGetOrdinal(i, tmp) Then
+                Return False
+            Else
+                Return CInt(tmp)
+            End If
+        End Function
+
+        Public Function GetString(i As Integer) As String
+            Dim tmp As Object = Nothing
+
+            If Not TryGetOrdinal(i, tmp) Then
+                Return False
+            Else
+                Return CStr(tmp)
+            End If
+        End Function
+
+        Public Function IsDBNull(i As Integer) As Boolean
+            Dim tmp As Object = Nothing
+
+            If Not TryGetOrdinal(i, tmp) Then
+                Return True
+            Else
+                Return tmp Is Nothing
+            End If
+        End Function
+
         Public Function TryGetOrdinal(index As UShort, ByRef value As Object) As Boolean
             value = Nothing
 

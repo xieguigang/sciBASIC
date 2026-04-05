@@ -104,7 +104,7 @@ Namespace ManagedSqlite
                                      For Each field In schema
                                          Yield New NamedValue(Of Object) With {
                                             .Name = field.value.Name,
-                                            .Value = row(field)
+                                            .Value = row(field.i)
                                          }
                                      Next
                                  End Function
