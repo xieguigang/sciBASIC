@@ -74,6 +74,11 @@ Namespace ManagedSqlite.Core.Tables
             End Get
         End Property
 
+        Default Public ReadOnly Property Item(field As String) As Object
+            Get
+
+            End Get
+        End Property
 
         Friend Sub New(index&, table As Sqlite3Table, rowId As Long, columnData As Object())
             Me.Table = table

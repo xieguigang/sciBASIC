@@ -71,12 +71,14 @@ Namespace ManagedSqlite.Core.Tables
 
         Public ReadOnly Property SchemaDefinition As Sqlite3SchemaRow
         Public ReadOnly Property Settings As Sqlite3Settings
+        Public ReadOnly Property schema As Schema
 
         Friend Sub New(reader As ReaderBase, rootPage As BTreePage, table As Sqlite3SchemaRow, settings As Sqlite3Settings)
             Me.SchemaDefinition = table
             Me.reader = reader
             Me.rootPage = rootPage
             Me.Settings = settings
+            Me.schema = SchemaDefinition.ParseSchema
         End Sub
 
         Public Overrides Function ToString() As String
@@ -89,7 +91,6 @@ Namespace ManagedSqlite.Core.Tables
         ''' <returns></returns>
         Public Iterator Function EnumerateRows() As IEnumerable(Of Sqlite3Row)
             Dim cells As IEnumerable(Of BTreeCellData) = BTreeTools.WalkTableBTree(rootPage)
-            Dim schema As Schema = SchemaDefinition.ParseSchema
             Dim metaInfo As ColumnDataMeta() = schema.columns _
                 .Select(Function(field)
                             Dim type As SqliteDataType = DataTypeParser.TryParse(field.Value)
@@ -181,21 +182,13 @@ Namespace ManagedSqlite.Core.Tables
                 Dim meta As ColumnDataMeta = metaInfos(i)
 
                 Select Case meta.type
-                    Case SqliteDataType.Null
-                        rowData(i) = Nothing
-
-                    Case SqliteDataType.[Integer]
-                        ' TODO: Do we handle negatives correctly?
-                        rowData(i) = reader.ReadInteger(CByte(meta.length))
-
-                    Case SqliteDataType.Float
-                        rowData(i) = BitConverter.Int64BitsToDouble(reader.ReadInteger(CByte(meta.length)))
-
-                    Case SqliteDataType.Boolean0
-                        rowData(i) = False
-
-                    Case SqliteDataType.Boolean1
-                        rowData(i) = True
+                    Case SqliteDataType.Null : rowData(i) = Nothing
+                         ' TODO: Do we handle negatives correctly?
+                    Case SqliteDataType.[Integer] : rowData(i) = reader.ReadInteger(CByte(meta.length))
+                    Case SqliteDataType.Float : rowData(i) = BitConverter.Int64BitsToDouble(reader.ReadInteger(CByte(meta.length)))
+                    Case SqliteDataType.Boolean0 : rowData(i) = False
+                    Case SqliteDataType.Boolean1 : rowData(i) = True
+                    Case SqliteDataType.Text : rowData(i) = reader.ReadString(meta.length)
 
                     Case SqliteDataType.Blob
 
@@ -204,10 +197,6 @@ Namespace ManagedSqlite.Core.Tables
                         Else
                             rowData(i) = reader.Read(meta.length)
                         End If
-
-                    Case SqliteDataType.Text
-                        rowData(i) = reader.ReadString(meta.length)
-
                     Case Else
                         Throw New ArgumentOutOfRangeException()
                 End Select

@@ -69,11 +69,7 @@ Namespace ComponentModel.DataSourceModel.SchemaMaps
         ''' <param name="explict"></param>
         ''' <returns></returns>
         <Extension>
-        Public Function GetSchemaName(Of T As Attribute)(
-                                     type As Type,
-                                     getName As Func(Of T, String),
-                                     Optional explict As Boolean = False) As String
-
+        Public Function GetSchemaName(Of T As Attribute)(type As Type, getName As Func(Of T, String), Optional explict As Boolean = False) As String
             Dim attrs As Object() = type.GetCustomAttributes(GetType(T), inherit:=True)
 
             If attrs.IsNullOrEmpty Then
@@ -100,9 +96,7 @@ Namespace ComponentModel.DataSourceModel.SchemaMaps
         ''' </param>
         ''' <returns></returns>
         <Extension>
-        Public Iterator Function GetFields(Of T As {Attribute})(type As Type,
-                                                                getName As Func(Of T, String),
-                                                                Optional explict As Boolean = False) As IEnumerable(Of BindProperty(Of T))
+        Public Iterator Function GetFields(Of T As {Attribute})(type As Type, getName As Func(Of T, String), Optional explict As Boolean = False) As IEnumerable(Of BindProperty(Of T))
             For Each field As FieldInfo In type.GetFields
                 Dim attr As T = field.GetCustomAttribute(Of T)
 

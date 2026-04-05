@@ -80,48 +80,6 @@ Imports FieldTuple = System.Collections.Generic.KeyValuePair(Of Microsoft.Visual
 Namespace ComponentModel.DataSourceModel.SchemaMaps
 
     ''' <summary>
-    ''' field data mapping
-    ''' </summary>
-    <AttributeUsage(AttributeTargets.[Property], Inherited:=True, AllowMultiple:=False)>
-    Public Class ColumnAttribute : Inherits Attribute
-
-        Public Property Name As String
-        Public ReadOnly Property [alias] As String()
-
-        Sub New(name As String, ParamArray [alias] As String())
-            Me.Name = name
-            Me.alias = [alias]
-        End Sub
-
-        Sub New()
-        End Sub
-
-        Public Overrides Function ToString() As String
-            Return Name
-        End Function
-    End Class
-
-    ''' <summary>
-    ''' <see cref="DataFrameColumnAttribute"/>属性的别称
-    ''' </summary>
-    Public Class Field : Inherits DataFrameColumnAttribute
-
-        ''' <summary>
-        ''' Initializes a new instance by name.
-        ''' </summary>
-        ''' <param name="FieldName">The name.</param>
-        ''' 
-        <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Sub New(fieldName As String)
-            Call MyBase.New(fieldName)
-        End Sub
-
-        Sub New(ordinal As Integer)
-            Call MyBase.New(ordinal)
-        End Sub
-    End Class
-
-    ''' <summary>
     ''' Represents a column of certain data frames. The mapping between to schema is also can be represent by this attribute. 
     ''' (也可以使用这个对象来完成在两个数据源之间的属性的映射，由于对于一些列名称的属性值缺失的映射而言，
     ''' 其是使用属性名来作为列映射名称的，故而在修改这些没有预设的列名称的映射属性的属性名的时候，请注意
@@ -323,15 +281,5 @@ Namespace ComponentModel.DataSourceModel.SchemaMaps
                 .Select(Function(o) DirectCast(o, DataFrameColumnAttribute)) _
                 .ToArray
         End Function
-    End Class
-
-    Public MustInherit Class DataFrameIO(Of TAttributeType As DataFrameColumnAttribute)
-
-        ''' <summary>
-        ''' 
-        ''' </summary>
-        ''' <returns></returns>
-        ''' <remarks></remarks>
-        Protected MustOverride Function InitializeSchema(Of TEntityType As Class)() As TAttributeType()
     End Class
 End Namespace

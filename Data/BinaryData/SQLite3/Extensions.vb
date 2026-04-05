@@ -96,19 +96,18 @@ Namespace ManagedSqlite
 
             Dim schema As SeqValue(Of NamedValue(Of String))() = table.SchemaDefinition _
                 .ParseSchema(removeNameEscape:=trimNameEscape) _
-                .columns _
+                .AsEnumerable _
                 .SeqIterator _
                 .ToArray
-            Dim populateValues =
-                Iterator Function(row As Sqlite3Row) As IEnumerable(Of NamedValue(Of Object))
-                    For Each field In schema
-                        Yield New NamedValue(Of Object) With {
-                            .Name = field.value.Name,
-                            .Value = row(field)
-                        }
-                    Next
-                End Function
             Dim i As i32 = Scan0
+            Dim populateValues = Iterator Function(row As Sqlite3Row) As IEnumerable(Of NamedValue(Of Object))
+                                     For Each field In schema
+                                         Yield New NamedValue(Of Object) With {
+                                            .Name = field.value.Name,
+                                            .Value = row(field)
+                                         }
+                                     Next
+                                 End Function
 
             For Each row As Sqlite3Row In table.EnumerateRows
                 Yield activator(populateValues(row), ++i)

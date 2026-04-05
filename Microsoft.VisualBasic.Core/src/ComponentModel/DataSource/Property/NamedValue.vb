@@ -1,64 +1,60 @@
 ﻿#Region "Microsoft.VisualBasic::b5e45dc8e792775a8c3ccd9cddf5409b, Microsoft.VisualBasic.Core\src\ComponentModel\DataSource\Property\NamedValue.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 218
-    '    Code Lines: 140 (64.22%)
-    ' Comment Lines: 50 (22.94%)
-    '    - Xml Docs: 88.00%
-    ' 
-    '   Blank Lines: 28 (12.84%)
-    '     File Size: 8.42 KB
+' Summaries:
 
 
-    '     Structure NamedValue
-    ' 
-    '         Properties: Description, IsEmpty, Name, Value, ValueType
-    ' 
-    '         Constructor: (+2 Overloads) Sub New
-    '         Function: FixValue, getValueStr, ToString
-    '         Operators: (+2 Overloads) +, <>, =
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 218
+'    Code Lines: 140 (64.22%)
+' Comment Lines: 50 (22.94%)
+'    - Xml Docs: 88.00%
+' 
+'   Blank Lines: 28 (12.84%)
+'     File Size: 8.42 KB
+
+
+'     Structure NamedValue
+' 
+'         Properties: Description, IsEmpty, Name, Value, ValueType
+' 
+'         Constructor: (+2 Overloads) Sub New
+'         Function: FixValue, getValueStr, ToString
+'         Operators: (+2 Overloads) +, <>, =
+' 
+' 
+' /********************************************************************************/
 
 #End Region
-
-#If NET48 And Not NETCOREAPP Then
-Imports System.Web.Script.Serialization
-#End If
 
 Imports System.Reflection
 Imports System.Runtime.CompilerServices
@@ -68,12 +64,19 @@ Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Linq
 Imports any = Microsoft.VisualBasic.Scripting
 
+#If NET48 And Not NETCOREAPP Then
+Imports System.Web.Script.Serialization
+#End If
+
 Namespace ComponentModel.DataSourceModel
 
     ''' <summary>
-    ''' The value object have a name string.(一个具有自己的名称的变量值)
+    ''' The value object have a name string.
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
+    ''' <remarks>
+    ''' (一个具有自己的名称的变量值)
+    ''' </remarks>
     Public Structure NamedValue(Of T) : Implements INamedValue
         Implements IKeyValuePairObject(Of String, T)
         Implements IsEmpty
@@ -243,7 +246,7 @@ Namespace ComponentModel.DataSourceModel
             End If
         End Operator
 
-#If NET_48 Or netcore5 = 1 Then
+#If NET_48 Or NETCOREAPP Then
 
         ''' <summary>
         ''' Convert from tuple
@@ -260,7 +263,6 @@ Namespace ComponentModel.DataSourceModel
         Public Shared Widening Operator CType(tuple As (name$, value As T, describ$)) As NamedValue(Of T)
             Return New NamedValue(Of T)(tuple.name, tuple.value, tuple.describ)
         End Operator
-
 #End If
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>

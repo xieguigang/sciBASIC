@@ -58,14 +58,17 @@
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace ManagedSqlite.Core.SQLSchema
 
-    Public Class Schema
+    Public Class Schema : Implements Enumeration(Of NamedValue(Of String))
 
         Public Property columns As NamedValue(Of String)()
         Public Property tableName As String
+
+        ReadOnly fieldSchema As New Dictionary(Of String, Integer)
 
         Public ReadOnly Property RawSql As String
 
@@ -73,9 +76,17 @@ Namespace ManagedSqlite.Core.SQLSchema
         Sub New(sql$, Optional removeNameEscape As Boolean = True)
             Me.RawSql = sql
             Me.columns = ParseColumns(sql, removeNameEscape).ToArray
+
+            For Each col As NamedValue(Of String) In columns
+                Call fieldSchema.Add(col.Name, fieldSchema.Count)
+            Next
         End Sub
 
         Public Function GetOrdinal(column As String) As Integer
+            If fieldSchema.ContainsKey(column) Then
+                Return fieldSchema(column)
+            End If
+
             For i As Integer = 0 To columns.Length - 1
                 If column = columns(i).Name Then
                     Return i
@@ -149,6 +160,12 @@ Namespace ManagedSqlite.Core.SQLSchema
 
         Public Overrides Function ToString() As String
             Return columns.Keys.GetJson
+        End Function
+
+        Public Iterator Function GenericEnumerator() As IEnumerator(Of NamedValue(Of String)) Implements Enumeration(Of NamedValue(Of String)).GenericEnumerator
+            For Each col As NamedValue(Of String) In columns
+                Yield col
+            Next
         End Function
     End Class
 End Namespace

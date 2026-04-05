@@ -64,6 +64,11 @@ Namespace ManagedSqlite.Core.Tables
         Public Property name As String
         Public Property tableName As String
         Public Property rootPage As UInteger
+
+        ''' <summary>
+        ''' the table create sql
+        ''' </summary>
+        ''' <returns></returns>
         Public Property Sql As String
 
         Public Overrides Function ToString() As String
@@ -74,6 +79,11 @@ Namespace ManagedSqlite.Core.Tables
             End If
         End Function
 
+        ''' <summary>
+        ''' Parse the table schema via the table create <see cref="Sql"/>
+        ''' </summary>
+        ''' <param name="removeNameEscape"></param>
+        ''' <returns></returns>
         Public Function ParseSchema(Optional removeNameEscape As Boolean = False) As Schema
             ' 有一些字段的名称可能是包含有空格或者小数点之类的,
             ' 则这些字段名称会被[]转义

@@ -110,6 +110,16 @@ Namespace ManagedSqlite.Core
             Return New Sqlite3Database(dbFile.Open(FileMode.Open, doClear:=False, [readOnly]:=True), settings)
         End Function
 
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="dbFile"></param>
+        ''' <returns></returns>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Function OpenFile(dbFile$, Optional blobAsBase64 As Boolean = False) As Sqlite3Database
+            Return OpenFile(dbFile, New Sqlite3Settings With {.blobAsBase64 = blobAsBase64})
+        End Function
+
         Private Sub Initialize()
             Dim expectedPages As UInteger
 

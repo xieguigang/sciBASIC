@@ -62,8 +62,7 @@ Namespace ComponentModel.DataSourceModel.SchemaMaps
     ''' <remarks>
     ''' (SQL之中的一个数据表的抽象描述接口)
     ''' </remarks>
-    Public MustInherit Class SQLTable
-        Implements ICloneable
+    Public MustInherit Class SQLTable : Implements ICloneable
 
         ''' <summary>
         ''' INSERT INTO table_name (field1, field2,...) VALUES (value1, value2,....)
