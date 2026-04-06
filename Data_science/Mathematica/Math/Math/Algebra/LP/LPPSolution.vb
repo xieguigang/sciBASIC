@@ -68,6 +68,7 @@ Namespace LinearAlgebra.LinearProgramming
 
         Dim solution() As Double
         Dim variableNames() As String
+
         Friend slack() As Double
         Friend shadowPrice() As Double
         Friend reducedCost() As Double
@@ -80,6 +81,12 @@ Namespace LinearAlgebra.LinearProgramming
         Public Property ConstraintTypes As String()
         Public Property ObjectiveFunctionValue As Double
         Public Property DecimalFormat As String = "G5"
+
+        Public ReadOnly Property SolverError As Boolean
+            Get
+                Return variableNames.IsNullOrEmpty AndAlso Not failureMessage.StringEmpty(, True)
+            End Get
+        End Property
 
         Public Sub New(failureMessage As String, solutionLog As String, feasibleSolutionTime As Long)
             Me.failureMessage = failureMessage
