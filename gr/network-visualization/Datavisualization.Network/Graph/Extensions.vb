@@ -86,16 +86,23 @@ Namespace Graph
         ''' </summary>
         ''' <param name="g"></param>
         <Extension>
-        Public Sub ApplyAnalysis(ByRef g As NetworkGraph)
+        Public Sub ApplyAnalysis(ByRef g As NetworkGraph, Optional parallel As Boolean = False)
             Dim nodePool As Node() = g.vertex.ToArray
             Dim graph As NetworkGraph = g
 
-            Call System.Threading.Tasks.Parallel.ForEach(
-                source:=nodePool,
-                body:=Sub(node)
-                          node.data.neighbours = graph.GetNeighbours(node.label).ToArray
-                          node.data(NamesOf.REFLECTION_ID_MAPPING_DEGREE) = node.data.neighborhoods
-                      End Sub)
+            If parallel Then
+                Call System.Threading.Tasks.Parallel.ForEach(
+                    source:=nodePool,
+                    body:=Sub(node)
+                              node.data.neighbours = graph.GetNeighbours(node.label).ToArray
+                              node.data(NamesOf.REFLECTION_ID_MAPPING_DEGREE) = node.data.neighborhoods
+                          End Sub)
+            Else
+                For Each node As Node In nodePool
+                    node.data.neighbours = graph.GetNeighbours(node.label).ToArray
+                    node.data(NamesOf.REFLECTION_ID_MAPPING_DEGREE) = node.data.neighborhoods
+                Next
+            End If
 
             Call g.ComputeNodeDegrees
         End Sub
