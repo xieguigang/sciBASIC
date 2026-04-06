@@ -87,10 +87,15 @@ Namespace Graph
         ''' <param name="g"></param>
         <Extension>
         Public Sub ApplyAnalysis(ByRef g As NetworkGraph)
-            For Each node In g.vertex
-                node.data.neighbours = g.GetNeighbours(node.label).ToArray
-                node.data(NamesOf.REFLECTION_ID_MAPPING_DEGREE) = node.data.neighborhoods
-            Next
+            Dim nodePool As Node() = g.vertex.ToArray
+            Dim graph As NetworkGraph = g
+
+            Call System.Threading.Tasks.Parallel.ForEach(
+                source:=nodePool,
+                body:=Sub(node)
+                          node.data.neighbours = graph.GetNeighbours(node.label).ToArray
+                          node.data(NamesOf.REFLECTION_ID_MAPPING_DEGREE) = node.data.neighborhoods
+                      End Sub)
 
             Call g.ComputeNodeDegrees
         End Sub
