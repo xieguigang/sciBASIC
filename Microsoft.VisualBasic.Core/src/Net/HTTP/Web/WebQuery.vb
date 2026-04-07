@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::315e317f20582c58bc501fbea8a6ba9e, Microsoft.VisualBasic.Core\src\Net\HTTP\Web\WebQuery.vb"
+﻿#Region "Microsoft.VisualBasic::7a86001e7516b553842ea4db9e03158b, Microsoft.VisualBasic.Core\src\Net\HTTP\Web\WebQuery.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 72.57%
     ' 
     '   Blank Lines: 54 (14.40%)
-    '     File Size: 15.64 KB
+    '     File Size: 15.65 KB
 
 
     '     Class WebQuery

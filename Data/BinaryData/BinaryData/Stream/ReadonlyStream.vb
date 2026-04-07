@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::93f6a83769b7733e227e6108d2870de9, Data\BinaryData\SQLite3\Helpers\ReadonlyStream.vb"
+﻿#Region "Microsoft.VisualBasic::0b0d890a6dc37737de8f4ea7ff8501f8, Data\BinaryData\BinaryData\Stream\ReadonlyStream.vb"
 
     ' Author:
     ' 
@@ -34,21 +34,20 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 24
-    '    Code Lines: 20 (83.33%)
-    ' Comment Lines: 0 (0.00%)
-    '    - Xml Docs: 0.00%
+    '   Total Lines: 35
+    '    Code Lines: 17 (48.57%)
+    ' Comment Lines: 13 (37.14%)
+    '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 4 (16.67%)
-    '     File Size: 701 B
+    '   Blank Lines: 5 (14.29%)
+    '     File Size: 1.08 KB
 
 
-    '     Class ReadonlyStream
+    ' Class ReadonlyStream
     ' 
-    '         Properties: CanWrite
+    '     Properties: CanWrite
     ' 
-    '         Sub: Flush, SetLength, Write
-    ' 
+    '     Sub: Flush, SetLength, Write
     ' 
     ' /********************************************************************************/
 

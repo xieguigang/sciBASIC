@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7b149fee42e4e0790115bf8dd2d27c39, Data\DataFrame\DataFrame\FastLoader.vb"
+﻿#Region "Microsoft.VisualBasic::cd584b6177200d3813c3d199f1c08c93, Data\DataFrame\DataFrame\FastLoader.vb"
 
     ' Author:
     ' 
@@ -34,25 +34,15 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 155
-    '    Code Lines: 112 (72.26%)
-    ' Comment Lines: 18 (11.61%)
+    '   Total Lines: 66
+    '    Code Lines: 41 (62.12%)
+    ' Comment Lines: 18 (27.27%)
     '    - Xml Docs: 94.44%
     ' 
-    '   Blank Lines: 25 (16.13%)
-    '     File Size: 5.37 KB
+    '   Blank Lines: 7 (10.61%)
+    '     File Size: 2.51 KB
 
 
-    ' Class DataFrameReader
-    ' 
-    '     Properties: delimiter, rowHeader
-    ' 
-    '     Constructor: (+1 Overloads) Sub New
-    ' 
-    '     Function: GetFeatures, GetRowHeaders, ReadLine
-    ' 
-    '     Sub: ReadLine, ReadLines, ReadStreamLines
-    ' 
     ' Module FastLoader
     ' 
     '     Function: ParseFeature, ReadCsv

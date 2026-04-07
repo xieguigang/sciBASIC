@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ef1983f65954455948d0ede1c8b01030, Data_science\MachineLearning\GNN\Graph.vb"
+﻿#Region "Microsoft.VisualBasic::7cfb8056df36e1e8949c94633ba96202, Data_science\MachineLearning\GNN\Graph.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 327
-    '    Code Lines: 168 (51.38%)
-    ' Comment Lines: 113 (34.56%)
+    '   Total Lines: 326
+    '    Code Lines: 168 (51.53%)
+    ' Comment Lines: 113 (34.66%)
     '    - Xml Docs: 95.58%
     ' 
-    '   Blank Lines: 46 (14.07%)
-    '     File Size: 9.98 KB
+    '   Blank Lines: 45 (13.80%)
+    '     File Size: 9.97 KB
 
 
     ' Class Edge
@@ -66,7 +66,6 @@
     ' 
     '     Constructor: (+1 Overloads) Sub New
     '     Sub: Add
-    ' 
     ' 
     ' /********************************************************************************/
 
@@ -398,5 +397,3 @@ Public Class GraphDataset
         End Get
     End Property
 End Class
-
-

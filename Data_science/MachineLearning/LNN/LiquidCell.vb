@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::28e37c5092ba38cf83fb1ecf79ece4f3, Data_science\MachineLearning\LNN\LiquidCell.vb"
+﻿#Region "Microsoft.VisualBasic::41c19f5025be718bc32e2faa62d7b77c, Data_science\MachineLearning\LNN\LiquidCell.vb"
 
     ' Author:
     ' 
@@ -417,4 +417,3 @@ Public Class LiquidCell
 #End Region
 
 End Class
-

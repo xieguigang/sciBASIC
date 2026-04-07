@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3e08778ef6da65c32c935fac19c18ac1, Data_science\MachineLearning\GNN\TemporalModels.vb"
+﻿#Region "Microsoft.VisualBasic::7d12b74321c9d942a6e1f35fb7c62787, Data_science\MachineLearning\GNN\TemporalModels.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 652
-    '    Code Lines: 398 (61.04%)
-    ' Comment Lines: 127 (19.48%)
+    '   Total Lines: 651
+    '    Code Lines: 398 (61.14%)
+    ' Comment Lines: 127 (19.51%)
     '    - Xml Docs: 66.93%
     ' 
-    '   Blank Lines: 127 (19.48%)
-    '     File Size: 21.74 KB
+    '   Blank Lines: 126 (19.35%)
+    '     File Size: 21.73 KB
 
 
     ' Class TemporalGNNModel
@@ -79,7 +79,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 Imports Microsoft.VisualBasic.MachineLearning.TensorFlow
 Imports std = System.Math
@@ -732,4 +731,3 @@ Public Class TimeSeriesUtils
         Return result
     End Function
 End Class
-

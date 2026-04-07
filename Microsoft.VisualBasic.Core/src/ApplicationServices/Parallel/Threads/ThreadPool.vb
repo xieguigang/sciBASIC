@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::770ded09dc182a6fe5ffc77b0cce8418, Microsoft.VisualBasic.Core\src\ApplicationServices\Parallel\Threads\ThreadPool.vb"
+﻿#Region "Microsoft.VisualBasic::0b701a164ac6b3b86f1ad53840336084, Microsoft.VisualBasic.Core\src\ApplicationServices\Parallel\Threads\ThreadPool.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 69.07%
     ' 
     '   Blank Lines: 56 (15.86%)
-    '     File Size: 13.14 KB
+    '     File Size: 13.15 KB
 
 
     '     Class ThreadPool

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b7f3a087d06810bc2b2f4e4139a60a4c, Data\BinaryData\SQLite3\Objects\BTreeLeafTablePage.vb"
+﻿#Region "Microsoft.VisualBasic::5c6301794376a6db6de41c41ecf9e9d8, Data\BinaryData\SQLite3\Objects\BTreeLeafTablePage.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 101
-    '    Code Lines: 55 (54.46%)
-    ' Comment Lines: 24 (23.76%)
+    '   Total Lines: 104
+    '    Code Lines: 57 (54.81%)
+    ' Comment Lines: 24 (23.08%)
     '    - Xml Docs: 54.17%
     ' 
-    '   Blank Lines: 22 (21.78%)
-    '     File Size: 4.16 KB
+    '   Blank Lines: 23 (22.12%)
+    '     File Size: 4.10 KB
 
 
     '     Class BTreeLeafTablePage
@@ -48,6 +48,9 @@
     '         Properties: Cells
     ' 
     '         Constructor: (+1 Overloads) Sub New
+    ' 
+    '         Function: ParseCellInternal
+    ' 
     '         Sub: ParseInternal
     '         Structure Cell
     ' 

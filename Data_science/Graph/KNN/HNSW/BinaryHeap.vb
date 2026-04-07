@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9ad96fe7f514f7e32f5034e54be44e7f, Data_science\Graph\KNN\HNSW\BinaryHeap.vb"
+﻿#Region "Microsoft.VisualBasic::889a451d08abb6f7a7204792647283f0, Data_science\Graph\KNN\HNSW\BinaryHeap.vb"
 
     ' Author:
     ' 
@@ -207,4 +207,3 @@ Namespace KNearNeighbors.HNSW
         End Sub
     End Class
 End Namespace
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b5d416823ceb889f45ddda51bb3399da, Microsoft.VisualBasic.Core\src\ComponentModel\Algorithm\BinaryTree\RBTree\Iterator.vb"
+﻿#Region "Microsoft.VisualBasic::2e40096dd9087f9cd04516cb400ebbd0, Microsoft.VisualBasic.Core\src\ComponentModel\Algorithm\BinaryTree\RBTree\Iterator.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 76.92%
     ' 
     '   Blank Lines: 9 (7.83%)
-    '     File Size: 4.14 KB
+    '     File Size: 4.12 KB
 
 
     '     Class Iterator

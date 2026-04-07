@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9fe3907b4a14035cffd0166c64b46edf, Microsoft.VisualBasic.Core\src\Text\IO\GB2312.vb"
+﻿#Region "Microsoft.VisualBasic::4abcfe9ef97264ffc0db81ab0797aa97, Microsoft.VisualBasic.Core\src\Text\IO\GB2312.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 65.79%
     ' 
     '   Blank Lines: 28 (2.02%)
-    '     File Size: 72.57 KB
+    '     File Size: 72.58 KB
 
 
     '     Module GB2312

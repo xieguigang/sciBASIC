@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::12a1f2f74fda2007c6c54ffe5b2e1511, Data_science\MachineLearning\GNN\Activations.vb"
+﻿#Region "Microsoft.VisualBasic::5895cbe2276da2eb731d27e43f502ad3, Data_science\MachineLearning\GNN\Activations.vb"
 
     ' Author:
     ' 
@@ -34,12 +34,12 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 303
-    '    Code Lines: 162 (53.47%)
-    ' Comment Lines: 103 (33.99%)
+    '   Total Lines: 301
+    '    Code Lines: 162 (53.82%)
+    ' Comment Lines: 103 (34.22%)
     '    - Xml Docs: 94.17%
     ' 
-    '   Blank Lines: 38 (12.54%)
+    '   Blank Lines: 36 (11.96%)
     '     File Size: 10.39 KB
 
 
@@ -74,7 +74,6 @@
     ' Module LossFunctions
     ' 
     '     Function: Compute, Gradient
-    ' 
     ' 
     ' /********************************************************************************/
 
@@ -381,6 +380,3 @@ Public Module LossFunctions
         End Select
     End Function
 End Module
-
-
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::279d5f8932e56eb5963414a847240e4a, Microsoft.VisualBasic.Core\src\Scripting\Actives.vb"
+﻿#Region "Microsoft.VisualBasic::27c333b6bd29ff15f95eb5c512551df0, Microsoft.VisualBasic.Core\src\Scripting\Actives.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 93.55%
     ' 
     '   Blank Lines: 19 (10.50%)
-    '     File Size: 7.19 KB
+    '     File Size: 7.20 KB
 
 
     '     Module Activity

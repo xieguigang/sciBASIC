@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::215031126cdf33d1075e0483cd06223e, Data_science\MachineLearning\TensorFlow\Tensor.vb"
+﻿#Region "Microsoft.VisualBasic::69c51c5667af7c6c74f344e4842378ca, Data_science\MachineLearning\TensorFlow\Tensor.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 94.68%
     ' 
     '   Blank Lines: 157 (15.48%)
-    '     File Size: 30.89 KB
+    '     File Size: 30.88 KB
 
 
     ' Class Tensor
@@ -1081,4 +1081,3 @@ Public Class Tensor : Implements ICloneable, IDisposable
 #End Region
 
 End Class
-

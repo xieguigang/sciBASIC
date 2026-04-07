@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cf573c109d51df442ee5bcfacb95d813, Data_science\DataMining\BinaryTree\ClusterTree\ClusterViz.vb"
+﻿#Region "Microsoft.VisualBasic::90dc2c7d19d1440a416729fc097fdf50, Data_science\DataMining\BinaryTree\ClusterTree\ClusterViz.vb"
 
     ' Author:
     ' 
@@ -114,4 +114,3 @@ Public Module ClusterViz
         End If
     End Sub
 End Module
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0ffe7734572ed00c0c1613b759265e8b, Microsoft.VisualBasic.Core\src\ComponentModel\DataSource\SchemaMaps\Mappings.vb"
+﻿#Region "Microsoft.VisualBasic::14c2fdf791e0e2be95aa28ec25ce207f, Microsoft.VisualBasic.Core\src\ComponentModel\DataSource\SchemaMaps\Mappings.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 243
-    '    Code Lines: 142 (58.44%)
-    ' Comment Lines: 68 (27.98%)
+    '   Total Lines: 237
+    '    Code Lines: 137 (57.81%)
+    ' Comment Lines: 68 (28.69%)
     '    - Xml Docs: 91.18%
     ' 
-    '   Blank Lines: 33 (13.58%)
-    '     File Size: 9.86 KB
+    '   Blank Lines: 32 (13.50%)
+    '     File Size: 9.61 KB
 
 
     '     Module Mappings

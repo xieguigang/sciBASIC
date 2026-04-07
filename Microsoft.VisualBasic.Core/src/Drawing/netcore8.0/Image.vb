@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::722ddbe5a216ff3fcaf4fc44b6ccf042, Microsoft.VisualBasic.Core\src\Drawing\netcore8.0\Image.vb"
+﻿#Region "Microsoft.VisualBasic::1b1f65b717508c49a4c0170786af728a, Microsoft.VisualBasic.Core\src\Drawing\netcore8.0\Image.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 49.00%
     ' 
     '   Blank Lines: 61 (19.00%)
-    '     File Size: 12.36 KB
+    '     File Size: 12.38 KB
 
 
     '     Class Image

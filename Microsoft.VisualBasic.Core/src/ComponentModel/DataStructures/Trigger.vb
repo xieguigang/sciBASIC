@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ae5886bdee1b150a22ab337c8978e358, Microsoft.VisualBasic.Core\src\ComponentModel\DataStructures\Trigger.vb"
+﻿#Region "Microsoft.VisualBasic::b9fe904fb825674721841624781ebce7, Microsoft.VisualBasic.Core\src\ComponentModel\DataStructures\Trigger.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 89.74%
     ' 
     '   Blank Lines: 28 (17.72%)
-    '     File Size: 5.01 KB
+    '     File Size: 5.07 KB
 
 
     '     Class ITrigger

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2a9e37d8d59674697e952044fcc5b438, Data_science\MachineLearning\LNN\Documentation.vb"
+﻿#Region "Microsoft.VisualBasic::7a2960441c260c213a3654dee92ef163, Data_science\MachineLearning\LNN\Documentation.vb"
 
     ' Author:
     ' 
@@ -327,4 +327,3 @@
 ''' | GenerateSineWave | 生成正弦波 | length, frequency等 | Double() |
 ''' | CalculateMetrics | 计算评估指标 | predicted, actual | (mse, mae, rmse, mape) |
 '''
-

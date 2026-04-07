@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5aa83e4cb6e3f54adbc7163ce3b3dd9d, Data_science\Graph\KNN\HNSW\Graph.vb"
+﻿#Region "Microsoft.VisualBasic::c7c73db9937743ba67831de95aaab03c, Data_science\Graph\KNN\HNSW\Graph.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 40.13%
     ' 
     '   Blank Lines: 49 (14.50%)
-    '     File Size: 15.87 KB
+    '     File Size: 15.86 KB
 
 
     '     Delegate Function
@@ -400,4 +400,3 @@ Namespace KNearNeighbors.HNSW
         End Function
     End Class
 End Namespace
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2f01be1aaefdb7695b0d2da025f3728b, Microsoft.VisualBasic.Core\src\Serialization\JSON\JsonIgnoreAttribute.vb"
+﻿#Region "Microsoft.VisualBasic::783d637170daea9389ea567ec40ffd49, Microsoft.VisualBasic.Core\src\Serialization\JSON\JsonIgnoreAttribute.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 0.00%
     ' 
     '   Blank Lines: 3 (30.00%)
-    '     File Size: 223 B
+    '     File Size: 243 B
 
 
     ' Class JsonIgnoreAttribute

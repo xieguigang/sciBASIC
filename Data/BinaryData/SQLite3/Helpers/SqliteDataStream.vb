@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ef2a354c0087ebb4668bcef6c3a40702, Data\BinaryData\SQLite3\Helpers\SqliteDataStream.vb"
+﻿#Region "Microsoft.VisualBasic::163168f17f12ef20f8dda052eff7ef41, Data\BinaryData\SQLite3\Helpers\SqliteDataStream.vb"
 
     ' Author:
     ' 
@@ -34,12 +34,12 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 113
-    '    Code Lines: 76 (67.26%)
-    ' Comment Lines: 15 (13.27%)
+    '   Total Lines: 112
+    '    Code Lines: 75 (66.96%)
+    ' Comment Lines: 15 (13.39%)
     '    - Xml Docs: 53.33%
     ' 
-    '   Blank Lines: 22 (19.47%)
+    '   Blank Lines: 22 (19.64%)
     '     File Size: 4.06 KB
 
 

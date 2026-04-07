@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9fce7b99ba3a4bfb881c555e58a8f422, Data_science\MachineLearning\LNN\TimeSeriesUtils.vb"
+﻿#Region "Microsoft.VisualBasic::a89634344dffd6e133d06304854199d7, Data_science\MachineLearning\LNN\TimeSeriesUtils.vb"
 
     ' Author:
     ' 
@@ -183,4 +183,3 @@ Public Module TimeSeriesUtils
     End Function
 
 End Module
-

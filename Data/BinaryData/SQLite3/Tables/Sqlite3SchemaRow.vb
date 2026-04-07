@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cd513f5e628b87f17a6b8fbca002f2a5, Data\BinaryData\SQLite3\Tables\Sqlite3SchemaRow.vb"
+﻿#Region "Microsoft.VisualBasic::288c919101c72676a46f49dd6176544f, Data\BinaryData\SQLite3\Tables\Sqlite3SchemaRow.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 30
-    '    Code Lines: 21 (70.00%)
-    ' Comment Lines: 3 (10.00%)
-    '    - Xml Docs: 0.00%
+    '   Total Lines: 40
+    '    Code Lines: 21 (52.50%)
+    ' Comment Lines: 12 (30.00%)
+    '    - Xml Docs: 75.00%
     ' 
-    '   Blank Lines: 6 (20.00%)
-    '     File Size: 1.08 KB
+    '   Blank Lines: 7 (17.50%)
+    '     File Size: 1.41 KB
 
 
     '     Class Sqlite3SchemaRow

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5ada8ef7b5125e40f4b4099708517167, Data\DataFrame\StorageProvider\ComponntModels\RowBuilder.vb"
+﻿#Region "Microsoft.VisualBasic::96dfaab9d9ad863eb1ec98819e17c38b, Data\DataFrame\StorageProvider\ComponntModels\RowBuilder.vb"
 
     ' Author:
     ' 
@@ -34,21 +34,15 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 264
-    '    Code Lines: 167 (63.26%)
-    ' Comment Lines: 51 (19.32%)
-    '    - Xml Docs: 92.16%
+    '   Total Lines: 254
+    '    Code Lines: 163 (64.17%)
+    ' Comment Lines: 47 (18.50%)
+    '    - Xml Docs: 91.49%
     ' 
-    '   Blank Lines: 46 (17.42%)
-    '     File Size: 10.59 KB
+    '   Blank Lines: 44 (17.32%)
+    '     File Size: 10.26 KB
 
 
-    '     Interface ISchema
-    ' 
-    '         Properties: SchemaOridinal
-    ' 
-    '         Function: GetOrdinal
-    ' 
     '     Class RowBuilder
     ' 
     '         Properties: ColumnIndex, Columns, Defaults, HaveMetaAttribute, IndexedFields

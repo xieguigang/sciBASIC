@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::aa7aef23b210ad75f1c3190ad265ea4d, Microsoft.VisualBasic.Core\src\ComponentModel\DataStructures\Deque\Data.vb"
+﻿#Region "Microsoft.VisualBasic::3b9123179a23df398435db4d3315efee, Microsoft.VisualBasic.Core\src\ComponentModel\DataStructures\Deque\Data.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 87.10%
     ' 
     '   Blank Lines: 64 (16.08%)
-    '     File Size: 13.32 KB
+    '     File Size: 13.33 KB
 
 
     '     Class Data

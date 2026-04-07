@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1eddead2ce4775213838fe66a845fc35, Microsoft.VisualBasic.Core\src\Data\Trinity\Word.vb"
+﻿#Region "Microsoft.VisualBasic::ae637b4f6eadcb08451d98938a000a3b, Microsoft.VisualBasic.Core\src\Data\Trinity\Word.vb"
 
     ' Author:
     ' 

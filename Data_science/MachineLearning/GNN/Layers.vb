@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b51812c646bfff6193ea0ee1194ac196, Data_science\MachineLearning\GNN\Layers.vb"
+﻿#Region "Microsoft.VisualBasic::87ab5ced43aac5d1bb21595c4d2b4a11, Data_science\MachineLearning\GNN\Layers.vb"
 
     ' Author:
     ' 
@@ -783,4 +783,3 @@ Public Class GlobalPoolingLayer
         Return New List(Of Tensor)()
     End Function
 End Class
-

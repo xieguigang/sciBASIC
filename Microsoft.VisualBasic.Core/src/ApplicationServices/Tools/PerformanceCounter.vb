@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::09902d77b1a896d37bce048bed25cc3b, Microsoft.VisualBasic.Core\src\ApplicationServices\Tools\PerformanceCounter.vb"
+﻿#Region "Microsoft.VisualBasic::c573b7e294d66bedff88750ca23c292f, Microsoft.VisualBasic.Core\src\ApplicationServices\Tools\PerformanceCounter.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 18 (16.51%)
-    '     File Size: 3.37 KB
+    '     File Size: 3.46 KB
 
 
     '     Class PerformanceCounter

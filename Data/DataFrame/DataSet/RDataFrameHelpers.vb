@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::dc1e99083cce7dda739ce8c3f0ecdcba, Data\DataFrame\DataSet\RDataFrameHelpers.vb"
+﻿#Region "Microsoft.VisualBasic::b0e2729a33a0b805b9f7e1b12a394ec8, Data\DataFrame\DataSet\RDataFrameHelpers.vb"
 
     ' Author:
     ' 
@@ -34,18 +34,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 71
-    '    Code Lines: 48 (67.61%)
-    ' Comment Lines: 11 (15.49%)
+    '   Total Lines: 70
+    '    Code Lines: 47 (67.14%)
+    ' Comment Lines: 11 (15.71%)
     '    - Xml Docs: 90.91%
     ' 
-    '   Blank Lines: 12 (16.90%)
-    '     File Size: 2.74 KB
+    '   Blank Lines: 12 (17.14%)
+    '     File Size: 2.71 KB
 
 
     '     Module RDataFrameHelpers
     ' 
-    '         Function: InvalidsAsRLangNA, processValue, StripNaN
+    '         Function: InvalidsAsRLangNA, ProcessValue, StripNaN
     ' 
     ' 
     ' /********************************************************************************/

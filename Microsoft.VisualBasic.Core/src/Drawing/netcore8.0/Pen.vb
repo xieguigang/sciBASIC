@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::820050434d007b701f6908ac21255825, Microsoft.VisualBasic.Core\src\Drawing\netcore8.0\Pen.vb"
+﻿#Region "Microsoft.VisualBasic::fd93972fec5975ada32b5b1a5dadf34f, Microsoft.VisualBasic.Core\src\Drawing\netcore8.0\Pen.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 33.87%
     ' 
     '   Blank Lines: 42 (20.59%)
-    '     File Size: 6.66 KB
+    '     File Size: 6.68 KB
 
 
     '     Class Pen

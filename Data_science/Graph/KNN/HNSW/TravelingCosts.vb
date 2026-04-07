@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::adebdec7008e47e8c93a9786192ef284, Data_science\Graph\KNN\HNSW\TravelingCosts.vb"
+﻿#Region "Microsoft.VisualBasic::6e13cabcd45635520a690f2848c71507, Data_science\Graph\KNN\HNSW\TravelingCosts.vb"
 
     ' Author:
     ' 
@@ -133,4 +133,3 @@ Namespace KNearNeighbors.HNSW
         End Function
     End Class
 End Namespace
-

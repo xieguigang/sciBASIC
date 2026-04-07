@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::de3e328a50f8ccf0aeaa4ddc042aff9e, Data_science\MachineLearning\GNN\RecurrentLayers.vb"
+﻿#Region "Microsoft.VisualBasic::a204f6fbd18e47e44764d8b63b0b5b12, Data_science\MachineLearning\GNN\RecurrentLayers.vb"
 
     ' Author:
     ' 
@@ -34,12 +34,12 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 748
-    '    Code Lines: 452 (60.43%)
-    ' Comment Lines: 167 (22.33%)
+    '   Total Lines: 747
+    '    Code Lines: 452 (60.51%)
+    ' Comment Lines: 167 (22.36%)
     '    - Xml Docs: 62.28%
     ' 
-    '   Blank Lines: 129 (17.25%)
+    '   Blank Lines: 128 (17.14%)
     '     File Size: 26.38 KB
 
 
@@ -77,7 +77,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 Imports Microsoft.VisualBasic.MachineLearning.TensorFlow
 Imports std = System.Math
@@ -826,4 +825,3 @@ Public Class BidirectionalRNNLayer
         Return grads
     End Function
 End Class
-

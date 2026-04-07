@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a0bfab75cf597dc3f017ac620ac3e2c8, Microsoft.VisualBasic.Core\src\Extensions\Collection\Vector.vb"
+﻿#Region "Microsoft.VisualBasic::6dd832257865b71c97f267f7c771ae21, Microsoft.VisualBasic.Core\src\Extensions\Collection\Vector.vb"
 
     ' Author:
     ' 
@@ -34,24 +34,23 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 716
-    '    Code Lines: 398 (55.59%)
-    ' Comment Lines: 236 (32.96%)
-    '    - Xml Docs: 92.80%
+    '   Total Lines: 706
+    '    Code Lines: 390 (55.24%)
+    ' Comment Lines: 236 (33.43%)
+    '    - Xml Docs: 92.37%
     ' 
-    '   Blank Lines: 82 (11.45%)
-    '     File Size: 25.80 KB
+    '   Blank Lines: 80 (11.33%)
+    '     File Size: 25.66 KB
 
 
     ' Module VectorExtensions
     ' 
-    '     Function: (+2 Overloads) After, All, Append, Coalesce, Construct
-    '               (+2 Overloads) CopyOf, (+3 Overloads) Delete, (+2 Overloads) Fill, GetRange, IndexOf
-    '               Last, LoadAsNumericVector, MappingData, Midv, PadLeft
-    '               RepeatCalls, Replicate, SetValue, (+3 Overloads) Sort, Split
-    '               VectorShadows
+    '     Function: (+2 Overloads) After, All, Coalesce, Construct, (+2 Overloads) CopyOf
+    '               (+3 Overloads) Delete, (+2 Overloads) Fill, GetRange, IndexOf, Last
+    '               LoadAsNumericVector, MappingData, Midv, PadLeft, RepeatCalls
+    '               Replicate, SetValue, (+3 Overloads) Sort, Split, VectorShadows
     ' 
-    '     Sub: (+4 Overloads) Add, InsertAt, (+2 Overloads) Memset, RotateLeft, RotateRight
+    '     Sub: (+4 Overloads) Append, InsertAt, (+2 Overloads) Memset, RotateLeft, RotateRight
     ' 
     ' /********************************************************************************/
 

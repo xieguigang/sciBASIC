@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::93974714e2265da5681b38c933f18e82, Microsoft.VisualBasic.Core\src\CommandLine\CLI\ProcessEx.vb"
+﻿#Region "Microsoft.VisualBasic::4901d2d6f1ba00e01e5a7aa99ddb5dd0, Microsoft.VisualBasic.Core\src\CommandLine\CLI\ProcessEx.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 0.00%
     ' 
     '   Blank Lines: 11 (20.75%)
-    '     File Size: 1.84 KB
+    '     File Size: 1.85 KB
 
 
     '     Structure ProcessEx

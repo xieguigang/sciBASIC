@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1e19a89cc9a9ffdc77d59305c1aac05c, Data_science\MachineLearning\GNN\Models.vb"
+﻿#Region "Microsoft.VisualBasic::1f8308f833097308994369e4184ab0f3, Data_science\MachineLearning\GNN\Models.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 698
-    '    Code Lines: 364 (52.15%)
-    ' Comment Lines: 200 (28.65%)
+    '   Total Lines: 697
+    '    Code Lines: 364 (52.22%)
+    ' Comment Lines: 200 (28.69%)
     '    - Xml Docs: 78.00%
     ' 
-    '   Blank Lines: 134 (19.20%)
-    '     File Size: 22.35 KB
+    '   Blank Lines: 133 (19.08%)
+    '     File Size: 22.34 KB
 
 
     ' Class Optimizer
@@ -101,7 +101,6 @@
     '     Function: Evaluate, TrainEpoch
     ' 
     '     Sub: Train
-    ' 
     ' 
     ' /********************************************************************************/
 
@@ -804,5 +803,3 @@ Public Class GraphClassificationTrainer
         Console.WriteLine("训练完成！")
     End Sub
 End Class
-
-

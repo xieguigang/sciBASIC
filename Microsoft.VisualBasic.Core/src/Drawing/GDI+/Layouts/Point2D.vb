@@ -1,57 +1,57 @@
-﻿#Region "Microsoft.VisualBasic::69146a03273f33079d8adec0a514082b, Microsoft.VisualBasic.Core\src\Drawing\GDI+\Layouts\Point2D.vb"
+﻿#Region "Microsoft.VisualBasic::b02c25a8e422ef235f81be6a5476d8b0, Microsoft.VisualBasic.Core\src\Drawing\GDI+\Layouts\Point2D.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 165
-'    Code Lines: 95 (57.58%)
-' Comment Lines: 48 (29.09%)
-'    - Xml Docs: 95.83%
-' 
-'   Blank Lines: 22 (13.33%)
-'     File Size: 6.01 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Class Point2D
-' 
-'         Properties: Point, PointF, X, Y
-' 
-'         Constructor: (+5 Overloads) Sub New
-'         Function: Clone, (+3 Overloads) DistanceTo, (+2 Overloads) Equals, ToString
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 170
+    '    Code Lines: 99 (58.24%)
+    ' Comment Lines: 48 (28.24%)
+    '    - Xml Docs: 95.83%
+    ' 
+    '   Blank Lines: 23 (13.53%)
+    '     File Size: 6.12 KB
+
+
+    '     Class Point2D
+    ' 
+    '         Properties: Point, PointF, X, Y
+    ' 
+    '         Constructor: (+5 Overloads) Sub New
+    '         Function: Clone, (+3 Overloads) DistanceTo, (+2 Overloads) Equals, ToString
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

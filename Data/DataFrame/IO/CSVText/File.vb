@@ -1,80 +1,80 @@
-﻿#Region "Microsoft.VisualBasic::90165f997e31649aaf40760ac5f1dcc7, Data\DataFrame\IO\CSVText\File.vb"
+﻿#Region "Microsoft.VisualBasic::bcff6c9a31826bac07e2f34b1019ef5f, Data\DataFrame\IO\CSVText\File.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 977
-'    Code Lines: 593 (60.70%)
-' Comment Lines: 259 (26.51%)
-'    - Xml Docs: 96.91%
-' 
-'   Blank Lines: 125 (12.79%)
-'     File Size: 39.66 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Class File
-' 
-'         Properties: Cell, Columns, EstimatedFileSize, Headers, Rows
-'                     Width
-' 
-'         Constructor: (+4 Overloads) Sub New
-' 
-'         Function: __createTableVector, AppendLine, AppendLines, AppendRange, FindAll
-'                   FindAtColumn, Generate, GenerateDocument, GetAllStringTokens, GetByLine
-'                   InsertEmptyColumnBefore, Project, Remove, (+3 Overloads) Save, (+2 Overloads) ToArray
-'                   TokenCounts, ToString, Transpose, Trim
-' 
-'         Sub: __setColumn, Append, (+2 Overloads) AppendLine, DeleteCell, RemoveRange
-' 
-'         Operators: (+2 Overloads) +
-'         Delegate Function
-' 
-'             Properties: IsReadOnly, RowNumbers
-' 
-'             Function: __LINQ_LOAD, AsMatrix, Contains, Distinct, GetEnumerator
-'                       GetEnumerator1, IndexOf, IsNullOrEmpty, (+2 Overloads) Join, Load
-'                       (+2 Overloads) loads, (+2 Overloads) LoadTsv, Parse, ReadHeaderRow, Remove
-'                       RemoveSubRow, Save
-' 
-'             Sub: (+3 Overloads) Add, Clear, CopyTo, Insert, InsertAt
-'                  RemoveAt, Save
-' 
-'             Operators: <, <=, >, >=
-' 
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 978
+    '    Code Lines: 594 (60.74%)
+    ' Comment Lines: 259 (26.48%)
+    '    - Xml Docs: 96.91%
+    ' 
+    '   Blank Lines: 125 (12.78%)
+    '     File Size: 39.72 KB
+
+
+    '     Class File
+    ' 
+    '         Properties: Cell, Columns, EstimatedFileSize, Headers, Rows
+    '                     Width
+    ' 
+    '         Constructor: (+4 Overloads) Sub New
+    ' 
+    '         Function: __createTableVector, AppendLine, AppendLines, AppendRange, FindAll
+    '                   FindAtColumn, Generate, GenerateDocument, GetAllStringTokens, GetByLine
+    '                   InsertEmptyColumnBefore, Project, Remove, (+3 Overloads) Save, (+2 Overloads) ToArray
+    '                   TokenCounts, ToString, Transpose, Trim
+    ' 
+    '         Sub: __setColumn, Append, (+2 Overloads) AppendLine, DeleteCell, RemoveRange
+    ' 
+    '         Operators: (+2 Overloads) +
+    '         Delegate Function
+    ' 
+    '             Properties: IsReadOnly, RowNumbers
+    ' 
+    '             Function: __LINQ_LOAD, AsMatrix, Contains, Distinct, GetEnumerator
+    '                       GetEnumerator1, IndexOf, IsNullOrEmpty, (+2 Overloads) Join, Load
+    '                       (+2 Overloads) loads, (+2 Overloads) LoadTsv, Parse, ReadHeaderRow, Remove
+    '                       RemoveSubRow, Save
+    ' 
+    '             Sub: (+3 Overloads) Add, Clear, CopyTo, Insert, InsertAt
+    '                  RemoveAt, Save
+    ' 
+    '             Operators: <, <=, >, >=
+    ' 
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

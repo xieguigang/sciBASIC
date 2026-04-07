@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::66712626df77033780a1d2f07fa80e64, Data\DataFrame\IO\DataFrame\HeaderSchema.vb"
+﻿#Region "Microsoft.VisualBasic::a74f0a9c987e9972b84d993668b149ea, Data\DataFrame\StorageProvider\DataFrame\HeaderSchema.vb"
 
     ' Author:
     ' 
@@ -34,20 +34,20 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 153
-    '    Code Lines: 104 (67.97%)
-    ' Comment Lines: 26 (16.99%)
+    '   Total Lines: 161
+    '    Code Lines: 109 (67.70%)
+    ' Comment Lines: 26 (16.15%)
     '    - Xml Docs: 80.77%
     ' 
-    '   Blank Lines: 23 (15.03%)
-    '     File Size: 6.18 KB
+    '   Blank Lines: 26 (16.15%)
+    '     File Size: 6.49 KB
 
 
     '     Class HeaderSchema
     ' 
-    '         Properties: Count, Headers, SchemaOridinal
+    '         Properties: Count, Headers, SchemaOridinal, SchemaType
     ' 
-    '         Constructor: (+1 Overloads) Sub New
+    '         Constructor: (+2 Overloads) Sub New
     ' 
     '         Function: AddAttribute, createSchemaOridinal, GetName, GetOrdinal
     ' 

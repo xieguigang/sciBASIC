@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2f461cf9afdcc15b3f6d82862fadcc6f, Microsoft.VisualBasic.Core\src\Net\HTTP\sitemap.xml.vb"
+﻿#Region "Microsoft.VisualBasic::ce77c031bee0a532f7b3523bf518cb7c, Microsoft.VisualBasic.Core\src\Net\HTTP\sitemap.xml.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 92.31%
     ' 
     '   Blank Lines: 19 (17.59%)
-    '     File Size: 4.20 KB
+    '     File Size: 4.24 KB
 
 
     '     Class sitemap

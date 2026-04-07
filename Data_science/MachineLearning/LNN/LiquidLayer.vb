@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c022c6d8b946401aaa29a62584bb4938, Data_science\MachineLearning\LNN\LiquidLayer.vb"
+﻿#Region "Microsoft.VisualBasic::0ba781fab5cadc4941c3d310a04bb9b9, Data_science\MachineLearning\LNN\LiquidLayer.vb"
 
     ' Author:
     ' 
@@ -264,4 +264,3 @@ Public Class LiquidLayer
 #End Region
 
 End Class
-

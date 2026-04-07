@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a47f5ff6836b99b584893d13c745b300, Microsoft.VisualBasic.Core\src\CommandLine\CLI\IORedirectFile.vb"
+﻿#Region "Microsoft.VisualBasic::672054d8d343300897027e54f5729bbf, Microsoft.VisualBasic.Core\src\CommandLine\CLI\IORedirectFile.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 60.00%
     ' 
     '   Blank Lines: 40 (13.75%)
-    '     File Size: 14.30 KB
+    '     File Size: 14.31 KB
 
 
     '     Class IORedirectFile

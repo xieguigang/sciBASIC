@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3a94cd8be75c53832d4f1296079932d7, Data_science\Graph\KNN\HNSW\CosineDistance.vb"
+﻿#Region "Microsoft.VisualBasic::71380f5850f1991e8e6c47dab97f7b2c, Data_science\Graph\KNN\HNSW\CosineDistance.vb"
 
     ' Author:
     ' 
@@ -206,4 +206,3 @@ Namespace KNearNeighbors.HNSW
         End Function
     End Module
 End Namespace
-

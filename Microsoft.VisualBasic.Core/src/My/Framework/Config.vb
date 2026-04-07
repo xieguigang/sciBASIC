@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::13260cf48c897457c85e670782fa5ccf, Microsoft.VisualBasic.Core\src\My\Framework\Config.vb"
+﻿#Region "Microsoft.VisualBasic::0c5df641f44760a0e86a3e4c532bacd5, Microsoft.VisualBasic.Core\src\My\Framework\Config.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 29.41%
     ' 
     '   Blank Lines: 20 (14.81%)
-    '     File Size: 4.92 KB
+    '     File Size: 4.93 KB
 
 
     '     Class Config

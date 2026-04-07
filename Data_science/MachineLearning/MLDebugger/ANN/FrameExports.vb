@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::962c256bb295c4a9a1c3c91e694fe82f, Data_science\MachineLearning\MLDebugger\ANN\FrameExports.vb"
+﻿#Region "Microsoft.VisualBasic::466172b5d98cbaff665117b8cfce47e6, Data_science\MachineLearning\MLDebugger\ANN\FrameExports.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 11 (12.22%)
-    '     File Size: 3.69 KB
+    '     File Size: 3.71 KB
 
 
     ' Module FrameExports

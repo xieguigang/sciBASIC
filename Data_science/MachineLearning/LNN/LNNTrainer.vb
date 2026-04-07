@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c9d0c4aae7ea473b97432c95616aa97b, Data_science\MachineLearning\LNN\LNNTrainer.vb"
+﻿#Region "Microsoft.VisualBasic::902b8529ecb4e746d7ba31889ca4a564, Data_science\MachineLearning\LNN\LNNTrainer.vb"
 
     ' Author:
     ' 
@@ -489,4 +489,3 @@ Public Class LNNTrainer
 #End Region
 
 End Class
-

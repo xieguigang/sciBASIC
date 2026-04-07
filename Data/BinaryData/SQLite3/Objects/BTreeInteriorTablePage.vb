@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::31ea600258d26ab129fb033a307fb4ab, Data\BinaryData\SQLite3\Objects\BTreeInteriorTablePage.vb"
+﻿#Region "Microsoft.VisualBasic::7af20f02e496ea03023660f5d21d2fe2, Data\BinaryData\SQLite3\Objects\BTreeInteriorTablePage.vb"
 
     ' Author:
     ' 
@@ -34,12 +34,12 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 38
-    '    Code Lines: 27 (71.05%)
-    ' Comment Lines: 3 (7.89%)
+    '   Total Lines: 40
+    '    Code Lines: 27 (67.50%)
+    ' Comment Lines: 3 (7.50%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 8 (21.05%)
+    '   Blank Lines: 10 (25.00%)
     '     File Size: 1.33 KB
 
 

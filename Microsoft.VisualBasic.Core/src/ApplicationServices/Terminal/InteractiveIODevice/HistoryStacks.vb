@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::51b023e8ea88a6cb4e99bf79e5fd0993, Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\InteractiveIODevice\HistoryStacks.vb"
+﻿#Region "Microsoft.VisualBasic::009a39e787d9c3e21c76b9fd116ed80e, Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\InteractiveIODevice\HistoryStacks.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 30 (20.41%)
-    '     File Size: 4.55 KB
+    '     File Size: 4.57 KB
 
 
     '     Class HistoryStacks

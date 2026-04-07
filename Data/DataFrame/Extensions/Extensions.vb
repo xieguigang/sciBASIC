@@ -1,59 +1,59 @@
-﻿#Region "Microsoft.VisualBasic::df4fbe550d41a1331c11a92275ea0d6c, Data\DataFrame\Extensions\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::bb2e49db2e8358e26558fc9d46420b56, Data\DataFrame\Extensions\Extensions.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 668
-'    Code Lines: 381 (57.04%)
-' Comment Lines: 213 (31.89%)
-'    - Xml Docs: 92.96%
-' 
-'   Blank Lines: 74 (11.08%)
-'     File Size: 28.89 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-' Module Extensions
-' 
-'     Constructor: (+1 Overloads) Sub New
-' 
-'     Function: (+4 Overloads) AsDataSource, AsLinq, (+5 Overloads) DataFrame, GetLocusMapName, IsEmptyTable
-'               (+3 Overloads) LoadCsv, LoadDataFrame, LoadDblVector, LoadStream, LoadTsv
-'               SaveDataSet, (+2 Overloads) SaveTable, (+6 Overloads) SaveTo, TabExport, ToCsvDoc
-' 
-'     Sub: Cable, ForEach
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 669
+    '    Code Lines: 382 (57.10%)
+    ' Comment Lines: 213 (31.84%)
+    '    - Xml Docs: 92.96%
+    ' 
+    '   Blank Lines: 74 (11.06%)
+    '     File Size: 28.94 KB
+
+
+    ' Module Extensions
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    ' 
+    '     Function: (+4 Overloads) AsDataSource, AsLinq, (+5 Overloads) DataFrame, GetLocusMapName, IsEmptyTable
+    '               (+3 Overloads) LoadCsv, LoadDataFrame, LoadDblVector, LoadStream, LoadTsv
+    '               SaveDataSet, (+2 Overloads) SaveTable, (+6 Overloads) SaveTo, TabExport, ToCsvDoc
+    ' 
+    '     Sub: Cable, ForEach
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

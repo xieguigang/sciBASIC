@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4946ef24356d54bf4c0d5b39b371668a, Microsoft.VisualBasic.Core\src\Language\Language\C\CString.vb"
+﻿#Region "Microsoft.VisualBasic::130b2e4f9f4ba120711f40f83bbcccb0, Microsoft.VisualBasic.Core\src\Language\Language\C\CString.vb"
 
     ' Author:
     ' 

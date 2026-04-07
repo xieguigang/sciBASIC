@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e002b6eb754d64c2f1d8f4ecb163aa29, Data_science\Mathematica\Math\Math\Scripting\Factors\NamedVector.vb"
+﻿#Region "Microsoft.VisualBasic::b34604dfc640e3628db7ae169af0b103, Data_science\Mathematica\Math\Math\Scripting\Factors\NamedVector.vb"
 
     ' Author:
     ' 

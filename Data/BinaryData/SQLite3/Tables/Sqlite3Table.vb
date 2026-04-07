@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::02d4f87eecc4a51a71d321306472cde8, Data\BinaryData\SQLite3\Tables\Sqlite3Table.vb"
+﻿#Region "Microsoft.VisualBasic::721aa53013e77bf269434e08bafdc6bd, Data\BinaryData\SQLite3\Tables\Sqlite3Table.vb"
 
     ' Author:
     ' 
@@ -34,18 +34,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 162
-    '    Code Lines: 110 (67.90%)
-    ' Comment Lines: 25 (15.43%)
+    '   Total Lines: 151
+    '    Code Lines: 105 (69.54%)
+    ' Comment Lines: 25 (16.56%)
     '    - Xml Docs: 16.00%
     ' 
-    '   Blank Lines: 27 (16.67%)
-    '     File Size: 6.92 KB
+    '   Blank Lines: 21 (13.91%)
+    '     File Size: 6.81 KB
 
 
     '     Class Sqlite3Table
     ' 
-    '         Properties: SchemaDefinition, Settings
+    '         Properties: schema, SchemaDefinition, Settings
     ' 
     '         Constructor: (+1 Overloads) Sub New
     '         Function: EnumerateRows, ParseRow, ToString

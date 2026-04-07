@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8e63ff7b0f08bf9e9c0ada8c93173691, Data_science\MachineLearning\LNN\ODESolver.vb"
+﻿#Region "Microsoft.VisualBasic::72ad94159a1a4bc1bac04bf993e62d1c, Data_science\MachineLearning\LNN\ODESolver.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 127
-    '    Code Lines: 53 (41.73%)
-    ' Comment Lines: 50 (39.37%)
+    '   Total Lines: 126
+    '    Code Lines: 53 (42.06%)
+    ' Comment Lines: 50 (39.68%)
     '    - Xml Docs: 66.00%
     ' 
-    '   Blank Lines: 24 (18.90%)
-    '     File Size: 4.87 KB
+    '   Blank Lines: 23 (18.25%)
+    '     File Size: 4.86 KB
 
 
     ' Module ODESolver
@@ -55,7 +55,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 Imports Microsoft.VisualBasic.MachineLearning.TensorFlow
 Imports std = System.Math
@@ -183,4 +182,3 @@ Public Module ODESolver
     End Function
 
 End Module
-

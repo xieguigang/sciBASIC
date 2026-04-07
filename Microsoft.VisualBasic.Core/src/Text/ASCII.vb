@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::865705ad273db2d5b0e5d2c95a929419, Microsoft.VisualBasic.Core\src\Text\ASCII.vb"
+﻿#Region "Microsoft.VisualBasic::440d2daf818e98b8a0423b9f18430e72, Microsoft.VisualBasic.Core\src\Text\ASCII.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 99.22%
     ' 
     '   Blank Lines: 30 (6.24%)
-    '     File Size: 18.44 KB
+    '     File Size: 18.47 KB
 
 
     '     Class ASCII

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d5f76f287ce015b15285e8098d7701b1, Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\Utility\UnixMan\ManFile\ManIndex.vb"
+﻿#Region "Microsoft.VisualBasic::2ca8831be067e081bc090a072c005c8b, Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\Utility\UnixMan\ManFile\ManIndex.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 4 (21.05%)
-    '     File Size: 589 B
+    '     File Size: 602 B
 
 
     '     Class ManIndex

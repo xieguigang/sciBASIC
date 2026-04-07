@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d1c7ae16fd1b009167f7b65d9459f997, Microsoft.VisualBasic.Core\src\ComponentModel\DataSource\SchemaMaps\DataSource.vb"
+﻿#Region "Microsoft.VisualBasic::45fa8676b89cb9c01d9711b49cf4ac1b, Microsoft.VisualBasic.Core\src\ComponentModel\DataSource\SchemaMaps\DataSource\DataFrameColumnAttribute.vb"
 
     ' Author:
     ' 
@@ -34,26 +34,15 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 264
-    '    Code Lines: 148 (56.06%)
-    ' Comment Lines: 80 (30.30%)
-    '    - Xml Docs: 93.75%
+    '   Total Lines: 212
+    '    Code Lines: 122 (57.55%)
+    ' Comment Lines: 64 (30.19%)
+    '    - Xml Docs: 95.31%
     ' 
-    '   Blank Lines: 36 (13.64%)
-    '     File Size: 10.97 KB
+    '   Blank Lines: 26 (12.26%)
+    '     File Size: 9.41 KB
 
 
-    '     Class ColumnAttribute
-    ' 
-    '         Properties: [alias], Name
-    ' 
-    '         Constructor: (+2 Overloads) Sub New
-    '         Function: ToString
-    ' 
-    '     Class Field
-    ' 
-    '         Constructor: (+2 Overloads) Sub New
-    ' 
     '     Class DataFrameColumnAttribute
     ' 
     '         Properties: Description, Index, Name
@@ -61,10 +50,6 @@
     '         Constructor: (+4 Overloads) Sub New
     '         Function: __attrs, __attrsAll, __source, GetIndex, GetMapping
     '                   (+2 Overloads) LoadMapping, SetNameValue, ToString
-    ' 
-    '     Class DataFrameIO
-    ' 
-    ' 
     ' 
     ' 
     ' /********************************************************************************/

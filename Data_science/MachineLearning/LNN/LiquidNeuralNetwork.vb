@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5e8c3b6fb7c1aeef992866f102f5923a, Data_science\MachineLearning\LNN\LiquidNeuralNetwork.vb"
+﻿#Region "Microsoft.VisualBasic::cbfc9cb3602590cef9fd0b655714df3d, Data_science\MachineLearning\LNN\LiquidNeuralNetwork.vb"
 
     ' Author:
     ' 
@@ -34,12 +34,12 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 283
-    '    Code Lines: 126 (44.52%)
-    ' Comment Lines: 101 (35.69%)
+    '   Total Lines: 282
+    '    Code Lines: 126 (44.68%)
+    ' Comment Lines: 101 (35.82%)
     '    - Xml Docs: 80.20%
     ' 
-    '   Blank Lines: 56 (19.79%)
+    '   Blank Lines: 55 (19.50%)
     '     File Size: 8.22 KB
 
 
@@ -54,7 +54,6 @@
     '     Function: ComputeOutput, Forward, GetParameterCount, GetParameters, ProcessSequence
     ' 
     '     Sub: Dispose, ResetState
-    ' 
     ' 
     ' /********************************************************************************/
 
@@ -342,5 +341,3 @@ Public Class LiquidNeuralNetwork
 #End Region
 
 End Class
-
-

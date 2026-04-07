@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::007622c62f6f2e092fc0f4dad80b0bb5, Microsoft.VisualBasic.Core\src\Drawing\Bitmap\BitmapReader.vb"
+﻿#Region "Microsoft.VisualBasic::62a93067ed8f20ba0ef4d2e2cb401046, Microsoft.VisualBasic.Core\src\Drawing\Bitmap\BitmapReader.vb"
 
     ' Author:
     ' 

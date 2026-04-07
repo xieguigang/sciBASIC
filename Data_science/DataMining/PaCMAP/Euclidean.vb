@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6e18f619971c7087c44b99ee78a85274, Data_science\DataMining\PaCMAP\Euclidean.vb"
+﻿#Region "Microsoft.VisualBasic::bf34450ad3f62712f727b90b2f653b65, Data_science\DataMining\PaCMAP\Euclidean.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 69.35%
     ' 
     '   Blank Lines: 21 (13.12%)
-    '     File Size: 6.38 KB
+    '     File Size: 6.37 KB
 
 
     '     Module EuclideanDistance
@@ -216,4 +216,3 @@ Namespace PaCMAP
         End Function
     End Module
 End Namespace
-

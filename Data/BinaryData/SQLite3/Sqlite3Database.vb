@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b431bf8d2f3e3d7689dc4ea3e1122567, Data\BinaryData\SQLite3\Sqlite3Database.vb"
+﻿#Region "Microsoft.VisualBasic::0653de7d94c41805cf24971e6433ee07, Data\BinaryData\SQLite3\Sqlite3Database.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 105
-    '    Code Lines: 68 (64.76%)
-    ' Comment Lines: 18 (17.14%)
-    '    - Xml Docs: 55.56%
+    '   Total Lines: 115
+    '    Code Lines: 72 (62.61%)
+    ' Comment Lines: 23 (20.00%)
+    '    - Xml Docs: 60.87%
     ' 
-    '   Blank Lines: 19 (18.10%)
-    '     File Size: 4.19 KB
+    '   Blank Lines: 20 (17.39%)
+    '     File Size: 4.61 KB
 
 
     '     Class Sqlite3Database
@@ -49,7 +49,7 @@
     ' 
     '         Constructor: (+1 Overloads) Sub New
     ' 
-    '         Function: GetTable, OpenFile
+    '         Function: GetTable, (+2 Overloads) OpenFile
     ' 
     '         Sub: Dispose, Initialize, InitializeMasterTable
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::50bbc96e336f3b3716dbcdacf99cf754, Microsoft.VisualBasic.Core\src\Drawing\netcore8.0\GraphicsPath.vb"
+﻿#Region "Microsoft.VisualBasic::cc0a65135e543806948337764ad9c6a5, Microsoft.VisualBasic.Core\src\Drawing\netcore8.0\GraphicsPath.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 0.00%
     ' 
     '   Blank Lines: 45 (27.78%)
-    '     File Size: 4.62 KB
+    '     File Size: 4.65 KB
 
 
     '     Class PathData

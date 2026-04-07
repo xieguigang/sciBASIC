@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3adb80d92d8c160c07b704f23d04c994, Microsoft.VisualBasic.Core\src\Net\Wget\Axel\Axel.vb"
+﻿#Region "Microsoft.VisualBasic::761ec342c825518729aae647997bd973, Microsoft.VisualBasic.Core\src\Net\Wget\Axel\Axel.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 14.29%
     ' 
     '   Blank Lines: 41 (20.71%)
-    '     File Size: 8.28 KB
+    '     File Size: 8.38 KB
 
 
     '     Class Axel

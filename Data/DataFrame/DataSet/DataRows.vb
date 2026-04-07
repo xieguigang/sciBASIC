@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::579e1073f79dac06364700886f26a3d8, Data\DataFrame\DataSet\DataRows.vb"
+﻿#Region "Microsoft.VisualBasic::98e35e9543ec9a6048cefd5a3315e31b, Data\DataFrame\DataSet\DataRows.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 191
-    '    Code Lines: 125 (65.45%)
-    ' Comment Lines: 44 (23.04%)
+    '   Total Lines: 187
+    '    Code Lines: 121 (64.71%)
+    ' Comment Lines: 44 (23.53%)
     '    - Xml Docs: 90.91%
     ' 
-    '   Blank Lines: 22 (11.52%)
-    '     File Size: 7.68 KB
+    '   Blank Lines: 22 (11.76%)
+    '     File Size: 7.36 KB
 
 
     '     Class DataRows

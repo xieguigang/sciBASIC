@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ba75cbfa6938234a7d2d51951498749e, Data_science\Graph\KNN\HNSW\SmallWorld.vb"
+﻿#Region "Microsoft.VisualBasic::83375af5497c6cfede2d1239057ed903, Data_science\Graph\KNN\HNSW\SmallWorld.vb"
 
     ' Author:
     ' 
@@ -163,4 +163,3 @@ Namespace KNearNeighbors.HNSW
         End Function
     End Class
 End Namespace
-

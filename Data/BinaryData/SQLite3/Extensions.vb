@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5b2e294a7bab02f989a148184763ed48, Data\BinaryData\SQLite3\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::30d964276456c082ac8b42e6956f3bae, Data\BinaryData\SQLite3\Extensions.vb"
 
     ' Author:
     ' 
@@ -34,19 +34,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 69
-    '    Code Lines: 50 (72.46%)
-    ' Comment Lines: 10 (14.49%)
+    '   Total Lines: 68
+    '    Code Lines: 49 (72.06%)
+    ' Comment Lines: 10 (14.71%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 9 (13.04%)
-    '     File Size: 3.02 KB
+    '   Blank Lines: 9 (13.24%)
+    '     File Size: 3.13 KB
 
 
     '     Module Extensions
     ' 
     '         Function: (+3 Overloads) ExportTable
-    ' 
     ' 
     ' 
     ' /********************************************************************************/

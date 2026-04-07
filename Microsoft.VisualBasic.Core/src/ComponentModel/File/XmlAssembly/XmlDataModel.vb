@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::45654213426e1cd941481342733a8a59, Microsoft.VisualBasic.Core\src\ComponentModel\File\XmlAssembly\XmlDataModel.vb"
+﻿#Region "Microsoft.VisualBasic::9d71bf1b924bcb4357b83e433ddb907e, Microsoft.VisualBasic.Core\src\ComponentModel\File\XmlAssembly\XmlDataModel.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 89.29%
     ' 
     '   Blank Lines: 10 (11.11%)
-    '     File Size: 3.60 KB
+    '     File Size: 3.61 KB
 
 
     '     Class XmlDataModel

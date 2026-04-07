@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e10675fba2ca4afdb44b1e5540e67ea1, Data_science\Graph\KNN\HNSW\ReverseComparer.vb"
+﻿#Region "Microsoft.VisualBasic::1100e58afb71356115f750dc7c4369ff, Data_science\Graph\KNN\HNSW\ReverseComparer.vb"
 
     ' Author:
     ' 
@@ -109,4 +109,3 @@ Namespace KNearNeighbors.HNSW
         End Function
     End Module
 End Namespace
-

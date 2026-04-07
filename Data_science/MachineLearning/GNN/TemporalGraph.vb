@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::002319b22ba3914e28cf3148712af92c, Data_science\MachineLearning\GNN\TemporalGraph.vb"
+﻿#Region "Microsoft.VisualBasic::5bf71441e0f766472da4bc93e255d52a, Data_science\MachineLearning\GNN\TemporalGraph.vb"
 
     ' Author:
     ' 
@@ -502,4 +502,3 @@ Public Class TemporalGraphBuilder
         Return tg
     End Function
 End Class
-

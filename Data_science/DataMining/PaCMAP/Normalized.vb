@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cf6be586d64edfdb99b4580c113acb89, Data_science\DataMining\PaCMAP\Normalized.vb"
+﻿#Region "Microsoft.VisualBasic::04bca75e7fc9e8178ae1b26de2ab9559, Data_science\DataMining\PaCMAP\Normalized.vb"
 
     ' Author:
     ' 
@@ -133,4 +133,3 @@ Namespace PaCMAP
         End Function
     End Module
 End Namespace
-
