@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2ae0b7a797902656d883f8108429bc18, Data_science\Mathematica\Math\DataFrame\NamedSparseMatrix.vb"
+﻿#Region "Microsoft.VisualBasic::f7caf246e67c7722866ef17cec7bb4b3, Data_science\Mathematica\Math\DataFrame\NamedSparseMatrix.vb"
 
     ' Author:
     ' 
@@ -143,4 +143,3 @@ Public Class NamedSparseMatrix
         Return $"[{[Dim]} x {[Dim]}]"
     End Function
 End Class
-
