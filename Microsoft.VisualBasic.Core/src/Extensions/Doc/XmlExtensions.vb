@@ -62,6 +62,7 @@ Imports System.Reflection
 Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports System.Xml
+Imports System.Xml.Schema
 Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.ApplicationServices
 Imports Microsoft.VisualBasic.CommandLine.Reflection
@@ -133,7 +134,6 @@ Public Module XmlExtensions
             Return DirectCast(obj, T)
         End If
     End Function
-
 
     ''' <summary>
     ''' 从文件之中加载XML之中的数据至一个对象类型之中
@@ -252,10 +252,11 @@ Public Module XmlExtensions
                 Dim result As String = Encoding.UTF8.GetString(stream.ToArray())
                 Return result
             Else
-                Dim sBuilder As New StringBuilder(1024)
-                Using StreamWriter As New StringWriter(sb:=sBuilder)
-                    Call (New XmlSerializer(type)).Serialize(StreamWriter, obj)
-                    Return sBuilder.ToString
+                Dim xml As New StringBuilder(1024)
+
+                Using s As New StringWriter(sb:=xml)
+                    Call (New XmlSerializer(type)).Serialize(s, obj)
+                    Return xml.ToString
                 End Using
             End If
 
@@ -273,6 +274,45 @@ Public Module XmlExtensions
                 Return Nothing
             End If
         End Try
+    End Function
+
+    Public Function GenerateXsdFromType(type As Type) As String
+        ' 1. 使用 XmlReflectionImporter 将 .NET Type 映射为 XML 内部映射结构
+        Dim importer As New XmlReflectionImporter()
+
+        ' 2. 导入类型映射
+        Dim mapping As XmlTypeMapping = importer.ImportTypeMapping(type)
+
+        ' 3. 创建一个 XSD 模式集合
+        Dim schemas As New XmlSchemas()
+
+        ' 4. 使用 XmlSchemaExporter 将映射导出为 XSD 模式
+        Dim exporter As New XmlSchemaExporter(schemas)
+        exporter.ExportTypeMapping(mapping)
+
+        ' 5. 编译 XSD 模式，确保所有内部引用（如复杂嵌套对象）都被正确解析
+        schemas.Compile(Nothing, True)
+
+        ' 6. 将生成的 XSD 写入字符串
+        Dim sb As New StringBuilder(1024)
+        Using writer As New StringWriter(sb)
+            For Each schema As XmlSchema In schemas
+                ' 使用 XmlWriter 进行格式化输出，使 XSD 具有良好的缩进，便于阅读
+                Dim settings As New XmlWriterSettings() With {
+                .Indent = True,
+                .Encoding = Encoding.UTF8,
+                .OmitXmlDeclaration = False ' XSD通常需要保留xml声明
+            }
+
+                ' 注意：StringWriter 默认使用 UTF-16，如果直接给 XmlWriter 会在 XSD 中声明为 UTF-16
+                ' 这里强制设置 Encoding 为 UTF8 仅供声明使用（StringWriter 实际内部还是 Unicode）
+                Using xmlWriter As XmlWriter = XmlWriter.Create(writer, settings)
+                    schema.Write(xmlWriter)
+                End Using
+            Next
+        End Using
+
+        Return sb.ToString()
     End Function
 
     ''' <summary>
