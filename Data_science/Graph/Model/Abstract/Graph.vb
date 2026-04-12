@@ -232,6 +232,12 @@ Public MustInherit Class Graph(Of V As {New, TV}, Edge As {New, Edge(Of V)}, G A
         End If
     End Function
 
+    ''' <summary>
+    ''' get direct edge link
+    ''' </summary>
+    ''' <param name="u"></param>
+    ''' <param name="v"></param>
+    ''' <returns></returns>
     Public Function GetEdge(u As V, v As V) As Edge
         If Not linkIndex.ContainsKey(u.label) Then
             Return Nothing
