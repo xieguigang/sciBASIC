@@ -206,6 +206,11 @@ Public Class DataMatrix : Implements IBucketVector, INumericMatrix, ILabeledMatr
     End Function
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
+    Public Function HasObject(name As String) As Boolean
+        Return name Like names
+    End Function
+
+    <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function GetVector(name As String) As Double()
         Return names.Objects.Select(Function(a) Me(a, name)).ToArray
     End Function
