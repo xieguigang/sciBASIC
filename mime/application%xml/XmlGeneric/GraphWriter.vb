@@ -143,6 +143,13 @@ Public Class GraphWriter
         If Not text Is Nothing Then
             If text.PropertyType Is GetType(String()) AndAlso xml.text IsNot Nothing Then
                 Call text.SetValue(obj, New String() {xml.text})
+            ElseIf text.PropertyType.IsArray Then
+                Dim elType As Type = text.PropertyType.GetElementType
+                Dim val As Object = Scripting.CTypeDynamic(xml.text, elType)
+                Dim arr As Array = Array.CreateInstance(elType, 1)
+
+                Call arr.SetValue(val, 0)
+                Call text.SetValue(obj, arr)
             Else
                 Call text.SetValue(obj, Scripting.CTypeDynamic(xml.text, text.PropertyType))
             End If
