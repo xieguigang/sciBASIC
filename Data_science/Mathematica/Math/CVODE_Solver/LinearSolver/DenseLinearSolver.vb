@@ -1,4 +1,5 @@
-﻿
+﻿Imports std = System.Math
+
 ''' <summary>
 ''' 稠密线性求解器
 ''' 使用带部分主元选择的LU分解
