@@ -67,7 +67,8 @@ Namespace CVODEExamples
             Dim options As New CVODEOptions() With {
                 .RelativeTolerance = 0.000001,
                 .AbsoluteTolerance = 0.00000001,
-                .MaxOrder = 5
+                .MaxOrder = 5,
+                .MaxNewtonIterations = 100
             }
 
             Using solver As New CVODESolver(CVODEMethod.Adams, rhsFunc, 2, options)
