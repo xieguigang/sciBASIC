@@ -169,7 +169,7 @@ Public Class EntityProperty
     End Function
 
     Public Overrides Function ToString() As String
-        Return $"[resource: {resource}] ({Me.SchemaDataType.FullName}) '{value}'"
+        Return $"[resource: {resource}] ({Me.SchemaDataType.FullName}) '{value.JoinBy("; ")}'"
     End Function
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
