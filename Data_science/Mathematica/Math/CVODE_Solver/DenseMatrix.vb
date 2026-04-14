@@ -1,3 +1,5 @@
+Imports std = System.Math
+
 ' ============================================================================
 ' DenseMatrix.vb - 稠密矩阵类
 ' Sundials CVODE求解器的矩阵基础模块
@@ -8,8 +10,7 @@
 ''' 稠密矩阵类，提供矩阵存储和基本操作
 ''' 采用列优先存储方式，便于与BLAS/LAPACK风格的操作兼容
 ''' </summary>
-Public Class DenseMatrix
-    Implements ICloneable
+Public Class DenseMatrix : Implements ICloneable
 
     ' 矩阵数据存储（列优先）
     Private _data As Double(,)
@@ -394,7 +395,7 @@ Public Class DenseMatrix
                 sum += _data(i, j) * _data(i, j)
             Next
         Next
-        Return Math.Sqrt(sum)
+        Return std.Sqrt(sum)
     End Function
 
     ''' <summary>
@@ -405,7 +406,7 @@ Public Class DenseMatrix
         For j As Integer = 0 To _cols - 1
             Dim colSum As Double = 0.0
             For i As Integer = 0 To _rows - 1
-                colSum += Math.Abs(_data(i, j))
+                colSum += std.Abs(_data(i, j))
             Next
             If colSum > maxSum Then
                 maxSum = colSum
@@ -422,7 +423,7 @@ Public Class DenseMatrix
         For i As Integer = 0 To _rows - 1
             Dim rowSum As Double = 0.0
             For j As Integer = 0 To _cols - 1
-                rowSum += Math.Abs(_data(i, j))
+                rowSum += std.Abs(_data(i, j))
             Next
             If rowSum > maxSum Then
                 maxSum = rowSum
@@ -443,8 +444,8 @@ Public Class DenseMatrix
         Dim sb As New Text.StringBuilder()
         sb.AppendLine($"DenseMatrix({_rows}x{_cols}):")
         Const maxDisplay As Integer = 6
-        Dim displayRows As Integer = Math.Min(_rows, maxDisplay)
-        Dim displayCols As Integer = Math.Min(_cols, maxDisplay)
+        Dim displayRows As Integer = std.Min(_rows, maxDisplay)
+        Dim displayCols As Integer = std.Min(_cols, maxDisplay)
         For i As Integer = 0 To displayRows - 1
             sb.Append("  [")
             For j As Integer = 0 To displayCols - 1

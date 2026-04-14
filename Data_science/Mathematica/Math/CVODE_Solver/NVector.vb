@@ -1,3 +1,5 @@
+Imports std = System.Math
+
 ' ============================================================================
 ' NVector.vb - 向量操作类
 ' Sundials CVODE求解器的向量基础模块
@@ -8,8 +10,7 @@
 ''' NVector类实现了SUNDIALS中的N_Vector抽象数据类型
 ''' 提供向量的基本操作：创建、复制、算术运算、范数计算等
 ''' </summary>
-Public Class NVector
-    Implements ICloneable
+Public Class NVector : Implements ICloneable
 
     ' 向量数据存储
     Private _data As Double()
@@ -216,7 +217,7 @@ Public Class NVector
         End If
         Dim result As New NVector(x.Length)
         For i As Integer = 0 To x.Length - 1
-            If Math.Abs(y(i)) < Double.Epsilon Then
+            If std.Abs(y(i)) < Double.Epsilon Then
                 Throw New DivideByZeroException($"向量y在索引{i}处为零")
             End If
             result(i) = x(i) / y(i)
@@ -278,7 +279,7 @@ Public Class NVector
     Public Shared Function Abs(v As NVector) As NVector
         Dim result As New NVector(v.Length)
         For i As Integer = 0 To v.Length - 1
-            result(i) = Math.Abs(v(i))
+            result(i) = std.Abs(v(i))
         Next
         Return result
     End Function
@@ -292,7 +293,7 @@ Public Class NVector
             If v(i) < 0 Then
                 Throw New ArgumentException($"向量在索引{i}处为负数，无法计算平方根")
             End If
-            result(i) = Math.Sqrt(v(i))
+            result(i) = std.Sqrt(v(i))
         Next
         Return result
     End Function
@@ -309,7 +310,7 @@ Public Class NVector
         For i As Integer = 0 To _length - 1
             sum += _data(i) * _data(i)
         Next
-        Return Math.Sqrt(sum)
+        Return std.Sqrt(sum)
     End Function
 
     ''' <summary>
@@ -318,7 +319,7 @@ Public Class NVector
     Public Function L1Norm() As Double
         Dim sum As Double = 0.0
         For i As Integer = 0 To _length - 1
-            sum += Math.Abs(_data(i))
+            sum += std.Abs(_data(i))
         Next
         Return sum
     End Function
@@ -329,7 +330,7 @@ Public Class NVector
     Public Function InfinityNorm() As Double
         Dim maxVal As Double = 0.0
         For i As Integer = 0 To _length - 1
-            Dim absVal As Double = Math.Abs(_data(i))
+            Dim absVal As Double = std.Abs(_data(i))
             If absVal > maxVal Then
                 maxVal = absVal
             End If
@@ -350,7 +351,7 @@ Public Class NVector
             Dim temp As Double = weights(i) * _data(i)
             sum += temp * temp
         Next
-        Return Math.Sqrt(sum / _length)
+        Return std.Sqrt(sum / _length)
     End Function
 
     ''' <summary>
@@ -434,7 +435,7 @@ Public Class NVector
             Throw New ArgumentException("向量长度不匹配")
         End If
         For i As Integer = 0 To _length - 1
-            If Math.Abs(v(i)) < Double.Epsilon Then
+            If std.Abs(v(i)) < Double.Epsilon Then
                 Throw New DivideByZeroException($"向量v在索引{i}处为零")
             End If
             _data(i) /= v(i)

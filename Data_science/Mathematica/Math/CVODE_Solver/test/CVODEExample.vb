@@ -3,8 +3,7 @@
 ' 包含多个常微分方程组的求解示例
 ' ============================================================================
 
-Imports System
-Imports Sundials.CVODE
+Imports Microsoft.VisualBasic.Math.Sundials.CVODE
 
 Namespace CVODEExamples
 
@@ -66,8 +65,8 @@ Namespace CVODEExamples
 
             ' 创建求解器（使用Adams方法）
             Dim options As New CVODEOptions() With {
-                .RelativeTolerance = 1.0E-6,
-                .AbsoluteTolerance = 1.0E-8,
+                .RelativeTolerance = 0.000001,
+                .AbsoluteTolerance = 0.00000001,
                 .MaxOrder = 5
             }
 
@@ -83,9 +82,9 @@ Namespace CVODEExamples
 
                 ' 输出表头
                 Console.WriteLine()
-                Console.WriteLine("{0,8} {1,15} {2,15} {3,15} {4,12}", _
+                Console.WriteLine("{0,8} {1,15} {2,15} {3,15} {4,12}",
                     "时间", "数值解y1", "解析解", "误差", "步数")
-                Console.WriteLine("{0,8} {1,15:E6} {2,15:E6} {3,15:E6} {4,12}", _
+                Console.WriteLine("{0,8} {1,15:E6} {2,15:E6} {3,15:E6} {4,12}",
                     0.0, y0(0), Math.Cos(0.0), 0.0, 0)
 
                 ' 积分
@@ -103,7 +102,7 @@ Namespace CVODEExamples
                     Dim exact As Double = Math.Cos(tOut)
                     Dim err As Double = Math.Abs(y(0) - exact)
 
-                    Console.WriteLine("{0,8:F2} {1,15:E6} {2,15:E6} {3,15:E6} {4,12}", _
+                    Console.WriteLine("{0,8:F2} {1,15:E6} {2,15:E6} {3,15:E6} {4,12}",
                         tOut, y(0), exact, err, solver.TotalSteps)
                 Next
 
@@ -150,8 +149,8 @@ Namespace CVODEExamples
 
             ' 创建求解器
             Dim options As New CVODEOptions() With {
-                .RelativeTolerance = 1.0E-6,
-                .AbsoluteTolerance = 1.0E-8,
+                .RelativeTolerance = 0.000001,
+                .AbsoluteTolerance = 0.00000001,
                 .MaxOrder = 5
             }
 
@@ -167,9 +166,9 @@ Namespace CVODEExamples
 
                 ' 输出表头
                 Console.WriteLine()
-                Console.WriteLine("{0,8} {1,15} {2,15} {3,15} {4,10}", _
+                Console.WriteLine("{0,8} {1,15} {2,15} {3,15} {4,10}",
                     "时间", "x", "y", "z", "步数")
-                Console.WriteLine("{0,8:F2} {1,15:E6} {2,15:E6} {3,15:E6} {4,10}", _
+                Console.WriteLine("{0,8:F2} {1,15:E6} {2,15:E6} {3,15:E6} {4,10}",
                     0.0, y0(0), y0(1), y0(2), 0)
 
                 ' 积分
@@ -184,7 +183,7 @@ Namespace CVODEExamples
                         Exit For
                     End If
 
-                    Console.WriteLine("{0,8:F2} {1,15:E6} {2,15:E6} {3,15:E6} {4,10}", _
+                    Console.WriteLine("{0,8:F2} {1,15:E6} {2,15:E6} {3,15:E6} {4,10}",
                         tOut, y(0), y(1), y(2), solver.TotalSteps)
                 Next
 
@@ -222,22 +221,22 @@ Namespace CVODEExamples
                                              Dim y2 As Double = y(1)
                                              Dim y3 As Double = y(2)
 
-                                             ydot(0) = -0.04 * y1 + 1.0E4 * y2 * y3
-                                             ydot(1) = 0.04 * y1 - 1.0E4 * y2 * y3 - 3.0E7 * y2 * y2
-                                             ydot(2) = 3.0E7 * y2 * y2
+                                             ydot(0) = -0.04 * y1 + 10000.0 * y2 * y3
+                                             ydot(1) = 0.04 * y1 - 10000.0 * y2 * y3 - 30000000.0 * y2 * y2
+                                             ydot(2) = 30000000.0 * y2 * y2
                                          End Sub
 
             ' 创建求解器（使用BDF方法处理刚性）
             Dim options As New CVODEOptions() With {
-                .RelativeTolerance = 1.0E-4,
-                .AbsoluteTolerance = 1.0E-8,
+                .RelativeTolerance = 0.0001,
+                .AbsoluteTolerance = 0.00000001,
                 .MaxOrder = 5,
                 .MaxSteps = 100000
             }
 
             Using solver As New CVODESolver(CVODEMethod.BDF, rhsFunc, 3, options)
                 ' 设置分量绝对误差（y2需要更小的容差）
-                solver.SetAbsoluteTolerance(New NVector(New Double() {1.0E-6, 1.0E-10, 1.0E-6}))
+                solver.SetAbsoluteTolerance(New NVector(New Double() {0.000001, 0.0000000001, 0.000001}))
 
                 ' 初始条件
                 Dim y0 As New NVector(New Double() {1.0, 0.0, 0.0})
@@ -250,14 +249,14 @@ Namespace CVODEExamples
 
                 ' 输出表头
                 Console.WriteLine()
-                Console.WriteLine("{0,12} {1,15} {2,15} {3,15} {4,10}", _
+                Console.WriteLine("{0,12} {1,15} {2,15} {3,15} {4,10}",
                     "时间", "y1", "y2", "y3", "步数")
-                Console.WriteLine("{0,12:E2} {1,15:E6} {2,15:E6} {3,15:E6} {4,10}", _
+                Console.WriteLine("{0,12:E2} {1,15:E6} {2,15:E6} {3,15:E6} {4,10}",
                     0.0, y0(0), y0(1), y0(2), 0)
 
                 ' 积分（使用对数时间步）
                 Dim y As New NVector(3)
-                Dim tValues As Double() = {0.0, 0.4, 4.0, 40.0, 400.0, 4000.0, 40000.0, 400000.0, 4000000.0, 4.0E7, 4.0E8, 4.0E9, 4.0E10}
+                Dim tValues As Double() = {0.0, 0.4, 4.0, 40.0, 400.0, 4000.0, 40000.0, 400000.0, 4000000.0, 40000000.0, 400000000.0, 4000000000.0, 40000000000.0}
 
                 For i As Integer = 1 To tValues.Length - 1
                     Dim tOut As Double = tValues(i)
@@ -268,7 +267,7 @@ Namespace CVODEExamples
                         Exit For
                     End If
 
-                    Console.WriteLine("{0,12:E2} {1,15:E6} {2,15:E6} {3,15:E6} {4,10}", _
+                    Console.WriteLine("{0,12:E2} {1,15:E6} {2,15:E6} {3,15:E6} {4,10}",
                         tOut, y(0), y(1), y(2), solver.TotalSteps)
                 Next
 
@@ -320,8 +319,8 @@ Namespace CVODEExamples
 
             ' 创建求解器
             Dim options As New CVODEOptions() With {
-                .RelativeTolerance = 1.0E-6,
-                .AbsoluteTolerance = 1.0E-6,
+                .RelativeTolerance = 0.000001,
+                .AbsoluteTolerance = 0.000001,
                 .MaxOrder = 5,
                 .MaxSteps = 50000
             }
@@ -341,9 +340,9 @@ Namespace CVODEExamples
 
                 ' 输出表头
                 Console.WriteLine()
-                Console.WriteLine("{0,12} {1,15} {2,15} {3,12}", _
+                Console.WriteLine("{0,12} {1,15} {2,15} {3,12}",
                     "时间", "y1", "y2", "步数")
-                Console.WriteLine("{0,12:E2} {1,15:E6} {2,15:E6} {3,12}", _
+                Console.WriteLine("{0,12:E2} {1,15:E6} {2,15:E6} {3,12}",
                     0.0, y0(0), y0(1), 0)
 
                 ' 积分
@@ -358,7 +357,7 @@ Namespace CVODEExamples
                         Exit For
                     End If
 
-                    Console.WriteLine("{0,12:E2} {1,15:E6} {2,15:E6} {3,12}", _
+                    Console.WriteLine("{0,12:E2} {1,15:E6} {2,15:E6} {3,12}",
                         tOut, y(0), y(1), solver.TotalSteps)
                 Next
 

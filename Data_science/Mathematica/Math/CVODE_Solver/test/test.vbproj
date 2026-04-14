@@ -7,6 +7,9 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\..\..\Microsoft.VisualBasic.Core\src\Core.vbproj" />
+    <ProjectReference Include="..\..\Math\Math.NET5.vbproj" />
+    <ProjectReference Include="..\..\ODE\odes-netcore5.vbproj" />
     <ProjectReference Include="..\Sundials.CVODE.vbproj" />
   </ItemGroup>
 
