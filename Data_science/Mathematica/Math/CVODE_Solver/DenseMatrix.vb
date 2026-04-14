@@ -317,7 +317,7 @@ Public Class DenseMatrix : Implements ICloneable
     ''' 设置对角线元素
     ''' </summary>
     Public Sub SetDiagonal(value As Double)
-        Dim n As Integer = Math.Min(_rows, _cols)
+        Dim n As Integer = std.Min(_rows, _cols)
         For i As Integer = 0 To n - 1
             _data(i, i) = value
         Next

@@ -537,10 +537,10 @@ Public Class CVODESolver
 
         ' 限制步长范围
         If _options.MaxStep > 0 Then
-            _h = Math.Min(_h, _options.MaxStep)
+            _h = std.Min(_h, _options.MaxStep)
         End If
         If _options.MinStep > 0 Then
-            _h = Math.Max(_h, _options.MinStep)
+            _h = std.Max(_h, _options.MinStep)
         End If
 
         ' 确保步长为正
@@ -556,7 +556,7 @@ Public Class CVODESolver
     ''' </summary>
     Private Sub ComputeErrorWeights()
         For i As Integer = 0 To _n - 1
-            _ewt(i) = 1.0 / (_options.RelativeTolerance * Math.Abs(_y(i)) + _atol(i))
+            _ewt(i) = 1.0 / (_options.RelativeTolerance * std.Abs(_y(i)) + _atol(i))
         Next
     End Sub
 
@@ -661,8 +661,8 @@ Public Class CVODESolver
         ' 步长和阶数控制
         If errorNorm > 1.0 Then
             ' 误差过大，缩减步长
-            Dim factor As Double = _options.SafetyFactor / Math.Pow(errorNorm, 1.0 / (_q + 1))
-            factor = Math.Max(factor, _options.MinReductionFactor)
+            Dim factor As Double = _options.SafetyFactor / std.Pow(errorNorm, 1.0 / (_q + 1))
+            factor = std.Max(factor, _options.MinReductionFactor)
             _h *= factor
             Return CVODEStatus.TestFail
         End If
@@ -838,7 +838,7 @@ Public Class CVODESolver
         For j As Integer = 0 To _n - 1
             ' 计算差分步长
             Dim yj As Double = _y(j)
-            Dim delta As Double = Math.Max(DIFF_FACTOR * Math.Abs(yj), DIFF_FACTOR)
+            Dim delta As Double = std.Max(DIFF_FACTOR * std.Abs(yj), DIFF_FACTOR)
 
             ' 扰动
             yTemp.CopyFrom(_y)
@@ -922,9 +922,9 @@ Public Class CVODESolver
         Dim factor As Double = 1.0
 
         If errorNorm > 0 Then
-            factor = _options.SafetyFactor / Math.Pow(errorNorm, 1.0 / (_q + 1))
-            factor = Math.Max(factor, _options.MinReductionFactor)
-            factor = Math.Min(factor, _options.MaxGrowthFactor)
+            factor = _options.SafetyFactor / std.Pow(errorNorm, 1.0 / (_q + 1))
+            factor = std.Max(factor, _options.MinReductionFactor)
+            factor = std.Min(factor, _options.MaxGrowthFactor)
         End If
 
         ' 更新步长
@@ -932,10 +932,10 @@ Public Class CVODESolver
 
         ' 限制步长范围
         If _options.MaxStep > 0 Then
-            _h = Math.Min(_h, _options.MaxStep)
+            _h = std.Min(_h, _options.MaxStep)
         End If
         If _options.MinStep > 0 Then
-            _h = Math.Max(_h, _options.MinStep)
+            _h = std.Max(_h, _options.MinStep)
         End If
 
         ' 阶数控制（简化版本）

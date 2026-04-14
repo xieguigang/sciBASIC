@@ -1,3 +1,5 @@
+Imports std = System.Math
+
 ' ============================================================================
 ' LinearSolver.vb - 线性求解器
 ' Sundials CVODE求解器的线性代数求解模块
@@ -136,11 +138,11 @@ Public Class DenseLinearSolver
         ' LU分解主循环
         For k As Integer = 0 To _n - 1
             ' 寻找主元
-            Dim maxVal As Double = Math.Abs(data(k, k))
+            Dim maxVal As Double = std.Abs(data(k, k))
             Dim maxIdx As Integer = k
 
             For i As Integer = k + 1 To _n - 1
-                Dim absVal As Double = Math.Abs(data(i, k))
+                Dim absVal As Double = std.Abs(data(i, k))
                 If absVal > maxVal Then
                     maxVal = absVal
                     maxIdx = i
@@ -196,7 +198,7 @@ Public Class DenseLinearSolver
         Dim minDiag As Double = Double.MaxValue
         Dim maxDiag As Double = 0.0
         For i As Integer = 0 To _n - 1
-            Dim diag As Double = Math.Abs(_luMatrix(i, i))
+            Dim diag As Double = std.Abs(_luMatrix(i, i))
             If diag < minDiag Then minDiag = diag
             If diag > maxDiag Then maxDiag = diag
         Next
@@ -346,8 +348,8 @@ Public Class BandLinearSolver
             Throw New ArgumentException("矩阵维度必须为正数", NameOf(n))
         End If
         _n = n
-        _lowerBandwidth = Math.Min(lowerBandwidth, n - 1)
-        _upperBandwidth = Math.Min(upperBandwidth, n - 1)
+        _lowerBandwidth = std.Min(lowerBandwidth, n - 1)
+        _upperBandwidth = std.Min(upperBandwidth, n - 1)
         ' 存储格式：每行存储带内的元素
         _bandMatrix = New Double(n - 1, _lowerBandwidth + _upperBandwidth) {}
         _pivots = New Integer(n - 1) {}
@@ -365,7 +367,7 @@ Public Class BandLinearSolver
         If row < 0 OrElse row >= _n OrElse col < 0 OrElse col >= _n Then
             Throw New IndexOutOfRangeException()
         End If
-        If Math.Abs(row - col) > Math.Max(_lowerBandwidth, _upperBandwidth) Then
+        If std.Abs(row - col) > std.Max(_lowerBandwidth, _upperBandwidth) Then
             Throw New ArgumentException("元素超出带宽范围")
         End If
         ' 带状存储索引
@@ -380,7 +382,7 @@ Public Class BandLinearSolver
         If row < 0 OrElse row >= _n OrElse col < 0 OrElse col >= _n Then
             Throw New IndexOutOfRangeException()
         End If
-        If Math.Abs(row - col) > Math.Max(_lowerBandwidth, _upperBandwidth) Then
+        If std.Abs(row - col) > std.Max(_lowerBandwidth, _upperBandwidth) Then
             Return 0.0
         End If
         Dim j As Integer = col - row + _lowerBandwidth
@@ -396,7 +398,7 @@ Public Class BandLinearSolver
         End If
         Array.Clear(_bandMatrix, 0, _bandMatrix.Length)
         For i As Integer = 0 To _n - 1
-            For j As Integer = Math.Max(0, i - _lowerBandwidth) To Math.Min(_n - 1, i + _upperBandwidth)
+            For j As Integer = std.Max(0, i - _lowerBandwidth) To std.Min(_n - 1, i + _upperBandwidth)
                 SetElement(i, j, A(i, j))
             Next
         Next
@@ -415,12 +417,12 @@ Public Class BandLinearSolver
 
         For k As Integer = 0 To _n - 1
             ' 寻找主元
-            Dim maxVal As Double = Math.Abs(GetElement(k, k))
+            Dim maxVal As Double = std.Abs(GetElement(k, k))
             Dim maxIdx As Integer = k
-            Dim limit As Integer = Math.Min(_n - 1, k + _lowerBandwidth)
+            Dim limit As Integer = std.Min(_n - 1, k + _lowerBandwidth)
 
             For i As Integer = k + 1 To limit
-                Dim absVal As Double = Math.Abs(GetElement(i, k))
+                Dim absVal As Double = std.Abs(GetElement(i, k))
                 If absVal > maxVal Then
                     maxVal = absVal
                     maxIdx = i
@@ -435,7 +437,7 @@ Public Class BandLinearSolver
 
             ' 交换行
             If maxIdx <> k Then
-                For j As Integer = Math.Max(0, k - _lowerBandwidth) To Math.Min(_n - 1, k + _upperBandwidth)
+                For j As Integer = std.Max(0, k - _lowerBandwidth) To std.Min(_n - 1, k + _upperBandwidth)
                     Dim temp As Double = GetElement(k, j)
                     SetElement(k, j, GetElement(maxIdx, j))
                     SetElement(maxIdx, j, temp)
@@ -444,11 +446,11 @@ Public Class BandLinearSolver
 
             ' 更新
             Dim pivot As Double = GetElement(k, k)
-            limit = Math.Min(_n - 1, k + _lowerBandwidth)
+            limit = std.Min(_n - 1, k + _lowerBandwidth)
             For i As Integer = k + 1 To limit
                 Dim factor As Double = GetElement(i, k) / pivot
                 SetElement(i, k, factor)
-                For j As Integer = k + 1 To Math.Min(_n - 1, k + _upperBandwidth)
+                For j As Integer = k + 1 To std.Min(_n - 1, k + _upperBandwidth)
                     SetElement(i, j, GetElement(i, j) - factor * GetElement(k, j))
                 Next
             Next
@@ -485,7 +487,7 @@ Public Class BandLinearSolver
         ' 前代
         For i As Integer = 1 To _n - 1
             Dim sum As Double = x(i)
-            Dim start As Integer = Math.Max(0, i - _lowerBandwidth)
+            Dim start As Integer = std.Max(0, i - _lowerBandwidth)
             For j As Integer = start To i - 1
                 sum -= GetElement(i, j) * x(j)
             Next
@@ -495,7 +497,7 @@ Public Class BandLinearSolver
         ' 回代
         For i As Integer = _n - 1 To 0 Step -1
             Dim sum As Double = x(i)
-            Dim [end] As Integer = Math.Min(_n - 1, i + _upperBandwidth)
+            Dim [end] As Integer = std.Min(_n - 1, i + _upperBandwidth)
             For j As Integer = i + 1 To [end]
                 sum -= GetElement(i, j) * x(j)
             Next

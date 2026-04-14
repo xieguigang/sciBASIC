@@ -1,3 +1,5 @@
+Imports std = System.Math
+
 ' ============================================================================
 ' CVODEAdvanced.vb - CVODE高级功能扩展
 ' 包含根查找、事件检测、灵敏度分析等高级功能
@@ -189,7 +191,7 @@ Public Class CVODESolverEx
             ' 计算根函数值
             _rootFunc(tMid, CurrentState, gTemp)
 
-            If Math.Abs(gTemp(rootIndex)) < TOL Then
+            If std.Abs(gTemp(rootIndex)) < TOL Then
                 Return tMid
             End If
 
