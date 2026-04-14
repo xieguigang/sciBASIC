@@ -473,7 +473,7 @@ Public Class NVector : Implements ICloneable
             Return False
         End If
         For i As Integer = 0 To _length - 1
-            If Math.Abs(_data(i) - other(i)) > tolerance Then
+            If std.Abs(_data(i) - other(i)) > tolerance Then
                 Return False
             End If
         Next
@@ -514,10 +514,10 @@ Public Class NVector : Implements ICloneable
     ''' 查找最大绝对值及其索引
     ''' </summary>
     Public Function MaxAbs() As (value As Double, index As Integer)
-        Dim maxVal As Double = Math.Abs(_data(0))
+        Dim maxVal As Double = std.Abs(_data(0))
         Dim maxIdx As Integer = 0
         For i As Integer = 1 To _length - 1
-            Dim absVal As Double = Math.Abs(_data(i))
+            Dim absVal As Double = std.Abs(_data(i))
             If absVal > maxVal Then
                 maxVal = absVal
                 maxIdx = i
@@ -546,7 +546,7 @@ Public Class NVector : Implements ICloneable
         sb.Append("NVector[")
         sb.Append(_length)
         sb.Append("]: {")
-        Dim displayCount As Integer = Math.Min(_length, maxDisplay)
+        Dim displayCount As Integer = std.Min(_length, maxDisplay)
         For i As Integer = 0 To displayCount - 1
             If i > 0 Then sb.Append(", ")
             sb.Append(_data(i).ToString("G6"))

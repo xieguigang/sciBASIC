@@ -1,3 +1,5 @@
+Imports std = System.Math
+
 ' ============================================================================
 ' CVODE.vb - CVODE常微分方程求解器核心模块
 ' 实现变阶变步长的多步方法求解常微分方程组
@@ -956,7 +958,7 @@ Public Class CVODESolver
         If i < 0 OrElse i >= _adamsCoeffs.GetLength(1) Then
             Return 0.0
         End If
-        Dim qIdx As Integer = Math.Min(_q - 1, _adamsCoeffs.GetLength(0) - 1)
+        Dim qIdx As Integer = std.Min(_q - 1, _adamsCoeffs.GetLength(0) - 1)
         Return _adamsCoeffs(qIdx, i)
     End Function
 
@@ -967,7 +969,7 @@ Public Class CVODESolver
         If i < 0 OrElse i >= _bdfCoeffs.GetLength(1) Then
             Return 0.0
         End If
-        Dim qIdx As Integer = Math.Min(_q, _bdfCoeffs.GetLength(0) - 1)
+        Dim qIdx As Integer = std.Min(_q, _bdfCoeffs.GetLength(0) - 1)
         Return _bdfCoeffs(qIdx, i)
     End Function
 
