@@ -55,11 +55,12 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 
 ''' <summary>
 ''' A generic xml element node
 ''' </summary>
-Public Class XmlElement
+Public Class XmlElement : Implements IReadOnlyId
 
     ''' <summary>
     ''' the xml tag name
@@ -81,12 +82,9 @@ Public Class XmlElement
     ''' <returns></returns>
     Public Property comment As String
 
-    Public ReadOnly Property id As String
+    Public ReadOnly Property id As String Implements IReadOnlyId.Identity
         Get
-            Return attributes _
-                .Where(Function(a) a.Key = "id") _
-                .FirstOrDefault _
-                .Value
+            Return attributes.TryGetValue("id")
         End Get
     End Property
 

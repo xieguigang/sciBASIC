@@ -74,14 +74,13 @@ Public Module XmlParser
             .name = root.Name.LocalName,
             .[namespace] = root.Name.Namespace.ToString
         }
+        Dim xmlns As String
+        Dim attr_name As String
 
         If root.HasAttributes Then
-            Dim xmlns As String
-            Dim attr_name As String
-
             rootElement.attributes = New Dictionary(Of String, String)
 
-            For Each attr In root.Attributes
+            For Each attr As XAttribute In root.Attributes
                 xmlns = attr.Name.Namespace.ToString
                 attr_name = If(xmlns.StringEmpty, "", xmlns & "!") & attr.Name.LocalName
                 rootElement.attributes.Add(attr_name, attr.Value)

@@ -75,7 +75,7 @@ Public Class GraphWriter
     End Function
 
     Private Shared Sub WriteAttributes(xml As XmlElement, obj As Object, parent As SoapGraph)
-        For Each attr In xml.attributes
+        For Each attr As KeyValuePair(Of String, String) In xml.attributes
             Dim attrName = attr.Key.GetTagValue("!")
             Dim key As String = attrName.Value
             Dim value As Object = Nothing
@@ -93,7 +93,7 @@ Public Class GraphWriter
 
                 Call prop.SetValue(obj, value)
             Else
-                Call $"{parent} missing attribute property '{key}'!".Warning
+                Call $"{parent} missing attribute property '{key}'!".warning
             End If
         Next
     End Sub
