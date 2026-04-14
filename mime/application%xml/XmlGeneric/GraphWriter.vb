@@ -125,7 +125,7 @@ Public Class GraphWriter
             Call WriteAttributes(xml, obj, parent)
         End If
 
-        For Each objVal In members
+        For Each objVal As KeyValuePair(Of String, XmlElement()) In members
             If parent.writers.ContainsKey(objVal.Key) Then
                 Call WriteValue(
                     objKey:=objVal.Key,
