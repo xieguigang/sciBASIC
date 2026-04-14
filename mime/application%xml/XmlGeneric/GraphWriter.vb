@@ -140,8 +140,8 @@ Public Class GraphWriter
             End If
         Next
 
-        If Not text Is Nothing Then
-            If text.PropertyType Is GetType(String()) AndAlso xml.text IsNot Nothing Then
+        If text IsNot Nothing AndAlso xml.text IsNot Nothing Then
+            If text.PropertyType Is GetType(String()) Then
                 Call text.SetValue(obj, New String() {xml.text})
             ElseIf text.PropertyType.IsArray Then
                 Dim elType As Type = text.PropertyType.GetElementType
