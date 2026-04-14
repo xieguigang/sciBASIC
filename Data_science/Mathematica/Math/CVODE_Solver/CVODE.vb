@@ -556,7 +556,14 @@ Public Class CVODESolver
     ''' </summary>
     Private Sub ComputeErrorWeights()
         For i As Integer = 0 To _n - 1
-            _ewt(i) = 1.0 / (_options.RelativeTolerance * std.Abs(_y(i)) + _atol(i))
+            Dim denom As Double = 1.0 / (_options.RelativeTolerance * std.Abs(_y(i)) + _atol(i))
+
+            ' 防止除以极小值
+            If denom < 0.000000000001 Then
+                _ewt(i) = 1000000.0  ' 设置一个合理的上限
+            Else
+                _ewt(i) = 1.0 / denom
+            End If
         Next
     End Sub
 
@@ -754,6 +761,7 @@ Public Class CVODESolver
         ' Newton迭代
         Dim converged As Boolean = False
         Dim newtonIter As Integer = 0
+        Dim lastDeltaNorm As Double = Double.MaxValue
 
         ' 计算初始残差
         _rhsFunc(_t + _h, _y, _ydot)
@@ -778,12 +786,23 @@ Public Class CVODESolver
             ' 更新解
             _y.AddVector(_tempV2)
 
+            ' 20260414
+            ' 重新计算误差权重（可选，但建议）
+            ComputeErrorWeights()
+
             ' 检查收敛
             Dim deltaNorm As Double = _tempV2.WRMSNorm(_ewt)
             If deltaNorm < _options.NewtonConvergenceFactor Then
                 converged = True
                 Exit Do
             End If
+
+            ' 检查是否发散
+            If deltaNorm > 1000.0 * lastDeltaNorm Then
+                Return CVODEStatus.ConvFail
+            End If
+
+            lastDeltaNorm = deltaNorm
 
             ' 重新计算导数
             _rhsFunc(_t + _h, _y, _ydot)
