@@ -140,7 +140,7 @@ Public Class GraphWriter
             End If
         Next
 
-        If text IsNot Nothing AndAlso xml.text IsNot Nothing Then
+        If text IsNot Nothing AndAlso xml.text IsNot Nothing AndAlso xml.text <> "" Then
             If text.PropertyType Is GetType(String()) Then
                 Call text.SetValue(obj, New String() {xml.text})
             ElseIf text.PropertyType.IsArray Then
