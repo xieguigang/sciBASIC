@@ -363,6 +363,18 @@ Public Module Extensions
         End If
     End Function
 
+    ''' <summary>
+    ''' add all elements inside the given data collection into the dictionary
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    ''' <param name="table"></param>
+    ''' <param name="data"></param>
+    ''' <param name="key"></param>
+    ''' <param name="replaceDuplicated"></param>
+    ''' <returns></returns>
+    ''' <remarks>
+    ''' this function will skip add if the given <paramref name="data"/> collection is nothing
+    ''' </remarks>
     <Extension>
     Public Function AddRange(Of T)(ByRef table As Dictionary(Of String, T),
                                    data As IEnumerable(Of T),
@@ -371,11 +383,11 @@ Public Module Extensions
         If data Is Nothing Then
             Return table
         ElseIf replaceDuplicated Then
-            For Each obj In data
+            For Each obj As T In data
                 table(key(obj)) = obj
             Next
         Else
-            For Each obj In data
+            For Each obj As T In data
                 table.Add(key(obj), obj)
             Next
         End If
