@@ -89,9 +89,7 @@ Public Module DataSetHelper
     ''' </param>
     ''' <returns></returns>
     <Extension>
-    Public Function CommonDataSet(Of Row As {INamedValue, IVector})(mat As IEnumerable(Of Row),
-                                                                    colnames As String(),
-                                                                    Optional labels As Array = Nothing) As StatisticsObject
+    Public Function CommonDataSet(Of Row As {INamedValue, IVector})(mat As IEnumerable(Of Row), colnames As String(), Optional labels As Array = Nothing) As StatisticsObject
         Return mat _
             .Select(Function(r) New NamedCollection(Of Double)(r.Key, r.Data)) _
             .CommonDataSet(colnames, labels)

@@ -118,6 +118,15 @@ Public Class DataMatrix : Implements IBucketVector, INumericMatrix, ILabeledMatr
         Me.matrix = RectangularArray.Matrix(Of Double)(Me.names.Count, Me.names.Count)
     End Sub
 
+    Sub New(rows As IEnumerable(Of (String, Double())))
+        Dim mat = rows.ToArray
+
+        Me.names = mat.Select(Function(a) a.Item1).ToArray
+        Me.matrix = mat.Select(Function(a) a.Item2).ToArray
+
+        Call CheckDimensionInternal()
+    End Sub
+
     Sub New(names As Index(Of String), matrix As Double()())
         Me.names = names
         Me.matrix = matrix
