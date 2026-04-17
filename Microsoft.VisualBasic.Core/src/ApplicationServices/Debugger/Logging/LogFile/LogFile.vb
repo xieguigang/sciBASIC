@@ -74,9 +74,7 @@ Namespace ApplicationServices.Debugging.Logging
     ''' <remarks>
     ''' 这个类模块将输入的信息格式化保存到文本文件之中，记录的信息包括信息头，消息文本，以及消息等级
     ''' </remarks>
-    Public Class LogFile
-        Implements IFileReference
-        Implements IDisposable
+    Public Class LogFile : Implements IFileReference, IDisposable
 
         Dim buffer As TextWriter
         Dim counts&
@@ -155,6 +153,10 @@ Namespace ApplicationServices.Debugging.Logging
             End If
 
             Return New FileStream(path, If(append, FileMode.Append, FileMode.Truncate), access:=FileAccess.Write, share:=FileShare.ReadWrite)
+        End Function
+
+        Public Shared Function Open(filepath As String, Optional append As Boolean = False) As LogFile
+            Return New LogFile(filepath, append:=append)
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
