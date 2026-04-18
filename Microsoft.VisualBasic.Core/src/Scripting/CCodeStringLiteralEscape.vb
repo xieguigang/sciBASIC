@@ -44,8 +44,9 @@ Namespace Scripting
                     ' C语言字符串中的双引号必须转义
                     sb.Append("\""")
                     i += 1
-
-                    ' === 可选逻辑：如果你的XML中包含真实的控制字符（如真实的TAB/回车），而非 \t / \n 文本，需要下面这段 ===
+                ElseIf c = "'"c Then
+                    sb.Append("\'")
+                    i += 1
                 ElseIf c = ControlChars.Tab Then
                     sb.Append("\t")
                     i += 1
@@ -55,8 +56,6 @@ Namespace Scripting
                 ElseIf c = ControlChars.Cr Then
                     sb.Append("\r")
                     i += 1
-                    ' ==========================================
-
                 Else
                     ' 其他普通字符原样追加
                     sb.Append(c)
