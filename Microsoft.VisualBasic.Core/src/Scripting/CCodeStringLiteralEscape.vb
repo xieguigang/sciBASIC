@@ -31,7 +31,7 @@ Namespace Scripting
                             i += 2
                         Else
                             ' 非法转义：将反斜杠本身转义为双反斜杠（如 \{ 变为 \\{）
-                            sb.Append("\\")
+                            ' sb.Append("\\")
                             i += 1 ' 注意这里只加1，下一个循环会处理 nextChar
                         End If
                     Else
