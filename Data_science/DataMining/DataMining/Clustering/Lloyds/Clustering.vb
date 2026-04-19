@@ -84,8 +84,8 @@ Namespace Lloyds
 
         Public MustOverride Function Clustering() As List(Of Point)
 
-        Protected Shared Sub __writeCluster(source As IEnumerable(Of Cluster(Of Point)))
-            For Each c In source.SeqIterator
+        Protected Shared Sub writeCluster(source As IEnumerable(Of Cluster(Of Point)))
+            For Each c As SeqValue(Of Cluster(Of Point)) In source.SeqIterator
                 For Each x As Point In c.value.m_innerList
                     Call x.CompleteLinkageCluster(c.i)
                 Next
