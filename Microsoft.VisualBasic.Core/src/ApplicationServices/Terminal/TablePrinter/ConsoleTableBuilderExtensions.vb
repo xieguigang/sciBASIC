@@ -661,7 +661,7 @@ Namespace ApplicationServices.Terminal.TablePrinter
 
             Dim filledMap = definition
 
-            For Each c In CType([Enum].GetValues(GetType(CharMapPositions)), CharMapPositions())
+            For Each c As CharMapPositions In CType([Enum].GetValues(GetType(CharMapPositions)), CharMapPositions())
                 If Not filledMap.ContainsKey(c) Then
                     filledMap.Add(c, ASCII.NUL)
                 End If
@@ -677,7 +677,7 @@ Namespace ApplicationServices.Terminal.TablePrinter
 
             Dim filledMap = definition
 
-            For Each c In CType([Enum].GetValues(GetType(HeaderCharMapPositions)), HeaderCharMapPositions())
+            For Each c As HeaderCharMapPositions In CType([Enum].GetValues(GetType(HeaderCharMapPositions)), HeaderCharMapPositions())
                 If Not filledMap.ContainsKey(c) Then
                     filledMap.Add(c, ASCII.NUL)
                 End If

@@ -62,6 +62,30 @@ Namespace Linq
     <HideModuleName>
     Public Module IteratorExtensions
 
+        Public Iterator Function c(Of T)(ParamArray x As IEnumerable(Of T)()) As IEnumerable(Of T)
+            For Each xi As IEnumerable(Of T) In x
+                If xi IsNot Nothing Then
+                    For Each i As T In xi
+                        Yield i
+                    Next
+                End If
+            Next
+        End Function
+
+        Public Iterator Function c(Of T)(ParamArray xs As IEnumerable(Of T())()) As IEnumerable(Of T)
+            For Each xi As IEnumerable(Of T()) In xs
+                If xi IsNot Nothing Then
+                    For Each seq As T() In xi
+                        If seq IsNot Nothing Then
+                            For Each i As T In seq
+                                Yield i
+                            Next
+                        End If
+                    Next
+                End If
+            Next
+        End Function
+
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         <DebuggerStepThrough>
