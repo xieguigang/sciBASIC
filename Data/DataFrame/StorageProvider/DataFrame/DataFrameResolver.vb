@@ -1,73 +1,73 @@
 ﻿#Region "Microsoft.VisualBasic::1f02ec07b884ce80e5367ce972b5eff1, Data\DataFrame\StorageProvider\DataFrame\DataFrameResolver.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 857
-    '    Code Lines: 547 (63.83%)
-    ' Comment Lines: 182 (21.24%)
-    '    - Xml Docs: 82.42%
-    ' 
-    '   Blank Lines: 128 (14.94%)
-    '     File Size: 34.75 KB
+' Summaries:
 
 
-    '     Class DataFrameResolver
-    ' 
-    '         Properties: Depth, FieldCount, Headers, HeadTitles, IDataRecord_Item
-    '                     IsClosed, Item, Nrows, RecordsAffected, Rows
-    '                     SchemaOridinal
-    ' 
-    '         Constructor: (+3 Overloads) Sub New
-    ' 
-    '         Function: __createTableVector, [Select], AddAttribute, AppendLine, ColumnRows
-    '                   CreateDataSource, (+2 Overloads) CreateObject, createObjectInternal, csv, EnumerateData
-    '                   EnumerateRowObjects, GetBoolean, GetByte, GetBytes, GetChar
-    '                   GetChars, (+2 Overloads) getColumnList, GetColumnVectors, GetData, GetDataTypeName
-    '                   GetDateTime, GetDecimal, GetDouble, GetEnumerator, GetEnumerator2
-    '                   GetFieldType, GetFloat, GetGuid, GetInt16, GetInt32
-    '                   GetInt64, GetName, (+2 Overloads) GetOrdinal, GetOrdinalSchema, (+2 Overloads) GetRow
-    '                   GetRowData, GetSchemaTable, (+2 Overloads) GetString, GetValue, GetValueLambda
-    '                   GetValues, IDataRecord_GetValue, IsDBNull, (+2 Overloads) Load, LoadDataSet
-    '                   MeasureTypeSchema, Parse, ParseRowData, Read, Slice
-    '                   ToString
-    ' 
-    '         Sub: ChangeMapping, Close, CopyFrom, (+2 Overloads) Dispose, Initialize
-    '              Reset
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 857
+'    Code Lines: 547 (63.83%)
+' Comment Lines: 182 (21.24%)
+'    - Xml Docs: 82.42%
+' 
+'   Blank Lines: 128 (14.94%)
+'     File Size: 34.75 KB
+
+
+'     Class DataFrameResolver
+' 
+'         Properties: Depth, FieldCount, Headers, HeadTitles, IDataRecord_Item
+'                     IsClosed, Item, Nrows, RecordsAffected, Rows
+'                     SchemaOridinal
+' 
+'         Constructor: (+3 Overloads) Sub New
+' 
+'         Function: __createTableVector, [Select], AddAttribute, AppendLine, ColumnRows
+'                   CreateDataSource, (+2 Overloads) CreateObject, createObjectInternal, csv, EnumerateData
+'                   EnumerateRowObjects, GetBoolean, GetByte, GetBytes, GetChar
+'                   GetChars, (+2 Overloads) getColumnList, GetColumnVectors, GetData, GetDataTypeName
+'                   GetDateTime, GetDecimal, GetDouble, GetEnumerator, GetEnumerator2
+'                   GetFieldType, GetFloat, GetGuid, GetInt16, GetInt32
+'                   GetInt64, GetName, (+2 Overloads) GetOrdinal, GetOrdinalSchema, (+2 Overloads) GetRow
+'                   GetRowData, GetSchemaTable, (+2 Overloads) GetString, GetValue, GetValueLambda
+'                   GetValues, IDataRecord_GetValue, IsDBNull, (+2 Overloads) Load, LoadDataSet
+'                   MeasureTypeSchema, Parse, ParseRowData, Read, Slice
+'                   ToString
+' 
+'         Sub: ChangeMapping, Close, CopyFrom, (+2 Overloads) Dispose, Initialize
+'              Reset
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -427,24 +427,24 @@ Namespace StorageProvider
                                               Optional skipWhile As NamedValue(Of Func(Of String, Boolean)) = Nothing,
                                               Optional simpleRowIterators As Boolean = True,
                                               Optional tsv As Boolean = False) As DataFrameResolver
-            Dim file As IO.File
+            Dim table As IO.File
 
             If fast Then
-                file = FileLoader.FastLoad(path, True, encoding, skipWhile, tsv:=tsv)
+                table = FileLoader.FastLoad(path, True, encoding, skipWhile, tsv:=tsv)
             Else
-                file = file.Load(path, encoding, , skipWhile,
-                                 simpleRowIterator:=simpleRowIterators,
-                                 isTsv:=tsv)
+                table = IO.File.Load(path, encoding, , skipWhile,
+                    simpleRowIterator:=simpleRowIterators,
+                    isTsv:=tsv)
             End If
 
-            Return CreateObject(file)
+            Return CreateObject(table)
         End Function
 
         Public Overloads Shared Function Load(stream As Stream,
                                               Optional encoding As Encoding = Nothing,
                                               Optional isTsv As Boolean = False) As DataFrameResolver
-            Dim file As New IO.File With {
-                ._innerTable = file.loads(
+            Dim datafile As New IO.File With {
+                ._innerTable = IO.File.loads(
                     file:=stream,
                     encoding:=If(encoding, Encoding.Default),
                     trimBlanks:=False,
@@ -452,7 +452,7 @@ Namespace StorageProvider
                     isTsv:=isTsv
                 )
             }
-            Dim table As DataFrameResolver = CreateObject(file)
+            Dim table As DataFrameResolver = CreateObject(datafile)
 
             Return table
         End Function
