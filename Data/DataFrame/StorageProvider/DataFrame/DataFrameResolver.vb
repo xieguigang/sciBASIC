@@ -462,6 +462,16 @@ Namespace StorageProvider
             Return DataSet.LoadDataSet(path, encoding:=encoding)
         End Function
 
+        ''' <summary>
+        ''' Parse the csv document text data as a dynamics data frame object, the first line of the csv document will be used as the column headers of the data frame object.
+        ''' </summary>
+        ''' <typeparam name="T"></typeparam>
+        ''' <param name="content"></param>
+        ''' <returns></returns>
+        ''' <remarks>
+        ''' <see cref="IO.File.Parse"/> the given <paramref name="content"/> text as table object, and then
+        ''' <see cref="AsDataSource"/> cast table to target object collection
+        ''' </remarks>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overloads Shared Function Parse(Of T As Class)(content As String) As IEnumerable(Of T)
             Return IO.File.Parse(content).AsDataSource(Of T)
