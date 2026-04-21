@@ -444,8 +444,10 @@ Public Module TextDoc
     <Extension>
     Public Iterator Function ReadAllLines(s As Stream, Optional encoding As Encoding = Nothing) As IEnumerable(Of String)
         Using reader As New StreamReader(s, encoding Or UTF8)
-            Do While Not reader.EndOfStream
-                Yield reader.ReadLine
+            Dim line As Value(Of String) = ""
+
+            Do While (line = reader.ReadLine) IsNot Nothing
+                Yield CStr(line)
             Loop
         End Using
     End Function
