@@ -146,7 +146,6 @@ Public Class StatisticsMathematics
     End Function
 
     Public Shared Sub StatisticsProperties(dataArray As Double(,), <Out> ByRef mean As Double(), <Out> ByRef stdev As Double())
-
         Dim rowSize = dataArray.GetLength(0)
         Dim columnSize = dataArray.GetLength(1)
 

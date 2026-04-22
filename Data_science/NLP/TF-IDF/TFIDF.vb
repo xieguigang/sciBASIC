@@ -192,8 +192,14 @@ Public Class TFIDF
                                 Dim vec As New Vector(From xi As Object In r Select CDbl(xi))
                                 Dim norm As Double = std.Sqrt((vec ^ 2).Sum)
 
-                                ' get normalized sequence row data vector
-                                Return New NamedCollection(Of Double)(r.name, vec / norm)
+                                If norm = 0.0 Then
+                                    ' vec = 0
+                                    ' just do nothing
+                                    Return New NamedCollection(Of Double)(r.name, vec)
+                                Else
+                                    ' get normalized sequence row data vector
+                                    Return New NamedCollection(Of Double)(r.name, vec / norm)
+                                End If
                             End Function) _
                 .ToArray
 
