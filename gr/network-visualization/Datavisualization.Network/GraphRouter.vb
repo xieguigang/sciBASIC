@@ -93,6 +93,11 @@ Public Class GraphRouter
         Me.nodeSet = nodeSet
     End Sub
 
+    Public Function SetParallel(opt As Boolean) As GraphRouter
+        dijkstra.parallel = opt
+        Return Me
+    End Function
+
     Public Function FindPath(start As Network.Graph.Node, ends As Network.Graph.Node) As Route
         Dim i As Integer = nodes.TryGetValue(start, [default]:=-1)
         Dim j As Integer = nodes.TryGetValue(ends, [default]:=-1)
