@@ -1,63 +1,63 @@
 ﻿#Region "Microsoft.VisualBasic::c88e4dbf2cdd821633a9d353d79d050a, Data_science\Graph\Analysis\Dijkstra\DijkstraAlgoritm.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 277
-    '    Code Lines: 168 (60.65%)
-    ' Comment Lines: 66 (23.83%)
-    '    - Xml Docs: 43.94%
-    ' 
-    '   Blank Lines: 43 (15.52%)
-    '     File Size: 13.41 KB
+' Summaries:
 
 
-    '     Class DijkstraAlgoritm
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    '         Function: DistanceFinder, DistanceFinderInternal, FindPath, FindPathBiDirectional
-    '         Class Node
-    ' 
-    '             Properties: Index, IsFixed, Parent, Path, PathToString
-    '                         TotalDistance
-    ' 
-    '             Constructor: (+1 Overloads) Sub New
-    ' 
-    ' 
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 277
+'    Code Lines: 168 (60.65%)
+' Comment Lines: 66 (23.83%)
+'    - Xml Docs: 43.94%
+' 
+'   Blank Lines: 43 (15.52%)
+'     File Size: 13.41 KB
+
+
+'     Class DijkstraAlgoritm
+' 
+'         Constructor: (+1 Overloads) Sub New
+'         Function: DistanceFinder, DistanceFinderInternal, FindPath, FindPathBiDirectional
+'         Class Node
+' 
+'             Properties: Index, IsFixed, Parent, Path, PathToString
+'                         TotalDistance
+' 
+'             Constructor: (+1 Overloads) Sub New
+' 
+' 
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -95,8 +95,13 @@ Namespace Analysis.Dijkstra
         End Class
 
         ReadOnly graph As SparseMatrix
+        ''' <summary>
+        ''' 网络图中的节点总数
+        ''' </summary>
         ReadOnly vertices As Integer
         ReadOnly nodes As Node()
+
+        Public Property parallel As Boolean = True
 
         ''' <param name="graph">The adjacency matrix of the graph.</param>
         ''' <param name="vertices">Total number of vertices.</param>
@@ -161,32 +166,47 @@ Namespace Analysis.Dijkstra
                 ' 2. 标记该节点为已确定
                 currentNode.IsFixed = True
 
-                ' 3. 松弛操作：更新所有邻居的距离
-                ' 使用 Parallel.For 循环处理邻居更新
-                System.Threading.Tasks.Parallel.For(0, vertices,
-                    Sub(i)
-                        Dim neighbor As Node = nodes(i)
-
-                        If Not neighbor.IsFixed AndAlso graph(currentNode.Index, neighbor.Index) <> 0 Then
-                            ' 检查防溢出：如果当前节点距离已经是Max，则不更新
-                            If currentNode.TotalDistance <> Integer.MaxValue Then
-                                Dim newDist As Double = currentNode.TotalDistance + graph(currentNode.Index, neighbor.Index)
-
-                                If newDist < neighbor.TotalDistance Then
-                                    neighbor.TotalDistance = newDist
-                                    neighbor.Parent = currentNode.Index
-                                    ' 更新路径
-                                    neighbor.Path.Clear()
-                                    neighbor.Path.AddRange(currentNode.Path)
-                                    neighbor.Path.Add(currentNode.Index)
-                                End If
-                            End If
-                        End If
-                    End Sub)
+                If parallel Then
+                    ' 3. 松弛操作：更新所有邻居的距离
+                    ' 使用 Parallel.For 循环处理邻居更新
+                    System.Threading.Tasks.Parallel.For(0, vertices, Sub(i) Call UpdateNeighbor(currentNode, i))
+                Else
+                    ' 3. 松弛操作：更新所有邻居的距离
+                    For i As Integer = 0 To vertices - 1
+                        Call UpdateNeighbor(currentNode, i)
+                    Next
+                End If
             End While
 
             Return nodes
         End Function
+
+        Private Sub UpdateNeighbor(currentNode As Node, i As Integer)
+            Dim neighbor As Node = nodes(i)
+
+            If neighbor.IsFixed Then
+                Return
+            ElseIf graph(currentNode.Index, neighbor.Index) = 0.0 Then
+                Return
+            End If
+
+            ' 检查防溢出：如果当前节点距离已经是Max，则不更新
+            If currentNode.TotalDistance <> Integer.MaxValue Then
+                Dim newDist As Double = currentNode.TotalDistance + graph(currentNode.Index, neighbor.Index)
+
+                If newDist < neighbor.TotalDistance Then
+                    neighbor.TotalDistance = newDist
+                    neighbor.Parent = currentNode.Index
+
+                    SyncLock neighbor.Path
+                        ' 更新路径
+                        neighbor.Path.Clear()
+                        neighbor.Path.AddRange(currentNode.Path)
+                        neighbor.Path.Add(currentNode.Index)
+                    End SyncLock
+                End If
+            End If
+        End Sub
 
         ''' <summary>
         ''' Calculates the shortest path using Bi-Directional Dijkstra algorithm.
