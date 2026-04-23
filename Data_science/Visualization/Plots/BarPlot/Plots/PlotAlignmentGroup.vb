@@ -443,7 +443,7 @@ Namespace BarPlot
                     If displayX AndAlso o.value / yrange.Max >= labelPlotStrength Then
                         xlabel = o.x.ToString(theme.tagFormat)
 
-                        If checkHighlight.yes Then
+                        If checkHighlight.yes AndAlso Not checkHighlight.X.Name.StringEmpty(, True) Then
                             xlabel = xlabel & $" [{checkHighlight.X.Name}]"
                         End If
 
@@ -514,7 +514,7 @@ Namespace BarPlot
                     If displayX AndAlso o.value / yrange.Max >= labelPlotStrength Then
                         xlabel = o.x.ToString(theme.tagFormat)
 
-                        If checkHighlight.yes Then
+                        If checkHighlight.yes AndAlso Not checkHighlight.X.Name.StringEmpty(, True) Then
                             xlabel = xlabel & $" [{checkHighlight.X.Name}]"
                         End If
 
