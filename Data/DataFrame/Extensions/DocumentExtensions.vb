@@ -286,12 +286,14 @@ Public Module DocumentExtensions
     Public Function LoadTsv(Of T As Class)(path$,
                                            Optional encoding As Encodings = Encodings.Default,
                                            Optional nameMaps As NameMapping = Nothing,
-                                           Optional mute As Boolean = False) As IEnumerable(Of T)
+                                           Optional mute As Boolean = False,
+                                           Optional skipComments As Boolean = False) As IEnumerable(Of T)
         Return [Imports](Of T)(path,
                                delimiter:=ASCII.TAB,
                                encoding:=encoding.CodePage,
                                nameMaps:=nameMaps,
-                               mute:=mute)
+                               mute:=mute,
+                               skipComments:=skipComments)
     End Function
 
     ''' <summary>

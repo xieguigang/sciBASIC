@@ -100,9 +100,11 @@ Public Module DataImports
     ''' 
     Public Function [Imports](<Parameter("txt.Path", "The file path for the data imports text file.")> txtPath$,
                               Optional delimiter$ = ",",
-                              Optional encoding As Encoding = Nothing) As File
+                              Optional encoding As Encoding = Nothing,
+                              Optional skipComments As Boolean = False) As File
+
         Dim lines As String() = txtPath.ReadAllLines(encoding)
-        Dim csv As New File(ImportsData(lines, delimiter), txtPath)
+        Dim csv As New File(ImportsData(lines, delimiter, skipComments), txtPath)
         Return csv
     End Function
 
@@ -119,9 +121,10 @@ Public Module DataImports
                                              Optional delimiter$ = ",",
                                              Optional encoding As Encoding = Nothing,
                                              Optional nameMaps As Dictionary(Of String, String) = Nothing,
-                                             Optional mute As Boolean = False) As IEnumerable(Of T)
+                                             Optional mute As Boolean = False,
+                                             Optional skipComments As Boolean = False) As IEnumerable(Of T)
 
-        Dim source As IO.File = [Imports](path, delimiter, encoding)
+        Dim source As IO.File = [Imports](path, delimiter, encoding, skipComments:=skipComments)
 
         If source.RowNumbers = 0 Then
             Return New T() {}
@@ -130,11 +133,29 @@ Public Module DataImports
         End If
     End Function
 
-    <ExportAPI("Data.Imports")>
-    Public Function ImportsData(lines As IEnumerable(Of String), Optional delimiter$ = ",") As csvFile
+    ''' <summary>
+    ''' 通过正则表达式按照特定的分隔符对文本行进行切分，并将切分后的结果封装成一个csvFile对象返回。
+    ''' </summary>
+    ''' <param name="lines"></param>
+    ''' <param name="delimiter"></param>
+    ''' <param name="skipComment">
+    ''' 是否跳过以#开头的注释行，默认值为False。如果设置为True，则在处理文本行时会忽略掉所有以#开头的行，这些行通常被视为注释或元数据，不会被解析为数据行。
+    ''' </param>
+    ''' <returns></returns>
+    Public Function ImportsData(lines As IEnumerable(Of String),
+                                Optional delimiter As String = ",",
+                                Optional skipComment As Boolean = False) As csvFile
+
         Dim regexp As String = String.Format(SplitRegxExpression, delimiter)
-        Dim LQuery = (From line As String In lines Select RowParsing(line, regexp)).ToArray
-        Return New csvFile(LQuery)
+        Dim source As IEnumerable(Of String) = lines
+
+        If skipComment Then
+            source = lines.SkipWhile(Function(line) line.StartsWith("#"))
+        End If
+
+        Return New csvFile(From line As String
+                           In source
+                           Select RowParsing(line, regexp))
     End Function
 
     ''' <summary>
