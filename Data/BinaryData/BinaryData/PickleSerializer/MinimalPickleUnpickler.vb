@@ -1,12 +1,8 @@
-﻿' =====================================================================
-' 扩展的 Pickle 协议解析器与序列化器 (VB.NET)
-' 支持 Pickle 协议 0-5 的反序列化，以及协议 4 格式的序列化
-' =====================================================================
-Imports System.Text
+﻿Imports System.Globalization
 Imports System.IO
-Imports System.Collections
 Imports System.Reflection
-Imports System.Globalization
+Imports System.Text
+Imports std = System.Math
 
 ' =====================================================================
 ' 辅助类型定义
@@ -75,8 +71,8 @@ Public Class PythonTuple
 
     Public Overrides Function GetHashCode() As Integer
         Dim hash = 17
-        For Each Item In _items
-            hash = hash * 31 + If(Item?.GetHashCode(), 0)
+        For Each item As Object In _items
+            hash = hash * 31 + If(item?.GetHashCode(), 0)
         Next
         Return hash
     End Function
@@ -320,7 +316,7 @@ Public Class MinimalPickleUnpickler
     Private Const TUPLE3 As Byte = &H87             ' 3元素元组 (协议2+)
 
     ' ----- 对象构造 -----
-    Private Const Global As Byte = &H63             ' 全局引用 'c'
+    Private Const [GLOBAL] As Byte = &H63             ' 全局引用 'c'
     Private Const REDUCE As Byte = &H52             ' 调用可调用对象 'R'
     Private Const BUILD As Byte = &H62              ' 构建对象状态 'b'
     Private Const NEWOBJ As Byte = &H81             ' 构建新对象 (协议2+)
@@ -680,7 +676,7 @@ Public Class MinimalPickleUnpickler
                 ' ============================================================
                 ' 对象构造（REDUCE/GLOBAL/NEWOBJ/BUILD 模式）
                 ' ============================================================
-                Case Global
+                Case [GLOBAL]
                     ' 读取模块名和类名（各占一行），压入全局引用
                     Dim moduleName = ReadLine(reader)
                     Dim className = ReadLine(reader)
@@ -703,14 +699,14 @@ Public Class MinimalPickleUnpickler
                     ' 协议2：弹出新式类参数和类引用，构造空对象
                     Dim args = stack.Pop()
                     Dim cls = stack.Pop()
-                    stack.Push(NEWOBJ(cls, args))
+                    stack.Push(NewObjf(cls, args))
 
                 Case INST
                     ' 协议0：读取模块名和类名，弹出 Mark 以来的参数，构造旧式类实例
                     Dim moduleName = ReadLine(reader)
                     Dim className = ReadLine(reader)
                     Dim args = PopToMark(stack)
-                    stack.Push(NEWOBJ(New PythonGlobalRef(moduleName, className), New PythonTuple(args.ToArray())))
+                    stack.Push(NewObjf(New PythonGlobalRef(moduleName, className), New PythonTuple(args.ToArray())))
 
                 Case OBJ
                     ' 协议0：弹出 Mark 以来的元素，第一个为类引用，其余为参数
@@ -718,9 +714,9 @@ Public Class MinimalPickleUnpickler
                     If items.Count >= 2 Then
                         Dim cls = items(0)
                         Dim args = items.Skip(1).ToArray()
-                        stack.Push(NEWOBJ(cls, New PythonTuple(args)))
+                        stack.Push(NewObjf(cls, New PythonTuple(args)))
                     ElseIf items.Count = 1 Then
-                        stack.Push(NEWOBJ(items(0), New PythonTuple(Array.Empty(Of Object)())))
+                        stack.Push(NewObjf(items(0), New PythonTuple(Array.Empty(Of Object)())))
                     Else
                         Throw New InvalidDataException("OBJ 操作码需要至少一个类引用")
                     End If
@@ -915,20 +911,20 @@ Public Class MinimalPickleUnpickler
 
         ' 无法识别的可调用对象，返回 PythonObject 包装器
         Dim argArray = ExtractArgs(args)
-        Return New PythonObject("unknown", callable?.ToString() ?? "callable", argArray)
+        Return New PythonObject("unknown", If(callable?.ToString(), "callable"), argArray)
     End Function
 
     ''' <summary>
     ''' 处理 NEWOBJ 操作码：使用类引用和参数构造新式类实例。
     ''' </summary>
-    Private Shared Function NewObj(cls As Object, args As Object) As Object
+    Private Shared Function NewObjf(cls As Object, args As Object) As Object
         Dim globalRef = TryCast(cls, PythonGlobalRef)
         If globalRef IsNot Nothing Then
             Return ConstructPythonObject(globalRef, args)
         End If
 
         Dim argArray = ExtractArgs(args)
-        Return New PythonObject("unknown", cls?.ToString() ?? "class", argArray)
+        Return New PythonObject("unknown", If(cls?.ToString(), "class"), argArray)
     End Function
 
     ''' <summary>
@@ -1266,7 +1262,7 @@ Public Class MinimalPicklePickler
     Private Const TUPLE3 As Byte = &H87
 
     ' 对象构造
-    Private Const Global As Byte = &H63
+    Private Const [GLOBAL] As Byte = &H63
     Private Const REDUCE As Byte = &H52
     Private Const BUILD As Byte = &H62
     Private Const NEWOBJ As Byte = &H81
@@ -1516,7 +1512,7 @@ Public Class MinimalPicklePickler
 
     ''' <summary>
     ''' 序列化 UTF-8 字符串。自动选择长度前缀大小：
-    '''   UTF8字节长度 <= 255  → SHORT_BINUNICODE (2字节头)
+    '''   UTF8字节长度 &lt;= 255  → SHORT_BINUNICODE (2字节头)
     '''   UTF8字节长度 > 255   → BINUNICODE (5字节头)
     ''' </summary>
     Private Sub SerializeString(value As String)
@@ -1534,7 +1530,7 @@ Public Class MinimalPicklePickler
 
     ''' <summary>
     ''' 序列化字节数组。自动选择长度前缀大小：
-    '''   长度 <= 255  → SHORT_BINBYTES (2字节头)
+    '''   长度 &lt;= 255  → SHORT_BINBYTES (2字节头)
     '''   长度 > 255   → BINBYTES (5字节头)
     ''' </summary>
     Private Sub SerializeBytes(value As Byte())
@@ -1634,7 +1630,7 @@ Public Class MinimalPicklePickler
                 For i = 0 To tuple.Length - 1
                     SerializeObject(tuple(i))
                 Next
-                _output.Add(tuple)
+                _output.Add(MinimalPicklePickler.TUPLE)
         End Select
 
         AddToMemo(tuple)
@@ -1667,7 +1663,7 @@ Public Class MinimalPicklePickler
         Dim dtUnspecified = New DateTime(dt.Ticks, DateTimeKind.Unspecified)
 
         ' GLOBAL: 引用 datetime.datetime
-        _output.Add(Global)
+        _output.Add([GLOBAL])
         _output.AddRange(Encoding.ASCII.GetBytes("datetime" & vbLf))
         _output.AddRange(Encoding.ASCII.GetBytes("datetime" & vbLf))
 
@@ -1690,13 +1686,13 @@ Public Class MinimalPicklePickler
     ''' </summary>
     Private Sub SerializeTimeSpan(ts As TimeSpan)
         ' GLOBAL: 引用 datetime.timedelta
-        _output.Add(Global)
+        _output.Add([GLOBAL])
         _output.AddRange(Encoding.ASCII.GetBytes("datetime" & vbLf))
         _output.AddRange(Encoding.ASCII.GetBytes("timedelta" & vbLf))
 
         ' 构造参数元组: (days, seconds, microseconds)
-        Dim totalDays = CLng(Math.Truncate(ts.TotalDays))
-        Dim remainingSeconds = CLng(Math.Truncate(ts.TotalSeconds)) - totalDays * 86400L
+        Dim totalDays = CLng(std.Truncate(ts.TotalDays))
+        Dim remainingSeconds = CLng(std.Truncate(ts.TotalSeconds)) - totalDays * 86400L
         Dim microseconds = (ts.Ticks Mod 10000000L) \ 10L ' 剩余微秒
         SerializeObject(New PythonTuple(New Object() {totalDays, remainingSeconds, microseconds}))
 
@@ -1709,7 +1705,7 @@ Public Class MinimalPicklePickler
     ''' 使用 GLOBAL + 参数元组 + REDUCE 模式。
     ''' </summary>
     Private Sub SerializeComplex(c As ComplexNumber)
-        _output.Add(Global)
+        _output.Add([GLOBAL])
         _output.AddRange(Encoding.ASCII.GetBytes("builtins" & vbLf))
         _output.AddRange(Encoding.ASCII.GetBytes("complex" & vbLf))
 
@@ -1726,7 +1722,7 @@ Public Class MinimalPicklePickler
     ''' </summary>
     Private Sub SerializePythonObject(pyObj As PythonObject)
         ' GLOBAL: 引用模块.类
-        _output.Add(Global)
+        _output.Add([GLOBAL])
         _output.AddRange(Encoding.ASCII.GetBytes(pyObj.ModuleName & vbLf))
         _output.AddRange(Encoding.ASCII.GetBytes(pyObj.ClassName & vbLf))
 
@@ -1757,7 +1753,7 @@ Public Class MinimalPicklePickler
         Dim objType = obj.GetType()
 
         ' GLOBAL: 引用命名空间.类名
-        _output.Add(Global)
+        _output.Add([GLOBAL])
         Dim ns = If(objType.Namespace, "")
         _output.AddRange(Encoding.ASCII.GetBytes(ns & vbLf))
         _output.AddRange(Encoding.ASCII.GetBytes(objType.Name & vbLf))
