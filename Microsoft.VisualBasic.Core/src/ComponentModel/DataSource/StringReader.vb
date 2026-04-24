@@ -68,6 +68,7 @@
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.Repository
 Imports Microsoft.VisualBasic.Scripting
+Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Microsoft.VisualBasic.Text
 
 Namespace ComponentModel.DataSourceModel
@@ -154,6 +155,43 @@ Namespace ComponentModel.DataSourceModel
         Public Function GetOrdinal(name As String) As Integer Implements IStringGetter.GetOrdinal
             Return keys.IndexOf(name)
         End Function
+    End Class
+
+    Public Class StringArrayPointer
+
+        Dim i As Integer
+        Dim vec As IReadOnlyCollection(Of String)
+
+        Sub New(array As IReadOnlyCollection(Of String))
+            vec = array
+        End Sub
+
+        Public Function ReadString() As String
+            Dim str As String
+
+            If i < vec.Count Then
+                str = vec(i)
+            Else
+                str = Nothing
+            End If
+
+            i += 1
+
+            Return str
+        End Function
+
+        Public Function ReadDouble() As Double
+            Return Val(ReadString)
+        End Function
+
+        Public Function ReadInteger() As Integer
+            Return CInt(Val(ReadString))
+        End Function
+
+        Public Overrides Function ToString() As String
+            Return vec.ToArray.GetJson
+        End Function
+
     End Class
 
     Public Class StringReader : Implements IKeyDataReader
