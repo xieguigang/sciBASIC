@@ -102,23 +102,18 @@ Namespace Scripting.Runtime
         ''' <returns></returns>
         Public Function BuildAll(Of T)(logic As Logics, ParamArray tests As Func(Of T, Boolean)()) As Func(Of T, Boolean)
             Select Case logic
-                Case Logics.And
-                    Return Function(x) x.__and(tests)
-                Case Logics.AndAlso
-                    Return Function(x) x.__andAlso(tests)
-                Case Logics.Or
-                    Return Function(x) x.__or(tests)
-                Case Logics.OrElse
-                    Return Function(x) x.__orElse(tests)
-                Case Logics.XOr
-                    Return Function(x) Not x.__orElse(tests)
+                Case Logics.And : Return Function(x) x.LogicsAnd(tests)
+                Case Logics.AndAlso : Return Function(x) x.LogicsAndAlso(tests)
+                Case Logics.Or : Return Function(x) x.LogicsOr(tests)
+                Case Logics.OrElse : Return Function(x) x.LogicsOrElse(tests)
+                Case Logics.XOr : Return Function(x) Not x.LogicsOrElse(tests)
                 Case Else
                     Throw New NotSupportedException(logic.ToString)
             End Select
         End Function
 
         <Extension>
-        Private Function __orElse(Of T)(x As T, tests As Func(Of T, Boolean)()) As Boolean
+        Private Function LogicsOrElse(Of T)(x As T, tests As Func(Of T, Boolean)()) As Boolean
             For Each test As Func(Of T, Boolean) In tests
                 If test(x) = True Then
                     Return True
@@ -129,7 +124,7 @@ Namespace Scripting.Runtime
         End Function
 
         <Extension>
-        Private Function __andAlso(Of T)(x As T, tests As Func(Of T, Boolean)()) As Boolean
+        Private Function LogicsAndAlso(Of T)(x As T, tests As Func(Of T, Boolean)()) As Boolean
             For Each test As Func(Of T, Boolean) In tests
                 If test(x) = False Then
                     Return False
@@ -147,7 +142,7 @@ Namespace Scripting.Runtime
         ''' <param name="tests"></param>
         ''' <returns></returns>
         <Extension>
-        Private Function __or(Of T)(x As T, tests As Func(Of T, Boolean)()) As Boolean
+        Private Function LogicsOr(Of T)(x As T, tests As Func(Of T, Boolean)()) As Boolean
             Dim [true] As Boolean = False
 
             For Each test As Func(Of T, Boolean) In tests
@@ -165,7 +160,7 @@ Namespace Scripting.Runtime
         ''' <param name="tests"></param>
         ''' <returns></returns>
         <Extension>
-        Private Function __and(Of T)(x As T, tests As Func(Of T, Boolean)()) As Boolean
+        Private Function LogicsAnd(Of T)(x As T, tests As Func(Of T, Boolean)()) As Boolean
             Dim [false] As Boolean = False
 
             For Each test As Func(Of T, Boolean) In tests

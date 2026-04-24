@@ -62,8 +62,7 @@ Imports Microsoft.VisualBasic.Linq
 
 Namespace Scripting.Runtime
 
-    Public Class OverloadsFunction
-        Implements INamedValue
+    Public Class OverloadsFunction : Implements INamedValue
 
         Public Property Name As String Implements IKeyedEntity(Of String).Key
 

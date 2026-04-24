@@ -2716,4 +2716,8 @@
 		</None>
 	</ItemGroup>
 
+	<ItemGroup>
+	  <Folder Include="Scripting\Runtime\NewFolder\" />
+	</ItemGroup>
+
 </Project>
