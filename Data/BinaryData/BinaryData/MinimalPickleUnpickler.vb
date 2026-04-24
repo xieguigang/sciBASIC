@@ -1,6 +1,9 @@
 ﻿' --- 1. 最小化 Pickle 协议4解析器 ---
 Imports System.Text
 
+''' <summary>
+''' Python pickle data reader helper
+''' </summary>
 Public Class MinimalPickleUnpickler
     ' Pickle 协议4 操作码
     Private Const PROTO As Byte = &H80
