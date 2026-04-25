@@ -171,7 +171,7 @@ Namespace ComponentModel.DataSourceModel.Repository
         ''' this function will erase the <paramref name="duplicated"/> at first and then make value assigned.
         ''' </remarks>
         <Extension>
-        Public Function UniqueNames(names As IEnumerable(Of String), <Out> Optional ByRef duplicated As String() = Nothing) As String()
+        Public Function UniqueNames(names As IEnumerable(Of String), <Out> Optional ByRef duplicated As String() = Nothing, Optional sep As String = "_") As String()
             Dim nameUniques As New Dictionary(Of String, Counter)
             Dim duplicates As New List(Of String)
 
@@ -188,7 +188,7 @@ RE0:
                 If nameUniques.ContainsKey(name) Then
                     nameUniques(name).Hit()
                     duplicates.Add(name)
-                    name = name & "_" & nameUniques(name).Value
+                    name = name & sep & nameUniques(name).Value
                     GoTo RE0
                 Else
                     nameUniques.Add(name, Scan0)
