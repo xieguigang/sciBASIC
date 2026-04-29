@@ -6,37 +6,52 @@
     Public Class ScriptSlot
 
         ' — 元数据 —
-        Public Property VarType As TypeCode = TypeCode.Empty
+        Public ReadOnly Property VarType As TypeCode = TypeCode.Empty
         Public Property IsReadOnly As Boolean = False
         Public Property IsConst As Boolean = False
 
         ' --- 强类型值存储 (模拟 Union，避免装箱) ---
         ' 只有与 VarType 对应的字段才是有效数据
-        Public BoolValue As Boolean
-        Public IntValue As Integer
-        Public DblValue As Double
-        Public StrValue As String
-        Public ObjValue As Object
+        Public ReadOnly Property BoolValue As Boolean
+        Public ReadOnly Property IntValue As Integer
+        Public ReadOnly Property DblValue As Double
+        Public ReadOnly Property StrValue As String
+        Public ReadOnly Property ObjValue As Object
 
         ' --- 强类型 Set 方法 (无装箱) ---
+
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="value"></param>
         Public Sub SetBoolean(value As Boolean)
-            Me.ClearValues() : VarType = TypeCode.Boolean : BoolValue = value
+            Call ClearValues()
+            _VarType = TypeCode.Boolean
+            _BoolValue = value
         End Sub
 
         Public Sub SetInteger(value As Integer)
-            Me.ClearValues() : VarType = TypeCode.Int32 : IntValue = value
+            Call ClearValues()
+            _VarType = TypeCode.Int32
+            _IntValue = value
         End Sub
 
         Public Sub SetDouble(value As Double)
-            Me.ClearValues() : VarType = TypeCode.Double : DblValue = value
+            Call ClearValues()
+            _VarType = TypeCode.Double
+            _DblValue = value
         End Sub
 
         Public Sub SetString(value As String)
-            Me.ClearValues() : VarType = TypeCode.String : StrValue = value
+            Call ClearValues()
+            _VarType = TypeCode.String
+            _StrValue = value
         End Sub
 
         Public Sub SetObject(value As Object)
-            Me.ClearValues() : VarType = TypeCode.Object : ObjValue = value
+            Call ClearValues()
+            _VarType = TypeCode.Object
+            _ObjValue = value
         End Sub
 
         ' --- 通用 Set 方法 (可能会发生一次拆箱，用于外部 Object 传入时) ---
@@ -78,12 +93,12 @@
 
         ' 辅助方法：切换类型时，清空旧值（特别是引用类型，防止内存泄漏）
         Private Sub ClearValues()
-            BoolValue = False
-            IntValue = 0
-            DblValue = 0.0
-            StrValue = Nothing
-            ObjValue = Nothing ' 释放旧引用
-            VarType = TypeCode.Empty
+            _BoolValue = False
+            _IntValue = 0
+            _DblValue = 0.0
+            _StrValue = Nothing
+            _ObjValue = Nothing ' 释放旧引用
+            _VarType = TypeCode.Empty
         End Sub
     End Class
 End Namespace

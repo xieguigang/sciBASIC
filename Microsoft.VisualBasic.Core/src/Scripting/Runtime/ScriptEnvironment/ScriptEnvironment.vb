@@ -4,8 +4,11 @@
     ''' 脚本运行环境（支持作用域嵌套）
     ''' </summary>
     Public Class ScriptEnvironment
-        ' 当前作用域的变量字典
-        Private ReadOnly _slots As New Dictionary(Of String, ScriptSlot)
+
+        ''' <summary>
+        ''' 当前作用域的变量字典
+        ''' </summary>
+        ReadOnly _slots As New Dictionary(Of String, ScriptSlot)
 
         ' 父级作用域（用于实现闭包或块级作用域）
         Private ReadOnly _parent As ScriptEnvironment
