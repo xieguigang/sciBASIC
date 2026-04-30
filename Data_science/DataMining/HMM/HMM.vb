@@ -95,6 +95,10 @@ Public Class HMM
         Return New Matrix(transMatrix)
     End Function
 
+    Public Function GetEmissMatrix() As Matrix
+        Return New Matrix(emissionMatrix)
+    End Function
+
     Public Function bayesTheorem(ob, hState) As Double
         Return Bayes.bayesTheorem(ob, hState)
     End Function
