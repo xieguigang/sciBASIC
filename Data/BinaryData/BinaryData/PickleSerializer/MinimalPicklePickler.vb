@@ -137,6 +137,13 @@ Namespace Pickle
             File.WriteAllBytes(filePath, bytes)
         End Sub
 
+        Public Shared Sub PickleToFile(obj As Object, file As Stream)
+            Dim bytes = Pickle(obj)
+
+            Call file.Write(bytes, Scan0, bytes.Length)
+            Call file.Flush()
+        End Sub
+
         ' ===== 内部序列化方法 =====
 
         ''' <summary>
