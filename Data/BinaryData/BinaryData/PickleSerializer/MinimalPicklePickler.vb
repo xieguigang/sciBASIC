@@ -2,6 +2,7 @@
 Imports System.Reflection
 Imports System.Text
 Imports std = System.Math
+Imports TypeInfo = Microsoft.VisualBasic.Scripting.MetaData.TypeInfo
 
 Namespace Pickle
 
@@ -176,6 +177,8 @@ Namespace Pickle
             If obj Is Nothing Then
                 _output.Add(NONE)
                 Return
+            ElseIf TypeOf obj Is Type Then
+                obj = New TypeInfo(DirectCast(obj, Type))
             End If
 
             ' ----- 检查 memo（共享引用和循环引用）-----
