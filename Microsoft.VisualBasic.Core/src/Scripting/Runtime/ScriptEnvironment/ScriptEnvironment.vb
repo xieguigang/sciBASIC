@@ -3,12 +3,13 @@
     ''' <summary>
     ''' 脚本运行环境
     ''' </summary>
-    Public Class ScriptEnvironment
+    Public Class ScriptEnvironment : Implements IDisposable
 
         ''' <summary>
         ''' 当前作用域的变量字典
         ''' </summary>
         Protected ReadOnly _slots As New Dictionary(Of String, ScriptSlot)
+        Private disposedValue As Boolean
 
         ' ========================================================
         ' 核心优化：强类型读写接口 (脚本引擎内部执行时优先使用)
@@ -99,6 +100,36 @@
             If slot.IsReadOnly OrElse slot.IsConst Then
                 Throw New Exception($"无法修改只读变量: '{name}'")
             End If
+        End Sub
+
+        Protected Overridable Sub Dispose(disposing As Boolean)
+            If Not disposedValue Then
+                If disposing Then
+                    ' TODO: dispose managed state (managed objects)
+                    For Each slot As ScriptSlot In _slots.Values
+                        Call slot.Dispose()
+                    Next
+
+                    Call _slots.Clear()
+                End If
+
+                ' TODO: free unmanaged resources (unmanaged objects) and override finalizer
+                ' TODO: set large fields to null
+                disposedValue = True
+            End If
+        End Sub
+
+        ' ' TODO: override finalizer only if 'Dispose(disposing As Boolean)' has code to free unmanaged resources
+        ' Protected Overrides Sub Finalize()
+        '     ' Do not change this code. Put cleanup code in 'Dispose(disposing As Boolean)' method
+        '     Dispose(disposing:=False)
+        '     MyBase.Finalize()
+        ' End Sub
+
+        Public Sub Dispose() Implements IDisposable.Dispose
+            ' Do not change this code. Put cleanup code in 'Dispose(disposing As Boolean)' method
+            Dispose(disposing:=True)
+            GC.SuppressFinalize(Me)
         End Sub
     End Class
 
