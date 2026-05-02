@@ -3,7 +3,9 @@
     ''' <summary>
     ''' 变量槽位：封装变量的类型、值和元数据
     ''' </summary>
-    Public Class ScriptSlot
+    Public Class ScriptSlot : Implements IDisposable
+
+        Private disposedValue As Boolean
 
         ' — 元数据 —
         Public ReadOnly Property VarType As TypeCode = TypeCode.Empty
@@ -17,6 +19,9 @@
         Public ReadOnly Property DblValue As Double
         Public ReadOnly Property StrValue As String
         Public ReadOnly Property ObjValue As Object
+        Public ReadOnly Property SngValue As Single
+        Public ReadOnly Property LngValue As Long
+        Public ReadOnly Property DateValue As Date
 
         ' --- 强类型 Set 方法 (无装箱) ---
 
@@ -54,6 +59,24 @@
             _ObjValue = value
         End Sub
 
+        Public Sub SetLong(value As Long)
+            Call ClearValues()
+            _VarType = TypeCode.Int64
+            _LngValue = value
+        End Sub
+
+        Public Sub SetSingle(value As Single)
+            Call ClearValues()
+            _VarType = TypeCode.Single
+            _SngValue = value
+        End Sub
+
+        Public Sub SetDate(value As Date)
+            Call ClearValues()
+            _VarType = TypeCode.DateTime
+            _DateValue = value
+        End Sub
+
         ' --- 通用 Set 方法 (可能会发生一次拆箱，用于外部 Object 传入时) ---
         Public Sub SetValue(value As Object)
             If value Is Nothing Then
@@ -85,6 +108,9 @@
                 Case TypeCode.Double : Return DblValue
                 Case TypeCode.String : Return StrValue
                 Case TypeCode.Object : Return ObjValue
+                Case TypeCode.Single : Return SngValue
+                Case TypeCode.Int64 : Return LngValue
+                Case TypeCode.DateTime : Return DateValue
 
                 Case Else
                     Return Nothing
@@ -96,9 +122,38 @@
             _BoolValue = False
             _IntValue = 0
             _DblValue = 0.0
+            _SngValue = 0
+            _LngValue = 0
+            _DateValue = Nothing
             _StrValue = Nothing
             _ObjValue = Nothing ' 释放旧引用
             _VarType = TypeCode.Empty
+        End Sub
+
+        Protected Overridable Sub Dispose(disposing As Boolean)
+            If Not disposedValue Then
+                If disposing Then
+                    ' TODO: dispose managed state (managed objects)
+                    Call ClearValues()
+                End If
+
+                ' TODO: free unmanaged resources (unmanaged objects) and override finalizer
+                ' TODO: set large fields to null
+                disposedValue = True
+            End If
+        End Sub
+
+        ' ' TODO: override finalizer only if 'Dispose(disposing As Boolean)' has code to free unmanaged resources
+        ' Protected Overrides Sub Finalize()
+        '     ' Do not change this code. Put cleanup code in 'Dispose(disposing As Boolean)' method
+        '     Dispose(disposing:=False)
+        '     MyBase.Finalize()
+        ' End Sub
+
+        Public Sub Dispose() Implements IDisposable.Dispose
+            ' Do not change this code. Put cleanup code in 'Dispose(disposing As Boolean)' method
+            Dispose(disposing:=True)
+            GC.SuppressFinalize(Me)
         End Sub
     End Class
 End Namespace
