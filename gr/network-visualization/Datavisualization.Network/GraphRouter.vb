@@ -71,6 +71,7 @@ Public Class GraphRouter
     Dim dijkstra As DijkstraAlgoritm
     Dim nodes As Dictionary(Of String, Integer)
     Dim nodeSet As Network.Graph.Node()
+    Dim strict As Boolean = False
 
     Public Class Route : Inherits Dijkstra.RoutePathway
 
@@ -98,9 +99,20 @@ Public Class GraphRouter
         Return Me
     End Function
 
+    Public Function SetStrict(opt As Boolean) As GraphRouter
+        strict = opt
+        Return Me
+    End Function
+
     Public Function FindPath(start As Network.Graph.Node, ends As Network.Graph.Node) As Route
-        Dim i As Integer = nodes.TryGetValue(start.label, [default]:=-1)
-        Dim j As Integer = nodes.TryGetValue(ends.label, [default]:=-1)
+        Dim i As Integer = If(start Is Nothing, -1, nodes.TryGetValue(start.label, [default]:=-1))
+        Dim j As Integer = If(ends Is Nothing, -1, nodes.TryGetValue(ends.label, [default]:=-1))
+
+        If start Is Nothing AndAlso strict Then
+            Throw New NullReferenceException("missing the route start node data!")
+        ElseIf ends Is Nothing AndAlso strict Then
+            Throw New NullReferenceException("missing the route ends node data!")
+        End If
 
         If i < 0 OrElse j < 0 Then
             Return Nothing
