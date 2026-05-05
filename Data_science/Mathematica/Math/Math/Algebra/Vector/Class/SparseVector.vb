@@ -189,10 +189,10 @@ Namespace LinearAlgebra
 
         Default Public Overloads Property Item(range As IntRange) As SparseVector
             Get
-                Return Me(range.ToArray)
+                Return Me(range.AsEnumerable.ToArray)
             End Get
             Set
-                Me(range.ToArray) = Value
+                Me(range.AsEnumerable.ToArray) = Value
             End Set
         End Property
 #End Region

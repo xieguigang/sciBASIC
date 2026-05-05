@@ -234,7 +234,7 @@ Namespace Language
                 Return New List(Of T)(Me.Skip(range.Min).Take(range.Interval))
             End Get
             Set(value As List(Of T))
-                Dim indices As Integer() = range.ToArray
+                Dim indices As Integer() = range.AsEnumerable.ToArray
 
                 For i As Integer = 0 To indices.Length - 1
                     Item(index:=indices(i)) = value(i)
