@@ -185,7 +185,7 @@ Public Class GraphRouter
             Return SparseMatrix.Empty
         Else
             nodeSet = If(nodeSet, New List(Of Network.Graph.Node))
-            nodeIndexMap = If(nodeIndexMap, New Dictionary(Of Network.Graph.Node, Integer))
+            nodeIndexMap = If(nodeIndexMap, New Dictionary(Of String, Integer))
         End If
 
         ' 2. 初始化矩阵，所有位置默认为 0 (表示无连接)
