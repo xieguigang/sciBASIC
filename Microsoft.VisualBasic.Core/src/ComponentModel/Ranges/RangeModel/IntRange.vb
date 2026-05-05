@@ -1,58 +1,58 @@
 ﻿#Region "Microsoft.VisualBasic::532fc13a5d26c7de766401db6aa27c7b, Microsoft.VisualBasic.Core\src\ComponentModel\Ranges\RangeModel\IntRange.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 181
-    '    Code Lines: 79 (43.65%)
-    ' Comment Lines: 77 (42.54%)
-    '    - Xml Docs: 74.03%
-    ' 
-    '   Blank Lines: 25 (13.81%)
-    '     File Size: 6.53 KB
+' Summaries:
 
 
-    '     Class IntRange
-    ' 
-    '         Properties: Interval, Max, Min
-    ' 
-    '         Constructor: (+3 Overloads) Sub New
-    '         Function: GetEnumerator, IEnumerable_GetEnumerator, (+3 Overloads) IsInside, (+2 Overloads) IsOverlapping, MinMax
-    '                   ScaleMapping, ToString
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 181
+'    Code Lines: 79 (43.65%)
+' Comment Lines: 77 (42.54%)
+'    - Xml Docs: 74.03%
+' 
+'   Blank Lines: 25 (13.81%)
+'     File Size: 6.53 KB
+
+
+'     Class IntRange
+' 
+'         Properties: Interval, Max, Min
+' 
+'         Constructor: (+3 Overloads) Sub New
+'         Function: GetEnumerator, IEnumerable_GetEnumerator, (+3 Overloads) IsInside, (+2 Overloads) IsOverlapping, MinMax
+'                   ScaleMapping, ToString
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -62,6 +62,7 @@
 ' andrew.kirillov@gmail.com
 '
 
+Imports System.Runtime.Serialization
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 
@@ -75,17 +76,17 @@ Namespace ComponentModel.Ranges.Model
         ''' <summary>
         ''' Minimum value
         ''' </summary>
-        Public Property Min As Integer Implements IRangeModel(Of Integer).Min
+        <DataMember> Public Property Min As Integer Implements IRangeModel(Of Integer).Min
 
         ''' <summary>
         ''' Maximum value
         ''' </summary>
-        Public Property Max As Integer Implements IRangeModel(Of Integer).Max
+        <DataMember> Public Property Max As Integer Implements IRangeModel(Of Integer).Max
 
         ''' <summary>
         ''' Length of the range (deffirence between maximum and minimum values)
         ''' </summary>
-        Public ReadOnly Property Interval As Integer
+        <DataMember> Public ReadOnly Property Interval As Integer
             Get
                 Return Max - Min
             End Get
