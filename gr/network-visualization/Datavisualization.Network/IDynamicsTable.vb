@@ -59,6 +59,9 @@ Namespace FileStream.Generic
     ''' <summary>
     ''' The network graph object contains the dynamics property for contains the extra information of the object.
     ''' </summary>
+    ''' <remarks>
+    ''' contains a string value dictionary object
+    ''' </remarks>
     Public MustInherit Class IDynamicsTable : Inherits DynamicPropertyBase(Of String)
 
         ''' <summary>

@@ -133,6 +133,14 @@ Namespace FileStream
             End With
         End Sub
 
+        Sub New(clone As Graph.Edge)
+            fromNode = clone.U.label
+            toNode = clone.V.label
+            value = clone.weight
+            interaction = clone(NamesOf.REFLECTION_ID_MAPPING_INTERACTION_TYPE)
+            Properties = clone.data.Properties
+        End Sub
+
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Contains(Interactor As String) As Boolean
             Return String.Equals(Interactor, fromNode, CaseInsensitive) OrElse String.Equals(Interactor, toNode, CaseInsensitive)
