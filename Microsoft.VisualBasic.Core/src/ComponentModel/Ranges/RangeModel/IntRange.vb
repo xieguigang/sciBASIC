@@ -63,15 +63,14 @@
 '
 
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Linq
 
 Namespace ComponentModel.Ranges.Model
 
     ''' <summary>
     ''' Represents an <see cref="Integer"/> range with minimum and maximum values
     ''' </summary>
-    Public Class IntRange
-        Implements IRangeModel(Of Integer)
-        Implements IEnumerable(Of Integer)
+    Public Class IntRange : Implements IRangeModel(Of Integer), Enumeration(Of Integer)
 
         ''' <summary>
         ''' Minimum value
@@ -186,20 +185,6 @@ Namespace ComponentModel.Ranges.Model
             Return value
         End Function
 
-        ''' <summary>
-        ''' 枚举出这个数值范围内的所有整数值，步长为1
-        ''' </summary>
-        ''' <returns></returns>
-        Public Iterator Function GetEnumerator() As IEnumerator(Of Integer) Implements IEnumerable(Of Integer).GetEnumerator
-            For i As Integer = Min To Max
-                Yield i
-            Next
-        End Function
-
-        Private Iterator Function IEnumerable_GetEnumerator() As IEnumerator Implements IEnumerable.GetEnumerator
-            Yield GetEnumerator()
-        End Function
-
         Public Shared Widening Operator CType(exp$) As IntRange
             Dim r As New IntRange
             Call exp.Parser(r.Min, r.Max)
@@ -234,6 +219,16 @@ Namespace ComponentModel.Ranges.Model
             Next
 
             Return {min, max}
+        End Function
+
+        ''' <summary>
+        ''' 枚举出这个数值范围内的所有整数值，步长为1
+        ''' </summary>
+        ''' <returns></returns>
+        Public Iterator Function GenericEnumerator() As IEnumerator(Of Integer) Implements Enumeration(Of Integer).GenericEnumerator
+            For i As Integer = Min To Max
+                Yield i
+            Next
         End Function
     End Class
 End Namespace
