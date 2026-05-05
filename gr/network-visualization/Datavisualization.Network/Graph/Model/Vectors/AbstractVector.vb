@@ -152,6 +152,22 @@ Namespace Layouts
         Public MustOverride Function SetZero() As AbstractVector
         Public MustOverride Function SetIdentity() As AbstractVector
 
+        Public Function ToArray() As Double()
+            If Me.GetType Is GetType(FDGVector2) Then
+                Return {x, y}
+            Else
+                Return {x, y, z}
+            End If
+        End Function
+
+        Public Shared Function FromVector(v As Double()) As AbstractVector
+            If v.Length = 2 Then
+                Return New FDGVector2(v(0), v(1))
+            Else
+                Return New FDGVector3(v(0), v(1), v(2))
+            End If
+        End Function
+
 
         Public Shared Operator +(a As AbstractVector, b As Double) As AbstractVector
             If TypeOf a Is FDGVector2 Then

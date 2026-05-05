@@ -140,6 +140,14 @@ Namespace Imaging
             Dispose(disposing:=True)
             GC.SuppressFinalize(Me)
         End Sub
+
+        Public Shared Function SolidColor(b As Brush) As Color
+            If TypeOf b Is SolidBrush Then
+                Return DirectCast(b, SolidBrush).Color
+            Else
+                Return Nothing
+            End If
+        End Function
     End Class
 
     Public Class SolidBrush : Inherits Brush
