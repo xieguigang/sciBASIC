@@ -351,6 +351,31 @@ Namespace Serialization.JSON
         End Function
 
         ''' <summary>
+        ''' load json list file
+        ''' </summary>
+        ''' <typeparam name="T"></typeparam>
+        ''' <param name="jsonl">the file content of the jsonl file</param>
+        ''' <param name="encoding"></param>
+        ''' <param name="simpleDict"></param>
+        ''' <param name="knownTypes"></param>
+        ''' <param name="throwEx"></param>
+        ''' <returns></returns>
+        <Extension>
+        Public Iterator Function LoadJSONL(Of T)(jsonl As IEnumerable(Of String),
+                                                 Optional encoding As Encoding = Nothing,
+                                                 Optional simpleDict As Boolean = True,
+                                                 Optional knownTypes As IEnumerable(Of Type) = Nothing,
+                                                 Optional throwEx As Boolean = True) As IEnumerable(Of T)
+            For Each json_str As String In jsonl
+                Yield json_str.LoadJSON(Of T)(
+                    simpleDict:=simpleDict,
+                    throwEx:=throwEx,
+                    knownTypes:=knownTypes
+                )
+            Next
+        End Function
+
+        ''' <summary>
         ''' Create object instance from a json text of a given text file. 
         ''' </summary>
         ''' <typeparam name="T"></typeparam>

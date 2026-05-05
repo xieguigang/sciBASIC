@@ -71,7 +71,6 @@ Imports System.Runtime.InteropServices
 Imports System.Text
 Imports Microsoft.VisualBasic.Parallel
 Imports Microsoft.VisualBasic.Text
-Imports Microsoft.VisualBasic.ValueTypes
 
 ''' <summary>
 ''' Represents an extended <see cref="BinaryReader"/> supporting special file format data types.
@@ -540,6 +539,12 @@ Public Class BinaryDataReader : Inherits BinaryReader
     ''' <returns>The string read from the current stream.</returns>
     Public Overloads Function ReadString(length As Integer) As String
         Return ReadString(length, Encoding)
+    End Function
+
+    Public Iterator Function ReadStringList(n As Integer) As IEnumerable(Of String)
+        For i As Integer = 1 To n
+            Yield ReadString()
+        Next
     End Function
 
     ''' <summary>
