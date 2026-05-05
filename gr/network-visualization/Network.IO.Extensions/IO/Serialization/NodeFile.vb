@@ -17,8 +17,14 @@ Module NodeFile
         Call s.Write(node.label)
         Call s.Write(node.pinned)
         Call s.Write(node.visited)
-        Call s.Write(node.degree.In)
-        Call s.Write(node.degree.Out)
+
+        If node.degree Is Nothing Then
+            Call s.Write(0%)
+            Call s.Write(0%)
+        Else
+            Call s.Write(node.degree.In)
+            Call s.Write(node.degree.Out)
+        End If
 
         Call s.Write(data.betweennessCentrality)
         Call s.Write(data.force.X)

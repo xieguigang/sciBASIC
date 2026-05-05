@@ -13,7 +13,7 @@ Module EdgeFile
         Call s.Write(table.fromNode)
         Call s.Write(table.toNode)
         Call s.Write(table.value)
-        Call s.Write(table.interaction)
+        Call s.Write(If(table.interaction, ""))
         Call s.Write(table.Properties.GetJson)
     End Sub
 
