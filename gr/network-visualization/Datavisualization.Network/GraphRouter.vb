@@ -69,7 +69,7 @@ Imports Microsoft.VisualBasic.Math.LinearAlgebra.Matrix
 Public Class GraphRouter
 
     Dim dijkstra As DijkstraAlgoritm
-    Dim nodes As Dictionary(Of Network.Graph.Node, Integer)
+    Dim nodes As Dictionary(Of String, Integer)
     Dim nodeSet As Network.Graph.Node()
 
     Public Class Route : Inherits Dijkstra.RoutePathway
@@ -87,7 +87,7 @@ Public Class GraphRouter
         End Sub
     End Class
 
-    Private Sub New(matrix As SparseMatrix, nodes As Dictionary(Of Network.Graph.Node, Integer), nodeSet As Network.Graph.Node())
+    Private Sub New(matrix As SparseMatrix, nodes As Dictionary(Of String, Integer), nodeSet As Network.Graph.Node())
         Me.dijkstra = New DijkstraAlgoritm(matrix, nodeSet.Length)
         Me.nodes = nodes
         Me.nodeSet = nodeSet
@@ -99,8 +99,8 @@ Public Class GraphRouter
     End Function
 
     Public Function FindPath(start As Network.Graph.Node, ends As Network.Graph.Node) As Route
-        Dim i As Integer = nodes.TryGetValue(start, [default]:=-1)
-        Dim j As Integer = nodes.TryGetValue(ends, [default]:=-1)
+        Dim i As Integer = nodes.TryGetValue(start.label, [default]:=-1)
+        Dim j As Integer = nodes.TryGetValue(ends.label, [default]:=-1)
 
         If i < 0 OrElse j < 0 Then
             Return Nothing
@@ -126,7 +126,7 @@ Public Class GraphRouter
     End Function
 
     Public Function FindPath(start As Network.Graph.Node) As Route()
-        Dim i As Integer = nodes.TryGetValue(start, [default]:=-1)
+        Dim i As Integer = nodes.TryGetValue(start.label, [default]:=-1)
 
         If i < 0 Then
             Return {}
@@ -152,12 +152,12 @@ Public Class GraphRouter
         If nodeCount = 0 Then
             Return New GraphRouter(
                 matrix:=SparseMatrix.Empty,
-                nodes:=New Dictionary(Of Network.Graph.Node, Integer),
+                nodes:=New Dictionary(Of String, Integer),
                 nodeSet:={}
             )
         Else
             Dim nodeSet As List(Of Network.Graph.Node) = Nothing
-            Dim nodeIndexMap As Dictionary(Of Network.Graph.Node, Integer) = Nothing
+            Dim nodeIndexMap As Dictionary(Of String, Integer) = Nothing
             Dim matrix As SparseMatrix = ConvertToMatrix(networkGraph, undirected, nodeSet, nodeIndexMap)
 
             Return New GraphRouter(
@@ -176,7 +176,7 @@ Public Class GraphRouter
     Public Shared Function ConvertToMatrix(networkGraph As NetworkGraph,
                                            Optional undirected As Boolean = False,
                                            Optional ByRef nodeSet As List(Of Network.Graph.Node) = Nothing,
-                                           Optional ByRef nodeIndexMap As Dictionary(Of Network.Graph.Node, Integer) = Nothing,
+                                           Optional ByRef nodeIndexMap As Dictionary(Of String, Integer) = Nothing,
                                            Optional eval As Func(Of Edge, Double) = Nothing) As SparseMatrix
         ' 1. 获取节点总数
         Dim nodeCount As Integer = networkGraph.vertex.Count
@@ -200,16 +200,19 @@ Public Class GraphRouter
         ' vb.net中 ++i 等价于i++
         ' i = 0 1 2 3 4 ...
         For Each v As Network.Graph.Node In networkGraph.vertex
-            nodeIndexMap(v) = ++i
+            nodeIndexMap(v.label) = ++i
             nodeSet.Add(v)
         Next
 
         ' 4. 遍历所有边并填充矩阵
         For Each edge As Edge In networkGraph.graphEdges
+            Dim u As String = edge.U.label
+            Dim v As String = edge.V.label
+
             ' 检查边的两个端点是否都在我们的节点列表中
-            If nodeIndexMap.ContainsKey(edge.U) AndAlso nodeIndexMap.ContainsKey(edge.V) Then
-                Dim uIndex As Integer = nodeIndexMap(edge.U)
-                Dim vIndex As Integer = nodeIndexMap(edge.V)
+            If nodeIndexMap.ContainsKey(u) AndAlso nodeIndexMap.ContainsKey(v) Then
+                Dim uIndex As Integer = nodeIndexMap(u)
+                Dim vIndex As Integer = nodeIndexMap(v)
                 Dim weight As Double = If(eval Is Nothing, edge.weight, eval(edge))
 
                 ' 添加正向边 U -> V

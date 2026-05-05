@@ -61,6 +61,7 @@
 
 #End Region
 
+Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Math.LinearAlgebra.Matrix
 
 Namespace Analysis.Dijkstra
@@ -121,6 +122,8 @@ Namespace Analysis.Dijkstra
         ''' </summary>
         ''' <param name="startIndex"></param>
         ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function DistanceFinder(startIndex As Integer) As Node()
             Return DistanceFinderInternal(startIndex, endIndex:=Nothing)
         End Function
