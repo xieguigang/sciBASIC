@@ -57,7 +57,7 @@ Module NodeFile
                 .betweennessCentrality = file.ReadDouble,
                 .force = New Point(file.ReadInt32, file.ReadInt32),
                 .initialPostion = AbstractVector.FromVector(file.ReadDoubles(file.ReadInt32)),
-                .color = New SolidBrush(file.ReadString.ToColor),
+                .color = New SolidBrush(file.ReadString.TranslateColor),
                 .label = file.ReadString,
                 .mass = file.ReadDouble,
                 .neighbours = file.ReadInt32s(file.ReadInt32),
