@@ -106,13 +106,13 @@ Public Module PCA
         Dim ticks As Integer
 
         For i As Integer = 0 To maxPC - 1
-            Call VBDebugger.EchoLine($"Calculate component {i + 1}...")
+            Call VBDebugger.cat($"Calculate component {i + 1}... ")
 
             t0 = Now
             ticks = dataArray.CalculateComponent(i, columnSize, rowSize, cutoff, tpMatrix, contributions, scores, loadings)
             t1 = Now
 
-            Call VBDebugger.EchoLine($"Cost {StringFormats.ReadableElapsedTime((t1 - t0).TotalMilliseconds)} and run {ticks} loop")
+            Call VBDebugger.EchoLine($"cost {StringFormats.ReadableElapsedTime((t1 - t0).TotalMilliseconds)} and run {ticks} loop [DONE]")
         Next
 
         Dim maResult = New MultivariateAnalysisResult() With {
