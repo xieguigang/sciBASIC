@@ -125,6 +125,10 @@ Namespace Graph
         Implements IGraphValueContainer(Of NodeData)
         Implements ICloneable(Of Node)
 
+        ''' <summary>
+        ''' the graph node metadata, includes styles, groups, positions data
+        ''' </summary>
+        ''' <returns></returns>
         Public Property data As NodeData Implements IGraphValueContainer(Of NodeData).data
 
         ''' <summary>

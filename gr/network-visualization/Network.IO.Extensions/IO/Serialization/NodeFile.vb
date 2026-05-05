@@ -10,7 +10,7 @@ Imports Microsoft.VisualBasic.Serialization.JSON
 Module NodeFile
 
     <Extension>
-    Public Sub SaveOneNode(node As Node, s As BinaryDataWriter)
+    Public Sub SaveOneNode(node As Graph.Node, s As BinaryDataWriter)
         Dim data As NodeData = node.data
 
         Call s.Write(node.ID)
@@ -38,9 +38,9 @@ Module NodeFile
         Call s.Write(data.Properties.GetJson)
     End Sub
 
-    Public Iterator Function ReadNode(file As BinaryDataReader, count As Integer) As IEnumerable(Of Node)
+    Public Iterator Function ReadNode(file As BinaryDataReader, count As Integer) As IEnumerable(Of Graph.Node)
         For i As Integer = 0 To count - 1
-            Dim node As New Node With {
+            Dim node As New Graph.Node With {
                .ID = file.ReadInt32,
                .label = file.ReadString,
                .pinned = file.ReadBoolean,
