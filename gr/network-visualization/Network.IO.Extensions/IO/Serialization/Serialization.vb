@@ -18,8 +18,8 @@ Public Module Serialization
     Public Sub Dump(g As NetworkGraph, file As BinaryDataWriter)
         Call file.Write(g.vertex.Count)
         Call file.Write(g.graphEdges.Count)
-        Call file.Write(g.id)
-        Call file.Write(g.name)
+        Call file.Write(If(g.id, ""))
+        Call file.Write(If(g.name, ""))
 
         For Each v As Graph.Node In g.vertex
             Call v.SaveOneNode(file)
