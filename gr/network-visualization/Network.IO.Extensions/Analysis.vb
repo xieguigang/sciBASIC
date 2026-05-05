@@ -79,7 +79,8 @@ Public Module AnalysisAPI
     ''' </summary>
     ''' <param name="net"></param>
     ''' <returns></returns>
-    <Extension> Public Function GetDegrees(net As NetworkTables) As Dictionary(Of String, Integer)
+    <Extension>
+    Public Function GetDegrees(net As NetworkTables) As Dictionary(Of String, Integer)
         Dim degree As New Dictionary(Of String, Integer)
         Dim counts = Sub(node$)
                          If degree.ContainsKey(node) Then
@@ -111,7 +112,8 @@ Public Module AnalysisAPI
     ''' 这个函数之中包含有了节点的degree，并且还计算出了indegree和outdegree
     ''' </summary>
     ''' <param name="net"></param>
-    <Extension> Public Function AnalysisDegrees(net As NetworkTables) As NetworkTables
+    <Extension>
+    Public Function AnalysisDegrees(net As NetworkTables) As NetworkTables
         Call net.ComputeNodeDegrees
         Return net
     End Function
@@ -121,7 +123,8 @@ Public Module AnalysisAPI
     ''' 这个函数之中包含有了节点的degree，并且还计算出了indegree和outdegree
     ''' </summary>
     ''' <param name="net"></param>
-    <Extension> Public Function ComputeNodeDegrees(ByRef net As NetworkTables) As Dictionary(Of String, Integer)
+    <Extension>
+    Public Function ComputeNodeDegrees(ByRef net As NetworkTables) As Dictionary(Of String, Integer)
         Dim degrees As Dictionary(Of String, Integer) = net.GetDegrees
         Dim d%
 
@@ -139,12 +142,12 @@ Public Module AnalysisAPI
                 Call node.Add(names.REFLECTION_ID_MAPPING_DEGREE, d)
                 'End If
 
-                If .in.ContainsKey(node.ID) Then
-                    d = .in(node.ID)
+                If .In.ContainsKey(node.ID) Then
+                    d = .In(node.ID)
                     node.Add(names.REFLECTION_ID_MAPPING_DEGREE_IN, d)
                 End If
-                If .out.ContainsKey(node.ID) Then
-                    d = .out(node.ID)
+                If .Out.ContainsKey(node.ID) Then
+                    d = .Out(node.ID)
                     node.Add(names.REFLECTION_ID_MAPPING_DEGREE_OUT, d)
                 End If
             Next
