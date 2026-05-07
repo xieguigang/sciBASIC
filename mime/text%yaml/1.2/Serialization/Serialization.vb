@@ -1,56 +1,57 @@
 ﻿#Region "Microsoft.VisualBasic::2b7fc8e0758b0b8fa650d591a237ee1f, mime\text%yaml\1.2\Serialization\Serialization.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 90
-    '    Code Lines: 77 (85.56%)
-    ' Comment Lines: 0 (0.00%)
-    '    - Xml Docs: 0.00%
-    ' 
-    '   Blank Lines: 13 (14.44%)
-    '     File Size: 3.23 KB
+' Summaries:
 
 
-    ' Module Serialization
-    ' 
-    '     Function: __setMaps, Load, LoadYAML, WriteYAML
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 90
+'    Code Lines: 77 (85.56%)
+' Comment Lines: 0 (0.00%)
+'    - Xml Docs: 0.00%
+' 
+'   Blank Lines: 13 (14.44%)
+'     File Size: 3.23 KB
+
+
+' Module Serialization
+' 
+'     Function: __setMaps, Load, LoadYAML, WriteYAML
+' 
+' /********************************************************************************/
 
 #End Region
 
+Imports System.Data
 Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports Microsoft.VisualBasic.ComponentModel.Collection
@@ -61,9 +62,24 @@ Imports Microsoft.VisualBasic.Text
 
 Public Module Serialization
 
+    ''' <summary>
+    ''' De-serialization of the yaml document file as the required .NET CLR object
+    ''' </summary>
+    ''' <typeparam name="T">the type information of the required .NET CLR object to be deserialization from the YAML document data</typeparam>
+    ''' <param name="path">file path to the target yaml document file</param>
+    ''' <returns>Target .NET clr object that de-serialized from the given yaml document file, contains the data that read from the yaml document file.</returns>
     <Extension>
-    Public Function LoadYAML(Of T)(path As String) As T
-        Dim input As New TextInput(path.GET)
+    Public Function LoadYAML(Of T As {New, Class})(path As String) As T
+        Try
+            Return LoadYAMLDocument(Of T)(path.GET)
+        Catch ex As Exception
+            Throw New InvalidProgramException(path, ex)
+        End Try
+    End Function
+
+    <Extension>
+    Public Function LoadYAMLDocument(Of T As {New, Class})(yaml As String) As T
+        Dim input As New TextInput(yaml)
         Dim success As Boolean
         Dim parser As New YamlParser()
         Dim yamlStream As YamlStream = parser.ParseYamlStream(input, success)
@@ -71,13 +87,18 @@ Public Module Serialization
         If success Then
             Return yamlStream.Load(Of T)
         Else
-            Dim ex As New Exception(parser.GetErrorMessageText())
-            Throw New Exception(path.ToFileURL, ex)
+            Throw New SyntaxErrorException(parser.GetErrorMessageText())
         End If
     End Function
 
+    ''' <summary>
+    ''' De-serialization of the parsed YAML document object as the .net CLR object
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    ''' <param name="yaml"></param>
+    ''' <returns></returns>
     <Extension>
-    Public Function Load(Of T)(yaml As YamlStream) As T
+    Public Function Load(Of T As {New, Class})(yaml As YamlStream) As T
         Dim type As Type = GetType(T)
         Dim maps As Dictionary(Of MappingEntry) = yaml.Enumerative.FirstOrDefault
 
