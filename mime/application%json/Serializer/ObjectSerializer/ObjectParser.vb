@@ -54,14 +54,27 @@
 Imports System.Reflection
 Imports System.Runtime.CompilerServices
 Imports System.Runtime.Serialization
-Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
-Imports Microsoft.VisualBasic.MIME.application.json.Javascript
-Imports Microsoft.VisualBasic.ApplicationServices.Development.XmlDoc.Assembly.XmlDocs
 Imports Microsoft.VisualBasic.ApplicationServices.Development.XmlDoc.Assembly
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.SchemaMaps
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.MIME.application.json.Javascript
 
 Module ObjectParser
 
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <param name="schema"></param>
+    ''' <param name="opt"></param>
+    ''' <returns></returns>
+    ''' <remarks>
+    ''' ignores members property which is tagged with one of the attribute:
+    ''' 
+    ''' 1. <see cref="ScriptIgnoreAttribute"/>
+    ''' 2. <see cref="DataIgnoredAttribute"/>
+    ''' 3. <see cref="IgnoreDataMemberAttribute"/>
+    ''' </remarks>
     <Extension>
     Private Function ParseSchemaWithIgnores(schema As Type, opt As JSONSerializerOptions) As KeyValuePair(Of String, PropertyInfo)()
         Dim key As String = $"{schema.FullName}+{opt.createUniqueKey}"
@@ -84,6 +97,26 @@ Module ObjectParser
                            Return ignores1 AndAlso ignores2 AndAlso ignores3
                        End Function) _
                 .ToArray
+
+            If opt.custom_name Then
+                cache(key) = cache(key) _
+                    .Select(Function(a)
+                                Dim df = a.Value.GetCustomAttribute(Of DataFrameColumnAttribute)
+
+                                If df IsNot Nothing Then
+                                    Return New KeyValuePair(Of String, PropertyInfo)(df.Name, a.Value)
+                                Else
+                                    Dim fd = a.Value.GetCustomAttribute(Of Field)
+
+                                    If fd IsNot Nothing Then
+                                        Return New KeyValuePair(Of String, PropertyInfo)(fd.Name, a.Value)
+                                    End If
+                                End If
+
+                                Return a
+                            End Function) _
+                    .ToArray
+            End If
         End If
 
         Return cache(key)

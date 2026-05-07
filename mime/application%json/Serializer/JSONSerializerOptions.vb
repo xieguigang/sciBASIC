@@ -71,6 +71,7 @@ Public Class JSONSerializerOptions
     ''' </summary>
     ''' <returns></returns>
     Public Property comment As Boolean = False
+    Public Property custom_name As Boolean = False
 #End Region
 
     ''' <summary>
