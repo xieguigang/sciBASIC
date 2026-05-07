@@ -1,6 +1,7 @@
 Imports System.Text
 Imports System.Text.RegularExpressions
 Imports Microsoft.VisualBasic.MIME.application.json.Javascript
+Imports std = System.Math
 
 #Region "YAML Document Parser - Converts YAML to JsonElement Model"
 
@@ -166,7 +167,7 @@ Public Class YamlParser
 
                     ' Add the line content (relative to base indentation)
                     If content.Length > 0 Then
-                        Dim relativeIndent As Integer = Math.Max(0, indent - mlState.BaseIndent)
+                        Dim relativeIndent As Integer = std.Max(0, indent - mlState.BaseIndent)
                         Dim lineContent As String = New String(" "c, relativeIndent) & content
                         mlState.Lines.Add(lineContent)
                     Else
@@ -1088,6 +1089,8 @@ Public Class YamlParser
         Dim sb As New StringBuilder(s.Length)
         Dim i As Integer = 0
 
+        Const Bell As Char = ChrW(7)
+
         While i < s.Length
             If s(i) = "\"c AndAlso i + 1 < s.Length Then
                 Dim nextCh As Char = s(i + 1)
@@ -1095,7 +1098,7 @@ Public Class YamlParser
                     Case "\"c : sb.Append("\"c) : i += 2
                     Case """"c : sb.Append(""""c) : i += 2
                     Case "/"c : sb.Append("/"c) : i += 2
-                    Case "a"c : sb.Append(ControlChars.Bell) : i += 2
+                    Case "a"c : sb.Append(Bell) : i += 2
                     Case "b"c : sb.Append(ControlChars.Back) : i += 2
                     Case "e"c : sb.Append(ChrW(&H1B)) : i += 2  ' Escape
                     Case "f"c : sb.Append(ControlChars.FormFeed) : i += 2
