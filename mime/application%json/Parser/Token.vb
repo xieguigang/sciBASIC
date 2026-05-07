@@ -76,6 +76,9 @@ Public Class Token : Inherits CodeToken(Of JSONElements)
         [String]
         Open
         Close
+        ''' <summary>
+        ''' :
+        ''' </summary>
         Colon
         Key
         Delimiter
