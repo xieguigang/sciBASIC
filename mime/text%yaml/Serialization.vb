@@ -20,6 +20,6 @@ Public Module Serialization
 
     <Extension>
     Public Function LoadYAMLDocument(Of T As {New, Class})(yaml As String) As T
-        Return YamlDocument.Parse(yaml).CreateObject(Of T)(decodeMetachar:=True)
+        Return New YamlParser().Parse(yaml).CreateObject(Of T)(decodeMetachar:=True)
     End Function
 End Module
