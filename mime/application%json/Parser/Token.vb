@@ -87,6 +87,9 @@ Public Class Token : Inherits CodeToken(Of JSONElements)
         ''' comment data when do json serialization
         ''' </remarks>
         Comment
+        Serial
+        NewLine
+        WhiteSpace
     End Enum
 
     Sub New(type As JSONElements, text As String)

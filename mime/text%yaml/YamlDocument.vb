@@ -13,7 +13,8 @@ Public Class YamlDocument
     End Sub
 
     Public Function GetDocument() As JsonElement
-        Dim tokens As IEnumerator(Of Token) = New TokenIcer(yaml).GetTokens.GetEnumerator
+        Dim doc As Token() = New TokenIcer(yaml).GetTokens.ToArray
+        Dim tokens As IEnumerator(Of Token) = doc.AsEnumerable.GetEnumerator
 
         If Not tokens.MoveNext Then
             ' empty collection 
@@ -40,7 +41,32 @@ Public Class YamlDocument
             Return Nothing
         End If
 
+        Select Case t.name
+            Case Token.JSONElements.Key
+                Return PullObject(pull)
+            Case Token.JSONElements.Serial
+                Return PullArray(pull)
+            Case Else
+                If t.IsJsonValue Then
+                    Return t.GetValue
+                Else
+                    Throw New InvalidProgramException($"invalid yaml syntax: the required token should be literal, object open or array open! (yaml_document_line: {t.span.line})")
+                End If
+        End Select
+    End Function
 
+    Private Function PullObject(pull As IEnumerator(Of Token)) As JsonObject
+        Dim obj As New JsonObject
+        Dim t As Token = pull.Current
+
+        Return obj
+    End Function
+
+    Private Function PullArray(pull As IEnumerator(Of Token)) As JsonArray
+        Dim array As New JsonArray
+        Dim t As Token = pull.Current
+
+        Return array
     End Function
 
     Public Shared Function Parse(yaml As String) As JsonElement
