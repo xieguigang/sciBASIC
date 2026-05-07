@@ -84,6 +84,9 @@ Namespace ComponentModel.DataSourceModel.SchemaMaps
     Public Class SoapGraph
 
         Public ReadOnly addMethod As MethodInfo
+        ''' <summary>
+        ''' the clr type is a dictionary?
+        ''' </summary>
         Public ReadOnly isTable As Boolean
         Public ReadOnly writers As IReadOnlyDictionary(Of String, PropertyInfo)
         ''' <summary>
@@ -95,6 +98,8 @@ Namespace ComponentModel.DataSourceModel.SchemaMaps
 
         Public ReadOnly knownTypes As Type()
         Public ReadOnly documentType As Serializations
+
+        ReadOnly strict As Boolean = True
 
         Private Sub New()
         End Sub
@@ -113,7 +118,8 @@ Namespace ComponentModel.DataSourceModel.SchemaMaps
                         valueType As Type,
                         raw As Type,
                         knownTypes As Type(),
-                        docTyp As Serializations)
+                        docTyp As Serializations,
+                        strict As Boolean)
 
             Me.addMethod = addMethod
             Me.isTable = isTable
@@ -123,6 +129,7 @@ Namespace ComponentModel.DataSourceModel.SchemaMaps
             Me.raw = raw
             Me.knownTypes = knownTypes
             Me.documentType = docTyp
+            Me.strict = strict
         End Sub
 
         ''' <summary>
@@ -155,6 +162,8 @@ Namespace ComponentModel.DataSourceModel.SchemaMaps
                 If knownType Is Nothing Then
                     Throw New InvalidProgramException($"can not create object from an interface type: {raw.FullName}!")
                 End If
+            ElseIf parent.knownTypes.IsNullOrEmpty AndAlso parent.isTable Then
+                Return New Object
             Else ' is object
                 knownType = parent.knownTypes _
                     .Select(Function(t) SoapGraph.GetSchema(t, documentType)) _
@@ -162,7 +171,11 @@ Namespace ComponentModel.DataSourceModel.SchemaMaps
                     .FirstOrDefault
 
                 If knownType Is Nothing Then
-                    Throw New InvalidProgramException($"can not create object...")
+                    If strict Then
+                        Throw New InvalidProgramException($"can not create object...")
+                    Else
+                        Return New Object
+                    End If
                 End If
             End If
 
@@ -206,10 +219,10 @@ Namespace ComponentModel.DataSourceModel.SchemaMaps
         ''' </summary>
         ''' <param name="type"></param>
         ''' <returns></returns>
-        Public Overloads Shared Function GetSchema(type As Type, Optional serializer As Serializations = Serializations.JSON) As SoapGraph
+        Public Overloads Shared Function GetSchema(type As Type, Optional serializer As Serializations = Serializations.JSON, Optional strict As Boolean = True) As SoapGraph
             Dim key As String = $"<{serializer.ToString}>{type.FullName}"
             Static cache As New Dictionary(Of String, SoapGraph)
-            Return cache.ComputeIfAbsent(key:=key, lazyValue:=Function() CreateSchema(type, serializer))
+            Return cache.ComputeIfAbsent(key:=key, lazyValue:=Function() CreateSchema(type, serializer, strict:=strict))
         End Function
 
         Public Shared Function GetAddMethod(schema As Type) As MethodInfo
@@ -259,7 +272,7 @@ Namespace ComponentModel.DataSourceModel.SchemaMaps
             Return writers
         End Function
 
-        Private Shared Function CreateSchema(schema As Type, serializer As Serializations) As SoapGraph
+        Private Shared Function CreateSchema(schema As Type, serializer As Serializations, strict As Boolean) As SoapGraph
             Dim isTable As Boolean = schema.IsInheritsFrom(GetType(DictionaryBase)) OrElse schema.ImplementInterface(GetType(IDictionary))
             Dim writers As Dictionary(Of String, PropertyInfo)
             Dim addMethod As MethodInfo = GetAddMethod(schema)
@@ -311,7 +324,8 @@ Namespace ComponentModel.DataSourceModel.SchemaMaps
                 valueType:=valueType,
                 keyType:=keyType,
                 knownTypes:=knownTypes,
-                docTyp:=serializer
+                docTyp:=serializer,
+                strict:=strict
             )
         End Function
 

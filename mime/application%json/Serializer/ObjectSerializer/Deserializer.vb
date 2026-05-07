@@ -178,7 +178,7 @@ Public Module Deserializer
     ''' <returns></returns>
     <Extension>
     Friend Function createObject(json As JsonObject, parent As SoapGraph, schema As Type, decodeMetachar As Boolean) As Object
-        Dim graph As SoapGraph = SoapGraph.GetSchema(schema, Serializations.JSON)
+        Dim graph As SoapGraph = SoapGraph.GetSchema(schema, Serializations.JSON, strict:=False)
         Dim obj As Object = graph.Activate(parent:=parent, docs:=json.ObjectKeys, schema:=graph)
         Dim inputs As Object()
         Dim addMethod As MethodInfo = graph.addMethod

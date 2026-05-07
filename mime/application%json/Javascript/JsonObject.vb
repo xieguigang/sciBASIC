@@ -275,7 +275,7 @@ Namespace Javascript
         Public Function CreateObject(type As Type, decodeMetachar As Boolean) As Object
             If type.IsArray AndAlso Me.isArray Then
                 Dim itemType As Type = type.GetElementType
-                Dim graph As SoapGraph = SoapGraph.GetSchema(itemType, Serializations.JSON)
+                Dim graph As SoapGraph = SoapGraph.GetSchema(itemType, Serializations.JSON, strict:=False)
 
                 Return ToJsonArray.createArray(graph, itemType, decodeMetachar)
             Else

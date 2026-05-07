@@ -590,7 +590,7 @@ Public Class YamlParser
                     value = JsonValue.NULL
                 Else
                     Dim nextLine As YamlLine = lines(index)
-                    If nextLine.Indent <= line.Indent Then
+                    If nextLine.Indent <= line.Indent AndAlso Not nextLine.IsListItem Then
                         ' Next line is at same or lesser indentation - null value
                         value = JsonValue.NULL
                     Else
