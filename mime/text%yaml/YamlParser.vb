@@ -1262,6 +1262,10 @@ Public Class YamlParser
     ''' </summary>
     Private ReadOnly _anchors As New Dictionary(Of String, JsonElement)
 
+    Public Sub New()
+
+    End Sub
+
     ''' <summary>
     ''' Clear all stored anchors. Call this before parsing a new document.
     ''' </summary>
