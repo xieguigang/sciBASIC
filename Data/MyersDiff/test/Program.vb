@@ -9,6 +9,7 @@
 
 Imports System.IO
 Imports System.Text
+Imports Microsoft.VisualBasic.Data.MyersDiff
 
 Module MyersDiffDemo
 
@@ -96,8 +97,8 @@ Module MyersDiffDemo
             "End Class"
         }
 
-        Dim differ As New MyersDiffAlgorithm.MyersDiff()
-        Dim result As MyersDiffAlgorithm.DiffResult = differ.Compare(oldLines, newLines)
+        Dim differ As New MyersDiff()
+        Dim result As DiffResult = differ.Compare(oldLines, newLines)
 
         ' 输出统计摘要
         Console.WriteLine(result.ToSummary())
@@ -126,8 +127,8 @@ Module MyersDiffDemo
         Dim oldText As String = "The quick brown fox jumps over the lazy dog."
         Dim newText As String = "The quick red fox leaps over the sleepy dog."
 
-        Dim differ As New MyersDiffAlgorithm.MyersDiff()
-        Dim result As MyersDiffAlgorithm.DiffResult = differ.CompareChars(oldText, newText)
+        Dim differ As New MyersDiff()
+        Dim result As DiffResult = differ.CompareChars(oldText, newText)
 
         Console.WriteLine("旧文本: {0}", oldText)
         Console.WriteLine("新文本: {0}", newText)
@@ -137,11 +138,11 @@ Module MyersDiffDemo
         Console.Write("差异: ")
         For Each item In result.Items
             Select Case item.Type
-                Case MyersDiffAlgorithm.EditType.Equal
+                Case EditType.Equal
                     Console.Write(item.Value)
-                Case MyersDiffAlgorithm.EditType.Delete
+                Case EditType.Delete
                     Console.Write("[-" & item.Value & "-]")
-                Case MyersDiffAlgorithm.EditType.Insert
+                Case EditType.Insert
                     Console.Write("[+" & item.Value & "+]")
             End Select
         Next
@@ -185,7 +186,7 @@ Module MyersDiffDemo
                 Encoding.UTF8)
 
             ' 执行文件比较
-            Dim diffText As String = MyersDiffAlgorithm.DiffUtils.DiffFiles(oldFile, newFile, 2)
+            Dim diffText As String = DiffUtils.DiffFiles(oldFile, newFile, 2)
 
             Console.WriteLine("旧文件: {0}", oldFile)
             Console.WriteLine("新文件: {0}", newFile)
@@ -193,8 +194,7 @@ Module MyersDiffDemo
             Console.WriteLine(diffText)
 
             ' 获取详细结果
-            Dim result As MyersDiffAlgorithm.DiffResult =
-                MyersDiffAlgorithm.DiffUtils.CompareFiles(oldFile, newFile)
+            Dim result As DiffResult = DiffUtils.CompareFiles(oldFile, newFile)
             Console.WriteLine(result.ToSummary())
 
         Finally
