@@ -4,6 +4,7 @@
     <RootNamespace>Microsoft.VisualBasic.Data.MyersDiff</RootNamespace>
     <TargetFramework>net10.0</TargetFramework>
     <AssemblyName>Microsoft.VisualBasic.Data.MyersDiff</AssemblyName>
+    <Platforms>AnyCPU;x64</Platforms>
   </PropertyGroup>
 
   <ItemGroup>

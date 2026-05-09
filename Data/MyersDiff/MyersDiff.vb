@@ -333,17 +333,17 @@ Public Class MyersDiff
                                      editPath As List(Of EditStep)) As List(Of DiffItem)
         Dim items As New List(Of DiffItem)()
 
-        For Each step In editPath
-            Select Case step.Type
-                    Case EditType.Equal
-                    items.Add(New DiffItem(EditType.Equal, step.OldIndex, step.NewIndex,
-                                           oldSeq(step.OldIndex)))
+        For Each [step] As EditStep In editPath
+            Select Case [step].Type
+                Case EditType.Equal
+                    items.Add(New DiffItem(EditType.Equal, [step].OldIndex, [step].NewIndex,
+                                           oldSeq([step].OldIndex)))
                 Case EditType.Delete
-                    items.Add(New DiffItem(EditType.Delete, step.OldIndex, -1,
-                                           oldSeq(step.OldIndex)))
+                    items.Add(New DiffItem(EditType.Delete, [step].OldIndex, -1,
+                                           oldSeq([step].OldIndex)))
                 Case EditType.Insert
-                    items.Add(New DiffItem(EditType.Insert, -1, step.NewIndex,
-                                           newSeq(step.NewIndex)))
+                    items.Add(New DiffItem(EditType.Insert, -1, [step].NewIndex,
+                                           newSeq([step].NewIndex)))
             End Select
         Next
 
