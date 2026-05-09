@@ -3,6 +3,8 @@
     <TargetFrameworks>net10.0-windows;net10.0</TargetFrameworks>
     <Platforms>AnyCPU;x64;x86</Platforms>
     <Configurations>Debug;Release;LipidSearch;Rsharp_app_release;mzkit;NPSearch;mzkit_win32;gcmodeller_desktop;CFD_win32;nuget_release;Desktop;MEMI-Desktop;CellaLAB-Desktop</Configurations>
+    <OutputType>Exe</OutputType>
+    <UseApplicationFramework>True</UseApplicationFramework>
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\gr\network-visualization\Datavisualization.Network\network_graph-netcore5.vbproj" />

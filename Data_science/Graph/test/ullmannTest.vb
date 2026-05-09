@@ -57,7 +57,7 @@ Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
 
 Module ullmannTest
 
-    Sub Main()
+    Sub Main3()
         Call identicalTest()
         Call Pause()
     End Sub

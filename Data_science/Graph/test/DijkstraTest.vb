@@ -56,7 +56,7 @@ Imports Microsoft.VisualBasic.Data.GraphTheory
 
 Module DijkstraTest
 
-    Sub Main()
+    Sub Main1()
         Dim g As New Graph
 
         For i As Integer = 10 To 20

@@ -59,6 +59,10 @@ Imports Microsoft.VisualBasic.Data.GraphTheory.DinicMaxFlow
 
 Module Program
     Sub Main()
+        Call testFlow()
+    End Sub
+
+    Sub testFlow()
         ' 创建一个 6 节点的网络图
         ' 节点编号: 0 ~ 5
         Dim solver As New DinicMaxFlowSolver(6)
