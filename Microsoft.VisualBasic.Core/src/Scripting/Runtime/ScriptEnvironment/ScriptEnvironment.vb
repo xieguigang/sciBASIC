@@ -76,7 +76,7 @@
             If _slots.ContainsKey(name) Then
                 Throw New Exception($"变量 '{name}' 已在当前作用域中定义")
             End If
-            Dim slot = New ScriptSlot() With {.IsReadOnly = isReadOnly}
+            Dim slot = New ScriptSlot(is_readonly:=isReadOnly)
             _slots(name) = slot
             Return slot
         End Function

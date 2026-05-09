@@ -9,7 +9,19 @@
 
         ' — 元数据 —
         Public ReadOnly Property VarType As TypeCode = TypeCode.Empty
-        Public Property IsReadOnly As Boolean = False
+
+        ''' <summary>
+        ''' current symbol value is constant lock binding in the environment?
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property IsReadOnly As Boolean
+            Get
+                Return _readonly
+            End Get
+        End Property
+
+        Protected _readonly As Boolean = False
+
         Public Property IsConst As Boolean = False
 
         ' --- 强类型值存储 (模拟 Union，避免装箱) ---
@@ -18,10 +30,21 @@
         Public ReadOnly Property IntValue As Integer
         Public ReadOnly Property DblValue As Double
         Public ReadOnly Property StrValue As String
+        ''' <summary>
+        ''' .NET clr class object value
+        ''' </summary>
+        ''' <returns></returns>
         Public ReadOnly Property ObjValue As Object
         Public ReadOnly Property SngValue As Single
         Public ReadOnly Property LngValue As Long
         Public ReadOnly Property DateValue As Date
+
+        Sub New()
+        End Sub
+
+        Sub New(is_readonly As Boolean)
+            _readonly = is_readonly
+        End Sub
 
         ' --- 强类型 Set 方法 (无装箱) ---
 
@@ -92,6 +115,12 @@
                     SetBoolean(DirectCast(value, Boolean))
                 ElseIf t Is GetType(String) Then
                     SetString(DirectCast(value, String))
+                ElseIf t Is GetType(Single) Then
+                    SetSingle(DirectCast(value, Single))
+                ElseIf t Is GetType(Long) Then
+                    SetLong(DirectCast(value, Long))
+                ElseIf t Is GetType(Date) Then
+                    SetDate(DirectCast(value, Date))
                 Else
                     ' 其他类型统一当 Object 处理
                     SetObject(value)
@@ -118,7 +147,7 @@
         End Function
 
         ' 辅助方法：切换类型时，清空旧值（特别是引用类型，防止内存泄漏）
-        Private Sub ClearValues()
+        Protected Sub ClearValues()
             _BoolValue = False
             _IntValue = 0
             _DblValue = 0.0
