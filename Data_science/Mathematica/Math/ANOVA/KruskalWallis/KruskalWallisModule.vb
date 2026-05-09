@@ -1,4 +1,4 @@
-Imports System.Math
+Imports std = System.Math
 
 ''' <summary>
 ''' Kruskal-Wallis 检验模块：提供完整的非参数多组比较检验功能
@@ -58,12 +58,12 @@ Public Module KruskalWallisModule
     Public Function LogGamma(ByVal x As Double) As Double
         ' 对于 x < 0.5，利用反射公式：Γ(x) = π / (sin(πx) * Γ(1-x))
         If x < 0.5 Then
-            Dim sinPiX As Double = Sin(PI * x)
-            If Abs(sinPiX) < 1.0E-300 Then
+            Dim sinPiX As Double = std.Sin(std.PI * x)
+            If std.Abs(sinPiX) < 1.0E-300 Then
                 ' 极点处，返回极大值
                 Return Double.MaxValue
             End If
-            Return Log(PI / Abs(sinPiX)) - LogGamma(1.0 - x)
+            Return std.Log(std.PI / std.Abs(sinPiX)) - LogGamma(1.0 - x)
         End If
 
         ' Lanczos 近似：Γ(x) ≈ √(2π) * (x + g - 0.5)^(x-0.5) * e^(-(x+g-0.5)) * Ag(x)
@@ -75,7 +75,7 @@ Public Module KruskalWallisModule
         Next
 
         Dim t As Double = x + LanczosG + 0.5
-        Dim result As Double = 0.5 * Log(2.0 * PI) + (x + 0.5) * Log(t) - t + Log(ag)
+        Dim result As Double = 0.5 * std.Log(2.0 * std.PI) + (x + 0.5) * std.Log(t) - t + std.Log(ag)
 
         Return result
     End Function
@@ -91,7 +91,7 @@ Public Module KruskalWallisModule
         If lg > 700 Then
             Return Double.PositiveInfinity
         End If
-        Return Exp(lg)
+        Return std.Exp(lg)
     End Function
 
     ''' <summary>
@@ -129,8 +129,8 @@ Public Module KruskalWallisModule
 
         ' 计算首项：x^a * e^(-x) / (a * Γ(a))
         ' 使用对数避免溢出
-        Dim logFirstTerm As Double = a * Log(x) - x - LogGamma(a)
-        Dim firstFactor As Double = Exp(logFirstTerm)
+        Dim logFirstTerm As Double = a * std.Log(x) - x - LogGamma(a)
+        Dim firstFactor As Double = std.Exp(logFirstTerm)
 
         ' 级数求和：Σ(n=0..∞) x^n / [a * (a+1) * ... * (a+n)]
         Dim term As Double = 1.0 / a  ' n=0 时的项
@@ -139,7 +139,7 @@ Public Module KruskalWallisModule
         For n As Integer = 1 To maxIterations
             term = term * x / (a + n)
             sum = sum + term
-            If Abs(term) < Abs(sum) * epsilon Then
+            If std.Abs(term) < std.Abs(sum) * epsilon Then
                 Exit For
             End If
         Next
@@ -162,14 +162,14 @@ Public Module KruskalWallisModule
         ' 使用标准不完全 Gamma 函数的连分数表示
 
         ' 前置因子：e^(-x) * x^a / Γ(a)
-        Dim logPrefix As Double = a * Log(x) - x - LogGamma(a)
-        Dim prefix As Double = Exp(logPrefix)
+        Dim logPrefix As Double = a * std.Log(x) - x - LogGamma(a)
+        Dim prefix As Double = std.Exp(logPrefix)
 
         ' Lentz 算法
         Dim b As Double = x + 1.0 - a  ' b_1
         Dim c As Double = 1.0 / tiny
         Dim d As Double = 1.0 / b
-        If Abs(b) < tiny Then d = 1.0 / tiny
+        If std.Abs(b) < tiny Then d = 1.0 / tiny
 
         Dim h As Double = d
 
@@ -177,16 +177,16 @@ Public Module KruskalWallisModule
             Dim an As Double = -i * (i - a)  ' 分子系数
             b = b + 2.0                       ' 分母递增
             d = an * d + b
-            If Abs(d) < tiny Then d = tiny
+            If std.Abs(d) < tiny Then d = tiny
             d = 1.0 / d
 
             c = b + an / c
-            If Abs(c) < tiny Then c = tiny
+            If std.Abs(c) < tiny Then c = tiny
 
             Dim delta As Double = c * d
             h = h * delta
 
-            If Abs(delta - 1.0) < epsilon Then
+            If std.Abs(delta - 1.0) < epsilon Then
                 Exit For
             End If
         Next
@@ -201,7 +201,7 @@ Public Module KruskalWallisModule
     ''' </summary>
     ''' <param name="x">卡方统计量，x >= 0</param>
     ''' <param name="k">自由度，正整数</param>
-    ''' <returns>累积概率 P(X <= x)，值域 [0, 1]</returns>
+    ''' <returns>累积概率 P(X &lt;= x)，值域 [0, 1]</returns>
     Public Function ChiSquaredCDF(ByVal x As Double, ByVal k As Integer) As Double
         If x <= 0 Then Return 0.0
         If k <= 0 Then Return 0.0
@@ -750,7 +750,7 @@ Public Module KruskalWallisModule
         Dim corrected As Double() = New Double(results.Length - 1) {}
         For i As Integer = 0 To results.Length - 1
             If results(i).IsValid Then
-                corrected(i) = Math.Min(results(i).PValue * m, 1.0)
+                corrected(i) = std.Min(results(i).PValue * m, 1.0)
             Else
                 corrected(i) = Double.NaN
             End If
@@ -804,7 +804,7 @@ Public Module KruskalWallisModule
 
         ' 限制在 [0, 1] 范围内
         For i As Integer = 0 To m - 1
-            bhValues(i) = Math.Min(Math.Max(bhValues(i), 0.0), 1.0)
+            bhValues(i) = std.Min(std.Max(bhValues(i), 0.0), 1.0)
         Next
 
         ' 写回结果
