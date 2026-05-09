@@ -264,16 +264,12 @@ Namespace CSS
 
         Public Shared Function GetStyle(style As String) As String
             Select Case LCase(style)
-                Case normal
-                    Return FontStyle.Regular
-                Case italic
-                    Return FontStyle.Italic
-                Case strong
-                    Return FontStyle.Bold
-                Case strikeout
-                    Return FontStyle.Strikeout
-                Case underline
-                    Return FontStyle.Underline
+                Case normal : Return FontStyle.Regular
+                Case italic : Return FontStyle.Italic
+                Case strong : Return FontStyle.Bold
+                Case strikeout : Return FontStyle.Strikeout
+                Case underline : Return FontStyle.Underline
+
                 Case Else
                     Return FontStyle.Regular
             End Select

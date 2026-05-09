@@ -94,7 +94,13 @@ Namespace Imaging
 
     <Flags>
     Public Enum FontStyle
+        ''' <summary>
+        ''' css normal
+        ''' </summary>
         Regular = 0
+        ''' <summary>
+        ''' css strongs
+        ''' </summary>
         Bold = 1
         Italic = 2
         Underline = 4
