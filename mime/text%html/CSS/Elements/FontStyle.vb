@@ -192,7 +192,7 @@ Namespace CSS
         ''' <summary>
         ''' Css string for set font style
         ''' </summary>
-        ''' <returns></returns>
+        ''' <returns><see cref="ToString()"/> value.</returns>
         Public Overrides ReadOnly Property CSSValue As String
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
@@ -224,6 +224,10 @@ Namespace CSS
             family = font.Name
             style = font.Style
             size = font.Size
+        End Sub
+
+        Sub New(base As CSSFont, family As String)
+
         End Sub
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>

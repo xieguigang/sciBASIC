@@ -1,3 +1,4 @@
+Imports Microsoft.VisualBasic.Math.Distributions
 Imports std = System.Math
 
 ''' <summary>
@@ -22,78 +23,6 @@ Imports std = System.Math
 ''' </remarks>
 Public Module KruskalWallisModule
 
-    ' ========================================================
-    '  第一部分：基础数学函数
-    '  实现 Gamma 函数、不完全 Gamma 函数、卡方分布 CDF
-    '  全部基于 VB.NET 基础运算，不依赖外部统计库
-    ' ========================================================
-
-    ''' <summary>
-    ''' Lanczos 近似系数（g=7, n=9），用于计算 Gamma 函数的对数
-    ''' 参考：Lanczos, C. (1964). A precision approximation of the gamma function.
-    ''' </summary>
-    Private ReadOnly LanczosCoefficients As Double() = {
-        0.99999999999980993,
-        676.5203681218851,
-        -1259.1392167224028,
-        771.32342877765313,
-        -176.61502916214059,
-        12.507343278686905,
-        -0.13857109526572012,
-        0.0000099843695780195716,
-        0.00000015056327351493116
-    }
-
-    ''' <summary>
-    ''' Lanczos 近似参数 g
-    ''' </summary>
-    Private Const LanczosG As Double = 7.0
-
-    ''' <summary>
-    ''' 计算 Gamma 函数的对数 ln(Γ(x))
-    ''' 使用 Lanczos 近似，精度约 15 位有效数字
-    ''' </summary>
-    ''' <param name="x">正实数</param>
-    ''' <returns>ln(Γ(x))</returns>
-    Public Function LogGamma(ByVal x As Double) As Double
-        ' 对于 x < 0.5，利用反射公式：Γ(x) = π / (sin(πx) * Γ(1-x))
-        If x < 0.5 Then
-            Dim sinPiX As Double = std.Sin(std.PI * x)
-            If std.Abs(sinPiX) < 1.0E-300 Then
-                ' 极点处，返回极大值
-                Return Double.MaxValue
-            End If
-            Return std.Log(std.PI / std.Abs(sinPiX)) - LogGamma(1.0 - x)
-        End If
-
-        ' Lanczos 近似：Γ(x) ≈ √(2π) * (x + g - 0.5)^(x-0.5) * e^(-(x+g-0.5)) * Ag(x)
-        x = x - 1.0
-        Dim ag As Double = LanczosCoefficients(0)
-
-        For i As Integer = 1 To LanczosCoefficients.Length - 1
-            ag = ag + LanczosCoefficients(i) / (x + i)
-        Next
-
-        Dim t As Double = x + LanczosG + 0.5
-        Dim result As Double = 0.5 * std.Log(2.0 * std.PI) + (x + 0.5) * std.Log(t) - t + std.Log(ag)
-
-        Return result
-    End Function
-
-    ''' <summary>
-    ''' 计算 Gamma 函数 Γ(x)
-    ''' 基于 LogGamma 的指数，注意大数溢出风险
-    ''' </summary>
-    ''' <param name="x">正实数</param>
-    ''' <returns>Γ(x)</returns>
-    Public Function GammaFunc(ByVal x As Double) As Double
-        Dim lg As Double = LogGamma(x)
-        If lg > 700 Then
-            Return Double.PositiveInfinity
-        End If
-        Return std.Exp(lg)
-    End Function
-
     ''' <summary>
     ''' 计算正则化不完全 Gamma 函数 P(a, x) = γ(a,x) / Γ(a)
     ''' 使用级数展开（当 x &lt; a+1 时）和连分数展开（当 x >= a+1 时）
@@ -103,7 +32,7 @@ Public Module KruskalWallisModule
     ''' <param name="a">形状参数，a > 0</param>
     ''' <param name="x">积分上限，x >= 0</param>
     ''' <returns>P(a, x)，值域 [0, 1]</returns>
-    Public Function RegularizedIncompleteGammaP(ByVal a As Double, ByVal x As Double) As Double
+    Public Function RegularizedIncompleteGammaP(a As Double, x As Double) As Double
         ' 边界情况处理
         If x < 0 Then Return 0.0
         If x = 0 Then Return 0.0
@@ -123,13 +52,13 @@ Public Module KruskalWallisModule
     ''' P(a,x) = e^(-x) * x^a * Σ(n=0..∞) x^n / [Γ(a+1+n)]
     ''' 等价形式：P(a,x) = e^(-x) * x^a / Γ(a) * Σ(n=0..∞) x^n / [a*(a+1)*...*(a+n)]
     ''' </summary>
-    Private Function GammaSeries(ByVal a As Double, ByVal x As Double) As Double
+    Private Function GammaSeries(a As Double, x As Double) As Double
         Dim maxIterations As Integer = 1000
         Dim epsilon As Double = 0.000000000001
 
         ' 计算首项：x^a * e^(-x) / (a * Γ(a))
         ' 使用对数避免溢出
-        Dim logFirstTerm As Double = a * std.Log(x) - x - LogGamma(a)
+        Dim logFirstTerm As Double = a * std.Log(x) - x - MathGamma.lngamm(a)
         Dim firstFactor As Double = std.Exp(logFirstTerm)
 
         ' 级数求和：Σ(n=0..∞) x^n / [a * (a+1) * ... * (a+n)]
@@ -152,7 +81,7 @@ Public Module KruskalWallisModule
     ''' 使用修正 Lentz 算法求连分数值
     ''' Q(a,x) = e^(-x) * x^a / Γ(a) * CF(a,x)
     ''' </summary>
-    Private Function GammaContinuedFraction(ByVal a As Double, ByVal x As Double) As Double
+    Private Function GammaContinuedFraction(a As Double, x As Double) As Double
         Dim maxIterations As Integer = 1000
         Dim epsilon As Double = 0.000000000001
         Dim tiny As Double = 1.0E-30
@@ -162,7 +91,7 @@ Public Module KruskalWallisModule
         ' 使用标准不完全 Gamma 函数的连分数表示
 
         ' 前置因子：e^(-x) * x^a / Γ(a)
-        Dim logPrefix As Double = a * std.Log(x) - x - LogGamma(a)
+        Dim logPrefix As Double = a * std.Log(x) - x - MathGamma.lngamm(a)
         Dim prefix As Double = std.Exp(logPrefix)
 
         ' Lentz 算法
@@ -202,7 +131,7 @@ Public Module KruskalWallisModule
     ''' <param name="x">卡方统计量，x >= 0</param>
     ''' <param name="k">自由度，正整数</param>
     ''' <returns>累积概率 P(X &lt;= x)，值域 [0, 1]</returns>
-    Public Function ChiSquaredCDF(ByVal x As Double, ByVal k As Integer) As Double
+    Public Function ChiSquaredCDF(x As Double, k As Integer) As Double
         If x <= 0 Then Return 0.0
         If k <= 0 Then Return 0.0
 
@@ -220,7 +149,7 @@ Public Module KruskalWallisModule
     ''' <param name="x">卡方统计量</param>
     ''' <param name="k">自由度</param>
     ''' <returns>右尾概率 p 值</returns>
-    Public Function ChiSquaredPValue(ByVal x As Double, ByVal k As Integer) As Double
+    Public Function ChiSquaredPValue(x As Double, k As Integer) As Double
         If x <= 0 Then Return 1.0
         If k <= 0 Then Return 1.0
 
@@ -245,7 +174,7 @@ Public Module KruskalWallisModule
     ''' </summary>
     ''' <param name="values">待排名的数值数组</param>
     ''' <returns>排名数组，与输入等长</returns>
-    Public Function ComputeRanks(ByVal values As Double()) As Double()
+    Public Function ComputeRanks(values As Double()) As Double()
         Dim n As Integer = values.Length
         Dim ranks As Double() = New Double(n - 1) {}
 
@@ -294,7 +223,7 @@ Public Module KruskalWallisModule
     ''' <summary>
     ''' 快速排序版本：按值对索引数组排序（适用于大规模数据）
     ''' </summary>
-    Private Sub QuickSortIndices(ByVal values As Double(), ByRef indices As Integer(), ByVal low As Integer, ByVal high As Integer)
+    Private Sub QuickSortIndices(values As Double(), ByRef indices As Integer(), low As Integer, high As Integer)
         If low < high Then
             Dim pivotIndex As Integer = Partition(values, indices, low, high)
             QuickSortIndices(values, indices, low, pivotIndex - 1)
@@ -302,7 +231,7 @@ Public Module KruskalWallisModule
         End If
     End Sub
 
-    Private Function Partition(ByVal values As Double(), ByRef indices As Integer(), ByVal low As Integer, ByVal high As Integer) As Integer
+    Private Function Partition(values As Double(), ByRef indices As Integer(), low As Integer, high As Integer) As Integer
         Dim pivot As Double = values(indices(high))
         Dim i As Integer = low - 1
 
@@ -326,7 +255,7 @@ Public Module KruskalWallisModule
     ''' 对一组数值进行排名（使用快速排序，适用于大规模数据）
     ''' 结值取平均秩
     ''' </summary>
-    Public Function ComputeRanksFast(ByVal values As Double()) As Double()
+    Public Function ComputeRanksFast(values As Double()) As Double()
         Dim n As Integer = values.Length
         Dim ranks As Double() = New Double(n - 1) {}
 
@@ -365,7 +294,7 @@ Public Module KruskalWallisModule
     ''' </summary>
     ''' <param name="values">全部观测值数组</param>
     ''' <returns>校正因子 C，值域 (0, 1]</returns>
-    Public Function ComputeTieCorrection(ByVal values As Double()) As Double
+    Public Function ComputeTieCorrection(values As Double()) As Double
         Dim n As Integer = values.Length
         If n <= 1 Then Return 1.0
 
@@ -412,9 +341,9 @@ Public Module KruskalWallisModule
     ''' <param name="groupNames">各组名称数组（可选）</param>
     ''' <param name="taxonName">分类单元名称（可选）</param>
     ''' <returns>KWResult 结构体，包含完整检验结果</returns>
-    Public Function KruskalWallisTest(ByVal abundanceData As Double()(),
-                                      Optional ByVal groupNames As String() = Nothing,
-                                      Optional ByVal taxonName As String = "") As KWResult
+    Public Function KruskalWallisTest(abundanceData As Double()(),
+                                      Optional groupNames As String() = Nothing,
+                                      Optional taxonName As String = "") As KWResult
 
         Dim result As New KWResult()
         result.TaxonName = taxonName
@@ -538,9 +467,9 @@ Public Module KruskalWallisModule
     ''' <param name="groupLabels">样本分组标签数组</param>
     ''' <param name="taxonNames">分类单元名称数组（可选）</param>
     ''' <returns>KWResult 数组，每个元素对应一个分类单元的检验结果</returns>
-    Public Function KruskalWallisMatrixTest(ByVal abundanceMatrix As Double(,),
-                                            ByVal groupLabels As String(),
-                                            Optional ByVal taxonNames As String() = Nothing) As KWResult()
+    Public Function KruskalWallisMatrixTest(abundanceMatrix As Double(,),
+                                            groupLabels As String(),
+                                            Optional taxonNames As String() = Nothing) As KWResult()
 
         Dim nTaxa As Integer = abundanceMatrix.GetUpperBound(0) + 1   ' 行数=分类单元数
         Dim nSamples As Integer = abundanceMatrix.GetUpperBound(1) + 1 ' 列数=样本数
@@ -611,7 +540,7 @@ Public Module KruskalWallisModule
     ''' <summary>
     ''' 将单个 KWResult 格式化为可读字符串
     ''' </summary>
-    Public Function FormatKWResult(ByVal result As KWResult) As String
+    Public Function FormatKWResult(result As KWResult) As String
         Dim sb As New System.Text.StringBuilder()
 
         sb.AppendLine("========================================")
@@ -671,7 +600,7 @@ Public Module KruskalWallisModule
     ''' 将多个 KWResult 格式化为汇总表格字符串
     ''' 适用于微生物丰度矩阵的批量检验结果展示
     ''' </summary>
-    Public Function FormatKWResultsTable(ByVal results As KWResult()) As String
+    Public Function FormatKWResultsTable(results As KWResult()) As String
         Dim sb As New System.Text.StringBuilder()
 
         sb.AppendLine("==========================================================================================")
@@ -720,8 +649,8 @@ Public Module KruskalWallisModule
     ''' <param name="results">检验结果数组</param>
     ''' <param name="alpha">显著性水平（默认 0.05）</param>
     ''' <returns>显著差异分类单元的 KWResult 数组</returns>
-    Public Function GetSignificantTaxa(ByVal results As KWResult(),
-                                       Optional ByVal alpha As Double = 0.05) As KWResult()
+    Public Function GetSignificantTaxa(results As KWResult(),
+                                       Optional alpha As Double = 0.05) As KWResult()
         Dim significant As New System.Collections.Generic.List(Of KWResult)
 
         For Each r As KWResult In results
@@ -741,7 +670,7 @@ Public Module KruskalWallisModule
     ''' </summary>
     ''' <param name="results">原始检验结果数组</param>
     ''' <returns>校正后的 p 值数组（与 results 等长）</returns>
-    Public Function BonferroniCorrection(ByVal results As KWResult()) As Double()
+    Public Function BonferroniCorrection(results As KWResult()) As Double()
         Dim m As Integer = 0
         For Each r As KWResult In results
             If r.IsValid Then m += 1
@@ -764,7 +693,7 @@ Public Module KruskalWallisModule
     ''' </summary>
     ''' <param name="results">原始检验结果数组</param>
     ''' <returns>校正后的 p 值数组（与 results 等长）</returns>
-    Public Function BenjaminiHochbergCorrection(ByVal results As KWResult()) As Double()
+    Public Function BenjaminiHochbergCorrection(results As KWResult()) As Double()
         Dim n As Integer = results.Length
         Dim corrected As Double() = New Double(n - 1) {}
 
