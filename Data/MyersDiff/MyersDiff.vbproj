@@ -6,4 +6,10 @@
     <AssemblyName>Microsoft.VisualBasic.Data.MyersDiff</AssemblyName>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Compile Remove="test\**" />
+    <EmbeddedResource Remove="test\**" />
+    <None Remove="test\**" />
+  </ItemGroup>
+
 </Project>
