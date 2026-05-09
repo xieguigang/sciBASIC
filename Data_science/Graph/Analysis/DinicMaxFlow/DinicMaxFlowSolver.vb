@@ -1,12 +1,12 @@
-﻿' =============================================================================
+﻿Imports std = System.Math
+
+' =============================================================================
 ' 模块名称: DinicMaxFlowModule
 ' 功能说明: 基于 Dinic 算法的最大网络流计算模块
 '          支持计算指定源点的最大流量以及全网络节点的流量分布
 ' 作者: Auto-Generated
 ' 日期: 2026-05-09
 ' =============================================================================
-
-Imports System.Collections.Generic
 
 Namespace DinicMaxFlow
 
@@ -147,7 +147,7 @@ Namespace DinicMaxFlow
                    edge.Capacity - edge.Flow > 0 Then
 
                     ' 递归推送流量, 取残余容量和剩余可推流量的最小值
-                    Dim remainFlow As Integer = Math.Min(maxFlow - pushed, edge.Capacity - edge.Flow)
+                    Dim remainFlow As Integer = std.Min(maxFlow - pushed, edge.Capacity - edge.Flow)
                     Dim flow As Integer = DFS(edge.To, sink, remainFlow)
 
                     If flow > 0 Then
