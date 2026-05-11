@@ -56,6 +56,7 @@ Imports System.Runtime.CompilerServices
 Imports System.Runtime.InteropServices
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
+Imports Microsoft.VisualBasic.ComponentModel.DataStructures
 Imports Microsoft.VisualBasic.Linq
 
 Namespace ComponentModel.DataSourceModel.Repository
@@ -103,7 +104,7 @@ Namespace ComponentModel.DataSourceModel.Repository
         ''' <param name="duplicated"></param>
         ''' <returns></returns>
         ''' <remarks>
-        ''' the name is uniqued via the <see cref="UniqueNames(IEnumerable(Of String), ByRef String())"/> method 
+        ''' the name is uniqued via the <see cref="UniqueNames"/> method 
         ''' via add numeric suffix to the name key string.
         ''' </remarks>
         <Extension>
@@ -172,34 +173,63 @@ Namespace ComponentModel.DataSourceModel.Repository
         ''' </remarks>
         <Extension>
         Public Function UniqueNames(names As IEnumerable(Of String), <Out> Optional ByRef duplicated As String() = Nothing, Optional sep As String = "_") As String()
-            Dim nameUniques As New Dictionary(Of String, Counter)
-            Dim duplicates As New List(Of String)
-
             Erase duplicated
 
             If names Is Nothing Then
                 Return New String() {}
             End If
 
+            Dim unique As New MakeUniqueName(sep)
+
             For Each name As String In names
-                ' 20251109 null value will be safely treated as empty string at here
-                name = If(name, "")
-RE0:
-                If nameUniques.ContainsKey(name) Then
-                    nameUniques(name).Hit()
-                    duplicates.Add(name)
-                    name = name & sep & nameUniques(name).Value
-                    GoTo RE0
-                Else
-                    nameUniques.Add(name, Scan0)
-                End If
+                Call unique.GetUniqueID(name)
             Next
 
-            If duplicates.Any Then
-                duplicated = duplicates.ToArray
+            If unique.duplicates.Any Then
+                duplicated = unique.duplicates.ToArray
             End If
 
-            Return nameUniques.Keys.ToArray
+            Return unique.UniqueIDs.ToArray
         End Function
     End Module
+
+    Public Class MakeUniqueName
+
+        Dim nameUniques As New Dictionary(Of String, Counter)
+        Dim sep As String
+
+        Friend duplicates As New List(Of String)
+
+        Public ReadOnly Property UniqueIDs As IEnumerable(Of String)
+            Get
+                Return nameUniques.Keys
+            End Get
+        End Property
+
+        Sub New(sep As String)
+            Me.sep = sep
+        End Sub
+
+        Public Sub Clear()
+            Call nameUniques.Clear()
+            Call duplicates.Clear()
+        End Sub
+
+        Public Function GetUniqueID(name As String) As String
+            ' 20251109 null value will be safely treated as empty string at here
+            name = If(name, "")
+RE0:
+            If nameUniques.ContainsKey(name) Then
+                nameUniques(name).Hit()
+                duplicates.Add(name)
+                name = name & sep & CInt(nameUniques(name)).ToString
+                GoTo RE0
+            Else
+                nameUniques.Add(name, Scan0)
+            End If
+
+            Return name
+        End Function
+
+    End Class
 End Namespace

@@ -142,7 +142,11 @@ Namespace ComponentModel
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overloads Shared Narrowing Operator CType(c As Counter) As Integer
-            Return c.Value
+            If c Is Nothing Then
+                Return 0
+            Else
+                Return c.Value
+            End If
         End Operator
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
