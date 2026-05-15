@@ -70,7 +70,7 @@ Imports Microsoft.VisualBasic.Linq
 Namespace FileStream.Generic
 
     ''' <summary>
-    ''' The network csv data information with specific type of the datamodel
+    ''' The network csv/json data information with specific type of the datamodel
     ''' </summary>
     ''' <typeparam name="T_Node"></typeparam>
     ''' <typeparam name="T_Edge"></typeparam>
@@ -78,8 +78,16 @@ Namespace FileStream.Generic
     Public Class Network(Of T_Node As Node, T_Edge As NetworkEdge)
         Implements IKeyValuePairObject(Of T_Node(), T_Edge())
 
+        ''' <summary>
+        ''' the network metadata
+        ''' </summary>
+        ''' <returns></returns>
         Public Property meta As MetaData
 
+        ''' <summary>
+        ''' the node metadata, optional, could be missing, which means nodes has no metadata
+        ''' </summary>
+        ''' <returns></returns>
         Public Property nodes As T_Node() Implements IKeyValuePairObject(Of T_Node(), T_Edge()).Key
             Get
                 If __nodes Is Nothing Then
@@ -96,6 +104,10 @@ Namespace FileStream.Generic
             End Set
         End Property
 
+        ''' <summary>
+        ''' the network data
+        ''' </summary>
+        ''' <returns></returns>
         Public Property edges As T_Edge() Implements IKeyValuePairObject(Of T_Node(), T_Edge()).Value
             Get
                 If __edges Is Nothing Then
@@ -116,9 +128,9 @@ Namespace FileStream.Generic
         ''' 判断这个网络模型之中是否是没有任何数据
         ''' </summary>
         ''' <returns></returns>
-        Public ReadOnly Property IsEmpty As Boolean
+        Public ReadOnly Property is_empty As Boolean
             Get
-                Return __nodes.IsNullOrEmpty AndAlso __edges.IsNullOrEmpty
+                Return __edges.IsNullOrEmpty
             End Get
         End Property
 

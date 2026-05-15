@@ -57,6 +57,9 @@
 
 Namespace FileStream
 
+    ''' <summary>
+    ''' the network metadata
+    ''' </summary>
     Public Class MetaData
 
         Public Property creators As String()
