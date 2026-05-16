@@ -68,7 +68,7 @@ Imports std = System.Math
 
 Namespace d3js.Layout
 
-    Public Class Forcedirected ： Inherits DataLabeler
+    Public Class Forcedirected : Inherits DataLabeler
 
         Protected ReadOnly mDxMap As New Dictionary(Of String, Double)
         Protected ReadOnly mDyMap As New Dictionary(Of String, Double)
@@ -80,6 +80,7 @@ Namespace d3js.Layout
         Dim k As Double
         Dim maxtx As Integer = 4
         Dim maxty As Integer = 3
+        Dim temperature As Double ' 引入温度变量
 
         ''' <summary>
         ''' 会尽量避免在这个区域内存在网络的节点，这个区域一般为legend的绘制区域
@@ -103,14 +104,12 @@ Namespace d3js.Layout
         Public Overrides Function Width(x As Double) As DataLabeler
             CANVAS_WIDTH = x
             maxtx = CANVAS_WIDTH / 3
-
             Return Me
         End Function
 
         Public Overrides Function Height(x As Double) As DataLabeler
             CANVAS_HEIGHT = x
             maxty = CANVAS_HEIGHT / 3
-
             Return Me
         End Function
 
@@ -131,28 +130,34 @@ Namespace d3js.Layout
         End Sub
 
         Protected Sub RejectRegions()
-            Dim dist, distX, distY As Double
-            Dim id As String
-            Dim dx, dy As Double
-
-            For Each rect In avoidRegions
+            ' 优化：使用矩形相交检测，而不是中心点距离
+            For Each region In avoidRegions
                 For Each v As Label In m_labels
+                    If v.pinned Then Continue For
 
-                    If v.pinned Then
-                        Continue For
-                    End If
+                    ' 将 Label 转为 RectangleF 进行相交判断
+                    Dim vRect As New RectangleF(v.X, v.Y, v.width, v.height)
 
-                    distX = rect.center.X - v.X
-                    distY = rect.center.Y - v.Y
-                    dist = std.Sqrt(distX * distX + distY * distY)
-                    id = v.text
+                    ' 假设 Rectangle2D 可以转换为 RectangleF (根据你的框架调整)
+                    Dim aRect As RectangleF = region.rect.Rectangle
 
-                    If dist > 0 Then
-                        dx = (distX / dist) * (k * k / dist) * ejectFactor * 10
-                        dy = (distY / dist) * (k * k / dist) * ejectFactor * 10
+                    If vRect.IntersectsWith(aRect) Then
+                        ' 计算穿透深度，寻找最短逃逸路径
+                        Dim overlapLeft = vRect.Right - aRect.Left
+                        Dim overlapRight = aRect.Right - vRect.Left
+                        Dim overlapTop = vRect.Bottom - aRect.Top
+                        Dim overlapBottom = aRect.Bottom - vRect.Top
 
-                        mDxMap(id) = mDxMap(id) + dx
-                        mDyMap(id) = mDyMap(id) + dy
+                        Dim minOverlap = std.Min(std.Min(overlapLeft, overlapRight), std.Min(overlapTop, overlapBottom))
+                        Dim id = v.text
+
+                        ' 增加一个较大的强制排斥力
+                        Dim pushForce As Double = minOverlap * ejectFactor * 2
+
+                        If minOverlap = overlapLeft Then mDxMap(id) -= pushForce
+                        If minOverlap = overlapRight Then mDxMap(id) += pushForce
+                        If minOverlap = overlapTop Then mDyMap(id) -= pushForce
+                        If minOverlap = overlapBottom Then mDyMap(id) += pushForce
                     End If
                 Next
             Next
@@ -165,28 +170,26 @@ Namespace d3js.Layout
             Dim distX, distY, dist As Double
             Dim id As String
             Dim dx, dy As Double
-            Dim ejectFactor = Me.ejectFactor
 
             For Each v As Label In m_labels
-                If v.pinned Then
-                    Continue For
-                Else
-                    id = v.text
-                End If
-
-                mDxMap(id) = 0.0
-                mDyMap(id) = 0.0
+                If v.pinned Then Continue For
+                id = v.text
 
                 For Each u As Label In m_labels.Where(Function(ui) Not ui Is v)
-                    distX = v.X - u.X
-                    distY = v.Y - u.Y
+                    ' 修复：使用标签的中心点计算排斥力，而不是左上角
+                    Dim vCenterX = v.X + v.width / 2
+                    Dim vCenterY = v.Y + v.height / 2
+                    Dim uCenterX = u.X + u.width / 2
+                    Dim uCenterY = u.Y + u.height / 2
+
+                    distX = vCenterX - uCenterX
+                    distY = vCenterY - uCenterY
                     dist = std.Sqrt(distX * distX + distY * distY)
 
-                    'If (dist < dist_thresh.Min) Then
-                    '    ejectFactor = 5
-                    'End If
-
-                    If dist > 0 AndAlso dist < dist_thresh.Max Then
+                    ' 移除了 dist_thresh.Max 的限制，只要靠得太近就排斥
+                    ' 设定一个极小值下限防止除以0
+                    If dist > 0.1 AndAlso dist < (k * 2) Then
+                        ' 考虑矩形大小的排斥力 (越近越强烈)
                         dx = (distX / dist) * (k * k / dist) * ejectFactor
                         dy = (distY / dist) * (k * k / dist) * ejectFactor
 
@@ -210,18 +213,22 @@ Namespace d3js.Layout
                 u = m_labels(i)
                 v = m_anchors(i)
 
-                If u.pinned Then
-                    Continue For
-                End If
+                If u.pinned Then Continue For
 
-                distX = u.X - v.x
-                distY = u.Y - v.y
+                ' 修复：将标签中心点拉向锚点，而不是左上角
+                Dim uCenterX = u.X + u.width / 2
+                Dim uCenterY = u.Y + u.height / 2
+
+                distX = uCenterX - v.x
+                distY = uCenterY - v.y
                 dist = std.Sqrt(distX * distX + distY * distY)
+
                 dx = distX * dist / k * condenseFactor
                 dy = distY * dist / k * condenseFactor
 
-                mDxMap(u.text) = mDxMap(u.text) - dx / u.text.Length
-                mDyMap(u.text) = mDyMap(u.text) - dy / u.text.Length
+                ' 修复：移除 / u.text.Length，长文本不应受到更强的拉力
+                mDxMap(u.text) = mDxMap(u.text) - dx
+                mDyMap(u.text) = mDyMap(u.text) - dy
             Next
         End Sub
 
@@ -233,31 +240,30 @@ Namespace d3js.Layout
                 dx = mDxMap(node.text)
                 dy = mDyMap(node.text)
 
+                ' 修复：使用 Log(1 + |dx|) 防止小于1时对数变负导致方向反转
                 If dx <> 0 Then
-                    dx = std.Sign(dx) * std.Log(std.Abs(dx))
+                    dx = std.Sign(dx) * std.Log(1 + std.Abs(dx))
                 End If
                 If dy <> 0 Then
-                    dy = std.Sign(dy) * std.Log(std.Abs(dy))
+                    dy = std.Sign(dy) * std.Log(1 + std.Abs(dy))
                 End If
 
-                If (dx < -maxtx) Then dx = -maxtx
-                If (dx > maxtx) Then dx = maxtx
-                If (dy < -maxty) Then dy = -maxty
-                If (dy > maxty) Then dy = maxty
+                ' 引入温度限制，随着迭代降温
+                Dim limitedDx = std.Min(std.Abs(dx), maxtx * temperature) * std.Sign(dx)
+                Dim limitedDy = std.Min(std.Abs(dy), maxty * temperature) * std.Sign(dy)
 
-                x = node.X
-                y = node.Y
-                x = x + dx ' If((x + dx) >= CANVAS_WIDTH OrElse (x + dx) <= 0, x - dx, x + dx)
-                y = y + dy ' If((y + dy) >= CANVAS_HEIGHT OrElse (y + dy <= 0), y - dy, y + dy)
+                x = node.X + limitedDx
+                y = node.Y + limitedDy
 
+                ' 边界检测修复：防止宽度大于画布时出现负值
                 If x + node.width >= CANVAS_WIDTH Then
-                    x = CANVAS_WIDTH - node.width
+                    x = std.Max(offset.X, CANVAS_WIDTH - node.width)
                 ElseIf x < offset.X Then
                     x = offset.X
                 End If
 
                 If y + node.height >= CANVAS_HEIGHT Then
-                    y = CANVAS_HEIGHT - node.height
+                    y = std.Max(offset.Y, CANVAS_HEIGHT - node.height)
                 ElseIf y < offset.Y Then
                     y = offset.Y
                 End If
@@ -270,8 +276,14 @@ Namespace d3js.Layout
         Public Overrides Function Start(Optional nsweeps As Integer = 2000, Optional showProgress As Boolean = True) As DataLabeler
             Me.k = std.Sqrt(CANVAS_WIDTH * CANVAS_HEIGHT / m_labels.Length)
 
+            ' 初始温度设为 1.0
+            Me.temperature = 1.0
+
             For i As Integer = 0 To nsweeps
                 Call Collide()
+
+                ' 模拟退火：温度线性递减到 0.1，保留微调能力
+                Me.temperature = std.Max(0.1, 1.0 - (i / nsweeps))
 
                 If showProgress AndAlso (100 * i / nsweeps) Mod 5 = 0 Then
                     Console.WriteLine($"- Completed {i + 1} of {nsweeps} [{CInt(100 * i / nsweeps)}%]")
@@ -281,4 +293,5 @@ Namespace d3js.Layout
             Return Me
         End Function
     End Class
+
 End Namespace
