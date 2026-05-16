@@ -68,7 +68,7 @@ Namespace d3js.Layout
     Public Class Label
 
         ''' <summary>
-        ''' the x-coordinate of the label.
+        ''' the x-coordinate of the label.(rectanglef x)
         ''' </summary>
         ''' <returns></returns>
         Public Property X As Double
@@ -81,7 +81,7 @@ Namespace d3js.Layout
         End Property
 
         ''' <summary>
-        ''' the y-coordinate of the label.
+        ''' the y-coordinate of the label.(rectanglef y)
         ''' </summary>
         ''' <returns></returns>
         Public Property Y As Double
@@ -94,7 +94,7 @@ Namespace d3js.Layout
         End Property
 
         ''' <summary>
-        ''' the width of the label (approximating the label as a rectangle).
+        ''' the width of the label (approximating the label as a rectangle, rectangle width).
         ''' </summary>
         ''' <returns></returns>
         Public Property width As Double
@@ -107,7 +107,7 @@ Namespace d3js.Layout
         End Property
 
         ''' <summary>
-        ''' the height of the label (same approximation).
+        ''' the height of the label (same approximation, rectangle height).
         ''' </summary>
         ''' <returns></returns>
         Public Property height As Double
