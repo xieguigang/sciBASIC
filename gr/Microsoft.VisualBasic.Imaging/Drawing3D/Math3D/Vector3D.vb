@@ -63,7 +63,7 @@ Imports std = System.Math
 
 Namespace Drawing3D.Math3D
 
-    Public Structure Vector3D : Implements IEnumerable(Of Point3D)
+    Public Class Vector3D : Implements IEnumerable(Of Point3D)
 
         Public X As Vector
         Public Y As Vector
@@ -195,11 +195,7 @@ Namespace Drawing3D.Math3D
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Operator -(p3D As Vector3D, offset As Point3D) As Vector3D
-            Return New Vector3D With {
-                .X = p3D.X - offset.X,
-                .Y = p3D.Y - offset.Y,
-                .Z = p3D.Z - offset.Z
-            }
+            Return New Vector3D(p3D.X - offset.X, p3D.Y - offset.Y, p3D.Z - offset.Z)
         End Operator
 
         Public Iterator Function GetEnumerator() As IEnumerator(Of Point3D) Implements IEnumerable(Of Point3D).GetEnumerator
@@ -211,5 +207,5 @@ Namespace Drawing3D.Math3D
         Private Iterator Function IEnumerable_GetEnumerator() As IEnumerator Implements IEnumerable.GetEnumerator
             Yield GetEnumerator()
         End Function
-    End Structure
+    End Class
 End Namespace

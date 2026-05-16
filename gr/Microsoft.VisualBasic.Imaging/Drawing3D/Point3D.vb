@@ -272,13 +272,24 @@ Namespace Drawing3D
         ''' <param name="viewDistance"></param>
         ''' <returns></returns>
         Public Function Project(viewWidth%, viewHeight%, fov%, viewDistance!, Optional offset As PointF = Nothing) As Point3D
-            Dim factor As Single, Xn As Single, Yn As Single
+            ' 1. 计算深度
+            Dim depth As Single = viewDistance + Me.Z
 
-            factor = fov / (viewDistance + Me.Z)
-            Xn = Me.X * factor + viewWidth / 2 + offset.X
-            Yn = Me.Y * factor + viewHeight / 2 + offset.Y
+            ' 2. 安全检查：如果点在摄像机背后或正好在摄像机平面上，不能直接投影
+            '    返回一个特殊的标记点（比如Z为负无穷），或者在外部调用时进行过滤
+            If depth <= 0 Then
+                ' 这里可以根据业务逻辑处理，比如返回Nothing（需将返回值改为Nullable(Of Point3D)）
+                ' 或者返回一个极远且标记为无效的点
+                Return New Point3D(0, 0, depth) ' 仅仅是示例，实际应在渲染管线中剔除
+            Else
+                Dim factor As Single, Xn As Single, Yn As Single
 
-            Return New Point3D(Xn, Yn, Me.Z)
+                factor = fov / (viewDistance + Me.Z)
+                Xn = Me.X * factor + viewWidth / 2 + offset.X
+                Yn = Me.Y * factor + viewHeight / 2 + offset.Y
+
+                Return New Point3D(Xn, Yn, Me.Z)
+            End If
         End Function
 
         ''' <summary>
