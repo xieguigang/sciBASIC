@@ -64,7 +64,7 @@ Imports Microsoft.VisualBasic.Imaging.LayoutModel
 Imports Microsoft.VisualBasic.Imaging.Math2D
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Scripting.Runtime
-Imports stdNum = System.Math
+Imports std = System.Math
 
 Namespace d3js.Layout
 
@@ -144,7 +144,7 @@ Namespace d3js.Layout
 
                     distX = rect.center.X - v.X
                     distY = rect.center.Y - v.Y
-                    dist = stdNum.Sqrt(distX * distX + distY * distY)
+                    dist = std.Sqrt(distX * distX + distY * distY)
                     id = v.text
 
                     If dist > 0 Then
@@ -180,7 +180,7 @@ Namespace d3js.Layout
                 For Each u As Label In m_labels.Where(Function(ui) Not ui Is v)
                     distX = v.X - u.X
                     distY = v.Y - u.Y
-                    dist = stdNum.Sqrt(distX * distX + distY * distY)
+                    dist = std.Sqrt(distX * distX + distY * distY)
 
                     'If (dist < dist_thresh.Min) Then
                     '    ejectFactor = 5
@@ -216,7 +216,7 @@ Namespace d3js.Layout
 
                 distX = u.X - v.x
                 distY = u.Y - v.y
-                dist = stdNum.Sqrt(distX * distX + distY * distY)
+                dist = std.Sqrt(distX * distX + distY * distY)
                 dx = distX * dist / k * condenseFactor
                 dy = distY * dist / k * condenseFactor
 
@@ -234,10 +234,10 @@ Namespace d3js.Layout
                 dy = mDyMap(node.text)
 
                 If dx <> 0 Then
-                    dx = stdNum.Sign(dx) * stdNum.Log(stdNum.Abs(dx))
+                    dx = std.Sign(dx) * std.Log(std.Abs(dx))
                 End If
                 If dy <> 0 Then
-                    dy = stdNum.Sign(dy) * stdNum.Log(stdNum.Abs(dy))
+                    dy = std.Sign(dy) * std.Log(std.Abs(dy))
                 End If
 
                 If (dx < -maxtx) Then dx = -maxtx
@@ -268,7 +268,7 @@ Namespace d3js.Layout
         End Sub
 
         Public Overrides Function Start(Optional nsweeps As Integer = 2000, Optional showProgress As Boolean = True) As DataLabeler
-            Me.k = stdNum.Sqrt(CANVAS_WIDTH * CANVAS_HEIGHT / m_labels.Length)
+            Me.k = std.Sqrt(CANVAS_WIDTH * CANVAS_HEIGHT / m_labels.Length)
 
             For i As Integer = 0 To nsweeps
                 Call Collide()
