@@ -86,6 +86,10 @@ Public Class GraphRouter
         Public Sub New(id As String)
             MyBase.New(id)
         End Sub
+
+        Public Overrides Function ToString() As String
+            Return PathwayNodes.Select(Function(a) a.label).JoinBy(" -> ")
+        End Function
     End Class
 
     Private Sub New(matrix As SparseMatrix, nodes As Dictionary(Of String, Integer), nodeSet As Network.Graph.Node())
