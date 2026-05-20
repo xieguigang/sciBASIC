@@ -184,6 +184,7 @@ Namespace Analysis.Dijkstra
 
                 ' 2. 标记该节点为已确定
                 currentNode.IsFixed = True
+                updateNeighbor.currentNode = currentNode
 
                 If parallel Then
                     ' 3. 松弛操作：更新所有邻居的距离
