@@ -108,7 +108,10 @@ Namespace Analysis.Dijkstra
         ''' 网络图中的节点总数
         ''' </summary>
         ReadOnly vertices As Integer
-        ReadOnly nodes As Node()
+        ''' <summary>
+        ''' 缓存不同起点的计算结果，Key为startIndex
+        ''' </summary>
+        Private ReadOnly pathCache As New Dictionary(Of Integer, Node())
 
         Public Property parallel As Boolean = True
 
@@ -117,12 +120,6 @@ Namespace Analysis.Dijkstra
         Sub New(graph As SparseMatrix, vertices As Integer)
             Me.graph = graph
             Me.vertices = vertices
-            Me.nodes = New Node(vertices - 1) {}
-
-            ' 初始化节点
-            For i As Integer = 0 To vertices - 1
-                nodes(i) = New Node(i, isStartNode:=False)
-            Next
         End Sub
 
         ''' <summary>
@@ -145,15 +142,23 @@ Namespace Analysis.Dijkstra
             Dim endIndexValue As Integer = If(endIndex.HasValue, endIndex.Value, -1)
             Dim currentNode As Node
 
-            If Not nodes(startIndex).IsFixed Then
-                nodes(startIndex).TotalDistance = 0
+            ' 1. 检查缓存，如果已有该起点的计算结果，直接返回
+            If pathCache.ContainsKey(startIndex) Then
+                Return pathCache(key:=startIndex)
             End If
+
+            ' 2. 缓存未命中，初始化全新的节点数组用于本次计算
+            Dim currentNodes As Node() = New Node(vertices - 1) {}
+            For i As Integer = 0 To vertices - 1
+                currentNodes(i) = New Node(i, isStartNode:=False)
+            Next
+            currentNodes(startIndex).TotalDistance = 0
 
             ' 使用循环代替递归，防止堆栈溢出
             While True
                 ' 1. 寻找当前未确定的最短距离节点
                 Dim candidates As List(Of Node) = (From v As Node
-                                                   In nodes
+                                                   In currentNodes
                                                    Where Not v.IsFixed
                                                    Order By v.TotalDistance Ascending).ToList()
 
@@ -180,21 +185,25 @@ Namespace Analysis.Dijkstra
                 If parallel Then
                     ' 3. 松弛操作：更新所有邻居的距离
                     ' 使用 Parallel.For 循环处理邻居更新
-                    System.Threading.Tasks.Parallel.For(0, vertices, Sub(i) Call UpdateNeighbor(currentNode, i))
+                    System.Threading.Tasks.Parallel.For(
+                        0, vertices, body:=Sub(i)
+                                               Call UpdateNeighbor(currentNode, neighbor:=currentNodes(i))
+                                           End Sub)
                 Else
                     ' 3. 松弛操作：更新所有邻居的距离
                     For i As Integer = 0 To vertices - 1
-                        Call UpdateNeighbor(currentNode, i)
+                        Call UpdateNeighbor(currentNode, neighbor:=currentNodes(i))
                     Next
                 End If
             End While
 
-            Return nodes
+            ' 4. 计算完成，将结果存入缓存
+            pathCache(key:=startIndex) = currentNodes
+
+            Return currentNodes
         End Function
 
-        Private Sub UpdateNeighbor(currentNode As Node, i As Integer)
-            Dim neighbor As Node = nodes(i)
-
+        Private Sub UpdateNeighbor(currentNode As Node, neighbor As Node)
             If neighbor.IsFixed Then
                 Return
             ElseIf graph(currentNode.Index, neighbor.Index) = 0.0 Then
