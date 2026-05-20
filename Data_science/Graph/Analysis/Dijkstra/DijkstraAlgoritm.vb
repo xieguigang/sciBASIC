@@ -63,6 +63,7 @@
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Math.LinearAlgebra.Matrix
+Imports Microsoft.VisualBasic.Parallel
 
 Namespace Analysis.Dijkstra
 
@@ -154,6 +155,8 @@ Namespace Analysis.Dijkstra
             Next
             currentNodes(startIndex).TotalDistance = 0
 
+            Dim updateNeighbor As New UpdateVector(currentNodes, Me)
+
             ' 使用循环代替递归，防止堆栈溢出
             While True
                 ' 1. 寻找当前未确定的最短距离节点
@@ -185,15 +188,17 @@ Namespace Analysis.Dijkstra
                 If parallel Then
                     ' 3. 松弛操作：更新所有邻居的距离
                     ' 使用 Parallel.For 循环处理邻居更新
-                    System.Threading.Tasks.Parallel.For(
-                        0, vertices, body:=Sub(i)
-                                               Call UpdateNeighbor(currentNode, neighbor:=currentNodes(i))
-                                           End Sub)
+                    ' System.Threading.Tasks.Parallel.For(
+                    '    0, vertices, body:=Sub(i)
+                    '                           Call UpdateNeighbor(currentNode, neighbor:=currentNodes(i))
+                    '                       End Sub)
+                    Call updateNeighbor.Run()
                 Else
                     ' 3. 松弛操作：更新所有邻居的距离
-                    For i As Integer = 0 To vertices - 1
-                        Call UpdateNeighbor(currentNode, neighbor:=currentNodes(i))
-                    Next
+                    ' For i As Integer = 0 To vertices - 1
+                    '    Call UpdateNeighbor(currentNode, neighbor:=currentNodes(i))
+                    ' Next
+                    Call updateNeighbor.Solve()
                 End If
             End While
 
@@ -202,6 +207,27 @@ Namespace Analysis.Dijkstra
 
             Return currentNodes
         End Function
+
+        Private Class UpdateVector : Inherits VectorTask
+
+            ReadOnly currentNodes As Node()
+            ReadOnly finder As DijkstraAlgoritm
+
+            Public currentNode As Node
+
+            Public Sub New(ByRef currentNodes As Node(), finder As DijkstraAlgoritm)
+                MyBase.New(nsize:=currentNodes.Length)
+
+                Me.finder = finder
+                Me.currentNodes = currentNodes
+            End Sub
+
+            Protected Overrides Sub Solve(start As Integer, ends As Integer, cpu_id As Integer)
+                For i As Integer = start To ends
+                    Call finder.UpdateNeighbor(currentNode, neighbor:=currentNodes(i))
+                Next
+            End Sub
+        End Class
 
         Private Sub UpdateNeighbor(currentNode As Node, neighbor As Node)
             If neighbor.IsFixed Then
