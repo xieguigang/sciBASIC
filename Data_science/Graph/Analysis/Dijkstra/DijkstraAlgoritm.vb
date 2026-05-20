@@ -81,7 +81,7 @@ Namespace Analysis.Dijkstra
 
             Public ReadOnly Property PathToString As String
                 Get
-                    Return String.Join("->", Path.Select(Function(i) (i + 1).ToString()).ToArray()) & "->" & (Index + 1).ToString()
+                    Return Path.Select(Function(i) (i + 1).ToString()).JoinBy("->") & "->" & (Index + 1).ToString()
                 End Get
             End Property
 
@@ -92,6 +92,14 @@ Namespace Analysis.Dijkstra
                 Parent = -1
                 Path = New List(Of Integer)()
             End Sub
+
+            Public Overrides Function ToString() As String
+                If Path.IsNullOrEmpty Then
+                    Return "n/a"
+                Else
+                    Return PathToString
+                End If
+            End Function
 
         End Class
 
