@@ -129,11 +129,16 @@ Public Class GraphRouter
             Return Nothing
         End If
 
+        Dim pathway As New List(Of Graph.Node)(
+            From idx As Integer
+            In routeNode.Path
+            Select nodeSet(idx))
+
+        Call pathway.Add(nodeSet(routeNode.Index))
+
         Return New Route(nodeSet(routeNode.Index).label) With {
             .Cost = routeNode.TotalDistance,
-            .PathwayNodes = (From idx As Integer
-                             In routeNode.Path
-                             Select nodeSet(idx)).ToArray()
+            .PathwayNodes = pathway.ToArray()
         }
     End Function
 
