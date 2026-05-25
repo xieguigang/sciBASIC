@@ -175,6 +175,10 @@ Namespace ComponentModel.DataSourceModel
             End Get
         End Property
 
+        Sub New(data As IEnumerable(Of T))
+            value = data.SafeQuery.ToArray
+        End Sub
+
         ''' <summary>
         ''' 
         ''' </summary>
