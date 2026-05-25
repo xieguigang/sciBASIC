@@ -229,7 +229,7 @@ Namespace Serialization.JSON
         ''' Create object instance from a given json text base on the template <see cref="Type"/>
         ''' information.
         ''' </summary>
-        ''' <param name="json">null -> Nothing</param>
+        ''' <param name="json">parse this json string and then decoded as the required .NET clr object. some special json text mapping: null will be decoded as Nothing</param>
         ''' <param name="type"></param>
         ''' <returns></returns>
         <ExportAPI("LoadObject")>
@@ -254,7 +254,7 @@ Namespace Serialization.JSON
             Using MS As New MemoryStream(Encoding.UTF8.GetBytes(json))
                 Dim settings As New DataContractJsonSerializerSettings With {
                     .UseSimpleDictionaryFormat = simpleDict,
-                    .SerializeReadOnlyTypes = True,
+                    .SerializeReadOnlyTypes = False,
                     .KnownTypes = If(knownTypes, DirectCast(New Type() {}, IEnumerable(Of Type))).ToArray
                 }
                 Dim ser As New DataContractJsonSerializer(type, settings)
@@ -271,7 +271,7 @@ Namespace Serialization.JSON
             Else
                 Dim settings As New DataContractJsonSerializerSettings With {
                     .UseSimpleDictionaryFormat = simpleDict,
-                    .SerializeReadOnlyTypes = True
+                    .SerializeReadOnlyTypes = False
                 }
                 Return New DataContractJsonSerializer(type, settings) _
                     .ReadObject(jsonStream)
