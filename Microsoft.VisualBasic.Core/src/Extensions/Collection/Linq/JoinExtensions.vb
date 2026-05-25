@@ -94,6 +94,23 @@ Namespace Linq
             Return source.IteratesALL
         End Function
 
+        <Extension>
+        Public Iterator Function JoinMany(Of T)(a As IEnumerable(Of T), b As IEnumerable(Of IEnumerable(Of T))) As IEnumerable(Of T)
+            If Not a Is Nothing Then
+                For Each x As T In a
+                    Yield x
+                Next
+            End If
+
+            If Not b Is Nothing Then
+                For Each pb As IEnumerable(Of T) In b
+                    For Each x As T In pb
+                        Yield x
+                    Next
+                Next
+            End If
+        End Function
+
         ''' <summary>
         ''' First, iterate populates the elements in collection <paramref name="a"/>, 
         ''' and then populate out all of the elements on collection <paramref name="b"/>
