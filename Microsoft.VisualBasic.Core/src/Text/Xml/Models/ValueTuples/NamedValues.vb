@@ -76,6 +76,7 @@ Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.Repository
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Linq
 
 Namespace Text.Xml.Models
 
@@ -184,8 +185,7 @@ Namespace Text.Xml.Models
     ''' 在这里不实现<see cref="IEnumerable(Of T)"/>是为了方便的实现XML序列化操作
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
-    Public Structure NamedVector(Of T)
-        Implements INamedValue
+    Public Class NamedVector(Of T) : Implements INamedValue, Enumeration(Of T)
 
         <XmlAttribute>
         Public Property name As String Implements IKeyedEntity(Of String).Key
@@ -198,8 +198,8 @@ Namespace Text.Xml.Models
 
         Sub New(namedCollection As NamedCollection(Of T))
             With namedCollection
-                name = .Name
-                vector = .Value
+                name = .name
+                vector = .value
             End With
         End Sub
 
@@ -208,8 +208,21 @@ Namespace Text.Xml.Models
             Me.vector = vector
         End Sub
 
+        Sub New()
+        End Sub
+
         Public Overrides Function ToString() As String
             Return name
         End Function
-    End Structure
+
+        Public Iterator Function GenericEnumerator() As IEnumerator(Of T) Implements Enumeration(Of T).GenericEnumerator
+            If vector Is Nothing Then
+                Return
+            End If
+
+            For Each item As T In vector
+                Yield item
+            Next
+        End Function
+    End Class
 End Namespace
