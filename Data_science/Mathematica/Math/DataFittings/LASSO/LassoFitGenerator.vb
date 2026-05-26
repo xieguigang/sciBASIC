@@ -58,6 +58,7 @@
 
 Imports Microsoft.VisualBasic.ApplicationServices.Debugging
 Imports Microsoft.VisualBasic.ApplicationServices.Terminal.ProgressBar.Tqdm
+Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports std = System.Math
 
 Namespace LASSO
@@ -194,7 +195,7 @@ Namespace LASSO
                 feature2residualCorrelations(j) = MathUtil.getDotProduct(targetsField, observations(j), targetsField.Length)
             Next
 
-            Dim feature2featureCorrelations = MathUtil.allocateDoubleMatrix(numFeatures, maxAllowedFeaturesAlongPath)
+            Dim feature2featureCorrelations = RectangularArray.Matrix(Of Double)(numFeatures, maxAllowedFeaturesAlongPath)
             Dim activeWeights = New Double(numFeatures - 1) {}
             Dim correlationCacheIndices = New Integer(numFeatures - 1) {}
             Dim denseActiveSet = New Double(numFeatures - 1) {}

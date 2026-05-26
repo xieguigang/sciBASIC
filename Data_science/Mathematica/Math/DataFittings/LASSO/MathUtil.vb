@@ -115,14 +115,6 @@ Namespace LASSO
             Next
         End Sub
 
-        Public Shared Function allocateDoubleMatrix(m As Integer, n As Integer) As Double()()
-            Dim mat = New Double(m - 1)() {}
-            For i = 0 To m - 1
-                mat(i) = New Double(n - 1) {}
-            Next
-            Return mat
-        End Function
-
         Public Shared Function getFormattedDouble(val As Double, decimalPoints As Integer) As String
             Dim format = "#."
             For i = 0 To decimalPoints - 1

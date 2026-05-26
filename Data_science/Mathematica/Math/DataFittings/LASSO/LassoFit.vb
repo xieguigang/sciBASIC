@@ -58,7 +58,7 @@
 #End Region
 
 Imports System.Text
-Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.ComponentModel.Collection
 
 Namespace LASSO
 
@@ -136,7 +136,7 @@ Namespace LASSO
 
         Public Sub New(numberOfLambdas As Integer, maxAllowedFeaturesAlongPath As Integer, numFeatures As Integer)
             intercepts = New Double(numberOfLambdas - 1) {}
-            compressedWeights = MathUtil.allocateDoubleMatrix(numberOfLambdas, maxAllowedFeaturesAlongPath)
+            compressedWeights = RectangularArray.Matrix(Of Double)(numberOfLambdas, maxAllowedFeaturesAlongPath)
             indices = New Integer(maxAllowedFeaturesAlongPath - 1) {}
             numberOfWeights = New Integer(numberOfLambdas - 1) {}
             lambdas = New Double(numberOfLambdas - 1) {}
