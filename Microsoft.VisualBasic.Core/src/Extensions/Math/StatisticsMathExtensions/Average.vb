@@ -1,62 +1,62 @@
 ﻿#Region "Microsoft.VisualBasic::5111f0c69fb580eeca22b6f2dd77136e, Microsoft.VisualBasic.Core\src\Extensions\Math\StatisticsMathExtensions\Average.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 55
-    '    Code Lines: 43 (78.18%)
-    ' Comment Lines: 0 (0.00%)
-    '    - Xml Docs: 0.00%
-    ' 
-    '   Blank Lines: 12 (21.82%)
-    '     File Size: 1.46 KB
+' Summaries:
 
 
-    '     Class Average
-    ' 
-    '         Properties: Average
-    ' 
-    '         Constructor: (+2 Overloads) Sub New
-    ' 
-    '         Function: getEigenvalue, ToString
-    ' 
-    '         Sub: addObservation
-    ' 
-    '         Operators: +
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 55
+'    Code Lines: 43 (78.18%)
+' Comment Lines: 0 (0.00%)
+'    - Xml Docs: 0.00%
+' 
+'   Blank Lines: 12 (21.82%)
+'     File Size: 1.46 KB
+
+
+'     Class Average
+' 
+'         Properties: Average
+' 
+'         Constructor: (+2 Overloads) Sub New
+' 
+'         Function: getEigenvalue, ToString
+' 
+'         Sub: addObservation
+' 
+'         Operators: +
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -101,6 +101,7 @@ Namespace Math.Statistics
             Return avg
         End Operator
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Widening Operator CType(avg As Double) As Average
             Return New Average() + avg
         End Operator
@@ -112,6 +113,14 @@ Namespace Math.Statistics
 
         Protected Overrides Function getEigenvalue() As Double
             Return Average
+        End Function
+
+        Public Shared Function WeightedAverage(x As Dictionary(Of String, Double), w As Dictionary(Of String, Double)) As Double
+            Dim names As String() = x.Keys.ToArray
+            Dim vec As Double() = (From i As String In names Select x(i)).ToArray
+            Dim weights As Double() = (From i As String In names Select If(w.ContainsKey(i), w(i), 0)).ToArray
+
+            Return vec.WeighedAverage(SIMD.Divide.f64_op_divide_f64_scalar(weights, weights.Sum))
         End Function
     End Class
 End Namespace
