@@ -88,17 +88,18 @@ Public Class Form1
     End Sub
 
     Sub Updates(objects As IEnumerable(Of MassPoint), forces As Dictionary(Of String, List(Of Force)))
+        Dim bmp As New System.Drawing.Bitmap(Size.Width, Size.Height)
 
-        Using g As Graphics2D = Size.CreateGDIDevice
+        Using g As Graphics2D = Graphics2D.Open(bmp)
             For Each m In objects
 
                 Call g.FillPie(Brushes.Black, New Rectangle(m.Point.Vector2D.ToPoint, New Size(10, 10)), 0, 360)
                 Call Debugger.ShowForce(m, g, forces(m.ID))
 
             Next
-
-            Me.BackgroundImage = g.ImageResource
         End Using
+
+        Me.BackgroundImage = bmp
 
         Call Thread.Sleep(30)
     End Sub

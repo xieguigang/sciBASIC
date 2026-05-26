@@ -98,7 +98,7 @@ Module label_layout_test
 
         Using g As Graphics2D = New Size(w, h).CreateGDIDevice
 
-            Dim arrow As New Pen(Color.Black, 2) With {.DashStyle = Drawing.Drawing2D.DashStyle.Dash, .EndCap = Drawing.Drawing2D.LineCap.ArrowAnchor}
+            Dim arrow As New Pen(Color.Black, 2) With {.DashStyle = DashStyle.Dash, .EndCap = LineCap.ArrowAnchor}
 
             For i As Integer = 0 To nodes.Length - 1
                 Dim n As Node = nodes(i)

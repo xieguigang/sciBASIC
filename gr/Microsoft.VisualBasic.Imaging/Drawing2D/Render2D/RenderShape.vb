@@ -55,7 +55,6 @@
 #End Region
 
 Imports System.Drawing
-Imports System.Net
 Imports std = System.Math
 
 #If NET48 Then

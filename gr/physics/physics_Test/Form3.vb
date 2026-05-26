@@ -321,8 +321,8 @@ Public Module FluidRender
 
     Const particleSize As Single = 5
 
-    Public Function Render(canvas As Size, container As FluidEngine) As Bitmap
-        Dim bmp As New Bitmap(canvas.Width, canvas.Height)
+    Public Function Render(canvas As Size, container As FluidEngine) As System.Drawing.Bitmap
+        Dim bmp As New System.Drawing.Bitmap(canvas.Width, canvas.Height)
         Dim maxV As Double = Aggregate p In container.Entity Into Max(p.velocity.magnitude)
         Dim minV As Double = 0
 

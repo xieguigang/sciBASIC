@@ -75,6 +75,7 @@ Imports Microsoft.VisualBasic.Drawing
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Physics
 Imports Microsoft.VisualBasic.MIME.Html.CSS
+Imports std = System.Math
 
 Public Class Form4
 
@@ -166,7 +167,7 @@ Public Class Form4
             Dim gx = Floor((px - hash.orig.Left) * invGridSpacing)
             Dim gy = Floor((py - hash.orig.Bottom) * invGridSpacing)
 
-            Dim h = Abs((gx * 92837111) Xor (gy * 689287499)) Mod hash.size
+            Dim h = std.Abs((gx * 92837111) Xor (gy * 689287499)) Mod hash.size
 
             If hash.marks(h) <> hash.currentMark Then
                 hash.marks(h) = hash.currentMark
@@ -195,7 +196,7 @@ Public Class Form4
 
             For x = gx - 1 To gx + 1
                 For y = gy - 1 To gy + 1
-                    Dim h = Abs((x * 92837111) Xor (y * 689287499)) Mod hash.size
+                    Dim h = std.Abs((x * 92837111) Xor (y * 689287499)) Mod hash.size
 
                     If hash.marks(h) <> hash.currentMark Then
                         Continue For
@@ -437,7 +438,7 @@ Public Class Form4
                     dy = b.Top - py
                 End If
 
-                If Abs(dx) < Abs(dy) Then
+                If std.Abs(dx) < std.Abs(dy) Then
                     particles.pos(2 * i) += dx
                 Else
                     particles.pos(2 * i + 1) += dy
@@ -447,7 +448,7 @@ Public Class Form4
     End Sub
 
     Sub draw()
-        Dim bmp As New Bitmap(Canvas.Width, Canvas.Height)
+        Dim bmp As New System.Drawing.Bitmap(Canvas.Width, Canvas.Height)
         Dim gfx As IGraphics = Graphics2D.Open(bmp)
         Dim nr As Integer = 0
 

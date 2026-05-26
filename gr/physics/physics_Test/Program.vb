@@ -106,22 +106,22 @@ Public Module Program
         Dim m2 As New MassPoint With {.Charge = 1, .Point = b}
         Dim f = Math.CoulombsLaw(m1, m2)
 
-        Call $"Coulombs force between the {m1.Point.ToString} and {m2.Point.ToString} is {f.ToString}".__DEBUG_ECHO
+        Call $"Coulombs force between the {m1.Point.ToString} and {m2.Point.ToString} is {f.ToString}".debug
     End Sub
 
     Sub g(m#)
-        Call $"gravity is {Math.Gravity(New MassPoint With {.Mass = m}).ToString }".__DEBUG_ECHO
+        Call $"gravity is {Math.Gravity(New MassPoint With {.Mass = m}).ToString }".debug
     End Sub
 
     Sub repl(a As Vector, b As Vector)
-        Call Math.RepulsiveForce(100, a, b).__DEBUG_ECHO
+        Call Math.RepulsiveForce(100, a, b).debug
     End Sub
 
     Sub reverse(f As Force)
-        Call $"ReverseOf({f.ToString}) is {-f}".__DEBUG_ECHO
+        Call $"ReverseOf({f.ToString}) is {-f}".debug
     End Sub
 
     Sub add(f1 As Force, f2 As Force)
-        Call $"||{f1.ToString}|| + ||{f2.ToString}||  =>  ||{(f1 + f2).ToString}||".__DEBUG_ECHO
+        Call $"||{f1.ToString}|| + ||{f2.ToString}||  =>  ||{(f1 + f2).ToString}||".debug
     End Sub
 End Module
