@@ -6,9 +6,7 @@
     <AssemblyName>Microsoft.VisualBasic.Imaging.Physics</AssemblyName>
     <Platforms>AnyCPU;x64</Platforms>
     <Configurations>Debug;Release;LipidSearch;Rsharp_app_release;mzkit;NPSearch;gcmodeller_desktop;CFD_win32;nuget_release;CellaLAB-Desktop</Configurations>
-    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
-    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <PackageLicenseFile>LICENSE</PackageLicenseFile>
+    <GeneratePackageOnBuild>False</GeneratePackageOnBuild>
     <PackageIcon>logo-knot.png</PackageIcon>
     <AutoGenerateBindingRedirects>True</AutoGenerateBindingRedirects>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
@@ -19,6 +17,7 @@
     <OutputType>WinExe</OutputType>
     <UseWindowsForms>True</UseWindowsForms>
     <UseWPF>True</UseWPF>
+    <StartupObject>Microsoft.VisualBasic.Imaging.Physics.Form3</StartupObject>
   </PropertyGroup>
 
   <ItemGroup>
