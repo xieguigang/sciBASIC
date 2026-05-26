@@ -559,47 +559,17 @@ Namespace Math.Correlations
         ''' </remarks>
         '''
         Public Function Spearman(x As Double(), y As Double()) As Double
-            Dim x_rank As Double() = x.sortRanking
-            Dim y_rank As Double() = y.sortRanking
+            ' 升序 Fractional ranking：最小值秩=1
+            Dim x_rank As Double() = x.Ranking(Strategies.FractionalRanking, desc:=False)
+            Dim y_rank As Double() = y.Ranking(Strategies.FractionalRanking, desc:=False)
+
+            ' 取反，使得最大值秩=1，与原 sortRanking 行为一致
+            For i As Integer = 0 To x_rank.Length - 1
+                x_rank(i) = -x_rank(i)
+                y_rank(i) = -y_rank(i)
+            Next
 
             Return GetPearson(x_rank, y_rank)
-        End Function
-
-        <Extension>
-        Private Function sortRanking(x As Double()) As Double()
-            Dim sorted As New Dictionary(Of Double, List(Of Integer))()
-            Dim size As Integer = x.Length
-            Dim ranks As Double() = New Double(size - 1) {}
-            Dim v As Double
-            Dim c As Double = 1
-
-            For i As Integer = 0 To size - 1
-                v = x(i)
-
-                If sorted.ContainsKey(v) = False Then
-                    sorted(v) = New List(Of Integer)
-                End If
-
-                Call sorted(v).Add(i)
-            Next
-
-            For Each vi As Double In sorted.Keys.OrderByDescending(Function(xi) xi)
-                Dim r As Double = 0
-                Dim sortSet = sorted(vi)
-
-                For Each i As Integer In sortSet
-                    r += c
-                    c += 1
-                Next
-
-                r /= sortSet.Count
-
-                For Each i As Integer In sortSet
-                    ranks(i) = r
-                Next
-            Next
-
-            Return ranks
         End Function
 
         ''' <summary>

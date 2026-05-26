@@ -149,7 +149,8 @@ Namespace Math.Correlations
         ''' <typeparam name="C"></typeparam>
         ''' <param name="list"></param>
         ''' <returns></returns>
-        <Extension> Public Function ModifiedCompetitionRanking(Of C As IComparable)(list As IEnumerable(Of C), Optional desc As Boolean = False) As Double()
+        <Extension>
+        Public Function ModifiedCompetitionRanking(Of C As IComparable)(list As IEnumerable(Of C), Optional desc As Boolean = False) As Double()
             Dim array = list _
                 .SeqIterator _
                 .ToDictionary(Function(x) x,
@@ -210,7 +211,8 @@ Namespace Math.Correlations
         ''' <typeparam name="C"></typeparam>
         ''' <param name="list"></param>
         ''' <returns></returns>
-        <Extension> Public Function StandardCompetitionRanking(Of C As IComparable)(list As IEnumerable(Of C), Optional desc As Boolean = False) As Double()
+        <Extension>
+        Public Function StandardCompetitionRanking(Of C As IComparable)(list As IEnumerable(Of C), Optional desc As Boolean = False) As Double()
             Dim array = list _
                 .SeqIterator _
                 .ToDictionary(Function(x) x,
@@ -257,7 +259,8 @@ Namespace Math.Correlations
         ''' <typeparam name="C"></typeparam>
         ''' <param name="list"></param>
         ''' <returns></returns>
-        <Extension> Public Function DenseRanking(Of C As IComparable)(list As IEnumerable(Of C), Optional desc As Boolean = False) As Double()
+        <Extension>
+        Public Function DenseRanking(Of C As IComparable)(list As IEnumerable(Of C), Optional desc As Boolean = False) As Double()
             Dim array = list _
                 .SeqIterator _
                 .ToDictionary(Function(x) x,
@@ -378,7 +381,8 @@ Namespace Math.Correlations
         ''' <typeparam name="C"></typeparam>
         ''' <param name="list"></param>
         ''' <returns></returns>
-        <Extension> Public Function FractionalRanking(Of C As IComparable)(list As IEnumerable(Of C), Optional desc As Boolean = False) As Double()
+        <Extension>
+        Public Function FractionalRanking(Of C As IComparable)(list As IEnumerable(Of C), Optional desc As Boolean = False) As Double()
             Dim vector As C() = list.ToArray
             Dim array As SeqValue(Of C)() = vector.SeqIterator.ToArray
             Dim ranks#() = vector.OrdinalRanking(desc)
