@@ -197,7 +197,8 @@ Namespace FileIO
         ''' <returns></returns>
         Public Function CopyTo(target$,
                                Optional progress As IProgress(Of String) = Nothing,
-                               Optional includeSrc As Boolean = False) As IEnumerable(Of String)
+                               Optional includeSrc As Boolean = False,
+                               Optional verbose As Boolean = True) As IEnumerable(Of String)
 
             Dim list As New List(Of String)
             Dim action = Sub(path$)
@@ -208,7 +209,7 @@ Namespace FileIO
                              Call list.Add(path)
                          End Sub
 
-            Call New CopyDirectoryAction(New Progress(Of String)(action)).Copy(folder, target, includeSrc)
+            Call New CopyDirectoryAction(New Progress(Of String)(action), verbose).Copy(folder, target, includeSrc)
 
             Return list
         End Function
