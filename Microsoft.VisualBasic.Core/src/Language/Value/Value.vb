@@ -259,6 +259,10 @@ Namespace Language
             Return Value.GetJson
         End Function
 
+        ''' <summary>
+        ''' Create a new reference value with the default value of its underlying type, which is Nothing for reference type and zero for value type.
+        ''' </summary>
+        ''' <returns></returns>
         Public Shared Function [Default]() As Value(Of T)
             Return New Value(Of T)(Nothing)
         End Function
