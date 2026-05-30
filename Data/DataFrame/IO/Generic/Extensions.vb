@@ -198,25 +198,6 @@ Namespace IO
         End Function
 
         ''' <summary>
-        ''' Gets the union collection of the keys from <see cref="DataSet.Properties"/>.
-        ''' </summary>
-        ''' <param name="list"></param>
-        ''' <returns></returns>
-        ''' <remarks>
-        ''' (包含所有的已经去除重复了的属性名称)
-        ''' </remarks>
-        <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        <Extension>
-        Public Function PropertyNames(Of T)(list As IEnumerable(Of DynamicPropertyBase(Of T))) As String()
-            Return list _
-                .Where(Function(a) Not a Is Nothing) _
-                .Select(Function(o) o.EnumerateKeys(False)) _
-                .IteratesALL _
-                .Distinct _
-                .ToArray
-        End Function
-
-        ''' <summary>
         ''' Get feature vector column value from the given dataset via a specific feature name.
         ''' (取出某一个给定的属性的所有值。取出来的数据元素之间的顺序是
         ''' 和<paramref name="datasets"/>之中的元素的顺序是一致的。)

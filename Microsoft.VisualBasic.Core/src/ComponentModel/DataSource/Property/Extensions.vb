@@ -85,5 +85,24 @@ Namespace ComponentModel.DataSourceModel
                 Yield item
             Next
         End Function
+
+        ''' <summary>
+        ''' Gets the union collection of the keys from <see cref="DynamicPropertyBase(Of T).Properties"/>.
+        ''' </summary>
+        ''' <param name="list"></param>
+        ''' <returns></returns>
+        ''' <remarks>
+        ''' (包含所有的已经去除重复了的属性名称)
+        ''' </remarks>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        <Extension>
+        Public Function PropertyNames(Of T)(list As IEnumerable(Of DynamicPropertyBase(Of T))) As String()
+            Return list _
+                .Where(Function(a) Not a Is Nothing) _
+                .Select(Function(o) o.EnumerateKeys(joinProperties:=False)) _
+                .IteratesALL _
+                .Distinct _
+                .ToArray
+        End Function
     End Module
 End Namespace
