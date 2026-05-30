@@ -59,6 +59,7 @@ Imports std = System.Math
 ''' NNLS Non-Negative Least-Squares algorithm
 ''' </summary>
 Public Module NonNegativeLeastSquares
+
     ''' <summary>
     ''' 求解非负最小二乘问题：最小化 ||Ax - b||^2，满足 x >= 0
     ''' </summary>
