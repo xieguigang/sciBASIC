@@ -118,7 +118,7 @@ Namespace Text.Xml.Linq
         ''' <returns></returns>
         Public Function LoadXml(xml As String, Optional variants As Type() = Nothing) As T
             Call sb.Clear()
-            Call sb.AppendLine("<?xml version=""1.0"" encoding=""utf-16""?>")
+            Call sb.AppendLine("<?xml version=""1.0"" encoding=""utf-16"" xmlns:xsi=""http://www.w3.org/2001/XMLSchema-instance""?>")
             Call sb.AppendLine(process(xml))
 
             If Not ReplaceXmlns.StringEmpty Then
