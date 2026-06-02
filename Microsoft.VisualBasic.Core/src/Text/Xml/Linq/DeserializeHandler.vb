@@ -110,6 +110,8 @@ Namespace Text.Xml.Linq
             Return xml.Replace($"xmlns=""{ReplaceXmlns}""", "")
         End Function
 
+        Const xsi As String = "xmlns:xsi=""http://www.w3.org/2001/XMLSchema-instance"""
+
         ''' <summary>
         ''' This method have bugs when deal with the xml when it have 
         ''' multiple xml namespace value
@@ -118,9 +120,10 @@ Namespace Text.Xml.Linq
         ''' <returns></returns>
         Public Function LoadXml(xml As String, Optional variants As Type() = Nothing) As T
             Call sb.Clear()
-            Call sb.AppendLine("<?xml version=""1.0"" encoding=""utf-16"" xmlns:xsi=""http://www.w3.org/2001/XMLSchema-instance""?>")
+            Call sb.AppendLine("<?xml version=""1.0"" encoding=""utf-16""?>")
             Call sb.AppendLine(process(xml))
 
+            ' removes of the default namespace definition, otherwise, the deserialization process will fail
             If Not ReplaceXmlns.StringEmpty Then
                 Call sb.Replace($"xmlns=""{ReplaceXmlns}""", "")
             End If
