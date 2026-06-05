@@ -53,7 +53,7 @@
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
-Imports stdNum = System.Math
+Imports std = System.Math
 
 ''' <summary>
 ''' ## An Algorithm for Weighted Linear Regression
@@ -123,7 +123,7 @@ Public Module WeightedLinearRegression
         If NDF < 1 Then
             Return Nothing
         End If
-        
+
         Dim V = New Double(N - 1, N - 1) {}
         Dim C = New Double(N - 1) {}
         Dim SEC = New Double(N - 1) {}
@@ -187,14 +187,14 @@ Public Module WeightedLinearRegression
         If RYSQ < 0.9999999 Then
             FReg = RYSQ / (1 - RYSQ) * NDF / (N - 1)
         End If
-        Dim SDV = stdNum.Sqrt(SSQ)
+        Dim SDV = std.Sqrt(SSQ)
 
         ' Calculate var-covar matrix and std error of coefficients
         For i As Integer = 0 To N - 1
             For j As Integer = 0 To N - 1
                 V(i, j) = V(i, j) * SSQ
             Next
-            SEC(i) = stdNum.Sqrt(V(i, i))
+            SEC(i) = std.Sqrt(V(i, i))
         Next
 
         Return New WeightedFit With {
@@ -221,7 +221,7 @@ Public Module WeightedLinearRegression
     End Function
 
     Public Function SymmetricMatrixInvert(V As Double(,)) As Boolean
-        Dim N As Integer = CInt(stdNum.Truncate(stdNum.Sqrt(V.Length)))
+        Dim N As Integer = CInt(std.Truncate(std.Sqrt(V.Length)))
         Dim t As Double() = New Double(N - 1) {}
         Dim Q As Double() = New Double(N - 1) {}
         Dim R As Double() = New Double(N - 1) {}
@@ -236,7 +236,7 @@ Public Module WeightedLinearRegression
         For M = 0 To N - 1
             Dim Big As Double = 0
             For L = 0 To N - 1
-                AB = stdNum.Abs(V(L, L))
+                AB = std.Abs(V(L, L))
                 If (AB > Big) AndAlso (R(L) <> 0) Then
                     Big = AB
                     K = L
