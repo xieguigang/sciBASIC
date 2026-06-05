@@ -1,6 +1,6 @@
 @echo off
 
-REM git remote add local http://192.168.0.232:8848/xieguigang/sciBASIC.git
+REM git remote add local http://192.168.3.48:8418/xieguigang/scibasic.git
 
 git pull gitlink HEAD
 git pull gitee HEAD
