@@ -687,7 +687,7 @@
 
   <ItemGroup>
     <PackageReference Include="System.Drawing.Primitives" Version="4.3.0" />
-    <PackageReference Include="System.IO.Packaging" Version="10.0.5" />
+    <PackageReference Include="System.IO.Packaging" Version="10.0.8" />
   </ItemGroup>
 
   <ItemGroup>
