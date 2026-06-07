@@ -110,6 +110,13 @@ Namespace Analysis.Model
             Return EnumerateAllEdges.Any(Function(link) link.source = i.label OrElse link.target = i.label)
         End Function
 
+        ''' <summary>
+        ''' add direct edge of U->V
+        ''' </summary>
+        ''' <param name="edge"></param>
+        ''' <remarks>
+        ''' edge target is V
+        ''' </remarks>
         Public Sub Add(edge As Edge)
             If Not adjacentNodes.ContainsKey(edge.target) Then
                 adjacentNodes.Add(edge.target, New EdgeSet(Of Edge))
