@@ -1,100 +1,74 @@
 ﻿#Region "Microsoft.VisualBasic::9dd628a6670c8ba59934c76ffca948d8, gr\network-visualization\Datavisualization.Network\Graph\GraphTree.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 123
-    '    Code Lines: 80 (65.04%)
-    ' Comment Lines: 25 (20.33%)
-    '    - Xml Docs: 96.00%
-    ' 
-    '   Blank Lines: 18 (14.63%)
-    '     File Size: 4.29 KB
+' Summaries:
 
 
-    '     Class GraphTreeNode
-    ' 
-    '         Properties: Childs, Node, Parents
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    '         Function: ToString
-    ' 
-    '     Class GraphTree
-    ' 
-    '         Properties: Count, Trees
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    ' 
-    '         Function: IterateTrees, ToString
-    ' 
-    '         Sub: IterateTrees
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 123
+'    Code Lines: 80 (65.04%)
+' Comment Lines: 25 (20.33%)
+'    - Xml Docs: 96.00%
+' 
+'   Blank Lines: 18 (14.63%)
+'     File Size: 4.29 KB
+
+
+'     Class GraphTreeNode
+' 
+'         Properties: Childs, Node, Parents
+' 
+'         Constructor: (+1 Overloads) Sub New
+'         Function: ToString
+' 
+'     Class GraphTree
+' 
+'         Properties: Count, Trees
+' 
+'         Constructor: (+1 Overloads) Sub New
+' 
+'         Function: IterateTrees, ToString
+' 
+'         Sub: IterateTrees
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
+Imports Microsoft.VisualBasic.Data.visualize.Network.Graph.Abstract
 Imports Microsoft.VisualBasic.Linq
 
 Namespace Graph
-
-    ''' <summary>
-    ''' 这是一个节点对象
-    ''' </summary>
-    Public Class GraphTreeNode
-
-        ''' <summary>
-        ''' 从外部链接到当前节点的节点列表
-        ''' </summary>
-        ''' <returns></returns>
-        Public Property Parents As List(Of GraphTreeNode)
-        ''' <summary>
-        ''' 从当前的节点出发，链接到的其他的节点列表
-        ''' </summary>
-        ''' <returns></returns>
-        Public Property Childs As List(Of GraphTreeNode)
-        Public Property Node As Node
-
-        Sub New()
-            Parents = New List(Of GraphTreeNode)
-            Childs = New List(Of GraphTreeNode)
-        End Sub
-
-        Public Overrides Function ToString() As String
-            Return Node.ToString
-        End Function
-    End Class
 
     Public Class GraphTree
 

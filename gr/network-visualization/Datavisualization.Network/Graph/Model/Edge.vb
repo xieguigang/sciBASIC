@@ -1,60 +1,60 @@
 ﻿#Region "Microsoft.VisualBasic::338555bae25fff0672e8df2cb6e90473, gr\network-visualization\Datavisualization.Network\Graph\Model\Edge.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 249
-    '    Code Lines: 138 (55.42%)
-    ' Comment Lines: 84 (33.73%)
-    '    - Xml Docs: 48.81%
-    ' 
-    '   Blank Lines: 27 (10.84%)
-    '     File Size: 8.63 KB
+' Summaries:
 
 
-    '     Class Edge
-    ' 
-    '         Properties: data, ID, isDirected, m_interationtype, m_source
-    '                     m_target, weight
-    ' 
-    '         Constructor: (+2 Overloads) Sub New
-    '         Function: Clone, (+2 Overloads) Equals, GetHashCode, Iterate2Nodes, Other
-    '                   ToString
-    '         Operators: <>, =
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 249
+'    Code Lines: 138 (55.42%)
+' Comment Lines: 84 (33.73%)
+'    - Xml Docs: 48.81%
+' 
+'   Blank Lines: 27 (10.84%)
+'     File Size: 8.63 KB
+
+
+'     Class Edge
+' 
+'         Properties: data, ID, isDirected, m_interationtype, m_source
+'                     m_target, weight
+' 
+'         Constructor: (+2 Overloads) Sub New
+'         Function: Clone, (+2 Overloads) Equals, GetHashCode, Iterate2Nodes, Other
+'                   ToString
+'         Operators: <>, =
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -100,6 +100,7 @@ Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Data.GraphTheory.Network
 Imports Microsoft.VisualBasic.Data.GraphTheory.SparseGraph
 Imports Microsoft.VisualBasic.Data.visualize.Network.FileStream.Generic
+Imports Microsoft.VisualBasic.Data.visualize.Network.Graph.Abstract
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Serialization
 
@@ -133,7 +134,7 @@ Namespace Graph
             End Set
         End Property
 
-        Public Property data As EdgeData Implements Selector.IGraphValueContainer(Of EdgeData).data
+        Public Property data As EdgeData Implements IGraphValueContainer(Of EdgeData).data
         Public Property isDirected As Boolean
 
         Default Public ReadOnly Property metadata(name As String) As String
