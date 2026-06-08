@@ -54,7 +54,6 @@
 
 Imports System.Drawing
 Imports System.Drawing.Drawing2D
-Imports System.Drawing.Imaging
 Imports System.Drawing.Text
 Imports System.IO
 Imports System.Reflection
@@ -63,50 +62,17 @@ Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.BitmapImage
 Imports Microsoft.VisualBasic.Language
-Imports Microsoft.VisualBasic.Net.Http
 Imports Microsoft.VisualBasic.Scripting.Runtime
 Imports Bitmap = System.Drawing.Bitmap
 Imports Font = System.Drawing.Font
 Imports GraphicsPath = System.Drawing.Drawing2D.GraphicsPath
 Imports Image = System.Drawing.Image
-Imports Pens = System.Drawing.Pens
-
-#If WINDOWS Then
-Imports std = System.Math
-#End If
 
 Public Module Extensions
 
     <Extension>
     Public Function CreateBuffer(bmp As System.Drawing.Bitmap) As BitmapImage.BitmapBuffer
-#If WINDOWS Then
-        ' Lock the bitmap's bits.  
-        Dim rect As New Rectangle(0, 0, bmp.Width, bmp.Height)
-        Dim bmpData As BitmapData = bmp.LockBits(
-            rect:=rect,
-            flags:=ImageLockMode.ReadWrite,
-            format:=bmp.PixelFormat
-        )
-
-        ' Get the address of the first line.
-        Dim ptr As IntPtr = bmpData.Scan0
-        ' Declare an array to hold the bytes of the bitmap.
-        Dim bytes As Integer = std.Abs(bmpData.Stride) * bmp.Height
-        Dim pixels As Integer = bmp.Width * bmp.Height
-        Dim channels As Integer
-
-        If bytes = pixels * 3 Then
-            channels = 3
-        ElseIf bytes = pixels * 4 Then
-            channels = 4
-        Else
-            Throw New NotImplementedException
-        End If
-
-        Return New BitmapImage.BitmapBuffer(ptr, bytes, bmp.Size, bmpData.Stride, channels, handle:=bmpData)
-#Else
-        Return BitmapBuffer.FromBitmap(bmp)
-#End If
+        Return Interop.BitmapBuffer.FromBitmap(bmp)
     End Function
 
     <Extension>
@@ -235,7 +201,8 @@ Public Module Extensions
     ''' 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <ExportAPI("To.Icon")>
-    <Extension> Public Function GetIcon(res As Image) As Icon
+    <Extension>
+    Public Function GetIcon(res As Image) As Icon
         Return Icon.FromHandle(New Bitmap(res).GetHicon)
     End Function
 
@@ -247,7 +214,8 @@ Public Module Extensions
     ''' 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <ExportAPI("To.Icon")>
-    <Extension> Public Function GetIcon(res As Bitmap) As Icon
+    <Extension>
+    Public Function GetIcon(res As Bitmap) As Icon
         Return Icon.FromHandle(res.GetHicon)
     End Function
 
@@ -310,12 +278,13 @@ Public Module Extensions
     ''' <returns></returns>
     ''' <remarks></remarks>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    <ExportAPI("GDI+.Create")>
-    <Extension> Public Function CreateGDIDevice(r As Size,
-                                                Optional filled As Color = Nothing,
-                                                <CallerMemberName>
-                                                Optional trace$ = "",
-                                                Optional dpi$ = "100,100") As Graphics2D
+    <Extension>
+    Public Function CreateGDIDevice(r As Size,
+                                    Optional filled As Color = Nothing,
+                                    <CallerMemberName>
+                                    Optional trace$ = "",
+                                    Optional dpi$ = "100,100") As Graphics2D
+
         Return CreateGDIDevice(r.Width, r.Height, filled:=filled, dpi:=dpi, trace:=trace)
     End Function
 
