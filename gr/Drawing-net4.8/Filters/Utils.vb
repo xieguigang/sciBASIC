@@ -56,10 +56,6 @@ Imports System.Drawing
 Imports System.Drawing.Drawing2D
 Imports System.Drawing.Text
 Imports System.Runtime.CompilerServices
-Imports Microsoft.VisualBasic.CommandLine.Reflection
-Imports Microsoft.VisualBasic.Imaging
-Imports Microsoft.VisualBasic.Imaging.BitmapImage
-Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Bitmap = System.Drawing.Bitmap
 Imports Image = System.Drawing.Image
 Imports TextureBrush = System.Drawing.TextureBrush
@@ -111,12 +107,7 @@ Namespace Imaging.BitmapImage
                         .SmoothingMode = SmoothingMode.HighQuality
                         .TextRenderingHint = TextRenderingHint.ClearTypeGridFit
 
-#If NET48 Then
-                        Call .FillPie(image, Bitmap.EntireImage, 0, 360)
-#Else
                         Call .FillPie(image, New Rectangle(New Point, Bitmap.Size), 0, 360)
-#End If
-
                     End With
 
                     Return Bitmap

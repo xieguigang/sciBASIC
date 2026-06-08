@@ -75,7 +75,7 @@ Imports Microsoft.VisualBasic.Imaging.PostScript
 Imports Microsoft.VisualBasic.Imaging.SVG
 Imports Microsoft.VisualBasic.MIME.Html.CSS
 
-#If NET48 Then
+#If WINDOWS Then
 Imports Microsoft.VisualBasic.Drawing
 #End If
 
@@ -125,12 +125,12 @@ Namespace Driver
         ''' register the default System.Drawing.Common graphics driver for .net 4.8 runtime
         ''' </summary>
         Public Sub Register()
-            Static gfx As System.Drawing.Graphics = System.Drawing.Graphics.FromImage(New Bitmap(10, 10))
+            Static gfx As System.Drawing.Graphics = System.Drawing.Graphics.FromImage(New System.Drawing.Bitmap(10, 10))
 
             Call DriverLoad.Register(New RasterInterop, Drivers.GDI)
             Call DriverLoad.Register(New SvgInterop, Drivers.SVG)
             Call DriverLoad.Register(Function(text As String, font As Font)
-                                         Return gfx.MeasureString(text, font)
+                                         Return gfx.MeasureString(text, New System.Drawing.Font(font.Name, font.Size, font.Style))
                                      End Function)
         End Sub
 
