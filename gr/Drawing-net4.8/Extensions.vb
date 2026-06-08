@@ -63,6 +63,7 @@ Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.BitmapImage
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Net.Http
 Imports Microsoft.VisualBasic.Scripting.Runtime
 Imports Bitmap = System.Drawing.Bitmap
 Imports Font = System.Drawing.Font
@@ -159,10 +160,7 @@ Public Module Extensions
     '''
     <Extension>
     Public Function CanvasCreateFromImageFile(path As String) As Graphics2D
-#If NET8_0_OR_GREATER Then
-        Throw New NotImplementedException
-#Else
-                Dim image As Image = LoadImage(path)
+        Dim image As Image = LoadImage(path)
         Dim g As Graphics = Graphics.FromImage(image)
 
         With g
@@ -171,7 +169,48 @@ Public Module Extensions
         End With
 
         Return Graphics2D.CreateObject(g, image)
-#End If
+    End Function
+
+    ''' <summary>
+    ''' Load image from a file and then close the file handle.
+    ''' (使用<see cref="Image.FromStream(Stream)"/>函数在加载完成图像到Dispose这段之间内都不会释放文件句柄，
+    ''' 则使用这个函数则没有这个问题，在图片加载之后会立即释放掉文件句柄)
+    ''' </summary>
+    ''' <param name="path"></param>
+    ''' <returns>
+    ''' 当参数<paramref name="throwEx"/>为false时候，函数返回空值的话，说明图片文件错误
+    ''' 例如文件未下载完成或者发生了二进制移码
+    ''' </returns>
+    <ExportAPI("LoadImage"), Extension>
+    Friend Function LoadImage(path$, Optional base64 As Boolean = False, Optional throwEx As Boolean = True) As Image
+        If base64 Then
+            Dim base64String = path.SolveStream
+            Dim bytData = Convert.FromBase64String(base64String)
+
+            Try
+                Using s As New MemoryStream(bytData)
+                    Return Image.FromStream(s)
+                End Using
+            Catch ex As Exception
+                If throwEx Then
+                    Throw New Exception(path, ex)
+                Else
+                    Return App.LogException(New Exception(path, ex))
+                End If
+            End Try
+        Else
+            Try
+                Using s As Stream = path.Open(FileMode.Open, doClear:=False, [readOnly]:=True, aggressive:=True)
+                    Return Image.FromStream(s)
+                End Using
+            Catch ex As Exception
+                If throwEx Then
+                    Throw New Exception(path, ex)
+                Else
+                    Return App.LogException(New Exception(path, ex))
+                End If
+            End Try
+        End If
     End Function
 
     ''' <summary>
