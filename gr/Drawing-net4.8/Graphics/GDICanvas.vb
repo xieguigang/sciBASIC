@@ -1,66 +1,66 @@
 ﻿#Region "Microsoft.VisualBasic::646761d50157f9849035278e9fdc61a8, gr\Drawing-net4.8\Graphics\GDICanvas.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 2541
-    '    Code Lines: 720 (28.34%)
-    ' Comment Lines: 1624 (63.91%)
-    '    - Xml Docs: 12.99%
-    ' 
-    '   Blank Lines: 197 (7.75%)
-    '     File Size: 87.20 KB
+' Summaries:
 
 
-    ' Class GDICanvas
-    ' 
-    '     Properties: Graphics, RenderingOrigin, TextContrast
-    ' 
-    '     Constructor: (+1 Overloads) Sub New
-    ' 
-    '     Function: GetContextInfo, GetStringPath, (+4 Overloads) IsVisible, (+4 Overloads) MeasureString
-    ' 
-    '     Sub: AddMetafileComment, ClearCanvas, (+4 Overloads) DrawArc, DrawB, (+3 Overloads) DrawBezier
-    '          (+2 Overloads) DrawBeziers, (+2 Overloads) DrawClosedCurve, (+7 Overloads) DrawCurve, (+4 Overloads) DrawEllipse, (+12 Overloads) DrawImage
-    '          (+5 Overloads) DrawImageUnscaled, DrawImageUnscaledAndClipped, (+5 Overloads) DrawLine, (+2 Overloads) DrawLines, DrawPath
-    '          (+4 Overloads) DrawPie, (+2 Overloads) DrawPolygon, (+4 Overloads) DrawRectangle, (+2 Overloads) DrawRectangles, (+4 Overloads) DrawString
-    '          ExcludeClip, (+2 Overloads) FillClosedCurve, (+4 Overloads) FillEllipse, FillPath, (+3 Overloads) FillPie
-    '          (+2 Overloads) FillPolygon, (+4 Overloads) FillRectangle, Finalize, Flush, (+2 Overloads) IntersectClip
-    '          ReleaseHandle, ResetClip, ResetTransform, RotateTransform, ScaleTransform
-    '          (+2 Overloads) SetClip, SetTransformMatrix, (+2 Overloads) TranslateClip, TranslateTransform
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 2541
+'    Code Lines: 720 (28.34%)
+' Comment Lines: 1624 (63.91%)
+'    - Xml Docs: 12.99%
+' 
+'   Blank Lines: 197 (7.75%)
+'     File Size: 87.20 KB
+
+
+' Class GDICanvas
+' 
+'     Properties: Graphics, RenderingOrigin, TextContrast
+' 
+'     Constructor: (+1 Overloads) Sub New
+' 
+'     Function: GetContextInfo, GetStringPath, (+4 Overloads) IsVisible, (+4 Overloads) MeasureString
+' 
+'     Sub: AddMetafileComment, ClearCanvas, (+4 Overloads) DrawArc, DrawB, (+3 Overloads) DrawBezier
+'          (+2 Overloads) DrawBeziers, (+2 Overloads) DrawClosedCurve, (+7 Overloads) DrawCurve, (+4 Overloads) DrawEllipse, (+12 Overloads) DrawImage
+'          (+5 Overloads) DrawImageUnscaled, DrawImageUnscaledAndClipped, (+5 Overloads) DrawLine, (+2 Overloads) DrawLines, DrawPath
+'          (+4 Overloads) DrawPie, (+2 Overloads) DrawPolygon, (+4 Overloads) DrawRectangle, (+2 Overloads) DrawRectangles, (+4 Overloads) DrawString
+'          ExcludeClip, (+2 Overloads) FillClosedCurve, (+4 Overloads) FillEllipse, FillPath, (+3 Overloads) FillPie
+'          (+2 Overloads) FillPolygon, (+4 Overloads) FillRectangle, Finalize, Flush, (+2 Overloads) IntersectClip
+'          ReleaseHandle, ResetClip, ResetTransform, RotateTransform, ScaleTransform
+'          (+2 Overloads) SetClip, SetTransformMatrix, (+2 Overloads) TranslateClip, TranslateTransform
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -70,6 +70,8 @@ Imports System.Drawing.Drawing2D
 Imports System.Drawing.Graphics
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Imaging
+Imports Microsoft.VisualBasic.Drawing.Interop
+
 
 #If NET8_0_OR_GREATER Then
 Imports Pen = Microsoft.VisualBasic.Imaging.Pen
