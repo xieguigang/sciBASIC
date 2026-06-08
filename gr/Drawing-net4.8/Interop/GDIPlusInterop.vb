@@ -52,8 +52,14 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Imaging.Driver
 
 Public Module GDIPlusInterop
+
+    <Extension>
+    Public Function CTypeGdiImage(gfx As GdiRasterGraphics) As System.Drawing.Image
+        Return gfx.ImageResource.CTypeGdiImage
+    End Function
 
     <Extension>
     Public Function CTypeGdiImage(image As Microsoft.VisualBasic.Imaging.Image) As System.Drawing.Image

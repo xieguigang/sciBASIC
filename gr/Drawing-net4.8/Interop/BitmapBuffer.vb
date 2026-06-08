@@ -33,6 +33,11 @@ Namespace Interop
             Return BitmapBuffer.FromBitmap(copy)
         End Function
 
+        ''' <summary>
+        ''' create image read/write memory buffer
+        ''' </summary>
+        ''' <param name="curBitmap"></param>
+        ''' <returns></returns>
         Public Overloads Shared Function FromBitmap(curBitmap As System.Drawing.Bitmap) As BitmapBuffer
             Return FromBitmap(curBitmap, ImageLockMode.ReadWrite)
         End Function

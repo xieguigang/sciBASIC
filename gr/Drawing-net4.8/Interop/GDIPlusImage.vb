@@ -81,5 +81,9 @@ Namespace Interop
         Public Shared Narrowing Operator CType(img As GDIPlusImage) As System.Drawing.Image
             Return img.bitmap
         End Operator
+
+        Public Shared Function LoadImage(path As String, Optional base64 As Boolean = False, Optional throwEx As Boolean = True) As System.Drawing.Image
+            Return path.LoadImage(base64, throwEx)
+        End Function
     End Class
 End Namespace

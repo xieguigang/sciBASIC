@@ -70,6 +70,11 @@ Imports Image = System.Drawing.Image
 
 Public Module Extensions
 
+    ''' <summary>
+    ''' create image read/write memory buffer
+    ''' </summary>
+    ''' <param name="bmp"></param>
+    ''' <returns></returns>
     <Extension>
     Public Function CreateBuffer(bmp As System.Drawing.Bitmap) As BitmapImage.BitmapBuffer
         Return Interop.BitmapBuffer.FromBitmap(bmp)
