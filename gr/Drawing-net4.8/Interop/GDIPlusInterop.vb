@@ -53,76 +53,26 @@
 
 Imports System.Runtime.CompilerServices
 
-#If WINDOWS Then
-Imports System.Drawing.Imaging
-
-Imports Image = System.Drawing.Image
-Imports Bitmap = System.Drawing.Bitmap
-#Else
-Imports System.IO
-Imports Microsoft.VisualBasic.Imaging
-Imports Microsoft.VisualBasic.Imaging.Driver
-
-Imports Image = Microsoft.VisualBasic.Imaging.Image
-Imports Bitmap = Microsoft.VisualBasic.Imaging.Bitmap
-#End If
-
 Public Module GDIPlusInterop
 
     <Extension>
-    Public Function CTypeGdiImage(image As Image) As System.Drawing.Image
-#If WINDOWS Then
-        Return image
-#Else
-        Using ms As New MemoryStream
-            Call image.Save(ms, ImageFormats.Png)
-            Call ms.Seek(Scan0, SeekOrigin.Begin)
-
-            Return System.Drawing.Image.FromStream(ms)
-        End Using
-#End If
+    Public Function CTypeGdiImage(image As Microsoft.VisualBasic.Imaging.Image) As System.Drawing.Image
+        Return Interop.GDIPlusImage.CTypeGDIPlusImage(image)
     End Function
 
     <Extension>
-    Public Function CTypeGdiImage(bitmap As Bitmap) As System.Drawing.Bitmap
-#If WINDOWS Then
-        Return bitmap
-#Else
-        Using ms As New MemoryStream
-            Call bitmap.Save(ms, ImageFormats.Bmp)
-            Call ms.Seek(Scan0, SeekOrigin.Begin)
-
-            Return System.Drawing.Bitmap.FromStream(ms)
-        End Using
-#End If
+    Public Function CTypeGdiImage(bitmap As Microsoft.VisualBasic.Imaging.Bitmap) As System.Drawing.Bitmap
+        Return Interop.GDIPlusImage.CTypeGDIPlusImage(bitmap)
     End Function
 
     <Extension>
-    Public Function CTypeFromGdiImage(image As System.Drawing.Image) As Image
-#If WINDOWS Then
-        Return image
-#Else
-        Using ms As New MemoryStream
-            Call image.Save(ms, format:=ImageFormat.Png)
-            Call ms.Seek(Scan0, SeekOrigin.Begin)
-
-            Return DriverLoad.LoadFromStream(ms)
-        End Using
-#End If
+    Public Function CTypeFromGdiImage(image As System.Drawing.Image) As Microsoft.VisualBasic.Imaging.Image
+        Return New Interop.GDIPlusImage(image)
     End Function
 
     <Extension>
-    Public Function CTypeFromGdiImage(bitmap As System.Drawing.Bitmap) As Bitmap
-#If WINDOWS Then
-        Return bitmap
-#Else
-        Using ms As New MemoryStream
-            Call bitmap.Save(ms, ImageFormat.Bmp)
-            Call ms.Seek(Scan0, SeekOrigin.Begin)
-
-            Return Microsoft.VisualBasic.Imaging.Bitmap.FromStream(ms)
-        End Using
-#End If
+    Public Function CTypeFromGdiImage(bitmap As System.Drawing.Bitmap) As Microsoft.VisualBasic.Imaging.Bitmap
+        Return New Microsoft.VisualBasic.Imaging.Bitmap(bitmap.CreateBuffer)
     End Function
 
     <Extension>
