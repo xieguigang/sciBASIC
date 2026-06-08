@@ -70,10 +70,6 @@ Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Imaging.Driver
 Imports std = System.Math
 
-#If NET48 Then
-Imports System.Drawing.Drawing2D
-#End If
-
 Namespace Imaging
 
     ''' <summary>
@@ -160,7 +156,7 @@ Namespace Imaging
         ''' </summary>
         ''' <param name="dpiXY"></param>
         Sub New(dpiXY As Size)
-            Call Me.New(std.max(dpiXY.Width, dpiXY.Height))
+            Call Me.New(std.Max(dpiXY.Width, dpiXY.Height))
         End Sub
 
         ''' <summary>
