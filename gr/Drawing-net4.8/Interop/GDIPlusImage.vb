@@ -30,10 +30,14 @@ Public Class GDIPlusImage : Inherits Microsoft.VisualBasic.Imaging.Image
     End Sub
 
     Sub New(img As Microsoft.VisualBasic.Imaging.Image)
-        bitmap = New System.Drawing.Bitmap(
-            width:=img.Width,
-            height:=img.Height,
-            format:=System.Drawing.Imaging.PixelFormat.Format32bppArgb
+        bitmap = CTypeGDIPlusImage(img)
+    End Sub
+
+    Public Shared Function CTypeGDIPlusImage(img As Microsoft.VisualBasic.Imaging.Image) As System.Drawing.Bitmap
+        Dim bitmap As New System.Drawing.Bitmap(
+           width:=img.Width,
+           height:=img.Height,
+           format:=System.Drawing.Imaging.PixelFormat.Format32bppArgb
         )
 
         Using buffer As BitmapBuffer = BitmapBuffer.FromBitmap(bitmap)
@@ -43,7 +47,9 @@ Public Class GDIPlusImage : Inherits Microsoft.VisualBasic.Imaging.Image
                 buffer.RawBuffer.Length
             )
         End Using
-    End Sub
+
+        Return bitmap
+    End Function
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Overrides Sub Save(s As IO.Stream, format As ImageFormats)
@@ -61,4 +67,16 @@ Public Class GDIPlusImage : Inherits Microsoft.VisualBasic.Imaging.Image
         Call s.Flush()
         Return s
     End Function
+
+    Public Function CreateCanvas2D(direct_access As Boolean) As IGraphics
+        Return bitmap.CreateCanvas2D(direct_access)
+    End Function
+
+    Public Shared Narrowing Operator CType(img As GDIPlusImage) As System.Drawing.Bitmap
+        Return img.bitmap
+    End Operator
+
+    Public Shared Narrowing Operator CType(img As GDIPlusImage) As System.Drawing.Image
+        Return img.bitmap
+    End Operator
 End Class

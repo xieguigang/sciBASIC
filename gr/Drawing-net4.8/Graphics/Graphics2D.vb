@@ -67,22 +67,16 @@ Imports System.Drawing
 Imports System.IO
 Imports System.Reflection
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Drawing.Drawing2D.Text
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.BitmapImage
 Imports Microsoft.VisualBasic.Imaging.Driver
-Imports std = System.Math
-Imports Microsoft.VisualBasic.Drawing.Drawing2D.Text
-
-
-#If NET8_0_OR_GREATER Then
-Imports Font = Microsoft.VisualBasic.Imaging.Font
 Imports Brush = Microsoft.VisualBasic.Imaging.Brush
-Imports Pen = Microsoft.VisualBasic.Imaging.Pen
+Imports Font = Microsoft.VisualBasic.Imaging.Font
 Imports Image = Microsoft.VisualBasic.Imaging.Image
-Imports Bitmap = Microsoft.VisualBasic.Imaging.Bitmap
-Imports GraphicsPath = Microsoft.VisualBasic.Imaging.GraphicsPath
+Imports Pen = Microsoft.VisualBasic.Imaging.Pen
 Imports SolidBrush = Microsoft.VisualBasic.Imaging.SolidBrush
-#End If
+Imports std = System.Math
 
 ''' <summary>
 ''' GDI+ device handle for encapsulates a GDI+ drawing surface.
@@ -102,15 +96,15 @@ Public Class Graphics2D : Inherits GDICanvas
     Public Property ImageResource As Image Implements GdiRasterGraphics.ImageResource
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Get
-            Throw New NotImplementedException
+            Return New GDIPlusImage(gfxImg)
         End Get
         Protected Friend Set(value As Image)
-            innerImage = value.CTypeGdiImage
+            gfxImg = GDIPlusImage.CTypeGDIPlusImage(value)
             innerSet()
         End Set
     End Property
 
-    Dim innerImage As System.Drawing.Image
+    Dim gfxImg As System.Drawing.Image
 
     Public Overrides ReadOnly Property Driver As Drivers
         Get
@@ -141,7 +135,7 @@ Public Class Graphics2D : Inherits GDICanvas
     End Sub
 
     Sub New(base As System.Drawing.Image)
-        innerImage = base
+        gfxImg = base
         Size = base.Size
         Center = New Point(Size.Width / 2, Size.Height / 2)
         Graphics = Graphics.FromImage(base)
@@ -178,8 +172,8 @@ Public Class Graphics2D : Inherits GDICanvas
     Public ReadOnly Property Center As Point
 
     Private Sub innerSet()
-        If Not innerImage Is Nothing Then
-            _Size = innerImage.Size
+        If Not gfxImg Is Nothing Then
+            _Size = gfxImg.Size
             _Center = New Point(Size.Width / 2, Size.Height / 2)
         Else
             _Size = Nothing
@@ -189,7 +183,7 @@ Public Class Graphics2D : Inherits GDICanvas
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function GetImageResource() As System.Drawing.Image
-        Return innerImage
+        Return gfxImg
     End Function
 
     ''' <summary>
@@ -242,7 +236,7 @@ Public Class Graphics2D : Inherits GDICanvas
     ''' 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Shared Narrowing Operator CType(g2D As Graphics2D) As System.Drawing.Image
-        Return g2D.innerImage
+        Return g2D.gfxImg
     End Operator
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -281,7 +275,7 @@ Public Class Graphics2D : Inherits GDICanvas
     End Sub
 
     Public Overloads Function Save(stream As Stream, format As ImageFormats) As Boolean Implements SaveGdiBitmap.Save
-        Call innerImage.Save(stream, format.GetFormat)
+        Call gfxImg.Save(stream, format.GetFormat)
         Call stream.Flush()
 
         Return True

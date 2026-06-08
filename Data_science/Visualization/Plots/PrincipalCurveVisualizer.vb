@@ -55,11 +55,13 @@
 Imports System.Drawing
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Math2D
-Imports Microsoft.VisualBasic.Math.Interpolation
 Imports Microsoft.VisualBasic.Scripting.Expressions
+Imports Pen = Microsoft.VisualBasic.Imaging.Pen
+Imports SolidBrush = Microsoft.VisualBasic.Imaging.SolidBrush
 Imports std = System.Math
 
 Public Class PrincipalCurveVisualizer
+
     Private _dataPoints As List(Of Vector2D)
     Private _curvePoints As List(Of Vector2D)
     Private _bounds As RectangleF

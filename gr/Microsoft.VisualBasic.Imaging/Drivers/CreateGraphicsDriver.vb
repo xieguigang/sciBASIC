@@ -145,11 +145,12 @@ Namespace Driver
 
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Public Overrides Function CreateCanvas2D(background As Bitmap, direct_access As Boolean) As IGraphics
-                Return background.CreateCanvas2D(direct_access)
+                Return New GDIPlusImage(background).CreateCanvas2D(direct_access)
             End Function
 
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Public Overrides Function CreateCanvas2D(background As Image, direct_access As Boolean) As IGraphics
-                Return background.CreateCanvas2D(direct_access)
+                Return New GDIPlusImage(background).CreateCanvas2D(direct_access)
             End Function
 
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
