@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::dd6600bd2328694c4e1079feff1af00f, Microsoft.VisualBasic.Core\src\Text\Xml\Models\ValueTuples\NamedValues.vb"
+﻿#Region "Microsoft.VisualBasic::30fedd00fca92bb82f4819b2867feb33, Microsoft.VisualBasic.Core\src\Text\Xml\Models\ValueTuples\NamedValues.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 143
-    '    Code Lines: 77 (53.85%)
-    ' Comment Lines: 44 (30.77%)
+    '   Total Lines: 156
+    '    Code Lines: 87 (55.77%)
+    ' Comment Lines: 44 (28.21%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 22 (15.38%)
-    '     File Size: 4.51 KB
+    '   Blank Lines: 25 (16.03%)
+    '     File Size: 4.91 KB
 
 
     '     Class NamedValue
@@ -58,12 +58,12 @@
     '         Constructor: (+3 Overloads) Sub New
     '         Function: ToString
     ' 
-    '     Structure NamedVector
+    '     Class NamedVector
     ' 
     '         Properties: attributes, name, vector
     ' 
-    '         Constructor: (+2 Overloads) Sub New
-    '         Function: ToString
+    '         Constructor: (+3 Overloads) Sub New
+    '         Function: GenericEnumerator, ToString
     ' 
     ' 
     ' /********************************************************************************/

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::de165bf125d40c95f161bd902d99a7bb, gr\network-visualization\Datavisualization.Network\IDynamicsTable.vb"
+﻿#Region "Microsoft.VisualBasic::06477c8750607bdb0e4890208860adde, gr\network-visualization\Datavisualization.Network\IDynamicsTable.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 23
-    '    Code Lines: 13 (56.52%)
-    ' Comment Lines: 7 (30.43%)
+    '   Total Lines: 26
+    '    Code Lines: 13 (50.00%)
+    ' Comment Lines: 10 (38.46%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 3 (13.04%)
-    '     File Size: 816 B
+    '   Blank Lines: 3 (11.54%)
+    '     File Size: 906 B
 
 
     '     Class IDynamicsTable

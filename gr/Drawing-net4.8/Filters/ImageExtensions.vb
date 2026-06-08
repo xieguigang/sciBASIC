@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::206a476e7ab50c447de3d77a55a90550, gr\Drawing-net4.8\ImageExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::206a476e7ab50c447de3d77a55a90550, gr\Drawing-net4.8\Filters\ImageExtensions.vb"
 
     ' Author:
     ' 

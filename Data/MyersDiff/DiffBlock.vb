@@ -1,4 +1,59 @@
-﻿
+﻿#Region "Microsoft.VisualBasic::3ed9f2c95dbe2a5a4734523cce4ceeb7, Data\MyersDiff\DiffBlock.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 31
+    '    Code Lines: 14 (45.16%)
+    ' Comment Lines: 11 (35.48%)
+    '    - Xml Docs: 72.73%
+    ' 
+    '   Blank Lines: 6 (19.35%)
+    '     File Size: 1.24 KB
+
+
+    ' Class DiffBlock
+    ' 
+    '     Properties: Items, NewCount, NewStart, OldCount, OldStart
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+
 ' -----------------------------------------------------------------------
 ' 差异块：连续相同类型差异项的分组，用于统一差异格式输出
 ' -----------------------------------------------------------------------

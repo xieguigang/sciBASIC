@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cfda1035290d1fc9cfbc38672b9ae154, gr\network-visualization\Network.IO.Extensions\IO\FileStream\MetaData.vb"
+﻿#Region "Microsoft.VisualBasic::36acd1b8a7225c782da3eb86f6a95d30, gr\network-visualization\Network.IO.Extensions\IO\FileStream\MetaData.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 18
-    '    Code Lines: 14 (77.78%)
-    ' Comment Lines: 0 (0.00%)
-    '    - Xml Docs: 0.00%
+    '   Total Lines: 21
+    '    Code Lines: 14 (66.67%)
+    ' Comment Lines: 3 (14.29%)
+    '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 4 (22.22%)
-    '     File Size: 574 B
+    '   Blank Lines: 4 (19.05%)
+    '     File Size: 643 B
 
 
     '     Class MetaData

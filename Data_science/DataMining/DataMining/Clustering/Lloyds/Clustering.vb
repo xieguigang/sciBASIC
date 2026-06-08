@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7c225f87c1ecc5deb854db7520d24f3b, Data_science\DataMining\DataMining\Clustering\Lloyds\Clustering.vb"
+﻿#Region "Microsoft.VisualBasic::eab068e83cafc427ad5aeb3f31c99390, Data_science\DataMining\DataMining\Clustering\Lloyds\Clustering.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 83.33%
     ' 
     '   Blank Lines: 7 (18.42%)
-    '     File Size: 1.18 KB
+    '     File Size: 1.22 KB
 
 
     '     Class Clustering
@@ -48,7 +48,7 @@
     '         Properties: Points
     ' 
     '         Constructor: (+1 Overloads) Sub New
-    '         Sub: __writeCluster
+    '         Sub: writeCluster
     ' 
     ' 
     ' /********************************************************************************/

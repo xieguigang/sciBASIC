@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::010cbaaddcf691c8eb61488f6d9b3054, gr\Drawing-net4.8\TiffWriter.vb"
+﻿#Region "Microsoft.VisualBasic::010cbaaddcf691c8eb61488f6d9b3054, gr\Drawing-net4.8\FileEncoder\TiffWriter.vb"
 
     ' Author:
     ' 

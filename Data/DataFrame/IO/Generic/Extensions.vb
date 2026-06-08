@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d46fcd3c7cd13809909084e15923d663, Data\DataFrame\IO\Generic\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::c1988b5809ce9d40c230f147e9d0aaef, Data\DataFrame\IO\Generic\Extensions.vb"
 
     ' Author:
     ' 
@@ -34,19 +34,19 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 312
-    '    Code Lines: 200 (64.10%)
-    ' Comment Lines: 85 (27.24%)
-    '    - Xml Docs: 98.82%
+    '   Total Lines: 293
+    '    Code Lines: 190 (64.85%)
+    ' Comment Lines: 77 (26.28%)
+    '    - Xml Docs: 98.70%
     ' 
-    '   Blank Lines: 27 (8.65%)
-    '     File Size: 13.43 KB
+    '   Blank Lines: 26 (8.87%)
+    '     File Size: 12.66 KB
 
 
     '     Module Extensions
     ' 
     '         Function: asCharacter, AsCharacter, AsDataSet, CreateObject, DataFrame
-    '                   EuclideanDistance, GroupBy, NamedMatrix, NamedValues, (+2 Overloads) PropertyNames
+    '                   EuclideanDistance, GroupBy, NamedMatrix, NamedValues, PropertyNames
     '                   (+2 Overloads) Transpose, Values, (+2 Overloads) Vector
     ' 
     ' 

@@ -1,3 +1,67 @@
+﻿#Region "Microsoft.VisualBasic::5a161df30c189d11db49167a59ffac15, Data_science\Mathematica\Math\CVODE_Solver\DenseMatrix.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 466
+    '    Code Lines: 311 (66.74%)
+    ' Comment Lines: 103 (22.10%)
+    '    - Xml Docs: 94.17%
+    ' 
+    '   Blank Lines: 52 (11.16%)
+    '     File Size: 14.03 KB
+
+
+    ' Class DenseMatrix
+    ' 
+    '     Properties: Columns, Data, IsSquare, Rows
+    ' 
+    '     Constructor: (+3 Overloads) Sub New
+    ' 
+    '     Function: Add, Clone, Diagonal, FrobeniusNorm, GetColumn
+    '               GetRow, Identity, InfinityNorm, Multiply, MultiplyVector
+    '               Norm1, Ones, Scale, Subtract, ToString
+    '               Transpose, Zeros
+    ' 
+    '     Sub: AddInPlace, CopyFrom, ScaleInPlace, SetColumn, SetConstant
+    '          SetDiagonal, SetRow
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
 Imports std = System.Math
 
 ' ============================================================================
@@ -462,5 +526,6 @@ Public Class DenseMatrix : Implements ICloneable
 #End Region
 
 End Class
+
 
 

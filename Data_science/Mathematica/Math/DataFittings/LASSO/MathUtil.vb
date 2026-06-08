@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c5ebdf8c764f0d85a7c042387c71d950, Data_science\Mathematica\Math\DataFittings\LASSO\MathUtil.vb"
+﻿#Region "Microsoft.VisualBasic::e016b4334cd0469aabe6438a18ea9626, Data_science\Mathematica\Math\DataFittings\LASSO\MathUtil.vb"
 
     ' Author:
     ' 
@@ -34,18 +34,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 79
-    '    Code Lines: 59 (74.68%)
-    ' Comment Lines: 7 (8.86%)
+    '   Total Lines: 71
+    '    Code Lines: 52 (73.24%)
+    ' Comment Lines: 7 (9.86%)
     '    - Xml Docs: 57.14%
     ' 
-    '   Blank Lines: 13 (16.46%)
-    '     File Size: 2.68 KB
+    '   Blank Lines: 12 (16.90%)
+    '     File Size: 2.39 KB
 
 
     '     Class MathUtil
     ' 
-    '         Function: allocateDoubleMatrix, (+2 Overloads) getDotProduct, getFormattedDouble, (+2 Overloads) getStd, (+2 Overloads) getStg
+    '         Function: (+2 Overloads) getDotProduct, getFormattedDouble, (+2 Overloads) getStd, (+2 Overloads) getStg
     ' 
     '         Sub: divideInPlace
     ' 

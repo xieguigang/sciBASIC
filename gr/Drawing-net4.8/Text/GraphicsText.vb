@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::53f5b5b0d43637091252c43e4cef6e39, gr\Drawing-net4.8\GraphicsText.vb"
+﻿#Region "Microsoft.VisualBasic::c989623355db8ba9bedfbf4957733a58, gr\Drawing-net4.8\Text\GraphicsText.vb"
 
     ' Author:
     ' 
@@ -34,22 +34,23 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 149
-    '    Code Lines: 95 (63.76%)
-    ' Comment Lines: 32 (21.48%)
+    '   Total Lines: 152
+    '    Code Lines: 97 (63.82%)
+    ' Comment Lines: 32 (21.05%)
     '    - Xml Docs: 68.75%
     ' 
-    '   Blank Lines: 22 (14.77%)
-    '     File Size: 5.37 KB
+    '   Blank Lines: 23 (15.13%)
+    '     File Size: 5.90 KB
 
 
-    ' Class GraphicsText
+    '     Class GraphicsText
     ' 
-    '     Constructor: (+2 Overloads) Sub New
+    '         Constructor: (+2 Overloads) Sub New
     ' 
-    '     Function: ConvertSize, GetRotatePoint
+    '         Function: ConvertSize, GetRotatePoint
     ' 
-    '     Sub: (+2 Overloads) DrawString, DrawStringInternal
+    '         Sub: (+2 Overloads) DrawString, DrawStringInternal
+    ' 
     ' 
     ' /********************************************************************************/
 

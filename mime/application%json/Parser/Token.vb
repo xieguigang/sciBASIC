@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::22b9e6ee75a16a174f12e515ba170522, mime\application%json\Parser\Token.vb"
+﻿#Region "Microsoft.VisualBasic::a4c4fe8fad8a6d319a21a0198bd96ab6, mime\application%json\Parser\Token.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 59
-    '    Code Lines: 45 (76.27%)
-    ' Comment Lines: 7 (11.86%)
+    '   Total Lines: 65
+    '    Code Lines: 48 (73.85%)
+    ' Comment Lines: 10 (15.38%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 7 (11.86%)
-    '     File Size: 1.78 KB
+    '   Blank Lines: 7 (10.77%)
+    '     File Size: 1.90 KB
 
 
     ' Class Token
@@ -50,7 +50,7 @@
     ' 
     '         [Boolean], [Double], [Integer], [String], Close
     '         Colon, Comment, Delimiter, Invalid, Key
-    '         Open
+    '         NewLine, Open, Serial, WhiteSpace
     ' 
     ' 
     ' 

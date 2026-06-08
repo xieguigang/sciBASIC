@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::508ca2aa9b27fb50c267e5a7baf15262, Microsoft.VisualBasic.Core\src\Drawing\GDI+\Interface.vb"
+﻿#Region "Microsoft.VisualBasic::8f28e3ca9f7b5fac3c541e5484ec8a88, Microsoft.VisualBasic.Core\src\Drawing\GDI+\Interface.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 1874
-    '    Code Lines: 206 (10.99%)
-    ' Comment Lines: 1582 (84.42%)
+    '   Total Lines: 1870
+    '    Code Lines: 203 (10.86%)
+    ' Comment Lines: 1582 (84.60%)
     '    - Xml Docs: 26.49%
     ' 
-    '   Blank Lines: 86 (4.59%)
-    '     File Size: 82.53 KB
+    '   Blank Lines: 85 (4.55%)
+    '     File Size: 82.47 KB
 
 
     '     Class IGraphics

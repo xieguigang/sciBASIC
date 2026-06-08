@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8bc36daf35166d4a143ba3bce1fd05b2, Data_science\Mathematica\Math\Math\Algebra\Vector\Class\SparseVector.vb"
+﻿#Region "Microsoft.VisualBasic::575c56b05d50e7f182d2625113f9f670, Data_science\Mathematica\Math\Math\Algebra\Vector\Class\SparseVector.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 92.00%
     ' 
     '   Blank Lines: 42 (13.86%)
-    '     File Size: 11.34 KB
+    '     File Size: 11.36 KB
 
 
     '     Class SparseVector

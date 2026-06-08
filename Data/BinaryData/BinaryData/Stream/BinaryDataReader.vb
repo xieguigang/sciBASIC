@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1dbb6c066056a85a4d7022f7ef8d1d56, Data\BinaryData\BinaryData\Stream\BinaryDataReader.vb"
+﻿#Region "Microsoft.VisualBasic::16e8c841689bcb006484948defb4fd0a, Data\BinaryData\BinaryData\Stream\BinaryDataReader.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 745
-    '    Code Lines: 372 (49.93%)
-    ' Comment Lines: 297 (39.87%)
+    '   Total Lines: 750
+    '    Code Lines: 376 (50.13%)
+    ' Comment Lines: 297 (39.60%)
     '    - Xml Docs: 89.23%
     ' 
-    '   Blank Lines: 76 (10.20%)
-    '     File Size: 32.78 KB
+    '   Blank Lines: 77 (10.27%)
+    '     File Size: 32.92 KB
 
 
     ' Class BinaryDataReader
@@ -55,9 +55,9 @@
     '               ReadDouble, ReadDoubles, ReadDwordLengthPrefixString, ReadDwordLenString, ReadInt16
     '               ReadInt16s, ReadInt32, ReadInt32s, ReadInt64, ReadInt64s
     '               ReadMultiple, ReadSByte, ReadSBytes, ReadSingle, ReadSingles
-    '               (+5 Overloads) ReadString, ReadUInt16, ReadUInt16s, ReadUInt32, ReadUInt32s
-    '               ReadUInt64, ReadUInt64s, ReadWordLengthPrefixString, ReadZeroTerminatedString, (+2 Overloads) Seek
-    '               (+3 Overloads) TemporarySeek, ToString
+    '               (+5 Overloads) ReadString, ReadStringList, ReadUInt16, ReadUInt16s, ReadUInt32
+    '               ReadUInt32s, ReadUInt64, ReadUInt64s, ReadWordLengthPrefixString, ReadZeroTerminatedString
+    '               (+2 Overloads) Seek, (+3 Overloads) TemporarySeek, ToString
     ' 
     '     Sub: Align, Mark, Reset, TemporarySeek
     ' 

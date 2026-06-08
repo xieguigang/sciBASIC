@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d9e4ad19de992e4b9e16362111f41274, gr\network-visualization\Network.IO.Extensions\IO\Network.vb"
+﻿#Region "Microsoft.VisualBasic::6e29e042106b018d1789486fc0cda235, gr\network-visualization\Network.IO.Extensions\IO\Network.vb"
 
     ' Author:
     ' 
@@ -34,18 +34,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 227
-    '    Code Lines: 142 (62.56%)
-    ' Comment Lines: 54 (23.79%)
-    '    - Xml Docs: 96.30%
+    '   Total Lines: 239
+    '    Code Lines: 142 (59.41%)
+    ' Comment Lines: 66 (27.62%)
+    '    - Xml Docs: 96.97%
     ' 
-    '   Blank Lines: 31 (13.66%)
-    '     File Size: 8.23 KB
+    '   Blank Lines: 31 (12.97%)
+    '     File Size: 8.60 KB
 
 
     '     Class Network
     ' 
-    '         Properties: edges, IsEmpty, meta, nodes
+    '         Properties: edges, is_empty, meta, nodes
     ' 
     '         Constructor: (+1 Overloads) Sub New
     ' 

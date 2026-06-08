@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fda1c38ae53e0b9f9133d16483a1adca, Microsoft.VisualBasic.Core\src\ComponentModel\DataSource\Property\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::40a7258cd312a7a1d0d62667ac0e6412, Microsoft.VisualBasic.Core\src\ComponentModel\DataSource\Property\Extensions.vb"
 
     ' Author:
     ' 
@@ -34,18 +34,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 35
-    '    Code Lines: 27 (77.14%)
-    ' Comment Lines: 0 (0.00%)
-    '    - Xml Docs: 0.00%
+    '   Total Lines: 54
+    '    Code Lines: 37 (68.52%)
+    ' Comment Lines: 8 (14.81%)
+    '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 8 (22.86%)
-    '     File Size: 1.38 KB
+    '   Blank Lines: 9 (16.67%)
+    '     File Size: 2.18 KB
 
 
     '     Module Extensions
     ' 
-    '         Function: ColRenames
+    '         Function: ColRenames, PropertyNames
     ' 
     ' 
     ' /********************************************************************************/

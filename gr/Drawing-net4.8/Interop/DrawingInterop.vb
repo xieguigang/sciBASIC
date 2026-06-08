@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f7b101b261fe8dad0da78b849a84de9a, gr\Drawing-net4.8\Graphics\DrawingInterop.vb"
+﻿#Region "Microsoft.VisualBasic::f7b101b261fe8dad0da78b849a84de9a, gr\Drawing-net4.8\Interop\DrawingInterop.vb"
 
     ' Author:
     ' 

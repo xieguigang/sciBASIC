@@ -1,3 +1,65 @@
+﻿#Region "Microsoft.VisualBasic::46d56b3c166df9607a9b952261c6cebf, Data\MyersDiff\MyersDiff.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 399
+    '    Code Lines: 195 (48.87%)
+    ' Comment Lines: 141 (35.34%)
+    '    - Xml Docs: 35.46%
+    ' 
+    '   Blank Lines: 63 (15.79%)
+    '     File Size: 16.73 KB
+
+
+    ' Class MyersDiff
+    ' 
+    '     Function: Backtrack, BuildDiffItems, Compare, CompareChars, CompareFiles
+    '               ComputeEditPath, ReadFileLines
+    '     Class EditStep
+    ' 
+    '         Properties: NewIndex, OldIndex, Type
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
+    ' 
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
 ' ============================================================================
 ' MyersDiff.vb — 基于 Myers 差异算法的文本比较模块
 ' ============================================================================
@@ -396,4 +458,5 @@ Public Class MyersDiff
     End Function
 
 End Class
+
 

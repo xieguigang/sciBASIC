@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::66fdf6a02058b224ca461f63c8fdcc53, gr\network-visualization\Datavisualization.Network\Graph\Model\Vectors\AbstractVector.vb"
+﻿#Region "Microsoft.VisualBasic::9e4298fd56c70611acbdd497d5f31761, gr\network-visualization\Datavisualization.Network\Graph\Model\Vectors\AbstractVector.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 184
-    '    Code Lines: 118 (64.13%)
-    ' Comment Lines: 40 (21.74%)
+    '   Total Lines: 200
+    '    Code Lines: 132 (66.00%)
+    ' Comment Lines: 40 (20.00%)
     '    - Xml Docs: 0.00%
     ' 
-    '   Blank Lines: 26 (14.13%)
-    '     File Size: 7.01 KB
+    '   Blank Lines: 28 (14.00%)
+    '     File Size: 7.52 KB
 
 
     '     Class AbstractVector
@@ -48,7 +48,8 @@
     '         Properties: isNaN, Point2D, x, y, z
     ' 
     '         Constructor: (+1 Overloads) Sub New
-    '         Function: Equals, GetHashCode, ToString, Vector2D
+    '         Function: Equals, FromVector, GetHashCode, ToArray, ToString
+    '                   Vector2D
     '         Operators: -, (+2 Overloads) *, /, (+2 Overloads) +, <>
     '                    =
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4c5ba42f85d951eacdbbc78735c14f21, mime\application%xml\XmlGeneric\XmlElement.vb"
+﻿#Region "Microsoft.VisualBasic::3eaf111272c8e6739a9601cf7e3726f5, mime\application%xml\XmlGeneric\XmlElement.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 67
-    '    Code Lines: 37 (55.22%)
-    ' Comment Lines: 21 (31.34%)
+    '   Total Lines: 65
+    '    Code Lines: 35 (53.85%)
+    ' Comment Lines: 21 (32.31%)
     '    - Xml Docs: 95.24%
     ' 
-    '   Blank Lines: 9 (13.43%)
-    '     File Size: 2.05 KB
+    '   Blank Lines: 9 (13.85%)
+    '     File Size: 2.07 KB
 
 
     ' Class XmlElement

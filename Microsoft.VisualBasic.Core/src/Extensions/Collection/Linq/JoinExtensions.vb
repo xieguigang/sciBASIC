@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::72e9cf5d3f879cc5c9358db0649f902e, Microsoft.VisualBasic.Core\src\Extensions\Collection\Linq\JoinExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::6963a3e3b4d5ffc8f10aaee381556988, Microsoft.VisualBasic.Core\src\Extensions\Collection\Linq\JoinExtensions.vb"
 
     ' Author:
     ' 
@@ -34,18 +34,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 82
-    '    Code Lines: 49 (59.76%)
-    ' Comment Lines: 24 (29.27%)
+    '   Total Lines: 99
+    '    Code Lines: 64 (64.65%)
+    ' Comment Lines: 24 (24.24%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 9 (10.98%)
-    '     File Size: 3.05 KB
+    '   Blank Lines: 11 (11.11%)
+    '     File Size: 3.62 KB
 
 
     '     Module JoinExtensions
     ' 
-    '         Function: Concatenate, IteratesALL, (+2 Overloads) JoinIterates
+    '         Function: Concatenate, IteratesALL, (+2 Overloads) JoinIterates, JoinMany
     ' 
     ' 
     ' /********************************************************************************/

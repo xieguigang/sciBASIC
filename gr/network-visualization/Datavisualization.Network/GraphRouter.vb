@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bfaca29738c0b80c2e154f118cecd963, gr\network-visualization\Datavisualization.Network\GraphRouter.vb"
+﻿#Region "Microsoft.VisualBasic::0990786a2868b02e1e502b6fe139f25a, gr\network-visualization\Datavisualization.Network\GraphRouter.vb"
 
     ' Author:
     ' 
@@ -34,24 +34,26 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 166
-    '    Code Lines: 117 (70.48%)
-    ' Comment Lines: 23 (13.86%)
+    '   Total Lines: 195
+    '    Code Lines: 139 (71.28%)
+    ' Comment Lines: 23 (11.79%)
     '    - Xml Docs: 43.48%
     ' 
-    '   Blank Lines: 26 (15.66%)
-    '     File Size: 6.73 KB
+    '   Blank Lines: 33 (16.92%)
+    '     File Size: 7.63 KB
 
 
     ' Class GraphRouter
     ' 
     '     Constructor: (+1 Overloads) Sub New
-    '     Function: CastRoute, ConvertToMatrix, (+2 Overloads) FindPath, LoadMatrix
+    '     Function: CastRoute, ConvertToMatrix, (+2 Overloads) FindPath, LoadMatrix, SetParallel
+    '               SetStrict
     '     Class Route
     ' 
     '         Properties: Count, PathwayNodes
     ' 
     '         Constructor: (+1 Overloads) Sub New
+    '         Function: ToString
     ' 
     ' 
     ' 

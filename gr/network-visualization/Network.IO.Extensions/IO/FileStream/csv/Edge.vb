@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9363122e870be28347e0f3de455e1440, gr\network-visualization\Network.IO.Extensions\IO\FileStream\csv\Edge.vb"
+﻿#Region "Microsoft.VisualBasic::47be4b4f670819497a2825c1ec6d63d1, gr\network-visualization\Network.IO.Extensions\IO\FileStream\csv\Edge.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 155
-    '    Code Lines: 108 (69.68%)
-    ' Comment Lines: 28 (18.06%)
+    '   Total Lines: 163
+    '    Code Lines: 115 (70.55%)
+    ' Comment Lines: 28 (17.18%)
     '    - Xml Docs: 92.86%
     ' 
-    '   Blank Lines: 19 (12.26%)
-    '     File Size: 6.25 KB
+    '   Blank Lines: 20 (12.27%)
+    '     File Size: 6.55 KB
 
 
     '     Class NetworkEdge
@@ -48,7 +48,7 @@
     '         Properties: fromNode, interaction, Key, selfLoop, toNode
     '                     value
     ' 
-    '         Constructor: (+3 Overloads) Sub New
+    '         Constructor: (+4 Overloads) Sub New
     '         Function: Contains, Equals, GetConnectedNode, GetNode, IsEqual
     '                   Nodes, ToString
     '         Operators: -, +

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0792e251d133ca3a59141550bbafa5e4, mime\application%xml\XmlGeneric\XmlDocumentParser.vb"
+﻿#Region "Microsoft.VisualBasic::b454c412d96a6d952c8cb83f4127b412, mime\application%xml\XmlGeneric\XmlDocumentParser.vb"
 
     ' Author:
     ' 
@@ -34,12 +34,12 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 61
-    '    Code Lines: 46 (75.41%)
-    ' Comment Lines: 5 (8.20%)
+    '   Total Lines: 60
+    '    Code Lines: 46 (76.67%)
+    ' Comment Lines: 5 (8.33%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 10 (16.39%)
+    '   Blank Lines: 9 (15.00%)
     '     File Size: 2.11 KB
 
 

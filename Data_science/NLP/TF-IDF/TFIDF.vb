@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0e39f56d3591543a5d17fa6ec0eb87af, Data_science\NLP\TF-IDF\TFIDF.vb"
+﻿#Region "Microsoft.VisualBasic::79996874bd9bd541f245d3bb09863dff, Data_science\NLP\TF-IDF\TFIDF.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 191
-    '    Code Lines: 113 (59.16%)
-    ' Comment Lines: 53 (27.75%)
-    '    - Xml Docs: 86.79%
+    '   Total Lines: 197
+    '    Code Lines: 117 (59.39%)
+    ' Comment Lines: 55 (27.92%)
+    '    - Xml Docs: 83.64%
     ' 
-    '   Blank Lines: 25 (13.09%)
-    '     File Size: 6.82 KB
+    '   Blank Lines: 25 (12.69%)
+    '     File Size: 7.15 KB
 
 
     ' Class TFIDF

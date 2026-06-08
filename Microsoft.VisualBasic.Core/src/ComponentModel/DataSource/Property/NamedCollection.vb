@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5fc655e2b13aca5e41dc691b079f3d34, Microsoft.VisualBasic.Core\src\ComponentModel\DataSource\Property\NamedCollection.vb"
+﻿#Region "Microsoft.VisualBasic::0ad15084da6fa6f5ed8ab22e40f85fb9, Microsoft.VisualBasic.Core\src\ComponentModel\DataSource\Property\NamedCollection.vb"
 
     ' Author:
     ' 
@@ -34,20 +34,20 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 232
-    '    Code Lines: 132 (56.90%)
-    ' Comment Lines: 73 (31.47%)
+    '   Total Lines: 236
+    '    Code Lines: 135 (57.20%)
+    ' Comment Lines: 73 (30.93%)
     '    - Xml Docs: 67.12%
     ' 
-    '   Blank Lines: 27 (11.64%)
-    '     File Size: 10.80 KB
+    '   Blank Lines: 28 (11.86%)
+    '     File Size: 10.91 KB
 
 
     '     Structure NamedCollection
     ' 
     '         Properties: description, IsEmpty, Length, name, value
     ' 
-    '         Constructor: (+6 Overloads) Sub New
+    '         Constructor: (+7 Overloads) Sub New
     '         Function: GetEnumerator, GetValues, IEnumerable_GetEnumerator, ToString
     '         Operators: <>, =
     ' 

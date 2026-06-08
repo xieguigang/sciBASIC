@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4052711e7919bbcdcaabeeaefdb0dc39, Microsoft.VisualBasic.Core\src\Extensions\Math\Correlations\Ranking.vb"
+﻿#Region "Microsoft.VisualBasic::496cc66353aeeef1e8a5bd87c37bc0cb, Microsoft.VisualBasic.Core\src\Extensions\Math\Correlations\Ranking.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 337
-    '    Code Lines: 156 (46.29%)
-    ' Comment Lines: 152 (45.10%)
+    '   Total Lines: 341
+    '    Code Lines: 160 (46.92%)
+    ' Comment Lines: 152 (44.57%)
     '    - Xml Docs: 84.21%
     ' 
-    '   Blank Lines: 29 (8.61%)
-    '     File Size: 17.26 KB
+    '   Blank Lines: 29 (8.50%)
+    '     File Size: 17.29 KB
 
 
     '     Module Ranking

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e557c5b147b2c1d699768abf17417d9e, Microsoft.VisualBasic.Core\src\ComponentModel\DataSource\Repository\SearchFramework.vb"
+﻿#Region "Microsoft.VisualBasic::269cce6c4917d85dc33b00461b298761, Microsoft.VisualBasic.Core\src\ComponentModel\DataSource\Repository\SearchFramework.vb"
 
     ' Author:
     ' 
@@ -34,18 +34,28 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 151
-    '    Code Lines: 89 (58.94%)
-    ' Comment Lines: 42 (27.81%)
+    '   Total Lines: 181
+    '    Code Lines: 110 (60.77%)
+    ' Comment Lines: 42 (23.20%)
     '    - Xml Docs: 88.10%
     ' 
-    '   Blank Lines: 20 (13.25%)
-    '     File Size: 6.45 KB
+    '   Blank Lines: 29 (16.02%)
+    '     File Size: 7.15 KB
 
 
     '     Module SearchFramework
     ' 
     '         Function: GetUniqueNames, MakeUniqueNames, MultipleQuery, Query, (+2 Overloads) UniqueNames
+    ' 
+    '     Class MakeUniqueName
+    ' 
+    '         Properties: UniqueIDs
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
+    '         Function: GetUniqueID
+    ' 
+    '         Sub: Clear
     ' 
     ' 
     ' /********************************************************************************/

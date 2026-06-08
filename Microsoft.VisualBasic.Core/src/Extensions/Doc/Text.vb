@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c38d518e1fe686ea16a0c65a8750533e, Microsoft.VisualBasic.Core\src\Extensions\Doc\Text.vb"
+﻿#Region "Microsoft.VisualBasic::8b94c1b90f6d4737193850c63802a44f, Microsoft.VisualBasic.Core\src\Extensions\Doc\Text.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 610
-    '    Code Lines: 363 (59.51%)
-    ' Comment Lines: 179 (29.34%)
+    '   Total Lines: 612
+    '    Code Lines: 364 (59.48%)
+    ' Comment Lines: 179 (29.25%)
     '    - Xml Docs: 88.83%
     ' 
-    '   Blank Lines: 68 (11.15%)
-    '     File Size: 23.52 KB
+    '   Blank Lines: 69 (11.27%)
+    '     File Size: 23.58 KB
 
 
     ' Module TextDoc

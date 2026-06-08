@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::94891ab95f46940f1d391acf7193f4bd, Data_science\Visualization\Plots\PrincipalCurveVisualizer.vb"
+﻿#Region "Microsoft.VisualBasic::7f673cdb0ba6474d3c1c53d54f5c2651, Data_science\Visualization\Plots\PrincipalCurveVisualizer.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 74
-    '    Code Lines: 55 (74.32%)
-    ' Comment Lines: 5 (6.76%)
+    '   Total Lines: 76
+    '    Code Lines: 56 (73.68%)
+    ' Comment Lines: 5 (6.58%)
     '    - Xml Docs: 0.00%
     ' 
-    '   Blank Lines: 14 (18.92%)
-    '     File Size: 2.79 KB
+    '   Blank Lines: 15 (19.74%)
+    '     File Size: 2.86 KB
 
 
     ' Class PrincipalCurveVisualizer

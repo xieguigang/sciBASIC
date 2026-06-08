@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7ee0cfac337bb4acff3fca6991926d2f, gr\Drawing-net4.8\ImageFormat.vb"
+﻿#Region "Microsoft.VisualBasic::7ee0cfac337bb4acff3fca6991926d2f, gr\Drawing-net4.8\FileEncoder\ImageFormat.vb"
 
     ' Author:
     ' 

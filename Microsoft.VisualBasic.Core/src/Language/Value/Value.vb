@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f827c09b0f3b003a0adb8f1f317f5e7c, Microsoft.VisualBasic.Core\src\Language\Value\Value.vb"
+﻿#Region "Microsoft.VisualBasic::5122a29b17a8a68334493a0bf9552d01, Microsoft.VisualBasic.Core\src\Language\Value\Value.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 310
-    '    Code Lines: 162 (52.26%)
-    ' Comment Lines: 110 (35.48%)
-    '    - Xml Docs: 99.09%
+    '   Total Lines: 314
+    '    Code Lines: 162 (51.59%)
+    ' Comment Lines: 114 (36.31%)
+    '    - Xml Docs: 99.12%
     ' 
-    '   Blank Lines: 38 (12.26%)
-    '     File Size: 12.38 KB
+    '   Blank Lines: 38 (12.10%)
+    '     File Size: 12.61 KB
 
 
     '     Class Value

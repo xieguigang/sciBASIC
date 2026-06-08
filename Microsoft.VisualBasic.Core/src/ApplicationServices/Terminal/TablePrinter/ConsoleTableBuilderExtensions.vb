@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9c0eea02e9848848c5a7305e96c7254d, Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\TablePrinter\ConsoleTableBuilderExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::acf47127c63a9d8b71f21961991b0c46, Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\TablePrinter\ConsoleTableBuilderExtensions.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 92.86%
     ' 
     '   Blank Lines: 109 (16.57%)
-    '     File Size: 29.59 KB
+    '     File Size: 29.63 KB
 
 
     '     Module ConsoleTableBuilderExtensions

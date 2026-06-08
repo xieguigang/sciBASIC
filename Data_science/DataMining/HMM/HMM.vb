@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::58af541c831b9f7f8a6f6e72d15f9cbc, Data_science\DataMining\HMM\HMM.vb"
+﻿#Region "Microsoft.VisualBasic::7012be7e70de9668055d6df9b51410f3, Data_science\DataMining\HMM\HMM.vb"
 
     ' Author:
     ' 
@@ -34,20 +34,20 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 62
-    '    Code Lines: 46 (74.19%)
-    ' Comment Lines: 5 (8.06%)
+    '   Total Lines: 66
+    '    Code Lines: 49 (74.24%)
+    ' Comment Lines: 5 (7.58%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 11 (17.74%)
-    '     File Size: 2.46 KB
+    '   Blank Lines: 12 (18.18%)
+    '     File Size: 2.57 KB
 
 
     ' Class HMM
     ' 
     '     Constructor: (+1 Overloads) Sub New
-    '     Function: backwardAlgorithm, baumWelchAlgorithm, bayesTheorem, forwardAlgorithm, GetTransMatrix
-    '               viterbiAlgorithm
+    '     Function: backwardAlgorithm, baumWelchAlgorithm, bayesTheorem, forwardAlgorithm, GetEmissMatrix
+    '               GetTransMatrix, viterbiAlgorithm
     ' 
     ' /********************************************************************************/
 

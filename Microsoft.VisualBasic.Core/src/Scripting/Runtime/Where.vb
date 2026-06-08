@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fe0e195744016013d6bc30ab975104cc, Microsoft.VisualBasic.Core\src\Scripting\Runtime\Where.vb"
+﻿#Region "Microsoft.VisualBasic::0597a8848b1b4569a987fe811be0810f, Microsoft.VisualBasic.Core\src\Scripting\Runtime\Where.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 121
-    '    Code Lines: 71 (58.68%)
-    ' Comment Lines: 34 (28.10%)
+    '   Total Lines: 116
+    '    Code Lines: 66 (56.90%)
+    ' Comment Lines: 34 (29.31%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 16 (13.22%)
-    '     File Size: 3.92 KB
+    '   Blank Lines: 16 (13.79%)
+    '     File Size: 3.86 KB
 
 
     '     Enum Logics
@@ -54,7 +54,7 @@
     ' 
     '     Module [Where]
     ' 
-    '         Function: __and, __andAlso, __or, __orElse, BuildAll
+    '         Function: BuildAll, LogicsAnd, LogicsAndAlso, LogicsOr, LogicsOrElse
     ' 
     ' 
     ' /********************************************************************************/

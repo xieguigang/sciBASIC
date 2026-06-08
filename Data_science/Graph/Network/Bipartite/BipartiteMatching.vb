@@ -1,70 +1,59 @@
-﻿#Region "Microsoft.VisualBasic::5d596e2edf7ff708f20685b67e546bd8, Data_science\Graph\Network\Bipartite\BipartiteMatching.vb"
+﻿#Region "Microsoft.VisualBasic::1b10257ce8bb9d677e84f9ede1236d28, Data_science\Graph\Network\Bipartite\BipartiteMatching.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 263
-'    Code Lines: 154 (58.56%)
-' Comment Lines: 66 (25.10%)
-'    - Xml Docs: 84.85%
-' 
-'   Blank Lines: 43 (16.35%)
-'     File Size: 10.58 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-' Class BipartiteMatching
-' 
-'     Properties: flow, matches
-' 
-'     Constructor: (+1 Overloads) Sub New
-' 
-'     Function: CreateMatches, existsAugmentingPath, fordFulkersonMaxFlow
-' 
-'     Sub: addEdge, connectSinkToRightHalf, connectSourceToLeftHalf, depthFirstSearch
-'     Class Edge
-' 
-'         Properties: Capacity, Flow, fromVertex, toVertex
-' 
-'         Constructor: (+1 Overloads) Sub New
-' 
-'         Function: getOtherEndNode, residualCapacityTo, ToString
-' 
-'         Sub: increaseFlowTo
-' 
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 195
+    '    Code Lines: 110 (56.41%)
+    ' Comment Lines: 51 (26.15%)
+    '    - Xml Docs: 80.39%
+    ' 
+    '   Blank Lines: 34 (17.44%)
+    '     File Size: 8.28 KB
+
+
+    ' Class BipartiteMatching
+    ' 
+    '     Properties: flow, matches
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    ' 
+    '     Function: CreateMatches, existsAugmentingPath, fordFulkersonMaxFlow
+    ' 
+    '     Sub: addEdge, connectSinkToRightHalf, connectSourceToLeftHalf, depthFirstSearch
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

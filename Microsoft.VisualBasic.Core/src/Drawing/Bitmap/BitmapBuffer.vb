@@ -1,68 +1,68 @@
-﻿#Region "Microsoft.VisualBasic::bd738ba1b6fa13988cc7df87040ecff2, Microsoft.VisualBasic.Core\src\Drawing\Bitmap\BitmapBuffer.vb"
+﻿#Region "Microsoft.VisualBasic::ba98734d421968d9917e82902c01272d, Microsoft.VisualBasic.Core\src\Drawing\Bitmap\BitmapBuffer.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 912
-'    Code Lines: 535 (58.66%)
-' Comment Lines: 231 (25.33%)
-'    - Xml Docs: 77.49%
-' 
-'   Blank Lines: 146 (16.01%)
-'     File Size: 31.19 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Class BitmapBuffer
-' 
-'         Properties: Height, Size, SortBins, Stride, UInt32Black1
-'                     UInt32Black2, UInt32White, Width
-' 
-'         Constructor: (+8 Overloads) Sub New
-' 
-'         Function: A, B, (+2 Overloads) FromBitmap, FromImage, G
-'                   GetAlpha, GetARGB, GetARGBStream, GetBlue, GetColor
-'                   GetEnumerator, GetGreen, GetHandleObject, GetImage, (+2 Overloads) GetIndex
-'                   (+3 Overloads) GetPixel, GetPixelChannels, GetPixelsAll, GetRed, OutOfRange
-'                   R, ToPixel2D, ToString, (+2 Overloads) Unpack, White
-' 
-'         Sub: Dispose, (+2 Overloads) Save, SetAlpha, SetBlue, SetGreen
-'              (+4 Overloads) SetPixel, SetRed, WriteARGBStream
-' 
-'         Operators: +
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 831
+    '    Code Lines: 471 (56.68%)
+    ' Comment Lines: 227 (27.32%)
+    '    - Xml Docs: 77.53%
+    ' 
+    '   Blank Lines: 133 (16.00%)
+    '     File Size: 28.67 KB
+
+
+    '     Class BitmapBuffer
+    ' 
+    '         Properties: Height, Size, SortBins, Stride, UInt32Black1
+    '                     UInt32Black2, UInt32White, Width
+    ' 
+    '         Constructor: (+7 Overloads) Sub New
+    ' 
+    '         Function: A, B, FromBitmap, FromImage, G
+    '                   GetAlpha, GetARGB, GetARGBStream, GetBlue, GetColor
+    '                   GetEnumerator, GetGreen, GetHandleObject, GetImage, (+2 Overloads) GetIndex
+    '                   (+3 Overloads) GetPixel, GetPixelChannels, GetPixelsAll, GetRed, OutOfRange
+    '                   R, ToPixel2D, ToString, (+2 Overloads) Unpack, White
+    ' 
+    '         Sub: Dispose, (+2 Overloads) Save, SetAlpha, SetBlue, SetGreen
+    '              (+4 Overloads) SetPixel, SetRed, WriteARGBStream
+    ' 
+    '         Operators: +
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

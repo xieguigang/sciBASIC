@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::55d75e49b20380e88221800d138afe0b, gr\Drawing-net4.8\Effects.vb"
+﻿#Region "Microsoft.VisualBasic::55d75e49b20380e88221800d138afe0b, gr\Drawing-net4.8\Filters\Effects.vb"
 
     ' Author:
     ' 

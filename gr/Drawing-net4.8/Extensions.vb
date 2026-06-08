@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7e79fa1beb51174b3e0e1693d7bbebfb, gr\Drawing-net4.8\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::f3d5bf73ca87623510d062eb32d8b9f4, gr\Drawing-net4.8\Extensions.vb"
 
     ' Author:
     ' 
@@ -34,19 +34,19 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 274
-    '    Code Lines: 187 (68.25%)
-    ' Comment Lines: 52 (18.98%)
-    '    - Xml Docs: 84.62%
+    '   Total Lines: 287
+    '    Code Lines: 189 (65.85%)
+    ' Comment Lines: 64 (22.30%)
+    '    - Xml Docs: 92.19%
     ' 
-    '   Blank Lines: 35 (12.77%)
-    '     File Size: 10.28 KB
+    '   Blank Lines: 34 (11.85%)
+    '     File Size: 11.07 KB
 
 
     ' Module Extensions
     ' 
     '     Function: CanvasCreateFromImageFile, CreateBuffer, CreateCanvas2D, (+4 Overloads) CreateGDIDevice, CreateObject
-    '               (+2 Overloads) GetIcon, GetStringPath, SaveIcon
+    '               (+2 Overloads) GetIcon, GetStringPath, LoadImage, SaveIcon
     ' 
     ' /********************************************************************************/
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::29ed5560c8dc8e26a9b7c86be62c4d5d, Microsoft.VisualBasic.Core\src\Drawing\netcore8.0\Font.vb"
+﻿#Region "Microsoft.VisualBasic::f44f256ee667076b9d71d5812a817b59, Microsoft.VisualBasic.Core\src\Drawing\netcore8.0\Font.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 40
-    '    Code Lines: 32 (80.00%)
-    ' Comment Lines: 0 (0.00%)
-    '    - Xml Docs: 0.00%
+    '   Total Lines: 46
+    '    Code Lines: 32 (69.57%)
+    ' Comment Lines: 6 (13.04%)
+    '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 8 (20.00%)
-    '     File Size: 1.07 KB
+    '   Blank Lines: 8 (17.39%)
+    '     File Size: 1.21 KB
 
 
     '     Class Font

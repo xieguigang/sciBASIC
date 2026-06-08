@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::706d006b1529215048ca5ff41870f7f3, Data_science\Mathematica\Math\ANOVA\MultivariateAnalysis\StatisticsMathematics.vb"
+﻿#Region "Microsoft.VisualBasic::12dd8243b146e4a31f1603a396175c62, Data_science\Mathematica\Math\ANOVA\MultivariateAnalysis\StatisticsMathematics.vb"
 
     ' Author:
     ' 
@@ -34,12 +34,12 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 136
-    '    Code Lines: 111 (81.62%)
+    '   Total Lines: 135
+    '    Code Lines: 111 (82.22%)
     ' Comment Lines: 0 (0.00%)
     '    - Xml Docs: 0.00%
     ' 
-    '   Blank Lines: 25 (18.38%)
+    '   Blank Lines: 24 (17.78%)
     '     File Size: 4.50 KB
 
 

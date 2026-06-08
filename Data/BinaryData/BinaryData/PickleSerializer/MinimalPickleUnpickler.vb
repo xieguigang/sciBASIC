@@ -1,4 +1,67 @@
-﻿Imports System.Globalization
+﻿#Region "Microsoft.VisualBasic::75bfc1b2eccad74248bba0e4c901fbd1, Data\BinaryData\BinaryData\PickleSerializer\MinimalPickleUnpickler.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 965
+    '    Code Lines: 604 (62.59%)
+    ' Comment Lines: 239 (24.77%)
+    '    - Xml Docs: 32.22%
+    ' 
+    '   Blank Lines: 122 (12.64%)
+    '     File Size: 48.96 KB
+
+
+    '     Class MinimalPickleUnpickler
+    ' 
+    '         Function: ConstructPythonObject, DecodeLong, EscapeDecode, ExtractArgs, IsOctalDigit
+    '                   NewObjf, PopToMark, RawUnicodeEscapeDecode, ReadLine, ReduceCallable
+    '                   Unpickle, UnpickleFromBytes, UnpickleFromStream
+    ' 
+    '         Sub: BuildObject
+    '         Class MarkObject
+    ' 
+    ' 
+    ' 
+    ' 
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+Imports System.Globalization
 Imports System.IO
 Imports System.Text
 

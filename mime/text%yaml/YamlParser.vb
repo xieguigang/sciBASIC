@@ -1,3 +1,64 @@
+﻿#Region "Microsoft.VisualBasic::b1c8fe8741ffbf288b5b5f6f169b92e4, mime\text%yaml\YamlParser.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 1280
+    '    Code Lines: 826 (64.53%)
+    ' Comment Lines: 280 (21.88%)
+    '    - Xml Docs: 37.14%
+    ' 
+    '   Blank Lines: 174 (13.59%)
+    '     File Size: 51.15 KB
+
+
+    ' Class YamlParser
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    ' 
+    '     Function: CollectQuotedString, CreateScalarValue, FinalizeBlockScalar, FindMappingColon, IsQuotedStringClosed
+    '               NormalizeMultiLineQuotedString, Parse, ParseBlockScalarValue, ParseFile, ParseFlowMapping
+    '               ParseFlowSequence, ParseMapping, ParseSequence, ParseValue, PreProcess
+    '               SplitFlowItems, StripComment, TryParseInteger, UnescapeDoubleQuotedString, UnquoteString
+    ' 
+    '     Sub: Reset
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
 Imports System.Text
 Imports System.Text.RegularExpressions
 Imports Microsoft.VisualBasic.MIME.application.json.Javascript
@@ -1276,5 +1337,6 @@ Public Class YamlParser
 #End Region
 
 End Class
+
 
 

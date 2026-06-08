@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4fd03054802117f298b88aca2fa68ac4, Microsoft.VisualBasic.Core\src\Extensions\Collection\Linq\Iterator.vb"
+﻿#Region "Microsoft.VisualBasic::79f8389f76c3b0a6e21e84663c5ba52f, Microsoft.VisualBasic.Core\src\Extensions\Collection\Linq\Iterator.vb"
 
     ' Author:
     ' 
@@ -34,19 +34,19 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 145
-    '    Code Lines: 94 (64.83%)
-    ' Comment Lines: 33 (22.76%)
+    '   Total Lines: 169
+    '    Code Lines: 116 (68.64%)
+    ' Comment Lines: 33 (19.53%)
     '    - Xml Docs: 87.88%
     ' 
-    '   Blank Lines: 18 (12.41%)
-    '     File Size: 5.63 KB
+    '   Blank Lines: 20 (11.83%)
+    '     File Size: 6.54 KB
 
 
     '     Module IteratorExtensions
     ' 
-    '         Function: [Next], (+2 Overloads) Indices, Ordinals, Previous, (+2 Overloads) SeqIterator
-    '                   (+2 Overloads) SeqTuple, Tuples, ValueArray
+    '         Function: [Next], (+2 Overloads) c, (+2 Overloads) Indices, Ordinals, Previous
+    '                   (+2 Overloads) SeqIterator, (+2 Overloads) SeqTuple, Tuples, ValueArray
     ' 
     ' 
     ' /********************************************************************************/

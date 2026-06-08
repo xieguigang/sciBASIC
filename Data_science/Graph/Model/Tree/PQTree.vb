@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f451c91ff58d9d443ce88e8a245d3bda, Data_science\Graph\PQTree.vb"
+﻿#Region "Microsoft.VisualBasic::f451c91ff58d9d443ce88e8a245d3bda, Data_science\Graph\Model\Tree\PQTree.vb"
 
     ' Author:
     ' 

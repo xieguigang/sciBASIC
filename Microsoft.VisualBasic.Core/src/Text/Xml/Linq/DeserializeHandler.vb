@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3a7853c18fc37ddfc0bf3c2770fdd2ce, Microsoft.VisualBasic.Core\src\Text\Xml\Linq\DeserializeHandler.vb"
+﻿#Region "Microsoft.VisualBasic::c0ed72925d5db563cb8b24e70900c401, Microsoft.VisualBasic.Core\src\Text\Xml\Linq\DeserializeHandler.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 81
-    '    Code Lines: 43 (53.09%)
-    ' Comment Lines: 24 (29.63%)
-    '    - Xml Docs: 54.17%
+    '   Total Lines: 84
+    '    Code Lines: 44 (52.38%)
+    ' Comment Lines: 25 (29.76%)
+    '    - Xml Docs: 52.00%
     ' 
-    '   Blank Lines: 14 (17.28%)
-    '     File Size: 3.30 KB
+    '   Blank Lines: 15 (17.86%)
+    '     File Size: 3.50 KB
 
 
     '     Class DeserializeHandler

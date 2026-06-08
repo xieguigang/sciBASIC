@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::37c42981c3c2a11778e5d9a66873d374, gr\Microsoft.VisualBasic.Imaging\Drawing3D\Point3D.vb"
+﻿#Region "Microsoft.VisualBasic::a17e6774e02648da5b938e6735a60b74, gr\Microsoft.VisualBasic.Imaging\Drawing3D\Point3D.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 286
-    '    Code Lines: 183 (63.99%)
-    ' Comment Lines: 54 (18.88%)
-    '    - Xml Docs: 85.19%
+    '   Total Lines: 297
+    '    Code Lines: 188 (63.30%)
+    ' Comment Lines: 59 (19.87%)
+    '    - Xml Docs: 77.97%
     ' 
-    '   Blank Lines: 49 (17.13%)
-    '     File Size: 11.17 KB
+    '   Blank Lines: 50 (16.84%)
+    '     File Size: 11.87 KB
 
 
     '     Structure Point3D

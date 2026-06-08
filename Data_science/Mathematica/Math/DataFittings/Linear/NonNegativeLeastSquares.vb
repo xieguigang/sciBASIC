@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1e4c41a6620b094740fe865ca39c67c5, Data_science\Mathematica\Math\DataFittings\Linear\NonNegativeLeastSquares.vb"
+﻿#Region "Microsoft.VisualBasic::63e5ae9846aafe418ede3c914756ee4f, Data_science\Mathematica\Math\DataFittings\Linear\NonNegativeLeastSquares.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 242
-    '    Code Lines: 162 (66.94%)
-    ' Comment Lines: 44 (18.18%)
+    '   Total Lines: 243
+    '    Code Lines: 162 (66.67%)
+    ' Comment Lines: 44 (18.11%)
     '    - Xml Docs: 45.45%
     ' 
-    '   Blank Lines: 36 (14.88%)
-    '     File Size: 8.98 KB
+    '   Blank Lines: 37 (15.23%)
+    '     File Size: 8.99 KB
 
 
     ' Module NonNegativeLeastSquares

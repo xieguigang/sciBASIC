@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a79041c1cea0abcf4eac0a1f23ebb02b, mime\application%rdf+xml\RDFProperty.vb"
+﻿#Region "Microsoft.VisualBasic::d5646f9a4fb71a75df3a9d22595c716c, mime\application%rdf+xml\RDFProperty.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 90.32%
     ' 
     '   Blank Lines: 24 (16.00%)
-    '     File Size: 4.47 KB
+    '     File Size: 4.49 KB
 
 
     ' Class RDFProperty

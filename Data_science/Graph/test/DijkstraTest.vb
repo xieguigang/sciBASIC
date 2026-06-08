@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1287dade6eda2b08295697196c1c76a0, Data_science\Graph\test\DijkstraTest.vb"
+﻿#Region "Microsoft.VisualBasic::ad5da6dfca302a4aafbfc6682314a51f, Data_science\Graph\test\DijkstraTest.vb"
 
     ' Author:
     ' 
@@ -40,12 +40,12 @@
     '    - Xml Docs: 0.00%
     ' 
     '   Blank Lines: 7 (21.21%)
-    '     File Size: 988 B
+    '     File Size: 989 B
 
 
     ' Module DijkstraTest
     ' 
-    '     Sub: Main
+    '     Sub: Main1
     ' 
     ' /********************************************************************************/
 

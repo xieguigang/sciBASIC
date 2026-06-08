@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::000b0c03751a065618cb26309dcec310, Microsoft.VisualBasic.Core\src\ApplicationServices\Debugger\Logging\LogFile\LogFile.vb"
+﻿#Region "Microsoft.VisualBasic::2fd24385a51654a06c876964a7605c77, Microsoft.VisualBasic.Core\src\ApplicationServices\Debugger\Logging\LogFile\LogFile.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 283
-    '    Code Lines: 178 (62.90%)
-    ' Comment Lines: 60 (21.20%)
+    '   Total Lines: 285
+    '    Code Lines: 179 (62.81%)
+    ' Comment Lines: 60 (21.05%)
     '    - Xml Docs: 71.67%
     ' 
-    '   Blank Lines: 45 (15.90%)
-    '     File Size: 11.68 KB
+    '   Blank Lines: 46 (16.14%)
+    '     File Size: 11.84 KB
 
 
     '     Class LogFile
@@ -49,7 +49,7 @@
     ' 
     '         Constructor: (+1 Overloads) Sub New
     ' 
-    '         Function: openFile, SaveLog, SystemInfo, ToString
+    '         Function: Open, openFile, SaveLog, SystemInfo, ToString
     ' 
     '         Sub: Debug, (+2 Overloads) Dispose, info, (+2 Overloads) log, (+2 Overloads) LogException
     '              Save, (+2 Overloads) Trace, (+4 Overloads) WriteLine

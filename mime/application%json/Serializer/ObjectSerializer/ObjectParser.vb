@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::77fea387eebfabda8cf5fe11a3bf6021, mime\application%json\Serializer\ObjectSerializer\ObjectParser.vb"
+﻿#Region "Microsoft.VisualBasic::4ab9ab608e3f8859d386fcc1cd3acc6d, mime\application%json\Serializer\ObjectSerializer\ObjectParser.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 181
-    '    Code Lines: 135 (74.59%)
-    ' Comment Lines: 14 (7.73%)
-    '    - Xml Docs: 42.86%
+    '   Total Lines: 214
+    '    Code Lines: 151 (70.56%)
+    ' Comment Lines: 27 (12.62%)
+    '    - Xml Docs: 62.96%
     ' 
-    '   Blank Lines: 32 (17.68%)
-    '     File Size: 7.18 KB
+    '   Blank Lines: 36 (16.82%)
+    '     File Size: 8.49 KB
 
 
     ' Module ObjectParser

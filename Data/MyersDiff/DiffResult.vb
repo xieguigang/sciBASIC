@@ -1,4 +1,60 @@
-﻿
+﻿#Region "Microsoft.VisualBasic::58d7075b7a4d865220169476e4f13b17, Data\MyersDiff\DiffResult.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 249
+    '    Code Lines: 169 (67.87%)
+    ' Comment Lines: 43 (17.27%)
+    '    - Xml Docs: 62.79%
+    ' 
+    '   Blank Lines: 37 (14.86%)
+    '     File Size: 9.84 KB
+
+
+    ' Class DiffResult
+    ' 
+    '     Properties: DeleteCount, EqualCount, InsertCount, Items, NewCount
+    '                 OldCount, Similarity
+    ' 
+    '     Function: BuildDiffBlocks, ToSideBySide, ToSummary, ToUnifiedDiff, TruncatePad
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+
 
 ' -----------------------------------------------------------------------
 ' 差异结果：封装完整的比较结果
@@ -247,3 +303,4 @@ Public Class DiffResult
         End If
     End Function
 End Class
+

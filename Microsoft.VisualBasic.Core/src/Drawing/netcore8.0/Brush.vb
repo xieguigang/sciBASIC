@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f19bf28ea4facdaba50cf302e5d293a4, Microsoft.VisualBasic.Core\src\Drawing\netcore8.0\Brush.vb"
+﻿#Region "Microsoft.VisualBasic::01e7d9fd11d65c317dd7af58bc99493a, Microsoft.VisualBasic.Core\src\Drawing\netcore8.0\Brush.vb"
 
     ' Author:
     ' 
@@ -34,16 +34,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 182
-    '    Code Lines: 141 (77.47%)
-    ' Comment Lines: 10 (5.49%)
+    '   Total Lines: 190
+    '    Code Lines: 148 (77.89%)
+    ' Comment Lines: 10 (5.26%)
     '    - Xml Docs: 0.00%
     ' 
-    '   Blank Lines: 31 (17.03%)
-    '     File Size: 5.71 KB
+    '   Blank Lines: 32 (16.84%)
+    '     File Size: 5.97 KB
 
 
     '     Class Brush
+    ' 
+    '         Function: SolidColor
     ' 
     '         Sub: (+2 Overloads) Dispose
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7259ea32fe5b455da300874f169c3e56, Microsoft.VisualBasic.Core\src\Language\Linq\List.vb"
+﻿#Region "Microsoft.VisualBasic::8d7d653b293aaef6a32d15b5d4493cb6, Microsoft.VisualBasic.Core\src\Language\Linq\List.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 89.37%
     ' 
     '   Blank Lines: 64 (9.34%)
-    '     File Size: 26.37 KB
+    '     File Size: 26.39 KB
 
 
     '     Class List

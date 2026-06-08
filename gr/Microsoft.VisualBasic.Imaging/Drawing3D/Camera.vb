@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f0ab42f8169e83657048a4f40eebf61a, gr\Microsoft.VisualBasic.Imaging\Drawing3D\Camera.vb"
+﻿#Region "Microsoft.VisualBasic::9d5040d3eb82c21b15cf2b5c8f661a6f, gr\Microsoft.VisualBasic.Imaging\Drawing3D\Camera.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 197
-    '    Code Lines: 141 (71.57%)
-    ' Comment Lines: 19 (9.64%)
+    '   Total Lines: 196
+    '    Code Lines: 140 (71.43%)
+    ' Comment Lines: 19 (9.69%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 37 (18.78%)
-    '     File Size: 6.81 KB
+    '   Blank Lines: 37 (18.88%)
+    '     File Size: 6.77 KB
 
 
     '     Class Camera

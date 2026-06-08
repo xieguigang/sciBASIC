@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::120905f43bfab3b27a84066975bd667e, Microsoft.VisualBasic.Core\src\Extensions\IO\Path\Directory.vb"
+﻿#Region "Microsoft.VisualBasic::2ae21c3f65c9600b495d371babdef461, Microsoft.VisualBasic.Core\src\Extensions\IO\Path\Directory.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 301
-    '    Code Lines: 160 (53.16%)
-    ' Comment Lines: 101 (33.55%)
+    '   Total Lines: 302
+    '    Code Lines: 161 (53.31%)
+    ' Comment Lines: 101 (33.44%)
     '    - Xml Docs: 80.20%
     ' 
-    '   Blank Lines: 40 (13.29%)
-    '     File Size: 12.50 KB
+    '   Blank Lines: 40 (13.25%)
+    '     File Size: 12.58 KB
 
 
     '     Class Directory

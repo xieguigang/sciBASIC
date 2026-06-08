@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::495b80f65874bb50e35415f22ee9831e, mime\application%json\Serializer\JSONSerializerOptions.vb"
+﻿#Region "Microsoft.VisualBasic::2fd187b869aeb4db7d7cc7c669e06c46, mime\application%json\Serializer\JSONSerializerOptions.vb"
 
     ' Author:
     ' 
@@ -34,19 +34,19 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 38
-    '    Code Lines: 20 (52.63%)
-    ' Comment Lines: 12 (31.58%)
+    '   Total Lines: 39
+    '    Code Lines: 21 (53.85%)
+    ' Comment Lines: 12 (30.77%)
     '    - Xml Docs: 91.67%
     ' 
-    '   Blank Lines: 6 (15.79%)
-    '     File Size: 1.22 KB
+    '   Blank Lines: 6 (15.38%)
+    '     File Size: 1.27 KB
 
 
     ' Class JSONSerializerOptions
     ' 
-    '     Properties: comment, digest, enumToString, indent, indent_width
-    '                 maskReadonly, unicodeEscape, unixTimestamp
+    '     Properties: comment, custom_name, digest, enumToString, indent
+    '                 indent_width, maskReadonly, unicodeEscape, unixTimestamp
     ' 
     '     Function: createUniqueKey, offsets
     ' 

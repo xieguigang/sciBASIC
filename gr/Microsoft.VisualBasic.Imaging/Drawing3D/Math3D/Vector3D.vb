@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::333db1696fff70faa1e9f73f66b01303, gr\Microsoft.VisualBasic.Imaging\Drawing3D\Math3D\Vector3D.vb"
+﻿#Region "Microsoft.VisualBasic::5dccd2eedc417e690eea1da91f28e17a, gr\Microsoft.VisualBasic.Imaging\Drawing3D\Math3D\Vector3D.vb"
 
     ' Author:
     ' 
@@ -34,16 +34,16 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 158
-    '    Code Lines: 111 (70.25%)
-    ' Comment Lines: 20 (12.66%)
+    '   Total Lines: 154
+    '    Code Lines: 107 (69.48%)
+    ' Comment Lines: 20 (12.99%)
     '    - Xml Docs: 95.00%
     ' 
-    '   Blank Lines: 27 (17.09%)
-    '     File Size: 5.95 KB
+    '   Blank Lines: 27 (17.53%)
+    '     File Size: 5.85 KB
 
 
-    '     Structure Vector3D
+    '     Class Vector3D
     ' 
     '         Constructor: (+2 Overloads) Sub New
     '         Function: GetEnumerator, IEnumerable_GetEnumerator, PointXY, Project, RotateX

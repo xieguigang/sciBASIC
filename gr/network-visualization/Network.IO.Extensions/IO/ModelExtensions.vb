@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::70b1269421370e9203442d198d0529e4, gr\network-visualization\Network.IO.Extensions\IO\ModelExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::efc091637eb7c5f33e1188064158f86c, gr\network-visualization\Network.IO.Extensions\IO\ModelExtensions.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 201
-    '    Code Lines: 130 (64.68%)
-    ' Comment Lines: 43 (21.39%)
+    '   Total Lines: 200
+    '    Code Lines: 129 (64.50%)
+    ' Comment Lines: 43 (21.50%)
     '    - Xml Docs: 93.02%
     ' 
-    '   Blank Lines: 28 (13.93%)
-    '     File Size: 8.21 KB
+    '   Blank Lines: 28 (14.00%)
+    '     File Size: 8.15 KB
 
 
     '     Module GraphAPI
