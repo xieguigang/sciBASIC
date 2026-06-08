@@ -130,7 +130,7 @@ Namespace Driver
             Call DriverLoad.Register(New RasterInterop, Drivers.GDI)
             Call DriverLoad.Register(New SvgInterop, Drivers.SVG)
             Call DriverLoad.Register(Function(text As String, font As Font)
-                                         Return gfx.MeasureString(text, New System.Drawing.Font(font.Name, font.Size, font.Style))
+                                         Return gfx.MeasureString(text, New System.Drawing.Font(font.Name, font.Size, font.Style.CastFontStyle))
                                      End Function)
         End Sub
 

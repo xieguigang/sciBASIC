@@ -56,6 +56,8 @@ Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Driver
+Imports Microsoft.VisualBasic.ApplicationServices.Terminal.TablePrinter
+
 
 #If NET48 Then
 Imports Image = System.Drawing.Image
@@ -65,7 +67,7 @@ Imports Image = Microsoft.VisualBasic.Imaging.Image
 Imports Bitmap = Microsoft.VisualBasic.Imaging.Bitmap
 #End If
 
-Public Module GdiInterop
+Public Module GDIPlusInterop
 
     <Extension>
     Public Function CTypeGdiImage(image As Image) As System.Drawing.Image
@@ -121,5 +123,19 @@ Public Module GdiInterop
             Return Microsoft.VisualBasic.Imaging.Bitmap.FromStream(ms)
         End Using
 #End If
+    End Function
+
+    <Extension>
+    Public Function CastFontStyle(style As Microsoft.VisualBasic.Imaging.FontStyle) As System.Drawing.FontStyle
+        Select Case style
+            Case Microsoft.VisualBasic.Imaging.FontStyle.Regular : Return System.Drawing.FontStyle.Regular
+            Case Microsoft.VisualBasic.Imaging.FontStyle.Bold : Return System.Drawing.FontStyle.Bold
+            Case Microsoft.VisualBasic.Imaging.FontStyle.Italic : Return System.Drawing.FontStyle.Italic
+            Case Microsoft.VisualBasic.Imaging.FontStyle.Underline : Return System.Drawing.FontStyle.Underline
+            Case Microsoft.VisualBasic.Imaging.FontStyle.Strikeout : Return System.Drawing.FontStyle.Strikeout
+
+            Case Else
+                Throw New NotImplementedException
+        End Select
     End Function
 End Module
