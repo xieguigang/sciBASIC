@@ -1,6 +1,7 @@
 ﻿Imports System.Drawing
 Imports System.Drawing.Imaging
 Imports Microsoft.VisualBasic.Imaging
+Imports std = System.Math
 
 Public Class BitmapBuffer : Inherits BitmapImage.BitmapBuffer
 
@@ -40,7 +41,7 @@ Public Class BitmapBuffer : Inherits BitmapImage.BitmapBuffer
     ''' <param name="curBitmap"></param>
     ''' <param name="mode"></param>
     ''' <returns></returns>
-    Public Overloads Shared Function FromBitmap(curBitmap As Bitmap, mode As ImageLockMode) As BitmapBuffer
+    Public Overloads Shared Function FromBitmap(curBitmap As System.Drawing.Bitmap, mode As ImageLockMode) As BitmapBuffer
         ' Lock the bitmap's bits.  
         Dim rect As New Rectangle(0, 0, curBitmap.Width, curBitmap.Height)
         Dim bmpData As BitmapData = curBitmap.LockBits(
