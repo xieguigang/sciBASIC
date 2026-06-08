@@ -119,13 +119,13 @@ Namespace Driver
             Call DriverLoad.Register(New PostScriptInterop, Drivers.PostScript)
         End Sub
 
-#If NET48 Then
+#If WINDOWS Then
 
         ''' <summary>
         ''' register the default System.Drawing.Common graphics driver for .net 4.8 runtime
         ''' </summary>
         Public Sub Register()
-            Static gfx As Graphics = Graphics.FromImage(New Bitmap(10, 10))
+            Static gfx As System.Drawing.Graphics = System.Drawing.Graphics.FromImage(New Bitmap(10, 10))
 
             Call DriverLoad.Register(New RasterInterop, Drivers.GDI)
             Call DriverLoad.Register(New SvgInterop, Drivers.SVG)
