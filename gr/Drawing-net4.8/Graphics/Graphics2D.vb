@@ -1,65 +1,65 @@
 ﻿#Region "Microsoft.VisualBasic::b8177704f9f77473a6cc9aa1aface2c8, gr\Drawing-net4.8\Graphics\Graphics2D.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 261
-    '    Code Lines: 171 (65.52%)
-    ' Comment Lines: 54 (20.69%)
-    '    - Xml Docs: 92.59%
-    ' 
-    '   Blank Lines: 36 (13.79%)
-    '     File Size: 9.08 KB
+' Summaries:
 
 
-    ' Class Graphics2D
-    ' 
-    '     Properties: Center, Driver, (+2 Overloads) ImageResource, Size
-    ' 
-    '     Constructor: (+5 Overloads) Sub New
-    ' 
-    '     Function: (+2 Overloads) CreateDevice, CreateObject, GetImageResource, Open, (+2 Overloads) Save
-    '               ToString
-    ' 
-    '     Sub: DrawCircle, DrawString, innerSet, saveFile
-    '     Structure Context
-    ' 
-    '         Function: Create
-    ' 
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 261
+'    Code Lines: 171 (65.52%)
+' Comment Lines: 54 (20.69%)
+'    - Xml Docs: 92.59%
+' 
+'   Blank Lines: 36 (13.79%)
+'     File Size: 9.08 KB
+
+
+' Class Graphics2D
+' 
+'     Properties: Center, Driver, (+2 Overloads) ImageResource, Size
+' 
+'     Constructor: (+5 Overloads) Sub New
+' 
+'     Function: (+2 Overloads) CreateDevice, CreateObject, GetImageResource, Open, (+2 Overloads) Save
+'               ToString
+' 
+'     Sub: DrawCircle, DrawString, innerSet, saveFile
+'     Structure Context
+' 
+'         Function: Create
+' 
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -71,6 +71,8 @@ Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.BitmapImage
 Imports Microsoft.VisualBasic.Imaging.Driver
 Imports std = System.Math
+Imports Microsoft.VisualBasic.Drawing.Drawing2D.Text
+
 
 #If NET8_0_OR_GREATER Then
 Imports Font = Microsoft.VisualBasic.Imaging.Font
@@ -97,18 +99,6 @@ Public Class Graphics2D : Inherits GDICanvas
     ''' GDI+ device handle memory.
     ''' </summary>
     ''' <remarks>(GDI+设备之中的图像数据)</remarks>
-#If NET48 Then
-    Public Property ImageResource As System.Drawing.Image Implements GdiRasterGraphics.ImageResource
-        <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Get
-            Return innerImage
-        End Get
-        Protected Friend Set(value As System.Drawing.Image)
-            innerImage = value
-            innerSet()
-        End Set
-    End Property
-#Else
     Public Property ImageResource As Image Implements GdiRasterGraphics.ImageResource
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Get
@@ -119,7 +109,6 @@ Public Class Graphics2D : Inherits GDICanvas
             innerSet()
         End Set
     End Property
-#End If
 
     Dim innerImage As System.Drawing.Image
 
@@ -302,13 +291,8 @@ Public Class Graphics2D : Inherits GDICanvas
         Dim sfont As System.Drawing.Font = Nothing
         Dim sbrush As System.Drawing.Brush = Nothing
 
-#If NET8_0_OR_GREATER Then
         sfont = font.CTypeFontObject
         sbrush = brush.CTypeBrushObject
-#Else
-        sfont = font
-        sbrush = brush
-#End If
 
         If angle <> 0 Then
             Dim text As New GraphicsText(g)
