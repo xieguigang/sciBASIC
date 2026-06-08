@@ -139,8 +139,8 @@ Namespace Driver
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Public Overrides Function CreateGraphic(size As Size, fill As Color, dpi As Integer) As IGraphics
                 Return Drawing.CreateGDIDevice(size.Width, size.Height,
-                                              filled:=fill,
-                                              dpi:=$"{dpi},{dpi}")
+                                               filled:=fill,
+                                               dpi:=$"{dpi},{dpi}")
             End Function
 
             <MethodImpl(MethodImplOptions.AggressiveInlining)>

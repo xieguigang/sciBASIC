@@ -77,7 +77,7 @@ Imports std = System.Math
 Public Module Extensions
 
     <Extension>
-    Public Function CreateBuffer(bmp As System.Drawing.Bitmap) As BitmapBuffer
+    Public Function CreateBuffer(bmp As System.Drawing.Bitmap) As BitmapImage.BitmapBuffer
 #If WINDOWS Then
         ' Lock the bitmap's bits.  
         Dim rect As New Rectangle(0, 0, bmp.Width, bmp.Height)
@@ -102,7 +102,7 @@ Public Module Extensions
             Throw New NotImplementedException
         End If
 
-        Return New BitmapBuffer(ptr, bytes, bmp.Size, bmpData.Stride, channels, handle:=bmpData)
+        Return New BitmapImage.BitmapBuffer(ptr, bytes, bmp.Size, bmpData.Stride, channels, handle:=bmpData)
 #Else
         Return BitmapBuffer.FromBitmap(bmp)
 #End If

@@ -1,73 +1,72 @@
 ﻿#Region "Microsoft.VisualBasic::bd738ba1b6fa13988cc7df87040ecff2, Microsoft.VisualBasic.Core\src\Drawing\Bitmap\BitmapBuffer.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 912
-    '    Code Lines: 535 (58.66%)
-    ' Comment Lines: 231 (25.33%)
-    '    - Xml Docs: 77.49%
-    ' 
-    '   Blank Lines: 146 (16.01%)
-    '     File Size: 31.19 KB
+' Summaries:
 
 
-    '     Class BitmapBuffer
-    ' 
-    '         Properties: Height, Size, SortBins, Stride, UInt32Black1
-    '                     UInt32Black2, UInt32White, Width
-    ' 
-    '         Constructor: (+8 Overloads) Sub New
-    ' 
-    '         Function: A, B, (+2 Overloads) FromBitmap, FromImage, G
-    '                   GetAlpha, GetARGB, GetARGBStream, GetBlue, GetColor
-    '                   GetEnumerator, GetGreen, GetHandleObject, GetImage, (+2 Overloads) GetIndex
-    '                   (+3 Overloads) GetPixel, GetPixelChannels, GetPixelsAll, GetRed, OutOfRange
-    '                   R, ToPixel2D, ToString, (+2 Overloads) Unpack, White
-    ' 
-    '         Sub: Dispose, (+2 Overloads) Save, SetAlpha, SetBlue, SetGreen
-    '              (+4 Overloads) SetPixel, SetRed, WriteARGBStream
-    ' 
-    '         Operators: +
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 912
+'    Code Lines: 535 (58.66%)
+' Comment Lines: 231 (25.33%)
+'    - Xml Docs: 77.49%
+' 
+'   Blank Lines: 146 (16.01%)
+'     File Size: 31.19 KB
+
+
+'     Class BitmapBuffer
+' 
+'         Properties: Height, Size, SortBins, Stride, UInt32Black1
+'                     UInt32Black2, UInt32White, Width
+' 
+'         Constructor: (+8 Overloads) Sub New
+' 
+'         Function: A, B, (+2 Overloads) FromBitmap, FromImage, G
+'                   GetAlpha, GetARGB, GetARGBStream, GetBlue, GetColor
+'                   GetEnumerator, GetGreen, GetHandleObject, GetImage, (+2 Overloads) GetIndex
+'                   (+3 Overloads) GetPixel, GetPixelChannels, GetPixelsAll, GetRed, OutOfRange
+'                   R, ToPixel2D, ToString, (+2 Overloads) Unpack, White
+' 
+'         Sub: Dispose, (+2 Overloads) Save, SetAlpha, SetBlue, SetGreen
+'              (+4 Overloads) SetPixel, SetRed, WriteARGBStream
+' 
+'         Operators: +
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Drawing
-Imports System.Drawing.Imaging
 Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Language
@@ -75,7 +74,6 @@ Imports Microsoft.VisualBasic.Language.Java
 Imports Microsoft.VisualBasic.Linq
 Imports BitsPerPixelEnum = Microsoft.VisualBasic.Imaging.BitmapImage.FileStream.BitsPerPixelEnum
 Imports MemoryBmp = Microsoft.VisualBasic.Imaging.BitmapImage.FileStream.Bitmap
-Imports std = System.Math
 
 Namespace Imaging.BitmapImage
 
@@ -88,10 +86,6 @@ Namespace Imaging.BitmapImage
     Public Class BitmapBuffer : Inherits Emit.Marshal.Byte
         Implements IDisposable
         Implements Enumeration(Of Color)
-
-#If NET48 Then
-        Protected raw As Bitmap
-#End If
 
         ''' <summary>
         ''' BitmapData
@@ -120,36 +114,18 @@ Namespace Imaging.BitmapImage
             End Get
         End Property
 
-#If NET48 Then
-
         ''' <summary>
-        ''' constructor for gdi+ image data object
+        ''' 
         ''' </summary>
         ''' <param name="ptr"></param>
         ''' <param name="byts"></param>
-        ''' <param name="raw"></param>
-        ''' <param name="handle"></param>
+        ''' <param name="size"></param>
+        ''' <param name="stride"></param>
         ''' <param name="channel"></param>
-        Public Sub New(ptr As IntPtr,
-                       byts%,
-                       raw As Bitmap,
-                       handle As BitmapData,
-                       channel As Integer)
-
-            Call MyBase.New(ptr, byts)
-
-            Me.raw = raw
-            Me.handle = handle
-
-            Me.Stride = handle.Stride
-            Me.Width = raw.Width
-            Me.Height = raw.Height
-            Me.Size = New Size(Width, Height)
-            Me.channels = channel
-            Me.memoryBuffer = False
-        End Sub
-#End If
-
+        ''' <param name="handle"></param>
+        ''' <remarks>
+        ''' memory buffer is false
+        ''' </remarks>
         Sub New(ptr As IntPtr, byts%, size As Size, stride As Integer, channel As Integer, Optional handle As Object = Nothing)
             Call MyBase.New(ptr, byts)
 
@@ -189,6 +165,7 @@ Namespace Imaging.BitmapImage
             _Height = size.Height
         End Sub
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Sub New(width As Integer, height As Integer, Optional channels As Integer = TYPE_INT_ARGB)
             Call Me.New(New Byte(width * height * channels - 1) {}, New Size(width, height), channels)
         End Sub
@@ -197,6 +174,8 @@ Namespace Imaging.BitmapImage
         ''' make in-memory data copy
         ''' </summary>
         ''' <param name="source"></param>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Sub New(source As BitmapBuffer)
             Call Me.New(source.buffer.ToArray, source.Size, source.channels)
         End Sub
@@ -290,16 +269,12 @@ Namespace Imaging.BitmapImage
         ''' <returns></returns>
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Function GetImage(Optional flush As Boolean = False) As Bitmap
+        Public Overridable Function GetImage(Optional flush As Boolean = False) As Bitmap
             If flush Then
                 Call Write()
             End If
 
-#If NET48 Then
-            Return DirectCast(raw.Clone, Bitmap)
-#Else
             Return New Bitmap(Me)
-#End If
         End Function
 
         ' pixel:  (1,1)(2,1)(3,1)(4,1)(1,2)(2,2)(3,2)(4,2)
@@ -880,18 +855,7 @@ Namespace Imaging.BitmapImage
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Function FromImage(res As Image) As BitmapBuffer
-#If NET48 Then
-            Dim copy As New Bitmap(res.Width, res.Height, format:=PixelFormat.Format32bppArgb)
-            Dim g As Graphics = Graphics.FromImage(copy)
-
-            Call g.DrawImageUnscaled(res, New Point)
-            Call g.Flush()
-            Call g.Dispose()
-
-            Return BitmapBuffer.FromBitmap(copy)
-#Else
             Return res.GetMemoryBitmap
-#End If
         End Function
 
         ''' <summary>
@@ -902,48 +866,8 @@ Namespace Imaging.BitmapImage
         ''' get the reference of the <see cref="Bitmap.MemoryBuffer"/> data directly
         ''' </returns>
         Public Shared Function FromBitmap(curBitmap As Bitmap) As BitmapBuffer
-#If NET48 Then
-            Return FromBitmap(curBitmap, ImageLockMode.ReadWrite)
-#Else
             Return curBitmap.MemoryBuffer
-#End If
         End Function
-
-#If NET48 Then
-
-        ''' <summary>
-        ''' 使用这个函数进行写数据的话，会修改到原图
-        ''' </summary>
-        ''' <param name="curBitmap"></param>
-        ''' <param name="mode"></param>
-        ''' <returns></returns>
-        Public Shared Function FromBitmap(curBitmap As Bitmap, mode As ImageLockMode) As BitmapBuffer
-            ' Lock the bitmap's bits.  
-            Dim rect As New Rectangle(0, 0, curBitmap.Width, curBitmap.Height)
-            Dim bmpData As BitmapData = curBitmap.LockBits(
-                rect:=rect,
-                flags:=mode,
-                format:=curBitmap.PixelFormat
-            )
-
-            ' Get the address of the first line.
-            Dim ptr As IntPtr = bmpData.Scan0
-            ' Declare an array to hold the bytes of the bitmap.
-            Dim bytes As Integer = std.Abs(bmpData.Stride) * curBitmap.Height
-            Dim pixels As Integer = curBitmap.Width * curBitmap.Height
-            Dim channels As Integer
-
-            If bytes = pixels * 3 Then
-                channels = 3
-            ElseIf bytes = pixels * 4 Then
-                channels = 4
-            Else
-                Throw New NotImplementedException
-            End If
-
-            Return New BitmapBuffer(ptr, bytes, curBitmap, bmpData, channels)
-        End Function
-#End If
 
         Protected Overrides Sub Dispose(disposing As Boolean)
             If Not memoryBuffer Then
@@ -951,11 +875,6 @@ Namespace Imaging.BitmapImage
                 ' managed memory pointer
                 Call Write()
             End If
-#If NET48 Then
-            If TypeOf handle Is BitmapData Then
-                Call raw.UnlockBits(DirectCast(handle, BitmapData))
-            End If
-#End If
         End Sub
 
         Public Iterator Function GetEnumerator() As IEnumerator(Of Color) Implements Enumeration(Of Color).GenericEnumerator
