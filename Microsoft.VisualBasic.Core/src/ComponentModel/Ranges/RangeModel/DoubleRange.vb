@@ -90,6 +90,25 @@ Namespace ComponentModel.Ranges.Model
         <XmlAttribute("max")>
         Public Property Max As Double Implements IRangeModel(Of Double).Max
 
+        Default Public Property Item(index As Integer) As Double
+            Get
+                If index = 0 Then Return Min Else Return Max
+            End Get
+            Set(value As Double)
+                If index = 0 Then Min = value Else Max = value
+            End Set
+        End Property
+
+        ''' <summary>
+        ''' 范围的中点
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property Center As Double
+            Get
+                Return (Min + Max) / 2.0
+            End Get
+        End Property
+
         ''' <summary>
         ''' Length of the range (deffirence between maximum and minimum values)
         ''' </summary>
@@ -240,14 +259,14 @@ Namespace ComponentModel.Ranges.Model
         End Function
 
         ''' <summary>
-        ''' Check if the specified value is inside this range
+        ''' [Contains?] Check if the specified value is inside this range
         ''' </summary>
         ''' 
         ''' <param name="x">Value to check</param>
         ''' 
         ''' <returns><b>True</b> if the specified value is inside this range or
         ''' <b>false</b> otherwise.</returns>
-        ''' 
+        ''' <remarks>判断值是否在范围内</remarks>
         Public Function IsInside(x As Double) As Boolean Implements IRangeModel(Of Double).IsInside
             Return ((x >= Min) AndAlso (x <= Max))
         End Function
@@ -312,8 +331,6 @@ Namespace ComponentModel.Ranges.Model
             End With
         End Operator
 
-#If NET_48 Or NETCOREAPP Then
-
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Widening Operator CType(tuple As (min#, max#)) As DoubleRange
             Return New DoubleRange(tuple.min, tuple.max)
@@ -328,8 +345,6 @@ Namespace ComponentModel.Ranges.Model
         Public Shared Widening Operator CType(tuple As (min&, max&)) As DoubleRange
             Return New DoubleRange(tuple.min, tuple.max)
         End Operator
-
-#End If
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Widening Operator CType(vector As Vector(Of Double)) As DoubleRange
