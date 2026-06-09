@@ -129,12 +129,19 @@ Namespace Imaging
             Z = index.Z
         End Sub
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Function ToString() As String
             Return $"[{X}, {Y}, {Z}]"
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Operator -(a As SpatialIndex3D, b As SpatialIndex3D) As SpatialIndex3D
             Return New SpatialIndex3D(a.X - b.X, a.Y - b.Y, a.Z - b.Z)
+        End Operator
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Widening Operator CType(xyz As (Integer, Integer, Integer)) As SpatialIndex3D
+            Return New SpatialIndex3D(xyz.Item1, xyz.Item2, xyz.Item3)
         End Operator
 
     End Structure
