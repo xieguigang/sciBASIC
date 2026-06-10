@@ -13,8 +13,7 @@ Public Module MathUtils
     ''' <param name="sigma">标准差</param>
     ''' <param name="height">峰高</param>
     ''' <returns>高斯函数值</returns>
-    Public Function Gaussian(x As Double, center As Double,
-                                    sigma As Double, height As Double) As Double
+    Public Function Gaussian(x As Double, center As Double, sigma As Double, height As Double) As Double
         Dim z As Double = (x - center) / sigma
         Return height * std.Exp(-0.5 * z * z)
     End Function

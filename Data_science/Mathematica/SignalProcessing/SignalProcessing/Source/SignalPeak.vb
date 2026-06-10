@@ -1,60 +1,60 @@
 ﻿#Region "Microsoft.VisualBasic::3f38db609a254d2eb1221b6500d04592, Data_science\Mathematica\SignalProcessing\SignalProcessing\Source\SignalPeak.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 36
-    '    Code Lines: 28 (77.78%)
-    ' Comment Lines: 0 (0.00%)
-    '    - Xml Docs: 0.00%
-    ' 
-    '   Blank Lines: 8 (22.22%)
-    '     File Size: 1.25 KB
+' Summaries:
 
 
-    '     Class SignalPeak
-    ' 
-    '         Properties: max_intensity, offset, width
-    ' 
-    '         Function: (+2 Overloads) GetSignalData
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 36
+'    Code Lines: 28 (77.78%)
+' Comment Lines: 0 (0.00%)
+'    - Xml Docs: 0.00%
+' 
+'   Blank Lines: 8 (22.22%)
+'     File Size: 1.25 KB
+
+
+'     Class SignalPeak
+' 
+'         Properties: max_intensity, offset, width
+' 
+'         Function: (+2 Overloads) GetSignalData
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
-Imports Microsoft.VisualBasic.Math.Distributions
+Imports gaussianFunc = Microsoft.VisualBasic.Math.Distributions.Gaussian
 Imports signalData = Microsoft.VisualBasic.Math.SignalProcessing.Signal
 
 Namespace Source
@@ -72,7 +72,7 @@ Namespace Source
             Dim center As Double = width / 2
 
             Do While xi < right
-                tick.Add((xi + offset, Gaussian.Gaussian(xi, max_intensity, center, width)))
+                tick.Add((xi + offset, gaussianFunc.Gaussian(xi, max_intensity, center, width)))
                 xi += dt
             Loop
 
@@ -84,7 +84,7 @@ Namespace Source
 
         Public Function GetSignalData(x As Double()) As Double()
             Dim center As Double = offset + width / 2
-            Dim y As Double() = Gaussian.Gaussian(x, max_intensity, center, width)
+            Dim y As Double() = gaussianFunc.Gaussian(x, max_intensity, center, width)
             Return y
         End Function
 
