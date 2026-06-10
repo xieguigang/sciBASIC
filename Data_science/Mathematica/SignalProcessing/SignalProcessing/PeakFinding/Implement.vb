@@ -59,7 +59,7 @@ Imports Microsoft.VisualBasic.ComponentModel.TagData
 Imports Microsoft.VisualBasic.Imaging.Math2D
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.Quantile
-Imports stdNum = System.Math
+Imports std = System.Math
 
 Namespace PeakFinding
 
@@ -131,8 +131,8 @@ Namespace PeakFinding
                 If dt < peakwidth.Min Then
                     Yield region
                 ElseIf dt > peakwidth.Max Then
-                    rtmin = stdNum.Max(rtmin, rt - halfPeakWidth)
-                    rtmax = stdNum.Min(rtmax, rt + halfPeakWidth)
+                    rtmin = std.Max(rtmin, rt - halfPeakWidth)
+                    rtmax = std.Min(rtmax, rt + halfPeakWidth)
 
                     Yield region.Subset(rtmin, rtmax)
                 Else
