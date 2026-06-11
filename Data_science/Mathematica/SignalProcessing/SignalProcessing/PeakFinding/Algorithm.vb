@@ -170,7 +170,7 @@ Namespace PeakFinding
                 Yield New SignalPeak With {
                     .integration = area.Last.y - area.First.y,
                     .region = rawSignals((time >= rtmin) & (time <= rtmax)),
-                    .baseline = baseline
+                    .baseline = .region.SignalBaseline(baseline_quantile)
                 }
             Next
         End Function
