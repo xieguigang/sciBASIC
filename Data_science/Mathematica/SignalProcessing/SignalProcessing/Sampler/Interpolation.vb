@@ -77,6 +77,17 @@ Public Module Interpolation
         Return From i As PointF In interpolate Select New TimeSignal(i)
     End Function
 
+    ''' <summary>
+    ''' 
+    ''' </summary>
+    ''' <typeparam name="T"></typeparam>
+    ''' <param name="source"></param>
+    ''' <param name="activator">
+    ''' cast data to the <typeparamref name="T"/> object
+    ''' </param>
+    ''' <param name="degree"></param>
+    ''' <param name="res"></param>
+    ''' <returns></returns>
     <Extension>
     Public Function BSpline(Of T As ITimeSignal)(source As IEnumerable(Of T), activator As Func(Of Single, Single, T), Optional degree As Double = 2, Optional res As Double = 5) As IEnumerable(Of T)
         Dim points As PointF() = source _
