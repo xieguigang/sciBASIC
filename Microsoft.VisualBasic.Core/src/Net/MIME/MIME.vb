@@ -93,6 +93,7 @@ Namespace Net.Protocols.ContentTypes
         Public Const Html As String = "text/html"
         Public Const Text As String = "plain/text"
         Public Const JSONText As String = "text/json"
+        Public Const TypeScript As String = "application/typescript"
 
         ''' <summary>
         ''' ``application/octet-stream``
@@ -137,6 +138,7 @@ Namespace Net.Protocols.ContentTypes
             Yield New ContentType With {.Details = "Deep Zoom Image", .FileExt = ".dzi", .MIMEType = "application/xml", .Name = "Deep Zoom Image"}
             Yield New ContentType With {.Details = "Jpeg image", .FileExt = ".jpeg", .MIMEType = "image/jpeg", .Name = "Jpeg image"}
             Yield New ContentType With {.Details = "ECMAScript Module JavaScript", .FileExt = ".mjs", .MIMEType = "application/javascript", .Name = "ECMAScript Module"}
+            Yield New ContentType With {.Details = "ECMAScript Module TypeScript", .FileExt = ".ts", .MIMEType = TypeScript, .Name = "Microsoft TypeScript"}
         End Function
 
         <Extension>
