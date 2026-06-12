@@ -64,8 +64,6 @@ Imports TypeSchema = System.Reflection.TypeInfo
 
 Namespace ComponentModel.Settings
 
-#If NET_40 = 0 Then
-
     <AttributeUsage(AttributeTargets.Property, AllowMultiple:=False, Inherited:=True)>
     Public Class SimpleConfig : Inherits Attribute
         Dim _ToLower As Boolean
@@ -179,7 +177,4 @@ INSERT:
             Next
         End Function
     End Class
-
-#End If
-
 End Namespace

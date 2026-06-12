@@ -57,8 +57,6 @@
 
 Imports System.Runtime.CompilerServices
 
-#If NET_40 = 0 Then
-
 Namespace ComponentModel.Settings
 
     Public Class Settings(Of T As {New, IProfile}) : Inherits ConfigEngine
@@ -139,4 +137,3 @@ Namespace ComponentModel.Settings
         End Operator
     End Class
 End Namespace
-#End If
