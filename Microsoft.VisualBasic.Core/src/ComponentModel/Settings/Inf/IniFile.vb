@@ -60,6 +60,7 @@
 
 Imports System.IO
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.My.UNIX
 
 Namespace ComponentModel.Settings.Inf
@@ -67,7 +68,7 @@ Namespace ComponentModel.Settings.Inf
     ''' <summary>
     ''' Ini file I/O handler
     ''' </summary>
-    Public Class IniFile : Implements IDisposable
+    Public Class IniFile : Implements IDisposable, Enumeration(Of Section)
 
         Public ReadOnly Property path As String
 
@@ -81,7 +82,13 @@ Namespace ComponentModel.Settings.Inf
         ''' <summary>
         ''' 为了避免频繁的读写文件，会使用这个数组来做缓存
         ''' </summary>
-        Dim data As Dictionary(Of String, Section)
+        ReadOnly data As Dictionary(Of String, Section)
+
+        Default Public ReadOnly Property Item(section As String) As Section
+            Get
+                Return data.TryGetValue(section)
+            End Get
+        End Property
 
         ''' <summary>
         ''' Open a ini file handle.
@@ -157,6 +164,16 @@ Namespace ComponentModel.Settings.Inf
             Else
                 Return [default]
             End If
+        End Function
+
+        Public Iterator Function GenericEnumerator() As IEnumerator(Of Section) Implements Enumeration(Of Section).GenericEnumerator
+            If data Is Nothing Then
+                Return
+            End If
+
+            For Each item As Section In data.Values
+                Yield item
+            Next
         End Function
 
 #Region "IDisposable Support"

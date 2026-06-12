@@ -71,7 +71,7 @@ Namespace ComponentModel.Settings.Inf
     ''' <summary>
     ''' 一个配置数据区域的抽象模型
     ''' </summary>
-    Public Class Section
+    Public Class Section : Implements Enumeration(Of HashValue)
 
         ''' <summary>
         ''' 区域的名称
@@ -189,6 +189,16 @@ Namespace ComponentModel.Settings.Inf
 
         Public Overrides Function ToString() As String
             Return $"[{Name}] with {configTable.Keys.ToArray.GetJson()}"
+        End Function
+
+        Public Iterator Function GenericEnumerator() As IEnumerator(Of HashValue) Implements Enumeration(Of HashValue).GenericEnumerator
+            If Items Is Nothing Then
+                Return
+            End If
+
+            For Each item As HashValue In Items
+                Yield item
+            Next
         End Function
     End Class
 End Namespace
