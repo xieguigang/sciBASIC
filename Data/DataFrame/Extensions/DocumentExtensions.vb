@@ -574,4 +574,26 @@ Public Module DocumentExtensions
 
         Return buffer.First
     End Function
+
+    ''' <summary>
+    ''' cast csv table to json object array
+    ''' </summary>
+    ''' <param name="table"></param>
+    ''' <returns></returns>
+    <Extension>
+    Public Iterator Function AsJSONObjects(table As IO.File) As IEnumerable(Of Dictionary(Of String, String))
+        Dim df As DataFrameResolver = DataFrameResolver.CreateObject(table)
+        Dim headers As String() = df.HeadTitles
+
+        Do While df.Read
+            Dim row As String() = df.GetRow
+            Dim json As New Dictionary(Of String, String)
+
+            For i As Integer = 0 To headers.Length - 1
+                json(headers(i)) = row(i)
+            Next
+
+            Yield json
+        Loop
+    End Function
 End Module
