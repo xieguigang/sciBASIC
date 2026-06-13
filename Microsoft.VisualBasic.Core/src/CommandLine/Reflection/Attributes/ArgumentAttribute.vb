@@ -67,7 +67,7 @@ Namespace CommandLine.Reflection
     ''' Use for the detail description for a specific commandline switch.(用于对某一个命令的开关参数的具体描述帮助信息)
     ''' </summary>
     ''' <remarks></remarks>
-    <AttributeUsage(AttributeTargets.Method, AllowMultiple:=True, Inherited:=True)>
+    <AttributeUsage(AttributeTargets.Method Or AttributeTargets.Parameter, AllowMultiple:=True, Inherited:=True)>
     Public Class ArgumentAttribute : Inherits CLIToken
 
         ''' <summary>
