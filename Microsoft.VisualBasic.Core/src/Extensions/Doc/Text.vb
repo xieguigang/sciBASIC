@@ -402,7 +402,9 @@ Public Module TextDoc
     ''' <param name="path"></param>
     ''' <param name="encoding">Default value is <see cref="Encoding.UTF8"/></param>
     ''' <param name="suppress">Suppress error message??</param>
-    ''' <returns></returns>
+    ''' <returns>
+    ''' this function returns empty string if the given file is not exists andalso <paramref name="throwEx"/> configured as false
+    ''' </returns>
     ''' <remarks>
     ''' (这个函数只建议读取小文本文件的时候使用)
     ''' </remarks>
