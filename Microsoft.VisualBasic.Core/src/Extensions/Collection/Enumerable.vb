@@ -68,16 +68,6 @@ Imports Microsoft.VisualBasic.Text.Xml.Models.KeyValuePair
 Public Module IEnumerations
 
     <Extension>
-    Public Iterator Function Zip(Of T1, T2)(first As IEnumerable(Of T1), join As IEnumerable(Of T2)) As IEnumerable(Of (First As T1, Second As T2))
-        Dim pull1 = first.GetEnumerator
-        Dim pull2 = join.GetEnumerator
-
-        Do While pull1.MoveNext AndAlso pull2.MoveNext
-            Yield (pull1.Current, pull2.Current)
-        Loop
-    End Function
-
-    <Extension>
     Public Function OfType(Of A, B, T)(source As IEnumerable(Of [Variant](Of A, B))) As IEnumerable(Of T)
         Return source _
             .Where(Function(element) element Like GetType(T)) _
