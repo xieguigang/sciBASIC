@@ -107,7 +107,7 @@ Namespace Analysis
         End Sub
 
         Public Shared Iterator Function ExplainNodeMapping(ullmann As IEnumerable(Of Integer()), G As String(), H As String()) As IEnumerable(Of NamedValue(Of String))
-            For Each gv As (map As Integer(), gid As String) In ullmann.Zip(join:=G)
+            For Each gv As (map As Integer(), gid As String) In ullmann.Zip(G)
                 For i As Integer = 0 To H.Length - 1
                     If gv.map(i) > 0 Then
                         Yield New NamedValue(Of String)(gv.gid, H(i))
