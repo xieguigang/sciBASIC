@@ -82,7 +82,9 @@ Namespace Net.Http
         Public Function CheckGZipMagic(data As Stream) As Boolean
             Dim magic As Byte() = New Byte(1) {}
 
+#Disable Warning CA2022 ' Avoid inexact read with 'Stream.Read'
             Call data.Read(magic, Scan0, magic.Length)
+#Enable Warning CA2022 ' Avoid inexact read with 'Stream.Read'
             Call data.Seek(-2, SeekOrigin.Current)
 
             Return CheckGZipMagic(magic)
@@ -102,6 +104,9 @@ Namespace Net.Http
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function UnGzipBase64(base64$) As MemoryStream
+            If base64 Is Nothing OrElse base64 = "" Then
+                Return New MemoryStream
+            End If
             Return Convert.FromBase64String(base64).UnGzipStream
         End Function
 
