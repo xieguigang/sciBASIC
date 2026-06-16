@@ -459,7 +459,7 @@ Public Module TextDoc
     ''' </summary>
     ''' <param name="path"></param>
     ''' <param name="encoding">Default value is UTF8</param>
-    ''' <returns></returns>
+    ''' <returns>this function will returns an empty string array(not nothing) if the given file is not found.</returns>
     ''' <remarks>
     ''' (这个函数只建议读取小文本文件的时候使用)
     ''' </remarks>
