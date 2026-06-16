@@ -255,15 +255,15 @@ Namespace LinearAlgebra
 
             ' 构建结果对象
             Return New PCAEllipseResult With {
-            .Center = New PointF(CSng(meanX), CSng(meanY)),
-            .SemiMajorAxis = CSng(semiMajorAxis),
-            .SemiMinorAxis = CSng(semiMinorAxis),
-            .RotationAngle = CSng(rotationAngle),
-            .ConfidenceLevel = confidenceLevel,
-            .CovarianceMatrix = covarianceMatrix,
-            .EigenValues = eigenDecomposition.EigenValues,
-            .EigenVectors = eigenDecomposition.EigenVectors
-        }
+                .Center = New PointF(CSng(meanX), CSng(meanY)),
+                .SemiMajorAxis = CSng(semiMajorAxis),
+                .SemiMinorAxis = CSng(semiMinorAxis),
+                .RotationAngle = CSng(rotationAngle),
+                .ConfidenceLevel = confidenceLevel,
+                .CovarianceMatrix = covarianceMatrix,
+                .EigenValues = eigenDecomposition.EigenValues,
+                .EigenVectors = eigenDecomposition.EigenVectors
+            }
         End Function
 
         ''' <summary>
