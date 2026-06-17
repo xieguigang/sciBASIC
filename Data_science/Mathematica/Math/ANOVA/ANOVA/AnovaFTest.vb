@@ -3,7 +3,8 @@
 Public Class AnovaFTest
 
     ' 分组数据：每个元素是一个分组在该代谢物上的表达量数组
-    Private ReadOnly groups As Double()()
+    ReadOnly groups As Double()()
+
     Private _fStat As Double
     Private _pValue As Double
 
