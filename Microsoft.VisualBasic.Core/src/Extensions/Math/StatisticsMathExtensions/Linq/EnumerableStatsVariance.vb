@@ -136,32 +136,25 @@ Namespace Math.Statistics.Linq
 
             Return Nothing
         End Function
-        '
-        ' Summary:
-        '     Computes the Variance of a sequence of System.Double values.
-        '
-        ' Parameters:
-        '   source:
-        '     A sequence of System.Double values to calculate the Variance of.
-        '
-        ' Returns:
-        '     The Variance of the sequence of values.
-        '
-        ' Exceptions:
-        '   System.ArgumentNullException:
-        '     source is null.
-        '
-        '   System.InvalidOperationException:
-        '     source contains no elements.
+
+        ''' <summary>
+        ''' Computes the Variance of a sequence of System.Double values.
+        ''' </summary>
+        ''' <param name="source">A sequence of System.Double values to calculate the Variance of.</param>
+        ''' <param name="isSample"></param>
+        ''' <returns>The Variance of the sequence of values.</returns>
         <Extension>
         Public Function Variance(source As IEnumerable(Of Double), Optional isSample As Boolean = True) As Double
-            Dim pull = source.ToArray
-            Dim avg As Double = pull.Average()
-            Dim d As Double = pull.Aggregate(0.0, Function(total, [next]) As Double
-                                                      total += ([next] - avg) ^ 2
-                                                      Return total
-                                                  End Function)
-            Return d / If(isSample, pull.Length - 1, pull.Length)
+            Dim arr As Double() = source.ToArray
+            Dim n As Integer = arr.Length
+
+            If n < 2 Then
+                Return 0.0
+            End If
+
+            Dim avg As Double = arr.Average()
+            Dim d As Double = Aggregate v As Double In arr Into Sum((v - avg) ^ 2)
+            Return d / If(isSample, n - 1, n)
         End Function
         '
         ' Summary:

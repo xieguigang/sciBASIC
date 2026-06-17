@@ -77,6 +77,15 @@ Namespace Math
     Public Module VBMath
 
         ''' <summary>
+        ''' 安全的 -log10(p) 计算, 处理p=0的边界情况
+        ''' </summary>
+        Public Function SafeNegLog10(p As Double) As Double
+            If p <= 0 Then Return 300.0
+            If p >= 1 Then Return 0.0
+            Return -std.Log10(p)
+        End Function
+
+        ''' <summary>
         ''' Standard clamping of a value into a fixed range
         ''' </summary>
         Public Function Clip(x As Double, clipValue As Double) As Double
@@ -830,8 +839,8 @@ Namespace Math
         ''' 
         ''' > https://en.wikipedia.org/wiki/Standard_deviation
         ''' </summary>
-        ''' <returns></returns>
-        ''' <remarks></remarks>
+        ''' <returns>StdDev</returns>
+        ''' <remarks>计算标准差 (样本标准差, ddof=1)</remarks>
         ''' 
         <Extension>
         Public Function SD(values As IEnumerable(Of Double), Optional isSample As Boolean = False) As Double
