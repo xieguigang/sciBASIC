@@ -500,6 +500,9 @@ Namespace Math.Correlations
         ''' <param name="x#"></param>
         ''' <param name="y#"></param>
         ''' <returns></returns>
+        ''' <remarks>
+        ''' 计算 Pearson 相关系数
+        ''' </remarks>
         <ExportAPI("Pearson")>
         Public Function GetPearson(x#(), y#()) As Double
             Dim n As Integer = x.Length

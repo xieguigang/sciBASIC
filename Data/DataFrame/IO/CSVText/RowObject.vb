@@ -342,7 +342,7 @@ Namespace IO
         Public Overloads Shared Function ToString(content As IEnumerable(Of String), Optional delimiter As String = ",") As String
             Dim array As String() = content _
                 .Select(Function(cell)
-                            Return cell.doDelimiterMask(delimiter)
+                            Return cell.EscapeCsv(delimiter)
                         End Function) _
                 .ToArray
             Dim line As String = String.Join(delimiter, array)

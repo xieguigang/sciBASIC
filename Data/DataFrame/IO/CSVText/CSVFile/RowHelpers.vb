@@ -73,32 +73,32 @@ Namespace IO.CSVFile
         End Function
 
         ''' <summary>
-        ''' 
+        ''' CSV 字段转义（处理逗号、引号、换行）
         ''' </summary>
-        ''' <param name="s">The cell value text</param>
+        ''' <param name="field">The cell value text</param>
         ''' <param name="deli">The value row delimiter</param>
         ''' <returns></returns>
         ''' 
         <Extension>
-        Friend Function doDelimiterMask(s$, deli As Char) As String
-            If String.IsNullOrEmpty(s) Then
+        Public Function EscapeCsv(field$, Optional deli As Char = ","c) As String
+            If String.IsNullOrEmpty(field) Then
                 Return ""
-            ElseIf s.First = """"c AndAlso s.Last = """"c AndAlso s.Length > 1 Then
+            ElseIf field.First = """"c AndAlso field.Last = """"c AndAlso field.Length > 1 Then
                 ' string is already been wrapped by the quote
                 ' returns the raw string
-                Return s
+                Return field
             Else
-                s = s.Replace("""", """""")
+                field = field.Replace("""", """""")
             End If
 
             ' 双引号可以转义换行
-            If s.IndexOf(deli) > -1 OrElse
-                s.IndexOf(ASCII.LF) > -1 OrElse
-                s.IndexOf(ASCII.CR) > -1 Then
+            If field.IndexOf(deli) > -1 OrElse
+                field.IndexOf(ASCII.LF) > -1 OrElse
+                field.IndexOf(ASCII.CR) > -1 Then
 
-                Return $"""{s}"""
+                Return $"""{field}"""
             Else
-                Return s
+                Return field
             End If
         End Function
 
