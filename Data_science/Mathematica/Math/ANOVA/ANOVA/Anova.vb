@@ -58,7 +58,13 @@
 Imports Microsoft.VisualBasic.Math.Statistics.Distributions.LinearMoments
 Imports std = System.Math
 
-Public Class AnovaTest
+''' <summary>
+''' 
+''' </summary>
+''' <remarks>
+''' use the new <see cref="AnovaFTest"/> code instead
+''' </remarks>
+<Obsolete> Public Class AnovaTest
 
     Public SSB As Double
     Public SSW As Double
