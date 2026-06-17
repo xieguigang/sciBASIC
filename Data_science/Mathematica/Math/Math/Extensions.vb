@@ -233,6 +233,43 @@ Imports std = System.Math
     End Function
 
     ''' <summary>
+    ''' Benjamini-Hochberg FDR校正
+    ''' <para>控制错误发现率 (False Discovery Rate)</para>
+    ''' </summary>
+    ''' <param name="pValues">原始p值数组</param>
+    ''' <returns>校正后的q值数组 (与输入顺序一致)</returns>
+    Public Function BHCorrection(pValues As IEnumerable(Of Double)) As Double()
+        Dim pList As Double() = pValues.ToArray()
+        Dim n As Integer = pList.Length
+        If n = 0 Then Return New Double(-1) {}
+
+        ' 创建 (p值, 原始索引) 对, 按p值升序排列
+        Dim indexed = pList.Select(Function(p, i) (p, i)).OrderBy(Function(x) x.Item1).ToArray()
+
+        Dim q(n - 1) As Double
+        Dim prevQ As Double = 1.0
+
+        ' 从大到小遍历, 保证单调性: q(i) = min(q(i+1), p(i) * n / rank(i))
+        For idx As Integer = n - 1 To 0 Step -1
+            Dim rank As Integer = idx + 1 ' 1-indexed rank
+            Dim raw As Double = indexed(idx).Item1 * CDbl(n) / CDbl(rank)
+            ' 取与后一个q值的最小值, 保证单调不减
+            prevQ = std.Min(prevQ, raw)
+            ' 上限为1
+            prevQ = std.Min(1.0, prevQ)
+            q(idx) = prevQ
+        Next
+
+        ' 将q值放回原始顺序
+        Dim result(n - 1) As Double
+        For idx As Integer = 0 To n - 1
+            result(indexed(idx).Item2) = q(idx)
+        Next
+
+        Return result
+    End Function
+
+    ''' <summary>
     ''' Tuple range iterates
     ''' </summary>
     ''' <param name="range">Number values iterates from value ``from`` to value ``to``.</param>
