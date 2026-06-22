@@ -96,7 +96,7 @@ Namespace LinearAlgebra.Matrix
         ''' <summary>
         ''' 矩阵求逆 - 使用 Gauss-Jordan 消元法带部分主元选取
         ''' </summary>
-        Public Function Inverse(a As Double(,)) As Double(,)
+        Public Function Inverse(a As Double(,), strict As Boolean) As Double(,)
             Dim n = a.GetLength(0)
             If a.GetLength(1) <> n Then Throw New Exception("矩阵必须为方阵才能求逆")
 
@@ -132,7 +132,17 @@ Namespace LinearAlgebra.Matrix
 
                 ' 主元行归一化
                 Dim pivot = aug(col, col)
-                If stdf.Abs(pivot) < 0.00000000000001 Then Throw New Exception("矩阵奇异，无法求逆")
+
+                Const eps As Double = 1 ^ -13
+
+                If stdf.Abs(pivot) < eps Then
+                    If strict Then
+                        Throw New Exception("矩阵奇异，无法求逆")
+                    Else
+                        pivot = eps
+                    End If
+                End If
+
                 For j = 0 To 2 * n - 1
                     aug(col, j) /= pivot
                 Next
