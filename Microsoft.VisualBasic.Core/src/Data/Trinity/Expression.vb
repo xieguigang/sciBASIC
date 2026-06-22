@@ -67,11 +67,13 @@ Namespace Data.Trinity
         ''' If <paramref name="list"/> contains no elements or it is nothing, then this function will returns nothing
         ''' </summary>
         ''' <param name="list"></param>
-        ''' <param name="comma$"></param>
-        ''' <param name="andalso$"></param>
-        ''' <param name="etc$"></param>
+        ''' <param name="comma"></param>
+        ''' <param name="andalso"></param>
+        ''' <param name="etc"></param>
         ''' <param name="joinSpace"></param>
-        ''' <returns></returns>
+        ''' <returns>
+        ''' this function returns null string if the given <paramref name="list"/> is empty or nothing.
+        ''' </returns>
         <Extension>
         Public Function Concatenate(list As IEnumerable(Of String),
                                     Optional comma$ = ",",
