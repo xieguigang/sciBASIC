@@ -1073,7 +1073,15 @@ Public Module App
             Static log As LogFile
 
             If log Is Nothing Then
-                log = New LogFile($"{App.LogErrDIR}/error_{LogFile.NowTimeNormalizedString}.log", append:=False)
+                Dim filepath As String = $"{App.LogErrDIR}/error_{LogFile.NowTimeNormalizedString}.log"
+
+                ' 20260623 disable the auto flush, due to the reason of log error in for loop may trigger too many log exception calls,
+                ' auto flush will wait too much disk io time make the for loop much slower.
+                ' set auto flush = false
+                log = New LogFile(filepath,
+                                  append:=False,
+                                  autoFlush:=False
+                )
                 log.log(MSG_TYPES.INF, ErrorLog.EnvironmentInfo, "app_debug_info")
             End If
 
