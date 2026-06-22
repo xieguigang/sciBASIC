@@ -292,13 +292,13 @@ Namespace Hypothesis
         ''' two sample p-value
         ''' </summary>
         ''' <param name="t#">The t test value</param>
-        ''' <param name="v">v is the degrees of freedom</param>
+        ''' <param name="df">v is the degrees of freedom</param>
         ''' <returns></returns>
         ''' <remarks>
         ''' 请注意，双样本检测与单样本检测的pvalue在less和greater是反过来的
         ''' </remarks>
-        Public Function Pvalue(t#, v#, Optional hyp As Hypothesis = Hypothesis.TwoSided) As Double
-            Dim tdist As New StudenttDistribution(v)
+        Public Function Pvalue(t#, df#, Optional hyp As Hypothesis = Hypothesis.TwoSided) As Double
+            Dim tdist As New StudenttDistribution(df)
 
             Select Case hyp
                 Case Hypothesis.Less
