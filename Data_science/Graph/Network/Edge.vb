@@ -98,16 +98,8 @@ Namespace Network
 
     Public Module IndexGraphExtensions
 
-        Public Function FromNetwork(Of E As SparseGraph.IInteraction, T As IndexEdge, G As {New, IndexGraph(Of T)})(network As IEnumerable(Of E), edge As Func(Of Integer, Integer, T)) As G
+        Public Function FromNetwork(Of E As SparseGraph.IInteraction, T As IndexEdge, G As {New, IndexGraph(Of T)})(network As IEnumerable(Of E), nodes As Index(Of String), edge As Func(Of Integer, Integer, T)) As G
             Dim graph = network.SafeQuery.ToArray
-            Dim nodes As Index(Of String) = graph _
-                .SelectMany(Iterator Function(i) As IEnumerable(Of String)
-                                Yield i.source
-                                Yield i.target
-                            End Function) _
-                .Distinct _
-                .OrderBy(Function(id) id) _
-                .Indexing
             Dim edges As T() = New T(graph.Length - 1) {}
             Dim j As E
 
@@ -120,6 +112,20 @@ Namespace Network
                 .Edges = edges,
                 .Nodes = nodes.Objects
             }
+        End Function
+
+        Public Function FromNetwork(Of E As SparseGraph.IInteraction, T As IndexEdge, G As {New, IndexGraph(Of T)})(network As IEnumerable(Of E), edge As Func(Of Integer, Integer, T)) As G
+            Dim graph = network.SafeQuery.ToArray
+            Dim nodes As Index(Of String) = graph _
+                .SelectMany(Iterator Function(i) As IEnumerable(Of String)
+                                Yield i.source
+                                Yield i.target
+                            End Function) _
+                .Distinct _
+                .OrderBy(Function(id) id) _
+                .Indexing
+
+            Return FromNetwork(Of E, T, G)(network, nodes, edge)
         End Function
     End Module
 End Namespace
