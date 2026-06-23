@@ -61,9 +61,9 @@ Imports Microsoft.VisualBasic.Language
 Namespace StorageProvider.Reflection
 
     ''' <summary>
-    ''' This property is a array data type object.(并不建议使用本Csv属性来储存大量的文本字符串，极容易出错)
+    ''' This property is a array data type object.
     ''' </summary>
-    ''' <remarks></remarks>
+    ''' <remarks>(并不建议使用本Csv属性来储存大量的文本字符串，极容易出错)</remarks>
     <AttributeUsage(AttributeTargets.Property, AllowMultiple:=False, Inherited:=False)>
     Public Class CollectionAttribute : Inherits ColumnAttribute
         Implements IAttributeComponent
