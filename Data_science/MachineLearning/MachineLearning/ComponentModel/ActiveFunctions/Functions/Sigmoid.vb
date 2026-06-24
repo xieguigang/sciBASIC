@@ -65,7 +65,7 @@
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Text.Xml.Models
-Imports stdNum = System.Math
+Imports std = System.Math
 
 Namespace ComponentModel.Activations
 
@@ -153,12 +153,12 @@ Namespace ComponentModel.Activations
         ''' <remarks>The method calculates function value at point <paramref name="x"/>.</remarks>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Function [Function](x As Double) As Double
-            Return (1 / (1 + stdNum.Exp(-_Alpha * x)))
+            Return (1 / (1 + std.Exp(-_Alpha * x)))
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Function doCall(x#, Optional alpha# = 1.0) As Double
-            Return (1 / (1 + stdNum.Exp(-alpha * x)))
+            Return (1 / (1 + std.Exp(-alpha * x)))
         End Function
 
         ''' <summary>

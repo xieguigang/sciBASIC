@@ -57,7 +57,7 @@
 #End Region
 
 Imports Microsoft.VisualBasic.Language
-Imports stdNum = System.Math
+Imports std = System.Math
 
 Namespace SVM
 
@@ -102,9 +102,9 @@ Namespace SVM
                 Case KernelType.POLY
                     Return powi(_gamma * dot(_x(i), _x(j)) + _coef0, _degree)
                 Case KernelType.RBF
-                    Return stdNum.Exp(-_gamma * (_xSquare(i) + _xSquare(j) - 2 * dot(_x(i), _x(j))))
+                    Return std.Exp(-_gamma * (_xSquare(i) + _xSquare(j) - 2 * dot(_x(i), _x(j))))
                 Case KernelType.SIGMOID
-                    Return stdNum.Tanh(_gamma * dot(_x(i), _x(j)) + _coef0)
+                    Return std.Tanh(_gamma * dot(_x(i), _x(j)) + _coef0)
                 Case KernelType.PRECOMPUTED
                     Return _x(i)(CInt(_x(j)(0).value)).value
                 Case Else
@@ -254,9 +254,9 @@ Namespace SVM
                     Return powi(param.degree * dot(x, y) + param.coefficient0, param.degree)
                 Case KernelType.RBF
                     Dim sum = computeSquaredDistance(x, y)
-                    Return stdNum.Exp(-param.gamma * sum)
+                    Return std.Exp(-param.gamma * sum)
                 Case KernelType.SIGMOID
-                    Return stdNum.Tanh(param.gamma * dot(x, y) + param.coefficient0)
+                    Return std.Tanh(param.gamma * dot(x, y) + param.coefficient0)
                 Case KernelType.PRECOMPUTED
                     Return x(CInt(y(0).value)).value
                 Case Else

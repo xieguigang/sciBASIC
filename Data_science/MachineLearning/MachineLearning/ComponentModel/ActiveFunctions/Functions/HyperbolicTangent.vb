@@ -55,7 +55,7 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
-Imports stdNum = System.Math
+Imports std = System.Math
 
 Namespace ComponentModel.Activations
 
@@ -88,8 +88,8 @@ Namespace ComponentModel.Activations
         ''' <param name="x"></param>
         ''' <returns></returns>
         Public Overrides Function [Function](x As Double) As Double
-            Dim a = stdNum.E ^ x
-            Dim b = stdNum.E ^ (-x)
+            Dim a = std.E ^ x
+            Dim b = std.E ^ (-x)
 
             Return (a - b) / (a + b)
         End Function
@@ -102,7 +102,7 @@ Namespace ComponentModel.Activations
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Protected Overrides Function Derivative(x As Double) As Double
-            Return 1 / (stdNum.Cosh(x) ^ 2)
+            Return 1 / (std.Cosh(x) ^ 2)
         End Function
 
         Public Overrides Function ToString() As String

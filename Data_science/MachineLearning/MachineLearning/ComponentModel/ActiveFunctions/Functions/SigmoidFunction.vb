@@ -56,7 +56,7 @@
 
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
-Imports stdNum = System.Math
+Imports std = System.Math
 
 Namespace ComponentModel.Activations
 
@@ -81,7 +81,7 @@ Namespace ComponentModel.Activations
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Overrides Function [Function](x As Double) As Double
-            Return If(x < -45.0, 0.0, If(x > 45.0, 1.0, 1.0 / (1.0 + stdNum.Exp(-x))))
+            Return If(x < -45.0, 0.0, If(x > 45.0, 1.0, 1.0 / (1.0 + std.Exp(-x))))
         End Function
 
         Public Shared Function Sigmoid(x As Vector) As Vector

@@ -71,7 +71,7 @@
 
 Imports System.Runtime.InteropServices
 Imports System.Threading
-Imports stdNum = System.Math
+Imports std = System.Math
 
 Namespace SVM
 
@@ -127,7 +127,7 @@ Namespace SVM
             Dim d = minPower
 
             While d <= maxPower
-                list.Add(stdNum.Pow(2, d))
+                list.Add(std.Pow(2, d))
                 d += iteration
             End While
 

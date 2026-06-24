@@ -72,7 +72,7 @@ Imports Microsoft.VisualBasic.MachineLearning.Darwinism.GAF
 Imports Microsoft.VisualBasic.MachineLearning.Darwinism.Models
 Imports Microsoft.VisualBasic.Math
 Imports randf = Microsoft.VisualBasic.Math.RandomExtensions
-Imports stdNum = System.Math
+Imports std = System.Math
 
 Namespace Darwinism
 
@@ -174,7 +174,7 @@ Namespace Darwinism
             If parallel Then
                 Dim parts% = PopulationSize / App.CPUCoreNumbers
 
-                Call $"Differential Evolution kernel have {App.CPUCoreNumbers}(=> {PopulationSize}/{parts}) CPU core for parallel computing.".Warning
+                Call $"Differential Evolution kernel have {App.CPUCoreNumbers}(=> {PopulationSize}/{parts}) CPU core for parallel computing.".warning
 
                 Do While (++i < maxIterations)
                     Dim subPopulates As Individual()() = population.Split(parts)
@@ -200,7 +200,7 @@ Namespace Darwinism
                         .Shuffles
 
                     If bestFit <= threshold Then
-                        Call MaxIteratesReach.Warning
+                        Call MaxIteratesReach.warning
                         Exit Do
                     Else
                         Call Console.Write(".")
@@ -225,7 +225,7 @@ Namespace Darwinism
                     bestFit = iter.Tag
 
                     If bestFit <= threshold Then
-                        Call MaxIteratesReach.Warning
+                        Call MaxIteratesReach.warning
                         Exit Do
                     Else
                         Call Console.Write(".")
@@ -279,18 +279,18 @@ Namespace Darwinism
                 ' calculate New candidate solution
 
                 ' pick random point from population
-                Dim x = stdNum.Floor(random.NextDouble * (populationSize - 1))
+                Dim x = std.Floor(random.NextDouble * (populationSize - 1))
                 Dim a, b, c As Integer
 
                 ' pick three different random points from population
                 Do While (a = x)
-                    a = stdNum.Floor(random.NextDouble * (populationSize - 1))
+                    a = std.Floor(random.NextDouble * (populationSize - 1))
                 Loop
                 Do While (b = x OrElse b = a)
-                    b = stdNum.Floor(random.NextDouble * (populationSize - 1))
+                    b = std.Floor(random.NextDouble * (populationSize - 1))
                 Loop
                 Do While (c = x OrElse c = a OrElse c = b)
-                    c = stdNum.Floor(random.NextDouble * (populationSize - 1))
+                    c = std.Floor(random.NextDouble * (populationSize - 1))
                 Loop
 
                 ' Pick a random index [0-Dimensionality]

@@ -59,7 +59,7 @@ Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Text.Xml.Models
-Imports stdNum = System.Math
+Imports std = System.Math
 
 Namespace Evaluation
 
@@ -76,7 +76,7 @@ Namespace Evaluation
                 Dim predicts = Me.predicts
 
                 Return actuals _
-                    .Select(Function(x, i) stdNum.Abs(x - predicts(i))) _
+                    .Select(Function(x, i) std.Abs(x - predicts(i))) _
                     .Average
             End Get
         End Property

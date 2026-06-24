@@ -56,7 +56,7 @@ Imports Microsoft.VisualBasic.MachineLearning.ComponentModel.Activations
 
 Module Module1
 
-    Sub Main()
+    Sub Main3()
         Call functionParserTest()
     End Sub
 

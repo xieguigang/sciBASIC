@@ -1,60 +1,60 @@
 ﻿#Region "Microsoft.VisualBasic::e97fc618aea52ea9f926f3682729d774, Data_science\MachineLearning\MachineLearning\SVM\Solver\Solver_NU.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 247
-    '    Code Lines: 188 (76.11%)
-    ' Comment Lines: 15 (6.07%)
-    '    - Xml Docs: 60.00%
-    ' 
-    '   Blank Lines: 44 (17.81%)
-    '     File Size: 8.78 KB
+' Summaries:
 
 
-    '     Class Solver_NU
-    ' 
-    '         Function: be_shrunk, calculate_rho, select_working_set
-    ' 
-    '         Sub: do_shrinking, Solve
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 247
+'    Code Lines: 188 (76.11%)
+' Comment Lines: 15 (6.07%)
+'    - Xml Docs: 60.00%
+' 
+'   Blank Lines: 44 (17.81%)
+'     File Size: 8.78 KB
+
+
+'     Class Solver_NU
+' 
+'         Function: be_shrunk, calculate_rho, select_working_set
+' 
+'         Sub: do_shrinking, Solve
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
-Imports stdNum = System.Math
+Imports std = System.Math
 
 Namespace SVM
 
@@ -168,7 +168,7 @@ Namespace SVM
                 End If
             Next
 
-            If stdNum.Max(Gmaxp + Gmaxp2, Gmaxn + Gmaxn2) < eps Then Return 1
+            If std.Max(Gmaxp + Gmaxp2, Gmaxn + Gmaxn2) < eps Then Return 1
 
             If y(Gmin_idx) = +1 Then
                 working_set(0) = Gmaxp_idx
@@ -227,7 +227,7 @@ Namespace SVM
                 End If
             Next
 
-            If unshrink = False AndAlso stdNum.Max(Gmax1 + Gmax2, Gmax3 + Gmax4) <= eps * 10 Then
+            If unshrink = False AndAlso std.Max(Gmax1 + Gmax2, Gmax3 + Gmax4) <= eps * 10 Then
                 unshrink = True
                 reconstruct_gradient()
                 active_size = l
@@ -261,9 +261,9 @@ Namespace SVM
 
                 If y(i) = +1 Then
                     If is_lower_bound(i) Then
-                        ub1 = stdNum.Min(ub1, G(i))
+                        ub1 = std.Min(ub1, G(i))
                     ElseIf is_upper_bound(i) Then
-                        lb1 = stdNum.Max(lb1, G(i))
+                        lb1 = std.Max(lb1, G(i))
                     Else
                         nr_free1 += 1
                         sum_free1 += G(i)
@@ -271,9 +271,9 @@ Namespace SVM
                 Else
 
                     If is_lower_bound(i) Then
-                        ub2 = stdNum.Min(ub2, G(i))
+                        ub2 = std.Min(ub2, G(i))
                     ElseIf is_upper_bound(i) Then
-                        lb2 = stdNum.Max(lb2, G(i))
+                        lb2 = std.Max(lb2, G(i))
                     Else
                         nr_free2 += 1
                         sum_free2 += G(i)

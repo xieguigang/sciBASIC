@@ -53,7 +53,7 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
-Imports stdNum = System.Math
+Imports std = System.Math
 
 Namespace SVM
 
@@ -64,7 +64,7 @@ Namespace SVM
 
         <Extension()>
         Public Function Truncate(x As Double) As Double
-            Return stdNum.Round(x * PRECISION) / PRECISION
+            Return std.Round(x * PRECISION) / PRECISION
         End Function
 
         <Extension()>

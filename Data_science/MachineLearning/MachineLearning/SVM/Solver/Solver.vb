@@ -74,7 +74,7 @@
 
 
 Imports Microsoft.VisualBasic.Text
-Imports stdNum = System.Math
+Imports std = System.Math
 
 Namespace SVM
 
@@ -314,15 +314,15 @@ Namespace SVM
             ' optimization step
 
             Dim iter = 0
-            Dim max_iter = stdNum.Max(10000000, If(l > Integer.MaxValue / 100, Integer.MaxValue, 100 * l))
-            Dim counter = stdNum.Min(l, 1000) + 1
+            Dim max_iter = std.Max(10000000, If(l > Integer.MaxValue / 100, Integer.MaxValue, 100 * l))
+            Dim counter = std.Min(l, 1000) + 1
             Dim working_set = New Integer(1) {}
 
             While iter < max_iter
                 ' show progress and do shrinking
 
                 If Threading.Interlocked.Decrement(counter) = 0 Then
-                    counter = stdNum.Min(l, 1000)
+                    counter = std.Min(l, 1000)
 
                     If shrinking Then
                         do_shrinking()
@@ -683,16 +683,16 @@ Namespace SVM
 
                 If is_lower_bound(i) Then
                     If y(i) > 0 Then
-                        ub = stdNum.Min(ub, yG)
+                        ub = std.Min(ub, yG)
                     Else
-                        lb = stdNum.Max(lb, yG)
+                        lb = std.Max(lb, yG)
                     End If
                 ElseIf is_upper_bound(i) Then
 
                     If y(i) < 0 Then
-                        ub = stdNum.Min(ub, yG)
+                        ub = std.Min(ub, yG)
                     Else
-                        lb = stdNum.Max(lb, yG)
+                        lb = std.Max(lb, yG)
                     End If
                 Else
                     nr_free += 1

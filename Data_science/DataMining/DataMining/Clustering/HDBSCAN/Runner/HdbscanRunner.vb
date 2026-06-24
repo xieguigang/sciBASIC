@@ -57,7 +57,7 @@
 Imports Microsoft.VisualBasic.DataMining.HDBSCAN.Distance
 Imports Microsoft.VisualBasic.DataMining.HDBSCAN.Hdbscanstar
 Imports Parallel0 = System.Threading.Tasks.Parallel
-Imports stdNum = System.Math
+Imports std = System.Math
 
 Namespace HDBSCAN.Runner
     Public Class HdbscanRunner
@@ -133,7 +133,7 @@ Namespace HDBSCAN.Runner
                         maxDegreeOfParallelism = Environment.ProcessorCount
                     End If
 
-                    Dim [option] = New ParallelOptions With {.MaxDegreeOfParallelism = stdNum.Max(1, maxDegreeOfParallelism)}
+                    Dim [option] = New ParallelOptions With {.MaxDegreeOfParallelism = std.Max(1, maxDegreeOfParallelism)}
 
                     Call Parallel0.For(0, [option].MaxDegreeOfParallelism, [option], Sub(indexThread)
                                                                                          Dim distanceThread = New Dictionary(Of Integer, Double)()
@@ -188,7 +188,7 @@ Namespace HDBSCAN.Runner
                         maxDegreeOfParallelism = Environment.ProcessorCount
                     End If
 
-                    Dim [option] = New ParallelOptions With {.MaxDegreeOfParallelism = stdNum.Max(1, maxDegreeOfParallelism)}
+                    Dim [option] = New ParallelOptions With {.MaxDegreeOfParallelism = std.Max(1, maxDegreeOfParallelism)}
 
                     Parallel0.For(0, size, [option], Sub(index)
                                                          Dim i = index Mod numPoints

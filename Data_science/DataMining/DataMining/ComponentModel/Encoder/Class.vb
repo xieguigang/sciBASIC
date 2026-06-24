@@ -57,7 +57,7 @@
 #End Region
 
 Imports Microsoft.VisualBasic.Linq
-Imports stdNum = System.Math
+Imports std = System.Math
 
 Namespace ComponentModel.Encoder
 
@@ -133,7 +133,7 @@ Namespace ComponentModel.Encoder
         End Operator
 
         Public Shared Operator =(a As Double, b As ColorClass) As Boolean
-            Return stdNum.Abs(a - b.factor) <= 0.000001
+            Return std.Abs(a - b.factor) <= 0.000001
         End Operator
 
         Public Shared Operator <>(a As Double, b As ColorClass) As Boolean
