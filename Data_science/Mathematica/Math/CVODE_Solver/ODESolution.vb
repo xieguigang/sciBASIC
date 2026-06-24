@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b9ebe85f97417063597760c6ac5b1cdf, Data_science\Mathematica\Math\CVODE_Solver\ODESolution.vb"
+﻿#Region "Microsoft.VisualBasic::aefb31b43b003ab7c345a6119cc1eae7, Data_science\Mathematica\Math\CVODE_Solver\ODESolution.vb"
 
     ' Author:
     ' 
@@ -139,4 +139,3 @@ Public Class ODESolution
     End Function
 
 End Class
-

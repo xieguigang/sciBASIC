@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0eadca3760d0813923e05102f4c3367d, Data_science\Mathematica\Math\ANOVA\KruskalWallis\KWResult.vb"
+﻿#Region "Microsoft.VisualBasic::3789c41824db0cf08ca6720efdf2917e, Data_science\Mathematica\Math\ANOVA\KruskalWallis\KWResult.vb"
 
     ' Author:
     ' 
@@ -34,12 +34,12 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 44
-    '    Code Lines: 15 (34.09%)
-    ' Comment Lines: 16 (36.36%)
+    '   Total Lines: 43
+    '    Code Lines: 15 (34.88%)
+    ' Comment Lines: 16 (37.21%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 13 (29.55%)
+    '   Blank Lines: 12 (27.91%)
     '     File Size: 1.49 KB
 
 
@@ -50,7 +50,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 ''' <summary>
 ''' Kruskal-Wallis 检验结果结构体，存储单个分类单元（物种/OTU）的检验统计量

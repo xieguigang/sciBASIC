@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::afdf00e8510c9ab87959893a90aa2615, Data_science\Mathematica\Math\CVODE_Solver\CVODESolver.vb"
+﻿#Region "Microsoft.VisualBasic::5bb39acf784da594f14f717977f1aff4, Data_science\Mathematica\Math\CVODE_Solver\CVODESolver.vb"
 
     ' Author:
     ' 
@@ -34,12 +34,12 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 914
-    '    Code Lines: 511 (55.91%)
-    ' Comment Lines: 241 (26.37%)
+    '   Total Lines: 912
+    '    Code Lines: 511 (56.03%)
+    ' Comment Lines: 241 (26.43%)
     '    - Xml Docs: 50.62%
     ' 
-    '   Blank Lines: 162 (17.72%)
+    '   Blank Lines: 160 (17.54%)
     '     File Size: 25.58 KB
 
 
@@ -57,7 +57,6 @@
     '     Sub: AdjustStepAndOrder, ComputeErrorWeights, ComputeNumericalJacobian, ConstructSystemMatrix, (+2 Overloads) Dispose
     '          Initialize, InitializeCoefficients, PredictAdams, PredictBDF, (+2 Overloads) SetAbsoluteTolerance
     '          SetJacobianFunction, SetMaxStep, SetMinStep, SetRelativeTolerance, UpdateHistory
-    ' 
     ' 
     ' /********************************************************************************/
 
@@ -975,6 +974,3 @@ Public Class CVODESolver : Implements IDisposable
 #End Region
 
 End Class
-
-
-

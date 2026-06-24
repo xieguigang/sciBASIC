@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6086283d20e86d53604668ddd2051244, Microsoft.VisualBasic.Core\src\Extensions\Math\Math.vb"
+﻿#Region "Microsoft.VisualBasic::ad1a489b8700945d5bda2fd13ce0d078, Microsoft.VisualBasic.Core\src\Extensions\Math\Math.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 948
-    '    Code Lines: 539 (56.86%)
-    ' Comment Lines: 294 (31.01%)
-    '    - Xml Docs: 82.99%
+    '   Total Lines: 957
+    '    Code Lines: 544 (56.84%)
+    ' Comment Lines: 297 (31.03%)
+    '    - Xml Docs: 83.16%
     ' 
-    '   Blank Lines: 115 (12.13%)
-    '     File Size: 33.31 KB
+    '   Blank Lines: 116 (12.12%)
+    '     File Size: 33.67 KB
 
 
     '     Module VBMath
@@ -49,8 +49,8 @@
     '                   EuclidGcd, Factorial, FactorialSequence, Hypot, (+2 Overloads) IsPowerOf2
     '                   LeastCommonMultiple, (+2 Overloads) Log2, LogN, (+2 Overloads) Max, Permut
     '                   PoissonPDF, Pow2, (+3 Overloads) ProductALL, (+3 Overloads) RangesAt, RMS
-    '                   RMSE, (+2 Overloads) RSD, (+4 Overloads) SD, (+2 Overloads) seq, SteinGcd
-    '                   (+5 Overloads) Sum, WeighedAverage, WeightedMedian, WeightedMedianOptimized
+    '                   RMSE, (+2 Overloads) RSD, SafeNegLog10, (+4 Overloads) SD, (+2 Overloads) seq
+    '                   SteinGcd, (+5 Overloads) Sum, WeighedAverage, WeightedMedian, WeightedMedianOptimized
     ' 
     ' 
     ' /********************************************************************************/

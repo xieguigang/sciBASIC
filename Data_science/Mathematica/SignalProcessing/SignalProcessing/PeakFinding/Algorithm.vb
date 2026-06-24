@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ed63f0d987b9bd57becec84d5f9c0eac, Data_science\Mathematica\SignalProcessing\SignalProcessing\PeakFinding\Algorithm.vb"
+﻿#Region "Microsoft.VisualBasic::00d6558819abf6068247554598026c49, Data_science\Mathematica\SignalProcessing\SignalProcessing\PeakFinding\Algorithm.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 41.67%
     ' 
     '   Blank Lines: 22 (12.64%)
-    '     File Size: 7.41 KB
+    '     File Size: 7.44 KB
 
 
     '     Class ElevationAlgorithm

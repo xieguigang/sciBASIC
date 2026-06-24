@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d65c4670f954805a500e852d4b2aa293, Data_science\Mathematica\SignalProcessing\SignalProcessing\Sampler\Interpolation.vb"
+﻿#Region "Microsoft.VisualBasic::141e320ef8cc4649e7b200ecab9ec4c3, Data_science\Mathematica\SignalProcessing\SignalProcessing\Sampler\Interpolation.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 39
-    '    Code Lines: 31 (79.49%)
-    ' Comment Lines: 3 (7.69%)
-    '    - Xml Docs: 100.00%
+    '   Total Lines: 50
+    '    Code Lines: 31 (62.00%)
+    ' Comment Lines: 14 (28.00%)
+    '    - Xml Docs: 92.86%
     ' 
-    '   Blank Lines: 5 (12.82%)
-    '     File Size: 1.61 KB
+    '   Blank Lines: 5 (10.00%)
+    '     File Size: 1.95 KB
 
 
     ' Module Interpolation

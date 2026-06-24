@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1127e3a7ce14c46b7cf9266d983f2a6a, Data_science\Mathematica\SignalProcessing\SignalProcessing\PeakFinding\Implement.vb"
+﻿#Region "Microsoft.VisualBasic::eac154b9dc15721a13edc0b993ee4ea6, Data_science\Mathematica\SignalProcessing\SignalProcessing\PeakFinding\Implement.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 66.67%
     ' 
     '   Blank Lines: 11 (12.22%)
-    '     File Size: 3.85 KB
+    '     File Size: 3.84 KB
 
 
     '     Module Implement

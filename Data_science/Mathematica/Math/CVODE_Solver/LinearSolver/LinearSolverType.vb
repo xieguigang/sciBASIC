@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::77159f27e1464043aba3c88e04fcaf0b, Data_science\Mathematica\Math\CVODE_Solver\LinearSolver\LinearSolverType.vb"
+﻿#Region "Microsoft.VisualBasic::4e579d9b98f25df843018e24a5e03426, Data_science\Mathematica\Math\CVODE_Solver\LinearSolver\LinearSolverType.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 18
-    '    Code Lines: 5 (27.78%)
-    ' Comment Lines: 12 (66.67%)
+    '   Total Lines: 17
+    '    Code Lines: 5 (29.41%)
+    ' Comment Lines: 12 (70.59%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 1 (5.56%)
-    '     File Size: 360 B
+    '   Blank Lines: 0 (0.00%)
+    '     File Size: 358 B
 
 
     ' Enum LinearSolverType
@@ -54,7 +54,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 ''' <summary>
 ''' 线性求解器类型枚举

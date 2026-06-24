@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::595459d9199922530d6aee5e631fdafe, Data_science\Mathematica\Math\ANOVA\KruskalWallis\KruskalWallisModule.vb"
+﻿#Region "Microsoft.VisualBasic::22d176c6cae83a0de10adc64e5d1aead, Data_science\Mathematica\Math\ANOVA\KruskalWallis\KruskalWallisModule.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 65.26%
     ' 
     '   Blank Lines: 123 (16.49%)
-    '     File Size: 28.30 KB
+    '     File Size: 28.29 KB
 
 
     ' Module KruskalWallisModule
@@ -802,4 +802,3 @@ Public Module KruskalWallisModule
         Return corrected
     End Function
 End Module
-

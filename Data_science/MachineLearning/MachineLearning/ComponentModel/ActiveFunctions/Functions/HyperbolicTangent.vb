@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0748dc17bfa88a15051a4ad455c57fd3, Data_science\MachineLearning\MachineLearning\ComponentModel\ActiveFunctions\Functions\HyperbolicTangent.vb"
+﻿#Region "Microsoft.VisualBasic::6c4ba4f6617962a4d73cb4d030be1fd2, Data_science\MachineLearning\MachineLearning\ComponentModel\ActiveFunctions\Functions\HyperbolicTangent.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 86.36%
     ' 
     '   Blank Lines: 7 (12.50%)
-    '     File Size: 1.64 KB
+    '     File Size: 1.63 KB
 
 
     '     Class HyperbolicTangent

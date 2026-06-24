@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ca8e9ebe6a1dae676049d89e9bfda6d9, Data_science\Mathematica\Math\CVODE_Solver\LinearSolver\BandLinearSolver.vb"
+﻿#Region "Microsoft.VisualBasic::46a634395aec70b872c76b65745d4e12, Data_science\Mathematica\Math\CVODE_Solver\LinearSolver\BandLinearSolver.vb"
 
     ' Author:
     ' 
@@ -34,12 +34,12 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 200
-    '    Code Lines: 128 (64.00%)
-    ' Comment Lines: 40 (20.00%)
+    '   Total Lines: 198
+    '    Code Lines: 128 (64.65%)
+    ' Comment Lines: 40 (20.20%)
     '    - Xml Docs: 62.50%
     ' 
-    '   Blank Lines: 32 (16.00%)
+    '   Blank Lines: 30 (15.15%)
     '     File Size: 6.57 KB
 
 
@@ -50,7 +50,6 @@
     '     Function: Factorize, GetElement, Solve
     ' 
     '     Sub: LoadFromDense, SetElement
-    ' 
     ' 
     ' /********************************************************************************/
 
@@ -254,6 +253,3 @@ Public Class BandLinearSolver
 #End Region
 
 End Class
-
-
-

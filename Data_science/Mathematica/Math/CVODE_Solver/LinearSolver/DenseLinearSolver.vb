@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4ba3d1dc414b074909ef8dea7e6dde19, Data_science\Mathematica\Math\CVODE_Solver\LinearSolver\DenseLinearSolver.vb"
+﻿#Region "Microsoft.VisualBasic::b498197964c1de58229c1ceb44a8d9a0, Data_science\Mathematica\Math\CVODE_Solver\LinearSolver\DenseLinearSolver.vb"
 
     ' Author:
     ' 
@@ -332,4 +332,3 @@ Public Class DenseLinearSolver
 #End Region
 
 End Class
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::30a2ce0641911cf53cf7615b2eb743cb, Microsoft.VisualBasic.Core\src\Data\Trinity\Expression.vb"
+﻿#Region "Microsoft.VisualBasic::c587608ec616520de4d1dc3071fd5b03, Microsoft.VisualBasic.Core\src\Data\Trinity\Expression.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 54
-    '    Code Lines: 35 (64.81%)
-    ' Comment Lines: 12 (22.22%)
+    '   Total Lines: 56
+    '    Code Lines: 35 (62.50%)
+    ' Comment Lines: 14 (25.00%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 7 (12.96%)
-    '     File Size: 2.16 KB
+    '   Blank Lines: 7 (12.50%)
+    '     File Size: 2.27 KB
 
 
     '     Module Expression

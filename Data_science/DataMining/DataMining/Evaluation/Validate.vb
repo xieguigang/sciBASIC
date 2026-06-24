@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d0b77250564abb52ce7fc40e1741e987, Data_science\DataMining\DataMining\Evaluation\Validate.vb"
+﻿#Region "Microsoft.VisualBasic::ef1eece3799a116478e42c46d79d305a, Data_science\DataMining\DataMining\Evaluation\Validate.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 12 (13.48%)
-    '     File Size: 3.41 KB
+    '     File Size: 3.40 KB
 
 
     '     Structure Validate

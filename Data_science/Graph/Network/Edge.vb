@@ -1,58 +1,66 @@
-﻿#Region "Microsoft.VisualBasic::6fb4e0a7df136478bb06f391265b1dd0, Data_science\Graph\Network\Edge.vb"
+﻿#Region "Microsoft.VisualBasic::2a028d7a4af73b5c5f330dd0f9f72fd0, Data_science\Graph\Network\Edge.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 30
-'    Code Lines: 10 (33.33%)
-' Comment Lines: 15 (50.00%)
-'    - Xml Docs: 100.00%
-' 
-'   Blank Lines: 5 (16.67%)
-'     File Size: 734 B
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Class Edge
-' 
-'         Constructor: (+1 Overloads) Sub New
-' 
-'     Interface IndexEdge
-' 
-'         Properties: U, V
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 73
+    '    Code Lines: 43 (58.90%)
+    ' Comment Lines: 15 (20.55%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 15 (20.55%)
+    '     File Size: 2.40 KB
+
+
+    '     Class Edge
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
+    '     Interface IndexEdge
+    ' 
+    '         Properties: U, V
+    ' 
+    '     Interface IndexGraph
+    ' 
+    '         Properties: Edges, Nodes
+    ' 
+    '     Module IndexGraphExtensions
+    ' 
+    '         Function: (+2 Overloads) FromNetwork
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

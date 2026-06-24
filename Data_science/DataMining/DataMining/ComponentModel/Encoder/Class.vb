@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d229944fe1f0cace0e11f284f9baa895, Data_science\DataMining\DataMining\ComponentModel\Encoder\Class.vb"
+﻿#Region "Microsoft.VisualBasic::6cfab83f79b713e178fbfb1c96bd41d3, Data_science\DataMining\DataMining\ComponentModel\Encoder\Class.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 98.65%
     ' 
     '   Blank Lines: 22 (12.94%)
-    '     File Size: 5.80 KB
+    '     File Size: 5.79 KB
 
 
     '     Class ColorClass

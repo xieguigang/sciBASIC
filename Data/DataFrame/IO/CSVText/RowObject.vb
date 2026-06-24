@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fcc9f2e88182ce26fd5182706f953f5e, Data\DataFrame\IO\CSVText\RowObject.vb"
+﻿#Region "Microsoft.VisualBasic::233b7bb16902dade27c0cb1f77b81025, Data\DataFrame\IO\CSVText\RowObject.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 99.29%
     ' 
     '   Blank Lines: 61 (12.15%)
-    '     File Size: 19.09 KB
+    '     File Size: 19.08 KB
 
 
     '     Class RowObject

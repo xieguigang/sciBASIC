@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::58d7075b7a4d865220169476e4f13b17, Data\MyersDiff\DiffResult.vb"
+﻿#Region "Microsoft.VisualBasic::15dd337ca01f584b97d2fca411de6e5a, Data\MyersDiff\DiffResult.vb"
 
     ' Author:
     ' 
@@ -34,12 +34,12 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 249
-    '    Code Lines: 169 (67.87%)
-    ' Comment Lines: 43 (17.27%)
+    '   Total Lines: 247
+    '    Code Lines: 169 (68.42%)
+    ' Comment Lines: 43 (17.41%)
     '    - Xml Docs: 62.79%
     ' 
-    '   Blank Lines: 37 (14.86%)
+    '   Blank Lines: 35 (14.17%)
     '     File Size: 9.84 KB
 
 
@@ -53,8 +53,6 @@
     ' /********************************************************************************/
 
 #End Region
-
-
 
 ' -----------------------------------------------------------------------
 ' 差异结果：封装完整的比较结果
@@ -303,4 +301,3 @@ Public Class DiffResult
         End If
     End Function
 End Class
-

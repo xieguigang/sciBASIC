@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::46d56b3c166df9607a9b952261c6cebf, Data\MyersDiff\MyersDiff.vb"
+﻿#Region "Microsoft.VisualBasic::2f429449e4c2653e3aa5e28ade29d2d0, Data\MyersDiff\MyersDiff.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 399
-    '    Code Lines: 195 (48.87%)
-    ' Comment Lines: 141 (35.34%)
+    '   Total Lines: 398
+    '    Code Lines: 195 (48.99%)
+    ' Comment Lines: 141 (35.43%)
     '    - Xml Docs: 35.46%
     ' 
-    '   Blank Lines: 63 (15.79%)
-    '     File Size: 16.73 KB
+    '   Blank Lines: 62 (15.58%)
+    '     File Size: 16.72 KB
 
 
     ' Class MyersDiff
@@ -52,7 +52,6 @@
     '         Properties: NewIndex, OldIndex, Type
     ' 
     '         Constructor: (+1 Overloads) Sub New
-    ' 
     ' 
     ' 
     ' 
@@ -458,5 +457,3 @@ Public Class MyersDiff
     End Function
 
 End Class
-
-

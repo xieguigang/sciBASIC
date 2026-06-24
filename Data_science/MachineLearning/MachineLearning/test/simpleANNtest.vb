@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::960cd1390534080d80438e768fceb44a, Data_science\MachineLearning\MachineLearning\test\simpleANNtest.vb"
+﻿#Region "Microsoft.VisualBasic::310d7994a44f0589e39751fc080da84d, Data_science\MachineLearning\MachineLearning\test\simpleANNtest.vb"
 
     ' Author:
     ' 
@@ -45,7 +45,7 @@
 
     ' Module simpleANNtest
     ' 
-    '     Sub: Main
+    '     Sub: Main1
     ' 
     ' /********************************************************************************/
 

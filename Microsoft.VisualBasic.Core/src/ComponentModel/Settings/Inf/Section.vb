@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::21e0ecc5295458f0b1869c321c3475b4, Microsoft.VisualBasic.Core\src\ComponentModel\Settings\Inf\Section.vb"
+﻿#Region "Microsoft.VisualBasic::364fde4d4a0f170e98965e25e245cefc, Microsoft.VisualBasic.Core\src\ComponentModel\Settings\Inf\Section.vb"
 
     ' Author:
     ' 
@@ -34,20 +34,20 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 136
-    '    Code Lines: 85 (62.50%)
-    ' Comment Lines: 30 (22.06%)
+    '   Total Lines: 146
+    '    Code Lines: 93 (63.70%)
+    ' Comment Lines: 30 (20.55%)
     '    - Xml Docs: 93.33%
     ' 
-    '   Blank Lines: 21 (15.44%)
-    '     File Size: 4.49 KB
+    '   Blank Lines: 23 (15.75%)
+    '     File Size: 4.87 KB
 
 
     '     Class Section
     ' 
     '         Properties: Comment, Items, Name
     ' 
-    '         Function: CreateDocFragment, GetValue, Have, ToString
+    '         Function: CreateDocFragment, GenericEnumerator, GetValue, Have, ToString
     ' 
     '         Sub: appendComments, Delete, SetComments, SetValue
     ' 

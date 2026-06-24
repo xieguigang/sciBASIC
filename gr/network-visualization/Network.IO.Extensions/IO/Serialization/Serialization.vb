@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::df78ceb56cd85c629caa857ddb6bbe12, gr\network-visualization\Network.IO.Extensions\IO\Serialization\Serialization.vb"
+﻿#Region "Microsoft.VisualBasic::2d1df9611d63de9337c249d849d89578, gr\network-visualization\Network.IO.Extensions\IO\Serialization\Serialization.vb"
 
     ' Author:
     ' 
@@ -117,4 +117,3 @@ Public Module Serialization
     End Function
 
 End Module
-

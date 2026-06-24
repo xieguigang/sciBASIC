@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::dfaf73a84231a59129946704e4910e21, Data_science\Mathematica\Math\CVODE_Solver\CVODEBuilder.vb"
+﻿#Region "Microsoft.VisualBasic::08003548382d3dd4f04514a3b6be1391, Data_science\Mathematica\Math\CVODE_Solver\CVODEBuilder.vb"
 
     ' Author:
     ' 
@@ -34,12 +34,12 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 107
-    '    Code Lines: 57 (53.27%)
-    ' Comment Lines: 34 (31.78%)
+    '   Total Lines: 106
+    '    Code Lines: 57 (53.77%)
+    ' Comment Lines: 34 (32.08%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 16 (14.95%)
+    '   Blank Lines: 15 (14.15%)
     '     File Size: 2.95 KB
 
 
@@ -51,7 +51,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 ''' <summary>
 ''' CVODE求解器构建器
@@ -159,4 +158,3 @@ Public Class CVODEBuilder
     End Function
 
 End Class
-

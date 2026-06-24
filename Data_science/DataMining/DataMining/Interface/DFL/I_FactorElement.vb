@@ -1,56 +1,56 @@
-﻿#Region "Microsoft.VisualBasic::0748f70313fc01e2b6809c5f8a59e771, Data_science\DataMining\DataMining\Interface\DFL\I_FactorElement.vb"
+﻿#Region "Microsoft.VisualBasic::f470e9b3233427fa75024e2dd050e0eb, Data_science\DataMining\DataMining\Interface\DFL\I_FactorElement.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 120
-'    Code Lines: 62 (51.67%)
-' Comment Lines: 42 (35.00%)
-'    - Xml Docs: 100.00%
-' 
-'   Blank Lines: 16 (13.33%)
-'     File Size: 4.56 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Class I_FactorElement
-' 
-'         Properties: FunctionalState, Quantity, Weight
-' 
-'         Function: get_InteractionQuantity, Internal_getEventProbabilities, set_Quantity, ShadowCopy, ToString
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 120
+    '    Code Lines: 62 (51.67%)
+    ' Comment Lines: 42 (35.00%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 16 (13.33%)
+    '     File Size: 4.55 KB
+
+
+    '     Class I_FactorElement
+    ' 
+    '         Properties: FunctionalState, Quantity, Weight
+    ' 
+    '         Function: get_InteractionQuantity, Internal_getEventProbabilities, set_Quantity, ShadowCopy, ToString
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

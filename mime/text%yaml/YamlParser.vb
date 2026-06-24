@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b1c8fe8741ffbf288b5b5f6f169b92e4, mime\text%yaml\YamlParser.vb"
+﻿#Region "Microsoft.VisualBasic::8e16ba821926c90cd2b27b2ce686fe88, mime\text%yaml\YamlParser.vb"
 
     ' Author:
     ' 
@@ -34,12 +34,12 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 1280
-    '    Code Lines: 826 (64.53%)
-    ' Comment Lines: 280 (21.88%)
+    '   Total Lines: 1278
+    '    Code Lines: 826 (64.63%)
+    ' Comment Lines: 280 (21.91%)
     '    - Xml Docs: 37.14%
     ' 
-    '   Blank Lines: 174 (13.59%)
+    '   Blank Lines: 172 (13.46%)
     '     File Size: 51.15 KB
 
 
@@ -53,7 +53,6 @@
     '               SplitFlowItems, StripComment, TryParseInteger, UnescapeDoubleQuotedString, UnquoteString
     ' 
     '     Sub: Reset
-    ' 
     ' 
     ' /********************************************************************************/
 
@@ -1337,6 +1336,3 @@ Public Class YamlParser
 #End Region
 
 End Class
-
-
-

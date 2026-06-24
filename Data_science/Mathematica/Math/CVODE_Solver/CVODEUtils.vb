@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f19f28cca0667f0992b0d59787d4630a, Data_science\Mathematica\Math\CVODE_Solver\CVODEUtils.vb"
+﻿#Region "Microsoft.VisualBasic::b30875eaa1f693967dfe024d01fce305, Data_science\Mathematica\Math\CVODE_Solver\CVODEUtils.vb"
 
     ' Author:
     ' 
@@ -34,12 +34,12 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 53
-    '    Code Lines: 30 (56.60%)
-    ' Comment Lines: 15 (28.30%)
+    '   Total Lines: 51
+    '    Code Lines: 30 (58.82%)
+    ' Comment Lines: 15 (29.41%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 8 (15.09%)
+    '   Blank Lines: 6 (11.76%)
     '     File Size: 1.41 KB
 
 
@@ -48,11 +48,9 @@
     '     Constructor: (+1 Overloads) Sub New
     '     Function: DefaultOptions, HighPrecisionOptions, NonStiffOptions, StiffOptions
     ' 
-    ' 
     ' /********************************************************************************/
 
 #End Region
-
 
 ''' <summary>
 ''' CVODE工具类
@@ -105,5 +103,3 @@ Public NotInheritable Class CVODEUtils
     End Function
 
 End Class
-
-

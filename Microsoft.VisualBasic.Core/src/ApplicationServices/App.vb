@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::91bcf8ae19fa20a29c090bdfaaf3bc34, Microsoft.VisualBasic.Core\src\ApplicationServices\App.vb"
+﻿#Region "Microsoft.VisualBasic::2ac81b93b3461a78ef0726b937ead305, Microsoft.VisualBasic.Core\src\ApplicationServices\App.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 1600
-    '    Code Lines: 776 (48.50%)
-    ' Comment Lines: 639 (39.94%)
-    '    - Xml Docs: 83.41%
+    '   Total Lines: 1608
+    '    Code Lines: 780 (48.51%)
+    ' Comment Lines: 642 (39.93%)
+    '    - Xml Docs: 83.02%
     ' 
-    '   Blank Lines: 185 (11.56%)
-    '     File Size: 68.80 KB
+    '   Blank Lines: 186 (11.57%)
+    '     File Size: 69.23 KB
 
 
     ' Module App

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4327f967e9da14991349520d6800c41e, Data_science\Graph\Analysis\Ullmann.vb"
+﻿#Region "Microsoft.VisualBasic::82c77f26810f024b0ea23cae82ca537b, Data_science\Graph\Analysis\Ullmann.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 87.50%
     ' 
     '   Blank Lines: 23 (13.77%)
-    '     File Size: 6.53 KB
+    '     File Size: 6.52 KB
 
 
     '     Class Ullmann

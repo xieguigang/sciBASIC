@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::37fe3731cbaeb510abdef53908c1a831, Data_science\Graph\Network\Bipartite\BipartiteEdge.vb"
+﻿#Region "Microsoft.VisualBasic::6d6b63a4794977f6d06bcb8f790e1a85, Data_science\Graph\Network\Bipartite\BipartiteEdge.vb"
 
     ' Author:
     ' 
@@ -34,12 +34,12 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 69
-    '    Code Lines: 44 (63.77%)
-    ' Comment Lines: 15 (21.74%)
+    '   Total Lines: 68
+    '    Code Lines: 44 (64.71%)
+    ' Comment Lines: 15 (22.06%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 10 (14.49%)
+    '   Blank Lines: 9 (13.24%)
     '     File Size: 2.15 KB
 
 
@@ -56,7 +56,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 Imports Microsoft.VisualBasic.Data.GraphTheory.Network
 
@@ -126,4 +125,3 @@ Friend Class BipartiteEdge : Implements IndexEdge
         Return "(" & fromVertex.ToString() & " --> " & toVertex.ToString() & ")"
     End Function
 End Class
-

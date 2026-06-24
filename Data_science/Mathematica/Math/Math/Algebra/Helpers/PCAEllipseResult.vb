@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1864a2f93dd00f3fe4df5b55d57b4e32, Data_science\Mathematica\Math\Math\Algebra\Helpers\PCAEllipseResult.vb"
+﻿#Region "Microsoft.VisualBasic::51705d83c872ed07013c97005aa60621, Data_science\Mathematica\Math\Math\Algebra\Helpers\PCAEllipseResult.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 70.94%
     ' 
     '   Blank Lines: 61 (15.68%)
-    '     File Size: 14.76 KB
+    '     File Size: 14.80 KB
 
 
     '     Class PCAEllipseResult

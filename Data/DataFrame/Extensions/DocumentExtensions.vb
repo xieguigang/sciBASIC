@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7c6d48230ee988a626b2fc6586689ca3, Data\DataFrame\Extensions\DocumentExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::8dfa02ef5b1461ad78524621088f4d31, Data\DataFrame\Extensions\DocumentExtensions.vb"
 
     ' Author:
     ' 
@@ -34,21 +34,21 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 521
-    '    Code Lines: 313 (60.08%)
-    ' Comment Lines: 138 (26.49%)
-    '    - Xml Docs: 92.75%
+    '   Total Lines: 543
+    '    Code Lines: 326 (60.04%)
+    ' Comment Lines: 143 (26.34%)
+    '    - Xml Docs: 93.01%
     ' 
-    '   Blank Lines: 70 (13.44%)
-    '     File Size: 19.62 KB
+    '   Blank Lines: 74 (13.63%)
+    '     File Size: 20.34 KB
 
 
     ' Module DocumentExtensions
     ' 
-    '     Function: Apply, CreateTable, DirectAppends, Distinct, GetColumnObjects
-    '               (+4 Overloads) GetColumnValues, GetLastRow, JoinColumns, LoadCsv, LoadData
-    '               LoadDictionary, LoadMappings, LoadTable, (+3 Overloads) LoadTsv, Normalization
-    '               ParseDoc, (+2 Overloads) SaveAsDataFrame, SaveTsv, TsvLine
+    '     Function: Apply, AsJSONObjects, CreateTable, DirectAppends, Distinct
+    '               GetColumnObjects, (+4 Overloads) GetColumnValues, GetLastRow, JoinColumns, LoadCsv
+    '               LoadData, LoadDictionary, LoadMappings, LoadTable, (+3 Overloads) LoadTsv
+    '               Normalization, ParseDoc, (+2 Overloads) SaveAsDataFrame, SaveTsv, TsvLine
     ' 
     ' /********************************************************************************/
 

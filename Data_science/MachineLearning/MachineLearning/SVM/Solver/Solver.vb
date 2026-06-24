@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::159491a39d386ddc3c151916715448a2, Data_science\MachineLearning\MachineLearning\SVM\Solver\Solver.vb"
+﻿#Region "Microsoft.VisualBasic::049f5119a6c621ef7ab8c67e280d38c4, Data_science\MachineLearning\MachineLearning\SVM\Solver\Solver.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 28.57%
     ' 
     '   Blank Lines: 125 (19.05%)
-    '     File Size: 21.52 KB
+    '     File Size: 21.49 KB
 
 
     '     Class Solver

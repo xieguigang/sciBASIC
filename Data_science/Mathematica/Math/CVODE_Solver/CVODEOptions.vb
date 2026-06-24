@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a6dc023c76e42cdcfb4cc88639f6b716, Data_science\Mathematica\Math\CVODE_Solver\CVODEOptions.vb"
+﻿#Region "Microsoft.VisualBasic::fd1f2fa38f68998d2ecf97a6ee3c86e4, Data_science\Mathematica\Math\CVODE_Solver\CVODEOptions.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 75
-    '    Code Lines: 16 (21.33%)
-    ' Comment Lines: 45 (60.00%)
+    '   Total Lines: 74
+    '    Code Lines: 16 (21.62%)
+    ' Comment Lines: 45 (60.81%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 14 (18.67%)
-    '     File Size: 1.93 KB
+    '   Blank Lines: 13 (17.57%)
+    '     File Size: 1.92 KB
 
 
     ' Class CVODEOptions
@@ -52,7 +52,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 ''' <summary>
 ''' CVODE求解器配置选项
@@ -128,4 +127,3 @@ Public Class CVODEOptions
     ''' </summary>
     Public Property JacobianUpdateFrequency As Integer = 20
 End Class
-

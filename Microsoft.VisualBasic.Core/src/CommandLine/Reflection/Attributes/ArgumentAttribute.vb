@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c52e3666517e6b88ff6fc67c40087d51, Microsoft.VisualBasic.Core\src\CommandLine\Reflection\Attributes\ArgumentAttribute.vb"
+﻿#Region "Microsoft.VisualBasic::e9adc2b4fc68f0216b4626429d10de67, Microsoft.VisualBasic.Core\src\CommandLine\Reflection\Attributes\ArgumentAttribute.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 95.65%
     ' 
     '   Blank Lines: 21 (12.43%)
-    '     File Size: 6.27 KB
+    '     File Size: 6.30 KB
 
 
     '     Class ArgumentAttribute

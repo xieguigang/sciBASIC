@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cfb249db5266f8a6d021fcc96eabf313, Data_science\Mathematica\Math\Math.Statistics\HypothesisTesting\FTest.vb"
+﻿#Region "Microsoft.VisualBasic::5445d12c16181cb867c118af7a64c15a, Data_science\Mathematica\Math\Math.Statistics\HypothesisTesting\FTest.vb"
 
     ' Author:
     ' 
@@ -34,19 +34,19 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 100
-    '    Code Lines: 74 (74.00%)
-    ' Comment Lines: 10 (10.00%)
-    '    - Xml Docs: 80.00%
+    '   Total Lines: 149
+    '    Code Lines: 99 (66.44%)
+    ' Comment Lines: 24 (16.11%)
+    '    - Xml Docs: 50.00%
     ' 
-    '   Blank Lines: 16 (16.00%)
-    '     File Size: 2.52 KB
+    '   Blank Lines: 26 (17.45%)
+    '     File Size: 4.52 KB
 
 
     ' Class FTest
     ' 
-    '     Properties: F, PValue, SingleTailedPval, XdegreeOfFreedom, XVariance
-    '                 YdegreeOfFreedom, YVariance
+    '     Properties: ConfidenceInterval95, F, PValue, SingleTailedPval, XdegreeOfFreedom
+    '                 XVariance, YdegreeOfFreedom, YVariance
     ' 
     '     Constructor: (+1 Overloads) Sub New
     '     Function: ToString

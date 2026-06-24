@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ac4159cf97bc059eed1ca0144d767aaf, Data_science\MachineLearning\MachineLearning\ComponentModel\ActiveFunctions\Functions\BipolarSigmoid.vb"
+﻿#Region "Microsoft.VisualBasic::dbcbabb59589e74901b504eda00b6e55, Data_science\MachineLearning\MachineLearning\ComponentModel\ActiveFunctions\Functions\BipolarSigmoid.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 66.67%
     ' 
     '   Blank Lines: 10 (8.77%)
-    '     File Size: 3.98 KB
+    '     File Size: 3.97 KB
 
 
     '     Class BipolarSigmoid

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bbbada10989e5ff9c0b34e481f825ea1, Data\MyersDiff\DiffItem.vb"
+﻿#Region "Microsoft.VisualBasic::d22db43d2fc08d866a3aad9128f2aff6, Data\MyersDiff\DiffItem.vb"
 
     ' Author:
     ' 
@@ -34,12 +34,12 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 41
-    '    Code Lines: 24 (58.54%)
-    ' Comment Lines: 10 (24.39%)
+    '   Total Lines: 39
+    '    Code Lines: 24 (61.54%)
+    ' Comment Lines: 10 (25.64%)
     '    - Xml Docs: 70.00%
     ' 
-    '   Blank Lines: 7 (17.07%)
+    '   Blank Lines: 5 (12.82%)
     '     File Size: 1.53 KB
 
 
@@ -53,8 +53,6 @@
     ' /********************************************************************************/
 
 #End Region
-
-
 
 ' -----------------------------------------------------------------------
 ' 差异项：记录单个编辑操作

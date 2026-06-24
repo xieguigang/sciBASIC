@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::aad8d978585990a89ab2cd3e36d723d6, Data_science\Mathematica\Math\CVODE_Solver\LinearSolver\LinearSolverResult.vb"
+﻿#Region "Microsoft.VisualBasic::09a9cacc96eee4d04c6d6c8ee5681cbd, Data_science\Mathematica\Math\CVODE_Solver\LinearSolver\LinearSolverResult.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 23
-    '    Code Lines: 6 (26.09%)
-    ' Comment Lines: 15 (65.22%)
+    '   Total Lines: 21
+    '    Code Lines: 6 (28.57%)
+    ' Comment Lines: 15 (71.43%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 2 (8.70%)
-    '     File Size: 443 B
+    '   Blank Lines: 0 (0.00%)
+    '     File Size: 439 B
 
 
     ' Enum LinearSolverResult
@@ -53,8 +53,6 @@
     ' /********************************************************************************/
 
 #End Region
-
-
 
 ''' <summary>
 ''' 线性求解器返回状态

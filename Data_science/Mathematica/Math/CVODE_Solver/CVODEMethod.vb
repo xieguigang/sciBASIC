@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::419422fa2ea4b2ff7f0a30038690da5e, Data_science\Mathematica\Math\CVODE_Solver\CVODEMethod.vb"
+﻿#Region "Microsoft.VisualBasic::7e720efb775b2c7d38f939d820334348, Data_science\Mathematica\Math\CVODE_Solver\CVODEMethod.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 16
-    '    Code Lines: 4 (25.00%)
-    ' Comment Lines: 11 (68.75%)
+    '   Total Lines: 15
+    '    Code Lines: 4 (26.67%)
+    ' Comment Lines: 11 (73.33%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 1 (6.25%)
-    '     File Size: 348 B
+    '   Blank Lines: 0 (0.00%)
+    '     File Size: 346 B
 
 
     ' Enum CVODEMethod
@@ -54,7 +54,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 ''' <summary>
 ''' 求解方法枚举

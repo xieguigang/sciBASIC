@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::47f3d9d66d372f5293fdefd838cc475d, Data_science\Mathematica\Math\CVODE_Solver\Func.vb"
+﻿#Region "Microsoft.VisualBasic::3fa45978bf337c23fb87a8e2c88e76c3, Data_science\Mathematica\Math\CVODE_Solver\Func.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 27
-    '    Code Lines: 3 (11.11%)
-    ' Comment Lines: 21 (77.78%)
+    '   Total Lines: 26
+    '    Code Lines: 3 (11.54%)
+    ' Comment Lines: 21 (80.77%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 3 (11.11%)
-    '     File Size: 1015 B
+    '   Blank Lines: 2 (7.69%)
+    '     File Size: 1013 B
 
 
     ' Delegate Sub
@@ -60,7 +60,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 ''' <summary>
 ''' 右端函数委托类型

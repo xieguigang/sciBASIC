@@ -1,55 +1,55 @@
-﻿#Region "Microsoft.VisualBasic::8ecb413476b369d318c83ea59d28f6bc, Data_science\DataMining\DataMining\Clustering\HDBSCAN\Distance\CosineSimilarity.vb"
+﻿#Region "Microsoft.VisualBasic::8a91dfc221a09967b1450d2281592e6e, Data_science\DataMining\DataMining\Clustering\HDBSCAN\Distance\CosineSimilarity.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 108
-'    Code Lines: 86 (79.63%)
-' Comment Lines: 4 (3.70%)
-'    - Xml Docs: 75.00%
-' 
-'   Blank Lines: 18 (16.67%)
-'     File Size: 5.30 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Class CosineSimilarity
-' 
-'         Constructor: (+1 Overloads) Sub New
-'         Function: (+2 Overloads) CalculateAndCacheMagnitude, (+2 Overloads) ComputeDistance, GetMostCommonDistanceValueForSparseMatrix
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 107
+    '    Code Lines: 84 (78.50%)
+    ' Comment Lines: 4 (3.74%)
+    '    - Xml Docs: 75.00%
+    ' 
+    '   Blank Lines: 19 (17.76%)
+    '     File Size: 5.23 KB
+
+
+    '     Class CosineSimilarity
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    '         Function: (+2 Overloads) CalculateAndCacheMagnitude, (+2 Overloads) ComputeDistance, GetMostCommonDistanceValueForSparseMatrix
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

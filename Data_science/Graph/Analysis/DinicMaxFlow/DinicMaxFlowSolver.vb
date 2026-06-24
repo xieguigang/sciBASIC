@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::21d5bf3f06ddc76b0d94552984ba51f7, Data_science\Graph\Analysis\DinicMaxFlow\DinicMaxFlowSolver.vb"
+﻿#Region "Microsoft.VisualBasic::b02c18778bb5dd0c45add8a05b6e27e5, Data_science\Graph\Analysis\DinicMaxFlow\DinicMaxFlowSolver.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 0.00%
     ' 
     '   Blank Lines: 43 (15.14%)
-    '     File Size: 12.70 KB
+    '     File Size: 12.69 KB
 
 
     '     Class DinicMaxFlowSolver
@@ -341,4 +341,3 @@ Namespace DinicMaxFlow
     End Class
 
 End Namespace
-

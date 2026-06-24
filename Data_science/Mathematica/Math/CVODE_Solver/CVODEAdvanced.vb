@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::20045b86f1feb8f4d81690fce1180943, Data_science\Mathematica\Math\CVODE_Solver\CVODEAdvanced.vb"
+﻿#Region "Microsoft.VisualBasic::8d5d7037ca240813422057a864521a4a, Data_science\Mathematica\Math\CVODE_Solver\CVODEAdvanced.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 178
-    '    Code Lines: 98 (55.06%)
-    ' Comment Lines: 43 (24.16%)
+    '   Total Lines: 176
+    '    Code Lines: 98 (55.68%)
+    ' Comment Lines: 43 (24.43%)
     '    - Xml Docs: 58.14%
     ' 
-    '   Blank Lines: 37 (20.79%)
-    '     File Size: 5.68 KB
+    '   Blank Lines: 35 (19.89%)
+    '     File Size: 5.67 KB
 
 
     ' Class CVODESolverEx
@@ -50,7 +50,6 @@
     '     Function: CheckRoot, IntegrateWithRootFinding, RefineRoot
     ' 
     '     Sub: SetRootFunction
-    ' 
     ' 
     ' /********************************************************************************/
 
@@ -232,6 +231,3 @@ Public Class CVODESolverEx : Inherits CVODESolver
 #End Region
 
 End Class
-
-
-

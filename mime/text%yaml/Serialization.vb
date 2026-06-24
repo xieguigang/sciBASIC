@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::38a641c8e6d5cc5ec6e91de1672e79d5, mime\text%yaml\Serialization.vb"
+﻿#Region "Microsoft.VisualBasic::3cc65340137deaf3d3e70aab7919109c, mime\text%yaml\Serialization.vb"
 
     ' Author:
     ' 
@@ -76,4 +76,3 @@ Public Module Serialization
         Return New YamlParser().Parse(yaml).CreateObject(Of T)(decodeMetachar:=True)
     End Function
 End Module
-

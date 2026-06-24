@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e4c72b277708c782047ac955e18ac269, Data_science\MachineLearning\MachineLearning\SVM\Parameter\ParameterSelection.vb"
+﻿#Region "Microsoft.VisualBasic::4d7fa37b611e891092f8116ec265d9a6, Data_science\MachineLearning\MachineLearning\SVM\Parameter\ParameterSelection.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 85.84%
     ' 
     '   Blank Lines: 16 (7.44%)
-    '     File Size: 12.17 KB
+    '     File Size: 12.16 KB
 
 
     '     Module ParameterSelection

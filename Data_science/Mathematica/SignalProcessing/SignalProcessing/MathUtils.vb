@@ -1,4 +1,58 @@
-﻿Imports std = System.Math
+﻿#Region "Microsoft.VisualBasic::68900ee6c1238930d999e5dc0afe2137, Data_science\Mathematica\SignalProcessing\SignalProcessing\MathUtils.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 182
+    '    Code Lines: 96 (52.75%)
+    ' Comment Lines: 58 (31.87%)
+    '    - Xml Docs: 84.48%
+    ' 
+    '   Blank Lines: 28 (15.38%)
+    '     File Size: 6.69 KB
+
+
+    ' Module MathUtils
+    ' 
+    '     Function: Convolve, FirstDerivative, Gaussian, LinearInterpolation, MexicanHatWavelet
+    '               MovingAverageSmooth, SavitzkyGolaySmooth, SecondDerivative
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+Imports std = System.Math
 
 ''' <summary>
 ''' 数学辅助工具类，提供信号处理和数值计算所需的基础函数

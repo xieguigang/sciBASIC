@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b7bd9eff8987a9fbe1916e60e72f53f1, Data_science\MachineLearning\MachineLearning\Darwinism\DifferentialEvolution.vb"
+﻿#Region "Microsoft.VisualBasic::81af38373acfe495c95ddf04e1cfe336, Data_science\MachineLearning\MachineLearning\Darwinism\DifferentialEvolution.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 65.82%
     ' 
     '   Blank Lines: 37 (12.50%)
-    '     File Size: 14.10 KB
+    '     File Size: 14.09 KB
 
 
     '     Interface IIndividual

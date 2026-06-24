@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::86ec76740d0812db14dfe7e26b9c269b, gr\network-visualization\Network.IO.Extensions\IO\Serialization\EdgeFile.vb"
+﻿#Region "Microsoft.VisualBasic::c5dbe07c2be8d9260494d68e7c6c3b12, gr\network-visualization\Network.IO.Extensions\IO\Serialization\EdgeFile.vb"
 
     ' Author:
     ' 
@@ -85,4 +85,3 @@ Module EdgeFile
     End Function
 
 End Module
-

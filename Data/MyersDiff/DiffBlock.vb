@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3ed9f2c95dbe2a5a4734523cce4ceeb7, Data\MyersDiff\DiffBlock.vb"
+﻿#Region "Microsoft.VisualBasic::c9de9404f97ff8851bcab5f620b5df8f, Data\MyersDiff\DiffBlock.vb"
 
     ' Author:
     ' 
@@ -34,12 +34,12 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 31
-    '    Code Lines: 14 (45.16%)
-    ' Comment Lines: 11 (35.48%)
+    '   Total Lines: 30
+    '    Code Lines: 14 (46.67%)
+    ' Comment Lines: 11 (36.67%)
     '    - Xml Docs: 72.73%
     ' 
-    '   Blank Lines: 6 (19.35%)
+    '   Blank Lines: 5 (16.67%)
     '     File Size: 1.24 KB
 
 
@@ -52,7 +52,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 ' -----------------------------------------------------------------------
 ' 差异块：连续相同类型差异项的分组，用于统一差异格式输出

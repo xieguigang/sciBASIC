@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5a161df30c189d11db49167a59ffac15, Data_science\Mathematica\Math\CVODE_Solver\DenseMatrix.vb"
+﻿#Region "Microsoft.VisualBasic::d7a013403ec76b21c5f7de652b68bdbd, Data_science\Mathematica\Math\CVODE_Solver\DenseMatrix.vb"
 
     ' Author:
     ' 
@@ -34,12 +34,12 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 466
-    '    Code Lines: 311 (66.74%)
-    ' Comment Lines: 103 (22.10%)
+    '   Total Lines: 464
+    '    Code Lines: 311 (67.03%)
+    ' Comment Lines: 103 (22.20%)
     '    - Xml Docs: 94.17%
     ' 
-    '   Blank Lines: 52 (11.16%)
+    '   Blank Lines: 50 (10.78%)
     '     File Size: 14.03 KB
 
 
@@ -56,7 +56,6 @@
     ' 
     '     Sub: AddInPlace, CopyFrom, ScaleInPlace, SetColumn, SetConstant
     '          SetDiagonal, SetRow
-    ' 
     ' 
     ' /********************************************************************************/
 
@@ -526,6 +525,3 @@ Public Class DenseMatrix : Implements ICloneable
 #End Region
 
 End Class
-
-
-

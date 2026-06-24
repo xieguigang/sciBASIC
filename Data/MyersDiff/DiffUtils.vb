@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::67b28adf970ada9934bb1858a7391dab, Data\MyersDiff\DiffUtils.vb"
+﻿#Region "Microsoft.VisualBasic::25318555f5ae4dcb0820f6f699d08b62, Data\MyersDiff\DiffUtils.vb"
 
     ' Author:
     ' 
@@ -34,12 +34,12 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 64
-    '    Code Lines: 30 (46.88%)
-    ' Comment Lines: 26 (40.62%)
+    '   Total Lines: 63
+    '    Code Lines: 30 (47.62%)
+    ' Comment Lines: 26 (41.27%)
     '    - Xml Docs: 84.62%
     ' 
-    '   Blank Lines: 8 (12.50%)
+    '   Blank Lines: 7 (11.11%)
     '     File Size: 2.77 KB
 
 
@@ -47,7 +47,6 @@
     ' 
     '     Constructor: (+1 Overloads) Sub New
     '     Function: CompareFiles, CompareLines, DiffChars, DiffFiles, DiffLines
-    ' 
     ' 
     ' /********************************************************************************/
 
@@ -116,5 +115,3 @@ Public NotInheritable Class DiffUtils
     End Function
 
 End Class
-
-

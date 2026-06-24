@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::053bccda25d4441c716c447dfbe21d15, gr\network-visualization\Network.IO.Extensions\IO\Serialization\NodeFile.vb"
+﻿#Region "Microsoft.VisualBasic::07ea27835e6f687231f3526b2ae4eef1, gr\network-visualization\Network.IO.Extensions\IO\Serialization\NodeFile.vb"
 
     ' Author:
     ' 
@@ -129,4 +129,3 @@ Module NodeFile
     End Function
 
 End Module
-

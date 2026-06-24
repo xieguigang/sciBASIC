@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6151b35ff43a48a945b448be85569e47, Data_science\MachineLearning\MachineLearning\test\Module1.vb"
+﻿#Region "Microsoft.VisualBasic::f7103ad0f91c170c4c2738409d417229, Data_science\MachineLearning\MachineLearning\test\Module1.vb"
 
     ' Author:
     ' 
@@ -40,12 +40,12 @@
     '    - Xml Docs: 0.00%
     ' 
     '   Blank Lines: 6 (30.00%)
-    '     File Size: 458 B
+    '     File Size: 459 B
 
 
     ' Module Module1
     ' 
-    '     Sub: functionParserTest, Main
+    '     Sub: functionParserTest, Main3
     ' 
     ' /********************************************************************************/
 

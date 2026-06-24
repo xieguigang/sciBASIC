@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fed865f13bf45a9c8ffde369f3464e8a, Microsoft.VisualBasic.Core\src\Drawing\PointF3D.vb"
+﻿#Region "Microsoft.VisualBasic::783fc986840bbe52a1e3f34e1e16f556, Microsoft.VisualBasic.Core\src\Drawing\PointF3D.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 136
-    '    Code Lines: 52 (38.24%)
-    ' Comment Lines: 58 (42.65%)
+    '   Total Lines: 163
+    '    Code Lines: 74 (45.40%)
+    ' Comment Lines: 58 (35.58%)
     '    - Xml Docs: 96.55%
     ' 
-    '   Blank Lines: 26 (19.12%)
-    '     File Size: 3.44 KB
+    '   Blank Lines: 31 (19.02%)
+    '     File Size: 4.40 KB
 
 
     '     Interface PointF3D
@@ -54,6 +54,10 @@
     '     Structure SpatialIndex3D
     ' 
     '         Properties: X, Y, Z
+    ' 
+    '         Constructor: (+2 Overloads) Sub New
+    '         Function: ToString
+    '         Operators: -
     ' 
     '     Interface Layout2D
     ' 

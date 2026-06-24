@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5255172286c1235b947b5646f2111bc4, Data_science\Mathematica\Math\CVODE_Solver\CVODEStatus.vb"
+﻿#Region "Microsoft.VisualBasic::860343060b1d5d2bc1e3ca9a9a4fc00a, Data_science\Mathematica\Math\CVODE_Solver\CVODEStatus.vb"
 
     ' Author:
     ' 
@@ -34,12 +34,12 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 67
-    '    Code Lines: 17 (25.37%)
-    ' Comment Lines: 48 (71.64%)
+    '   Total Lines: 65
+    '    Code Lines: 17 (26.15%)
+    ' Comment Lines: 48 (73.85%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 2 (2.99%)
+    '   Blank Lines: 0 (0.00%)
     '     File Size: 1.38 KB
 
 
@@ -53,8 +53,6 @@
     ' /********************************************************************************/
 
 #End Region
-
-
 
 ''' <summary>
 ''' 求解器返回状态
@@ -121,4 +119,3 @@ Public Enum CVODEStatus
     ''' </summary>
     BadInput = -12
 End Enum
-

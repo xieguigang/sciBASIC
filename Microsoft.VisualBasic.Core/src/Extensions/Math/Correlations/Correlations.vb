@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8c5ac2977695a2823b6cc05d21c3f32c, Microsoft.VisualBasic.Core\src\Extensions\Math\Correlations\Correlations.vb"
+﻿#Region "Microsoft.VisualBasic::85e2e64319d5d68ba4613d3fd63db67f, Microsoft.VisualBasic.Core\src\Extensions\Math\Correlations\Correlations.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 537
-    '    Code Lines: 285 (53.07%)
-    ' Comment Lines: 173 (32.22%)
-    '    - Xml Docs: 85.55%
+    '   Total Lines: 540
+    '    Code Lines: 285 (52.78%)
+    ' Comment Lines: 176 (32.59%)
+    '    - Xml Docs: 85.80%
     ' 
-    '   Blank Lines: 79 (14.71%)
-    '     File Size: 21.13 KB
+    '   Blank Lines: 79 (14.63%)
+    '     File Size: 21.22 KB
 
 
     '     Module Correlations

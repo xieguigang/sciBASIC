@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::80dd78b1156c147ac3b69149bc8dd4a0, Data_science\Mathematica\Math\CVODE_Solver\NVector.vb"
+﻿#Region "Microsoft.VisualBasic::1a48dc1054f086e67037d9ff1feaa406, Data_science\Mathematica\Math\CVODE_Solver\NVector.vb"
 
     ' Author:
     ' 
@@ -34,12 +34,12 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 564
-    '    Code Lines: 367 (65.07%)
-    ' Comment Lines: 136 (24.11%)
+    '   Total Lines: 563
+    '    Code Lines: 367 (65.19%)
+    ' Comment Lines: 136 (24.16%)
     '    - Xml Docs: 95.59%
     ' 
-    '   Blank Lines: 61 (10.82%)
+    '   Blank Lines: 60 (10.66%)
     '     File Size: 16.76 KB
 
 
@@ -57,7 +57,6 @@
     ' 
     '     Sub: AddConstant, AddVector, CopyFrom, DivideElementWiseInPlace, LinearSumInPlace
     '          MultiplyElementWiseInPlace, ScaleInPlace, SetConstant, SubtractVector
-    ' 
     ' 
     ' /********************************************************************************/
 
@@ -626,5 +625,3 @@ Public Class NVector : Implements ICloneable
 #End Region
 
 End Class
-
-
