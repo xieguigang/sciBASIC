@@ -11,6 +11,8 @@
 ' 作者: Qingyan Agent
 ' ============================================================================
 
+Imports Microsoft.VisualBasic.MachineLearning.TensorFlow
+Imports Microsoft.VisualBasic.MachineLearning.VariationalAutoencoder
 Imports std = System.Math
 
 ''' <summary>
@@ -18,7 +20,7 @@ Imports std = System.Math
 ''' </summary>
 Public Class GMVAEDemo
 
-    Public Shared Sub Main(args As String())
+    Public Shared Sub Main1(args As String())
         Console.WriteLine("="c, 80)
         Console.WriteLine("GMVAE (高斯混合变分自编码器) 测试 Demo")
         Console.WriteLine("="c, 80)
@@ -31,7 +33,7 @@ Public Class GMVAEDemo
         Console.WriteLine("-"c, 80)
 
         Dim nClusters = 3
-        Dim dim = 4
+        Dim [dim] = 4
         Dim samplesPerCluster = 100
         Dim totalSamples = nClusters * samplesPerCluster
 
@@ -42,7 +44,7 @@ Public Class GMVAEDemo
             (2.0, -2.0, -2.0, 2.0)
         }
 
-        Console.WriteLine($"数据维度: {dim}D")
+        Console.WriteLine($"数据维度: {[dim]}D")
         Console.WriteLine($"簇数量: {nClusters}")
         Console.WriteLine($"每簇样本数: {samplesPerCluster}")
         Console.WriteLine($"总样本数: {totalSamples}")
@@ -50,7 +52,7 @@ Public Class GMVAEDemo
 
         ' 生成数据
         Dim rng = New Random(42)
-        Dim data = New Double(totalSamples * dim - 1) {}
+        Dim data = New Double(totalSamples * [dim] - 1) {}
         Dim labels = New Integer(totalSamples - 1) {}
 
         For i = 0 To totalSamples - 1
@@ -58,7 +60,7 @@ Public Class GMVAEDemo
             labels(i) = cluster
             Dim c = centers(cluster)
 
-            For d = 0 To dim - 1
+            For d = 0 To [dim] - 1
                 ' Box-Muller 生成正态分布
                 Dim u1 = 1.0 - rng.NextDouble()
                 Dim u2 = 1.0 - rng.NextDouble()
@@ -70,11 +72,11 @@ Public Class GMVAEDemo
                     Case 2 : centerVal = c.Item3
                     Case Else : centerVal = c.Item4
                 End Select
-                data(i * dim + d) = centerVal + z * 0.5
+                data(i * [dim] + d) = centerVal + z * 0.5
             Next
         Next
 
-        Dim X = New Tensor(data, totalSamples, dim)
+        Dim X = New Tensor(data, totalSamples, [dim])
 
         Console.WriteLine("簇中心 (真实):")
         For i = 0 To nClusters - 1
@@ -90,7 +92,7 @@ Public Class GMVAEDemo
         Console.WriteLine("-"c, 80)
 
         Dim gmvae = New GMVAE(
-            inputDim:=dim,
+            inputDim:=[dim],
             latentDim:=4,
             nComponents:=nClusters,
             hiddenDim:=32,
@@ -178,7 +180,7 @@ Public Class GMVAEDemo
         ' 计算重构 MSE
         Dim mse As Double = 0
         For i = 0 To totalSamples - 1
-            For d = 0 To dim - 1
+            For d = 0 To [dim] - 1
                 Dim diff = X(i, d) - xRecon(i, d)
                 mse += diff * diff
             Next
@@ -195,7 +197,7 @@ Public Class GMVAEDemo
         For i = 0 To 4
             Dim origStr = ""
             Dim reconStr = ""
-            For d = 0 To dim - 1
+            For d = 0 To [dim] - 1
                 origStr += $"{X(i, d),6:F2} "
                 reconStr += $"{xRecon(i, d),6:F2} "
             Next
@@ -215,21 +217,21 @@ Public Class GMVAEDemo
 
             For i = 0 To 4
                 Dim s = ""
-                For d = 0 To dim - 1
+                For d = 0 To [dim] - 1
                     s += $"{generated(i, d),6:F2} "
                 Next
                 Console.WriteLine($"    样本 {i + 1}: {s}")
             Next
 
             ' 计算生成样本的均值
-            Dim genMean = New Double(dim - 1) {}
+            Dim genMean = New Double([dim] - 1) {}
             For i = 0 To 4
-                For d = 0 To dim - 1
+                For d = 0 To [dim] - 1
                     genMean(d) += generated(i, d)
                 Next
             Next
             Console.Write($"    生成均值: ")
-            For d = 0 To dim - 1
+            For d = 0 To [dim] - 1
                 genMean(d) /= 5
                 Console.Write($"{genMean(d),6:F2} ")
             Next

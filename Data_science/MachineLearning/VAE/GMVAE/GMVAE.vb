@@ -20,6 +20,7 @@
 ' 作者: Qingyan Agent
 ' ============================================================================
 
+Imports Microsoft.VisualBasic.MachineLearning.TensorFlow
 Imports std = System.Math
 
 ''' <summary>
@@ -741,11 +742,11 @@ Public Class GMVAE
     ''' <summary>重参数化采样: z = μ + σ * ε</summary>
     Private Function Reparameterize(mu As Tensor, logVar As Tensor, rng As Random) As Tensor
         Dim bs = mu.Shape(0)
-        Dim dim = mu.Shape(1)
-        Dim result = New Tensor(bs, dim)
+        Dim [dim] = mu.Shape(1)
+        Dim result = New Tensor(bs, [dim])
 
         For i = 0 To bs - 1
-            For d = 0 To dim - 1
+            For d = 0 To [dim] - 1
                 Dim u1 = 1.0 - rng.NextDouble()
                 Dim u2 = 1.0 - rng.NextDouble()
                 Dim eps = std.Sqrt(-2.0 * std.Log(u1)) * std.Sin(2.0 * std.PI * u2)

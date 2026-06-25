@@ -10,6 +10,8 @@
 ' 作者: Qingyan Agent
 ' ============================================================================
 
+Imports Microsoft.VisualBasic.MachineLearning.TensorFlow
+Imports Microsoft.VisualBasic.MachineLearning.VariationalAutoencoder
 Imports std = System.Math
 
 ''' <summary>
@@ -17,7 +19,7 @@ Imports std = System.Math
 ''' </summary>
 Public Class GMMDemo
 
-    Public Shared Sub Main(args As String())
+    Public Shared Sub Main2(args As String())
         Console.WriteLine("="c, 80)
         Console.WriteLine("GMM (高斯混合模型) 多峰信号分解测试 Demo")
         Console.WriteLine("="c, 80)
@@ -34,7 +36,7 @@ Public Class GMMDemo
         Dim truePeaks = {
             (mu:=20.0, sigma:=3.0, weight:=0.35),
             (mu:=45.0, sigma:=5.0, weight:=0.45),
-            (mu:=70.0, sigma:=2.5, weight:=0.20)
+            (mu:=70.0, sigma:=2.5, weight:=0.2)
         }
 
         Console.WriteLine("真实峰参数:")
@@ -158,7 +160,7 @@ Public Class GMMDemo
         Next
         fittedPeaks.Sort(Function(a, b) a.mu.CompareTo(b.mu))
 
-        Console.WriteLine($"{"峰"#0,-4} | {"真实 μ",-10} {"拟合 μ",-10} {"误差",-8} | {"真实 σ",-10} {"拟合 σ",-10} {"误差",-8} | {"真实 w",-10} {"拟合 w",-10} {"误差",-8}")
+        Console.WriteLine($"{"峰",-4} | {"真实 μ",-10} {"拟合 μ",-10} {"误差",-8} | {"真实 σ",-10} {"拟合 σ",-10} {"误差",-8} | {"真实 w",-10} {"拟合 w",-10} {"误差",-8}")
         Console.WriteLine("-"c, 100)
 
         Dim trueSorted = truePeaks.ToList()

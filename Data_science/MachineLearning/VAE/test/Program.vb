@@ -10,6 +10,8 @@ Public Module GraphVAEDemo
     ''' 主程序入口: 演示GraphVAE的使用
     ''' </summary>
     Public Sub Main()
+        GMMDemo.Main2({})
+
         Console.WriteLine("="c, 70)
         Console.WriteLine("GraphVAE 演示: 图变分自编码器")
         Console.WriteLine("="c, 70)

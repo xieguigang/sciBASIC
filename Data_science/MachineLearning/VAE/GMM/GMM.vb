@@ -11,6 +11,7 @@
 ' 作者: Qingyan Agent
 ' ============================================================================
 
+Imports Microsoft.VisualBasic.MachineLearning.TensorFlow
 Imports std = System.Math
 
 ''' <summary>
@@ -174,8 +175,8 @@ Public Class GaussianMixtureModel
 
         ' 初始化权重为均匀分布
         Dim wData = New Double(K - 1) {}
-        For k = 0 To K - 1
-            wData(k) = 1.0 / K
+        For K = 0 To K - 1
+            wData(K) = 1.0 / K
         Next
         Weights = New Tensor(wData, K)
 
@@ -184,22 +185,22 @@ Public Class GaussianMixtureModel
         Select Case _initMethod
             Case InitMethod.Random
                 ' 从数据中随机采样 K 个点作为初始均值
-                For k = 0 To K - 1
+                For K = 0 To K - 1
                     Dim idx = rng.Next(N)
-                    For d = 0 To D - 1
-                        meansData(k * D + d) = X(idx, d)
+                    For D = 0 To D - 1
+                        meansData(K * D + D) = X(idx, D)
                     Next
                 Next
             Case InitMethod.KMeansPP
                 ' K-Means++ 风格初始化
                 Dim firstIdx = rng.Next(N)
-                For d = 0 To D - 1
-                    meansData(d) = X(firstIdx, d)
+                For D = 0 To D - 1
+                    meansData(D) = X(firstIdx, D)
                 Next
 
                 Dim chosenIndices = New List(Of Integer) From {firstIdx}
 
-                For k = 1 To K - 1
+                For K = 1 To K - 1
                     ' 计算每个点到最近已选中心的距离平方
                     Dim dists = New Double(N - 1) {}
                     Dim totalDist As Double = 0
@@ -207,8 +208,8 @@ Public Class GaussianMixtureModel
                         Dim minDist As Double = Double.MaxValue
                         For Each ci In chosenIndices
                             Dim dist As Double = 0
-                            For d = 0 To D - 1
-                                Dim diff = X(i, d) - X(ci, d)
+                            For D = 0 To D - 1
+                                Dim diff = X(i, D) - X(ci, D)
                                 dist += diff * diff
                             Next
                             If dist < minDist Then minDist = dist
@@ -230,8 +231,8 @@ Public Class GaussianMixtureModel
                     Next
 
                     chosenIndices.Add(nextIdx)
-                    For d = 0 To D - 1
-                        meansData(k * D + d) = X(nextIdx, d)
+                    For D = 0 To D - 1
+                        meansData(K * D + D) = X(nextIdx, D)
                     Next
                 Next
         End Select
@@ -244,16 +245,16 @@ Public Class GaussianMixtureModel
             ' 计算全局方差
             Dim globalVar = New Double(D - 1) {}
             For i = 0 To N - 1
-                For d = 0 To D - 1
-                    globalVar(d) += X(i, d) * X(i, d)
+                For D = 0 To D - 1
+                    globalVar(D) += X(i, D) * X(i, D)
                 Next
             Next
-            For d = 0 To D - 1
-                globalVar(d) = globalVar(d) / N + _regCovar
+            For D = 0 To D - 1
+                globalVar(D) = globalVar(D) / N + _regCovar
             Next
-            For k = 0 To K - 1
-                For d = 0 To D - 1
-                    covData(k * D + d) = globalVar(d)
+            For K = 0 To K - 1
+                For D = 0 To D - 1
+                    covData(K * D + D) = globalVar(D)
                 Next
             Next
             Covariances = New Tensor(covData, K, D)
@@ -275,9 +276,9 @@ Public Class GaussianMixtureModel
                     If r = c Then globalCov(r * D + c) += _regCovar
                 Next
             Next
-            For k = 0 To K - 1
+            For K = 0 To K - 1
                 For j = 0 To D * D - 1
-                    covData(k * D * D + j) = globalCov(j)
+                    covData(K * D * D + j) = globalCov(j)
                 Next
             Next
             Covariances = New Tensor(covData, K, D, D)
@@ -298,9 +299,9 @@ Public Class GaussianMixtureModel
 
         ' 加上 log 权重
         Dim weightedLogProb = New Tensor(N, K)
-        For n = 0 To N - 1
-            For k = 0 To K - 1
-                weightedLogProb(n, k) = logProb(n, k) + std.Log(Weights(k))
+        For N = 0 To N - 1
+            For K = 0 To K - 1
+                weightedLogProb(N, K) = logProb(N, K) + std.Log(Weights(K))
             Next
         Next
 
@@ -308,27 +309,27 @@ Public Class GaussianMixtureModel
         Dim logLik As Double = 0
         logResp = New Tensor(N, K)
 
-        For n = 0 To N - 1
+        For N = 0 To N - 1
             ' 找最大值
             Dim maxVal As Double = Double.NegativeInfinity
-            For k = 0 To K - 1
-                If weightedLogProb(n, k) > maxVal Then
-                    maxVal = weightedLogProb(n, k)
+            For K = 0 To K - 1
+                If weightedLogProb(N, K) > maxVal Then
+                    maxVal = weightedLogProb(N, K)
                 End If
             Next
 
             ' 计算 sum exp
             Dim sumExp As Double = 0
-            For k = 0 To K - 1
-                sumExp += std.Exp(weightedLogProb(n, k) - maxVal)
+            For K = 0 To K - 1
+                sumExp += std.Exp(weightedLogProb(N, K) - maxVal)
             Next
 
             Dim logSumExp = maxVal + std.Log(sumExp)
             logLik += logSumExp
 
             ' 计算责任度 (log 域)
-            For k = 0 To K - 1
-                logResp(n, k) = weightedLogProb(n, k) - logSumExp
+            For K = 0 To K - 1
+                logResp(N, K) = weightedLogProb(N, K) - logSumExp
             Next
         Next
 
@@ -345,38 +346,38 @@ Public Class GaussianMixtureModel
 
         ' 将 log 责任度转换为责任度
         Dim resp = New Tensor(N, K)
-        For n = 0 To N - 1
-            For k = 0 To K - 1
-                resp(n, k) = std.Exp(logResp(n, k))
+        For N = 0 To N - 1
+            For K = 0 To K - 1
+                resp(N, K) = std.Exp(logResp(N, K))
             Next
         Next
 
         ' 计算 N_k = Σ_n resp(n, k)
         Dim Nk = New Double(K - 1) {}
-        For k = 0 To K - 1
+        For K = 0 To K - 1
             Dim s As Double = 0
-            For n = 0 To N - 1
-                s += resp(n, k)
+            For N = 0 To N - 1
+                s += resp(N, K)
             Next
-            Nk(k) = s
+            Nk(K) = s
         Next
 
         ' 更新权重: π_k = N_k / N
         Dim wData = New Double(K - 1) {}
-        For k = 0 To K - 1
-            wData(k) = (Nk(k) + 0.0000001) / (N + K * 0.0000001)
+        For K = 0 To K - 1
+            wData(K) = (Nk(K) + 0.0000001) / (N + K * 0.0000001)
         Next
         Weights = New Tensor(wData, K)
 
         ' 更新均值: μ_k = (1/N_k) Σ_n resp(n,k) * x_n
         Dim meansData = New Double(K * D - 1) {}
-        For k = 0 To K - 1
-            For d = 0 To D - 1
+        For K = 0 To K - 1
+            For D = 0 To D - 1
                 Dim s As Double = 0
-                For n = 0 To N - 1
-                    s += resp(n, k) * X(n, d)
+                For N = 0 To N - 1
+                    s += resp(N, K) * X(N, D)
                 Next
-                meansData(k * D + d) = s / (Nk(k) + 0.0000001)
+                meansData(K * D + D) = s / (Nk(K) + 0.0000001)
             Next
         Next
         Means = New Tensor(meansData, K, D)
@@ -384,31 +385,31 @@ Public Class GaussianMixtureModel
         ' 更新协方差
         If _diagCovariance Then
             Dim covData = New Double(K * D - 1) {}
-            For k = 0 To K - 1
-                For d = 0 To D - 1
+            For K = 0 To K - 1
+                For D = 0 To D - 1
                     Dim s As Double = 0
-                    For n = 0 To N - 1
-                        Dim diff = X(n, d) - Means(k, d)
-                        s += resp(n, k) * diff * diff
+                    For N = 0 To N - 1
+                        Dim diff = X(N, D) - Means(K, D)
+                        s += resp(N, K) * diff * diff
                     Next
-                    covData(k * D + d) = s / (Nk(k) + 0.0000001) + _regCovar
+                    covData(K * D + D) = s / (Nk(K) + 0.0000001) + _regCovar
                 Next
             Next
             Covariances = New Tensor(covData, K, D)
         Else
             Dim covData = New Double(K * D * D - 1) {}
-            For k = 0 To K - 1
+            For K = 0 To K - 1
                 For r = 0 To D - 1
                     For c = 0 To D - 1
                         Dim s As Double = 0
-                        For n = 0 To N - 1
-                            Dim diffR = X(n, r) - Means(k, r)
-                            Dim diffC = X(n, c) - Means(k, c)
-                            s += resp(n, k) * diffR * diffC
+                        For N = 0 To N - 1
+                            Dim diffR = X(N, r) - Means(K, r)
+                            Dim diffC = X(N, c) - Means(K, c)
+                            s += resp(N, K) * diffR * diffC
                         Next
-                        covData(k * D * D + r * D + c) = s / (Nk(k) + 0.0000001)
+                        covData(K * D * D + r * D + c) = s / (Nk(K) + 0.0000001)
                         If r = c Then
-                            covData(k * D * D + r * D + c) += _regCovar
+                            covData(K * D * D + r * D + c) += _regCovar
                         End If
                     Next
                 Next
@@ -438,34 +439,34 @@ Public Class GaussianMixtureModel
 
         If _diagCovariance Then
             ' 对角协方差情况
-            For k = 0 To K - 1
+            For K = 0 To K - 1
                 ' 计算 log|Σ_k| = Σ_d log(σ²_kd)
                 Dim logDetCov As Double = 0
-                For d = 0 To D - 1
-                    logDetCov += std.Log(Covariances(k, d))
+                For D = 0 To D - 1
+                    logDetCov += std.Log(Covariances(K, D))
                 Next
 
                 ' 常数项: -0.5 * (D * log(2π) + log|Σ_k|)
                 Dim constTerm = -0.5 * (D * std.Log(2.0 * std.PI) + logDetCov)
 
-                For n = 0 To N - 1
+                For N = 0 To N - 1
                     ' 计算 (x - μ)^T Σ^(-1) (x - μ) = Σ_d (x_d - μ_d)² / σ²_d
                     Dim mahalDist As Double = 0
-                    For d = 0 To D - 1
-                        Dim diff = X(n, d) - Means(k, d)
-                        mahalDist += diff * diff / Covariances(k, d)
+                    For D = 0 To D - 1
+                        Dim diff = X(N, D) - Means(K, D)
+                        mahalDist += diff * diff / Covariances(K, D)
                     Next
-                    result(n, k) = constTerm - 0.5 * mahalDist
+                    result(N, K) = constTerm - 0.5 * mahalDist
                 Next
             Next
         Else
             ' 全协方差情况
-            For k = 0 To K - 1
+            For K = 0 To K - 1
                 ' 提取第 k 个协方差矩阵 [D, D]
                 Dim cov = New Tensor(D, D)
                 For r = 0 To D - 1
                     For c = 0 To D - 1
-                        cov(r, c) = Covariances(k, r, c)
+                        cov(r, c) = Covariances(K, r, c)
                     Next
                 Next
 
@@ -475,17 +476,17 @@ Public Class GaussianMixtureModel
 
                 Dim constTerm = -0.5 * (D * std.Log(2.0 * std.PI) + logDetCov)
 
-                For n = 0 To N - 1
+                For N = 0 To N - 1
                     ' 计算 (x - μ)^T Σ^(-1) (x - μ)
                     Dim mahalDist As Double = 0
                     For r = 0 To D - 1
                         Dim sumRow As Double = 0
                         For c = 0 To D - 1
-                            sumRow += invCov(r, c) * (X(n, c) - Means(k, c))
+                            sumRow += invCov(r, c) * (X(N, c) - Means(K, c))
                         Next
-                        mahalDist += (X(n, r) - Means(k, r)) * sumRow
+                        mahalDist += (X(N, r) - Means(K, r)) * sumRow
                     Next
-                    result(n, k) = constTerm - 0.5 * mahalDist
+                    result(N, K) = constTerm - 0.5 * mahalDist
                 Next
             Next
         End If
@@ -509,9 +510,9 @@ Public Class GaussianMixtureModel
         Dim N = X.Shape(0)
         Dim K = _nComponents
         Dim resp = New Tensor(N, K)
-        For n = 0 To N - 1
-            For k = 0 To K - 1
-                resp(n, k) = std.Exp(logResp(n, k))
+        For N = 0 To N - 1
+            For K = 0 To K - 1
+                resp(N, K) = std.Exp(logResp(N, K))
             Next
         Next
         Return resp
@@ -528,16 +529,16 @@ Public Class GaussianMixtureModel
         Dim K = _nComponents
         Dim labels = New Integer(N - 1) {}
 
-        For n = 0 To N - 1
+        For N = 0 To N - 1
             Dim maxVal As Double = Double.NegativeInfinity
             Dim maxIdx = 0
-            For k = 0 To K - 1
-                If resp(n, k) > maxVal Then
-                    maxVal = resp(n, k)
-                    maxIdx = k
+            For K = 0 To K - 1
+                If resp(N, K) > maxVal Then
+                    maxVal = resp(N, K)
+                    maxIdx = K
                 End If
             Next
-            labels(n) = maxIdx
+            labels(N) = maxIdx
         Next
         Return labels
     End Function
@@ -562,17 +563,17 @@ Public Class GaussianMixtureModel
         Dim K = _nComponents
         Dim result = New Tensor(N)
 
-        For n = 0 To N - 1
+        For N = 0 To N - 1
             Dim maxVal As Double = Double.NegativeInfinity
-            For k = 0 To K - 1
-                Dim v = logProb(n, k) + std.Log(Weights(k))
+            For K = 0 To K - 1
+                Dim v = logProb(N, K) + std.Log(Weights(K))
                 If v > maxVal Then maxVal = v
             Next
             Dim sumExp As Double = 0
-            For k = 0 To K - 1
-                sumExp += std.Exp(logProb(n, k) + std.Log(Weights(k)) - maxVal)
+            For K = 0 To K - 1
+                sumExp += std.Exp(logProb(N, K) + std.Log(Weights(K)) - maxVal)
             Next
-            result(n) = maxVal + std.Log(sumExp)
+            result(N) = maxVal + std.Log(sumExp)
         Next
         Return result
     End Function
@@ -596,35 +597,35 @@ Public Class GaussianMixtureModel
         ' 累积权重用于选择成分
         Dim cumWeights = New Double(K - 1) {}
         cumWeights(0) = Weights(0)
-        For k = 1 To K - 1
-            cumWeights(k) = cumWeights(k - 1) + Weights(k)
+        For K = 1 To K - 1
+            cumWeights(K) = cumWeights(K - 1) + Weights(K)
         Next
 
         For i = 0 To n - 1
             ' 选择成分
             Dim r = rng.NextDouble()
             Dim selK = K - 1
-            For k = 0 To K - 1
-                If r <= cumWeights(k) Then
-                    selK = k
+            For K = 0 To K - 1
+                If r <= cumWeights(K) Then
+                    selK = K
                     Exit For
                 End If
             Next
 
             ' 从该成分的高斯分布中采样 (Box-Muller)
-            For d = 0 To D - 1
+            For D = 0 To D - 1
                 Dim u1 = 1.0 - rng.NextDouble()
                 Dim u2 = 1.0 - rng.NextDouble()
                 Dim z = std.Sqrt(-2.0 * std.Log(u1)) * std.Sin(2.0 * std.PI * u2)
 
                 If _diagCovariance Then
-                    Dim std_ = std.Sqrt(Covariances(selK, d))
-                    result(i, d) = Means(selK, d) + std_ * z
+                    Dim std_ = std.Sqrt(Covariances(selK, D))
+                    result(i, D) = Means(selK, D) + std_ * z
                 Else
                     ' 简化: 仅使用对角元素 (Cholesky 分解略)
-                    Dim var = Covariances(selK, d, d)
+                    Dim var = Covariances(selK, D, D)
                     Dim std_ = std.Sqrt(var)
-                    result(i, d) = Means(selK, d) + std_ * z
+                    result(i, D) = Means(selK, D) + std_ * z
                 End If
             Next
         Next
@@ -764,8 +765,8 @@ Public Class GaussianMixtureModel
     Public Function GetComponentMean(k As Integer) As Tensor
         Dim D = Means.Shape(1)
         Dim result = New Tensor(D)
-        For d = 0 To D - 1
-            result(d) = Means(k, d)
+        For D = 0 To D - 1
+            result(D) = Means(k, D)
         Next
         Return result
     End Function
@@ -777,12 +778,12 @@ Public Class GaussianMixtureModel
         Dim D = Means.Shape(1)
         Dim result = New Tensor(D)
         If _diagCovariance Then
-            For d = 0 To D - 1
-                result(d) = Covariances(k, d)
+            For D = 0 To D - 1
+                result(D) = Covariances(k, D)
             Next
         Else
-            For d = 0 To D - 1
-                result(d) = Covariances(k, d, d)
+            For D = 0 To D - 1
+                result(D) = Covariances(k, D, D)
             Next
         End If
         Return result
