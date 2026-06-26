@@ -1,9 +1,15 @@
-Imports System.Drawing
 Imports System.IO
+Imports DataPlot
 
 ' ============================================================================
 '  ChartExamples.vb - 9 种新增图表的使用示例与测试数据
 '  调用 ChartExamples.RunAll(outputDir) 即可批量生成全部示例 PNG。
+' ============================================================================
+'  运行方式：
+'   本框架基于 GDI+ 光栅驱动，需在程序启动时注册驱动后再调用 RunAll：
+'     1) 将宿主项目目标框架设为 net10.0-windows（或 net48）；
+'     2) 启动时调用 Microsoft.VisualBasic.Imaging.Driver.ImageDriver.Register()；
+'     3) 调用 ChartExamples.RunAll(输出目录) 批量生成 9 张 PNG。
 ' ============================================================================
 
 ''' <summary>9 种新增图表的使用示例与测试数据</summary>
