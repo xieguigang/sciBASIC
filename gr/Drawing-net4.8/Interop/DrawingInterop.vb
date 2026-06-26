@@ -136,6 +136,14 @@ Public Module DrawingInterop
                 Case GetType(GraphicsPath.op_AddArc)
                     Dim arc As GraphicsPath.op_AddArc = op
                     g.AddArc(arc.rect, arc.startAngle, arc.sweepAngle)
+
+                Case GetType(GraphicsPath.op_AddBezier)
+                    Dim bez As GraphicsPath.op_AddBezier = op
+                    g.AddBezier(bez.pt1, bez.pt2, bez.pt3, bez.pt4)
+
+                Case GetType(GraphicsPath.op_CloseFigure)
+                    g.CloseFigure()
+
                 Case Else
                     Throw New NotImplementedException(op.GetType.FullName)
             End Select
