@@ -4,8 +4,8 @@ Imports SolidBrush = Microsoft.VisualBasic.Imaging.SolidBrush
 Imports Pen = Microsoft.VisualBasic.Imaging.Pen
 Imports GraphicsPath = Microsoft.VisualBasic.Imaging.GraphicsPath
 Imports DashStyle = Microsoft.VisualBasic.Imaging.DashStyle
-Imports LineCap = Microsoft.VisualBasic.Imaging.LineCap
-Imports LineJoin = Microsoft.VisualBasic.Imaging.LineJoin
+Imports StringAlignment = Microsoft.VisualBasic.Imaging.StringAlignment
+Imports StringFormat = Microsoft.VisualBasic.Imaging.StringFormat
 
 
 ' ============================================================================
@@ -343,7 +343,7 @@ Public Class PiePlot
                   sf As New StringFormat()
                 sf.Alignment = StringAlignment.Center
                 sf.LineAlignment = StringAlignment.Center
-                _g.DrawString(label, Theme.TickLabelFont, br, lx, ly, sf)
+                _g.DrawString(label, Theme.TickLabelFont, br, lx, ly)
             End Using
             startA += sweep
         Next
@@ -355,7 +355,7 @@ Public Class PiePlot
                 sf.Alignment = StringAlignment.Center
                 sf.LineAlignment = StringAlignment.Center
                 _g.DrawString(If(String.IsNullOrEmpty(Title), "", ""),
-                              Theme.AxisLabelFont, br, cx, cy, sf)
+                              Theme.AxisLabelFont, br, cx, cy)
             End Using
         End If
     End Sub
@@ -420,7 +420,7 @@ Public Class HeatmapPlot
                         sf.Alignment = StringAlignment.Center
                         sf.LineAlignment = StringAlignment.Center
                         _g.DrawString(FormatNumber(v), Theme.TickLabelFont, br,
-                                      rect.X + rect.Width / 2, rect.Y + rect.Height / 2, sf)
+                                      rect.X + rect.Width / 2, rect.Y + rect.Height / 2)
                     End Using
                 End If
             Next
@@ -439,7 +439,7 @@ Public Class HeatmapPlot
                 sf.LineAlignment = StringAlignment.Center
                 For r = 0 To nRow - 1
                     _g.DrawString(RowLabels(r), Theme.TickLabelFont, br,
-                                  plotX - 6, plotY + (r + 0.5) * cellH, sf)
+                                  plotX - 6, plotY + (r + 0.5) * cellH)
                 Next
             End Using
         End If
@@ -453,7 +453,7 @@ Public Class HeatmapPlot
                 For c = 0 To nCol - 1
                     _g.TranslateTransform(plotX + (c + 0.5) * cellW, plotY - 6)
                     _g.RotateTransform(-45)
-                    _g.DrawString(ColLabels(c), Theme.TickLabelFont, br, 0, 0, sf)
+                    _g.DrawString(ColLabels(c), Theme.TickLabelFont, br, 0, 0)
                     _g.ResetTransform()
                 Next
             End Using
@@ -486,7 +486,7 @@ Public Class HeatmapPlot
                 If t < vmin OrElse t > vmax Then Continue For
                 Dim py As Single = cbY + (1 - (t - vmin) / (vmax - vmin)) * cbH
                 _g.DrawLine(pen, cbX + cbW, py, cbX + cbW + 4, py)
-                _g.DrawString(FormatNumber(t), Theme.TickLabelFont, br, cbX + cbW + 6, py, sf)
+                _g.DrawString(FormatNumber(t), Theme.TickLabelFont, br, cbX + cbW + 6, py)
             Next
         End Using
     End Sub
@@ -662,10 +662,10 @@ Public Class SankeyPlot
                 sf.LineAlignment = StringAlignment.Center
                 If n.Layer = 0 Then
                     sf.Alignment = StringAlignment.Far
-                    _g.DrawString(n.Label, Theme.TickLabelFont, br, n.X - 6, n.Y + n.Height / 2, sf)
+                    _g.DrawString(n.Label, Theme.TickLabelFont, br, n.X - 6, n.Y + n.Height / 2)
                 Else
                     sf.Alignment = StringAlignment.Near
-                    _g.DrawString(n.Label, Theme.TickLabelFont, br, n.X + nodeW + 6, n.Y + n.Height / 2, sf)
+                    _g.DrawString(n.Label, Theme.TickLabelFont, br, n.X + nodeW + 6, n.Y + n.Height / 2)
                 End If
             End Using
         Next

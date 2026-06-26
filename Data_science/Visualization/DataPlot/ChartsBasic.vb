@@ -5,6 +5,8 @@ Imports Pen = Microsoft.VisualBasic.Imaging.Pen
 Imports DashStyle = Microsoft.VisualBasic.Imaging.DashStyle
 Imports LineCap = Microsoft.VisualBasic.Imaging.LineCap
 Imports LineJoin = Microsoft.VisualBasic.Imaging.LineJoin
+Imports StringAlignment = Microsoft.VisualBasic.Imaging.StringAlignment
+Imports StringFormat = Microsoft.VisualBasic.Imaging.StringFormat
 
 ' ============================================================================
 '  ChartsBasic.vb - 基础图表：散点图 / 折线图 / 柱状图 / 直方图
@@ -220,7 +222,7 @@ Public Class BarPlot
                             sf.Alignment = StringAlignment.Near
                             sf.LineAlignment = StringAlignment.Center
                             _g.DrawString(FormatNumber(val), Theme.TickLabelFont, br,
-                                          rect.Right + 4, rect.Y + rect.Height / 2, sf)
+                                          rect.Right + 4, rect.Y + rect.Height / 2)
                         End Using
                     End If
                 Else
@@ -242,7 +244,7 @@ Public Class BarPlot
                             sf.Alignment = StringAlignment.Center
                             sf.LineAlignment = StringAlignment.Far
                             _g.DrawString(FormatNumber(val), Theme.TickLabelFont, br,
-                                          rect.X + rect.Width / 2, rect.Y - 2, sf)
+                                          rect.X + rect.Width / 2, rect.Y - 2)
                         End Using
                     End If
                 End If

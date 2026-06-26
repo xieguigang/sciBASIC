@@ -1,6 +1,8 @@
 Imports System.Drawing
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Driver
+Imports StringAlignment = Microsoft.VisualBasic.Imaging.StringAlignment
+Imports StringFormat = Microsoft.VisualBasic.Imaging.StringFormat
 
 ' ============================================================================
 '  PlotEngine.vb - 核心绘图引擎
@@ -209,7 +211,7 @@ Public Class PlotEngine
             sf.LineAlignment = StringAlignment.Center
             Using br As New SolidBrush(Theme.TitleColor)
                 Dim rect As New RectangleF(0, 10, _width, Theme.TitleFont.GetHeight(_g) + 6)
-                _g.DrawString(Title, Theme.TitleFont, br, rect, sf)
+                _g.DrawString(Title, Theme.TitleFont, br, rect)
             End Using
         End Using
         If Not String.IsNullOrEmpty(SubTitle) Then
@@ -219,7 +221,7 @@ Public Class PlotEngine
                 Using br As New SolidBrush(Theme.SubTitleColor)
                     Dim y = 10 + Theme.TitleFont.GetHeight(_g) + 6
                     Dim rect As New RectangleF(0, y, _width, Theme.SubTitleFont.GetHeight(_g) + 4)
-                    _g.DrawString(SubTitle, Theme.SubTitleFont, br, rect, sf)
+                    _g.DrawString(SubTitle, Theme.SubTitleFont, br, rect)
                 End Using
             End Using
         End If
@@ -276,11 +278,11 @@ Public Class PlotEngine
                         sf.LineAlignment = StringAlignment.Center
                         _g.TranslateTransform(px + 3, _plotArea.Bottom + 8)
                         _g.RotateTransform(45)
-                        _g.DrawString(label, Theme.TickLabelFont, br, 0, 0, sf)
+                        _g.DrawString(label, Theme.TickLabelFont, br, 0, 0)
                         _g.ResetTransform()
                     Else
                         Dim rect As New RectangleF(px - 50, _plotArea.Bottom + 7, 100, Theme.TickLabelFont.GetHeight(_g) + 4)
-                        _g.DrawString(label, Theme.TickLabelFont, br, rect, sf)
+                        _g.DrawString(label, Theme.TickLabelFont, br, rect)
                     End If
                 End Using
             Next
@@ -297,7 +299,7 @@ Public Class PlotEngine
                     sf.LineAlignment = StringAlignment.Center
                     Dim rect As New RectangleF(0, py - Theme.TickLabelFont.GetHeight(_g) / 2 - 2,
                                                _plotArea.Left - 8, Theme.TickLabelFont.GetHeight(_g) + 4)
-                    _g.DrawString(label, Theme.TickLabelFont, br, rect, sf)
+                    _g.DrawString(label, Theme.TickLabelFont, br, rect)
                 End Using
             Next
         End Using
@@ -310,7 +312,7 @@ Public Class PlotEngine
                 sf.LineAlignment = StringAlignment.Center
                 Dim y = _plotArea.Bottom + 35
                 Dim rect As New RectangleF(_plotArea.Left, y, _plotArea.Width, Theme.AxisLabelFont.GetHeight(_g) + 6)
-                _g.DrawString(XLabel, Theme.AxisLabelFont, br, rect, sf)
+                _g.DrawString(XLabel, Theme.AxisLabelFont, br, rect)
             End Using
         End If
         If Not String.IsNullOrEmpty(YLabel) Then
@@ -320,7 +322,7 @@ Public Class PlotEngine
                 sf.LineAlignment = StringAlignment.Center
                 _g.TranslateTransform(18, _plotArea.Top + _plotArea.Height / 2)
                 _g.RotateTransform(-90)
-                _g.DrawString(YLabel, Theme.AxisLabelFont, br, New RectangleF(-_plotArea.Height / 2, -Theme.AxisLabelFont.GetHeight(_g) / 2, _plotArea.Height, Theme.AxisLabelFont.GetHeight(_g) + 6), sf)
+                _g.DrawString(YLabel, Theme.AxisLabelFont, br, New RectangleF(-_plotArea.Height / 2, -Theme.AxisLabelFont.GetHeight(_g) / 2, _plotArea.Height, Theme.AxisLabelFont.GetHeight(_g) + 6))
                 _g.ResetTransform()
             End Using
         End If
@@ -397,7 +399,7 @@ Public Class PlotEngine
                 sf.Alignment = StringAlignment.Near
                 sf.LineAlignment = StringAlignment.Center
                 _g.DrawString(s.Name, Theme.LegendFont, br,
-                              lx + padX + boxW + 4, y - lineH / 2 + 2, sf)
+                              lx + padX + boxW + 4, y - lineH / 2 + 2)
             End Using
         Next
     End Sub
