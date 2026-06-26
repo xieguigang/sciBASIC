@@ -120,6 +120,12 @@ Namespace Imaging
         Public Property Alignment As StringAlignment
         Public Property LineAlignment As StringAlignment
 
+        Public Shared ReadOnly Property GenericTypographic As StringFormat
+            Get
+                Return New StringFormat
+            End Get
+        End Property
+
         Protected Overridable Sub Dispose(disposing As Boolean)
             If Not disposedValue Then
                 If disposing Then

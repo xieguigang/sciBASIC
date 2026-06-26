@@ -61,10 +61,11 @@ Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Scripting.Runtime
-Imports csvFile = Microsoft.VisualBasic.Data.csv.IO.File
+Imports csvFile = Microsoft.VisualBasic.Data.Framework.IO.File
 Imports Microsoft.VisualBasic.Data.ChartPlots.Statistics
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Imaging
+Imports DashStyle = Microsoft.VisualBasic.Imaging.DashStyle
 
 Module ScatterTest
 
@@ -172,7 +173,7 @@ Module ScatterTest
                 .pts = points
             }
 
-            csv = csv.Load(file.ParentPath.ParentPath & $"\TCL\{file.BaseName}.csv")
+            csv = csvFile.Load(file.ParentPath.ParentPath & $"\TCL\{file.BaseName}.csv")
 
             X = csv.Columns(0).Skip(1).AsDouble
             Dim YV = csv.Columns(1).Skip(1).AsDouble.AsVector

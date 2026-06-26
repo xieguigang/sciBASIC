@@ -1,53 +1,53 @@
 ﻿#Region "Microsoft.VisualBasic::923b3c33434f8f19177cfd2cac21c939, Data_science\Visualization\test\PieChartTest.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 173
-    '    Code Lines: 113 (65.32%)
-    ' Comment Lines: 20 (11.56%)
-    '    - Xml Docs: 0.00%
-    ' 
-    '   Blank Lines: 40 (23.12%)
-    '     File Size: 6.81 KB
+' Summaries:
 
 
-    ' Module PieChartTest
-    ' 
-    '     Sub: glowTest2, Main, radar2, radarTest, shapeGlowTest
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 173
+'    Code Lines: 113 (65.32%)
+' Comment Lines: 20 (11.56%)
+'    - Xml Docs: 0.00%
+' 
+'   Blank Lines: 40 (23.12%)
+'     File Size: 6.81 KB
+
+
+' Module PieChartTest
+' 
+'     Sub: glowTest2, Main, radar2, radarTest, shapeGlowTest
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -56,8 +56,18 @@ Imports System.Drawing.Drawing2D
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Data.ChartPlots
 Imports Microsoft.VisualBasic.Data.ChartPlots.Fractions
+Imports Microsoft.VisualBasic.Drawing
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
+Imports SolidBrush = System.Drawing.SolidBrush
+Imports Brushes = System.Drawing.Brushes
+Imports FontStyle = System.Drawing.FontStyle
+Imports GraphicsPath = System.Drawing.Drawing2D.GraphicsPath
+Imports StringFormat = System.Drawing.StringFormat
+Imports Pen = System.Drawing.Pen
+Imports LineJoin = System.Drawing.Drawing2D.LineJoin
+Imports Bitmap = System.Drawing.Bitmap
+Imports Image = System.Drawing.Image
 
 Public Module PieChartTest
 
@@ -136,12 +146,11 @@ Public Module PieChartTest
 
         Using Graphics As Graphics2D = New Size(1000, 1000).CreateGDIDevice
 
-            Graphics.SmoothingMode = SmoothingMode.AntiAlias
-            Graphics.InterpolationMode = InterpolationMode.HighQualityBicubic
+            ' Graphics.SmoothingMode = SmoothingMode.AntiAlias
+            ' Graphics.InterpolationMode = InterpolationMode.HighQualityBicubic
 
             Dim brushWhite = New SolidBrush(Color.White)
-            Graphics.FillRectangle(brushWhite, 0, 0,
-    Graphics.Width, Graphics.Height)
+            Graphics.FillRectangle(brushWhite, 0, 0, Graphics.Width, Graphics.Height)
 
             Dim FontFamily = New FontFamily("Arial")
             Dim strformat = New StringFormat()
