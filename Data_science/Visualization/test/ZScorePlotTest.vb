@@ -1,59 +1,60 @@
 ﻿#Region "Microsoft.VisualBasic::f65139c3675057aebf2bade890f8619c, Data_science\Visualization\test\ZScorePlotTest.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 139
-    '    Code Lines: 108 (77.70%)
-    ' Comment Lines: 2 (1.44%)
-    '    - Xml Docs: 0.00%
-    ' 
-    '   Blank Lines: 29 (20.86%)
-    '     File Size: 5.39 KB
+' Summaries:
 
 
-    ' Module ZScorePlotTest
-    ' 
-    '     Sub: analysis, duke_test, Main, plotBox, plotHeatmap
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 139
+'    Code Lines: 108 (77.70%)
+' Comment Lines: 2 (1.44%)
+'    - Xml Docs: 0.00%
+' 
+'   Blank Lines: 29 (20.86%)
+'     File Size: 5.39 KB
+
+
+' Module ZScorePlotTest
+' 
+'     Sub: analysis, duke_test, Main, plotBox, plotHeatmap
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.Data.ChartPlots.BoxPlot
 Imports Microsoft.VisualBasic.Data.ChartPlots.Statistics
-Imports Microsoft.VisualBasic.Data.csv.IO
+Imports Microsoft.VisualBasic.Data.Framework.IO
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
@@ -71,7 +72,7 @@ Module ZScorePlotTest
         Call Pause()
 
         Dim csv$ = "D:\OneDrive\Report_soil\16s-Desktop\8.24\predictions_ko.L3.xls"
-        Dim labels = Microsoft.VisualBasic.Data.csv.IO.Tokenizer.CharsParser(csv.ReadFirstLine, ASCII.TAB).Skip(1).AsList
+        Dim labels = Microsoft.VisualBasic.Data.Framework.IO.CSVFile.Tokenizer.CharsParser(csv.ReadFirstLine, ASCII.TAB).Skip(1).AsList
 
         With New Dictionary(Of String, String())
             !Case = {"20_1", "18_1", "17_1", "16_1", "15_2", "15_1", "14_1"}
@@ -120,7 +121,7 @@ Module ZScorePlotTest
 
     Sub plotBox()
         Dim csv$ = "D:\OneDrive\Report_soil\16s-Desktop\8.24\predictions_ko.L3.csv"
-        Dim labels = Microsoft.VisualBasic.Data.csv.IO.Tokenizer.CharsParser(csv.ReadFirstLine).Skip(1).AsList
+        Dim labels = Microsoft.VisualBasic.Data.Framework.IO.CSVFile.Tokenizer.CharsParser(csv.ReadFirstLine).Skip(1).AsList
 
         With New Dictionary(Of String, String())
             !Case = {
@@ -156,7 +157,7 @@ Module ZScorePlotTest
 
     Sub plotHeatmap()
         Dim csv$ = "D:\OneDrive\Report_soil\16s-Desktop\8.24\predictions_ko.L3.csv"
-        Dim labels = Microsoft.VisualBasic.Data.csv.IO.Tokenizer.CharsParser(csv.ReadFirstLine).Skip(1).AsList
+        Dim labels = Microsoft.VisualBasic.Data.Framework.IO.CSVFile.Tokenizer.CharsParser(csv.ReadFirstLine).Skip(1).AsList
 
         With New Dictionary(Of String, String())
             !Case = {
@@ -177,7 +178,7 @@ Module ZScorePlotTest
 
             Dim matrix = DataSet.LoadDataSet(csv).Project(colors.Keys.ToArray).ToArray
 
-            Call Heatmap.Heatmap.Plot(matrix,
+            Call Heatmap.HeatMap.Plot(matrix,
                                       size:="3800,5000",
                                       drawScaleMethod:=Heatmap.DrawElements.Rows,
                                       min:=0,

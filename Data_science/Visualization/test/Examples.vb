@@ -1,7 +1,8 @@
 Imports System.Drawing
 Imports System.Drawing.Drawing2D
 Imports System.IO
-Imports VbPlot
+Imports DataPlot
+Imports stdf = System.Math
 
 ' ============================================================================
 '  Examples.vb - 各类图表使用示例
@@ -56,13 +57,13 @@ Public Class Examples
         Dim s1 As New Series With {
             .Name = "Method A",
             .X = Enumerable.Range(0, 20).Select(Function(i) CDbl(i)).ToArray(),
-            .Y = Enumerable.Range(0, 20).Select(Function(i) Math.Sin(i * 0.5) * 10 + 20 + rnd.NextDouble() * 2).ToArray(),
+            .Y = Enumerable.Range(0, 20).Select(Function(i) stdf.Sin(i * 0.5) * 10 + 20 + rnd.NextDouble() * 2).ToArray(),
             .LineStyle = DashStyle.Solid
         }
         Dim s2 As New Series With {
             .Name = "Method B",
             .X = Enumerable.Range(0, 20).Select(Function(i) CDbl(i)).ToArray(),
-            .Y = Enumerable.Range(0, 20).Select(Function(i) Math.Cos(i * 0.5) * 8 + 18 + rnd.NextDouble() * 2).ToArray(),
+            .Y = Enumerable.Range(0, 20).Select(Function(i) stdf.Cos(i * 0.5) * 8 + 18 + rnd.NextDouble() * 2).ToArray(),
             .LineStyle = DashStyle.Dash,
             .Color = Color.FromArgb(214, 39, 40)
         }
@@ -169,15 +170,15 @@ Public Class Examples
         Dim mat(9, 11) As Double
         For i = 0 To 9
             For j = 0 To 11
-                mat(i, j) = Math.Sin(i * 0.5) * Math.Cos(j * 0.4) + rnd.NextDouble() * 0.3
+                mat(i, j) = stdf.Sin(i * 0.5) * stdf.Cos(j * 0.4) + rnd.NextDouble() * 0.3
             Next
         Next
-        Using plt As New HeatmapPlot(800, 600, PlotTheme.Light())
+        Using plt As New heatmapPlot(800, 600, PlotTheme.Light())
             plt.Title = "Heatmap Demo"
             plt.Matrix = mat
             plt.RowLabels = Enumerable.Range(1, 10).Select(Function(i) "R" & i).ToArray()
             plt.ColLabels = Enumerable.Range(1, 12).Select(Function(i) "C" & i).ToArray()
-            plt.ColorMap = HeatmapPlot.ColorMapType.Viridis
+            plt.ColorMap = heatmapPlot.ColorMapType.Viridis
             plt.ShowValues = False
             plt.Plot()
             plt.SavePng(Path.Combine(dir, "heatmap.png"), 300)
@@ -217,7 +218,7 @@ Public Class Examples
     Private Shared Function SampleNormal(rnd As Random, mean As Double, std As Double) As Double
         Dim u1 = rnd.NextDouble()
         Dim u2 = rnd.NextDouble()
-        Dim z = Math.Sqrt(-2 * Math.Log(u1)) * Math.Cos(2 * Math.PI * u2)
+        Dim z = stdf.Sqrt(-2 * stdf.Log(u1)) * stdf.Cos(2 * stdf.PI * u2)
         Return mean + std * z
     End Function
 
