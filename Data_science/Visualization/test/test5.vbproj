@@ -17,7 +17,7 @@
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 		<Configurations>Debug;Release;LipidSearch;Rsharp_app_release</Configurations>
 		<OutputType>Exe</OutputType>
-		<StartupObject>Microsoft.VisualBasic.Data.visualize.OutlineTest</StartupObject>
+		<StartupObject>Microsoft.VisualBasic.Data.visualize.Program</StartupObject>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">

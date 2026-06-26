@@ -54,7 +54,7 @@
 Imports Microsoft.VisualBasic.Data.Framework.IO
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 
-Module Module3
+Module ProgramXXX
 
     Sub Main()
         Call Boxplot()
