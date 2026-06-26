@@ -9,44 +9,11 @@ Imports StringFormat = Microsoft.VisualBasic.Imaging.StringFormat
 '  负责画布管理、坐标变换、坐标轴 / 网格 / 图例绘制、PNG 高清导出
 ' ============================================================================
 
-
-
-''' <summary>图表数据系列</summary>
-Public Class Series
-    Public Property Name As String = ""
-    Public Property Color As Color? = Nothing
-    Public Property X As Double() = {}
-    Public Property Y As Double() = {}
-    Public Property MarkerShape As MarkerShape = MarkerShape.Circle
-    Public Property LineStyle As DashStyle = DashStyle.Solid
-    Public Property Visible As Boolean = True
-End Class
-
-''' <summary>标记形状</summary>
-Public Enum MarkerShape
-    Circle
-    Square
-    Triangle
-    Diamond
-    Cross
-    Plus
-    None
-End Enum
-
-''' <summary>坐标轴</summary>
-Public Enum AxisSide
-    Bottom
-    Left
-    Top
-    Right
-End Enum
-
 ''' <summary>
 ''' 绘图引擎：所有图表类型的基类与公共能力。
 ''' 使用 GDI+ 在内存 Bitmap 上绘制，最后导出为 PNG。
 ''' </summary>
-Public Class PlotEngine
-    Implements IDisposable
+Public Class PlotEngine : Implements IDisposable
 
     ' ---------- 画布 ----------
     Protected _g As IGraphics
