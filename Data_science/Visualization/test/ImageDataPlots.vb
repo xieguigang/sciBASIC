@@ -56,6 +56,7 @@ Imports Microsoft.VisualBasic.Data.ChartPlots.ImageDataExtensions
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing3D
 Imports Microsoft.VisualBasic.Imaging.Driver
+Imports Image = Microsoft.VisualBasic.Imaging.Image
 
 Module ImageDataPlots
 

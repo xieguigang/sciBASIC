@@ -173,12 +173,12 @@ Public Class Examples
                 mat(i, j) = stdf.Sin(i * 0.5) * stdf.Cos(j * 0.4) + rnd.NextDouble() * 0.3
             Next
         Next
-        Using plt As New heatmapPlot(800, 600, PlotTheme.Light())
+        Using plt As New DataPlot.HeatmapPlot(800, 600, PlotTheme.Light())
             plt.Title = "Heatmap Demo"
             plt.Matrix = mat
             plt.RowLabels = Enumerable.Range(1, 10).Select(Function(i) "R" & i).ToArray()
             plt.ColLabels = Enumerable.Range(1, 12).Select(Function(i) "C" & i).ToArray()
-            plt.ColorMap = heatmapPlot.ColorMapType.Viridis
+            plt.ColorMap = DataPlot.HeatmapPlot.ColorMapType.Viridis
             plt.ShowValues = False
             plt.Plot()
             plt.SavePng(Path.Combine(dir, "heatmap.png"), 300)

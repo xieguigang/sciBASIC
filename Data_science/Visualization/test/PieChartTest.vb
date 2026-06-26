@@ -149,14 +149,14 @@ Public Module PieChartTest
             ' Graphics.SmoothingMode = SmoothingMode.AntiAlias
             ' Graphics.InterpolationMode = InterpolationMode.HighQualityBicubic
 
-            Dim brushWhite = New SolidBrush(Color.White)
+            Dim brushWhite = New Microsoft.VisualBasic.Imaging.SolidBrush(Color.White)
             Graphics.FillRectangle(brushWhite, 0, 0, Graphics.Width, Graphics.Height)
 
-            Dim FontFamily = New FontFamily("Arial")
-            Dim strformat = New StringFormat()
+            Dim FontFamily = New Microsoft.VisualBasic.Imaging.FontFamily("Arial")
+            Dim strformat = New Microsoft.VisualBasic.Imaging.StringFormat()
             Dim szbuf$ = "Text Designer"
 
-            Dim path As New GraphicsPath()
+            Dim path As New Microsoft.VisualBasic.Imaging.GraphicsPath()
             path.AddString(szbuf, FontFamily, FontStyle.Regular, 48.0F, New Point(10, 10), strformat)
 
             path.AddPolygon({New Point(100, 100), New Point(100, 800), New Point(800, 800), New Point(700, 200)})
@@ -164,18 +164,18 @@ Public Module PieChartTest
 
             For i As Integer = 1 To 20
 
-                Dim Pen = New Pen(Color.FromArgb(32, 0, 128, 192), i)
+                Dim Pen = New Microsoft.VisualBasic.Imaging.Pen(Color.FromArgb(32, 0, 128, 192), i)
                 Pen.LineJoin = LineJoin.Round
                 Graphics.DrawPath(Pen, path)
                 Pen.Dispose()
             Next
 
-            Dim Brush = New SolidBrush(Color.FromArgb(255, 255, 255))
+            Dim Brush = New Microsoft.VisualBasic.Imaging.SolidBrush(Color.FromArgb(255, 255, 255))
             Graphics.FillPath(Brush, path)
 
             brushWhite.Dispose()
-            FontFamily.Dispose()
-            path.Dispose()
+            ' FontFamily.Dispose()
+            ' path.Dispose()
             Brush.Dispose()
 
             Call Graphics.ImageResource.SaveAs("./g2.png")
@@ -196,7 +196,7 @@ Public Module PieChartTest
         ' Create a GraphicsPath object. 
         Dim pth As New GraphicsPath()
         ' Add the string in the chosen style. 
-        pth.AddString("Test", New FontFamily("Century Gothic"), FontStyle.Bold, 184, New Point(1000, 1500), StringFormat.GenericTypographic)
+        pth.AddString("Test", New System.Drawing.FontFamily("Century Gothic"), FontStyle.Bold, 184, New Point(1000, 1500), StringFormat.GenericTypographic)
         ' Get the graphics object for the image. 
         Dim g = Graphics.FromImage(bm)
         ' Create a matrix that shrinks the drawing output by the fixed ratio. 

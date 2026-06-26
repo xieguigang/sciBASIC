@@ -53,9 +53,8 @@
 
 Imports System.Drawing
 Imports Microsoft.VisualBasic.Data.ChartPlots.Statistics.Heatmap
-Imports Microsoft.VisualBasic.Data.csv.IO
+Imports Microsoft.VisualBasic.Data.Framework.IO
 Imports Microsoft.VisualBasic.Imaging
-Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
 Imports stdNum = System.Math
 
 Module DensityPlotTest

@@ -225,7 +225,20 @@ Namespace Imaging
             Public Property r2 As Single
         End Class
 
+        Public Class op_AddString : Inherits op
+            Public Property s As String
+            Public Property fontFamily As FontFamily
+            Public Property style As FontStyle
+            Public Property size As Single
+            Public Property pos As PointF
+            Public Property format As StringFormat
+        End Class
+
         Dim opSet As New List(Of op)
+
+        Public Sub AddString(s As String, fontFamily As fontfamily, style As FontStyle, size As Single, pos As PointF, format As StringFormat)
+            Call opSet.Add(New op_AddString With {.fontFamily = fontFamily, .format = format, .pos = pos, .s = s, .size = size, .style = style})
+        End Sub
 
         Public Sub AddEllipse(x As Single, y As Single, r1 As Single, r2 As Single)
             Call opSet.Add(New op_AddEllipse With {.x = x, .y = y, .r1 = r1, .r2 = r2})

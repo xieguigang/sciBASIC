@@ -152,6 +152,15 @@ Namespace Imaging
         End Sub
     End Class
 
+    Public Class FontFamily
+
+        Public Property Name As String
+
+        Sub New(name As String)
+            Me.Name = name
+        End Sub
+    End Class
+
     Public Enum StringAlignment
         Center
         Far
