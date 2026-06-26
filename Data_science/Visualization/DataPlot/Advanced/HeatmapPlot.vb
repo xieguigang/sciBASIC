@@ -2,6 +2,7 @@
 
 Imports System.Drawing
 Imports Microsoft.VisualBasic.Imaging
+Imports stdf = System.Math
 
 ''' <summary>热图</summary>
 Public Class HeatmapPlot
