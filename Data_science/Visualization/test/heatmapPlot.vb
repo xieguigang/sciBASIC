@@ -99,7 +99,7 @@ Module heatmapPlot
 
         Call Heatmap.Plot(data, size:="3200,6000", reverseClrSeq:=True, drawScaleMethod:=DrawElements.Cols, drawClass:=(Nothing, experiments)).Save(path.TrimSuffix & ".png")
 
-        ' Call AxisScalling.CreateAxisTicks({-10.3301, 13.7566}, 20).GetJson(True).__DEBUG_ECHO
+        ' Call AxisScalling.CreateAxisTicks({-10.3301, 13.7566}, 20).GetJson(True).debug
 
         Pause()
 

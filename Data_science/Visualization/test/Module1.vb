@@ -110,15 +110,15 @@ Module Module1
     End Sub
 
     Sub axisScallingTest()
-        'Call AxisScalling.GetAxisByTick(1, 0.1,).tos.GetJson.__DEBUG_ECHO
-        'Call AxisScalling.GetAxisValues(1).FormatNumeric.GetJson.__DEBUG_ECHO
-        'Call AxisScalling.GetAxisValues(10).FormatNumeric.GetJson.__DEBUG_ECHO
-        'Call AxisScalling.GetAxisValues(100).FormatNumeric.GetJson.__DEBUG_ECHO
-        'Call AxisScalling.GetAxisValues(1000).FormatNumeric.GetJson.__DEBUG_ECHO
-        'Call AxisScalling.GetAxisValues(1.0E+30).FormatNumeric.GetJson.__DEBUG_ECHO
-        'Call AxisScalling.GetAxisValues(1.0E-30).FormatNumeric.GetJson.__DEBUG_ECHO
-        'Call AxisScalling.GetAxisValues(0.1).FormatNumeric.GetJson.__DEBUG_ECHO
-        'Call AxisScalling.GetAxisValues(0.25).FormatNumeric.GetJson.__DEBUG_ECHO
+        'Call AxisScalling.GetAxisByTick(1, 0.1,).tos.GetJson.debug
+        'Call AxisScalling.GetAxisValues(1).FormatNumeric.GetJson.debug
+        'Call AxisScalling.GetAxisValues(10).FormatNumeric.GetJson.debug
+        'Call AxisScalling.GetAxisValues(100).FormatNumeric.GetJson.debug
+        'Call AxisScalling.GetAxisValues(1000).FormatNumeric.GetJson.debug
+        'Call AxisScalling.GetAxisValues(1.0E+30).FormatNumeric.GetJson.debug
+        'Call AxisScalling.GetAxisValues(1.0E-30).FormatNumeric.GetJson.debug
+        'Call AxisScalling.GetAxisValues(0.1).FormatNumeric.GetJson.debug
+        'Call AxisScalling.GetAxisValues(0.25).FormatNumeric.GetJson.debug
 
         'Pause()
     End Sub

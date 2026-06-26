@@ -105,7 +105,7 @@ Module FuzzyCMeansVisualize
 
 #Region "DEBUG INFO OUTPUTS"
         For Each x In raw
-            Call ($"{x.uid}: {x.entityVector.GetJson} => " & x.memberships.GetJson).__DEBUG_ECHO
+            Call ($"{x.uid}: {x.entityVector.GetJson} => " & x.memberships.GetJson).debug
         Next
 #End Region
 

@@ -130,7 +130,7 @@ Module ZScorePlotTest
             }
             !Control = labels - !Case
 
-            Call .GetJson.__DEBUG_ECHO
+            Call .GetJson.debug
 
             Dim data = DataSet.LoadDataSet(csv)
 
