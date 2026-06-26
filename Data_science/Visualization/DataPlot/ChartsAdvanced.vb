@@ -6,7 +6,7 @@ Imports GraphicsPath = Microsoft.VisualBasic.Imaging.GraphicsPath
 Imports DashStyle = Microsoft.VisualBasic.Imaging.DashStyle
 Imports StringAlignment = Microsoft.VisualBasic.Imaging.StringAlignment
 Imports StringFormat = Microsoft.VisualBasic.Imaging.StringFormat
-
+Imports stdf = System.Math
 
 ' ============================================================================
 '  ChartsAdvanced.vb - 高级图表：盒须图 / 小提琴图 / 饼图 / 热图 / 桑基图
@@ -543,10 +543,11 @@ Public Class HeatmapPlot
         If i >= n Then i = n - 1
         Dim f = pos - i
         Dim c1 = colors(i), c2 = colors(i + 1)
-        Return Color.FromArgb(
-            CInt(c1.R + (c2.R - c1.R) * f),
-            CInt(c1.G + (c2.G - c1.G) * f),
-            CInt(c1.B + (c2.B - c1.B) * f))
+        Dim r = stdf.Clamp(CDbl(c1.R) + (CDbl(c2.R) - CDbl(c1.R)) * f, 0, 255)
+        Dim g = stdf.Clamp(CDbl(c1.G) + (CDbl(c2.G) - CDbl(c1.G)) * f, 0, 255)
+        Dim b = stdf.Clamp(CDbl(c1.B) + (CDbl(c2.B) - CDbl(c1.B)) * f, 0, 255)
+
+        Return Color.FromArgb(r, g, b)
     End Function
 
     Private Function Brightness(c As Color) As Double
