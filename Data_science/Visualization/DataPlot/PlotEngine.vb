@@ -46,7 +46,6 @@ Public Class PlotEngine
     Implements IDisposable
 
     ' ---------- 画布 ----------
-    Private _bmp As Bitmap
     Protected _g As IGraphics
     Protected _width As Integer
     Protected _height As Integer
@@ -456,7 +455,7 @@ Public Class PlotEngine
     End Function
 
     ''' <summary>获取内部 Graphics（高级用户自定义绘制）</summary>
-    Public Function GetGraphics() As Graphics
+    Public Function GetGraphics() As IGraphics
         Return _g
     End Function
 
