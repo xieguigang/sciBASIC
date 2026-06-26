@@ -1,5 +1,13 @@
 Imports System.Drawing
 
+Imports SolidBrush = Microsoft.VisualBasic.Imaging.SolidBrush
+Imports Pen = Microsoft.VisualBasic.Imaging.Pen
+Imports GraphicsPath = Microsoft.VisualBasic.Imaging.GraphicsPath
+Imports DashStyle = Microsoft.VisualBasic.Imaging.DashStyle
+Imports LineCap = Microsoft.VisualBasic.Imaging.LineCap
+Imports LineJoin = Microsoft.VisualBasic.Imaging.LineJoin
+
+
 ' ============================================================================
 '  ChartsAdvanced.vb - 高级图表：盒须图 / 小提琴图 / 饼图 / 热图 / 桑基图
 ' ============================================================================
@@ -26,8 +34,8 @@ Public Class BoxPlot
         Dim nGrp = Groups.Count
         ' 计算全局 Y 范围
         Dim allData = Groups.SelectMany(Function(g) g.Data).ToList()
-        Dim ymin = If(ymin, allData.Min())
-        Dim ymax = If(ymax, allData.Max())
+        Dim ymin = If(Me.YMin, allData.Min())
+        Dim ymax = If(Me.YMax, allData.Max())
         Dim pad = (ymax - ymin) * 0.05
         ymin -= pad : ymax += pad
 
@@ -56,7 +64,7 @@ Public Class BoxPlot
             Dim whiskerLo = sorted.Where(Function(v) v >= wLo).Min()
             Dim whiskerHi = sorted.Where(Function(v) v <= wHi).Max()
 
-            Dim center = If(Horizontal,
+            Dim center As Single = If(Horizontal,
                             _plotArea.Top + (i + 0.5) * groupWidth,
                             _plotArea.Left + (i + 0.5) * groupWidth)
 
@@ -67,8 +75,8 @@ Public Class BoxPlot
                 Dim pxQ3 = ToPixelX(q3, ymin, ymax)
                 Dim pxWLo = ToPixelX(whiskerLo, ymin, ymax)
                 Dim pxWHi = ToPixelX(whiskerHi, ymin, ymax)
-                Dim by0 = center - boxWidth / 2
-                Dim by1 = center + boxWidth / 2
+                Dim by0 As Single = center - boxWidth / 2
+                Dim by1 As Single = center + boxWidth / 2
                 ' 盒子
                 Using br As New SolidBrush(Color.FromArgb(180, color)),
                       pen As New Pen(color, Theme.LineWidth)
@@ -87,7 +95,7 @@ Public Class BoxPlot
                         Dim pxM = ToPixelX(mean, ymin, ymax)
                         Using dsh As New Pen(color, Theme.LineWidth)
                             dsh.DashStyle = DashStyle.Dot
-                            _g.DrawLine(dsh, pxM, by0, pxM, by1)
+                            _g.DrawLine(dsh, pxM, CSng(by0), pxM, CSng(by1))
                         End Using
                     End If
                 End Using
@@ -109,19 +117,19 @@ Public Class BoxPlot
                 Dim bx1 = center + boxWidth / 2
                 Using br As New SolidBrush(Color.FromArgb(180, color)),
                       pen As New Pen(color, Theme.LineWidth)
-                    _g.FillRectangle(br, bx0, pyQ3, bx1 - bx0, pyQ1 - pyQ3)
-                    _g.DrawRectangle(pen, bx0, pyQ3, bx1 - bx0, pyQ1 - pyQ3)
-                    _g.DrawLine(pen, bx0, pyQ2, bx1, pyQ2)
-                    _g.DrawLine(pen, center, pyQ1, center, pyWLo)
-                    _g.DrawLine(pen, center, pyQ3, center, pyWHi)
-                    _g.DrawLine(pen, bx0 + 4, pyWLo, bx1 - 4, pyWLo)
-                    _g.DrawLine(pen, bx0 + 4, pyWHi, bx1 - 4, pyWHi)
+                    _g.FillRectangle(br, CSng(bx0), pyQ3, CSng(bx1 - bx0), pyQ1 - pyQ3)
+                    _g.DrawRectangle(pen, CSng(bx0), pyQ3, CSng(bx1 - bx0), pyQ1 - pyQ3)
+                    _g.DrawLine(pen, CSng(bx0), pyQ2, CSng(bx1), pyQ2)
+                    _g.DrawLine(pen, CSng(center), pyQ1, CSng(center), pyWLo)
+                    _g.DrawLine(pen, CSng(center), pyQ3, CSng(center), pyWHi)
+                    _g.DrawLine(pen, CSng(bx0 + 4), pyWLo, CSng(bx1 - 4), pyWLo)
+                    _g.DrawLine(pen, CSng(bx0 + 4), pyWHi, CSng(bx1 - 4), pyWHi)
                     If ShowMean Then
                         Dim mean = g.Data.Average()
                         Dim pyM = ToPixelY(mean, ymin, ymax)
                         Using dsh As New Pen(color, Theme.LineWidth)
                             dsh.DashStyle = DashStyle.Dot
-                            _g.DrawLine(dsh, bx0, pyM, bx1, pyM)
+                            _g.DrawLine(dsh, CSng(bx0), pyM, CSng(bx1), pyM)
                         End Using
                     End If
                 End Using
@@ -172,8 +180,8 @@ Public Class ViolinPlot
 
         Dim nGrp = Groups.Count
         Dim allData = Groups.SelectMany(Function(g) g.Data).ToList()
-        Dim ymin = If(ymin, allData.Min())
-        Dim ymax = If(ymax, allData.Max())
+        Dim ymin = If(Me.YMin, allData.Min())
+        Dim ymax = If(Me.YMax, allData.Max())
         Dim pad = (ymax - ymin) * 0.05
         ymin -= pad : ymax += pad
 
@@ -206,7 +214,7 @@ Public Class ViolinPlot
             Next
             Dim maxCount = counts.Max()
 
-            Dim center = _plotArea.Left + (i + 0.5) * groupWidth
+            Dim center As Single = _plotArea.Left + (i + 0.5) * groupWidth
 
             ' 构造小提琴轮廓（左右对称）
             Dim leftPts As New List(Of PointF)()
@@ -234,10 +242,10 @@ Public Class ViolinPlot
 
             ' 内部盒须
             If ShowBoxInside Then
-                Dim q1 = Quantile(sorted, 0.25)
-                Dim q2 = Quantile(sorted, 0.5)
-                Dim q3 = Quantile(sorted, 0.75)
-                Dim innerW = maxViolinWidth * 0.15
+                Dim q1 As Single = Quantile(sorted, 0.25)
+                Dim q2 As Single = Quantile(sorted, 0.5)
+                Dim q3 As Single = Quantile(sorted, 0.75)
+                Dim innerW As Single = maxViolinWidth * 0.15
                 Dim pyQ1 = ToPixelY(q1, ymin, ymax)
                 Dim pyQ2 = ToPixelY(q2, ymin, ymax)
                 Dim pyQ3 = ToPixelY(q3, ymin, ymax)
@@ -476,7 +484,7 @@ Public Class HeatmapPlot
             sf.LineAlignment = StringAlignment.Center
             For Each t In ticks
                 If t < vmin OrElse t > vmax Then Continue For
-                Dim py = cbY + (1 - (t - vmin) / (vmax - vmin)) * cbH
+                Dim py As Single = cbY + (1 - (t - vmin) / (vmax - vmin)) * cbH
                 _g.DrawLine(pen, cbX + cbW, py, cbX + cbW + 4, py)
                 _g.DrawString(FormatNumber(t), Theme.TickLabelFont, br, cbX + cbW + 6, py, sf)
             Next
@@ -634,7 +642,7 @@ Public Class SankeyPlot
                 New PointF(x1, srcY + linkH / 2))
             path.CloseFigure()
 
-            Dim color = If(l.Color, color.FromArgb(80, Theme.Palette(0)))
+            Dim color As Color = If(l.Color, Color.FromArgb(80, Theme.Palette(0)))
             Using br As New SolidBrush(color)
                 _g.FillPath(br, path)
             End Using

@@ -1,5 +1,11 @@
 Imports System.Drawing
 
+Imports SolidBrush = Microsoft.VisualBasic.Imaging.SolidBrush
+Imports Pen = Microsoft.VisualBasic.Imaging.Pen
+Imports DashStyle = Microsoft.VisualBasic.Imaging.DashStyle
+Imports LineCap = Microsoft.VisualBasic.Imaging.LineCap
+Imports LineJoin = Microsoft.VisualBasic.Imaging.LineJoin
+
 ' ============================================================================
 '  ChartsBasic.vb - 基础图表：散点图 / 折线图 / 柱状图 / 直方图
 ' ============================================================================
@@ -21,16 +27,16 @@ Public Class ScatterPlot
         ' 计算范围
         Dim allX = seriesList.SelectMany(Function(s) s.X).ToArray()
         Dim allY = seriesList.SelectMany(Function(s) s.Y).ToArray()
-        Dim xmin = If(xmin, allX.Min())
-        Dim xmax = If(xmax, allX.Max())
-        Dim ymin = If(ymin, allY.Min())
-        Dim ymax = If(ymax, allY.Max())
-        If xmin Is Nothing AndAlso xmax Is Nothing Then
+        Dim xmin = If(Me.XMin, allX.Min())
+        Dim xmax = If(Me.XMax, allX.Max())
+        Dim ymin = If(Me.YMin, allY.Min())
+        Dim ymax = If(Me.YMax, allY.Max())
+        If Me.XMin Is Nothing AndAlso Me.XMax Is Nothing Then
             Dim pad = (xmax - xmin) * 0.05
             If pad = 0 Then pad = 1
             xmin -= pad : xmax += pad
         End If
-        If ymin Is Nothing AndAlso ymax Is Nothing Then
+        If Me.YMin Is Nothing AndAlso Me.YMax Is Nothing Then
             Dim pad = (ymax - ymin) * 0.08
             If pad = 0 Then pad = 1
             ymin -= pad : ymax += pad
@@ -89,16 +95,16 @@ Public Class LinePlot
 
         Dim allX = seriesList.SelectMany(Function(s) s.X).ToArray()
         Dim allY = seriesList.SelectMany(Function(s) s.Y).ToArray()
-        Dim xmin = If(xmin, allX.Min())
-        Dim xmax = If(xmax, allX.Max())
-        Dim ymin = If(ymin, allY.Min())
-        Dim ymax = If(ymax, allY.Max())
-        If xmin Is Nothing AndAlso xmax Is Nothing Then
+        Dim xmin = If(Me.XMin, allX.Min())
+        Dim xmax = If(Me.XMax, allX.Max())
+        Dim ymin = If(Me.YMin, allY.Min())
+        Dim ymax = If(Me.YMax, allY.Max())
+        If Me.XMin Is Nothing AndAlso Me.XMax Is Nothing Then
             Dim pad = (xmax - xmin) * 0.05
             If pad = 0 Then pad = 1
             xmin -= pad : xmax += pad
         End If
-        If ymin Is Nothing AndAlso ymax Is Nothing Then
+        If Me.YMin Is Nothing AndAlso Me.YMax Is Nothing Then
             Dim pad = (ymax - ymin) * 0.08
             If pad = 0 Then pad = 1
             ymin -= pad : ymax += pad
@@ -290,12 +296,12 @@ Public Class HistogramPlot
             counts(idx) += 1
         Next
 
-        Dim xmin = If(xmin, dmin)
-        Dim xmax = If(xmax, dmax)
+        Dim xmin = If(Me.XMin, dmin)
+        Dim xmax = If(Me.XMax, dmax)
         Dim ymax = If(Density,
                       counts.Max() / (Data.Length * binW) * 1.1,
                       counts.Max() * 1.1)
-        Dim ymin = If(ymin, 0)
+        Dim ymin = If(Me.YMin, 0)
 
         DrawAxisAndGrid(xmin, xmax, ymin, ymax)
 

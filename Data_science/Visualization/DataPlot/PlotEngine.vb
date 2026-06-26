@@ -1,5 +1,6 @@
 Imports System.Drawing
 Imports Microsoft.VisualBasic.Imaging
+Imports Microsoft.VisualBasic.Imaging.Driver
 
 ' ============================================================================
 '  PlotEngine.vb - 核心绘图引擎
@@ -92,15 +93,13 @@ Public Class PlotEngine
     Public Sub New(width As Integer, height As Integer, Optional theme As PlotTheme = Nothing)
         _width = width
         _height = height
-        Me.Theme = If(theme, PlotTheme.Light())
-        _bmp = New Bitmap(width, height, PixelFormat.Format32bppArgb)
-        _g = Graphics.FromImage(_bmp)
+        _Theme = If(theme, PlotTheme.Light())
+        _g = DriverLoad.CreateGraphicsDevice(New Size(width, height))
         ApplyQuality(_g)
     End Sub
 
     Public Sub Dispose() Implements IDisposable.Dispose
         _g?.Dispose()
-        _bmp?.Dispose()
     End Sub
 
     ' ========================================================
@@ -108,12 +107,12 @@ Public Class PlotEngine
     ' ========================================================
     Private Sub ApplyQuality(g As IGraphics)
         If Theme.AntiAlias Then
-            g.SmoothingMode = SmoothingMode.AntiAlias
-            g.PixelOffsetMode = PixelOffsetMode.HighQuality
-            g.InterpolationMode = InterpolationMode.HighQualityBicubic
+            ' g.SmoothingMode = SmoothingMode.AntiAlias
+            ' g.PixelOffsetMode = PixelOffsetMode.HighQuality
+            ' g.InterpolationMode = InterpolationMode.HighQualityBicubic
         End If
         If Theme.HighQualityText Then
-            g.TextRenderingHint = TextRenderingHint.AntiAliasGridFit
+            ' g.TextRenderingHint = TextRenderingHint.AntiAliasGridFit
         End If
     End Sub
 
@@ -164,10 +163,10 @@ Public Class PlotEngine
         Dim [step] = NiceStep(max - min, tickCount)
         Dim start = Math.Ceiling(min / [step]) * [step]
         Dim v = start
-        Do While v <= max + step * 0.001
-                list.Add(Math.Round(v, 8))
-            v += step
-            Loop
+        Do While v <= max + [step] * 0.001
+            list.Add(Math.Round(v, 8))
+            v += [step]
+        Loop
         Return list.ToArray()
     End Function
 
@@ -438,21 +437,6 @@ Public Class PlotEngine
             End Select
         End Using
     End Sub
-
-    ' ========================================================
-    '  导出 PNG（支持高分辨率）
-    ' ========================================================
-    ''' <summary>导出当前画布为 PNG。dpi 默认 300，适合论文插图。</summary>
-    Public Sub SavePng(path As String, Optional dpi As Integer = 300)
-        ' 设置 DPI 元数据
-        _bmp.SetResolution(dpi, dpi)
-        _bmp.Save(path, ImageFormat.Png)
-    End Sub
-
-    ''' <summary>获取内部 Bitmap（用于进一步处理）</summary>
-    Public Function GetBitmap() As Bitmap
-        Return _bmp
-    End Function
 
     ''' <summary>获取内部 Graphics（高级用户自定义绘制）</summary>
     Public Function GetGraphics() As IGraphics

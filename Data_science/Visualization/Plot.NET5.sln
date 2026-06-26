@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 18
-VisualStudioVersion = 18.7.11919.86 stable
+VisualStudioVersion = 18.7.11919.86
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{778DAE3C-4631-46EA-AA77-85C1314464D9}") = "plots-netcore5", "Plots\plots-netcore5.vbproj", "{39C1BE58-ED98-4BAD-8545-FF0AD6882310}"
 EndProject
@@ -40,6 +40,8 @@ EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "test5", "test\test5.vbproj", "{F6E7E801-95E5-9D4D-871C-23F95EB3367C}"
 EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Drawing-net4.8", "..\..\gr\Drawing-net4.8\Drawing-net4.8.vbproj", "{A3F87B6D-4197-6CFE-7D63-C9D2AD08C834}"
+EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "ANOVA", "..\Mathematica\Math\ANOVA\ANOVA.vbproj", "{BC308169-66D5-7399-A9C3-0ADF9F89ABCA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -605,6 +607,38 @@ Global
 		{A3F87B6D-4197-6CFE-7D63-C9D2AD08C834}.Rsharp_app_release|Any CPU.Build.0 = Rsharp_app_release|Any CPU
 		{A3F87B6D-4197-6CFE-7D63-C9D2AD08C834}.Rsharp_app_release|x64.ActiveCfg = Rsharp_app_release|x64
 		{A3F87B6D-4197-6CFE-7D63-C9D2AD08C834}.Rsharp_app_release|x64.Build.0 = Rsharp_app_release|x64
+		{BC308169-66D5-7399-A9C3-0ADF9F89ABCA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BC308169-66D5-7399-A9C3-0ADF9F89ABCA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BC308169-66D5-7399-A9C3-0ADF9F89ABCA}.Debug|x64.ActiveCfg = Debug|x64
+		{BC308169-66D5-7399-A9C3-0ADF9F89ABCA}.Debug|x64.Build.0 = Debug|x64
+		{BC308169-66D5-7399-A9C3-0ADF9F89ABCA}.LipidSearch|Any CPU.ActiveCfg = nuget_release|Any CPU
+		{BC308169-66D5-7399-A9C3-0ADF9F89ABCA}.LipidSearch|Any CPU.Build.0 = nuget_release|Any CPU
+		{BC308169-66D5-7399-A9C3-0ADF9F89ABCA}.LipidSearch|x64.ActiveCfg = nuget_release|x64
+		{BC308169-66D5-7399-A9C3-0ADF9F89ABCA}.LipidSearch|x64.Build.0 = nuget_release|x64
+		{BC308169-66D5-7399-A9C3-0ADF9F89ABCA}.mzkit_win32|Any CPU.ActiveCfg = mzkit_win32|Any CPU
+		{BC308169-66D5-7399-A9C3-0ADF9F89ABCA}.mzkit_win32|Any CPU.Build.0 = mzkit_win32|Any CPU
+		{BC308169-66D5-7399-A9C3-0ADF9F89ABCA}.mzkit_win32|x64.ActiveCfg = mzkit_win32|x64
+		{BC308169-66D5-7399-A9C3-0ADF9F89ABCA}.mzkit_win32|x64.Build.0 = mzkit_win32|x64
+		{BC308169-66D5-7399-A9C3-0ADF9F89ABCA}.mzkit|Any CPU.ActiveCfg = Debug|Any CPU
+		{BC308169-66D5-7399-A9C3-0ADF9F89ABCA}.mzkit|Any CPU.Build.0 = Debug|Any CPU
+		{BC308169-66D5-7399-A9C3-0ADF9F89ABCA}.mzkit|x64.ActiveCfg = Debug|x64
+		{BC308169-66D5-7399-A9C3-0ADF9F89ABCA}.mzkit|x64.Build.0 = Debug|x64
+		{BC308169-66D5-7399-A9C3-0ADF9F89ABCA}.NPSearch|Any CPU.ActiveCfg = Rsharp_app_release|Any CPU
+		{BC308169-66D5-7399-A9C3-0ADF9F89ABCA}.NPSearch|Any CPU.Build.0 = Rsharp_app_release|Any CPU
+		{BC308169-66D5-7399-A9C3-0ADF9F89ABCA}.NPSearch|x64.ActiveCfg = Rsharp_app_release|x64
+		{BC308169-66D5-7399-A9C3-0ADF9F89ABCA}.NPSearch|x64.Build.0 = Rsharp_app_release|x64
+		{BC308169-66D5-7399-A9C3-0ADF9F89ABCA}.PlantMAT|Any CPU.ActiveCfg = Rsharp_app_release|Any CPU
+		{BC308169-66D5-7399-A9C3-0ADF9F89ABCA}.PlantMAT|Any CPU.Build.0 = Rsharp_app_release|Any CPU
+		{BC308169-66D5-7399-A9C3-0ADF9F89ABCA}.PlantMAT|x64.ActiveCfg = Rsharp_app_release|x64
+		{BC308169-66D5-7399-A9C3-0ADF9F89ABCA}.PlantMAT|x64.Build.0 = Rsharp_app_release|x64
+		{BC308169-66D5-7399-A9C3-0ADF9F89ABCA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BC308169-66D5-7399-A9C3-0ADF9F89ABCA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BC308169-66D5-7399-A9C3-0ADF9F89ABCA}.Release|x64.ActiveCfg = Release|x64
+		{BC308169-66D5-7399-A9C3-0ADF9F89ABCA}.Release|x64.Build.0 = Release|x64
+		{BC308169-66D5-7399-A9C3-0ADF9F89ABCA}.Rsharp_app_release|Any CPU.ActiveCfg = Rsharp_app_release|Any CPU
+		{BC308169-66D5-7399-A9C3-0ADF9F89ABCA}.Rsharp_app_release|Any CPU.Build.0 = Rsharp_app_release|Any CPU
+		{BC308169-66D5-7399-A9C3-0ADF9F89ABCA}.Rsharp_app_release|x64.ActiveCfg = Rsharp_app_release|x64
+		{BC308169-66D5-7399-A9C3-0ADF9F89ABCA}.Rsharp_app_release|x64.Build.0 = Rsharp_app_release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -624,6 +658,7 @@ Global
 		{1DA0CF1B-2EDD-4C12-A2B9-A669EAE6B264} = {A598186E-2B37-443B-A76A-75E12591A478}
 		{C0E17C85-7353-48E7-85EC-8A35EFD1213F} = {DAC92D44-A609-4929-AAE2-5902A9F75BE2}
 		{A3F87B6D-4197-6CFE-7D63-C9D2AD08C834} = {DAC92D44-A609-4929-AAE2-5902A9F75BE2}
+		{BC308169-66D5-7399-A9C3-0ADF9F89ABCA} = {A598186E-2B37-443B-A76A-75E12591A478}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {DEDDE03C-9283-4CA0-9875-E9194E8E4E65}
