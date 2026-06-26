@@ -178,7 +178,7 @@ Public Class TreemapPlot
     Private Sub DrawNodeLabel(n As TreemapNode, bgColor As Color)
         Dim label = n.Label
         If ShowValues Then
-            label &= vbNewLine & FormatNumber(n.Value)
+            label &= vbCrLf & FormatNumber(n.Value)
         End If
 
         Dim font = Theme.TickLabelFont
