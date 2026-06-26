@@ -2589,7 +2589,7 @@ Public MustInherit Class GDICanvas : Inherits IGraphics
         sfont = font 
 #End If
 
-        Dim path = s.GetStringPath(Dpi, rect, sfont, StringFormat.GenericTypographic)
+        Dim path = s.GetStringPath(Dpi, rect, sfont, System.Drawing.StringFormat.GenericTypographic)
 
 #If NET8_0_OR_GREATER Then
         Throw New InvalidCastException
