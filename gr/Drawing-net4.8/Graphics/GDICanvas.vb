@@ -69,9 +69,8 @@ Imports System.Drawing
 Imports System.Drawing.Drawing2D
 Imports System.Drawing.Graphics
 Imports System.Runtime.CompilerServices
-Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Drawing.Interop
-
+Imports Microsoft.VisualBasic.Imaging
 
 #If NET8_0_OR_GREATER Then
 Imports Pen = Microsoft.VisualBasic.Imaging.Pen
@@ -79,6 +78,7 @@ Imports Brush = Microsoft.VisualBasic.Imaging.Brush
 Imports Font = Microsoft.VisualBasic.Imaging.Font
 Imports Image = Microsoft.VisualBasic.Imaging.Image
 Imports GraphicsPath = Microsoft.VisualBasic.Imaging.GraphicsPath
+Imports StringFormat = Microsoft.VisualBasic.Imaging.StringFormat
 #End If
 
 ''' <summary>
@@ -2589,7 +2589,7 @@ Public MustInherit Class GDICanvas : Inherits IGraphics
         sfont = font 
 #End If
 
-        Dim path = s.GetStringPath(Dpi, rect, sfont, StringFormat.GenericTypographic)
+        Dim path = s.GetStringPath(Dpi, rect, sfont, System.Drawing.StringFormat.GenericTypographic)
 
 #If NET8_0_OR_GREATER Then
         Throw New InvalidCastException

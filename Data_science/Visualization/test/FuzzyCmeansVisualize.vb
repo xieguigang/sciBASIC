@@ -104,8 +104,8 @@ Module FuzzyCMeansVisualize
         Dim centras = raw.CMeans(n, 2)
 
 #Region "DEBUG INFO OUTPUTS"
-        For Each x In raw
-            Call ($"{x.uid}: {x.entityVector.GetJson} => " & x.memberships.GetJson).__DEBUG_ECHO
+        For Each x As FuzzyCMeansEntity In raw
+            Call ($"{x.uid}: {x.entityVector.GetJson} => " & x.memberships.GetJson).debug
         Next
 #End Region
 

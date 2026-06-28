@@ -1,69 +1,64 @@
 ﻿#Region "Microsoft.VisualBasic::f7b101b261fe8dad0da78b849a84de9a, gr\Drawing-net4.8\Interop\DrawingInterop.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 98
-    '    Code Lines: 55 (56.12%)
-    ' Comment Lines: 33 (33.67%)
-    '    - Xml Docs: 100.00%
-    ' 
-    '   Blank Lines: 10 (10.20%)
-    '     File Size: 3.70 KB
+' Summaries:
 
 
-    ' Module DrawingInterop
-    ' 
-    '     Function: (+3 Overloads) CTypeBrushObject, CTypeFontObject, CTypeGraphicsPath, CTypePenObject
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 98
+'    Code Lines: 55 (56.12%)
+' Comment Lines: 33 (33.67%)
+'    - Xml Docs: 100.00%
+' 
+'   Blank Lines: 10 (10.20%)
+'     File Size: 3.70 KB
+
+
+' Module DrawingInterop
+' 
+'     Function: (+3 Overloads) CTypeBrushObject, CTypeFontObject, CTypeGraphicsPath, CTypePenObject
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 #If NET8_0_OR_GREATER Then
 
-Imports System.Drawing
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Imaging
-Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.Linq
-Imports Microsoft.VisualBasic.MIME.Html.CSS
-Imports Bitmap = Microsoft.VisualBasic.Imaging.Bitmap
 Imports Brush = Microsoft.VisualBasic.Imaging.Brush
 Imports Font = Microsoft.VisualBasic.Imaging.Font
-Imports Image = Microsoft.VisualBasic.Imaging.Image
 Imports Pen = Microsoft.VisualBasic.Imaging.Pen
 Imports SolidBrush = Microsoft.VisualBasic.Imaging.SolidBrush
 Imports TextureBrush = Microsoft.VisualBasic.Imaging.TextureBrush
@@ -141,8 +136,16 @@ Public Module DrawingInterop
                 Case GetType(GraphicsPath.op_AddArc)
                     Dim arc As GraphicsPath.op_AddArc = op
                     g.AddArc(arc.rect, arc.startAngle, arc.sweepAngle)
+
+                Case GetType(GraphicsPath.op_AddBezier)
+                    Dim bez As GraphicsPath.op_AddBezier = op
+                    g.AddBezier(bez.pt1, bez.pt2, bez.pt3, bez.pt4)
+
+                Case GetType(GraphicsPath.op_CloseFigure)
+                    g.CloseFigure()
+
                 Case Else
-                    Throw New NotImplementedException
+                    Throw New NotImplementedException(op.GetType.FullName)
             End Select
         Next
 

@@ -1,66 +1,68 @@
 ﻿#Region "Microsoft.VisualBasic::f44f256ee667076b9d71d5812a817b59, Microsoft.VisualBasic.Core\src\Drawing\netcore8.0\Font.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 46
-    '    Code Lines: 32 (69.57%)
-    ' Comment Lines: 6 (13.04%)
-    '    - Xml Docs: 100.00%
-    ' 
-    '   Blank Lines: 8 (17.39%)
-    '     File Size: 1.21 KB
+' Summaries:
 
 
-    '     Class Font
-    ' 
-    '         Properties: Height, Name, Size, SizeInPoints, Style
-    ' 
-    '         Constructor: (+2 Overloads) Sub New
-    '         Function: Clone
-    ' 
-    '     Enum FontStyle
-    ' 
-    ' 
-    '  
-    ' 
-    ' 
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 46
+'    Code Lines: 32 (69.57%)
+' Comment Lines: 6 (13.04%)
+'    - Xml Docs: 100.00%
+' 
+'   Blank Lines: 8 (17.39%)
+'     File Size: 1.21 KB
+
+
+'     Class Font
+' 
+'         Properties: Height, Name, Size, SizeInPoints, Style
+' 
+'         Constructor: (+2 Overloads) Sub New
+'         Function: Clone
+' 
+'     Enum FontStyle
+' 
+' 
+'  
+' 
+' 
+' 
+' 
+' /********************************************************************************/
 
 #End Region
+
+Imports Microsoft.VisualBasic.Imaging.Driver
 
 Namespace Imaging
 
@@ -89,6 +91,10 @@ Namespace Imaging
 
         Public Function Clone() As Object
             Return New Font(Name, Size, Style)
+        End Function
+
+        Public Function GetHeight(g As IGraphics) As Single
+            Return DriverLoad.MeasureTextSize("A", Me).Height
         End Function
 
     End Class
@@ -124,6 +130,60 @@ Namespace Imaging
         Italic = 2
         Underline = 4
         Strikeout = 8
+    End Enum
+
+    Public Class StringFormat : Implements IDisposable
+
+        Private disposedValue As Boolean
+
+        Public Property Alignment As StringAlignment
+        Public Property LineAlignment As StringAlignment
+
+        Public Shared ReadOnly Property GenericTypographic As StringFormat
+            Get
+                Return New StringFormat
+            End Get
+        End Property
+
+        Protected Overridable Sub Dispose(disposing As Boolean)
+            If Not disposedValue Then
+                If disposing Then
+                    ' TODO: dispose managed state (managed objects)
+                End If
+
+                ' TODO: free unmanaged resources (unmanaged objects) and override finalizer
+                ' TODO: set large fields to null
+                disposedValue = True
+            End If
+        End Sub
+
+        ' ' TODO: override finalizer only if 'Dispose(disposing As Boolean)' has code to free unmanaged resources
+        ' Protected Overrides Sub Finalize()
+        '     ' Do not change this code. Put cleanup code in 'Dispose(disposing As Boolean)' method
+        '     Dispose(disposing:=False)
+        '     MyBase.Finalize()
+        ' End Sub
+
+        Public Sub Dispose() Implements IDisposable.Dispose
+            ' Do not change this code. Put cleanup code in 'Dispose(disposing As Boolean)' method
+            Dispose(disposing:=True)
+            GC.SuppressFinalize(Me)
+        End Sub
+    End Class
+
+    Public Class FontFamily
+
+        Public Property Name As String
+
+        Sub New(name As String)
+            Me.Name = name
+        End Sub
+    End Class
+
+    Public Enum StringAlignment
+        Center
+        Far
+        Near
     End Enum
 #End If
 End Namespace

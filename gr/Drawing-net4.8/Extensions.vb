@@ -256,7 +256,7 @@ Public Module Extensions
     Const InvalidSize As String = "One of the size parameter for the gdi+ device is not valid!"
 
     <Extension>
-    Public Function GetStringPath(s$, dpi!, rect As RectangleF, font As Font, format As StringFormat) As GraphicsPath
+    Public Function GetStringPath(s$, dpi!, rect As RectangleF, font As Font, format As System.Drawing.StringFormat) As GraphicsPath
         Dim path As New GraphicsPath()
         ' Convert font size into appropriate coordinates
         Dim emSize! = dpi * font.SizeInPoints / 72

@@ -55,9 +55,8 @@ Imports System.Drawing
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Data.ChartPlots
-Imports Microsoft.VisualBasic.Data.ChartPlots.BarPlot.Data
 Imports Microsoft.VisualBasic.Data.ChartPlots.Statistics
-Imports Microsoft.VisualBasic.Data.csv.IO
+Imports Microsoft.VisualBasic.Data.Framework.IO
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
 Imports Microsoft.VisualBasic.MIME.Html.CSS
 Imports stdNum = System.Math
@@ -110,15 +109,15 @@ Module Module1
     End Sub
 
     Sub axisScallingTest()
-        'Call AxisScalling.GetAxisByTick(1, 0.1,).tos.GetJson.__DEBUG_ECHO
-        'Call AxisScalling.GetAxisValues(1).FormatNumeric.GetJson.__DEBUG_ECHO
-        'Call AxisScalling.GetAxisValues(10).FormatNumeric.GetJson.__DEBUG_ECHO
-        'Call AxisScalling.GetAxisValues(100).FormatNumeric.GetJson.__DEBUG_ECHO
-        'Call AxisScalling.GetAxisValues(1000).FormatNumeric.GetJson.__DEBUG_ECHO
-        'Call AxisScalling.GetAxisValues(1.0E+30).FormatNumeric.GetJson.__DEBUG_ECHO
-        'Call AxisScalling.GetAxisValues(1.0E-30).FormatNumeric.GetJson.__DEBUG_ECHO
-        'Call AxisScalling.GetAxisValues(0.1).FormatNumeric.GetJson.__DEBUG_ECHO
-        'Call AxisScalling.GetAxisValues(0.25).FormatNumeric.GetJson.__DEBUG_ECHO
+        'Call AxisScalling.GetAxisByTick(1, 0.1,).tos.GetJson.debug
+        'Call AxisScalling.GetAxisValues(1).FormatNumeric.GetJson.debug
+        'Call AxisScalling.GetAxisValues(10).FormatNumeric.GetJson.debug
+        'Call AxisScalling.GetAxisValues(100).FormatNumeric.GetJson.debug
+        'Call AxisScalling.GetAxisValues(1000).FormatNumeric.GetJson.debug
+        'Call AxisScalling.GetAxisValues(1.0E+30).FormatNumeric.GetJson.debug
+        'Call AxisScalling.GetAxisValues(1.0E-30).FormatNumeric.GetJson.debug
+        'Call AxisScalling.GetAxisValues(0.1).FormatNumeric.GetJson.debug
+        'Call AxisScalling.GetAxisValues(0.25).FormatNumeric.GetJson.debug
 
         'Pause()
     End Sub
@@ -165,25 +164,24 @@ Module Module1
         'Pause()
 
         Dim datahm = DataSet.LoadDataSet("C:\Users\xieguigang\Desktop\ttttttt.csv")
-        Call Heatmap.Heatmap.Plot(datahm, mapName:=ColorBrewer.DivergingSchemes.RdYlGn11,
+        Call Heatmap.HeatMap.Plot(datahm, mapName:=ColorBrewer.DivergingSchemes.RdYlGn11,
                                    size:="2000,3600",
                                   drawScaleMethod:=Heatmap.DrawElements.Cols,
-                                  logTransform:=2,
                           mapLevels:=120,
                           padding:="padding: 300",
                           legendTitle:="Spearman correlations",
                           rowLabelfontStyle:=CSSFont.Win10Normal).Save("C:\Users\xieguigang\Desktop\ttttttt.png")
         Pause()
-        Dim data = LoadBarData(
-    "G:\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematical\images\Fruit_consumption.csv",
-    {
-        "rgb(124,181,236)",
-        "rgb(67,67,72)",
-        "gray"
-    })
+        '    Dim data = LoadBarData(
+        '"G:\GCModeller\src\runtime\sciBASIC#\Data_science\Mathematical\images\Fruit_consumption.csv",
+        '{
+        '    "rgb(124,181,236)",
+        '    "rgb(67,67,72)",
+        '    "gray"
+        '})
 
-        Call BarPlot.BarPlotAPI.Plot(data, size:=New Size(2000, 2500), stacked:=True) _
-    .Save("X:/Fruit_consumption-bar-stacked.png")
+        '    Call BarPlot.BarPlotAPI.Plot(data, size:=New Size(2000, 2500), stacked:=True) _
+        '.Save("X:/Fruit_consumption-bar-stacked.png")
 
         Pause()
 
@@ -195,7 +193,7 @@ Module Module1
         'raw = csv.SerialData.Interpolation(raw)
         'Call raw.SaveTo("G:\GCModeller\src\runtime\visualbasic_App\Data_science\Mathematical\data\ManhattanStatics\example.csv")
         'Pause()
-        Dim example = ChartPlots.csv.SerialData.GetData("G:\GCModeller\src\runtime\visualbasic_App\Data_science\Mathematical\data\ManhattanStatics\example.csv", {Color.Red}, 5).First
+        ' Dim example = ChartPlots.SerialData.GetData("G:\GCModeller\src\runtime\visualbasic_App\Data_science\Mathematical\data\ManhattanStatics\example.csv", {Color.Red}, 5).First
 
         '    Call ManhattanStatics.Plot(example).Save("G:\GCModeller\src\runtime\visualbasic_App\Data_science\Mathematical\data\ManhattanStatics/demo.png")
 
