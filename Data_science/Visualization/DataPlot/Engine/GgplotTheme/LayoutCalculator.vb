@@ -1,8 +1,7 @@
-Imports System
-Imports System.Collections.Generic
 Imports System.Drawing
 Imports System.Globalization
 Imports System.Text
+Imports Microsoft.VisualBasic.Imaging
 
 Namespace GgplotTheme
 
@@ -63,27 +62,27 @@ Namespace GgplotTheme
             Dim pen As New Pen(Colour, CSng(LinewidthPx))
             Select Case Lineend.ToLowerInvariant()
                 Case "round"
-                    pen.EndCap = System.Drawing.Drawing2D.LineCap.Round
-                    pen.StartCap = System.Drawing.Drawing2D.LineCap.Round
+                    pen.EndCap = LineCap.Round
+                    pen.StartCap = LineCap.Round
                 Case "square"
-                    pen.EndCap = System.Drawing.Drawing2D.LineCap.Square
-                    pen.StartCap = System.Drawing.Drawing2D.LineCap.Square
+                    pen.EndCap = LineCap.Square
+                    pen.StartCap = LineCap.Square
                 Case Else
-                    pen.EndCap = System.Drawing.Drawing2D.LineCap.Flat
-                    pen.StartCap = System.Drawing.Drawing2D.LineCap.Flat
+                    pen.EndCap = LineCap.Flat
+                    pen.StartCap = LineCap.Flat
             End Select
             ' Apply dash style
             Select Case Linetype.ToLowerInvariant()
                 Case "dashed", "22"
-                    pen.DashStyle = System.Drawing.Drawing2D.DashStyle.Dash
+                    pen.DashStyle = DashStyle.Dash
                 Case "dotted", "13"
-                    pen.DashStyle = System.Drawing.Drawing2D.DashStyle.Dot
+                    pen.DashStyle = DashStyle.Dot
                 Case "dotdash", "1343"
-                    pen.DashStyle = System.Drawing.Drawing2D.DashStyle.DashDot
+                    pen.DashStyle = DashStyle.DashDot
                 Case "longdash", "44"
-                    pen.DashStyle = System.Drawing.Drawing2D.DashStyle.Dash
+                    pen.DashStyle = DashStyle.Dash
                 Case "twodash", "2822"
-                    pen.DashStyle = System.Drawing.Drawing2D.DashStyle.DashDot
+                    pen.DashStyle = DashStyle.DashDot
                 Case "blank", "0"
                     pen.Color = Color.Transparent
             End Select
@@ -267,11 +266,11 @@ Namespace GgplotTheme
 
             ' Margin: convert to pixels
             If elem.Margin IsNot Nothing Then
-                Dim (t, r, b, l) As (Double, Double, Double, Double) = _converter.MarginToPixels(elem.Margin, resolved.SizePx * 72.0 / 96.0)
-                resolved.MarginTopPx = t
-                resolved.MarginRightPx = r
-                resolved.MarginBottomPx = b
-                resolved.MarginLeftPx = l
+                Dim margin As (t As Double, r As Double, b As Double, l As Double) = _converter.MarginToPixels(elem.Margin, resolved.SizePx * 72.0 / 96.0)
+                resolved.MarginTopPx = margin.t
+                resolved.MarginRightPx = margin.r
+                resolved.MarginBottomPx = margin.b
+                resolved.MarginLeftPx = margin.l
             End If
 
             resolved.IsBlank = elem.IsBlank
@@ -471,18 +470,18 @@ Namespace GgplotTheme
             layout.CanvasRect = New RectangleF(0, 0, CSng(cw), CSng(ch))
 
             ' Plot margins
-            Dim (mt, mr, mb, ml) As (Double, Double, Double, Double) = ResolveMarginToPixels("plot.margin")
-            layout.MarginTopPx = mt
-            layout.MarginRightPx = mr
-            layout.MarginBottomPx = mb
-            layout.MarginLeftPx = ml
+            Dim margin As (mt As Double, mr As Double, mb As Double, ml As Double) = ResolveMarginToPixels("plot.margin")
+            layout.MarginTopPx = margin.mt
+            layout.MarginRightPx = margin.mr
+            layout.MarginBottomPx = margin.mb
+            layout.MarginLeftPx = margin.ml
 
             ' Plot area (inside margins)
             layout.PlotAreaRect = New RectangleF(
-                CSng(ml),
-                CSng(mt),
-                CSng(cw - ml - mr),
-                CSng(ch - mt - mb)
+                CSng(margin.ml),
+                CSng(margin.mt),
+                CSng(cw - margin.ml - margin.mr),
+                CSng(ch - margin.mt - margin.mb)
             )
 
             ' Tick lengths

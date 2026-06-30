@@ -166,21 +166,21 @@ Namespace GgplotTheme
                 If Double.TryParse(inner, NumberStyles.Float, CultureInfo.InvariantCulture, relVal) Then
                     Return New Unit(relVal, UnitType.Rel)
                 End If
-            End Function
+            End If
 
             ' Handle unit() syntax: unit(0.25, "cm")
             If s.StartsWith("unit(") AndAlso s.EndsWith(")") Then
                 Dim inner As String = s.Substring(5, s.Length - 6).Trim()
                 Dim parts() As String = inner.Split(","c)
                 If parts.Length = 2 Then
-                    Dim val As Double
-                    Dim unitStr As String = parts(1).Trim().Trim(""""c, "'"c)
-                    If Double.TryParse(parts(0).Trim(), NumberStyles.Float, CultureInfo.InvariantCulture, val) Then
-                        Dim ut As UnitType = StringToUnitType(unitStr)
-                        Return New Unit(val, ut)
+                    Dim valu As Double
+                    Dim unitStrq As String = parts(1).Trim().Trim(""""c, "'"c)
+                    If Double.TryParse(parts(0).Trim(), NumberStyles.Float, CultureInfo.InvariantCulture, valu) Then
+                        Dim ut As UnitType = StringToUnitType(unitStrq)
+                        Return New Unit(valu, ut)
                     End If
                 End If
-            End Function
+            End If
 
             ' Extract numeric part and unit part
             Dim numEnd As Integer = 0
@@ -487,10 +487,12 @@ Namespace GgplotTheme
         Public Sub New()
         End Sub
 
-        Public Sub New(widthPx As Double, heightPx As Double, ppi As Double)
+        Public Sub New(widthPx As Double, heightPx As Double, ppi As Double, Optional baseFontSize As Double = 11, Optional lineHeight As Double = 1.2)
             _widthPx = widthPx
             _heightPx = heightPx
             _ppi = ppi
+            _baseFontSizePt = baseFontSize
+            _lineHeight = lineHeight
         End Sub
 
         Public Function Clone() As Object Implements ICloneable.Clone
