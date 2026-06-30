@@ -1,0 +1,464 @@
+/*
+ * Ggplot Theme CSS - Sample Theme
+ * 
+ * This file demonstrates the CSS-like format for defining ggplot themes.
+ * 
+ * Format rules:
+ *   - Selectors are ggplot element names (e.g., "axis.title.x.bottom")
+ *   - Properties are key-value pairs separated by ":"
+ *   - Each property ends with ";"
+ *   - Comments use /* ... *​/ syntax
+ *   - Inheritance is automatic based on the element name hierarchy
+ *   - Child elements inherit from parent elements (e.g., axis.title.x inherits from axis.title)
+ *   - Properties not specified are inherited from the parent element
+ *   - "blank: true;" marks an element as element_blank (not rendered)
+ *   - "NA" for colors means "no color" (transparent/not drawn)
+ * 
+ * Supported units: cm, mm, pt, lines, char, null, npc, inch, px, rel
+ *   - rel(value) is a relative multiplier of the inherited value
+ *   - npc values are 0.0-1.0 relative to the parent viewport
+ *   - lines/char are relative to the current font size
+ */
+
+/* ============================================================
+ * Canvas Settings
+ * Defines the canvas dimensions and PPI for unit conversion.
+ * This can be overridden at runtime via the CanvasContext.
+ * ============================================================ */
+@canvas {
+    width: 800px;
+    height: 600px;
+    ppi: 96;
+    base-font-size: 11pt;
+}
+
+/* ============================================================
+ * Root Elements
+ * These define the base styles that all child elements inherit.
+ * ============================================================ */
+
+/* Root line element - all line-like elements inherit from this */
+line {
+    color: #333333;
+    linewidth: 0.5pt;
+    linetype: solid;
+    lineend: butt;
+}
+
+/* Root rect element - all rectangle-like elements inherit from this */
+rect {
+    fill: #EBEBEB;
+    color: NA;
+    linewidth: 0.5pt;
+    linetype: solid;
+}
+
+/* Root text element - all text-like elements inherit from this */
+text {
+    family: "sans-serif";
+    size: 11pt;
+    color: #333333;
+    face: plain;
+    hjust: 0.5;
+    vjust: 0.5;
+    angle: 0;
+    lineheight: 1.2;
+    margin: 0pt 0pt 0pt 0pt;
+}
+
+/* Title inherits from text - base for all title elements */
+title {
+    face: plain;
+}
+
+/* Root spacing element - base for all spacing/length units */
+spacing {
+    length: 0.5lines;
+}
+
+/* Root margins element - base for all margin values */
+margins {
+    margin: 0pt 0pt 0pt 0pt;
+}
+
+/* ============================================================
+ * Axis Elements
+ * ============================================================ */
+
+/* Axis titles */
+axis.title {
+    face: plain;
+}
+
+axis.title.x {
+    /* Inherits from axis.title -> title -> text */
+}
+
+axis.title.x.bottom {
+    /* Inherits from axis.title.x */
+}
+
+axis.title.x.top {
+    /* Inherits from axis.title.x */
+}
+
+axis.title.y {
+    /* Inherits from axis.title */
+}
+
+axis.title.y.left {
+    /* Inherits from axis.title.y */
+}
+
+axis.title.y.right {
+    /* Inherits from axis.title.y */
+}
+
+/* Axis text (tick labels) */
+axis.text {
+    size: 9pt;
+}
+
+axis.text.x {
+    /* Inherits from axis.text */
+}
+
+axis.text.x.bottom {
+    /* Inherits from axis.text.x */
+}
+
+axis.text.x.top {
+    /* Inherits from axis.text.x */
+}
+
+axis.text.y {
+    /* Inherits from axis.text */
+}
+
+axis.text.y.left {
+    /* Inherits from axis.text.y */
+}
+
+axis.text.y.right {
+    /* Inherits from axis.text.y */
+}
+
+/* Axis ticks */
+axis.ticks {
+    color: #333333;
+    linewidth: 0.5pt;
+}
+
+axis.ticks.x {
+    /* Inherits from axis.ticks */
+}
+
+axis.ticks.x.bottom {
+    /* Inherits from axis.ticks.x */
+}
+
+axis.ticks.y {
+    /* Inherits from axis.ticks */
+}
+
+axis.ticks.y.left {
+    /* Inherits from axis.ticks.y */
+}
+
+/* Axis tick lengths (unit elements) */
+axis.ticks.length {
+    length: 0.2cm;
+}
+
+axis.ticks.length.x {
+    /* Inherits from axis.ticks.length */
+}
+
+axis.ticks.length.x.bottom {
+    /* Inherits from axis.ticks.length.x */
+}
+
+axis.ticks.length.y {
+    /* Inherits from axis.ticks.length */
+}
+
+axis.ticks.length.y.left {
+    /* Inherits from axis.ticks.length.y */
+}
+
+/* Minor axis tick lengths - relative to major tick length */
+axis.minor.ticks.length {
+    length: 0.5rel;
+}
+
+/* Axis lines */
+axis.line {
+    color: NA;
+    linewidth: 0.5pt;
+}
+
+axis.line.x {
+    /* Inherits from axis.line */
+}
+
+axis.line.x.bottom {
+    /* Inherits from axis.line.x */
+}
+
+axis.line.y {
+    /* Inherits from axis.line */
+}
+
+axis.line.y.left {
+    /* Inherits from axis.line.y */
+}
+
+/* ============================================================
+ * Panel Elements
+ * ============================================================ */
+
+panel.background {
+    fill: #EBEBEB;
+    color: NA;
+}
+
+panel.border {
+    fill: NA;
+    color: #333333;
+    linewidth: 0.5pt;
+}
+
+/* Panel grid lines */
+panel.grid {
+    color: white;
+    linewidth: 0.5pt;
+}
+
+panel.grid.major {
+    color: white;
+    linewidth: 0.5pt;
+}
+
+panel.grid.major.x {
+    /* Inherits from panel.grid.major */
+}
+
+panel.grid.major.y {
+    /* Inherits from panel.grid.major */
+}
+
+panel.grid.minor {
+    color: white;
+    linewidth: 0.25pt;
+}
+
+panel.grid.minor.x {
+    /* Inherits from panel.grid.minor */
+}
+
+panel.grid.minor.y {
+    /* Inherits from panel.grid.minor */
+}
+
+/* Panel spacing */
+panel.spacing {
+    length: 0.25lines;
+}
+
+panel.spacing.x {
+    /* Inherits from panel.spacing */
+}
+
+panel.spacing.y {
+    /* Inherits from panel.spacing */
+}
+
+/* ============================================================
+ * Plot Elements
+ * ============================================================ */
+
+plot.background {
+    fill: white;
+    color: NA;
+}
+
+plot.title {
+    size: 13.2pt;
+    hjust: 0;
+    vjust: 1;
+    face: plain;
+    margin: 0pt 0pt 5.5pt 0pt;
+}
+
+plot.subtitle {
+    size: 11pt;
+    hjust: 0;
+    vjust: 1;
+    face: plain;
+    margin: 0pt 0pt 5.5pt 0pt;
+}
+
+plot.caption {
+    size: 9pt;
+    hjust: 1;
+    vjust: 1;
+    face: plain;
+    margin: 0pt 0pt 0pt 0pt;
+}
+
+plot.tag {
+    size: 13.2pt;
+    hjust: 0;
+    vjust: 0;
+    face: plain;
+}
+
+plot.margin {
+    margin: 5.5pt 5.5pt 5.5pt 5.5pt;
+}
+
+/* Scalar properties */
+plot.title.position {
+    value: panel;
+}
+
+plot.caption.position {
+    value: panel;
+}
+
+plot.tag.location {
+    value: margin;
+}
+
+/* ============================================================
+ * Legend Elements
+ * ============================================================ */
+
+legend.background {
+    fill: NA;
+    color: NA;
+}
+
+legend.key {
+    fill: white;
+    color: NA;
+}
+
+legend.key.size {
+    length: 0.4cm;
+}
+
+legend.spacing {
+    length: 0.4cm;
+}
+
+legend.key.spacing {
+    length: 0.2cm;
+}
+
+legend.ticks.length {
+    length: 0.2cm;
+}
+
+legend.box.spacing {
+    length: 0.4cm;
+}
+
+legend.box.background {
+    fill: NA;
+    color: NA;
+}
+
+legend.box.margin {
+    margin: 0.6cm 0.6cm 0.6cm 0.6cm;
+}
+
+legend.margin {
+    margin: 0.2cm 0.2cm 0.2cm 0.2cm;
+}
+
+legend.text {
+    size: 9pt;
+}
+
+legend.title {
+    size: 9pt;
+    hjust: 0;
+}
+
+/* Scalar properties */
+legend.position {
+    value: right;
+}
+
+legend.direction {
+    value: vertical;
+}
+
+legend.justification {
+    value: center;
+}
+
+legend.box {
+    value: vertical;
+}
+
+legend.box.just {
+    value: center;
+}
+
+legend.location {
+    value: panel;
+}
+
+/* ============================================================
+ * Strip Elements (for faceted plots)
+ * ============================================================ */
+
+strip.background {
+    fill: #EBEBEB;
+    color: NA;
+}
+
+strip.text {
+    size: 9pt;
+    face: plain;
+    margin: 0pt 0pt 0pt 0pt;
+}
+
+strip.text.x {
+    /* Inherits from strip.text */
+}
+
+strip.text.y {
+    /* Inherits from strip.text */
+}
+
+strip.switch.pad.grid {
+    length: 0.1cm;
+}
+
+strip.switch.pad.wrap {
+    length: 0.1cm;
+}
+
+/* Scalar properties */
+strip.placement {
+    value: inside;
+}
+
+strip.clip {
+    value: inherit;
+}
+
+/* ============================================================
+ * Other Scalar Properties
+ * ============================================================ */
+
+aspect.ratio {
+    value: null;
+}
+
+panel.ontop {
+    value: false;
+}
