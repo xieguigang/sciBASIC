@@ -6,7 +6,7 @@ Imports stdf = System.Math
 ''' 每维度特征的 z-score 标准化器。
 ''' 
 ''' 训练阶段按特征维计算均值/标准差，推理阶段复用同一套参数，
-''' 解决各维度特征量纲差异大（如 SPS 的 quantile 向量 vs SCS 的 0-1 量纲）导致的梯度不稳定问题。
+''' 解决各维度特征量纲差异大导致的梯度不稳定问题。
 ''' 零方差维度标准差置 1，避免除零。
 ''' </summary>
 Public Class Standardizer
