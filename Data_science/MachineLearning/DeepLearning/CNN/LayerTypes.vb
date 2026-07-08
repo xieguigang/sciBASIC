@@ -81,7 +81,15 @@ Namespace CNN
         <Description("maxout")> Maxout
         <Description("lrn")> LRN
         <Description("dropout")> Dropout
+
+        ''' <summary>
+        ''' linear activation kind
+        ''' </summary>
+        ''' <remarks>
+        ''' 在神经网络中，Linear 层指的就是 Fully Connected 层（全连接层，常简称为 FC 层）。这一层的数学本质是一个线性变换，公式为 y=Wx+b。因为没有非线性激活函数（虽然后面通常会接一个激活函数如 ReLU），它执行的是纯粹的线性映射，因此称为“线性层”。
+        ''' </remarks>
         <Description("fully_connect")> FullyConnected
+
         <Description("regression")> Regression
         <Description("svm")> SVM
         <Description("conv_transpose")> Conv2DTranspose
@@ -89,5 +97,6 @@ Namespace CNN
         <Description("leaky_relu")> LeakyReLU
         <Description("gaussian")> Gaussian
 
+        <Description("linear")> Linear = FullyConnected
     End Enum
 End Namespace
