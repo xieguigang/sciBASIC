@@ -188,7 +188,7 @@ Namespace StorageProvider
         ''' </summary>
         ''' <returns></returns>
         Friend Shared Function createSchemaOridinal(headers As IEnumerable(Of String)) As Dictionary(Of String, Integer)
-            Dim arrayCache$() = headers.ToArray
+            Dim arrayCache$() = headers.Select(Function(name) name.Trim(""""c)).ToArray
             Dim duplicates$() = arrayCache _
                 .GroupBy(Function(s) s) _
                 .Where(Function(g) g.Count > 1) _
