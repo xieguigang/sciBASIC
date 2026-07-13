@@ -76,6 +76,8 @@ Public Class MainForm : Inherits Form
         trkIntensity = New TrackBar()
         lblElevation = New Label()
         trkElevation = New TrackBar()
+        lblAzimuth = New Label()
+        trkAzimuth = New TrackBar()
         menuStrip.SuspendLayout()
         toolStrip.SuspendLayout()
         statusStrip.SuspendLayout()
@@ -83,6 +85,7 @@ Public Class MainForm : Inherits Form
         CType(trkAmbient, ComponentModel.ISupportInitialize).BeginInit()
         CType(trkIntensity, ComponentModel.ISupportInitialize).BeginInit()
         CType(trkElevation, ComponentModel.ISupportInitialize).BeginInit()
+        CType(trkAzimuth, ComponentModel.ISupportInitialize).BeginInit()
         SuspendLayout()
         ' 
         ' menuStrip
@@ -187,6 +190,8 @@ Public Class MainForm : Inherits Form
         lightPanel.Controls.Add(trkIntensity)
         lightPanel.Controls.Add(lblElevation)
         lightPanel.Controls.Add(trkElevation)
+        lightPanel.Controls.Add(lblAzimuth)
+        lightPanel.Controls.Add(trkAzimuth)
         lightPanel.Dock = DockStyle.Right
         lightPanel.Location = New Point(734, 0)
         lightPanel.Name = "lightPanel"
@@ -197,8 +202,8 @@ Public Class MainForm : Inherits Form
         ' title
         ' 
         title.AutoSize = True
-        title.Font = New Font("Segoe UI", 9.0F, FontStyle.Bold)
-        title.Location = New Point(8, 8)
+        title.Font = New Font("Segoe UI", 9F, FontStyle.Bold)
+        title.Location = New Point(13, 8)
         title.Name = "title"
         title.Size = New Size(63, 15)
         title.TabIndex = 0
@@ -206,7 +211,7 @@ Public Class MainForm : Inherits Form
         ' 
         ' btnLightColor
         ' 
-        btnLightColor.Location = New Point(13, 561)
+        btnLightColor.Location = New Point(11, 397)
         btnLightColor.Name = "btnLightColor"
         btnLightColor.Size = New Size(96, 23)
         btnLightColor.TabIndex = 1
@@ -215,14 +220,14 @@ Public Class MainForm : Inherits Form
         ' lblLightColor
         ' 
         lblLightColor.BorderStyle = BorderStyle.FixedSingle
-        lblLightColor.Location = New Point(117, 561)
+        lblLightColor.Location = New Point(115, 397)
         lblLightColor.Name = "lblLightColor"
         lblLightColor.Size = New Size(48, 22)
         lblLightColor.TabIndex = 2
         ' 
         ' btnResetLight
         ' 
-        btnResetLight.Location = New Point(13, 602)
+        btnResetLight.Location = New Point(11, 426)
         btnResetLight.Name = "btnResetLight"
         btnResetLight.Size = New Size(152, 23)
         btnResetLight.TabIndex = 3
@@ -231,7 +236,7 @@ Public Class MainForm : Inherits Form
         ' lblAmbient
         ' 
         lblAmbient.AutoSize = True
-        lblAmbient.Location = New Point(13, 244)
+        lblAmbient.Location = New Point(13, 127)
         lblAmbient.Name = "lblAmbient"
         lblAmbient.Size = New Size(157, 15)
         lblAmbient.TabIndex = 4
@@ -240,17 +245,17 @@ Public Class MainForm : Inherits Form
         ' trkAmbient
         ' 
         trkAmbient.Anchor = AnchorStyles.Top Or AnchorStyles.Left Or AnchorStyles.Right
-        trkAmbient.Location = New Point(13, 272)
+        trkAmbient.Location = New Point(1, 150)
         trkAmbient.Maximum = 100
         trkAmbient.Name = "trkAmbient"
-        trkAmbient.Size = New Size(232, 45)
+        trkAmbient.Size = New Size(248, 45)
         trkAmbient.TabIndex = 5
         trkAmbient.Value = 25
         ' 
         ' lblIntensity
         ' 
         lblIntensity.AutoSize = True
-        lblIntensity.Location = New Point(13, 462)
+        lblIntensity.Location = New Point(13, 296)
         lblIntensity.Name = "lblIntensity"
         lblIntensity.Size = New Size(150, 15)
         lblIntensity.TabIndex = 6
@@ -258,7 +263,8 @@ Public Class MainForm : Inherits Form
         ' 
         ' trkIntensity
         ' 
-        trkIntensity.Location = New Point(1, 492)
+        trkIntensity.Anchor = AnchorStyles.Top Or AnchorStyles.Left Or AnchorStyles.Right
+        trkIntensity.Location = New Point(1, 318)
         trkIntensity.Maximum = 100
         trkIntensity.Name = "trkIntensity"
         trkIntensity.Size = New Size(248, 45)
@@ -268,7 +274,7 @@ Public Class MainForm : Inherits Form
         ' lblElevation
         ' 
         lblElevation.AutoSize = True
-        lblElevation.Location = New Point(8, 344)
+        lblElevation.Location = New Point(11, 211)
         lblElevation.Name = "lblElevation"
         lblElevation.Size = New Size(82, 15)
         lblElevation.TabIndex = 8
@@ -276,35 +282,34 @@ Public Class MainForm : Inherits Form
         ' 
         ' trkElevation
         ' 
-        trkElevation.Location = New Point(8, 371)
+        trkElevation.Anchor = AnchorStyles.Top Or AnchorStyles.Left Or AnchorStyles.Right
+        trkElevation.Location = New Point(1, 229)
         trkElevation.Maximum = 90
         trkElevation.Minimum = -90
         trkElevation.Name = "trkElevation"
         trkElevation.Size = New Size(248, 45)
         trkElevation.TabIndex = 9
         trkElevation.Value = 45
-
-
-        lblAzimuth = New Label()
-        lblAzimuth.Text = "光源方位: -30°"
+        ' 
+        ' lblAzimuth
+        ' 
         lblAzimuth.AutoSize = True
-        lblAzimuth.Top = 50
-        lblAzimuth.Left = 8
-        lightPanel.Controls.Add(lblAzimuth)
-
-        trkAzimuth = New TrackBar()
-        trkAzimuth.Minimum = -360
+        lblAzimuth.Location = New Point(11, 48)
+        lblAzimuth.Name = "lblAzimuth"
+        lblAzimuth.Size = New Size(87, 15)
+        lblAzimuth.TabIndex = 10
+        lblAzimuth.Text = "光源方位: -30°"
+        ' 
+        ' trkAzimuth
+        ' 
+        trkAzimuth.Anchor = AnchorStyles.Top Or AnchorStyles.Left Or AnchorStyles.Right
+        trkAzimuth.Location = New Point(1, 66)
         trkAzimuth.Maximum = 360
+        trkAzimuth.Minimum = -360
+        trkAzimuth.Name = "trkAzimuth"
+        trkAzimuth.Size = New Size(248, 45)
+        trkAzimuth.TabIndex = 11
         trkAzimuth.Value = -30
-        trkAzimuth.TickStyle = TickStyle.BottomRight
-        trkAzimuth.Left = 8
-        trkAzimuth.Top = Top + 16
-        trkAzimuth.Width = lightPanel.ClientSize.Width - 16
-
-        lightPanel.Controls.Add(trkAzimuth)
-
-
-
         ' 
         ' MainForm
         ' 
@@ -331,6 +336,7 @@ Public Class MainForm : Inherits Form
         CType(trkAmbient, ComponentModel.ISupportInitialize).EndInit()
         CType(trkIntensity, ComponentModel.ISupportInitialize).EndInit()
         CType(trkElevation, ComponentModel.ISupportInitialize).EndInit()
+        CType(trkAzimuth, ComponentModel.ISupportInitialize).EndInit()
         ResumeLayout(False)
         PerformLayout()
 
