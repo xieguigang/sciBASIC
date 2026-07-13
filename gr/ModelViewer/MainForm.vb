@@ -25,13 +25,13 @@ Public Class MainForm : Inherits Form
 
     ' ---- 光照调节状态 ----
     Private WithEvents lightPanel As Panel
-    Friend WithEvents lblAmbient As Label
+    Dim WithEvents lblAmbient As Label
     Private WithEvents lblIntensity As Label
-    Private WithEvents lblElevation As Label
+    Dim WithEvents lblElevation As Label
     Private WithEvents lblAzimuth As Label
-    Friend WithEvents trkAmbient As TrackBar
+    Dim WithEvents trkAmbient As TrackBar
     Private WithEvents trkIntensity As TrackBar
-    Private WithEvents trkElevation As TrackBar
+    Dim WithEvents trkElevation As TrackBar
     Private WithEvents trkAzimuth As TrackBar
     Private WithEvents btnLightColor As Button
     Private WithEvents lblLightColor As Label
@@ -49,7 +49,6 @@ Public Class MainForm : Inherits Form
 
     Public Sub New()
         InitializeComponent()
-        BuildUI()
     End Sub
 
     Private Sub InitializeComponent()
@@ -75,12 +74,15 @@ Public Class MainForm : Inherits Form
         trkAmbient = New TrackBar()
         lblIntensity = New Label()
         trkIntensity = New TrackBar()
+        lblElevation = New Label()
+        trkElevation = New TrackBar()
         menuStrip.SuspendLayout()
         toolStrip.SuspendLayout()
         statusStrip.SuspendLayout()
         lightPanel.SuspendLayout()
         CType(trkAmbient, ComponentModel.ISupportInitialize).BeginInit()
         CType(trkIntensity, ComponentModel.ISupportInitialize).BeginInit()
+        CType(trkElevation, ComponentModel.ISupportInitialize).BeginInit()
         SuspendLayout()
         ' 
         ' menuStrip
@@ -183,6 +185,8 @@ Public Class MainForm : Inherits Form
         lightPanel.Controls.Add(trkAmbient)
         lightPanel.Controls.Add(lblIntensity)
         lightPanel.Controls.Add(trkIntensity)
+        lightPanel.Controls.Add(lblElevation)
+        lightPanel.Controls.Add(trkElevation)
         lightPanel.Dock = DockStyle.Right
         lightPanel.Location = New Point(734, 0)
         lightPanel.Name = "lightPanel"
@@ -227,7 +231,7 @@ Public Class MainForm : Inherits Form
         ' lblAmbient
         ' 
         lblAmbient.AutoSize = True
-        lblAmbient.Location = New Point(8, 36)
+        lblAmbient.Location = New Point(13, 244)
         lblAmbient.Name = "lblAmbient"
         lblAmbient.Size = New Size(157, 15)
         lblAmbient.TabIndex = 4
@@ -236,7 +240,7 @@ Public Class MainForm : Inherits Form
         ' trkAmbient
         ' 
         trkAmbient.Anchor = AnchorStyles.Top Or AnchorStyles.Left Or AnchorStyles.Right
-        trkAmbient.Location = New Point(5, 54)
+        trkAmbient.Location = New Point(13, 272)
         trkAmbient.Maximum = 100
         trkAmbient.Name = "trkAmbient"
         trkAmbient.Size = New Size(232, 45)
@@ -246,7 +250,7 @@ Public Class MainForm : Inherits Form
         ' lblIntensity
         ' 
         lblIntensity.AutoSize = True
-        lblIntensity.Location = New Point(13, 263)
+        lblIntensity.Location = New Point(13, 462)
         lblIntensity.Name = "lblIntensity"
         lblIntensity.Size = New Size(150, 15)
         lblIntensity.TabIndex = 6
@@ -254,31 +258,51 @@ Public Class MainForm : Inherits Form
         ' 
         ' trkIntensity
         ' 
-        trkIntensity.Location = New Point(1, 293)
+        trkIntensity.Location = New Point(1, 492)
         trkIntensity.Maximum = 100
         trkIntensity.Name = "trkIntensity"
         trkIntensity.Size = New Size(248, 45)
         trkIntensity.TabIndex = 7
         trkIntensity.Value = 65
-
-
-        Dim lblElevation = New Label()
-        lblElevation.Text = "光源仰角: 45°"
+        ' 
+        ' lblElevation
+        ' 
         lblElevation.AutoSize = True
-        lblElevation.Top = 70
-        lblElevation.Left = 8
-        lightPanel.Controls.Add(lblElevation)
-
-        Dim trkElevation = New TrackBar()
-        trkElevation.Minimum = -90
+        lblElevation.Location = New Point(8, 344)
+        lblElevation.Name = "lblElevation"
+        lblElevation.Size = New Size(82, 15)
+        lblElevation.TabIndex = 8
+        lblElevation.Text = "光源仰角: 45°"
+        ' 
+        ' trkElevation
+        ' 
+        trkElevation.Location = New Point(8, 371)
         trkElevation.Maximum = 90
+        trkElevation.Minimum = -90
+        trkElevation.Name = "trkElevation"
+        trkElevation.Size = New Size(248, 45)
+        trkElevation.TabIndex = 9
         trkElevation.Value = 45
-        trkElevation.TickStyle = TickStyle.BottomRight
-        trkElevation.Left = 8
-        trkElevation.Top = 86
-        trkElevation.Width = lightPanel.ClientSize.Width - 16
 
-        lightPanel.Controls.Add(trkElevation)
+
+        lblAzimuth = New Label()
+        lblAzimuth.Text = "光源方位: -30°"
+        lblAzimuth.AutoSize = True
+        lblAzimuth.Top = 50
+        lblAzimuth.Left = 8
+        lightPanel.Controls.Add(lblAzimuth)
+
+        trkAzimuth = New TrackBar()
+        trkAzimuth.Minimum = -360
+        trkAzimuth.Maximum = 360
+        trkAzimuth.Value = -30
+        trkAzimuth.TickStyle = TickStyle.BottomRight
+        trkAzimuth.Left = 8
+        trkAzimuth.Top = Top + 16
+        trkAzimuth.Width = lightPanel.ClientSize.Width - 16
+
+        lightPanel.Controls.Add(trkAzimuth)
+
 
 
         ' 
@@ -306,89 +330,13 @@ Public Class MainForm : Inherits Form
         lightPanel.PerformLayout()
         CType(trkAmbient, ComponentModel.ISupportInitialize).EndInit()
         CType(trkIntensity, ComponentModel.ISupportInitialize).EndInit()
+        CType(trkElevation, ComponentModel.ISupportInitialize).EndInit()
         ResumeLayout(False)
         PerformLayout()
 
     End Sub
 
-    Private Sub BuildUI()
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        ' ---- 光照参数面板 ----
-        BuildLightingPanel()
-
-
-
-
-    End Sub
-
-    ' ===================== 光照参数面板 =====================
-
-    Private Sub BuildLightingPanel()
-
-
-
-
-        Dim top = 36
-
-        top += 50
-
-        top += 50
-        Me.trkElevation = MakeSlider(lightPanel, Me.lblElevation, , -90, 90, 45, top, AddressOf LightingScroll)
-        top += 50
-        trkAzimuth = MakeSlider(lightPanel, lblAzimuth, "光源方位: -30°", -360, 360, -30, top, AddressOf LightingScroll)
-        top += 56
-
-
-
-
-
-
-
-
-
-        top += 32
-
-
-        ' 应用默认光照（避免开箱即纯白）
-        ResetLighting()
-    End Sub
-
-    Private Function MakeSlider(lightPanel As Control, ByRef caption As Label, title As String, min As Integer, max As Integer, val As Integer, top As Integer, handler As EventHandler) As TrackBar
-        caption = New Label()
-        caption.Text = title
-        caption.AutoSize = True
-        caption.Top = top
-        caption.Left = 8
-        lightPanel.Controls.Add(caption)
-
-        Dim tb = New TrackBar()
-        tb.Minimum = min
-        tb.Maximum = max
-        tb.Value = val
-        tb.TickStyle = TickStyle.BottomRight
-        tb.Left = 8
-        tb.Top = top + 16
-        tb.Width = lightPanel.ClientSize.Width - 16
-        AddHandler tb.Scroll, handler
-        lightPanel.Controls.Add(tb)
-        Return tb
-    End Function
-
-    Private Sub LightingScroll(sender As Object, e As EventArgs) Handles trkAmbient.Scroll, trkIntensity.Scroll, trkElevation.Scroll
+    Private Sub LightingScroll(sender As Object, e As EventArgs) Handles trkAmbient.Scroll, trkIntensity.Scroll, trkElevation.Scroll, trkAzimuth.Scroll
         ApplyLighting()
     End Sub
 
@@ -613,6 +561,9 @@ Public Class MainForm : Inherits Form
             "3D 模型 (*.stl;*.obj;*.gltf;*.glb;*.dae;*.3ds;*.3mf)|*.stl;*.obj;*.gltf;*.glb;*.dae;*.3ds;*.3mf|" &
             "PLY 点云 (*.ply)|*.ply|所有文件 (*.*)|*.*"
         openFileDialog.Title = "打开三维模型或点云文件"
+
+        ' 应用默认光照（避免开箱即纯白）
+        Call ResetLighting()
     End Sub
 End Class
 
