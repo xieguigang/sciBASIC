@@ -86,11 +86,15 @@ Namespace Vendor_3mf.XML
         Public Property resources As resources
         Public Property build As build
 
+        ''' <summary>
+        ''' 从 XML 模型中提取所有的三角面数据
+        ''' </summary>
+        ''' <returns></returns>
         Public Function GetSurfaces() As IEnumerable(Of Surface)
             Dim out As New List(Of Surface)
             Dim objects As [object]() = resources _
                 .objects _
-                .Where(AddressOf NotNull) _
+                .Where(AddressOf HasMesh) _
                 .ToArray
             Dim materials As Brush() = resources _
                 .basematerials _
@@ -99,22 +103,28 @@ Namespace Vendor_3mf.XML
                 .Select(Function(c) New SolidBrush(c)) _
                 .ToArray
 
-            On Error Resume Next
-
             For Each obj As [object] In objects
-                If obj.pindex Is Nothing Then
-                    ' 使用三角面自己的资源编号
-                    out += obj.mesh.GetSurfaces(materials)
-                Else
-                    ' 使用总编号
-                    Dim base As base = resources _
-                        .basematerials _
-                        .basematerials(CInt(obj.pindex))
+                Try
+                    If obj Is Nothing OrElse obj.mesh Is Nothing Then
+                        Continue For
+                    End If
 
-                    out += obj _
-                        .mesh _
-                        .GetSurfaces(base)
-                End If
+                    If obj.pindex Is Nothing Then
+                        ' 使用三角面自己的资源编号
+                        out += obj.mesh.GetSurfaces(materials)
+                    Else
+                        ' 使用总编号
+                        Dim base As base = resources _
+                            .basematerials _
+                            .basematerials(CInt(obj.pindex))
+
+                        out += obj _
+                            .mesh _
+                            .GetSurfaces(base)
+                    End If
+                Catch ex As Exception
+                    ' 跳过有问题的对象，继续处理下一个
+                End Try
             Next
 
             Return out

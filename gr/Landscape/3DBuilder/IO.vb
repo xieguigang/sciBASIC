@@ -82,9 +82,27 @@ Namespace Vendor_3mf
             Return model
         End Function
 
-        <Extension> Public Function NotNull(o As [object]) As Boolean
-            Return Not o.mesh Is Nothing AndAlso
-            Not o.mesh.vertices.IsNullOrEmpty
+        ''' <summary>
+        ''' 判断 3mf object 是否包含有效的 mesh 数据
+        ''' </summary>
+        ''' <param name="o"></param>
+        ''' <returns></returns>
+        <Extension>
+        Public Function NotNull(o As XmlModel3D) As Boolean
+            Return Not o.resources Is Nothing AndAlso
+                   Not o.resources.objects Is Nothing
+        End Function
+
+        ''' <summary>
+        ''' 判断单个 3mf XML object 是否包含有效的 mesh 数据
+        ''' </summary>
+        ''' <param name="o"></param>
+        ''' <returns></returns>
+        <Extension>
+        Public Function HasMesh(o As [object]) As Boolean
+            Return Not o Is Nothing AndAlso
+                   Not o.mesh Is Nothing AndAlso
+                   Not o.mesh.vertices.IsNullOrEmpty
         End Function
     End Module
 End Namespace
