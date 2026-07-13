@@ -59,15 +59,16 @@ Imports Microsoft.VisualBasic.Data.ChartPlots.Fractions
 Imports Microsoft.VisualBasic.Drawing
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
-Imports SolidBrush = System.Drawing.SolidBrush
+Imports Bitmap = System.Drawing.Bitmap
 Imports Brushes = System.Drawing.Brushes
 Imports FontStyle = System.Drawing.FontStyle
 Imports GraphicsPath = System.Drawing.Drawing2D.GraphicsPath
-Imports StringFormat = System.Drawing.StringFormat
-Imports Pen = System.Drawing.Pen
-Imports LineJoin = System.Drawing.Drawing2D.LineJoin
-Imports Bitmap = System.Drawing.Bitmap
+Imports GraphicsUnit = System.Drawing.GraphicsUnit
 Imports Image = System.Drawing.Image
+Imports LineJoin = System.Drawing.Drawing2D.LineJoin
+Imports Pen = System.Drawing.Pen
+Imports SolidBrush = System.Drawing.SolidBrush
+Imports StringFormat = System.Drawing.StringFormat
 
 Public Module PieChartTest
 
