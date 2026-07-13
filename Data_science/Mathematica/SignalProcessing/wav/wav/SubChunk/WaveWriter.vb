@@ -189,7 +189,7 @@ Public Module WaveWriter
 
             writer.Write(System.Text.Encoding.ASCII.GetBytes("fmt "))
             writer.Write(CUInt(fmtChunkSize - 8)) ' chunk data size (excluding id+size fields)
-            writer.Write(CShort(wFormatTag.WAVE_FORMAT_EXTENSIBLE))
+            writer.Write(CUShort(wFormatTag.WAVE_FORMAT_EXTENSIBLE))
             writer.Write(CShort(channels))
             writer.Write(sampleRate)
             writer.Write(byteRate)
