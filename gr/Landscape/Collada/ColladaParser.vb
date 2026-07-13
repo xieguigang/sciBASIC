@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0e608f18f2dc1a66404b02f0a57395db, gr\Landscape\COLLADA\COLLADA.vb"
+﻿#Region "Microsoft.VisualBasic::a1c8e9d2f4b4c7a9b3e5d1c0a2f8b3, gr\Landscape\Collada\ColladaParser.vb"
 
     ' Author:
     ' 
@@ -25,38 +25,10 @@
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-
-
     ' /********************************************************************************/
 
     ' Summaries:
 
-
-    ' Code Statistics:
-
-    '   Total Lines: 220
-    '    Code Lines: 168 (76.36%)
-    ' Comment Lines: 29 (13.18%)
-    '    - Xml Docs: 86.21%
-    ' 
-    '   Blank Lines: 23 (10.45%)
-    '     File Size: 8.50 KB
-
-
-    '     Class COLLADA
-    ' 
-    '         Properties: version
-    ' 
-    '     Class asset
-    ' 
-    '     Class GeometrySource
-    ' 
-    '         Properties: count, floatArray, sourceId, stride
-    ' 
-    '     Class MeshGeometry
-    ' 
-    '         Properties: geometryId, normals, positions, triangleIndices, triangleMaterial
-    ' 
     '     Module COLLADAParser
     ' 
     '         Function: ReadFile, ReadGeometries
@@ -66,65 +38,17 @@
 
 #End Region
 
-Imports System.Drawing
 Imports System.IO
-Imports System.Xml
 Imports System.Xml.Linq
-Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.Imaging.Drawing3D
 Imports Microsoft.VisualBasic.Linq
 
-Namespace COLLADA
-
-    ''' <summary>
-    ''' # 3D Asset Exchange Schema
-    ''' 
-    ''' COLLADA defines an XML-based schema to make it easy to transport 3D assets 
-    ''' between applications - enabling diverse 3D authoring and content processing 
-    ''' tools to be combined into a production pipeline. The intermediate language 
-    ''' provides comprehensive encoding of visual scenes including: geometry, shaders
-    ''' and effects, physics, animation, kinematics, and even multiple version representations 
-    ''' of the same asset.
-    ''' 
-    ''' https://www.khronos.org/collada/
-    ''' </summary>
-    ''' 
-    <XmlType("COLLADA", [Namespace]:="http://www.collada.org/2005/11/COLLADASchema")>
-    Public Class COLLADA
-
-        <XmlAttribute> Public Property version As String
-
-    End Class
-
-    Public Class asset
-
-    End Class
-
-    ''' <summary>
-    ''' 单个 &lt;source&gt; 元素的数据
-    ''' </summary>
-    Friend Class GeometrySource
-        Public Property sourceId As String
-        Public Property floatArray As Single()
-        Public Property stride As Integer
-        Public Property count As Integer
-    End Class
-
-    ''' <summary>
-    ''' 单个 &lt;geometry&gt; 的完整网格数据
-    ''' </summary>
-    Friend Class MeshGeometry
-        Public Property geometryId As String
-        Public Property positions As Single()    ' 顶点坐标扁平数组 [x1,y1,z1, x2,y2,z2, ...]
-        Public Property normals As Single()     ' 法向量扁平数组 [nx1,ny1,nz1, ...]
-        Public Property triangleIndices As Integer()  ' 三角面顶点索引 [v1,v2,v3, v4,v5,v6, ...]
-        Public Property triangleMaterial As String    ' 材质名称
-    End Class
+Namespace Collada
 
     ''' <summary>
     ''' COLLADA (.dae) 文件几何数据解析器
     ''' </summary>
-    Public Module COLLADAParser
+    Public Partial Module COLLADAParser
 
         Private ReadOnly COLLADA_NS As XNamespace = "http://www.collada.org/2005/11/COLLADASchema"
 
@@ -133,9 +57,9 @@ Namespace COLLADA
         ''' </summary>
         ''' <param name="filePath$">DAE 文件路径</param>
         ''' <returns></returns>
-        Public Function ReadFile(filePath$) As Data.Graphics
+        Public Function ReadFile(filePath$) As Data.SceneModel
             Dim surfaces As Data.Surface() = ReadGeometries(filePath)
-            Return New Data.Graphics With {
+            Return New Data.SceneModel With {
                 .Surfaces = surfaces
             }
         End Function
@@ -263,15 +187,15 @@ Namespace COLLADA
 
                         surfaces.Add(New Data.Surface With {
                             .vertices = {
-                                New Data.Vector(New Point3D(
+                                New Data.Vertex(New Point3D(
                                     posSource.floatArray(base1),
                                     posSource.floatArray(base1 + 1),
                                     posSource.floatArray(base1 + 2))),
-                                New Data.Vector(New Point3D(
+                                New Data.Vertex(New Point3D(
                                     posSource.floatArray(base2),
                                     posSource.floatArray(base2 + 1),
                                     posSource.floatArray(base2 + 2))),
-                                New Data.Vector(New Point3D(
+                                New Data.Vertex(New Point3D(
                                     posSource.floatArray(base3),
                                     posSource.floatArray(base3 + 1),
                                     posSource.floatArray(base3 + 2)))
