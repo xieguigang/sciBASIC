@@ -131,21 +131,61 @@ Namespace Imaging
 
     Public Class PathData
 
+        ''' <summary>
+        ''' Gets or sets an array of PointF structures that represent the points through which the path is constructed.
+        ''' </summary>
         Public Property Points As PointF()
+
+        ''' <summary>
+        ''' Gets or sets the types of the corresponding points in the path. 
+        ''' 0=Start, 1=Line, 3=Bezier/Bezier3, 0x80=CloseSubpath flag
+        ''' </summary>
+        Public Property Types As Byte()
 
     End Class
 
+    Public Enum FillMode
+        ''' <summary>
+        ''' Specifies the alternate fill mode.
+        ''' </summary>
+        Alternate = 0
+        ''' <summary>
+        ''' Specifies the winding fill mode.
+        ''' </summary>
+        Winding = 1
+    End Enum
+
     Public Class GraphicsPath : Implements Enumeration(Of op)
 
+        ''' <summary>
+        ''' Gets or sets the fill mode that determines how the interior of shapes in this GraphicsPath is filled.
+        ''' </summary>
+        Public Property FillMode As FillMode = FillMode.Alternate
+
+        ''' <summary>
+        ''' Gets the PathData for this GraphicsPath, containing both Points and Types.
+        ''' </summary>
         Public ReadOnly Property PathData As PathData
             Get
-                Throw New NotImplementedException
+                Return CollectPathData()
             End Get
         End Property
 
+        ''' <summary>
+        ''' Gets the points in the path.
+        ''' </summary>
         Public ReadOnly Property PathPoints As PointF()
             Get
-                Throw New NotImplementedException
+                Return CollectPathPoints()
+            End Get
+        End Property
+
+        ''' <summary>
+        ''' Gets the types of the corresponding points in the path.
+        ''' </summary>
+        Public ReadOnly Property PathTypes As Byte()
+            Get
+                Return CollectPathTypes()
             End Get
         End Property
 
@@ -156,6 +196,80 @@ Namespace Imaging
             Call AddPolygon(points.ToArray)
             Call CloseAllFigures()
         End Sub
+
+        Private Function CollectPathPoints() As PointF()
+            Dim pts As New List(Of PointF)
+            Dim resetSeen As Boolean = False
+
+            For Each o As op In Me.opSet
+                If resetSeen AndAlso TypeOf o Is op_Reset Then
+                    pts.Clear()
+                    resetSeen = True
+                    Continue For
+                End If
+
+                If TypeOf o Is op_AddLine Then
+                    Dim line As op_AddLine = DirectCast(o, op_AddLine)
+                    If pts.Count = 0 OrElse pts.Last <> line.a Then
+                        pts.Add(line.a)
+                    End If
+                    pts.Add(line.b)
+                ElseIf TypeOf o Is op_AddBezier Then
+                    Dim bz As op_AddBezier = DirectCast(o, op_AddBezier)
+                    pts.Add(bz.pt1)
+                    pts.Add(bz.pt2)
+                    pts.Add(bz.pt3)
+                    pts.Add(bz.pt4)
+                ElseIf TypeOf o Is op_AddPolygon Then
+                    Dim pg As op_AddPolygon = DirectCast(o, op_AddPolygon)
+                    pts.AddRange(pg.points)
+                ElseIf TypeOf o Is op_AddLines Then
+                    Dim ls As op_AddLines = DirectCast(o, op_AddLines)
+                    pts.AddRange(ls.points)
+                ElseIf TypeOf o Is op_AddCurve Then
+                    Dim cv As op_AddCurve = DirectCast(o, op_AddCurve)
+                    pts.AddRange(cv.points)
+                ElseIf TypeOf o Is op_AddRectangle Then
+                    Dim rc As op_AddRectangle = DirectCast(o, op_AddRectangle)
+                    pts.Add(New PointF(rc.rect.Left, rc.rect.Top))
+                    pts.Add(New PointF(rc.rect.Right, rc.rect.Top))
+                    pts.Add(New PointF(rc.rect.Right, rc.rect.Bottom))
+                    pts.Add(New PointF(rc.rect.Left, rc.rect.Bottom))
+                ElseIf TypeOf o Is op_AddEllipse Then
+                    Dim el As op_AddEllipse = DirectCast(o, op_AddEllipse)
+                    pts.Add(New PointF(el.x + el.r1, el.y))
+                    pts.Add(New PointF(el.x, el.y + el.r2))
+                    pts.Add(New PointF(el.x + el.r1, el.y + el.r2 * 2))
+                    pts.Add(New PointF(el.x + el.r1 * 2, el.y + el.r2))
+                End If
+            Next
+
+            Return pts.ToArray
+        End Function
+
+        Private Function CollectPathData() As PathData
+            Dim data As New PathData With {
+                .Points = CollectPathPoints(),
+                .Types = CollectPathTypes()
+            }
+            Return data
+        End Function
+
+        Private Function CollectPathTypes() As Byte()
+            Dim types As New List(Of Byte)
+            Dim pts As PointF() = CollectPathPoints()
+
+            ' Build simplified type array
+            For i As Integer = 0 To pts.Length - 1
+                If i = 0 Then
+                    types.Add(0) ' Start
+                Else
+                    types.Add(1) ' Line (default)
+                End If
+            Next
+
+            Return types.ToArray
+        End Function
 
         Public MustInherit Class op
 

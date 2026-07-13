@@ -291,14 +291,129 @@ Namespace Imaging
     End Enum
 
 
-    Public Class CustomLineCap
+    ''' <summary>
+    ''' Encapsulates a custom user-defined line cap.
+    ''' </summary>
+    Public Class CustomLineCap : Implements IDisposable
 
+        Private disposedValue As Boolean
+
+        ''' <summary>
+        ''' Gets or sets the scale factor for the width of the line cap.
+        ''' </summary>
+        Public Property WidthScale As Single = 1.0F
+
+        ''' <summary>
+        ''' Gets or sets the scale factor for the height of the line cap.
+        ''' </summary>
+        Public Property HeightScale As Single = 1.0F
+
+        ''' <summary>
+        ''' Gets or sets the distance between the cap and the line.
+        ''' </summary>
+        Public Property BaseInset As Single
+
+        ''' <summary>
+        ''' Gets or sets the line cap used at the base of the cap.
+        ''' </summary>
+        Public Property BaseCap As LineCap = LineCap.Flat
+
+        ''' <summary>
+        ''' Gets or sets the line cap used at the stroke inset from the end of a line.
+        ''' </summary>
+        Public Property StrokeJoin As LineJoin = LineJoin.Miter
+
+        Sub New()
+        End Sub
+
+        Sub New(fillPath As GraphicsPath, strokePath As GraphicsPath, Optional baseCap As LineCap = LineCap.Flat, Optional baseInset As Single = 0)
+            _FillPath = fillPath
+            _StrokePath = strokePath
+            _BaseCap = baseCap
+            _BaseInset = baseInset
+        End Sub
+
+        Private _FillPath As GraphicsPath
+        Private _StrokePath As GraphicsPath
+
+        ''' <summary>
+        ''' Gets or sets the path used to fill the interior of the cap.
+        ''' </summary>
+        Public Property FillPath As GraphicsPath
+            Get
+                Return _FillPath
+            End Get
+            Set(value As GraphicsPath)
+                _FillPath = value
+            End Set
+        End Property
+
+        ''' <summary>
+        ''' Gets or sets the path used to draw the outline of the cap.
+        ''' </summary>
+        Public Property StrokePath As GraphicsPath
+            Get
+                Return _StrokePath
+            End Get
+            Set(value As GraphicsPath)
+                _StrokePath = value
+            End Set
+        End Property
+
+        Public Function Clone() As CustomLineCap
+            Dim cap As New CustomLineCap(_FillPath, _StrokePath, _BaseCap, _BaseInset) With {
+                .WidthScale = WidthScale,
+                .HeightScale = HeightScale
+            }
+            Return cap
+        End Function
+
+        Protected Overridable Sub Dispose(disposing As Boolean)
+            If Not disposedValue Then
+                If disposing Then
+                    ' TODO: dispose managed state (managed objects)
+                End If
+                ' TODO: free unmanaged resources (unmanaged objects) and override finalizer
+                disposedValue = True
+            End If
+        End Sub
+
+        Public Sub Dispose() Implements IDisposable.Dispose
+            Dispose(disposing:=True)
+            GC.SuppressFinalize(Me)
+        End Sub
     End Class
 
+    ''' <summary>
+    ''' Represents an adjustable arrow-shaped line cap.
+    ''' </summary>
     Public Class AdjustableArrowCap : Inherits CustomLineCap
 
-        Sub New(width As Single, height As Single)
+        ''' <summary>
+        ''' Gets or sets the width of the arrow cap.
+        ''' </summary>
+        Public Property Width As Single
 
+        ''' <summary>
+        ''' Gets or sets the height of the arrow cap.
+        ''' </summary>
+        Public Property Height As Single
+
+        ''' <summary>
+        ''' Gets or sets the inset of the arrow cap middle point.
+        ''' </summary>
+        Public Property MiddleInset As Single
+
+        ''' <summary>
+        ''' Gets or sets whether the arrow cap is filled.
+        ''' </summary>
+        Public Property Filled As Boolean
+
+        Sub New(width As Single, height As Single, Optional isFilled As Boolean = True)
+            MyBase.New()
+            _Width = width
+            _Height = height
+            _Filled = isFilled
         End Sub
     End Class
 
@@ -449,6 +564,49 @@ Namespace Imaging
         Private Sub New()
         End Sub
 
+    End Class
+
+    ''' <summary>
+    ''' Each property of the SystemPens class is a Pen that is the color of a Windows display element.
+    ''' </summary>
+    Public NotInheritable Class SystemPens
+
+        Public Shared ReadOnly Property ActiveBorder As New Pen(System.Drawing.SystemColors.ActiveBorder)
+        Public Shared ReadOnly Property ActiveCaption As New Pen(System.Drawing.SystemColors.ActiveCaption)
+        Public Shared ReadOnly Property ActiveCaptionText As New Pen(System.Drawing.SystemColors.ActiveCaptionText)
+        Public Shared ReadOnly Property AppWorkspace As New Pen(System.Drawing.SystemColors.AppWorkspace)
+        Public Shared ReadOnly Property ButtonFace As New Pen(System.Drawing.SystemColors.ButtonFace)
+        Public Shared ReadOnly Property ButtonHighlight As New Pen(System.Drawing.SystemColors.ButtonHighlight)
+        Public Shared ReadOnly Property ButtonShadow As New Pen(System.Drawing.SystemColors.ButtonShadow)
+        Public Shared ReadOnly Property Control As New Pen(System.Drawing.SystemColors.Control)
+        Public Shared ReadOnly Property ControlDark As New Pen(System.Drawing.SystemColors.ControlDark)
+        Public Shared ReadOnly Property ControlDarkDark As New Pen(System.Drawing.SystemColors.ControlDarkDark)
+        Public Shared ReadOnly Property ControlLight As New Pen(System.Drawing.SystemColors.ControlLight)
+        Public Shared ReadOnly Property ControlLightLight As New Pen(System.Drawing.SystemColors.ControlLightLight)
+        Public Shared ReadOnly Property ControlText As New Pen(System.Drawing.SystemColors.ControlText)
+        Public Shared ReadOnly Property Desktop As New Pen(System.Drawing.SystemColors.Desktop)
+        Public Shared ReadOnly Property GradientActiveCaption As New Pen(System.Drawing.SystemColors.GradientActiveCaption)
+        Public Shared ReadOnly Property GradientInactiveCaption As New Pen(System.Drawing.SystemColors.GradientInactiveCaption)
+        Public Shared ReadOnly Property GrayText As New Pen(System.Drawing.SystemColors.GrayText)
+        Public Shared ReadOnly Property Highlight As New Pen(System.Drawing.SystemColors.Highlight)
+        Public Shared ReadOnly Property HighlightText As New Pen(System.Drawing.SystemColors.HighlightText)
+        Public Shared ReadOnly Property HotTrack As New Pen(System.Drawing.SystemColors.HotTrack)
+        Public Shared ReadOnly Property InactiveBorder As New Pen(System.Drawing.SystemColors.InactiveBorder)
+        Public Shared ReadOnly Property InactiveCaption As New Pen(System.Drawing.SystemColors.InactiveCaption)
+        Public Shared ReadOnly Property InactiveCaptionText As New Pen(System.Drawing.SystemColors.InactiveCaptionText)
+        Public Shared ReadOnly Property Info As New Pen(System.Drawing.SystemColors.Info)
+        Public Shared ReadOnly Property InfoText As New Pen(System.Drawing.SystemColors.InfoText)
+        Public Shared ReadOnly Property Menu As New Pen(System.Drawing.SystemColors.Menu)
+        Public Shared ReadOnly Property MenuBar As New Pen(System.Drawing.SystemColors.MenuBar)
+        Public Shared ReadOnly Property MenuHighlight As New Pen(System.Drawing.SystemColors.MenuHighlight)
+        Public Shared ReadOnly Property MenuText As New Pen(System.Drawing.SystemColors.MenuText)
+        Public Shared ReadOnly Property ScrollBar As New Pen(System.Drawing.SystemColors.ScrollBar)
+        Public Shared ReadOnly Property Window As New Pen(System.Drawing.SystemColors.Window)
+        Public Shared ReadOnly Property WindowFrame As New Pen(System.Drawing.SystemColors.WindowFrame)
+        Public Shared ReadOnly Property WindowText As New Pen(System.Drawing.SystemColors.WindowText)
+
+        Private Sub New()
+        End Sub
     End Class
 #End If
 End Namespace

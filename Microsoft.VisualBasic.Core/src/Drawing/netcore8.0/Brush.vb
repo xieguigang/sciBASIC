@@ -328,29 +328,300 @@ Namespace Imaging
 
     Public Class HatchBrush : Inherits Brush
 
+        Public ReadOnly Property HatchStyle As HatchStyle
+        Public ReadOnly Property ForegroundColor As Color
+        Public ReadOnly Property BackgroundColor As Color
+
         Sub New(style As HatchStyle,
-                color1 As Color,
-                color2 As Color)
+                foreColor As Color,
+                backColor As Color)
+            _HatchStyle = style
+            _ForegroundColor = foreColor
+            _BackgroundColor = backColor
         End Sub
+
+        Public Overrides Function ToString() As String
+            Return $"{HatchStyle} {ForegroundColor.ToHtmlColor}/{BackgroundColor.ToHtmlColor}"
+        End Function
     End Class
 
     Public Class PathGradientBrush : Inherits Brush
 
+        ''' <summary>
+        ''' Gets or sets the color at the center of the path gradient.
+        ''' </summary>
+        Public Property CenterColor As Color
+
+        ''' <summary>
+        ''' Gets or sets an array of colors that correspond to the points in the path.
+        ''' </summary>
+        Public Property SurroundColors As Color()
+
+        ''' <summary>
+        ''' Gets or sets the center point of the path gradient.
+        ''' </summary>
+        Public Property CenterPoint As PointF
+
+        ''' <summary>
+        ''' Gets or sets the focus point for the gradient falloff.
+        ''' </summary>
+        Public Property FocusScales As PointF
+
+        ''' <summary>
+        ''' Gets or sets a Blend that specifies positions and factors for a custom falloff.
+        ''' </summary>
+        Public Property Blend As Blend
+
+        ''' <summary>
+        ''' Gets or sets the encompass rectangle for this gradient.
+        ''' </summary>
+        Public Property Rectangle As RectangleF
+
         Public Property WrapMode As WrapMode
         Public Property InterpolationColors As ColorBlend
+        Public Property Transform As Matrix
 
         Sub New(polygon As GraphicsPath)
-
+            _CenterColor = Color.White
+            _CenterPoint = New PointF(0, 0)
+            _FocusScales = New PointF(0, 0)
         End Sub
+
+        ''' <summary>
+        ''' Creates a copy of the PathGradientBrush from a given point array.
+        ''' </summary>
+        Sub New(points As PointF(), Optional wrapMode As WrapMode = WrapMode.Clamp)
+            _CenterColor = Color.White
+            _CenterPoint = New PointF(0, 0)
+            _FocusScales = New PointF(0, 0)
+            _WrapMode = wrapMode
+        End Sub
+
+        Public Overrides Function ToString() As String
+            Return $"PathGradientBrush: {CenterColor.ToHtmlColor}"
+        End Function
     End Class
 
     Public Class ColorBlend
 
+        ''' <summary>
+        ''' Gets or sets an array of colors to use at corresponding positions along a gradient.
+        ''' </summary>
         Public Property Colors As Color()
+
+        ''' <summary>
+        ''' Gets or sets the positions along a gradient line.
+        ''' </summary>
         Public Property Positions As Single()
 
-        Sub New(size As Integer)
+        Sub New()
+            Colors = New Color() {}
+            Positions = New Single() {}
+        End Sub
 
+        Sub New(size As Integer)
+            Colors = New Color(size - 1) {}
+            Positions = New Single(size - 1) {}
+        End Sub
+    End Class
+
+    ''' <summary>
+    ''' Defines a blend pattern for a gradient. Positions are from 0 to 1 and correspond 
+    ''' to percentage distance along the gradient line.
+    ''' </summary>
+    Public Class Blend
+
+        ''' <summary>
+        ''' Gets or sets an array of blend factors for the gradient. Values range from 0 to 1.
+        ''' </summary>
+        Public Property Factors As Single()
+
+        ''' <summary>
+        ''' Gets or sets an array of positions for the blend factors. Values range from 0 to 1.
+        ''' </summary>
+        Public Property Positions As Single()
+
+        Sub New()
+            Factors = New Single() {1.0F}
+            Positions = New Single() {1.0F}
+        End Sub
+
+        Sub New(count As Integer)
+            Factors = New Single(count - 1) {}
+            Positions = New Single(count - 1) {}
+        End Sub
+    End Class
+
+    ''' <summary>
+    ''' Specifies the direction of a linear gradient.
+    ''' </summary>
+    Public Enum LinearGradientMode
+        ''' <summary>
+        ''' Specifies a gradient from left to right.
+        ''' </summary>
+        Horizontal = 0
+        ''' <summary>
+        ''' Specifies a gradient from top to bottom.
+        ''' </summary>
+        Vertical = 1
+        ''' <summary>
+        ''' Specifies a gradient from upper-left to lower-right.
+        ''' </summary>
+        ForwardDiagonal = 2
+        ''' <summary>
+        ''' Specifies a gradient from upper-right to lower-left.
+        ''' </summary>
+        BackwardDiagonal = 3
+    End Enum
+
+    ''' <summary>
+    ''' Encapsulates a brush with a linear gradient. This data object stores 
+    ''' linear gradient parameters for SkiaSharp rendering.
+    ''' </summary>
+    Public Class LinearGradientBrush : Inherits Brush
+
+        ''' <summary>
+        ''' Gets or sets the starting and ending colors of the gradient.
+        ''' </summary>
+        Public Property LinearColors As Color()
+
+        ''' <summary>
+        ''' Gets or sets the bounding rectangle of the gradient.
+        ''' </summary>
+        Public Property Rectangle As RectangleF
+
+        ''' <summary>
+        ''' Gets or sets the angle orientation of the gradient, in degrees.
+        ''' </summary>
+        Public Property Angle As Single
+
+        ''' <summary>
+        ''' Gets or sets a value indicating whether gamma correction is enabled for this brush.
+        ''' </summary>
+        Public Property GammaCorrection As Boolean
+
+        ''' <summary>
+        ''' Gets or sets the wrap mode for this LinearGradientBrush.
+        ''' </summary>
+        Public Property WrapMode As WrapMode
+
+        ''' <summary>
+        ''' Gets or sets a Blend that specifies positions and factors for custom falloff.
+        ''' </summary>
+        Public Property Blend As Blend
+
+        ''' <summary>
+        ''' Gets or sets a ColorBlend that defines a multicolor linear gradient.
+        ''' </summary>
+        Public Property InterpolationColors As ColorBlend
+
+        ''' <summary>
+        ''' Gets or sets a copy of the Matrix that defines a local geometric transform.
+        ''' </summary>
+        Public Property Transform As Matrix
+
+        ''' <summary>
+        ''' Creates a linear gradient brush from a rectangle and two colors.
+        ''' </summary>
+        ''' <param name="rect">The bounding rectangle for the gradient.</param>
+        ''' <param name="color1">The starting color of the gradient.</param>
+        ''' <param name="color2">The ending color of the gradient.</param>
+        ''' <param name="angle">The angle of the gradient line, in degrees, from horizontal.</param>
+        Sub New(rect As RectangleF, color1 As Color, color2 As Color, Optional angle As Single = 0)
+            _Rectangle = rect
+            _LinearColors = {color1, color2}
+            _Angle = angle
+        End Sub
+
+        ''' <summary>
+        ''' Creates a linear gradient brush from a rectangle, two colors, and a gradient mode.
+        ''' </summary>
+        Sub New(rect As RectangleF, color1 As Color, color2 As Color, mode As LinearGradientMode)
+            _Rectangle = rect
+            _LinearColors = {color1, color2}
+            Select Case mode
+                Case LinearGradientMode.Horizontal
+                    _Angle = 0
+                Case LinearGradientMode.Vertical
+                    _Angle = 90
+                Case LinearGradientMode.ForwardDiagonal
+                    _Angle = 45
+                Case LinearGradientMode.BackwardDiagonal
+                    _Angle = 135
+            End Select
+        End Sub
+
+        ''' <summary>
+        ''' Sets the blend factors and positions to create a triangular falloff from center to edges.
+        ''' </summary>
+        Public Sub SetBlendTriangularShape(focus As Single, Optional scale As Single = 1.0F)
+            _triangularFocus = focus
+            _triangularScale = scale
+        End Sub
+
+        ''' <summary>
+        ''' Creates a linear gradient brush from rectangle and the sigma bell gradient profile.
+        ''' </summary>
+        Public Sub SetSigmaBellShape(focus As Single, Optional scale As Single = 1.0F)
+            _sigmaFocus = focus
+            _sigmaScale = scale
+        End Sub
+
+        Private _triangularFocus As Single
+        Private _triangularScale As Single
+        Private _sigmaFocus As Single
+        Private _sigmaScale As Single
+
+        Public Overrides Function ToString() As String
+            If LinearColors IsNot Nothing AndAlso LinearColors.Length >= 2 Then
+                Return $"LinearGradientBrush: {LinearColors(0).ToHtmlColor} -> {LinearColors(1).ToHtmlColor}"
+            Else
+                Return "LinearGradientBrush"
+            End If
+        End Function
+    End Class
+
+    ''' <summary>
+    ''' Each property of the SystemBrushes class is a SolidBrush that is the color 
+    ''' of a Windows display element.
+    ''' </summary>
+    Public NotInheritable Class SystemBrushes
+
+        Public Shared ReadOnly Property ActiveBorder As New SolidBrush(System.Drawing.SystemColors.ActiveBorder)
+        Public Shared ReadOnly Property ActiveCaption As New SolidBrush(System.Drawing.SystemColors.ActiveCaption)
+        Public Shared ReadOnly Property ActiveCaptionText As New SolidBrush(System.Drawing.SystemColors.ActiveCaptionText)
+        Public Shared ReadOnly Property AppWorkspace As New SolidBrush(System.Drawing.SystemColors.AppWorkspace)
+        Public Shared ReadOnly Property ButtonFace As New SolidBrush(System.Drawing.SystemColors.ButtonFace)
+        Public Shared ReadOnly Property ButtonHighlight As New SolidBrush(System.Drawing.SystemColors.ButtonHighlight)
+        Public Shared ReadOnly Property ButtonShadow As New SolidBrush(System.Drawing.SystemColors.ButtonShadow)
+        Public Shared ReadOnly Property Control As New SolidBrush(System.Drawing.SystemColors.Control)
+        Public Shared ReadOnly Property ControlDark As New SolidBrush(System.Drawing.SystemColors.ControlDark)
+        Public Shared ReadOnly Property ControlDarkDark As New SolidBrush(System.Drawing.SystemColors.ControlDarkDark)
+        Public Shared ReadOnly Property ControlLight As New SolidBrush(System.Drawing.SystemColors.ControlLight)
+        Public Shared ReadOnly Property ControlLightLight As New SolidBrush(System.Drawing.SystemColors.ControlLightLight)
+        Public Shared ReadOnly Property ControlText As New SolidBrush(System.Drawing.SystemColors.ControlText)
+        Public Shared ReadOnly Property Desktop As New SolidBrush(System.Drawing.SystemColors.Desktop)
+        Public Shared ReadOnly Property GradientActiveCaption As New SolidBrush(System.Drawing.SystemColors.GradientActiveCaption)
+        Public Shared ReadOnly Property GradientInactiveCaption As New SolidBrush(System.Drawing.SystemColors.GradientInactiveCaption)
+        Public Shared ReadOnly Property GrayText As New SolidBrush(System.Drawing.SystemColors.GrayText)
+        Public Shared ReadOnly Property Highlight As New SolidBrush(System.Drawing.SystemColors.Highlight)
+        Public Shared ReadOnly Property HighlightText As New SolidBrush(System.Drawing.SystemColors.HighlightText)
+        Public Shared ReadOnly Property HotTrack As New SolidBrush(System.Drawing.SystemColors.HotTrack)
+        Public Shared ReadOnly Property InactiveBorder As New SolidBrush(System.Drawing.SystemColors.InactiveBorder)
+        Public Shared ReadOnly Property InactiveCaption As New SolidBrush(System.Drawing.SystemColors.InactiveCaption)
+        Public Shared ReadOnly Property InactiveCaptionText As New SolidBrush(System.Drawing.SystemColors.InactiveCaptionText)
+        Public Shared ReadOnly Property Info As New SolidBrush(System.Drawing.SystemColors.Info)
+        Public Shared ReadOnly Property InfoText As New SolidBrush(System.Drawing.SystemColors.InfoText)
+        Public Shared ReadOnly Property Menu As New SolidBrush(System.Drawing.SystemColors.Menu)
+        Public Shared ReadOnly Property MenuBar As New SolidBrush(System.Drawing.SystemColors.MenuBar)
+        Public Shared ReadOnly Property MenuHighlight As New SolidBrush(System.Drawing.SystemColors.MenuHighlight)
+        Public Shared ReadOnly Property MenuText As New SolidBrush(System.Drawing.SystemColors.MenuText)
+        Public Shared ReadOnly Property ScrollBar As New SolidBrush(System.Drawing.SystemColors.ScrollBar)
+        Public Shared ReadOnly Property Window As New SolidBrush(System.Drawing.SystemColors.Window)
+        Public Shared ReadOnly Property WindowFrame As New SolidBrush(System.Drawing.SystemColors.WindowFrame)
+        Public Shared ReadOnly Property WindowText As New SolidBrush(System.Drawing.SystemColors.WindowText)
+
+        Private Sub New()
         End Sub
     End Class
 
