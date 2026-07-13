@@ -1,5 +1,6 @@
 Imports System.Windows.Forms.VisualStyles.VisualStyleElement.Window
 Imports Microsoft.VisualBasic.Imaging.Drawing3D
+Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.Math.Statistics
 
 Public Class MainForm : Inherits Form
@@ -561,6 +562,8 @@ Public Class MainForm : Inherits Form
     End Sub
 
     Private Sub MainForm_Load(sender As Object, e As EventArgs) Handles Me.Load
+        Call ImageDriver.Register()
+
         ' ---- 打开对话框 ----
         openFileDialog = New OpenFileDialog()
         openFileDialog.Filter =
