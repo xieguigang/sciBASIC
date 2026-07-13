@@ -285,8 +285,8 @@ Public Class SceneRenderer
             Dim vz = New System.Numerics.Vector(Of Single)(pz, j)
             Dim depth = New System.Numerics.Vector(Of Single)(vd) + vz
             Dim factor = New System.Numerics.Vector(Of Single)(fov) / depth
-            Dim vx = (New System.Numerics.Vector(Of Single)(px, j) * factor) + w2 + ox
-            Dim vy = (New System.Numerics.Vector(Of Single)(py, j) * factor) + h2 + oy
+            Dim vx = (New System.Numerics.Vector(Of Single)(px, j) * factor) + New System.Numerics.Vector(Of Single)(w2) + New System.Numerics.Vector(Of Single)(ox)
+            Dim vy = (New System.Numerics.Vector(Of Single)(py, j) * factor) + New System.Numerics.Vector(Of Single)(h2) + New System.Numerics.Vector(Of Single)(oy)
             For k = 0 To block - 1
                 xyArr(j + k) = New PointF(vx(k), vy(k))
             Next

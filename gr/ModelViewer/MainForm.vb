@@ -56,9 +56,9 @@ Public Class MainForm : Inherits Form
     Private showDebug As Boolean = False
     Private fpsWatch As New Stopwatch()
     Private lastFrameMs As Long = 0
-    Friend WithEvents ToolStripMenuItem1 As ToolStripSeparator
-    Friend WithEvents 关于ToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents 关闭ToolStripMenuItem As ToolStripMenuItem
+    Dim WithEvents ToolStripMenuItem1 As ToolStripSeparator
+    Dim WithEvents 关于ToolStripMenuItem As ToolStripMenuItem
+    Dim WithEvents 关闭ToolStripMenuItem As ToolStripMenuItem
     Private fps As Double = 0
 
     Public Sub New()
