@@ -17,6 +17,12 @@ Public Class SceneRenderer
     Public Property PointSize As Integer = 2
     Public Property PointAlpha As Integer = 255
     Public Property UseEmbeddedColor As Boolean = False
+    ''' <summary>是否在模型底部绘制表示地面的方形网格。</summary>
+    Public Property ShowGround As Boolean = True
+    ''' <summary>地面网格的线条颜色。</summary>
+    Public Property GroundColor As Color = Color.Gray
+    ''' <summary>画布（天空盒）背景色。</summary>
+    Public Property BackgroundColor As Color = Color.White
 
     Private surfaces As New List(Of Surface)()
     Private cloud As PointCloud() = Nothing
@@ -29,6 +35,8 @@ Public Class SceneRenderer
     Private colorTableScheme As String = ""
     Private colorTableAlpha As Integer = -1
     Private embeddedCache As New Dictionary(Of String, System.Drawing.SolidBrush)()
+    ''' <summary>地面网格所在的 Z 高度（模型最低点），保证网格正好托在模型底部。</summary>
+    Private groundZ As Double = -100
 
     Public ReadOnly Property SurfaceCount As Integer
         Get
@@ -89,6 +97,15 @@ Public Class SceneRenderer
             }
         Next
 
+        ' 记录模型最低点，作为地面网格的高度
+        groundZ = Double.MaxValue
+        For Each s In surfaces
+            For Each p In s.vertices
+                If p.Z < groundZ Then groundZ = p.Z
+            Next
+        Next
+        If groundZ = Double.MaxValue Then groundZ = -modelRadius
+
         Camera.AngleX = 20
         Camera.AngleY = -30
         Camera.AngleZ = 0
@@ -124,6 +141,13 @@ Public Class SceneRenderer
         intensityMin = imin
         intensityMax = imax
 
+        ' 记录点云最低点，作为地面网格的高度
+        groundZ = Double.MaxValue
+        For i = 0 To cloud.Length - 1
+            If cloud(i).z < groundZ Then groundZ = cloud(i).z
+        Next
+        If groundZ = Double.MaxValue Then groundZ = -modelRadius
+
         Camera.AngleX = 20
         Camera.AngleY = -30
         Camera.AngleZ = 0
@@ -152,9 +176,10 @@ Public Class SceneRenderer
 
     Public Sub Draw(g As Graphics, canvas As Size)
         Camera.Screen = canvas
-        g.Clear(Color.White)
+        g.Clear(BackgroundColor)
 
         If surfaces.Count > 0 Then
+            DrawGround(g)
             If Mode = RenderMode.Mesh Then
                 DrawMesh(g)
             Else
@@ -162,9 +187,48 @@ Public Class SceneRenderer
                 Camera.Draw(g, surfaces, drawPath:=False)
             End If
         ElseIf cloud IsNot Nothing AndAlso cloud.Length > 0 Then
+            DrawGround(g)
             DrawPointCloud(g)
         End If
     End Sub
+
+    ''' <summary>
+    ''' 在模型底部绘制表示地面的方形三维网格。先绘制于模型之前，
+    ''' 使不透明的模型表面能正确遮挡位于其后的网格线（近处地面在屏幕下方，
+    ''' 通常不与模型重叠，因而仍可见）。网格位于 X-Y 平面、Z = groundZ，
+    ''' 随相机一起旋转与透视投影，呈现为水平地面。
+    ''' </summary>
+    Private Sub DrawGround(g As Graphics)
+        If Not ShowGround Then Return
+
+        Dim half As Double = modelRadius * 2.0
+        Dim divisions As Integer = 20
+        Dim stepv As Double = (2.0 * half) / divisions
+        Dim z As Double = groundZ
+
+        Using pen As New System.Drawing.Pen(GroundColor, 1)
+            For i As Integer = 0 To divisions
+                Dim t = -half + i * stepv
+                ' 沿 X 方向（y = t 固定）
+                Dim a = ToScreen(New Point3D(-half, t, z))
+                Dim b = ToScreen(New Point3D(half, t, z))
+                g.DrawLine(pen, a, b)
+                ' 沿 Y 方向（x = t 固定）
+                Dim c = ToScreen(New Point3D(t, -half, z))
+                Dim d = ToScreen(New Point3D(t, half, z))
+                g.DrawLine(pen, c, d)
+            Next
+        End Using
+    End Sub
+
+    ''' <summary>
+    ''' 将世界坐标点经摄像机旋转、投影后转换为屏幕二维坐标。
+    ''' </summary>
+    Private Function ToScreen(p As Point3D) As PointF
+        Dim rotated = Camera.Rotate(p)
+        Dim projected = Camera.Project(rotated)
+        Return New PointF(CSng(projected.X), CSng(projected.Y))
+    End Function
 
     ''' <summary>
     ''' 三角网格（线框）模式：对每个面旋转+投影后仅描边，不填充。

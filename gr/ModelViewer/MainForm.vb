@@ -15,6 +15,8 @@ Public Class MainForm : Inherits Form
     Private WithEvents chkEmbedded As ToolStripButton
     Private WithEvents numPointSize As ToolStripComboBox
     Private WithEvents btnReset As ToolStripButton
+    Private WithEvents chkShowGround As ToolStripButton
+    Private WithEvents btnBgColor As ToolStripButton
 
     Private WithEvents statusStrip As StatusStrip
     Private WithEvents lblStatus As ToolStripStatusLabel
@@ -63,6 +65,8 @@ Public Class MainForm : Inherits Form
         chkEmbedded = New ToolStripButton()
         numPointSize = New ToolStripComboBox()
         btnReset = New ToolStripButton()
+        chkShowGround = New ToolStripButton()
+        btnBgColor = New ToolStripButton()
         canvas = New RenderPanel()
         statusStrip = New StatusStrip()
         lblStatus = New ToolStripStatusLabel()
@@ -113,7 +117,7 @@ Public Class MainForm : Inherits Form
         ' 
         ' toolStrip
         ' 
-        toolStrip.Items.AddRange(New ToolStripItem() {cboMode, cboScheme, chkEmbedded, numPointSize, btnReset})
+        toolStrip.Items.AddRange(New ToolStripItem() {cboMode, cboScheme, chkEmbedded, numPointSize, btnReset, chkShowGround, btnBgColor})
         toolStrip.Location = New Point(0, 24)
         toolStrip.Name = "toolStrip"
         toolStrip.Size = New Size(734, 25)
@@ -152,6 +156,21 @@ Public Class MainForm : Inherits Form
         btnReset.Name = "btnReset"
         btnReset.Size = New Size(63, 22)
         btnReset.Text = "重置视角"
+        ' 
+        ' chkShowGround
+        ' 
+        chkShowGround.CheckOnClick = True
+        chkShowGround.Name = "chkShowGround"
+        chkShowGround.Size = New Size(90, 22)
+        chkShowGround.Text = "显示地面"
+        chkShowGround.Checked = True
+        ' 
+        ' btnBgColor
+        ' 
+        btnBgColor.Name = "btnBgColor"
+        btnBgColor.Size = New Size(75, 22)
+        btnBgColor.Text = "背景色"
+        btnBgColor.BackColor = Color.White
         ' 
         ' canvas
         ' 
@@ -474,6 +493,22 @@ Public Class MainForm : Inherits Form
         ResetView()
     End Sub
 
+    Private Sub ShowGroundChanged(sender As Object, e As EventArgs) Handles chkShowGround.CheckedChanged
+        renderer.ShowGround = chkShowGround.Checked
+        canvas.Invalidate()
+    End Sub
+
+    Private Sub BgColorClick(sender As Object, e As EventArgs) Handles btnBgColor.Click
+        Using dlg As New ColorDialog()
+            dlg.Color = renderer.BackgroundColor
+            If dlg.ShowDialog() = DialogResult.OK Then
+                renderer.BackgroundColor = dlg.Color
+                btnBgColor.BackColor = dlg.Color
+                canvas.Invalidate()
+            End If
+        End Using
+    End Sub
+
     Private Sub ResetView()
         renderer.Camera.AngleX = 20
         renderer.Camera.AngleY = -30
@@ -538,7 +573,7 @@ Public Class MainForm : Inherits Form
         If renderer.HasData Then
             renderer.Draw(e.Graphics, canvas.ClientSize)
         Else
-            e.Graphics.Clear(Color.White)
+            e.Graphics.Clear(renderer.BackgroundColor)
             e.Graphics.DrawString(
                 "请通过「文件 ▸ 打开」加载三维模型或 PLY 点云",
                 New Font("Segoe UI", 12),
