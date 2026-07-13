@@ -22,9 +22,31 @@ Partial Class FormAbout
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        components = New System.ComponentModel.Container
-        Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(800, 450)
-        Me.Text = "Form1"
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(FormAbout))
+        RenderPanel1 = New RenderPanel()
+        SuspendLayout()
+        ' 
+        ' RenderPanel1
+        ' 
+        RenderPanel1.Dock = DockStyle.Bottom
+        RenderPanel1.Location = New Point(0, 83)
+        RenderPanel1.Name = "RenderPanel1"
+        RenderPanel1.Size = New Size(662, 531)
+        RenderPanel1.TabIndex = 0
+        ' 
+        ' FormAbout
+        ' 
+        AutoScaleDimensions = New SizeF(7F, 15F)
+        AutoScaleMode = AutoScaleMode.Font
+        ClientSize = New Size(662, 614)
+        Controls.Add(RenderPanel1)
+        FormBorderStyle = FormBorderStyle.FixedToolWindow
+        Icon = CType(resources.GetObject("$this.Icon"), Icon)
+        Name = "FormAbout"
+        StartPosition = FormStartPosition.CenterParent
+        Text = "关于"
+        ResumeLayout(False)
     End Sub
+
+    Friend WithEvents RenderPanel1 As RenderPanel
 End Class
