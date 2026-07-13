@@ -103,16 +103,10 @@ Public Class DataSubChunk : Inherits SampleDataChunk
         ' little endian
         wav.ByteOrder = ByteOrder.LittleEndian
 
-        Select Case format.BitsPerSample
-            Case 8
-                Return Sample.Parse8Bit(wav, format.channels)
-            Case 16
-                Return Sample.Parse16Bit(wav, format.channels)
-            Case 32
-                Return Sample.Parse32Bit(wav, format.channels)
-            Case Else
-                Throw New NotImplementedException(format.GetJson)
-        End Select
+        Dim parseFunc As Func(Of BinaryDataReader, Integer, IEnumerable(Of Sample)) =
+            ResolveParser(format.effectiveAudioFormat, format.BitsPerSample)
+
+        Return parseFunc(wav, format.channels)
     End Function
 
     Public Iterator Function GenericEnumerator() As IEnumerator(Of Sample) Implements Enumeration(Of Sample).GenericEnumerator
@@ -149,46 +143,20 @@ Public Class LazyDataChunk : Inherits SampleDataChunk
         wav.ByteOrder = ByteOrder.LittleEndian
         wav.Position = CalculateOffset(start, scan0)
 
+        Dim parseSingle As Func(Of BinaryDataReader, Integer, Sample) =
+            ResolveSingleSampleParser(format.effectiveAudioFormat, format.BitsPerSample)
+
         For i As Integer = 0 To length - 1
-            Select Case format.BitsPerSample
-                Case 32
-                    Yield Sample.Parse32BitSample(wav, format.channels)
-                Case Else
-                    Throw New NotImplementedException(format.ToString)
-            End Select
+            Yield parseSingle(wav, format.channels)
         Next
     End Function
 
     Public Function MeasureChunkSize(length As Integer) As Long
-        Dim bytes As Integer
-
-        Select Case format.BitsPerSample
-            Case 32
-                bytes = format.channels * 4
-            Case 16
-                bytes = format.channels * 2
-            Case 8
-                bytes = format.channels * 1
-            Case Else
-                Throw New NotImplementedException(format.ToString)
-        End Select
-
-        Return bytes * length
+        Return CLng(format.sampleSizeBytes) * length
     End Function
 
     Public Function CalculateOffset(start As Integer, Optional scan0% = 0) As Long
-        Dim sampleSize As Integer
-
-        Select Case format.BitsPerSample
-            Case 8 : sampleSize = format.channels * 1
-            Case 16 : sampleSize = format.channels * 2
-            Case 32 : sampleSize = format.channels * 4
-            Case Else
-                Throw New BadImageFormatException(format.GetJson)
-        End Select
-
-        Dim offset As Long = start * sampleSize
-
+        Dim offset As Long = CLng(start) * format.sampleSizeBytes
         Return (position + scan0) + offset
     End Function
 
@@ -202,3 +170,86 @@ Public Class LazyDataChunk : Inherits SampleDataChunk
         Return wav
     End Function
 End Class
+
+#Region "Parser Dispatch"
+
+''' <summary>
+''' Central dispatch for choosing the correct parser based on audio format and bits per sample.
+''' </summary>
+Friend Module ParserDispatch
+
+    ''' <summary>
+    ''' Resolves a streaming (iterator-based) parser for memory loading.
+    ''' </summary>
+    Friend Function ResolveParser(audioFormat As wFormatTag, bitsPerSample As Integer) _
+        As Func(Of BinaryDataReader, Integer, IEnumerable(Of Sample))
+
+        Select Case audioFormat
+            Case wFormatTag.WAVE_FORMAT_PCM
+                Select Case bitsPerSample
+                    Case 8 : Return AddressOf Sample.Parse8Bit
+                    Case 16 : Return AddressOf Sample.Parse16Bit
+                    Case 24 : Return AddressOf Sample.Parse24Bit
+                    Case 32 : Return AddressOf Sample.Parse32BitPCM
+                    Case Else
+                        Throw New NotSupportedException($"PCM {bitsPerSample}-bit not supported.")
+                End Select
+
+            Case wFormatTag.WAVE_FORMAT_IEEE_FLOAT
+                Select Case bitsPerSample
+                    Case 32 : Return AddressOf Sample.Parse32Bit
+                    Case 64 : Return AddressOf Sample.Parse64Bit
+                    Case Else
+                        Throw New NotSupportedException($"IEEE Float {bitsPerSample}-bit not supported.")
+                End Select
+
+            Case wFormatTag.WAVE_FORMAT_ALAW
+                Return AddressOf Sample.ParseALaw
+
+            Case wFormatTag.WAVE_FORMAT_MULAW
+                Return AddressOf Sample.ParseMuLaw
+
+            Case Else
+                Throw New NotSupportedException($"Audio format '{audioFormat}' is not supported.")
+        End Select
+    End Function
+
+    ''' <summary>
+    ''' Resolves a single-sample parser for lazy/streaming loading.
+    ''' </summary>
+    Friend Function ResolveSingleSampleParser(audioFormat As wFormatTag, bitsPerSample As Integer) _
+        As Func(Of BinaryDataReader, Integer, Sample)
+
+        Select Case audioFormat
+            Case wFormatTag.WAVE_FORMAT_PCM
+                Select Case bitsPerSample
+                    Case 8 : Return AddressOf Sample.Parse8BitSample
+                    Case 16 : Return AddressOf Sample.Parse16BitSample
+                    Case 24 : Return AddressOf Sample.Parse24BitSample
+                    Case 32 : Return AddressOf Sample.Parse32BitPCMSample
+                    Case Else
+                        Throw New NotSupportedException($"PCM {bitsPerSample}-bit not supported for streaming.")
+                End Select
+
+            Case wFormatTag.WAVE_FORMAT_IEEE_FLOAT
+                Select Case bitsPerSample
+                    Case 32 : Return AddressOf Sample.Parse32BitSample
+                    Case 64 : Return AddressOf Sample.Parse64BitSample
+                    Case Else
+                        Throw New NotSupportedException($"IEEE Float {bitsPerSample}-bit not supported for streaming.")
+                End Select
+
+            Case wFormatTag.WAVE_FORMAT_ALAW
+                Return AddressOf Sample.ParseALawSample
+
+            Case wFormatTag.WAVE_FORMAT_MULAW
+                Return AddressOf Sample.ParseMuLawSample
+
+            Case Else
+                Throw New NotSupportedException($"Audio format '{audioFormat}' is not supported for streaming.")
+        End Select
+    End Function
+
+End Module
+
+#End Region

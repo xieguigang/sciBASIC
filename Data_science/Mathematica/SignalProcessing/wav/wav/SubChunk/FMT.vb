@@ -54,6 +54,7 @@
 
 #End Region
 
+Imports System.IO
 Imports Microsoft.VisualBasic.Data.IO
 
 ''' <summary>
@@ -66,7 +67,11 @@ Public Class FMTSubChunk : Inherits SubChunk
     ''' </summary>
     ''' <returns></returns>
     Public Property audioFormat As wFormatTag
-    Public Property channels As Channels
+    ''' <summary>
+    ''' Number of audio channels (1=Mono, 2=Stereo, 6=5.1 surround, etc.)
+    ''' </summary>
+    ''' <returns></returns>
+    Public Property channels As Integer
     ''' <summary>
     ''' 22.05KHz/44.1kHz/48KHz
     ''' </summary>
@@ -98,13 +103,63 @@ Public Class FMTSubChunk : Inherits SubChunk
     ''' <returns></returns>
     Public Property BitsPerSample As Integer
 
+    ' ===== EXTENSIBLE format fields =====
+
+    ''' <summary>
+    ''' Size of the extension (0 for standard formats, >= 22 for EXTENSIBLE)
+    ''' </summary>
+    Public Property cbSize As Integer
+    ''' <summary>
+    ''' Number of valid bits per sample (EXTENSIBLE only, may differ from BitsPerSample)
+    ''' </summary>
+    Public Property ValidBitsPerSample As Integer
+    ''' <summary>
+    ''' Speaker position bitmask (EXTENSIBLE only)
+    ''' </summary>
+    Public Property ChannelMask As Integer
+    ''' <summary>
+    ''' SubFormat GUID (EXTENSIBLE only, maps to PCM or IEEE Float)
+    ''' </summary>
+    Public Property SubFormat As Guid
+
+    ' internal backing field for effective audio format
+    Friend _effectiveAudioFormat As wFormatTag
+
+    ''' <summary>
+    ''' Gets the effective audio format.
+    ''' For EXTENSIBLE format, this resolves from the SubFormat GUID.
+    ''' For standard formats, this equals <see cref="audioFormat"/>.
+    ''' </summary>
+    Public ReadOnly Property effectiveAudioFormat As wFormatTag
+        Get
+            Return _effectiveAudioFormat
+        End Get
+    End Property
+
     ''' <summary>
     ''' Pulse Code Modulation
     ''' </summary>
     ''' <returns></returns>
     Public ReadOnly Property isPCM As Boolean
         Get
-            Return audioFormat = 1
+            Return effectiveAudioFormat = wFormatTag.WAVE_FORMAT_PCM
+        End Get
+    End Property
+
+    ''' <summary>
+    ''' Number of bytes per sample frame (channels * bitsPerSample / 8).
+    ''' Handles non-integer byte counts (e.g. 24-bit = 3 bytes/channel).
+    ''' </summary>
+    Public ReadOnly Property sampleSizeBytes As Integer
+        Get
+            Select Case BitsPerSample
+                Case 8 : Return channels * 1
+                Case 16 : Return channels * 2
+                Case 24 : Return channels * 3
+                Case 32 : Return channels * 4
+                Case 64 : Return channels * 8
+                Case Else : Return CInt(channels * (BitsPerSample / 8))
+            End Select
         End Get
     End Property
 
@@ -114,15 +169,44 @@ Public Class FMTSubChunk : Inherits SubChunk
         ' number data is in little endian
         wav.ByteOrder = ByteOrder.LittleEndian
 
-        Return New FMTSubChunk With {
+        Dim fmt As New FMTSubChunk With {
             .chunkID = subchunk1ID,
             .chunkSize = wav.ReadInt32,
-            .audioFormat = wav.ReadInt16,
-            .channels = wav.ReadInt16,
+            .audioFormat = CType(wav.ReadInt16, wFormatTag),
+            .channels = CInt(wav.ReadInt16),
             .SampleRate = wav.ReadInt32,
             .ByteRate = wav.ReadInt32,
-            .BlockAlign = wav.ReadInt16,
-            .BitsPerSample = wav.ReadInt16
+            .BlockAlign = CInt(wav.ReadInt16),
+            .BitsPerSample = CInt(wav.ReadInt16)
         }
+
+        ' Handle WAVE_FORMAT_EXTENSIBLE
+        If fmt.audioFormat = wFormatTag.WAVE_FORMAT_EXTENSIBLE Then
+            fmt.cbSize = CInt(wav.ReadInt16)
+            fmt.ValidBitsPerSample = CInt(wav.ReadInt16)
+            fmt.ChannelMask = wav.ReadInt32
+            fmt.SubFormat = New Guid(wav.ReadBytes(16))
+
+            ' Map SubFormat GUID to standard encoding
+            If fmt.SubFormat = WavFormatGuids.SubTypePcm Then
+                fmt._effectiveAudioFormat = wFormatTag.WAVE_FORMAT_PCM
+            ElseIf fmt.SubFormat = WavFormatGuids.SubTypeIeeeFloat Then
+                fmt._effectiveAudioFormat = wFormatTag.WAVE_FORMAT_IEEE_FLOAT
+            Else
+                ' Unknown SubFormat, keep as EXTENSIBLE (will fall through to error)
+                fmt._effectiveAudioFormat = wFormatTag.WAVE_FORMAT_EXTENSIBLE
+            End If
+
+            ' Skip any extra bytes beyond the base EXTENSIBLE struct (cbSize - 22)
+            Dim extraBytes As Integer = fmt.cbSize - 22
+            If extraBytes > 0 Then
+                wav.Seek(extraBytes, SeekOrigin.Current)
+            End If
+        Else
+            fmt._effectiveAudioFormat = fmt.audioFormat
+            fmt.SubFormat = Guid.Empty
+        End If
+
+        Return fmt
     End Function
 End Class

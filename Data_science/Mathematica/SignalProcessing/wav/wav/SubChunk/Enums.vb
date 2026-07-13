@@ -92,6 +92,11 @@ Public Enum wFormatTag
     WAVE_FORMAT_EXTENSIBLE = &HFFFE
 End Enum
 
+''' <summary>
+''' Legacy enumeration for common channel counts.
+''' For multi-channel support, use Integer values directly
+''' on <see cref="FMTSubChunk.channels"/>.
+''' </summary>
 Public Enum Channels
     Mono = 1
     Stereo = 2
@@ -102,3 +107,17 @@ Public Enum ChannelPositions
     Left
     Right
 End Enum
+
+''' <summary>
+''' Well-known GUIDs for WAVE_FORMAT_EXTENSIBLE SubFormat field.
+''' </summary>
+Public Module WavFormatGuids
+    ''' <summary>
+    ''' KSDATAFORMAT_SUBTYPE_PCM: {00000001-0000-0010-8000-00AA00389B71}
+    ''' </summary>
+    Public ReadOnly SubTypePcm As Guid = New Guid("00000001-0000-0010-8000-00AA00389B71")
+    ''' <summary>
+    ''' KSDATAFORMAT_SUBTYPE_IEEE_FLOAT: {00000003-0000-0010-8000-00AA00389B71}
+    ''' </summary>
+    Public ReadOnly SubTypeIeeeFloat As Guid = New Guid("00000003-0000-0010-8000-00AA00389B71")
+End Module

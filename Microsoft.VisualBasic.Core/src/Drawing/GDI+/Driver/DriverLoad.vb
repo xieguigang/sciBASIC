@@ -65,6 +65,9 @@ Imports System.Runtime.CompilerServices
 
 Namespace Imaging.Driver
 
+    ''' <summary>
+    ''' Helper module for create the System.Drawing.Graphics object liked canvas object
+    ''' </summary>
     Public Module DriverLoad
 
         Dim libgdiplus_raster As DeviceInterop

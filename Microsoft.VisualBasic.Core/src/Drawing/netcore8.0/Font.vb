@@ -102,9 +102,49 @@ Namespace Imaging
         Public ReadOnly Property Name As String
         Public ReadOnly Property Size As Single
         Public ReadOnly Property SizeInPoints As Single
+            Get
+                Return Size * 0.75F
+            End Get
+        End Property
         Public ReadOnly Property Style As FontStyle
         Public ReadOnly Property Unit As GraphicsUnit
         Public ReadOnly Property Height As Single
+
+        ''' <summary>
+        ''' Gets a value indicating whether this font is bold.
+        ''' </summary>
+        Public ReadOnly Property Bold As Boolean
+            Get
+                Return (Style And FontStyle.Bold) <> 0
+            End Get
+        End Property
+
+        ''' <summary>
+        ''' Gets a value indicating whether this font is italic.
+        ''' </summary>
+        Public ReadOnly Property Italic As Boolean
+            Get
+                Return (Style And FontStyle.Italic) <> 0
+            End Get
+        End Property
+
+        ''' <summary>
+        ''' Gets a value indicating whether this font is underlined.
+        ''' </summary>
+        Public ReadOnly Property Underline As Boolean
+            Get
+                Return (Style And FontStyle.Underline) <> 0
+            End Get
+        End Property
+
+        ''' <summary>
+        ''' Gets a value indicating whether this font is struck out.
+        ''' </summary>
+        Public ReadOnly Property Strikeout As Boolean
+            Get
+                Return (Style And FontStyle.Strikeout) <> 0
+            End Get
+        End Property
 
         Sub New(familyName As String, emSize As Single, Optional style As FontStyle = FontStyle.Regular, Optional unit As GraphicsUnit = GraphicsUnit.Pixel)
             Me.Name = familyName
@@ -117,6 +157,7 @@ Namespace Imaging
             _Name = baseFont.Name
             _Size = baseFont.Size
             _Style = style
+            _Unit = baseFont.Unit
         End Sub
 
         Public Function Clone() As Object
@@ -125,6 +166,13 @@ Namespace Imaging
 
         Public Function GetHeight(g As IGraphics) As Single
             Return DriverLoad.MeasureTextSize("A", Me).Height
+        End Function
+
+        ''' <summary>
+        ''' Returns the line spacing, in pixels, of this font (uses default 1.0 graphics unit factor).
+        ''' </summary>
+        Public Function GetHeight() As Single
+            Return Size * 1.3F
         End Function
 
     End Class

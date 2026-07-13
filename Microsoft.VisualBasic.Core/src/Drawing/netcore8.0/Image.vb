@@ -403,5 +403,273 @@ Namespace Imaging
         '     The maximum value for this enumeration.
         Max = 15
     End Enum
+
+    ''' <summary>
+    ''' Specifies the file format of the image. Not inheritable.
+    ''' </summary>
+    Public NotInheritable Class ImageFormat
+
+        Private Sub New(guid As Guid)
+            _GUID = guid
+        End Sub
+
+        Private ReadOnly _GUID As Guid
+
+        Public ReadOnly Property Guid As Guid
+            Get
+                Return _GUID
+            End Get
+        End Property
+
+        ''' <summary>
+        ''' Gets the bitmap (BMP) image format.
+        ''' </summary>
+        Public Shared ReadOnly Property Bmp As New ImageFormat(New Guid("b96b3cab-0728-11d3-9d7b-0000f81ef32e"))
+
+        ''' <summary>
+        ''' Gets the Graphics Interchange Format (GIF) image format.
+        ''' </summary>
+        Public Shared ReadOnly Property Gif As New ImageFormat(New Guid("b96b3cb0-0728-11d3-9d7b-0000f81ef32e"))
+
+        ''' <summary>
+        ''' Gets the Joint Photographic Experts Group (JPEG) image format.
+        ''' </summary>
+        Public Shared ReadOnly Property Jpeg As New ImageFormat(New Guid("b96b3cae-0728-11d3-9d7b-0000f81ef32e"))
+
+        ''' <summary>
+        ''' Gets the W3C Portable Network Graphics (PNG) image format.
+        ''' </summary>
+        Public Shared ReadOnly Property Png As New ImageFormat(New Guid("b96b3caf-0728-11d3-9d7b-0000f81ef32e"))
+
+        ''' <summary>
+        ''' Gets the Tagged Image File Format (TIFF) image format.
+        ''' </summary>
+        Public Shared ReadOnly Property Tiff As New ImageFormat(New Guid("b96b3cb1-0728-11d3-9d7b-0000f81ef32e"))
+
+        ''' <summary>
+        ''' Gets the Windows metafile (WMF) image format.
+        ''' </summary>
+        Public Shared ReadOnly Property Wmf As New ImageFormat(New Guid("b96b3cad-0728-11d3-9d7b-0000f81ef32e"))
+
+        ''' <summary>
+        ''' Gets the enhanced metafile (EMF) image format.
+        ''' </summary>
+        Public Shared ReadOnly Property Emf As New ImageFormat(New Guid("b96b3cac-0728-11d3-9d7b-0000f81ef32e"))
+
+        ''' <summary>
+        ''' Gets the Exchangeable Image File (Exif) format.
+        ''' </summary>
+        Public Shared ReadOnly Property Exif As New ImageFormat(New Guid("b96b3cb2-0728-11d3-9d7b-0000f81ef32e"))
+
+        ''' <summary>
+        ''' Gets the Windows icon image format.
+        ''' </summary>
+        Public Shared ReadOnly Property Icon As New ImageFormat(New Guid("b96b3cb5-0728-11d3-9d7b-0000f81ef32e"))
+
+        ''' <summary>
+        ''' Gets the memory bitmap image format.
+        ''' </summary>
+        Public Shared ReadOnly Property MemoryBmp As New ImageFormat(New Guid("b96b3caa-0728-11d3-9d7b-0000f81ef32e"))
+
+        Public Overrides Function ToString() As String
+            Return _GUID.ToString
+        End Function
+
+        Public Overrides Function Equals(obj As Object) As Boolean
+            If TypeOf obj Is ImageFormat Then
+                Return _GUID.Equals(DirectCast(obj, ImageFormat).Guid)
+            End If
+            Return False
+        End Function
+
+        Public Overrides Function GetHashCode() As Integer
+            Return _GUID.GetHashCode
+        End Function
+    End Class
+
+    ''' <summary>
+    ''' Defines an array of colors that make up a color palette.
+    ''' The colors are 32-bit ARGB colors. Not inheritable.
+    ''' </summary>
+    Public NotInheritable Class ColorPalette
+
+        ''' <summary>
+        ''' Gets an array of Color structures.
+        ''' </summary>
+        Public Property Entries As Color()
+
+        ''' <summary>
+        ''' Gets a value that specifies how to interpret the color information in the array of colors.
+        ''' </summary>
+        Public Property Flags As Integer
+
+        Sub New()
+        End Sub
+
+        Sub New(entries As Color(), Optional flags As Integer = 0)
+            _Entries = entries
+            _Flags = flags
+        End Sub
+    End Class
+
+    ''' <summary>
+    ''' Defines a graphic metafile. A metafile contains records that describe a sequence 
+    ''' of graphics operations that can be recorded and played back.
+    ''' </summary>
+    Public Class Metafile : Inherits Image
+
+        Public Overrides ReadOnly Property Size As Size
+
+        ''' <summary>
+        ''' Gets the width, in pixels, of this Metafile.
+        ''' </summary>
+        Public ReadOnly Property HMetafile As IntPtr
+
+        ''' <summary>
+        ''' Gets the MetafileHeader associated with this Metafile.
+        ''' </summary>
+        Public ReadOnly Property MetafileHeader As MetafileHeaderData
+
+        Sub New(filename As String)
+            _Size = New Size(0, 0)
+        End Sub
+
+        Sub New(stream As Stream)
+            _Size = New Size(0, 0)
+        End Sub
+
+        Sub New(hdc As IntPtr, frameRect As RectangleF, Optional frameUnit As MetafileFrameUnit = MetafileFrameUnit.GdiCompatible, Optional type As MetafileType = MetafileType.Memory)
+            _Size = New Size(CInt(frameRect.Width), CInt(frameRect.Height))
+        End Sub
+
+        Sub New(hdc As IntPtr, frameRect As Rectangle, Optional frameUnit As MetafileFrameUnit = MetafileFrameUnit.GdiCompatible, Optional type As MetafileType = MetafileType.Memory)
+            _Size = New Size(frameRect.Width, frameRect.Height)
+        End Sub
+
+        Sub New(stream As Stream, hdc As IntPtr, Optional frameRect As RectangleF = Nothing, Optional frameUnit As MetafileFrameUnit = MetafileFrameUnit.GdiCompatible, Optional type As MetafileType = MetafileType.Memory)
+            _Size = New Size(CInt(frameRect.Width), CInt(frameRect.Height))
+        End Sub
+
+        Public Overrides Sub Save(s As Stream, format As ImageFormats)
+        End Sub
+
+        Protected Friend Overrides Function ConvertToBitmapStream() As MemoryStream
+            Return New MemoryStream
+        End Function
+
+        Public Overrides Function GetMemoryBitmap() As BitmapBuffer
+            Return Nothing
+        End Function
+    End Class
+
+    ''' <summary>
+    ''' Specifies the layout of the metafile format.
+    ''' </summary>
+    Public Enum MetafileType
+        ''' <summary>
+        ''' Specifies a metafile type that is not valid.
+        ''' </summary>
+        Invalid
+        ''' <summary>
+        ''' Specifies a WMF metafile.
+        ''' </summary>
+        Wmf
+        ''' <summary>
+        ''' Specifies a WMF Placeable metafile.
+        ''' </summary>
+        WmfPlaceable
+        ''' <summary>
+        ''' Specifies an EMF metafile.
+        ''' </summary>
+        Emf
+        ''' <summary>
+        ''' Specifies an EMF+ metafile.
+        ''' </summary>
+        EmfPlusOnly
+        ''' <summary>
+        ''' Specifies an EMF+ Dual metafile.
+        ''' </summary>
+        EmfPlusDual
+        ''' <summary>
+        ''' Specifies a memory metafile.
+        ''' </summary>
+        Memory
+    End Enum
+
+    ''' <summary>
+    ''' Specifies a unit of measurement for the rectangle used to size and position a metafile.
+    ''' </summary>
+    Public Enum MetafileFrameUnit
+        ''' <summary>
+        ''' Specifies a pixel as the unit of measure.
+        ''' </summary>
+        Pixel
+        ''' <summary>
+        ''' Specifies a printer's point as the unit of measure.
+        ''' </summary>
+        Point
+        ''' <summary>
+        ''' Specifies an inch as the unit of measure.
+        ''' </summary>
+        Inch
+        ''' <summary>
+        ''' Specifies 1/300 of an inch as the unit of measure.
+        ''' </summary>
+        Document
+        ''' <summary>
+        ''' Specifies a millimeter as the unit of measure.
+        ''' </summary>
+        Millimeter
+        ''' <summary>
+        ''' Specifies .01 of a millimeter as the unit of measure. Supported by GDI.
+        ''' </summary>
+        GdiCompatible
+    End Enum
+
+    ''' <summary>
+    ''' Contains attributes of an associated Metafile. Not inheritable.
+    ''' </summary>
+    Public Class MetafileHeaderData
+
+        ''' <summary>
+        ''' Gets the type of the associated Metafile.
+        ''' </summary>
+        Public ReadOnly Property Type As MetafileType
+
+        ''' <summary>
+        ''' Gets the size, in bytes, of the associated Metafile object.
+        ''' </summary>
+        Public ReadOnly Property MetafileSize As Integer
+
+        ''' <summary>
+        ''' Gets the version number of the metafile.
+        ''' </summary>
+        Public ReadOnly Property Version As Integer
+
+        ''' <summary>
+        ''' Gets the horizontal DPI of the metafile.
+        ''' </summary>
+        Public ReadOnly Property DpiX As Single
+
+        ''' <summary>
+        ''' Gets the vertical DPI of the metafile.
+        ''' </summary>
+        Public ReadOnly Property DpiY As Single
+
+        ''' <summary>
+        ''' Gets the bounding rectangle of the metafile.
+        ''' </summary>
+        Public ReadOnly Property Bounds As Rectangle
+
+        ''' <summary>
+        ''' Gets a value indicating whether the metafile is an EMF or EMF+.
+        ''' </summary>
+        Public ReadOnly Property IsEmfOrEmfPlus As Boolean
+
+        ''' <summary>
+        ''' Gets a value indicating whether the metafile is a WMF.
+        ''' </summary>
+        Public ReadOnly Property IsWmf As Boolean
+    End Class
 #End If
 End Namespace
