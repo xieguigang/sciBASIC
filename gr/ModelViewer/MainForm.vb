@@ -81,7 +81,7 @@ Public Class MainForm : Inherits Form
         menuStrip.Location = New Point(0, 0)
         menuStrip.Name = "menuStrip"
         menuStrip.RenderMode = ToolStripRenderMode.System
-        menuStrip.Size = New Size(984, 24)
+        menuStrip.Size = New Size(734, 24)
         menuStrip.TabIndex = 0
         ' 
         ' fileMenu
@@ -102,7 +102,7 @@ Public Class MainForm : Inherits Form
         toolStrip.Items.AddRange(New ToolStripItem() {cboMode, cboScheme, chkEmbedded, numPointSize, btnReset})
         toolStrip.Location = New Point(0, 24)
         toolStrip.Name = "toolStrip"
-        toolStrip.Size = New Size(984, 25)
+        toolStrip.Size = New Size(734, 25)
         toolStrip.TabIndex = 1
         ' 
         ' cboMode
@@ -145,7 +145,7 @@ Public Class MainForm : Inherits Form
         canvas.Dock = DockStyle.Fill
         canvas.Location = New Point(0, 49)
         canvas.Name = "canvas"
-        canvas.Size = New Size(984, 590)
+        canvas.Size = New Size(734, 590)
         canvas.TabIndex = 0
         canvas.TabStop = True
         ' 
@@ -154,7 +154,7 @@ Public Class MainForm : Inherits Form
         statusStrip.Items.AddRange(New ToolStripItem() {lblStatus})
         statusStrip.Location = New Point(0, 639)
         statusStrip.Name = "statusStrip"
-        statusStrip.Size = New Size(984, 22)
+        statusStrip.Size = New Size(734, 22)
         statusStrip.TabIndex = 1
         ' 
         ' lblStatus
@@ -172,10 +172,10 @@ Public Class MainForm : Inherits Form
         lightPanel.Controls.Add(lblLightColor)
         lightPanel.Controls.Add(btnResetLight)
         lightPanel.Dock = DockStyle.Right
-        lightPanel.Location = New Point(0, 0)
+        lightPanel.Location = New Point(734, 0)
         lightPanel.Name = "lightPanel"
         lightPanel.Padding = New Padding(8)
-        lightPanel.Size = New Size(250, 100)
+        lightPanel.Size = New Size(250, 661)
         lightPanel.TabIndex = 0
         ' 
         ' title
@@ -190,7 +190,7 @@ Public Class MainForm : Inherits Form
         ' 
         ' btnLightColor
         ' 
-        btnLightColor.Location = New Point(8, 100)
+        btnLightColor.Location = New Point(8, 142)
         btnLightColor.Name = "btnLightColor"
         btnLightColor.Size = New Size(96, 23)
         btnLightColor.TabIndex = 1
@@ -199,14 +199,14 @@ Public Class MainForm : Inherits Form
         ' lblLightColor
         ' 
         lblLightColor.BorderStyle = BorderStyle.FixedSingle
-        lblLightColor.Location = New Point(112, 120)
+        lblLightColor.Location = New Point(112, 142)
         lblLightColor.Name = "lblLightColor"
         lblLightColor.Size = New Size(48, 22)
         lblLightColor.TabIndex = 2
         ' 
         ' btnResetLight
         ' 
-        btnResetLight.Location = New Point(8, 140)
+        btnResetLight.Location = New Point(8, 183)
         btnResetLight.Name = "btnResetLight"
         btnResetLight.Size = New Size(152, 23)
         btnResetLight.TabIndex = 3
