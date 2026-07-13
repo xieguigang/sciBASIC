@@ -647,6 +647,8 @@ Namespace Imaging
         End Function
     End Class
 
+#If Not NETSTANDARD Then
+
     ''' <summary>
     ''' Each property of the SystemBrushes class is a SolidBrush that is the color 
     ''' of a Windows display element.
@@ -690,6 +692,7 @@ Namespace Imaging
         Private Sub New()
         End Sub
     End Class
+#End If
 
     Public Enum WrapMode
         Tile

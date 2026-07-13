@@ -99,7 +99,7 @@ Namespace ComponentModel.Ranges.Unit
             Dim num As String = desc.Match(SimpleNumberPattern)
             Dim unit As String = desc.Replace(num, "").Trim.ToUpper
             Dim unitFlag As ByteSize = ParseByteUnit(unit)
-            Dim bytes As Long = CLng(Val(num) * CLng(unitFlag))
+            Dim bytes As Long = CLng(Conversion.Val(num) * CLng(unitFlag))
 
             Return bytes
         End Function

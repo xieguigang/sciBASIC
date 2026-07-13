@@ -94,7 +94,7 @@ Namespace Data.Trinity.NLP
             Else
                 ignores = ignores _
                     .Where(Function(s) Not s.StringEmpty) _
-                    .Select(AddressOf LCase) _
+                    .Select(AddressOf Strings.LCase) _
                     .ToArray
             End If
 

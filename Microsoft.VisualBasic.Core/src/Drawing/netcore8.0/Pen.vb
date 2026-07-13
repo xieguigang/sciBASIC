@@ -614,6 +614,8 @@ Namespace Imaging
 
     End Class
 
+#If Not NETSTANDARD Then
+
     ''' <summary>
     ''' Each property of the SystemPens class is a Pen that is the color of a Windows display element.
     ''' </summary>
@@ -656,5 +658,6 @@ Namespace Imaging
         Private Sub New()
         End Sub
     End Class
+#End If
 #End If
 End Namespace

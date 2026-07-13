@@ -97,12 +97,11 @@ Namespace FileIO.Path
                 Dim q As String = process(path.BaseName)
 
                 For Each S In pls
-                    If InStr(q, S.name, CompareMethod.Text) = 1 OrElse
-                    InStr(S.name, q, CompareMethod.Text) = 1 Then
+                    If InStr(q, S.name, CompareMethod.Text) = 1 OrElse InStr(S.name, q, CompareMethod.Text) = 1 Then
                         Yield New PathMatch With {
-                        .Pair1 = path,
-                        .Pair2 = S.p
-                    }
+                            .Pair1 = path,
+                            .Pair2 = S.p
+                        }
                         Exit For
                     End If
                 Next
