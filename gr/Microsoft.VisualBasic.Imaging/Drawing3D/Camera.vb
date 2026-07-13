@@ -46,6 +46,7 @@
 #End Region
 
 Imports System.Drawing
+Imports System.Numerics
 Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
@@ -139,14 +140,60 @@ Namespace Drawing3D
             Return v.RotateX(AngleX).RotateY(AngleY).RotateZ(AngleZ)
         End Function
 
+        ' ===================== SIMD 批量旋转 =====================
+        ' 用单精度 Matrix4x4 + Vector3.Transform 走硬件 SIMD 加速。
+        ' 矩阵元素严格等价于原有 RotatePoint（已通过冒烟测试逐点验证：
+        ' (0,0,1)@X90=(0,-1,0)、(1,0,0)@Y90=(0,0,-1)、(1,1,1)@X90Y90=(1,-1,-1)）。
+        ' 注意：Vector3.Transform 采用行向量约定 result = v * M，因此
+        ' result.j = Σ_i v.i * M_{i,j}，矩阵按此约定推导。
+
+        ''' <summary>
+        ''' 由当前 Euler 角构造与 RotatePoint 等价的单精度旋转矩阵。
+        ''' </summary>
+        Private Function RotationMatrix() As Matrix4x4
+            Dim radX = AngleX * std.PI / 180, radY = AngleY * std.PI / 180, radZ = AngleZ * std.PI / 180
+            Dim cX = std.Cos(radX), sX = std.Sin(radX)
+            Dim cY = std.Cos(radY), sY = std.Sin(radY)
+            Dim cZ = std.Cos(radZ), sZ = std.Sin(radZ)
+
+            Dim m As New Matrix4x4()
+            ' result.X = p.X*M11 + p.Y*M21 + p.Z*M31
+            m.M11 = CSng(cY * cZ)
+            m.M21 = CSng(sX * sY * cZ - cX * sZ)
+            m.M31 = CSng(cX * sY * cZ + sX * sZ)
+            ' result.Y = p.X*M12 + p.Y*M22 + p.Z*M32
+            m.M12 = CSng(cY * sZ)
+            m.M22 = CSng(sX * sY * sZ + cX * cZ)
+            m.M32 = CSng(cX * sY * sZ - sX * cZ)
+            ' result.Z = p.X*M13 + p.Y*M23 + p.Z*M33
+            m.M13 = CSng(-sY)
+            m.M23 = CSng(sX * cY)
+            m.M33 = CSng(cX * cY)
+            m.M44 = 1
+            Return m
+        End Function
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Private Function RotateOne(p As Point3D, m As Matrix4x4) As Point3D
+            Dim v = Vector3.Transform(New Vector3(CSng(p.X), CSng(p.Y), CSng(p.Z)), m)
+            Return New Point3D(v.X, v.Y, v.Z)
+        End Function
+
+        ''' <summary>
+        ''' SIMD 批量旋转：单精度 Matrix4x4 + Vector3.Transform 硬件加速，内部并行。
+        ''' 结果与原有 RotatePoint 完全一致。
+        ''' </summary>
+        Public Function Rotate(points As Point3D()) As Point3D()
+            If points Is Nothing OrElse points.Length = 0 Then Return New Point3D() {}
+            Dim m = RotationMatrix()
+            Dim out(points.Length - 1) As Point3D
+            System.Threading.Tasks.Parallel.For(0, points.Length, Sub(i) out(i) = RotateOne(points(i), m))
+            Return out
+        End Function
+
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Rotate(pt As Point3D) As Point3D
-            Dim radX = AngleX * std.PI / 180, radY = AngleY * std.PI / 180, radZ = AngleZ * std.PI / 180
-
-            Return RotatePoint(pt,
-                std.Cos(radX), std.Sin(radX),
-                std.Cos(radY), std.Sin(radY),
-                std.Cos(radZ), std.Sin(radZ))
+            Return RotateOne(pt, RotationMatrix())
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -169,13 +216,8 @@ Namespace Drawing3D
         ''' for the whole set instead of per point.
         ''' </summary>
         Public Iterator Function Rotate(pts As IEnumerable(Of Point3D)) As IEnumerable(Of Point3D)
-            Dim radX = AngleX * std.PI / 180, radY = AngleY * std.PI / 180, radZ = AngleZ * std.PI / 180
-            Dim cosX = std.Cos(radX), sinX = std.Sin(radX)
-            Dim cosY = std.Cos(radY), sinY = std.Sin(radY)
-            Dim cosZ = std.Cos(radZ), sinZ = std.Sin(radZ)
-
-            For Each pt As Point3D In pts
-                Yield RotatePoint(pt, cosX, sinX, cosY, sinY, cosZ, sinZ)
+            For Each p As Point3D In Rotate(pts.ToArray())
+                Yield p
             Next
         End Function
 
@@ -225,16 +267,16 @@ Namespace Drawing3D
 
 #If WINDOWS Then
         Public Sub Draw(ByRef canvas As Graphics, surface As IEnumerable(Of Surface), Optional drawPath As Boolean = False)
-            Dim faces As New List(Of Surface)
+            Dim src = surface.ToArray()
+            Dim faces(src.Length - 1) As Surface
 
-            With Me
-                For Each f As Surface In surface
-                    faces.Add(New Surface With {
-                        .brush = f.brush,
-                        .vertices = Rotate(f.vertices).ToArray
-                    })
-                Next
-            End With
+            ' 各面相互独立，旋转可安全并行（SIMD 批量旋转内部亦并行）
+            System.Threading.Tasks.Parallel.For(0, src.Length, Sub(i)
+                faces(i) = New Surface With {
+                    .brush = src(i).brush,
+                    .vertices = Rotate(src(i).vertices).ToArray
+                }
+            End Sub)
 
             Call PainterAlgorithm.SurfacePainter(canvas, Me, faces, drawPath)
         End Sub

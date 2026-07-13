@@ -686,3 +686,4 @@ mime/application%vnd.openxmlformats-officedocument.spreadsheetml.sheet/.vscode/s
 mime/application%vnd.openxmlformats-officedocument.spreadsheetml.sheet/R-xlsx/.vscode/settings.json
 *.exe
 /tools
+gr/ModelViewer/build_log.txt

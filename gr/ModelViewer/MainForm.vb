@@ -1,7 +1,5 @@
-Imports System.Windows.Forms.VisualStyles.VisualStyleElement.Window
 Imports Microsoft.VisualBasic.Imaging.Drawing3D
 Imports Microsoft.VisualBasic.Imaging.Driver
-Imports Microsoft.VisualBasic.Math.Statistics
 
 Public Class MainForm : Inherits Form
 
@@ -15,6 +13,8 @@ Public Class MainForm : Inherits Form
     Private WithEvents chkEmbedded As ToolStripButton
     Private WithEvents numPointSize As ToolStripComboBox
     Private WithEvents btnReset As ToolStripButton
+    Private WithEvents chkShowGround As ToolStripButton
+    Private WithEvents btnBgColor As ToolStripButton
 
     Private WithEvents statusStrip As StatusStrip
     Private WithEvents lblStatus As ToolStripStatusLabel
@@ -48,6 +48,16 @@ Public Class MainForm : Inherits Form
     Dim WithEvents title As Label
     Private currentFile As String = ""
 
+    ' ---- 调试信息叠加状态 ----
+    Private WithEvents chkShowDebug As ToolStripButton
+    Private showDebug As Boolean = False
+    Private fpsWatch As New Stopwatch()
+    Private lastFrameMs As Long = 0
+    Dim WithEvents ToolStripMenuItem1 As ToolStripSeparator
+    Dim WithEvents 关于ToolStripMenuItem As ToolStripMenuItem
+    Dim WithEvents 关闭ToolStripMenuItem As ToolStripMenuItem
+    Private fps As Double = 0
+
     Public Sub New()
         InitializeComponent()
     End Sub
@@ -57,12 +67,18 @@ Public Class MainForm : Inherits Form
         menuStrip = New MenuStrip()
         fileMenu = New ToolStripMenuItem()
         openItem = New ToolStripMenuItem()
+        ToolStripMenuItem1 = New ToolStripSeparator()
+        关于ToolStripMenuItem = New ToolStripMenuItem()
+        关闭ToolStripMenuItem = New ToolStripMenuItem()
         toolStrip = New ToolStrip()
         cboMode = New ToolStripComboBox()
         cboScheme = New ToolStripComboBox()
         chkEmbedded = New ToolStripButton()
         numPointSize = New ToolStripComboBox()
         btnReset = New ToolStripButton()
+        chkShowGround = New ToolStripButton()
+        btnBgColor = New ToolStripButton()
+        chkShowDebug = New ToolStripButton()
         canvas = New RenderPanel()
         statusStrip = New StatusStrip()
         lblStatus = New ToolStripStatusLabel()
@@ -100,7 +116,7 @@ Public Class MainForm : Inherits Form
         ' 
         ' fileMenu
         ' 
-        fileMenu.DropDownItems.AddRange(New ToolStripItem() {openItem})
+        fileMenu.DropDownItems.AddRange(New ToolStripItem() {openItem, ToolStripMenuItem1, 关于ToolStripMenuItem, 关闭ToolStripMenuItem})
         fileMenu.Name = "fileMenu"
         fileMenu.Size = New Size(59, 20)
         fileMenu.Text = "文件(&F)"
@@ -108,12 +124,29 @@ Public Class MainForm : Inherits Form
         ' openItem
         ' 
         openItem.Name = "openItem"
-        openItem.Size = New Size(166, 22)
+        openItem.Size = New Size(180, 22)
         openItem.Text = "打开模型/点云..."
+        ' 
+        ' ToolStripMenuItem1
+        ' 
+        ToolStripMenuItem1.Name = "ToolStripMenuItem1"
+        ToolStripMenuItem1.Size = New Size(177, 6)
+        ' 
+        ' 关于ToolStripMenuItem
+        ' 
+        关于ToolStripMenuItem.Name = "关于ToolStripMenuItem"
+        关于ToolStripMenuItem.Size = New Size(180, 22)
+        关于ToolStripMenuItem.Text = "关于"
+        ' 
+        ' 关闭ToolStripMenuItem
+        ' 
+        关闭ToolStripMenuItem.Name = "关闭ToolStripMenuItem"
+        关闭ToolStripMenuItem.Size = New Size(180, 22)
+        关闭ToolStripMenuItem.Text = "关闭"
         ' 
         ' toolStrip
         ' 
-        toolStrip.Items.AddRange(New ToolStripItem() {cboMode, cboScheme, chkEmbedded, numPointSize, btnReset})
+        toolStrip.Items.AddRange(New ToolStripItem() {cboMode, cboScheme, chkEmbedded, numPointSize, btnReset, chkShowGround, btnBgColor, chkShowDebug})
         toolStrip.Location = New Point(0, 24)
         toolStrip.Name = "toolStrip"
         toolStrip.Size = New Size(734, 25)
@@ -152,6 +185,29 @@ Public Class MainForm : Inherits Form
         btnReset.Name = "btnReset"
         btnReset.Size = New Size(63, 22)
         btnReset.Text = "重置视角"
+        ' 
+        ' chkShowGround
+        ' 
+        chkShowGround.Checked = True
+        chkShowGround.CheckOnClick = True
+        chkShowGround.CheckState = CheckState.Checked
+        chkShowGround.Name = "chkShowGround"
+        chkShowGround.Size = New Size(63, 22)
+        chkShowGround.Text = "显示地面"
+        ' 
+        ' btnBgColor
+        ' 
+        btnBgColor.BackColor = Color.White
+        btnBgColor.Name = "btnBgColor"
+        btnBgColor.Size = New Size(50, 22)
+        btnBgColor.Text = "背景色"
+        ' 
+        ' chkShowDebug
+        ' 
+        chkShowDebug.CheckOnClick = True
+        chkShowDebug.Name = "chkShowDebug"
+        chkShowDebug.Size = New Size(63, 22)
+        chkShowDebug.Text = "调试信息"
         ' 
         ' canvas
         ' 
@@ -203,7 +259,7 @@ Public Class MainForm : Inherits Form
         ' title
         ' 
         title.AutoSize = True
-        title.Font = New Font("Segoe UI", 9F, FontStyle.Bold)
+        title.Font = New Font("Segoe UI", 9.0F, FontStyle.Bold)
         title.Location = New Point(13, 8)
         title.Name = "title"
         title.Size = New Size(63, 15)
@@ -474,6 +530,28 @@ Public Class MainForm : Inherits Form
         ResetView()
     End Sub
 
+    Private Sub ShowGroundChanged(sender As Object, e As EventArgs) Handles chkShowGround.CheckedChanged
+        renderer.ShowGround = chkShowGround.Checked
+        canvas.Invalidate()
+    End Sub
+
+    Private Sub BgColorClick(sender As Object, e As EventArgs) Handles btnBgColor.Click
+        Using dlg As New ColorDialog()
+            dlg.Color = renderer.BackgroundColor
+            If dlg.ShowDialog() = DialogResult.OK Then
+                renderer.BackgroundColor = dlg.Color
+                btnBgColor.BackColor = dlg.Color
+                canvas.Invalidate()
+            End If
+        End Using
+    End Sub
+
+    Private Sub ShowDebugChanged(sender As Object, e As EventArgs) Handles chkShowDebug.CheckedChanged
+        showDebug = chkShowDebug.Checked
+        lastFrameMs = 0
+        canvas.Invalidate()
+    End Sub
+
     Private Sub ResetView()
         renderer.Camera.AngleX = 20
         renderer.Camera.AngleY = -30
@@ -538,13 +616,15 @@ Public Class MainForm : Inherits Form
         If renderer.HasData Then
             renderer.Draw(e.Graphics, canvas.ClientSize)
         Else
-            e.Graphics.Clear(Color.White)
+            e.Graphics.Clear(renderer.BackgroundColor)
             e.Graphics.DrawString(
                 "请通过「文件 ▸ 打开」加载三维模型或 PLY 点云",
                 New Font("Segoe UI", 12),
                 Brushes.Gray,
                 New PointF(20, 20))
         End If
+
+        If showDebug Then DrawDebugOverlay(e.Graphics)
     End Sub
 
     Private Sub UpdateStatus()
@@ -573,6 +653,64 @@ Public Class MainForm : Inherits Form
 
         ' 应用默认光照（避免开箱即纯白）
         Call ResetLighting()
+        fpsWatch.Start()
+    End Sub
+
+    ' ===================== 调试信息叠加 =====================
+
+    ''' <summary>
+    ''' 在画布左上角绘制调试信息：Camera.ToString() 调试字符串 + 实时 FPS。
+    ''' 背景为黑色半透明圆角矩形，文本为蓝色。
+    ''' </summary>
+    Private Sub DrawDebugOverlay(g As Graphics)
+        ' 基于最近两次重绘的时间间隔估算 FPS（指数平滑）
+        Dim nowMs = fpsWatch.ElapsedMilliseconds
+        If lastFrameMs > 0 Then
+            Dim dt = nowMs - lastFrameMs
+            If dt > 0 Then
+                Dim inst = 1000.0 / dt
+                fps = fps * 0.9 + inst * 0.1
+            End If
+        End If
+        lastFrameMs = nowMs
+
+        Dim info = renderer.Camera.ToString()
+        Dim text = info & Environment.NewLine & $"FPS: {fps:F1}"
+
+        Dim font = New Font("Consolas", 9, FontStyle.Regular)
+        Dim padding = 8
+        Dim size = g.MeasureString(text, font)
+        Dim rect = New Rectangle(8, 8, CInt(size.Width) + padding * 2, CInt(size.Height) + padding * 2)
+
+        Using path = RoundRectPath(rect, 8)
+            Using back = New SolidBrush(Color.FromArgb(140, 0, 0, 0))
+                g.FillPath(back, path)
+            End Using
+            g.DrawString(text, font, Brushes.Blue, New PointF(rect.X + padding, rect.Y + padding))
+        End Using
+        font.Dispose()
+    End Sub
+
+    ''' <summary>
+    ''' 构造一个圆角矩形路径（用于半透明背景）。
+    ''' </summary>
+    Private Function RoundRectPath(rect As Rectangle, radius As Integer) As System.Drawing.Drawing2D.GraphicsPath
+        Dim path As New System.Drawing.Drawing2D.GraphicsPath()
+        Dim r = radius
+        path.AddArc(rect.X, rect.Y, r, r, 180, 90)
+        path.AddArc(rect.X + rect.Width - r, rect.Y, r, r, 270, 90)
+        path.AddArc(rect.X + rect.Width - r, rect.Y + rect.Height - r, r, r, 0, 90)
+        path.AddArc(rect.X, rect.Y + rect.Height - r, r, r, 90, 90)
+        path.CloseFigure()
+        Return path
+    End Function
+
+    Private Sub 关于ToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles 关于ToolStripMenuItem.Click
+        Call New FormAbout().ShowDialog()
+    End Sub
+
+    Private Sub 关闭ToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles 关闭ToolStripMenuItem.Click
+        Call Me.Close()
     End Sub
 End Class
 
