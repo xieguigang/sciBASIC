@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e67b5b91bf1c4d98ef22ae56528ecf8c, Microsoft.VisualBasic.Core\src\Drawing\netcore8.0\Image.vb"
+﻿#Region "Microsoft.VisualBasic::858b859255e2687221ed3fd6c65e3223, Microsoft.VisualBasic.Core\src\Drawing\netcore8.0\Image.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 327
-    '    Code Lines: 165 (50.46%)
-    ' Comment Lines: 100 (30.58%)
-    '    - Xml Docs: 49.00%
+    '   Total Lines: 595
+    '    Code Lines: 263 (44.20%)
+    ' Comment Lines: 225 (37.82%)
+    '    - Xml Docs: 77.33%
     ' 
-    '   Blank Lines: 62 (18.96%)
-    '     File Size: 12.63 KB
+    '   Blank Lines: 107 (17.98%)
+    '     File Size: 21.98 KB
 
 
     '     Class Image
@@ -72,6 +72,54 @@
     '  
     ' 
     ' 
+    ' 
+    '     Class ImageFormat
+    ' 
+    '         Properties: Bmp, Emf, Exif, Gif, Guid
+    '                     Icon, Jpeg, MemoryBmp, Png, Tiff
+    '                     Wmf
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    '         Function: Equals, GetHashCode, ToString
+    ' 
+    '     Class ColorPalette
+    ' 
+    '         Properties: Entries, Flags
+    ' 
+    '         Constructor: (+2 Overloads) Sub New
+    ' 
+    '     Class Metafile
+    ' 
+    '         Properties: HMetafile, MetafileHeader, Size
+    ' 
+    '         Constructor: (+5 Overloads) Sub New
+    ' 
+    '         Function: ConvertToBitmapStream, GetMemoryBitmap
+    ' 
+    '         Sub: Save
+    ' 
+    '     Enum MetafileType
+    ' 
+    '         Emf, EmfPlusDual, EmfPlusOnly, Invalid, Memory
+    '         Wmf, WmfPlaceable
+    ' 
+    '  
+    ' 
+    ' 
+    ' 
+    '     Enum MetafileFrameUnit
+    ' 
+    '         Document, GdiCompatible, Inch, Millimeter, Pixel
+    '         Point
+    ' 
+    '  
+    ' 
+    ' 
+    ' 
+    '     Class MetafileHeaderData
+    ' 
+    '         Properties: Bounds, DpiX, DpiY, IsEmfOrEmfPlus, IsWmf
+    '                     MetafileSize, Type, Version
     ' 
     ' 
     ' /********************************************************************************/

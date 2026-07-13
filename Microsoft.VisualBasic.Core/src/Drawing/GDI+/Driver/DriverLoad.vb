@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ece44ca5dfc0e6d7084c5721d8c974c9, Microsoft.VisualBasic.Core\src\Drawing\GDI+\Driver\DriverLoad.vb"
+﻿#Region "Microsoft.VisualBasic::6e8f88c817d8b7dbe63d657ad3ad3f49, Microsoft.VisualBasic.Core\src\Drawing\GDI+\Driver\DriverLoad.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 196
-    '    Code Lines: 147 (75.00%)
-    ' Comment Lines: 17 (8.67%)
-    '    - Xml Docs: 88.24%
+    '   Total Lines: 199
+    '    Code Lines: 147 (73.87%)
+    ' Comment Lines: 20 (10.05%)
+    '    - Xml Docs: 90.00%
     ' 
-    '   Blank Lines: 32 (16.33%)
-    '     File Size: 8.85 KB
+    '   Blank Lines: 32 (16.08%)
+    '     File Size: 8.97 KB
 
 
     '     Module DriverLoad

@@ -1,4 +1,4 @@
-#Region "Microsoft.VisualBasic::numpy_compat, Data_science\MachineLearning\TensorFlow\NumPy.vb"
+﻿#Region "Microsoft.VisualBasic::c3dc987273b8bf22b1adc72fd0efec0f, Data_science\MachineLearning\TensorFlow\NumPy.vb"
 
     ' Author:
     ' 
@@ -32,18 +32,35 @@
     ' Summaries:
 
 
-    ' Module NumPy
+    ' Code Statistics:
+
+    '   Total Lines: 734
+    '    Code Lines: 412 (56.13%)
+    ' Comment Lines: 200 (27.25%)
+    '    - Xml Docs: 91.50%
     ' 
-    '     Function: array, zeros, ones, full, eye, identity,
-    '               arange, linspace, reshape, transpose,
-    '               expand_dims, squeeze, dot, matmul,
-    '               concatenate, stack, vstack, hstack, split,
-    '               sum, mean, max, min, argmax, argmin,
-    '               exp, log, sqrt, square, abs, power, clip,
-    '               where, maximum, minimum
+    '   Blank Lines: 122 (16.62%)
+    '     File Size: 23.36 KB
+
+
+    ' Module NumPyModule
     ' 
-    '     Class Random
-    '         Function: rand, randn
+    '     Function: [where], abs, arange, argmax, argmin
+    '               array, as_double_array, clip, concatenate, cos
+    '               dot, equal, exp, expand_dims, eye
+    '               flatten, full, greater, hstack, identity
+    '               less, linspace, log, logspace, matmul
+    '               max, maximum, mean, min, minimum
+    '               ndim, ones, power, prod, reshape
+    '               shape, sin, size, split, sqrt
+    '               square, squeeze, stack, std, sum
+    '               tanh, transpose, vstack, zeros
+    '     Class RandomState
+    ' 
+    '         Function: rand, randint, randn
+    ' 
+    ' 
+    ' 
     ' 
     ' /********************************************************************************/
 

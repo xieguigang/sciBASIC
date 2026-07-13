@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1f93c14d29a1bcbb0342a7a5a96aab05, Data_science\Mathematica\SignalProcessing\wav\wav\SubChunk\Data.vb"
+﻿#Region "Microsoft.VisualBasic::e0f4abd942fb84040be50a751f4851a4, Data_science\Mathematica\SignalProcessing\wav\wav\SubChunk\Data.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 137
-    '    Code Lines: 107 (78.10%)
-    ' Comment Lines: 2 (1.46%)
-    '    - Xml Docs: 0.00%
+    '   Total Lines: 188
+    '    Code Lines: 136 (72.34%)
+    ' Comment Lines: 11 (5.85%)
+    '    - Xml Docs: 81.82%
     ' 
-    '   Blank Lines: 28 (20.44%)
-    '     File Size: 4.64 KB
+    '   Blank Lines: 41 (21.81%)
+    '     File Size: 7.16 KB
 
 
     ' Class DataSubChunk
@@ -60,6 +60,11 @@
     '     Function: CalculateOffset, LoadSamples, MeasureChunkSize, MoveToDataChunk
     ' 
     '     Sub: Close
+    ' 
+    ' Module ParserDispatch
+    ' 
+    '     Function: ResolveParser, ResolveSingleSampleParser
+    ' 
     ' 
     ' /********************************************************************************/
 

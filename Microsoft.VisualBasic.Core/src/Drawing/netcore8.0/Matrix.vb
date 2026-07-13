@@ -1,4 +1,4 @@
-#Region "Microsoft.VisualBasic::matrix_compat, Microsoft.VisualBasic.Core\src\Drawing\netcore8.0\Matrix.vb"
+﻿#Region "Microsoft.VisualBasic::57fb8206eeac7268aa8af844a4f7f404, Microsoft.VisualBasic.Core\src\Drawing\netcore8.0\Matrix.vb"
 
     ' Author:
     ' 
@@ -34,27 +34,32 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 0
-    '    Code Lines: 0
-    ' Comment Lines: 0
-    '    - Xml Docs: 0.00%
+    '   Total Lines: 212
+    '    Code Lines: 127 (59.91%)
+    ' Comment Lines: 55 (25.94%)
+    '    - Xml Docs: 90.91%
     ' 
-    '   Blank Lines: 0
-    '     File Size: 0 B
+    '   Blank Lines: 30 (14.15%)
+    '     File Size: 7.65 KB
 
 
+    '     Enum MatrixOrder
+    ' 
+    ' 
+    '  
+    ' 
+    ' 
+    ' 
     '     Class Matrix
     ' 
     '         Properties: Elements, IsIdentity, IsInvertible
     ' 
-    '         Constructor: (+1 Overloads) Sub New
+    '         Constructor: (+3 Overloads) Sub New
     ' 
-    '         Sub: Invert, Multiply, Reset, Rotate, RotateAt
-    '              Scale, Shear, Translate
+    '         Function: Clone, (+2 Overloads) TransformPoints, TransformVectors
     ' 
-    '         Function: Clone, TransformPoints, TransformVectors
-    ' 
-    ' 
+    '         Sub: (+2 Overloads) Dispose, Invert, Multiply, Reset, Rotate
+    '              RotateAt, Scale, Shear, Translate
     ' 
     ' 
     ' /********************************************************************************/

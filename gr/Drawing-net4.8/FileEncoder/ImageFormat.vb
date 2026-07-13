@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7ee0cfac337bb4acff3fca6991926d2f, gr\Drawing-net4.8\FileEncoder\ImageFormat.vb"
+﻿#Region "Microsoft.VisualBasic::33669dad0bd16db07ad4569802e70c92, gr\Drawing-net4.8\FileEncoder\ImageFormat.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 138
-    '    Code Lines: 97 (70.29%)
-    ' Comment Lines: 26 (18.84%)
+    '   Total Lines: 136
+    '    Code Lines: 95 (69.85%)
+    ' Comment Lines: 26 (19.12%)
     '    - Xml Docs: 96.15%
     ' 
-    '   Blank Lines: 15 (10.87%)
-    '     File Size: 4.93 KB
+    '   Blank Lines: 15 (11.03%)
+    '     File Size: 5.47 KB
 
 
     ' Module ImageFormatExtensions

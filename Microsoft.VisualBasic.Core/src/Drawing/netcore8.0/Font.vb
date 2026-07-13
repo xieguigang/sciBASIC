@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4c6b5873dbb5388e42e09814fd7d38e9, Microsoft.VisualBasic.Core\src\Drawing\netcore8.0\Font.vb"
+﻿#Region "Microsoft.VisualBasic::7544dc3a0fd002abfcec2d3a07bab867, Microsoft.VisualBasic.Core\src\Drawing\netcore8.0\Font.vb"
 
     ' Author:
     ' 
@@ -34,22 +34,22 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 125
-    '    Code Lines: 79 (63.20%)
-    ' Comment Lines: 24 (19.20%)
-    '    - Xml Docs: 25.00%
+    '   Total Lines: 173
+    '    Code Lines: 107 (61.85%)
+    ' Comment Lines: 39 (22.54%)
+    '    - Xml Docs: 53.85%
     ' 
-    '   Blank Lines: 22 (17.60%)
-    '     File Size: 4.01 KB
+    '   Blank Lines: 27 (15.61%)
+    '     File Size: 5.55 KB
 
 
     '     Class Font
     ' 
-    '         Properties: Height, Name, Size, SizeInPoints, Style
-    '                     Unit
+    '         Properties: Bold, Height, Italic, Name, Size
+    '                     SizeInPoints, Strikeout, Style, Underline, Unit
     ' 
     '         Constructor: (+2 Overloads) Sub New
-    '         Function: Clone, GetHeight
+    '         Function: Clone, (+2 Overloads) GetHeight
     ' 
     '     Enum GraphicsUnit
     ' 

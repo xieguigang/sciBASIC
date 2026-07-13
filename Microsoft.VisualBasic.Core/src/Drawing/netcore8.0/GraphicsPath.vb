@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c240b24023c3d035c8cc934ebc37462d, Microsoft.VisualBasic.Core\src\Drawing\netcore8.0\GraphicsPath.vb"
+﻿#Region "Microsoft.VisualBasic::7681d468b29a0c95c3a2e4df9f2d4ab0, Microsoft.VisualBasic.Core\src\Drawing\netcore8.0\GraphicsPath.vb"
 
     ' Author:
     ' 
@@ -34,30 +34,40 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 179
-    '    Code Lines: 131 (73.18%)
-    ' Comment Lines: 0 (0.00%)
-    '    - Xml Docs: 0.00%
+    '   Total Lines: 727
+    '    Code Lines: 390 (53.65%)
+    ' Comment Lines: 202 (27.79%)
+    '    - Xml Docs: 93.56%
     ' 
-    '   Blank Lines: 48 (26.82%)
-    '     File Size: 5.59 KB
+    '   Blank Lines: 135 (18.57%)
+    '     File Size: 25.40 KB
 
 
     '     Class PathData
     ' 
-    '         Properties: Points
+    '         Properties: Points, Types
+    ' 
+    '     Enum FillMode
+    ' 
+    ' 
+    '  
+    ' 
+    ' 
     ' 
     '     Class GraphicsPath
     ' 
-    '         Properties: PathData, PathPoints
+    '         Properties: FillMode, PathData, PathPoints, PathTypes
     ' 
     '         Constructor: (+2 Overloads) Sub New
     ' 
-    '         Function: GenericEnumerator
+    '         Function: CollectPathData, CollectPathPoints, CollectPathTypes, GenericEnumerator, GetBounds
+    '                   (+2 Overloads) IsOutlineVisible, (+2 Overloads) IsVisible
     ' 
-    '         Sub: (+2 Overloads) AddArc, AddBezier, AddCurve, AddEllipse, AddLine
-    '              AddLines, AddPolygon, AddRectangle, AddString, CloseAllFigures
-    '              CloseFigure, Reset
+    '         Sub: (+2 Overloads) AddArc, AddBezier, AddBeziers, AddClosedCurve, AddCurve
+    '              (+2 Overloads) AddEllipse, AddLine, AddLines, AddPath, (+2 Overloads) AddPie
+    '              AddPolygon, AddRectangle, AddString, CloseAllFigures, CloseFigure
+    '              (+2 Overloads) Dispose, Flatten, Reset, Reverse, StartFigure
+    '              Transform, Warp, Widen
     '         Class op
     ' 
     ' 
@@ -115,7 +125,104 @@
     '             Properties: fontFamily, format, pos, s, size
     '                         style
     ' 
+    '         Class op_AddPie
     ' 
+    '             Properties: rect, startAngle, sweepAngle
+    ' 
+    '         Class op_AddClosedCurve
+    ' 
+    '             Properties: points, tension
+    ' 
+    '         Class op_AddPath
+    ' 
+    '             Properties: connect, path
+    ' 
+    '         Class op_AddBeziers
+    ' 
+    '             Properties: points
+    ' 
+    '         Class op_AddEllipseRect
+    ' 
+    '             Properties: rect
+    ' 
+    '         Class op_StartFigure
+    ' 
+    ' 
+    ' 
+    '         Class op_Flatten
+    ' 
+    '             Properties: flatness, matrix
+    ' 
+    '         Class op_Widen
+    ' 
+    '             Properties: flatness, matrix, pen
+    ' 
+    '         Class op_Warp
+    ' 
+    '             Properties: destPoints, flatness, matrix, srcRect, warpMode
+    ' 
+    '         Class op_Transform
+    ' 
+    '             Properties: matrix
+    ' 
+    '         Class op_Reverse
+    ' 
+    ' 
+    ' 
+    '         Class op_GetBounds
+    ' 
+    '             Properties: matrix, pen
+    ' 
+    ' 
+    ' 
+    '     Enum WarpMode
+    ' 
+    ' 
+    '  
+    ' 
+    ' 
+    ' 
+    '     Enum SmoothingMode
+    ' 
+    ' 
+    '  
+    ' 
+    ' 
+    ' 
+    '     Enum InterpolationMode
+    ' 
+    ' 
+    '  
+    ' 
+    ' 
+    ' 
+    '     Enum CompositingMode
+    ' 
+    ' 
+    '  
+    ' 
+    ' 
+    ' 
+    '     Enum PixelOffsetMode
+    ' 
+    ' 
+    '  
+    ' 
+    ' 
+    ' 
+    '     Enum QualityMode
+    ' 
+    ' 
+    '  
+    ' 
+    ' 
+    ' 
+    '     Class GraphicsState
+    ' 
+    '         Properties: StateIndex
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    '         Function: ToString
     ' 
     ' 
     ' /********************************************************************************/

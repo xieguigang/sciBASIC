@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4042ff442fdc5ff7b5c595b7e00fce5e, Microsoft.VisualBasic.Core\src\Drawing\netcore8.0\Pen.vb"
+﻿#Region "Microsoft.VisualBasic::5a75ae4f9fb637ab48e4517c8a450819, Microsoft.VisualBasic.Core\src\Drawing\netcore8.0\Pen.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 205
-    '    Code Lines: 101 (49.27%)
-    ' Comment Lines: 62 (30.24%)
-    '    - Xml Docs: 33.87%
+    '   Total Lines: 496
+    '    Code Lines: 329 (66.33%)
+    ' Comment Lines: 106 (21.37%)
+    '    - Xml Docs: 59.43%
     ' 
-    '   Blank Lines: 42 (20.49%)
-    '     File Size: 6.75 KB
+    '   Blank Lines: 61 (12.30%)
+    '     File Size: 24.96 KB
 
 
     '     Class Pen
@@ -96,16 +96,64 @@
     ' 
     '     Class CustomLineCap
     ' 
+    '         Properties: BaseCap, BaseInset, FillPath, HeightScale, StrokeJoin
+    '                     StrokePath, WidthScale
     ' 
+    '         Constructor: (+2 Overloads) Sub New
+    ' 
+    '         Function: Clone
+    ' 
+    '         Sub: (+2 Overloads) Dispose
     ' 
     '     Class AdjustableArrowCap
+    ' 
+    '         Properties: Filled, Height, MiddleInset, Width
     ' 
     '         Constructor: (+1 Overloads) Sub New
     ' 
     '     Class Pens
     ' 
-    '         Properties: Black, Blue, Gray, Green, LightGray
-    '                     Red, White, WhiteSmoke
+    '         Properties: AliceBlue, AntiqueWhite, Aqua, Aquamarine, Azure
+    '                     Beige, Bisque, Black, BlanchedAlmond, Blue
+    '                     BlueViolet, Brown, BurlyWood, CadetBlue, Chartreuse
+    '                     Chocolate, Coral, CornflowerBlue, Cornsilk, Crimson
+    '                     Cyan, DarkBlue, DarkCyan, DarkGoldenrod, DarkGray
+    '                     DarkGreen, DarkKhaki, DarkMagenta, DarkOliveGreen, DarkOrange
+    '                     DarkOrchid, DarkRed, DarkSalmon, DarkSeaGreen, DarkSlateBlue
+    '                     DarkSlateGray, DarkTurquoise, DarkViolet, DeepPink, DeepSkyBlue
+    '                     DimGray, DodgerBlue, Firebrick, FloralWhite, ForestGreen
+    '                     Fuchsia, Gainsboro, GhostWhite, Gold, Goldenrod
+    '                     Gray, Green, GreenYellow, Honeydew, HotPink
+    '                     IndianRed, Indigo, Ivory, Khaki, Lavender
+    '                     LavenderBlush, LawnGreen, LemonChiffon, LightBlue, LightCoral
+    '                     LightCyan, LightGoldenrodYellow, LightGray, LightGreen, LightPink
+    '                     LightSalmon, LightSeaGreen, LightSkyBlue, LightSlateGray, LightSteelBlue
+    '                     LightYellow, Lime, LimeGreen, Linen, Magenta
+    '                     Maroon, MediumAquamarine, MediumBlue, MediumOrchid, MediumPurple
+    '                     MediumSeaGreen, MediumSlateBlue, MediumSpringGreen, MediumTurquoise, MediumVioletRed
+    '                     MidnightBlue, MintCream, MistyRose, Moccasin, NavajoWhite
+    '                     Navy, OldLace, Olive, OliveDrab, Orange
+    '                     OrangeRed, Orchid, PaleGoldenrod, PaleGreen, PaleTurquoise
+    '                     PaleVioletRed, PapayaWhip, PeachPuff, Peru, Pink
+    '                     Plum, PowderBlue, Purple, Red, RosyBrown
+    '                     RoyalBlue, SaddleBrown, Salmon, SandyBrown, SeaGreen
+    '                     SeaShell, Sienna, Silver, SkyBlue, SlateBlue
+    '                     SlateGray, Snow, SpringGreen, SteelBlue, Tan
+    '                     Teal, Thistle, Tomato, Transparent, Turquoise
+    '                     Violet, Wheat, White, WhiteSmoke, Yellow
+    '                     YellowGreen
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
+    '     Class SystemPens
+    ' 
+    '         Properties: ActiveBorder, ActiveCaption, ActiveCaptionText, AppWorkspace, ButtonFace
+    '                     ButtonHighlight, ButtonShadow, Control, ControlDark, ControlDarkDark
+    '                     ControlLight, ControlLightLight, ControlText, Desktop, GradientActiveCaption
+    '                     GradientInactiveCaption, GrayText, Highlight, HighlightText, HotTrack
+    '                     InactiveBorder, InactiveCaption, InactiveCaptionText, Info, InfoText
+    '                     Menu, MenuBar, MenuHighlight, MenuText, ScrollBar
+    '                     Window, WindowFrame, WindowText
     ' 
     '         Constructor: (+1 Overloads) Sub New
     ' 

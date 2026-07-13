@@ -1,4 +1,4 @@
-#Region "Microsoft.VisualBasic::region_compat, Microsoft.VisualBasic.Core\src\Drawing\netcore8.0\Region.vb"
+﻿#Region "Microsoft.VisualBasic::aa55ad14b75cd346b56fb476d4efe0ba, Microsoft.VisualBasic.Core\src\Drawing\netcore8.0\Region.vb"
 
     ' Author:
     ' 
@@ -34,25 +34,65 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 0
-    '    Code Lines: 0
-    ' Comment Lines: 0
-    '    - Xml Docs: 0.00%
+    '   Total Lines: 389
+    '    Code Lines: 212 (54.50%)
+    ' Comment Lines: 119 (30.59%)
+    '    - Xml Docs: 96.64%
     ' 
-    '   Blank Lines: 0
-    '     File Size: 0 B
+    '   Blank Lines: 58 (14.91%)
+    '     File Size: 14.27 KB
 
 
     '     Class Region
     ' 
-    '         Properties: IsEmpty, IsInfinite
+    '         Properties: IsEmpty, IsInfinite, RegionData
     ' 
-    '         Constructor: (+1 Overloads) Sub New
+    '         Constructor: (+6 Overloads) Sub New
     ' 
-    '         Sub: Complement, Exclude, Intersect, MakeEmpty
-    '              MakeInfinite, Transform, Translate, Union, Xor
+    '         Function: Clone, GetBounds, GetRegionData, (+3 Overloads) IsVisible
     ' 
-    '         Function: (+2 Overloads) IsVisible, Clone, GetBounds, GetRegionData
+    '         Sub: (+3 Overloads) [Xor], (+3 Overloads) Complement, (+2 Overloads) Dispose, (+3 Overloads) Exclude, (+3 Overloads) Intersect
+    '              MakeEmpty, MakeInfinite, ReleaseHrgn, Transform, (+2 Overloads) Translate
+    '              (+3 Overloads) Union
+    '         Class region_op
+    ' 
+    ' 
+    ' 
+    '         Class region_op_Complement
+    ' 
+    '             Properties: path, rect, region
+    ' 
+    '         Class region_op_Exclude
+    ' 
+    '             Properties: path, rect, region
+    ' 
+    '         Class region_op_Intersect
+    ' 
+    '             Properties: path, rect, region
+    ' 
+    '         Class region_op_Union
+    ' 
+    '             Properties: path, rect, region
+    ' 
+    '         Class region_op_Xor
+    ' 
+    '             Properties: path, rect, region
+    ' 
+    '         Class region_op_Translate
+    ' 
+    '             Properties: dx, dy
+    ' 
+    '         Class region_op_Transform
+    ' 
+    '             Properties: matrix
+    ' 
+    '         Class region_op_MakeEmpty
+    ' 
+    ' 
+    ' 
+    '         Class region_op_MakeInfinite
+    ' 
+    ' 
     ' 
     ' 
     ' 

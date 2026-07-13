@@ -1,4 +1,4 @@
-#Region "Microsoft.VisualBasic::WaveWriter, Data_science\Mathematica\SignalProcessing\wav\wav\SubChunk\WaveWriter.vb"
+﻿#Region "Microsoft.VisualBasic::3d152f7ab5abf5178799b925a37794ea, Data_science\Mathematica\SignalProcessing\wav\wav\WaveWriter.vb"
 
     ' Author:
     ' 
@@ -34,21 +34,22 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 
-    '    Code Lines: 
-    ' Comment Lines: 
-    '    - Xml Docs: 
+    '   Total Lines: 394
+    '    Code Lines: 251 (63.71%)
+    ' Comment Lines: 86 (21.83%)
+    '    - Xml Docs: 72.09%
     ' 
-    '   Blank Lines: 
-    '     File Size: 
-    '
+    '   Blank Lines: 57 (14.47%)
+    '     File Size: 15.66 KB
 
 
-    ' Class WaveWriter
+    ' Module WaveWriter
     ' 
-    '     Function: WriteWav
+    '     Function: ResolveEncoder
     ' 
-    '     Sub: WriteDataChunk, WriteFmtChunk, WriteRiffHeader, WriteSampleData
+    '     Sub: Encode16BitPCM, Encode24BitPCM, Encode32BitFloat, Encode32BitPCM, Encode64BitFloat
+    '          Encode8BitPCM, EncodeALaw, EncodeMuLaw, WriteDataChunk, WriteFmtChunk
+    '          WriteRiffHeader, WriteWav
     ' 
     ' /********************************************************************************/
 

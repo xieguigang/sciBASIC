@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::dbc8a441a7fe71efbeffd07a8dce50e9, Data_science\Mathematica\SignalProcessing\wav\wav\SubChunk\Sample.vb"
+﻿#Region "Microsoft.VisualBasic::3626eece97e4cfc971850f542b1d2263, Data_science\Mathematica\SignalProcessing\wav\wav\SubChunk\Sample.vb"
 
     ' Author:
     ' 
@@ -34,20 +34,23 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 60
-    '    Code Lines: 42 (70.00%)
-    ' Comment Lines: 6 (10.00%)
-    '    - Xml Docs: 100.00%
+    '   Total Lines: 357
+    '    Code Lines: 247 (69.19%)
+    ' Comment Lines: 66 (18.49%)
+    '    - Xml Docs: 95.45%
     ' 
-    '   Blank Lines: 12 (20.00%)
-    '     File Size: 1.98 KB
+    '   Blank Lines: 44 (12.32%)
+    '     File Size: 15.33 KB
 
 
     ' Structure Sample
     ' 
     '     Properties: left, right
     ' 
-    '     Function: Parse16Bit, Parse32Bit, Parse32BitSample, Parse8Bit, ToString
+    '     Function: Parse16Bit, Parse16BitSample, Parse24Bit, Parse24BitSample, Parse32Bit
+    '               Parse32BitPCM, Parse32BitPCMSample, Parse32BitSample, Parse64Bit, Parse64BitSample
+    '               Parse8Bit, Parse8BitSample, ParseALaw, ParseALawSample, ParseMuLaw
+    '               ParseMuLawSample, ReadInt24Normalized, ToString
     ' 
     ' /********************************************************************************/
 

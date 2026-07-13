@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::963eac7cff17e10e7215e500856793dc, gr\Drawing-net4.8\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::c7313f5daec35faac122815471ca5c97, gr\Drawing-net4.8\Extensions.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 92.19%
     ' 
     '   Blank Lines: 34 (11.85%)
-    '     File Size: 11.08 KB
+    '     File Size: 11.26 KB
 
 
     ' Module Extensions

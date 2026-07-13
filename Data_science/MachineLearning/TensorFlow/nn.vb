@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::60afca04da066478a71c8717bff8e9a7, Data_science\MachineLearning\TensorFlow\nn.vb"
+﻿#Region "Microsoft.VisualBasic::fc05cf8874969522ddf1f080e5d1ea88, Data_science\MachineLearning\TensorFlow\nn.vb"
 
     ' Author:
     ' 
@@ -34,22 +34,21 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 26
-    '    Code Lines: 21 (80.77%)
-    ' Comment Lines: 0 (0.00%)
-    '    - Xml Docs: 0.00%
+    '   Total Lines: 486
+    '    Code Lines: 308 (63.37%)
+    ' Comment Lines: 105 (21.60%)
+    '    - Xml Docs: 73.33%
     ' 
-    '   Blank Lines: 5 (19.23%)
-    '     File Size: 962 B
+    '   Blank Lines: 73 (15.02%)
+    '     File Size: 16.66 KB
 
 
     ' Module nn
     ' 
-    '     Function: relu, leaky_relu, elu, sigmoid, tanh, softmax, log_softmax,
-    '               sigmoid_cross_entropy_with_logits,
-    '               softmax_cross_entropy_with_logits,
-    '               sparse_softmax_cross_entropy_with_logits,
-    '               mse_loss, l2_loss, dropout
+    '     Function: dropout, elu, gelu, huber_loss, l2_loss
+    '               leaky_relu, log_softmax, mse_loss, relu, sigmoid
+    '               sigmoid_cross_entropy_with_logits, softmax, softmax_cross_entropy_with_logits, sparse_softmax_cross_entropy_with_logits, swish
+    '               tanh
     ' 
     ' /********************************************************************************/
 
