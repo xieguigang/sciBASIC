@@ -61,6 +61,7 @@
 
 Imports System.Drawing
 Imports System.Runtime.CompilerServices
+Imports System.Threading.Tasks
 Imports Microsoft.VisualBasic.Imaging.Drawing3D.Math3D
 Imports Microsoft.VisualBasic.Imaging.Math2D
 Imports Microsoft.VisualBasic.Language
@@ -178,24 +179,29 @@ Namespace Drawing3D
         ''' <returns></returns>
         <Extension>
         Public Function PainterBuffer(camera As Camera, surfaces As IEnumerable(Of Surface), illumination As Boolean) As IEnumerable(Of Polygon)
-            Dim sv As New List(Of Surface)
+            Dim src = surfaces.ToArray()
+            Dim n = src.Length
+            Dim verts(n - 1)() As Point3D
+            Dim cols(n - 1) As Color
 
-            For Each s As Surface In surfaces
-                Dim color As Color
-                Dim v As Point3D() = camera _
-                    .Project(s.vertices) _
-                    .ToArray
+            ' 各面独立：投影与光照可安全并行（只读 camera 状态、按索引写回）
+            Parallel.For(0, n, Sub(i)
+                Dim s = src(i)
+                verts(i) = camera.Project(s.vertices).ToArray()
 
                 If illumination Then
-                    color = camera.Lighting(s)
+                    cols(i) = camera.Lighting(s)
                 Else
-                    color = DirectCast(s.brush, SolidBrush).Color
+                    cols(i) = DirectCast(s.brush, SolidBrush).Color
                 End If
+            End Sub)
 
-                sv += New Surface With {
-                    .vertices = v,
-                    .brush = New SolidBrush(color)
-                }
+            Dim sv As New List(Of Surface)(n)
+            For i = 0 To n - 1
+                sv.Add(New Surface With {
+                    .vertices = verts(i),
+                    .brush = New SolidBrush(cols(i))
+                })
             Next
 
             Dim order As List(Of Integer) = sv _

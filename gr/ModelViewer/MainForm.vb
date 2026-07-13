@@ -56,6 +56,9 @@ Public Class MainForm : Inherits Form
     Private showDebug As Boolean = False
     Private fpsWatch As New Stopwatch()
     Private lastFrameMs As Long = 0
+    Friend WithEvents ToolStripMenuItem1 As ToolStripSeparator
+    Friend WithEvents 关于ToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents 关闭ToolStripMenuItem As ToolStripMenuItem
     Private fps As Double = 0
 
     Public Sub New()
@@ -67,6 +70,9 @@ Public Class MainForm : Inherits Form
         menuStrip = New MenuStrip()
         fileMenu = New ToolStripMenuItem()
         openItem = New ToolStripMenuItem()
+        ToolStripMenuItem1 = New ToolStripSeparator()
+        关于ToolStripMenuItem = New ToolStripMenuItem()
+        关闭ToolStripMenuItem = New ToolStripMenuItem()
         toolStrip = New ToolStrip()
         cboMode = New ToolStripComboBox()
         cboScheme = New ToolStripComboBox()
@@ -113,7 +119,7 @@ Public Class MainForm : Inherits Form
         ' 
         ' fileMenu
         ' 
-        fileMenu.DropDownItems.AddRange(New ToolStripItem() {openItem})
+        fileMenu.DropDownItems.AddRange(New ToolStripItem() {openItem, ToolStripMenuItem1, 关于ToolStripMenuItem, 关闭ToolStripMenuItem})
         fileMenu.Name = "fileMenu"
         fileMenu.Size = New Size(59, 20)
         fileMenu.Text = "文件(&F)"
@@ -121,8 +127,25 @@ Public Class MainForm : Inherits Form
         ' openItem
         ' 
         openItem.Name = "openItem"
-        openItem.Size = New Size(166, 22)
+        openItem.Size = New Size(180, 22)
         openItem.Text = "打开模型/点云..."
+        ' 
+        ' ToolStripMenuItem1
+        ' 
+        ToolStripMenuItem1.Name = "ToolStripMenuItem1"
+        ToolStripMenuItem1.Size = New Size(177, 6)
+        ' 
+        ' 关于ToolStripMenuItem
+        ' 
+        关于ToolStripMenuItem.Name = "关于ToolStripMenuItem"
+        关于ToolStripMenuItem.Size = New Size(180, 22)
+        关于ToolStripMenuItem.Text = "关于"
+        ' 
+        ' 关闭ToolStripMenuItem
+        ' 
+        关闭ToolStripMenuItem.Name = "关闭ToolStripMenuItem"
+        关闭ToolStripMenuItem.Size = New Size(180, 22)
+        关闭ToolStripMenuItem.Text = "关闭"
         ' 
         ' toolStrip
         ' 
@@ -168,24 +191,25 @@ Public Class MainForm : Inherits Form
         ' 
         ' chkShowGround
         ' 
-        chkShowGround.CheckOnClick = True
-        chkShowGround.Name = "chkShowGround"
-        chkShowGround.Size = New Size(90, 22)
-        chkShowGround.Text = "显示地面"
         chkShowGround.Checked = True
+        chkShowGround.CheckOnClick = True
+        chkShowGround.CheckState = CheckState.Checked
+        chkShowGround.Name = "chkShowGround"
+        chkShowGround.Size = New Size(63, 22)
+        chkShowGround.Text = "显示地面"
         ' 
         ' btnBgColor
         ' 
-        btnBgColor.Name = "btnBgColor"
-        btnBgColor.Size = New Size(75, 22)
-        btnBgColor.Text = "背景色"
         btnBgColor.BackColor = Color.White
+        btnBgColor.Name = "btnBgColor"
+        btnBgColor.Size = New Size(50, 22)
+        btnBgColor.Text = "背景色"
         ' 
         ' chkShowDebug
         ' 
         chkShowDebug.CheckOnClick = True
         chkShowDebug.Name = "chkShowDebug"
-        chkShowDebug.Size = New Size(90, 22)
+        chkShowDebug.Size = New Size(63, 22)
         chkShowDebug.Text = "调试信息"
         ' 
         ' canvas
@@ -238,7 +262,7 @@ Public Class MainForm : Inherits Form
         ' title
         ' 
         title.AutoSize = True
-        title.Font = New Font("Segoe UI", 9F, FontStyle.Bold)
+        title.Font = New Font("Segoe UI", 9.0F, FontStyle.Bold)
         title.Location = New Point(13, 8)
         title.Name = "title"
         title.Size = New Size(63, 15)
@@ -684,6 +708,13 @@ Public Class MainForm : Inherits Form
         Return path
     End Function
 
+    Private Sub 关于ToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles 关于ToolStripMenuItem.Click
+        Call New FormAbout().ShowDialog()
+    End Sub
+
+    Private Sub 关闭ToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles 关闭ToolStripMenuItem.Click
+        Call Me.Close()
+    End Sub
 End Class
 
 
