@@ -93,7 +93,7 @@ Namespace ThreeMF.Xml
         ''' <returns></returns>
         Public Function GetSurfaces() As IEnumerable(Of Surface)
             Dim out As New List(Of Surface)
-            Dim objects As [Object]() = resources _
+            Dim objects As Object3D() = resources _
                 .objects _
                 .Where(AddressOf HasMesh) _
                 .ToArray
@@ -104,7 +104,7 @@ Namespace ThreeMF.Xml
                 .Select(Function(c) New SolidBrush(c)) _
                 .ToArray
 
-            For Each obj As [Object] In objects
+            For Each obj As Object3D In objects
                 Try
                     If obj Is Nothing OrElse obj.mesh Is Nothing Then
                         Continue For
@@ -117,7 +117,7 @@ Namespace ThreeMF.Xml
                         ' 使用总编号
                         Dim base As BaseMaterial = resources _
                             .basematerials _
-                            .basematerials(CInt(obj.pindex))
+                            .items(CInt(obj.pindex))
 
                         out += obj _
                             .mesh _
