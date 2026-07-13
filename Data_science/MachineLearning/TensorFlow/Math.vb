@@ -685,7 +685,7 @@ Public Module Math
     End Function
 
     ''' <summary>
-    ''' 逐元素比较 a < b，返回 1.0/0.0 的 Tensor
+    ''' 逐元素比较：若 a 小于 b 则返回 1.0，否则返回 0.0
     ''' </summary>
     Public Function less(a As Tensor, b As Tensor) As Tensor
         If Not a.Shape.SequenceEqual(b.Shape) Then
@@ -702,7 +702,7 @@ Public Module Math
     End Function
 
     ''' <summary>
-    ''' 逐元素比较 a <= b，返回 1.0/0.0 的 Tensor
+    ''' 逐元素比较：若 a 小于等于 b 则返回 1.0，否则返回 0.0
     ''' </summary>
     Public Function less_equal(a As Tensor, b As Tensor) As Tensor
         If Not a.Shape.SequenceEqual(b.Shape) Then

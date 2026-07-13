@@ -481,8 +481,7 @@ Public Module nn
 
     ''' <summary>
     ''' Huber 损失（Smooth L1 Loss）
-    ''' 对于 |x| <= delta: 0.5 * x^2
-    ''' 对于 |x| > delta: delta * (|x| - 0.5 * delta)
+    ''' 当 |x| 不超过 delta 时为平方损失，否则为线性损失
     ''' </summary>
     Public Function huber_loss(predictions As Tensor, targets As Tensor, Optional delta As Double = 1.0) As Tensor
         If Not predictions.Shape.SequenceEqual(targets.Shape) Then

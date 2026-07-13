@@ -177,7 +177,7 @@ Public Module NumPyModule
         End If
 
         ' 计算元素个数
-        Dim count = CInt(std.Ceiling(([end] - start) / [step]))
+        Dim count = CInt(System.Math.Ceiling(([end] - start) / [step]))
         If count <= 0 Then count = 0
 
         Dim t = New Tensor(count)
@@ -221,7 +221,7 @@ Public Module NumPyModule
         Dim dst = result.Data
         Dim src = lin.Data
         For i = 0 To num - 1
-            dst(i) = std.Pow(base, src(i))
+            dst(i) = System.Math.Pow(base, src(i))
         Next
         Return result
     End Function
@@ -472,7 +472,7 @@ Public Module NumPyModule
             For j = 0 To numTensors - 1
                 Dim srcStart = i * postSize
                 Dim dstStart = (i * numTensors + j) * postSize
-                Array.Copy(tensors(j).Data, srcStart, dstData, dstStart, postSize)
+                System.Array.Copy(tensors(j).Data, srcStart, dstData, dstStart, postSize)
             Next
         Next
 
@@ -534,7 +534,7 @@ Public Module NumPyModule
 
             For block = 0 To preAxisSize - 1
                 Dim srcBase = (block * axisSize + s * splitSize) * postAxisSize
-                Array.Copy(srcData, srcBase, subData, subDstIdx, splitSize * postAxisSize)
+                System.Array.Copy(srcData, srcBase, subData, subDstIdx, splitSize * postAxisSize)
                 subDstIdx += splitSize * postAxisSize
             Next
 
