@@ -267,7 +267,7 @@ Public Class SceneRenderer
 
         ' ---- SIMD 投影：System.Numerics.Vector(Of Single) 批量计算 factor / 屏幕坐标 ----
         Dim cnt = cloud.Length
-        Dim px = New Single(cnt - 1), py = New Single(cnt - 1), pz = New Single(cnt - 1)
+        Dim px = New Single(cnt - 1) {}, py = New Single(cnt - 1) {}, pz = New Single(cnt - 1) {}
         For i = 0 To cnt - 1
             px(i) = CSng(rotated(i).X)
             py(i) = CSng(rotated(i).Y)
