@@ -105,7 +105,7 @@ Namespace Plot3D
 
             Dim plot3DInternal =
                 Sub(ByRef g As IGraphics, region As GraphicsRegion)
-                    With pieChart.Centra
+                    With pieChart.Centroid
                         Dim matrix As New Matrix(.Offsets(pieChart))
                         Dim vector = camera.Rotate(matrix.Matrix)
                         Dim model2D = matrix _
