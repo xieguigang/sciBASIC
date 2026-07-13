@@ -57,18 +57,18 @@ Imports Microsoft.VisualBasic.Linq
 
 Module LandscapeModel
 
-    Public Function ModelData() As Landscape.Data.Graphics
+    Public Function ModelData() As Landscape.Data.SceneModel
         Dim faces As Surface() = New Cube(20).faces
         Dim colors = {"red", "black", "yellow", "green", "blue", "gray"}
 
-        Return New Landscape.Data.Graphics With {
+        Return New Landscape.Data.SceneModel With {
             .bg = "lightblue",
             .Surfaces = faces _
                 .Select(Function(f, i)
                             Return New Landscape.Data.Surface With {
                                 .paint = colors(i),
                                 .vertices = f.vertices _
-                                    .Select(Function(pt) New Landscape.Data.Vector(pt)) _
+                                    .Select(Function(pt) New Landscape.Data.Vertex(pt)) _
                                     .ToArray
                             }
                         End Function) _

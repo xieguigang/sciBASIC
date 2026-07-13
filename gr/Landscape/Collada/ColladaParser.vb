@@ -29,7 +29,7 @@
 
     ' Summaries:
 
-    '     Module COLLADAParser
+    '     Module ColladaParser
     ' 
     '         Function: ReadFile, ReadGeometries
     ' 
@@ -48,7 +48,7 @@ Namespace Collada
     ''' <summary>
     ''' COLLADA (.dae) 文件几何数据解析器
     ''' </summary>
-    Public Partial Module COLLADAParser
+    Public Partial Module ColladaParser
 
         Private ReadOnly COLLADA_NS As XNamespace = "http://www.collada.org/2005/11/COLLADASchema"
 

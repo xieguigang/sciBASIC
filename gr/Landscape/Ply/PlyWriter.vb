@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2c41fa6a60f8e00aebe45022a02c38db, gr\Landscape\PLY\SimplePlyWriter.vb"
+﻿#Region "Microsoft.VisualBasic::2c41fa6a60f8e00aebe45022a02c38db, gr\Landscape\PLY\PlyWriter.vb"
 
     ' Author:
     ' 
@@ -43,7 +43,7 @@
     '     File Size: 2.39 KB
 
 
-    '     Module SimplePlyWriter
+    '     Module PlyWriter
     ' 
     '         Function: WriteAsciiText
     ' 
@@ -60,7 +60,7 @@ Imports System.Text
 
 Namespace Ply
 
-    Public Module SimplePlyWriter
+    Public Module PlyWriter
 
         Public Function WriteAsciiText(pointCloud As IEnumerable(Of PointCloud),
                                        buffer As Stream,

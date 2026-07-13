@@ -108,7 +108,7 @@
 
 '    Sub Main()
 '        Using file As StreamReader = "E:\mzkit\Rscript\Library\MSI_app\data\Segmentation.obj".OpenReader
-'            Dim obj As OBJ = OBJ.ReadFile(file)
+'            Dim obj As ObjModel = ObjModel.ReadFile(file)
 
 '            Pause()
 '        End Using

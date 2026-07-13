@@ -56,7 +56,7 @@ Imports Microsoft.VisualBasic.Data.ChartPlots.Drawing3D.Device
 Imports Microsoft.VisualBasic.Imaging.Drawing3D
 Imports Microsoft.VisualBasic.Imaging.Drawing3D.Device
 Imports Microsoft.VisualBasic.Imaging.Drawing3D.Landscape
-Imports Microsoft.VisualBasic.Imaging.Drawing3D.Landscape.Vendor_3mf
+Imports Microsoft.VisualBasic.Imaging.Drawing3D.Landscape.ThreeMF
 Imports Microsoft.VisualBasic.Imaging.Drawing3D.Math3D
 Imports Microsoft.VisualBasic.Imaging.Drawing3D.Models
 Imports Microsoft.VisualBasic.Imaging.Drawing3D.Models.Isometric
@@ -163,7 +163,7 @@ Public Class FormLandscape
             .Filter = "3D model(*.3mf)|*.3mf"
         }
             If file.ShowDialog = DialogResult.OK Then
-                Dim project As Vendor_3mf.Project = Vendor_3mf.IO.Open(file.FileName)
+                Dim project As ThreeMF.Project = ThreeMF.ModelIO.Open(file.FileName)
                 Dim surfaces As Surface() = project.GetSurfaces(True)
 
                 canvas.LightIllumination = True

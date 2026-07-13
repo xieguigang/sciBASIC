@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2ae8a93a96a05ced9dd712d5238cadcc, gr\Landscape\Wavefront\TextParser.vb"
+﻿#Region "Microsoft.VisualBasic::2ae8a93a96a05ced9dd712d5238cadcc, gr\Landscape\Wavefront\ObjTextParser.vb"
 
 ' Author:
 ' 
@@ -43,9 +43,9 @@
 '     File Size: 7.20 KB
 
 
-'     Module TextParser
+'     Module ObjTextParser
 ' 
-'         Function: CreateObjectPart, ParseFace, ParseFile, ParseVertex
+'         Function: CreateObjGroup, ParseFace, ParseFile, ParseVertex
 ' 
 ' 
 ' /********************************************************************************/
@@ -66,19 +66,19 @@ Namespace Wavefront
     ''' <summary>
     ''' OBJ (Wavefront) 文件文本解析器
     ''' </summary>
-    Public Module TextParser
+    Public Module ObjTextParser
 
         ''' <summary>
-        ''' 解析 OBJ 文件，使用 g/o 指令作为 ObjectPart 分隔边界
+        ''' 解析 OBJ 文件，使用 g/o 指令作为 ObjGroup 分隔边界
         ''' </summary>
         ''' <param name="buf"></param>
         ''' <returns></returns>
         <Extension>
-        Public Function ParseFile(buf As StreamReader) As OBJ
+        Public Function ParseFile(buf As StreamReader) As ObjModel
             Dim line As New Value(Of String)
             Dim comments As New StringBuilder
             Dim mtllib As String = Nothing
-            Dim parts As New List(Of ObjectPart)
+            Dim parts As New List(Of ObjGroup)
             Dim vertex As New List(Of Point3D)
             Dim vn As New List(Of Point3D)
             Dim currentGroup As String = Nothing
@@ -101,9 +101,9 @@ Namespace Wavefront
                             Case "vn"
                                 Call vn.Add(ParseVertex(tokens))
                             Case "g", "o"
-                                ' g/o 指令作为新的 ObjectPart 分隔边界
+                                ' g/o 指令作为新的 ObjGroup 分隔边界
                                 If vertex.Count > 0 OrElse f.Count > 0 Then
-                                    Dim part = CreateObjectPart(vertex, vn, currentGroup, usemtl, f)
+                                    Dim part = CreateObjGroup(vertex, vn, currentGroup, usemtl, f)
                                     If Not part.IsEmpty Then
                                         parts.Add(part)
                                     End If
@@ -128,15 +128,15 @@ Namespace Wavefront
                 ' 空行忽略，不作为分隔条件
             Loop
 
-            ' 处理最后一个 ObjectPart 的剩余数据
+            ' 处理最后一个 ObjGroup 的剩余数据
             If vertex.Count > 0 OrElse f.Count > 0 Then
-                Dim part = CreateObjectPart(vertex, vn, currentGroup, usemtl, f)
+                Dim part = CreateObjGroup(vertex, vn, currentGroup, usemtl, f)
                 If Not part.IsEmpty Then
                     parts.Add(part)
                 End If
             End If
 
-            Return New OBJ With {
+            Return New ObjModel With {
                 .comment = comments.ToString,
                 .mtllib = mtllib,
                 .parts = parts.ToArray
@@ -192,14 +192,14 @@ Namespace Wavefront
         End Sub
 
         ''' <summary>
-        ''' 从当前解析缓冲区创建 ObjectPart
+        ''' 从当前解析缓冲区创建 ObjGroup
         ''' </summary>
-        Private Function CreateObjectPart(vertex As List(Of Point3D),
+        Private Function CreateObjGroup(vertex As List(Of Point3D),
                                           vn As List(Of Point3D),
                                           g As String,
                                           usemtl As String,
-                                          f As List(Of Triangle)) As ObjectPart
-            Return New ObjectPart With {
+                                          f As List(Of Triangle)) As ObjGroup
+            Return New ObjGroup With {
                 .vertex = vertex.ToArray,
                 .vn = vn.ToArray,
                 .g = g,
