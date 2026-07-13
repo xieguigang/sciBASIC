@@ -53,14 +53,13 @@
 
 Imports System.Drawing
 Imports Microsoft.VisualBasic.ComponentModel.DataStructures
-Imports Microsoft.VisualBasic.Drawing
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.BitmapImage
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Math2D.ConcaveHull
+Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.Imaging.Math2D
 Imports Microsoft.VisualBasic.Linq
-Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Math.MachineVision
 Imports Microsoft.VisualBasic.Math.MachineVision.CCL
 
@@ -77,7 +76,7 @@ Public Module labeltest
         Dim pen2 As New Pen(Color.Blue, 2)
         Dim colors As LoopArray(Of Color) = Designer.GetColors("paper", 100)
 
-        Using gfx As Graphics2D = Graphics2D.CreateDevice(img.Size)
+        Using gfx As IGraphics = DriverLoad.CreateGraphicsDevice(img.Size)
             ' Call gfx.DrawImage(img, New Point)
 
             For Each item In CELLS
@@ -88,7 +87,7 @@ Public Module labeltest
             Next
 
             Call gfx.Flush()
-            Call gfx.ImageResource.SaveAs("Z:/label6.png")
+            Call DirectCast(gfx, GdiRasterGraphics).ImageResource.SaveAs("Z:/label6.png")
         End Using
     End Sub
 
@@ -101,7 +100,7 @@ Public Module labeltest
 
         Call "draw circles".info
 
-        Using gfx As Graphics2D = Graphics2D.CreateDevice(img.Size)
+        Using gfx As IGraphics = DriverLoad.CreateGraphicsDevice(img.Size)
             ' Call gfx.DrawImage(img, New Point)
 
             For Each item As EllipseShape In cells
@@ -109,7 +108,7 @@ Public Module labeltest
             Next
 
             Call gfx.Flush()
-            Call gfx.ImageResource.SaveAs("Z:/label7.png")
+            Call DirectCast(gfx, GdiRasterGraphics).ImageResource.SaveAs("Z:/label7.png")
         End Using
     End Sub
 End Module

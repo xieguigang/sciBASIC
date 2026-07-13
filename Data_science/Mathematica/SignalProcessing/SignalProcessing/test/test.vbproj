@@ -8,12 +8,10 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\..\..\Data\DataFrame\dataframework-netcore5.vbproj" />
-    <ProjectReference Include="..\..\..\..\..\gr\Drawing-net4.8\Drawing-net4.8.vbproj" />
     <ProjectReference Include="..\..\..\..\..\gr\Microsoft.VisualBasic.Imaging\imaging.NET5.vbproj" />
     <ProjectReference Include="..\..\..\..\..\Microsoft.VisualBasic.Core\src\Core.vbproj" />
     <ProjectReference Include="..\..\..\..\..\mime\text%html\html_netcore5.vbproj" />
     <ProjectReference Include="..\..\..\..\MachineLearning\DeepLearning\DeepLearning.NET6.vbproj" />
-    <ProjectReference Include="..\..\..\..\MachineLearning\DeepQNetwork\DeepQNetwork.vbproj" />
     <ProjectReference Include="..\..\..\..\MachineLearning\MachineLearning\machine_learning-netcore5.vbproj" />
     <ProjectReference Include="..\..\..\..\MachineLearning\TensorFlow\TensorFlow.vbproj" />
     <ProjectReference Include="..\..\..\Math\DataFittings\linear-netcore5.vbproj" />

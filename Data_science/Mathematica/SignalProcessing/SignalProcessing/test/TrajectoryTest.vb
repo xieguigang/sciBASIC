@@ -1,61 +1,63 @@
 ﻿#Region "Microsoft.VisualBasic::1c38bfbe3276e05496fb1356ad66d3f5, Data_science\Mathematica\SignalProcessing\SignalProcessing\test\TrajectoryTest.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 136
-    '    Code Lines: 96 (70.59%)
-    ' Comment Lines: 15 (11.03%)
-    '    - Xml Docs: 0.00%
-    ' 
-    '   Blank Lines: 25 (18.38%)
-    '     File Size: 5.03 KB
+' Summaries:
 
 
-    ' Class MotionSimulator
-    ' 
-    '     Function: GenerateTrackData
-    ' 
-    ' Module TrajectoryTest
-    ' 
-    '     Sub: Main, matchesTest, VisualizeTracks
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 136
+'    Code Lines: 96 (70.59%)
+' Comment Lines: 15 (11.03%)
+'    - Xml Docs: 0.00%
+' 
+'   Blank Lines: 25 (18.38%)
+'     File Size: 5.03 KB
+
+
+' Class MotionSimulator
+' 
+'     Function: GenerateTrackData
+' 
+' Module TrajectoryTest
+' 
+'     Sub: Main, matchesTest, VisualizeTracks
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Drawing
+Imports Microsoft.VisualBasic.Imaging
+Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.MachineVision
 Imports Microsoft.VisualBasic.Math.SignalProcessing.HungarianAlgorithm
@@ -111,9 +113,11 @@ Public Class MotionSimulator
                 End If
             End If
 
+            Dim detects As New List(Of Detection)
+
             ' 添加高斯噪声（标准差=3）
             For Each kvp In positions
-                frameData.Detections.Add(New Detection With {
+                detects.Add(New Detection With {
                     .ObjectID = kvp.Key,
                     .Position = New PointF(
                         kvp.Value.X + CSng(rnd.NextDouble() * 6 - 3),
@@ -121,7 +125,7 @@ Public Class MotionSimulator
                 })
             Next
 
-            frameData.Detections = frameData.Detections.Shuffles
+            frameData.Detections = c(frameData.Detections, detects).Shuffles
 
             Yield frameData
         Next
@@ -172,7 +176,7 @@ Module TrajectoryTest
 
     Private Sub VisualizeTracks(trajectories As IEnumerable(Of Trajectory))
         Using bmp As New Bitmap(1000, 900)
-            Using g = Graphics.FromImage(bmp)
+            Using g = DriverLoad.CreateGraphicsDevice(bmp)
                 g.Clear(Color.White)
                 Dim colors As New Dictionary(Of Integer, Color) From {
                 {0, Color.Red}, {1, Color.Blue}, {2, Color.Green}, {3, Color.Purple}, {4, Color.Black}
