@@ -25,23 +25,7 @@
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-
-
     ' /********************************************************************************/
-
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 297
-    '    Code Lines: 188 (63.30%)
-    ' Comment Lines: 59 (19.87%)
-    '    - Xml Docs: 77.97%
-    ' 
-    '   Blank Lines: 50 (16.84%)
-    '     File Size: 11.87 KB
-
 
     '     Structure Point3D
     ' 
@@ -49,10 +33,10 @@
     ' 
     '         Constructor: (+7 Overloads) Sub New
     ' 
-    '         Function: add, Clone, Cross, distance, divide
-    '                   Dot, length, lerp, (+2 Overloads) multiply, normalize
-    '                   Parse, Project, RotateX, RotateY, rotateYP
-    '                   RotateZ, subtract, ToArray, ToString, translate
+    '         Function: Add, Clone, Cross, Distance, Divide, Dot, Length
+    '                   Lerp, Multiply, Normalize, Project, RotateX, RotateY
+    '                   RotateYawPitch, RotateZ, Subtract, ToArray, ToPointF
+    '                   ToString, Translate
     ' 
     '         Sub: Project
     ' 
@@ -74,13 +58,12 @@ Imports vec = Microsoft.VisualBasic.Math.LinearAlgebra.Vector
 Namespace Drawing3D
 
     ''' <summary>
-    ''' Defines the Point3D class that represents points in 3D space with <see cref="Single"/> precise.
+    ''' Defines the Point3D class that represents points in 3D space with <see cref="Double"/> precise.
     ''' Developed by leonelmachava &lt;leonelmachava@gmail.com>
     ''' http://codentronix.com
     '''
     ''' Copyright (c) 2011 Leonel Machava
     ''' </summary>
-    ''' 
     <XmlType("vertex")> Public Structure Point3D : Implements PointF3D
 
         ''' <summary>
@@ -150,7 +133,7 @@ Namespace Drawing3D
         End Function
 
         Public Function ToArray() As Single()
-            Return New Single() {X, Y, Z}
+            Return New Single() {CSng(X), CSng(Y), CSng(Z)}
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -163,107 +146,106 @@ Namespace Drawing3D
             Return v1.CrossProduct(v2)
         End Function
 
-        Public Function add(vec As Point3D) As Point3D
-            Return New Point3D(_X + vec.X, _Y + vec.Y, _Z + vec.Z)
+        ''' <summary>
+        ''' Vector addition.
+        ''' </summary>
+        Public Function Add(v As Point3D) As Point3D
+            Return New Point3D(X + v.X, Y + v.Y, Z + v.Z)
         End Function
 
-        Public Function subtract(vec As Point3D) As Point3D
-            Return New Point3D(_X - vec.X, _Y - vec.Y, _Z - vec.Z)
+        ''' <summary>
+        ''' Vector subtraction (this - v).
+        ''' </summary>
+        Public Function Subtract(v As Point3D) As Point3D
+            Return New Point3D(X - v.X, Y - v.Y, Z - v.Z)
         End Function
 
-        Public Function multiply(scalar As Double) As Point3D
-            Return New Point3D(_X * scalar, _Y * scalar, _Z * scalar)
+        ''' <summary>
+        ''' Scalar multiplication.
+        ''' </summary>
+        Public Function Multiply(scalar As Double) As Point3D
+            Return New Point3D(X * scalar, Y * scalar, Z * scalar)
         End Function
 
-        Public Function multiply(vec As Point3D) As Point3D
-            Return New Point3D(_X * vec.X, _Y * vec.Y, _Z * vec.Z)
+        ''' <summary>
+        ''' Component-wise multiplication.
+        ''' </summary>
+        Public Function Multiply(v As Point3D) As Point3D
+            Return New Point3D(X * v.X, Y * v.Y, Z * v.Z)
         End Function
 
-        Public Function divide(vec As Point3D) As Point3D
-            Return New Point3D(_X / vec.X, _Y / vec.Y, _Z / vec.Z)
+        ''' <summary>
+        ''' Component-wise division.
+        ''' </summary>
+        Public Function Divide(v As Point3D) As Point3D
+            Return New Point3D(X / v.X, Y / v.Y, Z / v.Z)
         End Function
 
-        Public Function length() As Double
-            Return System.Math.Sqrt(_X ^ 2 + _Y ^ 2 + _Z ^ 2)
+        ''' <summary>
+        ''' Euclidean length (magnitude) of the vector.
+        ''' </summary>
+        Public Function Length() As Double
+            Return std.Sqrt(X * X + Y * Y + Z * Z)
         End Function
 
-        Public Function normalize() As Point3D
-            Dim length As Double = Me.length()
-            Return New Point3D(_X / length, _Y / length, _Z / length)
+        ''' <summary>
+        ''' Returns the unit vector. Degenerate (zero length) vectors return the zero vector.
+        ''' </summary>
+        Public Function Normalize() As Point3D
+            Dim length As Double = Me.Length()
+
+            If length = 0 Then
+                Return New Point3D(0, 0, 0)
+            Else
+                Return New Point3D(X / length, Y / length, Z / length)
+            End If
         End Function
 
-        Public Function rotateYP(yaw As Single, pitch As Single) As Point3D
+        ''' <summary>
+        ''' Translation by the given offset vector (non-mutating, returns a new point).
+        ''' </summary>
+        Public Function Translate(v As Point3D) As Point3D
+            Return New Point3D(X + v.X, Y + v.Y, Z + v.Z)
+        End Function
+
+        ''' <summary>
+        ''' Euclidean distance between two points.
+        ''' </summary>
+        Public Shared Function Distance(a As Point3D, b As Point3D) As Double
+            Return std.Sqrt((a.X - b.X) ^ 2 + (a.Y - b.Y) ^ 2 + (a.Z - b.Z) ^ 2)
+        End Function
+
+        ''' <summary>
+        ''' Linear interpolation between two points.
+        ''' </summary>
+        Public Shared Function Lerp(a As Point3D, b As Point3D, t As Single) As Point3D
+            Return a.Add(b.Subtract(a).Multiply(t))
+        End Function
+
+        ''' <summary>
+        ''' Combined yaw (around Y) and pitch (around X) rotation.
+        ''' </summary>
+        ''' <param name="yaw">Degree.</param>
+        ''' <param name="pitch">Degree.</param>
+        Public Function RotateYawPitch(yaw As Single, pitch As Single) As Point3D
             ' Convert to radians
-            Dim yawRads = Trigonometric.ToRadians(yaw)
-            Dim pitchRads = Trigonometric.ToRadians(pitch)
+            Dim yawRads = yaw * std.PI / 180
+            Dim pitchRads = pitch * std.PI / 180
 
             ' Step one: Rotate around X axis (pitch)
-            Dim _y As Double = Y * System.Math.Cos(pitchRads) - Z * System.Math.Sin(pitchRads)
-            Dim _z As Double = Y * System.Math.Sin(pitchRads) + Z * System.Math.Cos(pitchRads)
+            Dim y As Double = Y * std.Cos(pitchRads) - Z * std.Sin(pitchRads)
+            Dim z As Double = Y * std.Sin(pitchRads) + Z * std.Cos(pitchRads)
 
             ' Step two: Rotate around the Y axis (yaw)
-            Dim _x As Double = X * System.Math.Cos(yawRads) + _z * System.Math.Sin(yawRads)
-            _z = CSng(-X * System.Math.Sin(yawRads) + _z * System.Math.Cos(yawRads))
+            Dim x As Double = X * std.Cos(yawRads) + z * std.Sin(yawRads)
+            z = -X * std.Sin(yawRads) + z * std.Cos(yawRads)
 
-            Return New Point3D(_x, _y, _z)
-        End Function
-
-        ''' <summary>
-        ''' Does the same as Point3D.add but changes the vector itself instead of returning a new one </summary>
-        Public Function translate(vec As Point3D) As Point3D
-            Return New Point3D(X + vec.X, Y + vec.Y, Z + vec.Z)
-        End Function
-
-        Public Shared Function distance(a As Point3D, b As Point3D) As Double
-            Return System.Math.Sqrt(System.Math.Pow(a.X - b.X, 2) + System.Math.Pow(a.Y - b.Y, 2) + System.Math.Pow(a.Z - b.Z, 2))
-        End Function
-
-        Public Shared Function lerp(a As Point3D, b As Point3D, t As Single) As Point3D
-            Return a.add(b.subtract(a).multiply(t))
-        End Function
-
-        ''' <summary>
-        ''' 
-        ''' </summary>
-        ''' <param name="angle">Degree.(度，函数里面会自动转换为三角函数所需要的弧度的)</param>
-        ''' <returns></returns>
-        Public Function RotateX(angle As Single) As Point3D
-            Dim rad As Single, cosa As Single, sina As Single, yn As Single, zn As Single
-
-            rad = angle * std.PI / 180
-            cosa = std.Cos(rad)
-            sina = std.Sin(rad)
-            yn = Me.Y * cosa - Me.Z * sina
-            zn = Me.Y * sina + Me.Z * cosa
-            Return New Point3D(Me.X, yn, zn)
-        End Function
-
-        Public Function RotateY(angle As Single) As Point3D
-            Dim rad As Single, cosa As Single, sina As Single, Xn As Single, Zn As Single
-
-            rad = angle * std.PI / 180
-            cosa = std.Cos(rad)
-            sina = std.Sin(rad)
-            Zn = Me.Z * cosa - Me.X * sina
-            Xn = Me.Z * sina + Me.X * cosa
-
-            Return New Point3D(Xn, Me.Y, Zn)
-        End Function
-
-        Public Function RotateZ(angle As Single) As Point3D
-            Dim rad As Single, cosa As Single, sina As Single, Xn As Single, Yn As Single
-
-            rad = angle * std.PI / 180
-            cosa = std.Cos(rad)
-            sina = std.Sin(rad)
-            Xn = Me.X * cosa - Me.Y * sina
-            Yn = Me.X * sina + Me.Y * cosa
-            Return New Point3D(Xn, Yn, Me.Z)
+            Return New Point3D(x, y, z)
         End Function
 
         ''' <summary>
         ''' Project the 3D point to the 2D screen. By using the projection result, 
-        ''' just read the property <see cref="Projection.PointXY"/>.
+        ''' just read the property <see cref="PointF.X"/> and <see cref="PointF.Y"/>.
         ''' (将3D投影为2D，所以只需要取结果之中的<see cref="X"/>和<see cref="Y"/>就行了)
         ''' </summary>
         ''' <param name="viewWidth"></param>
@@ -275,21 +257,23 @@ Namespace Drawing3D
             ' 1. 计算深度
             Dim depth As Single = viewDistance + Me.Z
 
-            ' 2. 安全检查：如果点在摄像机背后或正好在摄像机平面上，不能直接投影
-            '    返回一个特殊的标记点（比如Z为负无穷），或者在外部调用时进行过滤
+            ' Behind / on the camera plane: avoid division by zero and NaN/Infinity
+            ' leaking into the draw pipeline by collapsing the perspective factor to 0
+            ' (the point effectively projects onto the screen centre).
+            Dim factor As Single
+            Dim Xn As Single
+            Dim Yn As Single
+
             If depth <= 0 Then
-                ' 这里可以根据业务逻辑处理，比如返回Nothing（需将返回值改为Nullable(Of Point3D)）
-                ' 或者返回一个极远且标记为无效的点
-                Return New Point3D(0, 0, depth) ' 仅仅是示例，实际应在渲染管线中剔除
+                factor = 0
             Else
-                Dim factor As Single, Xn As Single, Yn As Single
-
-                factor = fov / (viewDistance + Me.Z)
-                Xn = Me.X * factor + viewWidth / 2 + offset.X
-                Yn = Me.Y * factor + viewHeight / 2 + offset.Y
-
-                Return New Point3D(Xn, Yn, Me.Z)
+                factor = fov / depth
             End If
+
+            Xn = Me.X * factor + viewWidth / 2 + offset.X
+            Yn = Me.Y * factor + viewHeight / 2 + offset.Y
+
+            Return New Point3D(Xn, Yn, Me.Z)
         End Function
 
         ''' <summary>
@@ -309,6 +293,34 @@ Namespace Drawing3D
             x = x * factor + viewWidth / 2
             y = y * factor + viewHeight / 2
         End Sub
+
+        ''' <summary>
+        ''' Clamp a projected coordinate to the valid screen range, replacing
+        ''' positive/negative infinity and NaN with the corresponding edge.
+        ''' </summary>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Shared Function ClampProjection(value As Double, edge As Double) As Double
+            If value > Integer.MaxValue OrElse Single.IsPositiveInfinity(CSng(value)) Then
+                Return edge
+            ElseIf value < Integer.MinValue OrElse Single.IsNegativeInfinity(CSng(value)) Then
+                Return 0
+            ElseIf Single.IsNaN(CSng(value)) Then
+                Return edge
+            End If
+
+            Return value
+        End Function
+
+        ''' <summary>
+        ''' Convert this 3D point into a 2D GDI+ point, clamping out-of-range values.
+        ''' </summary>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function ToPointF(Optional rect As Size = Nothing) As PointF
+            Dim width As Double = If(rect = Nothing, 0, rect.Width)
+            Dim height As Double = If(rect = Nothing, 0, rect.Height)
+
+            Return New PointF(CSng(ClampProjection(X, width)), CSng(ClampProjection(Y, height)))
+        End Function
 
         Public Shared Function Parse(data As String) As Point3D
             Dim xyz As String() = data.Matches("[-]?\d+(\.\d+)?").ToArray

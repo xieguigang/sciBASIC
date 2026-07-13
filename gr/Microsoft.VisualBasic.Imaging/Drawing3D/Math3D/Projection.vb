@@ -88,25 +88,7 @@ Namespace Drawing3D.Math3D
         ''' <returns></returns>
         <Extension>
         Public Function PointXY(p As Point3D, Optional rect As Size = Nothing) As PointF
-            Dim x# = p.X, y# = p.Y
-
-            If Single.IsPositiveInfinity(CSng(x)) Then
-                x = rect.Width
-            ElseIf Single.IsNegativeInfinity(CSng(x)) Then
-                x = 0
-            ElseIf Single.IsNaN(CSng(x)) Then
-                x = rect.Width
-            End If
-
-            If Single.IsPositiveInfinity(CSng(y)) Then
-                y = rect.Height
-            ElseIf Single.IsNegativeInfinity(CSng(y)) Then
-                y = 0
-            ElseIf Single.IsNaN(CSng(y)) Then
-                y = rect.Height
-            End If
-
-            Return New PointF(CSng(x), CSng(y))
+            Return p.ToPointF(rect)
         End Function
 
         ''' <summary>
