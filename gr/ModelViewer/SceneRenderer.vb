@@ -1,8 +1,9 @@
+Imports System.Threading.Tasks
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing3D
 Imports Microsoft.VisualBasic.Imaging.Drawing3D.Math3D
+Imports Microsoft.VisualBasic.Imaging.Landscape.Gltf
 Imports Microsoft.VisualBasic.Imaging.Landscape.Ply
-Imports System.Threading.Tasks
 
 ''' <summary>
 ''' 封装摄像机(Camera)与已加载的模型/点云状态，负责居中、自动适配视距以及三种渲染模式。
@@ -72,19 +73,30 @@ Public Class SceneRenderer
     ''' </summary>
     Public Sub LoadModel(filePath As String)
         Dim scene = Microsoft.VisualBasic.Imaging.Landscape.Data.ModelLoader.LoadModel(filePath)
+
+        Me.cloud = Nothing
+        surfaces.Clear()
+
+        If scene.Surfaces IsNot Nothing Then
+            Call LoadModel(scene.Surfaces)
+        Else
+            Call LoadModel({})
+        End If
+    End Sub
+
+    Public Sub LoadModel(surfaceData As IEnumerable(Of Landscape.Data.Surface))
         Me.cloud = Nothing
         surfaces.Clear()
 
         Dim allPts As New List(Of Point3D)()
-        If scene.Surfaces IsNot Nothing Then
-            For Each s In scene.Surfaces
-                Dim obj = s.CreateObject()
-                If obj IsNot Nothing AndAlso obj.vertices IsNot Nothing AndAlso obj.vertices.Length >= 3 Then
-                    allPts.AddRange(obj.vertices)
-                    surfaces.Add(obj)
-                End If
-            Next
-        End If
+
+        For Each s In surfaceData
+            Dim obj = s.CreateObject()
+            If obj IsNot Nothing AndAlso obj.vertices IsNot Nothing AndAlso obj.vertices.Length >= 3 Then
+                allPts.AddRange(obj.vertices)
+                surfaces.Add(obj)
+            End If
+        Next
 
         Dim center = Centroid(allPts)
         modelRadius = Radius(allPts, center)

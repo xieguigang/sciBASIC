@@ -1,5 +1,6 @@
-﻿Imports System.Windows.Controls
+﻿Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing3D.Models
+Imports Microsoft.VisualBasic.Imaging.Landscape.Data
 
 Public Class FormAbout
 
@@ -7,12 +8,15 @@ Public Class FormAbout
     Dim WithEvents renderer As New SceneRenderer()
 
     Private Sub FormAbout_Load(sender As Object, e As EventArgs) Handles Me.Load
-        renderer.Camera.Screen = Canvas.ClientSize
-        renderer.BackgroundColor = Canvas.BackColor
-        ' renderer.LoadModel(path)
+        renderer.Camera.Screen = canvas.ClientSize
+        renderer.BackgroundColor = canvas.BackColor
+        renderer.LoadModel(cubeModel.faces.Select(Function(a) New Landscape.Data.Surface() With {
+            .paint = DirectCast(a.brush, SolidBrush).Color.ToHtmlColor,
+            .vertices = a.vertices.Select(Function(p) New Vertex(p)).ToArray
+        }))
 
         renderer.FitView()
-        Canvas.Invalidate()
+        canvas.Invalidate()
     End Sub
 
     Private Sub RenderPanel1_Paint(sender As Object, e As PaintEventArgs) Handles canvas.Paint
