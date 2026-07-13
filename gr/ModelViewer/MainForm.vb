@@ -72,17 +72,6 @@ Public Class MainForm : Inherits Form
         menuStrip.Items.Add(fileMenu)
         Me.MainMenuStrip = menuStrip
 
-        Me.Controls.Add(menuStrip)
-
-        ResumeLayout(False)
-
-    End Sub
-
-    Private Sub BuildUI()
-
-
-
-
         ' ---- 工具栏 ----
         toolStrip = New ToolStrip()
 
@@ -91,7 +80,7 @@ Public Class MainForm : Inherits Form
         cboMode.Items.AddRange(New Object() {"表面渲染", "三角形网格", "点云 (PLY)"})
         cboMode.SelectedIndex = 0
         cboMode.DropDownStyle = ComboBoxStyle.DropDownList
-        AddHandler cboMode.SelectedIndexChanged, AddressOf ModeChanged
+
         toolStrip.Items.Add(cboMode)
 
         toolStrip.Items.Add(New ToolStripSeparator())
@@ -103,25 +92,45 @@ Public Class MainForm : Inherits Form
             "jet", "rainbow", "cividis", "mako", "rocket", "viridis:rocket"})
         cboScheme.SelectedIndex = 0
         cboScheme.DropDownStyle = ComboBoxStyle.DropDownList
-        AddHandler cboScheme.SelectedIndexChanged, AddressOf SchemeChanged
+
         toolStrip.Items.Add(cboScheme)
 
         chkEmbedded = New ToolStripButton()
         chkEmbedded.Text = "使用点云自带颜色"
         chkEmbedded.CheckOnClick = True
-        AddHandler chkEmbedded.CheckedChanged, AddressOf EmbeddedChanged
-        toolStrip.Items.Add(chkEmbedded)
 
+        toolStrip.Items.Add(chkEmbedded)
         toolStrip.Items.Add(New ToolStripLabel("点径:"))
         numPointSize = New ToolStripComboBox()
         numPointSize.Items.AddRange(New Object() {"1", "2", "3", "4", "5", "6", "8", "10", "12"})
         numPointSize.SelectedIndex = 1
         numPointSize.DropDownStyle = ComboBoxStyle.DropDownList
         numPointSize.Width = 50
-        AddHandler numPointSize.SelectedIndexChanged, AddressOf PointSizeChanged
+
         toolStrip.Items.Add(numPointSize)
 
         toolStrip.Items.Add(New ToolStripSeparator())
+
+
+        Me.Controls.Add(menuStrip)
+        Me.Controls.Add(toolStrip)
+
+        ResumeLayout(False)
+
+    End Sub
+
+    Private Sub BuildUI()
+
+
+
+
+
+
+
+
+
+
+
 
         btnReset = New ToolStripButton("重置视角")
         AddHandler btnReset.Click, AddressOf ResetViewClick
@@ -149,7 +158,7 @@ Public Class MainForm : Inherits Form
 
         ' ---- 布局 ----
         Me.Controls.Add(canvas)
-        Me.Controls.Add(toolStrip)
+
         Me.Controls.Add(statusStrip)
 
 
@@ -343,7 +352,7 @@ Public Class MainForm : Inherits Form
 
     ' ===================== 模式 / 配色控件 =====================
 
-    Private Sub ModeChanged(sender As Object, e As EventArgs)
+    Private Sub ModeChanged(sender As Object, e As EventArgs) Handles cboMode.SelectedIndexChanged
         Select Case cboMode.SelectedIndex
             Case 0 : renderer.Mode = RenderMode.Surface
             Case 1 : renderer.Mode = RenderMode.Mesh
@@ -353,17 +362,17 @@ Public Class MainForm : Inherits Form
         canvas.Invalidate()
     End Sub
 
-    Private Sub SchemeChanged(sender As Object, e As EventArgs)
+    Private Sub SchemeChanged(sender As Object, e As EventArgs) Handles cboScheme.SelectedIndexChanged
         renderer.ColorScheme = CStr(cboScheme.Text)
         canvas.Invalidate()
     End Sub
 
-    Private Sub EmbeddedChanged(sender As Object, e As EventArgs)
+    Private Sub EmbeddedChanged(sender As Object, e As EventArgs) Handles chkEmbedded.CheckedChanged
         renderer.UseEmbeddedColor = chkEmbedded.Checked
         canvas.Invalidate()
     End Sub
 
-    Private Sub PointSizeChanged(sender As Object, e As EventArgs)
+    Private Sub PointSizeChanged(sender As Object, e As EventArgs) Handles numPointSize.SelectedIndexChanged
         renderer.PointSize = Integer.Parse(CStr(numPointSize.Text))
         canvas.Invalidate()
     End Sub
