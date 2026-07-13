@@ -1,3 +1,5 @@
+Imports Microsoft.VisualBasic.Imaging.Drawing3D
+
 Public Class MainForm : Inherits Form
 
     Private renderer As New SceneRenderer()
@@ -15,6 +17,22 @@ Public Class MainForm : Inherits Form
     Private lblStatus As ToolStripStatusLabel
 
     Private openFileDialog As OpenFileDialog
+
+    ' ---- 光照调节状态 ----
+    Private lightPanel As Panel
+    Private lblAmbient As Label
+    Private lblIntensity As Label
+    Private lblElevation As Label
+    Private lblAzimuth As Label
+    Private trkAmbient As TrackBar
+    Private trkIntensity As TrackBar
+    Private trkElevation As TrackBar
+    Private trkAzimuth As TrackBar
+    Private btnLightColor As Button
+    Private lblLightColor As Label
+    Private btnResetLight As Button
+    Private baseLightColor As Color = Color.White
+    Private lightIntensity As Double = 0.65
 
     Private dragging As Boolean = False
     Private panning As Boolean = False
@@ -100,6 +118,10 @@ Public Class MainForm : Inherits Form
         lblStatus = New ToolStripStatusLabel("请通过「文件 ▸ 打开」加载三维模型或 PLY 点云")
         statusStrip.Items.Add(lblStatus)
 
+        ' ---- 光照参数面板 ----
+        BuildLightingPanel()
+        Me.Controls.Add(lightPanel)
+
         ' ---- 布局 ----
         Me.Controls.Add(canvas)
         Me.Controls.Add(toolStrip)
@@ -113,6 +135,158 @@ Public Class MainForm : Inherits Form
             "PLY 点云 (*.ply)|*.ply|所有文件 (*.*)|*.*"
         openFileDialog.Title = "打开三维模型或点云文件"
     End Sub
+
+    ' ===================== 光照参数面板 =====================
+
+    Private Sub BuildLightingPanel()
+        lightPanel = New Panel()
+        lightPanel.Dock = DockStyle.Right
+        lightPanel.Width = 250
+        lightPanel.BackColor = SystemColors.Control
+        lightPanel.BorderStyle = BorderStyle.FixedSingle
+        lightPanel.Padding = New Padding(8)
+
+        Dim title = New Label()
+        title.Text = "光照参数"
+        title.Font = New Font(title.Font, FontStyle.Bold)
+        title.AutoSize = True
+        title.Top = 8
+        title.Left = 8
+        lightPanel.Controls.Add(title)
+
+        Dim top = 36
+        trkAmbient = MakeSlider(lightPanel, lblAmbient, "环境光强度 (Ambient): 25%", 0, 100, 25, top, AddressOf LightingScroll)
+        top += 50
+        trkIntensity = MakeSlider(lightPanel, lblIntensity, "光照亮度 (消除发白): 65%", 0, 100, 65, top, AddressOf LightingScroll)
+        top += 50
+        trkElevation = MakeSlider(lightPanel, lblElevation, "光源仰角: 45°", -90, 90, 45, top, AddressOf LightingScroll)
+        top += 50
+        trkAzimuth = MakeSlider(lightPanel, lblAzimuth, "光源方位: -30°", -360, 360, -30, top, AddressOf LightingScroll)
+        top += 56
+
+        btnLightColor = New Button()
+        btnLightColor.Text = "灯光颜色"
+        btnLightColor.Left = 8
+        btnLightColor.Top = top
+        btnLightColor.Width = 96
+        AddHandler btnLightColor.Click, AddressOf LightColorClick
+        lightPanel.Controls.Add(btnLightColor)
+
+        lblLightColor = New Label()
+        lblLightColor.Text = ""
+        lblLightColor.BorderStyle = BorderStyle.FixedSingle
+        lblLightColor.BackColor = baseLightColor
+        lblLightColor.Left = 112
+        lblLightColor.Top = top + 1
+        lblLightColor.Width = 48
+        lblLightColor.Height = 22
+        lightPanel.Controls.Add(lblLightColor)
+
+        top += 32
+        btnResetLight = New Button()
+        btnResetLight.Text = "重置光照"
+        btnResetLight.Left = 8
+        btnResetLight.Top = top
+        btnResetLight.Width = 152
+        AddHandler btnResetLight.Click, AddressOf ResetLightClick
+        lightPanel.Controls.Add(btnResetLight)
+
+        ' 应用默认光照（避免开箱即纯白）
+        ResetLighting()
+    End Sub
+
+    Private Function MakeSlider(parent As Control, ByRef caption As Label, title As String, min As Integer, max As Integer, val As Integer, top As Integer, handler As EventHandler) As TrackBar
+        caption = New Label()
+        caption.Text = title
+        caption.AutoSize = True
+        caption.Top = top
+        caption.Left = 8
+        parent.Controls.Add(caption)
+
+        Dim tb = New TrackBar()
+        tb.Minimum = min
+        tb.Maximum = max
+        tb.Value = val
+        tb.TickStyle = TickStyle.BottomRight
+        tb.Left = 8
+        tb.Top = top + 16
+        tb.Width = parent.ClientSize.Width - 16
+        AddHandler tb.Scroll, handler
+        parent.Controls.Add(tb)
+        Return tb
+    End Function
+
+    Private Sub LightingScroll(sender As Object, e As EventArgs)
+        ApplyLighting()
+    End Sub
+
+    Private Sub LightColorClick(sender As Object, e As EventArgs)
+        Using dlg As New ColorDialog()
+            dlg.Color = baseLightColor
+            If dlg.ShowDialog() = DialogResult.OK Then
+                baseLightColor = dlg.Color
+                lblLightColor.BackColor = baseLightColor
+                ApplyLighting()
+            End If
+        End Using
+    End Sub
+
+    Private Sub ResetLightClick(sender As Object, e As EventArgs)
+        ResetLighting()
+    End Sub
+
+    Private Sub ResetLighting()
+        trkAmbient.Value = 25
+        trkIntensity.Value = 65
+        trkElevation.Value = 45
+        trkAzimuth.Value = -30
+        baseLightColor = Color.White
+        lblLightColor.BackColor = baseLightColor
+        ApplyLighting()
+    End Sub
+
+    ''' <summary>
+    ''' 将当前 UI 控件的值写入 camera 的光照属性。
+    ''' </summary>
+    Private Sub ApplyLighting()
+        lightIntensity = trkIntensity.Value / 100.0
+        renderer.Camera.AmbientStrength = trkAmbient.Value / 100.0
+        renderer.Camera.LightColor = ScaleLightColor(baseLightColor, lightIntensity)
+        renderer.Camera.LightDirection = LightDirFromAngles(trkElevation.Value, trkAzimuth.Value)
+
+        lblAmbient.Text = $"环境光强度 (Ambient): {trkAmbient.Value}%"
+        lblIntensity.Text = $"光照亮度 (消除发白): {trkIntensity.Value}%"
+        lblElevation.Text = $"光源仰角: {trkElevation.Value}°"
+        lblAzimuth.Text = $"光源方位: {trkAzimuth.Value}°"
+
+        UpdateStatus()
+        canvas.Invalidate()
+    End Sub
+
+    ''' <summary>
+    ''' 按亮度系数缩放灯光颜色（降低亮度可削弱被照亮面的发白）。
+    ''' </summary>
+    Private Function ScaleLightColor(base As Color, k As Double) As Color
+        Dim r = CInt(base.R * k)
+        Dim g = CInt(base.G * k)
+        Dim b = CInt(base.B * k)
+        r = System.Math.Max(0, System.Math.Min(255, r))
+        g = System.Math.Max(0, System.Math.Min(255, g))
+        b = System.Math.Max(0, System.Math.Min(255, b))
+        Return Color.FromArgb(base.A, r, g, b)
+    End Function
+
+    ''' <summary>
+    ''' 由仰角/方位角（度）构造指向光源的单位向量。
+    ''' </summary>
+    Private Function LightDirFromAngles(elevDeg As Integer, azimDeg As Integer) As Point3D
+        Dim el = elevDeg * System.Math.PI / 180.0
+        Dim az = azimDeg * System.Math.PI / 180.0
+        Dim x = System.Math.Cos(el) * System.Math.Cos(az)
+        Dim y = System.Math.Cos(el) * System.Math.Sin(az)
+        Dim z = System.Math.Sin(el)
+        Return New Point3D(x, y, z).Normalize()
+    End Function
 
     ' ===================== 文件加载 =====================
 
@@ -179,7 +353,7 @@ Public Class MainForm : Inherits Form
         renderer.Camera.AngleZ = 0
         renderer.Camera.Offset = New PointF(0, 0)
         renderer.FitView()
-        UpdateStatus()
+        ResetLighting()
         canvas.Invalidate()
     End Sub
 
@@ -253,7 +427,8 @@ Public Class MainForm : Inherits Form
             $"模式: {modeText}  |  " &
             $"面: {renderer.SurfaceCount}  点: {renderer.PointCount}  |  " &
             $"角度X: {renderer.Camera.AngleX:F1}  Y: {renderer.Camera.AngleY:F1}  |  " &
-            $"视距: {renderer.Camera.ViewDistance:F1}"
+            $"视距: {renderer.Camera.ViewDistance:F1}  |  " &
+            $"环境光: {renderer.Camera.AmbientStrength:P0}  亮度: {lightIntensity:P0}"
     End Sub
 
 End Class

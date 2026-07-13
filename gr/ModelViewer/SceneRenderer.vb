@@ -1,3 +1,4 @@
+Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing3D
 Imports Microsoft.VisualBasic.Imaging.Drawing3D.Math3D
 Imports Microsoft.VisualBasic.Imaging.Landscape.Ply
@@ -24,10 +25,10 @@ Public Class SceneRenderer
     Private intensityMax As Double = 1
 
     Private colorTable As Color() = Nothing
-    Private colorBrushes As SolidBrush() = Nothing
+    Private colorBrushes As System.Drawing.SolidBrush() = Nothing
     Private colorTableScheme As String = ""
     Private colorTableAlpha As Integer = -1
-    Private embeddedCache As New Dictionary(Of String, SolidBrush)()
+    Private embeddedCache As New Dictionary(Of String, System.Drawing.SolidBrush)()
 
     Public ReadOnly Property SurfaceCount As Integer
         Get
@@ -162,7 +163,7 @@ Public Class SceneRenderer
     ''' 三角网格（线框）模式：对每个面旋转+投影后仅描边，不填充。
     ''' </summary>
     Private Sub DrawMesh(g As Graphics)
-        Using pen As New Pen(Color.FromArgb(200, 30, 30, 30), 1)
+        Using pen As New System.Drawing.Pen(Color.FromArgb(200, 30, 30, 30), 1)
             For Each s In surfaces
                 Dim projected = Camera.Project(Camera.Rotate(s.vertices)).ToArray()
                 Dim pts = projected.Select(Function(p) p.PointXY(Camera.Screen)).ToArray()
@@ -188,7 +189,7 @@ Public Class SceneRenderer
 
         For i = 0 To cloud.Length - 1
             Dim xy = projected(i).PointXY(Camera.Screen)
-            Dim brush As Brush
+            Dim brush As System.Drawing.Brush
 
             If UseEmbeddedColor AndAlso Not String.IsNullOrEmpty(cloud(i).color) Then
                 brush = GetEmbeddedBrush(cloud(i).color)
@@ -210,22 +211,17 @@ Public Class SceneRenderer
             colorTable = Microsoft.VisualBasic.Imaging.Drawing2D.Colors.Designer.GetColors(ColorScheme, 256, PointAlpha)
             colorTableScheme = ColorScheme
             colorTableAlpha = PointAlpha
-            colorBrushes = colorTable.Select(Function(c) New SolidBrush(c)).ToArray()
+            colorBrushes = colorTable.Select(Function(c) New System.Drawing.SolidBrush(c)).ToArray()
         End If
         Return colorTable
     End Function
 
-    Private Function GetEmbeddedBrush(c As String) As Brush
+    Private Function GetEmbeddedBrush(c As String) As System.Drawing.Brush
         If embeddedCache.ContainsKey(c) Then
             Return embeddedCache(c)
         End If
-        Dim col As Color
-        Try
-            col = If(c.StartsWith("#"c), ColorTranslator.FromHtml(c), Color.Black)
-        Catch
-            col = Color.Black
-        End Try
-        Dim b = New SolidBrush(col)
+        Dim col As Color = c.TranslateColor(throwEx:=False)
+        Dim b = New System.Drawing.SolidBrush(col)
         embeddedCache(c) = b
         Return b
     End Function
