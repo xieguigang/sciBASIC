@@ -75,7 +75,7 @@ Namespace PostScript
     ''' The postscript coordinate system has its origin at the bottom-left corner
     ''' with the y axis pointing up, which is the opposite of the GDI+ top-left
     ''' origin. For that reason every geometry coordinate that is written through
-    ''' this writer is flipped on the y axis by <see cref="Yf(Double)"/> so that
+    ''' this writer is flipped on the y axis by <see cref="Writer.Yf(Single)"/> so that
     ''' the generated postscript file looks identical to a GDI+ drawing. Text is
     ''' kept upright because it does not depend on a negative scale transform.
     ''' </remarks>

@@ -1,68 +1,69 @@
 ﻿#Region "Microsoft.VisualBasic::09a16dcbb2866c877524c56a7a890260, gr\Microsoft.VisualBasic.Imaging\PostScript\Parser.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 47
-    '    Code Lines: 26 (55.32%)
-    ' Comment Lines: 10 (21.28%)
-    '    - Xml Docs: 0.00%
-    ' 
-    '   Blank Lines: 11 (23.40%)
-    '    File Size: 1.59 KB
+' Summaries:
 
 
-    '     Class Parser
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    ' 
-    '         Function: Load
-    ' 
-    '         Sub: (+2 Overloads) Dispose
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 47
+'    Code Lines: 26 (55.32%)
+' Comment Lines: 10 (21.28%)
+'    - Xml Docs: 0.00%
+' 
+'   Blank Lines: 11 (23.40%)
+'    File Size: 1.59 KB
+
+
+'     Class Parser
+' 
+'         Constructor: (+1 Overloads) Sub New
+' 
+'         Function: Load
+' 
+'         Sub: (+2 Overloads) Dispose
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Drawing
 Imports System.Globalization
 Imports System.IO
-Imports System.Linq
+Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.MIME.Html.CSS
 Imports Microsoft.VisualBasic.Net.Http
+Imports std = System.Math
 
 Namespace PostScript
 
@@ -243,7 +244,7 @@ Namespace PostScript
                         .start = a1,
                         .sweep = If(tok = "arcn", a1 - a2, a2 - a1)
                     }
-                    currentPoint = New PointF(CSng(cx + r * Math.Cos(a2 * Math.PI / 180)), CSng(cy + r * Math.Sin(a2 * Math.PI / 180)))
+                    currentPoint = New PointF(CSng(cx + r * std.Cos(a2 * std.PI / 180)), CSng(cy + r * std.Sin(a2 * std.PI / 180)))
 
                 Case "closepath"
                     pathClosed = True
@@ -313,7 +314,7 @@ Namespace PostScript
                         lastName = tok
                     ElseIf tok.StartsWith("("c) Then
                         lastString = Unescape(tok)
-                    ElseIf tok.StartsWith("<~"c) Then
+                    ElseIf tok.StartsWith("<~") Then
                         ' strip the surrounding <~ ... ~> markers
                         If tok.Length > 4 Then
                             imageBase64 = tok.Substring(2, tok.Length - 4)
@@ -341,7 +342,7 @@ Namespace PostScript
                 Dim gdiCy = GdiY(pendingArc.cy)
                 Dim r = pendingArc.radius
 
-                If Math.Abs(pendingArc.sweep) >= 359.5 Then
+                If std.Abs(pendingArc.sweep) >= 359.5 Then
                     ' a full circle
                     Dim topLeft = New PointF(CSng(gdiCx - r), CSng(gdiCy - r))
                     Dim d = CInt(r * 2)
@@ -532,7 +533,7 @@ Namespace PostScript
                 Return False
             End If
 
-            Dim maxDev = rs.Select(Function(r) Math.Abs(r - avg)).Max()
+            Dim maxDev = rs.Select(Function(r) std.Abs(r - avg)).Max()
 
             If maxDev > 0.1 * avg Then
                 Return False
@@ -557,8 +558,8 @@ Namespace PostScript
             Dim a0 = rest(0)
             Dim a1 = rest(rest.Length - 1)
 
-            Dim ang0 = Math.Atan2(a0.Y - center.Y, a0.X - center.X) * 180 / Math.PI
-            Dim ang1 = Math.Atan2(a1.Y - center.Y, a1.X - center.X) * 180 / Math.PI
+            Dim ang0 = std.Atan2(a0.Y - center.Y, a0.X - center.X) * 180 / std.PI
+            Dim ang1 = std.Atan2(a1.Y - center.Y, a1.X - center.X) * 180 / std.PI
             Dim sweep = ang1 - ang0
 
             If sweep < 0 Then
@@ -581,7 +582,7 @@ Namespace PostScript
         Private Shared Function Dist(a As PointF, b As PointF) As Double
             Dim dx = a.X - b.X
             Dim dy = a.Y - b.Y
-            Return Math.Sqrt(dx * dx + dy * dy)
+            Return std.Sqrt(dx * dx + dy * dy)
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -670,7 +671,7 @@ Namespace PostScript
                         If stk.Count >= 2 Then
                             Dim y = stk.Pop()
                             stk.Pop()
-                            maxY = Math.Max(maxY, y)
+                            maxY = std.Max(maxY, y)
                         End If
                     ElseIf tk = "arc" OrElse tk = "arcn" Then
                         If stk.Count >= 5 Then
@@ -679,7 +680,7 @@ Namespace PostScript
                             stk.Pop()
                             Dim cy = stk.Pop()
                             stk.Pop()
-                            maxY = Math.Max(maxY, cy)
+                            maxY = std.Max(maxY, cy)
                         End If
                     End If
                 Next

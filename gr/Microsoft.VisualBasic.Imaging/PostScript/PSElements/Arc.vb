@@ -86,7 +86,7 @@ Namespace PostScript.Elements
         Public Property stroke As Stroke
 
         Friend Overrides Sub WriteAscii(ps As Writer)
-            Dim samples As PointF() = SampleArc(x, y, width, height, startAngle, sweepAngle)
+            Dim samples As PointF() = Arc.SampleArc(x, y, width, height, startAngle, sweepAngle)
             Dim center As New PointF(x + width / 2, y + height / 2)
             Dim doFill As Boolean = Not fill.StringEmpty(, True)
             Dim doStroke As Boolean = stroke IsNot Nothing

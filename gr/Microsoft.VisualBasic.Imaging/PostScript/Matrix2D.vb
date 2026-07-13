@@ -55,7 +55,7 @@ Namespace PostScript
     ''' x' = a * x + c * y + e
     ''' y' = b * x + d * y + f
     ''' 
-    ''' the transform operations follow the gdi+ <see cref="System.Drawing.Drawing2D.Matrix"/>
+    ''' the transform operations follow the gdi+ "System.Drawing.Drawing2D.Matrix"
     ''' semantics: a positive rotation angle is clockwise (because the gdi+ coordinate
     ''' system has its y axis pointing down). the postscript y flip is applied later by
     ''' the <see cref="Writer"/>, so this matrix only ever works in the gdi+ space.
