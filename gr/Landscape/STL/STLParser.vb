@@ -91,7 +91,7 @@ Namespace STL
             Dim bytesRead As Integer = stream.Read(header, 0, 5)
             stream.Seek(0, SeekOrigin.Begin)
 
-            Dim surfaces As Surface()
+            Dim surfaces As Data.Surface()
 
             If bytesRead = 5 AndAlso IsAsciiSTL(header) Then
                 Using reader As New StreamReader(stream, Encoding.ASCII, detectEncodingFromByteOrderMarks:=False, bufferSize:=4096, leaveOpen:=True)
@@ -134,8 +134,8 @@ Namespace STL
         ''' </summary>
         ''' <param name="reader"></param>
         ''' <returns></returns>
-        Public Function ParseAsciiSTL(reader As StreamReader) As Surface()
-            Dim surfaces As New List(Of Surface)
+        Public Function ParseAsciiSTL(reader As StreamReader) As Data.Surface()
+            Dim surfaces As New List(Of Data.Surface)
             Dim line As String
             Dim currentNormal As Point3D = Nothing
             Dim vertices As New List(Of Point3D)
@@ -188,7 +188,7 @@ Namespace STL
                     vertices.Clear()
                 ElseIf upperLine.StartsWith("VERTEX") Then
                     ' 顶点数据：vertex x y z
-                    Dim vertex As Point3D = ParseVertex(line)
+                    Dim vertex As Point3D? = ParseVertex(line)
                     If vertex IsNot Nothing Then
                         vertices.Add(vertex)
                     End If
@@ -217,7 +217,7 @@ Namespace STL
         ''' <summary>
         ''' 从 "vertex x y z" 行解析顶点坐标
         ''' </summary>
-        Private Function ParseVertex(line As String) As Point3D
+        Private Function ParseVertex(line As String) As Point3D?
             Dim parts As String() = line.Split(New Char() {" "c}, StringSplitOptions.RemoveEmptyEntries)
             If parts.Length >= 4 Then
                 Dim x As Single, y As Single, z As Single
@@ -245,7 +245,7 @@ Namespace STL
         ''' </summary>
         ''' <param name="reader"></param>
         ''' <returns></returns>
-        Public Function ParseBinarySTL(reader As BinaryReader) As Surface()
+        Public Function ParseBinarySTL(reader As BinaryReader) As Data.Surface()
             ' 跳过 80 字节文件头
             reader.ReadBytes(80)
 
@@ -256,7 +256,7 @@ Namespace STL
                 Return {}
             End If
 
-            Dim surfaces As Surface() = New Surface(CInt(triangleCount) - 1) {}
+            Dim surfaces As Data.Surface() = New Data.Surface(CInt(triangleCount) - 1) {}
 
             For i As Integer = 0 To CInt(triangleCount) - 1
                 Try
@@ -293,7 +293,7 @@ Namespace STL
                     }
                 Catch ex As EndOfStreamException
                     ' 文件提前结束，截断数组
-                    Dim truncated As Surface() = New Surface(i - 1) {}
+                    Dim truncated As Data.Surface() = New Data.Surface(i - 1) {}
                     Array.Copy(surfaces, truncated, i)
                     Return truncated
                 End Try
