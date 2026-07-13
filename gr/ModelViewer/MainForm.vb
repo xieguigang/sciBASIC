@@ -41,7 +41,19 @@ Public Class MainForm : Inherits Form
     Private currentFile As String = ""
 
     Public Sub New()
+        InitializeComponent()
         BuildUI()
+    End Sub
+
+    Private Sub InitializeComponent()
+        SuspendLayout()
+        ' 
+        ' MainForm
+        ' 
+        ClientSize = New Size(931, 611)
+        Name = "MainForm"
+        ResumeLayout(False)
+
     End Sub
 
     Private Sub BuildUI()
@@ -431,6 +443,9 @@ Public Class MainForm : Inherits Form
             $"环境光: {renderer.Camera.AmbientStrength:P0}  亮度: {lightIntensity:P0}"
     End Sub
 
+    Private Sub MainForm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+
+    End Sub
 End Class
 
 

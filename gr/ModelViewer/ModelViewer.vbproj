@@ -12,12 +12,20 @@
     <GenerateDocumentationFile>false</GenerateDocumentationFile>
     <Nullable>disable</Nullable>
     <Platforms>AnyCPU;x64</Platforms>
+    <UseWPF>True</UseWPF>
+    <StartupObject>ModelViewer.MainForm</StartupObject>
+    <ApplicationIcon>3mf.ico</ApplicationIcon>
+    <MyType>WindowsFormsWithCustomSubMain</MyType>
   </PropertyGroup>
 
   <ItemGroup>
     <Compile Remove="SmokeTest\**" />
     <EmbeddedResource Remove="SmokeTest\**" />
     <None Remove="SmokeTest\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="3mf.ico" />
   </ItemGroup>
 
   <ItemGroup>
