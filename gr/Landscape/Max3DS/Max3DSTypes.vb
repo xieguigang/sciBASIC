@@ -53,6 +53,7 @@
 #End Region
 
 Imports Microsoft.VisualBasic.Imaging.Drawing3D
+Imports std = System.Math
 
 Namespace Max3DS
 
@@ -194,9 +195,9 @@ Namespace Max3DS
         ''' 将漫反射颜色转换为 #RRGGBB 格式的十六进制颜色字符串
         ''' </summary>
         Public Function ToHtmlColor() As String
-            Dim r As Integer = CInt(Math.Min(diffuseColor.R * 255.0F, 255.0F))
-            Dim g As Integer = CInt(Math.Min(diffuseColor.G * 255.0F, 255.0F))
-            Dim b As Integer = CInt(Math.Min(diffuseColor.B * 255.0F, 255.0F))
+            Dim r As Integer = CInt(std.Min(diffuseColor.R * 255.0F, 255.0F))
+            Dim g As Integer = CInt(std.Min(diffuseColor.G * 255.0F, 255.0F))
+            Dim b As Integer = CInt(std.Min(diffuseColor.B * 255.0F, 255.0F))
             Return $"#{r:X2}{g:X2}{b:X2}"
         End Function
 
