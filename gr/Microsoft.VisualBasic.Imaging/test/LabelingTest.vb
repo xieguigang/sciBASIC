@@ -66,7 +66,7 @@ Module LabelingTest
     Sub Main1()
         Using g As Graphics2D = New Size(1024, 1024).CreateGDIDevice(filled:=Color.White)
             Dim css As CSSEnvirnment = g.LoadEnvironment
-            Dim labelFont As Font = css.GetFont(CSSFont.TryParse(CSSFont.PlotLabelNormal))
+            Dim labelFont As Microsoft.VisualBasic.Imaging.Font = css.GetFont(CSSFont.TryParse(CSSFont.PlotLabelNormal))
             Dim rand As New Random
             Dim labels As Label() = g.Label(130.SeqRandom.Select(Function(i) rand.NextDouble.ToString("F4"))).ToArray
             Dim anchors = labels _
@@ -97,7 +97,7 @@ Module LabelingTest
 
                 '  Call g.DrawCircle(anchor, anchor.r, Brushes.Red)
                 ' Call g.DrawString(label.text, labelFont, Brushes.Black, labelLayout.Location)
-                Call g.DrawLine(Pens.Green, anchor, labelLayout.GetTextAnchor(anchor))
+                Call g.DrawLine(Microsoft.VisualBasic.Imaging.Pens.Green, anchor, labelLayout.GetTextAnchor(anchor))
             Next
 
             Call g.Save("./test_labels.png", ImageFormats.Png)

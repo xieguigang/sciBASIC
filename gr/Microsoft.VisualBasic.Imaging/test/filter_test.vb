@@ -60,6 +60,8 @@ Imports Microsoft.VisualBasic.Imaging.Filters
 Imports Microsoft.VisualBasic.Imaging.Math2D
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.Distributions
+Imports Brushes = Microsoft.VisualBasic.Imaging.Brushes
+Imports Pens = Microsoft.VisualBasic.Imaging.Pens
 
 Module filter_test
 
