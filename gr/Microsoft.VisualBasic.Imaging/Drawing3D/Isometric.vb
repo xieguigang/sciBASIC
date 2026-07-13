@@ -64,7 +64,7 @@ Imports Microsoft.VisualBasic.Imaging.Drawing3D.Math3D
 Imports Microsoft.VisualBasic.Imaging.Drawing3D.Models.Isometric
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
-Imports stdNum = System.Math
+Imports std = System.Math
 
 Namespace Drawing3D
 
@@ -87,13 +87,13 @@ Namespace Drawing3D
         ReadOnly angle, scale As Double
 
         Public Sub New()
-            Me.angle = stdNum.PI / 6
+            Me.angle = std.PI / 6
             Me.scale = 70
             Me.transformation = {
-                ({Me.scale * stdNum.Cos(Me.angle), Me.scale * stdNum.Sin(Me.angle)}),
-                ({Me.scale * stdNum.Cos(stdNum.PI - Me.angle), Me.scale * stdNum.Sin(stdNum.PI - Me.angle)})
+                ({Me.scale * std.Cos(Me.angle), Me.scale * std.Sin(Me.angle)}),
+                ({Me.scale * std.Cos(std.PI - Me.angle), Me.scale * std.Sin(std.PI - Me.angle)})
             }
-            Me.lightAngle = New Point3D(2, -1, 3).Normalize()
+            Me.lightAngle = New Point3D(2, -1, 3).normalize()
             Me.colorDifference = 0.2
             Me.lightColor = Color.FromArgb(255, 255, 255)
         End Sub
@@ -428,17 +428,17 @@ Namespace Drawing3D
 
             For i = 0 To lengthA - 1
                 point = pointsA(i)
-                AminX = stdNum.Min(AminX, point.X)
-                AminY = stdNum.Min(AminY, point.Y)
-                AmaxX = stdNum.Max(AmaxX, point.X)
-                AmaxY = stdNum.Max(AmaxY, point.Y)
+                AminX = std.Min(AminX, point.X)
+                AminY = std.Min(AminY, point.Y)
+                AmaxX = std.Max(AmaxX, point.X)
+                AmaxY = std.Max(AmaxY, point.Y)
             Next
             For i = 0 To lengthB - 1
                 point = pointsB(i)
-                BminX = stdNum.Min(BminX, point.X)
-                BminY = stdNum.Min(BminY, point.Y)
-                BmaxX = stdNum.Max(BmaxX, point.X)
-                BmaxY = stdNum.Max(BmaxY, point.Y)
+                BminX = std.Min(BminX, point.X)
+                BminY = std.Min(BminY, point.Y)
+                BmaxX = std.Max(BmaxX, point.X)
+                BmaxY = std.Max(BmaxY, point.Y)
             Next
 
             If ((AminX <= BminX AndAlso BminX <= AmaxX) OrElse (BminX <= AminX AndAlso AminX <= BmaxX)) AndAlso ((AminY <= BminY AndAlso BminY <= AmaxY) OrElse (BminY <= AminY AndAlso AminY <= BmaxY)) Then

@@ -77,7 +77,7 @@ Namespace Drawing3D
     ''' </summary>
     Public Module PainterAlgorithm
 
-#If NET48 Then
+#If WINDOWS Then
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function CreateCanvas2D(camera As Camera, Optional bg$ = "white") As Graphics2D

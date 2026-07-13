@@ -202,16 +202,16 @@ Namespace Drawing3D
             Next
         End Function
 
-#If NET48 Then
+#If WINDOWS Then
         Public Sub Draw(ByRef canvas As Graphics, surface As IEnumerable(Of Surface), Optional drawPath As Boolean = False)
             Dim faces As New List(Of Surface)
 
             With Me
                 For Each f As Surface In surface
-                    faces += New Surface With {
+                    faces.Add(New Surface With {
                         .brush = f.brush,
                         .vertices = Rotate(f.vertices).ToArray
-                    }
+                    })
                 Next
             End With
 
