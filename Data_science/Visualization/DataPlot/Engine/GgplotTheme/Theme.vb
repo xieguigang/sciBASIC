@@ -431,8 +431,8 @@ Namespace GgplotTheme
             {"axis.title.y", ThemeElementType.ElementText},
             {"axis.title.y.left", ThemeElementType.ElementText},
             {"axis.title.y.right", ThemeElementType.ElementText},
-
-            '--- Axis text ---
+                                                                 _
+                                                                 _  '--- Axis text ---
             {"axis.text", ThemeElementType.ElementText},
             {"axis.text.x", ThemeElementType.ElementText},
             {"axis.text.x.top", ThemeElementType.ElementText},
@@ -442,8 +442,8 @@ Namespace GgplotTheme
             {"axis.text.y.right", ThemeElementType.ElementText},
             {"axis.text.theta", ThemeElementType.ElementText},
             {"axis.text.r", ThemeElementType.ElementText},
-
-            '--- Axis ticks ---
+                                                          _
+                                                          _  '--- Axis ticks ---
             {"axis.ticks", ThemeElementType.ElementLine},
             {"axis.ticks.x", ThemeElementType.ElementLine},
             {"axis.ticks.x.top", ThemeElementType.ElementLine},
@@ -453,15 +453,15 @@ Namespace GgplotTheme
             {"axis.ticks.y.right", ThemeElementType.ElementLine},
             {"axis.ticks.theta", ThemeElementType.ElementLine},
             {"axis.ticks.r", ThemeElementType.ElementLine},
-
+                                                           _
             {"axis.minor.ticks.x.top", ThemeElementType.ElementLine},
             {"axis.minor.ticks.x.bottom", ThemeElementType.ElementLine},
             {"axis.minor.ticks.y.left", ThemeElementType.ElementLine},
             {"axis.minor.ticks.y.right", ThemeElementType.ElementLine},
             {"axis.minor.ticks.theta", ThemeElementType.ElementLine},
             {"axis.minor.ticks.r", ThemeElementType.ElementLine},
-
-            '--- Axis ticks length ---
+                                                                 _
+                                                                 _  '--- Axis ticks length ---
             {"axis.ticks.length", ThemeElementType.Unit},
             {"axis.ticks.length.x", ThemeElementType.Unit},
             {"axis.ticks.length.x.top", ThemeElementType.Unit},
@@ -471,7 +471,7 @@ Namespace GgplotTheme
             {"axis.ticks.length.y.right", ThemeElementType.Unit},
             {"axis.ticks.length.theta", ThemeElementType.Unit},
             {"axis.ticks.length.r", ThemeElementType.Unit},
-
+                                                           _
             {"axis.minor.ticks.length", ThemeElementType.Unit},
             {"axis.minor.ticks.length.x", ThemeElementType.Unit},
             {"axis.minor.ticks.length.x.top", ThemeElementType.Unit},
@@ -481,8 +481,8 @@ Namespace GgplotTheme
             {"axis.minor.ticks.length.y.right", ThemeElementType.Unit},
             {"axis.minor.ticks.length.theta", ThemeElementType.Unit},
             {"axis.minor.ticks.length.r", ThemeElementType.Unit},
-
-            '--- Axis line ---
+                                                                 _
+                                                                 _ '--- Axis line ---
             {"axis.line", ThemeElementType.ElementLine},
             {"axis.line.x", ThemeElementType.ElementLine},
             {"axis.line.x.top", ThemeElementType.ElementLine},
@@ -492,8 +492,8 @@ Namespace GgplotTheme
             {"axis.line.y.right", ThemeElementType.ElementLine},
             {"axis.line.theta", ThemeElementType.ElementLine},
             {"axis.line.r", ThemeElementType.ElementLine},
-
-            '--- Legend ---
+                                                          _
+                                                          _  '--- Legend ---
             {"legend.background", ThemeElementType.ElementRect},
             {"legend.margin", ThemeElementType.Margin},
             {"legend.spacing", ThemeElementType.Unit},
@@ -531,8 +531,8 @@ Namespace GgplotTheme
             {"legend.box.margin", ThemeElementType.Margin},
             {"legend.box.background", ThemeElementType.ElementRect},
             {"legend.box.spacing", ThemeElementType.Unit},
-
-            '--- Panel ---
+                                                          _
+                                                          _  '--- Panel ---
             {"panel.background", ThemeElementType.ElementRect},
             {"panel.border", ThemeElementType.ElementRect},
             {"panel.spacing", ThemeElementType.Unit},
@@ -548,8 +548,8 @@ Namespace GgplotTheme
             {"panel.ontop", ThemeElementType.Scalar},
             {"panel.widths", ThemeElementType.Unit},
             {"panel.heights", ThemeElementType.Unit},
-
-            '--- Plot ---
+                                                     _
+                                                     _  '--- Plot ---
             {"plot.background", ThemeElementType.ElementRect},
             {"plot.title", ThemeElementType.ElementText},
             {"plot.title.position", ThemeElementType.Scalar},
@@ -560,8 +560,8 @@ Namespace GgplotTheme
             {"plot.tag.position", ThemeElementType.Scalar},
             {"plot.tag.location", ThemeElementType.Scalar},
             {"plot.margin", ThemeElementType.Margin},
-
-            '--- Strip ---
+                                                     _
+                                                     _  '--- Strip ---
             {"strip.background", ThemeElementType.ElementRect},
             {"strip.background.x", ThemeElementType.ElementRect},
             {"strip.background.y", ThemeElementType.ElementRect},
@@ -576,8 +576,8 @@ Namespace GgplotTheme
             {"strip.text.y.right", ThemeElementType.ElementText},
             {"strip.switch.pad.grid", ThemeElementType.Unit},
             {"strip.switch.pad.wrap", ThemeElementType.Unit},
-
-            '--- Scalars ---
+                                                             _
+                                                             _  '--- Scalars ---
             {"aspect.ratio", ThemeElementType.Scalar},
             {"complete", ThemeElementType.Scalar},
             {"validate", ThemeElementType.Scalar}
