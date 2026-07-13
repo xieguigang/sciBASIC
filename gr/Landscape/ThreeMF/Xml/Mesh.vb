@@ -75,14 +75,14 @@ Namespace ThreeMF.Xml
     Public Class Mesh
 
         Public Property vertices As Point3D()
-        Public Property triangles As triangle()
+        Public Property triangles As Triangle3D()
 
         Public Function GetSurfaces(material As BaseMaterial) As Surface()
             Dim out As New List(Of Surface)
             Dim color As Color = material.displaycolor.TranslateColor
             Dim b As New SolidBrush(color)
 
-            For Each t As triangle In triangles
+            For Each t As Triangle3D In triangles
                 out += New Surface With {
                     .vertices = {
                         vertices(t.v1), vertices(t.v2), vertices(t.v3)
@@ -94,15 +94,15 @@ Namespace ThreeMF.Xml
             Return out
         End Function
 
-        ''' <summary>
-        ''' <see cref="triangle.p1"/>
-        ''' </summary>
+    ''' <summary>
+    ''' <see cref="Triangle3D.p1"/>
+    ''' </summary>
         ''' <param name="materials"></param>
         ''' <returns></returns>
         Public Function GetSurfaces(materials As Brush()) As Surface()
             Dim out As New List(Of Surface)
 
-            For Each t As triangle In triangles
+            For Each t As Triangle3D In triangles
                 Dim i As Integer = CInt(t.p1)
 
                 out += New Surface With {
@@ -124,7 +124,7 @@ Namespace ThreeMF.Xml
     ''' <summary>
     ''' 3 vertex index to create a triangle of the surface model data
     ''' </summary>
-    Public Class triangle
+    Public Class Triangle3D
 
         <XmlAttribute> Public Property v1 As Integer
         <XmlAttribute> Public Property v2 As Integer
@@ -146,7 +146,7 @@ Namespace ThreeMF.Xml
         End Function
     End Class
 
-    Public Class component
+    Public Class Component
 
         <XmlAttribute>
         Public Property objectid As Integer

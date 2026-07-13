@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1594f9190feb57c3c42e9c67abd6fe25, gr\Landscape\3DBuilder\XML\XmlModel3D.vb"
+﻿#Region "Microsoft.VisualBasic::1594f9190feb57c3c42e9c67abd6fe25, gr\Landscape\ThreeMF\Xml\Model3D.vb"
 
 ' Author:
 ' 
@@ -74,7 +74,7 @@ Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Serialization.JSON
 
-Namespace Vendor_3mf.XML
+Namespace ThreeMF.Xml
 
     ''' <summary>
     ''' ``3D/3dmodel.model`` xml file.
@@ -99,7 +99,7 @@ Namespace Vendor_3mf.XML
                 .ToArray
             Dim materials As Brush() = resources _
                 .basematerials _
-                .basematerials _
+                .items _
                 .Select(Function(b) b.displaycolor.TranslateColor) _
                 .Select(Function(c) New SolidBrush(c)) _
                 .ToArray
@@ -115,7 +115,7 @@ Namespace Vendor_3mf.XML
                         out += obj.mesh.GetSurfaces(materials)
                     Else
                         ' 使用总编号
-                        Dim base As base = resources _
+                        Dim base As BaseMaterial = resources _
                             .basematerials _
                             .basematerials(CInt(obj.pindex))
 

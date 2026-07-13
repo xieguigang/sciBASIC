@@ -117,8 +117,8 @@ Namespace ThreeMF.Xml
 
     End Class
 
-    Public Class basematerials
-        Implements Iobject
+    Public Class BaseMaterials
+        Implements IObject
 
         <XmlAttribute("id")>
         Public Property id As Integer Implements Iobject.id
@@ -126,7 +126,7 @@ Namespace ThreeMF.Xml
         Public Property items As BaseMaterial()
 
         Public Overrides Function ToString() As String
-            Return basematerials.GetJson
+            Return Me.GetJson
         End Function
     End Class
 End Namespace
