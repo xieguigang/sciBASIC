@@ -22,24 +22,27 @@ Partial Class FormAbout
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
+        components = New ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(FormAbout))
         canvas = New RenderPanel()
         Panel1 = New Panel()
         Label1 = New Label()
+        Timer1 = New Timer(components)
         Panel1.SuspendLayout()
         SuspendLayout()
         ' 
-        ' RenderPanel1
+        ' canvas
         ' 
         canvas.BackColor = Color.SkyBlue
         canvas.Dock = DockStyle.Bottom
         canvas.Location = New Point(0, 83)
-        canvas.Name = "RenderPanel1"
+        canvas.Name = "canvas"
         canvas.Size = New Size(662, 531)
         canvas.TabIndex = 0
         ' 
         ' Panel1
         ' 
+        Panel1.BackColor = Color.White
         Panel1.Controls.Add(Label1)
         Panel1.Dock = DockStyle.Fill
         Panel1.Location = New Point(0, 0)
@@ -57,6 +60,10 @@ Partial Class FormAbout
         Label1.TabIndex = 0
         Label1.Text = "三维模型查看器"
         ' 
+        ' Timer1
+        ' 
+        Timer1.Interval = 10
+        ' 
         ' FormAbout
         ' 
         AutoScaleDimensions = New SizeF(7F, 15F)
@@ -64,8 +71,10 @@ Partial Class FormAbout
         ClientSize = New Size(662, 614)
         Controls.Add(Panel1)
         Controls.Add(canvas)
-        FormBorderStyle = FormBorderStyle.FixedToolWindow
+        FormBorderStyle = FormBorderStyle.FixedDialog
         Icon = CType(resources.GetObject("$this.Icon"), Icon)
+        MaximizeBox = False
+        MinimizeBox = False
         Name = "FormAbout"
         StartPosition = FormStartPosition.CenterParent
         Text = "关于"
@@ -77,4 +86,5 @@ Partial Class FormAbout
     Friend WithEvents canvas As RenderPanel
     Friend WithEvents Panel1 As Panel
     Friend WithEvents Label1 As Label
+    Friend WithEvents Timer1 As Timer
 End Class

@@ -14,9 +14,11 @@ Public Class FormAbout
             .paint = DirectCast(a.brush, SolidBrush).Color.ToHtmlColor,
             .vertices = a.vertices.Select(Function(p) New Vertex(p)).ToArray
         }))
-
+        renderer.ShowGround = False
         renderer.FitView()
         canvas.Invalidate()
+
+        Timer1.Enabled = True
     End Sub
 
     Private Sub RenderPanel1_Paint(sender As Object, e As PaintEventArgs) Handles canvas.Paint
@@ -26,5 +28,12 @@ Public Class FormAbout
         Else
             e.Graphics.Clear(renderer.BackgroundColor)
         End If
+    End Sub
+
+    Private Sub Timer1_Tick(sender As Object, e As EventArgs) Handles Timer1.Tick
+        renderer.Camera.AngleX += 1
+        renderer.Camera.AngleY += 1
+        renderer.Camera.AngleZ += 1
+        canvas.Invalidate()
     End Sub
 End Class

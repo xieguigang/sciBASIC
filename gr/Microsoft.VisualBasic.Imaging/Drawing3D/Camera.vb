@@ -46,10 +46,9 @@
 #End Region
 
 Imports System.Drawing
+Imports System.Numerics
 Imports System.Runtime.CompilerServices
 Imports System.Text
-Imports System.Numerics
-Imports System.Threading.Tasks
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Drawing3D.Math3D
 Imports std = System.Math
