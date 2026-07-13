@@ -16,13 +16,13 @@
     <Project Path="Drawing-net4.8/Drawing-net4.8.vbproj">
       <Platform Solution="*|x64" Project="x64" />
     </Project>
-    <Project Path="Landscape/Landscape.vbproj">
-      <Platform Solution="*|x64" Project="x64" />
-    </Project>
-    <Project Path="Microsoft.VisualBasic.Imaging/imaging.NET5.vbproj">
-      <Platform Solution="*|x64" Project="x64" />
-    </Project>
   </Folder>
+  <Project Path="Landscape/Landscape.vbproj">
+    <Platform Solution="*|x64" Project="x64" />
+  </Project>
+  <Project Path="Microsoft.VisualBasic.Imaging/imaging.NET5.vbproj">
+    <Platform Solution="*|x64" Project="x64" />
+  </Project>
   <Project Path="ModelViewer/ModelViewer.vbproj">
     <Platform Solution="*|x64" Project="x64" />
   </Project>
