@@ -118,7 +118,7 @@ Namespace Gltf
 
         ''' <summary>
         ''' 解析 data: URI 为字节数组
-        ''' 格式: data:[<mediatype>][;base64],<data>
+        ''' 格式: data:[&lt;mediatype>][;base64],&lt;data>
         ''' </summary>
         Private Function ParseDataUri(uri As String) As Byte()
             Try
@@ -133,7 +133,7 @@ Namespace Gltf
                     Return Convert.FromBase64String(data)
                 Else
                     ' URL-encoded binary (rare)
-                    Return Encoding.UTF8.GetBytes(Uri.UnescapeDataString(data))
+                    Return Encoding.UTF8.GetBytes(System.Uri.UnescapeDataString(data))
                 End If
             Catch
                 Return Nothing

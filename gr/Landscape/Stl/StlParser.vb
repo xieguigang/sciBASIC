@@ -53,7 +53,7 @@ Namespace Stl
     ''' 具体的 ASCII / Binary 解析逻辑分别在 StlAsciiReader 与
     ''' StlBinaryReader 这两个 Partial Module 中实现。
     ''' </summary>
-    Public Partial Module StlParser
+    Partial Public Module StlParser
 
         ''' <summary>
         ''' 从文件路径自动检测格式并解析 STL 模型

@@ -45,9 +45,7 @@ Imports Microsoft.VisualBasic.Linq
 
 Namespace Stl
 
-    ''' <summary>
-    ''' STL (Stereolithography) Binary 格式解析部分
-    ''' </summary>
+    ' STL (Stereolithography) Binary 格式解析部分
     Public Partial Module StlParser
 
         ''' <summary>

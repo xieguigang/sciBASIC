@@ -46,10 +46,7 @@ Imports Microsoft.VisualBasic.Linq
 
 Namespace Stl
 
-    ''' <summary>
-    ''' STL (Stereolithography) ASCII 格式解析部分
-    ''' </summary>
-    Public Partial Module StlParser
+    Partial Public Module StlParser
 
         ''' <summary>
         ''' 解析 ASCII 格式的 STL 文件
