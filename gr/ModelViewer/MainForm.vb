@@ -1,8 +1,5 @@
-Imports System.Windows.Forms.VisualStyles.VisualStyleElement.Window
 Imports Microsoft.VisualBasic.Imaging.Drawing3D
 Imports Microsoft.VisualBasic.Imaging.Driver
-Imports Microsoft.VisualBasic.Math.Statistics
-Imports System.Diagnostics
 
 Public Class MainForm : Inherits Form
 

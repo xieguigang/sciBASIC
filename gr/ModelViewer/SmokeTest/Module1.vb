@@ -1,57 +1,79 @@
 Imports System.Drawing
-Imports ModelViewer
+Imports Microsoft.VisualBasic.Imaging.Drawing3D.Math3D
 
 Module Module1
 
     Sub Main()
-        Dim modelPath = "g:\pixelArtist\src\framework\gr\Landscape\COLLADA\samples\cube.dae"
-        If Not System.IO.File.Exists(modelPath) Then
-            ' 退回到其它候选路径
-            Dim candidates = {
-                "g:\pixelArtist\src\framework\gr\Landscape\COLLADA\samples\house.dae",
-                "g:\pixelArtist\src\framework\gr\3DEngineTest\3mf\example.3mf"
-            }
-            For Each c In candidates
-                If System.IO.File.Exists(c) Then modelPath = c : Exit For
-            Next
-        End If
+        ' 1) 验证 SIMD 旋转与旧 RotatePoint 数学等价（X=90 -> (X,-Z,Y)；Y=90 -> (Z,Y,-X)）
+        Dim cam As New Microsoft.VisualBasic.Imaging.Drawing3D.Camera()
+        cam.AngleX = 90 : cam.AngleY = 0 : cam.AngleZ = 0
+        Dim p1 = cam.Rotate(New Point3D(0, 0, 1))   ' 期望 (0,-1,0)
+        Console.WriteLine($"Rotate(0,0,1) @X90 = ({p1.X:F3},{p1.Y:F3},{p1.Z:F3})")
+        AssertClose(p1, 0, -1, 0, "X=90 (0,0,1)")
 
-        Console.WriteLine("Loading model: " & modelPath)
-        Dim r = New SceneRenderer()
-        r.LoadModel(modelPath)
-        r.FitView()
-        r.Camera.Screen = New Size(800, 600)
+        cam.AngleX = 0 : cam.AngleY = 90 : cam.AngleZ = 0
+        Dim p2 = cam.Rotate(New Point3D(1, 0, 0))   ' 期望 (0,0,-1)
+        Console.WriteLine($"Rotate(1,0,0) @Y90 = ({p2.X:F3},{p2.Y:F3},{p2.Z:F3})")
+        AssertClose(p2, 0, 0, -1, "Y=90 (1,0,0)")
 
-        Dim modes = New RenderMode() {RenderMode.Surface, RenderMode.Mesh, RenderMode.PointCloud}
-        For Each mode In modes
-            r.Mode = mode
-            Using bmp As New Bitmap(800, 600)
-                Using g = Graphics.FromImage(bmp)
-                    r.Draw(g, New Size(800, 600))
-                End Using
-                Dim out = $"smoke_{mode}.png"
-                bmp.Save(out, Imaging.ImageFormat.Png)
+        ' 2) 合成立方体，验证 Camera.Draw 的并行+SIMD 渲染不抛异常且无 NaN
+        cam.AngleX = 20 : cam.AngleY = -30 : cam.AngleZ = 0
+        cam.FieldOfView = 256 * 8
+        cam.Screen = New Size(800, 600)
+        cam.ViewDistance = 1000
 
-                ' 校验不是全空白：统计非背景像素
-                Dim nonBg = 0
-                For y = 0 To bmp.Height - 1 Step 7
-                    For x = 0 To bmp.Width - 1 Step 7
-                        Dim c = bmp.GetPixel(x, y)
-                        If Math.Abs(c.R - r.BackgroundColor.R) > 8 OrElse
-                           Math.Abs(c.G - r.BackgroundColor.G) > 8 OrElse
-                           Math.Abs(c.B - r.BackgroundColor.B) > 8 Then
-                            nonBg += 1
-                        End If
-                    Next
-                Next
-                Console.WriteLine($"Rendered {mode}: nonBgPixels={nonBg}, saved {out}")
-                If nonBg = 0 Then
-                    Console.WriteLine($"WARNING: {mode} produced a blank image (possible render regression)")
-                End If
-            End Using
+        Dim cube = CubeTriangles()
+        Dim surfaces As New System.Collections.Generic.List(Of Microsoft.VisualBasic.Imaging.Drawing3D.Surface)()
+        For Each tri In cube
+            surfaces.Add(New Microsoft.VisualBasic.Imaging.Drawing3D.Surface(tri, New System.Drawing.SolidBrush(Color.FromArgb(180, 60, 120, 200))))
         Next
 
-        Console.WriteLine("SMOKE TEST PASSED (no exceptions)")
+        Using bmp As New Bitmap(800, 600)
+            Using g = Graphics.FromImage(bmp)
+                g.Clear(Color.White)
+                cam.Draw(g, surfaces)
+            End Using
+            bmp.Save("smoke_camera_draw.png", Imaging.ImageFormat.Png)
+        End Using
+        Console.WriteLine("Camera.Draw (parallel + SIMD) OK, surfaces=" & surfaces.Count)
+
+        ' 3) 批量旋转 SIMD 路径
+        Dim pts = cube.SelectMany(Function(t) t).ToArray()
+        Dim rotated = cam.Rotate(pts)
+        If rotated.Length <> pts.Length Then Throw New Exception("Batch Rotate length mismatch")
+        For Each r In rotated
+            If Double.IsNaN(r.X) OrElse Double.IsNaN(r.Y) OrElse Double.IsNaN(r.Z) Then
+                Throw New Exception("Batch Rotate produced NaN")
+            End If
+        Next
+        Console.WriteLine("Batch Rotate (SIMD) count=" & rotated.Length & " finite=OK")
+
+        Console.WriteLine("SMOKE TEST PASSED")
     End Sub
+
+    Sub AssertClose(p As Point3D, ex As Double, ey As Double, ez As Double, tag As String)
+        Dim tol = 1.0E-3
+        If Math.Abs(p.X - ex) > tol OrElse Math.Abs(p.Y - ey) > tol OrElse Math.Abs(p.Z - ez) > tol Then
+            Throw New Exception($"Rotation math regression [{tag}]: got ({p.X},{p.Y},{p.Z}) expected ({ex},{ey},{ez})")
+        End If
+    End Sub
+
+    Function CubeTriangles() As System.Collections.Generic.List(Of Point3D())
+        Dim v = {
+            New Point3D(-1, -1, -1), New Point3D(1, -1, -1), New Point3D(1, 1, -1), New Point3D(-1, 1, -1),
+            New Point3D(-1, -1, 1), New Point3D(1, -1, 1), New Point3D(1, 1, 1), New Point3D(-1, 1, 1)
+        }
+        Dim faces = {
+            New Integer() {0, 1, 2, 3}, New Integer() {4, 5, 6, 7},
+            New Integer() {0, 1, 5, 4}, New Integer() {2, 3, 7, 6},
+            New Integer() {1, 2, 6, 5}, New Integer() {0, 3, 7, 4}
+        }
+        Dim tris = New System.Collections.Generic.List(Of Point3D())()
+        For Each f In faces
+            tris.Add({v(f(0)), v(f(1)), v(f(2))})
+            tris.Add({v(f(0)), v(f(2)), v(f(3))})
+        Next
+        Return tris
+    End Function
 
 End Module
