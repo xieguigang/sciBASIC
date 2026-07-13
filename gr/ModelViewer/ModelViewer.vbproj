@@ -14,6 +14,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="SmokeTest\**" />
+    <EmbeddedResource Remove="SmokeTest\**" />
+    <None Remove="SmokeTest\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Import Include="System.Windows.Forms" />
     <Import Include="System.Drawing" />
   </ItemGroup>
