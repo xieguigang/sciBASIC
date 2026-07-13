@@ -51,71 +51,119 @@ Public Class MainForm : Inherits Form
 
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(MainForm))
+        menuStrip = New MenuStrip()
+        fileMenu = New ToolStripMenuItem()
+        openItem = New ToolStripMenuItem()
+        toolStrip = New ToolStrip()
+        cboMode = New ToolStripComboBox()
+        cboScheme = New ToolStripComboBox()
+        chkEmbedded = New ToolStripButton()
+        numPointSize = New ToolStripComboBox()
+        menuStrip.SuspendLayout()
+        toolStrip.SuspendLayout()
         SuspendLayout()
+        ' 
+        ' menuStrip
+        ' 
+        menuStrip.Items.AddRange(New ToolStripItem() {fileMenu})
+        menuStrip.Location = New Point(0, 0)
+        menuStrip.Name = "menuStrip"
+        menuStrip.Size = New Size(984, 24)
+        menuStrip.TabIndex = 0
+        ' 
+        ' fileMenu
+        ' 
+        fileMenu.DropDownItems.AddRange(New ToolStripItem() {openItem})
+        fileMenu.Name = "fileMenu"
+        fileMenu.Size = New Size(59, 20)
+        fileMenu.Text = "文件(&F)"
+        ' 
+        ' openItem
+        ' 
+        openItem.Name = "openItem"
+        openItem.Size = New Size(180, 22)
+        openItem.Text = "打开模型/点云..."
+        ' 
+        ' toolStrip
+        ' 
+        toolStrip.Items.AddRange(New ToolStripItem() {cboMode, cboScheme, chkEmbedded, numPointSize})
+        toolStrip.Location = New Point(0, 24)
+        toolStrip.Name = "toolStrip"
+        toolStrip.Size = New Size(984, 25)
+        toolStrip.TabIndex = 1
+        ' 
+        ' cboMode
+        ' 
+        cboMode.DropDownStyle = ComboBoxStyle.DropDownList
+        cboMode.Items.AddRange(New Object() {"表面渲染", "三角形网格", "点云 (PLY)"})
+        cboMode.Name = "cboMode"
+        cboMode.Size = New Size(121, 25)
+        cboMode.Text = "表面渲染"
+        ' 
+        ' cboScheme
+        ' 
+        cboScheme.DropDownStyle = ComboBoxStyle.DropDownList
+        cboScheme.Items.AddRange(New Object() {"viridis", "magma", "inferno", "plasma", "turbo", "jet", "rainbow", "cividis", "mako", "rocket", "viridis:rocket"})
+        cboScheme.Name = "cboScheme"
+        cboScheme.Size = New Size(121, 25)
+        cboScheme.Text = "viridis"
+        ' 
+        ' chkEmbedded
+        ' 
+        chkEmbedded.CheckOnClick = True
+        chkEmbedded.Name = "chkEmbedded"
+        chkEmbedded.Size = New Size(115, 22)
+        chkEmbedded.Text = "使用点云自带颜色"
+        ' 
+        ' numPointSize
+        ' 
+        numPointSize.DropDownStyle = ComboBoxStyle.DropDownList
+        numPointSize.Items.AddRange(New Object() {"1", "2", "3", "4", "5", "6", "8", "10", "12"})
+        numPointSize.Name = "numPointSize"
+        numPointSize.Size = New Size(121, 25)
+        numPointSize.Text = "2"
+
+
+        btnReset = New ToolStripButton("重置视角")
+
+        toolStrip.Items.Add(btnReset)
+
+        ' ---- 画布 ----
+        canvas = New RenderPanel()
+        canvas.Dock = DockStyle.Fill
+        canvas.BackColor = Color.White
+        canvas.TabStop = True
+
+        ' ---- 状态栏 ----
+        statusStrip = New StatusStrip()
+        lblStatus = New ToolStripStatusLabel("请通过「文件 ▸ 打开」加载三维模型或 PLY 点云")
+        statusStrip.Items.Add(lblStatus)
+
+        Me.Controls.Add(lightPanel)
+
+        ' ---- 布局 ----
+        Me.Controls.Add(canvas)
+
+        Me.Controls.Add(statusStrip)
+
         ' 
         ' MainForm
         ' 
-        ClientSize = New Size(931, 611)
+        ClientSize = New Size(984, 661)
+        Controls.Add(toolStrip)
+        Controls.Add(menuStrip)
         Icon = CType(resources.GetObject("$this.Icon"), Icon)
+        MainMenuStrip = menuStrip
+        MinimumSize = New Size(400, 300)
         Name = "MainForm"
-        Me.Text = "ModelViewer - 三维模型与点云查看器"
-        Me.Size = New Size(1000, 700)
-        Me.StartPosition = FormStartPosition.CenterScreen
-        Me.MinimumSize = New Size(400, 300)
-
-
-        ' ---- 菜单 ----
-        menuStrip = New MenuStrip()
-        fileMenu = New ToolStripMenuItem("文件(&F)")
-        openItem = New ToolStripMenuItem("打开模型/点云...")
-        fileMenu.DropDownItems.Add(openItem)
-        menuStrip.Items.Add(fileMenu)
-        Me.MainMenuStrip = menuStrip
-
-        ' ---- 工具栏 ----
-        toolStrip = New ToolStrip()
-
-        toolStrip.Items.Add(New ToolStripLabel("渲染模式:"))
-        cboMode = New ToolStripComboBox()
-        cboMode.Items.AddRange(New Object() {"表面渲染", "三角形网格", "点云 (PLY)"})
-        cboMode.SelectedIndex = 0
-        cboMode.DropDownStyle = ComboBoxStyle.DropDownList
-
-        toolStrip.Items.Add(cboMode)
-
-        toolStrip.Items.Add(New ToolStripSeparator())
-
-        toolStrip.Items.Add(New ToolStripLabel("点云配色:"))
-        cboScheme = New ToolStripComboBox()
-        cboScheme.Items.AddRange(New Object() {
-            "viridis", "magma", "inferno", "plasma", "turbo",
-            "jet", "rainbow", "cividis", "mako", "rocket", "viridis:rocket"})
-        cboScheme.SelectedIndex = 0
-        cboScheme.DropDownStyle = ComboBoxStyle.DropDownList
-
-        toolStrip.Items.Add(cboScheme)
-
-        chkEmbedded = New ToolStripButton()
-        chkEmbedded.Text = "使用点云自带颜色"
-        chkEmbedded.CheckOnClick = True
-
-        toolStrip.Items.Add(chkEmbedded)
-        toolStrip.Items.Add(New ToolStripLabel("点径:"))
-        numPointSize = New ToolStripComboBox()
-        numPointSize.Items.AddRange(New Object() {"1", "2", "3", "4", "5", "6", "8", "10", "12"})
-        numPointSize.SelectedIndex = 1
-        numPointSize.DropDownStyle = ComboBoxStyle.DropDownList
-        numPointSize.Width = 50
-
-        toolStrip.Items.Add(numPointSize)
-
-        toolStrip.Items.Add(New ToolStripSeparator())
-
-
-        Me.Controls.Add(menuStrip)
-        Me.Controls.Add(toolStrip)
-
+        StartPosition = FormStartPosition.CenterScreen
+        Text = "ModelViewer - 三维模型与点云查看器"
+        menuStrip.ResumeLayout(False)
+        menuStrip.PerformLayout()
+        toolStrip.ResumeLayout(False)
+        toolStrip.PerformLayout()
         ResumeLayout(False)
+        PerformLayout()
 
     End Sub
 
@@ -132,34 +180,19 @@ Public Class MainForm : Inherits Form
 
 
 
-        btnReset = New ToolStripButton("重置视角")
-        AddHandler btnReset.Click, AddressOf ResetViewClick
-        toolStrip.Items.Add(btnReset)
 
-        ' ---- 画布 ----
-        canvas = New RenderPanel()
-        canvas.Dock = DockStyle.Fill
-        canvas.BackColor = Color.White
-        canvas.TabStop = True
+
         AddHandler canvas.Paint, AddressOf Canvas_Paint
         AddHandler canvas.MouseDown, AddressOf Canvas_MouseDown
         AddHandler canvas.MouseMove, AddressOf Canvas_MouseMove
         AddHandler canvas.MouseUp, AddressOf Canvas_MouseUp
         AddHandler canvas.Zoom, AddressOf OnCanvasZoom
 
-        ' ---- 状态栏 ----
-        statusStrip = New StatusStrip()
-        lblStatus = New ToolStripStatusLabel("请通过「文件 ▸ 打开」加载三维模型或 PLY 点云")
-        statusStrip.Items.Add(lblStatus)
+
 
         ' ---- 光照参数面板 ----
         BuildLightingPanel()
-        Me.Controls.Add(lightPanel)
 
-        ' ---- 布局 ----
-        Me.Controls.Add(canvas)
-
-        Me.Controls.Add(statusStrip)
 
 
         ' ---- 打开对话框 ----
@@ -377,7 +410,7 @@ Public Class MainForm : Inherits Form
         canvas.Invalidate()
     End Sub
 
-    Private Sub ResetViewClick(sender As Object, e As EventArgs)
+    Private Sub ResetViewClick(sender As Object, e As EventArgs) Handles btnReset.Click
         ResetView()
     End Sub
 
@@ -456,13 +489,16 @@ Public Class MainForm : Inherits Form
 
     Private Sub UpdateStatus()
         Dim modeText = renderer.Mode.ToString()
-        lblStatus.Text =
-            $"文件: {IO.Path.GetFileName(currentFile)}  |  " &
-            $"模式: {modeText}  |  " &
-            $"面: {renderer.SurfaceCount}  点: {renderer.PointCount}  |  " &
-            $"角度X: {renderer.Camera.AngleX:F1}  Y: {renderer.Camera.AngleY:F1}  |  " &
-            $"视距: {renderer.Camera.ViewDistance:F1}  |  " &
-            $"环境光: {renderer.Camera.AmbientStrength:P0}  亮度: {lightIntensity:P0}"
+
+        If lblStatus IsNot Nothing Then
+            lblStatus.Text =
+                $"文件: {IO.Path.GetFileName(currentFile)}  |  " &
+                $"模式: {modeText}  |  " &
+                $"面: {renderer.SurfaceCount}  点: {renderer.PointCount}  |  " &
+                $"角度X: {renderer.Camera.AngleX:F1}  Y: {renderer.Camera.AngleY:F1}  |  " &
+                $"视距: {renderer.Camera.ViewDistance:F1}  |  " &
+                $"环境光: {renderer.Camera.AmbientStrength:P0}  亮度: {lightIntensity:P0}"
+        End If
     End Sub
 End Class
 
