@@ -1,4 +1,6 @@
+Imports System.Windows.Forms.VisualStyles.VisualStyleElement.Window
 Imports Microsoft.VisualBasic.Imaging.Drawing3D
+Imports Microsoft.VisualBasic.Math.Statistics
 
 Public Class MainForm : Inherits Form
 
@@ -23,11 +25,11 @@ Public Class MainForm : Inherits Form
 
     ' ---- 光照调节状态 ----
     Private WithEvents lightPanel As Panel
-    Private WithEvents lblAmbient As Label
+    Friend WithEvents lblAmbient As Label
     Private WithEvents lblIntensity As Label
     Private WithEvents lblElevation As Label
     Private WithEvents lblAzimuth As Label
-    Private WithEvents trkAmbient As TrackBar
+    Friend WithEvents trkAmbient As TrackBar
     Private WithEvents trkIntensity As TrackBar
     Private WithEvents trkElevation As TrackBar
     Private WithEvents trkAzimuth As TrackBar
@@ -69,10 +71,16 @@ Public Class MainForm : Inherits Form
         btnLightColor = New Button()
         lblLightColor = New Label()
         btnResetLight = New Button()
+        lblAmbient = New Label()
+        trkAmbient = New TrackBar()
+        lblIntensity = New Label()
+        trkIntensity = New TrackBar()
         menuStrip.SuspendLayout()
         toolStrip.SuspendLayout()
         statusStrip.SuspendLayout()
         lightPanel.SuspendLayout()
+        CType(trkAmbient, ComponentModel.ISupportInitialize).BeginInit()
+        CType(trkIntensity, ComponentModel.ISupportInitialize).BeginInit()
         SuspendLayout()
         ' 
         ' menuStrip
@@ -171,6 +179,10 @@ Public Class MainForm : Inherits Form
         lightPanel.Controls.Add(btnLightColor)
         lightPanel.Controls.Add(lblLightColor)
         lightPanel.Controls.Add(btnResetLight)
+        lightPanel.Controls.Add(lblAmbient)
+        lightPanel.Controls.Add(trkAmbient)
+        lightPanel.Controls.Add(lblIntensity)
+        lightPanel.Controls.Add(trkIntensity)
         lightPanel.Dock = DockStyle.Right
         lightPanel.Location = New Point(734, 0)
         lightPanel.Name = "lightPanel"
@@ -190,7 +202,7 @@ Public Class MainForm : Inherits Form
         ' 
         ' btnLightColor
         ' 
-        btnLightColor.Location = New Point(8, 142)
+        btnLightColor.Location = New Point(13, 561)
         btnLightColor.Name = "btnLightColor"
         btnLightColor.Size = New Size(96, 23)
         btnLightColor.TabIndex = 1
@@ -199,18 +211,55 @@ Public Class MainForm : Inherits Form
         ' lblLightColor
         ' 
         lblLightColor.BorderStyle = BorderStyle.FixedSingle
-        lblLightColor.Location = New Point(112, 142)
+        lblLightColor.Location = New Point(117, 561)
         lblLightColor.Name = "lblLightColor"
         lblLightColor.Size = New Size(48, 22)
         lblLightColor.TabIndex = 2
         ' 
         ' btnResetLight
         ' 
-        btnResetLight.Location = New Point(8, 183)
+        btnResetLight.Location = New Point(13, 602)
         btnResetLight.Name = "btnResetLight"
         btnResetLight.Size = New Size(152, 23)
         btnResetLight.TabIndex = 3
         btnResetLight.Text = "重置光照"
+        ' 
+        ' lblAmbient
+        ' 
+        lblAmbient.AutoSize = True
+        lblAmbient.Location = New Point(8, 36)
+        lblAmbient.Name = "lblAmbient"
+        lblAmbient.Size = New Size(157, 15)
+        lblAmbient.TabIndex = 4
+        lblAmbient.Text = "环境光强度 (Ambient): 25%"
+        ' 
+        ' trkAmbient
+        ' 
+        trkAmbient.Anchor = AnchorStyles.Top Or AnchorStyles.Left Or AnchorStyles.Right
+        trkAmbient.Location = New Point(5, 54)
+        trkAmbient.Maximum = 100
+        trkAmbient.Name = "trkAmbient"
+        trkAmbient.Size = New Size(232, 45)
+        trkAmbient.TabIndex = 5
+        trkAmbient.Value = 25
+        ' 
+        ' lblIntensity
+        ' 
+        lblIntensity.AutoSize = True
+        lblIntensity.Location = New Point(13, 263)
+        lblIntensity.Name = "lblIntensity"
+        lblIntensity.Size = New Size(150, 15)
+        lblIntensity.TabIndex = 6
+        lblIntensity.Text = "光照亮度 (消除发白): 65%"
+        ' 
+        ' trkIntensity
+        ' 
+        trkIntensity.Location = New Point(1, 293)
+        trkIntensity.Maximum = 100
+        trkIntensity.Name = "trkIntensity"
+        trkIntensity.Size = New Size(248, 45)
+        trkIntensity.TabIndex = 7
+        trkIntensity.Value = 65
         ' 
         ' MainForm
         ' 
@@ -234,6 +283,8 @@ Public Class MainForm : Inherits Form
         statusStrip.PerformLayout()
         lightPanel.ResumeLayout(False)
         lightPanel.PerformLayout()
+        CType(trkAmbient, ComponentModel.ISupportInitialize).EndInit()
+        CType(trkIntensity, ComponentModel.ISupportInitialize).EndInit()
         ResumeLayout(False)
         PerformLayout()
 
@@ -271,14 +322,18 @@ Public Class MainForm : Inherits Form
 
 
         Dim top = 36
-        trkAmbient = MakeSlider(lightPanel, lblAmbient, "环境光强度 (Ambient): 25%", 0, 100, 25, top, AddressOf LightingScroll)
+
         top += 50
-        trkIntensity = MakeSlider(lightPanel, lblIntensity, "光照亮度 (消除发白): 65%", 0, 100, 65, top, AddressOf LightingScroll)
+
         top += 50
         trkElevation = MakeSlider(lightPanel, lblElevation, "光源仰角: 45°", -90, 90, 45, top, AddressOf LightingScroll)
         top += 50
         trkAzimuth = MakeSlider(lightPanel, lblAzimuth, "光源方位: -30°", -360, 360, -30, top, AddressOf LightingScroll)
         top += 56
+
+
+
+
 
 
 
@@ -291,13 +346,13 @@ Public Class MainForm : Inherits Form
         ResetLighting()
     End Sub
 
-    Private Function MakeSlider(parent As Control, ByRef caption As Label, title As String, min As Integer, max As Integer, val As Integer, top As Integer, handler As EventHandler) As TrackBar
+    Private Function MakeSlider(lightPanel As Control, ByRef caption As Label, title As String, min As Integer, max As Integer, val As Integer, top As Integer, handler As EventHandler) As TrackBar
         caption = New Label()
         caption.Text = title
         caption.AutoSize = True
         caption.Top = top
         caption.Left = 8
-        parent.Controls.Add(caption)
+        lightPanel.Controls.Add(caption)
 
         Dim tb = New TrackBar()
         tb.Minimum = min
@@ -306,13 +361,13 @@ Public Class MainForm : Inherits Form
         tb.TickStyle = TickStyle.BottomRight
         tb.Left = 8
         tb.Top = top + 16
-        tb.Width = parent.ClientSize.Width - 16
+        tb.Width = lightPanel.ClientSize.Width - 16
         AddHandler tb.Scroll, handler
-        parent.Controls.Add(tb)
+        lightPanel.Controls.Add(tb)
         Return tb
     End Function
 
-    Private Sub LightingScroll(sender As Object, e As EventArgs)
+    Private Sub LightingScroll(sender As Object, e As EventArgs) Handles trkAmbient.Scroll, trkIntensity.Scroll
         ApplyLighting()
     End Sub
 
