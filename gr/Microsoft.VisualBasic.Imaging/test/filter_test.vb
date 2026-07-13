@@ -63,7 +63,7 @@ Imports Microsoft.VisualBasic.Math.Distributions
 
 Module filter_test
 
-    Sub Main()
+    Sub Main1()
         Call testDraw()
 
         Dim img = "Z:\Capture.PNG".LoadImage
