@@ -49,8 +49,9 @@
 
 #End Region
 
-Imports std = System.Math
 Imports tf = Microsoft.VisualBasic.MachineLearning.TensorFlow
+
+Namespace NumPy
 
 ''' <summary>
 ''' NumPy 兼容 API 模块
@@ -62,15 +63,15 @@ Imports tf = Microsoft.VisualBasic.MachineLearning.TensorFlow
 ''' Dim a = np.zeros(3, 4)
 ''' Dim b = np.dot(a, a.transpose())
 ''' </remarks>
-Public Module NumPy
+Public Module NumPyModule
 
 #Region "随机数"
 
     ''' <summary>
     ''' NumPy 风格的随机数子模块
-    ''' np.random.rand(...) 和 np.random.randn(...) 对应 NumPy.Random.rand(...)
+    ''' np.random.rand(...) 和 np.random.randn(...) 对应 NumPy.RandomState.rand(...)
     ''' </summary>
-    Public Class Random
+    Public Class RandomState
 
         ''' <summary>
         ''' 生成均匀分布 [0, 1) 的随机张量 (np.random.rand)
@@ -131,7 +132,7 @@ Public Module NumPy
     ''' </summary>
     Public Function full(shape As Integer(), value As Double) As Tensor
         Dim t = New Tensor(shape)
-        Array.Fill(t.Data, value)
+        System.Array.Fill(t.Data, value)
         Return t
     End Function
 
@@ -146,7 +147,7 @@ Public Module NumPy
             Return Tensor.Identity(n)
         End If
         Dim result = New Tensor(n, cols)
-        Dim minDim = std.Min(n, cols)
+        Dim minDim = System.Math.Min(n, cols)
         For i = 0 To minDim - 1
             result(i, i) = 1.0
         Next
@@ -410,7 +411,7 @@ Public Module NumPy
                 Dim srcData = t.Data
                 Dim srcBase = block * axisLen * postAxisSize
                 Dim copyLen = axisLen * postAxisSize
-                Array.Copy(srcData, srcBase, dstData, dstOffset, copyLen)
+                System.Array.Copy(srcData, srcBase, dstData, dstOffset, copyLen)
                 dstOffset += copyLen
             Next
         Next
@@ -780,3 +781,5 @@ Public Module NumPy
 #End Region
 
 End Module
+
+End Namespace
