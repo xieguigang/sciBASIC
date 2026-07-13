@@ -16,23 +16,25 @@
     <Project Path="../../../mime/text%html/html_netcore5.vbproj">
       <Platform Solution="*|x64" Project="x64" />
     </Project>
-    <Project Path="../../Mathematica/Math/DataFittings/linear-netcore5.vbproj">
-      <Platform Solution="*|x64" Project="x64" />
-    </Project>
-    <Project Path="../../Mathematica/Math/Math.Statistics/stats-netcore5.vbproj">
-      <Platform Solution="*|x64" Project="x64" />
-    </Project>
-    <Project Path="../../Mathematica/Math/Math/Math.NET5.vbproj">
-      <Platform Solution="*|x64" Project="x64" />
-    </Project>
-    <Project Path="../../Mathematica/SignalProcessing/SignalProcessing/signalprocessing-netcore5.vbproj">
-      <Platform Solution="*|x64" Project="x64" />
-    </Project>
-    <Project Path="../DataPlot/DataPlot.vbproj">
+    <Project Path="../../Visualization/DataPlot/DataPlot.vbproj">
       <Platform Solution="*|x64" Project="x64" />
     </Project>
   </Folder>
-  <Project Path="SignalPlotDemo.vbproj">
+  <Folder Name="/framework/math/">
+    <Project Path="../Math/DataFittings/linear-netcore5.vbproj">
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="../Math/Math.Statistics/stats-netcore5.vbproj">
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="../Math/Math/Math.NET5.vbproj">
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="SignalProcessing/signalprocessing-netcore5.vbproj">
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+  </Folder>
+  <Project Path="SignalPlotDemo/SignalPlotDemo.vbproj">
     <Platform Solution="*|x64" Project="x64" />
   </Project>
 </Solution>
