@@ -89,29 +89,12 @@ Namespace Drawing3D.Math3D
         ''' <returns></returns>
         Public Function PointXY(screen As Size) As IEnumerable(Of Point)
             Dim out As New List(Of Point)
-            Dim width! = screen.Width, height! = screen.Height
 
             For i As Integer = 0 To Me.X.Count - 1
-                Dim x# = Me.X(i)
-                Dim y# = Me.Y(i)
+                Dim x# = Point3D.ClampProjection(Me.X(i), screen.Width)
+                Dim y# = Point3D.ClampProjection(Me.Y(i), screen.Height)
 
-                If x > Integer.MaxValue OrElse Single.IsPositiveInfinity(x) Then
-                    x = width
-                ElseIf x < Integer.MinValue OrElse Single.IsNegativeInfinity(x) Then
-                    x = 0
-                ElseIf Single.IsNaN(x) Then
-                    x = width
-                End If
-
-                If y > Integer.MaxValue OrElse Single.IsPositiveInfinity(y) Then
-                    y = height
-                ElseIf y < Integer.MinValue OrElse Single.IsNegativeInfinity(y) Then
-                    y = 0
-                ElseIf Single.IsNaN(y) Then
-                    y = height
-                End If
-
-                out += New Point(x, y)
+                out.Add(New Point(CInt(x), CInt(y)))
             Next
 
             Return out

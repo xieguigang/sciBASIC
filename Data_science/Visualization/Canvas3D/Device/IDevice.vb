@@ -55,7 +55,7 @@ Imports System.Runtime.CompilerServices
 
 Namespace Drawing3D.Device
 
-    Public MustInherit Class IDevice(Of T As UserControl)
+    Public MustInherit Class IDevice(Of T As System.Windows.Forms.UserControl)
 
         Protected WithEvents device As T
 

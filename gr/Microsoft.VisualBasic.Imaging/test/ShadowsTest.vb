@@ -55,12 +55,17 @@ Imports System.Drawing
 Imports System.Drawing.Drawing2D
 Imports Microsoft.VisualBasic.Drawing
 Imports Microsoft.VisualBasic.Imaging
+Imports Brushes = System.Drawing.Brushes
+Imports ColorBlend = System.Drawing.Drawing2D.ColorBlend
+Imports GraphicsPath = System.Drawing.Drawing2D.GraphicsPath
+Imports PathGradientBrush = System.Drawing.Drawing2D.PathGradientBrush
+Imports WrapMode = System.Drawing.Drawing2D.WrapMode
 
 Module ShadowsTest
 
     Sub Main1()
-
-        Using Graphics As Graphics2D = New Size(500, 500).CreateGDIDevice(Color.White)
+        Dim bmp As New System.Drawing.Bitmap(500, 500)
+        Using Graphics As Graphics = Graphics.FromImage(bmp)
 
             Dim _path As New GraphicsPath
 
@@ -113,8 +118,10 @@ Module ShadowsTest
 
                 Graphics.FillPath(Brushes.Red, _path)
 
-                Graphics.Save("./shadows.png", ImageFormats.Png)
+
             End Using
         End Using
+
+        bmp.SaveAs("./shadows.png", ImageFormats.Png)
     End Sub
 End Module

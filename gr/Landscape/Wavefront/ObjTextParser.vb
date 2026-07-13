@@ -95,7 +95,7 @@ Namespace Wavefront
                     If line.StartsWith("mtllib") Then
                         mtllib = Mid(line.Value, "mtllib".Length + 1).Trim
                     Else
-                        Dim tokens As String() = line.Split
+                        Dim tokens As String() = line.Value.Split(New Char() {" "c, vbTab}, StringSplitOptions.RemoveEmptyEntries)
 
                         Select Case tokens(0)
                             Case "v"

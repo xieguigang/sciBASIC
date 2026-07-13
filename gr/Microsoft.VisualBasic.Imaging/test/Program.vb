@@ -88,7 +88,7 @@ Module Program
 
     Sub ASCIIArt_test()
 
-        Call "../1537192287563.jpg".LoadImage.GetBinaryBitmap().Convert2ASCII({"+"c, "-"c, "*"c, "."c}.GenerateFontWeights(New Font(FontFace.Consolas, 10))).SaveTo("../ascii.txt")
+        Call "../1537192287563.jpg".LoadImage.GetBinaryBitmap().Convert2ASCII({"+"c, "-"c, "*"c, "."c}.GenerateFontWeights(New Microsoft.VisualBasic.Imaging.Font(FontFace.Consolas, 10))).SaveTo("../ascii.txt")
 
         Pause()
 
@@ -157,14 +157,14 @@ log<sub>2</sub> ratio
 </html>
 "
 
-        Dim bitmap As New Bitmap(500, 300)
+        Dim bitmap As New System.Drawing.Bitmap(500, 300)
 
         Using g As Graphics = Graphics.FromImage(bitmap)
 
             g.Clear(Color.White)
             g.CompositingQuality = CompositingQuality.HighQuality
             g.TextRenderingHint = TextRenderingHint.AntiAlias
-            Call g.Render(html, New PointF(10, 10), 500)
+            ' Call g.Render(html, New PointF(10, 10), 500)
 
 
             Call TextRender.RenderHTML(g, "<span style=""color:lime"">Green Color Text</span>", CSSFont.PlotTitle, New PointF(0, 200))

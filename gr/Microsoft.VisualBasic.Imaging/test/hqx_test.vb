@@ -56,6 +56,7 @@ Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.BitmapImage
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.HeatMap
 Imports Microsoft.VisualBasic.Drawing
+Imports Bitmap = Microsoft.VisualBasic.Imaging.Bitmap
 
 Module hqx_test
 
@@ -81,7 +82,7 @@ Module hqx_test
     End Sub
 
     Sub bufferTest()
-        Dim img As Bitmap = New Bitmap(sourcePixels.LoadImage)
+        Dim img As New Bitmap(sourcePixels.LoadImage)
         Dim blank As New Bitmap(img.Width, img.Height)
         Dim buffer As BitmapBuffer = BitmapBuffer.FromBitmap(img)
         Dim bytes = buffer.GetARGBStream

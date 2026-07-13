@@ -75,7 +75,7 @@ Public Module HtmlRenderTest
             Dim size = g.MeasureSize(content).ToSize
             Dim rect As New Rectangle With {.Location = New Point(20, 20), .Size = size}
 
-            Call g.DrawRectangle(Pens.Green, rect)
+            Call g.DrawRectangle(Microsoft.VisualBasic.Imaging.Pens.Green, rect)
 
             Call g.Save("./test.png", ImageFormats.Png)
         End Using

@@ -77,7 +77,30 @@ Namespace PostScript.Elements
         Public Property fill As String
 
         Friend Overrides Sub WriteAscii(ps As Writer)
-            Throw New NotImplementedException()
+            If points Is Nothing OrElse points.Length < 3 Then
+                Return
+            End If
+
+            Call ps.moveto(points(0))
+
+            For i As Integer = 1 To points.Length - 1
+                Call ps.lineto(points(i).X, points(i).Y)
+            Next
+
+            Call ps.closepath()
+
+            If Not fill.StringEmpty(, True) Then
+                Call ps.color(fill.TranslateColor)
+                Call ps.fill()
+            End If
+
+            If stroke IsNot Nothing Then
+                Dim pen As Pen = ps.pen(stroke)
+
+                Call ps.linewidth(pen.Width)
+                Call ps.color(pen.Color)
+                Call ps.stroke()
+            End If
         End Sub
 
         Friend Overrides Sub Paint(g As IGraphics)
@@ -108,10 +131,16 @@ Namespace PostScript.Elements
         End Function
 
         Friend Overrides Function GetSize() As SizeF
-            Dim x As New List(Of Single)
-            Dim y As New List(Of Single)
+            If points Is Nothing OrElse points.Length = 0 Then
+                Return New SizeF(0, 0)
+            End If
 
-            Return New SizeF(New DoubleRange(x).Length, New DoubleRange(y).Length)
+            Dim minX As Single = points.Min(Function(p) p.X)
+            Dim maxX As Single = points.Max(Function(p) p.X)
+            Dim minY As Single = points.Min(Function(p) p.Y)
+            Dim maxY As Single = points.Max(Function(p) p.Y)
+
+            Return New SizeF(maxX - minX, maxY - minY)
         End Function
     End Class
 

@@ -74,6 +74,8 @@ Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.PostScript
 Imports Microsoft.VisualBasic.Imaging.SVG
 Imports Microsoft.VisualBasic.MIME.Html.CSS
+Imports System.IO
+
 
 #If WINDOWS Then
 Imports Microsoft.VisualBasic.Drawing
@@ -130,6 +132,13 @@ Namespace Driver
 
             Call DriverLoad.Register(New RasterInterop, Drivers.GDI)
             Call DriverLoad.Register(New SvgInterop, Drivers.SVG)
+            Call DriverLoad.Register(Function(s As Stream)
+                                         Using ms As New MemoryStream
+                                             Call s.CopyTo(ms)
+                                             Call ms.Seek(Scan0, SeekOrigin.Begin)
+                                             Return New GDIPlusImage(System.Drawing.Image.FromStream(ms))
+                                         End Using
+                                     End Function)
             Call DriverLoad.Register(Function(text As String, font As Font)
                                          Return gfx.MeasureString(text, New System.Drawing.Font(font.Name, font.Size, font.Style.CastFontStyle))
                                      End Function)

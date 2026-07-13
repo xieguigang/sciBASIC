@@ -1,59 +1,59 @@
 ﻿#Region "Microsoft.VisualBasic::cfed9bb15dfc1c18cc3b7e4a5365273b, gr\Microsoft.VisualBasic.Imaging\Drawing3D\Math3D\Polyhedron\Polyhedron.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 347
-    '    Code Lines: 59 (17.00%)
-    ' Comment Lines: 270 (77.81%)
-    '    - Xml Docs: 69.26%
-    ' 
-    '   Blank Lines: 18 (5.19%)
-    '     File Size: 15.78 KB
+' Summaries:
 
 
-    '     Class Polyhedron
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    '         Function: triangle_positions, volume, winding_number
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 347
+'    Code Lines: 59 (17.00%)
+' Comment Lines: 270 (77.81%)
+'    - Xml Docs: 69.26%
+' 
+'   Blank Lines: 18 (5.19%)
+'     File Size: 15.78 KB
+
+
+'     Class Polyhedron
+' 
+'         Constructor: (+1 Overloads) Sub New
+'         Function: triangle_positions, volume, winding_number
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
-Imports stdNum = System.Math
+Imports std = System.Math
 Imports ValueError = System.ArgumentException
 
 Namespace Drawing3D.Math3D
@@ -394,7 +394,7 @@ Namespace Drawing3D.Math3D
                          Let v2 = v(1)
                          Let v3 = v(2)
                          Into Sum(triangle_chain(v1, v2, v3, pt))
-            Dim fixed As Integer = stdNum.Floor(sumAll / 2)
+            Dim fixed As Integer = std.Floor(sumAll / 2)
 
             Return fixed
         End Function

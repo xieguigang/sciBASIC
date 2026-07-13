@@ -1,58 +1,60 @@
 ﻿#Region "Microsoft.VisualBasic::63c04126283cef81ac29097f36568bbe, sciBASIC#\Data_science\Visualization\Canvas3D\Device\Debugger.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 96
-    '    Code Lines: 60
-    ' Comment Lines: 17
-    '   Blank Lines: 19
-    '     File Size: 3.69 KB
+' Summaries:
 
 
-    '     Class Debugger
-    ' 
-    '         Properties: FPS
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    '         Sub: ClearFPSCount, device_MouseMove, (+2 Overloads) Dispose, DrawInformation
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 96
+'    Code Lines: 60
+' Comment Lines: 17
+'   Blank Lines: 19
+'     File Size: 3.69 KB
+
+
+'     Class Debugger
+' 
+'         Properties: FPS
+' 
+'         Constructor: (+1 Overloads) Sub New
+'         Sub: ClearFPSCount, device_MouseMove, (+2 Overloads) Dispose, DrawInformation
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
+Imports System.Drawing
+Imports System.Windows.Forms
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing3D
 Imports Microsoft.VisualBasic.Parallel.Tasks
@@ -72,8 +74,8 @@ Namespace Drawing3D.Device
             Call FPSThread.Start()
         End Sub
 
-        Dim font As New Font(FontFace.Consolas, 9)
-        Dim red As SolidBrush = Brushes.Red
+        Dim font As New System.Drawing.Font(FontFace.Consolas, 9)
+        Dim red As System.Drawing.SolidBrush = System.Drawing.Brushes.Red
         Dim mouse As Point
         Dim WithEvents FPSThread As New UpdateThread(1000, AddressOf ClearFPSCount)
 

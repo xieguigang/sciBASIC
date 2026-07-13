@@ -57,7 +57,6 @@
 #End Region
 
 Imports System.Drawing
-Imports System.Drawing.Drawing2D
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Imaging.Drawing3D.Math3D
 Imports Microsoft.VisualBasic.Imaging.Drawing3D.Models
@@ -71,7 +70,7 @@ Namespace Drawing3D
     ''' <remarks>
     ''' (进行实际3D绘图操作的对象模型，这个对象实际上就是相当于Path3D??)
     ''' </remarks>
-    Public Structure Surface
+    Public Class Surface
         Implements IEnumerable(Of Point3D)
         Implements I3DModel
 
@@ -80,11 +79,14 @@ Namespace Drawing3D
         ''' for construct a correct closed figure.
         ''' (请注意，在这里面的点都是有先后顺序分别的)
         ''' </summary>
-        Public vertices() As Point3D
+        Public Property vertices As Point3D()
         ''' <summary>
         ''' Drawing texture material of this surface.
         ''' </summary>
-        Public brush As Brush
+        Public Property brush As Brush
+
+        Sub New()
+        End Sub
 
         Sub New(v As Point3D(), b As Brush)
             brush = b
@@ -142,5 +144,5 @@ Namespace Drawing3D
 
             Return model
         End Function
-    End Structure
+    End Class
 End Namespace

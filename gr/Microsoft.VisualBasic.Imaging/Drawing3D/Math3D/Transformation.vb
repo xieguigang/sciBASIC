@@ -65,11 +65,11 @@ Namespace Drawing3D.Math3D
     Public Module Transformation
 
         ''' <summary>
-        ''' Gets the centra location of the target model which is consist with a set of surface
+        ''' Gets the centroid location of the target model which is consist with a set of surface
         ''' </summary>
         ''' <param name="surfaces"></param>
         ''' <returns></returns>
-        <Extension> Public Function Centra(surfaces As IEnumerable(Of Surface)) As Point3D
+        <Extension> Public Function Centroid(surfaces As IEnumerable(Of Surface)) As Point3D
             Dim vertices = surfaces.Select(Function(s) s.vertices).ToVector
             Dim x = vertices.Select(Function(p3D) p3D.X).Average
             Dim y = vertices.Select(Function(p3D) p3D.Y).Average
@@ -96,7 +96,7 @@ Namespace Drawing3D.Math3D
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
-        Public Function OffSets(polygon As IEnumerable(Of Point3D), offset As Point3D) As Point3D()
+        Public Function Offsets(polygon As IEnumerable(Of Point3D), offset As Point3D) As Point3D()
             Return polygon.Select(Function(point) point - offset).ToArray
         End Function
 

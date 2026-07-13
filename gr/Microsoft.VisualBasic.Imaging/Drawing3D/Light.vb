@@ -23,29 +23,13 @@
     ' GNU General Public License for more details.
     ' 
     ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
+    ' along with this program. If not see <http://www.gnu.org/licenses/>.
 
     ' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 103
-    '    Code Lines: 61 (59.22%)
-    ' Comment Lines: 27 (26.21%)
-    '    - Xml Docs: 92.59%
-    ' 
-    '   Blank Lines: 15 (14.56%)
-    '     File Size: 4.07 KB
-
-
     '     Module Light
     ' 
-    '         Function: Illumination, (+2 Overloads) Lighting
+    '         Function: ComputeLighting, (+2 Overloads) Lighting, Shade
     ' 
     ' 
     ' /********************************************************************************/
@@ -55,10 +39,11 @@
 Imports System.Drawing
 Imports System.Math
 Imports System.Runtime.CompilerServices
-Imports Microsoft.VisualBasic.Imaging
+Imports Microsoft.VisualBasic.Imaging.Drawing3D.Math3D
 Imports Microsoft.VisualBasic.Imaging.Drawing3D.Models.Isometric
+Imports std = System.Math
 
-Namespace Drawing3D.Device
+Namespace Drawing3D
 
     ''' <summary>
     ''' <see cref="Surface"/>的表面光照的计算
@@ -66,92 +51,72 @@ Namespace Drawing3D.Device
     Public Module Light
 
         ''' <summary>
-        ''' Makes the 3D graphic more natural.(旧的光照模型，不推荐使用)
+        ''' Lambert diffuse + ambient shading.
+        ''' Computes the face normal from the first three vertices, orients it
+        ''' toward the viewer, and blends the base color toward the light color
+        ''' by the lit amount. Degenerate faces (zero normal) keep the base color.
         ''' </summary>
-        ''' <param name="surfaces">
-        ''' Polygon buffer.(经过投影和排序之后得到的多边形的缓存对象)
-        ''' </param>
+        ''' <param name="vertices">vertices forming one face of the model</param>
+        ''' <param name="lightDirection">unit vector pointing toward the light source</param>
+        ''' <param name="baseColor">intrinsic surface color</param>
+        ''' <param name="ambientStrength">ambient term in [0,1]</param>
+        ''' <param name="lightColor">light color, usually white</param>
         ''' <returns></returns>
         <Extension>
-        Public Function Illumination(surfaces As IEnumerable(Of Polygon)) As IEnumerable(Of Polygon)
-            Dim array As Polygon() = surfaces.ToArray
-            Dim steps! = 0.75! / array.Length
-            Dim dark! = 1.0!
+        Public Function ComputeLighting(vertices As Point3D(), lightDirection As Point3D, baseColor As Color, ambientStrength As Double, lightColor As Color) As Color
+            If vertices Is Nothing OrElse vertices.Length < 3 Then
+                Return baseColor
+            End If
 
-            ' 不能够打乱经过painter算法排序的结果，所以使用for循环
-            For i As Integer = 0 To array.Length - 1
-                With array(i)
-                    If TypeOf .brush Is SolidBrush Then
-                        Dim color As Color = DirectCast(.brush, SolidBrush).Color
-                        Dim points As PointF() = .points
+            ' Face normal via cross product of two edges.
+            Dim a = vertices(0)
+            Dim b = vertices(1)
+            Dim c = vertices(2)
+            Dim normal = (b - a).CrossProduct(c - a)
 
-                        color = color.Darken(dark)
-                        array(i) = New Polygon With {
-                            .brush = New SolidBrush(color),
-                            .points = points
-                        }
-                    End If
-                End With
+            ' Degenerate face (zero area) -> keep base color.
+            Dim mag = normal.Length()
 
-                dark -= steps
-            Next
+            If mag = 0 Then
+                Return baseColor
+            End If
 
-            Return array
+            normal = normal.Multiply(1 / mag)
+
+            ' Orient the normal toward the viewer (positive Z) so back-faces are lit.
+            If normal.Z < 0 Then
+                normal = normal.Multiply(-1)
+            End If
+
+            ' Diffuse term, clamped to [0,1].
+            Dim diffuse = Max(0, normal.DotProduct(lightDirection))
+            Dim factor = ambientStrength + (1 - ambientStrength) * diffuse
+
+            Return Shade(baseColor, lightColor, factor)
         End Function
 
         ''' <summary>
         ''' 对模型之中的某一个表面进行光照处理
         ''' </summary>
         ''' <param name="path">这个对象是一个平面</param>
-        ''' <param name="color"></param>
-        ''' <param name="lightColor">光源的颜色，最常用的光源颜色为白色``<see cref="Color.White"/>``</param>
-        ''' <returns></returns>
+        ''' <param name="lightDirection">unit vector pointing toward the light source</param>
+        ''' <param name="baseColor">intrinsic surface color</param>
+        ''' <param name="ambientStrength">ambient term in [0,1]</param>
+        ''' <param name="lightColor">light color, usually white</param>
         <Extension>
-        Public Function Lighting(path As Path3D, lightAngle As Point3D, color As Color, colorDifference#, lightColor As Color) As Color
-            Return path.Points _
-                .ToArray _
-                .Lighting(lightAngle, color, colorDifference, lightColor)
+        Public Function Lighting(path As Path3D, lightDirection As Point3D, baseColor As Color, ambientStrength As Double, lightColor As Color) As Color
+            Return path.Points.ToArray().ComputeLighting(lightDirection, baseColor, ambientStrength, lightColor)
         End Function
 
         ''' <summary>
-        ''' 
+        ''' Shade <paramref name="baseColor"/> toward <paramref name="lightColor"/> by <paramref name="factor"/> (in [0,1]).
         ''' </summary>
-        ''' <param name="vertices">构成模型之中的一个表面的顶点数据</param>
-        ''' <param name="lightAngle"></param>
-        ''' <param name="color"></param>
-        ''' <param name="colorDifference#"></param>
-        ''' <param name="lightColor"></param>
-        ''' <returns></returns>
-        <Extension>
-        Public Function Lighting(vertices As Point3D(), lightAngle As Point3D, color As Color, colorDifference#, lightColor As Color) As Color
-            Dim p1 As Point3D = vertices(1)
-            Dim p2 As Point3D = vertices(0)
-            Dim i As Double = p2.X - p1.X
-            Dim j As Double = p2.Y - p1.Y
-            Dim k As Double = p2.Z - p1.Z
+        Private Function Shade(baseColor As Color, lightColor As Color, factor As Double) As Color
+            Dim r = CInt(Fix(baseColor.R * (1 - factor) + lightColor.R * factor))
+            Dim g = CInt(Fix(baseColor.G * (1 - factor) + lightColor.G * factor))
+            Dim b = CInt(Fix(baseColor.B * (1 - factor) + lightColor.B * factor))
 
-            If vertices.Length < 3 Then
-                Return color
-            End If
-
-            p1 = vertices(2)
-            p2 = vertices(1)
-
-            Dim i2 As Double = p2.X - p1.X
-            Dim j2 As Double = p2.Y - p1.Y
-            Dim k2 As Double = p2.Z - p1.Z
-            Dim i3 As Double = j * k2 - j2 * k
-            Dim j3 As Double = -1 * (i * k2 - i2 * k)
-            Dim k3 As Double = i * j2 - i2 * j
-            Dim magnitude As Double = Sqrt(i3 * i3 + j3 * j3 + k3 * k3)
-
-            i = If(magnitude = 0, 0, i3 / magnitude)
-            j = If(magnitude = 0, 0, j3 / magnitude)
-            k = If(magnitude = 0, 0, k3 / magnitude)
-
-            Dim brightness As Double = i * lightAngle.X + j * lightAngle.Y + k * lightAngle.Z
-
-            Return HSLColor.GetHSL(color).Lighten(brightness * colorDifference, lightColor)
+            Return Color.FromArgb(baseColor.A, std.Clamp(r, 0, 255), std.Clamp(g, 0, 255), std.Clamp(b, 0, 255))
         End Function
     End Module
 End Namespace

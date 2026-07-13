@@ -55,6 +55,9 @@ Imports System.Drawing
 Imports System.IO
 Imports Microsoft.VisualBasic.Drawing
 Imports Microsoft.VisualBasic.Imaging
+Imports Brushes = Microsoft.VisualBasic.Imaging.Brushes
+Imports Font = Microsoft.VisualBasic.Imaging.Font
+Imports FontStyle = Microsoft.VisualBasic.Imaging.FontStyle
 
 Module gifTest
 

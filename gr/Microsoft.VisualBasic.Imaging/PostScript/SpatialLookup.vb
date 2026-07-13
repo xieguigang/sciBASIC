@@ -105,14 +105,34 @@ Namespace PostScript
             Next
         End Sub
 
+        ' a large translation so that negative coordinates stay inside the unsigned
+        ' hash range instead of overflowing <see cref="CUInt"/>.
+        Private Const HASH_OFFSET As Long = 1000000
+
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Private Function HashX(x As Single) As UInteger
-            Return CUInt(std.Floor(x / gridSize.Width))
+            Dim v As Long = CLng(std.Floor(x / gridSize.Width)) + HASH_OFFSET
+
+            If v < 0 Then
+                v = 0
+            ElseIf v > UInteger.MaxValue Then
+                v = UInteger.MaxValue
+            End If
+
+            Return CUInt(v)
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Private Function HashY(y As Single) As UInteger
-            Return CUInt(std.Floor(y / gridSize.Height))
+            Dim v As Long = CLng(std.Floor(y / gridSize.Height)) + HASH_OFFSET
+
+            If v < 0 Then
+                v = 0
+            ElseIf v > UInteger.MaxValue Then
+                v = UInteger.MaxValue
+            End If
+
+            Return CUInt(v)
         End Function
 
         Public Function FindCommentShapeByPoint(x As Single, y As Single) As PSElement

@@ -1,0 +1,45 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net10.0-windows</TargetFramework>
+    <RootNamespace>ModelViewer</RootNamespace>
+    <AssemblyName>ModelViewer</AssemblyName>
+    <UseWindowsForms>true</UseWindowsForms>
+    <EnableDefaultApplicationDefinition>false</EnableDefaultApplicationDefinition>
+    <OptionStrict>Off</OptionStrict>
+    <OptionInfer>On</OptionInfer>
+    <GenerateDocumentationFile>false</GenerateDocumentationFile>
+    <Nullable>disable</Nullable>
+    <Platforms>AnyCPU;x64</Platforms>
+    <UseWPF>True</UseWPF>
+    <StartupObject>ModelViewer.MainForm</StartupObject>
+    <ApplicationIcon>3mf.ico</ApplicationIcon>
+    <MyType>WindowsFormsWithCustomSubMain</MyType>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="SmokeTest\**" />
+    <EmbeddedResource Remove="SmokeTest\**" />
+    <None Remove="SmokeTest\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="3mf.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Import Include="System.Windows.Forms" />
+    <Import Include="System.Drawing" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Data_science\Mathematica\Math\Math\Math.NET5.vbproj" />
+    <ProjectReference Include="..\..\Microsoft.VisualBasic.Core\src\Core.vbproj" />
+    <ProjectReference Include="..\..\mime\text%html\html_netcore5.vbproj" />
+    <ProjectReference Include="..\Drawing-net4.8\Drawing-net4.8.vbproj" />
+    <ProjectReference Include="..\Landscape\Landscape.vbproj" />
+    <ProjectReference Include="..\Microsoft.VisualBasic.Imaging\imaging.NET5.vbproj" />
+  </ItemGroup>
+
+</Project>

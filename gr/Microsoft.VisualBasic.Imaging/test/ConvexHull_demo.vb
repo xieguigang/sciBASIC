@@ -52,7 +52,6 @@
 #End Region
 
 Imports System.Drawing
-Imports System.Drawing.Drawing2D
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Drawing
@@ -62,8 +61,10 @@ Imports Microsoft.VisualBasic.Imaging.Drawing2D.Math2D
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Math2D.ConvexHull
 Imports Microsoft.VisualBasic.Imaging.Math2D
 Imports Microsoft.VisualBasic.Linq
-Imports Microsoft.VisualBasic.Math.Interpolation
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
+Imports Brushes = Microsoft.VisualBasic.Imaging.Brushes
+Imports DashStyle = Microsoft.VisualBasic.Imaging.DashStyle
+Imports Pen = Microsoft.VisualBasic.Imaging.Pen
 
 Module ConvexHull_demo
 

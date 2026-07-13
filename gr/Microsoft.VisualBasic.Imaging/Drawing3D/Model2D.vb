@@ -76,15 +76,15 @@ Namespace Drawing3D
         ''' </summary>
         Friend DrawPath As Path2D
 
-        Public ReadOnly Property isLine As Boolean
+        Public ReadOnly Property IsLine As Boolean
             Get
-                Return path.isLine3D
+                Return path.IsLine3D
             End Get
         End Property
 
-        Public ReadOnly Property isDot As Boolean
+        Public ReadOnly Property IsDot As Boolean
             Get
-                Return path.isDot3D
+                Return path.IsDot3D
             End Get
         End Property
 

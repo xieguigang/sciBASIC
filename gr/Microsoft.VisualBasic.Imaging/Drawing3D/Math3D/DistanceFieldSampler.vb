@@ -45,7 +45,7 @@
 
     '     Class DistanceFieldSampler
     ' 
-    '         Properties: NeedsUpdate, SampleSize
+    '         Properties: Path, Resolution
     ' 
     '         Function: DistanceToDistanceScore, GetDistance, GetDistanceScore, IsEdgeNearSampleRange
     ' 
@@ -74,26 +74,14 @@ Imports Vector3 = Microsoft.VisualBasic.Imaging.Drawing3D.Point3D
 Namespace Drawing3D.Math3D
 
     Public Class DistanceFieldSampler
-#Region "Unity Junk"
+        ''' <summary>
+        ''' The path whose distance field is sampled.
+        ''' </summary>
         Public Path As Path3D
+        ''' <summary>
+        ''' Resolution (samples per axis) of the generated distance field.
+        ''' </summary>
         Public Resolution As Integer = 128
-
-        Private _lastSampleSize As Vector2D
-        Private _lastSampledPosition As Vector3
-
-        Private ReadOnly Property SampleSize As Vector2D
-            Get
-                Return New Vector2D(1, 1)
-            End Get
-        End Property
-
-        Private ReadOnly Property NeedsUpdate As Boolean
-            Get
-                If Path Is Nothing Then Return False
-                Return std.Abs(_lastSampleSize.x - SampleSize.x) > Single.Epsilon OrElse std.Abs(_lastSampleSize.y - SampleSize.y) > Single.Epsilon
-            End Get
-        End Property
-#End Region
 
         ''' <summary>
         ''' Represents a point along a path.
@@ -252,8 +240,6 @@ Namespace Drawing3D.Math3D
         Shared _sBuffer As Single()
 
         Public Sub Update()
-            If Not NeedsUpdate Then Return
-
             If _sPath Is Nothing Then
                 _sPath = New List(Of Vertex)()
             Else
@@ -262,14 +248,33 @@ Namespace Drawing3D.Math3D
 
             GetVertices(_sPath)
 
-            If _sBuffer.TryCount <> Resolution * Resolution Then
+            If _sBuffer Is Nothing OrElse _sBuffer.Length <> Resolution * Resolution Then
                 _sBuffer = New Single(Resolution * Resolution - 1) {}
             End If
 
-            Dim origin = _lastSampledPosition - New Vector3(_lastSampleSize.x * 0.5F, 0F, _lastSampleSize.y * 0.5F)
-            SampleDistanceField(_sPath, origin, _lastSampleSize, Resolution, _sBuffer)
+            If _sPath.Count < 2 Then
+                Return
+            End If
 
+            ' Derive the sampling volume from the path bounding box.
+            Dim minX! = Single.MaxValue
+            Dim minZ! = Single.MaxValue
+            Dim maxX! = Single.MinValue
+            Dim maxZ! = Single.MinValue
+            Dim layerY! = 0
 
+            For Each v As Vertex In _sPath
+                minX = std.Min(minX, v.Pos.X)
+                maxX = std.Max(maxX, v.Pos.X)
+                minZ = std.Min(minZ, v.Pos.Z)
+                maxZ = std.Max(maxZ, v.Pos.Z)
+                layerY = v.Pos.Y
+            Next
+
+            Dim size As New Vector2D(std.Max(maxX - minX, 1), std.Max(maxZ - minZ, 1))
+            Dim origin As New Vector3(minX, layerY, minZ)
+
+            SampleDistanceField(_sPath, origin, size, Resolution, _sBuffer)
         End Sub
 
         Friend Sub GetVertices(sPath As List(Of DistanceFieldSampler.Vertex))

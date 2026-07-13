@@ -78,7 +78,18 @@ Namespace PostScript.Elements
         End Property
 
         Friend Overrides Sub WriteAscii(ps As Writer)
-            Throw New NotImplementedException()
+            If Not shape.fill.StringEmpty(, True) Then
+                Call ps.color(shape.fill.TranslateColor)
+                Call ps.fillCircle(center, shape.Radius)
+            End If
+
+            If stroke IsNot Nothing Then
+                Dim pen As Pen = ps.pen(stroke)
+
+                Call ps.linewidth(pen.Width)
+                Call ps.color(pen.Color)
+                Call ps.circle(center, shape.Radius)
+            End If
         End Sub
 
         Friend Overrides Sub Paint(g As IGraphics)
