@@ -57,11 +57,16 @@
 #End Region
 
 Imports System.Drawing
-Imports System.Drawing.Drawing2D
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Imaging.Drawing3D.Math3D
 Imports Microsoft.VisualBasic.Imaging.Drawing3D.Models
 Imports Microsoft.VisualBasic.Linq
+
+#If WINDOWS Then
+Imports Brush = System.Drawing.Brush
+#Else
+
+#End If
 
 Namespace Drawing3D
 
