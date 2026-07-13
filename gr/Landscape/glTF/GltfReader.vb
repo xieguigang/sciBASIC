@@ -1,4 +1,4 @@
-#Region "Microsoft.VisualBasic::glTF_Reader, gr\Landscape\glTF\GltfReader.vb"
+﻿#Region "Microsoft.VisualBasic::90a7c40dbd352857af7526c7e1b6de74, gr\Landscape\glTF\GltfReader.vb"
 
     ' Author:
     ' 
@@ -25,13 +25,29 @@
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
+
+
     ' /********************************************************************************/
 
     ' Summaries:
 
-    '     Module GltfReader
-    '         Function: LoadBuffers, ReadFile
 
+    ' Code Statistics:
+
+    '   Total Lines: 107
+    '    Code Lines: 59 (55.14%)
+    ' Comment Lines: 29 (27.10%)
+    '    - Xml Docs: 68.97%
+    ' 
+    '   Blank Lines: 19 (17.76%)
+    '     File Size: 4.14 KB
+
+
+    '     Module GltfReader
+    ' 
+    '         Function: LoadBuffers, ParseDataUri, ReadFile
+    ' 
+    ' 
     ' /********************************************************************************/
 
 #End Region

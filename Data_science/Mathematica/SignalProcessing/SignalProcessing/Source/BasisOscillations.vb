@@ -1,13 +1,76 @@
-#Region "Microsoft.VisualBasic::c1d2e3f4a5b6c70819203d4e5f6a7b8c, Data_science\Mathematica\SignalProcessing\SignalProcessing\Source\BasisOscillations.vb"
+﻿#Region "Microsoft.VisualBasic::7acc90d9a257c50a4bdad2c8a7553149, Data_science\Mathematica\SignalProcessing\SignalProcessing\Source\BasisOscillations.vb"
 
     ' Author:
     ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
     '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-    ' The periodic & oscillatory basis functions:
-    ' Sine, Cosine, Square, Triangle, Sawtooth and DampedSine.
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 92
+    '    Code Lines: 40 (43.48%)
+    ' Comment Lines: 38 (41.30%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 14 (15.22%)
+    '     File Size: 3.52 KB
+
+
+    '     Class Sine
+    ' 
+    '         Function: Shape
+    ' 
+    '     Class Cosine
+    ' 
+    '         Function: Shape
+    ' 
+    '     Class Square
+    ' 
+    '         Function: Shape
+    ' 
+    '     Class Triangle
+    ' 
+    '         Function: Shape
+    ' 
+    '     Class Sawtooth
+    ' 
+    '         Function: Shape
+    ' 
+    '     Class DampedSine
+    ' 
+    '         Properties: Damping
+    ' 
+    '         Function: Shape
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

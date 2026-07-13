@@ -1,14 +1,104 @@
-#Region "Microsoft.VisualBasic::c7d8e9f001122334455667788990011, Data_science\Mathematica\SignalProcessing\SignalProcessing\Source\SignalCombinators.vb"
+﻿#Region "Microsoft.VisualBasic::55cb689fc2db80a94421c299bb39d1f5, Data_science\Mathematica\SignalProcessing\SignalProcessing\Source\SignalCombinators.vb"
 
     ' Author:
     ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
     '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-    ' The combinators for basis functions:
-    ' Sum, Difference, Product, Quotient, Convolution and the fluent
-    ' SignalGenerator builder.
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 345
+    '    Code Lines: 235 (68.12%)
+    ' Comment Lines: 54 (15.65%)
+    '    - Xml Docs: 98.15%
+    ' 
+    '   Blank Lines: 56 (16.23%)
+    '     File Size: 11.82 KB
+
+
+    '     Class Sum
+    ' 
+    '         Properties: A, B
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    '         Function: Evaluate, Sample
+    ' 
+    '     Class Difference
+    ' 
+    '         Properties: A, B
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    '         Function: Evaluate, Sample
+    ' 
+    '     Class Product
+    ' 
+    '         Properties: A, B
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    '         Function: Evaluate, Sample
+    ' 
+    '     Class Quotient
+    ' 
+    '         Properties: A, B
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    '         Function: Evaluate, Sample
+    ' 
+    '     Class Convolution
+    ' 
+    '         Properties: GridMax, GridMin, GridN, Kernel, Signal
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
+    '         Function: Evaluate, lookup, Sample
+    ' 
+    '         Sub: ensureCache
+    ' 
+    '     Class SignalGenerator
+    ' 
+    ' 
+    '         Enum Operations
+    ' 
+    ' 
+    ' 
+    ' 
+    '  
+    ' 
+    '     Properties: Seed
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    '     Function: Add, Divide, Evaluate, Multiply, Sample
+    '               Subtract
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

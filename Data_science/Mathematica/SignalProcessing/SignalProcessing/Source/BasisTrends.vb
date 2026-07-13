@@ -1,13 +1,70 @@
-#Region "Microsoft.VisualBasic::e3f4a5b6c7d8e901020304f5a6b7c8d9, Data_science\Mathematica\SignalProcessing\SignalProcessing\Source\BasisTrends.vb"
+﻿#Region "Microsoft.VisualBasic::418f9e19c45ed5e02862fec5b41b8410, Data_science\Mathematica\SignalProcessing\SignalProcessing\Source\BasisTrends.vb"
 
     ' Author:
     ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
     '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-    ' The trend & gradient basis functions:
-    ' Linear, Exponential, Logarithm and Power.
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 70
+    '    Code Lines: 31 (44.29%)
+    ' Comment Lines: 28 (40.00%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 11 (15.71%)
+    '     File Size: 2.41 KB
+
+
+    '     Class Linear
+    ' 
+    '         Function: Shape
+    ' 
+    '     Class Exponential
+    ' 
+    '         Properties: Rate
+    ' 
+    '         Function: Shape
+    ' 
+    '     Class Logarithm
+    ' 
+    '         Function: Shape
+    ' 
+    '     Class Power
+    ' 
+    '         Properties: Exponent
+    ' 
+    '         Function: Shape
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

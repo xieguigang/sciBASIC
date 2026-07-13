@@ -1,4 +1,63 @@
-﻿
+﻿#Region "Microsoft.VisualBasic::254bb9a1df66ee9a620ba174c26b2f14, Data_science\Visualization\DataPlot\Advanced\BoxPlot.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 143
+    '    Code Lines: 122 (85.31%)
+    ' Comment Lines: 9 (6.29%)
+    '    - Xml Docs: 11.11%
+    ' 
+    '   Blank Lines: 12 (8.39%)
+    '     File Size: 6.67 KB
+
+
+    ' Class BoxPlot
+    ' 
+    '     Properties: Groups, Horizontal, ShowMean, ShowOutliers
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    ' 
+    '     Function: Quantile
+    ' 
+    '     Sub: Plot
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+
 Imports Microsoft.VisualBasic.Imaging
 
 ''' <summary>盒须图（Box Plot / Box-and-Whisker）</summary>
@@ -141,3 +200,4 @@ Public Class BoxPlot
         Return sorted(lo) + (sorted(hi) - sorted(lo)) * (pos - lo)
     End Function
 End Class
+

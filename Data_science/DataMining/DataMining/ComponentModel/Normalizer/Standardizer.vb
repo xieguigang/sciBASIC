@@ -1,3 +1,62 @@
+﻿#Region "Microsoft.VisualBasic::92784248a35adb25d0efa274110fe245, Data_science\DataMining\DataMining\ComponentModel\Normalizer\Standardizer.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 76
+    '    Code Lines: 43 (56.58%)
+    ' Comment Lines: 19 (25.00%)
+    '    - Xml Docs: 94.74%
+    ' 
+    '   Blank Lines: 14 (18.42%)
+    '     File Size: 2.21 KB
+
+
+    ' Class Standardizer
+    ' 
+    '     Properties: mean, std
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    ' 
+    '     Function: Load, Transform
+    ' 
+    '     Sub: Fit, Save
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
 Imports System.IO
 Imports Microsoft.VisualBasic.Serialization.JSON
 Imports stdf = System.Math
@@ -74,3 +133,4 @@ Public Class Standardizer
     End Function
 
 End Class
+

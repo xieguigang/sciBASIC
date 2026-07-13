@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ee10c82c88abd217967767581a82709e, Data_science\Mathematica\Math\DataFittings\LOESS\LOESSModel.vb"
+﻿#Region "Microsoft.VisualBasic::4358362e02e761139632d02b3fbd33b4, Data_science\Mathematica\Math\DataFittings\LOESS\LOESSModel.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 10
-    '    Code Lines: 6 (60.00%)
-    ' Comment Lines: 3 (30.00%)
+    '   Total Lines: 9
+    '    Code Lines: 6 (66.67%)
+    ' Comment Lines: 3 (33.33%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 1 (10.00%)
-    '     File Size: 261 B
+    '   Blank Lines: 0 (0.00%)
+    '     File Size: 257 B
 
 
     ' Class LOESSModel
@@ -51,7 +51,6 @@
 
 #End Region
 
-
 ''' <summary>
 ''' LOESS模型，存储训练数据和参数
 ''' </summary>
@@ -61,4 +60,3 @@ Public Class LOESSModel
     Public Property Span As Double
     Public Property Degree As Integer
 End Class
-

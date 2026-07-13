@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c8b1b248179ce7ad84f4abd4712b5ec4, gr\Landscape\ThreeMF\Xml\Mesh.vb"
+﻿#Region "Microsoft.VisualBasic::c516e4505c5030aff47eded0a671f974, gr\Landscape\ThreeMF\Xml\Mesh.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 17 (19.32%)
-    '     File Size: 2.65 KB
+    '     File Size: 2.66 KB
 
 
     '     Class Mesh

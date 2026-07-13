@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::848d03405320fa01431f9a33c80ddd98, Data_science\Visualization\test\VolinPlotTest.vb"
+﻿#Region "Microsoft.VisualBasic::f7751353316278186ab08e1432aafbd4, Data_science\Visualization\test\VolinPlotTest.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 0.00%
     ' 
     '   Blank Lines: 8 (38.10%)
-    '     File Size: 921 B
+    '     File Size: 927 B
 
 
     ' Module VolinPlotTest

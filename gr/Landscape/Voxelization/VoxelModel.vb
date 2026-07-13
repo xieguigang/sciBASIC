@@ -1,27 +1,27 @@
-#Region "Microsoft.VisualBasic::VoxelModel, gr\Landscape\Voxelization\VoxelModel.vb"
+﻿#Region "Microsoft.VisualBasic::28fcb96aa9da1afb02b9778a63658d3a, gr\Landscape\Voxelization\VoxelModel.vb"
 
     ' Author:
-    '
+    ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
     '       xie (genetics@smrucc.org)
     '       xieguigang (xie.guigang@live.com)
-    '
+    ' 
     ' Copyright (c) 2018 GPL3 Licensed
-    '
-    '
+    ' 
+    ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    '
-    '
+    ' 
+    ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
     ' the Free Software Foundation, either version 3 of the License, or
     ' (at your option) any later version.
-    '
+    ' 
     ' This program is distributed in the hope that it will be useful,
     ' but WITHOUT ANY WARRANTY; without even the implied warranty of
     ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
     ' GNU General Public License for more details.
-    '
+    ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
@@ -34,22 +34,23 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 119
-    '    Code Lines: 72 (60.50%)
-    ' Comment Lines: 30 (25.21%)
-    '    - Xml Docs: 100.00%
-    '
-    '   Blank Lines: 17 (14.29%)
-    '     File Size: 3.91 KB
+    '   Total Lines: 116
+    '    Code Lines: 40 (34.48%)
+    ' Comment Lines: 61 (52.59%)
+    '    - Xml Docs: 96.72%
+    ' 
+    '   Blank Lines: 15 (12.93%)
+    '     File Size: 4.43 KB
 
 
     '     Class VoxelModel
-    '
-    '         Properties: Cell, Depth, Height, MinX, MinY, MinZ, Shape, VoxelSize, Width
-    '
-    '         Function: GetIndex, VoxelToWorld
-
-
+    ' 
+    '         Properties: Depth, Height, MinX, MinY, MinZ
+    '                     Shape, SolidCount, VoxelSize, Width
+    ' 
+    '         Function: GetIndex, ToString, VoxelToWorld
+    ' 
+    ' 
     ' /********************************************************************************/
 
 #End Region

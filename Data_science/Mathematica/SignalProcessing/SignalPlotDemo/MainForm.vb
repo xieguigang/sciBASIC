@@ -1,3 +1,68 @@
+﻿#Region "Microsoft.VisualBasic::5520c8053b8ddade4bac71160b5076b4, Data_science\Mathematica\SignalProcessing\SignalPlotDemo\MainForm.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 753
+    '    Code Lines: 584 (77.56%)
+    ' Comment Lines: 40 (5.31%)
+    '    - Xml Docs: 12.50%
+    ' 
+    '   Blank Lines: 129 (17.13%)
+    '     File Size: 30.41 KB
+
+
+    ' Class MainForm
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    ' 
+    '     Function: buildParamsPanel, createFunction, createTrackBar, getXRange
+    ' 
+    '     Sub: _btnAddComposite_Click, _btnClearComposite_Click, _btnPlot_Click, _btnPlotComposite_Click, _btnPresetECG_Click
+    '          _btnPresetVib_Click, _btnPresetWeather_Click, _btnRefresh_Click, _btnRemoveComposite_Click, _btnSavePng_Click
+    '          _btnTheme_Click, _listBox_SelectedIndexChanged, _numAmp_ValueChanged, _numCenter_ValueChanged, _numOffset_ValueChanged
+    '          _numScale_ValueChanged, _pictureBox_Resize, _tabFunctions_SelectedIndexChanged, _trkAmp_Scroll, _trkCenter_Scroll
+    '          _trkOffset_Scroll, _trkScale_Scroll, addCategory, buildChart, buildCompositePanel
+    '          buildFunctionTabs, buildLayout, buildToolStrip, numericKeyDown, numericManualRefresh
+    '          plotComposite, plotCurrentFunction, rebuildComposite, resumeParamEvents, selectFunction
+    '          setChartImage, setCurrentListBox, suspendParamEvents, syncControlsToFunc, syncParamsToControls
+    '          syncTrackBarsFromNum
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
 Imports System.Drawing
 Imports System.Windows.Forms
 Imports Microsoft.VisualBasic.Math.SignalProcessing.Source.Generators
@@ -751,3 +816,4 @@ Public Class MainForm
 #End Region
 
 End Class
+

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1b1f65b717508c49a4c0170786af728a, Microsoft.VisualBasic.Core\src\Drawing\netcore8.0\Image.vb"
+﻿#Region "Microsoft.VisualBasic::e67b5b91bf1c4d98ef22ae56528ecf8c, Microsoft.VisualBasic.Core\src\Drawing\netcore8.0\Image.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 321
-    '    Code Lines: 160 (49.84%)
-    ' Comment Lines: 100 (31.15%)
+    '   Total Lines: 327
+    '    Code Lines: 165 (50.46%)
+    ' Comment Lines: 100 (30.58%)
     '    - Xml Docs: 49.00%
     ' 
-    '   Blank Lines: 61 (19.00%)
-    '     File Size: 12.38 KB
+    '   Blank Lines: 62 (18.96%)
+    '     File Size: 12.63 KB
 
 
     '     Class Image
@@ -64,7 +64,7 @@
     '         Function: Clone, ConvertToBitmapStream, GetMemoryBitmap, GetMemoryBuffer, GetPixel
     '                   LoadMemory, Resize, ToString
     ' 
-    '         Sub: (+2 Overloads) Save, SetPixel
+    '         Sub: (+3 Overloads) Save, SetPixel
     ' 
     '     Enum PixelFormat
     ' 

@@ -1,3 +1,65 @@
+﻿#Region "Microsoft.VisualBasic::6a59e135d1c8e594b0ea01471e829cd6, Data_science\MachineLearning\VAE\GMVAE\GMVAE.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 795
+    '    Code Lines: 519 (65.28%)
+    ' Comment Lines: 167 (21.01%)
+    '    - Xml Docs: 47.31%
+    ' 
+    '   Blank Lines: 109 (13.71%)
+    '     File Size: 28.73 KB
+
+
+    ' Class GMVAE
+    ' 
+    '     Properties: InputDim, LatentDim, LossHistory, NComponents
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    ' 
+    '     Function: Decode, EncodeY, Generate, Linear, LinearReLU
+    '               MatMul, PredictClusters, Reconstruct, Reparameterize, Softmax
+    '               SoftmaxBatch, SumRows, ToString
+    ' 
+    '     Sub: BackwardAndUpdate, ComputeLoss, Encode, EncodeZ, Fit
+    '          Forward, InitializeNetwork, UpdateTensor
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
 ' ============================================================================
 ' GMVAE.vb - 高斯混合变分自编码器 (Gaussian Mixture VAE)
 '
@@ -793,3 +855,4 @@ Public Class GMVAE
 #End Region
 
 End Class
+

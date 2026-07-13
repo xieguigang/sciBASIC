@@ -1,53 +1,53 @@
-﻿#Region "Microsoft.VisualBasic::923b3c33434f8f19177cfd2cac21c939, Data_science\Visualization\test\PieChartTest.vb"
+﻿#Region "Microsoft.VisualBasic::dd72b591295fc64ee37a1d0ce3f494fe, Data_science\Visualization\test\PieChartTest.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 173
-'    Code Lines: 113 (65.32%)
-' Comment Lines: 20 (11.56%)
-'    - Xml Docs: 0.00%
-' 
-'   Blank Lines: 40 (23.12%)
-'     File Size: 6.81 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-' Module PieChartTest
-' 
-'     Sub: glowTest2, Main, radar2, radarTest, shapeGlowTest
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 183
+    '    Code Lines: 119 (65.03%)
+    ' Comment Lines: 24 (13.11%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 40 (21.86%)
+    '     File Size: 7.52 KB
+
+
+    ' Module PieChartTest
+    ' 
+    '     Sub: glowTest2, Main, radar2, radarTest, shapeGlowTest
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

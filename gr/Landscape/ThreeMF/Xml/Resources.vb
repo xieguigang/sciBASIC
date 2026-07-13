@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fd8f660e1491d5bb44fc0a9fc1c75801, gr\Landscape\ThreeMF\Xml\Resources.vb"
+﻿#Region "Microsoft.VisualBasic::595dccfa1ea6504e6d454dd020f32eec, gr\Landscape\ThreeMF\Xml\Resources.vb"
 
     ' Author:
     ' 
@@ -43,28 +43,28 @@
     '     File Size: 1.57 KB
 
 
-    '     Class base
+    '     Class BaseMaterial
     ' 
     '         Properties: displaycolor, name
     ' 
     '         Function: ToString
     ' 
-    '     Class resources
+    '     Class Resources
     ' 
     '         Properties: basematerials, objects
     ' 
-    '     Interface Iobject
+    '     Interface IObject
     ' 
     '         Properties: id
     ' 
-    '     Class [object]
+    '     Class Object3D
     ' 
     '         Properties: components, id, mesh, pid, pindex
     '                     type
     ' 
-    '     Class basematerials
+    '     Class BaseMaterials
     ' 
-    '         Properties: basematerials, id
+    '         Properties: id, items
     ' 
     '         Function: ToString
     ' 

@@ -1,53 +1,53 @@
-﻿#Region "Microsoft.VisualBasic::dcce95c3d7a5ca4f45a16597d7ab3484, Data_science\Visualization\test\BarPlotTest.vb"
+﻿#Region "Microsoft.VisualBasic::9b43eae898dff75c0fb8d725357e17ff, Data_science\Visualization\test\BarPlotTest.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 83
-'    Code Lines: 61 (73.49%)
-' Comment Lines: 5 (6.02%)
-'    - Xml Docs: 0.00%
-' 
-'   Blank Lines: 17 (20.48%)
-'     File Size: 4.16 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-' Module BarPlotTest
-' 
-'     Sub: Main, variableWidthTest
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 84
+    '    Code Lines: 53 (63.10%)
+    ' Comment Lines: 14 (16.67%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 17 (20.24%)
+    '     File Size: 4.24 KB
+
+
+    ' Module BarPlotTest
+    ' 
+    '     Sub: Main, variableWidthTest
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

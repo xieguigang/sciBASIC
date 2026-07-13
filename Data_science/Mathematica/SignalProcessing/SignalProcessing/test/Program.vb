@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6945b409364ea5df1edef9fb7aa8cbab, Data_science\Mathematica\SignalProcessing\SignalProcessing\test\Program.vb"
+﻿#Region "Microsoft.VisualBasic::80dddaa4e9fbdf96d16884de19041e2c, Data_science\Mathematica\SignalProcessing\SignalProcessing\test\Program.vb"
 
     ' Author:
     ' 
@@ -40,12 +40,12 @@
     '    - Xml Docs: 0.00%
     ' 
     '   Blank Lines: 9 (31.03%)
-    '     File Size: 1008 B
+    '     File Size: 1010 B
 
 
     ' Module Program
     ' 
-    '     Sub: Main, peakFinding
+    '     Sub: Mainss, peakFinding
     ' 
     ' /********************************************************************************/
 

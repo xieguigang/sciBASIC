@@ -1,13 +1,66 @@
-#Region "Microsoft.VisualBasic::d8e9f00112233445566778899001122, Data_science\Mathematica\SignalProcessing\SignalProcessing\Source\SignalFactory.vb"
+﻿#Region "Microsoft.VisualBasic::54c4bbde30e7f0441260cf721502e3a8, Data_science\Mathematica\SignalProcessing\SignalProcessing\Source\SignalFactory.vb"
 
     ' Author:
     ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
     '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-    ' Convenience factory for basis functions and composite presets
-    ' (ECG, mechanical vibration, meteorological temperature).
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 207
+    '    Code Lines: 128 (61.84%)
+    ' Comment Lines: 39 (18.84%)
+    '    - Xml Docs: 84.62%
+    ' 
+    '   Blank Lines: 40 (19.32%)
+    '     File Size: 9.66 KB
+
+
+    '     Module BasisExtensions
+    ' 
+    '         Function: Amplified, At, Scaled, Shifted
+    ' 
+    '     Module Basis
+    ' 
+    '         Function: [Step], Cosine, DampedSine, DoubleExp, Exponential
+    '                   Gaussian, GaussianNoise, Gompertz, Linear, Logarithm
+    '                   LogNormal, Lorentz, Power, RectPulse, ReLU
+    '                   Ricker, Sawtooth, Sinc, Sine, Square
+    '                   Tanh, Triangle, UniformNoise
+    ' 
+    '     Module Presets
+    ' 
+    '         Function: ECG, Vibration, Weather
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

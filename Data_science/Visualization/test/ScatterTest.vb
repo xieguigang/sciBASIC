@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8db4dc255405672baee3ffcea4275ba7, Data_science\Visualization\test\ScatterTest.vb"
+﻿#Region "Microsoft.VisualBasic::098a529883b8ed39eab5d7b046481084, Data_science\Visualization\test\ScatterTest.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 147
-    '    Code Lines: 96 (65.31%)
-    ' Comment Lines: 21 (14.29%)
+    '   Total Lines: 148
+    '    Code Lines: 97 (65.54%)
+    ' Comment Lines: 21 (14.19%)
     '    - Xml Docs: 0.00%
     ' 
-    '   Blank Lines: 30 (20.41%)
-    '     File Size: 5.35 KB
+    '   Blank Lines: 30 (20.27%)
+    '     File Size: 5.42 KB
 
 
     ' Module ScatterTest

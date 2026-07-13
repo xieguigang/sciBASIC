@@ -1,3 +1,88 @@
+﻿#Region "Microsoft.VisualBasic::6d16301fc5f0888ccc6f36697857f660, Data_science\Visualization\DataPlot\Engine\GgplotTheme\Theme.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 1270
+    '    Code Lines: 976 (76.85%)
+    ' Comment Lines: 183 (14.41%)
+    '    - Xml Docs: 54.10%
+    ' 
+    '   Blank Lines: 111 (8.74%)
+    '     File Size: 62.49 KB
+
+
+    '     Enum ThemeElementType
+    ' 
+    '         ElementGeom, ElementLine, ElementPoint, ElementPolygon, ElementRect
+    '         ElementText, Margin, Scalar, Unit
+    ' 
+    '  
+    ' 
+    ' 
+    ' 
+    '     Class ThemeElementNames
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
+    '     Class InheritanceTree
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    '         Function: GetAllElementNames, GetAncestry, GetElementType, GetParent, IsKnownElement
+    ' 
+    '     Class Theme
+    ' 
+    '         Properties: AspectRatio, AxisLine, AxisText, AxisTicks, AxisTitle
+    '                     Canvas, Geom, LegendBackground, LegendPosition, LegendText
+    '                     LegendTitle, Line, PanelBackground, PanelBorder, PanelGridMajor
+    '                     PanelGridMinor, PlotBackground, PlotCaption, PlotMargin, PlotSubtitle
+    '                     PlotTag, PlotTitle, Point, Polygon, Rect
+    '                     StripBackground, StripText, Text, Title
+    ' 
+    '         Function: Clone, CreateElement, (+2 Overloads) GetElement, GetElementNames, GetMargin
+    '                   (+2 Overloads) GetScalar, GetScalarNames, GetUnit, HasElement, HasMargin
+    '                   HasScalar, HasUnit, ResolveElement, ResolveMargin, ResolveScalar
+    '                   ResolveUnit
+    ' 
+    '         Sub: Merge, RemoveElement, SetElement, SetMargin, SetScalar
+    '              SetUnit
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
 Imports System
 Imports System.Collections.Generic
 Imports System.Text
@@ -1268,3 +1353,4 @@ Namespace GgplotTheme
     End Class
 
 End Namespace
+

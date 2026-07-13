@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5f24913964d45e5acfe669d853532b77, gr\Landscape\ThreeMF\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::e2dc95bf0f88e4e783df1030ed50ad1d, gr\Landscape\ThreeMF\Extensions.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 88
-    '    Code Lines: 62 (70.45%)
-    ' Comment Lines: 18 (20.45%)
-    '    - Xml Docs: 88.89%
+    '   Total Lines: 87
+    '    Code Lines: 51 (58.62%)
+    ' Comment Lines: 28 (32.18%)
+    '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 8 (9.09%)
-    '     File Size: 3.20 KB
+    '   Blank Lines: 8 (9.20%)
+    '     File Size: 2.96 KB
 
 
     '     Module Extensions
