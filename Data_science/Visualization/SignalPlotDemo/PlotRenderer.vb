@@ -2,6 +2,7 @@ Imports System.Drawing
 Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.Math.SignalProcessing.Source.Generators
 Imports DataPlot
+Imports Microsoft.VisualBasic.Drawing
 
 ''' <summary>
 ''' 将信号生成器的结果渲染为 DataPlot 折线图，输出 System.Drawing.Bitmap 供 PictureBox 显示。
@@ -63,8 +64,7 @@ Public Module PlotRenderer
             ' 通过 Object 中转以绕过编译时窄化转换检查
             Dim g = TryCast(plot.GetGraphics(), GdiRasterGraphics)
             If g IsNot Nothing AndAlso g.ImageResource IsNot Nothing Then
-                Dim img As Object = g.ImageResource
-                Return DirectCast(img, Bitmap)
+                Return g.ImageResource.CTypeGdiImage
             End If
         End Using
 

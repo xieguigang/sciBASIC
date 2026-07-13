@@ -503,7 +503,7 @@ Public Class MainForm
     End Sub
 
     Private Sub syncTrackBarsFromNum()
-        _trkAmp.Value = CInt(CDbl(_numAmp.Value) * TRACKBAR_SCALE + TRACKBAR_SCALE * 2)
+        _trkAmp.Value = CInt(CDbl(_numAmp.Value) * TRACKBAR_SCALE)
         _trkCenter.Value = CInt(CDbl(_numCenter.Value) * TRACKBAR_SCALE + TRACKBAR_SCALE * 10)
         _trkScale.Value = CInt(Math.Max(0, CDbl(_numScale.Value) * TRACKBAR_SCALE))
         _trkOffset.Value = CInt(CDbl(_numOffset.Value) * TRACKBAR_SCALE + TRACKBAR_SCALE * 10)
