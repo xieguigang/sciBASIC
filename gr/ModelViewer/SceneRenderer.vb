@@ -180,12 +180,17 @@ Public Class SceneRenderer
 
         If surfaces.Count > 0 Then
             DrawGround(g)
-            If Mode = RenderMode.Mesh Then
-                DrawMesh(g)
-            Else
-                ' 表面模式：复用库内 Camera.Draw（含旋转/投影/画家算法/光照）
-                Camera.Draw(g, surfaces, drawPath:=False)
-            End If
+            Select Case Mode
+                Case RenderMode.Mesh
+                    DrawMesh(g)
+                Case RenderMode.PointCloud
+                    ' 即使加载的是实体模型，也强制以点云（仅顶点）形式显示，
+                    ' 顶点颜色按光照强度做热图着色。
+                    DrawModelAsPointCloud(g)
+                Case Else
+                    ' 表面模式：复用库内 Camera.Draw（含旋转/投影/画家算法/光照）
+                    Camera.Draw(g, surfaces, drawPath:=False)
+            End Select
         ElseIf cloud IsNot Nothing AndAlso cloud.Length > 0 Then
             DrawGround(g)
             DrawPointCloud(g)
@@ -276,6 +281,68 @@ Public Class SceneRenderer
             g.FillRectangle(brush, xy.X - half, xy.Y - half, sz, sz)
         Next
     End Sub
+
+    ''' <summary>
+    ''' 将已加载的实体模型强制以点云（仅顶点）形式显示：投影所有顶点，
+    ''' 并按每个面受到的光照强度（与表面渲染一致的光照公式）进行热图着色。
+    ''' 复用 cboScheme 指定的配色与 PointSize / PointAlpha。
+    ''' </summary>
+    Private Sub DrawModelAsPointCloud(g As Graphics)
+        Dim pts As New List(Of PointF)()
+        Dim intensities As New List(Of Double)()
+
+        For Each s In surfaces
+            ' 与表面渲染完全相同的光照强度（面法线·光向，环境光保底）
+            Dim factor = FaceLightFactor(s)
+            Dim projected = Camera.Project(Camera.Rotate(s.vertices)).ToArray()
+
+            For i = 0 To projected.Length - 1
+                pts.Add(New PointF(CSng(projected(i).X), CSng(projected(i).Y)))
+                intensities.Add(factor)
+            Next
+        Next
+
+        If pts.Count = 0 Then Return
+
+        ' 将光照强度归一化到 [0,1] 以映射到热图
+        Dim minI = intensities.Min()
+        Dim maxI = intensities.Max()
+        Dim range = maxI - minI
+        If range < 1.0E-9 Then range = 1
+
+        Dim colors = GetColorTable()
+        Dim n = colors.Length
+        Dim sz = Math.Max(1, PointSize)
+        Dim half = sz / 2.0F
+
+        For i = 0 To pts.Count - 1
+            Dim t = (intensities(i) - minI) / range
+            If t < 0 Then t = 0 Else If t > 1 Then t = 1
+            Dim cidx = CInt(t * (n - 1))
+            g.FillRectangle(colorBrushes(cidx), pts(i).X - half, pts(i).Y - half, sz, sz)
+        Next
+    End Sub
+
+    ''' <summary>
+    ''' 计算单个面的光照强度因子，与 Light.ComputeLighting 完全一致：
+    ''' 由面法线（朝向观察者）与光向求点积得到 diffuse，再
+    ''' factor = ambient + (1 - ambient) * diffuse。
+    ''' </summary>
+    Private Function FaceLightFactor(face As Surface) As Double
+        Dim v = face.vertices
+        If v Is Nothing OrElse v.Length < 3 Then Return Camera.AmbientStrength
+
+        Dim a = v(0), b = v(1), c = v(2)
+        Dim normal = (b - a).CrossProduct(c - a)
+        Dim mag = normal.Length()
+        If mag = 0 Then Return Camera.AmbientStrength
+
+        normal = normal.Multiply(1 / mag)
+        If normal.Z < 0 Then normal = normal.Multiply(-1)
+
+        Dim diffuse = Math.Max(0, normal.DotProduct(Camera.LightDirection))
+        Return Camera.AmbientStrength + (1 - Camera.AmbientStrength) * diffuse
+    End Function
 
     Private Function GetColorTable() As Color()
         If colorTable Is Nothing OrElse colorTableScheme <> ColorScheme OrElse colorTableAlpha <> PointAlpha Then
