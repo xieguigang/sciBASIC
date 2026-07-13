@@ -142,7 +142,15 @@ Public Module NumPy
     ''' <param name="m">列数（可选，默认为 n）</param>
     Public Function eye(n As Integer, Optional m As Integer? = Nothing) As Tensor
         Dim cols = If(m.HasValue, m.Value, n)
-        Return Tensor.Identity(n)
+        If cols = n Then
+            Return Tensor.Identity(n)
+        End If
+        Dim result = New Tensor(n, cols)
+        Dim minDim = std.Min(n, cols)
+        For i = 0 To minDim - 1
+            result(i, i) = 1.0
+        Next
+        Return result
     End Function
 
     ''' <summary>
