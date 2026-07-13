@@ -255,10 +255,13 @@ Namespace Drawing3D
             Dim indices = items.Select(Function(s) CInt(s.i)).ToArray()
             Dim values = items.Select(Function(s) z(+s)).ToArray()
 
-            ' Sort the face indices by their average Z value. O(n log n) via
-            ' Array.Sort (ascending); the index array is carried along so the
-            ' original ordering can be reconstructed for the painter algorithm.
+            ' Painter's algorithm draws the FARTHEST faces first and the NEAREST
+            ' last (so near faces overpaint far ones). In this projection
+            '   depth = viewDistance + Z   (larger Z = farther away)
+            ' so we must sort by Z DESCENDING: reverse the ascending Array.Sort
+            ' result so the index array is ordered far -> near.
             Array.Sort(values, indices)
+            Array.Reverse(indices)
 
             Return New List(Of Integer)(indices)
         End Function

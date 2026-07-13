@@ -132,16 +132,23 @@ Public Class SceneRenderer
         colorTable = Nothing
     End Sub
 
-    ''' <summary>
-    ''' 根据模型包围球半径与当前画布尺寸自动计算视距，使模型初始完整可见。
-    ''' </summary>
-    Public Sub FitView()
-        Dim minDim = Math.Min(Camera.Screen.Width, Camera.Screen.Height)
-        If minDim <= 0 Then minDim = 600
-        Dim vd As Double = modelRadius * Camera.FieldOfView / (0.4 * minDim)
-        If vd < 1 Then vd = 1
-        Camera.ViewDistance = CSng(vd)
-    End Sub
+        ''' <summary>
+        ''' 根据模型包围球半径与当前画布尺寸自动计算视距，使模型初始完整可见。
+        ''' 引入透视强度系数 perspectiveK：让 viewDistance 远大于模型半径，
+        ''' 从而把近处面的透视放大比降到自然范围（≈1.2×），避免模型被夸张畸变。
+        ''' 由于铺满比例 modelRadius·fov/viewDistance = 0.4·minDim 与 fov 无关，
+        ''' 同步放大 fov 与 viewDistance 可保持模型正好铺满、同时弱化透视。
+        ''' </summary>
+        Public Sub FitView()
+            Dim minDim = Math.Min(Camera.Screen.Width, Camera.Screen.Height)
+            If minDim <= 0 Then minDim = 600
+            ' 透视强度系数：越大透视越弱（更接近等距投影）。可在此调节。
+            Const perspectiveK As Double = 8
+            Camera.FieldOfView = CSng(256 * perspectiveK)
+            Dim vd As Double = modelRadius * Camera.FieldOfView / (0.4 * minDim)
+            If vd < 1 Then vd = 1
+            Camera.ViewDistance = CSng(vd)
+        End Sub
 
     Public Sub Draw(g As Graphics, canvas As Size)
         Camera.Screen = canvas
