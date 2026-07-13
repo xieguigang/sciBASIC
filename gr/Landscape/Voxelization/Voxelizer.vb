@@ -58,7 +58,9 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Imaging.Drawing2D.Shapes
 Imports Microsoft.VisualBasic.Imaging.Drawing3D
+Imports Microsoft.VisualBasic.Imaging.Landscape.Data
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports std = System.Math
@@ -187,8 +189,8 @@ Namespace Voxelization
 
             For Each surf In model.Surfaces
                 If surf.vertices Is Nothing Then Continue For
-                For Each v In surf.vertices
-                    If v IsNot Nothing Then
+                For Each v As Vertex In surf.vertices
+                    If v.Point3D IsNot Nothing Then
                         list.Add(v.PointData)
                     End If
                 Next
@@ -226,12 +228,12 @@ Namespace Voxelization
         ''' 保证等轴测（voxel 在 X/Y/Z 方向尺寸相同）。
         ''' </summary>
         Private Function ComputeVoxelGridDimensions(sizeX As Double, sizeY As Double, sizeZ As Double, resolution As Integer) As (width As Integer, height As Integer, depth As Integer, voxelSize As Double)
-            Dim maxSize As Double = Math.Max(Math.Max(sizeX, sizeY), sizeZ)
+            Dim maxSize As Double = std.Max(std.Max(sizeX, sizeY), sizeZ)
             Dim voxelSize As Double = maxSize / resolution
 
-            Dim width As Integer = Math.Max(1, CInt(Math.Ceiling(sizeX / voxelSize)))
-            Dim height As Integer = Math.Max(1, CInt(Math.Ceiling(sizeY / voxelSize)))
-            Dim depth As Integer = Math.Max(1, CInt(Math.Ceiling(sizeZ / voxelSize)))
+            Dim width As Integer = std.Max(1, CInt(std.Ceiling(sizeX / voxelSize)))
+            Dim height As Integer = std.Max(1, CInt(std.Ceiling(sizeY / voxelSize)))
+            Dim depth As Integer = std.Max(1, CInt(std.Ceiling(sizeZ / voxelSize)))
 
             Return (width, height, depth, voxelSize)
         End Function
@@ -300,7 +302,7 @@ Namespace Voxelization
             Dim a = Point3D.Dot(edge1, h)
 
             ' 射线平行于三角形平面 → 不相交
-            If Math.Abs(a) < EPSILON Then
+            If std.Abs(a) < EPSILON Then
                 Return False
             End If
 
@@ -413,8 +415,8 @@ Namespace Voxelization
                         Dim zExit As Double = intersections(i + 1)
 
                         ' 找到对应的体素 Z 索引范围
-                        Dim zStart As Integer = CInt(Math.Floor((zEntry - minZ) / voxelSize))
-                        Dim zEnd As Integer = CInt(Math.Ceiling((zExit - minZ) / voxelSize)) - 1
+                        Dim zStart As Integer = CInt(std.Floor((zEntry - minZ) / voxelSize))
+                        Dim zEnd As Integer = CInt(std.Ceiling((zExit - minZ) / voxelSize)) - 1
 
                         If zStart < 0 Then zStart = 0
                         If zEnd >= depth Then zEnd = depth - 1
@@ -449,7 +451,7 @@ Namespace Voxelization
 
                 ' 聚合所有在阈值范围内的连续交点
                 Dim j As Integer = i + 1
-                While j < intersections.Count AndAlso Math.Abs(intersections(j) - current) < threshold
+                While j < intersections.Count AndAlso std.Abs(intersections(j) - current) < threshold
                     sum += intersections(j)
                     count += 1
                     j += 1
