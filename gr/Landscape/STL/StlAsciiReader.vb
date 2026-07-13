@@ -1,4 +1,4 @@
-#Region "Microsoft.VisualBasic::d4e5b1c2f6a4d8c9b3g7e4d5f6a7c8, gr\Landscape\Stl\StlAsciiReader.vb"
+﻿#Region "Microsoft.VisualBasic::d2e7878c4b9577459cfa160eae8855c1, gr\Landscape\STL\StlAsciiReader.vb"
 
     ' Author:
     ' 
@@ -25,9 +25,23 @@
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
+
+
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 122
+    '    Code Lines: 79 (64.75%)
+    ' Comment Lines: 31 (25.41%)
+    '    - Xml Docs: 67.74%
+    ' 
+    '   Blank Lines: 12 (9.84%)
+    '     File Size: 4.93 KB
+
 
     '     Module StlParser
     ' 

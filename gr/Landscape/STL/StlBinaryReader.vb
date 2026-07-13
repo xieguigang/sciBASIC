@@ -1,4 +1,4 @@
-#Region "Microsoft.VisualBasic::e5f6c2d3a7b4e9d0c4h8f5d6a7b8c9, gr\Landscape\Stl\StlBinaryReader.vb"
+﻿#Region "Microsoft.VisualBasic::91bfbde6d613f7bb307819a799e14ce3, gr\Landscape\STL\StlBinaryReader.vb"
 
     ' Author:
     ' 
@@ -25,9 +25,23 @@
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
+
+
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 82
+    '    Code Lines: 44 (53.66%)
+    ' Comment Lines: 24 (29.27%)
+    '    - Xml Docs: 58.33%
+    ' 
+    '   Blank Lines: 14 (17.07%)
+    '     File Size: 3.29 KB
+
 
     '     Module StlParser
     ' 

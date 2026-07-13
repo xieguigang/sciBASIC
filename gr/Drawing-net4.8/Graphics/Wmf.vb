@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::747e217362f6adbe9de65ef2f2eb3a3e, gr\Drawing-net4.8\Graphics\Wmf.vb"
+﻿#Region "Microsoft.VisualBasic::ea15fac716fca67281ddb79a4524473e, gr\Drawing-net4.8\Graphics\Wmf.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 83.02%
     ' 
     '   Blank Lines: 25 (14.04%)
-    '     File Size: 7.69 KB
+    '     File Size: 7.70 KB
 
 
     ' Class Wmf

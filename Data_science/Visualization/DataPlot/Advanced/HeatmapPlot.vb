@@ -1,4 +1,72 @@
-﻿
+﻿#Region "Microsoft.VisualBasic::2b40d83bdbe2cd1b7ed6def83bea3b0f, Data_science\Visualization\DataPlot\Advanced\HeatmapPlot.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 199
+    '    Code Lines: 169 (84.92%)
+    ' Comment Lines: 8 (4.02%)
+    '    - Xml Docs: 12.50%
+    ' 
+    '   Blank Lines: 22 (11.06%)
+    '     File Size: 7.95 KB
+
+
+    ' Class HeatmapPlot
+    ' 
+    '     Properties: ColLabels, ColorMap, Matrix, MaxValue, MinValue
+    '                 RowLabels, ShowValues
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    '     Sub: Plot
+    '     Enum ColorMapType
+    ' 
+    '         CoolWarm, Grayscale, Inferno, Jet, Plasma
+    '         Viridis
+    ' 
+    ' 
+    ' 
+    '  
+    ' 
+    '     Function: Brightness, GetColor, LerpPalette
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+
 
 Imports System.Drawing
 Imports Microsoft.VisualBasic.Imaging
@@ -196,4 +264,5 @@ Public Class HeatmapPlot
         Return (0.299 * c.R + 0.587 * c.G + 0.114 * c.B) / 255
     End Function
 End Class
+
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cc0a65135e543806948337764ad9c6a5, Microsoft.VisualBasic.Core\src\Drawing\netcore8.0\GraphicsPath.vb"
+﻿#Region "Microsoft.VisualBasic::c240b24023c3d035c8cc934ebc37462d, Microsoft.VisualBasic.Core\src\Drawing\netcore8.0\GraphicsPath.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 162
-    '    Code Lines: 117 (72.22%)
+    '   Total Lines: 179
+    '    Code Lines: 131 (73.18%)
     ' Comment Lines: 0 (0.00%)
     '    - Xml Docs: 0.00%
     ' 
-    '   Blank Lines: 45 (27.78%)
-    '     File Size: 4.65 KB
+    '   Blank Lines: 48 (26.82%)
+    '     File Size: 5.59 KB
 
 
     '     Class PathData
@@ -55,9 +55,9 @@
     ' 
     '         Function: GenericEnumerator
     ' 
-    '         Sub: AddArc, AddBezier, AddCurve, AddEllipse, AddLine
-    '              AddLines, AddPolygon, AddRectangle, CloseAllFigures, CloseFigure
-    '              Reset
+    '         Sub: (+2 Overloads) AddArc, AddBezier, AddCurve, AddEllipse, AddLine
+    '              AddLines, AddPolygon, AddRectangle, AddString, CloseAllFigures
+    '              CloseFigure, Reset
     '         Class op
     ' 
     ' 
@@ -109,6 +109,11 @@
     '         Class op_AddEllipse
     ' 
     '             Properties: r1, r2, x, y
+    ' 
+    '         Class op_AddString
+    ' 
+    '             Properties: fontFamily, format, pos, s, size
+    '                         style
     ' 
     ' 
     ' 

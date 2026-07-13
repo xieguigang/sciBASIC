@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::eb590c0fac91a65d296db6cf4720c01d, Microsoft.VisualBasic.Core\src\ComponentModel\DataSource\StringReader.vb"
+﻿#Region "Microsoft.VisualBasic::4687a8de632b15a6161c34ec3bb69229, Microsoft.VisualBasic.Core\src\ComponentModel\DataSource\StringReader.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 307
-    '    Code Lines: 154 (50.16%)
-    ' Comment Lines: 105 (34.20%)
+    '   Total Lines: 333
+    '    Code Lines: 177 (53.15%)
+    ' Comment Lines: 105 (31.53%)
     '    - Xml Docs: 88.57%
     ' 
-    '   Blank Lines: 48 (15.64%)
-    '     File Size: 10.81 KB
+    '   Blank Lines: 51 (15.32%)
+    '     File Size: 11.69 KB
 
 
     '     Interface IStringGetter
@@ -55,7 +55,7 @@
     '     Class StringArrayPointer
     ' 
     '         Constructor: (+1 Overloads) Sub New
-    '         Function: ReadDouble, ReadInteger, ReadString, ToString
+    '         Function: (+2 Overloads) ReadDouble, (+2 Overloads) ReadInteger, (+2 Overloads) ReadString, ToString
     ' 
     '     Class StringReader
     ' 

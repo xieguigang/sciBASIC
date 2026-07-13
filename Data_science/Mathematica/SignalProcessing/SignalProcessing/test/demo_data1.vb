@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b5f4996d55d5c23c0fc15ff01462fa8c, Data_science\Mathematica\SignalProcessing\SignalProcessing\test\demo_data1.vb"
+﻿#Region "Microsoft.VisualBasic::eb121464f39d162f5bc92af76431dbd9, Data_science\Mathematica\SignalProcessing\SignalProcessing\test\demo_data1.vb"
 
     ' Author:
     ' 
@@ -45,7 +45,7 @@
 
     ' Module demo_data1
     ' 
-    '     Sub: fitCurveTest, fitMultipleGauss, Main
+    '     Sub: fitCurveTest, fitMultipleGauss, Main222
     ' 
     ' /********************************************************************************/
 

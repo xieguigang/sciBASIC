@@ -1,13 +1,72 @@
-#Region "Microsoft.VisualBasic::d2e3f4a5b6c7d80910203e4f5a6b7c8d, Data_science\Mathematica\SignalProcessing\SignalProcessing\Source\BasisPulses.vb"
+﻿#Region "Microsoft.VisualBasic::f20e183087d8d0bdc02c2bc8d40b8bfd, Data_science\Mathematica\SignalProcessing\SignalProcessing\Source\BasisPulses.vb"
 
     ' Author:
     ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
     '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-    ' The pulse & local-feature basis functions:
-    ' Gaussian, Lorentz, DoubleExp, Ricker and RectPulse.
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 87
+    '    Code Lines: 35 (40.23%)
+    ' Comment Lines: 40 (45.98%)
+    '    - Xml Docs: 87.50%
+    ' 
+    '   Blank Lines: 12 (13.79%)
+    '     File Size: 3.20 KB
+
+
+    '     Class Gaussian
+    ' 
+    '         Function: Shape
+    ' 
+    '     Class Lorentz
+    ' 
+    '         Function: Shape
+    ' 
+    '     Class DoubleExp
+    ' 
+    '         Function: Shape
+    ' 
+    '     Class Ricker
+    ' 
+    '         Function: Shape
+    ' 
+    '     Class RectPulse
+    ' 
+    '         Properties: Width
+    ' 
+    '         Function: Shape
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

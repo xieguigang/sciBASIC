@@ -1,4 +1,4 @@
-#Region "Microsoft.VisualBasic::glTF_Types, gr\Landscape\glTF\GltfTypes.vb"
+﻿#Region "Microsoft.VisualBasic::be0cb9e1ccfbe452da1649b896cede7c, gr\Landscape\glTF\GltfTypes.vb"
 
     ' Author:
     ' 
@@ -26,6 +26,7 @@
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
+
     ' /********************************************************************************/
 
     ' Summaries:
@@ -33,37 +34,77 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 0
-    '    Code Lines: 0
-    ' Comment Lines: 0
+    '   Total Lines: 293
+    '    Code Lines: 153 (52.22%)
+    ' Comment Lines: 69 (23.55%)
+    '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 0
-    '     File Size: 0 B
+    '   Blank Lines: 71 (24.23%)
+    '     File Size: 8.36 KB
 
 
     '     Class GltfRoot
-    '         Properties: Accessors, Asset, BufferViews, Buffers, DefaultScene, Materials, Meshes, Nodes, Samplers, Scenes, Textures
+    ' 
+    '         Properties: Accessors, Asset, Buffers, BufferViews, DefaultScene
+    '                     Materials, Meshes, Nodes, Scenes
+    ' 
     '     Class AssetInfo
+    ' 
     '         Properties: Generator, Version
+    ' 
     '     Class Scene
+    ' 
     '         Properties: Name, Nodes
+    ' 
     '     Class Node
-    '         Properties: Children, Matrix, MeshIndex, Name, Rotation, Scale, Translation
+    ' 
+    '         Properties: Children, Matrix, MeshIndex, Name, Rotation
+    '                     Scale, Translation
+    ' 
     '     Class GltfMesh
+    ' 
     '         Properties: Name, Primitives
+    ' 
     '     Class Primitive
+    ' 
     '         Properties: Attributes, IndicesAccessor, MaterialIndex, Mode
+    ' 
     '     Class Accessor
-    '         Properties: BufferViewIndex, ByteOffset, ComponentType, Count, ElementType, Max, Min
+    ' 
+    '         Properties: BufferViewIndex, ByteOffset, ComponentSize, ComponentType, Count
+    '                     ElementType, Max, Min, NumComponents
+    ' 
     '     Class BufferView
+    ' 
     '         Properties: BufferIndex, ByteLength, ByteOffset, ByteStride, Target
+    ' 
     '     Class GltfBuffer
+    ' 
     '         Properties: ByteLength, Uri
+    ' 
     '     Class GltfMaterial
+    ' 
     '         Properties: Name, PbrMetallicRoughness
+    ' 
     '     Class PbrMetallicRoughness
+    ' 
     '         Properties: BaseColorFactor
-
+    ' 
+    '     Enum GltfComponentType
+    ' 
+    ' 
+    '  
+    ' 
+    ' 
+    ' 
+    '     Enum GltfPrimitiveMode
+    ' 
+    ' 
+    '  
+    ' 
+    ' 
+    ' 
+    ' 
     ' /********************************************************************************/
 
 #End Region

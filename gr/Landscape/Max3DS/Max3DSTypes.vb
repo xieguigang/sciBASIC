@@ -1,4 +1,4 @@
-#Region "Microsoft.VisualBasic::3DS_Types, gr\Landscape\Max3DS\Max3DSTypes.vb"
+﻿#Region "Microsoft.VisualBasic::6fde865093c452a3523ee40a4c14925e, gr\Landscape\Max3DS\Max3DSTypes.vb"
 
     ' Author:
     ' 
@@ -32,22 +32,40 @@
     ' Summaries:
 
 
+    ' Code Statistics:
+
+    '   Total Lines: 157
+    '    Code Lines: 58 (36.94%)
+    ' Comment Lines: 69 (43.95%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 30 (19.11%)
+    '     File Size: 5.29 KB
+
+
     '     Class Chunk3DS
-
+    ' 
     '         Properties: childChunks, chunkId, chunkLength, dataOffset, endOffset
-
-
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    '         Function: ToString
+    ' 
     '     Class Mesh3DS
-
-    '         Properties: faces, faceMaterials, localMatrix, materialName, name, textureVertices, vertices
-
-
+    ' 
+    '         Properties: faceMaterials, faces, localMatrix, materialName, name
+    '                     textureVertices, vertices
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    '         Function: ToString
+    ' 
     '     Class Material3DS
-
+    ' 
     '         Properties: diffuseColor, name, textureFile
-
-
-
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    '         Function: ToHtmlColor, ToString
+    ' 
+    ' 
     ' /********************************************************************************/
 
 #End Region

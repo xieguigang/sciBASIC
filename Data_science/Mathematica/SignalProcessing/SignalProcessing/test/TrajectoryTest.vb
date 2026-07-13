@@ -1,57 +1,57 @@
-﻿#Region "Microsoft.VisualBasic::1c38bfbe3276e05496fb1356ad66d3f5, Data_science\Mathematica\SignalProcessing\SignalProcessing\test\TrajectoryTest.vb"
+﻿#Region "Microsoft.VisualBasic::c887ace4c07822dfd3d7d7a835c423e2, Data_science\Mathematica\SignalProcessing\SignalProcessing\test\TrajectoryTest.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 136
-'    Code Lines: 96 (70.59%)
-' Comment Lines: 15 (11.03%)
-'    - Xml Docs: 0.00%
-' 
-'   Blank Lines: 25 (18.38%)
-'     File Size: 5.03 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-' Class MotionSimulator
-' 
-'     Function: GenerateTrackData
-' 
-' Module TrajectoryTest
-' 
-'     Sub: Main, matchesTest, VisualizeTracks
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 140
+    '    Code Lines: 99 (70.71%)
+    ' Comment Lines: 15 (10.71%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 26 (18.57%)
+    '     File Size: 5.19 KB
+
+
+    ' Class MotionSimulator
+    ' 
+    '     Function: GenerateTrackData
+    ' 
+    ' Module TrajectoryTest
+    ' 
+    '     Sub: Main3333, matchesTest, VisualizeTracks
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

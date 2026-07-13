@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8123357812458721f63442bf52c31376, gr\Microsoft.VisualBasic.Imaging\test\objReaderTest.vb"
+﻿#Region "Microsoft.VisualBasic::21ffca75d43f6c3b5c54ee0ef1fc95e0, gr\Microsoft.VisualBasic.Imaging\test\objReaderTest.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 0.00%
     ' 
     '   Blank Lines: 15 (22.73%)
-    '     File Size: 2.00 KB
+    '     File Size: 2.01 KB
 
 
     ' 

@@ -1,3 +1,88 @@
+﻿#Region "Microsoft.VisualBasic::125f5c8591ea4b5e2075110f0bb19263, Data_science\MachineLearning\VAE\GraphVAE.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 931
+    '    Code Lines: 501 (53.81%)
+    ' Comment Lines: 251 (26.96%)
+    '    - Xml Docs: 46.22%
+    ' 
+    '   Blank Lines: 179 (19.23%)
+    '     File Size: 31.52 KB
+
+
+    ' Module GraphUtils
+    ' 
+    '     Function: AddBias, ApplyReLU, ApplySigmoid, BCELossSum, BinaryAccuracy
+    '               BroadcastRow, KLDivergence, NormalizeAdjacency, ReLUDerivFromInput, Sigmoid
+    '               Threshold
+    ' 
+    ' Class LinearLayer
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    ' 
+    '     Function: Backward, Forward
+    ' 
+    '     Sub: Update
+    ' 
+    ' Class GCNLayer
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    ' 
+    '     Function: Backward, Forward
+    ' 
+    '     Sub: Update
+    ' 
+    ' Structure GraphVAEConfig
+    ' 
+    ' 
+    ' 
+    ' Class GraphVAE
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    ' 
+    '     Function: ComputeLoss, Evaluate, Forward, Generate, Predict
+    '               SampleEpsilon, Train
+    ' 
+    '     Sub: Backward, Update
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
 ' ============================================================================
 ' GraphVAE: 图变分自编码器 (Graph Variational Autoencoder)
 ' ============================================================================
@@ -928,4 +1013,5 @@ Public Class GraphVAE
 #End Region
 
 End Class
+
 

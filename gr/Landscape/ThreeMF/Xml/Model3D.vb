@@ -1,68 +1,68 @@
-﻿#Region "Microsoft.VisualBasic::1594f9190feb57c3c42e9c67abd6fe25, gr\Landscape\ThreeMF\Xml\Model3D.vb"
+﻿#Region "Microsoft.VisualBasic::eaac580fbe22a4cd3ec1abcd7314a29f, gr\Landscape\ThreeMF\Xml\Model3D.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 74
-'    Code Lines: 54 (72.97%)
-' Comment Lines: 6 (8.11%)
-'    - Xml Docs: 50.00%
-' 
-'   Blank Lines: 14 (18.92%)
-'     File Size: 2.29 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Class XmlModel3D
-' 
-'         Properties: build, resources, unit
-' 
-'         Function: GetSurfaces
-' 
-'     Class build
-' 
-'         Properties: items
-' 
-'         Function: ToString
-' 
-'     Class item
-' 
-'         Properties: objectid, transform
-' 
-'         Function: ToString
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 83
+    '    Code Lines: 58 (69.88%)
+    ' Comment Lines: 11 (13.25%)
+    '    - Xml Docs: 63.64%
+    ' 
+    '   Blank Lines: 14 (16.87%)
+    '     File Size: 2.70 KB
+
+
+    '     Class XmlModel3D
+    ' 
+    '         Properties: build, resources, unit
+    ' 
+    '         Function: GetSurfaces
+    ' 
+    '     Class build
+    ' 
+    '         Properties: items
+    ' 
+    '         Function: ToString
+    ' 
+    '     Class item
+    ' 
+    '         Properties: objectid, transform
+    ' 
+    '         Function: ToString
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

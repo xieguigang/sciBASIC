@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c649bfb05a5369f7d57cf6b5f703d827, gr\Landscape\Wavefront\ObjModel.vb"
+﻿#Region "Microsoft.VisualBasic::69fdd7bbbe1ef5f29ff64be9f9291f88, gr\Landscape\Wavefront\ObjModel.vb"
 
     ' Author:
     ' 
@@ -34,20 +34,20 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 49
-    '    Code Lines: 35 (71.43%)
-    ' Comment Lines: 4 (8.16%)
-    '    - Xml Docs: 100.00%
+    '   Total Lines: 94
+    '    Code Lines: 65 (69.15%)
+    ' Comment Lines: 11 (11.70%)
+    '    - Xml Docs: 81.82%
     ' 
-    '   Blank Lines: 10 (20.41%)
-    '     File Size: 1.49 KB
+    '   Blank Lines: 18 (19.15%)
+    '     File Size: 3.57 KB
 
 
     '     Class ObjModel
     ' 
     '         Properties: comment, mtllib, parts
     ' 
-    '         Function: ReadFile
+    '         Function: ReadFile, ToSceneModel
     ' 
     '     Class ObjGroup
     ' 

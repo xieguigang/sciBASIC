@@ -1,3 +1,77 @@
+﻿#Region "Microsoft.VisualBasic::45ae53b48070cad3803558dc7ace853e, Data_science\Visualization\DataPlot\Engine\PlotEngine.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 430
+    '    Code Lines: 333 (77.44%)
+    ' Comment Lines: 57 (13.26%)
+    '    - Xml Docs: 19.30%
+    ' 
+    '   Blank Lines: 40 (9.30%)
+    '     File Size: 18.75 KB
+
+
+    ' Class PlotEngine
+    ' 
+    '     Properties: LegendLocation, ShowLegend, SubTitle, Theme, Title
+    '                 XLabel, XMax, XMin, YLabel, YMax
+    '                 YMin
+    '     Enum LegendPos
+    ' 
+    '         BottomOutside, LowerLeft, LowerRight, RightOutside, UpperLeft
+    '         UpperRight
+    ' 
+    ' 
+    ' 
+    '  
+    ' 
+    '     Properties: CanvasHeight, CanvasWidth, PlotArea
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    ' 
+    '     Function: FormatNumber, GenerateTicks, GetGraphics, NiceStep, ToPixelX
+    '               ToPixelY
+    ' 
+    '     Sub: ApplyQuality, AutoRange, ComputePlotArea, Dispose, DrawAxisAndGrid
+    '          DrawBackground, DrawLegend, DrawMarker, DrawPlotArea, DrawTitle
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
 Imports System.Drawing
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Driver
@@ -426,5 +500,6 @@ Public Class PlotEngine : Implements IDisposable
     End Property
 
 End Class
+
 
 

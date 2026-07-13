@@ -1,4 +1,4 @@
-#Region "Microsoft.VisualBasic::GLB_Reader, gr\Landscape\glTF\GlbReader.vb"
+﻿#Region "Microsoft.VisualBasic::5bad0981ec044012c03b628970dfafec, gr\Landscape\glTF\GlbReader.vb"
 
     ' Author:
     ' 
@@ -25,13 +25,29 @@
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
+
+
     ' /********************************************************************************/
 
     ' Summaries:
 
-    '     Module GlbReader
-    '         Function: ReadFile, ReadStream
 
+    ' Code Statistics:
+
+    '   Total Lines: 153
+    '    Code Lines: 74 (48.37%)
+    ' Comment Lines: 54 (35.29%)
+    '    - Xml Docs: 68.52%
+    ' 
+    '   Blank Lines: 25 (16.34%)
+    '     File Size: 6.43 KB
+
+
+    '     Module GlbReader
+    ' 
+    '         Function: BuildBufferList, ReadFile, ReadStream
+    ' 
+    ' 
     ' /********************************************************************************/
 
 #End Region

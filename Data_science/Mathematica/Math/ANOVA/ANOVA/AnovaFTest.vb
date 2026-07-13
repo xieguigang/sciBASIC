@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d0713eead4f6a38f3b65e22b4e3a07f2, Data_science\Mathematica\Math\ANOVA\ANOVA\AnovaFTest.vb"
+﻿#Region "Microsoft.VisualBasic::e68ffb43fb75ffe41a26c21ea7c6034b, Data_science\Mathematica\Math\ANOVA\ANOVA\AnovaFTest.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 58.82%
     ' 
     '   Blank Lines: 17 (15.74%)
-    '     File Size: 3.03 KB
+    '     File Size: 3.02 KB
 
 
     ' Class AnovaFTest
@@ -162,4 +162,3 @@ Public Class AnovaFTest
         _pValue = Distribution.FDistribution(_fStat, DfBetween, DfWithin)
     End Sub
 End Class
-

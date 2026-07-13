@@ -1,4 +1,4 @@
-#Region "Microsoft.VisualBasic::b7e2f1a94d3c4e8b6a0c2d9e4f1a7c5, gr\Landscape\Collada\ColladaTypes.vb"
+﻿#Region "Microsoft.VisualBasic::e638ce37668ba633989320cdc374b825, gr\Landscape\COLLADA\ColladaTypes.vb"
 
     ' Author:
     ' 
@@ -25,9 +25,23 @@
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
+
+
     ' /********************************************************************************/
 
     ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 13
+    '    Code Lines: 8 (61.54%)
+    ' Comment Lines: 3 (23.08%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 2 (15.38%)
+    '     File Size: 347 B
+
 
     '     Class GeometrySource
     ' 

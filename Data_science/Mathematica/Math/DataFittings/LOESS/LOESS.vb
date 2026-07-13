@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b2aeaaaef40b0b0c8b07e0721ad9fe2e, Data_science\Mathematica\Math\DataFittings\LOESS\LOESS.vb"
+﻿#Region "Microsoft.VisualBasic::db0db23a9c4750b7097a7eea79af7864, Data_science\Mathematica\Math\DataFittings\LOESS\LOESS.vb"
 
     ' Author:
     ' 
@@ -255,4 +255,3 @@ Public Module LOESS
     End Function
 
 End Module
-
