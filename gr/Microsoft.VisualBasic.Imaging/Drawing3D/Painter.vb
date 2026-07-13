@@ -66,7 +66,7 @@ Imports Microsoft.VisualBasic.Imaging.Math2D
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 
-#If NET48 Then
+#If WINDOWS Then
 Imports Microsoft.VisualBasic.Drawing
 #End If
 
@@ -143,7 +143,7 @@ Namespace Drawing3D
             Next
         End Sub
 
-#If NET48 Then
+#If WINDOWS Then
         ''' <summary>
         ''' 应用于WinForm的原生方法
         ''' </summary>
@@ -160,10 +160,10 @@ Namespace Drawing3D
             For Each polygon As Polygon In buf
                 With polygon
                     buffer = .points.Offsets(offset)
-                    canvas.FillPolygon(.brush, buffer)
+                    canvas.FillPolygon(.brush.CTypeBrushObject, buffer)
 
                     If drawPath Then
-                        Call canvas.DrawPolygon(Pens.Black, buffer)
+                        Call canvas.DrawPolygon(System.Drawing.Pens.Black, buffer)
                     End If
                 End With
             Next

@@ -54,6 +54,7 @@
 #End Region
 
 Imports System.Drawing
+Imports System.Windows.Forms
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing3D
 Imports Microsoft.VisualBasic.Parallel.Tasks
@@ -73,8 +74,8 @@ Namespace Drawing3D.Device
             Call FPSThread.Start()
         End Sub
 
-        Dim font As New Font(FontFace.Consolas, 9)
-        Dim red As SolidBrush = Brushes.Red
+        Dim font As New System.Drawing.Font(FontFace.Consolas, 9)
+        Dim red As System.Drawing.SolidBrush = System.Drawing.Brushes.Red
         Dim mouse As Point
         Dim WithEvents FPSThread As New UpdateThread(1000, AddressOf ClearFPSCount)
 

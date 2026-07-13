@@ -98,7 +98,7 @@ Namespace Drawing3D.Device
         End Property
 
         Dim __horizontalPanel As New Surface With {
-            .brush = New SolidBrush(Color.FromArgb(128, Color.Gray)),
+            .brush = New Microsoft.VisualBasic.Imaging.SolidBrush(Color.FromArgb(128, Color.Gray)),
             .vertices = {
                 New Point3D(100, 100),
                 New Point3D(100, -100),
