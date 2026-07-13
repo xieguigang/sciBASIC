@@ -52,6 +52,9 @@
 
 #End Region
 
+Imports Microsoft.VisualBasic.MachineLearning.CNN
+Imports Microsoft.VisualBasic.MachineLearning.CNN.trainers
+
 ''' <summary>
 ''' Create Q-learning model based on a deep full connected network
 ''' </summary>
