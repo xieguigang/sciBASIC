@@ -103,23 +103,6 @@ Namespace ThreeMF
         End Function
 
         ''' <summary>
-        ''' 将 OLE 颜色字符串转换为 System.Drawing.Color
-        ''' </summary>
-        ''' <param name="displaycolor">OLE颜色值字符串</param>
-        ''' <returns></returns>
-        <Extension>
-        Public Function TranslateColor(displaycolor As String) As Color
-            If displaycolor.StringEmpty Then
-                Return Color.Gray
-            End If
-            Try
-                Return ColorTranslator.FromOle(CInt(displaycolor))
-            Catch
-                Return Color.Gray
-            End Try
-        End Function
-
-        ''' <summary>
         ''' 从 basematerials 中提取所有的 Brush 画刷对象
         ''' </summary>
         ''' <param name="mats"></param>
