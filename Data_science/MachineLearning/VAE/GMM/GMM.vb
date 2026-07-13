@@ -11,6 +11,7 @@
 ' 作者: Qingyan Agent
 ' ============================================================================
 
+Imports Microsoft.VisualBasic.DataMining.KMeans
 Imports Microsoft.VisualBasic.MachineLearning.TensorFlow
 Imports std = System.Math
 
@@ -803,6 +804,27 @@ Public Class GaussianMixtureModel
 
     Public Overrides Function ToString() As String
         Return $"GMM(K={_nComponents}, diagCov={_diagCovariance}, converged={Converged}, nIter={NIter}, logLik={LogLikelihood:F4})"
+    End Function
+
+    Public Shared Function Predicts(rowdatas() As ClusterEntity, components As Integer, threshold As Double, strict As Boolean) As GaussianMixtureModel
+        Dim gmm As New GaussianMixtureModel(components, tol:=threshold)
+        Dim w As Integer = rowdatas(0).Length
+        Dim samples As Double() = New Double(rowdatas.Length * w - 1) {}
+
+        For i As Integer = 0 To rowdatas.Length - 1
+            Array.Copy(rowdatas(i).entityVector, 0, samples, i * w, w)
+        Next
+
+        Dim X = New Tensor(samples, rowdatas.Length, w)
+        gmm.Fit(X)
+        Return gmm
+    End Function
+
+    Public Shared Function Predicts(samples() As Double, components As Integer, threshold As Double, verbose As Boolean) As GaussianMixtureModel
+        Dim gmm As New GaussianMixtureModel(components, tol:=threshold)
+        Dim X = New Tensor(samples, samples.Length, 1)
+        gmm.Fit(X)
+        Return gmm
     End Function
 
 #End Region

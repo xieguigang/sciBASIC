@@ -31,8 +31,6 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\Microsoft.VisualBasic.Core\src\Core.vbproj" />
-    <ProjectReference Include="..\..\DataMining\DataMining\DataMining.NET5.vbproj" />
-    <ProjectReference Include="..\..\Mathematica\Math\Math.Statistics\stats-netcore5.vbproj" />
     <ProjectReference Include="..\..\Mathematica\Math\Math\Math.NET5.vbproj" />
   </ItemGroup>
 

@@ -166,9 +166,11 @@ Namespace ComponentModel.DataSourceModel
 
         Dim i As Integer
         Dim vec As IReadOnlyCollection(Of String)
+        Dim len As Integer
 
         Sub New(array As IReadOnlyCollection(Of String))
             vec = array
+            len = array.Count
         End Sub
 
         Public Function ReadString() As String
@@ -191,6 +193,30 @@ Namespace ComponentModel.DataSourceModel
 
         Public Function ReadInteger() As Integer
             Return CInt(Val(ReadString))
+        End Function
+
+        Public Function ReadInteger(offset As Integer) As Integer
+            If offset < 0 OrElse offset >= len Then
+                Return 0
+            Else
+                Return CInt(Val(vec(offset)))
+            End If
+        End Function
+
+        Public Function ReadDouble(offset As Integer) As Double
+            If offset < 0 OrElse offset >= len Then
+                Return 0
+            Else
+                Return Val(vec(offset))
+            End If
+        End Function
+
+        Public Function ReadString(offset As Integer, Optional strip As Boolean = False) As String
+            If offset < 0 OrElse offset >= len Then
+                Return Nothing
+            Else
+                Return If(strip, vec(offset).Trim(""""c), vec(offset))
+            End If
         End Function
 
         Public Overrides Function ToString() As String

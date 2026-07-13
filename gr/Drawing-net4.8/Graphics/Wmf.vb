@@ -183,7 +183,7 @@ Public Class Wmf : Inherits GDICanvas
         ' Make a Graphics object and draw.
         g = Graphics.FromImage(vectorMetafile)
         g.SmoothingMode = SmoothingMode.HighQuality
-        g.PageUnit = GraphicsUnit.Pixel
+        g.PageUnit = System.Drawing.GraphicsUnit.Pixel
         g.CompositingQuality = CompositingQuality.HighQuality
         g.CompositingMode = CompositingMode.SourceOver
         g.InterpolationMode = InterpolationMode.HighQualityBicubic

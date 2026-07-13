@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5f24913964d45e5acfe669d853532b77, gr\Landscape\3DBuilder\Extensions.vb"
+#Region "Microsoft.VisualBasic::b7e2f1a94d3c4e8b6a0c2d9e4f1a7c5, gr\Landscape\Collada\ColladaTypes.vb"
 
     ' Author:
     ' 
@@ -25,41 +25,29 @@
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-
-
     ' /********************************************************************************/
 
     ' Summaries:
 
-
-    ' Code Statistics:
-
-    '   Total Lines: 11
-    '    Code Lines: 7 (63.64%)
-    ' Comment Lines: 0 (0.00%)
-    '    - Xml Docs: 0.00%
+    '     Class GeometrySource
     ' 
-    '   Blank Lines: 4 (36.36%)
-    '     File Size: 206 B
-
-
-    '     Module Extensions
-    ' 
-    ' 
+    '         Properties: count, floatArray, sourceId, stride
     ' 
     ' 
     ' /********************************************************************************/
 
 #End Region
 
-Imports System.Runtime.CompilerServices
-Imports Microsoft.VisualBasic.Language
-Imports Microsoft.VisualBasic.Linq
+Namespace Collada
 
-Namespace Vendor_3mf
+    ''' <summary>
+    ''' 单个 &lt;source&gt; 元素的数据
+    ''' </summary>
+    Friend Class GeometrySource
+        Public Property sourceId As String
+        Public Property floatArray As Single()
+        Public Property stride As Integer
+        Public Property count As Integer
+    End Class
 
-    Public Module Extensions
-
-
-    End Module
 End Namespace

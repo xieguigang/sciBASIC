@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::af18493fe141e76e55cdd4ad74edb5e8, gr\Landscape\Graphics.vb"
+﻿#Region "Microsoft.VisualBasic::af18493fe141e76e55cdd4ad74edb5e8, gr\Landscape\Data\SceneModel.vb"
 
     ' Author:
     ' 
@@ -43,7 +43,7 @@
     '     File Size: 437 B
 
 
-    '     Class Graphics
+    '     Class SceneModel
     ' 
     '         Properties: bg, Surfaces
     ' 
@@ -57,7 +57,7 @@ Namespace Data
     ''' <summary>
     ''' The data model of the landscape 3D model.
     ''' </summary>
-    Public Class Graphics
+    Public Class SceneModel
 
         Public Property Surfaces As Surface()
         ''' <summary>

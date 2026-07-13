@@ -264,6 +264,12 @@ Namespace Imaging
             End Using
         End Function
 
+        Public Overloads Sub Save(filename As String, format As ImageFormats)
+            Using s As Stream = filename.Open(FileMode.OpenOrCreate, doClear:=True)
+                Call Save(s, format)
+            End Using
+        End Sub
+
         ''' <summary>
         ''' Save current bitmap object into a specific file
         ''' </summary>

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c649bfb05a5369f7d57cf6b5f703d827, gr\Landscape\Wavefront\OBJ.vb"
+﻿#Region "Microsoft.VisualBasic::c649bfb05a5369f7d57cf6b5f703d827, gr\Landscape\Wavefront\ObjModel.vb"
 
     ' Author:
     ' 
@@ -43,13 +43,13 @@
     '     File Size: 1.49 KB
 
 
-    '     Class OBJ
+    '     Class ObjModel
     ' 
     '         Properties: comment, mtllib, parts
     ' 
     '         Function: ReadFile
     ' 
-    '     Class ObjectPart
+    '     Class ObjGroup
     ' 
     '         Properties: f, g, IsEmpty, usemtl, vertex
     '                     vn
@@ -68,25 +68,25 @@ Imports Microsoft.VisualBasic.Language
 
 Namespace Wavefront
 
-    Public Class OBJ
+    Public Class ObjModel
 
         ''' <summary>
         ''' lib file name of mtl data
         ''' </summary>
         ''' <returns></returns>
         Public Property mtllib As String
-        Public Property parts As ObjectPart()
+        Public Property parts As ObjGroup()
         Public Property comment As String
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <DebuggerStepThrough>
-        Public Shared Function ReadFile(file As StreamReader) As OBJ
-            Return TextParser.ParseFile(file)
+        Public Shared Function ReadFile(file As StreamReader) As ObjModel
+            Return ObjTextParser.ParseFile(file)
         End Function
 
     End Class
 
-    Public Class ObjectPart
+    Public Class ObjGroup
 
         Public Property g As String
         Public Property vertex As Point3D()

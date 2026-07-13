@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c8b1b248179ce7ad84f4abd4712b5ec4, gr\Landscape\3DBuilder\XML\models.vb"
+﻿#Region "Microsoft.VisualBasic::c8b1b248179ce7ad84f4abd4712b5ec4, gr\Landscape\ThreeMF\Xml\Mesh.vb"
 
     ' Author:
     ' 
@@ -43,19 +43,19 @@
     '     File Size: 2.65 KB
 
 
-    '     Class mesh
+    '     Class Mesh
     ' 
     '         Properties: triangles, vertices
     ' 
     '         Function: (+2 Overloads) GetSurfaces, ToString
     ' 
-    '     Class triangle
+    '     Class Triangle3D
     ' 
     '         Properties: p1, pid, v1, v2, v3
     ' 
     '         Function: ToString
     ' 
-    '     Class component
+    '     Class Component
     ' 
     '         Properties: objectid
     ' 
@@ -70,19 +70,19 @@ Imports Microsoft.VisualBasic.Imaging.Drawing3D
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Serialization.JSON
 
-Namespace Vendor_3mf.XML
+Namespace ThreeMF.Xml
 
-    Public Class mesh
+    Public Class Mesh
 
         Public Property vertices As Point3D()
-        Public Property triangles As triangle()
+        Public Property triangles As Triangle3D()
 
-        Public Function GetSurfaces(base As base) As Surface()
+        Public Function GetSurfaces(material As BaseMaterial) As Surface()
             Dim out As New List(Of Surface)
-            Dim color As Color = base.displaycolor.TranslateColor
+            Dim color As Color = material.displaycolor.TranslateColor
             Dim b As New SolidBrush(color)
 
-            For Each t As triangle In triangles
+            For Each t As Triangle3D In triangles
                 out += New Surface With {
                     .vertices = {
                         vertices(t.v1), vertices(t.v2), vertices(t.v3)
@@ -94,15 +94,15 @@ Namespace Vendor_3mf.XML
             Return out
         End Function
 
-        ''' <summary>
-        ''' <see cref="triangle.p1"/>
-        ''' </summary>
+    ''' <summary>
+    ''' <see cref="Triangle3D.p1"/>
+    ''' </summary>
         ''' <param name="materials"></param>
         ''' <returns></returns>
         Public Function GetSurfaces(materials As Brush()) As Surface()
             Dim out As New List(Of Surface)
 
-            For Each t As triangle In triangles
+            For Each t As Triangle3D In triangles
                 Dim i As Integer = CInt(t.p1)
 
                 out += New Surface With {
@@ -124,7 +124,7 @@ Namespace Vendor_3mf.XML
     ''' <summary>
     ''' 3 vertex index to create a triangle of the surface model data
     ''' </summary>
-    Public Class triangle
+    Public Class Triangle3D
 
         <XmlAttribute> Public Property v1 As Integer
         <XmlAttribute> Public Property v2 As Integer
@@ -146,7 +146,7 @@ Namespace Vendor_3mf.XML
         End Function
     End Class
 
-    Public Class component
+    Public Class Component
 
         <XmlAttribute>
         Public Property objectid As Integer

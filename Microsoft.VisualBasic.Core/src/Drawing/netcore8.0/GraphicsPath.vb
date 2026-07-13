@@ -256,6 +256,10 @@ Namespace Imaging
             Call opSet.Add(New op_AddArc With {.rect = rect, .startAngle = startAngle, .sweepAngle = sweepAngle})
         End Sub
 
+        Public Sub AddArc(x As Single, y As Single, width As Single, height As Single, startAngle!, sweepAngle!)
+            Call opSet.Add(New op_AddArc With {.rect = New RectangleF(x, y, width, height), .startAngle = startAngle, .sweepAngle = sweepAngle})
+        End Sub
+
         Public Sub AddLine(a As PointF, b As PointF)
             Call opSet.Add(New op_AddLine(a, b))
         End Sub

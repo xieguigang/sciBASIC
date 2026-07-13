@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fd8f660e1491d5bb44fc0a9fc1c75801, gr\Landscape\3DBuilder\XML\resources.vb"
+﻿#Region "Microsoft.VisualBasic::fd8f660e1491d5bb44fc0a9fc1c75801, gr\Landscape\ThreeMF\Xml\Resources.vb"
 
     ' Author:
     ' 
@@ -76,9 +76,9 @@
 Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.Serialization.JSON
 
-Namespace Vendor_3mf.XML
+Namespace ThreeMF.Xml
 
-    Public Class base
+    Public Class BaseMaterial
 
         <XmlAttribute> Public Property name As String
         ''' <summary>
@@ -92,19 +92,19 @@ Namespace Vendor_3mf.XML
         End Function
     End Class
 
-    Public Class resources
+    Public Class Resources
 
-        Public Property basematerials As basematerials
+        Public Property basematerials As BaseMaterials
         <XmlElement("object")>
-        Public Property objects As [object]()
+        Public Property objects As Object3D()
 
     End Class
 
-    Public Interface Iobject
+    Public Interface IObject
         <XmlAttribute> Property id As Integer
     End Interface
 
-    Public Class [object] : Implements Iobject
+    Public Class Object3D : Implements IObject
 
         <XmlAttribute("id")>
         Public Property id As Integer Implements Iobject.id
@@ -112,21 +112,21 @@ Namespace Vendor_3mf.XML
         <XmlAttribute> Public Property pid As String
         <XmlAttribute> Public Property pindex As String
 
-        Public Property components As component()
-        Public Property mesh As mesh
+        Public Property components As Component()
+        Public Property mesh As Mesh
 
     End Class
 
-    Public Class basematerials
-        Implements Iobject
+    Public Class BaseMaterials
+        Implements IObject
 
         <XmlAttribute("id")>
         Public Property id As Integer Implements Iobject.id
         <XmlElement("base")>
-        Public Property basematerials As base()
+        Public Property items As BaseMaterial()
 
         Public Overrides Function ToString() As String
-            Return basematerials.GetJson
+            Return Me.GetJson
         End Function
     End Class
 End Namespace
