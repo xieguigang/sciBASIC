@@ -18,6 +18,7 @@ Public Class FormAbout
         renderer.FitView()
         canvas.Invalidate()
 
+        Timer1.Interval = 3
         Timer1.Enabled = True
     End Sub
 
