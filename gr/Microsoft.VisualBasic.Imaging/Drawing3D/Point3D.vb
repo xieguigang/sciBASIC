@@ -233,14 +233,53 @@ Namespace Drawing3D
             Dim pitchRads = pitch * std.PI / 180
 
             ' Step one: Rotate around X axis (pitch)
-            Dim y As Double = Y * std.Cos(pitchRads) - Z * std.Sin(pitchRads)
-            Dim z As Double = Y * std.Sin(pitchRads) + Z * std.Cos(pitchRads)
+            Dim ny As Double = Y * std.Cos(pitchRads) - Z * std.Sin(pitchRads)
+            Dim nz As Double = Y * std.Sin(pitchRads) + Z * std.Cos(pitchRads)
 
             ' Step two: Rotate around the Y axis (yaw)
-            Dim x As Double = X * std.Cos(yawRads) + z * std.Sin(yawRads)
-            z = -X * std.Sin(yawRads) + z * std.Cos(yawRads)
+            Dim nx As Double = X * std.Cos(yawRads) + nz * std.Sin(yawRads)
+            nz = -X * std.Sin(yawRads) + nz * std.Cos(yawRads)
 
-            Return New Point3D(x, y, z)
+            Return New Point3D(nx, ny, nz)
+        End Function
+
+        ''' <summary>
+        ''' Rotate this point around the X axis by <paramref name="angle"/> (degree).
+        ''' </summary>
+        Public Function RotateX(angle As Single) As Point3D
+            Dim rad = angle * std.PI / 180
+            Dim cosa = std.Cos(rad)
+            Dim sina = std.Sin(rad)
+            Dim ny = Y * cosa - Z * sina
+            Dim nz = Y * sina + Z * cosa
+
+            Return New Point3D(X, ny, nz)
+        End Function
+
+        ''' <summary>
+        ''' Rotate this point around the Y axis by <paramref name="angle"/> (degree).
+        ''' </summary>
+        Public Function RotateY(angle As Single) As Point3D
+            Dim rad = angle * std.PI / 180
+            Dim cosa = std.Cos(rad)
+            Dim sina = std.Sin(rad)
+            Dim nx = Z * cosa - X * sina
+            Dim nz = Z * sina + X * cosa
+
+            Return New Point3D(nx, Y, nz)
+        End Function
+
+        ''' <summary>
+        ''' Rotate this point around the Z axis by <paramref name="angle"/> (degree).
+        ''' </summary>
+        Public Function RotateZ(angle As Single) As Point3D
+            Dim rad = angle * std.PI / 180
+            Dim cosa = std.Cos(rad)
+            Dim sina = std.Sin(rad)
+            Dim nx = X * cosa - Y * sina
+            Dim ny = X * sina + Y * cosa
+
+            Return New Point3D(nx, ny, Z)
         End Function
 
         ''' <summary>
