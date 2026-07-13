@@ -155,7 +155,7 @@ Namespace Imaging
         Winding = 1
     End Enum
 
-    Public Class GraphicsPath : Implements Enumeration(Of op)
+    Public Class GraphicsPath : Implements Enumeration(Of op), IDisposable
 
         ''' <summary>
         ''' Gets or sets the fill mode that determines how the interior of shapes in this GraphicsPath is filled.
@@ -412,8 +412,9 @@ Namespace Imaging
         End Class
 
         Dim opSet As New List(Of op)
+        Private disposedValue As Boolean
 
-        Public Sub AddString(s As String, fontFamily As fontfamily, style As FontStyle, size As Single, pos As PointF, format As StringFormat)
+        Public Sub AddString(s As String, fontFamily As FontFamily, style As FontStyle, size As Single, pos As PointF, format As StringFormat)
             Call opSet.Add(New op_AddString With {.fontFamily = fontFamily, .format = format, .pos = pos, .s = s, .size = size, .style = style})
         End Sub
 
@@ -608,11 +609,37 @@ Namespace Imaging
             Return bounds.Contains(point)
         End Function
 
-        Public Iterator Function GenericEnumerator() As IEnumerator(Of op) Implements Enumeration(Of op).GenericEnumerator
+        Private Iterator Function GenericEnumerator() As IEnumerator(Of op) Implements Enumeration(Of op).GenericEnumerator
             For Each op As op In opSet
                 Yield op
             Next
         End Function
+
+        Protected Overridable Sub Dispose(disposing As Boolean)
+            If Not disposedValue Then
+                If disposing Then
+                    ' TODO: dispose managed state (managed objects)
+                    Call opSet.Clear()
+                End If
+
+                ' TODO: free unmanaged resources (unmanaged objects) and override finalizer
+                ' TODO: set large fields to null
+                disposedValue = True
+            End If
+        End Sub
+
+        ' ' TODO: override finalizer only if 'Dispose(disposing As Boolean)' has code to free unmanaged resources
+        ' Protected Overrides Sub Finalize()
+        '     ' Do not change this code. Put cleanup code in 'Dispose(disposing As Boolean)' method
+        '     Dispose(disposing:=False)
+        '     MyBase.Finalize()
+        ' End Sub
+
+        Public Sub Dispose() Implements IDisposable.Dispose
+            ' Do not change this code. Put cleanup code in 'Dispose(disposing As Boolean)' method
+            Dispose(disposing:=True)
+            GC.SuppressFinalize(Me)
+        End Sub
     End Class
 
     ''' <summary>

@@ -62,7 +62,6 @@
 #End Region
 
 Imports System.Drawing
-Imports System.Drawing.Drawing2D
 
 Namespace Imaging
 
@@ -168,7 +167,7 @@ Namespace Imaging
             Dim r As New Region
             r._isEmpty = _isEmpty
             r._isInfinite = _isInfinite
-            r.RegionData = RegionData
+            r._RegionData = RegionData
             r._hRgn = _hRgn
             If _rgnData IsNot Nothing Then
                 r._rgnData = DirectCast(_rgnData.Clone(), Byte())
@@ -185,8 +184,8 @@ Namespace Imaging
         Public Sub MakeEmpty()
             _isEmpty = True
             _isInfinite = False
-            RegionData = Nothing
-            Call regionOps.Add(New region_op MakeEmpty)
+            _RegionData = Nothing
+            Call regionOps.Add(New region_op_MakeEmpty)
         End Sub
 
         ''' <summary>
@@ -195,133 +194,133 @@ Namespace Imaging
         Public Sub MakeInfinite()
             _isInfinite = True
             _isEmpty = False
-            Call regionOps.Add(New region_op MakeInfinite)
+            Call regionOps.Add(New region_op_MakeInfinite)
         End Sub
 
         ''' <summary>
         ''' Updates this Region to the union minus the intersection of itself with the specified GraphicsPath.
         ''' </summary>
         Public Sub Complement(path As GraphicsPath)
-            Call regionOps.Add(New region_op Complement With {.path = path})
+            Call regionOps.Add(New region_op_Complement With {.path = path})
         End Sub
 
         ''' <summary>
         ''' Updates this Region to the union minus the intersection of itself with the specified RectangleF.
         ''' </summary>
         Public Sub Complement(rect As RectangleF)
-            Call regionOps.Add(New region_op Complement With {.rect = rect})
+            Call regionOps.Add(New region_op_Complement With {.rect = rect})
         End Sub
 
         ''' <summary>
         ''' Updates this Region to the union minus the intersection of itself with the specified Region.
         ''' </summary>
         Public Sub Complement(region As Region)
-            Call regionOps.Add(New region_op Complement With {.region = region})
+            Call regionOps.Add(New region_op_Complement With {.region = region})
         End Sub
 
         ''' <summary>
         ''' Updates this Region to the portion of itself that does not intersect the specified GraphicsPath.
         ''' </summary>
         Public Sub Exclude(path As GraphicsPath)
-            Call regionOps.Add(New region_op Exclude With {.path = path})
+            Call regionOps.Add(New region_op_Exclude With {.path = path})
         End Sub
 
         ''' <summary>
         ''' Updates this Region to the portion of itself that does not intersect the specified RectangleF.
         ''' </summary>
         Public Sub Exclude(rect As RectangleF)
-            Call regionOps.Add(New region_op Exclude With {.rect = rect})
+            Call regionOps.Add(New region_op_Exclude With {.rect = rect})
         End Sub
 
         ''' <summary>
         ''' Updates this Region to the portion of itself that does not intersect the specified Region.
         ''' </summary>
         Public Sub Exclude(region As Region)
-            Call regionOps.Add(New region_op Exclude With {.region = region})
+            Call regionOps.Add(New region_op_Exclude With {.region = region})
         End Sub
 
         ''' <summary>
         ''' Updates this Region to the intersection of itself with the specified GraphicsPath.
         ''' </summary>
         Public Sub Intersect(path As GraphicsPath)
-            Call regionOps.Add(New region_op Intersect With {.path = path})
+            Call regionOps.Add(New region_op_Intersect With {.path = path})
         End Sub
 
         ''' <summary>
         ''' Updates this Region to the intersection of itself with the specified RectangleF.
         ''' </summary>
         Public Sub Intersect(rect As RectangleF)
-            Call regionOps.Add(New region_op Intersect With {.rect = rect})
+            Call regionOps.Add(New region_op_Intersect With {.rect = rect})
         End Sub
 
         ''' <summary>
         ''' Updates this Region to the intersection of itself with the specified Region.
         ''' </summary>
         Public Sub Intersect(region As Region)
-            Call regionOps.Add(New region_op Intersect With {.region = region})
+            Call regionOps.Add(New region_op_Intersect With {.region = region})
         End Sub
 
         ''' <summary>
         ''' Updates this Region to the union of itself and the specified GraphicsPath.
         ''' </summary>
         Public Sub Union(path As GraphicsPath)
-            Call regionOps.Add(New region_op Union With {.path = path})
+            Call regionOps.Add(New region_op_Union With {.path = path})
         End Sub
 
         ''' <summary>
         ''' Updates this Region to the union of itself and the specified RectangleF.
         ''' </summary>
         Public Sub Union(rect As RectangleF)
-            Call regionOps.Add(New region_op Union With {.rect = rect})
+            Call regionOps.Add(New region_op_Union With {.rect = rect})
         End Sub
 
         ''' <summary>
         ''' Updates this Region to the union of itself and the specified Region.
         ''' </summary>
         Public Sub Union(region As Region)
-            Call regionOps.Add(New region_op Union With {.region = region})
+            Call regionOps.Add(New region_op_Union With {.region = region})
         End Sub
 
         ''' <summary>
         ''' Updates this Region to the union minus the intersection of itself with the specified GraphicsPath.
         ''' </summary>
-        Public Sub Xor(path As GraphicsPath)
-            Call regionOps.Add(New region_op Xor With {.path = path})
+        Public Sub [Xor](path As GraphicsPath)
+            Call regionOps.Add(New region_op_Xor With {.path = path})
         End Sub
 
         ''' <summary>
         ''' Updates this Region to the union minus the intersection of itself with the specified RectangleF.
         ''' </summary>
-        Public Sub Xor(rect As RectangleF)
-            Call regionOps.Add(New region_op Xor With {.rect = rect})
+        Public Sub [Xor](rect As RectangleF)
+            Call regionOps.Add(New region_op_Xor With {.rect = rect})
         End Sub
 
         ''' <summary>
         ''' Updates this Region to the union minus the intersection of itself with the specified Region.
         ''' </summary>
-        Public Sub Xor(region As Region)
-            Call regionOps.Add(New region_op Xor With {.region = region})
+        Public Sub [Xor](region As Region)
+            Call regionOps.Add(New region_op_Xor With {.region = region})
         End Sub
 
         ''' <summary>
         ''' Offsets the coordinates of this Region by the specified amount.
         ''' </summary>
         Public Sub Translate(dx As Single, dy As Single)
-            Call regionOps.Add(New region_op Translate With {.dx = dx, .dy = dy})
+            Call regionOps.Add(New region_op_Translate With {.dx = dx, .dy = dy})
         End Sub
 
         ''' <summary>
         ''' Offsets the coordinates of this Region by the specified amount (integer version).
         ''' </summary>
         Public Sub Translate(dx As Integer, dy As Integer)
-            Call regionOps.Add(New region_op Translate With {.dx = CSng(dx), .dy = CSng(dy)})
+            Call regionOps.Add(New region_op_Translate With {.dx = CSng(dx), .dy = CSng(dy)})
         End Sub
 
         ''' <summary>
         ''' Transforms this Region by the specified Matrix.
         ''' </summary>
         Public Sub Transform(matrix As Matrix)
-            Call regionOps.Add(New region_op Transform With {.matrix = matrix})
+            Call regionOps.Add(New region_op_Transform With {.matrix = matrix})
         End Sub
 
         ''' <summary>
@@ -403,48 +402,49 @@ Namespace Imaging
         Private MustInherit Class region_op
         End Class
 
-        Private Class region_op Complement : Inherits region_op
+        Private Class region_op_Complement : Inherits region_op
             Public Property path As GraphicsPath
             Public Property rect As RectangleF?
             Public Property region As Region
         End Class
 
-        Private Class region_op Exclude : Inherits region_op
+        Private Class region_op_Exclude : Inherits region_op
             Public Property path As GraphicsPath
             Public Property rect As RectangleF?
             Public Property region As Region
         End Class
 
-        Private Class region_op Intersect : Inherits region_op
+        Private Class region_op_Intersect : Inherits region_op
             Public Property path As GraphicsPath
             Public Property rect As RectangleF?
             Public Property region As Region
         End Class
 
-        Private Class region_op Union : Inherits region_op
+        Private Class region_op_Union : Inherits region_op
             Public Property path As GraphicsPath
             Public Property rect As RectangleF?
             Public Property region As Region
         End Class
 
-        Private Class region_op Xor : Inherits region_op
+        Private Class region_op_Xor : Inherits region_op
             Public Property path As GraphicsPath
             Public Property rect As RectangleF?
             Public Property region As Region
         End Class
 
-        Private Class region_op Translate : Inherits region_op
-            Public Property dx As Single, dy As Single
+        Private Class region_op_Translate : Inherits region_op
+            Public Property dx As Single
+            Public Property dy As Single
         End Class
 
-        Private Class region_op Transform : Inherits region_op
+        Private Class region_op_Transform : Inherits region_op
             Public Property matrix As Matrix
         End Class
 
-        Private Class region_op MakeEmpty : Inherits region_op
+        Private Class region_op_MakeEmpty : Inherits region_op
         End Class
 
-        Private Class region_op MakeInfinite : Inherits region_op
+        Private Class region_op_MakeInfinite : Inherits region_op
         End Class
     End Class
 

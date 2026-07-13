@@ -62,11 +62,15 @@
 #End Region
 
 Imports System.Drawing
-Imports System.Drawing.Drawing2D
 
 Namespace Imaging
 
 #If NET8_0_OR_GREATER Or NETSTANDARD2_0_OR_GREATER Then
+
+    Public Enum MatrixOrder
+        Prepend = 0
+        Append = 1
+    End Enum
 
     ''' <summary>
     ''' Encapsulates a 3-by-3 affine matrix that represents a geometric transform.
