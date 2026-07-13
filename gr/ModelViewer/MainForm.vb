@@ -260,6 +260,27 @@ Public Class MainForm : Inherits Form
         trkIntensity.Size = New Size(248, 45)
         trkIntensity.TabIndex = 7
         trkIntensity.Value = 65
+
+
+        Dim lblElevation = New Label()
+        lblElevation.Text = "光源仰角: 45°"
+        lblElevation.AutoSize = True
+        lblElevation.Top = 70
+        lblElevation.Left = 8
+        lightPanel.Controls.Add(lblElevation)
+
+        Dim trkElevation = New TrackBar()
+        trkElevation.Minimum = -90
+        trkElevation.Maximum = 90
+        trkElevation.Value = 45
+        trkElevation.TickStyle = TickStyle.BottomRight
+        trkElevation.Left = 8
+        trkElevation.Top = 86
+        trkElevation.Width = lightPanel.ClientSize.Width - 16
+
+        lightPanel.Controls.Add(trkElevation)
+
+
         ' 
         ' MainForm
         ' 
@@ -326,7 +347,7 @@ Public Class MainForm : Inherits Form
         top += 50
 
         top += 50
-        trkElevation = MakeSlider(lightPanel, lblElevation, "光源仰角: 45°", -90, 90, 45, top, AddressOf LightingScroll)
+        Me.trkElevation = MakeSlider(lightPanel, Me.lblElevation, , -90, 90, 45, top, AddressOf LightingScroll)
         top += 50
         trkAzimuth = MakeSlider(lightPanel, lblAzimuth, "光源方位: -30°", -360, 360, -30, top, AddressOf LightingScroll)
         top += 56
@@ -367,7 +388,7 @@ Public Class MainForm : Inherits Form
         Return tb
     End Function
 
-    Private Sub LightingScroll(sender As Object, e As EventArgs) Handles trkAmbient.Scroll, trkIntensity.Scroll
+    Private Sub LightingScroll(sender As Object, e As EventArgs) Handles trkAmbient.Scroll, trkIntensity.Scroll, trkElevation.Scroll
         ApplyLighting()
     End Sub
 
