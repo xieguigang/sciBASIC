@@ -72,6 +72,7 @@ Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace ThreeMF.Xml
 
+    <XmlType("mesh")>
     Public Class Mesh
 
         Public Property vertices As Point3D()
@@ -124,7 +125,7 @@ Namespace ThreeMF.Xml
     ''' <summary>
     ''' 3 vertex index to create a triangle of the surface model data
     ''' </summary>
-    Public Class Triangle3D
+    <XmlType("triangle")> Public Class Triangle3D
 
         <XmlAttribute> Public Property v1 As Integer
         <XmlAttribute> Public Property v2 As Integer
