@@ -11,7 +11,7 @@
 
 #End Region
 
-Imports randf = Microsoft.VisualBasic.Math.RandomExtensions
+Imports RE = Microsoft.VisualBasic.Math.RandomExtensions
 
 Namespace Source.Generators
 
@@ -26,7 +26,7 @@ Namespace Source.Generators
 
         Protected Overrides Function Shape(u As Double) As Double
             ' Amp carries the standard deviation here
-            Return randf.seeds.NextGaussian(0, stdAbs(Amp))
+            Return RE.seeds.NextGaussian(0, stdAbs(Amp))
         End Function
 
         <System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)>
@@ -43,7 +43,7 @@ Namespace Source.Generators
     Public Class UniformNoise : Inherits BasisFunction
 
         Protected Overrides Function Shape(u As Double) As Double
-            Return randf.NextDouble(0, Amp)
+            Return RE.seeds.NextDouble(0, Amp)
         End Function
     End Class
 End Namespace

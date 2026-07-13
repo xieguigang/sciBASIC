@@ -38,7 +38,7 @@ Module SignalGeneratorsDemo
         Debug.Assert(std.Abs(s.Evaluate(0)) < 1E-9, "Sine(0) failed")
 
         ' Step should be 0 before center and ~1 after (Scale>0 => logistic)
-        Dim st = Basis.Step(amp:=1, center:=0, scale:=0.01)
+        Dim st = Basis.[Step](amp:=1, center:=0, scale:=0.01)
         Debug.Assert(st.Evaluate(-1) < 0.001, "Step left failed")
         Debug.Assert(st.Evaluate(1) > 0.999, "Step right failed")
 
@@ -79,11 +79,11 @@ Module SignalGeneratorsDemo
     End Sub
 
     ''' <summary>a tiny helper to build an evenly spaced sequence (like Python's range).</summary>
-    Function Sequence(min As Double, max As Double, step As Double) As IEnumerable(Of Double)
+    Function Sequence(min As Double, max As Double, stepSize As Double) As IEnumerable(Of Double)
         Dim x = min
         Do While x <= max
             Yield x
-            x += step
+            x += stepSize
         Loop
     End Function
 End Module
