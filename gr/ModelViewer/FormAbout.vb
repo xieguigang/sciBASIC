@@ -4,21 +4,24 @@ Imports Microsoft.VisualBasic.Imaging.Landscape.Data
 
 Public Class FormAbout
 
-    Dim cubeModel As New Cube(10)
+    Dim cubeModel As New Cube(1)
     Dim WithEvents renderer As New SceneRenderer()
 
     Private Sub FormAbout_Load(sender As Object, e As EventArgs) Handles Me.Load
         renderer.Camera.Screen = canvas.ClientSize
+        renderer.Camera.LightColor = Color.White
+        renderer.Camera.AmbientStrength = 0
         renderer.BackgroundColor = canvas.BackColor
         renderer.LoadModel(cubeModel.faces.Select(Function(a) New Landscape.Data.Surface() With {
             .paint = DirectCast(a.brush, SolidBrush).Color.ToHtmlColor,
             .vertices = a.vertices.Select(Function(p) New Vertex(p)).ToArray
         }))
+        renderer.Camera.FieldOfView = 0
         renderer.ShowGround = False
         renderer.FitView()
         canvas.Invalidate()
 
-        Timer1.Interval = 3
+        Timer1.Interval = 15
         Timer1.Enabled = True
     End Sub
 
@@ -32,9 +35,10 @@ Public Class FormAbout
     End Sub
 
     Private Sub Timer1_Tick(sender As Object, e As EventArgs) Handles Timer1.Tick
-        renderer.Camera.AngleX += 1
-        renderer.Camera.AngleY += 1
+        renderer.Camera.AngleX += 3
+        renderer.Camera.AngleY += 2
         renderer.Camera.AngleZ += 1
+
         canvas.Invalidate()
     End Sub
 End Class
