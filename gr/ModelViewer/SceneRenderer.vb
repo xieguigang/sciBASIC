@@ -2,6 +2,8 @@ Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing3D
 Imports Microsoft.VisualBasic.Imaging.Drawing3D.Math3D
 Imports Microsoft.VisualBasic.Imaging.Landscape.Ply
+Imports System.Numerics
+Imports System.Threading.Tasks
 
 ''' <summary>
 ''' 封装摄像机(Camera)与已加载的模型/点云状态，负责居中、自动适配视距以及三种渲染模式。
@@ -252,6 +254,7 @@ Public Class SceneRenderer
 
     ''' <summary>
     ''' 点云模式：投影后用热图颜色（Designer.GetColors）或 PLY 自带颜色绘制填充点。
+    ''' 投影部分使用单精度 Vector(Of Single) 做 SIMD 批处理，颜色索引并行计算。
     ''' </summary>
     Private Sub DrawPointCloud(g As Graphics)
         Dim colors = GetColorTable()
@@ -261,24 +264,57 @@ Public Class SceneRenderer
 
         Dim pts3 = cloud.Select(Function(c) New Point3D(c.x, c.y, c.z)).ToArray()
         Dim rotated = Camera.Rotate(pts3).ToArray()
-        Dim projected = Camera.Project(rotated).ToArray()
 
-        For i = 0 To cloud.Length - 1
-            Dim xy = projected(i).PointXY(Camera.Screen)
-            Dim brush As System.Drawing.Brush
+        ' ---- SIMD 投影：Vector(Of Single) 批量计算 factor / 屏幕坐标 ----
+        Dim cnt = cloud.Length
+        Dim px = New Single(cnt - 1), py = New Single(cnt - 1), pz = New Single(cnt - 1)
+        For i = 0 To cnt - 1
+            px(i) = CSng(rotated(i).X)
+            py(i) = CSng(rotated(i).Y)
+            pz(i) = CSng(rotated(i).Z)
+        Next
 
+        Dim vd = CSng(Camera.ViewDistance), fov = CSng(Camera.FieldOfView)
+        Dim w2 = Camera.Screen.Width / 2.0F, h2 = Camera.Screen.Height / 2.0F
+        Dim ox = Camera.Offset.X, oy = Camera.Offset.Y
+        Dim xyArr(cnt - 1) As PointF
+
+        Dim j = 0
+        While j < cnt
+            Dim step = Math.Min(Vector(Of Single).Count, cnt - j)
+            Dim vz = New Vector(Of Single)(pz, j)
+            Dim depth = New Vector(Of Single)(vd) + vz
+            Dim factor = New Vector(Of Single)(fov) / depth
+            Dim vx = (New Vector(Of Single)(px, j) * factor) + w2 + ox
+            Dim vy = (New Vector(Of Single)(py, j) * factor) + h2 + oy
+            For k = 0 To step - 1
+                xyArr(j + k) = New PointF(vx(k), vy(k))
+            Next
+            j += step
+        End While
+
+        ' ---- 并行计算颜色索引 ----
+        Dim cidxArr(cnt - 1) As Integer
+        Parallel.For(0, cnt, Sub(i)
             If UseEmbeddedColor AndAlso Not String.IsNullOrEmpty(cloud(i).color) Then
-                brush = GetEmbeddedBrush(cloud(i).color)
+                cidxArr(i) = -1
             Else
                 Dim v = If(cloud(i).intensity <> 0, cloud(i).intensity, cloud(i).z)
                 Dim t = (v - intensityMin) / (intensityMax - intensityMin)
-                If t < 0 Then t = 0
-                If t > 1 Then t = 1
-                Dim cidx = CInt(t * (n - 1))
-                brush = colorBrushes(cidx)
+                If t < 0 Then t = 0 Else If t > 1 Then t = 1
+                cidxArr(i) = CInt(t * (n - 1))
             End If
+        End Sub)
 
-            g.FillRectangle(brush, xy.X - half, xy.Y - half, sz, sz)
+        ' ---- 串行绘制（GDI+ 不可并行）----
+        For i = 0 To cnt - 1
+            Dim brush As System.Drawing.Brush
+            If cidxArr(i) = -1 Then
+                brush = GetEmbeddedBrush(cloud(i).color)
+            Else
+                brush = colorBrushes(cidxArr(i))
+            End If
+            g.FillRectangle(brush, xyArr(i).X - half, xyArr(i).Y - half, sz, sz)
         Next
     End Sub
 
@@ -291,14 +327,27 @@ Public Class SceneRenderer
         Dim pts As New List(Of PointF)()
         Dim intensities As New List(Of Double)()
 
-        For Each s In surfaces
-            ' 与表面渲染完全相同的光照强度（面法线·光向，环境光保底）
+        ' 各面相互独立，并行计算投影与光照强度（按索引写回临时数组）
+        Dim src = surfaces.ToArray()
+        Dim facePts(src.Length - 1)() As PointF
+        Dim faceInten(src.Length - 1) As Double
+
+        Parallel.For(0, src.Length, Sub(i)
+            Dim s = src(i)
             Dim factor = FaceLightFactor(s)
             Dim projected = Camera.Project(Camera.Rotate(s.vertices)).ToArray()
+            Dim fp(projected.Length - 1) As PointF
+            For k = 0 To projected.Length - 1
+                fp(k) = New PointF(CSng(projected(k).X), CSng(projected(k).Y))
+            Next
+            facePts(i) = fp
+            faceInten(i) = factor
+        End Sub)
 
-            For i = 0 To projected.Length - 1
-                pts.Add(New PointF(CSng(projected(i).X), CSng(projected(i).Y)))
-                intensities.Add(factor)
+        For i = 0 To src.Length - 1
+            For k = 0 To facePts(i).Length - 1
+                pts.Add(facePts(i)(k))
+                intensities.Add(faceInten(i))
             Next
         Next
 
