@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5f24913964d45e5acfe669d853532b77, gr\Landscape\3DBuilder\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::5f24913964d45e5acfe669d853532b77, gr\Landscape\ThreeMF\Extensions.vb"
 
     ' Author:
     ' 
@@ -56,11 +56,11 @@ Imports System.Drawing
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Imaging.Drawing3D
-Imports Microsoft.VisualBasic.Imaging.Landscape.Vendor_3mf.XML
+Imports Microsoft.VisualBasic.Imaging.Landscape.ThreeMF.Xml
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 
-Namespace Vendor_3mf
+Namespace ThreeMF
 
     ''' <summary>
     ''' 3mf 格式相关的扩展工具方法
@@ -73,7 +73,7 @@ Namespace Vendor_3mf
         ''' <param name="mesh"></param>
         ''' <returns></returns>
         <Extension>
-        Public Function ValidMesh(mesh As mesh) As Boolean
+        Public Function ValidMesh(mesh As Mesh) As Boolean
             Return Not mesh Is Nothing AndAlso
                    Not mesh.vertices.IsNullOrEmpty AndAlso
                    Not mesh.triangles.IsNullOrEmpty
@@ -85,7 +85,7 @@ Namespace Vendor_3mf
         ''' <param name="mesh"></param>
         ''' <returns></returns>
         <Extension>
-        Public Function GetVertexCount(mesh As mesh) As Integer
+        Public Function GetVertexCount(mesh As Mesh) As Integer
             If mesh Is Nothing OrElse mesh.vertices Is Nothing Then
                 Return 0
             End If
@@ -98,7 +98,7 @@ Namespace Vendor_3mf
         ''' <param name="mesh"></param>
         ''' <returns></returns>
         <Extension>
-        Public Function GetTriangleCount(mesh As mesh) As Integer
+        Public Function GetTriangleCount(mesh As Mesh) As Integer
             If mesh Is Nothing OrElse mesh.triangles Is Nothing Then
                 Return 0
             End If
@@ -128,11 +128,11 @@ Namespace Vendor_3mf
         ''' <param name="mats"></param>
         ''' <returns></returns>
         <Extension>
-        Public Function GetMaterials(mats As basematerials) As Brush()
-            If mats Is Nothing OrElse mats.basematerials Is Nothing Then
+        Public Function GetMaterials(mats As BaseMaterials) As Brush()
+            If mats Is Nothing OrElse mats.items Is Nothing Then
                 Return {}
             End If
-            Return mats.basematerials _
+            Return mats.items _
                 .Select(Function(b)
                             Dim c As Color = b.displaycolor.TranslateColor
                             Return New SolidBrush(c)

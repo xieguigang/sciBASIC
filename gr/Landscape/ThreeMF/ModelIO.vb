@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::12d307b4e8fd5ab311425d78ff8376b2, gr\Landscape\3DBuilder\IO.vb"
+﻿#Region "Microsoft.VisualBasic::12d307b4e8fd5ab311425d78ff8376b2, gr\Landscape\ThreeMF\ModelIO.vb"
 
     ' Author:
     ' 
@@ -43,7 +43,7 @@
     '     File Size: 1.30 KB
 
 
-    '     Module IO
+    '     Module ModelIO
     ' 
     '         Function: Load3DModel, NotNull, Open
     ' 
@@ -55,12 +55,12 @@
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ApplicationServices
 Imports Microsoft.VisualBasic.ApplicationServices.Zip
-Imports Microsoft.VisualBasic.Imaging.Landscape.Vendor_3mf.XML
+Imports Microsoft.VisualBasic.Imaging.Landscape.ThreeMF.Xml
 Imports Microsoft.VisualBasic.Text.Xml
 
-Namespace Vendor_3mf
+Namespace ThreeMF
 
-    Public Module IO
+    Public Module ModelIO
 
         ''' <summary>
         ''' Open ``*.3mf`` model file.
@@ -99,7 +99,7 @@ Namespace Vendor_3mf
         ''' <param name="o"></param>
         ''' <returns></returns>
         <Extension>
-        Public Function HasMesh(o As [object]) As Boolean
+        Public Function HasMesh(o As Object3D) As Boolean
             Return Not o Is Nothing AndAlso
                    Not o.mesh Is Nothing AndAlso
                    Not o.mesh.vertices.IsNullOrEmpty

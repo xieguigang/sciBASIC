@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::79bc8001ac5d8d574a42d35b8418231f, gr\Landscape\Vector.vb"
+﻿#Region "Microsoft.VisualBasic::79bc8001ac5d8d574a42d35b8418231f, gr\Landscape\Data\Vertex.vb"
 
     ' Author:
     ' 
@@ -43,7 +43,7 @@
     '     File Size: 1.31 KB
 
 
-    '     Structure Vector
+    '     Structure Vertex
     ' 
     '         Properties: Point3D, PointData
     ' 
@@ -62,7 +62,7 @@ Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace Data
 
-    Public Structure Vector
+    Public Structure Vertex
 
         ''' <summary>
         ''' 2017-1-30

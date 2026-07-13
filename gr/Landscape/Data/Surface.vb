@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5b04740f9e115f48cc1b36ad30215d4f, gr\Landscape\Surface.vb"
+﻿#Region "Microsoft.VisualBasic::5b04740f9e115f48cc1b36ad30215d4f, gr\Landscape\Data\Surface.vb"
 
 ' Author:
 ' 
@@ -75,7 +75,7 @@ Namespace Data
         ''' ``xyz``的坐标数据
         ''' </summary>
         <XmlElement>
-        Public Property vertices As Vector()
+        Public Property vertices As Vertex()
         ''' <summary>
         ''' 这个是本``表面``对象所喷涂的纹理的定义，可以是颜色的名称或者表达式，也可以是图片的相对路径的引用
         ''' </summary>

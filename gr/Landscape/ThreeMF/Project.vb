@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c62d482cdccddd8af53a7e42e791c69d, gr\Landscape\3DBuilder\Project.vb"
+﻿#Region "Microsoft.VisualBasic::c62d482cdccddd8af53a7e42e791c69d, gr\Landscape\ThreeMF\Project.vb"
 
 ' Author:
 ' 
@@ -56,10 +56,10 @@
 
 Imports Microsoft.VisualBasic.Imaging.Drawing3D
 Imports Microsoft.VisualBasic.Imaging.Drawing3D.Math3D
-Imports Microsoft.VisualBasic.Imaging.Landscape.Vendor_3mf.XML
+Imports Microsoft.VisualBasic.Imaging.Landscape.ThreeMF.Xml
 Imports Microsoft.VisualBasic.Linq
 
-Namespace Vendor_3mf
+Namespace ThreeMF
 
     Public Class Project
 
@@ -77,7 +77,7 @@ Namespace Vendor_3mf
         Public Shared Function FromZipDirectory(dir$) As Project
             Return New Project With {
                 .Thumbnail = $"{dir}/Metadata/thumbnail.png".LoadImage,
-                .model = IO.Load3DModel(dir & "/3D/3dmodel.model")
+                .model = ModelIO.Load3DModel(dir & "/3D/3dmodel.model")
             }
         End Function
 
