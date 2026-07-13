@@ -486,6 +486,10 @@ Namespace PostScript
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Private Sub AddImage(image As Image, location As PointF, size As Size, scale As SizeF)
+            If image Is Nothing Then
+                Return
+            End If
+
             Call painting.Add(New Elements.ImageData With {
                 .image = New DataURI(image),
                 .location = tf(location),
