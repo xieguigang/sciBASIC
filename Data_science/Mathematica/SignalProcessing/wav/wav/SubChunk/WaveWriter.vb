@@ -56,6 +56,7 @@
 
 Imports System.IO
 Imports System.Runtime.CompilerServices
+Imports std = System.Math
 
 ''' <summary>
 ''' Static utility class for writing WAV audio files from sample data.
@@ -72,7 +73,7 @@ Public Module WaveWriter
     ''' Input: linear sample value (13-bit signed, zero-centered).
     ''' The sign bit is handled separately.
     ''' </summary>
-    Private Shared ReadOnly ALawEncodeTable As Byte() = {
+    ReadOnly ALawEncodeTable As Byte() = {
         1, 1, 2, 2, 3, 3, 3, 3,
         4, 4, 4, 4, 4, 4, 4, 4,
         5, 5, 5, 5, 5, 5, 5, 5,
@@ -96,7 +97,7 @@ Public Module WaveWriter
     ''' Input: linear sample value (14-bit signed).
     ''' The sign bit is handled separately.
     ''' </summary>
-    Private Shared ReadOnly MuLawEncodeTable As Byte() = {
+    ReadOnly MuLawEncodeTable As Byte() = {
         0, 0, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3,
         4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4,
         5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5,
@@ -238,7 +239,7 @@ Public Module WaveWriter
         Dim encoder As Action(Of BinaryWriter, Single) = ResolveEncoder(audioFormat, bitsPerSample)
 
         For Each sample In samples
-            For ch As Integer = 0 To Math.Min(channels, sample.channels.Length) - 1
+            For ch As Integer = 0 To std.Min(channels, sample.channels.Length) - 1
                 encoder(writer, sample.channels(ch))
             Next
             ' Pad missing channels with silence
@@ -299,8 +300,8 @@ Public Module WaveWriter
     ''' </summary>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Private Sub Encode8BitPCM(writer As BinaryWriter, value As Single)
-        Dim clamped As Single = Math.Max(-1.0F, Math.Min(1.0F, value))
-        Dim b As Byte = CByte(Math.Round((clamped * 128.0F) + 128.0F))
+        Dim clamped As Single = std.Max(-1.0F, std.Min(1.0F, value))
+        Dim b As Byte = CByte(std.Round((clamped * 128.0F) + 128.0F))
         writer.Write(b)
     End Sub
 
@@ -309,8 +310,8 @@ Public Module WaveWriter
     ''' </summary>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Private Sub Encode16BitPCM(writer As BinaryWriter, value As Single)
-        Dim clamped As Single = Math.Max(-1.0F, Math.Min(1.0F, value))
-        Dim v As Short = CShort(Math.Round(clamped * 32767.0F))
+        Dim clamped As Single = std.Max(-1.0F, std.Min(1.0F, value))
+        Dim v As Short = CShort(std.Round(clamped * 32767.0F))
         writer.Write(v)
     End Sub
 
@@ -319,8 +320,8 @@ Public Module WaveWriter
     ''' </summary>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Private Sub Encode24BitPCM(writer As BinaryWriter, value As Single)
-        Dim clamped As Single = Math.Max(-1.0F, Math.Min(1.0F, value))
-        Dim v As Integer = CInt(Math.Round(clamped * 8388607.0F))
+        Dim clamped As Single = std.Max(-1.0F, std.Min(1.0F, value))
+        Dim v As Integer = CInt(std.Round(clamped * 8388607.0F))
         ' Clamp to 24-bit signed range
         If v > 8388607 Then v = 8388607
         If v < -8388608 Then v = -8388608
@@ -335,8 +336,8 @@ Public Module WaveWriter
     ''' </summary>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Private Sub Encode32BitPCM(writer As BinaryWriter, value As Single)
-        Dim clamped As Single = Math.Max(-1.0F, Math.Min(1.0F, value))
-        Dim v As Integer = CInt(Math.Round(clamped * 2147483647.0F))
+        Dim clamped As Single = std.Max(-1.0F, std.Min(1.0F, value))
+        Dim v As Integer = CInt(std.Round(clamped * 2.14748365E+9F))
         writer.Write(v)
     End Sub
 
@@ -361,7 +362,7 @@ Public Module WaveWriter
     ''' </summary>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Private Sub EncodeALaw(writer As BinaryWriter, value As Single)
-        Dim clamped As Single = Math.Max(-1.0F, Math.Min(1.0F, value))
+        Dim clamped As Single = std.Max(-1.0F, std.Min(1.0F, value))
         ' Convert to 13-bit linear: [-4096, 4095]
         Dim pcmValue As Integer = CInt(clamped * 4095.0F)
 
@@ -407,7 +408,7 @@ Public Module WaveWriter
     ''' </summary>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Private Sub EncodeMuLaw(writer As BinaryWriter, value As Single)
-        Dim clamped As Single = Math.Max(-1.0F, Math.Min(1.0F, value))
+        Dim clamped As Single = std.Max(-1.0F, std.Min(1.0F, value))
         ' Convert to 14-bit linear: [-8192, 8191]
         Dim pcmValue As Integer = CInt(clamped * 8191.0F)
 
@@ -419,7 +420,7 @@ Public Module WaveWriter
             pcmValue = -pcmValue
         End If
 
-        pcmValue = Math.Min(pcmValue + bias, 32635)
+        pcmValue = std.Min(pcmValue + bias, 32635)
 
         ' Find segment
         Dim segment As Integer = 7
