@@ -182,7 +182,7 @@ Namespace Drawing3D
             If points Is Nothing OrElse points.Length = 0 Then Return New Point3D() {}
             Dim m = RotationMatrix()
             Dim out(points.Length - 1) As Point3D
-            Parallel.For(0, points.Length, Sub(i) out(i) = RotateOne(points(i), m))
+            System.Threading.Tasks.Parallel.For(0, points.Length, Sub(i) out(i) = RotateOne(points(i), m))
             Return out
         End Function
 
@@ -266,7 +266,7 @@ Namespace Drawing3D
             Dim faces(src.Length - 1) As Surface
 
             ' 各面相互独立，旋转可安全并行（SIMD 批量旋转内部亦并行）
-            Parallel.For(0, src.Length, Sub(i)
+            System.Threading.Tasks.Parallel.For(0, src.Length, Sub(i)
                 faces(i) = New Surface With {
                     .brush = src(i).brush,
                     .vertices = Rotate(src(i).vertices).ToArray

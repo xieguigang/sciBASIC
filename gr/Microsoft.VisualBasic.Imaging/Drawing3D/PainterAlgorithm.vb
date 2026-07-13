@@ -185,7 +185,7 @@ Namespace Drawing3D
             Dim cols(n - 1) As Color
 
             ' 各面独立：投影与光照可安全并行（只读 camera 状态、按索引写回）
-            Parallel.For(0, n, Sub(i)
+            System.Threading.Tasks.Parallel.For(0, n, Sub(i)
                 Dim s = src(i)
                 verts(i) = camera.Project(s.vertices).ToArray()
 

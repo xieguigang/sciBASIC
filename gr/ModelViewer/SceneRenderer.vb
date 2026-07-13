@@ -254,7 +254,7 @@ Public Class SceneRenderer
 
     ''' <summary>
     ''' 点云模式：投影后用热图颜色（Designer.GetColors）或 PLY 自带颜色绘制填充点。
-    ''' 投影部分使用单精度 Vector(Of Single) 做 SIMD 批处理，颜色索引并行计算。
+    ''' 投影部分使用单精度 System.Numerics.Vector(Of Single) 做 SIMD 批处理，颜色索引并行计算。
     ''' </summary>
     Private Sub DrawPointCloud(g As Graphics)
         Dim colors = GetColorTable()
@@ -265,7 +265,7 @@ Public Class SceneRenderer
         Dim pts3 = cloud.Select(Function(c) New Point3D(c.x, c.y, c.z)).ToArray()
         Dim rotated = Camera.Rotate(pts3).ToArray()
 
-        ' ---- SIMD 投影：Vector(Of Single) 批量计算 factor / 屏幕坐标 ----
+        ' ---- SIMD 投影：System.Numerics.Vector(Of Single) 批量计算 factor / 屏幕坐标 ----
         Dim cnt = cloud.Length
         Dim px = New Single(cnt - 1), py = New Single(cnt - 1), pz = New Single(cnt - 1)
         For i = 0 To cnt - 1
@@ -281,21 +281,21 @@ Public Class SceneRenderer
 
         Dim j = 0
         While j < cnt
-            Dim step = Math.Min(Vector(Of Single).Count, cnt - j)
-            Dim vz = New Vector(Of Single)(pz, j)
-            Dim depth = New Vector(Of Single)(vd) + vz
-            Dim factor = New Vector(Of Single)(fov) / depth
-            Dim vx = (New Vector(Of Single)(px, j) * factor) + w2 + ox
-            Dim vy = (New Vector(Of Single)(py, j) * factor) + h2 + oy
-            For k = 0 To step - 1
+            Dim block = Math.Min(System.Numerics.Vector(Of Single).Count, cnt - j)
+            Dim vz = New System.Numerics.Vector(Of Single)(pz, j)
+            Dim depth = New System.Numerics.Vector(Of Single)(vd) + vz
+            Dim factor = New System.Numerics.Vector(Of Single)(fov) / depth
+            Dim vx = (New System.Numerics.Vector(Of Single)(px, j) * factor) + w2 + ox
+            Dim vy = (New System.Numerics.Vector(Of Single)(py, j) * factor) + h2 + oy
+            For k = 0 To block - 1
                 xyArr(j + k) = New PointF(vx(k), vy(k))
             Next
-            j += step
+            j += block
         End While
 
         ' ---- 并行计算颜色索引 ----
         Dim cidxArr(cnt - 1) As Integer
-        Parallel.For(0, cnt, Sub(i)
+        System.Threading.Tasks.Parallel.For(0, cnt, Sub(i)
             If UseEmbeddedColor AndAlso Not String.IsNullOrEmpty(cloud(i).color) Then
                 cidxArr(i) = -1
             Else
@@ -332,7 +332,7 @@ Public Class SceneRenderer
         Dim facePts(src.Length - 1)() As PointF
         Dim faceInten(src.Length - 1) As Double
 
-        Parallel.For(0, src.Length, Sub(i)
+        System.Threading.Tasks.Parallel.For(0, src.Length, Sub(i)
             Dim s = src(i)
             Dim factor = FaceLightFactor(s)
             Dim projected = Camera.Project(Camera.Rotate(s.vertices)).ToArray()
