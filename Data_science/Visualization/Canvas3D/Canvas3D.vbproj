@@ -7,7 +7,7 @@
 	  <UseWPF>True</UseWPF>
 	  <MyType>WindowsForms</MyType>
     <Platforms>AnyCPU;x64;x86</Platforms>
-   
+    <NoWarn>$(NoWarn);WFO1000</NoWarn>
     <Configurations>Debug;Release;LipidSearch;Rsharp_app_release;PlantMAT;mzkit;NPSearch;mzkit_win32;gcmodeller_desktop;CFD_win32;nuget_release;Desktop;MEMI-Desktop;CellaLAB-Desktop</Configurations>
 	</PropertyGroup>
 
