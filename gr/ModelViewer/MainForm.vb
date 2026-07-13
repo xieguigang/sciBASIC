@@ -42,6 +42,7 @@ Public Class MainForm : Inherits Form
     Private panning As Boolean = False
     Private lastX As Integer = 0
     Private lastY As Integer = 0
+    Dim WithEvents title As Label
     Private currentFile As String = ""
 
     Public Sub New()
@@ -63,9 +64,15 @@ Public Class MainForm : Inherits Form
         canvas = New RenderPanel()
         statusStrip = New StatusStrip()
         lblStatus = New ToolStripStatusLabel()
+        lightPanel = New Panel()
+        title = New Label()
+        btnLightColor = New Button()
+        lblLightColor = New Label()
+        btnResetLight = New Button()
         menuStrip.SuspendLayout()
         toolStrip.SuspendLayout()
         statusStrip.SuspendLayout()
+        lightPanel.SuspendLayout()
         SuspendLayout()
         ' 
         ' menuStrip
@@ -156,6 +163,55 @@ Public Class MainForm : Inherits Form
         lblStatus.Size = New Size(282, 17)
         lblStatus.Text = "请通过「文件 ▸ 打开」加载三维模型或 PLY 点云"
         ' 
+        ' lightPanel
+        ' 
+        lightPanel.BackColor = SystemColors.Control
+        lightPanel.BorderStyle = BorderStyle.FixedSingle
+        lightPanel.Controls.Add(title)
+        lightPanel.Controls.Add(btnLightColor)
+        lightPanel.Controls.Add(lblLightColor)
+        lightPanel.Controls.Add(btnResetLight)
+        lightPanel.Dock = DockStyle.Right
+        lightPanel.Location = New Point(0, 0)
+        lightPanel.Name = "lightPanel"
+        lightPanel.Padding = New Padding(8)
+        lightPanel.Size = New Size(250, 100)
+        lightPanel.TabIndex = 0
+        ' 
+        ' title
+        ' 
+        title.AutoSize = True
+        title.Font = New Font("Segoe UI", 9.0F, FontStyle.Bold)
+        title.Location = New Point(8, 8)
+        title.Name = "title"
+        title.Size = New Size(63, 15)
+        title.TabIndex = 0
+        title.Text = "光照参数"
+        ' 
+        ' btnLightColor
+        ' 
+        btnLightColor.Location = New Point(8, 100)
+        btnLightColor.Name = "btnLightColor"
+        btnLightColor.Size = New Size(96, 23)
+        btnLightColor.TabIndex = 1
+        btnLightColor.Text = "灯光颜色"
+        ' 
+        ' lblLightColor
+        ' 
+        lblLightColor.BorderStyle = BorderStyle.FixedSingle
+        lblLightColor.Location = New Point(112, 120)
+        lblLightColor.Name = "lblLightColor"
+        lblLightColor.Size = New Size(48, 22)
+        lblLightColor.TabIndex = 2
+        ' 
+        ' btnResetLight
+        ' 
+        btnResetLight.Location = New Point(8, 140)
+        btnResetLight.Name = "btnResetLight"
+        btnResetLight.Size = New Size(152, 23)
+        btnResetLight.TabIndex = 3
+        btnResetLight.Text = "重置光照"
+        ' 
         ' MainForm
         ' 
         ClientSize = New Size(984, 661)
@@ -163,6 +219,7 @@ Public Class MainForm : Inherits Form
         Controls.Add(statusStrip)
         Controls.Add(toolStrip)
         Controls.Add(menuStrip)
+        Controls.Add(lightPanel)
         Icon = CType(resources.GetObject("$this.Icon"), Icon)
         MainMenuStrip = menuStrip
         MinimumSize = New Size(400, 300)
@@ -175,6 +232,8 @@ Public Class MainForm : Inherits Form
         toolStrip.PerformLayout()
         statusStrip.ResumeLayout(False)
         statusStrip.PerformLayout()
+        lightPanel.ResumeLayout(False)
+        lightPanel.PerformLayout()
         ResumeLayout(False)
         PerformLayout()
 
@@ -195,44 +254,21 @@ Public Class MainForm : Inherits Form
 
 
 
-        AddHandler canvas.Paint, AddressOf Canvas_Paint
-        AddHandler canvas.MouseDown, AddressOf Canvas_MouseDown
-        AddHandler canvas.MouseMove, AddressOf Canvas_MouseMove
-        AddHandler canvas.MouseUp, AddressOf Canvas_MouseUp
-        AddHandler canvas.Zoom, AddressOf OnCanvasZoom
-
-
 
         ' ---- 光照参数面板 ----
         BuildLightingPanel()
 
 
 
-        ' ---- 打开对话框 ----
-        openFileDialog = New OpenFileDialog()
-        openFileDialog.Filter =
-            "3D 模型 (*.stl;*.obj;*.gltf;*.glb;*.dae;*.3ds;*.3mf)|*.stl;*.obj;*.gltf;*.glb;*.dae;*.3ds;*.3mf|" &
-            "PLY 点云 (*.ply)|*.ply|所有文件 (*.*)|*.*"
-        openFileDialog.Title = "打开三维模型或点云文件"
+
     End Sub
 
     ' ===================== 光照参数面板 =====================
 
     Private Sub BuildLightingPanel()
-        lightPanel = New Panel()
-        lightPanel.Dock = DockStyle.Right
-        lightPanel.Width = 250
-        lightPanel.BackColor = SystemColors.Control
-        lightPanel.BorderStyle = BorderStyle.FixedSingle
-        lightPanel.Padding = New Padding(8)
 
-        Dim title = New Label()
-        title.Text = "光照参数"
-        title.Font = New Font(title.Font, FontStyle.Bold)
-        title.AutoSize = True
-        title.Top = 8
-        title.Left = 8
-        lightPanel.Controls.Add(title)
+
+
 
         Dim top = 36
         trkAmbient = MakeSlider(lightPanel, lblAmbient, "环境光强度 (Ambient): 25%", 0, 100, 25, top, AddressOf LightingScroll)
@@ -244,32 +280,12 @@ Public Class MainForm : Inherits Form
         trkAzimuth = MakeSlider(lightPanel, lblAzimuth, "光源方位: -30°", -360, 360, -30, top, AddressOf LightingScroll)
         top += 56
 
-        btnLightColor = New Button()
-        btnLightColor.Text = "灯光颜色"
-        btnLightColor.Left = 8
-        btnLightColor.Top = top
-        btnLightColor.Width = 96
-        AddHandler btnLightColor.Click, AddressOf LightColorClick
-        lightPanel.Controls.Add(btnLightColor)
 
-        lblLightColor = New Label()
-        lblLightColor.Text = ""
-        lblLightColor.BorderStyle = BorderStyle.FixedSingle
-        lblLightColor.BackColor = baseLightColor
-        lblLightColor.Left = 112
-        lblLightColor.Top = top + 1
-        lblLightColor.Width = 48
-        lblLightColor.Height = 22
-        lightPanel.Controls.Add(lblLightColor)
+
+
 
         top += 32
-        btnResetLight = New Button()
-        btnResetLight.Text = "重置光照"
-        btnResetLight.Left = 8
-        btnResetLight.Top = top
-        btnResetLight.Width = 152
-        AddHandler btnResetLight.Click, AddressOf ResetLightClick
-        lightPanel.Controls.Add(btnResetLight)
+
 
         ' 应用默认光照（避免开箱即纯白）
         ResetLighting()
@@ -300,7 +316,7 @@ Public Class MainForm : Inherits Form
         ApplyLighting()
     End Sub
 
-    Private Sub LightColorClick(sender As Object, e As EventArgs)
+    Private Sub LightColorClick(sender As Object, e As EventArgs) Handles btnLightColor.Click
         Using dlg As New ColorDialog()
             dlg.Color = baseLightColor
             If dlg.ShowDialog() = DialogResult.OK Then
@@ -311,7 +327,7 @@ Public Class MainForm : Inherits Form
         End Using
     End Sub
 
-    Private Sub ResetLightClick(sender As Object, e As EventArgs)
+    Private Sub ResetLightClick(sender As Object, e As EventArgs) Handles btnResetLight.Click
         ResetLighting()
     End Sub
 
@@ -439,7 +455,7 @@ Public Class MainForm : Inherits Form
 
     ' ===================== 鼠标交互 =====================
 
-    Private Sub Canvas_MouseDown(sender As Object, e As MouseEventArgs)
+    Private Sub Canvas_MouseDown(sender As Object, e As MouseEventArgs) Handles canvas.MouseDown
         canvas.Focus()
         If e.Button = MouseButtons.Left Then
             dragging = True
@@ -450,7 +466,7 @@ Public Class MainForm : Inherits Form
         End If
     End Sub
 
-    Private Sub Canvas_MouseMove(sender As Object, e As MouseEventArgs)
+    Private Sub Canvas_MouseMove(sender As Object, e As MouseEventArgs) Handles canvas.MouseMove
         If dragging Then
             Dim dx = e.X - lastX
             Dim dy = e.Y - lastY
@@ -470,12 +486,12 @@ Public Class MainForm : Inherits Form
         End If
     End Sub
 
-    Private Sub Canvas_MouseUp(sender As Object, e As MouseEventArgs)
+    Private Sub Canvas_MouseUp(sender As Object, e As MouseEventArgs) Handles canvas.MouseUp
         dragging = False
         panning = False
     End Sub
 
-    Private Sub OnCanvasZoom(delta As Integer)
+    Private Sub OnCanvasZoom(delta As Integer) Handles canvas.Zoom
         ' 滚轮：调整摄像机视距（缩放）。向上滚近、向下滚远。
         Dim factor = If(delta > 0, 0.9F, 1.1F)
         Dim vd = renderer.Camera.ViewDistance * factor
@@ -486,7 +502,7 @@ Public Class MainForm : Inherits Form
 
     ' ===================== 绘制 =====================
 
-    Private Sub Canvas_Paint(sender As Object, e As PaintEventArgs)
+    Private Sub Canvas_Paint(sender As Object, e As PaintEventArgs) Handles canvas.Paint
         If renderer Is Nothing Then Return
         If renderer.HasData Then
             renderer.Draw(e.Graphics, canvas.ClientSize)
@@ -512,6 +528,15 @@ Public Class MainForm : Inherits Form
                 $"视距: {renderer.Camera.ViewDistance:F1}  |  " &
                 $"环境光: {renderer.Camera.AmbientStrength:P0}  亮度: {lightIntensity:P0}"
         End If
+    End Sub
+
+    Private Sub MainForm_Load(sender As Object, e As EventArgs) Handles Me.Load
+        ' ---- 打开对话框 ----
+        openFileDialog = New OpenFileDialog()
+        openFileDialog.Filter =
+            "3D 模型 (*.stl;*.obj;*.gltf;*.glb;*.dae;*.3ds;*.3mf)|*.stl;*.obj;*.gltf;*.glb;*.dae;*.3ds;*.3mf|" &
+            "PLY 点云 (*.ply)|*.ply|所有文件 (*.*)|*.*"
+        openFileDialog.Title = "打开三维模型或点云文件"
     End Sub
 End Class
 
