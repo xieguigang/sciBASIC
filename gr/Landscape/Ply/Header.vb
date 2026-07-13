@@ -61,6 +61,11 @@ Namespace Ply
 
     Public Class Header
 
+        ''' <summary>
+        ''' PLY format type: ascii, binary_little_endian, binary_big_endian
+        ''' </summary>
+        Public Property format As String = "ascii"
+
         Public Property comment As String
         Public Property element_vertex As Integer
         Public Property element_face As Integer
@@ -68,10 +73,17 @@ Namespace Ply
 
         Friend Sub WriteAsciiText(file As StreamWriter)
             Call file.WriteLine($"ply")
-            Call file.WriteLine($"format ascii 1.0")
-            Call file.WriteLine($"comment {comment}")
+            Call file.WriteLine($"format {format} 1.0")
+
+            If Not String.IsNullOrEmpty(comment) Then
+                Call file.WriteLine($"comment {comment}")
+            End If
+
             Call file.WriteLine($"element vertex {element_vertex}")
-            Call file.WriteLine($"element face {element_face}")
+
+            If element_face > 0 Then
+                Call file.WriteLine($"element face {element_face}")
+            End If
 
             For Each field As NamedValue(Of String) In properties
                 Call file.WriteLine($"property {field.Value} {field.Name}")
