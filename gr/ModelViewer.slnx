@@ -1,3 +1,11 @@
 <Solution>
+  <Folder Name="/framework/">
+    <Project Path="../Data_science/Mathematica/Math/Math/Math.NET5.vbproj" />
+    <Project Path="../Microsoft.VisualBasic.Core/src/Core.vbproj" />
+    <Project Path="../mime/text%html/html_netcore5.vbproj" />
+    <Project Path="Drawing-net4.8/Drawing-net4.8.vbproj" />
+    <Project Path="Landscape/Landscape.vbproj" />
+    <Project Path="Microsoft.VisualBasic.Imaging/imaging.NET5.vbproj" />
+  </Folder>
   <Project Path="ModelViewer/ModelViewer.vbproj" />
 </Solution>
