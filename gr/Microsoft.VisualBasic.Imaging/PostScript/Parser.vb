@@ -58,6 +58,7 @@
 Imports System.Drawing
 Imports System.Globalization
 Imports System.IO
+Imports System.Linq
 Imports System.Text
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.MIME.Html.CSS
@@ -604,11 +605,27 @@ Namespace PostScript
             End If
 
             Dim inner = tok.Substring(1, tok.Length - 2)
-            inner = inner.Replace("\\", vbBack) ' placeholder
-            inner = inner.Replace("\(", "(").Replace("\)", ")")
-            inner = inner.Replace(vbBack, "\")
+            Dim sb As New StringBuilder
+            Dim i = 0
 
-            Return inner
+            While i < inner.Length
+                Dim c = inner(i)
+
+                If c = "\"c AndAlso i + 1 < inner.Length Then
+                    Dim n = inner(i + 1)
+
+                    If n = "("c OrElse n = ")"c OrElse n = "\"c Then
+                        sb.Append(n)
+                        i += 2
+                        Continue While
+                    End If
+                End If
+
+                sb.Append(c)
+                i += 1
+            End While
+
+            Return sb.ToString
         End Function
 
         ''' <summary>
