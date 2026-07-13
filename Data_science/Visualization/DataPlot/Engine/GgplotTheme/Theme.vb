@@ -237,7 +237,7 @@ Namespace GgplotTheme
 
         ' Maps element name -> parent element name (Nothing = root)
         Private Shared _parents As New Dictionary(Of String, String)(StringComparer.Ordinal) From {
-            '--- Root elements (no parent) ---
+                                                                                                   _ '--- Root elements (no parent) ---
             {"line", Nothing},
             {"rect", Nothing},
             {"text", Nothing},
@@ -247,8 +247,8 @@ Namespace GgplotTheme
             {"geom", Nothing},
             {"spacing", Nothing},
             {"margins", Nothing},
-
-            '--- Axis title (inherits from title -> text) ---
+                                 _
+                                 _ '--- Axis title (inherits from title -> text) ---
             {"axis.title", "title"},
             {"axis.title.x", "axis.title"},
             {"axis.title.x.top", "axis.title.x"},
@@ -256,8 +256,8 @@ Namespace GgplotTheme
             {"axis.title.y", "axis.title"},
             {"axis.title.y.left", "axis.title.y"},
             {"axis.title.y.right", "axis.title.y"},
-
-            '--- Axis text (inherits from text) ---
+                                                   _
+                                                   _   '--- Axis text (inherits from text) ---
             {"axis.text", "text"},
             {"axis.text.x", "axis.text"},
             {"axis.text.x.top", "axis.text.x"},
@@ -267,8 +267,8 @@ Namespace GgplotTheme
             {"axis.text.y.right", "axis.text.y"},
             {"axis.text.theta", "axis.text"},
             {"axis.text.r", "axis.text"},
-
-            '--- Axis ticks (line elements, inherit from line) ---
+                                         _
+                                         _  '--- Axis ticks (line elements, inherit from line) ---
             {"axis.ticks", "line"},
             {"axis.ticks.x", "axis.ticks"},
             {"axis.ticks.x.top", "axis.ticks.x"},
@@ -278,16 +278,16 @@ Namespace GgplotTheme
             {"axis.ticks.y.right", "axis.ticks.y"},
             {"axis.ticks.theta", "axis.ticks"},
             {"axis.ticks.r", "axis.ticks"},
-
-            '--- Axis minor ticks (inherit from axis.ticks) ---
+                                           _
+                                           _  '--- Axis minor ticks (inherit from axis.ticks) ---
             {"axis.minor.ticks.x.top", "axis.ticks.x.top"},
             {"axis.minor.ticks.x.bottom", "axis.ticks.x.bottom"},
             {"axis.minor.ticks.y.left", "axis.ticks.y.left"},
             {"axis.minor.ticks.y.right", "axis.ticks.y.right"},
             {"axis.minor.ticks.theta", "axis.ticks.theta"},
             {"axis.minor.ticks.r", "axis.ticks.r"},
-
-            '--- Axis ticks length (unit elements, inherit from spacing) ---
+                                                   _
+                                                   _  '--- Axis ticks length (unit elements, inherit from spacing) ---
             {"axis.ticks.length", "spacing"},
             {"axis.ticks.length.x", "axis.ticks.length"},
             {"axis.ticks.length.x.top", "axis.ticks.length.x"},
@@ -297,8 +297,8 @@ Namespace GgplotTheme
             {"axis.ticks.length.y.right", "axis.ticks.length.y"},
             {"axis.ticks.length.theta", "axis.ticks.length"},
             {"axis.ticks.length.r", "axis.ticks.length"},
-
-            '--- Axis minor ticks length (inherit from axis.ticks.length) ---
+                                                         _
+                                                         _   '--- Axis minor ticks length (inherit from axis.ticks.length) ---
             {"axis.minor.ticks.length", "axis.ticks.length"},
             {"axis.minor.ticks.length.x", "axis.minor.ticks.length"},
             {"axis.minor.ticks.length.x.top", "axis.minor.ticks.length.x"},
@@ -308,8 +308,8 @@ Namespace GgplotTheme
             {"axis.minor.ticks.length.y.right", "axis.minor.ticks.length.y"},
             {"axis.minor.ticks.length.theta", "axis.minor.ticks.length"},
             {"axis.minor.ticks.length.r", "axis.minor.ticks.length"},
-
-            '--- Axis line (line elements, inherit from line) ---
+                                                                     _
+                                                                     _  '--- Axis line (line elements, inherit from line) ---
             {"axis.line", "line"},
             {"axis.line.x", "axis.line"},
             {"axis.line.x.top", "axis.line.x"},
@@ -319,8 +319,8 @@ Namespace GgplotTheme
             {"axis.line.y.right", "axis.line.y"},
             {"axis.line.theta", "axis.line"},
             {"axis.line.r", "axis.line"},
-
-            '--- Legend (rect, text, line, unit, margin, scalar elements) ---
+                                         _
+                                         _  '--- Legend (rect, text, line, unit, margin, scalar elements) ---
             {"legend.background", "rect"},
             {"legend.margin", "margins"},
             {"legend.spacing", "spacing"},
@@ -358,8 +358,8 @@ Namespace GgplotTheme
             {"legend.box.margin", "margins"},
             {"legend.box.background", "rect"},
             {"legend.box.spacing", "spacing"},
-
-            '--- Panel ---
+                                              _
+                                              _  '--- Panel ---
             {"panel.background", "rect"},
             {"panel.border", "rect"},
             {"panel.spacing", "spacing"},
@@ -375,8 +375,8 @@ Namespace GgplotTheme
             {"panel.ontop", Nothing},
             {"panel.widths", Nothing},
             {"panel.heights", Nothing},
-
-            '--- Plot ---
+                                       _
+                                       _  '--- Plot ---
             {"plot.background", "rect"},
             {"plot.title", "title"},
             {"plot.title.position", Nothing},
@@ -387,8 +387,8 @@ Namespace GgplotTheme
             {"plot.tag.position", Nothing},
             {"plot.tag.location", Nothing},
             {"plot.margin", "margins"},
-
-            '--- Strip ---
+                                       _
+                                       _  '--- Strip ---
             {"strip.background", "rect"},
             {"strip.background.x", "strip.background"},
             {"strip.background.y", "strip.background"},
@@ -403,8 +403,8 @@ Namespace GgplotTheme
             {"strip.text.y.right", "strip.text.y"},
             {"strip.switch.pad.grid", "spacing"},
             {"strip.switch.pad.wrap", "spacing"},
-
-            '--- Scalar properties ---
+                                                 _
+                                                 _   '--- Scalar properties ---
             {"aspect.ratio", Nothing},
             {"complete", Nothing},
             {"validate", Nothing}
@@ -412,7 +412,7 @@ Namespace GgplotTheme
 
         ' Maps element name -> element type
         Private Shared _types As New Dictionary(Of String, ThemeElementType)(StringComparer.Ordinal) From {
-            '--- Root elements ---
+                                                                                                           _  '--- Root elements ---
             {"line", ThemeElementType.ElementLine},
             {"rect", ThemeElementType.ElementRect},
             {"text", ThemeElementType.ElementText},
@@ -422,8 +422,8 @@ Namespace GgplotTheme
             {"geom", ThemeElementType.ElementGeom},
             {"spacing", ThemeElementType.Unit},
             {"margins", ThemeElementType.Margin},
-
-            '--- Axis title ---
+                                                 _
+                                                 _   '--- Axis title ---
             {"axis.title", ThemeElementType.ElementText},
             {"axis.title.x", ThemeElementType.ElementText},
             {"axis.title.x.top", ThemeElementType.ElementText},
@@ -431,8 +431,8 @@ Namespace GgplotTheme
             {"axis.title.y", ThemeElementType.ElementText},
             {"axis.title.y.left", ThemeElementType.ElementText},
             {"axis.title.y.right", ThemeElementType.ElementText},
-
-            '--- Axis text ---
+                                                                 _
+                                                                 _  '--- Axis text ---
             {"axis.text", ThemeElementType.ElementText},
             {"axis.text.x", ThemeElementType.ElementText},
             {"axis.text.x.top", ThemeElementType.ElementText},
@@ -442,8 +442,8 @@ Namespace GgplotTheme
             {"axis.text.y.right", ThemeElementType.ElementText},
             {"axis.text.theta", ThemeElementType.ElementText},
             {"axis.text.r", ThemeElementType.ElementText},
-
-            '--- Axis ticks ---
+                                                          _
+                                                          _  '--- Axis ticks ---
             {"axis.ticks", ThemeElementType.ElementLine},
             {"axis.ticks.x", ThemeElementType.ElementLine},
             {"axis.ticks.x.top", ThemeElementType.ElementLine},
@@ -453,15 +453,15 @@ Namespace GgplotTheme
             {"axis.ticks.y.right", ThemeElementType.ElementLine},
             {"axis.ticks.theta", ThemeElementType.ElementLine},
             {"axis.ticks.r", ThemeElementType.ElementLine},
-
+                                                           _
             {"axis.minor.ticks.x.top", ThemeElementType.ElementLine},
             {"axis.minor.ticks.x.bottom", ThemeElementType.ElementLine},
             {"axis.minor.ticks.y.left", ThemeElementType.ElementLine},
             {"axis.minor.ticks.y.right", ThemeElementType.ElementLine},
             {"axis.minor.ticks.theta", ThemeElementType.ElementLine},
             {"axis.minor.ticks.r", ThemeElementType.ElementLine},
-
-            '--- Axis ticks length ---
+                                                                 _
+                                                                 _  '--- Axis ticks length ---
             {"axis.ticks.length", ThemeElementType.Unit},
             {"axis.ticks.length.x", ThemeElementType.Unit},
             {"axis.ticks.length.x.top", ThemeElementType.Unit},
@@ -471,7 +471,7 @@ Namespace GgplotTheme
             {"axis.ticks.length.y.right", ThemeElementType.Unit},
             {"axis.ticks.length.theta", ThemeElementType.Unit},
             {"axis.ticks.length.r", ThemeElementType.Unit},
-
+                                                           _
             {"axis.minor.ticks.length", ThemeElementType.Unit},
             {"axis.minor.ticks.length.x", ThemeElementType.Unit},
             {"axis.minor.ticks.length.x.top", ThemeElementType.Unit},
@@ -481,8 +481,8 @@ Namespace GgplotTheme
             {"axis.minor.ticks.length.y.right", ThemeElementType.Unit},
             {"axis.minor.ticks.length.theta", ThemeElementType.Unit},
             {"axis.minor.ticks.length.r", ThemeElementType.Unit},
-
-            '--- Axis line ---
+                                                                 _
+                                                                 _ '--- Axis line ---
             {"axis.line", ThemeElementType.ElementLine},
             {"axis.line.x", ThemeElementType.ElementLine},
             {"axis.line.x.top", ThemeElementType.ElementLine},
@@ -492,8 +492,8 @@ Namespace GgplotTheme
             {"axis.line.y.right", ThemeElementType.ElementLine},
             {"axis.line.theta", ThemeElementType.ElementLine},
             {"axis.line.r", ThemeElementType.ElementLine},
-
-            '--- Legend ---
+                                                          _
+                                                          _  '--- Legend ---
             {"legend.background", ThemeElementType.ElementRect},
             {"legend.margin", ThemeElementType.Margin},
             {"legend.spacing", ThemeElementType.Unit},
@@ -531,8 +531,8 @@ Namespace GgplotTheme
             {"legend.box.margin", ThemeElementType.Margin},
             {"legend.box.background", ThemeElementType.ElementRect},
             {"legend.box.spacing", ThemeElementType.Unit},
-
-            '--- Panel ---
+                                                          _
+                                                          _  '--- Panel ---
             {"panel.background", ThemeElementType.ElementRect},
             {"panel.border", ThemeElementType.ElementRect},
             {"panel.spacing", ThemeElementType.Unit},
@@ -548,8 +548,8 @@ Namespace GgplotTheme
             {"panel.ontop", ThemeElementType.Scalar},
             {"panel.widths", ThemeElementType.Unit},
             {"panel.heights", ThemeElementType.Unit},
-
-            '--- Plot ---
+                                                     _
+                                                     _  '--- Plot ---
             {"plot.background", ThemeElementType.ElementRect},
             {"plot.title", ThemeElementType.ElementText},
             {"plot.title.position", ThemeElementType.Scalar},
@@ -560,8 +560,8 @@ Namespace GgplotTheme
             {"plot.tag.position", ThemeElementType.Scalar},
             {"plot.tag.location", ThemeElementType.Scalar},
             {"plot.margin", ThemeElementType.Margin},
-
-            '--- Strip ---
+                                                     _
+                                                     _  '--- Strip ---
             {"strip.background", ThemeElementType.ElementRect},
             {"strip.background.x", ThemeElementType.ElementRect},
             {"strip.background.y", ThemeElementType.ElementRect},
@@ -576,8 +576,8 @@ Namespace GgplotTheme
             {"strip.text.y.right", ThemeElementType.ElementText},
             {"strip.switch.pad.grid", ThemeElementType.Unit},
             {"strip.switch.pad.wrap", ThemeElementType.Unit},
-
-            '--- Scalars ---
+                                                             _
+                                                             _  '--- Scalars ---
             {"aspect.ratio", ThemeElementType.Scalar},
             {"complete", ThemeElementType.Scalar},
             {"validate", ThemeElementType.Scalar}
