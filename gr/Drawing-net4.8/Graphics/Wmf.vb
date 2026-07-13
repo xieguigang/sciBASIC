@@ -56,7 +56,6 @@
 
 Imports System.Drawing
 Imports System.Drawing.Drawing2D
-Imports System.Drawing.Imaging
 Imports System.Drawing.Text
 Imports System.IO
 Imports Microsoft.VisualBasic.Imaging
@@ -100,7 +99,7 @@ Public Class Wmf : Inherits GDICanvas
     ''' <summary>
     ''' 矢量图的数据存储在这个元数据文件里面
     ''' </summary>
-    ReadOnly vectorMetafile As Metafile
+    ReadOnly vectorMetafile As System.Drawing.Imaging.Metafile
     ReadOnly hdc As IntPtr
     ReadOnly bounds As Size
     ReadOnly stream As Stream
@@ -170,7 +169,7 @@ Public Class Wmf : Inherits GDICanvas
         Me.bounds = bounds.Size.ToSize
 
         ' Make the Metafile, using the reference hDC.
-        Me.vectorMetafile = New Metafile(stream, hdc, bounds, MetafileFrameUnit.Pixel)
+        Me.vectorMetafile = New System.Drawing.Imaging.Metafile(stream, hdc, bounds, System.Drawing.Imaging.MetafileFrameUnit.Pixel)
         Me.stream = stream
 
         Call gSource.ReleaseHdc(hdc)
@@ -179,15 +178,15 @@ Public Class Wmf : Inherits GDICanvas
         Call g.Clear(backgroundColor.TranslateColor)
     End Sub
 
-    Private Sub initg(vectorMetafile As Metafile)
+    Private Sub initg(vectorMetafile As System.Drawing.Imaging.Metafile)
         ' Make a Graphics object and draw.
         g = Graphics.FromImage(vectorMetafile)
-        g.SmoothingMode = SmoothingMode.HighQuality
+        g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality
         g.PageUnit = System.Drawing.GraphicsUnit.Pixel
         g.CompositingQuality = CompositingQuality.HighQuality
-        g.CompositingMode = CompositingMode.SourceOver
-        g.InterpolationMode = InterpolationMode.HighQualityBicubic
-        g.PixelOffsetMode = PixelOffsetMode.HighQuality
+        g.CompositingMode = System.Drawing.Drawing2D.CompositingMode.SourceOver
+        g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic
+        g.PixelOffsetMode = System.Drawing.Drawing2D.PixelOffsetMode.HighQuality
         g.TextRenderingHint = TextRenderingHint.ClearTypeGridFit
     End Sub
 
@@ -203,7 +202,7 @@ Public Class Wmf : Inherits GDICanvas
         Me.bounds = bounds.Size.ToSize
 
         ' Make the Metafile, using the reference hDC.
-        Me.vectorMetafile = New Metafile(stream, hdc, bounds, MetafileFrameUnit.Pixel)
+        Me.vectorMetafile = New System.Drawing.Imaging.Metafile(stream, hdc, bounds, System.Drawing.Imaging.MetafileFrameUnit.Pixel)
         Me.stream = stream
 
         Call gSource.ReleaseHdc(hdc)

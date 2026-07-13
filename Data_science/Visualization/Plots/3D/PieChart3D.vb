@@ -66,6 +66,7 @@ Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.Imaging.Math2D
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Math
+Imports Matrix = Microsoft.VisualBasic.Imaging.Drawing3D.Math3D.Matrix
 
 Namespace Plot3D
 

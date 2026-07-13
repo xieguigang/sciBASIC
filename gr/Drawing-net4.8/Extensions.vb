@@ -233,10 +233,10 @@ Public Module Extensions
     Friend Function CreateObject(g As Graphics, res As System.Drawing.Image) As Graphics2D
         Dim img As Image = res
 
-        g.InterpolationMode = InterpolationMode.HighQualityBicubic
-        g.PixelOffsetMode = PixelOffsetMode.HighQuality
+        g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic
+        g.PixelOffsetMode = System.Drawing.Drawing2D.PixelOffsetMode.HighQuality
         g.CompositingQuality = CompositingQuality.HighQuality
-        g.SmoothingMode = SmoothingMode.HighQuality
+        g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality
         g.TextRenderingHint = TextRenderingHint.AntiAliasGridFit
 
         With New Graphics2D(img) With {.g = g}
@@ -329,12 +329,12 @@ Public Module Extensions
 
         Call g.Clear(filled)
 
-        g.InterpolationMode = InterpolationMode.HighQualityBicubic
-        g.PixelOffsetMode = PixelOffsetMode.HighQuality
+        g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic
+        g.PixelOffsetMode = System.Drawing.Drawing2D.PixelOffsetMode.HighQuality
         g.CompositingQuality = CompositingQuality.HighQuality
-        g.SmoothingMode = SmoothingMode.HighQuality
+        g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality
         g.TextRenderingHint = TextRenderingHint.AntiAliasGridFit
-        g.CompositingMode = CompositingMode.SourceOver
+        g.CompositingMode = System.Drawing.Drawing2D.CompositingMode.SourceOver
 
         Return Graphics2D.CreateObject(g, bitmap)
     End Function

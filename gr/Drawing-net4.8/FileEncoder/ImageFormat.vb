@@ -57,8 +57,6 @@ Imports System.Drawing.Imaging
 Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Imaging
-Imports Microsoft.VisualBasic.Net.Http
-Imports Microsoft.VisualBasic.Text
 Imports defaultFormat = Microsoft.VisualBasic.Language.Default.Default(Of System.Drawing.Imaging.ImageFormat)
 Imports Image = System.Drawing.Image
 
@@ -73,57 +71,57 @@ Public Module ImageFormatExtensions
     ''' 获取 W3C 可移植网络图形 (PNG) 图像格式。
     ''' </summary>
     ''' <returns></returns>
-    Public ReadOnly Property Png As defaultFormat = ImageFormat.Png
+    Public ReadOnly Property Png As defaultFormat = System.Drawing.Imaging.ImageFormat.Png
 
     ''' <summary>
-    ''' default is <see cref="ImageFormat.Png"/>
+    ''' default is <see cref=" System.Drawing.Imaging.ImageFormat.Png"/>
     ''' </summary>
     ''' <param name="format">大小写不敏感</param>
     ''' <returns></returns>
     <Extension>
-    Public Function GetSaveImageFormat(format As String) As ImageFormat
+    Public Function GetSaveImageFormat(format As String) As System.Drawing.Imaging.ImageFormat
         Dim value As String = format.ToLower.Trim
 
         If ImagingFormats.ContainsKey(value) Then
             Return ImagingFormats(value)
         Else
-            Return ImageFormat.Png
+            Return System.Drawing.Imaging.ImageFormat.Png
         End If
     End Function
 
-    ReadOnly ImagingFormats As New Dictionary(Of String, ImageFormat) From {
-        {"jpg", ImageFormat.Jpeg},
-        {"bmp", ImageFormat.Bmp},
-        {"emf", ImageFormat.Emf},
-        {"exif", ImageFormat.Exif},
-        {"gif", ImageFormat.Gif},
-        {"png", ImageFormat.Png},
-        {"wmf", ImageFormat.Wmf},
-        {"tiff", ImageFormat.Tiff}
+    ReadOnly ImagingFormats As New Dictionary(Of String, System.Drawing.Imaging.ImageFormat) From {
+        {"jpg", System.Drawing.Imaging.ImageFormat.Jpeg},
+        {"bmp", System.Drawing.Imaging.ImageFormat.Bmp},
+        {"emf", System.Drawing.Imaging.ImageFormat.Emf},
+        {"exif", System.Drawing.Imaging.ImageFormat.Exif},
+        {"gif", System.Drawing.Imaging.ImageFormat.Gif},
+        {"png", System.Drawing.Imaging.ImageFormat.Png},
+        {"wmf", System.Drawing.Imaging.ImageFormat.Wmf},
+        {"tiff", System.Drawing.Imaging.ImageFormat.Tiff}
     }
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
-    Public Function GetFormat(format As ImageFormats) As ImageFormat
+    Public Function GetFormat(format As ImageFormats) As System.Drawing.Imaging.ImageFormat
         Return formatsEnumMapping(format)
     End Function
 
-    ReadOnly formatsEnumMapping As New SortedDictionary(Of ImageFormats, ImageFormat) From {
-                                                                                            _
-        {ImageFormats.Bmp, ImageFormat.Bmp},
-        {ImageFormats.Emf, ImageFormat.Emf},
-        {ImageFormats.Exif, ImageFormat.Exif},
-        {ImageFormats.Gif, ImageFormat.Gif},
-        {ImageFormats.Icon, ImageFormat.Icon},
-        {ImageFormats.Jpeg, ImageFormat.Jpeg},
-        {ImageFormats.MemoryBmp, ImageFormat.MemoryBmp},
-        {ImageFormats.Png, ImageFormat.Png},
-        {ImageFormats.Tiff, ImageFormat.Tiff},
-        {ImageFormats.Wmf, ImageFormat.Wmf}
+    ReadOnly formatsEnumMapping As New SortedDictionary(Of ImageFormats, System.Drawing.Imaging.ImageFormat) From {
+                                                                                                                   _
+        {ImageFormats.Bmp, System.Drawing.Imaging.ImageFormat.Bmp},
+        {ImageFormats.Emf, System.Drawing.Imaging.ImageFormat.Emf},
+        {ImageFormats.Exif, System.Drawing.Imaging.ImageFormat.Exif},
+        {ImageFormats.Gif, System.Drawing.Imaging.ImageFormat.Gif},
+        {ImageFormats.Icon, System.Drawing.Imaging.ImageFormat.Icon},
+        {ImageFormats.Jpeg, System.Drawing.Imaging.ImageFormat.Jpeg},
+        {ImageFormats.MemoryBmp, System.Drawing.Imaging.ImageFormat.MemoryBmp},
+        {ImageFormats.Png, System.Drawing.Imaging.ImageFormat.Png},
+        {ImageFormats.Tiff, System.Drawing.Imaging.ImageFormat.Tiff},
+        {ImageFormats.Wmf, System.Drawing.Imaging.ImageFormat.Wmf}
     }
 
     <Extension>
-    Public Function SaveAs(res As Image, path As String, format As ImageFormat, Optional autoDispose As Boolean = False) As Boolean
+    Public Function SaveAs(res As Image, path As String, format As System.Drawing.Imaging.ImageFormat, Optional autoDispose As Boolean = False) As Boolean
         Using s As Stream = path.Open(FileMode.OpenOrCreate, doClear:=True)
             Call path.ParentPath.MakeDir
             Call res.Save(s, format)

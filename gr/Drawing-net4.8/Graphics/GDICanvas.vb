@@ -2212,7 +2212,7 @@ Public MustInherit Class GDICanvas : Inherits IGraphics
         Call Graphics.RotateTransform(angle)
     End Sub
 
-    Public Sub SetTransformMatrix(x As Matrix)
+    Public Sub SetTransformMatrix(x As System.Drawing.Drawing2D.Matrix)
         Graphics.Transform = x
     End Sub
 
