@@ -81,7 +81,7 @@ Namespace Wavefront
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <DebuggerStepThrough>
         Public Shared Function ReadFile(file As StreamReader) As ObjModel
-            Return TextParser.ParseFile(file)
+            Return ObjTextParser.ParseFile(file)
         End Function
 
     End Class
