@@ -23,31 +23,19 @@
     ' GNU General Public License for more details.
     ' 
     ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
+    ' along with this program. If not see <http://www.gnu.org/licenses/>.
 
     ' /********************************************************************************/
-
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 196
-    '    Code Lines: 140 (71.43%)
-    ' Comment Lines: 19 (9.69%)
-    '    - Xml Docs: 100.00%
-    ' 
-    '   Blank Lines: 37 (18.88%)
-    '     File Size: 6.77 KB
-
 
     '     Class Camera
     ' 
     '         Constructor: (+4 Overloads) Sub New
     ' 
-    '         Function: Lighting, (+2 Overloads) Project, (+4 Overloads) Rotate, (+2 Overloads) RotateX, (+2 Overloads) RotateY
+    '         Properties: AmbientStrength, AngleX, AngleY, AngleZ, FieldOfView
+    '                     LightColor, LightDirection, Offset, Screen, ViewDistance
+    ' 
+    '         Function: Lighting, (+2 Overloads) Project, (+4 Overloads) Rotate
+    '                   (+2 Overloads) RotateX, (+2 Overloads) RotateY
     '                   (+2 Overloads) RotateZ, ToString
     ' 
     '         Sub: Draw
@@ -61,8 +49,8 @@ Imports System.Drawing
 Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
-Imports Microsoft.VisualBasic.Imaging.Drawing3D.Device
 Imports Microsoft.VisualBasic.Imaging.Drawing3D.Math3D
+Imports std = System.Math
 
 Namespace Drawing3D
 
@@ -71,123 +59,156 @@ Namespace Drawing3D
         ''' <summary>
         ''' the view distance from the user view to target object
         ''' </summary>
-        Public viewDistance!
-        Public angleX!, angleY!, angleZ!
-        Public fov! = 256.0!
-        Public screen As Size
+        Public Property ViewDistance!
+        Public Property AngleX!
+        Public Property AngleY!
+        Public Property AngleZ!
+        Public Property FieldOfView! = 256.0!
+        Public Property Screen As Size
         ''' <summary>
         ''' Using for the project result 
         ''' </summary>
-        Public offset As PointF
+        Public Property Offset As PointF
 
         ''' <summary>
-        ''' Light
+        ''' Light direction (unit vector pointing toward the light source).
         ''' </summary>
-        Public lightAngle As Point3D
+        Public Property LightDirection As Point3D
         ''' <summary>
-        ''' Light
+        ''' Ambient term in [0,1] used by the lighting model.
         ''' </summary>
-        Public colorDifference As Double
+        Public Property AmbientStrength As Double
         ''' <summary>
-        ''' Light, default using <see cref="Color.White"/> as the light color
+        ''' Light color, default using <see cref="Color.White"/>.
         ''' </summary>
-        Public lightColor As Color
+        Public Property LightColor As Color
 
         Public Sub New()
             Dim lightPosition As New Point3D(2, -1, 3)
 
-            Me.lightAngle = lightPosition.normalize()
-            Me.colorDifference = 0.2
-            Me.lightColor = Color.FromArgb(255, 255, 255)
+            Me.LightDirection = lightPosition.Normalize()
+            Me.AmbientStrength = 0.2
+            Me.LightColor = Color.FromArgb(255, 255, 255)
         End Sub
 
         Sub New(gfx As IGraphics, viewAngle As Point3D, Optional viewDistance As Single = 100)
             Call Me.New(viewAngle)
 
-            Me.viewDistance = viewDistance
-            Me.screen = gfx.Size
+            Me.ViewDistance = viewDistance
+            Me.Screen = gfx.Size
         End Sub
 
         Sub New(canvas As GraphicsRegion, viewAngle As Point3D, Optional viewDistance As Single = 100)
             Call Me.New(viewAngle)
 
-            Me.viewDistance = viewDistance
-            Me.screen = canvas.Size
+            Me.ViewDistance = viewDistance
+            Me.Screen = canvas.Size
         End Sub
 
         Sub New(viewAngle As Point3D)
             Call Me.New()
 
-            angleX = viewAngle.X
-            angleY = viewAngle.Y
-            angleZ = viewAngle.Z
+            AngleX = viewAngle.X
+            AngleY = viewAngle.Y
+            AngleZ = viewAngle.Z
         End Sub
 
 #Region "Rotation"
 
+        ''' <summary>
+        ''' Apply the three camera-axis rotations to a single point, computing the
+        ''' trigonometric values only once for the whole transformation.
+        ''' </summary>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Private Function RotatePoint(p As Point3D, cosX As Double, sinX As Double, cosY As Double, sinY As Double, cosZ As Double, sinZ As Double) As Point3D
+            ' X axis
+            Dim y1 = p.Y * cosX - p.Z * sinX
+            Dim z1 = p.Y * sinX + p.Z * cosX
+            ' Y axis
+            Dim x2 = p.X * cosY + z1 * sinY
+            Dim z2 = -p.X * sinY + z1 * cosY
+            ' Z axis
+            Dim x3 = x2 * cosZ - y1 * sinZ
+            Dim y3 = x2 * sinZ + y1 * cosZ
+
+            Return New Point3D(x3, y3, z2)
+        End Function
+
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Rotate(v As Vector3D) As Vector3D
-            Return v.RotateX(angleX).RotateY(angleY).RotateZ(angleZ)
+            Return v.RotateX(AngleX).RotateY(AngleY).RotateZ(AngleZ)
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Rotate(pt As Point3D) As Point3D
-            Return pt.RotateX(angleX).RotateY(angleY).RotateZ(angleZ)
+            Dim radX = AngleX * std.PI / 180, radY = AngleY * std.PI / 180, radZ = AngleZ * std.PI / 180
+
+            Return RotatePoint(pt,
+                std.Cos(radX), std.Sin(radX),
+                std.Cos(radY), std.Sin(radY),
+                std.Cos(radZ), std.Sin(radZ))
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function RotateX(pt As Point3D) As Point3D
-            Return pt.RotateX(angleX)
+            Return pt.RotateX(AngleX)
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function RotateY(pt As Point3D) As Point3D
-            Return pt.RotateY(angleY)
+            Return pt.RotateY(AngleY)
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function RotateZ(pt As Point3D) As Point3D
-            Return pt.RotateZ(angleZ)
+            Return pt.RotateZ(AngleZ)
         End Function
 
+        ''' <summary>
+        ''' Batch rotation of a point set. Trigonometric values are computed once
+        ''' for the whole set instead of per point.
+        ''' </summary>
         Public Iterator Function Rotate(pts As IEnumerable(Of Point3D)) As IEnumerable(Of Point3D)
+            Dim radX = AngleX * std.PI / 180, radY = AngleY * std.PI / 180, radZ = AngleZ * std.PI / 180
+            Dim cosX = std.Cos(radX), sinX = std.Sin(radX)
+            Dim cosY = std.Cos(radY), sinY = std.Sin(radY)
+            Dim cosZ = std.Cos(radZ), sinZ = std.Sin(radZ)
+
             For Each pt As Point3D In pts
-                Yield pt _
-                    .RotateX(angleX) _
-                    .RotateY(angleY) _
-                    .RotateZ(angleZ)
+                Yield RotatePoint(pt, cosX, sinX, cosY, sinY, cosZ, sinZ)
             Next
         End Function
 
         Public Iterator Function RotateX(pts As IEnumerable(Of Point3D)) As IEnumerable(Of Point3D)
             For Each pt As Point3D In pts
-                Yield pt.RotateX(angleX)
+                Yield pt.RotateX(AngleX)
             Next
         End Function
 
         Public Iterator Function RotateY(pts As IEnumerable(Of Point3D)) As IEnumerable(Of Point3D)
             For Each pt As Point3D In pts
-                Yield pt.RotateY(angleY)
+                Yield pt.RotateY(AngleY)
             Next
         End Function
 
         Public Iterator Function RotateZ(pts As IEnumerable(Of Point3D)) As IEnumerable(Of Point3D)
             For Each pt As Point3D In pts
-                Yield pt.RotateZ(angleZ)
+                Yield pt.RotateZ(AngleZ)
             Next
         End Function
+
 #End Region
 
 #Region "3D -> 2D Project"
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function Project(pt As Point3D) As Point3D
-            Return pt.Project(screen.Width, screen.Height, fov, viewDistance, offset)
+            Return pt.Project(Screen.Width, Screen.Height, FieldOfView, ViewDistance, Offset)
         End Function
 
         Public Iterator Function Project(pts As IEnumerable(Of Point3D)) As IEnumerable(Of Point3D)
             For Each pt As Point3D In pts
-                Yield pt.Project(screen.Width, screen.Height, fov, viewDistance, offset)
+                Yield pt.Project(Screen.Width, Screen.Height, FieldOfView, ViewDistance, Offset)
             Next
         End Function
 
@@ -219,20 +240,21 @@ Namespace Drawing3D
         End Sub
 #End If
 
+        ''' <summary>
+        ''' Compute the lit color of a surface using the camera's light setup.
+        ''' Falls back to the surface's base color when the face is degenerate.
+        ''' </summary>
         Public Function Lighting(surface As Surface) As Color
-            Dim color As Color = DirectCast(surface.brush, SolidBrush).Color
+            Dim baseColor As Color
 
-            Try
-                color = surface.vertices _
-                    .Lighting(lightAngle,
-                              color,
-                              colorDifference,
-                              lightColor)
-            Catch ex As Exception
+            If TypeOf surface.brush Is SolidBrush Then
+                baseColor = DirectCast(surface.brush, SolidBrush).Color
+            Else
+                baseColor = Color.Black
+            End If
 
-            End Try
-
-            Return color
+            Return surface.vertices _
+                .ComputeLighting(LightDirection, baseColor, AmbientStrength, LightColor)
         End Function
 
         ''' <summary>
@@ -242,12 +264,13 @@ Namespace Drawing3D
         Public Overrides Function ToString() As String
             Dim debug As New StringBuilder
 
-            Call debug.AppendLine($"Rotation vector:  x={angleX}, y={angleY}, z={angleZ}")
-            Call debug.AppendLine($"View distance:    {viewDistance}")
-            Call debug.AppendLine($"FOV:              {fov}")
-            Call debug.AppendLine($"Screen size:      {screen.Width}px X {screen.Height}px")
-            Call debug.AppendLine($"Light color:      {lightColor.ToHtmlColor}")
-            Call debug.AppendLine($"Light angle:      x={lightAngle.X}, y={lightAngle.Y}, z={lightAngle.Z}")
+            Call debug.AppendLine($"Rotation vector:  x={AngleX}, y={AngleY}, z={AngleZ}")
+            Call debug.AppendLine($"View distance:    {ViewDistance}")
+            Call debug.AppendLine($"FOV:              {FieldOfView}")
+            Call debug.AppendLine($"Screen size:      {Screen.Width}px X {Screen.Height}px")
+            Call debug.AppendLine($"Light color:      {LightColor.ToHtmlColor}")
+            Call debug.AppendLine($"Light direction:  x={LightDirection.X}, y={LightDirection.Y}, z={LightDirection.Z}")
+            Call debug.AppendLine($"Ambient:          {AmbientStrength}")
 
             Return debug.ToString
         End Function

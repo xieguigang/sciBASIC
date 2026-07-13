@@ -59,7 +59,6 @@
 
 Imports System.Drawing
 Imports System.Runtime.CompilerServices
-Imports Microsoft.VisualBasic.Imaging.Drawing3D.Device
 Imports Microsoft.VisualBasic.Imaging.Drawing3D.Math3D
 Imports Microsoft.VisualBasic.Imaging.Drawing3D.Models.Isometric
 Imports Microsoft.VisualBasic.Language
@@ -81,8 +80,8 @@ Namespace Drawing3D
         ''' </summary>
         Dim models As New List(Of Model2D)
 
-        ReadOnly lightAngle As Point3D
-        ReadOnly colorDifference As Double
+        ReadOnly LightDirection As Point3D
+        ReadOnly AmbientStrength As Double
         ReadOnly lightColor As Color
         ReadOnly angle, scale As Double
 
@@ -93,8 +92,8 @@ Namespace Drawing3D
                 ({Me.scale * std.Cos(Me.angle), Me.scale * std.Sin(Me.angle)}),
                 ({Me.scale * std.Cos(std.PI - Me.angle), Me.scale * std.Sin(std.PI - Me.angle)})
             }
-            Me.lightAngle = New Point3D(2, -1, 3).normalize()
-            Me.colorDifference = 0.2
+            Me.LightDirection = New Point3D(2, -1, 3).Normalize()
+            Me.AmbientStrength = 0.2
             Me.lightColor = Color.FromArgb(255, 255, 255)
         End Sub
 
@@ -141,7 +140,7 @@ Namespace Drawing3D
         ''' <param name="path"></param>
         ''' <param name="color"></param>
         Private Sub AddPath(path As Path3D, color As Color)
-            color = path.Lighting(lightAngle, color, colorDifference, lightColor)
+            color = path.Lighting(Me.LightDirection, color, Me.AmbientStrength, Me.lightColor)
             models.Add(New Model2D(path, color))
         End Sub
 
@@ -195,10 +194,10 @@ Namespace Drawing3D
             Dim sortedItems As New List(Of Model2D)
             Dim observer As New Point3D(-10, -10, 20)
             Dim length As Integer = models.Count
-            Dim drawBefore As New List(Of IList(Of Integer))(length)
+            Dim drawBefore(length - 1) As List(Of Integer)
 
             For i As Integer = 0 To length - 1
-                drawBefore.Insert(i, New List(Of Integer))
+                drawBefore(i) = New List(Of Integer)
             Next
 
             Dim itemA As Model2D
@@ -337,7 +336,7 @@ Namespace Drawing3D
                 items.Add(right)
                 items.Add(bottom)
 
-                'search for equal points that are above or below for left and right or left and right for bottom and top
+                ' search for equal points that are above or below for left and right
                 For Each point As Point3D In m2.TransformedPoints
                     If point.X = left.X Then
                         If point.Y <> left.Y Then items.Add(point)
@@ -345,15 +344,9 @@ Namespace Drawing3D
                     If point.X = right.X Then
                         If point.Y <> right.Y Then items.Add(point)
                     End If
-                    If point.Y = top.Y Then
-                        If point.Y <> top.Y Then items.Add(point)
-                    End If
-                    If point.Y = bottom.Y Then
-                        If point.Y <> bottom.Y Then items.Add(point)
-                    End If
                 Next
 
-                If IsPointInPoly(items, position.X, position.Y) Then
+                If IsPointInPoly(items.ToArray(), position.X, position.Y) Then
                     Return m2
                 End If
             Next
