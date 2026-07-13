@@ -56,6 +56,7 @@ Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports Microsoft.VisualBasic.Imaging.Drawing3D
+Imports Microsoft.VisualBasic.Imaging.Landscape.Data
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 
@@ -74,7 +75,7 @@ Namespace STL
         ''' </summary>
         ''' <param name="filePath$">.stl 文件路径</param>
         ''' <returns>解析后的 Surface 三角面数组</returns>
-        Public Function ParseSTL(filePath$) As Data.Graphics
+        Public Function ParseSTL(filePath$) As SceneModel
             Using fs As New FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.Read)
                 Return ParseSTL(fs)
             End Using
@@ -85,7 +86,7 @@ Namespace STL
         ''' </summary>
         ''' <param name="stream">包含 STL 数据的流</param>
         ''' <returns>解析后的 Surface 三角面数组</returns>
-        Public Function ParseSTL(stream As Stream) As Data.Graphics
+        Public Function ParseSTL(stream As Stream) As SceneModel
             ' 读取前5个字节判断是否为 ASCII ("solid")
             Dim header As Byte() = New Byte(4) {}
             Dim bytesRead As Integer = stream.Read(header, 0, 5)
@@ -103,7 +104,7 @@ Namespace STL
                 End Using
             End If
 
-            Return New Data.Graphics With {
+            Return New SceneModel With {
                 .Surfaces = surfaces
             }
         End Function
@@ -177,9 +178,9 @@ Namespace STL
                     If isReadingFacet AndAlso vertices.Count >= 3 Then
                         surfaces.Add(New Data.Surface With {
                             .vertices = {
-                                New Data.Vector(vertices(0)),
-                                New Data.Vector(vertices(1)),
-                                New Data.Vector(vertices(2))
+                                New Vertex(vertices(0)),
+                                New Vertex(vertices(1)),
+                                New Vertex(vertices(2))
                             },
                             .paint = "#C0C0C0"
                         })
@@ -285,9 +286,9 @@ Namespace STL
 
                     surfaces(i) = New Data.Surface With {
                         .vertices = {
-                            New Data.Vector(New Point3D(v1x, v1y, v1z)),
-                            New Data.Vector(New Point3D(v2x, v2y, v2z)),
-                            New Data.Vector(New Point3D(v3x, v3y, v3z))
+                            New Vertex(New Point3D(v1x, v1y, v1z)),
+                            New Vertex(New Point3D(v2x, v2y, v2z)),
+                            New Vertex(New Point3D(v3x, v3y, v3z))
                         },
                         .paint = "#C0C0C0"
                     }

@@ -75,7 +75,7 @@ Namespace ThreeMF.Xml
     Public Class Mesh
 
         Public Property vertices As Point3D()
-        Public Property triangles As Triangle3D()
+        Public Property triangles As triangle()
 
         Public Function GetSurfaces(material As BaseMaterial) As Surface()
             Dim out As New List(Of Surface)
