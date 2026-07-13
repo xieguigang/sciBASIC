@@ -83,9 +83,38 @@ Namespace PostScript.Elements
         Public Property startAngle As Single
         Public Property sweepAngle As Single
         Public Property fill As String
+        Public Property stroke As Stroke
 
         Friend Overrides Sub WriteAscii(ps As Writer)
-            Throw New NotImplementedException()
+            Dim samples As PointF() = SampleArc(x, y, width, height, startAngle, sweepAngle)
+            Dim center As New PointF(x + width / 2, y + height / 2)
+            Dim doFill As Boolean = Not fill.StringEmpty(, True)
+            Dim doStroke As Boolean = stroke IsNot Nothing
+
+            If Not (doFill OrElse doStroke) Then
+                Return
+            End If
+
+            Call ps.moveto(center)
+
+            For i As Integer = 0 To samples.Length - 1
+                Call ps.lineto(samples(i).X, samples(i).Y)
+            Next
+
+            Call ps.closepath()
+
+            If doFill Then
+                Call ps.color(fill.TranslateColor)
+                Call ps.fill()
+            End If
+
+            If doStroke Then
+                Dim pen As Pen = ps.pen(stroke)
+
+                Call ps.linewidth(pen.Width)
+                Call ps.color(pen.Color)
+                Call ps.stroke()
+            End If
         End Sub
 
         Friend Overrides Sub Paint(g As IGraphics)
@@ -104,6 +133,7 @@ Namespace PostScript.Elements
             Return New Pie With {
                 .comment = comment,
                 .fill = fill,
+                .stroke = stroke,
                 .height = scaleY(height),
                 .startAngle = startAngle,
                 .sweepAngle = sweepAngle,
@@ -124,19 +154,38 @@ Namespace PostScript.Elements
         Public Property startAngle As Single
         Public Property sweepAngle As Single
 
+        ''' <summary>
+        ''' sample the points of an elliptical arc (gdi+ coordinate space) into a
+        ''' polyline. the start/end point math follows the gdi+ ellipse convention.
+        ''' </summary>
+        Friend Shared Function SampleArc(x As Single, y As Single, width As Single, height As Single, startAngle As Single, sweepAngle As Single) As PointF()
+            Dim cx As Double = x + width / 2
+            Dim cy As Double = y + height / 2
+            Dim rx As Double = width / 2
+            Dim ry As Double = height / 2
+            Dim steps As Integer = std.Max(2, CInt(std.Abs(sweepAngle) / 3))
+            Dim points(steps) As PointF
+
+            For i As Integer = 0 To steps
+                Dim angle As Double = (startAngle + sweepAngle * (i / steps)) * (std.PI / 180)
+                points(i) = New PointF(CSng(cx + std.Cos(angle) * rx), CSng(cy + std.Sin(angle) * ry))
+            Next
+
+            Return points
+        End Function
+
         Friend Overrides Sub WriteAscii(ps As Writer)
-            Dim startAngleRad As Double = startAngle * (std.PI / 180)
-            Dim sweepAngleRad As Double = sweepAngle * (std.PI / 180)
-            Dim startX As Double = x + (width / 2) + std.Cos(startAngleRad) * (width / 2)
-            Dim startY As Double = y + (height / 2) + std.Sin(startAngleRad) * (height / 2)
-            Dim endX As Double = x + (width / 2) + std.Cos(startAngleRad + sweepAngleRad) * (width / 2)
-            Dim endY As Double = y + (height / 2) + std.Sin(startAngleRad + sweepAngleRad) * (height / 2)
+            Dim points As PointF() = SampleArc(x, y, width, height, startAngle, sweepAngle)
             Dim pen As Pen = ps.pen(stroke)
 
             Call ps.linewidth(pen.Width)
             Call ps.color(pen.Color)
-            Call ps.moveto(startX, startY)
-            Call ps.arct(x, y, width, height, startAngle, sweepAngle)
+            Call ps.moveto(points(0))
+
+            For i As Integer = 1 To points.Length - 1
+                Call ps.lineto(points(i).X, points(i).Y)
+            Next
+
             Call ps.stroke()
         End Sub
 

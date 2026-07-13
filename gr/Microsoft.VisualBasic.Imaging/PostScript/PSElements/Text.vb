@@ -71,9 +71,9 @@ Namespace PostScript.Elements
         Public Property location As PointF
 
         Friend Overrides Sub WriteAscii(ps As Writer)
-            ps.font(font)
-            ps.color(font.color.TranslateColor)
-            ps.text(text, location.X, location.Y)
+            Call ps.font(font)
+            Call ps.color(font.color.TranslateColor)
+            Call ps.text(text, location.X, location.Y, rotation)
         End Sub
 
         Friend Overrides Sub Paint(g As IGraphics)

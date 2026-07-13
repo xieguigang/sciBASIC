@@ -173,14 +173,14 @@ Namespace PostScript
             Dim g As New Writer(fp, New CSSEnvirnment(size))
 
             fprintf(fp, "%%!PS-Adobe-3.0 EPSF-3.0\n")
-            fprintf(fp, "%%Extensions: CMYK ProcessColorModel")
-            fprintf(fp, "%%+ExtGState")
+            fprintf(fp, "%%%%Extensions: CMYK ProcessColorModel\n")
+            fprintf(fp, "%%%%+ExtGState\n")
             fprintf(fp, "%%%%DocumentData: Clean7Bit\n")
-            fprintf(fp, "%%%\%Origin: %10.2f %10.2f\n", originx, originy)
+            fprintf(fp, "%%%%Origin: %10.2f %10.2f\n", originx, originy)
             fprintf(fp, "%%%%BoundingBox: %10.2f %10.2f %10.2f %10.2f\n", originx, originy, size.Width, size.Height)
             fprintf(fp, "%%%%LanguageLevel: 3\n")
             fprintf(fp, "%%%%Pages: 1\n")
-            fprintf(fp, "%%%%Page: 1 1                           \n")
+            fprintf(fp, "%%%%Page: 1 1\n")
             fprintf(fp, "%% Convert to PDF with something like this:\n")
             fprintf(fp, "%% gs -o OutputFileName.pdf -sDEVICE=pdfwrite -dEPSCrop InputFileName.ps\n")
             fprintf(fp, "%% PostScript generated using the PStools library\n")
@@ -197,7 +197,8 @@ Namespace PostScript
                 Call paint.WriteAscii(g)
             Next
 
-            fprintf(fp, "%\n%\n%\n%EOF\n")
+            Call g.showpage()
+            fprintf(fp, "%%EOF\n")
         End Sub
 
         Public Iterator Function GenericEnumerator() As IEnumerator(Of PSElement) Implements Enumeration(Of PSElement).GenericEnumerator

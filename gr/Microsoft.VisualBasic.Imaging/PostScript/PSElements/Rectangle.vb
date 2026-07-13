@@ -77,12 +77,14 @@ Namespace PostScript.Elements
 
         Friend Overrides Sub WriteAscii(ps As Writer)
             Dim rect As RectangleF = shape.DrawingRegion
-
-            Call ps.rectangle(rect, shape.fill, False)
+            Dim border As Stroke = Nothing
 
             If shape.border IsNot Nothing Then
-                Call ps.rectangle(rect, shape.border.fill, True)
+                border = shape.border
             End If
+
+            ' the fill color is kept as a html color string here
+            Call ps.rectangle(rect, shape.fill, border)
         End Sub
 
         Friend Overrides Sub Paint(g As IGraphics)
