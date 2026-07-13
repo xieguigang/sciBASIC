@@ -2,7 +2,6 @@ Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing3D
 Imports Microsoft.VisualBasic.Imaging.Drawing3D.Math3D
 Imports Microsoft.VisualBasic.Imaging.Landscape.Ply
-Imports System.Numerics
 Imports System.Threading.Tasks
 
 ''' <summary>
@@ -254,59 +253,47 @@ Public Class SceneRenderer
 
     ''' <summary>
     ''' 点云模式：投影后用热图颜色（Designer.GetColors）或 PLY 自带颜色绘制填充点。
-    ''' 投影部分使用单精度 System.Numerics.Vector(Of Single) 做 SIMD 批处理，颜色索引并行计算。
+    ''' 旋转由库侧 SIMD（Camera.Rotate 批量重载，Vector3/Matrix4x4）完成；
+    ''' 投影使用并行标量计算（与 Camera.Project 公式严格一致），颜色索引同样并行。
     ''' </summary>
     Private Sub DrawPointCloud(g As Graphics)
         Dim colors = GetColorTable()
-        Dim n = colors.Length
+        Dim colorCount = colors.Length
         Dim sz = Math.Max(1, PointSize)
         Dim half = sz / 2.0F
 
+        Dim cnt = cloud.Length
+        Dim xyArr(cnt - 1) As PointF
+        Dim cidxArr(cnt - 1) As Integer
+
+        ' 旋转由库侧 SIMD 完成（Camera.Rotate 批量重载，Vector3/Matrix4x4）
         Dim pts3 = cloud.Select(Function(c) New Point3D(c.x, c.y, c.z)).ToArray()
         Dim rotated = Camera.Rotate(pts3).ToArray()
 
-        ' ---- SIMD 投影：System.Numerics.Vector(Of Single) 批量计算 factor / 屏幕坐标 ----
-        Dim cnt = cloud.Length
-        Dim px = New Single(cnt - 1) {}, py = New Single(cnt - 1) {}, pz = New Single(cnt - 1) {}
-        For i = 0 To cnt - 1
-            px(i) = CSng(rotated(i).X)
-            py(i) = CSng(rotated(i).Y)
-            pz(i) = CSng(rotated(i).Z)
-        Next
-
-        Dim vd = CSng(Camera.ViewDistance), fov = CSng(Camera.FieldOfView)
-        Dim w2 = Camera.Screen.Width / 2.0F, h2 = Camera.Screen.Height / 2.0F
+        Dim vd = Camera.ViewDistance
+        Dim fov = Camera.FieldOfView
+        Dim w2 = CSng(Camera.Screen.Width) / 2.0F
+        Dim h2 = CSng(Camera.Screen.Height) / 2.0F
         Dim ox = Camera.Offset.X, oy = Camera.Offset.Y
-        Dim xyArr(cnt - 1) As PointF
 
-        Dim j = 0
-        While j < cnt
-            Dim block = Math.Min(System.Numerics.Vector(Of Single).Count, cnt - j)
-            Dim vz = New System.Numerics.Vector(Of Single)(pz, j)
-            Dim depth = New System.Numerics.Vector(Of Single)(vd) + vz
-            Dim factor = New System.Numerics.Vector(Of Single)(fov) / depth
-            Dim vx = (New System.Numerics.Vector(Of Single)(px, j) * factor) + New System.Numerics.Vector(Of Single)(w2) + New System.Numerics.Vector(Of Single)(ox)
-            Dim vy = (New System.Numerics.Vector(Of Single)(py, j) * factor) + New System.Numerics.Vector(Of Single)(h2) + New System.Numerics.Vector(Of Single)(oy)
-            For k = 0 To block - 1
-                xyArr(j + k) = New PointF(vx(k), vy(k))
-            Next
-            j += block
-        End While
-
-        ' ---- 并行计算颜色索引 ----
-        Dim cidxArr(cnt - 1) As Integer
+        ' 并行标量投影（与 Camera.Project 公式一致）+ 并行颜色索引，按索引写回预分配数组，无共享可变状态
         System.Threading.Tasks.Parallel.For(0, cnt, Sub(i)
+            Dim p = rotated(i)
+            Dim depth = vd + p.Z
+            Dim factor As Single = If(depth <= 0, 0, fov / depth)
+            xyArr(i) = New PointF(p.X * factor + w2 + ox, p.Y * factor + h2 + oy)
+
             If UseEmbeddedColor AndAlso Not String.IsNullOrEmpty(cloud(i).color) Then
                 cidxArr(i) = -1
             Else
                 Dim v = If(cloud(i).intensity <> 0, cloud(i).intensity, cloud(i).z)
                 Dim t = (v - intensityMin) / (intensityMax - intensityMin)
                 If t < 0 Then t = 0 Else If t > 1 Then t = 1
-                cidxArr(i) = CInt(t * (n - 1))
+                cidxArr(i) = CInt(t * (colorCount - 1))
             End If
         End Sub)
 
-        ' ---- 串行绘制（GDI+ 不可并行）----
+        ' 串行绘制（GDI+ 不可并行）
         For i = 0 To cnt - 1
             Dim brush As System.Drawing.Brush
             If cidxArr(i) = -1 Then
