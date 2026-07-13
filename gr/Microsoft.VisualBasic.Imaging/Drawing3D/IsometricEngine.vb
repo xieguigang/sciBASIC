@@ -270,7 +270,7 @@ Namespace Drawing3D
 
             For Each model2D As Model2D In models
                 If model2D.isDot Then
-                    Throw New NotImplementedException
+                    canvas.DrawCircle(model2D.TransformedPoints(0).PointXY(canvas.Size), 2, model2D.Paint)
                 ElseIf model2D.isLine Then
                     canvas.DrawLine(New Pen(model2D.baseColor), model2D.TransformedPoints(0).PointXY(canvas.Size), model2D.TransformedPoints(1).PointXY(canvas.Size))
                 Else
