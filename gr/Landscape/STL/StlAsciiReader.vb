@@ -39,10 +39,8 @@
 #End Region
 
 Imports System.IO
-Imports System.Text
 Imports Microsoft.VisualBasic.Imaging.Drawing3D
 Imports Microsoft.VisualBasic.Language
-Imports Microsoft.VisualBasic.Linq
 
 Namespace Stl
 

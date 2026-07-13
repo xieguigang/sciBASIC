@@ -64,7 +64,6 @@
 Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Imaging.Drawing3D
-Imports Microsoft.VisualBasic.Imaging.Landscape.Data
 Imports Microsoft.VisualBasic.Language
 
 Namespace Wavefront
