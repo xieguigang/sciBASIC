@@ -23,7 +23,7 @@ Partial Class FormAbout
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(FormAbout))
-        RenderPanel1 = New RenderPanel()
+        canvas = New RenderPanel()
         Panel1 = New Panel()
         Label1 = New Label()
         Panel1.SuspendLayout()
@@ -31,12 +31,12 @@ Partial Class FormAbout
         ' 
         ' RenderPanel1
         ' 
-        RenderPanel1.BackColor = Color.SkyBlue
-        RenderPanel1.Dock = DockStyle.Bottom
-        RenderPanel1.Location = New Point(0, 83)
-        RenderPanel1.Name = "RenderPanel1"
-        RenderPanel1.Size = New Size(662, 531)
-        RenderPanel1.TabIndex = 0
+        canvas.BackColor = Color.SkyBlue
+        canvas.Dock = DockStyle.Bottom
+        canvas.Location = New Point(0, 83)
+        canvas.Name = "RenderPanel1"
+        canvas.Size = New Size(662, 531)
+        canvas.TabIndex = 0
         ' 
         ' Panel1
         ' 
@@ -63,7 +63,7 @@ Partial Class FormAbout
         AutoScaleMode = AutoScaleMode.Font
         ClientSize = New Size(662, 614)
         Controls.Add(Panel1)
-        Controls.Add(RenderPanel1)
+        Controls.Add(canvas)
         FormBorderStyle = FormBorderStyle.FixedToolWindow
         Icon = CType(resources.GetObject("$this.Icon"), Icon)
         Name = "FormAbout"
@@ -74,7 +74,7 @@ Partial Class FormAbout
         ResumeLayout(False)
     End Sub
 
-    Friend WithEvents RenderPanel1 As RenderPanel
+    Friend WithEvents canvas As RenderPanel
     Friend WithEvents Panel1 As Panel
     Friend WithEvents Label1 As Label
 End Class

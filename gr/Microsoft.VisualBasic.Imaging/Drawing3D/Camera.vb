@@ -142,8 +142,11 @@ Namespace Drawing3D
         End Function
 
         ' ===================== SIMD 批量旋转 =====================
-        ' 用单精度 Matrix4x4 + Vector3.Transform 走硬件 SIMD 加速，
-        ' 矩阵元素与原有 RotatePoint 数学完全一致（已验证 X=90→(X,-Z,Y)、Y=90→(Z,Y,-X)）。
+        ' 用单精度 Matrix4x4 + Vector3.Transform 走硬件 SIMD 加速。
+        ' 矩阵元素严格等价于原有 RotatePoint（已通过冒烟测试逐点验证：
+        ' (0,0,1)@X90=(0,-1,0)、(1,0,0)@Y90=(0,0,-1)、(1,1,1)@X90Y90=(1,-1,-1)）。
+        ' 注意：Vector3.Transform 采用行向量约定 result = v * M，因此
+        ' result.j = Σ_i v.i * M_{i,j}，矩阵按此约定推导。
 
         ''' <summary>
         ''' 由当前 Euler 角构造与 RotatePoint 等价的单精度旋转矩阵。
@@ -155,14 +158,17 @@ Namespace Drawing3D
             Dim cZ = std.Cos(radZ), sZ = std.Sin(radZ)
 
             Dim m As New Matrix4x4()
+            ' result.X = p.X*M11 + p.Y*M21 + p.Z*M31
             m.M11 = CSng(cY * cZ)
-            m.M12 = CSng(-cY * sZ)
-            m.M13 = CSng(sY)
-            m.M21 = CSng(cX * sZ + sX * sY * cZ)
-            m.M22 = CSng(cX * cZ - sX * sY * sZ)
-            m.M23 = CSng(-sX * cY)
-            m.M31 = CSng(sX * sZ - cX * sY * cZ)
-            m.M32 = CSng(sX * cZ + cX * sY * sZ)
+            m.M21 = CSng(sX * sY * cZ - cX * sZ)
+            m.M31 = CSng(cX * sY * cZ + sX * sZ)
+            ' result.Y = p.X*M12 + p.Y*M22 + p.Z*M32
+            m.M12 = CSng(cY * sZ)
+            m.M22 = CSng(sX * sY * sZ + cX * cZ)
+            m.M32 = CSng(cX * sY * sZ - sX * cZ)
+            ' result.Z = p.X*M13 + p.Y*M23 + p.Z*M33
+            m.M13 = CSng(-sY)
+            m.M23 = CSng(sX * cY)
             m.M33 = CSng(cX * cY)
             m.M44 = 1
             Return m
