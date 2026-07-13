@@ -73,6 +73,7 @@ Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.Imaging.Math2D
 Imports Microsoft.VisualBasic.MIME.Html.CSS
 Imports Microsoft.VisualBasic.Net.Http
+Imports std = System.Math
 
 Namespace PostScript
 
@@ -627,6 +628,7 @@ Namespace PostScript
         Public Overrides Sub DrawRectangle(pen As Pen, rect As Rectangle)
             Dim box As New Elements.Rectangle(tf(rect), Nothing)
 
+            box.shape.fill = ""
             box.shape.border = New Stroke(pen)
             painting.Add(box)
         End Sub
@@ -634,6 +636,7 @@ Namespace PostScript
         Public Overrides Sub DrawRectangle(pen As Pen, rect As RectangleF)
             Dim box As New Elements.Rectangle(tf(rect), Nothing)
 
+            box.shape.fill = ""
             box.shape.border = New Stroke(pen)
             painting.Add(box)
         End Sub
@@ -641,6 +644,7 @@ Namespace PostScript
         Public Overrides Sub DrawRectangle(pen As Pen, x As Single, y As Single, width As Single, height As Single)
             Dim rect As New Elements.Rectangle(tf(New RectangleF(x, y, width, height)), Nothing)
 
+            rect.shape.fill = ""
             rect.shape.border = New Stroke(pen)
             painting.Add(rect)
         End Sub

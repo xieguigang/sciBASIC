@@ -42,6 +42,7 @@
 #End Region
 
 Imports System.Drawing
+Imports std = System.Math
 
 Namespace PostScript
 
