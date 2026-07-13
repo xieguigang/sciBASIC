@@ -94,13 +94,13 @@ Namespace Drawing3D.Models.Isometric
             End Get
         End Property
 
-        Public ReadOnly Property isLine3D As Boolean
+        Public ReadOnly Property IsLine3D As Boolean
             Get
                 Return Points.Count = 2
             End Get
         End Property
 
-        Public ReadOnly Property isDot3D As Boolean
+        Public ReadOnly Property IsDot3D As Boolean
             Get
                 Return Points.Count = 1
             End Get
@@ -248,42 +248,57 @@ Namespace Drawing3D.Models.Isometric
         ''' <param name="observer"></param>
         ''' <returns></returns>
         Public Function CountCloserThan(pathA As Path3D, observer As Point3D) As Integer
-            If pathA.isLine3D Then
-                Return observer.ptLineDist(pathA.Points(0), pathA.Points(1))
+            If pathA.IsLine3D Then
+                Return CInt(Fix(DistanceToLine(observer, pathA.Points(0), pathA.Points(1))))
             End If
 
             Dim AB As Point3D = pathA.Points(0) - pathA.Points(1)
             Dim AC As Point3D = pathA.Points(0) - pathA.Points(2)
             Dim n As Point3D = VectorMath.CrossProduct(AB, AC)
 
+            ' Degenerate face (zero area): nothing meaningful to compare.
+            If n.Length() = 0 Then
+                Return 0
+            End If
+
             Dim OA As Point3D = Math3D.Transformation.ORIGIN - pathA.Points(0)
             Dim OU As Point3D = Math3D.Transformation.ORIGIN - observer ' U = user = observer
 
-            ' Plane defined by pathA such as ax + by + zc = d
-            ' Here d = nx*x + ny*y + nz*z = n.OA
+            ' Plane defined by pathA: n·(x - A) = 0  ->  d = n·OA
             Dim d As Double = n.DotProduct(OA)
-            Dim observerPosition As Double = n.DotProduct(OU) - d
-            Dim result As Integer = 0
-            Dim result0 As Integer = 0
+            Dim observerSide As Double = n.DotProduct(OU) - d
+            Dim count As Integer = 0
             Dim length As Integer = Me.Points.Count
 
             For i As Integer = 0 To length - 1
                 Dim OP As Point3D = Math3D.Transformation.ORIGIN - Me.Points(i)
-                Dim pPosition As Double = n.DotProduct(OP) - d
+                Dim pSide As Double = n.DotProduct(OP) - d
 
-                ' careful with rounding approximations result += 1
-                If observerPosition * pPosition >= 0.000000001 Then
-                    If observerPosition * pPosition >= -0.000000001 AndAlso observerPosition * pPosition < 0.000000001 Then
-                        result0 += 1
-                    End If
+                ' Count this path's vertices that lie on the same side of pathA's
+                ' plane as the observer.
+                If (observerSide >= 0 AndAlso pSide >= 0) OrElse (observerSide < 0 AndAlso pSide < 0) Then
+                    count += 1
                 End If
             Next
 
-            If result = 0 Then
-                Return 0
-            Else
-                Return ((result + result0) \ length)
+            Return count
+        End Function
+
+        ''' <summary>
+        ''' Shortest distance from point <paramref name="p"/> to the line through <paramref name="a"/> and <paramref name="b"/>.
+        ''' </summary>
+        Private Shared Function DistanceToLine(p As Point3D, a As Point3D, b As Point3D) As Double
+            Dim ab As Point3D = b - a
+            Dim ap As Point3D = p - a
+            Dim lenAb As Double = ab.Length()
+
+            If lenAb = 0 Then
+                Return ap.Length()
             End If
+
+            Dim cross As Point3D = VectorMath.CrossProduct(ab, ap)
+
+            Return cross.Length() / lenAb
         End Function
 
         Public Shared Widening Operator CType(points As Point3D()) As Path3D

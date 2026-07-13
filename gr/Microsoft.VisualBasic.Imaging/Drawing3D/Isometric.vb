@@ -361,26 +361,6 @@ Namespace Drawing3D
         ''' <param name="x"></param>
         ''' <param name="y"></param>
         ''' <returns></returns>
-        Private Function IsPointInPoly(poly As IList(Of Point3D), x As Double, y As Double) As Boolean
-            Dim c As Boolean = False
-            Dim i As i32 = -1
-            Dim l As Integer = poly.Count
-            Dim j As Integer = l - 1
-
-            Do While ++i < l - 1
-                If ((poly(i).Y <= y AndAlso y < poly(j).Y) OrElse
-                    (poly(j).Y <= y AndAlso y < poly(i).Y)) AndAlso
-                    (x < (poly(j).X - poly(i).X) * (y - poly(i).Y) / (poly(j).Y - poly(i).Y) + poly(i).X) Then
-
-                    c = Not c
-                End If
-
-                j = i
-            Loop
-
-            Return c
-        End Function
-
         Private Function IsPointInPoly(poly As Point3D(), x As Double, y As Double) As Boolean
             Dim c As Boolean = False
             Dim i As i32 = -1

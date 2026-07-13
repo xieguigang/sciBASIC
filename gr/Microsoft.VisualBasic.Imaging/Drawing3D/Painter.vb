@@ -130,9 +130,6 @@ Namespace Drawing3D
         ''' <param name="drawPath"></param>
         <Extension>
         Public Sub BufferPainting(ByRef canvas As IGraphics, buf As IEnumerable(Of Polygon), Optional drawPath As Boolean = False)
-            'If illumination Then
-            '    buf = buf.Illumination
-            'End If
             For Each polygon As Polygon In buf
                 With polygon
                     If drawPath Then
@@ -159,7 +156,9 @@ Namespace Drawing3D
 
             For Each polygon As Polygon In buf
                 With polygon
-                    buffer = .points.Offsets(offset)
+                    buffer = .points _
+                        .Select(Function(pt) New PointF(pt.X + offset.X, pt.Y + offset.Y)) _
+                        .ToArray()
                     canvas.FillPolygon(.brush.CTypeBrushObject, buffer)
 
                     If drawPath Then
@@ -236,11 +235,11 @@ Namespace Drawing3D
             ''' <summary>
             ''' The 3D projection result buffer
             ''' </summary>
-            Dim points As PointF()
+            Public Property points As PointF()
             ''' <summary>
             ''' Surface fill
             ''' </summary>
-            Dim brush As Brush
+            Public Property brush As Brush
         End Structure
 
         ''' <summary>
@@ -252,44 +251,16 @@ Namespace Drawing3D
         ''' <returns></returns>
         <Extension>
         Public Function OrderProvider(Of T)(source As IEnumerable(Of T), z As Func(Of T, Double)) As List(Of Integer)
-            Dim order As New List(Of Integer)
-            Dim avgZ As New List(Of Double)
+            Dim items = source.SeqIterator.ToArray()
+            Dim indices = items.Select(Function(s) CInt(s.i)).ToArray()
+            Dim values = items.Select(Function(s) z(+s)).ToArray()
 
-            ' Compute the average Z value of each face.
-            For Each i As SeqValue(Of T) In source.SeqIterator
-                Call avgZ.Add(z(+i))
-                Call order.Add(i)
-            Next
+            ' Sort the face indices by their average Z value. O(n log n) via
+            ' Array.Sort (ascending); the index array is carried along so the
+            ' original ordering can be reconstructed for the painter algorithm.
+            Array.Sort(values, indices)
 
-            Dim iMax%, tmp#
-
-            ' Next we sort the faces in descending order based on the Z value.
-            ' The objective is to draw distant faces first. This is called
-            ' the PAINTERS ALGORITHM. So, the visible faces will hide the invisible ones.
-            ' The sorting algorithm used is the SELECTION SORT.
-            For i% = 0 To avgZ.Count - 1
-                iMax = i
-
-                For j = i + 1 To avgZ.Count - 1
-                    If avgZ(j) > avgZ(iMax) Then
-                        iMax = j
-                    End If
-                Next
-
-                If iMax <> i Then
-                    tmp = avgZ(i)
-                    avgZ(i) = avgZ(iMax)
-                    avgZ(iMax) = tmp
-
-                    tmp = order(i)
-                    order(i) = order(iMax)
-                    order(iMax) = tmp
-                End If
-            Next
-
-            Call order.Reverse()
-
-            Return order
+            Return New List(Of Integer)(indices)
         End Function
     End Module
 End Namespace
