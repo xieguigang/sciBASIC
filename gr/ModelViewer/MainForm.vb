@@ -2,35 +2,36 @@ Imports Microsoft.VisualBasic.Imaging.Drawing3D
 
 Public Class MainForm : Inherits Form
 
-    Private renderer As New SceneRenderer()
-    Private canvas As RenderPanel
+    Private WithEvents renderer As New SceneRenderer()
+    Private WithEvents canvas As RenderPanel
 
-    Private menuStrip As MenuStrip
-    Private toolStrip As ToolStrip
-    Private cboMode As ToolStripComboBox
-    Private cboScheme As ToolStripComboBox
-    Private chkEmbedded As ToolStripButton
-    Private numPointSize As ToolStripComboBox
-    Private btnReset As ToolStripButton
+    Private WithEvents menuStrip As MenuStrip
+    Private WithEvents toolStrip As ToolStrip
+    Private WithEvents cboMode As ToolStripComboBox
+    Private WithEvents cboScheme As ToolStripComboBox
+    Private WithEvents chkEmbedded As ToolStripButton
+    Private WithEvents numPointSize As ToolStripComboBox
+    Private WithEvents btnReset As ToolStripButton
 
-    Private statusStrip As StatusStrip
-    Private lblStatus As ToolStripStatusLabel
+    Private WithEvents statusStrip As StatusStrip
+    Private WithEvents lblStatus As ToolStripStatusLabel
 
-    Private openFileDialog As OpenFileDialog
+    Private WithEvents openFileDialog As OpenFileDialog
 
     ' ---- 光照调节状态 ----
-    Private lightPanel As Panel
-    Private lblAmbient As Label
-    Private lblIntensity As Label
-    Private lblElevation As Label
-    Private lblAzimuth As Label
-    Private trkAmbient As TrackBar
-    Private trkIntensity As TrackBar
-    Private trkElevation As TrackBar
-    Private trkAzimuth As TrackBar
-    Private btnLightColor As Button
-    Private lblLightColor As Label
-    Private btnResetLight As Button
+    Private WithEvents lightPanel As Panel
+    Private WithEvents lblAmbient As Label
+    Private WithEvents lblIntensity As Label
+    Private WithEvents lblElevation As Label
+    Private WithEvents lblAzimuth As Label
+    Private WithEvents trkAmbient As TrackBar
+    Private WithEvents trkIntensity As TrackBar
+    Private WithEvents trkElevation As TrackBar
+    Private WithEvents trkAzimuth As TrackBar
+    Private WithEvents btnLightColor As Button
+    Private WithEvents lblLightColor As Label
+    Private WithEvents btnResetLight As Button
+
     Private baseLightColor As Color = Color.White
     Private lightIntensity As Double = 0.65
 
@@ -46,21 +47,19 @@ Public Class MainForm : Inherits Form
     End Sub
 
     Private Sub InitializeComponent()
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(MainForm))
         SuspendLayout()
         ' 
         ' MainForm
         ' 
         ClientSize = New Size(931, 611)
+        Icon = CType(resources.GetObject("$this.Icon"), Icon)
         Name = "MainForm"
-        ResumeLayout(False)
-
-    End Sub
-
-    Private Sub BuildUI()
         Me.Text = "ModelViewer - 三维模型与点云查看器"
         Me.Size = New Size(1000, 700)
         Me.StartPosition = FormStartPosition.CenterScreen
         Me.MinimumSize = New Size(400, 300)
+
 
         ' ---- 菜单 ----
         menuStrip = New MenuStrip()
@@ -69,6 +68,17 @@ Public Class MainForm : Inherits Form
         fileMenu.DropDownItems.Add(openItem)
         menuStrip.Items.Add(fileMenu)
         Me.MainMenuStrip = menuStrip
+
+        Me.Controls.Add(menuStrip)
+
+        ResumeLayout(False)
+
+    End Sub
+
+    Private Sub BuildUI()
+
+
+
 
         ' ---- 工具栏 ----
         toolStrip = New ToolStrip()
@@ -138,7 +148,7 @@ Public Class MainForm : Inherits Form
         Me.Controls.Add(canvas)
         Me.Controls.Add(toolStrip)
         Me.Controls.Add(statusStrip)
-        Me.Controls.Add(menuStrip)
+
 
         ' ---- 打开对话框 ----
         openFileDialog = New OpenFileDialog()
