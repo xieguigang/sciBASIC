@@ -59,8 +59,13 @@ Public Class MainForm : Inherits Form
         cboScheme = New ToolStripComboBox()
         chkEmbedded = New ToolStripButton()
         numPointSize = New ToolStripComboBox()
+        btnReset = New ToolStripButton()
+        canvas = New RenderPanel()
+        statusStrip = New StatusStrip()
+        lblStatus = New ToolStripStatusLabel()
         menuStrip.SuspendLayout()
         toolStrip.SuspendLayout()
+        statusStrip.SuspendLayout()
         SuspendLayout()
         ' 
         ' menuStrip
@@ -68,6 +73,7 @@ Public Class MainForm : Inherits Form
         menuStrip.Items.AddRange(New ToolStripItem() {fileMenu})
         menuStrip.Location = New Point(0, 0)
         menuStrip.Name = "menuStrip"
+        menuStrip.RenderMode = ToolStripRenderMode.System
         menuStrip.Size = New Size(984, 24)
         menuStrip.TabIndex = 0
         ' 
@@ -81,12 +87,12 @@ Public Class MainForm : Inherits Form
         ' openItem
         ' 
         openItem.Name = "openItem"
-        openItem.Size = New Size(180, 22)
+        openItem.Size = New Size(166, 22)
         openItem.Text = "打开模型/点云..."
         ' 
         ' toolStrip
         ' 
-        toolStrip.Items.AddRange(New ToolStripItem() {cboMode, cboScheme, chkEmbedded, numPointSize})
+        toolStrip.Items.AddRange(New ToolStripItem() {cboMode, cboScheme, chkEmbedded, numPointSize, btnReset})
         toolStrip.Location = New Point(0, 24)
         toolStrip.Name = "toolStrip"
         toolStrip.Size = New Size(984, 25)
@@ -98,7 +104,6 @@ Public Class MainForm : Inherits Form
         cboMode.Items.AddRange(New Object() {"表面渲染", "三角形网格", "点云 (PLY)"})
         cboMode.Name = "cboMode"
         cboMode.Size = New Size(121, 25)
-        cboMode.Text = "表面渲染"
         ' 
         ' cboScheme
         ' 
@@ -106,7 +111,6 @@ Public Class MainForm : Inherits Form
         cboScheme.Items.AddRange(New Object() {"viridis", "magma", "inferno", "plasma", "turbo", "jet", "rainbow", "cividis", "mako", "rocket", "viridis:rocket"})
         cboScheme.Name = "cboScheme"
         cboScheme.Size = New Size(121, 25)
-        cboScheme.Text = "viridis"
         ' 
         ' chkEmbedded
         ' 
@@ -121,35 +125,42 @@ Public Class MainForm : Inherits Form
         numPointSize.Items.AddRange(New Object() {"1", "2", "3", "4", "5", "6", "8", "10", "12"})
         numPointSize.Name = "numPointSize"
         numPointSize.Size = New Size(121, 25)
-        numPointSize.Text = "2"
-
-
-        btnReset = New ToolStripButton("重置视角")
-
-        toolStrip.Items.Add(btnReset)
-
-        ' ---- 画布 ----
-        canvas = New RenderPanel()
-        canvas.Dock = DockStyle.Fill
+        ' 
+        ' btnReset
+        ' 
+        btnReset.Name = "btnReset"
+        btnReset.Size = New Size(63, 22)
+        btnReset.Text = "重置视角"
+        ' 
+        ' canvas
+        ' 
         canvas.BackColor = Color.White
+        canvas.Dock = DockStyle.Fill
+        canvas.Location = New Point(0, 49)
+        canvas.Name = "canvas"
+        canvas.Size = New Size(984, 590)
+        canvas.TabIndex = 0
         canvas.TabStop = True
-
-        ' ---- 状态栏 ----
-        statusStrip = New StatusStrip()
-        lblStatus = New ToolStripStatusLabel("请通过「文件 ▸ 打开」加载三维模型或 PLY 点云")
-        statusStrip.Items.Add(lblStatus)
-
-        Me.Controls.Add(lightPanel)
-
-        ' ---- 布局 ----
-        Me.Controls.Add(canvas)
-
-        Me.Controls.Add(statusStrip)
-
+        ' 
+        ' statusStrip
+        ' 
+        statusStrip.Items.AddRange(New ToolStripItem() {lblStatus})
+        statusStrip.Location = New Point(0, 639)
+        statusStrip.Name = "statusStrip"
+        statusStrip.Size = New Size(984, 22)
+        statusStrip.TabIndex = 1
+        ' 
+        ' lblStatus
+        ' 
+        lblStatus.Name = "lblStatus"
+        lblStatus.Size = New Size(282, 17)
+        lblStatus.Text = "请通过「文件 ▸ 打开」加载三维模型或 PLY 点云"
         ' 
         ' MainForm
         ' 
         ClientSize = New Size(984, 661)
+        Controls.Add(canvas)
+        Controls.Add(statusStrip)
         Controls.Add(toolStrip)
         Controls.Add(menuStrip)
         Icon = CType(resources.GetObject("$this.Icon"), Icon)
@@ -162,6 +173,8 @@ Public Class MainForm : Inherits Form
         menuStrip.PerformLayout()
         toolStrip.ResumeLayout(False)
         toolStrip.PerformLayout()
+        statusStrip.ResumeLayout(False)
+        statusStrip.PerformLayout()
         ResumeLayout(False)
         PerformLayout()
 
