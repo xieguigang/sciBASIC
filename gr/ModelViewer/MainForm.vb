@@ -18,6 +18,9 @@ Public Class MainForm : Inherits Form
 
     Private WithEvents openFileDialog As OpenFileDialog
 
+    Dim WithEvents fileMenu As New ToolStripMenuItem
+    Dim WithEvents openItem As ToolStripMenuItem
+
     ' ---- 光照调节状态 ----
     Private WithEvents lightPanel As Panel
     Private WithEvents lblAmbient As Label
@@ -63,8 +66,8 @@ Public Class MainForm : Inherits Form
 
         ' ---- 菜单 ----
         menuStrip = New MenuStrip()
-        Dim fileMenu = New ToolStripMenuItem("文件(&F)")
-        Dim openItem = New ToolStripMenuItem("打开模型/点云...", Nothing, AddressOf OpenClick)
+        fileMenu = New ToolStripMenuItem("文件(&F)")
+        openItem = New ToolStripMenuItem("打开模型/点云...")
         fileMenu.DropDownItems.Add(openItem)
         menuStrip.Items.Add(fileMenu)
         Me.MainMenuStrip = menuStrip
@@ -312,7 +315,7 @@ Public Class MainForm : Inherits Form
 
     ' ===================== 文件加载 =====================
 
-    Private Sub OpenClick(sender As Object, e As EventArgs)
+    Private Sub OpenClick(sender As Object, e As EventArgs) Handles openItem.Click
         If openFileDialog.ShowDialog() = DialogResult.OK Then
             OpenFile(openFileDialog.FileName)
         End If
@@ -451,10 +454,6 @@ Public Class MainForm : Inherits Form
             $"角度X: {renderer.Camera.AngleX:F1}  Y: {renderer.Camera.AngleY:F1}  |  " &
             $"视距: {renderer.Camera.ViewDistance:F1}  |  " &
             $"环境光: {renderer.Camera.AmbientStrength:P0}  亮度: {lightIntensity:P0}"
-    End Sub
-
-    Private Sub MainForm_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-
     End Sub
 End Class
 
