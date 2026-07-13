@@ -88,11 +88,11 @@ Namespace ThreeMF
         ''' </summary>
         ''' <param name="centraOffset"></param>
         ''' <returns></returns>
-        Public Function GetSurfaces(Optional centraOffset As Boolean = False) As Surface()
+        Public Function GetSurfaces(Optional centraOffset As Boolean = False) As Drawing3D.Surface()
             If model Is Nothing Then
                 Return {}
             Else
-                Dim out As Surface() = model.GetSurfaces.ToArray
+                Dim out As Drawing3D.Surface() = model.GetSurfaces.ToArray
 
                 If centraOffset Then
                     With out.Centra
@@ -110,14 +110,14 @@ Namespace ThreeMF
         ''' </summary>
         ''' <returns>转换后的 SceneModel，若项目无有效模型则返回空 SceneModel</returns>
         Public Function ToSceneModel() As Data.SceneModel
-            Dim drawingSurfaces As Surface() = GetSurfaces()
+            Dim drawingSurfaces As Drawing3D.Surface() = GetSurfaces()
             If drawingSurfaces Is Nothing OrElse drawingSurfaces.Length = 0 Then
                 Return New Data.SceneModel With {.Surfaces = {}}
             End If
 
             Dim surfaces As New List(Of Data.Surface)(drawingSurfaces.Length)
 
-            For Each s As Surface In drawingSurfaces
+            For Each s As Drawing3D.Surface In drawingSurfaces
                 If s.vertices Is Nothing OrElse s.vertices.Length < 3 Then Continue For
 
                 ' 从 Brush 中提取颜色字符串

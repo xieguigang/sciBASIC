@@ -1,49 +1,50 @@
 #Region "Microsoft.VisualBasic::ModelLoader, gr\Landscape\Data\ModelLoader.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
 
-    '     Module ModelLoader
-    ' 
-    '         Function: LoadModel, LoadFromStream, DetectFormat, (+2 Overloads) VoxelizeForCFD
-    ' 
-    '     Enum ModelFormat
-    ' 
-    '         STL, GLTF, GLB, OBJ, DAE, 3DS, 3MF, Unknown
-    ' 
-    ' 
-    ' /********************************************************************************/
+'     Module ModelLoader
+' 
+'         Function: LoadModel, LoadFromStream, DetectFormat, (+2 Overloads) VoxelizeForCFD
+' 
+'     Enum ModelFormat
+' 
+'         STL, GLTF, GLB, OBJ, DAE, 3DS, 3MF, Unknown
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
+Imports System.ComponentModel
 Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Imaging.Landscape.Collada
@@ -53,8 +54,6 @@ Imports Microsoft.VisualBasic.Imaging.Landscape.Stl
 Imports Microsoft.VisualBasic.Imaging.Landscape.ThreeMF
 Imports Microsoft.VisualBasic.Imaging.Landscape.Voxelization
 Imports Microsoft.VisualBasic.Imaging.Landscape.Wavefront
-Imports Microsoft.VisualBasic.Language
-Imports Microsoft.VisualBasic.Linq
 
 Namespace Data
 
@@ -81,11 +80,11 @@ Namespace Data
         DAE
 
         ''' <summary>3D-Studio Max (.3ds)</summary>
-        <CodeComment("3DS")>
+        <Description("3DS")>
         _3DS
 
         ''' <summary>3D Manufacturing Format (.3mf)</summary>
-        <CodeComment("3MF")>
+        <Description("3MF")>
         _3MF
     End Enum
 
@@ -137,15 +136,15 @@ Namespace Data
                 Case ModelFormat.STL
                     Return filePath.ParseSTL
                 Case ModelFormat.GLTF
-                    Return filePath.ReadFile
+                    Return GltfReader.ReadFile(filePath)
                 Case ModelFormat.GLB
-                    Return filePath.ReadFile
+                    Return GlbReader.ReadFile(filePath)
                 Case ModelFormat.OBJ
                     Using reader As New StreamReader(filePath)
                         Return ObjTextParser.ParseFile(reader).ToSceneModel
                     End Using
                 Case ModelFormat.DAE
-                    Return filePath.ReadFile
+                    Return ColladaParser.ReadFile(filePath)
                 Case ModelFormat._3DS
                     Return filePath.Parse3DS
                 Case ModelFormat._3MF
