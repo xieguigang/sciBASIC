@@ -61,7 +61,7 @@ Imports std = System.Math
 
 Module TestPolygonAlignment
 
-    Sub Main()
+    Sub Main2222()
 
         Dim rect As New Rectangle(80, 100, 23, 28)
         Dim rect2 As New Rectangle(180, 200, 50, 28)

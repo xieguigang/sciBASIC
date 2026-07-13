@@ -65,7 +65,7 @@ Imports Microsoft.VisualBasic.Math.MachineVision.CCL
 
 Public Module labeltest
 
-    Sub Main()
+    Sub Main222()
         Call circleTest()
     End Sub
 

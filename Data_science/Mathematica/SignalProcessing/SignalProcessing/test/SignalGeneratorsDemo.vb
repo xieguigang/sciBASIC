@@ -54,7 +54,7 @@ Module SignalGeneratorsDemo
     End Sub
 
     Sub dumpExamples()
-        Dim x = Sequence(0, 10, 0.01).ToArray
+        Dim x = Grid(0, 10, 0.01).ToArray
 
         ' A composite: trend + seasonality + gaussian peak + noise
         Dim sig = New SignalGenerator() _
@@ -67,19 +67,19 @@ Module SignalGeneratorsDemo
 
         ' ECG preset
         Call Presets.ECG(period:=1, noise:=0.02) _
-            .ToGeneralSignal(Sequence(0, 3, 0.005).ToArray, reference:="ECG", unit:="s") _
+            .ToGeneralSignal(Grid(0, 3, 0.005).ToArray, reference:="ECG", unit:="s") _
             .GetText.SaveTo("./ecg_signal.csv")
 
         ' Weather preset
         Call Presets.Weather(days:=365) _
-            .ToGeneralSignal(Sequence(0, 365, 0.5).ToArray, reference:="weather", unit:="day") _
+            .ToGeneralSignal(Grid(0, 365, 0.5).ToArray, reference:="weather", unit:="day") _
             .GetText.SaveTo("./weather_signal.csv")
 
         Console.WriteLine("Example signals written to ./composite_signal.csv, ./ecg_signal.csv, ./weather_signal.csv")
     End Sub
 
     ''' <summary>a tiny helper to build an evenly spaced sequence (like Python's range).</summary>
-    Function Sequence(min As Double, max As Double, stepSize As Double) As IEnumerable(Of Double)
+    Iterator Function Grid(min As Double, max As Double, stepSize As Double) As IEnumerable(Of Double)
         Dim x = min
         Do While x <= max
             Yield x

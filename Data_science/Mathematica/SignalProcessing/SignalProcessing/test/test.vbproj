@@ -4,6 +4,7 @@
     <TargetFrameworks>net10.0</TargetFrameworks>
     <Platforms>AnyCPU;x64</Platforms>
     <Configurations>Debug;Release;LipidSearch;PlantMAT;mzkit;NPSearch;Rsharp_app_release;nuget_release;CellaLAB-Desktop</Configurations>
+    <OutputType>Exe</OutputType>
   </PropertyGroup>
 
   <ItemGroup>

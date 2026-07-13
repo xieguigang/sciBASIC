@@ -57,7 +57,7 @@ Imports Microsoft.VisualBasic.Math.SignalProcessing.KalmanFilter
 
 Module KalmanFilterDemotest
 
-    Sub Main()
+    Sub Main222()
         ' 初始化测试参数
         Dim timeSteps As Integer = 50
         Dim truePosition As Single()() = GenerateTrueTrajectory(timeSteps)
