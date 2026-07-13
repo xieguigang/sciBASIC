@@ -50,6 +50,7 @@
 
 #End Region
 
+Imports System.Windows.Forms
 Imports Microsoft.VisualBasic.Drawing
 
 Namespace Plot3D.Device

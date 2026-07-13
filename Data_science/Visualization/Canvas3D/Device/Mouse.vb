@@ -55,7 +55,7 @@ Imports Microsoft.VisualBasic.Imaging.Drawing3D
 
 Namespace Drawing3D.Device
 
-    Public Class Mouse : Inherits IDevice(Of UserControl)
+    Public Class Mouse : Inherits IDevice(Of System.Windows.Forms.UserControl)
 
         Dim press As Boolean
 

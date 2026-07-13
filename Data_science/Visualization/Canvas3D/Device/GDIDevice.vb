@@ -1,64 +1,66 @@
 ﻿#Region "Microsoft.VisualBasic::b708a6535a64e0db78dd6ec0bf4765fd, sciBASIC#\Data_science\Visualization\Canvas3D\Device\GDIDevice.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 235
-    '    Code Lines: 161
-    ' Comment Lines: 41
-    '   Blank Lines: 33
-    '     File Size: 7.65 KB
+' Summaries:
 
 
-    '     Class GDIDevice
-    ' 
-    '         Properties: Animation, AutoRotation, bg, DisableScreenResize, DrawPath
-    '                     FOV, LightColor, LightIllumination, Model, Plot
-    '                     RefreshInterval, RotationThread, ShowDebugger, ShowHorizontalPanel, ViewDistance
-    ' 
-    '         Sub: ___animationLoop, __init, __initDevice, _animationLoop_Tick, Dispose
-    '              GDIDevice_KeyDown, GDIDevice_Load, GDIDevice_MouseWheel, GDIDevice_Resize, InitializeComponent
-    '              Pause, Rotate, RotateX, RotateY, RotateZ
-    '              Run
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 235
+'    Code Lines: 161
+' Comment Lines: 41
+'   Blank Lines: 33
+'     File Size: 7.65 KB
+
+
+'     Class GDIDevice
+' 
+'         Properties: Animation, AutoRotation, bg, DisableScreenResize, DrawPath
+'                     FOV, LightColor, LightIllumination, Model, Plot
+'                     RefreshInterval, RotationThread, ShowDebugger, ShowHorizontalPanel, ViewDistance
+' 
+'         Sub: ___animationLoop, __init, __initDevice, _animationLoop_Tick, Dispose
+'              GDIDevice_KeyDown, GDIDevice_Load, GDIDevice_MouseWheel, GDIDevice_Resize, InitializeComponent
+'              Pause, Rotate, RotateX, RotateY, RotateZ
+'              Run
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
+Imports System.Drawing
 Imports System.Math
-Imports Microsoft.VisualBasic.Data.ChartPlots.Drawing3D.Device.Worker
+Imports System.Windows.Forms
+Imports Canvas3D.Drawing3D.Device.Worker
 Imports Microsoft.VisualBasic.Imaging.Drawing3D
 Imports Keyboard = System.Windows.Forms.Keys
 
@@ -73,7 +75,7 @@ Namespace Drawing3D.Device
     ''' + 空间计算线程，用来对数据进行预处理，包括投影和排序，生成可以直接被使用的多边形缓存
     ''' + 图形渲染线程，用于进行三维图形的绘图操作，进行图像显示
     ''' </remarks>
-    Public Class GDIDevice : Inherits UserControl
+    Public Class GDIDevice : Inherits System.Windows.Forms.UserControl
 
         Protected WithEvents _animationLoop As Timer
         Protected Friend _camera As New Camera With {
@@ -199,7 +201,7 @@ Namespace Drawing3D.Device
             Try
                 Throw New Exception("Please Implements the initialize code at here.")
             Catch ex As Exception
-                Call ex.__DEBUG_ECHO
+                Call ex.debug
             End Try
         End Sub
 
@@ -258,7 +260,7 @@ Namespace Drawing3D.Device
 
         Private Sub GDIDevice_Resize(sender As Object, e As EventArgs) Handles Me.Resize
             If _camera Is Nothing Then
-                Call "Camera object not initialized!".__DEBUG_ECHO
+                Call "Camera object not initialized!".debug
             Else
                 If Not DisableScreenResize Then
                     _camera.screen = Size
