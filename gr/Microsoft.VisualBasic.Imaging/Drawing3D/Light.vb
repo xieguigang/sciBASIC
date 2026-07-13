@@ -41,6 +41,7 @@ Imports System.Math
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Imaging.Drawing3D.Math3D
 Imports Microsoft.VisualBasic.Imaging.Drawing3D.Models.Isometric
+Imports std = System.Math
 
 Namespace Drawing3D
 
@@ -115,17 +116,7 @@ Namespace Drawing3D
             Dim g = CInt(Fix(baseColor.G * (1 - factor) + lightColor.G * factor))
             Dim b = CInt(Fix(baseColor.B * (1 - factor) + lightColor.B * factor))
 
-            Return Color.FromArgb(baseColor.A, ClampByte(r), ClampByte(g), ClampByte(b))
-        End Function
-
-        Private Function ClampByte(value As Integer) As Integer
-            If value < 0 Then
-                Return 0
-            ElseIf value > 255 Then
-                Return 255
-            End If
-
-            Return value
+            Return Color.FromArgb(baseColor.A, std.Clamp(r, 0, 255), std.Clamp(g, 0, 255), std.Clamp(b, 0, 255))
         End Function
     End Module
 End Namespace

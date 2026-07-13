@@ -51,7 +51,6 @@ Imports System.Drawing
 Imports System.Runtime.CompilerServices
 Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.Imaging.Drawing3D.Math3D
-Imports Microsoft.VisualBasic.Math
 Imports std = System.Math
 Imports vec = Microsoft.VisualBasic.Math.LinearAlgebra.Vector
 

@@ -45,7 +45,7 @@
 
     '     Class DistanceFieldSampler
     ' 
-    '         Properties: NeedsUpdate, SampleSize
+    '         Properties: Path, Resolution
     ' 
     '         Function: DistanceToDistanceScore, GetDistance, GetDistanceScore, IsEdgeNearSampleRange
     ' 
