@@ -66,7 +66,7 @@ Namespace Voxelization
     ''' 一维索引公式: <c>index = (x * Height + y) * Depth + z</c>
     ''' </summary>
     ''' <remarks>
-    ''' 体素化后的模型为实心体：所有位于 STL 三角网格内部的体素均标记为 True。
+    ''' 体素化后的模型为实心体：所有位于三角网格内部的体素均标记为 True。
     ''' CFD 计算引擎会在计算时基于模型的外表面（由 True/False 边界定义）做流体动力学计算。
     ''' </remarks>
     Public Class VoxelModel

@@ -68,21 +68,25 @@ Imports std = System.Math
 Namespace Voxelization
 
     ''' <summary>
-    ''' STL 三角网格模型 → CFD 实心体素模型的转换器。
+    ''' 三角网格模型 → CFD 实心体素模型的转换器。
+    ''' 
+    ''' 接受任意格式（STL、OBJ、glTF/GLB、COLLADA、3DS、3MF）解析后的
+    ''' <see cref="Data.SceneModel"/> 作为输入，将其转换为可用于 CFD
+    ''' 流体动力学仿真的实心体素模型。
     '''
     ''' ## 体素化算法
     '''
     ''' 采用 **列扫描射线投射 (Column-based Ray Casting)** 算法：
     '''
     ''' 1. 对体素网格中的每一列 ``(x, y)``，沿 Z 轴正方向发射一条射线
-    ''' 2. 使用 Möller–Trumbore 算法计算射线与每个 STL 三角面的交点
+    ''' 2. 使用 Möller–Trumbore 算法计算射线与每个三角面的交点
     ''' 3. 收集当前列上所有交点的 Z 坐标并排序
     ''' 4. 交点对 (z0,z1), (z2,z3), ... 之间的体素标记为 ``True``（固体内部）
     ''' 5. 最终体素模型为实心体，CFD 引擎在 True/False 边界上做流体计算
     '''
     ''' ## 前提条件
     '''
-    ''' - STL 模型必须是水密的 (watertight / manifold)，否则射线可能穿透内部
+    ''' - 输入模型必须是水密的 (watertight / manifold)，否则射线可能穿透内部
     ''' - 如果模型有孔洞，内部区域可能被标记为外部（False），请预先修复模型
     ''' </summary>
     Public Module Voxelizer
@@ -92,7 +96,7 @@ Namespace Voxelization
         ''' <summary>
         ''' 以指定的分辨率（最长边体素数量）将 SceneModel 体素化为实心体素模型。
         ''' </summary>
-        ''' <param name="model">已解析的 STL 场景模型</param>
+        ''' <param name="model">已解析的 3D 场景模型（任意格式转换后的 SceneModel）</param>
         ''' <param name="resolution">最长边上的体素分辨率，默认 128。实际各轴体素数量按比例缩放</param>
         ''' <returns>实心体素模型，若输入无效则返回 Nothing</returns>
         <Extension>
@@ -135,7 +139,7 @@ Namespace Voxelization
         ''' <summary>
         ''' 以指定的体素物理尺寸将 SceneModel 体素化为实心体素模型。
         ''' </summary>
-        ''' <param name="model">已解析的 STL 场景模型</param>
+        ''' <param name="model">已解析的 3D 场景模型（任意格式转换后的 SceneModel）</param>
         ''' <param name="voxelSize">每个体素的物理尺寸（世界坐标单位）</param>
         ''' <returns>实心体素模型，若输入无效则返回 Nothing</returns>
         <Extension>
@@ -243,7 +247,7 @@ Namespace Voxelization
 #Region "内部辅助方法 —— 三角形数据提取"
 
         ''' <summary>
-        ''' 将 SceneModel 中的 Surface 数组转换为 (v1, v2, v3) 三角形元组列表
+        ''' 将 SceneModel 中的三角面数组转换为 (v1, v2, v3) 三角形元组列表
         ''' </summary>
         Private Function ExtractTriangles(model As Data.SceneModel) As List(Of (v1 As Point3D, v2 As Point3D, v3 As Point3D))
             Dim list As New List(Of (v1 As Point3D, v2 As Point3D, v3 As Point3D))
@@ -251,7 +255,7 @@ Namespace Voxelization
             For Each surf In model.Surfaces
                 If surf.vertices Is Nothing OrElse surf.vertices.Length < 3 Then Continue For
 
-                ' STL 中每个 Surface 正好是 3 个顶点的三角形
+                ' SceneModel 中每个 Surface 正好是 3 个顶点的三角形
                 Dim v1 = surf.vertices(0).PointData
                 Dim v2 = surf.vertices(1).PointData
                 Dim v3 = surf.vertices(2).PointData
@@ -347,7 +351,7 @@ Namespace Voxelization
         ''' 对每个 (x, y) 列沿 Z 轴发射射线，收集与所有三角形的交点，
         ''' 排序后在交点对之间将体素标记为 True（固体内部）。
         ''' </summary>
-        ''' <param name="triangles">STL 三角面列表</param>
+        ''' <param name="triangles">三角面列表（已从 SceneModel 中提取）</param>
         ''' <param name="width">X 轴体素数量</param>
         ''' <param name="height">Y 轴体素数量</param>
         ''' <param name="depth">Z 轴体素数量</param>
