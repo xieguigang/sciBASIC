@@ -1,82 +1,82 @@
 ﻿#Region "Microsoft.VisualBasic::06829aeccc0c9ded4aae8cacbe265216, Data_science\Mathematica\SignalProcessing\MachineVision\CurveAnalysis.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 363
-    '    Code Lines: 205 (56.47%)
-    ' Comment Lines: 111 (30.58%)
-    '    - Xml Docs: 96.40%
-    ' 
-    '   Blank Lines: 47 (12.95%)
-    '     File Size: 15.70 KB
+' Summaries:
 
 
-    ' Module CurveAnalysis
-    ' 
-    '     Function: ArrAverage, ArrSum, CalcVal, CurveLength, ExtendPointOnLine
-    '               FindProcrustesRotationAngle, FrechetDist, Magnitude, PointDistance, ProcrustesNormalizeCurve
-    '               ProcrustesNormalizeRotation, RebalanceCurve, RotateCurve, ShapeSimilarity, SubdivideCurve
-    '               Subtract
-    '     Class Curve
-    ' 
-    '         Constructor: (+2 Overloads) Sub New
-    ' 
-    '     Class ShapeSimilarityOpts
-    ' 
-    '         Properties: CheckRotations, EstimationPoints, RestrictRotationAngle, Rotations
-    ' 
-    '     Class ProcrustesNormalizeCurveOpts
-    ' 
-    '         Properties: EstimationPoints, Rebalance
-    ' 
-    '     Class SubdivideCurveOpts
-    ' 
-    '         Properties: MaxLen
-    ' 
-    '     Class RebalanceCurveOpts
-    ' 
-    '         Properties: NumPoints
-    ' 
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 363
+'    Code Lines: 205 (56.47%)
+' Comment Lines: 111 (30.58%)
+'    - Xml Docs: 96.40%
+' 
+'   Blank Lines: 47 (12.95%)
+'     File Size: 15.70 KB
+
+
+' Module CurveAnalysis
+' 
+'     Function: ArrAverage, ArrSum, CalcVal, CurveLength, ExtendPointOnLine
+'               FindProcrustesRotationAngle, FrechetDist, Magnitude, PointDistance, ProcrustesNormalizeCurve
+'               ProcrustesNormalizeRotation, RebalanceCurve, RotateCurve, ShapeSimilarity, SubdivideCurve
+'               Subtract
+'     Class Curve
+' 
+'         Constructor: (+2 Overloads) Sub New
+' 
+'     Class ShapeSimilarityOpts
+' 
+'         Properties: CheckRotations, EstimationPoints, RestrictRotationAngle, Rotations
+' 
+'     Class ProcrustesNormalizeCurveOpts
+' 
+'         Properties: EstimationPoints, Rebalance
+' 
+'     Class SubdivideCurveOpts
+' 
+'         Properties: MaxLen
+' 
+'     Class RebalanceCurveOpts
+' 
+'         Properties: NumPoints
+' 
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
-Imports std = System.Math
 Imports System.Drawing
+Imports std = System.Math
 
 ''' <summary>
 ''' A collection of static methods for analyzing and comparing 2D curves.
