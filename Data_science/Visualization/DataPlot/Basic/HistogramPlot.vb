@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a294d86fb7dc835ec187b2c6ec265c0b, Data_science\Visualization\DataPlot\Basic\HistogramPlot.vb"
+﻿#Region "Microsoft.VisualBasic::066537255c1aa8de6f73303d9dd9522c, Data_science\Visualization\DataPlot\Basic\HistogramPlot.vb"
 
     ' Author:
     ' 
@@ -34,12 +34,12 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 74
-    '    Code Lines: 61 (82.43%)
-    ' Comment Lines: 2 (2.70%)
+    '   Total Lines: 72
+    '    Code Lines: 61 (84.72%)
+    ' Comment Lines: 2 (2.78%)
     '    - Xml Docs: 50.00%
     ' 
-    '   Blank Lines: 11 (14.86%)
+    '   Blank Lines: 9 (12.50%)
     '     File Size: 2.55 KB
 
 
@@ -50,11 +50,9 @@
     '     Constructor: (+1 Overloads) Sub New
     '     Sub: Plot
     ' 
-    ' 
     ' /********************************************************************************/
 
 #End Region
-
 
 Imports System.Drawing
 Imports Microsoft.VisualBasic.Imaging
@@ -128,5 +126,3 @@ Public Class HistogramPlot
         End If
     End Sub
 End Class
-
-

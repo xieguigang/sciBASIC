@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6775c4a28584e4704cbc92786b3a3139, Data_science\Visualization\DataPlot\Basic\BarPlot.vb"
+﻿#Region "Microsoft.VisualBasic::3cbe034182385627237f304716ed7335, Data_science\Visualization\DataPlot\Basic\BarPlot.vb"
 
     ' Author:
     ' 
@@ -34,12 +34,12 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 126
-    '    Code Lines: 109 (86.51%)
-    ' Comment Lines: 7 (5.56%)
+    '   Total Lines: 125
+    '    Code Lines: 109 (87.20%)
+    ' Comment Lines: 7 (5.60%)
     '    - Xml Docs: 28.57%
     ' 
-    '   Blank Lines: 10 (7.94%)
+    '   Blank Lines: 9 (7.20%)
     '     File Size: 5.83 KB
 
 
@@ -54,7 +54,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 Imports System.Drawing
 Imports Microsoft.VisualBasic.Imaging
@@ -181,4 +180,3 @@ Public Class BarPlot
         End If
     End Sub
 End Class
-

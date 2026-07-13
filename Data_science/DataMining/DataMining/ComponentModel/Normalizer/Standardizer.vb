@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::92784248a35adb25d0efa274110fe245, Data_science\DataMining\DataMining\ComponentModel\Normalizer\Standardizer.vb"
+﻿#Region "Microsoft.VisualBasic::5d8e8f9f7616aa8fce94ff9e91cc56b4, Data_science\DataMining\DataMining\ComponentModel\Normalizer\Standardizer.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 94.74%
     ' 
     '   Blank Lines: 14 (18.42%)
-    '     File Size: 2.21 KB
+    '     File Size: 2.20 KB
 
 
     ' Class Standardizer
@@ -133,4 +133,3 @@ Public Class Standardizer
     End Function
 
 End Class
-

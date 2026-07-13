@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d80227fee8e7f2894e80a040f8382dfb, Data_science\Mathematica\SignalProcessing\SignalPlotDemo\PlotRenderer.vb"
+﻿#Region "Microsoft.VisualBasic::7660098b65172e6ba945634aaeb93fa5, Data_science\Mathematica\SignalProcessing\SignalPlotDemo\PlotRenderer.vb"
 
     ' Author:
     ' 
@@ -137,4 +137,3 @@ Public Module PlotRenderer
     End Function
 
 End Module
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5bb03c2582b1096f5dc3fb9bbf54ea9c, Data_science\Visualization\DataPlot\Basic\StackedBarPlot.vb"
+﻿#Region "Microsoft.VisualBasic::ec926361891d30f591f0ecf7c3954c36, Data_science\Visualization\DataPlot\Basic\StackedBarPlot.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 30.00%
     ' 
     '   Blank Lines: 11 (6.18%)
-    '     File Size: 8.23 KB
+    '     File Size: 8.22 KB
 
 
     ' Class StackedBarPlot
@@ -233,4 +233,3 @@ Public Class StackedBarPlot
         End If
     End Sub
 End Class
-

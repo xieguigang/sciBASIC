@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c3082f74dfacf565db9ee904126dc0d1, Data_science\Visualization\DataPlot\Engine\GgplotTheme\DefaultTheme.vb"
+﻿#Region "Microsoft.VisualBasic::4a6bd2a32752b16bd1aa56faa606060a, Data_science\Visualization\DataPlot\Engine\GgplotTheme\DefaultTheme.vb"
 
     ' Author:
     ' 
@@ -543,4 +543,3 @@ Namespace GgplotTheme
     End Class
 
 End Namespace
-

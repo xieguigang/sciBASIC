@@ -551,7 +551,7 @@ G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/DataMining/DataMinin
 G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/DataMining/DataMining.NET5.vbproj,ComponentModel/Encoder/Variable/CategoricalEncoder.vb,82,0,14,68,1,1,0,3,0,3180,3.18 KB
 G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/DataMining/DataMining.NET5.vbproj,ComponentModel/Normalizer/Methods.vb,17,9,1,7,1,0,0,0,0,572,572 B
 G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/DataMining/DataMining.NET5.vbproj,ComponentModel/Normalizer/Normalizations.vb,96,17,13,66,1,0,1,5,0,3442,3.44 KB
-G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/DataMining/DataMining.NET5.vbproj,ComponentModel/Normalizer/Standardizer.vb,76,19,14,43,1,2,3,2,0,2205,2.21 KB
+G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/DataMining/DataMining.NET5.vbproj,ComponentModel/Normalizer/Standardizer.vb,76,19,14,43,1,2,3,2,0,2203,2.20 KB
 G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/DataMining/DataMining.NET5.vbproj,ComponentModel/Serialization/EntityVectorFile.vb,73,3,15,55,1,0,2,3,0,2457,2.46 KB
 G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/DataMining/DataMining.NET5.vbproj,DecisionTree/Algorithm.vb,222,34,40,148,1,0,0,8,0,9310,9.31 KB
 G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/DataMining/DataMining.NET5.vbproj,DecisionTree/Attributes.vb,36,3,7,26,1,3,2,2,0,1197,1.20 KB
@@ -592,7 +592,7 @@ G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/DataMining/DataMinin
 G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/DataMining/DataMining.NET5.vbproj,test/My Project/AssemblyInfo.vb,35,15,7,13,0,0,0,0,0,1162,1.16 KB
 G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/DataMining/DataMining.NET5.vbproj,test/My Project/Resources.Designer.vb,63,23,8,32,1,2,0,0,0,2772,2.77 KB
 G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/DataMining/DataMining.NET5.vbproj,test/My Project/Settings.Designer.vb,73,9,13,51,2,2,1,0,0,2960,2.96 KB
-G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/DataMining/DataMining.NET5.vbproj,<project>,11870,2689,1996,7185,161,168,160,349,20,469558,469.56 KB
+G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/DataMining/DataMining.NET5.vbproj,<project>,11870,2689,1996,7185,161,168,160,349,20,469556,469.56 KB
 G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/DBNCode/DBNCode.vbproj,dbn/Attribute.vb,58,34,12,12,1,3,0,5,0,2439,2.44 KB
 G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/DBNCode/DBNCode.vbproj,dbn/BayesNet.vb,592,125,101,366,1,4,8,9,0,25420,25.42 KB
 G:/GCModeller/src/runtime/sciBASIC#/Data_science/DataMining/DBNCode/DBNCode.vbproj,dbn/Configuration.vb,90,3,17,70,1,0,4,4,0,3078,3.08 KB
@@ -908,9 +908,9 @@ G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/DeepLearning/De
 G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/DeepLearning/DeepLearning.NET6.vbproj,CNN/SaveModelCNN.vb,39,3,7,29,1,0,3,0,0,1293,1.29 KB
 G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/DeepLearning/DeepLearning.NET6.vbproj,CNN/Trainer.vb,160,8,28,124,1,0,2,1,0,6611,6.61 KB
 G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/DeepLearning/DeepLearning.NET6.vbproj,CNN/Util.vb,27,6,3,18,1,0,0,1,0,883,883 B
-G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/DeepLearning/DeepLearning.NET6.vbproj,CNN/data/BackPropResult.vb,55,7,11,37,1,4,1,1,0,1701,1.70 KB
+G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/DeepLearning/DeepLearning.NET6.vbproj,CNN/data/BackPropResult.vb,53,7,10,36,1,4,1,1,0,1649,1.65 KB
 G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/DeepLearning/DeepLearning.NET6.vbproj,CNN/data/DataBlock.vb,283,85,42,156,1,6,19,8,0,9950,9.95 KB
-G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/DeepLearning/DeepLearning.NET6.vbproj,CNN/data/OutputDefinition.vb,53,21,9,23,1,4,2,1,0,1469,1.47 KB
+G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/DeepLearning/DeepLearning.NET6.vbproj,CNN/data/OutputDefinition.vb,51,21,8,22,1,4,2,1,0,1417,1.42 KB
 G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/DeepLearning/DeepLearning.NET6.vbproj,CNN/data/TrainResult.vb,47,3,10,34,1,1,1,1,0,1336,1.34 KB
 G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/DeepLearning/DeepLearning.NET6.vbproj,CNN/Layers/Conv2DTransposeLayer.vb,235,15,38,182,1,1,3,2,0,10118,10.12 KB
 G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/DeepLearning/DeepLearning.NET6.vbproj,CNN/Layers/ConvolutionLayer.vb,217,20,41,156,5,1,7,2,0,8762,8.76 KB
@@ -1005,7 +1005,7 @@ G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/DeepLearning/De
 G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/DeepLearning/DeepLearning.NET6.vbproj,Transformer/OutputLayer.vb,32,3,8,21,1,0,2,1,0,1119,1.12 KB
 G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/DeepLearning/DeepLearning.NET6.vbproj,Transformer/TransformerModel.vb,176,10,35,131,1,0,6,2,0,8389,8.39 KB
 G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/DeepLearning/DeepLearning.NET6.vbproj,Transformer/Utils/TextProcessing.vb,110,0,20,90,1,0,3,5,0,5143,5.14 KB
-G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/DeepLearning/DeepLearning.NET6.vbproj,<project>,12496,2364,2265,7867,138,181,307,309,0,454510,454.51 KB
+G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/DeepLearning/DeepLearning.NET6.vbproj,<project>,12492,2364,2263,7865,138,181,307,309,0,454406,454.41 KB
 G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/DeepLearning/test/test.vbproj,Class1.vb,20,15,5,0,0,0,0,0,0,760,760 B
 G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/DeepLearning/test/test.vbproj,Dataset.vb,99,0,18,81,1,1,5,6,0,3206,3.21 KB
 G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/DeepLearning/test/test.vbproj,LNN_Examples.vb,682,93,140,449,2,0,9,0,0,23755,23.75 KB
@@ -1218,14 +1218,14 @@ G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/TensorFlow/Tens
 G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/TensorFlow/TensorFlow.vbproj,AutomaticDifferentiation/Parallel/MatMul.vb,84,6,17,61,1,0,2,1,0,3126,3.13 KB
 G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/TensorFlow/TensorFlow.vbproj,AutomaticDifferentiation/Parallel/Multiply.vb,45,6,9,30,1,0,2,1,0,1380,1.38 KB
 G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/TensorFlow/TensorFlow.vbproj,<project>,2107,454,363,1290,17,11,35,73,31,70117,70.12 KB
-G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/VAE/VAE.vbproj,GraphVAE.vb,931,251,179,501,5,0,7,22,0,31518,31.52 KB
-G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/VAE/VAE.vbproj,MathUtils.vb,210,42,26,142,1,0,0,7,0,6034,6.03 KB
-G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/VAE/VAE.vbproj,GMM/GMM.vb,832,158,115,559,2,7,4,15,0,27510,27.51 KB
-G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/VAE/VAE.vbproj,GMVAE/GMVAE.vb,795,167,109,519,1,4,9,13,0,28735,28.73 KB
-G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/VAE/VAE.vbproj,test/GMMDemo.vb,390,68,57,265,1,0,1,1,0,16133,16.13 KB
-G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/VAE/VAE.vbproj,test/GMVAEDemo.vb,358,52,48,258,1,0,1,0,0,13906,13.91 KB
-G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/VAE/VAE.vbproj,test/Program.vb,145,15,29,101,1,0,1,0,0,5189,5.19 KB
-G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/VAE/VAE.vbproj,<project>,3661,753,563,2345,12,11,23,58,0,129025,129.03 KB
+G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/VAE/VAE.vbproj,GraphVAE.vb,930,251,178,501,5,0,7,22,0,31516,31.52 KB
+G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/VAE/VAE.vbproj,MathUtils.vb,210,42,26,142,1,0,0,7,0,6033,6.03 KB
+G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/VAE/VAE.vbproj,GMM/GMM.vb,832,158,115,559,2,7,4,15,0,27509,27.51 KB
+G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/VAE/VAE.vbproj,GMVAE/GMVAE.vb,795,167,109,519,1,4,9,13,0,28734,28.73 KB
+G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/VAE/VAE.vbproj,test/GMMDemo.vb,390,68,57,265,1,0,1,1,0,16132,16.13 KB
+G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/VAE/VAE.vbproj,test/GMVAEDemo.vb,358,52,48,258,1,0,1,0,0,13905,13.90 KB
+G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/VAE/VAE.vbproj,test/Program.vb,145,15,29,101,1,0,1,0,0,5187,5.19 KB
+G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/VAE/VAE.vbproj,<project>,3660,753,562,2345,12,11,23,58,0,129016,129.02 KB
 G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/VAE/test/test.vbproj,GMMDemo.vb,390,68,57,265,1,0,1,1,0,16132,16.13 KB
 G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/VAE/test/test.vbproj,GMVAEDemo.vb,358,52,48,258,1,0,1,0,0,13905,13.90 KB
 G:/GCModeller/src/runtime/sciBASIC#/Data_science/MachineLearning/VAE/test/test.vbproj,Program.vb,145,15,29,101,1,0,1,0,0,5187,5.19 KB
@@ -1817,10 +1817,10 @@ G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/SignalProcessing/Ma
 G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/SignalProcessing/Signal.IO/signal_io-netcore5.vbproj,SignalsReader.vb,66,0,9,57,1,0,0,1,0,3104,3.10 KB
 G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/SignalProcessing/Signal.IO/signal_io-netcore5.vbproj,SignalsWriter.vb,160,14,27,119,1,0,0,2,0,8015,8.02 KB
 G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/SignalProcessing/Signal.IO/signal_io-netcore5.vbproj,<project>,226,14,36,176,2,0,0,3,0,11119,11.12 KB
-G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/SignalProcessing/SignalPlotDemo/SignalPlotDemo.vbproj,MainForm.vb,753,40,129,584,1,0,42,4,0,30415,30.41 KB
-G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/SignalProcessing/SignalPlotDemo/SignalPlotDemo.vbproj,PlotRenderer.vb,86,24,10,52,1,0,0,2,0,3513,3.51 KB
-G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/SignalProcessing/SignalPlotDemo/SignalPlotDemo.vbproj,Program.vb,17,0,4,13,1,0,2,0,0,368,368 B
-G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/SignalProcessing/SignalPlotDemo/SignalPlotDemo.vbproj,<project>,856,64,143,649,3,0,44,6,0,34296,34.30 KB
+G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/SignalProcessing/SignalPlotDemo/SignalPlotDemo.vbproj,MainForm.vb,753,40,129,584,1,0,42,4,0,30413,30.41 KB
+G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/SignalProcessing/SignalPlotDemo/SignalPlotDemo.vbproj,PlotRenderer.vb,86,24,10,52,1,0,0,2,0,3511,3.51 KB
+G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/SignalProcessing/SignalPlotDemo/SignalPlotDemo.vbproj,Program.vb,17,0,4,13,1,0,2,0,0,366,366 B
+G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/SignalProcessing/SignalPlotDemo/SignalPlotDemo.vbproj,<project>,856,64,143,649,3,0,44,6,0,34290,34.29 KB
 G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/SignalProcessing/SignalProcessing/signalprocessing-netcore5.vbproj,Alignment.vb,83,9,10,64,1,0,0,3,0,3362,3.36 KB
 G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/SignalProcessing/SignalProcessing/signalprocessing-netcore5.vbproj,ColorSpectrum.vb,69,10,7,52,1,0,0,1,0,2106,2.11 KB
 G:/GCModeller/src/runtime/sciBASIC#/Data_science/Mathematica/SignalProcessing/SignalProcessing/signalprocessing-netcore5.vbproj,Extensions.vb,107,51,10,46,1,0,0,6,0,5404,5.40 KB
@@ -1939,40 +1939,40 @@ G:/GCModeller/src/runtime/sciBASIC#/Data_science/NLP/NLP.NET.vbproj,<project>,22
 G:/GCModeller/src/runtime/sciBASIC#/Data_science/NLP/test/test.vbproj,Module1.vb,86,13,10,63,1,0,2,0,0,4215,4.21 KB
 G:/GCModeller/src/runtime/sciBASIC#/Data_science/NLP/test/test.vbproj,Program.vb,47,4,8,35,1,0,3,0,0,1753,1.75 KB
 G:/GCModeller/src/runtime/sciBASIC#/Data_science/NLP/test/test.vbproj,<project>,133,17,18,98,2,0,5,0,0,5968,5.97 KB
-G:/GCModeller/src/runtime/sciBASIC#/Data_science/Visualization/DataPlot/DataPlot.vbproj,Extensions.vb,14,0,3,11,1,0,1,0,0,451,451 B
-G:/GCModeller/src/runtime/sciBASIC#/Data_science/Visualization/DataPlot/DataPlot.vbproj,Advanced/BoxGroup.vb,9,1,2,6,1,3,0,0,0,233,233 B
-G:/GCModeller/src/runtime/sciBASIC#/Data_science/Visualization/DataPlot/DataPlot.vbproj,Advanced/BoxPlot.vb,143,9,12,122,1,4,2,1,0,6666,6.67 KB
-G:/GCModeller/src/runtime/sciBASIC#/Data_science/Visualization/DataPlot/DataPlot.vbproj,Advanced/BubblePlot.vb,128,15,15,98,2,6,3,1,0,5528,5.53 KB
-G:/GCModeller/src/runtime/sciBASIC#/Data_science/Visualization/DataPlot/DataPlot.vbproj,Advanced/ChordPlot.vb,186,22,22,142,2,13,3,0,0,7989,7.99 KB
-G:/GCModeller/src/runtime/sciBASIC#/Data_science/Visualization/DataPlot/DataPlot.vbproj,Advanced/HeatmapPlot.vb,199,8,22,169,2,7,2,3,0,7945,7.95 KB
-G:/GCModeller/src/runtime/sciBASIC#/Data_science/Visualization/DataPlot/DataPlot.vbproj,Advanced/JitterPlot.vb,123,14,11,98,1,7,3,0,0,5397,5.40 KB
-G:/GCModeller/src/runtime/sciBASIC#/Data_science/Visualization/DataPlot/DataPlot.vbproj,Advanced/PiePlot.vb,96,5,12,79,1,8,2,0,0,3637,3.64 KB
-G:/GCModeller/src/runtime/sciBASIC#/Data_science/Visualization/DataPlot/DataPlot.vbproj,Advanced/RadarPlot.vb,142,16,14,112,1,7,2,0,0,5638,5.64 KB
-G:/GCModeller/src/runtime/sciBASIC#/Data_science/Visualization/DataPlot/DataPlot.vbproj,Advanced/RosePlot.vb,109,11,11,87,1,8,2,0,0,4345,4.34 KB
-G:/GCModeller/src/runtime/sciBASIC#/Data_science/Visualization/DataPlot/DataPlot.vbproj,Advanced/TreemapPlot.vb,203,26,27,150,2,11,6,2,0,8399,8.40 KB
-G:/GCModeller/src/runtime/sciBASIC#/Data_science/Visualization/DataPlot/DataPlot.vbproj,Advanced/ViolinPlot.vb,111,5,16,90,1,2,2,1,0,4487,4.49 KB
-G:/GCModeller/src/runtime/sciBASIC#/Data_science/Visualization/DataPlot/DataPlot.vbproj,Advanced/SankeyPlot/SankeyLink.vb,11,0,4,7,1,4,0,0,0,228,228 B
-G:/GCModeller/src/runtime/sciBASIC#/Data_science/Visualization/DataPlot/DataPlot.vbproj,Advanced/SankeyPlot/SankeyNode.vb,18,1,2,15,1,12,0,0,0,596,596 B
-G:/GCModeller/src/runtime/sciBASIC#/Data_science/Visualization/DataPlot/DataPlot.vbproj,Advanced/SankeyPlot/SankeyPlot.vb,130,11,15,104,1,2,2,0,0,5617,5.62 KB
-G:/GCModeller/src/runtime/sciBASIC#/Data_science/Visualization/DataPlot/DataPlot.vbproj,Basic/AreaPlot.vb,111,10,13,88,1,4,2,1,0,4536,4.54 KB
-G:/GCModeller/src/runtime/sciBASIC#/Data_science/Visualization/DataPlot/DataPlot.vbproj,Basic/BarPlot.vb,126,7,10,109,1,6,2,0,0,5831,5.83 KB
-G:/GCModeller/src/runtime/sciBASIC#/Data_science/Visualization/DataPlot/DataPlot.vbproj,Basic/HistogramPlot.vb,74,2,11,61,1,5,2,0,0,2552,2.55 KB
-G:/GCModeller/src/runtime/sciBASIC#/Data_science/Visualization/DataPlot/DataPlot.vbproj,Basic/LinePlot.vb,70,2,9,59,1,0,2,0,0,2567,2.57 KB
-G:/GCModeller/src/runtime/sciBASIC#/Data_science/Visualization/DataPlot/DataPlot.vbproj,Basic/ScatterPlot.vb,78,8,9,61,1,0,2,0,0,3071,3.07 KB
-G:/GCModeller/src/runtime/sciBASIC#/Data_science/Visualization/DataPlot/DataPlot.vbproj,Basic/StackedAreaPlot.vb,141,12,17,112,1,7,2,1,0,5820,5.82 KB
-G:/GCModeller/src/runtime/sciBASIC#/Data_science/Visualization/DataPlot/DataPlot.vbproj,Basic/StackedBarPlot.vb,178,10,11,157,1,6,2,0,0,8227,8.23 KB
-G:/GCModeller/src/runtime/sciBASIC#/Data_science/Visualization/DataPlot/DataPlot.vbproj,Engine/AxisSide.vb,8,1,1,6,1,0,0,0,0,108,108 B
-G:/GCModeller/src/runtime/sciBASIC#/Data_science/Visualization/DataPlot/DataPlot.vbproj,Engine/MarkerShape.vb,11,1,1,9,1,0,0,0,0,154,154 B
-G:/GCModeller/src/runtime/sciBASIC#/Data_science/Visualization/DataPlot/DataPlot.vbproj,Engine/PlotEngine.vb,430,57,40,333,2,14,11,6,0,18752,18.75 KB
-G:/GCModeller/src/runtime/sciBASIC#/Data_science/Visualization/DataPlot/DataPlot.vbproj,Engine/PlotTheme.vb,180,20,16,144,1,32,0,6,0,7796,7.80 KB
-G:/GCModeller/src/runtime/sciBASIC#/Data_science/Visualization/DataPlot/DataPlot.vbproj,Engine/Series.vb,15,1,3,11,1,7,0,0,0,490,490 B
-G:/GCModeller/src/runtime/sciBASIC#/Data_science/Visualization/DataPlot/DataPlot.vbproj,Engine/GgplotTheme/CssThemeMapper.vb,672,142,87,443,2,2,8,11,0,28467,28.47 KB
-G:/GCModeller/src/runtime/sciBASIC#/Data_science/Visualization/DataPlot/DataPlot.vbproj,Engine/GgplotTheme/DefaultTheme.vb,489,124,92,273,1,0,1,6,0,20432,20.43 KB
-G:/GCModeller/src/runtime/sciBASIC#/Data_science/Visualization/DataPlot/DataPlot.vbproj,Engine/GgplotTheme/Elements.vb,1075,113,98,864,9,41,13,22,0,43039,43.04 KB
-G:/GCModeller/src/runtime/sciBASIC#/Data_science/Visualization/DataPlot/DataPlot.vbproj,Engine/GgplotTheme/LayoutCalculator.vb,637,173,89,375,5,41,1,21,0,30212,30.21 KB
-G:/GCModeller/src/runtime/sciBASIC#/Data_science/Visualization/DataPlot/DataPlot.vbproj,Engine/GgplotTheme/Theme.vb,1270,183,111,976,4,29,8,23,0,62493,62.49 KB
-G:/GCModeller/src/runtime/sciBASIC#/Data_science/Visualization/DataPlot/DataPlot.vbproj,Engine/GgplotTheme/Units.vb,642,103,77,462,5,12,8,31,0,26533,26.53 KB
-G:/GCModeller/src/runtime/sciBASIC#/Data_science/Visualization/DataPlot/DataPlot.vbproj,<project>,7829,1113,883,5833,58,300,94,136,0,338236,338.24 KB
+G:/GCModeller/src/runtime/sciBASIC#/Data_science/Visualization/DataPlot/DataPlot.vbproj,Extensions.vb,14,0,3,11,1,0,1,0,0,449,449 B
+G:/GCModeller/src/runtime/sciBASIC#/Data_science/Visualization/DataPlot/DataPlot.vbproj,Advanced/BoxGroup.vb,8,1,1,6,1,3,0,0,0,229,229 B
+G:/GCModeller/src/runtime/sciBASIC#/Data_science/Visualization/DataPlot/DataPlot.vbproj,Advanced/BoxPlot.vb,142,9,11,122,1,4,2,1,0,6662,6.66 KB
+G:/GCModeller/src/runtime/sciBASIC#/Data_science/Visualization/DataPlot/DataPlot.vbproj,Advanced/BubblePlot.vb,128,15,15,98,2,6,3,1,0,5526,5.53 KB
+G:/GCModeller/src/runtime/sciBASIC#/Data_science/Visualization/DataPlot/DataPlot.vbproj,Advanced/ChordPlot.vb,186,22,22,142,2,13,3,0,0,7987,7.99 KB
+G:/GCModeller/src/runtime/sciBASIC#/Data_science/Visualization/DataPlot/DataPlot.vbproj,Advanced/HeatmapPlot.vb,196,8,19,169,2,7,2,3,0,7937,7.94 KB
+G:/GCModeller/src/runtime/sciBASIC#/Data_science/Visualization/DataPlot/DataPlot.vbproj,Advanced/JitterPlot.vb,123,14,11,98,1,7,3,0,0,5395,5.39 KB
+G:/GCModeller/src/runtime/sciBASIC#/Data_science/Visualization/DataPlot/DataPlot.vbproj,Advanced/PiePlot.vb,94,5,10,79,1,8,2,0,0,3631,3.63 KB
+G:/GCModeller/src/runtime/sciBASIC#/Data_science/Visualization/DataPlot/DataPlot.vbproj,Advanced/RadarPlot.vb,142,16,14,112,1,7,2,0,0,5636,5.64 KB
+G:/GCModeller/src/runtime/sciBASIC#/Data_science/Visualization/DataPlot/DataPlot.vbproj,Advanced/RosePlot.vb,109,11,11,87,1,8,2,0,0,4343,4.34 KB
+G:/GCModeller/src/runtime/sciBASIC#/Data_science/Visualization/DataPlot/DataPlot.vbproj,Advanced/TreemapPlot.vb,203,26,27,150,2,11,6,2,0,8397,8.40 KB
+G:/GCModeller/src/runtime/sciBASIC#/Data_science/Visualization/DataPlot/DataPlot.vbproj,Advanced/ViolinPlot.vb,109,5,14,90,1,2,2,1,0,4481,4.48 KB
+G:/GCModeller/src/runtime/sciBASIC#/Data_science/Visualization/DataPlot/DataPlot.vbproj,Advanced/SankeyPlot/SankeyLink.vb,8,0,1,7,1,4,0,0,0,220,220 B
+G:/GCModeller/src/runtime/sciBASIC#/Data_science/Visualization/DataPlot/DataPlot.vbproj,Advanced/SankeyPlot/SankeyNode.vb,17,1,1,15,1,12,0,0,0,592,592 B
+G:/GCModeller/src/runtime/sciBASIC#/Data_science/Visualization/DataPlot/DataPlot.vbproj,Advanced/SankeyPlot/SankeyPlot.vb,130,11,15,104,1,2,2,0,0,5615,5.62 KB
+G:/GCModeller/src/runtime/sciBASIC#/Data_science/Visualization/DataPlot/DataPlot.vbproj,Basic/AreaPlot.vb,111,10,13,88,1,4,2,1,0,4534,4.53 KB
+G:/GCModeller/src/runtime/sciBASIC#/Data_science/Visualization/DataPlot/DataPlot.vbproj,Basic/BarPlot.vb,125,7,9,109,1,6,2,0,0,5827,5.83 KB
+G:/GCModeller/src/runtime/sciBASIC#/Data_science/Visualization/DataPlot/DataPlot.vbproj,Basic/HistogramPlot.vb,72,2,9,61,1,5,2,0,0,2546,2.55 KB
+G:/GCModeller/src/runtime/sciBASIC#/Data_science/Visualization/DataPlot/DataPlot.vbproj,Basic/LinePlot.vb,69,2,8,59,1,0,2,0,0,2563,2.56 KB
+G:/GCModeller/src/runtime/sciBASIC#/Data_science/Visualization/DataPlot/DataPlot.vbproj,Basic/ScatterPlot.vb,78,8,9,61,1,0,2,0,0,3069,3.07 KB
+G:/GCModeller/src/runtime/sciBASIC#/Data_science/Visualization/DataPlot/DataPlot.vbproj,Basic/StackedAreaPlot.vb,141,12,17,112,1,7,2,1,0,5818,5.82 KB
+G:/GCModeller/src/runtime/sciBASIC#/Data_science/Visualization/DataPlot/DataPlot.vbproj,Basic/StackedBarPlot.vb,178,10,11,157,1,6,2,0,0,8225,8.22 KB
+G:/GCModeller/src/runtime/sciBASIC#/Data_science/Visualization/DataPlot/DataPlot.vbproj,Engine/AxisSide.vb,7,1,0,6,1,0,0,0,0,106,106 B
+G:/GCModeller/src/runtime/sciBASIC#/Data_science/Visualization/DataPlot/DataPlot.vbproj,Engine/MarkerShape.vb,10,1,0,9,1,0,0,0,0,152,152 B
+G:/GCModeller/src/runtime/sciBASIC#/Data_science/Visualization/DataPlot/DataPlot.vbproj,Engine/PlotEngine.vb,428,57,38,333,2,14,11,6,0,18746,18.75 KB
+G:/GCModeller/src/runtime/sciBASIC#/Data_science/Visualization/DataPlot/DataPlot.vbproj,Engine/PlotTheme.vb,179,20,15,144,1,32,0,6,0,7792,7.79 KB
+G:/GCModeller/src/runtime/sciBASIC#/Data_science/Visualization/DataPlot/DataPlot.vbproj,Engine/Series.vb,13,1,1,11,1,7,0,0,0,484,484 B
+G:/GCModeller/src/runtime/sciBASIC#/Data_science/Visualization/DataPlot/DataPlot.vbproj,Engine/GgplotTheme/CssThemeMapper.vb,672,142,87,443,2,2,8,11,0,28465,28.46 KB
+G:/GCModeller/src/runtime/sciBASIC#/Data_science/Visualization/DataPlot/DataPlot.vbproj,Engine/GgplotTheme/DefaultTheme.vb,489,124,92,273,1,0,1,6,0,20430,20.43 KB
+G:/GCModeller/src/runtime/sciBASIC#/Data_science/Visualization/DataPlot/DataPlot.vbproj,Engine/GgplotTheme/Elements.vb,1075,113,98,864,9,41,13,22,0,43037,43.04 KB
+G:/GCModeller/src/runtime/sciBASIC#/Data_science/Visualization/DataPlot/DataPlot.vbproj,Engine/GgplotTheme/LayoutCalculator.vb,637,173,89,375,5,41,1,21,0,30210,30.21 KB
+G:/GCModeller/src/runtime/sciBASIC#/Data_science/Visualization/DataPlot/DataPlot.vbproj,Engine/GgplotTheme/Theme.vb,1270,183,111,976,4,29,8,23,0,62491,62.49 KB
+G:/GCModeller/src/runtime/sciBASIC#/Data_science/Visualization/DataPlot/DataPlot.vbproj,Engine/GgplotTheme/Units.vb,642,103,77,462,5,12,8,31,0,26531,26.53 KB
+G:/GCModeller/src/runtime/sciBASIC#/Data_science/Visualization/DataPlot/DataPlot.vbproj,<project>,7805,1113,859,5833,58,300,94,136,0,338126,338.13 KB
 G:/GCModeller/src/runtime/sciBASIC#/Data_science/Visualization/Plots/plots-netcore5.vbproj,FillPolygons.vb,123,0,19,104,2,3,3,0,0,4925,4.92 KB
 G:/GCModeller/src/runtime/sciBASIC#/Data_science/Visualization/Plots/plots-netcore5.vbproj,ImageData.vb,100,0,13,87,1,0,0,4,0,3932,3.93 KB
 G:/GCModeller/src/runtime/sciBASIC#/Data_science/Visualization/Plots/plots-netcore5.vbproj,PlotTypes.vb,5,0,0,5,1,0,0,0,0,77,77 B
@@ -2101,7 +2101,7 @@ G:/GCModeller/src/runtime/sciBASIC#/Data_science/Visualization/test/test5.vbproj
 G:/GCModeller/src/runtime/sciBASIC#/Data_science/Visualization/test/test5.vbproj,ColorLegendTest.vb,23,0,6,17,1,0,1,0,0,842,842 B
 G:/GCModeller/src/runtime/sciBASIC#/Data_science/Visualization/test/test5.vbproj,CSSTest.vb,10,0,3,7,1,0,1,0,0,288,288 B
 G:/GCModeller/src/runtime/sciBASIC#/Data_science/Visualization/test/test5.vbproj,DensityPlotTest.vb,21,0,3,18,1,0,1,0,0,734,734 B
-G:/GCModeller/src/runtime/sciBASIC#/Data_science/Visualization/test/test5.vbproj,Examples.vb,225,14,16,195,1,0,10,1,0,9727,9.73 KB
+G:/GCModeller/src/runtime/sciBASIC#/Data_science/Visualization/test/test5.vbproj,Examples.vb,225,14,16,195,1,0,10,1,0,9725,9.72 KB
 G:/GCModeller/src/runtime/sciBASIC#/Data_science/Visualization/test/test5.vbproj,FuzzyCmeansVisualize.vb,123,14,19,90,1,0,4,1,0,4296,4.30 KB
 G:/GCModeller/src/runtime/sciBASIC#/Data_science/Visualization/test/test5.vbproj,heatmapPlot.vb,56,4,13,39,1,0,2,0,0,2055,2.06 KB
 G:/GCModeller/src/runtime/sciBASIC#/Data_science/Visualization/test/test5.vbproj,ImageDataPlots.vb,39,1,7,31,1,0,3,0,0,1251,1.25 KB
@@ -2109,7 +2109,7 @@ G:/GCModeller/src/runtime/sciBASIC#/Data_science/Visualization/test/test5.vbproj
 G:/GCModeller/src/runtime/sciBASIC#/Data_science/Visualization/test/test5.vbproj,OutlineTest.vb,53,1,11,41,1,0,2,0,0,1975,1.98 KB
 G:/GCModeller/src/runtime/sciBASIC#/Data_science/Visualization/test/test5.vbproj,PCAPlotTest.vb,32,1,8,23,1,0,2,1,0,1446,1.45 KB
 G:/GCModeller/src/runtime/sciBASIC#/Data_science/Visualization/test/test5.vbproj,PieChartTest.vb,183,24,40,119,1,0,5,0,0,7518,7.52 KB
-G:/GCModeller/src/runtime/sciBASIC#/Data_science/Visualization/test/test5.vbproj,Program.vb,9,0,2,7,1,0,1,0,0,181,181 B
+G:/GCModeller/src/runtime/sciBASIC#/Data_science/Visualization/test/test5.vbproj,Program.vb,9,0,2,7,1,0,1,0,0,179,179 B
 G:/GCModeller/src/runtime/sciBASIC#/Data_science/Visualization/test/test5.vbproj,ProgramXXX.vb,18,0,5,13,1,0,2,0,0,562,562 B
 G:/GCModeller/src/runtime/sciBASIC#/Data_science/Visualization/test/test5.vbproj,RegressionPlotTest.vb,15,0,3,12,1,0,1,0,0,596,596 B
 G:/GCModeller/src/runtime/sciBASIC#/Data_science/Visualization/test/test5.vbproj,ROCplotTest.vb,16,2,4,10,1,0,1,0,0,945,945 B
@@ -2125,8 +2125,8 @@ G:/GCModeller/src/runtime/sciBASIC#/Data_science/Visualization/test/test5.vbproj
 G:/GCModeller/src/runtime/sciBASIC#/Data_science/Visualization/test/test5.vbproj,ChartingBase.Test/My Project/AssemblyInfo.vb,35,15,7,13,0,0,0,0,0,1169,1.17 KB
 G:/GCModeller/src/runtime/sciBASIC#/Data_science/Visualization/test/test5.vbproj,ChartingBase.Test/My Project/Resources.Designer.vb,63,23,8,32,1,2,0,0,0,2781,2.78 KB
 G:/GCModeller/src/runtime/sciBASIC#/Data_science/Visualization/test/test5.vbproj,ChartingBase.Test/My Project/Settings.Designer.vb,73,9,13,51,2,2,1,0,0,2980,2.98 KB
-G:/GCModeller/src/runtime/sciBASIC#/Data_science/Visualization/test/test5.vbproj,Examples/ChartExamples.vb,303,47,22,234,1,0,11,0,0,14599,14.60 KB
-G:/GCModeller/src/runtime/sciBASIC#/Data_science/Visualization/test/test5.vbproj,<project>,2093,277,375,1441,28,4,73,3,0,85755,85.75 KB
+G:/GCModeller/src/runtime/sciBASIC#/Data_science/Visualization/test/test5.vbproj,Examples/ChartExamples.vb,303,47,22,234,1,0,11,0,0,14597,14.60 KB
+G:/GCModeller/src/runtime/sciBASIC#/Data_science/Visualization/test/test5.vbproj,<project>,2093,277,375,1441,28,4,73,3,0,85749,85.75 KB
 G:/GCModeller/src/runtime/sciBASIC#/Data_science/Visualization/Visualization/data_visualize-netcore5.vbproj,CorrelationNetwork.vb,192,13,29,150,1,0,0,5,0,7153,7.15 KB
 G:/GCModeller/src/runtime/sciBASIC#/Data_science/Visualization/Visualization/data_visualize-netcore5.vbproj,Extensions.vb,101,17,10,74,1,0,0,6,0,4071,4.07 KB
 G:/GCModeller/src/runtime/sciBASIC#/Data_science/Visualization/Visualization/data_visualize-netcore5.vbproj,NeuronNetworkExtensions.vb,104,14,9,81,1,0,0,2,0,4063,4.06 KB
@@ -4148,4 +4148,4 @@ G:/GCModeller/src/runtime/sciBASIC#/www/Microsoft.VisualBasic.Webservices.Bing/B
 G:/GCModeller/src/runtime/sciBASIC#/www/Microsoft.VisualBasic.Webservices.Bing/Bing.NET5.vbproj,test/My Project/Resources.Designer.vb,63,23,8,32,1,2,0,0,0,2781,2.78 KB
 G:/GCModeller/src/runtime/sciBASIC#/www/Microsoft.VisualBasic.Webservices.Bing/Bing.NET5.vbproj,test/My Project/Settings.Designer.vb,73,9,13,51,2,2,1,0,0,2966,2.97 KB
 G:/GCModeller/src/runtime/sciBASIC#/www/Microsoft.VisualBasic.Webservices.Bing/Bing.NET5.vbproj,<project>,1040,152,152,736,22,51,7,27,0,38473,38.47 KB
-../,<root>,1177714,265676,169536,742502,11470,15952,17832,29606,1464,45872520,45.87 MB
+../,<root>,1177656,265676,169482,742498,11470,15952,17832,29606,1464,45872046,45.87 MB

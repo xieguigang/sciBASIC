@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4900085511133bc13845cb221232571b, Data_science\Visualization\DataPlot\Advanced\RadarPlot.vb"
+﻿#Region "Microsoft.VisualBasic::f98338b712e01ceeb0d471b5359047c4, Data_science\Visualization\DataPlot\Advanced\RadarPlot.vb"
 
     ' Author:
     ' 
@@ -197,4 +197,3 @@ Public Class RadarPlot
         End If
     End Sub
 End Class
-

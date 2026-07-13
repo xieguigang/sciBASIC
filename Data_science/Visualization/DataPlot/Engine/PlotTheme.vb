@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::298f52a4a2bf8a51569212a072b2cc70, Data_science\Visualization\DataPlot\Engine\PlotTheme.vb"
+﻿#Region "Microsoft.VisualBasic::1fdf349319bfcdeee71cad82865a996b, Data_science\Visualization\DataPlot\Engine\PlotTheme.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 180
-    '    Code Lines: 144 (80.00%)
-    ' Comment Lines: 20 (11.11%)
+    '   Total Lines: 179
+    '    Code Lines: 144 (80.45%)
+    ' Comment Lines: 20 (11.17%)
     '    - Xml Docs: 50.00%
     ' 
-    '   Blank Lines: 16 (8.89%)
-    '     File Size: 7.80 KB
+    '   Blank Lines: 15 (8.38%)
+    '     File Size: 7.79 KB
 
 
     ' Class PlotTheme
@@ -55,7 +55,6 @@
     ' 
     '     Function: Clone, Dark, Grayscale, Light, Nature
     '               Science
-    ' 
     ' 
     ' /********************************************************************************/
 
@@ -240,5 +239,3 @@ Public Class PlotTheme
     End Function
 
 End Class
-
-

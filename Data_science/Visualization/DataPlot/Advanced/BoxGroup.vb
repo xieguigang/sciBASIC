@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::69c667e12913986627a3f9bd067fad21, Data_science\Visualization\DataPlot\Advanced\BoxGroup.vb"
+﻿#Region "Microsoft.VisualBasic::2e0cba2f95b0fd5903b5fbeac2953a2a, Data_science\Visualization\DataPlot\Advanced\BoxGroup.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 9
-    '    Code Lines: 6 (66.67%)
-    ' Comment Lines: 1 (11.11%)
+    '   Total Lines: 8
+    '    Code Lines: 6 (75.00%)
+    ' Comment Lines: 1 (12.50%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 2 (22.22%)
-    '     File Size: 233 B
+    '   Blank Lines: 1 (12.50%)
+    '     File Size: 229 B
 
 
     ' Class BoxGroup
@@ -51,7 +51,6 @@
 
 #End Region
 
-
 Imports System.Drawing
 
 ''' <summary>盒须图分组</summary>
@@ -60,4 +59,3 @@ Public Class BoxGroup
     Public Property Data As Double() = {}
     Public Property Color As Color? = Nothing
 End Class
-

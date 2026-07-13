@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::191f14f623b204be472313477086d44c, Data_science\Visualization\DataPlot\Advanced\SankeyPlot\SankeyNode.vb"
+﻿#Region "Microsoft.VisualBasic::b174d8e5f8b727d923781bdd14dbd4c0, Data_science\Visualization\DataPlot\Advanced\SankeyPlot\SankeyNode.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 18
-    '    Code Lines: 15 (83.33%)
-    ' Comment Lines: 1 (5.56%)
+    '   Total Lines: 17
+    '    Code Lines: 15 (88.24%)
+    ' Comment Lines: 1 (5.88%)
     '    - Xml Docs: 0.00%
     ' 
-    '   Blank Lines: 2 (11.11%)
-    '     File Size: 596 B
+    '   Blank Lines: 1 (5.88%)
+    '     File Size: 592 B
 
 
     ' Class SankeyNode
@@ -52,7 +52,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 Imports System.Drawing
 
@@ -71,4 +70,3 @@ Public Class SankeyNode
     Public Property OutOffsets As New Dictionary(Of String, Double)()
     Public Property InOffsets As New Dictionary(Of String, Double)()
 End Class
-

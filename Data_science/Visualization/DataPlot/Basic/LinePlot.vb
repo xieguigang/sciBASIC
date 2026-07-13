@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fb49b96c1dbf263a4996339ca94d7315, Data_science\Visualization\DataPlot\Basic\LinePlot.vb"
+﻿#Region "Microsoft.VisualBasic::765c22a7ca391402fdad64e7b17d15a1, Data_science\Visualization\DataPlot\Basic\LinePlot.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 70
-    '    Code Lines: 59 (84.29%)
-    ' Comment Lines: 2 (2.86%)
+    '   Total Lines: 69
+    '    Code Lines: 59 (85.51%)
+    ' Comment Lines: 2 (2.90%)
     '    - Xml Docs: 50.00%
     ' 
-    '   Blank Lines: 9 (12.86%)
-    '     File Size: 2.57 KB
+    '   Blank Lines: 8 (11.59%)
+    '     File Size: 2.56 KB
 
 
     ' Class LinePlot
@@ -51,7 +51,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 Imports System.Drawing
 
@@ -122,4 +121,3 @@ Public Class LinePlot
         DrawLegend(seriesList)
     End Sub
 End Class
-

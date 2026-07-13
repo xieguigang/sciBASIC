@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2b1fd3638e317f0f8c19a8ff19215610, Data_science\Visualization\DataPlot\Advanced\BubblePlot.vb"
+﻿#Region "Microsoft.VisualBasic::103023f789e44e493262d28faf30c3e4, Data_science\Visualization\DataPlot\Advanced\BubblePlot.vb"
 
     ' Author:
     ' 
@@ -189,4 +189,3 @@ Public Class BubblePlot
         Next
     End Sub
 End Class
-

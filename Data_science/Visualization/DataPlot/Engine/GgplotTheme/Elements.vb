@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::20f4daaaf1608ac991ae6abaabd3adad, Data_science\Visualization\DataPlot\Engine\GgplotTheme\Elements.vb"
+﻿#Region "Microsoft.VisualBasic::56787d94de4d3446455a473519454c11, Data_science\Visualization\DataPlot\Engine\GgplotTheme\Elements.vb"
 
     ' Author:
     ' 
@@ -1189,4 +1189,3 @@ Namespace GgplotTheme
     End Module
 
 End Namespace
-

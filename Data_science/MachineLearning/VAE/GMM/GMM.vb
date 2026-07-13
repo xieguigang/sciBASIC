@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7a9342e4bb330ddce0bf445d2ed63e51, Data_science\MachineLearning\VAE\GMM\GMM.vb"
+﻿#Region "Microsoft.VisualBasic::8880bc7d125dcda0e99bcb4ad1aa0094, Data_science\MachineLearning\VAE\GMM\GMM.vb"
 
     ' Author:
     ' 
@@ -899,4 +899,3 @@ Public Class GaussianMixtureModel
 #End Region
 
 End Class
-

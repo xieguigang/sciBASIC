@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::af0594b022e520e3b40c2576aa025d5b, Data_science\Mathematica\SignalProcessing\SignalPlotDemo\Program.vb"
+﻿#Region "Microsoft.VisualBasic::5b643eba91e6fb84053e87a0330a4e1a, Data_science\Mathematica\SignalProcessing\SignalPlotDemo\Program.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 0.00%
     ' 
     '   Blank Lines: 4 (23.53%)
-    '     File Size: 368 B
+    '     File Size: 366 B
 
 
     ' Module Program
@@ -69,4 +69,3 @@ Module Program
     End Sub
 
 End Module
-

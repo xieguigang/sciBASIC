@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e976885da846d6cbf70a635b80d74eb9, Data_science\Visualization\DataPlot\Engine\GgplotTheme\LayoutCalculator.vb"
+﻿#Region "Microsoft.VisualBasic::86029cc47c40e85cae093fd95b0b40e1, Data_science\Visualization\DataPlot\Engine\GgplotTheme\LayoutCalculator.vb"
 
     ' Author:
     ' 
@@ -721,4 +721,3 @@ Namespace GgplotTheme
     End Class
 
 End Namespace
-

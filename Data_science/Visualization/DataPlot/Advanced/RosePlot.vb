@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d47a44b7329833b744adc961f5a7a05e, Data_science\Visualization\DataPlot\Advanced\RosePlot.vb"
+﻿#Region "Microsoft.VisualBasic::508d661bbc74992a8c0509e539d7b75b, Data_science\Visualization\DataPlot\Advanced\RosePlot.vb"
 
     ' Author:
     ' 
@@ -164,4 +164,3 @@ Public Class RosePlot
         End If
     End Sub
 End Class
-

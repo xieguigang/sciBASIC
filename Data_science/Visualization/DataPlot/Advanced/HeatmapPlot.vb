@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2b40d83bdbe2cd1b7ed6def83bea3b0f, Data_science\Visualization\DataPlot\Advanced\HeatmapPlot.vb"
+﻿#Region "Microsoft.VisualBasic::7c9be341af00a354f6d087e5697a423e, Data_science\Visualization\DataPlot\Advanced\HeatmapPlot.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 199
-    '    Code Lines: 169 (84.92%)
-    ' Comment Lines: 8 (4.02%)
+    '   Total Lines: 196
+    '    Code Lines: 169 (86.22%)
+    ' Comment Lines: 8 (4.08%)
     '    - Xml Docs: 12.50%
     ' 
-    '   Blank Lines: 22 (11.06%)
-    '     File Size: 7.95 KB
+    '   Blank Lines: 19 (9.69%)
+    '     File Size: 7.94 KB
 
 
     ' Class HeatmapPlot
@@ -61,12 +61,9 @@
     ' 
     '     Function: Brightness, GetColor, LerpPalette
     ' 
-    ' 
     ' /********************************************************************************/
 
 #End Region
-
-
 
 Imports System.Drawing
 Imports Microsoft.VisualBasic.Imaging
@@ -264,5 +261,3 @@ Public Class HeatmapPlot
         Return (0.299 * c.R + 0.587 * c.G + 0.114 * c.B) / 255
     End Function
 End Class
-
-

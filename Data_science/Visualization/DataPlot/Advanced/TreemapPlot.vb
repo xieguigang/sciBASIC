@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::15defceca8888caa41b09928b645316f, Data_science\Visualization\DataPlot\Advanced\TreemapPlot.vb"
+﻿#Region "Microsoft.VisualBasic::46389c0f32e829fd34d327bc60338539, Data_science\Visualization\DataPlot\Advanced\TreemapPlot.vb"
 
     ' Author:
     ' 
@@ -265,4 +265,3 @@ Public Class TreemapPlot
         End Using
     End Sub
 End Class
-

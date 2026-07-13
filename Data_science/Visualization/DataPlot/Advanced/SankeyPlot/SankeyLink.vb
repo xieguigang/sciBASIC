@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e06d23b0840fe3e9027248f4fd0b05d8, Data_science\Visualization\DataPlot\Advanced\SankeyPlot\SankeyLink.vb"
+﻿#Region "Microsoft.VisualBasic::ea8162d54ace54f81f48fa5863ce96e3, Data_science\Visualization\DataPlot\Advanced\SankeyPlot\SankeyLink.vb"
 
     ' Author:
     ' 
@@ -34,24 +34,22 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 11
-    '    Code Lines: 7 (63.64%)
+    '   Total Lines: 8
+    '    Code Lines: 7 (87.50%)
     ' Comment Lines: 0 (0.00%)
     '    - Xml Docs: 0.00%
     ' 
-    '   Blank Lines: 4 (36.36%)
-    '     File Size: 228 B
+    '   Blank Lines: 1 (12.50%)
+    '     File Size: 220 B
 
 
     ' Class SankeyLink
     ' 
     '     Properties: Color, Source, Target, Value
     ' 
-    ' 
     ' /********************************************************************************/
 
 #End Region
-
 
 Imports System.Drawing
 
@@ -61,6 +59,3 @@ Public Class SankeyLink
     Public Property Value As Double
     Public Property Color As Color? = Nothing
 End Class
-
-
-

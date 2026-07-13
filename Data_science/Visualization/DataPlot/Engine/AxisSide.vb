@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e21bd86711a05362a887b01255528fea, Data_science\Visualization\DataPlot\Engine\AxisSide.vb"
+﻿#Region "Microsoft.VisualBasic::2e49bef21645aea385d745733016568d, Data_science\Visualization\DataPlot\Engine\AxisSide.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 8
-    '    Code Lines: 6 (75.00%)
-    ' Comment Lines: 1 (12.50%)
+    '   Total Lines: 7
+    '    Code Lines: 6 (85.71%)
+    ' Comment Lines: 1 (14.29%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 1 (12.50%)
-    '     File Size: 108 B
+    '   Blank Lines: 0 (0.00%)
+    '     File Size: 106 B
 
 
     ' Enum AxisSide
@@ -54,7 +54,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 ''' <summary>坐标轴</summary>
 Public Enum AxisSide

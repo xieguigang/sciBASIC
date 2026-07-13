@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2d317382daebad6d39c50347dcc94b6c, Data_science\Visualization\DataPlot\Engine\GgplotTheme\CssThemeMapper.vb"
+﻿#Region "Microsoft.VisualBasic::9259d885ce51935b77a94fa463739841, Data_science\Visualization\DataPlot\Engine\GgplotTheme\CssThemeMapper.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 46.48%
     ' 
     '   Blank Lines: 87 (12.95%)
-    '     File Size: 28.47 KB
+    '     File Size: 28.46 KB
 
 
     '     Class CssRule
@@ -734,4 +734,3 @@ Namespace GgplotTheme
     End Class
 
 End Namespace
-

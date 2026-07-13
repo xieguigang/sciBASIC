@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::254bb9a1df66ee9a620ba174c26b2f14, Data_science\Visualization\DataPlot\Advanced\BoxPlot.vb"
+﻿#Region "Microsoft.VisualBasic::2ac28dc7fd8f4306a1d658eee7356070, Data_science\Visualization\DataPlot\Advanced\BoxPlot.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 143
-    '    Code Lines: 122 (85.31%)
-    ' Comment Lines: 9 (6.29%)
+    '   Total Lines: 142
+    '    Code Lines: 122 (85.92%)
+    ' Comment Lines: 9 (6.34%)
     '    - Xml Docs: 11.11%
     ' 
-    '   Blank Lines: 12 (8.39%)
-    '     File Size: 6.67 KB
+    '   Blank Lines: 11 (7.75%)
+    '     File Size: 6.66 KB
 
 
     ' Class BoxPlot
@@ -56,7 +56,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 Imports Microsoft.VisualBasic.Imaging
 
@@ -200,4 +199,3 @@ Public Class BoxPlot
         Return sorted(lo) + (sorted(hi) - sorted(lo)) * (pos - lo)
     End Function
 End Class
-
