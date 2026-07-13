@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5520c8053b8ddade4bac71160b5076b4, Data_science\Mathematica\SignalProcessing\SignalPlotDemo\MainForm.vb"
+﻿#Region "Microsoft.VisualBasic::cb6721863a651e272e4edaf11c339b74, Data_science\Mathematica\SignalProcessing\SignalPlotDemo\MainForm.vb"
 
     ' Author:
     ' 
@@ -816,4 +816,3 @@ Public Class MainForm
 #End Region
 
 End Class
-

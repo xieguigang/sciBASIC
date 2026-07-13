@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7133d6f87d8d552ed70a0ff17d3a2713, Data_science\Visualization\DataPlot\Engine\Series.vb"
+﻿#Region "Microsoft.VisualBasic::5a643ab7c3309d790881b89a644455af, Data_science\Visualization\DataPlot\Engine\Series.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 15
-    '    Code Lines: 11 (73.33%)
-    ' Comment Lines: 1 (6.67%)
+    '   Total Lines: 13
+    '    Code Lines: 11 (84.62%)
+    ' Comment Lines: 1 (7.69%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 3 (20.00%)
-    '     File Size: 490 B
+    '   Blank Lines: 1 (7.69%)
+    '     File Size: 484 B
 
 
     ' Class Series
@@ -51,8 +51,6 @@
     ' /********************************************************************************/
 
 #End Region
-
-
 
 Imports System.Drawing
 Imports Microsoft.VisualBasic.Imaging
@@ -67,4 +65,3 @@ Public Class Series
     Public Property LineStyle As DashStyle = DashStyle.Solid
     Public Property Visible As Boolean = True
 End Class
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::73e9cba40cc83cc27efa6f9de0688143, Data_science\Visualization\DataPlot\Basic\ScatterPlot.vb"
+﻿#Region "Microsoft.VisualBasic::48e6b3aba23fe6d7ca9c5f92a9f498b9, Data_science\Visualization\DataPlot\Basic\ScatterPlot.vb"
 
     ' Author:
     ' 
@@ -130,4 +130,3 @@ Public Class ScatterPlot
         DrawLegend(seriesList)
     End Sub
 End Class
-

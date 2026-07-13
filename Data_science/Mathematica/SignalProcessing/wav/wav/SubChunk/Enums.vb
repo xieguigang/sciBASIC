@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5c04e1b48b50beabd7c6063ea58e3c0b, Data_science\Mathematica\SignalProcessing\wav\wav\SubChunk\Enums.vb"
+﻿#Region "Microsoft.VisualBasic::19fca914c5931c32747c2742a3d6ac4e, Data_science\Mathematica\SignalProcessing\wav\wav\SubChunk\Enums.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 33
-    '    Code Lines: 16 (48.48%)
-    ' Comment Lines: 15 (45.45%)
+    '   Total Lines: 52
+    '    Code Lines: 20 (38.46%)
+    ' Comment Lines: 29 (55.77%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 2 (6.06%)
-    '     File Size: 652 B
+    '   Blank Lines: 3 (5.77%)
+    '     File Size: 1.40 KB
 
 
     ' Enum wFormatTag
@@ -62,6 +62,10 @@
     '     Left, None, Right
     ' 
     '  
+    ' 
+    ' 
+    ' 
+    ' Module WavFormatGuids
     ' 
     ' 
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c82123bc46500cf67c1ac0bec65e9667, Data_science\Visualization\DataPlot\Advanced\ViolinPlot.vb"
+﻿#Region "Microsoft.VisualBasic::b718e21710b5cd8bdb17cad25c12f313, Data_science\Visualization\DataPlot\Advanced\ViolinPlot.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 111
-    '    Code Lines: 90 (81.08%)
-    ' Comment Lines: 5 (4.50%)
+    '   Total Lines: 109
+    '    Code Lines: 90 (82.57%)
+    ' Comment Lines: 5 (4.59%)
     '    - Xml Docs: 20.00%
     ' 
-    '   Blank Lines: 16 (14.41%)
-    '     File Size: 4.49 KB
+    '   Blank Lines: 14 (12.84%)
+    '     File Size: 4.48 KB
 
 
     ' Class ViolinPlot
@@ -56,8 +56,6 @@
     ' /********************************************************************************/
 
 #End Region
-
-
 
 Imports System.Drawing
 Imports Microsoft.VisualBasic.Imaging
@@ -168,4 +166,3 @@ Public Class ViolinPlot
         Return sorted(lo) + (sorted(hi) - sorted(lo)) * (pos - lo)
     End Function
 End Class
-

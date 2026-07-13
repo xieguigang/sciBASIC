@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::375d059de8b1ab2342c6111fa887c983, Data_science\Mathematica\SignalProcessing\wav\wav\SubChunk\FMT.vb"
+﻿#Region "Microsoft.VisualBasic::7533d2701f0c8eed1a339b9fc633b3bc, Data_science\Mathematica\SignalProcessing\wav\wav\SubChunk\FMT.vb"
 
     ' Author:
     ' 
@@ -34,19 +34,20 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 72
-    '    Code Lines: 28 (38.89%)
-    ' Comment Lines: 38 (52.78%)
-    '    - Xml Docs: 92.11%
+    '   Total Lines: 156
+    '    Code Lines: 72 (46.15%)
+    ' Comment Lines: 69 (44.23%)
+    '    - Xml Docs: 86.96%
     ' 
-    '   Blank Lines: 6 (8.33%)
-    '     File Size: 2.20 KB
+    '   Blank Lines: 15 (9.62%)
+    '     File Size: 5.53 KB
 
 
     ' Class FMTSubChunk
     ' 
-    '     Properties: audioFormat, BitsPerSample, BlockAlign, ByteRate, channels
-    '                 isPCM, SampleRate
+    '     Properties: audioFormat, BitsPerSample, BlockAlign, ByteRate, cbSize
+    '                 ChannelMask, channels, effectiveAudioFormat, isPCM, SampleRate
+    '                 sampleSizeBytes, SubFormat, ValidBitsPerSample
     ' 
     '     Function: ParseChunk
     ' 

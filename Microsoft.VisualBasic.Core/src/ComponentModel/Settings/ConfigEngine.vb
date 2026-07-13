@@ -276,7 +276,7 @@ Namespace ComponentModel.Settings
         <ExportAPI("Prints")>
         Public Shared Function Prints(data As IEnumerable(Of NamedValue(Of String))) As String
             Dim keys As String() = data.Select(Function(x) x.Name).ToArray
-            Dim maxLen As Integer = keys.Select(AddressOf Len).Max
+            Dim maxLen As Integer = keys.Select(AddressOf Strings.Len).Max
             Dim sb As New StringBuilder(New String("-"c, 120))
 
             Call sb.AppendLine()

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::88dbbf91cec6c85dac9660d6fe150273, Data_science\Visualization\test\Examples\ChartExamples.vb"
+﻿#Region "Microsoft.VisualBasic::fb625e3046e55319ab26031aa371a555, Data_science\Visualization\test\Examples\ChartExamples.vb"
 
     ' Author:
     ' 
@@ -356,4 +356,3 @@ Public Module ChartExamples
     End Sub
 
 End Module
-

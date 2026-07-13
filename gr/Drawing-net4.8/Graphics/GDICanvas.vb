@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::dcac1873c61800e8a35ff5c1748177ca, gr\Drawing-net4.8\Graphics\GDICanvas.vb"
+﻿#Region "Microsoft.VisualBasic::0d821814ff2e01fdfe81dc4cdd03bb8a, gr\Drawing-net4.8\Graphics\GDICanvas.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 12.99%
     ' 
     '   Blank Lines: 197 (7.75%)
-    '     File Size: 87.62 KB
+    '     File Size: 87.64 KB
 
 
     ' Class GDICanvas
@@ -2212,7 +2212,7 @@ Public MustInherit Class GDICanvas : Inherits IGraphics
         Call Graphics.RotateTransform(angle)
     End Sub
 
-    Public Sub SetTransformMatrix(x As Matrix)
+    Public Sub SetTransformMatrix(x As System.Drawing.Drawing2D.Matrix)
         Graphics.Transform = x
     End Sub
 

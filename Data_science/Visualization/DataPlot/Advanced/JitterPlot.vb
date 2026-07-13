@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::25d1b090c5f433a59d6e9dc5bc54cbe5, Data_science\Visualization\DataPlot\Advanced\JitterPlot.vb"
+﻿#Region "Microsoft.VisualBasic::14a654661fcc1db5e6bd835423c76050, Data_science\Visualization\DataPlot\Advanced\JitterPlot.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 57.14%
     ' 
     '   Blank Lines: 11 (8.94%)
-    '     File Size: 5.40 KB
+    '     File Size: 5.39 KB
 
 
     ' Class JitterPlot
@@ -178,4 +178,3 @@ Public Class JitterPlot
         End Using
     End Sub
 End Class
-

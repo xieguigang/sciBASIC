@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c77b8fff0bcbcfcbdbbee21c0079a2ff, Data_science\Visualization\DataPlot\Basic\AreaPlot.vb"
+﻿#Region "Microsoft.VisualBasic::60b05d981c46b9e048d47c2bafc881b2, Data_science\Visualization\DataPlot\Basic\AreaPlot.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 60.00%
     ' 
     '   Blank Lines: 13 (11.71%)
-    '     File Size: 4.54 KB
+    '     File Size: 4.53 KB
 
 
     ' Class AreaPlot
@@ -168,4 +168,3 @@ Public Class AreaPlot
         Return result
     End Function
 End Class
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::dee66eaa60bd241f9e142cf412eb3599, Data_science\Visualization\test\Examples.vb"
+﻿#Region "Microsoft.VisualBasic::d3a637ecd03a5f6dd5c5623aade68ccc, Data_science\Visualization\test\Examples.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 0.00%
     ' 
     '   Blank Lines: 16 (7.11%)
-    '     File Size: 9.73 KB
+    '     File Size: 9.72 KB
 
 
     ' Class Examples
@@ -279,4 +279,3 @@ Public Class Examples
     End Function
 
 End Class
-

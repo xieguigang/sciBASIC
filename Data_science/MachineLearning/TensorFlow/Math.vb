@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::014f5bcd17a5ff37909ce3d57b91c55f, Data_science\MachineLearning\TensorFlow\Math.vb"
+﻿#Region "Microsoft.VisualBasic::0912612f8d6a4694db59443eacfaa67e, Data_science\MachineLearning\TensorFlow\Math.vb"
 
     ' Author:
     ' 
@@ -34,20 +34,25 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 30
-    '    Code Lines: 23 (76.67%)
-    ' Comment Lines: 0 (0.00%)
-    '    - Xml Docs: 0.00%
+    '   Total Lines: 724
+    '    Code Lines: 518 (71.55%)
+    ' Comment Lines: 129 (17.82%)
+    '    - Xml Docs: 96.12%
     ' 
-    '   Blank Lines: 7 (23.33%)
-    '     File Size: 762 B
+    '   Blank Lines: 77 (10.64%)
+    '     File Size: 23.65 KB
 
 
     ' Module Math
     ' 
-    '     Function: exp, log, sqrt, square, abs, sin, cos, tanh, sigmoid, pow,
-    '               reduce_sum, reduce_mean, reduce_max, reduce_min,
-    '               argmax, argmin, clip_by_value, clip_by_norm
+    '     Function: abs, add, add_scalar, argmax, argmin
+    '               clip_by_norm, clip_by_value, cos, divide, equal
+    '               exp, greater, greater_equal, less, less_equal
+    '               log, matmul, maximum, minimum, multiply
+    '               multiply_scalar, negative, pow, reciprocal, reduce_all
+    '               reduce_any, reduce_max, reduce_mean, reduce_min, reduce_prod
+    '               reduce_std, reduce_sum, ReduceAlongAxis, ReduceArgAxis, sigmoid
+    '               sin, sqrt, square, subtract, tanh
     ' 
     ' /********************************************************************************/
 

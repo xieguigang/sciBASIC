@@ -130,7 +130,7 @@ Namespace Text.Xml
 
             Dim nsList As String() = r _
                 .Matches(root, xmlnsRegex, RegexICSng) _
-                .ToArray(AddressOf Trim)
+                .ToArray(AddressOf Strings.Trim)
 
             For Each ns As String In nsList
                 [namespace] += ns _
@@ -163,7 +163,7 @@ Namespace Text.Xml
         Public Shared Function RootParser(root As String) As NamedValue(Of Xmlns)
             Dim ns As New Xmlns(root)
             Dim name As String = root.Split.First
-            name = Mid(name, 2)
+            name = Strings.Mid(name, 2)
             Return New NamedValue(Of Xmlns)(name, ns)
         End Function
 

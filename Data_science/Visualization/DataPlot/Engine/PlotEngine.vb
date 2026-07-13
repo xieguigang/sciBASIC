@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::45ae53b48070cad3803558dc7ace853e, Data_science\Visualization\DataPlot\Engine\PlotEngine.vb"
+﻿#Region "Microsoft.VisualBasic::666c244acc777dc7ea9e2d14cf59fd5f, Data_science\Visualization\DataPlot\Engine\PlotEngine.vb"
 
     ' Author:
     ' 
@@ -34,12 +34,12 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 430
-    '    Code Lines: 333 (77.44%)
-    ' Comment Lines: 57 (13.26%)
+    '   Total Lines: 428
+    '    Code Lines: 333 (77.80%)
+    ' Comment Lines: 57 (13.32%)
     '    - Xml Docs: 19.30%
     ' 
-    '   Blank Lines: 40 (9.30%)
+    '   Blank Lines: 38 (8.88%)
     '     File Size: 18.75 KB
 
 
@@ -66,7 +66,6 @@
     ' 
     '     Sub: ApplyQuality, AutoRange, ComputePlotArea, Dispose, DrawAxisAndGrid
     '          DrawBackground, DrawLegend, DrawMarker, DrawPlotArea, DrawTitle
-    ' 
     ' 
     ' /********************************************************************************/
 
@@ -500,6 +499,3 @@ Public Class PlotEngine : Implements IDisposable
     End Property
 
 End Class
-
-
-

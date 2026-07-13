@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::125f5c8591ea4b5e2075110f0bb19263, Data_science\MachineLearning\VAE\GraphVAE.vb"
+﻿#Region "Microsoft.VisualBasic::74ccc848fe83da72926ec204543fb82f, Data_science\MachineLearning\VAE\GraphVAE.vb"
 
     ' Author:
     ' 
@@ -34,12 +34,12 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 931
-    '    Code Lines: 501 (53.81%)
-    ' Comment Lines: 251 (26.96%)
+    '   Total Lines: 930
+    '    Code Lines: 501 (53.87%)
+    ' Comment Lines: 251 (26.99%)
     '    - Xml Docs: 46.22%
     ' 
-    '   Blank Lines: 179 (19.23%)
+    '   Blank Lines: 178 (19.14%)
     '     File Size: 31.52 KB
 
 
@@ -77,7 +77,6 @@
     '               SampleEpsilon, Train
     ' 
     '     Sub: Backward, Update
-    ' 
     ' 
     ' /********************************************************************************/
 
@@ -1013,5 +1012,3 @@ Public Class GraphVAE
 #End Region
 
 End Class
-
-

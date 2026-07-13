@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::01e7d9fd11d65c317dd7af58bc99493a, Microsoft.VisualBasic.Core\src\Drawing\netcore8.0\Brush.vb"
+﻿#Region "Microsoft.VisualBasic::74109b8f333894d8e829023f4d41f94d, Microsoft.VisualBasic.Core\src\Drawing\netcore8.0\Brush.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 190
-    '    Code Lines: 148 (77.89%)
-    ' Comment Lines: 10 (5.26%)
-    '    - Xml Docs: 0.00%
+    '   Total Lines: 585
+    '    Code Lines: 409 (69.91%)
+    ' Comment Lines: 110 (18.80%)
+    '    - Xml Docs: 90.91%
     ' 
-    '   Blank Lines: 32 (16.84%)
-    '     File Size: 5.97 KB
+    '   Blank Lines: 66 (11.28%)
+    '     File Size: 29.22 KB
 
 
     '     Class Brush
@@ -65,26 +65,92 @@
     ' 
     '     Class Brushes
     ' 
-    '         Properties: Black, Blue, BlueViolet, Brown, DarkCyan
-    '                     DarkGreen, DarkOliveGreen, Gray, Green, LightGray
-    '                     Orange, Red, SkyBlue, Transparent, Violet
-    '                     White, Yellow
+    '         Properties: AliceBlue, AntiqueWhite, Aqua, Aquamarine, Azure
+    '                     Beige, Bisque, Black, BlanchedAlmond, Blue
+    '                     BlueViolet, Brown, BurlyWood, CadetBlue, Chartreuse
+    '                     Chocolate, Coral, CornflowerBlue, Cornsilk, Crimson
+    '                     Cyan, DarkBlue, DarkCyan, DarkGoldenrod, DarkGray
+    '                     DarkGreen, DarkKhaki, DarkMagenta, DarkOliveGreen, DarkOrange
+    '                     DarkOrchid, DarkRed, DarkSalmon, DarkSeaGreen, DarkSlateBlue
+    '                     DarkSlateGray, DarkTurquoise, DarkViolet, DeepPink, DeepSkyBlue
+    '                     DimGray, DodgerBlue, Firebrick, FloralWhite, ForestGreen
+    '                     Fuchsia, Gainsboro, GhostWhite, Gold, Goldenrod
+    '                     Gray, Green, GreenYellow, Honeydew, HotPink
+    '                     IndianRed, Indigo, Ivory, Khaki, Lavender
+    '                     LavenderBlush, LawnGreen, LemonChiffon, LightBlue, LightCoral
+    '                     LightCyan, LightGoldenrodYellow, LightGray, LightGreen, LightPink
+    '                     LightSalmon, LightSeaGreen, LightSkyBlue, LightSlateGray, LightSteelBlue
+    '                     LightYellow, Lime, LimeGreen, Linen, Magenta
+    '                     Maroon, MediumAquamarine, MediumBlue, MediumOrchid, MediumPurple
+    '                     MediumSeaGreen, MediumSlateBlue, MediumSpringGreen, MediumTurquoise, MediumVioletRed
+    '                     MidnightBlue, MintCream, MistyRose, Moccasin, NavajoWhite
+    '                     Navy, OldLace, Olive, OliveDrab, Orange
+    '                     OrangeRed, Orchid, PaleGoldenrod, PaleGreen, PaleTurquoise
+    '                     PaleVioletRed, PapayaWhip, PeachPuff, Peru, Pink
+    '                     Plum, PowderBlue, Purple, Red, RosyBrown
+    '                     RoyalBlue, SaddleBrown, Salmon, SandyBrown, SeaGreen
+    '                     SeaShell, Sienna, Silver, SkyBlue, SlateBlue
+    '                     SlateGray, Snow, SpringGreen, SteelBlue, Tan
+    '                     Teal, Thistle, Tomato, Transparent, Turquoise
+    '                     Violet, Wheat, White, WhiteSmoke, Yellow
+    '                     YellowGreen
     ' 
     '         Constructor: (+1 Overloads) Sub New
     ' 
     '     Class HatchBrush
     ' 
+    '         Properties: BackgroundColor, ForegroundColor, HatchStyle
+    ' 
     '         Constructor: (+1 Overloads) Sub New
+    '         Function: ToString
     ' 
     '     Class PathGradientBrush
     ' 
-    '         Properties: InterpolationColors, WrapMode
+    '         Properties: Blend, CenterColor, CenterPoint, FocusScales, InterpolationColors
+    '                     Rectangle, SurroundColors, Transform, WrapMode
     ' 
-    '         Constructor: (+1 Overloads) Sub New
+    '         Constructor: (+2 Overloads) Sub New
+    '         Function: ToString
     ' 
     '     Class ColorBlend
     ' 
     '         Properties: Colors, Positions
+    ' 
+    '         Constructor: (+2 Overloads) Sub New
+    ' 
+    '     Class Blend
+    ' 
+    '         Properties: Factors, Positions
+    ' 
+    '         Constructor: (+2 Overloads) Sub New
+    ' 
+    '     Enum LinearGradientMode
+    ' 
+    ' 
+    '  
+    ' 
+    ' 
+    ' 
+    '     Class LinearGradientBrush
+    ' 
+    '         Properties: Angle, Blend, GammaCorrection, InterpolationColors, LinearColors
+    '                     Rectangle, Transform, WrapMode
+    ' 
+    '         Constructor: (+2 Overloads) Sub New
+    ' 
+    '         Function: ToString
+    ' 
+    '         Sub: SetBlendTriangularShape, SetSigmaBellShape
+    ' 
+    '     Class SystemBrushes
+    ' 
+    '         Properties: ActiveBorder, ActiveCaption, ActiveCaptionText, AppWorkspace, ButtonFace
+    '                     ButtonHighlight, ButtonShadow, Control, ControlDark, ControlDarkDark
+    '                     ControlLight, ControlLightLight, ControlText, Desktop, GradientActiveCaption
+    '                     GradientInactiveCaption, GrayText, Highlight, HighlightText, HotTrack
+    '                     InactiveBorder, InactiveCaption, InactiveCaptionText, Info, InfoText
+    '                     Menu, MenuBar, MenuHighlight, MenuText, ScrollBar
+    '                     Window, WindowFrame, WindowText
     ' 
     '         Constructor: (+1 Overloads) Sub New
     ' 
@@ -581,6 +647,8 @@ Namespace Imaging
         End Function
     End Class
 
+#If Not NETSTANDARD Then
+
     ''' <summary>
     ''' Each property of the SystemBrushes class is a SolidBrush that is the color 
     ''' of a Windows display element.
@@ -624,6 +692,7 @@ Namespace Imaging
         Private Sub New()
         End Sub
     End Class
+#End If
 
     Public Enum WrapMode
         Tile

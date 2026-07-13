@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2c61e82f066ef90328fafbebb2771ef0, Data_science\MachineLearning\VAE\MathUtils.vb"
+﻿#Region "Microsoft.VisualBasic::53690f752d54b85ca521c7235673ecd1, Data_science\MachineLearning\VAE\MathUtils.vb"
 
     ' Author:
     ' 
@@ -262,4 +262,3 @@ Public Module MathUtils
     End Function
 
 End Module
-

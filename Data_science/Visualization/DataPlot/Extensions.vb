@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::518b9072b311e14c31ff72158564eb2b, Data_science\Visualization\DataPlot\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::c2e7f9f520c52023adffa1c611e82d86, Data_science\Visualization\DataPlot\Extensions.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 0.00%
     ' 
     '   Blank Lines: 3 (21.43%)
-    '     File Size: 451 B
+    '     File Size: 449 B
 
 
     ' Module Extensions
@@ -65,4 +65,3 @@ Public Module Extensions
         Call res.SaveAs(filepath)
     End Sub
 End Module
-

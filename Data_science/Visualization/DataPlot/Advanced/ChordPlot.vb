@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::32587b487d2cca05e4b8c4e27deb5698, Data_science\Visualization\DataPlot\Advanced\ChordPlot.vb"
+﻿#Region "Microsoft.VisualBasic::f5cda3fd6c4739049d6570ae3e66c262, Data_science\Visualization\DataPlot\Advanced\ChordPlot.vb"
 
     ' Author:
     ' 
@@ -245,4 +245,3 @@ Public Class ChordPlot
         End Using
     End Sub
 End Class
-

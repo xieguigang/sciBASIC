@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d971387d6befec8b215170366fdaa5db, Data_science\Visualization\DataPlot\Advanced\SankeyPlot\SankeyPlot.vb"
+﻿#Region "Microsoft.VisualBasic::630da35745746c6c0f222188056346d5, Data_science\Visualization\DataPlot\Advanced\SankeyPlot\SankeyPlot.vb"
 
     ' Author:
     ' 
@@ -184,4 +184,3 @@ Public Class SankeyPlot
         Next
     End Sub
 End Class
-

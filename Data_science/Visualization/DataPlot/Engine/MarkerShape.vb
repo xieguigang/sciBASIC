@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8437bed1898799d9f6a933c234c453bd, Data_science\Visualization\DataPlot\Engine\MarkerShape.vb"
+﻿#Region "Microsoft.VisualBasic::a6f15747d2ad274814e0330a70266af3, Data_science\Visualization\DataPlot\Engine\MarkerShape.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 11
-    '    Code Lines: 9 (81.82%)
-    ' Comment Lines: 1 (9.09%)
+    '   Total Lines: 10
+    '    Code Lines: 9 (90.00%)
+    ' Comment Lines: 1 (10.00%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 1 (9.09%)
-    '     File Size: 154 B
+    '   Blank Lines: 0 (0.00%)
+    '     File Size: 152 B
 
 
     ' Enum MarkerShape
@@ -55,7 +55,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 ''' <summary>标记形状</summary>
 Public Enum MarkerShape

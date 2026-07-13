@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a7467994c9a5c475a79b0126393ac795, Data_science\Visualization\DataPlot\Basic\StackedAreaPlot.vb"
+﻿#Region "Microsoft.VisualBasic::46b6dca3b2432ee59a63298804ec937c, Data_science\Visualization\DataPlot\Basic\StackedAreaPlot.vb"
 
     ' Author:
     ' 
@@ -199,4 +199,3 @@ Public Class StackedAreaPlot
         Return result
     End Function
 End Class
-
