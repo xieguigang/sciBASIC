@@ -1,60 +1,60 @@
 ﻿#Region "Microsoft.VisualBasic::c424a7a7fe45edfee0709cc0524bff3c, gr\physics\physics_Test\Form3.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 288
-    '    Code Lines: 52 (18.06%)
-    ' Comment Lines: 172 (59.72%)
-    '    - Xml Docs: 0.00%
-    ' 
-    '   Blank Lines: 64 (22.22%)
-    '     File Size: 11.01 KB
+' Summaries:
 
 
-    ' Class Form3
-    ' 
-    '     Properties: deltaTime
-    ' 
-    '     Sub: Form3_Load, Form3_SizeChanged, Timer1_Tick
-    ' 
-    ' Module FluidRender
-    ' 
-    '     Constructor: (+1 Overloads) Sub New
-    '     Function: Render
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 288
+'    Code Lines: 52 (18.06%)
+' Comment Lines: 172 (59.72%)
+'    - Xml Docs: 0.00%
+' 
+'   Blank Lines: 64 (22.22%)
+'     File Size: 11.01 KB
+
+
+' Class Form3
+' 
+'     Properties: deltaTime
+' 
+'     Sub: Form3_Load, Form3_SizeChanged, Timer1_Tick
+' 
+' Module FluidRender
+' 
+'     Constructor: (+1 Overloads) Sub New
+'     Function: Render
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -63,6 +63,7 @@ Imports Microsoft.VisualBasic.Drawing
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
 Imports Microsoft.VisualBasic.Imaging.Physics
+Imports solidBrush = Microsoft.VisualBasic.Imaging.SolidBrush
 
 Public Class Form3
 
@@ -313,24 +314,24 @@ End Class
 
 Public Module FluidRender
 
-    Dim colors As Brush()
+    Dim colors As solidBrush()
 
     Sub New()
-        colors = Designer.GetColors(ScalerPalette.turbo.Description).Select(Function(c) New SolidBrush(c)).ToArray
+        colors = Designer.GetColors(ScalerPalette.turbo.Description).Select(Function(c) New solidBrush(c)).ToArray
     End Sub
 
     Const particleSize As Single = 5
 
     Public Function Render(canvas As Size, container As FluidEngine) As System.Drawing.Bitmap
         Dim bmp As New System.Drawing.Bitmap(canvas.Width, canvas.Height)
-        Dim maxV As Double = Aggregate p In container.Entity Into Max(p.velocity.magnitude)
+        Dim maxV As Double = Aggregate p In container.Entity Into Max(p.Velocity.Magnitude)
         Dim minV As Double = 0
 
         Using gfx As IGraphics = Graphics2D.Open(bmp)
             Call gfx.Clear(Color.Black)
 
             For Each p In container.Entity
-                Dim level As Integer = p.velocity.magnitude / maxV * colors.Length
+                Dim level As Integer = p.Velocity.Magnitude / maxV * colors.Length
 
                 If level < 0 Then
                     level = 0
@@ -338,7 +339,7 @@ Public Module FluidRender
                     level = colors.Length - 1
                 End If
 
-                Call gfx.DrawCircle(CType(p.position, PointF), particleSize, colors(level))
+                Call gfx.DrawCircle(CType(p.Position, PointF), particleSize, colors(level))
             Next
 
             Return bmp

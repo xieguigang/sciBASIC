@@ -65,6 +65,7 @@ Imports Microsoft.VisualBasic.Math.LinearAlgebra
 ''' <summary>
 ''' 质点，没有体积和大小，只有质量和电荷量的理想物理对象
 ''' </summary>
+<System.Obsolete("Use Microsoft.VisualBasic.Imaging.Physics.RigidBody instead.")>
 Public Class MassPoint : Implements INamedValue
 
     ''' <summary>

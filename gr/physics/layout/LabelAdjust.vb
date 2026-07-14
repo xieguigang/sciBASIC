@@ -23,14 +23,11 @@
     ' GNU General Public License for more details.
     ' 
     ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
+    ' along with this program.  If not, see <http://www.gnu.org/licenses/>.
+    
+    
+    
     ' /********************************************************************************/
-
-    ' Summaries:
-
 
     ' Code Statistics:
 
@@ -43,40 +40,13 @@
     '     File Size: 17.16 KB
 
 
-    '     Class Node
-    ' 
-    '         Properties: fixed, LayoutData, size, X, Y
-    ' 
-    '         Function: ToString
-    ' 
-    '     Class TextProperties
-    ' 
-    '         Properties: Height, Width
-    ' 
     '     Class LabelAdjust
     ' 
     '         Properties: AdjustBySize, Speed
     ' 
-    '         Function: repulse
+    '         Function: Repulse
     ' 
-    '         Sub: goAlgo, resetPropertiesValues, Solve
-    '         Class QuadNode
-    ' 
-    '             Properties: Nodes
-    ' 
-    '             Constructor: (+1 Overloads) Sub New
-    '             Sub: add
-    ' 
-    '         Class QuadTree
-    ' 
-    '             Constructor: (+1 Overloads) Sub New
-    ' 
-    '             Function: [get], getAdjacentNodes, getQuadNode
-    ' 
-    '             Sub: add
-    ' 
-    ' 
-    ' 
+    '         Sub: Iterate, ResetPropertiesValues, Solve
     ' 
     ' /********************************************************************************/
 
@@ -131,57 +101,26 @@ Imports std = System.Math
 Namespace layout
 
     ''' <summary>
-    ''' the layout data model
-    ''' </summary>
-    ''' <remarks>
-    ''' contains node layout position and shape size data
-    ''' </remarks>
-    Public Class Node : Implements Layout2D
-
-        Public Property X As Double Implements Layout2D.X
-        Public Property Y As Double Implements Layout2D.Y
-        Public Property LayoutData As ForceVectorNodeLayoutData
-        Public Property size As Double
-        Public Property fixed As Boolean
-
-        Public Overrides Function ToString() As String
-            Return $"({X.ToString("F2")},{Y.ToString("F2")}) {If(LayoutData Is Nothing, "", LayoutData.ToString)}"
-        End Function
-
-    End Class
-
-    ''' <summary>
-    ''' the label drawing style data
-    ''' </summary>
-    ''' <remarks>
-    ''' text label size data
-    ''' </remarks>
-    Public Class TextProperties
-        Public Property Width As Single
-        Public Property Height As Single
-    End Class
-
-    ''' <summary>
     ''' @author Mathieu Jacomy
     ''' </summary>
     Public Class LabelAdjust
 
         'Settings
-        Private radiusScale As Single = 1.1F
+        Private RadiusScale As Single = 1.1F
         'Graph size
-        Private xmin As Single
-        Private xmax As Single
-        Private ymin As Single
-        Private ymax As Single
+        Private XMin As Single
+        Private XMax As Single
+        Private YMin As Single
+        Private YMax As Single
 
         Dim Converged As Boolean
 
-        Public max_iterations As Integer = 1000
-        Public canvas As SizeF
+        Public MaxIterations As Integer = 1000
+        Public Canvas As SizeF
 
-        Public Sub resetPropertiesValues()
+        Public Sub ResetPropertiesValues()
             Speed = 1
-            radiusScale = 1.1F
+            RadiusScale = 1.1F
             AdjustBySize = True
         End Sub
 
@@ -194,9 +133,9 @@ Namespace layout
                     n.LayoutData = New LabelAdjustLayoutData()
                 End If
                 layoutData = n.LayoutData
-                layoutData.freeze = 0
-                layoutData.dx = 0
-                layoutData.dy = 0
+                layoutData.Freeze = 0
+                layoutData.Dx = 0
+                layoutData.Dy = 0
             Next
 
             Converged = False
@@ -204,9 +143,9 @@ Namespace layout
             Dim i As Integer = 0
 
             Do While Not Converged
-                Call goAlgo(nodes, labels)
+                Call Iterate(nodes, labels)
 
-                If i > max_iterations Then
+                If i > MaxIterations Then
                     Exit Do
                 Else
                     i += 1
@@ -219,12 +158,12 @@ Namespace layout
         ''' </summary>
         ''' <param name="nodes"></param>
         ''' <param name="labels"></param>
-        Private Sub goAlgo(nodes As Node(), labels As Dictionary(Of Node, TextProperties))
+        Private Sub Iterate(nodes As Node(), labels As Dictionary(Of Node, TextProperties))
             ' Get xmin, xmax, ymin, ymax
-            xmin = Single.MaxValue
-            xmax = Single.Epsilon
-            ymin = Single.MaxValue
-            ymax = Single.Epsilon
+            XMin = Single.MaxValue
+            XMax = Single.Epsilon
+            YMin = Single.MaxValue
+            YMax = Single.Epsilon
 
             Dim correctNodes As New List(Of Node)()
             For Each n As Node In nodes
@@ -233,7 +172,7 @@ Namespace layout
                 Dim t As TextProperties = labels(n)
                 Dim w As Single = t.Width
                 Dim h As Single = t.Height
-                Dim radius As Single = n.size() / 2.0F
+                Dim radius As Single = n.Size / 2.0F
 
                 If w > 0 AndAlso h > 0 Then
                     ' Get the rectangle occupied by the node (size + label)
@@ -243,16 +182,16 @@ Namespace layout
                     Dim nymax = std.Max(y + h / 2, y + radius)
 
                     ' Update global boundaries
-                    xmin = std.Min(xmin, nxmin)
-                    xmax = std.Max(xmax, nxmax)
-                    ymin = std.Min(ymin, nymin)
-                    ymax = std.Max(ymax, nymax)
+                    XMin = std.Min(XMin, nxmin)
+                    XMax = std.Max(XMax, nxmax)
+                    YMin = std.Min(YMin, nymin)
+                    YMax = std.Max(YMax, nymax)
 
                     correctNodes.Add(n)
                 End If
             Next
 
-            If correctNodes.Count = 0 OrElse xmin = xmax OrElse ymin = ymax Then
+            If correctNodes.Count = 0 OrElse XMin = XMax OrElse YMin = YMax Then
                 Converged = True
                 Return
             End If
@@ -261,31 +200,31 @@ Namespace layout
             Dim someCollision = False
 
             'Add all nodes in the quadtree
-            Dim quadTree As New QuadTree(correctNodes.Count, (xmax - xmin) / (ymax - ymin)) With {
-                .xmax = Me.xmax,
-                .xmin = Me.xmin,
-                .ymax = Me.ymax,
-                .ymin = Me.ymin
+            Dim quadTree As New QuadTree(correctNodes.Count, (XMax - XMin) / (YMax - YMin)) With {
+                .XMax = Me.XMax,
+                .XMin = Me.XMin,
+                .YMax = Me.YMax,
+                .YMin = Me.YMin
             }
 
             For Each n As Node In correctNodes
-                quadTree.add(n, labels)
+                quadTree.Add(n, labels)
             Next
 
             'Compute repulsion - with neighbours in the 8 quadnodes around the node
             For Each n As Node In correctNodes
                 timeStamp += 1
                 Dim layoutData As LabelAdjustLayoutData = n.LayoutData
-                Dim quad = quadTree.getQuadNode(layoutData.labelAdjustQuadNode)
+                Dim quad = quadTree.GetQuadNode(layoutData.LabelAdjustQuadNode)
 
                 'Repulse with adjacent quad - but only one per pair of nodes, timestamp is guaranteeing that
-                For Each neighbour As Node In quadTree.getAdjacentNodes(quad.row, quad.col)
+                For Each neighbour As Node In quadTree.GetAdjacentNodes(quad.row, quad.col)
                     Dim neighborLayoutData As LabelAdjustLayoutData = neighbour.LayoutData
-                    If neighbour IsNot n AndAlso neighborLayoutData.freeze < timeStamp Then
-                        Dim collision = Me.repulse(n, neighbour, labels)
+                    If neighbour IsNot n AndAlso neighborLayoutData.Freeze < timeStamp Then
+                        Dim collision = Me.Repulse(n, neighbour, labels)
                         someCollision = someCollision OrElse collision
                     End If
-                    neighborLayoutData.freeze = timeStamp 'Use the existing freeze float variable to set timestamp
+                    neighborLayoutData.Freeze = timeStamp 'Use the existing freeze float variable to set timestamp
                 Next
             Next
 
@@ -295,19 +234,19 @@ Namespace layout
                 ' apply forces
                 For Each n As Node In correctNodes
                     Dim layoutData As LabelAdjustLayoutData = n.LayoutData
-                    If Not n.fixed Then
-                        layoutData.dx *= Speed
-                        layoutData.dy *= Speed
-                        Dim x As Single = n.X() + layoutData.dx
-                        Dim y As Single = n.Y() + layoutData.dy
+                    If Not n.Fixed Then
+                        layoutData.Dx *= Speed
+                        layoutData.Dy *= Speed
+                        Dim x As Single = n.X() + layoutData.Dx
+                        Dim y As Single = n.Y() + layoutData.Dy
 
                         If x < 0 Then x = 0
                         If y < 0 Then y = 0
-                        If x + labels(n).Width > canvas.Width Then
-                            x = canvas.Width - labels(n).Width
+                        If x + labels(n).Width > Canvas.Width Then
+                            x = Canvas.Width - labels(n).Width
                         End If
-                        If y + labels(n).Height > canvas.Height Then
-                            y = canvas.Height - labels(n).Height
+                        If y + labels(n).Height > Canvas.Height Then
+                            y = Canvas.Height - labels(n).Height
                         End If
 
                         n.X = x
@@ -317,7 +256,7 @@ Namespace layout
             End If
         End Sub
 
-        Private Function repulse(n1 As Node, n2 As Node, labels As Dictionary(Of Node, TextProperties)) As Boolean
+        Private Function Repulse(n1 As Node, n2 As Node, labels As Dictionary(Of Node, TextProperties)) As Boolean
             Dim collision = False
             Dim n1x As Single = n1.X()
             Dim n1y As Single = n1.Y()
@@ -345,15 +284,15 @@ Namespace layout
                 Dim xDist As Double = n2x - n1x
                 Dim yDist As Double = n2y - n1y
                 Dim dist = std.Sqrt(xDist * xDist + yDist * yDist)
-                Dim sphereCollision As Boolean = dist < radiusScale * (n1.size() + n2.size())
+                Dim sphereCollision As Boolean = dist < RadiusScale * (n1.Size + n2.Size)
                 If sphereCollision Then
-                    Dim f As Double = 0.1 * n1.size() / dist
+                    Dim f As Double = 0.1 * n1.Size / dist
                     If dist > 0 Then
-                        n2Data.dx = CSng(n2Data.dx + xDist / dist * f)
-                        n2Data.dy = CSng(n2Data.dy + yDist / dist * f)
+                        n2Data.Dx = CSng(n2Data.Dx + xDist / dist * f)
+                        n2Data.Dy = CSng(n2Data.Dy + yDist / dist * f)
                     Else
-                        n2Data.dx = CSng(n2Data.dx + 0.01 * (0.5 - randf.NextDouble))
-                        n2Data.dy = CSng(n2Data.dy + 0.01 * (0.5 - randf.NextDouble))
+                        n2Data.Dx = CSng(n2Data.Dx + 0.01 * (0.5 - randf.NextDouble))
+                        n2Data.Dy = CSng(n2Data.Dy + 0.01 * (0.5 - randf.NextDouble))
                     End If
                     collision = True
                 End If
@@ -368,20 +307,20 @@ Namespace layout
                 If labelCollisionXleft > 0 AndAlso labelCollisionXright > 0 Then ' Collision
                     If upDifferential > downDifferential Then
                         ' N1 pushes N2 up
-                        n2Data.dy = CSng(n2Data.dy - 0.02 * n1h * (0.8 + 0.4 * randf.NextDouble))
+                        n2Data.Dy = CSng(n2Data.Dy - 0.02 * n1h * (0.8 + 0.4 * randf.NextDouble))
                         collision = True
                     Else
                         ' N1 pushes N2 down
-                        n2Data.dy = CSng(n2Data.dy + 0.02 * n1h * (0.8 + 0.4 * randf.NextDouble))
+                        n2Data.Dy = CSng(n2Data.Dy + 0.02 * n1h * (0.8 + 0.4 * randf.NextDouble))
                         collision = True
                     End If
                     If labelCollisionXleft > labelCollisionXright Then
                         ' N1 pushes N2 right
-                        n2Data.dx = CSng(n2Data.dx + 0.01 * (n1h * 2) * (0.8 + 0.4 * randf.NextDouble))
+                        n2Data.Dx = CSng(n2Data.Dx + 0.01 * (n1h * 2) * (0.8 + 0.4 * randf.NextDouble))
                         collision = True
                     Else
                         ' N1 pushes N2 left
-                        n2Data.dx = CSng(n2Data.dx - 0.01 * (n1h * 2) * (0.8 + 0.4 * randf.NextDouble))
+                        n2Data.Dx = CSng(n2Data.Dx - 0.01 * (n1h * 2) * (0.8 + 0.4 * randf.NextDouble))
                         collision = True
                     End If
                 End If
@@ -394,115 +333,6 @@ Namespace layout
 
         Public Overridable Property AdjustBySize As Boolean = True
 
-        Private Class QuadNode
-
-            Friend ReadOnly index As Integer
-            Friend ReadOnly row As Integer
-            Friend ReadOnly col As Integer
-
-            Public Sub New(index As Integer, row As Integer, col As Integer)
-                Me.index = index
-                Me.row = row
-                Me.col = col
-                Me.Nodes = New List(Of Node)()
-            End Sub
-
-            Public Overridable ReadOnly Property Nodes As IList(Of Node)
-
-            Public Overridable Sub add(n As Node)
-                Nodes.Add(n)
-            End Sub
-        End Class
-
-        Private Class QuadTree
-
-            Friend ReadOnly quads As QuadNode()
-            Friend ReadOnly COLUMNS As Integer
-            Friend ReadOnly ROWS As Integer
-
-            Public xmin, xmax, ymin, ymax As Double
-
-            Public Sub New(numberNodes As Integer, aspectRatio As Single)
-                If aspectRatio > 0 Then
-                    COLUMNS = CInt(std.Ceiling(numberNodes / 50.0F))
-                    ROWS = CInt(std.Ceiling(COLUMNS / aspectRatio))
-                Else
-                    ROWS = CInt(std.Ceiling(numberNodes / 50.0F))
-                    COLUMNS = CInt(std.Ceiling(ROWS / aspectRatio))
-                End If
-                quads = New QuadNode(COLUMNS * ROWS - 1) {}
-                For row = 0 To ROWS - 1
-                    For col = 0 To COLUMNS - 1
-                        quads(row * COLUMNS + col) = New QuadNode(row * COLUMNS + col, row, col)
-                    Next
-                Next
-            End Sub
-
-            Public Overridable Sub add(node As Node, labels As Dictionary(Of Node, TextProperties))
-                Dim x As Single = node.X()
-                Dim y As Single = node.Y()
-                Dim t As TextProperties = labels(node)
-                Dim w As Single = t.Width
-                Dim h As Single = t.Height
-                Dim radius As Single = node.size()
-
-                ' Get the rectangle occupied by the node (size + label)
-                Dim nxmin = std.Min(x - w / 2, x - radius)
-                Dim nxmax = std.Max(x + w / 2, x + radius)
-                Dim nymin = std.Min(y - h / 2, y - radius)
-                Dim nymax = std.Max(y + h / 2, y + radius)
-
-                ' Get the rectangle as boxes
-                Dim minXbox As Integer = std.Floor((COLUMNS - 1) * (nxmin - xmin) / (xmax - xmin))
-                Dim maxXbox As Integer = std.Floor((COLUMNS - 1) * (nxmax - xmin) / (xmax - xmin))
-                Dim minYbox As Integer = std.Floor((ROWS - 1) * ((ymax - ymin - (nymax - ymin)) / (ymax - ymin)))
-                Dim maxYbox As Integer = std.Floor((ROWS - 1) * ((ymax - ymin - (nymin - ymin)) / (ymax - ymin)))
-                Dim col = minXbox
-
-                While col <= maxXbox AndAlso col < COLUMNS AndAlso col >= 0
-                    Dim row = minYbox
-
-                    While row <= maxYbox AndAlso row < ROWS AndAlso row >= 0
-                        quads(CInt(row * COLUMNS + col)).add(node)
-                        row += 1
-                    End While
-
-                    col += 1
-                End While
-
-                'Get the node center
-                Dim centerX As Integer = std.Floor((COLUMNS - 1) * (x - xmin) / (xmax - xmin))
-                Dim centerY As Integer = std.Floor((ROWS - 1) * ((ymax - ymin - (y - ymin)) / (ymax - ymin)))
-                Dim layoutData As LabelAdjustLayoutData = node.LayoutData
-                layoutData.labelAdjustQuadNode = quads(centerY * COLUMNS + centerX).index
-            End Sub
-
-            Public Overridable Function [get](row As Integer, col As Integer) As IList(Of Node)
-                Return quads(row * ROWS + col).Nodes
-            End Function
-
-            Public Overridable Function getAdjacentNodes(row As Integer, col As Integer) As IList(Of Node)
-                If quads.Length = 1 Then
-                    Return quads(0).Nodes
-                End If
-
-                Dim adjNodes As New List(Of Node)()
-                Dim left = std.Max(0, col - 1)
-                Dim top = std.Max(0, row - 1)
-                Dim right = std.Min(COLUMNS - 1, col + 1)
-                Dim bottom = std.Min(ROWS - 1, row + 1)
-                For i = left To right
-                    For j = top To bottom
-                        CType(adjNodes, List(Of Node)).AddRange(quads(j * COLUMNS + i).Nodes)
-                    Next
-                Next
-                Return adjNodes
-            End Function
-
-            Public Overridable Function getQuadNode(index As Integer) As QuadNode
-                Return quads(index)
-            End Function
-        End Class
     End Class
 
 End Namespace

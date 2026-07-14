@@ -57,6 +57,10 @@ Imports Microsoft.VisualBasic.Drawing
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Math2D
 Imports Microsoft.VisualBasic.Imaging.Physics.layout
+Imports Brushes = Microsoft.VisualBasic.Imaging.Brushes
+Imports Font = Microsoft.VisualBasic.Imaging.Font
+Imports Pen = Microsoft.VisualBasic.Imaging.Pen
+Imports Pens = Microsoft.VisualBasic.Imaging.Pens
 Imports randf = Microsoft.VisualBasic.Math.RandomExtensions
 
 Module label_layout_test

@@ -23,10 +23,10 @@
     ' GNU General Public License for more details.
     ' 
     ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
+    ' along with this program.  If not, see <http://www.gnu.org/licenses/>.
+    
+    
+    
     ' /********************************************************************************/
 
     ' Summaries:
@@ -101,14 +101,14 @@ Namespace layout
     ''' </summary>
     Public Class ForceLayoutData : Inherits ForceVector
 
-        Public energy0 As Single
-        Public [step] As Single
-        Public progress As Integer
+        Public Energy0 As Single
+        Public [Step] As Single
+        Public Progress As Integer
 
         Public Sub New()
-            progress = 0
-            [step] = 0
-            energy0 = Single.PositiveInfinity
+            Progress = 0
+            [Step] = 0
+            Energy0 = Single.PositiveInfinity
         End Sub
     End Class
 

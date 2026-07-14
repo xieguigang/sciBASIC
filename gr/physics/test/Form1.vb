@@ -57,6 +57,7 @@ Imports Microsoft.VisualBasic.Drawing
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Physics
 Imports Microsoft.VisualBasic.Language
+Imports Brushes = Microsoft.VisualBasic.Imaging.Brushes
 
 Public Class Form1
 
@@ -75,11 +76,11 @@ Public Class Form1
 
         world.AddReaction(NameOf(a), NameOf(b),
                           Function(x, y)
-                              Return Math.RepulsiveForce(1 / System.Math.Sqrt(((x.Point - y.Point) ^ 2).Sum), a.Point, b.Point)
+                              Return ForceMath.RepulsiveForce(1 / System.Math.Sqrt(((x.Point - y.Point) ^ 2).Sum), a.Point, b.Point)
                           End Function)
         world.AddReaction(NameOf(a), NameOf(c),
                           Function(x, y)
-                              Return Math.AttractiveForce(System.Math.Sqrt(((x.Point - y.Point) ^ 2).Sum), a.Point, b.Point)
+                              Return ForceMath.AttractiveForce(System.Math.Sqrt(((x.Point - y.Point) ^ 2).Sum), a.Point, b.Point)
                           End Function)
 
         Call Me.Invoke(Sub()

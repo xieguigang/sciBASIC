@@ -67,10 +67,10 @@ Public Module Reactions
     ''' <returns></returns>
     Public Function CoulombsLaw(m1 As MassPoint, m2 As MassPoint, Optional k# = 9000000000.0) As Force
         Dim d = m1.Point - m2.Point
-        Dim f = Math.CoulombsLaw(m1.Charge, m2.Charge, d.SumMagnitude, k)
+        Dim f = ForceMath.CoulombsLaw(m1.Charge, m2.Charge, d.SumMagnitude, k)
 
         With RepulsiveForce(f, m1.Point, m2.Point)
-            .source = NameOf(CoulombsLaw)
+            .Source = NameOf(CoulombsLaw)
             Return .ByRef
         End With
     End Function

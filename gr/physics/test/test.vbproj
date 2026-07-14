@@ -1,9 +1,9 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <RootNamespace>Microsoft.VisualBasic.Imaging.Physics</RootNamespace>
+    <RootNamespace>test</RootNamespace>
     <TargetFrameworks>net10.0-windows</TargetFrameworks>
-    <AssemblyName>Microsoft.VisualBasic.Imaging.Physics</AssemblyName>
+    <AssemblyName>test</AssemblyName>
     <Platforms>AnyCPU;x64</Platforms>
     <Configurations>Debug;Release;LipidSearch;Rsharp_app_release;mzkit;NPSearch;gcmodeller_desktop;CFD_win32;nuget_release;CellaLAB-Desktop</Configurations>
     <GeneratePackageOnBuild>False</GeneratePackageOnBuild>
@@ -17,7 +17,7 @@
     <OutputType>WinExe</OutputType>
     <UseWindowsForms>True</UseWindowsForms>
     <UseWPF>True</UseWPF>
-    <StartupObject>Microsoft.VisualBasic.Imaging.Physics.Form3</StartupObject>
+    <StartupObject>test.DemoRigidBody</StartupObject>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net10.0-windows|AnyCPU'">

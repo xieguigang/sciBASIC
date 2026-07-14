@@ -23,10 +23,10 @@
     ' GNU General Public License for more details.
     ' 
     ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
+    ' along with this program.  If not, see <http://www.gnu.org/licenses/>.
+    
+    
+    
     ' /********************************************************************************/
 
     ' Summaries:
@@ -110,14 +110,14 @@ Namespace layout
     Public Class ForceVectorNodeLayoutData : Inherits LayoutData
 
         'Data
-        Public dx As Single = 0
-        Public dy As Single = 0
-        Public old_dx As Single = 0
-        Public old_dy As Single = 0
-        Public freeze As Single = 0F
+        Public Dx As Single = 0
+        Public Dy As Single = 0
+        Public OldDx As Single = 0
+        Public OldDy As Single = 0
+        Public Freeze As Single = 0F
 
         Public Overrides Function ToString() As String
-            Return $"[{dx}, {dy}]"
+            Return $"[{Dx}, {Dy}]"
         End Function
 
     End Class
