@@ -1,17 +1,15 @@
 ' Copyright (c) 2018 GPL3 Licensed
 ' 物理世界：固定步长游戏循环，整合力场、宽/窄相位碰撞、关节与刚体积分。
 
-Imports System.Collections.Generic
 Imports Microsoft.VisualBasic.Imaging.Physics.Collision
-Imports Microsoft.VisualBasic.Imaging.Physics
-Imports Microsoft.VisualBasic.Imaging.Physics.Joints
 Imports Microsoft.VisualBasic.Imaging.Physics.ForceFields
+Imports Microsoft.VisualBasic.Imaging.Physics.Joints
 
 ''' <summary>
-''' 2D 物理世界。以 <see cref="Step"/> 固定步长驱动，内部按子步执行：
+''' 2D 物理世界。以 <see cref="PhysicsWorld.Step"/> 固定步长驱动，内部按子步执行：
 ''' 施加力场 → 由力积分速度 → 宽相位 → 窄相位 → 顺序冲量求解（接触 + 关节）→
 ''' 由速度积分位置 → 关节位置修正。
-''' 可直接接入游戏主循环（每帧调用一次 <see cref="Step"/> 传入真实 dt）。
+''' 可直接接入游戏主循环（每帧调用一次 <see cref="PhysicsWorld.Step"/> 传入真实 dt）。
 ''' </summary>
 Public Class PhysicsWorld
 

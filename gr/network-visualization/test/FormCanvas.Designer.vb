@@ -1,4 +1,6 @@
-﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+﻿Imports System.Windows.Forms
+
+<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
 Partial Class FormCanvas
     Inherits System.Windows.Forms.Form
 
@@ -115,12 +117,12 @@ Partial Class FormCanvas
 
     End Sub
 
-    Friend WithEvents MenuStrip1 As Windows.Forms.MenuStrip
-    Friend WithEvents FileToolStripMenuItem As Windows.Forms.ToolStripMenuItem
-    Friend WithEvents SaveAsSVGToolStripMenuItem As Windows.Forms.ToolStripMenuItem
-    Friend WithEvents RefreshParametersToolStripMenuItem As Windows.Forms.ToolStripMenuItem
-    Friend WithEvents DToolStripMenuItem As Windows.Forms.ToolStripMenuItem
-    Friend WithEvents TrackBar1 As Windows.Forms.TrackBar
+    Friend WithEvents MenuStrip1 As MenuStrip
+    Friend WithEvents FileToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents SaveAsSVGToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents RefreshParametersToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents DToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents TrackBar1 As TrackBar
     Friend WithEvents AutoRotateToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents ShowLabelsToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
 End Class

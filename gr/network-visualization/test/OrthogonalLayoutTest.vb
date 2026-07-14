@@ -59,6 +59,8 @@ Imports Microsoft.VisualBasic.Drawing
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Scripting.Runtime
 Imports Microsoft.VisualBasic.Serialization.JSON
+Imports Brushes = Microsoft.VisualBasic.Imaging.Brushes
+Imports Font = Microsoft.VisualBasic.Imaging.Font
 Imports inode = Microsoft.VisualBasic.Data.visualize.Network.Graph.Node
 
 Module OrthogonalLayoutTest

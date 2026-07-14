@@ -131,7 +131,7 @@ End Module
 
 Public Class PointAccess3 : Inherits KdNodeAccessor(Of FDGVector3)
 
-    Public Overrides Sub setByDimensin(x As FDGVector3, dimName As String, value As Double)
+    Public Overrides Sub setBydimension(x As FDGVector3, dimName As String, value As Double)
         Select Case dimName.ToLower
             Case "x" : x.x = value
             Case "y" : x.y = value
@@ -166,7 +166,7 @@ End Class
 
 Public Class PointAccess : Inherits KdNodeAccessor(Of Point2D)
 
-    Public Overrides Sub setByDimensin(x As Point2D, dimName As String, value As Double)
+    Public Overrides Sub setByDimension(x As Point2D, dimName As String, value As Double)
         If dimName.TextEquals("x") Then
             x.X = value
         Else
