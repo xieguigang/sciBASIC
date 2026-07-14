@@ -2,7 +2,7 @@
 ' 接触求解器：顺序冲量法，处理恢复系数(弹性)、库仑摩擦、Baumgarte 位置修正。
 
 Imports System.Math
-Imports Microsoft.VisualBasic.Imaging.Physics.RigidBody
+Imports Microsoft.VisualBasic.Imaging.Physics
 Imports std = System.Math
 
 Namespace Collision

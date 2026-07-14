@@ -3,7 +3,7 @@
 
 Imports System.Collections.Generic
 Imports Microsoft.VisualBasic.Imaging.Physics.Collision
-Imports Microsoft.VisualBasic.Imaging.Physics.RigidBody
+Imports Microsoft.VisualBasic.Imaging.Physics
 Imports Microsoft.VisualBasic.Imaging.Physics.Joints
 Imports Microsoft.VisualBasic.Imaging.Physics.ForceFields
 

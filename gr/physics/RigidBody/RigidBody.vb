@@ -7,7 +7,7 @@ Imports Microsoft.VisualBasic.Imaging.Physics.Collision
 ''' 2D 刚体。不会发生形变，受力后整体平动 + 转动。
 ''' 位置 <see cref="Position"/> 表示质心（世界坐标），<see cref="Rotation"/> 为 2D 标量角（弧度）。
 ''' </summary>
-Namespace RigidBody
+
 
     Public Class RigidBody
 
@@ -143,5 +143,3 @@ Namespace RigidBody
         Return Shape.GetAABB(Position, Rotation)
     End Function
 End Class
-
-End Namespace

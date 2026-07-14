@@ -2,7 +2,7 @@
 ' 力场基类：在其作用区域内对所有刚体施加力。
 
 Imports Microsoft.VisualBasic.Imaging.Physics.Collision
-Imports Microsoft.VisualBasic.Imaging.Physics.RigidBody
+Imports Microsoft.VisualBasic.Imaging.Physics
 
 Namespace ForceFields
 

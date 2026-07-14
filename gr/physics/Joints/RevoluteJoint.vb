@@ -1,7 +1,7 @@
 ' Copyright (c) 2018 GPL3 Licensed
 ' 铰链/球窝关节：允许绕单轴旋转，约束两个锚点重合（2D 下等价于球窝）。
 
-Imports Microsoft.VisualBasic.Imaging.Physics.RigidBody
+Imports Microsoft.VisualBasic.Imaging.Physics
 
 Namespace Joints
 

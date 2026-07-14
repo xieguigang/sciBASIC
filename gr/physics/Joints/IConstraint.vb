@@ -1,7 +1,7 @@
 ' Copyright (c) 2018 GPL3 Licensed
 ' 约束/关节统一接口。
 
-Imports Microsoft.VisualBasic.Imaging.Physics.RigidBody
+Imports Microsoft.VisualBasic.Imaging.Physics
 
 Namespace Joints
 

@@ -2,7 +2,7 @@
 ' 固定关节：锁定全部自由度（位置 + 旋转）。
 
 Imports System.Math
-Imports Microsoft.VisualBasic.Imaging.Physics.RigidBody
+Imports Microsoft.VisualBasic.Imaging.Physics
 Imports std = System.Math
 
 Namespace Joints

@@ -1,7 +1,7 @@
 ' Copyright (c) 2018 GPL3 Licensed
 ' 重力场：在区域内施加与质量成正比的恒定重力。
 
-Imports Microsoft.VisualBasic.Imaging.Physics.RigidBody
+Imports Microsoft.VisualBasic.Imaging.Physics
 
 Namespace ForceFields
 

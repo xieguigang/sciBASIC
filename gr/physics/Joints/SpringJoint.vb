@@ -1,7 +1,7 @@
 ' Copyright (c) 2018 GPL3 Licensed
 ' 弹簧关节：用胡克定律 + 阻尼模拟弹性连接。
 
-Imports Microsoft.VisualBasic.Imaging.Physics.RigidBody
+Imports Microsoft.VisualBasic.Imaging.Physics
 
 Namespace Joints
 

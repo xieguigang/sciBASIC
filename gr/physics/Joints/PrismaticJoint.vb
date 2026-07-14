@@ -2,7 +2,7 @@
 ' 滑块关节：允许沿单一轴平移，约束垂直方向的移动与相对旋转。
 
 Imports System.Math
-Imports Microsoft.VisualBasic.Imaging.Physics.RigidBody
+Imports Microsoft.VisualBasic.Imaging.Physics
 Imports std = System.Math
 
 Namespace Joints

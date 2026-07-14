@@ -2,7 +2,7 @@
 ' 磁力场：以点源为中心的吸引/排斥力场（随距离平方衰减）。
 
 Imports System.Math
-Imports Microsoft.VisualBasic.Imaging.Physics.RigidBody
+Imports Microsoft.VisualBasic.Imaging.Physics
 Imports std = System.Math
 
 Namespace ForceFields

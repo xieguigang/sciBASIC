@@ -3,7 +3,7 @@
 
 Imports System
 Imports System.Drawing
-Imports System.Math
+Imports std = System.Math
 
 Namespace Particles2D
 
@@ -16,10 +16,10 @@ Namespace Particles2D
         Public Position As Vector2
 
         ''' <summary>发射中心方向（弧度）</summary>
-        Public BaseAngle As Double = -PI / 2.0
+        Public BaseAngle As Double = -std.PI / 2.0
 
         ''' <summary>张角（弧度，绕中心方向两侧各 Spread/2）</summary>
-        Public Spread As Double = PI
+        Public Spread As Double = std.PI
 
         ''' <summary>初速度大小</summary>
         Public Speed As Double = 120.0
@@ -44,8 +44,8 @@ Namespace Particles2D
         ''' <summary>生成单个粒子（处于激活状态）</summary>
         Public Function GenerateOne() As GameParticle
             Dim angle = BaseAngle + (rnd.NextDouble() - 0.5) * Spread
-            Dim speed = Speed * (0.5 + rnd.NextDouble())
-            Dim v = New Vector2(Cos(angle), Sin(angle)) * speed
+            Dim speed = Me.Speed * (0.5 + rnd.NextDouble())
+            Dim v = New Vector2(std.Cos(angle), std.Sin(angle)) * speed
             Dim p = New GameParticle
             p.Reset(Position, v, Life * (0.7 + 0.6 * rnd.NextDouble()), Size, Color)
             Return p

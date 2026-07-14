@@ -3,7 +3,7 @@
 
 Imports System
 Imports System.Math
-Imports Microsoft.VisualBasic.Imaging.Physics.RigidBody
+Imports Microsoft.VisualBasic.Imaging.Physics
 Imports std = System.Math
 
 Namespace Collision
