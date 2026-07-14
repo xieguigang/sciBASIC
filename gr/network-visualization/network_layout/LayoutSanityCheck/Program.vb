@@ -3,6 +3,8 @@ Imports System.Drawing
 Imports System.Linq
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
 Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts
+Imports radial = Microsoft.VisualBasic.Data.visualize.Network.Layouts.Radial.RadialLayout
+Imports circular = Microsoft.VisualBasic.Data.visualize.Network.Layouts.Circular.CircularLayout
 
 Module Program
 
@@ -12,6 +14,15 @@ Module Program
 
         Console.WriteLine("=== SpringEmbedder.ForceDirectedLayout ===")
         Call SanityCheck(AddressOf RunSpringEmbedder, "SpringEmbedder")
+
+        Console.WriteLine("=== RadialLayout ===")
+        Call SanityCheck(AddressOf RunRadial, "Radial")
+
+        Console.WriteLine("=== CircularLayout ===")
+        Call SanityCheck(AddressOf RunCircular, "Circular")
+
+        Console.WriteLine("=== CircularLayout + 2-opt 交叉优化 ===")
+        Call SanityCheck(AddressOf RunCircularOptimized, "Circular+Opt")
 
         Console.WriteLine("ALL CHECKS DONE")
     End Sub
@@ -50,6 +61,18 @@ Module Program
 
     Private Sub RunSpringEmbedder(g As NetworkGraph)
         Call SpringEmbedder.ForceDirectedLayout(g, New Size(1000, 1000), 1000)
+    End Sub
+
+    Private Sub RunRadial(g As NetworkGraph)
+        Call radial.LayoutNodes(g)
+    End Sub
+
+    Private Sub RunCircular(g As NetworkGraph)
+        Call circular.LayoutNodes(g, sortByDegree:=True)
+    End Sub
+
+    Private Sub RunCircularOptimized(g As NetworkGraph)
+        Call circular.LayoutNodesWithCrossingOptimization(g, maxSwaps:=1000)
     End Sub
 
     Private Sub SanityCheck(runner As LayoutRunner, name As String)
