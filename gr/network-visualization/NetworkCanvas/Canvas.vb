@@ -59,17 +59,13 @@
 #End Region
 
 Imports System.ComponentModel
-Imports System.Drawing.Drawing2D
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
 Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts.SpringForce
 Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts.SpringForce.Interfaces
 Imports Microsoft.VisualBasic.Drawing
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Parallel.Tasks
-
-#If NET8_0_OR_GREATER Then
 Imports Bitmap = System.Drawing.Bitmap
-#End If
 
 ''' <summary>
 ''' Controls for view the network model.
