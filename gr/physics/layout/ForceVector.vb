@@ -23,10 +23,10 @@
     ' GNU General Public License for more details.
     ' 
     ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
+    ' along with this program.  If not, see <http://www.gnu.org/licenses/>.
+    
+    
+    
     ' /********************************************************************************/
 
     ' Summaries:
@@ -49,9 +49,9 @@
     ' 
     '         Constructor: (+3 Overloads) Sub New
     ' 
-    '         Function: normalize, ToString, z
+    '         Function: Normalize, ToString, Z
     ' 
-    '         Sub: add, multiply, subtract
+    '         Sub: Add, Multiply, Subtract
     ' 
     ' 
     ' /********************************************************************************/
@@ -110,50 +110,50 @@ Namespace layout
     ''' </summary>
     Public Class ForceVector : Inherits LayoutData
 
-        Public x As Single
-        Public y As Single
+        Public X As Single
+        Public Y As Single
 
         Public Sub New(vector As ForceVector)
-            x = vector.x
-            y = vector.y
+            X = vector.X
+            Y = vector.Y
         End Sub
 
         Public Sub New(x As Single, y As Single)
-            Me.x = x
-            Me.y = y
+            Me.X = x
+            Me.Y = y
         End Sub
 
         Public Sub New()
-            x = 0
-            y = 0
+            X = 0
+            Y = 0
         End Sub
 
-        Public Overridable Function z() As Single
+        Public Overridable Function Z() As Single
             Throw New NotSupportedException("Not supported yet.")
         End Function
 
-        Public Overridable Sub add(f As ForceVector)
+        Public Overridable Sub Add(f As ForceVector)
             If f IsNot Nothing Then
-                x += f.x
-                y += f.y
+                X += f.X
+                Y += f.Y
             End If
         End Sub
 
-        Public Overridable Sub multiply(s As Single)
-            x *= s
-            y *= s
+        Public Overridable Sub Multiply(s As Single)
+            X *= s
+            Y *= s
         End Sub
 
-        Public Overridable Sub subtract(f As ForceVector)
+        Public Overridable Sub Subtract(f As ForceVector)
             If f IsNot Nothing Then
-                x -= f.x
-                y -= f.y
+                X -= f.X
+                Y -= f.Y
             End If
         End Sub
 
         Public Overridable ReadOnly Property Energy As Single
             Get
-                Return x ^ 2 + y ^ 2
+                Return X ^ 2 + Y ^ 2
             End Get
         End Property
 
@@ -163,13 +163,13 @@ Namespace layout
             End Get
         End Property
 
-        Public Overridable Function normalize() As ForceVector
+        Public Overridable Function Normalize() As ForceVector
             Dim norm = Me.Norm
-            Return New ForceVector(x / norm, y / norm)
+            Return New ForceVector(X / norm, Y / norm)
         End Function
 
         Public Overrides Function ToString() As String
-            Return "(" & x.ToString() & ", " & y.ToString() & ")"
+            Return "(" & X.ToString() & ", " & Y.ToString() & ")"
         End Function
     End Class
 

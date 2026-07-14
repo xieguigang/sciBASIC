@@ -23,10 +23,10 @@
     ' GNU General Public License for more details.
     ' 
     ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
+    ' along with this program.  If not, see <http://www.gnu.org/licenses/>.
+    
+    
+    
     ' /********************************************************************************/
 
     ' Summaries:
@@ -45,11 +45,12 @@
 
     '     Class ForceVectorUtils
     ' 
-    '         Function: attraction, distance, repulsion
+    '         Function: Attraction, Distance, Repulsion
     ' 
-    '         Sub: fcBiAttractor, fcBiAttractor_noCollide, fcBiFlatAttractor, fcBiRepulsor, fcBiRepulsor_noCollide
-    '              fcBiRepulsor_y, fcUniAttractor, fcUniRepulsor
-    ' 
+    '         Sub: ApplyBidirectionalAttraction, ApplyBidirectionalAttractionNoCollide
+    '             ApplyBidirectionalFlatAttraction, ApplyBidirectionalRepulsion
+    '             ApplyBidirectionalRepulsionNoCollide, ApplyBidirectionalRepulsionVertical
+    '             ApplyUnidirectionalAttraction, ApplyUnidirectionalRepulsion
     ' 
     ' /********************************************************************************/
 
@@ -108,170 +109,125 @@ Namespace layout
     ''' </summary>
     Public Class ForceVectorUtils
 
-        Public Shared Function distance(n1 As Layout2D, n2 As Layout2D) As Single
+        Public Shared Function Distance(n1 As Layout2D, n2 As Layout2D) As Single
             Return CSng(Hypot(n1.X() - n2.X(), n1.Y() - n2.Y()))
         End Function
 
-        Public Shared Sub fcBiRepulsor(N1 As Node, N2 As Node, c As Double)
-            Dim xDist As Double = N1.X() - N2.X() ' distance en x entre les deux noeuds
+        ''' <summary>
+        ''' Apply a force to both nodes (bidirectional): N1 and N2 are pushed apart / pulled together.
+        ''' </summary>
+        Private Shared Sub ApplyBidirectional(N1 As Node, N2 As Node, xDist As Double, yDist As Double, dist As Double, f As Double, verticalY As Double)
+            Dim N1L As ForceVectorNodeLayoutData = N1.LayoutData
+            Dim N2L As ForceVectorNodeLayoutData = N2.LayoutData
+
+            N1L.Dx += xDist / dist * f
+            N1L.Dy += verticalY * yDist / dist * f
+
+            N2L.Dx -= xDist / dist * f
+            N2L.Dy -= verticalY * yDist / dist * f
+        End Sub
+
+        ''' <summary>
+        ''' Apply a force to the target node only (unidirectional): N2 is pushed away from N1.
+        ''' </summary>
+        Private Shared Sub ApplyUnidirectional(N1 As Node, N2 As Node, xDist As Double, yDist As Double, dist As Double, f As Double, verticalY As Double)
+            Dim N2L As ForceVectorNodeLayoutData = N2.LayoutData
+
+            N2L.Dx -= xDist / dist * f
+            N2L.Dy -= verticalY * yDist / dist * f
+        End Sub
+
+        Public Shared Sub ApplyBidirectionalRepulsion(N1 As Node, N2 As Node, c As Double)
+            Dim xDist As Double = N1.X() - N2.X()
             Dim yDist As Double = N1.Y() - N2.Y()
-            Dim dist As Double = CSng(std.Sqrt(xDist * xDist + yDist * yDist)) ' distance tout court
+            Dim dist As Double = std.Sqrt(xDist * xDist + yDist * yDist)
 
             If dist > 0 Then
-                Dim f = repulsion(c, dist)
-
-                Dim N1L As ForceVectorNodeLayoutData = N1.LayoutData
-                Dim N2L As ForceVectorNodeLayoutData = N2.LayoutData
-
-                N1L.dx += xDist / dist * f
-                N1L.dy += yDist / dist * f
-
-                N2L.dx -= xDist / dist * f
-                N2L.dy -= yDist / dist * f
+                ApplyBidirectional(N1, N2, xDist, yDist, dist, Repulsion(c, dist), 1)
             End If
         End Sub
 
-        Public Shared Sub fcBiRepulsor_y(N1 As Node, N2 As Node, c As Double, verticalization As Double)
-            Dim xDist As Double = N1.X() - N2.X() ' distance en x entre les deux noeuds
+        Public Shared Sub ApplyBidirectionalRepulsionVertical(N1 As Node, N2 As Node, c As Double, verticalization As Double)
+            Dim xDist As Double = N1.X() - N2.X()
             Dim yDist As Double = N1.Y() - N2.Y()
-            Dim dist As Double = CSng(std.Sqrt(xDist * xDist + yDist * yDist)) ' distance tout court
+            Dim dist As Double = std.Sqrt(xDist * xDist + yDist * yDist)
 
             If dist > 0 Then
-                Dim f = repulsion(c, dist)
-
-                Dim N1L As ForceVectorNodeLayoutData = N1.LayoutData
-                Dim N2L As ForceVectorNodeLayoutData = N2.LayoutData
-
-                N1L.dx += xDist / dist * f
-                N1L.dy += verticalization * yDist / dist * f
-
-                N2L.dx -= xDist / dist * f
-                N2L.dy -= verticalization * yDist / dist * f
+                ApplyBidirectional(N1, N2, xDist, yDist, dist, Repulsion(c, dist), verticalization)
             End If
         End Sub
 
-        Public Shared Sub fcBiRepulsor_noCollide(N1 As Node, N2 As Node, c As Double)
-            Dim xDist As Double = N1.X() - N2.X() ' distance en x entre les deux noeuds
+        Public Shared Sub ApplyBidirectionalRepulsionNoCollide(N1 As Node, N2 As Node, c As Double)
+            Dim xDist As Double = N1.X() - N2.X()
             Dim yDist As Double = N1.Y() - N2.Y()
-            Dim dist As Double = std.Sqrt(xDist * xDist + yDist * yDist) - N1.size() - N2.size() ' distance (from the border of each node)
+            Dim dist As Double = std.Sqrt(xDist * xDist + yDist * yDist) - N1.Size - N2.Size
 
             If dist > 0 Then
-                Dim f = repulsion(c, dist)
-
-                Dim N1L As ForceVectorNodeLayoutData = N1.LayoutData
-                Dim N2L As ForceVectorNodeLayoutData = N2.LayoutData
-
-                N1L.dx += xDist / dist * f
-                N1L.dy += yDist / dist * f
-
-                N2L.dx -= xDist / dist * f
-                N2L.dy -= yDist / dist * f
-            ElseIf dist <> 0 Then
-                Dim f = -c 'flat repulsion
-
-                Dim N1L As ForceVectorNodeLayoutData = N1.LayoutData
-                Dim N2L As ForceVectorNodeLayoutData = N2.LayoutData
-
-                N1L.dx += xDist / dist * f
-                N1L.dy += yDist / dist * f
-
-                N2L.dx -= xDist / dist * f
-                N2L.dy -= yDist / dist * f
+                ApplyBidirectional(N1, N2, xDist, yDist, dist, Repulsion(c, dist), 1)
+            Else
+                ' nodes overlap: apply a flat repulsion to separate them
+                ApplyBidirectional(N1, N2, xDist, yDist, N1.Size + N2.Size, -c, 1)
             End If
         End Sub
 
-        Public Shared Sub fcUniRepulsor(N1 As Node, N2 As Node, c As Double)
-            Dim xDist As Double = N1.X() - N2.X() ' distance en x entre les deux noeuds
+        Public Shared Sub ApplyUnidirectionalRepulsion(N1 As Node, N2 As Node, c As Double)
+            Dim xDist As Double = N1.X() - N2.X()
             Dim yDist As Double = N1.Y() - N2.Y()
-            Dim dist As Double = CSng(std.Sqrt(xDist * xDist + yDist * yDist)) ' distance tout court
+            Dim dist As Double = std.Sqrt(xDist * xDist + yDist * yDist)
 
             If dist > 0 Then
-                Dim f = repulsion(c, dist)
-
-                Dim N2L As ForceVectorNodeLayoutData = N2.LayoutData
-
-                N2L.dx -= xDist / dist * f
-                N2L.dy -= yDist / dist * f
+                ApplyUnidirectional(N1, N2, xDist, yDist, dist, Repulsion(c, dist), 1)
             End If
         End Sub
 
-        Public Shared Sub fcBiAttractor(N1 As Node, N2 As Node, c As Double)
-            Dim xDist As Double = N1.X() - N2.X() ' distance en x entre les deux noeuds
+        Public Shared Sub ApplyBidirectionalAttraction(N1 As Node, N2 As Node, c As Double)
+            Dim xDist As Double = N1.X() - N2.X()
             Dim yDist As Double = N1.Y() - N2.Y()
-            Dim dist As Double = CSng(std.Sqrt(xDist * xDist + yDist * yDist)) ' distance tout court
+            Dim dist As Double = std.Sqrt(xDist * xDist + yDist * yDist)
 
             If dist > 0 Then
-                Dim f = attraction(c, dist)
-
-                Dim N1L As ForceVectorNodeLayoutData = N1.LayoutData
-                Dim N2L As ForceVectorNodeLayoutData = N2.LayoutData
-
-                N1L.dx += xDist / dist * f
-                N1L.dy += yDist / dist * f
-
-                N2L.dx -= xDist / dist * f
-                N2L.dy -= yDist / dist * f
+                ApplyBidirectional(N1, N2, xDist, yDist, dist, Attraction(c, dist), 1)
             End If
         End Sub
 
-        Public Shared Sub fcBiAttractor_noCollide(N1 As Node, N2 As Node, c As Double)
-            Dim xDist As Double = N1.X() - N2.X() ' distance en x entre les deux noeuds
+        Public Shared Sub ApplyBidirectionalAttractionNoCollide(N1 As Node, N2 As Node, c As Double)
+            Dim xDist As Double = N1.X() - N2.X()
             Dim yDist As Double = N1.Y() - N2.Y()
-            Dim dist As Double = std.Sqrt(xDist * xDist + yDist * yDist) - N1.size() - N2.size() ' distance (from the border of each node)
+            Dim dist As Double = std.Sqrt(xDist * xDist + yDist * yDist) - N1.Size - N2.Size
 
             If dist > 0 Then
-                Dim f = attraction(c, dist)
-
-                Dim N1L As ForceVectorNodeLayoutData = N1.LayoutData
-                Dim N2L As ForceVectorNodeLayoutData = N2.LayoutData
-
-                N1L.dx += xDist / dist * f
-                N1L.dy += yDist / dist * f
-
-                N2L.dx -= xDist / dist * f
-                N2L.dy -= yDist / dist * f
+                ApplyBidirectional(N1, N2, xDist, yDist, dist, Attraction(c, dist), 1)
+            Else
+                ' nodes overlap: separate them with a flat repulsion
+                ApplyBidirectional(N1, N2, xDist, yDist, N1.Size + N2.Size, -c, 1)
             End If
         End Sub
 
-        Public Shared Sub fcBiFlatAttractor(N1 As Node, N2 As Node, c As Double)
-            Dim xDist As Double = N1.X() - N2.X() ' distance en x entre les deux noeuds
+        Public Shared Sub ApplyBidirectionalFlatAttraction(N1 As Node, N2 As Node, c As Double)
+            Dim xDist As Double = N1.X() - N2.X()
             Dim yDist As Double = N1.Y() - N2.Y()
-            Dim dist As Double = CSng(std.Sqrt(xDist * xDist + yDist * yDist)) ' distance tout court
+            Dim dist As Double = std.Sqrt(xDist * xDist + yDist * yDist)
 
             If dist > 0 Then
-                Dim f = -c
-
-                Dim N1L As ForceVectorNodeLayoutData = N1.LayoutData
-                Dim N2L As ForceVectorNodeLayoutData = N2.LayoutData
-
-                N1L.dx += xDist / dist * f
-                N1L.dy += yDist / dist * f
-
-                N2L.dx -= xDist / dist * f
-                N2L.dy -= yDist / dist * f
+                ApplyBidirectional(N1, N2, xDist, yDist, dist, -c, 1)
             End If
         End Sub
 
-        Public Shared Sub fcUniAttractor(N1 As Node, N2 As Node, c As Single)
-            Dim xDist As Double = N1.X() - N2.X() ' distance en x entre les deux noeuds
+        Public Shared Sub ApplyUnidirectionalAttraction(N1 As Node, N2 As Node, c As Single)
+            Dim xDist As Double = N1.X() - N2.X()
             Dim yDist As Double = N1.Y() - N2.Y()
-            Dim dist As Double = CSng(std.Sqrt(xDist * xDist + yDist * yDist)) ' distance tout court
+            Dim dist As Double = std.Sqrt(xDist * xDist + yDist * yDist)
 
             If dist > 0 Then
-                Dim f = attraction(c, dist)
-
-                Dim N2L As ForceVectorNodeLayoutData = N2.LayoutData
-
-                N2L.dx -= xDist / dist * f
-                N2L.dy -= yDist / dist * f
+                ApplyUnidirectional(N1, N2, xDist, yDist, dist, Attraction(c, dist), 1)
             End If
         End Sub
 
-        Protected Friend Shared Function attraction(c As Double, dist As Double) As Double
+        Protected Friend Shared Function Attraction(c As Double, dist As Double) As Double
             Return 0.01 * -c * dist
         End Function
 
-        Protected Friend Shared Function repulsion(c As Double, dist As Double) As Double
+        Protected Friend Shared Function Repulsion(c As Double, dist As Double) As Double
             Return 0.001 * c / dist
         End Function
     End Class
