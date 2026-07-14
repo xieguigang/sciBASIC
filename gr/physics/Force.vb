@@ -23,10 +23,10 @@
     ' GNU General Public License for more details.
     ' 
     ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
+    ' along with this program.  If not, see <http://www.gnu.org/licenses/>.
+    
+    
+    
     ' /********************************************************************************/
 
     ' Summaries:
@@ -74,52 +74,52 @@ Public Class Force
     ''' 力的大小
     ''' </summary>
     ''' <returns></returns>
-    Public Property strength As Double
+    Public Property Strength As Double
     ''' <summary>
     ''' 力的方向，与水平的夹角，使用弧度
     ''' </summary>
     ''' <returns></returns>
-    Public Property angle As Double
-    Public Property source As String
+    Public Property Angle As Double
+    Public Property Source As String
 
     Sub New()
     End Sub
 
     Sub New(F#, angle#, <CallerMemberName> Optional trace$ = Nothing)
-        Me.strength = F#
-        Me.angle = angle
-        Me.source = trace
+        Me.Strength = F#
+        Me.Angle = angle
+        Me.Source = trace
     End Sub
 
-    Public Sub void()
-        strength = 0
-        angle = 0
+    Public Sub Reset()
+        Strength = 0
+        Angle = 0
     End Sub
 
     Public Overrides Function ToString() As String
-        Dim d$ = angle.ToDegrees.ToString("F2")
-        Return $"a={d}, {strength.ToString("F2")}N [{source}]"
+        Dim d$ = Angle.ToDegrees.ToString("F2")
+        Return $"a={d}, {Strength.ToString("F2")}N [{Source}]"
     End Function
 
     Public Shared Operator ^(f As Force, n As Double) As Double
-        Return f.strength ^ n
+        Return f.Strength ^ n
     End Operator
 
     Public Shared Operator *(x As Double, f As Force) As Double
-        Return x * f.strength
+        Return x * f.Strength
     End Operator
 
     Public Shared Operator *(x As Integer, f As Force) As Double
-        Return x * f.strength
+        Return x * f.Strength
     End Operator
 
     Public Shared Operator =(f As Force, strength#) As Boolean
-        Return f.strength = strength
+        Return f.Strength = strength
     End Operator
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Shared Operator =(f As Force, strength%) As Boolean
-        Return std.Abs(f.strength - strength) <= 0.0001
+        Return std.Abs(f.Strength - strength) <= 0.0001
     End Operator
 
     Public Shared Operator <>(f As Force, strength#) As Boolean
@@ -131,19 +131,19 @@ Public Class Force
     End Operator
 
     Public Shared Operator >(strength#, f As Force) As Boolean
-        Return strength > f.strength
+        Return strength > f.Strength
     End Operator
 
     Public Shared Operator <(strength#, f As Force) As Boolean
-        Return strength < f.strength
+        Return strength < f.Strength
     End Operator
 
     Public Shared Operator >(f1 As Force, f2 As Force) As Boolean
-        Return f1.strength > f2.strength
+        Return f1.Strength > f2.Strength
     End Operator
 
     Public Shared Operator <(f1 As Force, f2 As Force) As Boolean
-        Return f1.strength < f2.strength
+        Return f1.Strength < f2.Strength
     End Operator
 
     ''' <summary>
@@ -153,9 +153,9 @@ Public Class Force
     ''' <returns></returns>
     Public Shared Operator -(f As Force) As Force
         Return New Force With {
-            .strength = f.strength,
-            .angle = f.angle + PI,
-            .source = $"Reverse({f.source})"
+            .Strength = f.Strength,
+            .Angle = f.Angle + PI,
+            .Source = $"Reverse({f.Source})"
         }
     End Operator
 
@@ -166,6 +166,6 @@ Public Class Force
     ''' <param name="f2"></param>
     ''' <returns></returns>
     Public Shared Operator +(f1 As Force, f2 As Force) As Force
-        Return Math.ParallelogramLaw(f1, f2)
+        Return ForceMath.ParallelogramLaw(f1, f2)
     End Operator
 End Class

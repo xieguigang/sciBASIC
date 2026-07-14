@@ -23,10 +23,10 @@
     ' GNU General Public License for more details.
     ' 
     ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
+    ' along with this program.  If not, see <http://www.gnu.org/licenses/>.
+    
+    
+    
     ' /********************************************************************************/
 
     ' Summaries:
@@ -62,7 +62,7 @@ Imports std = System.Math
 ''' <summary>
 ''' Math provider for <see cref="Force"/>
 ''' </summary>
-Public Module Math
+Public Module ForceMath
 
     ''' <summary>
     ''' Vector index for XYZ
@@ -76,14 +76,17 @@ Public Module Math
     ''' <returns></returns>
     <Extension>
     Public Function Decomposition2D(F As Force) As Vector
-        Dim v = F.strength
-        Dim a = F.angle
-        Return New Vector({v * std.Cos(a), v * Sin(a)})
+        Dim v = F.Strength
+        Dim a = F.Angle
+        Return New Vector({v * std.Cos(a), v * std.Sin(a)})
     End Function
 
     <Extension>
     Public Function Decomposition3D(F As Force) As Vector
-        Throw New NotImplementedException
+        Dim v = F.Strength
+        Dim a = F.Angle
+        ' Force 仅编码了平面角，3D 向量在 xy 平面投影，z 分量为 0
+        Return New Vector({v * std.Cos(a), v * std.Sin(a), 0})
     End Function
 
     ''' <summary>
@@ -102,37 +105,37 @@ Public Module Math
         Else
         End If
 
-        Dim alpha = f1.angle - f2.angle
-        Dim F = Sqrt(f1 ^ 2 + f2 ^ 2 + 2 * f1 * f2 * std.Cos(alpha))
+        Dim alpha = f1.Angle - f2.Angle
+        Dim F = std.Sqrt(f1.Strength ^ 2 + f2.Strength ^ 2 + 2 * f1.Strength * f2.Strength * std.Cos(alpha))
 
         If F = 0R Then
             ' F 为零的之后，只有二者方向相反
-            alpha = Min(f2.angle, f1.angle)
+            alpha = std.Min(f2.Angle, f1.Angle)
         Else
-            Dim sina = Sin(alpha) * f1 / F
+            Dim sina = std.Sin(alpha) * f1.Strength / F
 
             If std.Abs(sina) <= 0.000000000001 Then
                 ' 要么二者相反，要么二者同向
-                If F > f1 AndAlso F > f2 Then
+                If F > f1.Strength AndAlso F > f2.Strength Then
                     ' 二者同向相加才会出现都大于的情况
-                    alpha = Min(f1.angle, f2.angle)
+                    alpha = std.Min(f1.Angle, f2.Angle)
                 Else
                     ' 反向，取力最大的方向
-                    If f1 > f2 Then
-                        alpha = f1.angle
+                    If f1.Strength > f2.Strength Then
+                        alpha = f1.Angle
                     Else
-                        alpha = f2.angle
+                        alpha = f2.Angle
                     End If
                 End If
             Else
-                alpha = Sinh(sina) + f2.angle
+                alpha = std.Sinh(sina) + f2.Angle
             End If
         End If
 
         Return New Force With {
-            .strength = F,
-            .angle = alpha,
-            .source = NameOf(ParallelogramLaw)
+            .Strength = F,
+            .Angle = alpha,
+            .Source = NameOf(ParallelogramLaw)
         }
     End Function
 
@@ -146,7 +149,7 @@ Public Module Math
         Dim result As New Force
 
         ' 力从小到大升序排序，可以保证最后力的方向永远是偏向于大力所指向的方向
-        For Each n As Force In F.OrderBy(Function(i) i.strength)
+        For Each n As Force In F.OrderBy(Function(i) i.Strength)
             result = result + n
         Next
 
@@ -164,9 +167,9 @@ Public Module Math
         Dim alpha = PI + 1 / 2 * PI
 
         Return New Force With {
-            .strength = f,
-            .angle = alpha,
-            .source = NameOf(Gravity)
+            .Strength = f,
+            .Angle = alpha,
+            .Source = NameOf(Gravity)
         }
     End Function
 
@@ -174,8 +177,9 @@ Public Module Math
     ''' 与合力的方向相反的摩檫力
     ''' </summary>
     ''' <returns></returns>
-    Public Function Friction() As Force
-        Throw New NotImplementedException
+    Public Function Friction(f As Force) As Force
+        ' 摩檫力方向与合力相反
+        Return -f
     End Function
 
     ''' <summary>
@@ -201,10 +205,10 @@ Public Module Math
     ''' <returns></returns>
     Public Function CoulombsLaw(m1 As MassPoint, m2 As MassPoint, Optional k# = 9000000000.0) As Force
         Dim d = m1.Point - m2.Point
-        Dim f = Math.CoulombsLaw(m1.Charge, m2.Charge, d.SumMagnitude, k)
+        Dim f = CoulombsLaw(m1.Charge, m2.Charge, d.SumMagnitude, k)
 
         With RepulsiveForce(f, m1.Point, m2.Point)
-            .source = NameOf(CoulombsLaw)
+            .Source = NameOf(CoulombsLaw)
             Return .ByRef
         End With
     End Function
@@ -231,7 +235,7 @@ Public Module Math
     Public Function RepulsiveForce(strength#, a As Vector, b As Vector) As Force
         Dim d = a - b
         Dim cosA = Cos(a - b, {100, 0})  ' 两个向量的方向对X坐标轴的夹角才是力的方向
-        Dim alpha = Arccos(cosA)
+        Dim alpha = std.Arccos(cosA)
 
         If d(Y) < 0 Then
             ' y 小于零的时候是第三和第4象限的
@@ -243,9 +247,9 @@ Public Module Math
         End If
 
         Return New Force With {
-            .strength = strength,
-            .angle = alpha,
-            .source = NameOf(RepulsiveForce)
+            .Strength = strength,
+            .Angle = alpha,
+            .Source = NameOf(RepulsiveForce)
         }
     End Function
 
@@ -257,8 +261,8 @@ Public Module Math
     ''' <param name="b"></param>
     ''' <returns></returns>
     Public Function AttractiveForce(strength#, a As Vector, b As Vector) As Force
-        With -Math.RepulsiveForce(strength, a, b)
-            .source = NameOf(AttractiveForce)
+        With -RepulsiveForce(strength, a, b)
+            .Source = NameOf(AttractiveForce)
             Return .ByRef
         End With
     End Function
