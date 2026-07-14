@@ -64,6 +64,11 @@ Namespace Drawing3D
         Public Property AngleX!
         Public Property AngleY!
         Public Property AngleZ!
+
+        ''' <summary>
+        ''' FOV
+        ''' </summary>
+        ''' <returns></returns>
         Public Property FieldOfView! = 256.0!
         Public Property Screen As Size
         ''' <summary>
