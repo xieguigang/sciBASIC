@@ -91,10 +91,10 @@ Public Class Particle : Implements Layout2D
 
     Sub New(i As Integer, box As Size)
         index = i
-        position = Vector2.random(box)
-        velocity = Vector2.random(New SizeF(10, 10))
-        predictedPosition = Vector2.zero
-        density = Vector2.zero
+        position = Vector2.Random(box)
+        velocity = Vector2.Random(New SizeF(10, 10))
+        predictedPosition = Vector2.Zero
+        density = Vector2.Zero
     End Sub
 
 End Class

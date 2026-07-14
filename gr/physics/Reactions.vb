@@ -70,7 +70,7 @@ Public Module Reactions
         Dim f = ForceMath.CoulombsLaw(m1.Charge, m2.Charge, d.SumMagnitude, k)
 
         With RepulsiveForce(f, m1.Point, m2.Point)
-            .source = NameOf(CoulombsLaw)
+            .Source = NameOf(CoulombsLaw)
             Return .ByRef
         End With
     End Function

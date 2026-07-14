@@ -23,10 +23,10 @@
     ' GNU General Public License for more details.
     ' 
     ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
+    ' along with this program.  If not, see <http://www.gnu.org/licenses/>.
+    
+    
+    
     ' /********************************************************************************/
 
     ' Summaries:
@@ -64,45 +64,45 @@ Imports System.Math
 
 Public Class Vector2 : Inherits Vector2D
 
-    Public Shared ReadOnly Property down As Vector2
+    Public Shared ReadOnly Property Down As Vector2
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Get
             Return New Vector2(0, 1)
         End Get
     End Property
 
-    Public Shared ReadOnly Property up As Vector2
+    Public Shared ReadOnly Property Up As Vector2
         Get
             Return New Vector2(0, -1)
         End Get
     End Property
 
-    Public Shared ReadOnly Property right As Vector2
+    Public Shared ReadOnly Property Right As Vector2
         Get
             Return New Vector2(1, 0)
         End Get
     End Property
 
-    Public Shared ReadOnly Property left As Vector2
+    Public Shared ReadOnly Property Left As Vector2
         Get
             Return New Vector2(-1, 0)
         End Get
     End Property
 
-    Public Overloads Shared ReadOnly Property zero As Vector2
+    Public Overloads Shared ReadOnly Property Zero As Vector2
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Get
             Return New Vector2(0, 0)
         End Get
     End Property
 
-    Public Shared ReadOnly Property one As Vector2
+    Public Shared ReadOnly Property One As Vector2
         Get
             Return New Vector2(1, 1)
         End Get
     End Property
 
-    Public ReadOnly Property magnitude As Double
+    Public ReadOnly Property Magnitude As Double
         Get
             Return Sqrt(x ^ 2 + y ^ 2)
         End Get
@@ -141,11 +141,11 @@ Public Class Vector2 : Inherits Vector2D
         Call MyBase.New(CDbl(x), CDbl(y))
     End Sub
 
-    Public Shared Function random(box As SizeF) As Vector2
+    Public Shared Function Random(box As SizeF) As Vector2
         Return New Vector2(randf.NextDouble(0, box.Width), randf.NextDouble(0, box.Height))
     End Function
 
-    Public Shared Function random(box As Size) As Vector2
+    Public Shared Function Random(box As Size) As Vector2
         Return New Vector2(randf.NextInteger(box.Width), randf.NextInteger(box.Height))
     End Function
 
@@ -184,7 +184,7 @@ Public Class Vector2 : Inherits Vector2D
 
     Public Overloads Shared Operator /(v As Vector2, n As Double) As Vector2
         If n = 0.0 Then
-            Return Vector2.zero
+            Return Vector2.Zero
         Else
             Return New Vector2(v.x / n, v.y / n)
         End If

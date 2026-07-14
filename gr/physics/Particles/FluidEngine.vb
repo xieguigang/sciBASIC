@@ -373,7 +373,7 @@ Public Class FluidEngine : Implements IContainer(Of Particle)
         Dim densityNear As Single = particles(id).density(1)
         Dim pressure As Single = PressureFromDensity(density)
         Dim nearPressure As Single = NearPressureFromDensity(densityNear)
-        Dim pressureForce As Vector2 = Vector2.zero
+        Dim pressureForce As Vector2 = Vector2.Zero
 
         Dim pos As Vector2 = particles(id).predictedPosition
         Dim originCell = GetCell2D(pos, smoothingRadius)
@@ -425,7 +425,7 @@ Public Class FluidEngine : Implements IContainer(Of Particle)
         Dim originCell = GetCell2D(pos, smoothingRadius)
         Dim sqrRadius As Single = smoothingRadius * smoothingRadius
 
-        Dim viscosityForce As Vector2 = Vector2.zero
+        Dim viscosityForce As Vector2 = Vector2.Zero
         Dim velocity As Vector2 = particles(id).velocity
 
         Dim neighbours = spatial.SpatialLookup(originCell)

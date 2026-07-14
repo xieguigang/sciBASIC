@@ -96,19 +96,19 @@ Public Class World
     ''' <param name="physX">调试使用</param>
     Public Delegate Sub Output(objs As IEnumerable(Of MassPoint), physX As Dictionary(Of String, List(Of Force)))
 
-    Protected objects As List(Of MassPoint)
-    Protected reactions As New Dictionary(Of String, Dictionary(Of String, NamedValue(Of Reaction)))
-    Protected forceSystem As New Dictionary(Of String, List(Of Force))
-    Protected outputs As Output
+    Protected Objects As List(Of MassPoint)
+    Protected Reactions As New Dictionary(Of String, Dictionary(Of String, NamedValue(Of Reaction)))
+    Protected ForceSystem As New Dictionary(Of String, List(Of Force))
+    Protected Outputs As Output
 
     Protected Overridable Sub RaiseEvents()
-        If Not outputs Is Nothing Then
-            Call outputs(objects, forceSystem)
+        If Not Outputs Is Nothing Then
+            Call Outputs(Objects, ForceSystem)
         End If
     End Sub
 
     Sub New(Optional updates As Output = Nothing)
-        outputs = updates
+        Outputs = updates
     End Sub
 
     ''' <summary>
@@ -119,11 +119,11 @@ Public Class World
     ''' <param name="react">这两个对象之间如何产生力？</param>
     ''' <param name="trace$"></param>
     Public Sub AddReaction(a$, b$, react As Reaction, <CallerMemberName> Optional trace$ = Nothing)
-        If Not reactions.ContainsKey(a) Then
-            reactions.Add(a, New Dictionary(Of String, NamedValue(Of Reaction)))
+        If Not Reactions.ContainsKey(a) Then
+            Reactions.Add(a, New Dictionary(Of String, NamedValue(Of Reaction)))
         End If
 
-        Dim list = reactions(a)
+        Dim list = Reactions(a)
 
         list(b) = New NamedValue(Of Reaction) With {
             .Name = react.ToString,
@@ -144,37 +144,37 @@ Public Class World
     End Sub
 
     Private Sub React()
-        For Each F In forceSystem.Values
+        For Each F In ForceSystem.Values
             Call F.Clear()
         Next
 
-        For Each a As MassPoint In objects.Where(Function(m) Me.reactions.ContainsKey(m.ID))
-            Dim reactions = Me.reactions(a.ID)
-            Dim forces As List(Of Force) = forceSystem(a.ID)
+        For Each a As MassPoint In Objects.Where(Function(m) Me.Reactions.ContainsKey(m.ID))
+            Dim Reactions = Me.Reactions(a.ID)
+            Dim forces As List(Of Force) = ForceSystem(a.ID)
 
-            For Each b As MassPoint In objects.Where(Function(m) reactions.ContainsKey(m.ID))
-                Dim reaction As NamedValue(Of Reaction) = reactions(b.ID)
+            For Each b As MassPoint In Objects.Where(Function(m) Reactions.ContainsKey(m.ID))
+                Dim reaction As NamedValue(Of Reaction) = Reactions(b.ID)
 
                 With reaction.Value(a, b)
-                    .source = reaction.Name
+                    .Source = reaction.Name
 
                     Call forces.Add(.ByRef)
-                    Call forceSystem(b.ID).Add(- .ByRef)
+                    Call ForceSystem(b.ID).Add(- .ByRef)
                 End With
             Next
         Next
 
-        For Each m As MassPoint In objects
+        For Each m As MassPoint In Objects
             ' 力影响了物体的加速度
-            m += forceSystem(m.ID).Sum
+            m += ForceSystem(m.ID).Sum
             ' 加速度改变了物体现有的运动状态
             m.Displacement()
         Next
     End Sub
 
     Public Shared Operator +(world As World, m As MassPoint) As World
-        world.objects += m
-        world.forceSystem.Add(m.ID, New List(Of Force))
+        world.Objects += m
+        world.ForceSystem.Add(m.ID, New List(Of Force))
 
         If m.Acceleration Is Nothing Then
             m.Acceleration = New Vector(2)
