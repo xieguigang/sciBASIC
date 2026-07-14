@@ -9,7 +9,9 @@ Imports Microsoft.VisualBasic.Imaging.Drawing2D.Math2D
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Math2D.ConcaveHull
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.ComponentModel.DataStructures
 Imports Microsoft.VisualBasic.MIME.Html.CSS
+Imports Microsoft.VisualBasic.MIME.Html.Render
 
 ''' <summary>
 ''' 将网络节点按照分组绘制出凸包多边形（convex hull polygon）以及其图例。
@@ -34,10 +36,6 @@ Friend Class HullPolygonRendering
     ''' <param name="g"></param>
     ''' <param name="drawPoints">将会被绘制到画布上面的节点集合</param>
     Public Sub RenderHull(g As IGraphics, drawPoints As Node())
-        If config.HullPolygonGroups Is Nothing Then
-            Return
-        End If
-
         Dim hullPolygonGroups = config.HullPolygonGroups
         Dim hullPolygon As Index(Of String)
         Dim groups = drawPoints _

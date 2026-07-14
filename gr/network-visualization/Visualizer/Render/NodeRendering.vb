@@ -40,8 +40,8 @@ Friend Class NodeRendering
         defaultColor = dc.TranslateColor
 
         Dim env As CSSEnvirnment = CSSEnvirnment.Empty(config.Ppi)
-        stroke = env.GetPen(CSS.Stroke.TryParse(config.NodeStroke), allowNull:=True)
-        baseFont = env.GetFont(CSSFont.TryParse(config.LabelFontBase, New CSSFont With {
+        stroke = env.GetPen(Microsoft.VisualBasic.MIME.Html.CSS.Stroke.TryParse(config.NodeStroke), allowNull:=True)
+        baseFont = env.GetFont(Microsoft.VisualBasic.MIME.Html.CSS.CSSFont.TryParse(config.LabelFontBase, New CSSFont With {
             .family = FontFace.MicrosoftYaHei,
             .size = 12,
             .style = FontStyle.Regular

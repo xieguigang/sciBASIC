@@ -64,7 +64,7 @@ Public Class NetworkPlot
 
         ' 所绘制的图像输出的尺寸大小
         Dim frameSize As SizeF = PrinterDimension.SizeOf(config.CanvasSize)
-        Dim margin As Padding = CSS.Padding.TryParse(
+        Dim margin As Padding = Microsoft.VisualBasic.MIME.Html.CSS.Padding.TryParse(
             config.Padding, [default]:=New Padding With {
                 .Bottom = 100,
                 .Left = 100,
