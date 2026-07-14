@@ -128,6 +128,9 @@ Namespace SpringForce
         Dim disposedValue As Boolean
         Dim grid As Grid(Of LayoutPoint())
 
+        ' 并行模式下对共享节点加速度的写入需要串行化，避免数据竞争
+        Shared ReadOnly coulombLock As New Object()
+
         Public Property graph As NetworkGraph Implements IForceDirected.graph
         Public Property interactiveMode As Boolean = False Implements IForceDirected.interactiveMode
         Private ReadOnly Property Entity As IReadOnlyCollection(Of LayoutPoint) Implements IContainer(Of LayoutPoint).Entity
@@ -186,7 +189,9 @@ Namespace SpringForce
             End If
 
             If existingSpring IsNot Nothing Then
-                Return New Spring(existingSpring.A, existingSpring.B, 0F, 0F)
+                ' 复用同一对节点已有的弹簧（共享其自然长度与刚度），
+                ' 避免原先返回 length=0/K=0 的弹簧，使重边不产生弹簧力、且把节点拉向重叠。
+                Return existingSpring
             End If
 
             Dim toEdges As IEnumerable(Of Edge) = graph.GetEdges(edge.V, edge.U)
@@ -201,7 +206,7 @@ Namespace SpringForce
             End If
 
             If existingSpring IsNot Nothing Then
-                Return New Spring(existingSpring.B, existingSpring.A, 0F, 0F)
+                Return existingSpring
             End If
 
             Dim U = GetPoint(edge.U)
@@ -245,19 +250,28 @@ Namespace SpringForce
                     Dim distance As Double = d.Magnitude() + 0.1F
                     Dim direction As AbstractVector = d.Normalize()
 
-                    If n1.pinned AndAlso current.node.pinned Then
-                        partner.ApplyForce(direction * 0F)
-                        current.ApplyForce(direction * 0F)
-                    ElseIf n1.pinned Then
-                        partner.ApplyForce(direction * 0F)
-                        current.ApplyForce((direction * repulsion) / (distance * -1.0F))
-                    ElseIf current.node.pinned Then
-                        partner.ApplyForce((direction * repulsion) / (distance))
-                        current.ApplyForce(direction * 0F)
-                    Else
-                        partner.ApplyForce((direction * repulsion) / (distance * 0.5F))
-                        current.ApplyForce((direction * repulsion) / (distance * -0.5F))
-                    End If
+                    ' 库仑排斥力使用逆平方模型 repulsion / d^2（经典 FR 力导向），
+                    ' 并以最小距离 1.0 软约束避免近距离奇点导致数值爆炸。
+                    Dim effDist As Double = stdNum.Max(distance, 1.0F)
+                    Dim f As Double = repulsion / (effDist * effDist)
+
+                    ' 串行化对共享节点加速度的写入：非并行路径无竞争开销，
+                    ' 并行路径（parallel=True）下可避免跨线程数据竞争导致结果非确定。
+                    SyncLock coulombLock
+                        If n1.pinned AndAlso current.node.pinned Then
+                            partner.ApplyForce(direction * 0F)
+                            current.ApplyForce(direction * 0F)
+                        ElseIf n1.pinned Then
+                            partner.ApplyForce(direction * 0F)
+                            current.ApplyForce(direction * (f * -1.0F))
+                        ElseIf current.node.pinned Then
+                            partner.ApplyForce(direction * f)
+                            current.ApplyForce(direction * 0F)
+                        Else
+                            partner.ApplyForce(direction * (f * 0.5F))
+                            current.ApplyForce(direction * (f * -0.5F))
+                        End If
+                    End SyncLock
                 End If
             Next
         End Sub
@@ -355,13 +369,14 @@ Namespace SpringForce
                     End If
                 Else
                     If point.position.x.IsNaNImaginary OrElse stdNum.Abs(point.position.x) > maxCanvas OrElse point.position.x < 0 Then
-                        point.position.x = randf.NextDouble * x / 100
+                        ' 越界/非实数时重置到画布内的合理正坐标，避免重置回负值或仍越界
+                        point.position.x = randf.NextDouble * Width
                     End If
                     If point.position.y.IsNaNImaginary OrElse stdNum.Abs(point.position.y) > maxCanvas OrElse point.position.y < 0 Then
-                        point.position.y = randf.NextDouble * y / 100
+                        point.position.y = randf.NextDouble * Height
                     End If
                     If point.position.z.IsNaNImaginary OrElse stdNum.Abs(point.position.z) > maxCanvas OrElse point.position.z < 0 Then
-                        point.position.z = randf.NextDouble * z / 100
+                        point.position.z = randf.NextDouble * Height
                     End If
                 End If
 

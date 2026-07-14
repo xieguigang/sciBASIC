@@ -63,11 +63,18 @@ Imports randf = Microsoft.VisualBasic.Math.RandomExtensions
 Public Class SpringEmbedder : Implements IPlanner
 
     ReadOnly k As Double
-    ReadOnly maxRepulsiveForceDistance As Double = 10
+    ReadOnly maxRepulsiveForceDistance As Double
     ReadOnly c As Double = 3
 
     ReadOnly nodes As Node()
     ReadOnly edges As Edge()
+
+    ''' <summary>
+    ''' 合力累加器（双精度）。原先累加到 <see cref="NodeData.force"/>（System.Drawing.Point，X/Y 为整型），
+    ''' 每次赋值都会被截断为整数，导致力被严重量化、布局质量差。这里改用双精度字典绕开该限制。
+    ''' </summary>
+    ReadOnly forceX As New Dictionary(Of String, Double)
+    ReadOnly forceY As New Dictionary(Of String, Double)
 
     ''' <summary>
     ''' 
@@ -76,16 +83,28 @@ Public Class SpringEmbedder : Implements IPlanner
     ''' <param name="size"></param>
     ''' <param name="maxRepulsiveForceDistance">
     ''' Repulsive forces between nodes that are further apart than this are ignored.
+    ''' 若未指定（传入 NaN），则依据画布尺度给出合理默认值，避免仅在 10px 内生效导致网络无法铺开。
     ''' </param>
     Sub New(g As NetworkGraph, size As Size,
-            Optional maxRepulsiveForceDistance As Double = 10,
+            Optional maxRepulsiveForceDistance As Double = Double.NaN,
             Optional c As Double = 3)
 
         Me.nodes = g.connectedNodes
         Me.edges = g.graphEdges.ToArray
         Me.c = c
-        Me.maxRepulsiveForceDistance = maxRepulsiveForceDistance
         Me.k = size.Width * size.Height / (nodes.Length * 1000)
+
+        If Double.IsNaN(maxRepulsiveForceDistance) OrElse maxRepulsiveForceDistance <= 0 Then
+            ' 与画布尺度相关的合理默认作用距离，使排斥力能够覆盖整个画布
+            Me.maxRepulsiveForceDistance = System.Math.Min(size.Width, size.Height) * 0.5
+        Else
+            Me.maxRepulsiveForceDistance = maxRepulsiveForceDistance
+        End If
+
+        For Each n As Node In nodes
+            forceX(n.label) = 0.0
+            forceY(n.label) = 0.0
+        Next
     End Sub
 
     ''' <summary>
@@ -100,6 +119,12 @@ Public Class SpringEmbedder : Implements IPlanner
     End Sub
 
     Public Sub Collide(Optional timeStep As Double = Double.NaN) Implements IPlanner.Collide
+        ' 每轮重置双精度合力累加器
+        For Each n As Node In nodes
+            forceX(n.label) = 0.0
+            forceY(n.label) = 0.0
+        Next
+
         Call repulsions()
         Call edgeAttractions()
         Call setLocation(c:=timeStep)
@@ -125,16 +150,13 @@ Public Class SpringEmbedder : Implements IPlanner
 
                 If distance < maxRepulsiveForceDistance Then
                     Dim repulsiveForce As Double = (k * k / distance)
-                    Dim fa As Point = a.data.force
-                    Dim fb As Point = b.data.force
 
-                    fb.X = fb.X + (repulsiveForce * deltaX / distance)
-                    fb.Y = fb.Y + (repulsiveForce * deltaY / distance)
-                    fa.X = fa.X - (repulsiveForce * deltaX / distance)
-                    fa.Y = fa.Y - (repulsiveForce * deltaY / distance)
-
-                    a.data.force = fa
-                    b.data.force = fb
+                    ' a 受到背离 b 的排斥力（方向 a - b = -delta）
+                    forceX(a.label) = forceX(a.label) - (repulsiveForce * deltaX / distance)
+                    forceY(a.label) = forceY(a.label) - (repulsiveForce * deltaY / distance)
+                    ' b 受到背离 a 的排斥力（方向 b - a = +delta）
+                    forceX(b.label) = forceX(b.label) + (repulsiveForce * deltaX / distance)
+                    forceY(b.label) = forceY(b.label) + (repulsiveForce * deltaY / distance)
                 End If
             Next
         Next
@@ -165,29 +187,27 @@ Public Class SpringEmbedder : Implements IPlanner
 
             Dim distance As Double = System.Math.Sqrt(distanceSquared)
 
-            If distance > maxRepulsiveForceDistance Then
-                distance = maxRepulsiveForceDistance
-            End If
-
-            distanceSquared = distance * distance
-
+            ' FR 吸引力为 d^2/k，依定义本就不应对距离做“排斥力上限”截断。
+            ' 原代码将其截断到 maxRepulsiveForceDistance（默认 10），
+            ' 使得 attractiveForce = (100 - k*k)/k ≈ 0，吸引力恒近似为 0，网络无法收拢。
             Dim attractiveForce As Double = (distanceSquared - k * k) / k
 
             ' Make edges stronger if people know each other.
             Dim weight As Double = edge.weight
 
+            ' 防止 weight <= 0 时 Log 产生 NaN/负无穷
+            If weight <= 0 Then
+                weight = 1
+            End If
+
             attractiveForce *= (System.Math.Log(weight) * 0.5) + 1
 
-            Dim fa As Point = nodeA.data.force
-            Dim fb As Point = nodeB.data.force
-
-            fb.X = nodeB.data.force.X - attractiveForce * deltaX / distance
-            fb.Y = nodeB.data.force.Y - attractiveForce * deltaY / distance
-            fa.X = nodeA.data.force.X + attractiveForce * deltaX / distance
-            fa.Y = nodeA.data.force.Y + attractiveForce * deltaY / distance
-
-            nodeA.data.force = fa
-            nodeB.data.force = fb
+            ' nodeA 受到朝向 nodeB 的吸引力（方向 B - A = +delta）
+            forceX(nodeA.label) = forceX(nodeA.label) + (attractiveForce * deltaX / distance)
+            forceY(nodeA.label) = forceY(nodeA.label) + (attractiveForce * deltaY / distance)
+            ' nodeB 受到朝向 nodeA 的吸引力（方向 A - B = -delta）
+            forceX(nodeB.label) = forceX(nodeB.label) - (attractiveForce * deltaX / distance)
+            forceY(nodeB.label) = forceY(nodeB.label) - (attractiveForce * deltaY / distance)
         Next
     End Sub
 
@@ -198,8 +218,8 @@ Public Class SpringEmbedder : Implements IPlanner
         For a As Integer = 0 To nodes.Length - 1
             Dim node As Node = nodes(a)
 
-            Dim xMovement As Double = c * node.data.force.X
-            Dim yMovement As Double = c * node.data.force.Y
+            Dim xMovement As Double = c * forceX(node.label)
+            Dim yMovement As Double = c * forceY(node.label)
 
             ' Limit movement values to stop nodes flying into oblivion.
             Dim max As Double = 100
@@ -215,7 +235,6 @@ Public Class SpringEmbedder : Implements IPlanner
             End If
 
             node.data.initialPostion.Point2D = New Point(node.data.initialPostion.x + xMovement, node.data.initialPostion.y + yMovement)
-            node.data.force = New Point
         Next
     End Sub
 

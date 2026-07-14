@@ -149,9 +149,9 @@ Namespace ForceDirected
             For Each v As Node In g.vertex
                 id = v.label
 
-                mDxMap(id) = 0.0
-                mDyMap(id) = 0.0
-
+                ' 注意：不可在此处把 mDxMap/mDyMap 重置为 0，
+                ' 否则会抹除 MyBase.runAttraction() 已累加的“直接边”吸引力。
+                ' 这里只在其之上继续累加“间接边”吸引力。
                 For Each u As Node In g.vertex.Where(Function(ui) Not ui Is v)
                     Dim key As String = $"{u.label}-{v.label}"
 

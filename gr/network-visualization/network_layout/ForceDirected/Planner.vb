@@ -90,6 +90,14 @@ Namespace ForceDirected
         ''' </summary>
         Protected ReadOnly avoidRegions As (rect As Rectangle2D, center As PointF)()
 
+        ''' <summary>
+        ''' 温度冷却调度：每轮迭代后位移上限按 <see cref="coolingRate"/> 递减，
+        ''' 使布局从“大步铺开”逐渐收敛到“微调”，避免恒被常数 ±maxtx/±maxty 截断而失效。
+        ''' </summary>
+        Protected ReadOnly initTemperature As Double
+        Protected temperature As Double
+        Protected Const coolingRate As Double = 0.99
+
         Sub New(g As NetworkGraph,
                 Optional ejectFactor As Integer = 6,
                 Optional condenseFactor As Integer = 3,
@@ -116,6 +124,16 @@ Namespace ForceDirected
                 .SafeQuery _
                 .Select(Function(rect) (New Rectangle2D(rect), rect.Centre)) _
                 .ToArray
+
+            ' 兼容旧参数：若调用方显式传入较大的 maxtx/maxty 则以其为主；
+            ' 否则旧的默认 4/3 过小，改用与画布尺度相关的合理初温。
+            initTemperature = stdNum.Max(maxtx, maxty)
+
+            If initTemperature <= 4 Then
+                initTemperature = stdNum.Min(CANVAS_WIDTH, CANVAS_HEIGHT) * 0.1
+            End If
+
+            temperature = initTemperature
         End Sub
 
         ''' <summary>
@@ -128,6 +146,8 @@ Namespace ForceDirected
             Call runAttraction()
             Call RejectRegions()
             Call setPosition()
+            ' 温度冷却：随迭代递减位移上限，逐步收敛
+            temperature = temperature * coolingRate
         End Sub
 
         Protected Sub reset()
@@ -222,15 +242,21 @@ Namespace ForceDirected
         Private Sub setPosition()
             Dim dx, dy As Double
             Dim x, y As Double
+            Dim len As Double
 
             For Each node As Node In g.vertex.Where(Function(v) Not v.pinned)
                 dx = mDxMap(node.label)
                 dy = mDyMap(node.label)
 
-                If (dx < -maxtx) Then dx = -maxtx
-                If (dx > maxtx) Then dx = maxtx
-                If (dy < -maxty) Then dy = -maxty
-                If (dy > maxty) Then dy = maxty
+                ' 按合力方向归一化后以当前温度限幅，保留排斥/吸引的相对强弱
+                ' （原先逐轴硬截断到 ±maxtx/±maxty，使所有节点位移被等同压到极小常数，
+                '   排斥与吸引的相对强弱全部失效、收敛极慢）。
+                len = stdNum.Sqrt(dx * dx + dy * dy)
+
+                If len > temperature AndAlso len > 0 Then
+                    dx = dx / len * temperature
+                    dy = dy / len * temperature
+                End If
 
                 x = node.data.initialPostion.x
                 y = node.data.initialPostion.y
