@@ -623,8 +623,11 @@
 
   <ItemGroup>
     <Compile Remove="physics_Test\**" />
+    <Compile Remove="test\**" />
     <EmbeddedResource Remove="physics_Test\**" />
+    <EmbeddedResource Remove="test\**" />
     <None Remove="physics_Test\**" />
+    <None Remove="test\**" />
     <None Include="..\..\LICENSE">
       <Pack>True</Pack>
       <PackagePath></PackagePath>
