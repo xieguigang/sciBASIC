@@ -69,7 +69,7 @@ Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Imaging.LayoutModel
 Imports Microsoft.VisualBasic.Imaging.Math2D
 Imports Microsoft.VisualBasic.My.JavaScript
-Imports stdNum = System.Math
+Imports std = System.Math
 
 Namespace Cola
 
@@ -112,8 +112,8 @@ Namespace Cola
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Private Sub clockwiseRadialSweep(p As Point2D, pList As Point2D(), force As Action(Of Point2D))
             Call pList.AsEnumerable _
-                .Sort(Function(a, b)
-                          Return stdNum.Atan2(a.Y - p.Y, a.X - p.X) - stdNum.Atan2(b.Y - p.Y, b.X - p.X)
+                .sort(Function(a, b)
+                          Return std.Atan2(a.Y - p.Y, a.X - p.X) - std.Atan2(b.Y - p.Y, b.X - p.X)
                       End Function) _
                 .DoEach(force)
         End Sub
@@ -188,7 +188,7 @@ Namespace Cola
                     End If
                 End If
 
-                c = stdNum.Floor((a + b) \ 2)
+                c = std.Floor((a + b) \ 2)
                 ' midpoint of [a,b], and 0<c<n
                 dnC = below(P, V(c + 1), V(c))
                 If dnC AndAlso Not above(P, V(c - 1), V(c)) Then
@@ -273,7 +273,7 @@ Namespace Cola
                     End If
                 End If
 
-                c = stdNum.Floor((a + b) \ 2)
+                c = std.Floor((a + b) \ 2)
                 ' midpoint of [a,b], and 0<c<n
                 dnC = below(P, V(c + 1), V(c))
                 If above(P, V(c - 1), V(c)) AndAlso Not dnC Then

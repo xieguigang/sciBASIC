@@ -64,7 +64,7 @@ Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.My.JavaScript
 Imports number = System.Double
-Imports stdNum = System.Math
+Imports std = System.Math
 
 Namespace EdgeBundling.Mingle
 
@@ -188,7 +188,7 @@ Namespace EdgeBundling.Mingle
             ink = getInkValue(node)
             alpha = getMaxTurningAngleValue(node, m1, m2)
             p = If(options.angleStrength, 1.2)
-            Return ink * (1 + stdNum.Sin(alpha) / p)
+            Return ink * (1 + std.Sin(alpha) / p)
         End Function
 
         Public Function goldenSectionSearch(a As number, b As number, c As number, tau As number, f As Func(Of Double, Double)) As number
@@ -201,7 +201,7 @@ Namespace EdgeBundling.Mingle
             Else
                 x = b - resphi * (b - a)
             End If
-            If (stdNum.Abs(c - a) < tau * (stdNum.Abs(b) + stdNum.Abs(x))) Then
+            If (std.Abs(c - a) < tau * (std.Abs(b) + std.Abs(x))) Then
                 Return (c + a) / 2
             End If
             If (f(x) < f(b)) Then
@@ -323,13 +323,13 @@ Namespace EdgeBundling.Mingle
                     vec = {coords(0) - m1(0), coords(1) - m1(1)}
                     norm = InternalMath.norm(vec)
                     dot = vec(0) * m2Tom1(0) + vec(1) * m2Tom1(1)
-                    angleValue = stdNum.Abs(stdNum.Acos(dot / norm / m1m2Norm))
+                    angleValue = std.Abs(std.Acos(dot / norm / m1m2Norm))
                     angle = If(angle < angleValue, angleValue, angle)
 
                     vec = {coords(2) - m2(0), coords(3) - m2(1)}
                     norm = InternalMath.norm(vec)
                     dot = vec(0) * m1Tom2(0) + vec(1) * m1Tom2(1)
-                    angleValue = stdNum.Abs(stdNum.Acos(dot / norm / m1m2Norm))
+                    angleValue = std.Abs(std.Acos(dot / norm / m1m2Norm))
                     angle = If(angle < angleValue, angleValue, angle)
                 Next
 

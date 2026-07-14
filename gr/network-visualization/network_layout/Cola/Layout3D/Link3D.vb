@@ -54,7 +54,7 @@
 #End Region
 
 Imports Microsoft.VisualBasic.My.JavaScript
-Imports stdNum = System.Math
+Imports std = System.Math
 
 Namespace Cola
 
@@ -73,10 +73,10 @@ Namespace Cola
         End Sub
 
         Public Function actualLength(x As Double()()) As Double
-            Return stdNum.Sqrt(x.Reduce(Function(c As Double, v As Double())
-                                          Dim dx = v(Me.target) - v(Me.source)
-                                          Return c + dx * dx
-                                      End Function, 0))
+            Return std.Sqrt(x.reduce(Function(c As Double, v As Double())
+                                         Dim dx = v(Me.target) - v(Me.source)
+                                         Return c + dx * dx
+                                     End Function, 0))
         End Function
     End Class
 End Namespace

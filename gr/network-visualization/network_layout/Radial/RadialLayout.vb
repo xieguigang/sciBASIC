@@ -1,6 +1,6 @@
 ﻿Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
-Imports stdNum = System.Math
+Imports std = System.Math
 
 Namespace Radial
 
@@ -22,7 +22,7 @@ Namespace Radial
 
             If Double.IsNaN(radius) OrElse radius <= 0 Then
                 ' 根据节点数自动推算合理环间距
-                radius = stdNum.Sqrt(1000.0 * 1000.0 / stdNum.Max(nodeCount, 1)) * 1.5
+                radius = std.Sqrt(1000.0 * 1000.0 / std.Max(nodeCount, 1)) * 1.5
             End If
 
             ' 计算度排序，最高度节点作为根
@@ -78,7 +78,7 @@ Namespace Radial
             Dim cx As Double = center.data.initialPostion.x
             Dim cy As Double = center.data.initialPostion.y
 
-            Dim deltaAngle As Double = 2.0 * stdNum.PI / connected.Length
+            Dim deltaAngle As Double = 2.0 * std.PI / connected.Length
             Dim angle As Double = 0.0
 
             ' 将已布局的邻居从度字典中移除，避免递归时重复处理
@@ -91,8 +91,8 @@ Namespace Radial
                 ' 正确公式应为 center.{x,y} + radius * Cos/Sin（加法），
                 ' 使子节点分布在以 center 为圆心、radius 为半径的圆环上。
                 node.data.initialPostion = New FDGVector2(
-                    cx + radius * stdNum.Cos(angle),
-                    cy + radius * stdNum.Sin(angle)
+                    cx + radius * std.Cos(angle),
+                    cy + radius * std.Sin(angle)
                 )
 
                 ' 递归：以当前节点为新的圆心，进入下一层（半径缩小以避免无限增长）

@@ -57,7 +57,7 @@ Imports System.Drawing
 Imports Microsoft.VisualBasic.Data.visualize.Network.FileStream.Generic
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
 Imports randf = Microsoft.VisualBasic.Math.RandomExtensions
-Imports stdNum = System.Math
+Imports std = System.Math
 
 Namespace ForceDirected
 
@@ -127,7 +127,7 @@ Namespace ForceDirected
                 v = edge.V
                 distX = u.data.initialPostion.x - v.data.initialPostion.x
                 distY = u.data.initialPostion.y - v.data.initialPostion.y
-                dist = stdNum.Sqrt(distX * distX + distY * distY)
+                dist = std.Sqrt(distX * distX + distY * distY)
                 dx = distX * dist / k * condenseFactor
                 dy = distY * dist / k * condenseFactor
 
@@ -166,7 +166,7 @@ Namespace ForceDirected
                 For Each v As Node In g.vertex.Where(Function(ui) Not ui Is u)
                     distX = u.data.initialPostion.x - v.data.initialPostion.x
                     distY = u.data.initialPostion.y - v.data.initialPostion.y
-                    dist = stdNum.Sqrt(distX * distX + distY * distY)
+                    dist = std.Sqrt(distX * distX + distY * distY)
 
                     If dist > 0 AndAlso dist < dist_thresh.Max Then
                         dx = (distX / dist) * (k * k / dist) * ejectFactor

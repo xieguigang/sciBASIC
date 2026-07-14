@@ -55,7 +55,7 @@
 
 Imports System.Drawing
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
-Imports stdNum = System.Math
+Imports std = System.Math
 
 Namespace ForceDirected
 
@@ -81,7 +81,7 @@ Namespace ForceDirected
             Dim allW As Double() = g.graphEdges _
                 .Select(Function(e) e.weight) _
                 .Where(Function(w) w <> 0.0) _
-                .Select(AddressOf stdNum.Abs) _
+                .Select(AddressOf std.Abs) _
                 .ToArray
             Dim mineW As Double = allW.Min
             Dim maxeW As Double = allW.Max
@@ -91,7 +91,7 @@ Namespace ForceDirected
                     edge.weight = mineW
                 End If
 
-                absW(edge.ID) = (stdNum.Abs(edge.weight) - mineW) / (maxeW - mineW) * maxW + 1
+                absW(edge.ID) = (std.Abs(edge.weight) - mineW) / (maxeW - mineW) * maxW + 1
             Next
         End Sub
 
@@ -108,7 +108,7 @@ Namespace ForceDirected
                 v = edge.V
                 distX = u.data.initialPostion.x - v.data.initialPostion.x
                 distY = u.data.initialPostion.y - v.data.initialPostion.y
-                dist = stdNum.Sqrt(distX * distX + distY * distY)
+                dist = std.Sqrt(distX * distX + distY * distY)
                 dx = distX * dist / k * condenseFactor
                 dy = distY * dist / k * condenseFactor
 
@@ -145,7 +145,7 @@ Namespace ForceDirected
                 For Each v As Node In g.vertex.Where(Function(ui) Not ui Is u)
                     distX = u.data.initialPostion.x - v.data.initialPostion.x
                     distY = u.data.initialPostion.y - v.data.initialPostion.y
-                    dist = stdNum.Sqrt(distX * distX + distY * distY)
+                    dist = std.Sqrt(distX * distX + distY * distY)
 
                     If dist > 0 AndAlso dist < dist_thresh.Max Then
                         dx = (distX / dist) * (k * k / dist) * ejectFactor

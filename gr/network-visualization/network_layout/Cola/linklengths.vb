@@ -63,7 +63,7 @@ Imports System.Runtime.CompilerServices
 Imports System.Threading
 Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts.Cola.GridRouter
 Imports any = System.Object
-Imports stdNum = System.Math
+Imports std = System.Math
 
 Namespace Cola
 
@@ -143,7 +143,7 @@ Namespace Cola
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Sub symmetricDiffLinkLengths(Of Link)(links As Link(), la As LinkAccessor(Of Link), Optional w As Double = 1)
-            computeLinkLengths(links, w, Function(a, b) stdNum.Sqrt(unionCount(a, b) - intersectionCount(a, b)), la)
+            computeLinkLengths(links, w, Function(a, b) std.Sqrt(unionCount(a, b) - intersectionCount(a, b)), la)
         End Sub
 
         ''' <summary>
@@ -156,7 +156,7 @@ Namespace Cola
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Sub jaccardLinkLengths(Of Link)(links As Link(), la As LinkAccessor(Of Link), Optional w As Double = 1)
-            computeLinkLengths(links, w, Function(a, b) If(stdNum.Min(a.Keys.Count, b.Keys.Count) < 1.1, 0, intersectionCount(a, b) / unionCount(a, b)), la)
+            computeLinkLengths(links, w, Function(a, b) If(std.Min(a.Keys.Count, b.Keys.Count) < 1.1, 0, intersectionCount(a, b) / unionCount(a, b)), la)
         End Sub
 
         ''' <summary>
@@ -216,7 +216,7 @@ Namespace Cola
             Dim strongConnect As Action(Of NodeIndexer) =
                 Sub(v As NodeIndexer)
                     ' Set the depth index for v to the smallest unused index
-                    v.lowlink = stdNum.Max(Interlocked.Increment(index), index - 1)
+                    v.lowlink = std.Max(Interlocked.Increment(index), index - 1)
                     v.index = v.lowlink
                     stack.Push(v)
                     v.onStack = True
@@ -226,10 +226,10 @@ Namespace Cola
                         If w.index Is Nothing Then
                             ' Successor w has not yet been visited; recurse on it
                             strongConnect(w)
-                            v.lowlink = stdNum.Min(v.lowlink, w.lowlink)
+                            v.lowlink = std.Min(v.lowlink, w.lowlink)
                         ElseIf w.onStack Then
                             ' Successor w is in stack S and hence in the current SCC
-                            v.lowlink = stdNum.Min(v.lowlink, CType(w.index, Integer))
+                            v.lowlink = std.Min(v.lowlink, CType(w.index, Integer))
                         End If
                     Next
 

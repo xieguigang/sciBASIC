@@ -55,7 +55,7 @@
 #End Region
 
 Imports Microsoft.VisualBasic.Data.GraphTheory.KdTree
-Imports stdNum = System.Math
+Imports std = System.Math
 
 Namespace EdgeBundling.Mingle
 
@@ -82,7 +82,7 @@ Namespace EdgeBundling.Mingle
             Dim diff2 = a.z - b.z
             Dim diff3 = a.w - b.w
 
-            Return stdNum.Sqrt(diff0 * diff0 + diff1 * diff1 + diff2 * diff2 + diff3 * diff3)
+            Return std.Sqrt(diff0 * diff0 + diff1 * diff1 + diff2 * diff2 + diff3 * diff3)
         End Function
 
         Public Overrides Function getByDimension(x As GraphKdNode, dimName As String) As Double

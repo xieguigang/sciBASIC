@@ -105,7 +105,7 @@ Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
 Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts.SpringForce.Interfaces
 Imports Microsoft.VisualBasic.Imaging.Physics
 Imports randf = Microsoft.VisualBasic.Math.RandomExtensions
-Imports stdNum = System.Math
+Imports std = System.Math
 
 Namespace SpringForce
 
@@ -252,7 +252,7 @@ Namespace SpringForce
 
                     ' 库仑排斥力使用逆平方模型 repulsion / d^2（经典 FR 力导向），
                     ' 并以最小距离 1.0 软约束避免近距离奇点导致数值爆炸。
-                    Dim effDist As Double = stdNum.Max(distance, 1.0F)
+                    Dim effDist As Double = std.Max(distance, 1.0F)
                     Dim f As Double = repulsion / (effDist * effDist)
 
                     ' 串行化对共享节点加速度的写入：非并行路径无竞争开销，
@@ -368,14 +368,14 @@ Namespace SpringForce
                         point.position.z = 0
                     End If
                 Else
-                    If point.position.x.IsNaNImaginary OrElse stdNum.Abs(point.position.x) > maxCanvas OrElse point.position.x < 0 Then
+                    If point.position.x.IsNaNImaginary OrElse std.Abs(point.position.x) > maxCanvas OrElse point.position.x < 0 Then
                         ' 越界/非实数时重置到画布内的合理正坐标，避免重置回负值或仍越界
                         point.position.x = randf.NextDouble * Width
                     End If
-                    If point.position.y.IsNaNImaginary OrElse stdNum.Abs(point.position.y) > maxCanvas OrElse point.position.y < 0 Then
+                    If point.position.y.IsNaNImaginary OrElse std.Abs(point.position.y) > maxCanvas OrElse point.position.y < 0 Then
                         point.position.y = randf.NextDouble * Height
                     End If
-                    If point.position.z.IsNaNImaginary OrElse stdNum.Abs(point.position.z) > maxCanvas OrElse point.position.z < 0 Then
+                    If point.position.z.IsNaNImaginary OrElse std.Abs(point.position.z) > maxCanvas OrElse point.position.z < 0 Then
                         point.position.z = randf.NextDouble * Height
                     End If
                 End If

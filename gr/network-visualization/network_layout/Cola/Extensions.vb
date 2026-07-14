@@ -68,7 +68,7 @@ Imports Microsoft.VisualBasic.Imaging.LayoutModel
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.Python
 Imports Microsoft.VisualBasic.My.JavaScript
-Imports stdNum = System.Math
+Imports std = System.Math
 
 Namespace Cola
 
@@ -148,7 +148,7 @@ Namespace Cola
             Dim ti = target.rayIntersection(source.CenterX, source.CenterY) Or New Point2D(target.CenterX, target.CenterY).AsDefault
             Dim dx = ti.X - si.X
             Dim dy = ti.Y - si.Y
-            Dim l = stdNum.Sqrt(dx * dx + dy * dy), al = l - ah
+            Dim l = std.Sqrt(dx * dx + dy * dy), al = l - ah
 
             Return New DirectedEdge With {
                 .sourceIntersection = si,
@@ -181,7 +181,7 @@ Namespace Cola
 
             Dim dx = ti.X - s.X
             Dim dy = ti.Y - s.Y
-            Dim l = stdNum.Sqrt(dx * dx + dy * dy)
+            Dim l = std.Sqrt(dx * dx + dy * dy)
 
             Return New Point2D With {
                 .X = ti.X - ah * dx / l,

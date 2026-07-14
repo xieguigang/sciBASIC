@@ -55,7 +55,7 @@
 
 Imports System.Drawing
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
-Imports stdNum = System.Math
+Imports std = System.Math
 
 Namespace ForceDirected
 
@@ -75,7 +75,7 @@ Namespace ForceDirected
             MyBase.New(g, ejectFactor, condenseFactor, maxtx, maxty, dist_threshold, size)
 
             Me.center = New PointF(CANVAS_WIDTH / 2, CANVAS_HEIGHT / 2)
-            Me.maxRadius = stdNum.Min(CANVAS_HEIGHT, CANVAS_WIDTH) / 2
+            Me.maxRadius = std.Min(CANVAS_HEIGHT, CANVAS_WIDTH) / 2
         End Sub
 
         Protected Overrides Sub runRepulsive()
@@ -93,7 +93,7 @@ Namespace ForceDirected
                 For Each u As Node In g.vertex.Where(Function(ui) Not ui Is v)
                     distX = v.data.initialPostion.x - u.data.initialPostion.x
                     distY = v.data.initialPostion.y - u.data.initialPostion.y
-                    dist = stdNum.Sqrt(distX * distX + distY * distY)
+                    dist = std.Sqrt(distX * distX + distY * distY)
 
                     'If (dist < dist_thresh.Min) Then
                     '    ejectFactor = 5
@@ -111,7 +111,7 @@ Namespace ForceDirected
                 ' 还会被中心点排斥
                 distX = v.data.initialPostion.x - center.X
                 distY = v.data.initialPostion.y - center.Y
-                dist = stdNum.Sqrt(distX * distX + distY * distY)
+                dist = std.Sqrt(distX * distX + distY * distY)
 
                 'If (dist < dist_thresh.Min) Then
                 '    ejectFactor = 5

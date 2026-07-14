@@ -1,61 +1,60 @@
 ﻿#Region "Microsoft.VisualBasic::1a0d6719b48db0175c8fd3709cfe4d21, gr\network-visualization\Visualizer\MingleRender\MingleRender.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 190
-    '    Code Lines: 145 (76.32%)
-    ' Comment Lines: 21 (11.05%)
-    '    - Xml Docs: 0.00%
-    ' 
-    '   Blank Lines: 24 (12.63%)
-    '     File Size: 7.59 KB
+' Summaries:
 
 
-    ' Class MingleRender
-    ' 
-    '     Constructor: (+1 Overloads) Sub New
-    ' 
-    '     Function: adjustPosition
-    ' 
-    '     Sub: renderBezier, renderLine, renderQuadratic
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 190
+'    Code Lines: 145 (76.32%)
+' Comment Lines: 21 (11.05%)
+'    - Xml Docs: 0.00%
+' 
+'   Blank Lines: 24 (12.63%)
+'     File Size: 7.59 KB
+
+
+' Class MingleRender
+' 
+'     Constructor: (+1 Overloads) Sub New
+' 
+'     Function: adjustPosition
+' 
+'     Sub: renderBezier, renderLine, renderQuadratic
+' 
+' /********************************************************************************/
 
 #End Region
 
-Imports System.Drawing
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
 Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts.EdgeBundling.Mingle
 Imports Microsoft.VisualBasic.Imaging
@@ -63,7 +62,7 @@ Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports number = System.Double
-Imports stdNum = System.Math
+Imports std = System.Math
 
 Public Class MingleRender
 
@@ -138,7 +137,7 @@ Public Class MingleRender
             Next
             ' remove -margin to get the line weight into account.
             ' pos = $add(pos, $mult((lengthBefore - (lengthBefore + lengthAfter) / 2) * -margin, posItem.normal));
-            pos = pos + (posItem.normal * (lengthBefore - (lengthBefore + lengthAfter) / 2) * stdNum.Min(epsilon, delta))
+            pos = pos + (posItem.normal * (lengthBefore - (lengthBefore + lengthAfter) / 2) * std.Min(epsilon, delta))
         End If
 
         Return pos
@@ -203,7 +202,7 @@ Public Class MingleRender
             nodeStart = e(0).node
             n = e.Length
 
-            x = stdNum.Max(1, nodeStart.data.mass)
+            x = std.Max(1, nodeStart.data.mass)
 
             ctx.lineWidth = If(x = 0, 1, x) * If(options.scale = 0, 1, options.scale)
             ctx.strokeStyle = If(nodeStart.data.color Is Nothing, ctx.strokeStyle, DirectCast(nodeStart.data.color, SolidBrush).Color.ToHtmlColor)
