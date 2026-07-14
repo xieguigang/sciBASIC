@@ -235,7 +235,7 @@ Public Module ForceMath
     Public Function RepulsiveForce(strength#, a As Vector, b As Vector) As Force
         Dim d = a - b
         Dim cosA = Cos(a - b, {100, 0})  ' 两个向量的方向对X坐标轴的夹角才是力的方向
-        Dim alpha = std.Arccos(cosA)
+        Dim alpha = std.Acos(cosA)
 
         If d(Y) < 0 Then
             ' y 小于零的时候是第三和第4象限的

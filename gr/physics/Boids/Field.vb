@@ -23,10 +23,10 @@
     ' GNU General Public License for more details.
     ' 
     ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
+    ' along with this program.  If not, see <http://www.gnu.org/licenses/>.
+    
+    
+    
     ' /********************************************************************************/
 
     ' Summaries:
@@ -95,8 +95,8 @@ Namespace Boids
         End Property
 
         Dim Boids As New List(Of Boid)
-        Dim grid As Grid(Of Boid())
-        Dim radius As Single = 15
+        Dim BoidGrid As Grid(Of Boid())
+        Dim Radius As Single = 15
 
         Public Sub New(width As Double, height As Double, Optional boidCount As Integer = 100)
             Call (width, height).Set(Me.Width, Me.Height)
@@ -106,14 +106,14 @@ Namespace Boids
             Next
 
             VectorTask.n_threads = App.CPUCoreNumbers
-            task = New PhysicTask(Me)
+            Task = New PhysicTask(Me)
         End Sub
 
-        Dim task As PhysicTask
+        Dim Task As PhysicTask
 
         Public Sub Advance(Optional bounceOffWalls As Boolean = True, Optional wrapAroundEdges As Boolean = False)
-            grid = Me.EncodeGrid(radius)
-            task.Run()
+            BoidGrid = Me.EncodeGrid(Radius)
+            Task.Run()
 
             ' move all boids forward in time
             ' just update the fields of each boid
@@ -139,22 +139,22 @@ Namespace Boids
                 Dim flockXvel As Double = Nothing, flockYvel As Double = Nothing,
                alignXvel As Double = Nothing, alignYvel As Double = Nothing,
                avoidXvel As Double = Nothing, avoidYvel As Double = Nothing,
-               predXvel As Double = Nothing, predYval As Double = Nothing
+               predXvel As Double = Nothing, predYvel As Double = Nothing
 
                 Const distance As Double = 50
 
                 ' update void speed and direction (velocity) based on rules
                 For i As Integer = start To ends
                     Dim boid As Boid = boids(i)
-                    Dim neighbors As Boid() = field.grid.SpatialLookup(boid, field.radius).Where(Function(x) x.GetDistance(boid) < distance).ToArray
+                    Dim neighbors As Boid() = field.BoidGrid.SpatialLookup(boid, field.Radius).Where(Function(x) x.GetDistance(boid) < distance).ToArray
 
                     field.Flock(boid, neighbors, 0.0003).Set(flockXvel, flockYvel)
                     field.Align(boid, neighbors, 0.01).Set(alignXvel, alignYvel)
                     field.Avoid(boid, 20, 0.001).Set(avoidXvel, avoidYvel)
-                    field.Predator(boid, 150, 0.00005).Set(predXvel, predYval)
+                    field.Predator(boid, 150, 0.00005).Set(predXvel, predYvel)
 
                     boid.Xvel += flockXvel + avoidXvel + alignXvel + predXvel
-                    boid.Yvel += flockYvel + avoidYvel + alignYvel + predYval
+                    boid.Yvel += flockYvel + avoidYvel + alignYvel + predYvel
                 Next
             End Sub
         End Class
@@ -170,7 +170,7 @@ Namespace Boids
 
         Private Function Avoid(boid As Boid, distance As Double, power As Double) As (Double, Double)
             ' point away as boids get close
-            Dim neighbors = grid.SpatialLookup(boid, radius).Where(Function(x) x.GetDistance(boid) < distance)
+            Dim neighbors = BoidGrid.SpatialLookup(boid, Radius).Where(Function(x) x.GetDistance(boid) < distance)
             Dim sumClosenessX As Double = Nothing, sumClosenessY As Double = Nothing
 
             For Each neighbor As Boid In neighbors
@@ -201,7 +201,7 @@ Namespace Boids
 
         Private Function Align(boid As Boid, neighbors As Boid(), power As Double) As (Double, Double)
             ' point toward the center of the flock (mean flock boid position)
-            ' Dim neighbors = grid.SpatialLookup(boid, radius).Where(Function(x) x.GetDistance(boid) < distance).ToArray
+            ' Dim neighbors = BoidGrid.SpatialLookup(boid, Radius).Where(Function(x) x.GetDistance(boid) < distance).ToArray
             Dim meanXvel As Double = neighbors.Sum(Function(x) x.Xvel) / neighbors.Count()
             Dim meanYvel As Double = neighbors.Sum(Function(x) x.Yvel) / neighbors.Count()
             Dim dXvel = meanXvel - boid.Xvel

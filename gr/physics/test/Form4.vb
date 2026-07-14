@@ -75,6 +75,7 @@ Imports Microsoft.VisualBasic.Drawing
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Physics
 Imports Microsoft.VisualBasic.MIME.Html.CSS
+Imports Brushes = Microsoft.VisualBasic.Imaging.Brushes
 Imports std = System.Math
 
 Public Class Form4

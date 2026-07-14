@@ -23,10 +23,10 @@
     ' GNU General Public License for more details.
     ' 
     ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
+    ' along with this program.  If not, see <http://www.gnu.org/licenses/>.
+    
+    
+    
     ' /********************************************************************************/
 
     ' Summaries:
@@ -59,42 +59,42 @@ Public Class Particle : Implements Layout2D
 
     Public Property X As Double Implements Layout2D.X
         Get
-            Return predictedPosition.x
+            Return PredictedPosition.x
         End Get
         Set(value As Double)
-            If Not predictedPosition Is Nothing Then
-                predictedPosition.x = value
+            If Not PredictedPosition Is Nothing Then
+                PredictedPosition.x = value
             End If
         End Set
     End Property
 
     Public Property Y As Double Implements Layout2D.Y
         Get
-            Return predictedPosition.y
+            Return PredictedPosition.y
         End Get
         Set(value As Double)
-            If Not predictedPosition Is Nothing Then
-                predictedPosition.y = value
+            If Not PredictedPosition Is Nothing Then
+                PredictedPosition.y = value
             End If
         End Set
     End Property
 
-    Public position As Vector2
-    Public velocity As Vector2
-    Public index As Integer
-    Public predictedPosition As Vector2
+    Public Position As Vector2
+    Public Velocity As Vector2
+    Public Index As Integer
+    Public PredictedPosition As Vector2
 
     ''' <summary>
     ''' Density, Near Density
     ''' </summary>
-    Public density As Vector2
+    Public Density As Vector2
 
     Sub New(i As Integer, box As Size)
-        index = i
-        position = Vector2.Random(box)
-        velocity = Vector2.Random(New SizeF(10, 10))
-        predictedPosition = Vector2.Zero
-        density = Vector2.Zero
+        Index = i
+        Position = Vector2.Random(box)
+        Velocity = Vector2.Random(New SizeF(10, 10))
+        PredictedPosition = Vector2.Zero
+        Density = Vector2.Zero
     End Sub
 
 End Class
