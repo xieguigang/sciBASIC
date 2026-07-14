@@ -3,7 +3,7 @@
   <PropertyGroup>
     <RootNamespace>Microsoft.VisualBasic.Imaging.Physics</RootNamespace>
     <TargetFrameworks>net10.0-windows</TargetFrameworks>
-    <AssemblyName>Microsoft.VisualBasic.Imaging.Physics</AssemblyName>
+    <AssemblyName>test</AssemblyName>
     <Platforms>AnyCPU;x64</Platforms>
     <Configurations>Debug;Release;LipidSearch;Rsharp_app_release;mzkit;NPSearch;gcmodeller_desktop;CFD_win32;nuget_release;CellaLAB-Desktop</Configurations>
     <GeneratePackageOnBuild>False</GeneratePackageOnBuild>
