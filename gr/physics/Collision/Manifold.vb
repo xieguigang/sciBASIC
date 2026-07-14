@@ -3,7 +3,7 @@
 
 Imports Microsoft.VisualBasic.Imaging.Physics.RigidBody
 
-Namespace Microsoft.VisualBasic.Imaging.Physics.Collision
+Namespace Collision
 
     ''' <summary>
     ''' 碰撞流形（接触信息）。法向量 <see cref="Normal"/> 由 A 指向 B。

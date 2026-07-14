@@ -4,7 +4,7 @@
 Imports System.Collections.Generic
 Imports System.Linq
 
-Namespace Microsoft.VisualBasic.Imaging.Physics.Particles2D
+Namespace Particles2D
 
     ''' <summary>
     ''' 轻量粒子系统。使用对象池复用 <see cref="GameParticle"/>，避免频繁分配；

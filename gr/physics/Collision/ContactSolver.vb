@@ -5,7 +5,7 @@ Imports System.Math
 Imports Microsoft.VisualBasic.Imaging.Physics.RigidBody
 Imports std = System.Math
 
-Namespace Microsoft.VisualBasic.Imaging.Physics.Collision
+Namespace Collision
 
     ''' <summary>
     ''' 顺序冲量接触求解器。对每个接触点迭代计算法向冲量（含恢复系数与 Baumgarte

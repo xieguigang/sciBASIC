@@ -6,7 +6,7 @@ Imports System.Math
 Imports Microsoft.VisualBasic.Imaging.Physics.RigidBody
 Imports std = System.Math
 
-Namespace Microsoft.VisualBasic.Imaging.Physics.Collision
+Namespace Collision
 
     ''' <summary>
     ''' Narrow Phase 窄相位精确碰撞检测。根据几何体类型分派到具体算法，

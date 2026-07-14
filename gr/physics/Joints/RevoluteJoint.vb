@@ -3,7 +3,7 @@
 
 Imports Microsoft.VisualBasic.Imaging.Physics.RigidBody
 
-Namespace Microsoft.VisualBasic.Imaging.Physics.Joints
+Namespace Joints
 
     ''' <summary>
     ''' 铰链（旋转）关节：将两个刚体在各自的局部锚点处钉在一起，允许绕该点自由旋转。

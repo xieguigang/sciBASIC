@@ -5,7 +5,7 @@ Imports System.Math
 Imports Microsoft.VisualBasic.Imaging.Physics.RigidBody
 Imports std = System.Math
 
-Namespace Microsoft.VisualBasic.Imaging.Physics.Joints
+Namespace Joints
 
     ''' <summary>
     ''' 滑块（棱柱）关节：允许两个刚体沿给定世界轴 <see cref="axis"/> 自由滑动，

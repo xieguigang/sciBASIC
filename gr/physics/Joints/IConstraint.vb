@@ -3,7 +3,7 @@
 
 Imports Microsoft.VisualBasic.Imaging.Physics.RigidBody
 
-Namespace Microsoft.VisualBasic.Imaging.Physics.Joints
+Namespace Joints
 
     ''' <summary>
     ''' 约束（关节）统一接口。在物理世界的速度迭代阶段调用 <see cref="SolveVelocity"/>，

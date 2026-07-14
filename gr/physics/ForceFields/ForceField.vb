@@ -4,7 +4,7 @@
 Imports Microsoft.VisualBasic.Imaging.Physics.Collision
 Imports Microsoft.VisualBasic.Imaging.Physics.RigidBody
 
-Namespace Microsoft.VisualBasic.Imaging.Physics.ForceFields
+Namespace ForceFields
 
     ''' <summary>
     ''' 力场基类。覆盖一个区域（<see cref="Region"/>，为 Nothing 时表示全局），

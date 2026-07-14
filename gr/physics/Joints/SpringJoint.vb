@@ -3,7 +3,7 @@
 
 Imports Microsoft.VisualBasic.Imaging.Physics.RigidBody
 
-Namespace Microsoft.VisualBasic.Imaging.Physics.Joints
+Namespace Joints
 
     ''' <summary>
     ''' 弹簧关节：在两个刚体的锚点之间施加胡克弹力（与形变成正比）和阻尼力

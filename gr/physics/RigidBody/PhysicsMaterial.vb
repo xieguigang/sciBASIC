@@ -4,7 +4,7 @@
 Imports System.Math
 Imports std = System.Math
 
-Namespace Microsoft.VisualBasic.Imaging.Physics.RigidBody
+Namespace RigidBody
 
     ''' <summary>
     ''' 物理材质：摩擦系数 (friction) 与恢复系数 (restitution)。

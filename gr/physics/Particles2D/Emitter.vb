@@ -5,7 +5,7 @@ Imports System
 Imports System.Drawing
 Imports System.Math
 
-Namespace Microsoft.VisualBasic.Imaging.Physics.Particles2D
+Namespace Particles2D
 
     ''' <summary>
     ''' 粒子发射器：在 <see cref="Position"/> 处沿 <see cref="BaseAngle"/> 方向、

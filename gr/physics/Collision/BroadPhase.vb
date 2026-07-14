@@ -7,7 +7,7 @@ Imports System.Math
 Imports std = System.Math
 Imports Microsoft.VisualBasic.Imaging.Physics.RigidBody
 
-Namespace Microsoft.VisualBasic.Imaging.Physics.Collision
+Namespace Collision
 
     ''' <summary>
     ''' Broad Phase 宽相位剔除。将所有刚体的 AABB 写入均匀网格，

@@ -5,7 +5,7 @@ Imports System.Math
 Imports Microsoft.VisualBasic.Imaging.Physics.RigidBody
 Imports std = System.Math
 
-Namespace Microsoft.VisualBasic.Imaging.Physics.ForceFields
+Namespace ForceFields
 
     ''' <summary>
     ''' 磁力场（点源）：以 <see cref="Center"/> 为中心，对场内刚体施加随距离

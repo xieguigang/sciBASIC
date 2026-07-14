@@ -3,7 +3,7 @@
 
 Imports Microsoft.VisualBasic.Imaging.Physics.RigidBody
 
-Namespace Microsoft.VisualBasic.Imaging.Physics.ForceFields
+Namespace ForceFields
 
     ''' <summary>
     ''' 重力场：对场内每个刚体施加 F = m·g（默认向下）。

@@ -6,7 +6,7 @@ Imports System.Linq
 Imports System.Math
 Imports std = System.Math
 
-Namespace Microsoft.VisualBasic.Imaging.Physics.Collision
+Namespace Collision
 
     ''' <summary>轴对齐包围盒</summary>
     Public Structure AABB

@@ -5,7 +5,7 @@ Imports System.Math
 Imports Microsoft.VisualBasic.Imaging.Physics.RigidBody
 Imports std = System.Math
 
-Namespace Microsoft.VisualBasic.Imaging.Physics.ForceFields
+Namespace ForceFields
 
     ''' <summary>
     ''' 风力场：在区域内沿 <see cref="Direction"/> 施加风力，叠加正弦湍流使效果更自然。

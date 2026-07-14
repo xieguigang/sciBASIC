@@ -5,7 +5,7 @@ Imports System.Math
 Imports Microsoft.VisualBasic.Imaging.Physics.RigidBody
 Imports std = System.Math
 
-Namespace Microsoft.VisualBasic.Imaging.Physics.Joints
+Namespace Joints
 
     ''' <summary>
     ''' 固定（焊接）关节：将两个刚体的相对位置与相对角度完全锁定，

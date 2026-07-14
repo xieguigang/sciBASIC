@@ -3,7 +3,7 @@
 
 Imports System.Drawing
 
-Namespace Microsoft.VisualBasic.Imaging.Physics.Particles2D
+Namespace Particles2D
 
     ''' <summary>
     ''' 单个粒子。数据极简（位置、速度、寿命、尺寸、颜色），
