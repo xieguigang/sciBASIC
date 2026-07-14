@@ -101,7 +101,7 @@ Namespace layout
     ''' </summary>
     Public Class LabelAdjustLayoutData : Inherits ForceVectorNodeLayoutData
 
-        Friend labelAdjustQuadNode As Integer
+        Friend LabelAdjustQuadNode As Integer
     End Class
 
 End Namespace

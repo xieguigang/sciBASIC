@@ -66,7 +66,7 @@ Public Class FluidKernels
         SpikyPow2DerivativeScalingFactor = 12 / (Pow(smoothingRadius, 4) * PI)
     End Sub
 
-    Private Function SmoothingKernelPoly6(dst As Single, radius As Single) As Single
+    Public Function SmoothingKernelPoly6(dst As Single, radius As Single) As Single
         If dst < radius Then
             Dim v As Single = radius * radius - dst * dst
             Return v * v * v * Poly6ScalingFactor
@@ -74,7 +74,7 @@ Public Class FluidKernels
         Return 0
     End Function
 
-    Private Function SpikyKernelPow3(dst As Single, radius As Single) As Single
+    Public Function SpikyKernelPow3(dst As Single, radius As Single) As Single
         If dst < radius Then
             Dim v As Single = radius - dst
             Return v * v * v * SpikyPow3ScalingFactor
@@ -82,7 +82,7 @@ Public Class FluidKernels
         Return 0
     End Function
 
-    Private Function SpikyKernelPow2(dst As Single, radius As Single) As Single
+    Public Function SpikyKernelPow2(dst As Single, radius As Single) As Single
         If dst < radius Then
             Dim v As Single = radius - dst
             Return v * v * SpikyPow2ScalingFactor
@@ -90,7 +90,7 @@ Public Class FluidKernels
         Return 0
     End Function
 
-    Private Function DerivativeSpikyPow3(dst As Single, radius As Single) As Single
+    Public Function DerivativeSpikyPow3(dst As Single, radius As Single) As Single
         If dst <= radius Then
             Dim v As Single = radius - dst
             Return -v * v * SpikyPow3DerivativeScalingFactor
@@ -98,7 +98,7 @@ Public Class FluidKernels
         Return 0
     End Function
 
-    Private Function DerivativeSpikyPow2(dst As Single, radius As Single) As Single
+    Public Function DerivativeSpikyPow2(dst As Single, radius As Single) As Single
         If dst <= radius Then
             Dim v As Single = radius - dst
             Return -v * SpikyPow2DerivativeScalingFactor
