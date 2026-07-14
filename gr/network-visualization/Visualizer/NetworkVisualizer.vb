@@ -204,7 +204,78 @@ Public Module NetworkVisualizer
                               Optional driver As Drivers = Drivers.Default,
                               Optional ppi As Integer = 100) As GraphicsData
 
-        Call GetType(NetworkVisualizer).Assembly _
+        ' 兼容外壳：将原先一长串的 Optional 参数收敛到 NetworkRenderConfig 配置对象，
+        ' 然后委托给模块化的 NetworkPlot 渲染类完成实际的绘制工作。
+        Dim config As New NetworkRenderConfig With {
+            .CanvasSize = canvasSize,
+            .Padding = padding,
+            .Background = background,
+            .DefaultColor = defaultColor,
+            .DisplayId = displayId,
+            .LabelColorAsNodeColor = labelColorAsNodeColor,
+            .NodeStroke = nodeStroke,
+            .MinLinkWidth = minLinkWidth,
+            .LinkWidth = linkWidth,
+            .NodeRadius = nodeRadius,
+            .FontSize = fontSize,
+            .LabelFontBase = labelFontBase,
+            .EdgeDashTypes = edgeDashTypes,
+            .EdgeShadowDistance = edgeShadowDistance,
+            .DrawNodeShape = drawNodeShape,
+            .NodeWidget = nodeWidget,
+            .ShapeRender = shapeRender,
+            .GetNodeLabel = getNodeLabel,
+            .GetLabelPosition = getLabelPosition,
+            .GetLabelColor = getLabelColor,
+            .HideDisconnectedNode = hideDisconnectedNode,
+            .ThrowEx = throwEx,
+            .HullPolygonGroups = hullPolygonGroups,
+            .LabelerIterations = labelerIterations,
+            .LabelWordWrapWidth = labelWordWrapWidth,
+            .ShowLabelerProgress = showLabelerProgress,
+            .DefaultEdgeColor = defaultEdgeColor,
+            .DefaultLabelColor = defaultLabelColor,
+            .LabelTextStroke = labelTextStroke,
+            .ShowConvexHullLegend = showConvexHullLegend,
+            .DrawEdgeBends = drawEdgeBends,
+            .DrawEdgeDirection = drawEdgeDirection,
+            .ConvexHullLabelFontCSS = convexHullLabelFontCSS,
+            .ConvexHullScale = convexHullScale,
+            .ConvexHullCurveDegree = convexHullCurveDegree,
+            .FillConvexHullPolygon = fillConvexHullPolygon,
+            .Driver = driver,
+            .Ppi = ppi
+        }
+
+        Return New NetworkPlot(net, config).Render()
+    End Function
+
+    ''' <summary>
+    ''' 兼容外壳（已废弃的内部实现，绘制流程已迁移至 <see cref="NetworkPlot"/>）。
+    ''' 保留此处仅为避免误用；真正的凸包多边形绘制逻辑现在位于
+    ''' <see cref="Render.HullPolygonRendering"/> 类中。
+    ''' </summary>
+    <Obsolete("Use NetworkPlot + HullPolygonRendering instead.")>
+    <Extension>
+    Private Sub drawhullPolygon(g As IGraphics,
+                                drawPoints As Node(),
+                                hullPolygonGroups As NamedValue(Of String),
+                                scalePos As Dictionary(Of String, PointF),
+                                showConvexHullLegend As Boolean,
+                                fillPolygon As Boolean,
+                                convexHullLabelFontCSS$,
+                                convexHullScale!,
+                                convexHullCurveDegree!)
+        Call New HullPolygonRendering(Nothing, scalePos).RenderHull(g, drawPoints)
+    End Sub
+
+    <Extension>
+    Private Sub drawhullPolygon_placeholder()
+        ' 此空过程仅用于占位，实际逻辑已迁移至 HullPolygonRendering 类。
+    End Sub
+
+    ' 以下为原 DrawImage 函数体（已迁移至 NetworkPlot，保留此注释以便对照历史）。
+    '     Call GetType(NetworkVisualizer).Assembly _
             .FromAssembly _
             .DoCall(Sub(assm)
                         Dim driverPrompt$ = "

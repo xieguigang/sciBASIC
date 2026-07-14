@@ -1,66 +1,19 @@
-﻿#Region "Microsoft.VisualBasic::56a28e265c8c768366d87ddf8c447f87, gr\network-visualization\Visualizer\Render\NodeRendering.vb"
-
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-    ' /********************************************************************************/
-
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 211
-    '    Code Lines: 176 (83.41%)
-    ' Comment Lines: 5 (2.37%)
-    '    - Xml Docs: 0.00%
-    ' 
-    '   Blank Lines: 30 (14.22%)
-    '     File Size: 7.67 KB
-
-
-    ' Class NodeRendering
-    ' 
-    '     Constructor: (+1 Overloads) Sub New
-    '     Function: DefaultDrawNodeShape, DrawDefaultCircle, RenderingVertexNodes, renderNode
-    ' 
-    ' /********************************************************************************/
-
-#End Region
-
-Imports System.Drawing
+﻿Imports System.Drawing
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.d3js.Layout
+Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Drawing2D.Text
+Imports Microsoft.VisualBasic.MIME.Html.CSS
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Serialization.JSON
+Imports std = System.Math
 
+''' <summary>
+''' 网络节点的渲染类。从共享的 <see cref="NetworkRenderConfig"/> 配置对象读取参数，
+''' 取代原先一长串的独立构造函数参数。
+''' </summary>
 Friend Class NodeRendering
 
     ReadOnly radiusValue As Func(Of Node, Single()),
@@ -79,35 +32,67 @@ Friend Class NodeRendering
     Dim drawShape As DrawShape
     Dim graph As NetworkGraph
 
-    Sub New(graph As NetworkGraph,
-            radiusValue As Func(Of Node, Single()),
-            fontSizeValue As Func(Of Node, Single),
-            defaultColor As Color,
-            stroke As Pen,
-            baseFontCss As Font,
-            scalePos As Dictionary(Of String, PointF),
-            throwEx As Boolean,
-            getDisplayLabel As Func(Of Node, String),
-            drawNodeShape As DrawNodeShape,
-            drawShape As DrawShape,
-            getLabelPosition As GetLabelPosition,
-            labelWordWrapWidth As Integer,
-            nodeWidget As Func(Of IGraphics, PointF, Double, Node, RectangleF))
-
-        Me.radiusValue = radiusValue
-        Me.fontSizeValue = fontSizeValue
-        Me.defaultColor = defaultColor
-        Me.stroke = stroke
+    Sub New(graph As NetworkGraph, config As NetworkRenderConfig, scalePos As Dictionary(Of String, PointF))
         Me.graph = graph
-        Me.baseFont = baseFontCss
         Me.scalePos = scalePos
-        Me.drawShape = drawShape
-        Me.throwEx = throwEx
-        Me.getDisplayLabel = getDisplayLabel
-        Me.drawNodeShape = drawNodeShape
-        Me.getLabelPosition = getLabelPosition
-        Me.labelWordWrapWidth = labelWordWrapWidth
-        Me.nodeWidget = nodeWidget
+
+        Dim dc = If(config.DefaultColor.StringEmpty, "skyblue", config.DefaultColor)
+        defaultColor = dc.TranslateColor
+
+        Dim env As CSSEnvirnment = CSSEnvirnment.Empty(config.Ppi)
+        stroke = env.GetPen(CSS.Stroke.TryParse(config.NodeStroke), allowNull:=True)
+        baseFont = env.GetFont(CSSFont.TryParse(config.LabelFontBase, New CSSFont With {
+            .family = FontFace.MicrosoftYaHei,
+            .size = 12,
+            .style = FontStyle.Regular
+        }))
+
+        throwEx = config.ThrowEx
+        getLabelPosition = config.GetLabelPosition
+        labelWordWrapWidth = config.LabelWordWrapWidth
+        nodeWidget = config.NodeWidget
+        drawShape = config.ShapeRender
+        drawNodeShape = config.DrawNodeShape
+
+        If config.GetNodeLabel Is Nothing AndAlso config.DisplayId Then
+            getDisplayLabel = Function(node) node.GetDisplayText
+        ElseIf config.GetNodeLabel Is Nothing Then
+            getDisplayLabel = Function(v) Nothing
+        Else
+            getDisplayLabel = config.GetNodeLabel
+        End If
+
+        If config.FontSize Is Nothing Then
+            fontSizeValue = Function() 16.0!
+        ElseIf config.FontSize Like GetType(Single) Then
+            Dim fsize As Single = config.FontSize
+            fontSizeValue = Function() fsize
+        Else
+            fontSizeValue = config.FontSize
+        End If
+
+        If config.NodeRadius Is Nothing Then
+            ' check for node size data
+            If graph.vertex.All(Function(v) v.data.size.IsNullOrEmpty) Then
+                ' all nodes has unify size
+                Dim frameSize As SizeF = PrinterDimension.SizeOf(config.CanvasSize)
+                Dim min = std.Min(frameSize.Width, frameSize.Height) / 100
+                radiusValue = Function() {min}
+            Else
+                ' use the node size
+                radiusValue = Function(v)
+                                   Return v.data.size _
+                                      .Select(Function(d) CSng(d)) _
+                                      .ToArray
+                               End Function
+            End If
+        ElseIf config.NodeRadius Like GetType(Single) Then
+            Dim radius As Single = config.NodeRadius
+            radiusValue = Function() {radius}
+        Else
+            Dim func As Func(Of Node, Single) = config.NodeRadius
+            radiusValue = Function(n) {func(n)}
+        End If
     End Sub
 
     Private Function DefaultDrawNodeShape(id As String, g As IGraphics, brush As Brush, radius As Single(), center As PointF) As RectangleF
