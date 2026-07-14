@@ -178,9 +178,9 @@ Namespace Collision
             Dim bestIndex = 0
 
             For i = 0 To polyA.Count - 1
-                Dim nw = polyA.WorldNormal(i, A.Rotation)
-                Dim vA = polyA.WorldVertex(i, A.Position, A.Rotation)
-                Dim sB = polyB.WorldSupport(-nw, B.Position, B.Rotation)
+                Dim nw As Vector2 = polyA.WorldNormal(i, A.Rotation)
+                Dim vA As Vector2 = polyA.WorldVertex(i, A.Position, A.Rotation)
+                Dim sB As Vector2 = polyB.WorldSupport(-nw, B.Position, B.Rotation)
                 Dim d = Dot(nw, sB - vA)
                 If d > best Then
                     best = d

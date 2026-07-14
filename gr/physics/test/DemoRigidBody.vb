@@ -162,8 +162,11 @@ Public Class DemoRigidBody : Inherits Form
             Next
             Dim fill = If(b.IsStatic, Color.FromArgb(90, 120, 140), Color.FromArgb(70, 130, 180))
             Using br = New SolidBrush(fill), pen = New Pen(Color.LightSteelBlue, 1.5F)
-                g.FillPolygon(br, pts)
-                g.DrawPolygon(pen, pts)
+                Try
+                    g.FillPolygon(br, pts)
+                    g.DrawPolygon(pen, pts)
+                Catch ex As Exception
+                End Try
             End Using
         ElseIf TypeOf b.Shape Is CircleCollider Then
             Dim c = CType(b.Shape, CircleCollider)

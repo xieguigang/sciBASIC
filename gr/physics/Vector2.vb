@@ -57,10 +57,10 @@
 #End Region
 
 Imports System.Drawing
+Imports System.Math
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Imaging.Math2D
 Imports randf = Microsoft.VisualBasic.Math.RandomExtensions
-Imports System.Math
 
 Public Class Vector2 : Inherits Vector2D
 
@@ -152,6 +152,13 @@ Public Class Vector2 : Inherits Vector2D
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Overloads Shared Narrowing Operator CType(v As Vector2) As PointF
         Return New PointF(v.x, v.y)
+    End Operator
+
+    Public Overloads Shared Operator -(v As Vector2) As Vector2
+        If v Is Nothing Then
+            Return New Vector2
+        End If
+        Return New Vector2(-v.x, -v.y)
     End Operator
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
