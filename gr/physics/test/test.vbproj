@@ -17,7 +17,7 @@
     <OutputType>WinExe</OutputType>
     <UseWindowsForms>True</UseWindowsForms>
     <UseWPF>True</UseWPF>
-    <StartupObject>test.Boids.Viewer.Form2</StartupObject>
+    <StartupObject>test.DemoRigidBody</StartupObject>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net10.0-windows|AnyCPU'">

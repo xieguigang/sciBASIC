@@ -5,6 +5,7 @@ Imports System
 Imports System.Collections.Generic
 Imports System.Math
 Imports std = System.Math
+Imports Microsoft.VisualBasic.Imaging.Physics.RigidBody
 
 Namespace Microsoft.VisualBasic.Imaging.Physics.Collision
 

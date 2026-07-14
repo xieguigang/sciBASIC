@@ -7,7 +7,9 @@ Imports Microsoft.VisualBasic.Imaging.Physics.Collision
 ''' 2D 刚体。不会发生形变，受力后整体平动 + 转动。
 ''' 位置 <see cref="Position"/> 表示质心（世界坐标），<see cref="Rotation"/> 为 2D 标量角（弧度）。
 ''' </summary>
-Public Class RigidBody
+Namespace Microsoft.VisualBasic.Imaging.Physics.RigidBody
+
+    Public Class RigidBody
 
     ''' <summary>唯一标识符</summary>
     Public Property ID As String = Guid.NewGuid().ToString("N")
@@ -35,6 +37,12 @@ Public Class RigidBody
 
     ''' <summary>角阻尼（0 = 无）</summary>
     Public AngularDamping As Double = 0.05
+
+    ''' <summary>
+    ''' 最大线速度（像素/秒）。0 = 不限制。作为简化连续碰撞检测(CCD)的防护，
+    ''' 限制单步位移不超过物体尺寸，避免高速物体“穿隧”而过。
+    ''' </summary>
+    Public MaxSpeed As Double = 0.0
 
     ''' <summary>物理材质</summary>
     Public Material As PhysicsMaterial = New PhysicsMaterial()
@@ -109,6 +117,12 @@ Public Class RigidBody
         ' 指数阻尼，数值稳定
         Velocity *= 1.0 / (1.0 + LinearDamping * dt)
         AngularVelocity *= 1.0 / (1.0 + AngularDamping * dt)
+
+        ' 简化 CCD：限制最大速度，避免单步位移过大穿隧
+        If MaxSpeed > 0.0 Then
+            Dim sp = Length(Velocity)
+            If sp > MaxSpeed Then Velocity *= MaxSpeed / sp
+        End If
     End Sub
 
     ''' <summary>由速度更新位置：x += v·dt; θ += ω·dt</summary>
@@ -129,3 +143,5 @@ Public Class RigidBody
         Return Shape.GetAABB(Position, Rotation)
     End Function
 End Class
+
+End Namespace

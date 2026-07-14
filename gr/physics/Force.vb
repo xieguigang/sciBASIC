@@ -68,6 +68,7 @@ Imports std = System.Math
 ''' <summary>
 ''' 力
 ''' </summary>
+<System.Obsolete("Polar Force is kept for backward compatibility; new code should use Vector2 force accumulators (RigidBody.ApplyForce).")>
 Public Class Force
 
     ''' <summary>

@@ -80,6 +80,7 @@ Imports Microsoft.VisualBasic.Math.LinearAlgebra
 ''' <summary>
 ''' Physics world reactor
 ''' </summary>
+<System.Obsolete("Use Microsoft.VisualBasic.Imaging.Physics.PhysicsWorld (RigidBody) instead.")>
 Public Class World
 
     Public Enum Type As Byte

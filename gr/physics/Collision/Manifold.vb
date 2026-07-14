@@ -1,6 +1,8 @@
 ' Copyright (c) 2018 GPL3 Licensed
 ' 碰撞流形：承载法向、穿透深度、接触点，以及顺序冲量求解所需的累加器。
 
+Imports Microsoft.VisualBasic.Imaging.Physics.RigidBody
+
 Namespace Microsoft.VisualBasic.Imaging.Physics.Collision
 
     ''' <summary>
