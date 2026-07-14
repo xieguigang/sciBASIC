@@ -63,7 +63,7 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
-Imports stdNum = System.Math
+Imports std = System.Math
 Imports WeightTable = System.Collections.Generic.Dictionary(Of Integer, Double)
 
 Namespace Analysis.PageRank
@@ -85,7 +85,7 @@ Namespace Analysis.PageRank
         Friend Overloads Sub AddVertex(id As Integer)
             Dim v As New WeightedPRNode With {
                 .ID = id,
-                .Label = id,
+                .label = id,
                 .ConnectedTargets = New WeightTable
             }
             Call AddVertex(v)
@@ -166,7 +166,7 @@ Namespace Analysis.PageRank
             Dim inverse# = 1 / g.size.vertex
 
             For Each vertex As WeightedPRNode In g _
-                .Vertex _
+                .vertex _
                 .Where(Function(v)
                            Return Not v _
                                .ConnectedTargets _
@@ -181,7 +181,7 @@ Namespace Analysis.PageRank
                 End If
             Next
 
-            For Each vertex As WeightedPRNode In g.Vertex
+            For Each vertex As WeightedPRNode In g.vertex
                 vertex.Weight = inverse
 
                 If vertex.ConnectedTargets Is Nothing Then
@@ -194,7 +194,7 @@ Namespace Analysis.PageRank
                 Dim nodes As New WeightTable
                 Dim leak# = 0
 
-                For Each v As WeightedPRNode In g.Vertex
+                For Each v As WeightedPRNode In g.vertex
                     nodes(v.ID) = v.Weight
 
                     If v.Outbound = 0R Then
@@ -206,7 +206,7 @@ Namespace Analysis.PageRank
 
                 leak *= a
 
-                For Each edge As WeightedPRNode In g.Vertex
+                For Each edge As WeightedPRNode In g.vertex
                     Dim source As Integer = edge.ID
 
                     For Each map In edge.ConnectedTargets
@@ -219,7 +219,7 @@ Namespace Analysis.PageRank
                 d = 0
 
                 For Each v As WeightedPRNode In g.vertex
-                    d += stdNum.Abs(v.Weight - nodes(v.ID))
+                    d += std.Abs(v.Weight - nodes(v.ID))
                 Next
             Loop
 

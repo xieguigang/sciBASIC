@@ -1,56 +1,56 @@
 ﻿#Region "Microsoft.VisualBasic::bf9b7b38e9df9e4f8be10ac7d8c37a79, Data\BinaryData\BinaryData\Bzip2\Math\CRC32.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 48
-    '    Code Lines: 26 (54.17%)
-    ' Comment Lines: 15 (31.25%)
-    '    - Xml Docs: 73.33%
-    ' 
-    '   Blank Lines: 7 (14.58%)
-    '     File Size: 4.78 KB
+' Summaries:
 
 
-    '     Class CRC32
-    ' 
-    '         Properties: CRC
-    ' 
-    '         Sub: (+2 Overloads) UpdateCrc
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 48
+'    Code Lines: 26 (54.17%)
+' Comment Lines: 15 (31.25%)
+'    - Xml Docs: 73.33%
+' 
+'   Blank Lines: 7 (14.58%)
+'     File Size: 4.78 KB
+
+
+'     Class CRC32
+' 
+'         Properties: CRC
+' 
+'         Sub: (+2 Overloads) UpdateCrc
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -59,7 +59,7 @@
 ' Location: http://github.com/jaime-olivares/bzip2
 ' Ported from the Java implementation by Matthew Francis: https://github.com/MateuszBartosiewicz/bzip2
 
-Imports stdNum = System.Math
+Imports std = System.Math
 
 Namespace Bzip2.Math
 
@@ -95,7 +95,7 @@ Namespace Bzip2.Math
         ''' <param name="value">The value to update the CRC with</param>
         ''' <param name="count">The number of bytes</param>
         Public Sub UpdateCrc(value As Integer, count As Integer)
-            While stdNum.Max(Threading.Interlocked.Decrement(count), count + 1) > 0
+            While std.Max(Threading.Interlocked.Decrement(count), count + 1) > 0
                 crcField = crcField << 8 Xor Crc32Lookup((crcField >> 24 Xor value) And &HFF)
             End While
         End Sub

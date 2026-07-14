@@ -58,7 +58,7 @@
 Imports System.Drawing
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Imaging.d3js.scale
-Imports stdNum = System.Math
+Imports std = System.Math
 
 Namespace Graphic.Axis
 
@@ -109,7 +109,7 @@ Namespace Graphic.Axis
             y1 = TranslateY(y1)
             y2 = TranslateY(y2)
 
-            Return stdNum.Max(y1, y2) - stdNum.Min(y1, y2)
+            Return std.Max(y1, y2) - std.Min(y1, y2)
         End Function
 
         ''' <summary>

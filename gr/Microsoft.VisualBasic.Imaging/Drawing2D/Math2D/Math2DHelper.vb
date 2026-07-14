@@ -56,7 +56,7 @@ Imports System.Drawing
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Imaging.Math2D
 Imports Microsoft.VisualBasic.Linq
-Imports stdNum = System.Math
+Imports std = System.Math
 
 Namespace Drawing2D.Math2D
 
@@ -82,7 +82,7 @@ Namespace Drawing2D.Math2D
                 For xi As Integer = orderX.Min + 1 To endX
                     Dim xiii As Integer = xi
 
-                    If orderX.Any(Function(xii) stdNum.Abs(xiii - xii) <= 0.05) Then
+                    If orderX.Any(Function(xii) std.Abs(xiii - xii) <= 0.05) Then
                         background = Not background
                     ElseIf Not background Then
                         Yield New PointF(xi, line.Key)

@@ -1,7 +1,6 @@
-﻿Imports System.Runtime.CompilerServices
-Imports Microsoft.VisualBasic.Data.visualize.Network.Analysis
+﻿Imports Microsoft.VisualBasic.Data.visualize.Network.Analysis
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
-Imports stdNum = System.Math
+Imports std = System.Math
 
 Namespace Circular
 
@@ -57,15 +56,15 @@ Namespace Circular
             End If
             Dim orderedArr As Node() = ordered.ToArray()
 
-            Dim deltaAngle As Double = 2.0 * stdNum.PI / n
+            Dim deltaAngle As Double = 2.0 * std.PI / n
             Dim angle As Double = 0.0
 
             For i As Integer = 0 To n - 1
                 Dim node As Node = orderedArr(i)
 
                 node.data.initialPostion = New FDGVector2(
-                    cx + radius * stdNum.Cos(angle),
-                    cy + radius * stdNum.Sin(angle)
+                    cx + radius * std.Cos(angle),
+                    cy + radius * std.Sin(angle)
                 )
 
                 angle += deltaAngle
@@ -175,18 +174,18 @@ Namespace Circular
                                 swaps += 1
                             End If
                         Next
-                    End While
+                    Next
                 End While
             End If
 
             ' 将最终顺序映射到圆上
-            Dim deltaAngle As Double = 2.0 * stdNum.PI / n
+            Dim deltaAngle As Double = 2.0 * std.PI / n
             Dim angle As Double = 0.0
 
             For i As Integer = 0 To n - 1
                 order(i).data.initialPostion = New FDGVector2(
-                    cx + radius * stdNum.Cos(angle),
-                    cy + radius * stdNum.Sin(angle)
+                    cx + radius * std.Cos(angle),
+                    cy + radius * std.Sin(angle)
                 )
                 angle += deltaAngle
             Next

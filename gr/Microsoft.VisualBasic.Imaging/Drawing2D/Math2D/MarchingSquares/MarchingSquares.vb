@@ -57,10 +57,9 @@
 #End Region
 
 Imports System.Drawing
-Imports System.Drawing.Drawing2D
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Imaging.LayoutModel
-Imports stdNum = System.Math
+Imports std = System.Math
 
 ' MarchingSquares.java
 ' 
@@ -320,7 +319,7 @@ Namespace Drawing2D.Math2D.MarchingSquares
             Dim xPrev As Double = c + pt.X
             Dim yPrev As Double = r + pt.Y
 
-            If stdNum.Abs(x - xPrev) > epsilon AndAlso stdNum.Abs(y - yPrev) > epsilon Then
+            If std.Abs(x - xPrev) > epsilon AndAlso std.Abs(y - yPrev) > epsilon Then
                 iso.LineTo(x, y)
             End If
 
@@ -345,7 +344,7 @@ Namespace Drawing2D.Math2D.MarchingSquares
                 x = c + pt.X
                 y = r + pt.Y
 
-                If stdNum.Abs(x - xPrev) > epsilon AndAlso stdNum.Abs(y - yPrev) > epsilon Then
+                If std.Abs(x - xPrev) > epsilon AndAlso std.Abs(y - yPrev) > epsilon Then
                     iso.LineTo(x, y)
                 End If
 
@@ -389,7 +388,7 @@ Namespace Drawing2D.Math2D.MarchingSquares
             Dim superMin = levels(0)
 
             For i = 1 To levels.Length - 1
-                superMin = stdNum.Min(superMin, levels(i))
+                superMin = std.Min(superMin, levels(i))
             Next
 
             superMin -= 1
