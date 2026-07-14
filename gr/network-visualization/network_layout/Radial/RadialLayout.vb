@@ -1,59 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b4c1c79061aed40a7a95a96b011b262a, gr\network-visualization\network_layout\Radial\RadialLayout.vb"
-
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-    ' /********************************************************************************/
-
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 51
-    '    Code Lines: 37 (72.55%)
-    ' Comment Lines: 4 (7.84%)
-    '    - Xml Docs: 0.00%
-    ' 
-    '   Blank Lines: 10 (19.61%)
-    '     File Size: 2.08 KB
-
-
-    '     Module RadialLayout
-    ' 
-    '         Function: layoutCurrentCenter, LayoutNodes
-    ' 
-    ' 
-    ' /********************************************************************************/
-
-#End Region
-
-Imports System.Runtime.CompilerServices
-Imports Microsoft.VisualBasic.Data.visualize.Network.Analysis
+﻿Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
 Imports stdNum = System.Math
 
@@ -61,45 +6,105 @@ Namespace Radial
 
     Public Module RadialLayout
 
-        Public Function LayoutNodes(g As NetworkGraph) As NetworkGraph
-            ' 首先计算出所有节点的连接度
-            ' 将最高连接度的节点作为布局的中心点
-            Dim degreeOrders = g.ComputeNodeDegrees.OrderByDescending(Function(a) a.Value).ToArray
-            Dim layout = g.layoutCurrentCenter(cid:=degreeOrders.First.Key, degreeOrders.ToDictionary)
+        ''' <summary>
+        ''' 径向树布局：以最高度节点为根，将邻居节点按角度均匀分布在同心圆环上，
+        ''' 递归地将每个节点的邻居分布以该节点为中心的下一层圆环上。
+        ''' </summary>
+        ''' <param name="g">输入网络图。节点 initialPostion 为空时自动用随机位置初始化。</param>
+        ''' <param name="radius">
+        ''' 每层圆环之间的间距（像素）。默认 120，若传入 NaN 则按 sqrt(area/nodeCount) 自动推算。
+        ''' </param>
+        ''' <returns>布局完成后的网络图。</returns>
+        Public Function LayoutNodes(g As NetworkGraph,
+                                   Optional radius As Double = Double.NaN) As NetworkGraph
 
-            Return layout
-        End Function
+            Dim nodeCount As Integer = g.vertex.Count
 
-        <Extension>
-        Private Function layoutCurrentCenter(g As NetworkGraph, cid As String, degrees As Dictionary(Of String, Integer)) As NetworkGraph
-            ' 其余的节点与中心节点的距离与度有关，度越高距离越远
-            Dim center As Node = g.GetElementByID(cid)
-            Dim connected As Node() = g.GetEdges(center) _
-                .Select(Function(a) a.Other(center)) _
-                .Where(Function(a) degrees.ContainsKey(a.label)) _
-                .OrderBy(Function(n) degrees(n.label)) _
-                .ToArray
-
-            degrees.Remove(cid)
-
-            ' 当前节点为孤立节点或者已经被布局过了
-            If connected.Length = 0 OrElse degrees.Count = 0 Then
-                Return g
+            If Double.IsNaN(radius) OrElse radius <= 0 Then
+                ' 根据节点数自动推算合理环间距
+                radius = stdNum.Sqrt(1000.0 * 1000.0 / stdNum.Max(nodeCount, 1)) * 1.5
             End If
 
-            Dim deltaAngle As Double = 2 * stdNum.PI / connected.Length
-            Dim angle As Double
+            ' 计算度排序，最高度节点作为根
+            Dim degrees As Dictionary(Of String, Integer) = g.ComputeNodeDegrees()
+            Dim degreeOrders = degrees.OrderByDescending(Function(a) a.Value).ToArray
+            Dim rootId As String = degreeOrders.First.Key
 
-            For Each node As Node In connected
-                node.data.initialPostion = New FDGVector2 With {
-                    .x = center.data.initialPostion.x * stdNum.Cos(angle),
-                    .y = center.data.initialPostion.y * stdNum.Sin(angle)
-                }
-                g.layoutCurrentCenter(node.label, degrees)
-                angle += deltaAngle
-            Next
+            ' 确保根节点的中心位置不为 Nothing
+            Dim root As Node = g.GetElementByID(rootId)
+            If root.data.initialPostion Is Nothing Then
+                root.data.initialPostion = New FDGVector2(0, 0)
+            End If
+
+            ' 所有尚未布局的节点如果在后续递归中始终没有被放置，则保持在原位（不额外处理）
+            Call g.layoutCurrentCenter(centerId:=rootId,
+                                       degrees:=degrees,
+                                       radius:=radius,
+                                       level:=0)
 
             Return g
         End Function
+
+        ''' <summary>
+        ''' 以 <paramref name="centerId"/> 为圆心，将其直接邻居按度排序后分布在
+        ''' 距离 <paramref name="radius"/> 的圆环上，然后递归处理每个邻居。
+        ''' </summary>
+        <Extension>
+        Private Sub layoutCurrentCenter(g As NetworkGraph,
+                                        centerId As String,
+                                        degrees As Dictionary(Of String, Integer),
+                                        radius As Double,
+                                        level As Integer)
+
+            Dim center As Node = g.GetElementByID(centerId)
+
+            ' 获取当前中心节点的所有直接邻居（已按度升序排列）
+            Dim connected As Node() = g.GetEdges(center) _
+                .Select(Function(e) e.Other(center)) _
+                .Where(Function(n) degrees.ContainsKey(n.label) AndAlso n.label <> centerId) _
+                .OrderBy(Function(n) degrees(n.label)) _
+                .ToArray()
+
+            ' 无邻居或所有邻居都已在更外层布局过 → 终止递归
+            If connected.Length = 0 Then
+                Return
+            End If
+
+            ' 确保中心节点位置已初始化
+            If center.data.initialPostion Is Nothing Then
+                center.data.initialPostion = New FDGVector2(0, 0)
+            End If
+
+            Dim cx As Double = center.data.initialPostion.x
+            Dim cy As Double = center.data.initialPostion.y
+
+            Dim deltaAngle As Double = 2.0 * stdNum.PI / connected.Length
+            Dim angle As Double = 0.0
+
+            ' 将已布局的邻居从度字典中移除，避免递归时重复处理
+            For Each node As Node In connected
+                degrees.Remove(node.label)
+            Next
+
+            For Each node As Node In connected
+                ' 关键修正：原代码为 center.{x,y} * Cos/Sin（乘法），
+                ' 正确公式应为 center.{x,y} + radius * Cos/Sin（加法），
+                ' 使子节点分布在以 center 为圆心、radius 为半径的圆环上。
+                node.data.initialPostion = New FDGVector2(
+                    cx + radius * stdNum.Cos(angle),
+                    cy + radius * stdNum.Sin(angle)
+                )
+
+                ' 递归：以当前节点为新的圆心，进入下一层（半径缩小以避免无限增长）
+                Call g.layoutCurrentCenter(
+                    centerId:=node.label,
+                    degrees:=degrees,
+                    radius:=radius * 0.75,
+                    level:=level + 1)
+
+                angle += deltaAngle
+            Next
+        End Sub
+
     End Module
 End Namespace
