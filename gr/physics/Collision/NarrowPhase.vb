@@ -1,11 +1,6 @@
 ' Copyright (c) 2018 GPL3 Licensed
 ' Narrow Phase：圆-圆、圆-多边形、多边形-多边形(SAT+裁剪) 精确碰撞，生成接触流形。
 
-Imports System
-Imports System.Math
-Imports Microsoft.VisualBasic.Imaging.Physics
-Imports std = System.Math
-
 Namespace Collision
 
     ''' <summary>
@@ -46,7 +41,7 @@ Namespace Collision
                 Return m
             End If
 
-            If dist < 1.0e-9 Then
+            If dist < 0.000000001 Then
                 m.Penetration = rA
                 m.Normal = New Vector2(1, 0)
                 m.Contacts = New Vector2() {ca}
@@ -85,7 +80,7 @@ Namespace Collision
             Dim v1 = pc.vertices(faceNormal)
             Dim v2 = pc.vertices((faceNormal + 1) Mod pc.Count)
 
-            If separation < 1.0e-9 Then
+            If separation < 0.000000001 Then
                 ' 圆心在多边形内部
                 Dim nLocal = pc.normals(faceNormal)
                 m.Normal = -Rotate(nLocal, poly.Rotation)
