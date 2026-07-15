@@ -193,5 +193,16 @@ Namespace Circular
             Return g
         End Function
 
+        ''' <summary>
+        ''' 接受 <see cref="CircularLayoutParameters"/> 参数对象重载（保持旧函数签名兼容）
+        ''' </summary>
+        Public Function LayoutNodes(g As NetworkGraph, params As CircularLayoutParameters) As NetworkGraph
+            If params.OptimizeCrossing Then
+                Return LayoutNodesWithCrossingOptimization(g, params.Radius, params.CenterX, params.CenterY, params.MaxSwaps)
+            Else
+                Return LayoutNodes(g, params.Radius, params.CenterX, params.CenterY, params.SortByDegree)
+            End If
+        End Function
+
     End Module
 End Namespace

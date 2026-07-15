@@ -137,6 +137,19 @@ Namespace ForceDirected
         End Sub
 
         ''' <summary>
+        ''' 使用 <see cref="ForceDirectedParameters"/> 参数对象构造布局器，便于通过 PropertyGrid 编辑参数
+        ''' </summary>
+        Sub New(g As NetworkGraph, params As ForceDirectedParameters)
+            Me.New(g,
+                   ejectFactor:=params.EjectFactor,
+                   condenseFactor:=params.CondenseFactor,
+                   maxtx:=params.MaxTx,
+                   maxty:=params.MaxTy,
+                   dist_threshold:=params.DistThreshold,
+                   size:=String.Format("{0},{1}", params.CanvasWidth, params.CanvasHeight))
+        End Sub
+
+        ''' <summary>
         ''' run a step of the current layout algorithm 
         ''' </summary>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
