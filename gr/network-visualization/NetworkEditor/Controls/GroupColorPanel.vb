@@ -10,7 +10,7 @@ Namespace NetworkEditor.Controls
     ''' </summary>
     Public Class GroupColorPanel : Inherits UserControl
 
-        Private state As EditorState = Nothing
+        Private _state As EditorState = Nothing
         Private _targetCanvas As NetworkEditorCanvas = Nothing
 
         Private lstGroups As New ListBox() With {.Dock = DockStyle.Fill, .DrawMode = DrawMode.OwnerDrawFixed, .ItemHeight = 18, .IntegralHeight = False}
@@ -25,10 +25,10 @@ Namespace NetworkEditor.Controls
 
         Public Property State As EditorState
             Get
-                Return state
+                Return _state
             End Get
             Set(value As EditorState)
-                state = value
+                _state = value
                 RefreshGroups()
             End Set
         End Property
@@ -77,8 +77,8 @@ Namespace NetworkEditor.Controls
 
         Public Sub RefreshGroups()
             lstGroups.Items.Clear()
-            If state IsNot Nothing Then
-                For Each g In state.GroupColors.Groups
+            If _state IsNot Nothing Then
+                For Each g In _state.GroupColors.Groups
                     lstGroups.Items.Add(g)
                 Next
             End If
@@ -91,7 +91,7 @@ Namespace NetworkEditor.Controls
             Dim g = e.Graphics
             g.FillRectangle(New SolidBrush(e.BackColor), e.Bounds)
             Dim name = CStr(lstGroups.Items(e.Index))
-            Dim col = If(state IsNot Nothing, state.GroupColors(name), Color.Gray)
+            Dim col = If(_state IsNot Nothing, _state.GroupColors(name), Color.Gray)
             g.FillRectangle(New SolidBrush(col), e.Bounds.X + 2, e.Bounds.Y + 2, 14, 14)
             g.DrawRectangle(Pens.Black, e.Bounds.X + 2, e.Bounds.Y + 2, 14, 14)
             Using fnt = New Font("Segoe UI", 9)
@@ -102,10 +102,10 @@ Namespace NetworkEditor.Controls
         Private Sub btnAdd_Click(sender As Object, e As EventArgs)
             Dim name = txtNew.Text.Trim()
             If name = "" OrElse name = "新分组名" Then
-                name = "group" & (state.GroupColors.Groups.Length + 1)
+                name = "group" & (_state.GroupColors.Groups.Length + 1)
             End If
-            If Not state.GroupColors.Contains(name) Then
-                state.GroupColors.Add(name)
+            If Not _state.GroupColors.Contains(name) Then
+                _state.GroupColors.Add(name)
                 RefreshGroups()
                 RaiseChanged()
             End If
@@ -115,7 +115,7 @@ Namespace NetworkEditor.Controls
             If lstGroups.SelectedItem Is Nothing Then
                 Return
             End If
-            state.GroupColors.Remove(CStr(lstGroups.SelectedItem))
+            _state.GroupColors.Remove(CStr(lstGroups.SelectedItem))
             RefreshGroups()
             RaiseChanged()
         End Sub
@@ -125,9 +125,9 @@ Namespace NetworkEditor.Controls
                 Return
             End If
             Dim name = CStr(lstGroups.SelectedItem)
-            colorDlg.Color = state.GroupColors(name)
+            colorDlg.Color = _state.GroupColors(name)
             If colorDlg.ShowDialog() = DialogResult.OK Then
-                state.GroupColors(name) = colorDlg.Color
+                _state.GroupColors(name) = colorDlg.Color
                 RefreshGroups()
                 RaiseChanged()
             End If

@@ -17,8 +17,8 @@ Namespace NetworkEditor.Controls
         Private _state As EditorState = Nothing
 
         ' 视口变换
-        Private viewOffset As PointF = New PointF(0, 0)
-        Private viewScale As Single = 1.0F
+        Private _viewOffset As PointF = New PointF(0, 0)
+        Private _viewScale As Single = 1.0F
 
         ' 交互状态
         Private isPanning As Boolean = False
@@ -55,17 +55,17 @@ Namespace NetworkEditor.Controls
 
         Public Property State As EditorState
             Get
-                Return state
+                Return _state
             End Get
             Set(value As EditorState)
-                If state IsNot Nothing Then
-                    RemoveHandler state.SelectionChanged, AddressOf OnStateChanged
-                    RemoveHandler state.GraphChanged, AddressOf OnStateChanged
+                If _state IsNot Nothing Then
+                    RemoveHandler _state.SelectionChanged, AddressOf OnStateChanged
+                    RemoveHandler _state.GraphChanged, AddressOf OnStateChanged
                 End If
-                state = value
-                If state IsNot Nothing Then
-                    AddHandler state.SelectionChanged, AddressOf OnStateChanged
-                    AddHandler state.GraphChanged, AddressOf OnStateChanged
+                _state = value
+                If _state IsNot Nothing Then
+                    AddHandler _state.SelectionChanged, AddressOf OnStateChanged
+                    AddHandler _state.GraphChanged, AddressOf OnStateChanged
                 End If
                 Me.Invalidate()
             End Set
@@ -87,13 +87,13 @@ Namespace NetworkEditor.Controls
 
         Public ReadOnly Property ViewOffset As PointF
             Get
-                Return viewOffset
+                Return _viewOffset
             End Get
         End Property
 
         Public ReadOnly Property ViewScale As Single
             Get
-                Return viewScale
+                Return _viewScale
             End Get
         End Property
 
@@ -104,20 +104,20 @@ Namespace NetworkEditor.Controls
 #Region "坐标变换"
 
         Public Function GraphToScreen(gx As Double, gy As Double) As PointF
-            Return New PointF(gx * viewScale + viewOffset.X, gy * viewScale + viewOffset.Y)
+            Return New PointF(gx * _viewScale + _viewOffset.X, gy * _viewScale + _viewOffset.Y)
         End Function
 
         Public Function ScreenToGraph(sp As PointF) As PointF
-            Return New PointF((sp.X - viewOffset.X) / viewScale, (sp.Y - viewOffset.Y) / viewScale)
+            Return New PointF((sp.X - _viewOffset.X) / _viewScale, (sp.Y - _viewOffset.Y) / _viewScale)
         End Function
 
         Public Function GetWorldBounds() As RectangleF
-            If state Is Nothing OrElse state.Graph Is Nothing Then
+            If _state Is Nothing OrElse _state.Graph Is Nothing Then
                 Return RectangleF.Empty
             End If
             Dim minX = Double.MaxValue, minY = Double.MaxValue, maxX = Double.MinValue, maxY = Double.MinValue
             Dim any As Boolean = False
-            For Each n As Node In state.Graph.vertex
+            For Each n As Node In _state.Graph.vertex
                 If n.data.initialPostion Is Nothing Then
                     Continue For
                 End If
@@ -140,34 +140,34 @@ Namespace NetworkEditor.Controls
         End Function
 
         Public Sub CenterOnGraph(gx As Double, gy As Double)
-            viewOffset = New PointF(ClientSize.Width / 2.0F - CSng(gx) * viewScale, ClientSize.Height / 2.0F - CSng(gy) * viewScale)
+            _viewOffset = New PointF(ClientSize.Width / 2.0F - CSng(gx) * _viewScale, ClientSize.Height / 2.0F - CSng(gy) * _viewScale)
             Me.Invalidate()
         End Sub
 
         Public Sub FitView()
             Dim b = GetWorldBounds()
             If b.IsEmpty Then
-                viewScale = 1.0F
-                viewOffset = New PointF(0, 0)
+                _viewScale = 1.0F
+                _viewOffset = New PointF(0, 0)
                 Me.Invalidate()
                 Return
             End If
             Dim pad As Single = 40.0F
             Dim sx = (ClientSize.Width - pad * 2) / Math.Max(1.0F, b.Width)
             Dim sy = (ClientSize.Height - pad * 2) / Math.Max(1.0F, b.Height)
-            viewScale = CSng(Math.Min(sx, sy))
-            If viewScale <= 0 Then
-                viewScale = 1.0F
+            _viewScale = CSng(Math.Min(sx, sy))
+            If _viewScale <= 0 Then
+                _viewScale = 1.0F
             End If
             Dim cx = b.X + b.Width / 2.0F
             Dim cy = b.Y + b.Height / 2.0F
-            viewOffset = New PointF(ClientSize.Width / 2.0F - cx * viewScale, ClientSize.Height / 2.0F - cy * viewScale)
+            _viewOffset = New PointF(ClientSize.Width / 2.0F - cx * _viewScale, ClientSize.Height / 2.0F - cy * _viewScale)
             Me.Invalidate()
         End Sub
 
         Public Sub ResetView()
-            viewScale = 1.0F
-            viewOffset = New PointF(0, 0)
+            _viewScale = 1.0F
+            _viewOffset = New PointF(0, 0)
             Me.Invalidate()
         End Sub
 
@@ -184,11 +184,11 @@ Namespace NetworkEditor.Controls
             If n.data.size IsNot Nothing AndAlso n.data.size.Length > 0 Then
                 baseR = CSng(n.data.size(0))
             End If
-            Return Math.Max(3.0F, baseR * viewScale)
+            Return Math.Max(3.0F, baseR * _viewScale)
         End Function
 
         Private Function NodeAt(pt As PointF) As Node
-            Dim arr = state.Graph.vertex.ToArray()
+            Dim arr = _state.Graph.vertex.ToArray()
             For i As Integer = arr.Length - 1 To 0 Step -1
                 Dim n = arr(i)
                 If n.data.initialPostion Is Nothing Then
@@ -206,7 +206,7 @@ Namespace NetworkEditor.Controls
         End Function
 
         Private Function EdgeAt(pt As PointF) As Edge
-            For Each ed As Edge In state.Graph.graphEdges
+            For Each ed As Edge In _state.Graph.graphEdges
                 If ed.U.data.initialPostion Is Nothing OrElse ed.V.data.initialPostion Is Nothing Then
                     Continue For
                 End If
@@ -239,14 +239,14 @@ Namespace NetworkEditor.Controls
 
         Protected Overrides Sub OnMouseDown(e As MouseEventArgs)
             MyBase.OnMouseDown(e)
-            If state Is Nothing OrElse state.Graph Is Nothing Then
+            If _state Is Nothing OrElse _state.Graph Is Nothing Then
                 Return
             End If
 
             If e.Button = MouseButtons.Middle OrElse e.Button = MouseButtons.Right Then
                 isPanning = True
                 panStart = e.Location
-                panOffsetStart = viewOffset
+                panOffsetStart = _viewOffset
                 Me.Cursor = Cursors.SizeAll
                 Return
             End If
@@ -259,9 +259,9 @@ Namespace NetworkEditor.Controls
                             linkSource = n
                             Me.Invalidate()
                         ElseIf linkSource IsNot n Then
-                            Dim ed = state.Graph.CreateEdge(linkSource, n)
+                            Dim ed = _state.Graph.CreateEdge(linkSource, n)
                             If ed IsNot Nothing Then
-                                state.RaiseGraphChanged()
+                                _state.RaiseGraphChanged()
                             End If
                             linkSource = Nothing
                             Me.Invalidate()
@@ -274,15 +274,15 @@ Namespace NetworkEditor.Controls
                 If hitNode IsNot Nothing Then
                     Dim additive = (Control.ModifierKeys And Keys.Control) = Keys.Control OrElse (Control.ModifierKeys And Keys.Shift) = Keys.Shift
                     If additive Then
-                        state.ToggleNode(hitNode)
-                    ElseIf Not state.SelectedNodes.Contains(hitNode) Then
-                        state.SelectNode(hitNode)
+                        _state.ToggleNode(hitNode)
+                    ElseIf Not _state.SelectedNodes.Contains(hitNode) Then
+                        _state.SelectNode(hitNode)
                     End If
 
                     isDraggingNodes = True
                     dragStartGraph = ScreenToGraph(e.Location)
                     dragInit = New Dictionary(Of Node, FDGVector2)
-                    For Each sel As Node In state.SelectedNodes
+                    For Each sel As Node In _state.SelectedNodes
                         If sel.data.initialPostion Is Nothing Then
                             sel.data.initialPostion = New FDGVector2(0, 0)
                         End If
@@ -293,7 +293,7 @@ Namespace NetworkEditor.Controls
 
                 Dim hitEdge = EdgeAt(e.Location)
                 If hitEdge IsNot Nothing Then
-                    state.SelectEdge(hitEdge)
+                    _state.SelectEdge(hitEdge)
                     Return
                 End If
 
@@ -306,12 +306,12 @@ Namespace NetworkEditor.Controls
 
         Protected Overrides Sub OnMouseMove(e As MouseEventArgs)
             MyBase.OnMouseMove(e)
-            If state Is Nothing OrElse state.Graph Is Nothing Then
+            If _state Is Nothing OrElse _state.Graph Is Nothing Then
                 Return
             End If
 
             If isPanning Then
-                viewOffset = New PointF(panOffsetStart.X + (e.Location.X - panStart.X), panOffsetStart.Y + (e.Location.Y - panStart.Y))
+                _viewOffset = New PointF(panOffsetStart.X + (e.Location.X - panStart.X), panOffsetStart.Y + (e.Location.Y - panStart.Y))
                 Me.Invalidate()
                 Return
             End If
@@ -349,20 +349,20 @@ Namespace NetworkEditor.Controls
             If isRubberBand Then
                 Dim additive = (Control.ModifierKeys And Keys.Control) = Keys.Control OrElse (Control.ModifierKeys And Keys.Shift) = Keys.Shift
                 If Not additive Then
-                    state.SelectedNodes.Clear()
+                    _state.SelectedNodes.Clear()
                 End If
-                For Each n As Node In state.Graph.vertex
+                For Each n As Node In _state.Graph.vertex
                     If n.data.initialPostion Is Nothing Then
                         Continue For
                     End If
                     Dim c = GraphToScreen(n.data.initialPostion.x, n.data.initialPostion.y)
                     If rubberRect.Contains(CInt(c.X), CInt(c.Y)) Then
-                        If Not state.SelectedNodes.Contains(n) Then
-                            state.SelectedNodes.Add(n)
+                        If Not _state.SelectedNodes.Contains(n) Then
+                            _state.SelectedNodes.Add(n)
                         End If
                     End If
                 Next
-                state.SelectedEdge = Nothing
+                _state.SelectedEdge = Nothing
                 isRubberBand = False
                 rubberRect = Rectangle.Empty
                 RaiseEventSelection()
@@ -379,15 +379,14 @@ Namespace NetworkEditor.Controls
 
         Protected Overrides Sub OnMouseWheel(e As MouseEventArgs)
             MyBase.OnMouseWheel(e)
-            If state Is Nothing Then
+            If _state Is Nothing Then
                 Return
             End If
             Dim before = ScreenToGraph(e.Location)
             Dim factor As Single = If(e.Delta > 0, 1.1F, 1.0F / 1.1F)
-            viewScale = CSng(Math.Max(0.05, Math.Min(20.0, viewScale * factor)))
+            _viewScale = CSng(Math.Max(0.05, Math.Min(20.0, _viewScale * factor)))
             ' 保持光标下图形点不动
-            viewOffset = New PointF(e.Location.X - before.X * viewScale, e.Location.Y - before.Y * viewScale)
-            e.Handled = True
+            _viewOffset = New PointF(e.Location.X - before.X * _viewScale, e.Location.Y - before.Y * _viewScale)
             Me.Invalidate()
         End Sub
 
@@ -400,8 +399,8 @@ Namespace NetworkEditor.Controls
         End Function
 
         Private Sub RaiseEventSelection()
-            If state IsNot Nothing Then
-                state.RaiseSelectionChanged()
+            If _state IsNot Nothing Then
+                _state.RaiseSelectionChanged()
             End If
         End Sub
 
@@ -415,19 +414,19 @@ Namespace NetworkEditor.Controls
             g.SmoothingMode = SmoothingMode.HighQuality
             g.Clear(CBg)
 
-            If state Is Nothing OrElse state.Graph Is Nothing Then
+            If _state Is Nothing OrElse _state.Graph Is Nothing Then
                 Return
             End If
 
             ' 边
-            For Each ed As Edge In state.Graph.graphEdges
+            For Each ed As Edge In _state.Graph.graphEdges
                 If ed.U.data.initialPostion Is Nothing OrElse ed.V.data.initialPostion Is Nothing Then
                     Continue For
                 End If
                 Dim p1 = GraphToScreen(ed.U.data.initialPostion.x, ed.U.data.initialPostion.y)
                 Dim p2 = GraphToScreen(ed.V.data.initialPostion.x, ed.V.data.initialPostion.y)
-                Dim selected = (ed Is state.SelectedEdge)
-                Dim col = If(selected, CSelEdge, state.GetEdgeColor(ed))
+                Dim selected = (ed Is _state.SelectedEdge)
+                Dim col = If(selected, CSelEdge, _state.GetEdgeColor(ed))
                 Dim w = 1.0F + CSng(Math.Min(4.0, Math.Abs(ed.weight)))
                 If selected Then
                     w = 3.0F
@@ -438,13 +437,13 @@ Namespace NetworkEditor.Controls
             Next
 
             ' 节点
-            For Each n As Node In state.Graph.vertex
+            For Each n As Node In _state.Graph.vertex
                 If n.data.initialPostion Is Nothing Then
                     Continue For
                 End If
                 Dim c = GraphToScreen(n.data.initialPostion.x, n.data.initialPostion.y)
                 Dim r = GetNodeScreenRadius(n)
-                Dim selected = state.SelectedNodes.Contains(n)
+                Dim selected = _state.SelectedNodes.Contains(n)
 
                 If selected Then
                     Using glow = New SolidBrush(Color.FromArgb(60, &H36, &HE2, &HC2))
@@ -452,7 +451,7 @@ Namespace NetworkEditor.Controls
                     End Using
                 End If
 
-                Using fill = New SolidBrush(state.GetNodeColor(n))
+                Using fill = New SolidBrush(_state.GetNodeColor(n))
                     g.FillEllipse(fill, c.X - r, c.Y - r, r * 2, r * 2)
                 End Using
 
@@ -460,7 +459,7 @@ Namespace NetworkEditor.Controls
                     g.DrawEllipse(stroke, c.X - r, c.Y - r, r * 2, r * 2)
                 End Using
 
-                If viewScale >= 0.6F OrElse selected OrElse (n Is hoverNode) Then
+                If _viewScale >= 0.6F OrElse selected OrElse (n Is hoverNode) Then
                     Dim label = If(String.IsNullOrEmpty(n.data.label), n.label, n.data.label)
                     Using br = New SolidBrush(CText)
                         Using fnt = New Font("Segoe UI", 9)

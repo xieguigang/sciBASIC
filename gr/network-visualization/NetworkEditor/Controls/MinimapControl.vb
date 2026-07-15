@@ -65,7 +65,7 @@ Namespace NetworkEditor.Controls
                 Dim sx = offX + (n.data.initialPostion.x - world.X) * scale
                 Dim sy = offY + (n.data.initialPostion.y - world.Y) * scale
                 Using b = New SolidBrush(_canvas.State.GetNodeColor(n))
-                    g.FillRectangle(b, sx - 1, sy - 1, 2, 2)
+                    g.FillRectangle(b, CSng(sx) - 1.0F, CSng(sy) - 1.0F, 2.0F, 2.0F)
                 End Using
             Next
 
