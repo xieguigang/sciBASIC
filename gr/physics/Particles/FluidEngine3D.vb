@@ -51,13 +51,19 @@ Public Class FluidEngine3D : Implements IContainer3D(Of Particle3D)
 
     ' Settings, exposed as read/write properties so that they can be bound to
     ' the WinForm PropertyGrid and tuned live.
+    '
+    ' NOTE: the 3D SPH density magnitude is intrinsically tiny (it scales as
+    ' ~2 / s^3 with the particle spacing s). For the default 1500 particles
+    ' inside a 200^3 box the rest density is roughly 3.4E-4, so TargetDensity,
+    ' PressureMultiplier and NearPressureMultiplier are tuned against that
+    ' scale - not against the (much larger) 2D values.
     Public Property Gravity As Single = 100
     Public Property DeltaTime As Single = 1 / 60
-    Public Property CollisionDamping As Single = 0.35
-    Public Property TargetDensity As Single = 5
-    Public Property PressureMultiplier As Single = 20
-    Public Property NearPressureMultiplier As Single = 8
-    Public Property ViscosityStrength As Single = 0.06
+    Public Property CollisionDamping As Single = 0.5
+    Public Property TargetDensity As Single = 0.00034F
+    Public Property PressureMultiplier As Single = 5
+    Public Property NearPressureMultiplier As Single = 2
+    Public Property ViscosityStrength As Single = 1.5
     Public Property ParticleSize As Single = 4
 
     ''' <summary>

@@ -42,29 +42,29 @@ Namespace FluidSim3D
         Public Property DeltaTime As Single = 1 / 60.0F
 
         <Category("物理 Physics")>
-        <Description("目标密度，流体在该密度下压力为零。")>
+        <Description("目标密度（3D SPH 量级约为 1E-4，由粒子间距决定）。流体在该密度下压力为零。")>
         <DisplayName("目标密度 TargetDensity")>
-        Public Property TargetDensity As Single = 5.0F
+        Public Property TargetDensity As Single = 0.00034F
 
         <Category("物理 Physics")>
         <Description("压力系数，越大流体越「硬」、越不易压缩。")>
         <DisplayName("压力系数 PressureMultiplier")>
-        Public Property PressureMultiplier As Single = 20.0F
+        Public Property PressureMultiplier As Single = 5.0F
 
         <Category("物理 Physics")>
         <Description("近压力系数，用于防止粒子互相穿透。")>
         <DisplayName("近压力系数 NearPressureMultiplier")>
-        Public Property NearPressureMultiplier As Single = 8.0F
+        Public Property NearPressureMultiplier As Single = 2.0F
 
         <Category("物理 Physics")>
         <Description("黏度强度，让相邻粒子速度趋于一致，使水流更平滑。")>
         <DisplayName("黏度 ViscosityStrength")>
-        Public Property ViscosityStrength As Single = 0.06F
+        Public Property ViscosityStrength As Single = 1.5F
 
         <Category("物理 Physics")>
         <Description("边界碰撞反弹的阻尼系数（0~1，越小越「黏」）。")>
         <DisplayName("碰撞阻尼 CollisionDamping")>
-        Public Property CollisionDamping As Single = 0.35F
+        Public Property CollisionDamping As Single = 0.5F
 
         <Category("容器 Container")>
         <Description("容纳水模拟的长方体在 X 方向的尺寸（世界单位）。")>
