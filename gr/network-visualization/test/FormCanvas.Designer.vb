@@ -24,96 +24,99 @@ Partial Class FormCanvas
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Me.MenuStrip1 = New System.Windows.Forms.MenuStrip()
-        Me.FileToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.SaveAsSVGToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.RefreshParametersToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.DToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.AutoRotateToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.ShowLabelsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.TrackBar1 = New System.Windows.Forms.TrackBar()
-        Me.MenuStrip1.SuspendLayout()
-        CType(Me.TrackBar1, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.SuspendLayout()
-        '
-        'MenuStrip1
-        '
-        Me.MenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.FileToolStripMenuItem})
-        Me.MenuStrip1.Location = New System.Drawing.Point(0, 0)
-        Me.MenuStrip1.Name = "MenuStrip1"
-        Me.MenuStrip1.Size = New System.Drawing.Size(688, 24)
-        Me.MenuStrip1.TabIndex = 0
-        Me.MenuStrip1.Text = "MenuStrip1"
-        '
-        'FileToolStripMenuItem
-        '
-        Me.FileToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.SaveAsSVGToolStripMenuItem, Me.RefreshParametersToolStripMenuItem, Me.DToolStripMenuItem, Me.AutoRotateToolStripMenuItem, Me.ShowLabelsToolStripMenuItem})
-        Me.FileToolStripMenuItem.Name = "FileToolStripMenuItem"
-        Me.FileToolStripMenuItem.Size = New System.Drawing.Size(37, 20)
-        Me.FileToolStripMenuItem.Text = "File"
-        '
-        'SaveAsSVGToolStripMenuItem
-        '
-        Me.SaveAsSVGToolStripMenuItem.Name = "SaveAsSVGToolStripMenuItem"
-        Me.SaveAsSVGToolStripMenuItem.Size = New System.Drawing.Size(175, 22)
-        Me.SaveAsSVGToolStripMenuItem.Text = "Save As SVG"
-        '
-        'RefreshParametersToolStripMenuItem
-        '
-        Me.RefreshParametersToolStripMenuItem.Name = "RefreshParametersToolStripMenuItem"
-        Me.RefreshParametersToolStripMenuItem.Size = New System.Drawing.Size(175, 22)
-        Me.RefreshParametersToolStripMenuItem.Text = "Refresh Parameters"
-        '
-        'DToolStripMenuItem
-        '
-        Me.DToolStripMenuItem.CheckOnClick = True
-        Me.DToolStripMenuItem.Name = "DToolStripMenuItem"
-        Me.DToolStripMenuItem.Size = New System.Drawing.Size(175, 22)
-        Me.DToolStripMenuItem.Text = "3D"
-        '
-        'AutoRotateToolStripMenuItem
-        '
-        Me.AutoRotateToolStripMenuItem.Checked = True
-        Me.AutoRotateToolStripMenuItem.CheckOnClick = True
-        Me.AutoRotateToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked
-        Me.AutoRotateToolStripMenuItem.Name = "AutoRotateToolStripMenuItem"
-        Me.AutoRotateToolStripMenuItem.Size = New System.Drawing.Size(175, 22)
-        Me.AutoRotateToolStripMenuItem.Text = "Auto Rotate"
-        '
-        'ShowLabelsToolStripMenuItem
-        '
-        Me.ShowLabelsToolStripMenuItem.Checked = True
-        Me.ShowLabelsToolStripMenuItem.CheckOnClick = True
-        Me.ShowLabelsToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked
-        Me.ShowLabelsToolStripMenuItem.Name = "ShowLabelsToolStripMenuItem"
-        Me.ShowLabelsToolStripMenuItem.Size = New System.Drawing.Size(175, 22)
-        Me.ShowLabelsToolStripMenuItem.Text = "Show Labels"
-        '
-        'TrackBar1
-        '
-        Me.TrackBar1.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.TrackBar1.Location = New System.Drawing.Point(537, 422)
-        Me.TrackBar1.Maximum = 0
-        Me.TrackBar1.Minimum = -60
-        Me.TrackBar1.Name = "TrackBar1"
-        Me.TrackBar1.Size = New System.Drawing.Size(139, 45)
-        Me.TrackBar1.TabIndex = 1
-        '
-        'FormCanvas
-        '
-        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
-        Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(688, 479)
-        Me.Controls.Add(Me.TrackBar1)
-        Me.Controls.Add(Me.MenuStrip1)
-        Me.MainMenuStrip = Me.MenuStrip1
-        Me.Name = "FormCanvas"
-        Me.Text = "Network Canvas"
-        Me.MenuStrip1.ResumeLayout(False)
-        Me.MenuStrip1.PerformLayout()
-        CType(Me.TrackBar1, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.ResumeLayout(False)
-        Me.PerformLayout()
+        MenuStrip1 = New MenuStrip()
+        FileToolStripMenuItem = New ToolStripMenuItem()
+        SaveAsSVGToolStripMenuItem = New ToolStripMenuItem()
+        RefreshParametersToolStripMenuItem = New ToolStripMenuItem()
+        DToolStripMenuItem = New ToolStripMenuItem()
+        AutoRotateToolStripMenuItem = New ToolStripMenuItem()
+        ShowLabelsToolStripMenuItem = New ToolStripMenuItem()
+        TrackBar1 = New TrackBar()
+        MenuStrip1.SuspendLayout()
+        CType(TrackBar1, System.ComponentModel.ISupportInitialize).BeginInit()
+        SuspendLayout()
+        ' 
+        ' MenuStrip1
+        ' 
+        MenuStrip1.Items.AddRange(New ToolStripItem() {FileToolStripMenuItem})
+        MenuStrip1.Location = New System.Drawing.Point(0, 0)
+        MenuStrip1.Name = "MenuStrip1"
+        MenuStrip1.Padding = New Padding(7, 2, 0, 2)
+        MenuStrip1.Size = New System.Drawing.Size(803, 24)
+        MenuStrip1.TabIndex = 0
+        MenuStrip1.Text = "MenuStrip1"
+        ' 
+        ' FileToolStripMenuItem
+        ' 
+        FileToolStripMenuItem.DropDownItems.AddRange(New ToolStripItem() {SaveAsSVGToolStripMenuItem, RefreshParametersToolStripMenuItem, DToolStripMenuItem, AutoRotateToolStripMenuItem, ShowLabelsToolStripMenuItem})
+        FileToolStripMenuItem.Name = "FileToolStripMenuItem"
+        FileToolStripMenuItem.Size = New System.Drawing.Size(37, 20)
+        FileToolStripMenuItem.Text = "File"
+        ' 
+        ' SaveAsSVGToolStripMenuItem
+        ' 
+        SaveAsSVGToolStripMenuItem.Name = "SaveAsSVGToolStripMenuItem"
+        SaveAsSVGToolStripMenuItem.Size = New System.Drawing.Size(175, 22)
+        SaveAsSVGToolStripMenuItem.Text = "Save As SVG"
+        ' 
+        ' RefreshParametersToolStripMenuItem
+        ' 
+        RefreshParametersToolStripMenuItem.Name = "RefreshParametersToolStripMenuItem"
+        RefreshParametersToolStripMenuItem.Size = New System.Drawing.Size(175, 22)
+        RefreshParametersToolStripMenuItem.Text = "Refresh Parameters"
+        ' 
+        ' DToolStripMenuItem
+        ' 
+        DToolStripMenuItem.CheckOnClick = True
+        DToolStripMenuItem.Name = "DToolStripMenuItem"
+        DToolStripMenuItem.Size = New System.Drawing.Size(175, 22)
+        DToolStripMenuItem.Text = "3D"
+        ' 
+        ' AutoRotateToolStripMenuItem
+        ' 
+        AutoRotateToolStripMenuItem.Checked = True
+        AutoRotateToolStripMenuItem.CheckOnClick = True
+        AutoRotateToolStripMenuItem.CheckState = CheckState.Checked
+        AutoRotateToolStripMenuItem.Name = "AutoRotateToolStripMenuItem"
+        AutoRotateToolStripMenuItem.Size = New System.Drawing.Size(175, 22)
+        AutoRotateToolStripMenuItem.Text = "Auto Rotate"
+        ' 
+        ' ShowLabelsToolStripMenuItem
+        ' 
+        ShowLabelsToolStripMenuItem.Checked = True
+        ShowLabelsToolStripMenuItem.CheckOnClick = True
+        ShowLabelsToolStripMenuItem.CheckState = CheckState.Checked
+        ShowLabelsToolStripMenuItem.Name = "ShowLabelsToolStripMenuItem"
+        ShowLabelsToolStripMenuItem.Size = New System.Drawing.Size(175, 22)
+        ShowLabelsToolStripMenuItem.Text = "Show Labels"
+        ' 
+        ' TrackBar1
+        ' 
+        TrackBar1.Anchor = AnchorStyles.Bottom Or AnchorStyles.Right
+        TrackBar1.Location = New System.Drawing.Point(626, 487)
+        TrackBar1.Margin = New Padding(4, 3, 4, 3)
+        TrackBar1.Maximum = 0
+        TrackBar1.Minimum = -60
+        TrackBar1.Name = "TrackBar1"
+        TrackBar1.Size = New System.Drawing.Size(162, 45)
+        TrackBar1.TabIndex = 1
+        ' 
+        ' FormCanvas
+        ' 
+        AutoScaleDimensions = New System.Drawing.SizeF(7F, 15F)
+        AutoScaleMode = AutoScaleMode.Font
+        ClientSize = New System.Drawing.Size(803, 553)
+        Controls.Add(TrackBar1)
+        Controls.Add(MenuStrip1)
+        MainMenuStrip = MenuStrip1
+        Margin = New Padding(4, 3, 4, 3)
+        Name = "FormCanvas"
+        Text = "Network Canvas"
+        MenuStrip1.ResumeLayout(False)
+        MenuStrip1.PerformLayout()
+        CType(TrackBar1, System.ComponentModel.ISupportInitialize).EndInit()
+        ResumeLayout(False)
+        PerformLayout()
 
     End Sub
 
