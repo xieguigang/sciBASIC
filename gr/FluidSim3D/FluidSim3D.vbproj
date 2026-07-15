@@ -13,7 +13,7 @@
     <Nullable>disable</Nullable>
     <Platforms>AnyCPU;x64</Platforms>
     <MyType>WindowsFormsWithCustomSubMain</MyType>
-    <StartupObject>FluidSim3D.Program</StartupObject>
+    <StartupObject>FluidSim3D.FluidSim3D.Program</StartupObject>
   </PropertyGroup>
 
   <ItemGroup>

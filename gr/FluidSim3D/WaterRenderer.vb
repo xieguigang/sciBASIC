@@ -42,6 +42,9 @@ Namespace FluidSim3D
             (0, 4), (1, 5), (2, 6), (3, 7)
         }
 
+        ' cached blue colour ramp (built once)
+        Private cachedRamp As SolidBrush() = Nothing
+
         Public Sub New()
             Camera.AngleX = 20
             Camera.AngleY = -30
@@ -70,6 +73,10 @@ Namespace FluidSim3D
         Public Sub Draw(g As Graphics, canvas As Size, engine As FluidEngine3D, params As FluidParameters, showBoundary As Boolean)
             Camera.Screen = canvas
             DrawBackground(g, canvas)
+
+            If engine Is Nothing Then
+                Return
+            End If
 
             Dim center = engine.BoxSize * 0.5
 
@@ -166,21 +173,27 @@ Namespace FluidSim3D
             System.Array.Sort(order, Function(a, b) depth(b).CompareTo(depth(a)))
 
             ' pre compute a small blue gradient colour ramp (light -> deep)
-            Dim ramp = BuildRamp()
+            If cachedRamp Is Nothing Then cachedRamp = BuildRamp()
+            Dim ramp = cachedRamp
 
             Dim baseSize = System.Math.Max(2.0F, params.ParticleSize)
             Dim vscale = System.Math.Max(1.0F, VelocityScale)
+            Dim maxSize = baseSize * 3.0F
 
             For Each k In order
+                ' skip points that ended up behind the camera plane
+                If depth(k) <= -vd Then Continue For
+
                 Dim speed = speeds(k)
                 Dim t = speed / vscale
                 If t < 0 Then t = 0 Else If t > 1 Then t = 1
                 Dim cidx = CInt(t * (ramp.Length - 1))
                 Dim brush = ramp(cidx)
 
-                ' perspective dot size: nearer particles are larger
-                Dim sz = baseSize * (0.6F + 0.4F * factor(k) * (256.0F / fov))
+                ' perspective dot size: nearer particles (smaller depth) are larger
+                Dim sz = baseSize * (vd / depth(k))
                 If sz < 1.5F Then sz = 1.5F
+                If sz > maxSize Then sz = maxSize
                 Dim half = sz / 2.0F
 
                 g.FillEllipse(brush, xy(k).X - half, xy(k).Y - half, sz, sz)
