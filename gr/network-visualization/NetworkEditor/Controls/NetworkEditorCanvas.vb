@@ -14,7 +14,7 @@ Namespace NetworkEditor.Controls
     ''' </summary>
     Public Class NetworkEditorCanvas : Inherits UserControl
 
-        Private state As EditorState = Nothing
+        Private _state As EditorState = Nothing
 
         ' 视口变换
         Private viewOffset As PointF = New PointF(0, 0)
@@ -400,9 +400,8 @@ Namespace NetworkEditor.Controls
         End Function
 
         Private Sub RaiseEventSelection()
-            ' 通过清空再设置触发 SelectionChanged
             If state IsNot Nothing Then
-                state.SelectEdge(Nothing)
+                state.RaiseSelectionChanged()
             End If
         End Sub
 

@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
-    <RootNamespace>NetworkEditor</RootNamespace>
+    <RootNamespace></RootNamespace>
     <AssemblyName>NetworkEditor</AssemblyName>
     <TargetFramework>net10.0-windows</TargetFramework>
     <UseWindowsForms>true</UseWindowsForms>

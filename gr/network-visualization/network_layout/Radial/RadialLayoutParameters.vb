@@ -1,6 +1,6 @@
 Imports System.ComponentModel
 
-Namespace Microsoft.VisualBasic.Data.visualize.Network.Layouts.Radial
+Namespace Radial
 
     ''' <summary>
     ''' 径向布局参数，可在 PropertyGrid 中编辑

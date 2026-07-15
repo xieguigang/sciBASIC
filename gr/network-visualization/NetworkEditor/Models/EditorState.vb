@@ -30,6 +30,13 @@ Namespace NetworkEditor.Models
             RaiseEvent SelectionChanged(Me, EventArgs.Empty)
         End Sub
 
+        ''' <summary>
+        ''' 仅触发选中变更事件（不修改选中集合），用于框选后通知 UI 刷新
+        ''' </summary>
+        Public Sub RaiseSelectionChanged()
+            RaiseEvent SelectionChanged(Me, EventArgs.Empty)
+        End Sub
+
         Public Sub SelectNode(n As Node, Optional additive As Boolean = False)
             If Not additive Then
                 SelectedNodes.Clear()

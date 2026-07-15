@@ -1,6 +1,6 @@
 Imports System.ComponentModel
 
-Namespace Microsoft.VisualBasic.Data.visualize.Network.Layouts.ForceDirected
+Namespace ForceDirected
 
     ''' <summary>
     ''' Force-Directed 力导向布局参数，可在 PropertyGrid 中编辑。
