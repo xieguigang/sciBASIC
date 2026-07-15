@@ -219,9 +219,9 @@ Namespace FluidSim3D
                 Dim f = seg - idx
                 If idx >= stops.Length - 1 Then idx = stops.Length - 2 : f = 1
                 Dim a = stops(idx), b = stops(idx + 1)
-                Dim r = CInt(a.R + (b.R - a.R) * f)
-                Dim gg = CInt(a.G + (b.G - a.G) * f)
-                Dim bl = CInt(a.B + (b.B - a.B) * f)
+                Dim r = CInt(CSng(a.R) + (CSng(b.R) - CSng(a.R)) * f)
+                Dim gg = CInt(CSng(a.G) + (CSng(b.G) - CSng(a.G)) * f)
+                Dim bl = CInt(CSng(a.B) + (CSng(b.B) - CSng(a.B)) * f)
                 out(i) = New SolidBrush(Color.FromArgb(255, r, gg, bl))
             Next
             Return out

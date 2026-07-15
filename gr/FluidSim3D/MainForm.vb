@@ -67,6 +67,13 @@ Namespace FluidSim3D
             Me.ForeColor = Color.FromArgb(230, 240, 255)
             Me.MinimumSize = New Size(640, 480)
 
+
+            ' ---------- render canvas ----------
+            canvas = New RenderPanel()
+            canvas.Dock = DockStyle.Fill
+            canvas.BackColor = Color.FromArgb(8, 12, 20)
+            canvas.TabStop = True
+
             ' ---------- tool strip (dark) ----------
             toolStrip = New ToolStrip()
             toolStrip.RenderMode = ToolStripRenderMode.Professional
@@ -131,11 +138,7 @@ Namespace FluidSim3D
             leftPanel.Controls.Add(propGrid)
             leftPanel.Controls.Add(lblHeader)
 
-            ' ---------- render canvas ----------
-            canvas = New RenderPanel()
-            canvas.Dock = DockStyle.Fill
-            canvas.BackColor = Color.FromArgb(8, 12, 20)
-            canvas.TabStop = True
+
 
             ' ---------- status strip ----------
             statusStrip = New StatusStrip()
