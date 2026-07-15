@@ -60,7 +60,7 @@ Namespace SVG.XML.Enums
     ''' </summary>
     Public MustInherit Class SvgEnum
 
-        ReadOnly _value As String
+        Protected ReadOnly _value As String
 
         Protected Sub New(value As String)
             _value = value

@@ -1,66 +1,67 @@
 ﻿#Region "Microsoft.VisualBasic::8acde70f1478dfdefd03c1d2bf71b27e, gr\Microsoft.VisualBasic.Imaging\SVG\Renderer.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 74
-    '    Code Lines: 52 (70.27%)
-    ' Comment Lines: 14 (18.92%)
-    '    - Xml Docs: 78.57%
-    ' 
-    '   Blank Lines: 8 (10.81%)
-    '     File Size: 2.62 KB
+' Summaries:
 
 
-    '     Module Renderer
-    ' 
-    '         Function: DrawImage, SVGColorHelper
-    ' 
-    '         Sub: drawLayer
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 74
+'    Code Lines: 52 (70.27%)
+' Comment Lines: 14 (18.92%)
+'    - Xml Docs: 78.57%
+' 
+'   Blank Lines: 8 (10.81%)
+'     File Size: 2.62 KB
+
+
+'     Module Renderer
+' 
+'         Function: DrawImage, SVGColorHelper
+' 
+'         Sub: drawLayer
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Drawing
-Imports System.Drawing.Drawing2D
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Driver
-Imports Microsoft.VisualBasic.Imaging.SVG.XML
 Imports Microsoft.VisualBasic.Imaging.SVG.PathHelper
+Imports Microsoft.VisualBasic.Imaging.SVG.XML
+Imports Microsoft.VisualBasic.Imaging.SVG.XML.Enums
+Imports std = System.Math
 
 Namespace SVG
 
@@ -138,7 +139,7 @@ Namespace SVG
 
             ' Apply fill (SVG default fill is black, so we always fill unless explicitly "none")
             If fillColor <> Color.Empty Then
-                Dim alpha As Integer = CInt(Math.Max(0, Math.Min(1, fillOpacity)) * 255)
+                Dim alpha As Integer = CInt(std.Max(0, std.Min(1, fillOpacity)) * 255)
                 If alpha > 0 Then
                     Dim fillCol As Color = Color.FromArgb(alpha, fillColor)
                     Using br As New SolidBrush(fillCol)
@@ -149,22 +150,22 @@ Namespace SVG
 
             ' Apply stroke (only if width > 0 and color is not "none")
             If strokeColor <> Color.Empty AndAlso strokeWidth > 0 Then
-                Dim alpha As Integer = CInt(Math.Max(0, Math.Min(1, strokeOpacity)) * 255)
+                Dim alpha As Integer = CInt(std.Max(0, std.Min(1, strokeOpacity)) * 255)
                 If alpha > 0 Then
                     Dim strokeCol As Color = Color.FromArgb(alpha, strokeColor)
                     Using pen As New Pen(strokeCol, CSng(strokeWidth))
                         ' Apply stroke line cap style
-                        Select Case element.StrokeLineCap
-                            Case Enums.SvgStrokeLineCap.Round
-                                pen.StartCap = Drawing2D.LineCap.Round
-                                pen.EndCap = Drawing2D.LineCap.Round
-                            Case Enums.SvgStrokeLineCap.Square
-                                pen.StartCap = Drawing2D.LineCap.Square
-                                pen.EndCap = Drawing2D.LineCap.Square
+                        Select Case element.StrokeLineCap.enum
+                            Case SvgStrokeLineCap.cap_round
+                                pen.StartCap = LineCap.Round
+                                pen.EndCap = LineCap.Round
+                            Case SvgStrokeLineCap.cap_square
+                                pen.StartCap = LineCap.Square
+                                pen.EndCap = LineCap.Square
                             Case Else
                                 ' Butt (default)
-                                pen.StartCap = Drawing2D.LineCap.Flat
-                                pen.EndCap = Drawing2D.LineCap.Flat
+                                pen.StartCap = LineCap.Flat
+                                pen.EndCap = LineCap.Flat
                         End Select
 
                         ' Apply stroke dash array if specified
@@ -270,11 +271,11 @@ Namespace SVG
             End While
         End Sub
 
+#If NET48 Then
         ''' <summary>
         ''' Try to get the underlying <see cref="System.Drawing.Graphics"/> object from an <see cref="IGraphics"/> instance.
         ''' Returns Nothing if unavailable.
         ''' </summary>
-#If NET48 Then
         Private Function TryGetGdiGraphics(g As IGraphics) As Graphics
             If TypeOf g Is Graphics2D Then
                 Return DirectCast(g, Graphics2D).Graphics
@@ -295,8 +296,8 @@ Namespace SVG
             End If
 
             ' Clamp corner radius to half of width/height
-            rx = Math.Min(rx, w / 2)
-            ry = Math.Min(ry, h / 2)
+            rx = std.Min(rx, w / 2)
+            ry = std.Min(ry, h / 2)
 
             If rx <= 0 AndAlso ry <= 0 Then
                 ' Regular rectangle
@@ -385,7 +386,7 @@ Namespace SVG
                         Dim strokeColor As Color = ParseSvgColor(line.Stroke)
                         If strokeColor <> Color.Empty AndAlso line.StrokeWidth > 0 Then
                             Dim strokeOpacity As Double = line.StrokeOpacity
-                            Dim alpha As Integer = CInt(Math.Max(0, Math.Min(1, strokeOpacity)) * 255)
+                            Dim alpha As Integer = CInt(std.Max(0, std.Min(1, strokeOpacity)) * 255)
                             Dim strokeCol As Color = Color.FromArgb(alpha, strokeColor)
 
                             Using pen As New Pen(strokeCol, CSng(line.StrokeWidth))
@@ -394,16 +395,16 @@ Namespace SVG
                                 If dashArray IsNot Nothing AndAlso dashArray.Length > 0 Then
                                     pen.DashPattern = dashArray.Select(Function(d) CSng(d)).ToArray()
                                 End If
-                                Select Case line.StrokeLineCap
-                                    Case Enums.SvgStrokeLineCap.Round
-                                        pen.StartCap = Drawing2D.LineCap.Round
-                                        pen.EndCap = Drawing2D.LineCap.Round
-                                    Case Enums.SvgStrokeLineCap.Square
-                                        pen.StartCap = Drawing2D.LineCap.Square
-                                        pen.EndCap = Drawing2D.LineCap.Square
+                                Select Case line.StrokeLineCap.enum
+                                    Case SvgStrokeLineCap.cap_round
+                                        pen.StartCap = LineCap.Round
+                                        pen.EndCap = LineCap.Round
+                                    Case SvgStrokeLineCap.cap_square
+                                        pen.StartCap = LineCap.Square
+                                        pen.EndCap = LineCap.Square
                                     Case Else
-                                        pen.StartCap = Drawing2D.LineCap.Flat
-                                        pen.EndCap = Drawing2D.LineCap.Flat
+                                        pen.StartCap = LineCap.Flat
+                                        pen.EndCap = LineCap.Flat
                                 End Select
                                 g.DrawLine(pen, CSng(line.X1), CSng(line.Y1), CSng(line.X2), CSng(line.Y2))
                             End Using
@@ -422,10 +423,7 @@ Namespace SVG
 
                             Using roundPath As GraphicsPath = BuildRoundedRectPath(
                                 CSng(rect.X), CSng(rect.Y), CSng(rect.Width), CSng(rect.Height), rx, ry)
-
-                                Call DrawShape(g, rect,
-                                    Sub(br) g.FillPath(br, roundPath) End Sub,
-                                    Sub(pen) g.DrawPath(pen, roundPath) End Sub)
+                                Call DrawShape(g, rect, fillAction:=Sub(br) g.FillPath(br, roundPath), strokeAction:=Sub(pen) g.DrawPath(pen, roundPath))
                             End Using
                         Else
                             ' Regular rectangle
@@ -451,8 +449,8 @@ Namespace SVG
 
                         If gdiPath IsNot Nothing Then
                             Call DrawShape(g, svgPath,
-                                Sub(br) g.FillPath(br, gdiPath) End Sub,
-                                Sub(pen) g.DrawPath(pen, gdiPath) End Sub)
+                                Sub(br) g.FillPath(br, gdiPath),
+                                Sub(pen) g.DrawPath(pen, gdiPath))
                             gdiPath.Dispose()
                         End If
                         Call g.ResetTransform()
@@ -471,8 +469,8 @@ Namespace SVG
                             Next
 
                             Call DrawShape(g, polygon,
-                                Sub(br) g.FillPolygon(br, points) End Sub,
-                                Sub(pen) g.DrawPolygon(pen, points) End Sub)
+                    Sub(br) g.FillPolygon(br, points),
+                                Sub(pen) g.DrawPolygon(pen, points))
                         End If
                         Call g.ResetTransform()
 
@@ -493,7 +491,7 @@ Namespace SVG
                             Dim strokeColor As Color = ParseSvgColor(polyline.Stroke)
                             If strokeColor <> Color.Empty AndAlso polyline.StrokeWidth > 0 Then
                                 Dim strokeOpacity As Double = polyline.StrokeOpacity
-                                Dim alpha As Integer = CInt(Math.Max(0, Math.Min(1, strokeOpacity)) * 255)
+                                Dim alpha As Integer = CInt(std.Max(0, std.Min(1, strokeOpacity)) * 255)
                                 Dim strokeCol As Color = Color.FromArgb(alpha, strokeColor)
 
                                 Using pen As New Pen(strokeCol, CSng(polyline.StrokeWidth))
@@ -505,7 +503,7 @@ Namespace SVG
                             Dim fillColor As Color = ParseSvgColor(polyline.Fill)
                             If fillColor <> Color.Empty Then
                                 Dim fillOpacity As Double = polyline.FillOpacity
-                                Dim alpha As Integer = CInt(Math.Max(0, Math.Min(1, fillOpacity)) * 255)
+                                Dim alpha As Integer = CInt(std.Max(0, std.Min(1, fillOpacity)) * 255)
                                 If alpha > 0 Then
                                     Dim fillCol As Color = Color.FromArgb(alpha, fillColor)
                                     Using br As New SolidBrush(fillCol)
@@ -532,19 +530,19 @@ Namespace SVG
 
                         Dim textStr As String = text.Text
                         If Not String.IsNullOrEmpty(textStr) Then
-                            Using font As New Font(fontFamily, fontSize, FontStyle.Regular)
-                                Dim fillColor As Color = ParseSvgColor(text.Fill)
-                                If fillColor <> Color.Empty Then
-                                    Dim fillOpacity As Double = text.FillOpacity
-                                    Dim alpha As Integer = CInt(Math.Max(0, Math.Min(1, fillOpacity)) * 255)
-                                    If alpha > 0 Then
-                                        Dim fillCol As Color = Color.FromArgb(alpha, fillColor)
-                                        Using br As New SolidBrush(fillCol)
-                                            g.DrawString(textStr, font, br, CSng(text.X), CSng(text.Y))
-                                        End Using
-                                    End If
+                            Dim font As New Font(fontFamily, fontSize, FontStyle.Regular)
+                            Dim fillColor As Color = ParseSvgColor(text.Fill)
+                            If fillColor <> Color.Empty Then
+                                Dim fillOpacity As Double = text.FillOpacity
+                                Dim alpha As Integer = CInt(std.Max(0, std.Min(1, fillOpacity)) * 255)
+                                If alpha > 0 Then
+                                    Dim fillCol As Color = Color.FromArgb(alpha, fillColor)
+                                    Using br As New SolidBrush(fillCol)
+                                        g.DrawString(textStr, font, br, CSng(text.X), CSng(text.Y))
+                                    End Using
                                 End If
-                            End Using
+                            End If
+
                         End If
                         Call g.ResetTransform()
 
@@ -565,7 +563,7 @@ Namespace SVG
                                 End If
                             Catch ex As Exception
                                 ' Log and skip images that cannot be decoded
-                                Call $"Failed to render embedded SVG image: {ex.Message}".Warning
+                                Call $"Failed to render embedded SVG image: {ex.Message}".warning
                             End Try
                         End If
                         Call g.ResetTransform()

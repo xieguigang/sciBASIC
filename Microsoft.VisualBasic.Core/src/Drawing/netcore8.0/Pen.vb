@@ -187,6 +187,7 @@ Namespace Imaging
         Public Property MiterLimit As Single
         Public Property DashCap As DashCap
         Public Property DashOffset As Single
+        Public Property DashPattern As Single()
 
         Sub New(color As Color, Optional width As Single = 1)
             _Color = color
