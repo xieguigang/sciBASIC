@@ -13,6 +13,7 @@
     <Nullable>disable</Nullable>
     <GenerateDocumentationFile>false</GenerateDocumentationFile>
     <Platforms>AnyCPU;x64</Platforms>
+    <Configurations>Debug;Release;Rsharp_app_release;mzkit;mzkit_win32;CellaLAB-Desktop</Configurations>
     <NoWarn>$(NoWarn);BC40056;WFO1000</NoWarn>
   </PropertyGroup>
 
