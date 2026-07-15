@@ -60,13 +60,13 @@ Imports System.Runtime.CompilerServices
 Imports System.Xml.Serialization
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
 Imports Microsoft.VisualBasic.Linq
-Imports Microsoft.VisualBasic.Math.Quantile
 Imports Microsoft.VisualBasic.Serialization.JSON
+Imports std = System.Math
 
 Namespace Distributions
 
     ''' <summary>
-    ''' The data sample xml model
+    ''' The data sample model
     ''' </summary>
     ''' <remarks>
     ''' summary of the sample data vector
@@ -76,45 +76,59 @@ Namespace Distributions
         <XmlAttribute> Public Property min As Double
         <XmlAttribute> Public Property max As Double
         <XmlAttribute> Public Property average As Double
+        <XmlAttribute> Public Property sum As Double
+        <XmlAttribute> Public Property size As Integer
+
+        ''' <summary>
+        ''' variance of the population
+        ''' </summary>
+        <XmlAttribute> Public Property variance As Double
 
         ''' <summary>
         ''' standard deviation of the population
         ''' </summary>
-        ''' <returns></returns>
-        ''' <remarks>
-        ''' evaluated from the <see cref="SD"/> function.
-        ''' </remarks>
         <XmlAttribute> Public Property stdErr As Double
 
         ''' <summary>
-        ''' length of the raw data vector
+        ''' coefficient of variation (stdErr / average)
         ''' </summary>
-        ''' <returns></returns>
-        <XmlAttribute> Public Property size As Integer
+        <XmlAttribute> Public Property CV As Double
+
+        ''' <summary>
+        ''' range of the data (max - min)
+        ''' </summary>
+        <XmlAttribute> Public Property range As Double
 
         ''' <summary>
         ''' 分别为0%, 25%, 50%, 75%, 100%
         ''' </summary>
-        ''' <returns></returns>
         <XmlAttribute> Public Property quantile As Double()
+
+        ''' <summary>
+        ''' 中位数 (50% quantile)
+        ''' </summary>
+        <XmlAttribute> Public Property median As Double
 
         <XmlAttribute> Public Property mode As Double
 
         Public ReadOnly Property CI95Range As Double()
             Get
+                If size <= 1 Then Return {average, average}
+                ' 均值的 95% 置信区间: average ± 1.96 * (SD / sqrt(n))
+                Dim se As Double = stdErr / std.Sqrt(size)
                 Return {
-                    average - 1.96 * stdErr,
-                    average + 1.96 * stdErr
+                    average - 1.96 * se,
+                    average + 1.96 * se
                 }
             End Get
         End Property
 
         Public ReadOnly Property outlierBoundary As Double()
             Get
+                If quantile Is Nothing OrElse quantile.Length < 4 Then Return {Double.NaN, Double.NaN}
                 Dim Q1 = quantile(1)
                 Dim Q3 = quantile(3)
                 Dim IQR = Q3 - Q1
-
                 Return {
                     Q1 - 1.5 * IQR,
                     Q3 + 1.5 * IQR
@@ -125,12 +139,6 @@ Namespace Distributions
         Sub New()
         End Sub
 
-        ''' <summary>
-        ''' Construct a feature data based on a specific dataframe column data
-        ''' </summary>
-        ''' <param name="data">the raw data matrix column data</param>
-        ''' <param name="estimateQuantile"></param>
-        ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Sub New(data As IEnumerable(Of Double), Optional estimateQuantile As Boolean = True)
             Call Me.New(data.SafeQuery.ToArray, estimateQuantile)
@@ -147,46 +155,122 @@ Namespace Distributions
         ''' <param name="v">the raw data matrix column data</param>
         ''' <param name="estimateQuantile"></param>
         Sub New(v As Double(), Optional estimateQuantile As Boolean = True)
-            If v.Length = 0 Then
+            size = v.Length
+
+            If size = 0 Then
                 min = Double.NaN
                 max = Double.NaN
                 average = Double.NaN
+                sum = 0
                 stdErr = Double.NaN
-                size = 0
-            Else
-                min = v.Min
-                max = v.Max
-                average = v.Average
-                stdErr = v.SD
-                size = v.Length
-                mode = EvaluateMode(v.OrderBy(Function(d) d).ToArray)
+                variance = Double.NaN
+                CV = Double.NaN
+                range = Double.NaN
+                median = Double.NaN
+                Return
             End If
 
-            If estimateQuantile AndAlso v.Length > 0 Then
-                With v.GKQuantile
-                    quantile = {
-                        .Query(0),
-                        .Query(0.25),
-                        .Query(0.5),
-                        .Query(0.75),
-                        .Query(1)
-                    }
-                End With
+            If size = 1 Then
+                min = v(0) : max = v(0) : average = v(0) : sum = v(0)
+                stdErr = 0 : variance = 0 : CV = 0 : range = 0 : median = v(0) : mode = v(0)
+                If estimateQuantile Then
+                    quantile = {v(0), v(0), v(0), v(0), v(0)}
+                End If
+                Return
             End If
+
+            ' 1. 单次遍历计算 Sum, Min, Max, SumOfSquares (性能优化核心)
+            Dim sumVal As Double = 0
+            Dim sumSq As Double = 0
+            Dim minVal As Double = v(0)
+            Dim maxVal As Double = v(0)
+
+            For i As Integer = 0 To size - 1
+                Dim val As Double = v(i)
+                sumVal += val
+                sumSq += val * val
+                If val < minVal Then minVal = val
+                If val > maxVal Then maxVal = val
+            Next
+
+            sum = sumVal
+            min = minVal
+            max = maxVal
+            range = maxVal - minVal
+            average = sumVal / size
+
+            ' 总体方差: E(X^2) - (E(X))^2
+            variance = (sumSq / size) - (average * average)
+
+            ' 防止浮点数精度问题导致的微小负数
+            If variance < 0 Then variance = 0
+            stdErr = std.Sqrt(variance)
+
+            If average <> 0 Then
+                CV = stdErr / average
+            Else
+                CV = Double.NaN
+            End If
+
+            ' 2. 一次性排序，复用于分位数和众数（避免多次排序和分配内存）
+            Dim sortedArr As Double() = CType(v.Clone(), Double())
+            Array.Sort(sortedArr)
+
+            If estimateQuantile Then
+                ' 精确分位数计算（基于线性插值法，与R/numpy默认类型一致）
+                quantile = {
+                    sortedArr(0),
+                    GetPercentile(sortedArr, 0.25),
+                    GetPercentile(sortedArr, 0.5),
+                    GetPercentile(sortedArr, 0.75),
+                    sortedArr(size - 1)
+                }
+                median = quantile(2)
+            Else
+                ' 即使不计算分位数，原逻辑也要求计算众数
+                median = GetPercentile(sortedArr, 0.5)
+            End If
+
+            ' 计算众数
+            mode = EvaluateMode(sortedArr)
         End Sub
 
+        ''' <summary>
+        ''' 计算精确分位数 (Linear interpolation, similar to R type 7)
+        ''' </summary>
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Private Shared Function GetPercentile(sortedData As Double(), p As Double) As Double
+            If sortedData.Length = 0 Then Return Double.NaN
+            If sortedData.Length = 1 Then Return sortedData(0)
+
+            Dim n As Integer = sortedData.Length
+            Dim idx As Double = p * (n - 1)
+            Dim lower As Integer = CInt(std.Floor(idx))
+            Dim upper As Integer = CInt(std.Ceiling(idx))
+
+            If lower = upper Then Return sortedData(lower)
+
+            Dim frac As Double = idx - lower
+            Return sortedData(lower) + (sortedData(upper) - sortedData(lower)) * frac
+        End Function
+
         Public Shared Function EvaluateMode(data As Double()) As Double
-            Dim modeValue As Double = Double.NaN
-            Dim modeCount As Integer = 0
-            Dim currValue = data(0)
-            Dim currCount = 1
+            If data Is Nothing OrElse data.Length = 0 Then Return Double.NaN
+            If data.Length = 1 Then Return data(0)
+
+            ' data 必须为已排序数组！
+            Dim modeValue As Double = data(0)
+            Dim modeCount As Integer = 1
+            Dim currValue As Double = data(0)
+            Dim currCount As Integer = 1
 
             ' Count the amount of repeat And update mode variables
             For i As Integer = 1 To data.Length - 1
                 If data(i) = currValue Then
                     currCount += 1
                 Else
-                    If (currCount >= modeCount) Then
+                    ' 修正：使用 > 而不是 >=，确保在多个值频次相同时保留最先出现的那个值
+                    If currCount > modeCount Then
                         modeCount = currCount
                         modeValue = currValue
                     End If
@@ -197,10 +281,12 @@ Namespace Distributions
             Next
 
             ' Check the last count
-            If (currCount >= modeCount) Then
-                modeCount = currCount
+            If currCount > modeCount Then
                 modeValue = currValue
             End If
+
+            ' 如果所有值都只出现一次(没有重复)，众数概念上无意义，这里返回第一个元素
+            If modeCount = 1 Then Return data(0)
 
             Return modeValue
         End Function
@@ -208,7 +294,6 @@ Namespace Distributions
         ''' <summary>
         ''' <see cref="DoubleRange"/> = ``[<see cref="min"/>, <see cref="max"/>]``
         ''' </summary>
-        ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function GetRange() As DoubleRange
             Return {min, max}
@@ -219,4 +304,5 @@ Namespace Distributions
             Return GetJson
         End Function
     End Class
+
 End Namespace
