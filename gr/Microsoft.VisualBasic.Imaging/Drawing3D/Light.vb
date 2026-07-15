@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d4133a8c8b8f37a5867fbccc38ab6f39, gr\Microsoft.VisualBasic.Imaging\Drawing3D\Light.vb"
+﻿#Region "Microsoft.VisualBasic::77621f10cab45fd4dbddc9a2c569fdfc, gr\Microsoft.VisualBasic.Imaging\Drawing3D\Light.vb"
 
     ' Author:
     ' 
@@ -23,13 +23,29 @@
     ' GNU General Public License for more details.
     ' 
     ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not see <http://www.gnu.org/licenses/>.
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
 
     ' /********************************************************************************/
 
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 84
+    '    Code Lines: 41 (48.81%)
+    ' Comment Lines: 30 (35.71%)
+    '    - Xml Docs: 86.67%
+    ' 
+    '   Blank Lines: 13 (15.48%)
+    '     File Size: 3.87 KB
+
+
     '     Module Light
     ' 
-    '         Function: ComputeLighting, (+2 Overloads) Lighting, Shade
+    '         Function: ComputeLighting, Lighting, Shade
     ' 
     ' 
     ' /********************************************************************************/

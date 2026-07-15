@@ -1,3 +1,61 @@
+﻿#Region "Microsoft.VisualBasic::42a544d9025b66df62b57d160979e3fc, gr\physics\Particles2D\ParticleSystem.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 71
+    '    Code Lines: 48 (67.61%)
+    ' Comment Lines: 13 (18.31%)
+    '    - Xml Docs: 84.62%
+    ' 
+    '   Blank Lines: 10 (14.08%)
+    '     File Size: 2.51 KB
+
+
+    '     Class ParticleSystem
+    ' 
+    '         Properties: Count, Particles
+    ' 
+    '         Function: GetFree
+    ' 
+    '         Sub: [Step], Emit
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
 ' Copyright (c) 2018 GPL3 Licensed
 ' 粒子系统：对象池管理粒子，仅做重力 + 线性阻力积分，避免 GC 抖动。
 
@@ -69,3 +127,4 @@ Namespace Particles2D
         End Function
     End Class
 End Namespace
+

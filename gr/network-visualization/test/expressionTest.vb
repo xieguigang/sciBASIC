@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d256a190d36d7dafe764a4ec2e7e3ec3, sciBASIC#\gr\network-visualization\test\expressionTest.vb"
+﻿#Region "Microsoft.VisualBasic::d256a190d36d7dafe764a4ec2e7e3ec3, gr\network-visualization\test\expressionTest.vb"
 
     ' Author:
     ' 
@@ -35,10 +35,12 @@
     ' Code Statistics:
 
     '   Total Lines: 16
-    '    Code Lines: 10
-    ' Comment Lines: 0
-    '   Blank Lines: 6
-    '     File Size: 407.00 B
+    '    Code Lines: 10 (62.50%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 6 (37.50%)
+    '     File Size: 407 B
 
 
     ' Module expressionTest

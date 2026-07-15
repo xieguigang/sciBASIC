@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::219a75603dd174a73679d8dd1d36b30b, gr\physics\Math.vb"
+﻿#Region "Microsoft.VisualBasic::1e3ba9185852bfa3bfa76bb319a0e18e, gr\physics\Math.vb"
 
     ' Author:
     ' 
@@ -23,10 +23,10 @@
     ' GNU General Public License for more details.
     ' 
     ' You should have received a copy of the GNU General Public License
-    ' along with this program.  If not, see <http://www.gnu.org/licenses/>.
-    
-    
-    
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
     ' /********************************************************************************/
 
     ' Summaries:
@@ -34,19 +34,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 211
-    '    Code Lines: 109 (51.66%)
-    ' Comment Lines: 79 (37.44%)
-    '    - Xml Docs: 84.81%
+    '   Total Lines: 40
+    '    Code Lines: 17 (42.50%)
+    ' Comment Lines: 19 (47.50%)
+    '    - Xml Docs: 89.47%
     ' 
-    '   Blank Lines: 23 (10.90%)
-    '     File Size: 6.71 KB
+    '   Blank Lines: 4 (10.00%)
+    '     File Size: 1.24 KB
 
 
-    ' Module Math
+    ' Module ForceMath
     ' 
-    '     Function: AttractiveForce, Cos, (+2 Overloads) CoulombsLaw, Decomposition2D, Decomposition3D
-    '               Friction, Gravity, ParallelogramLaw, RepulsiveForce, Sum
+    '     Function: Cos, CoulombsLaw
     ' 
     ' /********************************************************************************/
 

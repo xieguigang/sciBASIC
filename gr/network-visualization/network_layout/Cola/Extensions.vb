@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5c243944ffc8ae366f6b4257fae7357c, gr\network-visualization\network_layout\Cola\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::e6d92c6ca95e369d80812b95cb8a3ee3, gr\network-visualization\network_layout\Cola\Extensions.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 93.10%
     ' 
     '   Blank Lines: 26 (14.69%)
-    '     File Size: 7.48 KB
+    '     File Size: 7.47 KB
 
 
     '     Class Leaf

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::db9f5269029f591c99930ac9cf93e10f, Microsoft.VisualBasic.Core\src\Data\Trinity\NLP\TextTokens.vb"
+﻿#Region "Microsoft.VisualBasic::bddfe8a313bd972c679dbc36d62a87b9, Microsoft.VisualBasic.Core\src\Data\Trinity\NLP\TextTokens.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 18 (16.36%)
-    '     File Size: 4.27 KB
+    '     File Size: 4.28 KB
 
 
     '     Interface ITokenCount

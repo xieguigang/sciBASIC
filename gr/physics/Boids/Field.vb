@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::96792582374f5a7ffb1fb43023248a94, gr\physics\Boids\Field.vb"
+﻿#Region "Microsoft.VisualBasic::c8491a05bc057d4554ac9419b297fdc4, gr\physics\Boids\Field.vb"
 
     ' Author:
     ' 
@@ -23,10 +23,10 @@
     ' GNU General Public License for more details.
     ' 
     ' You should have received a copy of the GNU General Public License
-    ' along with this program.  If not, see <http://www.gnu.org/licenses/>.
-    
-    
-    
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
     ' /********************************************************************************/
 
     ' Summaries:
@@ -40,7 +40,7 @@
     '    - Xml Docs: 42.86%
     ' 
     '   Blank Lines: 29 (17.90%)
-    '     File Size: 7.19 KB
+    '     File Size: 7.21 KB
 
 
     '     Class Field

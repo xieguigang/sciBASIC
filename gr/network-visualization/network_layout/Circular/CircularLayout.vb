@@ -1,4 +1,58 @@
-﻿Imports Microsoft.VisualBasic.Data.visualize.Network.Analysis
+﻿#Region "Microsoft.VisualBasic::c5dd7433da987b777afad758cf0d1a63, gr\network-visualization\network_layout\Circular\CircularLayout.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 197
+    '    Code Lines: 126 (63.96%)
+    ' Comment Lines: 39 (19.80%)
+    '    - Xml Docs: 74.36%
+    ' 
+    '   Blank Lines: 32 (16.24%)
+    '     File Size: 8.71 KB
+
+
+    '     Module CircularLayout
+    ' 
+    '         Function: LayoutNodes, LayoutNodesWithCrossingOptimization
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+Imports Microsoft.VisualBasic.Data.visualize.Network.Analysis
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
 Imports std = System.Math
 
@@ -195,3 +249,4 @@ Namespace Circular
 
     End Module
 End Namespace
+

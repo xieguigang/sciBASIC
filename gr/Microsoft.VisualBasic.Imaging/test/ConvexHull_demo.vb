@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f43b47238d0a9f53bb22d9fdb4b57561, gr\Microsoft.VisualBasic.Imaging\test\ConvexHull_demo.vb"
+﻿#Region "Microsoft.VisualBasic::92b6feb3937deaf1e71148a9d14e9d78, gr\Microsoft.VisualBasic.Imaging\test\ConvexHull_demo.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 76
-    '    Code Lines: 61 (80.26%)
-    ' Comment Lines: 1 (1.32%)
+    '   Total Lines: 77
+    '    Code Lines: 62 (80.52%)
+    ' Comment Lines: 1 (1.30%)
     '    - Xml Docs: 0.00%
     ' 
-    '   Blank Lines: 14 (18.42%)
-    '     File Size: 2.75 KB
+    '   Blank Lines: 14 (18.18%)
+    '     File Size: 2.83 KB
 
 
     ' Module ConvexHull_demo

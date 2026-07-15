@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fa71737a730c9248ed0854b34e4247ad, gr\network-visualization\network_layout\Cola\Models\Solver.vb"
+﻿#Region "Microsoft.VisualBasic::bbd954564f9ea7ee6b3df65dd9943307, gr\network-visualization\network_layout\Cola\Models\Solver.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 81.25%
     ' 
     '   Blank Lines: 31 (18.45%)
-    '     File Size: 5.46 KB
+    '     File Size: 5.45 KB
 
 
     '     Class Solver

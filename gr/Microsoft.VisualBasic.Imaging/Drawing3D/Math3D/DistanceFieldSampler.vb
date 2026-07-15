@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cae858b2ae57838f1a6f1596cc411651, gr\Microsoft.VisualBasic.Imaging\Drawing3D\Math3D\DistanceFieldSampler.vb"
+﻿#Region "Microsoft.VisualBasic::bf60815c2b45dce6ac1e733a36e33525, gr\Microsoft.VisualBasic.Imaging\Drawing3D\Math3D\DistanceFieldSampler.vb"
 
     ' Author:
     ' 
@@ -34,18 +34,16 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 214
-    '    Code Lines: 135 (63.08%)
-    ' Comment Lines: 34 (15.89%)
-    '    - Xml Docs: 91.18%
+    '   Total Lines: 219
+    '    Code Lines: 135 (61.64%)
+    ' Comment Lines: 41 (18.72%)
+    '    - Xml Docs: 90.24%
     ' 
-    '   Blank Lines: 45 (21.03%)
-    '     File Size: 8.20 KB
+    '   Blank Lines: 43 (19.63%)
+    '     File Size: 8.44 KB
 
 
     '     Class DistanceFieldSampler
-    ' 
-    '         Properties: Path, Resolution
     ' 
     '         Function: DistanceToDistanceScore, GetDistance, GetDistanceScore, IsEdgeNearSampleRange
     ' 

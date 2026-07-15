@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b312deb5af4068c1d40067226df27f54, gr\Microsoft.VisualBasic.Imaging\Drawing3D\Math3D\Projection.vb"
+﻿#Region "Microsoft.VisualBasic::87e7da3d523c48f26b1aa138e84763d2, gr\Microsoft.VisualBasic.Imaging\Drawing3D\Math3D\Projection.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 110
-    '    Code Lines: 68 (61.82%)
-    ' Comment Lines: 26 (23.64%)
+    '   Total Lines: 92
+    '    Code Lines: 53 (57.61%)
+    ' Comment Lines: 26 (28.26%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 16 (14.55%)
-    '     File Size: 4.17 KB
+    '   Blank Lines: 13 (14.13%)
+    '     File Size: 3.58 KB
 
 
     '     Module Projection

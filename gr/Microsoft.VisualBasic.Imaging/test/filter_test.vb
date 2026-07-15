@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4aa299b44f9e644e102b93714eaab60f, gr\Microsoft.VisualBasic.Imaging\test\filter_test.vb"
+﻿#Region "Microsoft.VisualBasic::27b71583811e02b31d56c6cca0685702, gr\Microsoft.VisualBasic.Imaging\test\filter_test.vb"
 
     ' Author:
     ' 
@@ -34,18 +34,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 44
-    '    Code Lines: 34 (77.27%)
+    '   Total Lines: 46
+    '    Code Lines: 36 (78.26%)
     ' Comment Lines: 0 (0.00%)
     '    - Xml Docs: 0.00%
     ' 
-    '   Blank Lines: 10 (22.73%)
-    '     File Size: 1.33 KB
+    '   Blank Lines: 10 (21.74%)
+    '     File Size: 1.44 KB
 
 
     ' Module filter_test
     ' 
-    '     Sub: Main, testDraw
+    '     Sub: Main1, testDraw
     ' 
     ' /********************************************************************************/
 

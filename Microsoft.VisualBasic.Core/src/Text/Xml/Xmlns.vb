@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f102d5b8bfab1c9bab600e58f1abd72e, Microsoft.VisualBasic.Core\src\Text\Xml\Xmlns.vb"
+﻿#Region "Microsoft.VisualBasic::cfc2841ca06d9726859d08c8a403c59a, Microsoft.VisualBasic.Core\src\Text\Xml\Xmlns.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 96.55%
     ' 
     '   Blank Lines: 24 (14.91%)
-    '     File Size: 6.00 KB
+    '     File Size: 6.01 KB
 
 
     '     Class Xmlns

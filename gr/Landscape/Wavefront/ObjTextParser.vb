@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ca366eb6c99f2d6e4c850ef5a7343618, gr\Landscape\Wavefront\ObjTextParser.vb"
+﻿#Region "Microsoft.VisualBasic::728ae0a78d4409c60ebdb658dceea3fc, gr\Landscape\Wavefront\ObjTextParser.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 61.29%
     ' 
     '   Blank Lines: 15 (9.49%)
-    '     File Size: 7.18 KB
+    '     File Size: 7.25 KB
 
 
     '     Module ObjTextParser

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c31f17fb3cb69623ceb75b1a4dbb857f, gr\physics\Vector2Math.vb"
+﻿#Region "Microsoft.VisualBasic::3ffa1689042bd0d35c9bbcebb7975d07, gr\physics\Vector2Math.vb"
 
     ' Author:
     ' 
@@ -26,6 +26,7 @@
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
+
     ' /********************************************************************************/
 
     ' Summaries:
@@ -33,20 +34,20 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 25
-    '    Code Lines: 18 (72.00%)
-    ' Comment Lines: 3 (12.00%)
-    '    - Xml Docs: 100.00%
+    '   Total Lines: 81
+    '    Code Lines: 57 (70.37%)
+    ' Comment Lines: 10 (12.35%)
+    '    - Xml Docs: 90.00%
     ' 
-    '   Blank Lines: 4 (16.00%)
-    '     File Size: 772 B
+    '   Blank Lines: 14 (17.28%)
+    '     File Size: 3.08 KB
 
 
     ' Module Vector2Math
     ' 
-    '     Function: Abs, Dot, saturate
+    '     Function: Abs, (+3 Overloads) Cross, Distance, Dot, Length
+    '               LengthSquared, Normalize, Perpendicular, Rotate, saturate
     ' 
-
     ' /********************************************************************************/
 
 #End Region

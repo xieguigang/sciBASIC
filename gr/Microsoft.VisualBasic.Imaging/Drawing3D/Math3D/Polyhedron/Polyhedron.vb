@@ -1,55 +1,55 @@
-﻿#Region "Microsoft.VisualBasic::cfed9bb15dfc1c18cc3b7e4a5365273b, gr\Microsoft.VisualBasic.Imaging\Drawing3D\Math3D\Polyhedron\Polyhedron.vb"
+﻿#Region "Microsoft.VisualBasic::6ffdfdc1aa9cc303e2f2c6b73920db14, gr\Microsoft.VisualBasic.Imaging\Drawing3D\Math3D\Polyhedron\Polyhedron.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 347
-'    Code Lines: 59 (17.00%)
-' Comment Lines: 270 (77.81%)
-'    - Xml Docs: 69.26%
-' 
-'   Blank Lines: 18 (5.19%)
-'     File Size: 15.78 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Class Polyhedron
-' 
-'         Constructor: (+1 Overloads) Sub New
-'         Function: triangle_positions, volume, winding_number
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 347
+    '    Code Lines: 59 (17.00%)
+    ' Comment Lines: 270 (77.81%)
+    '    - Xml Docs: 69.26%
+    ' 
+    '   Blank Lines: 18 (5.19%)
+    '     File Size: 15.77 KB
+
+
+    '     Class Polyhedron
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    '         Function: triangle_positions, volume, winding_number
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

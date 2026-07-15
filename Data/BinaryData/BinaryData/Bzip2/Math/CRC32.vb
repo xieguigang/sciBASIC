@@ -1,56 +1,56 @@
-﻿#Region "Microsoft.VisualBasic::bf9b7b38e9df9e4f8be10ac7d8c37a79, Data\BinaryData\BinaryData\Bzip2\Math\CRC32.vb"
+﻿#Region "Microsoft.VisualBasic::06b37189321149104fb09bb2a037248a, Data\BinaryData\BinaryData\Bzip2\Math\CRC32.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 48
-'    Code Lines: 26 (54.17%)
-' Comment Lines: 15 (31.25%)
-'    - Xml Docs: 73.33%
-' 
-'   Blank Lines: 7 (14.58%)
-'     File Size: 4.78 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Class CRC32
-' 
-'         Properties: CRC
-' 
-'         Sub: (+2 Overloads) UpdateCrc
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 48
+    '    Code Lines: 26 (54.17%)
+    ' Comment Lines: 15 (31.25%)
+    '    - Xml Docs: 73.33%
+    ' 
+    '   Blank Lines: 7 (14.58%)
+    '     File Size: 4.77 KB
+
+
+    '     Class CRC32
+    ' 
+    '         Properties: CRC
+    ' 
+    '         Sub: (+2 Overloads) UpdateCrc
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

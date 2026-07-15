@@ -1,4 +1,4 @@
-#Region "Microsoft.VisualBasic::00000000000000000000000000000000, gr\Landscape\Voxelization\SDFVolume.vb"
+﻿#Region "Microsoft.VisualBasic::140d4505eb6e2bba2192087adc1e1661, gr\Landscape\Voxelization\SDFVolume.vb"
 
     ' Author:
     ' 
@@ -32,12 +32,24 @@
     ' Summaries:
 
 
+    ' Code Statistics:
+
+    '   Total Lines: 191
+    '    Code Lines: 79 (41.36%)
+    ' Comment Lines: 85 (44.50%)
+    '    - Xml Docs: 88.24%
+    ' 
+    '   Blank Lines: 27 (14.14%)
+    '     File Size: 8.37 KB
+
+
     '     Class SDFVolume
     ' 
     '         Properties: Depth, Height, MinX, MinY, MinZ
     '                     Occupancy, SDF, VoxelSize, Width
     ' 
-    '         Function: GetIndex, SampleSDF, ToString, ToVoxelModel, VoxelToWorld
+    '         Function: Clamp, GetIndex, SampleSDF, ToString, ToVoxelModel
+    '                   VoxelToWorld
     ' 
     ' 
     ' /********************************************************************************/

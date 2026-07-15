@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::dd59be2778a89d6ea7a7027072d322f2, Microsoft.VisualBasic.Core\src\ComponentModel\Settings\ConfigEngine.vb"
+﻿#Region "Microsoft.VisualBasic::790bd3cbee066cf3f9321d6477c0293c, Microsoft.VisualBasic.Core\src\ComponentModel\Settings\ConfigEngine.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 63.24%
     ' 
     '   Blank Lines: 48 (14.59%)
-    '     File Size: 13.41 KB
+    '     File Size: 13.42 KB
 
 
     '     Class ConfigEngine

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::556b9055e7ff96051eee251d947f7ecf, sciBASIC#\gr\network-visualization\test\Test.vb"
+﻿#Region "Microsoft.VisualBasic::556b9055e7ff96051eee251d947f7ecf, gr\network-visualization\test\Test.vb"
 
     ' Author:
     ' 
@@ -35,9 +35,11 @@
     ' Code Statistics:
 
     '   Total Lines: 83
-    '    Code Lines: 0
-    ' Comment Lines: 69
-    '   Blank Lines: 14
+    '    Code Lines: 0 (0.00%)
+    ' Comment Lines: 69 (83.13%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 14 (16.87%)
     '     File Size: 2.57 KB
 
 

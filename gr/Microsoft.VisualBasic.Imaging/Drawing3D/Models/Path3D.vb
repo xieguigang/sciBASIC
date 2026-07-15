@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e0dff2a17dd8400993279879c0712425, gr\Microsoft.VisualBasic.Imaging\Drawing3D\Models\Path3D.vb"
+﻿#Region "Microsoft.VisualBasic::618bfa9e4e11e900391cade19e7f2e66, gr\Microsoft.VisualBasic.Imaging\Drawing3D\Models\Path3D.vb"
 
     ' Author:
     ' 
@@ -34,23 +34,23 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 234
-    '    Code Lines: 156 (66.67%)
-    ' Comment Lines: 32 (13.68%)
-    '    - Xml Docs: 90.62%
+    '   Total Lines: 249
+    '    Code Lines: 162 (65.06%)
+    ' Comment Lines: 36 (14.46%)
+    '    - Xml Docs: 88.89%
     ' 
-    '   Blank Lines: 46 (19.66%)
-    '     File Size: 8.31 KB
+    '   Blank Lines: 51 (20.48%)
+    '     File Size: 8.84 KB
 
 
     '     Class Path3D
     ' 
-    '         Properties: Depth, isDot3D, isLine3D, Points
+    '         Properties: Depth, IsDot3D, IsLine3D, Points
     ' 
     '         Constructor: (+2 Overloads) Sub New
-    '         Function: CloserThan, CountCloserThan, Push, Reverse, RotateX
-    '                   RotateY, RotateZ, (+3 Overloads) Scale, ToString, Translate
-    '                   TranslatePoints
+    '         Function: CloserThan, CountCloserThan, DistanceToLine, Push, Reverse
+    '                   RotateX, RotateY, RotateZ, (+3 Overloads) Scale, ToString
+    '                   Translate, TranslatePoints
     ' 
     ' 
     ' /********************************************************************************/

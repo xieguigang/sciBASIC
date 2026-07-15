@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1678ee057965dea08e848c87fe1fb44c, gr\physics\layout\Displacement.vb"
+﻿#Region "Microsoft.VisualBasic::4f32aabcfbd84d4d4dab4a282eb4d206, gr\physics\layout\Displacement.vb"
 
     ' Author:
     ' 
@@ -47,7 +47,7 @@
     ' 
     '         Properties: [Step]
     ' 
-    '         Sub: moveNode
+    '         Sub: MoveNode
     ' 
     ' 
     ' /********************************************************************************/

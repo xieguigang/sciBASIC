@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::44f3498ebf109f53e3e8753839c42588, gr\Microsoft.VisualBasic.Imaging\Drawing3D\Isometric.vb"
+﻿#Region "Microsoft.VisualBasic::91f82bfd58c03316b103244f5890b963, gr\Microsoft.VisualBasic.Imaging\Drawing3D\IsometricEngine.vb"
 
     ' Author:
     ' 
@@ -34,20 +34,20 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 464
-    '    Code Lines: 347 (74.78%)
-    ' Comment Lines: 54 (11.64%)
+    '   Total Lines: 437
+    '    Code Lines: 325 (74.37%)
+    ' Comment Lines: 54 (12.36%)
     '    - Xml Docs: 74.07%
     ' 
-    '   Blank Lines: 63 (13.58%)
-    '     File Size: 19.31 KB
+    '   Blank Lines: 58 (13.27%)
+    '     File Size: 18.26 KB
 
 
     '     Class IsometricEngine
     ' 
     '         Constructor: (+1 Overloads) Sub New
     ' 
-    '         Function: FindItemForPosition, GetEnumerator, IEnumerable_GetEnumerator, IntersectionWith, (+2 Overloads) IsPointInPoly
+    '         Function: FindItemForPosition, GetEnumerator, IEnumerable_GetEnumerator, IntersectionWith, IsPointInPoly
     '                   sortPaths, TranslatePoint
     ' 
     '         Sub: (+3 Overloads) Add, AddPath, Clear, Draw, Measure

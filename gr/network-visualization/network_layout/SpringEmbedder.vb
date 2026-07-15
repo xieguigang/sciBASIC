@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::49ff9aaec38888dbc6d559be2402b719, gr\network-visualization\network_layout\SpringEmbedder.vb"
+﻿#Region "Microsoft.VisualBasic::b39c251ffbf3b9dabab4cd3d079bd24a, gr\network-visualization\network_layout\SpringEmbedder.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 185
-    '    Code Lines: 119 (64.32%)
-    ' Comment Lines: 32 (17.30%)
-    '    - Xml Docs: 75.00%
+    '   Total Lines: 204
+    '    Code Lines: 123 (60.29%)
+    ' Comment Lines: 47 (23.04%)
+    '    - Xml Docs: 61.70%
     ' 
-    '   Blank Lines: 34 (18.38%)
-    '     File Size: 6.94 KB
+    '   Blank Lines: 34 (16.67%)
+    '     File Size: 8.47 KB
 
 
     ' Class SpringEmbedder

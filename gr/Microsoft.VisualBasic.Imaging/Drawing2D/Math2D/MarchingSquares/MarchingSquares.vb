@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0733cee567dd4ebd13f6f1c2a30935eb, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Math2D\MarchingSquares\MarchingSquares.vb"
+﻿#Region "Microsoft.VisualBasic::4a93d9cc2abfcc0bed0d95b88e21d518, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Math2D\MarchingSquares\MarchingSquares.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 434
-    '    Code Lines: 189 (43.55%)
-    ' Comment Lines: 191 (44.01%)
+    '   Total Lines: 433
+    '    Code Lines: 188 (43.42%)
+    ' Comment Lines: 191 (44.11%)
     '    - Xml Docs: 72.25%
     ' 
-    '   Blank Lines: 54 (12.44%)
-    '     File Size: 18.47 KB
+    '   Blank Lines: 54 (12.47%)
+    '     File Size: 18.42 KB
 
 
     '     Class MarchingSquares

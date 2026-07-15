@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6a807186112948eca769406e2c3e1d76, gr\physics\layout\AbstractForce.vb"
+﻿#Region "Microsoft.VisualBasic::ef3a9386fa6b1929f97c46f712522ab9, gr\physics\layout\AbstractForce.vb"
 
     ' Author:
     ' 
@@ -45,7 +45,7 @@
 
     '     Class AbstractForce
     ' 
-    '         Function: calculateForce
+    '         Function: CalculateForce
     ' 
     ' 
     ' /********************************************************************************/

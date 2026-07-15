@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0745b53686cc8414f09a56defc1c915c, gr\Microsoft.VisualBasic.Imaging\Drawing3D\Math3D\Transformation.vb"
+﻿#Region "Microsoft.VisualBasic::b9aee2a43303c1d2d0e968e884231d81, gr\Microsoft.VisualBasic.Imaging\Drawing3D\Math3D\Transformation.vb"
 
     ' Author:
     ' 
@@ -47,8 +47,8 @@
     ' 
     '         Properties: ORIGIN
     ' 
-    '         Function: Centra, Distance, Offsets, OffSets, RotateX
-    '                   RotateY, RotateZ, (+3 Overloads) Scale, Translate
+    '         Function: Centroid, Distance, (+2 Overloads) Offsets, RotateX, RotateY
+    '                   RotateZ, (+3 Overloads) Scale, Translate
     ' 
     ' 
     ' /********************************************************************************/

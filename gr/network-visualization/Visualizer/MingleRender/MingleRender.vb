@@ -1,57 +1,57 @@
-﻿#Region "Microsoft.VisualBasic::1a0d6719b48db0175c8fd3709cfe4d21, gr\network-visualization\Visualizer\MingleRender\MingleRender.vb"
+﻿#Region "Microsoft.VisualBasic::2e2f23ae4b9aa69fd7f755fbf9d900c8, gr\network-visualization\Visualizer\MingleRender\MingleRender.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 190
-'    Code Lines: 145 (76.32%)
-' Comment Lines: 21 (11.05%)
-'    - Xml Docs: 0.00%
-' 
-'   Blank Lines: 24 (12.63%)
-'     File Size: 7.59 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-' Class MingleRender
-' 
-'     Constructor: (+1 Overloads) Sub New
-' 
-'     Function: adjustPosition
-' 
-'     Sub: renderBezier, renderLine, renderQuadratic
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 189
+    '    Code Lines: 144 (76.19%)
+    ' Comment Lines: 21 (11.11%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 24 (12.70%)
+    '     File Size: 7.55 KB
+
+
+    ' Class MingleRender
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    ' 
+    '     Function: adjustPosition
+    ' 
+    '     Sub: renderBezier, renderLine, renderQuadratic
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

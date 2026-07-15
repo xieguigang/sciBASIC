@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9cfffdb3ca34df7427c38d79201a578b, gr\Microsoft.VisualBasic.Imaging\SVG\XML\Xml\Enums\SvgEnum.vb"
+﻿#Region "Microsoft.VisualBasic::247b40a2bcebaa8fc8f7b22e3e6b07f1, gr\Microsoft.VisualBasic.Imaging\SVG\XML\Xml\Enums\SvgEnum.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 8 (20.00%)
-    '     File Size: 1.32 KB
+    '     File Size: 1.33 KB
 
 
     '     Class SvgEnum

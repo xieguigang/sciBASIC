@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5dccd2eedc417e690eea1da91f28e17a, gr\Microsoft.VisualBasic.Imaging\Drawing3D\Math3D\Vector3D.vb"
+﻿#Region "Microsoft.VisualBasic::5495eb27d58e772e5aa6f0b8a89ec0c4, gr\Microsoft.VisualBasic.Imaging\Drawing3D\Math3D\Vector3D.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 154
-    '    Code Lines: 107 (69.48%)
-    ' Comment Lines: 20 (12.99%)
+    '   Total Lines: 137
+    '    Code Lines: 92 (67.15%)
+    ' Comment Lines: 20 (14.60%)
     '    - Xml Docs: 95.00%
     ' 
-    '   Blank Lines: 27 (17.53%)
-    '     File Size: 5.85 KB
+    '   Blank Lines: 25 (18.25%)
+    '     File Size: 5.22 KB
 
 
     '     Class Vector3D

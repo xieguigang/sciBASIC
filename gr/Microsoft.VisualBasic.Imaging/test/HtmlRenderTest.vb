@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4811d94f559cec8d55230c926c0f08be, gr\Microsoft.VisualBasic.Imaging\test\HtmlRenderTest.vb"
+﻿#Region "Microsoft.VisualBasic::b0a7132501e073349790b4467d1d1bf1, gr\Microsoft.VisualBasic.Imaging\test\HtmlRenderTest.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 0.00%
     ' 
     '   Blank Lines: 9 (28.12%)
-    '     File Size: 1.12 KB
+    '     File Size: 1.15 KB
 
 
     ' Module HtmlRenderTest

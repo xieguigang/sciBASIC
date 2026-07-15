@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::61ebdc47db0f1d4716597be0889e90ec, Microsoft.VisualBasic.Core\src\Extensions\IO\Path\PathMatch.vb"
+﻿#Region "Microsoft.VisualBasic::1ad8856bc13d9416a11b1cff374451c4, Microsoft.VisualBasic.Core\src\Extensions\IO\Path\PathMatch.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 58
-    '    Code Lines: 42 (72.41%)
-    ' Comment Lines: 6 (10.34%)
+    '   Total Lines: 57
+    '    Code Lines: 41 (71.93%)
+    ' Comment Lines: 6 (10.53%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 10 (17.24%)
-    '     File Size: 2.13 KB
+    '   Blank Lines: 10 (17.54%)
+    '     File Size: 2.12 KB
 
 
     '     Structure PathMatch

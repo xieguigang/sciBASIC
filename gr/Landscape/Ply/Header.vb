@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::756cba720fc3bfcbf87464ca0d341548, gr\Landscape\PLY\Header.vb"
+﻿#Region "Microsoft.VisualBasic::52797bb47621d2b0b04e9d7f9db57a81, gr\Landscape\PLY\Header.vb"
 
     ' Author:
     ' 
@@ -34,18 +34,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 27
-    '    Code Lines: 21 (77.78%)
-    ' Comment Lines: 0 (0.00%)
-    '    - Xml Docs: 0.00%
+    '   Total Lines: 39
+    '    Code Lines: 26 (66.67%)
+    ' Comment Lines: 3 (7.69%)
+    '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 6 (22.22%)
-    '     File Size: 935 B
+    '   Blank Lines: 10 (25.64%)
+    '     File Size: 1.26 KB
 
 
     '     Class Header
     ' 
-    '         Properties: comment, element_face, element_vertex, properties
+    '         Properties: comment, element_face, element_vertex, format, properties
     ' 
     '         Sub: WriteAsciiText
     ' 

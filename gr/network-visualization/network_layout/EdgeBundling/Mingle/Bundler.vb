@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ada7bb2dfc9b5d7432688ef545abc7f1, gr\network-visualization\network_layout\EdgeBundling\Mingle\Bundler.vb"
+﻿#Region "Microsoft.VisualBasic::9c5e9ea3d7516076134e36ed98af053a, gr\network-visualization\network_layout\EdgeBundling\Mingle\Bundler.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 48.39%
     ' 
     '   Blank Lines: 76 (14.81%)
-    '     File Size: 21.30 KB
+    '     File Size: 21.27 KB
 
 
     '     Class Bundler

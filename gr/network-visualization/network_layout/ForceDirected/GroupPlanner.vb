@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c09d0b59faca369cdd6ee61425631cda, gr\network-visualization\network_layout\ForceDirected\GroupPlanner.vb"
+﻿#Region "Microsoft.VisualBasic::223381543c765f595870de445846e0e6, gr\network-visualization\network_layout\ForceDirected\GroupPlanner.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 60.00%
     ' 
     '   Blank Lines: 22 (15.07%)
-    '     File Size: 6.23 KB
+    '     File Size: 6.22 KB
 
 
     '     Class GroupPlanner

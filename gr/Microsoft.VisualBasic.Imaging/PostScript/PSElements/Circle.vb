@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a749bde3427c010c08091d360770f368, gr\Microsoft.VisualBasic.Imaging\PostScript\PSElements\Circle.vb"
+﻿#Region "Microsoft.VisualBasic::52a13aaf3987cb78f4da3162fb98ad75, gr\Microsoft.VisualBasic.Imaging\PostScript\PSElements\Circle.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 57
-    '    Code Lines: 44 (77.19%)
+    '   Total Lines: 68
+    '    Code Lines: 53 (77.94%)
     ' Comment Lines: 0 (0.00%)
     '    - Xml Docs: 0.00%
     ' 
-    '   Blank Lines: 13 (22.81%)
-    '     File Size: 2.00 KB
+    '   Blank Lines: 15 (22.06%)
+    '     File Size: 2.40 KB
 
 
     '     Class Circle

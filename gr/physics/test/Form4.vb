@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::248054a70d2f358ec2f357503ccddf48, gr\physics\physics_Test\Form4.vb"
+﻿#Region "Microsoft.VisualBasic::357e256518d30f04e3176cf853030f20, gr\physics\test\Form4.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 461
-    '    Code Lines: 345 (74.84%)
-    ' Comment Lines: 11 (2.39%)
+    '   Total Lines: 462
+    '    Code Lines: 346 (74.89%)
+    ' Comment Lines: 11 (2.38%)
     '    - Xml Docs: 0.00%
     ' 
-    '   Blank Lines: 105 (22.78%)
-    '     File Size: 14.12 KB
+    '   Blank Lines: 105 (22.73%)
+    '     File Size: 14.18 KB
 
 
     ' Class Form4

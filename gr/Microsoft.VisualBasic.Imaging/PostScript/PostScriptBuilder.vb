@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::925ae2268d245273120507bebc043544, gr\Microsoft.VisualBasic.Imaging\PostScript\PostScriptBuilder.vb"
+﻿#Region "Microsoft.VisualBasic::ba546ee0b4c6e228273df1ad8513c2de, gr\Microsoft.VisualBasic.Imaging\PostScript\PostScriptBuilder.vb"
 
     ' Author:
     ' 
@@ -34,12 +34,12 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 155
-    '    Code Lines: 106 (68.39%)
-    ' Comment Lines: 25 (16.13%)
+    '   Total Lines: 156
+    '    Code Lines: 107 (68.59%)
+    ' Comment Lines: 25 (16.03%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 24 (15.48%)
+    '   Blank Lines: 24 (15.38%)
     '     File Size: 5.95 KB
 
 
