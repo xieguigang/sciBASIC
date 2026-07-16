@@ -81,7 +81,7 @@ Public Class MainForm : Inherits Form
         env = New StickmanEnv()
         currentState = env.Reset()
         prevState = currentState
-        agent = New QAgent(New QNetwork(env.StateSize, GetType(StickmanAction), New Integer() {64, 64, 32}, 0.005), True, 50000)
+        agent = New QAgent(New QNetwork(env.StateSize, GetType(StickmanAction), New Integer() {64, 64, 32}, 0.1), True, 50000)
         agent.BeginEpisode()
 
         AddHandler worldPanel.Paint, AddressOf DrawWorld
