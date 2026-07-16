@@ -107,9 +107,15 @@ Namespace Symbolic
             If TypeOf core Is BinaryExpression Then
                 Dim b = DirectCast(core, BinaryExpression)
                 Select Case b.operator
-                    Case "^"c : Return integratePower(b.left, b.right, var)
+                    Case "^"c
+                        Dim tp = integrateTrigPower(b.left, b.right, var)
+                        If tp IsNot Nothing Then Return tp
+                        Return integratePower(b.left, b.right, var)
                     Case "/"c : Return integrateQuotient(b.left, b.right, var)
-                    Case "*"c : Return integrateProduct(core, var)
+                    Case "*"c
+                        Dim sub_r = trySubstitution(core, var)
+                        If sub_r IsNot Nothing Then Return sub_r
+                        Return integrateProduct(core, var)
                     Case Else : Return Nothing
                 End Select
             End If
@@ -134,6 +140,9 @@ Namespace Symbolic
                     Case "ln" : Return Div(Subt(Mul(Clone(u), funcLn(Clone(u))), Clone(u)), MakeLiteral(lf.a))
                     Case "sqrt" : Return Div(Mul(MakeLiteral(2.0 / 3.0), Pow(Clone(u), MakeLiteral(1.5))), MakeLiteral(lf.a))
                     Case "tan" : Return Div(Negate(funcLn(funcCos(Clone(u)))), MakeLiteral(lf.a))
+                    Case "sec" : Return Div(funcLn(Add(funcSec(u), funcTan(u))), MakeLiteral(lf.a))
+                    Case "csc" : Return Div(funcLn(Subt(funcCsc(u), funcCot(u))), MakeLiteral(lf.a))
+                    Case "cot" : Return Div(funcLn(funcSin(u)), MakeLiteral(lf.a))
                 End Select
             End If
             Return Nothing
@@ -171,6 +180,22 @@ Namespace Symbolic
                 End If
                 If isOnePlusVarSquared(den, var) Then Return funcAtan(var)
                 If isSqrtOneMinusVarSq(den, var) Then Return funcAsin(var)
+
+                Dim c As Double
+                If isVarSquaredPlusConst(den, var, c) AndAlso c > 0 Then
+                    Dim s = System.Math.Sqrt(c)
+                    Return Div(funcAtan(Div(New SymbolExpression(var), MakeLiteral(s))), MakeLiteral(s))
+                End If
+                If isVarSquaredMinusConst(den, var, c) AndAlso c > 0 Then
+                    Dim s = System.Math.Sqrt(c)
+                    Dim inner = Div(Subt(New SymbolExpression(var), MakeLiteral(s)), Add(New SymbolExpression(var), MakeLiteral(s)))
+                    Return Mul(MakeLiteral(1.0 / (2.0 * s)), funcLn(inner))
+                End If
+                If isConstMinusVarSquared(den, var, c) AndAlso c > 0 Then
+                    Dim s = System.Math.Sqrt(c)
+                    Dim inner = Div(Add(New SymbolExpression(var), MakeLiteral(s)), Subt(MakeLiteral(s), New SymbolExpression(var)))
+                    Return Mul(MakeLiteral(1.0 / (2.0 * s)), funcLn(inner))
+                End If
             Else
                 Dim lf = decomposeLinear(den, var)
                 If lf.isLinear AndAlso lf.a <> 0.0 Then
@@ -250,6 +275,144 @@ Namespace Symbolic
                             Return True
                         End If
                     End If
+                End If
+            End If
+            Return False
+        End Function
+
+        ' ------------------------------------------------------------------
+        ' Trigonometric power integrals (sin^2, cos^2, sec^2, csc^2, tan^2, cot^2)
+        ' ------------------------------------------------------------------
+
+        Private Function integrateTrigPower(left As Expression, right As Expression, var$) As Expression
+            If Not (TypeOf left Is FunctionInvoke AndAlso DirectCast(left, FunctionInvoke).parameters.Length = 1) Then Return Nothing
+            Dim f = DirectCast(left, FunctionInvoke)
+            Dim e = NumericValue(right)
+            If Not e.HasValue Then Return Nothing
+
+            Dim u = f.parameters(0)
+            Dim lf = decomposeLinear(u, var)
+            If Not (lf.isLinear AndAlso lf.a <> 0.0) Then Return Nothing
+            Dim a = lf.a
+
+            Select Case f.funcName
+                Case "sin"
+                    If e.Value = 2.0 Then Return Div(Subt(Clone(u), Mul(funcSin(u), funcCos(u))), MakeLiteral(2.0 * a))
+                Case "cos"
+                    If e.Value = 2.0 Then Return Div(Add(Clone(u), Mul(funcSin(u), funcCos(u))), MakeLiteral(2.0 * a))
+                Case "sec"
+                    If e.Value = 2.0 Then Return Div(funcTan(u), MakeLiteral(a))
+                Case "csc"
+                    If e.Value = 2.0 Then Return Div(Negate(funcCot(u)), MakeLiteral(a))
+                Case "tan"
+                    If e.Value = 2.0 Then Return Div(Subt(funcTan(u), Clone(u)), MakeLiteral(a))
+                Case "cot"
+                    If e.Value = 2.0 Then Return Div(Subt(Negate(funcCot(u)), Clone(u)), MakeLiteral(a))
+            End Select
+            Return Nothing
+        End Function
+
+        ' ------------------------------------------------------------------
+        ' Substitution heuristic:  integral of f(w) * w'  ->  F(w)
+        ' ------------------------------------------------------------------
+
+        Private Function trySubstitution(core As Expression, var$) As Expression
+            Dim factors = FlattenProduct(core)
+
+            For i As Integer = 0 To factors.Count - 1
+                Dim f = factors(i)
+                If TypeOf f Is FunctionInvoke AndAlso DirectCast(f, FunctionInvoke).parameters.Length = 1 Then
+                    Dim fi = DirectCast(f, FunctionInvoke)
+                    Dim w = fi.parameters(0)
+
+                    ' Linear arguments are handled directly by integrateFunction.
+                    Dim lf = decomposeLinear(w, var)
+                    If lf.isLinear AndAlso lf.a <> 0.0 Then Continue For
+
+                    Dim wp = Differentiate(w, var)
+                    If wp Is Nothing Then Continue For
+
+                    Dim rest As New List(Of Expression)
+                    For j As Integer = 0 To factors.Count - 1
+                        If j <> i Then rest.Add(factors(j))
+                    Next
+
+                    Dim restExpr As Expression
+                    If rest.Count = 0 Then
+                        restExpr = MakeLiteral(1)
+                    ElseIf rest.Count = 1 Then
+                        restExpr = rest(0)
+                    Else
+                        restExpr = rest(0)
+                        For j As Integer = 1 To rest.Count - 1
+                            restExpr = Mul(restExpr, rest(j))
+                        Next
+                    End If
+
+                    ' Accept the substitution when the remaining factor is a constant
+                    ' multiple of w'.
+                    Dim sratio = simplifyExpr(Div(Clone(restExpr), Clone(wp)))
+                    If IsConstant(sratio) Then
+                        Dim c = NumericValue(sratio)
+                        If c.HasValue AndAlso System.Math.Abs(c.Value) > 1.0E-9 Then
+                            Dim F = primitiveOf(fi.funcName, w)
+                            If F IsNot Nothing Then
+                                Return Div(Clone(F), MakeLiteral(c.Value))
+                            End If
+                        End If
+                    End If
+                End If
+            Next
+
+            Return Nothing
+        End Function
+
+        Private Function primitiveOf(name$, w As Expression) As Expression
+            Select Case name
+                Case "exp" : Return funcExp(w)
+                Case "sin" : Return Negate(funcCos(w))
+                Case "cos" : Return funcSin(w)
+                Case "tan" : Return Negate(funcLn(funcCos(w)))
+                Case "sec" : Return funcLn(Add(funcSec(w), funcTan(w)))
+                Case "csc" : Return funcLn(Subt(funcCsc(w), funcCot(w)))
+                Case "cot" : Return funcLn(funcSin(w))
+                Case "ln" : Return Subt(Mul(Clone(w), funcLn(Clone(w))), Clone(w))
+                Case Else : Return Nothing
+            End Select
+        End Function
+
+        ' ------------------------------------------------------------------
+        ' Rational-function denominator shapes
+        ' ------------------------------------------------------------------
+
+        Private Function isVarSquaredPlusConst(den As Expression, var$, ByRef c As Double) As Boolean
+            If TypeOf den Is BinaryExpression AndAlso DirectCast(den, BinaryExpression).operator = "+"c Then
+                Dim b = DirectCast(den, BinaryExpression)
+                If isVarSquared(b.left, var) AndAlso TypeOf b.right Is Literal Then
+                    c = DirectCast(b.right, Literal).number
+                    Return True
+                End If
+            End If
+            Return False
+        End Function
+
+        Private Function isVarSquaredMinusConst(den As Expression, var$, ByRef c As Double) As Boolean
+            If TypeOf den Is BinaryExpression AndAlso DirectCast(den, BinaryExpression).operator = "-"c Then
+                Dim b = DirectCast(den, BinaryExpression)
+                If isVarSquared(b.left, var) AndAlso TypeOf b.right Is Literal Then
+                    c = DirectCast(b.right, Literal).number
+                    Return True
+                End If
+            End If
+            Return False
+        End Function
+
+        Private Function isConstMinusVarSquared(den As Expression, var$, ByRef c As Double) As Boolean
+            If TypeOf den Is BinaryExpression AndAlso DirectCast(den, BinaryExpression).operator = "-"c Then
+                Dim b = DirectCast(den, BinaryExpression)
+                If TypeOf b.left Is Literal AndAlso isVarSquared(b.right, var) Then
+                    c = DirectCast(b.left, Literal).number
+                    Return True
                 End If
             End If
             Return False
@@ -383,6 +546,18 @@ Namespace Symbolic
         End Function
         Private Function funcCos(x As Expression) As FunctionInvoke
             Return New FunctionInvoke("cos", New Expression() {x})
+        End Function
+        Private Function funcTan(x As Expression) As FunctionInvoke
+            Return New FunctionInvoke("tan", New Expression() {x})
+        End Function
+        Private Function funcCot(x As Expression) As FunctionInvoke
+            Return New FunctionInvoke("cot", New Expression() {x})
+        End Function
+        Private Function funcSec(x As Expression) As FunctionInvoke
+            Return New FunctionInvoke("sec", New Expression() {x})
+        End Function
+        Private Function funcCsc(x As Expression) As FunctionInvoke
+            Return New FunctionInvoke("csc", New Expression() {x})
         End Function
         Private Function funcLn(x As Expression) As FunctionInvoke
             Return New FunctionInvoke("ln", New Expression() {x})

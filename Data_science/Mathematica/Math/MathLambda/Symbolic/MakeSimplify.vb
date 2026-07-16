@@ -27,6 +27,16 @@ Namespace Symbolic
             Return makeSimple(raw)
         End Function
 
+        ''' <summary>
+        ''' Pure algebraic simplification without any (auto) factorisation. Used by
+        ''' the rationalisation and polynomial modules so that a factorisation step
+        ''' inside <see cref="Symbolic.Simplify"/> cannot recurse back into
+        ''' <see cref="Polynomial.Factor"/> and cause an infinite loop.
+        ''' </summary>
+        Friend Function simplifyRaw(raw As Expression) As Expression
+            Return makeSimple(raw)
+        End Function
+
         Private Function makeSimple(expr As Expression) As Expression
             If expr Is Nothing Then
                 Return Nothing

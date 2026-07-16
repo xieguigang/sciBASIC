@@ -1,10 +1,10 @@
 ﻿#Region "Microsoft.VisualBasic::5cab8d942e2473ae56fecef99ef0629a, Data_science\Mathematica\Math\MathLambda\test\SymbolicTest.vb"
 
-    '     Module SymbolicTest
-    ' 
-    '         Verification examples for the symbolic computation engine.
-    ' 
-    ' /********************************************************************************/
+'     Module SymbolicTest
+' 
+'         Verification examples for the symbolic computation engine.
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -87,8 +87,8 @@ Module SymbolicTest
         Dim J = Symbolic.Jacobian(funcs, {"x", "y"})
         Console.WriteLine("  Jacobian:")
         For i = 0 To J.GetLength(0) - 1
-            For j = 0 To J.GetLength(1) - 1
-                Console.Write($"    {J(i, j)}")
+            For J = 0 To J.GetLength(1) - 1
+                Console.Write($"    {J(i, J)}")
             Next
             Console.WriteLine()
         Next
@@ -96,8 +96,8 @@ Module SymbolicTest
         Dim H = Symbolic.Hessian(ScriptEngine.ParseExpression("x ^ 2 * y + x * y ^ 2"), {"x", "y"})
         Console.WriteLine("  Hessian:")
         For i = 0 To H.GetLength(0) - 1
-            For j = 0 To H.GetLength(1) - 1
-                Console.Write($"    {H(i, j)}")
+            For J = 0 To H.GetLength(1) - 1
+                Console.Write($"    {H(i, J)}")
             Next
             Console.WriteLine()
         Next

@@ -39,7 +39,43 @@ Namespace Symbolic
                 Return DirectCast(raw, UnifySymbol).GetSimplify
             End If
 
-            Return MakeSimplify.simplifyExpr(raw)
+            Dim simple = MakeSimplify.simplifyExpr(raw)
+
+            ' Auto-factor a univariate polynomial so that, for example,
+            ' x^2 + 2*x + 1 simplifies straight to (x + 1)^2. Multivariate
+            ' expressions are left untouched to avoid the not-supported path.
+            Dim syms = GetSymbols(simple)
+            If syms.Length = 1 Then
+                Dim v = syms(0)
+                If Polynomial.IsUnivariatePolynomial(simple, v) Then
+                    Dim fac = Polynomial.Factor(simple, v)
+                    If Not ExprEquals(fac, simple) Then
+                        simple = fac
+                    End If
+                End If
+            End If
+
+            Return simple
+        End Function
+
+        ' ------------------------------------------------------------------
+        ' Rationalisation
+        ' ------------------------------------------------------------------
+
+        ''' <summary>
+        ''' Rationalise the expression: remove square roots and the imaginary unit
+        ''' from every denominator by conjugate multiplication, e.g.
+        ''' 1/(1 + sqrt(2)) -> sqrt(2) - 1, 1/(a + b*i) -> (a - b*i)/(a^2 + b^2).
+        ''' </summary>
+        Public Function Rationalize(expr As String) As Expression
+            Return Rationalizer.Rationalize(Script.ParseExpression(expr))
+        End Function
+
+        ''' <summary>
+        ''' Rationalise the expression (string form overload).
+        ''' </summary>
+        Public Function Rationalize(expr As Expression) As Expression
+            Return Rationalizer.Rationalize(expr)
         End Function
 
         ' ------------------------------------------------------------------

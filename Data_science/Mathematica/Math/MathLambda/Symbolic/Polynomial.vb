@@ -215,6 +215,35 @@ Namespace Symbolic
             Return r0
         End Function
 
+        ''' <summary>
+        ''' Test whether <paramref name="expr"/> is a polynomial in the single
+        ''' variable <paramref name="var"/> (no transcendental functions, fractional
+        ''' or negative exponents). Used by <see cref="Symbolic.Simplify"/> to decide
+        ''' whether the auto-factorisation step is safe to apply.
+        ''' </summary>
+        Friend Function IsUnivariatePolynomial(expr As Expression, var$) As Boolean
+            If expr Is Nothing Then
+                Return True
+            ElseIf TypeOf expr Is Literal Then
+                Return True
+            ElseIf TypeOf expr Is SymbolExpression Then
+                Return DirectCast(expr, SymbolExpression).symbolName = var
+            ElseIf TypeOf expr Is UnaryExpression AndAlso DirectCast(expr, UnaryExpression).operator = "-"c Then
+                Return IsUnivariatePolynomial(DirectCast(expr, UnaryExpression).value, var)
+            ElseIf TypeOf expr Is BinaryExpression Then
+                Dim b = DirectCast(expr, BinaryExpression)
+                Select Case b.operator
+                    Case "+"c, "-"c, "*"c
+                        Return IsUnivariatePolynomial(b.left, var) AndAlso IsUnivariatePolynomial(b.right, var)
+                    Case "^"c
+                        Return IsUnivariatePolynomial(b.left, var) AndAlso TypeOf b.right Is Literal
+                    Case Else
+                        Return False
+                End Select
+            End If
+            Return False
+        End Function
+
         Private Function polyIsZero(p As UnivariatePoly) As Boolean
             For i As Integer = 0 To p.coeff.Length - 1
                 If System.Math.Abs(p.coeff(i)) >= EPS Then Return False
