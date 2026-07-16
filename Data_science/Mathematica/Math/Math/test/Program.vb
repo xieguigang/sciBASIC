@@ -38,7 +38,13 @@ Module Program
     End Sub
 
     Sub AssertEqual(name As String, expected As Object, actual As Object)
-        If expected.Equals(actual) Then
+        If expected Is Nothing AndAlso actual Is Nothing Then
+            pass += 1
+            Console.WriteLine($"  [PASS] {name}: Nothing")
+        ElseIf expected Is Nothing OrElse actual Is Nothing Then
+            fail += 1
+            Console.WriteLine($"  [FAIL] {name}: 期望 {If(expected Is Nothing, "Nothing", expected.ToString)}, 实际 {If(actual Is Nothing, "Nothing", actual.ToString)}")
+        ElseIf expected.Equals(actual) Then
             pass += 1
             Console.WriteLine($"  [PASS] {name}: {expected}")
         Else
