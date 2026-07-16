@@ -469,15 +469,11 @@ Public Class CVODESolver : Implements IDisposable
 
         ' ---- 误差估计 ----
         If _method = CVODEMethod.Adams Then
-            ' Adams 正确器阶 p=q+1，需用 p 阶差商 + Adams-Moulton 误差常数估计 O(h^{p+1}) 截断误差；
-            ' 历史不足时退回预测-校正差（保守估计）。
-            If _histCount >= q + 1 Then
-                errEst = EstimateAdamsError(q, hTry, tNew)
-            Else
-                _tempV.CopyFrom(y)
-                _tempV.SubtractVector(yPred)
-                errEst = _tempV.WRMSNorm(_ewt)
-            End If
+            ' Adams：预测(AB_{q+1})与校正(AM_{q+1})之差即局部截断误差（主阶），
+            ' 该方法对任意阶均稳定（不依赖高阶差商）。
+            _tempV.CopyFrom(y)
+            _tempV.SubtractVector(yPred)
+            errEst = _tempV.WRMSNorm(_ewt)
         Else
             ' BDF：用差商 + BDF 误差常数得到 O(h^{q+1}) 的真实截断误差
             errEst = EstimateBDFFrror(q, hTry, tNew, y)
