@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 18
-VisualStudioVersion = 18.7.11925.98 stable
+VisualStudioVersion = 18.7.11925.98
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "DeepQNetwork", "DeepQNetwork.vbproj", "{A63F3CC5-C8BB-29F6-A671-CD65C893E2A8}"
 EndProject
@@ -20,6 +20,10 @@ EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Math.NET5", "..\..\Mathematica\Math\Math\Math.NET5.vbproj", "{DA17305D-8D30-63A7-9437-D24F31F7CBB1}"
 EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "stats-netcore5", "..\..\Mathematica\Math\Math.Statistics\stats-netcore5.vbproj", "{BB934B95-E18B-5F21-973D-38AC59572EA9}"
+EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "physics-netcore5", "..\..\..\gr\physics\physics-netcore5.vbproj", "{344E1600-A3F6-6A8B-1175-17D22F5559FA}"
+EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "graph-netcore5", "..\..\Graph\graph-netcore5.vbproj", "{18A89400-63A9-3190-79F8-CAC2A7A21450}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -93,6 +97,22 @@ Global
 		{BB934B95-E18B-5F21-973D-38AC59572EA9}.Release|Any CPU.Build.0 = Release|Any CPU
 		{BB934B95-E18B-5F21-973D-38AC59572EA9}.Release|x64.ActiveCfg = Release|x64
 		{BB934B95-E18B-5F21-973D-38AC59572EA9}.Release|x64.Build.0 = Release|x64
+		{344E1600-A3F6-6A8B-1175-17D22F5559FA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{344E1600-A3F6-6A8B-1175-17D22F5559FA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{344E1600-A3F6-6A8B-1175-17D22F5559FA}.Debug|x64.ActiveCfg = Debug|x64
+		{344E1600-A3F6-6A8B-1175-17D22F5559FA}.Debug|x64.Build.0 = Debug|x64
+		{344E1600-A3F6-6A8B-1175-17D22F5559FA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{344E1600-A3F6-6A8B-1175-17D22F5559FA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{344E1600-A3F6-6A8B-1175-17D22F5559FA}.Release|x64.ActiveCfg = Release|x64
+		{344E1600-A3F6-6A8B-1175-17D22F5559FA}.Release|x64.Build.0 = Release|x64
+		{18A89400-63A9-3190-79F8-CAC2A7A21450}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{18A89400-63A9-3190-79F8-CAC2A7A21450}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{18A89400-63A9-3190-79F8-CAC2A7A21450}.Debug|x64.ActiveCfg = Debug|x64
+		{18A89400-63A9-3190-79F8-CAC2A7A21450}.Debug|x64.Build.0 = Debug|x64
+		{18A89400-63A9-3190-79F8-CAC2A7A21450}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{18A89400-63A9-3190-79F8-CAC2A7A21450}.Release|Any CPU.Build.0 = Release|Any CPU
+		{18A89400-63A9-3190-79F8-CAC2A7A21450}.Release|x64.ActiveCfg = Release|x64
+		{18A89400-63A9-3190-79F8-CAC2A7A21450}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -105,6 +125,8 @@ Global
 		{6025EBEC-2EC2-D439-1A7C-7235714359B8} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 		{DA17305D-8D30-63A7-9437-D24F31F7CBB1} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 		{BB934B95-E18B-5F21-973D-38AC59572EA9} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+		{344E1600-A3F6-6A8B-1175-17D22F5559FA} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+		{18A89400-63A9-3190-79F8-CAC2A7A21450} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {05519093-17C3-4E9B-A60C-E3E9E8AC9A27}
