@@ -1,4 +1,12 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
+    <Platforms>AnyCPU;x64;x86</Platforms>   
+    <Configurations>Debug;Release;LipidSearch;Rsharp_app_release;PlantMAT;mzkit;NPSearch;mzkit_win32;gcmodeller_desktop;CFD_win32;nuget_release;Desktop;MEMI-Desktop;CellaLAB-Desktop</Configurations>   
+    <TargetFramework>net10.0</TargetFramework>   
+    <OutputType>Exe</OutputType>
   </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\Microsoft.VisualBasic.Core\src\Core.vbproj" />
+    <ProjectReference Include="..\Math\Math.NET5.vbproj" />
+  </ItemGroup>
   </Project>
