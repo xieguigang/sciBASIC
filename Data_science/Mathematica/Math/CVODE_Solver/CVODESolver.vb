@@ -1,186 +1,85 @@
-﻿#Region "Microsoft.VisualBasic::5bb39acf784da594f14f717977f1aff4, Data_science\Mathematica\Math\CVODE_Solver\CVODESolver.vb"
-
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-    ' /********************************************************************************/
-
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 912
-    '    Code Lines: 511 (56.03%)
-    ' Comment Lines: 241 (26.43%)
-    '    - Xml Docs: 50.62%
-    ' 
-    '   Blank Lines: 160 (17.54%)
-    '     File Size: 25.58 KB
-
-
-    ' Class CVODESolver
-    ' 
-    '     Properties: CurrentOrder, CurrentState, CurrentStep, CurrentTime, LinearSolves
-    '                 NewtonIterations, RHSFunctionEvaluations, TotalSteps
-    ' 
-    '     Constructor: (+1 Overloads) Sub New
-    ' 
-    '     Function: [Step], ComputeJacobian, Correct, EstimateError, EstimateInitialStep
-    '               GetAdamsPredictorCoefficient, GetBDFCoefficient, Initialize, Integrate, Predict
-    '               TakeStep
-    ' 
-    '     Sub: AdjustStepAndOrder, ComputeErrorWeights, ComputeNumericalJacobian, ConstructSystemMatrix, (+2 Overloads) Dispose
-    '          Initialize, InitializeCoefficients, PredictAdams, PredictBDF, (+2 Overloads) SetAbsoluteTolerance
-    '          SetJacobianFunction, SetMaxStep, SetMinStep, SetRelativeTolerance, UpdateHistory
-    ' 
-    ' /********************************************************************************/
-
-#End Region
+﻿' ============================================================================
+' CVODESolver.vb - CVODE常微分方程求解器核心模块（重写版）
+' 采用经典变步长、变阶数多步法（Adams 非刚性 / BDF 刚性）。
+' 预测-校正系数通过 Lagrange / 差商在每一步从真实历史点直接计算，
+' 因此对任意步长变化都正确，无需记忆固定系数表。
+' 仅基于 .NET 基础数学函数库实现，不依赖第三方库。
+' ============================================================================
 
 Imports std = System.Math
 
-' ============================================================================
-' CVODE.vb - CVODE常微分方程求解器核心模块
-' 实现变阶变步长的多步方法求解常微分方程组
-' 支持Adams方法（非刚性问题）和BDF方法（刚性问题）
-' 仅基于.NET基础数学函数库实现，不依赖第三方库
-' ============================================================================
-
 ''' <summary>
-''' CVODE常微分方程求解器
-''' 实现变阶变步长的多步方法
+''' CVODE常微分方程求解器（变阶变步长多步法）
 ''' </summary>
 Public Class CVODESolver : Implements IDisposable
 
 #Region "常量定义"
 
-    ' Adams方法最大阶数
     Private Const ADAMS_MAX_ORDER As Integer = 12
-    ' BDF方法最大阶数
     Private Const BDF_MAX_ORDER As Integer = 5
-    ' 默认相对误差
     Private Const DEFAULT_REL_TOL As Double = 0.0001
-    ' 默认绝对误差
     Private Const DEFAULT_ABS_TOL As Double = 0.00000001
-    ' 最小步长因子
     Private Const MIN_H_FACTOR As Double = 0.1
-    ' 最大步长因子
-    Private Const MAX_H_FACTOR As Double = 10.0
-    ' Newton迭代收敛阈值
-    Private Const NEWTON_CONV_RATE As Double = 0.3
-    ' 零阈值
     Private Const ZERO_THRESHOLD As Double = 0.000000000000001
+    ' 步长控制安全因子与增长上限（保守取值以保证稳定）
+    Private Const SAFETY As Double = 0.3
+    Private Const MAX_GROWTH As Double = 2.0
+    Private Const MIN_REDUCTION As Double = 0.25
+    ' 单次 Step 内允许的最大失败重试次数
+    Private Const MAX_FAILS As Integer = 10
 
 #End Region
 
 #Region "私有字段"
 
-    ' 问题维度
     Private _n As Integer
-    ' 求解方法
     Private _method As CVODEMethod
-    ' 配置选项
     Private _options As CVODEOptions
+    Private _maxOrder As Integer
 
-    ' 右端函数
     Private _rhsFunc As RHSFunction
-    ' Jacobian函数（可选）
     Private _jacobianFunc As JacobianFunction
 
-    ' 当前时间
     Private _t As Double
-    ' 当前状态
     Private _y As NVector
-    ' 当前导数
     Private _ydot As NVector
 
-    ' 当前步长
     Private _h As Double
-    ' 当前阶数
     Private _q As Integer
-    ' 当前步数
     Private _nSteps As Long
-    ' 右端函数调用次数
     Private _nRHSEvals As Long
-    ' Newton迭代次数
     Private _nNewtonIters As Long
-    ' 线性求解次数
     Private _nLinearSolves As Long
 
-    ' 历史数据存储（Nordsieck数组）
-    Private _zn As NVector()  ' 导数历史
-    Private _znm As NVector() ' 状态历史
+    ' 历史数据（index 0 = 最新）
+    Private _cap As Integer
+    Private _tHist() As Double
+    Private _yHist() As NVector
+    Private _fHist() As NVector
+    Private _histCount As Integer
 
-    ' 线性求解器
+    ' 误差权重与绝对误差容差
+    Private _ewt As NVector
+    Private _atol As NVector
+
+    ' 线性求解器与矩阵 / 临时向量
     Private _linearSolver As DenseLinearSolver
-    ' Jacobian矩阵
     Private _J As DenseMatrix
-    ' 预条件向量
+    Private _A As DenseMatrix
     Private _tempV As NVector
     Private _tempV2 As NVector
     Private _tempV3 As NVector
+    Private _delta As NVector
+    Private _knownSumV As NVector
+    Private _fNewHist As NVector
 
-    ' 误差权重向量
-    Private _ewt As NVector
-    ' 绝对误差容差向量
-    Private _atol As NVector
-
-    ' Newton迭代相关
-    Private _gamma As Double
-    Private _gammaInv As Double
-    Private _prevGamma As Double
-
-    ' 步长和阶数控制
-    Private _eta As Double
-    Private _etaMax As Double
-    Private _etaMin As Double
-    Private _etaThreshold As Double
-
-    ' 系数表
-    Private _adamsCoeffs As Double(,)
-    Private _bdfCoeffs As Double(,)
-
-    ' 初始化标志
     Private _isInitialized As Boolean
-    ' 已释放标志
     Private _isDisposed As Boolean
 
 #End Region
 
 #Region "构造函数"
 
-    ''' <summary>
-    ''' 创建CVODE求解器
-    ''' </summary>
-    ''' <param name="method">求解方法</param>
-    ''' <param name="rhsFunc">右端函数</param>
-    ''' <param name="n">问题维度</param>
-    ''' <param name="options">配置选项（可选）</param>
     Public Sub New(method As CVODEMethod, rhsFunc As RHSFunction, n As Integer, Optional options As CVODEOptions = Nothing)
         If rhsFunc Is Nothing Then
             Throw New ArgumentNullException(NameOf(rhsFunc))
@@ -194,20 +93,17 @@ Public Class CVODESolver : Implements IDisposable
         _n = n
         _options = If(options, New CVODEOptions())
 
-        ' 验证最大阶数
         Dim maxOrder As Integer = If(_method = CVODEMethod.Adams, ADAMS_MAX_ORDER, BDF_MAX_ORDER)
         If _options.MaxOrder < 1 OrElse _options.MaxOrder > maxOrder Then
             _options.MaxOrder = maxOrder
         End If
+        _maxOrder = _options.MaxOrder
 
-        Initialize()
+        AllocateResources()
     End Sub
 
-    ''' <summary>
-    ''' 初始化求解器
-    ''' </summary>
-    Private Sub Initialize()
-        ' 分配向量
+    ''' <summary>分配所有内部资源（不依赖初值）。</summary>
+    Private Sub AllocateResources()
         _y = New NVector(_n)
         _ydot = New NVector(_n)
         _ewt = New NVector(_n)
@@ -215,127 +111,72 @@ Public Class CVODESolver : Implements IDisposable
         _tempV = New NVector(_n)
         _tempV2 = New NVector(_n)
         _tempV3 = New NVector(_n)
+        _delta = New NVector(_n)
+        _knownSumV = New NVector(_n)
+        _fNewHist = New NVector(_n)
 
-        ' 分配历史存储
-        Dim maxOrder As Integer = _options.MaxOrder
-        _zn = New NVector(maxOrder + 1) {}
-        _znm = New NVector(maxOrder + 1) {}
-        For i As Integer = 0 To maxOrder
-            _zn(i) = New NVector(_n)
-            _znm(i) = New NVector(_n)
+        _cap = _maxOrder + 1
+        _tHist = New Double(_cap - 1) {}
+        _yHist = New NVector(_cap - 1) {}
+        _fHist = New NVector(_cap - 1) {}
+        For i As Integer = 0 To _cap - 1
+            _yHist(i) = New NVector(_n)
+            _fHist(i) = New NVector(_n)
         Next
 
-        ' 分配线性求解器
         _linearSolver = New DenseLinearSolver(_n)
         _J = New DenseMatrix(_n, _n)
+        _A = New DenseMatrix(_n, _n)
 
-        ' 初始化系数表
-        InitializeCoefficients()
-
-        ' 初始化控制参数
-        _eta = 1.0
-        _etaMax = _options.MaxGrowthFactor
-        _etaMin = _options.MinReductionFactor
-        _etaThreshold = 0.9
-
-        _isInitialized = True
-    End Sub
-
-    ''' <summary>
-    ''' 初始化Adams和BDF系数表
-    ''' </summary>
-    Private Sub InitializeCoefficients()
-        ' Adams系数（预测和校正）
-        _adamsCoeffs = New Double(,) {
-            {1.0, 0, 0, 0, 0, 0},
-            {3.0 / 2.0, -1.0 / 2.0, 0, 0, 0, 0},
-            {23.0 / 12.0, -16.0 / 12.0, 5.0 / 12.0, 0, 0, 0},
-            {55.0 / 24.0, -59.0 / 24.0, 37.0 / 24.0, -9.0 / 24.0, 0, 0},
-            {1901.0 / 720.0, -2774.0 / 720.0, 2616.0 / 720.0, -1274.0 / 720.0, 251.0 / 720.0, 0},
-            {4277.0 / 1440.0, -7923.0 / 1440.0, 9982.0 / 1440.0, -7298.0 / 1440.0, 2877.0 / 1440.0, -475.0 / 1440.0}
-        }
-
-        ' BDF系数
-        _bdfCoeffs = New Double(,) {
-            {1.0, 0, 0, 0, 0, 0},
-            {3.0 / 2.0, -1.0 / 2.0, 0, 0, 0, 0},
-            {11.0 / 6.0, -7.0 / 6.0, 1.0 / 3.0, 0, 0, 0},
-            {25.0 / 12.0, -23.0 / 12.0, 13.0 / 12.0, -1.0 / 4.0, 0, 0},
-            {137.0 / 60.0, -163.0 / 60.0, 137.0 / 60.0, -21.0 / 20.0, 1.0 / 5.0, 0},
-            {147.0 / 60.0, -213.0 / 60.0, 243.0 / 60.0, -183.0 / 60.0, 61.0 / 60.0, -1.0 / 6.0}
-        }
+        _isInitialized = False
     End Sub
 
 #End Region
 
 #Region "属性"
 
-    ''' <summary>
-    ''' 获取当前时间
-    ''' </summary>
     Public ReadOnly Property CurrentTime As Double
         Get
             Return _t
         End Get
     End Property
 
-    ''' <summary>
-    ''' 获取当前状态向量
-    ''' </summary>
     Public ReadOnly Property CurrentState As NVector
         Get
             Return _y
         End Get
     End Property
 
-    ''' <summary>
-    ''' 获取当前步长
-    ''' </summary>
     Public ReadOnly Property CurrentStep As Double
         Get
             Return _h
         End Get
     End Property
 
-    ''' <summary>
-    ''' 获取当前阶数
-    ''' </summary>
     Public ReadOnly Property CurrentOrder As Integer
         Get
             Return _q
         End Get
     End Property
 
-    ''' <summary>
-    ''' 获取总步数
-    ''' </summary>
     Public ReadOnly Property TotalSteps As Long
         Get
             Return _nSteps
         End Get
     End Property
 
-    ''' <summary>
-    ''' 获取右端函数调用次数
-    ''' </summary>
     Public ReadOnly Property RHSFunctionEvaluations As Long
         Get
             Return _nRHSEvals
         End Get
     End Property
 
-    ''' <summary>
-    ''' 获取Newton迭代次数
-    ''' </summary>
     Public ReadOnly Property NewtonIterations As Long
         Get
             Return _nNewtonIters
         End Get
     End Property
 
-    ''' <summary>
-    ''' 获取线性求解次数
-    ''' </summary>
     Public ReadOnly Property LinearSolves As Long
         Get
             Return _nLinearSolves
@@ -346,18 +187,11 @@ Public Class CVODESolver : Implements IDisposable
 
 #Region "初始化求解"
 
-    ''' <summary>
-    ''' 初始化求解器状态
-    ''' </summary>
-    ''' <param name="t0">初始时间</param>
-    ''' <param name="y0">初始状态</param>
-    ''' <returns>状态码</returns>
     Public Function Initialize(t0 As Double, y0 As NVector) As CVODEStatus
         If y0 Is Nothing OrElse y0.Length <> _n Then
             Return CVODEStatus.BadInput
         End If
 
-        ' 设置初始状态
         _t = t0
         _y.CopyFrom(y0)
 
@@ -365,14 +199,15 @@ Public Class CVODESolver : Implements IDisposable
         _rhsFunc(_t, _y, _ydot)
         _nRHSEvals += 1
 
-        ' 初始化历史数据
-        _zn(0).CopyFrom(_ydot)
-        For i As Integer = 1 To _options.MaxOrder
-            _zn(i).SetConstant(0.0)
-        Next
-
-        ' 初始化阶数
+        ' 初始化历史（仅 1 个点，阶数从 1 起步，后续逐步提升）
+        _histCount = 1
+        _tHist(0) = _t
+        _yHist(0).CopyFrom(_y)
+        _fHist(0).CopyFrom(_ydot)
         _q = 1
+
+        ' 误差权重（基于当前状态）
+        ComputeErrorWeights()
 
         ' 估计初始步长
         Dim status As CVODEStatus = EstimateInitialStep()
@@ -380,77 +215,52 @@ Public Class CVODESolver : Implements IDisposable
             Return status
         End If
 
-        ' 计算误差权重
-        ComputeErrorWeights()
-
-        ' 初始化gamma
-        _gamma = 1.0
-        _gammaInv = 1.0
-        _prevGamma = 1.0
-
-        ' 重置计数器
         _nSteps = 0
         _nNewtonIters = 0
         _nLinearSolves = 0
+        _isInitialized = True
 
         Return CVODEStatus.Success
     End Function
 
-    ''' <summary>
-    ''' 估计初始步长
-    ''' </summary>
+    ''' <summary>估计初始步长（用户指定优先，否则基于初值规模）。</summary>
     Private Function EstimateInitialStep() As CVODEStatus
-        ' 如果用户指定了初始步长，使用用户值
         If _options.InitialStep > 0 Then
             _h = _options.InitialStep
-            Return CVODEStatus.Success
+        Else
+            Dim yn As Double = _y.WRMSNorm(NVector.Ones(_n))
+            Dim fn As Double = _ydot.WRMSNorm(NVector.Ones(_n))
+            If fn > ZERO_THRESHOLD Then
+                _h = 0.01 * yn / fn
+            Else
+                _h = 0.001
+            End If
+            If _h <= 0 Then
+                _h = 0.001
+            End If
         End If
 
-        ' 基于初始导数估计步长
-        Dim yNorm As Double = _y.WRMSNorm(_ewt)
-        Dim ydotNorm As Double = _ydot.WRMSNorm(_ewt)
-
-        If yNorm < ZERO_THRESHOLD AndAlso ydotNorm < ZERO_THRESHOLD Then
-            yNorm = 1.0
-            ydotNorm = 1.0
-        ElseIf yNorm < ZERO_THRESHOLD Then
-            yNorm = 1.0
-        ElseIf ydotNorm < ZERO_THRESHOLD Then
-            ydotNorm = 1.0
-        End If
-
-        ' 初始步长估计
-        _h = 0.01 * yNorm / ydotNorm
-
-        ' 限制步长范围
         If _options.MaxStep > 0 Then
             _h = std.Min(_h, _options.MaxStep)
         End If
         If _options.MinStep > 0 Then
             _h = std.Max(_h, _options.MinStep)
         End If
-
-        ' 确保步长为正
-        If _h <= 0 Then
-            _h = 0.000001
+        If _h <= ZERO_THRESHOLD Then
+            _h = ZERO_THRESHOLD
         End If
 
         Return CVODEStatus.Success
     End Function
 
-    ''' <summary>
-    ''' 计算误差权重向量
-    ''' </summary>
+    ''' <summary>计算误差权重 w_i = 1 / (rtol*|y_i| + atol_i)。</summary>
     Private Sub ComputeErrorWeights()
         For i As Integer = 0 To _n - 1
-            Dim denom As Double = 1.0 / (_options.RelativeTolerance * std.Abs(_y(i)) + _atol(i))
-
-            ' 防止除以极小值
-            If denom < 0.000000000001 Then
-                _ewt(i) = 1000000.0  ' 设置一个合理的上限
-            Else
-                _ewt(i) = 1.0 / denom
+            Dim denom As Double = _options.RelativeTolerance * std.Abs(_y(i)) + _atol(i)
+            If denom < ZERO_THRESHOLD Then
+                denom = ZERO_THRESHOLD
             End If
+            _ewt(i) = 1.0 / denom
         Next
     End Sub
 
@@ -458,67 +268,65 @@ Public Class CVODESolver : Implements IDisposable
 
 #Region "主求解循环"
 
-    ''' <summary>
-    ''' 执行一步积分
-    ''' </summary>
-    ''' <param name="tOut">目标输出时间</param>
-    ''' <returns>状态码</returns>
     Public Function [Step](tOut As Double) As CVODEStatus
         If Not _isInitialized Then
             Return CVODEStatus.BadInput
         End If
-
-        Dim status As CVODEStatus
-
-        ' 检查是否已到达目标时间
         If _t >= tOut Then
             Return CVODEStatus.Success
         End If
-
-        ' 检查步数限制
         If _nSteps >= _options.MaxSteps Then
             Return CVODEStatus.TooManySteps
         End If
 
-        ' 调整步长以精确到达tOut
-        Dim hTarget As Double = tOut - _t
-        If _h > hTarget Then
-            _h = hTarget
+        ' 调整步长以精确到达 tOut
+        Dim hTry As Double = _h
+        If (tOut - _t) <= hTry Then
+            hTry = tOut - _t
+        End If
+        If hTry <= 0 Then
+            Return CVODEStatus.Success
         End If
 
-        ' 执行一步
-        status = TakeStep()
+        Dim tries As Integer = 0
+        Do
+            tries += 1
+            Dim hNext As Double = hTry
+            Dim errEst As Double = 0.0
+            Dim st As CVODEStatus = AttemptStep(hTry, hNext, errEst)
 
-        If status = CVODEStatus.Success Then
-            _nSteps += 1
-        End If
-
-        Return status
+            If st = CVODEStatus.Success Then
+                _nSteps += 1
+                Return CVODEStatus.Success
+            ElseIf st = CVODEStatus.TestFail Then
+                ' 误差过大：使用建议的更小步长重试
+                hTry = hNext
+                If _q > 1 Then
+                    _q -= 1
+                End If
+                If tries >= MAX_FAILS OrElse hTry <= ZERO_THRESHOLD Then
+                    Return CVODEStatus.ConvFail
+                End If
+            Else
+                ' 线性求解失败 / Newton 不收敛等硬错误
+                Return st
+            End If
+        Loop
     End Function
 
-    ''' <summary>
-    ''' 积分到指定时间
-    ''' </summary>
-    ''' <param name="tOut">目标输出时间</param>
-    ''' <param name="yOut">输出状态向量（可选）</param>
-    ''' <returns>状态码</returns>
     Public Function Integrate(tOut As Double, Optional yOut As NVector = Nothing) As CVODEStatus
         Dim status As CVODEStatus
 
-        ' 循环积分直到到达目标时间
         Do While _t < tOut
             status = [Step](tOut)
             If status <> CVODEStatus.Success Then
                 Return status
             End If
-
-            ' 检查步数限制
             If _nSteps >= _options.MaxSteps Then
                 Return CVODEStatus.TooManySteps
             End If
         Loop
 
-        ' 输出结果
         If yOut IsNot Nothing Then
             yOut.CopyFrom(_y)
         End If
@@ -527,373 +335,371 @@ Public Class CVODESolver : Implements IDisposable
     End Function
 
     ''' <summary>
-    ''' 执行单步积分
+    ''' 尝试前进一步。成功则提交历史并返回 Success；
+    ''' 误差过大返回 TestFail（hNext 为建议的更小步长）；
+    ''' 不收敛/线性求解失败返回相应状态且不提交。
     ''' </summary>
-    Private Function TakeStep() As CVODEStatus
-        Dim status As CVODEStatus
+    Private Function AttemptStep(hTry As Double, ByRef hNext As Double, ByRef errEst As Double) As CVODEStatus
+        Dim q As Integer = _q
+        Dim tNew As Double = _t + hTry
 
-        ' 预测阶段
-        status = Predict()
-        If status <> CVODEStatus.Success Then
-            Return status
-        End If
-
-        ' 校正阶段（Newton迭代）
-        status = Correct()
-        If status <> CVODEStatus.Success Then
-            ' 校正失败，缩减步长重试
-            _h *= 0.5
-            If _h < ZERO_THRESHOLD Then
-                Return CVODEStatus.StepTooSmall
-            End If
-            Return CVODEStatus.ConvFail
-        End If
-
-        ' 误差估计
-        Dim errorNorm As Double = EstimateError()
-
-        ' 步长和阶数控制
-        If errorNorm > 1.0 Then
-            ' 误差过大，缩减步长
-            Dim factor As Double = _options.SafetyFactor / std.Pow(errorNorm, 1.0 / (_q + 1))
-            factor = std.Max(factor, _options.MinReductionFactor)
-            _h *= factor
-            Return CVODEStatus.TestFail
-        End If
-
-        ' 更新历史数据
-        UpdateHistory()
-
-        ' 调整步长和阶数
-        AdjustStepAndOrder(errorNorm)
-
-        ' 更新误差权重
         ComputeErrorWeights()
 
-        Return CVODEStatus.Success
-    End Function
+        ' ---- 预测 ----
+        Dim yPred As New NVector(_n)
+        Predict(q, hTry, tNew, yPred)
 
-#End Region
+        ' ---- 校正系数（按当前真实历史点计算）----
+        Dim gamma As Double = 0.0
+        Dim linStatus As LinearSolverResult
 
-#Region "预测-校正"
-
-    ''' <summary>
-    ''' 预测阶段：计算预测值
-    ''' </summary>
-    Private Function Predict() As CVODEStatus
-        ' 使用多步公式预测
         If _method = CVODEMethod.Adams Then
-            ' Adams预测
-            PredictAdams()
+            ' 校正节点：tNew + 过去 q 个 f 点
+            Dim nodes As Double() = New Double(q) {}
+            nodes(0) = tNew
+            For j As Integer = 1 To q
+                nodes(j) = _tHist(j - 1)
+            Next
+            ' I(j) = ∫_{t}^{tNew} L_j(τ) dτ
+            Dim Icoeff(q) As Double
+            For j As Integer = 0 To q
+                Icoeff(j) = IntegrateLagrangeBasis(nodes, j, _t, tNew)
+            Next
+            gamma = Icoeff(0)
+
+            ' knownSum = Σ_{j=1}^{q} I(j) * fHist(j-1)
+            _knownSumV.SetConstant(0.0)
+            For j As Integer = 1 To q
+                _knownSumV.LinearSumInPlace(Icoeff(j), _fHist(j - 1))
+            Next
         Else
-            ' BDF预测
-            PredictBDF()
+            ' BDF：校正节点 = tNew + 过去 q 个 y 点
+            Dim nodes As Double() = New Double(q) {}
+            nodes(0) = tNew
+            For j As Integer = 1 To q
+                nodes(j) = _tHist(j - 1)
+            Next
+            Dim c0 As Double = LagrangeBasisDeriv(nodes, 0, tNew)
+            If std.Abs(c0) < ZERO_THRESHOLD Then
+                Return CVODEStatus.LinearSolveFail
+            End If
+            gamma = 1.0 / c0
+
+            ' knownSum = Σ_{j=1}^{q} alphaHat(j-1) * yHist(j-1)
+            ' alphaHat(k-1) = -L'_k(tNew) / c0
+            _knownSumV.SetConstant(0.0)
+            For k As Integer = 1 To q
+                Dim ak As Double = -LagrangeBasisDeriv(nodes, k, tNew) / c0
+                _knownSumV.LinearSumInPlace(ak, _yHist(k - 1))
+            Next
         End If
 
-        Return CVODEStatus.Success
-    End Function
-
-    ''' <summary>
-    ''' Adams方法预测
-    ''' </summary>
-    Private Sub PredictAdams()
-        ' 预测值: y_pred = y_n + h * sum_{i=0}^{q-1} beta_i * zn[i]
-        _tempV.SetConstant(0.0)
-
-        For i As Integer = 0 To _q - 1
-            Dim coeff As Double = GetAdamsPredictorCoefficient(i)
-            _tempV.LinearSumInPlace(coeff, _zn(i))
-        Next
-
-        _y.CopyFrom(_znm(0))
-        _y.LinearSumInPlace(_h, _tempV)
-    End Sub
-
-    ''' <summary>
-    ''' BDF方法预测
-    ''' </summary>
-    Private Sub PredictBDF()
-        ' BDF预测值
-        _tempV.SetConstant(0.0)
-
-        For i As Integer = 0 To _q
-            Dim coeff As Double = GetBDFCoefficient(i)
-            _tempV.LinearSumInPlace(coeff, _znm(i))
-        Next
-
-        _y.CopyFrom(_tempV)
-    End Sub
-
-    ''' <summary>
-    ''' 校正阶段：Newton迭代求解
-    ''' </summary>
-    Private Function Correct() As CVODEStatus
-        Dim status As CVODEStatus
-
-        ' 计算Jacobian矩阵
-        status = ComputeJacobian()
-        If status <> CVODEStatus.Success Then
-            Return status
-        End If
-
-        ' 构造线性系统矩阵: (I - gamma*J)
-        ConstructSystemMatrix()
-
-        ' LU分解
-        Dim linStatus As LinearSolverResult = _linearSolver.Factorize(_J)
+        ' ---- Jacobian 与线性系统 (I - gamma*J) ----
+        ComputeJacobian(tNew, yPred)
+        linStatus = BuildAndFactorizeSystem(gamma)
         If linStatus <> LinearSolverResult.Success Then
             Return CVODEStatus.LinearSolveFail
         End If
 
-        ' Newton迭代
+        ' ---- Newton 迭代 ----
+        Dim y As New NVector(_n)
+        y.CopyFrom(yPred)
+        Dim maxIters As Integer = std.Max(_options.MaxNewtonIterations, 6)
+        Dim convTol As Double = std.Max(_options.NewtonConvergenceFactor, 0.0001)
         Dim converged As Boolean = False
-        Dim newtonIter As Integer = 0
-        Dim lastDeltaNorm As Double = Double.MaxValue
+        Dim lastNorm As Double = Double.MaxValue
 
-        ' 计算初始残差
-        _rhsFunc(_t + _h, _y, _ydot)
-        _nRHSEvals += 1
+        For iter As Integer = 1 To maxIters
+            _rhsFunc(tNew, y, _tempV3)
+            _nRHSEvals += 1
+            _fNewHist.CopyFrom(_tempV3)
 
-        Do While newtonIter < _options.MaxNewtonIterations
-            newtonIter += 1
-            _nNewtonIters += 1
+            ' 残差 R(y)
+            If _method = CVODEMethod.Adams Then
+                _tempV.CopyFrom(y)
+                _tempV.SubtractVector(_y)            ' y - y_n
+                _tempV2.CopyFrom(_tempV3)
+                _tempV2.ScaleInPlace(gamma)          ' gamma * f_new
+                _tempV.SubtractVector(_tempV2)       ' (y - y_n) - gamma f_new
+                _tempV.SubtractVector(_knownSumV)    ' - knownSum
+            Else
+                _tempV.CopyFrom(y)
+                _tempV2.CopyFrom(_tempV3)
+                _tempV2.ScaleInPlace(gamma)          ' gamma * f_new
+                _tempV.SubtractVector(_tempV2)       ' y - gamma f_new
+                _tempV.SubtractVector(_knownSumV)    ' - knownSum
+            End If
 
-            ' 计算残差: b = ydot_pred - ydot
-            _tempV.CopyFrom(_zn(0))
-            _tempV.SubtractVector(_ydot)
-
-            ' 求解线性系统
-            linStatus = _linearSolver.Solve(_tempV, _tempV2)
+            ' 求解 (I - gamma J) delta = -R
+            _tempV2.CopyFrom(_tempV)
+            _tempV2.ScaleInPlace(-1.0)
+            linStatus = _linearSolver.Solve(_tempV2, _delta)
             _nLinearSolves += 1
-
             If linStatus <> LinearSolverResult.Success Then
                 Return CVODEStatus.LinearSolveFail
             End If
 
-            ' 更新解
-            _y.AddVector(_tempV2)
+            y.AddVector(_delta)
+            _nNewtonIters += 1
 
-            ' 20260414
-            ' 重新计算误差权重（可选，但建议）
-            ComputeErrorWeights()
-
-            ' 检查收敛
-            Dim deltaNorm As Double = _tempV2.WRMSNorm(_ewt)
-            If deltaNorm < _options.NewtonConvergenceFactor Then
-                converged = True
-                Exit Do
-            End If
-
-            ' 检查是否发散
-            If deltaNorm > 1000.0 * lastDeltaNorm Then
+            Dim dNorm As Double = _delta.WRMSNorm(_ewt)
+            If iter > 1 AndAlso dNorm > 1000.0 * lastNorm Then
                 Return CVODEStatus.ConvFail
             End If
-
-            lastDeltaNorm = deltaNorm
-
-            ' 重新计算导数
-            _rhsFunc(_t + _h, _y, _ydot)
-            _nRHSEvals += 1
-        Loop
+            lastNorm = dNorm
+            If dNorm < convTol Then
+                converged = True
+                Exit For
+            End If
+        Next
 
         If Not converged Then
             Return CVODEStatus.ConvFail
         End If
 
-        ' 更新时间
-        _t += _h
+        ' ---- 误差估计（预测-校正之差的加权范数）----
+        _tempV.CopyFrom(y)
+        _tempV.SubtractVector(yPred)
+        errEst = _tempV.WRMSNorm(_ewt)
 
+        If errEst > 1.0 Then
+            ' 拒绝：按误差缩小步长
+            Dim factor As Double = SAFETY / std.Pow(errEst, 1.0 / (q + 1))
+            factor = std.Max(factor, MIN_REDUCTION)
+            hNext = hTry * factor
+            If _options.MinStep > 0 Then
+                hNext = std.Max(hNext, _options.MinStep)
+            End If
+            Return CVODEStatus.TestFail
+        End If
+
+        ' ---- 接受：步长与阶数控制 ----
+        Dim grow As Double = SAFETY / std.Pow(errEst, 1.0 / (q + 1))
+        grow = std.Max(grow, MIN_REDUCTION)
+        grow = std.Min(grow, MAX_GROWTH)
+        hNext = hTry * grow
+        If _options.MaxStep > 0 Then
+            hNext = std.Min(hNext, _options.MaxStep)
+        End If
+        If _options.MinStep > 0 Then
+            hNext = std.Max(hNext, _options.MinStep)
+        End If
+
+        If errEst < 0.1 AndAlso q < _maxOrder AndAlso _histCount >= q + 1 Then
+            _q = q + 1
+        ElseIf errEst > 0.5 AndAlso q > 1 Then
+            _q = q - 1
+        End If
+
+        Commit(tNew, y)
         Return CVODEStatus.Success
     End Function
+
+    ''' <summary>提交一步成功结果到历史。</summary>
+    Private Sub Commit(tNew As Double, yCorr As NVector)
+        ' 历史下移
+        For i As Integer = _histCount - 1 DownTo 1
+            _tHist(i) = _tHist(i - 1)
+            _yHist(i).CopyFrom(_yHist(i - 1))
+            _fHist(i).CopyFrom(_fHist(i - 1))
+        Next
+        _tHist(0) = tNew
+        _yHist(0).CopyFrom(yCorr)
+        _fHist(0).CopyFrom(_fNewHist)
+        If _histCount < _cap Then
+            _histCount += 1
+        End If
+
+        _t = tNew
+        _y = _yHist(0)
+        _ydot.CopyFrom(_fNewHist)
+    End Sub
 
 #End Region
 
-#Region "Jacobian计算"
+#Region "预测"
 
     ''' <summary>
-    ''' 计算Jacobian矩阵
+    ''' 计算预测值 yPred（写入 yPred）。
+    ''' Adams：对过去 f 做多项式积分；BDF：对过去 y 做多项式外推。
+    ''' 历史点不足时自动降阶使用可用点数。
     ''' </summary>
-    Private Function ComputeJacobian() As CVODEStatus
-        If _options.UseUserJacobian AndAlso _jacobianFunc IsNot Nothing Then
-            ' 使用用户提供的Jacobian
-            _jacobianFunc(_t + _h, _y, _ydot, _J)
+    Private Sub Predict(q As Integer, h As Double, tNew As Double, yPred As NVector)
+        If _method = CVODEMethod.Adams Then
+            Dim numPast As Integer = std.Min(q, _histCount - 1)
+            Dim nodes(numPast) As Double
+            For j As Integer = 0 To numPast
+                nodes(j) = _tHist(j)
+            Next
+            yPred.CopyFrom(_y)
+            For j As Integer = 0 To numPast
+                Dim Ij As Double = IntegrateLagrangeBasis(nodes, j, _t, tNew)
+                yPred.LinearSumInPlace(Ij, _fHist(j))
+            Next
         Else
-            ' 数值差分计算Jacobian
-            ComputeNumericalJacobian()
+            Dim numPast As Integer = std.Min(q, _histCount - 1)
+            Dim nodes(numPast) As Double
+            For j As Integer = 0 To numPast
+                nodes(j) = _tHist(j)
+            Next
+            yPred.SetConstant(0.0)
+            For j As Integer = 0 To numPast
+                Dim w As Double = LagrangeBasisValue(nodes, j, tNew)
+                yPred.LinearSumInPlace(w, _yHist(j))
+            Next
         End If
+    End Sub
 
+#End Region
+
+#Region "Jacobian 与线性系统"
+
+    Private Function ComputeJacobian(t As Double, yRef As NVector) As CVODEStatus
+        If _options.UseUserJacobian AndAlso _jacobianFunc IsNot Nothing Then
+            _jacobianFunc(t, yRef, _ydot, _J)
+        Else
+            ComputeNumericalJacobian(t, yRef)
+        End If
         Return CVODEStatus.Success
     End Function
 
-    ''' <summary>
-    ''' 数值差分计算Jacobian矩阵
-    ''' 使用前向差分
-    ''' </summary>
-    Private Sub ComputeNumericalJacobian()
-        Dim yTemp As NVector = _tempV3
-        Dim fTemp As NVector = _tempV2
-
-        ' 差分步长因子
-        Const DIFF_FACTOR As Double = 0.00000001
-
-        ' 保存当前导数
-        _rhsFunc(_t + _h, _y, _ydot)
+    ''' <summary>前向差分数值 Jacobian：J(i,j) = (f_i(y+e_j) - f_i(y)) / e_j。</summary>
+    Private Sub ComputeNumericalJacobian(t As Double, yRef As NVector)
+        _rhsFunc(t, yRef, _tempV3)
         _nRHSEvals += 1
 
-        ' 逐列计算Jacobian
+        Const DIFF_FACTOR As Double = 0.00000001
         For j As Integer = 0 To _n - 1
-            ' 计算差分步长
-            Dim yj As Double = _y(j)
+            Dim yj As Double = yRef(j)
             Dim delta As Double = std.Max(DIFF_FACTOR * std.Abs(yj), DIFF_FACTOR)
-
-            ' 扰动
-            yTemp.CopyFrom(_y)
-            yTemp(j) = yj + delta
-
-            ' 计算扰动后的导数
-            _rhsFunc(_t + _h, yTemp, fTemp)
+            _tempV2.CopyFrom(yRef)
+            _tempV2(j) = yj + delta
+            _rhsFunc(t, _tempV2, _fNewHist)
             _nRHSEvals += 1
-
-            ' 计算Jacobian列
             For i As Integer = 0 To _n - 1
-                _J(i, j) = (fTemp(i) - _ydot(i)) / delta
+                _J(i, j) = (_fNewHist(i) - _tempV3(i)) / delta
             Next
         Next
+        ' 保存 base f 供后续使用
+        _ydot.CopyFrom(_tempV3)
     End Sub
 
-    ''' <summary>
-    ''' 构造线性系统矩阵: I - gamma * J
-    ''' </summary>
-    Private Sub ConstructSystemMatrix()
-        _gamma = _h * _gamma
-        _gammaInv = 1.0 / _gamma
-
-        ' 构造 I - gamma * J
+    ''' <summary>构造 A = I - gamma*J 并 LU 分解。</summary>
+    Private Function BuildAndFactorizeSystem(gamma As Double) As LinearSolverResult
         For i As Integer = 0 To _n - 1
             For j As Integer = 0 To _n - 1
                 If i = j Then
-                    _J(i, j) = 1.0 - _gamma * _J(i, j)
+                    _A(i, j) = 1.0 - gamma * _J(i, j)
                 Else
-                    _J(i, j) = -_gamma * _J(i, j)
+                    _A(i, j) = -gamma * _J(i, j)
                 End If
             Next
         Next
-    End Sub
-
-#End Region
-
-#Region "误差估计"
-
-    ''' <summary>
-    ''' 估计局部截断误差
-    ''' </summary>
-    Private Function EstimateError() As Double
-        ' 使用历史数据估计误差
-        Dim errorVec As NVector = _tempV
-
-        ' 误差估计: err = C_{q+1} * h^{q+1} * y^{(q+1)}
-        ' 简化估计：使用最后一步的差分
-        errorVec.CopyFrom(_zn(_q))
-        errorVec.ScaleInPlace(_h)
-
-        ' 计算加权RMS范数
-        Return errorVec.WRMSNorm(_ewt)
+        Return _linearSolver.Factorize(_A)
     End Function
 
 #End Region
 
-#Region "步长和阶数控制"
+#Region "Lagrange / 多项式工具"
 
-    ''' <summary>
-    ''' 更新历史数据
-    ''' </summary>
-    Private Sub UpdateHistory()
-        ' 更新Nordsieck数组
-        ' 移位历史数据
-        For i As Integer = _q To 1 Step -1
-            _zn(i).CopyFrom(_zn(i - 1))
-            _znm(i).CopyFrom(_znm(i - 1))
+    ''' <summary>Lagrange 基函数 L_j(x) = Π_{m≠j} (x - x_m)/(x_j - x_m)。</summary>
+    Private Function LagrangeBasisValue(nodes() As Double, j As Integer, x As Double) As Double
+        Dim val As Double = 1.0
+        For m As Integer = 0 To nodes.Length - 1
+            If m <> j Then
+                val *= (x - nodes(m)) / (nodes(j) - nodes(m))
+            End If
         Next
-
-        ' 更新最新数据
-        _zn(0).CopyFrom(_ydot)
-        _znm(0).CopyFrom(_y)
-    End Sub
-
-    ''' <summary>
-    ''' 调整步长和阶数
-    ''' </summary>
-    Private Sub AdjustStepAndOrder(errorNorm As Double)
-        ' 计算步长调整因子
-        Dim factor As Double = 1.0
-
-        If errorNorm > 0 Then
-            factor = _options.SafetyFactor / std.Pow(errorNorm, 1.0 / (_q + 1))
-            factor = std.Max(factor, _options.MinReductionFactor)
-            factor = std.Min(factor, _options.MaxGrowthFactor)
-        End If
-
-        ' 更新步长
-        _h *= factor
-
-        ' 限制步长范围
-        If _options.MaxStep > 0 Then
-            _h = std.Min(_h, _options.MaxStep)
-        End If
-        If _options.MinStep > 0 Then
-            _h = std.Max(_h, _options.MinStep)
-        End If
-
-        ' 阶数控制（简化版本）
-        ' 如果误差很小，可以考虑增加阶数
-        If errorNorm < 0.1 AndAlso _q < _options.MaxOrder Then
-            _q += 1
-        ElseIf errorNorm > 0.9 AndAlso _q > 1 Then
-            _q -= 1
-        End If
-    End Sub
-
-#End Region
-
-#Region "系数获取"
-
-    ''' <summary>
-    ''' 获取Adams预测系数
-    ''' </summary>
-    Private Function GetAdamsPredictorCoefficient(i As Integer) As Double
-        If i < 0 OrElse i >= _adamsCoeffs.GetLength(1) Then
-            Return 0.0
-        End If
-        Dim qIdx As Integer = std.Min(_q - 1, _adamsCoeffs.GetLength(0) - 1)
-        Return _adamsCoeffs(qIdx, i)
+        Return val
     End Function
 
-    ''' <summary>
-    ''' 获取BDF系数
-    ''' </summary>
-    Private Function GetBDFCoefficient(i As Integer) As Double
-        If i < 0 OrElse i >= _bdfCoeffs.GetLength(1) Then
+    ''' <summary>Lagrange 基函数的导数 L'_j(x) = L_j(x) * Σ_{m≠j} 1/(x - x_m)。</summary>
+    Private Function LagrangeBasisDeriv(nodes() As Double, j As Integer, x As Double) As Double
+        Dim L As Double = LagrangeBasisValue(nodes, j, x)
+        Dim s As Double = 0.0
+        For m As Integer = 0 To nodes.Length - 1
+            If m <> j Then
+                s += 1.0 / (x - nodes(m))
+            End If
+        Next
+        Return L * s
+    End Function
+
+    ''' <summary>∫_{a}^{b} L_j(τ) dτ，通过展开单根多项式后逐项积分。</summary>
+    Private Function IntegrateLagrangeBasis(nodes() As Double, j As Integer, a As Double, b As Double) As Double
+        Dim deg As Integer = nodes.Length - 1
+        ' 构造单根多项式 Π_{m≠j} (τ - x_m) 的系数（升幂）
+        Dim roots(deg - 1) As Double
+        Dim idx As Integer = 0
+        For m As Integer = 0 To nodes.Length - 1
+            If m <> j Then
+                roots(idx) = nodes(m)
+                idx += 1
+            End If
+        Next
+        Dim mono() As Double = PolyFromRoots(roots)
+        Dim denom As Double = 1.0
+        For m As Integer = 0 To nodes.Length - 1
+            If m <> j Then
+                denom *= (nodes(j) - nodes(m))
+            End If
+        Next
+        If std.Abs(denom) < ZERO_THRESHOLD Then
             Return 0.0
         End If
-        Dim qIdx As Integer = std.Min(_q, _bdfCoeffs.GetLength(0) - 1)
-        Return _bdfCoeffs(qIdx, i)
+        Dim anti() As Double = PolyIntegrate(mono)
+        Dim val As Double = (PolyEval(anti, b) - PolyEval(anti, a)) / denom
+        Return val
+    End Function
+
+    ''' <summary>由根构造多项式系数（升幂）：Π (τ - root)。</summary>
+    Private Function PolyFromRoots(roots() As Double) As Double()
+        Dim result() As Double = {1.0}
+        For Each r As Double In roots
+            ' 乘以 (τ - r) = (-r) + 1*τ
+            result = PolyMul(result, New Double() {-r, 1.0})
+        Next
+        Return result
+    End Function
+
+    ''' <summary>多项式乘法（卷积，升幂）。</summary>
+    Private Function PolyMul(p() As Double, q() As Double) As Double()
+        Dim r(p.Length + q.Length - 1) As Double
+        For i As Integer = 0 To p.Length - 1
+            For j As Integer = 0 To q.Length - 1
+                r(i + j) += p(i) * q(j)
+            Next
+        Next
+        Return r
+    End Function
+
+    ''' <summary>多项式不定积分（升幂，常数项为 0）。</summary>
+    Private Function PolyIntegrate(p() As Double) As Double()
+        Dim anti(p.Length) As Double
+        For i As Integer = 0 To p.Length - 1
+            anti(i + 1) = p(i) / (i + 1)
+        Next
+        Return anti
+    End Function
+
+    ''' <summary>Horner 法求值多项式。</summary>
+    Private Function PolyEval(p() As Double, x As Double) As Double
+        Dim s As Double = 0.0
+        For i As Integer = p.Length - 1 DownTo 0
+            s = s * x + p(i)
+        Next
+        Return s
     End Function
 
 #End Region
 
 #Region "设置方法"
 
-    ''' <summary>
-    ''' 设置Jacobian函数
-    ''' </summary>
     Public Sub SetJacobianFunction(jacFunc As JacobianFunction)
         _jacobianFunc = jacFunc
         _options.UseUserJacobian = True
     End Sub
 
-    ''' <summary>
-    ''' 设置绝对误差容差（标量）
-    ''' </summary>
     Public Sub SetAbsoluteTolerance(atol As Double)
         If atol <= 0 Then
             Throw New ArgumentException("绝对误差容差必须为正数", NameOf(atol))
@@ -902,9 +708,6 @@ Public Class CVODESolver : Implements IDisposable
         _atol = NVector.Constant(_n, atol)
     End Sub
 
-    ''' <summary>
-    ''' 设置绝对误差容差（向量）
-    ''' </summary>
     Public Sub SetAbsoluteTolerance(atol As NVector)
         If atol Is Nothing OrElse atol.Length <> _n Then
             Throw New ArgumentException("绝对误差容差向量维度不匹配")
@@ -912,9 +715,6 @@ Public Class CVODESolver : Implements IDisposable
         _atol = New NVector(atol)
     End Sub
 
-    ''' <summary>
-    ''' 设置相对误差容差
-    ''' </summary>
     Public Sub SetRelativeTolerance(rtol As Double)
         If rtol <= 0 Then
             Throw New ArgumentException("相对误差容差必须为正数", NameOf(rtol))
@@ -922,9 +722,6 @@ Public Class CVODESolver : Implements IDisposable
         _options.RelativeTolerance = rtol
     End Sub
 
-    ''' <summary>
-    ''' 设置最大步长
-    ''' </summary>
     Public Sub SetMaxStep(hMax As Double)
         If hMax < 0 Then
             Throw New ArgumentException("最大步长不能为负", NameOf(hMax))
@@ -932,9 +729,6 @@ Public Class CVODESolver : Implements IDisposable
         _options.MaxStep = hMax
     End Sub
 
-    ''' <summary>
-    ''' 设置最小步长
-    ''' </summary>
     Public Sub SetMinStep(hMin As Double)
         If hMin < 0 Then
             Throw New ArgumentException("最小步长不能为负", NameOf(hMin))
@@ -944,12 +738,11 @@ Public Class CVODESolver : Implements IDisposable
 
 #End Region
 
-#Region "IDisposable实现"
+#Region "IDisposable 实现"
 
     Protected Overridable Sub Dispose(disposing As Boolean)
         If Not _isDisposed Then
             If disposing Then
-                ' 释放托管资源
                 _y = Nothing
                 _ydot = Nothing
                 _ewt = Nothing
@@ -957,10 +750,14 @@ Public Class CVODESolver : Implements IDisposable
                 _tempV = Nothing
                 _tempV2 = Nothing
                 _tempV3 = Nothing
-                _zn = Nothing
-                _znm = Nothing
+                _delta = Nothing
+                _knownSumV = Nothing
+                _fNewHist = Nothing
+                _yHist = Nothing
+                _fHist = Nothing
                 _linearSolver = Nothing
                 _J = Nothing
+                _A = Nothing
             End If
             _isDisposed = True
         End If
