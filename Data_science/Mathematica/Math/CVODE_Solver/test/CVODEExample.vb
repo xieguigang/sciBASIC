@@ -90,7 +90,9 @@ Namespace CVODEExamples
 
             Console.WriteLine()
             Console.WriteLine("所有示例运行完成！")
-            Console.ReadKey()
+            If Not Console.IsInputRedirected Then
+                Console.ReadKey()
+            End If
         End Sub
 
 #Region "示例1：简谐振子"

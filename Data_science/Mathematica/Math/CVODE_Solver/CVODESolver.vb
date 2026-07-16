@@ -307,8 +307,20 @@ Public Class CVODESolver : Implements IDisposable
                 If tries >= MAX_FAILS OrElse hTry <= ZERO_THRESHOLD Then
                     Return CVODEStatus.ConvFail
                 End If
+            ElseIf st = CVODEStatus.ConvFail Then
+                ' Newton 不收敛：缩小步长并重试（更小步长使 I-gamma*J 更易求解）
+                If _q > 1 Then
+                    _q -= 1
+                End If
+                hTry = hTry * 0.25
+                If _options.MinStep > 0 Then
+                    hTry = std.Max(hTry, _options.MinStep)
+                End If
+                If tries >= MAX_FAILS OrElse hTry <= ZERO_THRESHOLD Then
+                    Return CVODEStatus.ConvFail
+                End If
             Else
-                ' 线性求解失败 / Newton 不收敛等硬错误
+                ' 线性求解失败等硬错误
                 Return st
             End If
         Loop
@@ -404,10 +416,11 @@ Public Class CVODESolver : Implements IDisposable
         ' ---- Newton 迭代 ----
         Dim y As New NVector(_n)
         y.CopyFrom(yPred)
-        Dim maxIters As Integer = std.Max(_options.MaxNewtonIterations, 6)
-        Dim convTol As Double = std.Max(_options.NewtonConvergenceFactor, 0.0001)
+        ' 收敛阈值采用 CVODE 标准 RCON=0.33（按 WRMS 加权范数）。
+        ' 过紧（如 1e-4 或 0.1）会使非线性 BDF 示例无法在有限次迭代内收敛。
+        Dim maxIters As Integer = std.Max(_options.MaxNewtonIterations, 10)
+        Dim convTol As Double = std.Max(_options.NewtonConvergenceFactor, 0.33)
         Dim converged As Boolean = False
-        Dim lastNorm As Double = Double.MaxValue
 
         For iter As Integer = 1 To maxIters
             _rhsFunc(tNew, y, _tempV3)
@@ -443,10 +456,6 @@ Public Class CVODESolver : Implements IDisposable
             _nNewtonIters += 1
 
             Dim dNorm As Double = _delta.WRMSNorm(_ewt)
-            If iter > 1 AndAlso dNorm > 1000.0 * lastNorm Then
-                Return CVODEStatus.ConvFail
-            End If
-            lastNorm = dNorm
             If dNorm < convTol Then
                 converged = True
                 Exit For
@@ -454,13 +463,25 @@ Public Class CVODESolver : Implements IDisposable
         Next
 
         If Not converged Then
+            Console.Error.WriteLine($"NEWTFAIL m={_method} q={q} h={hTry:E4} tNew={tNew:E4}")
             Return CVODEStatus.ConvFail
         End If
 
-        ' ---- 误差估计（预测-校正之差的加权范数）----
-        _tempV.CopyFrom(y)
-        _tempV.SubtractVector(yPred)
-        errEst = _tempV.WRMSNorm(_ewt)
+        ' ---- 误差估计 ----
+        If _method = CVODEMethod.Adams Then
+            ' Adams 正确器阶 p=q+1，需用 p 阶差商 + Adams-Moulton 误差常数估计 O(h^{p+1}) 截断误差；
+            ' 历史不足时退回预测-校正差（保守估计）。
+            If _histCount >= q + 1 Then
+                errEst = EstimateAdamsError(q, hTry, tNew)
+            Else
+                _tempV.CopyFrom(y)
+                _tempV.SubtractVector(yPred)
+                errEst = _tempV.WRMSNorm(_ewt)
+            End If
+        Else
+            ' BDF：用差商 + BDF 误差常数得到 O(h^{q+1}) 的真实截断误差
+            errEst = EstimateBDFFrror(q, hTry, tNew, y)
+        End If
 
         If errEst > 1.0 Then
             ' 拒绝：按误差缩小步长
@@ -485,6 +506,9 @@ Public Class CVODESolver : Implements IDisposable
             hNext = std.Max(hNext, _options.MinStep)
         End If
 
+        ' 写回自适应步长，供下一步使用（此前漏写导致步长控制失效、步数爆炸）
+        _h = hNext
+
         If errEst < 0.1 AndAlso q < _maxOrder AndAlso _histCount >= q + 1 Then
             _q = q + 1
         ElseIf errEst > 0.5 AndAlso q > 1 Then
@@ -492,6 +516,11 @@ Public Class CVODESolver : Implements IDisposable
         End If
 
         Commit(tNew, y)
+        Static dbg2 As Integer = 0
+        If dbg2 < 20 Then
+            Console.Error.WriteLine($"OK m={_method} q={q} h={hTry:E4} err={errEst:E3} hNext={hNext:E4}")
+            dbg2 += 1
+        End If
         Return CVODEStatus.Success
     End Function
 
@@ -549,6 +578,127 @@ Public Class CVODESolver : Implements IDisposable
             Next
         End If
     End Sub
+
+    ''' <summary>
+    ''' 估计 BDF(q) 的局部截断误差（加权 RMS 范数）。
+    '''   LTE_i = C_{q+1} · h^{q+1} · q! · DD_q[f]_i
+    ''' 其中 DD_q[f] 为 f 在节点 (tNew, t_n, ..., t_{n-q+1}) 上的 q 阶差商，
+    '''   C_{q+1} = (1/(q+1)!) · Σ_{k=0}^{q} α_k·(-k)^{q+1} 为 BDF 误差常数（α 为 BDF 系数）。
+    ''' </summary>
+    Private Function EstimateBDFFrror(q As Integer, h As Double, tNew As Double, yCorr As NVector) As Double
+        ' 1) BDF 系数 α_k = c_k / c0，c_k = L'_k(tNew)
+        Dim nodes(q) As Double
+        nodes(0) = tNew
+        For k As Integer = 1 To q
+            nodes(k) = _tHist(k - 1)
+        Next
+        Dim c0 As Double = LagrangeBasisDeriv(nodes, 0, tNew)
+        If std.Abs(c0) < ZERO_THRESHOLD Then
+            Return Double.MaxValue
+        End If
+        Dim alpha(q) As Double
+        alpha(0) = 1.0
+        For k As Integer = 1 To q
+            alpha(k) = LagrangeBasisDeriv(nodes, k, tNew) / c0
+        Next
+
+        ' 2) 误差常数 C_{q+1}
+        Dim cq As Double = 0.0
+        For k As Integer = 0 To q
+            cq += alpha(k) * std.Pow(-k, q + 1)
+        Next
+        cq = cq / Factorial(q + 1)
+
+        ' 3) q 阶差商 DD_q[f]_i（节点 xs=[tNew, tHist(0..q-1)]，值=[fNew, fHist(0..q-1)]）
+        Dim m As Integer = q
+        Dim xs(m) As Double
+        Dim fv(m) As NVector
+        xs(0) = tNew
+        fv(0) = _fNewHist
+        For k As Integer = 1 To m
+            xs(k) = _tHist(k - 1)
+            fv(k) = _fHist(k - 1)
+        Next
+
+        Dim errVec As New NVector(_n)
+        For i As Integer = 0 To _n - 1
+            Dim tab(m) As Double
+            For k As Integer = 0 To m
+                tab(k) = fv(k)(i)
+            Next
+            For j As Integer = 1 To m
+                For k As Integer = 0 To m - j
+                    tab(k) = (tab(k + 1) - tab(k)) / (xs(k + j) - xs(k))
+                Next
+            Next
+            ' LTE_i = C_{q+1} · h^{q+1} · q! · DD_q[f]_i
+            errVec(i) = cq * std.Pow(h, q + 1) * Factorial(q) * tab(0)
+        Next
+
+        Return errVec.WRMSNorm(_ewt)
+    End Function
+
+    ''' <summary>
+    ''' 估计 Adams(q) 正确器（阶 p=q+1）的局部截断误差（加权 RMS 范数）。
+    '''   LTE_i = C_AM · h^{p+1} · p! · DD_p[f]_i
+    ''' 其中 DD_p[f] 为 f 在节点 (tNew, tHist(0..q)) 上的 p 阶差商，
+    '''   C_AM = (-1)^p/(p+1)! · [1 - (p+1)·Σ_{j=0}^{p-1} β̄_j·j^p]，
+    '''   β̄_j = Icoeff(j)/Icoeff(0)，Icoeff(j)=∫_{t_n}^{tNew} L_j dτ。
+    ''' 调用前需保证 _histCount >= q+1（即拥有 q+1 个历史 f 点）。
+    ''' </summary>
+    Private Function EstimateAdamsError(q As Integer, h As Double, tNew As Double) As Double
+        Dim p As Integer = q + 1
+
+        Dim nodes(q) As Double
+        nodes(0) = tNew
+        For j As Integer = 1 To q
+            nodes(j) = _tHist(j - 1)
+        Next
+        Dim Icoeff(q) As Double
+        For j As Integer = 0 To q
+            Icoeff(j) = IntegrateLagrangeBasis(nodes, j, _t, tNew)
+        Next
+        If std.Abs(Icoeff(0)) < ZERO_THRESHOLD Then
+            Return Double.MaxValue
+        End If
+        Dim betaBar(q) As Double
+        For j As Integer = 0 To q
+            betaBar(j) = Icoeff(j) / Icoeff(0)
+        Next
+
+        Dim cam As Double = 0.0
+        For j As Integer = 0 To q
+            cam += betaBar(j) * std.Pow(j, p)
+        Next
+        cam = std.Pow(-1, p) / Factorial(p + 1) * (1.0 - (p + 1) * cam)
+
+        ' p 阶差商 DD_p[f]：节点 xs=[tNew, tHist(0..q)]，值=[fNew, fHist(0..q)]
+        Dim m As Integer = p
+        Dim xs(m) As Double
+        Dim fv(m) As NVector
+        xs(0) = tNew
+        fv(0) = _fNewHist
+        For k As Integer = 1 To m
+            xs(k) = _tHist(k - 1)
+            fv(k) = _fHist(k - 1)
+        Next
+
+        Dim errVec As New NVector(_n)
+        For i As Integer = 0 To _n - 1
+            Dim tab(m) As Double
+            For k As Integer = 0 To m
+                tab(k) = fv(k)(i)
+            Next
+            For j As Integer = 1 To m
+                For k As Integer = 0 To m - j
+                    tab(k) = (tab(k + 1) - tab(k)) / (xs(k + j) - xs(k))
+                Next
+            Next
+            errVec(i) = cam * std.Pow(h, p + 1) * Factorial(p) * tab(0)
+        Next
+
+        Return errVec.WRMSNorm(_ewt)
+    End Function
 
 #End Region
 
@@ -613,16 +763,33 @@ Public Class CVODESolver : Implements IDisposable
         Return val
     End Function
 
-    ''' <summary>Lagrange 基函数的导数 L'_j(x) = L_j(x) * Σ_{m≠j} 1/(x - x_m)。</summary>
+    ''' <summary>
+    ''' Lagrange 基函数在 x 处的导数（乘积法则形式，对任意 x 包括节点均正确）。
+    '''   L'_j(x) = Σ_{k≠j} [ 1/(x_j - x_k) · Π_{m≠j,k} (x - x_m)/(x_j - x_m) ]
+    ''' 注意：原公式 L_j(x)·Σ_{m≠j}1/(x-x_m) 在 x 与其它节点重合时因 L_j(x)=0
+    ''' 而给出错误结果，BDF 中 x=tNew 正是节点，故此处改用乘积法则。
+    ''' </summary>
     Private Function LagrangeBasisDeriv(nodes() As Double, j As Integer, x As Double) As Double
-        Dim L As Double = LagrangeBasisValue(nodes, j, x)
         Dim s As Double = 0.0
-        For m As Integer = 0 To nodes.Length - 1
-            If m <> j Then
-                s += 1.0 / (x - nodes(m))
-            End If
+        For k As Integer = 0 To nodes.Length - 1
+            If k = j Then Continue For
+            Dim prod As Double = 1.0 / (nodes(j) - nodes(k))
+            For m As Integer = 0 To nodes.Length - 1
+                If m = j OrElse m = k Then Continue For
+                prod *= (x - nodes(m)) / (nodes(j) - nodes(m))
+            Next
+            s += prod
         Next
-        Return L * s
+        Return s
+    End Function
+
+    ''' <summary>小整数阶乘（q ≤ BDF_MAX_ORDER=5，足够）。</summary>
+    Private Function Factorial(k As Integer) As Double
+        Dim r As Double = 1.0
+        For i As Integer = 2 To k
+            r *= i
+        Next
+        Return r
     End Function
 
     ''' <summary>∫_{a}^{b} L_j(τ) dτ，通过展开单根多项式后逐项积分。</summary>
