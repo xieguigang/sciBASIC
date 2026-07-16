@@ -57,8 +57,8 @@ Namespace Symbolic
             Dim x = New SymbolExpression(var)
 
             For k As Integer = 0 To order
-                Dim d = DerivativeN(expr, var, k)
-                Dim dAt = simplifyExpr(Substitute(d, var, point))
+                Dim d = Derivative.DerivativeN(expr, var, k)
+                Dim dAt = simplifyExpr(d.Substitute(var, point))
 
                 Dim coeff As Expression
                 If IsConstant(dAt) Then
@@ -86,9 +86,9 @@ Namespace Symbolic
             Next
 
             ' Lagrange remainder: f^(n+1)(xi) / (n+1)! * (x - a)^(n+1)
-            Dim dNext = DerivativeN(expr, var, order + 1)
+            Dim dNext = Derivative.DerivativeN(expr, var, order + 1)
             Dim xi = New SymbolExpression("_xi")
-            Dim dAtXi = Substitute(dNext, var, xi)
+            Dim dAtXi = dNext.Substitute(var, xi)
             Dim remCoeff = Div(simplifyExpr(dAtXi), MakeLiteral(factorial(order + 1)))
             Dim remTerm = Mul(remCoeff, Pow(Subt(Clone(x), Clone(point)), MakeLiteral(order + 1)))
 

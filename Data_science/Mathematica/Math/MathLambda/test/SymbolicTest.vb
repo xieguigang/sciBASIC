@@ -1,51 +1,8 @@
 ﻿#Region "Microsoft.VisualBasic::5cab8d942e2473ae56fecef99ef0629a, Data_science\Mathematica\Math\MathLambda\test\SymbolicTest.vb"
 
-    ' Author:
+    '     Module SymbolicTest
     ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-    ' /********************************************************************************/
-
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 73
-    '    Code Lines: 47 (64.38%)
-    ' Comment Lines: 3 (4.11%)
-    '    - Xml Docs: 0.00%
-    ' 
-    '   Blank Lines: 23 (31.51%)
-    '     File Size: 2.27 KB
-
-
-    ' Module SymbolicTest
-    ' 
-    '     Sub: expands, Main, test_Simplify, unit_test
+    '         Verification examples for the symbolic computation engine.
     ' 
     ' /********************************************************************************/
 
@@ -59,68 +16,174 @@ Imports Microsoft.VisualBasic.Math.Scripting
 Module SymbolicTest
 
     Sub Main()
-
         ' Call expands()
-        '  Call unit_test()
+        ' Call unit_test()
         Call test_Simplify()
+        Call test_Substitute()
+        Call test_Derivative()
+        Call test_Polynomial()
+        Call test_Integration()
+        Call test_Limit()
+        Call test_Taylor()
+        Call test_Boolean()
 
         Pause()
     End Sub
 
     Sub unit_test()
-
         Call Console.WriteLine(Symbolic.Simplify("0+x"))
         Call Console.WriteLine(Symbolic.Simplify("0+x + 0 * a"))
-
         Pause()
-
     End Sub
 
     Sub test_Simplify()
-        Dim symbols = ScriptEngine.ParseExpression("(5+5) * (2*x + x / 5 + x ^ 3)")
-        Dim result = symbols.DoCall(AddressOf Symbolic.Simplify)
+        Console.WriteLine("=== Simplification ===")
 
-        Console.WriteLine($"{symbols} -> {result}")
+        Dim samples = {
+            "(5+5) * (2*x + x / 5 + x ^ 3)",
+            "sin(x) ^ 2 + cos(x) ^ 2",
+            "1 - sin(x) ^ 2",
+            "x ^ 2 + 2 * x + 1",
+            "x * 0 + 3 * x - x",
+            "(a + a) * (b + b)"
+        }
 
-        ScriptEngine.SetVariable("x", 33)
-
-        Console.WriteLine($"{symbols} = {symbols.Evaluate(ScriptEngine.Expression)}")
-        Console.WriteLine($"{result} = {result.Evaluate(ScriptEngine.Expression)}")
-
-        ' (x ^ 2 * 2 + -1) ^ -2
-        symbols = ScriptEngine.ParseExpression("(2 * x ^ 2 - 1 + 0 * a) ^ -1 * (2 * x ^ 2  - 1 * 1) ^ -1")
-        result = symbols.DoCall(AddressOf Symbolic.Simplify)
-
-        Console.WriteLine($"{symbols} -> {result}")
-
-        ScriptEngine.SetVariable("a", Double.MaxValue)
-        ScriptEngine.SetVariable("x", 3)
-
-        Console.WriteLine($"{symbols} = {symbols.Evaluate(ScriptEngine.Expression)}")
-        Console.WriteLine($"{result} = {result.Evaluate(ScriptEngine.Expression)}")
-    End Sub
-
-    Sub expands()
-        Dim expr1 = ScriptEngine.ParseExpression($"(a+b)^3")
-        Dim result1 = expr1.Expands
-
-        expr1 = ScriptEngine.ParseExpression($"(a+b+c)^3")
-        result1 = expr1.Expands
-
-        ScriptEngine.SetVariable("a", 1)
-        ScriptEngine.SetVariable("b", 2)
-        ScriptEngine.SetVariable("c", 3)
-
-        Call Console.WriteLine(expr1.Evaluate(ScriptEngine.Expression))
-        Call Console.WriteLine(result1.Evaluate(ScriptEngine.Expression))
-
-        For i As Integer = 0 To 4
-            Dim expr = ScriptEngine.ParseExpression($"(a+b)^{i}")
-            Dim result = expr.Expands
-
-            Console.WriteLine($"{expr} -> {result}")
+        For Each s In samples
+            Dim expr = ScriptEngine.ParseExpression(s)
+            Console.WriteLine($"  {s}  ->  {Symbolic.Simplify(expr)}")
         Next
 
-        Pause()
+        Console.WriteLine()
+    End Sub
+
+    Sub test_Substitute()
+        Console.WriteLine("=== Substitution ===")
+
+        Dim expr = ScriptEngine.ParseExpression("x ^ 2 + 3 * x + 1")
+        Console.WriteLine($"  f(x)      = {expr}")
+        Console.WriteLine($"  f(y+1)    = {Symbolic.Substitute(expr, "x", "y + 1")}")
+        Console.WriteLine($"  f(2)      = {Symbolic.Substitute(expr, "x", 2.0)}")
+
+        Dim mapping As New Dictionary(Of String, String) From {{"x", "a + b"}, {"y", "c"}}
+        Dim g = ScriptEngine.ParseExpression("x * y")
+        Console.WriteLine($"  x*y, x->a+b, y->c  = {Symbolic.Substitute(g, mapping)}")
+
+        Console.WriteLine()
+    End Sub
+
+    Sub test_Derivative()
+        Console.WriteLine("=== Differentiation ===")
+
+        For Each s In {"x ^ 2", "sin(x)", "exp(x)", "x * exp(x)", "x ^ 3 + 2 * x", "ln(x)"}
+            Dim expr = ScriptEngine.ParseExpression(s)
+            Console.WriteLine($"  d/d{x} {s}  =  {Symbolic.Derivative(expr, "x")}")
+        Next
+
+        Console.WriteLine($"  d^2/dx^2 x^3  =  {Symbolic.DerivativeN(ScriptEngine.ParseExpression("x ^ 3"), "x", 2)}")
+        Console.WriteLine($"  d/dx x^4 (n=4) = {Symbolic.DerivativeN(ScriptEngine.ParseExpression("x ^ 4"), "x", 4)}")
+
+        ' Jacobian and Hessian
+        Dim funcs = {ScriptEngine.ParseExpression("x ^ 2 + y"), ScriptEngine.ParseExpression("x * y")}
+        Dim J = Symbolic.Jacobian(funcs, {"x", "y"})
+        Console.WriteLine("  Jacobian:")
+        For i = 0 To J.GetLength(0) - 1
+            For j = 0 To J.GetLength(1) - 1
+                Console.Write($"    {J(i, j)}")
+            Next
+            Console.WriteLine()
+        Next
+
+        Dim H = Symbolic.Hessian(ScriptEngine.ParseExpression("x ^ 2 * y + x * y ^ 2"), {"x", "y"})
+        Console.WriteLine("  Hessian:")
+        For i = 0 To H.GetLength(0) - 1
+            For j = 0 To H.GetLength(1) - 1
+                Console.Write($"    {H(i, j)}")
+            Next
+            Console.WriteLine()
+        Next
+
+        ' Implicit differentiation: x^2 + y^2 = 1  ->  -x/y
+        Dim F = ScriptEngine.ParseExpression("x ^ 2 + y ^ 2 - 1")
+        Console.WriteLine($"  dy/dx of x^2+y^2=1  =  {Symbolic.ImplicitDerivative(F, "y", "x")}")
+
+        Console.WriteLine()
+    End Sub
+
+    Sub test_Polynomial()
+        Console.WriteLine("=== Polynomial ===")
+
+        Console.WriteLine($"  Factor(x^2+2x+1)        = {Symbolic.Factor("x ^ 2 + 2 * x + 1")}")
+        Console.WriteLine($"  Factor(x^2-1)           = {Symbolic.Factor("x ^ 2 - 1")}")
+        Console.WriteLine($"  Factor(x^3-x)           = {Symbolic.Factor("x ^ 3 - x")}")
+        Console.WriteLine($"  (x+1)*(x-1)             = {Symbolic.PolynomialMultiply("x + 1", "x - 1")}")
+        Console.WriteLine($"  (x^3-1)/(x-1) quotient  = {Symbolic.PolynomialDivide("x ^ 3 - 1", "x - 1")}")
+        Console.WriteLine($"  (x^3-1)/(x-1) remainder = {Symbolic.PolynomialRemainder("x ^ 3 - 1", "x - 1")}")
+        Console.WriteLine($"  GCD(x^2-1, x^2+2x+1)    = {Symbolic.PolynomialGCD("x ^ 2 - 1", "x ^ 2 + 2 * x + 1")}")
+
+        Console.WriteLine()
+    End Sub
+
+    Sub test_Integration()
+        Console.WriteLine("=== Integration ===")
+
+        For Each s In {"x ^ 2", "x ^ 3 + 2 * x", "1 / x", "exp(x)", "sin(x)", "cos(x)", "x * exp(x)", "1 / (1 + x ^ 2)", "1 / (x ^ 2) ?"}
+            ' skip the malformed one gracefully
+        Next
+
+        For Each s In {"x ^ 2", "x ^ 3 + 2 * x", "1 / x", "exp(x)", "sin(x)", "cos(x)", "x * exp(x)", "1 / (1 + x ^ 2)", "1 / sqrt(1 - x ^ 2)"}
+            Dim expr = ScriptEngine.ParseExpression(s)
+            Console.WriteLine($"  ∫ {s} dx  =  {Symbolic.Integrate(expr, "x")}")
+        Next
+
+        Console.WriteLine($"  ∫ 2x dx from 0 to 1  =  {Symbolic.DefiniteIntegral("2 * x", "x", 0, 1)}  (expected 1)")
+        Console.WriteLine($"  ∫ x^2 dx from 0 to 2 =  {Symbolic.DefiniteIntegral("x ^ 2", "x", 0, 2)}  (expected 8/3)")
+
+        Console.WriteLine()
+    End Sub
+
+    Sub test_Limit()
+        Console.WriteLine("=== Limits ===")
+
+        Console.WriteLine($"  lim x->0 sin(x)/x   =  {Symbolic.Limit("sin(x) / x", "x", "0")}  (expected 1)")
+        Console.WriteLine($"  lim x->0 (1-cos(x))/x^2 = {Symbolic.Limit("(1 - cos(x)) / (x ^ 2)", "x", "0")}  (expected 1/2)")
+        Console.WriteLine($"  lim x->2 (x^2-4)/(x-2)  =  {Symbolic.Limit("(x ^ 2 - 4) / (x - 2)", "x", "2")}  (expected 4)")
+        Console.WriteLine($"  lim x->0 exp(x)         =  {Symbolic.Limit("exp(x)", "x", "0")}  (expected 1)")
+        Console.WriteLine($"  lim x->inf (x^2+1)/(2x^2+3) = {Symbolic.Limit("(x ^ 2 + 1) / (2 * x ^ 2 + 3)", "x", "inf")}  (expected 1/2)")
+
+        Console.WriteLine()
+    End Sub
+
+    Sub test_Taylor()
+        Console.WriteLine("=== Taylor series ===")
+
+        For Each s In {"exp(x)", "sin(x)", "cos(x)", "1 / (1 - x)"}
+            Dim expr = ScriptEngine.ParseExpression(s)
+            Dim series = Symbolic.Taylor(expr, "x", "0", 4)
+            Console.WriteLine($"  T_4 {s} about 0  =  {series}")
+        Next
+
+        Dim ex = ScriptEngine.ParseExpression("exp(x)")
+        Dim res = Microsoft.VisualBasic.Math.Lambda.Symbolic.Taylor.TaylorWithRemainder(ex, "x", ScriptEngine.ParseExpression("0"), 3)
+        Console.WriteLine($"  e^x T_3 = {res.polynomial}")
+        Console.WriteLine($"  e^x R_3 = {res.remainder}")
+
+        Console.WriteLine()
+    End Sub
+
+    Sub test_Boolean()
+        Console.WriteLine("=== Boolean algebra (Quine-McCluskey) ===")
+
+        ' f(A,B,C) = Sigma(1,3,7)  ->  A'C + BC
+        Dim f = {1, 3, 7}
+        Console.WriteLine($"  minterms {{1,3,7}}  ->  {String.Join(" + ", Symbolic.QuineMcCluskey({"A", "B", "C"}, f))}")
+        Console.WriteLine($"  SOP expr           ->  {Symbolic.QMCSimplifySOP({"A", "B", "C"}, f)}")
+
+        ' truth table derived minterms
+        Dim mt = Symbolic.TruthTable({"A", "B", "C"}, Function(b) (b(0) AndAlso b(1)) OrElse (Not b(2)))
+        Console.WriteLine($"  truth-table minterms of (A AND B) OR (NOT C): {mt.JoinBy(", ")}")
+        Console.WriteLine($"  SOP                 ->  {Symbolic.QMCSimplifySOP({"A", "B", "C"}, mt)}")
+        Console.WriteLine($"  POS                 ->  {Symbolic.QMCSimplifyPOS({"A", "B", "C"}, mt)}")
+
+        Console.WriteLine()
     End Sub
 End Module

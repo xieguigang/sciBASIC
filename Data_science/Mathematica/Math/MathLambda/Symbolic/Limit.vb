@@ -37,11 +37,12 @@ Namespace Symbolic
 
         Private Function computeLimit(expr As Expression, var$, target As Expression, depth As Integer) As Expression
             If depth > 24 Then
-                Return simplifyExpr(Substitute(expr, var, target))
+                Return simplifyExpr(expr.Substitute(var, target))
             End If
 
             ' 1) Direct substitution into a constant expression.
-            Dim s = simplifyExpr(Substitute(expr, var, target))
+            Dim s = simplifyExpr(expr.Substitute(var, target))
+            Console.WriteLine($"[LDBG] expr={expr} target={target} depth={depth} s={s} const={IsConstant(s)}")
             If IsConstant(s) Then
                 Dim v As Double
                 Try
@@ -65,6 +66,7 @@ Namespace Symbolic
 
                     Dim is00 = nearZero(av) AndAlso nearZero(bv)
                     Dim isII = Double.IsInfinity(av) AndAlso Double.IsInfinity(bv)
+                    Console.WriteLine($"[LDBG] av={av} bv={bv} is00={is00} isII={isII}")
 
                     If is00 OrElse isII Then
                         Dim da = Differentiate(b.left, var)
@@ -95,7 +97,7 @@ Namespace Symbolic
                 End If
             End If
 
-            Return simplifyExpr(Substitute(expr, var, target))
+            Return simplifyExpr(expr.Substitute(var, target))
         End Function
 
         ''' <summary>
@@ -104,7 +106,7 @@ Namespace Symbolic
         ''' </summary>
         Private Function probe(expr As Expression, var$, value As Double) As Double
             Try
-                Dim subbed = Substitute(expr, var, value)
+                Dim subbed = expr.Substitute(var, value)
                 Return subbed.Evaluate(Script.Expression)
             Catch
                 Return Double.NaN

@@ -75,8 +75,8 @@ Namespace Symbolic
             Dim F = Integrate(expr, var)
             If F Is Nothing Then Return Double.NaN
             Try
-                Dim atUpper = Substitute(F, var, upper).Evaluate(Script.Expression)
-                Dim atLower = Substitute(F, var, lower).Evaluate(Script.Expression)
+                Dim atUpper = F.Substitute(var, upper).Evaluate(Script.Expression)
+                Dim atLower = F.Substitute(var, lower).Evaluate(Script.Expression)
                 Return atUpper - atLower
             Catch
                 Return Double.NaN
@@ -140,9 +140,9 @@ Namespace Symbolic
         End Function
 
         Private Function integratePower(left As Expression, right As Expression, var$) As Expression
-            Dim eNum = NumericValue(right)
-            If Not eNum.HasValue Then Return Nothing
-            Dim n = eNum.Value
+            Dim numVal = NumericValue(right)
+            If Not numVal.HasValue Then Return Nothing
+            Dim n = numVal.Value
 
             If n = -1.0 Then
                 If TypeOf left Is SymbolExpression AndAlso DirectCast(left, SymbolExpression).symbolName = var Then
