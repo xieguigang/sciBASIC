@@ -1,75 +1,58 @@
 ﻿#Region "Microsoft.VisualBasic::e294c700dc7d04dbae6f856ec5c58715, gr\network-visualization\NetworkCanvas\Canvas.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
+' /********************************************************************************/
 
-    ' /********************************************************************************/
+' Summaries:
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 251
-    '    Code Lines: 180 (71.71%)
-    ' Comment Lines: 35 (13.94%)
-    '    - Xml Docs: 91.43%
-    ' 
-    '   Blank Lines: 36 (14.34%)
-    '     File Size: 7.79 KB
-
-
-    ' Class Canvas
-    ' 
-    '     Properties: AutoRotate, DynamicsRadius, FdgArgs, Graph, ShowLabel
-    '                 ViewDistance
-    ' 
-    '     Function: GetSnapshot, GetTargetNode, WriteLayout
-    ' 
-    '     Sub: [Stop], Canvas_Disposed, Canvas_Load, Canvas_Paint, Canvas_SizeChanged
-    '          doPaint, doPhysicsUpdates, Run, SetFDGParams, SetPhysical
-    '          SetRotate, setupGraph
-    ' 
-    ' /********************************************************************************/
+' Class Canvas
+' 
+'     Properties: AutoRotate, DynamicsRadius, FdgArgs, Graph, ShowLabel
+'                 ViewDistance
+' 
+'     Function: GetSnapshot, GetTargetNode, WriteLayout
+' 
+'     Sub: [Stop], Canvas_Disposed, Canvas_Load, Canvas_Paint, Canvas_SizeChanged
+'          doPaint, doPhysicsUpdates, Run, SetFDGParams, SetPhysical
+'          SetRotate, setupGraph
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.ComponentModel
-Imports System.Drawing.Drawing2D
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
 Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts.SpringForce
 Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts.SpringForce.Interfaces
 Imports Microsoft.VisualBasic.Drawing
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Parallel.Tasks
-
-#If NET8_0_OR_GREATER Then
 Imports Bitmap = System.Drawing.Bitmap
-#End If
 
 ''' <summary>
 ''' Controls for view the network model.
@@ -180,6 +163,19 @@ Public Class Canvas
     Dim paper As IGraphics
     Dim viewDist As Double = -450
 
+    ''' <summary>
+    ''' 渲染视图状态（视口、悬停/选中、LOD、网格），在 Canvas 与 Renderer 间共享。
+    ''' </summary>
+    Protected Friend view As New CanvasViewState
+
+    ''' <summary>
+    ''' 离屏缓冲与对应的 GDI+ 设备上下文，用于整帧绘制后单次 Blit，减少闪烁。
+    ''' </summary>
+    Private backBuffer As Bitmap
+    Private backG As System.Drawing.Graphics
+    Private nodeTooltip As New ToolTip
+    Private grid As New SpatialGrid
+
     Public Property AutoRotate As Boolean = True
     Public Property DynamicsRadius As Boolean = False
 
@@ -216,15 +212,17 @@ Public Class Canvas
     End Property
 
     Private Sub doPaint()
-        On Error Resume Next
+        Try
+            Call Me.Invoke(Sub() Call Invalidate())
 
-        Call Me.Invoke(Sub() Call Invalidate())
-
-        If _AutoRotate Then
-            Static r As Double = -100.0R
-            r += 0.4
-            Call SetRotate(r)
-        End If
+            If _AutoRotate Then
+                Static r As Double = -100.0R
+                r += 0.4
+                Call SetRotate(r)
+            End If
+        Catch ex As Exception
+            Call App.LogException(ex)
+        End Try
     End Sub
 
     ''' <summary>
@@ -250,11 +248,93 @@ Public Class Canvas
     End Sub
 
     Private Sub Canvas_Paint(sender As Object, e As PaintEventArgs) Handles Me.Paint
-        paper = New Graphics2D(e.Graphics, Size)
-        fdgRenderer.Draw(0.05F, physicsUpdate:=False)
+        If Width <= 0 OrElse Height <= 0 Then
+            Return
+        End If
+
+        ' 按需重建离屏缓冲
+        If backBuffer Is Nothing OrElse backBuffer.Width <> Width OrElse backBuffer.Height <> Height Then
+            If backBuffer IsNot Nothing Then backBuffer.Dispose()
+            If backG IsNot Nothing Then backG.Dispose()
+
+            backBuffer = New Bitmap(Width, Height)
+            backG = System.Drawing.Graphics.FromImage(backBuffer)
+            ' 高质量绘制：抗锯齿 + 半像素偏移 + ClearType 文本
+            backG.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias
+            backG.PixelOffsetMode = System.Drawing.Drawing2D.PixelOffsetMode.Half
+            backG.TextRenderingHint = System.Drawing.Text.TextRenderingHint.ClearTypeGridFit
+            paper = New Graphics2D(backG, Size)
+        End If
+
+        ' 清空背景（背景网格由 Renderer 叠加绘制）
+        backG.Clear(BackColor)
+
+        If fdgRenderer IsNot Nothing Then
+            fdgRenderer.View = view
+            ' 整帧单次锁，与物理线程（doPhysicsUpdates 中的 SyncLock fdgRenderer）互斥
+            SyncLock fdgRenderer
+                fdgRenderer.Draw(0.05F, physicsUpdate:=False)
+            End SyncLock
+        End If
+
+        ' 单次 Blit 到控件表面
+        e.Graphics.DrawImage(backBuffer, 0, 0)
     End Sub
 
     Dim inputs As InputDevice
+
+    ''' <summary>
+    ''' 命中测试：返回屏幕点 p 下的节点（2D 视图使用空间网格加速）。
+    ''' </summary>
+    Public Function HitTest(p As Point) As Node
+        If fdgRenderer Is Nothing Then
+            Return Nothing
+        End If
+
+        If space3D Then
+            ' 3D 视图暂不做悬停命中（保留原有行为）
+            Return Nothing
+        End If
+
+        Dim rect = fdgRenderer.ClientRegion
+        Dim vp = view.Viewport
+
+        SyncLock fdgRenderer
+            grid.Build(Graph.vertex,
+                Function(n)
+                    Dim pos = fdgPhysics.GetPoint(n).position
+                    Return vp.ToScreen(CSng(pos.x), CSng(pos.y), rect)
+                End Function,
+                Function(n)
+                    Dim baseR = If(n.data.size.IsNullOrEmpty, 0, CSng(n.data.size(0)))
+                    If baseR = 0 Then baseR = 20
+                    Return System.Math.Max(2.0F, baseR * vp.zoom)
+                End Function,
+                System.Math.Max(24.0F, 2.0F * 20.0F * vp.zoom + 1))
+
+            Return grid.Query(New PointF(p.X, p.Y),
+                Function(n)
+                    Dim pos = fdgPhysics.GetPoint(n).position
+                    Return vp.ToScreen(CSng(pos.x), CSng(pos.y), rect)
+                End Function,
+                Function(n)
+                    Dim baseR = If(n.data.size.IsNullOrEmpty, 0, CSng(n.data.size(0)))
+                    If baseR = 0 Then baseR = 20
+                    Return System.Math.Max(2.0F, baseR * vp.zoom)
+                End Function)
+        End SyncLock
+    End Function
+
+    Public Sub ShowNodeTooltip(n As Node, p As Point)
+        If n Is Nothing OrElse n.data Is Nothing Then
+            Return
+        End If
+        nodeTooltip.Show(n.data.label, Me, p.X + 12, p.Y + 12)
+    End Sub
+
+    Public Sub HideTooltip()
+        nodeTooltip.Hide(Me)
+    End Sub
 
     Private Sub Canvas_Load(sender As Object, e As EventArgs) Handles Me.Load
         If Graph Is Nothing Then
@@ -300,6 +380,8 @@ Public Class Canvas
     Private Sub Canvas_Disposed(sender As Object, e As EventArgs) Handles Me.Disposed
         timer.Dispose()
         physicsEngine.Dispose()
+        If backBuffer IsNot Nothing Then backBuffer.Dispose()
+        If backG IsNot Nothing Then backG.Dispose()
     End Sub
 
     Private Sub Canvas_SizeChanged(sender As Object, e As EventArgs) Handles Me.SizeChanged

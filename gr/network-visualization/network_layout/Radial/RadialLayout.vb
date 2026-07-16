@@ -163,6 +163,13 @@ Namespace Radial
             Next
         End Sub
 
+        ''' <summary>
+        ''' 接受 <see cref="RadialLayoutParameters"/> 参数对象重载（保持旧函数签名兼容）
+        ''' </summary>
+        Public Function LayoutNodes(g As NetworkGraph, params As RadialLayoutParameters) As NetworkGraph
+            Return LayoutNodes(g, params.Radius)
+        End Function
+
     End Module
 End Namespace
 

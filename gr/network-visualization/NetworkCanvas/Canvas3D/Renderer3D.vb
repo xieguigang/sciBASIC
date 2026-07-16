@@ -26,22 +26,7 @@
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-
     ' /********************************************************************************/
-
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 109
-    '    Code Lines: 82 (75.23%)
-    ' Comment Lines: 9 (8.26%)
-    '    - Xml Docs: 55.56%
-    ' 
-    '   Blank Lines: 18 (16.51%)
-    '     File Size: 4.04 KB
-
 
     ' Class Renderer3D
     ' 
@@ -96,29 +81,31 @@ Public Class Renderer3D : Inherits Renderer
             .RotateZ(rotate) _
             .Project(rect.Width, rect.Height, 256, ViewDistance) _
             .PointXY
-        '   pos1 = GraphToScreen(pos1, rect)
         Dim pos2 As PointF = New Point3D(iPosition2.x, iPosition2.y, iPosition2.z) _
             .RotateX(rotate) _
             .RotateY(rotate) _
             .RotateZ(rotate) _
             .Project(rect.Width, rect.Height, 256, ViewDistance) _
             .PointXY
-        '   pos2 = GraphToScreen(pos2, rect)
-        Dim canvas As IGraphics = graphicsProvider()
 
-        SyncLock canvas
-            Try
-                Call canvas.DrawLine(
-                    edgeStyles(iEdge),
-                    pos1.X,
-                    pos1.Y,
-                    pos2.X,
-                    pos2.Y
-                )
-            Catch ex As Exception
+        If Renderer.IsOffscreen(pos1, pos2, rect) Then
+            Return
+        End If
 
-            End Try
-        End SyncLock
+        Dim canvas As IGraphics = frameCanvas
+
+        Try
+            If View.IsHighlighted(iEdge.U) OrElse View.IsHighlighted(iEdge.V) Then
+                Dim w As Single = edgeStyles(iEdge).Width + 1.5F
+                Using hp As New Microsoft.VisualBasic.Imaging.Pen(System.Drawing.Color.Orange, w)
+                    canvas.DrawLine(hp, pos1.X, pos1.Y, pos2.X, pos2.Y)
+                End Using
+            Else
+                canvas.DrawLine(edgeStyles(iEdge), pos1.X, pos1.Y, pos2.X, pos2.Y)
+            End If
+        Catch ex As Exception
+
+        End Try
     End Sub
 
     Protected Overrides Sub drawNode(n As Node, iPosition As AbstractVector)
@@ -135,31 +122,38 @@ Public Class Renderer3D : Inherits Renderer
             .RotateZ(rotate) _
             .Project(client.Width, client.Height, 256, ViewDistance) _
             .PointXY ' 调整FOV参数的效果不太好
-        Dim canvas As IGraphics = graphicsProvider()
 
-        '   pos = GraphToScreen(pos, __regionProvider())
+        If Renderer.IsOffscreen(pos, pos, client) Then
+            Return
+        End If
 
-        SyncLock canvas
+        Dim canvas As IGraphics = frameCanvas
+
+        Try
+            If View.IsHighlighted(n) Then
+                Dim rr As Single = r + 3.0F
+                Dim ring = If(View.Hovered Is n AndAlso Not View.Selected.Contains(n), hoverBrush, selectBrush)
+                canvas.FillPie(ring, pos.X - rr / 2.0F, pos.Y - rr / 2.0F, rr, rr, 0.0F, 360.0F)
+            End If
+
             Dim pt As New PointF(pos.X - r / 2, pos.Y - r / 2)
             Dim rect As New RectangleF(pt, New SizeF(r, r))
 
             Call canvas.FillPie(
                 n.data.color,
                 rect.X, rect.Y, rect.Width, rect.Height,
-                0!, 360.0!)
+                0.0F, 360.0F)
 
-            If ShowLabels Then
-                Dim center As PointF = rect.Centre
+            If View.ShouldDrawLabels(forceDirected.graph.vertex.Count, 1.0F) Then
                 Dim labeltext As String = n.data.label
-                Dim sz As SizeF = canvas.MeasureString(labeltext, Font)
-
-                center = New PointF(
-                    center.X - sz.Width / 2,
-                    center.Y - sz.Height / 2
-                )
-
-                Call canvas.DrawString(labeltext, Font, Brushes.Gray, center)
+                If Not String.IsNullOrEmpty(labeltext) Then
+                    Dim sz As SizeF = canvas.MeasureString(labeltext, Font)
+                    Dim center As PointF = New PointF(rect.Centre.X - sz.Width / 2, rect.Centre.Y - sz.Height / 2)
+                    Call canvas.DrawString(labeltext, Font, Brushes.Gray, center)
+                End If
             End If
-        End SyncLock
+        Catch ex As Exception
+
+        End Try
     End Sub
 End Class

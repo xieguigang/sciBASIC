@@ -1,58 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::be1b102f508c72211850563fa8f8baa7, gr\network-visualization\Visualizer\Render\LabelRendering.vb"
-
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-    ' /********************************************************************************/
-
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 128
-    '    Code Lines: 103 (80.47%)
-    ' Comment Lines: 8 (6.25%)
-    '    - Xml Docs: 37.50%
-    ' 
-    '   Blank Lines: 17 (13.28%)
-    '     File Size: 5.11 KB
-
-
-    ' Class LabelRendering
-    ' 
-    '     Constructor: (+1 Overloads) Sub New
-    '     Sub: renderLabel, renderLabels
-    ' 
-    ' /********************************************************************************/
-
-#End Region
-
-Imports System.Drawing
+﻿Imports System.Drawing
 Imports System.Drawing.Drawing2D
 Imports Microsoft.VisualBasic.ComponentModel.Algorithm.base
 Imports Microsoft.VisualBasic.ComponentModel.Collection
@@ -78,19 +24,18 @@ Friend Class LabelRendering
         labelTextStrokeCSS As String,
         getLabelColor As Func(Of Node, Color)
 
-    Sub New(labelColorAsNodeColor As Boolean,
-        iteration As Integer,
-        showLabelerProgress As Boolean,
-        defaultLabelColorValue As String,
-        labelTextStrokeCSS As String,
-        getLabelColor As Func(Of Node, Color))
+    Sub New(config As NetworkRenderConfig)
+        Me.labelColorAsNodeColor = config.LabelColorAsNodeColor
+        Me.iteration = config.LabelerIterations
+        Me.showLabelerProgress = config.ShowLabelerProgress
+        Me.defaultLabelColorValue = config.DefaultLabelColor
+        Me.labelTextStrokeCSS = config.LabelTextStroke
 
-        Me.labelColorAsNodeColor = labelColorAsNodeColor
-        Me.iteration = iteration
-        Me.showLabelerProgress = showLabelerProgress
-        Me.defaultLabelColorValue = defaultLabelColorValue
-        Me.labelTextStrokeCSS = labelTextStrokeCSS
-        Me.getLabelColor = getLabelColor
+        If config.GetLabelColor Is Nothing Then
+            getLabelColor = Function(node) Nothing
+        Else
+            getLabelColor = config.GetLabelColor
+        End If
     End Sub
 
     Public Sub renderLabels(g As IGraphics, labelList As IEnumerable(Of LayoutLabel))

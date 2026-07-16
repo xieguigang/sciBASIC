@@ -54,4 +54,8 @@
 Public Interface IGraphicsEngine
 
     Property ShowLabels As Boolean
+    ''' <summary>
+    ''' 渲染视图状态（视口、悬停/选中高亮、LOD 与网格）。由 Canvas 在每帧绘制前下发。
+    ''' </summary>
+    Property View As CanvasViewState
 End Interface

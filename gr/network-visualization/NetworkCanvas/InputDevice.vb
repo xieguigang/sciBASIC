@@ -26,22 +26,7 @@
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-
     ' /********************************************************************************/
-
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 133
-    '    Code Lines: 79 (59.40%)
-    ' Comment Lines: 31 (23.31%)
-    '    - Xml Docs: 45.16%
-    ' 
-    '   Blank Lines: 23 (17.29%)
-    '     File Size: 4.61 KB
-
 
     ' Class InputDevice
     ' 
@@ -71,31 +56,49 @@ Public Class InputDevice : Implements IDisposable
     End Sub
 
     Protected Overridable Sub Canvas_MouseMove(sender As Object, e As MouseEventArgs) Handles Canvas.MouseMove
-        If Not drag Then
-            ' 设置tooltip
+        ' 拖拽节点
+        If drag AndAlso dragNode IsNot Nothing Then
+            If System.Math.Abs(e.Location.X - downPoint.X) > 3 OrElse
+               System.Math.Abs(e.Location.Y - downPoint.Y) > 3 Then
+                moved = True
+            End If
+
+            Dim vec As FDGVector2 = Canvas.fdgRenderer.ScreenToGraph(New Point(e.Location.X, e.Location.Y))
+            dragNode.pinned = True
+            Canvas.fdgPhysics.GetPoint(dragNode).position = vec
             Return
         End If
 
-        If dragNode IsNot Nothing Then
-            Dim vec As FDGVector2 =
-                    Canvas.fdgRenderer.ScreenToGraph(
-                    New Point(e.Location.X, e.Location.Y))
+        ' 平移视图（空白处拖拽）
+        If panning Then
+            Dim dx = e.Location.X - lastPan.X
+            Dim dy = e.Location.Y - lastPan.Y
+            Canvas.view.Viewport.Pan(dx, dy)
+            lastPan = e.Location
+            Canvas.Invalidate()
+            Return
+        End If
 
-            dragNode.pinned = True
-            Canvas.fdgPhysics.GetPoint(dragNode).position = vec
-        Else
-            dragNode = getNode(e.Location)
+        ' 悬停高亮 + tooltip
+        Dim hit = Canvas.HitTest(e.Location)
+        If hit IsNot lastHover Then
+            lastHover = hit
+            Canvas.view.Hovered = hit
+            If hit Is Nothing Then
+                Canvas.HideTooltip()
+            Else
+                Canvas.ShowNodeTooltip(hit, e.Location)
+            End If
+            Canvas.Invalidate()
         End If
     End Sub
 
     Protected dragNode As Node
 
     ''' <summary>
-    ''' 
+    ''' get target node which is pointed by the mouse
     ''' </summary>
-    ''' <param name="p">
-    ''' a location which is screen to control
-    ''' </param>
+    ''' <param name="p"></param>
     ''' <returns></returns>
     Public Function GetPointedNode(p As Point) As Node
         Return getNode(p)
@@ -104,54 +107,67 @@ Public Class InputDevice : Implements IDisposable
     ''' <summary>
     ''' get target node which is pointed by the mouse
     ''' </summary>
-    ''' <param name="p"></param>
-    ''' <returns></returns>
     Protected Overridable Function getNode(p As Point) As Node
-        For Each node As Node In Canvas.Graph.vertex
-            Dim r As Single = node.data.size(0)
-            Dim v As AbstractVector = Canvas.fdgPhysics.GetPoint(node).position
-
-            If TypeOf v Is FDGVector3 Then
-                Return Nothing
-            End If
-
-            Dim npt As Point = Renderer.GraphToScreen(v, Canvas.fdgRenderer.ClientRegion)
-            Dim pt As New Point(CInt(npt.X - r / 2), CInt(npt.Y - r / 2))
-            Dim rect As New Rectangle(pt, New Size(CInt(r), CInt(r)))
-
-            If rect.Contains(p) Then
-                Return node
-            End If
-        Next
-
-        Return Nothing
+        Return Canvas.HitTest(p)
     End Function
 
     Protected drag As Boolean
+    Protected panning As Boolean
+    Protected lastPan As Point
+    Protected lastHover As Node
+    Protected downPoint As Point
+    Protected moved As Boolean
 
     Protected Overridable Sub Canvas_MouseDown(sender As Object, e As MouseEventArgs) Handles Canvas.MouseDown
         If e.Button = MouseButtons.Left Then
-            drag = True
-            dragNode = getNode(e.Location)
+            Dim hit = Canvas.HitTest(e.Location)
+
+            If hit IsNot Nothing Then
+                drag = True
+                dragNode = hit
+                downPoint = e.Location
+                moved = False
+            Else
+                panning = True
+                lastPan = e.Location
+            End If
         End If
     End Sub
 
     Protected Overridable Sub Canvas_MouseUp(sender As Object, e As MouseEventArgs) Handles Canvas.MouseUp
-        drag = False
+        If drag AndAlso dragNode IsNot Nothing Then
+            ' 视为点击：选中节点（Ctrl 多选，否则单选）
+            If Not moved Then
+                If (Control.ModifierKeys And Keys.Control) = Keys.Control Then
+                    If Canvas.view.Selected.Contains(dragNode) Then
+                        Canvas.view.Selected.Remove(dragNode)
+                    Else
+                        Canvas.view.Selected.Add(dragNode)
+                    End If
+                Else
+                    Canvas.view.Selected.Clear()
+                    Canvas.view.Selected.Add(dragNode)
+                End If
+            End If
 
-        If dragNode IsNot Nothing Then
             dragNode.pinned = False
             dragNode = Nothing
         End If
+
+        drag = False
+        panning = False
+        Canvas.Invalidate()
     End Sub
 
     Protected Overridable Sub Canvas_MouseWheel(sender As Object, e As MouseEventArgs) Handles Canvas.MouseWheel
         If Canvas.space3D Then
-            ' adjust view distance
+            ' 3D 视图：调整视距
             Canvas.ViewDistance += e.Delta / 10
         Else
-            Dim oldArgument = Canvas.FdgArgs
-            Canvas.SetFDGParams(New ForceDirectedArgs With {.Damping = oldArgument.Damping, .Iterations = 0, .Repulsion = oldArgument.Repulsion, .Stiffness = oldArgument.Stiffness + e.Delta / 10})
+            ' 2D 视图：以光标为锚点缩放
+            Dim factor = 1.0F + e.Delta / 1000.0F
+            Canvas.view.Viewport.ZoomAt(e.Location, factor, Canvas.fdgRenderer.ClientRegion)
+            Canvas.Invalidate()
         End If
     End Sub
 
