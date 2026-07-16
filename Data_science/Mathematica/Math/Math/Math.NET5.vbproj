@@ -2378,10 +2378,13 @@
 	<ItemGroup>
 	  <Compile Remove="Numerics\Optimization\LBFGSB\examples\**" />
 	  <Compile Remove="packages\**" />
+	  <Compile Remove="test\**" />
 	  <EmbeddedResource Remove="Numerics\Optimization\LBFGSB\examples\**" />
 	  <EmbeddedResource Remove="packages\**" />
+	  <EmbeddedResource Remove="test\**" />
 	  <None Remove="Numerics\Optimization\LBFGSB\examples\**" />
 	  <None Remove="packages\**" />
+	  <None Remove="test\**" />
 	</ItemGroup>
 
   <ItemGroup>
