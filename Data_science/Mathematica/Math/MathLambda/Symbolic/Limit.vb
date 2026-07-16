@@ -40,9 +40,26 @@ Namespace Symbolic
                 Return simplifyExpr(expr.Substitute(var, target))
             End If
 
-            ' 1) Direct substitution into a constant expression.
+            ' 1) L'Hopital's rule for the 0/0 and Infinity/Infinity forms. This must be
+            '    tested BEFORE the direct-substitution step, because the engine may
+            '    evaluate an indeterminate quotient to a finite value (e.g. 0/0 -> 0).
+            If TypeOf target Is Literal AndAlso TypeOf expr Is BinaryExpression AndAlso DirectCast(expr, BinaryExpression).operator = "/"c Then
+                Dim b = DirectCast(expr, BinaryExpression)
+                Dim t = NumericValue(target).Value
+                Dim av = probe(b.left, var, t)
+                Dim bv = probe(b.right, var, t)
+
+                If (nearZero(av) AndAlso nearZero(bv)) OrElse (Double.IsInfinity(av) AndAlso Double.IsInfinity(bv)) Then
+                    Dim da = Differentiate(b.left, var)
+                    Dim db = Differentiate(b.right, var)
+                    If da IsNot Nothing AndAlso db IsNot Nothing Then
+                        Return computeLimit(Div(da, db), var, target, depth + 1)
+                    End If
+                End If
+            End If
+
+            ' 2) Direct substitution into a constant expression.
             Dim s = simplifyExpr(expr.Substitute(var, target))
-            Console.WriteLine($"[LDBG] expr={expr} target={target} depth={depth} s={s} const={IsConstant(s)}")
             If IsConstant(s) Then
                 Dim v As Double
                 Try
@@ -54,28 +71,7 @@ Namespace Symbolic
                     Return MakeLiteral(v)
                 End If
                 ' It was an indeterminate constant form (0/0, Infinity/Infinity); fall
-                ' through to L'Hopital's rule below.
-            End If
-
-            ' 2) L'Hopital's rule for f/g with a 0/0 or Infinity/Infinity form.
-            If TypeOf target Is Literal Then
-                If TypeOf expr Is BinaryExpression AndAlso DirectCast(expr, BinaryExpression).operator = "/"c Then
-                    Dim b = DirectCast(expr, BinaryExpression)
-                    Dim av = probe(b.left, var, target)
-                    Dim bv = probe(b.right, var, target)
-
-                    Dim is00 = nearZero(av) AndAlso nearZero(bv)
-                    Dim isII = Double.IsInfinity(av) AndAlso Double.IsInfinity(bv)
-                    Console.WriteLine($"[LDBG] av={av} bv={bv} is00={is00} isII={isII}")
-
-                    If is00 OrElse isII Then
-                        Dim da = Differentiate(b.left, var)
-                        Dim db = Differentiate(b.right, var)
-                        If da IsNot Nothing AndAlso db IsNot Nothing Then
-                            Return computeLimit(Div(da, db), var, target, depth + 1)
-                        End If
-                    End If
-                End If
+                ' through to the numeric probes below.
             End If
 
             ' 3) Infinite limit point: probe at a very large finite magnitude.
