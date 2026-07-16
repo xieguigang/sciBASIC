@@ -58,7 +58,7 @@ Imports Microsoft.VisualBasic.MIME.application.xml.MathML
 
 Module Module1
 
-    Sub Main()
+    Sub Main1()
         Call mathLambdaTest()
         Call complexExpressionTest()
     End Sub

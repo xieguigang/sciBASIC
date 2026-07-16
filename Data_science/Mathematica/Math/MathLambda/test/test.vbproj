@@ -17,5 +17,6 @@
 	     verification examples run. -->
 	<PropertyGroup>
 	  <StartupObject>SymbolicTest</StartupObject>
+	  <OutputType>Exe</OutputType>
 	</PropertyGroup>
 </Project>
