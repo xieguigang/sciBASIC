@@ -126,8 +126,11 @@
 
 	<ItemGroup>
 	  <Compile Remove="Test\**" />
+	  <Compile Remove="verify\**" />
 	  <EmbeddedResource Remove="Test\**" />
+	  <EmbeddedResource Remove="verify\**" />
 	  <None Remove="Test\**" />
+	  <None Remove="verify\**" />
 	  <None Include="..\..\..\..\LICENSE">
 	    <Pack>True</Pack>
 	    <PackagePath></PackagePath>
