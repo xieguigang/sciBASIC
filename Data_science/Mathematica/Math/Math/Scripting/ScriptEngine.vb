@@ -133,6 +133,16 @@ Namespace Scripting
         End Sub
 
         ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="name">function name</param>
+        ''' <param name="args">parameter names</param>
+        ''' <param name="expr">function body, the math expression</param>
+        Public Sub SetFunction(name As String, args As String(), expr As String)
+            Call Expression.AddFunction(name, args, expr)
+        End Sub
+
+        ''' <summary>
         ''' Run the simple script that stores in the <see cref="Scripts"/> table.
         ''' </summary>
         ''' <param name="statement"></param>
