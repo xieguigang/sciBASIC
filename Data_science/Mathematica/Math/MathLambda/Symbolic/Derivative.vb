@@ -24,7 +24,7 @@ Namespace Symbolic
         ''' is used.
         ''' </summary>
         <Extension>
-        Public Function GetDerivative(exp As Expression, Optional wrt$ = Nothing) As Expression
+        Public Function GetDerivative(exp As Expression, Optional wrt As String = Nothing) As Expression
             If wrt Is Nothing Then wrt = inferSingleVar(exp)
             Return simplifyExpr(diff(exp, wrt))
         End Function
@@ -62,15 +62,15 @@ Namespace Symbolic
         ''' </summary>
         Public Function Jacobian(funcs As Expression(), vars As String()) As Expression(,)
             Dim m = funcs.Length, n = vars.Length
-            Dim J(m - 1, n - 1) As Expression
+            Dim Jmat(m - 1, n - 1) As Expression
 
             For i As Integer = 0 To m - 1
                 For j As Integer = 0 To n - 1
-                    J(i, j) = simplifyExpr(diff(funcs(i), vars(j)))
+                    Jmat(i, j) = simplifyExpr(diff(funcs(i), vars(j)))
                 Next
             Next
 
-            Return J
+            Return Jmat
         End Function
 
         ''' <summary>

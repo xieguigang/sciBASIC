@@ -27,7 +27,7 @@ Namespace Symbolic
         Public ReadOnly Property Degree As Integer
             Get
                 Dim d = coeff.Length - 1
-                While d > 0 AndAlso Math.Abs(coeff(d)) < 1E-9
+                While d > 0 AndAlso System.Math.Abs(coeff(d)) < 1E-9
                     d -= 1
                 End While
                 Return d
@@ -139,7 +139,7 @@ Namespace Symbolic
 
             For i As Integer = 0 To poly.coeff.Length - 1
                 Dim c = poly.coeff(i)
-                If Math.Abs(c) < EPS Then Continue For
+                If System.Math.Abs(c) < EPS Then Continue For
                 If i = 0 Then
                     terms.Add(MakeLiteral(c))
                 ElseIf i = 1 Then
@@ -181,7 +181,7 @@ Namespace Symbolic
             Dim q(dividend.Degree) As Double
             Dim rDeg = dividend.Degree
 
-            While rDeg >= dDeg AndAlso Math.Abs(remC(rDeg)) >= EPS
+            While rDeg >= dDeg AndAlso System.Math.Abs(remC(rDeg)) >= EPS
                 Dim coef = remC(rDeg) / dLead
                 Dim deg = rDeg - dDeg
                 q(deg) = coef
@@ -206,7 +206,7 @@ Namespace Symbolic
             Loop
 
             Dim lead = r0.coeff(r0.Degree)
-            If Math.Abs(lead) >= EPS Then
+            If System.Math.Abs(lead) >= EPS Then
                 For i As Integer = 0 To r0.coeff.Length - 1
                     r0.coeff(i) /= lead
                 Next
@@ -217,14 +217,14 @@ Namespace Symbolic
 
         Private Function polyIsZero(p As UnivariatePoly) As Boolean
             For i As Integer = 0 To p.coeff.Length - 1
-                If Math.Abs(p.coeff(i)) >= EPS Then Return False
+                If System.Math.Abs(p.coeff(i)) >= EPS Then Return False
             Next
             Return True
         End Function
 
         Private Function trimZero(arr As Double()) As Double()
             Dim d = arr.Length - 1
-            While d > 0 AndAlso Math.Abs(arr(d)) < EPS
+            While d > 0 AndAlso System.Math.Abs(arr(d)) < EPS
                 d -= 1
             End While
             If d = arr.Length - 1 Then Return arr
@@ -253,7 +253,7 @@ Namespace Symbolic
             ' pull out the numeric greatest common divisor of coefficients
             Dim numericGCD = 0.0
             For i As Integer = 0 To current.coeff.Length - 1
-                numericGCD = gcd(numericGCD, Math.Abs(current.coeff(i)))
+                numericGCD = gcd(numericGCD, System.Math.Abs(current.coeff(i)))
             Next
             If numericGCD > 1 + EPS Then
                 For i As Integer = 0 To current.coeff.Length - 1
@@ -266,17 +266,20 @@ Namespace Symbolic
             While changed AndAlso current.Degree >= 1
                 changed = False
                 For r As Integer = -20 To 20
-                    If Math.Abs(evalPoly(current.coeff, r)) < 1.0E-6 Then
+                    If System.Math.Abs(evalPoly(current.coeff, r)) < 1.0E-6 Then
                         ' root r -> factor (x - r)
                         factors.Add(Subt(x, MakeLiteral(r)))
 
                         ' divide current by (x - r)
+                        Dim tmp(1) As Double
+                        tmp(0) = -r
+                        tmp(1) = 1
                         Dim divisor = New UnivariatePoly With {
                             .variable = poly.variable,
-                            .coeff = New Double() {-r, 1}
+                            .coeff = tmp
                         }
-                        Dim q As UnivariatePoly, rem As UnivariatePoly
-                        polyDivide(current, divisor, q, rem)
+                        Dim q As UnivariatePoly, remPoly As UnivariatePoly
+                        polyDivide(current, divisor, q, remPoly)
                         current = q
                         changed = True
                         Exit For
@@ -286,7 +289,7 @@ Namespace Symbolic
 
             If current.Degree >= 1 Then
                 factors.Add(toExpr(current))
-            ElseIf Math.Abs(current.coeff(0)) >= EPS AndAlso factors.Count = 0 Then
+            ElseIf System.Math.Abs(current.coeff(0)) >= EPS AndAlso factors.Count = 0 Then
                 factors.Add(toExpr(current))
             End If
 
@@ -294,11 +297,11 @@ Namespace Symbolic
         End Function
 
         Private Function gcd(a As Double, b As Double) As Double
-            a = Math.Abs(a)
-            b = Math.Abs(b)
+            a = System.Math.Abs(a)
+            b = System.Math.Abs(b)
             While b > EPS
                 Dim t = b
-                b = a - Math.Floor(a / b) * b
+                b = a - System.Math.Floor(a / b) * b
                 a = t
             End While
             Return a
@@ -312,7 +315,7 @@ Namespace Symbolic
         ''' Factorise a univariate polynomial expression (heuristic). Returns the
         ''' factorised expression, e.g. x^2 + 2*x + 1 -> (x + 1)^2.
         ''' </summary>
-        Public Function Factor(expr As Expression, Optional var$ = Nothing) As Expression
+        Public Function Factor(expr As Expression, Optional var As String = Nothing) As Expression
             If var Is Nothing Then var = inferVar(expr)
             Dim expanded = simplifyExpr(Expands(expr))
             Dim poly = parsePoly(expanded, var)
@@ -334,7 +337,7 @@ Namespace Symbolic
         ''' <summary>
         ''' Multiply two univariate polynomials and return the result as an expression.
         ''' </summary>
-        Public Function PolynomialMultiply(a As Expression, b As Expression, Optional var$ = Nothing) As Expression
+        Public Function PolynomialMultiply(a As Expression, b As Expression, Optional var As String = Nothing) As Expression
             If var Is Nothing Then var = inferVar(a)
             Dim pa = parsePoly(simplifyExpr(Expands(a)), var)
             Dim pb = parsePoly(simplifyExpr(Expands(b)), var)
@@ -345,20 +348,31 @@ Namespace Symbolic
         ''' Divide <paramref name="dividend"/> by <paramref name="divisor"/>, returning the
         ''' quotient and assigning the remainder to <paramref name="remainder"/>.
         ''' </summary>
-        Public Function PolynomialDivide(dividend As Expression, divisor As Expression, Optional var$ = Nothing, Optional remainder As Expression = Nothing) As Expression
+        Public Function PolynomialDivide(dividend As Expression, divisor As Expression, Optional var As String = Nothing) As Expression
             If var Is Nothing Then var = inferVar(dividend)
             Dim pa = parsePoly(simplifyExpr(Expands(dividend)), var)
             Dim pb = parsePoly(simplifyExpr(Expands(divisor)), var)
             Dim q As UnivariatePoly, r As UnivariatePoly
             polyDivide(pa, pb, q, r)
-            remainder = toExpr(r)
             Return toExpr(q)
+        End Function
+
+        ''' <summary>
+        ''' Remainder of dividing <paramref name="dividend"/> by <paramref name="divisor"/>.
+        ''' </summary>
+        Public Function PolynomialRemainder(dividend As Expression, divisor As Expression, Optional var As String = Nothing) As Expression
+            If var Is Nothing Then var = inferVar(dividend)
+            Dim pa = parsePoly(simplifyExpr(Expands(dividend)), var)
+            Dim pb = parsePoly(simplifyExpr(Expands(divisor)), var)
+            Dim q As UnivariatePoly, r As UnivariatePoly
+            polyDivide(pa, pb, q, r)
+            Return toExpr(r)
         End Function
 
         ''' <summary>
         ''' Greatest common divisor of two univariate polynomials (returned monic).
         ''' </summary>
-        Public Function PolynomialGCD(a As Expression, b As Expression, Optional var$ = Nothing) As Expression
+        Public Function PolynomialGCD(a As Expression, b As Expression, Optional var As String = Nothing) As Expression
             If var Is Nothing Then var = inferVar(a)
             Dim pa = parsePoly(simplifyExpr(Expands(a)), var)
             Dim pb = parsePoly(simplifyExpr(Expands(b)), var)
