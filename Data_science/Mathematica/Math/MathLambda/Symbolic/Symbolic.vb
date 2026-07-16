@@ -226,6 +226,20 @@ Namespace Symbolic
             Return Microsoft.VisualBasic.Math.Lambda.Symbolic.Taylor.Taylor(expr, var, point, order)
         End Function
 
+        ''' <summary>
+        ''' Taylor expansion together with its Lagrange remainder.
+        ''' </summary>
+        Public Function TaylorWithRemainder(expr As String, var$, point$, order%) As TaylorResult
+            Return Microsoft.VisualBasic.Math.Lambda.Symbolic.Taylor.TaylorWithRemainder(Script.ParseExpression(expr), var, Script.ParseExpression(point), order)
+        End Function
+
+        ''' <summary>
+        ''' Taylor expansion together with its Lagrange remainder.
+        ''' </summary>
+        Public Function TaylorWithRemainder(expr As Expression, var$, point As Expression, order%) As TaylorResult
+            Return Microsoft.VisualBasic.Math.Lambda.Symbolic.Taylor.TaylorWithRemainder(expr, var, point, order)
+        End Function
+
         ' ------------------------------------------------------------------
         ' Polynomial arithmetic / factorisation
         ' ------------------------------------------------------------------
@@ -239,6 +253,22 @@ Namespace Symbolic
 
         Public Function Factor(expr As Expression, Optional var As String = Nothing) As Expression
             Return Polynomial.Factor(expr, var)
+        End Function
+
+        ''' <summary>
+        ''' Factor a (possibly multivariate) polynomial over the explicitly given
+        ''' variable set, e.g. x^2 - y^2 -> (x - y) * (x + y).
+        ''' </summary>
+        Public Function Factor(expr As String, vars As String()) As Expression
+            Return Polynomial.Factor(Script.ParseExpression(expr), vars)
+        End Function
+
+        ''' <summary>
+        ''' Factor a (possibly multivariate) polynomial over the explicitly given
+        ''' variable set.
+        ''' </summary>
+        Public Function Factor(expr As Expression, vars As String()) As Expression
+            Return Polynomial.Factor(expr, vars)
         End Function
 
         Public Function PolynomialGCD(a As String, b As String, Optional var As String = Nothing) As Expression

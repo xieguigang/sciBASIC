@@ -345,8 +345,28 @@ Namespace Symbolic
         ''' factorised expression, e.g. x^2 + 2*x + 1 -> (x + 1)^2.
         ''' </summary>
         Public Function Factor(expr As Expression, Optional var As String = Nothing) As Expression
-            If var Is Nothing Then var = inferVar(expr)
-            Dim expanded = simplifyExpr(Expands(expr))
+            Dim syms = GetSymbols(expr)
+            If syms.Length <= 1 Then
+                Dim v = If(syms.Length = 1, syms(0), inferVar(expr))
+                Return factorUnivariate(expr, v)
+            End If
+            Return factorMultivariate(expr, syms)
+        End Function
+
+        ''' <summary>
+        ''' Factor a (possibly multivariate) polynomial over the explicitly given
+        ''' variable set.
+        ''' </summary>
+        Public Function Factor(expr As Expression, vars As String()) As Expression
+            If vars.Length <= 1 Then
+                Dim v = If(vars.Length = 1, vars(0), inferVar(expr))
+                Return factorUnivariate(expr, v)
+            End If
+            Return factorMultivariate(expr, vars)
+        End Function
+
+        Private Function factorUnivariate(expr As Expression, var As String) As Expression
+            Dim expanded = simplifyRaw(Expands(expr))
             Dim poly = parsePoly(expanded, var)
             Dim factors = factorLinearRoots(poly)
 
@@ -360,7 +380,7 @@ Namespace Symbolic
             For i As Integer = 1 To factors.Count - 1
                 acc = Mul(acc, factors(i))
             Next
-            Return simplifyExpr(acc)
+            Return simplifyRaw(acc)
         End Function
 
         ''' <summary>
@@ -406,6 +426,310 @@ Namespace Symbolic
             Dim pa = parsePoly(simplifyExpr(Expands(a)), var)
             Dim pb = parsePoly(simplifyExpr(Expands(b)), var)
             Return toExpr(polyGCD(pa, pb))
+        End Function
+
+        ' ------------------------------------------------------------------
+        ' Multivariate factorisation (heuristic)
+        ' ------------------------------------------------------------------
+
+        Private Class MonoTerm
+            Public coeff As Double
+            Public exps As New Dictionary(Of String, Integer)
+        End Class
+
+        Private Function isMultiPoly(expr As Expression, vars As String()) As Boolean
+            If expr Is Nothing Then Return True
+            If TypeOf expr Is Literal Then Return True
+            If TypeOf expr Is SymbolExpression Then Return True
+            If TypeOf expr Is UnaryExpression AndAlso DirectCast(expr, UnaryExpression).operator = "-"c Then
+                Return isMultiPoly(DirectCast(expr, UnaryExpression).value, vars)
+            End If
+            If TypeOf expr Is BinaryExpression Then
+                Dim b = DirectCast(expr, BinaryExpression)
+                Select Case b.operator
+                    Case "+"c, "-"c, "*"c
+                        Return isMultiPoly(b.left, vars) AndAlso isMultiPoly(b.right, vars)
+                    Case "^"c
+                        Return isMultiPoly(b.left, vars) AndAlso TypeOf b.right Is Literal
+                    Case Else
+                        Return False
+                End Select
+            End If
+            Return False
+        End Function
+
+        Private Function factorMultivariate(expr As Expression, vars As String()) As Expression
+            If Not isMultiPoly(expr, vars) Then Return expr
+
+            expr = simplifyRaw(Expands(expr))
+            If Not isMultiPoly(expr, vars) Then Return expr
+
+            Dim terms = FlattenSum(expr)
+            Dim mts As New List(Of MonoTerm)
+            For Each t In terms
+                mts.Add(parseMultiTerm(t, vars))
+            Next
+
+            ' 1) numeric content (greatest common divisor of coefficients)
+            Dim ng = 0.0
+            For Each m In mts
+                ng = gcd(ng, System.Math.Abs(m.coeff))
+            Next
+            If ng > 1.0 + EPS Then
+                For Each m In mts
+                    m.coeff /= ng
+                Next
+            End If
+
+            ' 2) greatest common monomial factor
+            Dim gcfExps As New Dictionary(Of String, Integer)
+            For Each v In vars
+                gcfExps(v) = Integer.MaxValue
+            Next
+            For Each m In mts
+                For Each v In vars
+                    Dim e = If(m.exps.ContainsKey(v), m.exps(v), 0)
+                    If e < gcfExps(v) Then gcfExps(v) = e
+                Next
+            Next
+
+            Dim commonMono As Expression = Nothing
+            For Each v In vars
+                Dim e = gcfExps(v)
+                If e > 0 Then
+                    Dim f = If(e = 1, New SymbolExpression(v), Pow(New SymbolExpression(v), MakeLiteral(e)))
+                    commonMono = If(commonMono Is Nothing, f, Mul(commonMono, f))
+                End If
+            Next
+
+            If commonMono IsNot Nothing Then
+                Dim divided As New List(Of Expression)
+                For Each t In terms
+                    divided.Add(simplifyRaw(Div(Clone(t), Clone(commonMono))))
+                Next
+                Dim inner As Expression
+                If divided.Count = 1 Then
+                    inner = divided(0)
+                Else
+                    inner = divided(0)
+                    For i As Integer = 1 To divided.Count - 1
+                        inner = Add(inner, divided(i))
+                    Next
+                End If
+                Return Mul(commonMono, factorMultivariate(inner, vars))
+            End If
+
+            ' 3) difference of squares A^2 - B^2 -> (A - B)(A + B)
+            Dim ds = tryDiffSquares(mts, vars)
+            If ds IsNot Nothing Then Return ds
+
+            ' 3b) perfect square trinomial A^2 +/- 2AB + B^2 -> (A +/- B)^2
+            Dim st = trySquareTrinomial(mts, vars)
+            If st IsNot Nothing Then Return st
+
+            ' 4) no further heuristic applies: rebuild (constant content * restored sum)
+            Dim rebuilt As Expression = Nothing
+            For Each m In mts
+                Dim termExpr = monoToExpr(m, vars)
+                rebuilt = If(rebuilt Is Nothing, termExpr, Add(rebuilt, termExpr))
+            Next
+            If ng > 1.0 + EPS Then rebuilt = Mul(MakeLiteral(ng), rebuilt)
+            Return simplifyRaw(rebuilt)
+        End Function
+
+        Private Function monoToExpr(m As MonoTerm, vars As String()) As Expression
+            Dim parts As New List(Of Expression)
+            For Each v In vars
+                Dim e = If(m.exps.ContainsKey(v), m.exps(v), 0)
+                If e > 0 Then
+                    If e = 1 Then
+                        parts.Add(New SymbolExpression(v))
+                    Else
+                        parts.Add(Pow(New SymbolExpression(v), MakeLiteral(e)))
+                    End If
+                End If
+            Next
+
+            Dim mono As Expression
+            If parts.Count = 0 Then
+                mono = MakeLiteral(1)
+            ElseIf parts.Count = 1 Then
+                mono = parts(0)
+            Else
+                mono = parts(0)
+                For i As Integer = 1 To parts.Count - 1
+                    mono = Mul(mono, parts(i))
+                Next
+            End If
+
+            If System.Math.Abs(m.coeff - 1.0) < EPS Then
+                Return mono
+            ElseIf System.Math.Abs(m.coeff + 1.0) < EPS Then
+                Return Negate(mono)
+            ElseIf parts.Count = 0 Then
+                Return MakeLiteral(m.coeff)
+            Else
+                Return Mul(MakeLiteral(m.coeff), mono)
+            End If
+        End Function
+
+        Private Function parseMultiTerm(t As Expression, vars As String()) As MonoTerm
+            Dim m As New MonoTerm With {.coeff = 1.0, .exps = New Dictionary(Of String, Integer)}
+            If TypeOf t Is UnaryExpression AndAlso DirectCast(t, UnaryExpression).operator = "-"c Then
+                m.coeff = -1.0
+                addMultiFactors(FlattenProduct(DirectCast(t, UnaryExpression).value), m)
+            Else
+                addMultiFactors(FlattenProduct(t), m)
+            End If
+            Return m
+        End Function
+
+        Private Sub addMultiFactors(factors As List(Of Expression), m As MonoTerm)
+            For Each f In factors
+                If TypeOf f Is Literal Then
+                    m.coeff *= DirectCast(f, Literal).number
+                ElseIf TypeOf f Is SymbolExpression Then
+                    Dim nm = DirectCast(f, SymbolExpression).symbolName
+                    If Not m.exps.ContainsKey(nm) Then m.exps(nm) = 0
+                    m.exps(nm) += 1
+                ElseIf TypeOf f Is BinaryExpression AndAlso DirectCast(f, BinaryExpression).operator = "^"c Then
+                    Dim b = DirectCast(f, BinaryExpression)
+                    If TypeOf b.left Is SymbolExpression AndAlso TypeOf b.right Is Literal Then
+                        Dim nm = DirectCast(b.left, SymbolExpression).symbolName
+                        Dim e = CInt(DirectCast(b.right, Literal).number)
+                        If Not m.exps.ContainsKey(nm) Then m.exps(nm) = 0
+                        m.exps(nm) += e
+                    Else
+                        Throw New NotSupportedException($"unsupported multivariate factor: {f}")
+                    End If
+                ElseIf TypeOf f Is BinaryExpression AndAlso DirectCast(f, BinaryExpression).operator = "/"c Then
+                    Dim b = DirectCast(f, BinaryExpression)
+                    Dim ln = NumericValue(b.left)
+                    If ln.HasValue AndAlso ln.Value = 1.0 AndAlso TypeOf b.right Is Literal Then
+                        m.coeff /= DirectCast(b.right, Literal).number
+                    Else
+                        Throw New NotSupportedException($"unsupported multivariate factor: {f}")
+                    End If
+                Else
+                    Throw New NotSupportedException($"unsupported multivariate factor: {f}")
+                End If
+            Next
+        End Sub
+
+        Private Function tryDiffSquares(mts As List(Of MonoTerm), vars As String()) As Expression
+            If mts.Count <> 2 Then Return Nothing
+
+            Dim t0 = mts(0), t1 = mts(1)
+            If Not ((t0.coeff > 0 AndAlso t1.coeff < 0) OrElse (t0.coeff < 0 AndAlso t1.coeff > 0)) Then Return Nothing
+
+            Dim pos = If(t0.coeff > 0, t0, t1)
+            Dim neg = If(t0.coeff < 0, t0, t1)
+            Dim A = squareRootMono(pos, vars)
+            Dim B = squareRootMono(neg, vars)
+            If A Is Nothing OrElse B Is Nothing Then Return Nothing
+
+            Return Mul(factorMultivariate(Subt(A, B), vars), factorMultivariate(Add(A, B), vars))
+        End Function
+
+        Private Function squareRootMono(m As MonoTerm, vars As String()) As Expression
+            For Each v In vars
+                Dim e = If(m.exps.ContainsKey(v), m.exps(v), 0)
+                If e Mod 2 <> 0 Then Return Nothing
+            Next
+
+            Dim c = System.Math.Abs(m.coeff)
+            Dim sc = System.Math.Sqrt(c)
+            If System.Math.Abs(sc - System.Math.Round(sc)) > 1.0E-9 Then Return Nothing
+
+            Dim parts As New List(Of Expression)
+            Dim scc = System.Math.Round(sc)
+            If scc <> 1 Then parts.Add(MakeLiteral(scc))
+            For Each v In vars
+                Dim e = If(m.exps.ContainsKey(v), m.exps(v), 0) \ 2
+                If e > 0 Then
+                    If e = 1 Then
+                        parts.Add(New SymbolExpression(v))
+                    Else
+                        parts.Add(Pow(New SymbolExpression(v), MakeLiteral(e)))
+                    End If
+                End If
+            Next
+
+            If parts.Count = 0 Then Return MakeLiteral(1)
+            If parts.Count = 1 Then Return parts(0)
+            Dim acc = parts(0)
+            For i As Integer = 1 To parts.Count - 1
+                acc = Mul(acc, parts(i))
+            Next
+            Return acc
+        End Function
+
+        Private Function trySquareTrinomial(mts As List(Of MonoTerm), vars As String()) As Expression
+            If mts.Count <> 3 Then Return Nothing
+
+            Dim squares As New List(Of MonoTerm)
+            Dim cross As MonoTerm = Nothing
+            For Each m In mts
+                If isSquareMono(m, vars) Then
+                    squares.Add(m)
+                Else
+                    cross = m
+                End If
+            Next
+            If squares.Count <> 2 OrElse cross Is Nothing Then Return Nothing
+
+            Dim A = squareRootMono(squares(0), vars)
+            Dim B = squareRootMono(squares(1), vars)
+            If A Is Nothing OrElse B Is Nothing Then Return Nothing
+
+            Dim aCoeff = System.Math.Round(System.Math.Sqrt(System.Math.Abs(squares(0).coeff)))
+            Dim bCoeff = System.Math.Round(System.Math.Sqrt(System.Math.Abs(squares(1).coeff)))
+            Dim plusCoeff = 2.0 * aCoeff * bCoeff
+
+            ' expected cross exponents = (A exponents) + (B exponents)
+            Dim expSum As New Dictionary(Of String, Integer)
+            For Each v In vars
+                Dim s = halfExp(squares(0), v) + halfExp(squares(1), v)
+                If s <> 0 Then expSum(v) = s
+            Next
+
+            Dim crossExps As New Dictionary(Of String, Integer)
+            For Each kv In cross.exps
+                If kv.Value <> 0 Then crossExps(kv.Key) = kv.Value
+            Next
+
+            If Not dictEquals(expSum, crossExps) Then Return Nothing
+
+            If System.Math.Abs(cross.coeff - plusCoeff) < 1.0E-9 Then
+                Return Pow(Add(A, B), MakeLiteral(2))
+            ElseIf System.Math.Abs(cross.coeff + plusCoeff) < 1.0E-9 Then
+                Return Pow(Subt(A, B), MakeLiteral(2))
+            End If
+            Return Nothing
+        End Function
+
+        Private Function isSquareMono(m As MonoTerm, vars As String()) As Boolean
+            If m.coeff <= 0 Then Return False
+            For Each v In vars
+                Dim e = If(m.exps.ContainsKey(v), m.exps(v), 0)
+                If e Mod 2 <> 0 Then Return False
+            Next
+            Dim sc = System.Math.Sqrt(m.coeff)
+            If System.Math.Abs(sc - System.Math.Round(sc)) > 1.0E-9 Then Return False
+            Return True
+        End Function
+
+        Private Function halfExp(m As MonoTerm, v As String) As Integer
+            Dim e = If(m.exps.ContainsKey(v), m.exps(v), 0)
+            Return e \ 2
+        End Function
+
+        Private Function dictEquals(d1 As Dictionary(Of String, Integer), d2 As Dictionary(Of String, Integer)) As Boolean
+            If d1.Count <> d2.Count Then Return False
+            For Each kv In d1
+                If Not d2.ContainsKey(kv.Key) OrElse d2(kv.Key) <> kv.Value Then Return False
+            Next
+            Return True
         End Function
     End Module
 End Namespace

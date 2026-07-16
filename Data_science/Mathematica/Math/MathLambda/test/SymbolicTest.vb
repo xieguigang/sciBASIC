@@ -26,6 +26,10 @@ Module SymbolicTest
         Call test_Limit()
         Call test_Taylor()
         Call test_Boolean()
+        Call test_Rationalize()
+        Call test_AutoFactor()
+        Call test_EnhancedIntegration()
+        Call test_MultivariateFactor()
 
         Pause()
     End Sub
@@ -76,7 +80,7 @@ Module SymbolicTest
 
         For Each s In {"x ^ 2", "sin(x)", "exp(x)", "x * exp(x)", "x ^ 3 + 2 * x", "ln(x)"}
             Dim expr = ScriptEngine.ParseExpression(s)
-            Console.WriteLine($"  d/d{x} {s}  =  {Symbolic.Derivative(expr, "x")}")
+            Console.WriteLine($"  d/dx {s}  =  {Symbolic.Derivative(expr, "x")}")
         Next
 
         Console.WriteLine($"  d^2/dx^2 x^3  =  {Symbolic.DerivativeN(ScriptEngine.ParseExpression("x ^ 3"), "x", 2)}")
@@ -87,8 +91,8 @@ Module SymbolicTest
         Dim J = Symbolic.Jacobian(funcs, {"x", "y"})
         Console.WriteLine("  Jacobian:")
         For i = 0 To J.GetLength(0) - 1
-            For J = 0 To J.GetLength(1) - 1
-                Console.Write($"    {J(i, J)}")
+            For k = 0 To J.GetLength(1) - 1
+                Console.Write($"    {J(i, k)}")
             Next
             Console.WriteLine()
         Next
@@ -96,8 +100,8 @@ Module SymbolicTest
         Dim H = Symbolic.Hessian(ScriptEngine.ParseExpression("x ^ 2 * y + x * y ^ 2"), {"x", "y"})
         Console.WriteLine("  Hessian:")
         For i = 0 To H.GetLength(0) - 1
-            For J = 0 To H.GetLength(1) - 1
-                Console.Write($"    {H(i, J)}")
+            For k = 0 To H.GetLength(1) - 1
+                Console.Write($"    {H(i, k)}")
             Next
             Console.WriteLine()
         Next
@@ -158,12 +162,12 @@ Module SymbolicTest
 
         For Each s In {"exp(x)", "sin(x)", "cos(x)", "1 / (1 - x)"}
             Dim expr = ScriptEngine.ParseExpression(s)
-            Dim series = Symbolic.Taylor(expr, "x", "0", 4)
+            Dim series = Symbolic.Taylor(expr, "x", ScriptEngine.ParseExpression("0"), 4)
             Console.WriteLine($"  T_4 {s} about 0  =  {series}")
         Next
 
         Dim ex = ScriptEngine.ParseExpression("exp(x)")
-        Dim res = Microsoft.VisualBasic.Math.Lambda.Symbolic.Taylor.TaylorWithRemainder(ex, "x", ScriptEngine.ParseExpression("0"), 3)
+        Dim res = Symbolic.TaylorWithRemainder(ex, "x", ScriptEngine.ParseExpression("0"), 3)
         Console.WriteLine($"  e^x T_3 = {res.polynomial}")
         Console.WriteLine($"  e^x R_3 = {res.remainder}")
 
@@ -183,6 +187,53 @@ Module SymbolicTest
         Console.WriteLine($"  truth-table minterms of (A AND B) OR (NOT C): {mt.JoinBy(", ")}")
         Console.WriteLine($"  SOP                 ->  {Symbolic.QMCSimplifySOP({"A", "B", "C"}, mt)}")
         Console.WriteLine($"  POS                 ->  {Symbolic.QMCSimplifyPOS({"A", "B", "C"}, mt)}")
+
+        Console.WriteLine()
+    End Sub
+
+    Sub test_Rationalize()
+        Console.WriteLine("=== Rationalization ===")
+
+        For Each s In {"1 / (1 + sqrt(2))", "1 / sqrt(2)", "1 / (sqrt(a) + sqrt(b))", "a / (b + sqrt(c))", "1 / (x + y * i)"}
+            Dim expr = ScriptEngine.ParseExpression(s)
+            Console.WriteLine($"  rationalize({s})  =  {Symbolic.Rationalize(expr)}")
+        Next
+
+        Console.WriteLine()
+    End Sub
+
+    Sub test_AutoFactor()
+        Console.WriteLine("=== Simplify auto-factor ===")
+
+        For Each s In {"x ^ 2 + 2 * x + 1", "x ^ 2 - 1", "x ^ 3 - x", "x ^ 2 + x", "x + x"}
+            Dim expr = ScriptEngine.ParseExpression(s)
+            Console.WriteLine($"  Simplify({s})  =  {Symbolic.Simplify(expr)}")
+        Next
+
+        Console.WriteLine()
+    End Sub
+
+    Sub test_EnhancedIntegration()
+        Console.WriteLine("=== Enhanced integration ===")
+
+        For Each s In {"tan(x)", "sec(x)", "csc(x)", "cot(x)", "sin(x) ^ 2", "cos(x) ^ 2", "sec(x) ^ 2",
+                       "1 / (x ^ 2 - 4)", "1 / (4 - x ^ 2)", "1 / (x ^ 2 + 4)",
+                       "2 * x * exp(x ^ 2)", "2 * x * cos(x ^ 2)"}
+            Dim expr = ScriptEngine.ParseExpression(s)
+            Console.WriteLine($"  ∫ {s} dx  =  {Symbolic.Integrate(expr, "x")}")
+        Next
+
+        Console.WriteLine()
+    End Sub
+
+    Sub test_MultivariateFactor()
+        Console.WriteLine("=== Multivariate factor ===")
+
+        For Each s In {"x ^ 2 - y ^ 2", "x ^ 2 + 2 * x * y + y ^ 2", "x ^ 4 - y ^ 4",
+                       "x * y + x", "4 * x ^ 2 - 9 * y ^ 2", "x ^ 2 + y ^ 2"}
+            Dim expr = ScriptEngine.ParseExpression(s)
+            Console.WriteLine($"  Factor({s})  =  {Symbolic.Factor(expr)}")
+        Next
 
         Console.WriteLine()
     End Sub

@@ -178,8 +178,8 @@ Namespace Symbolic
                 If lf.isLinear AndAlso lf.a <> 0.0 Then
                     Return Div(funcLn(Clone(den)), MakeLiteral(lf.a))
                 End If
-                If isOnePlusVarSquared(den, var) Then Return funcAtan(var)
-                If isSqrtOneMinusVarSq(den, var) Then Return funcAsin(var)
+                If isOnePlusVarSquared(den, var) Then Return funcAtan(New SymbolExpression(var))
+                If isSqrtOneMinusVarSq(den, var) Then Return funcAsin(New SymbolExpression(var))
 
                 Dim c As Double
                 If isVarSquaredPlusConst(den, var, c) AndAlso c > 0 Then
@@ -355,9 +355,9 @@ Namespace Symbolic
                     If IsConstant(sratio) Then
                         Dim c = NumericValue(sratio)
                         If c.HasValue AndAlso System.Math.Abs(c.Value) > 1.0E-9 Then
-                            Dim F = primitiveOf(fi.funcName, w)
-                            If F IsNot Nothing Then
-                                Return Div(Clone(F), MakeLiteral(c.Value))
+                            Dim prim = primitiveOf(fi.funcName, w)
+                            If prim IsNot Nothing Then
+                                Return Div(Clone(prim), MakeLiteral(c.Value))
                             End If
                         End If
                     End If
@@ -562,11 +562,11 @@ Namespace Symbolic
         Private Function funcLn(x As Expression) As FunctionInvoke
             Return New FunctionInvoke("ln", New Expression() {x})
         End Function
-        Private Function funcAtan(x$) As FunctionInvoke
-            Return New FunctionInvoke("atan", New Expression() {New SymbolExpression(x)})
+        Private Function funcAtan(x As Expression) As FunctionInvoke
+            Return New FunctionInvoke("atan", New Expression() {x})
         End Function
-        Private Function funcAsin(x$) As FunctionInvoke
-            Return New FunctionInvoke("asin", New Expression() {New SymbolExpression(x)})
+        Private Function funcAsin(x As Expression) As FunctionInvoke
+            Return New FunctionInvoke("asin", New Expression() {x})
         End Function
     End Module
 End Namespace
