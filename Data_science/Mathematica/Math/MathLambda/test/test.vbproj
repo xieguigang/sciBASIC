@@ -16,7 +16,7 @@
 	<!-- Both Module1 and SymbolicTest declare a Main; pick SymbolicTest so the
 	     verification examples run. -->
 	<PropertyGroup>
-	  <StartupObject>SymbolicTest</StartupObject>
+	  <StartupObject>test.SymbolicTest</StartupObject>
 	  <OutputType>Exe</OutputType>
 	</PropertyGroup>
 </Project>
