@@ -246,7 +246,6 @@ Namespace Symbolic
             If coeff = 0 Then Return MakeLiteral(0)
 
             Dim result As New List(Of Expression)
-            If coeff <> 1 Then result.Add(MakeLiteral(coeff))
             For Each g In groups
                 If g.exp = 0 Then
                     Continue For
@@ -268,14 +267,24 @@ Namespace Symbolic
             ' to clear cross terms like sqrt(a)*sqrt(b) - sqrt(b)*sqrt(a)).
             result.Sort(Function(a, b) canonicalKey(a).CompareTo(canonicalKey(b)))
 
-            If result.Count = 0 Then Return MakeLiteral(1)
-            If result.Count = 1 Then Return result(0)
+            If result.Count = 0 Then
+                Return MakeLiteral(coeff)
+            End If
 
-            Dim acc = result(0)
+            Dim prod = result(0)
             For i As Integer = 1 To result.Count - 1
-                acc = Mul(acc, result(i))
+                prod = Mul(prod, result(i))
             Next
-            Return acc
+
+            ' Render a negative coefficient as a Negate wrapper rather than a *(-1)
+            ' literal factor, so that e.g. -a*b and a*b compare equal and cancel.
+            If coeff = 1 Then
+                Return prod
+            ElseIf coeff = -1 Then
+                Return Negate(prod)
+            Else
+                Return Mul(MakeLiteral(coeff), prod)
+            End If
         End Function
 
         Private Function canonicalKey(e As Expression) As String
