@@ -78,9 +78,7 @@ Public Class MainForm : Inherits Form
         statusStrip.Dock = DockStyle.Bottom
         Me.Controls.Add(statusStrip)
 
-        ' ===================== 顶部控件 =====================
-        cboMode = Cbo(8, 8, 120, {"曲面  z = f(x, y)", "曲线  x(t), y(t), z(t)"})
-        cboMode.SelectedIndex = 0
+
 
         lblExpr = Lbl("z = f(x, y) :", 136, 10, 96)
         txtSurface = Txt("sin(sqrt(x*x + y*y))", 236, 8, 240)
@@ -114,7 +112,9 @@ Public Class MainForm : Inherits Form
         cboScheme.SelectedIndex = 0
 
         chkAxes = Chk("显示坐标轴", 632, 51, 92)
-
+        ' ===================== 顶部控件 =====================
+        cboMode = Cbo(8, 8, 120, {"曲面  z = f(x, y)", "曲线  x(t), y(t), z(t)"})
+        cboMode.SelectedIndex = 0
         ApplyMode()
     End Sub
 
@@ -140,8 +140,8 @@ Public Class MainForm : Inherits Form
     Private Function Num(x%, y%, w%, v#, mn#, mx#, decimals%) As NumericUpDown
         Dim c = New NumericUpDown() With {
             .Location = New Point(x, y), .Size = New Size(w, 23),
-            .Value = CDec(v), .Minimum = CDec(mn), .Maximum = CDec(mx), .DecimalPlaces = decimals,
-            .Increment = CDec(0.5), .Font = New Font("Segoe UI", 9, FontStyle.Regular)}
+             .Minimum = CDec(mn), .Maximum = CDec(mx), .DecimalPlaces = decimals,
+            .Increment = CDec(0.5), .Font = New Font("Segoe UI", 9, FontStyle.Regular), .Value = CDec(v)}
         topPanel.Controls.Add(c)
         Return c
     End Function
