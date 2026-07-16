@@ -5,7 +5,7 @@ VisualStudioVersion = 18.7.11925.98
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "DeepQNetwork", "DeepQNetwork.vbproj", "{A63F3CC5-C8BB-29F6-A671-CD65C893E2A8}"
 EndProject
-Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "DeepQNetwork.Demo", "Demo\DeepQNetwork.Demo.vbproj", "{D4E5C6A1-B2F3-4A7B-8C9D-0E1F2A3B4C5D}"
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "demo", "Demo\demo.vbproj", "{D4E5C6A1-B2F3-4A7B-8C9D-0E1F2A3B4C5D}"
 EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Core", "..\..\..\Microsoft.VisualBasic.Core\src\Core.vbproj", "{466296CB-E19B-F73C-A306-D88960A5A16D}"
 EndProject
