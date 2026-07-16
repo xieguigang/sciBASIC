@@ -63,6 +63,7 @@ Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ApplicationServices
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MachineLearning.CNN.data
+Imports Microsoft.VisualBasic.MachineLearning.SVM
 Imports std = System.Math
 
 Namespace CNN.trainers
@@ -130,6 +131,7 @@ Namespace CNN.trainers
             Dim cost_loss As Double
             Dim l2_decay_loss = 0.0
             Dim l1_decay_loss = 0.0
+            Dim flag As Boolean = Not checkpoints Is Nothing
 
             ' also set the flag that lets the net know we're just training
             Call net.forward(x, checkpoints)
@@ -144,7 +146,10 @@ Namespace CNN.trainers
 
             If k Mod batch_size = 0 Then
                 Call adjustWeights(l2_decay_loss, l1_decay_loss)
-                Call checkpoints.Mark("adjust_weights")
+
+                If flag Then
+                    Call checkpoints.Mark("adjust_weights")
+                End If
             End If
 
             ' appending softmax_loss for backwards compatibility, but from now on we will always use cost_loss

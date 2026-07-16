@@ -424,9 +424,8 @@ Public Class MainForm : Inherits Form
         g.Clear(BG)
 
         If episodeRewards.Count = 0 Then
-            Using f = Consolas10, br = New SolidBrush(TextDim)
-                g.DrawString("训练开始后，将在此显示每回合累计奖励（青）与前进距离（橙）的学习曲线", f, br, 14, 12)
-            End Using
+            Dim ft = Consolas10, br = New SolidBrush(TextDim)
+            g.DrawString("训练开始后，将在此显示每回合累计奖励（青）与前进距离（橙）的学习曲线", ft, br, 14, 12)
             Return
         End If
 
@@ -472,13 +471,12 @@ Public Class MainForm : Inherits Form
         End Using
 
         ' 图例 + 轴标
-        Using f = Consolas10
-            g.DrawString("累计奖励", f, New SolidBrush(Cyan), padL + 4, 6)
-            g.DrawString("前进距离(px)", f, New SolidBrush(Orange), padL + 100, 6)
-            g.DrawString("回合 →", f, New SolidBrush(TextDim), padL + plotW - 44, padT + plotH + 6)
-            g.DrawString("maxR=" & maxR.ToString("F1"), f, New SolidBrush(TextDim), 2, padT)
-            g.DrawString("maxD=" & CInt(maxD), f, New SolidBrush(TextDim), 2, padT + plotH - 14)
-        End Using
+        Dim f = Consolas10
+        g.DrawString("累计奖励", f, New SolidBrush(Cyan), padL + 4, 6)
+        g.DrawString("前进距离(px)", f, New SolidBrush(Orange), padL + 100, 6)
+        g.DrawString("回合 →", f, New SolidBrush(TextDim), padL + plotW - 44, padT + plotH + 6)
+        g.DrawString("maxR=" & maxR.ToString("F1"), f, New SolidBrush(TextDim), 2, padT)
+        g.DrawString("maxD=" & CInt(maxD), f, New SolidBrush(TextDim), 2, padT + plotH - 14)
     End Sub
 
 End Class
