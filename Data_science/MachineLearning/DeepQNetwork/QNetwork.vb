@@ -53,6 +53,7 @@
 #End Region
 
 Imports Microsoft.VisualBasic.MachineLearning.CNN
+Imports Microsoft.VisualBasic.MachineLearning.CNN.data
 Imports Microsoft.VisualBasic.MachineLearning.CNN.trainers
 
 ''' <summary>
@@ -65,23 +66,28 @@ Public Class QNetwork
 
     Dim ada As TrainerAlgorithm
 
+    ' architecture cache (for clone / rebuild / state-size inference)
+    Private ReadOnly stateSize As Integer
+    Private ReadOnly hiddenSizes As Integer()
+    Private ReadOnly actionType As Type
+
     ''' <summary>
     ''' Create a new Q-learning model
     ''' </summary>
-    ''' <param name="statSize">
-    ''' the vector size of the current world status
-    ''' </param>
-    ''' <param name="actions">
-    ''' should be a <see cref="System.Enum"/> value type of the output actions
-    ''' </param>
-    ''' <param name="hiddens">
-    ''' configs of the hidden layers, is a vector of the neuron nodes in each hidden layers
-    ''' </param>
-    Sub New(statSize As Integer, actions As Type, Optional hiddens As Integer() = Nothing)
+    ''' <param name="statSize">the vector size of the current world status</param>
+    ''' <param name="actions">should be a <see cref="System.Enum"/> value type of the output actions</param>
+    ''' <param name="hiddens">configs of the hidden layers, is a vector of the neuron nodes in each hidden layers</param>
+    ''' <param name="learningRate">the optimizer step size for the online Q-learning update</param>
+    Sub New(statSize As Integer, actions As Type, Optional hiddens As Integer() = Nothing, Optional learningRate As Double = 0.001)
+        Me.stateSize = statSize
+        Me.actionType = actions
         Call Me.New(actions)
-        DNN = buildModel(statSize, defaultShape(hiddens, statSize, actionSet.Length), actionSet.Length)
-        ada = New AdaGradTrainer(5, 0.001)
+        Dim shape = defaultShape(hiddens, statSize, actionSet.Length)
+        Me.hiddenSizes = shape
+        DNN = buildModel(statSize, shape, actionSet.Length)
+        ada = New AdamTrainer(1, 0.0)
         ada.SetKernel(DNN)
+        ada.learning_rate = learningRate
     End Sub
 
     Private Shared Function defaultShape(hiddens As Integer(), statSize As Integer, actionSize As Integer) As Integer()
@@ -117,10 +123,106 @@ Public Class QNetwork
     ''' <param name="Q"></param>
     ''' <param name="actions">should be a <see cref="System.Enum"/> value type of the output actions</param>
     Sub New(Q As ConvolutionalNN, actions As Type)
+        Me.stateSize = Q.input.out_depth
+        Me.actionType = actions
         Call Me.New(actions)
         DNN = Q
-        ada = New AdaGradTrainer(5, 0.001)
+        ada = New AdamTrainer(1, 0.0)
         ada.SetKernel(DNN)
+        ada.learning_rate = 0.001
+    End Sub
+
+    ' ---------------- Q-learning runtime interface ----------------
+
+    ''' <summary>dimension of the input world state vector</summary>
+    Public ReadOnly Property StateSize As Integer
+        Get
+            Return stateSize
+        End Get
+    End Property
+
+    ''' <summary>number of discrete actions</summary>
+    Public ReadOnly Property ActionCount As Integer
+        Get
+            Return actionSet.Length
+        End Get
+    End Property
+
+    ''' <summary>the enum values of the discrete action set</summary>
+    Public ReadOnly Property Actions As Array
+        Get
+            Return actionSet
+        End Get
+    End Property
+
+    ''' <summary>the optimizer learning rate (set at runtime)</summary>
+    Public Property learningRate As Double
+        Get
+            Return ada.learning_rate
+        End Get
+        Set(value As Double)
+            ada.learning_rate = value
+        End Set
+    End Property
+
+    ''' <summary>
+    ''' forward pass, returns the Q-value vector for every action.
+    ''' The raw state vector is copied directly into the network input
+    ''' (no image normalization), so predict and train share the same encoding.
+    ''' </summary>
+    Public Function predictQ(state As Double()) As Double()
+        Dim db = New DataBlock(1, 1, stateSize, 0)
+        For i As Integer = 0 To stateSize - 1
+            db.setWeight(i, state(i))
+        Next
+        Dim act = DNN.forward(db, Nothing)
+        Return act.Weights
+    End Function
+
+    ''' <summary>greedy action selection (argmax over Q-values)</summary>
+    Public Function argmaxAction(state As Double()) As Integer
+        Dim q = predictQ(state)
+        Dim best = 0
+        Dim bestv = q(0)
+        For i As Integer = 1 To q.Length - 1
+            If q(i) > bestv Then
+                bestv = q(i)
+                best = i
+            End If
+        Next
+        Return best
+    End Function
+
+    ''' <summary>
+    ''' one supervised regression step: fit the network output toward
+    ''' <paramref name="targetQ"/> at the given <paramref name="state"/>.
+    ''' With batch_size = 1 this performs an immediate online update.
+    ''' </summary>
+    Public Sub trainOnTargets(state As Double(), targetQ As Double())
+        Dim db = New DataBlock(1, 1, stateSize, 0)
+        For i As Integer = 0 To stateSize - 1
+            db.setWeight(i, state(i))
+        Next
+        Call ada.train(db, targetQ, Nothing)
+    End Sub
+
+    ''' <summary>deep copy of this Q-network (independent weights)</summary>
+    Public Function Clone() As QNetwork
+        Dim q = New QNetwork(stateSize, actionType, hiddenSizes, ada.learning_rate)
+        q.CopyWeightsFrom(Me)
+        Return q
+    End Function
+
+    ''' <summary>
+    ''' copy weight values from <paramref name="src"/> into this network.
+    ''' Both networks must share the same architecture.
+    ''' </summary>
+    Public Sub CopyWeightsFrom(src As QNetwork)
+        Dim mine = DNN.BackPropagationResult.ToArray()
+        Dim theirs = src.DNN.BackPropagationResult.ToArray()
+        For i As Integer = 0 To mine.Length - 1
+            Array.Copy(theirs(i).Weights, 0, mine(i).Weights, 0, mine(i).Weights.Length)
+        Next
     End Sub
 
 End Class
