@@ -627,9 +627,12 @@ Public Class CVODESolver : Implements IDisposable
 
     ''' <summary>∫_{a}^{b} L_j(τ) dτ，通过展开单根多项式后逐项积分。</summary>
     Private Function IntegrateLagrangeBasis(nodes() As Double, j As Integer, a As Double, b As Double) As Double
-        Dim deg As Integer = nodes.Length - 1
+        ' 单个节点时 L_j(τ) ≡ 1，积分即为区间长度
+        If nodes.Length = 1 Then
+            Return b - a
+        End If
         ' 构造单根多项式 Π_{m≠j} (τ - x_m) 的系数（升幂）
-        Dim roots(deg - 1) As Double
+        Dim roots(nodes.Length - 2) As Double
         Dim idx As Integer = 0
         For m As Integer = 0 To nodes.Length - 1
             If m <> j Then
