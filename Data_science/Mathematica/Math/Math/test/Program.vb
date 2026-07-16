@@ -138,8 +138,8 @@ Module Program
         Dim result2 = engine.Evaluate("3<>3")
         AssertEqual("3 <> 3 = 0", 0.0, result2)
 
-        ' (3 <> 3) + 5 = 5
-        Dim result3 = engine.Evaluate("3<>3+5")
+        ' (3 <> 3) + 5 = 5 —— 注意 <> 优先级最低，需显式括号
+        Dim result3 = engine.Evaluate("(3<>3)+5")
         AssertEqual("(3 <> 3) + 5 = 5", 5.0, result3)
 
         Console.WriteLine()
@@ -241,9 +241,13 @@ Module Program
         Dim result2 = engine.Evaluate("2^3+4*5-6/3")
         AssertEqual("2^3+4*5-6/3 = 8+20-2 = 26", 26.0, result2)
 
-        ' 右结合的幂运算: 2^3^2 = 2^(3^2) = 2^9 = 512
+        ' 幂运算按优先级从左往右计算: 2^3^2 = (2^3)^2 = 8^2 = 64
         Dim result3 = engine.Evaluate("2^3^2")
-        AssertEqual("2^3^2 = 512", 512.0, result3)
+        AssertEqual("2^3^2 = (2^3)^2 = 64", 64.0, result3)
+
+        ' 若需右结合，使用括号: 2^(3^2) = 512
+        Dim result4 = engine.Evaluate("2^(3^2)")
+        AssertEqual("2^(3^2) = 512", 512.0, result4)
 
         Console.WriteLine()
     End Sub
