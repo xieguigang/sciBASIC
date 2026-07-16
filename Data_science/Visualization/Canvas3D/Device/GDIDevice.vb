@@ -81,12 +81,12 @@ Namespace Drawing3D.Device
 
         Protected WithEvents _animationLoop As Timer
         Protected Friend _camera As New Camera With {
-            .angleX = 0,
-            .angleY = 0,
-            .angleZ = 0,
-            .fov = 256,
-            .screen = Size,
-            .viewDistance = -40
+            .AngleX = 0,
+            .AngleY = 0,
+            .AngleZ = 0,
+            .FieldOfView = 256,
+            .Screen = Size,
+            .ViewDistance = -40
         }
 
         Dim rotationWorker As New AutoRotation(Me)
@@ -119,10 +119,10 @@ Namespace Drawing3D.Device
         End Property
         Public Property FOV As Double
             Get
-                Return _camera.fov
+                Return _camera.FieldOfView
             End Get
             Set(value As Double)
-                _camera.fov = value
+                _camera.FieldOfView = value
             End Set
         End Property
 

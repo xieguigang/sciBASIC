@@ -1,7 +1,6 @@
 Imports System.Drawing
 Imports System.Linq
 Imports Microsoft.VisualBasic.Imaging.Drawing3D
-Imports Microsoft.VisualBasic.Imaging.Drawing2D.Colors
 
 ''' <summary>
 ''' 三维渲染核心：封装摄像机(Camera)与已生成的曲面/曲线数据，
@@ -24,7 +23,7 @@ Public Class PlotScene
     Private modelCenter As Point3D = New Point3D(0, 0, 0)
 
     Private colorTable As Color() = Nothing
-    Private colorBrushes As SolidBrush() = Nothing
+    Private colorBrushes As Microsoft.VisualBasic.Imaging.SolidBrush() = Nothing
     Private colorTableScheme As String = ""
 
     Private zMin As Double = 0
@@ -67,9 +66,9 @@ Public Class PlotScene
 
     Private Sub EnsureColorTable()
         If colorTable Is Nothing OrElse colorTableScheme <> ColorScheme Then
-            colorTable = Designer.GetColors(ColorScheme, 256, 255)
+            colorTable = Microsoft.VisualBasic.Imaging.Drawing2D.Colors.Designer.GetColors(ColorScheme, 256, 255)
             colorTableScheme = ColorScheme
-            colorBrushes = colorTable.Select(Function(c) New SolidBrush(c)).ToArray()
+            colorBrushes = colorTable.Select(Function(c) New Microsoft.VisualBasic.Imaging.SolidBrush(c)).ToArray()
         End If
     End Sub
 
