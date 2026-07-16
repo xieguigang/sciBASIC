@@ -12,4 +12,10 @@
 	  <ProjectReference Include="..\..\Math\Math.NET5.vbproj" />
 	  <ProjectReference Include="..\symbolic-netcore5.vbproj" />
 	</ItemGroup>
-	</Project>
+
+	<!-- Both Module1 and SymbolicTest declare a Main; pick SymbolicTest so the
+	     verification examples run. -->
+	<PropertyGroup>
+	  <StartupObject>SymbolicTest</StartupObject>
+	</PropertyGroup>
+</Project>
