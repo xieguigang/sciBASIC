@@ -75,11 +75,7 @@ Namespace Symbolic
                 Return DirectCast(raw, UnifySymbol).GetSimplify
             End If
 
-            If Not TypeOf raw Is BinaryExpression Then
-                Return raw
-            Else
-                Return MakeSimplify.makeSimple(raw)
-            End If
+            Return MakeSimplify.simplifyExpr(raw)
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>

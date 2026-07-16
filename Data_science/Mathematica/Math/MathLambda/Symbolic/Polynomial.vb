@@ -1,0 +1,368 @@
+' /********************************************************************************/
+'
+'     Module Polynomial
+' 
+'         Univariate polynomial arithmetic over (exact) numeric coefficients:
+'         construction from / serialisation to the expression tree, multiplication,
+'         division with remainder, greatest common divisor (Euclidean algorithm)
+'         and heuristic factorisation (rational-root / repeated division).
+'
+'     Author: xie.guigang@live.com
+'     Copyright (c) 2018 GPL3 Licensed
+'
+' /********************************************************************************/
+
+Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Math.Scripting.MathExpression.Impl
+
+Namespace Symbolic
+
+    ''' <summary>
+    ''' A univariate polynomial a0 + a1*x + ... + an*x^n with numeric coefficients.
+    ''' </summary>
+    Friend Class UnivariatePoly
+        Public variable As String
+        Public coeff As Double()
+
+        Public ReadOnly Property Degree As Integer
+            Get
+                Dim d = coeff.Length - 1
+                While d > 0 AndAlso Math.Abs(coeff(d)) < 1E-9
+                    d -= 1
+                End While
+                Return d
+            End Get
+        End Property
+    End Class
+
+    Module Polynomial
+
+        Private Const EPS As Double = 1.0E-9
+
+        ' ------------------------------------------------------------------
+        ' Construction / serialisation
+        ' ------------------------------------------------------------------
+
+        ''' <summary>
+        ''' Infer the single variable of a univariate polynomial expression.
+        ''' </summary>
+        Private Function inferVar(expr As Expression) As String
+            Dim symbols = GetSymbols(expr)
+            If symbols.Length = 1 Then
+                Return symbols(0)
+            ElseIf symbols.Length = 0 Then
+                Throw New NotSupportedException("the expression contains no variable to build a polynomial from.")
+            Else
+                Throw New NotSupportedException($"multivariate polynomial is not supported, found variables: {symbols.JoinBy(", ")}")
+            End If
+        End Function
+
+        Private Function parsePoly(expr As Expression, var$) As UnivariatePoly
+            Dim terms = FlattenSum(expr)
+            Dim dict As New Dictionary(Of Integer, Double)
+
+            For Each t In terms
+                Dim c As Double, p As Integer
+                parseTerm(t, var, c, p)
+                If dict.ContainsKey(p) Then
+                    dict(p) += c
+                Else
+                    dict.Add(p, c)
+                End If
+            Next
+
+            Dim maxP = 0
+            For Each k In dict.Keys
+                If k > maxP Then maxP = k
+            Next
+
+            Dim arr(maxP) As Double
+            For i As Integer = 0 To maxP
+                If dict.ContainsKey(i) Then arr(i) = dict(i)
+            Next
+
+            Return New UnivariatePoly With {.variable = var, .coeff = arr}
+        End Function
+
+        Private Sub parseTerm(t As Expression, var$, ByRef c As Double, ByRef p As Integer)
+            If TypeOf t Is UnaryExpression AndAlso DirectCast(t, UnaryExpression).operator = "-"c Then
+                Dim c2 As Double, p2 As Integer
+                parseTerm(DirectCast(t, UnaryExpression).value, var, c2, p2)
+                c = -c2
+                p = p2
+                Return
+            End If
+
+            If TypeOf t Is Literal Then
+                c = DirectCast(t, Literal).number
+                p = 0
+                Return
+            End If
+
+            If TypeOf t Is SymbolExpression Then
+                If DirectCast(t, SymbolExpression).symbolName = var Then
+                    c = 1 : p = 1
+                Else
+                    Throw New NotSupportedException($"multivariate term not supported by the polynomial engine: {t}")
+                End If
+                Return
+            End If
+
+            If TypeOf t Is BinaryExpression Then
+                Dim b = DirectCast(t, BinaryExpression)
+                If b.operator = "^"c Then
+                    If TypeOf b.left Is SymbolExpression AndAlso DirectCast(b.left, SymbolExpression).symbolName = var AndAlso TypeOf b.right Is Literal Then
+                        c = 1
+                        p = CInt(DirectCast(b.right, Literal).number)
+                        Return
+                    End If
+                    Throw New NotSupportedException($"unsupported power term: {t}")
+                ElseIf b.operator = "*"c Then
+                    c = 1
+                    p = 0
+                    For Each f In FlattenProduct(t)
+                        Dim c2 As Double, p2 As Integer
+                        parseTerm(f, var, c2, p2)
+                        c *= c2
+                        p += p2
+                    Next
+                    Return
+                End If
+            End If
+
+            Throw New NotSupportedException($"unsupported polynomial term: {t}")
+        End Sub
+
+        Private Function toExpr(poly As UnivariatePoly) As Expression
+            Dim x = New SymbolExpression(poly.variable)
+            Dim terms As New List(Of Expression)
+
+            For i As Integer = 0 To poly.coeff.Length - 1
+                Dim c = poly.coeff(i)
+                If Math.Abs(c) < EPS Then Continue For
+                If i = 0 Then
+                    terms.Add(MakeLiteral(c))
+                ElseIf i = 1 Then
+                    terms.Add(Mul(MakeLiteral(c), x))
+                Else
+                    terms.Add(Mul(MakeLiteral(c), Pow(x, MakeLiteral(i))))
+                End If
+            Next
+
+            If terms.Count = 0 Then Return MakeLiteral(0)
+            If terms.Count = 1 Then Return terms(0)
+
+            Dim acc = terms(0)
+            For i As Integer = 1 To terms.Count - 1
+                acc = Add(acc, terms(i))
+            Next
+            Return simplifyExpr(acc)
+        End Function
+
+        ' ------------------------------------------------------------------
+        ' Arithmetic
+        ' ------------------------------------------------------------------
+
+        Private Function polyMultiply(a As UnivariatePoly, b As UnivariatePoly) As UnivariatePoly
+            Dim n = a.Degree, m = b.Degree
+            Dim res(n + m) As Double
+            For i As Integer = 0 To n
+                For j As Integer = 0 To m
+                    res(i + j) += a.coeff(i) * b.coeff(j)
+                Next
+            Next
+            Return New UnivariatePoly With {.variable = a.variable, .coeff = res}
+        End Function
+
+        Private Sub polyDivide(dividend As UnivariatePoly, divisor As UnivariatePoly, ByRef quotient As UnivariatePoly, ByRef remainder As UnivariatePoly)
+            Dim remC = CType(dividend.coeff.Clone, Double())
+            Dim dDeg = divisor.Degree
+            Dim dLead = divisor.coeff(dDeg)
+            Dim q(dividend.Degree) As Double
+            Dim rDeg = dividend.Degree
+
+            While rDeg >= dDeg AndAlso Math.Abs(remC(rDeg)) >= EPS
+                Dim coef = remC(rDeg) / dLead
+                Dim deg = rDeg - dDeg
+                q(deg) = coef
+                For i As Integer = 0 To dDeg
+                    remC(deg + i) -= coef * divisor.coeff(i)
+                Next
+                rDeg -= 1
+            End While
+
+            quotient = New UnivariatePoly With {.variable = dividend.variable, .coeff = trimZero(q)}
+            remainder = New UnivariatePoly With {.variable = dividend.variable, .coeff = trimZero(remC)}
+        End Sub
+
+        Private Function polyGCD(a As UnivariatePoly, b As UnivariatePoly) As UnivariatePoly
+            Dim r0 = a, r1 = b
+
+            Do While Not polyIsZero(r1)
+                Dim q As UnivariatePoly, r As UnivariatePoly
+                polyDivide(r0, r1, q, r)
+                r0 = r1
+                r1 = r
+            Loop
+
+            Dim lead = r0.coeff(r0.Degree)
+            If Math.Abs(lead) >= EPS Then
+                For i As Integer = 0 To r0.coeff.Length - 1
+                    r0.coeff(i) /= lead
+                Next
+            End If
+
+            Return r0
+        End Function
+
+        Private Function polyIsZero(p As UnivariatePoly) As Boolean
+            For i As Integer = 0 To p.coeff.Length - 1
+                If Math.Abs(p.coeff(i)) >= EPS Then Return False
+            Next
+            Return True
+        End Function
+
+        Private Function trimZero(arr As Double()) As Double()
+            Dim d = arr.Length - 1
+            While d > 0 AndAlso Math.Abs(arr(d)) < EPS
+                d -= 1
+            End While
+            If d = arr.Length - 1 Then Return arr
+            Dim out(d) As Double
+            Array.Copy(arr, out, d + 1)
+            Return out
+        End Function
+
+        Private Function evalPoly(coeff As Double(), x As Double) As Double
+            Dim result = 0.0
+            For i As Integer = coeff.Length - 1 To 0 Step -1
+                result = result * x + coeff(i)
+            Next
+            Return result
+        End Function
+
+        ' ------------------------------------------------------------------
+        ' Heuristic factorisation
+        ' ------------------------------------------------------------------
+
+        Private Function factorLinearRoots(poly As UnivariatePoly) As List(Of Expression)
+            Dim factors As New List(Of Expression)
+            Dim x = New SymbolExpression(poly.variable)
+            Dim current = poly
+
+            ' pull out the numeric greatest common divisor of coefficients
+            Dim numericGCD = 0.0
+            For i As Integer = 0 To current.coeff.Length - 1
+                numericGCD = gcd(numericGCD, Math.Abs(current.coeff(i)))
+            Next
+            If numericGCD > 1 + EPS Then
+                For i As Integer = 0 To current.coeff.Length - 1
+                    current.coeff(i) /= numericGCD
+                Next
+                factors.Add(MakeLiteral(numericGCD))
+            End If
+
+            Dim changed = True
+            While changed AndAlso current.Degree >= 1
+                changed = False
+                For r As Integer = -20 To 20
+                    If Math.Abs(evalPoly(current.coeff, r)) < 1.0E-6 Then
+                        ' root r -> factor (x - r)
+                        factors.Add(Subt(x, MakeLiteral(r)))
+
+                        ' divide current by (x - r)
+                        Dim divisor = New UnivariatePoly With {
+                            .variable = poly.variable,
+                            .coeff = New Double() {-r, 1}
+                        }
+                        Dim q As UnivariatePoly, rem As UnivariatePoly
+                        polyDivide(current, divisor, q, rem)
+                        current = q
+                        changed = True
+                        Exit For
+                    End If
+                Next
+            End While
+
+            If current.Degree >= 1 Then
+                factors.Add(toExpr(current))
+            ElseIf Math.Abs(current.coeff(0)) >= EPS AndAlso factors.Count = 0 Then
+                factors.Add(toExpr(current))
+            End If
+
+            Return factors
+        End Function
+
+        Private Function gcd(a As Double, b As Double) As Double
+            a = Math.Abs(a)
+            b = Math.Abs(b)
+            While b > EPS
+                Dim t = b
+                b = a - Math.Floor(a / b) * b
+                a = t
+            End While
+            Return a
+        End Function
+
+        ' ------------------------------------------------------------------
+        ' Public API
+        ' ------------------------------------------------------------------
+
+        ''' <summary>
+        ''' Factorise a univariate polynomial expression (heuristic). Returns the
+        ''' factorised expression, e.g. x^2 + 2*x + 1 -> (x + 1)^2.
+        ''' </summary>
+        Public Function Factor(expr As Expression, Optional var$ = Nothing) As Expression
+            If var Is Nothing Then var = inferVar(expr)
+            Dim expanded = simplifyExpr(Expands(expr))
+            Dim poly = parsePoly(expanded, var)
+            Dim factors = factorLinearRoots(poly)
+
+            If factors.Count = 0 Then
+                Return MakeLiteral(1)
+            ElseIf factors.Count = 1 Then
+                Return factors(0)
+            End If
+
+            Dim acc = factors(0)
+            For i As Integer = 1 To factors.Count - 1
+                acc = Mul(acc, factors(i))
+            Next
+            Return simplifyExpr(acc)
+        End Function
+
+        ''' <summary>
+        ''' Multiply two univariate polynomials and return the result as an expression.
+        ''' </summary>
+        Public Function PolynomialMultiply(a As Expression, b As Expression, Optional var$ = Nothing) As Expression
+            If var Is Nothing Then var = inferVar(a)
+            Dim pa = parsePoly(simplifyExpr(Expands(a)), var)
+            Dim pb = parsePoly(simplifyExpr(Expands(b)), var)
+            Return toExpr(polyMultiply(pa, pb))
+        End Function
+
+        ''' <summary>
+        ''' Divide <paramref name="dividend"/> by <paramref name="divisor"/>, returning the
+        ''' quotient and assigning the remainder to <paramref name="remainder"/>.
+        ''' </summary>
+        Public Function PolynomialDivide(dividend As Expression, divisor As Expression, Optional var$ = Nothing, Optional remainder As Expression = Nothing) As Expression
+            If var Is Nothing Then var = inferVar(dividend)
+            Dim pa = parsePoly(simplifyExpr(Expands(dividend)), var)
+            Dim pb = parsePoly(simplifyExpr(Expands(divisor)), var)
+            Dim q As UnivariatePoly, r As UnivariatePoly
+            polyDivide(pa, pb, q, r)
+            remainder = toExpr(r)
+            Return toExpr(q)
+        End Function
+
+        ''' <summary>
+        ''' Greatest common divisor of two univariate polynomials (returned monic).
+        ''' </summary>
+        Public Function PolynomialGCD(a As Expression, b As Expression, Optional var$ = Nothing) As Expression
+            If var Is Nothing Then var = inferVar(a)
+            Dim pa = parsePoly(simplifyExpr(Expands(a)), var)
+            Dim pb = parsePoly(simplifyExpr(Expands(b)), var)
+            Return toExpr(polyGCD(pa, pb))
+        End Function
+    End Module
+End Namespace

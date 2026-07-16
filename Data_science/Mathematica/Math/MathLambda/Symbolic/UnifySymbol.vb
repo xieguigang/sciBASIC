@@ -98,13 +98,9 @@ Namespace Symbolic
                 ' 1 * x ^ 1 = x
                 Return New SymbolExpression(symbolName)
             Else
-                Dim bin = CType(Me, BinaryExpression)
-
-                If bin.isNormalized Then
-                    Return bin
-                Else
-                    Return MakeSimplify.makeSimple(bin)
-                End If
+                ' convert a * x ^ n back into a binary tree and run the
+                ' general simplification pass on it
+                Return MakeSimplify.simplifyExpr(CType(Me, BinaryExpression))
             End If
         End Function
 
