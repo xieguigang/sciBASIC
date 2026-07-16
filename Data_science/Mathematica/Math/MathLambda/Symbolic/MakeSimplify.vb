@@ -252,9 +252,9 @@ Namespace Symbolic
                     Continue For
                 End If
 
-                Dim folded = foldSqrtPower(g.baseExpr, g.exp)
+                Dim folded = foldSpecialSquare(g.baseExpr, g.exp)
                 If folded IsNot Nothing Then
-                    ' sqrt(y) ^ 2  ->  y  (and similar perfect-square radicals)
+                    ' sqrt(y) ^ 2  ->  y ;  i ^ 2  ->  -1
                     result.Add(folded)
                 ElseIf g.exp = 1 Then
                     result.Add(g.baseExpr)
@@ -262,6 +262,11 @@ Namespace Symbolic
                     result.Add(Pow(g.baseExpr, MakeLiteral(g.exp)))
                 End If
             Next
+
+            ' Canonicalise the factor order so that commutative products such as
+            ' a*b and b*a compare equal and cancel in sums (needed by rationalisation
+            ' to clear cross terms like sqrt(a)*sqrt(b) - sqrt(b)*sqrt(a)).
+            result.Sort(Function(a, b) canonicalKey(a).CompareTo(canonicalKey(b)))
 
             If result.Count = 0 Then Return MakeLiteral(1)
             If result.Count = 1 Then Return result(0)
@@ -271,6 +276,25 @@ Namespace Symbolic
                 acc = Mul(acc, result(i))
             Next
             Return acc
+        End Function
+
+        Private Function canonicalKey(e As Expression) As String
+            If e Is Nothing Then Return ""
+            If TypeOf e Is Literal Then
+                Return "L" & DirectCast(e, Literal).number.ToString
+            ElseIf TypeOf e Is SymbolExpression Then
+                Return "S" & DirectCast(e, SymbolExpression).symbolName
+            ElseIf TypeOf e Is FunctionInvoke Then
+                Dim f = DirectCast(e, FunctionInvoke)
+                Return "F" & f.funcName & "(" & String.Join(",", f.parameters.Select(AddressOf canonicalKey)) & ")"
+            ElseIf TypeOf e Is BinaryExpression Then
+                Dim b = DirectCast(e, BinaryExpression)
+                Return "B" & b.operator & "(" & canonicalKey(b.left) & "," & canonicalKey(b.right) & ")"
+            ElseIf TypeOf e Is UnaryExpression Then
+                Dim u = DirectCast(e, UnaryExpression)
+                Return "U" & u.operator & "(" & canonicalKey(u.value) & ")"
+            End If
+            Return "X" & e.GetType.Name
         End Function
 
         Private Sub addFactor(groups As List(Of ProdGroup), baseExpr As Expression, exponent As Double, ByRef coeff As Double)
@@ -396,12 +420,12 @@ Namespace Symbolic
         End Function
 
         ''' <summary>
-        ''' If <paramref name="baseExpr"/> is sqrt(y) raised to an even integer power
-        ''' n, return the simplified factor y ^ (n / 2). Otherwise return Nothing.
-        ''' This lets products like sqrt(2) * sqrt(2) and (sqrt(x)) ^ 2 collapse to a
-        ''' rational expression, which the rationalisation step needs.
+        ''' If <paramref name="baseExpr"/> is sqrt(y) raised to an even integer power n,
+        ''' return the simplified factor y ^ (n / 2). If it is the imaginary unit i
+        ''' squared, return -1. Otherwise return Nothing. These folds let the
+        ''' rationalisation step clear radicals and the imaginary unit from denominators.
         ''' </summary>
-        Private Function foldSqrtPower(baseExpr As Expression, exp As Double) As Expression
+        Private Function foldSpecialSquare(baseExpr As Expression, exp As Double) As Expression
             If TypeOf baseExpr Is FunctionInvoke Then
                 Dim f = DirectCast(baseExpr, FunctionInvoke)
                 If f.funcName = "sqrt" AndAlso f.parameters.Length = 1 Then
@@ -409,6 +433,11 @@ Namespace Symbolic
                     If System.Math.Abs(exp - n) < 1.0E-9 AndAlso n >= 2 AndAlso (n Mod 2 = 0) Then
                         Return Pow(f.parameters(0), MakeLiteral(n \ 2))
                     End If
+                End If
+            ElseIf TypeOf baseExpr Is SymbolExpression Then
+                Dim nm = DirectCast(baseExpr, SymbolExpression).symbolName
+                If (nm = "i" OrElse nm = "I") AndAlso System.Math.Abs(exp - 2) < 1.0E-9 Then
+                    Return MakeLiteral(-1)
                 End If
             End If
             Return Nothing
