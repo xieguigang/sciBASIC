@@ -67,7 +67,7 @@ Public Class QNetwork
     Dim ada As TrainerAlgorithm
 
     ' architecture cache (for clone / rebuild / state-size inference)
-    Private ReadOnly stateSize As Integer
+    Private ReadOnly m_stateSize As Integer
     Private ReadOnly hiddenSizes As Integer()
     Private ReadOnly actionType As Type
 
@@ -79,9 +79,9 @@ Public Class QNetwork
     ''' <param name="hiddens">configs of the hidden layers, is a vector of the neuron nodes in each hidden layers</param>
     ''' <param name="learningRate">the optimizer step size for the online Q-learning update</param>
     Sub New(statSize As Integer, actions As Type, Optional hiddens As Integer() = Nothing, Optional learningRate As Double = 0.001)
-        Me.stateSize = statSize
-        Me.actionType = actions
         Call Me.New(actions)
+        Me.m_stateSize = statSize
+        Me.actionType = actions
         Dim shape = defaultShape(hiddens, statSize, actionSet.Length)
         Me.hiddenSizes = shape
         DNN = buildModel(statSize, shape, actionSet.Length)
@@ -123,9 +123,9 @@ Public Class QNetwork
     ''' <param name="Q"></param>
     ''' <param name="actions">should be a <see cref="System.Enum"/> value type of the output actions</param>
     Sub New(Q As ConvolutionalNN, actions As Type)
-        Me.stateSize = Q.input.out_depth
-        Me.actionType = actions
         Call Me.New(actions)
+        Me.m_stateSize = Q.input.out_depth
+        Me.actionType = actions
         DNN = Q
         ada = New AdamTrainer(1, 0.0)
         ada.SetKernel(DNN)
@@ -137,7 +137,7 @@ Public Class QNetwork
     ''' <summary>dimension of the input world state vector</summary>
     Public ReadOnly Property StateSize As Integer
         Get
-            Return stateSize
+            Return m_stateSize
         End Get
     End Property
 
@@ -171,8 +171,8 @@ Public Class QNetwork
     ''' (no image normalization), so predict and train share the same encoding.
     ''' </summary>
     Public Function predictQ(state As Double()) As Double()
-        Dim db = New DataBlock(1, 1, stateSize, 0)
-        For i As Integer = 0 To stateSize - 1
+        Dim db = New DataBlock(1, 1, m_stateSize, 0)
+        For i As Integer = 0 To m_stateSize - 1
             db.setWeight(i, state(i))
         Next
         Dim act = DNN.forward(db, Nothing)
@@ -199,8 +199,8 @@ Public Class QNetwork
     ''' With batch_size = 1 this performs an immediate online update.
     ''' </summary>
     Public Sub trainOnTargets(state As Double(), targetQ As Double())
-        Dim db = New DataBlock(1, 1, stateSize, 0)
-        For i As Integer = 0 To stateSize - 1
+        Dim db = New DataBlock(1, 1, m_stateSize, 0)
+        For i As Integer = 0 To m_stateSize - 1
             db.setWeight(i, state(i))
         Next
         Call ada.train(db, targetQ, Nothing)
@@ -208,7 +208,7 @@ Public Class QNetwork
 
     ''' <summary>deep copy of this Q-network (independent weights)</summary>
     Public Function Clone() As QNetwork
-        Dim q = New QNetwork(stateSize, actionType, hiddenSizes, ada.learning_rate)
+        Dim q = New QNetwork(m_stateSize, actionType, hiddenSizes, ada.learning_rate)
         q.CopyWeightsFrom(Me)
         Return q
     End Function
