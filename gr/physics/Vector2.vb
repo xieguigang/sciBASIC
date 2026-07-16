@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::08fa53aab65a964d445278419e855f1b, gr\physics\Vector2.vb"
+﻿#Region "Microsoft.VisualBasic::6842a35f3eb6f572208d536f112b79be, gr\physics\Vector2.vb"
 
     ' Author:
     ' 
@@ -23,10 +23,10 @@
     ' GNU General Public License for more details.
     ' 
     ' You should have received a copy of the GNU General Public License
-    ' along with this program.  If not, see <http://www.gnu.org/licenses/>.
-    
-    
-    
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
     ' /********************************************************************************/
 
     ' Summaries:
@@ -34,23 +34,23 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 134
-    '    Code Lines: 112 (83.58%)
+    '   Total Lines: 141
+    '    Code Lines: 118 (83.69%)
     ' Comment Lines: 0 (0.00%)
     '    - Xml Docs: 0.00%
     ' 
-    '   Blank Lines: 22 (16.42%)
-    '     File Size: 4.06 KB
+    '   Blank Lines: 23 (16.31%)
+    '     File Size: 4.27 KB
 
 
     ' Class Vector2
     ' 
-    '     Properties: down, left, magnitude, one, right
-    '                 up, zero
+    '     Properties: Down, Left, Magnitude, One, Right
+    '                 Up, Zero
     ' 
     '     Constructor: (+3 Overloads) Sub New
-    '     Function: (+2 Overloads) random
-    '     Operators: (+2 Overloads) -, (+3 Overloads) *, /, +
+    '     Function: (+2 Overloads) Random
+    '     Operators: (+3 Overloads) -, (+3 Overloads) *, /, +
     ' 
     ' /********************************************************************************/
 

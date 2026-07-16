@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9350f213975a6889e4dac61bcf1ca80d, gr\Microsoft.VisualBasic.Imaging\Drawing3D\Model2D.vb"
+﻿#Region "Microsoft.VisualBasic::f863bb40b3f00bfdbe9ca1abcdef2873, gr\Microsoft.VisualBasic.Imaging\Drawing3D\Model2D.vb"
 
     ' Author:
     ' 
@@ -45,7 +45,7 @@
 
     '     Class Model2D
     ' 
-    '         Properties: isDot, isLine
+    '         Properties: IsDot, IsLine
     ' 
     '         Constructor: (+2 Overloads) Sub New
     ' 

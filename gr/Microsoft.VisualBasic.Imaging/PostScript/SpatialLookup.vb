@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e7571583a26e7e8cddd38404d323db3d, gr\Microsoft.VisualBasic.Imaging\PostScript\SpatialLookup.vb"
+﻿#Region "Microsoft.VisualBasic::ce63a38b41780943ab11c3444f6c3a8c, gr\Microsoft.VisualBasic.Imaging\PostScript\SpatialLookup.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 94
-    '    Code Lines: 75 (79.79%)
-    ' Comment Lines: 0 (0.00%)
+    '   Total Lines: 114
+    '    Code Lines: 88 (77.19%)
+    ' Comment Lines: 2 (1.75%)
     '    - Xml Docs: 0.00%
     ' 
-    '   Blank Lines: 19 (20.21%)
-    '     File Size: 3.50 KB
+    '   Blank Lines: 24 (21.05%)
+    '     File Size: 4.13 KB
 
 
     '     Class SpatialHashing

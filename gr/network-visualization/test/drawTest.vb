@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7e1433838acd94295aff9bbe584c3569, sciBASIC#\gr\network-visualization\test\drawTest.vb"
+﻿#Region "Microsoft.VisualBasic::d56c9be3b01031247465d045b9ad2273, gr\network-visualization\test\drawTest.vb"
 
     ' Author:
     ' 
@@ -35,9 +35,11 @@
     ' Code Statistics:
 
     '   Total Lines: 135
-    '    Code Lines: 92
-    ' Comment Lines: 18
-    '   Blank Lines: 25
+    '    Code Lines: 92 (68.15%)
+    ' Comment Lines: 18 (13.33%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 25 (18.52%)
     '     File Size: 5.17 KB
 
 
@@ -51,13 +53,13 @@
     ' 
     '     Function: activate, getByDimension, GetDimensions, metric, nodeIs
     ' 
-    '     Sub: setByDimensin
+    '     Sub: setBydimension
     ' 
     ' Class PointAccess
     ' 
     '     Function: activate, getByDimension, GetDimensions, metric, nodeIs
     ' 
-    '     Sub: setByDimensin
+    '     Sub: setByDimension
     ' 
     ' /********************************************************************************/
 

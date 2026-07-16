@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8508c07b98f7dde34d40798a23a7234d, Data_science\Visualization\Plots\3D\PieChart3D.vb"
+﻿#Region "Microsoft.VisualBasic::9690de70b01d7c930425a99fc58559fd, Data_science\Visualization\Plots\3D\PieChart3D.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 0.00%
     ' 
     '   Blank Lines: 9 (12.33%)
-    '     File Size: 3.09 KB
+    '     File Size: 3.10 KB
 
 
     '     Module PieChart3D

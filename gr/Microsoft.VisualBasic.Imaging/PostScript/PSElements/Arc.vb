@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bafd9639d0544a4941bcf03da9d5142a, gr\Microsoft.VisualBasic.Imaging\PostScript\PSElements\Arc.vb"
+﻿#Region "Microsoft.VisualBasic::d79c927ce0189bd7d446fb67261b5991, gr\Microsoft.VisualBasic.Imaging\PostScript\PSElements\Arc.vb"
 
     ' Author:
     ' 
@@ -34,19 +34,19 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 101
-    '    Code Lines: 85 (84.16%)
-    ' Comment Lines: 0 (0.00%)
-    '    - Xml Docs: 0.00%
+    '   Total Lines: 150
+    '    Code Lines: 118 (78.67%)
+    ' Comment Lines: 4 (2.67%)
+    '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 16 (15.84%)
-    '     File Size: 3.82 KB
+    '   Blank Lines: 28 (18.67%)
+    '     File Size: 5.41 KB
 
 
     '     Class Pie
     ' 
-    '         Properties: fill, height, startAngle, sweepAngle, width
-    '                     x, y
+    '         Properties: fill, height, startAngle, stroke, sweepAngle
+    '                     width, x, y
     ' 
     '         Function: GetSize, GetXy, ScaleTo
     ' 
@@ -57,7 +57,7 @@
     '         Properties: height, startAngle, stroke, sweepAngle, width
     '                     x, y
     ' 
-    '         Function: GetSize, GetXy, ScaleTo
+    '         Function: GetSize, GetXy, SampleArc, ScaleTo
     ' 
     '         Sub: Paint, WriteAscii
     ' 

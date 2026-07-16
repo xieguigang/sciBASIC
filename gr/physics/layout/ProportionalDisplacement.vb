@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2470b2c47d22fbf1c819755e93027375, gr\physics\layout\ProportionalDisplacement.vb"
+﻿#Region "Microsoft.VisualBasic::692c84cbe617ff3e7e27067b2fe1f118, gr\physics\layout\ProportionalDisplacement.vb"
 
     ' Author:
     ' 
@@ -51,7 +51,7 @@
     ' 
     '         Function: assertValue
     ' 
-    '         Sub: moveNode
+    '         Sub: MoveNode
     ' 
     ' 
     ' /********************************************************************************/

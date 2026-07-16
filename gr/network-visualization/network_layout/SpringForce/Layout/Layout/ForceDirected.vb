@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6621368f3a5e5766e106ba0f16ff49ba, gr\network-visualization\network_layout\SpringForce\Layout\Layout\ForceDirected.vb"
+﻿#Region "Microsoft.VisualBasic::b127ed11eba825fa3cfc5e5dd88cf748, gr\network-visualization\network_layout\SpringForce\Layout\Layout\ForceDirected.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 417
-    '    Code Lines: 295 (70.74%)
-    ' Comment Lines: 62 (14.87%)
-    '    - Xml Docs: 14.52%
+    '   Total Lines: 432
+    '    Code Lines: 300 (69.44%)
+    ' Comment Lines: 70 (16.20%)
+    '    - Xml Docs: 12.86%
     ' 
-    '   Blank Lines: 60 (14.39%)
-    '     File Size: 17.06 KB
+    '   Blank Lines: 62 (14.35%)
+    '     File Size: 18.05 KB
 
 
     '     Class ForceDirected

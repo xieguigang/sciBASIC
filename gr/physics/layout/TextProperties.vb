@@ -1,4 +1,4 @@
-#Region "Microsoft.VisualBasic::22d529a3b06becec315d4644ed6f410a, gr\physics\layout\TextProperties.vb"
+﻿#Region "Microsoft.VisualBasic::5fbb3c096f1adacd4ea4e9219e1c237e, gr\physics\layout\TextProperties.vb"
 
     ' Author:
     ' 
@@ -23,12 +23,31 @@
     ' GNU General Public License for more details.
     ' 
     ' You should have received a copy of the GNU General Public License
-    ' along with this program.  If not, see <http://www.gnu.org/licenses/>.
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
 
     ' /********************************************************************************/
 
-    '     Class TextProperties
+    ' Summaries:
 
+
+    ' Code Statistics:
+
+    '   Total Lines: 14
+    '    Code Lines: 6 (42.86%)
+    ' Comment Lines: 6 (42.86%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 2 (14.29%)
+    '     File Size: 312 B
+
+
+    '     Class TextProperties
+    ' 
+    '         Properties: Height, Width
+    ' 
+    ' 
     ' /********************************************************************************/
 
 #End Region

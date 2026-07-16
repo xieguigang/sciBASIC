@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f48f496404007bf374422bdce0e7e607, gr\Microsoft.VisualBasic.Imaging\d3js\labeler\Anchor.vb"
+﻿#Region "Microsoft.VisualBasic::b6bea138fce0bb13dd40ee9f376f249b, gr\Microsoft.VisualBasic.Imaging\d3js\labeler\Anchor.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 95.45%
     ' 
     '   Blank Lines: 18 (17.31%)
-    '     File Size: 3.00 KB
+    '     File Size: 2.99 KB
 
 
     '     Class Anchor

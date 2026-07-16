@@ -1,57 +1,66 @@
-﻿#Region "Microsoft.VisualBasic::09a16dcbb2866c877524c56a7a890260, gr\Microsoft.VisualBasic.Imaging\PostScript\Parser.vb"
+﻿#Region "Microsoft.VisualBasic::a30e4ef1b6503a2b82169bb3fac5a54d, gr\Microsoft.VisualBasic.Imaging\PostScript\Parser.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 47
-'    Code Lines: 26 (55.32%)
-' Comment Lines: 10 (21.28%)
-'    - Xml Docs: 0.00%
-' 
-'   Blank Lines: 11 (23.40%)
-'    File Size: 1.59 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Class Parser
-' 
-'         Constructor: (+1 Overloads) Sub New
-' 
-'         Function: Load
-' 
-'         Sub: (+2 Overloads) Dispose
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 803
+    '    Code Lines: 567 (70.61%)
+    ' Comment Lines: 87 (10.83%)
+    '    - Xml Docs: 70.11%
+    ' 
+    '   Blank Lines: 149 (18.56%)
+    '     File Size: 30.03 KB
+
+
+    '     Class Parser
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
+    '         Function: Clamp255, Dist, FinalizeImage, FinalizeShape, FinalizeText
+    '                   Gdi, GdiY, IsAxisAlignedRect, IsPie, Load
+    '                   MakePie, ParseCanvasHeight, Pop, RectFromPoints, Tokenize
+    '                   Unescape
+    ' 
+    '         Sub: (+2 Overloads) Dispose, InterpretToken, ResetState, SampleCurveto
+    '         Class ArcInfo
+    ' 
+    ' 
+    ' 
+    ' 
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

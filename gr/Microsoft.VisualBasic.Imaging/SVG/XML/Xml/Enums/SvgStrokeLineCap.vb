@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::790f07252af349ef9c716f55a3d9999a, gr\Microsoft.VisualBasic.Imaging\SVG\XML\Xml\Enums\SvgStrokeLineCap.vb"
+﻿#Region "Microsoft.VisualBasic::b638f3a138561a879f08c9948f5427a1, gr\Microsoft.VisualBasic.Imaging\SVG\XML\Xml\Enums\SvgStrokeLineCap.vb"
 
     ' Author:
     ' 
@@ -34,18 +34,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 14
-    '    Code Lines: 11 (78.57%)
+    '   Total Lines: 24
+    '    Code Lines: 18 (75.00%)
     ' Comment Lines: 0 (0.00%)
     '    - Xml Docs: 0.00%
     ' 
-    '   Blank Lines: 3 (21.43%)
-    '     File Size: 507 B
+    '   Blank Lines: 6 (25.00%)
+    '     File Size: 753 B
 
 
     '     Class SvgStrokeLineCap
     ' 
-    '         Properties: Butt, Round, Square
+    '         Properties: [enum], Butt, Round, Square
     ' 
     '         Constructor: (+1 Overloads) Sub New
     ' 
@@ -55,16 +55,26 @@
 #End Region
 
 Namespace SVG.XML.Enums
-    Public Class SvgStrokeLineCap
-        Inherits SvgEnum
+
+    Public Class SvgStrokeLineCap : Inherits SvgEnum
+
+        Public Const cap_butt As String = "butt"
+        Public Const cap_round As String = "round"
+        Public Const cap_square As String = "square"
+
+        Public Shared ReadOnly Property Butt As New SvgStrokeLineCap(cap_butt)
+        Public Shared ReadOnly Property Round As New SvgStrokeLineCap(cap_round)
+        Public Shared ReadOnly Property Square As New SvgStrokeLineCap(cap_square)
+
+        Public ReadOnly Property [enum] As String
+            Get
+                Return _value
+            End Get
+        End Property
+
         Private Sub New(value As String)
             MyBase.New(value)
         End Sub
 
-        Public Shared ReadOnly Property Butt As SvgStrokeLineCap = New SvgStrokeLineCap("butt")
-
-        Public Shared ReadOnly Property Round As SvgStrokeLineCap = New SvgStrokeLineCap("round")
-
-        Public Shared ReadOnly Property Square As SvgStrokeLineCap = New SvgStrokeLineCap("square")
     End Class
 End Namespace

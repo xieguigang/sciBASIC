@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e2dc95bf0f88e4e783df1030ed50ad1d, gr\Landscape\ThreeMF\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::26543d29c52a9a568cdad91c9cef7cf3, gr\Landscape\ThreeMF\Extensions.vb"
 
     ' Author:
     ' 
@@ -34,18 +34,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 87
-    '    Code Lines: 51 (58.62%)
-    ' Comment Lines: 28 (32.18%)
+    '   Total Lines: 70
+    '    Code Lines: 40 (57.14%)
+    ' Comment Lines: 23 (32.86%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 8 (9.20%)
-    '     File Size: 2.96 KB
+    '   Blank Lines: 7 (10.00%)
+    '     File Size: 2.36 KB
 
 
     '     Module Extensions
     ' 
-    '         Function: GetMaterials, GetTriangleCount, GetVertexCount, TranslateColor, ValidMesh
+    '         Function: GetMaterials, GetTriangleCount, GetVertexCount, ValidMesh
     ' 
     ' 
     ' /********************************************************************************/

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::46b4a203a522f4571f223fa3ea53f43a, gr\Microsoft.VisualBasic.Imaging\test\hqx_test.vb"
+﻿#Region "Microsoft.VisualBasic::852660c00a7a68591a2ba0035082f856, gr\Microsoft.VisualBasic.Imaging\test\hqx_test.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 44
-    '    Code Lines: 27 (61.36%)
-    ' Comment Lines: 4 (9.09%)
+    '   Total Lines: 45
+    '    Code Lines: 28 (62.22%)
+    ' Comment Lines: 4 (8.89%)
     '    - Xml Docs: 0.00%
     ' 
-    '   Blank Lines: 13 (29.55%)
-    '     File Size: 1.48 KB
+    '   Blank Lines: 13 (28.89%)
+    '     File Size: 1.52 KB
 
 
     ' Module hqx_test

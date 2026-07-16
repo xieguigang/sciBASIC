@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::22d529a3b06becec315d4644ed6f410a, gr\physics\layout\LabelAdjust.vb"
+﻿#Region "Microsoft.VisualBasic::90d2ccfc58293f366ed0693478dbb842, gr\physics\layout\LabelAdjust.vb"
 
     ' Author:
     ' 
@@ -23,21 +23,24 @@
     ' GNU General Public License for more details.
     ' 
     ' You should have received a copy of the GNU General Public License
-    ' along with this program.  If not, see <http://www.gnu.org/licenses/>.
-    
-    
-    
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
     ' /********************************************************************************/
+
+    ' Summaries:
+
 
     ' Code Statistics:
 
-    '   Total Lines: 424
-    '    Code Lines: 284 (66.98%)
-    ' Comment Lines: 79 (18.63%)
-    '    - Xml Docs: 25.32%
+    '   Total Lines: 284
+    '    Code Lines: 183 (64.44%)
+    ' Comment Lines: 64 (22.54%)
+    '    - Xml Docs: 12.50%
     ' 
-    '   Blank Lines: 61 (14.39%)
-    '     File Size: 17.16 KB
+    '   Blank Lines: 37 (13.03%)
+    '     File Size: 11.42 KB
 
 
     '     Class LabelAdjust
@@ -47,6 +50,7 @@
     '         Function: Repulse
     ' 
     '         Sub: Iterate, ResetPropertiesValues, Solve
+    ' 
     ' 
     ' /********************************************************************************/
 

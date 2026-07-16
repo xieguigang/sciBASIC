@@ -1,4 +1,4 @@
-#Region "Microsoft.VisualBasic::00000000000000000000000000000000, gr\Microsoft.VisualBasic.Imaging\PostScript\Matrix2D.vb"
+﻿#Region "Microsoft.VisualBasic::53dbcfda643bfaeb30295188a7ea3dc1, gr\Microsoft.VisualBasic.Imaging\PostScript\Matrix2D.vb"
 
     ' Author:
     ' 
@@ -26,15 +26,30 @@
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
+
     ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 122
+    '    Code Lines: 63 (51.64%)
+    ' Comment Lines: 43 (35.25%)
+    '    - Xml Docs: 90.70%
+    ' 
+    '   Blank Lines: 16 (13.11%)
+    '     File Size: 3.80 KB
+
 
     '     Class Matrix2D
     ' 
-    '         a light weight 2D affine transformation matrix that works on both
-    '         windows and linux (netcore) platforms. the system.Drawing.Drawing2D.Matrix
-    '         is not available on the linux netcore build, so this class is used
-    '         to bake the current transform (CTM) into the element coordinates of
-    '         the postscript graphics.
+    '         Constructor: (+2 Overloads) Sub New
+    ' 
+    '         Function: ScaleFactors, ToString, TransformPoint
+    ' 
+    '         Sub: Prepend, Reset, Rotate, Scale, Translate
     ' 
     ' 
     ' /********************************************************************************/

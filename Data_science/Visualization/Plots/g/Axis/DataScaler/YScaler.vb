@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8e394ae54ca77a26461c087a30c254b5, Data_science\Visualization\Plots\g\Axis\DataScaler\YScaler.vb"
+﻿#Region "Microsoft.VisualBasic::4f5be49dc6cc2f27b6c4753532a205ce, Data_science\Visualization\Plots\g\Axis\DataScaler\YScaler.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 90.91%
     ' 
     '   Blank Lines: 11 (16.42%)
-    '     File Size: 2.12 KB
+    '     File Size: 2.11 KB
 
 
     '     Class YScaler

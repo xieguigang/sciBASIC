@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d2ce444eda903d488dae51493ae3bc6f, gr\Microsoft.VisualBasic.Imaging\PostScript\GraphicsPostScript.vb"
+﻿#Region "Microsoft.VisualBasic::70208e24d105103ec1367309c66d90bd, gr\Microsoft.VisualBasic.Imaging\PostScript\GraphicsPostScript.vb"
 
     ' Author:
     ' 
@@ -26,6 +26,7 @@
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
+
     ' /********************************************************************************/
 
     ' Summaries:
@@ -33,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 542
-    '    Code Lines: 418 (77.12%)
-    ' Comment Lines: 13 (2.40%)
-    '    - Xml Docs: 100.00%
+    '   Total Lines: 836
+    '    Code Lines: 637 (76.20%)
+    ' Comment Lines: 27 (3.23%)
+    '    - Xml Docs: 81.48%
     ' 
-    '   Blank Lines: 111 (20.48%)
-    '     File Size: 21.96 KB
+    '   Blank Lines: 172 (20.57%)
+    '     File Size: 33.38 KB
 
 
     '     Class GraphicsPostScript
@@ -48,16 +49,18 @@
     ' 
     '         Constructor: (+1 Overloads) Sub New
     ' 
-    '         Function: GetContextInfo, GetStringPath, (+4 Overloads) IsVisible, (+3 Overloads) MeasureString
+    '         Function: bezierPoint, brushColor, GetContextInfo, GetStringPath, (+4 Overloads) IsVisible
+    '                   (+3 Overloads) MeasureString, sampleBezier, sampleCurve, (+5 Overloads) tf, tfRadius
+    '                   tfScale
     ' 
-    '         Sub: AddMetafileComment, ClearCanvas, (+4 Overloads) DrawArc, (+3 Overloads) DrawBezier, (+2 Overloads) DrawBeziers
-    '              DrawCircle, (+2 Overloads) DrawClosedCurve, (+7 Overloads) DrawCurve, (+4 Overloads) DrawEllipse, (+10 Overloads) DrawImage
-    '              (+4 Overloads) DrawImageUnscaled, DrawImageUnscaledAndClipped, (+4 Overloads) DrawLine, (+2 Overloads) DrawLines, DrawPath
-    '              (+4 Overloads) DrawPie, (+2 Overloads) DrawPolygon, (+4 Overloads) DrawRectangle, (+2 Overloads) DrawRectangles, (+4 Overloads) DrawString
-    '              ExcludeClip, (+2 Overloads) FillClosedCurve, (+4 Overloads) FillEllipse, FillPath, (+3 Overloads) FillPie
-    '              (+2 Overloads) FillPolygon, (+4 Overloads) FillRectangle, Flush, (+2 Overloads) IntersectClip, ReleaseHandle
-    '              ResetClip, ResetTransform, RotateTransform, ScaleTransform, (+2 Overloads) SetClip
-    '              (+2 Overloads) TranslateClip, TranslateTransform
+    '         Sub: AddImage, AddMetafileComment, ClearCanvas, (+4 Overloads) DrawArc, (+3 Overloads) DrawBezier
+    '              (+2 Overloads) DrawBeziers, DrawCircle, (+2 Overloads) DrawClosedCurve, (+7 Overloads) DrawCurve, (+4 Overloads) DrawEllipse
+    '              (+10 Overloads) DrawImage, (+4 Overloads) DrawImageUnscaled, DrawImageUnscaledAndClipped, (+4 Overloads) DrawLine, (+2 Overloads) DrawLines
+    '              DrawPath, (+4 Overloads) DrawPie, (+2 Overloads) DrawPolygon, (+4 Overloads) DrawRectangle, (+2 Overloads) DrawRectangles
+    '              (+4 Overloads) DrawString, ExcludeClip, (+2 Overloads) FillClosedCurve, (+4 Overloads) FillEllipse, FillPath
+    '              (+3 Overloads) FillPie, (+2 Overloads) FillPolygon, (+4 Overloads) FillRectangle, Flush, (+2 Overloads) IntersectClip
+    '              ReleaseHandle, ResetClip, ResetTransform, RotateTransform, ScaleTransform
+    '              (+2 Overloads) SetClip, (+2 Overloads) TranslateClip, TranslateTransform
     ' 
     ' 
     ' /********************************************************************************/

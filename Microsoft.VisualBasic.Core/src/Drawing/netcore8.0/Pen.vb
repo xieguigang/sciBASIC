@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5a75ae4f9fb637ab48e4517c8a450819, Microsoft.VisualBasic.Core\src\Drawing\netcore8.0\Pen.vb"
+﻿#Region "Microsoft.VisualBasic::84ef11b728f52883185b7569121bd2d1, Microsoft.VisualBasic.Core\src\Drawing\netcore8.0\Pen.vb"
 
     ' Author:
     ' 
@@ -34,20 +34,20 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 496
-    '    Code Lines: 329 (66.33%)
-    ' Comment Lines: 106 (21.37%)
+    '   Total Lines: 500
+    '    Code Lines: 332 (66.40%)
+    ' Comment Lines: 106 (21.20%)
     '    - Xml Docs: 59.43%
     ' 
-    '   Blank Lines: 61 (12.30%)
-    '     File Size: 24.96 KB
+    '   Blank Lines: 62 (12.40%)
+    '     File Size: 25.05 KB
 
 
     '     Class Pen
     ' 
     '         Properties: Alignment, Brush, Color, CustomEndCap, DashCap
-    '                     DashOffset, DashStyle, EndCap, LineJoin, MiterLimit
-    '                     StartCap, Width
+    '                     DashOffset, DashPattern, DashStyle, EndCap, LineJoin
+    '                     MiterLimit, StartCap, Width
     ' 
     '         Constructor: (+2 Overloads) Sub New
     ' 
@@ -187,6 +187,7 @@ Namespace Imaging
         Public Property MiterLimit As Single
         Public Property DashCap As DashCap
         Public Property DashOffset As Single
+        Public Property DashPattern As Single()
 
         Sub New(color As Color, Optional width As Single = 1)
             _Color = color

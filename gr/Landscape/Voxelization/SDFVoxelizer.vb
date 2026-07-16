@@ -1,4 +1,4 @@
-#Region "Microsoft.VisualBasic::00000000000000000000000000000000, gr\Landscape\Voxelization\SDFVoxelizer.vb"
+﻿#Region "Microsoft.VisualBasic::fce0312a06728f941d8af4f65e70a00f, gr\Landscape\Voxelization\SDFVoxelizer.vb"
 
     ' Author:
     ' 
@@ -32,10 +32,28 @@
     ' Summaries:
 
 
+    ' Code Statistics:
+
+    '   Total Lines: 325
+    '    Code Lines: 179 (55.08%)
+    ' Comment Lines: 92 (28.31%)
+    '    - Xml Docs: 84.78%
+    ' 
+    '   Blank Lines: 54 (16.62%)
+    '     File Size: 16.09 KB
+
+
     '     Module SDFVoxelizer
     ' 
-    '         Function: ComputeBoundingBox, ComputeSDF, ComputeVoxelGridDimensions, ExtractTriangles, SignedDistance
-    '                   (+2 Overloads) Voxelize
+    '         Function: BuildSDFVolume, ComputeBoundingBox, (+2 Overloads) ComputeSDF, ComputeVoxelGridDimensions, ExtractTriangles
+    '                   SignedDistance, (+2 Overloads) Voxelize
+    ' 
+    '         Sub: ApplyMargin
+    '         Structure BoundingBox
+    ' 
+    ' 
+    ' 
+    ' 
     ' 
     ' 
     ' /********************************************************************************/

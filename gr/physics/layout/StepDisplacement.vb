@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5b0243bed1cdb10e50b4eda8008ff47a, gr\physics\layout\StepDisplacement.vb"
+﻿#Region "Microsoft.VisualBasic::4e3a3995530ff84de439b4a0e6b7beea, gr\physics\layout\StepDisplacement.vb"
 
     ' Author:
     ' 
@@ -51,7 +51,7 @@
     ' 
     '         Function: assertValue
     ' 
-    '         Sub: moveNode
+    '         Sub: MoveNode
     ' 
     ' 
     ' /********************************************************************************/

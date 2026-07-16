@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::74109b8f333894d8e829023f4d41f94d, Microsoft.VisualBasic.Core\src\Drawing\netcore8.0\Brush.vb"
+﻿#Region "Microsoft.VisualBasic::9209d47bb5f846263a5cc0cbde5c94bf, Microsoft.VisualBasic.Core\src\Drawing\netcore8.0\Brush.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 585
-    '    Code Lines: 409 (69.91%)
-    ' Comment Lines: 110 (18.80%)
+    '   Total Lines: 588
+    '    Code Lines: 411 (69.90%)
+    ' Comment Lines: 110 (18.71%)
     '    - Xml Docs: 90.91%
     ' 
-    '   Blank Lines: 66 (11.28%)
-    '     File Size: 29.22 KB
+    '   Blank Lines: 67 (11.39%)
+    '     File Size: 29.26 KB
 
 
     '     Class Brush

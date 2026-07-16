@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f86f220e8eb57db5d003b4d81474f742, gr\physics\physics_Test\Form3.Designer.vb"
+﻿#Region "Microsoft.VisualBasic::f86f220e8eb57db5d003b4d81474f742, gr\physics\test\Form3.Designer.vb"
 
     ' Author:
     ' 

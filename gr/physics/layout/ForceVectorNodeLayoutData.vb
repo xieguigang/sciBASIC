@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b4928056e106570c6e2d0e5ea9cee2e9, gr\physics\layout\ForceVectorNodeLayoutData.vb"
+﻿#Region "Microsoft.VisualBasic::956935d4fd466b215bdcc4f1e9c68fba, gr\physics\layout\ForceVectorNodeLayoutData.vb"
 
     ' Author:
     ' 
@@ -23,10 +23,10 @@
     ' GNU General Public License for more details.
     ' 
     ' You should have received a copy of the GNU General Public License
-    ' along with this program.  If not, see <http://www.gnu.org/licenses/>.
-    
-    
-    
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
     ' /********************************************************************************/
 
     ' Summaries:

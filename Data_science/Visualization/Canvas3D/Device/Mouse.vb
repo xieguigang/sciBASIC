@@ -1,53 +1,55 @@
-﻿#Region "Microsoft.VisualBasic::d865566954cecb016e8a9789c08f7908, sciBASIC#\Data_science\Visualization\Canvas3D\Device\Mouse.vb"
+﻿#Region "Microsoft.VisualBasic::543050a66a69c9586c91ac0a2dbded05, Data_science\Visualization\Canvas3D\Device\Mouse.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 70
-'    Code Lines: 48
-' Comment Lines: 4
-'   Blank Lines: 18
-'     File Size: 2.00 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Class Mouse
-' 
-'         Constructor: (+1 Overloads) Sub New
-'         Sub: device_MouseDown, device_MouseMove, device_MouseUp
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 72
+    '    Code Lines: 50 (69.44%)
+    ' Comment Lines: 4 (5.56%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 18 (25.00%)
+    '     File Size: 2.08 KB
+
+
+    '     Class Mouse
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    '         Sub: device_MouseDown, device_MouseMove, device_MouseUp
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

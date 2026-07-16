@@ -1,4 +1,4 @@
-#Region "Microsoft.VisualBasic::22d529a3b06becec315d4644ed6f410a, gr\physics\layout\Node.vb"
+﻿#Region "Microsoft.VisualBasic::e8eba2e7024beec2e44a096b39350638, gr\physics\layout\Node.vb"
 
     ' Author:
     ' 
@@ -23,12 +23,33 @@
     ' GNU General Public License for more details.
     ' 
     ' You should have received a copy of the GNU General Public License
-    ' along with this program.  If not, see <http://www.gnu.org/licenses/>.
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
 
     ' /********************************************************************************/
 
-    '     Class Node
+    ' Summaries:
 
+
+    ' Code Statistics:
+
+    '   Total Lines: 25
+    '    Code Lines: 13 (52.00%)
+    ' Comment Lines: 6 (24.00%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 6 (24.00%)
+    '     File Size: 754 B
+
+
+    '     Class Node
+    ' 
+    '         Properties: Fixed, LayoutData, Size, X, Y
+    ' 
+    '         Function: ToString
+    ' 
+    ' 
     ' /********************************************************************************/
 
 #End Region

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::47a4b23d9e8b1268fcd33035bd2cb2c2, gr\Microsoft.VisualBasic.Imaging\PostScript\PSElements\Poly.vb"
+﻿#Region "Microsoft.VisualBasic::d155953d43729f88c0cd50146ad0eefc, gr\Microsoft.VisualBasic.Imaging\PostScript\PSElements\Poly.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 90
-    '    Code Lines: 72 (80.00%)
+    '   Total Lines: 119
+    '    Code Lines: 94 (78.99%)
     ' Comment Lines: 0 (0.00%)
     '    - Xml Docs: 0.00%
     ' 
-    '   Blank Lines: 18 (20.00%)
-    '     File Size: 3.10 KB
+    '   Blank Lines: 25 (21.01%)
+    '     File Size: 4.03 KB
 
 
     '     Class Polygon

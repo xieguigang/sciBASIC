@@ -1,8 +1,9 @@
-#Region "Microsoft.VisualBasic::PLY Point Cloud Reader, gr\Landscape\PLY\PlyReader.vb"
+﻿#Region "Microsoft.VisualBasic::db4a06d805f208ee03e863de47b1cc46, gr\Landscape\PLY\PlyReader.vb"
 
     ' Author:
     ' 
     '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
     '       xieguigang (xie.guigang@live.com)
     ' 
     ' Copyright (c) 2018 GPL3 Licensed
@@ -33,18 +34,34 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 0
-    '    Code Lines: 0 (0.00%)
-    ' Comment Lines: 0 (0.00%)
-    '    - Xml Docs: 0.00%
+    '   Total Lines: 705
+    '    Code Lines: 483 (68.51%)
+    ' Comment Lines: 115 (16.31%)
+    '    - Xml Docs: 72.17%
     ' 
-    '   Blank Lines: 0 (0.00%)
-    '     File Size: 0 B
+    '   Blank Lines: 107 (15.18%)
+    '     File Size: 30.49 KB
 
 
     '     Module PlyReader
     ' 
-    '         Function: ReadFile, ReadStream
+    '         Function: BuildPropertyMapping, GetPropertyByteSize, ParseHeaderText, ReadAsciiVertices, ReadBinaryPropertyValue
+    '                   ReadBinaryVertices, ReadFile, ReadListCount, ReadStream, (+6 Overloads) SwapEndian
+    ' 
+    '         Sub: LocateHeaderEnd
+    '         Structure PropertyMapping
+    ' 
+    ' 
+    ' 
+    '         Class PlyPropertyDef
+    ' 
+    ' 
+    ' 
+    '         Class PlyVertexFormat
+    ' 
+    ' 
+    ' 
+    ' 
     ' 
     ' 
     ' /********************************************************************************/

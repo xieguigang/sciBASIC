@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::02f5bb88c00259235466f0e9ad85bf2a, gr\Microsoft.VisualBasic.Imaging\Drawing3D\Surface.vb"
+﻿#Region "Microsoft.VisualBasic::d98a0c875361349fcb8a7cbde757dd70, gr\Microsoft.VisualBasic.Imaging\Drawing3D\Surface.vb"
 
     ' Author:
     ' 
@@ -34,18 +34,20 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 88
-    '    Code Lines: 60 (68.18%)
-    ' Comment Lines: 14 (15.91%)
+    '   Total Lines: 90
+    '    Code Lines: 61 (67.78%)
+    ' Comment Lines: 14 (15.56%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 14 (15.91%)
-    '     File Size: 2.92 KB
+    '   Blank Lines: 15 (16.67%)
+    '     File Size: 2.93 KB
 
 
-    '     Structure Surface
+    '     Class Surface
     ' 
-    '         Constructor: (+1 Overloads) Sub New
+    '         Properties: brush, vertices
+    ' 
+    '         Constructor: (+2 Overloads) Sub New
     ' 
     '         Function: Copy, GetEnumerator, IEnumerable_GetEnumerator
     ' 

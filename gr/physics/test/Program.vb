@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::78cd44245f25c88c58c6f48c2245bdd7, gr\physics\physics_Test\Program.vb"
+﻿#Region "Microsoft.VisualBasic::458dff3015ba54b257d4cc53cf466f78, gr\physics\test\Program.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 0.00%
     ' 
     '   Blank Lines: 26 (35.62%)
-    '     File Size: 2.16 KB
+    '     File Size: 2.18 KB
 
 
     ' Module Program
@@ -87,41 +87,41 @@ Public Module Program
         'Call reverse(New Force(100, PI / 3))
 
 
-        Call add(New Force(1000, 1 / 2 * PI / 2), New Force(100, PI + 1 / 2 * PI / 2))  ' 45  225  -> 45
+        'Call add(New Force(1000, 1 / 2 * PI / 2), New Force(100, PI + 1 / 2 * PI / 2))  ' 45  225  -> 45
 
-        Call add(New Force(100, 0), New Force(100, 1 / 2 * PI))  ' 45
+        'Call add(New Force(100, 0), New Force(100, 1 / 2 * PI))  ' 45
 
-        Call add(New Force(100, 0), New Force(100, PI)) ' 0
-        Call add(New Force(100, 0), New Force(100, PI * 2)) ' 0
+        'Call add(New Force(100, 0), New Force(100, PI)) ' 0
+        'Call add(New Force(100, 0), New Force(100, PI * 2)) ' 0
 
-        Call add(New Force(100, 0), New Force(100, PI + 1 / 2 * PI)) ' 270+45
+        'Call add(New Force(100, 0), New Force(100, PI + 1 / 2 * PI)) ' 270+45
 
         Pause()
 
     End Sub
 
 
-    Sub cl(a As Vector, b As Vector)
-        Dim m1 As New MassPoint With {.Charge = 1, .Point = a}
-        Dim m2 As New MassPoint With {.Charge = 1, .Point = b}
-        Dim f = ForceMath.CoulombsLaw(m1, m2)
+    'Sub cl(a As Vector, b As Vector)
+    '    Dim m1 As New MassPoint With {.Charge = 1, .Point = a}
+    '    Dim m2 As New MassPoint With {.Charge = 1, .Point = b}
+    '    Dim f = ForceMath.CoulombsLaw(m1, m2)
 
-        Call $"Coulombs force between the {m1.Point.ToString} and {m2.Point.ToString} is {f.ToString}".debug
-    End Sub
+    '    Call $"Coulombs force between the {m1.Point.ToString} and {m2.Point.ToString} is {f.ToString}".debug
+    'End Sub
 
-    Sub g(m#)
-        Call $"gravity is {ForceMath.Gravity(New MassPoint With {.Mass = m}).ToString }".debug
-    End Sub
+    'Sub g(m#)
+    '    Call $"gravity is {ForceMath.Gravity(New MassPoint With {.Mass = m}).ToString }".debug
+    'End Sub
 
-    Sub repl(a As Vector, b As Vector)
-        Call ForceMath.RepulsiveForce(100, a, b).debug
-    End Sub
+    'Sub repl(a As Vector, b As Vector)
+    '    Call ForceMath.RepulsiveForce(100, a, b).debug
+    'End Sub
 
-    Sub reverse(f As Force)
-        Call $"ReverseOf({f.ToString}) is {-f}".debug
-    End Sub
+    'Sub reverse(f As Force)
+    '    Call $"ReverseOf({f.ToString}) is {-f}".debug
+    'End Sub
 
-    Sub add(f1 As Force, f2 As Force)
-        Call $"||{f1.ToString}|| + ||{f2.ToString}||  =>  ||{(f1 + f2).ToString}||".debug
-    End Sub
+    'Sub add(f1 As Force, f2 As Force)
+    '    Call $"||{f1.ToString}|| + ||{f2.ToString}||  =>  ||{(f1 + f2).ToString}||".debug
+    'End Sub
 End Module

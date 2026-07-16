@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::039f7a36c1f0970020c898083caae62e, Data_science\Mathematica\Math\Math\Distributions\Sample.vb"
+﻿#Region "Microsoft.VisualBasic::beca351d81f3261fd59b6263bdf29418, Data_science\Mathematica\Math\Math\Distributions\Sample.vb"
 
     ' Author:
     ' 
@@ -34,22 +34,23 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 164
-    '    Code Lines: 104 (63.41%)
-    ' Comment Lines: 38 (23.17%)
-    '    - Xml Docs: 92.11%
+    '   Total Lines: 250
+    '    Code Lines: 161 (64.40%)
+    ' Comment Lines: 48 (19.20%)
+    '    - Xml Docs: 72.92%
     ' 
-    '   Blank Lines: 22 (13.41%)
-    '     File Size: 5.52 KB
+    '   Blank Lines: 41 (16.40%)
+    '     File Size: 9.06 KB
 
 
     '     Class SampleDistribution
     ' 
-    '         Properties: average, CI95Range, max, min, mode
-    '                     outlierBoundary, quantile, size, stdErr
+    '         Properties: average, CI95Range, CV, max, median
+    '                     min, mode, outlierBoundary, quantile, range
+    '                     size, stdErr, sum, variance
     ' 
     '         Constructor: (+4 Overloads) Sub New
-    '         Function: EvaluateMode, GetRange, ToString
+    '         Function: EvaluateMode, GetPercentile, GetRange, ToString
     ' 
     ' 
     ' /********************************************************************************/

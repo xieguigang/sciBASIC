@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ced47e48a30a0d5fdf82a96f9f2c1744, gr\physics\Particles\FluidEngine.vb"
+﻿#Region "Microsoft.VisualBasic::63ad0f9b90d1834876540eb698d107bd, gr\physics\Particles\FluidEngine.vb"
 
     ' Author:
     ' 
@@ -23,10 +23,10 @@
     ' GNU General Public License for more details.
     ' 
     ' You should have received a copy of the GNU General Public License
-    ' along with this program.  If not, see <http://www.gnu.org/licenses/>.
-    
-    
-    
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
     ' /********************************************************************************/
 
     ' Summaries:
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 403
-    '    Code Lines: 286 (70.97%)
-    ' Comment Lines: 41 (10.17%)
+    '   Total Lines: 306
+    '    Code Lines: 228 (74.51%)
+    ' Comment Lines: 16 (5.23%)
     '    - Xml Docs: 0.00%
     ' 
-    '   Blank Lines: 76 (18.86%)
-    '     File Size: 15.40 KB
+    '   Blank Lines: 62 (20.26%)
+    '     File Size: 11.57 KB
 
 
     ' Class FluidEngine
@@ -49,12 +49,10 @@
     ' 
     '     Constructor: (+1 Overloads) Sub New
     ' 
-    '     Function: CalculateDensity, ComputeExternalForce, PressureFromDensity
-    '               NearPressureFromDensity
+    '     Function: CalculateDensity, ComputeExternalForce, NearPressureFromDensity, PressureFromDensity
     ' 
-    '     Sub: ApplyExternalForces, CalculateDensities, CalculatePressureForce
-    '          CalculateViscosity, HandleCollisions, Resize, RunDebugStep
-    '          RunSimulationStep, UpdatePositions
+    '     Sub: ApplyExternalForces, CalculateDensities, CalculatePressureForce, CalculateViscosity, HandleCollisions
+    '          Resize, RunDebugStep, RunSimulationStep, UpdatePositions
     ' 
     ' /********************************************************************************/
 

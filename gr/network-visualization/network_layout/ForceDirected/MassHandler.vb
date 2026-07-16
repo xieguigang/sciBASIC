@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5186fd9f168c25fdde87b6d8a8293bab, gr\network-visualization\network_layout\ForceDirected\MassHandler.vb"
+﻿#Region "Microsoft.VisualBasic::e8ede27043d269e10b5ae0ea49f502a0, gr\network-visualization\network_layout\ForceDirected\MassHandler.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 38
-    '    Code Lines: 24 (63.16%)
-    ' Comment Lines: 8 (21.05%)
+    '   Total Lines: 36
+    '    Code Lines: 22 (61.11%)
+    ' Comment Lines: 8 (22.22%)
     '    - Xml Docs: 87.50%
     ' 
-    '   Blank Lines: 6 (15.79%)
-    '     File Size: 1.22 KB
+    '   Blank Lines: 6 (16.67%)
+    '     File Size: 1.12 KB
 
 
     '     Class MassHandler

@@ -1,4 +1,4 @@
-#Region "Microsoft.VisualBasic::ced47e48a30a0d5fdf82a96f9f2c1744, gr\physics\Particles\FluidKernels.vb"
+﻿#Region "Microsoft.VisualBasic::bad39784353aeb961d839c95e8c59873, gr\physics\Particles\FluidKernels.vb"
 
     ' Author:
     ' 
@@ -23,21 +23,30 @@
     ' GNU General Public License for more details.
     ' 
     ' You should have received a copy of the GNU General Public License
-    ' along with this program.  If not, see <http://www.gnu.org/licenses/>.
-    
-    
-    
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
     ' /********************************************************************************/
 
     ' Summaries:
 
 
+    ' Code Statistics:
+
+    '   Total Lines: 63
+    '    Code Lines: 50 (79.37%)
+    ' Comment Lines: 5 (7.94%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 8 (12.70%)
+    '     File Size: 2.29 KB
+
+
     ' Class FluidKernels
     ' 
     '     Constructor: (+1 Overloads) Sub New
-    ' 
-    '     Function: DerivativeSpikyPow2, DerivativeSpikyPow3, SmoothingKernelPoly6
-    '               SpikyKernelPow2, SpikyKernelPow3
+    '     Function: DerivativeSpikyPow2, DerivativeSpikyPow3, SmoothingKernelPoly6, SpikyKernelPow2, SpikyKernelPow3
     ' 
     ' /********************************************************************************/
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ade76905815fb7ba8cb1986b4e7d592b, gr\physics\layout\ForceVectorUtils.vb"
+﻿#Region "Microsoft.VisualBasic::bcc7a78914be050aac91397cd279b1ed, gr\physics\layout\ForceVectorUtils.vb"
 
     ' Author:
     ' 
@@ -23,10 +23,10 @@
     ' GNU General Public License for more details.
     ' 
     ' You should have received a copy of the GNU General Public License
-    ' along with this program.  If not, see <http://www.gnu.org/licenses/>.
-    
-    
-    
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
     ' /********************************************************************************/
 
     ' Summaries:
@@ -34,23 +34,22 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 222
-    '    Code Lines: 129 (58.11%)
-    ' Comment Lines: 45 (20.27%)
-    '    - Xml Docs: 6.67%
+    '   Total Lines: 177
+    '    Code Lines: 96 (54.24%)
+    ' Comment Lines: 53 (29.94%)
+    '    - Xml Docs: 16.98%
     ' 
-    '   Blank Lines: 48 (21.62%)
-    '     File Size: 8.90 KB
+    '   Blank Lines: 28 (15.82%)
+    '     File Size: 7.60 KB
 
 
     '     Class ForceVectorUtils
     ' 
     '         Function: Attraction, Distance, Repulsion
     ' 
-    '         Sub: ApplyBidirectionalAttraction, ApplyBidirectionalAttractionNoCollide
-    '             ApplyBidirectionalFlatAttraction, ApplyBidirectionalRepulsion
-    '             ApplyBidirectionalRepulsionNoCollide, ApplyBidirectionalRepulsionVertical
-    '             ApplyUnidirectionalAttraction, ApplyUnidirectionalRepulsion
+    '         Sub: ApplyBidirectional, ApplyBidirectionalAttraction, ApplyBidirectionalAttractionNoCollide, ApplyBidirectionalFlatAttraction, ApplyBidirectionalRepulsion
+    '              ApplyBidirectionalRepulsionNoCollide, ApplyBidirectionalRepulsionVertical, ApplyUnidirectional, ApplyUnidirectionalAttraction, ApplyUnidirectionalRepulsion
+    ' 
     ' 
     ' /********************************************************************************/
 

@@ -1,4 +1,4 @@
-#Region "Microsoft.VisualBasic::22d529a3b06becec315d4644ed6f410a, gr\physics\layout\QuadTree.vb"
+﻿#Region "Microsoft.VisualBasic::6d211487bb6ac44e8244df5bfa485401, gr\physics\layout\QuadTree.vb"
 
     ' Author:
     ' 
@@ -23,12 +23,43 @@
     ' GNU General Public License for more details.
     ' 
     ' You should have received a copy of the GNU General Public License
-    ' along with this program.  If not, see <http://www.gnu.org/licenses/>.
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
 
     ' /********************************************************************************/
 
-    '     Class QuadTree
+    ' Summaries:
 
+
+    ' Code Statistics:
+
+    '   Total Lines: 117
+    '    Code Lines: 92 (78.63%)
+    ' Comment Lines: 3 (2.56%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 22 (18.80%)
+    '     File Size: 4.60 KB
+
+
+    '     Class QuadTree
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
+    '         Function: GetAdjacentNodes, GetNode, GetQuadNode
+    ' 
+    '         Sub: Add
+    '         Class QuadNode
+    ' 
+    '             Properties: Nodes
+    ' 
+    '             Constructor: (+1 Overloads) Sub New
+    '             Sub: Add
+    ' 
+    ' 
+    ' 
+    ' 
     ' /********************************************************************************/
 
 #End Region

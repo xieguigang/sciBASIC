@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::60911abb1f4ed47a5547e28b771fb6ee, gr\physics\Particles\Particle.vb"
+﻿#Region "Microsoft.VisualBasic::a1856fc2cfc008d0765dbad57eb84f0d, gr\physics\Particles\Particle.vb"
 
     ' Author:
     ' 
@@ -23,10 +23,10 @@
     ' GNU General Public License for more details.
     ' 
     ' You should have received a copy of the GNU General Public License
-    ' along with this program.  If not, see <http://www.gnu.org/licenses/>.
-    
-    
-    
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
     ' /********************************************************************************/
 
     ' Summaries:

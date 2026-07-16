@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9d5040d3eb82c21b15cf2b5c8f661a6f, gr\Microsoft.VisualBasic.Imaging\Drawing3D\Camera.vb"
+﻿#Region "Microsoft.VisualBasic::2daa39a9ed34c0c2a724a85ca3feb498, gr\Microsoft.VisualBasic.Imaging\Drawing3D\Camera.vb"
 
     ' Author:
     ' 
@@ -23,20 +23,35 @@
     ' GNU General Public License for more details.
     ' 
     ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not see <http://www.gnu.org/licenses/>.
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
 
     ' /********************************************************************************/
 
-    '     Class Camera
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 278
+    '    Code Lines: 178 (64.03%)
+    ' Comment Lines: 55 (19.78%)
+    '    - Xml Docs: 76.36%
     ' 
-    '         Constructor: (+4 Overloads) Sub New
+    '   Blank Lines: 45 (16.19%)
+    '     File Size: 10.90 KB
+
+
+    '     Class Camera
     ' 
     '         Properties: AmbientStrength, AngleX, AngleY, AngleZ, FieldOfView
     '                     LightColor, LightDirection, Offset, Screen, ViewDistance
     ' 
-    '         Function: Lighting, (+2 Overloads) Project, (+4 Overloads) Rotate
-    '                   (+2 Overloads) RotateX, (+2 Overloads) RotateY
-    '                   (+2 Overloads) RotateZ, ToString
+    '         Constructor: (+4 Overloads) Sub New
+    ' 
+    '         Function: Lighting, (+2 Overloads) Project, (+5 Overloads) Rotate, RotateOne, RotatePoint
+    '                   (+2 Overloads) RotateX, (+2 Overloads) RotateY, (+2 Overloads) RotateZ, RotationMatrix, ToString
     ' 
     '         Sub: Draw
     ' 

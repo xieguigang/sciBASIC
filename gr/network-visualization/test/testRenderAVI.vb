@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::436e350d28df34252acfd60c17cd3ef1, sciBASIC#\gr\network-visualization\test\testRenderAVI.vb"
+﻿#Region "Microsoft.VisualBasic::436e350d28df34252acfd60c17cd3ef1, gr\network-visualization\test\testRenderAVI.vb"
 
     ' Author:
     ' 
@@ -35,10 +35,12 @@
     ' Code Statistics:
 
     '   Total Lines: 15
-    '    Code Lines: 11
-    ' Comment Lines: 0
-    '   Blank Lines: 4
-    '     File Size: 527.00 B
+    '    Code Lines: 11 (73.33%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 4 (26.67%)
+    '     File Size: 527 B
 
 
     ' Module testRenderAVI

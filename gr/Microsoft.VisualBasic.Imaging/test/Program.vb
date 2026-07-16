@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fa41202b14f6f074b5e18129fe2e20e8, gr\Microsoft.VisualBasic.Imaging\test\Program.vb"
+﻿#Region "Microsoft.VisualBasic::18f17a83d968d4794c1310c5f160725e, gr\Microsoft.VisualBasic.Imaging\test\Program.vb"
 
     ' Author:
     ' 
@@ -35,12 +35,12 @@
     ' Code Statistics:
 
     '   Total Lines: 160
-    '    Code Lines: 82 (51.25%)
-    ' Comment Lines: 21 (13.12%)
+    '    Code Lines: 81 (50.62%)
+    ' Comment Lines: 22 (13.75%)
     '    - Xml Docs: 0.00%
     ' 
     '   Blank Lines: 57 (35.62%)
-    '     File Size: 4.61 KB
+    '     File Size: 4.66 KB
 
 
     ' Module Program

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c71043cf47305ce76776e23240983672, gr\Microsoft.VisualBasic.Imaging\Drawing3D\Painter.vb"
+﻿#Region "Microsoft.VisualBasic::e17d20198ebbabdee3110b66d46f30a1, gr\Microsoft.VisualBasic.Imaging\Drawing3D\PainterAlgorithm.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 234
-    '    Code Lines: 145 (61.97%)
-    ' Comment Lines: 60 (25.64%)
-    '    - Xml Docs: 85.00%
+    '   Total Lines: 214
+    '    Code Lines: 133 (62.15%)
+    ' Comment Lines: 58 (27.10%)
+    '    - Xml Docs: 87.93%
     ' 
-    '   Blank Lines: 29 (12.39%)
-    '     File Size: 8.92 KB
+    '   Blank Lines: 23 (10.75%)
+    '     File Size: 8.73 KB
 
 
     '     Module PainterAlgorithm
@@ -50,7 +50,7 @@
     '         Sub: (+2 Overloads) BufferPainting, (+2 Overloads) SurfacePainter
     '         Structure Polygon
     ' 
-    ' 
+    '             Properties: brush, points
     ' 
     ' 
     ' 

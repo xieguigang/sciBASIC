@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5550ac909adf75fab9e21673745ad1cc, gr\network-visualization\network_layout\EdgeBundling\Mingle\Accessor.vb"
+﻿#Region "Microsoft.VisualBasic::c7d3dca622668edf045848b7d0f8f498, gr\network-visualization\network_layout\EdgeBundling\Mingle\Accessor.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 0.00%
     ' 
     '   Blank Lines: 9 (17.65%)
-    '     File Size: 1.80 KB
+    '     File Size: 1.79 KB
 
 
     '     Class Accessor

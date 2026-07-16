@@ -1,61 +1,63 @@
-﻿#Region "Microsoft.VisualBasic::a2035f927a0d4e45f123f7d67f8f5b65, gr\Microsoft.VisualBasic.Imaging\PostScript\Writer.vb"
+﻿#Region "Microsoft.VisualBasic::491f64b84d97c23a46488b45714eaba7, gr\Microsoft.VisualBasic.Imaging\PostScript\Writer.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 280
-'    Code Lines: 145 (51.79%)
-' Comment Lines: 92 (32.86%)
-'    - Xml Docs: 79.35%
-' 
-'   Blank Lines: 43 (15.36%)
-'     File Size: 9.61 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Class Writer
-' 
-'         Constructor: (+1 Overloads) Sub New
-' 
-'         Function: pen
-' 
-'         Sub: arct, beginTransparent, circle, closepath, (+2 Overloads) color
-'              comment, dash, (+2 Overloads) Dispose, endTransparent, (+2 Overloads) font
-'              grestore, gsave, image, line, lineto, linewidth, (+2 Overloads) moveto
-'              note, rectangle, rotate, scale, setgray, showpage, stroke, text
-'              translate, transparency
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 393
+    '    Code Lines: 194 (49.36%)
+    ' Comment Lines: 141 (35.88%)
+    '    - Xml Docs: 82.98%
+    ' 
+    '   Blank Lines: 58 (14.76%)
+    '     File Size: 14.79 KB
+
+
+    '     Class Writer
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
+    '         Function: pen, Yf
+    ' 
+    '         Sub: arct, beginTransparent, circle, closepath, (+2 Overloads) color
+    '              comment, curveto, dash, (+2 Overloads) Dispose, endTransparent
+    '              fill, fillCircle, (+2 Overloads) font, grestore, gsave
+    '              image, line, lineto, linewidth, (+2 Overloads) moveto
+    '              note, rectangle, rotate, scale, setgray
+    '              showpage, stroke, (+2 Overloads) text, translate, transparency
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c6b4630304a623ebf142524c75003d34, gr\Microsoft.VisualBasic.Imaging\test\ShadowsTest.vb"
+﻿#Region "Microsoft.VisualBasic::a525de879c84f136fcc37df0fc6588b4, gr\Microsoft.VisualBasic.Imaging\test\ShadowsTest.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 67
-    '    Code Lines: 31 (46.27%)
-    ' Comment Lines: 21 (31.34%)
+    '   Total Lines: 74
+    '    Code Lines: 37 (50.00%)
+    ' Comment Lines: 21 (28.38%)
     '    - Xml Docs: 0.00%
     ' 
-    '   Blank Lines: 15 (22.39%)
-    '     File Size: 2.91 KB
+    '   Blank Lines: 16 (21.62%)
+    '     File Size: 3.22 KB
 
 
     ' Module ShadowsTest

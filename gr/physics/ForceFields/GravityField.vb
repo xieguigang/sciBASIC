@@ -1,3 +1,58 @@
+﻿#Region "Microsoft.VisualBasic::3f578cb31526f6df7fcc00b0cf4757d2, gr\physics\ForceFields\GravityField.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 28
+    '    Code Lines: 15 (53.57%)
+    ' Comment Lines: 7 (25.00%)
+    '    - Xml Docs: 71.43%
+    ' 
+    '   Blank Lines: 6 (21.43%)
+    '     File Size: 971 B
+
+
+    '     Class GravityField
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    '         Sub: Apply
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
 ' Copyright (c) 2018 GPL3 Licensed
 ' 重力场：在区域内施加与质量成正比的恒定重力。
 
@@ -26,3 +81,4 @@ Namespace ForceFields
         End Sub
     End Class
 End Namespace
+

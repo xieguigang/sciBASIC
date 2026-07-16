@@ -1,3 +1,62 @@
+﻿#Region "Microsoft.VisualBasic::74b710c7982c55874e7112805c7c8074, gr\physics\Collision\BroadPhase.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 85
+    '    Code Lines: 62 (72.94%)
+    ' Comment Lines: 8 (9.41%)
+    '    - Xml Docs: 75.00%
+    ' 
+    '   Blank Lines: 15 (17.65%)
+    '     File Size: 3.14 KB
+
+
+    '     Module BroadPhase
+    ' 
+    '         Function: ComputePairs, HashCell
+    '         Structure BodyPair
+    ' 
+    ' 
+    ' 
+    ' 
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
 ' Copyright (c) 2018 GPL3 Licensed
 ' Broad Phase：均匀网格空间划分，粗略剔除不可能碰撞的物体对。
 
@@ -83,3 +142,4 @@ Namespace Collision
         End Function
     End Module
 End Namespace
+
