@@ -65,7 +65,7 @@ Namespace Scripting.MathExpression
         Dim text As CharPtr
         Dim buf As New CharBuffer
 
-        ReadOnly operators As Index(Of Char) = {"+"c, "-"c, "*"c, "/"c, "^"c, "%"c, "\"c}
+        ReadOnly operators As Index(Of Char) = {"+"c, "-"c, "*"c, "/"c, "^"c, "%"c, "\"c, "<"c, ">"c}
 
         Sub New(text As CharPtr)
             Me.text = text
@@ -136,28 +136,7 @@ Namespace Scripting.MathExpression
                 Else
                     Return New MathToken(MathTokens.Comma, ","c)
                 End If
-            ElseIf c = "<"c Then
-                If buf > 0 Then
-                    Return populateToken(cacheNext:=c)
-                Else
-                    buf += c
-                End If
-            ElseIf c = ">" Then
-                If buf = 1 AndAlso buf(Scan0) = "<" Then
-                    buf.Clear()
-                    Return New MathToken(MathTokens.Operator, "<>")
-                Else
-                    Return populateToken(cacheNext:=c)
-                End If
             Else
-                If buf = "<" Then
-                    buf.Clear()
-                    Return New MathToken(MathTokens.Operator, "<")
-                ElseIf buf = ">" Then
-                     buf.Clear()
-                    Return New MathToken(MathTokens.Operator, ">")
-                End If
-
                 buf += c
             End If
 
