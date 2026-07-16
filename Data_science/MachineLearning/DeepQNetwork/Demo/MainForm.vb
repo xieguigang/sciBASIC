@@ -429,8 +429,12 @@ Namespace DeepQNetwork.Demo
 
             Dim n = episodeRewards.Count
             Dim maxR = 1.0, maxD = 1.0
-            For Each v In episodeRewards : If v > maxR Then maxR = v : Next
-            For Each v In episodeDist : If v > maxD Then maxD = v : Next
+            For Each v In episodeRewards
+                If v > maxR Then maxR = v
+            Next
+            For Each v In episodeDist
+                If v > maxD Then maxD = v
+            Next
 
             Using axis = New Pen(Color.FromArgb(71, 85, 105), 1)
                 g.DrawLine(axis, padL, padT, padL, padT + plotH)

@@ -32,7 +32,7 @@ Public Class StickmanEnv : Implements IEnvironment
     Private obstacleCleared, stepCleared As Boolean
     Private steps As Integer
 
-    Private currentState As Double()
+    Private curState As Double()
     Private lastR As Double
     Private doneFlag As Boolean
 
@@ -66,7 +66,7 @@ Public Class StickmanEnv : Implements IEnvironment
 
     Public ReadOnly Property CurrentState As Double() Implements IEnvironment.CurrentState
         Get
-            Return currentState
+            Return curState
         End Get
     End Property
 
@@ -89,8 +89,8 @@ Public Class StickmanEnv : Implements IEnvironment
         doneFlag = False
         lastR = 0
         BuildWorld()
-        currentState = AssembleState()
-        Return currentState
+        curState = AssembleState()
+        Return curState
     End Function
 
     Public Function [Step](action As Integer) As StepResult Implements IEnvironment.Step
@@ -137,8 +137,8 @@ Public Class StickmanEnv : Implements IEnvironment
         If newX < StartX - 150 Then doneFlag = True
 
         lastR = reward
-        currentState = AssembleState()
-        Return New StepResult With {.state = currentState, .reward = reward, .done = doneFlag}
+        curState = AssembleState()
+        Return New StepResult With {.state = curState, .reward = reward, .done = doneFlag}
     End Function
 
     ' ---------------- 关卡构建 ----------------
