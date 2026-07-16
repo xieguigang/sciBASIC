@@ -180,9 +180,10 @@ Namespace Symbolic
                 Dim c As Double, b As Expression
                 SplitCoefficient(DirectCast(term, UnaryExpression).value, c, b)
                 coeff = -c
-                body = b
+                body = makeSimple(b)
             Else
                 SplitCoefficient(term, coeff, body)
+                body = makeSimple(body)
             End If
         End Sub
 
@@ -219,7 +220,7 @@ Namespace Symbolic
                 If TypeOf f Is BinaryExpression AndAlso DirectCast(f, BinaryExpression).operator = "/"c Then
                     Dim b = DirectCast(f, BinaryExpression)
                     If isLiteralOne(b.left) Then
-                        addFactor(groups, b.right, -1, coeff)
+                        addFactor(groups, makeSimple(b.right), -1, coeff)
                         Continue For
                     End If
                 End If
@@ -229,7 +230,7 @@ Namespace Symbolic
                     Dim p = DirectCast(f, BinaryExpression)
                     Dim e = NumericValue(p.right)
                     If e.HasValue Then
-                        addFactor(groups, p.left, e.Value, coeff)
+                        addFactor(groups, makeSimple(p.left), e.Value, coeff)
                         Continue For
                     End If
                 End If
@@ -249,6 +250,12 @@ Namespace Symbolic
             For Each g In groups
                 If g.exp = 0 Then
                     Continue For
+                End If
+
+                Dim folded = foldSqrtPower(g.baseExpr, g.exp)
+                If folded IsNot Nothing Then
+                    ' sqrt(y) ^ 2  ->  y  (and similar perfect-square radicals)
+                    result.Add(folded)
                 ElseIf g.exp = 1 Then
                     result.Add(g.baseExpr)
                 Else
@@ -386,6 +393,25 @@ Namespace Symbolic
                 Return True
             End If
             Return False
+        End Function
+
+        ''' <summary>
+        ''' If <paramref name="baseExpr"/> is sqrt(y) raised to an even integer power
+        ''' n, return the simplified factor y ^ (n / 2). Otherwise return Nothing.
+        ''' This lets products like sqrt(2) * sqrt(2) and (sqrt(x)) ^ 2 collapse to a
+        ''' rational expression, which the rationalisation step needs.
+        ''' </summary>
+        Private Function foldSqrtPower(baseExpr As Expression, exp As Double) As Expression
+            If TypeOf baseExpr Is FunctionInvoke Then
+                Dim f = DirectCast(baseExpr, FunctionInvoke)
+                If f.funcName = "sqrt" AndAlso f.parameters.Length = 1 Then
+                    Dim n = System.Math.Round(exp)
+                    If System.Math.Abs(exp - n) < 1.0E-9 AndAlso n >= 2 AndAlso (n Mod 2 = 0) Then
+                        Return Pow(f.parameters(0), MakeLiteral(n \ 2))
+                    End If
+                End If
+            End If
+            Return Nothing
         End Function
     End Module
 End Namespace

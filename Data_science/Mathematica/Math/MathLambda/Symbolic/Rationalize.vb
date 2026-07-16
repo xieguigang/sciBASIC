@@ -172,11 +172,79 @@ Namespace Symbolic
         End Function
 
         ' ------------------------------------------------------------------
-        ' Local simplification (distribute products then algebraically simplify)
+        ' Local simplification (fully distribute products then simplify)
         ' ------------------------------------------------------------------
 
         Private Function simplifyInner(expr As Expression) As Expression
-            Return MakeSimplify.simplifyRaw(PolyExpansion.Expands(expr))
+            Return MakeSimplify.simplifyRaw(distributeAll(expr))
+        End Function
+
+        ''' <summary>
+        ''' Fully expand every product of sums (FOIL) so that a conjugate product
+        ''' such as (a + b*sqrt(c)) * (a - b*sqrt(c)) becomes the rational sum
+        ''' a^2 - b^2*c, which the shared simplifier then reduces to a number.
+        ''' </summary>
+        Private Function distributeAll(expr As Expression) As Expression
+            If expr Is Nothing Then
+                Return expr
+            ElseIf TypeOf expr Is Literal OrElse TypeOf expr Is SymbolExpression Then
+                Return expr
+            End If
+
+            If TypeOf expr Is BinaryExpression Then
+                Dim b = DirectCast(expr, BinaryExpression)
+                Dim l = distributeAll(b.left)
+                Dim r = distributeAll(b.right)
+                If b.operator = "*"c Then
+                    Return distributeMul(l, r)
+                End If
+                Return New BinaryExpression(l, r, b.operator)
+            End If
+
+            If TypeOf expr Is FunctionInvoke Then
+                Dim f = DirectCast(expr, FunctionInvoke)
+                Return New FunctionInvoke(f.funcName, f.parameters.Select(AddressOf distributeAll).ToArray)
+            End If
+
+            If TypeOf expr Is UnaryExpression Then
+                Dim u = DirectCast(expr, UnaryExpression)
+                Return New UnaryExpression With {.[operator] = u.operator, .value = distributeAll(u.value)}
+            End If
+
+            If TypeOf expr Is UnaryNot Then
+                Dim n = DirectCast(expr, UnaryNot)
+                Return New UnaryNot With {.value = distributeAll(n.value)}
+            End If
+
+            Return expr
+        End Function
+
+        Private Function isSumExpr(e As Expression) As Boolean
+            Return TypeOf e Is BinaryExpression AndAlso DirectCast(e, BinaryExpression).operator = "+"c
+        End Function
+
+        Private Function distributeMul(l As Expression, r As Expression) As Expression
+            If isSumExpr(l) Then
+                Dim b = DirectCast(l, BinaryExpression)
+                Return Add(distributeMul(b.left, r), distributeMul(b.right, r))
+            End If
+
+            If TypeOf l Is BinaryExpression AndAlso DirectCast(l, BinaryExpression).operator = "-"c Then
+                Dim b = DirectCast(l, BinaryExpression)
+                Return distributeMul(Add(b.left, Negate(b.right)), r)
+            End If
+
+            If isSumExpr(r) Then
+                Dim b = DirectCast(r, BinaryExpression)
+                Return Add(distributeMul(l, b.left), distributeMul(l, b.right))
+            End If
+
+            If TypeOf r Is BinaryExpression AndAlso DirectCast(r, BinaryExpression).operator = "-"c Then
+                Dim b = DirectCast(r, BinaryExpression)
+                Return distributeMul(l, Add(b.left, Negate(b.right)))
+            End If
+
+            Return New BinaryExpression(l, r, "*"c)
         End Function
     End Module
 End Namespace
