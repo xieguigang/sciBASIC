@@ -25,6 +25,8 @@ Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "physics-netcore5", "..\..\.
 EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "graph-netcore5", "..\..\Graph\graph-netcore5.vbproj", "{18A89400-63A9-3190-79F8-CAC2A7A21450}"
 EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "DeepQNetwork.Demo", "Demo\DeepQNetwork.Demo.vbproj", "{8B38B39A-0BFF-C0D2-6835-E47F6C6443CE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -113,6 +115,14 @@ Global
 		{18A89400-63A9-3190-79F8-CAC2A7A21450}.Release|Any CPU.Build.0 = Release|Any CPU
 		{18A89400-63A9-3190-79F8-CAC2A7A21450}.Release|x64.ActiveCfg = Release|x64
 		{18A89400-63A9-3190-79F8-CAC2A7A21450}.Release|x64.Build.0 = Release|x64
+		{8B38B39A-0BFF-C0D2-6835-E47F6C6443CE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8B38B39A-0BFF-C0D2-6835-E47F6C6443CE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8B38B39A-0BFF-C0D2-6835-E47F6C6443CE}.Debug|x64.ActiveCfg = Debug|x64
+		{8B38B39A-0BFF-C0D2-6835-E47F6C6443CE}.Debug|x64.Build.0 = Debug|x64
+		{8B38B39A-0BFF-C0D2-6835-E47F6C6443CE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8B38B39A-0BFF-C0D2-6835-E47F6C6443CE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8B38B39A-0BFF-C0D2-6835-E47F6C6443CE}.Release|x64.ActiveCfg = Release|x64
+		{8B38B39A-0BFF-C0D2-6835-E47F6C6443CE}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
