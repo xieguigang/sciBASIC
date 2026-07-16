@@ -498,7 +498,7 @@ Public Class CVODESolver : Implements IDisposable
     ''' <summary>提交一步成功结果到历史。</summary>
     Private Sub Commit(tNew As Double, yCorr As NVector)
         ' 历史下移
-        For i As Integer = _histCount - 1 DownTo 1
+        For i As Integer = _histCount - 1 To 1 Step -1
             _tHist(i) = _tHist(i - 1)
             _yHist(i).CopyFrom(_yHist(i - 1))
             _fHist(i).CopyFrom(_fHist(i - 1))
@@ -688,7 +688,7 @@ Public Class CVODESolver : Implements IDisposable
     ''' <summary>Horner 法求值多项式。</summary>
     Private Function PolyEval(p() As Double, x As Double) As Double
         Dim s As Double = 0.0
-        For i As Integer = p.Length - 1 DownTo 0
+        For i As Integer = p.Length - 1 To 0 Step -1
             s = s * x + p(i)
         Next
         Return s
