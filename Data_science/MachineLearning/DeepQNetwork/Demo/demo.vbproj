@@ -2,12 +2,12 @@
 
   <PropertyGroup>
     
-    <AssemblyName>DeepQNetwork.Demo</AssemblyName>
+    <AssemblyName>Demo</AssemblyName>
     <TargetFramework>net10.0-windows</TargetFramework>
     <OutputType>WinExe</OutputType>
     <UseWindowsForms>true</UseWindowsForms>
     <UseApplicationFramework>false</UseApplicationFramework>
-    <StartupObject>DeepQNetwork.Demo.MainForm</StartupObject>
+    <StartupObject>Demo.MainForm</StartupObject>
     <Platforms>AnyCPU;x64</Platforms>
     <OptionInfer>On</OptionInfer>
     <GenerateDocumentationFile>false</GenerateDocumentationFile>
