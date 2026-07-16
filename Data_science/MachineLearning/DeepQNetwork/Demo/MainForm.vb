@@ -10,8 +10,7 @@ Imports System.Windows.Forms
 Imports Microsoft.VisualBasic.Imaging.Physics
 Imports Microsoft.VisualBasic.Imaging.Physics.Collision
 Imports DeepQNetwork
-
-Namespace DeepQNetwork.Demo
+Imports System.Reflection
 
     ''' <summary>
     ''' DQN Stickman Runner — dark-dashboard WinForm that trains (or demos) a stickman
@@ -102,8 +101,9 @@ Namespace DeepQNetwork.Demo
             rightPanel = New Panel() With {.Dock = DockStyle.Right, .Width = 300, .BackColor = PanelBG}
             bottomPanel = New Panel() With {.Dock = DockStyle.Bottom, .Height = 200, .BackColor = BG}
             worldPanel = New Panel() With {.Dock = DockStyle.Fill, .BackColor = BG}
-            worldPanel.DoubleBuffered = True
             bottomPanel.DoubleBuffered = True
+            EnableDoubleBuffer(worldPanel)
+            EnableDoubleBuffer(bottomPanel)
 
             ' 顶栏
             titleLabel = New Label() With {
@@ -345,16 +345,25 @@ Namespace DeepQNetwork.Demo
             DrawSkeleton(g)
         End Sub
 
+        Private Sub EnableDoubleBuffer(ctl As Control)
+            Dim pi = GetType(Control).GetProperty("DoubleBuffered", BindingFlags.NonPublic Or BindingFlags.Instance)
+            pi.SetValue(ctl, True)
+        End Sub
+
         Private Sub DrawGrid(g As Graphics)
             Using pen = New Pen(Color.FromArgb(20, 30, 48), 1)
-                Dim stepPx = 80.0F
-                Dim first = CSng(-(camX * scale) Mod stepPx)
-                For x = first To worldPanel.Width Step stepPx
-                    g.DrawLine(pen, x, 0, x, worldPanel.Height)
-                Next
-                For y = 0 To worldPanel.Height Step stepPx
-                    g.DrawLine(pen, 0, y, worldPanel.Width, y)
-                Next
+                Dim gridStep As Single = 80.0F
+                Dim sx As Single = CSng(-(camX * scale) Mod gridStep)
+                Dim x As Single = sx
+                While x < worldPanel.Width
+                    g.DrawLine(pen, x, 0.0F, x, CSng(worldPanel.Height))
+                    x += gridStep
+                End While
+                Dim y As Single = 0.0F
+                While y < worldPanel.Height
+                    g.DrawLine(pen, 0.0F, y, CSng(worldPanel.Width), y)
+                    y += gridStep
+                End While
             End Using
         End Sub
 
@@ -448,7 +457,7 @@ Namespace DeepQNetwork.Demo
                     Dim x1 = padL + i / (n - 1) * plotW
                     Dim y0 = padT + plotH - (episodeRewards(i - 1) / maxR) * plotH
                     Dim y1 = padT + plotH - (episodeRewards(i) / maxR) * plotH
-                    g.DrawLine(pen, x0, y0, x1, y1)
+                    g.DrawLine(pen, CSng(x0), CSng(y0), CSng(x1), CSng(y1))
                 Next
             End Using
 
@@ -459,7 +468,7 @@ Namespace DeepQNetwork.Demo
                     Dim x1 = padL + i / (n - 1) * plotW
                     Dim y0 = padT + plotH - (episodeDist(i - 1) / maxD) * plotH
                     Dim y1 = padT + plotH - (episodeDist(i) / maxD) * plotH
-                    g.DrawLine(pen, x0, y0, x1, y1)
+                    g.DrawLine(pen, CSng(x0), CSng(y0), CSng(x1), CSng(y1))
                 Next
             End Using
 
@@ -475,4 +484,3 @@ Namespace DeepQNetwork.Demo
 
     End Class
 
-End Namespace

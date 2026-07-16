@@ -7,11 +7,12 @@
     <OutputType>WinExe</OutputType>
     <UseWindowsForms>true</UseWindowsForms>
     <UseApplicationFramework>false</UseApplicationFramework>
-    <StartupObject>DeepQNetwork.Demo.Program</StartupObject>
+    <StartupObject>DeepQNetwork.Demo.MainForm</StartupObject>
     <Platforms>AnyCPU;x64</Platforms>
     <OptionInfer>On</OptionInfer>
     <GenerateDocumentationFile>false</GenerateDocumentationFile>
     <Nullable>disable</Nullable>
+    <UseWPF>True</UseWPF>
   </PropertyGroup>
 
   <ItemGroup>

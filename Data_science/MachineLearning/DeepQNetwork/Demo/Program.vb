@@ -4,18 +4,14 @@
 Imports System.Threading
 Imports System.Windows.Forms
 
-Namespace DeepQNetwork.Demo
+''' <summary>Application entry point for the DQN Stickman Runner demo.</summary>
+Module Program
 
-    ''' <summary>Application entry point for the DQN Stickman Runner demo.</summary>
-    Module Program
+    <STAThread()>
+    Sub Main()
+        Application.EnableVisualStyles()
+        Application.SetCompatibleTextRenderingDefault(False)
+        Application.Run(New MainForm())
+    End Sub
 
-        <STAThread()>
-        Sub Main()
-            Application.EnableVisualStyles()
-            Application.SetCompatibleTextRenderingDefault(False)
-            Application.Run(New MainForm())
-        End Sub
-
-    End Module
-
-End Namespace
+End Module
