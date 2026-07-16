@@ -21,8 +21,8 @@ Public Class CVODESolver : Implements IDisposable
     Private Const DEFAULT_ABS_TOL As Double = 0.00000001
     Private Const MIN_H_FACTOR As Double = 0.1
     Private Const ZERO_THRESHOLD As Double = 0.000000000000001
-    ' 步长控制安全因子与增长上限（保守取值以保证稳定）
-    Private Const SAFETY As Double = 0.3
+    ' 步长控制安全因子（CVODE 标准取值，目标误差 ~SAFETY^{q+1}，过小时步长塌缩）
+    Private Const SAFETY As Double = 0.9
     Private Const MAX_GROWTH As Double = 2.0
     Private Const MIN_REDUCTION As Double = 0.25
     ' 单次 Step 内允许的最大失败重试次数
@@ -512,11 +512,6 @@ Public Class CVODESolver : Implements IDisposable
         End If
 
         Commit(tNew, y)
-        Static dbg2 As Integer = 0
-        If dbg2 < 20 Then
-            Console.Error.WriteLine($"OK m={_method} q={q} h={hTry:E4} err={errEst:E3} hNext={hNext:E4}")
-            dbg2 += 1
-        End If
         Return CVODEStatus.Success
     End Function
 
