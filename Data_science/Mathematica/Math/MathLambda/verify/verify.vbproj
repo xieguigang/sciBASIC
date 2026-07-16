@@ -7,6 +7,9 @@
     <Nullable>disable</Nullable>
   </PropertyGroup>
   <ItemGroup>
-    <ProjectReference Include="..\symbolic-netcore5.vbproj" />
+    <!-- Reference the already-built symbolic library and its dependencies by DLL
+         (instead of a project reference) to avoid a duplicate AssemblyInfo build
+         glitch that occurs when symbolic-netcore5 is rebuilt as a P2P reference. -->
+    <Reference Include="$(MSBuildThisFileDirectory)..\bin\Debug\net10.0\*.dll" />
   </ItemGroup>
 </Project>
