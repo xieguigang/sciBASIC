@@ -101,7 +101,6 @@ Imports System.Reflection
             rightPanel = New Panel() With {.Dock = DockStyle.Right, .Width = 300, .BackColor = PanelBG}
             bottomPanel = New Panel() With {.Dock = DockStyle.Bottom, .Height = 200, .BackColor = BG}
             worldPanel = New Panel() With {.Dock = DockStyle.Fill, .BackColor = BG}
-            bottomPanel.DoubleBuffered = True
             EnableDoubleBuffer(worldPanel)
             EnableDoubleBuffer(bottomPanel)
 
