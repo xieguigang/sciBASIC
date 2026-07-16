@@ -63,26 +63,52 @@ Namespace Scripting.MathExpression
 
     Public Module ExpressionBuilder
 
-        ReadOnly operatorPriority As String() = {"^", "*/%", "+-", "<>"}
+        ReadOnly operatorPriority As String() = {"^", "*/%\", "+-", "<>"}
 
         <Extension>
         Private Function AsExpression(token As MathToken) As Expression
             Select Case token.name
                 Case MathTokens.Literal
                     If token.text.Last = "!"c Then
-                        Return New Factorial(token.text)
+                        Return New Factorial(token.text.TrimEnd("!"c))
                     Else
                         Return New Literal(token.text)
                     End If
                 Case MathTokens.LogicalLiteral
                     Return New LogicalLiteral(token.text)
                 Case MathTokens.Symbol
-                    Return New SymbolExpression(token.text)
+                    If token.text.Last = "!"c Then
+                        Return New Factorial(token.text.TrimEnd("!"c))
+                    Else
+                        Return New SymbolExpression(token.text)
+                    End If
                 Case MathTokens.Open, MathTokens.Close, MathTokens.Invalid, MathTokens.Operator, MathTokens.Terminator
                     Throw New SyntaxErrorException
                 Case Else
                     Throw New NotImplementedException
             End Select
+        End Function
+
+        ''' <summary>
+        ''' 将相邻的 &lt; 与 &gt; 运算符 token 合并为 &lt;&gt;（不等于），以支持带空格的写法，如 <c>a &lt;&gt; b</c>。
+        ''' 词法器会丢弃空白字符，因此切分后 &lt; 与 &gt; 之间不会存在其它 token。
+        ''' </summary>
+        Private Function mergeNotEqual(tokens As MathToken()) As MathToken()
+            Dim out As New List(Of MathToken)
+
+            For i As Integer = 0 To tokens.Length - 1
+                If i < tokens.Length - 1 AndAlso
+                   tokens(i).name = MathTokens.Operator AndAlso tokens(i).text = "<"c AndAlso
+                   tokens(i + 1).name = MathTokens.Operator AndAlso tokens(i + 1).text = ">"c Then
+
+                    out.Add(New MathToken(MathTokens.Operator, "<>"))
+                    i += 1
+                Else
+                    out.Add(tokens(i))
+                End If
+            Next
+
+            Return out.ToArray
         End Function
 
         <Extension>
@@ -101,6 +127,8 @@ Namespace Scripting.MathExpression
         End Function
 
         Public Function BuildExpression(tokens As MathToken()) As Expression
+            tokens = mergeNotEqual(tokens)
+
             Dim blocks As List(Of MathToken())
 
             If tokens.Length = 1 Then
@@ -266,7 +294,7 @@ Namespace Scripting.MathExpression
                             Else
                                 a = buf(j - 1).TryCast(Of Expression)
                             End If
-                            If j + 1 > buf.Count Then
+                            If j + 1 >= buf.Count Then
                                 Throw New SyntaxErrorException
                             Else
                                 b = buf(j + 1).TryCast(Of Expression)

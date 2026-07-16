@@ -59,7 +59,6 @@
 Imports System.Linq.Expressions
 Imports System.Reflection
 Imports System.Runtime.CompilerServices
-Imports Microsoft.VisualBasic.ComponentModel.Algorithm.DynamicProgramming.Levenshtein
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.Scripting.MathExpression.Impl
@@ -133,7 +132,8 @@ Namespace Scripting.MathExpression
                         Case "cos" : Return GetDoubleMathFunction(NameOf(std.Cos), args(0))
                         Case "sin" : Return GetDoubleMathFunction(NameOf(std.Sin), args(0))
                         Case "tan" : Return GetDoubleMathFunction(NameOf(std.Tan), args(0))
-                        Case "log" : Return GetDoubleMathFunction(NameOf(std.Log), args(0))
+                        Case "pow" : Return GetMathFunction2(NameOf(std.Pow), args(0), args(1))
+                        Case "log" : Return GetMathFunction2(NameOf(std.Log), args(0), args(1))
                         Case Else
                             Throw New NotImplementedException($"the function call of '{name}' is not implemented!")
                     End Select
@@ -147,6 +147,11 @@ Namespace Scripting.MathExpression
             Dim absMethod As MethodInfo = GetType(System.Math).GetMethod(name, {GetType(Double)})
             Dim callAbs As MethodCallExpression = Expressions.Expression.Call(absMethod, num)
             Return callAbs
+        End Function
+
+        Private Function GetMathFunction2(name$, a As Expressions.Expression, b As Expressions.Expression) As MethodCallExpression
+            Dim method As MethodInfo = GetType(System.Math).GetMethod(name, {GetType(Double), GetType(Double)})
+            Return Expressions.Expression.Call(method, a, b)
         End Function
 
         <Extension>
@@ -163,22 +168,8 @@ Namespace Scripting.MathExpression
 
                 Return parameters(symbolName)
             Else
-                With parameters _
-                    .Where(Function(t) Not t.Key Like applied) _
-                    .OrderByDescending(Function(t)
-                                           Return LevenshteinDistance.ComputeDistance(t.Key, symbolName)?.MatchSimilarity >= 0.5
-                                       End Function) _
-                    .FirstOrDefault
-
-                    If Not .Value Is Nothing Then
-                        Call $"the missing {symbolName} is replaced by un-applied '{ .Key}'!".warning
-
-                        applied += .Key
-                        Return .Value
-                    Else
-                        Throw New EntryPointNotFoundException(symbolName)
-                    End If
-                End With
+                ' 缺失的符号名直接抛出错误，避免用拼写相近的参数静默替换而导致错误结果
+                Throw New EntryPointNotFoundException(symbolName)
             End If
         End Function
     End Module

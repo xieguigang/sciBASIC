@@ -98,6 +98,12 @@ Namespace Scripting.BasicR
         End Function
 
         Public Function mean(ParamArray x As Double()) As Double
+            ' ParamArray 在直接传入一个 Double() 数组时会被包装成长度为 1 的数组，
+            ' 此时元素本身才是真正的数据序列，需要解包后再求平均
+            If x.Length = 1 AndAlso x(0).GetType.IsArray Then
+                Return DirectCast(CObj(x(0)), IEnumerable(Of Double)).Average
+            End If
+
             Return x.Average
         End Function
 

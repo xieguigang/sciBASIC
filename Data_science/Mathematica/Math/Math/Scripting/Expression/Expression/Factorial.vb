@@ -65,7 +65,7 @@ Namespace Scripting.MathExpression.Impl
         Public ReadOnly Property factor As Expression
 
         Sub New(factor As String)
-            Me.factor = Expression.Parse(factor)
+            Me.factor = Expression.Parse(factor.TrimEnd("!"c))
         End Sub
 
         Public Overrides Function Evaluate(env As ExpressionEngine) As Double

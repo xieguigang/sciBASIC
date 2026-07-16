@@ -125,7 +125,7 @@ Namespace Scripting
         <Extension>
         Public Sub SetFunction(engine As ExpressionEngine, run As String)
             Dim declares As String = r.Match(run, ".+\(.+?\)").Value
-            Dim lambda As String = Mid(run, declares.Length)
+            Dim lambda As String = run.Substring(run.IndexOf(declares) + declares.Length).Trim
             Dim name As String = declares.Split("("c).First
             Dim parameters As String() = declares.GetStackValue("(", ")").StringSplit("\s*,\s*")
 
@@ -228,7 +228,12 @@ Namespace Scripting
                 Return exp
             Catch ex As Exception
                 Call App.LogException(New Exception(expression, ex))
-                Return Nothing
+
+                If throwEx Then
+                    Throw
+                Else
+                    Return Nothing
+                End If
             End Try
         End Function
 

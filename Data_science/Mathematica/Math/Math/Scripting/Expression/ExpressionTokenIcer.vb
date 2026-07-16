@@ -65,7 +65,7 @@ Namespace Scripting.MathExpression
         Dim text As CharPtr
         Dim buf As New CharBuffer
 
-        ReadOnly operators As Index(Of Char) = {"+"c, "-"c, "*"c, "/"c, "^"c, "%"c}
+        ReadOnly operators As Index(Of Char) = {"+"c, "-"c, "*"c, "/"c, "^"c, "%"c, "\"c}
 
         Sub New(text As CharPtr)
             Me.text = text

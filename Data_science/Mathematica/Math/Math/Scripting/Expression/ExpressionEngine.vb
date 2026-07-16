@@ -127,6 +127,11 @@ Namespace Scripting.MathExpression
                         env.symbols(symbol.Key) = symbol.Value
                     Next
 
+                    ' 拷贝外层函数表，使得用户自定义函数体内可以调用其它用户自定义函数
+                    For Each userFunc In functions
+                        env.functions(userFunc.Key) = userFunc.Value
+                    Next
+
                     For i As Integer = 0 To parameters.Length - 1
                         env.symbols(parameters(i)) = arguments(i)
                     Next

@@ -6,7 +6,7 @@
     <OutputType>Exe</OutputType>
   </PropertyGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\Microsoft.VisualBasic.Core\src\Core.vbproj" />
-    <ProjectReference Include="..\Math\Math.NET5.vbproj" />
+    <ProjectReference Include="..\..\..\..\..\Microsoft.VisualBasic.Core\src\Core.vbproj" />
+    <ProjectReference Include="..\Math.NET5.vbproj" />
   </ItemGroup>
   </Project>
