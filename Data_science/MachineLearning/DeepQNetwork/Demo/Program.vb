@@ -1,18 +1,21 @@
 ' Copyright (c) 2018 GPL3 Licensed
-' DQN 火柴人跑步 Demo 入口。
+' DQN 火柴人强化学习 Demo 入口。
 
-Imports System
+Imports System.Threading
 Imports System.Windows.Forms
 
 Namespace DeepQNetwork.Demo
 
+    ''' <summary>Application entry point for the DQN Stickman Runner demo.</summary>
     Module Program
 
-        <STAThread>
+        <STAThread()>
         Sub Main()
             Application.EnableVisualStyles()
             Application.SetCompatibleTextRenderingDefault(False)
             Application.Run(New MainForm())
         End Sub
+
     End Module
+
 End Namespace
