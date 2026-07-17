@@ -272,7 +272,10 @@ Namespace Data
                 ' For record variables, it is the amount of space per
                 ' record. Pad to a multiple of 4 to match the on-disk
                 ' interleaved layout used by the standard format.
-                recordStep += (varSize + 3) \ 4 * 4
+                ' NOTE: in VB, "*" has higher precedence than "\", so the
+                ' inner parentheses around the integer division are required:
+                ' ((varSize + 3) \ 4) * 4 == ceil(varSize / 4) * 4.
+                recordStep += ((varSize + 3) \ 4) * 4
                 record = True
             End If
 
