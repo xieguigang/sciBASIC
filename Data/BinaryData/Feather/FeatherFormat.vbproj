@@ -13,6 +13,7 @@
     <DefaultItemExcludes>$(DefaultItemExcludes);$(ProjectDir)**\*.cs</DefaultItemExcludes>
     <RootNamespace>Microsoft.VisualBasic.DataStorage.FeatherFormat</RootNamespace>
     <AssemblyName>Microsoft.VisualBasic.DataStorage.FeatherFormat</AssemblyName>
+    <RemoveIntegerChecks>True</RemoveIntegerChecks>
     <UseApplicationFramework>True</UseApplicationFramework>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
