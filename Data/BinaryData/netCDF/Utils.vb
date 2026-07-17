@@ -280,9 +280,9 @@ Module Utils
         End If
 
         Select Case type
-            Case CDFDataTypes.NC_BYTE
+            Case CDFDataTypes.NC_BYTE, CDFDataTypes.NC_UBYTE
                 Return buffer.ReadBytes(size)
-            Case CDFDataTypes.NC_CHAR
+            Case CDFDataTypes.NC_CHAR, CDFDataTypes.NC_STRING
                 Return New String(buffer.ReadChars(size)).TrimNull
             Case CDFDataTypes.NC_SHORT
                 Return readNumber(size, AddressOf buffer.ReadInt16)
@@ -294,6 +294,12 @@ Module Utils
                 Return readNumber(size, AddressOf buffer.ReadDouble)
             Case CDFDataTypes.NC_INT64
                 Return readNumber(size, AddressOf buffer.ReadInt64)
+            Case CDFDataTypes.NC_USHORT
+                Return ReadBE(Of UShort)(buffer, size, 2, AddressOf BitConverter.ToUInt16)
+            Case CDFDataTypes.NC_UINT
+                Return ReadBE(Of UInteger)(buffer, size, 4, AddressOf BitConverter.ToUInt32)
+            Case CDFDataTypes.NC_UINT64
+                Return ReadBE(Of ULong)(buffer, size, 8, AddressOf BitConverter.ToUInt64)
             Case CDFDataTypes.BOOLEAN
 
                 ' 20210212 bytes flags for maps boolean
