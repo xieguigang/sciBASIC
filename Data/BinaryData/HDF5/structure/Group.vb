@@ -99,14 +99,57 @@ Namespace struct
         End Property
 
         Public Sub New(sb As Superblock, facade As DataObjectFacade)
+            m_facade = facade
+
             Dim gm As GroupMessage = facade.dataObject.groupMessage
 
-            If gm Is Nothing Then
-                Throw New InvalidProgramException("Invalid folder object!")
+            If gm IsNot Nothing Then
+                ' v1 "old style" group: symbol table + local heap + B-tree.
+                readGroup(sb, gm.bTreeAddress, gm.nameHeapAddress)
+            Else
+                ' v2 "new style" group: links are stored as Link messages (compact) or in a
+                ' fractal heap indexed by a v2 B-tree (dense).
+                Call readGroupV2(sb, facade)
+            End If
+        End Sub
+
+        ''' <summary>
+        ''' Builds the child list for a version 2 (or later) object header. Compact groups keep
+        ''' their links as Link messages; dense groups keep them in a fractal heap and are not
+        ''' yet implemented here.
+        ''' </summary>
+        Private Sub readGroupV2(sb As Superblock, facade As DataObjectFacade)
+            Dim msgs = facade.dataObject.messages
+
+            If msgs Is Nothing Then
+                Return
             End If
 
-            m_facade = facade
-            readGroup(sb, gm.bTreeAddress, gm.nameHeapAddress)
+            Dim dense As Boolean = False
+
+            For Each msg As ObjectHeaderMessage In msgs
+                Dim t As ObjectHeaderMessages = msg.headerMessageType.type
+
+                If t = ObjectHeaderMessages.GroupInfo OrElse t = ObjectHeaderMessages.LinkInfo Then
+                    dense = True
+                End If
+            Next
+
+            If dense Then
+                Throw New NotImplementedException("dense (fractal heap) groups are not yet implemented")
+            End If
+
+            ' Compact group: each child is a Link message with a hard link to its object header.
+            For Each msg As ObjectHeaderMessage In msgs
+                If msg.headerMessageType Is ObjectHeaderMessageType.Link AndAlso msg.linkMessage IsNot Nothing Then
+                    Dim link = msg.linkMessage
+
+                    If link.linkType = 0 Then
+                        ' hard link -> object header address
+                        objects.Add(New DataObjectFacade(sb, link.linkName, link.linkAddress))
+                    End If
+                End If
+            Next
         End Sub
 
         Private Sub readGroup(sb As Superblock, bTreeAddress As Long, nameHeapAddress As Long)

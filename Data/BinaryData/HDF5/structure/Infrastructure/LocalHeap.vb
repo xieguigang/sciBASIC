@@ -111,8 +111,8 @@ Namespace struct
 
             Me.version = [in].readByte()
 
-            If Me.version > 0 Then
-                Throw New IOException("version not implemented")
+            If Me.version > 1 Then
+                Throw New IOException("local heap version " & Me.version & " is not implemented")
             End If
 
             Me.reserved0 = [in].readBytes(3)

@@ -141,7 +141,64 @@ Namespace struct
         End Function
 
         Private Sub readVersion2([in] As BinaryReader, sb As Superblock, address As Long)
-            Throw New IOException("version not implented")
+            Call readHeaderChunk([in], sb, address, 0)
+        End Sub
+
+        ''' <summary>
+        ''' Reads a single OHDR chunk located at <paramref name="chunkAddress"/> and appends its
+        ''' (non-NIL) messages to <see cref="headerMessages"/>. Continuation messages are followed
+        ''' recursively. Messages in a version 2 object header are stored packed (no 8-byte padding)
+        ''' and are preceded by a 5-byte prefix (type, size, flags) instead of the 8-byte v1 prefix.
+        ''' </summary>
+        Private Sub readHeaderChunk([in] As BinaryReader, sb As Superblock, chunkAddress As Long, depth As Integer)
+            If depth > 64 Then
+                Throw New IOException("too many object header continuation blocks")
+            End If
+
+            [in].offset = chunkAddress
+
+            Dim sig = [in].readBytes(4)
+            If Not sig.SequenceEqual(OHDR_SIGNATURE) Then
+                Throw New IOException("invalid object header (OHDR) signature")
+            End If
+
+            Me.version = [in].readByte()
+            Dim ohFlags = [in].readByte()
+
+            ' bit 5 (0x20): access/modification/change/birth times (4 x 32-bit)
+            If (ohFlags And &H20) <> 0 Then
+                [in].skipBytes(16)
+            End If
+
+            ' bit 4 (0x10): non-default attribute storage phase change values (2 x 16-bit)
+            If (ohFlags And &H10) <> 0 Then
+                [in].skipBytes(4)
+            End If
+
+            ' bits 0-1: size of the "Size of Chunk #0" field (1/2/4/8 bytes)
+            Dim chunkSizeField = ({1, 2, 4, 8})(ohFlags And &H3)
+            Dim chunkSize = ReadHelper.readVariableSizeUnsigned([in], chunkSizeField)
+            Dim chunkEnd = [in].offset + chunkSize
+
+            ' bit 2 (0x04): per-message creation order field present
+            Dim messageCreationOrder = (ohFlags And &H4) <> 0
+
+            While [in].offset < chunkEnd
+                Dim msgStart = [in].offset
+                Dim msg As New ObjectHeaderMessage([in], sb, msgStart, 2, messageCreationOrder)
+
+                If msg.headerMessageType Is ObjectHeaderMessageType.ObjectHeaderContinuation Then
+                    Dim cmsg = msg.continueMessage
+                    Call readHeaderChunk([in], sb, cmsg.offset, depth + 1)
+                ElseIf msg.headerMessageType IsNot ObjectHeaderMessageType.NIL Then
+                    Me.headerMessages.Add(msg)
+                End If
+
+                [in].offset = msgStart + msg.headerLength + msg.sizeOfHeaderMessageData
+            End While
+
+            ' 4-byte checksum at the end of the chunk
+            [in].skipBytes(4)
         End Sub
 
         Protected Friend Overrides Sub printValues(console As TextWriter)
