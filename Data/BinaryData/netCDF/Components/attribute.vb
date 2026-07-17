@@ -102,13 +102,16 @@ Namespace Components
 
         Public Function getObjectValue() As Object
             Select Case type
-                Case CDFDataTypes.NC_BYTE : Return Byte.Parse(value)
-                Case CDFDataTypes.NC_CHAR : Return value
+                Case CDFDataTypes.NC_BYTE, CDFDataTypes.NC_UBYTE : Return Byte.Parse(value)
+                Case CDFDataTypes.NC_CHAR, CDFDataTypes.NC_STRING : Return value
                 Case CDFDataTypes.NC_DOUBLE : Return Double.Parse(value)
                 Case CDFDataTypes.NC_FLOAT : Return Single.Parse(value)
                 Case CDFDataTypes.NC_INT : Return Integer.Parse(value)
                 Case CDFDataTypes.NC_SHORT : Return Short.Parse(value)
+                Case CDFDataTypes.NC_USHORT : Return UShort.Parse(value)
                 Case CDFDataTypes.NC_INT64 : Return Long.Parse(value)
+                Case CDFDataTypes.NC_UINT : Return UInteger.Parse(value)
+                Case CDFDataTypes.NC_UINT64 : Return ULong.Parse(value)
                 Case CDFDataTypes.BOOLEAN
 
                     If value.IsPattern("\d+") Then
@@ -124,18 +127,23 @@ Namespace Components
 
         Public Function getBytes(Optional base64Bytes As Boolean = False) As Byte()
             Select Case type
-                Case CDFDataTypes.NC_BYTE : Return {Byte.Parse(value)}
+                Case CDFDataTypes.NC_BYTE, CDFDataTypes.NC_UBYTE : Return {Byte.Parse(value)}
                 Case CDFDataTypes.NC_CHAR
                     If base64Bytes Then
                         Return value.Base64RawBytes
                     Else
                         Return UTF8WithoutBOM.GetBytes(value)
                     End If
+                Case CDFDataTypes.NC_STRING
+                    Return UTF8WithoutBOM.GetBytes(value)
                 Case CDFDataTypes.NC_DOUBLE : Return BitConverter.GetBytes(Double.Parse(value))
                 Case CDFDataTypes.NC_FLOAT : Return BitConverter.GetBytes(Single.Parse(value))
                 Case CDFDataTypes.NC_INT : Return BitConverter.GetBytes(Integer.Parse(value))
                 Case CDFDataTypes.NC_SHORT : Return BitConverter.GetBytes(Short.Parse(value))
+                Case CDFDataTypes.NC_USHORT : Return BitConverter.GetBytes(UShort.Parse(value))
                 Case CDFDataTypes.NC_INT64 : Return BitConverter.GetBytes(Long.Parse(value))
+                Case CDFDataTypes.NC_UINT : Return BitConverter.GetBytes(UInteger.Parse(value))
+                Case CDFDataTypes.NC_UINT64 : Return BitConverter.GetBytes(ULong.Parse(value))
 
                 Case Else
                     Throw New NotSupportedException
