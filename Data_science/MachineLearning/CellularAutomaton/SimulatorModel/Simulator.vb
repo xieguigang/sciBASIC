@@ -86,7 +86,7 @@ Public Class Simulator(Of T As Individual) : Inherits Iterator.Kernel
     ''' </summary>
     ''' <param name="size">the grid size</param>
     Sub New(size As Size, activator As Func(Of T))
-        Dim grid = MAT(Of CellEntity(Of T))(size.Height, size.Width)
+        Dim grid = RectangularArray.Matrix(Of CellEntity(Of T))(size.Height, size.Width)
 
         Me.grid = grid
         Me.size = size

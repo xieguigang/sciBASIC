@@ -70,7 +70,7 @@ Public Class Debugger(Of T As Individual) : Implements IDisposable
         Me.file = file
         Me.getInt = getInt
         Me.simulator = simulator
-        Me.cache = MAT(Of List(Of Integer))(size.Height, size.Width)
+        Me.cache = RectangularArray.Matrix(Of List(Of Integer))(size.Height, size.Width)
 
         For j As Integer = 0 To size.Width - 1
             For i As Integer = 0 To size.Height - 1
