@@ -92,7 +92,7 @@ Namespace NeuralNetwork.Activations
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Shared Function FromXmlModel(functions As Dictionary(Of String, ActiveFunction)) As LayerActives
+        Public Shared Function FromXmlModel(functions As IReadOnlyDictionary(Of String, ActiveFunction)) As LayerActives
             Return New LayerActives With {
                 .hiddens = functions!hiddens.Function,
                 .output = functions!output.Function

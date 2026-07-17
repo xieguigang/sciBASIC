@@ -149,7 +149,7 @@ Namespace NeuralNetwork
             m_INPUTNEURONCOUNT = cnn.input.dims.x
             m_OUTPUTNEURONCOUNT = cnn.output.out_depth
 
-            Dim fc As New List(Of Layer)
+            Dim fc As New List(Of CNN.layers.Layer)
             For i As Integer = 0 To cnn.LayerNum - 1
                 If cnn.Layer(i).Type = LayerTypes.FullyConnected Then
                     fc.Add(cnn.Layer(i))
@@ -164,7 +164,7 @@ Namespace NeuralNetwork
                 hidden.Add(fc(i).BackPropagationResult.ToArray.Length - 1)
             Next
 
-            m_HIDDENLAYERCOUNT = std.Max(fc.Count - 1, 0)
+            m_HIDDENLAYERCOUNT = If(fc.Count - 1 > 0, fc.Count - 1, 0)
             m_HIDDENNEURONCOUNT = If(hidden.Count > 0, hidden(0), 0)
 
             alg = New SGDTrainer(batch_size:=1, l2_decay:=0)
@@ -230,7 +230,7 @@ Namespace NeuralNetwork
             End Get
         End Property
 
-        Private Shared Iterator Function EachFCLayer(cnn As ConvolutionalNN) As IEnumerable(Of Layer)
+        Private Shared Iterator Function EachFCLayer(cnn As ConvolutionalNN) As IEnumerable(Of CNN.layers.Layer)
             For i As Integer = 0 To cnn.LayerNum - 1
                 If cnn.Layer(i).Type = LayerTypes.FullyConnected Then
                     Yield cnn.Layer(i)
@@ -242,7 +242,7 @@ Namespace NeuralNetwork
             Get
                 Dim allWeights As New List(Of Double)()
 
-                For Each layer As Layer In EachFCLayer(cnn)
+                For Each layer As CNN.layers.Layer In EachFCLayer(cnn)
                     Dim results = layer.BackPropagationResult.ToArray
 
                     ' 仅取权重（每一层前 out_depth 个元素为 filters），不含偏置
@@ -265,7 +265,7 @@ Namespace NeuralNetwork
             Get
                 Dim allBias As New List(Of Double)()
 
-                For Each layer As Layer In EachFCLayer(cnn)
+                For Each layer As CNN.layers.Layer In EachFCLayer(cnn)
                     ' 偏置位于每一个全连接层 BackPropagationResult 的最后一个元素
                     Dim results = layer.BackPropagationResult.ToArray
                     allBias.AddRange(results(results.Length - 1).Weights)
@@ -318,7 +318,7 @@ Namespace NeuralNetwork
         ''' 将当前的 CNN 内核模型以 CNN 二进制格式持久化保存
         ''' </summary>
         Public Overridable Sub Save(path As String)
-            Using file As Stream = path.Open(FileMode.OpenOrCreate, doClear:=True, [readOnly]:=False)
+            Using file As Stream = New FileStream(path, FileMode.Create, FileAccess.Write)
                 Call Save(file)
             End Using
         End Sub
@@ -334,7 +334,7 @@ Namespace NeuralNetwork
         ''' 从 CNN 二进制模型文件之中加载 NeuralNetwork 模型
         ''' </summary>
         Public Shared Function Load(path As String) As Netz
-            Using file As Stream = path.OpenReadonly
+            Using file As Stream = New FileStream(path, FileMode.Open, FileAccess.Read)
                 Return Load(file)
             End Using
         End Function

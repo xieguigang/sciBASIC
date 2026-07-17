@@ -82,6 +82,17 @@ Namespace NeuralNetwork
         End Property
 
         ''' <summary>
+        ''' 当前层之中的神经元节点数量（供 <see cref="Trainings.IndividualParallelTraining"/> 等消费者读取）
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property Count As Integer
+            <MethodImpl(MethodImplOptions.AggressiveInlining)>
+            Get
+                Return Neurons.Length
+            End Get
+        End Property
+
+        ''' <summary>
         ''' 通过<see cref="SoftmaxLayer"/>将当前层之中的所有的神经元的值都归一化为[0,1]这个区间内
         ''' </summary>
         ''' <returns></returns>

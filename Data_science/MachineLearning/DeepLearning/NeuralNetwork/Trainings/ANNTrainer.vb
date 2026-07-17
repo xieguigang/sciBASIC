@@ -449,6 +449,17 @@ Namespace NeuralNetwork
         End Sub
 
         ''' <summary>
+        ''' 使用 CNN 批量训练器对当前数据集进行批量训练。
+        ''' 与在线的逐样本训练 <see cref="Train"/> 互补：在线训练见 <see cref="Train"/>，
+        ''' 批量训练一次性使用全部样本进行多轮 SGD。
+        ''' </summary>
+        ''' <param name="maxLoops">批量训练的迭代（轮）数上限</param>
+        Public Sub TrainBatch(maxLoops As Integer)
+            Call network.TrainBatch(dataSets.ToArray, maxLoops)
+            Call SaveSnapshot()
+        End Sub
+
+        ''' <summary>
         ''' 预测值与目标值之间的误差的绝对值之和
         ''' </summary>
         ''' <param name="neuronNetwork"></param>

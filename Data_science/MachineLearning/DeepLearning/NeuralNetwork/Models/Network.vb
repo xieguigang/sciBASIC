@@ -150,9 +150,9 @@ Namespace NeuralNetwork
         ''' 遗留数据图镜像（由 CNN 内核权重/数值回写）
         ''' </summary>
         Private m_graph As (input As Layer, hidden As HiddenLayers, output As Layer)
-        Private ReadOnly m_inputSize As Integer
-        Private ReadOnly m_hiddenSize As Integer()
-        Private ReadOnly m_outputSize As Integer
+        Private m_inputSize As Integer
+        Private m_hiddenSize As Integer()
+        Private m_outputSize As Integer
         Private Shared ReadOnly dropOutRand As New System.Random
 #End Region
 
@@ -179,7 +179,7 @@ Namespace NeuralNetwork
             ' 从 CNN 内核推导网络规模
             m_inputSize = cnn.input.dims.x
 
-            Dim fcLayers As New List(Of Layer)
+            Dim fcLayers As New List(Of CNN.layers.Layer)
             For i As Integer = 0 To cnn.LayerNum - 1
                 If cnn.Layer(i).Type = LayerTypes.FullyConnected Then
                     fcLayers.Add(cnn.Layer(i))
@@ -401,6 +401,38 @@ Namespace NeuralNetwork
         Public Function Compute(ParamArray inputs As Double()) As Double()
             Return ForwardPropagate(inputs, parallel:=False).Output
         End Function
+
+        ''' <summary>
+        ''' 批量训练入口：将 <see cref="TrainingSample"/> 转换为 CNN 的
+        ''' <see cref="Microsoft.VisualBasic.MachineLearning.ComponentModel.StoreProcedure.SampleData"/> 之后，
+        ''' 调用 <see cref="CNN.Trainer.train"/> 完成批量 SGD 训练；
+        ''' 在线的逐样本训练请见 <see cref="BackPropagate"/>。
+        ''' </summary>
+        ''' <param name="samples">训练样本集合</param>
+        ''' <param name="maxLoops">批量训练的迭代（轮）数上限</param>
+        Public Sub TrainBatch(samples As TrainingSample(), maxLoops As Integer)
+            If cnn Is Nothing Then
+                Return
+            End If
+
+            Dim sampleData As New List(Of Microsoft.VisualBasic.MachineLearning.ComponentModel.StoreProcedure.SampleData)
+
+            For Each s As TrainingSample In samples
+                ' CNN 的 Trainer.train 内部会按列做数据集归一化
+                Call sampleData.Add(New Microsoft.VisualBasic.MachineLearning.ComponentModel.StoreProcedure.SampleData(s.sample, s.classify))
+            Next
+
+            Dim sgd As New SGDTrainer(batch_size:=1, l2_decay:=0)
+            Call sgd.SetKernel(cnn)
+            sgd.learning_rate = LearnRate
+            sgd.momentum = Momentum
+
+            Dim trainer As New Microsoft.VisualBasic.MachineLearning.CNN.Trainer(sgd)
+            Call trainer.train(sampleData.ToArray, maxLoops)
+
+            ' 训练完成后，将更新后的 CNN 权重/偏置回写到遗留数据图镜像
+            Call NetworkKernel.SyncFromCNN(cnn, m_graph, m_inputSize, m_hiddenSize, m_outputSize)
+        End Sub
 #End Region
 
 #Region "-- Persistence (CNN binary format) --"
@@ -409,7 +441,7 @@ Namespace NeuralNetwork
         ''' 将当前的 CNN 内核模型以 CNN 二进制格式持久化保存
         ''' </summary>
         Public Overridable Sub Save(path As String)
-            Using file As Stream = file.OpenWrite(path)
+            Using file As Stream = New FileStream(path, FileMode.Create, FileAccess.Write)
                 Call Save(file)
             End Using
         End Sub
@@ -427,7 +459,7 @@ Namespace NeuralNetwork
         ''' 从 CNN 二进制模型文件之中加载 NeuralNetwork 模型
         ''' </summary>
         Public Shared Function Load(path As String) As Network
-            Using file As Stream = file.OpenRead(path)
+            Using file As Stream = New FileStream(path, FileMode.Open, FileAccess.Read)
                 Return Load(file)
             End Using
         End Function
