@@ -11,7 +11,12 @@
     <GenerateDocumentationFile>false</GenerateDocumentationFile>
     <Nullable>enable</Nullable>
     <ImplicitUsings>disable</ImplicitUsings>
+    <Platforms>AnyCPU;x64</Platforms>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="build.log" />
+  </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\CellularAutomaton.vbproj" />
