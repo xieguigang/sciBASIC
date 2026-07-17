@@ -244,6 +244,12 @@ Public Class HDF5Reader : Implements IFileDump
 
             While iter.hasNext()
                 chunk = iter.[next](reader, sb)
+
+                ' Skip invalid chunks (e.g. B-tree high-key sentinels with no file position)
+                If chunk.filePosition < 0 Then
+                    Continue While
+                End If
+
                 ' read/add a new data chunk block
                 container.chunks.Add(chunk)
             End While

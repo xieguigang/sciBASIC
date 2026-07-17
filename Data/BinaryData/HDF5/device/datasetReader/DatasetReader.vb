@@ -228,7 +228,7 @@ Namespace device
 
         <Extension>
         Private Function asShortBuffer(buffer As Byte(), byteOrder As ByteOrder) As Short()
-            Return buffer.Split(4).Select(Function(chunk) BinaryReader.ToShort(chunk, byteOrder)).ToArray
+            Return buffer.Split(2).Select(Function(chunk) BinaryReader.ToShort(chunk, byteOrder)).ToArray
         End Function
 
         Private Sub fillData(Of T)(data As Array, dims As Integer(), buffer As T())
@@ -244,20 +244,17 @@ Namespace device
         End Sub
 
         Private Sub fillDataUnsigned(Of T)(data As Array, dims As Integer(), buffer As T())
-            If dims.Length > 1 Then
-                For i As Integer = 0 To dims(0) - 1
-                    Dim newArray As Object = data.GetValue(i)
+            ' Signed and unsigned integer types share the same in-memory byte
+            ' layout, so a raw byte copy reinterprets each element as the matching
+            ' unsigned type correctly (works for 1-D and multi-D arrays alike).
+            If buffer Is Nothing OrElse buffer.Length = 0 Then
+                Return
+            End If
 
-                    fillDataUnsigned(newArray, dims.Skip(1).ToArray, buffer)
-                Next
-            Else
-                Dim tempBuffer As SByte() = New SByte(dims(dims.Length - 1) - 1) {}
+            Dim totalBytes As Integer = Buffer.ByteLength(buffer)
 
-                Call Array.ConstrainedCopy(buffer, Scan0, tempBuffer, Scan0, buffer.Length)
-
-                For i As Integer = 0 To tempBuffer.Length - 1
-                    data.SetValue(CUInt(tempBuffer(i)), i)
-                Next
+            If totalBytes > 0 Then
+                Call Buffer.BlockCopy(buffer, Scan0, data, Scan0, totalBytes)
             End If
         End Sub
     End Module

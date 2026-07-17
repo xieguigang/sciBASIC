@@ -73,6 +73,10 @@ Namespace edu.arizona.cs.hdf5.test
 
             Dim result = reader.dataset.data(reader.superblock)
 
+            If TypeOf result Is Array Then
+                Console.WriteLine("decoded array length : " & DirectCast(result, Array).Length)
+            End If
+
             If showHeader Then
                 Dim headerSize As Long = reader.headerSize
                 Console.WriteLine("header size : " & headerSize)
@@ -101,6 +105,11 @@ Namespace edu.arizona.cs.hdf5.test
                 For Each chunk As DataChunk In chunks
 
                     Dim filepos As Long = chunk.filePosition
+
+                    ' Skip invalid chunks (B-tree high-key sentinels)
+                    If filepos < 0 Then
+                        Continue For
+                    End If
 
                     If showHeader Then
                         DirectCast(chunk, IFileDump).printValues(console:=text)

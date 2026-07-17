@@ -206,19 +206,20 @@ Namespace struct
             'End If
 
             Dim size As Long = 8 + 2 * sb.sizeOfOffsets + Me.numberOfEntries * (8 + sb.sizeOfOffsets + 8 + layout.numberOfDimensions)
-            Dim isLast As Boolean
             Dim dc As DataChunk
 
             leftAddress = ReadHelper.readO([in], sb)
             rightAddress = ReadHelper.readO([in], sb)
 
             If Me.isLeaf Then
-                ' read all entries as a DataChunk
+                ' Read only the real leaf entries. The trailing "high key" sentinel that
+                ' HDF5 appends to a leaf node has no data pointer and must be skipped,
+                ' otherwise iteration returns the sentinel (filePosition = -1) instead of
+                ' the actual data chunks.
                 Me.entries = New List(Of DataChunk)()
 
-                For i As Integer = 0 To Me.numberOfEntries
-                    isLast = (i = Me.numberOfEntries)
-                    dc = New DataChunk(sb, [in].offset, layout.numberOfDimensions, isLast)
+                For i As Integer = 0 To Me.numberOfEntries - 1
+                    dc = New DataChunk(sb, [in].offset, layout.numberOfDimensions, False)
                     entries.Add(dc)
                 Next
             Else
@@ -249,16 +250,8 @@ Namespace struct
         ''' <param name="sb"></param>
         Public Sub first([in] As BinaryReader, sb As Superblock)
             If Me.level = 0 Then
-
-                ' note nentries-1 - assume dont skip the last one
-                '                for (currentEntry = 0; currentEntry < nentries-1; currentEntry++) {
-                '                	DataChunk entry = myEntries.get(currentEntry + 1);
-                '                	if ((wantOrigin == null) || tiling.compare(wantOrigin, entry.offset) < 0) 
-                '                		break;   // LOOK ??
-                '                } 
-                '                
-
-                Me.currentEntry = 0
+                ' Start at -1 so the first [next] call yields entries(0)
+                Me.currentEntry = -1
             Else
                 Me.currentNode = Nothing
                 Me.currentEntry = 0
@@ -293,7 +286,7 @@ Namespace struct
         ''' </remarks>
         Public Function hasNext() As Boolean
             If Me.level = 0 Then
-                Return (Me.currentEntry < Me.numberOfEntries)
+                Return (Me.currentEntry < Me.entries.Count - 1)
             Else
                 If Me.currentNode.hasNext() Then
                     Return True

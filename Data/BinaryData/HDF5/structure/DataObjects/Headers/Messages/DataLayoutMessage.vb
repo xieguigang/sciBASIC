@@ -213,6 +213,9 @@ Namespace struct.messages
                 Me._dataAddress = [in].offset
             ElseIf type = LayoutClass.ChunkedStorage Then
                 Me._dataElementSize = [in].readInt
+            ElseIf type = LayoutClass.ContiguousStorage Then
+                ' Total Size of Dataset Storage (in bytes)
+                Me._continuousSize = ReadHelper.readL([in], sb)
             End If
         End Sub
 
