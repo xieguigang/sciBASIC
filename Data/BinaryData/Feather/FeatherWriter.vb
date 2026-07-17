@@ -126,6 +126,13 @@ Public NotInheritable Class FeatherWriter
     Private DataStream As BinaryDataWriter
     Private VariableStream As BinaryDataWriter
 
+    ''' <summary>
+    ''' Underlying <see cref="FileStream"/> owned by the file-mode constructor.
+    ''' Disposed after the three logical (multiplexed) child streams are released.
+    ''' Null for the stream-mode constructor, whose underlying stream is caller-owned.
+    ''' </summary>
+    Private _fileStream As Stream
+
     Private PendingColumns As LinkedList(Of WriteColumnConfig)
     Private Metadata As LinkedList(Of ColumnMetadata)
 
@@ -188,19 +195,31 @@ Public NotInheritable Class FeatherWriter
         End Select
 
         Try
-            DataStream = New BinaryDataWriter(File.Open(filePath, FileMode.Create, FileAccess.ReadWrite, FileShare.ReadWrite)) With {.ByteOrder = ByteOrder.LittleEndian}
-            NullStream = New BinaryDataWriter(File.Open(filePath, FileMode.Create, FileAccess.ReadWrite, FileShare.ReadWrite)) With {.ByteOrder = ByteOrder.LittleEndian}
-            VariableStream = New BinaryDataWriter(File.Open(filePath, FileMode.Create, FileAccess.ReadWrite, FileShare.ReadWrite)) With {.ByteOrder = ByteOrder.LittleEndian}
+            ' Open a single physical stream and multiplex the three logical
+            ' streams (Data / Null / Variable) onto it via MultiStreamProvider.
+            ' Opening three independent FileStream handles to the same file
+            ' corrupts the physical layout once the streams write to disjoint
+            ' regions at scale, which garbles variable-length (UTF-8) data on
+            ' a write-then-read round trip.
+            _fileStream = File.Open(filePath, FileMode.Create, FileAccess.ReadWrite, FileShare.ReadWrite)
+
+            Dim multiplexer = New MultiStreamProvider(_fileStream)
+
+            DataStream = New BinaryDataWriter(multiplexer.CreateChildStream()) With {.ByteOrder = ByteOrder.LittleEndian}
+            NullStream = New BinaryDataWriter(multiplexer.CreateChildStream()) With {.ByteOrder = ByteOrder.LittleEndian}
+            VariableStream = New BinaryDataWriter(multiplexer.CreateChildStream()) With {.ByteOrder = ByteOrder.LittleEndian}
 
             Setup(mode)
         Catch
-            DataStream?.Dispose()
-            NullStream?.Dispose()
-            VariableStream?.Dispose()
+            If DataStream IsNot Nothing Then DataStream.Dispose()
+            If NullStream IsNot Nothing Then NullStream.Dispose()
+            If VariableStream IsNot Nothing Then VariableStream.Dispose()
+            If _fileStream IsNot Nothing Then _fileStream.Dispose()
 
             VariableStream = Nothing
             NullStream = Nothing
             DataStream = Nothing
+            _fileStream = Nothing
 
             Throw
         End Try
@@ -1372,6 +1391,15 @@ inferFromUntyped:
         DataStream.Dispose()
         NullStream.Dispose()
         VariableStream.Dispose()
+
+        ' The single underlying file stream is owned by the file-mode
+        ' constructor and must be released after the multiplexed children
+        ' have flushed their pending writes (WriteToStream runs on the last
+        ' child's disposal).
+        If _fileStream IsNot Nothing Then
+            _fileStream.Dispose()
+            _fileStream = Nothing
+        End If
 
         VariableStream = Nothing
         NullStream = Nothing
