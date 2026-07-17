@@ -689,3 +689,5 @@ mime/application%vnd.openxmlformats-officedocument.spreadsheetml.sheet/R-xlsx/.v
 gr/ModelViewer/build_log.txt
 Data_science/MachineLearning/DeepLearning/_smoketest/netz_model.cnn
 Data_science/MachineLearning/DeepLearning/_smoketest/network_model.cnn
+Data/BinaryData/Feather/test/_diff_value.txt
+Data/BinaryData/Feather/test/_diff_writer.txt
