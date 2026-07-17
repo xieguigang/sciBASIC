@@ -166,8 +166,10 @@ Namespace CNN.trainers
             Dim pglist As BackPropResult() = net.BackPropagationResult.ToArray
 
             ' initialize lists for accumulators.
-            ' Will only be done once on first iteration
-            If gsum.Count = 0 AndAlso momentum > 0.0 Then
+            ' Will only be done once on first iteration.
+            ' Note: gsum/xsum must be initialized even when momentum = 0,
+            ' because SGDTrainer.update accesses gsum(i) unconditionally.
+            If gsum.Count = 0 Then
                 For i As Integer = 0 To pglist.Length - 1
                     Dim newGsumArr = New Double(pglist(i).Weights.Length - 1) {}
                     gsum.Add(newGsumArr)
