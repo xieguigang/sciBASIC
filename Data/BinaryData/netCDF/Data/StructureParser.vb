@@ -249,18 +249,15 @@ Namespace Data
             Utils.notNetcdf((type < 1 OrElse type > 12), $"non valid type {type}")
 
             ' Read variable size and offset according to the file version:
-            '   classic (1) : 32-bit vsize, 32-bit offset
-            '   64-bit offset (2) : 32-bit vsize, 64-bit offset
-            '   64-bit data (5) : 64-bit vsize, 64-bit offset
+            '   classic (1)       : 32-bit vsize, 32-bit offset
+            '   64-bit offset (2) : 64-bit vsize, 64-bit offset
+            '   64-bit data (5)   : 64-bit vsize, 64-bit offset
             Dim varSize As Long
             Dim offset As Long
 
             If (version = 1) Then
                 varSize = buffer.ReadUInt32()
                 offset = buffer.ReadUInt32()
-            ElseIf (version = 2) Then
-                varSize = buffer.ReadUInt32()
-                offset = buffer.ReadInt64
             Else
                 varSize = buffer.ReadInt64
                 offset = buffer.ReadInt64
