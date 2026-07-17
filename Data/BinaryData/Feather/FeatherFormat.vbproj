@@ -166,6 +166,11 @@
     <DebugType>full</DebugType>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Remove="test\**" />
+    <EmbeddedResource Remove="test\**" />
+    <None Remove="test\**" />
+  </ItemGroup>
+  <ItemGroup>
     <PackageReference Include="System.Composition" Version="10.0.10" />
     <PackageReference Include="System.Diagnostics.DiagnosticSource" Version="10.0.10" />
     <PackageReference Include="System.Drawing.Primitives" Version="4.3.0" />
