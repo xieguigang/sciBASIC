@@ -71,16 +71,29 @@ Namespace Data
         Private Function CreateArray(x As variable, size As Integer) As Array
             Select Case x.type
                 Case CDFDataTypes.BOOLEAN : Return New Boolean(size - 1) {}
-                Case CDFDataTypes.NC_BYTE : Return New Byte(size - 1) {}
-                Case CDFDataTypes.NC_CHAR : Return New Char(size - 1) {}
+                Case CDFDataTypes.NC_BYTE, CDFDataTypes.NC_UBYTE : Return New Byte(size - 1) {}
+                Case CDFDataTypes.NC_CHAR, CDFDataTypes.NC_STRING : Return New Char(size - 1) {}
                 Case CDFDataTypes.NC_DOUBLE : Return New Double(size - 1) {}
                 Case CDFDataTypes.NC_FLOAT : Return New Single(size - 1) {}
-                Case CDFDataTypes.NC_INT : Return New Integer(size - 1) {}
-                Case CDFDataTypes.NC_INT64 : Return New Long(size - 1) {}
+                Case CDFDataTypes.NC_INT, CDFDataTypes.NC_USHORT : Return New Integer(size - 1) {}
+                Case CDFDataTypes.NC_INT64, CDFDataTypes.NC_UINT, CDFDataTypes.NC_UINT64 : Return New Long(size - 1) {}
                 Case CDFDataTypes.NC_SHORT : Return New Short(size - 1) {}
                 Case Else
                     Throw New InvalidDataException("invalid data type!")
             End Select
+        End Function
+
+        ''' <summary>
+        ''' Product of the sizes of the given dimension ids.
+        ''' </summary>
+        Private Function dimProduct(dimensions As Dimension(), ids As Integer()) As Long
+            Dim p As Long = 1
+
+            For Each id As Integer In ids
+                p *= dimensions(id).size
+            Next
+
+            Return p
         End Function
 
         ''' <summary>
@@ -92,18 +105,19 @@ Namespace Data
         ''' <remarks>
         ''' 非记录类型则是一个数组
         ''' </remarks>
-        Public Function nonRecord(buffer As BinaryDataReader, variable As variable) As Array
-            ' size of the data
-            Dim size As Integer = variable.size / sizeof(variable.type)
-            ' iterates over the data
-            Dim data As Array = buffer.readVector(size, variable.type) ' variable.CreateArray(size)
+        Public Function nonRecord(buffer As BinaryDataReader, variable As variable, dimensions As Dimension()) As Array
+            ' Real element count = product of all dimension sizes.
+            ' For numeric types this equals varSize / elementSize; for
+            ' char/byte variables the stored vsize may include 4-byte
+            ' padding, so we must use the dimension product to avoid
+            ' reading the padding bytes.
+            Dim realCount As Integer = CInt(dimProduct(dimensions, variable.dimensions))
 
-            ' 读取的结果是一个T()数组
-            ' For i As Integer = 0 To size - 1
-            ' data(i) = Utils.readType(buffer, variable.type, 1)
-            ' Next
+            If realCount <= 0 Then
+                realCount = CInt(variable.size \ sizeof(variable.type))
+            End If
 
-            Return data
+            Return buffer.readVector(realCount, variable.type)
         End Function
 
         ''' <summary>
@@ -117,44 +131,27 @@ Namespace Data
         ''' <remarks>
         ''' 记录类型的数据可能是一个矩阵类型
         ''' </remarks>
-        Public Function record(buffer As BinaryDataReader, variable As variable, recordDimension As recordDimension) As Array
-            Dim width% = If(variable.size, variable.size / sizeof(variable.type), 1)
-            ' size of the data
-            ' TODO streaming data
-            Dim size As Integer = recordDimension.length
-            ' iterates over the data
-            Dim data As Array = Array.CreateInstance(variable.type.ToType, size)
-            Dim [step] As Integer = recordDimension.recordStep
-            Dim reader As Func(Of Byte(), Object) = Utils.GetRecordReader(variable.type)
-            Dim base As Stream = buffer.BaseStream
-            Dim chunkSize As Long = [step] * size
-            Dim mem As Byte() = New Byte(chunkSize - 1) {}
-            Dim i As i32 = Scan0
-            Dim parallel As Boolean = False ' size >= 100000
+        Public Function record(buffer As BinaryDataReader, variable As variable, recordDimension As recordDimension, dimensions As Dimension()) As Array
+            ' Elements per record slab = product of the non-record
+            ' dimension sizes (all dimensions except the leading record dim).
+            Dim perRecordElems As Integer = 1
 
-            ' 20220630
-            ' why needs offset of 4 bytes?
-            Call base.Seek(4, SeekOrigin.Current)
-            Call base.Read(mem, Scan0, chunkSize)
+            For i As Integer = 1 To variable.dimensions.Length - 1
+                perRecordElems *= CInt(dimensions(variable.dimensions(i)).size)
+            Next
 
-            ' 读取的结果可能是一个T()()矩阵或者T()数组
+            Dim numRecords As Integer = CInt(recordDimension.length)
+            Dim total As Integer = perRecordElems * numRecords
+            Dim data As Array = CreateArray(variable, total)
+            Dim [step] As Long = recordDimension.recordStep
 
-            If parallel Then
-                For Each item As SeqValue(Of Object) In mem _
-                    .SplitIterator([step]) _
-                    .SeqIterator _
-                    .AsParallel _
-                    .Select(Function(j)
-                                Return New SeqValue(Of Object)(j.i, reader(j.value))
-                            End Function)
-
-                    data(item.i) = item.value
-                Next
-            Else
-                For Each block As Byte() In mem.SplitIterator([step])
-                    data(++i) = reader(block)
-                Next
-            End If
+            ' Record variables are stored interleaved in the file: the r-th
+            ' record of this variable starts at (offset + r * recordStep).
+            For r As Integer = 0 To numRecords - 1
+                buffer.Seek(variable.offset + r * [step], SeekOrigin.Begin)
+                Dim slab As Array = buffer.readVector(perRecordElems, variable.type)
+                Array.Copy(slab, 0, data, r * perRecordElems, perRecordElems)
+            Next
 
             Return data
         End Function

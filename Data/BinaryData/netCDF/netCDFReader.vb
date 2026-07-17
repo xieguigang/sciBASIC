@@ -350,10 +350,10 @@ Public Class netCDFReader : Implements IDisposable
 
         If (variable.record) Then
             ' record variable case
-            values = DataReader.record(buffer, variable, header.recordDimension)
+            values = DataReader.record(buffer, variable, header.recordDimension, header.dimensions)
         Else
             ' non-record variable case
-            values = DataReader.nonRecord(buffer, variable)
+            values = DataReader.nonRecord(buffer, variable, header.dimensions)
         End If
 
         Return VectorHelper.FromAny(values, variable.type)
