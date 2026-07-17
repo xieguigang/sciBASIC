@@ -98,7 +98,7 @@ Module Program
 
         ' Scenario E: read third-party (R-generated) feather files.
         ' Regression guard that the reader still parses external files.
-        Dim exampleDir = IO.Path.Combine(IO.Path.GetDirectoryName(Reflection.Assembly.GetExecutingAssembly().Location), "..\examples")
+        Dim exampleDir = IO.Path.Combine(IO.Path.GetDirectoryName(Reflection.Assembly.GetExecutingAssembly().Location), "..\..\..\..\examples")
         Dim eOk = True
         For Each ex In {IO.Path.Combine(exampleDir, "r-feather-test.feather"), IO.Path.Combine(exampleDir, "r-feather-test-nullable.feather")}
             If Not IO.File.Exists(ex) Then
@@ -113,7 +113,7 @@ Module Program
                     Else
                         ' touch a few values across columns to ensure no read errors
                         For c = 0 To df.ColumnCount - 1
-                            Dim v = CStr(df(0, c))
+                            Dim v = df(0, c).ToString()
                         Next
                         Console.WriteLine($"Scenario E (examples): PASS rows={df.RowCount} cols={df.ColumnCount} for {IO.Path.GetFileName(ex)}")
                     End If
