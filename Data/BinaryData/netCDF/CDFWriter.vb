@@ -218,7 +218,8 @@ Public Class CDFWriter : Implements IDisposable
 
     Dim variables As New List(Of variable)
     Dim dimensionList As New Dictionary(Of String, SeqValue(Of Dimension))
-    Dim recordDimensionLength As UInteger
+    Dim recordDimensionLength As Long
+    Dim cdfVersion As Byte = 1
     Dim init0 As Long
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -474,10 +475,14 @@ Public Class CDFWriter : Implements IDisposable
     ''' </param>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Sub AddVariable(name$, data As ICDFDataVector, dims As [Variant](Of String(), String), Optional attrs As [Variant](Of attribute, attribute()) = Nothing)
+        ' BOOLEAN is an internal extension type; store it as a standard
+        ' NC_BYTE so the file can be read by the official netCDF tools.
+        Dim cdfType As CDFDataTypes = If(data.cdfDataType = CDFDataTypes.BOOLEAN, CDFDataTypes.NC_BYTE, data.cdfDataType)
+
         variables += New variable With {
             .name = name,
-            .type = data.cdfDataType,
-            .size = data.length * sizeof(.type),
+            .type = cdfType,
+            .size = CLng(data.length) * sizeof(cdfType),
             .value = data,
             .attributes = attrs.TryCastArray,
             .dimensions = getDimensionList(dims)
