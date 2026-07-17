@@ -389,12 +389,15 @@
 	  <Compile Remove="NeuralNetwork\Demo\**" />
 	  <Compile Remove="QLearning\Maze-Q-Learning\**" />
 	  <Compile Remove="test\**" />
+	  <Compile Remove="_smoketest\**" />
 	  <EmbeddedResource Remove="NeuralNetwork\Demo\**" />
 	  <EmbeddedResource Remove="QLearning\Maze-Q-Learning\**" />
 	  <EmbeddedResource Remove="test\**" />
+	  <EmbeddedResource Remove="_smoketest\**" />
 	  <None Remove="NeuralNetwork\Demo\**" />
 	  <None Remove="QLearning\Maze-Q-Learning\**" />
 	  <None Remove="test\**" />
+	  <None Remove="_smoketest\**" />
 	  <None Include="..\..\..\LICENSE">
 	    <Pack>True</Pack>
 	    <PackagePath></PackagePath>
