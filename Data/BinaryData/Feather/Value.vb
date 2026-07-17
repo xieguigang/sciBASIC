@@ -2018,7 +2018,7 @@ Public Class Value
                 ' END TODO
 
             Case ColumnType.Category, ColumnType.NullableCategory, ColumnType.String
-                valStr = """" & ToString() & """"
+                valStr = """" & CStr(Me) & """"
             Case ColumnType.NullableString
                 Dim asStr = CStr(Me)
                 valStr = If(Not asStr Is Nothing, """" & asStr & """", "null")
