@@ -288,6 +288,8 @@ Public Class CDFWriter : Implements IDisposable
     ''' are interleaved record-by-record.
     ''' </summary>
     Public Sub Save()
+        If saved Then Return
+
         ' Build an id -> dimension lookup and locate the (optional) record
         ' dimension, which is the dimension whose size is zero.
         Dim dimById As New Dictionary(Of Integer, Dimension)
@@ -430,6 +432,8 @@ Public Class CDFWriter : Implements IDisposable
         Next
 
         Call WriteData(isRecord, perRecord, numRecords)
+
+        saved = True
     End Sub
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -794,6 +798,7 @@ Public Class CDFWriter : Implements IDisposable
 
 #Region "IDisposable Support"
     Private disposedValue As Boolean ' To detect redundant calls
+    Private saved As Boolean = False   ' To prevent Save() from being invoked twice
 
     ' IDisposable
     Protected Sub Dispose(disposing As Boolean)

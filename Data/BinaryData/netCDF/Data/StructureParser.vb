@@ -168,6 +168,8 @@ Namespace Data
 
                 If TypeOf val Is Boolean() Then
                     val = val(Scan0)
+                ElseIf TypeOf val Is Byte() Then
+                    val = DirectCast(val, Byte())(Scan0)
                 End If
 
                 Yield New attribute With {
