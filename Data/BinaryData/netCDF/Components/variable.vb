@@ -121,12 +121,12 @@ Namespace Components
         ''' Variable size. If not a record variable, the amount
         ''' of space in bytes allocated to the variable's data.
         ''' </remarks>
-        <XmlAttribute> Public Property size As Integer
+        <XmlAttribute> Public Property size As Long
         ''' <summary>
         ''' Number with the offset where of the variable begins
         ''' </summary>
         ''' <returns></returns>
-        <XmlAttribute> Public Property offset As UInteger
+        <XmlAttribute> Public Property offset As Long
         ''' <summary>
         ''' True if Is a record variable, false otherwise
         ''' </summary>

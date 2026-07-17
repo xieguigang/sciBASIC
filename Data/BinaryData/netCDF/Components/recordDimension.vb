@@ -67,7 +67,7 @@ Namespace Components
         ''' Number of elements in the record dimension
         ''' </summary>
         ''' <returns></returns>
-        <XmlAttribute> Public Property length As Integer
+        <XmlAttribute> Public Property length As Long
         ''' <summary>
         ''' Id number In the list Of dimensions For the record dimension
         ''' </summary>
@@ -82,7 +82,7 @@ Namespace Components
         ''' Number with the record variables step size
         ''' </summary>
         ''' <returns></returns>
-        <XmlAttribute> Public Property recordStep As Integer
+        <XmlAttribute> Public Property recordStep As Long
 
         Public Overrides Function ToString() As String
             Return $"[{id}] {name} ({recordStep}x{length})"
