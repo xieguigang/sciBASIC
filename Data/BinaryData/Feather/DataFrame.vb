@@ -508,7 +508,12 @@ Partial Public Class DataFrame
         Dim columnMetadata = Metadata.Columns(translatedColumnIndex)
         Dim nullBitmaskOffset = columnMetadata.NullBitmaskOffset
 
-        Dim nullBitmaskByteOffset = nullBitmaskOffset + translatedRowIndex / 8
+        ' NOTE: must use integer division (\) here. VB's '/' is floating-point,
+        '   so e.g. row 6 would compute offset 68908.75 which, when coerced to a
+        '   Long for ReadByte, rounds up to the next byte and reads the wrong
+        '   null-bitmask byte. That wrongly flags non-null rows as null and makes
+        '   nullable columns (especially multi-byte UTF-8 text) come back empty.
+        Dim nullBitmaskByteOffset = nullBitmaskOffset + translatedRowIndex \ 8
         Dim nullBitmaskBitmask = CByte(1 << CByte(translatedRowIndex Mod 8))
 
         Dim nullBitmaskByte = View.ReadByte(nullBitmaskByteOffset)
@@ -692,7 +697,7 @@ Partial Public Class DataFrame
         Dim columnMetadata = Metadata.Columns(translatedColumnIndex)
         Dim dataOffset = columnMetadata.DataOffset
 
-        Dim byteOffset = translatedRowIndex / 8
+        Dim byteOffset = translatedRowIndex \ 8
         Dim bitOffset = CByte(translatedRowIndex Mod 8)
         Dim bitMask = CByte(1 << bitOffset)
 
