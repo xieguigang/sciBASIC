@@ -148,18 +148,22 @@ Namespace NeuralNetwork
             m_INPUTNEURONCOUNT = cnn.input.dims.x
             m_OUTPUTNEURONCOUNT = cnn.output.out_depth
 
-            Dim fc = cnn _
-                .Layers _
-                .Where(Function(l) l.Type = LayerTypes.FullyConnected) _
-                .ToArray
-            Dim hidden = New List(Of Integer)
-
-            For i As Integer = 0 To fc.Length - 2
-                hidden.Add(fc(i).BackPropagationResult.First.Weights.Length)
-                ' 注意：此处 hidden 维度为各隐藏层 size，仅用于计数展示
+            Dim fc As New List(Of Layer)
+            For i As Integer = 0 To cnn.LayerNum - 1
+                If cnn.Layer(i).Type = LayerTypes.FullyConnected Then
+                    fc.Add(cnn.Layer(i))
+                End If
             Next
 
-            m_HIDDENLAYERCOUNT = Math.Max(fc.Length - 1, 0)
+            Dim hidden = New List(Of Integer)
+
+            For i As Integer = 0 To fc.Count - 2
+                ' 每个全连接层 BackPropagationResult 包含 out_depth 个 filter + 1 个 bias，
+                ' 故隐藏层规模 = 结果数量 - 1
+                hidden.Add(fc(i).BackPropagationResult.ToArray.Length - 1)
+            Next
+
+            m_HIDDENLAYERCOUNT = Math.Max(fc.Count - 1, 0)
             m_HIDDENNEURONCOUNT = If(hidden.Count > 0, hidden(0), 0)
 
             alg = New SGDTrainer(batch_size:=1, l2_decay:=0)

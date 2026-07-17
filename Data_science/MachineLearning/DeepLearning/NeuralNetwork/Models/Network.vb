@@ -157,6 +157,7 @@ Namespace NeuralNetwork
         Private ReadOnly m_inputSize As Integer
         Private ReadOnly m_hiddenSize As Integer()
         Private ReadOnly m_outputSize As Integer
+        Private Shared ReadOnly dropOutRand As New System.Random
 #End Region
 
         ''' <summary>
@@ -285,6 +286,31 @@ Namespace NeuralNetwork
 
             Return dict
         End Function
+
+        ''' <summary>
+        ''' 随机失活隐藏层之中的一部分神经元节点（DropOut 正则化）。
+        ''' </summary>
+        ''' <param name="percentage">
+        ''' [0,1] 之间，表示被随机删除的节点数量百分比。
+        ''' </param>
+        ''' <remarks>
+        ''' 这里是保留的兼容接口：旧的对象图随机失活标记（<see cref="Neuron.isDroppedOut"/>/
+        ''' <see cref="Layer.doDropOutMode"/>）仍会被维护，以便 <see cref="StoreProcedure"/> 镜像与
+        ''' <see cref="Trainings.ANNTrainer"/> 调用点保持可编译；真正的计算由 CNN 内核完成，
+        ''' DropOut 语义下沉到内核（构建期可按 dropOutRate 插入 DropoutLayer）。
+        ''' </remarks>
+        Public Sub DoDropOut(Optional percentage As Double = 0.5)
+            Dim dropOutMode As Boolean = percentage > 0
+            Dim p As Double = percentage
+
+            For Each layer As Layer In HiddenLayer
+                layer.doDropOutMode = dropOutMode
+
+                For Each neuron As Neuron In layer
+                    neuron.isDroppedOut = dropOutMode AndAlso (dropOutRand.NextDouble < p)
+                Next
+            Next
+        End Sub
 
         Public Overrides Function ToString() As String
             Dim summary As New StringBuilder

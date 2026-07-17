@@ -146,10 +146,12 @@ Namespace NeuralNetwork
                 End If
             Next
 
-            Dim legacyLayers As Layer() = {graph.input} _
-                .Join(graph.hidden.Layers) _
-                .Join({graph.output}) _
-                .ToArray
+            ' CNN 的全连接层只对应隐藏层与输出层（输入层没有权重突触），
+            ' 因此仅将隐藏层与输出层作为镜像同步目标
+            Dim legacyList As New List(Of Layer)
+            Call legacyList.AddRange(graph.hidden.Layers)
+            Call legacyList.Add(graph.output)
+            Dim legacyLayers As Layer() = legacyList.ToArray
 
             For k As Integer = 0 To fcLayers.Length - 1
                 Dim results = fcLayers(k).BackPropagationResult.ToArray
