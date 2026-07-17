@@ -46,13 +46,15 @@ Module Program
         allOk = allOk And aOk
         If IO.File.Exists(pathA) Then IO.File.Delete(pathA)
 
-        ' Scenario B: List(Of String) + List(Of Integer)
+        ' Scenario B: List(Of String) + List(Of Integer)  (nullable + non-null string via collection)
         Dim pathB = IO.Path.ChangeExtension(IO.Path.GetTempFileName(), ".feather")
         Using w As New FeatherWriter(pathB)
             w.AddColumn("city", New List(Of String)({"南京", "武汉", "成都", "杭州"}))
+            w.AddColumn("name", New List(Of String)({"赵一", Nothing, "孙三", "周八"}))
             w.AddColumn("age", New List(Of Integer)({1, 2, 3, 4}))
+            w.AddColumn("score", New List(Of Double)({1.1, 2.2, 3.3, 4.4}))
         End Using
-        Dim bOk = RunScenario(pathB, {"南京", "武汉", "成都", "杭州"}, {Nothing, Nothing, Nothing, Nothing}, {1, 2, 3, 4}, {0, 0, 0, 0})
+        Dim bOk = RunScenario(pathB, {"南京", "武汉", "成都", "杭州"}, {"赵一", Nothing, "孙三", "周八"}, {1, 2, 3, 4}, {1.1, 2.2, 3.3, 4.4})
         Console.WriteLine("Scenario B (List(Of String)): " & If(bOk, "PASS", "FAIL"))
         allOk = allOk And bOk
         If IO.File.Exists(pathB) Then IO.File.Delete(pathB)
@@ -61,9 +63,11 @@ Module Program
         Dim pathC = IO.Path.ChangeExtension(IO.Path.GetTempFileName(), ".feather")
         Using w As New FeatherWriter(pathC)
             w.AddColumn("city", (From s In {"重庆", "天津", "苏州", "青岛"} Select s).ToArray().AsEnumerable())
-            w.AddColumn("age", {5, 6, 7, 8})
+            w.AddColumn("name", (From s In {"钱九", Nothing, "冯十", "蒋二"} Select s).ToArray().AsEnumerable())
+            w.AddColumn("age", (From i In {5, 6, 7, 8} Select i).ToArray().AsEnumerable())
+            w.AddColumn("score", (From d In {5.5, 6.6, 7.7, 8.8} Select d).ToArray().AsEnumerable())
         End Using
-        Dim cOk = RunScenario(pathC, {"重庆", "天津", "苏州", "青岛"}, {Nothing, Nothing, Nothing, Nothing}, {5, 6, 7, 8}, {0, 0, 0, 0})
+        Dim cOk = RunScenario(pathC, {"重庆", "天津", "苏州", "青岛"}, {"钱九", Nothing, "冯十", "蒋二"}, {5, 6, 7, 8}, {5.5, 6.6, 7.7, 8.8})
         Console.WriteLine("Scenario C (IEnumerable LINQ): " & If(cOk, "PASS", "FAIL"))
         allOk = allOk And cOk
         If IO.File.Exists(pathC) Then IO.File.Delete(pathC)
@@ -91,6 +95,35 @@ Module Program
         Console.WriteLine("Scenario D (5000 rows, 2 cn strings): " & If(dOk, "PASS", "FAIL"))
         allOk = allOk And dOk
         If IO.File.Exists(pathD) Then IO.File.Delete(pathD)
+
+        ' Scenario E: read third-party (R-generated) feather files.
+        ' Regression guard that the reader still parses external files.
+        Dim exampleDir = IO.Path.Combine(IO.Path.GetDirectoryName(Reflection.Assembly.GetExecutingAssembly().Location), "..\examples")
+        Dim eOk = True
+        For Each ex In {IO.Path.Combine(exampleDir, "r-feather-test.feather"), IO.Path.Combine(exampleDir, "r-feather-test-nullable.feather")}
+            If Not IO.File.Exists(ex) Then
+                Console.WriteLine($"Scenario E (examples): SKIP (missing {ex})")
+                Continue For
+            End If
+            Try
+                Using df As DataFrame = FeatherReader.ReadFromFile(ex)
+                    If df.RowCount <= 0 OrElse df.ColumnCount <= 0 Then
+                        eOk = False
+                        Console.WriteLine($"Scenario E (examples): FAIL shape rows={df.RowCount} cols={df.ColumnCount} for {IO.Path.GetFileName(ex)}")
+                    Else
+                        ' touch a few values across columns to ensure no read errors
+                        For c = 0 To df.ColumnCount - 1
+                            Dim v = CStr(df(0, c))
+                        Next
+                        Console.WriteLine($"Scenario E (examples): PASS rows={df.RowCount} cols={df.ColumnCount} for {IO.Path.GetFileName(ex)}")
+                    End If
+                End Using
+            Catch exErr As Exception
+                eOk = False
+                Console.WriteLine($"Scenario E (examples): FAIL {IO.Path.GetFileName(ex)} -> {exErr.GetType().Name}: {exErr.Message}")
+            End Try
+        Next
+        allOk = allOk And eOk
 
         Console.WriteLine(If(allOk, "ALL PASS", "SOME FAIL"))
     End Sub
