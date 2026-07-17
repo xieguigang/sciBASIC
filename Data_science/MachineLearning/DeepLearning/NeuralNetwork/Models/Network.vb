@@ -384,8 +384,29 @@ Namespace NeuralNetwork
 
             ' 在线逐样本训练：batch_size=1 时每个样本都立即更新权重，
             ' 与旧 Network 的在线反向传播语义一致
-            Call alg.train(db, targets, Nothing)
+            ' 注意：CNN 训练器在目标长度为 1 时会把目标当作分类类别索引（整数），
+            ' 对于单输出回归会把连续目标截断为 0/1。这里把回归目标填充为长度 2 的
+            ' 数组，强制走回归（double 数组）反传分支；RegressionLayer.backward 只读取
+            ' y(0)，第二个占位元素被忽略，不影响梯度计算。
+            Call alg.train(db, EnsureRegressionTarget(targets), Nothing)
         End Sub
+
+        ''' <summary>
+        ''' 将单输出回归目标调整为 CNN 训练器可正确处理的格式。
+        ''' 当网络输出为单神经元的回归层、且目标向量长度为 1 时，返回长度 2 的数组
+        ''' （第二个元素为占位，会被 <see cref="RegressionLayer"/> 忽略），从而避免
+        ''' <see cref="CNN.trainers.TrainerAlgorithm.train"/> 把目标误当作分类类别索引。
+        ''' </summary>
+        Private Function EnsureRegressionTarget(raw As Double()) As Double()
+            If cnn IsNot Nothing AndAlso
+               cnn.output.Type = LayerTypes.Regression AndAlso
+               raw IsNot Nothing AndAlso
+               raw.Length = 1 Then
+                Return New Double(1) {raw(0), 0.0}
+            End If
+
+            Return raw
+        End Function
 
         ''' <summary>
         ''' Compute result output for the neuron network <paramref name="inputs"/>.
@@ -414,8 +435,10 @@ Namespace NeuralNetwork
             Dim sampleData As New List(Of SampleData)
 
             For Each s As (input As Double(), target As Double()) In samples
-                ' CNN 的 Trainer.train 内部会按列做数据集归一化
-                Call sampleData.Add(New SampleData(s.input, s.target))
+                ' CNN 的 Trainer.train 内部会按列做数据集归一化；
+                ' 单输出回归需要把目标填充为长度 2 的数组，
+                ' 否则 Trainer 会将其当作分类标签处理（is_generative 判据为 labels.Length > 1）
+                Call sampleData.Add(New SampleData(s.input, EnsureRegressionTarget(s.target)))
             Next
 
             Dim sgd As New SGDTrainer(batch_size:=1, l2_decay:=0)

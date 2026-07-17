@@ -43,7 +43,8 @@ Module Program
         Console.WriteLine("=== Network (CNN kernel) ===")
 
         ' 在线逐样本训练（Network.ForwardPropagate + BackPropagate -> CNN 内核）
-        Dim net As New Network(inputSize:=2, hiddenSize:={4}, outputSize:=1, learnRate:=0.3, momentum:=0.9)
+        ' 使用 momentum:=0 的 vanilla SGD（与 Netz 一致）以获得稳定的训练轨迹
+        Dim net As New Network(inputSize:=2, hiddenSize:={4}, outputSize:=1, learnRate:=0.3, momentum:=0)
         For i As Integer = 1 To 600
             Dim a = rnd.NextDouble()
             Dim b = rnd.NextDouble()

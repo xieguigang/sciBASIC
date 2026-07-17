@@ -219,9 +219,27 @@ Namespace NeuralNetwork
             alg.learning_rate = LERNRATE
             alg.momentum = 0
 
-            Dim tr = alg.train(db, goodOutput, Nothing)
+            ' 单输出回归：CNN 训练器在目标长度为 1 时会把目标当作分类类别索引（整数），
+            ' 需填充为长度 2 的数组以强制走回归（double 数组）反传分支，
+            ' RegressionLayer.backward 只会读取 y(0)，第二个占位被忽略。
+            Dim tr = alg.train(db, EnsureRegressionTarget(goodOutput), Nothing)
             m_lastError = tr.Loss
         End Sub
+
+        ''' <summary>
+        ''' 将单输出回归目标调整为 CNN 训练器可正确处理的格式（详见
+        ''' <see cref="Network.EnsureRegressionTarget"/>）。
+        ''' </summary>
+        Private Function EnsureRegressionTarget(raw As Double()) As Double()
+            If cnn IsNot Nothing AndAlso
+               cnn.output.Type = LayerTypes.Regression AndAlso
+               raw IsNot Nothing AndAlso
+               raw.Length = 1 Then
+                Return New Double(1) {raw(0), 0.0}
+            End If
+
+            Return raw
+        End Function
 
         Public Overridable ReadOnly Property TotalError As Double
             Get
