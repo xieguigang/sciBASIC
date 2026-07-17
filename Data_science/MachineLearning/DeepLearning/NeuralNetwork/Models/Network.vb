@@ -446,8 +446,21 @@ Namespace NeuralNetwork
             sgd.learning_rate = LearnRate
             sgd.momentum = Momentum
 
-            Dim trainer As New Microsoft.VisualBasic.MachineLearning.CNN.Trainer(sgd)
+            ' verbose:=False 且使用空 logger，避免 CNN.Trainer 在训练时向控制台
+            ' 输出进度（在重定向/非控制台宿主下会抛出 "The handle is invalid" 等 IO 异常）
+            Dim trainer As New Microsoft.VisualBasic.MachineLearning.CNN.Trainer(
+                sgd,
+                log:=AddressOf NoLog,
+                verbose:=False
+            )
             Call trainer.train(sampleData.ToArray, maxLoops)
+        End Sub
+
+        ''' <summary>
+        ''' 空日志方法，用于抑制 <see cref="CNN.Trainer"/> 在训练时的控制台输出
+        ''' （避免在非控制台/重定向宿主下抛出 IO 异常）。
+        ''' </summary>
+        Private Shared Sub NoLog(s As String)
         End Sub
 #End Region
 

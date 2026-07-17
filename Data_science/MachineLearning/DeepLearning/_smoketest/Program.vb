@@ -6,6 +6,7 @@ Module Program
     Dim rnd As New Random
 
     Sub Main()
+        App.EnableTqdm = False
         Call TestNetz()
         Call TestNetwork()
         Console.WriteLine("SMOKE TEST DONE")
@@ -16,9 +17,9 @@ Module Program
 
         Dim net As New Netz(inputNeurons:=2, hiddenNeurons:=4, hiddenLayers:=1, outputNeurons:=1,
                               activate:=Function(d) 1.0 / (1.0 + System.Math.Exp(-d)))
-        net.LERNRATE = 0.3
+        net.LERNRATE = 0.05
 
-        For i As Integer = 1 To 3000
+        For i As Integer = 1 To 4000
             Dim x0 = rnd.NextDouble()
             Dim x1 = rnd.NextDouble()
             Call net.train({x0, x1}, {x0 + x1})
@@ -26,6 +27,7 @@ Module Program
 
         Dim p = net.predict({0.3, 0.5})
         Console.WriteLine($"  predict(0.3,0.5) = {p(0):F4}  (target 0.8)  TotalError={net.TotalError:F4}")
+        Console.WriteLine($"  DBG netz (0,0)={net.predict({0,0})(0):F4} (1,1)={net.predict({1,1})(0):F4}")
         Call AssertFinite("Netz.predict", p(0))
 
         Dim path = "netz_model.cnn"
@@ -44,8 +46,8 @@ Module Program
 
         ' 在线逐样本训练（Network.ForwardPropagate + BackPropagate -> CNN 内核）
         ' 使用 momentum:=0 的 vanilla SGD（与 Netz 一致）以获得稳定的训练轨迹
-        Dim net As New Network(inputSize:=2, hiddenSize:={4}, outputSize:=1, learnRate:=0.3, momentum:=0)
-        For i As Integer = 1 To 600
+        Dim net As New Network(inputSize:=2, hiddenSize:={4}, outputSize:=1, learnRate:=0.05, momentum:=0)
+        For i As Integer = 1 To 4000
             Dim a = rnd.NextDouble()
             Dim b = rnd.NextDouble()
             Call net.ForwardPropagate({a, b}, parallel:=False)
@@ -54,10 +56,11 @@ Module Program
 
         Dim err = net.Compute(0.3, 0.5)
         Console.WriteLine($"  online  predict = {err(0):F4}  (target 0.8)")
+        Console.WriteLine($"  DBG (0,0)={net.Compute(0,0)(0):F4} (1,1)={net.Compute(1,1)(0):F4} (0.5,0.5)={net.Compute(0.5,0.5)(0):F4}")
         Call AssertFinite("Network.online.Compute", err(0))
 
         ' 批量训练（CNN.Trainer.train via Network.TrainBatch）
-        Dim network2 As New Network(inputSize:=2, hiddenSize:={4}, outputSize:=1, learnRate:=0.3)
+        Dim network2 As New Network(inputSize:=2, hiddenSize:={4}, outputSize:=1, learnRate:=0.05)
 
         Dim batchSize As Integer = 200
         Dim batch(batchSize - 1) As (input As Double(), target As Double())
