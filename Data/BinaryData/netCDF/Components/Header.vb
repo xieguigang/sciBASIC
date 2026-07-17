@@ -130,11 +130,14 @@ Namespace Components
         Friend Sub New(buffer As BinaryDataReader, version As Byte)
             ' Length of record dimension
             ' sum of the varSize's of all the record variables.
-            Me.recordDimension = New recordDimension With {.length = buffer.ReadUInt32}
+            ' numrecs is 64-bit for CDF-5, otherwise 32-bit.
+            Me.recordDimension = New recordDimension With {
+                .length = If(version = 5, buffer.ReadInt64, buffer.ReadUInt32)
+            }
             Me.version = version
 
             ' List of dimensions
-            Dim dimList As DimensionList = buffer.dimensionsList()
+            Dim dimList As DimensionList = buffer.dimensionsList(version)
 
             Me.recordDimension.id = If(dimList.recordId, dimList.recordId, -100)
             Me.recordDimension.name = dimList.recordName

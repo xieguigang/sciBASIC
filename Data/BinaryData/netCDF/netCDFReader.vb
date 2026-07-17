@@ -167,11 +167,12 @@ Public Class netCDFReader : Implements IDisposable
     ''' <returns></returns>
     Public ReadOnly Property version As String
         Get
-            If (header.version = 1) Then
-                Return "classic format"
-            Else
-                Return "64-bit offset format"
-            End If
+            Select Case header.version
+                Case 1 : Return "classic format"
+                Case 2 : Return "64-bit offset format (CDF-2)"
+                Case 5 : Return "64-bit data format (CDF-5)"
+                Case Else : Return $"unknown version {header.version}"
+            End Select
         End Get
     End Property
 

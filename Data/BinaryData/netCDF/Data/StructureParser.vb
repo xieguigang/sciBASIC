@@ -83,7 +83,7 @@ Namespace Data
         ''' </returns>
         ''' 
         <Extension>
-        Friend Function dimensionsList(buffer As BinaryDataReader) As DimensionList
+        Friend Function dimensionsList(buffer As BinaryDataReader, Optional version As Byte = 1) As DimensionList
             Dim dimList = buffer.ReadUInt32()
 
             If (dimList = ZERO) Then
@@ -102,8 +102,8 @@ Namespace Data
             For [dim] As Integer = 0 To dimensionSize - 1
                 ' Read name
                 Dim name = Utils.readName(buffer)
-                ' Read dimension size
-                Dim size = buffer.ReadUInt32()
+                ' Read dimension size (64-bit for CDF-5, otherwise 32-bit)
+                Dim size As Long = If(version = 5, buffer.ReadInt64, buffer.ReadUInt32)
 
                 If (size = NC_UNLIMITED) Then
                     ' In netcdf 3 one field can be Of size unlimmited
@@ -198,9 +198,9 @@ Namespace Data
         '''  </returns>
         '''  
         <Extension>
-        Friend Function variablesList(buffer As BinaryDataReader, recordId%?, version As Byte) As (variables As variable(), recordStep%)
+        Friend Function variablesList(buffer As BinaryDataReader, recordId%?, version As Byte) As (variables As variable(), recordStep As Long)
             Dim varList = buffer.ReadUInt32()
-            Dim recordStep As Integer = 0
+            Dim recordStep As Long = 0
 
             If (varList = ZERO) Then
                 Utils.notNetcdf((buffer.ReadUInt32() <> ZERO), "wrong empty tag for list of variables")
@@ -229,7 +229,7 @@ Namespace Data
         ''' <param name="recordStep%"></param>
         ''' <returns></returns>
         <Extension>
-        Private Function readVariableInternal(buffer As BinaryDataReader, recordId%?, version As Byte, ByRef recordStep%) As variable
+        Private Function readVariableInternal(buffer As BinaryDataReader, recordId%?, version As Byte, ByRef recordStep As Long) As variable
             ' Read name
             Dim name = Utils.readName(buffer)
             ' Read dimensionality of the variable
@@ -246,18 +246,24 @@ Namespace Data
             ' Read type
             Dim type As CDFDataTypes = buffer.ReadUInt32()
 
-            Utils.notNetcdf(((type < 1) AndAlso (type > 6)), $"non valid type {type}")
+            Utils.notNetcdf((type < 1 OrElse type > 12), $"non valid type {type}")
 
-            ' Read variable size
-            ' The 32-bit varSize field Is Not large enough to contain the size of variables that require
-            ' more than 2^32 - 4 bytes, so 2^32 - 1 Is used in the varSize field for such variables.
-            Dim varSize = buffer.ReadUInt32()
-            ' Read offset
-            Dim offset = buffer.ReadUInt32()
+            ' Read variable size and offset according to the file version:
+            '   classic (1) : 32-bit vsize, 32-bit offset
+            '   64-bit offset (2) : 32-bit vsize, 64-bit offset
+            '   64-bit data (5) : 64-bit vsize, 64-bit offset
+            Dim varSize As Long
+            Dim offset As Long
 
-            If (version = 2) Then
-                Utils.notNetcdf((offset > 0), "offsets larger than 4GB not supported")
+            If (version = 1) Then
+                varSize = buffer.ReadUInt32()
                 offset = buffer.ReadUInt32()
+            ElseIf (version = 2) Then
+                varSize = buffer.ReadUInt32()
+                offset = buffer.ReadInt64
+            Else
+                varSize = buffer.ReadInt64
+                offset = buffer.ReadInt64
             End If
 
             Dim record As Boolean = False
@@ -265,8 +271,9 @@ Namespace Data
             ' Count amount of record variables
             If ((recordId IsNot Nothing) AndAlso (dimensionsIds(0) = recordId)) Then
                 ' For record variables, it is the amount of space per
-                ' record.
-                recordStep += varSize
+                ' record. Pad to a multiple of 4 to match the on-disk
+                ' interleaved layout used by the standard format.
+                recordStep += (varSize + 3) \ 4 * 4
                 record = True
             End If
 
