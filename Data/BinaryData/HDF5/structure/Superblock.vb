@@ -123,6 +123,26 @@ Namespace struct
         Public ReadOnly Property endOfFileAddress() As Long
         Public ReadOnly Property driverInformationBlockAddress() As Long
         Public ReadOnly Property rootGroupSymbolTableEntry() As SymbolTableEntry
+        Public ReadOnly Property rootGroupObjectHeaderAddressV2() As Long
+        ''' <summary>
+        ''' Unified entry point to the root group: for superblock v0/v1 it is the object
+        ''' header address stored inside the root group symbol table entry, for superblock
+        ''' v2/v3 it is the dedicated ``Root Group Object Header Address`` field.
+        ''' Returns a negative value if the root group cannot be resolved.
+        ''' </summary>
+        Public ReadOnly Property rootGroupHeaderAddress() As Long
+            Get
+                If Me.versionOfSuperblock <= 1 Then
+                    If Me.rootGroupSymbolTableEntry Is Nothing Then
+                        Return -1
+                    End If
+
+                    Return Me.rootGroupSymbolTableEntry.objectHeaderAddress
+                Else
+                    Return Me.rootGroupObjectHeaderAddressV2
+                End If
+            End Get
+        End Property
         Public ReadOnly Property totalSuperBlockSize() As Integer
 
         Public ReadOnly Property globalHeaps As Dictionary(Of Long, GlobalHeap)
@@ -214,7 +234,38 @@ Namespace struct
         End Sub
 
         Private Sub readVersion2([in] As BinaryReader)
-            Throw New IOException("version 2 is not implemented")
+            ' Layout: Superblock (Versions 2 and 3)
+            '   Size of Offsets           (1 byte)
+            '   Size of Lengths           (1 byte)
+            '   File Consistency Flags    (1 byte)
+            '   Base Address              (size of offsets bytes)
+            '   Superblock Extension Address (size of offsets bytes)
+            '   End of File Address       (size of offsets bytes)
+            '   Root Group Object Header Address (size of offsets bytes)
+            '   Superblock Checksum       (4 bytes)
+            _sizeOfOffsets = [in].readByte()
+            _sizeOfLengths = [in].readByte()
+
+            If _sizeOfOffsets <= 0 Then
+                _sizeOfOffsets = 8
+            End If
+            If _sizeOfLengths <= 0 Then
+                _sizeOfLengths = 8
+            End If
+
+            _fileConsistencyFlags = [in].readByte()
+            _totalSuperBlockSize = 12 + _sizeOfOffsets * 4
+
+            _baseAddress = ReadHelper.readO([in], Me)
+            _addressOfFileFreeSpaceInfo = ReadHelper.readO([in], Me)
+            _endOfFileAddress = ReadHelper.readO([in], Me)
+            _driverInformationBlockAddress = ReadHelper.readO([in], Me)
+            _rootGroupObjectHeaderAddressV2 = ReadHelper.readO([in], Me)
+
+            ' Superblock checksum (4 bytes) - present for v2/v3
+            [in].skipBytes(4)
+
+            _totalSuperBlockSize += 4
         End Sub
 
         Public Overrides Function ToString() As String
@@ -262,7 +313,11 @@ Namespace struct
             console.WriteLine("end of file address : " & endOfFileAddress)
             console.WriteLine("driver information block address : " & driverInformationBlockAddress)
 
-            rootGroupSymbolTableEntry.printValues(console)
+            If Me.versionOfSuperblock <= 1 Then
+                rootGroupSymbolTableEntry.printValues(console)
+            Else
+                console.WriteLine("root group object header address : " & rootGroupObjectHeaderAddressV2)
+            End If
 
             console.WriteLine("total super block size : " & totalSuperBlockSize)
             console.WriteLine("Superblock <<<")

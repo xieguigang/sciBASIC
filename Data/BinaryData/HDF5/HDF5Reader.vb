@@ -192,8 +192,8 @@ Public Class HDF5Reader : Implements IFileDump
 
     Private Sub parseHeader()
         Dim sb As Superblock = Me.superblock
-        Dim rootSymbolTableEntry As SymbolTableEntry = sb.rootGroupSymbolTableEntry
-        Dim objectFacade As New DataObjectFacade(sb, "root", rootSymbolTableEntry.objectHeaderAddress)
+        Dim rootHeaderAddress As Long = sb.rootGroupHeaderAddress
+        Dim objectFacade As New DataObjectFacade(sb, "root", rootHeaderAddress)
         Dim rootGroup As New Group(sb, objectFacade)
         Dim objects As List(Of DataObjectFacade) = rootGroup.objects
 
