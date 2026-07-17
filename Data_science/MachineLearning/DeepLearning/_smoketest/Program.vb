@@ -1,6 +1,5 @@
 Imports System
 Imports Microsoft.VisualBasic.MachineLearning.NeuralNetwork
-Imports Microsoft.VisualBasic.MachineLearning.NeuralNetwork.Trainings
 
 Module Program
 
@@ -43,22 +42,31 @@ Module Program
     Private Sub TestNetwork()
         Console.WriteLine("=== Network (CNN kernel) ===")
 
-        ' 在线逐样本训练（ANNTrainer -> Network.ForwardPropagate/BackPropagate -> CNN）
-        Dim trainer As New ANNTrainer(2, {4}, 1, 0.3, 0.9)
+        ' 在线逐样本训练（Network.ForwardPropagate + BackPropagate -> CNN 内核）
+        Dim net As New Network(inputSize:=2, hiddenSize:={4}, outputSize:=1, learnRate:=0.3, momentum:=0.9)
         For i As Integer = 1 To 600
             Dim a = rnd.NextDouble()
             Dim b = rnd.NextDouble()
-            Call trainer.Add({a, b}, a + b)
+            Call net.ForwardPropagate({a, b}, parallel:=False)
+            Call net.BackPropagate({a + b}, parallel:=False)
         Next
-        Call trainer.Train(300)
 
-        Dim err = trainer.NeuronNetwork.Compute(0.3, 0.5)
+        Dim err = net.Compute(0.3, 0.5)
         Console.WriteLine($"  online  predict = {err(0):F4}  (target 0.8)")
         Call AssertFinite("Network.online.Compute", err(0))
 
-        ' 批量训练（CNN.Trainer.train）
+        ' 批量训练（CNN.Trainer.train via Network.TrainBatch）
         Dim network2 As New Network(inputSize:=2, hiddenSize:={4}, outputSize:=1, learnRate:=0.3)
-        Call network2.TrainBatch(trainer.TrainingSet, 200)
+
+        Dim batchSize As Integer = 200
+        Dim batch(batchSize - 1) As (input As Double(), target As Double())
+        For i As Integer = 0 To batchSize - 1
+            Dim a = rnd.NextDouble()
+            Dim b = rnd.NextDouble()
+            batch(i) = ({a, b}, {a + b})
+        Next
+        Call network2.TrainBatch(batch, 200)
+
         Dim err2 = network2.Compute(0.3, 0.5)
         Console.WriteLine($"  batch   predict = {err2(0):F4}")
         Call AssertFinite("Network.batch.Compute", err2(0))
@@ -71,7 +79,7 @@ Module Program
         Console.WriteLine($"  loaded  predict = {err3(0):F4}")
         Call AssertFinite("Network.Load.Compute", err3(0))
 
-        ' 镜像只读属性
+        ' 只读视图属性
         Console.WriteLine($"  Input={network3.InputLayer.Count} Hidden={network3.HiddenLayer.Count} Output={network3.OutputLayer.Count}")
     End Sub
 

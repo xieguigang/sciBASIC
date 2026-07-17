@@ -8,9 +8,7 @@
 ' 
 ' Copyright (c) 2018 GPL3 Licensed
 ' 
-' 
 ' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
 ' 
 ' This program is free software: you can redistribute it and/or modify
 ' it under the terms of the GNU General Public License as published by
@@ -26,58 +24,50 @@
 ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-
 ' /********************************************************************************/
-
-' Summaries:
-
-
-' Code Statistics:
-
-'   Total Lines: 187
-'    Code Lines: 90 (48.13%)
-' Comment Lines: 71 (37.97%)
-'    - Xml Docs: 95.77%
-' 
-'   Blank Lines: 26 (13.90%)
-'     File Size: 7.50 KB
-
 
 '     Class Network
 ' 
 '         Properties: Activations, HiddenLayer, InputLayer, LearnRate, LearnRateDecay
 '                     Momentum, OutputLayer, Truncate
 ' 
-'         Constructor: (+3 Overloads) Sub New
+'         Constructor: (+2 Overloads) Sub New
 ' 
 '         Function: Compute, ForwardPropagate, ToString
 ' 
-'         Sub: BackPropagate
+'         Sub: BackPropagate, DoDropOut, TrainBatch
 ' 
 ' 
+
 ' /********************************************************************************/
 
 #End Region
 
 Imports System.IO
-Imports System.Runtime.CompilerServices
 Imports System.Text
+Imports System.Runtime.CompilerServices
+Imports System.Collections.Generic
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MachineLearning.CNN
 Imports Microsoft.VisualBasic.MachineLearning.CNN.trainers
-Imports Microsoft.VisualBasic.MachineLearning.ComponentModel.Activations
-Imports Microsoft.VisualBasic.MachineLearning.NeuralNetwork.Activations
+Imports Microsoft.VisualBasic.MachineLearning.CNN.layers
+Imports Microsoft.VisualBasic.MachineLearning.CNN.data
+Imports Microsoft.VisualBasic.MachineLearning.CNN.losslayers
+Imports Microsoft.VisualBasic.MachineLearning.CNN.SaveModelCNN
+Imports Microsoft.VisualBasic.MachineLearning.CNN.ReadModelCNN
+Imports Microsoft.VisualBasic.MachineLearning.ComponentModel.StoreProcedure
 
 Namespace NeuralNetwork
 
     ''' <summary>
     ''' 人工神经网络计算用的对象模型。
     ''' 
-    ''' 本类已重构为以 CNN 的 <see cref="ConvolutionalNN"/> 全连接网络为统一计算内核：
+    ''' 本类以 CNN 的 <see cref="ConvolutionalNN"/> 全连接网络为统一的内部计算内核：
     ''' 前向传播与反向传播（含参数更新）均由 CNN 内核完成；
     ''' 对外公开的 <see cref="InputLayer"/> / <see cref="HiddenLayer"/> / <see cref="OutputLayer"/> /
-    ''' <see cref="Activations"/> 等仍作为只读镜像保留，供 <see cref="StoreProcedure"/> 快照、
-    ''' <see cref="ANNTrainer"/> 与 <see cref="Importance"/> 等既有消费者读取。
+    ''' <see cref="Activations"/> 等以只读视图（<see cref="NetworkLayerView"/> / <see cref="HiddenLayersView"/>）形式保留，
+    ''' 不再维护任何遗留的 Layer/Neuron/Synapse 数据图。
     ''' </summary>
     ''' <remarks>
     ''' > https://github.com/trentsartain/Neural-Network
@@ -90,20 +80,20 @@ Namespace NeuralNetwork
         Public Property Truncate As Double = -1
 
         ''' <summary>
-        ''' 通过这个属性可以枚举出所有的输入层的神经元节点
+        ''' 输入层的只读视图（从 CNN 内核派生规模与输出）
         ''' </summary>
         ''' <returns></returns>
-        Public Property InputLayer As Layer
+        Public Property InputLayer As NetworkLayerView
         ''' <summary>
-        ''' 通过这个属性可以枚举出所有的隐藏层，然后对每一层隐藏层可以枚举出该隐藏层之中的所有的神经元节点
+        ''' 隐藏层集合的只读视图
         ''' </summary>
         ''' <returns></returns>
-        Public Property HiddenLayer As HiddenLayers
+        Public Property HiddenLayer As HiddenLayersView
         ''' <summary>
-        ''' 通过这个属性可以枚举出所有的输出层的神经元节点
+        ''' 输出层的只读视图（从 CNN 内核派生规模与输出）
         ''' </summary>
         ''' <returns></returns>
-        Public Property OutputLayer As Layer
+        Public Property OutputLayer As NetworkLayerView
 
         ''' <summary>
         ''' 1 - <see cref="LearnRateDecay"/>
@@ -124,13 +114,10 @@ Namespace NeuralNetwork
         End Property
 
         ''' <summary>
-        ''' 激活函数
+        ''' 激活函数配置（仅作为元数据保留，无实际计算功能；计算由 CNN 激活层完成）
         ''' </summary>
         ''' <returns></returns>
-        ''' <remarks>
-        ''' 这个属性在这里只是起着存储到XML模型之中的作用,并没有实际的计算功能
-        ''' </remarks>
-        Public Property Activations As IReadOnlyDictionary(Of String, ActiveFunction)
+        Public Property Activations As IReadOnlyDictionary(Of String, String)
 #End Region
 
 #Region "-- CNN Kernel --"
@@ -146,29 +133,15 @@ Namespace NeuralNetwork
         ''' 缓存上一次前向传播所使用的输入样本
         ''' </summary>
         Private m_lastInput As Double()
-        ''' <summary>
-        ''' 遗留数据图镜像（由 CNN 内核权重/数值回写）
-        ''' </summary>
-        Private m_graph As (input As Layer, hidden As HiddenLayers, output As Layer)
         Private m_inputSize As Integer
         Private m_hiddenSize As Integer()
         Private m_outputSize As Integer
-        Private Shared ReadOnly dropOutRand As New System.Random
-#End Region
-
         ''' <summary>
-        ''' 这个构造函数是给XML模型加载操作所使用的（仅作为元数据壳，不构建计算图）
+        ''' DropOut 配置（仅在构建期通过 dropOutRate 插入 DropoutLayer 时生效）
         ''' </summary>
-        ''' <param name="activations"></param>
-        Friend Sub New(activations As LayerActives)
-            Me.LearnRateDecay = 0.00000001
-            Me.Activations = BuildActivations(activations)
-        End Sub
-
-        Friend Sub New(activations As IReadOnlyDictionary(Of String, ActiveFunction))
-            Me.LearnRateDecay = 0.00000001
-            Me.Activations = activations
-        End Sub
+        Private m_dropOutMode As Boolean
+        Private m_dropOutRate As Double
+#End Region
 
         ''' <summary>
         ''' 由已经加载的 CNN 内核还原 Network（供 <see cref="Load"/> 使用）
@@ -192,12 +165,17 @@ Namespace NeuralNetwork
             Next
             m_outputSize = fcLayers(fcLayers.Count - 1).BackPropagationResult.ToArray.Length - 1
 
-            Call BuildGraph(m_inputSize, m_hiddenSize, m_outputSize, LayerActives.GetDefaultConfig)
-            Call NetworkKernel.SyncFromCNN(cnn, m_graph, m_inputSize, m_hiddenSize, m_outputSize)
+            Call BuildViews(m_inputSize, m_hiddenSize, m_outputSize)
 
             Me.LearnRate = 0.1
             Me.Momentum = 0.9
             Me.LearnRateDecay = 0.00000001
+            Me.Activations = New Dictionary(Of String, String) From {
+                {"input", "sigmoid"},
+                {"hiddens", "sigmoid"},
+                {"output", "sigmoid"}
+            }
+
             alg = New SGDTrainer(batch_size:=1, l2_decay:=0)
             alg.SetKernel(cnn)
             alg.learning_rate = LearnRate
@@ -205,82 +183,98 @@ Namespace NeuralNetwork
         End Sub
 
         ''' <summary>
-        ''' 
+        ''' 根据网络规模构造一个以 CNN 全连接网络为内核的 <see cref="Network"/>。
         ''' </summary>
         ''' <param name="inputSize">``>=2``</param>
         ''' <param name="hiddenSize">``>=2``</param>
         ''' <param name="outputSize">``>=1``</param>
         ''' <param name="learnRate"></param>
         ''' <param name="momentum"></param>
+        ''' <param name="active">
+        ''' 隐藏层/输出层所使用的激活函数名称，可取值：``sigmoid``（默认）、``relu``、``tanh``、``leakyrelu``。
+        ''' </param>
+        ''' <param name="dropOutRate">
+        ''' [0,1) 的 DropOut 比率；当大于 0 时会在每个全连接层之后插入 DropoutLayer。
+        ''' </param>
+        ''' <param name="weightInit">
+        ''' （保留以兼容旧接口）权重初始化由 CNN 内核负责，此参数不再被使用。
+        ''' </param>
         ''' <remarks>
-        ''' 会在创建的时候赋值一个guid
+        ''' 会在创建的时候赋值一个 guid
         ''' </remarks>
         Public Sub New(inputSize%, hiddenSize%(), outputSize%,
                        Optional learnRate# = 0.1,
                        Optional momentum# = 0.9,
-                       Optional active As LayerActives = Nothing,
+                       Optional active As String = "sigmoid",
+                       Optional dropOutRate As Double = 0,
                        Optional weightInit As Func(Of Double) = Nothing)
 
-            Dim activations As LayerActives = active Or LayerActives.GetDefaultConfig
-            Dim guid As i32 = 100
-
-            weightInit = weightInit Or Helpers.randomWeight
+            Dim actName = If(active Is Nothing, "sigmoid", active).ToLower
 
             Me.LearnRate = learnRate
             Me.Momentum = momentum
-            Me.Activations = BuildActivations(activations)
             Me.LearnRateDecay = 0.00000001
+            Me.m_dropOutMode = dropOutRate > 0
+            Me.m_dropOutRate = dropOutRate
+            Me.Activations = New Dictionary(Of String, String) From {
+                {"input", "sigmoid"},
+                {"hiddens", actName},
+                {"output", actName}
+            }
 
-            Call BuildGraph(inputSize, hiddenSize, outputSize, activations)
+            Call BuildViews(inputSize, hiddenSize, outputSize)
 
             ' 以 CNN 全连接网络作为统一计算内核，替换旧的矩阵计算
             cnn = NetworkKernel.BuildCNN(
                 inputSize:=inputSize,
                 hiddenSize:=hiddenSize,
                 outputSize:=outputSize,
-                hiddenAct:=NetworkKernel.CNNLayer(activations.hiddens),
-                outputAct:=NetworkKernel.CNNLayer(activations.output),
-                regression:=True
+                hiddenAct:=ParseActivation(actName),
+                outputAct:=ParseActivation(actName),
+                regression:=True,
+                dropOutRate:=dropOutRate
             )
 
             alg = New SGDTrainer(batch_size:=1, l2_decay:=0)
             alg.SetKernel(cnn)
             alg.learning_rate = learnRate
             alg.momentum = momentum
-
-            ' 将 CNN 内核初始化的权重/偏置回写到遗留数据图镜像
-            Call NetworkKernel.SyncFromCNN(cnn, m_graph, inputSize, hiddenSize, outputSize)
         End Sub
 
         ''' <summary>
-        ''' 构建遗留的 Layer/Neuron/Synapse 数据图（仅作为镜像容器，真实计算由 CNN 内核完成）
+        ''' 根据网络规模构建只读视图对象（InputLayer / HiddenLayer / OutputLayer）
         ''' </summary>
-        Private Sub BuildGraph(inputSize%, hiddenSize%(), outputSize%, active As LayerActives)
-            Dim weightInit As Func(Of Double) = Function() 0.0
-            Dim guid As i32 = 100
+        Private Sub BuildViews(inputSize%, hiddenSize%(), outputSize%)
+            InputLayer = New NetworkLayerView(inputSize)
 
-            InputLayer = New Layer(inputSize, Nothing, weightInit, guid:=guid)
-            HiddenLayer = New HiddenLayers(InputLayer, hiddenSize, weightInit, active.hiddens, guid:=guid)
-            OutputLayer = New Layer(outputSize, active.output, weightInit, input:=HiddenLayer.Output, guid:=guid)
+            Dim hViews As New List(Of NetworkLayerView)
+            For Each h As Integer In hiddenSize
+                Call hViews.Add(New NetworkLayerView(h))
+            Next
+            HiddenLayer = New HiddenLayersView(hViews)
+
+            OutputLayer = New NetworkLayerView(outputSize)
 
             m_inputSize = inputSize
             m_hiddenSize = hiddenSize
             m_outputSize = outputSize
-            m_graph = (InputLayer, HiddenLayer, OutputLayer)
         End Sub
 
         ''' <summary>
-        ''' 构造兼容 <see cref="StoreProcedure"/> 快照读取的激活函数字典（包含 input/hiddens/output 键）
+        ''' 将激活函数名称映射为 CNN 的激活层对象
         ''' </summary>
-        Private Shared Function BuildActivations(active As LayerActives) As IReadOnlyDictionary(Of String, ActiveFunction)
-            Dim a = active Or LayerActives.GetDefaultConfig
-            Dim dict = a.GetXmlModels
-
-            If Not dict.ContainsKey("input") Then
-                dict.Add("input", a.hiddens.Store)
-            End If
-
-            Return dict
+        Private Shared Function ParseActivation(name As String) As CNN.layers.Layer
+            Select Case name.ToLower
+                Case "relu", "rectifiedlinearunits"
+                    Return New RectifiedLinearUnitsLayer
+                Case "tanh"
+                    Return New TanhLayer
+                Case "leakyrelu", "leakyrectifiedlinearunits"
+                    Return New LeakyReluLayer
+                Case Else
+                    ' Sigmoid 以及其它未知激活都回退到 Sigmoid
+                    Return New SigmoidLayer
+            End Select
         End Function
 
         ''' <summary>
@@ -290,22 +284,14 @@ Namespace NeuralNetwork
         ''' [0,1] 之间，表示被随机删除的节点数量百分比。
         ''' </param>
         ''' <remarks>
-        ''' 这里是保留的兼容接口：旧的对象图随机失活标记（<see cref="Neuron.isDroppedOut"/>/
-        ''' <see cref="Layer.doDropOutMode"/>）仍会被维护，以便 <see cref="StoreProcedure"/> 镜像与
-        ''' <see cref="Trainings.ANNTrainer"/> 调用点保持可编译；真正的计算由 CNN 内核完成，
-        ''' DropOut 语义下沉到内核（构建期可按 dropOutRate 插入 DropoutLayer）。
+        ''' 真正的 DropOut 通过在构造期传入 <paramref name="dropOutRate"/> 参数、
+        ''' 在 CNN 内核之中插入 <see cref="Microsoft.VisualBasic.MachineLearning.CNN.layers.DropoutLayer"/> 实现
+        ''' （训练时生效，推理时自动关闭）。本方法保留为兼容接口：运行时调用仅更新比率标记，
+        ''' 需要在构造期配置方能在后续训练中生效。
         ''' </remarks>
         Public Sub DoDropOut(Optional percentage As Double = 0.5)
-            Dim dropOutMode As Boolean = percentage > 0
-            Dim p As Double = percentage
-
-            For Each layer As Layer In HiddenLayer
-                layer.doDropOutMode = dropOutMode
-
-                For Each neuron As Neuron In layer
-                    neuron.isDroppedOut = dropOutMode AndAlso (dropOutRand.NextDouble < p)
-                Next
-            Next
+            m_dropOutMode = percentage > 0
+            m_dropOutRate = percentage
         End Sub
 
         Public Overrides Function ToString() As String
@@ -316,20 +302,20 @@ Namespace NeuralNetwork
 
             Call summary.AppendLine()
             Call summary.AppendLine("input layer:")
-            Call summary.AppendLine("active function using: " & Activations!input.ToString)
+            Call summary.AppendLine("active function using: " & Activations!input)
             Call summary.AppendLine(InputLayer.ToString)
             Call summary.AppendLine("hiddens layer:")
-            Call summary.AppendLine("active function using: " & Activations!hiddens.ToString)
+            Call summary.AppendLine("active function using: " & Activations!hiddens)
             Call summary.AppendLine(HiddenLayer.ToString)
             Call summary.AppendLine()
 
-            For Each layer As Layer In HiddenLayer
+            For Each layer As NetworkLayerView In HiddenLayer
                 Call summary.AppendLine($"   {layer.ToString}")
             Next
 
             Call summary.AppendLine()
             Call summary.AppendLine("output layer:")
-            Call summary.AppendLine("active function using: " & Activations!output.ToString)
+            Call summary.AppendLine("active function using: " & Activations!output)
             Call summary.AppendLine(OutputLayer.ToString)
 
             Return summary.ToString
@@ -338,7 +324,7 @@ Namespace NeuralNetwork
 #Region "ANN compute"
 
         ''' <summary>
-        ''' 这个函数会返回<see cref="OutputLayer"/>
+        ''' 这个函数会返回<see cref="OutputLayer"/>。
         ''' </summary>
         ''' <param name="inputs">
         ''' 神经网路的输入层的输入数据,应该都是被归一化为[0,1]或者[-1,1]这两个区间内了的
@@ -347,17 +333,32 @@ Namespace NeuralNetwork
         ''' <remarks>
         ''' this function just calculate the network value
         ''' </remarks>
-        Public Function ForwardPropagate(inputs As Double(), parallel As Boolean) As Layer
+        Public Function ForwardPropagate(inputs As Double(), parallel As Boolean) As NetworkLayerView
             If cnn Is Nothing Then
                 Return OutputLayer
             End If
 
             m_lastInput = inputs
 
-            Dim out = cnn.forward(NetworkKernel.BuildDataBlock(inputs), training:=Nothing).Weights
+            Dim db = NetworkKernel.BuildDataBlock(inputs)
 
-            ' 将 CNN 前向传播的输出数值回写到遗留数据图镜像
-            Call NetworkKernel.SyncOutput(m_graph, inputs, out)
+            ' 逐层前向传播，将各层（输入/隐藏/输出）的激活向量填充到只读视图
+            Dim act = cnn.Layer(0).forward(db, training:=Nothing)
+            InputLayer.Output = act.Weights
+
+            Dim hIdx As Integer = 0
+            For i As Integer = 1 To cnn.LayerNum - 1
+                act = cnn.Layer(i).forward(act, training:=Nothing)
+
+                If cnn.Layer(i).Type = LayerTypes.FullyConnected Then
+                    If hIdx < HiddenLayer.Count Then
+                        HiddenLayer(hIdx).Output = act.Weights
+                        hIdx += 1
+                    Else
+                        OutputLayer.Output = act.Weights
+                    End If
+                End If
+            Next
 
             Return OutputLayer
         End Function
@@ -368,7 +369,7 @@ Namespace NeuralNetwork
         ''' <param name="targets"></param>
         ''' <remarks>
         ''' 在反向传播之后,网络只会修改节点之间的突触边链接的权重值以及节点
-        ''' 的<see cref="Neuron.Gradient"/>值,没有修改节点的<see cref="Neuron.Value"/>值.
+        ''' 的梯度值,没有修改节点的输出值.
         ''' </remarks>
         Public Sub BackPropagate(targets As Double(), parallel As Boolean)
             If cnn Is Nothing Then
@@ -385,9 +386,6 @@ Namespace NeuralNetwork
             ' 在线逐样本训练：batch_size=1 时每个样本都立即更新权重，
             ' 与旧 Network 的在线反向传播语义一致
             Call alg.train(db, targets, Nothing)
-
-            ' 训练完成后，将更新后的 CNN 权重/偏置回写到遗留数据图镜像
-            Call NetworkKernel.SyncFromCNN(cnn, m_graph, m_inputSize, m_hiddenSize, m_outputSize)
         End Sub
 
         ''' <summary>
@@ -403,23 +401,22 @@ Namespace NeuralNetwork
         End Function
 
         ''' <summary>
-        ''' 批量训练入口：将 <see cref="TrainingSample"/> 转换为 CNN 的
-        ''' <see cref="Microsoft.VisualBasic.MachineLearning.ComponentModel.StoreProcedure.SampleData"/> 之后，
-        ''' 调用 <see cref="CNN.Trainer.train"/> 完成批量 SGD 训练；
+        ''' 批量训练入口：将 <paramref name="samples"/> 转换为 CNN 的
+        ''' <see cref="SampleData"/> 之后，调用 <see cref="CNN.Trainer.train"/> 完成批量 SGD 训练；
         ''' 在线的逐样本训练请见 <see cref="BackPropagate"/>。
         ''' </summary>
-        ''' <param name="samples">训练样本集合</param>
+        ''' <param name="samples">训练样本集合，元素为 (输入向量, 目标向量) 元组</param>
         ''' <param name="maxLoops">批量训练的迭代（轮）数上限</param>
-        Public Sub TrainBatch(samples As TrainingSample(), maxLoops As Integer)
+        Public Sub TrainBatch(samples As (input As Double(), target As Double())(), maxLoops As Integer)
             If cnn Is Nothing Then
                 Return
             End If
 
-            Dim sampleData As New List(Of Microsoft.VisualBasic.MachineLearning.ComponentModel.StoreProcedure.SampleData)
+            Dim sampleData As New List(Of SampleData)
 
-            For Each s As TrainingSample In samples
+            For Each s As (input As Double(), target As Double()) In samples
                 ' CNN 的 Trainer.train 内部会按列做数据集归一化
-                Call sampleData.Add(New Microsoft.VisualBasic.MachineLearning.ComponentModel.StoreProcedure.SampleData(s.sample, s.classify))
+                Call sampleData.Add(New SampleData(s.input, s.target))
             Next
 
             Dim sgd As New SGDTrainer(batch_size:=1, l2_decay:=0)
@@ -429,9 +426,6 @@ Namespace NeuralNetwork
 
             Dim trainer As New Microsoft.VisualBasic.MachineLearning.CNN.Trainer(sgd)
             Call trainer.train(sampleData.ToArray, maxLoops)
-
-            ' 训练完成后，将更新后的 CNN 权重/偏置回写到遗留数据图镜像
-            Call NetworkKernel.SyncFromCNN(cnn, m_graph, m_inputSize, m_hiddenSize, m_outputSize)
         End Sub
 #End Region
 
