@@ -56,6 +56,7 @@
 
 Imports System.Text
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
+Imports Microsoft.VisualBasic.DataStorage.netCDF
 Imports Microsoft.VisualBasic.DataStorage.netCDF.Components
 Imports Microsoft.VisualBasic.DataStorage.netCDF.Data
 Imports Microsoft.VisualBasic.Language
@@ -167,47 +168,9 @@ Namespace DataVector
         End Function
 
         Public Function GetBuffer(encoding As Encoding) As Byte() Implements ICDFDataVector.GetBuffer
-            Dim chunks As Byte()()
-
-            Select Case cdfDataType
-                Case CDFDataTypes.NC_BYTE : Return DirectCast(CObj(Me), bytes).Array
-                Case CDFDataTypes.BOOLEAN : Return DirectCast(CObj(Me), flags).Array.Select(Function(b) CByte(If(b, 1, 0))).ToArray
-                Case CDFDataTypes.NC_CHAR : Return encoding.GetBytes(DirectCast(CObj(Me), chars).CharString)
-                Case CDFDataTypes.NC_DOUBLE
-                    chunks = DirectCast(CObj(Me), doubles).Array _
-                        .Select(AddressOf BitConverter.GetBytes) _
-                        .ToArray
-                Case CDFDataTypes.NC_FLOAT
-                    chunks = DirectCast(CObj(Me), floats).Array _
-                        .Select(AddressOf BitConverter.GetBytes) _
-                        .ToArray
-                Case CDFDataTypes.NC_INT
-                    chunks = DirectCast(CObj(Me), integers).Array _
-                        .Select(AddressOf BitConverter.GetBytes) _
-                        .ToArray
-                Case CDFDataTypes.NC_SHORT
-                    chunks = DirectCast(CObj(Me), shorts).Array _
-                        .Select(AddressOf BitConverter.GetBytes) _
-                        .ToArray
-                Case CDFDataTypes.NC_INT64
-                    chunks = DirectCast(CObj(Me), longs).Array _
-                        .Select(AddressOf BitConverter.GetBytes) _
-                        .ToArray
-                Case Else
-                    Throw New NotImplementedException(cdfDataType.Description)
-            End Select
-
-            If BitConverter.IsLittleEndian Then
-                Return chunks _
-                    .Select(Function(c)
-                                System.Array.Reverse(c)
-                                Return c
-                            End Function) _
-                    .IteratesALL _
-                    .ToArray
-            Else
-                Return chunks.IteratesALL.ToArray
-            End If
+            ' Delegate to the shared big-endian conversion so every CDF type
+            ' (including the extended unsigned / 64-bit types) is supported.
+            Return Utils.ToBigEndianBytes(Me.genericValue, Me.cdfDataType, encoding)
         End Function
 
         Public MustOverride Function ToNumeric() As Double() Implements ICTypeVector.ToNumeric

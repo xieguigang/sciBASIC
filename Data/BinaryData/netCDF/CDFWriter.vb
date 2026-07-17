@@ -47,7 +47,8 @@
     ' 
     '     Constructor: (+2 Overloads) Sub New
     ' 
-    '     Function: CalcOffsets, Dimensions, getDimension, getDimensionList, getVariableHeaderBuffer
+    '     Function: Dimensions, getDimension, getDimensionList, getVariableHeaderBuffer, pickVersion
+    '               WriteData, variableBytes
     '               (+4 Overloads) GlobalAttributes
     ' 
     '     Sub: (+3 Overloads) AddVariable, (+5 Overloads) AddVector, (+2 Overloads) Dispose, Flush, Save
@@ -281,55 +282,154 @@ Public Class CDFWriter : Implements IDisposable
     End Function
 
     ''' <summary>
-    ''' 会需要在这个函数之中进行offset的计算操作
+    ''' Write the netCDF file following the standard CDF-1/2/5 layout:
+    ''' non-record variables are stored contiguously (char/byte values are
+    ''' padded to a 4-byte boundary), followed by the record variables which
+    ''' are interleaved record-by-record.
     ''' </summary>
     Public Sub Save()
-        Call output.Seek(init0, SeekOrigin.Begin)
+        ' Build an id -> dimension lookup and locate the (optional) record
+        ' dimension, which is the dimension whose size is zero.
+        Dim dimById As New Dictionary(Of Integer, Dimension)
+        Dim recordDimId As Integer = -1
 
-        Call output.Write(recordDimensionLength)
-        ' -------------------------dimensionsList----------------------------
-        ' List of dimensions
-        Call output.Write(Header.NC_DIMENSION)
-        ' dimensionSize
-        Call output.Write(dimensionList.Count)
+        For Each kv In dimensionList
+            dimById(kv.Value.i) = kv.Value.value
 
-        For Each [dim] In dimensionList
-            Dim dimension As Dimension = [dim].Value
-
-            Call output.writeName([dim].Key)
-            Call output.Write(dimension.size)
+            If kv.Value.value.size = 0 Then
+                recordDimId = kv.Value.i
+            End If
         Next
 
-        ' ------------------------attributesList-----------------------------
+        Dim isRecord(variables.Count - 1) As Boolean
+        Dim perRecord(variables.Count - 1) As Long
+        Dim numRecords As Long = 0
+
+        For i As Integer = 0 To variables.Count - 1
+            Dim v As variable = variables(i)
+
+            isRecord(i) = (v.dimensions IsNot Nothing AndAlso v.dimensions.Length > 0 AndAlso v.dimensions(0) = recordDimId)
+
+            If isRecord(i) Then
+                Dim per As Long = 1
+
+                For d As Integer = 1 To v.dimensions.Length - 1
+                    per *= dimById(v.dimensions(d)).size
+                Next
+
+                perRecord(i) = per
+                v.record = True
+
+                Dim n As Long = CLng(v.value.length) \ per
+
+                If numRecords = 0 Then
+                    numRecords = n
+                ElseIf n <> numRecords Then
+                    Call $"Record variable '{v.name}' has an inconsistent record count!".Warning
+                End If
+            Else
+                v.record = False
+            End If
+        Next
+
+        recordDimensionLength = numRecords
+
+        ' Compute the (4-byte aligned) vsize for every variable.
+        For i As Integer = 0 To variables.Count - 1
+            Dim v As variable = variables(i)
+            Dim elemBytes As Integer = sizeof(v.type)
+            Dim elems As Long = If(isRecord(i), perRecord(i), CLng(v.value.length))
+
+            v.size = (elems * elemBytes).pad4()
+        Next
+
+        ' Pick the file version and overwrite the version byte written by the
+        ' constructor.
+        cdfVersion = pickVersion(numRecords, isRecord, perRecord)
+
+        output.Seek(init0 - 1, SeekOrigin.Begin)
+        output.Write(cdfVersion)
+        output.Seek(init0, SeekOrigin.Begin)
+
+        ' numrecs (64-bit for CDF-5, otherwise 32-bit)
+        If cdfVersion = 5 Then
+            output.Write(numRecords)
+        Else
+            output.Write(CUInt(If(numRecords > UInteger.MaxValue, UInteger.MaxValue, CUInt(numRecords))))
+        End If
+
+        ' dim_list
+        Call output.Write(Header.NC_DIMENSION)
+        Call output.Write(dimensionList.Count)
+
+        For Each kv In dimensionList
+            Dim dim As Dimension = kv.Value.value
+            Call output.writeName(kv.Key)
+
+            ' The unlimited (record) dimension is always stored with length 0.
+            Dim len As Long = If(kv.Value.i = recordDimId, 0, dim.size)
+
+            If cdfVersion = 5 Then
+                Call output.Write(len)
+            Else
+                Call output.Write(CUInt(If(len > UInteger.MaxValue, UInteger.MaxValue, CUInt(len))))
+            End If
+        Next
+
         ' global attributes
         Call writeAttributes(output, globalAttrs)
 
-        ' -----------------------variablesList--------------------------
-        ' List of variables
+        ' var_list
         Call output.Write(CUInt(Header.NC_VARIABLE))
-        ' variableSize 
         Call output.Write(CUInt(variables.Count))
 
-        ' 先生成每一个变量的header的buffer
+        ' Build the header buffers (vsize is set, the offset is a placeholder
+        ' that gets back-filled once the real data offsets are known).
         Dim variableBuffers As New List(Of Byte())
 
-        For Each var As variable In variables
-            variableBuffers.Add(getVariableHeaderBuffer(var, output))
+        For Each v As variable In variables
+            variableBuffers.Add(getVariableHeaderBuffer(v, output, cdfVersion))
         Next
 
-        Dim tmp As String = CalcOffsets(variableBuffers)
+        ' Compute offsets: non-record variables first, then the interleaved
+        ' record region.
+        Dim current As Long = output.Position + variableBuffers.Sum(Function(b) CLng(b.Length))
 
-        ' 在这个循环仅写入了变量的头部数据
         For i As Integer = 0 To variables.Count - 1
-            ' offset已经在计算offset函数的调用过程之中被替换掉了
-            ' 在这里直接写入buffer数据
+            If Not isRecord(i) Then
+                variables(i).offset = current
+                current += variables(i).size
+            End If
+        Next
+
+        For i As Integer = 0 To variables.Count - 1
+            If isRecord(i) Then
+                variables(i).offset = current
+                current += variables(i).size
+            End If
+        Next
+
+        ' Fill the offset back into each header buffer (8 bytes for CDF-2/5,
+        ' 4 bytes for CDF-1).
+        For i As Integer = 0 To variables.Count - 1
+            Dim width As Integer = If(cdfVersion = 1, 4, 8)
+            Dim chunk As Byte()
+
+            If width = 4 Then
+                chunk = BitConverter.GetBytes(CUInt(variables(i).offset))
+            Else
+                chunk = BitConverter.GetBytes(variables(i).offset)
+            End If
+
+            Call variableBuffers(i).Fill(chunk, -width, reverse:=True)
+        Next
+
+        ' Write the variable headers, then the data region.
+        For i As Integer = 0 To variables.Count - 1
             Call output.Write(variableBuffers(i))
         Next
 
-        Using buffer As Stream = tmp.Open
-            ' 接着就是写入数据块了
-            Call output.Write(buffer)
-        End Using
+        Call WriteData(isRecord, perRecord, numRecords)
     End Sub
 
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -338,13 +438,11 @@ Public Class CDFWriter : Implements IDisposable
     End Sub
 
     ''' <summary>
-    ''' 因为这个步骤是发生在计算offset之前的
-    ''' 所以<see cref="variable.offset"/>，全部都是零
-    ''' 可以在计算完成之后，将buffer的末尾4个字节替换掉再写入文件
+    ''' Build the variable header buffer. The offset field is written as a
+    ''' placeholder (4 bytes for CDF-1, 8 bytes for CDF-2/5) and is back-filled
+    ''' once the real data offsets are known.
     ''' </summary>
-    ''' <param name="var"></param>
-    ''' <returns></returns>
-    Private Shared Function getVariableHeaderBuffer(var As variable, writerTemplate As BinaryDataWriter) As Byte()
+    Private Shared Function getVariableHeaderBuffer(var As variable, writerTemplate As BinaryDataWriter, version As Byte) As Byte()
         Dim buffer As New MemoryStream
 
         Using output = New BinaryDataWriter(buffer, writerTemplate.Encoding) With {
@@ -353,17 +451,28 @@ Public Class CDFWriter : Implements IDisposable
         }
             Call output.writeName(var.name)
 
-            ' dimensionality 
+            ' dimensionality
             Call output.Write(CUInt(var.dimensions.Length))
-            ' dimensionsIds
+            ' dimension ids
             Call output.Write(var.dimensions)
             ' attributes of this variable
             Call writeAttributes(output, var.attributes)
             Call output.Write(var.type)
-            ' varSize
-            Call output.Write(CUInt(var.size))
-            ' version = 1, write 4 bytes
-            Call output.Write(var.offset)
+
+            ' vsize (64-bit for CDF-2/5, otherwise 32-bit)
+            If version = 1 Then
+                Call output.Write(CUInt(var.size))
+            Else
+                Call output.Write(CULng(var.size))
+            End If
+
+            ' begin (offset placeholder)
+            If version = 1 Then
+                Call output.Write(CUInt(0))
+            Else
+                Call output.Write(CLng(0))
+            End If
+
             Call output.Flush()
         End Using
 
@@ -371,40 +480,103 @@ Public Class CDFWriter : Implements IDisposable
     End Function
 
     ''' <summary>
-    ''' 这个函数在完成计算之后会直接修改<see cref="Variable"/> class之中的属性值
-    ''' 完成函数调用之后可以直接读取属性值
+    ''' Choose CDF-1 / CDF-2 / CDF-5 based on the data sizes and types.
     ''' </summary>
-    ''' <param name="buffers">
-    ''' 这个是和<see cref="variables"/>之中的元素一一对应的
-    ''' </param>
-    ''' <remarks>
-    ''' 函数返回数据块的缓存
-    ''' </remarks>
-    Private Function CalcOffsets(buffers As List(Of Byte())) As String
-        ' 这个位置是在所有的变量头部之后的
-        ' 因为这个函数是发生在变量写入之前的，所以会需要加上自身的长度
-        ' 才会将offset的位置移动到数据区域的起始位置
-        Dim current As UInteger = output.Position + buffers.Sum(Function(v) v.Length)
-        Dim chunk As Byte()
-        Dim handle$ = TempFileSystem.GetAppSysTempFile(".dat", App.PID)
+    Private Function pickVersion(numRecords As Long, isRecord As Boolean(), perRecord As Long()) As Byte
+        Dim need5 As Boolean = False
+        Dim maxVsize As Long = 0
+        Dim totalData As Long = 0
 
-        ' 2019-1-21 当写入一个超大的CDF文件的时候
-        ' 字节数量会超过Array的最大元素数量上限
-        ' 所以在这里会需要使用Stream对象来避免这个可能的问题
-        Using dataBuffer As FileStream = handle.Open
-            For i As Integer = 0 To variables.Count - 1
-                chunk = BitConverter.GetBytes(current)
-                ' 因为CDF文件的byteorder是Big，所以在这里填充的时候会需要翻转一下顺序
-                buffers(i).Fill(chunk, -4, reverse:=True)
-                chunk = variables(i).value.GetBuffer(output.Encoding)
-                current += chunk.Length
-                dataBuffer.Write(chunk, Scan0, chunk.Length)
+        For Each d In dimensionList.Values
+            If d.value.size > Integer.MaxValue Then
+                need5 = True
+            End If
+        Next
+
+        If numRecords > Integer.MaxValue Then
+            need5 = True
+        End If
+
+        For i As Integer = 0 To variables.Count - 1
+            If variables(i).type > CDFDataTypes.NC_DOUBLE Then
+                ' Extended types (NC_UBYTE .. NC_UINT64) require CDF-5.
+                need5 = True
+            End If
+
+            maxVsize = Math.Max(maxVsize, variables(i).size)
+
+            If isRecord(i) Then
+                totalData += numRecords * variables(i).size
+            Else
+                totalData += variables(i).size
+            End If
+        Next
+
+        If need5 Then
+            Return 5
+        End If
+
+        ' CDF-2 uses 64-bit offsets / vsize but 32-bit dim_length / numrecs.
+        If maxVsize > Integer.MaxValue OrElse (init0 + totalData) > Integer.MaxValue Then
+            Return 2
+        End If
+
+        Return 1
+    End Function
+
+    ''' <summary>
+    ''' Write the variable data region: non-record variables first, then the
+    ''' record variables interleaved record-by-record.
+    ''' </summary>
+    Private Sub WriteData(isRecord As Boolean(), perRecord As Long(), numRecords As Long)
+        For i As Integer = 0 To variables.Count - 1
+            If Not isRecord(i) Then
+                Call writeVariableData(variables(i))
+            End If
+        Next
+
+        If numRecords > 0 Then
+            For r As Long = 0 To numRecords - 1
+                For i As Integer = 0 To variables.Count - 1
+                    If isRecord(i) Then
+                        Call writeRecordSlab(variables(i), perRecord(i), r)
+                    End If
+                Next
             Next
+        End If
+    End Sub
 
-            Call dataBuffer.Flush()
-        End Using
+    Private Sub writeVariableData(v As variable)
+        Call output.Write(variableBytes(v, 0, CLng(v.value.length)))
+        Call output.writePadding
+    End Sub
 
-        Return handle
+    Private Sub writeRecordSlab(v As variable, perRecord As Long, r As Long)
+        Call output.Write(variableBytes(v, r * perRecord, perRecord))
+        Call output.writePadding
+    End Sub
+
+    ''' <summary>
+    ''' Convert the slice [<paramref name="start"/>, <paramref name="start"/> + <paramref name="count"/>)
+    ''' of a variable's values into big-endian bytes ready to be written.
+    ''' </summary>
+    Private Function variableBytes(v As variable, start As Long, count As Long) As Byte()
+        Dim dataType As CDFDataTypes = v.value.cdfDataType
+        Dim raw As Array = v.value.genericValue
+
+        ' Internal BOOLEAN values are stored as NC_BYTE on disk.
+        If dataType = CDFDataTypes.BOOLEAN Then
+            raw = DirectCast(raw, Boolean()) _
+                .Select(Function(b) CByte(If(b, 1, 0))) _
+                .ToArray
+            dataType = CDFDataTypes.NC_BYTE
+        End If
+
+        If start > 0 OrElse count < raw.Length Then
+            raw = Utils.sliceVector(raw, dataType, CInt(start), CInt(count))
+        End If
+
+        Return Utils.ToBigEndianBytes(raw, dataType, output.Encoding)
     End Function
 
     Private Shared Sub writeAttributes(output As BinaryDataWriter, attrs As attribute())
@@ -424,10 +596,10 @@ Public Class CDFWriter : Implements IDisposable
 
             ' 在attributes里面，除了字符串，其他类型的数据都是只有一个元素
             Select Case attr.type
-                Case CDFDataTypes.NC_BYTE
+                Case CDFDataTypes.NC_BYTE, CDFDataTypes.NC_UBYTE
                     Call output.Write(1)
                     Call output.Write(Byte.Parse(attr.value))
-                Case CDFDataTypes.NC_CHAR
+                Case CDFDataTypes.NC_CHAR, CDFDataTypes.NC_STRING
                     Dim stringBuffer = output.Encoding.GetBytes(attr.value)
                     Call output.Write(attr.value.Length)
                     Call output.Write(stringBuffer)
@@ -439,13 +611,22 @@ Public Class CDFWriter : Implements IDisposable
                     Call output.Write(Single.Parse(attr.value))
                 Case CDFDataTypes.NC_INT
                     Call output.Write(1)
-                    Call output.Write(UInteger.Parse(attr.value))
+                    Call output.Write(Integer.Parse(attr.value))
                 Case CDFDataTypes.NC_SHORT
                     Call output.Write(1)
                     Call output.Write(Short.Parse(attr.value))
+                Case CDFDataTypes.NC_USHORT
+                    Call output.Write(1)
+                    Call output.Write(UShort.Parse(attr.value))
                 Case CDFDataTypes.NC_INT64
                     Call output.Write(1)
                     Call output.Write(Long.Parse(attr.value))
+                Case CDFDataTypes.NC_UINT
+                    Call output.Write(1)
+                    Call output.Write(UInteger.Parse(attr.value))
+                Case CDFDataTypes.NC_UINT64
+                    Call output.Write(1)
+                    Call output.Write(ULong.Parse(attr.value))
                 Case CDFDataTypes.BOOLEAN
 
                     ' 20210212 using byte flag for boolean?

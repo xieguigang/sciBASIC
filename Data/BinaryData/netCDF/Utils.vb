@@ -312,4 +312,67 @@ Module Utils
                 Return Utils.notNetcdf(True, $"non valid type {type}")
         End Select
     End Function
+
+    ''' <summary>
+    ''' Return a new array of the same element type containing the slice
+    ''' [<paramref name="start"/>, <paramref name="start"/> + <paramref name="count"/>)
+    ''' of <paramref name="data"/>.
+    ''' </summary>
+    Public Function sliceVector(data As Array, type As CDFDataTypes, start As Integer, count As Integer) As Array
+        Select Case type
+            Case CDFDataTypes.NC_BYTE, CDFDataTypes.NC_UBYTE : Return sliceVector(Of Byte)(data, start, count)
+            Case CDFDataTypes.NC_CHAR, CDFDataTypes.NC_STRING : Return sliceVector(Of Char)(data, start, count)
+            Case CDFDataTypes.NC_SHORT, CDFDataTypes.NC_USHORT : Return sliceVector(Of Short)(data, start, count)
+            Case CDFDataTypes.NC_INT, CDFDataTypes.NC_UINT : Return sliceVector(Of Integer)(data, start, count)
+            Case CDFDataTypes.NC_INT64, CDFDataTypes.NC_UINT64 : Return sliceVector(Of Long)(data, start, count)
+            Case CDFDataTypes.NC_FLOAT : Return sliceVector(Of Single)(data, start, count)
+            Case CDFDataTypes.NC_DOUBLE : Return sliceVector(Of Double)(data, start, count)
+            Case Else : Return notNetcdf(True, $"non valid type {type}")
+        End Select
+    End Function
+
+    Private Function sliceVector(Of T)(data As Array, start As Integer, count As Integer) As T()
+        Dim src As T() = DirectCast(data, T())
+        Dim dst(count - 1) As T
+        Call Array.Copy(src, start, dst, 0, count)
+        Return dst
+    End Function
+
+    ''' <summary>
+    ''' Convert a whole variable array of the given CDF type into big-endian
+    ''' bytes ready to be written to a CDF file.
+    ''' </summary>
+    Public Function ToBigEndianBytes(data As Array, type As CDFDataTypes, encoding As Encoding) As Byte()
+        Select Case type
+            Case CDFDataTypes.NC_BYTE, CDFDataTypes.NC_UBYTE : Return DirectCast(data, Byte())
+            Case CDFDataTypes.BOOLEAN : Return DirectCast(data, Boolean()).Select(Function(b) CByte(If(b, 1, 0))).ToArray
+            Case CDFDataTypes.NC_CHAR, CDFDataTypes.NC_STRING : Return encoding.GetBytes(New String(DirectCast(data, Char())))
+            Case CDFDataTypes.NC_SHORT : Return toBE(DirectCast(data, Short()), 2, AddressOf BitConverter.GetBytes)
+            Case CDFDataTypes.NC_USHORT : Return toBE(DirectCast(data, UShort()), 2, AddressOf BitConverter.GetBytes)
+            Case CDFDataTypes.NC_INT : Return toBE(DirectCast(data, Integer()), 4, AddressOf BitConverter.GetBytes)
+            Case CDFDataTypes.NC_UINT : Return toBE(DirectCast(data, UInteger()), 4, AddressOf BitConverter.GetBytes)
+            Case CDFDataTypes.NC_INT64 : Return toBE(DirectCast(data, Long()), 8, AddressOf BitConverter.GetBytes)
+            Case CDFDataTypes.NC_UINT64 : Return toBE(DirectCast(data, ULong()), 8, AddressOf BitConverter.GetBytes)
+            Case CDFDataTypes.NC_FLOAT : Return toBE(DirectCast(data, Single()), 4, AddressOf BitConverter.GetBytes)
+            Case CDFDataTypes.NC_DOUBLE : Return toBE(DirectCast(data, Double()), 8, AddressOf BitConverter.GetBytes)
+            Case Else : Return notNetcdf(True, $"non valid type {type}")
+        End Select
+    End Function
+
+    Private Function toBE(Of T)(values As T(), elemSize As Integer, getBytes As Func(Of T, Byte())) As Byte()
+        Dim out As Byte() = New Byte(values.Length * elemSize - 1) {}
+        Dim tmp As Byte()
+
+        For i As Integer = 0 To values.Length - 1
+            tmp = getBytes(values(i))
+
+            If BitConverter.IsLittleEndian Then
+                Call Array.Reverse(tmp)
+            End If
+
+            Call Array.Copy(tmp, 0, out, i * elemSize, elemSize)
+        Next
+
+        Return out
+    End Function
 End Module
