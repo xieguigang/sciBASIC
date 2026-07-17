@@ -1,60 +1,60 @@
 ﻿#Region "Microsoft.VisualBasic::56669ab2ff152a6f9c1da4adcfa15860, Data\BinaryData\HDF5\structure\DataObjects\Headers\ObjectHeader.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 96
-    '    Code Lines: 62 (64.58%)
-    ' Comment Lines: 9 (9.38%)
-    '    - Xml Docs: 0.00%
-    ' 
-    '   Blank Lines: 25 (26.04%)
-    '     File Size: 3.67 KB
+' Summaries:
 
 
-    '     Class ObjectHeader
-    ' 
-    '         Properties: headerMessages, objectHeaderSize, objectReferenceCount, totalNumberOfHeaderMessages, version
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    ' 
-    '         Function: readVersion1
-    ' 
-    '         Sub: printValues, readVersion2
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 96
+'    Code Lines: 62 (64.58%)
+' Comment Lines: 9 (9.38%)
+'    - Xml Docs: 0.00%
+' 
+'   Blank Lines: 25 (26.04%)
+'     File Size: 3.67 KB
+
+
+'     Class ObjectHeader
+' 
+'         Properties: headerMessages, objectHeaderSize, objectReferenceCount, totalNumberOfHeaderMessages, version
+' 
+'         Constructor: (+1 Overloads) Sub New
+' 
+'         Function: readVersion1
+' 
+'         Sub: printValues, readVersion2
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -67,6 +67,7 @@
 
 
 Imports System.IO
+Imports Microsoft.VisualBasic.Data.IO.HDF5.device
 Imports Microsoft.VisualBasic.Data.IO.HDF5.struct.messages
 Imports BinaryReader = Microsoft.VisualBasic.Data.IO.HDF5.device.BinaryReader
 
@@ -162,7 +163,7 @@ Namespace struct
                 Throw New IOException("invalid object header (OHDR) signature")
             End If
 
-            Me.version = [in].readByte()
+            Me._version = [in].readByte()
             Dim ohFlags = [in].readByte()
 
             ' bit 5 (0x20): access/modification/change/birth times (4 x 32-bit)

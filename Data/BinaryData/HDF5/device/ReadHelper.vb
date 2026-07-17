@@ -67,11 +67,11 @@
 Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Data.IO.HDF5.struct
-Imports stdNum = System.Math
+Imports std = System.Math
 
 Namespace device
 
-    <HideModuleName> Public Module ReadHelper
+    Public Module ReadHelper
 
         ''' <summary>
         ''' <see cref="Superblock.sizeOfOffsets"/>
@@ -242,7 +242,7 @@ Namespace device
         End Function
 
         Public Function readVariableSizeFactor([in] As BinaryReader, sizeFactor As Integer) As Long
-            Dim size As Integer = CInt(stdNum.Truncate(stdNum.Pow(2, sizeFactor)))
+            Dim size As Integer = CInt(std.Truncate(std.Pow(2, sizeFactor)))
             Return readVariableSizeUnsigned([in], size)
         End Function
 

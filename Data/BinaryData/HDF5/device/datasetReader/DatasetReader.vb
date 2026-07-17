@@ -251,10 +251,10 @@ Namespace device
                 Return
             End If
 
-            Dim totalBytes As Integer = Buffer.ByteLength(buffer)
+            Dim totalBytes As Integer = System.Buffer.ByteLength(buffer)
 
             If totalBytes > 0 Then
-                Call Buffer.BlockCopy(buffer, Scan0, data, Scan0, totalBytes)
+                Call System.Buffer.BlockCopy(buffer, Scan0, data, Scan0, totalBytes)
             End If
         End Sub
     End Module
