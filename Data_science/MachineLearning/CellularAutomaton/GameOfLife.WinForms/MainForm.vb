@@ -13,16 +13,16 @@ Imports Microsoft.VisualBasic.MachineLearning.CellularAutomaton
         Inherits Form
 
         ' ---- 配色（深色科技控制台风格）----
-        Private ReadOnly BG As Color = Color.FromArgb(&HFF, &H16, &H16, &H1F)
-        Private ReadOnly PANEL As Color = Color.FromArgb(&HFF, &H1E, &H1E, &H2E)
-        Private ReadOnly DEAD As Color = Color.FromArgb(&HFF, &H10, &H10, &H18)
-        Private ReadOnly ALIVE As Color = Color.FromArgb(&HFF, &H0, &HE5, &HFF)
+        Private ReadOnly ColBG As Color = Color.FromArgb(&HFF, &H16, &H16, &H1F)
+        Private ReadOnly ColPanel As Color = Color.FromArgb(&HFF, &H1E, &H1E, &H2E)
+        Private ReadOnly ColDead As Color = Color.FromArgb(&HFF, &H10, &H10, &H18)
+        Private ReadOnly ColAlive As Color = Color.FromArgb(&HFF, &H0, &HE5, &HFF)
         Private ReadOnly ColAliveGlow As Color = Color.FromArgb(50, &H0, &HE5, &HFF)
-        Private ReadOnly TEXT As Color = Color.FromArgb(&HFF, &HE0, &HE0, &HE0)
-        Private ReadOnly TEXTDIM As Color = Color.FromArgb(&HFF, &HB0, &HBEC5)
-        Private ReadOnly BTN_BG As Color = Color.FromArgb(&HFF, &H2A, &H2A, &H3C)
-        Private ReadOnly BTN_HOVER As Color = Color.FromArgb(&HFF, &H29, &H79, &HFF)
-        Private ReadOnly ACCENT As Color = Color.FromArgb(&HFF, &H0, &HE5, &HFF)
+        Private ReadOnly ColText As Color = Color.FromArgb(&HFF, &HE0, &HE0, &HE0)
+        Private ReadOnly ColTextDim As Color = Color.FromArgb(&HFF, &HB0, &HBEC5)
+        Private ReadOnly ColBtnBg As Color = Color.FromArgb(&HFF, &H2A, &H2A, &H3C)
+        Private ReadOnly ColBtnHover As Color = Color.FromArgb(&HFF, &H29, &H79, &HFF)
+        Private ReadOnly ColAccent As Color = Color.FromArgb(&HFF, &H0, &HE5, &HFF)
 
         ' ---- 控件 ----
         Private sidebar As Panel
@@ -68,7 +68,7 @@ Imports Microsoft.VisualBasic.MachineLearning.CellularAutomaton
             Me.Text = "Conway's Game of Life · 元胞自动机"
             Me.Size = New Size(1120, 740)
             Me.MinimumSize = New Size(860, 560)
-            Me.BackColor = BG
+            Me.BackColor = ColBG
             Me.Font = New Font("Segoe UI", 11)
             Me.StartPosition = FormStartPosition.CenterScreen
             Me.DoubleBuffered = True
@@ -77,14 +77,14 @@ Imports Microsoft.VisualBasic.MachineLearning.CellularAutomaton
             sidebar = New Panel() With {
                 .Dock = DockStyle.Left,
                 .Width = 320,
-                .BackColor = PANEL
+                .BackColor = ColPanel
             }
             flow = New FlowLayoutPanel() With {
                 .Dock = DockStyle.Fill,
                 .FlowDirection = FlowDirection.TopDown,
                 .WrapContents = False,
                 .AutoScroll = True,
-                .BackColor = PANEL,
+                .BackColor = ColPanel,
                 .Padding = New Padding(18, 18, 18, 18)
             }
             sidebar.Controls.Add(flow)
@@ -92,13 +92,13 @@ Imports Microsoft.VisualBasic.MachineLearning.CellularAutomaton
             ' 画布容器
             scrollPanel = New Panel() With {
                 .Dock = DockStyle.Fill,
-                .BackColor = DEAD,
+                .BackColor = ColDead,
                 .AutoScroll = True
             }
             canvas = New PictureBox() With {
                 .Location = New Point(0, 0),
                 .SizeMode = PictureBoxSizeMode.AutoSize,
-                .BackColor = DEAD,
+                .BackColor = ColDead,
                 .Cursor = Cursors.Cross
             }
             scrollPanel.Controls.Add(canvas)
@@ -106,14 +106,14 @@ Imports Microsoft.VisualBasic.MachineLearning.CellularAutomaton
             ' 状态栏
             statusStrip = New StatusStrip() With {
                 .Dock = DockStyle.Bottom,
-                .BackColor = PANEL,
-                .ForeColor = TEXT,
+                .BackColor = ColPanel,
+                .ForeColor = ColText,
                 .SizingGrip = False
             }
-            lblGen = New ToolStripStatusLabel("世代 0") With {.ForeColor = ACCENT}
-            lblAlive = New ToolStripStatusLabel("存活 0") With {.ForeColor = TEXT}
-            lblFps = New ToolStripStatusLabel("FPS 0") With {.ForeColor = TEXTDIM}
-            lblRule = New ToolStripStatusLabel("规则 B3/S23") With {.ForeColor = TEXTDIM, .Spring = True, .TextAlign = ContentAlignment.MiddleRight}
+            lblGen = New ToolStripStatusLabel("世代 0") With {.ForeColor = ColAccent}
+            lblAlive = New ToolStripStatusLabel("存活 0") With {.ForeColor = ColText}
+            lblFps = New ToolStripStatusLabel("FPS 0") With {.ForeColor = ColTextDim}
+            lblRule = New ToolStripStatusLabel("规则 B3/S23") With {.ForeColor = ColTextDim, .Spring = True, .TextAlign = ContentAlignment.MiddleRight}
             statusStrip.Items.AddRange({lblGen, lblAlive, lblFps, lblRule})
 
             ' 布局顺序：先停靠侧边/底，最后 Fill 填充剩余
@@ -128,13 +128,13 @@ Imports Microsoft.VisualBasic.MachineLearning.CellularAutomaton
         Private Sub BuildSidebar()
             Dim title = New Label() With {
                 .Text = "CONWAY'S GAME OF LIFE",
-                .ForeColor = ACCENT,
+                .ForeColor = ColAccent,
                 .Font = New Font("Segoe UI", 16, FontStyle.Bold),
                 .Width = 284, .Height = 30
             }
             Dim subTitle = New Label() With {
                 .Text = "Cellular Automaton · 元胞自动机 Demo",
-                .ForeColor = TEXTDIM,
+                .ForeColor = ColTextDim,
                 .Font = New Font("Segoe UI", 10),
                 .Width = 284, .Height = 18,
                 .Margin = New Padding(0, 2, 0, 14)
@@ -149,7 +149,7 @@ Imports Microsoft.VisualBasic.MachineLearning.CellularAutomaton
             Dim secNeighbor = SectionLabel("邻居类型 (Neighborhood)")
             cmbNeighbor = New ComboBox() With {
                 .Width = 284, .DropDownStyle = ComboBoxStyle.DropDownList,
-                .BackColor = BTN_BG, .ForeColor = TEXT, .FlatStyle = FlatStyle.Flat
+                .BackColor = ColBtnBg, .ForeColor = ColText, .FlatStyle = FlatStyle.Flat
             }
             cmbNeighbor.Items.Add("冯·诺依曼型 Von Neumann (4)")
             cmbNeighbor.Items.Add("摩尔型 Moore (8)")
@@ -159,7 +159,7 @@ Imports Microsoft.VisualBasic.MachineLearning.CellularAutomaton
             Dim secBoundary = SectionLabel("边界模式 (Boundary)")
             cmbBoundary = New ComboBox() With {
                 .Width = 284, .DropDownStyle = ComboBoxStyle.DropDownList,
-                .BackColor = BTN_BG, .ForeColor = TEXT, .FlatStyle = FlatStyle.Flat
+                .BackColor = ColBtnBg, .ForeColor = ColText, .FlatStyle = FlatStyle.Flat
             }
             cmbBoundary.Items.Add("有界 Bounded")
             cmbBoundary.Items.Add("环面 Toroidal")
@@ -169,18 +169,18 @@ Imports Microsoft.VisualBasic.MachineLearning.CellularAutomaton
             numSize = New NumericUpDown() With {
                 .Width = 284, .Minimum = 10, .Maximum = 200,
                 .Value = 90, .Increment = 5,
-                .BackColor = BTN_BG, .ForeColor = TEXT
+                .BackColor = ColBtnBg, .ForeColor = ColText
             }
 
             Dim secSpeed = SectionLabel("演化速度 (Speed)")
             trkSpeed = New TrackBar() With {
                 .Width = 284, .Minimum = 1, .Maximum = 100, .Value = 75,
-                .TickStyle = TickStyle.None, .BackColor = PANEL
+                .TickStyle = TickStyle.None, .BackColor = ColPanel
             }
 
             Dim hint = New Label() With {
                 .Text = "提示：暂停状态下可在网格上点击 / 拖拽绘制或擦除细胞。",
-                .ForeColor = TEXTDIM, .Font = New Font("Segoe UI", 9),
+                .ForeColor = ColTextDim, .Font = New Font("Segoe UI", 9),
                 .Width = 284, .Height = 30,
                 .Margin = New Padding(0, 10, 0, 0)
             }
@@ -201,15 +201,15 @@ Imports Microsoft.VisualBasic.MachineLearning.CellularAutomaton
                 .Text = text,
                 .Width = 284, .Height = 42,
                 .FlatStyle = FlatStyle.Flat,
-                .BackColor = BTN_BG,
-                .ForeColor = TEXT,
+                .BackColor = ColBtnBg,
+                .ForeColor = ColText,
                 .Font = New Font("Segoe UI", 11),
                 .Cursor = Cursors.Hand,
                 .Margin = New Padding(0, 0, 0, 10)
             }
             b.FlatAppearance.BorderSize = 0
-            AddHandler b.MouseEnter, Sub(s, e) b.BackColor = BTN_HOVER
-            AddHandler b.MouseLeave, Sub(s, e) b.BackColor = BTN_BG
+            AddHandler b.MouseEnter, Sub(s, e) b.BackColor = ColBtnHover
+            AddHandler b.MouseLeave, Sub(s, e) b.BackColor = ColBtnBg
             AddHandler b.Click, click
             Return b
         End Function
@@ -217,7 +217,7 @@ Imports Microsoft.VisualBasic.MachineLearning.CellularAutomaton
         Private Function SectionLabel(text As String) As Label
             Return New Label() With {
                 .Text = text,
-                .ForeColor = ACCENT,
+                .ForeColor = ColAccent,
                 .Font = New Font("Segoe UI", 11, FontStyle.Bold),
                 .Width = 284, .Height = 22,
                 .Margin = New Padding(0, 14, 0, 4)
@@ -316,9 +316,9 @@ Imports Microsoft.VisualBasic.MachineLearning.CellularAutomaton
 
             aliveCount = 0
             Using g = Graphics.FromImage(bmp)
-                g.Clear(DEAD)
+                g.Clear(ColDead)
                 Using glow = New SolidBrush(ColAliveGlow)
-                    Using brush = New SolidBrush(ALIVE)
+                    Using brush = New SolidBrush(ColAlive)
                         For i As Integer = 0 To rows - 1
                             For j As Integer = 0 To cols - 1
                                 If simulator.CellData(i, j).State Then
