@@ -61,22 +61,33 @@ Imports randf = Microsoft.VisualBasic.Math.RandomExtensions
 Public Class Simulator(Of T As Individual) : Inherits Iterator.Kernel
 
     Friend ReadOnly grid As CellEntity(Of T)()()
-    Friend ReadOnly size As Size
+    Public ReadOnly size As Size
+    Friend ReadOnly neighborType As NeighborhoodType
+    Friend ReadOnly boundary As BoundaryMode
 
     ''' <summary>
-    ''' 
+    ''' 获取指定行列坐标处的细胞。坐标越界时依据边界模式处理：
+    ''' <see cref="BoundaryMode.Bounded"/> 返回 Nothing（视为无邻居）；
+    ''' <see cref="BoundaryMode.Toroidal"/> 环绕缝合。
     ''' </summary>
     ''' <param name="i">行编号</param>
     ''' <param name="j">列编号</param>
     ''' <returns></returns>
     Default Public ReadOnly Property getCell(i As Integer, j As Integer) As CellEntity(Of T)
         Get
-            If i < 0 OrElse j < 0 Then
-                Return Nothing
-            ElseIf i >= size.Width OrElse j >= size.Width Then
-                Return Nothing
-            Else
+            If boundary = BoundaryMode.Toroidal Then
+                i = ((i Mod size.Height) + size.Height) Mod size.Height
+                j = ((j Mod size.Width) + size.Width) Mod size.Width
+
                 Return grid(i)(j)
+            Else
+                If i < 0 OrElse j < 0 Then
+                    Return Nothing
+                ElseIf i >= size.Height OrElse j >= size.Width Then
+                    Return Nothing
+                Else
+                    Return grid(i)(j)
+                End If
             End If
         End Get
     End Property
@@ -85,11 +96,19 @@ Public Class Simulator(Of T As Individual) : Inherits Iterator.Kernel
     ''' 
     ''' </summary>
     ''' <param name="size">the grid size</param>
-    Sub New(size As Size, activator As Func(Of T))
+    ''' <param name="activator">用于初始化每个细胞的工厂函数。</param>
+    ''' <param name="neighborType">邻居拓扑类型，默认冯·诺依曼型。</param>
+    ''' <param name="boundary">边界处理模式，默认有界。</param>
+    Sub New(size As Size,
+            activator As Func(Of T),
+            Optional neighborType As NeighborhoodType = NeighborhoodType.VonNeumann,
+            Optional boundary As BoundaryMode = BoundaryMode.Bounded)
         Dim grid = RectangularArray.Matrix(Of CellEntity(Of T))(size.Height, size.Width)
 
         Me.grid = grid
         Me.size = size
+        Me.neighborType = neighborType
+        Me.boundary = boundary
 
         For j As Integer = 0 To size.Width - 1
             For i As Integer = 0 To size.Height - 1
@@ -99,7 +118,7 @@ Public Class Simulator(Of T As Individual) : Inherits Iterator.Kernel
 
         For j As Integer = 0 To size.Width - 1
             For i As Integer = 0 To size.Height - 1
-                Call grid(i)(j).config(Me)
+                Call grid(i)(j).config(Me, neighborType)
             Next
         Next
     End Sub
@@ -113,13 +132,22 @@ Public Class Simulator(Of T As Individual) : Inherits Iterator.Kernel
     End Sub
 
     ''' <summary>
-    ''' runOrder()
+    ''' 同步演化一个世代：先让所有细胞依据邻居“当前状态”计算下一代（Tick），
+    ''' 再统一提交（Commit），避免同世代内顺序更新污染。
     ''' </summary>
     ''' <param name="itr"></param>
     Protected Overrides Sub [Step](itr As Integer)
+        ' 阶段一：计算全部细胞的下一代状态（仅写入缓冲）
         For j As Integer = 0 To size.Width - 1
             For i As Integer = 0 To size.Height - 1
                 Call grid(i)(j).Tick()
+            Next
+        Next
+
+        ' 阶段二：统一提交下一代状态
+        For j As Integer = 0 To size.Width - 1
+            For i As Integer = 0 To size.Height - 1
+                Call grid(i)(j).Commit()
             Next
         Next
     End Sub
@@ -128,9 +156,17 @@ Public Class Simulator(Of T As Individual) : Inherits Iterator.Kernel
         Dim x As Integer() = size.Width.SeqRandom
         Dim y As Integer() = size.Height.SeqRandom
 
+        ' 阶段一：以随机顺序计算下一代状态（仅写入缓冲）
         For Each xi As Integer In x
             For Each yi As Integer In y
                 Call grid(yi)(xi).Tick()
+            Next
+        Next
+
+        ' 阶段二：统一提交
+        For Each xi As Integer In x
+            For Each yi As Integer In y
+                Call grid(yi)(xi).Commit()
             Next
         Next
     End Sub
@@ -152,5 +188,22 @@ Public Class Simulator(Of T As Individual) : Inherits Iterator.Kernel
                 Yield individual.data
             Next
         Next
+    End Function
+
+    ''' <summary>
+    ''' 获取指定行列处细胞所承载的个体数据，便于外部读取/写入状态（如渲染或鼠标绘制）。
+    ''' 越界时依据边界模式：有界返回 Nothing；环面返回环绕后的细胞。
+    ''' </summary>
+    ''' <param name="i">行编号</param>
+    ''' <param name="j">列编号</param>
+    ''' <returns></returns>
+    Public Function CellData(i As Integer, j As Integer) As T
+        Dim c = Me(i, j)
+
+        If c Is Nothing Then
+            Return Nothing
+        Else
+            Return c.Value
+        End If
     End Function
 End Class

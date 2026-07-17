@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net10.0-windows</TargetFramework>
+    <RootNamespace>GameOfLife.WinForms</RootNamespace>
+    <AssemblyName>GameOfLife.WinForms</AssemblyName>
+    <UseWindowsForms>true</UseWindowsForms>
+    <UseApplicationFramework>false</UseApplicationFramework>
+    <StartupObject>GameOfLife.WinForms.Program</StartupObject>
+    <GenerateDocumentationFile>false</GenerateDocumentationFile>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>disable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\CellularAutomaton.vbproj" />
+  </ItemGroup>
+
+</Project>

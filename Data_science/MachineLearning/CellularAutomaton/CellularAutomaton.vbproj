@@ -230,4 +230,11 @@
 	  <ProjectReference Include="..\..\Mathematica\Math\Math\Math.NET5.vbproj" />
 	</ItemGroup>
   
+	<!-- WinForms 演示项目位于本目录子文件夹中，需排除其源文件，避免被本类库（net10.0）递归编译 -->
+	<ItemGroup>
+	  <Compile Remove="GameOfLife.WinForms\**\*.vb" />
+	  <EmbeddedResource Remove="GameOfLife.WinForms\**\*.resx" />
+	  <None Remove="GameOfLife.WinForms\**\*" />
+	</ItemGroup>
+
 </Project>

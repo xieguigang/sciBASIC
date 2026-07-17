@@ -55,7 +55,18 @@
 
 Public Interface Individual
 
+    ''' <summary>
+    ''' 根据邻居的当前状态计算下一代状态（仅写入缓冲，不直接修改“当前状态”），
+    ''' 以保证同一世代基于同一帧状态同步演化。
+    ''' </summary>
+    ''' <param name="adjacents">相邻细胞的当前状态序列。</param>
     Sub Tick(adjacents As IEnumerable(Of Individual))
+
+    ''' <summary>
+    ''' 将 <see cref="Tick"/> 计算出的下一代状态提交为“当前状态”（双缓冲提交）。
+    ''' 在所有细胞的 <see cref="Tick"/> 完成后统一调用。
+    ''' </summary>
+    Sub Commit()
 
 End Interface
 
