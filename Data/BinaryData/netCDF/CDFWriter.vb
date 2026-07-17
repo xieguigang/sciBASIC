@@ -363,11 +363,11 @@ Public Class CDFWriter : Implements IDisposable
         Call output.Write(dimensionList.Count)
 
         For Each kv In dimensionList
-            Dim dim As Dimension = kv.Value.value
+            Dim dimValue As Dimension = kv.Value.value
             Call output.writeName(kv.Key)
 
             ' The unlimited (record) dimension is always stored with length 0.
-            Dim len As Long = If(kv.Value.i = recordDimId, 0, dim.size)
+            Dim len As Long = If(kv.Value.i = recordDimId, 0, dimValue.size)
 
             If cdfVersion = 5 Then
                 Call output.Write(len)
@@ -503,7 +503,9 @@ Public Class CDFWriter : Implements IDisposable
                 need5 = True
             End If
 
-            maxVsize = Math.Max(maxVsize, variables(i).size)
+            If variables(i).size > maxVsize Then
+                maxVsize = variables(i).size
+            End If
 
             If isRecord(i) Then
                 totalData += numRecords * variables(i).size
