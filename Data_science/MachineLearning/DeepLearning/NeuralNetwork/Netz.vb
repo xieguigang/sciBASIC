@@ -69,6 +69,7 @@ Imports Microsoft.VisualBasic.MachineLearning.CNN.data
 Imports Microsoft.VisualBasic.MachineLearning.CNN.trainers
 Imports Microsoft.VisualBasic.MachineLearning.CNN.SaveModelCNN
 Imports Microsoft.VisualBasic.MachineLearning.CNN.ReadModelCNN
+Imports std = System.Math
 
 Namespace NeuralNetwork
 
@@ -163,7 +164,7 @@ Namespace NeuralNetwork
                 hidden.Add(fc(i).BackPropagationResult.ToArray.Length - 1)
             Next
 
-            m_HIDDENLAYERCOUNT = Math.Max(fc.Count - 1, 0)
+            m_HIDDENLAYERCOUNT = std.Max(fc.Count - 1, 0)
             m_HIDDENNEURONCOUNT = If(hidden.Count > 0, hidden(0), 0)
 
             alg = New SGDTrainer(batch_size:=1, l2_decay:=0)
@@ -317,7 +318,7 @@ Namespace NeuralNetwork
         ''' 将当前的 CNN 内核模型以 CNN 二进制格式持久化保存
         ''' </summary>
         Public Overridable Sub Save(path As String)
-            Using file As Stream = File.OpenWrite(path)
+            Using file As Stream = path.Open(FileMode.OpenOrCreate, doClear:=True, [readOnly]:=False)
                 Call Save(file)
             End Using
         End Sub
@@ -333,7 +334,7 @@ Namespace NeuralNetwork
         ''' 从 CNN 二进制模型文件之中加载 NeuralNetwork 模型
         ''' </summary>
         Public Shared Function Load(path As String) As Netz
-            Using file As Stream = File.OpenRead(path)
+            Using file As Stream = path.OpenReadonly
                 Return Load(file)
             End Using
         End Function
