@@ -1,53 +1,50 @@
 #Region "Microsoft.VisualBasic::network_kernel_facade, Data_science\MachineLearning\DeepLearning\NeuralNetwork\NetworkKernel.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
+' Summaries:
 
-    '   Module NetworkKernel
-    ' 
-    '       Function: (+2 Overloads) BuildCNN, CNNLayer, SyncFromCNN, SyncOutput
-    ' 
-    ' 
+'   Module NetworkKernel
+' 
+'       Function: (+2 Overloads) BuildCNN, CNNLayer, SyncFromCNN, SyncOutput
+' 
+' 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
 #End Region
 
-Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MachineLearning.CNN
+Imports Microsoft.VisualBasic.MachineLearning.CNN.data
 Imports Microsoft.VisualBasic.MachineLearning.CNN.layers
 Imports Microsoft.VisualBasic.MachineLearning.CNN.losslayers
-Imports Microsoft.VisualBasic.MachineLearning.CNN.data
-Imports Microsoft.VisualBasic.MachineLearning.NeuralNetwork
-Imports Microsoft.VisualBasic.MachineLearning.NeuralNetwork.Activations
 Imports act = Microsoft.VisualBasic.MachineLearning.ComponentModel.Activations
 
 Namespace NeuralNetwork
@@ -81,8 +78,8 @@ Namespace NeuralNetwork
         Public Function BuildCNN(inputSize%,
                                hiddenSize%(),
                                outputSize%,
-                               hiddenAct As Layer,
-                               outputAct As Layer,
+                               hiddenAct As CNN.layers.Layer,
+                               outputAct As CNN.layers.Layer,
                                Optional regression As Boolean = True) As ConvolutionalNN
             Dim builder As New LayerBuilder
 
@@ -111,7 +108,7 @@ Namespace NeuralNetwork
         ''' <remarks>
         ''' 对于任意无法精确识别的激活函数，统一回退到 <see cref="SigmoidLayer"/>（与旧 Netz 的默认激活一致）。
         ''' </remarks>
-        Public Function CNNLayer(active As act.IActivationFunction) As Layer
+        Public Function CNNLayer(active As act.IActivationFunction) As CNN.layers.Layer
             Dim name$ = active.GetType.Name
 
             If name.TextEquals("RectifiedLinearUnits") OrElse
@@ -138,7 +135,7 @@ Namespace NeuralNetwork
                                 inputSize%,
                                 hiddenSize%(),
                                 outputSize%)
-            Dim fcLayers As New List(Of Layer)
+            Dim fcLayers As New List(Of CNN.layers.Layer)
 
             For i As Integer = 0 To net.LayerNum - 1
                 If net.Layer(i).Type = LayerTypes.FullyConnected Then
@@ -153,7 +150,7 @@ Namespace NeuralNetwork
             Call legacyList.Add(graph.output)
             Dim legacyLayers As Layer() = legacyList.ToArray
 
-            For k As Integer = 0 To fcLayers.Length - 1
+            For k As Integer = 0 To fcLayers.Count - 1
                 Dim results = fcLayers(k).BackPropagationResult.ToArray
                 Dim outDepth = results.Length - 1
                 Dim layer = legacyLayers(k)

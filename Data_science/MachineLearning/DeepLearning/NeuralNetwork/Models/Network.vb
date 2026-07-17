@@ -1,76 +1,72 @@
 ﻿#Region "Microsoft.VisualBasic::fdfaaa354b70a13ceb542dffa60918ad, Data_science\MachineLearning\DeepLearning\NeuralNetwork\Models\Network.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 187
-    '    Code Lines: 90 (48.13%)
-    ' Comment Lines: 71 (37.97%)
-    '    - Xml Docs: 95.77%
-    ' 
-    '   Blank Lines: 26 (13.90%)
-    '     File Size: 7.50 KB
+' Summaries:
 
 
-    '     Class Network
-    ' 
-    '         Properties: Activations, HiddenLayer, InputLayer, LearnRate, LearnRateDecay
-    '                     Momentum, OutputLayer, Truncate
-    ' 
-    '         Constructor: (+3 Overloads) Sub New
-    ' 
-    '         Function: Compute, ForwardPropagate, ToString
-    ' 
-    '         Sub: BackPropagate
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 187
+'    Code Lines: 90 (48.13%)
+' Comment Lines: 71 (37.97%)
+'    - Xml Docs: 95.77%
+' 
+'   Blank Lines: 26 (13.90%)
+'     File Size: 7.50 KB
+
+
+'     Class Network
+' 
+'         Properties: Activations, HiddenLayer, InputLayer, LearnRate, LearnRateDecay
+'                     Momentum, OutputLayer, Truncate
+' 
+'         Constructor: (+3 Overloads) Sub New
+' 
+'         Function: Compute, ForwardPropagate, ToString
+' 
+'         Sub: BackPropagate
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.IO
 Imports System.Runtime.CompilerServices
+Imports System.Text
 Imports Microsoft.VisualBasic.Language
-Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.MachineLearning.CNN
+Imports Microsoft.VisualBasic.MachineLearning.CNN.trainers
 Imports Microsoft.VisualBasic.MachineLearning.ComponentModel.Activations
 Imports Microsoft.VisualBasic.MachineLearning.NeuralNetwork.Activations
-Imports Microsoft.VisualBasic.MachineLearning.CNN
-Imports Microsoft.VisualBasic.MachineLearning.CNN.layers
-Imports Microsoft.VisualBasic.MachineLearning.CNN.data
-Imports Microsoft.VisualBasic.MachineLearning.CNN.trainers
-Imports Microsoft.VisualBasic.MachineLearning.CNN.SaveModelCNN
-Imports Microsoft.VisualBasic.MachineLearning.CNN.ReadModelCNN
 
 Namespace NeuralNetwork
 
@@ -249,8 +245,8 @@ Namespace NeuralNetwork
 
             alg = New SGDTrainer(batch_size:=1, l2_decay:=0)
             alg.SetKernel(cnn)
-            alg.learning_rate = LearnRate
-            alg.momentum = Momentum
+            alg.learning_rate = learnRate
+            alg.momentum = momentum
 
             ' 将 CNN 内核初始化的权重/偏置回写到遗留数据图镜像
             Call NetworkKernel.SyncFromCNN(cnn, m_graph, inputSize, hiddenSize, outputSize)
@@ -413,7 +409,7 @@ Namespace NeuralNetwork
         ''' 将当前的 CNN 内核模型以 CNN 二进制格式持久化保存
         ''' </summary>
         Public Overridable Sub Save(path As String)
-            Using file As Stream = File.OpenWrite(path)
+            Using file As Stream = file.OpenWrite(path)
                 Call Save(file)
             End Using
         End Sub
@@ -431,7 +427,7 @@ Namespace NeuralNetwork
         ''' 从 CNN 二进制模型文件之中加载 NeuralNetwork 模型
         ''' </summary>
         Public Shared Function Load(path As String) As Network
-            Using file As Stream = File.OpenRead(path)
+            Using file As Stream = file.OpenRead(path)
                 Return Load(file)
             End Using
         End Function
