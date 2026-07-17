@@ -261,14 +261,16 @@ Public Class netCDFReader : Implements IDisposable
     End Property
 
     Sub New(buffer As BinaryDataReader, Optional ignoreDuplicated As Boolean = False)
-        Dim version As Value(Of Byte) = Scan0
+        Dim versionByte As Byte
 
         buffer.ByteOrder = ByteOrder.BigEndian
         ' Test if file in support format
         Utils.notNetcdf(buffer.ReadString(3) <> Magic, $"should start with {Magic}")
-        Utils.notNetcdf((version = buffer.ReadByte) > 2, "unknown version")
+        versionByte = buffer.ReadByte
+        ' Version 1 = classic, 2 = 64-bit offset (CDF-2), 5 = 64-bit data (CDF-5)
+        Utils.notNetcdf(versionByte > 5, "unknown or unsupported CDF version")
 
-        Me.header = New Header(buffer, version)
+        Me.header = New Header(buffer, versionByte)
         Me.buffer = buffer
         Me.globalAttributeTable = header _
             .globalAttributes _

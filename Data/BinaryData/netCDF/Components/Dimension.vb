@@ -79,15 +79,15 @@ Namespace Components
         ''' Number with the size of the dimension
         ''' </summary>
         <XmlText>
-        Dim size As Integer
+        Dim size As Long
 
-        Sub New(name As String, size As Integer)
+        Sub New(name As String, size As Long)
             Me.name = name
             Me.size = size
         End Sub
 
         Sub New(chrs As chars)
-            Me.size = chrs.Length
+            Me.size = CLng(chrs.Length)
         End Sub
 
         Public Overrides Function ToString() As String
@@ -95,7 +95,7 @@ Namespace Components
         End Function
 
         Public Shared Function FromVector(Of T)(data As CDFData(Of T), Optional dimName As String = Nothing) As Dimension
-            Dim dimSize As Integer = data.Length
+            Dim dimSize As Long = data.Length
 
             If dimName.StringEmpty Then
                 dimName = $"{App.GetNextUniqueName("sizeof_")}_{GetType(T).Name.ToLower}"
