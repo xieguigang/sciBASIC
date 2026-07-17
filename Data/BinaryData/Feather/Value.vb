@@ -2043,6 +2043,10 @@ Public Class Value
                 Dim asTimeSpan = CType(Me, TimeSpan?)
                 valStr = If(asTimeSpan IsNot Nothing, asTimeSpan.ToString(), "null")
 
+            Case ColumnType.NullableTime_Microsecond, ColumnType.NullableTime_Millisecond, ColumnType.NullableTime_Nanosecond, ColumnType.NullableTime_Second
+                Dim asNullableTimeSpan = CType(Me, TimeSpan?)
+                valStr = If(asNullableTimeSpan IsNot Nothing, asNullableTimeSpan.ToString(), "null")
+
             Case ColumnType.Double
                 valStr = CDbl(Me).ToString()
             Case ColumnType.NullableDouble
