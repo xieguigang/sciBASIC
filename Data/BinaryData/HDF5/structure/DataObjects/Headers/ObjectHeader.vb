@@ -74,6 +74,10 @@ Namespace struct
 
     Public Class ObjectHeader : Inherits HDF5Ptr
 
+        Shared ReadOnly OHDR_SIGNATURE As Byte() = {&H4F, &H48, &H44, &H52} _
+            .Select(Function(i) CByte(i)) _
+            .ToArray
+
         Public ReadOnly Property version As Integer
         Public ReadOnly Property totalNumberOfHeaderMessages As Integer
         Public ReadOnly Property objectReferenceCount As Integer
@@ -98,8 +102,11 @@ Namespace struct
                 [in].skipBytes(4)
 
                 readVersion1([in], sb, [in].offset, Me.totalNumberOfHeaderMessages, Long.MaxValue)
+            ElseIf Me.version = &H4F Then
+                ' The first byte is 'O' of the "OHDR" signature of a version 2 object header.
+                Call readVersion2([in], sb, address)
             Else
-                readVersion2([in], sb, [in].offset)
+                Throw New IOException("unsupported object header version: " & Me.version)
             End If
         End Sub
 
