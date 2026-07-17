@@ -89,7 +89,7 @@ Namespace NeuralNetwork
 
         Sub New(count As Integer)
             m_count = count
-            m_output = New Double(Math.Max(count, 1) - 1) {}
+            m_output = New Double(System.Math.Max(count, 1) - 1) {}
         End Sub
 
         Public Overrides Function ToString() As String

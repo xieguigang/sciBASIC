@@ -47,7 +47,6 @@ Imports System.IO
 Imports System.Text
 Imports System.Runtime.CompilerServices
 Imports System.Collections.Generic
-Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MachineLearning.CNN
 Imports Microsoft.VisualBasic.MachineLearning.CNN.trainers
