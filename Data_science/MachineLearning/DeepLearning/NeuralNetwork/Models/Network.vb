@@ -127,7 +127,7 @@ Namespace NeuralNetwork
         ''' <summary>
         ''' 用于在线逐样本训练的 CNN 训练器（batch_size=1，复现旧的在线 SGD 语义）
         ''' </summary>
-        Private ReadOnly alg As SGDTrainer
+        Private ReadOnly alg As TrainerAlgorithm
         ''' <summary>
         ''' 缓存上一次前向传播所使用的输入样本
         ''' </summary>
@@ -175,7 +175,7 @@ Namespace NeuralNetwork
                 {"output", "sigmoid"}
             }
 
-            alg = New SGDTrainer(batch_size:=1, l2_decay:=0)
+            alg = New AdaGradTrainer(1, 0)
             alg.SetKernel(cnn)
             alg.learning_rate = LearnRate
             alg.momentum = Momentum
@@ -234,7 +234,7 @@ Namespace NeuralNetwork
                 dropOutRate:=dropOutRate
             )
 
-            alg = New SGDTrainer(batch_size:=1, l2_decay:=0)
+            alg = New AdaGradTrainer(1, 0)
             alg.SetKernel(cnn)
             alg.learning_rate = learnRate
             alg.momentum = momentum
@@ -421,9 +421,12 @@ Namespace NeuralNetwork
         End Function
 
         ''' <summary>
-        ''' 批量训练入口：将 <paramref name="samples"/> 转换为 CNN 的
-        ''' <see cref="SampleData"/> 之后，调用 <see cref="CNN.Trainer.train"/> 完成批量 SGD 训练；
+        ''' 批量训练入口：以 <paramref name="maxLoops"/> 轮（epoch）遍历 <paramref name="samples"/>，
+        ''' 复用与在线训练相同的 <see cref="SGDTrainer"/>（batch_size=1）逐样本更新权重；
         ''' 在线的逐样本训练请见 <see cref="BackPropagate"/>。
+        ''' 这里直接驱动 <see cref="SGDTrainer"/> 而非 <see cref="CNN.Trainer"/>，
+        ''' 以避免 <see cref="CNN.Trainer"/> 在训练时向控制台输出进度（在重定向/非控制台宿主下
+        ''' 会抛出 "The handle is invalid" 等 IO 异常）。
         ''' </summary>
         ''' <param name="samples">训练样本集合，元素为 (输入向量, 目标向量) 元组</param>
         ''' <param name="maxLoops">批量训练的迭代（轮）数上限</param>
@@ -432,35 +435,18 @@ Namespace NeuralNetwork
                 Return
             End If
 
-            Dim sampleData As New List(Of SampleData)
+            alg.learning_rate = LearnRate
+            alg.momentum = Momentum
 
-            For Each s As (input As Double(), target As Double()) In samples
-                ' CNN 的 Trainer.train 内部会按列做数据集归一化；
-                ' 单输出回归需要把目标填充为长度 2 的数组，
-                ' 否则 Trainer 会将其当作分类标签处理（is_generative 判据为 labels.Length > 1）
-                Call sampleData.Add(New SampleData(s.input, EnsureRegressionTarget(s.target)))
+            For loopIter As Integer = 1 To maxLoops
+                For Each s As (input As Double(), target As Double()) In samples
+                    Dim db = NetworkKernel.BuildDataBlock(s.input)
+
+                    ' 单输出回归：目标填充为长度 2 以走正确的 double 数组反传分支
+                    ' （详见 EnsureRegressionTarget 与 BackPropagate）
+                    Call alg.train(db, EnsureRegressionTarget(s.target), Nothing)
+                Next
             Next
-
-            Dim sgd As New SGDTrainer(batch_size:=1, l2_decay:=0)
-            Call sgd.SetKernel(cnn)
-            sgd.learning_rate = LearnRate
-            sgd.momentum = Momentum
-
-            ' verbose:=False 且使用空 logger，避免 CNN.Trainer 在训练时向控制台
-            ' 输出进度（在重定向/非控制台宿主下会抛出 "The handle is invalid" 等 IO 异常）
-            Dim trainer As New Microsoft.VisualBasic.MachineLearning.CNN.Trainer(
-                sgd,
-                log:=AddressOf NoLog,
-                verbose:=False
-            )
-            Call trainer.train(sampleData.ToArray, maxLoops)
-        End Sub
-
-        ''' <summary>
-        ''' 空日志方法，用于抑制 <see cref="CNN.Trainer"/> 在训练时的控制台输出
-        ''' （避免在非控制台/重定向宿主下抛出 IO 异常）。
-        ''' </summary>
-        Private Shared Sub NoLog(s As String)
         End Sub
 #End Region
 

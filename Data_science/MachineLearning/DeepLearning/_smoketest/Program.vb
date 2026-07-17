@@ -6,7 +6,6 @@ Module Program
     Dim rnd As New Random
 
     Sub Main()
-        App.EnableTqdm = False
         Call TestNetz()
         Call TestNetwork()
         Console.WriteLine("SMOKE TEST DONE")
@@ -28,6 +27,8 @@ Module Program
         Dim p = net.predict({0.3, 0.5})
         Console.WriteLine($"  predict(0.3,0.5) = {p(0):F4}  (target 0.8)  TotalError={net.TotalError:F4}")
         Console.WriteLine($"  DBG netz (0,0)={net.predict({0,0})(0):F4} (1,1)={net.predict({1,1})(0):F4}")
+        Dim w = net.Weights
+        Console.WriteLine($"  DBG netz weights.Count={w.Count} first3={w(0):F3},{w(1):F3},{w(2):F3} bias={net.Bias(0):F3}")
         Call AssertFinite("Netz.predict", p(0))
 
         Dim path = "netz_model.cnn"

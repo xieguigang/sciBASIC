@@ -92,15 +92,19 @@ Namespace NeuralNetwork
             Next
 
             Call builder.buildFullyConnectedLayer(outputSize)
-            Call builder.add(outputAct)
 
             If dropOutRate > 0 Then
                 Call builder.buildDropoutLayer(dropOutRate)
             End If
 
             If regression Then
+                ' 回归任务的输出层应为线性（无激活），以允许输出取任意实数，
+                ' 从而正确拟合连续数值目标（例如 a+b ∈ [0,2]）；
+                ' 若在此处追加 Sigmoid 等激活，输出会被压到 (0,1)，
+                ' 既无法表示大于 1 的目标，也会使训练退化为常数解。
                 Call builder.buildRegressionLayer()
             Else
+                Call builder.add(outputAct)
                 Call builder.buildSoftmaxLayer()
             End If
 

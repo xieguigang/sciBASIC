@@ -95,7 +95,7 @@ Namespace NeuralNetwork
         ''' the CNN full-connected network as the unified compute kernel
         ''' </summary>
         Private ReadOnly cnn As ConvolutionalNN
-        Private ReadOnly alg As SGDTrainer
+        Private ReadOnly alg As TrainerAlgorithm
 
         ''' <summary>
         ''' cache for the last forward propagation result
@@ -122,17 +122,19 @@ Namespace NeuralNetwork
                 hiddenSize(i) = hiddenNeurons
             Next
 
-            ' 与旧 Netz 默认激活(Sigmoid.doCall)一致，使用 Sigmoid 作为 CNN 激活层
+            ' 回归网络使用 ReLU 隐藏层 + 线性输出层（BuildCNN 回归分支已不加输出激活），
+            ' 这样朴素 SGD/AdaGrad 也能稳定地拟合连续数值目标（如 a+b）。
+            ' 旧 Netz 的 Sigmoid 隐藏层在该小网络上容易退化为常数解，故此处改用 ReLU。
             cnn = NetworkKernel.BuildCNN(
                 inputSize:=inputNeurons,
                 hiddenSize:=hiddenSize,
                 outputSize:=outputNeurons,
-                hiddenAct:=New SigmoidLayer,
-                outputAct:=New SigmoidLayer,
+                hiddenAct:=New RectifiedLinearUnitsLayer,
+                outputAct:=New RectifiedLinearUnitsLayer,
                 regression:=True
             )
 
-            alg = New SGDTrainer(batch_size:=1, l2_decay:=0)
+            alg = New AdaGradTrainer(1, 0)
             alg.SetKernel(cnn)
             alg.learning_rate = LERNRATE
             alg.momentum = 0
@@ -167,7 +169,7 @@ Namespace NeuralNetwork
             m_HIDDENLAYERCOUNT = If(fc.Count - 1 > 0, fc.Count - 1, 0)
             m_HIDDENNEURONCOUNT = If(hidden.Count > 0, hidden(0), 0)
 
-            alg = New SGDTrainer(batch_size:=1, l2_decay:=0)
+            alg = New AdaGradTrainer(1, 0)
             alg.SetKernel(cnn)
             alg.learning_rate = LERNRATE
             alg.momentum = 0
