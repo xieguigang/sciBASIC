@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>netCDF.Tests</RootNamespace>
+    <AssemblyName>netCDF.TestRunner</AssemblyName>
+    <TargetFramework>net10.0</TargetFramework>
+    <GenerateDocumentationFile>False</GenerateDocumentationFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\netCDF\netCDF.vbproj" />
+  </ItemGroup>
+</Project>

@@ -3,15 +3,13 @@ Imports Microsoft.VisualBasic.DataStorage.netCDF
 Imports Microsoft.VisualBasic.DataStorage.netCDF.Components
 Imports Microsoft.VisualBasic.DataStorage.netCDF.DataVector
 
-Namespace Tests
-
     ''' <summary>
     ''' Round-trip tests for the netCDF reader/writer. They exercise the
     ''' standard-compliant writer (version selection, 4-byte padding, record
     ''' variable interleaving, 64-bit offsets) and the reader (dimension-product
     ''' based element counts, record interleaving, extended types).
     ''' </summary>
-    Public Module CDFReaderWriterTest
+    Module CDFReaderWriterTest
 
         ''' <summary>
         ''' Run every test and return the list of failure messages (empty = all pass).
@@ -39,6 +37,8 @@ Namespace Tests
                 Dim ch = {"a"c, "b"c, "c"c}
                 Dim fl = {CSng(1.25), CSng(2.25), CSng(3.25)}
                 Dim bo = {True, False, True}
+                ' BOOLEAN is stored as NC_BYTE, so it round-trips as bytes 0/1.
+                Dim boBytes = {CByte(1), CByte(0), CByte(1)}
                 ' record variable temp(time, lat): 2 records x 3 lat = 6 elements
                 Dim temp = {1, 2, 3, 4, 5, 6}
 
@@ -101,4 +101,4 @@ Namespace Tests
             Next
         End Sub
     End Module
-End Namespace
+
