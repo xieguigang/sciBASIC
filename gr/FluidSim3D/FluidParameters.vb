@@ -19,7 +19,7 @@ Namespace FluidSim3D
         <Category("模拟 Simulation")>
         <Description("水粒子的总数量。修改后需要点击「应用参数」重建模拟器。")>
         <DisplayName("粒子数 ParticleCount")>
-        Public Property ParticleCount As Integer = 1500
+        Public Property ParticleCount As Integer = 3500
 
         <Category("模拟 Simulation")>
         <Description("SPH 平滑半径，决定每个粒子影响邻域的范围（世界单位）。")>
