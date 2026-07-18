@@ -1,4 +1,6 @@
 Imports System.IO
+Imports Microsoft.VisualBasic.ApplicationServices.Terminal.ProgressBar
+Imports Microsoft.VisualBasic.ApplicationServices.Terminal.ProgressBar.Tqdm
 Imports Microsoft.VisualBasic.MachineLearning.TensorFlow
 Imports Microsoft.VisualBasic.MachineVision.GaussianSplatting3D
 
@@ -102,10 +104,12 @@ Module Program
 
         ' 训练日志
         Dim logPath = Path.Combine(OutputDir, "training_log.csv")
+        Dim bar As Tqdm.ProgressBar = Nothing
+
         Using logSw As New StreamWriter(logPath)
             logSw.WriteLine("iteration,num_gaussians,loss,psnr,lr,cloned,split,pruned")
 
-            For iter = 0 To NUM_ITERATIONS - 1
+            For Each iter As Integer In TqdmWrapper.Range(0, NUM_ITERATIONS, bar:=bar)
                 ' 更新学习率
                 optimizer.LearningRate = scheduler.GetLr(iter)
 
@@ -133,10 +137,10 @@ Module Program
                     avgLoss /= Cameras.Count
                     avgPsnr /= Cameras.Count
 
-                    Console.WriteLine($"  iter {iter,4:D} | gaussians {model.Count,6:D} | " &
-                                      $"loss {avgLoss:F6} | psnr {avgPsnr:F2} dB | " &
-                                      $"lr {optimizer.LearningRate:F5} | " &
-                                      $"+{stats.Item1} ~{stats.Item2} -{stats.Item3}")
+                    bar.SetLabel($"  iter {iter,4:D} | gaussians {model.Count,6:D} | " &
+                                 $"loss {avgLoss:F6} | psnr {avgPsnr:F2} dB | " &
+                                 $"lr {optimizer.LearningRate:F5} | " &
+                                 $"+{stats.Item1} ~{stats.Item2} -{stats.Item3}")
                     logSw.WriteLine($"{iter},{model.Count},{avgLoss:F6},{avgPsnr:F4},{optimizer.LearningRate:F6}," &
                                     $"{stats.Item1},{stats.Item2},{stats.Item3}")
                     logSw.Flush()
