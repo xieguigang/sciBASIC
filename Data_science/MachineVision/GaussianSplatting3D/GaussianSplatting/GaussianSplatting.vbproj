@@ -1,0 +1,31 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Library</OutputType>
+    <TargetFramework>net10.0-windows</TargetFramework>
+    <RootNamespace>Microsoft.VisualBasic.MachineVision.GaussianSplatting3D</RootNamespace>
+    <AssemblyName>Microsoft.VisualBasic.MachineVision.GaussianSplatting3D</AssemblyName>
+    <LangVersion>16.9</LangVersion>
+    <OptionStrict>Off</OptionStrict>
+    <OptionExplicit>On</OptionExplicit>
+    <OptionCompare>Binary</OptionCompare>
+    <OptionInfer>On</OptionInfer>
+    <Nullable>Disable</Nullable>
+    <UseSystemDrawing>true</UseSystemDrawing>
+    <Platforms>AnyCPU;x64</Platforms>
+    <AssemblyTitle>3D Gaussian Splatting</AssemblyTitle>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.Drawing.Common" Version="10.0.10" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\MachineLearning\TensorFlow\TensorFlow.vbproj" />
+    <ProjectReference Include="..\..\..\Mathematica\Math\Math\Math.NET5.vbproj" />
+    <ProjectReference Include="G:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj" />
+  </ItemGroup>
+
+
+
+</Project>
