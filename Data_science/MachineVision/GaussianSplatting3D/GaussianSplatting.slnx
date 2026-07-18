@@ -17,4 +17,7 @@
   <Project Path="GaussianSplatting/GaussianSplatting.vbproj">
     <Platform Solution="*|x64" Project="x64" />
   </Project>
+  <Project Path="test/test.vbproj" Id="5afbd4a5-ae16-4e07-8c19-35f41d94fc05">
+    <Platform Solution="Debug|x64" Project="x64" />
+  </Project>
 </Solution>

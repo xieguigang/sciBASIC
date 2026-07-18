@@ -1,10 +1,10 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <OutputType>Exe</OutputType>
+    <OutputType>Library</OutputType>
     <TargetFramework>net10.0-windows</TargetFramework>
-    <RootNamespace>GaussianSplatting</RootNamespace>
-    <AssemblyName>GaussianSplatting</AssemblyName>
+    <RootNamespace>Microsoft.VisualBasic.MachineVision.GaussianSplatting3D</RootNamespace>
+    <AssemblyName>Microsoft.VisualBasic.MachineVision.GaussianSplatting3D</AssemblyName>
     <LangVersion>16.9</LangVersion>
     <OptionStrict>Off</OptionStrict>
     <OptionExplicit>On</OptionExplicit>
@@ -13,6 +13,7 @@
     <Nullable>Disable</Nullable>
     <UseSystemDrawing>true</UseSystemDrawing>
     <Platforms>AnyCPU;x64</Platforms>
+    <AssemblyTitle>3D Gaussian Splatting</AssemblyTitle>
   </PropertyGroup>
 
   <ItemGroup>
