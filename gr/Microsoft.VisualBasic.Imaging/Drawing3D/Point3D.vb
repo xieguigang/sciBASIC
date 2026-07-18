@@ -1,66 +1,66 @@
 ﻿#Region "Microsoft.VisualBasic::b9e4943c916c1fc6fe0482ab80ec388b, gr\Microsoft.VisualBasic.Imaging\Drawing3D\Point3D.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 363
-    '    Code Lines: 207 (57.02%)
-    ' Comment Lines: 101 (27.82%)
-    '    - Xml Docs: 90.10%
-    ' 
-    '   Blank Lines: 55 (15.15%)
-    '     File Size: 13.82 KB
+' Summaries:
 
 
-    '     Structure Point3D
-    ' 
-    '         Properties: Depth, X, Y, Z
-    ' 
-    '         Constructor: (+7 Overloads) Sub New
-    ' 
-    '         Function: Add, ClampProjection, Clone, Cross, Distance
-    '                   Divide, Dot, Length, Lerp, (+2 Overloads) Multiply
-    '                   Normalize, Parse, Project, RotateX, RotateY
-    '                   RotateYawPitch, RotateZ, Subtract, ToArray, ToPointF
-    '                   ToString, Translate
-    ' 
-    '         Sub: Project
-    ' 
-    '         Operators: -, <>, =
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 363
+'    Code Lines: 207 (57.02%)
+' Comment Lines: 101 (27.82%)
+'    - Xml Docs: 90.10%
+' 
+'   Blank Lines: 55 (15.15%)
+'     File Size: 13.82 KB
+
+
+'     Structure Point3D
+' 
+'         Properties: Depth, X, Y, Z
+' 
+'         Constructor: (+7 Overloads) Sub New
+' 
+'         Function: Add, ClampProjection, Clone, Cross, Distance
+'                   Divide, Dot, Length, Lerp, (+2 Overloads) Multiply
+'                   Normalize, Parse, Project, RotateX, RotateY
+'                   RotateYawPitch, RotateZ, Subtract, ToArray, ToPointF
+'                   ToString, Translate
+' 
+'         Sub: Project
+' 
+'         Operators: -, <>, =
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -243,6 +243,9 @@ Namespace Drawing3D
         ''' </summary>
         ''' <param name="yaw">Degree.</param>
         ''' <param name="pitch">Degree.</param>
+        ''' <remarks>
+        ''' rotateYP
+        ''' </remarks>
         Public Function RotateYawPitch(yaw As Single, pitch As Single) As Point3D
             ' Convert to radians
             Dim yawRads = yaw * std.PI / 180
