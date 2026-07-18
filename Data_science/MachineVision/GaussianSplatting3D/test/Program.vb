@@ -1,5 +1,6 @@
 Imports System.IO
 Imports Microsoft.VisualBasic.MachineLearning.TensorFlow
+Imports Microsoft.VisualBasic.MachineVision.GaussianSplatting3D
 
 Module Program
 
