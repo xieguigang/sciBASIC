@@ -1,0 +1,16 @@
+{
+  "image_width": 320,
+  "image_height": 240,
+  "num_views": 12,
+  "cam_radius": 6.0,
+  "cam_height": 2.0,
+  "fov_deg": 50.0,
+  "ground_truth_points": 7368,
+  "scene_objects": [
+    "ground_plane (checkerboard)",
+    "cube (red)",
+    "sphere (blue)",
+    "torus (yellow)",
+    "cone (green)"
+  ]
+}
