@@ -60,19 +60,6 @@ Imports Microsoft.VisualBasic.Text.Xml.Models
 Public Module ROC
 
     <Extension>
-    Public Iterator Function CreateValidateResult(network As Network, validateSet As IEnumerable(Of TrainingSample)) As IEnumerable(Of Validate)
-        For Each sample As TrainingSample In validateSet
-            Dim predicts = network.Compute(sample.sample)
-            Dim actuals = sample.classify
-
-            Yield New Validate With {
-                .actuals = actuals,
-                .predicts = predicts
-            }
-        Next
-    End Function
-
-    <Extension>
     Public Function ROC(result As IEnumerable(Of Validate), range As DoubleRange, attribute%, Optional n% = 20) As Validation()
         Dim thresholdSeq As New Sequence With {.n = n, .range = range}
 
@@ -86,23 +73,5 @@ Public Module ROC
                         Not threshold.Sensibility.IsNaNImaginary
                 End Function) _
          .ToArray
-    End Function
-
-    <Extension>
-    Public Function AUC(training As TrainingUtils) As Double()
-        Dim network As Network = training.NeuronNetwork
-        Dim result As Validate() = network.CreateValidateResult(training.TrainingSet).ToArray
-        Dim attributes As Double() = result(Scan0).actuals
-        Dim evalAUC = Function(null As Double, i As Integer) As Double
-                          Dim validations = result.ROC(New Double() {0, 1}, attribute:=i)
-                          Dim AUCValue = Validation.AUC(validations)
-
-                          Return AUCValue
-                      End Function
-        Dim validateAUCs = attributes _
-            .Select(evalAUC) _
-            .ToArray
-
-        Return validateAUCs
     End Function
 End Module
