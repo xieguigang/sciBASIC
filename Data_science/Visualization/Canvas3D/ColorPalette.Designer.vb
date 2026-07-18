@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9a6d4f7bbe2450b395e46b8c29e3fcb7, Data_science\Visualization\Canvas3D\ColorPalette.Designer.vb"
+﻿#Region "Microsoft.VisualBasic::64001439b5b88f5bd8a82af91c2b9d33, Data_science\Visualization\Canvas3D\ColorPalette.Designer.vb"
 
     ' Author:
     ' 
@@ -34,12 +34,12 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 41
-    '    Code Lines: 26 (63.41%)
-    ' Comment Lines: 8 (19.51%)
+    '   Total Lines: 40
+    '    Code Lines: 26 (65.00%)
+    ' Comment Lines: 8 (20.00%)
     '    - Xml Docs: 0.00%
     ' 
-    '   Blank Lines: 7 (17.07%)
+    '   Blank Lines: 6 (15.00%)
     '     File Size: 1.45 KB
 
 
@@ -51,7 +51,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 Namespace Drawing2D.Colors
 

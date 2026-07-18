@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::903d2eaece9cdb3baa0319f3321f967c, Data\BinaryData\netCDF\Data\StructureParser.vb"
+﻿#Region "Microsoft.VisualBasic::2e91f2030559da0489e04e37df92b179, Data\BinaryData\netCDF\Data\StructureParser.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 230
-    '    Code Lines: 117 (50.87%)
-    ' Comment Lines: 80 (34.78%)
-    '    - Xml Docs: 62.50%
+    '   Total Lines: 239
+    '    Code Lines: 122 (51.05%)
+    ' Comment Lines: 84 (35.15%)
+    '    - Xml Docs: 59.52%
     ' 
-    '   Blank Lines: 33 (14.35%)
-    '     File Size: 8.99 KB
+    '   Blank Lines: 33 (13.81%)
+    '     File Size: 9.60 KB
 
 
     '     Module StructureParser

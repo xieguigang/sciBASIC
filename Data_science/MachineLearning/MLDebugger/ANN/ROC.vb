@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ed282dcae4dd55571c496b2e613e4d84, Data_science\MachineLearning\MLDebugger\ANN\ROC.vb"
+﻿#Region "Microsoft.VisualBasic::9a94d0b9d90a4389903d2ebe5b87aac4, Data_science\MachineLearning\MLDebugger\ANN\ROC.vb"
 
     ' Author:
     ' 
@@ -34,18 +34,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 55
-    '    Code Lines: 47 (85.45%)
+    '   Total Lines: 24
+    '    Code Lines: 21 (87.50%)
     ' Comment Lines: 0 (0.00%)
     '    - Xml Docs: 0.00%
     ' 
-    '   Blank Lines: 8 (14.55%)
-    '     File Size: 2.28 KB
+    '   Blank Lines: 3 (12.50%)
+    '     File Size: 1.04 KB
 
 
     ' Module ROC
     ' 
-    '     Function: AUC, CreateValidateResult, ROC
+    '     Function: ROC
     ' 
     ' /********************************************************************************/
 

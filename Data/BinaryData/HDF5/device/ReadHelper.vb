@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9e488b2d4dd59f6bf752ba7e6d4d30e5, Data\BinaryData\HDF5\device\ReadHelper.vb"
+﻿#Region "Microsoft.VisualBasic::ee155a630b034ca47eddb30a546e447f, Data\BinaryData\HDF5\device\ReadHelper.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 69.70%
     ' 
     '   Blank Lines: 41 (19.43%)
-    '     File Size: 7.34 KB
+    '     File Size: 7.32 KB
 
 
     '     Module ReadHelper

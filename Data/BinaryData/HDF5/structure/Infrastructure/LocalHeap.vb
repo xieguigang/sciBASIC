@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8c2105f35fb9ff44552c829999b8ab84, Data\BinaryData\HDF5\structure\Infrastructure\LocalHeap.vb"
+﻿#Region "Microsoft.VisualBasic::9d58df06c67869bb85480c2250e40f41, Data\BinaryData\HDF5\structure\Infrastructure\LocalHeap.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 46.67%
     ' 
     '   Blank Lines: 27 (21.95%)
-    '     File Size: 4.67 KB
+    '     File Size: 4.71 KB
 
 
     '     Class LocalHeap

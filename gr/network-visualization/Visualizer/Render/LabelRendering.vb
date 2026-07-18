@@ -1,4 +1,58 @@
-﻿Imports System.Drawing
+﻿#Region "Microsoft.VisualBasic::ccfe06280994f4f508d3868e2a2b6216, gr\network-visualization\Visualizer\Render\LabelRendering.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 127
+    '    Code Lines: 102 (80.31%)
+    ' Comment Lines: 8 (6.30%)
+    '    - Xml Docs: 37.50%
+    ' 
+    '   Blank Lines: 17 (13.39%)
+    '     File Size: 5.08 KB
+
+
+    ' Class LabelRendering
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    '     Sub: renderLabel, renderLabels
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+Imports System.Drawing
 Imports System.Drawing.Drawing2D
 Imports Microsoft.VisualBasic.ComponentModel.Algorithm.base
 Imports Microsoft.VisualBasic.ComponentModel.Collection
@@ -125,3 +179,4 @@ Friend Class LabelRendering
         End With
     End Sub
 End Class
+

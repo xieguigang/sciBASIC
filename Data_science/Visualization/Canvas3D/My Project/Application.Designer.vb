@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0bd157d89c9b1457fa8a746e7fadb277, Data_science\Visualization\Canvas3D\My Project\Application.Designer.vb"
+﻿#Region "Microsoft.VisualBasic::694b0c9f3261c95224d10f94bba4c539, Data_science\Visualization\Canvas3D\My Project\Application.Designer.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 13
-    '    Code Lines: 2 (15.38%)
-    ' Comment Lines: 9 (69.23%)
+    '   Total Lines: 12
+    '    Code Lines: 2 (16.67%)
+    ' Comment Lines: 9 (75.00%)
     '    - Xml Docs: 0.00%
     ' 
-    '   Blank Lines: 2 (15.38%)
-    '     File Size: 438 B
+    '   Blank Lines: 1 (8.33%)
+    '     File Size: 434 B
 
 
     ' 
@@ -60,5 +60,3 @@
 
 Option Strict On
 Option Explicit On
-
-

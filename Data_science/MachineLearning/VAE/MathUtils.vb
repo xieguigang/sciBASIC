@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::53690f752d54b85ca521c7235673ecd1, Data_science\MachineLearning\VAE\MathUtils.vb"
+﻿#Region "Microsoft.VisualBasic::00a1e90a2a41aad4fb5bdca0f696a4de, Data_science\MachineLearning\VAE\MathUtils.vb"
 
     ' Author:
     ' 
@@ -34,19 +34,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 210
-    '    Code Lines: 142 (67.62%)
-    ' Comment Lines: 42 (20.00%)
-    '    - Xml Docs: 57.14%
+    '   Total Lines: 158
+    '    Code Lines: 105 (66.46%)
+    ' Comment Lines: 33 (20.89%)
+    '    - Xml Docs: 45.45%
     ' 
-    '   Blank Lines: 26 (12.38%)
-    '     File Size: 6.03 KB
+    '   Blank Lines: 20 (12.66%)
+    '     File Size: 4.61 KB
 
 
     ' Module MathUtils
     ' 
-    '     Function: Determinant, EuclideanDistance, LogSumExp, MatrixInverse, Randn
-    '               Sigmoid, Softmax
+    '     Function: Determinant, EuclideanDistance, MatrixInverse, Randn
     ' 
     ' /********************************************************************************/
 

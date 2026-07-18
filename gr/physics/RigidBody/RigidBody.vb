@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a9902bed4f501833f8f1022d0444e43f, gr\physics\RigidBody\RigidBody.vb"
+﻿#Region "Microsoft.VisualBasic::e5ae906a50dba3979a6d7a8e530a868a, gr\physics\RigidBody\RigidBody.vb"
 
     ' Author:
     ' 
@@ -203,4 +203,3 @@ Imports Microsoft.VisualBasic.Imaging.Physics.Collision
         Return Shape.GetAABB(Position, Rotation)
     End Function
 End Class
-

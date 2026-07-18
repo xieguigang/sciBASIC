@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c5dd7433da987b777afad758cf0d1a63, gr\network-visualization\network_layout\Circular\CircularLayout.vb"
+﻿#Region "Microsoft.VisualBasic::5e1620f4404f1970049c64188c7769f7, gr\network-visualization\network_layout\Circular\CircularLayout.vb"
 
     ' Author:
     ' 
@@ -34,18 +34,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 197
-    '    Code Lines: 126 (63.96%)
-    ' Comment Lines: 39 (19.80%)
-    '    - Xml Docs: 74.36%
+    '   Total Lines: 208
+    '    Code Lines: 133 (63.94%)
+    ' Comment Lines: 42 (20.19%)
+    '    - Xml Docs: 76.19%
     ' 
-    '   Blank Lines: 32 (16.24%)
-    '     File Size: 8.71 KB
+    '   Blank Lines: 33 (15.87%)
+    '     File Size: 9.32 KB
 
 
     '     Module CircularLayout
     ' 
-    '         Function: LayoutNodes, LayoutNodesWithCrossingOptimization
+    '         Function: (+2 Overloads) LayoutNodes, LayoutNodesWithCrossingOptimization
     ' 
     ' 
     ' /********************************************************************************/
@@ -260,4 +260,3 @@ Namespace Circular
 
     End Module
 End Namespace
-

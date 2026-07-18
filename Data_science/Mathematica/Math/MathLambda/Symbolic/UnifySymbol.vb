@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a32e52df8e46c8aa8362b23b8eb2774a, Data_science\Mathematica\Math\MathLambda\Symbolic\UnifySymbol.vb"
+﻿#Region "Microsoft.VisualBasic::7fd299da92a3c69aaf7ede93987aedbc, Data_science\Mathematica\Math\MathLambda\Symbolic\UnifySymbol.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 95
-    '    Code Lines: 65 (68.42%)
-    ' Comment Lines: 17 (17.89%)
-    '    - Xml Docs: 52.94%
+    '   Total Lines: 91
+    '    Code Lines: 60 (65.93%)
+    ' Comment Lines: 19 (20.88%)
+    '    - Xml Docs: 47.37%
     ' 
-    '   Blank Lines: 13 (13.68%)
-    '     File Size: 3.38 KB
+    '   Blank Lines: 12 (13.19%)
+    '     File Size: 3.36 KB
 
 
     '     Class UnifySymbol

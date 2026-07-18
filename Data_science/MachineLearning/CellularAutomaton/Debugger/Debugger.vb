@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2f0e8f2686e7e1c0e93ba3b99d544841, sciBASIC#\Data_science\MachineLearning\CellularAutomaton\Debugger\Debugger.vb"
+﻿#Region "Microsoft.VisualBasic::4137b73962ad84ae54bd0e102cb8e51f, Data_science\MachineLearning\CellularAutomaton\Debugger\Debugger.vb"
 
     ' Author:
     ' 
@@ -35,10 +35,12 @@
     ' Code Statistics:
 
     '   Total Lines: 80
-    '    Code Lines: 53
-    ' Comment Lines: 14
-    '   Blank Lines: 13
-    '     File Size: 2.75 KB
+    '    Code Lines: 53 (66.25%)
+    ' Comment Lines: 14 (17.50%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 13 (16.25%)
+    '     File Size: 2.85 KB
 
 
     ' Class Debugger

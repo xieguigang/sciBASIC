@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b8be889e85b254c0946f2fb3b6611011, gr\physics\test\Form1.vb"
+﻿#Region "Microsoft.VisualBasic::52c77df70c2f6f637a761eb58d40f4d0, gr\physics\test\Form1.vb"
 
     ' Author:
     ' 
@@ -35,17 +35,17 @@
     ' Code Statistics:
 
     '   Total Lines: 54
-    '    Code Lines: 41 (75.93%)
-    ' Comment Lines: 0 (0.00%)
+    '    Code Lines: 9 (16.67%)
+    ' Comment Lines: 32 (59.26%)
     '    - Xml Docs: 0.00%
     ' 
     '   Blank Lines: 13 (24.07%)
-    '     File Size: 2.11 KB
+    '     File Size: 2.14 KB
 
 
     ' Class Form1
     ' 
-    '     Sub: Form1_Load, Updates
+    ' 
     ' 
     ' /********************************************************************************/
 

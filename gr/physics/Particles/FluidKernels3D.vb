@@ -1,4 +1,4 @@
-#Region "Microsoft.VisualBasic::gr\physics\Particles\FluidKernels3D.vb"
+﻿#Region "Microsoft.VisualBasic::6309de1146c4c290a56c96ea904ae862, gr\physics\Particles\FluidKernels3D.vb"
 
     ' Author:
     ' 
@@ -24,6 +24,31 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 74
+    '    Code Lines: 50 (67.57%)
+    ' Comment Lines: 16 (21.62%)
+    '    - Xml Docs: 81.25%
+    ' 
+    '   Blank Lines: 8 (10.81%)
+    '     File Size: 2.78 KB
+
+
+    ' Class FluidKernels3D
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    '     Function: DerivativeSpikyPow2, DerivativeSpikyPow3, SmoothingKernelPoly6, SpikyKernelPow2, SpikyKernelPow3
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

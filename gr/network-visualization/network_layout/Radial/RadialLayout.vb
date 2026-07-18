@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::15e231af268194f3041bed3a1e419e2b, gr\network-visualization\network_layout\Radial\RadialLayout.vb"
+﻿#Region "Microsoft.VisualBasic::df121eb298b7a13960a4f3551c02df26, gr\network-visualization\network_layout\Radial\RadialLayout.vb"
 
     ' Author:
     ' 
@@ -34,18 +34,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 111
-    '    Code Lines: 65 (58.56%)
-    ' Comment Lines: 25 (22.52%)
-    '    - Xml Docs: 52.00%
+    '   Total Lines: 118
+    '    Code Lines: 68 (57.63%)
+    ' Comment Lines: 28 (23.73%)
+    '    - Xml Docs: 57.14%
     ' 
-    '   Blank Lines: 21 (18.92%)
-    '     File Size: 5.04 KB
+    '   Blank Lines: 22 (18.64%)
+    '     File Size: 5.37 KB
 
 
     '     Module RadialLayout
     ' 
-    '         Function: LayoutNodes
+    '         Function: (+2 Overloads) LayoutNodes
     ' 
     '         Sub: layoutCurrentCenter
     ' 
@@ -172,4 +172,3 @@ Namespace Radial
 
     End Module
 End Namespace
-

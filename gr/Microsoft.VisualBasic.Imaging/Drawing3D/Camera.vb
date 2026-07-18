@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2daa39a9ed34c0c2a724a85ca3feb498, gr\Microsoft.VisualBasic.Imaging\Drawing3D\Camera.vb"
+﻿#Region "Microsoft.VisualBasic::3f0c768c6f5a2b3274cf067fa72d8375, gr\Microsoft.VisualBasic.Imaging\Drawing3D\Camera.vb"
 
     ' Author:
     ' 
@@ -34,19 +34,20 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 278
-    '    Code Lines: 178 (64.03%)
-    ' Comment Lines: 55 (19.78%)
-    '    - Xml Docs: 76.36%
+    '   Total Lines: 293
+    '    Code Lines: 179 (61.09%)
+    ' Comment Lines: 67 (22.87%)
+    '    - Xml Docs: 80.60%
     ' 
-    '   Blank Lines: 45 (16.19%)
-    '     File Size: 10.90 KB
+    '   Blank Lines: 47 (16.04%)
+    '     File Size: 11.24 KB
 
 
     '     Class Camera
     ' 
     '         Properties: AmbientStrength, AngleX, AngleY, AngleZ, FieldOfView
-    '                     LightColor, LightDirection, Offset, Screen, ViewDistance
+    '                     LightColor, LightDirection, Offset, position, Screen
+    '                     ViewDistance
     ' 
     '         Constructor: (+4 Overloads) Sub New
     ' 

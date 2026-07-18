@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fbd05851a8db32da48b6612b43e769e7, Data\BinaryData\netCDF\Components\recordDimension.vb"
+﻿#Region "Microsoft.VisualBasic::d7890906de78375b42bb9f63fb0edcf3, Data\BinaryData\netCDF\Components\recordDimension.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 4 (11.43%)
-    '     File Size: 1.14 KB
+    '     File Size: 1.13 KB
 
 
     '     Class recordDimension

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::149bedbd9f01e9c5c3ff2258e8f17a69, gr\ModelViewer\RenderPanel.vb"
+﻿#Region "Microsoft.VisualBasic::7c3945ffd90074ebea96874589ffe41e, gr\ModelViewer\RenderPanel.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 3 (20.00%)
-    '     File Size: 433 B
+    '     File Size: 431 B
 
 
     ' Class RenderPanel
@@ -67,4 +67,3 @@ Public Class RenderPanel : Inherits Panel
         RaiseEvent Zoom(e.Delta)
     End Sub
 End Class
-

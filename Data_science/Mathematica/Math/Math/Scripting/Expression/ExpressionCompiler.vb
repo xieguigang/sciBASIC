@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b5caed0a390f852eed63cb0d46dde620, Data_science\Mathematica\Math\Math\Scripting\Expression\ExpressionCompiler.vb"
+﻿#Region "Microsoft.VisualBasic::677210fb88a691ca5e3762c37aed8416, Data_science\Mathematica\Math\Math\Scripting\Expression\ExpressionCompiler.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 127
-    '    Code Lines: 102 (80.31%)
-    ' Comment Lines: 9 (7.09%)
-    '    - Xml Docs: 55.56%
+    '   Total Lines: 118
+    '    Code Lines: 93 (78.81%)
+    ' Comment Lines: 10 (8.47%)
+    '    - Xml Docs: 50.00%
     ' 
-    '   Blank Lines: 16 (12.60%)
-    '     File Size: 6.86 KB
+    '   Blank Lines: 15 (12.71%)
+    '     File Size: 6.62 KB
 
 
     '     Delegate Function
@@ -48,7 +48,7 @@
     ' 
     '     Module ExpressionCompiler
     ' 
-    '         Function: CreateExpression, CreateLambda, GetDoubleMathFunction, MakeSymbolReference
+    '         Function: CreateExpression, CreateLambda, GetDoubleMathFunction, GetMathFunction2, MakeSymbolReference
     ' 
     ' 
     ' 

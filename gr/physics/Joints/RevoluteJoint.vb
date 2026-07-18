@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d54095729ae88b6dc62ca0f25975dfe7, gr\physics\Joints\RevoluteJoint.vb"
+﻿#Region "Microsoft.VisualBasic::029df8e29bdcb199bb730bed3d2255ed, gr\physics\Joints\RevoluteJoint.vb"
 
     ' Author:
     ' 
@@ -117,4 +117,3 @@ Namespace Joints
         End Sub
     End Class
 End Namespace
-

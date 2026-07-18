@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::023ef54d1c648b94a1b70852033aeb3f, Data_science\Mathematica\Math\Math\Scripting\Expression\Expression\BinaryExpression.vb"
+﻿#Region "Microsoft.VisualBasic::55823fdea9a19bd4e9273a91567cace3, Data_science\Mathematica\Math\Math\Scripting\Expression\Expression\BinaryExpression.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 55
-    '    Code Lines: 32 (58.18%)
-    ' Comment Lines: 15 (27.27%)
+    '   Total Lines: 58
+    '    Code Lines: 34 (58.62%)
+    ' Comment Lines: 15 (25.86%)
     '    - Xml Docs: 93.33%
     ' 
-    '   Blank Lines: 8 (14.55%)
-    '     File Size: 1.91 KB
+    '   Blank Lines: 9 (15.52%)
+    '     File Size: 1.98 KB
 
 
     '     Class BinaryExpression

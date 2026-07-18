@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d1576f2c5f82aca3cfc9d62f6ee3f227, Data\BinaryData\Feather\FeatherWriter.vb"
+﻿#Region "Microsoft.VisualBasic::043083e9c70d2ee8e4d4f11225ac02fd, Data\BinaryData\Feather\FeatherWriter.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 3538
-    '    Code Lines: 2679 (75.72%)
-    ' Comment Lines: 121 (3.42%)
-    '    - Xml Docs: 53.72%
+    '   Total Lines: 3566
+    '    Code Lines: 2688 (75.38%)
+    ' Comment Lines: 136 (3.81%)
+    '    - Xml Docs: 51.47%
     ' 
-    '   Blank Lines: 738 (20.86%)
-    '     File Size: 119.26 KB
+    '   Blank Lines: 742 (20.81%)
+    '     File Size: 120.65 KB
 
 
     ' Enum WriteMode

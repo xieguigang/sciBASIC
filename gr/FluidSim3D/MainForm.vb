@@ -1,3 +1,68 @@
+﻿#Region "Microsoft.VisualBasic::376a2233c0fff929f22baafd89c76e51, gr\FluidSim3D\MainForm.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 471
+    '    Code Lines: 345 (73.25%)
+    ' Comment Lines: 48 (10.19%)
+    '    - Xml Docs: 10.42%
+    ' 
+    '   Blank Lines: 78 (16.56%)
+    '     File Size: 18.86 KB
+
+
+    '     Class MainForm
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    '         Sub: ApplyClick, ApplyParameters, BoundaryClick, BuildEngine, Canvas_MouseDown
+    '              Canvas_MouseMove, Canvas_MouseUp, Canvas_Paint, Canvas_Zoom, InitializeComponent
+    '              MainForm_Load, PlayClick, ResetSimClick, ResetViewClick, SampleShake
+    '              SimTick, SyncParamsToEngine, UpdateStatus
+    '         Class DarkToolStripColorTable
+    ' 
+    '             Properties: ButtonCheckedGradientBegin, ButtonCheckedGradientEnd, ButtonPressedGradientBegin, ButtonPressedGradientEnd, ButtonSelectedGradientBegin
+    '                         ButtonSelectedGradientEnd, MenuStripGradientBegin, MenuStripGradientEnd, SeparatorDark, SeparatorLight
+    '                         ToolStripGradientBegin, ToolStripGradientEnd, ToolStripGradientMiddle
+    ' 
+    ' 
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
 ' /********************************************************************************/
 '
 '     MainForm - the 3D water simulator desktop application.
@@ -469,3 +534,4 @@ Namespace FluidSim3D
     End Class
 
 End Namespace
+

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::499ee6bac1f1f3b00fee6d9e6ddae935, gr\ModelViewer\MainForm.vb"
+﻿#Region "Microsoft.VisualBasic::7cf33a702b3ccf3e3add043c83e13aeb, gr\ModelViewer\MainForm.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 717
-    '    Code Lines: 534 (74.48%)
-    ' Comment Lines: 125 (17.43%)
+    '   Total Lines: 715
+    '    Code Lines: 534 (74.69%)
+    ' Comment Lines: 125 (17.48%)
     '    - Xml Docs: 12.80%
     ' 
-    '   Blank Lines: 58 (8.09%)
-    '     File Size: 27.73 KB
+    '   Blank Lines: 56 (7.83%)
+    '     File Size: 27.72 KB
 
 
     ' Class MainForm
@@ -54,7 +54,6 @@
     '          LightingScroll, MainForm_Load, ModeChanged, OnCanvasZoom, OpenClick
     '          OpenFile, PointSizeChanged, ResetLightClick, ResetLighting, ResetView
     '          ResetViewClick, SchemeChanged, ShowDebugChanged, ShowGroundChanged, UpdateStatus
-    ' 
     ' 
     ' /********************************************************************************/
 
@@ -775,6 +774,3 @@ Public Class MainForm : Inherits Form
         Call Me.Close()
     End Sub
 End Class
-
-
-

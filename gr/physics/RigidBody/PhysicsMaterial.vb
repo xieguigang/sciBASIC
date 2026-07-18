@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bf9b82a6bd779219c79046f47d8904dc, gr\physics\RigidBody\PhysicsMaterial.vb"
+﻿#Region "Microsoft.VisualBasic::14d19400253d86db7ec058068a1500ef, gr\physics\RigidBody\PhysicsMaterial.vb"
 
     ' Author:
     ' 
@@ -34,12 +34,12 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 36
-    '    Code Lines: 16 (44.44%)
-    ' Comment Lines: 10 (27.78%)
+    '   Total Lines: 35
+    '    Code Lines: 16 (45.71%)
+    ' Comment Lines: 10 (28.57%)
     '    - Xml Docs: 80.00%
     ' 
-    '   Blank Lines: 10 (27.78%)
+    '   Blank Lines: 9 (25.71%)
     '     File Size: 1.41 KB
 
 
@@ -49,7 +49,6 @@
     ' 
     '     Constructor: (+1 Overloads) Sub New
     '     Function: CombineFriction, CombineRestitution
-    ' 
     ' 
     ' /********************************************************************************/
 
@@ -90,5 +89,3 @@ Public Class PhysicsMaterial
         Return std.Max(a.Restitution, b.Restitution)
     End Function
 End Class
-
-

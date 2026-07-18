@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0abb9aa55c74ad64bcfa750035af29d6, Data\BinaryData\netCDF\Components\Dimension.vb"
+﻿#Region "Microsoft.VisualBasic::7dd388488103e002a0436b9396da5f83, Data\BinaryData\netCDF\Components\Dimension.vb"
 
     ' Author:
     ' 

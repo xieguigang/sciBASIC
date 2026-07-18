@@ -1,4 +1,4 @@
-#Region "Microsoft.VisualBasic::network_views, Data_science\MachineLearning\DeepLearning\NeuralNetwork\NetworkViews.vb"
+﻿#Region "Microsoft.VisualBasic::16905bdc3fcfdb8de959d278420f0772, Data_science\MachineLearning\DeepLearning\NeuralNetwork\NetworkViews.vb"
 
     ' Author:
     ' 
@@ -26,22 +26,38 @@
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
+
     ' /********************************************************************************/
 
     ' Summaries:
 
 
+    ' Code Statistics:
+
+    '   Total Lines: 105
+    '    Code Lines: 55 (52.38%)
+    ' Comment Lines: 35 (33.33%)
+    '    - Xml Docs: 94.29%
+    ' 
+    '   Blank Lines: 15 (14.29%)
+    '     File Size: 3.63 KB
+
+
     '     Class NetworkLayerView
-
+    ' 
     '         Properties: Count, Output
-
-    '     
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    '         Function: ToString
+    ' 
     '     Class HiddenLayersView
-
-    '         Properties: Count, Item, Layers
-
-    '     
-
+    ' 
+    '         Properties: Count, Layers
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    '         Function: GetEnumerator, IEnumerable_GetEnumerator
+    ' 
+    ' 
     ' /********************************************************************************/
 
 #End Region

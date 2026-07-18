@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3f1ed8d1dc8fd4f65399b37891f0759f, Data\BinaryData\HDF5\HDF5File.vb"
+﻿#Region "Microsoft.VisualBasic::1ffba42a2a29fa9c8530c21c6f4bea91, Data\BinaryData\HDF5\HDF5File.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 69.23%
     ' 
     '   Blank Lines: 31 (16.85%)
-    '     File Size: 7.30 KB
+    '     File Size: 7.26 KB
 
 
     ' Class HDF5File

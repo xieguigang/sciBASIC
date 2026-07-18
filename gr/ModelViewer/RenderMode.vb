@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e4e06195990cff25c87370edf7b44f48, gr\ModelViewer\RenderMode.vb"
+﻿#Region "Microsoft.VisualBasic::fd6526c308bae7618be6de59856eaeb1, gr\ModelViewer\RenderMode.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 9
-    '    Code Lines: 5 (55.56%)
-    ' Comment Lines: 3 (33.33%)
+    '   Total Lines: 8
+    '    Code Lines: 5 (62.50%)
+    ' Comment Lines: 3 (37.50%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 1 (11.11%)
-    '     File Size: 163 B
+    '   Blank Lines: 0 (0.00%)
+    '     File Size: 161 B
 
 
     ' Enum RenderMode
@@ -54,7 +54,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 ''' <summary>
 ''' 渲染模式：表面 / 三角网格(线框) / 点云

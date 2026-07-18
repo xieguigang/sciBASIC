@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3ce8e38a68065bbf8c8728394b0d99cc, gr\physics\Particles2D\GameParticle.vb"
+﻿#Region "Microsoft.VisualBasic::ecfee668298e727469b5a2ae9a76eb20, gr\physics\Particles2D\GameParticle.vb"
 
     ' Author:
     ' 
@@ -84,4 +84,3 @@ Namespace Particles2D
         End Sub
     End Class
 End Namespace
-

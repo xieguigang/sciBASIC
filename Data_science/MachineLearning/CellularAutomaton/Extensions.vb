@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3782d485329399bd28bfc40c0fd349f5, sciBASIC#\Data_science\MachineLearning\CellularAutomaton\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::3782d485329399bd28bfc40c0fd349f5, Data_science\MachineLearning\CellularAutomaton\Extensions.vb"
 
     ' Author:
     ' 
@@ -35,9 +35,11 @@
     ' Code Statistics:
 
     '   Total Lines: 49
-    '    Code Lines: 41
-    ' Comment Lines: 0
-    '   Blank Lines: 8
+    '    Code Lines: 41 (83.67%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 8 (16.33%)
     '     File Size: 1.96 KB
 
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b34e8f3d7fe019cf39c6bcd1fb3bbba4, gr\physics\ForceFields\MagneticField.vb"
+﻿#Region "Microsoft.VisualBasic::05a6764ebcb0b0f5f8ef3a42ae3af096, gr\physics\ForceFields\MagneticField.vb"
 
     ' Author:
     ' 
@@ -103,4 +103,3 @@ Namespace ForceFields
         End Sub
     End Class
 End Namespace
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a9a46aba165865ebdf3898fcd7a46bcb, Data_science\MachineLearning\DeepQNetwork\QNetwork.vb"
+﻿#Region "Microsoft.VisualBasic::b6250a1463614bc65a16c25f5cfd1e09, Data_science\MachineLearning\DeepQNetwork\QNetwork.vb"
 
     ' Author:
     ' 
@@ -34,19 +34,24 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 72
-    '    Code Lines: 38 (52.78%)
-    ' Comment Lines: 20 (27.78%)
-    '    - Xml Docs: 100.00%
+    '   Total Lines: 174
+    '    Code Lines: 112 (64.37%)
+    ' Comment Lines: 37 (21.26%)
+    '    - Xml Docs: 94.59%
     ' 
-    '   Blank Lines: 14 (19.44%)
-    '     File Size: 2.48 KB
+    '   Blank Lines: 25 (14.37%)
+    '     File Size: 6.38 KB
 
 
     ' Class QNetwork
     ' 
+    '     Properties: ActionCount, Actions, learningRate, StateSize
+    ' 
     '     Constructor: (+3 Overloads) Sub New
-    '     Function: buildModel, defaultShape
+    ' 
+    '     Function: argmaxAction, buildModel, Clone, defaultShape, predictQ
+    ' 
+    '     Sub: CopyWeightsFrom, trainOnTargets
     ' 
     ' /********************************************************************************/
 

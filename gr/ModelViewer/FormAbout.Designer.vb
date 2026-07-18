@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::dfe3c850f28dda00eb8745f6a498777a, gr\ModelViewer\FormAbout.Designer.vb"
+﻿#Region "Microsoft.VisualBasic::71884705d5331c15c0af09d49efe1fd6, gr\ModelViewer\FormAbout.Designer.vb"
 
     ' Author:
     ' 
@@ -141,4 +141,3 @@ Partial Class FormAbout
     Friend WithEvents Label1 As Label
     Friend WithEvents Timer1 As Timer
 End Class
-

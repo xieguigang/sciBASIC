@@ -1,71 +1,68 @@
-﻿#Region "Microsoft.VisualBasic::5a623f4b5be242227ea579802a917b3f, gr\network-visualization\Visualizer\NetworkVisualizer.vb"
+﻿#Region "Microsoft.VisualBasic::d84e08954f6cc047539faacbdf53bd68, gr\network-visualization\Visualizer\NetworkVisualizer.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 458
-'    Code Lines: 320 (69.87%)
-' Comment Lines: 85 (18.56%)
-'    - Xml Docs: 72.94%
-' 
-'   Blank Lines: 53 (11.57%)
-'     File Size: 21.93 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-' Module NetworkVisualizer
-' 
-'     Properties: BackgroundColor
-'     Delegate Function
-' 
-' 
-'     Delegate Function
-' 
-' 
-'     Delegate Sub
-' 
-'         Function: DirectMapRadius, DrawImage
-' 
-'         Sub: drawhullPolygon
-' 
-' 
-' 
-' 
-' 
-' 
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 199
+    '    Code Lines: 127 (63.82%)
+    ' Comment Lines: 60 (30.15%)
+    '    - Xml Docs: 86.67%
+    ' 
+    '   Blank Lines: 12 (6.03%)
+    '     File Size: 10.60 KB
+
+
+    ' Module NetworkVisualizer
+    ' 
+    '     Properties: BackgroundColor
+    '     Delegate Function
+    ' 
+    ' 
+    '     Delegate Function
+    ' 
+    ' 
+    '     Delegate Sub
+    ' 
+    '         Function: DirectMapRadius, DrawImage
+    ' 
+    ' 
+    ' 
+    ' 
+    ' 
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

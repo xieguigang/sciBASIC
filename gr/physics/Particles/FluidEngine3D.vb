@@ -1,4 +1,4 @@
-#Region "Microsoft.VisualBasic::gr\physics\Particles\FluidEngine3D.vb"
+﻿#Region "Microsoft.VisualBasic::ba3069c9d56188f836ca538a920b05fb, gr\physics\Particles\FluidEngine3D.vb"
 
     ' Author:
     ' 
@@ -24,6 +24,39 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 353
+    '    Code Lines: 235 (66.57%)
+    ' Comment Lines: 54 (15.30%)
+    '    - Xml Docs: 72.22%
+    ' 
+    '   Blank Lines: 64 (18.13%)
+    '     File Size: 13.32 KB
+
+
+    ' Class FluidEngine3D
+    ' 
+    '     Properties: BoxSize, CollisionDamping, Count, DeltaTime, DisturbAccel
+    '                 DisturbDamping, Entity, Gravity, NearPressureMultiplier, ParticleSize
+    '                 PressureMultiplier, SmoothingRadius, TargetDensity, ViscosityStrength
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    ' 
+    '     Function: CalculateDensity, ComputeExternalForce, NearPressureFromDensity, PressureFromDensity
+    ' 
+    '     Sub: ApplyExternalForces, CalculateDensities, CalculatePressureForce, CalculateViscosity, DecayDisturbance
+    '          HandleCollisions, Reset, RunDebugStep, RunSimulationStep, UpdatePositions
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

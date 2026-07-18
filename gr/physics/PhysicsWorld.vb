@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e2e63c677f7ea81b5f1187dc7e5b0603, gr\physics\PhysicsWorld.vb"
+﻿#Region "Microsoft.VisualBasic::64f0c36c0e8ec11a2d92fe924d803048, gr\physics\PhysicsWorld.vb"
 
     ' Author:
     ' 
@@ -200,4 +200,3 @@ Public Class PhysicsWorld
         Return New RigidBody(New CircleCollider(radius), mass, material)
     End Function
 End Class
-

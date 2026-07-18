@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c52e82dd2d90e99bcd94be42192b7545, Data\BinaryData\netCDF\Components\attribute.vb"
+﻿#Region "Microsoft.VisualBasic::0e2730af092c6d4d943b6700f18e767b, Data\BinaryData\netCDF\Components\attribute.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 93
-    '    Code Lines: 62 (66.67%)
-    ' Comment Lines: 18 (19.35%)
+    '   Total Lines: 101
+    '    Code Lines: 70 (69.31%)
+    ' Comment Lines: 18 (17.82%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 13 (13.98%)
-    '     File Size: 3.65 KB
+    '   Blank Lines: 13 (12.87%)
+    '     File Size: 4.33 KB
 
 
     '     Class attribute
