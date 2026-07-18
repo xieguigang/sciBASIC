@@ -17,8 +17,8 @@ Module Program
     Private Const DENSIFY_UNTIL_ITER As Integer = 400
 
     ' ===== 路径配置 =====
-    Private ReadOnly TestDataDir As String = "/home/z/my-project/download/test_data"
-    Private ReadOnly OutputDir As String = "/home/z/my-project/download/output"
+    Private ReadOnly TestDataDir As String = "G:\pixelArtist\src\framework\Data_science\MachineVision\GaussianSplatting3D\test_data"
+    Private ReadOnly OutputDir As String = "G:\pixelArtist\src\framework\Data_science\MachineVision\GaussianSplatting3D\output"
 
     Sub Main(args As String())
         Console.WriteLine("="c, 70)
