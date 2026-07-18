@@ -2,6 +2,7 @@ Imports System.IO
 Imports System.Drawing
 Imports System.Drawing.Imaging
 Imports std = System.Math
+Imports Microsoft.VisualBasic.MachineLearning.TensorFlow
 
 ''' <summary>
 ''' 图像加载器 - 从 PNG 文件加载图像并转换为 Tensor

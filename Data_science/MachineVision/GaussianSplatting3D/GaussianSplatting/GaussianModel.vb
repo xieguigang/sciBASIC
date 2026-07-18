@@ -1,3 +1,4 @@
+Imports Microsoft.VisualBasic.MachineLearning.TensorFlow
 Imports std = System.Math
 
 ''' <summary>
@@ -149,7 +150,7 @@ Public Class GaussianModel
     Public Shared Function QuaternionToMatrix(w As Double, x As Double, y As Double, z As Double) As Double(,)
         ' 归一化
         Dim n = std.Sqrt(w * w + x * x + y * y + z * z)
-        If n < 1e-12 Then
+        If n < 0.000000000001 Then
             Return New Double(,) {{1, 0, 0}, {0, 1, 0}, {0, 0, 1}}
         End If
         w /= n : x /= n : y /= n : z /= n

@@ -1,3 +1,4 @@
+Imports Microsoft.VisualBasic.MachineLearning.TensorFlow
 Imports std = System.Math
 
 ''' <summary>
@@ -116,8 +117,8 @@ Public Class SplatRenderer
             Dim invC = a * invDet
 
             ' 3σ 半径（像素）
-            Dim sigmaX = std.Sqrt(std.Max(a, 1e-10))
-            Dim sigmaY = std.Sqrt(std.Max(c, 1e-10))
+            Dim sigmaX = std.Sqrt(std.Max(a, 0.0000000001))
+            Dim sigmaY = std.Sqrt(std.Max(c, 0.0000000001))
             Dim radius = std.Max(sigmaX, sigmaY) * SPLAT_RADIUS_SIGMA
             Dim minX = CInt(std.Floor(cu - radius))
             Dim maxX = CInt(std.Ceiling(cu + radius))
@@ -143,10 +144,10 @@ Public Class SplatRenderer
                     ' 高斯权重
                     Dim weight = std.Exp(-0.5 * m2)
                     Dim alpha = op * weight
-                    If alpha < 1e-6 Then Continue For
+                    If alpha < 0.000001 Then Continue For
 
                     Dim trans = T(y, x)
-                    If trans < 1e-6 Then Continue For
+                    If trans < 0.000001 Then Continue For
 
                     Dim contribution = alpha * trans
                     image(y, x, 0) += r * contribution
@@ -234,7 +235,7 @@ Public Class SplatRenderer
     ''' </summary>
     Public Shared Function ComputePSNR(rendered As Tensor, target As Tensor) As Double
         Dim mse = ComputeMSE(rendered, target)
-        If mse < 1e-12 Then Return 100.0
+        If mse < 0.000000000001 Then Return 100.0
         Return 10.0 * std.Log10(1.0 / mse)
     End Function
 

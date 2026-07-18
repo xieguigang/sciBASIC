@@ -20,6 +20,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\MachineLearning\TensorFlow\TensorFlow.vbproj" />
+    <ProjectReference Include="..\..\..\Mathematica\Math\Math\Math.NET5.vbproj" />
     <ProjectReference Include="G:\GCModeller\src\runtime\sciBASIC#\Microsoft.VisualBasic.Core\src\Core.vbproj" />
   </ItemGroup>
 

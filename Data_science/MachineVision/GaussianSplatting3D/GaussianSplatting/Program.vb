@@ -1,5 +1,6 @@
 Imports System.IO
 Imports System.Runtime
+Imports Microsoft.VisualBasic.MachineLearning.TensorFlow
 
 Module Program
 
@@ -62,12 +63,12 @@ Module Program
             Cameras = .Cameras
         End With
 
-        Console.WriteLine($"  - 内参: fx={intrinsics.Fx}, fy={intrinsics.Fy}, " &
-                          $"cx={intrinsics.Cx}, cy={intrinsics.Cy}")
-        Console.WriteLine($"  - 视图数量: {cameras.Count}")
+        Console.WriteLine($"  - 内参: fx={Intrinsics.Fx}, fy={Intrinsics.Fy}, " &
+                          $"cx={Intrinsics.Cx}, cy={Intrinsics.Cy}")
+        Console.WriteLine($"  - 视图数量: {Cameras.Count}")
 
         ' 加载目标图像
-        Dim targetImages = ImageLoader.LoadAll(TestDataDir, cameras.Count)
+        Dim targetImages = ImageLoader.LoadAll(TestDataDir, Cameras.Count)
         If targetImages.Count = 0 Then
             Console.WriteLine("错误: 未找到任何 PNG 图像")
             Return
@@ -82,7 +83,7 @@ Module Program
         ' ---- Step 2: 初始化高斯模型 ----
         Console.WriteLine()
         Console.WriteLine("[2/5] 初始化高斯模型 ...")
-        Dim model = InitializeModel(intrinsics, cameras, targetImages)
+        Dim model = InitializeModel(Intrinsics, Cameras, targetImages)
         Console.WriteLine($"  - 初始高斯数量: {model.Count}")
 
         ' ---- Step 3: 训练循环 ----
@@ -109,7 +110,7 @@ Module Program
                 optimizer.LearningRate = scheduler.GetLr(iter)
 
                 ' 计算梯度
-                gradCalc.ComputeGradients(model, cameras, targetImages)
+                gradCalc.ComputeGradients(model, Cameras, targetImages)
 
                 ' 优化器更新
                 optimizer.StepModel(model)
@@ -124,13 +125,13 @@ Module Program
                 If iter Mod 10 = 0 OrElse iter = NUM_ITERATIONS - 1 Then
                     Dim avgLoss = 0.0
                     Dim avgPsnr = 0.0
-                    For v = 0 To cameras.Count - 1
-                        Dim rendered = SplatRenderer.Render(model, cameras(v))
+                    For v = 0 To Cameras.Count - 1
+                        Dim rendered = SplatRenderer.Render(model, Cameras(v))
                         avgLoss += SplatRenderer.ComputeMSE(rendered, targetImages(v))
                         avgPsnr += SplatRenderer.ComputePSNR(rendered, targetImages(v))
                     Next
-                    avgLoss /= cameras.Count
-                    avgPsnr /= cameras.Count
+                    avgLoss /= Cameras.Count
+                    avgPsnr /= Cameras.Count
 
                     Console.WriteLine($"  iter {iter,4:D} | gaussians {model.Count,6:D} | " &
                                       $"loss {avgLoss:F6} | psnr {avgPsnr:F2} dB | " &
@@ -156,8 +157,8 @@ Module Program
         If Not Directory.Exists(renderDir) Then
             Directory.CreateDirectory(renderDir)
         End If
-        For v = 0 To cameras.Count - 1
-            Dim rendered = SplatRenderer.Render(model, cameras(v))
+        For v = 0 To Cameras.Count - 1
+            Dim rendered = SplatRenderer.Render(model, Cameras(v))
             ImageLoader.Save(rendered, Path.Combine(renderDir, $"render_{v:00}.png"))
         Next
         Console.WriteLine($"  - 渲染结果已保存: {renderDir}")
@@ -166,13 +167,13 @@ Module Program
         Console.WriteLine()
         Console.WriteLine("[5/5] 最终评估 ...")
         Dim finalLoss = 0.0, finalPsnr = 0.0
-        For v = 0 To cameras.Count - 1
-            Dim rendered = SplatRenderer.Render(model, cameras(v))
+        For v = 0 To Cameras.Count - 1
+            Dim rendered = SplatRenderer.Render(model, Cameras(v))
             finalLoss += SplatRenderer.ComputeMSE(rendered, targetImages(v))
             finalPsnr += SplatRenderer.ComputePSNR(rendered, targetImages(v))
         Next
-        finalLoss /= cameras.Count
-        finalPsnr /= cameras.Count
+        finalLoss /= Cameras.Count
+        finalPsnr /= Cameras.Count
         Console.WriteLine($"  - 最终高斯数量: {model.Count}")
         Console.WriteLine($"  - 最终 MSE: {finalLoss:F6}")
         Console.WriteLine($"  - 最终 PSNR: {finalPsnr:F2} dB")
@@ -226,7 +227,7 @@ Module Program
 
                 ' 变换到世界坐标系：P_world = R^T * (P_cam - t)
                 Dim matR = cam0.Extrinsics.R
-                Dim t = cam0.Extrinsics.t
+                Dim t = cam0.Extrinsics.T
                 Dim xt = xc - t(0)
                 Dim yt = yc - t(1)
                 Dim zt = zc - t(2)

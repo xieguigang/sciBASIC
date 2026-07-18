@@ -1,3 +1,4 @@
+Imports Microsoft.VisualBasic.MachineLearning.TensorFlow
 Imports std = System.Math
 
 ''' <summary>
@@ -26,7 +27,7 @@ Public Class AdamOptimizer
     Public Property Beta2 As Double = 0.999
 
     ''' <summary>数值稳定项</summary>
-    Public Property Epsilon As Double = 1e-8
+    Public Property Epsilon As Double = 0.00000001
 
     ''' <summary>时间步</summary>
     Private _t As Integer = 0
