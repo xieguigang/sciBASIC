@@ -1,69 +1,69 @@
 ﻿#Region "Microsoft.VisualBasic::69c51c5667af7c6c74f344e4842378ca, Data_science\MachineLearning\TensorFlow\Tensor.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 1014
-    '    Code Lines: 575 (56.71%)
-    ' Comment Lines: 282 (27.81%)
-    '    - Xml Docs: 94.68%
-    ' 
-    '   Blank Lines: 157 (15.48%)
-    '     File Size: 30.88 KB
+' Summaries:
 
 
-    ' Class Tensor
-    ' 
-    '     Properties: Data, Dimensions, Gradient, IsVariable, Length
-    '                 Rank, Shape, TotalLength
-    ' 
-    '     Constructor: (+4 Overloads) Sub New
-    ' 
-    '     Function: (+2 Overloads) Apply, BroadcastedAddition, Clone, DimsEqual, ElementwiseMultiply
-    '               Filled, From2DArray, Get1DInd, GetColumn, GetFlatIndex
-    '               GetIndices, GetRow, GetValue, HeInit, Identity
-    '               L2Norm, MatMul, (+2 Overloads) Mean, MultAll, Ones
-    '               Random, RandomNormal, Range, Reshape, Scalar
-    '               Sum, To2DArray, To2DArrayDouble, ToArray, ToDoubleArray
-    '               ToString, TotalSum, Transpose, Variable, XavierInit
-    '               Zeros
-    ' 
-    '     Sub: Dispose, Finalize, Print, SetValue, UpdateDimProds
-    ' 
-    '     Operators: (+2 Overloads) -, (+2 Overloads) *, /, (+2 Overloads) +
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 1014
+'    Code Lines: 575 (56.71%)
+' Comment Lines: 282 (27.81%)
+'    - Xml Docs: 94.68%
+' 
+'   Blank Lines: 157 (15.48%)
+'     File Size: 30.88 KB
+
+
+' Class Tensor
+' 
+'     Properties: Data, Dimensions, Gradient, IsVariable, Length
+'                 Rank, Shape, TotalLength
+' 
+'     Constructor: (+4 Overloads) Sub New
+' 
+'     Function: (+2 Overloads) Apply, BroadcastedAddition, Clone, DimsEqual, ElementwiseMultiply
+'               Filled, From2DArray, Get1DInd, GetColumn, GetFlatIndex
+'               GetIndices, GetRow, GetValue, HeInit, Identity
+'               L2Norm, MatMul, (+2 Overloads) Mean, MultAll, Ones
+'               Random, RandomNormal, Range, Reshape, Scalar
+'               Sum, To2DArray, To2DArrayDouble, ToArray, ToDoubleArray
+'               ToString, TotalSum, Transpose, Variable, XavierInit
+'               Zeros
+' 
+'     Sub: Dispose, Finalize, Print, SetValue, UpdateDimProds
+' 
+'     Operators: (+2 Overloads) -, (+2 Overloads) *, /, (+2 Overloads) +
+' 
+' /********************************************************************************/
 
 #End Region
 
