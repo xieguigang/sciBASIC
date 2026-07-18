@@ -53,12 +53,13 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports System.Text
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MIME.application.json.Javascript
 Imports Microsoft.VisualBasic.My.JavaScript
 
-<HideModuleName> Public Module JSONTextParser
+Public Module JSONTextParser
 
     ''' <summary>
     ''' Parse json string
@@ -175,5 +176,30 @@ Imports Microsoft.VisualBasic.My.JavaScript
         End If
 
         Return values
+    End Function
+
+    ''' <summary>
+    ''' Minimal JSON string escaper. We avoid pulling in System.Web.Script
+    ''' or Newtonsoft.Json just for this one purpose.
+    ''' </summary>
+    Public Function JsonEscape(s As String) As String
+        If s Is Nothing Then Return ""
+        Dim sb As New StringBuilder(s.Length)
+        For Each c As Char In s
+            Select Case c
+                Case "\"c : sb.Append("\\")
+                Case """"c : sb.Append("\""")
+                Case ControlChars.Cr : sb.Append("\r")
+                Case ControlChars.Lf : sb.Append("\n")
+                Case ControlChars.Tab : sb.Append("\t")
+                Case Else
+                    If c < " "c Then
+                        sb.Append("\u" & AscW(c).ToString("x4"))
+                    Else
+                        sb.Append(c)
+                    End If
+            End Select
+        Next
+        Return sb.ToString()
     End Function
 End Module
