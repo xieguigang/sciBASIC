@@ -76,9 +76,24 @@ Namespace Drawing3D
         ''' the view distance from the user view to target object
         ''' </summary>
         Public Property ViewDistance!
+
+        ''' <summary>
+        ''' pitch
+        ''' </summary>
+        ''' <returns></returns>
         Public Property AngleX!
+        ''' <summary>
+        ''' yaw
+        ''' </summary>
+        ''' <returns></returns>
         Public Property AngleY!
+        ''' <summary>
+        ''' roll
+        ''' </summary>
+        ''' <returns></returns>
         Public Property AngleZ!
+
+        Public Property position As Point3D
 
         ''' <summary>
         ''' FOV
