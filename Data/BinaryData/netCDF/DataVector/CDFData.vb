@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c33fc336e493964ab84dcbb1c9f267af, Data\BinaryData\netCDF\DataVector\CDFData.vb"
+﻿#Region "Microsoft.VisualBasic::9b8de9195d0425611e18af75a16a5ede, Data\BinaryData\netCDF\DataVector\CDFData.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 164
-    '    Code Lines: 134 (81.71%)
-    ' Comment Lines: 10 (6.10%)
-    '    - Xml Docs: 90.00%
+    '   Total Lines: 127
+    '    Code Lines: 97 (76.38%)
+    ' Comment Lines: 12 (9.45%)
+    '    - Xml Docs: 75.00%
     ' 
-    '   Blank Lines: 20 (12.20%)
-    '     File Size: 7.56 KB
+    '   Blank Lines: 18 (14.17%)
+    '     File Size: 5.82 KB
 
 
     '     Class CDFData

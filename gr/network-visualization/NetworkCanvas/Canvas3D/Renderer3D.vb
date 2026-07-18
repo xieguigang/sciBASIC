@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1a55ef29c303e54162c4055de50c5657, gr\network-visualization\NetworkCanvas\Canvas3D\Renderer3D.vb"
+﻿#Region "Microsoft.VisualBasic::9b47f1004bf8bde6675cd0b0c22f9de1, gr\network-visualization\NetworkCanvas\Canvas3D\Renderer3D.vb"
 
     ' Author:
     ' 
@@ -26,7 +26,22 @@
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
+
     ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 118
+    '    Code Lines: 91 (77.12%)
+    ' Comment Lines: 6 (5.08%)
+    '    - Xml Docs: 83.33%
+    ' 
+    '   Blank Lines: 21 (17.80%)
+    '     File Size: 4.66 KB
+
 
     ' Class Renderer3D
     ' 

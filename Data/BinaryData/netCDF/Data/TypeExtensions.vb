@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e18b034665be000463e79ecfc675a9aa, Data\BinaryData\netCDF\Data\TypeExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::8d9b1b5d4c161797359973b1d7e63dfd, Data\BinaryData\netCDF\Data\TypeExtensions.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 100
-    '    Code Lines: 70 (70.00%)
-    ' Comment Lines: 21 (21.00%)
+    '   Total Lines: 102
+    '    Code Lines: 72 (70.59%)
+    ' Comment Lines: 21 (20.59%)
     '    - Xml Docs: 71.43%
     ' 
-    '   Blank Lines: 9 (9.00%)
-    '     File Size: 4.26 KB
+    '   Blank Lines: 9 (8.82%)
+    '     File Size: 4.54 KB
 
 
     '     Module TypeExtensions

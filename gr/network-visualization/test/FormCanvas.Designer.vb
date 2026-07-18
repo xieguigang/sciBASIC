@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::488d0207aaded3ae2b7a3bfea383ed27, gr\network-visualization\test\FormCanvas.Designer.vb"
+﻿#Region "Microsoft.VisualBasic::8ef751d6b5c6d500dead7caa9b12442a, gr\network-visualization\test\FormCanvas.Designer.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 128
-    '    Code Lines: 90 (70.31%)
-    ' Comment Lines: 32 (25.00%)
+    '   Total Lines: 131
+    '    Code Lines: 93 (70.99%)
+    ' Comment Lines: 32 (24.43%)
     '    - Xml Docs: 0.00%
     ' 
-    '   Blank Lines: 6 (4.69%)
-    '     File Size: 6.18 KB
+    '   Blank Lines: 6 (4.58%)
+    '     File Size: 5.77 KB
 
 
     ' Class FormCanvas
@@ -182,4 +182,3 @@ Partial Class FormCanvas
     Friend WithEvents AutoRotateToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents ShowLabelsToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
 End Class
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::666d5a4601f63cf5c5f257a7cdeeb128, gr\ModelViewer\SceneRenderer.vb"
+﻿#Region "Microsoft.VisualBasic::75393273e2aface04b9cef67c96769a0, gr\ModelViewer\SceneRenderer.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 432
-    '    Code Lines: 310 (71.76%)
-    ' Comment Lines: 64 (14.81%)
+    '   Total Lines: 430
+    '    Code Lines: 310 (72.09%)
+    ' Comment Lines: 64 (14.88%)
     '    - Xml Docs: 78.12%
     ' 
-    '   Blank Lines: 58 (13.43%)
-    '     File Size: 17.58 KB
+    '   Blank Lines: 56 (13.02%)
+    '     File Size: 17.57 KB
 
 
     ' Class SceneRenderer
@@ -56,7 +56,6 @@
     ' 
     '     Sub: Draw, DrawGround, DrawMesh, DrawModelAsPointCloud, DrawPointCloud
     '          FitView, (+2 Overloads) LoadModel, LoadPointCloud
-    ' 
     ' 
     ' /********************************************************************************/
 
@@ -492,6 +491,3 @@ Public Class SceneRenderer
     End Function
 
 End Class
-
-
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7fb7c37edcf282530823ce814bb17a52, gr\ModelViewer\Program.vb"
+﻿#Region "Microsoft.VisualBasic::add17a2cdf43c949c5a38141cf0d15db, gr\ModelViewer\Program.vb"
 
     ' Author:
     ' 
@@ -34,20 +34,19 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 18
-    '    Code Lines: 12 (66.67%)
+    '   Total Lines: 16
+    '    Code Lines: 12 (75.00%)
     ' Comment Lines: 0 (0.00%)
     '    - Xml Docs: 0.00%
     ' 
-    '   Blank Lines: 6 (33.33%)
-    '     File Size: 349 B
+    '   Blank Lines: 4 (25.00%)
+    '     File Size: 343 B
 
 
     ' Module Program
     ' 
     '     Constructor: (+1 Overloads) Sub New
     '     Sub: Main
-    ' 
     ' 
     ' /********************************************************************************/
 
@@ -69,6 +68,3 @@ Module Program
     End Sub
 
 End Module
-
-
-

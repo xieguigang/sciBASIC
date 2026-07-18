@@ -1,3 +1,63 @@
+﻿#Region "Microsoft.VisualBasic::9ca82d257cd9f31568e30643ddee7504, gr\FluidSim3D\WaterRenderer.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 245
+    '    Code Lines: 166 (67.76%)
+    ' Comment Lines: 43 (17.55%)
+    '    - Xml Docs: 41.86%
+    ' 
+    '   Blank Lines: 36 (14.69%)
+    '     File Size: 10.41 KB
+
+
+    '     Class WaterRenderer
+    ' 
+    '         Properties: BackgroundBottom, BackgroundTop, BoundaryColor, Camera, VelocityScale
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
+    '         Function: BuildRamp, ProjectToScreen, ToPoint
+    ' 
+    '         Sub: Draw, DrawBackground, DrawBoundary, DrawWater, FitView
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
 ' /********************************************************************************/
 '
 '     WaterRenderer - bridges the physics FluidEngine3D (which works in its own
@@ -243,3 +303,4 @@ Namespace FluidSim3D
     End Class
 
 End Namespace
+

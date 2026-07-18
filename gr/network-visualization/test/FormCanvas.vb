@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::891e2cd1d2a31a4d1e7d9aef27a1a67c, gr\network-visualization\test\FormCanvas.vb"
+﻿#Region "Microsoft.VisualBasic::abc85ffc16b70e29b1efef0f5a29e8aa, gr\network-visualization\test\FormCanvas.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 0.00%
     ' 
     '   Blank Lines: 16 (22.54%)
-    '     File Size: 2.86 KB
+    '     File Size: 2.88 KB
 
 
     ' Class FormCanvas

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e11f017f7752fe0e038947175846b73b, Data\BinaryData\netCDF\netCDFReader.vb"
+﻿#Region "Microsoft.VisualBasic::060ebb6227bb0b50bc1bf78ff2756d7a, Data\BinaryData\netCDF\netCDFReader.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 404
-    '    Code Lines: 179 (44.31%)
-    ' Comment Lines: 185 (45.79%)
-    '    - Xml Docs: 48.65%
+    '   Total Lines: 407
+    '    Code Lines: 181 (44.47%)
+    ' Comment Lines: 186 (45.70%)
+    '    - Xml Docs: 48.39%
     ' 
-    '   Blank Lines: 40 (9.90%)
-    '     File Size: 16.23 KB
+    '   Blank Lines: 40 (9.83%)
+    '     File Size: 16.52 KB
 
 
     ' Class netCDFReader

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::84f68d86cce9c67ca6bf350c77373a01, Data_science\Mathematica\Math\Math\Scripting\Expression\ExpressionBuilder.vb"
+﻿#Region "Microsoft.VisualBasic::8eeaa31fdb992437a398e08439846d5e, Data_science\Mathematica\Math\Math\Scripting\Expression\ExpressionBuilder.vb"
 
     ' Author:
     ' 
@@ -34,18 +34,19 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 231
-    '    Code Lines: 176 (76.19%)
-    ' Comment Lines: 25 (10.82%)
-    '    - Xml Docs: 68.00%
+    '   Total Lines: 259
+    '    Code Lines: 195 (75.29%)
+    ' Comment Lines: 29 (11.20%)
+    '    - Xml Docs: 72.41%
     ' 
-    '   Blank Lines: 30 (12.99%)
-    '     File Size: 9.40 KB
+    '   Blank Lines: 35 (13.51%)
+    '     File Size: 10.64 KB
 
 
     '     Module ExpressionBuilder
     ' 
     '         Function: AsCallFunction, AsExpression, BuildExpression, isFunctionInvoke, isOperator
+    '                   mergeNotEqual
     ' 
     '         Sub: joinNegatives, processOperators
     ' 

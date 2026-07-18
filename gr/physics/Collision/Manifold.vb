@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bbd87c868892e265fe01566f3d9191b9, gr\physics\Collision\Manifold.vb"
+﻿#Region "Microsoft.VisualBasic::f1d2ec3bb3cb9920e6ba7ec78b0fa493, gr\physics\Collision\Manifold.vb"
 
     ' Author:
     ' 
@@ -96,4 +96,3 @@ Namespace Collision
         End Sub
     End Class
 End Namespace
-

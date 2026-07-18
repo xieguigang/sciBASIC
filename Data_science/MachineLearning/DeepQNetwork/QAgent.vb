@@ -1,3 +1,60 @@
+﻿#Region "Microsoft.VisualBasic::c5bd8029dda98d64aa149b7342f775f0, Data_science\MachineLearning\DeepQNetwork\QAgent.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 140
+    '    Code Lines: 81 (57.86%)
+    ' Comment Lines: 40 (28.57%)
+    '    - Xml Docs: 87.50%
+    ' 
+    '   Blank Lines: 19 (13.57%)
+    '     File Size: 5.45 KB
+
+
+    ' Class QAgent
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    ' 
+    '     Function: act, GreedyAction
+    ' 
+    '     Sub: BeginEpisode, Learn, RecordReward, Store
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
 ' Copyright (c) 2018 GPL3 Licensed
 ' DQN 智能体：ε-贪心选动作、经验回放、TD 目标（可选目标网络），
 ' 维护训练统计（回合奖励 / ε / 步数 / 当前 TD 误差）。
@@ -138,3 +195,4 @@ Public Class QAgent
         episodeReward += r
     End Sub
 End Class
+

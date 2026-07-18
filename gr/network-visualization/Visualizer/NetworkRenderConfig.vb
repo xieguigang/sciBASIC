@@ -1,3 +1,63 @@
+﻿#Region "Microsoft.VisualBasic::b3645d827e3840aa439d3b4bc559f183, gr\network-visualization\Visualizer\NetworkRenderConfig.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 83
+    '    Code Lines: 50 (60.24%)
+    ' Comment Lines: 23 (27.71%)
+    '    - Xml Docs: 65.22%
+    ' 
+    '   Blank Lines: 10 (12.05%)
+    '     File Size: 4.16 KB
+
+
+    ' Class NetworkRenderConfig
+    ' 
+    '     Properties: Background, CanvasSize, ConvexHullCurveDegree, ConvexHullLabelFontCSS, ConvexHullScale
+    '                 DefaultColor, DefaultEdgeColor, DefaultLabelColor, DisplayId, DrawEdgeBends
+    '                 DrawEdgeDirection, DrawNodeShape, Driver, EdgeDashTypes, EdgeShadowDistance
+    '                 FillConvexHullPolygon, FontSize, GetLabelColor, GetLabelPosition, GetNodeLabel
+    '                 HideDisconnectedNode, HullPolygonGroups, LabelColorAsNodeColor, LabelerIterations, LabelFontBase
+    '                 LabelTextStroke, LabelWordWrapWidth, LinkWidth, MinLinkWidth, NodeRadius
+    '                 NodeStroke, NodeWidget, Padding, Ppi, ShapeRender
+    '                 ShowConvexHullLegend, ShowLabelerProgress, ThrowEx
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
 Imports System.Drawing
 Imports System.Drawing.Drawing2D
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
@@ -81,3 +141,4 @@ Public Class NetworkRenderConfig
     Public Property ThrowEx As Boolean = True
 
 End Class
+

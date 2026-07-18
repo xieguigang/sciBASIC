@@ -1,4 +1,4 @@
-#Region "Microsoft.VisualBasic::gr\physics\Grid3D.vb"
+﻿#Region "Microsoft.VisualBasic::de52ef65fc3ec5eb7e1116cda2b11694, gr\physics\Grid3D.vb"
 
     ' Author:
     ' 
@@ -24,6 +24,34 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 84
+    '    Code Lines: 43 (51.19%)
+    ' Comment Lines: 28 (33.33%)
+    '    - Xml Docs: 92.86%
+    ' 
+    '   Blank Lines: 13 (15.48%)
+    '     File Size: 3.38 KB
+
+
+    ' Module Grid3D
+    ' 
+    '     Function: EncodeGrid3D, GetCell3D, PopulateLookups, SpatialLookup3D
+    ' 
+    ' Interface IContainer3D
+    ' 
+    '     Properties: BoxSize, Entity
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

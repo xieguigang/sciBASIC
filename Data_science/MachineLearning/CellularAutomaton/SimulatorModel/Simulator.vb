@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::22ece2099416edf696da00f872fe4a5f, sciBASIC#\Data_science\MachineLearning\CellularAutomaton\SimulatorModel\Simulator.vb"
+﻿#Region "Microsoft.VisualBasic::196ff2d98b537c7f0811b0d7bb7d365a, Data_science\MachineLearning\CellularAutomaton\SimulatorModel\Simulator.vb"
 
     ' Author:
     ' 
@@ -34,18 +34,20 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 101
-    '    Code Lines: 72
-    ' Comment Lines: 14
-    '   Blank Lines: 15
-    '     File Size: 2.83 KB
+    '   Total Lines: 154
+    '    Code Lines: 103 (66.88%)
+    ' Comment Lines: 31 (20.13%)
+    '    - Xml Docs: 83.87%
+    ' 
+    '   Blank Lines: 20 (12.99%)
+    '     File Size: 5.45 KB
 
 
     ' Class Simulator
     ' 
     '     Constructor: (+1 Overloads) Sub New
     ' 
-    '     Function: RandomCells, Snapshot
+    '     Function: CellData, RandomCells, Snapshot
     ' 
     '     Sub: [Step], Run, runRandom
     ' 

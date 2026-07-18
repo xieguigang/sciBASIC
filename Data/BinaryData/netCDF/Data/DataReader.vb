@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::04e157ecf277bbf51faa22aa3f8654ab, Data\BinaryData\netCDF\Data\DataReader.vb"
+﻿#Region "Microsoft.VisualBasic::6173baf499397aef48d1513a13c9164b, Data\BinaryData\netCDF\Data\DataReader.vb"
 
     ' Author:
     ' 
@@ -34,18 +34,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 108
-    '    Code Lines: 60 (55.56%)
-    ' Comment Lines: 36 (33.33%)
-    '    - Xml Docs: 66.67%
+    '   Total Lines: 105
+    '    Code Lines: 55 (52.38%)
+    ' Comment Lines: 36 (34.29%)
+    '    - Xml Docs: 75.00%
     ' 
-    '   Blank Lines: 12 (11.11%)
-    '     File Size: 4.64 KB
+    '   Blank Lines: 14 (13.33%)
+    '     File Size: 4.82 KB
 
 
     '     Module DataReader
     ' 
-    '         Function: CreateArray, nonRecord, record
+    '         Function: CreateArray, dimProduct, nonRecord, record
     ' 
     ' 
     ' /********************************************************************************/

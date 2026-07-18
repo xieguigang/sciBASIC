@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3f578cb31526f6df7fcc00b0cf4757d2, gr\physics\ForceFields\GravityField.vb"
+﻿#Region "Microsoft.VisualBasic::1d65ab5f33be78fff8b8ea9eaee6949b, gr\physics\ForceFields\GravityField.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 71.43%
     ' 
     '   Blank Lines: 6 (21.43%)
-    '     File Size: 971 B
+    '     File Size: 969 B
 
 
     '     Class GravityField
@@ -81,4 +81,3 @@ Namespace ForceFields
         End Sub
     End Class
 End Namespace
-

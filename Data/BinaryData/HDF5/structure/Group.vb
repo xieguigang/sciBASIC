@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fe148b9d11f9452541b0e46403ff1df7, Data\BinaryData\HDF5\structure\Group.vb"
+﻿#Region "Microsoft.VisualBasic::8fd1330c388fbd58ab649dcaa3d45a7b, Data\BinaryData\HDF5\structure\Group.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 91
-    '    Code Lines: 52 (57.14%)
-    ' Comment Lines: 20 (21.98%)
-    '    - Xml Docs: 65.00%
+    '   Total Lines: 134
+    '    Code Lines: 77 (57.46%)
+    ' Comment Lines: 30 (22.39%)
+    '    - Xml Docs: 60.00%
     ' 
-    '   Blank Lines: 19 (20.88%)
-    '     File Size: 3.06 KB
+    '   Blank Lines: 27 (20.15%)
+    '     File Size: 4.91 KB
 
 
     '     Class Group
@@ -51,7 +51,7 @@
     ' 
     '         Function: ToString
     ' 
-    '         Sub: printValues, readGroup
+    '         Sub: printValues, readGroup, readGroupV2
     ' 
     ' 
     ' /********************************************************************************/

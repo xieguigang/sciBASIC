@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::958cfd1f7d41fa781be39086cd6133fb, Data_science\Visualization\Canvas3D\Device\Debugger.vb"
+﻿#Region "Microsoft.VisualBasic::f8018fcfd9745091a5f365ad3c58e8d7, Data_science\Visualization\Canvas3D\Device\Debugger.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 0.00%
     ' 
     '   Blank Lines: 19 (19.39%)
-    '     File Size: 3.79 KB
+    '     File Size: 3.80 KB
 
 
     '     Class Debugger

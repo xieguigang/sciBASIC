@@ -1,63 +1,63 @@
-﻿#Region "Microsoft.VisualBasic::f5452fb0194b94b2389551ab0c3472be, Data\BinaryData\HDF5\structure\DataObjects\Headers\ObjectHeaderMessage.vb"
+﻿#Region "Microsoft.VisualBasic::a9302630e52d3c1cd7259e505974d254, Data\BinaryData\HDF5\structure\DataObjects\Headers\ObjectHeaderMessage.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 156
-'    Code Lines: 128 (82.05%)
-' Comment Lines: 8 (5.13%)
-'    - Xml Docs: 0.00%
-' 
-'   Blank Lines: 20 (12.82%)
-'     File Size: 8.37 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Class ObjectHeaderMessage
-' 
-'         Properties: attributeMessage, continueMessage, dataspaceMessage, dataTypeMessage, fillValueMessage
-'                     fillValueOldMessage, filterPipelineMessage, groupMessage, headerLength, headerMessageData
-'                     headerMessageFlags, headerMessageType, headerMessageTypeNumber, lastModifiedMessage, layoutMessage
-'                     linkMessage, sizeOfHeaderMessageData
-' 
-'         Constructor: (+1 Overloads) Sub New
-' 
-'         Function: ToString
-' 
-'         Sub: printValues
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 224
+    '    Code Lines: 177 (79.02%)
+    ' Comment Lines: 19 (8.48%)
+    '    - Xml Docs: 36.84%
+    ' 
+    '   Blank Lines: 28 (12.50%)
+    '     File Size: 11.93 KB
+
+
+    '     Class ObjectHeaderMessage
+    ' 
+    '         Properties: attributeMessage, continueMessage, dataspaceMessage, dataTypeMessage, fillValueMessage
+    '                     fillValueOldMessage, filterPipelineMessage, groupMessage, headerLength, headerMessageData
+    '                     headerMessageFlags, headerMessageType, headerMessageTypeNumber, lastModifiedMessage, layoutMessage
+    '                     linkMessage, sizeOfHeaderMessageData
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
+    '         Function: resolveSharedMessage, ToString
+    ' 
+    '         Sub: printValues
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

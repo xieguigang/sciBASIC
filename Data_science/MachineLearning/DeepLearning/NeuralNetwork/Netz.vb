@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9de059e0c9219a5af0c76441a392924c, Data_science\MachineLearning\DeepLearning\NeuralNetwork\Netz.vb"
+﻿#Region "Microsoft.VisualBasic::cb68effdf0240d27bcd683ae3f5654f7, Data_science\MachineLearning\DeepLearning\NeuralNetwork\Netz.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 280
-    '    Code Lines: 226 (80.71%)
-    ' Comment Lines: 6 (2.14%)
-    '    - Xml Docs: 100.00%
+    '   Total Lines: 308
+    '    Code Lines: 199 (64.61%)
+    ' Comment Lines: 55 (17.86%)
+    '    - Xml Docs: 72.73%
     ' 
-    '   Blank Lines: 48 (17.14%)
-    '     File Size: 10.98 KB
+    '   Blank Lines: 54 (17.53%)
+    '     File Size: 12.17 KB
 
 
     '     Class Netz
@@ -48,11 +48,11 @@
     '         Properties: Bias, HiddenLayerCount, HiddenNeuronCount, InputNeuronCount, MaxOutputNeuronIndex
     '                     Neurons, Output, OutputNeuronCount, TotalError, Weights
     ' 
-    '         Constructor: (+1 Overloads) Sub New
+    '         Constructor: (+2 Overloads) Sub New
     ' 
-    '         Function: predict
+    '         Function: BuildDataBlock, EachFCLayer, EnsureRegressionTarget, (+2 Overloads) Load, predict
     ' 
-    '         Sub: addInput, adjustWeightsAndBias2, calculateError2, run, train
+    '         Sub: addInput, run, (+2 Overloads) Save, train
     ' 
     ' 
     ' /********************************************************************************/

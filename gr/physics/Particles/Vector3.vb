@@ -1,4 +1,4 @@
-#Region "Microsoft.VisualBasic::gr\physics\Particles\Vector3.vb"
+﻿#Region "Microsoft.VisualBasic::ef4d1f6e85b2b0d426bc86d0b4464259, gr\physics\Particles\Vector3.vb"
 
     ' Author:
     ' 
@@ -24,6 +24,35 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 179
+    '    Code Lines: 129 (72.07%)
+    ' Comment Lines: 27 (15.08%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 23 (12.85%)
+    '     File Size: 5.82 KB
+
+
+    ' Class Vector3
+    ' 
+    '     Properties: Magnitude, One, Zero
+    ' 
+    '     Constructor: (+3 Overloads) Sub New
+    '     Function: Clone, Cross, Dot, Normalize, Random
+    '               ToString
+    '     Operators: (+2 Overloads) -, (+3 Overloads) *, /, +
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

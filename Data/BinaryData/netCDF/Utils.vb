@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::300763d2eff4a84c10688abdf2bfca2a, Data\BinaryData\netCDF\Utils.vb"
+﻿#Region "Microsoft.VisualBasic::c9d69d36e91723f072c050db4e115ce2, Data\BinaryData\netCDF\Utils.vb"
 
     ' Author:
     ' 
@@ -34,19 +34,20 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 213
-    '    Code Lines: 129 (60.56%)
-    ' Comment Lines: 58 (27.23%)
-    '    - Xml Docs: 77.59%
+    '   Total Lines: 322
+    '    Code Lines: 210 (65.22%)
+    ' Comment Lines: 74 (22.98%)
+    '    - Xml Docs: 82.43%
     ' 
-    '   Blank Lines: 26 (12.21%)
-    '     File Size: 8.55 KB
+    '   Blank Lines: 38 (11.80%)
+    '     File Size: 14.94 KB
 
 
     ' Module Utils
     ' 
-    '     Function: CastNumber, GetRecordReader, notNetcdf, readName, readNumber
-    '               readType, readVector
+    '     Function: CastNumber, GetRecordReader, notNetcdf, pad4, ReadBE
+    '               readName, readNumber, readType, readVector, (+2 Overloads) sliceVector
+    '               toBE, ToBigEndianBytes
     ' 
     '     Sub: padding, writeName, writePadding
     ' 

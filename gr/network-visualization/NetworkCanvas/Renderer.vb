@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::40b6a511bfae8f090322218c5edc6403, gr\network-visualization\NetworkCanvas\Renderer.vb"
+﻿#Region "Microsoft.VisualBasic::54cfccddb37125e96c82537bb216d06c, gr\network-visualization\NetworkCanvas\Renderer.vb"
 
     ' Author:
     ' 
@@ -26,17 +26,33 @@
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
+
     ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 310
+    '    Code Lines: 200 (64.52%)
+    ' Comment Lines: 56 (18.06%)
+    '    - Xml Docs: 85.71%
+    ' 
+    '   Blank Lines: 54 (17.42%)
+    '     File Size: 12.10 KB
+
 
     ' Class Renderer
     ' 
-    '     Properties: ClientRegion, Font, ShowLabels, ZeroFilter
+    '     Properties: ClientRegion, Font, ShowLabels, View, ZeroFilter
     ' 
     '     Constructor: (+1 Overloads) Sub New
     ' 
-    '     Function: (+2 Overloads) GraphToScreen, ScreenToGraph
+    '     Function: GetNodeRadius, (+3 Overloads) GraphToScreen, IsOffscreen, NodeRadius, ScreenToGraph
     ' 
-    '     Sub: Clear, DirectDraw, doEdgeDrawing, drawEdge, drawNode
+    '     Sub: Clear, DirectDraw, doEdgeDrawing, drawEdge, DrawGrid
+    '          drawNode
     ' 
     ' /********************************************************************************/
 

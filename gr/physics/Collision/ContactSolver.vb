@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c5d1e3ec7307df4e88d493bad231bc3f, gr\physics\Collision\ContactSolver.vb"
+﻿#Region "Microsoft.VisualBasic::f9ed5d3d52794c3cd4c2ec14874bc9e0, gr\physics\Collision\ContactSolver.vb"
 
     ' Author:
     ' 
@@ -136,4 +136,3 @@ Namespace Collision
         End Sub
     End Module
 End Namespace
-

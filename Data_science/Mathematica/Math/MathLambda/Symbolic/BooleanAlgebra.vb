@@ -1,3 +1,63 @@
+﻿#Region "Microsoft.VisualBasic::8785a90690078cbf4965caa946b841d9, Data_science\Mathematica\Math\MathLambda\Symbolic\BooleanAlgebra.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 271
+    '    Code Lines: 197 (72.69%)
+    ' Comment Lines: 40 (14.76%)
+    '    - Xml Docs: 37.50%
+    ' 
+    '   Blank Lines: 34 (12.55%)
+    '     File Size: 11.41 KB
+
+
+    '     Module BooleanAlgebra
+    ' 
+    '         Function: combineStep, computePrimes, dedupe, implicantToExpr, implicantToString
+    '                   QMCSimplifyPOS, QMCSimplifySOP, QuineMcCluskey, selectCover, TruthTable
+    '         Class Implicant
+    ' 
+    ' 
+    ' 
+    ' 
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
 ' /********************************************************************************/
 '
 '     Module BooleanAlgebra
@@ -269,3 +329,4 @@ Namespace Symbolic
         End Function
     End Module
 End Namespace
+

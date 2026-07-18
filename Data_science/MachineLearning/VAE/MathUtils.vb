@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::53690f752d54b85ca521c7235673ecd1, Data_science\MachineLearning\VAE\MathUtils.vb"
+﻿#Region "Microsoft.VisualBasic::00a1e90a2a41aad4fb5bdca0f696a4de, Data_science\MachineLearning\VAE\MathUtils.vb"
 
     ' Author:
     ' 
@@ -34,19 +34,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 210
-    '    Code Lines: 142 (67.62%)
-    ' Comment Lines: 42 (20.00%)
-    '    - Xml Docs: 57.14%
+    '   Total Lines: 158
+    '    Code Lines: 105 (66.46%)
+    ' Comment Lines: 33 (20.89%)
+    '    - Xml Docs: 45.45%
     ' 
-    '   Blank Lines: 26 (12.38%)
-    '     File Size: 6.03 KB
+    '   Blank Lines: 20 (12.66%)
+    '     File Size: 4.61 KB
 
 
     ' Module MathUtils
     ' 
-    '     Function: Determinant, EuclideanDistance, LogSumExp, MatrixInverse, Randn
-    '               Sigmoid, Softmax
+    '     Function: Determinant, EuclideanDistance, MatrixInverse, Randn
     ' 
     ' /********************************************************************************/
 
@@ -182,58 +181,6 @@ Public Module MathUtils
             Next
         Next
         Return result
-    End Function
-
-    ''' <summary>
-    ''' 对数求和指数 (log-sum-exp) - 数值稳定
-    ''' </summary>
-    Public Function LogSumExp(values As Double()) As Double
-        Dim maxVal = Double.NegativeInfinity
-        For Each v In values
-            If v > maxVal Then maxVal = v
-        Next
-
-        If Double.IsNegativeInfinity(maxVal) Then Return Double.NegativeInfinity
-
-        Dim sumExp As Double = 0
-        For Each v In values
-            sumExp += std.Exp(v - maxVal)
-        Next
-        Return maxVal + std.Log(sumExp)
-    End Function
-
-    ''' <summary>
-    ''' Softmax 函数 (1D)
-    ''' </summary>
-    Public Function Softmax(logits As Double()) As Double()
-        Dim n = logits.Length
-        Dim maxVal = Double.NegativeInfinity
-        For Each v In logits
-            If v > maxVal Then maxVal = v
-        Next
-
-        Dim result = New Double(n - 1) {}
-        Dim sumExp As Double = 0
-        For i = 0 To n - 1
-            result(i) = std.Exp(logits(i) - maxVal)
-            sumExp += result(i)
-        Next
-        For i = 0 To n - 1
-            result(i) /= sumExp
-        Next
-        Return result
-    End Function
-
-    ''' <summary>
-    ''' Sigmoid 函数
-    ''' </summary>
-    Public Function Sigmoid(x As Double) As Double
-        If x >= 0 Then
-            Return 1.0 / (1.0 + std.Exp(-x))
-        Else
-            Dim ex = std.Exp(x)
-            Return ex / (1.0 + ex)
-        End If
     End Function
 
     ''' <summary>

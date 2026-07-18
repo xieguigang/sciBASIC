@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::40157802618c9beeea3365f3e841db5b, gr\physics\Joints\IConstraint.vb"
+﻿#Region "Microsoft.VisualBasic::f6477e1fdc357bc527da19cfb8f95ef5, gr\physics\Joints\IConstraint.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 75.00%
     ' 
     '   Blank Lines: 4 (21.05%)
-    '     File Size: 669 B
+    '     File Size: 667 B
 
 
     '     Interface IConstraint
@@ -71,4 +71,3 @@ Namespace Joints
         Sub SolvePosition(dt As Double)
     End Interface
 End Namespace
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fac9bcb6cab0c2d181fac97dd87ff8c7, gr\physics\Particles2D\Emitter.vb"
+﻿#Region "Microsoft.VisualBasic::3e58c9ea9987da9a2d371f965a50f658, gr\physics\Particles2D\Emitter.vb"
 
     ' Author:
     ' 
@@ -107,4 +107,3 @@ Namespace Particles2D
         End Function
     End Class
 End Namespace
-

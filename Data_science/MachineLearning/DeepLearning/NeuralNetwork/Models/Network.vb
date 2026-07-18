@@ -1,45 +1,62 @@
-﻿#Region "Microsoft.VisualBasic::fdfaaa354b70a13ceb542dffa60918ad, Data_science\MachineLearning\DeepLearning\NeuralNetwork\Models\Network.vb"
+﻿#Region "Microsoft.VisualBasic::0aadf1be156654c9be49e605a3ad9231, Data_science\MachineLearning\DeepLearning\NeuralNetwork\Models\Network.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' /********************************************************************************/
 
-'     Class Network
-' 
-'         Properties: Activations, HiddenLayer, InputLayer, LearnRate, LearnRateDecay
-'                     Momentum, OutputLayer, Truncate
-' 
-'         Constructor: (+2 Overloads) Sub New
-' 
-'         Function: Compute, ForwardPropagate, ToString
-' 
-'         Sub: BackPropagate, DoDropOut, TrainBatch
-' 
-' 
+    ' /********************************************************************************/
 
-' /********************************************************************************/
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 445
+    '    Code Lines: 234 (52.58%)
+    ' Comment Lines: 153 (34.38%)
+    '    - Xml Docs: 90.85%
+    ' 
+    '   Blank Lines: 58 (13.03%)
+    '     File Size: 18.87 KB
+
+
+    '     Class Network
+    ' 
+    '         Properties: Activations, HiddenLayer, InputLayer, LearnRate, LearnRateDecay
+    '                     Momentum, OutputLayer, Truncate
+    ' 
+    '         Constructor: (+2 Overloads) Sub New
+    ' 
+    '         Function: Compute, EnsureRegressionTarget, ForwardPropagate, (+2 Overloads) Load, ParseActivation
+    '                   ToString
+    ' 
+    '         Sub: BackPropagate, BuildViews, DoDropOut, (+2 Overloads) Save, TrainBatch
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

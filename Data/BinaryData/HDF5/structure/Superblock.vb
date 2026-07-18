@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::806232cc522de1f4e6195df0f114f7c8, Data\BinaryData\HDF5\structure\Superblock.vb"
+﻿#Region "Microsoft.VisualBasic::0bf5c0d23d592dfd3797d8e2fcc079c1, Data\BinaryData\HDF5\structure\Superblock.vb"
 
     ' Author:
     ' 
@@ -34,21 +34,21 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 209
-    '    Code Lines: 144 (68.90%)
-    ' Comment Lines: 27 (12.92%)
-    '    - Xml Docs: 66.67%
+    '   Total Lines: 264
+    '    Code Lines: 177 (67.05%)
+    ' Comment Lines: 43 (16.29%)
+    '    - Xml Docs: 55.81%
     ' 
-    '   Blank Lines: 38 (18.18%)
-    '     File Size: 9.42 KB
+    '   Blank Lines: 44 (16.67%)
+    '     File Size: 11.93 KB
 
 
     '     Class Superblock
     ' 
     '         Properties: addressOfFileFreeSpaceInfo, baseAddress, driverInformationBlockAddress, endOfFileAddress, fileConsistencyFlags
     '                     globalHeaps, groupInternalNodeK, groupLeafNodeK, indexedStorageInterNodeK, magic
-    '                     rootGroupSymbolTableEntry, sizeOfLengths, sizeOfOffsets, totalSuperBlockSize, versionOfFileFreeSpaceStorage
-    '                     versionOfRootGroupSymbolTableEntry, versionOfShardedHeaderMessageFormat, versionOfSuperblock
+    '                     rootGroupHeaderAddress, rootGroupObjectHeaderAddressV2, rootGroupSymbolTableEntry, sizeOfLengths, sizeOfOffsets
+    '                     totalSuperBlockSize, versionOfFileFreeSpaceStorage, versionOfRootGroupSymbolTableEntry, versionOfShardedHeaderMessageFormat, versionOfSuperblock
     ' 
     '         Constructor: (+1 Overloads) Sub New
     ' 

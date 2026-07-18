@@ -1,4 +1,69 @@
-﻿' ============================================================================
+﻿#Region "Microsoft.VisualBasic::1f4c96fb017cece83d7a55a311a20bf7, Data_science\Mathematica\Math\CVODE_Solver\CVODESolver.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 934
+    '    Code Lines: 712 (76.23%)
+    ' Comment Lines: 97 (10.39%)
+    '    - Xml Docs: 47.42%
+    ' 
+    '   Blank Lines: 125 (13.38%)
+    '     File Size: 32.14 KB
+
+
+    ' Class CVODESolver
+    ' 
+    '     Properties: CurrentOrder, CurrentState, CurrentStep, CurrentTime, LinearSolves
+    '                 NewtonIterations, RHSFunctionEvaluations, TotalSteps
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    ' 
+    '     Function: [Step], AttemptStep, BuildAndFactorizeSystem, ComputeJacobian, EstimateAdamsError
+    '               EstimateBDFFrror, EstimateInitialStep, Factorial, Initialize, Integrate
+    '               IntegrateLagrangeBasis, LagrangeBasisDeriv, LagrangeBasisValue, PolyEval, PolyFromRoots
+    '               PolyIntegrate, PolyMul
+    ' 
+    '     Sub: AllocateResources, Commit, ComputeErrorWeights, ComputeNumericalJacobian, (+2 Overloads) Dispose
+    '          Predict, (+2 Overloads) SetAbsoluteTolerance, SetJacobianFunction, SetMaxStep, SetMinStep
+    '          SetRelativeTolerance
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+' ============================================================================
 ' CVODESolver.vb - CVODE常微分方程求解器核心模块（重写版）
 ' 采用经典变步长、变阶数多步法（Adams 非刚性 / BDF 刚性）。
 ' 预测-校正系数通过 Lagrange / 差商在每一步从真实历史点直接计算，
@@ -932,3 +997,4 @@ Public Class CVODESolver : Implements IDisposable
 #End Region
 
 End Class
+

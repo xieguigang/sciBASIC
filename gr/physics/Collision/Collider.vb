@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1f583b1a88ceb78a45209cd97c252342, gr\physics\Collision\Collider.vb"
+﻿#Region "Microsoft.VisualBasic::76363f66d749458b64d07559aa36e5bb, gr\physics\Collision\Collider.vb"
 
     ' Author:
     ' 
@@ -281,4 +281,3 @@ Namespace Collision
         End Function
     End Class
 End Namespace
-

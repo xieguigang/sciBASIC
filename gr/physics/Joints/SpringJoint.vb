@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e4564665ebcde5859856a5cb2e762d4d, gr\physics\Joints\SpringJoint.vb"
+﻿#Region "Microsoft.VisualBasic::36b71413d06d09236cbb2bd23a82883b, gr\physics\Joints\SpringJoint.vb"
 
     ' Author:
     ' 
@@ -114,4 +114,3 @@ Namespace Joints
         End Sub
     End Class
 End Namespace
-

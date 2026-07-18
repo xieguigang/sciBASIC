@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5dcfdd321c8bd859bf0e8cf2b4dfeeaa, gr\network-visualization\network_layout\ForceDirected\Planner.vb"
+﻿#Region "Microsoft.VisualBasic::d4cb0ab86b09c9e0874909778666f40d, gr\network-visualization\network_layout\ForceDirected\Planner.vb"
 
     ' Author:
     ' 
@@ -34,18 +34,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 227
-    '    Code Lines: 161 (70.93%)
-    ' Comment Lines: 28 (12.33%)
-    '    - Xml Docs: 67.86%
+    '   Total Lines: 240
+    '    Code Lines: 170 (70.83%)
+    ' Comment Lines: 31 (12.92%)
+    '    - Xml Docs: 70.97%
     ' 
-    '   Blank Lines: 38 (16.74%)
-    '     File Size: 8.88 KB
+    '   Blank Lines: 39 (16.25%)
+    '     File Size: 9.51 KB
 
 
     '     Class Planner
     ' 
-    '         Constructor: (+1 Overloads) Sub New
+    '         Constructor: (+2 Overloads) Sub New
     '         Sub: Collide, RejectRegions, reset, runAttraction, runRepulsive
     '              setPosition
     ' 

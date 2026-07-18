@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::25d62ff09bdcd334d5413aae5b78888c, Data\BinaryData\netCDF\Components\Header.vb"
+﻿#Region "Microsoft.VisualBasic::8fcbd8f5746dbd48cf8927b3a8e9b652, Data\BinaryData\netCDF\Components\Header.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 107
-    '    Code Lines: 41 (38.32%)
-    ' Comment Lines: 52 (48.60%)
-    '    - Xml Docs: 86.54%
+    '   Total Lines: 110
+    '    Code Lines: 43 (39.09%)
+    ' Comment Lines: 53 (48.18%)
+    '    - Xml Docs: 84.91%
     ' 
-    '   Blank Lines: 14 (13.08%)
-    '     File Size: 3.63 KB
+    '   Blank Lines: 14 (12.73%)
+    '     File Size: 3.78 KB
 
 
     '     Class Header

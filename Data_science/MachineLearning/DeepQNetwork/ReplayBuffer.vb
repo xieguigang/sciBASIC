@@ -1,3 +1,66 @@
+﻿#Region "Microsoft.VisualBasic::3ea93769df236f7e65bbf0e224f37019, Data_science\MachineLearning\DeepQNetwork\ReplayBuffer.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 72
+    '    Code Lines: 48 (66.67%)
+    ' Comment Lines: 12 (16.67%)
+    '    - Xml Docs: 83.33%
+    ' 
+    '   Blank Lines: 12 (16.67%)
+    '     File Size: 1.99 KB
+
+
+    ' Structure Experience
+    ' 
+    ' 
+    ' 
+    ' Class ReplayBuffer
+    ' 
+    '     Properties: Count
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    ' 
+    '     Function: Sample
+    ' 
+    '     Sub: Add, Clear
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
 ' Copyright (c) 2018 GPL3 Licensed
 ' 经验回放缓冲：环形缓冲存储 (s, a, r, s', done) 转移样本，支持小批量随机抽取。
 
@@ -70,3 +133,4 @@ Public Class ReplayBuffer
         filled = 0
     End Sub
 End Class
+

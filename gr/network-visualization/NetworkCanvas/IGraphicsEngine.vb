@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3444666dfe24851c4ed4969b0ed2f69f, gr\network-visualization\NetworkCanvas\IGraphicsEngine.vb"
+﻿#Region "Microsoft.VisualBasic::53ca2b234d8f673c311e0d0ac5656ee8, gr\network-visualization\NetworkCanvas\IGraphicsEngine.vb"
 
     ' Author:
     ' 
@@ -34,18 +34,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 4
-    '    Code Lines: 3 (75.00%)
-    ' Comment Lines: 0 (0.00%)
-    '    - Xml Docs: 0.00%
+    '   Total Lines: 8
+    '    Code Lines: 4 (50.00%)
+    ' Comment Lines: 3 (37.50%)
+    '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 1 (25.00%)
-    '     File Size: 85 B
+    '   Blank Lines: 1 (12.50%)
+    '     File Size: 281 B
 
 
     ' Interface IGraphicsEngine
     ' 
-    '     Properties: ShowLabels
+    '     Properties: ShowLabels, View
     ' 
     ' /********************************************************************************/
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1b01a6586205af7813a105599a4a8c07, Data_science\Mathematica\Math\Math\Scripting\R\base.vb"
+﻿#Region "Microsoft.VisualBasic::6b282dee1a45c1409ba37e0d9d927499, Data_science\Mathematica\Math\Math\Scripting\R\base.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 54
-    '    Code Lines: 40 (74.07%)
-    ' Comment Lines: 0 (0.00%)
+    '   Total Lines: 60
+    '    Code Lines: 43 (71.67%)
+    ' Comment Lines: 2 (3.33%)
     '    - Xml Docs: 0.00%
     ' 
-    '   Blank Lines: 14 (25.93%)
-    '     File Size: 1.83 KB
+    '   Blank Lines: 15 (25.00%)
+    '     File Size: 2.19 KB
 
 
     '     Module base

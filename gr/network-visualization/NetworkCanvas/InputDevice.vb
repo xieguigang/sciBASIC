@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1f7f70edce49dbaf0313b7a9183dccb3, gr\network-visualization\NetworkCanvas\InputDevice.vb"
+﻿#Region "Microsoft.VisualBasic::c89c7d87bcc20a8663a73372b967987f, gr\network-visualization\NetworkCanvas\InputDevice.vb"
 
     ' Author:
     ' 
@@ -26,7 +26,22 @@
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
+
     ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 164
+    '    Code Lines: 111 (67.68%)
+    ' Comment Lines: 31 (18.90%)
+    '    - Xml Docs: 35.48%
+    ' 
+    '   Blank Lines: 22 (13.41%)
+    '     File Size: 5.78 KB
+
 
     ' Class InputDevice
     ' 

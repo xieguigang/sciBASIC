@@ -1,10 +1,55 @@
-﻿#Region "Microsoft.VisualBasic::5cab8d942e2473ae56fecef99ef0629a, Data_science\Mathematica\Math\MathLambda\test\SymbolicTest.vb"
+﻿#Region "Microsoft.VisualBasic::47961646d8c0c4242db8da7186cce6f4, Data_science\Mathematica\Math\MathLambda\test\SymbolicTest.vb"
 
-'     Module SymbolicTest
-' 
-'         Verification examples for the symbolic computation engine.
-' 
-' /********************************************************************************/
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 230
+    '    Code Lines: 173 (75.22%)
+    ' Comment Lines: 7 (3.04%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 50 (21.74%)
+    '     File Size: 9.38 KB
+
+
+    ' Module SymbolicTest
+    ' 
+    '     Sub: Main, test_AutoFactor, test_Boolean, test_Derivative, test_EnhancedIntegration
+    '          test_Integration, test_Limit, test_MultivariateFactor, test_Polynomial, test_Rationalize
+    '          test_Simplify, test_Substitute, test_Taylor, unit_test
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

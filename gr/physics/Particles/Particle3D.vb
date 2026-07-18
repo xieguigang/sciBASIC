@@ -1,4 +1,4 @@
-#Region "Microsoft.VisualBasic::gr\physics\Particles\Particle3D.vb"
+﻿#Region "Microsoft.VisualBasic::b2f7c33a82c04fcbb2a9fe97025e0919, gr\physics\Particles\Particle3D.vb"
 
     ' Author:
     ' 
@@ -24,6 +24,30 @@
     ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 29
+    '    Code Lines: 14 (48.28%)
+    ' Comment Lines: 11 (37.93%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 4 (13.79%)
+    '     File Size: 971 B
+
+
+    ' Class Particle3D
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

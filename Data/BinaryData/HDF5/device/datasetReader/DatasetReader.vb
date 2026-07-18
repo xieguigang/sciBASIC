@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::27028d22d4ce5c8bf7bfd6da65e406d8, Data\BinaryData\HDF5\device\datasetReader\DatasetReader.vb"
+﻿#Region "Microsoft.VisualBasic::12d09299255cdc3292adbc0a2c17d0f1, Data\BinaryData\HDF5\device\datasetReader\DatasetReader.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 207
-    '    Code Lines: 151 (72.95%)
-    ' Comment Lines: 26 (12.56%)
-    '    - Xml Docs: 80.77%
+    '   Total Lines: 204
+    '    Code Lines: 146 (71.57%)
+    ' Comment Lines: 29 (14.22%)
+    '    - Xml Docs: 72.41%
     ' 
-    '   Blank Lines: 30 (14.49%)
-    '     File Size: 9.23 KB
+    '   Blank Lines: 29 (14.22%)
+    '     File Size: 9.18 KB
 
 
     '     Module DatasetReader

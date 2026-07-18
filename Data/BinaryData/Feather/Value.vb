@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7be2324ea88806e5ef1a106ce1101276, Data\BinaryData\Feather\Value.vb"
+﻿#Region "Microsoft.VisualBasic::3990c4f0c79dad1884dd1b640eff44b6, Data\BinaryData\Feather\Value.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 2109
-    '    Code Lines: 1592 (75.49%)
+    '   Total Lines: 2113
+    '    Code Lines: 1595 (75.49%)
     ' Comment Lines: 64 (3.03%)
     '    - Xml Docs: 60.94%
     ' 
-    '   Blank Lines: 453 (21.48%)
-    '     File Size: 83.27 KB
+    '   Blank Lines: 454 (21.49%)
+    '     File Size: 83.59 KB
 
 
     ' Class Value

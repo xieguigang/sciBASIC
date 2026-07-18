@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ed282dcae4dd55571c496b2e613e4d84, Data_science\MachineLearning\MLDebugger\ANN\ROC.vb"
+﻿#Region "Microsoft.VisualBasic::9a94d0b9d90a4389903d2ebe5b87aac4, Data_science\MachineLearning\MLDebugger\ANN\ROC.vb"
 
     ' Author:
     ' 
@@ -34,18 +34,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 55
-    '    Code Lines: 47 (85.45%)
+    '   Total Lines: 24
+    '    Code Lines: 21 (87.50%)
     ' Comment Lines: 0 (0.00%)
     '    - Xml Docs: 0.00%
     ' 
-    '   Blank Lines: 8 (14.55%)
-    '     File Size: 2.28 KB
+    '   Blank Lines: 3 (12.50%)
+    '     File Size: 1.04 KB
 
 
     ' Module ROC
     ' 
-    '     Function: AUC, CreateValidateResult, ROC
+    '     Function: ROC
     ' 
     ' /********************************************************************************/
 
@@ -58,19 +58,6 @@ Imports Microsoft.VisualBasic.MachineLearning.NeuralNetwork
 Imports Microsoft.VisualBasic.Text.Xml.Models
 
 Public Module ROC
-
-    <Extension>
-    Public Iterator Function CreateValidateResult(network As Network, validateSet As IEnumerable(Of TrainingSample)) As IEnumerable(Of Validate)
-        For Each sample As TrainingSample In validateSet
-            Dim predicts = network.Compute(sample.sample)
-            Dim actuals = sample.classify
-
-            Yield New Validate With {
-                .actuals = actuals,
-                .predicts = predicts
-            }
-        Next
-    End Function
 
     <Extension>
     Public Function ROC(result As IEnumerable(Of Validate), range As DoubleRange, attribute%, Optional n% = 20) As Validation()
@@ -86,23 +73,5 @@ Public Module ROC
                         Not threshold.Sensibility.IsNaNImaginary
                 End Function) _
          .ToArray
-    End Function
-
-    <Extension>
-    Public Function AUC(training As TrainingUtils) As Double()
-        Dim network As Network = training.NeuronNetwork
-        Dim result As Validate() = network.CreateValidateResult(training.TrainingSet).ToArray
-        Dim attributes As Double() = result(Scan0).actuals
-        Dim evalAUC = Function(null As Double, i As Integer) As Double
-                          Dim validations = result.ROC(New Double() {0, 1}, attribute:=i)
-                          Dim AUCValue = Validation.AUC(validations)
-
-                          Return AUCValue
-                      End Function
-        Dim validateAUCs = attributes _
-            .Select(evalAUC) _
-            .ToArray
-
-        Return validateAUCs
     End Function
 End Module

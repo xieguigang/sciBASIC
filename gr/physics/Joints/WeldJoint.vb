@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::07f06bb26c76b26030bce3d834694ae4, gr\physics\Joints\WeldJoint.vb"
+﻿#Region "Microsoft.VisualBasic::0fd3d2b6ae25f143b87254569383d756, gr\physics\Joints\WeldJoint.vb"
 
     ' Author:
     ' 
@@ -145,4 +145,3 @@ Namespace Joints
         End Function
     End Class
 End Namespace
-

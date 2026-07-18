@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bbca8116c40f4b06ac73e0a009cb3ea0, gr\physics\Joints\PrismaticJoint.vb"
+﻿#Region "Microsoft.VisualBasic::d2f385e0e0381f2f739956ff2d2c989a, gr\physics\Joints\PrismaticJoint.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 55.56%
     ' 
     '   Blank Lines: 12 (15.79%)
-    '     File Size: 2.82 KB
+    '     File Size: 2.81 KB
 
 
     '     Class PrismaticJoint
@@ -132,4 +132,3 @@ Namespace Joints
         End Function
     End Class
 End Namespace
-

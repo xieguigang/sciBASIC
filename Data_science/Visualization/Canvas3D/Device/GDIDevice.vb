@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::240abe1124763343fc4ff18eafbc9d94, Data_science\Visualization\Canvas3D\Device\GDIDevice.vb"
+﻿#Region "Microsoft.VisualBasic::e049cbb33b79781454514956a82a019a, Data_science\Visualization\Canvas3D\Device\GDIDevice.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 80.49%
     ' 
     '   Blank Lines: 33 (13.92%)
-    '     File Size: 7.68 KB
+    '     File Size: 7.71 KB
 
 
     '     Class GDIDevice

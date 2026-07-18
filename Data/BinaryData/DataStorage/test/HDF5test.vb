@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::68854b1dac6d0150133a56b17793d6de, Data\BinaryData\DataStorage\test\HDF5test.vb"
+﻿#Region "Microsoft.VisualBasic::4656e6796c50bf5d31a07d7a456e5848, Data\BinaryData\DataStorage\test\HDF5test.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 144
-    '    Code Lines: 91 (63.19%)
-    ' Comment Lines: 14 (9.72%)
+    '   Total Lines: 153
+    '    Code Lines: 97 (63.40%)
+    ' Comment Lines: 15 (9.80%)
     '    - Xml Docs: 0.00%
     ' 
-    '   Blank Lines: 39 (27.08%)
-    '     File Size: 5.27 KB
+    '   Blank Lines: 41 (26.80%)
+    '     File Size: 5.61 KB
 
 
     '     Class ParseTest

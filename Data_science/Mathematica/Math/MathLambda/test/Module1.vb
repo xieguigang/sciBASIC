@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c3026202b75479261d80b20e0784f498, Data_science\Mathematica\Math\MathLambda\test\Module1.vb"
+﻿#Region "Microsoft.VisualBasic::879f75a008309217bf8ced34ee010353, Data_science\Mathematica\Math\MathLambda\test\Module1.vb"
 
     ' Author:
     ' 
@@ -45,7 +45,7 @@
 
     ' Module Module1
     ' 
-    '     Sub: complexExpressionTest, Main, mathLambdaTest, simpleExpressionTest
+    '     Sub: complexExpressionTest, Main1, mathLambdaTest, simpleExpressionTest
     ' 
     ' /********************************************************************************/
 

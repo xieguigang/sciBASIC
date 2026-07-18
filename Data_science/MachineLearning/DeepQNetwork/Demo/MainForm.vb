@@ -1,3 +1,63 @@
+﻿#Region "Microsoft.VisualBasic::d203d32eb9e276b77e61bcf480e6ce1c, Data_science\MachineLearning\DeepQNetwork\Demo\MainForm.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 482
+    '    Code Lines: 390 (80.91%)
+    ' Comment Lines: 32 (6.64%)
+    '    - Xml Docs: 12.50%
+    ' 
+    '   Blank Lines: 60 (12.45%)
+    '     File Size: 18.54 KB
+
+
+    ' Class MainForm
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    ' 
+    '     Function: MakeButton, MakeLabel, W2S
+    ' 
+    '     Sub: BuildControls, DrawBody, DrawChart, DrawGoal, DrawGrid
+    '          DrawSkeleton, DrawWorld, EnableDoubleBuffer, OnDemo, OnReset
+    '          OnSpeed, OnStart, OnTick, StepOnce, UpdateBadge
+    '          UpdateHUD
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
 ' Copyright (c) 2018 GPL3 Licensed
 ' DQN 火柴人强化学习可视化 Demo：游戏循环驱动 智能体→环境→渲染，
 ' GDI+ 绘制地形与火柴人（相机水平跟随）、HUD、实时学习曲线。
@@ -480,4 +540,3 @@ Public Class MainForm : Inherits Form
     End Sub
 
 End Class
-

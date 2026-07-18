@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e0bd8b6504246b7ee457cea621b5d248, Data_science\Mathematica\Math\Math\Scripting\Expression\Expression\Factorial.vb"
+﻿#Region "Microsoft.VisualBasic::bac56f371ddf1f94e1da336cafe8e9ca, Data_science\Mathematica\Math\Math\Scripting\Expression\Expression\Factorial.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 6 (21.43%)
-    '     File Size: 844 B
+    '     File Size: 856 B
 
 
     '     Class Factorial

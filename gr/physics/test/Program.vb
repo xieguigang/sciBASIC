@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::458dff3015ba54b257d4cc53cf466f78, gr\physics\test\Program.vb"
+﻿#Region "Microsoft.VisualBasic::8a3a10235ab2be4167db9a26225baafc, gr\physics\test\Program.vb"
 
     ' Author:
     ' 
@@ -35,18 +35,17 @@
     ' Code Statistics:
 
     '   Total Lines: 73
-    '    Code Lines: 31 (42.47%)
-    ' Comment Lines: 16 (21.92%)
+    '    Code Lines: 8 (10.96%)
+    ' Comment Lines: 39 (53.42%)
     '    - Xml Docs: 0.00%
     ' 
     '   Blank Lines: 26 (35.62%)
-    '     File Size: 2.18 KB
+    '     File Size: 2.20 KB
 
 
     ' Module Program
     ' 
-    '     Sub: add, cl, g, Main, repl
-    '          reverse
+    '     Sub: Main
     ' 
     ' /********************************************************************************/
 
