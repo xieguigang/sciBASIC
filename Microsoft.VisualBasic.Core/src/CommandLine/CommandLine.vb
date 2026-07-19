@@ -936,8 +936,15 @@ Namespace CommandLine
             Return commandlineStr.GetTokens
         End Function
 
-        Public Shared Function BuildFromArguments(args As String()) As CommandLine
-            Return Parsers.TryParse(args, False, rawInput:=args.Select(Function(s) s.CLIToken).JoinBy(" "))
+        Public Shared Function BuildFromArguments(args As String(), Optional NoSubCommand As Boolean = False) As CommandLine
+            If NoSubCommand Then
+                args = Linq.c({"RUN"}, args).ToArray
+            End If
+
+            Dim argStr As String = args.Select(Function(s) s.CLIToken).JoinBy(" ")
+            Dim cli As CommandLine = Parsers.TryParse(args, False, rawInput:=argStr)
+
+            Return cli
         End Function
 
         Public Shared Function BuildFromArguments(name As String, args As String()) As CommandLine

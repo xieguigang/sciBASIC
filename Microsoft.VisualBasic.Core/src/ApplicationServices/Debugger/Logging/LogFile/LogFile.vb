@@ -155,8 +155,17 @@ Namespace ApplicationServices.Debugging.Logging
             Return New FileStream(path, If(append, FileMode.Append, FileMode.Truncate), access:=FileAccess.Write, share:=FileShare.ReadWrite)
         End Function
 
-        Public Shared Function Open(filepath As String, Optional append As Boolean = False) As LogFile
-            Return New LogFile(filepath, append:=append)
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="filepath"></param>
+        ''' <param name="append"></param>
+        ''' <param name="split">
+        ''' LoggingDriver(header As <see cref="String"/>, message As <see cref="String"/>, level As <see cref="MSG_TYPES"/>)
+        ''' </param>
+        ''' <returns></returns>
+        Public Shared Function Open(filepath As String, Optional append As Boolean = False, Optional split As LoggingDriver = Nothing) As LogFile
+            Return New LogFile(filepath, append:=append, split:=split)
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -244,11 +253,21 @@ Namespace ApplicationServices.Debugging.Logging
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Sub WriteLine(Optional s As String = "")
             Call WriteLine(s, type:=MSG_TYPES.INF, obj:="")
+
+            If Not split Is Nothing Then
+                Call split("", s, MSG_TYPES.ERR)
+            End If
         End Sub
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Sub WriteLine(s As String())
-            Call WriteLine(String.Join(vbCrLf, s), type:=MSG_TYPES.INF, obj:="")
+            Dim text As String = String.Join(vbCrLf, s)
+
+            Call WriteLine(text, type:=MSG_TYPES.INF, obj:="")
+
+            If Not split Is Nothing Then
+                Call split("", text, MSG_TYPES.ERR)
+            End If
         End Sub
 
         ''' <summary>
@@ -260,7 +279,13 @@ Namespace ApplicationServices.Debugging.Logging
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Sub WriteLine(s As String, ParamArray args() As String)
-            Call WriteLine(s, type:=MSG_TYPES.INF, obj:=If(String.IsNullOrEmpty(args(0)), "", args(0)))
+            Dim objId As String = If(String.IsNullOrEmpty(args(0)), "", args(0))
+
+            Call WriteLine(s, type:=MSG_TYPES.INF, obj:=objId)
+
+            If Not split Is Nothing Then
+                Call split(objId, s, MSG_TYPES.ERR)
+            End If
         End Sub
 
         ''' <summary>
