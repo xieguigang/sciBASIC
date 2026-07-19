@@ -71,6 +71,7 @@ Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ApplicationServices
 Imports Microsoft.VisualBasic.CommandLine.Parsers
+Imports Microsoft.VisualBasic.CommandLine.Reflection
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Language
@@ -588,7 +589,7 @@ Namespace CommandLine
         End Function
 
         ''' <summary>
-        ''' Gets the String value Of the specified field.
+        ''' Gets the String value Of the specified argument.
         ''' </summary>
         ''' <returns></returns>
         ''' 
@@ -833,6 +834,10 @@ Namespace CommandLine
                     }
 
             Return list
+        End Function
+
+        Public Function CreateOpts(Of T As {New, Class})() As T
+            Return SetOpt.CreateOpt(Of T)(Me)
         End Function
 
         ''' <summary>

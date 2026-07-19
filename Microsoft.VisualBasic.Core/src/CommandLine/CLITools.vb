@@ -141,7 +141,7 @@ Namespace CommandLine
         ''' </summary>
         ''' <returns></returns>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Function Args() As CommandLine
+        Public Function GetArgs() As CommandLine
             Return App.CommandLine
         End Function
 
@@ -324,7 +324,6 @@ Namespace CommandLine
         ''' <param name="args"></param>
         ''' <param name="bFlags"></param>
         ''' <returns></returns>
-        <ExportAPI("CreateObject")>
         Public Function CreateObject(name$, args As IEnumerable(Of ValueTuple), Optional bFlags As IEnumerable(Of String) = Nothing) As CommandLine
             Dim parameters As New List(Of NamedValue(Of String))
             Dim tokens As New List(Of String) From {name}
