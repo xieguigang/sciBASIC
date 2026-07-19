@@ -1,61 +1,59 @@
 ﻿#Region "Microsoft.VisualBasic::814525a3d02a6d43c646a88bceb01db7, mime\application%json\Serializer\ObjectSerializer\ObjectSerializer.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 119
-    '    Code Lines: 91 (76.47%)
-    ' Comment Lines: 15 (12.61%)
-    '    - Xml Docs: 86.67%
-    ' 
-    '   Blank Lines: 13 (10.92%)
-    '     File Size: 4.54 KB
+' Summaries:
 
 
-    ' Module ObjectSerializer
-    ' 
-    '     Function: GetJsonElement, populateArrayJson, populateTableJson
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 119
+'    Code Lines: 91 (76.47%)
+' Comment Lines: 15 (12.61%)
+'    - Xml Docs: 86.67%
+' 
+'   Blank Lines: 13 (10.92%)
+'     File Size: 4.54 KB
+
+
+' Module ObjectSerializer
+' 
+'     Function: GetJsonElement, populateArrayJson, populateTableJson
+' 
+' /********************************************************************************/
 
 #End Region
 
-Imports System.Reflection
 Imports System.Runtime.CompilerServices
-Imports System.Runtime.Serialization
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
-Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel.DataFramework
+Imports Microsoft.VisualBasic.Emit.Delegates
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MIME.application.json.Javascript
@@ -131,7 +129,7 @@ Public Module ObjectSerializer
             schema = obj.GetType
         End If
 
-        If schema.IsArray OrElse schema.IsInheritsFrom(GetType(List(Of )), strict:=False) Then
+        If schema.IsArray OrElse schema.ImplementInterface(Of IList) Then
             Return schema.populateArrayJson(obj, opt)
         ElseIf DataFramework.IsPrimitive(schema) Then
             If schema Is GetType(Date) Then
