@@ -1,67 +1,70 @@
 ﻿#Region "Microsoft.VisualBasic::c20ce6cb29d2cf1b7db251d1c2529176, Microsoft.VisualBasic.Core\src\CommandLine\Stream.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 101
-    '    Code Lines: 58 (57.43%)
-    ' Comment Lines: 31 (30.69%)
-    '    - Xml Docs: 54.84%
-    ' 
-    '   Blank Lines: 12 (11.88%)
-    '     File Size: 4.22 KB
+' Summaries:
 
 
-    '     Enum FileTypes
-    ' 
-    '         DiskFile, MemoryFile, PipelineFile
-    ' 
-    '  
-    ' 
-    ' 
-    ' 
-    '     Module StreamExtensions
-    ' 
-    '         Function: FileType, OpenForRead, OpenForWrite
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 101
+'    Code Lines: 58 (57.43%)
+' Comment Lines: 31 (30.69%)
+'    - Xml Docs: 54.84%
+' 
+'   Blank Lines: 12 (11.88%)
+'     File Size: 4.22 KB
+
+
+'     Enum FileTypes
+' 
+'         DiskFile, MemoryFile, PipelineFile
+' 
+'  
+' 
+' 
+' 
+'     Module StreamExtensions
+' 
+'         Function: FileType, OpenForRead, OpenForWrite
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.IO
+
+#If WINDOWS Then
 Imports System.IO.MemoryMappedFiles
+#End If
 
 Namespace CommandLine
 
@@ -98,7 +101,7 @@ Namespace CommandLine
             If reference.TextEquals("std_in://") Then
                 Return Console.OpenStandardInput
             ElseIf reference.TextEquals("std_out://") Then
-                Throw New InvalidProgramException()
+                Throw New InvalidProgramException("can not read data from the stdout stream!")
             ElseIf reference.ToLower.StartsWith("memory://") Then
 #If WINDOWS Then
                 Dim view As Stream
@@ -124,7 +127,7 @@ Namespace CommandLine
         ''' <returns></returns>
         Public Function OpenForWrite(reference As String, Optional size& = 512 * 1024 * 1024) As Stream
             If reference.TextEquals("std_in://") Then
-                Throw New InvalidProgramException
+                Throw New InvalidProgramException("can not write data into the stdin stream!")
             ElseIf reference.TextEquals("std_out://") Then
                 Return Console.OpenStandardOutput
             ElseIf reference.ToLower.StartsWith("memory://") Then

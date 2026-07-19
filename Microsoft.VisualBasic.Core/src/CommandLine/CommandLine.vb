@@ -588,7 +588,7 @@ Namespace CommandLine
         End Function
 
         ''' <summary>
-        ''' Gets the String value Of the specified field.
+        ''' Gets the String value Of the specified argument.
         ''' </summary>
         ''' <returns></returns>
         ''' 
