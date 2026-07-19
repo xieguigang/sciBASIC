@@ -7,10 +7,14 @@ Namespace CommandLine.Reflection
 
         Public Function CreateOpt(Of T As {New, Class})(args As CommandLine) As T
             Dim obj As Object = New T
-            Dim data As PropertyInfo() = DataFramework.Schema(Of T)(PropertyAccess.Writeable, nonIndex:=True, binds:=PublicProperty).Values.ToArray
             Dim objVal As Object
 
-            For Each field As PropertyInfo In data
+            For Each data As KeyValuePair(Of String, PropertyInfo) In DataFramework.Schema(Of T)(
+                flag:=PropertyAccess.Writeable,
+                nonIndex:=True,
+                binds:=PublicProperty
+            )
+                Dim field As PropertyInfo = data.Value
                 Dim opt As OptAttribute = field.GetCustomAttribute(Of OptAttribute)
 
                 If opt Is Nothing Then
