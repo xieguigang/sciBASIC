@@ -65,7 +65,7 @@ Namespace Framework.Optimization.LBFGSB
         Public newact_set As List(Of Integer)
         Public fv_set As List(Of Integer)
 
-        Public Shared ReadOnly eps As Double = Microsoft.VisualBasic.Math.Ulp(1.0)
+        Public Shared ReadOnly eps As Double = NumeralSystem.Ulp(1.0)
 
         Public Shared Function search_greater(brk As Double(), ord As List(Of Integer), t As Double, start As Integer) As Integer
             Dim nord = ord.Count

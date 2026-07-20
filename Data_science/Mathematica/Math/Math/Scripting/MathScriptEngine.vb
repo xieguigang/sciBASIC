@@ -4,6 +4,7 @@ Imports System.Linq
 Imports System.Text.RegularExpressions
 Imports Microsoft.VisualBasic.Math.Scripting.MathExpression
 Imports Microsoft.VisualBasic.Math.Scripting.MathExpression.Impl
+Imports std = System.Math
 
 Namespace Microsoft.VisualBasic.Math.Scripting
 
@@ -108,19 +109,16 @@ Namespace Microsoft.VisualBasic.Math.Scripting
 
         Private Sub RegisterFunction(name As String, params() As String, body As Expression)
             funcs(name) = New UserFunction With {.params = params, .body = body}
-            Try
-                engine.AddFunction(name, params, Function(args) EvalUserFunc(name, args))
-            Catch
-            End Try
         End Sub
 
         Private Function EvalUserFunc(name As String, args As Double()) As Double
             Dim f = funcs(name)
             Dim saved As New Dictionary(Of String, Double)()
             For i = 0 To f.params.Length - 1
-                If engine.symbols.ContainsKey(f.params(i)) Then
-                    saved(f.params(i)) = engine.symbols(f.params(i))
-                End If
+                Try
+                    saved(f.params(i)) = engine.GetSymbolValue(f.params(i))
+                Catch
+                End Try
                 engine.SetSymbol(f.params(i), args(i))
             Next
             Dim r As Double
@@ -131,11 +129,20 @@ Namespace Microsoft.VisualBasic.Math.Scripting
                     If saved.ContainsKey(p) Then
                         engine.SetSymbol(p, saved(p))
                     Else
-                        engine.symbols.Remove(p)
+                        ' 无公共 Remove：重置为 0（参数名不会出现在用户变量中）
+                        engine.SetSymbol(p, 0)
                     End If
                 Next
             End Try
             Return r
+        End Function
+
+        Private Function IsBuiltin(name As String) As Boolean
+            Try
+                Return engine.GetFunction(name) IsNot Nothing
+            Catch
+                Return False
+            End Try
         End Function
 
         ' ===================== 赋值 =====================
@@ -203,7 +210,7 @@ Namespace Microsoft.VisualBasic.Math.Scripting
                     Next
                     Return out
                 End If
-            ElseIf engine.functions.ContainsKey(fname) Then
+            ElseIf engine.CheckFunction(fname) Then
                 If length <= 0 Then
                     Dim a(resolved.Length - 1) As Double
                     For i = 0 To resolved.Length - 1 : a(i) = resolved(i).Scalar : Next
@@ -278,7 +285,7 @@ Namespace Microsoft.VisualBasic.Math.Scripting
             Dim mx = CDbl(positional(1))
             Dim n As Integer? = Nothing
             Dim stepVal As Double? = Nothing
-            If named.ContainsKey("n") Then n = CInt(Math.Round(CDbl(named("n"))))
+            If named.ContainsKey("n") Then n = CInt(std.Round(CDbl(named("n"))))
             If named.ContainsKey("step") Then stepVal = CDbl(named("step"))
 
             If n.HasValue AndAlso n.Value > 1 Then
@@ -351,7 +358,7 @@ Namespace Microsoft.VisualBasic.Math.Scripting
             ' 2) 用户函数（按参数名匹配 ctx 向量）
             If funcs.ContainsKey(name) Then
                 Dim f = funcs(name)
-                Dim argVecs(f.params.Length - 1) As Double()
+                Dim argVecs() As Double()
                 For pi = 0 To f.params.Length - 1
                     argVecs(pi) = If(ctx.ContainsKey(f.params(pi)), ctx(f.params(pi)), Nothing)
                 Next
@@ -384,7 +391,7 @@ Namespace Microsoft.VisualBasic.Math.Scripting
             Dim expr = Expression.Parse(exprStr)
             Dim len = -1
             For Each kv In ctx
-                If len < 0 Then len = kv.Value.Length Else len = Math.Min(len, kv.Value.Length)
+                If len < 0 Then len = kv.Value.Length Else len = std.Min(len, kv.Value.Length)
             Next
             If len < 0 Then len = 1
             Dim out(len - 1) As Double

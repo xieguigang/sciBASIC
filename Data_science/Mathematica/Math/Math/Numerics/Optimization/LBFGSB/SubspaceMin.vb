@@ -60,7 +60,7 @@ Namespace Framework.Optimization.LBFGSB
 
     Public NotInheritable Class SubspaceMin
 
-        Public Shared ReadOnly meps As Double = -Microsoft.VisualBasic.Math.Ulp(1.0)
+        Public Shared ReadOnly meps As Double = -NumeralSystem.Ulp(1.0)
 
         Public Shared Sub subvec_assign(v As Double(), ind As List(Of Integer), rhs As Double())
             Dim nsub = ind.Count
