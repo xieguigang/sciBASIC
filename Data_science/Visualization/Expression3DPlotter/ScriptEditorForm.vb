@@ -30,9 +30,11 @@ Public Class ScriptEditorForm
     Private Function SampleScript() As String
         Dim sb As New StringBuilder()
         sb.AppendLine("# 三维曲面示例")
+        sb.AppendLine("# 创建自变量x和y，分辨率为80个数据点")
         sb.AppendLine("x = axis(-3, 3, n=80)")
         sb.AppendLine("y = axis(-3, 3, n=80)")
         sb.AppendLine("z(x, y) = sin(sqrt(x*x + y*y))")
+        sb.AppendLine("# 绘制三维曲面图")
         sb.AppendLine("surface(x, y, z)")
         sb.AppendLine("")
         sb.AppendLine("# 其它可用指令（取消注释即可）：")
