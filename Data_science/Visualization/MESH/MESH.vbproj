@@ -4,7 +4,7 @@
     <OutputType>WinExe</OutputType>
     <TargetFramework>net10.0-windows</TargetFramework>
     <RootNamespace>Expression3DPlotter</RootNamespace>
-    <AssemblyName>Expression3DPlotter</AssemblyName>
+    <AssemblyName>MESH</AssemblyName>
     <UseWindowsForms>true</UseWindowsForms>
     <EnableDefaultApplicationDefinition>false</EnableDefaultApplicationDefinition>
     <OptionStrict>Off</OptionStrict>
@@ -14,10 +14,15 @@
     <Platforms>AnyCPU;x64</Platforms>
     <NoWarn>$(NoWarn);WFO1000</NoWarn>
     <UseWPF>True</UseWPF>
-    <StartupObject>Expression3DPlotter.MainForm</StartupObject>
-    <MyType>WindowsFormsWithCustomSubMain</MyType>
+    <StartupObject>Expression3DPlotter.My.MyApplication</StartupObject>
+    <MyType>WindowsForms</MyType>
     <NoWarn>$(NoWarn);WFO1000</NoWarn>
+    <ApplicationIcon>sciBASIC#.ico</ApplicationIcon>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Content Include="sciBASIC#.ico" />
+  </ItemGroup>
 
   <ItemGroup>
     <Import Include="System.Windows.Forms" />

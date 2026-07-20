@@ -51,6 +51,7 @@ Public Class PlotScene
         Camera.FieldOfView = 256
         Camera.Offset = New PointF(0, 0)
         Camera.Screen = New Size(800, 600)
+        Camera.AmbientStrength = 0
     End Sub
 
     Public ReadOnly Property SurfaceCount As Integer

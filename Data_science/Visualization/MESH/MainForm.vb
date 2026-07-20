@@ -99,8 +99,6 @@ Public Class MainForm : Inherits Form
 
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(MainForm))
-        Dim PlotScene1 As PlotScene = New PlotScene()
-        Dim Camera1 As Microsoft.VisualBasic.Imaging.Drawing3D.Camera = New Imaging.Drawing3D.Camera()
         ToolStrip1 = New ToolStrip()
         ToolStripButton1 = New ToolStripButton()
         ToolStripSeparator1 = New ToolStripSeparator()
@@ -111,7 +109,6 @@ Public Class MainForm : Inherits Form
         ToolStripLabel1 = New ToolStripLabel()
         cboScheme = New ToolStripComboBox()
         pic2D = New PictureBox()
-        canvas = New SurfaceCanvas()
         statusStrip = New StatusStrip()
         lblStatus = New ToolStripStatusLabel()
         ToolStrip1.SuspendLayout()
@@ -125,7 +122,7 @@ Public Class MainForm : Inherits Form
         ToolStrip1.Location = New Point(0, 0)
         ToolStrip1.Name = "ToolStrip1"
         ToolStrip1.RenderMode = ToolStripRenderMode.System
-        ToolStrip1.Size = New Size(796, 25)
+        ToolStrip1.Size = New Size(1156, 25)
         ToolStrip1.TabIndex = 0
         ToolStrip1.Text = "ToolStrip1"
         ' 
@@ -157,7 +154,7 @@ Public Class MainForm : Inherits Form
         ' 
         chkAxes.CheckOnClick = True
         chkAxes.Name = "chkAxes"
-        chkAxes.Size = New Size(180, 22)
+        chkAxes.Size = New Size(178, 22)
         chkAxes.Text = "绘制坐标轴"
         ' 
         ' ToolStripMenuItem1
@@ -165,7 +162,7 @@ Public Class MainForm : Inherits Form
         ToolStripMenuItem1.CheckOnClick = True
         ToolStripMenuItem1.Image = CType(resources.GetObject("ToolStripMenuItem1.Image"), Image)
         ToolStripMenuItem1.Name = "ToolStripMenuItem1"
-        ToolStripMenuItem1.Size = New Size(180, 22)
+        ToolStripMenuItem1.Size = New Size(178, 22)
         ToolStripMenuItem1.Text = "显示盒子网格面"
         ' 
         ' ToolStripMenuItem2
@@ -174,7 +171,7 @@ Public Class MainForm : Inherits Form
         ToolStripMenuItem2.CheckOnClick = True
         ToolStripMenuItem2.CheckState = CheckState.Checked
         ToolStripMenuItem2.Name = "ToolStripMenuItem2"
-        ToolStripMenuItem2.Size = New Size(180, 22)
+        ToolStripMenuItem2.Size = New Size(178, 22)
         ToolStripMenuItem2.Text = "显示带刻度坐标轴"
         ' 
         ' ToolStripLabel1
@@ -195,42 +192,16 @@ Public Class MainForm : Inherits Form
         pic2D.Dock = DockStyle.Fill
         pic2D.Location = New Point(0, 25)
         pic2D.Name = "pic2D"
-        pic2D.Size = New Size(796, 511)
+        pic2D.Size = New Size(1156, 762)
         pic2D.TabIndex = 0
         pic2D.TabStop = False
-        ' 
-        ' canvas
-        ' 
-        canvas.BackColor = Color.White
-        canvas.Dock = DockStyle.Fill
-        canvas.Location = New Point(0, 25)
-        canvas.Name = "canvas"
-        PlotScene1.BackgroundColor = Color.White
-        Camera1.AmbientStrength = 0.2R
-        Camera1.AngleX = 20F
-        Camera1.AngleY = -30F
-        Camera1.AngleZ = 0F
-        Camera1.FieldOfView = 256F
-        Camera1.LightColor = Color.FromArgb(CByte(255), CByte(255), CByte(255))
-        Camera1.Offset = CType(resources.GetObject("Camera1.Offset"), PointF)
-        Camera1.Screen = New Size(200, 100)
-        Camera1.ViewDistance = 0F
-        PlotScene1.Camera = Camera1
-        PlotScene1.ColorScheme = "viridis"
-        PlotScene1.ShowAxes = True
-        PlotScene1.ShowBox = True
-        PlotScene1.ShowTicks = False
-        canvas.Scene = PlotScene1
-        canvas.Size = New Size(796, 511)
-        canvas.TabIndex = 1
-        canvas.TabStop = True
         ' 
         ' statusStrip
         ' 
         statusStrip.Items.AddRange(New ToolStripItem() {lblStatus})
-        statusStrip.Location = New Point(0, 536)
+        statusStrip.Location = New Point(0, 787)
         statusStrip.Name = "statusStrip"
-        statusStrip.Size = New Size(796, 22)
+        statusStrip.Size = New Size(1156, 22)
         statusStrip.TabIndex = 2
         ' 
         ' lblStatus
@@ -241,12 +212,12 @@ Public Class MainForm : Inherits Form
         ' MainForm
         ' 
         BackColor = SystemColors.Control
-        ClientSize = New Size(796, 558)
+        ClientSize = New Size(1156, 809)
         Controls.Add(pic2D)
-        Controls.Add(canvas)
         Controls.Add(statusStrip)
         Controls.Add(ToolStrip1)
         Font = New Font("Segoe UI", 9F)
+        Icon = CType(resources.GetObject("$this.Icon"), Icon)
         MinimumSize = New Size(600, 420)
         Name = "MainForm"
         StartPosition = FormStartPosition.CenterScreen
@@ -339,12 +310,12 @@ Public Class MainForm : Inherits Form
         UpdateStatus()
     End Sub
 
-    Private Sub OnZoom(delta As Integer) Handles canvas.Zoom
+    Private Sub OnZoom(delta As Integer)
         If canvas.Scene Is Nothing Then Return
         Dim factor = If(delta > 0, 0.9F, 1.1F)
         canvas.Scene.Camera.ViewDistance = Math.Max(1.0F, canvas.Scene.Camera.ViewDistance * factor)
-        canvas.Invalidate()
-        UpdateStatus()
+        canvas.Invalidate
+        UpdateStatus
     End Sub
 
     Private Sub UpdateStatus(Optional msg$ = "")
