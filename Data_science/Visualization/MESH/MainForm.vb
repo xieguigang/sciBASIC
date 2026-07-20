@@ -90,6 +90,9 @@ Public Class MainForm : Inherits Form
     Friend WithEvents cboScheme As ToolStripComboBox
     Friend WithEvents ToolStripMenuItem1 As ToolStripMenuItem
     Friend WithEvents ToolStripMenuItem2 As ToolStripMenuItem
+    Friend WithEvents ToolStripSeparator2 As ToolStripSeparator
+    Friend WithEvents ToolStripLabel2 As ToolStripLabel
+    Friend WithEvents ToolStripButton2 As ToolStripButton
 
     Private editor As ScriptEditorForm = Nothing
 
@@ -108,6 +111,9 @@ Public Class MainForm : Inherits Form
         ToolStripMenuItem2 = New ToolStripMenuItem()
         ToolStripLabel1 = New ToolStripLabel()
         cboScheme = New ToolStripComboBox()
+        ToolStripSeparator2 = New ToolStripSeparator()
+        ToolStripLabel2 = New ToolStripLabel()
+        ToolStripButton2 = New ToolStripButton()
         pic2D = New PictureBox()
         statusStrip = New StatusStrip()
         lblStatus = New ToolStripStatusLabel()
@@ -119,7 +125,7 @@ Public Class MainForm : Inherits Form
         ' 
         ' ToolStrip1
         ' 
-        ToolStrip1.Items.AddRange(New ToolStripItem() {ToolStripButton1, ToolStripSeparator1, ToolStripSplitButton1, ToolStripLabel1, cboScheme})
+        ToolStrip1.Items.AddRange(New ToolStripItem() {ToolStripButton1, ToolStripSeparator1, ToolStripSplitButton1, ToolStripLabel1, cboScheme, ToolStripSeparator2, ToolStripLabel2, ToolStripButton2})
         ToolStrip1.Location = New Point(0, 0)
         ToolStrip1.Name = "ToolStrip1"
         ToolStrip1.RenderMode = ToolStripRenderMode.Professional
@@ -188,6 +194,26 @@ Public Class MainForm : Inherits Form
         cboScheme.Name = "cboScheme"
         cboScheme.Size = New Size(121, 25)
         ' 
+        ' ToolStripSeparator2
+        ' 
+        ToolStripSeparator2.Name = "ToolStripSeparator2"
+        ToolStripSeparator2.Size = New Size(6, 25)
+        ' 
+        ' ToolStripLabel2
+        ' 
+        ToolStripLabel2.Name = "ToolStripLabel2"
+        ToolStripLabel2.Size = New Size(85, 22)
+        ToolStripLabel2.Text = "画布背景色："
+        ' 
+        ' ToolStripButton2
+        ' 
+        ToolStripButton2.DisplayStyle = ToolStripItemDisplayStyle.Image
+        ToolStripButton2.Image = CType(resources.GetObject("ToolStripButton2.Image"), Image)
+        ToolStripButton2.ImageTransparentColor = Color.Magenta
+        ToolStripButton2.Name = "ToolStripButton2"
+        ToolStripButton2.Size = New Size(23, 22)
+        ToolStripButton2.Text = "选择颜色"
+        ' 
         ' pic2D
         ' 
         pic2D.Dock = DockStyle.Fill
@@ -212,7 +238,7 @@ Public Class MainForm : Inherits Form
         ' 
         ' canvas
         ' 
-        canvas.BackColor = Color.White
+        canvas.BackColor = Color.FromArgb(CByte(200), CByte(213), CByte(215))
         canvas.Dock = DockStyle.Fill
         canvas.Location = New Point(0, 25)
         canvas.Name = "canvas"
@@ -229,7 +255,7 @@ Public Class MainForm : Inherits Form
         Controls.Add(pic2D)
         Controls.Add(statusStrip)
         Controls.Add(ToolStrip1)
-        Font = New Font("Segoe UI", 9F)
+        Font = New Font("Segoe UI", 9.0F)
         Icon = CType(resources.GetObject("$this.Icon"), Icon)
         MinimumSize = New Size(600, 420)
         Name = "MainForm"
@@ -253,6 +279,10 @@ Public Class MainForm : Inherits Form
         canvas.Scene.ShowAxes = chkAxes.Checked
         canvas.Scene.ShowBox = ToolStripMenuItem1.Checked
         canvas.Scene.ShowTicks = ToolStripMenuItem2.Checked
+        canvas.Scene.Camera.AngleX = 125
+        canvas.Scene.Camera.AngleX = 0
+        canvas.Scene.Camera.AngleX = 0
+        canvas.Scene.BackgroundColor = Color.FromArgb(200, 213, 215)
 
         ' 默认演示：启动即渲染一个三维曲面
         Call OnDraw(Me, EventArgs.Empty)
@@ -315,8 +345,8 @@ Public Class MainForm : Inherits Form
 
     Private Sub OnReset(sender As Object, e As EventArgs) Handles ToolStripButton1.Click
         If canvas.Scene Is Nothing Then Return
-        canvas.Scene.Camera.AngleX = 20
-        canvas.Scene.Camera.AngleY = -30
+        canvas.Scene.Camera.AngleX = 125
+        canvas.Scene.Camera.AngleY = 0
         canvas.Scene.Camera.AngleZ = 0
         canvas.Scene.Camera.Offset = New PointF(0, 0)
         canvas.Scene.FitView()
@@ -336,7 +366,7 @@ Public Class MainForm : Inherits Form
         If canvas.Scene Is Nothing Then Return
         Dim s = canvas.Scene
         lblStatus.Text =
-            $"{msg}  |  角度X:{s.Camera.AngleX:F1} Y:{s.Camera.AngleY:F1}  |  " &
+            $"{msg}  |  角度X:{s.Camera.AngleX:F1} Y:{s.Camera.AngleY:F1} Z:{s.Camera.AngleZ:F1} |  " &
             $"视距:{s.Camera.ViewDistance:F1}  |  半径:{s.ModelRadius:F1}  |  " &
             $"面:{s.SurfaceCount} 点:{s.PointCount}  |  配色:{GetColorSchemaName()}"
     End Sub
@@ -391,6 +421,15 @@ Public Class MainForm : Inherits Form
         canvas.Scene.Recolor()
         canvas.Invalidate()
         UpdateStatus()
+    End Sub
+
+    Private Sub ToolStripButton2_Click(sender As Object, e As EventArgs) Handles ToolStripButton2.Click
+        Using color As New ColorDialog
+            If color.ShowDialog = DialogResult.OK Then
+                canvas.BackColor = color.Color
+                canvas.Scene.BackgroundColor = color.Color
+            End If
+        End Using
     End Sub
 End Class
 
