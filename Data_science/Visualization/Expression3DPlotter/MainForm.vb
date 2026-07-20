@@ -61,8 +61,6 @@
 
 #End Region
 
-Imports System.Windows.Forms
-Imports System.Drawing
 Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.Math.Scripting
 
@@ -74,251 +72,233 @@ Imports Microsoft.VisualBasic.Math.Scripting
 Public Class MainForm : Inherits Form
 
     Private WithEvents canvas As SurfaceCanvas
-    Private WithEvents topPanel As Panel
+
     Private WithEvents statusStrip As StatusStrip
     Private WithEvents lblStatus As ToolStripStatusLabel
 
-    ' 模式与表达式
-    Private WithEvents cboMode As ComboBox
-    Private WithEvents lblExpr As Label
-    Private WithEvents txtSurface As TextBox
-    Private WithEvents txtCurveX As TextBox
-    Private WithEvents txtCurveY As TextBox
-    Private WithEvents txtCurveZ As TextBox
-
-    ' 曲面范围
-    Private WithEvents lblXr As Label
-    Private WithEvents numXmin As NumericUpDown
-    Private WithEvents lblXto As Label
-    Private WithEvents numXmax As NumericUpDown
-    Private WithEvents lblYr As Label
-    Private WithEvents numYmin As NumericUpDown
-    Private WithEvents lblYto As Label
-    Private WithEvents numYmax As NumericUpDown
-
-    ' 曲线范围
-    Private WithEvents lblTr As Label
-    Private WithEvents numTmin As NumericUpDown
-    Private WithEvents lblTto As Label
-    Private WithEvents numTmax As NumericUpDown
-
-    ' 其它
-    Private WithEvents lblDiv As Label
-    Private WithEvents numDiv As NumericUpDown
-    Private WithEvents lblScheme As Label
-    Private WithEvents cboScheme As ComboBox
-    Private WithEvents chkAxes As CheckBox
-    Private WithEvents btnDraw As Button
-    Private WithEvents btnReset As Button
 
     ' 脚本模式相关
     Private pic2D As PictureBox
-    Private btnScript As Button
-    Private chkBox As CheckBox
-    Private chkTicks As CheckBox
+
+
+    Friend WithEvents ToolStrip1 As ToolStrip
+    Friend WithEvents ToolStripButton1 As ToolStripButton
+    Friend WithEvents ToolStripSeparator1 As ToolStripSeparator
+    Friend WithEvents ToolStripSplitButton1 As ToolStripSplitButton
+    Friend WithEvents chkAxes As ToolStripMenuItem
+    Friend WithEvents ToolStripLabel1 As ToolStripLabel
+    Friend WithEvents cboScheme As ToolStripComboBox
+    Friend WithEvents ToolStripMenuItem1 As ToolStripMenuItem
+    Friend WithEvents ToolStripMenuItem2 As ToolStripMenuItem
+
     Private editor As ScriptEditorForm = Nothing
 
     Public Sub New()
         InitializeComponent()
-        SetupScriptUI()
     End Sub
 
     Private Sub InitializeComponent()
-        ' ---- 窗体 ----
-        Me.Text = "三维数学表达式绘图器"
-        Me.Size = New Size(1000, 720)
-        Me.StartPosition = FormStartPosition.CenterScreen
-        Me.BackColor = SystemColors.Control
-        Me.Font = New Font("Segoe UI", 9, FontStyle.Regular)
-        Me.MinimumSize = New Size(600, 420)
-
-        ' ---- 顶部工具栏面板 ----
-        topPanel = New Panel() With {
-            .Dock = DockStyle.Top, .Height = 86, .BackColor = Color.White,
-            .Padding = New Padding(8), .BorderStyle = BorderStyle.FixedSingle}
-        Me.Controls.Add(topPanel)
-
-        ' ---- 画布 ----
-        canvas = New SurfaceCanvas() With {.Dock = DockStyle.Fill, .BackColor = Color.White}
-        canvas.Scene = New PlotScene()
-        Me.Controls.Add(canvas)
-
-        ' ---- 状态栏 ----
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(MainForm))
+        Dim PlotScene1 As PlotScene = New PlotScene()
+        Dim Camera1 As Microsoft.VisualBasic.Imaging.Drawing3D.Camera = New Microsoft.VisualBasic.Imaging.Drawing3D.Camera()
+        ToolStrip1 = New ToolStrip()
+        ToolStripButton1 = New ToolStripButton()
+        ToolStripSeparator1 = New ToolStripSeparator()
+        ToolStripSplitButton1 = New ToolStripSplitButton()
+        chkAxes = New ToolStripMenuItem()
+        ToolStripMenuItem1 = New ToolStripMenuItem()
+        ToolStripMenuItem2 = New ToolStripMenuItem()
+        ToolStripLabel1 = New ToolStripLabel()
+        cboScheme = New ToolStripComboBox()
+        pic2D = New PictureBox()
+        canvas = New SurfaceCanvas()
         statusStrip = New StatusStrip()
-        lblStatus = New ToolStripStatusLabel() With {.Text = "就绪"}
-        statusStrip.Items.Add(lblStatus)
-        statusStrip.Dock = DockStyle.Bottom
-        Me.Controls.Add(statusStrip)
+        lblStatus = New ToolStripStatusLabel()
+        ToolStrip1.SuspendLayout()
+        CType(pic2D, System.ComponentModel.ISupportInitialize).BeginInit()
+        statusStrip.SuspendLayout()
+        SuspendLayout()
+        ' 
+        ' ToolStrip1
+        ' 
+        ToolStrip1.Items.AddRange(New ToolStripItem() {ToolStripButton1, ToolStripSeparator1, ToolStripSplitButton1, ToolStripLabel1, cboScheme})
+        ToolStrip1.Location = New Point(0, 0)
+        ToolStrip1.Name = "ToolStrip1"
+        ToolStrip1.Size = New Size(796, 25)
+        ToolStrip1.TabIndex = 0
+        ToolStrip1.Text = "ToolStrip1"
+        ' 
+        ' ToolStripButton1
+        ' 
+        ToolStripButton1.DisplayStyle = ToolStripItemDisplayStyle.Image
+        ToolStripButton1.Image = CType(resources.GetObject("ToolStripButton1.Image"), Image)
+        ToolStripButton1.ImageTransparentColor = Color.Magenta
+        ToolStripButton1.Name = "ToolStripButton1"
+        ToolStripButton1.Size = New Size(23, 22)
+        ToolStripButton1.Text = "重置视角"
+        ' 
+        ' ToolStripSeparator1
+        ' 
+        ToolStripSeparator1.Name = "ToolStripSeparator1"
+        ToolStripSeparator1.Size = New Size(6, 25)
+        ' 
+        ' ToolStripSplitButton1
+        ' 
+        ToolStripSplitButton1.DisplayStyle = ToolStripItemDisplayStyle.Image
+        ToolStripSplitButton1.DropDownItems.AddRange(New ToolStripItem() {chkAxes, ToolStripMenuItem1, ToolStripMenuItem2})
+        ToolStripSplitButton1.Image = CType(resources.GetObject("ToolStripSplitButton1.Image"), Image)
+        ToolStripSplitButton1.ImageTransparentColor = Color.Magenta
+        ToolStripSplitButton1.Name = "ToolStripSplitButton1"
+        ToolStripSplitButton1.Size = New Size(32, 22)
+        ToolStripSplitButton1.Text = "ToolStripSplitButton1"
+        ' 
+        ' chkAxes
+        ' 
+        chkAxes.Checked = True
+        chkAxes.CheckOnClick = True
+        chkAxes.CheckState = CheckState.Checked
+        chkAxes.Name = "chkAxes"
+        chkAxes.Size = New Size(180, 22)
+        chkAxes.Text = "绘制坐标轴"
+        ' 
+        ' ToolStripMenuItem1
+        ' 
+        ToolStripMenuItem1.Checked = True
+        ToolStripMenuItem1.CheckOnClick = True
+        ToolStripMenuItem1.CheckState = CheckState.Checked
+        ToolStripMenuItem1.Name = "ToolStripMenuItem1"
+        ToolStripMenuItem1.Size = New Size(180, 22)
+        ToolStripMenuItem1.Text = "显示盒子网格面"
+        ' 
+        ' ToolStripMenuItem2
+        ' 
+        ToolStripMenuItem2.Checked = True
+        ToolStripMenuItem2.CheckOnClick = True
+        ToolStripMenuItem2.CheckState = CheckState.Checked
+        ToolStripMenuItem2.Name = "ToolStripMenuItem2"
+        ToolStripMenuItem2.Size = New Size(180, 22)
+        ToolStripMenuItem2.Text = "显示带刻度坐标轴"
+        ' 
+        ' ToolStripLabel1
+        ' 
+        ToolStripLabel1.Name = "ToolStripLabel1"
+        ToolStripLabel1.Size = New Size(59, 22)
+        ToolStripLabel1.Text = "颜色模式"
+        ' 
+        ' cboScheme
+        ' 
+        cboScheme.DropDownStyle = ComboBoxStyle.DropDownList
+        cboScheme.Items.AddRange(New Object() {"viridis", "magma", "inferno", "plasma", "turbo", "jet", "rainbow", "cividis", "mako", "rocket"})
+        cboScheme.Name = "cboScheme"
+        cboScheme.Size = New Size(121, 25)
+        ' 
+        ' pic2D
+        ' 
+        pic2D.Dock = DockStyle.Fill
+        pic2D.Location = New Point(0, 25)
+        pic2D.Name = "pic2D"
+        pic2D.Size = New Size(796, 511)
+        pic2D.TabIndex = 0
+        pic2D.TabStop = False
+        ' 
+        ' canvas
+        ' 
+        canvas.BackColor = Color.White
+        canvas.Dock = DockStyle.Fill
+        canvas.Location = New Point(0, 25)
+        canvas.Name = "canvas"
+        PlotScene1.BackgroundColor = Color.White
+        Camera1.AmbientStrength = 0.2R
+        Camera1.AngleX = 20.0F
+        Camera1.AngleY = -30.0F
+        Camera1.AngleZ = 0F
+        Camera1.FieldOfView = 256.0F
+        Camera1.LightColor = Color.FromArgb(CByte(255), CByte(255), CByte(255))
+        Camera1.Offset = CType(resources.GetObject("Camera1.Offset"), PointF)
+        Camera1.Screen = New Size(200, 100)
+        Camera1.ViewDistance = 0F
+        PlotScene1.Camera = Camera1
+        PlotScene1.ColorScheme = "viridis"
+        PlotScene1.ShowAxes = True
+        PlotScene1.ShowBox = True
+        PlotScene1.ShowTicks = False
+        canvas.Scene = PlotScene1
+        canvas.Size = New Size(796, 511)
+        canvas.TabIndex = 1
+        canvas.TabStop = True
+        ' 
+        ' statusStrip
+        ' 
+        statusStrip.Items.AddRange(New ToolStripItem() {lblStatus})
+        statusStrip.Location = New Point(0, 536)
+        statusStrip.Name = "statusStrip"
+        statusStrip.Size = New Size(796, 22)
+        statusStrip.TabIndex = 2
+        ' 
+        ' lblStatus
+        ' 
+        lblStatus.Name = "lblStatus"
+        lblStatus.Size = New Size(0, 17)
+        ' 
+        ' MainForm
+        ' 
+        BackColor = SystemColors.Control
+        ClientSize = New Size(796, 558)
+        Controls.Add(pic2D)
+        Controls.Add(canvas)
+        Controls.Add(statusStrip)
+        Controls.Add(ToolStrip1)
+        Font = New Font("Segoe UI", 9.0F)
+        MinimumSize = New Size(600, 420)
+        Name = "MainForm"
+        StartPosition = FormStartPosition.CenterScreen
+        Text = "三维数学表达式绘图器"
+        ToolStrip1.ResumeLayout(False)
+        ToolStrip1.PerformLayout()
+        CType(pic2D, System.ComponentModel.ISupportInitialize).EndInit()
+        statusStrip.ResumeLayout(False)
+        statusStrip.PerformLayout()
+        ResumeLayout(False)
+        PerformLayout()
 
-
-
-        lblExpr = Lbl("z = f(x, y) :", 136, 10, 96)
-        txtSurface = Txt("sin(sqrt(x*x + y*y))", 236, 8, 240)
-        txtCurveX = Txt("2*sin(t)", 236, 8, 78)
-        txtCurveY = Txt("2*cos(t)", 320, 8, 78)
-        txtCurveZ = Txt("0.3*t", 404, 8, 78)
-
-        btnDraw = Btn("绘制", 492, 7, 70)
-        btnReset = Btn("重置视角", 570, 7, 84)
-
-        ' 第二行：范围
-        lblXr = Lbl("X:", 8, 52, 18)
-        numXmin = Num(28, 50, 64, -8, -100000, 100000, 1)
-        lblXto = Lbl("~", 94, 52, 14)
-        numXmax = Num(108, 50, 64, 8, -100000, 100000, 1)
-        lblYr = Lbl("Y:", 180, 52, 18)
-        numYmin = Num(200, 50, 64, -8, -100000, 100000, 1)
-        lblYto = Lbl("~", 266, 52, 14)
-        numYmax = Num(280, 50, 64, 8, -100000, 100000, 1)
-
-        lblTr = Lbl("t:", 8, 52, 18)
-        numTmin = Num(28, 50, 64, 0, -100000, 100000, 1)
-        lblTto = Lbl("~", 94, 52, 14)
-        numTmax = Num(108, 50, 64, 12.566, -100000, 100000, 2)
-
-        lblDiv = Lbl("分辨率:", 360, 52, 50)
-        numDiv = Num(414, 50, 56, 60, 5, 400, 0)
-
-        lblScheme = Lbl("配色:", 480, 52, 40)
-        cboScheme = Cbo(524, 50, 100, {"viridis", "magma", "inferno", "plasma", "turbo", "jet", "rainbow", "cividis", "mako", "rocket"})
-        cboScheme.SelectedIndex = 0
-
-        chkAxes = Chk("显示坐标轴", 632, 51, 92)
-        ' ===================== 顶部控件 =====================
-        cboMode = Cbo(8, 8, 120, {"曲面  z = f(x, y)", "曲线  x(t), y(t), z(t)"})
-        cboMode.SelectedIndex = 0
-        ApplyMode()
     End Sub
-
-#Region "控件辅助构造"
-
-    Private Function Lbl(text$, x%, y%, w%) As Label
-        Dim c = New Label() With {
-            .Text = text, .Location = New Point(x, y), .Size = New Size(w, 20),
-            .ForeColor = Color.FromArgb(33, 33, 33), .Font = New Font("Segoe UI", 9, FontStyle.Regular),
-            .TextAlign = ContentAlignment.MiddleLeft}
-        topPanel.Controls.Add(c)
-        Return c
-    End Function
-
-    Private Function Txt(text$, x%, y%, w%) As TextBox
-        Dim c = New TextBox() With {
-            .Text = text, .Location = New Point(x, y), .Size = New Size(w, 23),
-            .Font = New Font("Segoe UI", 10, FontStyle.Regular), .BorderStyle = BorderStyle.FixedSingle}
-        topPanel.Controls.Add(c)
-        Return c
-    End Function
-
-    Private Function Num(x%, y%, w%, v#, mn#, mx#, decimals%) As NumericUpDown
-        Dim c = New NumericUpDown() With {
-            .Location = New Point(x, y), .Size = New Size(w, 23),
-             .Minimum = CDec(mn), .Maximum = CDec(mx), .DecimalPlaces = decimals,
-            .Increment = CDec(0.5), .Font = New Font("Segoe UI", 9, FontStyle.Regular), .Value = CDec(v)}
-        topPanel.Controls.Add(c)
-        Return c
-    End Function
-
-    Private Function Cbo(x%, y%, w%, items$()) As ComboBox
-        Dim c = New ComboBox() With {
-            .Location = New Point(x, y), .Size = New Size(w, 23),
-            .DropDownStyle = ComboBoxStyle.DropDownList, .Font = New Font("Segoe UI", 9, FontStyle.Regular)}
-        c.Items.AddRange(items)
-        topPanel.Controls.Add(c)
-        Return c
-    End Function
-
-    Private Function Btn(text$, x%, y%, w%) As Button
-        Dim c = New Button() With {
-            .Text = text, .Location = New Point(x, y), .Size = New Size(w, 26),
-            .Font = New Font("Segoe UI", 9, FontStyle.Regular), .BackColor = Color.FromArgb(21, 101, 192),
-            .ForeColor = Color.White, .FlatStyle = FlatStyle.Flat, .Cursor = Cursors.Hand}
-        c.FlatAppearance.BorderSize = 0
-        topPanel.Controls.Add(c)
-        Return c
-    End Function
-
-    Private Function Chk(text$, x%, y%, w%) As CheckBox
-        Dim c = New CheckBox() With {
-            .Text = text, .Location = New Point(x, y), .Size = New Size(w, 23),
-            .ForeColor = Color.FromArgb(33, 33, 33), .Font = New Font("Segoe UI", 9, FontStyle.Regular),
-            .Checked = True}
-        topPanel.Controls.Add(c)
-        Return c
-    End Function
-
-#End Region
 
 #Region "交互逻辑"
 
     Private Sub MainForm_Load(sender As Object, e As EventArgs) Handles Me.Load
         Call ImageDriver.Register()
+        Call LoadScriptInput()
+
         ' 默认演示：启动即渲染一个三维曲面
         OnDraw(Me, EventArgs.Empty)
     End Sub
 
-    Private Sub ModeChanged(sender As Object, e As EventArgs) Handles cboMode.SelectedIndexChanged
-        ApplyMode()
-        If cboMode.SelectedIndex = 0 Then
-            txtSurface.Text = "sin(sqrt(x*x + y*y))"
-        Else
-            txtCurveX.Text = "2*sin(t)" : txtCurveY.Text = "2*cos(t)" : txtCurveZ.Text = "0.3*t"
+    Private Sub LoadScriptInput()
+        If editor Is Nothing OrElse editor.IsDisposed Then
+            editor = New ScriptEditorForm()
+            AddHandler editor.ScriptExecuted, AddressOf OnScriptExecuted
         End If
+        If editor.Visible Then editor.BringToFront() Else editor.Show(Me)
     End Sub
 
-    Private Sub ApplyMode()
-        Dim isSurface = (cboMode.SelectedIndex = 0)
-        txtSurface.Visible = isSurface
-        txtCurveX.Visible = Not isSurface
-        txtCurveY.Visible = Not isSurface
-        txtCurveZ.Visible = Not isSurface
-        lblExpr.Text = If(isSurface, "z = f(x, y) :", "x(t), y(t), z(t) :")
-
-        lblXr.Visible = isSurface : numXmin.Visible = isSurface : lblXto.Visible = isSurface : numXmax.Visible = isSurface
-        lblYr.Visible = isSurface : numYmin.Visible = isSurface : lblYto.Visible = isSurface : numYmax.Visible = isSurface
-
-        lblTr.Visible = Not isSurface : numTmin.Visible = Not isSurface : lblTto.Visible = Not isSurface : numTmax.Visible = Not isSurface
-    End Sub
-
-    Private Sub OnDraw(sender As Object, e As EventArgs) Handles btnDraw.Click
+    Private Sub OnDraw(sender As Object, e As EventArgs)
         If canvas.Scene Is Nothing Then Return
         canvas.Visible = True
         If pic2D IsNot Nothing Then pic2D.Visible = False
         Try
-            txtSurface.BackColor = Color.White
-            txtCurveX.BackColor = Color.White
-            txtCurveY.BackColor = Color.White
-            txtCurveZ.BackColor = Color.White
-
-            If cboMode.SelectedIndex = 0 Then
-                Dim zEval = New ExpressionEvaluator(txtSurface.Text)
-                canvas.Scene.SetSurface(zEval,
-                    CDbl(numXmin.Value), CDbl(numXmax.Value),
-                    CDbl(numYmin.Value), CDbl(numYmax.Value),
-                    CInt(numDiv.Value), CStr(cboScheme.Text))
-            Else
-                Dim xE = New ExpressionEvaluator(txtCurveX.Text)
-                Dim yE = New ExpressionEvaluator(txtCurveY.Text)
-                Dim zE = New ExpressionEvaluator(txtCurveZ.Text)
-                canvas.Scene.SetCurve(xE, yE, zE,
-                    CDbl(numTmin.Value), CDbl(numTmax.Value),
-                    CInt(numDiv.Value), CStr(cboScheme.Text))
-            End If
-
+            Dim zEval = New ExpressionEvaluator("sin(sqrt(x*x + y*y))")
+            canvas.Scene.SetSurface(zEval,
+                    -80, 80,
+                    -80, 80,
+                    120, CStr(cboScheme.Text))
             canvas.Invalidate()
             UpdateStatus("就绪")
         Catch ex As Exception
             UpdateStatus("表达式错误: " & ex.Message)
-            If cboMode.SelectedIndex = 0 Then
-                txtSurface.BackColor = Color.FromArgb(255, 255, 200, 200)
-            Else
-                txtCurveX.BackColor = Color.FromArgb(255, 255, 200, 200)
-                txtCurveY.BackColor = Color.FromArgb(255, 255, 200, 200)
-                txtCurveZ.BackColor = Color.FromArgb(255, 255, 200, 200)
-            End If
         End Try
     End Sub
 
-    Private Sub OnReset(sender As Object, e As EventArgs) Handles btnReset.Click
+    Private Sub OnReset(sender As Object, e As EventArgs) Handles ToolStripButton1.Click
         If canvas.Scene Is Nothing Then Return
         canvas.Scene.Camera.AngleX = 20
         canvas.Scene.Camera.AngleY = -30
@@ -330,8 +310,10 @@ Public Class MainForm : Inherits Form
     End Sub
 
     Private Sub AxesChanged(sender As Object, e As EventArgs) Handles chkAxes.CheckedChanged
-        canvas.Scene.ShowAxes = chkAxes.Checked
-        canvas.Invalidate()
+        If canvas.Scene IsNot Nothing Then
+            canvas.Scene.ShowAxes = chkAxes.Checked
+            canvas.Invalidate()
+        End If
     End Sub
 
     Private Sub OnZoom(delta As Integer) Handles canvas.Zoom
@@ -353,44 +335,16 @@ Public Class MainForm : Inherits Form
 
 #End Region
 
-    ' ===================== 脚本模式 =====================
-
-    Private Sub SetupScriptUI()
-        ' 二维画布（默认隐藏，脚本产出二维图时显示）
-        pic2D = New PictureBox() With {.Dock = DockStyle.Fill, .Visible = False, .BackColor = Color.White}
-        Me.Controls.Add(pic2D)
-
-        ' 顶部面板加高，新增第三行放置脚本模式与三维开关
-        topPanel.Height = 116
-
-        btnScript = Btn("脚本模式", 8, 88, 100)
-        chkBox = Chk("显示盒子网格面", 120, 89, 130)
-        chkTicks = Chk("带刻度坐标轴", 260, 89, 120)
-        chkBox.Checked = True
-        chkTicks.Checked = False
-
-        AddHandler btnScript.Click, AddressOf OnScriptClick
-        AddHandler chkBox.CheckedChanged, AddressOf OnBoxChecked
-        AddHandler chkTicks.CheckedChanged, AddressOf OnTicksChecked
-    End Sub
-
-    Private Sub OnScriptClick(sender As Object, e As EventArgs)
-        If editor Is Nothing OrElse editor.IsDisposed Then
-            editor = New ScriptEditorForm()
-            AddHandler editor.ScriptExecuted, AddressOf OnScriptExecuted
-        End If
-        If editor.Visible Then editor.BringToFront() Else editor.Show(Me)
-    End Sub
-
-    Private Sub OnBoxChecked(sender As Object, e As EventArgs)
-        If canvas.Scene IsNot Nothing Then canvas.Scene.ShowBox = chkBox.Checked
+    Private Sub OnBoxChecked(sender As Object, e As EventArgs) Handles ToolStripMenuItem1.Click
+        If canvas.Scene IsNot Nothing Then canvas.Scene.ShowBox = ToolStripMenuItem1.Checked
         canvas.Invalidate()
     End Sub
 
-    Private Sub OnTicksChecked(sender As Object, e As EventArgs)
-        If canvas.Scene IsNot Nothing Then canvas.Scene.ShowTicks = chkTicks.Checked
+    Private Sub OnTicksChecked(sender As Object, e As EventArgs) Handles ToolStripMenuItem2.Click
+        If canvas.Scene IsNot Nothing Then canvas.Scene.ShowTicks = ToolStripMenuItem2.Checked
         canvas.Invalidate()
     End Sub
+
 
     Private Sub OnScriptExecuted(result As ScriptResult)
         If result Is Nothing OrElse Not result.Success Then
@@ -434,6 +388,5 @@ Public Class MainForm : Inherits Form
             UpdateStatus("已渲染 " & result.Commands.Count & " 个二维绘图指令")
         End If
     End Sub
-
 End Class
 
