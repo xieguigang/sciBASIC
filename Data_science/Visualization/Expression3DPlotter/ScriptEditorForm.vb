@@ -51,20 +51,44 @@ Public Class ScriptEditorForm
     End Sub
 
     Private Function BuildPresetScripts() As List(Of PresetScript)
-        Return New List(Of PresetScript) From {
-            MakeScript("正弦波纹 (Sine Ripple)", "sin(sqrt(x*x + y*y))", -8, 8, -8, 8),
-            MakeScript("抛物面 (Paraboloid)", "x*x + y*y", -5, 5, -5, 5),
-            MakeScript("鞍面 (Saddle)", "x*x - y*y", -5, 5, -5, 5),
-            MakeScript("双曲抛物面 (Hyperbolic Saddle)", "x*y", -5, 5, -5, 5),
-            MakeScript("高斯钟形 (Gaussian Bell)", "exp(-(x*x + y*y)/5)", -5, 5, -5, 5),
-            MakeScript("余弦波纹 (Cosine Ripple)", "cos(x) * cos(y)", -5, 5, -5, 5),
-            MakeScript("墨西哥帽 (Mexican Hat)", "(1 - x*x - y*y) * exp(-(x*x + y*y)/2)", -4, 4, -4, 4),
-            MakeScript("倒置抛物面 (Inverted Paraboloid)", "-(x*x + y*y)", -5, 5, -5, 5),
-            MakeScript("猴鞍面 (Monkey Saddle)", "x*x*x - 3*x*y*y", -3, 3, -3, 3),
-            MakeScript("混合正弦 (Sine-Cosine Mix)", "sin(x) + cos(y)", -5, 5, -5, 5),
-            MakeScript("对数曲面 (Logarithmic)", "log(1 + x*x + y*y)", -5, 5, -5, 5),
-            MakeScript("旋臂曲面 (Spiral Arms)", "sin(x*y)", -4, 4, -4, 4)
-        }
+        Dim list As New List(Of PresetScript)
+
+        ' ---- 经典曲面（z = f(x, y)）----
+        list.Add(MakeScript("正弦波纹 (Sine Ripple)", "sin(sqrt(x*x + y*y))", -8, 8, -8, 8))
+        list.Add(MakeScript("抛物面 (Paraboloid)", "x*x + y*y", -5, 5, -5, 5))
+        list.Add(MakeScript("鞍面 (Saddle)", "x*x - y*y", -5, 5, -5, 5))
+        list.Add(MakeScript("双曲抛物面 (Hyperbolic Saddle)", "x*y", -5, 5, -5, 5))
+        list.Add(MakeScript("高斯钟形 (Gaussian Bell)", "exp(-(x*x + y*y)/5)", -5, 5, -5, 5))
+        list.Add(MakeScript("余弦波纹 (Cosine Ripple)", "cos(x) * cos(y)", -5, 5, -5, 5))
+        list.Add(MakeScript("墨西哥帽 (Mexican Hat)", "(1 - x*x - y*y) * exp(-(x*x + y*y)/2)", -4, 4, -4, 4))
+        list.Add(MakeScript("倒置抛物面 (Inverted Paraboloid)", "-(x*x + y*y)", -5, 5, -5, 5))
+        list.Add(MakeScript("猴鞍面 (Monkey Saddle)", "x*x*x - 3*x*y*y", -3, 3, -3, 3))
+        list.Add(MakeScript("混合正弦 (Sine-Cosine Mix)", "sin(x) + cos(y)", -5, 5, -5, 5))
+        list.Add(MakeScript("对数曲面 (Logarithmic)", "log(1 + x*x + y*y)", -5, 5, -5, 5))
+        list.Add(MakeScript("旋臂曲面 (Spiral Arms)", "sin(x*y)", -4, 4, -4, 4))
+
+        ' ---- 更多曲面预设 ----
+        list.Add(MakeScript("蛋盒 (Eggcrate)", "sin(x) * sin(y)", -6, 6, -6, 6))
+        list.Add(MakeScript("阻尼波纹 (Damped Ripple)", "exp(-(x*x + y*y)/15) * sin(sqrt(x*x + y*y))", -8, 8, -8, 8))
+        list.Add(MakeScript("圆锥 (Cone)", "sqrt(x*x + y*y)", -5, 5, -5, 5))
+        list.Add(MakeScript("椭圆抛物面 (Elliptic Paraboloid)", "x*x/4 + y*y/2", -6, 6, -6, 6))
+        list.Add(MakeScript("波纹干涉 (Interference)", "sin(x) + sin(y)", -6, 6, -6, 6))
+        list.Add(MakeScript("交叉波 (Cross Wave)", "sin(x) * cos(y)", -6, 6, -6, 6))
+        list.Add(MakeScript("波纹带 (Ripple Band)", "sin(x*x + y*y)", -4, 4, -4, 4))
+        list.Add(MakeScript("高斯波包 (Gaussian Wave Packet)", "exp(-(x*x + y*y)/8) * cos(x*x + y*y)", -5, 5, -5, 5))
+        list.Add(MakeScript("双高斯 (Twin Gaussian)", "exp(-((x-2)*(x-2) + y*y)/3) + exp(-((x+2)*(x+2) + y*y)/3)", -6, 6, -6, 6))
+        list.Add(MakeScript("涟漪衰减 (Decaying Ripple)", "sin(sqrt(x*x + y*y)) / (1 + sqrt(x*x + y*y))", -10, 10, -10, 10))
+        list.Add(MakeScript("峰谷交替 (Peaks Mix)", "sin(x) * exp(-y*y/8) + cos(y) * exp(-x*x/8)", -6, 6, -6, 6))
+
+        ' ---- 二维曲线（line）----
+        list.Add(MakeLineScript("正弦曲线 (Sine Curve)", "sin(x)", -6.2831853, 6.2831853, 200))
+        list.Add(MakeLineScript("阻尼正弦 (Damped Sine)", "exp(-x/4) * sin(3*x)", -6.2831853, 6.2831853, 200))
+        list.Add(MakeLineScript("高斯曲线 (Gaussian Curve)", "exp(-x*x/2)", -5, 5, 200))
+
+        ' ---- 三维散点（scatter）----
+        list.Add(MakeScatter3Script("格点散点 (Grid Scatter)", "sin(x) * cos(y)", -3, 3, -3, 3, 50))
+
+        Return list
     End Function
 
     Private Function MakeScript(name$, expr$, xmin#, xmax#, ymin#, ymax#) As PresetScript
@@ -74,6 +98,25 @@ Public Class ScriptEditorForm
         sb.AppendLine($"y = axis({ymin}, {ymax}, n=80)")
         sb.AppendLine($"z(x, y) = {expr}")
         sb.AppendLine("surface(x, y, z)")
+        Return New PresetScript With {.Name = name, .Script = sb.ToString()}
+    End Function
+
+    Private Function MakeLineScript(name$, expr$, xmin#, xmax#, n%) As PresetScript
+        Dim sb As New StringBuilder()
+        sb.AppendLine("# " & name)
+        sb.AppendLine($"x = axis({xmin}, {xmax}, n={n})")
+        sb.AppendLine($"y(x) = {expr}")
+        sb.AppendLine("line(x, y)")
+        Return New PresetScript With {.Name = name, .Script = sb.ToString()}
+    End Function
+
+    Private Function MakeScatter3Script(name$, expr$, xmin#, xmax#, ymin#, ymax#, n%) As PresetScript
+        Dim sb As New StringBuilder()
+        sb.AppendLine("# " & name)
+        sb.AppendLine($"x = axis({xmin}, {xmax}, n={n})")
+        sb.AppendLine($"y = axis({ymin}, {ymax}, n={n})")
+        sb.AppendLine($"z3(x, y) = {expr}")
+        sb.AppendLine("scatter(x, y, z3(x, y))")
         Return New PresetScript With {.Name = name, .Script = sb.ToString()}
     End Function
 
@@ -106,9 +149,9 @@ Public Class ScriptEditorForm
         ToolStripButton1 = New ToolStripButton()
         ToolStripSeparator1 = New ToolStripSeparator()
         ToolStripButton2 = New ToolStripButton()
-        TextBox1 = New TextBox()
-        cboPreset = New ToolStripComboBox()
         ToolStripLabel2 = New ToolStripLabel()
+        cboPreset = New ToolStripComboBox()
+        TextBox1 = New TextBox()
         StatusStrip1.SuspendLayout()
         ToolStrip1.SuspendLayout()
         SuspendLayout()
@@ -166,26 +209,28 @@ Public Class ScriptEditorForm
         ToolStripButton2.Size = New Size(23, 22)
         ToolStripButton2.Text = "Demo Script"
         ' 
-        ' TextBox1
-        ' 
-        TextBox1.Dock = DockStyle.Fill
-        TextBox1.Location = New Point(0, 25)
-        TextBox1.Multiline = True
-        TextBox1.Name = "TextBox1"
-        TextBox1.Size = New Size(744, 494)
-        TextBox1.TabIndex = 2
-        ' 
-        ' cboPreset
-        ' 
-        cboPreset.Name = "cboPreset"
-        cboPreset.Size = New Size(160, 25)
-        cboPreset.DropDownStyle = ComboBoxStyle.DropDownList
-        ' 
         ' ToolStripLabel2
         ' 
         ToolStripLabel2.Name = "ToolStripLabel2"
         ToolStripLabel2.Size = New Size(46, 22)
         ToolStripLabel2.Text = "预设："
+        ' 
+        ' cboPreset
+        ' 
+        cboPreset.DropDownStyle = ComboBoxStyle.DropDownList
+        cboPreset.MaxDropDownItems = 20
+        cboPreset.Name = "cboPreset"
+        cboPreset.Size = New Size(200, 25)
+        ' 
+        ' TextBox1
+        ' 
+        TextBox1.Dock = DockStyle.Fill
+        TextBox1.Font = New Font("Microsoft YaHei", 12F, FontStyle.Regular, GraphicsUnit.Point, CByte(0))
+        TextBox1.Location = New Point(0, 25)
+        TextBox1.Multiline = True
+        TextBox1.Name = "TextBox1"
+        TextBox1.Size = New Size(744, 494)
+        TextBox1.TabIndex = 2
         ' 
         ' ScriptEditorForm
         ' 
