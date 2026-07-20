@@ -113,8 +113,16 @@ Public Class MainForm : Inherits Form
     Private WithEvents btnDraw As Button
     Private WithEvents btnReset As Button
 
+    ' 脚本模式相关
+    Private pic2D As PictureBox
+    Private btnScript As Button
+    Private chkBox As CheckBox
+    Private chkTicks As CheckBox
+    Private editor As ScriptEditorForm = Nothing
+
     Public Sub New()
         InitializeComponent()
+        SetupScriptUI()
     End Sub
 
     Private Sub InitializeComponent()
@@ -281,6 +289,8 @@ Public Class MainForm : Inherits Form
 
     Private Sub OnDraw(sender As Object, e As EventArgs) Handles btnDraw.Click
         If canvas.Scene Is Nothing Then Return
+        canvas.Visible = True
+        If pic2D IsNot Nothing Then pic2D.Visible = False
         Try
             txtSurface.BackColor = Color.White
             txtCurveX.BackColor = Color.White
@@ -397,6 +407,88 @@ Public Class MainForm : Inherits Form
     End Sub
 
 #End Region
+
+    ' ===================== 脚本模式 =====================
+
+    Private Sub SetupScriptUI()
+        ' 二维画布（默认隐藏，脚本产出二维图时显示）
+        pic2D = New PictureBox() With {.Dock = DockStyle.Fill, .Visible = False, .BackColor = Color.White}
+        Me.Controls.Add(pic2D)
+
+        ' 顶部面板加高，新增第三行放置脚本模式与三维开关
+        topPanel.Height = 116
+
+        btnScript = Btn("脚本模式", 8, 88, 100)
+        chkBox = Chk("显示盒子网格面", 120, 89, 130)
+        chkTicks = Chk("带刻度坐标轴", 260, 89, 120)
+        chkBox.Checked = True
+        chkTicks.Checked = False
+
+        AddHandler btnScript.Click, AddressOf OnScriptClick
+        AddHandler chkBox.CheckedChanged, AddressOf OnBoxChecked
+        AddHandler chkTicks.CheckedChanged, AddressOf OnTicksChecked
+    End Sub
+
+    Private Sub OnScriptClick(sender As Object, e As EventArgs)
+        If editor Is Nothing OrElse editor.IsDisposed Then
+            editor = New ScriptEditorForm()
+            AddHandler editor.ScriptExecuted, AddressOf OnScriptExecuted
+        End If
+        If editor.Visible Then editor.BringToFront() Else editor.Show(Me)
+    End Sub
+
+    Private Sub OnBoxChecked(sender As Object, e As EventArgs)
+        If canvas.Scene IsNot Nothing Then canvas.Scene.ShowBox = chkBox.Checked
+        canvas.Invalidate()
+    End Sub
+
+    Private Sub OnTicksChecked(sender As Object, e As EventArgs)
+        If canvas.Scene IsNot Nothing Then canvas.Scene.ShowTicks = chkTicks.Checked
+        canvas.Invalidate()
+    End Sub
+
+    Private Sub OnScriptExecuted(result As ScriptResult)
+        If result Is Nothing OrElse Not result.Success Then
+            UpdateStatus(If(result Is Nothing, "无结果", "脚本错误：" & result.ErrorMessage))
+            Return
+        End If
+        If result.Commands.Count = 0 Then
+            UpdateStatus("脚本未产生任何绘图指令")
+            Return
+        End If
+
+        Dim cmds3D As New List(Of PlotCommand)()
+        For Each c In result.Commands
+            If c.Is3D Then cmds3D.Add(c)
+        Next
+
+        If cmds3D.Count > 0 Then
+            canvas.Scene.Clear()
+            For Each c In cmds3D
+                Select Case c.Kind
+                    Case PlotKind.Surface
+                        canvas.Scene.SetSurface(c.X, c.Y, c.ZGrid)
+                    Case PlotKind.Scatter
+                        canvas.Scene.SetScatter(c.X, c.Y, c.Z)
+                    Case PlotKind.Line
+                        canvas.Scene.SetLine(c.X, c.Y, c.Z)
+                End Select
+            Next
+            canvas.Visible = True
+            If pic2D IsNot Nothing Then pic2D.Visible = False
+            canvas.Invalidate()
+            UpdateStatus("已渲染 " & cmds3D.Count & " 个三维绘图指令")
+        Else
+            Dim w = Math.Max(10, canvas.Width)
+            Dim h = Math.Max(10, canvas.Height)
+            Dim bmp = DataPlotView.Render(result.Commands, w, h)
+            If pic2D.Image IsNot Nothing Then pic2D.Image.Dispose()
+            pic2D.Image = bmp
+            pic2D.Visible = True
+            canvas.Visible = False
+            UpdateStatus("已渲染 " & result.Commands.Count & " 个二维绘图指令")
+        End If
+    End Sub
 
 End Class
 
