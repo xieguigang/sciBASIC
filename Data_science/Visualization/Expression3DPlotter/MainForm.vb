@@ -99,8 +99,8 @@ Public Class MainForm : Inherits Form
 
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(MainForm))
-        Dim PlotScene1 As PlotScene = New PlotScene()
-        Dim Camera1 As Microsoft.VisualBasic.Imaging.Drawing3D.Camera = New Microsoft.VisualBasic.Imaging.Drawing3D.Camera()
+        Dim PlotScene2 As PlotScene = New PlotScene()
+        Dim Camera2 As Microsoft.VisualBasic.Imaging.Drawing3D.Camera = New Imaging.Drawing3D.Camera()
         ToolStrip1 = New ToolStrip()
         ToolStripButton1 = New ToolStripButton()
         ToolStripSeparator1 = New ToolStripSeparator()
@@ -115,7 +115,7 @@ Public Class MainForm : Inherits Form
         statusStrip = New StatusStrip()
         lblStatus = New ToolStripStatusLabel()
         ToolStrip1.SuspendLayout()
-        CType(pic2D, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(pic2D, ComponentModel.ISupportInitialize).BeginInit()
         statusStrip.SuspendLayout()
         SuspendLayout()
         ' 
@@ -154,18 +154,14 @@ Public Class MainForm : Inherits Form
         ' 
         ' chkAxes
         ' 
-        chkAxes.Checked = True
         chkAxes.CheckOnClick = True
-        chkAxes.CheckState = CheckState.Checked
         chkAxes.Name = "chkAxes"
         chkAxes.Size = New Size(180, 22)
         chkAxes.Text = "绘制坐标轴"
         ' 
         ' ToolStripMenuItem1
         ' 
-        ToolStripMenuItem1.Checked = True
         ToolStripMenuItem1.CheckOnClick = True
-        ToolStripMenuItem1.CheckState = CheckState.Checked
         ToolStripMenuItem1.Name = "ToolStripMenuItem1"
         ToolStripMenuItem1.Size = New Size(180, 22)
         ToolStripMenuItem1.Text = "显示盒子网格面"
@@ -207,22 +203,22 @@ Public Class MainForm : Inherits Form
         canvas.Dock = DockStyle.Fill
         canvas.Location = New Point(0, 25)
         canvas.Name = "canvas"
-        PlotScene1.BackgroundColor = Color.White
-        Camera1.AmbientStrength = 0.2R
-        Camera1.AngleX = 20.0F
-        Camera1.AngleY = -30.0F
-        Camera1.AngleZ = 0F
-        Camera1.FieldOfView = 256.0F
-        Camera1.LightColor = Color.FromArgb(CByte(255), CByte(255), CByte(255))
-        Camera1.Offset = CType(resources.GetObject("Camera1.Offset"), PointF)
-        Camera1.Screen = New Size(200, 100)
-        Camera1.ViewDistance = 0F
-        PlotScene1.Camera = Camera1
-        PlotScene1.ColorScheme = "viridis"
-        PlotScene1.ShowAxes = True
-        PlotScene1.ShowBox = True
-        PlotScene1.ShowTicks = False
-        canvas.Scene = PlotScene1
+        PlotScene2.BackgroundColor = Color.White
+        Camera2.AmbientStrength = 0.2R
+        Camera2.AngleX = 20F
+        Camera2.AngleY = -30F
+        Camera2.AngleZ = 0F
+        Camera2.FieldOfView = 256F
+        Camera2.LightColor = Color.FromArgb(CByte(255), CByte(255), CByte(255))
+        Camera2.Offset = CType(resources.GetObject("Camera2.Offset"), PointF)
+        Camera2.Screen = New Size(200, 100)
+        Camera2.ViewDistance = 0F
+        PlotScene2.Camera = Camera2
+        PlotScene2.ColorScheme = "viridis"
+        PlotScene2.ShowAxes = True
+        PlotScene2.ShowBox = True
+        PlotScene2.ShowTicks = False
+        canvas.Scene = PlotScene2
         canvas.Size = New Size(796, 511)
         canvas.TabIndex = 1
         canvas.TabStop = True
@@ -248,14 +244,14 @@ Public Class MainForm : Inherits Form
         Controls.Add(canvas)
         Controls.Add(statusStrip)
         Controls.Add(ToolStrip1)
-        Font = New Font("Segoe UI", 9.0F)
+        Font = New Font("Segoe UI", 9F)
         MinimumSize = New Size(600, 420)
         Name = "MainForm"
         StartPosition = FormStartPosition.CenterScreen
         Text = "三维数学表达式绘图器"
         ToolStrip1.ResumeLayout(False)
         ToolStrip1.PerformLayout()
-        CType(pic2D, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(pic2D, ComponentModel.ISupportInitialize).EndInit()
         statusStrip.ResumeLayout(False)
         statusStrip.PerformLayout()
         ResumeLayout(False)
@@ -398,6 +394,8 @@ Public Class MainForm : Inherits Form
     End Sub
 
     Private Sub cboScheme_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cboScheme.SelectedIndexChanged
+        canvas.Scene.ColorScheme = GetColorSchemaName()
+        canvas.Scene.EnsureColorTable()
         canvas.Invalidate()
     End Sub
 End Class

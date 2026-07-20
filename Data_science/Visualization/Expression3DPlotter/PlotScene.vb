@@ -90,7 +90,7 @@ Public Class PlotScene
         scatterPoints = Nothing
     End Sub
 
-    Private Sub EnsureColorTable()
+    Public Sub EnsureColorTable()
         If colorTable Is Nothing OrElse colorTableScheme <> ColorScheme Then
             colorTable = Microsoft.VisualBasic.Imaging.Drawing2D.Colors.Designer.GetColors(ColorScheme, 256, 255)
             colorTableScheme = ColorScheme
