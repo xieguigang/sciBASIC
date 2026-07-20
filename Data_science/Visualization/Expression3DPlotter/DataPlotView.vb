@@ -1,8 +1,7 @@
 Imports System.Drawing
+Imports System.IO
 Imports DataPlot
-Imports Microsoft.VisualBasic.Drawing
 Imports Microsoft.VisualBasic.Math.Microsoft.VisualBasic.Math.Scripting
-Imports Microsoft.VisualBasic.Math.Scripting
 
 ''' <summary>
 ''' 二维绘图桥接：将脚本引擎产出的二维 PlotCommand 转交给 DataPlot 的
@@ -24,21 +23,16 @@ Public Class DataPlotView
     }
 
     ''' <summary>
-    ''' 将脚本产生的二维绘图指令渲染到位图。
+    ''' 将脚本产生的二维绘图指令渲染到位图（System.Drawing.Bitmap，供 PictureBox 使用）。
     ''' 只要存在散点（Scatter）指令就使用 ScatterPlot 引擎，否则使用 LinePlot 引擎。
     ''' </summary>
-    Public Shared Function Render(commands As List(Of PlotCommand), w As Integer, h As Integer) As Bitmap
+    Public Shared Function Render(commands As List(Of PlotCommand), w As Integer, h As Integer) As System.Drawing.Bitmap
         If commands Is Nothing OrElse commands.Count = 0 Then Return Nothing
+        If w < 1 Then w = 1
+        If h < 1 Then h = 1
 
+        ' DataPlot 底层使用 Microsoft.VisualBasic.Imaging.Bitmap（GDI 内存位图）
         Dim bmp As New Microsoft.VisualBasic.Imaging.Bitmap(w, h)
-        Dim plot As SeriesPlotEngine
-
-        Dim hasScatter = commands.Any(Function(c) c.Kind = PlotKind.Scatter AndAlso Not c.Is3D)
-        If hasScatter Then
-            plot = New ScatterPlot(bmp)
-        Else
-            plot = New LinePlot(bmp)
-        End If
 
         Dim seriesList As New List(Of Series)()
         Dim idx As Integer = 0
@@ -68,14 +62,39 @@ Public Class DataPlotView
         Next
 
         If seriesList.Count = 0 Then
-            plot.Dispose()
-            Return bmp.CTypeGdiImage
+            Return ConvertBitmap(bmp)
         End If
 
-        plot.Plot(seriesList)
-        Dim result = plot.ToBitmap()
-        plot.Dispose()
-        Return result.CTypeGdiImage
+        Dim rendered As Microsoft.VisualBasic.Imaging.Bitmap
+
+        If commands.Any(Function(c) c.Kind = PlotKind.Scatter AndAlso Not c.Is3D) Then
+            Using p As New ScatterPlot(bmp)
+                p.Plot(seriesList)
+                rendered = p.ToBitmap()
+            End Using
+        Else
+            Using p As New LinePlot(bmp)
+                p.Plot(seriesList)
+                rendered = p.ToBitmap()
+            End Using
+        End If
+
+        Return ConvertBitmap(rendered)
+    End Function
+
+    ''' <summary>
+    ''' 将 Microsoft.VisualBasic.Imaging.Bitmap（GDI 内存位图）转换为
+    ''' System.Drawing.Bitmap，以便直接赋值给 PictureBox.Image。
+    ''' </summary>
+    Private Shared Function ConvertBitmap(src As Microsoft.VisualBasic.Imaging.Bitmap) As System.Drawing.Bitmap
+        Using ms As New MemoryStream()
+            src.Save(ms, Microsoft.VisualBasic.Imaging.ImageFormats.Bmp)
+            ms.Seek(0, SeekOrigin.Begin)
+            ' 从流加载后立刻复制一份，使返回的位图不再依赖原始流
+            Using loaded = System.Drawing.Bitmap.FromStream(ms)
+                Return New System.Drawing.Bitmap(loaded)
+            End Using
+        End Using
     End Function
 
 End Class

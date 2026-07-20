@@ -71,7 +71,7 @@ Public Class ScatterPlot
     End Sub
 
     ''' <summary>直接在已有的位图上绘制（用于宿主程序 PictureBox 等）。</summary>
-    Public Sub New(bmp As Bitmap)
+    Public Sub New(bmp As Microsoft.VisualBasic.Imaging.Bitmap)
         MyBase.New(bmp)
     End Sub
 

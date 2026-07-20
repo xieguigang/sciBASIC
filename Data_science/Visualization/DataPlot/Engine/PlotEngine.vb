@@ -106,7 +106,7 @@ Public Class PlotEngine : Implements IDisposable
     Protected _g As IGraphics
     Protected _width As Integer
     Protected _height As Integer
-    Protected _bitmap As Bitmap = Nothing
+    Protected _bitmap As Microsoft.VisualBasic.Imaging.Bitmap = Nothing
 
     ' ---------- 主题 ----------
     Public Property Theme As PlotTheme
@@ -159,7 +159,7 @@ Public Class PlotEngine : Implements IDisposable
     ''' 直接使用已有的 System.Drawing.Bitmap 作为绘图设备（GDI 驱动）。
     ''' 渲染结果即绘制在该位图上，可通过 ToBitmap() 取回。
     ''' </summary>
-    Public Sub New(bmp As Bitmap)
+    Public Sub New(bmp As Microsoft.VisualBasic.Imaging.Bitmap)
         If bmp Is Nothing Then Throw New ArgumentNullException(NameOf(bmp))
         _bitmap = bmp
         _width = bmp.Width
@@ -170,7 +170,7 @@ Public Class PlotEngine : Implements IDisposable
     End Sub
 
     ''' <summary>取回底层绘图位图（若由 New(bmp) 构造则有值，否则为 Nothing）。</summary>
-    Public Function ToBitmap() As Bitmap
+    Public Function ToBitmap() As Microsoft.VisualBasic.Imaging.Bitmap
         Return _bitmap
     End Function
 
