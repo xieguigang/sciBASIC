@@ -25,7 +25,57 @@ Public Class ScriptEditorForm
 
     Sub New()
         InitializeComponent()
+        LoadPresetScripts()
     End Sub
+
+    ''' <summary>
+    ''' 预设脚本项：显示名称 + 完整绘图脚本。
+    ''' 由 MainForm 的预设曲面迁移而来，按 SampleScript() 的语法规则拼装。
+    ''' </summary>
+    Private Class PresetScript
+        Public Name As String
+        Public Script As String
+    End Class
+
+    ''' <summary>
+    ''' 将预设表达式（原 MainForm 的 BuildPresets）按脚本语法转换为可选择的绘图脚本，
+    ''' 并填充到 cboPreset。选择后仅载入 TextBox1，不自动运行。
+    ''' </summary>
+    Private Sub LoadPresetScripts()
+        Dim presets = BuildPresetScripts()
+        cboPreset.Items.Clear()
+        For Each p In presets
+            cboPreset.Items.Add(p.Name)
+        Next
+        cboPreset.SelectedIndex = -1
+    End Sub
+
+    Private Function BuildPresetScripts() As List(Of PresetScript)
+        Return New List(Of PresetScript) From {
+            MakeScript("正弦波纹 (Sine Ripple)", "sin(sqrt(x*x + y*y))", -8, 8, -8, 8),
+            MakeScript("抛物面 (Paraboloid)", "x*x + y*y", -5, 5, -5, 5),
+            MakeScript("鞍面 (Saddle)", "x*x - y*y", -5, 5, -5, 5),
+            MakeScript("双曲抛物面 (Hyperbolic Saddle)", "x*y", -5, 5, -5, 5),
+            MakeScript("高斯钟形 (Gaussian Bell)", "exp(-(x*x + y*y)/5)", -5, 5, -5, 5),
+            MakeScript("余弦波纹 (Cosine Ripple)", "cos(x) * cos(y)", -5, 5, -5, 5),
+            MakeScript("墨西哥帽 (Mexican Hat)", "(1 - x*x - y*y) * exp(-(x*x + y*y)/2)", -4, 4, -4, 4),
+            MakeScript("倒置抛物面 (Inverted Paraboloid)", "-(x*x + y*y)", -5, 5, -5, 5),
+            MakeScript("猴鞍面 (Monkey Saddle)", "x*x*x - 3*x*y*y", -3, 3, -3, 3),
+            MakeScript("混合正弦 (Sine-Cosine Mix)", "sin(x) + cos(y)", -5, 5, -5, 5),
+            MakeScript("对数曲面 (Logarithmic)", "log(1 + x*x + y*y)", -5, 5, -5, 5),
+            MakeScript("旋臂曲面 (Spiral Arms)", "sin(x*y)", -4, 4, -4, 4)
+        }
+    End Function
+
+    Private Function MakeScript(name$, expr$, xmin#, xmax#, ymin#, ymax#) As PresetScript
+        Dim sb As New StringBuilder()
+        sb.AppendLine("# " & name)
+        sb.AppendLine($"x = axis({xmin}, {xmax}, n=80)")
+        sb.AppendLine($"y = axis({ymin}, {ymax}, n=80)")
+        sb.AppendLine($"z(x, y) = {expr}")
+        sb.AppendLine("surface(x, y, z)")
+        Return New PresetScript With {.Name = name, .Script = sb.ToString()}
+    End Function
 
     Private Function SampleScript() As String
         Dim sb As New StringBuilder()
@@ -129,7 +179,7 @@ Public Class ScriptEditorForm
         ' 
         cboPreset.Name = "cboPreset"
         cboPreset.Size = New Size(160, 25)
-        cboPreset.DropDownStyle = ToolStripComboBoxStyle.DropDownList
+        cboPreset.DropDownStyle = ComboBoxStyle.DropDownList
         ' 
         ' ToolStripLabel2
         ' 
@@ -159,13 +209,21 @@ Public Class ScriptEditorForm
         TextBox1.Text = SampleScript()
     End Sub
 
+    Private Sub PresetSelected(sender As Object, e As EventArgs) Handles cboPreset.SelectedIndexChanged
+        If cboPreset.SelectedIndex < 0 Then Return
+        Dim presets = BuildPresetScripts()
+        If cboPreset.SelectedIndex >= presets.Count Then Return
+        ' 仅将预设脚本载入编辑框，供用户查看/编辑后手动运行
+        TextBox1.Text = presets(cboPreset.SelectedIndex).Script
+    End Sub
+
     Private Sub ToolStripButton1_Click(sender As Object, e As EventArgs) Handles ToolStripButton1.Click
         Dim engine As New MathScriptEngine()
         Dim result = engine.RunScript(TextBox1.Text)
         If result.Success Then
-            ToolStripLabel1.Text = "成功：" & result.Commands.Count & " 条绘图指令"
+            ToolStripStatusLabel1.Text = "成功：" & result.Commands.Count & " 条绘图指令"
         Else
-            ToolStripLabel1.Text = "错误：" & result.ErrorMessage
+            ToolStripStatusLabel1.Text = "错误：" & result.ErrorMessage
         End If
         RaiseEvent ScriptExecuted(result)
     End Sub
