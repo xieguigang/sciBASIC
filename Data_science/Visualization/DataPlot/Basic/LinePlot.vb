@@ -64,6 +64,11 @@ Public Class LinePlot
         MyBase.New(width, height, theme)
     End Sub
 
+    ''' <summary>直接在已有的位图上绘制（用于宿主程序 PictureBox 等）。</summary>
+    Public Sub New(bmp As Bitmap)
+        MyBase.New(bmp)
+    End Sub
+
     Public Sub Plot(seriesList As IList(Of Series))
         ' 折线图默认不显示标记
         For Each s In seriesList
