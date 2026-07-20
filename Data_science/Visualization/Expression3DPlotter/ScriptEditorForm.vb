@@ -128,7 +128,8 @@ Public Class ScriptEditorForm
         ' cboPreset
         ' 
         cboPreset.Name = "cboPreset"
-        cboPreset.Size = New Size(121, 25)
+        cboPreset.Size = New Size(160, 25)
+        cboPreset.DropDownStyle = ToolStripComboBoxStyle.DropDownList
         ' 
         ' ToolStripLabel2
         ' 
