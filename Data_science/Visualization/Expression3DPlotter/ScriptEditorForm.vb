@@ -80,13 +80,24 @@ Public Class ScriptEditorForm
         list.Add(MakeScript("涟漪衰减 (Decaying Ripple)", "sin(sqrt(x*x + y*y)) / (1 + sqrt(x*x + y*y))", -10, 10, -10, 10))
         list.Add(MakeScript("峰谷交替 (Peaks Mix)", "sin(x) * exp(-y*y/8) + cos(y) * exp(-x*x/8)", -6, 6, -6, 6))
 
-        ' ---- 二维曲线（line）----
-        list.Add(MakeLineScript("正弦曲线 (Sine Curve)", "sin(x)", -6.2831853, 6.2831853, 200))
-        list.Add(MakeLineScript("阻尼正弦 (Damped Sine)", "exp(-x/4) * sin(3*x)", -6.2831853, 6.2831853, 200))
-        list.Add(MakeLineScript("高斯曲线 (Gaussian Curve)", "exp(-x*x/2)", -5, 5, 200))
-
-        ' ---- 三维散点（scatter）----
-        list.Add(MakeScatter3Script("格点散点 (Grid Scatter)", "sin(x) * cos(y)", -3, 3, -3, 3, 50))
+        ' ---- 基于函数库的三维曲面（覆盖 abs/asin/acos/atan/atan2/cosh/sinh/tanh/ln/log10/max/min/pow/sign/floor 等）----
+        list.Add(MakeScript("双曲余弦碗 (Cosh Bowl)", "cosh(sqrt(x*x + y*y)/3)", -4, 4, -4, 4))
+        list.Add(MakeScript("双曲正弦脊 (Sinh Ridge)", "sinh(x)/2 + sinh(y)/2", -3, 3, -3, 3))
+        list.Add(MakeScript("双曲正切台 (Tanh Plateau)", "tanh(x) + tanh(y)", -5, 5, -5, 5))
+        list.Add(MakeScript("绝对值锥 (Abs Cone)", "abs(x) + abs(y)", -5, 5, -5, 5))
+        list.Add(MakeScript("反正弦叶 (Asin Leaf)", "asin(sin(x) * cos(y))", -3.14, 3.14, -3.14, 3.14))
+        list.Add(MakeScript("反余弦冠 (Acos Crown)", "acos(cos(x) * cos(y))", -3.14, 3.14, -3.14, 3.14))
+        list.Add(MakeScript("方位角面 (Atan2 Azimuth)", "atan2(y, x)", -5, 5, -5, 5))
+        list.Add(MakeScript("反正切鞍 (Atan Saddle)", "atan(x) - atan(y)", -5, 5, -5, 5))
+        list.Add(MakeScript("自然对数面 (Ln Surface)", "ln(1 + x*x + y*y)", -5, 5, -5, 5))
+        list.Add(MakeScript("常用对数面 (Log10 Surface)", "log10(1 + x*x + y*y)", -5, 5, -5, 5))
+        list.Add(MakeScript("最大脊 (Max Ridge)", "max(x, y)", -4, 4, -4, 4))
+        list.Add(MakeScript("最小谷 (Min Valley)", "min(x*x, y*y)", -4, 4, -4, 4))
+        list.Add(MakeScript("符号阶跃 (Sign Step)", "sign(sin(x)) + sign(cos(y))", -6.28, 6.28, -6.28, 6.28))
+        list.Add(MakeScript("取整阶跃 (Floor Step)", "floor(x) + floor(y)", -5, 5, -5, 5))
+        list.Add(MakeScript("幂曲面 (Pow Surface)", "pow(sin(x), 2) + pow(cos(y), 2)", -6.28, 6.28, -6.28, 6.28))
+        list.Add(MakeScript("取整冠 (Ceiling Crown)", "ceiling(x) + ceiling(y)", -5, 5, -5, 5))
+        list.Add(MakeScript("四舍五入面 (Round Surface)", "round(x) + round(y)", -5, 5, -5, 5))
 
         Return list
     End Function
