@@ -350,14 +350,34 @@ Namespace Scripting
         End Sub
 
         Private Function ResolveArgVector(name As String, ctx As Dictionary(Of String, Double())) As Double()
-            ' 1) 直接向量变量
-            If vars.ContainsKey(name) AndAlso TypeOf vars(name) Is Double() Then
-                Return DirectCast(vars(name), Double())
+            Dim raw = name.Trim()
+
+            ' 0) 函数调用形式：fname(args)，例如 zz(x, y) 或 sin(x)
+            If raw.Contains("("c) AndAlso raw.EndsWith(")"c) AndAlso Not raw.StartsWith("axis(") Then
+                Dim fname = raw.Substring(0, raw.IndexOf("("c)).Trim()
+                If funcs.ContainsKey(fname) Then
+                    Dim f = funcs(fname)
+                    Dim argVecs As Double()() = New Double(f.params.Length - 1)() {}
+                    Dim argStr = raw.Substring(raw.IndexOf("("c) + 1).TrimEnd(")"c)
+                    Dim argNames = argStr.Split(","c).[Select](Function(s) s.Trim()).ToArray()
+                    For pi = 0 To f.params.Length - 1
+                        argVecs(pi) = ResolveArgVector(argNames(pi), ctx)
+                    Next
+                    If argVecs.All(Function(v) Not (v Is Nothing)) Then
+                        Return ApplyUserFuncVector(fname, f, argVecs)
+                    End If
+                    Return Nothing
+                End If
             End If
 
-            ' 2) 用户函数（按参数名匹配 ctx 向量）
-            If funcs.ContainsKey(name) Then
-                Dim f = funcs(name)
+            ' 1) 直接向量变量
+            If vars.ContainsKey(raw) AndAlso TypeOf vars(raw) Is Double() Then
+                Return DirectCast(vars(raw), Double())
+            End If
+
+            ' 2) 用户函数（按参数名匹配 ctx 向量）—— name 为纯函数名时
+            If funcs.ContainsKey(raw) Then
+                Dim f = funcs(raw)
                 Dim argVecs As Double()() = New Double(f.params.Length - 1)() {}
                 For pi = 0 To f.params.Length - 1
                     If ctx.ContainsKey(f.params(pi)) Then
@@ -367,13 +387,13 @@ Namespace Scripting
                     End If
                 Next
                 If argVecs.All(Function(v) Not (v Is Nothing)) Then
-                    Return ApplyUserFuncVector(name, f, argVecs)
+                    Return ApplyUserFuncVector(raw, f, argVecs)
                 End If
             End If
 
             ' 3) 表达式（如 sin(x)、x*x、x+y）：在 ctx 向量上逐元素求值
-            If name.Contains("("c) OrElse ExprReferencesVector(name, ctx) Then
-                Return EvalExprVector(name, ctx)
+            If raw.Contains("("c) OrElse ExprReferencesVector(raw, ctx) Then
+                Return EvalExprVector(raw, ctx)
             End If
 
             Throw New Exception("未找到向量变量或无法解析: " & name)
