@@ -1,5 +1,3 @@
-Imports System.Drawing
-Imports System.Windows.Forms
 Imports Microsoft.VisualBasic.Math.Scripting
 
 ''' <summary>
@@ -12,36 +10,18 @@ Public Class ScriptEditorForm
 
     Public Event ScriptExecuted(result As ScriptResult)
 
-    Private txt As New TextBox()
-    Private btnRun As New Button()
-    Private btnExample As New Button()
-    Private btnClose As New Button()
-    Private status As New Label()
 
-    Public Sub New()
-        Text = "脚本输入框 - 数学表达式可视化"
-        Width = 760
-        Height = 580
-        StartPosition = FormStartPosition.CenterParent
+    Friend WithEvents StatusStrip1 As StatusStrip
+    Friend WithEvents ToolStrip1 As ToolStrip
+    Friend WithEvents ToolStripStatusLabel1 As ToolStripStatusLabel
+    Friend WithEvents ToolStripLabel1 As ToolStripLabel
+    Friend WithEvents ToolStripButton1 As ToolStripButton
+    Friend WithEvents TextBox1 As TextBox
+    Friend WithEvents ToolStripSeparator1 As ToolStripSeparator
+    Friend WithEvents ToolStripButton2 As ToolStripButton
 
-        txt.Multiline = True
-        txt.ScrollBars = ScrollBars.Both
-        txt.Dock = DockStyle.Fill
-        txt.Font = New Font("Consolas", 11)
-        txt.Text = SampleScript()
-        Controls.Add(txt)
-
-        Dim panel As New Panel() With {.Dock = DockStyle.Bottom, .Height = 50}
-        btnRun.Text = "运行" : btnRun.Width = 90 : btnRun.Left = 12 : btnRun.Top = 10
-        btnExample.Text = "示例" : btnExample.Width = 90 : btnExample.Left = 112 : btnExample.Top = 10
-        btnClose.Text = "关闭" : btnClose.Width = 90 : btnClose.Left = 212 : btnClose.Top = 10
-        status.AutoSize = True : status.Top = 16 : status.Left = 320
-        panel.Controls.AddRange({btnRun, btnExample, btnClose, status})
-        Controls.Add(panel)
-
-        AddHandler btnRun.Click, AddressOf OnRun
-        AddHandler btnExample.Click, AddressOf OnExample
-        AddHandler btnClose.Click, AddressOf OnClose
+    Sub New()
+        InitializeComponent()
     End Sub
 
     Private Function SampleScript() As String
@@ -62,23 +42,112 @@ Public Class ScriptEditorForm
         Return sb.ToString()
     End Function
 
-    Private Sub OnRun(sender As Object, e As EventArgs)
+    Private Sub InitializeComponent()
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(ScriptEditorForm))
+        StatusStrip1 = New StatusStrip()
+        ToolStripStatusLabel1 = New ToolStripStatusLabel()
+        ToolStrip1 = New ToolStrip()
+        ToolStripLabel1 = New ToolStripLabel()
+        ToolStripButton1 = New ToolStripButton()
+        ToolStripSeparator1 = New ToolStripSeparator()
+        ToolStripButton2 = New ToolStripButton()
+        TextBox1 = New TextBox()
+        StatusStrip1.SuspendLayout()
+        ToolStrip1.SuspendLayout()
+        SuspendLayout()
+        ' 
+        ' StatusStrip1
+        ' 
+        StatusStrip1.Items.AddRange(New ToolStripItem() {ToolStripStatusLabel1})
+        StatusStrip1.Location = New Point(0, 519)
+        StatusStrip1.Name = "StatusStrip1"
+        StatusStrip1.Size = New Size(744, 22)
+        StatusStrip1.TabIndex = 0
+        StatusStrip1.Text = "StatusStrip1"
+        ' 
+        ' ToolStripStatusLabel1
+        ' 
+        ToolStripStatusLabel1.Name = "ToolStripStatusLabel1"
+        ToolStripStatusLabel1.Size = New Size(39, 17)
+        ToolStripStatusLabel1.Text = "Ready"
+        ' 
+        ' ToolStrip1
+        ' 
+        ToolStrip1.Items.AddRange(New ToolStripItem() {ToolStripLabel1, ToolStripButton1, ToolStripSeparator1, ToolStripButton2})
+        ToolStrip1.Location = New Point(0, 0)
+        ToolStrip1.Name = "ToolStrip1"
+        ToolStrip1.Size = New Size(744, 25)
+        ToolStrip1.TabIndex = 1
+        ToolStrip1.Text = "ToolStrip1"
+        ' 
+        ' ToolStripLabel1
+        ' 
+        ToolStripLabel1.Name = "ToolStripLabel1"
+        ToolStripLabel1.Size = New Size(98, 22)
+        ToolStripLabel1.Text = "点击运行绘图："
+        ' 
+        ' ToolStripButton1
+        ' 
+        ToolStripButton1.DisplayStyle = ToolStripItemDisplayStyle.Image
+        ToolStripButton1.Image = CType(resources.GetObject("ToolStripButton1.Image"), Image)
+        ToolStripButton1.ImageTransparentColor = Color.Magenta
+        ToolStripButton1.Name = "ToolStripButton1"
+        ToolStripButton1.Size = New Size(23, 22)
+        ToolStripButton1.Text = "ToolStripButton1"
+        ' 
+        ' ToolStripSeparator1
+        ' 
+        ToolStripSeparator1.Name = "ToolStripSeparator1"
+        ToolStripSeparator1.Size = New Size(6, 25)
+        ' 
+        ' ToolStripButton2
+        ' 
+        ToolStripButton2.DisplayStyle = ToolStripItemDisplayStyle.Image
+        ToolStripButton2.Image = CType(resources.GetObject("ToolStripButton2.Image"), Image)
+        ToolStripButton2.ImageTransparentColor = Color.Magenta
+        ToolStripButton2.Name = "ToolStripButton2"
+        ToolStripButton2.Size = New Size(23, 22)
+        ToolStripButton2.Text = "ToolStripButton2"
+        ' 
+        ' TextBox1
+        ' 
+        TextBox1.Dock = DockStyle.Fill
+        TextBox1.Location = New Point(0, 25)
+        TextBox1.Multiline = True
+        TextBox1.Name = "TextBox1"
+        TextBox1.Size = New Size(744, 494)
+        TextBox1.TabIndex = 2
+        ' 
+        ' ScriptEditorForm
+        ' 
+        ClientSize = New Size(744, 541)
+        Controls.Add(TextBox1)
+        Controls.Add(ToolStrip1)
+        Controls.Add(StatusStrip1)
+        Name = "ScriptEditorForm"
+        StartPosition = FormStartPosition.CenterParent
+        Text = "脚本输入框 - 数学表达式可视化"
+        StatusStrip1.ResumeLayout(False)
+        StatusStrip1.PerformLayout()
+        ToolStrip1.ResumeLayout(False)
+        ToolStrip1.PerformLayout()
+        ResumeLayout(False)
+        PerformLayout()
+
+    End Sub
+
+    Private Sub ToolStripButton2_Click(sender As Object, e As EventArgs) Handles ToolStripButton2.Click
+        TextBox1.Text = SampleScript()
+    End Sub
+
+    Private Sub ToolStripButton1_Click(sender As Object, e As EventArgs) Handles ToolStripButton1.Click
         Dim engine As New MathScriptEngine()
-        Dim result = engine.RunScript(txt.Text)
+        Dim result = engine.RunScript(TextBox1.Text)
         If result.Success Then
-            status.Text = "成功：" & result.Commands.Count & " 条绘图指令"
+            ToolStripLabel1.Text = "成功：" & result.Commands.Count & " 条绘图指令"
         Else
-            status.Text = "错误：" & result.ErrorMessage
+            ToolStripLabel1.Text = "错误：" & result.ErrorMessage
         End If
         RaiseEvent ScriptExecuted(result)
     End Sub
-
-    Private Sub OnExample(sender As Object, e As EventArgs)
-        txt.Text = SampleScript()
-    End Sub
-
-    Private Sub OnClose(sender As Object, e As EventArgs)
-        Close()
-    End Sub
-
 End Class
