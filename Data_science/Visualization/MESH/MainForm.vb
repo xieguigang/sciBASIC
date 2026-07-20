@@ -324,12 +324,12 @@ Public Class MainForm : Inherits Form
         UpdateStatus()
     End Sub
 
-    Private Sub OnZoom(delta As Integer)
+    Private Sub OnZoom(delta As Integer) Handles canvas.Zoom
         If canvas.Scene Is Nothing Then Return
         Dim factor = If(delta > 0, 0.9F, 1.1F)
         canvas.Scene.Camera.ViewDistance = Math.Max(1.0F, canvas.Scene.Camera.ViewDistance * factor)
-        canvas.Invalidate
-        UpdateStatus
+        canvas.Invalidate()
+        UpdateStatus()
     End Sub
 
     Private Sub UpdateStatus(Optional msg$ = "")
