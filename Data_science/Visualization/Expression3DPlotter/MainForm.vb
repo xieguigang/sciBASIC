@@ -288,15 +288,23 @@ Public Class MainForm : Inherits Form
         Try
             Dim zEval = New ExpressionEvaluator("sin(sqrt(x*x + y*y))")
             canvas.Scene.SetSurface(zEval,
-                    -80, 80,
-                    -80, 80,
-                    120, CStr(cboScheme.Text))
+                    -8, 8,
+                    -8, 8,
+                    120, GetColorSchemaName())
             canvas.Invalidate()
             UpdateStatus("就绪")
         Catch ex As Exception
             UpdateStatus("表达式错误: " & ex.Message)
         End Try
     End Sub
+
+    Private Function GetColorSchemaName() As String
+        If cboScheme.SelectedIndex < 0 Then
+            cboScheme.SelectedIndex = 0
+        End If
+
+        Return CStr(cboScheme.Items(cboScheme.SelectedIndex))
+    End Function
 
     Private Sub OnReset(sender As Object, e As EventArgs) Handles ToolStripButton1.Click
         If canvas.Scene Is Nothing Then Return
@@ -330,7 +338,7 @@ Public Class MainForm : Inherits Form
         lblStatus.Text =
             $"{msg}  |  角度X:{s.Camera.AngleX:F1} Y:{s.Camera.AngleY:F1}  |  " &
             $"视距:{s.Camera.ViewDistance:F1}  |  半径:{s.ModelRadius:F1}  |  " &
-            $"面:{s.SurfaceCount} 点:{s.PointCount}  |  配色:{cboScheme.Text}"
+            $"面:{s.SurfaceCount} 点:{s.PointCount}  |  配色:{GetColorSchemaName()}"
     End Sub
 
 #End Region
@@ -387,6 +395,10 @@ Public Class MainForm : Inherits Form
             canvas.Visible = False
             UpdateStatus("已渲染 " & result.Commands.Count & " 个二维绘图指令")
         End If
+    End Sub
+
+    Private Sub cboScheme_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cboScheme.SelectedIndexChanged
+        canvas.Invalidate()
     End Sub
 End Class
 
