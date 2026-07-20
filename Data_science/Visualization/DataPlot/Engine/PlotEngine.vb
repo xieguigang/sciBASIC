@@ -82,6 +82,20 @@ Imports StringFormat = Microsoft.VisualBasic.Imaging.StringFormat
 '  负责画布管理、坐标变换、坐标轴 / 网格 / 图例绘制、PNG 高清导出
 ' ============================================================================
 
+Public MustInherit Class SeriesPlotEngine : Inherits PlotEngine
+
+    Protected Sub New(bmp As Bitmap)
+        MyBase.New(bmp)
+    End Sub
+
+    Protected Sub New(width As Integer, height As Integer, Optional theme As PlotTheme = Nothing)
+        MyBase.New(width, height, theme)
+    End Sub
+
+    Public MustOverride Sub Plot(seriesList As IList(Of Series))
+
+End Class
+
 ''' <summary>
 ''' 绘图引擎：所有图表类型的基类与公共能力。
 ''' 使用 GDI+ 在内存 Bitmap 上绘制，最后导出为 PNG。

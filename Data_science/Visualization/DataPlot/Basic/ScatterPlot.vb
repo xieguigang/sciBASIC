@@ -64,7 +64,7 @@ Imports Pen = Microsoft.VisualBasic.Imaging.Pen
 
 ''' <summary>散点图</summary>
 Public Class ScatterPlot
-    Inherits PlotEngine
+    Inherits SeriesPlotEngine
 
     Public Sub New(width As Integer, height As Integer, Optional theme As PlotTheme = Nothing)
         MyBase.New(width, height, theme)
@@ -75,7 +75,7 @@ Public Class ScatterPlot
         MyBase.New(bmp)
     End Sub
 
-    Public Sub Plot(seriesList As IList(Of Series))
+    Public Overrides Sub Plot(seriesList As IList(Of Series))
         DrawBackground()
         ComputePlotArea()
         DrawPlotArea()

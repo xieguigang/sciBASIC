@@ -1,5 +1,7 @@
 Imports System.Drawing
 Imports DataPlot
+Imports Microsoft.VisualBasic.Drawing
+Imports Microsoft.VisualBasic.Math.Microsoft.VisualBasic.Math.Scripting
 Imports Microsoft.VisualBasic.Math.Scripting
 
 ''' <summary>
@@ -28,8 +30,8 @@ Public Class DataPlotView
     Public Shared Function Render(commands As List(Of PlotCommand), w As Integer, h As Integer) As Bitmap
         If commands Is Nothing OrElse commands.Count = 0 Then Return Nothing
 
-        Dim bmp As New Bitmap(w, h)
-        Dim plot As PlotEngine
+        Dim bmp As New Microsoft.VisualBasic.Imaging.Bitmap(w, h)
+        Dim plot As SeriesPlotEngine
 
         Dim hasScatter = commands.Any(Function(c) c.Kind = PlotKind.Scatter AndAlso Not c.Is3D)
         If hasScatter Then
@@ -67,13 +69,13 @@ Public Class DataPlotView
 
         If seriesList.Count = 0 Then
             plot.Dispose()
-            Return bmp
+            Return bmp.CTypeGdiImage
         End If
 
         plot.Plot(seriesList)
         Dim result = plot.ToBitmap()
         plot.Dispose()
-        Return result
+        Return result.CTypeGdiImage
     End Function
 
 End Class

@@ -58,7 +58,7 @@ Imports Microsoft.VisualBasic.Imaging
 
 ''' <summary>折线图（默认无标记，可单独配置）</summary>
 Public Class LinePlot
-    Inherits PlotEngine
+    Inherits SeriesPlotEngine
 
     Public Sub New(width As Integer, height As Integer, Optional theme As PlotTheme = Nothing)
         MyBase.New(width, height, theme)
@@ -69,7 +69,7 @@ Public Class LinePlot
         MyBase.New(bmp)
     End Sub
 
-    Public Sub Plot(seriesList As IList(Of Series))
+    Public Overrides Sub Plot(seriesList As IList(Of Series))
         ' 折线图默认不显示标记
         For Each s In seriesList
             If s.MarkerShape = MarkerShape.Circle Then s.MarkerShape = MarkerShape.None
