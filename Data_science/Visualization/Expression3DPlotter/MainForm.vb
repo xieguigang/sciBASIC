@@ -398,9 +398,12 @@ Public Class MainForm : Inherits Form
     End Sub
 
     Private Sub cboScheme_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cboScheme.SelectedIndexChanged
+        If canvas.Scene Is Nothing Then Return
         canvas.Scene.ColorScheme = GetColorSchemaName()
-        canvas.Scene.EnsureColorTable()
+        ' 立即按新调色板重新着色当前图形，无需等到下一次绘制
+        canvas.Scene.Recolor()
         canvas.Invalidate()
+        UpdateStatus()
     End Sub
 End Class
 
