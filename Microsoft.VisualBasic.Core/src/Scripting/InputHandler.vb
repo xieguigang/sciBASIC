@@ -185,13 +185,13 @@ Namespace Scripting
 
         ''' <summary>
         ''' Converts a string expression which was input from the console or script file to the specified type.
-        ''' (请注意，函数只是转换最基本的数据类型，转换错误会返回空值，空字符串也会返回空值)
         ''' </summary>
         ''' <param name="expression">The string expression to convert.</param>
         ''' <param name="target">The type to which to convert the object.</param>
         ''' <returns>An object whose type at run time is the requested target type.</returns>
         ''' <remarks>
-        ''' If all failure, then will try <see cref="Conversion.CTypeDynamic"/>
+        ''' If all failure, then will try <see cref="Conversion.CTypeDynamic"/>.
+        ''' (请注意，函数只是转换最基本的数据类型，转换错误会返回空值，空字符串也会返回空值)
         ''' </remarks>
         <Extension>
         Public Function CTypeDynamic(expression$, target As Type) As Object
