@@ -59,13 +59,12 @@
 #End Region
 
 Imports System.Drawing
-Imports System.Drawing.Drawing2D
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
-Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Drawing2D
 Imports Microsoft.VisualBasic.Imaging.Driver
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.MIME.Html.CSS
 
 ''' <summary>
