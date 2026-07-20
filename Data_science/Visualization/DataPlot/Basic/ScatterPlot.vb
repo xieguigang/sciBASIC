@@ -53,14 +53,10 @@
 #End Region
 
 Imports System.Drawing
-
-Imports SolidBrush = Microsoft.VisualBasic.Imaging.SolidBrush
-Imports Pen = Microsoft.VisualBasic.Imaging.Pen
+Imports Bitmap = Microsoft.VisualBasic.Imaging.Bitmap
 Imports DashStyle = Microsoft.VisualBasic.Imaging.DashStyle
 Imports LineCap = Microsoft.VisualBasic.Imaging.LineCap
-Imports LineJoin = Microsoft.VisualBasic.Imaging.LineJoin
-Imports StringAlignment = Microsoft.VisualBasic.Imaging.StringAlignment
-Imports StringFormat = Microsoft.VisualBasic.Imaging.StringFormat
+Imports Pen = Microsoft.VisualBasic.Imaging.Pen
 
 ' ============================================================================
 '  ChartsBasic.vb - 基础图表：散点图 / 折线图 / 柱状图 / 直方图
@@ -68,13 +64,18 @@ Imports StringFormat = Microsoft.VisualBasic.Imaging.StringFormat
 
 ''' <summary>散点图</summary>
 Public Class ScatterPlot
-    Inherits PlotEngine
+    Inherits SeriesPlotEngine
 
     Public Sub New(width As Integer, height As Integer, Optional theme As PlotTheme = Nothing)
         MyBase.New(width, height, theme)
     End Sub
 
-    Public Sub Plot(seriesList As IList(Of Series))
+    ''' <summary>直接在已有的位图上绘制（用于宿主程序 PictureBox 等）。</summary>
+    Public Sub New(bmp As Microsoft.VisualBasic.Imaging.Bitmap)
+        MyBase.New(bmp)
+    End Sub
+
+    Public Overrides Sub Plot(seriesList As IList(Of Series))
         DrawBackground()
         ComputePlotArea()
         DrawPlotArea()

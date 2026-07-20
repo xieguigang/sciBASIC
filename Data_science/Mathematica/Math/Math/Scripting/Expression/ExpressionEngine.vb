@@ -154,6 +154,11 @@ Namespace Scripting.MathExpression
             Return functions(name)
         End Function
 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Function CheckFunction(name As String) As Boolean
+            Return functions.ContainsKey(name)
+        End Function
+
         ''' <summary>
         ''' set the symbol value
         ''' </summary>

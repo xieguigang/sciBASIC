@@ -80,7 +80,7 @@ Namespace Framework.Optimization.LBFGSB.LineSearches
             End Sub
         End Class
 
-        Public Shared ReadOnly eps As Double = Microsoft.VisualBasic.Math.Ulp(1.0)
+        Public Shared ReadOnly eps As Double = NumeralSystem.Ulp(1.0)
 
         Public Shared Function quadratic_minimizer(a As Double, b As Double, fa As Double, ga As Double, fb As Double) As Double
             Dim ba = b - a

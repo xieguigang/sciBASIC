@@ -1,73 +1,12 @@
-﻿#Region "Microsoft.VisualBasic::16fb26d4526715db0d786d5edbcb4652, Data_science\Visualization\Expression3DPlotter\PlotScene.vb"
-
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-    ' /********************************************************************************/
-
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 287
-    '    Code Lines: 218 (75.96%)
-    ' Comment Lines: 29 (10.10%)
-    '    - Xml Docs: 65.52%
-    ' 
-    '   Blank Lines: 40 (13.94%)
-    '     File Size: 11.27 KB
-
-
-    ' Class PlotScene
-    ' 
-    '     Properties: BackgroundColor, Camera, ColorScheme, HasData, ModelRadius
-    '                 PointCount, ShowAxes, SurfaceCount
-    ' 
-    '     Constructor: (+1 Overloads) Sub New
-    ' 
-    '     Function: ToScreen
-    ' 
-    '     Sub: CenterModel, Draw, DrawAxes, DrawCurve, DrawGround
-    '          EnsureColorTable, FitView, SetCurve, SetSurface
-    ' 
-    ' /********************************************************************************/
-
-#End Region
-
-Imports System.Drawing
+﻿Imports System.Drawing
 Imports System.Linq
 Imports Microsoft.VisualBasic.Imaging.Drawing3D
 
 ''' <summary>
-''' 三维渲染核心：封装摄像机(Camera)与已生成的曲面/曲线数据，
+''' 三维渲染核心：封装摄像机(Camera)与已生成的曲面/曲线/散点数据，
 ''' 负责质心居中、自动适配视距、热图着色（Designer 连续颜色谱）以及
-''' 坐标轴与底面网格的绘制。复用 Microsoft.VisualBasic.Imaging.Drawing3D 的
-''' 画家算法 + 光照渲染能力。
+''' 坐标轴、底面网格、盒子网格面与带刻度尺三维坐标轴的绘制。
+''' 复用 Microsoft.VisualBasic.Imaging.Drawing3D 的画家算法 + 光照渲染能力。
 ''' </summary>
 Public Class PlotScene
 
@@ -75,10 +14,20 @@ Public Class PlotScene
     Public Property ColorScheme As String = "viridis"
     Public Property BackgroundColor As Color = Color.White
     Public Property ShowAxes As Boolean = True
+    ''' <summary>是否绘制基于数据包围盒的三维盒子六个面的网格</summary>
+    Public Property ShowBox As Boolean = True
+    ''' <summary>是否绘制从包围盒角出发、带数字刻度的三维坐标轴</summary>
+    Public Property ShowTicks As Boolean = False
 
+    ' 原始（未居中）数据
+    Private rawSurfaces As New List(Of Surface)()
+    Private rawCurve As Point3D() = Nothing
+    Private rawScatter As Point3D() = Nothing
+
+    ' 居中后用于绘制
     Private surfaces As New List(Of Surface)()
     Private curvePoints As Point3D() = Nothing
-    Private curveColors As Color() = Nothing
+    Private scatterPoints As Point3D() = Nothing
 
     Private modelR As Double = 100
     Private modelCenter As Point3D = New Point3D(0, 0, 0)
@@ -87,8 +36,13 @@ Public Class PlotScene
     Private colorBrushes As Microsoft.VisualBasic.Imaging.SolidBrush() = Nothing
     Private colorTableScheme As String = ""
 
+    Dim curveColors As Color()
+
     Private zMin As Double = 0
     Private zMax As Double = 1
+
+    ' 数据包围盒（用于盒子网格与刻度尺）
+    Private bxmin, bxmax, bymin, bymax, bzmin, bzmax As Double
 
     Public Sub New()
         Camera.AngleX = 20
@@ -113,7 +67,9 @@ Public Class PlotScene
 
     Public ReadOnly Property HasData As Boolean
         Get
-            Return surfaces.Count > 0 OrElse (curvePoints IsNot Nothing AndAlso curvePoints.Length > 1)
+            Return surfaces.Count > 0 OrElse
+                   (curvePoints IsNot Nothing AndAlso curvePoints.Length > 1) OrElse
+                   (scatterPoints IsNot Nothing AndAlso scatterPoints.Length > 0)
         End Get
     End Property
 
@@ -123,7 +79,16 @@ Public Class PlotScene
         End Get
     End Property
 
-    ' ===================== 颜色谱 =====================
+    ' ===================== 清空 / 颜色谱 =====================
+
+    Public Sub Clear()
+        rawSurfaces.Clear()
+        rawCurve = Nothing
+        rawScatter = Nothing
+        surfaces.Clear()
+        curvePoints = Nothing
+        scatterPoints = Nothing
+    End Sub
 
     Private Sub EnsureColorTable()
         If colorTable Is Nothing OrElse colorTableScheme <> ColorScheme Then
@@ -133,7 +98,7 @@ Public Class PlotScene
         End If
     End Sub
 
-    ' ===================== 数据生成：曲面 =====================
+    ' ===================== 数据生成：曲面（表达式） =====================
 
     ''' <summary>
     ''' 在 x∈[xMin,xMax]、y∈[yMin,yMax] 的网格上采样 z=f(x,y)，构造四边形面片，
@@ -143,8 +108,9 @@ Public Class PlotScene
                           xMin#, xMax#, yMin#, yMax#, div%, scheme$)
 
         ColorScheme = scheme
-        surfaces.Clear()
-        curvePoints = Nothing
+        rawSurfaces.Clear()
+        rawCurve = Nothing
+        rawScatter = Nothing
         EnsureColorTable()
 
         Dim nx = Math.Max(1, div), ny = Math.Max(1, div)
@@ -152,7 +118,7 @@ Public Class PlotScene
         For i As Integer = 0 To nx : xs(i) = xMin + (xMax - xMin) * i / nx : Next
         For j As Integer = 0 To ny : ys(j) = yMin + (yMax - yMin) * j / ny : Next
 
-        ' 先整体求值，统计 z 范围（用于颜色归一化），并记录点
+        ' 先整体求值，统计 z 范围（用于颜色归一化）
         Dim zs(nx, ny) As Double
         zMin = Double.MaxValue : zMax = Double.MinValue
         For i As Integer = 0 To nx
@@ -167,7 +133,6 @@ Public Class PlotScene
         Next
         If zMax <= zMin Then zMax = zMin + 1
 
-        Dim allPts As New List(Of Point3D)()
         For i As Integer = 0 To nx - 1
             For j As Integer = 0 To ny - 1
                 Dim z00 = zs(i, j), z10 = zs(i + 1, j), z01 = zs(i, j + 1), z11 = zs(i + 1, j + 1)
@@ -180,20 +145,18 @@ Public Class PlotScene
                 Dim p10 = New Point3D(xs(i + 1), ys(j), z10)
                 Dim p11 = New Point3D(xs(i + 1), ys(j + 1), z11)
                 Dim p01 = New Point3D(xs(i), ys(j + 1), z01)
-                allPts.AddRange({p00, p10, p11, p01})
 
                 Dim avgZ = (z00 + z10 + z01 + z11) / 4
                 Dim t = (avgZ - zMin) / (zMax - zMin)
                 Dim cidx = CInt(Math.Min(255, Math.Max(0, t * 255)))
-                surfaces.Add(New Surface With {.vertices = {p00, p10, p11, p01}, .brush = colorBrushes(cidx)})
+                rawSurfaces.Add(New Surface With {.vertices = {p00, p10, p11, p01}, .brush = colorBrushes(cidx)})
             Next
         Next
 
-        CenterModel(allPts)
-        FitView()
+        Recenter()
     End Sub
 
-    ' ===================== 数据生成：参数曲线 =====================
+    ' ===================== 数据生成：参数曲线（表达式） =====================
 
     ''' <summary>
     ''' 在 t∈[tMin,tMax] 采样得到三维点序列，连接成折线，并按参数 t 做渐变着色。
@@ -201,7 +164,9 @@ Public Class PlotScene
     Public Sub SetCurve(xEval As ExpressionEvaluator, yEval As ExpressionEvaluator, zEval As ExpressionEvaluator,
                         tMin#, tMax#, div%, scheme$)
         ColorScheme = scheme
-        surfaces.Clear()
+        rawSurfaces.Clear()
+        rawCurve = Nothing
+        rawScatter = Nothing
         EnsureColorTable()
 
         Dim n = Math.Max(1, div)
@@ -218,7 +183,7 @@ Public Class PlotScene
             pts(i) = New Point3D(x, y, z)
         Next
 
-        curvePoints = pts
+        rawCurve = pts
         ReDim curveColors(n)
         For i As Integer = 0 To n
             Dim tt = i / n
@@ -226,16 +191,116 @@ Public Class PlotScene
             curveColors(i) = colorTable(cidx)
         Next
 
-        CenterModel(pts.ToList())
-        FitView()
+        Recenter()
+    End Sub
+
+    ' ===================== 数据生成：向量（脚本引擎产出） =====================
+
+    ''' <summary>由脚本引擎产出的向量数据绘制三维/二维散点。</summary>
+    Public Sub SetScatter(x As Double(), y As Double(), z As Double())
+        rawSurfaces.Clear()
+        rawCurve = Nothing
+        rawScatter = Nothing
+        EnsureColorTable()
+
+        Dim pts As New List(Of Point3D)()
+        Dim n = If(x Is Nothing, 0, x.Length)
+        For i As Integer = 0 To n - 1
+            Dim zz = If(z IsNot Nothing AndAlso i < z.Length, z(i), 0)
+            pts.Add(New Point3D(x(i), y(i), zz))
+        Next
+        rawScatter = pts.ToArray()
+        Recenter()
+    End Sub
+
+    ''' <summary>由脚本引擎产出的向量数据绘制三维/二维曲线。</summary>
+    Public Sub SetLine(x As Double(), y As Double(), z As Double())
+        rawSurfaces.Clear()
+        rawCurve = Nothing
+        rawScatter = Nothing
+        EnsureColorTable()
+
+        Dim n = If(x Is Nothing, 0, x.Length)
+        Dim pts(n - 1) As Point3D
+        For i As Integer = 0 To n - 1
+            Dim zz = If(z IsNot Nothing AndAlso i < z.Length, z(i), 0)
+            pts(i) = New Point3D(x(i), y(i), zz)
+        Next
+        rawCurve = pts
+
+        ReDim curveColors(n - 1)
+        For i As Integer = 0 To n - 1
+            Dim tt = If(n > 1, i / (n - 1), 0)
+            Dim cidx = CInt(Math.Min(255, Math.Max(0, tt * 255)))
+            curveColors(i) = colorTable(cidx)
+        Next
+
+        Recenter()
+    End Sub
+
+    ''' <summary>
+    ''' 由脚本引擎产出的网格数据绘制三维曲面。
+    ''' ZGrid(i)(j)：i 沿 Y 轴、j 沿 X 轴。
+    ''' </summary>
+    Public Sub SetSurface(x As Double(), y As Double(), zGrid As Double()())
+        rawSurfaces.Clear()
+        rawCurve = Nothing
+        rawScatter = Nothing
+        EnsureColorTable()
+
+        zMin = Double.MaxValue : zMax = Double.MinValue
+        For i As Integer = 0 To y.Length - 1
+            For j As Integer = 0 To x.Length - 1
+                Dim z = zGrid(i)(j)
+                If Double.IsFinite(z) Then
+                    If z < zMin Then zMin = z
+                    If z > zMax Then zMax = z
+                End If
+            Next
+        Next
+        If zMax <= zMin Then zMax = zMin + 1
+
+        For iX As Integer = 0 To x.Length - 2
+            For jY As Integer = 0 To y.Length - 2
+                Dim z00 = zGrid(jY)(iX)
+                Dim z10 = zGrid(jY + 1)(iX)
+                Dim z11 = zGrid(jY + 1)(iX + 1)
+                Dim z01 = zGrid(jY)(iX + 1)
+                If Not (Double.IsFinite(z00) AndAlso Double.IsFinite(z10) AndAlso Double.IsFinite(z01) AndAlso Double.IsFinite(z11)) Then
+                    Continue For
+                End If
+
+                Dim p00 = New Point3D(x(iX), y(jY), z00)
+                Dim p10 = New Point3D(x(iX), y(jY + 1), z10)
+                Dim p11 = New Point3D(x(iX + 1), y(jY + 1), z11)
+                Dim p01 = New Point3D(x(iX + 1), y(jY), z01)
+
+                Dim avgZ = (z00 + z10 + z01 + z11) / 4
+                Dim t = (avgZ - zMin) / (zMax - zMin)
+                Dim cidx = CInt(Math.Min(255, Math.Max(0, t * 255)))
+                rawSurfaces.Add(New Surface With {.vertices = {p00, p10, p11, p01}, .brush = colorBrushes(cidx)})
+            Next
+        Next
+
+        Recenter()
     End Sub
 
     ' ===================== 居中 + 自动视距 =====================
 
-    Private Sub CenterModel(allPts As List(Of Point3D))
+    Private Sub Recenter()
+        Dim allPts As New List(Of Point3D)()
+        For Each s In rawSurfaces : allPts.AddRange(s.vertices)
+        Next
+        If rawCurve IsNot Nothing Then allPts.AddRange(rawCurve)
+        If rawScatter IsNot Nothing Then allPts.AddRange(rawScatter)
+
         If allPts.Count = 0 Then
             modelCenter = New Point3D(0, 0, 0)
             modelR = 1
+            bxmin = 0 : bxmax = 0 : bymin = 0 : bymax = 0 : bzmin = 0 : bzmax = 0
+            surfaces.Clear()
+            curvePoints = Nothing
+            scatterPoints = Nothing
             Return
         End If
 
@@ -245,22 +310,21 @@ Public Class PlotScene
         modelCenter = New Point3D(cx, cy, cz)
 
         ' 以质心为原点居中，保证旋转围绕模型中心
-        For i As Integer = 0 To surfaces.Count - 1
-            surfaces(i) = New Surface With {
-                .brush = surfaces(i).brush,
-                .vertices = surfaces(i).vertices.Select(Function(p) p.Subtract(modelCenter)).ToArray()
-            }
-        Next
-        If curvePoints IsNot Nothing Then
-            curvePoints = curvePoints.Select(Function(p) p.Subtract(modelCenter)).ToArray()
-        End If
+        surfaces = rawSurfaces.Select(Function(s) New Surface With {
+            .brush = s.brush,
+            .vertices = s.vertices.Select(Function(p) p.Subtract(modelCenter)).ToArray()
+        }).ToList()
+        curvePoints = If(rawCurve Is Nothing, Nothing, rawCurve.Select(Function(p) p.Subtract(modelCenter)).ToArray())
+        scatterPoints = If(rawScatter Is Nothing, Nothing, rawScatter.Select(Function(p) p.Subtract(modelCenter)).ToArray())
 
-        Dim maxR As Double = 0
-        For Each p As Point3D In allPts
-            Dim d = Point3D.Distance(p, modelCenter)
-            If d > maxR Then maxR = d
-        Next
+        ' 数据包围盒
+        bxmin = allPts.Min(Function(p) p.X) : bxmax = allPts.Max(Function(p) p.X)
+        bymin = allPts.Min(Function(p) p.Y) : bymax = allPts.Max(Function(p) p.Y)
+        bzmin = allPts.Min(Function(p) p.Z) : bzmax = allPts.Max(Function(p) p.Z)
+
+        Dim maxR As Double = allPts.Max(Function(p) Point3D.Distance(p, modelCenter))
         modelR = If(maxR <= 0, 1, maxR)
+        FitView()
     End Sub
 
     ''' <summary>
@@ -283,16 +347,20 @@ Public Class PlotScene
         Camera.Screen = canvas
         g.Clear(BackgroundColor)
 
-        If surfaces.Count > 0 Then
-            If ShowAxes Then DrawGround(g)
-            ' 画家算法 + 光照（热图基色在光照下叠加明暗）
-            Camera.Draw(g, surfaces, drawPath:=False)
-            If ShowAxes Then DrawAxes(g)
-        ElseIf curvePoints IsNot Nothing AndAlso curvePoints.Length > 1 Then
-            If ShowAxes Then DrawGround(g)
-            DrawCurve(g)
-            If ShowAxes Then DrawAxes(g)
-        End If
+        Dim hasSurf = surfaces.Count > 0
+        Dim hasLine = curvePoints IsNot Nothing AndAlso curvePoints.Length > 1
+        Dim hasScatter = scatterPoints IsNot Nothing AndAlso scatterPoints.Length > 0
+        If Not (hasSurf OrElse hasLine OrElse hasScatter) Then Return
+
+        If ShowBox Then DrawBox(g)
+        If ShowTicks Then DrawRuler(g)
+        If ShowAxes Then DrawGround(g)
+
+        ' 画家算法 + 光照（热图基色在光照下叠加明暗）
+        If hasSurf Then Camera.Draw(g, surfaces, drawPath:=False)
+        If hasLine Then DrawCurve(g)
+        If hasScatter Then DrawScatter(g)
+        If ShowAxes Then DrawAxes(g)
     End Sub
 
     Private Function ToScreen(p As Point3D) As PointF
@@ -300,6 +368,134 @@ Public Class PlotScene
         Dim projected = Camera.Project(rotated)
         Return New PointF(CSng(projected.X), CSng(projected.Y))
     End Function
+
+    ''' <summary>将“数据坐标”点先居中再投影到屏幕（盒子/刻度尺使用）。</summary>
+    Private Function ToScreenData(p As Point3D) As PointF
+        Return ToScreen(New Point3D(p.X - modelCenter.X, p.Y - modelCenter.Y, p.Z - modelCenter.Z))
+    End Function
+
+    ''' <summary>绘制基于数据包围盒的三维盒子六个面的网格。</summary>
+    Private Sub DrawBox(g As Graphics)
+        Dim x0 = bxmin, x1 = bxmax, y0 = bymin, y1 = bymax, z0 = bzmin, z1 = bzmax
+        Dim c(7) As Point3D
+        c(0) = New Point3D(x0, y0, z0) : c(1) = New Point3D(x1, y0, z0)
+        c(2) = New Point3D(x1, y1, z0) : c(3) = New Point3D(x0, y1, z0)
+        c(4) = New Point3D(x0, y0, z1) : c(5) = New Point3D(x1, y0, z1)
+        c(6) = New Point3D(x1, y1, z1) : c(7) = New Point3D(x0, y1, z1)
+
+        Dim edges = {
+            New Integer() {0, 1}, New Integer() {1, 2}, New Integer() {2, 3}, New Integer() {3, 0},
+            New Integer() {4, 5}, New Integer() {5, 6}, New Integer() {6, 7}, New Integer() {7, 4},
+            New Integer() {0, 4}, New Integer() {1, 5}, New Integer() {2, 6}, New Integer() {3, 7}
+        }
+
+        Using pen As New Pen(Color.FromArgb(150, 170, 170, 170), 1)
+            For Each e In edges
+                g.DrawLine(pen, ToScreenData(c(e(0))), ToScreenData(c(e(1))))
+            Next
+
+            Dim div = 4
+            ' X-Y 面 (z0, z1)
+            For f = 0 To 1
+                Dim z = If(f = 0, z0, z1)
+                For i = 1 To div - 1
+                    Dim tx = x0 + (x1 - x0) * i / div
+                    g.DrawLine(pen, ToScreenData(New Point3D(tx, y0, z)), ToScreenData(New Point3D(tx, y1, z)))
+                    Dim ty = y0 + (y1 - y0) * i / div
+                    g.DrawLine(pen, ToScreenData(New Point3D(x0, ty, z)), ToScreenData(New Point3D(x1, ty, z)))
+                Next
+            Next
+            ' X-Z 面 (y0, y1)
+            For f = 0 To 1
+                Dim y = If(f = 0, y0, y1)
+                For i = 1 To div - 1
+                    Dim tx = x0 + (x1 - x0) * i / div
+                    g.DrawLine(pen, ToScreenData(New Point3D(tx, y, z0)), ToScreenData(New Point3D(tx, y, z1)))
+                    Dim tz = z0 + (z1 - z0) * i / div
+                    g.DrawLine(pen, ToScreenData(New Point3D(x0, y, tz)), ToScreenData(New Point3D(x1, y, tz)))
+                Next
+            Next
+            ' Y-Z 面 (x0, x1)
+            For f = 0 To 1
+                Dim x = If(f = 0, x0, x1)
+                For i = 1 To div - 1
+                    Dim ty = y0 + (y1 - y0) * i / div
+                    g.DrawLine(pen, ToScreenData(New Point3D(x, ty, z0)), ToScreenData(New Point3D(x, ty, z1)))
+                    Dim tz = z0 + (z1 - z0) * i / div
+                    g.DrawLine(pen, ToScreenData(New Point3D(x, y0, tz)), ToScreenData(New Point3D(x, y1, tz)))
+                Next
+            Next
+        End Using
+    End Sub
+
+    ''' <summary>绘制从包围盒角出发、带数字刻度的三维坐标轴（带刻度尺）。</summary>
+    Private Sub DrawRuler(g As Graphics)
+        Dim x0 = bxmin, x1 = bxmax, y0 = bymin, y1 = bymax, z0 = bzmin, z1 = bzmax
+        Dim o = ToScreenData(New Point3D(x0, y0, z0))
+        Dim ax = ToScreenData(New Point3D(x1, y0, z0))
+        Dim ay = ToScreenData(New Point3D(x0, y1, z0))
+        Dim az = ToScreenData(New Point3D(x0, y0, z1))
+        Using penX As New Pen(Color.DarkRed, 2) : g.DrawLine(penX, o, ax) : End Using
+        Using penY As New Pen(Color.DarkGreen, 2) : g.DrawLine(penY, o, ay) : End Using
+        Using penZ As New Pen(Color.DarkBlue, 2) : g.DrawLine(penZ, o, az) : End Using
+
+        Using f As New Font("Segoe UI", 8)
+            For Each tk In NiceTicks(x0, x1)
+                Dim p1 = ToScreenData(New Point3D(tk, y0, z0))
+                Dim p2 = ToScreenData(New Point3D(tk, y0 - (y1 - y0) * 0.02, z0))
+                g.DrawLine(Pens.Gray, p1, p2)
+                g.DrawString(FormatTick(tk), f, Brushes.DarkRed, p1)
+            Next
+            For Each tk In NiceTicks(y0, y1)
+                Dim p1 = ToScreenData(New Point3D(x0, tk, z0))
+                Dim p2 = ToScreenData(New Point3D(x0 - (x1 - x0) * 0.02, tk, z0))
+                g.DrawLine(Pens.Gray, p1, p2)
+                g.DrawString(FormatTick(tk), f, Brushes.DarkGreen, p1)
+            Next
+            For Each tk In NiceTicks(z0, z1)
+                Dim p1 = ToScreenData(New Point3D(x0, y0, tk))
+                Dim p2 = ToScreenData(New Point3D(x0 - (x1 - x0) * 0.02, y0, tk))
+                g.DrawLine(Pens.Gray, p1, p2)
+                g.DrawString(FormatTick(tk), f, Brushes.DarkBlue, p1)
+            Next
+        End Using
+    End Sub
+
+    Private Function NiceTicks(min As Double, max As Double) As Double()
+        If Not Double.IsFinite(min) OrElse Not Double.IsFinite(max) OrElse max <= min Then Return New Double() {}
+        Dim span = max - min
+        Dim rawStep = span / 6
+        Dim mag = Math.Pow(10, Math.Floor(Math.Log10(rawStep)))
+        Dim norm = rawStep / mag
+        Dim stepv = If(norm < 1.5, 1, If(norm < 3, 2, If(norm < 7, 5, 10))) * mag
+        Dim ticks As New List(Of Double)()
+        Dim start = Math.Ceiling(min / stepv) * stepv
+        Dim v = start
+        Dim guard = 0
+        Do While v <= max + stepv * 0.5 AndAlso guard < 1000
+            ticks.Add(v)
+            v += stepv
+            guard += 1
+        Loop
+        Return ticks.ToArray()
+    End Function
+
+    Private Function FormatTick(v As Double) As String
+        If Math.Abs(v) >= 1000 OrElse (Math.Abs(v) > 0 AndAlso Math.Abs(v) < 0.001) Then
+            Return v.ToString("0.##E+0")
+        End If
+        Return v.ToString("0.##")
+    End Function
+
+    ''' <summary>绘制三维散点。</summary>
+    Private Sub DrawScatter(g As Graphics)
+        Using b As New SolidBrush(Color.FromArgb(210, 30, 80, 180))
+            For Each p In scatterPoints
+                Dim s = ToScreen(p)
+                g.FillEllipse(b, s.X - 3, s.Y - 3, 6, 6)
+            Next
+        End Using
+    End Sub
 
     ''' <summary>在模型底部（z = -modelR）绘制 X-Y 参考网格。</summary>
     Private Sub DrawGround(g As Graphics)
@@ -345,5 +541,5 @@ Public Class PlotScene
             End Using
         Next
     End Sub
-End Class
 
+End Class

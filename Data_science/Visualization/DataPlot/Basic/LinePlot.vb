@@ -58,13 +58,18 @@ Imports Microsoft.VisualBasic.Imaging
 
 ''' <summary>折线图（默认无标记，可单独配置）</summary>
 Public Class LinePlot
-    Inherits PlotEngine
+    Inherits SeriesPlotEngine
 
     Public Sub New(width As Integer, height As Integer, Optional theme As PlotTheme = Nothing)
         MyBase.New(width, height, theme)
     End Sub
 
-    Public Sub Plot(seriesList As IList(Of Series))
+    ''' <summary>直接在已有的位图上绘制（用于宿主程序 PictureBox 等）。</summary>
+    Public Sub New(bmp As Microsoft.VisualBasic.Imaging.Bitmap)
+        MyBase.New(bmp)
+    End Sub
+
+    Public Overrides Sub Plot(seriesList As IList(Of Series))
         ' 折线图默认不显示标记
         For Each s In seriesList
             If s.MarkerShape = MarkerShape.Circle Then s.MarkerShape = MarkerShape.None

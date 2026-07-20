@@ -143,7 +143,7 @@ Namespace Framework.Optimization.LBFGSB.LineSearches
 
         Public info As RESULT
 
-        Public Shared ReadOnly eps As Double = Microsoft.VisualBasic.Math.Ulp(1.0)
+        Public Shared ReadOnly eps As Double = NumeralSystem.Ulp(1.0)
         Public Shared ReadOnly iterfinitemax As Integer = -std.Log(eps) / std.Log(2.0)
 
         Public Sub New(fun As IGradFunction, param As Parameters, xp As Double(), drt As Double(), step_max As Double, _step As Double, _fx As Double, grad As Double(), _dg As Double, x As Double(), weak_wolfe As Boolean)

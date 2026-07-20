@@ -82,6 +82,20 @@ Imports StringFormat = Microsoft.VisualBasic.Imaging.StringFormat
 '  负责画布管理、坐标变换、坐标轴 / 网格 / 图例绘制、PNG 高清导出
 ' ============================================================================
 
+Public MustInherit Class SeriesPlotEngine : Inherits PlotEngine
+
+    Protected Sub New(bmp As Bitmap)
+        MyBase.New(bmp)
+    End Sub
+
+    Protected Sub New(width As Integer, height As Integer, Optional theme As PlotTheme = Nothing)
+        MyBase.New(width, height, theme)
+    End Sub
+
+    Public MustOverride Sub Plot(seriesList As IList(Of Series))
+
+End Class
+
 ''' <summary>
 ''' 绘图引擎：所有图表类型的基类与公共能力。
 ''' 使用 GDI+ 在内存 Bitmap 上绘制，最后导出为 PNG。
@@ -92,6 +106,7 @@ Public Class PlotEngine : Implements IDisposable
     Protected _g As IGraphics
     Protected _width As Integer
     Protected _height As Integer
+    Protected _bitmap As Microsoft.VisualBasic.Imaging.Bitmap = Nothing
 
     ' ---------- 主题 ----------
     Public Property Theme As PlotTheme
@@ -139,6 +154,25 @@ Public Class PlotEngine : Implements IDisposable
         _g = DriverLoad.CreateGraphicsDevice(New Size(width, height))
         ApplyQuality(_g)
     End Sub
+
+    ''' <summary>
+    ''' 直接使用已有的 System.Drawing.Bitmap 作为绘图设备（GDI 驱动）。
+    ''' 渲染结果即绘制在该位图上，可通过 ToBitmap() 取回。
+    ''' </summary>
+    Public Sub New(bmp As Microsoft.VisualBasic.Imaging.Bitmap)
+        If bmp Is Nothing Then Throw New ArgumentNullException(NameOf(bmp))
+        _bitmap = bmp
+        _width = bmp.Width
+        _height = bmp.Height
+        _Theme = PlotTheme.Light()
+        _g = DriverLoad.CreateGraphicsDevice(bmp, driver:=Drivers.GDI)
+        ApplyQuality(_g)
+    End Sub
+
+    ''' <summary>取回底层绘图位图（若由 New(bmp) 构造则有值，否则为 Nothing）。</summary>
+    Public Function ToBitmap() As Microsoft.VisualBasic.Imaging.Bitmap
+        Return _bitmap
+    End Function
 
     Public Sub Dispose() Implements IDisposable.Dispose
         _g?.Dispose()
