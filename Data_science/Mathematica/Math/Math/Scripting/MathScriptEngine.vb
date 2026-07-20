@@ -358,11 +358,15 @@ Namespace Microsoft.VisualBasic.Math.Scripting
             ' 2) 用户函数（按参数名匹配 ctx 向量）
             If funcs.ContainsKey(name) Then
                 Dim f = funcs(name)
-                Dim argVecs() As Double()
+                Dim argVecs As Double()() = New Double(f.params.Length - 1)() {}
                 For pi = 0 To f.params.Length - 1
-                    argVecs(pi) = If(ctx.ContainsKey(f.params(pi)), ctx(f.params(pi)), Nothing)
+                    If ctx.ContainsKey(f.params(pi)) Then
+                        argVecs(pi) = ctx(f.params(pi))
+                    Else
+                        argVecs(pi) = Nothing
+                    End If
                 Next
-                If argVecs.All(Function(v) v IsNot Nothing) Then
+                If argVecs.All(Function(v) Not (v Is Nothing)) Then
                     Return ApplyUserFuncVector(name, f, argVecs)
                 End If
             End If

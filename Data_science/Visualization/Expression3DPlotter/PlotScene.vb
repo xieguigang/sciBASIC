@@ -36,6 +36,8 @@ Public Class PlotScene
     Private colorBrushes As Microsoft.VisualBasic.Imaging.SolidBrush() = Nothing
     Private colorTableScheme As String = ""
 
+    Dim curveColors As Color()
+
     Private zMin As Double = 0
     Private zMax As Double = 1
 

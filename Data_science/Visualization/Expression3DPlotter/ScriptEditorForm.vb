@@ -1,5 +1,6 @@
 Imports System.Drawing
 Imports System.Windows.Forms
+Imports Microsoft.VisualBasic.Math.Microsoft.VisualBasic.Math.Scripting
 Imports Microsoft.VisualBasic.Math.Scripting
 
 ''' <summary>
