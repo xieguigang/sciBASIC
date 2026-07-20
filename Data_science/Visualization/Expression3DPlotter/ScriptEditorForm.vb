@@ -1,3 +1,4 @@
+Imports System.Text
 Imports Microsoft.VisualBasic.Math.Scripting
 
 ''' <summary>
@@ -18,6 +19,8 @@ Public Class ScriptEditorForm
     Friend WithEvents ToolStripButton1 As ToolStripButton
     Friend WithEvents TextBox1 As TextBox
     Friend WithEvents ToolStripSeparator1 As ToolStripSeparator
+    Friend WithEvents ToolStripLabel2 As ToolStripLabel
+    Friend WithEvents cboPreset As ToolStripComboBox
     Friend WithEvents ToolStripButton2 As ToolStripButton
 
     Sub New()
@@ -25,7 +28,7 @@ Public Class ScriptEditorForm
     End Sub
 
     Private Function SampleScript() As String
-        Dim sb As New System.Text.StringBuilder()
+        Dim sb As New StringBuilder()
         sb.AppendLine("# 三维曲面示例")
         sb.AppendLine("x = axis(-3, 3, n=80)")
         sb.AppendLine("y = axis(-3, 3, n=80)")
@@ -52,6 +55,8 @@ Public Class ScriptEditorForm
         ToolStripSeparator1 = New ToolStripSeparator()
         ToolStripButton2 = New ToolStripButton()
         TextBox1 = New TextBox()
+        cboPreset = New ToolStripComboBox()
+        ToolStripLabel2 = New ToolStripLabel()
         StatusStrip1.SuspendLayout()
         ToolStrip1.SuspendLayout()
         SuspendLayout()
@@ -73,7 +78,7 @@ Public Class ScriptEditorForm
         ' 
         ' ToolStrip1
         ' 
-        ToolStrip1.Items.AddRange(New ToolStripItem() {ToolStripLabel1, ToolStripButton1, ToolStripSeparator1, ToolStripButton2})
+        ToolStrip1.Items.AddRange(New ToolStripItem() {ToolStripLabel1, ToolStripButton1, ToolStripSeparator1, ToolStripButton2, ToolStripLabel2, cboPreset})
         ToolStrip1.Location = New Point(0, 0)
         ToolStrip1.Name = "ToolStrip1"
         ToolStrip1.Size = New Size(744, 25)
@@ -93,7 +98,7 @@ Public Class ScriptEditorForm
         ToolStripButton1.ImageTransparentColor = Color.Magenta
         ToolStripButton1.Name = "ToolStripButton1"
         ToolStripButton1.Size = New Size(23, 22)
-        ToolStripButton1.Text = "ToolStripButton1"
+        ToolStripButton1.Text = "Run"
         ' 
         ' ToolStripSeparator1
         ' 
@@ -107,7 +112,7 @@ Public Class ScriptEditorForm
         ToolStripButton2.ImageTransparentColor = Color.Magenta
         ToolStripButton2.Name = "ToolStripButton2"
         ToolStripButton2.Size = New Size(23, 22)
-        ToolStripButton2.Text = "ToolStripButton2"
+        ToolStripButton2.Text = "Demo Script"
         ' 
         ' TextBox1
         ' 
@@ -117,6 +122,17 @@ Public Class ScriptEditorForm
         TextBox1.Name = "TextBox1"
         TextBox1.Size = New Size(744, 494)
         TextBox1.TabIndex = 2
+        ' 
+        ' cboPreset
+        ' 
+        cboPreset.Name = "cboPreset"
+        cboPreset.Size = New Size(121, 25)
+        ' 
+        ' ToolStripLabel2
+        ' 
+        ToolStripLabel2.Name = "ToolStripLabel2"
+        ToolStripLabel2.Size = New Size(46, 22)
+        ToolStripLabel2.Text = "预设："
         ' 
         ' ScriptEditorForm
         ' 
