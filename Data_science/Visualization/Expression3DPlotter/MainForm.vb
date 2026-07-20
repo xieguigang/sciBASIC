@@ -65,7 +65,7 @@
 Imports System.Windows.Forms
 Imports System.Drawing
 Imports Microsoft.VisualBasic.Imaging.Driver
-Imports Microsoft.VisualBasic.Math.Microsoft.VisualBasic.Math.Scripting
+Imports Microsoft.VisualBasic.Math.Scripting
 
 ''' <summary>
 ''' 三维数学表达式绘图器主窗体（light 亮色主题）。

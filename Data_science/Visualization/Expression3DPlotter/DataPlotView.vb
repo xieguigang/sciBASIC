@@ -1,7 +1,7 @@
 Imports System.Drawing
 Imports System.IO
 Imports DataPlot
-Imports Microsoft.VisualBasic.Math.Microsoft.VisualBasic.Math.Scripting
+Imports Microsoft.VisualBasic.Math.Scripting
 
 ''' <summary>
 ''' 二维绘图桥接：将脚本引擎产出的二维 PlotCommand 转交给 DataPlot 的

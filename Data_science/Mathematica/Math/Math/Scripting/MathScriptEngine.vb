@@ -6,7 +6,7 @@ Imports Microsoft.VisualBasic.Math.Scripting.MathExpression
 Imports Microsoft.VisualBasic.Math.Scripting.MathExpression.Impl
 Imports std = System.Math
 
-Namespace Microsoft.VisualBasic.Math.Scripting
+Namespace Scripting
 
     Friend Class UserFunction
         Public params As String()

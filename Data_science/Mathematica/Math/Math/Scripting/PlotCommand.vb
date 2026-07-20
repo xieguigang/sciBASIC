@@ -1,4 +1,4 @@
-Namespace Microsoft.VisualBasic.Math.Scripting
+Namespace Scripting
 
     ''' <summary>绘图类型</summary>
     Public Enum PlotKind
