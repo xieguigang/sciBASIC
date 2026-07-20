@@ -99,8 +99,8 @@ Public Class MainForm : Inherits Form
 
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(MainForm))
-        Dim PlotScene2 As PlotScene = New PlotScene()
-        Dim Camera2 As Microsoft.VisualBasic.Imaging.Drawing3D.Camera = New Imaging.Drawing3D.Camera()
+        Dim PlotScene1 As PlotScene = New PlotScene()
+        Dim Camera1 As Microsoft.VisualBasic.Imaging.Drawing3D.Camera = New Imaging.Drawing3D.Camera()
         ToolStrip1 = New ToolStrip()
         ToolStripButton1 = New ToolStripButton()
         ToolStripSeparator1 = New ToolStripSeparator()
@@ -124,6 +124,7 @@ Public Class MainForm : Inherits Form
         ToolStrip1.Items.AddRange(New ToolStripItem() {ToolStripButton1, ToolStripSeparator1, ToolStripSplitButton1, ToolStripLabel1, cboScheme})
         ToolStrip1.Location = New Point(0, 0)
         ToolStrip1.Name = "ToolStrip1"
+        ToolStrip1.RenderMode = ToolStripRenderMode.System
         ToolStrip1.Size = New Size(796, 25)
         ToolStrip1.TabIndex = 0
         ToolStrip1.Text = "ToolStrip1"
@@ -162,6 +163,7 @@ Public Class MainForm : Inherits Form
         ' ToolStripMenuItem1
         ' 
         ToolStripMenuItem1.CheckOnClick = True
+        ToolStripMenuItem1.Image = CType(resources.GetObject("ToolStripMenuItem1.Image"), Image)
         ToolStripMenuItem1.Name = "ToolStripMenuItem1"
         ToolStripMenuItem1.Size = New Size(180, 22)
         ToolStripMenuItem1.Text = "显示盒子网格面"
@@ -203,22 +205,22 @@ Public Class MainForm : Inherits Form
         canvas.Dock = DockStyle.Fill
         canvas.Location = New Point(0, 25)
         canvas.Name = "canvas"
-        PlotScene2.BackgroundColor = Color.White
-        Camera2.AmbientStrength = 0.2R
-        Camera2.AngleX = 20.0F
-        Camera2.AngleY = -30.0F
-        Camera2.AngleZ = 0F
-        Camera2.FieldOfView = 256.0F
-        Camera2.LightColor = Color.FromArgb(CByte(255), CByte(255), CByte(255))
-        Camera2.Offset = CType(resources.GetObject("Camera2.Offset"), PointF)
-        Camera2.Screen = New Size(200, 100)
-        Camera2.ViewDistance = 0F
-        PlotScene2.Camera = Camera2
-        PlotScene2.ColorScheme = "viridis"
-        PlotScene2.ShowAxes = True
-        PlotScene2.ShowBox = True
-        PlotScene2.ShowTicks = False
-        canvas.Scene = PlotScene2
+        PlotScene1.BackgroundColor = Color.White
+        Camera1.AmbientStrength = 0.2R
+        Camera1.AngleX = 20F
+        Camera1.AngleY = -30F
+        Camera1.AngleZ = 0F
+        Camera1.FieldOfView = 256F
+        Camera1.LightColor = Color.FromArgb(CByte(255), CByte(255), CByte(255))
+        Camera1.Offset = CType(resources.GetObject("Camera1.Offset"), PointF)
+        Camera1.Screen = New Size(200, 100)
+        Camera1.ViewDistance = 0F
+        PlotScene1.Camera = Camera1
+        PlotScene1.ColorScheme = "viridis"
+        PlotScene1.ShowAxes = True
+        PlotScene1.ShowBox = True
+        PlotScene1.ShowTicks = False
+        canvas.Scene = PlotScene1
         canvas.Size = New Size(796, 511)
         canvas.TabIndex = 1
         canvas.TabStop = True
@@ -244,7 +246,7 @@ Public Class MainForm : Inherits Form
         Controls.Add(canvas)
         Controls.Add(statusStrip)
         Controls.Add(ToolStrip1)
-        Font = New Font("Segoe UI", 9.0F)
+        Font = New Font("Segoe UI", 9F)
         MinimumSize = New Size(600, 420)
         Name = "MainForm"
         StartPosition = FormStartPosition.CenterScreen

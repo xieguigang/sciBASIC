@@ -19,7 +19,7 @@ Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Drawing-net4.8", "..\..\gr\
 EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "imaging.NET5", "..\..\gr\Microsoft.VisualBasic.Imaging\imaging.NET5.vbproj", "{8223A601-401E-7929-AB50-42BE238B91D9}"
 EndProject
-Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Expression3DPlotter", "Expression3DPlotter\Expression3DPlotter.vbproj", "{C112AB23-7244-2083-A1BB-91638EBE5338}"
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "MESH", "Expression3DPlotter\MESH.vbproj", "{C112AB23-7244-2083-A1BB-91638EBE5338}"
 EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "DataPlot", "DataPlot\DataPlot.vbproj", "{7BC45592-C46A-170E-9A45-C50A6E9DEDF5}"
 EndProject

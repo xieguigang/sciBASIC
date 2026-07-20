@@ -187,6 +187,7 @@ Public Class ScriptEditorForm
         ToolStrip1.Items.AddRange(New ToolStripItem() {ToolStripLabel1, ToolStripButton1, ToolStripSeparator1, ToolStripButton2, ToolStripLabel2, cboPreset})
         ToolStrip1.Location = New Point(0, 0)
         ToolStrip1.Name = "ToolStrip1"
+        ToolStrip1.RenderMode = ToolStripRenderMode.System
         ToolStrip1.Size = New Size(744, 25)
         ToolStrip1.TabIndex = 1
         ToolStrip1.Text = "ToolStrip1"
