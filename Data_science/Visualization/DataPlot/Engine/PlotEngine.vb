@@ -92,6 +92,7 @@ Public Class PlotEngine : Implements IDisposable
     Protected _g As IGraphics
     Protected _width As Integer
     Protected _height As Integer
+    Protected _bitmap As Bitmap = Nothing
 
     ' ---------- 主题 ----------
     Public Property Theme As PlotTheme
@@ -139,6 +140,25 @@ Public Class PlotEngine : Implements IDisposable
         _g = DriverLoad.CreateGraphicsDevice(New Size(width, height))
         ApplyQuality(_g)
     End Sub
+
+    ''' <summary>
+    ''' 直接使用已有的 System.Drawing.Bitmap 作为绘图设备（GDI 驱动）。
+    ''' 渲染结果即绘制在该位图上，可通过 ToBitmap() 取回。
+    ''' </summary>
+    Public Sub New(bmp As Bitmap)
+        If bmp Is Nothing Then Throw New ArgumentNullException(NameOf(bmp))
+        _bitmap = bmp
+        _width = bmp.Width
+        _height = bmp.Height
+        _Theme = PlotTheme.Light()
+        _g = DriverLoad.CreateGraphicsDevice(bmp, driver:=Drivers.GDI)
+        ApplyQuality(_g)
+    End Sub
+
+    ''' <summary>取回底层绘图位图（若由 New(bmp) 构造则有值，否则为 Nothing）。</summary>
+    Public Function ToBitmap() As Bitmap
+        Return _bitmap
+    End Function
 
     Public Sub Dispose() Implements IDisposable.Dispose
         _g?.Dispose()
