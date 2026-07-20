@@ -205,10 +205,10 @@ Public Class MainForm : Inherits Form
         canvas.Name = "canvas"
         PlotScene2.BackgroundColor = Color.White
         Camera2.AmbientStrength = 0.2R
-        Camera2.AngleX = 20F
-        Camera2.AngleY = -30F
+        Camera2.AngleX = 20.0F
+        Camera2.AngleY = -30.0F
         Camera2.AngleZ = 0F
-        Camera2.FieldOfView = 256F
+        Camera2.FieldOfView = 256.0F
         Camera2.LightColor = Color.FromArgb(CByte(255), CByte(255), CByte(255))
         Camera2.Offset = CType(resources.GetObject("Camera2.Offset"), PointF)
         Camera2.Screen = New Size(200, 100)
@@ -244,7 +244,7 @@ Public Class MainForm : Inherits Form
         Controls.Add(canvas)
         Controls.Add(statusStrip)
         Controls.Add(ToolStrip1)
-        Font = New Font("Segoe UI", 9F)
+        Font = New Font("Segoe UI", 9.0F)
         MinimumSize = New Size(600, 420)
         Name = "MainForm"
         StartPosition = FormStartPosition.CenterScreen
@@ -259,14 +259,38 @@ Public Class MainForm : Inherits Form
 
     End Sub
 
-#Region "交互逻辑"
-
     Private Sub MainForm_Load(sender As Object, e As EventArgs) Handles Me.Load
         Call ImageDriver.Register()
         Call LoadScriptInput()
 
+        canvas.Scene.ShowAxes = chkAxes.Checked
+        canvas.Scene.ShowBox = ToolStripMenuItem1.Checked
+        canvas.Scene.ShowTicks = ToolStripMenuItem2.Checked
+
         ' 默认演示：启动即渲染一个三维曲面
-        OnDraw(Me, EventArgs.Empty)
+        Call OnDraw(Me, EventArgs.Empty)
+        Call OnReset(Me, EventArgs.Empty)
+    End Sub
+
+    Private Sub AxesChanged(sender As Object, e As EventArgs) Handles chkAxes.CheckedChanged
+        If canvas.Scene IsNot Nothing Then
+            canvas.Scene.ShowAxes = chkAxes.Checked
+            canvas.Invalidate()
+        End If
+    End Sub
+
+    Private Sub OnBoxChecked(sender As Object, e As EventArgs) Handles ToolStripMenuItem1.Click
+        If canvas.Scene IsNot Nothing Then
+            canvas.Scene.ShowBox = ToolStripMenuItem1.Checked
+            canvas.Invalidate()
+        End If
+    End Sub
+
+    Private Sub OnTicksChecked(sender As Object, e As EventArgs) Handles ToolStripMenuItem2.Click
+        If canvas.Scene IsNot Nothing Then
+            canvas.Scene.ShowTicks = ToolStripMenuItem2.Checked
+            canvas.Invalidate()
+        End If
     End Sub
 
     Private Sub LoadScriptInput()
@@ -313,13 +337,6 @@ Public Class MainForm : Inherits Form
         UpdateStatus()
     End Sub
 
-    Private Sub AxesChanged(sender As Object, e As EventArgs) Handles chkAxes.CheckedChanged
-        If canvas.Scene IsNot Nothing Then
-            canvas.Scene.ShowAxes = chkAxes.Checked
-            canvas.Invalidate()
-        End If
-    End Sub
-
     Private Sub OnZoom(delta As Integer) Handles canvas.Zoom
         If canvas.Scene Is Nothing Then Return
         Dim factor = If(delta > 0, 0.9F, 1.1F)
@@ -336,19 +353,6 @@ Public Class MainForm : Inherits Form
             $"视距:{s.Camera.ViewDistance:F1}  |  半径:{s.ModelRadius:F1}  |  " &
             $"面:{s.SurfaceCount} 点:{s.PointCount}  |  配色:{GetColorSchemaName()}"
     End Sub
-
-#End Region
-
-    Private Sub OnBoxChecked(sender As Object, e As EventArgs) Handles ToolStripMenuItem1.Click
-        If canvas.Scene IsNot Nothing Then canvas.Scene.ShowBox = ToolStripMenuItem1.Checked
-        canvas.Invalidate()
-    End Sub
-
-    Private Sub OnTicksChecked(sender As Object, e As EventArgs) Handles ToolStripMenuItem2.Click
-        If canvas.Scene IsNot Nothing Then canvas.Scene.ShowTicks = ToolStripMenuItem2.Checked
-        canvas.Invalidate()
-    End Sub
-
 
     Private Sub OnScriptExecuted(result As ScriptResult)
         If result Is Nothing OrElse Not result.Success Then
