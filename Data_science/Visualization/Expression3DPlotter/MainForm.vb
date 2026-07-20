@@ -47,12 +47,11 @@
 ' 
 '     Constructor: (+1 Overloads) Sub New
 ' 
-'     Function: Btn, BuildPresets, Cbo, Chk, Lbl
+'     Function: Btn, Cbo, Chk, Lbl
 '               Num, Txt
 ' 
 '     Sub: ApplyMode, AxesChanged, InitializeComponent, MainForm_Load, ModeChanged
-'          OnDraw, OnReset, OnZoom, PresetSelected, UpdateStatus
-'     Class PresetInfo
+'          OnDraw, OnReset, OnZoom, UpdateStatus
 ' 
 ' 
 ' 
@@ -108,8 +107,6 @@ Public Class MainForm : Inherits Form
     Private WithEvents numDiv As NumericUpDown
     Private WithEvents lblScheme As Label
     Private WithEvents cboScheme As ComboBox
-    Private WithEvents cboPreset As ComboBox
-    Private WithEvents lblPreset As Label
     Private WithEvents chkAxes As CheckBox
     Private WithEvents btnDraw As Button
     Private WithEvents btnReset As Button
@@ -191,12 +188,6 @@ Public Class MainForm : Inherits Form
         cboMode = Cbo(8, 8, 120, {"曲面  z = f(x, y)", "曲线  x(t), y(t), z(t)"})
         cboMode.SelectedIndex = 0
         ApplyMode()
-
-        ' ---- 预设曲面下拉框 ----
-        lblPreset = Lbl("预设:", 660, 10, 40)
-        Dim presetNames = BuildPresets().Select(Function(p) p.Name).ToArray()
-        cboPreset = Cbo(704, 8, 220, presetNames)
-        cboPreset.SelectedIndex = -1
     End Sub
 
 #Region "控件辅助构造"
@@ -358,53 +349,6 @@ Public Class MainForm : Inherits Form
             $"{msg}  |  角度X:{s.Camera.AngleX:F1} Y:{s.Camera.AngleY:F1}  |  " &
             $"视距:{s.Camera.ViewDistance:F1}  |  半径:{s.ModelRadius:F1}  |  " &
             $"面:{s.SurfaceCount} 点:{s.PointCount}  |  配色:{cboScheme.Text}"
-    End Sub
-
-#End Region
-
-#Region "预设曲面"
-
-    Private Class PresetInfo
-        Public Name As String
-        Public Expression As String
-        Public XMin As Double
-        Public XMax As Double
-        Public YMin As Double
-        Public YMax As Double
-    End Class
-
-    Private Function BuildPresets() As List(Of PresetInfo)
-        Return New List(Of PresetInfo) From {
-            New PresetInfo With {.Name = "正弦波纹 (Sine Ripple)", .Expression = "sin(sqrt(x*x + y*y))", .XMin = -8, .XMax = 8, .YMin = -8, .YMax = 8},
-            New PresetInfo With {.Name = "抛物面 (Paraboloid)", .Expression = "x*x + y*y", .XMin = -5, .XMax = 5, .YMin = -5, .YMax = 5},
-            New PresetInfo With {.Name = "鞍面 (Saddle)", .Expression = "x*x - y*y", .XMin = -5, .XMax = 5, .YMin = -5, .YMax = 5},
-            New PresetInfo With {.Name = "双曲抛物面 (Hyperbolic Saddle)", .Expression = "x*y", .XMin = -5, .XMax = 5, .YMin = -5, .YMax = 5},
-            New PresetInfo With {.Name = "高斯钟形 (Gaussian Bell)", .Expression = "exp(-(x*x + y*y)/5)", .XMin = -5, .XMax = 5, .YMin = -5, .YMax = 5},
-            New PresetInfo With {.Name = "余弦波纹 (Cosine Ripple)", .Expression = "cos(x) * cos(y)", .XMin = -5, .XMax = 5, .YMin = -5, .YMax = 5},
-            New PresetInfo With {.Name = "墨西哥帽 (Mexican Hat)", .Expression = "(1 - x*x - y*y) * exp(-(x*x + y*y)/2)", .XMin = -4, .XMax = 4, .YMin = -4, .YMax = 4},
-            New PresetInfo With {.Name = "倒置抛物面 (Inverted Paraboloid)", .Expression = "-(x*x + y*y)", .XMin = -5, .XMax = 5, .YMin = -5, .YMax = 5},
-            New PresetInfo With {.Name = "猴鞍面 (Monkey Saddle)", .Expression = "x*x*x - 3*x*y*y", .XMin = -3, .XMax = 3, .YMin = -3, .YMax = 3},
-            New PresetInfo With {.Name = "混合正弦 (Sine-Cosine Mix)", .Expression = "sin(x) + cos(y)", .XMin = -5, .XMax = 5, .YMin = -5, .YMax = 5},
-            New PresetInfo With {.Name = "对数曲面 (Logarithmic)", .Expression = "log(1 + x*x + y*y)", .XMin = -5, .XMax = 5, .YMin = -5, .YMax = 5},
-            New PresetInfo With {.Name = "旋臂曲面 (Spiral Arms)", .Expression = "sin(x*y)", .XMin = -4, .XMax = 4, .YMin = -4, .YMax = 4}
-        }
-    End Function
-
-    Private Sub PresetSelected(sender As Object, e As EventArgs) Handles cboPreset.SelectedIndexChanged
-        If cboPreset.SelectedIndex < 0 Then Return
-        Dim presets = BuildPresets()
-        Dim p = presets(cboPreset.SelectedIndex)
-
-        ' 切换到曲面模式
-        cboMode.SelectedIndex = 0
-        txtSurface.Text = p.Expression
-        numXmin.Value = CDec(p.XMin)
-        numXmax.Value = CDec(p.XMax)
-        numYmin.Value = CDec(p.YMin)
-        numYmax.Value = CDec(p.YMax)
-
-        ' 自动绘制
-        OnDraw(sender, e)
     End Sub
 
 #End Region
