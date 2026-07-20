@@ -122,7 +122,7 @@ Public Class MainForm : Inherits Form
         ToolStrip1.Items.AddRange(New ToolStripItem() {ToolStripButton1, ToolStripSeparator1, ToolStripSplitButton1, ToolStripLabel1, cboScheme})
         ToolStrip1.Location = New Point(0, 0)
         ToolStrip1.Name = "ToolStrip1"
-        ToolStrip1.RenderMode = ToolStripRenderMode.System
+        ToolStrip1.RenderMode = ToolStripRenderMode.Professional
         ToolStrip1.Size = New Size(1189, 25)
         ToolStrip1.TabIndex = 0
         ToolStrip1.Text = "ToolStrip1"

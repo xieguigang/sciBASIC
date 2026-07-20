@@ -170,9 +170,9 @@ Public Class ScriptEditorForm
         ' StatusStrip1
         ' 
         StatusStrip1.Items.AddRange(New ToolStripItem() {ToolStripStatusLabel1})
-        StatusStrip1.Location = New Point(0, 519)
+        StatusStrip1.Location = New Point(0, 469)
         StatusStrip1.Name = "StatusStrip1"
-        StatusStrip1.Size = New Size(744, 22)
+        StatusStrip1.Size = New Size(633, 22)
         StatusStrip1.TabIndex = 0
         StatusStrip1.Text = "StatusStrip1"
         ' 
@@ -184,11 +184,12 @@ Public Class ScriptEditorForm
         ' 
         ' ToolStrip1
         ' 
+        ToolStrip1.AutoSize = False
         ToolStrip1.Items.AddRange(New ToolStripItem() {ToolStripLabel1, ToolStripButton1, ToolStripSeparator1, ToolStripButton2, ToolStripLabel2, cboPreset})
         ToolStrip1.Location = New Point(0, 0)
         ToolStrip1.Name = "ToolStrip1"
         ToolStrip1.RenderMode = ToolStripRenderMode.System
-        ToolStrip1.Size = New Size(744, 25)
+        ToolStrip1.Size = New Size(633, 30)
         ToolStrip1.TabIndex = 1
         ToolStrip1.Text = "ToolStrip1"
         ' 
@@ -204,7 +205,7 @@ Public Class ScriptEditorForm
         ToolStripButton1.Image = CType(resources.GetObject("ToolStripButton1.Image"), Image)
         ToolStripButton1.ImageTransparentColor = Color.Magenta
         ToolStripButton1.Name = "ToolStripButton1"
-        ToolStripButton1.Size = New Size(23, 22)
+        ToolStripButton1.Size = New Size(23, 27)
         ToolStripButton1.Text = "Run"
         ' 
         ' ToolStripSeparator1
@@ -238,15 +239,15 @@ Public Class ScriptEditorForm
         ' 
         TextBox1.Dock = DockStyle.Fill
         TextBox1.Font = New Font("Microsoft YaHei", 12F, FontStyle.Regular, GraphicsUnit.Point, CByte(0))
-        TextBox1.Location = New Point(0, 25)
+        TextBox1.Location = New Point(0, 30)
         TextBox1.Multiline = True
         TextBox1.Name = "TextBox1"
-        TextBox1.Size = New Size(744, 494)
+        TextBox1.Size = New Size(633, 439)
         TextBox1.TabIndex = 2
         ' 
         ' ScriptEditorForm
         ' 
-        ClientSize = New Size(744, 541)
+        ClientSize = New Size(633, 491)
         Controls.Add(TextBox1)
         Controls.Add(ToolStrip1)
         Controls.Add(StatusStrip1)
