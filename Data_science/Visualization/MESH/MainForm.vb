@@ -78,7 +78,7 @@ Public Class MainForm : Inherits Form
 
 
     ' 脚本模式相关
-    Private pic2D As PictureBox
+    Private WithEvents pic2D As PictureBox
 
 
     Friend WithEvents ToolStrip1 As ToolStrip
@@ -111,6 +111,7 @@ Public Class MainForm : Inherits Form
         pic2D = New PictureBox()
         statusStrip = New StatusStrip()
         lblStatus = New ToolStripStatusLabel()
+        canvas = New SurfaceCanvas()
         ToolStrip1.SuspendLayout()
         CType(pic2D, ComponentModel.ISupportInitialize).BeginInit()
         statusStrip.SuspendLayout()
@@ -122,7 +123,7 @@ Public Class MainForm : Inherits Form
         ToolStrip1.Location = New Point(0, 0)
         ToolStrip1.Name = "ToolStrip1"
         ToolStrip1.RenderMode = ToolStripRenderMode.System
-        ToolStrip1.Size = New Size(1156, 25)
+        ToolStrip1.Size = New Size(1189, 25)
         ToolStrip1.TabIndex = 0
         ToolStrip1.Text = "ToolStrip1"
         ' 
@@ -192,16 +193,16 @@ Public Class MainForm : Inherits Form
         pic2D.Dock = DockStyle.Fill
         pic2D.Location = New Point(0, 25)
         pic2D.Name = "pic2D"
-        pic2D.Size = New Size(1156, 762)
+        pic2D.Size = New Size(1189, 730)
         pic2D.TabIndex = 0
         pic2D.TabStop = False
         ' 
         ' statusStrip
         ' 
         statusStrip.Items.AddRange(New ToolStripItem() {lblStatus})
-        statusStrip.Location = New Point(0, 787)
+        statusStrip.Location = New Point(0, 755)
         statusStrip.Name = "statusStrip"
-        statusStrip.Size = New Size(1156, 22)
+        statusStrip.Size = New Size(1189, 22)
         statusStrip.TabIndex = 2
         ' 
         ' lblStatus
@@ -209,10 +210,22 @@ Public Class MainForm : Inherits Form
         lblStatus.Name = "lblStatus"
         lblStatus.Size = New Size(0, 17)
         ' 
+        ' canvas
+        ' 
+        canvas.BackColor = Color.White
+        canvas.Dock = DockStyle.Fill
+        canvas.Location = New Point(0, 25)
+        canvas.Name = "canvas"
+        canvas.Scene = Nothing
+        canvas.Size = New Size(1189, 730)
+        canvas.TabIndex = 0
+        canvas.TabStop = True
+        ' 
         ' MainForm
         ' 
         BackColor = SystemColors.Control
-        ClientSize = New Size(1156, 809)
+        ClientSize = New Size(1189, 777)
+        Controls.Add(canvas)
         Controls.Add(pic2D)
         Controls.Add(statusStrip)
         Controls.Add(ToolStrip1)
@@ -236,6 +249,7 @@ Public Class MainForm : Inherits Form
         Call ImageDriver.Register()
         Call LoadScriptInput()
 
+        canvas.Scene = New PlotScene
         canvas.Scene.ShowAxes = chkAxes.Checked
         canvas.Scene.ShowBox = ToolStripMenuItem1.Checked
         canvas.Scene.ShowTicks = ToolStripMenuItem2.Checked

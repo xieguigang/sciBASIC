@@ -14,8 +14,8 @@
     <Platforms>AnyCPU;x64</Platforms>
     <NoWarn>$(NoWarn);WFO1000</NoWarn>
     <UseWPF>True</UseWPF>
-    <StartupObject>Expression3DPlotter.My.MyApplication</StartupObject>
-    <MyType>WindowsForms</MyType>
+    <StartupObject>Expression3DPlotter.MainForm</StartupObject>
+    <MyType>WindowsFormsWithCustomSubMain</MyType>
     <NoWarn>$(NoWarn);WFO1000</NoWarn>
     <ApplicationIcon>sciBASIC#.ico</ApplicationIcon>
   </PropertyGroup>
