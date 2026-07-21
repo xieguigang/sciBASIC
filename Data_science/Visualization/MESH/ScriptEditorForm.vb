@@ -1,5 +1,6 @@
 Imports System.ComponentModel
 Imports System.Text
+Imports Microsoft.VisualBasic.Data.Framework
 Imports Microsoft.VisualBasic.Math.Scripting
 
 ''' <summary>
@@ -317,4 +318,119 @@ Public Class ScriptEditorForm
         End If
         helpForm.BringToFront()
     End Sub
+
+    ' ===================== data() 文件加载（委托给 MathScriptEngine） =====================
+
+    ''' <summary>
+    ''' data("file.csv" | "file.arff") 命令的实际加载实现。按扩展名分流到
+    ''' DataFrame.read_csv / read_arff，遍历 featureSet 取出所有数值类型列，
+    ''' 将其列名清洗为合法符号名后，以“列名 -> 数值向量(Double())”字典返回，
+    ''' 由引擎注入为可用自变量/绘图变量。路径为相对路径时基于当前工作目录解析。
+    ''' </summary>
+    Private Function LoadDataFrameFile(path As String) As Dictionary(Of String, Double())
+        If Not System.IO.Path.IsPathRooted(path) Then
+            path = System.IO.Path.Combine(Environment.CurrentDirectory, path)
+        End If
+
+        Dim df As DataFrame
+        Dim ext = System.IO.Path.GetExtension(path).ToLower()
+
+        If ext = ".arff" Then
+            df = DataFrame.read_arff(path)
+        ElseIf ext = ".tsv" Then
+            df = DataFrame.read_csv(path, vbTab)
+        Else
+            df = DataFrame.read_csv(path)
+        End If
+
+        If df Is Nothing Then
+            Throw New Exception("无法读取数据框: " & path)
+        End If
+
+        Dim out As New Dictionary(Of String, Double())()
+
+        For Each FV As FeatureVector In df.featureSet
+            If IsNumericType(FV.type) Then
+                Dim colName = SanitizeColumnName(FV.name, out)
+                out(colName) = ToDoubleArray(FV.vector)
+            End If
+        Next
+
+        Return out
+    End Function
+
+    ''' <summary>
+    ''' 判断列元素类型是否为数值类型（Double/Single/整型/Decimal 等），
+    ''' 排除 Boolean、Char、String、DateTime 等非数值类型。
+    ''' </summary>
+    Private Function IsNumericType(t As Type) As Boolean
+        If t Is Nothing Then Return False
+        Select Case Type.GetTypeCode(t)
+            Case TypeCode.Double, TypeCode.Single, TypeCode.Int32, TypeCode.Int64,
+                 TypeCode.Int16, TypeCode.Byte, TypeCode.SByte, TypeCode.UInt16,
+                 TypeCode.UInt32, TypeCode.UInt64, TypeCode.Decimal
+                Return True
+            Case Else
+                Return False
+        End Select
+    End Function
+
+    ''' <summary>
+    ''' 将列名清洗为合法符号名：非 [A-Za-z0-9_] 字符统一替换为下划线；
+    ''' 空名或以数字开头时前置下划线；并与已加载列名去重（冲突追加 _2/_3…）。
+    ''' </summary>
+    Private Function SanitizeColumnName(name As String, existing As Dictionary(Of String, Double())) As String
+        Dim sb As New StringBuilder()
+
+        If String.IsNullOrEmpty(name) Then
+            sb.Append("_"c)
+        Else
+            For Each c In name
+                If (c >= "A"c AndAlso c <= "Z"c) OrElse
+                   (c >= "a"c AndAlso c <= "z"c) OrElse
+                   (c >= "0"c AndAlso c <= "9"c) OrElse c = "_"c Then
+                    sb.Append(c)
+                Else
+                    sb.Append("_"c)
+                End If
+            Next
+        End If
+
+        Dim s = sb.ToString()
+
+        ' 必须以字母或下划线开头
+        If s.Length = 0 OrElse (s(0) >= "0"c AndAlso s(0) <= "9"c) Then
+            s = "_" & s
+        End If
+
+        ' 与已加载列名去重
+        Dim base = s
+        Dim i = 2
+        While existing.ContainsKey(s)
+            s = base & "_" & i
+            i += 1
+        End While
+
+        Return s
+    End Function
+
+    ''' <summary>
+    ''' 将任意数值类型列（Object/Array）统一转换为 Double()，空元素视为 0。
+    ''' 避免直接 CType(FeatureVector, Double()) 仅对 Double 列有效的问题。
+    ''' </summary>
+    Private Function ToDoubleArray(arr As Array) As Double()
+        If arr Is Nothing OrElse arr.Length = 0 Then
+            Return New Double(-1) {}
+        End If
+        Dim out(arr.Length - 1) As Double
+        For i = 0 To arr.Length - 1
+            Dim v = arr.GetValue(i)
+            If v Is Nothing Then
+                out(i) = 0
+            Else
+                out(i) = CDbl(v)
+            End If
+        Next
+        Return out
+    End Function
 End Class

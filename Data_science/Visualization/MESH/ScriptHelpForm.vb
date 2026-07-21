@@ -154,6 +154,7 @@ Public Class ScriptHelpForm
         syn.Nodes.Add("变量赋值").Tag = "assign"
         syn.Nodes.Add("函数定义").Tag = "funcdef"
         syn.Nodes.Add("向量生成 axis").Tag = "axis"
+        syn.Nodes.Add("数据框读取 data").Tag = "data"
 
         Dim plt = TreeView1.Nodes.Add("绘图指令")
         plt.Tag = "plot"
@@ -322,6 +323,27 @@ Public Class ScriptHelpForm
                  "# 步长 0.1 的 0..10 坐标轴" & vbCrLf &
                  "t = axis(0, 10, step=0.1)") &
             "<div class='hint'>未指定 n 或 step 时，默认生成 1000 个点。</div>")
+
+        helpTopics("data") = Html(
+            "<h2>数据框读取 data</h2>" &
+            "<p>从外部数据文件（CSV / ARFF）读入数值列，并<strong>以列名为变量名</strong>注入环境，" &
+            "之后即可像使用 <code>axis</code> 生成的自变量一样参与表达式求值或绘图指令：</p>" &
+            Code("data(""data_frame.csv"")" & vbCrLf &
+                 "data(""data_frame.arff"")") &
+            "<h3>行为说明</h3>" &
+            "<ul>" &
+            "<li>按<strong>文件扩展名</strong>自动选择读取方式：<code>.arff</code> 用 ARFF 读取器，其余（如 <code>.csv</code> / <code>.tsv</code>）用 CSV 读取器（<code>.tsv</code> 以制表符分隔）。</li>" &
+            "<li>仅加载<strong>数值类型</strong>的列（整数、单/双精度、Decimal 等），字符串、日期、布尔等非数值列会被忽略。</li>" &
+            "<li>列名作为变量名使用；其中<strong>空格等非法符号会被统一替换为下划线</strong>，以数字开头的列名会自动前置下划线，重复列名将追加 <code>_2</code>、<code>_3</code> 等后缀去重。</li>" &
+            "<li>路径为相对路径时，基于程序<strong>当前工作目录</strong>解析；文件不存在或读取失败会在状态栏提示 <code>第 N 行: ...</code>。</li>" &
+            "</ul>" &
+            "<h3>示例</h3>" &
+            Code("# 读取 CSV，列名 time / signal value 会变成变量 time / signal_value" & vbCrLf &
+                 "data(""measure.csv"")" & vbCrLf &
+                 "# 之后直接用列名绘图" & vbCrLf &
+                 "scatter(time, signal_value)") &
+            "<div class='hint'>data() 是独立语句（写成 <code>data(""file"")</code> 即可），无需赋给变量；" &
+            "加载的列变量与 axis 生成的自变量完全等价，可与内置函数、表达式混用。</div>")
 
         helpTopics("plot") = Html(
             "<h2>绘图指令</h2>" &
