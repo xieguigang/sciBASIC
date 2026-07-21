@@ -93,6 +93,7 @@ Public Class MainForm : Inherits Form
     Friend WithEvents ToolStripSeparator2 As ToolStripSeparator
     Friend WithEvents ToolStripLabel2 As ToolStripLabel
     Friend WithEvents ToolStripButton2 As ToolStripButton
+    Friend WithEvents ToolStripButton3 As ToolStripButton
 
     Private editor As ScriptEditorForm = Nothing
 
@@ -118,6 +119,7 @@ Public Class MainForm : Inherits Form
         statusStrip = New StatusStrip()
         lblStatus = New ToolStripStatusLabel()
         canvas = New SurfaceCanvas()
+        ToolStripButton3 = New ToolStripButton()
         ToolStrip1.SuspendLayout()
         CType(pic2D, ComponentModel.ISupportInitialize).BeginInit()
         statusStrip.SuspendLayout()
@@ -125,7 +127,7 @@ Public Class MainForm : Inherits Form
         ' 
         ' ToolStrip1
         ' 
-        ToolStrip1.Items.AddRange(New ToolStripItem() {ToolStripButton1, ToolStripSeparator1, ToolStripSplitButton1, ToolStripLabel1, cboScheme, ToolStripSeparator2, ToolStripLabel2, ToolStripButton2})
+        ToolStrip1.Items.AddRange(New ToolStripItem() {ToolStripButton3, ToolStripButton1, ToolStripSeparator1, ToolStripSplitButton1, ToolStripLabel1, cboScheme, ToolStripSeparator2, ToolStripLabel2, ToolStripButton2})
         ToolStrip1.Location = New Point(0, 0)
         ToolStrip1.Name = "ToolStrip1"
         ToolStrip1.RenderMode = ToolStripRenderMode.Professional
@@ -247,6 +249,15 @@ Public Class MainForm : Inherits Form
         canvas.TabIndex = 0
         canvas.TabStop = True
         ' 
+        ' ToolStripButton3
+        ' 
+        ToolStripButton3.DisplayStyle = ToolStripItemDisplayStyle.Image
+        ToolStripButton3.Image = CType(resources.GetObject("ToolStripButton3.Image"), Image)
+        ToolStripButton3.ImageTransparentColor = Color.Magenta
+        ToolStripButton3.Name = "ToolStripButton3"
+        ToolStripButton3.Size = New Size(23, 22)
+        ToolStripButton3.Text = "打开绘图脚本编辑器"
+        ' 
         ' MainForm
         ' 
         BackColor = SystemColors.Control
@@ -255,7 +266,7 @@ Public Class MainForm : Inherits Form
         Controls.Add(pic2D)
         Controls.Add(statusStrip)
         Controls.Add(ToolStrip1)
-        Font = New Font("Segoe UI", 9.0F)
+        Font = New Font("Segoe UI", 9F)
         Icon = CType(resources.GetObject("$this.Icon"), Icon)
         MinimumSize = New Size(600, 420)
         Name = "MainForm"
@@ -310,7 +321,7 @@ Public Class MainForm : Inherits Form
         End If
     End Sub
 
-    Private Sub LoadScriptInput()
+    Private Sub LoadScriptInput() Handles ToolStripButton3.Click
         If editor Is Nothing OrElse editor.IsDisposed Then
             editor = New ScriptEditorForm()
             AddHandler editor.ScriptExecuted, AddressOf OnScriptExecuted

@@ -23,6 +23,11 @@ Public Class ScriptEditorForm
     Friend WithEvents ToolStripLabel2 As ToolStripLabel
     Friend WithEvents cboPreset As ToolStripComboBox
     Friend WithEvents ToolStripButton2 As ToolStripButton
+    Friend WithEvents ToolStripButton3 As ToolStripButton
+    Friend WithEvents ToolStripSeparator2 As ToolStripSeparator
+
+    ''' <summary>帮助窗口单例，避免重复打开多个实例。</summary>
+    Private helpForm As ScriptHelpForm
 
     Sub New()
         InitializeComponent()
@@ -163,6 +168,8 @@ Public Class ScriptEditorForm
         ToolStripButton2 = New ToolStripButton()
         ToolStripLabel2 = New ToolStripLabel()
         cboPreset = New ToolStripComboBox()
+        ToolStripSeparator2 = New ToolStripSeparator()
+        ToolStripButton3 = New ToolStripButton()
         TextBox1 = New TextBox()
         StatusStrip1.SuspendLayout()
         ToolStrip1.SuspendLayout()
@@ -186,7 +193,7 @@ Public Class ScriptEditorForm
         ' ToolStrip1
         ' 
         ToolStrip1.AutoSize = False
-        ToolStrip1.Items.AddRange(New ToolStripItem() {ToolStripLabel1, ToolStripButton1, ToolStripSeparator1, ToolStripButton2, ToolStripLabel2, cboPreset})
+        ToolStrip1.Items.AddRange(New ToolStripItem() {ToolStripLabel1, ToolStripButton1, ToolStripSeparator1, ToolStripButton2, ToolStripLabel2, cboPreset, ToolStripSeparator2, ToolStripButton3})
         ToolStrip1.Location = New Point(0, 0)
         ToolStrip1.Name = "ToolStrip1"
         ToolStrip1.RenderMode = ToolStripRenderMode.System
@@ -235,6 +242,18 @@ Public Class ScriptEditorForm
         cboPreset.MaxDropDownItems = 20
         cboPreset.Name = "cboPreset"
         cboPreset.Size = New Size(200, 25)
+        ' 
+        ' ToolStripSeparator2
+        ' 
+        ToolStripSeparator2.Name = "ToolStripSeparator2"
+        ToolStripSeparator2.Size = New Size(6, 25)
+        ' 
+        ' ToolStripButton3
+        ' 
+        ToolStripButton3.DisplayStyle = ToolStripItemDisplayStyle.Text
+        ToolStripButton3.Name = "ToolStripButton3"
+        ToolStripButton3.Size = New Size(40, 22)
+        ToolStripButton3.Text = "帮助"
         ' 
         ' TextBox1
         ' 
@@ -287,8 +306,13 @@ Public Class ScriptEditorForm
         RaiseEvent ScriptExecuted(result)
     End Sub
 
-    Private Sub ScriptEditorForm_FormClosing(sender As Object, e As FormClosingEventArgs) Handles Me.FormClosing
-        e.Cancel = True
-        WindowState = FormWindowState.Minimized
+    Private Sub ToolStripButton3_Click(sender As Object, e As EventArgs) Handles ToolStripButton3.Click
+        If helpForm Is Nothing OrElse helpForm.IsDisposed Then
+            helpForm = New ScriptHelpForm()
+        End If
+        If Not helpForm.Visible Then
+            helpForm.Show(Me)
+        End If
+        helpForm.BringToFront()
     End Sub
 End Class
