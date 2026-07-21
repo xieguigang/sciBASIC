@@ -547,7 +547,7 @@ Public Class PlotScene
         Using penY As New Pen(Color.DarkGreen, 2) : g.DrawLine(penY, o, ay) : End Using
         Using penZ As New Pen(Color.DarkBlue, 2) : g.DrawLine(penZ, o, az) : End Using
 
-        Using f As New Font("Segoe UI", 8)
+        Using f As New Font("Segoe UI", 10)
             For Each tk In NiceTicks(x0, x1)
                 Dim p1 = ToScreenData(New Point3D(tk, y0, z0))
                 Dim p2 = ToScreenData(New Point3D(tk, y0 - (y1 - y0) * 0.02, z0))
