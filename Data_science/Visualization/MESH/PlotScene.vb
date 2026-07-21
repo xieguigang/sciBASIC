@@ -433,7 +433,7 @@ Public Class PlotScene
     ''' <summary>点云模式：将每个 surface 多边形的顶点绘制为小圆点，使用各自基色。</summary>
     Private Sub DrawSurfacePoints(g As Graphics)
         If surfaces.Count = 0 Then Return
-        Dim polys = Camera.PainterBuffer(surfaces, illumination:=False).ToArray()
+        Dim polys = Camera.PainterBuffer(Camera.Rotate(surfaces).ToArray(), illumination:=False).ToArray()
         Dim r As Single = 2.5F
         For Each poly In polys
             Dim col = GetBrushColor(poly.brush)
@@ -448,7 +448,7 @@ Public Class PlotScene
     ''' <summary>边线模式：仅绘制 surface 多边形边，不填充；边框色取自 surface 的 brush 基色。</summary>
     Private Sub DrawSurfaceEdges(g As Graphics)
         If surfaces.Count = 0 Then Return
-        Dim polys = Camera.PainterBuffer(surfaces, illumination:=False).ToArray()
+        Dim polys = Camera.PainterBuffer(Camera.Rotate(surfaces).ToArray(), illumination:=False).ToArray()
         For Each poly In polys
             Dim col = GetBrushColor(poly.brush)
             Using pen As New Pen(col, 1)
