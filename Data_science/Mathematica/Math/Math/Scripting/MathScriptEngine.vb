@@ -1,6 +1,3 @@
-Imports System
-Imports System.Collections.Generic
-Imports System.Linq
 Imports System.Text.RegularExpressions
 Imports Microsoft.VisualBasic.Math.Scripting.MathExpression
 Imports Microsoft.VisualBasic.Math.Scripting.MathExpression.Impl
@@ -44,7 +41,7 @@ Namespace Scripting
         End Function
 
         Public Sub AddFunction(name As String, params() As String, body As String)
-            RegisterFunction(name, params, Expression.Parse(body))
+            RegisterFunction(name, params, ExpressionEngine.Parse(body))
         End Sub
 
         Public Function RunScript(script As String) As ScriptResult
@@ -82,7 +79,7 @@ Namespace Scripting
                 Dim ps = If(String.IsNullOrWhiteSpace(plist),
                            New String() {},
                            plist.Split(","c).Select(Function(s) s.Trim()).Where(Function(s) s.Length > 0).ToArray())
-                RegisterFunction(name, ps, Expression.Parse(body))
+                RegisterFunction(name, ps, ExpressionEngine.Parse(body))
                 Return
             End If
 
@@ -165,7 +162,7 @@ Namespace Scripting
             End If
 
             ' 普通表达式（可引用向量符号，逐元素求值）
-            Dim expr = Expression.Parse(rhs)
+            Dim expr = ExpressionEngine.Parse(rhs)
             Dim syms = expr.GetVariableSymbols().ToList()
             Dim length = VectorLength(syms)
             If length <= 0 Then
@@ -412,7 +409,7 @@ Namespace Scripting
         End Function
 
         Private Function EvalExprVector(exprStr As String, ctx As Dictionary(Of String, Double())) As Double()
-            Dim expr = Expression.Parse(exprStr)
+            Dim expr = ExpressionEngine.Parse(exprStr)
             Dim len = -1
             For Each kv In ctx
                 If len < 0 Then len = kv.Value.Length Else len = std.Min(len, kv.Value.Length)
@@ -428,7 +425,7 @@ Namespace Scripting
 
         Private Function ExprReferencesVector(exprStr As String, ctx As Dictionary(Of String, Double())) As Boolean
             Try
-                Dim syms = Expression.Parse(exprStr).GetVariableSymbols()
+                Dim syms = ExpressionEngine.Parse(exprStr).GetVariableSymbols()
                 Return syms.Any(Function(s) ctx.ContainsKey(s))
             Catch
                 Return False
