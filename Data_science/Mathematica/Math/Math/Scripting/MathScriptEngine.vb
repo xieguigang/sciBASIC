@@ -40,6 +40,15 @@ Namespace Scripting
             If vars.ContainsKey(name) Then Return vars(name) Else Return Nothing
         End Function
 
+        ''' <summary>
+        ''' 数据框文件加载器（由宿主程序注入，例如 MESH）。给定文件路径，
+        ''' 返回“清洗后的列名 -> 数值向量(Double())”字典。脚本中的
+        ''' <c>data("xxx.csv" | "xxx.arff")</c> 命令会调用它，把外部数据框
+        ''' 的数值列加载为环境变量，供后续表达式与绘图指令按列名引用。
+        ''' 默认 Nothing 时 data() 命令会抛出明确错误，不影响其它功能（向后兼容）。
+        ''' </summary>
+        Public Property DataLoader As Func(Of String, Dictionary(Of String, Double()))
+
         Public Sub AddFunction(name As String, params() As String, body As String)
             RegisterFunction(name, params, ExpressionEngine.Parse(body))
         End Sub
@@ -70,6 +79,9 @@ Namespace Scripting
         ' ===================== 行解析 =====================
 
         Private Sub ProcessLine(line As String, result As ScriptResult)
+            ' 0) data("file.csv" | "file.arff") 数据框文件加载命令
+            If HandleDataCommand(line) Then Return
+
             ' 1) 函数定义：name(params) = body
             Dim m = Regex.Match(line, "^([A-Za-z_]\w*)\s*\(([^)]*)\)\s*=\s*(.+)$")
             If m.Success Then
@@ -107,6 +119,34 @@ Namespace Scripting
         Private Sub RegisterFunction(name As String, params() As String, body As Expression)
             funcs(name) = New UserFunction With {.params = params, .body = body}
         End Sub
+
+        ''' <summary>
+        ''' 识别并执行 data("path") / data('path') 命令。匹配成功时调用
+        ''' <see cref="DataLoader"/> 加载数值列并注入 <c>vars</c>（引擎按
+        ''' Double() 自动识别为向量变量）；加载失败抛出异常，由 RunScript
+        ''' 统一带上“第 N 行”前缀。非 data 命令返回 False 交还原有流程。
+        ''' </summary>
+        Private Function HandleDataCommand(line As String) As Boolean
+            Dim m = Regex.Match(line, "^data\s*\(\s*(""|')(?<path>.+?)\1\s*\)$", RegexOptions.IgnoreCase)
+            If Not m.Success Then Return False
+
+            If DataLoader Is Nothing Then
+                Throw New Exception("data() 命令未配置数据加载器 (DataLoader 未设置)")
+            End If
+
+            Dim path = m.Groups("path").Value
+            Dim cols = DataLoader(path)
+
+            If cols Is Nothing Then
+                Throw New Exception("数据加载器未返回数据: " & path)
+            End If
+
+            For Each kv In cols
+                vars(kv.Key) = kv.Value
+            Next
+
+            Return True
+        End Function
 
         Private Function EvalUserFunc(name As String, args As Double()) As Double
             Dim f = funcs(name)
