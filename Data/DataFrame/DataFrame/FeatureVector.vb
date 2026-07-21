@@ -59,8 +59,10 @@
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.Collection.Generic
+Imports Microsoft.VisualBasic.Data.Trinity
 Imports Microsoft.VisualBasic.Language.Vectorization
 Imports Microsoft.VisualBasic.Linq
+Imports Microsoft.VisualBasic.Scripting.Runtime
 Imports Microsoft.VisualBasic.ValueTypes
 Imports any = Microsoft.VisualBasic.Scripting
 
@@ -251,7 +253,7 @@ Public Class FeatureVector : Implements IReadOnlyId
     End Function
 
     Public Overrides Function ToString() As String
-        Return $"[{type.Name.ToLower} 1 x {vector.Length}] [{vector.AsObjectEnumerator.Take(9).JoinBy(", ")}"
+        Return $"[{type.Name.ToLower} 1 x {vector.Length}] [{vector.AsObjectEnumerator.Take(15).AsCharacter.Concatenate(", ")}"
     End Function
 
     Public Shared Function CheckSupports(type As Type) As Boolean
