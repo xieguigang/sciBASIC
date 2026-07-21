@@ -533,5 +533,51 @@ Public Class MainForm : Inherits Form
             End If
         End Using
     End Sub
+
+    ' ===================== 画面快照：复制 / 保存 =====================
+
+    ''' <summary>
+    ''' 捕获当前三维画布（SurfaceCanvas）实际显示的画面为 Bitmap。
+    ''' 通过 Control.DrawToBitmap 走 OnPaint 渲染链路，1:1 还原当前
+    ''' 视角、视距、背景色及全部叠加层（坐标轴/盒子/网格/散点）。
+    ''' 画布未初始化、尺寸非法或场景为空时返回 Nothing。
+    ''' </summary>
+    Private Function GetCanvasSnapshot() As Bitmap
+        If canvas Is Nothing OrElse canvas.Scene Is Nothing Then Return Nothing
+        If canvas.Width < 1 OrElse canvas.Height < 1 Then Return Nothing
+        Dim bmp As New Bitmap(canvas.Width, canvas.Height)
+        canvas.DrawToBitmap(bmp, New Rectangle(0, 0, canvas.Width, canvas.Height))
+        Return bmp
+    End Function
+
+    Private Sub CopySnapshotImage_Click(sender As Object, e As EventArgs) Handles CopySnapshotImage.Click
+        Using bmp = GetCanvasSnapshot()
+            If bmp Is Nothing Then
+                UpdateStatus("没有可复制的画面")
+                Return
+            End If
+            Clipboard.SetImage(bmp)
+            UpdateStatus("已复制当前三维画面到剪贴板")
+        End Using
+    End Sub
+
+    Private Sub SaveSnapshotImageAsFile_Click(sender As Object, e As EventArgs) Handles SaveSnapshotImageAsFile.Click
+        Using bmp = GetCanvasSnapshot()
+            If bmp Is Nothing Then
+                UpdateStatus("没有可保存的画面")
+                Return
+            End If
+            Using dlg As New SaveFileDialog
+                dlg.Filter = "PNG 图片 (*.png)|*.png"
+                dlg.DefaultExt = "png"
+                dlg.FileName = "snapshot.png"
+                dlg.Title = "保存当前三维画面为图片"
+                If dlg.ShowDialog() = DialogResult.OK Then
+                    bmp.Save(dlg.FileName, System.Drawing.Imaging.ImageFormat.Png)
+                    UpdateStatus("已保存画面到：" & dlg.FileName)
+                End If
+            End Using
+        End Using
+    End Sub
 End Class
 
