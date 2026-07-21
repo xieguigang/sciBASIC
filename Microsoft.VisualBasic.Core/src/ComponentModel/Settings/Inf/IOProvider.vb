@@ -99,7 +99,7 @@ Namespace ComponentModel.Settings.Inf
         ''' <returns></returns>
         <Extension>
         Public Function WriteProfile(Of T As Class)(x As T, ini As IniFile) As Boolean
-            Dim sections = __getSections(Of T)()
+            Dim sections = GetSectionsFromCLR(Of T)()
             Dim msg$
 
             ' 首先写入global的配置数据
@@ -113,7 +113,7 @@ Namespace ComponentModel.Settings.Inf
                     msg = GetType(T).EmptySection(section)
                     obj = Activator.CreateInstance(schema)
 
-                    Call msg.Warning
+                    Call msg.warning
                     Call App.LogException(msg)
                 End If
 
@@ -143,11 +143,11 @@ Namespace ComponentModel.Settings.Inf
         ''' </summary>
         ''' <typeparam name="T"></typeparam>
         ''' <returns></returns>
-        Private Function __getSections(Of T As Class)() As PropertyInfo()
+        Private Function GetSectionsFromCLR(Of T As Class)() As PropertyInfo()
             Dim properties As PropertyInfo() = GetType(T).GetProperties(PublicProperty)
 
             properties = LinqAPI.Exec(Of PropertyInfo) _
- _
+                                                       _
                 () <= From p As PropertyInfo
                       In properties
                       Let type As Type = p.PropertyType
@@ -175,7 +175,7 @@ Namespace ComponentModel.Settings.Inf
             Dim obj As Object = ClassMapper.ClassWriter(ini, GetType(T))
             Dim x As Object
 
-            For Each prop As PropertyInfo In __getSections(Of T)()
+            For Each prop As PropertyInfo In GetSectionsFromCLR(Of T)()
                 x = ClassMapper.ClassWriter(ini, prop.PropertyType)
                 prop.SetValue(obj, x, Nothing)
             Next

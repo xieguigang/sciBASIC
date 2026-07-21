@@ -74,6 +74,10 @@ Namespace ComponentModel.Settings.Inf
         Const RegexoSectionHeader$ = "^\s*\[[^]]+\]\s*$"
         Const RegexpKeyValueItem$ = "^\s*[^=]+\s*=\s*.*$"
 
+        Private Function isBlank(strLine As String, removeComments As Boolean) As Boolean
+            Return strLine.StringEmpty(True) OrElse (removeComments AndAlso strLine.isCommentsOrBlank)
+        End Function
+
         ''' <summary>
         ''' 在读取的时候会将空白行给删除掉
         ''' </summary>
@@ -82,14 +86,10 @@ Namespace ComponentModel.Settings.Inf
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Private Function readDataLines(path As String, removeComments As Boolean) As IEnumerable(Of String)
-            Dim isBlank = Function(strLine As String) As Boolean
-                              Return strLine.StringEmpty(True) OrElse (removeComments AndAlso strLine.isCommentsOrBlank)
-                          End Function
-
             Return From line As String
                    In path.ReadAllLines
                    Let strLine As String = line.Trim
-                   Where Not isBlank(strLine)
+                   Where Not isBlank(strLine, removeComments)
                    Select strLine
         End Function
 
