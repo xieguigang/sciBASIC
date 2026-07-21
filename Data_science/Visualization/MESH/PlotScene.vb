@@ -425,8 +425,8 @@ Public Class PlotScene
     End Sub
 
     ''' <summary>从 Brush 提取颜色；仅 SolidBrush 可提色，其余回退为 Black。</summary>
-    Private Function GetBrushColor(b As Brush) As Color
-        If TypeOf b Is SolidBrush Then Return DirectCast(b, SolidBrush).Color
+    Private Function GetBrushColor(b As Microsoft.VisualBasic.Imaging.Brush) As Color
+        If TypeOf b Is Microsoft.VisualBasic.Imaging.SolidBrush Then Return DirectCast(b, Microsoft.VisualBasic.Imaging.SolidBrush).Color
         Return Color.Black
     End Function
 
