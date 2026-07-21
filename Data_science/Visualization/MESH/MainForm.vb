@@ -314,6 +314,7 @@ Public Class MainForm : Inherits Form
         canvas.Scene.BackgroundColor = Color.FromArgb(200, 213, 215)
 
         ToolStripComboBox1.SelectedIndex = 0
+        canvas.Scene.RenderMode = CType(ToolStripComboBox1.SelectedIndex, RenderMode3D)
 
         ' 默认演示：启动即渲染一个三维曲面
         Call OnDraw(Me, EventArgs.Empty)
@@ -450,6 +451,16 @@ Public Class MainForm : Inherits Form
         canvas.Scene.ColorScheme = GetColorSchemaName()
         ' 立即按新调色板重新着色当前图形，无需等到下一次绘制
         canvas.Scene.Recolor()
+        canvas.Invalidate()
+        UpdateStatus()
+    End Sub
+
+    Private Sub ToolStripComboBox1_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ToolStripComboBox1.SelectedIndexChanged
+        If canvas.Scene Is Nothing Then Return
+        If ToolStripComboBox1.SelectedIndex >= 0 Then
+            canvas.Scene.RenderMode = CType(ToolStripComboBox1.SelectedIndex, RenderMode3D)
+        End If
+        ' 切换渲染模式后立即刷新当前三维图形
         canvas.Invalidate()
         UpdateStatus()
     End Sub
