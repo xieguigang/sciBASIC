@@ -98,6 +98,9 @@ Public Class MainForm : Inherits Form
     Friend WithEvents ToolStripComboBox1 As ToolStripComboBox
     Friend WithEvents ToolStripLabel4 As ToolStripLabel
     Friend WithEvents ToolStripComboBox2 As ToolStripComboBox
+    Friend WithEvents ToolStripSeparator3 As ToolStripSeparator
+    Friend WithEvents CopySnapshotImage As ToolStripButton
+    Friend WithEvents SaveSnapshotImageAsFile As ToolStripButton
 
     Private editor As ScriptEditorForm = Nothing
 
@@ -115,6 +118,10 @@ Public Class MainForm : Inherits Form
         chkAxes = New ToolStripMenuItem()
         ToolStripMenuItem1 = New ToolStripMenuItem()
         ToolStripMenuItem2 = New ToolStripMenuItem()
+        ToolStripLabel3 = New ToolStripLabel()
+        ToolStripComboBox1 = New ToolStripComboBox()
+        ToolStripLabel4 = New ToolStripLabel()
+        ToolStripComboBox2 = New ToolStripComboBox()
         ToolStripLabel1 = New ToolStripLabel()
         cboScheme = New ToolStripComboBox()
         ToolStripSeparator2 = New ToolStripSeparator()
@@ -124,10 +131,9 @@ Public Class MainForm : Inherits Form
         statusStrip = New StatusStrip()
         lblStatus = New ToolStripStatusLabel()
         canvas = New SurfaceCanvas()
-        ToolStripLabel3 = New ToolStripLabel()
-        ToolStripComboBox1 = New ToolStripComboBox()
-        ToolStripLabel4 = New ToolStripLabel()
-        ToolStripComboBox2 = New ToolStripComboBox()
+        ToolStripSeparator3 = New ToolStripSeparator()
+        CopySnapshotImage = New ToolStripButton()
+        SaveSnapshotImageAsFile = New ToolStripButton()
         ToolStrip1.SuspendLayout()
         CType(pic2D, ComponentModel.ISupportInitialize).BeginInit()
         statusStrip.SuspendLayout()
@@ -135,7 +141,7 @@ Public Class MainForm : Inherits Form
         ' 
         ' ToolStrip1
         ' 
-        ToolStrip1.Items.AddRange(New ToolStripItem() {ToolStripButton3, ToolStripButton1, ToolStripSeparator1, ToolStripSplitButton1, ToolStripLabel3, ToolStripComboBox1, ToolStripLabel4, ToolStripComboBox2, ToolStripLabel1, cboScheme, ToolStripSeparator2, ToolStripLabel2, ToolStripButton2})
+        ToolStrip1.Items.AddRange(New ToolStripItem() {ToolStripButton3, ToolStripButton1, ToolStripSeparator1, ToolStripSplitButton1, ToolStripLabel3, ToolStripComboBox1, ToolStripLabel4, ToolStripComboBox2, ToolStripLabel1, cboScheme, ToolStripSeparator2, ToolStripLabel2, ToolStripButton2, ToolStripSeparator3, CopySnapshotImage, SaveSnapshotImageAsFile})
         ToolStrip1.Location = New Point(0, 0)
         ToolStrip1.Name = "ToolStrip1"
         ToolStrip1.RenderMode = ToolStripRenderMode.Professional
@@ -199,6 +205,34 @@ Public Class MainForm : Inherits Form
         ToolStripMenuItem2.Name = "ToolStripMenuItem2"
         ToolStripMenuItem2.Size = New Size(178, 22)
         ToolStripMenuItem2.Text = "显示带刻度坐标轴"
+        ' 
+        ' ToolStripLabel3
+        ' 
+        ToolStripLabel3.Name = "ToolStripLabel3"
+        ToolStripLabel3.Size = New Size(124, 22)
+        ToolStripLabel3.Text = "三维图形渲染模式："
+        ' 
+        ' ToolStripComboBox1
+        ' 
+        ToolStripComboBox1.DropDownStyle = ComboBoxStyle.DropDownList
+        ToolStripComboBox1.Items.AddRange(New Object() {"surface", "point cloud", "edge"})
+        ToolStripComboBox1.Name = "ToolStripComboBox1"
+        ToolStripComboBox1.Size = New Size(121, 25)
+        ToolStripComboBox1.ToolTipText = "三维图形渲染模式"
+        ' 
+        ' ToolStripLabel4
+        ' 
+        ToolStripLabel4.Name = "ToolStripLabel4"
+        ToolStripLabel4.Size = New Size(59, 22)
+        ToolStripLabel4.Text = "点大小："
+        ' 
+        ' ToolStripComboBox2
+        ' 
+        ToolStripComboBox2.DropDownStyle = ComboBoxStyle.DropDownList
+        ToolStripComboBox2.Items.AddRange(New Object() {"2", "3", "4", "6", "8", "10", "12"})
+        ToolStripComboBox2.Name = "ToolStripComboBox2"
+        ToolStripComboBox2.Size = New Size(75, 25)
+        ToolStripComboBox2.ToolTipText = "scatter / point cloud 模式下散点直径"
         ' 
         ' ToolStripLabel1
         ' 
@@ -266,33 +300,28 @@ Public Class MainForm : Inherits Form
         canvas.TabIndex = 0
         canvas.TabStop = True
         ' 
-        ' ToolStripLabel3
+        ' ToolStripSeparator3
         ' 
-        ToolStripLabel3.Name = "ToolStripLabel3"
-        ToolStripLabel3.Size = New Size(124, 22)
-        ToolStripLabel3.Text = "三维图形渲染模式："
+        ToolStripSeparator3.Name = "ToolStripSeparator3"
+        ToolStripSeparator3.Size = New Size(6, 25)
         ' 
-        ' ToolStripComboBox1
+        ' CopySnapshotImage
         ' 
-        ToolStripComboBox1.DropDownStyle = ComboBoxStyle.DropDownList
-        ToolStripComboBox1.Items.AddRange(New Object() {"surface", "point cloud", "edge"})
-        ToolStripComboBox1.Name = "ToolStripComboBox1"
-        ToolStripComboBox1.Size = New Size(121, 25)
-        ToolStripComboBox1.ToolTipText = "三维图形渲染模式"
+        CopySnapshotImage.DisplayStyle = ToolStripItemDisplayStyle.Image
+        CopySnapshotImage.Image = CType(resources.GetObject("CopySnapshotImage.Image"), Image)
+        CopySnapshotImage.ImageTransparentColor = Color.Magenta
+        CopySnapshotImage.Name = "CopySnapshotImage"
+        CopySnapshotImage.Size = New Size(23, 22)
+        CopySnapshotImage.Text = "复制当前画面"
         ' 
-        ' ToolStripLabel4
+        ' SaveSnapshotImageAsFile
         ' 
-        ToolStripLabel4.Name = "ToolStripLabel4"
-        ToolStripLabel4.Size = New Size(53, 22)
-        ToolStripLabel4.Text = "点大小："
-        ' 
-        ' ToolStripComboBox2
-        ' 
-        ToolStripComboBox2.DropDownStyle = ComboBoxStyle.DropDownList
-        ToolStripComboBox2.Items.AddRange(New Object() {"2", "3", "4", "6", "8", "10", "12"})
-        ToolStripComboBox2.Name = "ToolStripComboBox2"
-        ToolStripComboBox2.Size = New Size(56, 25)
-        ToolStripComboBox2.ToolTipText = "scatter / point cloud 模式下散点直径"
+        SaveSnapshotImageAsFile.DisplayStyle = ToolStripItemDisplayStyle.Image
+        SaveSnapshotImageAsFile.Image = CType(resources.GetObject("SaveSnapshotImageAsFile.Image"), Image)
+        SaveSnapshotImageAsFile.ImageTransparentColor = Color.Magenta
+        SaveSnapshotImageAsFile.Name = "SaveSnapshotImageAsFile"
+        SaveSnapshotImageAsFile.Size = New Size(23, 22)
+        SaveSnapshotImageAsFile.Text = "当前画面保存为文件"
         ' 
         ' MainForm
         ' 

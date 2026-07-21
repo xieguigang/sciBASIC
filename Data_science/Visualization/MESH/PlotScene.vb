@@ -1,6 +1,4 @@
-﻿Imports System.Drawing
-Imports System.Linq
-Imports Microsoft.VisualBasic.Imaging.Drawing3D
+﻿Imports Microsoft.VisualBasic.Imaging.Drawing3D
 
 ''' <summary>三维图形渲染模式。</summary>
 Public Enum RenderMode3D
