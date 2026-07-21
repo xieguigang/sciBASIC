@@ -68,7 +68,7 @@ Namespace ComponentModel.Settings.Inf
     ''' ' clr class define for mapping the ini section
     ''' &lt;ClassName("section-1")> 
     ''' Public Class Section1
-    '''    Public Property config1 As String = "xyz"
+    '''    Public Property config1 As Integer = 122
     ''' End Class
     ''' 
     ''' &lt;ClassName("section-2")> 
@@ -81,6 +81,15 @@ Namespace ComponentModel.Settings.Inf
     '''    Public Property section_1 As Section1
     '''    Public Property section_2 As Section2
     '''    
+    '''    ' Will generates the ini config file via WriteProfile function:
+    '''    '
+    '''    ' ```inf
+    '''    ' [section-1]
+    '''    ' config1 = 122
+    '''    '
+    '''    ' [section-2]
+    '''    ' key = XXXXX
+    '''    ' ```
     '''    Public Function SaveIni(file As String) As Boolean
     '''       Return IOProvider.WriteProfile(Me, file)
     '''    End Function
