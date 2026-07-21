@@ -89,8 +89,8 @@ Namespace Javascript
             Return If(New JsonParser(jsonStr).OpenJSON, [default])
         End Function
 
-        Public Shared Function Parse(json_str As String) As Task(Of JsonElement)
-            Return Task(Of JsonElement).Run(Function() ParseJSON(json_str))
+        Public Shared Async Function Parse(json_str As String) As Task(Of JsonElement)
+            Return Await Task.Run(Function() ParseJSON(json_str))
         End Function
 
         Public Shared Narrowing Operator CType(js As JsonElement) As JavaScriptObject

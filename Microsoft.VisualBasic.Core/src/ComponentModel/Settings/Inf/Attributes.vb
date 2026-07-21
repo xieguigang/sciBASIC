@@ -80,9 +80,12 @@ Namespace ComponentModel.Settings.Inf
         Public ReadOnly Property Name As String
 
         ''' <summary>
-        ''' Defines the section name in the ini profile data.(定义在Ini配置文件之中的Section的名称)
+        ''' Defines the section name in the ini profile data.
         ''' </summary>
         ''' <param name="name"></param>
+        ''' <remarks>
+        ''' (定义在Ini配置文件之中的Section的名称)
+        ''' </remarks>
         Sub New(name As String)
             Me.Name = name
         End Sub

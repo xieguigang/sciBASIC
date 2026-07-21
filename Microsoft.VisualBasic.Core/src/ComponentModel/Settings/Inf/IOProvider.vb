@@ -64,6 +64,41 @@ Namespace ComponentModel.Settings.Inf
     ''' <summary>
     ''' 在这个模块之中提供了.NET对象与``*.ini``配置文件之间的相互映射的序列化操作
     ''' </summary>
+    ''' <example>
+    ''' ' clr class define for mapping the ini section
+    ''' &lt;ClassName("section-1")> 
+    ''' Public Class Section1
+    '''    Public Property config1 As Integer = 122
+    ''' End Class
+    ''' 
+    ''' &lt;ClassName("section-2")> 
+    ''' Public Class Section2
+    '''    Public Property key As String = "XXXXX"
+    ''' End Class
+    ''' 
+    ''' Public Class ConfigIniFile
+    ''' 
+    '''    Public Property section_1 As Section1
+    '''    Public Property section_2 As Section2
+    '''    
+    '''    ' Will generates the ini config file via WriteProfile function:
+    '''    '
+    '''    ' ```inf
+    '''    ' [section-1]
+    '''    ' config1 = 122
+    '''    '
+    '''    ' [section-2]
+    '''    ' key = XXXXX
+    '''    ' ```
+    '''    Public Function SaveIni(file As String) As Boolean
+    '''       Return IOProvider.WriteProfile(Me, file)
+    '''    End Function
+    '''    
+    '''    Public Shared Function LoadIni(file As String) As ConfigIniFile
+    '''       Return IOProvider.LoadProfile(Of ConfigIniFile)(file)
+    '''    End Function
+    ''' End Class
+    ''' </example>
     Public Module IOProvider
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -99,7 +134,7 @@ Namespace ComponentModel.Settings.Inf
         ''' <returns></returns>
         <Extension>
         Public Function WriteProfile(Of T As Class)(x As T, ini As IniFile) As Boolean
-            Dim sections = __getSections(Of T)()
+            Dim sections = GetSectionsFromCLR(Of T)()
             Dim msg$
 
             ' 首先写入global的配置数据
@@ -113,7 +148,7 @@ Namespace ComponentModel.Settings.Inf
                     msg = GetType(T).EmptySection(section)
                     obj = Activator.CreateInstance(schema)
 
-                    Call msg.Warning
+                    Call msg.warning
                     Call App.LogException(msg)
                 End If
 
@@ -143,11 +178,11 @@ Namespace ComponentModel.Settings.Inf
         ''' </summary>
         ''' <typeparam name="T"></typeparam>
         ''' <returns></returns>
-        Private Function __getSections(Of T As Class)() As PropertyInfo()
+        Private Function GetSectionsFromCLR(Of T As Class)() As PropertyInfo()
             Dim properties As PropertyInfo() = GetType(T).GetProperties(PublicProperty)
 
             properties = LinqAPI.Exec(Of PropertyInfo) _
- _
+                                                       _
                 () <= From p As PropertyInfo
                       In properties
                       Let type As Type = p.PropertyType
@@ -175,7 +210,7 @@ Namespace ComponentModel.Settings.Inf
             Dim obj As Object = ClassMapper.ClassWriter(ini, GetType(T))
             Dim x As Object
 
-            For Each prop As PropertyInfo In __getSections(Of T)()
+            For Each prop As PropertyInfo In GetSectionsFromCLR(Of T)()
                 x = ClassMapper.ClassWriter(ini, prop.PropertyType)
                 prop.SetValue(obj, x, Nothing)
             Next

@@ -64,15 +64,20 @@ Namespace ComponentModel.Settings.Inf
 
     ''' <summary>
     ''' Wrapper class for *.ini and *.inf configure file.
-    ''' (可能文件中的注释行会受到影响，所以请尽量使用本类型中的两个静态函数来操作INI文件)
     ''' </summary>
-    ''' <remarks></remarks>
+    ''' <remarks>
+    ''' (可能文件中的注释行会受到影响，所以请尽量使用本类型中的两个静态函数来操作INI文件)
+    ''' </remarks>
     ''' 
     <Package("Settings.Inf", Description:="Wrapper class for *.ini and *.inf configure file.", Url:="http://gcmodeller.org", Publisher:="xie.guigang@live.com")>
     Public Module INIProfile
 
         Const RegexoSectionHeader$ = "^\s*\[[^]]+\]\s*$"
         Const RegexpKeyValueItem$ = "^\s*[^=]+\s*=\s*.*$"
+
+        Private Function isBlank(strLine As String, removeComments As Boolean) As Boolean
+            Return strLine.StringEmpty(True) OrElse (removeComments AndAlso strLine.isCommentsOrBlank)
+        End Function
 
         ''' <summary>
         ''' 在读取的时候会将空白行给删除掉
@@ -82,14 +87,10 @@ Namespace ComponentModel.Settings.Inf
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Private Function readDataLines(path As String, removeComments As Boolean) As IEnumerable(Of String)
-            Dim isBlank = Function(strLine As String) As Boolean
-                              Return strLine.StringEmpty(True) OrElse (removeComments AndAlso strLine.isCommentsOrBlank)
-                          End Function
-
             Return From line As String
                    In path.ReadAllLines
                    Let strLine As String = line.Trim
-                   Where Not isBlank(strLine)
+                   Where Not isBlank(strLine, removeComments)
                    Select strLine
         End Function
 
