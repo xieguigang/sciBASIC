@@ -94,6 +94,8 @@ Public Class MainForm : Inherits Form
     Friend WithEvents ToolStripLabel2 As ToolStripLabel
     Friend WithEvents ToolStripButton2 As ToolStripButton
     Friend WithEvents ToolStripButton3 As ToolStripButton
+    Friend WithEvents ToolStripLabel3 As ToolStripLabel
+    Friend WithEvents ToolStripComboBox1 As ToolStripComboBox
 
     Private editor As ScriptEditorForm = Nothing
 
@@ -104,6 +106,7 @@ Public Class MainForm : Inherits Form
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(MainForm))
         ToolStrip1 = New ToolStrip()
+        ToolStripButton3 = New ToolStripButton()
         ToolStripButton1 = New ToolStripButton()
         ToolStripSeparator1 = New ToolStripSeparator()
         ToolStripSplitButton1 = New ToolStripSplitButton()
@@ -119,7 +122,8 @@ Public Class MainForm : Inherits Form
         statusStrip = New StatusStrip()
         lblStatus = New ToolStripStatusLabel()
         canvas = New SurfaceCanvas()
-        ToolStripButton3 = New ToolStripButton()
+        ToolStripLabel3 = New ToolStripLabel()
+        ToolStripComboBox1 = New ToolStripComboBox()
         ToolStrip1.SuspendLayout()
         CType(pic2D, ComponentModel.ISupportInitialize).BeginInit()
         statusStrip.SuspendLayout()
@@ -127,13 +131,22 @@ Public Class MainForm : Inherits Form
         ' 
         ' ToolStrip1
         ' 
-        ToolStrip1.Items.AddRange(New ToolStripItem() {ToolStripButton3, ToolStripButton1, ToolStripSeparator1, ToolStripSplitButton1, ToolStripLabel1, cboScheme, ToolStripSeparator2, ToolStripLabel2, ToolStripButton2})
+        ToolStrip1.Items.AddRange(New ToolStripItem() {ToolStripButton3, ToolStripButton1, ToolStripSeparator1, ToolStripSplitButton1, ToolStripLabel3, ToolStripComboBox1, ToolStripLabel1, cboScheme, ToolStripSeparator2, ToolStripLabel2, ToolStripButton2})
         ToolStrip1.Location = New Point(0, 0)
         ToolStrip1.Name = "ToolStrip1"
         ToolStrip1.RenderMode = ToolStripRenderMode.Professional
-        ToolStrip1.Size = New Size(1189, 25)
+        ToolStrip1.Size = New Size(1256, 25)
         ToolStrip1.TabIndex = 0
         ToolStrip1.Text = "ToolStrip1"
+        ' 
+        ' ToolStripButton3
+        ' 
+        ToolStripButton3.DisplayStyle = ToolStripItemDisplayStyle.Image
+        ToolStripButton3.Image = CType(resources.GetObject("ToolStripButton3.Image"), Image)
+        ToolStripButton3.ImageTransparentColor = Color.Magenta
+        ToolStripButton3.Name = "ToolStripButton3"
+        ToolStripButton3.Size = New Size(23, 22)
+        ToolStripButton3.Text = "打开绘图脚本编辑器"
         ' 
         ' ToolStripButton1
         ' 
@@ -221,16 +234,16 @@ Public Class MainForm : Inherits Form
         pic2D.Dock = DockStyle.Fill
         pic2D.Location = New Point(0, 25)
         pic2D.Name = "pic2D"
-        pic2D.Size = New Size(1189, 730)
+        pic2D.Size = New Size(1256, 789)
         pic2D.TabIndex = 0
         pic2D.TabStop = False
         ' 
         ' statusStrip
         ' 
         statusStrip.Items.AddRange(New ToolStripItem() {lblStatus})
-        statusStrip.Location = New Point(0, 755)
+        statusStrip.Location = New Point(0, 814)
         statusStrip.Name = "statusStrip"
-        statusStrip.Size = New Size(1189, 22)
+        statusStrip.Size = New Size(1256, 22)
         statusStrip.TabIndex = 2
         ' 
         ' lblStatus
@@ -245,23 +258,28 @@ Public Class MainForm : Inherits Form
         canvas.Location = New Point(0, 25)
         canvas.Name = "canvas"
         canvas.Scene = Nothing
-        canvas.Size = New Size(1189, 730)
+        canvas.Size = New Size(1256, 789)
         canvas.TabIndex = 0
         canvas.TabStop = True
         ' 
-        ' ToolStripButton3
+        ' ToolStripLabel3
         ' 
-        ToolStripButton3.DisplayStyle = ToolStripItemDisplayStyle.Image
-        ToolStripButton3.Image = CType(resources.GetObject("ToolStripButton3.Image"), Image)
-        ToolStripButton3.ImageTransparentColor = Color.Magenta
-        ToolStripButton3.Name = "ToolStripButton3"
-        ToolStripButton3.Size = New Size(23, 22)
-        ToolStripButton3.Text = "打开绘图脚本编辑器"
+        ToolStripLabel3.Name = "ToolStripLabel3"
+        ToolStripLabel3.Size = New Size(124, 22)
+        ToolStripLabel3.Text = "三维图形渲染模式："
+        ' 
+        ' ToolStripComboBox1
+        ' 
+        ToolStripComboBox1.DropDownStyle = ComboBoxStyle.DropDownList
+        ToolStripComboBox1.Items.AddRange(New Object() {"surface", "point cloud", "edge"})
+        ToolStripComboBox1.Name = "ToolStripComboBox1"
+        ToolStripComboBox1.Size = New Size(121, 25)
+        ToolStripComboBox1.ToolTipText = "三维图形渲染模式"
         ' 
         ' MainForm
         ' 
         BackColor = SystemColors.Control
-        ClientSize = New Size(1189, 777)
+        ClientSize = New Size(1256, 836)
         Controls.Add(canvas)
         Controls.Add(pic2D)
         Controls.Add(statusStrip)
@@ -294,6 +312,8 @@ Public Class MainForm : Inherits Form
         canvas.Scene.Camera.AngleX = 0
         canvas.Scene.Camera.AngleX = 0
         canvas.Scene.BackgroundColor = Color.FromArgb(200, 213, 215)
+
+        ToolStripComboBox1.SelectedIndex = 0
 
         ' 默认演示：启动即渲染一个三维曲面
         Call OnDraw(Me, EventArgs.Empty)
