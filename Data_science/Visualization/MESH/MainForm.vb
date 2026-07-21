@@ -96,6 +96,8 @@ Public Class MainForm : Inherits Form
     Friend WithEvents ToolStripButton3 As ToolStripButton
     Friend WithEvents ToolStripLabel3 As ToolStripLabel
     Friend WithEvents ToolStripComboBox1 As ToolStripComboBox
+    Friend WithEvents ToolStripLabel4 As ToolStripLabel
+    Friend WithEvents ToolStripComboBox2 As ToolStripComboBox
 
     Private editor As ScriptEditorForm = Nothing
 
@@ -124,6 +126,8 @@ Public Class MainForm : Inherits Form
         canvas = New SurfaceCanvas()
         ToolStripLabel3 = New ToolStripLabel()
         ToolStripComboBox1 = New ToolStripComboBox()
+        ToolStripLabel4 = New ToolStripLabel()
+        ToolStripComboBox2 = New ToolStripComboBox()
         ToolStrip1.SuspendLayout()
         CType(pic2D, ComponentModel.ISupportInitialize).BeginInit()
         statusStrip.SuspendLayout()
@@ -131,7 +135,7 @@ Public Class MainForm : Inherits Form
         ' 
         ' ToolStrip1
         ' 
-        ToolStrip1.Items.AddRange(New ToolStripItem() {ToolStripButton3, ToolStripButton1, ToolStripSeparator1, ToolStripSplitButton1, ToolStripLabel3, ToolStripComboBox1, ToolStripLabel1, cboScheme, ToolStripSeparator2, ToolStripLabel2, ToolStripButton2})
+        ToolStrip1.Items.AddRange(New ToolStripItem() {ToolStripButton3, ToolStripButton1, ToolStripSeparator1, ToolStripSplitButton1, ToolStripLabel3, ToolStripComboBox1, ToolStripLabel4, ToolStripComboBox2, ToolStripLabel1, cboScheme, ToolStripSeparator2, ToolStripLabel2, ToolStripButton2})
         ToolStrip1.Location = New Point(0, 0)
         ToolStrip1.Name = "ToolStrip1"
         ToolStrip1.RenderMode = ToolStripRenderMode.Professional
@@ -276,6 +280,20 @@ Public Class MainForm : Inherits Form
         ToolStripComboBox1.Size = New Size(121, 25)
         ToolStripComboBox1.ToolTipText = "三维图形渲染模式"
         ' 
+        ' ToolStripLabel4
+        ' 
+        ToolStripLabel4.Name = "ToolStripLabel4"
+        ToolStripLabel4.Size = New Size(53, 22)
+        ToolStripLabel4.Text = "点大小："
+        ' 
+        ' ToolStripComboBox2
+        ' 
+        ToolStripComboBox2.DropDownStyle = ComboBoxStyle.DropDownList
+        ToolStripComboBox2.Items.AddRange(New Object() {"2", "3", "4", "6", "8", "10", "12"})
+        ToolStripComboBox2.Name = "ToolStripComboBox2"
+        ToolStripComboBox2.Size = New Size(56, 25)
+        ToolStripComboBox2.ToolTipText = "scatter / point cloud 模式下散点直径"
+        ' 
         ' MainForm
         ' 
         BackColor = SystemColors.Control
@@ -315,6 +333,9 @@ Public Class MainForm : Inherits Form
 
         ToolStripComboBox1.SelectedIndex = 0
         canvas.Scene.RenderMode = CType(ToolStripComboBox1.SelectedIndex, RenderMode3D)
+
+        ToolStripComboBox2.SelectedIndex = 3
+        canvas.Scene.PointSize = Single.Parse(CStr(ToolStripComboBox2.Items(ToolStripComboBox2.SelectedIndex)))
 
         ' 默认演示：启动即渲染一个三维曲面
         Call OnDraw(Me, EventArgs.Empty)
@@ -461,6 +482,16 @@ Public Class MainForm : Inherits Form
             canvas.Scene.RenderMode = CType(ToolStripComboBox1.SelectedIndex, RenderMode3D)
         End If
         ' 切换渲染模式后立即刷新当前三维图形
+        canvas.Invalidate()
+        UpdateStatus()
+    End Sub
+
+    Private Sub ToolStripComboBox2_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ToolStripComboBox2.SelectedIndexChanged
+        If canvas.Scene Is Nothing Then Return
+        If ToolStripComboBox2.SelectedIndex >= 0 Then
+            canvas.Scene.PointSize = Single.Parse(CStr(ToolStripComboBox2.Items(ToolStripComboBox2.SelectedIndex)))
+        End If
+        ' 调整点大小后立即刷新当前三维图形
         canvas.Invalidate()
         UpdateStatus()
     End Sub

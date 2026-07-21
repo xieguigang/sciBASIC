@@ -30,6 +30,8 @@ Public Class PlotScene
     Public Property ShowTicks As Boolean = False
     ''' <summary>三维图形渲染模式（surface / point cloud / edge）。</summary>
     Public Property RenderMode As RenderMode3D = RenderMode3D.Surface
+    ''' <summary>散点 / 点云 / 折线顶点模式下绘制圆点的直径（像素）。</summary>
+    Public Property PointSize As Single = 6.0F
 
     ' 原始（未居中）数据
     Private rawSurfaces As New List(Of Surface)()
@@ -434,7 +436,7 @@ Public Class PlotScene
     Private Sub DrawSurfacePoints(g As Graphics)
         If surfaces.Count = 0 Then Return
         Dim polys = Camera.PainterBuffer(Camera.Rotate(surfaces).ToArray(), illumination:=False).ToArray()
-        Dim r As Single = 2.5F
+        Dim r = PointSize / 2.0F
         For Each poly In polys
             Dim col = GetBrushColor(poly.brush)
             Using b As New SolidBrush(col)
@@ -460,7 +462,7 @@ Public Class PlotScene
     ''' <summary>点云模式：将折线的每个顶点绘制为小圆点，使用既有的曲线渐变色。</summary>
     Private Sub DrawCurvePoints(g As Graphics)
         If curvePoints Is Nothing Then Return
-        Dim r As Single = 3.0F
+        Dim r = PointSize / 2.0F
         For i As Integer = 0 To curvePoints.Length - 1
             Dim s = ToScreen(curvePoints(i))
             Dim ci = If(i < curveColors.Length, i, If(curveColors.Length > 0, curveColors.Length - 1, 0))
@@ -600,7 +602,7 @@ Public Class PlotScene
         Using b As New SolidBrush(Color.FromArgb(210, 30, 80, 180))
             For Each p In scatterPoints
                 Dim s = ToScreen(p)
-                g.FillEllipse(b, s.X - 3, s.Y - 3, 6, 6)
+                g.FillEllipse(b, s.X - PointSize / 2, s.Y - PointSize / 2, PointSize, PointSize)
             Next
         End Using
     End Sub
