@@ -209,7 +209,7 @@ Public Class MainForm : Inherits Form
         ' cboScheme
         ' 
         cboScheme.DropDownStyle = ComboBoxStyle.DropDownList
-        cboScheme.Items.AddRange(New Object() {"viridis", "magma", "inferno", "plasma", "turbo", "jet", "rainbow", "cividis", "mako", "rocket"})
+        cboScheme.Items.AddRange(New Object() {"viridis", "magma", "inferno", "plasma", "turbo", "jet", "rainbow", "cividis", "mako", "rocket", "typhoon", "fleximaging", "seismic", "icefire"})
         cboScheme.Name = "cboScheme"
         cboScheme.Size = New Size(121, 25)
         ' 
