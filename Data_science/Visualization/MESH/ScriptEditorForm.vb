@@ -297,6 +297,8 @@ Public Class ScriptEditorForm
 
     Private Sub ToolStripButton1_Click(sender As Object, e As EventArgs) Handles ToolStripButton1.Click
         Dim engine As New MathScriptEngine()
+        ' 注入数据框文件加载器：data("xxx.csv" | "xxx.arff") 命令会调用它
+        engine.DataLoader = AddressOf LoadDataFrameFile
         Dim result = engine.RunScript(TextBox1.Text)
         If result.Success Then
             ToolStripStatusLabel1.Text = "成功：" & result.Commands.Count & " 条绘图指令"
