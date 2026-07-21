@@ -2,6 +2,16 @@
 Imports System.Linq
 Imports Microsoft.VisualBasic.Imaging.Drawing3D
 
+''' <summary>三维图形渲染模式。</summary>
+Public Enum RenderMode3D
+    ''' <summary>完整曲面（光照填充），不影响 line / scatter。</summary>
+    Surface = 0
+    ''' <summary>点云：仅显示三维图形顶点，影响 surface 与 line，不影响 scatter。</summary>
+    PointCloud = 1
+    ''' <summary>边线：仅绘制 surface 多边形边（不填充），不影响 line / scatter。</summary>
+    Edge = 2
+End Enum
+
 ''' <summary>
 ''' 三维渲染核心：封装摄像机(Camera)与已生成的曲面/曲线/散点数据，
 ''' 负责质心居中、自动适配视距、热图着色（Designer 连续颜色谱）以及
@@ -18,6 +28,8 @@ Public Class PlotScene
     Public Property ShowBox As Boolean = True
     ''' <summary>是否绘制从包围盒角出发、带数字刻度的三维坐标轴</summary>
     Public Property ShowTicks As Boolean = False
+    ''' <summary>三维图形渲染模式（surface / point cloud / edge）。</summary>
+    Public Property RenderMode As RenderMode3D = RenderMode3D.Surface
 
     ' 原始（未居中）数据
     Private rawSurfaces As New List(Of Surface)()
@@ -394,11 +406,69 @@ Public Class PlotScene
         If ShowTicks Then DrawRuler(g)
         If ShowAxes Then DrawGround(g)
 
-        ' 画家算法 + 光照（热图基色在光照下叠加明暗）
-        If hasSurf Then Camera.Draw(g, surfaces, drawPath:=False)
-        If hasLine Then DrawCurve(g)
+        ' 画家算法 + 光照（热图基色在光照下叠加明暗），按渲染模式分派
+        If hasSurf Then
+            Select Case RenderMode
+                Case RenderMode3D.Surface
+                    Camera.Draw(g, surfaces, drawPath:=False)
+                Case RenderMode3D.PointCloud
+                    DrawSurfacePoints(g)
+                Case RenderMode3D.Edge
+                    DrawSurfaceEdges(g)
+            End Select
+        End If
+        If hasLine Then
+            If RenderMode = RenderMode3D.PointCloud Then DrawCurvePoints(g) Else DrawCurve(g)
+        End If
         If hasScatter Then DrawScatter(g)
         If ShowAxes Then DrawAxes(g)
+    End Sub
+
+    ''' <summary>从 Brush 提取颜色；仅 SolidBrush 可提色，其余回退为 Black。</summary>
+    Private Function GetBrushColor(b As Brush) As Color
+        If TypeOf b Is SolidBrush Then Return DirectCast(b, SolidBrush).Color
+        Return Color.Black
+    End Function
+
+    ''' <summary>点云模式：将每个 surface 多边形的顶点绘制为小圆点，使用各自基色。</summary>
+    Private Sub DrawSurfacePoints(g As Graphics)
+        If surfaces.Count = 0 Then Return
+        Dim polys = Camera.PainterBuffer(surfaces, illumination:=False).ToArray()
+        Dim r As Single = 2.5F
+        For Each poly In polys
+            Dim col = GetBrushColor(poly.brush)
+            Using b As New SolidBrush(col)
+                For Each pt In poly.points
+                    g.FillEllipse(b, pt.X - r, pt.Y - r, 2 * r, 2 * r)
+                Next
+            End Using
+        Next
+    End Sub
+
+    ''' <summary>边线模式：仅绘制 surface 多边形边，不填充；边框色取自 surface 的 brush 基色。</summary>
+    Private Sub DrawSurfaceEdges(g As Graphics)
+        If surfaces.Count = 0 Then Return
+        Dim polys = Camera.PainterBuffer(surfaces, illumination:=False).ToArray()
+        For Each poly In polys
+            Dim col = GetBrushColor(poly.brush)
+            Using pen As New Pen(col, 1)
+                g.DrawPolygon(pen, poly.points)
+            End Using
+        Next
+    End Sub
+
+    ''' <summary>点云模式：将折线的每个顶点绘制为小圆点，使用既有的曲线渐变色。</summary>
+    Private Sub DrawCurvePoints(g As Graphics)
+        If curvePoints Is Nothing Then Return
+        Dim r As Single = 3.0F
+        For i As Integer = 0 To curvePoints.Length - 1
+            Dim s = ToScreen(curvePoints(i))
+            Dim ci = If(i < curveColors.Length, i, If(curveColors.Length > 0, curveColors.Length - 1, 0))
+            Dim col = If(curveColors IsNot Nothing AndAlso curveColors.Length > 0, curveColors(ci), Color.Black)
+            Using b As New SolidBrush(col)
+                g.FillEllipse(b, s.X - r, s.Y - r, 2 * r, 2 * r)
+            End Using
+        Next
     End Sub
 
     Private Function ToScreen(p As Point3D) As PointF
