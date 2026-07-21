@@ -1,3 +1,4 @@
+Imports System.ComponentModel
 Imports System.Text
 Imports Microsoft.VisualBasic.Math.Scripting
 
@@ -238,7 +239,7 @@ Public Class ScriptEditorForm
         ' TextBox1
         ' 
         TextBox1.Dock = DockStyle.Fill
-        TextBox1.Font = New Font("Microsoft YaHei", 12F, FontStyle.Regular, GraphicsUnit.Point, CByte(0))
+        TextBox1.Font = New Font("Microsoft YaHei", 12.0F, FontStyle.Regular, GraphicsUnit.Point, CByte(0))
         TextBox1.Location = New Point(0, 30)
         TextBox1.Multiline = True
         TextBox1.Name = "TextBox1"
@@ -284,5 +285,10 @@ Public Class ScriptEditorForm
             ToolStripStatusLabel1.Text = "错误：" & result.ErrorMessage
         End If
         RaiseEvent ScriptExecuted(result)
+    End Sub
+
+    Private Sub ScriptEditorForm_FormClosing(sender As Object, e As FormClosingEventArgs) Handles Me.FormClosing
+        e.Cancel = True
+        WindowState = FormWindowState.Minimized
     End Sub
 End Class
