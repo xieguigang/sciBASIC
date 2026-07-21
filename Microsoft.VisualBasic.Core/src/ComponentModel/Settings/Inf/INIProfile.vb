@@ -64,9 +64,10 @@ Namespace ComponentModel.Settings.Inf
 
     ''' <summary>
     ''' Wrapper class for *.ini and *.inf configure file.
-    ''' (可能文件中的注释行会受到影响，所以请尽量使用本类型中的两个静态函数来操作INI文件)
     ''' </summary>
-    ''' <remarks></remarks>
+    ''' <remarks>
+    ''' (可能文件中的注释行会受到影响，所以请尽量使用本类型中的两个静态函数来操作INI文件)
+    ''' </remarks>
     ''' 
     <Package("Settings.Inf", Description:="Wrapper class for *.ini and *.inf configure file.", Url:="http://gcmodeller.org", Publisher:="xie.guigang@live.com")>
     Public Module INIProfile

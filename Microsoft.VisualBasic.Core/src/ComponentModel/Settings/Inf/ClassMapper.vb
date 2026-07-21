@@ -109,6 +109,12 @@ Namespace ComponentModel.Settings.Inf
             Return DirectCast(ClassWriter(ini, GetType(T)), T)
         End Function
 
+        ''' <summary>
+        ''' Load data from ini file onto a clr object with specific type
+        ''' </summary>
+        ''' <param name="ini"></param>
+        ''' <param name="type"></param>
+        ''' <returns></returns>
         Public Function ClassWriter(ini As IniFile, type As Type) As Object
             Dim obj As Object = Activator.CreateInstance(type)
             Dim maps = MapParser(type)
@@ -129,6 +135,12 @@ Namespace ComponentModel.Settings.Inf
             Return obj
         End Function
 
+        ''' <summary>
+        ''' Extract the config data from a clr object to write ini file
+        ''' </summary>
+        ''' <typeparam name="T"></typeparam>
+        ''' <param name="x"></param>
+        ''' <param name="ini"></param>
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Sub ClassDumper(Of T As Class)(x As T, ini As IniFile)
