@@ -51,6 +51,7 @@ Public Class PlotScene
         Camera.FieldOfView = 256
         Camera.Offset = New PointF(0, 0)
         Camera.Screen = New Size(800, 600)
+        Camera.AmbientStrength = 0
     End Sub
 
     Public ReadOnly Property SurfaceCount As Integer
@@ -90,12 +91,54 @@ Public Class PlotScene
         scatterPoints = Nothing
     End Sub
 
-    Private Sub EnsureColorTable()
+    Public Sub EnsureColorTable()
         If colorTable Is Nothing OrElse colorTableScheme <> ColorScheme Then
             colorTable = Microsoft.VisualBasic.Imaging.Drawing2D.Colors.Designer.GetColors(ColorScheme, 256, 255)
             colorTableScheme = ColorScheme
             colorBrushes = colorTable.Select(Function(c) New Microsoft.VisualBasic.Imaging.SolidBrush(c)).ToArray()
         End If
+    End Sub
+
+    ''' <summary>
+    ''' 依据当前 colorTable 重新为所有已生成数据（曲面面片 / 曲线 / 折线）着色，
+    ''' 并重建绘制用的居中数据，使切换颜色板后立即生效，且不改变当前视角与视距。
+    ''' </summary>
+    Public Sub Recolor()
+        EnsureColorTable()
+        If colorBrushes Is Nothing Then Return
+
+        ' 重新计算曲面面片基色（按原始 z 在 [zMin, zMax] 归一化查色）
+        For Each s In rawSurfaces
+            Dim avgZ = s.vertices.Average(Function(p) p.Z)
+            Dim t = (avgZ - zMin) / (zMax - zMin)
+            Dim cidx = CInt(Math.Min(255, Math.Max(0, t * 255)))
+            s.brush = colorBrushes(cidx)
+        Next
+
+        ' 重新计算曲线 / 折线渐变着色
+        If curveColors IsNot Nothing AndAlso curveColors.Length > 1 Then
+            Dim n = curveColors.Length - 1
+            For i As Integer = 0 To n
+                Dim cidx = CInt(Math.Min(255, Math.Max(0, i / n * 255)))
+                curveColors(i) = colorTable(cidx)
+            Next
+        End If
+
+        ' 重建居中后的绘制数据（沿用既有 modelCenter，不重置视角）
+        RebuildCenteredData()
+    End Sub
+
+    ''' <summary>
+    ''' 仅重建居中后的绘制数据（surfaces / curvePoints / scatterPoints），
+    ''' 保持 modelCenter、modelR、包围盒与视距不变。
+    ''' </summary>
+    Private Sub RebuildCenteredData()
+        surfaces = rawSurfaces.Select(Function(s) New Surface With {
+            .brush = s.brush,
+            .vertices = s.vertices.Select(Function(p) p.Subtract(modelCenter)).ToArray()
+        }).ToList()
+        curvePoints = If(rawCurve Is Nothing, Nothing, rawCurve.Select(Function(p) p.Subtract(modelCenter)).ToArray())
+        scatterPoints = If(rawScatter Is Nothing, Nothing, rawScatter.Select(Function(p) p.Subtract(modelCenter)).ToArray())
     End Sub
 
     ' ===================== 数据生成：曲面（表达式） =====================
@@ -310,12 +353,7 @@ Public Class PlotScene
         modelCenter = New Point3D(cx, cy, cz)
 
         ' 以质心为原点居中，保证旋转围绕模型中心
-        surfaces = rawSurfaces.Select(Function(s) New Surface With {
-            .brush = s.brush,
-            .vertices = s.vertices.Select(Function(p) p.Subtract(modelCenter)).ToArray()
-        }).ToList()
-        curvePoints = If(rawCurve Is Nothing, Nothing, rawCurve.Select(Function(p) p.Subtract(modelCenter)).ToArray())
-        scatterPoints = If(rawScatter Is Nothing, Nothing, rawScatter.Select(Function(p) p.Subtract(modelCenter)).ToArray())
+        RebuildCenteredData()
 
         ' 数据包围盒
         bxmin = allPts.Min(Function(p) p.X) : bxmax = allPts.Max(Function(p) p.X)

@@ -1,6 +1,5 @@
-Imports System.Drawing
-Imports System.IO
 Imports DataPlot
+Imports Microsoft.VisualBasic.Drawing
 Imports Microsoft.VisualBasic.Math.Scripting
 
 ''' <summary>
@@ -62,7 +61,7 @@ Public Class DataPlotView
         Next
 
         If seriesList.Count = 0 Then
-            Return ConvertBitmap(bmp)
+            Return bmp.CTypeGdiImage
         End If
 
         Dim rendered As Microsoft.VisualBasic.Imaging.Bitmap
@@ -79,22 +78,6 @@ Public Class DataPlotView
             End Using
         End If
 
-        Return ConvertBitmap(rendered)
+        Return rendered.CTypeGdiImage
     End Function
-
-    ''' <summary>
-    ''' 将 Microsoft.VisualBasic.Imaging.Bitmap（GDI 内存位图）转换为
-    ''' System.Drawing.Bitmap，以便直接赋值给 PictureBox.Image。
-    ''' </summary>
-    Private Shared Function ConvertBitmap(src As Microsoft.VisualBasic.Imaging.Bitmap) As System.Drawing.Bitmap
-        Using ms As New MemoryStream()
-            src.Save(ms, Microsoft.VisualBasic.Imaging.ImageFormats.Bmp)
-            ms.Seek(0, SeekOrigin.Begin)
-            ' 从流加载后立刻复制一份，使返回的位图不再依赖原始流
-            Using loaded = System.Drawing.Bitmap.FromStream(ms)
-                Return New System.Drawing.Bitmap(loaded)
-            End Using
-        End Using
-    End Function
-
 End Class
