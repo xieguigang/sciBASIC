@@ -302,19 +302,24 @@ Namespace Drawing3D
         End Function
 
 #If WINDOWS Then
-        Public Sub Draw(ByRef canvas As Graphics, surface As IEnumerable(Of Surface), Optional drawPath As Boolean = False)
+        Public Sub Draw(ByRef canvas As Graphics, surface As IEnumerable(Of Surface),
+                        Optional drawPath As Boolean = False,
+                        Optional illumination As Boolean = True)
+
             Dim src = surface.ToArray()
             Dim faces(src.Length - 1) As Surface
 
             ' 各面相互独立，旋转可安全并行（SIMD 批量旋转内部亦并行）
-            System.Threading.Tasks.Parallel.For(0, src.Length, Sub(i)
-                faces(i) = New Surface With {
-                    .brush = src(i).brush,
-                    .vertices = Rotate(src(i).vertices).ToArray
-                }
-            End Sub)
+            Call System.Threading.Tasks.Parallel.For(
+                0, src.Length,
+                body:=Sub(i)
+                          faces(i) = New Surface With {
+                              .brush = src(i).brush,
+                              .vertices = Rotate(src(i).vertices).ToArray
+                          }
+                      End Sub)
 
-            Call PainterAlgorithm.SurfacePainter(canvas, Me, faces, drawPath)
+            Call PainterAlgorithm.SurfacePainter(canvas, Me, faces, drawPath, illumination:=illumination)
         End Sub
 #End If
 

@@ -412,7 +412,7 @@ Public Class PlotScene
         If hasSurf Then
             Select Case RenderMode
                 Case RenderMode3D.Surface
-                    Camera.Draw(g, surfaces, drawPath:=False)
+                    Camera.Draw(g, surfaces, drawPath:=False, illumination:=False)
                 Case RenderMode3D.PointCloud
                     DrawSurfacePoints(g)
                 Case RenderMode3D.Edge
