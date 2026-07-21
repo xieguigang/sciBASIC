@@ -64,6 +64,32 @@ Namespace ComponentModel.Settings.Inf
     ''' <summary>
     ''' 在这个模块之中提供了.NET对象与``*.ini``配置文件之间的相互映射的序列化操作
     ''' </summary>
+    ''' <example>
+    ''' ' clr class define for mapping the ini section
+    ''' &lt;ClassName("section-1")> 
+    ''' Public Class Section1
+    '''    Public Property config1 As String = "xyz"
+    ''' End Class
+    ''' 
+    ''' &lt;ClassName("section-2")> 
+    ''' Public Class Section2
+    '''    Public Property key As String = "XXXXX"
+    ''' End Class
+    ''' 
+    ''' Public Class ConfigIniFile
+    ''' 
+    '''    Public Property section_1 As Section1
+    '''    Public Property section_2 As Section2
+    '''    
+    '''    Public Function SaveIni(file As String) As Boolean
+    '''       Return IOProvider.WriteProfile(Me, file)
+    '''    End Function
+    '''    
+    '''    Public Shared Function LoadIni(file As String) As ConfigIniFile
+    '''       Return IOProvider.LoadProfile(Of ConfigIniFile)(file)
+    '''    End Function
+    ''' End Class
+    ''' </example>
     Public Module IOProvider
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
