@@ -51,6 +51,7 @@
 
 #End Region
 
+Imports System.Collections.Concurrent
 Imports System.Reflection
 Imports System.Runtime.CompilerServices
 Imports System.Runtime.Serialization
@@ -79,47 +80,49 @@ Module ObjectParser
     Private Function ParseSchemaWithIgnores(schema As Type, opt As JSONSerializerOptions) As KeyValuePair(Of String, PropertyInfo)()
         Dim key As String = $"{schema.FullName}+{opt.createUniqueKey}"
 
-        Static cache As New Dictionary(Of String, KeyValuePair(Of String, PropertyInfo)())
+        ' thread-safe schema cache: ConcurrentDictionary + GetOrAdd eliminates the
+        ' race condition that existed with the unsynchronized Dictionary write.
+        Static cache As New ConcurrentDictionary(Of String, KeyValuePair(Of String, PropertyInfo)())
 
-        If Not cache.ContainsKey(key) Then
-            cache(key) = schema _
-                .Schema(PropertyAccess.Readable, nonIndex:=True) _
-                .Where(Function(p)
-                           If opt.maskReadonly AndAlso Not p.Value.CanWrite Then
-                               Return False
-                           End If
+        Return cache.GetOrAdd(key, Function(k As String) As KeyValuePair(Of String, PropertyInfo)()
+                                       Dim result As KeyValuePair(Of String, PropertyInfo)() = schema _
+                                           .Schema(PropertyAccess.Readable, nonIndex:=True) _
+                                           .Where(Function(p)
+                                                      If opt.maskReadonly AndAlso Not p.Value.CanWrite Then
+                                                          Return False
+                                                      End If
 
-                           Dim reader = p.Value
-                           Dim ignores1 = reader.GetAttribute(Of ScriptIgnoreAttribute) Is Nothing
-                           Dim ignores2 = reader.GetAttribute(Of DataIgnoredAttribute) Is Nothing
-                           Dim ignores3 = reader.GetAttribute(Of IgnoreDataMemberAttribute) Is Nothing
+                                                      Dim reader = p.Value
+                                                      Dim ignores1 = reader.GetAttribute(Of ScriptIgnoreAttribute) Is Nothing
+                                                      Dim ignores2 = reader.GetAttribute(Of DataIgnoredAttribute) Is Nothing
+                                                      Dim ignores3 = reader.GetAttribute(Of IgnoreDataMemberAttribute) Is Nothing
 
-                           Return ignores1 AndAlso ignores2 AndAlso ignores3
-                       End Function) _
-                .ToArray
+                                                      Return ignores1 AndAlso ignores2 AndAlso ignores3
+                                                  End Function) _
+                                           .ToArray
 
-            If opt.custom_name Then
-                cache(key) = cache(key) _
-                    .Select(Function(a)
-                                Dim df = a.Value.GetCustomAttribute(Of DataFrameColumnAttribute)
+                                       If opt.custom_name Then
+                                           result = result _
+                                               .Select(Function(a)
+                                                           Dim df = a.Value.GetCustomAttribute(Of DataFrameColumnAttribute)
 
-                                If df IsNot Nothing Then
-                                    Return New KeyValuePair(Of String, PropertyInfo)(df.Name, a.Value)
-                                Else
-                                    Dim fd = a.Value.GetCustomAttribute(Of Field)
+                                                           If df IsNot Nothing Then
+                                                               Return New KeyValuePair(Of String, PropertyInfo)(df.Name, a.Value)
+                                                           Else
+                                                               Dim fd = a.Value.GetCustomAttribute(Of Field)
 
-                                    If fd IsNot Nothing Then
-                                        Return New KeyValuePair(Of String, PropertyInfo)(fd.Name, a.Value)
-                                    End If
-                                End If
+                                                               If fd IsNot Nothing Then
+                                                                   Return New KeyValuePair(Of String, PropertyInfo)(fd.Name, a.Value)
+                                                               End If
+                                                           End If
 
-                                Return a
-                            End Function) _
-                    .ToArray
-            End If
-        End If
+                                                           Return a
+                                                       End Function) _
+                                               .ToArray
+                                       End If
 
-        Return cache(key)
+                                       Return result
+                                   End Function)
     End Function
 
     <Extension>

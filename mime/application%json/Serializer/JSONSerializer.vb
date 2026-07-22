@@ -136,8 +136,8 @@ Public Module JSONSerializer
     End Function
 
     <Extension>
-    Public Sub WriteJSON(json As JsonElement, file As Stream, opts As JSONSerializerOptions)
-        Dim writer As New JSONWriter(opts, file)
+    Public Sub WriteJSON(json As JsonElement, file As Stream, opts As JSONSerializerOptions, Optional leaveOpen As Boolean = False)
+        Dim writer As New JSONWriter(opts, file, leaveOpen)
         Call writer.BuildJSONString(json)
         Call writer.Dispose()
     End Sub

@@ -68,6 +68,7 @@ Imports System.Data
 Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports System.Text
+Imports System.Globalization
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MIME.application.json.Javascript
 Imports ASCII = Microsoft.VisualBasic.Text.ASCII
@@ -135,8 +136,10 @@ Public Class JsonParser
     ''' </param>
     ''' <returns></returns>
     Public Shared Function Open(file As String, Optional strictVectorSyntax As Boolean = True) As JsonElement
+        ' use streaming tokenicer (StreamTokenIcer) instead of reading the whole
+        ' file into memory via ReadToEnd, reduces memory pressure on large files
         Using sr As New StreamReader(file)
-            Return New JsonParser(sr.ReadToEnd, strictVectorSyntax:=strictVectorSyntax).OpenJSON()
+            Return New JsonParser(sr, strictVectorSyntax:=strictVectorSyntax).OpenJSON()
         End Using
     End Function
 
@@ -247,7 +250,9 @@ Public Class JsonParser
             t = pull.Next
 
             If t Is Nothing Then
-                Throw New InvalidDataException($"in-complete json object document! (json_document_line: {t.span.line})")
+                ' NOTE: t is Nothing here, must not access t.span.line or a NullReferenceException
+                ' will be thrown and mask the original parse error.
+                Throw New InvalidDataException("in-complete json object document! (json_document_line: end of stream)")
             ElseIf t.name <> Token.JSONElements.Colon Then
                 Throw New InvalidDataException($"missing colon symbol for key:value pair in json object document! (json_document_line: {t.span.line})")
             Else
@@ -310,9 +315,11 @@ Public Class JsonParser
 
             If t Is Nothing Then
                 If strictVectorSyntax Then
-                    Throw New InvalidDataException($"in-complete json array! (json_document_line: {t.span.line})")
+                    ' NOTE: t is Nothing here, must not access t.span.line or a NullReferenceException
+                    ' will be thrown and mask the original parse error.
+                    Throw New InvalidDataException("in-complete json array! (json_document_line: end of stream)")
                 Else
-                    Dim message As String = $"in-complete json array: possible json syntax error on parse json array at line {t.span.line}."
+                    Dim message As String = "in-complete json array: possible json syntax error on parse json array at end of stream."
 
                     Call message.warning
                     Call System.Diagnostics.Debug.WriteLine(message)
@@ -354,11 +361,12 @@ Public Class JsonParser
         Dim index% = 0
         Dim chr As Char, code$
         Dim sb As New StringBuilder
-        Dim str_len As Integer = Len(str)
 
         If str Is Nothing OrElse str = "" Then
             Return str
         End If
+
+        Dim str_len As Integer = Len(str)
 
         While index < str_len
             chr = str(index)
@@ -399,9 +407,54 @@ Public Class JsonParser
                             Case "u"
                                 ' unescape the unicode characters
                                 index += 1
+
+                                ' require at least 4 hex digits following \u
+                                If index + 4 > str_len Then
+                                    Throw New InvalidDataException("incomplete unicode escape sequence '\u' in json string!")
+                                End If
+
                                 code = Mid(str, index + 1, 4)
-                                sb.Append(ChrW(Val("&h" & code)))
-                                index += 4
+
+                                Dim codePoint As Integer
+
+                                ' use locale-invariant hex parsing instead of Val("&h"..)
+                                ' which silently returns 0 on invalid input
+                                If Not Integer.TryParse(code,
+                                                       NumberStyles.HexNumber,
+                                                       CultureInfo.InvariantCulture,
+                                                       codePoint) Then
+
+                                    Throw New InvalidDataException($"invalid unicode escape sequence '\u{code}' in json string!")
+                                End If
+
+                                ' surrogate pair handling:
+                                ' a high surrogate (D800-DBFF) may be followed by
+                                ' a low surrogate (DC00-DFFF) \uXXXX pair
+                                If codePoint >= &HD800 AndAlso codePoint <= &HDBFF _
+                                   AndAlso index + 10 <= str_len _
+                                   AndAlso str(index + 4) = "\"c AndAlso str(index + 5) = "u"c Then
+
+                                    Dim lowCode As String = Mid(str, index + 6, 4)
+                                    Dim lowPoint As Integer
+
+                                    If Integer.TryParse(lowCode,
+                                                       NumberStyles.HexNumber,
+                                                       CultureInfo.InvariantCulture,
+                                                       lowPoint) _
+                                       AndAlso lowPoint >= &HDC00 AndAlso lowPoint <= &HDFFF Then
+
+                                        Dim fullCode As Integer = &H10000 + ((codePoint - &HD800) << 10) + (lowPoint - &HDC00)
+                                        sb.Append(Char.ConvertFromUtf32(fullCode))
+                                        index += 10
+                                    Else
+                                        ' no valid low surrogate following, append high surrogate as-is
+                                        sb.Append(ChrW(codePoint))
+                                        index += 4
+                                    End If
+                                Else
+                                    sb.Append(ChrW(codePoint))
+                                    index += 4
+                                End If
                             Case Else
                                 ' unrecognized escape sequence: keep the backslash
                                 ' together with the following literal character

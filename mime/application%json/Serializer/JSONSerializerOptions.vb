@@ -89,7 +89,10 @@ Public Class JSONSerializerOptions
     ''' </summary>
     ''' <returns></returns>
     Friend Function createUniqueKey() As String
-        Return $"{maskReadonly},{comment}"
+        ' include custom_name so that the internal schema cache distinguishes
+        ' between serializing the same type with/without custom name mapping,
+        ' avoiding a stale cache hit that skips the custom name rewrite.
+        Return $"{maskReadonly},{comment},{custom_name}"
     End Function
 
 End Class

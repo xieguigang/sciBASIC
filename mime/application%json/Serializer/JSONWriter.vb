@@ -58,6 +58,7 @@
 Imports System.IO
 Imports System.Text
 Imports System.Text.RegularExpressions
+Imports System.Globalization
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Linq
@@ -72,19 +73,24 @@ Friend Class JSONWriter : Implements IDisposable
     ReadOnly json As TextWriter
     ReadOnly opts As JSONSerializerOptions
     ''' <summary>
-    ''' find two char
+    ''' when true, only flush the internal text writer on dispose and leave the
+    ''' underlying stream open so that the caller can continue writing to it
+    ''' afterwards. when false (default), the text writer is disposed which also
+    ''' closes the underlying stream.
     ''' </summary>
-    ReadOnly unescape As New Regex("[^\\]""", RegexOptions.Multiline)
+    ReadOnly leaveOpen As Boolean
 
     Dim disposedValue As Boolean
 
-    Sub New(opts As JSONSerializerOptions, file As Stream)
+    Sub New(opts As JSONSerializerOptions, file As Stream, Optional leaveOpen As Boolean = False)
         Me.opts = opts
+        Me.leaveOpen = leaveOpen
         Me.json = New StreamWriter(file)
     End Sub
 
-    Sub New(opts As JSONSerializerOptions, file As StringBuilder)
+    Sub New(opts As JSONSerializerOptions, file As StringBuilder, Optional leaveOpen As Boolean = False)
         Me.opts = opts
+        Me.leaveOpen = leaveOpen
         Me.json = New StringWriter(file)
     End Sub
 
@@ -306,59 +312,73 @@ Friend Class JSONWriter : Implements IDisposable
     End Sub
 
     Private Function encodeString(value As String) As String
-        value = value.Replace(vbCr, vbLf)
-
         If opts.unicodeEscape Then
-            Dim sb As New StringBuilder
-            Dim code As Integer
-            Dim bytes As Byte()
-            Dim b1, b0 As String
-
-            For Each c As Char In DirectCast(value, String).Replace("\", "\\")
-                code = AscW(c)
-
-                If code < 0 OrElse code > Byte.MaxValue Then
-                    sb.Append("\u")
-                    bytes = Encoding.Unicode.GetBytes(c)
-                    b1 = bytes(1).ToString("x")
-                    b0 = bytes(0).ToString("x")
-                    sb.Append(If(b1.Length < 2, "0" & b1, b1))
-                    sb.Append(If(b0.Length < 2, "0" & b0, b0))
-                Else
-                    sb.Append(c)
-                End If
-            Next
-
-            value = sb.ToString.Replace(vbLf, "\n")
-
-            If InStr(value, """") > 0 Then
-                ' escape the quote symbol inside string,
-                ' or json string will syntax error
-                Dim unescape_quotes As String() = unescape.Matches(value).ToArray
-
-                For Each unescape_char As String In unescape_quotes
-                    value = value.Replace(
-                    unescape_char,
-                    unescape_char.First & "\" & unescape_char.Last
-                )
-                Next
-
-                If value.First = """"c Then
-                    value = "\" & value
-                End If
-            End If
-
-            Return $"""{value}"""
+            Return """" & escapeUnicode(value) & """"
         Else
             Return JsonContract.GetObjectJson(GetType(String), value).Replace(vbLf, "\n")
         End If
     End Function
 
+    ''' <summary>
+    ''' single-pass json string escaping with unicode escape support.
+    ''' escapes backslash, double quote, control characters and non-ASCII
+    ''' characters in a single StringBuilder pass to avoid the fragile
+    ''' regex-based post-processing that could crash on empty strings or
+    ''' produce wrong output when matched substrings overlapped.
+    ''' </summary>
+    Private Function escapeUnicode(value As String) As String
+        If value Is Nothing Then
+            Return ""
+        End If
+
+        Dim sb As New StringBuilder(value.Length + 16)
+
+        For Each c As Char In value
+            Select Case c
+                Case "\"c
+                    sb.Append("\\")
+                Case """"c
+                    sb.Append("\""")
+                Case vbCr
+                    sb.Append("\r")
+                Case vbLf
+                    sb.Append("\n")
+                Case vbTab
+                    sb.Append("\t")
+                Case vbBack
+                    sb.Append("\b")
+                Case vbFormFeed
+                    sb.Append("\f")
+                Case Else
+                    Dim code As Integer = AscW(c)
+
+                    ' control chars below 0x20 (not handled by the named cases
+                    ' above) and non-ASCII characters (>= 0x80) are escaped as
+                    ' \uXXXX to produce pure-ASCII json output.
+                    If code < &H20 OrElse code > &H7F Then
+                        sb.Append("\u")
+                        sb.Append(code.ToString("x4", CultureInfo.InvariantCulture))
+                    Else
+                        sb.Append(c)
+                    End If
+            End Select
+        Next
+
+        Return sb.ToString()
+    End Function
+
     Protected Overridable Sub Dispose(disposing As Boolean)
         If Not disposedValue Then
             If disposing Then
-                ' TODO: dispose managed state (managed objects)
+                ' always flush pending buffered text so the caller can read it
                 Call json.Flush()
+
+                ' only dispose the internal text writer (and its underlying stream)
+                ' when the caller does not need to keep writing to the target stream.
+                ' leaveOpen=True keeps the stream open for subsequent writes.
+                If Not leaveOpen Then
+                    Call json.Dispose()
+                End If
             End If
 
             ' TODO: free unmanaged resources (unmanaged objects) and override finalizer
