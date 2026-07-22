@@ -1,4 +1,6 @@
-﻿Namespace CommandLine.Reflection
+﻿Imports Microsoft.VisualBasic.Serialization.JSON
+
+Namespace CommandLine.Reflection
 
     <AttributeUsage(AttributeTargets.Property)>
     Public Class OptAttribute : Inherits Attribute
@@ -15,6 +17,9 @@
                     If args.ContainsParameter(name) Then
                         Return args(name)
                     End If
+                    If args.BoolFlags.IndexOf(name) > -1 Then
+                        Return "True"
+                    End If
                 Next
 
                 Return Nothing
@@ -24,6 +29,10 @@
         Sub New(ParamArray names As String())
             Me.Names = names
         End Sub
+
+        Public Overrides Function ToString() As String
+            Return Names.GetJson
+        End Function
 
     End Class
 End Namespace
