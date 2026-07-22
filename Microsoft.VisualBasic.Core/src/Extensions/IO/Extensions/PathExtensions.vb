@@ -607,10 +607,12 @@ Public Module PathExtensions
 
     ''' <summary>
     ''' Gets the file length, if the path is not exists, then returns -1.
-    ''' (安全的获取文件的大小，如果目标文件不存在的话会返回-1)
     ''' </summary>
     ''' <param name="path"></param>
     ''' <returns></returns>
+    ''' <remarks>
+    ''' (安全的获取文件的大小，如果目标文件不存在的话会返回-1)
+    ''' </remarks>
     <Extension>
     Public Function FileLength(path As String) As Long
         If path.StringEmpty Then
