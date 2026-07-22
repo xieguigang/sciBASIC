@@ -65,9 +65,29 @@ Module simple_jsonParserTest
     "choices":[
         {"index":0,"delta":{"tool_calls":[{"index":0,"function":{"arguments":"C:\\\\Windows\\cmd.exe"}}]},"logprobs":null,"finish_reason":null}]}</json>
 
+    ReadOnly LLM_test2 As String = <json>
+                                       {
+            "mechanism": "HIF-1α stabilization under hypoxia transcriptionally upregulates GLUT1, glycolytic enzymes, LDHA, and PDK1 (which inhibits PDH), shifting metabolism from OXPHOS to glycolysis.",
+            "evidence": "Multiple papers: "HIF-1 induces GLUT1, glycolytic enzymes, LDHA" and "HIF-1 increases PDK1 to inhibit PDH" in breast cancer cells."
+        }
+                                   </json>
+
+    ReadOnly LLM_test3 As String = <json>
+                                        {"name": "Alice", "age": 
+                                   </json>
+
     Sub Main()
+        Call test3()
         Call test2()
         Call test1()
+    End Sub
+
+    Sub test3()
+        Dim parsed = LenientJsonParser.ParseJSON(LLM_test2)
+
+        parsed = LenientJsonParser.ParseJSON(LLM_test3)
+
+        Pause()
     End Sub
 
     Sub test2()
