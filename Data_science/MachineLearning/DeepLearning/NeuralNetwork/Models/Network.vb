@@ -300,7 +300,7 @@ Namespace NeuralNetwork
         ''' [0,1] 之间，表示被随机删除的节点数量百分比。
         ''' </param>
         ''' <remarks>
-        ''' 真正的 DropOut 通过在构造期传入 <paramref name="dropOutRate"/> 参数、
+        ''' 真正的 DropOut 通过在构造期传入 <paramref name="percentage"/> 参数、
         ''' 在 CNN 内核之中插入 <see cref="Microsoft.VisualBasic.MachineLearning.CNN.layers.DropoutLayer"/> 实现
         ''' （训练时生效，推理时自动关闭）。本方法保留为兼容接口：运行时调用仅更新比率标记，
         ''' 需要在构造期配置方能在后续训练中生效。

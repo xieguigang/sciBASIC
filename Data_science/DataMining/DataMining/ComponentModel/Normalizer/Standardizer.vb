@@ -93,8 +93,9 @@ Public Class Standardizer
         std = New Double(dimSize - 1) {}
 
         For d As Integer = 0 To dimSize - 1
-            Dim m = list.Average(Function(v) v(d))
-            Dim variance = list.Average(Function(v) (v(d) - m) * (v(d) - m))
+            Dim offset As Integer = d
+            Dim m = list.Average(Function(v) v(offset))
+            Dim variance = list.Average(Function(v) (v(offset) - m) * (v(offset) - m))
             mean(d) = m
             std(d) = If(variance <= 0, 1.0, stdf.Sqrt(variance))
         Next

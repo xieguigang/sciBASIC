@@ -116,7 +116,7 @@ Namespace NeuralNetwork
     ''' <summary>
     ''' 只读视图：表示网络之中的全部隐藏层集合。
     ''' 
-    ''' 保留旧 <see cref="HiddenLayers"/> 公开接口之中的 <see cref="Count"/> 与索引器，
+    ''' 保留旧 "HiddenLayers" 公开接口之中的 <see cref="Count"/> 与索引器，
     ''' 但其内部不再维护遗留的 Layer/Neuron/Synapse 数据图。
     ''' </summary>
     Public Class HiddenLayersView : Implements IEnumerable(Of NetworkLayerView)

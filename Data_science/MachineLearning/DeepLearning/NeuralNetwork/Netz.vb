@@ -106,7 +106,7 @@ Namespace NeuralNetwork
 
         ''' <summary>
         ''' 保留旧接口之中的激活函数引用（用于兼容），实际计算由 CNN 激活层完成。
-        ''' 任意自定义 <paramref name="activate"/> 无法在 CNN 层体系内精确表达时，回退到 Sigmoid（与旧 Netz 默认一致）。
+        ''' 任意自定义 "activate" 无法在 CNN 层体系内精确表达时，回退到 Sigmoid（与旧 Netz 默认一致）。
         ''' </summary>
         Private ReadOnly m_activate As Func(Of Double, Double)
 
