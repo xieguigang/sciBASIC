@@ -73,6 +73,14 @@ Namespace Javascript
 
         Public Overloads Property value As Object
 
+        ''' <summary>
+        ''' indicates if the stored string <see cref="value"/> is still a raw
+        ''' json literal (may contain escape sequences) and needs to be decoded
+        ''' by <see cref="GetStripString"/>. Set to <see langword="False"/> when
+        ''' the value has already been decoded (e.g. during parsing).
+        ''' </summary>
+        Private _isRaw As Boolean = True
+
         Public ReadOnly Property BSONValue As BSONValue
             Get
                 Return BSONValue.FromValue(value)
@@ -125,6 +133,22 @@ Namespace Javascript
         End Sub
 
         ''' <summary>
+        ''' create based on the value literal data
+        ''' </summary>
+        ''' <param name="obj">
+        ''' could be any type of the clr runtime object as the json value
+        ''' </param>
+        ''' <param name="alreadyDecoded">
+        ''' when <see langword="True"/> the string value is already decoded
+        ''' (escape sequences resolved) and <see cref="GetStripString"/> will
+        ''' return it as-is instead of re-decoding it.
+        ''' </param>
+        Public Sub New(obj As Object, alreadyDecoded As Boolean)
+            value = obj
+            _isRaw = Not alreadyDecoded
+        End Sub
+
+        ''' <summary>
         ''' get literal value
         ''' </summary>
         ''' <returns></returns>
@@ -173,6 +197,15 @@ Namespace Javascript
             Dim s$ = Scripting _
                 .ToString(value, null) _
                 .GetString
+
+            If Not _isRaw Then
+                ' the string value has already been decoded when it was
+                ' parsed/constructed, so return it directly to avoid
+                ' re-decoding escape sequences (which would corrupt values
+                ' that legitimately contain backslashes, e.g. "\\")
+                Return s
+            End If
+
             s = JsonParser.StripString(s, decodeMetachar)
             Return s
         End Function

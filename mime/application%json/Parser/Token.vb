@@ -63,6 +63,7 @@
 
 #End Region
 
+Imports Microsoft.VisualBasic.MIME.application.json
 Imports Microsoft.VisualBasic.MIME.application.json.Javascript
 Imports Microsoft.VisualBasic.Scripting.TokenIcer
 
@@ -106,7 +107,13 @@ Public Class Token : Inherits CodeToken(Of JSONElements)
     Public Function GetValue() As JsonValue
         Select Case name
             Case JSONElements.String
-                Return New JsonValue(text)
+                ' decode json escape sequences (e.g. \\, \", \/, \n, \uXXXX)
+                ' when reading the string literal value
+                Dim raw As String = text
+
+                raw = JsonParser.StripString(raw, decodeMetaChar:=True)
+
+                Return New JsonValue(raw, alreadyDecoded:=True)
             Case JSONElements.Boolean
                 Return New JsonValue(text.ParseBoolean)
             Case JSONElements.Double

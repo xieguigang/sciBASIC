@@ -56,11 +56,14 @@ Imports Microsoft.VisualBasic.MIME.application.json.Javascript
 
 Module simple_jsonParserTest
 
-    ReadOnly failureTestExample As String = <json>{"id":"921a4932-0d77-490e-bb15-3bd9c3596fd1","object":"chat.completion.chunk",
+    ReadOnly failureTestExample As String = <json>{
+    "id":"921a4932-0d77-490e-bb15-3bd9c3596fd1",
+    "object":"chat.completion.chunk",
     "created":1784698240,
     "model":"deepseek-v4-flash",
     "system_fingerprint":"fp_8b330d02d0_prod0820_fp8_kvcache_20260402",
-    "choices":[{"index":0,"delta":{"tool_calls":[{"index":0,"function":{"arguments":":\\\\"}}]},"logprobs":null,"finish_reason":null}]}</json>
+    "choices":[
+        {"index":0,"delta":{"tool_calls":[{"index":0,"function":{"arguments":"C:\\\\Windows\\cmd.exe"}}]},"logprobs":null,"finish_reason":null}]}</json>
 
     Sub Main()
         Call test2()
@@ -68,8 +71,15 @@ Module simple_jsonParserTest
     End Sub
 
     Sub test2()
-        Dim escpae_strVal = JsonParser.Parse(failureTestExample)
-
+        Dim escpae_strVal As JsonObject = JsonParser.Parse(failureTestExample)
+        Dim choices As JsonArray = escpae_strVal!choices
+        Dim opt As JsonObject = choices(0)
+        Dim tool_call = opt!delta
+        Dim args As JsonArray = DirectCast(tool_call, JsonObject)!tool_calls
+        Dim firstVal As JsonObject = args(0)
+        Dim firstFunc As JsonObject = firstVal!function
+        Dim arg = firstFunc!arguments
+        Dim str As String = DirectCast(arg, JsonValue).AsString(True)
         Pause()
     End Sub
 
