@@ -467,7 +467,7 @@ Public Class DataFrame : Implements INumericMatrix, ILabeledMatrix, Enumeration(
         Return FastLoader.ReadCsv(file, delimiter, rowHeader, encoding, verbose:=verbose)
     End Function
 
-    Public Shared Function GetDimension(file As String) As (rows As Integer, cols As Integer)
+    Public Shared Function GetDimension(file As String) As (rows As Integer, cols As Integer, header As String())
         Dim firstLine As String() = Tokenizer.CharsParser(file.ReadFirstLine).ToArray
         Dim nrows As Long
 
@@ -477,7 +477,7 @@ Public Class DataFrame : Implements INumericMatrix, ILabeledMatrix, Enumeration(
             nrows = file.ReadAllLines.Count - 1
         End If
 
-        Return (nrows, firstLine.Length)
+        Return (nrows, firstLine.Length, firstLine)
     End Function
 
     Private Function ArrayPack(Optional deepcopy As Boolean = False) As Double()() Implements INumericMatrix.ArrayPack
