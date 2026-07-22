@@ -116,4 +116,45 @@ Public Module FastLoader
 
         Return FeatureVector.FromGeneral(name, array)
     End Function
+
+    Public Function CountLinesFast(filePath As String) As Long
+        Dim lineCount As Long = 0
+        ' 使用 4MB 的缓冲区，减少磁盘 I/O 次数
+        Dim bufferSize As Integer = 4 * 1024 * 1024
+        Dim buffer(bufferSize - 1) As Byte
+        ' FileOptions.SequentialScan 提示操作系统按顺序访问，极大提升大文件读取速度
+        Dim fileOptions As FileOptions = FileOptions.Asynchronous Or FileOptions.SequentialScan
+        Dim bytesRead As Integer
+        Dim lastByteWasNewline As Boolean = False
+
+        Using fs As New FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.Read, bufferSize, fileOptions)
+            Do
+                bytesRead = fs.Read(buffer, 0, bufferSize)
+
+                If bytesRead = 0 Then
+                    Exit Do
+                End If
+
+                ' 遍历缓冲区，统计换行符 \n (LF, ASCII码 10)
+                ' 这种写法在VB.NET中比字符串拆分快几个数量级
+                For i As Integer = 0 To bytesRead - 1
+                    If buffer(i) = 10 Then ' 10 是 \n 的 ASCII 码
+                        lineCount += 1
+                    End If
+                Next
+
+                ' 记录最后一个字节是否为换行符，用于判断文件末尾是否有空行
+                If bytesRead > 0 Then
+                    lastByteWasNewline = (buffer(bytesRead - 1) = 10)
+                End If
+            Loop While bytesRead > 0
+        End Using
+
+        ' 如果文件不为空，且最后一个字符不是换行符，说明最后一行没有换行符，需要补+1
+        If lineCount > 0 AndAlso Not lastByteWasNewline Then
+            lineCount += 1
+        End If
+
+        Return lineCount
+    End Function
 End Module

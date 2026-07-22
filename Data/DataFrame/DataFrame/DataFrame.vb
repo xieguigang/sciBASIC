@@ -65,7 +65,9 @@ Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
+Imports Microsoft.VisualBasic.ComponentModel.Ranges.Unit
 Imports Microsoft.VisualBasic.Data.Framework.IO.ArffFile
+Imports Microsoft.VisualBasic.Data.Framework.IO.CSVFile
 Imports Microsoft.VisualBasic.Language.Vectorization
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math
@@ -463,6 +465,19 @@ Public Class DataFrame : Implements INumericMatrix, ILabeledMatrix, Enumeration(
                                     Optional verbose As Boolean = True) As DataFrame
 
         Return FastLoader.ReadCsv(file, delimiter, rowHeader, encoding, verbose:=verbose)
+    End Function
+
+    Public Shared Function GetDimension(file As String) As (rows As Integer, cols As Integer)
+        Dim firstLine As String() = Tokenizer.CharsParser(file.ReadFirstLine).ToArray
+        Dim nrows As Long
+
+        If file.FileLength > 64 * ByteSize.MB Then
+            nrows = FastLoader.CountLinesFast(file) - 1
+        Else
+            nrows = file.ReadAllLines.Count - 1
+        End If
+
+        Return (nrows, firstLine.Length)
     End Function
 
     Private Function ArrayPack(Optional deepcopy As Boolean = False) As Double()() Implements INumericMatrix.ArrayPack
