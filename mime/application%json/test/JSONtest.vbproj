@@ -1,0 +1,12 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <Platforms>AnyCPU;x64</Platforms>
+    <Configurations>Debug;Release;Rsharp_app_release;PlantMAT;NPSearch;LipidSearch;mzkit_win32;gcmodeller_desktop;Docker;nuget_release;Desktop;MEMI-Desktop;CellaLAB-Desktop</Configurations>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Microsoft.VisualBasic.Core\src\Core.vbproj" />
+    <ProjectReference Include="..\JSON-netcore5.vbproj" />
+  </ItemGroup>
+  </Project>
