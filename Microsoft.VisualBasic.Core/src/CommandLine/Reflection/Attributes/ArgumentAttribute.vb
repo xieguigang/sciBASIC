@@ -194,6 +194,11 @@ Namespace CommandLine.Reflection
             Me.Pipeline = pip
         End Sub
 
+        Public Function SetOptional(opt As Boolean) As ArgumentAttribute
+            [_Optional] = opt
+            Return Me
+        End Function
+
         Public Overrides Function ToString() As String
             Dim sb As New StringBuilder(1024)
             Dim example$ = ExampleValue
