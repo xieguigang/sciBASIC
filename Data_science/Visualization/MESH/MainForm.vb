@@ -94,6 +94,13 @@ Public Class MainForm : Inherits Form
     Friend WithEvents ToolStripLabel2 As ToolStripLabel
     Friend WithEvents ToolStripButton2 As ToolStripButton
     Friend WithEvents ToolStripButton3 As ToolStripButton
+    Friend WithEvents ToolStripLabel3 As ToolStripLabel
+    Friend WithEvents ToolStripComboBox1 As ToolStripComboBox
+    Friend WithEvents ToolStripLabel4 As ToolStripLabel
+    Friend WithEvents ToolStripComboBox2 As ToolStripComboBox
+    Friend WithEvents ToolStripSeparator3 As ToolStripSeparator
+    Friend WithEvents CopySnapshotImage As ToolStripButton
+    Friend WithEvents SaveSnapshotImageAsFile As ToolStripButton
 
     Private editor As ScriptEditorForm = Nothing
 
@@ -104,12 +111,17 @@ Public Class MainForm : Inherits Form
     Private Sub InitializeComponent()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(MainForm))
         ToolStrip1 = New ToolStrip()
+        ToolStripButton3 = New ToolStripButton()
         ToolStripButton1 = New ToolStripButton()
         ToolStripSeparator1 = New ToolStripSeparator()
         ToolStripSplitButton1 = New ToolStripSplitButton()
         chkAxes = New ToolStripMenuItem()
         ToolStripMenuItem1 = New ToolStripMenuItem()
         ToolStripMenuItem2 = New ToolStripMenuItem()
+        ToolStripLabel3 = New ToolStripLabel()
+        ToolStripComboBox1 = New ToolStripComboBox()
+        ToolStripLabel4 = New ToolStripLabel()
+        ToolStripComboBox2 = New ToolStripComboBox()
         ToolStripLabel1 = New ToolStripLabel()
         cboScheme = New ToolStripComboBox()
         ToolStripSeparator2 = New ToolStripSeparator()
@@ -119,7 +131,9 @@ Public Class MainForm : Inherits Form
         statusStrip = New StatusStrip()
         lblStatus = New ToolStripStatusLabel()
         canvas = New SurfaceCanvas()
-        ToolStripButton3 = New ToolStripButton()
+        ToolStripSeparator3 = New ToolStripSeparator()
+        CopySnapshotImage = New ToolStripButton()
+        SaveSnapshotImageAsFile = New ToolStripButton()
         ToolStrip1.SuspendLayout()
         CType(pic2D, ComponentModel.ISupportInitialize).BeginInit()
         statusStrip.SuspendLayout()
@@ -127,13 +141,22 @@ Public Class MainForm : Inherits Form
         ' 
         ' ToolStrip1
         ' 
-        ToolStrip1.Items.AddRange(New ToolStripItem() {ToolStripButton3, ToolStripButton1, ToolStripSeparator1, ToolStripSplitButton1, ToolStripLabel1, cboScheme, ToolStripSeparator2, ToolStripLabel2, ToolStripButton2})
+        ToolStrip1.Items.AddRange(New ToolStripItem() {ToolStripButton3, ToolStripButton1, ToolStripSeparator1, ToolStripSplitButton1, ToolStripLabel3, ToolStripComboBox1, ToolStripLabel4, ToolStripComboBox2, ToolStripLabel1, cboScheme, ToolStripSeparator2, ToolStripLabel2, ToolStripButton2, ToolStripSeparator3, CopySnapshotImage, SaveSnapshotImageAsFile})
         ToolStrip1.Location = New Point(0, 0)
         ToolStrip1.Name = "ToolStrip1"
         ToolStrip1.RenderMode = ToolStripRenderMode.Professional
-        ToolStrip1.Size = New Size(1189, 25)
+        ToolStrip1.Size = New Size(1256, 25)
         ToolStrip1.TabIndex = 0
         ToolStrip1.Text = "ToolStrip1"
+        ' 
+        ' ToolStripButton3
+        ' 
+        ToolStripButton3.DisplayStyle = ToolStripItemDisplayStyle.Image
+        ToolStripButton3.Image = CType(resources.GetObject("ToolStripButton3.Image"), Image)
+        ToolStripButton3.ImageTransparentColor = Color.Magenta
+        ToolStripButton3.Name = "ToolStripButton3"
+        ToolStripButton3.Size = New Size(23, 22)
+        ToolStripButton3.Text = "打开绘图脚本编辑器"
         ' 
         ' ToolStripButton1
         ' 
@@ -183,6 +206,34 @@ Public Class MainForm : Inherits Form
         ToolStripMenuItem2.Size = New Size(178, 22)
         ToolStripMenuItem2.Text = "显示带刻度坐标轴"
         ' 
+        ' ToolStripLabel3
+        ' 
+        ToolStripLabel3.Name = "ToolStripLabel3"
+        ToolStripLabel3.Size = New Size(124, 22)
+        ToolStripLabel3.Text = "三维图形渲染模式："
+        ' 
+        ' ToolStripComboBox1
+        ' 
+        ToolStripComboBox1.DropDownStyle = ComboBoxStyle.DropDownList
+        ToolStripComboBox1.Items.AddRange(New Object() {"surface", "point cloud", "edge"})
+        ToolStripComboBox1.Name = "ToolStripComboBox1"
+        ToolStripComboBox1.Size = New Size(121, 25)
+        ToolStripComboBox1.ToolTipText = "三维图形渲染模式"
+        ' 
+        ' ToolStripLabel4
+        ' 
+        ToolStripLabel4.Name = "ToolStripLabel4"
+        ToolStripLabel4.Size = New Size(59, 22)
+        ToolStripLabel4.Text = "点大小："
+        ' 
+        ' ToolStripComboBox2
+        ' 
+        ToolStripComboBox2.DropDownStyle = ComboBoxStyle.DropDownList
+        ToolStripComboBox2.Items.AddRange(New Object() {"2", "3", "4", "6", "8", "10", "12"})
+        ToolStripComboBox2.Name = "ToolStripComboBox2"
+        ToolStripComboBox2.Size = New Size(75, 25)
+        ToolStripComboBox2.ToolTipText = "scatter / point cloud 模式下散点直径"
+        ' 
         ' ToolStripLabel1
         ' 
         ToolStripLabel1.Name = "ToolStripLabel1"
@@ -192,7 +243,7 @@ Public Class MainForm : Inherits Form
         ' cboScheme
         ' 
         cboScheme.DropDownStyle = ComboBoxStyle.DropDownList
-        cboScheme.Items.AddRange(New Object() {"viridis", "magma", "inferno", "plasma", "turbo", "jet", "rainbow", "cividis", "mako", "rocket"})
+        cboScheme.Items.AddRange(New Object() {"viridis", "magma", "inferno", "plasma", "turbo", "jet", "rainbow", "cividis", "mako", "rocket", "typhoon", "fleximaging", "seismic", "icefire"})
         cboScheme.Name = "cboScheme"
         cboScheme.Size = New Size(121, 25)
         ' 
@@ -221,16 +272,16 @@ Public Class MainForm : Inherits Form
         pic2D.Dock = DockStyle.Fill
         pic2D.Location = New Point(0, 25)
         pic2D.Name = "pic2D"
-        pic2D.Size = New Size(1189, 730)
+        pic2D.Size = New Size(1256, 789)
         pic2D.TabIndex = 0
         pic2D.TabStop = False
         ' 
         ' statusStrip
         ' 
         statusStrip.Items.AddRange(New ToolStripItem() {lblStatus})
-        statusStrip.Location = New Point(0, 755)
+        statusStrip.Location = New Point(0, 814)
         statusStrip.Name = "statusStrip"
-        statusStrip.Size = New Size(1189, 22)
+        statusStrip.Size = New Size(1256, 22)
         statusStrip.TabIndex = 2
         ' 
         ' lblStatus
@@ -245,23 +296,37 @@ Public Class MainForm : Inherits Form
         canvas.Location = New Point(0, 25)
         canvas.Name = "canvas"
         canvas.Scene = Nothing
-        canvas.Size = New Size(1189, 730)
+        canvas.Size = New Size(1256, 789)
         canvas.TabIndex = 0
         canvas.TabStop = True
         ' 
-        ' ToolStripButton3
+        ' ToolStripSeparator3
         ' 
-        ToolStripButton3.DisplayStyle = ToolStripItemDisplayStyle.Image
-        ToolStripButton3.Image = CType(resources.GetObject("ToolStripButton3.Image"), Image)
-        ToolStripButton3.ImageTransparentColor = Color.Magenta
-        ToolStripButton3.Name = "ToolStripButton3"
-        ToolStripButton3.Size = New Size(23, 22)
-        ToolStripButton3.Text = "打开绘图脚本编辑器"
+        ToolStripSeparator3.Name = "ToolStripSeparator3"
+        ToolStripSeparator3.Size = New Size(6, 25)
+        ' 
+        ' CopySnapshotImage
+        ' 
+        CopySnapshotImage.DisplayStyle = ToolStripItemDisplayStyle.Image
+        CopySnapshotImage.Image = CType(resources.GetObject("CopySnapshotImage.Image"), Image)
+        CopySnapshotImage.ImageTransparentColor = Color.Magenta
+        CopySnapshotImage.Name = "CopySnapshotImage"
+        CopySnapshotImage.Size = New Size(23, 22)
+        CopySnapshotImage.Text = "复制当前画面"
+        ' 
+        ' SaveSnapshotImageAsFile
+        ' 
+        SaveSnapshotImageAsFile.DisplayStyle = ToolStripItemDisplayStyle.Image
+        SaveSnapshotImageAsFile.Image = CType(resources.GetObject("SaveSnapshotImageAsFile.Image"), Image)
+        SaveSnapshotImageAsFile.ImageTransparentColor = Color.Magenta
+        SaveSnapshotImageAsFile.Name = "SaveSnapshotImageAsFile"
+        SaveSnapshotImageAsFile.Size = New Size(23, 22)
+        SaveSnapshotImageAsFile.Text = "当前画面保存为文件"
         ' 
         ' MainForm
         ' 
         BackColor = SystemColors.Control
-        ClientSize = New Size(1189, 777)
+        ClientSize = New Size(1256, 836)
         Controls.Add(canvas)
         Controls.Add(pic2D)
         Controls.Add(statusStrip)
@@ -294,6 +359,12 @@ Public Class MainForm : Inherits Form
         canvas.Scene.Camera.AngleX = 0
         canvas.Scene.Camera.AngleX = 0
         canvas.Scene.BackgroundColor = Color.FromArgb(200, 213, 215)
+
+        ToolStripComboBox1.SelectedIndex = 0
+        canvas.Scene.RenderMode = CType(ToolStripComboBox1.SelectedIndex, RenderMode3D)
+
+        ToolStripComboBox2.SelectedIndex = 3
+        canvas.Scene.PointSize = Single.Parse(CStr(ToolStripComboBox2.Items(ToolStripComboBox2.SelectedIndex)))
 
         ' 默认演示：启动即渲染一个三维曲面
         Call OnDraw(Me, EventArgs.Empty)
@@ -434,12 +505,78 @@ Public Class MainForm : Inherits Form
         UpdateStatus()
     End Sub
 
+    Private Sub ToolStripComboBox1_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ToolStripComboBox1.SelectedIndexChanged
+        If canvas.Scene Is Nothing Then Return
+        If ToolStripComboBox1.SelectedIndex >= 0 Then
+            canvas.Scene.RenderMode = CType(ToolStripComboBox1.SelectedIndex, RenderMode3D)
+        End If
+        ' 切换渲染模式后立即刷新当前三维图形
+        canvas.Invalidate()
+        UpdateStatus()
+    End Sub
+
+    Private Sub ToolStripComboBox2_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ToolStripComboBox2.SelectedIndexChanged
+        If canvas.Scene Is Nothing Then Return
+        If ToolStripComboBox2.SelectedIndex >= 0 Then
+            canvas.Scene.PointSize = Single.Parse(CStr(ToolStripComboBox2.Items(ToolStripComboBox2.SelectedIndex)))
+        End If
+        ' 调整点大小后立即刷新当前三维图形
+        canvas.Invalidate()
+        UpdateStatus()
+    End Sub
+
     Private Sub ToolStripButton2_Click(sender As Object, e As EventArgs) Handles ToolStripButton2.Click
         Using color As New ColorDialog
             If color.ShowDialog = DialogResult.OK Then
                 canvas.BackColor = color.Color
                 canvas.Scene.BackgroundColor = color.Color
             End If
+        End Using
+    End Sub
+
+    ' ===================== 画面快照：复制 / 保存 =====================
+
+    ''' <summary>
+    ''' 捕获当前三维画布（SurfaceCanvas）实际显示的画面为 Bitmap。
+    ''' 通过 Control.DrawToBitmap 走 OnPaint 渲染链路，1:1 还原当前
+    ''' 视角、视距、背景色及全部叠加层（坐标轴/盒子/网格/散点）。
+    ''' 画布未初始化、尺寸非法或场景为空时返回 Nothing。
+    ''' </summary>
+    Private Function GetCanvasSnapshot() As Bitmap
+        If canvas Is Nothing OrElse canvas.Scene Is Nothing Then Return Nothing
+        If canvas.Width < 1 OrElse canvas.Height < 1 Then Return Nothing
+        Dim bmp As New Bitmap(canvas.Width, canvas.Height)
+        canvas.DrawToBitmap(bmp, New Rectangle(0, 0, canvas.Width, canvas.Height))
+        Return bmp
+    End Function
+
+    Private Sub CopySnapshotImage_Click(sender As Object, e As EventArgs) Handles CopySnapshotImage.Click
+        Using bmp = GetCanvasSnapshot()
+            If bmp Is Nothing Then
+                UpdateStatus("没有可复制的画面")
+                Return
+            End If
+            Clipboard.SetImage(bmp)
+            UpdateStatus("已复制当前三维画面到剪贴板")
+        End Using
+    End Sub
+
+    Private Sub SaveSnapshotImageAsFile_Click(sender As Object, e As EventArgs) Handles SaveSnapshotImageAsFile.Click
+        Using bmp = GetCanvasSnapshot()
+            If bmp Is Nothing Then
+                UpdateStatus("没有可保存的画面")
+                Return
+            End If
+            Using dlg As New SaveFileDialog
+                dlg.Filter = "PNG 图片 (*.png)|*.png"
+                dlg.DefaultExt = "png"
+                dlg.FileName = "snapshot.png"
+                dlg.Title = "保存当前三维画面为图片"
+                If dlg.ShowDialog() = DialogResult.OK Then
+                    bmp.Save(dlg.FileName, System.Drawing.Imaging.ImageFormat.Png)
+                    UpdateStatus("已保存画面到：" & dlg.FileName)
+                End If
+            End Using
         End Using
     End Sub
 End Class
