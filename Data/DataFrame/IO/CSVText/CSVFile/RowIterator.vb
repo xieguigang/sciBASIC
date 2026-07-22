@@ -103,6 +103,12 @@ Namespace IO.CSVFile
             Loop
         End Function
 
+        Public Shared Function RowSolver(file As String, Optional simple As Boolean = False) As IEnumerable(Of RowObject)
+            Using s As Stream = file.Open(FileMode.Open, doClear:=False, [readOnly]:=True)
+                Return RowSolver(s, simple)
+            End Using
+        End Function
+
         Public Shared Function RowSolver(file As Stream, simple As Boolean) As IEnumerable(Of RowObject)
             If simple Then
                 Return New StreamReader(file) _
