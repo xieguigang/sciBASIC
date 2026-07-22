@@ -63,7 +63,14 @@ Module simple_jsonParserTest
     "choices":[{"index":0,"delta":{"tool_calls":[{"index":0,"function":{"arguments":":\\\\"}}]},"logprobs":null,"finish_reason":null}]}</json>
 
     Sub Main()
+        Call test2()
         Call test1()
+    End Sub
+
+    Sub test2()
+        Dim escpae_strVal = JsonParser.Parse(failureTestExample)
+
+        Pause()
     End Sub
 
     Sub test1()
