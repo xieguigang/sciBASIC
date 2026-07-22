@@ -57,7 +57,7 @@ Imports Microsoft.VisualBasic.MIME.application.json.Javascript
 
 Module bsontest
 
-    Sub Main()
+    Sub Main3()
         Dim obj As New JsonObject()
         obj("hello") = New JsonValue(123)
 

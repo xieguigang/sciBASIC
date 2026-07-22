@@ -55,7 +55,7 @@ Imports Microsoft.VisualBasic.MIME.application.json.JSONLogic
 
 Module logicTest
 
-    Sub Main()
+    Sub Main4()
         Dim out As Object
 
         out = jsonLogic.apply("{'==' : [1, 1]}")

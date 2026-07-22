@@ -53,7 +53,7 @@
 
 Module big_bson_reader
 
-    Sub Main()
+    Sub Main1()
 
     End Sub
 End Module

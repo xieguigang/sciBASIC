@@ -77,7 +77,7 @@ Module writerTest
 ]
 }"
 
-    Sub Main()
+    Sub Main6()
         Dim json As JsonElement = JsonParser.Parse(writerTest.json)
         Dim json_str As String = json.BuildJsonString(indent:=True)
         Dim json_line As String = json.BuildJsonString(indent:=False)

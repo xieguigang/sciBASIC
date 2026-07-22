@@ -72,7 +72,7 @@ End Class
 
 Module Module1
 
-    Sub Main()
+    Sub Main5()
         Call deserializeObjectTest()
     End Sub
 
@@ -94,8 +94,8 @@ Module Module1
 
         Call t.GetJson(maskReadonly:=True).SaveTo("./test_out.json")
         Call json.SaveTo("./test_out2.json")
-        Call t2.Tarray.GetJson(maskReadonly:=True).__DEBUG_ECHO
-        Call t2.Tarray2.GetJson(maskReadonly:=True).__DEBUG_ECHO
+        Call t2.Tarray.GetJson(maskReadonly:=True).debug
+        Call t2.Tarray2.GetJson(maskReadonly:=True).debug
 
         Pause()
     End Sub
