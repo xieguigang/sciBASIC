@@ -56,6 +56,12 @@ Imports Microsoft.VisualBasic.MIME.application.json.Javascript
 
 Module simple_jsonParserTest
 
+    ReadOnly failureTestExample As String = <json>{"id":"921a4932-0d77-490e-bb15-3bd9c3596fd1","object":"chat.completion.chunk",
+    "created":1784698240,
+    "model":"deepseek-v4-flash",
+    "system_fingerprint":"fp_8b330d02d0_prod0820_fp8_kvcache_20260402",
+    "choices":[{"index":0,"delta":{"tool_calls":[{"index":0,"function":{"arguments":":\\\\"}}]},"logprobs":null,"finish_reason":null}]}</json>
+
     Sub Main()
         Call test1()
     End Sub
