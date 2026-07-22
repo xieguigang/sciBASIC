@@ -103,9 +103,9 @@ Namespace IO.CSVFile
             Loop
         End Function
 
-        Public Shared Function RowSolver(file As String, Optional simple As Boolean = False) As IEnumerable(Of RowObject)
+        Public Shared Function HeaderResolver(file As String, Optional simple As Boolean = False) As RowObject
             Using s As Stream = file.Open(FileMode.Open, doClear:=False, [readOnly]:=True)
-                Return RowSolver(s, simple)
+                Return RowSolver(s, simple).FirstOrDefault
             End Using
         End Function
 
