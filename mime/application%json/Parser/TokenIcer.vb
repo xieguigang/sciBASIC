@@ -72,6 +72,14 @@ Public MustInherit Class TokenIcer
 
     Protected buffer As CharBuffer
     Protected escape As Char = ASCII.NUL
+    ''' <summary>
+    ''' when true, the next char inside a string literal is part of an escape
+    ''' sequence (e.g. \\, \", \/, \uXXXX) and must be taken literally. This
+    ''' replaces the previous fragile "is the last char a backslash" heuristic
+    ''' which failed to terminate strings containing backslash sequences such
+    ''' as Windows paths ending with a backslash (e.g. "C:\\").
+    ''' </summary>
+    Protected escapePending As Boolean = False
     Protected lastToken As Token
     Protected line As Integer = 0
 
@@ -109,16 +117,23 @@ Public MustInherit Class TokenIcer
                 Call buffer.Add(c)
             End If
         ElseIf escape <> ASCII.NUL Then
-            ' is string escape
-            If c = escape Then
-                If buffer.StartEscaping Then
-                    ' continute
-                    buffer += c
-                Else
-                    ' end of the string escape
-                    escape = ASCII.NUL
-                    Yield New Token(Token.JSONElements.String, buffer.PopAllChars)
-                End If
+            ' we are inside a quoted string literal delimited by `escape` (the quote char)
+            If escapePending Then
+                ' the previous char was a backslash, so this char is part of an
+                ' escape sequence and must be taken literally (covers \\, \", \/,
+                ' \uXXXX, etc.). The raw escape sequence is kept in the buffer and
+                ' decoded later by JsonParser.StripString when the value is read.
+                buffer += c
+                escapePending = False
+            ElseIf c = "\"c Then
+                ' begin an escape sequence: keep the backslash in the buffer
+                buffer += c
+                escapePending = True
+            ElseIf c = escape Then
+                ' real end of the string literal (only when not in an escape sequence)
+                escape = ASCII.NUL
+                escapePending = False
+                Yield New Token(Token.JSONElements.String, buffer.PopAllChars)
             Else
                 buffer += c
             End If
@@ -138,6 +153,7 @@ Public MustInherit Class TokenIcer
             End If
         ElseIf c = "'"c OrElse c = """"c Then
             escape = c
+            escapePending = False
             Return
         ElseIf c = ":"c Then
             ' end previous token
