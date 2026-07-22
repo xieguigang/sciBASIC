@@ -265,7 +265,7 @@ Public Class JsonParser
                 If strictVectorSyntax Then
                     Throw New Exception(message)
                 Else
-                    Call message.Warning
+                    Call message.warning
                     Call VBDebugger.EchoLine(message)
                 End If
 
@@ -314,7 +314,7 @@ Public Class JsonParser
                 Else
                     Dim message As String = $"in-complete json array: possible json syntax error on parse json array at line {t.span.line}."
 
-                    Call message.Warning
+                    Call message.warning
                     Call System.Diagnostics.Debug.WriteLine(message)
 
                     Exit Do
@@ -335,7 +335,7 @@ Public Class JsonParser
                     ' stop iterator move to next in next loop
                     back = True
 
-                    Call message.Warning
+                    Call message.warning
                     Call System.Diagnostics.Debug.WriteLine(message)
                 End If
             End If
