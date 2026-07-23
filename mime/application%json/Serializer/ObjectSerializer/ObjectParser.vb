@@ -196,12 +196,14 @@ Module ObjectParser
         Dim docs As ProjectType = If(opt.comment, schema.LoadXmlDocs, Nothing)
 
         For Each reader As KeyValuePair(Of String, PropertyInfo) In memberReaders
-            If opt.comment Then
+            If opt.comment AndAlso docs IsNot Nothing Then
                 comment = docs.GetProperties(reader.Value.Name) _
                     .SafeQuery _
                     .Select(Function(p) p.Summary) _
                     .JoinBy(vbLf) _
                     .Trim(" "c, vbLf, vbCr, vbTab)
+            Else
+                comment = Nothing
             End If
 
             [property] = reader.Value
