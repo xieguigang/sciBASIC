@@ -89,6 +89,22 @@ Namespace ApplicationServices.Terminal.Utility
             userAction()
         End Sub
 
+        ''' <summary>
+        ''' 创建CancellationTokenSource，支持Ctrl+C取消
+        ''' </summary>
+        ''' <param name="prompt"></param>
+        ''' <returns></returns>
+        Public Shared Function GetConsoleCancellationToken(Optional prompt As String = "正在取消任务，请稍候...") As CancellationToken
+            Dim cts As New CancellationTokenSource()
+            Dim evt As New UserTaskCancelAction(
+                Sub()
+                    cts.Cancel()
+                    Console.WriteLine(vbCrLf & prompt)
+                End Sub)
+
+            Return cts.Token
+        End Function
+
 #Region "IDisposable Support"
         ' IDisposable
         Protected Overrides Sub Dispose(disposing As Boolean)
