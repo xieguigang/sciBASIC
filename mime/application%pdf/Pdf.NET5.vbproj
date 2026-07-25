@@ -156,4 +156,8 @@
     <Import Include="System.Data" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="PdfReader\" />
+  </ItemGroup>
+
 </Project>
