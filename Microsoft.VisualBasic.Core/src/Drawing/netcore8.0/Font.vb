@@ -153,6 +153,12 @@ Namespace Imaging
             Me.Unit = unit
         End Sub
 
+        Sub New(font As FontFamily, designHeight As Integer, fontStyle As FontStyle, unit As GraphicsUnit)
+            Me.Name = font.Name
+            Me.Style = fontStyle
+            Me.Unit = unit
+        End Sub
+
         Sub New(baseFont As Font, style As FontStyle)
             _Name = baseFont.Name
             _Size = baseFont.Size
@@ -256,6 +262,26 @@ Namespace Imaging
         Sub New(name As String)
             Me.Name = name
         End Sub
+
+        Public Function IsStyleAvailable(fontStyle As FontStyle) As Boolean
+            Return True
+        End Function
+
+        Public Function GetEmHeight(fontStyle As FontStyle) As Integer
+            Return 12
+        End Function
+
+        Public Function GetCellAscent(fontStyle As FontStyle) As Integer
+            Throw New NotImplementedException()
+        End Function
+
+        Public Function GetCellDescent(fontStyle As FontStyle) As Integer
+            Throw New NotImplementedException()
+        End Function
+
+        Public Function GetLineSpacing(fontStyle As FontStyle) As Integer
+            Throw New NotImplementedException()
+        End Function
     End Class
 
     Public Enum StringAlignment
