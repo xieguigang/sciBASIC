@@ -17,11 +17,11 @@
 
 Imports System.IO
 Imports System.Text
+Imports Microsoft.VisualBasic.FileIO
 
-Public Class PdfReader
-    Implements IDisposable
+Public Class PdfReader : Implements IDisposable
 
-    Private ReadOnly _data As Byte()
+    Dim _data As Byte()
     Private ReadOnly _objects As New Dictionary(Of Integer, PdfIndirectObject)()
     Private _trailer As PdfDictionary
     Private _rootRef As PdfReference
@@ -29,9 +29,32 @@ Public Class PdfReader
     Private ReadOnly _xrefEntries As New Dictionary(Of Integer, XRefEntry)()
     Private _objectStreamsParsed As New HashSet(Of Integer)()
 
+    ' ---------------- 属性 ----------------
+
+    Public ReadOnly Property Trailer As PdfDictionary
+        Get
+            Return _trailer
+        End Get
+    End Property
+
+    Public ReadOnly Property DataSize As Integer
+        Get
+            Return _data.Length
+        End Get
+    End Property
+
+    Public ReadOnly Property ObjectCount As Integer
+        Get
+            Return _objects.Count
+        End Get
+    End Property
+
     Public Sub New(filePath As String)
-        _data = File.ReadAllBytes(filePath)
-        Initialize()
+        Call Me.New(File.ReadAllBytes(filePath))
+    End Sub
+
+    Sub New(file As Stream)
+        Call Me.New(file.Bytes)
     End Sub
 
     Public Sub New(data As Byte())
@@ -404,27 +427,8 @@ Public Class PdfReader
         Return result.ToArray()
     End Function
 
-    ' ---------------- 属性 ----------------
-
-    Public ReadOnly Property Trailer As PdfDictionary
-        Get
-            Return _trailer
-        End Get
-    End Property
-
-    Public ReadOnly Property Data As Byte()
-        Get
-            Return _data
-        End Get
-    End Property
-
-    Public ReadOnly Property ObjectCount As Integer
-        Get
-            Return _objects.Count
-        End Get
-    End Property
-
     Public Sub Dispose() Implements IDisposable.Dispose
+        Erase _data
     End Sub
 
 End Class

@@ -29,35 +29,7 @@ Public Class Program
         End If
 
         Try
-            Dim sw = System.Diagnostics.Stopwatch.StartNew()
-            Console.WriteLine($"[1/3] 读取 PDF 文件: {inputPath}")
-            Using reader As New PdfReader(inputPath)
-                Console.WriteLine($"      文件大小: {New FileInfo(inputPath).Length / 1024.0:F1} KB")
-                Console.WriteLine($"      解析到 {reader.ObjectCount} 个间接对象")
 
-                Console.WriteLine("[2/3] 遍历页面树并提取文本...")
-                Dim extractor As New TextExtractor(reader)
-                Dim pages = reader.GetPages()
-                Console.WriteLine($"      共 {pages.Count} 页")
-
-                Console.WriteLine("[3/3] 写入输出文件...")
-                Using writer As New StreamWriter(outputPath, False, System.Text.Encoding.UTF8)
-                    For i = 0 To pages.Count - 1
-                        Dim text = extractor.ExtractFromPage(pages(i))
-                        writer.WriteLine($"========== Page {i + 1} ==========")
-                        writer.WriteLine(text)
-                        writer.WriteLine()
-                        If (i + 1) Mod 10 = 0 OrElse i = pages.Count - 1 Then
-                            Console.WriteLine($"      已处理 {i + 1}/{pages.Count} 页")
-                        End If
-                    Next
-                End Using
-
-                sw.Stop()
-                Console.WriteLine($"完成！耗时 {sw.ElapsedMilliseconds} ms")
-                Console.WriteLine($"输出文件: {outputPath}")
-                Console.WriteLine($"输出大小: {New FileInfo(outputPath).Length / 1024.0:F1} KB")
-            End Using
             Return 0
         Catch ex As Exception
             Console.Error.WriteLine($"解析失败: {ex.Message}")
