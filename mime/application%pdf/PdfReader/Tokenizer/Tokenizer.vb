@@ -1,71 +1,69 @@
 ﻿#Region "Microsoft.VisualBasic::213f0f7bf9ac6df3a53829f31c80cfdf, mime\application%pdf\PdfReader\Tokenizer\Tokenizer.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 680
-    '    Code Lines: 488 (71.76%)
-    ' Comment Lines: 57 (8.38%)
-    '    - Xml Docs: 0.00%
-    ' 
-    '   Blank Lines: 135 (19.85%)
-    '     File Size: 26.70 KB
+' Summaries:
 
 
-    '     Class Tokenizer
-    ' 
-    '         Properties: AllowIdentifiers, IgnoreComments, Position, Reader
-    ' 
-    '         Constructor: (+2 Overloads) Sub New
-    ' 
-    '         Function: ConvertDecimalToInteger, ConvertDecimalToLong, GetAnyToken, GetBytes, GetComment
-    '                   GetDictionaryClose, GetDictionaryOpenOrHexString, GetKeywordOrIdentifier, GetName, GetNumber
-    '                   GetStringLiteral, GetStringLiteralUTF16, GetToken, GetXRefEntry, GetXRefOffset
-    '                   GotoNextLine
-    ' 
-    '         Sub: (+2 Overloads) Dispose, PushToken, SkipWhitespace
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 680
+'    Code Lines: 488 (71.76%)
+' Comment Lines: 57 (8.38%)
+'    - Xml Docs: 0.00%
+' 
+'   Blank Lines: 135 (19.85%)
+'     File Size: 26.70 KB
+
+
+'     Class Tokenizer
+' 
+'         Properties: AllowIdentifiers, IgnoreComments, Position, Reader
+' 
+'         Constructor: (+2 Overloads) Sub New
+' 
+'         Function: ConvertDecimalToInteger, ConvertDecimalToLong, GetAnyToken, GetBytes, GetComment
+'                   GetDictionaryClose, GetDictionaryOpenOrHexString, GetKeywordOrIdentifier, GetName, GetNumber
+'                   GetStringLiteral, GetStringLiteralUTF16, GetToken, GetXRefEntry, GetXRefOffset
+'                   GotoNextLine
+' 
+'         Sub: (+2 Overloads) Dispose, PushToken, SkipWhitespace
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
-Imports System
-Imports System.Collections.Generic
 Imports System.IO
 Imports System.Text
-Imports stdNum = System.Math
+Imports std = System.Math
 
 Namespace PdfReader
     Public Class Tokenizer
@@ -363,7 +361,7 @@ Namespace PdfReader
 
             For i = 0 To length - 1
                 ret *= 10
-                ret += _line(stdNum.Min(Threading.Interlocked.Increment(index), index - 1)) - 48 ' '0'
+                ret += _line(std.Min(Threading.Interlocked.Increment(index), index - 1)) - 48 ' '0'
             Next
 
             Return ret
@@ -375,7 +373,7 @@ Namespace PdfReader
 
             For i = 0 To length - 1
                 ret *= 10
-                ret += bytes(stdNum.Min(Threading.Interlocked.Increment(index), index - 1)) - 48 ' '0'
+                ret += bytes(std.Min(Threading.Interlocked.Increment(index), index - 1)) - 48 ' '0'
             Next
 
             Return ret
@@ -454,12 +452,12 @@ Namespace PdfReader
             Dim position = _position + _index
             Dim positive = True
             Dim start = _index
-            Dim current = _line(stdNum.Min(Threading.Interlocked.Increment(_index), _index - 1))
+            Dim current = _line(std.Min(Threading.Interlocked.Increment(_index), _index - 1))
 
             ' Check for sign
             If current = 43 Then ' '+'
                 If _index < _length Then
-                    current = _line(stdNum.Min(Threading.Interlocked.Increment(_index), _index - 1))
+                    current = _line(std.Min(Threading.Interlocked.Increment(_index), _index - 1))
                 Else
                     Return New TokenError(position, $"Cannot parse number because unexpected end-of-line encountered after '+'.")
                 End If
@@ -467,7 +465,7 @@ Namespace PdfReader
                 positive = False
 
                 If _index < _length Then
-                    current = _line(stdNum.Min(Threading.Interlocked.Increment(_index), _index - 1))
+                    current = _line(std.Min(Threading.Interlocked.Increment(_index), _index - 1))
                 Else
                     Return New TokenError(position, $"Cannot parse number because unexpected end-of-line encountered after '-'.")
                 End If
@@ -482,7 +480,7 @@ Namespace PdfReader
                     whole = whole * 10 + (current - 48)
 
                     If _index < _length Then
-                        current = _line(stdNum.Min(Threading.Interlocked.Increment(_index), _index - 1))
+                        current = _line(std.Min(Threading.Interlocked.Increment(_index), _index - 1))
                     Else
                         Return New TokenInteger(If(positive, whole, -whole))
                     End If
@@ -498,7 +496,7 @@ Namespace PdfReader
             End If
 
             If _index < _length Then
-                current = _line(stdNum.Min(Threading.Interlocked.Increment(_index), _index - 1))
+                current = _line(std.Min(Threading.Interlocked.Increment(_index), _index - 1))
             Else
                 Return New TokenReal(If(positive, whole, -whole))
             End If

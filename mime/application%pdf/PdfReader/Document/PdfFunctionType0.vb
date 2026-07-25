@@ -1,66 +1,65 @@
 ﻿#Region "Microsoft.VisualBasic::f2af68911c67c4a2d7a927ebe8fc4393, mime\application%pdf\PdfReader\Document\PdfFunctionType0.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 151
-    '    Code Lines: 112 (74.17%)
-    ' Comment Lines: 10 (6.62%)
-    '    - Xml Docs: 0.00%
-    ' 
-    '   Blank Lines: 29 (19.21%)
-    '     File Size: 5.53 KB
+' Summaries:
 
 
-    '     Class PdfFunctionType0
-    ' 
-    '         Properties: BitsPerSample, Decode, Encode, Order, Size
-    '                     Stream
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    ' 
-    '         Function: [Call]
-    ' 
-    '         Sub: Initialize
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 151
+'    Code Lines: 112 (74.17%)
+' Comment Lines: 10 (6.62%)
+'    - Xml Docs: 0.00%
+' 
+'   Blank Lines: 29 (19.21%)
+'     File Size: 5.53 KB
+
+
+'     Class PdfFunctionType0
+' 
+'         Properties: BitsPerSample, Decode, Encode, Order, Size
+'                     Stream
+' 
+'         Constructor: (+1 Overloads) Sub New
+' 
+'         Function: [Call]
+' 
+'         Sub: Initialize
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
-Imports System
-Imports stdNum = System.Math
+Imports std = System.Math
 
 Namespace PdfReader
     Public Class PdfFunctionType0
@@ -125,13 +124,13 @@ Namespace PdfReader
 
             While i < inputs.Length
                 ' Limit check the input to the domain range
-                inputs(i) = stdNum.Max(_domainValues(d), stdNum.Min(_domainValues(d + 1), inputs(i)))
+                inputs(i) = std.Max(_domainValues(d), std.Min(_domainValues(d + 1), inputs(i)))
 
                 ' Interpolate each input from the domain to the set of encoded values
                 inputs(i) = CInt(Interpolate(inputs(i), _domainValues(d), _domainValues(d + 1), _encodeValues(d), _encodeValues(d + 1)))
 
                 ' Limit check to the encoded values
-                inputs(i) = stdNum.Max(_encodeValues(d), stdNum.Min(_encodeValues(d + 1), inputs(i)))
+                inputs(i) = std.Max(_encodeValues(d), std.Min(_encodeValues(d + 1), inputs(i)))
 
                 ' Find sample position within array
                 sampleNumber += CInt(inputs(i) * _samplesValues(i))

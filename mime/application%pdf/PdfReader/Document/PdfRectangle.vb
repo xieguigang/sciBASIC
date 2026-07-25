@@ -1,66 +1,65 @@
 ﻿#Region "Microsoft.VisualBasic::8fac665f08cf07ef00b39f868e60845f, mime\application%pdf\PdfReader\Document\PdfRectangle.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 92
-    '    Code Lines: 76 (82.61%)
-    ' Comment Lines: 3 (3.26%)
-    '    - Xml Docs: 0.00%
-    ' 
-    '   Blank Lines: 13 (14.13%)
-    '     File Size: 3.03 KB
+' Summaries:
 
 
-    '     Class PdfRectangle
-    ' 
-    '         Properties: Height, LowerLeftX, LowerLeftY, UpperRightX, UpperRightY
-    '                     Width
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    ' 
-    '         Function: ObjectToFloat, ToString
-    ' 
-    '         Sub: Visit
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 92
+'    Code Lines: 76 (82.61%)
+' Comment Lines: 3 (3.26%)
+'    - Xml Docs: 0.00%
+' 
+'   Blank Lines: 13 (14.13%)
+'     File Size: 3.03 KB
+
+
+'     Class PdfRectangle
+' 
+'         Properties: Height, LowerLeftX, LowerLeftY, UpperRightX, UpperRightY
+'                     Width
+' 
+'         Constructor: (+1 Overloads) Sub New
+' 
+'         Function: ObjectToFloat, ToString
+' 
+'         Sub: Visit
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
-Imports System
-Imports stdNum = System.Math
+Imports std = System.Math
 
 Namespace PdfReader
     Public Class PdfRectangle
@@ -77,10 +76,10 @@ Namespace PdfReader
             Dim uy = ObjectToFloat(array.Objects(3))
 
             ' Normalize so the lower-left and upper-right are actually those values
-            LowerLeftX = stdNum.Min(lx, ux)
-            LowerLeftY = stdNum.Min(ly, uy)
-            UpperRightX = stdNum.Max(lx, ux)
-            UpperRightY = stdNum.Max(ly, uy)
+            LowerLeftX = std.Min(lx, ux)
+            LowerLeftY = std.Min(ly, uy)
+            UpperRightX = std.Max(lx, ux)
+            UpperRightY = std.Max(ly, uy)
         End Sub
 
         Public Overrides Function ToString() As String

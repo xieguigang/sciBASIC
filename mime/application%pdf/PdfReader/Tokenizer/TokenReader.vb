@@ -1,66 +1,65 @@
 ﻿#Region "Microsoft.VisualBasic::682a555806749427e2de832145c600aa, mime\application%pdf\PdfReader\Tokenizer\TokenReader.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 122
-    '    Code Lines: 91 (74.59%)
-    ' Comment Lines: 11 (9.02%)
-    '    - Xml Docs: 0.00%
-    ' 
-    '   Blank Lines: 20 (16.39%)
-    '     File Size: 4.39 KB
+' Summaries:
 
 
-    '     Class TokenReader
-    ' 
-    '         Properties: Position
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    ' 
-    '         Function: GetBytes, ReadBytes, ReadLine
-    ' 
-    '         Sub: AppendBytes, Reset
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 122
+'    Code Lines: 91 (74.59%)
+' Comment Lines: 11 (9.02%)
+'    - Xml Docs: 0.00%
+' 
+'   Blank Lines: 20 (16.39%)
+'     File Size: 4.39 KB
+
+
+'     Class TokenReader
+' 
+'         Properties: Position
+' 
+'         Constructor: (+1 Overloads) Sub New
+' 
+'         Function: GetBytes, ReadBytes, ReadLine
+' 
+'         Sub: AppendBytes, Reset
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
-Imports System
 Imports System.IO
-Imports stdNum = System.Math
+Imports std = System.Math
 
 Namespace PdfReader
     Public Class TokenReader
@@ -90,7 +89,7 @@ Namespace PdfReader
 
             ' Copy any remaining bytes in the buffer
             If _start < _end Then
-                Dim copy = stdNum.Min(length, _end - _start)
+                Dim copy = std.Min(length, _end - _start)
                 Array.Copy(_bytes, _start, ret, 0, copy)
                 index += copy
                 _start += copy
