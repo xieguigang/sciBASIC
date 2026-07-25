@@ -181,6 +181,9 @@ Namespace Imaging
             Return Size * 1.3F
         End Function
 
+        Public Function ToHfont() As IntPtr
+            Throw New NotImplementedException()
+        End Function
     End Class
 
     Public Enum GraphicsUnit
