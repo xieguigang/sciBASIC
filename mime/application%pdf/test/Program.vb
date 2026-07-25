@@ -7,7 +7,6 @@
 ' ============================================================================
 
 Imports System.IO
-Imports Microsoft.VisualBasic.MIME.application.pdf
 
 Public Class Program
     Public Shared Function Main(args As String()) As Integer
