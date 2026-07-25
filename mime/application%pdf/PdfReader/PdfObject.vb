@@ -9,6 +9,7 @@
 '    - Reference (num gen R)
 '  本文件定义所有这些类型的轻量级类，不依赖任何第三方 PDF 库。
 ' ============================================================================
+Imports std = System.Math
 
 ''' <summary>所有 PDF 对象的抽象基类。</summary>
 Public MustInherit Class PdfObject
@@ -38,7 +39,7 @@ Public Class PdfNumber
     End Sub
     Public ReadOnly Property IntegerValue As Integer
         Get
-            Return CInt(Math.Truncate(Value))
+            Return CInt(std.Truncate(Value))
         End Get
     End Property
 End Class

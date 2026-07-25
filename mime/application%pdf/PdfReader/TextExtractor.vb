@@ -16,6 +16,7 @@
 
 Imports System.IO
 Imports System.Text
+Imports std = System.Math
 
 Public Class TextExtractor
     Private ReadOnly _reader As PdfReader
@@ -252,7 +253,7 @@ Public Class TextExtractor
                     Dim f = PopNumber(stack) ' f = y 平移
                     Dim e = PopNumber(stack) ' e = x 平移
                     stack.Pop() : stack.Pop() : stack.Pop() : stack.Pop()
-                    If Not Double.IsNaN(_lastY) AndAlso Math.Abs(_lastY - f) > 2 Then
+                    If Not Double.IsNaN(_lastY) AndAlso std.Abs(_lastY - f) > 2 Then
                         _result.AppendLine()
                     End If
                     _lastY = f

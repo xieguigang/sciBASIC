@@ -11,6 +11,7 @@
 
 Imports System.IO
 Imports System.IO.Compression
+Imports std = System.Math
 
 Public Class FlateDecode
 
@@ -72,7 +73,7 @@ Public Class FlateDecode
     Public Shared Function ApplyPredictor(data As Byte(), columns As Integer,
                                           bitsPerComponent As Integer, colors As Integer) As Byte()
         If columns <= 0 Then Return data
-        Dim bytesPerPixel = CInt(Math.Ceiling(bitsPerComponent * colors / 8.0))
+        Dim bytesPerPixel = CInt(std.Ceiling(bitsPerComponent * colors / 8.0))
         If bytesPerPixel = 0 Then bytesPerPixel = 1
         Dim stride = bytesPerPixel * columns
         If stride = 0 Then Return data
@@ -120,9 +121,9 @@ Public Class FlateDecode
     Private Shared Function PaethPredictor(a As Byte, b As Byte, c As Byte) As Integer
         Dim ai = CInt(a), bi = CInt(b), ci = CInt(c)
         Dim p = ai + bi - ci
-        Dim pa = Math.Abs(p - ai)
-        Dim pb = Math.Abs(p - bi)
-        Dim pc = Math.Abs(p - ci)
+        Dim pa = std.Abs(p - ai)
+        Dim pb = std.Abs(p - bi)
+        Dim pc = std.Abs(p - ci)
         If pa <= pb AndAlso pa <= pc Then Return ai
         If pb <= pc Then Return bi
         Return ci
