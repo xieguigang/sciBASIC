@@ -465,7 +465,7 @@ Namespace Symbolic
 
         ''' <summary>
         ''' Divide <paramref name="dividend"/> by <paramref name="divisor"/>, returning the
-        ''' quotient and assigning the remainder to <paramref name="remainder"/>.
+        ''' quotient and assigning the remainder to remainder.
         ''' </summary>
         Public Function PolynomialDivide(dividend As Expression, divisor As Expression, Optional var As String = Nothing) As Expression
             If var Is Nothing Then var = inferVar(dividend)
