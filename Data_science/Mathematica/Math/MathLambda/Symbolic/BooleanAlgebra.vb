@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8785a90690078cbf4965caa946b841d9, Data_science\Mathematica\Math\MathLambda\Symbolic\BooleanAlgebra.vb"
+﻿#Region "Microsoft.VisualBasic::9c517aaf462ebd93b337cc2c40829c98, Data_science\Mathematica\Math\MathLambda\Symbolic\BooleanAlgebra.vb"
 
     ' Author:
     ' 
@@ -329,4 +329,3 @@ Namespace Symbolic
         End Function
     End Module
 End Namespace
-

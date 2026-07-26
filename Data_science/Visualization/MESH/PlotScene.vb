@@ -1,4 +1,75 @@
-﻿Imports Microsoft.VisualBasic.Imaging.Drawing3D
+﻿#Region "Microsoft.VisualBasic::01af60bfc5999e4eb4f8a9bea2ef3411, Data_science\Visualization\MESH\PlotScene.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 653
+    '    Code Lines: 501 (76.72%)
+    ' Comment Lines: 70 (10.72%)
+    '    - Xml Docs: 70.00%
+    ' 
+    '   Blank Lines: 82 (12.56%)
+    '     File Size: 27.84 KB
+
+
+    ' Enum RenderMode3D
+    ' 
+    ' 
+    '  
+    ' 
+    ' 
+    ' 
+    ' Class PlotScene
+    ' 
+    '     Properties: BackgroundColor, Camera, ColorScheme, HasData, ModelRadius
+    '                 PointCount, PointSize, RenderMode, ShowAxes, ShowBox
+    '                 ShowTicks, SurfaceCount
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    ' 
+    '     Function: FormatTick, GetBrushColor, NiceTicks, ToScreen, ToScreenData
+    ' 
+    '     Sub: Clear, Draw, DrawAxes, DrawBox, DrawCurve
+    '          DrawCurvePoints, DrawGround, DrawRuler, DrawScatter, DrawSurfaceEdges
+    '          DrawSurfacePoints, EnsureColorTable, FitView, RebuildCenteredData, Recenter
+    '          Recolor, SetCurve, SetLine, SetScatter, (+2 Overloads) SetSurface
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+Imports Microsoft.VisualBasic.Imaging.Drawing3D
 
 ''' <summary>三维图形渲染模式。</summary>
 Public Enum RenderMode3D
@@ -651,3 +722,4 @@ Public Class PlotScene
     End Sub
 
 End Class
+

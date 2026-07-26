@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cc8f4283d0f6f33e4f303ad2a7e56c42, mime\application%json\JSONtest\Module1.vb"
+﻿#Region "Microsoft.VisualBasic::744ba1149fb634bd47ee6ecc93eb5057, mime\application%json\test\Module1.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 0.00%
     ' 
     '   Blank Lines: 15 (23.44%)
-    '     File Size: 2.37 KB
+    '     File Size: 2.35 KB
 
 
     ' Class TestDynamicsObject
@@ -49,7 +49,7 @@
     ' 
     ' Module Module1
     ' 
-    '     Sub: deserializeObjectTest, Main, test1
+    '     Sub: deserializeObjectTest, Main5, test1
     ' 
     ' Class anyObject
     ' 

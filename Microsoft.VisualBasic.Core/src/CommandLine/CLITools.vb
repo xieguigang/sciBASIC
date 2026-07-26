@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::db7c534a26609777108f4117eeec242a, Microsoft.VisualBasic.Core\src\CommandLine\CLITools.vb"
+﻿#Region "Microsoft.VisualBasic::8f9323bce47c9c5fc9285810c4c3c6e6, Microsoft.VisualBasic.Core\src\CommandLine\CLITools.vb"
 
     ' Author:
     ' 
@@ -34,18 +34,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 382
-    '    Code Lines: 228 (59.69%)
-    ' Comment Lines: 103 (26.96%)
+    '   Total Lines: 381
+    '    Code Lines: 227 (59.58%)
+    ' Comment Lines: 103 (27.03%)
     '    - Xml Docs: 78.64%
     ' 
-    '   Blank Lines: 51 (13.35%)
-    '     File Size: 14.94 KB
+    '   Blank Lines: 51 (13.39%)
+    '     File Size: 14.90 KB
 
 
     '     Module CLITools
     ' 
-    '         Function: Args, CreateObject, Equals, GetCommandsOverview, GetFileList
+    '         Function: CreateObject, Equals, GetArgs, GetCommandsOverview, GetFileList
     '                   GetTokens, Join, makesureQuot, Print, ShellExec
     '                   SingleValueOrStdIn, TrimParamPrefix, TryParse
     ' 

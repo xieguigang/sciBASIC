@@ -1,3 +1,80 @@
+﻿#Region "Microsoft.VisualBasic::33a70b84dbb62a8d82e9f703806e859e, mime\application%pdf\PdfReader\PdfLexer.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 385
+    '    Code Lines: 319 (82.86%)
+    ' Comment Lines: 33 (8.57%)
+    '    - Xml Docs: 9.09%
+    ' 
+    '   Blank Lines: 33 (8.57%)
+    '     File Size: 14.60 KB
+
+
+    ' Enum PdfTokenType
+    ' 
+    '     EndObj, EndStream, EOF, HexString, Keyword
+    '     LiteralString, Name, Number, Obj, StartXRef
+    '     Stream, Trailer, XRef
+    ' 
+    '  
+    ' 
+    ' 
+    ' 
+    ' Class PdfToken
+    ' 
+    '     Properties: ByteValue, NumberValue, Position, TextValue, Type
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    ' 
+    ' Class PdfLexer
+    ' 
+    '     Properties: Data, Length, Position
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    ' 
+    '     Function: DecodePdfString, IsDelimiter, IsWhitespace, NextToken, ReadHexString
+    '               ReadLiteralString, ReadName, ReadNumberOrKeyword, ReadStreamData, ReadStreamDataScan
+    ' 
+    '     Sub: SkipStreamEOL, SkipWhitespaceAndComments
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
 ' ============================================================================
 '  PdfLexer.vb  -  PDF 词法分析器
 '  ----------------------------------------------------------------------------
@@ -382,4 +459,5 @@ Public Class PdfLexer
     End Sub
 
 End Class
+
 

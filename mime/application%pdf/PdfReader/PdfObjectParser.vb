@@ -1,3 +1,61 @@
+﻿#Region "Microsoft.VisualBasic::84b4b692a93ee59aa3aba82d354012a2, mime\application%pdf\PdfReader\PdfObjectParser.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 131
+    '    Code Lines: 97 (74.05%)
+    ' Comment Lines: 18 (13.74%)
+    '    - Xml Docs: 16.67%
+    ' 
+    '   Blank Lines: 16 (12.21%)
+    '     File Size: 5.30 KB
+
+
+    ' Class PdfObjectParser
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    ' 
+    '     Function: ParseArray, ParseDictionary, ParseObject, ParseObjectFromToken, ReadStreamBytes
+    ' 
+    '     Sub: SkipToEndStream
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
 ' ============================================================================
 '  PdfObjectParser.vb  -  递归下降对象解析器
 '  ----------------------------------------------------------------------------
@@ -128,4 +186,5 @@ Public Class PdfObjectParser
     End Function
 
 End Class
+
 

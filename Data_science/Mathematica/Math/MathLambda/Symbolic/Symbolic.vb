@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c010a334d926b469f5e4a5e8008ef911, Data_science\Mathematica\Math\MathLambda\Symbolic\Symbolic.vb"
+﻿#Region "Microsoft.VisualBasic::3d04f7c1354fab7b30f991b65e75a31c, Data_science\Mathematica\Math\MathLambda\Symbolic\Symbolic.vb"
 
     ' Author:
     ' 
@@ -382,4 +382,3 @@ Namespace Symbolic
         End Function
     End Module
 End Namespace
-

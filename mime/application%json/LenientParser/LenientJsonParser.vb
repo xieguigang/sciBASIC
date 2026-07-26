@@ -1,51 +1,61 @@
-#Region "Microsoft.VisualBasic::a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6, mime\application%json\LenientParser\LenientJsonParser.vb"
+﻿#Region "Microsoft.VisualBasic::c16482d715aa04c8e96f2b2a4285efde, mime\application%json\LenientParser\LenientJsonParser.vb"
 
     ' Author:
-    '
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
     '       xieguigang (xie.guigang@live.com)
-    '
-    ' Copyright (c) 2026 GPL3 Licensed
-    '
-    '
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    '
-    '
+    ' 
+    ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
     ' the Free Software Foundation, either version 3 of the License, or
     ' (at your option) any later version.
-    '
+    ' 
     ' This program is distributed in the hope that it will be useful,
     ' but WITHOUT ANY WARRANTY; without even the implied warranty of
     ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
     ' GNU General Public License for more details.
-    '
+    ' 
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /*******************************************************************************/
+    ' /********************************************************************************/
 
     ' Summaries:
 
+
     ' Code Statistics:
-    '
-    '   Total Lines: ~650
-    '    Code Lines: ~550
-    ' Comment Lines: ~60
-    '
-    '   Class LenientJsonParser
-    '
-    '       Constructor: (+1 Overload) Sub New
-    '       Function: Parse, ParseJSON, Open, OpenStream
-    '                 parse_value, parse_object, parse_array, parse_string
-    '                 parse_number, parse_keyword, parse_key
-    '                 skip_whitespace_and_comments, skip_line_comment
-    '                 skip_block_comment, check_infinity, is_hex_digit
-    '                 is_likely_closing_quote
-    '
-    ' /*******************************************************************************/
+
+    '   Total Lines: 993
+    '    Code Lines: 530 (53.37%)
+    ' Comment Lines: 322 (32.43%)
+    '    - Xml Docs: 65.53%
+    ' 
+    '   Blank Lines: 141 (14.20%)
+    '     File Size: 39.33 KB
+
+
+    '     Class LenientJsonParser
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
+    '         Function: at_end, check_infinity, is_hex_digit, is_likely_closing_quote, Open
+    '                   OpenStream, Parse, parse_array, parse_key, parse_keyword
+    '                   parse_number, parse_object, parse_string, parse_value, ParseJSON
+    '                   (+2 Overloads) peek
+    ' 
+    '         Sub: parse_unicode_escape, skip_block_comment, skip_line_comment, skip_whitespace_and_comments
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

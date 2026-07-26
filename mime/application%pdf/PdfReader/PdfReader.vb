@@ -1,3 +1,77 @@
+﻿#Region "Microsoft.VisualBasic::297ed86dd88fcb6109f58560ead6a875, mime\application%pdf\PdfReader\PdfReader.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 449
+    '    Code Lines: 361 (80.40%)
+    ' Comment Lines: 39 (8.69%)
+    '    - Xml Docs: 5.13%
+    ' 
+    '   Blank Lines: 49 (10.91%)
+    '     File Size: 18.00 KB
+
+
+    ' Class PdfReader
+    ' 
+    '     Properties: DataSize, ObjectCount, Trailer
+    ' 
+    '     Constructor: (+3 Overloads) Sub New
+    ' 
+    '     Function: ApplyFilter, DecodeAsciiHex, DecodeStream, FindLastOccurrence, GetPages
+    '               ReadW, Resolve
+    ' 
+    '     Sub: Dispose, Initialize, ParseAllObjectStreams, ParseIndirectObjectAt, ParseObjectStream
+    '          ParseXRefAndTrailer, ParseXRefStream, ParseXRefTable, TraversePageTree
+    ' 
+    ' Class XRefEntry
+    ' 
+    ' 
+    '     Enum EntryType
+    ' 
+    ' 
+    ' 
+    ' 
+    '  
+    ' 
+    ' 
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
 ' ============================================================================
 '  PdfReader.vb  -  PDF 主读取器
 '  ----------------------------------------------------------------------------
@@ -446,4 +520,5 @@ Friend Class XRefEntry
     Public ObjectStreamNum As Integer
     Public IndexInStream As Integer
 End Class
+
 

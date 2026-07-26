@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ccfe06280994f4f508d3868e2a2b6216, gr\network-visualization\Visualizer\Render\LabelRendering.vb"
+﻿#Region "Microsoft.VisualBasic::697984d9ab2a3d89e21d7d9ba9f70097, gr\network-visualization\Visualizer\Render\LabelRendering.vb"
 
     ' Author:
     ' 
@@ -179,4 +179,3 @@ Friend Class LabelRendering
         End With
     End Sub
 End Class
-

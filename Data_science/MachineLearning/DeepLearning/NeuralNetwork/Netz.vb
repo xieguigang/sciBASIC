@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cb68effdf0240d27bcd683ae3f5654f7, Data_science\MachineLearning\DeepLearning\NeuralNetwork\Netz.vb"
+﻿#Region "Microsoft.VisualBasic::60e116651a1bda3e8f9a73dd04a51a51, Data_science\MachineLearning\DeepLearning\NeuralNetwork\Netz.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 72.73%
     ' 
     '   Blank Lines: 54 (17.53%)
-    '     File Size: 12.17 KB
+    '     File Size: 12.15 KB
 
 
     '     Class Netz

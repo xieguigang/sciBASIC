@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e9adc2b4fc68f0216b4626429d10de67, Microsoft.VisualBasic.Core\src\CommandLine\Reflection\Attributes\ArgumentAttribute.vb"
+﻿#Region "Microsoft.VisualBasic::39f5f1153eafcd43dab05e6bbd42201b, Microsoft.VisualBasic.Core\src\CommandLine\Reflection\Attributes\ArgumentAttribute.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 169
-    '    Code Lines: 79 (46.75%)
-    ' Comment Lines: 69 (40.83%)
+    '   Total Lines: 174
+    '    Code Lines: 83 (47.70%)
+    ' Comment Lines: 69 (39.66%)
     '    - Xml Docs: 95.65%
     ' 
-    '   Blank Lines: 21 (12.43%)
-    '     File Size: 6.30 KB
+    '   Blank Lines: 22 (12.64%)
+    '     File Size: 6.45 KB
 
 
     '     Class ArgumentAttribute
@@ -50,7 +50,7 @@
     '                     Usage
     ' 
     '         Constructor: (+1 Overloads) Sub New
-    '         Function: ToString
+    '         Function: SetOptional, ToString
     ' 
     ' 
     ' /********************************************************************************/

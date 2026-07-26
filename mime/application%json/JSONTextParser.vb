@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e0ecea07df7d25af9c823f2f4a6a5829, mime\application%json\JSONTextParser.vb"
+﻿#Region "Microsoft.VisualBasic::ec448b526dd04df640d957d055a1d281, mime\application%json\JSONTextParser.vb"
 
     ' Author:
     ' 
@@ -34,19 +34,19 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 125
-    '    Code Lines: 87 (69.60%)
-    ' Comment Lines: 23 (18.40%)
-    '    - Xml Docs: 91.30%
+    '   Total Lines: 151
+    '    Code Lines: 108 (71.52%)
+    ' Comment Lines: 27 (17.88%)
+    '    - Xml Docs: 92.59%
     ' 
-    '   Blank Lines: 15 (12.00%)
-    '     File Size: 4.69 KB
+    '   Blank Lines: 16 (10.60%)
+    '     File Size: 5.64 KB
 
 
     ' Module JSONTextParser
     ' 
-    '     Function: AsString, AsStringVector, CreateJsObject, DecodeArray, ParseJson
-    '               ParseJsonFile
+    '     Function: AsString, AsStringVector, CreateJsObject, DecodeArray, JsonEscape
+    '               ParseJson, ParseJsonFile
     ' 
     ' /********************************************************************************/
 

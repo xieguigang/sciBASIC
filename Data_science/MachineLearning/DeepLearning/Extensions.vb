@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::faf023e8d09b17a7901dd95f9e01b056, Data_science\MachineLearning\DeepLearning\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::4c8969a6d465d74a4b00377be84512c3, Data_science\MachineLearning\DeepLearning\Extensions.vb"
 
     ' Author:
     ' 
@@ -107,4 +107,3 @@ Imports std = System.Math
         End If
     End Function
 End Module
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7b363c685555fe472d68d2850f2aa366, Data_science\Mathematica\Math\MathLambda\Symbolic\Polynomial.vb"
+﻿#Region "Microsoft.VisualBasic::a2ecb332d22f94250b46b42cfd16507f, Data_science\Mathematica\Math\MathLambda\Symbolic\Polynomial.vb"
 
     ' Author:
     ' 
@@ -803,4 +803,3 @@ Namespace Symbolic
         End Function
     End Module
 End Namespace
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2856b71a32e19338ea4d3323e278cd5a, mime\application%json\Serializer\JSONWriter.vb"
+﻿#Region "Microsoft.VisualBasic::0e4d64390597d60e2ecc68888a34d5e4, mime\application%json\Serializer\JSONWriter.vb"
 
     ' Author:
     ' 
@@ -34,20 +34,20 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 325
-    '    Code Lines: 241 (74.15%)
-    ' Comment Lines: 36 (11.08%)
-    '    - Xml Docs: 44.44%
+    '   Total Lines: 345
+    '    Code Lines: 249 (72.17%)
+    ' Comment Lines: 50 (14.49%)
+    '    - Xml Docs: 52.00%
     ' 
-    '   Blank Lines: 48 (14.77%)
-    '     File Size: 11.61 KB
+    '   Blank Lines: 46 (13.33%)
+    '     File Size: 12.71 KB
 
 
     ' Class JSONWriter
     ' 
     '     Constructor: (+2 Overloads) Sub New
     ' 
-    '     Function: encodeString, jsonValueString
+    '     Function: encodeString, escapeUnicode, jsonValueString
     ' 
     '     Sub: (+2 Overloads) BuildJSONString, (+2 Overloads) Dispose, jsonArrayString, jsonObjectString
     ' 

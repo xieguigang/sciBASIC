@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e8f564de070f6278e09b9c113300a338, Data_science\Mathematica\Math\MathLambda\Symbolic\Rationalize.vb"
+﻿#Region "Microsoft.VisualBasic::5717719732661978e675a608c7d717ac, Data_science\Mathematica\Math\MathLambda\Symbolic\Rationalize.vb"
 
     ' Author:
     ' 
@@ -303,4 +303,3 @@ Namespace Symbolic
         End Function
     End Module
 End Namespace
-

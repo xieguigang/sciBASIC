@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ccbc77441aca93faccd615b57fd84a87, Data_science\Mathematica\Math\Math\Numerics\Optimization\LBFGSB\SubspaceMin.vb"
+﻿#Region "Microsoft.VisualBasic::bc3cc50ea5a18450b69525c2ad310881, Data_science\Mathematica\Math\Math\Numerics\Optimization\LBFGSB\SubspaceMin.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 0.00%
     ' 
     '   Blank Lines: 48 (17.58%)
-    '     File Size: 10.05 KB
+    '     File Size: 10.04 KB
 
 
     '     Class SubspaceMin

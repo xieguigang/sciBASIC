@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2e7cf1c117e4368b58b728d665796c06, gr\network-visualization\Visualizer\NetworkPlot.vb"
+﻿#Region "Microsoft.VisualBasic::9c26ccef6c74efd73dfe4e8309932cf5, gr\network-visualization\Visualizer\NetworkPlot.vb"
 
     ' Author:
     ' 
@@ -186,4 +186,3 @@ Public Class NetworkPlot
         Return g.GraphicsPlots(frameSize.ToSize, margin, config.Background, plotInternal, driver:=config.Driver)
     End Function
 End Class
-

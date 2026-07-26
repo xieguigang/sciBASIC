@@ -1,63 +1,60 @@
-﻿#Region "Microsoft.VisualBasic::3ec0f424cfde435fa7a4ba4fe4cef64e, Data_science\Visualization\Expression3DPlotter\MainForm.vb"
+﻿#Region "Microsoft.VisualBasic::944d1809d2476f48d7496ee553b63f8f, Data_science\Visualization\MESH\MainForm.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 337
-'    Code Lines: 267 (79.23%)
-' Comment Lines: 19 (5.64%)
-'    - Xml Docs: 26.32%
-' 
-'   Blank Lines: 51 (15.13%)
-'     File Size: 14.69 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-' Class MainForm
-' 
-'     Constructor: (+1 Overloads) Sub New
-' 
-'     Function: Btn, Cbo, Chk, Lbl
-'               Num, Txt
-' 
-'     Sub: ApplyMode, AxesChanged, InitializeComponent, MainForm_Load, ModeChanged
-'          OnDraw, OnReset, OnZoom, UpdateStatus
-' 
-' 
-' 
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 519
+    '    Code Lines: 390 (75.14%)
+    ' Comment Lines: 92 (17.73%)
+    '    - Xml Docs: 11.96%
+    ' 
+    '   Blank Lines: 37 (7.13%)
+    '     File Size: 22.23 KB
+
+
+    ' Class MainForm
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    ' 
+    '     Function: GetCanvasSnapshot, GetColorSchemaName
+    ' 
+    '     Sub: AxesChanged, cboScheme_SelectedIndexChanged, CopySnapshotImage_Click, InitializeComponent, LoadScriptInput
+    '          MainForm_Load, OnBoxChecked, OnDraw, OnReset, OnScriptExecuted
+    '          OnTicksChecked, OnZoom, SaveSnapshotImageAsFile_Click, ToolStripButton2_Click, ToolStripComboBox1_SelectedIndexChanged
+    '          ToolStripComboBox2_SelectedIndexChanged, UpdateStatus
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 
@@ -580,4 +577,3 @@ Public Class MainForm : Inherits Form
         End Using
     End Sub
 End Class
-

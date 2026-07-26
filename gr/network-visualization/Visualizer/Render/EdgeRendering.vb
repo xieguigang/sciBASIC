@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f96365b800184be8fe939f790d954050, gr\network-visualization\Visualizer\Render\EdgeRendering.vb"
+﻿#Region "Microsoft.VisualBasic::52f14e27a8fbf832a0be1452a7a0f5a8, gr\network-visualization\Visualizer\Render\EdgeRendering.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 77.78%
     ' 
     '   Blank Lines: 30 (13.51%)
-    '     File Size: 8.69 KB
+    '     File Size: 8.68 KB
 
 
     ' Class EdgeRendering
@@ -278,4 +278,3 @@ Friend Class LineSegmentRender
         }
     End Function
 End Class
-

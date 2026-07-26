@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8676300e0e1bdc3becfea3d2396cf547, Data_science\Mathematica\Math\MathLambda\Symbolic\Integration.vb"
+﻿#Region "Microsoft.VisualBasic::f4a690d71a030f2686973c3898f3873b, Data_science\Mathematica\Math\MathLambda\Symbolic\Integration.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 24.44%
     ' 
     '   Blank Lines: 60 (10.49%)
-    '     File Size: 28.17 KB
+    '     File Size: 28.16 KB
 
 
     '     Module Integration
@@ -637,4 +637,3 @@ Namespace Symbolic
         End Function
     End Module
 End Namespace
-

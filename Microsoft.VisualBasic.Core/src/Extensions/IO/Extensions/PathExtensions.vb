@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8c08a3074603c4317de15dce58faadb3, Microsoft.VisualBasic.Core\src\Extensions\IO\Extensions\PathExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::4c7d8dcc279d0e84bd17b5492af0438d, Microsoft.VisualBasic.Core\src\Extensions\IO\Extensions\PathExtensions.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 1126
-    '    Code Lines: 638 (56.66%)
-    ' Comment Lines: 369 (32.77%)
-    '    - Xml Docs: 83.74%
+    '   Total Lines: 1128
+    '    Code Lines: 638 (56.56%)
+    ' Comment Lines: 371 (32.89%)
+    '    - Xml Docs: 83.83%
     ' 
-    '   Blank Lines: 119 (10.57%)
-    '     File Size: 44.21 KB
+    '   Blank Lines: 119 (10.55%)
+    '     File Size: 44.25 KB
 
 
     ' Module PathExtensions

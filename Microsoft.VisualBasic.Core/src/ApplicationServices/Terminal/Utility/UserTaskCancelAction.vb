@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::17999381e12c52a1965ae4f001bdc985, Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\Utility\UserTaskCancelAction.vb"
+﻿#Region "Microsoft.VisualBasic::5fc536b56bae9e2c8af5c0b7032c4979, Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\Utility\UserTaskCancelAction.vb"
 
     ' Author:
     ' 
@@ -34,18 +34,21 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 126
-    '    Code Lines: 73 (57.94%)
-    ' Comment Lines: 28 (22.22%)
-    '    - Xml Docs: 32.14%
+    '   Total Lines: 142
+    '    Code Lines: 82 (57.75%)
+    ' Comment Lines: 33 (23.24%)
+    '    - Xml Docs: 42.42%
     ' 
-    '   Blank Lines: 25 (19.84%)
-    '     File Size: 4.38 KB
+    '   Blank Lines: 27 (19.01%)
+    '     File Size: 5.01 KB
 
 
     '     Class UserTaskCancelAction
     ' 
     '         Constructor: (+1 Overloads) Sub New
+    ' 
+    '         Function: GetConsoleCancellationToken
+    ' 
     '         Sub: Dispose, handleCancel
     ' 
     '     Class ConsoleUserTaskAction

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5d8e8f9f7616aa8fce94ff9e91cc56b4, Data_science\DataMining\DataMining\ComponentModel\Normalizer\Standardizer.vb"
+﻿#Region "Microsoft.VisualBasic::8a945dab0d35e186c880e98da213c187, Data_science\DataMining\DataMining\ComponentModel\Normalizer\Standardizer.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 76
-    '    Code Lines: 43 (56.58%)
-    ' Comment Lines: 19 (25.00%)
+    '   Total Lines: 77
+    '    Code Lines: 44 (57.14%)
+    ' Comment Lines: 19 (24.68%)
     '    - Xml Docs: 94.74%
     ' 
-    '   Blank Lines: 14 (18.42%)
-    '     File Size: 2.20 KB
+    '   Blank Lines: 14 (18.18%)
+    '     File Size: 2.26 KB
 
 
     ' Class Standardizer

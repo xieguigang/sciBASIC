@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7a9804f1b2647451935892913b6fab02, Data_science\MachineLearning\DeepQNetwork\QTable.vb"
+﻿#Region "Microsoft.VisualBasic::133cc6f7eff08ad84cecbfab06697118, Data_science\MachineLearning\DeepQNetwork\QTable.vb"
 
     ' Author:
     ' 
@@ -163,4 +163,3 @@ Public Class QTable
         epsilon = std.Max(epsilonMin, epsilon * epsilonDecay)
     End Sub
 End Class
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f6c63e04faa5fa22f46f6c45475f576f, Data\BinaryData\TestRunner\CDFReaderWriterTest.vb"
+﻿#Region "Microsoft.VisualBasic::981f5908f067f74631fc73a277e0555e, Data\BinaryData\TestRunner\CDFReaderWriterTest.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 104
-    '    Code Lines: 79 (75.96%)
-    ' Comment Lines: 11 (10.58%)
+    '   Total Lines: 103
+    '    Code Lines: 79 (76.70%)
+    ' Comment Lines: 11 (10.68%)
     '    - Xml Docs: 81.82%
     ' 
-    '   Blank Lines: 14 (13.46%)
-    '     File Size: 4.77 KB
+    '   Blank Lines: 13 (12.62%)
+    '     File Size: 4.76 KB
 
 
     '     Module CDFReaderWriterTest
@@ -48,7 +48,6 @@
     '         Function: RoundTripStandard, RunAll
     ' 
     '         Sub: Check
-    ' 
     ' 
     ' /********************************************************************************/
 
@@ -157,5 +156,3 @@ Imports Microsoft.VisualBasic.DataStorage.netCDF.DataVector
             Next
         End Sub
     End Module
-
-

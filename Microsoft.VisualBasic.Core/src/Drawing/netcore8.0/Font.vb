@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7544dc3a0fd002abfcec2d3a07bab867, Microsoft.VisualBasic.Core\src\Drawing\netcore8.0\Font.vb"
+﻿#Region "Microsoft.VisualBasic::4c2533b06f085fac445cdeb88c40c91c, Microsoft.VisualBasic.Core\src\Drawing\netcore8.0\Font.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 173
-    '    Code Lines: 107 (61.85%)
-    ' Comment Lines: 39 (22.54%)
+    '   Total Lines: 202
+    '    Code Lines: 130 (64.36%)
+    ' Comment Lines: 39 (19.31%)
     '    - Xml Docs: 53.85%
     ' 
-    '   Blank Lines: 27 (15.61%)
-    '     File Size: 5.55 KB
+    '   Blank Lines: 33 (16.34%)
+    '     File Size: 6.58 KB
 
 
     '     Class Font
@@ -48,8 +48,8 @@
     '         Properties: Bold, Height, Italic, Name, Size
     '                     SizeInPoints, Strikeout, Style, Underline, Unit
     ' 
-    '         Constructor: (+2 Overloads) Sub New
-    '         Function: Clone, (+2 Overloads) GetHeight
+    '         Constructor: (+3 Overloads) Sub New
+    '         Function: Clone, (+2 Overloads) GetHeight, ToHfont
     ' 
     '     Enum GraphicsUnit
     ' 
@@ -78,6 +78,7 @@
     '         Properties: Name
     ' 
     '         Constructor: (+1 Overloads) Sub New
+    '         Function: GetCellAscent, GetCellDescent, GetEmHeight, GetLineSpacing, IsStyleAvailable
     ' 
     '     Enum StringAlignment
     ' 

@@ -1,3 +1,58 @@
+﻿#Region "Microsoft.VisualBasic::b89033eb7a779e00793a58325d6b018b, mime\application%pdf\PdfReader\FlateDecode.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 218
+    '    Code Lines: 172 (78.90%)
+    ' Comment Lines: 28 (12.84%)
+    '    - Xml Docs: 21.43%
+    ' 
+    '   Blank Lines: 18 (8.26%)
+    '     File Size: 8.65 KB
+
+
+    ' Class FlateDecode
+    ' 
+    '     Function: ApplyPredictor, Decode, DecodeAscii85, DecodeRawDeflate, IsAscii85Whitespace
+    '               PaethPredictor
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
 ' ============================================================================
 '  FlateDecode.vb  -  FlateDecode (zlib/deflate) 解压缩 + PNG 预测器
 '  ----------------------------------------------------------------------------
@@ -214,5 +269,6 @@ Public Class FlateDecode
     End Function
 
 End Class
+
 
 

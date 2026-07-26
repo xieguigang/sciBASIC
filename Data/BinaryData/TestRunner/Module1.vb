@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5b6f0b2199e4467d8a7569f6227bd7b9, Data\BinaryData\TestRunner\Module1.vb"
+﻿#Region "Microsoft.VisualBasic::67463a60845ed71edf268fc289c295de, Data\BinaryData\TestRunner\Module1.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 0.00%
     ' 
     '   Blank Lines: 1 (7.14%)
-    '     File Size: 399 B
+    '     File Size: 397 B
 
 
     ' Module Module1
@@ -65,4 +65,3 @@ Module Module1
         End If
     End Sub
 End Module
-

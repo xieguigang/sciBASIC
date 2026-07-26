@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cd584b6177200d3813c3d199f1c08c93, Data\DataFrame\DataFrame\FastLoader.vb"
+﻿#Region "Microsoft.VisualBasic::44d5ed2bda1068ce3f4b88129f2aa43b, Data\DataFrame\DataFrame\FastLoader.vb"
 
     ' Author:
     ' 
@@ -34,18 +34,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 66
-    '    Code Lines: 41 (62.12%)
-    ' Comment Lines: 18 (27.27%)
-    '    - Xml Docs: 94.44%
+    '   Total Lines: 107
+    '    Code Lines: 69 (64.49%)
+    ' Comment Lines: 24 (22.43%)
+    '    - Xml Docs: 70.83%
     ' 
-    '   Blank Lines: 7 (10.61%)
-    '     File Size: 2.51 KB
+    '   Blank Lines: 14 (13.08%)
+    '     File Size: 4.30 KB
 
 
     ' Module FastLoader
     ' 
-    '     Function: ParseFeature, ReadCsv
+    '     Function: CountLinesFast, ParseFeature, ReadCsv
     ' 
     ' /********************************************************************************/
 

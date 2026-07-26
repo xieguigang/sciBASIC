@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::05b494f62b88bfa9bd3ef1b93cb6ca22, gr\network-visualization\NetworkEditor\Adapters\EdgePropertyAdapter.vb"
+﻿#Region "Microsoft.VisualBasic::081a9ce1c2f94dcb5202fff4d635a6f5, gr\network-visualization\NetworkEditor\Adapters\EdgePropertyAdapter.vb"
 
     ' Author:
     ' 
@@ -135,4 +135,3 @@ Namespace NetworkEditor.Adapters
     End Class
 
 End Namespace
-

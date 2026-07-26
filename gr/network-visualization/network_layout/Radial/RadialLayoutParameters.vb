@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c7980cb658ac4085196df1cb1af8ec24, gr\network-visualization\network_layout\Radial\RadialLayoutParameters.vb"
+﻿#Region "Microsoft.VisualBasic::15f42503660e6637af3d94c8b49e2164, gr\network-visualization\network_layout\Radial\RadialLayoutParameters.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 5 (27.78%)
-    '     File Size: 531 B
+    '     File Size: 529 B
 
 
     '     Class RadialLayoutParameters
@@ -72,4 +72,3 @@ Namespace Radial
     End Class
 
 End Namespace
-

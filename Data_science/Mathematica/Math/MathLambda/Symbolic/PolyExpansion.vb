@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c9c539eaa0c4c8b79059ff67801ee03b, Data_science\Mathematica\Math\MathLambda\Symbolic\PolyExpansion.vb"
+﻿#Region "Microsoft.VisualBasic::2ce3db1a57dbb000d20817c02033af22, Data_science\Mathematica\Math\MathLambda\Symbolic\PolyExpansion.vb"
 
     ' Author:
     ' 
@@ -159,4 +159,3 @@ Namespace Symbolic
         End Function
     End Module
 End Namespace
-

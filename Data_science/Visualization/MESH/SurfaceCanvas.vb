@@ -1,56 +1,56 @@
-﻿#Region "Microsoft.VisualBasic::b3f5b1754e9a349d7a3d469996a4add8, Data_science\Visualization\Expression3DPlotter\SurfaceCanvas.vb"
+﻿#Region "Microsoft.VisualBasic::80e55ee1a94a7ca7335ed11e84a37a95, Data_science\Visualization\MESH\SurfaceCanvas.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 76
-'    Code Lines: 58 (76.32%)
-' Comment Lines: 7 (9.21%)
-'    - Xml Docs: 71.43%
-' 
-'   Blank Lines: 11 (14.47%)
-'     File Size: 2.45 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-' Class SurfaceCanvas
-' 
-'     Properties: Scene
-' 
-'     Constructor: (+1 Overloads) Sub New
-'     Sub: OnMouseDown, OnMouseMove, OnMouseUp, OnMouseWheel, OnPaint
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 73
+    '    Code Lines: 56 (76.71%)
+    ' Comment Lines: 7 (9.59%)
+    '    - Xml Docs: 71.43%
+    ' 
+    '   Blank Lines: 10 (13.70%)
+    '     File Size: 2.39 KB
+
+
+    ' Class SurfaceCanvas
+    ' 
+    '     Properties: Scene
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    '     Sub: OnMouseDown, OnMouseMove, OnMouseUp, OnMouseWheel, OnPaint
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 
@@ -127,4 +127,3 @@ Public Class SurfaceCanvas : Inherits Panel
         End If
     End Sub
 End Class
-

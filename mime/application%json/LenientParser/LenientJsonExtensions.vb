@@ -1,45 +1,54 @@
-#Region "Microsoft.VisualBasic::b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7, mime\application%json\LenientParser\LenientJsonExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::7107b8e8bdaf7ae3e6f860f6b7d923be, mime\application%json\LenientParser\LenientJsonExtensions.vb"
 
-' Author:
-'
-'       xieguigang (xie.guigang@live.com)
-'
-' Copyright (c) 2026 GPL3 Licensed
-'
-'
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-'
-'
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-'
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-'
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-' /*******************************************************************************/
+    ' /********************************************************************************/
 
-' Summaries:
+    ' Summaries:
 
-' Code Statistics:
-'
-'   Total Lines: ~120
-'    Code Lines: ~80
-' Comment Lines: ~30
-'
-'   Module LenientJsonExtensions
-'
-'       Function: ParseJsonLenient, LoadLenientJson, RepairJson
-'
-' /*******************************************************************************/
+
+    ' Code Statistics:
+
+    '   Total Lines: 80
+    '    Code Lines: 25 (31.25%)
+    ' Comment Lines: 46 (57.50%)
+    '    - Xml Docs: 97.83%
+    ' 
+    '   Blank Lines: 9 (11.25%)
+    '     File Size: 3.13 KB
+
+
+    '     Module LenientJsonExtensions
+    ' 
+    '         Function: LoadLenientJson, ParseJsonLenient, RepairJson
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

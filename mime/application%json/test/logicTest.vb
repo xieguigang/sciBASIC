@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::749193b3f43ab201a94bff410cb295c2, mime\application%json\JSONtest\logicTest.vb"
+﻿#Region "Microsoft.VisualBasic::90eeed9bf5525133b6ad3ad1374d8785, mime\application%json\test\logicTest.vb"
 
     ' Author:
     ' 
@@ -40,12 +40,12 @@
     '    - Xml Docs: 0.00%
     ' 
     '   Blank Lines: 4 (22.22%)
-    '     File Size: 567 B
+    '     File Size: 568 B
 
 
     ' Module logicTest
     ' 
-    '     Sub: Main
+    '     Sub: Main4
     ' 
     ' /********************************************************************************/
 

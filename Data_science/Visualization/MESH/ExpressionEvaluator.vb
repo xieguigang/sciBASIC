@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6e37cdfcfd4adc108acd774b275d6bec, Data_science\Visualization\Expression3DPlotter\ExpressionEvaluator.vb"
+﻿#Region "Microsoft.VisualBasic::58758f7001b126411c8568fa6329a93b, Data_science\Visualization\MESH\ExpressionEvaluator.vb"
 
     ' Author:
     ' 
@@ -87,4 +87,3 @@ Public Class ExpressionEvaluator
         Return engine.Evaluate(expr)
     End Function
 End Class
-

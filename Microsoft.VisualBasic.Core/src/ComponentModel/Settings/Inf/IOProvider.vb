@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::968e873a96eae610b40a20ca262747db, Microsoft.VisualBasic.Core\src\ComponentModel\Settings\Inf\IOProvider.vb"
+﻿#Region "Microsoft.VisualBasic::179ae278db86f9942703e61cbddff567, Microsoft.VisualBasic.Core\src\ComponentModel\Settings\Inf\IOProvider.vb"
 
     ' Author:
     ' 
@@ -34,18 +34,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 165
-    '    Code Lines: 91 (55.15%)
-    ' Comment Lines: 49 (29.70%)
-    '    - Xml Docs: 93.88%
+    '   Total Lines: 200
+    '    Code Lines: 91 (45.50%)
+    ' Comment Lines: 84 (42.00%)
+    '    - Xml Docs: 90.48%
     ' 
-    '   Blank Lines: 25 (15.15%)
-    '     File Size: 6.50 KB
+    '   Blank Lines: 25 (12.50%)
+    '     File Size: 7.71 KB
 
 
     '     Module IOProvider
     ' 
-    '         Function: __getPath, __getSections, EmptySection, (+2 Overloads) LoadProfile, (+3 Overloads) WriteProfile
+    '         Function: __getPath, EmptySection, GetSectionsFromCLR, (+2 Overloads) LoadProfile, (+3 Overloads) WriteProfile
     ' 
     ' 
     ' /********************************************************************************/

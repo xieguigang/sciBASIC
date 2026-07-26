@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::81f17644b4da4a590e266287553a56b1, mime\application%json\JSONtest\writerTest.vb"
+﻿#Region "Microsoft.VisualBasic::e09c3deab1a596a53d2509282c205de7, mime\application%json\test\writerTest.vb"
 
     ' Author:
     ' 
@@ -40,12 +40,12 @@
     '    - Xml Docs: 0.00%
     ' 
     '   Blank Lines: 6 (16.22%)
-    '     File Size: 979 B
+    '     File Size: 980 B
 
 
     ' Module writerTest
     ' 
-    '     Sub: Main
+    '     Sub: Main6
     ' 
     ' /********************************************************************************/
 

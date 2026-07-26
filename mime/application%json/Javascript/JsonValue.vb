@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::60af66345a49c9398cf96ff6c1a81efe, mime\application%json\Javascript\JsonValue.vb"
+﻿#Region "Microsoft.VisualBasic::be8816d1bf0554b68111c89c25e06ce6, mime\application%json\Javascript\JsonValue.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 158
-    '    Code Lines: 106 (67.09%)
-    ' Comment Lines: 33 (20.89%)
-    '    - Xml Docs: 100.00%
+    '   Total Lines: 191
+    '    Code Lines: 114 (59.69%)
+    ' Comment Lines: 54 (28.27%)
+    '    - Xml Docs: 92.59%
     ' 
-    '   Blank Lines: 19 (12.03%)
-    '     File Size: 5.31 KB
+    '   Blank Lines: 23 (12.04%)
+    '     File Size: 6.74 KB
 
 
     '     Class JsonValue
@@ -48,7 +48,7 @@
     '         Properties: BSONValue, IsEmptyString, IsLiteralNull, NULL, UnderlyingType
     '                     value
     ' 
-    '         Constructor: (+2 Overloads) Sub New
+    '         Constructor: (+3 Overloads) Sub New
     '         Function: GetStripString, (+2 Overloads) Literal, ToString
     ' 
     ' 

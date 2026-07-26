@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::16de0512171627ab228638faa6364931, Data_science\Mathematica\Math\Math\Numerics\Optimization\LBFGSB\LineSearches\LineSearch.vb"
+﻿#Region "Microsoft.VisualBasic::2be6697feff4f4b0540f35172b362a02, Data_science\Mathematica\Math\Math\Numerics\Optimization\LBFGSB\LineSearches\LineSearch.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 15.00%
     ' 
     '   Blank Lines: 58 (18.89%)
-    '     File Size: 13.16 KB
+    '     File Size: 13.15 KB
 
 
     '     Class LineSearch

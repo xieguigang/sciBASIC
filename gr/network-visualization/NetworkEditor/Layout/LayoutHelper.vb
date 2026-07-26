@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3918c6b751e106f87c2687f3ca3ca075, gr\network-visualization\NetworkEditor\Layout\LayoutHelper.vb"
+﻿#Region "Microsoft.VisualBasic::a9c2cdf849247fd7f2e018816903a563, gr\network-visualization\NetworkEditor\Layout\LayoutHelper.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 5 (23.81%)
-    '     File Size: 735 B
+    '     File Size: 733 B
 
 
     '     Module LayoutHelper
@@ -73,4 +73,3 @@ Namespace NetworkEditor.Layout
     End Module
 
 End Namespace
-

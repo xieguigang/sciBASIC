@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ea430cd2daf234927444bdb269c253bd, gr\network-visualization\NetworkEditor\Layout\RadialRunner.vb"
+﻿#Region "Microsoft.VisualBasic::bb3254b3f2084f181d9b1a439b439c81, gr\network-visualization\NetworkEditor\Layout\RadialRunner.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 0.00%
     ' 
     '   Blank Lines: 8 (27.59%)
-    '     File Size: 986 B
+    '     File Size: 984 B
 
 
     '     Class RadialRunner
@@ -85,4 +85,3 @@ Namespace NetworkEditor.Layout
     End Class
 
 End Namespace
-
