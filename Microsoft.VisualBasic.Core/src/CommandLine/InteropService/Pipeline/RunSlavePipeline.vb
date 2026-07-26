@@ -146,6 +146,8 @@ Namespace CommandLine.InteropService.Pipeline
                 Call handleRunStream(Process, "", onReadLine:=AddressOf ProcessMessage, async:=True)
             End If
 
+            AddHandler _Process.Exited, Sub() RaiseEvent Finish(Process.ExitCode)
+
             Return Process
         End Function
 
