@@ -1,4 +1,5 @@
 Imports System.IO
+Imports Microsoft.VisualBasic.Data.NLP.ChineseTokenizer
 
 Module Program
 

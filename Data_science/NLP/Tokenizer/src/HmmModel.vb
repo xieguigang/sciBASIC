@@ -1,3 +1,5 @@
+Imports std = System.Math
+
 Namespace ChineseTokenizer
 
     ''' <summary>
@@ -47,21 +49,21 @@ Namespace ChineseTokenizer
         ''' </summary>
         Private Sub InitializeDefaults()
             ' 初始概率：句首极少为 M 或 E
-            _pi(STATE_B) = Math.Log(0.6)
-            _pi(STATE_M) = Math.Log(0.05)
-            _pi(STATE_E) = Math.Log(0.05)
-            _pi(STATE_S) = Math.Log(0.3)
+            _pi(STATE_B) = std.Log(0.6)
+            _pi(STATE_M) = std.Log(0.05)
+            _pi(STATE_E) = std.Log(0.05)
+            _pi(STATE_S) = std.Log(0.3)
 
             ' 转移概率矩阵（行=前状态，列=后状态）
             ' 合法转移：B->M, B->E, M->M, M->E, E->B, E->S, S->B, S->S
-            _trans(STATE_B, STATE_M) = Math.Log(0.15)
-            _trans(STATE_B, STATE_E) = Math.Log(0.85)
-            _trans(STATE_M, STATE_M) = Math.Log(0.15)
-            _trans(STATE_M, STATE_E) = Math.Log(0.85)
-            _trans(STATE_E, STATE_B) = Math.Log(0.55)
-            _trans(STATE_E, STATE_S) = Math.Log(0.45)
-            _trans(STATE_S, STATE_B) = Math.Log(0.55)
-            _trans(STATE_S, STATE_S) = Math.Log(0.45)
+            _trans(STATE_B, STATE_M) = std.Log(0.15)
+            _trans(STATE_B, STATE_E) = std.Log(0.85)
+            _trans(STATE_M, STATE_M) = std.Log(0.15)
+            _trans(STATE_M, STATE_E) = std.Log(0.85)
+            _trans(STATE_E, STATE_B) = std.Log(0.55)
+            _trans(STATE_E, STATE_S) = std.Log(0.45)
+            _trans(STATE_S, STATE_B) = std.Log(0.55)
+            _trans(STATE_S, STATE_S) = std.Log(0.45)
             ' 非法转移赋极小值
             For i As Integer = 0 To STATE_COUNT - 1
                 For j As Integer = 0 To STATE_COUNT - 1
@@ -147,7 +149,7 @@ Namespace ChineseTokenizer
 
             ' 转换为对数概率（带加 1 平滑）
             For i As Integer = 0 To STATE_COUNT - 1
-                _pi(i) = If(piTotal > 0, Math.Log((piCount(i) + 1.0) / (piTotal + STATE_COUNT)), Math.Log(1.0 / STATE_COUNT))
+                _pi(i) = If(piTotal > 0, std.Log((piCount(i) + 1.0) / (piTotal + STATE_COUNT)), std.Log(1.0 / STATE_COUNT))
             Next
 
             For i As Integer = 0 To STATE_COUNT - 1
@@ -156,7 +158,7 @@ Namespace ChineseTokenizer
                     rowSum += transCount(i, j)
                 Next
                 For j As Integer = 0 To STATE_COUNT - 1
-                    _trans(i, j) = If(rowSum > 0, Math.Log((transCount(i, j) + 1.0) / (rowSum + STATE_COUNT)), -100.0)
+                    _trans(i, j) = If(rowSum > 0, std.Log((transCount(i, j) + 1.0) / (rowSum + STATE_COUNT)), -100.0)
                 Next
             Next
 
@@ -164,7 +166,7 @@ Namespace ChineseTokenizer
             For Each kv As KeyValuePair(Of Char, Long()) In emitCount
                 Dim probs(STATE_COUNT - 1) As Double
                 For s As Integer = 0 To STATE_COUNT - 1
-                    probs(s) = If(stateTotal(s) > 0, Math.Log((kv.Value(s) + 1.0) / (stateTotal(s) + emitCount.Count)), DEFAULT_EMIT_LOG_PROB)
+                    probs(s) = If(stateTotal(s) > 0, std.Log((kv.Value(s) + 1.0) / (stateTotal(s) + emitCount.Count)), DEFAULT_EMIT_LOG_PROB)
                 Next
                 _emit(kv.Key) = probs
             Next
@@ -234,7 +236,7 @@ Namespace ChineseTokenizer
             If String.IsNullOrEmpty(text) OrElse tags Is Nothing OrElse tags.Count = 0 Then Return words
 
             Dim buf As New System.Text.StringBuilder()
-            For i As Integer = 0 To Math.Min(text.Length, tags.Count) - 1
+            For i As Integer = 0 To std.Min(text.Length, tags.Count) - 1
                 Dim tag As String = tags(i)
                 buf.Append(text(i))
                 Select Case tag

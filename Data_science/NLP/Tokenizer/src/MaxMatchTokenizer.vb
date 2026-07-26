@@ -1,4 +1,5 @@
 Imports System.Text
+Imports std = System.Math
 
 Namespace ChineseTokenizer
 
@@ -29,7 +30,7 @@ Namespace ChineseTokenizer
 
             Dim i As Integer = 0
             Dim n As Integer = text.Length
-            Dim maxLen As Integer = Math.Min(_dict.MaxWordLength, n)
+            Dim maxLen As Integer = std.Min(_dict.MaxWordLength, n)
 
             Do While i < n
                 Dim ch As Char = text(i)
@@ -87,7 +88,7 @@ Namespace ChineseTokenizer
                     Continue Do
                 End If
 
-                Dim maxLen As Integer = Math.Min(_dict.MaxWordLength, j + 1)
+                Dim maxLen As Integer = std.Min(_dict.MaxWordLength, j + 1)
                 Dim matchedLen As Integer = 0
                 ' 从最长开始尝试
                 For L As Integer = maxLen To 1 Step -1

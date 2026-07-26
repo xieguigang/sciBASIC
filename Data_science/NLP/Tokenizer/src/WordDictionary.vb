@@ -1,5 +1,6 @@
 Imports System.IO
 Imports System.Text
+Imports std = System.Math
 
 Namespace ChineseTokenizer
 
@@ -71,9 +72,9 @@ Namespace ChineseTokenizer
                 If word.Length > _maxWordLength Then _maxWordLength = word.Length
             End If
             node.IsEnd = True
-            node.Frequency += Math.Max(frequency, 1L)
+            node.Frequency += std.Max(frequency, 1L)
             If Not String.IsNullOrEmpty(posTag) Then node.PosTag = posTag
-            _totalFrequency += Math.Max(frequency, 1L)
+            _totalFrequency += std.Max(frequency, 1L)
         End Sub
 
         ''' <summary>判断词典中是否包含指定词。</summary>
@@ -199,7 +200,7 @@ Namespace ChineseTokenizer
 
             Dim node As TrieNode = _root
             Dim bestLen As Integer = 0
-            Dim limit As Integer = Math.Min(startIdx + maxLen, text.Length)
+            Dim limit As Integer = std.Min(startIdx + maxLen, text.Length)
 
             For i As Integer = startIdx To limit - 1
                 Dim ch As Char = text(i)
