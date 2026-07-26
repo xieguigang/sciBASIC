@@ -74,8 +74,7 @@ Imports Microsoft.VisualBasic.MachineLearning.TensorFlow
 ''' 完整的液态神经网络
 ''' 用于时间序列预测和分析
 ''' </summary>
-Public Class LiquidNeuralNetwork
-    Implements IDisposable
+Public Class LiquidNeuralNetwork : Implements IDisposable
 
     Private _disposed As Boolean = False
 

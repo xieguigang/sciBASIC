@@ -727,8 +727,10 @@ Public Class LNNUsageExamples
         Console.WriteLine("========================================" & vbNewLine)
 
         BasicTimeSeriesPrediction()
-        MultiStepForecast()
         CompareODESolvers()
+
+        MultiStepForecast()
+
         StateHistoryExample()
         CompareActivationFunctions()
 

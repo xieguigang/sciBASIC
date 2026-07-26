@@ -65,8 +65,7 @@ Imports std = System.Math
 ''' 液态神经网络层
 ''' 包含多个LiquidCell，支持多层堆叠
 ''' </summary>
-Public Class LiquidLayer
-    Implements IDisposable
+Public Class LiquidLayer : Implements IDisposable
 
     Private _disposed As Boolean = False
 

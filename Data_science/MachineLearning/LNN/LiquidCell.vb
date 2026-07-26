@@ -77,8 +77,7 @@ Imports std = System.Math
 ''' - b: 偏置
 ''' - σ: 激活函数
 ''' </summary>
-Public Class LiquidCell
-    Implements IDisposable
+Public Class LiquidCell : Implements IDisposable
 
 #Region "私有字段"
 
