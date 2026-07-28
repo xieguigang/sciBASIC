@@ -3,6 +3,8 @@ Imports System.Text.RegularExpressions
 Imports Microsoft.VisualBasic.ApplicationServices.Development.VisualStudio.VBProj.ProjectXml
 Imports Microsoft.VisualBasic.ApplicationServices.Development.VisualStudio.VBProj.Reflection
 Imports Microsoft.VisualBasic.ApplicationServices.Development.VisualStudio.VBProj.Syntax
+Imports Microsoft.VisualBasic.ComponentModel
+Imports Microsoft.VisualBasic.Net.Protocols.ContentTypes
 Imports Microsoft.VisualBasic.Scripting.Expressions
 
 Namespace VBProj
@@ -10,7 +12,7 @@ Namespace VBProj
     ''' <summary>
     ''' vbproj file model
     ''' </summary>
-    Public Class VBProject
+    Public Class VBProject : Implements IFileReference
 
         Public Property RootNamespace As String
         Public Property AssemblyName As String
@@ -32,6 +34,19 @@ Namespace VBProj
         Public Property PackageReferences As VBPackageReference()
         ''' <summary>Compile Remove patterns collected from the vbproj</summary>
         Public Property CompileExcludes As String()
+
+        Public ReadOnly Property IsDotNetCoreSDK As Boolean
+            Get
+                Return Sdk = "Microsoft.NET.Sdk"
+            End Get
+        End Property
+
+        Private Property FilePath As String Implements IFileReference.FilePath
+        Private ReadOnly Property MimeType As ContentType() Implements IFileReference.MimeType
+            Get
+                Return {MIME.UnknownType}
+            End Get
+        End Property
 
         ''' <summary>
         ''' Get symbol via fullname
@@ -158,8 +173,11 @@ Namespace VBProj
             Dim doc As XDocument = XDocument.Load(vbproj)
             Dim ns As XNamespace = If(doc.Root Is Nothing, "", doc.Root.Name.Namespace)
 
-            Dim proj As New VBProject()
-            proj.Sdk = If(doc.Root IsNot Nothing, If(doc.Root.Attribute("Sdk")?.Value, ""), "")
+            Dim proj As New VBProject() With {
+                .Sdk = If(doc.Root IsNot Nothing, If(doc.Root.Attribute("Sdk")?.Value, ""), ""),
+                .FilePath = vbproj.GetFullPath
+            }
+
             ParseProperties(doc, ns, proj)
 
             Dim files As String() = CollectCompileFiles(doc, ns, projDir)
