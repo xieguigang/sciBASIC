@@ -1,7 +1,7 @@
 Imports System.Text
 Imports Microsoft.VisualBasic.Scripting.MetaData
 
-Namespace Syntax
+Namespace VBProj.Syntax
 
     ''' <summary>
     ''' recursive descent parser for VB.NET source code.

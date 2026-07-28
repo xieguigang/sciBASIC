@@ -1,4 +1,4 @@
-Namespace Syntax
+Namespace VBProj.Syntax
 
     ''' <summary>
     ''' the kind of a lexical token produced by <see cref="VBScanner"/>

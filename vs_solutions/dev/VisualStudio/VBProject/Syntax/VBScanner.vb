@@ -1,6 +1,6 @@
 Imports System.Text
 
-Namespace Syntax
+Namespace VBProj.Syntax
 
     ''' <summary>
     ''' a logical (already line-continued) source line together with the
@@ -225,7 +225,7 @@ Namespace Syntax
                 Dim w As String = sb.ToString()
                 sb.Clear()
                 Dim kind As TokenKind = If(Keywords.Contains(w), TokenKind.Keyword, TokenKind.Identifier)
-                toks.Add(New Token With {.Kind = kind, .Text = w})
+                toks.Add(New Token With {.kind = kind, .Text = w})
             End If
         End Sub
 

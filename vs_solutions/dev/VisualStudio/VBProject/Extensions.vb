@@ -60,7 +60,7 @@ Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.Language.UnixBash
 Imports Microsoft.VisualBasic.Linq
 
-Namespace vbproj
+Namespace VBProj
 
     <HideModuleName> Public Module Extensions
 

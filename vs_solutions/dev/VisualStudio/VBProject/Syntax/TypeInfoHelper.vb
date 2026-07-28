@@ -1,6 +1,6 @@
 Imports Microsoft.VisualBasic.Scripting.MetaData
 
-Namespace Syntax
+Namespace VBProj.Syntax
 
     ''' <summary>
     ''' helpers to build <see cref="TypeInfo"/> clr type references from the
