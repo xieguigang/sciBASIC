@@ -1,4 +1,6 @@
-﻿Imports System.Text.RegularExpressions
+﻿Imports System.IO
+Imports System.Text.RegularExpressions
+Imports Microsoft.VisualBasic.ApplicationServices.Development.VisualStudio.VBProj.ProjectXml
 Imports Microsoft.VisualBasic.ApplicationServices.Development.VisualStudio.VBProj.Reflection
 Imports Microsoft.VisualBasic.ApplicationServices.Development.VisualStudio.VBProj.Syntax
 Imports Microsoft.VisualBasic.Scripting.Expressions
@@ -162,7 +164,7 @@ Namespace VBProj
             Dim files As String() = CollectCompileFiles(doc, ns, projDir)
             Dim docs As New List(Of VBDocument)
 
-            For Each rel In files
+            For Each rel As String In files
                 Dim full As String = Path.Combine(projDir, rel)
 
                 If Not File.Exists(full) Then
