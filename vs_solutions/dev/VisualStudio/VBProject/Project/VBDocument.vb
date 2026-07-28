@@ -1,9 +1,4 @@
-﻿Imports System.IO
-Imports System.Text.RegularExpressions
-Imports VBLang.Reflection
-Imports VBLang.Syntax
-
-Namespace VBProj
+﻿Namespace VBProj
 
     Public Class VBDocument
 
