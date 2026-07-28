@@ -1,8 +1,6 @@
-Imports System
-Imports System.Collections.Generic
 Imports System.IO
-Imports System.Xml.Linq
-Imports VBLang.Syntax
+Imports Microsoft.VisualBasic.ApplicationServices.Development.VisualStudio.VBProj
+Imports Microsoft.VisualBasic.ApplicationServices.Development.VisualStudio.VBProj.Syntax
 
 Module Program
 

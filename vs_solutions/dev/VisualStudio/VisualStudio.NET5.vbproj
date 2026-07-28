@@ -93,6 +93,7 @@
 
   <ItemGroup>
     <PackageReference Include="System.Configuration.ConfigurationManager" Version="10.0.10" />
+    <PackageReference Include="System.Reflection.MetadataLoadContext" Version="10.0.10" />
   </ItemGroup>
 
   <ItemGroup>

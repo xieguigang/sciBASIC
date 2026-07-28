@@ -54,12 +54,9 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
-Imports Microsoft.VisualBasic.ApplicationServices.Development.VisualStudio.vbproj
-Imports Microsoft.VisualBasic.ApplicationServices.Development.VisualStudio.vbproj.Xml
+Imports Microsoft.VisualBasic.ApplicationServices.Development.VisualStudio.VBProj
 Imports Microsoft.VisualBasic.ApplicationServices.Development.VisualStudio.VBProj.ProjectXml
 Imports Microsoft.VisualBasic.ComponentModel
-Imports Microsoft.VisualBasic.Language
-Imports Microsoft.VisualBasic.Language.UnixBash
 Imports Microsoft.VisualBasic.Linq
 
 Namespace VBProj
