@@ -61,7 +61,8 @@ tables — the kind of artifacts that end up in a scientific manuscript.
   SUNDIALS CVODE bindings).
 - **Machine learning & data mining** — clustering (K-Means, …), SVM, decision trees, Naïve Bayes, PCA,
   association rules and sequence alignment.
-- **Evolutionary algorithms** — genetic algorithms and differential evolution under `Darwinism`.
+- **Evolutionary algorithms** — genetic algorithms and differential evolution under
+  `Microsoft.VisualBasic.MachineLearning.Darwinism`.
 - **Natural-language processing** — `TextRank` keyword extraction and the `GraphQuery` object query DSL.
 - **Visualization / "Graphics Artist"** — scatter, line, bar, histogram, heatmap, volcano and 3-D
   plots; network/force-directed layouts; SVG / d3js / PDF export; `colorbrewer` palettes; isometric 3-D
@@ -164,10 +165,9 @@ and `mime/` roots) rather than the general core.
 
 | Namespace | Description |
 | --- | --- |
-| `Microsoft.VisualBasic.Data.DataFrame` * | In-memory `DataFrame` and feature vectors. |
-| `Microsoft.VisualBasic.Data.csv.IO` * | CSV / TSV document I/O. |
+| `Microsoft.VisualBasic.Data.Framework` * | In-memory `DataFrame`, CSV / TSV I/O and reflection-based `EntityObject` storage. |
 | `Microsoft.VisualBasic.Data.BinaryData` * | Binary scientific formats, including `NetCDF`. |
-| `Microsoft.VisualBasic.Data.Text.TextRank` * | `TextRank` keyword extraction. |
+| `Microsoft.VisualBasic.Data.NLP.TextRank` * | `TextRank` keyword extraction (modules `TextRank` + `NLPExtensions`). |
 | `Microsoft.VisualBasic.Data.GraphQuery` * | `GraphQuery` object query DSL and engine. |
 | `Microsoft.VisualBasic.MIME.Markup` * | JSON / HTML / XML / Markdown text parsing. |
 | `Microsoft.VisualBasic.MIME.Office.Excel` * | Excel (OpenXML / .xlsx) reading & writing. |
@@ -183,10 +183,10 @@ and `mime/` roots) rather than the general core.
 | `Microsoft.VisualBasic.Math.Sundials.CVODE` * | SUNDIALS CVODE stiff/non-stiff ODE bindings. |
 | `Microsoft.VisualBasic.Math.SignalProcessing` * | Signal processing. |
 | `Microsoft.VisualBasic.Math.GibbsSampling` * | Gibbs sampling. |
-| `Microsoft.VisualBasic.Math.Symbolic` * | Symbolic / genetic programming math. |
+| `Microsoft.VisualBasic.Math.Symbolic.GeneticProgramming` * | Symbolic / genetic programming math. |
 | `Microsoft.VisualBasic.DataMining` * | Data mining: clustering, Association Rules, sequence alignment. |
 | `Microsoft.VisualBasic.MachineLearning` * | Machine learning: SVM, decision tree, Naïve Bayes, PCA. |
-| `Microsoft.VisualBasic.Darwinism` * | Evolutionary algorithms (genetic algorithm, differential evolution). |
+| `Microsoft.VisualBasic.MachineLearning.Darwinism` * | Evolutionary algorithms (genetic algorithm, differential evolution). |
 | `Microsoft.VisualBasic.Math.MachineVision` * | Machine vision utilities. |
 
 ### Visualization & graphics — `Data_science/Visualization` & `gr/` **
@@ -197,7 +197,7 @@ and `mime/` roots) rather than the general core.
 | `Microsoft.VisualBasic.Imaging` * | "Graphics Artist" device: `GraphicsData`, drawing primitives. |
 | `Microsoft.VisualBasic.Imaging.LayoutModel` * | Layout models for plots and diagrams. |
 | `Microsoft.VisualBasic.Imaging.Drawing2D` * | 2-D vector graphics, colors, styles. |
-| `Microsoft.VisualBasic.Imaging.network` * | Force-directed network layout & rendering. |
+| `Microsoft.VisualBasic.Data.visualize.Network` * | Force-directed network layout & rendering. |
 | `Microsoft.VisualBasic.Imaging.colorbrewer` * | Publication color palettes. |
 
 ---
@@ -279,17 +279,13 @@ Call println("hello from sciBASIC#")
 ### Tabular data & file I/O (`Data/`)
 
 ```vbnet
-Imports Microsoft.VisualBasic.Data.DataFrame
-Imports Microsoft.VisualBasic.Data.csv.IO
+Imports Microsoft.VisualBasic.Data.Framework.IO
+Imports Microsoft.VisualBasic.Data.Framework.StorageProvider
 
-' Read a CSV into a DataFrame; columns are addressed by name through the
-' default member (df!columnName returns a FeatureVector).
-Dim df As DataFrame = DataFrame.Load("data.csv")
-Dim x As Double() = df!value                ' column vector
-df!scaled = x.Select(Function(v) v * 2).ToArray
-Call df.Save("scaled.csv")
+' Load a CSV into an in-memory dataframe resolver:
+Dim df = DataFrameResolver.Load("data.csv")
 
-' Strongly-typed loading into entity objects:
+' Strongly-typed loading into entity objects (confirmed API):
 Dim people = EntityObject.LoadDataSet(Of Person)("people.csv")
 ```
 
@@ -298,20 +294,23 @@ Reading a `NetCDF` scientific file:
 ```vbnet
 Imports Microsoft.VisualBasic.Data.BinaryData
 
-Dim nc = NetCDFReader.Open("model.nc")
-Dim var = nc.GetVariable("temperature")
-Dim data = var.GetData(Of Single)()
+Dim nc = netCDFReader.Open("model.nc")
+Dim v = nc.getDataVariable("temperature")   ' ICDFDataVector
+Dim data = v.genericValue                   ' System.Array of the variable
 ```
 
 ### Natural-language processing
 
-**TextRank** keyword extraction (`Microsoft.VisualBasic.Data.Text.TextRank`):
+**TextRank** keyword extraction (`Microsoft.VisualBasic.Data.NLP.TextRank` + `NLPExtensions`):
 
 ```vbnet
-Imports Microsoft.VisualBasic.Data.Text.TextRank
+Imports Microsoft.VisualBasic.Data.NLP.TextRank
+Imports Microsoft.VisualBasic.Data.NLP.NLPExtensions
 
+' Build the TextRank word graph, then rank it with PageRank:
 Dim doc As String = IO.File.ReadAllText("paper.txt")
-Dim keywords = doc.TextRankKeywords(topN:=10)
+Dim graph = doc.TextGraph()          ' WeightedPRGraph (a GraphMatrix)
+Dim keywords = graph.KeyWords()      ' Dictionary(Of String, Double): word -> score
 ```
 
 **GraphQuery** — a GraphQL-like DSL over your .NET objects
@@ -372,29 +371,36 @@ Dim result = New Lorenz().Solve(10000, 0, 30)
 ```vbnet
 Imports Microsoft.VisualBasic.DataMining.KMeans
 
-' entities: IEnumerable(Of Double()) — each row is a feature vector.
-Dim clusters = KMeans.Cluster(entities, k:=3)
+' source: IEnumerable(Of T) where T carries a numeric feature vector
+' (T : EntityBase(Of Double)).
+Dim clusters = New KMeans().ClusterDataSet(source, k:=3)
 
-For Each c In clusters
-    Console.WriteLine($"cluster {c.Cluster} has {c.Count} points")
+For i As Integer = 0 To clusters.NumOfCluster - 1
+    Dim centroid = clusters(i).ClusterMean()   ' centroid of cluster i
+    Console.WriteLine($"cluster {i}: {String.Join(",", centroid)}")
 Next
 ```
 
 Evolutionary search with `Darwinism` (genetic algorithm):
 
 ```vbnet
-Imports Microsoft.VisualBasic.Darwinism
-Imports Microsoft.VisualBasic.Darwinism.GAF
+Imports Microsoft.VisualBasic.MachineLearning.Darwinism.GAF
 
-Public Class MyFitness : Inherits Fitness(Of Chromosome)
-    Public Overrides Function Calculate(c As Chromosome) As Double
-        Return -EvaluateModel(c)   ' lower fitness value == better
+' 1. Implement the fitness function (smaller value == better):
+Public Class MyFitness : Implements Fitness(Of MyChromosome)
+    Public ReadOnly Property Cacheable As Boolean = False
+    Public Function Calculate(c As MyChromosome, parallel As Boolean) As Double _
+        Implements Fitness(Of MyChromosome).Calculate
+        Return -EvaluateModel(c)
     End Function
 End Class
 
-Dim ga As New GeneticAlgorithm(Of Chromosome)(generator, AddressOf MyEvaluate, populationSize:=100)
-ga.Evolve(500)
-Dim best = ga.Best
+' 2. Build a Population(Of MyChromosome) and evolve it generation by generation:
+Dim ga As New GeneticAlgorithm(Of MyChromosome)(population, New MyFitness())
+For i As Integer = 1 To 500
+    ga.Evolve()          ' advance one generation
+Next
+Dim best = ga.Best       ' the fittest chromosome
 ```
 
 ### Visualization & "Graphics Artist" (`Data_science/Visualization`, `gr/`)
@@ -417,7 +423,7 @@ Call BarPlot.Plot(bars).Save("bars.png")
 ```
 
 Network / force-directed layouts and SVG/d3js export are provided by the
-`Microsoft.VisualBasic.Imaging.network` and `colorbrewer` modules — see
+`Microsoft.VisualBasic.Data.visualize.Network` and `colorbrewer` modules — see
 [`gr/network-visualization/README.md`](gr/network-visualization/README.md).
 
 ### LLM proxy (`Microsoft.VisualBasic.LLMs`, core)
@@ -462,7 +468,7 @@ controls.
 ## Documentation & Contacts
 
 - Source & issues: <https://github.com/xieguigang/sciBASIC>
-- Module guides: [`docs/guides`](docs/guides), VB code style: [`docs/vb_codestyle`](docs/vb_codestyle)
+- Module guides: [`docs/guides`](docs/guides), project documentation: [`docs`](docs/README.md)
 - Tutorials: [`tutorials/`](tutorials)
 - Author / contact: xieguigang — xie.guigang@live.com
 
