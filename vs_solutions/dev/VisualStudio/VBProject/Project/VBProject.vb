@@ -44,7 +44,14 @@ Namespace VBProj
         Private Property FilePath As String Implements IFileReference.FilePath
         Private ReadOnly Property MimeType As ContentType() Implements IFileReference.MimeType
             Get
-                Return {MIME.UnknownType}
+                Return {
+                    New ContentType With {
+                        .Details = "VisualStudio Project",
+                        .FileExt = ".vbproj",
+                        .MIMEType = "visualstudio/xml-project",
+                        .Name = "Project"
+                    }
+                }
             End Get
         End Property
 

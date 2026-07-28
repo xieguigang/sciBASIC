@@ -58,6 +58,7 @@ Imports Microsoft.VisualBasic.ApplicationServices.Development.VisualStudio.vbpro
 Imports Microsoft.VisualBasic.ApplicationServices.Development.VisualStudio.vbproj.Xml
 Imports Microsoft.VisualBasic.ApplicationServices.Development.VisualStudio.VBProj.ProjectXml
 Imports Microsoft.VisualBasic.ComponentModel
+Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.UnixBash
 Imports Microsoft.VisualBasic.Linq
 
@@ -97,65 +98,6 @@ Namespace VBProj
             End If
 
             Return sourceList.vbfileFilter(sourceFolder, fullName, skipAssmInfo)
-        End Function
-
-        <Extension>
-        Private Function newDotNetSDKProjectSource(vbproj As Project) As IEnumerable(Of String)
-            Dim sourceDir As String = DirectCast(vbproj, IFileReference).FilePath _
-                .ParentPath _
-                .Replace("\", "/")
-            Dim files As IEnumerable(Of String) = ls - l - r - "*.vb" <= sourceDir
-            Dim relative As String() = files _
-                .Select(Function(path)
-                            Return path.Replace("\", "/").Replace(sourceDir, "")
-                        End Function) _
-                .ToArray
-
-            Return relative
-        End Function
-
-        <Extension>
-        Private Function legacyProjectSource(vbproj As Project) As IEnumerable(Of String)
-            Dim itemList As ItemGroup() = vbproj.ItemGroups
-            Dim sourceList As IEnumerable(Of String) = itemList _
-                .Where(Function(items) Not items.Compiles.IsNullOrEmpty) _
-                .Select(Function(items)
-                            Return items.Compiles _
-                               .Where(Function(vb)
-                                          Return Not True = vb.AutoGen.ParseBoolean
-                                      End Function) _
-                               .Select(Function(vb)
-                                           Return vb.Include.Replace("%28", "(").Replace("%29", ")")
-                                       End Function)
-                        End Function) _
-                .IteratesALL
-
-            Return sourceList
-        End Function
-
-        <Extension>
-        Private Function vbfileFilter(sourcefiles As IEnumerable(Of String),
-                                      sourceFolder As String,
-                                      fullName As Boolean,
-                                      skipAssmInfo As Boolean) As IEnumerable(Of String)
-            Return sourcefiles _
-                .Select(Function(relative)
-                            If fullName Then
-                                Return $"{sourceFolder}/{relative}"
-                            Else
-                                Return relative
-                            End If
-                        End Function) _
-                .Where(Function(vb)
-                           If skipAssmInfo Then
-                               Return Not vb.EndsWith(Development.AssemblyInfo.ProjectFile)
-                           Else
-                               Return True
-                           End If
-                       End Function) _
-                .Where(Function(vb)
-                           Return Not vb.Split("\"c, "/"c).Any(Function(name) name = "obj")
-                       End Function)
         End Function
 
         ''' <summary>
@@ -215,7 +157,20 @@ Namespace VBProj
 
         <Extension>
         Public Function GetProfile(vbproj As VBProject, name As String) As VBBuildConfiguration
-            Return vbproj.Configurations.SafeQuery.Where(Function(c) c.)
+            Return vbproj.Configurations _
+                .SafeQuery _
+                .Where(Function(c)
+                           Dim condition As String = c.Condition
+
+                           If InStr(condition, "$(Configuration)") = 0 AndAlso InStr(condition, "$(Platform)") = 0 Then
+                               condition = $"'$(Configuration)|$(Platform)' == '{condition}'"
+                           Else
+                               condition = condition.Trim
+                           End If
+
+                           Return Not condition.StringEmpty AndAlso condition.TextEquals(c.Condition.Trim)
+                       End Function) _
+                .FirstOrDefault
         End Function
 
         ''' <summary>
