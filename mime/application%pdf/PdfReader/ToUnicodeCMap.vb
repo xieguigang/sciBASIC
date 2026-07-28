@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ff65b8a7c6cdaf3a511aaee9c2665fd8, mime\application%pdf\PdfReader\ToUnicodeCMap.vb"
+﻿#Region "Microsoft.VisualBasic::c49eb5e99333c6d480bd6bd6b760cad6, mime\application%pdf\PdfReader\ToUnicodeCMap.vb"
 
     ' Author:
     ' 
@@ -34,12 +34,12 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 215
-    '    Code Lines: 162 (75.35%)
-    ' Comment Lines: 33 (15.35%)
+    '   Total Lines: 214
+    '    Code Lines: 162 (75.70%)
+    ' Comment Lines: 33 (15.42%)
     '    - Xml Docs: 9.09%
     ' 
-    '   Blank Lines: 20 (9.30%)
+    '   Blank Lines: 19 (8.88%)
     '     File Size: 8.11 KB
 
 
@@ -51,7 +51,6 @@
     '               ReadHexToken, SkipTo
     ' 
     '     Sub: Parse, ParseBfChar, ParseBfCharSection, ParseBfRange, ParseBfRangeSection
-    ' 
     ' 
     ' /********************************************************************************/
 
@@ -271,5 +270,3 @@ Public Class ToUnicodeCMap
     End Function
 
 End Class
-
-

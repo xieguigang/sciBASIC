@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9b4842fb72f5f4862d91782056872447, Data_science\MachineVision\GaussianSplatting3D\GaussianSplatting\GradientCalculator.vb"
+﻿#Region "Microsoft.VisualBasic::d380b0c8c6ae25e467cd6b33ceed14e4, Data_science\MachineVision\GaussianSplatting3D\GaussianSplatting\GradientCalculator.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 71.43%
     ' 
     '   Blank Lines: 27 (10.19%)
-    '     File Size: 11.42 KB
+    '     File Size: 11.41 KB
 
 
     ' Class GradientCalculator
@@ -329,4 +329,3 @@ Public Class DensityController
     End Function
 
 End Class
-

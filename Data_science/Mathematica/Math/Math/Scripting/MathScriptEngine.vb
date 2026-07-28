@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e4fa33443fa9a6aaf8d5e5f87dca3789, Data_science\Mathematica\Math\Math\Scripting\MathScriptEngine.vb"
+﻿#Region "Microsoft.VisualBasic::fe4bad8509fcf1e22b01279efbcb0a95, Data_science\Mathematica\Math\Math\Scripting\MathScriptEngine.vb"
 
     ' Author:
     ' 
@@ -608,4 +608,3 @@ Namespace Scripting
     End Class
 
 End Namespace
-

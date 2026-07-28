@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a3b95518ce67cb8ea743273c4d499c7e, mime\application%pdf\PDF.vb"
+﻿#Region "Microsoft.VisualBasic::1d1bc74cb87f1ba998ef280cb45dad19, mime\application%pdf\PDF.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 0.00%
     ' 
     '   Blank Lines: 3 (20.00%)
-    '     File Size: 447 B
+    '     File Size: 445 B
 
 
     ' Module PDF
@@ -66,4 +66,3 @@ Public Module PDF
         End Using
     End Function
 End Module
-

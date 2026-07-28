@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::41c19f5025be718bc32e2faa62d7b77c, Data_science\MachineLearning\LNN\LiquidCell.vb"
+﻿#Region "Microsoft.VisualBasic::aeeeb742dff3f7d9a57670a1d252ebce, Data_science\MachineLearning\LNN\LiquidCell.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 357
-    '    Code Lines: 171 (47.90%)
-    ' Comment Lines: 126 (35.29%)
+    '   Total Lines: 356
+    '    Code Lines: 170 (47.75%)
+    ' Comment Lines: 126 (35.39%)
     '    - Xml Docs: 87.30%
     ' 
-    '   Blank Lines: 60 (16.81%)
-    '     File Size: 11.56 KB
+    '   Blank Lines: 60 (16.85%)
+    '     File Size: 11.55 KB
 
 
     ' Class LiquidCell

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0ba781fab5cadc4941c3d310a04bb9b9, Data_science\MachineLearning\LNN\LiquidLayer.vb"
+﻿#Region "Microsoft.VisualBasic::7cb99e2041e26b2178f21267fa35ccf7, Data_science\MachineLearning\LNN\LiquidLayer.vb"
 
     ' Author:
     ' 
@@ -34,12 +34,12 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 206
-    '    Code Lines: 103 (50.00%)
-    ' Comment Lines: 64 (31.07%)
+    '   Total Lines: 205
+    '    Code Lines: 102 (49.76%)
+    ' Comment Lines: 64 (31.22%)
     '    - Xml Docs: 90.62%
     ' 
-    '   Blank Lines: 39 (18.93%)
+    '   Blank Lines: 39 (19.02%)
     '     File Size: 5.87 KB
 
 

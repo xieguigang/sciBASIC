@@ -1,3 +1,71 @@
+﻿#Region "Microsoft.VisualBasic::4241b452a8dfd3269f960419d1e5254d, Data_science\NLP\Tokenizer\src\ChineseTokenizer.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 197
+    '    Code Lines: 128 (64.97%)
+    ' Comment Lines: 45 (22.84%)
+    '    - Xml Docs: 86.67%
+    ' 
+    '   Blank Lines: 24 (12.18%)
+    '     File Size: 7.89 KB
+
+
+    '     Enum SegmentAlgorithm
+    ' 
+    '         BackwardMaxMatch, BidirectionalMaxMatch, ForwardMaxMatch, Hybrid
+    ' 
+    '  
+    ' 
+    ' 
+    ' 
+    '     Class Tokenizer
+    ' 
+    '         Properties: Algorithm, Dictionary, Hmm
+    ' 
+    '         Constructor: (+2 Overloads) Sub New
+    ' 
+    '         Function: CreateDefault, HybridSegment, Segment, SegmentToString
+    ' 
+    '         Sub: TrainHmm
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
 Imports System.Text
 
 Namespace ChineseTokenizer
@@ -195,3 +263,4 @@ Namespace ChineseTokenizer
     End Class
 
 End Namespace
+

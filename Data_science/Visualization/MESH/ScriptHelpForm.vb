@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3be7259db0956f89fd78c592c2eaff3c, Data_science\Visualization\MESH\ScriptHelpForm.vb"
+﻿#Region "Microsoft.VisualBasic::10af2c7a167ebed054b80b31295d71df, Data_science\Visualization\MESH\ScriptHelpForm.vb"
 
     ' Author:
     ' 
@@ -577,4 +577,3 @@ Public Class ScriptHelpForm
     End Sub
 
 End Class
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f5e83b9a528f1bc06c57e37d92ca4b53, Data_science\MachineVision\GaussianSplatting3D\GaussianSplatting\Camera.vb"
+﻿#Region "Microsoft.VisualBasic::8b13fd86c89288467ac975ac8239dec4, Data_science\MachineVision\GaussianSplatting3D\GaussianSplatting\Camera.vb"
 
     ' Author:
     ' 
@@ -277,4 +277,3 @@ Public Class Camera
     End Function
 
 End Class
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::662aebf94f9966a54012f8de5077db73, Data_science\MachineVision\GaussianSplatting3D\GaussianSplatting\Optimizer.vb"
+﻿#Region "Microsoft.VisualBasic::53a6eb1c620d8c83ff0ba7c88bf9fdb7, Data_science\MachineVision\GaussianSplatting3D\GaussianSplatting\Optimizer.vb"
 
     ' Author:
     ' 
@@ -176,4 +176,3 @@ Public Class LRScheduler
     End Function
 
 End Class
-

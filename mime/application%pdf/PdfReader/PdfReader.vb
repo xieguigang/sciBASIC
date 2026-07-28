@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::297ed86dd88fcb6109f58560ead6a875, mime\application%pdf\PdfReader\PdfReader.vb"
+﻿#Region "Microsoft.VisualBasic::555be694789b31ae7fc396dd9fca6baa, mime\application%pdf\PdfReader\PdfReader.vb"
 
     ' Author:
     ' 
@@ -34,12 +34,12 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 449
-    '    Code Lines: 361 (80.40%)
-    ' Comment Lines: 39 (8.69%)
+    '   Total Lines: 448
+    '    Code Lines: 361 (80.58%)
+    ' Comment Lines: 39 (8.71%)
     '    - Xml Docs: 5.13%
     ' 
-    '   Blank Lines: 49 (10.91%)
+    '   Blank Lines: 48 (10.71%)
     '     File Size: 18.00 KB
 
 
@@ -64,7 +64,6 @@
     ' 
     ' 
     '  
-    ' 
     ' 
     ' 
     ' 
@@ -520,5 +519,3 @@ Friend Class XRefEntry
     Public ObjectStreamNum As Integer
     Public IndexInStream As Integer
 End Class
-
-

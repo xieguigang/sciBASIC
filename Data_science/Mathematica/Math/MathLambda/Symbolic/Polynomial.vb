@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a2ecb332d22f94250b46b42cfd16507f, Data_science\Mathematica\Math\MathLambda\Symbolic\Polynomial.vb"
+﻿#Region "Microsoft.VisualBasic::1c672a125bf898bd72da93236d9e6db9, Data_science\Mathematica\Math\MathLambda\Symbolic\Polynomial.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 47.14%
     ' 
     '   Blank Lines: 90 (12.24%)
-    '     File Size: 31.01 KB
+    '     File Size: 30.99 KB
 
 
     '     Class UnivariatePoly

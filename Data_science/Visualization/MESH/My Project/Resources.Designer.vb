@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9f6897bc851a67543a790fa734ebdac8, Data_science\Visualization\MESH\My Project\Resources.Designer.vb"
+﻿#Region "Microsoft.VisualBasic::818cfcbc2b51272ce1506493781d82ec, Data_science\Visualization\MESH\My Project\Resources.Designer.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 17.39%
     ' 
     '   Blank Lines: 8 (12.70%)
-    '     File Size: 2.79 KB
+    '     File Size: 2.78 KB
 
 
     '     Module Resources
@@ -115,4 +115,3 @@ Namespace My.Resources
         End Property
     End Module
 End Namespace
-

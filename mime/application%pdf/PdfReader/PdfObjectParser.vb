@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::84b4b692a93ee59aa3aba82d354012a2, mime\application%pdf\PdfReader\PdfObjectParser.vb"
+﻿#Region "Microsoft.VisualBasic::c25b97de6d1d7faef66df791c24c1662, mime\application%pdf\PdfReader\PdfObjectParser.vb"
 
     ' Author:
     ' 
@@ -34,12 +34,12 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 131
-    '    Code Lines: 97 (74.05%)
-    ' Comment Lines: 18 (13.74%)
+    '   Total Lines: 130
+    '    Code Lines: 97 (74.62%)
+    ' Comment Lines: 18 (13.85%)
     '    - Xml Docs: 16.67%
     ' 
-    '   Blank Lines: 16 (12.21%)
+    '   Blank Lines: 15 (11.54%)
     '     File Size: 5.30 KB
 
 
@@ -50,7 +50,6 @@
     '     Function: ParseArray, ParseDictionary, ParseObject, ParseObjectFromToken, ReadStreamBytes
     ' 
     '     Sub: SkipToEndStream
-    ' 
     ' 
     ' /********************************************************************************/
 
@@ -186,5 +185,3 @@ Public Class PdfObjectParser
     End Function
 
 End Class
-
-

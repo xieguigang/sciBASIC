@@ -1,4 +1,81 @@
-﻿Namespace VBProj.ProjectXml
+﻿#Region "Microsoft.VisualBasic::5b7c236d6d8cb63a20303c8f107d47a2, vs_solutions\dev\VisualStudio\VBProject\Project\ProjectXml.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 98
+    '    Code Lines: 58 (59.18%)
+    ' Comment Lines: 24 (24.49%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 16 (16.33%)
+    '     File Size: 3.80 KB
+
+
+    '     Class VBProjectReference
+    ' 
+    '         Properties: [Include], [Private], Aliases, Condition, ReferenceOutputAssembly
+    '                     SetTargetFramework
+    ' 
+    '     Class VBPackageReference
+    ' 
+    '         Properties: Condition, ExcludeAssets, Id, IncludeAssets, PrivateAssets
+    '                     Version
+    ' 
+    '     Class VBBuildConfiguration
+    ' 
+    '         Properties: Condition, Configuration, DebugType, DefineConstants, Extra
+    '                     Optimize, OutputPath, Platform
+    ' 
+    '     Class VBProjectMetadata
+    ' 
+    '         Properties: AssemblyOriginatorKeyFile, EnableDefaultCompileItems, ImplicitUsings, LangVersion, Nullable
+    '                     Other, Platforms, SignAssembly, TargetFramework, TargetFrameworks
+    ' 
+    '     Class VBNuGetMetadata
+    ' 
+    '         Properties: Authors, Company, Copyright, Description, GeneratePackageOnBuild
+    '                     Other, PackageId, PackageLicenseExpression, PackageProjectUrl, PackageReadmeFile
+    '                     PackageTags, Product, RepositoryType, RepositoryUrl, RestoreSources
+    '                     Version
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+Namespace VBProj.ProjectXml
 
     ''' <summary>
     ''' external project reference (ProjectReference item)

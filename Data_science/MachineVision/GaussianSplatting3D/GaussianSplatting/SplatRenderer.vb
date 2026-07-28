@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::818065eff75408c833197f24cbd3ffa9, Data_science\MachineVision\GaussianSplatting3D\GaussianSplatting\SplatRenderer.vb"
+﻿#Region "Microsoft.VisualBasic::1d0f434a585976347998a4d045795421, Data_science\MachineVision\GaussianSplatting3D\GaussianSplatting\SplatRenderer.vb"
 
     ' Author:
     ' 
@@ -293,4 +293,3 @@ Public Class SplatRenderer
     End Function
 
 End Class
-

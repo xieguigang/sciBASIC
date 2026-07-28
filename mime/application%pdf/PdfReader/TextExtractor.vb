@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7ecad1e6b9406dac5991aa96cb28ef3e, mime\application%pdf\PdfReader\TextExtractor.vb"
+﻿#Region "Microsoft.VisualBasic::28be3dfc20f65943f45b057bc1caab64, mime\application%pdf\PdfReader\TextExtractor.vb"
 
     ' Author:
     ' 
@@ -461,4 +461,3 @@ Public Class FontInfo
     Public ToUnicode As ToUnicodeCMap
     Public IsTwoByte As Boolean = False
 End Class
-

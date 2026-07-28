@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bf81d07111b5094684b85c07e017b392, Data_science\MachineVision\GaussianSplatting3D\GaussianSplatting\ImageLoader.vb"
+﻿#Region "Microsoft.VisualBasic::5f2fa8337d9fe5578f99fac3fc6683d1, Data_science\MachineVision\GaussianSplatting3D\GaussianSplatting\ImageLoader.vb"
 
     ' Author:
     ' 
@@ -285,4 +285,3 @@ Public Class PointCloudIO
     End Function
 
 End Class
-

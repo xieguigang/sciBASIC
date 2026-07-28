@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::58bdfd7e5a3db54e879c5e7d61363430, mime\application%pdf\PdfReader\PdfObject.vb"
+﻿#Region "Microsoft.VisualBasic::0b5b4c3038e26249905688565effeebc, mime\application%pdf\PdfReader\PdfObject.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 168
-    '    Code Lines: 133 (79.17%)
-    ' Comment Lines: 22 (13.10%)
+    '   Total Lines: 166
+    '    Code Lines: 133 (80.12%)
+    ' Comment Lines: 22 (13.25%)
     '    - Xml Docs: 50.00%
     ' 
-    '   Blank Lines: 13 (7.74%)
-    '     File Size: 5.55 KB
+    '   Blank Lines: 11 (6.63%)
+    '     File Size: 5.54 KB
 
 
     ' Class PdfObject
@@ -97,7 +97,6 @@
     ' Class PdfIndirectObject
     ' 
     '     Constructor: (+1 Overloads) Sub New
-    ' 
     ' 
     ' /********************************************************************************/
 
@@ -269,6 +268,3 @@ Public Class PdfIndirectObject
         Me.Content = content
     End Sub
 End Class
-
-
-

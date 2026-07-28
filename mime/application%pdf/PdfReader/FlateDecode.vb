@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b89033eb7a779e00793a58325d6b018b, mime\application%pdf\PdfReader\FlateDecode.vb"
+﻿#Region "Microsoft.VisualBasic::d73de5c4c2416e5e949636874c5f7df9, mime\application%pdf\PdfReader\FlateDecode.vb"
 
     ' Author:
     ' 
@@ -34,12 +34,12 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 218
-    '    Code Lines: 172 (78.90%)
-    ' Comment Lines: 28 (12.84%)
+    '   Total Lines: 216
+    '    Code Lines: 172 (79.63%)
+    ' Comment Lines: 28 (12.96%)
     '    - Xml Docs: 21.43%
     ' 
-    '   Blank Lines: 18 (8.26%)
+    '   Blank Lines: 16 (7.41%)
     '     File Size: 8.65 KB
 
 
@@ -47,7 +47,6 @@
     ' 
     '     Function: ApplyPredictor, Decode, DecodeAscii85, DecodeRawDeflate, IsAscii85Whitespace
     '               PaethPredictor
-    ' 
     ' 
     ' /********************************************************************************/
 
@@ -269,6 +268,3 @@ Public Class FlateDecode
     End Function
 
 End Class
-
-
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::099a63c88c19104153d65b16c11a6bca, mime\text%yaml\YamlFrontMatterParser.vb"
+﻿#Region "Microsoft.VisualBasic::7ebdf2c84720d471cae056725070e5f9, mime\text%yaml\YamlFrontMatterParser.vb"
 
     ' Author:
     ' 
@@ -182,4 +182,3 @@ Public Module YamlFrontMatterParser
     End Function
 
 End Module
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9c0bc3d8ac6533ff24c80b80ac6dbd33, Data_science\MachineVision\GaussianSplatting3D\GaussianSplatting\GaussianModel.vb"
+﻿#Region "Microsoft.VisualBasic::3a4a8c63be98b9c3310f22d5ab572fbd, Data_science\MachineVision\GaussianSplatting3D\GaussianSplatting\GaussianModel.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 69.86%
     ' 
     '   Blank Lines: 34 (10.93%)
-    '     File Size: 11.93 KB
+    '     File Size: 11.92 KB
 
 
     ' Class GaussianModel
@@ -370,4 +370,3 @@ Public Class GaussianModel
     End Function
 
 End Class
-

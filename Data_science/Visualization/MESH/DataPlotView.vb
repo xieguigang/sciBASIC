@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::65def64a0d7517cad2fd30860da6b97c, Data_science\Visualization\MESH\DataPlotView.vb"
+﻿#Region "Microsoft.VisualBasic::d1c2d4d0c16c5d26c71def45c0dba61b, Data_science\Visualization\MESH\DataPlotView.vb"
 
     ' Author:
     ' 
@@ -134,4 +134,3 @@ Public Class DataPlotView
         Return rendered.CTypeGdiImage
     End Function
 End Class
-

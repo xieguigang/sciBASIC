@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c461eec78f678476fd08ab6c61453801, Data_science\Mathematica\Math\Math\Scripting\PlotCommand.vb"
+﻿#Region "Microsoft.VisualBasic::e1bc12664a43410430dab25cebb16078, Data_science\Mathematica\Math\Math\Scripting\PlotCommand.vb"
 
     ' Author:
     ' 
@@ -106,4 +106,3 @@ Namespace Scripting
     End Class
 
 End Namespace
-

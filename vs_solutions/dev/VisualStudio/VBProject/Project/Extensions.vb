@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::55bfbe1664b31ad39a06d9093e23b360, vs_solutions\dev\VisualStudio\vbproj\Extensions.vb"
+﻿#Region "Microsoft.VisualBasic::498db22fb6f1746095c620d9eaf9c1c3, vs_solutions\dev\VisualStudio\VBProject\Project\Extensions.vb"
 
     ' Author:
     ' 
@@ -34,19 +34,19 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 186
-    '    Code Lines: 146 (78.49%)
-    ' Comment Lines: 20 (10.75%)
+    '   Total Lines: 139
+    '    Code Lines: 102 (73.38%)
+    ' Comment Lines: 20 (14.39%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 20 (10.75%)
-    '     File Size: 7.86 KB
+    '   Blank Lines: 17 (12.23%)
+    '     File Size: 5.74 KB
 
 
     '     Module Extensions
     ' 
     '         Function: AssemblyInfo, (+2 Overloads) EnumerateSourceFiles, ExtractNuGetAssemblyInfo, GetOutputDirectory, GetOutputName
-    '                   legacyProjectSource, newDotNetSDKProjectSource, RootNamespace, vbfileFilter
+    '                   GetProfile, RootNamespace
     ' 
     ' 
     ' /********************************************************************************/

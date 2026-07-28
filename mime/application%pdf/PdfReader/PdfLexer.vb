@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::33a70b84dbb62a8d82e9f703806e859e, mime\application%pdf\PdfReader\PdfLexer.vb"
+﻿#Region "Microsoft.VisualBasic::44a7395458f40bc500582b88f669e983, mime\application%pdf\PdfReader\PdfLexer.vb"
 
     ' Author:
     ' 
@@ -34,12 +34,12 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 385
-    '    Code Lines: 319 (82.86%)
-    ' Comment Lines: 33 (8.57%)
+    '   Total Lines: 384
+    '    Code Lines: 319 (83.07%)
+    ' Comment Lines: 33 (8.59%)
     '    - Xml Docs: 9.09%
     ' 
-    '   Blank Lines: 33 (8.57%)
+    '   Blank Lines: 32 (8.33%)
     '     File Size: 14.60 KB
 
 
@@ -69,7 +69,6 @@
     '               ReadLiteralString, ReadName, ReadNumberOrKeyword, ReadStreamData, ReadStreamDataScan
     ' 
     '     Sub: SkipStreamEOL, SkipWhitespaceAndComments
-    ' 
     ' 
     ' /********************************************************************************/
 
@@ -459,5 +458,3 @@ Public Class PdfLexer
     End Sub
 
 End Class
-
-
