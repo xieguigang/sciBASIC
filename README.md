@@ -1,485 +1,470 @@
 # sciBASIC#: Microsoft VisualBasic for Scientific Computing
 
-![(๑•̀ㅂ•́)و✧](etc/badge.png)
-![](https://cdn.rawgit.com/LunaGao/BlessYourCodeTag/master/tags/alpaca.svg)
-[![Github All Releases](https://img.shields.io/github/downloads/xieguigang/sciBASIC/total.svg?maxAge=2592000?style=flat-square)]()
-[![GPL Licence](https://badges.frapsoft.com/os/gpl/gpl.svg?v=103)](https://opensource.org/licenses/GPL-3.0/)
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.166002.svg)](https://doi.org/10.5281/zenodo.166002)
+[![GitHub release](https://img.shields.io/github/release/xieguigang/sciBASIC.svg)](https://github.com/xieguigang/sciBASIC/releases)
+[![AppVeyor build](https://ci.appveyor.com/api/projects/status/github/xieguigang/scibasic?branch=master&svg=true)](https://ci.appveyor.com/project/xieguigang/scibasic)
+[![License GPLv3](https://img.shields.io/badge/license-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0.html)
+[![Gitter](https://badges.gitter.im/xieguigang/sciBASIC.svg)](https://gitter.im/xieguigang/sciBASIC)
 
-###### [WARNING] This project is a work in progress and is not recommended for production use.
-> Probably some namespace and object name may changes frequently on each commit, and you are feel free to using the **Object Browser** in visual studio to adapted to the object not defined problem which was caused by these changes.....
+> A VisualBasic(.NET) language kernel and runtime for scientific data computing, machine learning, visualization and command-line data-science applications — running on .NET (`net10.0`) across Windows, Linux and macOS.
 
-<hr>
+---
 
-[![sciBASIC# logo](Microsoft.VisualBasic.Core/logo.png)](./vs_solutions/logo/Program.vb)
+## Table of Contents
 
-> Read the project documents: [http://sciBASIC.NET/](http://sciBASIC.NET)
+- [Introduction](#introduction)
+- [Features](#features)
+- [Installation & Build](#installation--build)
+- [Quick Start](#quick-start)
+- [Module & Namespace Overview](#module--namespace-overview)
+- [Extended VisualBasic Language](#extended-visualbasic-language)
+- [Examples by Domain](#examples-by-domain)
+- [FAQ](#faq)
+- [Documentation & Contacts](#documentation--contacts)
 
-## Scientific Computing runtime for VisualBasic.NET
+---
 
-sciBASIC#: A Microsoft VisualBasic feature runtime for data science application on Windows/Linux/macOS And China Tianhe Super Computing Platform. It was mainly consists with a data frame system, a data science analysis system, a data graphics system and a general application core runtime.
+## Introduction
 
-``sciBASIC#``(read as ``scientific visualbasic`` or just ``sciBASIC sharp``) is a Microsoft VisualBasic language feature runtime for your data science application which is running in the CLI environment on Windows/Linux/macOS **Desktop/Server** platform or **supercomputer** platform. This framework project includes a lot of mathematics utility tools and the utility code extension functions for the data sciences application which is programming in VisualBasic language, and it also extends the VisualBasic programming language syntax. Makes the VisualBasic programming style more modernized in the data science industry by using this runtime library framework.
+**sciBASIC#** is a cross-platform framework, written entirely in Microsoft VisualBasic.NET, that brings the
+productivity of the BASIC language to scientific computing. It bundles a large, cohesive set of reusable
+libraries that together form the foundation for building data-science **command-line tools** on Windows,
+Linux and macOS — on modern .NET (`.NET 10`) as well as the classic .NET Framework / mono.
 
-> Abount VisualBasic code style guidelines:
-> + https://github.com/xieguigang/sciBASIC/tree/master/docs/vb_codestyle
+The runtime is organized into a few cooperating layers:
 
-> Guides for using this framework, you can found the document and content index at the [README.md](./guides/README.md)(This guidelines document is currently compiling for users):
-> + https://github.com/xieguigang/sciBASIC/tree/master/docs/guides
+| Layer | Source root | Purpose |
+| --- | --- | --- |
+| **Core runtime** | `Microsoft.VisualBasic.Core/` | Extended VB language syntax, LINQ-style collections, a CLI application framework, component model, serialization, networking and text utilities. |
+| **Data framework** | `Data/` | Tabular data (`DataFrame`), scientific file I/O (CSV, NetCDF, …), MIME / text & XML parsing, and natural-language processing (TextRank, GraphQuery). |
+| **Math & data science** | `Data_science/` | Numerical math, statistics, ODE solvers, machine learning & data mining, evolutionary algorithms (`Darwinism`) and machine vision. |
+| **Graphics & visualization** | `gr/`, `Data_science/Visualization` | The "sciBASIC# Artists" imaging engine that produces publication-quality 2D/3D plots, SVG / d3js export, network layouts and color palettes. |
+| **Web / MIME helpers** | `www/`, `mime/` | HTTP client utilities and MIME-type text/XML parsers (JSON, OpenXML / xlsx). |
 
-![](./etc/README/nodes.gif)
-<hr/>
+The design philosophy is **CLI-first**: instead of drag-and-drop controls, sciBASIC# emphasizes
+headless, scriptable, reproducible data-science programs that read files, compute, and emit figures or
+tables — the kind of artifacts that end up in a scientific manuscript.
 
-### Runtime Installation
+---
 
-+ Compile &amp; Application Development on this runtime required the latest VisualStudio 2017.
-+ If you are running sciBASIC runtime on Windows, please makesure your operating system supports .NET framework 4.6
-+ If you are running sciBASIC runtime on Linux/macOS, please install mono runtime at first by following the installation manual on **mono-project** website. And then the ``Microsoft VisualBasic core runtime`` is required, you can find this runtime file in this repository: [Microsoft.VisualBasic.7z](./Microsoft.VisualBasic.7z), just extract this 7z archive and put the **Microsoft.VisualBasic.dll** kernel in the application directory.
+## Features
 
-### Install this framework via nuget package
+- **Extended VisualBasic syntax** — `Value(Of T)` inline assignment, `List(Of T)` with a `+` append
+  operator and rich indexers, LINQ helpers (`Sequence`, `Iterates`, `which`, `sentinel`) and Unix-shell
+  style helpers (`UnixBash.ls`, `cat`).
+- **Command-line application framework** — attribute-driven (`<ExportAPI>`, `<Usage>`) CLIs, automatic
+  help generation, and `InteropService` to host external command-line tools.
+- **Tabular data** — a `DataFrame` model, CSV / TSV I/O, and strongly-typed `EntityObject` loading.
+- **Scientific file I/O** — `NetCDF` readers/writers and other binary formats, plus MIME text/XML and
+  Excel (OpenXML) parsing.
+- **Mathematics** — linear algebra, statistics & hypothesis testing (ANOVA), data fitting /
+  bootstrapping, Gibbs sampling, signal processing, symbolic math and **ODE solvers** (Runge–Kutta,
+  SUNDIALS CVODE bindings).
+- **Machine learning & data mining** — clustering (K-Means, …), SVM, decision trees, Naïve Bayes, PCA,
+  association rules and sequence alignment.
+- **Evolutionary algorithms** — genetic algorithms and differential evolution under `Darwinism`.
+- **Natural-language processing** — `TextRank` keyword extraction and the `GraphQuery` object query DSL.
+- **Visualization / "Graphics Artist"** — scatter, line, bar, histogram, heatmap, volcano and 3-D
+  plots; network/force-directed layouts; SVG / d3js / PDF export; `colorbrewer` palettes; isometric 3-D
+  engine. Figures are tuned for **printable, publication-quality** output.
+- **LLM proxy** — bridge a local model (e.g. Ollama) or any `Func(Of String, String)` endpoint into the
+  runtime via `Microsoft.VisualBasic.LLMs`.
 
-For .NET Framework 4.6:
+---
 
-+ https://www.nuget.org/packages/sciBASIC#
+## Installation & Build
 
-```bash
-# For install latest stable release version:
-PM> Install-Package sciBASIC
-# For install latest unstable beta version:
-PM> Install-Package sciBASIC -Pre
-```
+### Prerequisites
 
-### Contacts
+- [.NET 10 SDK](https://dot.net) (the libraries target `net10.0`; graphics/imaging projects additionally
+  target `net10.0-windows` because they use `System.Drawing` / GDI+).
+- Visual Studio 2022 (Windows) or any editor with the VB.NET / .NET workload (Visual Studio Code +
+  the C#/VB dev kit, or JetBrains Rider) on Linux / macOS.
 
-Foundation for VisualBasic.NET scientific computing softwares from China: [foundation@sciBASIC.NET](mailto://foundation@scibasic.net)
+### Consume the packages
 
-### Directory Structure
-
-###### 1. source projects
-
-+ **[/CLI_tools](./CLI_tools/)** : Some small utilities and example tools
-+ **[/Data](./Data/)** : *sciBASIC#* data framework system for data science, includes data frame, data I/O, natural language text processing and data object search framework.
-+ **[/Data_science](./Data_science/)** : *sciBASIC#* Mathmatica system, data graphics plot system & Data Mining library
-+ **[/Microsoft.VisualBasic.Core](./Microsoft.VisualBasic.Core/)** : **Microsoft VisualBasic General App core runtime**
-+ **[/mime](./mime/)** : Various mime-type text or Xml doc parsers in VisualBasic.
-+ **[/gr](./gr/)** : **sciBASIC# Artists**: (graphic artist) VB.NET imaging graphics system
-+ **[/www](./www/)** : Web related utilities code
-+ **[/vs_solutions](./vs_solutions/)** : sciBASIC framework Windows installer project. 
-
-###### 2. docs for User
-
-+ **[/guides](./docs/guides/)** : This framework code usage example and manual documents
-+ **[/vb_codestyle](./docs/vb_codestyle/)** : sciBASIC# Coding style standard document
-
----------------------------------------------------------------------------------------------------------------
-
-## Namespace
-
-|  |Namespace                                    |Description                                                                       |
-|--|---------------------------------------------|----------------------------------------------------------------------------------|
-|  |Microsoft.VisualBasic.ApplicationServices    |Application tool and Utils for build software in a more easy way                  |
-|  |Microsoft.VisualBasic.CommandLine            |CLI framework for VisualBasic App                                                 |
-|\*|**Microsoft.VisualBasic.Data**               |Raw data processing related code and charting plot library for data visualization |
-|\*|**Microsoft.VisualBasic.DataMining**         |``sciBASIC`` data mining library                                                  |
-|\*|**Microsoft.VisualBasic.Imaging**            |``sciBASIC`` graphics system based on the GDI+ API from ``System.Drawing``        |
-|\*|**Microsoft.VisualBasic.MachineLearning**    |``sciBASIC`` machine learning library                                             |
-|\*|**Microsoft.VisualBasic.Math**               |``sciBASIC`` math library                                                         |
-|  |Microsoft.VisualBasic.MIME                   |MIME type text document parser                                                    |
-|  |Microsoft.VisualBasic.Scripting              |String expression related API for CLI programming and scripting programming       |
-
-sciBASIC runtime can be split as two part: Part1 is the general application runtime, like scripting helper, commandline system, and text document parser; Another part of the runtime is the data science runtime, like math function, cluster function, or charting runtime for data visualization. All of the data science related namespace in sciBASIC are marked with **asterisk**. 
-
-## FAQs
-
-**1. Which platform that I can using this framework?**
-For writing x86/x64 server/Desktop Win32 CLI program.
-
-**2. Relationship between Microsoft VisualBasic.NET and sciBASIC?**
-sciBASIC is fully compatible with the native VB.NET language, sciBASIC is a kind of dialect derive from the Microsoft VisualBasic.NET language.
-
-**3. Is there any interactive WinForm/WPF control for charting plot?**
-One of this framework its primary target is aim at provides a drawing environment for your CLI program create high quality printable content for scientific manuscript. This framework is not too much involved with "interactive".
-
-**4. Any coding style suggestion by using sciBASIC framework?**
-``sciBASIC`` framework is a kind of functional programming runtime for VisualBasic language. 
-
-**5. Major features**
-Major features of the ``sciBASIC`` are: 
-+ Functional programming
-+ Fluent style Method cascading
-+ Linq pipeline
-+ Parallel computing
-
-## ODEs scripting language feature
-
-Example for solving a dynamics system using VisualBasic ODEs scripting language feature, demo created for the [Lorenz system](https://en.wikipedia.org/wiki/Lorenz_system):
-
-```vbnet
-Dim x, y, z As var
-Dim sigma# = 10
-Dim rho# = 28
-Dim beta# = 8 / 3
-Dim t = (a:=0, b:=120, dt:=0.005)
-
-Call Let$(list:=Function() {x = 1, y = 1, z = 1})
-Call {
-    x = Function() sigma * (y - x),
-    y = Function() x * (rho - z) - y,
-    z = Function() x * y - beta * z
-}.Solve(dt:=t) _
- .DataFrame _
- .Save($"{App.HOME}/Lorenz_system.csv")
-```
-
-![](./Data_science/Mathematica/data/Lorenz_system/Lorenz_system.png)
-
-## Microsoft VisualBasic Trinity Natural Language Processor
-
-### TextRank
-
-PageRank analysis on the text paragraph for find out the keyword, here is the pagerank result of the this example paragraph:
-
-> "the important pagerank. show on pagerank. have significance pagerank. implements pagerank algorithm. textrank base on pagerank."
-
-![](./Data/TextRank/visualize.png)
-
-### GraphQuery
-
-GraphQuery is a query language and execution engine tied to any backend service. It is back-end language independent.
-
-```vbnet
-Imports Microsoft.VisualBasic.Data.GraphQuery
-Imports Microsoft.VisualBasic.Data.GraphQuery.Language
-Imports Microsoft.VisualBasic.MIME.application.json
-Imports Microsoft.VisualBasic.MIME.application.json.Javascript
-Imports Microsoft.VisualBasic.MIME.Markup.HTML
-
-' define your graph query at here
-Dim queryText As String = "..."
-Dim query As Query = QueryParser.GetQuery(queryText)
-Dim engine As New Engine
-' http get of the html document text from web server or local filesystem
-Dim url As String = "..."
-Dim doc As HtmlDocument = HtmlDocument.LoadDocument(url)
-Dim data As JsonElement = engine.Execute(doc, query)
-' debug view of the graph query result
-Dim json As String = data.BuildJsonString(New JSONSerializerOptions With {.indent = True})
-
-Call Console.WriteLine(json)
-```
-
-Read more about the graphquery language: [GraphQuery](https://github.com/xieguigang/sciBASIC/tree/master/Data/GraphQuery)
+The individual libraries are published as NuGet packages under the `Microsoft.VisualBasic.*` family
+(e.g. the core runtime assembly `Microsoft.VisualBasic.Runtime`). Add them to your project with:
 
 ```bash
-graphquery
-{
-    # parser function pipeline can be 
-    # in different line,
-    # this will let you write graphquery
-    # code in a more graceful style when
-    # you needs a lot of pipeline function
-    # for parse value data.
-    bookID    css("book") 
-            | attr("id")
+dotnet add package Microsoft.VisualBasic.Runtime
+```
 
-    title     css("title")
-    isbn      xpath("//isbn")
-    quote     css("quote")
-    language  css("title") | attr("lang")
+### Build from source
 
-    # another sub query in current graph query
-    author css("author") {
-        name css("name")
-        born css("born")
-        dead css("dead")
-    }
+Clone the repository and build the NuGet solution, which references every library project:
 
-    # this is a array of type character
-    character xpath("//character") [{
-        name          css("name")
-        born          css("born")
-        qualification xpath("qualification")
-    }]
+```bash
+git clone https://github.com/xieguigang/sciBASIC.git
+cd sciBASIC
+dotnet build nuget.slnx -c Release
+```
+
+To build a single library, open its `.vbproj` (for example
+`Microsoft.VisualBasic.Core/src/Core.vbproj`) or the relevant solution under `vs_solutions/`.
+
+---
+
+## Quick Start
+
+A minimal sciBASIC# console application that exposes a CLI command:
+
+```vbnet
+Imports Microsoft.VisualBasic.ApplicationServices
+Imports Microsoft.VisualBasic.CommandLine
+Imports Microsoft.VisualBasic.CommandLine.Reflection
+
+Module Program
+
+    Public Function Main() As Integer
+        ' Standard sciBASIC# CLI entry point: dispatches /switch based on
+        ' <ExportAPI> methods and auto-generates the help screen.
+        Return GetType(Program).RunCLI(App.CommandLine)
+    End Function
+
+    <ExportAPI("/hello")>
+    <Usage("/hello /name <string>")>
+    Public Function Hello(args As CommandLine) As Integer
+        Call Console.WriteLine($"Hello, {args("/name")}!")
+        Return 0
+    End Function
+
+End Module
+```
+
+```bash
+yourapp.exe /hello /name "sciBASIC#"
+# -> Hello, sciBASIC#!
+```
+
+---
+
+## Module & Namespace Overview
+
+The framework exposes a large, consistent set of namespaces. The tables below group them by layer.
+Names marked with **\*** ship from the *data-science runtime* (the `Data/`, `Data_science/`, `gr/`
+and `mime/` roots) rather than the general core.
+
+### Core runtime — `Microsoft.VisualBasic.Core`
+
+| Namespace | Description |
+| --- | --- |
+| `Microsoft.VisualBasic.Language` | Extended VB syntax: `Value(Of T)`, `List(Of T)`, `Vector`, `UnixBash` shell helpers. |
+| `Microsoft.VisualBasic.Language.Linq` | LINQ-style collection helpers (`Sequence`, `Iterates`, `which`, `sentinel`). |
+| `Microsoft.VisualBasic.CommandLine` | CLI application framework, `InteropService`, `POSIX` helpers. |
+| `Microsoft.VisualBasic.ApplicationServices` | `App` host, logging, `println`, debug port (8081). |
+| `Microsoft.VisualBasic.ComponentModel` | Component model: `Collection`, `DataSourceModel`, `Range`, settings. |
+| `Microsoft.VisualBasic.Scripting` | Symbol tables and dynamic math-expression evaluation. |
+| `Microsoft.VisualBasic.Serialization` | JSON / XML (de)serialization. |
+| `Microsoft.VisualBasic.Net` | HTTP / networking utilities. |
+| `Microsoft.VisualBasic.Text` | `StringBuilder` helpers and CSV/text utilities. |
+| `Microsoft.VisualBasic.Drawing` | Color and 2-D drawing primitives. |
+| `Microsoft.VisualBasic.LLMs` | LLM proxy: `HookOllama`, `LLMsTalk`. |
+
+### Data framework — `Data/` & `mime/` **
+
+| Namespace | Description |
+| --- | --- |
+| `Microsoft.VisualBasic.Data.DataFrame` * | In-memory `DataFrame` and feature vectors. |
+| `Microsoft.VisualBasic.Data.csv.IO` * | CSV / TSV document I/O. |
+| `Microsoft.VisualBasic.Data.BinaryData` * | Binary scientific formats, including `NetCDF`. |
+| `Microsoft.VisualBasic.Data.Text.TextRank` * | `TextRank` keyword extraction. |
+| `Microsoft.VisualBasic.Data.GraphQuery` * | `GraphQuery` object query DSL and engine. |
+| `Microsoft.VisualBasic.MIME.Markup` * | JSON / HTML / XML / Markdown text parsing. |
+| `Microsoft.VisualBasic.MIME.Office.Excel` * | Excel (OpenXML / .xlsx) reading & writing. |
+
+### Math & data science — `Data_science/` **
+
+| Namespace | Description |
+| --- | --- |
+| `Microsoft.VisualBasic.Math` * | Core numerical math (root namespace of the Mathematica library). |
+| `Microsoft.VisualBasic.Math.LinearAlgebra` * | Vectors, matrices, matrix decomposition. |
+| `Microsoft.VisualBasic.Math.Statistics` * | Descriptive statistics, distributions, hypothesis tests (ANOVA). |
+| `Microsoft.VisualBasic.Math.Calculus.Dynamics` * | ODE system solver (`ODEs`, Runge–Kutta). |
+| `Microsoft.VisualBasic.Math.Sundials.CVODE` * | SUNDIALS CVODE stiff/non-stiff ODE bindings. |
+| `Microsoft.VisualBasic.Math.SignalProcessing` * | Signal processing. |
+| `Microsoft.VisualBasic.Math.GibbsSampling` * | Gibbs sampling. |
+| `Microsoft.VisualBasic.Math.Symbolic` * | Symbolic / genetic programming math. |
+| `Microsoft.VisualBasic.DataMining` * | Data mining: clustering, Association Rules, sequence alignment. |
+| `Microsoft.VisualBasic.MachineLearning` * | Machine learning: SVM, decision tree, Naïve Bayes, PCA. |
+| `Microsoft.VisualBasic.Darwinism` * | Evolutionary algorithms (genetic algorithm, differential evolution). |
+| `Microsoft.VisualBasic.Math.MachineVision` * | Machine vision utilities. |
+
+### Visualization & graphics — `Data_science/Visualization` & `gr/` **
+
+| Namespace | Description |
+| --- | --- |
+| `Microsoft.VisualBasic.Data.ChartPlots` * | Plotting: scatter, line, bar, histogram, heatmap, volcano, 3-D. |
+| `Microsoft.VisualBasic.Imaging` * | "Graphics Artist" device: `GraphicsData`, drawing primitives. |
+| `Microsoft.VisualBasic.Imaging.LayoutModel` * | Layout models for plots and diagrams. |
+| `Microsoft.VisualBasic.Imaging.Drawing2D` * | 2-D vector graphics, colors, styles. |
+| `Microsoft.VisualBasic.Imaging.network` * | Force-directed network layout & rendering. |
+| `Microsoft.VisualBasic.Imaging.colorbrewer` * | Publication color palettes. |
+
+---
+
+## Extended VisualBasic Language
+
+sciBASIC# extends the VB.NET surface so that small data-science scripts read almost like a domain-specific
+language. All of the helpers below live in `Microsoft.VisualBasic.Language` (core runtime) unless noted.
+
+### Inline value assignment — `Value(Of T)`
+
+```vbnet
+Imports Microsoft.VisualBasic.Language
+
+Dim x As New Foo With {
+    .a = Value(Of Integer)(100),   ' inline assignment of a property
+    .b = Value(Of String)("test")
 }
 ```
 
-## Image fast binarization using VisualBasic image extension API
-[``Sub Binarization(ByRef curBitmap As Bitmap, Optional style As BinarizationStyles = BinarizationStyles.Binary)``](./Microsoft.VisualBasic.Core/src/Extensions/Image/Bitmap/hcBitmap.vb)
+### `List(Of T)` append operator and rich indexers
+
+The core `List(Of T)` overloads `+`, so `l += item` appends, and it exposes Python-like
+slice/negative indexers:
 
 ```vbnet
+Imports Microsoft.VisualBasic.Language
+
+Dim l As New List(Of String)
+l += "a"
+l += "b"
+l += "c"
+
+Dim last = l(-1)          ' "c"
+Dim slice = l(0, 2)       ' { "a", "b" }
+```
+
+### LINQ-style sequence helpers
+
+```vbnet
+Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Linq
+
+' 100.Sequence -> 0 .. 99
+Dim squares = 100.Sequence _
+    .Select(Function(i) i * i) _
+    .ToArray
+
+For Each x In New List(Of Integer)({1, 2, 3}).IteratesALL
+    Call Console.WriteLine(x)
+Next
+```
+
+### Unix-shell style helpers — `UnixBash`
+
+```vbnet
+Imports Microsoft.VisualBasic.Language
+
+' list files, recursively, long format — mirroring the `ls -l -r` shell command
+Dim files = ls("-l -r") _
+    .Select(Function(path) path.FullName) _
+    .ToArray
+
+Dim text = cat("data/notes.txt")   ' read a whole file as one string
+```
+
+### `println` and the application host
+
+```vbnet
+Imports Microsoft.VisualBasic.App
+
+Call println("hello from sciBASIC#")
+```
+
+---
+
+## Examples by Domain
+
+### Tabular data & file I/O (`Data/`)
+
+```vbnet
+Imports Microsoft.VisualBasic.Data.DataFrame
+Imports Microsoft.VisualBasic.Data.csv.IO
+
+' Read a CSV into a DataFrame; columns are addressed by name through the
+' default member (df!columnName returns a FeatureVector).
+Dim df As DataFrame = DataFrame.Load("data.csv")
+Dim x As Double() = df!value                ' column vector
+df!scaled = x.Select(Function(v) v * 2).ToArray
+Call df.Save("scaled.csv")
+
+' Strongly-typed loading into entity objects:
+Dim people = EntityObject.LoadDataSet(Of Person)("people.csv")
+```
+
+Reading a `NetCDF` scientific file:
+
+```vbnet
+Imports Microsoft.VisualBasic.Data.BinaryData
+
+Dim nc = NetCDFReader.Open("model.nc")
+Dim var = nc.GetVariable("temperature")
+Dim data = var.GetData(Of Single)()
+```
+
+### Natural-language processing
+
+**TextRank** keyword extraction (`Microsoft.VisualBasic.Data.Text.TextRank`):
+
+```vbnet
+Imports Microsoft.VisualBasic.Data.Text.TextRank
+
+Dim doc As String = IO.File.ReadAllText("paper.txt")
+Dim keywords = doc.TextRankKeywords(topN:=10)
+```
+
+**GraphQuery** — a GraphQL-like DSL over your .NET objects
+(`Microsoft.VisualBasic.Data.GraphQuery`):
+
+```vbnet
+Imports Microsoft.VisualBasic.Data.GraphQuery
+
+<GraphQuery("gene")>
+Public Class Gene
+    <GraphQuery("symbol")> Public symbol As String
+    <GraphQuery("length")> Public length As Integer
+End Class
+
+' Project only the requested fields from any object graph:
+Dim q = GraphQuery.DoQuery("gene { symbol length }")
+Dim out = q.From(myGene)
+```
+
+See [`Data/GraphQuery/README.md`](Data/GraphQuery/README.md) and
+[`Data/TextRank/README.md`](Data/TextRank/README.md) for the full reference.
+
+### Mathematics & ODEs (`Data_science/Mathematica`)
+
+Solve a system of ordinary differential equations by subclassing `ODEs`
+(namespace `Microsoft.VisualBasic.Math.Calculus.Dynamics`):
+
+```vbnet
+Imports Microsoft.VisualBasic.Math.Calculus.Dynamics
+Imports Microsoft.VisualBasic.Math.LinearAlgebra
+
+Public Class Lorenz : Inherits ODEs
+    Public x, y, z As var
+    Public a As Double = 10
+    Public b As Double = 8 / 3
+    Public c As Double = 28
+
+    ' Initial values of the state variables.
+    Protected Overrides Function y0() As var()
+        Return {New var("x", 0), New var("y", 1), New var("z", 0)}
+    End Function
+
+    ' The differential equations: dy/dt = f(t, y).
+    Protected Overrides Sub func(dx#, ByRef dy As Vector)
+        dy(0) = a * (y - x)
+        dy(1) = x * (c - z) - y
+        dy(2) = x * y - b * z
+    End Sub
+End Class
+
+' Integrate for 10000 steps over t in [0, 30]:
+Dim result = New Lorenz().Solve(10000, 0, 30)
+' result.x -> time grid;  result.y -> Dictionary(name -> trajectory)
+```
+
+### Machine learning & data mining (`Data_science/`)
+
+```vbnet
+Imports Microsoft.VisualBasic.DataMining.KMeans
+
+' entities: IEnumerable(Of Double()) — each row is a feature vector.
+Dim clusters = KMeans.Cluster(entities, k:=3)
+
+For Each c In clusters
+    Console.WriteLine($"cluster {c.Cluster} has {c.Count} points")
+Next
+```
+
+Evolutionary search with `Darwinism` (genetic algorithm):
+
+```vbnet
+Imports Microsoft.VisualBasic.Darwinism
+Imports Microsoft.VisualBasic.Darwinism.GAF
+
+Public Class MyFitness : Inherits Fitness(Of Chromosome)
+    Public Overrides Function Calculate(c As Chromosome) As Double
+        Return -EvaluateModel(c)   ' lower fitness value == better
+    End Function
+End Class
+
+Dim ga As New GeneticAlgorithm(Of Chromosome)(generator, AddressOf MyEvaluate, populationSize:=100)
+ga.Evolve(500)
+Dim best = ga.Best
+```
+
+### Visualization & "Graphics Artist" (`Data_science/Visualization`, `gr/`)
+
+```vbnet
+Imports Microsoft.VisualBasic.Data.ChartPlots
 Imports Microsoft.VisualBasic.Imaging
 
-Dim bitmap As Image = Image.FromFile("./etc/lena/f13e6388b975d9434ad9e1a41272d242_1_orig.jpg")
+' 3-D scatter heatmap -> saved as a high-resolution raster image.
+Call Plot3D.ScatterHeatmap _
+    .Plot(data, size:=New Size(1200, 800)) _
+    .Save("scatter3d.png")
 
-Call bitmap.Grayscale().SaveAs("./etc/lena/lena.grayscale.png", ImageFormats.Png)
-Call bitmap.GetBinaryBitmap
-     .SaveAs("./etc/lena/lena.binary.png", ImageFormats.Png)
-Call bitmap.GetBinaryBitmap(BinarizationStyles.SparseGray)
-     .SaveAs("./etc/lena/lena.gray.png", ImageFormats.Png)
+' 2-D scatter heatmap.
+Call ScatterHeatmap.Plot(points, gridSize:=20).Save("heatmap.png")
+
+' Bar plot directly from a CSV.
+Dim bars = csv.LoadBarData("counts.csv")
+Call BarPlot.Plot(bars).Save("bars.png")
 ```
 
-|Normal|Binary|SparseGray|Grayscale|
-|------|------|----|---------|
-|![](./etc/lena/f13e6388b975d9434ad9e1a41272d242_1_orig.jpg)|![](./etc/lena/lena.binary.png)|![](./etc/lena/lena.gray.png)|![](./etc/lena/lena.grayscale.png)|
+Network / force-directed layouts and SVG/d3js export are provided by the
+`Microsoft.VisualBasic.Imaging.network` and `colorbrewer` modules — see
+[`gr/network-visualization/README.md`](gr/network-visualization/README.md).
 
-## sciBASIC# Graphics Artist
-
-![](./Data_science/Graph/Model/Tree/KdTree/KDtree-visual.png)
-> data visualization of the KD-tree based KNN search result
-
-[![](./gr/network-visualization/KEGG-pathway-network-clusters.png)](https://github.com/SMRUCC/GCModeller/blob/master/src/GCModeller/models/Networks/STRING/FunctionalEnrichmentPlot.vb)
-
-+ **[Network Visualization Interface](./gr/network-visualization/)**
-+ **[2D Imaging & 3D graphics engine](./gr/Microsoft.VisualBasic.Imaging/)**
-+ **[Isometric 3D graphics engine](./gr/Microsoft.VisualBasic.Imaging/Drawing3D/Models/README.md)**
-
-![](./gr/Microsoft.VisualBasic.Imaging/Drawing3D/Models/screenshots/io.fabianterhorst.isometric.screenshot.IsometricViewTest_doScreenshotThree.png)
-![](./gr/network-visualization/tumblr_inline_mqvdlydGCp1qz4rgp.png)
-![](./gr/build_3DEngine/images/screenshot.png)
-
-## Microsoft VisualBasic Data Science & Data Plots System
-
-+ **[Mathematics & Chart Ploting System](./Data_science/Mathematical/)**
-+ **[Darwinism computing module](./Data_science/Darwinism/)**
-+ **[Data Mining &amp; Machine Learning](./Data_science/)**
-+ **[sciBASIC# DataFrame System](./Data/DataFrame/)**
-
-### sciBASIC# Chart Plots System
-
-#### sciBASIC Power the R# ggplot graphics library
-
-The ``R#`` language is another scientific computing language which is designed for .NET runtime, ``R#`` is evolved from the R language. There is a famous graphics library called ``ggplot2`` in R language, so keeps the same, there is a graphics library called ``ggplot`` was developed for ``R#`` language.
-
-![](Data_science/Mathematica/images/myeloma_violin.png)
-![](Data_science/Mathematica/images/myeloma_box.png)
-![](Data_science/Mathematica/images/myeloma_bar.png)
-
-> charting via [R# ggplot](https://github.com/rsharp-lang/ggplot)
-
-#### Another charting
-
-Imports namespace for use the sciBASIC charting plot system api:
+### LLM proxy (`Microsoft.VisualBasic.LLMs`, core)
 
 ```vbnet
-Imports Microsoft.VisualBasic.Data.ChartPlots
+Imports Microsoft.VisualBasic.LLMs
+
+' Bridge a local Ollama (or any Func(Of String, String)) endpoint in:
+HookOllama(Function(prompt) MyLocalModel.Ask(prompt))
+
+' Prompt the hooked model from anywhere in your code:
+Dim answer As String = LLMsTalk("Explain principal component analysis")
 ```
 
-![](./Data_science/kmeans3D.png)
-![](./Data_science/Mathematica/images/DensityPlot.png)
-![](./Data_science/DataMining/hierarchical-clustering/test.png)
-![](./Data_science/Mathematica/images/identity_pie.png)
-![](./Data_science/Mathematica/images/heatmap/Sample.SPCC.png)
-![](./Data_science/Mathematica/images/log2FC_heatmap.png)
-![](./Data_science/algorithms/CMeans/CMeans.png)
-![](./Data_science/Mathematica/images/295022-plots-plots.png)
-[![](./Data_science/Mathematica/images/alignment/L26369_%255BM%252BH%255D%252B%2523.%252Flxy-CID30.mzXML%2523294-alignment.png)](./Data_science/Mathematica/Plots/BarPlot/AlignmentPlot.vb)
-![](./Data_science/Mathematica/images/boxplot/simpson.png)
-![](./Data_science/Mathematica/images/stat/16S-KO-level3-Z-scores.png)
+---
 
-###### 3D heatmap
+## FAQ
 
-```vbnet
-Dim func As Func(Of Double, Double, (Z#, Color#)) =
-_
-    Function(x, y) (3 * Math.Sin(x) * Math.Cos(y), Color:=x + y ^ 2)
+**Why VisualBasic for scientific computing?**
+Because the language is concise and readable, and sciBASIC# turns it into a
+productive environment for writing headless, reproducible data-science
+programs — without giving up the .NET ecosystem.
 
-Call Plot3D.ScatterHeatmap.Plot(
-    func, "-3,3", "-3,3",
-    New Camera With {
-        .screen = New Size(3600, 2500),
-        .ViewDistance = -3.3,
-        .angleZ = 30,
-        .angleX = 30,
-        .angleY = -30,
-        .offset = New Point(-100, -100)
-    }) _
-    .SaveAs("./3d-heatmap.png")
-```
+**Are the figures usable in a paper?**
+Yes. The `Imaging` / `ChartPlots` engines are tuned for **printable,
+publication-quality** output and can export SVG, PDF and high-DPI raster
+images, which is why sciBASIC# is often described as the "Graphics Artist"
+for scientific plotting.
 
-![](./Data_science/Mathematica/images/3d-heatmap.png)
+**Is it cross-platform?**
+Yes. The core and math libraries target `net10.0` and run on .NET under
+Windows, Linux and macOS. The graphics/imaging projects additionally target
+`net10.0-windows` because they rely on `System.Drawing` / GDI+.
 
-###### Contour Heatmap
+**CLI or GUI?**
+CLI-first. sciBASIC# is designed for command-line data-science applications
+that read inputs, compute, and write figures/tables — not interactive
+controls.
 
-You can using a lambda expression as the plot data source:
+---
 
-```vbnet
-Dim f As Func(Of Double, Double, Double) =
-    Function(x, y) x ^ 2 + y ^ 3
+## Documentation & Contacts
 
-Call ScatterHeatmap _
-    .Plot(f, "(-1,1)", "(-1,1)", legendTitle:="z = x ^ 2 + y ^ 3") _
-    .SaveAs("./scatter-heatmap.png")
-```
+- Source & issues: <https://github.com/xieguigang/sciBASIC>
+- Module guides: [`docs/guides`](docs/guides), VB code style: [`docs/vb_codestyle`](docs/vb_codestyle)
+- Tutorials: [`tutorials/`](tutorials)
+- Author / contact: xieguigang — xie.guigang@live.com
 
-![](./Data_science/Mathematica/images/scatter-heatmap.png)
-![](./Data_science/Mathematica/images/256821.654661046-rho_gamma3_1%2C120_0.25%2C20.png)
-
-###### Stacked Barplot
-
-The stacked barplot is a best choice for visualize the sample composition and compares to other samples data:
-
-```vbnet
-Imports Microsoft.VisualBasic.Data.ChartPlots
-
-' Plots metagenome taxonomy profiles annotation result using barplot
-Dim file = "./FigurePlot-Reference-Unigenes.absolute.level1.csv"
-' Using color brewer color profiles
-Dim taxonomy As BarDataGroup = csv.LoadBarData(file, "Paired:c8") 
-
-Call BarPlot.Plot(
-    taxonomy,
-    New Size(2000, 1400),
-    stacked:=True,
-    legendFont:=New Font(FontFace.BookmanOldStyle, 18)
-) _
-    .SaveAs("./FigurePlot-Reference-Unigenes.absolute.level1.png")
-```
-
-![](./Data_science/Mathematica/images/FigurePlot-Reference-Unigenes.absolute.level1.png)
-
-![](./Data_science/Visualization/data/sample_groups.VolinPlot.png)
-
-###### beta-PDF
-
-```vbnet
-Public Function beta(x#, alpha#, _beta#) As Double
-    Return Pow(x, alpha - 1) * Pow((1 - x), _beta - 1) *
-        Exp(lgamma(alpha + _beta) - lgamma(alpha) - lgamma(_beta))
-End Function
-
-Public Function lgamma(x As Double) As Double
-    Dim logterm As Double = Math.Log(x * (1.0F + x) * (2.0F + x))
-    Dim xp3 As Double = 3.0F + x
-
-    Return -2.081061F - x + 0.0833333F / xp3 -
-        logterm + (2.5F + x) * Math.Log(xp3)
-End Function
-```
-
-![](./Data_science/Mathematica/data/beta-PDF/beta_PDF.png)
-> https://en.wikipedia.org/wiki/Beta_distribution
-
-###### Heatmap
-![](./Data_science/Mathematica/images/heatmap.png)
-
-```vbnet
-Dim data = DataSet.LoadDataSet("./Quick_correlation_matrix_heatmap/mtcars.csv")
-
-Call data.CorrelatesNormalized() _
-    .Plot(mapName:="Jet",  ' Using internal color theme 'Jet'
-          mapLevels:=20,
-          legendFont:=New Font(FontFace.BookmanOldStyle, 32)) _
-    .SaveAs("./images/heatmap.png")
-```
-
-> ###### Microsoft.VisualBasic.Mathematical.Plots.Heatmap::Plot(IEnumerable(Of NamedValue(Of Dictionary(Of String, Double))), Color(), Integer, String, Boolean, Size, Size, String, String, String) As Bitmap
-
-Heatmap data source from R dataset [``mtcars``](./Data_science/Mathematica/Quick_correlation_matrix_heatmap/mtcars.csv) and calculates [the Pearson correlations](./Microsoft.VisualBasic.Architecture.Framework/Extensions/Math/Correlations.vb):
-
-```R
-data(mtcars)
-write.csv(mtcars, "./Data_science/Mathematical/Quick_correlation_matrix_heatmap/mtcars.csv")
-```
-
-<hr/>
-
-## New VisualBasic Language Syntax in this runtime
-
-First of all, imports the language feature namespace of VisualBasic
-
-```vbnet
-#Region "Microsoft VisualBasic.NET language"
-' sciBASIC# general application runtime
-' Microsoft.VisualBasic.Architecture.Framework_v3.0_22.0.76.201__8da45dcd8060cc9a.dll
-#End Region
-
-Imports Microsoft.VisualBasic.Language
-```
-
-###### 1. Inline value assign
-
-Old:
-
-```vbnet
-Dim s As String = ""
-
-Do While Not s Is Nothing
-   s = blablabla
-
-   ' Do other staff
-Loop
-```
-
-New:
-
-```vbnet
-Dim s As New Value(Of String)
-
-Do While Not (s = blablabla) Is Nothing
-   ' Do other staff
-Loop
-```
-
-###### 2. List(Of ) Add
-
-Old:
-
-```vbnet
-Dim l As New List(Of String)
-
-Call l.Add("123")
-Call l.AddRange(From x In 100.Sequence Select CStr(x))
-```
-
-New:
-
-```vbnet
-Dim l As New List(Of String)
-
-l += "123"
-l += From x As Integer
-     In 100.Sequence
-     Select CStr(x)
-```
-
-###### New Integer(int) type in visualbasic
-
-+ value ranges syntax
-
-```vbnet
-Dim min As int = 1
-Dim max As int = 200
-Dim x% = 199
-
-' Compares
-Call println(min <= x < max) ' True
-x += 10 ' 209
-Call println(min <= x < max) ' False
-x = -1
-Call println(min <= x < max) ' False
-```
-
-+ inline calculation and value assign
-
-```vbnet
-Dim bitChunk As Byte() = New Byte(INT64 - 1) {}
-Dim p As int = Scan0
-
-Call Array.ConstrainedCopy(rawStream, ++(p + INT64), bitChunk, Scan0, INT64)
-ProtocolCategory = BitConverter.ToInt64(bitChunk, Scan0)
-
-Call Array.ConstrainedCopy(rawStream, ++(p + INT64), bitChunk, Scan0, INT64)
-Protocol = BitConverter.ToInt64(bitChunk, Scan0)
-
-bitChunk = New Byte(INT64 - 1) {}
-Call Array.ConstrainedCopy(rawStream, p = (p + INT64), bitChunk, Scan0, INT64)
-BufferLength = BitConverter.ToInt64(bitChunk, Scan0)
-```
-
-<hr/>
-
-![](./www/data/github/xieguigang_github-vcard.png)
-
-<img src="https://starchart.cc/xieguigang/sciBASIC.svg" alt="Stargazers over time" style="max-width: 60%">
-
-> Copyleft 2022, [I@xieguigang.me](mailto://I@xieguigang.me) (http://sciBASIC.NET/)
+> sciBASIC# is licensed under the **GNU GPLv3**. See the headers in each source
+> file for authorship and copyright details.
