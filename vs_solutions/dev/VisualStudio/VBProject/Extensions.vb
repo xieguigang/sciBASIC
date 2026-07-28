@@ -74,7 +74,7 @@ Namespace VBProj
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function EnumerateSourceFiles(vbproj As String) As IEnumerable(Of String)
-            Return vbproj.LoadXml(Of Project).EnumerateSourceFiles
+            Return VBProject.LoadProjectXml(vbproj).EnumerateSourceFiles
         End Function
 
         ''' <summary>

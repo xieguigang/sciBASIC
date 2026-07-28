@@ -3,6 +3,7 @@ Imports System.Text.RegularExpressions
 Imports Microsoft.VisualBasic.ApplicationServices.Development.VisualStudio.VBProj.ProjectXml
 Imports Microsoft.VisualBasic.ApplicationServices.Development.VisualStudio.VBProj.Reflection
 Imports Microsoft.VisualBasic.ApplicationServices.Development.VisualStudio.VBProj.Syntax
+Imports Microsoft.VisualBasic.ApplicationServices.Development.XmlDoc.Serialization
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.Net.Protocols.ContentTypes
 Imports Microsoft.VisualBasic.Scripting.Expressions
@@ -175,18 +176,10 @@ Namespace VBProj
         ''' <param name="vbproj"></param>
         ''' <returns></returns>
         Public Shared Function Load(vbproj As String) As VBProject
-            Dim projDir As String = Path.GetDirectoryName(Path.GetFullPath(vbproj))
-
+            Dim proj As VBProject = LoadProjectXml(vbproj)
+            Dim projDir As String = DirectCast(proj, IFileReference).FilePath.GetFullPath
             Dim doc As XDocument = XDocument.Load(vbproj)
             Dim ns As XNamespace = If(doc.Root Is Nothing, "", doc.Root.Name.Namespace)
-
-            Dim proj As New VBProject() With {
-                .Sdk = If(doc.Root IsNot Nothing, If(doc.Root.Attribute("Sdk")?.Value, ""), ""),
-                .FilePath = vbproj.GetFullPath
-            }
-
-            ParseProperties(doc, ns, proj)
-
             Dim files As String() = CollectCompileFiles(doc, ns, projDir)
             Dim docs As New List(Of VBDocument)
 
@@ -222,8 +215,29 @@ Namespace VBProj
                 docs.Add(vbdoc)
             Next
 
-            ParseItemGroups(doc, ns, proj)
             proj.CompileFiles = docs.ToArray()
+
+            Return proj
+        End Function
+
+        ''' <summary>
+        ''' Just read the vbproj xml file
+        ''' </summary>
+        ''' <param name="vbproj"></param>
+        ''' <returns></returns>
+        Public Shared Function LoadProjectXml(vbproj As String) As VBProject
+            Dim projDir As String = Path.GetDirectoryName(Path.GetFullPath(vbproj))
+            Dim doc As XDocument = XDocument.Load(vbproj)
+            Dim ns As XNamespace = If(doc.Root Is Nothing, "", doc.Root.Name.Namespace)
+
+            Dim proj As New VBProject() With {
+                .Sdk = If(doc.Root IsNot Nothing, If(doc.Root.Attribute("Sdk")?.Value, ""), ""),
+                .FilePath = vbproj.GetFullPath
+            }
+
+            ParseProperties(doc, ns, proj)
+            ParseItemGroups(doc, ns, proj)
+
             Return proj
         End Function
 
