@@ -55,58 +55,61 @@
 
 Imports Microsoft.VisualBasic.Text
 
-''' <summary>
-''' svn log or git log
-''' </summary>
-Public Class log
-
-    Public Property commit As String
-    Public Property author As String
-    Public Property [date] As Date
-    Public Property message As String
+Namespace VersionControl.Git
 
     ''' <summary>
-    ''' parse git log text
+    ''' svn log or git log
     ''' </summary>
-    ''' <param name="text">``git log [fileName]``</param>
-    ''' <returns></returns>
-    Public Shared Iterator Function ParseGitLogText(text As String) As IEnumerable(Of log)
-        For Each block As String() In text.LineIterators.Split(Function(line) line.StartsWith("commit "), DelimiterLocation.NextFirst)
-            Yield New log With {
-                .commit = block(Scan0).Trim.Split.Last,
-                .author = block(1).GetTagValue(":", trim:=True).Value,
-                .[date] = Date.Parse(block(2).GetTagValue(":", trim:=True).Value),
-                .message = block _
-                    .Skip(3) _
-                    .Select(AddressOf Strings.Trim) _
-                    .Where(Function(s) Not s.StringEmpty) _
-                    .JoinBy("; ")
-            }
-        Next
-    End Function
+    Public Class log
 
-    ''' <summary>
-    ''' 
-    ''' </summary>
-    ''' <param name="text">``svn log [fileName]``</param>
-    ''' <returns></returns>
-    Public Shared Iterator Function ParseSvnLogText(text As String) As IEnumerable(Of log)
-        For Each block As String() In text.LineIterators.Split(Function(line) line.IsPattern("[-]+"), DelimiterLocation.NotIncludes)
-            Dim tokens As String() = block(Scan0) _
-                .Split("|"c) _
-                .Select(AddressOf Strings.Trim) _
-                .ToArray
+        Public Property commit As String
+        Public Property author As String
+        Public Property [date] As Date
+        Public Property message As String
 
-            Yield New log With {
-                .commit = tokens(Scan0),
-                .author = tokens(1),
-                .[date] = Date.Parse(tokens(2)),
-                .message = block _
-                    .Skip(1) _
+        ''' <summary>
+        ''' parse git log text
+        ''' </summary>
+        ''' <param name="text">``git log [fileName]``</param>
+        ''' <returns></returns>
+        Public Shared Iterator Function ParseGitLogText(text As String) As IEnumerable(Of log)
+            For Each block As String() In text.LineIterators.Split(Function(line) line.StartsWith("commit "), DelimiterLocation.NextFirst)
+                Yield New log With {
+                    .commit = block(Scan0).Trim.Split.Last,
+                    .author = block(1).GetTagValue(":", trim:=True).Value,
+                    .[date] = Date.Parse(block(2).GetTagValue(":", trim:=True).Value),
+                    .message = block _
+                        .Skip(3) _
+                        .Select(AddressOf Strings.Trim) _
+                        .Where(Function(s) Not s.StringEmpty) _
+                        .JoinBy("; ")
+                }
+            Next
+        End Function
+
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="text">``svn log [fileName]``</param>
+        ''' <returns></returns>
+        Public Shared Iterator Function ParseSvnLogText(text As String) As IEnumerable(Of log)
+            For Each block As String() In text.LineIterators.Split(Function(line) line.IsPattern("[-]+"), DelimiterLocation.NotIncludes)
+                Dim tokens As String() = block(Scan0) _
+                    .Split("|"c) _
                     .Select(AddressOf Strings.Trim) _
-                    .JoinBy(vbCrLf) _
-                    .Trim(" ", ASCII.TAB, ASCII.CR, ASCII.LF)
-            }
-        Next
-    End Function
-End Class
+                    .ToArray
+
+                Yield New log With {
+                    .commit = tokens(Scan0),
+                    .author = tokens(1),
+                    .[date] = Date.Parse(tokens(2)),
+                    .message = block _
+                        .Skip(1) _
+                        .Select(AddressOf Strings.Trim) _
+                        .JoinBy(vbCrLf) _
+                        .Trim(" ", ASCII.TAB, ASCII.CR, ASCII.LF)
+                }
+            Next
+        End Function
+    End Class
+End Namespace
