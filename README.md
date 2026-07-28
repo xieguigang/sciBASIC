@@ -7,8 +7,6 @@
 
 > A VisualBasic(.NET) language kernel and runtime for scientific data computing, machine learning, visualization and command-line data-science applications — running on .NET (`net10.0`) across Windows, Linux and macOS.
 
-![](tutorials/MESH.PNG)
-
 ---
 
 ## Table of Contents
@@ -45,6 +43,12 @@ The runtime is organized into a few cooperating layers:
 The design philosophy is **CLI-first**: instead of drag-and-drop controls, sciBASIC# emphasizes
 headless, scriptable, reproducible data-science programs that read files, compute, and emit figures or
 tables — the kind of artifacts that end up in a scientific manuscript.
+
+#### 3D Graphics Example From sciBASIC#
+
+![](tutorials/MESH.PNG)
+![](tutorials/ModelViewer1.PNG)
+![](tutorials/ModelViewer2.PNG)
 
 ---
 
