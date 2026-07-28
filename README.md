@@ -7,6 +7,8 @@
 
 > A VisualBasic(.NET) language kernel and runtime for scientific data computing, machine learning, visualization and command-line data-science applications — running on .NET (`net10.0`) across Windows, Linux and macOS.
 
+![](tutorials/MESH.PNG)
+
 ---
 
 ## Table of Contents
