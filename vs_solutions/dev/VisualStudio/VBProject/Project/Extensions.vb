@@ -74,7 +74,11 @@ Namespace VBProj
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         <Extension>
         Public Function EnumerateSourceFiles(vbproj As String) As IEnumerable(Of String)
-            Return VBProject.LoadProjectXml(vbproj).EnumerateSourceFiles
+            Dim projDir As String = vbproj.ParentPath.GetFullPath
+            Dim doc As XDocument = XDocument.Load(vbproj)
+            Dim ns As XNamespace = If(doc.Root Is Nothing, "", doc.Root.Name.Namespace)
+
+            Return ProjectFiles.CollectCompileFiles(doc, ns, projDir)
         End Function
 
         ''' <summary>

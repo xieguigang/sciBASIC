@@ -177,7 +177,7 @@ Namespace VBProj
         ''' <returns></returns>
         Public Shared Function Load(vbproj As String) As VBProject
             Dim proj As VBProject = LoadProjectXml(vbproj)
-            Dim projDir As String = DirectCast(proj, IFileReference).FilePath.GetFullPath
+            Dim projDir As String = DirectCast(proj, IFileReference).FilePath.ParentPath.GetFullPath
             Dim doc As XDocument = XDocument.Load(vbproj)
             Dim ns As XNamespace = If(doc.Root Is Nothing, "", doc.Root.Name.Namespace)
             Dim files As String() = CollectCompileFiles(doc, ns, projDir)
@@ -239,107 +239,6 @@ Namespace VBProj
             ParseItemGroups(doc, ns, proj)
 
             Return proj
-        End Function
-
-        Private Shared Function ReadProperty(doc As XDocument, ns As XNamespace, name As String) As String
-            If doc.Root Is Nothing Then Return ""
-            For Each pg In doc.Root.Elements(ns + "PropertyGroup")
-                Dim el = pg.Element(ns + name)
-                If el IsNot Nothing AndAlso Not String.IsNullOrWhiteSpace(el.Value) Then
-                    Return el.Value.Trim()
-                End If
-            Next
-            Return ""
-        End Function
-
-        Private Shared Function CollectCompileFiles(doc As XDocument, ns As XNamespace, projDir As String) As String()
-            Dim includes As New List(Of String)
-            Dim removes As New List(Of String)
-
-            If doc.Root IsNot Nothing Then
-                For Each ig In doc.Root.Elements(ns + "ItemGroup")
-                    For Each c In ig.Elements(ns + "Compile")
-                        Dim inc = c.Attribute("Include")?.Value
-                        If inc IsNot Nothing Then includes.Add(NormalizePath(inc))
-                        Dim remAttr = c.Attribute("Remove")?.Value
-                        If remAttr IsNot Nothing Then removes.Add(NormalizePath(remAttr))
-                    Next
-                Next
-            End If
-
-            Dim defaultDisabled As Boolean = ReadProperty(doc, ns, "EnableDefaultCompileItems").Equals("false", StringComparison.OrdinalIgnoreCase)
-
-            Dim result As New List(Of String)
-
-            If includes.Count = 0 AndAlso Not defaultDisabled Then
-                If Directory.Exists(projDir) Then
-                    Try
-                        For Each f In Directory.GetFiles(projDir, "*.vb", SearchOption.AllDirectories)
-                            Dim rel = GetRelativePath(projDir, f)
-                            If Not IsExcludedByDefault(rel) Then
-                                result.Add(rel)
-                            End If
-                        Next
-                    Catch
-                    End Try
-                End If
-            Else
-                result.AddRange(includes)
-            End If
-
-            If removes.Count > 0 Then
-                result.RemoveAll(Function(p) removes.Any(Function(r) GlobMatch(r, p)))
-            End If
-
-            Return result.ToArray()
-        End Function
-
-        Private Shared Function NormalizePath(p As String) As String
-            Dim s = p.Trim()
-            While s.StartsWith(".\") OrElse s.StartsWith("./")
-                s = s.Substring(2)
-            End While
-            Return s.Replace("/", "\")
-        End Function
-
-        Private Shared Function GetRelativePath(baseDir As String, file As String) As String
-            Dim b = Path.GetFullPath(baseDir).TrimEnd("\"c, "/"c) & "\"
-            Dim f = Path.GetFullPath(file)
-            Dim uriB = New Uri(b)
-            Dim uriF = New Uri(f)
-            Dim rel = Uri.UnescapeDataString(uriB.MakeRelativeUri(uriF).ToString())
-            Return rel.Replace("/", "\")
-        End Function
-
-        Private Shared Function IsExcludedByDefault(rel As String) As Boolean
-            Dim lower = rel.Replace("\", "/").ToLowerInvariant()
-            Return lower.Contains("/obj/") OrElse lower.Contains("/bin/") OrElse lower.StartsWith("obj/") OrElse lower.StartsWith("bin/")
-        End Function
-
-        Private Shared Function GlobMatch(pattern As String, path As String) As Boolean
-            Dim p = pattern.Replace("\", "/").ToLowerInvariant()
-            Dim s = path.Replace("\", "/").ToLowerInvariant()
-            Dim rx As String = "^"
-            Dim i As Integer = 0
-            While i < p.Length
-                Dim c As Char = p(i)
-                If c = "*"c Then
-                    If i + 1 < p.Length AndAlso p(i + 1) = "*"c Then
-                        rx &= ".*"
-                        i += 1
-                        If i + 1 < p.Length AndAlso p(i + 1) = "/"c Then i += 1
-                    Else
-                        rx &= "[^/]*"
-                    End If
-                ElseIf c = "?"c Then
-                    rx &= "."
-                Else
-                    rx &= Regex.Escape(c.ToString())
-                End If
-                i += 1
-            End While
-            rx &= "$"
-            Return Regex.IsMatch(s, rx)
         End Function
 
         ' Extract Imports statements that VBParser.Parse silently ignores.
@@ -726,7 +625,6 @@ Namespace VBProj
                 el.SetAttributeValue(name, value)
             End If
         End Sub
-
 
     End Class
 End Namespace
