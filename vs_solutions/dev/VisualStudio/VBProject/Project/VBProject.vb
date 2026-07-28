@@ -14,6 +14,7 @@ Namespace VBProj
 
         Public Property RootNamespace As String
         Public Property AssemblyName As String
+        Public Property AssemblyVersion As String
         Public Property OutputType As String
         Public Property CompileFiles As VBDocument()
 

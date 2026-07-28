@@ -180,28 +180,25 @@ Namespace VBProj
         End Function
 
         <Extension>
-        Public Function ExtractNuGetAssemblyInfo(netcore As Project) As AssemblyInfo
-            Dim main As PropertyGroup = netcore.MainGroup
-
-            If main Is Nothing Then
-                Return Nothing
-            End If
+        Public Function ExtractNuGetAssemblyInfo(netcore As VBProject) As AssemblyInfo
+            Dim nuget = netcore.NuGet
+            Dim main = netcore.Metadata
 
             Return New AssemblyInfo With {
-                .AssemblyCompany = main.Company,
-                .AssemblyCopyright = main.Copyright,
-                .AssemblyDescription = main.Description,
-                .AssemblyFileVersion = main.AssemblyVersion,
-                .AssemblyVersion = main.AssemblyVersion,
-                .AssemblyInformationalVersion = main.Version,
-                .AssemblyFullName = main.AssemblyName,
-                .AssemblyProduct = main.AssemblyName,
-                .AssemblyTitle = main.Description,
-                .AssemblyTrademark = main.Company,
+                .AssemblyCompany = nuget.Company,
+                .AssemblyCopyright = nuget.Copyright,
+                .AssemblyDescription = nuget.Description,
+                .AssemblyFileVersion = netcore.AssemblyVersion,
+                .AssemblyVersion = nuget.Version,
+                .AssemblyInformationalVersion = nuget.Version,
+                .AssemblyFullName = netcore.AssemblyName,
+                .AssemblyProduct = nuget.Product,
+                .AssemblyTitle = nuget.Description,
+                .AssemblyTrademark = nuget.Company,
                 .ComVisible = False,
                 .Guid = Guid.NewGuid.ToString,
-                .Name = main.AssemblyName,
-                .TargetFramework = "netcoreapp",
+                .Name = nuget.PackageId,
+                .TargetFramework = main.TargetFramework,
                 .BuiltTime = Nothing
             }
         End Function
