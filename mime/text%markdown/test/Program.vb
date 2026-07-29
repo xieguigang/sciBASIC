@@ -220,7 +220,7 @@ _this_ _is_ _your_ _basic_ _boring_ _emphasis_
             New Block With {.type = "list", .ordered = False, .items = {"alpha", "beta", "gamma"}},
             New Block With {.type = "tasklist", .ordered = False, .items = {"write docs", "run tests", "ship"}, .checked = {True, False, True}},
             New Block With {.type = "blockquote", .content = "line one" & vbCrLf & "line two"},
-            New Block With {.type = "table", .headers = {"Name", "Age", "Role"}, .alignments = {"left", "center", "right"}, .rows = {{"Tom", "28", "dev"}, {"Lucy", "31", "pm"}}},
+            New Block With {.type = "table", .headers = {"Name", "Age", "Role"}, .alignments = {"left", "center", "right"}, .rows = {New String() {"Tom", "28", "dev"}, New String() {"Lucy", "31", "pm"}}},
             New Block With {.type = "hr"},
             New Block With {.type = "image", .url = "a.png", .alt = "pic", .title = "a picture"},
             New Block With {.type = "math", .content = "\frac{a}{b} = c"},

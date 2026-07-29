@@ -95,7 +95,11 @@ Namespace JSONSchema
         Public Function ToHtmlBlock(block As Block) As String
             Select Case Strings.LCase(block.type)
                 Case "heading", "h"
-                    Dim level As Integer = Math.Min(6, Math.Max(1, block.level))
+                    Dim level As Integer = block.level
+
+                    If level < 1 Then level = 1
+                    If level > 6 Then level = 6
+
                     Return "<h" & level & ">" & HtmlEncode(block.content) & "</h" & level & ">"
                 Case "paragraph", "p"
                     Return "<p>" & HtmlEncode(block.content) & "</p>"

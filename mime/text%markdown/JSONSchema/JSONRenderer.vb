@@ -31,10 +31,15 @@ Namespace JSONSchema
                                            .ToArray)
                         }
                     Case "heading", "h"
+                        Dim lvl As Integer = item!level.AsString(True).ParseInteger
+
+                        If lvl < 1 Then lvl = 1
+                        If lvl > 6 Then lvl = 6
+
                         Yield New Block With {
                             .type = "heading",
                             .content = item!content.AsString(True),
-                            .level = item!level.AsString(True).ParseInteger
+                            .level = lvl
                         }
                     Case "paragraph", "p"
                         Yield New Block With {
