@@ -23,9 +23,12 @@ Namespace JSONSchema
                             .type = "table",
                             .headers = item!headers.AsStringVector(True),
                             .alignments = item!alignments.AsStringVector(False),
-                            .rows = DirectCast(item!rows, JsonArray) _
-                                .Select(Function(r) r.AsStringVector(True)) _
-                                .ToArray
+                            .rows = If(item!rows Is Nothing,
+                                       Nothing,
+                                       DirectCast(item!rows, JsonArray) _
+                                           .SafeQuery _
+                                           .Select(Function(r) r.AsStringVector(True)) _
+                                           .ToArray)
                         }
                     Case "heading", "h"
                         Yield New Block With {
@@ -70,6 +73,43 @@ Namespace JSONSchema
                         Yield New Block With {
                             .type = "html",
                             .content = item!content.AsString(True)
+                        }
+                    Case "math", "equation", "tex", "latex"
+                        Yield New Block With {
+                            .type = "math",
+                            .content = item!content.AsString(True),
+                            .language = item!language.AsString(False)
+                        }
+                    Case "link", "a"
+                        Yield New Block With {
+                            .type = "link",
+                            .url = item!url.AsString(True),
+                            .alt = item!alt.AsString(True),
+                            .title = item!title.AsString(False)
+                        }
+                    Case "tasklist", "tasks", "todo"
+                        Yield New Block With {
+                            .type = "tasklist",
+                            .ordered = item!ordered.AsString(False).ParseBoolean,
+                            .items = item!items.AsStringVector(True),
+                            .checked = If(item!checked Is Nothing,
+                                          Nothing,
+                                          DirectCast(item!checked, JsonArray) _
+                                              .SafeQuery _
+                                              .Select(Function(b) b.AsString(False).ParseBoolean) _
+                                              .ToArray())
+                        }
+                    Case "footnote", "note"
+                        Yield New Block With {
+                            .type = "footnote",
+                            .id = item!id.AsString(True),
+                            .content = item!content.AsString(True)
+                        }
+                    Case "deflist", "definition", "dl"
+                        Yield New Block With {
+                            .type = "deflist",
+                            .terms = item!terms.AsStringVector(True),
+                            .definitions = item!definitions.AsStringVector(True)
                         }
                     Case Else
                         ' 默认当作纯文本

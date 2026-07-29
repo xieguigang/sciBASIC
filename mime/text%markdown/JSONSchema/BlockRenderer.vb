@@ -46,11 +46,23 @@ Namespace JSONSchema
             End Select
         End Function
 
+        ''' <summary>
+        ''' 返回两个整型的最小值（避免与 <see cref="Microsoft.VisualBasic.Linq"/> 中
+        ''' 的同名扩展方法冲突，因此不在此模块内使用 ``Math.Min``）。
+        ''' </summary>
+        Private Function MinInt(a As Integer, b As Integer) As Integer
+            Return If(a < b, a, b)
+        End Function
+
         <Extension>
         Public Function ToMarkdownBlock(block As Block) As String
             Select Case Strings.LCase(block.type)
                 Case "heading", "h"
-                    Dim level As Integer = If(block.level <= 0, 1, block.level)
+                    Dim level As Integer = block.level
+
+                    If level < 1 Then level = 1
+                    If level > 6 Then level = 6
+
                     Return New String("#"c, level) & " " & block.content
                 Case "paragraph", "p", "html", "raw"
                     Return block.content
@@ -83,7 +95,7 @@ Namespace JSONSchema
         Public Function ToHtmlBlock(block As Block) As String
             Select Case Strings.LCase(block.type)
                 Case "heading", "h"
-                    Dim level As Integer = If(block.level <= 0, 1, block.level)
+                    Dim level As Integer = Math.Min(6, Math.Max(1, block.level))
                     Return "<h" & level & ">" & HtmlEncode(block.content) & "</h" & level & ">"
                 Case "paragraph", "p"
                     Return "<p>" & HtmlEncode(block.content) & "</p>"
@@ -136,11 +148,14 @@ Namespace JSONSchema
 
         Private Function renderTableMarkdown(block As Block) As String
             Dim sb As New StringBuilder
+            Dim ncols As Integer = If(block.headers Is Nothing, 0, block.headers.Length)
 
-            Call sb.AppendLine("| " & block.headers.JoinBy(" | ") & " |")
-            Call sb.AppendLine("| " & block.headers _
-                .Select(Function(h, i) alignMarkdownToken(block.alignments, i)) _
-                .JoinBy(" | ") & " |")
+            If ncols > 0 Then
+                Call sb.AppendLine("| " & block.headers.JoinBy(" | ") & " |")
+                Call sb.AppendLine("| " & block.headers _
+                    .Select(Function(h, i) alignMarkdownToken(block.alignments, i)) _
+                    .JoinBy(" | ") & " |")
+            End If
 
             For Each row As String() In block.rows.SafeQuery
                 Call sb.AppendLine("| " & row.JoinBy(" | ") & " |")
@@ -179,17 +194,22 @@ Namespace JSONSchema
 
         Private Function renderTableHtml(block As Block) As String
             Dim sb As New StringBuilder
+            Dim ncols As Integer = If(block.headers Is Nothing, 0, block.headers.Length)
 
             Call sb.AppendLine("<table>")
-            Call sb.AppendLine("  <thead>")
-            Call sb.AppendLine("    <tr>")
 
-            For i As Integer = 0 To block.headers.Length - 1
-                Call sb.AppendLine("      <th" & AlignStyle(block.alignments, i) & ">" & HtmlEncode(block.headers(i)) & "</th>")
-            Next
+            If ncols > 0 Then
+                Call sb.AppendLine("  <thead>")
+                Call sb.AppendLine("    <tr>")
 
-            Call sb.AppendLine("    </tr>")
-            Call sb.AppendLine("  </thead>")
+                For i As Integer = 0 To ncols - 1
+                    Call sb.AppendLine("      <th" & AlignStyle(block.alignments, i) & ">" & HtmlEncode(block.headers(i)) & "</th>")
+                Next
+
+                Call sb.AppendLine("    </tr>")
+                Call sb.AppendLine("  </thead>")
+            End If
+
             Call sb.AppendLine("  <tbody>")
 
             For Each row As String() In block.rows.SafeQuery
@@ -204,6 +224,135 @@ Namespace JSONSchema
 
             Call sb.AppendLine("  </tbody>")
             Call sb.AppendLine("</table>")
+
+            Return sb.ToString.TrimEnd(vbCrLf.ToCharArray)
+        End Function
+
+        Private Function renderBlockquoteHtml(block As Block) As String
+            Dim lines As String() = block.content.Split(New String() {vbCrLf, vbLf, vbCr}, StringSplitOptions.None)
+            Dim inner As String = lines _
+                .Select(Function(l) "<p>" & HtmlEncode(l) & "</p>") _
+                .JoinBy(vbCrLf)
+
+            Return "<blockquote>" & vbCrLf & inner & vbCrLf & "</blockquote>"
+        End Function
+
+        ' -----------------------------------------------------------------
+        ' math / equation
+        ' -----------------------------------------------------------------
+        Private Function renderMathMarkdown(block As Block) As String
+            If String.IsNullOrEmpty(block.language) Then
+                Return "$$" & vbCrLf & block.content & vbCrLf & "$$"
+            Else
+                Return "```" & block.language & vbCrLf & block.content & vbCrLf & "```"
+            End If
+        End Function
+
+        Private Function renderMathHtml(block As Block) As String
+            ' 保留 LaTeX 原字符，交由 KaTeX / MathJax 处理，不做 HTML 转义
+            Return "<div class=""math"">" & "$$" & block.content & "$$" & "</div>"
+        End Function
+
+        ' -----------------------------------------------------------------
+        ' link
+        ' -----------------------------------------------------------------
+        Private Function renderLinkMarkdown(block As Block) As String
+            If String.IsNullOrEmpty(block.title) Then
+                Return "[" & block.alt & "](" & block.url & ")"
+            Else
+                Return "[" & block.alt & "](" & block.url & " """ & block.title & """)"
+            End If
+        End Function
+
+        Private Function renderLinkHtml(block As Block) As String
+            Dim titleAttr As String = If(String.IsNullOrEmpty(block.title), "", " title=""" & HtmlEncode(block.title) & """")
+            Return "<a href=""" & HtmlEncode(block.url) & """" & titleAttr & ">" & HtmlEncode(block.alt) & "</a>"
+        End Function
+
+        ' -----------------------------------------------------------------
+        ' tasklist (GFM task list)
+        ' -----------------------------------------------------------------
+        Private Function renderTaskListMarkdown(block As Block) As String
+            Dim sb As New StringBuilder
+            Dim pos As Integer = 0
+
+            For Each item As String In block.items.SafeQuery
+                Dim mark As String = " "
+
+                If Not block.checked Is Nothing AndAlso pos < block.checked.Length AndAlso block.checked(pos) Then
+                    mark = "x"
+                End If
+
+                If block.ordered Then
+                    Call sb.AppendLine((pos + 1) & ". [" & mark & "] " & item)
+                Else
+                    Call sb.AppendLine("- [" & mark & "] " & item)
+                End If
+
+                pos += 1
+            Next
+
+            Return sb.ToString.TrimEnd(vbCrLf.ToCharArray)
+        End Function
+
+        Private Function renderTaskListHtml(block As Block) As String
+            Dim sb As New StringBuilder
+            Dim tag As String = If(block.ordered, "ol", "ul")
+            Dim pos As Integer = 0
+
+            Call sb.AppendLine("<" & tag & " class=""task-list"">")
+
+            For Each item As String In block.items.SafeQuery
+                Dim isChecked As Boolean = Not block.checked Is Nothing AndAlso pos < block.checked.Length AndAlso block.checked(pos)
+                Dim box As String = "<input type=""checkbox""" & If(isChecked, " checked", "") & " disabled />"
+
+                Call sb.AppendLine("  <li>" & box & " " & HtmlEncode(item) & "</li>")
+                pos += 1
+            Next
+
+            Call sb.AppendLine("</" & tag & ">")
+
+            Return sb.ToString.TrimEnd(vbCrLf.ToCharArray)
+        End Function
+
+        ' -----------------------------------------------------------------
+        ' footnote
+        ' -----------------------------------------------------------------
+        Private Function renderFootnoteMarkdown(block As Block) As String
+            Return "[^" & block.id & "]: " & block.content
+        End Function
+
+        Private Function renderFootnoteHtml(block As Block) As String
+            Return "<div class=""footnote"" id=""fn-" & HtmlEncode(block.id) & """>" & HtmlEncode(block.content) & "</div>"
+        End Function
+
+        ' -----------------------------------------------------------------
+        ' deflist (definition list)
+        ' -----------------------------------------------------------------
+        Private Function renderDefListMarkdown(block As Block) As String
+            Dim sb As New StringBuilder
+            Dim n As Integer = MinInt(If(block.terms Is Nothing, 0, block.terms.Length), If(block.definitions Is Nothing, 0, block.definitions.Length))
+
+            For i As Integer = 0 To n - 1
+                Call sb.AppendLine(block.terms(i))
+                Call sb.AppendLine(": " & block.definitions(i))
+            Next
+
+            Return sb.ToString.TrimEnd(vbCrLf.ToCharArray)
+        End Function
+
+        Private Function renderDefListHtml(block As Block) As String
+            Dim sb As New StringBuilder
+            Dim n As Integer = MinInt(If(block.terms Is Nothing, 0, block.terms.Length), If(block.definitions Is Nothing, 0, block.definitions.Length))
+
+            Call sb.AppendLine("<dl>")
+
+            For i As Integer = 0 To n - 1
+                Call sb.AppendLine("  <dt>" & HtmlEncode(block.terms(i)) & "</dt>")
+                Call sb.AppendLine("  <dd>" & HtmlEncode(block.definitions(i)) & "</dd>")
+            Next
+
+            Call sb.AppendLine("</dl>")
 
             Return sb.ToString.TrimEnd(vbCrLf.ToCharArray)
         End Function

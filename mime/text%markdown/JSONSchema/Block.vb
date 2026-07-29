@@ -6,9 +6,10 @@
     Public Class Block
 
         ''' <summary>
-        ''' 块级语法类型，统一小写。当前支持的集合：
-        ''' table / heading(h) / paragraph(p) / code / list(li) / blockquote /
-        ''' hr(horizontal-rule) / image(img) / html(raw)
+        ''' 块级语法类型，统一小写。当前支持的完整集合：
+        ''' heading(h) / paragraph(p) / code / list(li) / blockquote /
+        ''' table / hr(horizontal-rule) / image(img) / html(raw) /
+        ''' math / link / tasklist / footnote / deflist
         ''' </summary>
         ''' <returns></returns>
         Public Property type As String
@@ -64,10 +65,37 @@
         ''' <returns></returns>
         Public Property alt As String
         ''' <summary>
-        ''' the optional title (hover tip) if type = image/img
+        ''' the optional title (hover tip) if type = image/img or link
         ''' </summary>
         ''' <returns></returns>
         Public Property title As String
+
+        ''' <summary>
+        ''' tasklist only: 与 <see cref="items"/> 平行排列，标记每一项是否被勾选。
+        ''' 当该字段为 Nothing 时，渲染时默认所有项均未勾选。
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property checked As Boolean()
+
+        ''' <summary>
+        ''' footnote only: 脚注的唯一标识，例如 "1" / "note"。
+        ''' 在 markdown 中表现为 [^id]: content，在 html 中表现为 id="fn-id"。
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property id As String
+
+        ''' <summary>
+        ''' deflist only: 术语列表（对应 html 的 &lt;dt&gt;）。
+        ''' 与 <see cref="definitions"/> 平行排列。
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property terms As String()
+
+        ''' <summary>
+        ''' deflist only: 定义列表（对应 html 的 &lt;dd&gt;），与 <see cref="terms"/> 平行排列。
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property definitions As String()
 
     End Class
 End Namespace

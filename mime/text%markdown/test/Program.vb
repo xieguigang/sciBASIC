@@ -52,6 +52,7 @@
 #End Region
 
 Imports Microsoft.VisualBasic.MIME.text.markdown
+Imports Microsoft.VisualBasic.MIME.text.markdown.JSONSchema
 
 Module Program
 
@@ -204,5 +205,41 @@ _this_ _is_ _your_ _basic_ _boring_ _emphasis_
         Console.WriteLine(New MarkdownRender().Transform(quote_links))
 
         Call New MarkdownRender().Transform(quote_links).SaveTo("./test_demo.html")
+
+        Call jsonSchemaTest()
+    End Sub
+
+    ''' <summary>
+    ''' 验证 JSONSchema 管线：Block 数组 -> markdown / html
+    ''' </summary>
+    Private Sub jsonSchemaTest()
+        Dim blocks As Block() = {
+            New Block With {.type = "heading", .level = 1, .content = "Document Title"},
+            New Block With {.type = "paragraph", .content = "This is a paragraph with text."},
+            New Block With {.type = "code", .language = "vbnet", .content = "Dim x As Integer = 1"},
+            New Block With {.type = "list", .ordered = False, .items = {"alpha", "beta", "gamma"}},
+            New Block With {.type = "tasklist", .ordered = False, .items = {"write docs", "run tests", "ship"}, .checked = {True, False, True}},
+            New Block With {.type = "blockquote", .content = "line one" & vbCrLf & "line two"},
+            New Block With {.type = "table", .headers = {"Name", "Age", "Role"}, .alignments = {"left", "center", "right"}, .rows = {{"Tom", "28", "dev"}, {"Lucy", "31", "pm"}}},
+            New Block With {.type = "hr"},
+            New Block With {.type = "image", .url = "a.png", .alt = "pic", .title = "a picture"},
+            New Block With {.type = "math", .content = "\frac{a}{b} = c"},
+            New Block With {.type = "link", .url = "https://x.com", .alt = "X", .title = "home"},
+            New Block With {.type = "footnote", .id = "1", .content = "The first footnote."},
+            New Block With {.type = "deflist", .terms = {"Term A", "Term B"}, .definitions = {"definition a", "definition b"}},
+            ' 缺省/边界场景：表格无表头、无 rows，heading 层级越界
+            New Block With {.type = "table", .rows = {{"only", "data"}}},
+            New Block With {.type = "heading", .level = 9, .content = "Overflow heading level"}
+        }
+
+        Dim md As String = blocks.ToMarkdown
+        Dim html As String = blocks.ToHtml
+
+        Call md.SaveTo("./test_json_schema.md")
+        Call html.SaveTo("./test_json_schema.html")
+
+        Console.WriteLine(md)
+        Console.WriteLine(New String("-"c, 40))
+        Console.WriteLine(html)
     End Sub
 End Module
