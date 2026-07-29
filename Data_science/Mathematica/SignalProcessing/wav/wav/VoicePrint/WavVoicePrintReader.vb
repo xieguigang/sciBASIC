@@ -12,7 +12,7 @@
 
 Imports System.IO
 Imports Microsoft.VisualBasic.Data.IO
-Imports Microsoft.VisualBasic.Data.Wave
+Imports std = System.Math
 
 ''' <summary>
 ''' 基于 WAV 文件的声纹提取辅助类。
@@ -58,13 +58,13 @@ Public Class WavVoicePrintReader
             Dim totalSamples As Integer = wav.data.chunkSize \ wav.fmt.sampleSizeBytes
 
             ' 计算时间窗口对应的采样范围
-            Dim startSample As Integer = CInt(Math.Max(0, startTimeSec * sampleRate))
+            Dim startSample As Integer = CInt(std.Max(0, startTimeSec * sampleRate))
             Dim endSample As Integer
 
             If endTimeSec < 0 Then
                 endSample = totalSamples
             Else
-                endSample = CInt(Math.Min(totalSamples, endTimeSec * sampleRate))
+                endSample = CInt(std.Min(totalSamples, endTimeSec * sampleRate))
             End If
 
             If endSample <= startSample Then
@@ -119,13 +119,13 @@ Public Class WavVoicePrintReader
 
             Dim totalSamples As Integer = wav.data.chunkSize \ wav.fmt.sampleSizeBytes
 
-            Dim startSample As Integer = CInt(Math.Max(0, startTimeSec * sampleRate))
+            Dim startSample As Integer = CInt(std.Max(0, startTimeSec * sampleRate))
             Dim endSample As Integer
 
             If endTimeSec < 0 Then
                 endSample = totalSamples
             Else
-                endSample = CInt(Math.Min(totalSamples, endTimeSec * sampleRate))
+                endSample = CInt(std.Min(totalSamples, endTimeSec * sampleRate))
             End If
 
             If endSample <= startSample Then

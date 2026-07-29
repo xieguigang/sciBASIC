@@ -26,7 +26,7 @@
 '   例：targetDim=192, 3 orders, 4 stats → n_mfcc = 192/12 = 16
 ' ============================================================================
 
-Imports System.Math
+Imports std = System.Math
 
 ''' <summary>
 ''' 声纹提取参数配置。
@@ -198,7 +198,7 @@ Public Class VoicePrintExtractor
 
             ' 对数压缩
             For i As Integer = 0 To melEnergies.Length - 1
-                melEnergies(i) = Math.Log(melEnergies(i) + 1.0E-10)
+                melEnergies(i) = std.Log(melEnergies(i) + 0.0000000001)
             Next
 
             ' DCT → MFCC
@@ -260,8 +260,8 @@ Public Class VoicePrintExtractor
     Private Function CalculateNumMfcc(options As VoicePrintOptions) As Integer
         Dim nOrders As Integer = 1 + (If(options.UseDelta, 1, 0)) + (If(options.UseDeltaDelta, 1, 0))
         Dim nStats As Integer = 4  ' mean, std, skew, kurt
-        Dim nMfcc As Integer = CInt(Math.Ceiling(options.TargetDimension / CDbl(nOrders * nStats)))
-        Return Math.Max(1, nMfcc)
+        Dim nMfcc As Integer = CInt(std.Ceiling(options.TargetDimension / CDbl(nOrders * nStats)))
+        Return std.Max(1, nMfcc)
     End Function
 
     ''' <summary>
@@ -351,7 +351,7 @@ Public Class VoicePrintExtractor
                 variance += diff * diff
             Next
             variance /= features.Length
-            Dim std As Double = Math.Sqrt(variance)
+            Dim std As Double = std.Sqrt(variance)
             If std < 1.0E-10 Then std = 1.0
 
             ' 归一化
@@ -369,7 +369,7 @@ Public Class VoicePrintExtractor
         For i As Integer = 0 To vector.Length - 1
             norm += vector(i) * vector(i)
         Next
-        norm = Math.Sqrt(norm)
+        norm = std.Sqrt(norm)
         If norm > 1.0E-10 Then
             For i As Integer = 0 To vector.Length - 1
                 vector(i) /= norm
