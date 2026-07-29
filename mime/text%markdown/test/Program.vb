@@ -213,19 +213,24 @@ _this_ _is_ _your_ _basic_ _boring_ _emphasis_
     ''' 验证 JSONSchema 管线：Block 数组 -> markdown / html
     ''' </summary>
     Private Sub jsonSchemaTest()
+        Dim listItems As String() = {"alpha", "beta", "gamma"}
+        Dim taskItems As String() = {"write docs", "run tests", "ship"}
+        Dim taskChecked As Boolean() = {True, False, True}
+        Dim tableHeaders As String() = {"Name", "Age", "Role"}
+        Dim tableAligns As String() = {"left", "center", "right"}
+        Dim tableRows As String()() = {New String() {"Tom", "28", "dev"}, New String() {"Lucy", "31", "pm"}}
         Dim defTerms As String() = {"A", "B"}
         Dim defDefs As String() = {"c", "d"}
-        Dim onlyRow As String() = {"only", "data"}
-        Dim tableRows As String()() = {New String() {"Tom", "28", "dev"}, New String() {"Lucy", "31", "pm"}}
+        Dim onlyRows As String()() = {New String() {"only", "data"}}
 
         Dim blocks As Block() = {
             New Block With {.type = "heading", .level = 1, .content = "Document Title"},
             New Block With {.type = "paragraph", .content = "This is a paragraph with text."},
             New Block With {.type = "code", .language = "vbnet", .content = "Dim x As Integer = 1"},
-            New Block With {.type = "list", .ordered = False, .items = {"alpha", "beta", "gamma"}},
-            New Block With {.type = "tasklist", .ordered = False, .items = {"write docs", "run tests", "ship"}, .checked = {True, False, True}},
+            New Block With {.type = "list", .ordered = False, .items = listItems},
+            New Block With {.type = "tasklist", .ordered = False, .items = taskItems, .checked = taskChecked},
             New Block With {.type = "blockquote", .content = "line one" & vbCrLf & "line two"},
-            New Block With {.type = "table", .headers = {"Name", "Age", "Role"}, .alignments = {"left", "center", "right"}, .rows = tableRows},
+            New Block With {.type = "table", .headers = tableHeaders, .alignments = tableAligns, .rows = tableRows},
             New Block With {.type = "hr"},
             New Block With {.type = "image", .url = "a.png", .alt = "pic", .title = "a picture"},
             New Block With {.type = "math", .content = "\frac{a}{b} = c"},
@@ -233,7 +238,7 @@ _this_ _is_ _your_ _basic_ _boring_ _emphasis_
             New Block With {.type = "footnote", .id = "1", .content = "The first footnote."},
             New Block With {.type = "deflist", .terms = defTerms, .definitions = defDefs},
             ' 缺省/边界场景：表格无表头、无 rows，heading 层级越界
-            New Block With {.type = "table", .rows = {onlyRow}},
+            New Block With {.type = "table", .rows = onlyRows},
             New Block With {.type = "heading", .level = 9, .content = "Overflow heading level"}
         }
 
