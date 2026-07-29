@@ -897,7 +897,7 @@ Public Class MarkdownParser
         Dim m = Regex.Match(text.Substring(i), "^(?:https?|ftp)://[^\s<>""')]+")
         If m.Success Then
             Dim url = m.Value
-            While url.Length > 0 AndAlso ".),"c.Contains(url(url.Length - 1))
+            While url.Length > 0 AndAlso ".),".Contains(url(url.Length - 1))
                 url = url.Substring(0, url.Length - 1)
             End While
             Return New SpanInfo With {.matched = True, .content = url, .endIndex = i + url.Length}

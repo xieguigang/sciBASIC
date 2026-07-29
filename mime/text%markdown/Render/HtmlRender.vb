@@ -2,6 +2,7 @@
 Imports System.Linq
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Language
+Imports System.Text.RegularExpressions
 
 Public Class HtmlRender : Inherits Render
 
