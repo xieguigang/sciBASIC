@@ -6,7 +6,9 @@
     Public Class Block
 
         ''' <summary>
-        ''' table/heading/paragraph/code/list/blockquote
+        ''' 块级语法类型，统一小写。当前支持的集合：
+        ''' table / heading(h) / paragraph(p) / code / list(li) / blockquote /
+        ''' hr(horizontal-rule) / image(img) / html(raw)
         ''' </summary>
         ''' <returns></returns>
         Public Property type As String
@@ -50,6 +52,22 @@
         ''' </summary>
         ''' <returns></returns>
         Public Property rows As String()()
+
+        ''' <summary>
+        ''' the image source url if type = image/img
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property url As String
+        ''' <summary>
+        ''' the alternative text if type = image/img
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property alt As String
+        ''' <summary>
+        ''' the optional title (hover tip) if type = image/img
+        ''' </summary>
+        ''' <returns></returns>
+        Public Property title As String
 
     End Class
 End Namespace

@@ -28,7 +28,7 @@ Namespace JSONSchema
                         }
                     Case "heading", "h"
                         Yield New Block With {
-                            .type = "paragraph",
+                            .type = "heading",
                             .content = item!content.AsString(True),
                             .level = item!level.AsString(True).ParseInteger
                         }
@@ -52,6 +52,22 @@ Namespace JSONSchema
                     Case "blockquote"
                         Yield New Block With {
                             .type = "blockquote",
+                            .content = item!content.AsString(True)
+                        }
+                    Case "hr", "horizontal-rule", "horizontalrule", "thematic-break"
+                        Yield New Block With {
+                            .type = "hr"
+                        }
+                    Case "image", "img"
+                        Yield New Block With {
+                            .type = "image",
+                            .url = item!url.AsString(True),
+                            .alt = item!alt.AsString(True),
+                            .title = item!title.AsString(False)
+                        }
+                    Case "html", "raw"
+                        Yield New Block With {
+                            .type = "html",
                             .content = item!content.AsString(True)
                         }
                     Case Else
