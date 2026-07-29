@@ -1,3 +1,7 @@
+Imports System.IO
+Imports Microsoft.VisualBasic.Data.IO
+Imports std = System.Math
+
 ' ============================================================================
 ' WavVoicePrintReader.vb - WAV 文件声纹提取辅助类
 '
@@ -9,10 +13,6 @@
 '   - Microsoft.VisualBasic.Data.Wave.WaveFile（来自上传的 WAV 模块）
 '   - VoicePrintExtractor（本项目的核心提取器）
 ' ============================================================================
-
-Imports System.IO
-Imports Microsoft.VisualBasic.Data.IO
-Imports std = System.Math
 
 ''' <summary>
 ''' 基于 WAV 文件的声纹提取辅助类。
