@@ -106,7 +106,7 @@ Namespace Imaging.BitmapImage
                 Call Array.Copy(sourceBuffer.RawBuffer, sourceStartIndex, newBuffer, destStartIndex, destStride)
             Next
 
-            Return New BitmapBuffer(newBuffer, New Size(newWidth, newHeight), channel:=4)
+            Return New BitmapBuffer(newBuffer, New Size(newWidth, newHeight), channel:=BitmapBuffer.TYPE_INT_ARGB)
         End Function
 
         ''' <summary>

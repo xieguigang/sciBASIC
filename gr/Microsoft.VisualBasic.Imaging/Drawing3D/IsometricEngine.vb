@@ -85,7 +85,7 @@ Namespace Drawing3D
         ReadOnly lightColor As Color
         ReadOnly angle, scale As Double
 
-        Public Sub New(Optional ambientStrength As Double = 0.2, Optional lightIntensity As Double = 0.1)
+        Public Sub New(Optional ambientStrength As Double = 0.2, Optional lightIntensity As Double = 0.3)
             Me.angle = std.PI / 6
             Me.scale = 70
             Me.transformation = {
