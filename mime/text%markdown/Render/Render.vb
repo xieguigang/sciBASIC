@@ -1,7 +1,4 @@
-﻿Imports System.Text
-Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
-
-''' <summary>
+﻿''' <summary>
 ''' The different markup syntax formatter for the markdown document.
 ''' </summary>
 Public MustInherit Class Render
