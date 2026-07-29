@@ -51,26 +51,6 @@
       <Platform Solution="*|x64" Project="x64" />
       <Platform Solution="*|x86" Project="x86" />
     </Project>
-    <Project Path="../mime/text%html/html_netcore5.vbproj">
-      <BuildType Solution="Biodeep_UNIX_x64|*" Project="Debug" />
-      <BuildType Solution="Biodeep|*" Project="Debug" />
-      <BuildType Solution="Biostack-Debug|*" Project="Debug" />
-      <BuildType Solution="Biostack|*" Project="Debug" />
-      <BuildType Solution="DEMO|*" Project="Debug" />
-      <BuildType Solution="Docker|*" Project="Debug" />
-      <BuildType Solution="docs|*" Project="Debug" />
-      <BuildType Solution="GCModeller(Release_X64)|*" Project="gcmodeller_desktop" />
-      <BuildType Solution="GCModeller(UNIX-Release_X64)|*" Project="gcmodeller_desktop" />
-      <BuildType Solution="installer_x64|*" Project="Debug" />
-      <BuildType Solution="mysqli_X64_release|*" Project="mzkit_win32" />
-      <BuildType Solution="PlantMAT|*" Project="Debug" />
-      <BuildType Solution="ProteoWizard.d|*" Project="Debug" />
-      <BuildType Solution="Publish|*" Project="Debug" />
-      <BuildType Solution="sciBASIC.NET-test-release|*" Project="Debug" />
-      <BuildType Solution="Surveillance-of-infectious-diseases|*" Project="Debug" />
-      <BuildType Solution="Yilia-Release_x64|*" Project="Release" />
-      <Platform Solution="*|x64" Project="x64" />
-    </Project>
   </Folder>
   <Project Path="../../../../../galaxy/src/WebViewHelper/WebViewHelper.shproj" Id="ceb7782e-585a-48f5-95b9-4c01cead6b0c" />
   <Project Path="../mime/text%markdown/markdown.NET5.vbproj">
