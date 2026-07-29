@@ -7,7 +7,7 @@
 ' 所有方法均为纯数学运算，不依赖任何文件 I/O。
 ' ============================================================================
 
-Imports System.Math
+Imports std = System.Math
 
 ''' <summary>
 ''' 信号处理工具模块，提供静态方法供声纹提取流水线调用。
@@ -95,7 +95,7 @@ Public Module SignalProcessing
             Return window
         End If
         For i As Integer = 0 To size - 1
-            window(i) = 0.54 - 0.46 * Cos(2.0 * PI * i / (size - 1))
+            window(i) = 0.54 - 0.46 * std.Cos(2.0 * std.PI * i / (size - 1))
         Next
         Return window
     End Function
@@ -136,12 +136,12 @@ Public Module SignalProcessing
         Dim size As Integer = 2
         Do While size <= n
             Dim halfSize As Integer = size >> 1
-            Dim tableStep As Double = 2.0 * PI / size
+            Dim tableStep As Double = 2.0 * std.PI / size
 
             For i As Integer = 0 To halfSize - 1
                 Dim angle As Double = -i * tableStep
-                Dim wr As Double = Cos(angle)
-                Dim wi As Double = Sin(angle)
+                Dim wr As Double = std.Cos(angle)
+                Dim wi As Double = std.Sin(angle)
 
                 Dim j2 As Integer = i
                 Do While j2 < n
@@ -197,12 +197,12 @@ Public Module SignalProcessing
         For k As Integer = 0 To numCoeffs - 1
             Dim sumVal As Double = 0.0
             For i As Integer = 0 To n - 1
-                sumVal += input(i) * Cos(PI / n * (i + 0.5) * k)
+                sumVal += input(i) * std.Cos(std.PI / n * (i + 0.5) * k)
             Next
             If k = 0 Then
-                output(k) = sumVal * Sqrt(1.0 / n)
+                output(k) = sumVal * std.Sqrt(1.0 / n)
             Else
-                output(k) = sumVal * Sqrt(2.0 / n)
+                output(k) = sumVal * std.Sqrt(2.0 / n)
             End If
         Next
         Return output
@@ -227,18 +227,18 @@ Public Module SignalProcessing
 
         ' 分母：2 * Σ_{n=1}^{N} n²
         Dim denom As Double = 0.0
-        For n As Integer = 1 To N
-            denom += 2.0 * n * n
+        For ni As Integer = 1 To N
+            denom += 2.0 * ni * ni
         Next
 
         For t As Integer = 0 To numFrames - 1
             delta(t) = New Double(numCoeffs - 1) {}
             For k As Integer = 0 To numCoeffs - 1
                 Dim sumVal As Double = 0.0
-                For n As Integer = 1 To N
-                    Dim idxPlus As Integer = Min(t + n, numFrames - 1)
-                    Dim idxMinus As Integer = Max(t - n, 0)
-                    sumVal += n * (features(idxPlus)(k) - features(idxMinus)(k))
+                For ni As Integer = 1 To N
+                    Dim idxPlus As Integer = std.Min(t + ni, numFrames - 1)
+                    Dim idxMinus As Integer = std.Max(t - ni, 0)
+                    sumVal += ni * (features(idxPlus)(k) - features(idxMinus)(k))
                 Next
                 delta(t)(k) = sumVal / denom
             Next
@@ -275,7 +275,7 @@ Public Module SignalProcessing
             sumSq += diff * diff
         Next
         Dim variance As Double = sumSq / n
-        std = Sqrt(variance)
+        std = System.Math.Sqrt(variance)
 
         If std < 1.0E-10 Then
             skewness = 0.0
@@ -356,7 +356,7 @@ Public Class MelFilterbank
         For i As Integer = 0 To numFilters + 1
             melPoints(i) = lowMel + (highMel - lowMel) * i / (numFilters + 1)
             hzPoints(i) = MelToHz(melPoints(i))
-            binPoints(i) = CInt(Math.Floor((fftSize + 1) * hzPoints(i) / sampleRate))
+            binPoints(i) = CInt(std.Floor((fftSize + 1) * hzPoints(i) / sampleRate))
         Next
 
         Dim numBins As Integer = fftSize \ 2 + 1
@@ -374,11 +374,11 @@ Public Class MelFilterbank
 
                 If k <= centerBin Then
                     ' 上升沿
-                    Dim span As Integer = Math.Max(1, centerBin - leftBin)
+                    Dim span As Integer = std.Max(1, centerBin - leftBin)
                     _filters(f)(k) = CDbl(k - leftBin) / span
                 Else
                     ' 下降沿
-                    Dim span As Integer = Math.Max(1, rightBin - centerBin)
+                    Dim span As Integer = std.Max(1, rightBin - centerBin)
                     _filters(f)(k) = CDbl(rightBin - k) / span
                 End If
             Next
@@ -392,7 +392,7 @@ Public Class MelFilterbank
         Dim output(_numFilters - 1) As Double
         For f As Integer = 0 To _numFilters - 1
             Dim sumVal As Double = 0.0
-            Dim len As Integer = Math.Min(powerSpectrum.Length, _filters(f).Length)
+            Dim len As Integer = std.Min(powerSpectrum.Length, _filters(f).Length)
             For k As Integer = 0 To len - 1
                 sumVal += powerSpectrum(k) * _filters(f)(k)
             Next
@@ -403,12 +403,12 @@ Public Class MelFilterbank
 
     ''' <summary>Hz → Mel 尺度转换。</summary>
     Public Shared Function HzToMel(hz As Double) As Double
-        Return 2595.0 * Math.Log10(1.0 + hz / 700.0)
+        Return 2595.0 * std.Log10(1.0 + hz / 700.0)
     End Function
 
     ''' <summary>Mel → Hz 尺度转换。</summary>
     Public Shared Function MelToHz(mel As Double) As Double
-        Return 700.0 * (Math.Pow(10.0, mel / 2595.0) - 1.0)
+        Return 700.0 * (std.Pow(10.0, mel / 2595.0) - 1.0)
     End Function
 
 End Class
