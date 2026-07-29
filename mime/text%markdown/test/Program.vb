@@ -213,6 +213,11 @@ _this_ _is_ _your_ _basic_ _boring_ _emphasis_
     ''' 验证 JSONSchema 管线：Block 数组 -> markdown / html
     ''' </summary>
     Private Sub jsonSchemaTest()
+        Dim defTerms As String() = {"A", "B"}
+        Dim defDefs As String() = {"c", "d"}
+        Dim onlyRow As String() = {"only", "data"}
+        Dim tableRows As String()() = {New String() {"Tom", "28", "dev"}, New String() {"Lucy", "31", "pm"}}
+
         Dim blocks As Block() = {
             New Block With {.type = "heading", .level = 1, .content = "Document Title"},
             New Block With {.type = "paragraph", .content = "This is a paragraph with text."},
@@ -220,15 +225,15 @@ _this_ _is_ _your_ _basic_ _boring_ _emphasis_
             New Block With {.type = "list", .ordered = False, .items = {"alpha", "beta", "gamma"}},
             New Block With {.type = "tasklist", .ordered = False, .items = {"write docs", "run tests", "ship"}, .checked = {True, False, True}},
             New Block With {.type = "blockquote", .content = "line one" & vbCrLf & "line two"},
-            New Block With {.type = "table", .headers = {"Name", "Age", "Role"}, .alignments = {"left", "center", "right"}, .rows = {New String() {"Tom", "28", "dev"}, New String() {"Lucy", "31", "pm"}}},
+            New Block With {.type = "table", .headers = {"Name", "Age", "Role"}, .alignments = {"left", "center", "right"}, .rows = tableRows},
             New Block With {.type = "hr"},
             New Block With {.type = "image", .url = "a.png", .alt = "pic", .title = "a picture"},
             New Block With {.type = "math", .content = "\frac{a}{b} = c"},
             New Block With {.type = "link", .url = "https://x.com", .alt = "X", .title = "home"},
             New Block With {.type = "footnote", .id = "1", .content = "The first footnote."},
-            New Block With {.type = "deflist", .terms = {"Term A", "Term B"}, .definitions = {"definition a", "definition b"}},
+            New Block With {.type = "deflist", .terms = defTerms, .definitions = defDefs},
             ' 缺省/边界场景：表格无表头、无 rows，heading 层级越界
-            New Block With {.type = "table", .rows = {{"only", "data"}}},
+            New Block With {.type = "table", .rows = {onlyRow}},
             New Block With {.type = "heading", .level = 9, .content = "Overflow heading level"}
         }
 
