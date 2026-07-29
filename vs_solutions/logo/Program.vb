@@ -65,7 +65,7 @@ Imports std = System.Math
 ''' </summary>
 Module Program
 
-    Const save$ = "../../../../logo.png"
+    Const save$ = "../../../../../logo.png"
 
     ReadOnly BLUE As Color = Color.FromArgb(50, 60, 160)
     ReadOnly GREEN As Color = Color.FromArgb(50, 160, 60)
@@ -104,7 +104,7 @@ Module Program
             }
 
             Call g.DrawImageUnscaled(logo, topleft)
-            Call DirectCast(g, GdiRasterGraphics).ImageResource.SaveAs("../../../logo-knot.png")
+            Call DirectCast(g, GdiRasterGraphics).ImageResource.SaveAs("../../../../logo-knot.png")
         End Using
 
         Using g As IGraphics = DriverLoad.CreateDefaultRasterGraphics(New Size(2000, 500), fill_color:=Color.Transparent)
@@ -125,6 +125,6 @@ Module Program
             .ColorReplace(color1.Color, Color.White) _
             .ColorReplace(color2.Color, Color.White)
 
-        Call logo.SaveAs("../../../logo-white.png")
+        Call logo.SaveAs("../../../../logo-white.png")
     End Sub
 End Module
