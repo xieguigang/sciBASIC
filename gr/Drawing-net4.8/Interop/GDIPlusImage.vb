@@ -61,16 +61,33 @@
 Imports System.Drawing
 Imports System.IO
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.ApplicationServices.Debugging
 Imports Microsoft.VisualBasic.Imaging
+Imports Microsoft.VisualBasic.Net.Http
 
 Namespace Interop
 
     Public Class GDIPlusImage : Inherits Microsoft.VisualBasic.Imaging.Image
+        Implements IVisualStudioPreviews
 
         Public Overrides ReadOnly Property Size As Size
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return bitmap.Size
+            End Get
+        End Property
+
+        Public ReadOnly Property Previews As String Implements IVisualStudioPreviews.Previews
+            Get
+                Dim ms As Stream = ConvertToBitmapStream()
+                Dim uri As New DataURI(ms, mime:="image/png")
+                Dim html As XElement = <html>
+                                           <body>
+                                               <img src=<%= uri.ToString %> style="width:100%;"/>
+                                           </body>
+                                       </html>
+
+                Return html.ToString
             End Get
         End Property
 

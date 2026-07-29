@@ -57,12 +57,14 @@
 
 Imports System.Drawing
 Imports System.IO
+Imports Microsoft.VisualBasic.ApplicationServices.Debugging
 Imports Microsoft.VisualBasic.MIME.Html.CSS
 Imports Microsoft.VisualBasic.Net.Http
 
 Namespace Driver
 
     Public Class PostScriptData : Inherits GraphicsData
+        Implements IVisualStudioPreviews
 
         Public Overrides ReadOnly Property Driver As Drivers
             Get
@@ -70,7 +72,7 @@ Namespace Driver
             End Get
         End Property
 
-        Public Overrides ReadOnly Property Previews As String
+        Public Overrides ReadOnly Property Previews As String Implements IVisualStudioPreviews.Previews
             Get
                 Return "PostScript"
             End Get

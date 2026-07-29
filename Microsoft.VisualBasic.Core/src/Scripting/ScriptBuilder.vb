@@ -59,6 +59,7 @@
 Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports System.Text
+Imports Microsoft.VisualBasic.ApplicationServices.Debugging
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.Text
 
@@ -67,7 +68,9 @@ Namespace Scripting.SymbolBuilder
     ''' <summary>
     ''' 对<see cref="StringBuilder"/>对象的拓展，添加了操作符凭借字符串，从而能够让生成代码的操作更加的方便
     ''' </summary>
-    Public Class ScriptBuilder : Implements ISaveHandle
+    Public Class ScriptBuilder
+        Implements ISaveHandle
+        Implements IVisualStudioPreviews
 
         Public ReadOnly Property script As StringBuilder
 
@@ -89,7 +92,7 @@ Namespace Scripting.SymbolBuilder
         ''' Equals to <see cref="StringBuilder.ToString()"/>
         ''' </summary>
         ''' <returns></returns>
-        Public ReadOnly Property Preview As String
+        Public ReadOnly Property Preview As String Implements IVisualStudioPreviews.Previews
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
                 Return script.ToString

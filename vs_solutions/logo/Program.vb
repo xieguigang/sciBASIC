@@ -55,8 +55,8 @@ Imports Microsoft.VisualBasic.Imaging.Drawing3D
 Imports Microsoft.VisualBasic.Imaging.Drawing3D.Models.Isometric.Shapes
 Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.Imaging.Math2D
-Imports Bitmap = Microsoft.VisualBasic.Imaging.Bitmap
 Imports Font = Microsoft.VisualBasic.Imaging.Font
+Imports Image = Microsoft.VisualBasic.Imaging.Image
 Imports SolidBrush = Microsoft.VisualBasic.Imaging.SolidBrush
 Imports std = System.Math
 
@@ -80,7 +80,7 @@ Module Program
     End Sub
 
     Sub Main()
-        Dim logo As Bitmap, fontName$ = FontFace.Verdana
+        Dim logo As Image, fontName$ = FontFace.Verdana
         Dim color1 As New SolidBrush(Color.FromArgb(0, 65, 102))
         Dim color2 As New SolidBrush(Color.FromArgb(0, 172, 221))
 
@@ -104,10 +104,10 @@ Module Program
             }
 
             Call g.DrawImageUnscaled(logo, topleft)
-            Call DirectCast(g, GdiRasterGraphics).ImageResource.SaveAs("../../../../logo-knot.png")
+            Call DirectCast(g, GdiRasterGraphics).ImageResource.SaveAs("../../../../../logo-knot.png")
         End Using
 
-        Using g As IGraphics = DriverLoad.CreateDefaultRasterGraphics(New Size(2000, 500), fill_color:=Color.Transparent)
+        Using g As IGraphics = DriverLoad.CreateDefaultRasterGraphics(New Size(2400, 500), fill_color:=Color.Transparent)
             Call g.DrawImageUnscaled(logo, New Point(50, 50))
 
             Call g.DrawString("sci", New Font(fontName, 140), color1, New PointF(430, 90))
@@ -125,6 +125,6 @@ Module Program
             .ColorReplace(color1.Color, Color.White) _
             .ColorReplace(color2.Color, Color.White)
 
-        Call logo.SaveAs("../../../../logo-white.png")
+        Call logo.SaveAs("../../../../../logo-white.png")
     End Sub
 End Module

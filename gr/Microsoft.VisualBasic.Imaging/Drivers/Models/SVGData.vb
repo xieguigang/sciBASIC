@@ -59,6 +59,7 @@ Imports System.Drawing
 Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports System.Text
+Imports Microsoft.VisualBasic.ApplicationServices.Debugging
 Imports Microsoft.VisualBasic.Imaging.SVG
 Imports Microsoft.VisualBasic.MIME.Html.CSS
 Imports Microsoft.VisualBasic.Net.Http
@@ -69,6 +70,7 @@ Namespace Driver
     ''' SVG graphic data
     ''' </summary>
     Public Class SVGData : Inherits GraphicsData
+        Implements IVisualStudioPreviews
 
         Public ReadOnly Property SVG As SVGDataLayers
 
@@ -113,7 +115,7 @@ Namespace Driver
             End Get
         End Property
 
-        Public Overrides ReadOnly Property Previews As String
+        Public Overrides ReadOnly Property Previews As String Implements IVisualStudioPreviews.Previews
             Get
                 Dim svg As DataURI = GetDataURI()
                 Dim html As XElement = <html>

@@ -64,8 +64,9 @@ Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Imaging.BitmapImage
 Imports Microsoft.VisualBasic.MIME.Html.CSS
 Imports Microsoft.VisualBasic.Net.Http
+Imports Microsoft.VisualBasic.ApplicationServices.Debugging
 
-#If NET48 Then
+#If WINDOWS Then
 Imports Microsoft.VisualBasic.Drawing
 #End If
 
@@ -76,6 +77,7 @@ Namespace Driver
     ''' </summary>
     Public Class ImageData : Inherits GraphicsData
         Implements SaveGdiBitmap
+        Implements IVisualStudioPreviews
 
         ''' <summary>
         ''' GDI+ image
@@ -83,7 +85,7 @@ Namespace Driver
         ''' <returns></returns>
         Public ReadOnly Property Image As Image
 
-        Public Overrides ReadOnly Property Previews As String
+        Public Overrides ReadOnly Property Previews As String Implements IVisualStudioPreviews.Previews
             Get
                 Dim uri As New DataURI(Image)
                 Dim html As XElement = <html>
@@ -152,7 +154,7 @@ Namespace Driver
                     ' do nothing
             End Select
 
-#If NET48 Then
+#If WINDOWS Then
             Return Image.SaveAs(path, format)
 #Else
             Using s As Stream = path.Open(FileMode.OpenOrCreate, doClear:=True)
@@ -163,11 +165,7 @@ Namespace Driver
 
         Public Overloads Function Save(stream As Stream, format As ImageFormats) As Boolean Implements SaveGdiBitmap.Save
             Try
-#If NET48 Then
-                Call Image.Save(stream, format.GetFormat)
-#Else
                 Call Image.Save(stream, format)
-#End If
             Catch ex As Exception
                 Call App.LogException(ex)
                 Return False
@@ -178,11 +176,7 @@ Namespace Driver
 
         Public Overrides Function Save(out As Stream) As Boolean
             Try
-#If NET48 Then
-                Call Image.Save(out, DefaultFormat.GetFormat)
-#Else
                 Call Image.Save(out, DefaultFormat)
-#End If
             Catch ex As Exception
                 Call App.LogException(ex)
                 Return False

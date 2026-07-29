@@ -57,6 +57,7 @@
 
 Imports System.Drawing
 Imports System.IO
+Imports Microsoft.VisualBasic.ApplicationServices.Debugging
 Imports Microsoft.VisualBasic.Imaging.BitmapImage
 Imports Microsoft.VisualBasic.MIME.Html.CSS
 Imports Microsoft.VisualBasic.Net.Http
@@ -64,7 +65,7 @@ Imports Microsoft.VisualBasic.Net.Http
 Namespace Driver
 
     Public Class WmfData : Inherits GraphicsData
-
+        Implements IVisualStudioPreviews
         Implements SaveGdiBitmap
 
         Public Overrides ReadOnly Property Driver As Drivers
@@ -73,7 +74,7 @@ Namespace Driver
             End Get
         End Property
 
-        Public Overrides ReadOnly Property Previews As String
+        Public Overrides ReadOnly Property Previews As String Implements IVisualStudioPreviews.Previews
             Get
                 Return "Wmf"
             End Get
