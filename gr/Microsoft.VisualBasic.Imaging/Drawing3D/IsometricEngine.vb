@@ -92,7 +92,7 @@ Namespace Drawing3D
                 ({Me.scale * std.Cos(Me.angle), Me.scale * std.Sin(Me.angle)}),
                 ({Me.scale * std.Cos(std.PI - Me.angle), Me.scale * std.Sin(std.PI - Me.angle)})
             }
-            Me.lightDirection = New Point3D(2, -1, 3).Normalize()
+            Me.lightDirection = New Point3D(2, -2, 3).Normalize()
             Me.ambientStrength = ambientStrength
             Me.lightColor = Color.FromArgb(255, 255, 255).ScaleLightColor(k:=lightIntensity)
         End Sub
