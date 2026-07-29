@@ -7,6 +7,8 @@
 
 > A VisualBasic(.NET) language kernel and runtime for scientific data computing, machine learning, visualization and command-line data-science applications — running on .NET (`net10.0`) across Windows, Linux and macOS.
 
+![](tutorials/logo.png)
+
 ---
 
 ## Table of Contents
@@ -218,10 +220,12 @@ language. All of the helpers below live in `Microsoft.VisualBasic.Language` (cor
 ```vbnet
 Imports Microsoft.VisualBasic.Language
 
-Dim x As New Foo With {
-    .a = Value(Of Integer)(100),   ' inline assignment of a property
-    .b = Value(Of String)("test")
-}
+Dim line As Value(Of String) = ""
+
+' inline assignment
+Do While (line = stream.ReadLine) IsNot Nothing
+    ' ...
+Loop
 ```
 
 ### `List(Of T)` append operator and rich indexers
@@ -263,7 +267,7 @@ Next
 Imports Microsoft.VisualBasic.Language
 
 ' list files, recursively, long format — mirroring the `ls -l -r` shell command
-Dim files = ls("-l -r") _
+Dim files = (ls - l - r)  _
     .Select(Function(path) path.FullName) _
     .ToArray
 
@@ -432,6 +436,37 @@ Network / force-directed layouts and SVG/d3js export are provided by the
 `Microsoft.VisualBasic.Data.visualize.Network` and `colorbrewer` modules — see
 [`gr/network-visualization/README.md`](gr/network-visualization/README.md).
 
+#### Example for Draw sciBasic Logo
+
+```vbnet
+Dim logo As Image, fontName$ = FontFace.Verdana
+Dim color1 As New SolidBrush(Color.FromArgb(0, 65, 102))
+Dim color2 As New SolidBrush(Color.FromArgb(0, 172, 221))
+
+Using g As IGraphics = DriverLoad.CreateDefaultRasterGraphics(New Size(900, 800), fill_color:=Color.Transparent)
+    Dim isometricView As New IsometricEngine(ambientStrength:=0.05, lightIntensity:=0.1)
+
+    isometricView.Add(New Knot(New Point3D(1, 1, 1), scale:=1), GREEN)
+    isometricView.Draw(g)
+
+    logo = DirectCast(g, GdiRasterGraphics).ImageResource.CorpBlank(blankColor:=Color.Transparent)
+End Using
+
+Using g As IGraphics = DriverLoad.CreateDefaultRasterGraphics(New Size(2400, 500), fill_color:=Color.Transparent)
+    Call g.DrawImageUnscaled(logo, New Point(50, 50))
+
+    Call g.DrawString("sci", New Font(fontName, 140), color1, New PointF(430, 90))
+    Call g.DrawString("BASIC#", New Font(fontName, 200), color2, New PointF(670, 60))
+    Call g.DrawString("http://sciBASIC.NET", New Font(FontFace.SegoeUI, 48), color1, New PointF(720, 350))
+
+    Call g.Flush()
+
+    Call DirectCast(g, GdiRasterGraphics).ImageResource _
+        .CorpBlank(blankColor:=Color.Transparent, margin:=30) _
+        .SaveAs("logo.png")
+End Using
+```
+
 ### LLM proxy (`Microsoft.VisualBasic.LLMs`, core)
 
 ```vbnet
@@ -441,7 +476,7 @@ Imports Microsoft.VisualBasic.LLMs
 HookOllama(Function(prompt) MyLocalModel.Ask(prompt))
 
 ' Prompt the hooked model from anywhere in your code:
-Dim answer As String = LLMsTalk("Explain principal component analysis")
+Dim answer As String = Await LLMsTalk("Explain principal component analysis")
 ```
 
 ---

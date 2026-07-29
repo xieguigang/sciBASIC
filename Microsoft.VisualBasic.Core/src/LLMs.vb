@@ -55,9 +55,9 @@
 
 Public Module LLMs
 
-    Dim ollama As Func(Of String, String)
+    Dim ollama As Func(Of String, Task(Of String))
 
-    Public Sub HookOllama(chat As Func(Of String, String))
+    Public Sub HookOllama(chat As Func(Of String, Task(Of String)))
         ollama = chat
     End Sub
 
@@ -68,11 +68,11 @@ Public Module LLMs
     ''' <returns>
     ''' this proxy function will returns nothing if there is no ollama client is hooked
     ''' </returns>
-    Public Function LLMsTalk(prompt As String) As String
+    Public Async Function LLMsTalk(prompt As String) As Task(Of String)
         If ollama Is Nothing Then
             Return Nothing
         Else
-            Return ollama(prompt)
+            Return Await ollama(prompt)
         End If
     End Function
 End Module
