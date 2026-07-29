@@ -1,7 +1,4 @@
 ﻿Imports System.Text
-Imports System.Linq
-Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
-Imports Microsoft.VisualBasic.Language
 Imports System.Text.RegularExpressions
 
 Public Class TextRender : Inherits Render
