@@ -301,10 +301,13 @@
   <ItemGroup>
     <Compile Remove="JSONtest\**" />
     <Compile Remove="SoapGraph\**" />
+    <Compile Remove="test\**" />
     <EmbeddedResource Remove="JSONtest\**" />
     <EmbeddedResource Remove="SoapGraph\**" />
+    <EmbeddedResource Remove="test\**" />
     <None Remove="JSONtest\**" />
     <None Remove="SoapGraph\**" />
+    <None Remove="test\**" />
   </ItemGroup>
 
   <ItemGroup>

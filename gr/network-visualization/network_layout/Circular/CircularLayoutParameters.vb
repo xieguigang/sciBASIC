@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::63614448a740e6e95d51f680f9879af3, gr\network-visualization\network_layout\Circular\CircularLayoutParameters.vb"
+﻿#Region "Microsoft.VisualBasic::c85afba7ce4c461b9e3a56713c5b2ba7, gr\network-visualization\network_layout\Circular\CircularLayoutParameters.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 10 (30.30%)
-    '     File Size: 1.26 KB
+    '     File Size: 1.25 KB
 
 
     '     Class CircularLayoutParameters
@@ -88,4 +88,3 @@ Namespace Circular
     End Class
 
 End Namespace
-

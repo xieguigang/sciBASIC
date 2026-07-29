@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e5fa6a06bdb08f22d64257f415082bd9, Microsoft.VisualBasic.Core\src\Extensions\IO\IOStream.vb"
+﻿#Region "Microsoft.VisualBasic::9c02b952d4490c2219f1b96329f909d3, Microsoft.VisualBasic.Core\src\Extensions\IO\IOStream.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 53
-    '    Code Lines: 41 (77.36%)
+    '   Total Lines: 64
+    '    Code Lines: 51 (79.69%)
     ' Comment Lines: 0 (0.00%)
     '    - Xml Docs: 0.00%
     ' 
-    '   Blank Lines: 12 (22.64%)
-    '     File Size: 1.62 KB
+    '   Blank Lines: 13 (20.31%)
+    '     File Size: 1.97 KB
 
 
     '     Class IOStream
@@ -50,13 +50,14 @@
     ' 
     '     Module IOStreamExtensions
     ' 
-    '         Function: AsIOStream, FileOpen
+    '         Function: AsIOStream, Bytes, FileOpen
     ' 
     ' 
     ' /********************************************************************************/
 
 #End Region
 
+Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.My.FrameworkInternal
 Imports Microsoft.VisualBasic.My.FrameworkInternal.IOHandler
@@ -107,6 +108,16 @@ Namespace FileIO
         <Extension>
         Public Function FileOpen(path As String, Optional encoding As Encodings = Encodings.UTF8) As Integer
             Return My.File.OpenHandle(path, encoding)
+        End Function
+
+        <Extension>
+        Public Function Bytes(s As Stream) As Byte()
+            Using buf As New MemoryStream
+                Call s.CopyTo(buf)
+                Call buf.Flush()
+                Call buf.Seek(Scan0, SeekOrigin.Begin)
+                Return buf.ToArray
+            End Using
         End Function
     End Module
 End Namespace

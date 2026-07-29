@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::df0bdbd4c52cd76070e1d42317b31620, gr\network-visualization\NetworkEditor\Layout\CircularRunner.vb"
+﻿#Region "Microsoft.VisualBasic::4ad5c0b862a5ba3cfe8544023b121dd8, gr\network-visualization\NetworkEditor\Layout\CircularRunner.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 0.00%
     ' 
     '   Blank Lines: 7 (25.93%)
-    '     File Size: 934 B
+    '     File Size: 932 B
 
 
     '     Class CircularRunner
@@ -83,4 +83,3 @@ Namespace NetworkEditor.Layout
     End Class
 
 End Namespace
-

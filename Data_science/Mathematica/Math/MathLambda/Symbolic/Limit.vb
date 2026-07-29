@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8da4fd3a7ba2abf842cbdd8b39f13156, Data_science\Mathematica\Math\MathLambda\Symbolic\Limit.vb"
+﻿#Region "Microsoft.VisualBasic::2423e01bf404d32487d8d77205a54c93, Data_science\Mathematica\Math\MathLambda\Symbolic\Limit.vb"
 
     ' Author:
     ' 
@@ -192,4 +192,3 @@ Namespace Symbolic
         End Function
     End Module
 End Namespace
-

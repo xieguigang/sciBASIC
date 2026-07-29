@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f8318e74705c915ca4cbfeb0789eca83, mime\application%json\Javascript\JsonElement.vb"
+﻿#Region "Microsoft.VisualBasic::c46aac985e2703eec15fc2957e7ed3bd, mime\application%json\Javascript\JsonElement.vb"
 
     ' Author:
     ' 
@@ -45,7 +45,7 @@
 
     '     Class JsonElement
     ' 
-    '         Function: [As], Parse, ParseJSON, ToString
+    '         Function: [As], ParseJSON, ToString
     ' 
     ' 
     ' /********************************************************************************/

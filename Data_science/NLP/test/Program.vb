@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bdae276f17a3554ff5f123a9d226d8dd, Data_science\NLP\test\Program.vb"
+﻿#Region "Microsoft.VisualBasic::6ecc650e5a5c3e3cddf2aee702942407, Data_science\NLP\test\Program.vb"
 
     ' Author:
     ' 
@@ -40,12 +40,12 @@
     '    - Xml Docs: 0.00%
     ' 
     '   Blank Lines: 8 (17.02%)
-    '     File Size: 1.75 KB
+    '     File Size: 1.76 KB
 
 
-    ' Module Program
+    ' Module Program2
     ' 
-    '     Sub: Main, test1, test2
+    '     Sub: Main11111, test1, test2
     ' 
     ' /********************************************************************************/
 
@@ -55,8 +55,8 @@ Imports System.IO
 Imports Microsoft.VisualBasic.Data.NLP.LDA
 Imports Microsoft.VisualBasic.Parallel
 
-Module Program
-    Sub Main(args As String())
+Module Program2
+    Sub Main11111(args As String())
         ' 1. Load corpus from disk
         Dim corpus As Corpus = Corpus.load("\GCModeller\src\R-sharp\test\demo\machineLearning\NLP\data\mini")
 

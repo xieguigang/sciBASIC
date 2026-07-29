@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c769dd28bad939004cff74eb554f3b86, Microsoft.VisualBasic.Core\src\ComponentModel\Settings\Inf\INIProfile.vb"
+﻿#Region "Microsoft.VisualBasic::7db183c062116a00f0d18ea37603782a, Microsoft.VisualBasic.Core\src\ComponentModel\Settings\Inf\INIProfile.vb"
 
     ' Author:
     ' 
@@ -34,18 +34,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 171
-    '    Code Lines: 95 (55.56%)
-    ' Comment Lines: 59 (34.50%)
-    '    - Xml Docs: 86.44%
+    '   Total Lines: 172
+    '    Code Lines: 95 (55.23%)
+    ' Comment Lines: 60 (34.88%)
+    '    - Xml Docs: 86.67%
     ' 
-    '   Blank Lines: 17 (9.94%)
-    '     File Size: 7.51 KB
+    '   Blank Lines: 17 (9.88%)
+    '     File Size: 7.52 KB
 
 
     '     Module INIProfile
     ' 
-    '         Function: (+2 Overloads) GetPrivateProfileString, isCommentsOrBlank, PopulateSections, readDataLines
+    '         Function: (+2 Overloads) GetPrivateProfileString, isBlank, isCommentsOrBlank, PopulateSections, readDataLines
     ' 
     '         Sub: WritePrivateProfileString
     ' 

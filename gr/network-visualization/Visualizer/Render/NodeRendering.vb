@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c02f4f2d98a5628209006cbd86aa0975, gr\network-visualization\Visualizer\Render\NodeRendering.vb"
+﻿#Region "Microsoft.VisualBasic::a21f18bf881d6a4ada70bae23935282b, gr\network-visualization\Visualizer\Render\NodeRendering.vb"
 
     ' Author:
     ' 
@@ -302,4 +302,3 @@ Friend Class NodeRendering
         End If
     End Function
 End Class
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::917de53366d09591c50b9508d61011dc, gr\network-visualization\NetworkEditor\Controls\GroupColorPanel.vb"
+﻿#Region "Microsoft.VisualBasic::c6216ba351c48e34fa1e2d14cf8233b2, gr\network-visualization\NetworkEditor\Controls\GroupColorPanel.vb"
 
     ' Author:
     ' 
@@ -211,4 +211,3 @@ Namespace NetworkEditor.Controls
     End Class
 
 End Namespace
-

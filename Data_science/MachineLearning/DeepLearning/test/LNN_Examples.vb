@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b8d702a566df838c0cc9a99bf0a06b59, Data_science\MachineLearning\DeepLearning\test\LNN_Examples.vb"
+﻿#Region "Microsoft.VisualBasic::c0b7219d0080d6e16a77701b88453d1f, Data_science\MachineLearning\DeepLearning\test\LNN_Examples.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 682
-    '    Code Lines: 449 (65.84%)
-    ' Comment Lines: 93 (13.64%)
+    '   Total Lines: 684
+    '    Code Lines: 449 (65.64%)
+    ' Comment Lines: 93 (13.60%)
     '    - Xml Docs: 36.56%
     ' 
-    '   Blank Lines: 140 (20.53%)
-    '     File Size: 23.75 KB
+    '   Blank Lines: 142 (20.76%)
+    '     File Size: 23.76 KB
 
 
     ' Module LNNExamples
@@ -727,8 +727,10 @@ Public Class LNNUsageExamples
         Console.WriteLine("========================================" & vbNewLine)
 
         BasicTimeSeriesPrediction()
-        MultiStepForecast()
         CompareODESolvers()
+
+        MultiStepForecast()
+
         StateHistoryExample()
         CompareActivationFunctions()
 

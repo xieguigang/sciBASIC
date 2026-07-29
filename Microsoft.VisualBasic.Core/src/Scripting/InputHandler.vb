@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6f13bd011f1b0845035ab6ad579c873b, Microsoft.VisualBasic.Core\src\Scripting\InputHandler.vb"
+﻿#Region "Microsoft.VisualBasic::074a3fe61fa017f8c9f6509df75eae9f, Microsoft.VisualBasic.Core\src\Scripting\InputHandler.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 461
-    '    Code Lines: 276 (59.87%)
-    ' Comment Lines: 137 (29.72%)
-    '    - Xml Docs: 91.24%
+    '   Total Lines: 464
+    '    Code Lines: 277 (59.70%)
+    ' Comment Lines: 139 (29.96%)
+    '    - Xml Docs: 91.37%
     ' 
-    '   Blank Lines: 48 (10.41%)
-    '     File Size: 20.21 KB
+    '   Blank Lines: 48 (10.34%)
+    '     File Size: 20.30 KB
 
 
     '     Module InputHandler

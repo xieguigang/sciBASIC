@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7b363c685555fe472d68d2850f2aa366, Data_science\Mathematica\Math\MathLambda\Symbolic\Polynomial.vb"
+﻿#Region "Microsoft.VisualBasic::1c672a125bf898bd72da93236d9e6db9, Data_science\Mathematica\Math\MathLambda\Symbolic\Polynomial.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 47.14%
     ' 
     '   Blank Lines: 90 (12.24%)
-    '     File Size: 31.01 KB
+    '     File Size: 30.99 KB
 
 
     '     Class UnivariatePoly
@@ -465,7 +465,7 @@ Namespace Symbolic
 
         ''' <summary>
         ''' Divide <paramref name="dividend"/> by <paramref name="divisor"/>, returning the
-        ''' quotient and assigning the remainder to <paramref name="remainder"/>.
+        ''' quotient and assigning the remainder to remainder.
         ''' </summary>
         Public Function PolynomialDivide(dividend As Expression, divisor As Expression, Optional var As String = Nothing) As Expression
             If var Is Nothing Then var = inferVar(dividend)
@@ -803,4 +803,3 @@ Namespace Symbolic
         End Function
     End Module
 End Namespace
-

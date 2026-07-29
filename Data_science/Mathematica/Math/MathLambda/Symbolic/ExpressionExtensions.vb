@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::88b9453451cd47511ad03d119bf5be57, Data_science\Mathematica\Math\MathLambda\Symbolic\ExpressionExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::a1b8e7a025889072686f988bc287e8d8, Data_science\Mathematica\Math\MathLambda\Symbolic\ExpressionExtensions.vb"
 
     ' Author:
     ' 
@@ -426,4 +426,3 @@ Namespace Symbolic
         End Class
     End Module
 End Namespace
-

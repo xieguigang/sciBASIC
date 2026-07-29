@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1f4c96fb017cece83d7a55a311a20bf7, Data_science\Mathematica\Math\CVODE_Solver\CVODESolver.vb"
+﻿#Region "Microsoft.VisualBasic::a8dead85a83b9a30304cb14f8017a87c, Data_science\Mathematica\Math\CVODE_Solver\CVODESolver.vb"
 
     ' Author:
     ' 
@@ -997,4 +997,3 @@ Public Class CVODESolver : Implements IDisposable
 #End Region
 
 End Class
-

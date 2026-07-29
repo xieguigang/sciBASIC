@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::830a9a578c1cf70329e08ffddafbddfe, Data\DataFrame\DataFrame\FeatureVector.vb"
+﻿#Region "Microsoft.VisualBasic::63fd6be8e5e204b8371a7c6e585f167b, Data\DataFrame\DataFrame\FeatureVector.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 281
-    '    Code Lines: 205 (72.95%)
-    ' Comment Lines: 29 (10.32%)
+    '   Total Lines: 283
+    '    Code Lines: 207 (73.14%)
+    ' Comment Lines: 29 (10.25%)
     '    - Xml Docs: 96.55%
     ' 
-    '   Blank Lines: 47 (16.73%)
-    '     File Size: 9.45 KB
+    '   Blank Lines: 47 (16.61%)
+    '     File Size: 9.56 KB
 
 
     ' Class FeatureVector

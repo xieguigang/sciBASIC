@@ -1,68 +1,68 @@
-﻿#Region "Microsoft.VisualBasic::c3dc987273b8bf22b1adc72fd0efec0f, Data_science\MachineLearning\TensorFlow\NumPy.vb"
+﻿#Region "Microsoft.VisualBasic::f9605c6a9ec2456263fbf22501e73c4c, Data_science\MachineLearning\TensorFlow\NumPy.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 734
-'    Code Lines: 412 (56.13%)
-' Comment Lines: 200 (27.25%)
-'    - Xml Docs: 91.50%
-' 
-'   Blank Lines: 122 (16.62%)
-'     File Size: 23.36 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-' Module NumPyModule
-' 
-'     Function: [where], abs, arange, argmax, argmin
-'               array, as_double_array, clip, concatenate, cos
-'               dot, equal, exp, expand_dims, eye
-'               flatten, full, greater, hstack, identity
-'               less, linspace, log, logspace, matmul
-'               max, maximum, mean, min, minimum
-'               ndim, ones, power, prod, reshape
-'               shape, sin, size, split, sqrt
-'               square, squeeze, stack, std, sum
-'               tanh, transpose, vstack, zeros
-'     Class RandomState
-' 
-'         Function: rand, randint, randn
-' 
-' 
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 732
+    '    Code Lines: 411 (56.15%)
+    ' Comment Lines: 200 (27.32%)
+    '    - Xml Docs: 91.50%
+    ' 
+    '   Blank Lines: 121 (16.53%)
+    '     File Size: 25.66 KB
+
+
+    '     Module NumPyModule
+    ' 
+    '         Function: [where], abs, arange, argmax, argmin
+    '                   array, as_double_array, clip, concatenate, cos
+    '                   dot, equal, exp, expand_dims, eye
+    '                   flatten, full, greater, hstack, identity
+    '                   less, linspace, log, logspace, matmul
+    '                   max, maximum, mean, min, minimum
+    '                   ndim, ones, power, prod, reshape
+    '                   shape, sin, size, split, sqrt
+    '                   square, squeeze, stack, std, sum
+    '                   tanh, transpose, vstack, zeros
+    '         Class RandomState
+    ' 
+    '             Function: rand, randint, randn
+    ' 
+    ' 
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

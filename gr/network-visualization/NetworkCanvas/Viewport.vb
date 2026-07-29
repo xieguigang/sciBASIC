@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a2c82b530aa41484bee7df5d0514c1b1, gr\network-visualization\NetworkCanvas\Viewport.vb"
+﻿#Region "Microsoft.VisualBasic::3e21715f6739cd523d8055cb6f0c0526, gr\network-visualization\NetworkCanvas\Viewport.vb"
 
     ' Author:
     ' 
@@ -194,4 +194,3 @@ Public Class CanvasViewState
         Return (Hovered Is n) OrElse Selected.Contains(n)
     End Function
 End Class
-

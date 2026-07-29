@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e7f070a8e3965f089b4d3600e1fc15e6, Data_science\MachineLearning\DeepQNetwork\IEnvironment.vb"
+﻿#Region "Microsoft.VisualBasic::6c67ba9391daf70840878043b819883b, Data_science\MachineLearning\DeepQNetwork\IEnvironment.vb"
 
     ' Author:
     ' 
@@ -104,4 +104,3 @@ Public Structure StepResult
     ''' <summary>whether the episode ended</summary>
     Public done As Boolean
 End Structure
-

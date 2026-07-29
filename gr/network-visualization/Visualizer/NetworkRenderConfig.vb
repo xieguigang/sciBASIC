@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b3645d827e3840aa439d3b4bc559f183, gr\network-visualization\Visualizer\NetworkRenderConfig.vb"
+﻿#Region "Microsoft.VisualBasic::f6f1cc6a3c48517f2b8a7a7937e98ee9, gr\network-visualization\Visualizer\NetworkRenderConfig.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 83
-    '    Code Lines: 50 (60.24%)
-    ' Comment Lines: 23 (27.71%)
+    '   Total Lines: 82
+    '    Code Lines: 49 (59.76%)
+    ' Comment Lines: 23 (28.05%)
     '    - Xml Docs: 65.22%
     ' 
-    '   Blank Lines: 10 (12.05%)
-    '     File Size: 4.16 KB
+    '   Blank Lines: 10 (12.20%)
+    '     File Size: 4.12 KB
 
 
     ' Class NetworkRenderConfig
@@ -140,4 +140,3 @@ Public Class NetworkRenderConfig
     Public Property ThrowEx As Boolean = True
 
 End Class
-

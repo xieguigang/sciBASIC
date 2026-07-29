@@ -146,10 +146,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="System.Runtime" Version="4.3.1" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\..\..\..\Microsoft.VisualBasic.Core\src\Core.vbproj" />
     <ProjectReference Include="..\..\..\..\mime\application%xml\xml-netcore5.vbproj" />
     <ProjectReference Include="..\Math\Math.NET5.vbproj" />

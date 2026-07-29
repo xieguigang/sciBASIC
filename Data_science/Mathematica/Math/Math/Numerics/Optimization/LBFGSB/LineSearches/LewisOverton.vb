@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::20c7fbd38f818b9be0ea650bdab0266c, Data_science\Mathematica\Math\Math\Numerics\Optimization\LBFGSB\LineSearches\LewisOverton.vb"
+﻿#Region "Microsoft.VisualBasic::4a434f520d2dce9d795279ed663b09ee, Data_science\Mathematica\Math\Math\Numerics\Optimization\LBFGSB\LineSearches\LewisOverton.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 93.75%
     ' 
     '   Blank Lines: 37 (18.88%)
-    '     File Size: 6.40 KB
+    '     File Size: 6.38 KB
 
 
     '     Class LewisOverton

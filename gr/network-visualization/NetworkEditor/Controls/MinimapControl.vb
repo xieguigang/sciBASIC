@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1f35fc58edfbb5d83c99884d86ea94ed, gr\network-visualization\NetworkEditor\Controls\MinimapControl.vb"
+﻿#Region "Microsoft.VisualBasic::24591d3ec468327b4cca091788cf7700, gr\network-visualization\NetworkEditor\Controls\MinimapControl.vb"
 
     ' Author:
     ' 
@@ -193,4 +193,3 @@ Namespace NetworkEditor.Controls
     End Class
 
 End Namespace
-

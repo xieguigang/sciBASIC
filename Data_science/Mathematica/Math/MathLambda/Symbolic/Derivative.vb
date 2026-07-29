@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7dd85d8e3181cb0113f07c657ebe847a, Data_science\Mathematica\Math\MathLambda\Symbolic\Derivative.vb"
+﻿#Region "Microsoft.VisualBasic::663a7475b8731794f92437aef08f55b9, Data_science\Mathematica\Math\MathLambda\Symbolic\Derivative.vb"
 
     ' Author:
     ' 
@@ -248,4 +248,3 @@ Namespace Symbolic
         End Function
     End Module
 End Namespace
-

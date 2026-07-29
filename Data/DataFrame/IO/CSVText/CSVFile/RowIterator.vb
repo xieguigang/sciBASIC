@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d26c7d0436e34b483ded495910e39b35, Data\DataFrame\IO\CSVText\CSVFile\RowIterator.vb"
+﻿#Region "Microsoft.VisualBasic::c3c401724f1a9b32dd3f94a4e551afdf, Data\DataFrame\IO\CSVText\CSVFile\RowIterator.vb"
 
     ' Author:
     ' 
@@ -34,20 +34,20 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 90
-    '    Code Lines: 62 (68.89%)
-    ' Comment Lines: 12 (13.33%)
+    '   Total Lines: 96
+    '    Code Lines: 67 (69.79%)
+    ' Comment Lines: 12 (12.50%)
     '    - Xml Docs: 0.00%
     ' 
-    '   Blank Lines: 16 (17.78%)
-    '     File Size: 3.27 KB
+    '   Blank Lines: 17 (17.71%)
+    '     File Size: 3.58 KB
 
 
     '     Class RowIterator
     ' 
     '         Constructor: (+1 Overloads) Sub New
     ' 
-    '         Function: GetRows, RowSolver
+    '         Function: GetRows, HeaderResolver, RowSolver
     ' 
     '         Sub: (+2 Overloads) Dispose
     ' 
@@ -101,6 +101,12 @@ Namespace IO.CSVFile
                     Yield New RowObject(row.PopAll)
                 End If
             Loop
+        End Function
+
+        Public Shared Function HeaderResolver(file As String, Optional simple As Boolean = False) As RowObject
+            Using s As Stream = file.Open(FileMode.Open, doClear:=False, [readOnly]:=True)
+                Return RowSolver(s, simple).FirstOrDefault
+            End Using
         End Function
 
         Public Shared Function RowSolver(file As Stream, simple As Boolean) As IEnumerable(Of RowObject)

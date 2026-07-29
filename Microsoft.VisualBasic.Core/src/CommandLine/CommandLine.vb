@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::38efa0e1db1653962a95448ecc55db29, Microsoft.VisualBasic.Core\src\CommandLine\CommandLine.vb"
+﻿#Region "Microsoft.VisualBasic::4968cc110f8e099f9189f40134c50a52, Microsoft.VisualBasic.Core\src\CommandLine\CommandLine.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 889
-    '    Code Lines: 465 (52.31%)
-    ' Comment Lines: 321 (36.11%)
+    '   Total Lines: 901
+    '    Code Lines: 474 (52.61%)
+    ' Comment Lines: 321 (35.63%)
     '    - Xml Docs: 89.72%
     ' 
-    '   Blank Lines: 103 (11.59%)
-    '     File Size: 37.64 KB
+    '   Blank Lines: 106 (11.76%)
+    '     File Size: 38.07 KB
 
 
     '     Class CommandLine
@@ -50,12 +50,12 @@
     '                     Parameters, SingleValue, Tokens
     ' 
     '         Function: Assert, (+2 Overloads) BuildFromArguments, CheckMissingRequiredArguments, CheckMissingRequiredParameters, Contains
-    '                   ContainsParameter, GetDataReader, GetDictionary, GetEnumerator, GetEnumerator1
-    '                   GetFullDIRPath, GetFullFilePath, GetObject, GetOrdinal, GetSize
-    '                   (+2 Overloads) GetString, GetValue, hasKey, HavebFlag, IsTrue
-    '                   MoveNext, OpenHandle, OpenStreamInput, OpenStreamOutput, Parse
-    '                   ParseTokens, ReadInput, (+2 Overloads) Remove, Required, ToArgumentVector
-    '                   ToString, TrimNamePrefix
+    '                   ContainsParameter, CreateOpts, GetDataReader, GetDictionary, GetEnumerator
+    '                   GetEnumerator1, GetFullDIRPath, GetFullFilePath, GetObject, GetOrdinal
+    '                   GetSize, (+2 Overloads) GetString, GetValue, hasKey, HavebFlag
+    '                   IsTrue, MoveNext, OpenHandle, OpenStreamInput, OpenStreamOutput
+    '                   Parse, ParseTokens, ReadInput, (+2 Overloads) Remove, Required
+    '                   ToArgumentVector, ToString, TrimNamePrefix
     ' 
     '         Sub: (+2 Overloads) Add, Clear, CopyTo
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::86374459bb2c4220c366feeb49b496c4, gr\network-visualization\NetworkEditor\Models\GroupColorMap.vb"
+﻿#Region "Microsoft.VisualBasic::77b57601bf738a59a187cdf94ba714d7, gr\network-visualization\NetworkEditor\Models\GroupColorMap.vb"
 
     ' Author:
     ' 
@@ -133,4 +133,3 @@ Namespace NetworkEditor.Models
     End Class
 
 End Namespace
-

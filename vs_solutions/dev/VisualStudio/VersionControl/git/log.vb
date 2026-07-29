@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::844e07299c8ff46a146d216497ab7b91, vs_solutions\dev\VisualStudio\VersionControl\git\log.vb"
+﻿#Region "Microsoft.VisualBasic::dfd8e2592da1bc7bd1deb424653fd55d, vs_solutions\dev\VisualStudio\VersionControl\git\log.vb"
 
     ' Author:
     ' 
@@ -34,20 +34,21 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 57
-    '    Code Lines: 39 (68.42%)
-    ' Comment Lines: 13 (22.81%)
+    '   Total Lines: 60
+    '    Code Lines: 41 (68.33%)
+    ' Comment Lines: 13 (21.67%)
     '    - Xml Docs: 92.31%
     ' 
-    '   Blank Lines: 5 (8.77%)
-    '     File Size: 2.14 KB
+    '   Blank Lines: 6 (10.00%)
+    '     File Size: 2.39 KB
 
 
-    ' Class log
+    '     Class log
     ' 
-    '     Properties: [date], author, commit, message
+    '         Properties: [date], author, commit, message
     ' 
-    '     Function: ParseGitLogText, ParseSvnLogText
+    '         Function: ParseGitLogText, ParseSvnLogText
+    ' 
     ' 
     ' /********************************************************************************/
 
@@ -55,58 +56,61 @@
 
 Imports Microsoft.VisualBasic.Text
 
-''' <summary>
-''' svn log or git log
-''' </summary>
-Public Class log
-
-    Public Property commit As String
-    Public Property author As String
-    Public Property [date] As Date
-    Public Property message As String
+Namespace VersionControl.Git
 
     ''' <summary>
-    ''' parse git log text
+    ''' svn log or git log
     ''' </summary>
-    ''' <param name="text">``git log [fileName]``</param>
-    ''' <returns></returns>
-    Public Shared Iterator Function ParseGitLogText(text As String) As IEnumerable(Of log)
-        For Each block As String() In text.LineIterators.Split(Function(line) line.StartsWith("commit "), DelimiterLocation.NextFirst)
-            Yield New log With {
-                .commit = block(Scan0).Trim.Split.Last,
-                .author = block(1).GetTagValue(":", trim:=True).Value,
-                .[date] = Date.Parse(block(2).GetTagValue(":", trim:=True).Value),
-                .message = block _
-                    .Skip(3) _
-                    .Select(AddressOf Strings.Trim) _
-                    .Where(Function(s) Not s.StringEmpty) _
-                    .JoinBy("; ")
-            }
-        Next
-    End Function
+    Public Class log
 
-    ''' <summary>
-    ''' 
-    ''' </summary>
-    ''' <param name="text">``svn log [fileName]``</param>
-    ''' <returns></returns>
-    Public Shared Iterator Function ParseSvnLogText(text As String) As IEnumerable(Of log)
-        For Each block As String() In text.LineIterators.Split(Function(line) line.IsPattern("[-]+"), DelimiterLocation.NotIncludes)
-            Dim tokens As String() = block(Scan0) _
-                .Split("|"c) _
-                .Select(AddressOf Strings.Trim) _
-                .ToArray
+        Public Property commit As String
+        Public Property author As String
+        Public Property [date] As Date
+        Public Property message As String
 
-            Yield New log With {
-                .commit = tokens(Scan0),
-                .author = tokens(1),
-                .[date] = Date.Parse(tokens(2)),
-                .message = block _
-                    .Skip(1) _
+        ''' <summary>
+        ''' parse git log text
+        ''' </summary>
+        ''' <param name="text">``git log [fileName]``</param>
+        ''' <returns></returns>
+        Public Shared Iterator Function ParseGitLogText(text As String) As IEnumerable(Of log)
+            For Each block As String() In text.LineIterators.Split(Function(line) line.StartsWith("commit "), DelimiterLocation.NextFirst)
+                Yield New log With {
+                    .commit = block(Scan0).Trim.Split.Last,
+                    .author = block(1).GetTagValue(":", trim:=True).Value,
+                    .[date] = Date.Parse(block(2).GetTagValue(":", trim:=True).Value),
+                    .message = block _
+                        .Skip(3) _
+                        .Select(AddressOf Strings.Trim) _
+                        .Where(Function(s) Not s.StringEmpty) _
+                        .JoinBy("; ")
+                }
+            Next
+        End Function
+
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="text">``svn log [fileName]``</param>
+        ''' <returns></returns>
+        Public Shared Iterator Function ParseSvnLogText(text As String) As IEnumerable(Of log)
+            For Each block As String() In text.LineIterators.Split(Function(line) line.IsPattern("[-]+"), DelimiterLocation.NotIncludes)
+                Dim tokens As String() = block(Scan0) _
+                    .Split("|"c) _
                     .Select(AddressOf Strings.Trim) _
-                    .JoinBy(vbCrLf) _
-                    .Trim(" ", ASCII.TAB, ASCII.CR, ASCII.LF)
-            }
-        Next
-    End Function
-End Class
+                    .ToArray
+
+                Yield New log With {
+                    .commit = tokens(Scan0),
+                    .author = tokens(1),
+                    .[date] = Date.Parse(tokens(2)),
+                    .message = block _
+                        .Skip(1) _
+                        .Select(AddressOf Strings.Trim) _
+                        .JoinBy(vbCrLf) _
+                        .Trim(" ", ASCII.TAB, ASCII.CR, ASCII.LF)
+                }
+            Next
+        End Function
+    End Class
+End Namespace

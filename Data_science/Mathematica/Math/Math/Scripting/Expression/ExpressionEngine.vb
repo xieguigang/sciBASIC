@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0a45ab931788199c62ec7ae6b1b8b665, Data_science\Mathematica\Math\Math\Scripting\Expression\ExpressionEngine.vb"
+﻿#Region "Microsoft.VisualBasic::c5f82348fb62fd251deebe18c863ea15, Data_science\Mathematica\Math\Math\Scripting\Expression\ExpressionEngine.vb"
 
     ' Author:
     ' 
@@ -34,19 +34,19 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 139
-    '    Code Lines: 103 (74.10%)
-    ' Comment Lines: 16 (11.51%)
+    '   Total Lines: 144
+    '    Code Lines: 107 (74.31%)
+    ' Comment Lines: 16 (11.11%)
     '    - Xml Docs: 87.50%
     ' 
-    '   Blank Lines: 20 (14.39%)
-    '     File Size: 6.06 KB
+    '   Blank Lines: 21 (14.58%)
+    '     File Size: 6.26 KB
 
 
     '     Class ExpressionEngine
     ' 
-    '         Function: AddFunction, (+2 Overloads) Evaluate, GetFunction, GetSymbolValue, Parse
-    '                   (+2 Overloads) SetSymbol
+    '         Function: AddFunction, CheckFunction, (+2 Overloads) Evaluate, GetFunction, GetSymbolValue
+    '                   Parse, (+2 Overloads) SetSymbol
     ' 
     ' 
     ' /********************************************************************************/

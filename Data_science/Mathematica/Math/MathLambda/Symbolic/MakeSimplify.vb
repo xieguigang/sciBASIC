@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::441a476f92fa97c65b46ac3a988087f5, Data_science\Mathematica\Math\MathLambda\Symbolic\MakeSimplify.vb"
+﻿#Region "Microsoft.VisualBasic::47120553264fa5a2ceaee467a4a390d5, Data_science\Mathematica\Math\MathLambda\Symbolic\MakeSimplify.vb"
 
     ' Author:
     ' 
@@ -521,4 +521,3 @@ Namespace Symbolic
         End Function
     End Module
 End Namespace
-

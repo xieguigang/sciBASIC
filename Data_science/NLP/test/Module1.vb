@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f024edb30dfd841827a05e91fc603d88, Data_science\NLP\test\Module1.vb"
+﻿#Region "Microsoft.VisualBasic::fd2ea5a742a3cee71753b28a5b7c8bad, Data_science\NLP\test\Module1.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 86
-    '    Code Lines: 63 (73.26%)
-    ' Comment Lines: 13 (15.12%)
+    '   Total Lines: 98
+    '    Code Lines: 71 (72.45%)
+    ' Comment Lines: 13 (13.27%)
     '    - Xml Docs: 53.85%
     ' 
-    '   Blank Lines: 10 (11.63%)
-    '     File Size: 4.21 KB
+    '   Blank Lines: 14 (14.29%)
+    '     File Size: 4.49 KB
 
 
     ' Module Module1
@@ -53,17 +53,29 @@
 
 Imports System.IO
 Imports Microsoft.VisualBasic.Data.NLP
+Imports Microsoft.VisualBasic.Math.Correlations
 
 Module Module1
 
     Sub testtfidf()
         Dim docs = New String() {"knowledge building needs innovative environments are better at helping their inhabitants explore the adjacent possible", "As a basis for evaluating explanations, creative knowledge building weight of evidence is a poor substitute for the first two criteria listed above.", "A public idea database makes every passing idea visible to everyone else in the organization and do creative work.", "questioning and various disturbances initiate cycles of innovation and creative organization knowledge.", "We need some way to ensure knowledge to spread among environments that any notes that are dropped are dropped."}
 
-        Dim tfIdf As TF_IDF = New TF_IDF(docs, {})
-        For i = 0 To tfIdf.docSize - 1
+        Dim tfIdf As TFIDF = New TFIDF
+        Dim i As Integer
+
+        For Each seq In docs
+            Call tfIdf.Add(i, seq.StringSplit("\s+"))
+            i += 1
+        Next
+
+        For i = 0 To tfIdf.N - 1
             Console.Write(i + 1.ToString() & vbTab)
-            For j = 0 To tfIdf.docSize - 1
-                Console.Write(tfIdf.getSimilarity(i, j).ToString() & vbTab)
+            Dim v = tfIdf.TfidfVectorizer(i.ToString)
+
+            For j = 0 To tfIdf.N - 1
+                Dim u = tfIdf.TfidfVectorizer(j.ToString)
+
+                Console.Write(v.SquareDistance(u) & vbTab)
             Next
             Console.WriteLine()
         Next

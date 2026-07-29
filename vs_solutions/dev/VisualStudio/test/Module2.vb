@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f0e65f1904fb4f63b5a148c1c554ab3b, vs_solutions\dev\VisualStudio\test\Module2.vb"
+﻿#Region "Microsoft.VisualBasic::66d9d3a01c95ed123a7c2b67c3d7f494, vs_solutions\dev\VisualStudio\test\Module2.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 0.00%
     ' 
     '   Blank Lines: 6 (26.09%)
-    '     File Size: 671 B
+    '     File Size: 674 B
 
 
     ' Module Module2
@@ -55,7 +55,7 @@
 
 #End Region
 
-Imports Microsoft.VisualBasic.ApplicationServices.Development.VisualStudio
+Imports Microsoft.VisualBasic.ApplicationServices.Development.VisualStudio.IL
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 
 Module Module2

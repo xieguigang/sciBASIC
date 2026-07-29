@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::60af66345a49c9398cf96ff6c1a81efe, mime\application%json\Javascript\JsonValue.vb"
+﻿#Region "Microsoft.VisualBasic::be8816d1bf0554b68111c89c25e06ce6, mime\application%json\Javascript\JsonValue.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 158
-    '    Code Lines: 106 (67.09%)
-    ' Comment Lines: 33 (20.89%)
-    '    - Xml Docs: 100.00%
+    '   Total Lines: 191
+    '    Code Lines: 114 (59.69%)
+    ' Comment Lines: 54 (28.27%)
+    '    - Xml Docs: 92.59%
     ' 
-    '   Blank Lines: 19 (12.03%)
-    '     File Size: 5.31 KB
+    '   Blank Lines: 23 (12.04%)
+    '     File Size: 6.74 KB
 
 
     '     Class JsonValue
@@ -48,7 +48,7 @@
     '         Properties: BSONValue, IsEmptyString, IsLiteralNull, NULL, UnderlyingType
     '                     value
     ' 
-    '         Constructor: (+2 Overloads) Sub New
+    '         Constructor: (+3 Overloads) Sub New
     '         Function: GetStripString, (+2 Overloads) Literal, ToString
     ' 
     ' 
@@ -72,6 +72,14 @@ Namespace Javascript
     Public Class JsonValue : Inherits JsonElement
 
         Public Overloads Property value As Object
+
+        ''' <summary>
+        ''' indicates if the stored string <see cref="value"/> is still a raw
+        ''' json literal (may contain escape sequences) and needs to be decoded
+        ''' by <see cref="GetStripString"/>. Set to <see langword="False"/> when
+        ''' the value has already been decoded (e.g. during parsing).
+        ''' </summary>
+        Private _isRaw As Boolean = True
 
         Public ReadOnly Property BSONValue As BSONValue
             Get
@@ -125,6 +133,22 @@ Namespace Javascript
         End Sub
 
         ''' <summary>
+        ''' create based on the value literal data
+        ''' </summary>
+        ''' <param name="obj">
+        ''' could be any type of the clr runtime object as the json value
+        ''' </param>
+        ''' <param name="alreadyDecoded">
+        ''' when <see langword="True"/> the string value is already decoded
+        ''' (escape sequences resolved) and <see cref="GetStripString"/> will
+        ''' return it as-is instead of re-decoding it.
+        ''' </param>
+        Public Sub New(obj As Object, alreadyDecoded As Boolean)
+            value = obj
+            _isRaw = Not alreadyDecoded
+        End Sub
+
+        ''' <summary>
         ''' get literal value
         ''' </summary>
         ''' <returns></returns>
@@ -173,6 +197,15 @@ Namespace Javascript
             Dim s$ = Scripting _
                 .ToString(value, null) _
                 .GetString
+
+            If Not _isRaw Then
+                ' the string value has already been decoded when it was
+                ' parsed/constructed, so return it directly to avoid
+                ' re-decoding escape sequences (which would corrupt values
+                ' that legitimately contain backslashes, e.g. "\\")
+                Return s
+            End If
+
             s = JsonParser.StripString(s, decodeMetachar)
             Return s
         End Function

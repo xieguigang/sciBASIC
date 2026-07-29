@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a4c4fe8fad8a6d319a21a0198bd96ab6, mime\application%json\Parser\Token.vb"
+﻿#Region "Microsoft.VisualBasic::22683de2f531848a1d47aac408511295, mime\application%json\Parser\Token.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 65
-    '    Code Lines: 48 (73.85%)
-    ' Comment Lines: 10 (15.38%)
-    '    - Xml Docs: 100.00%
+    '   Total Lines: 72
+    '    Code Lines: 51 (70.83%)
+    ' Comment Lines: 12 (16.67%)
+    '    - Xml Docs: 83.33%
     ' 
-    '   Blank Lines: 7 (10.77%)
-    '     File Size: 1.90 KB
+    '   Blank Lines: 9 (12.50%)
+    '     File Size: 2.23 KB
 
 
     ' Class Token
@@ -63,6 +63,7 @@
 
 #End Region
 
+Imports Microsoft.VisualBasic.MIME.application.json
 Imports Microsoft.VisualBasic.MIME.application.json.Javascript
 Imports Microsoft.VisualBasic.Scripting.TokenIcer
 
@@ -106,7 +107,13 @@ Public Class Token : Inherits CodeToken(Of JSONElements)
     Public Function GetValue() As JsonValue
         Select Case name
             Case JSONElements.String
-                Return New JsonValue(text)
+                ' decode json escape sequences (e.g. \\, \", \/, \n, \uXXXX)
+                ' when reading the string literal value
+                Dim raw As String = text
+
+                raw = JsonParser.StripString(raw, decodeMetaChar:=True)
+
+                Return New JsonValue(raw, alreadyDecoded:=True)
             Case JSONElements.Boolean
                 Return New JsonValue(text.ParseBoolean)
             Case JSONElements.Double

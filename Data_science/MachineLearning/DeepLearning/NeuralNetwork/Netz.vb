@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cb68effdf0240d27bcd683ae3f5654f7, Data_science\MachineLearning\DeepLearning\NeuralNetwork\Netz.vb"
+﻿#Region "Microsoft.VisualBasic::60e116651a1bda3e8f9a73dd04a51a51, Data_science\MachineLearning\DeepLearning\NeuralNetwork\Netz.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 72.73%
     ' 
     '   Blank Lines: 54 (17.53%)
-    '     File Size: 12.17 KB
+    '     File Size: 12.15 KB
 
 
     '     Class Netz
@@ -106,7 +106,7 @@ Namespace NeuralNetwork
 
         ''' <summary>
         ''' 保留旧接口之中的激活函数引用（用于兼容），实际计算由 CNN 激活层完成。
-        ''' 任意自定义 <paramref name="activate"/> 无法在 CNN 层体系内精确表达时，回退到 Sigmoid（与旧 Netz 默认一致）。
+        ''' 任意自定义 "activate" 无法在 CNN 层体系内精确表达时，回退到 Sigmoid（与旧 Netz 默认一致）。
         ''' </summary>
         Private ReadOnly m_activate As Func(Of Double, Double)
 

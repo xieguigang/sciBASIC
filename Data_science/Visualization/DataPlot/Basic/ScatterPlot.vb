@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::48e6b3aba23fe6d7ca9c5f92a9f498b9, Data_science\Visualization\DataPlot\Basic\ScatterPlot.vb"
+﻿#Region "Microsoft.VisualBasic::33fb17a6646b7fd50d4d06f503949227, Data_science\Visualization\DataPlot\Basic\ScatterPlot.vb"
 
     ' Author:
     ' 
@@ -34,18 +34,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 78
-    '    Code Lines: 61 (78.21%)
-    ' Comment Lines: 8 (10.26%)
-    '    - Xml Docs: 12.50%
+    '   Total Lines: 79
+    '    Code Lines: 61 (77.22%)
+    ' Comment Lines: 9 (11.39%)
+    '    - Xml Docs: 22.22%
     ' 
-    '   Blank Lines: 9 (11.54%)
-    '     File Size: 3.07 KB
+    '   Blank Lines: 9 (11.39%)
+    '     File Size: 3.08 KB
 
 
     ' Class ScatterPlot
     ' 
-    '     Constructor: (+1 Overloads) Sub New
+    '     Constructor: (+2 Overloads) Sub New
     '     Sub: Plot
     ' 
     ' /********************************************************************************/

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c5bd8029dda98d64aa149b7342f775f0, Data_science\MachineLearning\DeepQNetwork\QAgent.vb"
+﻿#Region "Microsoft.VisualBasic::05ceffaab8ea23116b5c847c2e9608e5, Data_science\MachineLearning\DeepQNetwork\QAgent.vb"
 
     ' Author:
     ' 
@@ -195,4 +195,3 @@ Public Class QAgent
         episodeReward += r
     End Sub
 End Class
-

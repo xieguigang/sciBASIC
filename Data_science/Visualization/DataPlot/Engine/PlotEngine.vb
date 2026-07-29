@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::666c244acc777dc7ea9e2d14cf59fd5f, Data_science\Visualization\DataPlot\Engine\PlotEngine.vb"
+﻿#Region "Microsoft.VisualBasic::55eff919dfe645388da98eb194e09fde, Data_science\Visualization\DataPlot\Engine\PlotEngine.vb"
 
     ' Author:
     ' 
@@ -34,15 +34,19 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 428
-    '    Code Lines: 333 (77.80%)
-    ' Comment Lines: 57 (13.32%)
-    '    - Xml Docs: 19.30%
+    '   Total Lines: 462
+    '    Code Lines: 355 (76.84%)
+    ' Comment Lines: 62 (13.42%)
+    '    - Xml Docs: 25.81%
     ' 
-    '   Blank Lines: 38 (8.88%)
-    '     File Size: 18.75 KB
+    '   Blank Lines: 45 (9.74%)
+    '     File Size: 20.01 KB
 
 
+    ' Class SeriesPlotEngine
+    ' 
+    '     Constructor: (+2 Overloads) Sub New
+    ' 
     ' Class PlotEngine
     ' 
     '     Properties: LegendLocation, ShowLegend, SubTitle, Theme, Title
@@ -59,10 +63,10 @@
     ' 
     '     Properties: CanvasHeight, CanvasWidth, PlotArea
     ' 
-    '     Constructor: (+1 Overloads) Sub New
+    '     Constructor: (+2 Overloads) Sub New
     ' 
-    '     Function: FormatNumber, GenerateTicks, GetGraphics, NiceStep, ToPixelX
-    '               ToPixelY
+    '     Function: FormatNumber, GenerateTicks, GetGraphics, NiceStep, ToBitmap
+    '               ToPixelX, ToPixelY
     ' 
     '     Sub: ApplyQuality, AutoRange, ComputePlotArea, Dispose, DrawAxisAndGrid
     '          DrawBackground, DrawLegend, DrawMarker, DrawPlotArea, DrawTitle

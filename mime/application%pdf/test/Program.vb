@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::edba9a6676c776e13e81d6a4bbed73bd, mime\application%pdf\test\Program.vb"
+﻿#Region "Microsoft.VisualBasic::36584906b022f219472c2e198801a55c, mime\application%pdf\test\Program.vb"
 
     ' Author:
     ' 
@@ -34,128 +34,76 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 107
-    '    Code Lines: 58 (54.21%)
-    ' Comment Lines: 29 (27.10%)
+    '   Total Lines: 54
+    '    Code Lines: 38 (70.37%)
+    ' Comment Lines: 8 (14.81%)
     '    - Xml Docs: 0.00%
     ' 
-    '   Blank Lines: 20 (18.69%)
-    '     File Size: 4.55 KB
+    '   Blank Lines: 8 (14.81%)
+    '     File Size: 2.13 KB
 
 
-    '     Class Program
+    ' Class Program
     ' 
-    '         Sub: ListIndirectObjects, LoadImmediately, LoadOnDemand, Main, ShowFirstPageContent
+    '     Function: Main
     ' 
+    '     Sub: PrintUsage
     ' 
     ' /********************************************************************************/
 
 #End Region
 
-Imports Microsoft.VisualBasic.Language
-Imports Microsoft.VisualBasic.MIME.application.pdf.PdfReader
+' ============================================================================
+'  Program.vb  -  命令行入口
+'  ----------------------------------------------------------------------------
+'  用法：
+'    VBNetPdfParser <input.pdf> [output.txt]
+'  若不指定输出文件，则输出到与输入同名的 .txt 文件。
+' ============================================================================
 
-Namespace ExampleConsoleApp
-    Friend Class Program
-        Public Shared Sub Main()
-            Dim filename = "D:\biodeep\biodeep_pipeline\biodeepdb\Odor Threshold Values.pdf"
-            '-----------------------------------------------
-            ' Comment/Uncomment the example you want to run
-            '-----------------------------------------------
+Imports System.IO
 
-            ' 1 - Show document details in compact form
-            '---------------------------------------------
-            ' LoadImmediately(filename, False, False)
+Public Class Program
+    Public Shared Function Main(args As String()) As Integer
+        Console.OutputEncoding = System.Text.Encoding.UTF8
+        ' 注册 Windows 等代码页编码（.NET Core/5+ 默认不含）
+        System.Text.Encoding.RegisterProvider(System.Text.CodePagesEncodingProvider.Instance)
 
-            ' 2 - As above but also resolve references
-            '---------------------------------------------
-            '  LoadImmediately(filename, true, false);
+        If args.Length = 0 Then
+            PrintUsage()
+            Return 1
+        End If
 
-            ' 3 - As above but also show stream contents
-            '---------------------------------------------
-            '  LoadImmediately(filename, true, true);
+        Dim inputPath = args(0)
+        Dim outputPath = If(args.Length > 1, args(1), Path.ChangeExtension(inputPath, ".txt"))
 
-            ' 4 - On demand versions of the above three methods
-            '---------------------------------------------
-            '  LoadOnDemand(filename, false, false);
-            '  LoadOnDemand(filename, true, false);
-            '  LoadOnDemand(filename, true, true);
+        If Not File.Exists(inputPath) Then
+            Console.Error.WriteLine($"错误：找不到输入文件 {inputPath}")
+            Return 2
+        End If
 
-            ' 5 - Show content commands for the first page
-            '---------------------------------------------
-            ShowFirstPageContent(filename)
+        Try
 
-            ' 6 - List the indirect objects
-            '---------------------------------------------
-            '  ListIndirectObjects(filename, false, false);
+            Return 0
+        Catch ex As Exception
+            Console.Error.WriteLine($"解析失败: {ex.Message}")
+            Console.Error.WriteLine(ex.StackTrace)
+            Return 3
+        End Try
+    End Function
 
-            Pause()
-        End Sub
-
-        Private Shared Sub LoadImmediately(ByVal filename As String, ByVal resolve As Boolean, ByVal streamContent As Boolean)
-            Dim document As PdfDocument = New PdfDocument()
-            document.Load(filename, True)
-            document.Close()
-
-            ' Output an overview of the document contents
-            Dim builder As PdfDebugBuilder = New PdfDebugBuilder(document)
-            builder.Resolve = resolve
-            builder.StreamContent = streamContent
-            Console.WriteLine(builder.ToString())
-        End Sub
-
-        Private Shared Sub LoadOnDemand(ByVal filename As String, ByVal resolve As Boolean, ByVal streamContent As Boolean)
-            Dim document As PdfDocument = New PdfDocument()
-            document.Load(filename, False)
-            Dim builder As PdfDebugBuilder = New PdfDebugBuilder(document)
-            builder.Resolve = resolve
-            builder.StreamContent = streamContent
-            Console.WriteLine(builder.ToString())
-
-            ' Cannot close document until finished accessing it
-            document.Close()
-        End Sub
-
-        Private Shared Sub ShowFirstPageContent(ByVal filename As String)
-            Dim document As PdfDocument = New PdfDocument()
-            document.Load(filename, False)
-            Dim contents = document.Catalog.Pages(0).Contents
-
-            ' Get a parser for decoding the contents of the page
-            Dim parser As PdfContentsParser = contents.CreateParser()
-
-            ' Keep getting new content commands until no more left
-            Dim obj As New Value(Of PdfObject)
-            Dim strs As New List(Of String)
-
-
-            While (obj = parser.GetObject()) IsNot Nothing
-                If obj.GetUnderlyingType() Is GetType(PdfArray) Then
-                    strs.Add(CType(obj, PdfArray).GetAllTextContent)
-                    Console.WriteLine(strs.Last)
-                Else
-                    ' Console.WriteLine(obj);
-                End If
-            End While
-
-            document.Close()
-        End Sub
-
-        Private Shared Sub ListIndirectObjects(ByVal filename As String, ByVal resolve As Boolean, ByVal streamContent As Boolean)
-            Dim document As PdfDocument = New PdfDocument()
-            document.Load(filename, True)
-            document.Close()
-
-            ' Get each indirect object identifier
-            For Each id In document.IndirectObjects
-                ' Get each generation for the identifier
-                For Each gen In id.Value
-                    Dim builder As PdfDebugBuilder = New PdfDebugBuilder(gen.Value)
-                    builder.Resolve = resolve
-                    builder.StreamContent = streamContent
-                    Console.WriteLine(builder.ToString())
-                Next
-            Next
-        End Sub
-    End Class
-End Namespace
+    Private Shared Sub PrintUsage()
+        Console.WriteLine("VBNetPdfParser - 从头实现的 PDF 文本解析器")
+        Console.WriteLine()
+        Console.WriteLine("用法:")
+        Console.WriteLine("  VBNetPdfParser <input.pdf> [output.txt]")
+        Console.WriteLine()
+        Console.WriteLine("参数:")
+        Console.WriteLine("  input.pdf    要解析的 PDF 文件路径")
+        Console.WriteLine("  output.txt   输出文本文件路径（可选，默认与输入同名 .txt）")
+        Console.WriteLine()
+        Console.WriteLine("示例:")
+        Console.WriteLine("  VBNetPdfParser paper.pdf")
+        Console.WriteLine("  VBNetPdfParser paper.pdf paper_text.txt")
+    End Sub
+End Class

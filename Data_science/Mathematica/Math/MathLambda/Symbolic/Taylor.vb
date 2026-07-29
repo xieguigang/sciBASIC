@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b832384086b943340ccef2a909e0af2d, Data_science\Mathematica\Math\MathLambda\Symbolic\Taylor.vb"
+﻿#Region "Microsoft.VisualBasic::5746660fc640eb515bf3e27f7186d2a3, Data_science\Mathematica\Math\MathLambda\Symbolic\Taylor.vb"
 
     ' Author:
     ' 
@@ -165,4 +165,3 @@ Namespace Symbolic
         End Function
     End Module
 End Namespace
-
