@@ -214,8 +214,12 @@ Namespace Imaging
                 Dim paddedSize As New Size(res.Width + margin * 2, res.Height + margin * 2)
                 Dim gfx As IGraphics = DriverLoad.CreateDefaultRasterGraphics(paddedSize, If(isTransparent, Color.Transparent, blankColor))
 
+                ' 20260729 直接使用DrawImageUnscaled似乎会让图片被稍微放大
+                ' 直接使用DrawImage方法，并限定图片大小来解决掉这个bug
+                Const scale As Single = 0.9999
+
                 Call gfx.Clear(blankColor)
-                Call gfx.DrawImageUnscaled(res, New Point(margin, margin))
+                Call gfx.DrawImage(res, CSng(margin), CSng(margin), CSng(res.Width * scale), CSng(res.Height * scale))
 
                 Return DirectCast(gfx, GdiRasterGraphics).ImageResource
             Else

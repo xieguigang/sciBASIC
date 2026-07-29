@@ -55,6 +55,7 @@ Imports Microsoft.VisualBasic.Imaging.Drawing3D
 Imports Microsoft.VisualBasic.Imaging.Drawing3D.Models.Isometric.Shapes
 Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.Imaging.Math2D
+Imports Brushes = Microsoft.VisualBasic.Imaging.Brushes
 Imports Font = Microsoft.VisualBasic.Imaging.Font
 Imports Image = Microsoft.VisualBasic.Imaging.Image
 Imports SolidBrush = Microsoft.VisualBasic.Imaging.SolidBrush
@@ -90,10 +91,8 @@ Module Program
             isometricView.Add(New Knot(New Point3D(1, 1, 1), scale:=1), GREEN)
             isometricView.Draw(g)
 
-            logo = DirectCast(g, GdiRasterGraphics).ImageResource
+            logo = DirectCast(g, GdiRasterGraphics).ImageResource.CorpBlank(blankColor:=Color.Transparent)
         End Using
-
-        logo = logo.CorpBlank(blankColor:=Color.Transparent)
 
         Dim s As Integer = std.Max(logo.Width, logo.Height) * 1.125
 
@@ -114,17 +113,25 @@ Module Program
             Call g.DrawString("BASIC#", New Font(fontName, 200), color2, New PointF(670, 60))
             Call g.DrawString("http://sciBASIC.NET", New Font(FontFace.SegoeUI, 48), color1, New PointF(720, 350))
 
-            logo = DirectCast(g, GdiRasterGraphics).ImageResource
+            Call g.Flush()
+
+            Call DirectCast(g, GdiRasterGraphics).ImageResource _
+                .CorpBlank(blankColor:=Color.Transparent, margin:=30) _
+                .SaveAs(save)
         End Using
 
-        Call logo _
-            .CorpBlank(blankColor:=Color.Transparent, margin:=30) _
-            .SaveAs(save)
+        Using g As IGraphics = DriverLoad.CreateDefaultRasterGraphics(New Size(2400, 500), fill_color:=Color.Transparent)
+            Call g.DrawImageUnscaled(logo, New Point(50, 50))
 
-        logo = save.LoadImage _
-            .ColorReplace(color1.Color, Color.White) _
-            .ColorReplace(color2.Color, Color.White)
+            Call g.DrawString("sci", New Font(fontName, 140), Brushes.White, New PointF(430, 90))
+            Call g.DrawString("BASIC#", New Font(fontName, 200), Brushes.White, New PointF(670, 60))
+            Call g.DrawString("http://sciBASIC.NET", New Font(FontFace.SegoeUI, 48), Brushes.White, New PointF(720, 350))
 
-        Call logo.SaveAs("../../../../../logo-white.png")
+            Call g.Flush()
+
+            Call DirectCast(g, GdiRasterGraphics).ImageResource _
+                .CorpBlank(blankColor:=Color.Transparent, margin:=30) _
+                .SaveAs("../../../../../logo-white.png")
+        End Using
     End Sub
 End Module
