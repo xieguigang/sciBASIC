@@ -1,10 +1,10 @@
-Imports System.Collections.Generic
 Imports System.Linq
 Imports System.Text
 Imports System.Text.RegularExpressions
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
-Imports Microsoft.VisualBasic.Text
+Imports ASCII = Microsoft.VisualBasic.Text.ASCII
+Imports std = System.Math
 
 ''' <summary>
 ''' A two-phase recursive Markdown parser: block-level tokenization followed by
@@ -311,7 +311,7 @@ Public Class MarkdownParser
             End If
 
             Dim itemLines As New List(Of String)
-            Dim rest = lines(i).Substring(Math.Min(li.contentColumn, lines(i).Length))
+            Dim rest = lines(i).Substring(std.Min(li.contentColumn, lines(i).Length))
             itemLines.Add(rest)
             i += 1
 
@@ -851,7 +851,7 @@ Public Class MarkdownParser
         Dim k = from
         While k + count - 1 < text.Length
             Dim ok = True
-            For c = 0 To count - 1
+            For c As Integer = 0 To count - 1
                 If text(k + c) <> delim Then
                     ok = False
                     Exit For

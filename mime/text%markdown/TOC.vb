@@ -34,7 +34,7 @@ Public Module TOC
     Private Function Slug(text As String) As String
         Dim s = text.ToLower()
         Dim sb As New StringBuilder
-        For Each c In s
+        For Each c As Char In s
             If Char.IsLetterOrDigit(c) OrElse c = " "c OrElse c = "-"c Then
                 sb.Append(If(c = " "c, "-"c, c))
             End If
