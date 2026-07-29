@@ -129,9 +129,11 @@
 Imports System.Drawing
 Imports System.IO
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.ApplicationServices.Debugging
 Imports Microsoft.VisualBasic.Imaging.BitmapImage
 Imports Microsoft.VisualBasic.Imaging.BitmapImage.FileStream
 Imports Microsoft.VisualBasic.Imaging.Driver
+Imports Microsoft.VisualBasic.Net.Http
 Imports MemoryBmp = Microsoft.VisualBasic.Imaging.BitmapImage.FileStream.Bitmap
 
 Namespace Imaging
@@ -205,6 +207,18 @@ Namespace Imaging
             End Using
         End Function
 
+        Protected Shared Function GeneratePreviewHtml(img As Image) As String
+            Dim ms As Stream = img.ConvertToBitmapStream()
+            Dim uri As New DataURI(ms, mime:="image/png")
+            Dim html As XElement = <html>
+                                       <body>
+                                           <img src=<%= uri.ToString %> style="width:100%;"/>
+                                       </body>
+                                   </html>
+
+            Return html.ToString
+        End Function
+
         Protected Overridable Sub Dispose(disposing As Boolean)
             If Not disposedValue Then
                 If disposing Then
@@ -240,6 +254,7 @@ Namespace Imaging
     ''' </summary>
     Public Class Bitmap : Inherits Image
         Implements IRasterMemory
+        Implements IVisualStudioPreviews
 
         Public Overrides ReadOnly Property Size As Size
             Get
@@ -248,6 +263,11 @@ Namespace Imaging
         End Property
 
         Public ReadOnly Property MemoryBuffer As BitmapBuffer
+        Public ReadOnly Property Previews As String Implements IVisualStudioPreviews.Previews
+            Get
+                Return GeneratePreviewHtml(Me)
+            End Get
+        End Property
 
         Sub New(file As String)
             Call Me.New(LoadMemory(file))

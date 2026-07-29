@@ -95,7 +95,7 @@ Module Program
 
         logo = logo.CorpBlank(blankColor:=Color.Transparent)
 
-        Dim s = std.Max(logo.Width, logo.Height)
+        Dim s As Integer = std.Max(logo.Width, logo.Height) * 1.125
 
         Using g As IGraphics = DriverLoad.CreateDefaultRasterGraphics(s.SquareSize, fill_color:=Color.Transparent)
             Dim topleft As New Point With {
