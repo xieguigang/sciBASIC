@@ -86,6 +86,16 @@ Namespace JSONSchema
                     Else
                         Return "![" & block.alt & "](" & block.url & " """ & block.title & """)"
                     End If
+                Case "link", "a"
+                    Return renderLinkMarkdown(block)
+                Case "math", "equation", "tex", "latex"
+                    Return renderMathMarkdown(block)
+                Case "tasklist", "tasks", "todo"
+                    Return renderTaskListMarkdown(block)
+                Case "footnote", "note"
+                    Return renderFootnoteMarkdown(block)
+                Case "deflist", "definition", "dl"
+                    Return renderDefListMarkdown(block)
                 Case Else
                     Return block.content
             End Select
@@ -109,7 +119,7 @@ Namespace JSONSchema
                 Case "list", "li"
                     Return renderListHtml(block)
                 Case "blockquote"
-                    Return "<blockquote>" & HtmlEncode(block.content) & "</blockquote>"
+                    Return renderBlockquoteHtml(block)
                 Case "table"
                     Return renderTableHtml(block)
                 Case "hr", "horizontal-rule", "horizontalrule", "thematic-break"
@@ -117,6 +127,16 @@ Namespace JSONSchema
                 Case "image", "img"
                     Dim titleAttr As String = If(String.IsNullOrEmpty(block.title), "", " title=""" & HtmlEncode(block.title) & """")
                     Return "<img src=""" & HtmlEncode(block.url) & """ alt=""" & HtmlEncode(block.alt) & """" & titleAttr & " />"
+                Case "link", "a"
+                    Return renderLinkHtml(block)
+                Case "math", "equation", "tex", "latex"
+                    Return renderMathHtml(block)
+                Case "tasklist", "tasks", "todo"
+                    Return renderTaskListHtml(block)
+                Case "footnote", "note"
+                    Return renderFootnoteHtml(block)
+                Case "deflist", "definition", "dl"
+                    Return renderDefListHtml(block)
                 Case "html", "raw"
                     ' raw html block, output as-is without encoding
                     Return block.content
