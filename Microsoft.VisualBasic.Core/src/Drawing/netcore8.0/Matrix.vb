@@ -256,6 +256,111 @@ Namespace Imaging
         Private _transformPointsPts As Point()
         Private _transformVectors As PointF()
 
+        ' Read-only accessors for the stored transform operation parameters.
+        ' These are consumed by the Drawing-net4.8 interop layer to faithfully
+        ' replay an Imaging.Matrix onto a System.Drawing.Drawing2D.Matrix.
+        Public ReadOnly Property HasCustomInit As Boolean
+            Get
+                Return _hasCustomInit
+            End Get
+        End Property
+
+        Public ReadOnly Property SrcRect As RectangleF
+            Get
+                Return _srcRect
+            End Get
+        End Property
+
+        Public ReadOnly Property DstPoints As PointF()
+            Get
+                Return _dstPoints
+            End Get
+        End Property
+
+        Public ReadOnly Property RotateAngle As Single
+            Get
+                Return _rotateAngle
+            End Get
+        End Property
+
+        Public ReadOnly Property RotateAtPoint As PointF?
+            Get
+                Return _rotateAtPoint
+            End Get
+        End Property
+
+        Public ReadOnly Property ScaleX As Single
+            Get
+                Return _scaleX
+            End Get
+        End Property
+
+        Public ReadOnly Property ScaleY As Single
+            Get
+                Return _scaleY
+            End Get
+        End Property
+
+        Public ReadOnly Property ScaleOrder As MatrixOrder
+            Get
+                Return _scaleOrder
+            End Get
+        End Property
+
+        Public ReadOnly Property ShearX As Single
+            Get
+                Return _shearX
+            End Get
+        End Property
+
+        Public ReadOnly Property ShearY As Single
+            Get
+                Return _shearY
+            End Get
+        End Property
+
+        Public ReadOnly Property ShearOrder As MatrixOrder
+            Get
+                Return _shearOrder
+            End Get
+        End Property
+
+        Public ReadOnly Property TranslateX As Single
+            Get
+                Return _translateX
+            End Get
+        End Property
+
+        Public ReadOnly Property TranslateY As Single
+            Get
+                Return _translateY
+            End Get
+        End Property
+
+        Public ReadOnly Property TranslateOrder As MatrixOrder
+            Get
+                Return _translateOrder
+            End Get
+        End Property
+
+        Public ReadOnly Property MultiplyMatrix As Matrix
+            Get
+                Return _multiplyMatrix
+            End Get
+        End Property
+
+        Public ReadOnly Property MultiplyOrder As MatrixOrder
+            Get
+                Return _multiplyOrder
+            End Get
+        End Property
+
+        Public ReadOnly Property IsInverted As Boolean
+            Get
+                Return _isInverted
+            End Get
+        End Property
+
         Public Shared ReadOnly Identity As New Matrix
 
         Protected Overridable Sub Dispose(disposing As Boolean)
