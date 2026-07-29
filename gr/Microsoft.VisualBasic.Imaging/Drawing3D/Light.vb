@@ -134,5 +134,30 @@ Namespace Drawing3D
 
             Return Color.FromArgb(baseColor.A, std.Clamp(r, 0, 255), std.Clamp(g, 0, 255), std.Clamp(b, 0, 255))
         End Function
+
+        ''' <summary>
+        ''' 按亮度系数缩放灯光颜色（降低亮度可削弱被照亮面的发白）。
+        ''' </summary>
+        Public Function ScaleLightColor(base As Color, k As Double) As Color
+            Dim r = CInt(base.R * k)
+            Dim g = CInt(base.G * k)
+            Dim b = CInt(base.B * k)
+            r = System.Math.Max(0, System.Math.Min(255, r))
+            g = System.Math.Max(0, System.Math.Min(255, g))
+            b = System.Math.Max(0, System.Math.Min(255, b))
+            Return Color.FromArgb(base.A, r, g, b)
+        End Function
+
+        ''' <summary>
+        ''' 由仰角/方位角（度）构造指向光源的单位向量。
+        ''' </summary>
+        Public Function LightDirFromAngles(elevDeg As Integer, azimDeg As Integer) As Point3D
+            Dim el = elevDeg * System.Math.PI / 180.0
+            Dim az = azimDeg * System.Math.PI / 180.0
+            Dim x = System.Math.Cos(el) * System.Math.Cos(az)
+            Dim y = System.Math.Cos(el) * System.Math.Sin(az)
+            Dim z = System.Math.Sin(el)
+            Return New Point3D(x, y, z).Normalize()
+        End Function
     End Module
 End Namespace
