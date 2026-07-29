@@ -54,7 +54,6 @@
 #End Region
 
 Imports System.Text
-Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Text.Parser.HtmlParser
 
 ''' <summary>
