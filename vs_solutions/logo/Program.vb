@@ -51,11 +51,14 @@
 
 Imports System.Drawing
 Imports Microsoft.VisualBasic.Imaging
-Imports Microsoft.VisualBasic.Imaging.BitmapImage
 Imports Microsoft.VisualBasic.Imaging.Drawing3D
 Imports Microsoft.VisualBasic.Imaging.Drawing3D.Models.Isometric.Shapes
+Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.Imaging.Math2D
-Imports stdNum = System.Math
+Imports Bitmap = Microsoft.VisualBasic.Imaging.Bitmap
+Imports Font = Microsoft.VisualBasic.Imaging.Font
+Imports SolidBrush = Microsoft.VisualBasic.Imaging.SolidBrush
+Imports std = System.Math
 
 ''' <summary>
 ''' sciBASIC framework logo generator. A demo for the sciBASIC graphics artist system.
@@ -72,44 +75,46 @@ Module Program
     ReadOnly LIGHT_GREEN As Color = Color.FromArgb(40, 180, 40)
     ReadOnly PURPLE As Color = Color.FromArgb(180, 0, 180)
 
+    Sub New()
+        Call ImageDriver.Register()
+    End Sub
+
     Sub Main()
         Dim logo As Bitmap, fontName$ = FontFace.Verdana
         Dim color1 As New SolidBrush(Color.FromArgb(0, 65, 102))
         Dim color2 As New SolidBrush(Color.FromArgb(0, 172, 221))
 
-        Using g As Graphics2D = New Size(900, 800).CreateGDIDevice(filled:=Color.Transparent)
+        Using g As IGraphics = DriverLoad.CreateDefaultRasterGraphics(New Size(900, 800), fill_color:=Color.Transparent)
             Dim isometricView As New IsometricEngine
 
             isometricView.Add(New Knot(New Point3D(1, 1, 1), scale:=1), GREEN)
             isometricView.Draw(g)
 
-            logo = g.ImageResource
+            logo = DirectCast(g, GdiRasterGraphics).ImageResource
         End Using
 
         logo = logo.CorpBlank(blankColor:=Color.Transparent)
 
-        Using g As Graphics2D = stdNum.Max(logo.Width, logo.Height) _
-            .SquareSize _
-            .CreateGDIDevice(filled:=Color.Transparent)
+        Dim s = std.Max(logo.Width, logo.Height)
 
+        Using g As IGraphics = DriverLoad.CreateDefaultRasterGraphics(s.SquareSize, fill_color:=Color.Transparent)
             Dim topleft As New Point With {
                 .X = (g.Width - logo.Width) / 2,
                 .Y = (g.Height - logo.Height) / 2
             }
 
             Call g.DrawImageUnscaled(logo, topleft)
-            Call g.ImageResource.SaveAs("../../../logo-knot.png")
+            Call DirectCast(g, GdiRasterGraphics).ImageResource.SaveAs("../../../logo-knot.png")
         End Using
 
-        Using g As Graphics2D = New Size(2000, 500).CreateGDIDevice(filled:=Color.Transparent)
-
+        Using g As IGraphics = DriverLoad.CreateDefaultRasterGraphics(New Size(2000, 500), fill_color:=Color.Transparent)
             Call g.DrawImageUnscaled(logo, New Point(50, 50))
 
             Call g.DrawString("sci", New Font(fontName, 140), color1, New PointF(430, 90))
             Call g.DrawString("BASIC#", New Font(fontName, 200), color2, New PointF(670, 60))
             Call g.DrawString("http://sciBASIC.NET", New Font(FontFace.SegoeUI, 48), color1, New PointF(720, 350))
 
-            logo = g.ImageResource
+            logo = DirectCast(g, GdiRasterGraphics).ImageResource
         End Using
 
         Call logo _
@@ -121,6 +126,5 @@ Module Program
             .ColorReplace(color2.Color, Color.White)
 
         Call logo.SaveAs("../../../logo-white.png")
-
     End Sub
 End Module
