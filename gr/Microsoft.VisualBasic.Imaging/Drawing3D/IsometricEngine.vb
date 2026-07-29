@@ -80,21 +80,23 @@ Namespace Drawing3D
         ''' </summary>
         Dim models As New List(Of Model2D)
 
-        ReadOnly LightDirection As Point3D
-        ReadOnly AmbientStrength As Double
+        ReadOnly lightDirection As Point3D
+        ReadOnly ambientStrength As Double
         ReadOnly lightColor As Color
         ReadOnly angle, scale As Double
+        ReadOnly lightRendering As Boolean
 
-        Public Sub New()
+        Public Sub New(Optional ambientStrength As Double = 0.2, Optional lightRendering As Boolean = True)
             Me.angle = std.PI / 6
             Me.scale = 70
             Me.transformation = {
                 ({Me.scale * std.Cos(Me.angle), Me.scale * std.Sin(Me.angle)}),
                 ({Me.scale * std.Cos(std.PI - Me.angle), Me.scale * std.Sin(std.PI - Me.angle)})
             }
-            Me.LightDirection = New Point3D(2, -1, 3).Normalize()
-            Me.AmbientStrength = 0.2
+            Me.lightDirection = New Point3D(2, -1, 3).Normalize()
+            Me.ambientStrength = ambientStrength
             Me.lightColor = Color.FromArgb(255, 255, 255)
+            Me.lightRendering = lightRendering
         End Sub
 
         ''' <summary>
@@ -140,7 +142,10 @@ Namespace Drawing3D
         ''' <param name="path"></param>
         ''' <param name="color"></param>
         Private Sub AddPath(path As Path3D, color As Color)
-            color = path.Lighting(Me.LightDirection, color, Me.AmbientStrength, Me.lightColor)
+            If lightRendering Then
+                color = path.Lighting(Me.lightDirection, color, Me.ambientStrength, Me.lightColor)
+            End If
+
             models.Add(New Model2D(path, color))
         End Sub
 
@@ -156,7 +161,6 @@ Namespace Drawing3D
             Me.originY = height * 0.9
 
             For Each model As Model2D In models
-
                 model.TransformedPoints = New Point3D(model.path.Points.Count - 1) {}
 
                 ' Todo: test if .reset is not needed and rewind is enough

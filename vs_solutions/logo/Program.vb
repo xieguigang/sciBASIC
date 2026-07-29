@@ -85,7 +85,7 @@ Module Program
         Dim color2 As New SolidBrush(Color.FromArgb(0, 172, 221))
 
         Using g As IGraphics = DriverLoad.CreateDefaultRasterGraphics(New Size(900, 800), fill_color:=Color.Transparent)
-            Dim isometricView As New IsometricEngine
+            Dim isometricView As New IsometricEngine(ambientStrength:=0)
 
             isometricView.Add(New Knot(New Point3D(1, 1, 1), scale:=1), GREEN)
             isometricView.Draw(g)
