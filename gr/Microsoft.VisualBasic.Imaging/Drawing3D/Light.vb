@@ -138,6 +138,8 @@ Namespace Drawing3D
         ''' <summary>
         ''' 按亮度系数缩放灯光颜色（降低亮度可削弱被照亮面的发白）。
         ''' </summary>
+        ''' 
+        <Extension>
         Public Function ScaleLightColor(base As Color, k As Double) As Color
             Dim r = CInt(base.R * k)
             Dim g = CInt(base.G * k)

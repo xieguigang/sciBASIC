@@ -84,9 +84,8 @@ Namespace Drawing3D
         ReadOnly ambientStrength As Double
         ReadOnly lightColor As Color
         ReadOnly angle, scale As Double
-        ReadOnly lightRendering As Boolean
 
-        Public Sub New(Optional ambientStrength As Double = 0.2, Optional lightRendering As Boolean = True)
+        Public Sub New(Optional ambientStrength As Double = 0.2, Optional lightIntensity As Double = 0.1)
             Me.angle = std.PI / 6
             Me.scale = 70
             Me.transformation = {
@@ -95,8 +94,7 @@ Namespace Drawing3D
             }
             Me.lightDirection = New Point3D(2, -1, 3).Normalize()
             Me.ambientStrength = ambientStrength
-            Me.lightColor = Color.FromArgb(255, 255, 255)
-            Me.lightRendering = lightRendering
+            Me.lightColor = Color.FromArgb(255, 255, 255).ScaleLightColor(k:=lightIntensity)
         End Sub
 
         ''' <summary>
@@ -142,11 +140,7 @@ Namespace Drawing3D
         ''' <param name="path"></param>
         ''' <param name="color"></param>
         Private Sub AddPath(path As Path3D, color As Color)
-            If lightRendering Then
-                color = path.Lighting(Me.lightDirection, color, Me.ambientStrength, Me.lightColor)
-            End If
-
-            models.Add(New Model2D(path, color))
+            Call models.Add(New Model2D(path, baseColor:=path.Lighting(Me.lightDirection, color, Me.ambientStrength, Me.lightColor)))
         End Sub
 
         ''' <summary>
