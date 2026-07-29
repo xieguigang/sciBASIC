@@ -58,10 +58,6 @@ Imports Microsoft.VisualBasic.Imaging.BitmapImage
 Imports Microsoft.VisualBasic.Imaging.Driver
 Imports Microsoft.VisualBasic.Serialization.JSON
 
-#If NET48 Then
-Imports Bitmap = System.Drawing.Bitmap
-#End If
-
 Namespace Imaging
 
     Public Module ImageTools
@@ -163,11 +159,10 @@ Namespace Imaging
         ''' 将图像的多余的空白处给剪裁掉，确定边界，然后进行剪裁，使用这个函数需要注意下设置空白色，默认使用的空白色为<see cref="Color.White"/>
         ''' </summary>
         ''' <param name="res"></param>
-        ''' <param name="margin"></param>
         ''' <param name="blankColor">默认白色为空白色</param>
         ''' <returns></returns>
         <Extension>
-        Private Function CorpBlankInternal(res As Bitmap, margin%, blankColor As Color, isTransparent As Boolean, trace$) As Image
+        Private Function CorpBlankInternal(res As Bitmap, blankColor As Color, isTransparent As Boolean, trace$) As Image
             Dim bmp As BitmapBuffer = BufferInternal(res, trace)
             Dim top%, left%
 
@@ -277,7 +272,20 @@ Namespace Imaging
             Next
 
             region = New Rectangle(0, 0, right, res.Height)
-            res = res.ImageCrop(New Rectangle(region.Location, region.Size))
+
+            Return res.ImageCrop(New Rectangle(region.Location, region.Size))
+        End Function
+
+        ''' <summary>
+        ''' 将图像的多余的空白处给剪裁掉，确定边界，然后进行剪裁，使用这个函数需要注意下设置空白色，默认使用的空白色为<see cref="Color.White"/>
+        ''' </summary>
+        ''' <param name="res"></param>
+        ''' <param name="margin"></param>
+        ''' <param name="blankColor">默认白色为空白色</param>
+        ''' <returns></returns>
+        <Extension>
+        Private Function CorpBlankInternal(res As Bitmap, margin%, blankColor As Color, isTransparent As Boolean, trace$) As Image
+            res = res.CorpBlankInternal(blankColor, isTransparent, trace)
 
             If margin > 0 Then
                 Dim paddedSize As New Size(res.Width + margin * 2, res.Height + margin * 2)
