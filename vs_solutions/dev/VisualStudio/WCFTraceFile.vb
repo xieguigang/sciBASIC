@@ -1,68 +1,79 @@
-﻿#Region "Microsoft.VisualBasic::aafd6af1281499665f84b36579893673, vs_solutions\dev\VisualStudio\WCFTraceFile.vb"
-' Author:
-' 
-' asuka (amethyst.asuka@gcmodeller.org)
-' xie (genetics@smrucc.org)
-' xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c)2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-' /********************************************************************************/
-' Summaries:
-' Code Statistics:
-' Total Lines:61
-' Code Lines:46 (75.41%)
-' Comment Lines:0 (0.00%)
-' - Xml Docs:0.00%
-' 
-' Blank Lines:15 (24.59%)
-' File Size:1.73 KB
-' Class WCFTraceFile
-' 
-' Function: ReadFile
-' 
-' Class E2ETraceEvent
-' 
-' Properties: ApplicationData, System
-' 
-' Class SystemEvent
-' 
-' Properties: Channel, Computer, Correlation, EventID, Execution
-' Level, Source, SubType, TimeCreated, Type
-' 
-' Class Execution
-' 
-' Properties: ProcessID, ProcessName, ThreadID
-' 
-' Class SystemTime
-' 
-' Properties: SystemTime
-' 
-' Class TagValue
-' 
-' Properties: Name, Value
-' 
-' Class Correlation
-' 
-' Properties: ActivityID
-' 
-' /********************************************************************************/
+﻿#Region "Microsoft.VisualBasic::6b345e0a87c16340054aa0590d6d0c3e, vs_solutions\dev\VisualStudio\WCFTraceFile.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 199
+    '    Code Lines: 49 (24.62%)
+    ' Comment Lines: 116 (58.29%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 34 (17.09%)
+    '     File Size: 7.89 KB
+
+
+    ' Class WCFTraceFile
+    ' 
+    '     Function: ReadFile
+    ' 
+    ' Class E2ETraceEvent
+    ' 
+    '     Properties: ApplicationData, System
+    ' 
+    ' Class SystemEvent
+    ' 
+    '     Properties: Channel, Computer, Correlation, EventID, Execution
+    '                 Level, Source, SubType, TimeCreated, Type
+    ' 
+    ' Class Execution
+    ' 
+    '     Properties: ProcessID, ProcessName, ThreadID
+    ' 
+    ' Class SystemTime
+    ' 
+    '     Properties: SystemTime
+    ' 
+    ' Class TagValue
+    ' 
+    '     Properties: Name, Value
+    ' 
+    ' Class Correlation
+    ' 
+    '     Properties: ActivityID
+    ' 
+    ' /********************************************************************************/
+
 #End Region
 
 Imports System.Runtime.CompilerServices

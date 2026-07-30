@@ -1,53 +1,53 @@
-﻿#Region "Microsoft.VisualBasic::e09c3deab1a596a53d2509282c205de7, mime\application%json\test\writerTest.vb"
+﻿#Region "Microsoft.VisualBasic::b5236402096191200ddde64686238bfb, mime\application%json\test\writerTest.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 37
-'    Code Lines: 20 (54.05%)
-' Comment Lines: 11 (29.73%)
-'    - Xml Docs: 0.00%
-' 
-'   Blank Lines: 6 (16.22%)
-'     File Size: 980 B
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-' Module writerTest
-' 
-'     Sub: Main6
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 42
+    '    Code Lines: 23 (54.76%)
+    ' Comment Lines: 11 (26.19%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 8 (19.05%)
+    '     File Size: 1.68 KB
+
+
+    ' Module writerTest
+    ' 
+    '     Sub: Main6
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

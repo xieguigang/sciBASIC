@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2d9fffb32ac645e72970e81a989d525a, vs_solutions\dev\VisualStudio\VBProject\Syntax\TypeInfoHelper.vb"
+﻿#Region "Microsoft.VisualBasic::a42351f698862b80505ff1f67bce174b, vs_solutions\dev\VisualStudio\VBProject\Syntax\TypeInfoHelper.vb"
 
     ' Author:
     ' 
@@ -82,4 +82,3 @@ Namespace VBProj.Syntax
     End Module
 
 End Namespace
-

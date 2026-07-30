@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::14894863c8963efc72a3a501bc39f0b3, mime\text%markdown\test\Program.vb"
+﻿#Region "Microsoft.VisualBasic::cf36c40ce047aff10a744814475d1785, mime\text%markdown\test\Program.vb"
 
     ' Author:
     ' 
@@ -34,18 +34,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 155
-    '    Code Lines: 101 (65.16%)
-    ' Comment Lines: 0 (0.00%)
-    '    - Xml Docs: 0.00%
+    '   Total Lines: 202
+    '    Code Lines: 138 (68.32%)
+    ' Comment Lines: 4 (1.98%)
+    '    - Xml Docs: 75.00%
     ' 
-    '   Blank Lines: 54 (34.84%)
-    '     File Size: 3.27 KB
+    '   Blank Lines: 60 (29.70%)
+    '     File Size: 5.92 KB
 
 
     ' Module Program
     ' 
-    '     Sub: Main, tableTest
+    '     Sub: jsonSchemaTest, Main, tableTest
     ' 
     ' /********************************************************************************/
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::630eb279210333346b5cffa202e95689, Microsoft.VisualBasic.Core\src\ApplicationServices\FileSystem\Fs\FileSystemTree.vb"
+﻿#Region "Microsoft.VisualBasic::ae18d1a6b39921888bad15cc03daa3f2, Microsoft.VisualBasic.Core\src\ApplicationServices\FileSystem\Fs\FileSystemTree.vb"
 
     ' Author:
     ' 
@@ -34,22 +34,26 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 174
-    '    Code Lines: 99 (56.90%)
-    ' Comment Lines: 51 (29.31%)
+    '   Total Lines: 199
+    '    Code Lines: 118 (59.30%)
+    ' Comment Lines: 51 (25.63%)
     '    - Xml Docs: 98.04%
     ' 
-    '   Blank Lines: 24 (13.79%)
-    '     File Size: 5.92 KB
+    '   Blank Lines: 30 (15.08%)
+    '     File Size: 6.73 KB
 
 
+    '     Class VirtualFile
+    ' 
+    '         Properties: files, name, type
+    ' 
     '     Class FileSystemTree
     ' 
     '         Properties: data, Files, FullName, IsDirectory, Name
     '                     Parent
     ' 
     '         Function: AddFile, BuildTree, DeleteFile, GenericEnumerator, (+2 Overloads) GetFile
-    '                   ToString
+    '                   ToJSONModel, ToString
     ' 
     ' 
     ' /********************************************************************************/

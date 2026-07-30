@@ -1,53 +1,53 @@
-﻿#Region "Microsoft.VisualBasic::b4866341bda672c13828b8af5dfce189, mime\application%json\test\simple_jsonParserTest.vb"
+﻿#Region "Microsoft.VisualBasic::11732b7fef130b42096b275a77ebd1a4, mime\application%json\test\simple_jsonParserTest.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 88
-'    Code Lines: 60 (68.18%)
-' Comment Lines: 16 (18.18%)
-'    - Xml Docs: 0.00%
-' 
-'   Blank Lines: 12 (13.64%)
-'     File Size: 3.45 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-' Module simple_jsonParserTest
-' 
-'     Sub: Main, test1, test2, test3
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 89
+    '    Code Lines: 61 (68.54%)
+    ' Comment Lines: 16 (17.98%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 12 (13.48%)
+    '     File Size: 3.51 KB
+
+
+    ' Module simple_jsonParserTest
+    ' 
+    '     Sub: Main11, test1, test2, test3
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

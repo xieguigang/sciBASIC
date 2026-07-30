@@ -1,16 +1,79 @@
-#Region "Microsoft.VisualBasic::00000000000000000000000000000000, sciBASIC#\vs_solutions\dev\vs_PDB\PortablePdb.vb"
+﻿#Region "Microsoft.VisualBasic::d4cb9ba949e0ae1bcadd5d707ceee283, vs_solutions\dev\vs_PDB\PortablePdb.vb"
 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 870
+    '    Code Lines: 657 (75.52%)
+    ' Comment Lines: 54 (6.21%)
+    '    - Xml Docs: 40.74%
+    ' 
+    '   Blank Lines: 159 (18.28%)
+    '     File Size: 35.91 KB
+
+
+    ' Class PortablePdbReader
+    ' 
+    '     Properties: Documents, LineNumbers
+    ' 
+    '     Constructor: (+2 Overloads) Sub New
+    ' 
+    '     Function: FindMetadataInPe, ReadBlobBytes, ReadBlobString, ReadCompressed, ReadCompressedSigned
+    '               ReadGuid, ReadHeapIndex, ReadPdbBlob, ReadPdbString, RvaToOffset
+    ' 
+    '     Sub: DecodeDocuments, DecodeMethodDebugInfo, DecodeSequencePoints, Parse, ParsePdbStreamHeader
+    '          ParseStreamHeaders, ParseTablesStream
+    '     Structure SeqPoint
+    ' 
+    ' 
+    ' 
+    '     Enum ColKind
+    ' 
+    ' 
+    ' 
+    ' 
+    '     Structure Col
+    ' 
+    ' 
+    ' 
+    '  
+    ' 
+    '     Function: C, CodedIndexSize, CodedTagBits, CodedTagTables, RowSize
+    ' 
+    '     Sub: (+2 Overloads) Dispose, InitSchemas
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 
@@ -884,4 +947,3 @@ Public Class PortablePdbReader : Implements IDisposable
 
 #End Region
 End Class
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1b23cf52efd0141cd36f6ea0b382c2d4, Microsoft.VisualBasic.Core\src\Scripting\ScriptBuilder.vb"
+﻿#Region "Microsoft.VisualBasic::ff1718ba5a9a201498f67610e18a33f3, Microsoft.VisualBasic.Core\src\Scripting\ScriptBuilder.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 165
-    '    Code Lines: 89 (53.94%)
-    ' Comment Lines: 54 (32.73%)
+    '   Total Lines: 168
+    '    Code Lines: 92 (54.76%)
+    ' Comment Lines: 54 (32.14%)
     '    - Xml Docs: 92.59%
     ' 
-    '   Blank Lines: 22 (13.33%)
-    '     File Size: 6.08 KB
+    '   Blank Lines: 22 (13.10%)
+    '     File Size: 6.23 KB
 
 
     '     Class ScriptBuilder

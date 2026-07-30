@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0abf3e92b37d9ca353adfb0a06f1450d, vs_solutions\dev\VisualStudio\VBProject\Reflection\AssemblySymbolLoader.vb"
+﻿#Region "Microsoft.VisualBasic::d0c3a91d621ecf812d19999138fbe505, vs_solutions\dev\VisualStudio\VBProject\Reflection\AssemblySymbolLoader.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 707
-    '    Code Lines: 559 (79.07%)
-    ' Comment Lines: 43 (6.08%)
-    '    - Xml Docs: 44.19%
+    '   Total Lines: 705
+    '    Code Lines: 559 (79.29%)
+    ' Comment Lines: 41 (5.82%)
+    '    - Xml Docs: 29.27%
     ' 
-    '   Blank Lines: 105 (14.85%)
-    '     File Size: 30.89 KB
+    '   Blank Lines: 105 (14.89%)
+    '     File Size: 30.85 KB
 
 
     '     Module AssemblySymbolLoader
@@ -763,4 +763,3 @@ Namespace VBProj.Reflection
     End Module
 
 End Namespace
-

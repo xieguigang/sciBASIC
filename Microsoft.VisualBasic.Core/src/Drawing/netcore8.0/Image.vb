@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::858b859255e2687221ed3fd6c65e3223, Microsoft.VisualBasic.Core\src\Drawing\netcore8.0\Image.vb"
+﻿#Region "Microsoft.VisualBasic::09abe6f188caf2f14605702c4f931f4d, Microsoft.VisualBasic.Core\src\Drawing\netcore8.0\Image.vb"
 
     ' Author:
     ' 
@@ -34,20 +34,20 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 595
-    '    Code Lines: 263 (44.20%)
-    ' Comment Lines: 225 (37.82%)
+    '   Total Lines: 615
+    '    Code Lines: 281 (45.69%)
+    ' Comment Lines: 225 (36.59%)
     '    - Xml Docs: 77.33%
     ' 
-    '   Blank Lines: 107 (17.98%)
-    '     File Size: 21.98 KB
+    '   Blank Lines: 109 (17.72%)
+    '     File Size: 22.86 KB
 
 
     '     Class Image
     ' 
     '         Properties: Height, Width
     ' 
-    '         Function: FromFile, FromStream
+    '         Function: FromFile, FromStream, GeneratePreviewHtml
     ' 
     '         Sub: (+2 Overloads) Dispose
     ' 
@@ -57,7 +57,7 @@
     ' 
     '     Class Bitmap
     ' 
-    '         Properties: MemoryBuffer, Size
+    '         Properties: MemoryBuffer, Previews, Size
     ' 
     '         Constructor: (+5 Overloads) Sub New
     ' 

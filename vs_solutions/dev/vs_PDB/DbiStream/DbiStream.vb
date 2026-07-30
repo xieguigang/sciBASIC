@@ -1,28 +1,59 @@
-#Region "Microsoft.VisualBasic::00000000000000000000000000000000, sciBASIC#\vs_solutions\dev\vs_PDB\DbiStream.vb"
+﻿#Region "Microsoft.VisualBasic::e0dca0c46ea586292e12d4f4b206453c, vs_solutions\dev\vs_PDB\DbiStream\DbiStream.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 304
+    '    Code Lines: 220 (72.37%)
+    ' Comment Lines: 25 (8.22%)
+    '    - Xml Docs: 28.00%
+    ' 
+    '   Blank Lines: 59 (19.41%)
+    '     File Size: 11.58 KB
+
+
+    ' Class DbiReader
+    ' 
+    '     Properties: Header, LineNumbers, Modules, SourceDocuments
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    ' 
+    '     Function: ReadHeader, ReadNullString
+    ' 
+    '     Sub: Parse, ParseC13, ParseLines, ParseModuleInfo, ParseSourceInfo
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 
@@ -330,4 +361,3 @@ Public Class DbiReader
         Return Encoding.UTF8.GetString(data, offset, len)
     End Function
 End Class
-

@@ -1,86 +1,94 @@
-#Region "Microsoft.VisualBasic::5a3b2c1d8e9f0a4b7c6d5e2f1a3b4c7d8e9f0a1, vs_solutions\dev\VisualStudio\VersionControl\git\diff.vb"
+﻿#Region "Microsoft.VisualBasic::a94d801c5cf80f8b25ccdd9dd5fd7f58, vs_solutions\dev\VisualStudio\VersionControl\git\diff.vb"
 
-' Author:
-' 
-' asuka (amethyst.asuka@gcmodeller.org)
-' xie (genetics@smrucc.org)
-' xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c)2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-' Total Lines:260
-' Code Lines:200 (76.92%)
-' Comment Lines:40 (15.38%)
-' - Xml Docs:95.00%
-' 
-' Blank Lines:20 (7.69%)
-' File Size:8.50 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-' Enum DiffLineType
-' 
-' Added, Deleted, Context
-' 
-' 
-' Enum FileChangeKind
-' 
-' Added, Modified, Deleted, Renamed
-' 
-' 
-' Class DiffLine
-' 
-' Properties: Type, Content
-' 
-' 
-' Class DiffHunk
-' 
-' Properties: OldStart, OldCount, NewStart, NewCount, Lines
-' 
-' 
-' Class FileChange
-' 
-' Properties: FilePath, ChangeKind, Hunks
-' 
-' 
-' Class DiffResult
-' 
-' Properties: Files
-' 
-' Function: GetAllAddedLines, GetAllDeletedLines
-' 
-' 
-' Module diff
-' 
-' Function: GetDiff, ParseDiffText
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 346
+    '    Code Lines: 195 (56.36%)
+    ' Comment Lines: 105 (30.35%)
+    '    - Xml Docs: 89.52%
+    ' 
+    '   Blank Lines: 46 (13.29%)
+    '     File Size: 13.72 KB
+
+
+    '     Enum DiffLineType
+    ' 
+    '         Added, Context, Deleted
+    ' 
+    '  
+    ' 
+    ' 
+    ' 
+    '     Enum FileChangeKind
+    ' 
+    '         Added, Deleted, Modified, Renamed
+    ' 
+    '  
+    ' 
+    ' 
+    ' 
+    '     Class DiffLine
+    ' 
+    '         Properties: Content, Type
+    ' 
+    '         Function: ToString
+    ' 
+    '     Class DiffHunk
+    ' 
+    '         Properties: Lines, NewCount, NewStart, OldCount, OldStart
+    ' 
+    '         Function: ToString
+    ' 
+    '     Class FileChange
+    ' 
+    '         Properties: ChangeKind, FilePath, Hunks
+    ' 
+    '         Function: ToString
+    ' 
+    '     Class DiffResult
+    ' 
+    '         Properties: Files
+    ' 
+    '         Function: GetAllAddedLines, GetAllDeletedLines
+    ' 
+    '     Module diff
+    ' 
+    '         Function: GetDiff, ParseDiffText
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

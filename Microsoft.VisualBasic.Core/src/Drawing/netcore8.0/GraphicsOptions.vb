@@ -1,4 +1,114 @@
-﻿
+﻿#Region "Microsoft.VisualBasic::3a6ae4cd45b762bb003ae9b73c78c34f, Microsoft.VisualBasic.Core\src\Drawing\netcore8.0\GraphicsOptions.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 241
+    '    Code Lines: 68 (28.22%)
+    ' Comment Lines: 126 (52.28%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 47 (19.50%)
+    '     File Size: 6.58 KB
+
+
+    '     Class PathData
+    ' 
+    '         Properties: Points, Types
+    ' 
+    '     Enum FillMode
+    ' 
+    ' 
+    '  
+    ' 
+    ' 
+    ' 
+    '     Enum WarpMode
+    ' 
+    ' 
+    '  
+    ' 
+    ' 
+    ' 
+    '     Enum SmoothingMode
+    ' 
+    ' 
+    '  
+    ' 
+    ' 
+    ' 
+    '     Enum InterpolationMode
+    ' 
+    ' 
+    '  
+    ' 
+    ' 
+    ' 
+    '     Enum CompositingMode
+    ' 
+    ' 
+    '  
+    ' 
+    ' 
+    ' 
+    '     Enum PixelOffsetMode
+    ' 
+    ' 
+    '  
+    ' 
+    ' 
+    ' 
+    '     Enum QualityMode
+    ' 
+    ' 
+    '  
+    ' 
+    ' 
+    ' 
+    '     Class GraphicsState
+    ' 
+    '         Properties: StateIndex
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    '         Function: ToString
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+
 Imports System.Drawing
 
 Namespace Imaging

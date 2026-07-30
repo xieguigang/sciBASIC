@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::80e55ee1a94a7ca7335ed11e84a37a95, Data_science\Visualization\MESH\SurfaceCanvas.vb"
+﻿#Region "Microsoft.VisualBasic::80e55ee1a94a7ca7335ed11e84a37a95, tutorials\MESH\SurfaceCanvas.vb"
 
     ' Author:
     ' 

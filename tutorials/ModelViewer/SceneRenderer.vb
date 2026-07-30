@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::75393273e2aface04b9cef67c96769a0, gr\ModelViewer\SceneRenderer.vb"
+﻿#Region "Microsoft.VisualBasic::75393273e2aface04b9cef67c96769a0, tutorials\ModelViewer\SceneRenderer.vb"
 
     ' Author:
     ' 

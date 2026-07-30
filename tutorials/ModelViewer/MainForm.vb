@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7cf33a702b3ccf3e3add043c83e13aeb, gr\ModelViewer\MainForm.vb"
+﻿#Region "Microsoft.VisualBasic::da24319c5b89ec4646c7a2fc5bc9a5fa, tutorials\ModelViewer\MainForm.vb"
 
     ' Author:
     ' 
@@ -34,20 +34,20 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 715
-    '    Code Lines: 534 (74.69%)
-    ' Comment Lines: 125 (17.48%)
-    '    - Xml Docs: 12.80%
+    '   Total Lines: 690
+    '    Code Lines: 517 (74.93%)
+    ' Comment Lines: 119 (17.25%)
+    '    - Xml Docs: 8.40%
     ' 
-    '   Blank Lines: 56 (7.83%)
-    '     File Size: 27.72 KB
+    '   Blank Lines: 54 (7.83%)
+    '     File Size: 26.64 KB
 
 
     ' Class MainForm
     ' 
     '     Constructor: (+1 Overloads) Sub New
     ' 
-    '     Function: LightDirFromAngles, RoundRectPath, ScaleLightColor
+    '     Function: RoundRectPath
     ' 
     '     Sub: ApplyLighting, BgColorClick, Canvas_MouseDown, Canvas_MouseMove, Canvas_MouseUp
     '          Canvas_Paint, DrawDebugOverlay, EmbeddedChanged, InitializeComponent, LightColorClick

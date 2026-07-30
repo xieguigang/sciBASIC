@@ -1,4 +1,61 @@
-﻿Namespace JSONSchema
+﻿#Region "Microsoft.VisualBasic::1525078201f2cf921b0ce48e9d298cd8, mime\text%markdown\JSONSchema\Block.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 101
+    '    Code Lines: 20 (19.80%)
+    ' Comment Lines: 73 (72.28%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 8 (7.92%)
+    '     File Size: 3.76 KB
+
+
+    '     Class Block
+    ' 
+    '         Properties: alignments, alt, checked, content, definitions
+    '                     headers, id, items, language, level
+    '                     ordered, rows, terms, title, type
+    '                     url
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+Namespace JSONSchema
 
     ''' <summary>
     ''' 针对markdown格式有限的支持

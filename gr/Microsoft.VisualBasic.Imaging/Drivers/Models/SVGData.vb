@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0da2f67acb2361e38adcab4000ea6228, gr\Microsoft.VisualBasic.Imaging\Drivers\Models\SVGData.vb"
+﻿#Region "Microsoft.VisualBasic::780249259af6bf181a648a612c8fa81d, gr\Microsoft.VisualBasic.Imaging\Drivers\Models\SVGData.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 130
-    '    Code Lines: 80 (61.54%)
-    ' Comment Lines: 30 (23.08%)
+    '   Total Lines: 132
+    '    Code Lines: 82 (62.12%)
+    ' Comment Lines: 30 (22.73%)
     '    - Xml Docs: 96.67%
     ' 
-    '   Blank Lines: 20 (15.38%)
-    '     File Size: 4.58 KB
+    '   Blank Lines: 20 (15.15%)
+    '     File Size: 4.73 KB
 
 
     '     Class SVGData

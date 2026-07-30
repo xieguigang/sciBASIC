@@ -1,16 +1,59 @@
-#Region "Microsoft.VisualBasic::00000000000000000000000000000000, sciBASIC#\vs_solutions\dev\vs_PDB\SymbolStream.vb"
+﻿#Region "Microsoft.VisualBasic::ea64aa161257185aa2ec680cb552d66c, vs_solutions\dev\vs_PDB\SymbolStream.vb"
 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 186
+    '    Code Lines: 134 (72.04%)
+    ' Comment Lines: 24 (12.90%)
+    '    - Xml Docs: 29.17%
+    ' 
+    '   Blank Lines: 28 (15.05%)
+    '     File Size: 7.08 KB
+
+
+    ' Class PublicSymbolReader
+    ' 
+    '     Properties: Symbols
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    ' 
+    '     Function: DecodeRecord, ReadName
+    ' 
+    '     Sub: Parse
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 
@@ -200,4 +243,3 @@ Public Class PublicSymbolReader
         Return CodeView.ReadNullString(p, pos, Encoding.UTF8)
     End Function
 End Class
-

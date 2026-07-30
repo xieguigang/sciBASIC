@@ -1,3 +1,70 @@
+﻿#Region "Microsoft.VisualBasic::60fa583571d4ae3ae563851c759aa1d1, Data_science\Mathematica\SignalProcessing\wav\wav\VoicePrint\VoicePrintExtractor.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 399
+    '    Code Lines: 206 (51.63%)
+    ' Comment Lines: 120 (30.08%)
+    '    - Xml Docs: 47.50%
+    ' 
+    '   Blank Lines: 73 (18.30%)
+    '     File Size: 14.43 KB
+
+
+    ' Class VoicePrintOptions
+    ' 
+    '     Properties: ApplyCMVN, DeltaN, FrameHopMs, FrameSizeMs, IncludeC0
+    '                 L2Normalize, NumMelFilters, PreEmphasisCoeff, TargetDimension, UseDelta
+    '                 UseDeltaDelta
+    ' 
+    ' Class VoicePrintResult
+    ' 
+    '     Properties: DurationSec, NumFrames, NumMfcc, SampleRate, Vector
+    ' 
+    '     Function: ToString
+    ' 
+    ' Class VoicePrintExtractor
+    ' 
+    '     Function: AdjustDimension, CalculateNumMfcc, ComputeVoiceprintVector, Extract, ExtractDetailed
+    ' 
+    '     Sub: AppendStatistics, ApplyCMVN, L2NormalizeVector
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
 Imports std = System.Math
 
 ' ============================================================================
@@ -397,3 +464,4 @@ Public Class VoicePrintExtractor
     End Function
 
 End Class
+

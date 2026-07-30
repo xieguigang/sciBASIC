@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5060b5ebab396b262ea57ab225045c9f, Data_science\NLP\Tokenizer\src\WordDictionary.vb"
+﻿#Region "Microsoft.VisualBasic::8013d9125726f6b5f35276169bbd83d2, Data_science\NLP\Tokenizer\src\WordDictionary.vb"
 
     ' Author:
     ' 
@@ -282,4 +282,3 @@ Namespace ChineseTokenizer
     End Class
 
 End Namespace
-

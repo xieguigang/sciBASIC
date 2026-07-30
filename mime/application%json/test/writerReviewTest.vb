@@ -1,3 +1,57 @@
+﻿#Region "Microsoft.VisualBasic::c7aa412d26fbfe919da68809acd6ee5a, mime\application%json\test\writerReviewTest.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 163
+    '    Code Lines: 122 (74.85%)
+    ' Comment Lines: 24 (14.72%)
+    '    - Xml Docs: 45.83%
+    ' 
+    '   Blank Lines: 17 (10.43%)
+    '     File Size: 8.77 KB
+
+
+    ' Module writerReviewTest
+    ' 
+    '     Sub: MainWriterReview
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
 #Region "JSONWriter review tests"
 
 Imports System.Collections.Generic
@@ -161,3 +215,4 @@ Module writerReviewTest
 
 End Module
 #End Region
+

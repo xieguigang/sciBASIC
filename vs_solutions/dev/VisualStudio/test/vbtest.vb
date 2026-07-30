@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fd5cea335250b84f57b92e4c3aa9ed57, vs_solutions\dev\VisualStudio\test\vbtest.vb"
+﻿#Region "Microsoft.VisualBasic::163e50a3be11b8fec374544d34729d3c, vs_solutions\dev\VisualStudio\test\vbtest.vb"
 
     ' Author:
     ' 
@@ -43,9 +43,9 @@
     '     File Size: 18.07 KB
 
 
-    ' Module Program
+    ' Module Program2222
     ' 
-    '     Sub: Assert, Dump, Main, RunAsserts, TestProject
+    '     Sub: Assert, Dump, Main1, RunAsserts, TestProject
     '          TestReflection
     '     Delegate Function
     ' 
@@ -428,4 +428,3 @@ End Namespace
     End Sub
 
 End Module
-

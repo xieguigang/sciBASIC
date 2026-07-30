@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::66d9d3a01c95ed123a7c2b67c3d7f494, vs_solutions\dev\VisualStudio\test\Module2.vb"
+﻿#Region "Microsoft.VisualBasic::1565ed219b44d35276785ebd6dbc0c49, vs_solutions\dev\VisualStudio\test\Module2.vb"
 
     ' Author:
     ' 
@@ -40,12 +40,12 @@
     '    - Xml Docs: 0.00%
     ' 
     '   Blank Lines: 6 (26.09%)
-    '     File Size: 674 B
+    '     File Size: 675 B
 
 
     ' Module Module2
     ' 
-    '     Sub: Main
+    '     Sub: Main1
     ' 
     ' Class aaaa
     ' 

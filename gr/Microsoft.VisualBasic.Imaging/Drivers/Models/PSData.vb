@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::62606d80e109f8aaa67e138dcef3810f, gr\Microsoft.VisualBasic.Imaging\Drivers\Models\PSData.vb"
+﻿#Region "Microsoft.VisualBasic::a10ee04178bab633700a468db0dc01d9, gr\Microsoft.VisualBasic.Imaging\Drivers\Models\PSData.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 34
-    '    Code Lines: 27 (79.41%)
+    '   Total Lines: 36
+    '    Code Lines: 29 (80.56%)
     ' Comment Lines: 0 (0.00%)
     '    - Xml Docs: 0.00%
     ' 
-    '   Blank Lines: 7 (20.59%)
-    '     File Size: 971 B
+    '   Blank Lines: 7 (19.44%)
+    '     File Size: 1.12 KB
 
 
     '     Class PostScriptData

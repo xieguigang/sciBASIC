@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fd6526c308bae7618be6de59856eaeb1, gr\ModelViewer\RenderMode.vb"
+﻿#Region "Microsoft.VisualBasic::fd6526c308bae7618be6de59856eaeb1, tutorials\ModelViewer\RenderMode.vb"
 
     ' Author:
     ' 

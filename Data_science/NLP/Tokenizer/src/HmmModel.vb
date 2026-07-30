@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::283131eb50fbbafa36ed86bc3cdbdbfa, Data_science\NLP\Tokenizer\src\HmmModel.vb"
+﻿#Region "Microsoft.VisualBasic::e3b74aaf8f60b471d2a0dd712229552b, Data_science\NLP\Tokenizer\src\HmmModel.vb"
 
     ' Author:
     ' 
@@ -324,4 +324,3 @@ Namespace ChineseTokenizer
     End Class
 
 End Namespace
-

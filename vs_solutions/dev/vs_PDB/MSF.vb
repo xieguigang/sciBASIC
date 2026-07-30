@@ -1,28 +1,61 @@
-#Region "Microsoft.VisualBasic::00000000000000000000000000000000, sciBASIC#\vs_solutions\dev\vs_PDB\MSF.vb"
+﻿#Region "Microsoft.VisualBasic::f74947d586866115f2d8a9dee9c55d87, vs_solutions\dev\vs_PDB\MSF.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 359
+    '    Code Lines: 209 (58.22%)
+    ' Comment Lines: 88 (24.51%)
+    '    - Xml Docs: 80.68%
+    ' 
+    '   Blank Lines: 62 (17.27%)
+    '     File Size: 12.88 KB
+
+
+    ' Class MSFReader
+    ' 
+    '     Properties: FreePageCount, NamedStreams, NumPages, PageSize, PdbInfo
+    '                 StreamCount
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    ' 
+    '     Function: GetStream, GetStreamByName, IsMagic, IsPageFree, ParsePdbStream
+    '               ReadDirectory
+    ' 
+    '     Sub: Dispose, ParseStreamTable, ReadFreePageMap, ReadSuperBlock
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 
@@ -385,6 +418,3 @@ Public Class MSFReader : Implements IDisposable
         End If
     End Sub
 End Class
-
-
-

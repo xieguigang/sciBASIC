@@ -1,4 +1,57 @@
-﻿''' <summary>
+﻿#Region "Microsoft.VisualBasic::f07273c76c6ed75277d67716019f0521, mime\text%markdown\Render\Render.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 58
+    '    Code Lines: 37 (63.79%)
+    ' Comment Lines: 13 (22.41%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 8 (13.79%)
+    '     File Size: 2.69 KB
+
+
+    ' Class Render
+    ' 
+    '     Function: EscapeHtml, router
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+''' <summary>
 ''' The different markup syntax formatter for the markdown document.
 ''' </summary>
 Public MustInherit Class Render
@@ -56,3 +109,4 @@ Public MustInherit Class Render
         Return s
     End Function
 End Class
+

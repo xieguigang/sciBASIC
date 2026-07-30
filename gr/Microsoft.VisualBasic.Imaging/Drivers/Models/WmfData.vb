@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9fd138737a8e1a41eea86ffcb97cbbe8, gr\Microsoft.VisualBasic.Imaging\Drivers\Models\WmfData.vb"
+﻿#Region "Microsoft.VisualBasic::d54c21714ca37706d2cb5f92f97cc0cc, gr\Microsoft.VisualBasic.Imaging\Drivers\Models\WmfData.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 64
-    '    Code Lines: 47 (73.44%)
-    ' Comment Lines: 4 (6.25%)
+    '   Total Lines: 65
+    '    Code Lines: 49 (75.38%)
+    ' Comment Lines: 4 (6.15%)
     '    - Xml Docs: 0.00%
     ' 
-    '   Blank Lines: 13 (20.31%)
-    '     File Size: 2.06 KB
+    '   Blank Lines: 12 (18.46%)
+    '     File Size: 2.20 KB
 
 
     '     Class WmfData

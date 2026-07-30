@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5122a29b17a8a68334493a0bf9552d01, Microsoft.VisualBasic.Core\src\Language\Value\Value.vb"
+﻿#Region "Microsoft.VisualBasic::f5e51d057b05c5991447b5f5f62fa70b, Microsoft.VisualBasic.Core\src\Language\Value\Value.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 314
-    '    Code Lines: 162 (51.59%)
-    ' Comment Lines: 114 (36.31%)
+    '   Total Lines: 318
+    '    Code Lines: 165 (51.89%)
+    ' Comment Lines: 114 (35.85%)
     '    - Xml Docs: 99.12%
     ' 
-    '   Blank Lines: 38 (12.10%)
-    '     File Size: 12.61 KB
+    '   Blank Lines: 39 (12.26%)
+    '     File Size: 12.70 KB
 
 
     '     Class Value
@@ -48,8 +48,12 @@
     '         Properties: HasValue, Value
     ' 
     '         Constructor: (+3 Overloads) Sub New
+    ' 
     '         Function: [Default], (+2 Overloads) Equals, GetJson, GetUnderlyingType, (+2 Overloads) GetValueOrDefault
     '                   IsNothing, ToString
+    ' 
+    '         Sub: Assign
+    ' 
     '         Operators: -, (+3 Overloads) +, <=, (+2 Overloads) <>, (+2 Overloads) =
     '                    >=, (+4 Overloads) Like
     '         Interface IValueOf

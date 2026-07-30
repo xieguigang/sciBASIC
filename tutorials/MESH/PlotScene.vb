@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d5e4772bf898190c7cb616db2bcc9d10, Data_science\Visualization\MESH\PlotScene.vb"
+﻿#Region "Microsoft.VisualBasic::d5e4772bf898190c7cb616db2bcc9d10, tutorials\MESH\PlotScene.vb"
 
     ' Author:
     ' 
