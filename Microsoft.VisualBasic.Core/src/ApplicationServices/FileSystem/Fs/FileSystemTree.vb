@@ -61,6 +61,14 @@ Imports Microsoft.VisualBasic.Linq
 
 Namespace ApplicationServices
 
+    Public Class VirtualFile
+
+        Public Property name As String
+        Public Property files As Dictionary(Of String, VirtualFile)
+        Public Property type As String
+
+    End Class
+
     ''' <summary>
     ''' A virtual filesystem tree
     ''' </summary>
@@ -102,6 +110,23 @@ Namespace ApplicationServices
                 Return Not Files.IsNullOrEmpty
             End Get
         End Property
+
+        Public Function ToJSONModel() As VirtualFile
+            Dim json As New VirtualFile With {
+                .name = Name,
+                .type = If(IsDirectory, "dir", "file")
+            }
+
+            If IsDirectory Then
+                json.files = Files _
+                    .ToDictionary(Function(a) a.Key,
+                                  Function(a)
+                                      Return a.Value.ToJSONModel
+                                  End Function)
+            End If
+
+            Return json
+        End Function
 
         ''' <summary>
         ''' Get a node by its key name in current tree node
