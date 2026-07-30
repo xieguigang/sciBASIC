@@ -27,6 +27,7 @@
 #End Region
 
 Imports System.IO
+Imports System.Text
 Imports Microsoft.VisualBasic.Binary
 
 Namespace sciBASIC.PDB
@@ -53,17 +54,56 @@ Namespace sciBASIC.PDB
         ''' <summary>
         ''' Page size of the MSF file.
         ''' </summary>
+        Private _pageSize As Integer
         Public ReadOnly Property PageSize As Integer
+            Get
+                Return _pageSize
+            End Get
+        End Property
 
         ''' <summary>
         ''' Total number of pages in the file.
         ''' </summary>
+        Private _numPages As Integer
         Public ReadOnly Property NumPages As Integer
+            Get
+                Return _numPages
+            End Get
+        End Property
+
+        ''' <summary>
+        ''' Number of pages marked free (unallocated) in the free-page-map.
+        ''' </summary>
+        Public ReadOnly Property FreePageCount As Integer
+            Get
+                Return _freePageCount
+            End Get
+        End Property
 
         ''' <summary>
         ''' Size in bytes of the stream directory (from the SuperBlock).
         ''' </summary>
         Private dirBytes As Integer
+
+        ''' <summary>
+        ''' Block number of the first free-page-map (FPM0).
+        ''' </summary>
+        Private freePageMapAddr As Integer
+
+        ''' <summary>
+        ''' Raw bytes of the FPM0 page (1 bit per page; 1 = free / unallocated).
+        ''' </summary>
+        Private freePageMap As Byte()
+
+        ''' <summary>
+        ''' Number of pages marked free in <see cref="freePageMap"/>.
+        ''' </summary>
+        Private _freePageCount As Integer
+
+        ''' <summary>
+        ''' Named-stream map decoded from the PDB stream (stream #1), name -> stream index.
+        ''' </summary>
+        Private ReadOnly namedStreams As New Dictionary(Of String, Integer)(StringComparer.OrdinalIgnoreCase)
 
         ''' <summary>
         ''' GUID / signature / age parsed from the PDB stream.
@@ -75,11 +115,13 @@ Namespace sciBASIC.PDB
 
         Sub New(filePath As String)
             file = New FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.Read)
-            PageSize = ReadPageSize()
+            ReadSuperBlock()
 
-            If PageSize <= 0 Then
+            If _pageSize <= 0 Then
                 Throw New InvalidDataException("Invalid MSF page size.")
             End If
+
+            ReadFreePageMap()
 
             Dim directory As Byte() = ReadDirectory()
             ParseStreamTable(directory)
@@ -111,25 +153,69 @@ Namespace sciBASIC.PDB
             End Try
         End Function
 
-        Private Function ReadPageSize() As Integer
+        ''' <summary>
+        ''' Read the SuperBlock and populate the page-size, free-page-map block index,
+        ''' page count, directory size and directory block-map address.
+        ''' </summary>
+        Private Sub ReadSuperBlock()
             ' SuperBlock layout:
-            '   char  Magic[44];
-            '   u32   PageSize;          offset 44
-            '   u32   FreePageMap;       offset 48
-            '   u32   NumPages;          offset 52
-            '   u32   NumDirectoryBytes; offset 56
-            '   u32   Reserved;          offset 60
-            '   u32   BlockMapAddr;      offset 64
+            '   char  Magic[44];          offset 0
+            '   u32   PageSize;           offset 44
+            '   u32   FreePageMapBlock;   offset 48  (block# of FPM0)
+            '   u32   NumPages;           offset 52
+            '   u32   NumDirectoryBytes;  offset 56
+            '   u32   Reserved;           offset 60
+            '   u32   BlockMapAddr;       offset 64
             file.Seek(44, SeekOrigin.Begin)
-            Using br As New BinaryDataReader(file, ByteOrder.LittleEndian, leaveOpen:=True)
-                Dim pageSize As Integer = br.ReadInt32()
-                _NumPages = br.ReadInt32()
-                dirBytes = br.ReadInt32() ' directory bytes
-                _ = br.ReadInt32() ' reserved
-                blockMapAddr = br.ReadInt32()
-            End Using
 
-            Return PageSize
+            Using br As New BinaryDataReader(file, ByteOrder.LittleEndian, leaveOpen:=True)
+                _pageSize = br.ReadInt32()           ' BlockSize           @44
+                freePageMapAddr = br.ReadInt32()     ' FreePageMapBlock    @48
+                _numPages = br.ReadInt32()           ' NumPages            @52
+                dirBytes = br.ReadInt32()            ' NumDirectoryBytes   @56
+                _ = br.ReadInt32()                   ' Reserved            @60
+                blockMapAddr = br.ReadInt32()        ' BlockMapAddr        @64
+            End Using
+        End Sub
+
+        ''' <summary>
+        ''' Read the first free-page-map (FPM0) page and count the free pages.
+        ''' The FPM is a bit array (1 bit per page); bit set = page is free / unallocated.
+        ''' </summary>
+        Private Sub ReadFreePageMap()
+            _freePageCount = 0
+            freePageMap = Nothing
+
+            If freePageMapAddr < 0 Then
+                Return
+            End If
+
+            file.Seek(CLng(freePageMapAddr) * _pageSize, SeekOrigin.Begin)
+            freePageMap = New Byte(_pageSize - 1) {}
+            file.Read(freePageMap, 0, _pageSize)
+
+            For i As Integer = 0 To Math.Min(_numPages, freePageMap.Length * 8) - 1
+                If IsPageFree(i) Then
+                    _freePageCount += 1
+                End If
+            Next
+        End Sub
+
+        ''' <summary>
+        ''' Returns True when the given page is marked free (unallocated) in the FPM.
+        ''' </summary>
+        Public Function IsPageFree(page As Integer) As Boolean
+            If freePageMap Is Nothing OrElse page < 0 Then
+                Return False
+            End If
+
+            Dim byteIndex As Integer = page \ 8
+
+            If byteIndex >= freePageMap.Length Then
+                Return False
+            End If
+
+            Return (freePageMap(byteIndex) And CByte(1 << (page Mod 8))) <> 0
         End Function
 
         Private blockMapAddr As Integer
@@ -207,6 +293,28 @@ Namespace sciBASIC.PDB
         End Function
 
         ''' <summary>
+        ''' Get a stream by its name using the named-stream map decoded from the PDB stream.
+        ''' </summary>
+        Public Function GetStreamByName(name As String) As Stream
+            Dim index As Integer
+
+            If namedStreams.TryGetValue(name, index) Then
+                Return GetStream(index)
+            End If
+
+            Return Nothing
+        End Function
+
+        ''' <summary>
+        ''' The named-stream map (stream name -> stream index) decoded from the PDB stream.
+        ''' </summary>
+        Public ReadOnly Property NamedStreams As IReadOnlyDictionary(Of String, Integer)
+            Get
+                Return namedStreams
+            End Get
+        End Property
+
+        ''' <summary>
         ''' The PDB stream (stream #1) carries the GUID/signature/age and a named-stream
         ''' map. We only decode the header portion here.
         ''' </summary>
@@ -223,6 +331,38 @@ Namespace sciBASIC.PDB
                 info.Signature = reader.ReadInt32()
                 info.Age = reader.ReadInt32()
                 info.Guid = New Guid(reader.ReadBytes(16))
+
+                ' After the GUID follows a named-stream map:
+                '   u32 NamesSize;                       size in bytes of the table below
+                '   repeated until NamesSize consumed:
+                '     u32 StreamIndex;
+                '     u32 NameLenInBytes;
+                '     byte Name[NameLenInBytes];         (UTF-8, not null terminated)
+                If reader.BaseStream.Position + 4 <= reader.BaseStream.Length Then
+                    Dim namesSize As Integer = reader.ReadInt32()
+
+                    If namesSize > 0 AndAlso namesSize <= reader.BaseStream.Length - reader.BaseStream.Position Then
+                        Dim nameBlock As Byte() = reader.ReadBytes(namesSize)
+                        Dim i As Integer = 0
+
+                        While i + 8 <= namesSize
+                            Dim streamIndex As Integer = BitConverter.ToInt32(nameBlock, i)
+                            Dim nameLen As Integer = BitConverter.ToInt32(nameBlock, i + 4)
+                            i += 8
+
+                            If i + nameLen > namesSize Then
+                                Exit While
+                            End If
+
+                            Dim name As String = Encoding.UTF8.GetString(nameBlock, i, nameLen).TrimEnd(ControlChars.NullChar)
+                            i += nameLen
+
+                            If name.Length > 0 AndAlso Not namedStreams.ContainsKey(name) Then
+                                namedStreams(name) = streamIndex
+                            End If
+                        End While
+                    End If
+                End If
             End Using
 
             Return info
