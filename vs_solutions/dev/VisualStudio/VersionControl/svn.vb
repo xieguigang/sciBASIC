@@ -58,13 +58,10 @@ Namespace VersionControl
 
     Public Module svn
 
-        Public Function getLogText(file As String) As String
+        Public Function getLogText(file As String, Optional svn As String = "svn") As String
             Dim command$ = $"log {file.CLIPath}"
-            Dim svn As New IORedirectFile("svn", command, debug:=False)
-
-            Call svn.Run()
-
-            Return svn.StandardOutput
+            Dim stdout As String = PipelineProcess.Call(svn, command)
+            Return stdout
         End Function
     End Module
 End Namespace
