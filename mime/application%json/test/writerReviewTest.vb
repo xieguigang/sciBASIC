@@ -1,0 +1,113 @@
+#Region "JSONWriter review tests"
+
+Imports System.Collections.Generic
+Imports System.Globalization
+Imports System.Threading
+Imports Microsoft.VisualBasic.MIME.application.json
+Imports Microsoft.VisualBasic.MIME.application.json.Javascript
+Imports Microsoft.VisualBasic.Serialization.JSON
+
+''' <summary>
+''' code-review regression tests for the JSONWriter fixes:
+'''   - invariant-culture number formatting (no locale decimal separator)
+'''   - quoted ISO-8601 date when unixTimestamp = false
+'''   - NaN / +Infinity / -Infinity literals
+'''   - control-character escaping in both unicode and non-unicode paths
+'''   - non-ASCII escaping only in the unicode path
+'''   - no blank line before the closing bracket of an indented array
+'''
+''' run by renaming this Sub to `Main` (the test project allows a single entry
+''' point) and executing the JSONtest project.
+''' </summary>
+Module writerReviewTest
+
+    Sub MainWriterReview()
+        Dim failures As New List(Of String)
+        Dim originalCulture = Thread.CurrentThread.CurrentCulture
+
+        Try
+            ' 1. numbers must be formatted with the invariant culture ("." decimal separator)
+            Thread.CurrentThread.CurrentCulture = New CultureInfo("de-DE")
+            Dim numObj = New JsonObject
+            numObj.Add("num", 1234.5)
+            numObj.Add("neg", -0.0001)
+            Dim numJson = numObj.BuildJsonString(indent:=False)
+            If Not numJson.Contains("1234.5") Then failures.Add("number not invariant formatted: " & numJson)
+            If numJson.Contains("1234,5") Then failures.Add("number used culture decimal separator: " & numJson)
+
+            ' 2. NaN / +Infinity / -Infinity must be emitted as json string literals
+            Dim spObj = New JsonObject
+            spObj.Add("nan", Double.NaN)
+            spObj.Add("pos", Double.PositiveInfinity)
+            spObj.Add("neg", Double.NegativeInfinity)
+            Dim spJson = spObj.BuildJsonString(indent:=False)
+            If Not spJson.Contains("""NaN""") Then failures.Add("NaN not serialized as literal: " & spJson)
+            If Not spJson.Contains("""Infinity""") Then failures.Add("+Infinity not serialized: " & spJson)
+            If Not spJson.Contains("""-Infinity""") Then failures.Add("-Infinity not serialized: " & spJson)
+
+            ' 3. non-unix date -> quoted ISO-8601 string
+            Dim dateObj = New JsonObject
+            dateObj.Add("d", New Date(2026, 7, 30, 12, 34, 56))
+            Dim optsDate = New JSONSerializerOptions With {.unixTimestamp = False}
+            Dim dateJson = dateObj.BuildJsonString(optsDate)
+            If Not dateJson.Contains("""2026-07-30T12:34:56") Then failures.Add("date not quoted ISO string: " & dateJson)
+            If JsonParser.Parse(dateJson) Is Nothing Then failures.Add("date json failed to parse: " & dateJson)
+
+            ' 4. control chars must be escaped (never raw) in the non-unicode path
+            Dim ctrlObj = New JsonObject
+            ctrlObj.Add("s", "a" & vbCrLf & "b" & vbTab & "c" & vbCr & "d")
+            Dim optsCtrl = New JSONSerializerOptions With {.unicodeEscape = False}
+            Dim ctrlJson = ctrlObj.BuildJsonString(optsCtrl)
+            If ctrlJson.Contains(vbCr) OrElse ctrlJson.Contains(vbLf) OrElse ctrlJson.Contains(vbTab) Then
+                failures.Add("raw control characters leaked into non-unicode output: " & ctrlJson)
+            End If
+            If JsonParser.Parse(ctrlJson) Is Nothing Then failures.Add("ctrl json failed to parse: " & ctrlJson)
+
+            ' 5. control chars must be escaped in the unicode path as well
+            Dim optsUni = New JSONSerializerOptions With {.unicodeEscape = True}
+            Dim uniJson = ctrlObj.BuildJsonString(optsUni)
+            If JsonParser.Parse(uniJson) Is Nothing Then failures.Add("unicode json failed to parse: " & uniJson)
+
+            ' 6. non-ASCII is escaped only in the unicode path
+            Dim uniStrObj = New JsonObject
+            uniStrObj.Add("s", "caf" & ChrW(&H00E9) & "测试")
+            Dim uniEscJson = uniStrObj.BuildJsonString(optsUni)
+            If uniEscJson.Contains("测试") OrElse uniEscJson.Contains("caf" & ChrW(&H00E9)) Then
+                failures.Add("non-ASCII not escaped in unicode path: " & uniEscJson)
+            End If
+            If JsonParser.Parse(uniEscJson) Is Nothing Then failures.Add("unicode-escaped json failed to parse: " & uniEscJson)
+
+            Dim rawEscJson = uniStrObj.BuildJsonString(optsCtrl)
+            If JsonParser.Parse(rawEscJson) Is Nothing Then failures.Add("raw non-ASCII json failed to parse: " & rawEscJson)
+
+            ' 7. indented array closing must not emit a blank line before ]
+            Dim arrObj = New JsonObject
+            Dim objArr As New JsonArray
+            objArr.Add(New JsonObject From {{"x", 1}})
+            objArr.Add(New JsonObject From {{"y", 2}})
+            arrObj.Add("items", objArr)
+            arrObj.Add("names", New JsonArray({"a", "b", "c"}))
+            Dim indentJson = arrObj.BuildJsonString(indent:=True)
+            If indentJson.Contains(Environment.NewLine & Environment.NewLine) Then
+                failures.Add("blank line detected before closing bracket:" & vbCrLf & indentJson)
+            End If
+            If JsonParser.Parse(indentJson) Is Nothing Then failures.Add("indented json failed to parse: " & indentJson)
+
+        Catch ex As Exception
+            failures.Add("exception: " & ex.Message & vbCrLf & ex.StackTrace)
+        Finally
+            Thread.CurrentThread.CurrentCulture = originalCulture
+        End Try
+
+        If failures.Count = 0 Then
+            Console.WriteLine("ALL JSONWriter REVIEW TESTS PASSED")
+        Else
+            Console.WriteLine("JSONWriter REVIEW TESTS FAILED (" & failures.Count & "):")
+            For Each f In failures
+                Console.WriteLine(" - " & f)
+            Next
+        End If
+    End Sub
+
+End Module
+#End Region
