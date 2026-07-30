@@ -1,64 +1,63 @@
 ﻿#Region "Microsoft.VisualBasic::0e4d64390597d60e2ecc68888a34d5e4, mime\application%json\Serializer\JSONWriter.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 345
-    '    Code Lines: 249 (72.17%)
-    ' Comment Lines: 50 (14.49%)
-    '    - Xml Docs: 52.00%
-    ' 
-    '   Blank Lines: 46 (13.33%)
-    '     File Size: 12.71 KB
+' Summaries:
 
 
-    ' Class JSONWriter
-    ' 
-    '     Constructor: (+2 Overloads) Sub New
-    ' 
-    '     Function: encodeString, escapeUnicode, jsonValueString
-    ' 
-    '     Sub: (+2 Overloads) BuildJSONString, (+2 Overloads) Dispose, jsonArrayString, jsonObjectString
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 345
+'    Code Lines: 249 (72.17%)
+' Comment Lines: 50 (14.49%)
+'    - Xml Docs: 52.00%
+' 
+'   Blank Lines: 46 (13.33%)
+'     File Size: 12.71 KB
+
+
+' Class JSONWriter
+' 
+'     Constructor: (+2 Overloads) Sub New
+' 
+'     Function: encodeString, escapeString, jsonValueString
+' 
+'     Sub: (+2 Overloads) BuildJSONString, (+2 Overloads) Dispose, jsonArrayString, jsonObjectString
+' 
+' /********************************************************************************/
 
 #End Region
 
+Imports System.Globalization
 Imports System.IO
 Imports System.Text
-Imports System.Text.RegularExpressions
-Imports System.Globalization
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Linq
@@ -85,7 +84,9 @@ Friend Class JSONWriter : Implements IDisposable
     Sub New(opts As JSONSerializerOptions, file As Stream, Optional leaveOpen As Boolean = False)
         Me.opts = opts
         Me.leaveOpen = leaveOpen
-        Me.json = New StreamWriter(file)
+        ' emit UTF-8 without BOM and propagate the leaveOpen flag to the underlying
+        ' stream so the caller can keep writing when leaveOpen is true.
+        Me.json = New StreamWriter(file, New UTF8Encoding(False), 1024, leaveOpen)
     End Sub
 
     Sub New(opts As JSONSerializerOptions, file As StringBuilder, Optional leaveOpen As Boolean = False)
@@ -139,19 +140,55 @@ Friend Class JSONWriter : Implements IDisposable
             Return "null"
         End If
 
-        If TypeOf value Is Date AndAlso opts.unixTimestamp Then
-            Return DirectCast(value, Date).UnixTimeStamp
+        If TypeOf value Is Date Then
+            If opts.unixTimestamp Then
+                ' UnixTimeStamp returns a Double; format it with the invariant
+                ' culture so the timestamp is always a valid, locale-independent
+                ' json number.
+                Return DirectCast(value, Date).UnixTimeStamp.ToString("R", CultureInfo.InvariantCulture)
+            Else
+                ' a json date must be a quoted string; use the round-trip ISO-8601 format
+                Return $"""{DirectCast(value, Date).ToString("o", CultureInfo.InvariantCulture)}"""
+            End If
         ElseIf TypeOf value Is String Then
             Return encodeString(value)
         ElseIf TypeOf value Is Boolean Then
-            Return value.ToString.ToLower
+            Return If(DirectCast(value, Boolean), "true", "false")
         ElseIf TypeOf value Is ObjectId Then
             Return $"""{value.ToString}"""
-        ElseIf TypeOf value Is Double AndAlso CDbl(value).IsNaNImaginary Then
-            Return """NaN"""
+        ElseIf TypeOf value Is Double Then
+            Dim d As Double = CDbl(value)
+
+            If Double.IsNaN(d) Then
+                Return """NaN"""
+            ElseIf d = Double.PositiveInfinity Then
+                Return """Infinity"""
+            ElseIf d = Double.NegativeInfinity Then
+                Return """-Infinity"""
+            Else
+                Return d.ToString("R", CultureInfo.InvariantCulture)
+            End If
+        ElseIf TypeOf value Is Single Then
+            Dim s As Single = CSng(value)
+
+            If Single.IsNaN(s) Then
+                Return """NaN"""
+            ElseIf s = Single.PositiveInfinity Then
+                Return """Infinity"""
+            ElseIf s = Single.NegativeInfinity Then
+                Return """-Infinity"""
+            Else
+                Return s.ToString("R", CultureInfo.InvariantCulture)
+            End If
         Else
-            ' number,integer,etc
-            Return any.ToString(value)
+            ' number, integer, decimal, etc.
+            ' use the invariant culture so the decimal separator is always "." and
+            ' thousands separators never appear -> always a valid json number.
+            If TypeOf value Is IFormattable Then
+                Return DirectCast(value, IFormattable).ToString(Nothing, CultureInfo.InvariantCulture)
+            Else
+                Return any.ToString(value)
+            End If
         End If
     End Function
 
@@ -280,7 +317,7 @@ Friend Class JSONWriter : Implements IDisposable
                     ' If check_chars Then
                     ' Call json.Write(strs.JoinBy(", "))
                     ' Else
-                    Call json.WriteLine(strs.Select(Function(si) opts.offsets(indent + 1) & si).JoinBy(", " & vbCrLf))
+                    Call json.WriteLine(strs.Select(Function(si) opts.offsets(indent + 1) & si).JoinBy(", " & Environment.NewLine))
                     ' End If
                 Else
                     Call json.Write(strs.JoinBy(","))
@@ -312,21 +349,19 @@ Friend Class JSONWriter : Implements IDisposable
     End Sub
 
     Private Function encodeString(value As String) As String
-        If opts.unicodeEscape Then
-            Return """" & escapeUnicode(value) & """"
-        Else
-            Return JsonContract.GetObjectJson(GetType(String), value).Replace(vbLf, "\n")
-        End If
+        ' the non-unicode path still has to escape the json-grammar control characters
+        ' (\, ", tab, cr, lf, ...) and only skips escaping the >0x7f non-ASCII range.
+        Return """" & escapeString(value, opts.unicodeEscape) & """"
     End Function
 
     ''' <summary>
-    ''' single-pass json string escaping with unicode escape support.
-    ''' escapes backslash, double quote, control characters and non-ASCII
-    ''' characters in a single StringBuilder pass to avoid the fragile
-    ''' regex-based post-processing that could crash on empty strings or
-    ''' produce wrong output when matched substrings overlapped.
+    ''' single-pass json string escaping. the json-grammar characters (\\, ", tab,
+    ''' cr, lf, backspace, form-feed) and every other control character below 0x20
+    ''' are always escaped. when <paramref name="escapeAllNonAscii"/> is true, each
+    ''' non-ASCII character (>= 0x80, including every utf-16 code unit from the
+    ''' supplementary planes) is escaped as \uXXXX as well.
     ''' </summary>
-    Private Function escapeUnicode(value As String) As String
+    Private Function escapeString(value As String, escapeAllNonAscii As Boolean) As String
         If value Is Nothing Then
             Return ""
         End If
@@ -352,10 +387,11 @@ Friend Class JSONWriter : Implements IDisposable
                 Case Else
                     Dim code As Integer = AscW(c)
 
-                    ' control chars below 0x20 (not handled by the named cases
-                    ' above) and non-ASCII characters (>= 0x80) are escaped as
-                    ' \uXXXX to produce pure-ASCII json output.
-                    If code < &H20 OrElse code > &H7F Then
+                    If code < &H20 Then
+                        ' any remaining control character (e.g. 0x00..0x1f)
+                        sb.Append("\u")
+                        sb.Append(code.ToString("x4", CultureInfo.InvariantCulture))
+                    ElseIf escapeAllNonAscii AndAlso code > &H7F Then
                         sb.Append("\u")
                         sb.Append(code.ToString("x4", CultureInfo.InvariantCulture))
                     Else
