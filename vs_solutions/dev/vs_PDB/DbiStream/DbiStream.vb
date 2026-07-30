@@ -70,17 +70,21 @@ Public Class DbiReader
         ParseSourceInfo(data, pos, srcInfoEnd)
         pos = srcInfoEnd + Header.TypeServerMapSize + Header.ECSubstreamSize + Header.OptionalDbgHdrSize
 
-        ' 3) the remaining bytes are the C13 debug-data substream; each module's
-        '    line info lives at [pos + module.C13Offset, + module.C13Size].
-        For Each m As ModuleInfo In Modules
-            If m.C13Size > 0 AndAlso m.C13Offset >= 0 Then
-                Dim start As Integer = pos + m.C13Offset
-                Dim [end] As Integer = std.Min(start + m.C13Size, data.Length)
+        ' 3) the remaining bytes are the C13 debug-data substream, laid out
+        '    sequentially (module after module) in module order.
+        Dim c13Cursor As Integer = 0
 
-                If start >= 0 AndAlso [end] <= data.Length Then
-                    ParseC13(data, start, [end], m)
+        For Each m As ModuleInfo In Modules
+            If m.C13Size > 0 Then
+                Dim segStart As Integer = pos + c13Cursor
+                Dim segEnd As Integer = std.Min(segStart + m.C13Size, data.Length)
+
+                If segStart >= 0 AndAlso segEnd <= data.Length Then
+                    ParseC13(data, segStart, segEnd, m)
                 End If
             End If
+
+            c13Cursor += m.C13Size
         Next
     End Sub
 
@@ -118,46 +122,45 @@ Public Class DbiReader
         Dim p As Integer = start
 
         While p < [end]
-            Dim modStart As Integer = p
-            ' Fixed part is 40 bytes (before the inline srcFiles array).
-            If p + 40 > [end] Then Exit While
+            ' Modern (PDB 7.0) module-info header is 32 bytes; the per-module C13
+            ' line-info size is C13ByteSize at offset 24.
+            If p + 32 > [end] Then Exit While
 
-            Dim un1 As Integer = BitConverter.ToInt32(data, p)
-            Dim section As UShort = BitConverter.ToUInt16(data, p + 4)
-            Dim flags As UShort = BitConverter.ToUInt16(data, p + 6)
-            Dim dataCrc As Integer = BitConverter.ToInt32(data, p + 8)
-            Dim relocCrc As Integer = BitConverter.ToInt32(data, p + 12)
-            Dim symOffset As Integer = BitConverter.ToInt32(data, p + 16)
-            Dim symSize As Integer = BitConverter.ToInt32(data, p + 20)
-            Dim c11Offset As Integer = BitConverter.ToInt32(data, p + 24)
-            Dim c11Size As Integer = BitConverter.ToInt32(data, p + 28)
-            Dim c13Offset As Integer = BitConverter.ToInt32(data, p + 32)
-            Dim c13Size As Integer = BitConverter.ToInt32(data, p + 36)
-            Dim numFiles As UShort = BitConverter.ToUInt16(data, p + 40)
-            Dim pdbFile As UShort = BitConverter.ToUInt16(data, p + 42)
+            Dim c13Size As Integer = BitConverter.ToInt32(data, p + 24)
+            p += 32
 
-            p += 44
-
-            Dim fileIndices As Integer() = New Integer(numFiles - 1) {}
-
-            For i As Integer = 0 To numFiles - 1
-                fileIndices(i) = BitConverter.ToInt32(data, p)
-                p += 4
-            Next
-
+            ' Module name and object-file name (NUL-terminated), then the file table.
             Dim moduleName As String = ReadNullString(data, p)
             p += moduleName.Length + 1
             Dim objName As String = ReadNullString(data, p)
             p += objName.Length + 1
 
+            If p + 2 > [end] Then Exit While
+            Dim numFiles As UShort = BitConverter.ToUInt16(data, p)
+            p += 2
+
+            Dim fileIndices As Integer()
+
+            If numFiles > 0 Then
+                fileIndices = New Integer(numFiles - 1) {}
+
+                For i As Integer = 0 To numFiles - 1
+                    If p + 4 > [end] Then Exit While
+                    fileIndices(i) = BitConverter.ToInt32(data, p)
+                    p += 4
+                Next
+            Else
+                fileIndices = New Integer() {}
+            End If
+
             Dim m As New ModuleInfo With {
                 .ModuleName = moduleName,
                 .ObjFileName = objName,
                 .FileIndices = fileIndices,
-                .C13Offset = c13Offset,
+                .C13Offset = 0,
                 .C13Size = c13Size,
-                .SymbolOffset = symOffset,
-                .SymbolSize = symSize
+                .SymbolOffset = 0,
+                .SymbolSize = 0
             }
             Modules.Add(m)
         End While

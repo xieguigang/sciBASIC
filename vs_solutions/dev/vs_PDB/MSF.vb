@@ -43,7 +43,7 @@ Public Class MSFReader : Implements IDisposable
     ''' Canonical magic prefix of a classic PDB file
     ''' ("Microsoft C/C++ MSF 7.00\r\n\x1aDS").
     ''' </summary>
-    Public Const Magic As String = "Microsoft C/C++ MSF 7.00" & vbCrLf & vbNullChar & "DS" & vbNullChar & vbNullChar & vbNullChar
+    Public Const Magic As String = "Microsoft C/C++ MSF 7.00" & vbCrLf & ChrW(&H1A) & "DS" & vbNullChar & vbNullChar & vbNullChar
 
     Public Const StreamPdb As Integer = 1
     Public Const StreamTpi As Integer = 2
@@ -156,15 +156,15 @@ Public Class MSFReader : Implements IDisposable
     ''' page count, directory size and directory block-map address.
     ''' </summary>
     Private Sub ReadSuperBlock()
-        ' SuperBlock layout:
-        '   char  Magic[44];          offset 0
-        '   u32   PageSize;           offset 44
-        '   u32   FreePageMapBlock;   offset 48  (block# of FPM0)
-        '   u32   NumPages;           offset 52
-        '   u32   NumDirectoryBytes;  offset 56
-        '   u32   Reserved;           offset 60
-        '   u32   BlockMapAddr;       offset 64
-        file.Seek(44, SeekOrigin.Begin)
+        ' Canonical MSF SuperBlock layout:
+        '   char  Magic[32];          offset 0
+        '   u32   PageSize;           offset 32
+        '   u32   FreePageMapBlock;   offset 36  (block# of FPM0)
+        '   u32   NumPages;           offset 40
+        '   u32   NumDirectoryBytes;  offset 44
+        '   u32   Reserved;           offset 48
+        '   u32   BlockMapAddr;       offset 52
+        file.Seek(32, SeekOrigin.Begin)
 
         Using br As New BinaryDataReader(file, leaveOpen:=True) With {.ByteOrder = ByteOrder.LittleEndian}
             _pageSize = br.ReadInt32()           ' BlockSize           @44

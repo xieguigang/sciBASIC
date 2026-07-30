@@ -602,6 +602,50 @@ Public Class PortablePdbReader : Implements IDisposable
         Return New Guid(g)
     End Function
 
+    ''' <summary>Read a length-prefixed UTF-8 string from the standard #Blob heap (ECMA-335 default Document layout).</summary>
+    Private Function ReadBlobString(idx As UInteger) As String
+        If idx = 0 OrElse blobHeapOffset < 0 Then
+            Return ""
+        End If
+
+        Dim pos As Integer = blobHeapOffset + CInt(idx)
+
+        If pos >= raw.Length Then
+            Return ""
+        End If
+
+        Dim len As Integer = ReadCompressed(raw, pos)
+
+        If len < 0 OrElse pos + len > raw.Length Then
+            Return ""
+        End If
+
+        Return Encoding.UTF8.GetString(raw, pos, len)
+    End Function
+
+    ''' <summary>Read a length-prefixed byte blob from the standard #Blob heap (ECMA-335 default Document.Hash).</summary>
+    Private Function ReadBlobBytes(idx As UInteger) As Byte()
+        If idx = 0 OrElse blobHeapOffset < 0 Then
+            Return New Byte() {}
+        End If
+
+        Dim pos As Integer = blobHeapOffset + CInt(idx)
+
+        If pos >= raw.Length Then
+            Return New Byte() {}
+        End If
+
+        Dim len As Integer = ReadCompressed(raw, pos)
+
+        If len < 0 OrElse pos + len > raw.Length Then
+            Return New Byte() {}
+        End If
+
+        Dim buf As Byte() = New Byte(len - 1) {}
+        Array.Copy(raw, pos, buf, 0, len)
+        Return buf
+    End Function
+
     ''' <summary>Read an ECMA-335 compressed (unsigned) integer; advances <paramref name="pos"/>.</summary>
     Private Shared Function ReadCompressed(blob As Byte(), ByRef pos As Integer) As Integer
         Dim b0 As Byte = blob(pos)

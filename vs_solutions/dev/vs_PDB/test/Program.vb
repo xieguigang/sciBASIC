@@ -1,3 +1,6 @@
+Imports Microsoft.VisualBasic.ApplicationServices.Development.VisualStudio.ProgramDatabase
+Imports Microsoft.VisualBasic.ApplicationServices.Development.VisualStudio.ProgramDatabase.Models
+
 Module Program
     Sub Main(args As String())
         If args.Length < 1 Then
