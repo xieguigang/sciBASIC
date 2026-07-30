@@ -81,7 +81,8 @@ Public Module JSONSerializer
                                   Optional indent As Boolean = False,
                                   Optional enumToStr As Boolean = True,
                                   Optional unixTimestamp As Boolean = True,
-                                  Optional comment As Boolean = False) As String
+                                  Optional comment As Boolean = False,
+                                  Optional escapeUnicode As Boolean = False) As String
         If obj Is Nothing Then
             Return "null"
         End If
@@ -91,7 +92,8 @@ Public Module JSONSerializer
             .maskReadonly = maskReadonly,
             .enumToString = enumToStr,
             .unixTimestamp = unixTimestamp,
-            .comment = comment
+            .comment = comment,
+            .unicodeEscape = escapeUnicode
         }.DoCall(Function(opts)
                      Return obj.GetType.GetJsonElement(obj, opts).BuildJsonString(opts)
                  End Function)
