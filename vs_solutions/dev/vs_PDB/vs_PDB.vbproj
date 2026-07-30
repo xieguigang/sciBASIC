@@ -4,12 +4,21 @@
     <TargetFrameworks>net10.0</TargetFrameworks>
     <Platforms>AnyCPU;x64</Platforms>
     <Configurations>Debug;Release;LipidSearch;Rsharp_app_release;PlantMAT;mzkit;NPSearch;mzkit_win32;gcmodeller_desktop;Docker;CFD_win32;nuget_release;Desktop;MEMI-Desktop;CellaLAB-Desktop</Configurations>
+    <RootNamespace>Microsoft.VisualBasic.ApplicationServices.Development.VisualStudio.ProgramDatabase</RootNamespace>
+    <AssemblyName>Microsoft.VisualBasic.ApplicationServices.Development.VisualStudio.ProgramDatabase</AssemblyName>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
   </PropertyGroup>
 
   <ItemGroup>
     <Compile Remove="test\**" />
     <EmbeddedResource Remove="test\**" />
     <None Remove="test\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="build.log" />
+    <None Remove="build_test.log" />
+    <None Remove="run.log" />
   </ItemGroup>
 
   <ItemGroup>

@@ -1,5 +1,3 @@
-Imports vs_PDB.sciBASIC.PDB
-
 Module Program
     Sub Main(args As String())
         If args.Length < 1 Then
@@ -16,7 +14,7 @@ Module Program
         Dim pdb As PDB
 
         Try
-            pdb = PDB.Open(pdbPath)
+            pdb = pdb.Open(pdbPath)
         Catch ex As Exception
             Console.Error.WriteLine("Failed to open PDB: " & ex.Message)
             Return
