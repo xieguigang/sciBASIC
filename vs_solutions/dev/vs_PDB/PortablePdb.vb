@@ -368,19 +368,23 @@ Public Class PortablePdbReader : Implements IDisposable
             End If
 
             Dim nameIdx As UInteger
+            Dim langIdx As UInteger
+            Dim hashAlgIdx As UInteger
             Dim hashIdx As UInteger
 
             If usePdbHeap Then
+                ' #Pdb layout: Name (4-byte pdb string), Language (#GUID), HashAlgorithm (#GUID), Hash (4-byte pdb blob).
                 nameIdx = BitConverter.ToUInt32(tables, rowStart)
+                langIdx = ReadHeapIndex(tables, rowStart + 4, guidSize)
+                hashAlgIdx = ReadHeapIndex(tables, rowStart + 4 + guidSize, guidSize)
                 hashIdx = BitConverter.ToUInt32(tables, rowStart + 4 + 2 * guidSize)
             Else
-                ' ECMA-335 default: Name and Hash are indices into the standard #Blob heap.
+                ' ECMA-335 default: Name (#Blob), Language (#GUID), HashAlgorithm (#GUID), Hash (#Blob).
                 nameIdx = ReadHeapIndex(tables, rowStart, blobSize)
-                hashIdx = ReadHeapIndex(tables, rowStart + guidSize * 2, blobSize)
+                langIdx = ReadHeapIndex(tables, rowStart + guidSize, guidSize)
+                hashAlgIdx = ReadHeapIndex(tables, rowStart + 2 * guidSize, guidSize)
+                hashIdx = ReadHeapIndex(tables, rowStart + 3 * guidSize, blobSize)
             End If
-
-            Dim langIdx As UInteger = ReadHeapIndex(tables, rowStart + 4, guidSize)
-            Dim hashAlgIdx As UInteger = ReadHeapIndex(tables, rowStart + 4 + guidSize, guidSize)
 
             Dim doc As New SourceDocument With {
                 .FilePath = If(usePdbHeap, ReadPdbString(nameIdx), ReadBlobString(nameIdx)),

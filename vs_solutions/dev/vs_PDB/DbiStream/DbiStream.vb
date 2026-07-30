@@ -92,23 +92,22 @@ Public Class DbiReader
                 h.VersionSignature = br.ReadInt32()
                 h.VersionHeader = br.ReadInt32()
                 h.Age = br.ReadInt32()
-                h.GlobalStreamIndex = br.ReadUInt16()
-                h.PublicStreamIndex = CUShort(br.ReadUInt16())
-                h.SymRecordStreamIndex = CUShort(br.ReadUInt16())
-                h.PdbDllVersion = CUShort(br.ReadUInt16())
-                ' pdbDllRbld
-                h.PublicStreamIndex = h.PublicStreamIndex ' (kept)
-                br.ReadUInt16()
-                h.ModInfoSize = br.ReadInt32()
-                h.SectionContributionSize = br.ReadInt32()
-                h.SectionMapSize = br.ReadInt32()
-                h.SourceInfoSize = br.ReadInt32()
-                h.TypeServerMapSize = br.ReadInt32()
-                h.OptionalDbgHdrSize = br.ReadInt32()
-                h.ECSubstreamSize = br.ReadInt32()
-                br.ReadUInt16() ' flags
-                h.Machine = CUShort(br.ReadUInt16())
-                br.ReadUInt32() ' padding
+                h.GlobalStreamIndex = br.ReadUInt16()       ' 12
+                br.ReadUInt16()                             ' 14 BuildNumber (unused)
+                h.PublicStreamIndex = br.ReadUInt16()       ' 16
+                h.PdbDllVersion = br.ReadUInt16()           ' 18
+                h.SymRecordStreamIndex = br.ReadUInt16()    ' 20
+                br.ReadUInt16()                             ' 22 PdbDllRbld (unused)
+                h.ModInfoSize = br.ReadInt32()              ' 24
+                h.SectionContributionSize = br.ReadInt32()  ' 28
+                h.SectionMapSize = br.ReadInt32()           ' 32
+                h.SourceInfoSize = br.ReadInt32()           ' 36
+                h.TypeServerMapSize = br.ReadInt32()       ' 40
+                h.OptionalDbgHdrSize = br.ReadInt32()       ' 44
+                h.ECSubstreamSize = br.ReadInt32()          ' 48
+                br.ReadUInt16()                             ' 52 Flags (unused)
+                h.Machine = br.ReadUInt16()                 ' 54
+                br.ReadUInt32()                             ' 56 Padding (unused)
             End Using
         End Using
 

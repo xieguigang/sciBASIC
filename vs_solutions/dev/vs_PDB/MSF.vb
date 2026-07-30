@@ -343,20 +343,27 @@ Public Class MSFReader : Implements IDisposable
                     Dim nameBlock As Byte() = reader.ReadBytes(namesSize)
                     Dim i As Integer = 0
 
-                    While i + 8 <= namesSize
-                        Dim streamIndex As Integer = BitConverter.ToInt32(nameBlock, i)
-                        Dim nameLen As Integer = BitConverter.ToInt32(nameBlock, i + 4)
-                        i += 8
+                    ' Canonical PDB named-stream map: a sequence of (i32 streamNumber,
+                    ' NUL-terminated name) entries, terminated by a streamNumber of -1.
+                    While i + 4 <= namesSize
+                        Dim streamNumber As Integer = BitConverter.ToInt32(nameBlock, i)
+                        i += 4
 
-                        If i + nameLen > namesSize Then
+                        If streamNumber = -1 Then
                             Exit While
                         End If
 
-                        Dim name As String = Encoding.UTF8.GetString(nameBlock, i, nameLen).TrimEnd(ControlChars.NullChar)
-                        i += nameLen
+                        Dim start As Integer = i
+
+                        While i < namesSize AndAlso nameBlock(i) <> 0
+                            i += 1
+                        End While
+
+                        Dim name As String = Encoding.UTF8.GetString(nameBlock, start, i - start)
+                        i += 1 ' skip the NUL terminator
 
                         If name.Length > 0 AndAlso Not NamedStreams.ContainsKey(name) Then
-                            _namedStreams(name) = streamIndex
+                            _namedStreams(name) = streamNumber
                         End If
                     End While
                 End If
