@@ -99,8 +99,8 @@ Friend Class JSONWriter : Implements IDisposable
         Call BuildJSONString(json, 0)
     End Sub
 
-    Private Sub BuildJSONString(json As JsonElement, indent As Integer)
-        If json Is Nothing OrElse (TypeOf json Is JsonValue AndAlso DirectCast(json, JsonValue).IsLiteralNull) Then
+    Private Sub BuildJSONString(json As JsonElement, indent As Integer, Optional trailingNewline As Boolean = True)
+        If json Is Nothing OrElse (TypeOf json Is JsonValue AndAlso DirectCast(json, JsonValue).value Is Nothing) Then
             If opts.indent Then
                 Call Me.json.WriteLine(opts.offsets(indent) & "null")
             Else
@@ -112,9 +112,13 @@ Friend Class JSONWriter : Implements IDisposable
                     Dim val As String = jsonValueString(DirectCast(json, JsonValue))
 
                     If opts.indent Then
-                        Call Me.json.WriteLine(opts.offsets(indent) & val)
+                        Call Me.json.Write(opts.offsets(indent) & val)
                     Else
-                        Call Me.json.WriteLine(val)
+                        Call Me.json.Write(val)
+                    End If
+
+                    If trailingNewline Then
+                        Call Me.json.WriteLine()
                     End If
                 Case GetType(JsonObject) : Call jsonObjectString(DirectCast(json, JsonObject), indent)
                 Case GetType(JsonArray) : Call jsonArrayString(DirectCast(json, JsonArray), indent)
@@ -180,16 +184,39 @@ Friend Class JSONWriter : Implements IDisposable
             Else
                 Return s.ToString("R", CultureInfo.InvariantCulture)
             End If
-        Else
-            ' number, integer, decimal, etc.
-            ' use the invariant culture so the decimal separator is always "." and
-            ' thousands separators never appear -> always a valid json number.
+        ElseIf IsJsonNumber(value) Then
+            ' all numeric clr primitive types (byte..ulong, decimal, ...) are emitted
+            ' as unquoted json numbers using the invariant culture so the decimal
+            ' separator is always "." and thousands separators never appear.
             If TypeOf value Is IFormattable Then
                 Return DirectCast(value, IFormattable).ToString(Nothing, CultureInfo.InvariantCulture)
             Else
                 Return any.ToString(value)
             End If
+        Else
+            ' anything that is not a json number / boolean / date / string (char,
+            ' guid, timespan, enum, uri, version, opaque clr objects, ...) is emitted
+            ' as a quoted json string so the serialized output is always valid json.
+            Return encodeString(Convert.ToString(value, CultureInfo.InvariantCulture))
         End If
+    End Function
+
+    ''' <summary>
+    ''' true for the clr numeric primitive types that may be emitted as an unquoted
+    ''' json number. any other type (char, guid, timespan, enum, uri, version, ...)
+    ''' must be serialized as a quoted string to stay valid json.
+    ''' </summary>
+    Private Function IsJsonNumber(value As Object) As Boolean
+        Select Case value.GetType
+            Case GetType(Byte), GetType(SByte),
+                 GetType(Int16), GetType(UInt16),
+                 GetType(Int32), GetType(UInt32),
+                 GetType(Int64), GetType(UInt64),
+                 GetType(Decimal), GetType(Double), GetType(Single)
+                Return True
+            Case Else
+                Return False
+        End Select
     End Function
 
     ''' <summary>
@@ -287,18 +314,21 @@ Friend Class JSONWriter : Implements IDisposable
             Case GetType(Object)
                 Dim objs As JsonElement() = arr.ToArray
 
-                For i As Integer = 0 To objs.Length - 2
-                    Call BuildJSONString(objs(i), indent + 1)
-                    Call json.Write(",")
+                For i As Integer = 0 To objs.Length - 1
+                    ' BuildJSONString writes the element (scalar or nested object/array)
+                    ' with the proper indentation itself; we suppress its trailing newline
+                    ' so the separator comma can be placed at the end of the same line.
+                    Call BuildJSONString(objs(i), indent + 1, trailingNewline:=False)
 
-                    If opts.indent Then
-                        Call json.WriteLine()
+                    If i < objs.Length - 1 Then
+                        If opts.indent Then
+                            Call json.Write(",")
+                            Call json.WriteLine()
+                        Else
+                            Call json.Write(", ")
+                        End If
                     End If
                 Next
-
-                If objs.Any Then
-                    Call BuildJSONString(objs.Last, indent + 1)
-                End If
 
                 If opts.indent Then
                     Call json.WriteLine()
