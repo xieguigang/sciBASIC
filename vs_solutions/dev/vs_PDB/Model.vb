@@ -48,6 +48,12 @@ Namespace sciBASIC.PDB
         Public Property FilePath As String
 
         ''' <summary>
+        ''' Optional remapped URL of the source file on a Git host (e.g. GitHub), filled by
+        ''' <see cref="Extensions.PointLocal2Github"/>. Empty until remapped.
+        ''' </summary>
+        Public Property GitHubUrl As String
+
+        ''' <summary>
         ''' Language of the source file. For the classic PDB this is usually empty; for the
         ''' Portable PDB this is the language GUID (C# / VB / F# / ...) from the Document table.
         ''' </summary>
@@ -98,6 +104,11 @@ Namespace sciBASIC.PDB
         ''' The source document this line range belongs to.
         ''' </summary>
         Public Property Document As SourceDocument
+
+        ''' <summary>
+        ''' IL / native offset at which this line range begins (best-effort, 0 when not available).
+        ''' </summary>
+        Public Property Offset As Long
 
         ''' <summary>
         ''' Method or function name this line range is part of (best-effort; may be empty for
