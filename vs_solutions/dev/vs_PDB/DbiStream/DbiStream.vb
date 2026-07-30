@@ -38,43 +38,6 @@ Imports std = System.Math
 ''' </summary>
 Public Class DbiReader
 
-    ''' <summary>
-    ''' Header information carried by the DBI stream.
-    ''' </summary>
-    Public Class DbiHeader
-        Public VersionSignature As Integer
-        Public VersionHeader As Integer
-        Public Age As Integer
-        Public GlobalStreamIndex As UShort
-        Public PublicStreamIndex As UShort
-        Public SymRecordStreamIndex As UShort
-        Public ModInfoSize As Integer
-        Public SectionContributionSize As Integer
-        Public SectionMapSize As Integer
-        Public SourceInfoSize As Integer
-        Public TypeServerMapSize As Integer
-        Public OptionalDbgHdrSize As Integer
-        Public ECSubstreamSize As Integer
-        Public Machine As UShort
-        Public Property PdbDllVersion As UShort
-    End Class
-
-    ''' <summary>
-    ''' One module entry from the module-info substream.
-    ''' </summary>
-    Public Class ModuleInfo
-        Public ModuleName As String
-        Public ObjFileName As String
-        ''' <summary>Indices into the source-info substream file table.</summary>
-        Public FileIndices As Integer()
-        ''' <summary>Offset of this module's C13 line info, relative to the DBI debug-data substream.</summary>
-        Public C13Offset As Integer
-        Public C13Size As Integer
-        ''' <summary>Offset/length of this module's symbols within the symbol stream.</summary>
-        Public SymbolOffset As Integer
-        Public SymbolSize As Integer
-    End Class
-
     Public Property Header As DbiHeader
     Public ReadOnly Property Modules As New List(Of ModuleInfo)()
     Public ReadOnly Property SourceDocuments As New List(Of SourceDocument)()

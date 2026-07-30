@@ -37,8 +37,7 @@ Imports std = System.Math
 ''' page store; the header (SuperBlock) describes the page size and the location
 ''' of the stream directory.
 ''' </summary>
-Public Class MSFReader
-    Implements IDisposable
+Public Class MSFReader : Implements IDisposable
 
     ''' <summary>
     ''' Canonical magic prefix of a classic PDB file
