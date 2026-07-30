@@ -93,6 +93,56 @@ Module writerReviewTest
             End If
             If JsonParser.Parse(indentJson) Is Nothing Then failures.Add("indented json failed to parse: " & indentJson)
 
+        ' 8. round-tripped json: an array that mixes objects and scalar values
+        '    becomes an Object-typed array; its scalar elements must not produce
+        '    leading commas or a blank line before the closing bracket.
+        Dim rt = JsonParser.Parse("[1, {""x"": 1}, 2, 3]")
+        Dim rtJson = rt.BuildJsonString(indent:=True)
+        If rtJson.Contains(Environment.NewLine & Environment.NewLine) Then
+            failures.Add("blank line before closing bracket in round-tripped array:" & vbCrLf & rtJson)
+        End If
+        If rtJson.Contains(Environment.NewLine & ",") Then
+            failures.Add("leading comma in round-tripped indented array:" & vbCrLf & rtJson)
+        End If
+        Dim rtParsed = JsonParser.Parse(rtJson)
+        If rtParsed Is Nothing Then
+            failures.Add("round-tripped array failed to parse: " & rtJson)
+        ElseIf DirectCast(rtParsed, JsonArray).Length <> 4 Then
+            failures.Add("round-tripped array lost elements: " & rtJson)
+        End If
+
+        ' 9. non-numeric clr types (char, guid, timespan, enum) must be quoted strings
+        Dim miscObj = New JsonObject
+        miscObj.Add("c", ChrW(65))
+        miscObj.Add("g", System.Guid.NewGuid())
+        miscObj.Add("t", System.TimeSpan.FromMinutes(5))
+        miscObj.Add("e", System.DayOfWeek.Monday)
+        Dim miscJson = miscObj.BuildJsonString(indent:=False)
+        If JsonParser.Parse(miscJson) Is Nothing Then
+            failures.Add("non-numeric clr types produced invalid json: " & miscJson)
+        End If
+        If miscJson.Contains("Monday") AndAlso Not miscJson.Contains("""Monday""") Then
+            failures.Add("enum serialized as bare token (not quoted): " & miscJson)
+        End If
+
+        ' 10. the clr string "null" must stay a json string, not become the null keyword
+        Dim nullObj = New JsonObject
+        nullObj.Add("n", "null")
+        Dim nullJson = nullObj.BuildJsonString(indent:=False)
+        If Not nullJson.Contains("""null""") Then
+            failures.Add("clr string ""null"" not quoted: " & nullJson)
+        End If
+        If nullJson.Contains(": null") OrElse nullJson.Contains(":null") Then
+            failures.Add("clr string ""null"" became the json null keyword: " & nullJson)
+        End If
+        Dim reparsedNull = DirectCast(JsonParser.Parse(nullJson), JsonObject)
+        Dim nv = DirectCast(reparsedNull("n"), JsonValue)
+        If nv.value Is Nothing Then
+            failures.Add("clr string ""null"" parsed back as json null: " & nullJson)
+        ElseIf Not CStr(nv.value) = "null" Then
+            failures.Add("clr string ""null"" round-trip lost its value: " & nullJson)
+        End If
+
         Catch ex As Exception
             failures.Add("exception: " & ex.Message & vbCrLf & ex.StackTrace)
         Finally
