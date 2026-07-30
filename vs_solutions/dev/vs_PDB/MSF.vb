@@ -111,6 +111,12 @@ Public Class MSFReader : Implements IDisposable
     Private ReadOnly file As FileStream
     Private ReadOnly streams As New List(Of Stream)()
 
+    Public ReadOnly Property StreamCount As Integer
+        Get
+            Return streams.Count
+        End Get
+    End Property
+
     Sub New(filePath As String)
         file = New FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.Read)
         ReadSuperBlock()
