@@ -231,6 +231,10 @@ Namespace Language
             End If
         End Function
 
+        Public Sub Assign(newValue As T)
+            _Value = newValue
+        End Sub
+
         ''' <summary>
         ''' Is the <see cref="Value"/> is nothing.
         ''' </summary>
