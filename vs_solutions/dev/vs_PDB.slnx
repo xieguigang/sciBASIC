@@ -1,0 +1,20 @@
+<Solution>
+  <Configurations>
+    <Platform Name="Any CPU" />
+    <Platform Name="x64" />
+  </Configurations>
+  <Folder Name="/framework/">
+    <Project Path="../../Data/BinaryData/BinaryData/binarydata-netcore5.vbproj">
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="../../Microsoft.VisualBasic.Core/src/Core.vbproj">
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+  </Folder>
+  <Project Path="vs_PDB/test/test.vbproj" Id="58d556c2-68a6-475d-b6c4-2bf39a8c5faf">
+    <Platform Solution="Debug|x64" Project="x64" />
+  </Project>
+  <Project Path="vs_PDB/vs_PDB.vbproj">
+    <Platform Solution="*|x64" Project="x64" />
+  </Project>
+</Solution>
