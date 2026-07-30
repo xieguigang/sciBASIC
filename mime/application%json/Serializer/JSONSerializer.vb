@@ -112,12 +112,14 @@ Public Module JSONSerializer
     Public Function CreateJSONElement(Of T)(obj As T,
                                             Optional maskReadonly As Boolean = False,
                                             Optional enumToStr As Boolean = True,
-                                            Optional unixTimestamp As Boolean = True) As JsonElement
+                                            Optional unixTimestamp As Boolean = True,
+                                            Optional maskNull As Boolean = True) As JsonElement
 
         Return New JSONSerializerOptions With {
             .maskReadonly = maskReadonly,
             .enumToString = enumToStr,
-            .unixTimestamp = unixTimestamp
+            .unixTimestamp = unixTimestamp,
+            .maskNull = maskNull
         }.DoCall(Function(opts)
                      Return obj.GetType.GetJsonElement(obj, opts)
                  End Function)

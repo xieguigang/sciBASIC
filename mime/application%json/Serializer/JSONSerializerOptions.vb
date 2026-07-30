@@ -66,6 +66,8 @@ Public Class JSONSerializerOptions
 
 #Region "clr type schema parser"
     Public Property maskReadonly As Boolean = False
+    Public Property maskNull As Boolean = True
+
     ''' <summary>
     ''' show xml comment text in json? this option usually be applied for generates the json config file
     ''' </summary>

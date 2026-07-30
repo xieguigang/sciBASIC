@@ -210,6 +210,11 @@ Module ObjectParser
             valueType = [property].PropertyType
             valObj = [property].GetValue(obj)
 
+            ' 20260730 skip of the null property
+            If valObj Is Nothing AndAlso opt.maskNull Then
+                Continue For
+            End If
+
             If metadata IsNot Nothing AndAlso [property] Is metadata Then
                 Dim js As IDictionary = TryCast(valObj, IDictionary)
 
