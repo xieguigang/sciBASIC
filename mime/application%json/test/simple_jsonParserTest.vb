@@ -1,58 +1,59 @@
 ﻿#Region "Microsoft.VisualBasic::b4866341bda672c13828b8af5dfce189, mime\application%json\test\simple_jsonParserTest.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 88
-    '    Code Lines: 60 (68.18%)
-    ' Comment Lines: 16 (18.18%)
-    '    - Xml Docs: 0.00%
-    ' 
-    '   Blank Lines: 12 (13.64%)
-    '     File Size: 3.45 KB
+' Summaries:
 
 
-    ' Module simple_jsonParserTest
-    ' 
-    '     Sub: Main, test1, test2, test3
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 88
+'    Code Lines: 60 (68.18%)
+' Comment Lines: 16 (18.18%)
+'    - Xml Docs: 0.00%
+' 
+'   Blank Lines: 12 (13.64%)
+'     File Size: 3.45 KB
+
+
+' Module simple_jsonParserTest
+' 
+'     Sub: Main, test1, test2, test3
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports Microsoft.VisualBasic.MIME.application.json
 Imports Microsoft.VisualBasic.MIME.application.json.Javascript
+Imports Microsoft.VisualBasic.MIME.application.json.LenientJson
 
 Module simple_jsonParserTest
 
@@ -76,7 +77,7 @@ Module simple_jsonParserTest
                                         {"name": "Alice", "age": 
                                    </json>
 
-    Sub Main()
+    Sub Main11()
         Call test3()
         Call test2()
         Call test1()

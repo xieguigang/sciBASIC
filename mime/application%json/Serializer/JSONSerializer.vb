@@ -122,8 +122,8 @@ Public Module JSONSerializer
     End Function
 
     <Extension>
-    Public Function BuildJsonString(json As JsonElement, Optional indent As Boolean = False) As String
-        Return json.BuildJsonString(New JSONSerializerOptions With {.indent = indent})
+    Public Function BuildJsonString(json As JsonElement, Optional indent As Boolean = False, Optional unicodeEscape As Boolean = False) As String
+        Return json.BuildJsonString(New JSONSerializerOptions With {.indent = indent, .unicodeEscape = unicodeEscape})
     End Function
 
     <Extension>
