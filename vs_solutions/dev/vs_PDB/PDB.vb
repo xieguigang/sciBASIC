@@ -14,6 +14,7 @@
 
 #End Region
 
+Imports System
 Imports System.IO
 
 Namespace sciBASIC.PDB
