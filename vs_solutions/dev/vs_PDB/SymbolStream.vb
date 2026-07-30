@@ -181,7 +181,7 @@ Namespace sciBASIC.PDB
                     Dim name As String = CodeView.ReadNullString(p, 4, Encoding.UTF8)
                     sym = New Symbol With {
                         .Name = name,
-                        .Kind = SymbolKind.Typedef
+                        .Kind = SymbolKind.Unknown
                     }
             End Select
 

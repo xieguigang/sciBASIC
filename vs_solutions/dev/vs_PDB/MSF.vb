@@ -1,34 +1,34 @@
 #Region "Microsoft.VisualBasic::00000000000000000000000000000000, sciBASIC#\vs_solutions\dev\vs_PDB\MSF.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
 Imports System.IO
 Imports System.Text
-Imports Microsoft.VisualBasic.Binary
+Imports Microsoft.VisualBasic.Data.IO
 
 Namespace sciBASIC.PDB
 
@@ -103,7 +103,7 @@ Namespace sciBASIC.PDB
         ''' <summary>
         ''' Named-stream map decoded from the PDB stream (stream #1), name -> stream index.
         ''' </summary>
-        Private ReadOnly namedStreams As New Dictionary(Of String, Integer)(StringComparer.OrdinalIgnoreCase)
+        Private ReadOnly _namedStreams As New Dictionary(Of String, Integer)(StringComparer.OrdinalIgnoreCase)
 
         ''' <summary>
         ''' GUID / signature / age parsed from the PDB stream.
@@ -139,7 +139,7 @@ Namespace sciBASIC.PDB
                         Return False
                     End If
 
-                    Dim magic As Byte() = Text.Encoding.ASCII.GetBytes(Magic)
+                    Dim magic As Byte() = Text.Encoding.ASCII.GetBytes(MSFReader.Magic)
                     For i As Integer = 0 To magic.Length - 1
                         If head(i) <> magic(i) Then
                             Return False
@@ -168,12 +168,12 @@ Namespace sciBASIC.PDB
             '   u32   BlockMapAddr;       offset 64
             file.Seek(44, SeekOrigin.Begin)
 
-            Using br As New BinaryDataReader(file, ByteOrder.LittleEndian, leaveOpen:=True)
+            Using br As New BinaryDataReader(file, leaveOpen:=True) With {.ByteOrder = ByteOrder.LittleEndian}
                 _pageSize = br.ReadInt32()           ' BlockSize           @44
                 freePageMapAddr = br.ReadInt32()     ' FreePageMapBlock    @48
                 _numPages = br.ReadInt32()           ' NumPages            @52
                 dirBytes = br.ReadInt32()            ' NumDirectoryBytes   @56
-                _ = br.ReadInt32()                   ' Reserved            @60
+                br.ReadInt32()                       ' Reserved            @60
                 blockMapAddr = br.ReadInt32()        ' BlockMapAddr        @64
             End Using
         End Sub
@@ -230,7 +230,7 @@ Namespace sciBASIC.PDB
             Dim dirPageCount As Integer = (dirBytes + PageSize - 1) \ PageSize
             Dim dirPages As Integer() = New Integer(dirPageCount - 1) {}
 
-            Using br As New BinaryDataReader(file, ByteOrder.LittleEndian, leaveOpen:=True)
+            Using br As New BinaryDataReader(file, leaveOpen:=True) With {.ByteOrder = ByteOrder.LittleEndian}
                 For i As Integer = 0 To dirPageCount - 1
                     dirPages(i) = br.ReadInt32()
                 Next
@@ -254,7 +254,7 @@ Namespace sciBASIC.PDB
         ''' </summary>
         Private Sub ParseStreamTable(directory As Byte())
             Using ms As New MemoryStream(directory)
-                Using br As New BinaryDataReader(ms, ByteOrder.LittleEndian, leaveOpen:=False)
+                Using br As New BinaryDataReader(ms, leaveOpen:=False) With {.ByteOrder = ByteOrder.LittleEndian}
                     Dim numStreams As Integer = br.ReadInt32()
                     Dim sizes As Integer() = New Integer(numStreams - 1) {}
 
@@ -310,7 +310,7 @@ Namespace sciBASIC.PDB
         ''' </summary>
         Public ReadOnly Property NamedStreams As IReadOnlyDictionary(Of String, Integer)
             Get
-                Return namedStreams
+                Return _namedStreams
             End Get
         End Property
 
@@ -358,7 +358,7 @@ Namespace sciBASIC.PDB
                             i += nameLen
 
                             If name.Length > 0 AndAlso Not namedStreams.ContainsKey(name) Then
-                                namedStreams(name) = streamIndex
+                                _namedStreams(name) = streamIndex
                             End If
                         End While
                     End If

@@ -53,13 +53,13 @@ Namespace sciBASIC.PDB
                 Return
             End If
 
-            PdbStreamVersion = BitConverter.ToInt32(data, 0)
+            _PdbStreamVersion = BitConverter.ToInt32(data, 0)
             Dim headerSize As Integer = BitConverter.ToInt32(data, 4)
-            TypeIndexBegin = BitConverter.ToUInt32(data, 8)
-            TypeIndexEnd = BitConverter.ToUInt32(data, 12)
+            _TypeIndexBegin = BitConverter.ToUInt32(data, 8)
+            _TypeIndexEnd = BitConverter.ToUInt32(data, 12)
 
             If TypeIndexBegin = 0 Then
-                TypeIndexBegin = &H1000
+                _TypeIndexBegin = &H1000
             End If
 
             ' Records follow the header. HeaderSize is the size of the header (including the

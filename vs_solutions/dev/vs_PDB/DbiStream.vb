@@ -1,34 +1,34 @@
 #Region "Microsoft.VisualBasic::00000000000000000000000000000000, sciBASIC#\vs_solutions\dev\vs_PDB\DbiStream.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #End Region
 
 Imports System.IO
 Imports System.Text
-Imports Microsoft.VisualBasic.Binary
+Imports Microsoft.VisualBasic.Data.IO
 
 Namespace sciBASIC.PDB
 
@@ -56,6 +56,7 @@ Namespace sciBASIC.PDB
             Public OptionalDbgHdrSize As Integer
             Public ECSubstreamSize As Integer
             Public Machine As UShort
+            Public Property PdbDllVersion As UShort
         End Class
 
         ''' <summary>
@@ -124,7 +125,7 @@ Namespace sciBASIC.PDB
             Dim h As New DbiHeader()
 
             Using ms As New MemoryStream(data)
-                Using br As New BinaryDataReader(ms, ByteOrder.LittleEndian, leaveOpen:=False)
+                Using br As New BinaryDataReader(ms, leaveOpen:=False) With {.ByteOrder = ByteOrder.LittleEndian}
                     h.VersionSignature = br.ReadInt32()
                     h.VersionHeader = br.ReadInt32()
                     h.Age = br.ReadInt32()
