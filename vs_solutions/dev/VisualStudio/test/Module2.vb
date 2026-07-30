@@ -60,7 +60,7 @@ Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 
 Module Module2
 
-    Sub Main()
+    Sub Main1()
         Dim method = GetType(aaaa).GetMethod(NameOf(aaaa.bbbb))
         Dim result = New MethodAnalyzer().AnalyzeMethod(method)
 

@@ -63,13 +63,11 @@ Imports System.Reflection
 Imports System.Runtime.InteropServices
 Imports TypeInfo = Microsoft.VisualBasic.Scripting.MetaData.TypeInfo
 
-''' <summary>
-''' Loads a .NET assembly (dll) via read-only metadata reflection and maps
-''' every type and member into the VBLang symbol tree model. The whole
-''' assembly is hosted inside a single virtual <see cref="VBDocument"/> whose
-''' <see cref="VBDocument.Types"/> dictionary holds the symbol tree (namespaces
-''' -> types -> nested types / members). No source code is executed.
-''' </summary>
+' Loads a .NET assembly (dll) via read-only metadata reflection and maps
+' every type and member into the VBLang symbol tree model. The whole
+' assembly is hosted inside a single virtual <see cref="VBDocument"/> whose
+' <see cref="VBDocument.Types"/> dictionary holds the symbol tree (namespaces
+' -> types -> nested types / members). No source code is executed.
 Namespace VBProj.Reflection
 
     ''' <summary>

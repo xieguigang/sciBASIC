@@ -76,9 +76,9 @@ Imports Microsoft.VisualBasic.ApplicationServices.Development.VisualStudio.VBPro
 Imports Microsoft.VisualBasic.ApplicationServices.Development.VisualStudio.VBProj.ProjectXml
 Imports Microsoft.VisualBasic.ApplicationServices.Development.VisualStudio.VBProj.Syntax
 
-Module Program
+Module Program2222
 
-    Sub Main()
+    Sub Main1()
         Try
             TestProject()
         Catch ex As Exception

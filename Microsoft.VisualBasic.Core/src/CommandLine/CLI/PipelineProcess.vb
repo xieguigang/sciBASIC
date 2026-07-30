@@ -130,9 +130,7 @@ Namespace CommandLine
                                 Optional shell As Boolean = False,
                                 Optional setProcess As Action(Of Process) = Nothing) As Integer
             ' check for shell flag
-            Dim check_shell = app.ExtensionSuffix("sh", "cmd", "bat") OrElse
-                shell OrElse
-                Not app.FileExists
+            Dim check_shell = app.ExtensionSuffix("sh", "cmd", "bat") OrElse shell
             Dim p As Process = CreatePipeline(
                 appPath:=app,
                 args:=args,

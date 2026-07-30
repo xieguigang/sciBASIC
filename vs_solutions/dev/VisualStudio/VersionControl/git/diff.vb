@@ -274,7 +274,7 @@ Namespace VersionControl.Git
         ''' <param name="cached">If <c>True</c>, runs <c>git diff --cached</c> (staged changes).</param>
         ''' <returns>A <see cref="DiffResult"/> containing all parsed file changes.</returns>
         Public Function GetDiff(directory As String, Optional cached As Boolean = False, Optional git As String = "git") As DiffResult
-            Dim args$ = If(cached, "diff --cached", "diff")
+            Dim args$ = "--no-pager " & If(cached, "diff --cached", "diff")
             Dim output As String = PipelineProcess.Call(git, args, workdir:=directory)
 
             If output.StringEmpty Then

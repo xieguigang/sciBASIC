@@ -56,7 +56,8 @@ Imports Microsoft.VisualBasic.Serialization.JSON
 
 Module Module1
 
-    Sub Main()
+    Sub Main1()
+        Call gitTest.Run()
         Call sourceMapDecodeTest()
         Call vlqtest()
     End Sub
