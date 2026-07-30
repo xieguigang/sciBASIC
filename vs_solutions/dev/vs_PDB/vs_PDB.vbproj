@@ -17,7 +17,9 @@
 
   <ItemGroup>
     <None Remove="build.log" />
+    <None Remove="build_now.log" />
     <None Remove="build_test.log" />
+    <None Remove="out_classic.log" />
     <None Remove="run.log" />
   </ItemGroup>
 

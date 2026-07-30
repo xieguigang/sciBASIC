@@ -2228,6 +2228,17 @@
       <BuildType Solution="Yilia-Release_x64|*" Project="Release" />
       <Platform Solution="*|x64" Project="x64" />
     </Project>
+    <Project Path="vs_solutions/dev/vs_PDB/vs_PDB.vbproj">
+      <BuildType Solution="Biodeep|*" Project="Release" />
+      <BuildType Solution="Biostack|*" Project="Rsharp_app_release" />
+      <BuildType Solution="GCModeller(Release_X64)|*" Project="CellaLAB-Desktop" />
+      <BuildType Solution="GCModeller(UNIX-Release_X64)|*" Project="Rsharp_app_release" />
+      <BuildType Solution="installer_x64|*" Project="Rsharp_app_release" />
+      <BuildType Solution="Publish|*" Project="Rsharp_app_release" />
+      <BuildType Solution="RsharpDev|*" Project="LipidSearch" />
+      <BuildType Solution="Yilia-Release_x64|*" Project="Rsharp_app_release" />
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
   </Folder>
   <Folder Name="/packages/visualize/">
     <Project Path="Data_science/DataMining/hierarchical-clustering/HCTreePlot/HCTreePlot.vbproj">
