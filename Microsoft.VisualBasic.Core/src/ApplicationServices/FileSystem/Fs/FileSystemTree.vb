@@ -113,7 +113,7 @@ Namespace ApplicationServices
 
         Public Function ToJSONModel() As VirtualFile
             Dim json As New VirtualFile With {
-                .name = Name,
+                .name = If(IsDirectory AndAlso Name.StringEmpty, "/", Nothing),
                 .type = If(IsDirectory, "dir", "file")
             }
 
