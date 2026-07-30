@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0e4d64390597d60e2ecc68888a34d5e4, mime\application%json\Serializer\JSONWriter.vb"
+﻿#Region "Microsoft.VisualBasic::2cf6d380c80abd9b8efbf5c466766cba, mime\application%json\Serializer\JSONWriter.vb"
 
     ' Author:
     ' 
@@ -34,20 +34,20 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 345
-    '    Code Lines: 249 (72.17%)
-    ' Comment Lines: 50 (14.49%)
-    '    - Xml Docs: 52.00%
+    '   Total Lines: 410
+    '    Code Lines: 292 (71.22%)
+    ' Comment Lines: 69 (16.83%)
+    '    - Xml Docs: 44.93%
     ' 
-    '   Blank Lines: 46 (13.33%)
-    '     File Size: 12.71 KB
+    '   Blank Lines: 49 (11.95%)
+    '     File Size: 16.35 KB
 
 
     ' Class JSONWriter
     ' 
     '     Constructor: (+2 Overloads) Sub New
     ' 
-    '     Function: encodeString, escapeUnicode, jsonValueString
+    '     Function: encodeString, escapeString, IsJsonNumber, jsonValueString
     ' 
     '     Sub: (+2 Overloads) BuildJSONString, (+2 Overloads) Dispose, jsonArrayString, jsonObjectString
     ' 
@@ -55,16 +55,14 @@
 
 #End Region
 
+Imports System.Globalization
 Imports System.IO
 Imports System.Text
-Imports System.Text.RegularExpressions
-Imports System.Globalization
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MIME.application.json.BSON
 Imports Microsoft.VisualBasic.MIME.application.json.Javascript
-Imports Microsoft.VisualBasic.Serialization.JSON
 Imports Microsoft.VisualBasic.ValueTypes
 Imports any = Microsoft.VisualBasic.Scripting
 
@@ -85,7 +83,9 @@ Friend Class JSONWriter : Implements IDisposable
     Sub New(opts As JSONSerializerOptions, file As Stream, Optional leaveOpen As Boolean = False)
         Me.opts = opts
         Me.leaveOpen = leaveOpen
-        Me.json = New StreamWriter(file)
+        ' emit UTF-8 without BOM and propagate the leaveOpen flag to the underlying
+        ' stream so the caller can keep writing when leaveOpen is true.
+        Me.json = New StreamWriter(file, New UTF8Encoding(False), 1024, leaveOpen)
     End Sub
 
     Sub New(opts As JSONSerializerOptions, file As StringBuilder, Optional leaveOpen As Boolean = False)
@@ -98,8 +98,8 @@ Friend Class JSONWriter : Implements IDisposable
         Call BuildJSONString(json, 0)
     End Sub
 
-    Private Sub BuildJSONString(json As JsonElement, indent As Integer)
-        If json Is Nothing OrElse (TypeOf json Is JsonValue AndAlso DirectCast(json, JsonValue).IsLiteralNull) Then
+    Private Sub BuildJSONString(json As JsonElement, indent As Integer, Optional trailingNewline As Boolean = True)
+        If json Is Nothing OrElse (TypeOf json Is JsonValue AndAlso DirectCast(json, JsonValue).value Is Nothing) Then
             If opts.indent Then
                 Call Me.json.WriteLine(opts.offsets(indent) & "null")
             Else
@@ -111,9 +111,13 @@ Friend Class JSONWriter : Implements IDisposable
                     Dim val As String = jsonValueString(DirectCast(json, JsonValue))
 
                     If opts.indent Then
-                        Call Me.json.WriteLine(opts.offsets(indent) & val)
+                        Call Me.json.Write(opts.offsets(indent) & val)
                     Else
-                        Call Me.json.WriteLine(val)
+                        Call Me.json.Write(val)
+                    End If
+
+                    If trailingNewline Then
+                        Call Me.json.WriteLine()
                     End If
                 Case GetType(JsonObject) : Call jsonObjectString(DirectCast(json, JsonObject), indent)
                 Case GetType(JsonArray) : Call jsonArrayString(DirectCast(json, JsonArray), indent)
@@ -139,20 +143,79 @@ Friend Class JSONWriter : Implements IDisposable
             Return "null"
         End If
 
-        If TypeOf value Is Date AndAlso opts.unixTimestamp Then
-            Return DirectCast(value, Date).UnixTimeStamp
+        If TypeOf value Is Date Then
+            If opts.unixTimestamp Then
+                ' UnixTimeStamp returns a Double; format it with the invariant
+                ' culture so the timestamp is always a valid, locale-independent
+                ' json number.
+                Return DirectCast(value, Date).UnixTimeStamp.ToString("R", CultureInfo.InvariantCulture)
+            Else
+                ' a json date must be a quoted string; use the round-trip ISO-8601 format
+                Return $"""{DirectCast(value, Date).ToString("o", CultureInfo.InvariantCulture)}"""
+            End If
         ElseIf TypeOf value Is String Then
             Return encodeString(value)
         ElseIf TypeOf value Is Boolean Then
-            Return value.ToString.ToLower
+            Return If(DirectCast(value, Boolean), "true", "false")
         ElseIf TypeOf value Is ObjectId Then
             Return $"""{value.ToString}"""
-        ElseIf TypeOf value Is Double AndAlso CDbl(value).IsNaNImaginary Then
-            Return """NaN"""
+        ElseIf TypeOf value Is Double Then
+            Dim d As Double = CDbl(value)
+
+            If Double.IsNaN(d) Then
+                Return """NaN"""
+            ElseIf d = Double.PositiveInfinity Then
+                Return """Infinity"""
+            ElseIf d = Double.NegativeInfinity Then
+                Return """-Infinity"""
+            Else
+                Return d.ToString("R", CultureInfo.InvariantCulture)
+            End If
+        ElseIf TypeOf value Is Single Then
+            Dim s As Single = CSng(value)
+
+            If Single.IsNaN(s) Then
+                Return """NaN"""
+            ElseIf s = Single.PositiveInfinity Then
+                Return """Infinity"""
+            ElseIf s = Single.NegativeInfinity Then
+                Return """-Infinity"""
+            Else
+                Return s.ToString("R", CultureInfo.InvariantCulture)
+            End If
+        ElseIf IsJsonNumber(value) Then
+            ' all numeric clr primitive types (byte..ulong, decimal, ...) are emitted
+            ' as unquoted json numbers using the invariant culture so the decimal
+            ' separator is always "." and thousands separators never appear.
+            If TypeOf value Is IFormattable Then
+                Return DirectCast(value, IFormattable).ToString(Nothing, CultureInfo.InvariantCulture)
+            Else
+                Return any.ToString(value)
+            End If
         Else
-            ' number,integer,etc
-            Return any.ToString(value)
+            ' anything that is not a json number / boolean / date / string (char,
+            ' guid, timespan, enum, uri, version, opaque clr objects, ...) is emitted
+            ' as a quoted json string so the serialized output is always valid json.
+            Return encodeString(Convert.ToString(value, CultureInfo.InvariantCulture))
         End If
+    End Function
+
+    ''' <summary>
+    ''' true for the clr numeric primitive types that may be emitted as an unquoted
+    ''' json number. any other type (char, guid, timespan, enum, uri, version, ...)
+    ''' must be serialized as a quoted string to stay valid json.
+    ''' </summary>
+    Private Function IsJsonNumber(value As Object) As Boolean
+        Select Case value.GetType
+            Case GetType(Byte), GetType(SByte),
+                 GetType(Int16), GetType(UInt16),
+                 GetType(Int32), GetType(UInt32),
+                 GetType(Int64), GetType(UInt64),
+                 GetType(Decimal), GetType(Double), GetType(Single)
+                Return True
+            Case Else
+                Return False
+        End Select
     End Function
 
     ''' <summary>
@@ -250,18 +313,21 @@ Friend Class JSONWriter : Implements IDisposable
             Case GetType(Object)
                 Dim objs As JsonElement() = arr.ToArray
 
-                For i As Integer = 0 To objs.Length - 2
-                    Call BuildJSONString(objs(i), indent + 1)
-                    Call json.Write(",")
+                For i As Integer = 0 To objs.Length - 1
+                    ' BuildJSONString writes the element (scalar or nested object/array)
+                    ' with the proper indentation itself; we suppress its trailing newline
+                    ' so the separator comma can be placed at the end of the same line.
+                    Call BuildJSONString(objs(i), indent + 1, trailingNewline:=False)
 
-                    If opts.indent Then
-                        Call json.WriteLine()
+                    If i < objs.Length - 1 Then
+                        If opts.indent Then
+                            Call json.Write(",")
+                            Call json.WriteLine()
+                        Else
+                            Call json.Write(", ")
+                        End If
                     End If
                 Next
-
-                If objs.Any Then
-                    Call BuildJSONString(objs.Last, indent + 1)
-                End If
 
                 If opts.indent Then
                     Call json.WriteLine()
@@ -280,7 +346,7 @@ Friend Class JSONWriter : Implements IDisposable
                     ' If check_chars Then
                     ' Call json.Write(strs.JoinBy(", "))
                     ' Else
-                    Call json.WriteLine(strs.Select(Function(si) opts.offsets(indent + 1) & si).JoinBy(", " & vbCrLf))
+                    Call json.WriteLine(strs.Select(Function(si) opts.offsets(indent + 1) & si).JoinBy(", " & Environment.NewLine))
                     ' End If
                 Else
                     Call json.Write(strs.JoinBy(","))
@@ -312,21 +378,19 @@ Friend Class JSONWriter : Implements IDisposable
     End Sub
 
     Private Function encodeString(value As String) As String
-        If opts.unicodeEscape Then
-            Return """" & escapeUnicode(value) & """"
-        Else
-            Return JsonContract.GetObjectJson(GetType(String), value).Replace(vbLf, "\n")
-        End If
+        ' the non-unicode path still has to escape the json-grammar control characters
+        ' (\, ", tab, cr, lf, ...) and only skips escaping the >0x7f non-ASCII range.
+        Return """" & escapeString(value, opts.unicodeEscape) & """"
     End Function
 
     ''' <summary>
-    ''' single-pass json string escaping with unicode escape support.
-    ''' escapes backslash, double quote, control characters and non-ASCII
-    ''' characters in a single StringBuilder pass to avoid the fragile
-    ''' regex-based post-processing that could crash on empty strings or
-    ''' produce wrong output when matched substrings overlapped.
+    ''' single-pass json string escaping. the json-grammar characters (\\, ", tab,
+    ''' cr, lf, backspace, form-feed) and every other control character below 0x20
+    ''' are always escaped. when <paramref name="escapeAllNonAscii"/> is true, each
+    ''' non-ASCII character (>= 0x80, including every utf-16 code unit from the
+    ''' supplementary planes) is escaped as \uXXXX as well.
     ''' </summary>
-    Private Function escapeUnicode(value As String) As String
+    Private Function escapeString(value As String, escapeAllNonAscii As Boolean) As String
         If value Is Nothing Then
             Return ""
         End If
@@ -352,10 +416,11 @@ Friend Class JSONWriter : Implements IDisposable
                 Case Else
                     Dim code As Integer = AscW(c)
 
-                    ' control chars below 0x20 (not handled by the named cases
-                    ' above) and non-ASCII characters (>= 0x80) are escaped as
-                    ' \uXXXX to produce pure-ASCII json output.
-                    If code < &H20 OrElse code > &H7F Then
+                    If code < &H20 Then
+                        ' any remaining control character (e.g. 0x00..0x1f)
+                        sb.Append("\u")
+                        sb.Append(code.ToString("x4", CultureInfo.InvariantCulture))
+                    ElseIf escapeAllNonAscii AndAlso code > &H7F Then
                         sb.Append("\u")
                         sb.Append(code.ToString("x4", CultureInfo.InvariantCulture))
                     Else

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a04620205deebab5edc82eb2b99947e0, mime\text%markdown\TOC.vb"
+﻿#Region "Microsoft.VisualBasic::b7f8261ed9f4d89d1f1d8f67549e86e6, mime\text%markdown\TOC.vb"
 
     ' Author:
     ' 
@@ -34,139 +34,85 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 119
-    '    Code Lines: 83 (69.75%)
-    ' Comment Lines: 15 (12.61%)
-    '    - Xml Docs: 86.67%
+    '   Total Lines: 64
+    '    Code Lines: 42 (65.62%)
+    ' Comment Lines: 17 (26.56%)
+    '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 21 (17.65%)
-    '     File Size: 3.83 KB
+    '   Blank Lines: 5 (7.81%)
+    '     File Size: 2.63 KB
 
 
     ' Module TOC
     ' 
-    '     Function: AddToc, GetHeaders, ReplaceHeaders
+    '     Function: AddToc, GenerateToc, Slug
     ' 
     ' /********************************************************************************/
 
 #End Region
 
-Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports System.Text.RegularExpressions
 Imports Microsoft.VisualBasic.Language
-Imports Microsoft.VisualBasic.Linq
 
-''' <summary>
-''' TOC generator for markdown
-''' </summary>
 Public Module TOC
 
+    Private ReadOnly atxHeader As New Regex("^(#{1,6})\s+(.*?)\s*#*\s*$", RegexOptions.Multiline)
+
     ''' <summary>
-    ''' 为makrdown文本添加目录
+    ''' Generate a nested markdown table of contents from the ATX headers
+    ''' (``#`` .. ``######``) found in the document.
     ''' </summary>
-    ''' <param name="md$"></param>
-    ''' <returns></returns>
-    Public Function AddToc(md As StringBuilder, Optional numbering As Boolean = True, Optional autoSave As Boolean = True) As String
+    ''' <param name="md">The markdown source text.</param>
+    ''' <param name="numbering">Reserved for future numbered list output.</param>
+    ''' <returns>A markdown list string representing the document outline.</returns>
+    Public Function GenerateToc(md As String, Optional numbering As Boolean = False) As String
         Dim sb As New StringBuilder
+        For Each m As Match In atxHeader.Matches(md)
+            Dim level = m.Groups(1).Value.Length
+            Dim text = m.Groups(2).Value.Trim()
+            If text.StringEmpty Then
+                Continue For
+            End If
+            Dim indent = New String(" "c, (level - 1) * 2)
+            Dim anchor = Slug(text)
+            sb.AppendLine($"{indent}- [{text}](#{anchor})")
+        Next
+        Return sb.ToString.Trim(vbCr, vbLf, " "c)
+    End Function
 
-        Call sb.AppendLine("<!-- vb.net-markdown-toc -->")
-        Call sb.AppendLine()
-        Call sb.AppendLine(md.ReplaceHeaders)
-        Call sb.AppendLine()
-        Call sb.AppendLine("<!-- vb.net-markdown-toc-config
-	numbering=true
-	autoSave=true
-	/vb.net-markdown-toc-config -->
-<!-- /vb.net-markdown-toc -->")
-
-        Call sb.AppendLine(md.ToString)
-
+    ''' <summary>
+    ''' Make a url friendly anchor slug out of a header text.
+    ''' </summary>
+    Private Function Slug(text As String) As String
+        Dim s = text.ToLower()
+        Dim sb As New StringBuilder
+        For Each c As Char In s
+            If Char.IsLetterOrDigit(c) OrElse c = " "c OrElse c = "-"c Then
+                sb.Append(If(c = " "c, "-"c, c))
+            End If
+        Next
         Return sb.ToString
     End Function
 
-    <Extension> Private Function ReplaceHeaders(ByRef md As StringBuilder) As String
-        Dim headers = GetHeaders(md.ToString)
-        Dim i%() = {1, 1, 1, 1, 1, 1}
-        Dim TOC As New List(Of String)
-
-        For Each head In headers
-            Dim parts = head.GetTagValue(" ", trim:=True)
-            Dim level$ = parts.Name
-            Dim indent$ = "   ".Repeats(level.Length - 1).JoinBy("")
-
-            If level.Length > 4 Then
-                Continue For
-            End If
-
-            If level.Length = 1 Then
-                TOC += $"{i}. " & parts.Value
-            End If
-
-            level = $"<h{level.Length}>"
-
-        Next
-
-        Throw New NotImplementedException
-    End Function
-
-    Const regex_headerSetext$ = "
-              ^(.+?)
-              [ ]*
-              \n
-              (=+|-+)     # $1 = string of ='s or -'s
-              [ ]*
-              \n+"
-    Const regex_headerAtx$ = "
-              ^(\#{1,6})  # $1 = string of #'s
-              [ ]*
-              (.+?)       # $2 = Header text
-              [ ]*
-              \#*         # optional closing #'s (not counted)
-              \n+"
-
-    ReadOnly _headerSetext As New Regex(regex_headerSetext, RegexOptions.Multiline Or RegexOptions.IgnorePatternWhitespace Or RegexOptions.Compiled)
-    ReadOnly _headerAtx As New Regex(regex_headerAtx, RegexOptions.Multiline Or RegexOptions.IgnorePatternWhitespace Or RegexOptions.Compiled)
-
     ''' <summary>
-    ''' 按header在markdown文档之中出现的顺序进行返回
+    ''' Insert a generated table of contents at the top of the markdown document.
     ''' </summary>
-    ''' <param name="md$"></param>
-    ''' <returns></returns>
-    Public Function GetHeaders(md$) As String()
-        Dim headers As New List(Of String)
-
-        headers += _headerSetext.Matches(md).ToArray
-        headers += _headerAtx _
-            .Matches(md) _
-            .ToArray(Function(s) s.TrimNewLine.Trim)
-
-        Dim orders As New List(Of SeqValue(Of String))
-        Dim pos%
-
-        For Each headerGroup As IGrouping(Of String, String) In headers.GroupBy(Function(s) s)
-            ' start 参数必须要大于零
-            pos = 1
-
-            Do While True
-                pos = InStr(pos, md, headerGroup.Key)
-
-                If pos > 0 Then
-                    orders += New SeqValue(Of String) With {
-                        .i = pos,
-                        .value = headerGroup.Key
-                    }
-                    ' 必须要往前位移一个字符，否则会出现死循环
-                    pos += 1
-                Else
-                    Exit Do
-                End If
-            Loop
-        Next
-
-        Return orders _
-            .OrderBy(Function(i) i.i) _
-            .Select(Function(s) s.value) _
-            .ToArray
+    ''' <param name="md">The markdown source text.</param>
+    ''' <param name="numbering">Reserved for future numbered list output.</param>
+    ''' <param name="autoSave">Reserved for future file persistence.</param>
+    ''' <returns>The markdown document with a TOC block prepended.</returns>
+    Public Function AddToc(md As String, Optional numbering As Boolean = False, Optional autoSave As Boolean = False) As String
+        Dim toc = GenerateToc(md, numbering)
+        Dim out As New StringBuilder
+        out.AppendLine("<!-- markdown-toc -->")
+        out.AppendLine()
+        out.AppendLine(toc)
+        out.AppendLine()
+        out.AppendLine("<!-- /markdown-toc -->")
+        out.AppendLine()
+        out.Append(md)
+        Return out.ToString
     End Function
 End Module
+

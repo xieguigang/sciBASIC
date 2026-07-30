@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a3ea74e6da1f805721637aa4700ed149, vs_solutions\dev\VisualStudio\VBProject\Syntax\VBScanner.vb"
+﻿#Region "Microsoft.VisualBasic::dd51ad4765888e3733e510459f7f2597, vs_solutions\dev\VisualStudio\VBProject\Syntax\VBScanner.vb"
 
     ' Author:
     ' 
@@ -396,4 +396,3 @@ Namespace VBProj.Syntax
     End Class
 
 End Namespace
-

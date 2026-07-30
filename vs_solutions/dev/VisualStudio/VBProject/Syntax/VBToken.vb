@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8b6c4e9b34ad4e45d581e5c0c7abff25, vs_solutions\dev\VisualStudio\VBProject\Syntax\VBToken.vb"
+﻿#Region "Microsoft.VisualBasic::7f105a42020ac512e30260bd594d3132, vs_solutions\dev\VisualStudio\VBProject\Syntax\VBToken.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 4 (13.33%)
-    '     File Size: 720 B
+    '     File Size: 718 B
 
 
     '     Enum TokenKind
@@ -91,4 +91,3 @@ Namespace VBProj.Syntax
     End Structure
 
 End Namespace
-

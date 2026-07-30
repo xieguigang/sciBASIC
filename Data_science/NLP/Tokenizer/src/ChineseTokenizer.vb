@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4241b452a8dfd3269f960419d1e5254d, Data_science\NLP\Tokenizer\src\ChineseTokenizer.vb"
+﻿#Region "Microsoft.VisualBasic::f528885f1bbf425e6d61f7ec6892bdf7, Data_science\NLP\Tokenizer\src\ChineseTokenizer.vb"
 
     ' Author:
     ' 
@@ -263,4 +263,3 @@ Namespace ChineseTokenizer
     End Class
 
 End Namespace
-

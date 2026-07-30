@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::60bdb996f045f0da269919026b97b80d, Microsoft.VisualBasic.Core\src\LLMs.vb"
+﻿#Region "Microsoft.VisualBasic::32090593981db767a0e21e6a35862590, Microsoft.VisualBasic.Core\src\LLMs.vb"
 
     ' Author:
     ' 
@@ -40,12 +40,10 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 3 (13.04%)
-    '     File Size: 666 B
+    '     File Size: 705 B
 
 
     ' Module LLMs
-    ' 
-    '     Function: LLMsTalk
     ' 
     '     Sub: HookOllama
     ' 

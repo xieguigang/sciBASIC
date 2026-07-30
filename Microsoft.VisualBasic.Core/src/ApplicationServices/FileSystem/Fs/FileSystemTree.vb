@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::630eb279210333346b5cffa202e95689, Microsoft.VisualBasic.Core\src\ApplicationServices\FileSystem\Fs\FileSystemTree.vb"
+﻿#Region "Microsoft.VisualBasic::ae18d1a6b39921888bad15cc03daa3f2, Microsoft.VisualBasic.Core\src\ApplicationServices\FileSystem\Fs\FileSystemTree.vb"
 
     ' Author:
     ' 
@@ -34,22 +34,26 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 174
-    '    Code Lines: 99 (56.90%)
-    ' Comment Lines: 51 (29.31%)
+    '   Total Lines: 199
+    '    Code Lines: 118 (59.30%)
+    ' Comment Lines: 51 (25.63%)
     '    - Xml Docs: 98.04%
     ' 
-    '   Blank Lines: 24 (13.79%)
-    '     File Size: 5.92 KB
+    '   Blank Lines: 30 (15.08%)
+    '     File Size: 6.73 KB
 
 
+    '     Class VirtualFile
+    ' 
+    '         Properties: files, name, type
+    ' 
     '     Class FileSystemTree
     ' 
     '         Properties: data, Files, FullName, IsDirectory, Name
     '                     Parent
     ' 
     '         Function: AddFile, BuildTree, DeleteFile, GenericEnumerator, (+2 Overloads) GetFile
-    '                   ToString
+    '                   ToJSONModel, ToString
     ' 
     ' 
     ' /********************************************************************************/
@@ -60,6 +64,14 @@ Imports Microsoft.VisualBasic.FileIO.Path
 Imports Microsoft.VisualBasic.Linq
 
 Namespace ApplicationServices
+
+    Public Class VirtualFile
+
+        Public Property name As String
+        Public Property files As Dictionary(Of String, VirtualFile)
+        Public Property type As String
+
+    End Class
 
     ''' <summary>
     ''' A virtual filesystem tree
@@ -102,6 +114,23 @@ Namespace ApplicationServices
                 Return Not Files.IsNullOrEmpty
             End Get
         End Property
+
+        Public Function ToJSONModel() As VirtualFile
+            Dim json As New VirtualFile With {
+                .name = If(IsDirectory AndAlso Name.StringEmpty, "/", Nothing),
+                .type = If(IsDirectory, "dir", "file")
+            }
+
+            If IsDirectory Then
+                json.files = Files _
+                    .ToDictionary(Function(a) a.Key,
+                                  Function(a)
+                                      Return a.Value.ToJSONModel
+                                  End Function)
+            End If
+
+            Return json
+        End Function
 
         ''' <summary>
         ''' Get a node by its key name in current tree node

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b210dd9c2feef69c85b0c3f454ee8d48, mime\application%json\Serializer\JSONSerializer.vb"
+﻿#Region "Microsoft.VisualBasic::bddc93647356157f0ce7a5e4d0887705, mime\application%json\Serializer\JSONSerializer.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 101
-    '    Code Lines: 67 (66.34%)
-    ' Comment Lines: 22 (21.78%)
+    '   Total Lines: 105
+    '    Code Lines: 71 (67.62%)
+    ' Comment Lines: 22 (20.95%)
     '    - Xml Docs: 95.45%
     ' 
-    '   Blank Lines: 12 (11.88%)
-    '     File Size: 3.87 KB
+    '   Blank Lines: 12 (11.43%)
+    '     File Size: 4.18 KB
 
 
     ' Module JSONSerializer
@@ -81,7 +81,8 @@ Public Module JSONSerializer
                                   Optional indent As Boolean = False,
                                   Optional enumToStr As Boolean = True,
                                   Optional unixTimestamp As Boolean = True,
-                                  Optional comment As Boolean = False) As String
+                                  Optional comment As Boolean = False,
+                                  Optional escapeUnicode As Boolean = False) As String
         If obj Is Nothing Then
             Return "null"
         End If
@@ -91,7 +92,8 @@ Public Module JSONSerializer
             .maskReadonly = maskReadonly,
             .enumToString = enumToStr,
             .unixTimestamp = unixTimestamp,
-            .comment = comment
+            .comment = comment,
+            .unicodeEscape = escapeUnicode
         }.DoCall(Function(opts)
                      Return obj.GetType.GetJsonElement(obj, opts).BuildJsonString(opts)
                  End Function)
@@ -110,20 +112,22 @@ Public Module JSONSerializer
     Public Function CreateJSONElement(Of T)(obj As T,
                                             Optional maskReadonly As Boolean = False,
                                             Optional enumToStr As Boolean = True,
-                                            Optional unixTimestamp As Boolean = True) As JsonElement
+                                            Optional unixTimestamp As Boolean = True,
+                                            Optional maskNull As Boolean = True) As JsonElement
 
         Return New JSONSerializerOptions With {
             .maskReadonly = maskReadonly,
             .enumToString = enumToStr,
-            .unixTimestamp = unixTimestamp
+            .unixTimestamp = unixTimestamp,
+            .maskNull = maskNull
         }.DoCall(Function(opts)
                      Return obj.GetType.GetJsonElement(obj, opts)
                  End Function)
     End Function
 
     <Extension>
-    Public Function BuildJsonString(json As JsonElement, Optional indent As Boolean = False) As String
-        Return json.BuildJsonString(New JSONSerializerOptions With {.indent = indent})
+    Public Function BuildJsonString(json As JsonElement, Optional indent As Boolean = False, Optional unicodeEscape As Boolean = False) As String
+        Return json.BuildJsonString(New JSONSerializerOptions With {.indent = indent, .unicodeEscape = unicodeEscape})
     End Function
 
     <Extension>

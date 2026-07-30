@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a5cdab791007db91f4ceb2b75f3f0280, Data_science\NLP\test\sample\Program.vb"
+﻿#Region "Microsoft.VisualBasic::68b34c14bd34f9921a8df64f789fea93, Data_science\NLP\test\sample\Program.vb"
 
     ' Author:
     ' 
@@ -154,4 +154,3 @@ Module Program
     End Sub
 
 End Module
-

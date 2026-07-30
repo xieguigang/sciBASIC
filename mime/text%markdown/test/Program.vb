@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::14894863c8963efc72a3a501bc39f0b3, mime\text%markdown\test\Program.vb"
+﻿#Region "Microsoft.VisualBasic::cf36c40ce047aff10a744814475d1785, mime\text%markdown\test\Program.vb"
 
     ' Author:
     ' 
@@ -34,24 +34,25 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 155
-    '    Code Lines: 101 (65.16%)
-    ' Comment Lines: 0 (0.00%)
-    '    - Xml Docs: 0.00%
+    '   Total Lines: 202
+    '    Code Lines: 138 (68.32%)
+    ' Comment Lines: 4 (1.98%)
+    '    - Xml Docs: 75.00%
     ' 
-    '   Blank Lines: 54 (34.84%)
-    '     File Size: 3.27 KB
+    '   Blank Lines: 60 (29.70%)
+    '     File Size: 5.92 KB
 
 
     ' Module Program
     ' 
-    '     Sub: Main, tableTest
+    '     Sub: jsonSchemaTest, Main, tableTest
     ' 
     ' /********************************************************************************/
 
 #End Region
 
 Imports Microsoft.VisualBasic.MIME.text.markdown
+Imports Microsoft.VisualBasic.MIME.text.markdown.JSONSchema
 
 Module Program
 
@@ -204,5 +205,51 @@ _this_ _is_ _your_ _basic_ _boring_ _emphasis_
         Console.WriteLine(New MarkdownRender().Transform(quote_links))
 
         Call New MarkdownRender().Transform(quote_links).SaveTo("./test_demo.html")
+
+        Call jsonSchemaTest()
+    End Sub
+
+    ''' <summary>
+    ''' 验证 JSONSchema 管线：Block 数组 -> markdown / html
+    ''' </summary>
+    Private Sub jsonSchemaTest()
+        Dim listItems As String() = {"alpha", "beta", "gamma"}
+        Dim taskItems As String() = {"write docs", "run tests", "ship"}
+        Dim taskChecked As Boolean() = {True, False, True}
+        Dim tableHeaders As String() = {"Name", "Age", "Role"}
+        Dim tableAligns As String() = {"left", "center", "right"}
+        Dim tableRows As String()() = {New String() {"Tom", "28", "dev"}, New String() {"Lucy", "31", "pm"}}
+        Dim defTerms As String() = {"A", "B"}
+        Dim defDefs As String() = {"c", "d"}
+        Dim onlyRows As String()() = {New String() {"only", "data"}}
+
+        Dim blocks As Block() = {
+            New Block() With {.type = "heading", .level = 1, .content = "Document Title"},
+            New Block() With {.type = "paragraph", .content = "This is a paragraph with text."},
+            New Block() With {.type = "code", .language = "vbnet", .content = "Dim x As Integer = 1"},
+            New Block() With {.type = "list", .ordered = False, .items = listItems},
+            New Block() With {.type = "tasklist", .ordered = False, .items = taskItems, .checked = taskChecked},
+            New Block() With {.type = "blockquote", .content = "line one" & vbCrLf & "line two"},
+            New Block() With {.type = "table", .headers = tableHeaders, .alignments = tableAligns, .rows = tableRows},
+            New Block() With {.type = "hr"},
+            New Block() With {.type = "image", .url = "a.png", .alt = "pic", .title = "a picture"},
+            New Block() With {.type = "math", .content = "\frac{a}{b} = c"},
+            New Block() With {.type = "link", .url = "https://x.com", .alt = "X", .title = "home"},
+            New Block() With {.type = "footnote", .id = "1", .content = "The first footnote."},
+            New Block() With {.type = "deflist"},
+            ' 缺省/边界场景：表格无表头、无 rows，heading 层级越界
+            New Block() With {.type = "table", .rows = onlyRows},
+            New Block() With {.type = "heading", .level = 9, .content = "Overflow heading level"}
+        }
+
+        Dim md As String = blocks.ToMarkdown
+        Dim html As String = blocks.ToHtml
+
+        Call md.SaveTo("./test_json_schema.md")
+        Call html.SaveTo("./test_json_schema.html")
+
+        Console.WriteLine(md)
+        Console.WriteLine(New String("-"c, 40))
+        Console.WriteLine(html)
     End Sub
 End Module

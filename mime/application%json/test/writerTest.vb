@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e09c3deab1a596a53d2509282c205de7, mime\application%json\test\writerTest.vb"
+﻿#Region "Microsoft.VisualBasic::b5236402096191200ddde64686238bfb, mime\application%json\test\writerTest.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 37
-    '    Code Lines: 20 (54.05%)
-    ' Comment Lines: 11 (29.73%)
+    '   Total Lines: 42
+    '    Code Lines: 23 (54.76%)
+    ' Comment Lines: 11 (26.19%)
     '    - Xml Docs: 0.00%
     ' 
-    '   Blank Lines: 6 (16.22%)
-    '     File Size: 980 B
+    '   Blank Lines: 8 (19.05%)
+    '     File Size: 1.68 KB
 
 
     ' Module writerTest
@@ -60,7 +60,7 @@ Module writerTest
     'vec': [23,4,44,23,42,34,2,3,42,3,4,2.34],
     'strs': [
         'dsadsadad',
-'asdadasdsd','qeqeqweqwewq','4444444444','3333'
+'asdadasdsd','qeqeqweqwewq','4444444444','3333','中文字符串测试','unicode字符测试：😀😁😂🤣😃😄😅😆🦩🦚🦉🐦🐧🐥🐤🐣🏎🚄🚅🚈🚝🚞🚃🚋🚍🦽🦼🛹🚲🛴🛵🏍☑🔚🔙〰➰✔💲💱🔘™®©➗✖➖➕👩👨🧑👧👦🧒👶👵👴🏿🧓🏿👩🏿‍🦰👨🏿‍🦰👩🏿‍🦱👨🏿‍🦱👩🏿‍🦲👨🏿‍🦲'
 ],
 'chars':['a','s','m','d','k','j','a','d','b','a','s','d','a','s','d'],
 'flags':[true,true,true,false,false,true],
@@ -79,11 +79,16 @@ Module writerTest
 
     Sub Main6()
         Dim json As JsonElement = JsonParser.Parse(writerTest.json)
-        Dim json_str As String = json.BuildJsonString(indent:=True)
-        Dim json_line As String = json.BuildJsonString(indent:=False)
+        Dim json_str As String = json.BuildJsonString(indent:=True, unicodeEscape:=False)
+        Dim json_line As String = json.BuildJsonString(indent:=False, unicodeEscape:=False)
 
         Call Console.WriteLine(json_str)
         Call Console.WriteLine(json_line)
+
+        json = New With {.strings = {"中文语言字符", "Unicode emoji：😀😁😂🤣😃😄😅😆"}, .bools = {False, False, True, True}}.CreateJSONElement
+        json_str = json.BuildJsonString(indent:=True, unicodeEscape:=False)
+
+        Call Console.WriteLine(json_str)
 
         Pause()
     End Sub

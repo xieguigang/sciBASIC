@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::57fb8206eeac7268aa8af844a4f7f404, Microsoft.VisualBasic.Core\src\Drawing\netcore8.0\Matrix.vb"
+﻿#Region "Microsoft.VisualBasic::407ccd31016493292011cfc33359d837, Microsoft.VisualBasic.Core\src\Drawing\netcore8.0\Matrix.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 212
-    '    Code Lines: 127 (59.91%)
-    ' Comment Lines: 55 (25.94%)
-    '    - Xml Docs: 90.91%
+    '   Total Lines: 317
+    '    Code Lines: 212 (66.88%)
+    ' Comment Lines: 58 (18.30%)
+    '    - Xml Docs: 86.21%
     ' 
-    '   Blank Lines: 30 (14.15%)
-    '     File Size: 7.65 KB
+    '   Blank Lines: 47 (14.83%)
+    '     File Size: 10.51 KB
 
 
     '     Enum MatrixOrder
@@ -52,7 +52,10 @@
     ' 
     '     Class Matrix
     ' 
-    '         Properties: Elements, IsIdentity, IsInvertible
+    '         Properties: DstPoints, Elements, HasCustomInit, IsIdentity, IsInverted
+    '                     IsInvertible, MultiplyMatrix, MultiplyOrder, RotateAngle, RotateAtPoint
+    '                     ScaleOrder, ScaleX, ScaleY, ShearOrder, ShearX
+    '                     ShearY, SrcRect, TranslateOrder, TranslateX, TranslateY
     ' 
     '         Constructor: (+3 Overloads) Sub New
     ' 

@@ -338,7 +338,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Microsoft.VisualBasic.Core\src\Core.vbproj" />
-    <ProjectReference Include="..\text%html\html_netcore5.vbproj" />
+    <ProjectReference Include="..\application%json\JSON-netcore5.vbproj" />
   </ItemGroup>
 
 </Project>

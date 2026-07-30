@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::829070c9868153e883d34081958fc2c6, gr\Drawing-net4.8\Interop\GDIPlusImage.vb"
+﻿#Region "Microsoft.VisualBasic::9d937ce5146d4f6ee3910e0334a1fb6e, gr\Drawing-net4.8\Interop\GDIPlusImage.vb"
 
     ' Author:
     ' 
@@ -34,18 +34,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 89
-    '    Code Lines: 71 (79.78%)
+    '   Total Lines: 97
+    '    Code Lines: 78 (80.41%)
     ' Comment Lines: 0 (0.00%)
     '    - Xml Docs: 0.00%
     ' 
-    '   Blank Lines: 18 (20.22%)
-    '     File Size: 3.25 KB
+    '   Blank Lines: 19 (19.59%)
+    '     File Size: 3.56 KB
 
 
     '     Class GDIPlusImage
     ' 
-    '         Properties: Size
+    '         Properties: Previews, Size
     ' 
     '         Constructor: (+4 Overloads) Sub New
     ' 

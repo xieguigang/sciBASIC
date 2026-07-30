@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::818cfcbc2b51272ce1506493781d82ec, Data_science\Visualization\MESH\My Project\Resources.Designer.vb"
+﻿#Region "Microsoft.VisualBasic::818cfcbc2b51272ce1506493781d82ec, tutorials\MESH\My Project\Resources.Designer.vb"
 
     ' Author:
     ' 

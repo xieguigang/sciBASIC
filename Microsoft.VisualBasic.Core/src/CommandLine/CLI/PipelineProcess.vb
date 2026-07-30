@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::54a322791f31657e3e2f8cc6f8a441b6, Microsoft.VisualBasic.Core\src\CommandLine\CLI\PipelineProcess.vb"
+﻿#Region "Microsoft.VisualBasic::4d41da71e50e2bcc249041ef07b3b935, Microsoft.VisualBasic.Core\src\CommandLine\CLI\PipelineProcess.vb"
 
     ' Author:
     ' 
@@ -34,19 +34,19 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 354
-    '    Code Lines: 191 (53.95%)
-    ' Comment Lines: 112 (31.64%)
-    '    - Xml Docs: 83.04%
+    '   Total Lines: 346
+    '    Code Lines: 190 (54.91%)
+    ' Comment Lines: 106 (30.64%)
+    '    - Xml Docs: 83.02%
     ' 
-    '   Blank Lines: 51 (14.41%)
-    '     File Size: 13.74 KB
+    '   Blank Lines: 50 (14.45%)
+    '     File Size: 13.47 KB
 
 
     '     Module PipelineProcess
     ' 
     '         Function: (+2 Overloads) [Call], CallDotNetCorePipeline, CheckProcessStreamOpen, CreatePipeline, (+2 Overloads) ExecSub
-    '                   FindProc, (+2 Overloads) GetProc, handleRunStream
+    '                   FindProc, GetProc, handleRunStream
     ' 
     '         Sub: ReadLines
     ' 
@@ -72,22 +72,12 @@ Namespace CommandLine
     Public Module PipelineProcess
 
         ''' <summary>
-        ''' <see cref="Process.GetProcessById"/>
-        ''' </summary>
-        ''' <param name="pid"></param>
-        ''' <returns></returns>
-        ''' 
-        <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Function GetProc(pid As Integer) As Process
-            Return Process.GetProcessById(pid)
-        End Function
-
-        ''' <summary>
         ''' Get process by command line parameter.(按照命令行参数来获取进程实例)
         ''' </summary>
         ''' <param name="cli"></param>
         ''' <returns></returns>
-        <Extension> Public Function GetProc(cli As String) As Process
+        <Extension>
+        Public Function GetProc(cli As String) As Process
             Dim CLICompared As CommandLine = CommandLine.op_Implicit(cli)
             Dim listProc As Process() = Proc.GetProcesses
             Dim process = LinqAPI.DefaultFirst(Of Process) _
@@ -140,9 +130,7 @@ Namespace CommandLine
                                 Optional shell As Boolean = False,
                                 Optional setProcess As Action(Of Process) = Nothing) As Integer
             ' check for shell flag
-            Dim check_shell = app.ExtensionSuffix("sh", "cmd", "bat") OrElse
-                shell OrElse
-                Not app.FileExists
+            Dim check_shell = app.ExtensionSuffix("sh", "cmd", "bat") OrElse shell
             Dim p As Process = CreatePipeline(
                 appPath:=app,
                 args:=args,
@@ -362,7 +350,8 @@ Namespace CommandLine
                                Optional debug As Boolean = False,
                                Optional ByRef stdErr As String = Nothing,
                                Optional ByRef exitCode As Integer = 0,
-                               Optional shell As Boolean = False) As String
+                               Optional shell As Boolean = False,
+                               Optional workdir As String = Nothing) As String
 
             Dim stdout As New List(Of String)
             Dim readLine As Action(Of String)
@@ -376,7 +365,10 @@ Namespace CommandLine
                 readLine = AddressOf stdout.Add
             End If
 
-            exitCode = ExecSub(app, args, readLine, [in], stdErr, shell:=shell)
+            exitCode = ExecSub(app, args, readLine, [in], stdErr,
+                               workdir:=workdir,
+                               shell:=shell
+            )
 
             Return stdout.JoinBy(vbCrLf)
         End Function

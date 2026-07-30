@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fe3404f0fef8770b9ba55355675b190d, mime\text%markdown\Render\Render.vb"
+﻿#Region "Microsoft.VisualBasic::f07273c76c6ed75277d67716019f0521, mime\text%markdown\Render\Render.vb"
 
     ' Author:
     ' 
@@ -34,49 +34,79 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 29
-    '    Code Lines: 24 (82.76%)
-    ' Comment Lines: 0 (0.00%)
-    '    - Xml Docs: 0.00%
+    '   Total Lines: 58
+    '    Code Lines: 37 (63.79%)
+    ' Comment Lines: 13 (22.41%)
+    '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 5 (17.24%)
-    '     File Size: 1.61 KB
+    '   Blank Lines: 8 (13.79%)
+    '     File Size: 2.69 KB
 
 
     ' Class Render
     ' 
-    '     Function: SetImageUrlRouter
+    '     Function: EscapeHtml, router
     ' 
     ' /********************************************************************************/
 
 #End Region
 
-Imports System.Text.RegularExpressions
-
+''' <summary>
+''' The different markup syntax formatter for the markdown document.
+''' </summary>
 Public MustInherit Class Render
 
-    Protected Shared ReadOnly _leadingWhitespace As New Regex("^[ ]*", RegexOptions.Compiled)
-    Protected image_url_router As Func(Of String, String)
-
-    Public Function SetImageUrlRouter(router As Func(Of String, String)) As Render
-        image_url_router = router
-        Return Me
-    End Function
-
-    Public MustOverride Function Paragraph(text As String, CreateParagraphs As Boolean) As String
+    ''' <summary>
+    ''' run the html text output for display
+    ''' </summary>
+    ''' <param name="html"></param>
+    ''' <returns></returns>
+    Public MustOverride Function Document(html As String) As String
+    Public MustOverride Function Paragraph(text As String, Optional createParagraphs As Boolean = True) As String
     Public MustOverride Function Header(text As String, level As Integer) As String
-    Public MustOverride Function CodeSpan(text As String) As String
-    Public MustOverride Function CodeBlock(code As String, lang As String) As String
-    Public MustOverride Function Document(text As String) As String
     Public MustOverride Function HorizontalLine() As String
     Public MustOverride Function NewLine() As String
-    Public MustOverride Function Image(url As String, altText As String, title As String) As String
-    Public MustOverride Function AnchorLink(url As String, text As String, title As String) As String
+
     Public MustOverride Function Bold(text As String) As String
     Public MustOverride Function Italic(text As String) As String
     Public MustOverride Function Underline(text As String) As String
-    Public MustOverride Function BlockQuote(text As String) As String
-    Public MustOverride Function List(items As IEnumerable(Of String), orderList As Boolean) As String
-    Public MustOverride Function Table(head As String(), rows As IEnumerable(Of String())) As String
+    Public MustOverride Function Strikethrough(text As String) As String
+    Public MustOverride Function CodeSpan(text As String) As String
+    Public MustOverride Function CodeBlock(text As String, language As String) As String
 
+    Public MustOverride Function Image(url As String, alt As String, title As String) As String
+    Public MustOverride Function AnchorLink(url As String, text As String, title As String) As String
+
+    Public MustOverride Function BlockQuote(text As String) As String
+    Public MustOverride Function List(items As IEnumerable(Of String), orderList As Boolean, Optional startNumber As Integer = 1) As String
+    Public MustOverride Function Table(head() As String, rows As IEnumerable(Of String()), Optional align() As String = Nothing) As String
+
+    Public MustOverride Sub SetImageUrlRouter(router As Func(Of String, String))
+
+    Protected _router As Func(Of String, String)
+
+    Protected Function router(url As String) As String
+        If _router Is Nothing Then
+            Return url
+        Else
+            Return _router(url)
+        End If
+    End Function
+
+    ''' <summary>
+    ''' Escape the special html chars in a text context. When
+    ''' <paramref name="forAttribute"/> is true the quote characters are also
+    ''' escaped so that the value is safe to embed inside an html attribute.
+    ''' </summary>
+    Protected Shared Function EscapeHtml(text As String, Optional forAttribute As Boolean = False) As String
+        If text Is Nothing Then
+            Return ""
+        End If
+        Dim s = text.Replace("&", "&amp;").Replace("<", "&lt;").Replace(">", "&gt;")
+        If forAttribute Then
+            s = s.Replace("""", "&quot;").Replace("'", "&#39;")
+        End If
+        Return s
+    End Function
 End Class
+

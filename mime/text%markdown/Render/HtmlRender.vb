@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4235e1e0cb9995d1e357a1b92a205c22, mime\text%markdown\Render\HtmlRender.vb"
+﻿#Region "Microsoft.VisualBasic::137000e98b00945e9d316b0e0398f38c, mime\text%markdown\Render\HtmlRender.vb"
 
     ' Author:
     ' 
@@ -34,110 +34,53 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 136
-    '    Code Lines: 94 (69.12%)
-    ' Comment Lines: 13 (9.56%)
-    '    - Xml Docs: 84.62%
+    '   Total Lines: 137
+    '    Code Lines: 115 (83.94%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
     ' 
-    '   Blank Lines: 29 (21.32%)
-    '     File Size: 4.41 KB
+    '   Blank Lines: 22 (16.06%)
+    '     File Size: 4.62 KB
 
 
     ' Class HtmlRender
     ' 
-    '     Properties: image_class
-    '     Delegate Function
+    '     Function: AlignAttr, AnchorLink, BlockQuote, Bold, CodeBlock
+    '               CodeSpan, Document, Header, HorizontalLine, Image
+    '               Italic, List, NewLine, Paragraph, Strikethrough
+    '               Table, Underline
     ' 
-    '         Properties: CodeSyntaxHighlight
-    ' 
-    '         Function: AnchorLink, BlockQuote, Bold, CodeBlock, CodeSpan
-    '                   Document, escapeHtml, Header, HorizontalLine, Image
-    '                   Italic, List, NewLine, Paragraph, Table
-    '                   Underline
-    ' 
-    ' 
+    '     Sub: SetImageUrlRouter
     ' 
     ' /********************************************************************************/
 
 #End Region
 
+Imports System.Text.RegularExpressions
+
 Public Class HtmlRender : Inherits Render
 
-    Public Property image_class As String
-
-    Public Delegate Function CodeHtmlSyntaxHighlight(code As String, lang As String) As String
-
-    Public Property CodeSyntaxHighlight As CodeHtmlSyntaxHighlight
-
-    ''' <summary>
-    ''' 
-    ''' </summary>
-    ''' <param name="text"></param>
-    ''' <param name="CreateParagraphs">
-    ''' add html paragraph tag automatically?
-    ''' </param>
-    ''' <returns></returns>
-    Public Overrides Function Paragraph(text As String, CreateParagraphs As Boolean) As String
-        ' replace the leading whitespace as the html tag <p>
-        Dim p As String = _leadingWhitespace.Replace(text, If(CreateParagraphs, "<p>", ""))
-        Dim html As String = p & (If(CreateParagraphs, "</p>", ""))
-
+    Public Overrides Function Document(html As String) As String
         Return html
     End Function
 
-    Public Overrides Function Document(text As String) As String
+    Public Overrides Function Paragraph(text As String, Optional createParagraphs As Boolean = True) As String
+        If createParagraphs Then
+            Return _leadingWhitespace.Replace(text, "<p>")
+        End If
         Return text
     End Function
 
     Public Overrides Function Header(text As String, level As Integer) As String
-        Return String.Format("<h{1}>{0}</h{1}>" & vbLf & vbLf, text, level)
+        Return $"<h{level}>{text}</h{level}>"
     End Function
 
-    Public Overrides Function CodeSpan(text As String) As String
-        Return {"<code>", escapeHtml(text), "</code>"}.JoinBy("")
-    End Function
-
-    Private Shared Function escapeHtml(text As String) As String
-        Return If(text, "").Replace("<", "&lt;")
-    End Function
-
-    ''' <summary>
-    ''' &lt;hr />
-    ''' </summary>
-    ''' <returns></returns>
     Public Overrides Function HorizontalLine() As String
-        Return vbCrLf & vbCrLf & "<hr />" & vbCrLf & vbCrLf
+        Return "<hr />"
     End Function
 
     Public Overrides Function NewLine() As String
-        Return vbCrLf & "<br />" & vbCrLf
-    End Function
-
-    Public Overrides Function CodeBlock(code As String, lang As String) As String
-        Return String.Concat(vbLf & vbLf & $"<pre><code class=""{lang}"">",
-                             If(CodeSyntaxHighlight Is Nothing, escapeHtml(code), _CodeSyntaxHighlight(code, lang)),
-                             vbLf & "</code></pre>" & vbLf & vbLf)
-    End Function
-
-    Public Overrides Function Image(url As String, altText As String, title As String) As String
-        Dim result As String
-
-        If Not image_url_router Is Nothing Then
-            url = image_url_router(url)
-        End If
-
-        result = String.Format("<img style=""width:100%;"" src=""{0}"" alt=""{1}""", url, altText)
-
-        If Not image_class.StringEmpty Then
-            result &= $" class=""{image_class}"""
-        End If
-        If Not String.IsNullOrEmpty(title) Then
-            result &= $" title=""{title}"""
-        End If
-
-        result &= " />"
-
-        Return result
+        Return "<br />"
     End Function
 
     Public Overrides Function Bold(text As String) As String
@@ -148,16 +91,57 @@ Public Class HtmlRender : Inherits Render
         Return $"<em>{text}</em>"
     End Function
 
-    Public Overrides Function BlockQuote(text As String) As String
-        Return vbLf & vbLf & $"<blockquote>{text.LineTokens.JoinBy("<br />" & vbLf)}</blockquote>" & vbLf & vbLf
+    Public Overrides Function Underline(text As String) As String
+        Return $"<u>{text}</u>"
     End Function
 
-    Public Overrides Function List(items As IEnumerable(Of String), orderList As Boolean) As String
-        Dim listSet As String() = items.Select(Function(s) $"<li>{s}</li>").ToArray
+    Public Overrides Function Strikethrough(text As String) As String
+        Return $"<del>{text}</del>"
+    End Function
+
+    Public Overrides Function CodeSpan(text As String) As String
+        Return $"<code>{EscapeHtml(text)}</code>"
+    End Function
+
+    Public Overrides Function CodeBlock(text As String, language As String) As String
+        If language.StringEmpty Then
+            Return $"
+<pre><code>{EscapeHtml(text)}</code></pre>
+"
+        Else
+            Return $"
+<pre><code class=""language-{language}"">{EscapeHtml(text)}</code></pre>
+"
+        End If
+    End Function
+
+    Public Overrides Function Image(url As String, alt As String, title As String) As String
+        If title.StringEmpty Then
+            Return $"<img src=""{EscapeHtml(router(url), forAttribute:=True)}"" alt=""{EscapeHtml(alt, forAttribute:=True)}"" />"
+        Else
+            Return $"<img src=""{EscapeHtml(router(url), forAttribute:=True)}"" alt=""{EscapeHtml(alt, forAttribute:=True)}"" title=""{EscapeHtml(title, forAttribute:=True)}"" />"
+        End If
+    End Function
+
+    Public Overrides Function AnchorLink(url As String, text As String, title As String) As String
+        If title.StringEmpty Then
+            Return $"<a href=""{EscapeHtml(router(url), forAttribute:=True)}"">{text}</a>"
+        Else
+            Return $"<a href=""{EscapeHtml(router(url), forAttribute:=True)}"" title=""{EscapeHtml(title, forAttribute:=True)}"">{text}</a>"
+        End If
+    End Function
+
+    Public Overrides Function BlockQuote(text As String) As String
+        Return $"<blockquote>{text}</blockquote>"
+    End Function
+
+    Public Overrides Function List(items As IEnumerable(Of String), orderList As Boolean, Optional startNumber As Integer = 1) As String
+        Dim listSet = items.Select(Function(s) $"<li>{s}</li>").ToArray
 
         If orderList Then
+            Dim startAttr = If(startNumber = 1, "", $" start=""{startNumber}""")
             Return $"
-<ol>
+<ol{startAttr}>
 {listSet.JoinBy(vbLf)}
 </ol>
 "
@@ -170,30 +154,43 @@ Public Class HtmlRender : Inherits Render
         End If
     End Function
 
-    Public Overrides Function Table(head() As String, rows As IEnumerable(Of String())) As String
-        Dim bodyRows = rows _
-            .Select(Function(r)
-                        Return $"<tr>{r.Select(Function(d) $"<td>{d}</td>").JoinBy("")}</tr>"
-                    End Function) _
+    Public Overrides Function Table(head() As String, rows As IEnumerable(Of String()), Optional align() As String = Nothing) As String
+        Dim th = head.Select(Function(h, idx) $"<th{AlignAttr(align, idx)}>{h}</th>").ToArray
+        Dim body = rows _
+            .Select(Function(r) $"<tr>{r.Select(Function(d, idx) $"<td{AlignAttr(align, idx)}>{d}</td>").JoinBy("")}</tr>") _
             .ToArray
 
-        Return $"<table>
-
+        Return $"
+<table>
 <thead>
-<tr>{head.Select(Function(h) $"<th>{h}</th>").JoinBy("")}</tr>
+<tr>{th.JoinBy("")}</tr>
 </thead>
 <tbody>
-{bodyRows.JoinBy(vbCrLf)}
+{body.JoinBy(vbLf)}
 </tbody>
-
-</table>"
+</table>
+"
     End Function
 
-    Public Overrides Function AnchorLink(url As String, text As String, title As String) As String
-        Return $"<a href='{url}' title='{title}'>{text}</a>"
+    Private Shared Function AlignAttr(align() As String, idx As Integer) As String
+        If align Is Nothing OrElse idx >= align.Length Then
+            Return ""
+        End If
+        Dim a = align(idx)
+        If a = "left" Then
+            Return " style=""text-align:left;"""
+        ElseIf a = "right" Then
+            Return " style=""text-align:right;"""
+        ElseIf a = "center" Then
+            Return " style=""text-align:center;"""
+        End If
+        Return ""
     End Function
 
-    Public Overrides Function Underline(text As String) As String
-        Return $"<u>{text}</u>"
-    End Function
+    Public Overrides Sub SetImageUrlRouter(router As Func(Of String, String))
+        _router = router
+    End Sub
+
+    ReadOnly _leadingWhitespace As New Regex("^[ ]*", RegexOptions.Multiline)
 End Class
+

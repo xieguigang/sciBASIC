@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e734fcc536dfe5523784bc54edb1ee76, mime\application%json\Serializer\ObjectSerializer\ObjectSerializer.vb"
+﻿#Region "Microsoft.VisualBasic::33dbb032043e660bb91898ba36e6566f, mime\application%json\Serializer\ObjectSerializer\ObjectSerializer.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 117
-    '    Code Lines: 89 (76.07%)
-    ' Comment Lines: 15 (12.82%)
+    '   Total Lines: 116
+    '    Code Lines: 88 (75.86%)
+    ' Comment Lines: 15 (12.93%)
     '    - Xml Docs: 86.67%
     ' 
-    '   Blank Lines: 13 (11.11%)
-    '     File Size: 4.42 KB
+    '   Blank Lines: 13 (11.21%)
+    '     File Size: 4.38 KB
 
 
     ' Module ObjectSerializer
@@ -54,7 +54,6 @@
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 Imports Microsoft.VisualBasic.Emit.Delegates
-Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MIME.application.json.Javascript
 Imports Microsoft.VisualBasic.ValueTypes

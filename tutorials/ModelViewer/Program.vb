@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::add17a2cdf43c949c5a38141cf0d15db, gr\ModelViewer\Program.vb"
+﻿#Region "Microsoft.VisualBasic::add17a2cdf43c949c5a38141cf0d15db, tutorials\ModelViewer\Program.vb"
 
     ' Author:
     ' 

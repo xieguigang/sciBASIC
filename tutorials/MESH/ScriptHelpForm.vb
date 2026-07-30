@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::10af2c7a167ebed054b80b31295d71df, Data_science\Visualization\MESH\ScriptHelpForm.vb"
+﻿#Region "Microsoft.VisualBasic::10af2c7a167ebed054b80b31295d71df, tutorials\MESH\ScriptHelpForm.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b722482b14aac0181233174ace4581c7, mime\application%json\Serializer\JSONSerializerOptions.vb"
+﻿#Region "Microsoft.VisualBasic::26370efa5ebb6e40c488ed52022b1813, mime\application%json\Serializer\JSONSerializerOptions.vb"
 
     ' Author:
     ' 
@@ -34,19 +34,19 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 42
-    '    Code Lines: 21 (50.00%)
-    ' Comment Lines: 15 (35.71%)
+    '   Total Lines: 44
+    '    Code Lines: 22 (50.00%)
+    ' Comment Lines: 15 (34.09%)
     '    - Xml Docs: 73.33%
     ' 
-    '   Blank Lines: 6 (14.29%)
-    '     File Size: 1.52 KB
+    '   Blank Lines: 7 (15.91%)
+    '     File Size: 1.57 KB
 
 
     ' Class JSONSerializerOptions
     ' 
     '     Properties: comment, custom_name, digest, enumToString, indent
-    '                 indent_width, maskReadonly, unicodeEscape, unixTimestamp
+    '                 indent_width, maskNull, maskReadonly, unicodeEscape, unixTimestamp
     ' 
     '     Function: createUniqueKey, offsets
     ' 
@@ -66,6 +66,8 @@ Public Class JSONSerializerOptions
 
 #Region "clr type schema parser"
     Public Property maskReadonly As Boolean = False
+    Public Property maskNull As Boolean = True
+
     ''' <summary>
     ''' show xml comment text in json? this option usually be applied for generates the json config file
     ''' </summary>

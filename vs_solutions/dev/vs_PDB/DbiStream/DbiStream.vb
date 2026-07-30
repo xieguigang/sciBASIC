@@ -1,0 +1,363 @@
+﻿#Region "Microsoft.VisualBasic::e0dca0c46ea586292e12d4f4b206453c, vs_solutions\dev\vs_PDB\DbiStream\DbiStream.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 304
+    '    Code Lines: 220 (72.37%)
+    ' Comment Lines: 25 (8.22%)
+    '    - Xml Docs: 28.00%
+    ' 
+    '   Blank Lines: 59 (19.41%)
+    '     File Size: 11.58 KB
+
+
+    ' Class DbiReader
+    ' 
+    '     Properties: Header, LineNumbers, Modules, SourceDocuments
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    ' 
+    '     Function: ReadHeader, ReadNullString
+    ' 
+    '     Sub: Parse, ParseC13, ParseLines, ParseModuleInfo, ParseSourceInfo
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+Imports System.IO
+Imports System.Text
+Imports Microsoft.VisualBasic.ApplicationServices.Development.VisualStudio.ProgramDatabase.Models
+Imports Microsoft.VisualBasic.Data.IO
+Imports std = System.Math
+
+''' <summary>
+''' Parses the DBI stream (stream #3) of a classic PDB: it exposes the module list,
+''' the referenced source documents, and (best-effort) the line-number information.
+''' </summary>
+Public Class DbiReader
+
+    Public Property Header As DbiHeader
+    Public ReadOnly Property Modules As New List(Of ModuleInfo)()
+    Public ReadOnly Property SourceDocuments As New List(Of SourceDocument)()
+    Public ReadOnly Property LineNumbers As New List(Of LineInfo)()
+
+    ' C13 sub-section types.
+    Private Const DEBUG_S_LINES As UInteger = &HF2
+    Private Const DEBUG_S_LINES_2 As UInteger = &HF9
+
+    Sub New(dbi As Stream)
+        Dim bytes As Byte() = dbi.GetBytes()
+        Parse(bytes)
+    End Sub
+
+    Private Sub Parse(data As Byte())
+        If data.Length < 64 Then
+            Return
+        End If
+
+        Header = ReadHeader(data)
+        Dim pos As Integer = 64
+
+        ' 1) module-info substream.
+        Dim modInfoEnd As Integer = pos + Header.ModInfoSize
+        ParseModuleInfo(data, pos, modInfoEnd)
+
+        ' 2) skip the fixed substreams up to the source-info substream.
+        pos = modInfoEnd + Header.SectionContributionSize + Header.SectionMapSize
+        Dim srcInfoEnd As Integer = pos + Header.SourceInfoSize
+        ParseSourceInfo(data, pos, srcInfoEnd)
+        pos = srcInfoEnd + Header.TypeServerMapSize + Header.ECSubstreamSize + Header.OptionalDbgHdrSize
+
+        ' 3) the remaining bytes are the C13 debug-data substream, laid out
+        '    sequentially (module after module) in module order.
+        Dim c13Cursor As Integer = 0
+
+        For Each m As ModuleInfo In Modules
+            If m.C13Size > 0 Then
+                Dim segStart As Integer = pos + c13Cursor
+                Dim segEnd As Integer = std.Min(segStart + m.C13Size, data.Length)
+
+                If segStart >= 0 AndAlso segEnd <= data.Length Then
+                    ParseC13(data, segStart, segEnd, m)
+                End If
+            End If
+
+            c13Cursor += m.C13Size
+        Next
+    End Sub
+
+    Private Function ReadHeader(data As Byte()) As DbiHeader
+        Dim h As New DbiHeader()
+
+        Using ms As New MemoryStream(data)
+            Using br As New BinaryDataReader(ms, leaveOpen:=False) With {.ByteOrder = ByteOrder.LittleEndian}
+                h.VersionSignature = br.ReadInt32()
+                h.VersionHeader = br.ReadInt32()
+                h.Age = br.ReadInt32()
+                h.GlobalStreamIndex = br.ReadUInt16()       ' 12
+                br.ReadUInt16()                             ' 14 BuildNumber (unused)
+                h.PublicStreamIndex = br.ReadUInt16()       ' 16
+                h.PdbDllVersion = br.ReadUInt16()           ' 18
+                h.SymRecordStreamIndex = br.ReadUInt16()    ' 20
+                br.ReadUInt16()                             ' 22 PdbDllRbld (unused)
+                h.ModInfoSize = br.ReadInt32()              ' 24
+                h.SectionContributionSize = br.ReadInt32()  ' 28
+                h.SectionMapSize = br.ReadInt32()           ' 32
+                h.SourceInfoSize = br.ReadInt32()           ' 36
+                h.TypeServerMapSize = br.ReadInt32()       ' 40
+                h.OptionalDbgHdrSize = br.ReadInt32()       ' 44
+                h.ECSubstreamSize = br.ReadInt32()          ' 48
+                br.ReadUInt16()                             ' 52 Flags (unused)
+                h.Machine = br.ReadUInt16()                 ' 54
+                br.ReadUInt32()                             ' 56 Padding (unused)
+            End Using
+        End Using
+
+        Return h
+    End Function
+
+    Private Sub ParseModuleInfo(data As Byte(), start As Integer, [end] As Integer)
+        Dim p As Integer = start
+
+        While p < [end]
+            ' Modern (PDB 7.0) module-info header is 32 bytes; the per-module C13
+            ' line-info size is C13ByteSize at offset 24.
+            If p + 32 > [end] Then Exit While
+
+            Dim c13Size As Integer = BitConverter.ToInt32(data, p + 24)
+            p += 32
+
+            ' Module name and object-file name (NUL-terminated), then the file table.
+            Dim moduleName As String = ReadNullString(data, p)
+            p += moduleName.Length + 1
+            Dim objName As String = ReadNullString(data, p)
+            p += objName.Length + 1
+
+            If p + 2 > [end] Then Exit While
+            Dim numFiles As UShort = BitConverter.ToUInt16(data, p)
+            p += 2
+
+            Dim fileIndices As Integer()
+
+            If numFiles > 0 Then
+                fileIndices = New Integer(numFiles - 1) {}
+
+                For i As Integer = 0 To numFiles - 1
+                    If p + 4 > [end] Then Exit While
+                    fileIndices(i) = BitConverter.ToInt32(data, p)
+                    p += 4
+                Next
+            Else
+                fileIndices = New Integer() {}
+            End If
+
+            Dim m As New ModuleInfo With {
+                .ModuleName = moduleName,
+                .ObjFileName = objName,
+                .FileIndices = fileIndices,
+                .C13Offset = 0,
+                .C13Size = c13Size,
+                .SymbolOffset = 0,
+                .SymbolSize = 0
+            }
+            Modules.Add(m)
+        End While
+    End Sub
+
+    Private Sub ParseSourceInfo(data As Byte(), start As Integer, [end] As Integer)
+        If start + 4 > [end] Then
+            Return
+        End If
+
+        Dim numModules As UShort = BitConverter.ToUInt16(data, start)
+        Dim numSources As UShort = BitConverter.ToUInt16(data, start + 2)
+        Dim p As Integer = start + 4
+
+        ' modIndices[numModules], modFileCounts[numModules]
+        p += numModules * 2
+        p += numModules * 2
+
+        If numSources = 0 Then
+            Return
+        End If
+
+        Dim offsets As Integer() = New Integer(numSources - 1) {}
+
+        For i As Integer = 0 To numSources - 1
+            ' Source-file name offsets are 4-byte (u32) entries.
+            offsets(i) = BitConverter.ToInt32(data, p)
+            p += 4
+        Next
+
+        ' The string table begins right after the offset array.
+        Dim stringsBase As Integer = p
+
+        For i As Integer = 0 To numSources - 1
+            Dim strPos As Integer = stringsBase + offsets(i)
+            Dim path As String = ReadNullString(data, strPos)
+
+            SourceDocuments.Add(New SourceDocument With {.FilePath = path})
+        Next
+    End Sub
+
+    Private Sub ParseC13(data As Byte(), start As Integer, [end] As Integer, m As ModuleInfo)
+        Dim p As Integer = start
+
+        While p + 8 <= [end]
+            Dim subType As UInteger = BitConverter.ToUInt32(data, p)
+            Dim length As Integer = BitConverter.ToInt32(data, p + 4)
+            Dim payloadStart As Integer = p + 8
+            Dim payloadEnd As Integer = std.Min(payloadStart + length, [end])
+
+            If subType = DEBUG_S_LINES OrElse subType = DEBUG_S_LINES_2 Then
+                Try
+                    ParseLines(data, payloadStart, payloadEnd, m, subType = DEBUG_S_LINES_2)
+                Catch
+                    ' Skip a malformed line subsection.
+                End Try
+            End If
+
+            ' Advance to the next sub-section (4-byte aligned).
+            p = payloadEnd
+            p = (p + 3) And Not 3
+
+            If length = 0 Then
+                Exit While
+            End If
+        End While
+    End Sub
+
+    Private Sub ParseLines(data As Byte(), start As Integer, [end] As Integer, m As ModuleInfo, withColumns As Boolean)
+        Dim p As Integer = start
+
+        If p + 12 > [end] Then
+            Return
+        End If
+
+        Dim off As Integer = BitConverter.ToInt32(data, p)
+        Dim seg As UShort = BitConverter.ToUInt16(data, p + 4)
+        Dim flags As UShort = BitConverter.ToUInt16(data, p + 6)
+        Dim numFiles As Integer = BitConverter.ToInt32(data, p + 8)
+        p += 12
+
+        For f As Integer = 0 To numFiles - 1
+            If p + 12 > [end] Then
+                Exit For
+            End If
+
+            ' Remember where this file entry starts so we can advance by blockSize.
+            Dim fileEntryStart As Integer = p
+            Dim fileId As Integer = BitConverter.ToInt32(data, p)
+            Dim numLines As Integer = BitConverter.ToInt32(data, p + 4)
+            Dim blockSize As Integer = BitConverter.ToInt32(data, p + 8)
+            p += 12
+
+            Dim doc As SourceDocument = Nothing
+
+            If fileId >= 0 AndAlso fileId < m.FileIndices.Length Then
+                Dim srcIndex As Integer = m.FileIndices(fileId)
+
+                If srcIndex >= 0 AndAlso srcIndex < SourceDocuments.Count Then
+                    doc = SourceDocuments(srcIndex)
+                End If
+            End If
+
+            ' 1) the line-number records (each is u32 offset, u32 linenum).
+            Dim lineEnd As Integer = p + numLines * 8
+
+            If lineEnd > [end] Then
+                lineEnd = [end]
+            End If
+
+            For l As Integer = 0 To numLines - 1
+                If p + 8 > lineEnd Then
+                    Exit For
+                End If
+
+                Dim lineOffset As UInteger = BitConverter.ToUInt32(data, p)
+                Dim lineNum As UInteger = BitConverter.ToUInt32(data, p + 4)
+                p += 8
+
+                Dim li As New LineInfo With {
+                    .Document = doc,
+                    .Offset = lineOffset
+                }
+                li.StartLine = CInt(lineNum And &HFFFFFF)
+                li.EndLine = li.StartLine + CInt((lineNum >> 24) And &HFF)
+                LineNumbers.Add(li)
+            Next
+
+            ' 2) for DEBUG_S_LINES_2 the column records follow as a separate array
+            '    (u16 colStart, u16 colEnd) per line.
+            If withColumns Then
+                For l As Integer = 0 To numLines - 1
+                    If p + 4 > [end] Then
+                        Exit For
+                    End If
+
+                    Dim colStart As UShort = BitConverter.ToUInt16(data, p)
+                    Dim colEnd As UShort = BitConverter.ToUInt16(data, p + 2)
+                    p += 4
+
+                    Dim idx As Integer = LineNumbers.Count - numLines + l
+
+                    If idx >= 0 AndAlso idx < LineNumbers.Count Then
+                        LineNumbers(idx).StartColumn = colStart
+                        LineNumbers(idx).EndColumn = colEnd
+                    End If
+                Next
+            End If
+
+            ' Advance to the next file entry using the declared block size.
+            p = fileEntryStart + blockSize
+            p = (p + 3) And Not 3
+        Next
+    End Sub
+
+    ''' <summary>
+    ''' Read a null-terminated (UTF-8) string starting at <paramref name="offset"/>.
+    ''' </summary>
+    Friend Shared Function ReadNullString(data As Byte(), offset As Integer) As String
+        Dim p As Integer = offset
+
+        While p < data.Length AndAlso data(p) <> 0
+            p += 1
+        End While
+
+        Dim len As Integer = p - offset
+        Return Encoding.UTF8.GetString(data, offset, len)
+    End Function
+End Class

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0b733e779ea99531c730f6f3103cb8f6, Microsoft.VisualBasic.Core\src\Drawing\GDI+\ImageTools.vb"
+﻿#Region "Microsoft.VisualBasic::e9c7fa35abd704b90dde384decb3d192, Microsoft.VisualBasic.Core\src\Drawing\GDI+\ImageTools.vb"
 
     ' Author:
     ' 
@@ -34,18 +34,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 241
-    '    Code Lines: 145 (60.17%)
-    ' Comment Lines: 52 (21.58%)
-    '    - Xml Docs: 63.46%
+    '   Total Lines: 176
+    '    Code Lines: 94 (53.41%)
+    ' Comment Lines: 60 (34.09%)
+    '    - Xml Docs: 65.00%
     ' 
-    '   Blank Lines: 44 (18.26%)
-    '     File Size: 9.13 KB
+    '   Blank Lines: 22 (12.50%)
+    '     File Size: 8.33 KB
 
 
     '     Module ImageTools
     ' 
-    '         Function: BufferInternal, (+2 Overloads) CorpBlank, CorpBlankInternal, (+2 Overloads) ImageCrop
+    '         Function: BufferInternal, (+2 Overloads) CorpBlank, (+2 Overloads) CorpBlankInternal, (+2 Overloads) ImageCrop
     ' 
     ' 
     ' /********************************************************************************/

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::17ed7caa05bc738589c1ffad8db742ec, gr\ModelViewer\FormAbout.vb"
+﻿#Region "Microsoft.VisualBasic::17ed7caa05bc738589c1ffad8db742ec, tutorials\ModelViewer\FormAbout.vb"
 
     ' Author:
     ' 

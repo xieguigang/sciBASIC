@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d3c8ed45ab177e044f1aad4770ed679a, Data_science\NLP\Tokenizer\src\MaxMatchTokenizer.vb"
+﻿#Region "Microsoft.VisualBasic::937a51322a6193a60c57c3ebfde6db0f, Data_science\NLP\Tokenizer\src\MaxMatchTokenizer.vb"
 
     ' Author:
     ' 
@@ -221,4 +221,3 @@ Namespace ChineseTokenizer
     End Class
 
 End Namespace
-

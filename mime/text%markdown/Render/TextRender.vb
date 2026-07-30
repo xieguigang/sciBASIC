@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d018a94e25471bceb316e5f50dfc84b7, mime\text%markdown\Render\TextRender.vb"
+﻿#Region "Microsoft.VisualBasic::31fa48b49617dc326c8db4f14762402d, mime\text%markdown\Render\TextRender.vb"
 
     ' Author:
     ' 
@@ -35,76 +35,53 @@
     ' Code Statistics:
 
     '   Total Lines: 87
-    '    Code Lines: 56 (64.37%)
-    ' Comment Lines: 12 (13.79%)
-    '    - Xml Docs: 100.00%
+    '    Code Lines: 67 (77.01%)
+    ' Comment Lines: 0 (0.00%)
+    '    - Xml Docs: 0.00%
     ' 
-    '   Blank Lines: 19 (21.84%)
-    '     File Size: 2.74 KB
+    '   Blank Lines: 20 (22.99%)
+    '     File Size: 2.79 KB
 
 
     ' Class TextRender
     ' 
     '     Function: AnchorLink, BlockQuote, Bold, CodeBlock, CodeSpan
     '               Document, Header, HorizontalLine, Image, Italic
-    '               List, NewLine, Paragraph, Table, Underline
+    '               List, NewLine, Paragraph, Strikethrough, StripHTMLTags
+    '               Table, Underline
+    ' 
+    '     Sub: SetImageUrlRouter
     ' 
     ' /********************************************************************************/
 
 #End Region
 
 Imports System.Text
-Imports Microsoft.VisualBasic.Language
-Imports Microsoft.VisualBasic.Text.Parser.HtmlParser
+Imports System.Text.RegularExpressions
 
-''' <summary>
-''' plain text document
-''' </summary>
-''' <remarks>
-''' not only the markdown format tag will be removed from this render, and also 
-''' the additional html tag inside the given markdown document will be removed.
-''' </remarks>
 Public Class TextRender : Inherits Render
 
-    Public Overrides Function Paragraph(text As String, CreateParagraphs As Boolean) As String
+    Public Overrides Function Document(html As String) As String
+        Return StripHTMLTags(html)
+    End Function
+
+    Public Overrides Function Paragraph(text As String, Optional createParagraphs As Boolean = True) As String
+        If createParagraphs Then
+            Return text & vbCrLf
+        End If
         Return text
     End Function
 
     Public Overrides Function Header(text As String, level As Integer) As String
-        Return text
-    End Function
-
-    Public Overrides Function CodeSpan(text As String) As String
-        Return " " & text & " "
-    End Function
-
-    Public Overrides Function CodeBlock(code As String, lang As String) As String
-        Return code
-    End Function
-
-    ''' <summary>
-    ''' additional html tag inside the document will be removed
-    ''' </summary>
-    ''' <param name="text"></param>
-    ''' <returns></returns>
-    Public Overrides Function Document(text As String) As String
-        Return text.StripHTMLTags
+        Return text & vbCrLf
     End Function
 
     Public Overrides Function HorizontalLine() As String
-        Return "-----------------------------------------"
+        Return New String("-"c, 60) & vbCrLf
     End Function
 
     Public Overrides Function NewLine() As String
-        Return vbLf
-    End Function
-
-    Public Overrides Function Image(url As String, altText As String, title As String) As String
-        Return altText
-    End Function
-
-    Public Overrides Function AnchorLink(url As String, text As String, title As String) As String
-        Return text
+        Return vbCrLf
     End Function
 
     Public Overrides Function Bold(text As String) As String
@@ -119,24 +96,51 @@ Public Class TextRender : Inherits Render
         Return text
     End Function
 
+    Public Overrides Function Strikethrough(text As String) As String
+        Return text
+    End Function
+
+    Public Overrides Function CodeSpan(text As String) As String
+        Return text
+    End Function
+
+    Public Overrides Function CodeBlock(text As String, language As String) As String
+        Return text & vbCrLf
+    End Function
+
+    Public Overrides Function Image(url As String, alt As String, title As String) As String
+        Return alt
+    End Function
+
+    Public Overrides Function AnchorLink(url As String, text As String, title As String) As String
+        Return text
+    End Function
+
     Public Overrides Function BlockQuote(text As String) As String
-        Return $"""{text}"""
+        Return "> " & text.Replace(vbLf, vbLf & "> ")
     End Function
 
-    Public Overrides Function List(items As IEnumerable(Of String), orderList As Boolean) As String
-        Return items.JoinBy(vbLf)
+    Public Overrides Function List(items As IEnumerable(Of String), orderList As Boolean, Optional startNumber As Integer = 1) As String
+        Return items.JoinBy(vbLf) & vbLf
     End Function
 
-    Public Overrides Function Table(head() As String, rows As IEnumerable(Of String())) As String
-        Dim sb As New StringBuilder
-
-        Call sb.AppendLine(head.JoinBy(vbTab))
-        Call sb.AppendLine("----------------------------------------------")
-
-        For Each row As String() In rows
-            Call sb.AppendLine(row.JoinBy(vbTab))
+    Public Overrides Function Table(head() As String, rows As IEnumerable(Of String()), Optional align() As String = Nothing) As String
+        Dim t As New StringBuilder
+        t.AppendLine(head.JoinBy(vbTab))
+        For Each row In rows
+            t.AppendLine(row.JoinBy(vbTab))
         Next
+        Return t.ToString
+    End Function
 
-        Return sb.ToString
+    Public Overrides Sub SetImageUrlRouter(router As Func(Of String, String))
+        _router = router
+    End Sub
+
+    Shared ReadOnly htmlTag As New Regex("<[^>]+>", RegexOptions.Compiled)
+
+    Shared Function StripHTMLTags(html As String) As String
+        Return htmlTag.Replace(html, "")
     End Function
 End Class
+

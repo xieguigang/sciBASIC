@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::77621f10cab45fd4dbddc9a2c569fdfc, gr\Microsoft.VisualBasic.Imaging\Drawing3D\Light.vb"
+﻿#Region "Microsoft.VisualBasic::7be866ff659364d3607bf36e5aa80774, gr\Microsoft.VisualBasic.Imaging\Drawing3D\Light.vb"
 
     ' Author:
     ' 
@@ -34,18 +34,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 84
-    '    Code Lines: 41 (48.81%)
-    ' Comment Lines: 30 (35.71%)
-    '    - Xml Docs: 86.67%
+    '   Total Lines: 111
+    '    Code Lines: 59 (53.15%)
+    ' Comment Lines: 37 (33.33%)
+    '    - Xml Docs: 86.49%
     ' 
-    '   Blank Lines: 13 (15.48%)
-    '     File Size: 3.87 KB
+    '   Blank Lines: 15 (13.51%)
+    '     File Size: 5.07 KB
 
 
     '     Module Light
     ' 
-    '         Function: ComputeLighting, Lighting, Shade
+    '         Function: ComputeLighting, LightDirFromAngles, Lighting, ScaleLightColor, Shade
     ' 
     ' 
     ' /********************************************************************************/

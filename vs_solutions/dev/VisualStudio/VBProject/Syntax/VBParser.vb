@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b9c6ab519fe56ef9e035e0c423ff656a, vs_solutions\dev\VisualStudio\VBProject\Syntax\VBParser.vb"
+﻿#Region "Microsoft.VisualBasic::f570bbf6aa98922523cf08013a879c45, vs_solutions\dev\VisualStudio\VBProject\Syntax\VBParser.vb"
 
     ' Author:
     ' 
@@ -918,4 +918,3 @@ Namespace VBProj.Syntax
     End Module
 
 End Namespace
-

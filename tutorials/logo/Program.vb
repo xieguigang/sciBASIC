@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6fc714cbe4f6e955afdec38af5c18742, sciBASIC#\vs_solutions\logo\Program.vb"
+﻿#Region "Microsoft.VisualBasic::a706c7beb9d0c36d26e241f98cf2e44a, tutorials\logo\Program.vb"
 
     ' Author:
     ' 
@@ -34,15 +34,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 75
-    '    Code Lines: 53
-    ' Comment Lines: 3
-    '   Blank Lines: 19
-    '     File Size: 2.84 KB
+    '   Total Lines: 86
+    '    Code Lines: 64 (74.42%)
+    ' Comment Lines: 3 (3.49%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 19 (22.09%)
+    '     File Size: 3.90 KB
 
 
     ' Module Program
     ' 
+    '     Constructor: (+1 Overloads) Sub New
     '     Sub: Main
     ' 
     ' /********************************************************************************/

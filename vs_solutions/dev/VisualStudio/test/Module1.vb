@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b13b0ee8df0f526706e95dc433c90d23, vs_solutions\dev\VisualStudio\test\Module1.vb"
+﻿#Region "Microsoft.VisualBasic::b716162752e607f69246964afb1b10aa, vs_solutions\dev\VisualStudio\test\Module1.vb"
 
     ' Author:
     ' 
@@ -34,18 +34,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 35
-    '    Code Lines: 27 (77.14%)
+    '   Total Lines: 36
+    '    Code Lines: 28 (77.78%)
     ' Comment Lines: 0 (0.00%)
     '    - Xml Docs: 0.00%
     ' 
-    '   Blank Lines: 8 (22.86%)
-    '     File Size: 1.24 KB
+    '   Blank Lines: 8 (22.22%)
+    '     File Size: 1.26 KB
 
 
     ' Module Module1
     ' 
-    '     Sub: Main, sourceMapDecodeTest, vlqtest
+    '     Sub: Main1, sourceMapDecodeTest, vlqtest
     ' 
     ' /********************************************************************************/
 
@@ -56,7 +56,8 @@ Imports Microsoft.VisualBasic.Serialization.JSON
 
 Module Module1
 
-    Sub Main()
+    Sub Main1()
+        Call gitTest.Run()
         Call sourceMapDecodeTest()
         Call vlqtest()
     End Sub

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b4866341bda672c13828b8af5dfce189, mime\application%json\test\simple_jsonParserTest.vb"
+﻿#Region "Microsoft.VisualBasic::11732b7fef130b42096b275a77ebd1a4, mime\application%json\test\simple_jsonParserTest.vb"
 
     ' Author:
     ' 
@@ -34,18 +34,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 88
-    '    Code Lines: 60 (68.18%)
-    ' Comment Lines: 16 (18.18%)
+    '   Total Lines: 89
+    '    Code Lines: 61 (68.54%)
+    ' Comment Lines: 16 (17.98%)
     '    - Xml Docs: 0.00%
     ' 
-    '   Blank Lines: 12 (13.64%)
-    '     File Size: 3.45 KB
+    '   Blank Lines: 12 (13.48%)
+    '     File Size: 3.51 KB
 
 
     ' Module simple_jsonParserTest
     ' 
-    '     Sub: Main, test1, test2, test3
+    '     Sub: Main11, test1, test2, test3
     ' 
     ' /********************************************************************************/
 
@@ -53,6 +53,7 @@
 
 Imports Microsoft.VisualBasic.MIME.application.json
 Imports Microsoft.VisualBasic.MIME.application.json.Javascript
+Imports Microsoft.VisualBasic.MIME.application.json.LenientJson
 
 Module simple_jsonParserTest
 
@@ -76,7 +77,7 @@ Module simple_jsonParserTest
                                         {"name": "Alice", "age": 
                                    </json>
 
-    Sub Main()
+    Sub Main11()
         Call test3()
         Call test2()
         Call test1()

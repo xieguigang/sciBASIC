@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::91f82bfd58c03316b103244f5890b963, gr\Microsoft.VisualBasic.Imaging\Drawing3D\IsometricEngine.vb"
+﻿#Region "Microsoft.VisualBasic::87135322d56386e6b1e880eea4e266e8, gr\Microsoft.VisualBasic.Imaging\Drawing3D\IsometricEngine.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 437
-    '    Code Lines: 325 (74.37%)
-    ' Comment Lines: 54 (12.36%)
+    '   Total Lines: 435
+    '    Code Lines: 324 (74.48%)
+    ' Comment Lines: 54 (12.41%)
     '    - Xml Docs: 74.07%
     ' 
-    '   Blank Lines: 58 (13.27%)
-    '     File Size: 18.26 KB
+    '   Blank Lines: 57 (13.10%)
+    '     File Size: 18.38 KB
 
 
     '     Class IsometricEngine

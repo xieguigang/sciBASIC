@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7c3945ffd90074ebea96874589ffe41e, gr\ModelViewer\RenderPanel.vb"
+﻿#Region "Microsoft.VisualBasic::7c3945ffd90074ebea96874589ffe41e, tutorials\ModelViewer\RenderPanel.vb"
 
     ' Author:
     ' 

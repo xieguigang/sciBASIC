@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fccd934cd733e5a243e04270d99c5090, vs_solutions\dev\VisualStudio\VersionControl\svn.vb"
+﻿#Region "Microsoft.VisualBasic::5535762f9be82c691c9a915ab41e8df5, vs_solutions\dev\VisualStudio\VersionControl\svn.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 16
-    '    Code Lines: 11 (68.75%)
+    '   Total Lines: 13
+    '    Code Lines: 10 (76.92%)
     ' Comment Lines: 0 (0.00%)
     '    - Xml Docs: 0.00%
     ' 
-    '   Blank Lines: 5 (31.25%)
-    '     File Size: 405 B
+    '   Blank Lines: 3 (23.08%)
+    '     File Size: 391 B
 
 
     '     Module svn
@@ -58,13 +58,10 @@ Namespace VersionControl
 
     Public Module svn
 
-        Public Function getLogText(file As String) As String
+        Public Function getLogText(file As String, Optional svn As String = "svn") As String
             Dim command$ = $"log {file.CLIPath}"
-            Dim svn As New IORedirectFile("svn", command, debug:=False)
-
-            Call svn.Run()
-
-            Return svn.StandardOutput
+            Dim stdout As String = PipelineProcess.Call(svn, command)
+            Return stdout
         End Function
     End Module
 End Namespace

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7681d468b29a0c95c3a2e4df9f2d4ab0, Microsoft.VisualBasic.Core\src\Drawing\netcore8.0\GraphicsPath.vb"
+﻿#Region "Microsoft.VisualBasic::d6f91eff5c95ed08c1952416b25688a5, Microsoft.VisualBasic.Core\src\Drawing\netcore8.0\GraphicsPath.vb"
 
     ' Author:
     ' 
@@ -34,26 +34,15 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 727
-    '    Code Lines: 390 (53.65%)
-    ' Comment Lines: 202 (27.79%)
-    '    - Xml Docs: 93.56%
+    '   Total Lines: 496
+    '    Code Lines: 327 (65.93%)
+    ' Comment Lines: 76 (15.32%)
+    '    - Xml Docs: 82.89%
     ' 
-    '   Blank Lines: 135 (18.57%)
-    '     File Size: 25.40 KB
+    '   Blank Lines: 93 (18.75%)
+    '     File Size: 18.95 KB
 
 
-    '     Class PathData
-    ' 
-    '         Properties: Points, Types
-    ' 
-    '     Enum FillMode
-    ' 
-    ' 
-    '  
-    ' 
-    ' 
-    ' 
     '     Class GraphicsPath
     ' 
     '         Properties: FillMode, PathData, PathPoints, PathTypes
@@ -174,55 +163,6 @@
     '             Properties: matrix, pen
     ' 
     ' 
-    ' 
-    '     Enum WarpMode
-    ' 
-    ' 
-    '  
-    ' 
-    ' 
-    ' 
-    '     Enum SmoothingMode
-    ' 
-    ' 
-    '  
-    ' 
-    ' 
-    ' 
-    '     Enum InterpolationMode
-    ' 
-    ' 
-    '  
-    ' 
-    ' 
-    ' 
-    '     Enum CompositingMode
-    ' 
-    ' 
-    '  
-    ' 
-    ' 
-    ' 
-    '     Enum PixelOffsetMode
-    ' 
-    ' 
-    '  
-    ' 
-    ' 
-    ' 
-    '     Enum QualityMode
-    ' 
-    ' 
-    '  
-    ' 
-    ' 
-    ' 
-    '     Class GraphicsState
-    ' 
-    '         Properties: StateIndex
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    '         Function: ToString
     ' 
     ' 
     ' /********************************************************************************/
