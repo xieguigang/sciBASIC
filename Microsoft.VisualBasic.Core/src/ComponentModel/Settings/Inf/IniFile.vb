@@ -71,6 +71,7 @@ Namespace ComponentModel.Settings.Inf
     Public Class IniFile : Implements IDisposable, Enumeration(Of Section)
 
         Public ReadOnly Property path As String
+        Public ReadOnly Property comments As New List(Of String)
 
         Public ReadOnly Property FileExists As Boolean
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
@@ -103,11 +104,30 @@ Namespace ComponentModel.Settings.Inf
                               End Function)
         End Sub
 
+        Public Function OpenSection(name As String) As Section
+            If Not data.ContainsKey(name) Then
+                data(name) = New Section With {
+                    .Name = name,
+                    .Items = {}
+                }
+            End If
+
+            Return data(name)
+        End Function
+
         ''' <summary>
         ''' 将缓存数据写入文件之中
         ''' </summary>
         Public Sub Flush()
             Using write As StreamWriter = path.OpenWriter
+                If Not comments.IsNullOrEmpty Then
+                    For Each line As String In comments
+                        Call write.WriteLine("; " & line)
+                    Next
+
+                    Call write.WriteLine()
+                End If
+
                 For Each section As Section In data.Values
                     Call write.WriteLine(section.CreateDocFragment)
                 Next
@@ -120,14 +140,7 @@ Namespace ComponentModel.Settings.Inf
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Sub WriteValue(section$, key$, value$, Optional comments$ = Nothing)
-            If Not data.ContainsKey(section) Then
-                data(section) = New Section With {
-                    .Name = section,
-                    .Items = {}
-                }
-            End If
-
-            data(section).SetValue(key, value, comments)
+            Call OpenSection(section).SetValue(key, value, comments)
         End Sub
 
         ''' <summary>
