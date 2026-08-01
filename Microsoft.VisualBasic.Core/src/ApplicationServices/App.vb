@@ -1,75 +1,75 @@
 ﻿#Region "Microsoft.VisualBasic::2ac81b93b3461a78ef0726b937ead305, Microsoft.VisualBasic.Core\src\ApplicationServices\App.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 1608
-    '    Code Lines: 780 (48.51%)
-    ' Comment Lines: 642 (39.93%)
-    '    - Xml Docs: 83.02%
-    ' 
-    '   Blank Lines: 186 (11.57%)
-    '     File Size: 69.23 KB
+' Summaries:
 
 
-    ' Module App
-    ' 
-    '     Properties: AppSystemTemp, AssemblyName, BufferSize, Command, CommandLine
-    '                 CPUCoreNumbers, CurrentDirectory, CurrentProcessTemp, CurrentUnixTimeMillis, Desktop
-    '                 EnableAnsiColor, EnableTqdm, ExecutablePath, GetLastError, Github
-    '                 HOME, Info, InputFile, IsConsoleApp, IsMicrosoftPlatform
-    '                 LocalData, LocalDataTemp, LogErrDIR, LogFile, MemoryLoad
-    '                 n_threads, NanoTime, NextTempName, OutFile, PID
-    '                 Platform, PreviousDirectory, Process, ProductName, ProductProgramData
-    '                 ProductSharedDIR, ProductSharedTemp, Running, RunningInGitBash, RunTimeDirectory
-    '                 StartTime, StartupDirectory, StdErr, StdInput, StdOut
-    '                 SysTemp, UnixTimeStamp, UserHOME, Version
-    ' 
-    '     Constructor: (+1 Overloads) Sub New
-    ' 
-    '     Function: __listFiles, (+2 Overloads) Argument, CheckIsMicrosoftPlatform, CLICode, (+2 Overloads) ElapsedMilliseconds
-    '               Exit, finalizeCLI, FormatTime, (+2 Overloads) GetAppLocalData, GetAppVariables
-    '               GetFile, GetNextUniqueName, GetProductSharedDIR, GetProductSharedTemp, GetTempFile
-    '               GetVariable, (+3 Overloads) LogException, NullDevice, RedirectErrLogging, RedirectLogging
-    '               (+13 Overloads) RunCLI, RunCLIInternal, SelfFolk, Shell, tempCode
-    '               TemporaryEnvironment, TraceBugs
-    ' 
-    '     Sub: __GCThreadInvoke, __removesTEMP, [Stop], AddExitCleanHook, (+2 Overloads) DoNothing
-    '          FlushMemory, Free, JoinVariable, (+2 Overloads) JoinVariables, Pause
-    '          (+2 Overloads) println, SetBufferSize, SetSystemTemp, StartGC, StopGC
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 1608
+'    Code Lines: 780 (48.51%)
+' Comment Lines: 642 (39.93%)
+'    - Xml Docs: 83.02%
+' 
+'   Blank Lines: 186 (11.57%)
+'     File Size: 69.23 KB
+
+
+' Module App
+' 
+'     Properties: AppSystemTemp, AssemblyName, BufferSize, Command, CommandLine
+'                 CPUCoreNumbers, CurrentDirectory, CurrentProcessTemp, CurrentUnixTimeMillis, Desktop
+'                 EnableAnsiColor, EnableTqdm, ExecutablePath, GetLastError, Github
+'                 HOME, Info, InputFile, IsConsoleApp, IsMicrosoftPlatform
+'                 LocalData, LocalDataTemp, LogErrDIR, LogFile, MemoryLoad
+'                 n_threads, NanoTime, NextTempName, OutFile, PID
+'                 Platform, PreviousDirectory, Process, ProductName, ProductProgramData
+'                 ProductSharedDIR, ProductSharedTemp, Running, RunningInGitBash, RunTimeDirectory
+'                 StartTime, StartupDirectory, StdErr, StdInput, StdOut
+'                 SysTemp, UnixTimeStamp, UserHOME, Version
+' 
+'     Constructor: (+1 Overloads) Sub New
+' 
+'     Function: __listFiles, (+2 Overloads) Argument, CheckIsMicrosoftPlatform, CLICode, (+2 Overloads) ElapsedMilliseconds
+'               Exit, finalizeCLI, FormatTime, (+2 Overloads) GetAppLocalData, GetAppVariables
+'               GetFile, GetNextUniqueName, GetProductSharedDIR, GetProductSharedTemp, GetTempFile
+'               GetVariable, (+3 Overloads) LogException, NullDevice, RedirectErrLogging, RedirectLogging
+'               (+13 Overloads) RunCLI, RunCLIInternal, SelfFolk, Shell, tempCode
+'               TemporaryEnvironment, TraceBugs
+' 
+'     Sub: __GCThreadInvoke, __removesTEMP, [Stop], AddExitCleanHook, (+2 Overloads) DoNothing
+'          FlushMemory, Free, JoinVariable, (+2 Overloads) JoinVariables, Pause
+'          (+2 Overloads) println, SetBufferSize, SetSystemTemp, StartGC, StopGC
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -379,13 +379,13 @@ Public Module App
             Return path
         End If
 
-        For Each DIR As String In {
+        For Each dir As String In {
             App.HOME,
             App.UserHOME,
             App.ProductProgramData,
             App.ProductSharedDIR
         }
-            If (path = DIR & "/" & fileName).FileExists Then
+            If (path = dir & "/" & fileName).FileExists Then
                 Return path
             End If
         Next
@@ -410,7 +410,10 @@ Public Module App
                 _PreviousDirectory = Directory.GetCurrentDirectory
             End If
 
-            FS.CreateDirectory(value)
+            If Not value.DirectoryExists Then
+                Call FS.CreateDirectory(value)
+            End If
+
             FS.CurrentDirectory = value
         End Set
     End Property
@@ -453,7 +456,10 @@ Public Module App
     Public ReadOnly Property ProductSharedDIR As String
 
     Sub New()
-        ' On Error Resume Next ' 在Linux服务器上面不起作用？？？
+        ' 20260801
+        ' 在Linux服务器上面不起作用？？？
+        On Error Resume Next
+
         PreviousDirectory = App.StartupDirectory
 
 #Region "公共模块内的所有的文件路径初始化"
@@ -461,35 +467,31 @@ Public Module App
         ' 现在放在这个构造函数之中，强制忽略掉错误继续执行，提升一些稳定性，防止出现程序无法启动的情况出现。
 
         ' 请注意，这里的变量都是有先后的初始化顺序的
-        Try
-            App.RunTimeDirectory = FS _
+        App.RunTimeDirectory = FS _
                 .GetDirectoryInfo(RuntimeEnvironment.GetRuntimeDirectory) _
                 .FullName _
                 .Replace("/", "\")
-            App.Desktop = Environment.GetFolderPath(Environment.SpecialFolder.Desktop)
-            App.ExecutablePath = FS.GetFileInfo(Application.ExecutablePath).FullName    ' (Process.GetCurrentProcess.StartInfo.FileName).FullName
-            App.Info = ApplicationInfoUtils.CurrentExe()
-            App.AssemblyName = BaseName(App.ExecutablePath)
-            App.ProductName = Application.ProductName Or AssemblyName.AsDefault(Function(s) String.IsNullOrEmpty(s))
-            App.HOME = FS.GetParentPath(App.ExecutablePath)
-            App.UserHOME = PathMapper.HOME.GetDirectoryFullPath("App.New(.cctor)")
-            App.ProductProgramData = $"{Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData)}/{ProductName}".GetDirectoryFullPath("App.New(.cctor)")
-            App.ProductSharedDIR = $"{ProductProgramData}/.shared".GetDirectoryFullPath
-            App.LocalData = App.GetAppLocalData(ProductName, AssemblyName, "App.New(.cctor)")
-            App.CurrentProcessTemp = TempFileSystem.GenerateTemp(App.SysTemp & "/tmp.io", App.PID).GetDirectoryFullPath("App.New(.cctor)")
-            App.ProductSharedTemp = App.ProductSharedDIR & "/tmp/"
-            App.LogErrDIR = App.LocalData & $"/.logs/err/"
-        Catch ex As Exception
-
-        End Try
+        App.Desktop = Environment.GetFolderPath(Environment.SpecialFolder.Desktop)
+        App.ExecutablePath = FS.GetFileInfo(Application.ExecutablePath).FullName    ' (Process.GetCurrentProcess.StartInfo.FileName).FullName
+        App.Info = ApplicationInfoUtils.CurrentExe()
+        App.AssemblyName = BaseName(App.ExecutablePath)
+        App.ProductName = Application.ProductName Or AssemblyName.AsDefault(Function(s) String.IsNullOrEmpty(s))
+        App.HOME = FS.GetParentPath(App.ExecutablePath)
+        App.UserHOME = PathMapper.HOME.GetDirectoryFullPath("App.New(.cctor)")
+        App.ProductProgramData = $"{Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData)}/{ProductName}".GetDirectoryFullPath("App.New(.cctor)")
+        App.ProductSharedDIR = $"{ProductProgramData}/.shared".GetDirectoryFullPath
+        App.LocalData = App.GetAppLocalData(ProductName, AssemblyName, "App.New(.cctor)")
+        App.CurrentProcessTemp = TempFileSystem.GenerateTemp(App.SysTemp & "/tmp.io", App.PID).GetDirectoryFullPath("App.New(.cctor)")
+        App.ProductSharedTemp = App.ProductSharedDIR & "/tmp/"
+        App.LogErrDIR = App.LocalData & $"/.logs/err/"
 #End Region
 
         If App.HOME.StringEmpty Then
             App.HOME = Directory.GetCurrentDirectory
         End If
-
-        Call FS.CreateDirectory(AppSystemTemp)
-        ' Call FileIO.FileSystem.CreateDirectory(App.HOME & "/Resources/")
+        If Not AppSystemTemp.DirectoryExists Then
+            Call FS.CreateDirectory(AppSystemTemp)
+        End If
 
         ' 2018-08-14 因为经过测试发现text encoding模块会优先于命令行参数设置模块的初始化的加载
         ' 所以会导致环境变量为空
@@ -498,23 +500,24 @@ Public Module App
         Dim envir As Dictionary(Of String, String) = App _
             .CommandLine _
             .EnvironmentVariables
-
-        Call App.JoinVariables(
-            envir _
-            .SafeQuery _
+        Dim list = envir.SafeQuery _
             .Select(Function(x)
                         Return New NamedValue(Of String) With {
                             .Name = x.Key,
                             .Value = x.Value
                         }
                     End Function) _
-            .ToArray)
+            .ToArray
+
+        Call App.JoinVariables(list)
 
         ' 20200428
         ' 因为在CodePage拓展函数所属的TextEncodings模块的构造函数之中，会需要调用当前的这个App模块之中的环境变量函数
         ' 进行默认字符编码的设置，所以在这里不可以使用CodePage拓展函数，否则会产生循环引用导致程序初始化错误
         '
-        ' System.TypeInitializationException: The type initializer for 'Microsoft.VisualBasic.App' threw an exception. ---> System.TypeInitializationException: The type initializer for 'Microsoft.VisualBasic.Text.TextEncodings' threw an exception. ---> System.NullReferenceException: Object reference not set to an instance of an object
+        ' System.TypeInitializationException: The type initializer for 'Microsoft.VisualBasic.App' threw an exception.
+        ' ---> System.TypeInitializationException: The type initializer for 'Microsoft.VisualBasic.Text.TextEncodings' threw an exception.
+        ' ---> System.NullReferenceException: Object reference not set to an instance of an object
         ' at Microsoft.VisualBasic.App.GetVariable (System.String name) [0x00001] in <eb97044717724341a21be2d5b902e6d1>:0
         ' at Microsoft.VisualBasic.Text.TextEncodings..cctor () [0x00034] in <eb97044717724341a21be2d5b902e6d1>:0
         ' --- End of inner exception stack trace ---
@@ -1628,7 +1631,7 @@ Public Module App
         ' 使用这个自动清理功能的函数，可能会将这些有用的中间文件给删除掉
         ' 所以在这里给出一条警告信息，方便在调试的时候了解这个自动垃圾回收线程是否被启动了
         Call App.__GCThread.Start()
-        Call "Garbage auto collection thread started!".Warning
+        Call "Garbage auto collection thread started!".warning
 
         App._CLIAutoClean = autoClose
     End Sub

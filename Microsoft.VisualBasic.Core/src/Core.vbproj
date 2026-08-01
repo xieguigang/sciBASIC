@@ -42,7 +42,7 @@
 		<PlatformTarget>x64</PlatformTarget>
 		<RemoveIntegerChecks>true</RemoveIntegerChecks>
 		<DebugSymbols>true</DebugSymbols>
-		<DebugType>full</DebugType>
+		<DebugType>portable</DebugType>
 		<DefineConstants>netcore5=1,FRAMEWORD_CORE=1</DefineConstants>
 		<DocumentationFile>Microsoft.VisualBasic.Runtime.xml</DocumentationFile>
 	</PropertyGroup>
@@ -51,7 +51,7 @@
 	  <PlatformTarget>x64</PlatformTarget>
 	  <RemoveIntegerChecks>true</RemoveIntegerChecks>
 	  <DebugSymbols>true</DebugSymbols>
-	  <DebugType>full</DebugType>
+	  <DebugType>portable</DebugType>
 	  <DefineConstants>netcore5=1,FRAMEWORD_CORE=1</DefineConstants>
 	  <DocumentationFile>Microsoft.VisualBasic.Runtime.xml</DocumentationFile>
 	</PropertyGroup>
@@ -60,7 +60,7 @@
 		<PlatformTarget>x64</PlatformTarget>
 		<RemoveIntegerChecks>true</RemoveIntegerChecks>
 		<DebugSymbols>true</DebugSymbols>
-		<DebugType>full</DebugType>				
+		<DebugType>portable</DebugType>				
 		<OutputPath>../../.nuget/</OutputPath>
 	</PropertyGroup>
 
@@ -69,7 +69,7 @@
 		<RemoveIntegerChecks>false</RemoveIntegerChecks>
 		<Optimize>false</Optimize>
 		<DebugSymbols>true</DebugSymbols>
-		<DebugType>full</DebugType>
+		<DebugType>portable</DebugType>
 		<DefineDebug>false</DefineDebug>
 		<DefineConstants>netcore5=1</DefineConstants>
 	</PropertyGroup>
@@ -79,7 +79,7 @@
 	  <RemoveIntegerChecks>false</RemoveIntegerChecks>
 	  <Optimize>false</Optimize>
 	  <DebugSymbols>true</DebugSymbols>
-	  <DebugType>full</DebugType>
+	  <DebugType>portable</DebugType>
 	  <DefineDebug>false</DefineDebug>
 	  <DefineConstants>netcore5=1</DefineConstants>
 	</PropertyGroup>
@@ -89,7 +89,7 @@
 	  <RemoveIntegerChecks>false</RemoveIntegerChecks>
 	  <Optimize>false</Optimize>
 	  <DebugSymbols>true</DebugSymbols>
-	  <DebugType>full</DebugType>
+	  <DebugType>portable</DebugType>
 	  <DefineDebug>false</DefineDebug>
 	  <DefineConstants>netcore5=1</DefineConstants>
 	</PropertyGroup>
@@ -99,7 +99,7 @@
 	  <RemoveIntegerChecks>false</RemoveIntegerChecks>
 	  <Optimize>false</Optimize>
 	  <DebugSymbols>true</DebugSymbols>
-	  <DebugType>full</DebugType>
+	  <DebugType>portable</DebugType>
 	  <DefineDebug>false</DefineDebug>
 	  <DefineConstants>netcore5=1</DefineConstants>
 	</PropertyGroup>
@@ -109,7 +109,7 @@
 		<RemoveIntegerChecks>false</RemoveIntegerChecks>
 		<Optimize>false</Optimize>
 		<DebugSymbols>true</DebugSymbols>
-		<DebugType>full</DebugType>
+		<DebugType>portable</DebugType>
 		<DefineDebug>false</DefineDebug>
 		<DefineConstants>netcore5=1</DefineConstants>
 	</PropertyGroup>
@@ -119,89 +119,109 @@
 	  <RemoveIntegerChecks>false</RemoveIntegerChecks>
 	  <Optimize>false</Optimize>
 	  <DebugSymbols>true</DebugSymbols>
-	  <DebugType>full</DebugType>
+	  <DebugType>portable</DebugType>
 	  <DefineDebug>false</DefineDebug>
 	  <DefineConstants>netcore5=1</DefineConstants>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Rsharp_app_release|AnyCPU'">
 		<DocumentationFile>Microsoft.VisualBasic.Runtime.xml</DocumentationFile>
+		<DebugType>portable</DebugType>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='CFD_win32|AnyCPU'">
 	  <DocumentationFile>Microsoft.VisualBasic.Runtime.xml</DocumentationFile>
+	  <DebugType>portable</DebugType>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Rsharp_app_release|x86'">
 	  <DocumentationFile>Microsoft.VisualBasic.Runtime.xml</DocumentationFile>
+	  <DebugType>portable</DebugType>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='CFD_win32|x86'">
 	  <DocumentationFile>Microsoft.VisualBasic.Runtime.xml</DocumentationFile>
+	  <DebugType>portable</DebugType>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='gcmodeller_desktop|AnyCPU'">
 	  <DocumentationFile>Microsoft.VisualBasic.Runtime.xml</DocumentationFile>
+	  <DebugType>portable</DebugType>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='CellaLAB-Desktop|AnyCPU'">
 	  <DocumentationFile>Microsoft.VisualBasic.Runtime.xml</DocumentationFile>
+	  <DebugType>portable</DebugType>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Desktop|AnyCPU'">
 	  <DocumentationFile>Microsoft.VisualBasic.Runtime.xml</DocumentationFile>
+	  <DebugType>portable</DebugType>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Docker|AnyCPU'">
 	  <DocumentationFile>Microsoft.VisualBasic.Runtime.xml</DocumentationFile>
+	  <DebugType>portable</DebugType>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='gcmodeller_desktop|x86'">
 	  <DocumentationFile>Microsoft.VisualBasic.Runtime.xml</DocumentationFile>
+	  <DebugType>portable</DebugType>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='CellaLAB-Desktop|x86'">
 	  <DocumentationFile>Microsoft.VisualBasic.Runtime.xml</DocumentationFile>
+	  <DebugType>portable</DebugType>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Desktop|x86'">
 	  <DocumentationFile>Microsoft.VisualBasic.Runtime.xml</DocumentationFile>
+	  <DebugType>portable</DebugType>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Docker|x86'">
 	  <DocumentationFile>Microsoft.VisualBasic.Runtime.xml</DocumentationFile>
+	  <DebugType>portable</DebugType>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='mzkit_win32|AnyCPU'">
 	  <DocumentationFile>Microsoft.VisualBasic.Runtime.xml</DocumentationFile>
+	  <DebugType>portable</DebugType>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='mzkit_win32|x86'">
 	  <DocumentationFile>Microsoft.VisualBasic.Runtime.xml</DocumentationFile>
+	  <DebugType>portable</DebugType>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='PlantMAT|AnyCPU'">
 		<DocumentationFile>Microsoft.VisualBasic.Runtime.xml</DocumentationFile>
+		<DebugType>portable</DebugType>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='PlantMAT|x86'">
 	  <DocumentationFile>Microsoft.VisualBasic.Runtime.xml</DocumentationFile>
+	  <DebugType>portable</DebugType>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='NPSearch|AnyCPU'">
 		<DocumentationFile>Microsoft.VisualBasic.Runtime.xml</DocumentationFile>
+		<DebugType>portable</DebugType>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='NPSearch|x86'">
 	  <DocumentationFile>Microsoft.VisualBasic.Runtime.xml</DocumentationFile>
+	  <DebugType>portable</DebugType>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='LipidSearch|AnyCPU'">
 		<DocumentationFile>Microsoft.VisualBasic.Runtime.xml</DocumentationFile>
+		<DebugType>portable</DebugType>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='LipidSearch|x86'">
 	  <DocumentationFile>Microsoft.VisualBasic.Runtime.xml</DocumentationFile>
+	  <DebugType>portable</DebugType>
 	</PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -209,7 +229,7 @@
     <RemoveIntegerChecks>true</RemoveIntegerChecks>
     <Optimize>false</Optimize>
     <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
+    <DebugType>portable</DebugType>
     <DefineDebug>false</DefineDebug>
     <OutputPath>bin/</OutputPath>
   </PropertyGroup>
@@ -219,7 +239,7 @@
     <RemoveIntegerChecks>true</RemoveIntegerChecks>
     <Optimize>false</Optimize>
     <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
+    <DebugType>portable</DebugType>
     <DefineDebug>false</DefineDebug>
     <OutputPath>bin/</OutputPath>
   </PropertyGroup>
@@ -230,7 +250,7 @@
 		<RemoveIntegerChecks>true</RemoveIntegerChecks>
 		<Optimize>false</Optimize>
 		<DebugSymbols>true</DebugSymbols>
-		<DebugType>full</DebugType>
+		<DebugType>portable</DebugType>
 		<DefineDebug>false</DefineDebug>
 		<OutputPath>../../../../../..\mzkit\Rscript\Library\mzkit_app\assembly\</OutputPath>
 	</PropertyGroup>
@@ -242,7 +262,7 @@
 		<Optimize>false</Optimize>
 		<BaseAddress>4194304</BaseAddress>
 		<DebugSymbols>true</DebugSymbols>
-		<DebugType>full</DebugType>
+		<DebugType>portable</DebugType>
 		<DefineDebug>false</DefineDebug>
 		<DefineTrace>true</DefineTrace>
 		<OutputPath>../../../../\R-sharp\App\</OutputPath>
@@ -255,7 +275,7 @@
 	  <Optimize>false</Optimize>
 	  <BaseAddress>4194304</BaseAddress>
 	  <DebugSymbols>true</DebugSymbols>
-	  <DebugType>full</DebugType>
+	  <DebugType>portable</DebugType>
 	  <DefineDebug>false</DefineDebug>
 	  <DefineTrace>true</DefineTrace>
 	</PropertyGroup>
@@ -267,7 +287,7 @@
 	  <Optimize>false</Optimize>
 	  <BaseAddress>4194304</BaseAddress>
 	  <DebugSymbols>true</DebugSymbols>
-	  <DebugType>full</DebugType>
+	  <DebugType>portable</DebugType>
 	  <DefineDebug>false</DefineDebug>
 	  <DefineTrace>true</DefineTrace>
 	</PropertyGroup>
@@ -279,7 +299,7 @@
 	  <Optimize>false</Optimize>
 	  <BaseAddress>4194304</BaseAddress>
 	  <DebugSymbols>true</DebugSymbols>
-	  <DebugType>full</DebugType>
+	  <DebugType>portable</DebugType>
 	  <DefineDebug>false</DefineDebug>
 	  <DefineTrace>true</DefineTrace>
 	</PropertyGroup>
@@ -291,7 +311,7 @@
 	  <Optimize>false</Optimize>
 	  <BaseAddress>4194304</BaseAddress>
 	  <DebugSymbols>true</DebugSymbols>
-	  <DebugType>full</DebugType>
+	  <DebugType>portable</DebugType>
 	  <DefineDebug>false</DefineDebug>
 	  <DefineTrace>true</DefineTrace>
 	</PropertyGroup>
@@ -303,7 +323,7 @@
 	  <Optimize>false</Optimize>
 	  <BaseAddress>4194304</BaseAddress>
 	  <DebugSymbols>true</DebugSymbols>
-	  <DebugType>full</DebugType>
+	  <DebugType>portable</DebugType>
 	  <DefineDebug>false</DefineDebug>
 	  <DefineTrace>true</DefineTrace>
 	</PropertyGroup>
@@ -338,7 +358,7 @@
 		<Optimize>false</Optimize>
 		<BaseAddress>4194304</BaseAddress>
 		<DebugSymbols>true</DebugSymbols>
-		<DebugType>full</DebugType>
+		<DebugType>portable</DebugType>
 		<DefineDebug>false</DefineDebug>
 		<DefineTrace>true</DefineTrace>		
 	</PropertyGroup>
@@ -351,7 +371,7 @@
 		<Optimize>false</Optimize>
 		<BaseAddress>4194304</BaseAddress>
 		<DebugSymbols>true</DebugSymbols>
-		<DebugType>full</DebugType>
+		<DebugType>portable</DebugType>
 		<DefineDebug>false</DefineDebug>
 		<DefineTrace>true</DefineTrace>
 	</PropertyGroup>
@@ -2669,6 +2689,26 @@
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='MEMI-Desktop|net10.0-windows|x86'">
     <DefineTrace>True</DefineTrace>
     <RemoveIntegerChecks>True</RemoveIntegerChecks>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <DebugType>portable</DebugType>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='NPSearch|x64'">
+    <DebugType>portable</DebugType>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='mzkit_win32|x64'">
+    <DebugType>portable</DebugType>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='nuget_release|AnyCPU'">
+    <DebugType>portable</DebugType>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='nuget_release|x86'">
+    <DebugType>portable</DebugType>
   </PropertyGroup>
 
   <ItemGroup>
