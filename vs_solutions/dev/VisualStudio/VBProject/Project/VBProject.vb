@@ -81,7 +81,7 @@ Namespace VBProj
     Public Class VBProject : Implements IFileReference, IProjectWorkspace
 
         Public Property RootNamespace As String
-        Public Property AssemblyName As String
+        Public Property AssemblyName As String Implements IProjectWorkspace.Name
         Public Property AssemblyVersion As String
         Public Property OutputType As String
         Public Property CompileFiles As VBDocument()
