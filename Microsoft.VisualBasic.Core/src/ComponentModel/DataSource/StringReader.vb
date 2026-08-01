@@ -1,72 +1,72 @@
 ﻿#Region "Microsoft.VisualBasic::4687a8de632b15a6161c34ec3bb69229, Microsoft.VisualBasic.Core\src\ComponentModel\DataSource\StringReader.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 333
-    '    Code Lines: 177 (53.15%)
-    ' Comment Lines: 105 (31.53%)
-    '    - Xml Docs: 88.57%
-    ' 
-    '   Blank Lines: 51 (15.32%)
-    '     File Size: 11.69 KB
+' Summaries:
 
 
-    '     Interface IStringGetter
-    ' 
-    '         Function: GetOrdinal, GetSize, (+2 Overloads) GetString, HasKey, MoveNext
-    ' 
-    '     Class DictionaryWrapper
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    '         Function: GetOrdinal, GetSize, (+2 Overloads) GetString, HasKey, MoveNext
-    ' 
-    '     Class StringArrayPointer
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    '         Function: (+2 Overloads) ReadDouble, (+2 Overloads) ReadInteger, (+2 Overloads) ReadString, ToString
-    ' 
-    '     Class StringReader
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    '         Function: GetBoolean, GetByte, GetBytes, GetChar, GetChars
-    '                   GetDateTime, GetDecimal, GetDouble, GetFloat, GetGuid
-    '                   GetInt16, GetInt32, GetInt64, GetString, GetUInt64
-    '                   IsNull, WrapDictionary
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 333
+'    Code Lines: 177 (53.15%)
+' Comment Lines: 105 (31.53%)
+'    - Xml Docs: 88.57%
+' 
+'   Blank Lines: 51 (15.32%)
+'     File Size: 11.69 KB
+
+
+'     Interface IStringGetter
+' 
+'         Function: GetOrdinal, GetSize, (+2 Overloads) GetString, HasKey, MoveNext
+' 
+'     Class DictionaryWrapper
+' 
+'         Constructor: (+1 Overloads) Sub New
+'         Function: GetOrdinal, GetSize, (+2 Overloads) GetString, HasKey, MoveNext
+' 
+'     Class StringArrayPointer
+' 
+'         Constructor: (+1 Overloads) Sub New
+'         Function: (+2 Overloads) ReadDouble, (+2 Overloads) ReadInteger, (+2 Overloads) ReadString, ToString
+' 
+'     Class StringReader
+' 
+'         Constructor: (+1 Overloads) Sub New
+'         Function: GetBoolean, GetByte, GetBytes, GetChar, GetChars
+'                   GetDateTime, GetDecimal, GetDouble, GetFloat, GetGuid
+'                   GetInt16, GetInt32, GetInt64, GetString, GetUInt64
+'                   IsNull, WrapDictionary
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -131,10 +131,13 @@ Namespace ComponentModel.DataSourceModel
 
         ReadOnly dict As Dictionary(Of String, String)
         ReadOnly keys As String()
+        ReadOnly unsafe As Boolean
 
-        Sub New(list As Dictionary(Of String, String))
+        Sub New(list As Dictionary(Of String, String), Optional unsafe As Boolean = True)
             dict = list
             keys = dict.Keys.ToArray
+
+            Me.unsafe = unsafe
         End Sub
 
         Public Function HasKey(name As String) As Boolean Implements IStringGetter.HasKey
@@ -142,7 +145,13 @@ Namespace ComponentModel.DataSourceModel
         End Function
 
         Public Function GetString(name As String) As String Implements IStringGetter.GetString, IKeyDataReader.GetData
-            Return dict(name)
+            If unsafe Then
+                Return dict(name)
+            ElseIf Not dict.ContainsKey(name) Then
+                Return ""
+            Else
+                Return dict(name)
+            End If
         End Function
 
         Public Function GetString(ordinal As Integer) As String Implements IStringGetter.GetString
@@ -246,7 +255,13 @@ Namespace ComponentModel.DataSourceModel
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function GetByte(parameter As String) As Byte
-            Return Byte.Parse(getter.GetString(parameter))
+            Dim b As Byte
+
+            If Byte.TryParse(getter.GetString(parameter), b) Then
+                Return b
+            Else
+                Return 0
+            End If
         End Function
 
         ''' <summary>
@@ -299,7 +314,13 @@ Namespace ComponentModel.DataSourceModel
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function GetDecimal(parameter As String) As Decimal
-            Return Decimal.Parse(getter.GetString(parameter))
+            Dim f128 As Decimal
+
+            If Decimal.TryParse(getter.GetString(parameter), f128) Then
+                Return f128
+            Else
+                Return 0
+            End If
         End Function
 
         ''' <summary>
@@ -319,7 +340,13 @@ Namespace ComponentModel.DataSourceModel
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function GetFloat(parameter As String) As Single
-            Return Single.Parse(getter.GetString(parameter))
+            Dim f32 As Single
+
+            If Single.TryParse(getter.GetString(parameter), f32) Then
+                Return f32
+            Else
+                Return 0
+            End If
         End Function
 
         ''' <summary>
@@ -339,7 +366,13 @@ Namespace ComponentModel.DataSourceModel
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function GetInt16(parameter As String) As Int16
-            Return Int16.Parse(getter.GetString(parameter))
+            Dim i16 As Short
+
+            If Int16.TryParse(getter.GetString(parameter), i16) Then
+                Return i16
+            Else
+                Return 0
+            End If
         End Function
 
         ''' <summary>
@@ -366,12 +399,24 @@ Namespace ComponentModel.DataSourceModel
         ''' 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function GetInt64(parameter As String) As Int64
-            Return Long.Parse(getter.GetString(parameter))
+            Dim i64 As Long
+
+            If Long.TryParse(getter.GetString(parameter), i64) Then
+                Return i64
+            Else
+                Return 0
+            End If
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function GetUInt64(name As String) As ULong
-            Return ULong.Parse(getter.GetString(name))
+            Dim i64 As ULong
+
+            If ULong.TryParse(getter.GetString(name), i64) Then
+                Return i64
+            Else
+                Return 0
+            End If
         End Function
 
         ''' <summary>
@@ -398,8 +443,8 @@ Namespace ComponentModel.DataSourceModel
             End If
         End Function
 
-        Public Shared Function WrapDictionary(dict As Dictionary(Of String, String)) As StringReader
-            Return New StringReader(New DictionaryWrapper(dict))
+        Public Shared Function WrapDictionary(dict As Dictionary(Of String, String), Optional unsafe As Boolean = True) As StringReader
+            Return New StringReader(New DictionaryWrapper(dict, unsafe))
         End Function
     End Class
 End Namespace
