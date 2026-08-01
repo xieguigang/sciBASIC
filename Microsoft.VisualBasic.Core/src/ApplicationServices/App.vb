@@ -458,36 +458,43 @@ Public Module App
     Sub New()
         ' 20260801
         ' 在Linux服务器上面不起作用？？？
-        On Error Resume Next
+        Try
+            Call Startup()
+        Catch ex As Exception
+            Call Console.Error.WriteLine(ex.ToString)
+            Call Environment.Exit(0)
+        End Try
+    End Sub
 
-        PreviousDirectory = App.StartupDirectory
+    Private Sub Startup()
+        _PreviousDirectory = App.StartupDirectory
 
 #Region "公共模块内的所有的文件路径初始化"
         ' 因为vb的基础运行时环境在Linux平台上面对文件系统的支持还不是太完善，所以不能够放在属性的位置直接赋值，否则比较难处理异常
         ' 现在放在这个构造函数之中，强制忽略掉错误继续执行，提升一些稳定性，防止出现程序无法启动的情况出现。
 
         ' 请注意，这里的变量都是有先后的初始化顺序的
-        App.RunTimeDirectory = FS _
+        _RunTimeDirectory = FS _
                 .GetDirectoryInfo(RuntimeEnvironment.GetRuntimeDirectory) _
                 .FullName _
                 .Replace("/", "\")
-        App.Desktop = Environment.GetFolderPath(Environment.SpecialFolder.Desktop)
-        App.ExecutablePath = FS.GetFileInfo(Application.ExecutablePath).FullName    ' (Process.GetCurrentProcess.StartInfo.FileName).FullName
-        App.Info = ApplicationInfoUtils.CurrentExe()
-        App.AssemblyName = BaseName(App.ExecutablePath)
-        App.ProductName = Application.ProductName Or AssemblyName.AsDefault(Function(s) String.IsNullOrEmpty(s))
-        App.HOME = FS.GetParentPath(App.ExecutablePath)
-        App.UserHOME = PathMapper.HOME.GetDirectoryFullPath("App.New(.cctor)")
-        App.ProductProgramData = $"{Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData)}/{ProductName}".GetDirectoryFullPath("App.New(.cctor)")
-        App.ProductSharedDIR = $"{ProductProgramData}/.shared".GetDirectoryFullPath
-        App.LocalData = App.GetAppLocalData(ProductName, AssemblyName, "App.New(.cctor)")
-        App.CurrentProcessTemp = TempFileSystem.GenerateTemp(App.SysTemp & "/tmp.io", App.PID).GetDirectoryFullPath("App.New(.cctor)")
-        App.ProductSharedTemp = App.ProductSharedDIR & "/tmp/"
-        App.LogErrDIR = App.LocalData & $"/.logs/err/"
+        _Desktop = Environment.GetFolderPath(Environment.SpecialFolder.Desktop)
+        _ExecutablePath = FS.GetFileInfo(Application.ExecutablePath).FullName    ' (Process.GetCurrentProcess.StartInfo.FileName).FullName
+        _Info = ApplicationInfoUtils.CurrentExe()
+        _AssemblyName = BaseName(_ExecutablePath)
+        _ProductName = Application.ProductName Or _AssemblyName.AsDefault(Function(s) String.IsNullOrEmpty(s))
+        _HOME = FS.GetParentPath(_ExecutablePath)
+        _UserHOME = PathMapper.HOME.GetDirectoryFullPath("App.New(.cctor)")
+        _ProductProgramData = $"{Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData)}/{ProductName}".GetDirectoryFullPath("App.New(.cctor)")
+        _ProductSharedDIR = $"{_ProductProgramData}/.shared".GetDirectoryFullPath
+        _LocalData = App.GetAppLocalData(_ProductName, _AssemblyName, "App.New(.cctor)")
+        _CurrentProcessTemp = TempFileSystem.GenerateTemp(App.SysTemp & "/tmp.io", App.PID).GetDirectoryFullPath("App.New(.cctor)")
+        _ProductSharedTemp = _ProductSharedDIR & "/tmp/"
+        _LogErrDIR = _LocalData & $"/.logs/err/"
 #End Region
 
         If App.HOME.StringEmpty Then
-            App.HOME = Directory.GetCurrentDirectory
+            _HOME = Directory.GetCurrentDirectory
         End If
         If Not AppSystemTemp.DirectoryExists Then
             Call FS.CreateDirectory(AppSystemTemp)
@@ -526,7 +533,7 @@ Public Module App
         ' at Rserve.Program.Main () [0x00001] in <419e486af7e7476b893119a59f5f71e8>:0
         ' 
         ' Encodings.UTF8WithoutBOM.CodePage
-        App.StdOut = Console.OpenStandardOutput.OpenTextWriter(New UTF8Encoding(encoderShouldEmitUTF8Identifier:=False))
+        _StdOut = Console.OpenStandardOutput.OpenTextWriter(New UTF8Encoding(encoderShouldEmitUTF8Identifier:=False))
     End Sub
 
     ''' <summary>
