@@ -3,8 +3,8 @@
   <PropertyGroup>
     <OutputType>Library</OutputType>
     <TargetFramework>net10.0</TargetFramework>
-    <RootNamespace>KnowledgeGraph</RootNamespace>
-    <AssemblyName>KnowledgeGraph</AssemblyName>
+    <RootNamespace>Microsoft.VisualBasic.Data.NLP.Knowledge</RootNamespace>
+    <AssemblyName>Microsoft.VisualBasic.Data.NLP.Knowledge</AssemblyName>
     <OptionExplicit>On</OptionExplicit>
     <OptionStrict>Off</OptionStrict>
     <Import>Microsoft.VisualBasic</Import>
