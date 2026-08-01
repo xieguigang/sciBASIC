@@ -97,36 +97,37 @@ Namespace CommandLine.Parsers
         ''' Try parsing the cli command string from the string value.
         ''' </summary>
         ''' <param name="args">The commandline arguments which is user inputs from the terminal.</param>
-        ''' <param name="duplicatedAllows">Allow the duplicated command parameter argument name in the input, 
+        ''' <param name="allowDuplicated">Allow the duplicated command parameter argument name in the input, 
         ''' default is not allowed the duplication.(是否允许有重复名称的参数名出现，默认是不允许的)</param>
         ''' <returns></returns>
         ''' <remarks>(尝试着从文本行之中解析出命令行参数信息)</remarks>
         <ExportAPI("TryParse")>
         <Extension>
         Public Function TryParse(args As StringList,
-                                 Optional duplicatedAllows As Boolean = False,
+                                 Optional allowDuplicated As Boolean = False,
                                  Optional rawInput$ = Nothing) As CommandLine
 
 #If UNIX Then
             ' 20210606 这个主要是针对docker环境的命令行传递的问题
             Dim tokens$() = POSIX.JoinTokens(args.SafeQuery).ToArray
 #Else
-            Dim tokens$() = args.SafeQuery.ToArray
+            Dim tokens$() = If(args, New String() {}).ToArray
 #End If
-            Dim singleValue$ = ""
-
             If tokens.Length = 0 Then
                 Return New CommandLine
             Else
-                tokens = tokens _
+                Return tokens _
                     .fixWindowsNetworkDirectory _
                     .extract _
-                    .ToArray
+                    .ToArray _
+                    .ParseCLIInternal(rawInput, duplicatedAllows:=allowDuplicated)
             End If
+        End Function
 
-            Dim bools$() = tokens _
-                .Skip(1) _
-                .GetLogicalFlags(singleValue)
+        <Extension>
+        Private Function ParseCLIInternal(tokens As String(), rawInput$, duplicatedAllows As Boolean) As CommandLine
+            Dim singleValue$ = ""
+            Dim bools$() = tokens.Skip(1).GetLogicalFlags(singleValue)
             Dim cli As New CommandLine With {
                 .Name = tokens(Scan0),
                 .Tokens = tokens,
