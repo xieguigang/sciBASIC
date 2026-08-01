@@ -63,6 +63,9 @@
 
 #End Region
 
+Imports System.IO
+Imports System.Xml
+
 Namespace sln
 
     ''' <summary>
@@ -101,6 +104,23 @@ Namespace sln
         Public Property IsXmlFormat As Boolean
 
         ''' <summary>
+        ''' The solution GUID, mirrored from <see cref="[Global].SolutionGuid"/>.
+        ''' Setting this also updates the underlying global property.
+        ''' </summary>
+        Public Property SolutionGuid As String
+            Get
+                Return [Global].SolutionGuid
+            End Get
+            Set(value As String)
+                [Global].SolutionGuid = value
+
+                If Not String.IsNullOrEmpty(value) Then
+                    [Global].Properties("SolutionGuid") = value
+                End If
+            End Set
+        End Property
+
+        ''' <summary>
         ''' Resolve the full path of a project relative to the solution file.
         ''' </summary>
         Public Function GetProjectFullPath(p As Project) As String
@@ -119,8 +139,190 @@ Namespace sln
             Return IO.Path.GetFullPath(IO.Path.Combine(IO.Path.GetDirectoryName(FilePath), p.RelativePath))
         End Function
 
+        ''' <summary>
+        ''' Find a project or solution folder by its GUID (case-insensitive).
+        ''' </summary>
+        Public Function GetProject(guid As String) As Project
+            If String.IsNullOrEmpty(guid) Then
+                Return Nothing
+            End If
+
+            Dim g As String = guid.ToUpperInvariant()
+
+            For Each p In Projects
+                If p.Guid IsNot Nothing AndAlso p.Guid.ToUpperInvariant() = g Then
+                    Return p
+                End If
+            Next
+
+            Return Nothing
+        End Function
+
+        ''' <summary>
+        ''' Get all top-level nodes (no parent solution folder).
+        ''' </summary>
+        Public Function GetRootProjects() As List(Of Project)
+            Dim roots As New List(Of Project)
+
+            For Each p In Projects
+                If String.IsNullOrEmpty(p.ParentGuid) Then
+                    roots.Add(p)
+                End If
+            Next
+
+            Return roots
+        End Function
+
+        ''' <summary>
+        ''' Get the direct children of the given parent solution folder GUID.
+        ''' </summary>
+        Public Function GetChildProjects(parentGuid As String) As List(Of Project)
+            Dim children As New List(Of Project)
+            Dim g As String = If(parentGuid Is Nothing, "", parentGuid.ToUpperInvariant())
+
+            For Each p In Projects
+                If p.ParentGuid IsNot Nothing AndAlso p.ParentGuid.ToUpperInvariant() = g Then
+                    children.Add(p)
+                End If
+            Next
+
+            Return children
+        End Function
+
         Public Shared Function Load(sln As String) As Solution
             Return Parser.Parse(path:=sln)
+        End Function
+
+        ''' <summary>
+        ''' Save this solution model as a ``.slnx`` (XML) file. The output is
+        ''' symmetric with <see cref="Parser.ParseSlnx"/> so it can be re-read.
+        ''' </summary>
+        ''' <param name="path">
+        ''' The target ``.slnx`` file path. When omitted, <see cref="FilePath"/> is used.
+        ''' </param>
+        Public Sub Save(Optional path As String = Nothing)
+            Dim target As String = If(path, FilePath)
+
+            If String.IsNullOrEmpty(target) Then
+                Throw New ArgumentNullException(NameOf(path), "A target path must be supplied (FilePath is empty).")
+            End If
+
+            FilePath = target
+            IsXmlFormat = True
+
+            Dim doc As New XmlDocument()
+            doc.AppendChild(doc.CreateXmlDeclaration("1.0", "utf-8", Nothing))
+
+            Dim root As XmlElement = doc.CreateElement("Solution")
+            doc.AppendChild(root)
+
+            If Not String.IsNullOrEmpty(FormatVersion) Then
+                root.SetAttribute("Version", FormatVersion)
+            End If
+
+            If Not String.IsNullOrEmpty(VisualStudioVersion) Then
+                root.SetAttribute("VisualStudioVersion", VisualStudioVersion)
+            End If
+
+            If Not String.IsNullOrEmpty(MinimumVisualStudioVersion) Then
+                root.SetAttribute("MinimumVisualStudioVersion", MinimumVisualStudioVersion)
+            End If
+
+            If Not String.IsNullOrEmpty([Global].SolutionGuid) Then
+                root.SetAttribute("Id", [Global].SolutionGuid)
+            End If
+
+            ' Emit project tree recursively from roots down.
+            For Each root_p In GetRootProjects()
+                WriteProjectNode(root, root_p, doc)
+            Next
+
+            ' Solution level configurations.
+            For Each cfg In Configurations
+                Dim cfgEl As XmlElement = doc.CreateElement("Configuration")
+                cfgEl.SetAttribute("Name", cfg.Name)
+                root.AppendChild(cfgEl)
+            Next
+
+            ' Remaining global properties (skip SolutionGuid, already on root).
+            For Each kv In [Global].Properties
+                If String.Equals(kv.Key, "SolutionGuid", StringComparison.OrdinalIgnoreCase) Then
+                    Continue For
+                End If
+
+                ' Configuration_* entries are produced by the parser's round-trip,
+                ' not genuine global properties, so they are skipped on save.
+                If kv.Key.StartsWith("Configuration_", StringComparison.OrdinalIgnoreCase) Then
+                    Continue For
+                End If
+
+                Dim propEl As XmlElement = doc.CreateElement("Property")
+                propEl.SetAttribute("Name", kv.Key)
+                propEl.SetAttribute("Value", kv.Value)
+                root.AppendChild(propEl)
+            Next
+
+            IO.Directory.CreateDirectory(IO.Path.GetDirectoryName(IO.Path.GetFullPath(target)))
+
+            Using writer As New XmlTextWriter(target, New UTF8Encoding(encoderShouldEmitUTF8Identifier:=True))
+                writer.Formatting = Formatting.Indented
+                writer.Indentation = 2
+                doc.WriteTo(writer)
+            End Using
+        End Sub
+
+        ''' <summary>
+        ''' Recursively write a project / folder node and its children into the
+        ''' slnx XML tree. Folders become ``&lt;Folder&gt;`` elements, projects
+        ''' become ``&lt;Project&gt;`` elements.
+        ''' </summary>
+        Private Sub WriteProjectNode(parent As XmlNode, p As Project, doc As XmlDocument)
+            Dim el As XmlElement
+
+            If p.IsFolder Then
+                el = doc.CreateElement("Folder")
+                el.SetAttribute("Name", If(p.Name, ""))
+
+                If Not String.IsNullOrEmpty(p.Guid) Then
+                    el.SetAttribute("Guid", p.Guid)
+                End If
+            Else
+                el = doc.CreateElement("Project")
+                el.SetAttribute("Path", If(p.RelativePath, ""))
+                el.SetAttribute("Name", If(p.Name, ""))
+
+                If Not String.IsNullOrEmpty(p.Guid) Then
+                    el.SetAttribute("Guid", p.Guid)
+                End If
+
+                If Not String.IsNullOrEmpty(p.TypeGuid) Then
+                    el.SetAttribute("Type", p.TypeGuid)
+                ElseIf p.NodeType <> TypeId.Unknown Then
+                    el.SetAttribute("Type", GetTypeGuid(p.NodeType))
+                End If
+            End If
+
+            parent.AppendChild(el)
+
+            ' Recurse into children so hierarchy is preserved as nesting.
+            For Each child In GetChildProjects(p.Guid)
+                WriteProjectNode(el, child, doc)
+            Next
+        End Sub
+
+        ''' <summary>
+        ''' Resolve the project type GUID for an enum value via its
+        ''' <see cref="DescriptionAttribute"/> (inverse of <c>Parser.ResolveType</c>).
+        ''' </summary>
+        Private Function GetTypeGuid(type As TypeId) As String
+            Dim field = GetType(TypeId).GetField(type.ToString())
+            Dim attr = CType(Attribute.GetCustomAttribute(field, GetType(DescriptionAttribute)), DescriptionAttribute)
+
+            If attr IsNot Nothing Then
+                Return attr.Description
+            End If
+
+            Return String.Empty
         End Function
     End Class
 
