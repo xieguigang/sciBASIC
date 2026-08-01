@@ -3,7 +3,21 @@
     <Platform Name="Any CPU" />
     <Platform Name="x64" />
   </Configurations>
+  <Folder Name="/framework/">
+    <Project Path="../Data_science/Graph/graph-netcore5.vbproj">
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="../Data_science/Mathematica/Math/Math/Math.NET5.vbproj">
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="../Microsoft.VisualBasic.Core/src/Core.vbproj">
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+  </Folder>
   <Project Path="KnowledgeGraph/KnowledgeGraph.vbproj">
     <Platform Solution="*|x64" Project="x64" />
+  </Project>
+  <Project Path="KnowledgeGraph/test/test.vbproj" Id="ede41d6a-7ef8-4ceb-b3b9-e293257d0174">
+    <Platform Solution="Debug|x64" Project="x64" />
   </Project>
 </Solution>
