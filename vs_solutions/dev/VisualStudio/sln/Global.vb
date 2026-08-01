@@ -52,9 +52,41 @@
 
 #End Region
 
+Imports System.Collections.Generic
+
 Namespace sln
 
+    ''' <summary>
+    ''' Carries the content of the solution ``GlobalSection`` pairs
+    ''' (e.g. ``SolutionGuid`` and other global properties).
+    ''' </summary>
     Public Class [Global]
 
+        ''' <summary>
+        ''' The solution GUID, if declared in ``GlobalSection(SolutionProperties)``.
+        ''' </summary>
+        Public Property SolutionGuid As String
+
+        ''' <summary>
+        ''' All raw key/value pairs found in the global sections.
+        ''' </summary>
+        Public Property Properties As New Dictionary(Of String, String)
+
+        ''' <summary>
+        ''' Get a global property value by key (case-insensitive).
+        ''' </summary>
+        Public Function GetValue(key As String) As String
+            If Properties Is Nothing Then
+                Return String.Empty
+            End If
+
+            For Each kv In Properties
+                If String.Equals(kv.Key, key, StringComparison.OrdinalIgnoreCase) Then
+                    Return kv.Value
+                End If
+            Next
+
+            Return String.Empty
+        End Function
     End Class
 End Namespace
