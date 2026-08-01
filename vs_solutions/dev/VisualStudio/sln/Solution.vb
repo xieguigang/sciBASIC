@@ -65,8 +65,6 @@
 
 Imports System.ComponentModel
 
-Imports System.Collections.Generic
-
 Namespace sln
 
     ''' <summary>
@@ -92,7 +90,7 @@ Namespace sln
         ''' <summary>
         ''' Global section key/value pairs (e.g. ``SolutionGuid``).
         ''' </summary>
-        Public Property Global As New [Global]
+        Public Property [Global] As New [Global]
 
         ''' <summary>
         ''' The file path of the solution that this model was parsed from.
