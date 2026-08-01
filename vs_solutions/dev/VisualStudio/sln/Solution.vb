@@ -63,7 +63,8 @@
 
 #End Region
 
-Imports System.IO
+Imports System.ComponentModel
+Imports System.Text
 Imports System.Xml
 
 Namespace sln
