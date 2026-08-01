@@ -75,7 +75,7 @@ Namespace Model
 
         Public ReadOnly Property IsEmpty As Boolean
             Get
-                Return words.IsNullOrEmpty OrElse words.All(AddressOf TextRank.IsEmpty)
+                Return words.IsNullOrEmpty OrElse words.All(AddressOf Text.IsEmpty)
             End Get
         End Property
 
@@ -183,7 +183,7 @@ Namespace Model
         Friend Function Trim() As Sentence
             Return New Sentence With {
                .words = words _
-                   .Where(Function(si) Not TextRank.IsEmpty(si)) _
+                   .Where(Function(si) Not Text.IsEmpty(si)) _
                    .ToArray
             }
         End Function
