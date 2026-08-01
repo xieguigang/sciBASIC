@@ -91,6 +91,12 @@ Namespace ComponentModel.Settings.Inf
             End Get
         End Property
 
+        Public ReadOnly Property SectionNames As IEnumerable(Of String)
+            Get
+                Return data.Keys
+            End Get
+        End Property
+
         ''' <summary>
         ''' Open a ini file handle.
         ''' </summary>
@@ -179,7 +185,11 @@ Namespace ComponentModel.Settings.Inf
             End If
         End Function
 
-        Public Iterator Function GenericEnumerator() As IEnumerator(Of Section) Implements Enumeration(Of Section).GenericEnumerator
+        ''' <summary>
+        ''' make supports for .AsEnumerable() of <see cref="Section"/> object
+        ''' </summary>
+        ''' <returns></returns>
+        Private Iterator Function GenericEnumerator() As IEnumerator(Of Section) Implements Enumeration(Of Section).GenericEnumerator
             If data Is Nothing Then
                 Return
             End If
