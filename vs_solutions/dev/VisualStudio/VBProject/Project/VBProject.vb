@@ -1,73 +1,75 @@
 ﻿#Region "Microsoft.VisualBasic::67989829e32dedb0ffbd9439821f1bf0, vs_solutions\dev\VisualStudio\VBProject\Project\VBProject.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 630
-    '    Code Lines: 497 (78.89%)
-    ' Comment Lines: 64 (10.16%)
-    '    - Xml Docs: 75.00%
-    ' 
-    '   Blank Lines: 69 (10.95%)
-    '     File Size: 30.57 KB
+' Summaries:
 
 
-    '     Class VBProject
-    ' 
-    '         Properties: AssemblyName, AssemblyVersion, CompileExcludes, CompileFiles, Configurations
-    '                     FilePath, IsDotNetCoreSDK, Metadata, MimeType, NuGet
-    '                     OutputType, PackageReferences, ProjectReferences, RootNamespace, Sdk
-    ' 
-    '         Function: [GetType], CleanName, ElementValue, ExtractImports, FindByLastName
-    '                   FindInContainer, Generate, IsNuGetProperty, Load, LoadAssembly
-    '                   LoadProjectXml, ParseConfigCondition, SplitImports, StripGenerics
-    ' 
-    '         Sub: AddAttrIf, AddIf, ParseItemGroups, ParseProperties, Save
-    '              SetMetadataProperty, SetNuGetProperty
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 630
+'    Code Lines: 497 (78.89%)
+' Comment Lines: 64 (10.16%)
+'    - Xml Docs: 75.00%
+' 
+'   Blank Lines: 69 (10.95%)
+'     File Size: 30.57 KB
+
+
+'     Class VBProject
+' 
+'         Properties: AssemblyName, AssemblyVersion, CompileExcludes, CompileFiles, Configurations
+'                     FilePath, IsDotNetCoreSDK, Metadata, MimeType, NuGet
+'                     OutputType, PackageReferences, ProjectReferences, RootNamespace, Sdk
+' 
+'         Function: [GetType], CleanName, ElementValue, ExtractImports, FindByLastName
+'                   FindInContainer, Generate, IsNuGetProperty, Load, LoadAssembly
+'                   LoadProjectXml, ParseConfigCondition, SplitImports, StripGenerics
+' 
+'         Sub: AddAttrIf, AddIf, ParseItemGroups, ParseProperties, Save
+'              SetMetadataProperty, SetNuGetProperty
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.IO
 Imports System.Text.RegularExpressions
+Imports Microsoft.VisualBasic.ApplicationServices.Development.VisualStudio.sln
 Imports Microsoft.VisualBasic.ApplicationServices.Development.VisualStudio.VBProj.ProjectXml
 Imports Microsoft.VisualBasic.ApplicationServices.Development.VisualStudio.VBProj.Reflection
 Imports Microsoft.VisualBasic.ApplicationServices.Development.VisualStudio.VBProj.Syntax
 Imports Microsoft.VisualBasic.ApplicationServices.Development.XmlDoc.Serialization
 Imports Microsoft.VisualBasic.ComponentModel
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Net.Protocols.ContentTypes
 Imports Microsoft.VisualBasic.Scripting.Expressions
 
@@ -76,7 +78,7 @@ Namespace VBProj
     ''' <summary>
     ''' vbproj file model
     ''' </summary>
-    Public Class VBProject : Implements IFileReference
+    Public Class VBProject : Implements IFileReference, IProjectWorkspace
 
         Public Property RootNamespace As String
         Public Property AssemblyName As String
@@ -496,7 +498,7 @@ Namespace VBProj
 
             If doc.Root IsNot Nothing Then
                 For Each ig In doc.Root.Elements(ns + "ItemGroup")
-                    For Each c In ig.Elements()
+                    For Each c As XElement In ig.Elements()
                         Dim local = c.Name.LocalName
                         Dim inc = c.Attribute("Include")?.Value
                         Dim remAttr = c.Attribute("Remove")?.Value
@@ -689,5 +691,8 @@ Namespace VBProj
             End If
         End Sub
 
+        Public Function GetCompileFiles() As IEnumerable(Of String) Implements IProjectWorkspace.GetCompileFiles
+            Return From file As VBDocument In CompileFiles.SafeQuery Select file.FileName
+        End Function
     End Class
 End Namespace

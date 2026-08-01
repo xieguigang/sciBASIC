@@ -115,8 +115,12 @@ Namespace ApplicationServices.Terminal
                               Return CType(f.GetValue(Nothing), AnsiColor)
                           End Function, StringComparer.OrdinalIgnoreCase)
 
+        Public ReadOnly Property R As Byte
+        Public ReadOnly Property G As Byte
+        Public ReadOnly Property B As Byte
+
         Public Shared Function Rgb(r As Byte, g As Byte, b As Byte) As AnsiColor
-            Return New AnsiColor($"38;2;{r};{g};{b}", $"48;2;{r};{g};{b}", $"#{r:X2}{g:X2}{b:X2}")
+            Return New AnsiColor($"38;2;{r};{g};{b}", $"48;2;{r};{g};{b}", $"#{r:X2}{g:X2}{b:X2}") With {._R = r, ._G = g, ._B = b}
         End Function
 
         Public Sub New(foregroundCode As String, backgroundCode As String, friendlyName As String)

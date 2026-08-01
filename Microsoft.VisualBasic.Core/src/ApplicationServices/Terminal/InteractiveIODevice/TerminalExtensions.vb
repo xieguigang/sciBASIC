@@ -112,7 +112,7 @@ Namespace ApplicationServices.Terminal
                     RaiseEvent Resize()
                 End If
 
-                Thread.Sleep(10)
+                Call Thread.Sleep(10)
             Loop
         End Sub
 

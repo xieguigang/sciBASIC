@@ -121,7 +121,7 @@ Namespace VBProj
             Return s.Replace("/", "\")
         End Function
 
-        Private Function GetRelativePath(baseDir As String, file As String) As String
+        Friend Function GetRelativePath(baseDir As String, file As String) As String
             Dim b = Path.GetFullPath(baseDir).TrimEnd("\"c, "/"c) & "\"
             Dim f = Path.GetFullPath(file)
             Dim uriB = New Uri(b)
@@ -130,7 +130,7 @@ Namespace VBProj
             Return rel.Replace("/", "\")
         End Function
 
-        Private Function IsExcludedByDefault(rel As String) As Boolean
+        Friend Function IsExcludedByDefault(rel As String) As Boolean
             Dim lower = rel.Replace("\", "/").ToLowerInvariant()
             Return lower.Contains("/obj/") OrElse lower.Contains("/bin/") OrElse lower.StartsWith("obj/") OrElse lower.StartsWith("bin/")
         End Function
