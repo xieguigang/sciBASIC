@@ -322,8 +322,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Data\DataFrame\dataframework-netcore5.vbproj" />
+    <ProjectReference Include="..\..\Data_science\Mathematica\Math\Math\Math.NET5.vbproj" />
     <ProjectReference Include="..\..\Microsoft.VisualBasic.Core\src\Core.vbproj" />
-    <ProjectReference Include="..\Mathematica\Math\Math\Math.NET5.vbproj" />
   </ItemGroup>
 
   <ItemGroup>

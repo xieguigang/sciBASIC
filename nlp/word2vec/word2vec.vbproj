@@ -48,6 +48,5 @@
 	  <ProjectReference Include="..\..\Data_science\Graph\graph-netcore5.vbproj" />
 	  <ProjectReference Include="..\..\Data_science\Mathematica\Math\Math\Math.NET5.vbproj" />
 	  <ProjectReference Include="..\..\Microsoft.VisualBasic.Core\src\Core.vbproj" />
-	  <ProjectReference Include="..\Trinity\Trinity.NET5.vbproj" />
 	</ItemGroup>
   </Project>
