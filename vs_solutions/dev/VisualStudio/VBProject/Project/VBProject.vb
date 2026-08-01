@@ -68,15 +68,22 @@ Imports Microsoft.VisualBasic.ApplicationServices.Development.VisualStudio.VBPro
 Imports Microsoft.VisualBasic.ApplicationServices.Development.VisualStudio.VBProj.Syntax
 Imports Microsoft.VisualBasic.ApplicationServices.Development.XmlDoc.Serialization
 Imports Microsoft.VisualBasic.ComponentModel
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Net.Protocols.ContentTypes
 Imports Microsoft.VisualBasic.Scripting.Expressions
 
 Namespace VBProj
 
+    Public Interface IProjectWorkspace
+
+        Function GetCompileFiles() As IEnumerable(Of String)
+
+    End Interface
+
     ''' <summary>
     ''' vbproj file model
     ''' </summary>
-    Public Class VBProject : Implements IFileReference
+    Public Class VBProject : Implements IFileReference, IProjectWorkspace
 
         Public Property RootNamespace As String
         Public Property AssemblyName As String
@@ -496,7 +503,7 @@ Namespace VBProj
 
             If doc.Root IsNot Nothing Then
                 For Each ig In doc.Root.Elements(ns + "ItemGroup")
-                    For Each c In ig.Elements()
+                    For Each c As XElement In ig.Elements()
                         Dim local = c.Name.LocalName
                         Dim inc = c.Attribute("Include")?.Value
                         Dim remAttr = c.Attribute("Remove")?.Value
@@ -689,5 +696,8 @@ Namespace VBProj
             End If
         End Sub
 
+        Public Function GetCompileFiles() As IEnumerable(Of String) Implements IProjectWorkspace.GetCompileFiles
+            Return From file As VBDocument In CompileFiles.SafeQuery Select file.FileName
+        End Function
     End Class
 End Namespace
