@@ -12,6 +12,7 @@
 Imports System.Collections.Generic
 Imports System.Globalization
 Imports System.Text
+Imports KnowledgeGraph
 
 Module Program
 
@@ -32,7 +33,7 @@ Module Program
         ' Step 1: 构建知识图谱
         ' ================================================================
         Console.WriteLine("[1] 构建知识图谱...")
-        Dim graph As KnowledgeGraph = TestKnowledgeBase.BuildTestGraph()
+        Dim graph = TestKnowledgeBase.BuildTestGraph()
 
         PrintGraphStats(graph)
         Console.WriteLine()

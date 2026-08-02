@@ -16,7 +16,7 @@
 ' z-score > 2.58 对应 p < 0.01，z-score > 1.96 对应 p < 0.05
 ' ============================================================================
 
-Imports System.Collections.Generic
+Imports std = System.Math
 
 ''' <summary>
 ''' 置换检验结果。
@@ -156,7 +156,7 @@ Public Class StatisticalTest
             nullVariance += (v - nullMean) * (v - nullMean)
         Next
         nullVariance /= iterations
-        Dim nullStd As Double = Math.Sqrt(nullVariance)
+        Dim nullStd As Double = std.Sqrt(nullVariance)
 
         ' z-score
         Dim zScore As Double = 0.0
@@ -213,7 +213,7 @@ Public Class StatisticalTest
         Dim pool As Integer() = CType(source.Clone(), Integer())
 
         Dim n As Integer = pool.Length
-        Dim actualK As Integer = Math.Min(k, n)
+        Dim actualK As Integer = std.Min(k, n)
 
         For i As Integer = 0 To actualK - 1
             Dim j As Integer = _rng.Next(i, n)
@@ -274,7 +274,7 @@ Public Class StatisticalTest
             For Each attrId In sharedAttrs
                 Dim deg As Integer = randomAttrEntities(attrId).Count
                 If deg > 1 Then
-                    aaSum += 1.0 / Math.Log(deg)
+                    aaSum += 1.0 / std.Log(deg)
                 End If
             Next
 
@@ -291,7 +291,7 @@ Public Class StatisticalTest
         Dim nullMean As Double = sumValues / iterations
         Dim nullVariance As Double = sumSqValues / iterations - nullMean * nullMean
         If nullVariance < 0 Then nullVariance = 0
-        Dim nullStd As Double = Math.Sqrt(nullVariance)
+        Dim nullStd As Double = std.Sqrt(nullVariance)
 
         Dim zScore As Double = 0.0
         If nullStd > 1.0E-10 Then

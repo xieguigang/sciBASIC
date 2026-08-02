@@ -23,7 +23,7 @@
 ' ============================================================================
 
 Imports System.Collections.Generic
-Imports System.Math
+Imports std = System.Math
 
 ''' <summary>
 ''' 相似度度量结果：包含一对实体之间的所有相似度指标。
@@ -42,7 +42,7 @@ Public Class SimilarityResult
 
     Public ReadOnly Property MaxInclusion As Double
         Get
-            Return Math.Max(InclusionAB, InclusionBA)
+            Return std.Max(InclusionAB, InclusionBA)
         End Get
     End Property
 
@@ -89,7 +89,7 @@ Public Module SimilarityMetrics
             Dim degree As Integer = graph.GetAttributeDegree(attrId)
             If degree > 1 Then
                 ' 1 / log(degree)：度数越高（越常见），贡献越小
-                sum += 1.0 / Math.Log(degree)
+                sum += 1.0 / std.Log(degree)
             ElseIf degree = 1 Then
                 ' 度为 1 的属性不可能被两个实体共享，但防御性处理
                 sum += 0.0
@@ -116,7 +116,7 @@ Public Module SimilarityMetrics
         If degA = 0 OrElse degB = 0 Then Return 0.0
 
         Dim common As Integer = CommonNeighborsCount(graph, entityA, entityB)
-        Return CDbl(common) / Math.Sqrt(CDbl(degA) * degB)
+        Return CDbl(common) / std.Sqrt(CDbl(degA) * degB)
     End Function
 
     ''' <summary>
@@ -158,14 +158,14 @@ Public Module SimilarityMetrics
         For Each attrId As Integer In [shared]
             Dim deg As Integer = graph.GetAttributeDegree(attrId)
             If deg > 1 Then
-                aaSum += 1.0 / Math.Log(deg)
+                aaSum += 1.0 / std.Log(deg)
             End If
         Next
         result.AdamicAdar = aaSum
 
         ' Cosine
         If degA > 0 AndAlso degB > 0 Then
-            result.CosineSimilarity = CDbl([shared].Count) / Math.Sqrt(CDbl(degA) * degB)
+            result.CosineSimilarity = CDbl([shared].Count) / std.Sqrt(CDbl(degA) * degB)
         End If
 
         ' Inclusion ratios

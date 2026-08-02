@@ -22,7 +22,7 @@
 '    是 Related-To 的一个子类型
 ' ============================================================================
 
-Imports System.Collections.Generic
+Imports std = System.Math
 
 ''' <summary>
 ''' 本体论关系类型。
@@ -166,7 +166,7 @@ Public Class OntologyInferer
 
                 ' 执行置换检验
                 Dim aaTest As PermutationTestResult = tester.TestAdamicAdarFull(i, j, _options.PermutationIterations)
-                Dim correctedP As Double = Math.Min(1.0, aaTest.PValue * numComparisons)
+                Dim correctedP As Double = std.Min(1.0, aaTest.PValue * numComparisons)
 
                 ' 计算置信度
                 Dim confidence As Double = ComputeConfidence(relType, sim, aaTest)
@@ -287,7 +287,7 @@ Public Class OntologyInferer
 
             Case OntologyRelationType.HasFunction, OntologyRelationType.RelatedTo
                 ' Related 置信度 = AA 归一化 × (1 - p-value)
-                Dim aaNorm As Double = Math.Min(1.0, sim.AdamicAdar / 10.0)
+                Dim aaNorm As Double = std.Min(1.0, sim.AdamicAdar / 10.0)
                 Return aaNorm * (1.0 - test.PValue)
 
             Case Else
@@ -352,8 +352,8 @@ Public Class OntologyInferer
     ''' 生成有序对键（用于去重）。
     ''' </summary>
     Private Function MakePairKey(a As Integer, b As Integer) As Long
-        Dim lo As Integer = Math.Min(a, b)
-        Dim hi As Integer = Math.Max(a, b)
+        Dim lo As Integer = std.Min(a, b)
+        Dim hi As Integer = std.Max(a, b)
         Return CLng(lo) * 100000 + hi
     End Function
 

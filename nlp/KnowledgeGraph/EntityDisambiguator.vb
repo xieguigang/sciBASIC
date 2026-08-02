@@ -15,7 +15,7 @@
 '   5. 应用 Bonferroni 校正控制多重检验误差
 ' ============================================================================
 
-Imports System.Collections.Generic
+Imports std = System.Math
 
 ''' <summary>
 ''' 实体消歧配置参数。
@@ -124,7 +124,7 @@ Public Class EntityDisambiguator
                 Dim aaTest As PermutationTestResult = tester.TestAdamicAdarFull(i, j, _options.PermutationIterations)
 
                 ' Bonferroni 校正
-                Dim correctedP As Double = Math.Min(1.0, Math.Min(jacTest.PValue, aaTest.PValue) * numComparisons)
+                Dim correctedP As Double = std.Min(1.0, std.Min(jacTest.PValue, aaTest.PValue) * numComparisons)
 
                 Dim pairResult As New SynonymPairResult With {
                     .EntityAId = i,
@@ -203,7 +203,7 @@ Public Class EntityDisambiguator
             ' 置信度 = 1 - 最小校正 p-value
             If group.PairwiseResults.Count > 0 Then
                 Dim minP As Double = group.PairwiseResults.Min(Function(p) p.BonferroniCorrectedPValue)
-                group.Confidence = Math.Max(0.0, Math.Min(1.0, 1.0 - minP))
+                group.Confidence = std.Max(0.0, std.Min(1.0, 1.0 - minP))
             End If
 
             ' 规范名称：度数最大的实体
