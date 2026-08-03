@@ -334,7 +334,7 @@ Namespace FileIO
         End Sub
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Function GetFiles() As IEnumerable(Of String) Implements IFileSystemEnvironment.GetFiles
+        Public Function GetAllFiles() As IEnumerable(Of String) Implements IFileSystemEnvironment.GetFiles
             Return ls - l - r - "*.*" <= folder
         End Function
 
