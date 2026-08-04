@@ -1,3 +1,4 @@
 <Solution>
   <Project Path="docx/docx.vbproj" />
+  <Project Path="test/test.vbproj" Id="1aea5ae3-2940-4a04-bc1a-a091cd63815b" />
 </Solution>
