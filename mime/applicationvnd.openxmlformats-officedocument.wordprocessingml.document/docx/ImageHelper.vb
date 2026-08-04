@@ -183,7 +183,7 @@ Public Module ImageHelper
         ' CRC (over type + data)
         Dim crcData As Byte()
         If dataLen > 0 Then
-            crcData = New Byte(3 + dataLen - 1) {}
+            crcData = New Byte(4 + dataLen - 1) {}
             Array.Copy(typeBytes, crcData, 4)
             Array.Copy(data, 0, crcData, 4, dataLen)
         Else

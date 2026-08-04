@@ -557,8 +557,8 @@ Public Class WordDocument
         Dim widthEmu As Integer = If(width > 0, CInt(width * 12700), dims.Width * 9525)
         Dim heightEmu As Integer = If(height > 0, CInt(height * 12700), dims.Height * 9525)
 
-        ' 缩放以适应页面宽度
-        Dim maxWEmu As Integer = (_pageWidth - _marginLeft - _marginRight) * 914400 \ 1440
+        ' 缩放以适应页面宽度 (1 twip = 635 EMU)
+        Dim maxWEmu As Integer = (_pageWidth - _marginLeft - _marginRight) * 635
         If widthEmu > maxWEmu Then
             Dim scale As Double = CDbl(maxWEmu) / widthEmu
             widthEmu = maxWEmu
