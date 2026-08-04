@@ -14,7 +14,8 @@
 
 Imports System.IO
 Imports System.Text
-Imports WordDocument.JSONSchema
+Imports Microsoft.VisualBasic.MIME.Office.WordDocument
+Imports Microsoft.VisualBasic.MIME.text.markdown
 
 Module Program
 
@@ -117,7 +118,7 @@ Module Program
         })
 
         ' 文档标题
-        doc.Title("2024 年度实验数据分析报告")
+        doc.DocTitle("2024 年度实验数据分析报告")
 
         ' 目录
         doc.Toc(maxLevel:=3)
@@ -176,6 +177,9 @@ Module Program
 
         doc.H2("2.2 差异表达基因分析")
         doc.Paragraph("使用 DESeq2 进行差异表达分析，以 |log2FoldChange| > 1 且 adjusted p-value < 0.05 为筛选标准。结果显示，共有 847 个基因差异表达，其中上调 412 个，下调 435 个。")
+
+        Dim imgPath = "G:\OmicsWorks\test\multiple_omics\figures\step06_volcano_proteome_Active_fermentation.png"
+        Dim img2Path = "G:\OmicsWorks\test\multiple_omics\figures\step14_pathway_bridge_heatmap.png"
 
         doc.Image(imgPath, width:=450, caption:="图 1. 差异表达基因火山图")
         doc.Image(img2Path, width:=350, caption:="图 2. 基因表达聚类热图")

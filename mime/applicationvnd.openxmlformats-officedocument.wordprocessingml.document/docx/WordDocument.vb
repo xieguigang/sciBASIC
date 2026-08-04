@@ -22,7 +22,8 @@
 Imports System.IO
 Imports System.Text
 Imports System.Globalization
-Imports WordDocument.JSONSchema
+Imports std = System.Math
+Imports Microsoft.VisualBasic.MIME.text.markdown
 
 ''' <summary>
 ''' Word 文档生成器。
@@ -181,7 +182,7 @@ Public Class WordDocument
     ' ========================================================================
 
     ''' <summary>写入文档标题（居中大字号，非 heading 样式）。</summary>
-    Public Function Title(text As String) As WordDocument
+    Public Function DocTitle(text As String) As WordDocument
         Dim s As WordStyle = _titleStyle
         _body.Append("<w:p><w:pPr>")
         _body.Append($"<w:spacing w:before=""{PtToTwip(s.SpaceBefore)}"" w:after=""{PtToTwip(s.SpaceAfter)}"" w:line=""{CInt(s.LineSpacing * 240)}"" w:lineRule=""auto""/>")
@@ -383,7 +384,7 @@ Public Class WordDocument
 
     ''' <summary>写入定义列表。</summary>
     Public Function DefinitionList(terms As String(), definitions As String()) As WordDocument
-        Dim n As Integer = Math.Min(If(terms?.Length, 0), If(definitions?.Length, 0))
+        Dim n As Integer = std.Min(If(terms?.Length, 0), If(definitions?.Length, 0))
         For i As Integer = 0 To n - 1
             ' 术语 (粗体)
             _body.Append("<w:p><w:pPr><w:spacing w:before=""60"" w:after=""20""/></w:pPr>")
@@ -543,13 +544,13 @@ Public Class WordDocument
                           Optional width As Double = 0,
                           Optional height As Double = 0,
                           Optional caption As String = "") As WordDocument
-        If Not File.Exists(file) Then
+        If Not file.FileExists Then
             Console.Error.WriteLine($"[警告] 图片文件不存在: {file}")
             Return Me
         End If
 
         Dim ext As String = Path.GetExtension(file).TrimStart("."c).ToLower()
-        Dim imgBytes As Byte() = File.ReadAllBytes(file)
+        Dim imgBytes As Byte() = file.ReadBinary
         Dim dims As ImageDimensions = ImageHelper.ReadImageDimensions(file)
 
         ' 转换为 EMU (1 pixel @96DPI = 9525 EMU, 1 pt = 12700 EMU)
