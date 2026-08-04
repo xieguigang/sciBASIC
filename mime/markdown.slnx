@@ -51,6 +51,26 @@
       <Platform Solution="*|x64" Project="x64" />
       <Platform Solution="*|x86" Project="x86" />
     </Project>
+    <Project Path="application%json/JSON-netcore5.vbproj">
+      <BuildType Solution="Biodeep_UNIX_x64|*" Project="Rsharp_app_release" />
+      <BuildType Solution="Biodeep|*" Project="Release" />
+      <BuildType Solution="Biostack-Debug|*" Project="Rsharp_app_release" />
+      <BuildType Solution="Biostack|*" Project="Rsharp_app_release" />
+      <BuildType Solution="CFD_win32|*" Project="Rsharp_app_release" />
+      <BuildType Solution="DEMO|*" Project="Rsharp_app_release" />
+      <BuildType Solution="docs|*" Project="Release" />
+      <BuildType Solution="GCModeller(Release_X64)|*" Project="CellaLAB-Desktop" />
+      <BuildType Solution="GCModeller(UNIX-Release_X64)|*" Project="Rsharp_app_release" />
+      <BuildType Solution="installer_x64|*" Project="Rsharp_app_release" />
+      <BuildType Solution="mysqli_X64_release|*" Project="CellaLAB-Desktop" />
+      <BuildType Solution="mzkit|*" Project="Debug" />
+      <BuildType Solution="ProteoWizard.d|*" Project="Rsharp_app_release" />
+      <BuildType Solution="Publish|*" Project="Rsharp_app_release" />
+      <BuildType Solution="sciBASIC.NET-test-release|*" Project="Rsharp_app_release" />
+      <BuildType Solution="Surveillance-of-infectious-diseases|*" Project="Rsharp_app_release" />
+      <BuildType Solution="Yilia-Release_x64|*" Project="Rsharp_app_release" />
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
     <Project Path="text%html/html_netcore5.vbproj">
       <BuildType Solution="Biodeep_UNIX_x64|*" Project="Debug" />
       <BuildType Solution="Biodeep|*" Project="Debug" />

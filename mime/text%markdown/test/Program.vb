@@ -201,12 +201,13 @@ _this_ _is_ _your_ _basic_ _boring_ _emphasis_
     End Sub
 
     Sub Main(args As String())
+        Call jsonSchemaTest()
         tableTest()
         Console.WriteLine(New MarkdownRender().Transform(quote_links))
 
         Call New MarkdownRender().Transform(quote_links).SaveTo("./test_demo.html")
 
-        Call jsonSchemaTest()
+
     End Sub
 
     ''' <summary>
@@ -237,7 +238,7 @@ _this_ _is_ _your_ _basic_ _boring_ _emphasis_
             New Block() With {.type = "link", .url = "https://x.com", .alt = "X", .title = "home"},
             New Block() With {.type = "footnote", .id = "1", .content = "The first footnote."},
             New Block() With {.type = "deflist"},
-            ' 缺省/边界场景：表格无表头、无 rows，heading 层级越界
+                                                 _ ' 缺省/边界场景：表格无表头、无 rows，heading 层级越界
             New Block() With {.type = "table", .rows = onlyRows},
             New Block() With {.type = "heading", .level = 9, .content = "Overflow heading level"}
         }
@@ -251,5 +252,7 @@ _this_ _is_ _your_ _basic_ _boring_ _emphasis_
         Console.WriteLine(md)
         Console.WriteLine(New String("-"c, 40))
         Console.WriteLine(html)
+
+        Pause()
     End Sub
 End Module
