@@ -10,7 +10,7 @@ Namespace sln
         ''' the name of the folder
         ''' </summary>
         ''' <returns></returns>
-        Public ReadOnly Property Name As String
+        Public ReadOnly Property Name As String Implements IProjectWorkspace.Name
             Get
                 Return Path.BaseName
             End Get
