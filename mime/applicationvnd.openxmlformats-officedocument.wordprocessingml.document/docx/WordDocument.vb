@@ -535,6 +535,184 @@ Public Class WordDocument
         Return Me
     End Function
 
+    ' ========================================================================
+    ' 自适应表格 (AutoFit)
+    ' ========================================================================
+
+    ''' <summary>写入表格，按窗口宽度自适应（auto fit to window，占满页面 100% 宽）。</summary>
+    Public Function TableAutoFitWindow(headers As String(), rows As String()(),
+                                       Optional alignments As String() = Nothing,
+                                       Optional center As Boolean = False,
+                                       Optional threeLine As Boolean = False) As WordDocument
+        Return WriteAutoFitTable("window", headers, rows, alignments, center, threeLine)
+    End Function
+
+    ''' <summary>写入表格，按内容宽度自适应（auto fit to contents，按内容收缩宽度）。</summary>
+    Public Function TableAutoFitContents(headers As String(), rows As String()(),
+                                         Optional alignments As String() = Nothing,
+                                         Optional center As Boolean = False,
+                                         Optional threeLine As Boolean = False) As WordDocument
+        Return WriteAutoFitTable("contents", headers, rows, alignments, center, threeLine)
+    End Function
+
+    ''' <summary>写入表格，按窗口宽度自适应（auto fit to window，占满页面 100% 宽）。</summary>
+    Public Function TableAutoFitWindow(headers As String(,), rows As String(,),
+                                       Optional alignments As String() = Nothing,
+                                       Optional center As Boolean = False,
+                                       Optional threeLine As Boolean = False) As WordDocument
+        Return WriteAutoFitTable("window", ToJagged1D(headers), ToJagged2D(rows), alignments, center, threeLine)
+    End Function
+
+    ''' <summary>写入表格，按内容宽度自适应（auto fit to contents，按内容收缩宽度）。</summary>
+    Public Function TableAutoFitContents(headers As String(,), rows As String(,),
+                                         Optional alignments As String() = Nothing,
+                                         Optional center As Boolean = False,
+                                         Optional threeLine As Boolean = False) As WordDocument
+        Return WriteAutoFitTable("contents", ToJagged1D(headers), ToJagged2D(rows), alignments, center, threeLine)
+    End Function
+
+    ''' <summary>
+    ''' 自适应表格核心实现。
+    ''' mode:
+    '''   - "window"   : 表格占满页面宽度（100% pct）+ 自动布局，由 Word 按窗口折列宽。
+    '''   - "contents" : 表格按内容自适应宽度（w:tblW type=auto）+ 自动布局。
+    ''' center: True 时整个表格在页面中水平居中。
+    ''' 其余表头/边框/隔行底纹/字体逻辑与 <see cref="Table"/> 完全一致，统一读取 _tableStyle 与 _paragraphStyle。
+    ''' </summary>
+    Private Function WriteAutoFitTable(mode As String,
+                                       headers As String(),
+                                       rows As String()(),
+                                       Optional alignments As String() = Nothing,
+                                       Optional center As Boolean = False,
+                                       Optional threeLine As Boolean = False) As WordDocument
+        Dim nCols As Integer = If(headers?.Length, 0)
+        If nCols = 0 AndAlso rows?.Length > 0 Then
+            nCols = If(rows(0)?.Length, 0)
+        End If
+        If nCols = 0 Then Return Me
+
+        Dim ts As TableStyle = _tableStyle
+
+        _body.Append("<w:tbl><w:tblPr>")
+        ' 宽度策略
+        If mode = "window" Then
+            _body.Append("<w:tblW w:w=""5000"" w:type=""pct""/>")   ' 100% 页面宽度
+        Else
+            _body.Append("<w:tblW w:type=""auto""/>")              ' 按内容自适应
+        End If
+        _body.Append("<w:tblLayout w:type=""autofit""/>")
+        If center Then _body.Append("<w:jc w:val=""center""/>")    ' 表格整体水平居中
+        _body.Append("<w:tblBorders>")
+        If threeLine Then
+            ' 三线表：仅保留顶线、底线（粗，1.5pt）与表头下分隔线（由表头行 trBorders 提供，0.75pt），
+            ' 去除全部竖线及数据行之间的横线
+            _body.Append($"<w:top w:val=""single"" w:sz=""12"" w:space=""0"" w:color=""{ts.BorderColor}""/>")
+            _body.Append("<w:left w:val=""none"" w:sz=""0"" w:space=""0"" w:color=""auto""/>")
+            _body.Append($"<w:bottom w:val=""single"" w:sz=""12"" w:space=""0"" w:color=""{ts.BorderColor}""/>")
+            _body.Append("<w:right w:val=""none"" w:sz=""0"" w:space=""0"" w:color=""auto""/>")
+            _body.Append("<w:insideH w:val=""none"" w:sz=""0"" w:space=""0"" w:color=""auto""/>")
+            _body.Append("<w:insideV w:val=""none"" w:sz=""0"" w:space=""0"" w:color=""auto""/>")
+        Else
+            _body.Append($"<w:top w:val=""single"" w:sz=""{ts.BorderSize}"" w:color=""{ts.BorderColor}""/>")
+            _body.Append($"<w:left w:val=""single"" w:sz=""{ts.BorderSize}"" w:color=""{ts.BorderColor}""/>")
+            _body.Append($"<w:bottom w:val=""single"" w:sz=""{ts.BorderSize}"" w:color=""{ts.BorderColor}""/>")
+            _body.Append($"<w:right w:val=""single"" w:sz=""{ts.BorderSize}"" w:color=""{ts.BorderColor}""/>")
+            _body.Append($"<w:insideH w:val=""single"" w:sz=""{ts.BorderSize}"" w:color=""{ts.BorderColor}""/>")
+            _body.Append($"<w:insideV w:val=""single"" w:sz=""{ts.BorderSize}"" w:color=""{ts.BorderColor}""/>")
+        End If
+        _body.Append("</w:tblBorders>")
+        _body.Append("</w:tblPr>")
+
+        ' 列定义：auto 模式下由 Word 自动计算宽度
+        _body.Append("<w:tblGrid>")
+        For c As Integer = 0 To nCols - 1
+            _body.Append("<w:gridCol w:w=""0""/>")
+        Next
+        _body.Append("</w:tblGrid>")
+
+        ' 表头行
+        If headers IsNot Nothing AndAlso headers.Length > 0 Then
+            _body.Append("<w:tr><w:trPr>")
+            If threeLine Then
+                ' 三线表：表头下方加一条分隔线（0.75pt）
+                _body.Append("<w:trBorders>")
+                _body.Append($"<w:bottom w:val=""single"" w:sz=""6"" w:space=""0"" w:color=""{ts.BorderColor}""/>")
+                _body.Append("</w:trBorders>")
+            End If
+            _body.Append("<w:tblHeader/></w:trPr>")
+            For c As Integer = 0 To nCols - 1
+                _body.Append("<w:tc><w:tcPr>")
+                _body.Append("<w:tcW w:w=""0"" w:type=""auto""/>")
+                If Not threeLine Then _body.Append($"<w:shd w:val=""clear"" w:color=""auto"" w:fill=""{ts.HeaderBackColor}""/>")
+                _body.Append("<w:vAlign w:val=""center""/></w:tcPr>")
+                _body.Append("<w:p><w:pPr>")
+                Dim align As String = GetAlign(alignments, c)
+                If align <> "left" Then _body.Append($"<w:jc w:val=""{align}""/>")
+                _body.Append("</w:pPr><w:r><w:rPr>")
+                _body.Append($"<w:rFonts w:ascii=""{_paragraphStyle.FontName}"" w:eastAsia=""{_paragraphStyle.FontNameEastAsia}"" w:hAnsi=""{_paragraphStyle.FontName}""/>")
+                If ts.HeaderBold Then _body.Append("<w:b/>")
+                ' 三线表无表头底色，故表头文字改用深色，避免沿用白色前景导致在白底上不可见
+                Dim headerFore As String = If(threeLine, "000000", ts.HeaderForeColor)
+                _body.Append($"<w:color w:val=""{headerFore}""/>")
+                _body.Append($"<w:sz w:val=""{CInt(_paragraphStyle.Size * 2)}""/></w:rPr>")
+                _body.Append($"<w:t xml:space=""preserve"">{XEsc(If(c < headers.Length, headers(c), ""))}</w:t></w:r></w:p></w:tc>")
+            Next
+            _body.Append("</w:tr>")
+        End If
+
+        ' 数据行
+        For rIdx As Integer = 0 To rows.Length - 1
+            Dim row As String() = rows(rIdx)
+            _body.Append("<w:tr>")
+            Dim rowBg As String = If(threeLine, "", If(rIdx Mod 2 = 1 AndAlso ts.AltRowBackColor <> "", ts.AltRowBackColor, ""))
+            For c As Integer = 0 To nCols - 1
+                _body.Append("<w:tc><w:tcPr>")
+                _body.Append("<w:tcW w:w=""0"" w:type=""auto""/>")
+                If rowBg <> "" Then _body.Append($"<w:shd w:val=""clear"" w:color=""auto"" w:fill=""{rowBg}""/>")
+                _body.Append("<w:vAlign w:val=""center""/></w:tcPr>")
+                _body.Append("<w:p><w:pPr>")
+                Dim align As String = GetAlign(alignments, c)
+                If align <> "left" Then _body.Append($"<w:jc w:val=""{align}""/>")
+                _body.Append("</w:pPr><w:r><w:rPr>")
+                _body.Append($"<w:rFonts w:ascii=""{_paragraphStyle.FontName}"" w:eastAsia=""{_paragraphStyle.FontNameEastAsia}"" w:hAnsi=""{_paragraphStyle.FontName}""/>")
+                _body.Append($"<w:sz w:val=""{CInt(_paragraphStyle.Size * 2)}""/></w:rPr>")
+                _body.Append($"<w:t xml:space=""preserve"">{XEsc(If(c < If(row?.Length, 0), row(c), ""))}</w:t></w:r></w:p></w:tc>")
+            Next
+            _body.Append("</w:tr>")
+        Next
+
+        _body.Append("</w:tbl>")
+        _body.Append("<w:p/>")
+        Return Me
+    End Function
+
+    ''' <summary>将二维数组转换为一维数组（仅取第一行，用于表头）。</summary>
+    Private Shared Function ToJagged1D(matrix As String(,)) As String()
+        If matrix Is Nothing Then Return Nothing
+        Dim cols As Integer = matrix.GetLength(1)
+        Dim out(cols - 1) As String
+        For c As Integer = 0 To cols - 1
+            out(c) = matrix(0, c)
+        Next
+        Return out
+    End Function
+
+    ''' <summary>将二维数组转换为交错数组。</summary>
+    Private Shared Function ToJagged2D(matrix As String(,)) As String()()
+        If matrix Is Nothing Then Return Nothing
+        Dim rows As Integer = matrix.GetLength(0)
+        Dim cols As Integer = matrix.GetLength(1)
+        Dim out(rows - 1)() As String
+        For r As Integer = 0 To rows - 1
+            Dim row(cols - 1) As String
+            For c As Integer = 0 To cols - 1
+                row(c) = matrix(r, c)
+            Next
+            out(r) = row
+        Next
+        Return out
+    End Function
+
     ''' <summary>插入图片。</summary>
     ''' <param name="file">图片文件路径。</param>
     ''' <param name="width">指定宽度（磅），0 表示自动。</param>
