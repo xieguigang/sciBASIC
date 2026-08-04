@@ -56,7 +56,7 @@ Imports Microsoft.VisualBasic.Data.NLP.ChineseTokenizer
 
 Module Program
 
-    Sub Main(args As String())
+    Sub Mai222n(args As String())
         Console.WriteLine(New String("="c, 60))
         Console.WriteLine("中文分词算法模块演示 (VB.NET / .NET 10)")
         Console.WriteLine(New String("="c, 60))

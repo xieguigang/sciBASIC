@@ -1,3 +1,6 @@
+Imports System.Text
+Imports std = System.Math
+
 ' ============================================================================
 ' BM25.vb - Best Matching 25 相关性排序算法
 '
@@ -358,14 +361,14 @@ Namespace BM25
             Select Case IdfMode
                 Case IdfVariant.Lucene
                     ' log(1 + (N-n+0.5)/(n+0.5))，永远非负
-                    Return Math.Log(1.0 + numerator / denominator)
+                    Return std.Log(1.0 + numerator / denominator)
                 Case IdfVariant.Okapi
                     ' log((N-n+0.5)/(n+0.5))，可能为负
                     Dim ratio As Double = numerator / denominator
                     If ratio <= 0 Then Return 0.0
-                    Return Math.Log(ratio)
+                    Return std.Log(ratio)
                 Case Else
-                    Return Math.Log(1.0 + numerator / denominator)
+                    Return std.Log(1.0 + numerator / denominator)
             End Select
         End Function
 
@@ -442,7 +445,7 @@ Namespace BM25
 
             ' 按非字母数字字符切分
             Dim tokens As New List(Of String)
-            Dim sb As New Text.StringBuilder()
+            Dim sb As New StringBuilder()
 
             For Each ch As Char In text
                 If Char.IsLetterOrDigit(ch) Then
@@ -470,7 +473,7 @@ Namespace BM25
         ''' 获取语料库的统计摘要。
         ''' </summary>
         Public Function GetStatistics() As String
-            Dim sb As New Text.StringBuilder()
+            Dim sb As New StringBuilder()
             sb.AppendLine($"=== BM25 语料库统计 ===")
             sb.AppendLine($"  文档总数 (N):       {_totalDocs}")
             sb.AppendLine($"  平均文档长度 (avgdl): {_avgDocLength:F2}")
