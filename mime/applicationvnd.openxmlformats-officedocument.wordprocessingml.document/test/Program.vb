@@ -25,7 +25,7 @@ Module Program
         Console.WriteLine()
 
         ' 创建输出目录
-        Dim outDir As String = "/home/z/my-project/WordDocument/output"
+        Dim outDir As String = "z:/my-project/WordDocument/output"
         If Not Directory.Exists(outDir) Then Directory.CreateDirectory(outDir)
 
         ' 生成测试图片
