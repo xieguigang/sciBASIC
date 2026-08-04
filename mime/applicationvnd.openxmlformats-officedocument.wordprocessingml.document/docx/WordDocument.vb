@@ -731,17 +731,10 @@ Public Class WordDocument
         Dim imgBytes As Byte() = file.ReadBinary
         Dim dims As Size = ImageHelper.ReadImageDimensions(file)
 
-        ' 转换为 EMU (1 pixel @96DPI = 9525 EMU, 1 pt = 12700 EMU)
-        Dim widthEmu As Integer = If(width > 0, CInt(width * 12700), dims.Width * 9525)
-        Dim heightEmu As Integer = If(height > 0, CInt(height * 12700), dims.Height * 9525)
+        Dim widthEmu As Integer
+        Dim heightEmu As Integer
 
-        ' 缩放以适应页面宽度 (1 twip = 635 EMU)
-        Dim maxWEmu As Integer = (_pageWidth - _marginLeft - _marginRight) * 635
-        If widthEmu > maxWEmu Then
-            Dim scale As Double = CDbl(maxWEmu) / widthEmu
-            widthEmu = maxWEmu
-            heightEmu = CInt(heightEmu * scale)
-        End If
+        Call ResolveImageExtent(dims, width, height, widthEmu, heightEmu)
 
         ' 注册图片关系
         _imageRelIdCounter += 1
@@ -783,6 +776,91 @@ Public Class WordDocument
         End If
 
         Return Me
+    End Function
+
+    ' 单位换算常量: 1 px @96DPI = 9525 EMU, 1 pt = 12700 EMU, 1 twip = 635 EMU
+    Private Const EmuPerPixel As Double = 9525.0
+    Private Const EmuPerPoint As Double = 12700.0
+    Private Const EmuPerTwip As Double = 635.0
+
+    ''' <summary>
+    ''' 依据图片原生尺寸与调用方指定的宽/高（磅），解算最终写入 OOXML 的 EMU 尺寸。
+    ''' 保证：未同时指定宽高时严格保持原生宽高比；结果始终落在可打印区域内。
+    ''' </summary>
+    ''' <param name="dims">图片原生像素尺寸；<see cref="Size.Empty"/> 表示尺寸未知。</param>
+    ''' <param name="width">调用方指定宽度（磅），0 表示自动。</param>
+    ''' <param name="height">调用方指定高度（磅），0 表示自动。</param>
+    ''' <param name="widthEmu">输出：最终宽度（EMU）。</param>
+    ''' <param name="heightEmu">输出：最终高度（EMU）。</param>
+    Private Sub ResolveImageExtent(dims As Size,
+                                   width As Double,
+                                   height As Double,
+                                   ByRef widthEmu As Integer,
+                                   ByRef heightEmu As Integer)
+
+        ' 可打印区域 (twips -> EMU)
+        Dim maxWEmu As Double = (_pageWidth - _marginLeft - _marginRight) * EmuPerTwip
+        Dim maxHEmu As Double = (_pageHeight - _marginTop - _marginBottom) * EmuPerTwip
+
+        ' 原生尺寸有效性：无效时无法推导宽高比
+        Dim hasNative As Boolean = dims.Width > 0 AndAlso dims.Height > 0
+        Dim wEmu As Double
+        Dim hEmu As Double
+
+        If width > 0 AndAlso height > 0 Then
+            ' 两者都显式指定：尊重调用方意图，不强制比例
+            wEmu = width * EmuPerPoint
+            hEmu = height * EmuPerPoint
+        ElseIf width > 0 Then
+            ' 只给宽度：按原生比例推导高度
+            wEmu = width * EmuPerPoint
+            hEmu = If(hasNative, wEmu * (dims.Height / CDbl(dims.Width)), wEmu * 0.75)
+        ElseIf height > 0 Then
+            ' 只给高度：按原生比例推导宽度
+            hEmu = height * EmuPerPoint
+            wEmu = If(hasNative, hEmu * (dims.Width / CDbl(dims.Height)), hEmu / 0.75)
+        ElseIf hasNative Then
+            ' 均未指定且原生尺寸已知：按原生像素呈现
+            wEmu = dims.Width * EmuPerPixel
+            hEmu = dims.Height * EmuPerPixel
+        Else
+            ' 均未指定且尺寸未知：退回可打印宽度，按 4:3 呈现，保证图片仍然可见
+            wEmu = maxWEmu
+            hEmu = maxWEmu * 0.75
+        End If
+
+        ' 可打印区域双向钳制：取两个比值中的较小者，宽高同乘同一个 scale，
+        ' 一次性完成缩放，避免两次独立钳制导致比例二次失真。
+        Dim scale As Double = 1.0
+
+        If wEmu > maxWEmu AndAlso wEmu > 0 Then
+            scale = std.Min(scale, maxWEmu / wEmu)
+        End If
+        If hEmu > maxHEmu AndAlso hEmu > 0 Then
+            scale = std.Min(scale, maxHEmu / hEmu)
+        End If
+
+        If scale < 1.0 Then
+            wEmu *= scale
+            hEmu *= scale
+        End If
+
+        widthEmu = ToEmu(wEmu)
+        heightEmu = ToEmu(hEmu)
+    End Sub
+
+    ''' <summary>
+    ''' 将 EMU 浮点计算结果收敛为合法的 Integer：
+    ''' 下限 1 EMU（避免 0 尺寸令 Word 判定文档损坏），上限防溢出。
+    ''' </summary>
+    Private Function ToEmu(value As Double) As Integer
+        If Double.IsNaN(value) OrElse Double.IsInfinity(value) OrElse value < 1.0 Then
+            Return 1
+        ElseIf value >= Integer.MaxValue Then
+            Return Integer.MaxValue
+        Else
+            Return CInt(std.Round(value))
+        End If
     End Function
 
     ' ========================================================================
