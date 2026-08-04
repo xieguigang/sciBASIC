@@ -7,7 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\docx\docx.vbproj" />
+    <ProjectReference Include="..\..\..\Microsoft.VisualBasic.Core\src\Core.vbproj" />
+    <ProjectReference Include="..\..\application%json\JSON-netcore5.vbproj" />
+    <ProjectReference Include="..\..\text%markdown\markdown.NET5.vbproj" />
+    <ProjectReference Include="..\docx\WordDocument.vbproj" />
   </ItemGroup>
 
 </Project>
