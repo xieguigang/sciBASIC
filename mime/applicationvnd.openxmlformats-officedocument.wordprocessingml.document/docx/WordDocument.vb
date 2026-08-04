@@ -19,11 +19,11 @@
 ' Save 时由 DocxPackager 组装完整的 .docx 包。
 ' ============================================================================
 
+Imports System.Drawing
 Imports System.IO
 Imports System.Text
-Imports System.Globalization
-Imports std = System.Math
 Imports Microsoft.VisualBasic.MIME.text.markdown
+Imports std = System.Math
 
 ''' <summary>
 ''' Word 文档生成器。
@@ -551,7 +551,7 @@ Public Class WordDocument
 
         Dim ext As String = Path.GetExtension(file).TrimStart("."c).ToLower()
         Dim imgBytes As Byte() = file.ReadBinary
-        Dim dims As ImageDimensions = ImageHelper.ReadImageDimensions(file)
+        Dim dims As Size = ImageHelper.ReadImageDimensions(file)
 
         ' 转换为 EMU (1 pixel @96DPI = 9525 EMU, 1 pt = 12700 EMU)
         Dim widthEmu As Integer = If(width > 0, CInt(width * 12700), dims.Width * 9525)

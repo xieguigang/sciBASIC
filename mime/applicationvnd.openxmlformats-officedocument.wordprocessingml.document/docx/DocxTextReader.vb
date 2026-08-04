@@ -7,8 +7,6 @@
 
 Imports System.IO
 Imports System.IO.Compression
-Imports System.Xml
-Imports System.Xml.Linq
 Imports System.Text
 
 ''' <summary>

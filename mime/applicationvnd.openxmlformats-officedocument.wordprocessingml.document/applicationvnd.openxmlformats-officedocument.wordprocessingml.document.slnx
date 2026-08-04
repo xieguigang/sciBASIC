@@ -1,9 +1,23 @@
 <Solution>
+  <Configurations>
+    <Platform Name="Any CPU" />
+    <Platform Name="x64" />
+  </Configurations>
   <Folder Name="/framework/">
-    <Project Path="../../Microsoft.VisualBasic.Core/src/Core.vbproj" />
-    <Project Path="../application%json/JSON-netcore5.vbproj" />
-    <Project Path="../text%markdown/markdown.NET5.vbproj" />
+    <Project Path="../../Microsoft.VisualBasic.Core/src/Core.vbproj">
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="../application%json/JSON-netcore5.vbproj">
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
+    <Project Path="../text%markdown/markdown.NET5.vbproj">
+      <Platform Solution="*|x64" Project="x64" />
+    </Project>
   </Folder>
-  <Project Path="docx/WordDocument.vbproj" />
-  <Project Path="test/test.vbproj" Id="1aea5ae3-2940-4a04-bc1a-a091cd63815b" />
+  <Project Path="docx/WordDocument.vbproj">
+    <Platform Solution="*|x64" Project="x64" />
+  </Project>
+  <Project Path="test/test.vbproj" Id="1aea5ae3-2940-4a04-bc1a-a091cd63815b">
+    <Platform Solution="*|x64" Project="x64" />
+  </Project>
 </Solution>

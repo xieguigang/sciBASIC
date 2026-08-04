@@ -7,14 +7,7 @@
 
 Imports System.IO
 Imports System.IO.Compression
-
-''' <summary>
-''' 图像尺寸信息。
-''' </summary>
-Public Structure ImageDimensions
-    Public Property Width As Integer
-    Public Property Height As Integer
-End Structure
+Imports ImageDimensions = System.Drawing.Size
 
 ''' <summary>
 ''' 图像工具：读取图像尺寸、生成测试 PNG。
@@ -126,7 +119,7 @@ Public Module ImageHelper
                               r As Byte, g As Byte, b As Byte)
         Using fs As New FileStream(filePath, FileMode.Create)
             ' PNG 签名
-            Dim sig As Byte() = {&H89, &H50, &H4E, &H47, &H0D, &H0A, &H1A, &H0A}
+            Dim sig As Byte() = {&H89, &H50, &H4E, &H47, &HD, &HA, &H1A, &HA}
             fs.Write(sig, 0, 8)
 
             ' IHDR 数据 (13 bytes)
@@ -207,7 +200,7 @@ Public Module ImageHelper
         Using ms As New MemoryStream()
             ' zlib 头: 0x78 0x01 (deflate, level 1)
             ms.WriteByte(&H78)
-            ms.WriteByte(&H01)
+            ms.WriteByte(&H1)
 
             ' deflate 压缩
             Using ds As New DeflateStream(ms, CompressionMode.Compress, leaveOpen:=True)

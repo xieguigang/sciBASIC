@@ -15,10 +15,10 @@
 '   docProps/app.xml             - 应用属性
 ' ============================================================================
 
+Imports System.Globalization
 Imports System.IO
 Imports System.IO.Compression
 Imports System.Text
-Imports System.Globalization
 
 ''' <summary>
 ''' .docx 文件打包器。

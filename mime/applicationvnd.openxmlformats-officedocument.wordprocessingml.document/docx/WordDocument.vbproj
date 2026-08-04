@@ -11,6 +11,7 @@
     <Import>System</Import>
     <Import>System.Collections.Generic</Import>
     <Import>System.Linq</Import>
+    <Platforms>AnyCPU;x64</Platforms>
   </PropertyGroup>
 
   <ItemGroup>
