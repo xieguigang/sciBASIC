@@ -349,6 +349,14 @@ Public Module VBDebugger
         End If
     End Sub
 
+    Public Sub Write(msg As String, Optional color As ConsoleColor = ConsoleColor.White)
+        If Not My.redirectInfo Is Nothing Then
+            Call My.Log4VB.redirectInfo(DateTime.UtcNow.ToString, msg, MSG_TYPES.INF)
+        Else
+            Call My.Log4VB.Print(msg, color)
+        End If
+    End Sub
+
     ''' <summary>
     ''' If <paramref name="test"/> boolean value is False, then the assertion test failure. If the test is failure the specific message will be output on the console.
     ''' </summary>

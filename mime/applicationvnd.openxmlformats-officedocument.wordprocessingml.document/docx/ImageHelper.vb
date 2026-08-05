@@ -17,36 +17,43 @@ Public Module ImageHelper
     ''' <summary>
     ''' 从 PNG 文件读取图像尺寸。
     ''' </summary>
+    ''' <returns>解析成功返回真实像素尺寸；无法识别时返回 <see cref="ImageDimensions.Empty"/> 表示尺寸未知。</returns>
     Public Function ReadPngDimensions(data As Byte()) As ImageDimensions
         ' PNG 签名: 89 50 4E 47 0D 0A 1A 0A (8 bytes)
         ' IHDR: width at offset 16-19, height at offset 20-23 (big-endian)
         If data Is Nothing OrElse data.Length < 24 Then
-            Return New ImageDimensions With {.Width = 600, .Height = 400}
+            Return ImageDimensions.Empty
         End If
 
         ' 验证 PNG 签名
         If data(0) <> &H89 OrElse data(1) <> &H50 OrElse data(2) <> &H4E OrElse data(3) <> &H47 Then
-            Return New ImageDimensions With {.Width = 600, .Height = 400}
+            Return ImageDimensions.Empty
         End If
 
-        Dim w As Integer = (data(16) << 24) Or (data(17) << 16) Or (data(18) << 8) Or data(19)
-        Dim h As Integer = (data(20) << 24) Or (data(21) << 16) Or (data(22) << 8) Or data(23)
+        Dim w As Integer = BE32(data, 16)
+        Dim h As Integer = BE32(data, 20)
+
+        ' 畸形 IHDR：尺寸为 0 或负数（最高位被置位）一律视为未知
+        If w <= 0 OrElse h <= 0 Then
+            Return ImageDimensions.Empty
+        End If
 
         Return New ImageDimensions With {.Width = w, .Height = h}
     End Function
 
     ''' <summary>
     ''' 从 JPEG 文件读取图像尺寸。
-    ''' 通过扫描 SOF0/SOF2 标记获取尺寸。
+    ''' 通过扫描 SOFn 标记获取尺寸（涵盖基线、扩展顺序、渐进式及算术编码等变体）。
     ''' </summary>
+    ''' <returns>解析成功返回真实像素尺寸；无法识别时返回 <see cref="ImageDimensions.Empty"/> 表示尺寸未知。</returns>
     Public Function ReadJpegDimensions(data As Byte()) As ImageDimensions
         If data Is Nothing OrElse data.Length < 4 Then
-            Return New ImageDimensions With {.Width = 600, .Height = 400}
+            Return ImageDimensions.Empty
         End If
 
         ' 验证 JPEG 签名: FF D8
         If data(0) <> &HFF OrElse data(1) <> &HD8 Then
-            Return New ImageDimensions With {.Width = 600, .Height = 400}
+            Return ImageDimensions.Empty
         End If
 
         Dim pos As Integer = 2
@@ -70,16 +77,30 @@ Public Module ImageHelper
                 Continue Do
             End If
 
+            ' SOS(DA) 之后是熵编码数据，不再有可解析的段头
+            If marker = &HDA Then
+                Exit Do
+            End If
+
             ' 读取段长度 (big-endian)
             If pos + 3 >= data.Length Then Exit Do
-            Dim length As Integer = (data(pos + 2) << 8) Or data(pos + 3)
+            Dim length As Integer = BE16(data, pos + 2)
 
-            ' SOF0 (FFC0) 或 SOF2 (FFC2): 包含图像尺寸
-            If marker = &HC0 OrElse marker = &HC2 Then
+            ' 段长度自身占 2 字节，小于 2 说明文件损坏；
+            ' 若不拦截会导致 pos 不前进甚至回退，形成死循环
+            If length < 2 Then Exit Do
+
+            ' SOFn: 包含图像尺寸。
+            ' C0-C3、C5-C7、C9-CB、CD-CF 均为 SOF 变体；
+            ' 需排除 C4(DHT)、C8(JPG 保留)、CC(DAC)，它们不携带尺寸。
+            If IsStartOfFrame(marker) Then
                 If pos + 8 < data.Length Then
-                    Dim h As Integer = (data(pos + 5) << 8) Or data(pos + 6)
-                    Dim w As Integer = (data(pos + 7) << 8) Or data(pos + 8)
-                    Return New ImageDimensions With {.Width = w, .Height = h}
+                    Dim h As Integer = BE16(data, pos + 5)
+                    Dim w As Integer = BE16(data, pos + 7)
+
+                    If w > 0 AndAlso h > 0 Then
+                        Return New ImageDimensions With {.Width = w, .Height = h}
+                    End If
                 End If
                 Exit Do
             End If
@@ -87,27 +108,75 @@ Public Module ImageHelper
             pos += 2 + length
         Loop
 
-        Return New ImageDimensions With {.Width = 600, .Height = 400}
+        Return ImageDimensions.Empty
+    End Function
+
+    ''' <summary>
+    ''' 读取大端序 32 位无符号整数（以 Integer 承载）。
+    ''' </summary>
+    ''' <remarks>
+    ''' 必须先 <c>CInt</c> 提升再移位：VB.NET 中 <c>Byte</c> 参与 <c>&lt;&lt;</c> 时结果仍为 <c>Byte</c>，
+    ''' 且移位数会被掩码为 <c>count And 7</c>，直接对 Byte 左移 8/16/24 位会把高位字节全部丢弃，
+    ''' 导致解析出的尺寸严重偏小（例如 2400x1800 会被读成 105x15）。
+    ''' </remarks>
+    Private Function BE32(data As Byte(), offset As Integer) As Integer
+        Return (CInt(data(offset)) << 24) Or
+               (CInt(data(offset + 1)) << 16) Or
+               (CInt(data(offset + 2)) << 8) Or
+               CInt(data(offset + 3))
+    End Function
+
+    ''' <summary>
+    ''' 读取大端序 16 位无符号整数。
+    ''' </summary>
+    ''' <remarks>同 <see cref="BE32"/>，必须先 <c>CInt</c> 提升再移位。</remarks>
+    Private Function BE16(data As Byte(), offset As Integer) As Integer
+        Return (CInt(data(offset)) << 8) Or CInt(data(offset + 1))
+    End Function
+
+    ''' <summary>
+    ''' 判断 JPEG 标记是否为携带尺寸信息的 SOFn 段。
+    ''' </summary>
+    Private Function IsStartOfFrame(marker As Integer) As Boolean
+        Select Case marker
+            Case &HC4, &HC8, &HCC
+                ' DHT / JPG 保留 / DAC：不携带尺寸
+                Return False
+            Case &HC0 To &HCF
+                Return True
+            Case Else
+                Return False
+        End Select
     End Function
 
     ''' <summary>
     ''' 从文件读取图像尺寸。
     ''' </summary>
+    ''' <returns>解析成功返回真实像素尺寸；无法识别时返回 <see cref="ImageDimensions.Empty"/> 表示尺寸未知。</returns>
     Public Function ReadImageDimensions(filePath As String) As ImageDimensions
         Try
             Dim data As Byte() = File.ReadAllBytes(filePath)
             Dim ext As String = Path.GetExtension(filePath).TrimStart("."c).ToLower()
+            Dim dims As ImageDimensions
 
             Select Case ext
                 Case "png"
-                    Return ReadPngDimensions(data)
+                    dims = ReadPngDimensions(data)
                 Case "jpg", "jpeg"
-                    Return ReadJpegDimensions(data)
+                    dims = ReadJpegDimensions(data)
                 Case Else
-                    Return New ImageDimensions With {.Width = 600, .Height = 400}
+                    Console.Error.WriteLine($"[警告] 不支持读取该格式的图像尺寸，将按默认比例呈现: {filePath}")
+                    Return ImageDimensions.Empty
             End Select
-        Catch
-            Return New ImageDimensions With {.Width = 600, .Height = 400}
+
+            If dims.IsEmpty Then
+                Console.Error.WriteLine($"[警告] 无法解析图像尺寸（文件可能已损坏或格式不符），将按默认比例呈现: {filePath}")
+            End If
+
+            Return dims
+        Catch ex As Exception
+            Console.Error.WriteLine($"[警告] 读取图像尺寸失败，将按默认比例呈现: {filePath} - {ex.Message}")
+            Return ImageDimensions.Empty
         End Try
     End Function
 
