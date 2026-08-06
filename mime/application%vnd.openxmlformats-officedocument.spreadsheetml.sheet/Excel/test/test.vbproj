@@ -4,6 +4,7 @@
     <OutputType>Exe</OutputType>
     <TargetFramework>net10.0</TargetFramework>
     <Platforms>AnyCPU;x64</Platforms>
+    <AssemblyName>test</AssemblyName>
   </PropertyGroup>
 
   <ItemGroup>
