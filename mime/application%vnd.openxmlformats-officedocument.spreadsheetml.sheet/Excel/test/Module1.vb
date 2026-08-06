@@ -70,7 +70,7 @@ Module Module1
 
         workbook.Save()
 
-        ' Pause()
+        Pause()
     End Sub
 
     Sub zip_test()
