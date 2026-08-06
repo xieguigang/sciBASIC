@@ -274,10 +274,10 @@ Namespace XLSX.Writer
         <Obsolete("This method is a deprecated subset of the function SelectedCellRanges. SelectedCellRanges will get this function name in a future version. Therefore, the type will change")>
         Public ReadOnly Property SelectedCells As Range?
             Get
-                If selectedCellsField.Count = 0 Then
+                If SelectedCellRanges.Count = 0 Then
                     Return Nothing
                 Else
-                    Return selectedCellsField(0)
+                    Return _SelectedCellRanges(0)
                 End If
             End Get
         End Property
@@ -431,7 +431,7 @@ Namespace XLSX.Writer
             SheetProtectionValues = New List(Of SheetProtectionValue)()
             HiddenRows = New Dictionary(Of Integer, Boolean)()
             Columns = New Dictionary(Of Integer, Column)()
-            selectedCellsField = New List(Of Range)()
+            SelectedCellRanges = New List(Of Range)()
             ActiveStyle = Nothing
             m_workbookReference = Nothing
         End Sub
@@ -497,15 +497,15 @@ Namespace XLSX.Writer
         ''' <param name="style">If not null, the defined style will be applied to the cell, otherwise no style or the default style will be applied.</param>
         Private Sub AddNextCell(cell As Cell, incremental As Boolean, style As Style)
             ' date and time styles are already defined by the passed cell object
-            If style IsNot Nothing OrElse m_activeStyle IsNot Nothing AndAlso useActiveStyle Then
+            If style IsNot Nothing OrElse ActiveStyle IsNot Nothing AndAlso useActiveStyle Then
 
                 If cell.CellStyle Is Nothing AndAlso useActiveStyle Then
-                    cell.SetStyle(m_activeStyle)
+                    cell.SetStyle(ActiveStyle)
                 ElseIf cell.CellStyle Is Nothing AndAlso style IsNot Nothing Then
                     cell.SetStyle(style)
                 ElseIf cell.CellStyle IsNot Nothing AndAlso useActiveStyle Then
                     Dim mixedStyle As Style = CType(cell.CellStyle.Copy(), Style)
-                    mixedStyle.Append(m_activeStyle)
+                    mixedStyle.Append(ActiveStyle)
                     cell.SetStyle(mixedStyle)
                 ElseIf cell.CellStyle IsNot Nothing AndAlso style IsNot Nothing Then
                     Dim mixedStyle As Style = CType(cell.CellStyle.Copy(), Style)
@@ -514,10 +514,10 @@ Namespace XLSX.Writer
                 End If
             End If
             Dim address = cell.CellAddress
-            If m_cells.ContainsKey(address) Then
-                m_cells(address) = cell
+            If Cells.ContainsKey(address) Then
+                Cells(address) = cell
             Else
-                m_cells.Add(address, cell)
+                Cells.Add(address, cell)
             End If
             If incremental Then
                 If CurrentCellDirection = CellDirection.ColumnToColumn Then
@@ -739,7 +739,7 @@ Namespace XLSX.Writer
         ''' <returns>Returns true if the cell could be removed (existed), otherwise false (did not exist).</returns>
         Public Function RemoveCell(columnNumber As Integer, rowNumber As Integer) As Boolean
             Dim address = ResolveCellAddress(columnNumber, rowNumber)
-            Return m_cells.Remove(address)
+            Return Cells.Remove(address)
         End Function
 
         ''' <summary>
@@ -762,11 +762,11 @@ Namespace XLSX.Writer
             Dim addresses As IReadOnlyList(Of Address) = cellRange.ResolveEnclosedAddresses()
             For Each address In addresses
                 Dim key As String = address.GetAddress()
-                If m_cells.ContainsKey(key) Then
+                If Cells.ContainsKey(key) Then
                     If style Is Nothing Then
-                        m_cells(key).RemoveStyle()
+                        Cells(key).RemoveStyle()
                     Else
-                        m_cells(key).SetStyle(style)
+                        Cells(key).SetStyle(style)
                     End If
                 Else
                     If style IsNot Nothing Then
@@ -822,11 +822,11 @@ Namespace XLSX.Writer
         ''' </summary>
         ''' <param name="typeOfProtection">Allowed action on the worksheet or cells.</param>
         Public Sub AddAllowedActionOnSheetProtection(typeOfProtection As SheetProtectionValue)
-            If Not sheetProtectionValuesField.Contains(typeOfProtection) Then
-                If typeOfProtection = SheetProtectionValue.selectLockedCells AndAlso Not sheetProtectionValuesField.Contains(SheetProtectionValue.selectUnlockedCells) Then
-                    sheetProtectionValuesField.Add(SheetProtectionValue.selectUnlockedCells)
+            If Not SheetProtectionValues.Contains(typeOfProtection) Then
+                If typeOfProtection = SheetProtectionValue.selectLockedCells AndAlso Not SheetProtectionValues.Contains(SheetProtectionValue.selectUnlockedCells) Then
+                    SheetProtectionValues.Add(SheetProtectionValue.selectUnlockedCells)
                 End If
-                sheetProtectionValuesField.Add(typeOfProtection)
+                SheetProtectionValues.Add(typeOfProtection)
                 UseSheetProtection = True
             End If
         End Sub
@@ -861,7 +861,7 @@ Namespace XLSX.Writer
         ''' </summary>
         Public Sub ClearActiveStyle()
             useActiveStyle = False
-            m_activeStyle = Nothing
+            _ActiveStyle = Nothing
         End Sub
 
         ''' <summary>
@@ -870,10 +870,10 @@ Namespace XLSX.Writer
         ''' <param name="address">Address of the cell.</param>
         ''' <returns>Cell object.</returns>
         Public Function GetCell(address As Address) As Cell
-            If Not m_cells.ContainsKey(address.GetAddress()) Then
+            If Not Cells.ContainsKey(address.GetAddress()) Then
                 Throw New WorksheetException("The cell with the address " & address.GetAddress() & " does not exist in this worksheet")
             End If
-            Return m_cells(address.GetAddress())
+            Return Cells(address.GetAddress())
         End Function
 
         ''' <summary>
@@ -892,7 +892,7 @@ Namespace XLSX.Writer
         ''' <param name="address">Address to check.</param>
         ''' <returns>The <see cref="Boolean"/>.</returns>
         Public Function HasCell(address As Address) As Boolean
-            Return m_cells.ContainsKey(address.GetAddress())
+            Return Cells.ContainsKey(address.GetAddress())
         End Function
 
         ''' <summary>
@@ -910,11 +910,11 @@ Namespace XLSX.Writer
         ''' </summary>
         ''' <param name="columnNumber">Column number to reset (zero-based).</param>
         Public Sub ResetColumn(columnNumber As Integer)
-            If columnsField.ContainsKey(columnNumber) AndAlso Not columnsField(columnNumber).HasAutoFilter Then ' AutoFilters cannot have gaps 
-                columnsField.Remove(columnNumber)
-            ElseIf columnsField.ContainsKey(columnNumber) Then
-                columnsField(columnNumber).IsHidden = False
-                columnsField(columnNumber).Width = DEFAULT_COLUMN_WIDTH
+            If Columns.ContainsKey(columnNumber) AndAlso Not Columns(columnNumber).HasAutoFilter Then ' AutoFilters cannot have gaps 
+                Columns.Remove(columnNumber)
+            ElseIf Columns.ContainsKey(columnNumber) Then
+                Columns(columnNumber).IsHidden = False
+                Columns(columnNumber).Width = DEFAULT_COLUMN_WIDTH
             End If
         End Sub
 
@@ -1042,21 +1042,21 @@ Namespace XLSX.Writer
         ''' <param name="ignoreEmpty">If true, empty cell values are ignored, otherwise considered without checking the content.</param>
         ''' <returns>Min or max number, or -1 if not defined.</returns>
         Private Function GetBoundaryDataNumber(row As Boolean, min As Boolean, ignoreEmpty As Boolean) As Integer
-            If m_cells.Count = 0 Then
+            If Cells.Count = 0 Then
                 Return -1
             End If
             If Not ignoreEmpty Then
                 If row AndAlso min Then
-                    Return m_cells.Min(Function(x) x.Value.RowNumber)
+                    Return Cells.Min(Function(x) x.Value.RowNumber)
                 ElseIf row Then
-                    Return m_cells.Max(Function(x) x.Value.RowNumber)
+                    Return Cells.Max(Function(x) x.Value.RowNumber)
                 ElseIf min Then
-                    Return m_cells.Min(Function(x) x.Value.ColumnNumber)
+                    Return Cells.Min(Function(x) x.Value.ColumnNumber)
                 Else
-                    Return m_cells.Max(Function(x) x.Value.ColumnNumber)
+                    Return Cells.Max(Function(x) x.Value.ColumnNumber)
                 End If
             End If
-            Dim nonEmptyCells As List(Of Cell) = m_cells.Values.Where(Function(x) x.Value IsNot Nothing).ToList()
+            Dim nonEmptyCells As List(Of Cell) = Cells.Values.Where(Function(x) x.Value IsNot Nothing).ToList()
             If nonEmptyCells.Count = 0 Then
                 Return -1
             End If
@@ -1081,17 +1081,17 @@ Namespace XLSX.Writer
             Dim cellBoundary = GetBoundaryDataNumber(row, min, False)
             If row Then
                 Dim heightBoundary = -1
-                If rowHeightsField.Count > 0 Then
+                If RowHeights.Count > 0 Then
                     heightBoundary = If(min, RowHeights.Min(Function(x) x.Key), RowHeights.Max(Function(x) x.Key))
                 End If
                 Dim hiddenBoundary = -1
-                If hiddenRowsField.Count > 0 Then
+                If HiddenRows.Count > 0 Then
                     hiddenBoundary = If(min, HiddenRows.Min(Function(x) x.Key), HiddenRows.Max(Function(x) x.Key))
                 End If
                 Return If(min, GetMinRow(cellBoundary, heightBoundary, hiddenBoundary), GetMaxRow(cellBoundary, heightBoundary, hiddenBoundary))
             Else
                 Dim columnDefBoundary = -1
-                If columnsField.Count > 0 Then
+                If Columns.Count > 0 Then
                     columnDefBoundary = If(min, Columns.Min(Function(x) x.Key), Columns.Max(Function(x) x.Key))
                 End If
                 If min Then
@@ -1234,12 +1234,12 @@ Namespace XLSX.Writer
             Dim key As String = startAddress.ToString() & ":" & endAddress.ToString()
             Dim value As Range = New Range(startAddress, endAddress)
             Dim enclosedAddress As IReadOnlyList(Of Address) = value.ResolveEnclosedAddresses()
-            For Each item In mergedCellsField
+            For Each item In MergedCells
                 If Enumerable.ToList(Enumerable.Intersect(item.Value.ResolveEnclosedAddresses(), enclosedAddress)).Count > 0 Then
                     Throw New RangeException("ConflictingRangeException", "The passed range: " & value.ToString() & " contains cells that are already in the defined merge range: " & item.Key)
                 End If
             Next
-            mergedCellsField.Add(key, value)
+            MergedCells.Add(key, value)
             Return key
         End Function
 
@@ -1247,11 +1247,11 @@ Namespace XLSX.Writer
         ''' Method to recalculate the auto filter (columns) of this worksheet. This is an internal method. There is no need to use it
         ''' </summary>
         Friend Sub RecalculateAutoFilter()
-            If m_autoFilterRange Is Nothing Then
+            If AutoFilterRange Is Nothing Then
                 Return
             End If
-            Dim start = m_autoFilterRange.Value.StartAddress.Column
-            Dim [end] = m_autoFilterRange.Value.EndAddress.Column
+            Dim start = AutoFilterRange.Value.StartAddress.Column
+            Dim [end] = AutoFilterRange.Value.EndAddress.Column
             Dim endRow = 0
             For Each item In Cells
                 If item.Value.ColumnNumber < start OrElse item.Value.ColumnNumber > [end] Then
@@ -1263,18 +1263,18 @@ Namespace XLSX.Writer
             Next
             Dim c As Column
             For i As Integer = start To [end]
-                If Not columnsField.ContainsKey(i) Then
+                If Not Columns.ContainsKey(i) Then
                     c = New Column(i)
                     c.HasAutoFilter = True
-                    columnsField.Add(i, c)
+                    Columns.Add(i, c)
                 Else
-                    columnsField(i).HasAutoFilter = True
+                    Columns(i).HasAutoFilter = True
                 End If
             Next
             Dim temp As Range = New Range()
             temp.StartAddress = New Address(start, 0)
             temp.EndAddress = New Address([end], endRow)
-            m_autoFilterRange = temp
+            _AutoFilterRange = temp
         End Sub
 
         ''' <summary>
@@ -1282,7 +1282,7 @@ Namespace XLSX.Writer
         ''' </summary>
         Friend Sub RecalculateColumns()
             Dim columnsToDelete As List(Of Integer) = New List(Of Integer)()
-            For Each col In columnsField
+            For Each col In Columns
                 If Not col.Value.HasAutoFilter AndAlso Not col.Value.IsHidden AndAlso std.Abs(col.Value.Width - DEFAULT_COLUMN_WIDTH) <= FLOAT_THRESHOLD Then
                     columnsToDelete.Add(col.Key)
                 End If
@@ -1291,7 +1291,7 @@ Namespace XLSX.Writer
                 End If
             Next
             For Each index In columnsToDelete
-                columnsField.Remove(index)
+                Columns.Remove(index)
             Next
         End Sub
 
@@ -1334,7 +1334,7 @@ Namespace XLSX.Writer
         ''' Removes auto filters from the worksheet
         ''' </summary>
         Public Sub RemoveAutoFilter()
-            m_autoFilterRange = Nothing
+            _AutoFilterRange = Nothing
         End Sub
 
         ''' <summary>
@@ -1370,28 +1370,28 @@ Namespace XLSX.Writer
             If Not Equals(range, Nothing) Then
                 range = range.ToUpper()
             End If
-            If Equals(range, Nothing) OrElse Not mergedCellsField.ContainsKey(range) Then
+            If Equals(range, Nothing) OrElse Not MergedCells.ContainsKey(range) Then
                 Throw New RangeException("UnknownRangeException", "The cell range " & range & " was not found in the list of merged cell ranges")
             End If
 
             Dim addresses As List(Of Address) = TryCast(GetCellRange(range), List(Of Address))
             For Each address In addresses
-                If m_cells.ContainsKey(address.GetAddress()) Then
-                    Dim cell As Cell = m_cells(address.ToString())
+                If Cells.ContainsKey(address.GetAddress()) Then
+                    Dim cell As Cell = Cells(address.ToString())
                     If BasicStyles.MergeCellStyle.Equals(cell.CellStyle) Then
                         cell.RemoveStyle()
                     End If
                     cell.ResolveCellType() ' resets the type
                 End If
             Next
-            mergedCellsField.Remove(range)
+            MergedCells.Remove(range)
         End Sub
 
         ''' <summary>
         ''' Removes the cell selection of this worksheet
         ''' </summary>
         Public Sub RemoveSelectedCells()
-            selectedCellsField.Clear()
+            SelectedCellRanges.Clear()
         End Sub
 
         ''' <summary>
@@ -1399,8 +1399,8 @@ Namespace XLSX.Writer
         ''' </summary>
         ''' <param name="rowNumber">Row number (zero-based).</param>
         Public Sub RemoveRowHeight(rowNumber As Integer)
-            If rowHeightsField.ContainsKey(rowNumber) Then
-                rowHeightsField.Remove(rowNumber)
+            If RowHeights.ContainsKey(rowNumber) Then
+                RowHeights.Remove(rowNumber)
             End If
         End Sub
 
@@ -1409,8 +1409,8 @@ Namespace XLSX.Writer
         ''' </summary>
         ''' <param name="value">Allowed action on the worksheet or cells.</param>
         Public Sub RemoveAllowedActionOnSheetProtection(value As SheetProtectionValue)
-            If sheetProtectionValuesField.Contains(value) Then
-                sheetProtectionValuesField.Remove(value)
+            If SheetProtectionValues.Contains(value) Then
+                SheetProtectionValues.Remove(value)
             End If
         End Sub
 
@@ -1424,7 +1424,7 @@ Namespace XLSX.Writer
             Else
                 useActiveStyle = True
             End If
-            m_activeStyle = style
+            _ActiveStyle = style
         End Sub
 
         ''' <summary>
@@ -1447,7 +1447,7 @@ Namespace XLSX.Writer
         ''' </summary>
         ''' <param name="range">Range to apply auto filter on. The range could be 'A1:C10' for instance. The end row will be recalculated automatically when saving the file.</param>
         Public Sub SetAutoFilter(range As String)
-            m_autoFilterRange = ResolveCellRange(range)
+            _AutoFilterRange = ResolveCellRange(range)
             RecalculateAutoFilter()
             RecalculateColumns()
         End Sub
@@ -1459,15 +1459,15 @@ Namespace XLSX.Writer
         ''' <param name="state">If true, the column will be hidden, otherwise be visible.</param>
         Private Sub SetColumnHiddenState(columnNumber As Integer, state As Boolean)
             ValidateColumnNumber(columnNumber)
-            If columnsField.ContainsKey(columnNumber) Then
-                columnsField(columnNumber).IsHidden = state
+            If Columns.ContainsKey(columnNumber) Then
+                Columns(columnNumber).IsHidden = state
             ElseIf state Then
                 Dim c As Column = New Column(columnNumber)
                 c.IsHidden = True
-                columnsField.Add(columnNumber, c)
+                Columns.Add(columnNumber, c)
             End If
-            If Not columnsField(columnNumber).IsHidden AndAlso std.Abs(columnsField(columnNumber).Width - DEFAULT_COLUMN_WIDTH) <= FLOAT_THRESHOLD AndAlso Not columnsField(columnNumber).HasAutoFilter Then
-                columnsField.Remove(columnNumber)
+            If Not Columns(columnNumber).IsHidden AndAlso std.Abs(Columns(columnNumber).Width - DEFAULT_COLUMN_WIDTH) <= FLOAT_THRESHOLD AndAlso Not Columns(columnNumber).HasAutoFilter Then
+                Columns.Remove(columnNumber)
             End If
         End Sub
 
@@ -1491,12 +1491,12 @@ Namespace XLSX.Writer
             If width < MIN_COLUMN_WIDTH OrElse width > MAX_COLUMN_WIDTH Then
                 Throw New RangeException("OutOfRangeException", "The column width (" & width.ToString() & ") is out of range. Range is from " & MIN_COLUMN_WIDTH.ToString() & " to " & MAX_COLUMN_WIDTH.ToString() & " (chars).")
             End If
-            If columnsField.ContainsKey(columnNumber) Then
-                columnsField(columnNumber).Width = width
+            If Columns.ContainsKey(columnNumber) Then
+                Columns(columnNumber).Width = width
             Else
                 Dim c As Column = New Column(columnNumber)
                 c.Width = width
-                columnsField.Add(columnNumber, c)
+                Columns.Add(columnNumber, c)
             End If
         End Sub
 
@@ -1565,7 +1565,7 @@ Namespace XLSX.Writer
         <Obsolete("This method is a deprecated subset of the function AddSelectedCells. It will be removed in a future version")>
         Public Sub SetSelectedCells(range As String)
             If Equals(range, Nothing) Then
-                selectedCellsField.Clear()
+                SelectedCellRanges.Clear()
                 Return
             Else
                 SetSelectedCells(New Range(range))
@@ -1577,7 +1577,7 @@ Namespace XLSX.Writer
         ''' </summary>
         ''' <param name="range">Cell range to be added as selected cells</param>
         Public Sub AddSelectedCells(range As Range)
-            selectedCellsField.Add(range)
+            SelectedCellRanges.Add(range)
         End Sub
 
         ''' <summary>
@@ -1586,7 +1586,7 @@ Namespace XLSX.Writer
         ''' <param name="startAddress">Start address of the range to add</param>
         ''' <param name="endAddress">End address of the range to add</param>
         Public Sub AddSelectedCells(startAddress As Address, endAddress As Address)
-            selectedCellsField.Add(New Range(startAddress, endAddress))
+            SelectedCellRanges.Add(New Range(startAddress, endAddress))
         End Sub
 
         ''' <summary>
@@ -1595,7 +1595,7 @@ Namespace XLSX.Writer
         ''' <param name="range">Cell range to add as selected cells</param>
         Public Sub AddSelectedCells(range As String)
             If Not Equals(range, Nothing) Then
-                selectedCellsField.Add(ResolveCellRange(range))
+                SelectedCellRanges.Add(ResolveCellRange(range))
             End If
         End Sub
 
@@ -1605,12 +1605,12 @@ Namespace XLSX.Writer
         ''' <param name="password">Password (UTF-8) to protect the worksheet. If the password is null or empty, no password will be used.</param>
         Public Sub SetSheetProtectionPassword(password As String)
             If String.IsNullOrEmpty(password) Then
-                sheetProtectionPasswordField = Nothing
-                sheetProtectionPasswordHashField = Nothing
+                _SheetProtectionPassword = Nothing
+                _SheetProtectionPasswordHash = Nothing
                 UseSheetProtection = False
             Else
-                sheetProtectionPasswordField = password
-                sheetProtectionPasswordHashField = LowLevel.GeneratePasswordHash(password)
+                _SheetProtectionPassword = password
+                _SheetProtectionPasswordHash = LowLevel.GeneratePasswordHash(password)
                 UseSheetProtection = True
             End If
         End Sub
@@ -1625,10 +1625,10 @@ Namespace XLSX.Writer
             If height < MIN_ROW_HEIGHT OrElse height > MAX_ROW_HEIGHT Then
                 Throw New RangeException("OutOfRangeException", "The row height (" & height.ToString() & ") is out of range. Range is from " & MIN_ROW_HEIGHT.ToString() & " to " & MAX_ROW_HEIGHT.ToString() & " (equals 546px).")
             End If
-            If rowHeightsField.ContainsKey(rowNumber) Then
-                rowHeightsField(rowNumber) = height
+            If RowHeights.ContainsKey(rowNumber) Then
+                RowHeights(rowNumber) = height
             Else
-                rowHeightsField.Add(rowNumber, height)
+                RowHeights.Add(rowNumber, height)
             End If
         End Sub
 
@@ -1639,14 +1639,14 @@ Namespace XLSX.Writer
         ''' <param name="state">If true, the row will be hidden, otherwise visible.</param>
         Private Sub SetRowHiddenState(rowNumber As Integer, state As Boolean)
             ValidateRowNumber(rowNumber)
-            If hiddenRowsField.ContainsKey(rowNumber) Then
+            If HiddenRows.ContainsKey(rowNumber) Then
                 If state Then
-                    hiddenRowsField(rowNumber) = True
+                    HiddenRows(rowNumber) = True
                 Else
-                    hiddenRowsField.Remove(rowNumber)
+                    HiddenRows.Remove(rowNumber)
                 End If
             ElseIf state Then
-                hiddenRowsField.Add(rowNumber, True)
+                HiddenRows.Add(rowNumber, True)
             End If
         End Sub
 
@@ -1742,14 +1742,14 @@ Namespace XLSX.Writer
                     Throw New WorksheetException("The row number " & topLeftCell.Row.ToString() & " is not valid for a frozen, horizontal split height the split pane row number " & numberOfRowsFromTop.Value.ToString())
                 End If
             End If
-            paneSplitLeftWidthField = Nothing
-            paneSplitTopHeightField = Nothing
-            freezeSplitPanesField = freeze
+            _PaneSplitLeftWidth = Nothing
+            _PaneSplitTopHeight = Nothing
+            _FreezeSplitPanes = freeze
             Dim row = If(numberOfRowsFromTop IsNot Nothing, numberOfRowsFromTop.Value, 0)
             Dim column = If(numberOfColumnsFromLeft IsNot Nothing, numberOfColumnsFromLeft.Value, 0)
-            paneSplitAddressField = New Address(column, row)
-            paneSplitTopLeftCellField = topLeftCell
-            activePaneField = activePane
+            _PaneSplitAddress = New Address(column, row)
+            _PaneSplitTopLeftCell = topLeftCell
+            _ActivePane = activePane
         End Sub
 
         ''' <summary>
@@ -1760,24 +1760,24 @@ Namespace XLSX.Writer
         ''' <param name="topLeftCell">Top Left cell address of the bottom right pane (if applicable).</param>
         ''' <param name="activePane">Active pane in the split window.</param>
         Public Sub SetSplit(leftPaneWidth As Single?, topPaneHeight As Single?, topLeftCell As Address, activePane As WorksheetPane)
-            paneSplitLeftWidthField = leftPaneWidth
-            paneSplitTopHeightField = topPaneHeight
-            freezeSplitPanesField = Nothing
-            paneSplitAddressField = Nothing
-            paneSplitTopLeftCellField = topLeftCell
-            activePaneField = activePane
+            _PaneSplitLeftWidth = leftPaneWidth
+            _PaneSplitTopHeight = topPaneHeight
+            _FreezeSplitPanes = Nothing
+            _PaneSplitAddress = Nothing
+            _PaneSplitTopLeftCell = topLeftCell
+            _ActivePane = activePane
         End Sub
 
         ''' <summary>
         ''' Resets splitting of the worksheet into panes, as well as their freezing
         ''' </summary>
         Public Sub ResetSplit()
-            paneSplitLeftWidthField = Nothing
-            paneSplitTopHeightField = Nothing
-            freezeSplitPanesField = Nothing
-            paneSplitAddressField = Nothing
-            paneSplitTopLeftCellField = Nothing
-            activePaneField = Nothing
+            _PaneSplitLeftWidth = Nothing
+            _PaneSplitTopHeight = Nothing
+            _FreezeSplitPanes = Nothing
+            _PaneSplitAddress = Nothing
+            _PaneSplitTopLeftCell = Nothing
+            _ActivePane = Nothing
         End Sub
 
         ''' <summary>
@@ -1786,50 +1786,50 @@ Namespace XLSX.Writer
         ''' <returns>The <see cref="Worksheet"/>.</returns>
         Public Function Copy() As Worksheet
             Dim lCopy As Worksheet = New Worksheet()
-            For Each cell In m_cells
+            For Each cell In Cells
                 lCopy.AddCell(cell.Value.Copy(), cell.Key)
             Next
-            lCopy.activePaneField = activePaneField
-            lCopy.m_activeStyle = m_activeStyle
-            If m_autoFilterRange.HasValue Then
-                lCopy.m_autoFilterRange = m_autoFilterRange.Value.Copy()
+            lCopy._ActivePane = ActivePane
+            lCopy._ActiveStyle = ActiveStyle
+            If AutoFilterRange.HasValue Then
+                lCopy._AutoFilterRange = AutoFilterRange.Value.Copy()
             End If
-            For Each column In columnsField
-                lCopy.columnsField.Add(column.Key, column.Value.Copy())
+            For Each column In Columns
+                lCopy.Columns.Add(column.Key, column.Value.Copy())
             Next
             lCopy.CurrentCellDirection = CurrentCellDirection
             lCopy.currentColumnNumber = currentColumnNumber
             lCopy.currentRowNumber = currentRowNumber
             lCopy.m_defaultColumnWidth = m_defaultColumnWidth
             lCopy.m_defaultRowHeight = m_defaultRowHeight
-            lCopy.freezeSplitPanesField = freezeSplitPanesField
+            lCopy._FreezeSplitPanes = FreezeSplitPanes
             lCopy.m_hidden = m_hidden
-            For Each row In hiddenRowsField
-                lCopy.hiddenRowsField.Add(row.Key, row.Value)
+            For Each row In HiddenRows
+                lCopy.HiddenRows.Add(row.Key, row.Value)
             Next
-            For Each cell In mergedCellsField
-                lCopy.mergedCellsField.Add(cell.Key, cell.Value.Copy())
+            For Each cell In MergedCells
+                lCopy.MergedCells.Add(cell.Key, cell.Value.Copy())
             Next
-            If paneSplitAddressField.HasValue Then
-                lCopy.paneSplitAddressField = paneSplitAddressField.Value.Copy()
+            If PaneSplitAddress.HasValue Then
+                lCopy._PaneSplitAddress = PaneSplitAddress.Value.Copy()
             End If
-            lCopy.paneSplitLeftWidthField = paneSplitLeftWidthField
-            lCopy.paneSplitTopHeightField = paneSplitTopHeightField
-            If paneSplitTopLeftCellField.HasValue Then
-                lCopy.paneSplitTopLeftCellField = paneSplitTopLeftCellField.Value.Copy()
+            lCopy._PaneSplitLeftWidth = PaneSplitLeftWidth
+            lCopy._PaneSplitTopHeight = PaneSplitTopHeight
+            If PaneSplitTopLeftCell.HasValue Then
+                lCopy._PaneSplitTopLeftCell = PaneSplitTopLeftCell.Value.Copy()
             End If
-            For Each row In rowHeightsField
-                lCopy.rowHeightsField.Add(row.Key, row.Value)
+            For Each row In RowHeights
+                lCopy.RowHeights.Add(row.Key, row.Value)
             Next
-            If selectedCellsField.Count > 0 Then
-                For Each selectedCellRange In selectedCellsField
+            If SelectedCellRanges.Count > 0 Then
+                For Each selectedCellRange In SelectedCellRanges
                     lCopy.AddSelectedCells(selectedCellRange.Copy())
                 Next
             End If
-            lCopy.sheetProtectionPasswordField = sheetProtectionPasswordField
-            lCopy.sheetProtectionPasswordHashField = sheetProtectionPasswordHashField
-            For Each value As SheetProtectionValue In sheetProtectionValuesField
-                lCopy.sheetProtectionValuesField.Add(value)
+            lCopy._SheetProtectionPassword = SheetProtectionPassword
+            lCopy._SheetProtectionPasswordHash = SheetProtectionPasswordHash
+            For Each value As SheetProtectionValue In SheetProtectionValues
+                lCopy.SheetProtectionValues.Add(value)
             Next
             lCopy.useActiveStyle = useActiveStyle
             lCopy.UseSheetProtection = UseSheetProtection
@@ -1899,6 +1899,8 @@ Namespace XLSX.Writer
                 End If
                 number += 1
             End While
+
+            Throw New Exception("This exception will never happends!")
         End Function
 
         ''' <summary>
