@@ -1,3 +1,4 @@
+Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.MIME.Office.Excel.XLSX.Writer
 Imports Microsoft.VisualBasic.MIME.Office.Excel.XLSX.Writer.Styling
 
@@ -30,6 +31,8 @@ Public Module ReportHelper
     ''' <param name="rowTitles">Row titles for the first column (row 3+). One per data row.</param>
     ''' <param name="data">Body values, one inner enumerable per data row (matching <paramref name="rowTitles"/> order).</param>
     ''' <returns>The created and styled <see cref="Worksheet"/> for further manipulation.</returns>
+    ''' 
+    <Extension>
     Public Function WriteReportSheet(workbook As Workbook,
                                      sheetName As String,
                                      commentText As String,
