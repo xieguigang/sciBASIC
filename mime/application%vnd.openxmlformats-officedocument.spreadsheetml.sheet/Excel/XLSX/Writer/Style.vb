@@ -1164,8 +1164,7 @@ Namespace XLSX.Writer
                     Return backgroundColorField
                 End Get
                 Set(value As String)
-                    ValidateColor(value, True)
-                    backgroundColorField = value
+                    backgroundColorField = NormalizeColor(value, True)
                     If PatternFill = PatternValue.none Then
                         PatternFill = PatternValue.solid
                     End If
@@ -1181,8 +1180,7 @@ Namespace XLSX.Writer
                     Return foregroundColorField
                 End Get
                 Set(value As String)
-                    ValidateColor(value, True)
-                    foregroundColorField = value
+                    foregroundColorField = NormalizeColor(value, True)
                     If PatternFill = PatternValue.none Then
                         PatternFill = PatternValue.solid
                     End If
@@ -1205,10 +1203,16 @@ Namespace XLSX.Writer
             ''' Initializes a new instance of the <see cref="Fill"/> class
             ''' </summary>
             Public Sub New()
+                ' NOTE: the color fields are assigned directly instead of through their
+                ' properties. The property setters implicitly promote a "none" pattern to
+                ' "solid", which would turn every freshly created (i.e. empty) Fill into an
+                ' opaque black one. Writing the backing fields keeps the default Fill truly
+                ' empty, which is what both the XML writer and AbstractStyle.CopyProperties
+                ' (which compares against a pristine reference instance) expect.
+                foregroundColorField = DEFAULT_COLOR
+                backgroundColorField = DEFAULT_COLOR
                 IndexedColor = DEFAULT_INDEXED_COLOR
                 PatternFill = DEFAULT_PATTERN_FILL
-                ForegroundColor = DEFAULT_COLOR
-                BackgroundColor = DEFAULT_COLOR
             End Sub
 
             ''' <summary>
@@ -1217,8 +1221,8 @@ Namespace XLSX.Writer
             ''' <param name="foreground">Foreground color of the fill.</param>
             ''' <param name="background">Background color of the fill.</param>
             Public Sub New(foreground As String, background As String)
-                BackgroundColor = background
-                ForegroundColor = foreground
+                backgroundColorField = NormalizeColor(background, True)
+                foregroundColorField = NormalizeColor(foreground, True)
                 IndexedColor = DEFAULT_INDEXED_COLOR
                 PatternFill = PatternValue.solid
             End Sub
@@ -1231,9 +1235,9 @@ Namespace XLSX.Writer
             Public Sub New(value As String, filltype As FillType)
                 If filltype = FillType.fillColor Then
                     backgroundColorField = DEFAULT_COLOR
-                    ForegroundColor = value
+                    foregroundColorField = NormalizeColor(value, True)
                 Else
-                    BackgroundColor = value
+                    backgroundColorField = NormalizeColor(value, True)
                     foregroundColorField = DEFAULT_COLOR
                 End If
                 IndexedColor = DEFAULT_INDEXED_COLOR
@@ -1262,8 +1266,11 @@ Namespace XLSX.Writer
             ''' <returns>Copy of the current object without the internal ID.</returns>
             Public Overrides Function Copy() As AbstractStyle
                 Dim lCopy As Fill = New Fill()
-                lCopy.BackgroundColor = BackgroundColor
-                lCopy.ForegroundColor = ForegroundColor
+                ' Assign the backing fields directly and restore the pattern afterwards, so
+                ' the auto-promotion inside the property setters cannot turn a copied "none"
+                ' fill into a solid one.
+                lCopy.backgroundColorField = BackgroundColor
+                lCopy.foregroundColorField = ForegroundColor
                 lCopy.IndexedColor = IndexedColor
                 lCopy.PatternFill = PatternFill
                 Return lCopy
@@ -1298,9 +1305,9 @@ Namespace XLSX.Writer
             Public Sub SetColor(value As String, filltype As FillType)
                 If filltype = FillType.fillColor Then
                     backgroundColorField = DEFAULT_COLOR
-                    ForegroundColor = value
+                    foregroundColorField = NormalizeColor(value, True)
                 Else
-                    BackgroundColor = value
+                    backgroundColorField = NormalizeColor(value, True)
                     foregroundColorField = DEFAULT_COLOR
                 End If
                 PatternFill = PatternValue.solid
@@ -1341,21 +1348,86 @@ Namespace XLSX.Writer
             ''' <param name="useAlpha">If true, two additional characters (total 8) are expected as alpha value.</param>
             ''' <param name="allowEmpty">Optional parameter that allows null or empty as valid values.</param>
             Public Shared Sub ValidateColor(hexCode As String, useAlpha As Boolean, Optional allowEmpty As Boolean = False)
-                If String.IsNullOrEmpty(hexCode) Then
+                NormalizeColor(hexCode, useAlpha, allowEmpty)
+            End Sub
+
+            ''' <summary>
+            ''' Validates and normalizes a color expression into the canonical upper case
+            ''' AARRGGBB (or RRGGBB) form that is expected inside the generated XML
+            ''' </summary>
+            ''' <remarks>
+            ''' Accepted notations are <c>AARRGGBB</c>, <c>RRGGBB</c> and both of them with a
+            ''' leading CSS style hash (<c>#AARRGGBB</c> / <c>#RRGGBB</c>). When
+            ''' <paramref name="useAlpha"/> is true a missing alpha channel is completed with
+            ''' a fully opaque <c>FF</c>.
+            ''' </remarks>
+            ''' <param name="hexCode">Hex string to normalize.</param>
+            ''' <param name="useAlpha">If true, an alpha value is expected or added (total 8 characters).</param>
+            ''' <param name="allowEmpty">Optional parameter that allows null or empty as valid values.</param>
+            ''' <returns>The normalized, upper case hex value, or an empty string for an allowed empty input.</returns>
+            Public Shared Function NormalizeColor(hexCode As String, useAlpha As Boolean, Optional allowEmpty As Boolean = False) As String
+                Dim value As String = If(hexCode, String.Empty).Trim()
+                If value.StartsWith("#") Then
+                    value = value.Substring(1)
+                End If
+                If value.Length = 0 Then
                     If allowEmpty Then
-                        Return
+                        Return String.Empty
                     End If
                     Throw New StyleException("A general style exception occurred", "The color expression was null or empty")
                 End If
-                Dim length As Integer
-                length = If(useAlpha, 8, 6)
-                If hexCode Is Nothing OrElse hexCode.Length <> length Then
-                    Throw New StyleException("A general style exception occurred", "The value '" & hexCode & "' is invalid. A valid value must contain six hex characters")
-                End If
-                If Not Regex.IsMatch(hexCode, "[a-fA-F0-9]{6,8}") Then
+                ' Anchored on purpose: an unanchored pattern would happily accept a substring
+                ' match and let invalid characters slip through into the XML.
+                If Not Regex.IsMatch(value, "^[a-fA-F0-9]+$") Then
                     Throw New StyleException("A general style exception occurred", "The expression '" & hexCode & "' is not a valid hex value")
                 End If
-            End Sub
+                If useAlpha Then
+                    If value.Length = 6 Then
+                        value = "FF" & value
+                    End If
+                    If value.Length <> 8 Then
+                        Throw New StyleException("A general style exception occurred", "The value '" & hexCode & "' is invalid. A valid value must contain six or eight hex characters")
+                    End If
+                ElseIf value.Length <> 6 Then
+                    Throw New StyleException("A general style exception occurred", "The value '" & hexCode & "' is invalid. A valid value must contain six hex characters")
+                End If
+                Return value.ToUpperInvariant()
+            End Function
+
+            ''' <summary>
+            ''' Gets the color that Excel actually renders for this fill
+            ''' </summary>
+            ''' <remarks>
+            ''' For a solid fill the visible color is taken from the <c>fgColor</c> element,
+            ''' <c>bgColor</c> is ignored by Excel. Callers of this class however tend to
+            ''' express the cell shading through <see cref="BackgroundColor"/>, so that value
+            ''' takes precedence and <see cref="ForegroundColor"/> only acts as fallback for
+            ''' the internal <see cref="SetColor"/> / built-in style code paths.
+            ''' </remarks>
+            ''' <returns>The effective color as AARRGGBB, or an empty string when no explicit color was set.</returns>
+            Public Function GetEffectiveFillColor() As String
+                If Not String.IsNullOrEmpty(BackgroundColor) AndAlso Not String.Equals(BackgroundColor, DEFAULT_COLOR) Then
+                    Return BackgroundColor
+                End If
+                If Not String.IsNullOrEmpty(ForegroundColor) AndAlso Not String.Equals(ForegroundColor, DEFAULT_COLOR) Then
+                    Return ForegroundColor
+                End If
+                ' Both colors are still at their default. Only honor that default when the
+                ' pattern was set explicitly, otherwise the fill is simply undefined.
+                If PatternFill <> PatternValue.none AndAlso Not String.IsNullOrEmpty(ForegroundColor) Then
+                    Return ForegroundColor
+                End If
+                Return String.Empty
+            End Function
+
+            ''' <summary>
+            ''' Gets a value indicating whether this fill produces any visible shading and
+            ''' therefore has to be written to the style sheet
+            ''' </summary>
+            ''' <returns>True if the fill has to be applied to a cell.</returns>
+            Public Function HasVisibleFill() As Boolean
+                Return PatternFill <> PatternValue.none
+            End Function
         End Class
 
         ''' <summary>

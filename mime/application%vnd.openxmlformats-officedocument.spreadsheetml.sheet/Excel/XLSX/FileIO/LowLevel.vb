@@ -1212,14 +1212,24 @@ Namespace XLSX.FileIO
             Dim fillStyles As Style.Fill() = m_styles.GetFills()
             Dim sb As StringBuilder = New StringBuilder()
             For Each item In fillStyles
+                Dim effectiveColor As String = item.GetEffectiveFillColor()
+                ' A solid pattern without any usable color would be rendered by Excel using
+                ' the fgColor default, which is opaque black. Degrade to "none" instead so an
+                ' unconfigured fill stays invisible.
+                Dim patternValue As Style.Fill.PatternValue = item.PatternFill
+                If patternValue = Style.Fill.PatternValue.solid AndAlso String.IsNullOrEmpty(effectiveColor) Then
+                    patternValue = Style.Fill.PatternValue.none
+                End If
                 sb.Append("<fill>")
-                sb.Append("<patternFill patternType=""").Append(Style.Fill.GetPatternName(item.PatternFill)).Append("""")
-                If item.PatternFill = Style.Fill.PatternValue.solid Then
+                sb.Append("<patternFill patternType=""").Append(Style.Fill.GetPatternName(patternValue)).Append("""")
+                If patternValue = Style.Fill.PatternValue.solid Then
+                    ' For a solid fill Excel renders fgColor and ignores bgColor, therefore
+                    ' the effective (user facing "background") color has to go into fgColor.
                     sb.Append(">")
-                    sb.Append("<fgColor rgb=""").Append(item.ForegroundColor).Append("""/>")
+                    sb.Append("<fgColor rgb=""").Append(effectiveColor).Append("""/>")
                     sb.Append("<bgColor indexed=""").Append(item.IndexedColor.ToString("G", culture)).Append("""/>")
                     sb.Append("</patternFill>")
-                ElseIf item.PatternFill = Style.Fill.PatternValue.mediumGray OrElse item.PatternFill = Style.Fill.PatternValue.lightGray OrElse item.PatternFill = Style.Fill.PatternValue.gray0625 OrElse item.PatternFill = Style.Fill.PatternValue.darkGray Then
+                ElseIf patternValue = Style.Fill.PatternValue.mediumGray OrElse patternValue = Style.Fill.PatternValue.lightGray OrElse patternValue = Style.Fill.PatternValue.gray0625 OrElse patternValue = Style.Fill.PatternValue.darkGray Then
                     sb.Append(">")
                     sb.Append("<fgColor rgb=""").Append(item.ForegroundColor).Append("""/>")
                     If Not String.IsNullOrEmpty(item.BackgroundColor) Then
@@ -1353,7 +1363,7 @@ Namespace XLSX.FileIO
                 If Not style.CurrentFont.IsDefaultFont Then
                     sb.Append(""" applyFont=""1")
                 End If
-                If style.CurrentFill.PatternFill <> Style.Fill.PatternValue.none Then
+                If style.CurrentFill.HasVisibleFill() Then
                     sb.Append(""" applyFill=""1")
                 End If
                 If Not style.CurrentBorder.IsEmpty() Then
@@ -1392,10 +1402,10 @@ Namespace XLSX.FileIO
             Dim sb As StringBuilder = New StringBuilder()
             Dim tempColors As List(Of String) = New List(Of String)()
             For Each item In fonts
+                ' Only skip unset font colors here. The previous implementation compared
+                ' against Style.Fill.DEFAULT_COLOR, which belongs to fills and silently
+                ' dropped a deliberately chosen black font color.
                 If String.IsNullOrEmpty(item.ColorValue) Then
-                    Continue For
-                End If
-                If Equals(item.ColorValue, Style.Fill.DEFAULT_COLOR) Then
                     Continue For
                 End If
                 If Not tempColors.Contains(item.ColorValue) Then
@@ -1403,11 +1413,9 @@ Namespace XLSX.FileIO
                 End If
             Next
             For Each item In fills
-                If Not String.IsNullOrEmpty(item.BackgroundColor) AndAlso Not Equals(item.BackgroundColor, Style.Fill.DEFAULT_COLOR) AndAlso Not tempColors.Contains(item.BackgroundColor) Then
-                    tempColors.Add(item.BackgroundColor)
-                End If
-                If Not String.IsNullOrEmpty(item.ForegroundColor) AndAlso Not Equals(item.ForegroundColor, Style.Fill.DEFAULT_COLOR) AndAlso Not tempColors.Contains(item.ForegroundColor) Then
-                    tempColors.Add(item.ForegroundColor)
+                Dim effectiveColor As String = item.GetEffectiveFillColor()
+                If Not String.IsNullOrEmpty(effectiveColor) AndAlso Not Equals(effectiveColor, Style.Fill.DEFAULT_COLOR) AndAlso Not tempColors.Contains(effectiveColor) Then
+                    tempColors.Add(effectiveColor)
                 End If
             Next
             If tempColors.Count > 0 Then

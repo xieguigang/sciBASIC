@@ -68,9 +68,57 @@ Module Module1
         workbook.CurrentWorksheet.AddNextCell(4323355.2, New Style With {.CurrentFill = New Style.Fill With {.BackgroundColor = "#FFFFBB66"}}) ' Add cell B1
         workbook.CurrentWorksheet.AddNextCell(DateTime.Now) ' Add cell C1
 
+        Call testFillColors(workbook)
+
         workbook.Save()
 
         Pause()
+    End Sub
+
+    ''' <summary>
+    ''' Writes a sheet where every row exercises one of the supported fill notations.
+    ''' Open the generated file and compare the rendered color against the label in
+    ''' column A: they must match, and no cell may turn up black unexpectedly.
+    ''' </summary>
+    Private Sub testFillColors(workbook As Workbook)
+        workbook.AddWorksheet("fill_colors")
+
+        Dim sheet = workbook.CurrentWorksheet
+
+        ' background color only, hash prefixed with alpha - the original bug report
+        Call writeFillSample(sheet, "#FFFFBB66 -> orange", New Style.Fill With {.BackgroundColor = "#FFFFBB66"})
+        ' background color only, hash prefixed without alpha
+        Call writeFillSample(sheet, "#4472C4 -> blue", New Style.Fill With {.BackgroundColor = "#4472C4"})
+        ' background color only, plain 8 digit notation
+        Call writeFillSample(sheet, "FF70AD47 -> green", New Style.Fill With {.BackgroundColor = "FF70AD47", .ForegroundColor = "FFFF0000"})
+        ' background color only, plain 6 digit notation (alpha is completed to FF)
+        Call writeFillSample(sheet, "ED7D31 -> amber", New Style.Fill With {.BackgroundColor = "ED7D31"})
+        ' lower case input has to be normalized as well
+        Call writeFillSample(sheet, "#ffc000 -> yellow", New Style.Fill With {.BackgroundColor = "#ffc000"})
+        ' foreground color only, which is what SetColor / ColorizedBackground produce
+        Call writeFillSample(sheet, "foreground A5A5A5 -> gray", New Style.Fill With {.ForegroundColor = "FFA5A5A5"})
+        ' both colors set - background wins for a solid fill
+        Call writeFillSample(sheet, "fg black + bg red -> red", New Style.Fill With {.ForegroundColor = "FF000000", .BackgroundColor = "FFFF0000"})
+        ' an explicitly requested black background must stay black
+        Call writeFillSample(sheet, "#FF000000 -> black", New Style.Fill With {.BackgroundColor = "#FF000000"})
+        ' non solid pattern fill keeps its original fgColor / bgColor semantics
+        Call writeFillSample(sheet, "gray125 pattern", New Style.Fill With {.PatternFill = Style.Fill.PatternValue.gray125})
+        ' built in helper style has to stay compatible
+        Call writeFillSample(sheet, "ColorizedBackground(00B0F0)", Style.BasicStyles.ColorizedBackground("00B0F0").CurrentFill)
+
+        ' no fill at all - this cell must render without any shading
+        sheet.AddNextCell("no fill -> transparent")
+        sheet.AddNextCell("sample")
+        sheet.GoToNextRow()
+
+        ' a default constructed fill is still "none" and must not paint anything
+        Call writeFillSample(sheet, "default Fill() -> transparent", New Style.Fill())
+    End Sub
+
+    Private Sub writeFillSample(sheet As Worksheet, label As String, fill As Style.Fill)
+        sheet.AddNextCell(label)
+        sheet.AddNextCell("sample", New Style With {.CurrentFill = fill})
+        sheet.GoToNextRow()
     End Sub
 
     Sub zip_test()
