@@ -424,13 +424,6 @@
   </ItemGroup>
 
   <ItemGroup>
-
-    <PackageReference Include="System.Drawing.Primitives" Version="4.3.0" />
-
-    <PackageReference Include="System.Linq.Queryable" Version="4.3.0" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\..\Microsoft.VisualBasic.Core\src\Core.vbproj" />
   </ItemGroup>
 

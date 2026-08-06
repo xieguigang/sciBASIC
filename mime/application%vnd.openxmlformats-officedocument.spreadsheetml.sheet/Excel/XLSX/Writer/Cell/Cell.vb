@@ -1,64 +1,64 @@
 ﻿#Region "Microsoft.VisualBasic::d17a793e7afd5583d1e3012a8a965201, mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\XLSX\Writer\Cell\Cell.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 614
-    '    Code Lines: 395 (64.33%)
-    ' Comment Lines: 178 (28.99%)
-    '    - Xml Docs: 96.07%
-    ' 
-    '   Blank Lines: 41 (6.68%)
-    '     File Size: 28.85 KB
+' Summaries:
 
 
-    '     Class Cell
-    ' 
-    '         Properties: CellAddress, CellAddress2, CellAddressType, CellStyle, ColumnNumber
-    '                     DataType, RowNumber, Value
-    ' 
-    '         Constructor: (+4 Overloads) Sub New
-    ' 
-    '         Function: CompareTo, ConvertArray, Copy, GetAddressScope, (+4 Overloads) GetCellRange
-    '                   ResolveCellAddress, ResolveCellCoordinate, ResolveCellRange, ResolveColumn, ResolveColumnAddress
-    '                   SetStyle
-    ' 
-    '         Sub: RemoveStyle, (+2 Overloads) ResolveCellCoordinate, ResolveCellType, SetCellLockedState, ValidateColumnNumber
-    '              ValidateRowNumber
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 614
+'    Code Lines: 395 (64.33%)
+' Comment Lines: 178 (28.99%)
+'    - Xml Docs: 96.07%
+' 
+'   Blank Lines: 41 (6.68%)
+'     File Size: 28.85 KB
+
+
+'     Class Cell
+' 
+'         Properties: CellAddress, CellAddress2, CellAddressType, CellStyle, ColumnNumber
+'                     DataType, RowNumber, Value
+' 
+'         Constructor: (+4 Overloads) Sub New
+' 
+'         Function: CompareTo, ConvertArray, Copy, GetAddressScope, (+4 Overloads) GetCellRange
+'                   ResolveCellAddress, ResolveCellCoordinate, ResolveCellRange, ResolveColumn, ResolveColumnAddress
+'                   SetStyle
+' 
+'         Sub: RemoveStyle, (+2 Overloads) ResolveCellCoordinate, ResolveCellType, SetCellLockedState, ValidateColumnNumber
+'              ValidateRowNumber
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -73,6 +73,7 @@ Imports System.Globalization
 Imports System.Runtime.InteropServices
 Imports System.Text
 Imports System.Text.RegularExpressions
+Imports Microsoft.VisualBasic.MIME.Office.Excel.XLSX.Writer.Styling
 
 Namespace XLSX.Writer
 
@@ -82,24 +83,19 @@ Namespace XLSX.Writer
     Public Class Cell : Implements IComparable(Of Cell)
 
         ''' <summary>
-        ''' Defines the cellStyle
-        ''' </summary>
-        Private cellStyleField As Style
-
-        ''' <summary>
         ''' Defines the columnNumber
         ''' </summary>
-        Private columnNumberField As Integer
+        Private m_columnNumber As Integer
 
         ''' <summary>
         ''' Defines the rowNumber
         ''' </summary>
-        Private rowNumberField As Integer
+        Private m_rowNumber As Integer
 
         ''' <summary>
         ''' Defines the value
         ''' </summary>
-        Private valueField As Object
+        Private m_value As Object
 
         ''' <summary>
         ''' Gets or sets the combined cell Address as string in the format A1 - XFD1048576
@@ -110,7 +106,7 @@ Namespace XLSX.Writer
             End Get
             Set(value As String)
                 Dim addressType As AddressType
-                ResolveCellCoordinate(value, columnNumberField, rowNumberField, addressType)
+                ResolveCellCoordinate(value, m_columnNumber, m_rowNumber, addressType)
                 CellAddressType = addressType
             End Set
         End Property
@@ -133,23 +129,19 @@ Namespace XLSX.Writer
         ''' Gets the assigned style of the cell
         ''' </summary>
         Public ReadOnly Property CellStyle As Style
-            Get
-                Return cellStyleField
-            End Get
-        End Property
 
         ''' <summary>
         ''' Gets or sets the ColumnNumber
         ''' </summary>
         Public Property ColumnNumber As Integer
             Get
-                Return columnNumberField
+                Return m_columnNumber
             End Get
             Set(value As Integer)
                 If value < Worksheet.MIN_COLUMN_NUMBER OrElse value > Worksheet.MAX_COLUMN_NUMBER Then
                     Throw New RangeException("OutOfRangeException", "The passed column number (" & value.ToString() & ") is out of range. Range is from " & Worksheet.MIN_COLUMN_NUMBER.ToString() & " to " & Worksheet.MAX_COLUMN_NUMBER.ToString() & " (" & (Worksheet.MAX_COLUMN_NUMBER + 1).ToString() & " rows).")
                 End If
-                columnNumberField = value
+                m_columnNumber = value
             End Set
         End Property
 
@@ -163,13 +155,13 @@ Namespace XLSX.Writer
         ''' </summary>
         Public Property RowNumber As Integer
             Get
-                Return rowNumberField
+                Return m_rowNumber
             End Get
             Set(value As Integer)
                 If value < Worksheet.MIN_ROW_NUMBER OrElse value > Worksheet.MAX_ROW_NUMBER Then
                     Throw New RangeException("OutOfRangeException", "The passed row number (" & value.ToString() & ") is out of range. Range is from " & Worksheet.MIN_ROW_NUMBER.ToString() & " to " & Worksheet.MAX_ROW_NUMBER.ToString() & " (" & (Worksheet.MAX_ROW_NUMBER + 1).ToString() & " rows).")
                 End If
-                rowNumberField = value
+                m_rowNumber = value
             End Set
         End Property
 
@@ -183,10 +175,10 @@ Namespace XLSX.Writer
         ''' </summary>
         Public Property Value As Object
             Get
-                Return valueField
+                Return m_value
             End Get
             Set(value As Object)
-                valueField = value
+                m_value = value
                 ResolveCellType()
             End Set
         End Property
@@ -205,9 +197,9 @@ Namespace XLSX.Writer
         ''' <param name="type">Type of the cell.</param>
         Public Sub New(value As Object, type As CellType)
             If type = CellType.EMPTY Then
-                valueField = Nothing
+                m_value = Nothing
             Else
-                valueField = value
+                m_value = value
             End If
             DataType = type
             If type = CellType.DEFAULT Then
@@ -223,9 +215,9 @@ Namespace XLSX.Writer
         ''' <param name="address">Address of the cell.</param>
         Public Sub New(value As Object, type As CellType, address As String)
             If type = CellType.EMPTY Then
-                valueField = Nothing
+                m_value = Nothing
             Else
-                valueField = value
+                m_value = value
             End If
             DataType = type
             CellAddress = address
@@ -266,7 +258,7 @@ Namespace XLSX.Writer
         ''' Removes the assigned style from the cell
         ''' </summary>
         Public Sub RemoveStyle()
-            cellStyleField = Nothing
+            _CellStyle = Nothing
         End Sub
 
         ''' <summary>
@@ -274,15 +266,15 @@ Namespace XLSX.Writer
         ''' CellType FORMULA will skip this method and EMPTY will discard the value of the cell
         ''' </summary>
         Public Sub ResolveCellType()
-            If valueField Is Nothing Then
+            If m_value Is Nothing Then
                 DataType = CellType.EMPTY
-                valueField = Nothing
+                m_value = Nothing
                 Return
             End If
             If DataType = CellType.FORMULA Then
                 Return
             End If
-            Dim t As Type = valueField.GetType()
+            Dim t As Type = m_value.GetType()
             If t Is GetType(Boolean) Then
                 DataType = CellType.BOOL
             ElseIf t Is GetType(Byte) OrElse t Is GetType(SByte) Then
@@ -315,10 +307,10 @@ Namespace XLSX.Writer
         ''' <param name="isHidden">If true, the value of the cell will be invisible if the worksheet is protected.</param>
         Public Sub SetCellLockedState(isLocked As Boolean, isHidden As Boolean)
             Dim lockStyle As Style
-            If cellStyleField Is Nothing Then
+            If _CellStyle Is Nothing Then
                 lockStyle = New Style()
             Else
-                lockStyle = cellStyleField.CopyStyle()
+                lockStyle = _CellStyle.CopyStyle()
             End If
             lockStyle.CurrentCellXf.Locked = isLocked
             lockStyle.CurrentCellXf.Hidden = isHidden
@@ -335,8 +327,8 @@ Namespace XLSX.Writer
             If style Is Nothing Then
                 Throw New StyleException("A reference is missing in the style definition", "No style to assign was defined")
             End If
-            cellStyleField = If(unmanaged, style, StyleRepository.Instance.AddStyle(style))
-            Return cellStyleField
+            _CellStyle = If(unmanaged, style, StyleRepository.Instance.AddStyle(style))
+            Return _CellStyle
         End Function
 
         ''' <summary>
@@ -345,12 +337,12 @@ Namespace XLSX.Writer
         ''' <returns>Copy of this cell.</returns>
         Friend Function Copy() As Cell
             Dim lCopy As Cell = New Cell()
-            lCopy.valueField = valueField
+            lCopy.m_value = m_value
             lCopy.DataType = DataType
             lCopy.CellAddress = CellAddress
             lCopy.CellAddressType = CellAddressType
-            If cellStyleField IsNot Nothing Then
-                lCopy.SetStyle(cellStyleField, True)
+            If _CellStyle IsNot Nothing Then
+                lCopy.SetStyle(_CellStyle, True)
             End If
             Return lCopy
         End Function
@@ -402,10 +394,10 @@ Namespace XLSX.Writer
                     c = New Cell(CUShort(o), CellType.NUMBER)
                 ElseIf t Is GetType(Date) Then
                     c = New Cell(CDate(o), CellType.DATE)
-                    c.SetStyle(Style.BasicStyles.DateFormat)
+                    c.SetStyle(BasicStyles.DateFormat)
                 ElseIf t Is GetType(TimeSpan) Then
                     c = New Cell(CType(o, TimeSpan), CellType.TIME)
-                    c.SetStyle(Style.BasicStyles.TimeFormat)
+                    c.SetStyle(BasicStyles.TimeFormat)
                 ElseIf t Is GetType(String) Then
                     c = New Cell(CStr(o), CellType.STRING) ' Default = unspecified object
                 Else

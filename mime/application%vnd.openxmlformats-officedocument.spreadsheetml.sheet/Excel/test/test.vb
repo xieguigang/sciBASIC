@@ -85,7 +85,7 @@ Module test
     Sub styleModelTest()
         Dim font = Styling.StyleFont(FontFace.BookmanOldStyle, 55, "yellow", True, True)
 
-        font.GetXml.__DEBUG_ECHO
+        font.GetXml.debug
 
         Pause()
     End Sub

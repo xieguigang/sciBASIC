@@ -1,72 +1,72 @@
 ﻿#Region "Microsoft.VisualBasic::752a389fd94d7cac170e6b2a0e544e95, mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\XLSX\Writer\Workbook.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 952
-    '    Code Lines: 472 (49.58%)
-    ' Comment Lines: 384 (40.34%)
-    '    - Xml Docs: 97.40%
-    ' 
-    '   Blank Lines: 96 (10.08%)
-    '     File Size: 45.30 KB
+' Summaries:
 
 
-    '     Class Workbook
-    ' 
-    '         Properties: CurrentWorksheet, Filename, Hidden, LockStructureIfProtected, LockWindowsIfProtected
-    '                     SelectedWorksheet, UseWorkbookProtection, WorkbookMetadata, WorkbookProtectionPassword, WorkbookProtectionPasswordHash
-    '                     Worksheets, WS
-    ' 
-    '         Constructor: (+5 Overloads) Sub New
-    ' 
-    '         Function: AddStyle, AddStyleComponent, AddWorksheet, (+3 Overloads) CopyWorksheetIntoThis, (+3 Overloads) CopyWorksheetTo
-    '                   GetMruColors, GetNextWorksheetId, (+2 Overloads) GetWorksheet, (+2 Overloads) SetCurrentWorksheet
-    ' 
-    '         Sub: AddMruColor, (+3 Overloads) AddWorksheet, ClearMruColors, Init, (+4 Overloads) RemoveStyle
-    '              (+3 Overloads) RemoveWorksheet, ResolveMergedCells, Save, SaveAs, SaveAsStream
-    '              SetCurrentWorksheet, (+3 Overloads) SetSelectedWorksheet, SetWorkbookProtection, ValidateWorksheets
-    '         Class Shortener
-    ' 
-    '             Constructor: (+1 Overloads) Sub New
-    '             Sub: (+2 Overloads) Down, (+2 Overloads) Formula, (+2 Overloads) Left, NullCheck, (+2 Overloads) Right
-    '                  SetCurrentWorksheet, SetCurrentWorksheetInternal, (+2 Overloads) Up, (+2 Overloads) Value
-    ' 
-    ' 
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 952
+'    Code Lines: 472 (49.58%)
+' Comment Lines: 384 (40.34%)
+'    - Xml Docs: 97.40%
+' 
+'   Blank Lines: 96 (10.08%)
+'     File Size: 45.30 KB
+
+
+'     Class Workbook
+' 
+'         Properties: CurrentWorksheet, Filename, Hidden, LockStructureIfProtected, LockWindowsIfProtected
+'                     SelectedWorksheet, UseWorkbookProtection, WorkbookMetadata, WorkbookProtectionPassword, WorkbookProtectionPasswordHash
+'                     Worksheets, WS
+' 
+'         Constructor: (+5 Overloads) Sub New
+' 
+'         Function: AddStyle, AddStyleComponent, AddWorksheet, (+3 Overloads) CopyWorksheetIntoThis, (+3 Overloads) CopyWorksheetTo
+'                   GetMruColors, GetNextWorksheetId, (+2 Overloads) GetWorksheet, (+2 Overloads) SetCurrentWorksheet
+' 
+'         Sub: AddMruColor, (+3 Overloads) AddWorksheet, ClearMruColors, Init, (+4 Overloads) RemoveStyle
+'              (+3 Overloads) RemoveWorksheet, ResolveMergedCells, Save, SaveAs, SaveAsStream
+'              SetCurrentWorksheet, (+3 Overloads) SetSelectedWorksheet, SetWorkbookProtection, ValidateWorksheets
+'         Class Shortener
+' 
+'             Constructor: (+1 Overloads) Sub New
+'             Sub: (+2 Overloads) Down, (+2 Overloads) Formula, (+2 Overloads) Left, NullCheck, (+2 Overloads) Right
+'                  SetCurrentWorksheet, SetCurrentWorksheetInternal, (+2 Overloads) Up, (+2 Overloads) Value
+' 
+' 
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -80,7 +80,7 @@
 Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.MIME.Office.Excel.XLSX.FileIO
-Imports Microsoft.VisualBasic.MIME.Office.Excel.XLSX.Writer.Style
+Imports Microsoft.VisualBasic.MIME.Office.Excel.XLSX.Writer.Styling
 
 Namespace XLSX.Writer
 
@@ -94,10 +94,6 @@ Namespace XLSX.Writer
         ''' Hash of the protected workbook, originated from <see cref="WorkbookProtectionPassword"/>
         ''' </summary>
         Private _WorkbookProtectionPasswordHash As String
-        ''' <summary>
-        ''' Defines the filename
-        ''' </summary>
-        Private m_filename As String
 
         ''' <summary>
         ''' Defines the currentWorksheet
@@ -112,22 +108,22 @@ Namespace XLSX.Writer
         ''' <summary>
         ''' Defines the workbookProtectionPassword
         ''' </summary>
-        Private workbookProtectionPasswordField As String
+        Private m_workbookProtectionPassword As String
 
         ''' <summary>
         ''' Defines the lockWindowsIfProtected
         ''' </summary>
-        Private lockWindowsIfProtectedField As Boolean
+        Private m_lockWindowsIfProtected As Boolean
 
         ''' <summary>
         ''' Defines the lockStructureIfProtected
         ''' </summary>
-        Private lockStructureIfProtectedField As Boolean
+        Private m_lockStructureIfProtected As Boolean
 
         ''' <summary>
         ''' Defines the selectedWorksheet
         ''' </summary>
-        Private selectedWorksheetField As Integer
+        Private m_selectedWorksheet As Integer
 
         ''' <summary>
         ''' Defines the shortener
@@ -137,7 +133,7 @@ Namespace XLSX.Writer
         ''' <summary>
         ''' Defines the mruColors
         ''' </summary>
-        Private mruColors As List(Of String) = New List(Of String)()
+        Private mruColors As New List(Of String)()
 
         ''' <summary>
         ''' Gets the shortener object for the current worksheet
@@ -161,13 +157,6 @@ Namespace XLSX.Writer
         ''' Gets or sets the filename of the workbook
         ''' </summary>
         Public Property Filename As String
-            Get
-                Return m_filename
-            End Get
-            Set(value As String)
-                m_filename = value
-            End Set
-        End Property
 
         ''' <summary>
         ''' Gets a value indicating whether LockStructureIfProtected
@@ -175,7 +164,7 @@ Namespace XLSX.Writer
         ''' </summary>
         Public ReadOnly Property LockStructureIfProtected As Boolean
             Get
-                Return lockStructureIfProtectedField
+                Return m_lockStructureIfProtected
             End Get
         End Property
 
@@ -185,7 +174,7 @@ Namespace XLSX.Writer
         ''' </summary>
         Public ReadOnly Property LockWindowsIfProtected As Boolean
             Get
-                Return lockWindowsIfProtectedField
+                Return m_lockWindowsIfProtected
             End Get
         End Property
 
@@ -207,7 +196,7 @@ Namespace XLSX.Writer
         ''' </summary>
         Public ReadOnly Property SelectedWorksheet As Integer
             Get
-                Return selectedWorksheetField
+                Return m_selectedWorksheet
             End Get
         End Property
 
@@ -222,7 +211,7 @@ Namespace XLSX.Writer
         ''' </summary>
         Public ReadOnly Property WorkbookProtectionPassword As String
             Get
-                Return workbookProtectionPasswordField
+                Return m_workbookProtectionPassword
             End Get
         End Property
 
@@ -281,7 +270,7 @@ Namespace XLSX.Writer
         ''' <param name="sheetName">Name of the first worksheet. The name will be sanitized automatically according to the specifications of Excel.</param>
         Public Sub New(filename As String, sheetName As String)
             Init()
-            m_filename = filename
+            _Filename = filename
 
             If Not sheetName.StringEmpty() Then
                 Call AddWorksheet(sheetName, True)
@@ -296,7 +285,8 @@ Namespace XLSX.Writer
         ''' <param name="sanitizeSheetName">If true, the name of the worksheet will be sanitized automatically according to the specifications of Excel.</param>
         Public Sub New(filename As String, sheetName As String, sanitizeSheetName As Boolean)
             Init()
-            m_filename = filename
+            _Filename = filename
+
             If sanitizeSheetName Then
                 AddWorksheet(Worksheet.SanitizeWorksheetName(sheetName, Me))
             Else
@@ -309,11 +299,10 @@ Namespace XLSX.Writer
         ''' </summary>
         ''' <param name="color">RGB code in hex format (either 6 characters, e.g. FF00AC or 8 characters with leading alpha value). Alpha will be set to full opacity (FF) in case of 6 characters.</param>
         Public Sub AddMruColor(color As String)
-            If color IsNot Nothing AndAlso color.Length = 6 Then
-                color = "FF" & color
-            End If
-            Style.Fill.ValidateColor(color, True)
-            mruColors.Add(color.ToUpper())
+            ' Reuse the shared normalizer so that the MRU list contains exactly the same
+            ' canonical, leading-hash stripped, alpha-completed, upper case values that the
+            ' writers emit. AllowEmpty is off: an MRU color must be a real color.
+            mruColors.Add(Styling.Fill.NormalizeColor(color, True))
         End Sub
 
         ''' <summary>
@@ -541,10 +530,10 @@ Namespace XLSX.Writer
         ''' <param name="fileName">filename of the saved workbook.</param>
         Public Sub SaveAs(fileName As String)
             Dim backup = fileName
-            m_filename = fileName
+            _Filename = fileName
             Dim l As LowLevel = New LowLevel(Me)
             l.Save()
-            m_filename = backup
+            _Filename = backup
         End Sub
 
         ''' <summary>
@@ -554,10 +543,10 @@ Namespace XLSX.Writer
         ''' <returns>Task object (void).</returns>
         Public Async Function SaveAsAsync(fileName As String) As Task
             Dim backup = fileName
-            m_filename = fileName
+            _Filename = fileName
             Dim l As LowLevel = New LowLevel(Me)
             Await l.SaveAsync()
-            m_filename = backup
+            _Filename = backup
         End Function
 
         ''' <summary>
@@ -625,8 +614,8 @@ Namespace XLSX.Writer
         ''' </summary>
         ''' <param name="name">Name of the worksheet.</param>
         Public Sub SetSelectedWorksheet(name As String)
-            selectedWorksheetField = Worksheets.FindIndex(Function(w) Equals(w.SheetName, name))
-            If selectedWorksheetField < 0 Then
+            m_selectedWorksheet = Worksheets.FindIndex(Function(w) Equals(w.SheetName, name))
+            If m_selectedWorksheet < 0 Then
                 Throw New WorksheetException("The worksheet with the name '" & name & "' does not exist.")
             End If
             ValidateWorksheets()
@@ -640,7 +629,7 @@ Namespace XLSX.Writer
             If worksheetIndex < 0 OrElse worksheetIndex > Worksheets.Count - 1 Then
                 Throw New RangeException("OutOfRangeException", "The worksheet index " & worksheetIndex.ToString() & " is out of range")
             End If
-            selectedWorksheetField = worksheetIndex
+            m_selectedWorksheet = worksheetIndex
             ValidateWorksheets()
         End Sub
 
@@ -649,8 +638,8 @@ Namespace XLSX.Writer
         ''' </summary>
         ''' <param name="worksheet">Worksheet object (must be in the collection of worksheets).</param>
         Public Sub SetSelectedWorksheet(worksheet As Worksheet)
-            selectedWorksheetField = Worksheets.IndexOf(worksheet)
-            If selectedWorksheetField < 0 Then
+            m_selectedWorksheet = Worksheets.IndexOf(worksheet)
+            If m_selectedWorksheet < 0 Then
                 Throw New WorksheetException("The passed worksheet object is not in the worksheet collection.")
             End If
             ValidateWorksheets()
@@ -689,9 +678,9 @@ Namespace XLSX.Writer
         ''' <param name="protectStructure">If true, the structure will be locked if the workbook is protected.</param>
         ''' <param name="password">Optional password. If null or empty, no password will be set in case of protection.</param>
         Public Sub SetWorkbookProtection(state As Boolean, protectWindows As Boolean, protectStructure As Boolean, password As String)
-            lockWindowsIfProtectedField = protectWindows
-            lockStructureIfProtectedField = protectStructure
-            workbookProtectionPasswordField = password
+            m_lockWindowsIfProtected = protectWindows
+            m_lockStructureIfProtected = protectStructure
+            m_workbookProtectionPassword = password
             WorkbookProtectionPasswordHash = LowLevel.GeneratePasswordHash(password)
             If protectWindows = False AndAlso protectStructure = False Then
                 UseWorkbookProtection = False
@@ -810,8 +799,8 @@ Namespace XLSX.Writer
             End If
             For i = 0 To woksheetCount - 1
                 If Worksheets.Item(i).Hidden Then
-                    If i = selectedWorksheetField Then
-                        Throw New WorksheetException("The worksheet with the index " & selectedWorksheetField.ToString() & " cannot be set as selected, since it is set hidden")
+                    If i = m_selectedWorksheet Then
+                        Throw New WorksheetException("The worksheet with the index " & m_selectedWorksheet.ToString() & " cannot be set as selected, since it is set hidden")
                     End If
                 End If
             Next
@@ -831,12 +820,12 @@ Namespace XLSX.Writer
                 If resetCurrentWorksheet Then
                     m_currentWorksheet = Worksheets.Item(Worksheets.Count - 1)
                 End If
-                If selectedWorksheetField = index OrElse selectedWorksheetField > Worksheets.Count - 1 Then
-                    selectedWorksheetField = Worksheets.Count - 1
+                If m_selectedWorksheet = index OrElse m_selectedWorksheet > Worksheets.Count - 1 Then
+                    m_selectedWorksheet = Worksheets.Count - 1
                 End If
             Else
                 m_currentWorksheet = Nothing
-                selectedWorksheetField = 0
+                m_selectedWorksheet = 0
             End If
             ValidateWorksheets()
         End Sub
