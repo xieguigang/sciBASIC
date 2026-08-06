@@ -61,7 +61,13 @@ Module Module1
     Sub testWriter()
         Dim workbook As New Workbook("basic.xlsx", "SXheet124234") ' Create New workbook
         workbook.CurrentWorksheet.AddNextCell("Test") ' Add cell A1
-        workbook.CurrentWorksheet.AddNextCell(55.2, New Style With {.CurrentFill = New Fill With {.ForegroundColor = "#FF00FF00"}}) ' Add cell B1
+        ' NOTE: Fill.ForegroundColor is NOT the font color - for a solid fill it is the
+        ' cell background (the visible color for solid fills comes from fgColor). The
+        ' font color is set via CurrentFont.ColorValue. The two are demonstrated below.
+        workbook.CurrentWorksheet.AddNextCell(55.2, New Style With {
+            .CurrentFill = New Fill With {.BackgroundColor = "#FF00FF00"},
+            .CurrentFont = New Font With {.ColorValue = "#FFFF0000"}
+        }) ' Add cell B1 (green fill, red font)
         workbook.CurrentWorksheet.AddNextCell(DateTime.Now) ' Add cell C1
 
         workbook.AddWorksheet("page_nooote")
@@ -70,6 +76,7 @@ Module Module1
         workbook.CurrentWorksheet.AddNextCell(DateTime.Now) ' Add cell C1
 
         Call testFillColors(workbook)
+        Call testFontColors(workbook)
 
         workbook.Save()
 
@@ -119,6 +126,45 @@ Module Module1
     Private Sub writeFillSample(sheet As Worksheet, label As String, fill As Fill)
         sheet.AddNextCell(label)
         sheet.AddNextCell("sample", New Style With {.CurrentFill = fill})
+        sheet.GoToNextRow()
+    End Sub
+
+    ''' <summary>
+    ''' Writes a sheet where every row exercises one of the supported font color notations.
+    ''' Open the generated file and compare the rendered font color against the label in
+    ''' column A: they must match. A font color must never silently fall back to black.
+    ''' </summary>
+    Private Sub testFontColors(workbook As Workbook)
+        workbook.AddWorksheet("font_colors")
+
+        Dim sheet = workbook.CurrentWorksheet
+
+        ' hash prefixed with alpha - the original failure case (was written verbatim as
+        '"#FF00FF00" and ignored by Excel, falling back to black)
+        Call writeFontSample(sheet, "#FF00FF00 -> green", New Font With {.ColorValue = "#FF00FF00"})
+        ' hash prefixed without alpha (completed to FF)
+        Call writeFontSample(sheet, "#4472C4 -> blue", New Font With {.ColorValue = "#4472C4"})
+        ' plain 6 digit notation (alpha is completed to FF)
+        Call writeFontSample(sheet, "ED7D31 -> amber", New Font With {.ColorValue = "ED7D31"})
+        ' lower case input has to be normalized as well
+        Call writeFontSample(sheet, "#ff0000 -> red", New Font With {.ColorValue = "#ff0000"})
+        ' font color + background color combined: they must not interfere with each other
+        Call writeFontSample(sheet, "green font on orange fill", New Font With {.ColorValue = "#FF00FF00"}, New Fill With {.BackgroundColor = "#FFFFBB66"})
+        ' no ColorValue at all - must fall back to the default theme color (not black)
+        Call writeFontSample(sheet, "default font -> theme color", New Font())
+        ' built in helper style has to stay compatible
+        Call writeFontSample(sheet, "ColorizedText(00B0F0) -> light blue", BasicStyles.ColorizedText("00B0F0").CurrentFont)
+        ' border color with a hash prefix must also be normalized
+        Call writeFontSample(sheet, "red font + red border", New Font With {.ColorValue = "#FFFF0000"}, border:=New Border With {.BottomColor = "#FFFF0000", .BottomStyle = StyleValue.thin})
+    End Sub
+
+    Private Sub writeFontSample(sheet As Worksheet, label As String, font As Font, Optional fill As Fill = Nothing, Optional border As Border = Nothing)
+        sheet.AddNextCell(label)
+        Dim style As New Style()
+        style.CurrentFont = font
+        If fill IsNot Nothing Then style.CurrentFill = fill
+        If border IsNot Nothing Then style.CurrentBorder = border
+        sheet.AddNextCell("sample", style)
         sheet.GoToNextRow()
     End Sub
 

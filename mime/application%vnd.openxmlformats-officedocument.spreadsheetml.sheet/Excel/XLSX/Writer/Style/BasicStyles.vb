@@ -246,9 +246,11 @@ Namespace XLSX.Writer.Styling
         ''' <param name="rgb">RGB code in hex format (6 characters, e.g. FF00AC). Alpha will be set to full opacity (FF).</param>
         ''' <returns>Style with font color definition.</returns>
         Public Shared Function ColorizedText(rgb As String) As Style
-            Fill.ValidateColor(rgb, False)
             Dim s As Style = New Style()
-            s.CurrentFont.ColorValue = "FF" & rgb.ToUpper()
+            ' NormalizeColor completes the alpha channel to FF and strips a leading '#',
+            ' so both "FF00AC" and "#FF00AC" work. Assigning through the property stores
+            ' the normalized value (the setter no longer just validates).
+            s.CurrentFont.ColorValue = Fill.NormalizeColor(rgb, True)
             Return s
         End Function
 
@@ -258,9 +260,10 @@ Namespace XLSX.Writer.Styling
         ''' <param name="rgb">RGB code in hex format (6 characters, e.g. FF00AC). Alpha will be set to full opacity (FF).</param>
         ''' <returns>Style with background color definition.</returns>
         Public Shared Function ColorizedBackground(rgb As String) As Style
-            Fill.ValidateColor(rgb, False)
             Dim s As Style = New Style()
-            s.CurrentFill.SetColor("FF" & rgb.ToUpper(), FillType.fillColor)
+            ' NormalizeColor completes the alpha channel to FF and strips a leading '#',
+            ' so both "FF00AC" and "#FF00AC" work uniformly with ColorizedText.
+            s.CurrentFill.SetColor(Fill.NormalizeColor(rgb, True), FillType.fillColor)
             Return s
         End Function
 

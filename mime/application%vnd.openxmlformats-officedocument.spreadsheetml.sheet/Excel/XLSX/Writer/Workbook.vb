@@ -299,11 +299,10 @@ Namespace XLSX.Writer
         ''' </summary>
         ''' <param name="color">RGB code in hex format (either 6 characters, e.g. FF00AC or 8 characters with leading alpha value). Alpha will be set to full opacity (FF) in case of 6 characters.</param>
         Public Sub AddMruColor(color As String)
-            If color IsNot Nothing AndAlso color.Length = 6 Then
-                color = "FF" & color
-            End If
-            Styling.Fill.ValidateColor(color, True)
-            mruColors.Add(color.ToUpper())
+            ' Reuse the shared normalizer so that the MRU list contains exactly the same
+            ' canonical, leading-hash stripped, alpha-completed, upper case values that the
+            ' writers emit. AllowEmpty is off: an MRU color must be a real color.
+            mruColors.Add(Styling.Fill.NormalizeColor(color, True))
         End Sub
 
         ''' <summary>

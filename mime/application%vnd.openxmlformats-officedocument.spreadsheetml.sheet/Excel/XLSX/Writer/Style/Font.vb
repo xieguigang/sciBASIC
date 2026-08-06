@@ -114,8 +114,10 @@ Namespace XLSX.Writer.Styling
                 Return colorValueField
             End Get
             Set(value As String)
-                Fill.ValidateColor(value, True, True)
-                colorValueField = value
+                ' Normalize instead of only validating: an un-normalized value such as
+                '"#FF00FF00" or "00FF00" would otherwise be written verbatim into
+                '<color rgb="..."/> and ignored by Excel, falling back to black.
+                colorValueField = Fill.NormalizeColor(value, True, True)
             End Set
         End Property
 
@@ -147,7 +149,7 @@ Namespace XLSX.Writer.Styling
                 Return nameField
             End Get
             Set(value As String)
-                If String.IsNullOrEmpty(nameField) Then
+                If String.IsNullOrEmpty(value) Then
                     Throw New StyleException("A general style exception occurred", "The font name was null or empty")
                 End If
                 nameField = value

@@ -52,8 +52,7 @@ Namespace XLSX.Writer.Styling
                 Return m_bottomColor
             End Get
             Set(value As String)
-                Fill.ValidateColor(value, True, True)
-                m_bottomColor = value
+                m_bottomColor = Fill.NormalizeColor(value, True, True)
             End Set
         End Property
 
@@ -72,8 +71,7 @@ Namespace XLSX.Writer.Styling
                 Return m_diagonalColor
             End Get
             Set(value As String)
-                Fill.ValidateColor(value, True, True)
-                m_diagonalColor = value
+                m_diagonalColor = Fill.NormalizeColor(value, True, True)
             End Set
         End Property
 
@@ -106,8 +104,7 @@ Namespace XLSX.Writer.Styling
                 Return m_leftColor
             End Get
             Set(value As String)
-                Fill.ValidateColor(value, True, True)
-                m_leftColor = value
+                m_leftColor = Fill.NormalizeColor(value, True, True)
             End Set
         End Property
 
@@ -126,8 +123,7 @@ Namespace XLSX.Writer.Styling
                 Return m_rightColor
             End Get
             Set(value As String)
-                Fill.ValidateColor(value, True, True)
-                m_rightColor = value
+                m_rightColor = Fill.NormalizeColor(value, True, True)
             End Set
         End Property
 
@@ -146,8 +142,7 @@ Namespace XLSX.Writer.Styling
                 Return m_topColor
             End Get
             Set(value As String)
-                Fill.ValidateColor(value, True, True)
-                m_topColor = value
+                m_topColor = Fill.NormalizeColor(value, True, True)
             End Set
         End Property
 
