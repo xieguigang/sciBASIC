@@ -1,64 +1,64 @@
 ﻿#Region "Microsoft.VisualBasic::d17a793e7afd5583d1e3012a8a965201, mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\XLSX\Writer\Cell\Cell.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 614
-    '    Code Lines: 395 (64.33%)
-    ' Comment Lines: 178 (28.99%)
-    '    - Xml Docs: 96.07%
-    ' 
-    '   Blank Lines: 41 (6.68%)
-    '     File Size: 28.85 KB
+' Summaries:
 
 
-    '     Class Cell
-    ' 
-    '         Properties: CellAddress, CellAddress2, CellAddressType, CellStyle, ColumnNumber
-    '                     DataType, RowNumber, Value
-    ' 
-    '         Constructor: (+4 Overloads) Sub New
-    ' 
-    '         Function: CompareTo, ConvertArray, Copy, GetAddressScope, (+4 Overloads) GetCellRange
-    '                   ResolveCellAddress, ResolveCellCoordinate, ResolveCellRange, ResolveColumn, ResolveColumnAddress
-    '                   SetStyle
-    ' 
-    '         Sub: RemoveStyle, (+2 Overloads) ResolveCellCoordinate, ResolveCellType, SetCellLockedState, ValidateColumnNumber
-    '              ValidateRowNumber
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 614
+'    Code Lines: 395 (64.33%)
+' Comment Lines: 178 (28.99%)
+'    - Xml Docs: 96.07%
+' 
+'   Blank Lines: 41 (6.68%)
+'     File Size: 28.85 KB
+
+
+'     Class Cell
+' 
+'         Properties: CellAddress, CellAddress2, CellAddressType, CellStyle, ColumnNumber
+'                     DataType, RowNumber, Value
+' 
+'         Constructor: (+4 Overloads) Sub New
+' 
+'         Function: CompareTo, ConvertArray, Copy, GetAddressScope, (+4 Overloads) GetCellRange
+'                   ResolveCellAddress, ResolveCellCoordinate, ResolveCellRange, ResolveColumn, ResolveColumnAddress
+'                   SetStyle
+' 
+'         Sub: RemoveStyle, (+2 Overloads) ResolveCellCoordinate, ResolveCellType, SetCellLockedState, ValidateColumnNumber
+'              ValidateRowNumber
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -73,6 +73,7 @@ Imports System.Globalization
 Imports System.Runtime.InteropServices
 Imports System.Text
 Imports System.Text.RegularExpressions
+Imports Microsoft.VisualBasic.MIME.Office.Excel.XLSX.Writer.Styling
 
 Namespace XLSX.Writer
 
@@ -393,10 +394,10 @@ Namespace XLSX.Writer
                     c = New Cell(CUShort(o), CellType.NUMBER)
                 ElseIf t Is GetType(Date) Then
                     c = New Cell(CDate(o), CellType.DATE)
-                    c.SetStyle(Style.BasicStyles.DateFormat)
+                    c.SetStyle(BasicStyles.DateFormat)
                 ElseIf t Is GetType(TimeSpan) Then
                     c = New Cell(CType(o, TimeSpan), CellType.TIME)
-                    c.SetStyle(Style.BasicStyles.TimeFormat)
+                    c.SetStyle(BasicStyles.TimeFormat)
                 ElseIf t Is GetType(String) Then
                     c = New Cell(CStr(o), CellType.STRING) ' Default = unspecified object
                 Else

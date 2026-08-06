@@ -1,60 +1,60 @@
 ﻿#Region "Microsoft.VisualBasic::acea349aaf11bb8cd57e5884dd4c085c, mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\XLSX\Writer\StyleRepository.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 80
-    '    Code Lines: 36 (45.00%)
-    ' Comment Lines: 35 (43.75%)
-    '    - Xml Docs: 82.86%
-    ' 
-    '   Blank Lines: 9 (11.25%)
-    '     File Size: 2.94 KB
+' Summaries:
 
 
-    '     Class StyleRepository
-    ' 
-    '         Properties: Instance, Styles
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    ' 
-    '         Function: AddStyle
-    ' 
-    '         Sub: FlushStyles
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 80
+'    Code Lines: 36 (45.00%)
+' Comment Lines: 35 (43.75%)
+'    - Xml Docs: 82.86%
+' 
+'   Blank Lines: 9 (11.25%)
+'     File Size: 2.94 KB
+
+
+'     Class StyleRepository
+' 
+'         Properties: Instance, Styles
+' 
+'         Constructor: (+1 Overloads) Sub New
+' 
+'         Function: AddStyle
+' 
+'         Sub: FlushStyles
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -64,6 +64,8 @@
 '  This library is licensed under the MIT License.
 '  You find a copy of the license in project folder or on: http://opensource.org/licenses/MIT
 ' 
+
+Imports Microsoft.VisualBasic.MIME.Office.Excel.XLSX.Writer.Styling
 
 Namespace XLSX.Writer
 

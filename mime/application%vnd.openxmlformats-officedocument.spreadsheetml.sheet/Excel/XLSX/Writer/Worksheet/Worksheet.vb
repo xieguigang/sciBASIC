@@ -1,78 +1,78 @@
 ﻿#Region "Microsoft.VisualBasic::1b601493c28908da7b9127b0d753d90d, mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\XLSX\Writer\Worksheet\Worksheet.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 1997
-    '    Code Lines: 1072 (53.68%)
-    ' Comment Lines: 749 (37.51%)
-    '    - Xml Docs: 98.53%
-    ' 
-    '   Blank Lines: 176 (8.81%)
-    '     File Size: 97.25 KB
+' Summaries:
 
 
-    '     Class Worksheet
-    ' 
-    '         Properties: ActivePane, ActiveStyle, AutoFilterRange, Cells, Columns
-    '                     CurrentCellDirection, DefaultColumnWidth, DefaultRowHeight, FreezeSplitPanes, Hidden
-    '                     HiddenRows, MergedCells, PaneSplitAddress, PaneSplitLeftWidth, PaneSplitTopHeight
-    '                     PaneSplitTopLeftCell, RowHeights, SelectedCellRanges, SelectedCells, SheetID
-    '                     SheetName, SheetProtectionPassword, SheetProtectionPasswordHash, SheetProtectionValues, UseSheetProtection
-    '                     WorkbookReference
-    ' 
-    '         Constructor: (+3 Overloads) Sub New
-    ' 
-    '         Function: AddDataRow, AddNextCell, CastValue, Copy, GetBoundaryDataNumber
-    '                   GetBoundaryNumber, (+2 Overloads) GetCell, GetCurrentColumnNumber, GetCurrentRowNumber, GetFirstCellAddress
-    '                   GetFirstColumnNumber, GetFirstDataCellAddress, GetFirstDataColumnNumber, GetFirstDataRowNumber, GetFirstRowNumber
-    '                   GetLastCellAddress, GetLastColumnNumber, GetLastDataCellAddress, GetLastDataColumnNumber, GetLastDataRowNumber
-    '                   GetLastRowNumber, GetMaxRow, GetMinRow, GetUnusedWorksheetName, GoToNextRow
-    '                   (+2 Overloads) HasCell, (+3 Overloads) MergeCells, (+2 Overloads) RemoveCell, SanitizeWorksheetName, WorksheetExists
-    ' 
-    '         Sub: AddAllowedActionOnSheetProtection, (+4 Overloads) AddCell, (+4 Overloads) AddCellFormula, (+4 Overloads) AddCellRange, AddCellRangeInternal
-    '              (+2 Overloads) AddHiddenColumn, AddHiddenRow, (+2 Overloads) AddNextCell, (+2 Overloads) AddNextCellFormula, (+3 Overloads) AddSelectedCells
-    '              ClearActiveStyle, (+2 Overloads) GoToNextColumn, GoToNextRow, RecalculateAutoFilter, RecalculateColumns
-    '              RemoveAllowedActionOnSheetProtection, RemoveAutoFilter, (+2 Overloads) RemoveHiddenColumn, RemoveHiddenRow, RemoveMergedCells
-    '              RemoveRowHeight, RemoveSelectedCells, ResetColumn, ResetSplit, ResolveMergedCells
-    '              SetActiveStyle, (+2 Overloads) SetAutoFilter, SetColumnHiddenState, (+2 Overloads) SetColumnWidth, (+2 Overloads) SetCurrentCellAddress
-    '              SetCurrentColumnNumber, SetCurrentRowNumber, (+2 Overloads) SetHorizontalSplit, SetRowHeight, SetRowHiddenState
-    '              (+3 Overloads) SetSelectedCells, (+2 Overloads) SetSheetName, SetSheetProtectionPassword, (+2 Overloads) SetSplit, (+4 Overloads) SetStyle
-    '              (+2 Overloads) SetVerticalSplit
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 1997
+'    Code Lines: 1072 (53.68%)
+' Comment Lines: 749 (37.51%)
+'    - Xml Docs: 98.53%
+' 
+'   Blank Lines: 176 (8.81%)
+'     File Size: 97.25 KB
+
+
+'     Class Worksheet
+' 
+'         Properties: ActivePane, ActiveStyle, AutoFilterRange, Cells, Columns
+'                     CurrentCellDirection, DefaultColumnWidth, DefaultRowHeight, FreezeSplitPanes, Hidden
+'                     HiddenRows, MergedCells, PaneSplitAddress, PaneSplitLeftWidth, PaneSplitTopHeight
+'                     PaneSplitTopLeftCell, RowHeights, SelectedCellRanges, SelectedCells, SheetID
+'                     SheetName, SheetProtectionPassword, SheetProtectionPasswordHash, SheetProtectionValues, UseSheetProtection
+'                     WorkbookReference
+' 
+'         Constructor: (+3 Overloads) Sub New
+' 
+'         Function: AddDataRow, AddNextCell, CastValue, Copy, GetBoundaryDataNumber
+'                   GetBoundaryNumber, (+2 Overloads) GetCell, GetCurrentColumnNumber, GetCurrentRowNumber, GetFirstCellAddress
+'                   GetFirstColumnNumber, GetFirstDataCellAddress, GetFirstDataColumnNumber, GetFirstDataRowNumber, GetFirstRowNumber
+'                   GetLastCellAddress, GetLastColumnNumber, GetLastDataCellAddress, GetLastDataColumnNumber, GetLastDataRowNumber
+'                   GetLastRowNumber, GetMaxRow, GetMinRow, GetUnusedWorksheetName, GoToNextRow
+'                   (+2 Overloads) HasCell, (+3 Overloads) MergeCells, (+2 Overloads) RemoveCell, SanitizeWorksheetName, WorksheetExists
+' 
+'         Sub: AddAllowedActionOnSheetProtection, (+4 Overloads) AddCell, (+4 Overloads) AddCellFormula, (+4 Overloads) AddCellRange, AddCellRangeInternal
+'              (+2 Overloads) AddHiddenColumn, AddHiddenRow, (+2 Overloads) AddNextCell, (+2 Overloads) AddNextCellFormula, (+3 Overloads) AddSelectedCells
+'              ClearActiveStyle, (+2 Overloads) GoToNextColumn, GoToNextRow, RecalculateAutoFilter, RecalculateColumns
+'              RemoveAllowedActionOnSheetProtection, RemoveAutoFilter, (+2 Overloads) RemoveHiddenColumn, RemoveHiddenRow, RemoveMergedCells
+'              RemoveRowHeight, RemoveSelectedCells, ResetColumn, ResetSplit, ResolveMergedCells
+'              SetActiveStyle, (+2 Overloads) SetAutoFilter, SetColumnHiddenState, (+2 Overloads) SetColumnWidth, (+2 Overloads) SetCurrentCellAddress
+'              SetCurrentColumnNumber, SetCurrentRowNumber, (+2 Overloads) SetHorizontalSplit, SetRowHeight, SetRowHiddenState
+'              (+3 Overloads) SetSelectedCells, (+2 Overloads) SetSheetName, SetSheetProtectionPassword, (+2 Overloads) SetSplit, (+4 Overloads) SetStyle
+'              (+2 Overloads) SetVerticalSplit
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -88,6 +88,7 @@ Imports System.Text
 Imports System.Text.RegularExpressions
 Imports Microsoft.VisualBasic.MIME.Office.Excel.XLSX.FileIO
 Imports Microsoft.VisualBasic.MIME.Office.Excel.XLSX.Writer.Cell
+Imports Microsoft.VisualBasic.MIME.Office.Excel.XLSX.Writer.Styling
 Imports std = System.Math
 
 Namespace XLSX.Writer
@@ -1452,7 +1453,7 @@ Namespace XLSX.Writer
         ''' This is an internal method. There is no need to use it
         ''' </summary>
         Friend Sub ResolveMergedCells()
-            Dim mergeStyle = Style.BasicStyles.MergeCellStyle
+            Dim mergeStyle = BasicStyles.MergeCellStyle
             Dim cell As Cell
             For Each range As KeyValuePair(Of String, Range) In MergedCells
                 Dim pos = 0
@@ -1530,7 +1531,7 @@ Namespace XLSX.Writer
             For Each address In addresses
                 If cellsField.ContainsKey(address.GetAddress()) Then
                     Dim cell As Cell = cellsField(address.ToString())
-                    If Style.BasicStyles.MergeCellStyle.Equals(cell.CellStyle) Then
+                    If BasicStyles.MergeCellStyle.Equals(cell.CellStyle) Then
                         cell.RemoveStyle()
                     End If
                     cell.ResolveCellType() ' resets the type
