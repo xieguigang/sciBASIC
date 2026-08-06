@@ -79,7 +79,7 @@ Namespace LenientJson
     ''' scanning the input character-by-character with a cursor.
     ''' </para>
     ''' <para>
-    ''' The following 15 repair strategies are implemented:
+    ''' The following 16 repair strategies are implemented:
     ''' </para>
     ''' <list type="number">
     ''' <item><description>Skip comments (// line and /* block */ comments)</description></item>
@@ -97,7 +97,33 @@ Namespace LenientJson
     ''' <item><description>Convert NaN to null</description></item>
     ''' <item><description>Partial keyword matching (tru -> true, etc.)</description></item>
     ''' <item><description>Smart quote closure detection — when a quote is encountered inside a string, lookahead to check if the next non-whitespace character is a structural character (, } ] : or EOF) before treating it as the closing quote; otherwise keep it as an internal unescaped quote</description></item>
+    ''' <item><description>Missing closing quote recovery — repair a value string whose closing quote was dropped, causing it to swallow the <c>", "</c> separator and the following key name</description></item>
     ''' </list>
+    ''' <para>
+    ''' <b>Strategy 16 in detail.</b> A very common LLM failure is to omit the
+    ''' closing quote of a string value, for example emitting
+    ''' <code>{"module_name": "demo,goal": "the goal text"}</code>
+    ''' instead of the correct
+    ''' <code>{"module_name": "demo", "goal": "the goal text"}</code>
+    ''' Without special handling this is catastrophic rather than local: the value
+    ''' is read as <c>demo,goal</c>, the stray <c>:</c> is skipped, and the
+    ''' following text is consumed as the next key. Every subsequent key and value
+    ''' is shifted by one, so the whole document degenerates into garbage keys and
+    ''' no usable content survives.
+    ''' </para>
+    ''' <para>
+    ''' The repair keys off a hard guarantee of the JSON grammar rather than a
+    ''' heuristic: a string in <i>value</i> position may only be followed by
+    ''' <c>,</c>, <c>}</c>, <c>]</c> or EOF — <b>never</b> by <c>:</c>. So a colon
+    ''' there is proof that the closing quote was dropped. The parser then splits
+    ''' the string at its <b>last</b> comma: the text before it is the true value,
+    ''' the text after it is the swallowed key. The last comma is used because real
+    ''' values often contain commas (prose, file paths, CJK text) whereas the
+    ''' swallowed key is an identifier that virtually never does. Because valid
+    ''' JSON can never trigger the condition, well-formed documents are unaffected.
+    ''' If the string contains no comma the parser degrades to the previous
+    ''' behaviour, so the strategy can only ever improve the result.
+    ''' </para>
     ''' </remarks>
     Public Class LenientJsonParser
 
@@ -117,6 +143,50 @@ Namespace LenientJson
         ''' Total length of the input string.
         ''' </summary>
         Private ReadOnly m_length As Integer
+
+        ''' <summary>
+        ''' Set by <see cref="parse_string"/> when a string parsed in the
+        ''' <see cref="StringContext.Value"/> position was terminated by a quote
+        ''' whose next non-whitespace character is a colon.
+        ''' </summary>
+        ''' <remarks>
+        ''' In valid JSON a value string's closing quote can only be followed by
+        ''' <c>,</c>, <c>}</c>, <c>]</c> or EOF — never by <c>:</c>. Therefore a
+        ''' colon here is a deterministic signal that the closing quote of the
+        ''' value was omitted and the string has swallowed the <c>", "</c>
+        ''' separator together with the following key name (Strategy 16).
+        ''' <para>
+        ''' This field carries that side-band information back to
+        ''' <see cref="parse_object"/>, because <see cref="parse_string"/> itself
+        ''' returns a plain <see cref="String"/>. It is reset at the start of every
+        ''' <see cref="parse_string"/> call, so it always reflects only the most
+        ''' recently parsed string.
+        ''' </para>
+        ''' </remarks>
+        Private m_last_string_broken_at_colon As Boolean
+
+#End Region
+
+#Region "String parsing context"
+
+        ''' <summary>
+        ''' Indicates the syntactic position that the string currently being
+        ''' parsed occupies within the JSON structure. This context determines
+        ''' which characters are considered legal successors of a closing quote.
+        ''' </summary>
+        Private Enum StringContext
+            ''' <summary>
+            ''' Key position: the closing quote may legally be followed by
+            ''' <c>,</c>, <c>}</c>, <c>]</c> or <c>:</c>.
+            ''' </summary>
+            Key
+            ''' <summary>
+            ''' Value position: the closing quote may legally be followed only by
+            ''' <c>,</c>, <c>}</c>, <c>]</c> or EOF. A <c>:</c> here means the
+            ''' closing quote was omitted (Strategy 16).
+            ''' </summary>
+            Value
+        End Enum
 
 #End Region
 
@@ -318,6 +388,11 @@ Namespace LenientJson
         ''' </param>
         ''' <returns>The parsed <see cref="JsonElement"/>, or Nothing if no value found.</returns>
         Private Function parse_value(stop_at_structural As Boolean) As JsonElement
+            ' Strategy 16: only parse_string raises this signal, and most branches
+            ' below never reach it. Clear it up front so a stale flag from an earlier
+            ' string can never be mistaken for an error on this value.
+            m_last_string_broken_at_colon = False
+
             Do
                 ' Skip whitespace and comments before each attempt
                 skip_whitespace_and_comments()
@@ -342,8 +417,10 @@ Namespace LenientJson
                     ' Array
                     Return parse_array()
                 ElseIf c = """"c OrElse c = "'"c Then
-                    ' Strategy 3: Accept both double-quoted and single-quoted strings
-                    Dim s As String = parse_string()
+                    ' Strategy 3: Accept both double-quoted and single-quoted strings.
+                    ' Parsed in value context so that Strategy 16 can detect a
+                    ' missing closing quote (terminator followed by ':').
+                    Dim s As String = parse_string(StringContext.Value)
                     Return New JsonValue(s, alreadyDecoded:=True)
                 ElseIf c = "-"c OrElse c = "+"c Then
                     ' Strategy 12: Accept leading + sign
@@ -374,7 +451,7 @@ Namespace LenientJson
 
 #End Region
 
-#Region "Parse object (Strategy 6, 7, 8, 9)"
+#Region "Parse object (Strategy 6, 7, 8, 9, 16)"
 
         ''' <summary>
         ''' Parse a JSON object { "key": value, ... }.
@@ -383,7 +460,16 @@ Namespace LenientJson
         ''' - Strategy 7: Skip trailing commas
         ''' - Strategy 8: Tolerate missing colons
         ''' - Strategy 9: Accept unquoted keys
+        ''' - Strategy 16: Missing closing quote recovery — split a value string that
+        '''   swallowed the separator and the following key back into its two parts
         ''' </summary>
+        ''' <remarks>
+        ''' The Strategy 16 recovery runs as a loop because the malformed pattern
+        ''' usually repeats across consecutive pairs of the same object: repairing
+        ''' one pair exposes the next. Each iteration writes the corrected value for
+        ''' the current key, adopts the recovered key, and parses its value, which
+        ''' may in turn raise the same signal.
+        ''' </remarks>
         Private Function parse_object() As JsonElement
             Dim obj As New JsonObject()
 
@@ -437,6 +523,68 @@ Namespace LenientJson
                     value = JsonValue.NULL
                 End If
 
+                ' Strategy 16: Missing closing quote recovery.
+                ' A value string terminated by a quote that is followed by ':' proves
+                ' its own closing quote was dropped, so the string actually reads
+                ' <real value>", "<next key>. Split it back apart and keep going.
+                ' The error typically repeats across consecutive pairs of the same
+                ' object, so this loops until the chain is exhausted.
+                Do While m_last_string_broken_at_colon
+                    ' Consume the stray ':' that exposed the error.
+                    skip_whitespace_and_comments()
+
+                    If Not at_end() AndAlso peek() = ":"c Then
+                        m_index += 1
+                    End If
+
+                    ' The flag is only ever raised by a string value, so this cast
+                    ' is safe; guard anyway to stay lenient.
+                    Dim str_value As JsonValue = TryCast(value, JsonValue)
+                    Dim merged As String = If(str_value Is Nothing, "", TryCast(str_value.value, String))
+
+                    If merged Is Nothing Then
+                        merged = ""
+                    End If
+
+                    Dim cut As Integer = merged.LastIndexOf(","c)
+
+                    If cut < 0 Then
+                        ' No comma to split on — we cannot reliably tell where the
+                        ' value ends and the key begins. Degrade to the legacy
+                        ' behaviour: keep the whole string as the value.
+                        m_last_string_broken_at_colon = False
+                        Exit Do
+                    End If
+
+                    ' Text before the last comma is the real value. The swallowed key
+                    ' is an identifier and virtually never contains a comma, so the
+                    ' LAST comma is the separator remnant — values themselves may well
+                    ' contain commas (prose, paths, CJK text).
+                    Dim real_value As String = merged.Substring(0, cut)
+                    Dim next_key As String = clean_recovered_key(merged.Substring(cut + 1))
+
+                    obj(key) = New JsonValue(real_value, alreadyDecoded:=True)
+
+                    If next_key.Length = 0 Then
+                        ' Nothing usable recovered as a key — stop repairing and let
+                        ' the main loop resynchronise on the next structural char.
+                        m_last_string_broken_at_colon = False
+                        Exit Do
+                    End If
+
+                    ' Parse the value belonging to the recovered key. parse_value
+                    ' clears the signal on entry, so it stays raised only if this
+                    ' value hits the very same error — which is exactly when the
+                    ' loop should run again.
+                    key = next_key
+                    value = parse_value(stop_at_structural:=True)
+
+                    If value Is Nothing Then
+                        value = JsonValue.NULL
+                        m_last_string_broken_at_colon = False
+                    End If
+                Loop
+
                 ' Add key-value pair (duplicate keys silently overwrite)
                 obj(key) = value
 
@@ -464,6 +612,26 @@ Namespace LenientJson
             Loop
 
             Return obj
+        End Function
+
+        ''' <summary>
+        ''' Normalise a key name recovered by the Strategy 16 split so that it is
+        ''' safe to use as an object property name.
+        ''' </summary>
+        ''' <remarks>
+        ''' The recovered fragment comes from inside a string literal, so it may
+        ''' carry surrounding whitespace and stray quote characters left over from
+        ''' the malformed input. Both are stripped here to avoid producing property
+        ''' names such as <c>" goal</c>.
+        ''' </remarks>
+        ''' <param name="raw">The raw text following the split comma.</param>
+        ''' <returns>The cleaned key, or an empty string if nothing usable remains.</returns>
+        Private Shared Function clean_recovered_key(raw As String) As String
+            If String.IsNullOrEmpty(raw) Then
+                Return ""
+            End If
+
+            Return raw.Trim().Trim(""""c, "'"c).Trim()
         End Function
 
 #End Region
@@ -555,9 +723,21 @@ Namespace LenientJson
         '''   non-whitespace character is a structural character (, } ] : or EOF).
         '''   If so, treat the quote as the real closing quote; otherwise keep it
         '''   as an internal unescaped quote.
+        ''' - Strategy 16: Missing closing quote detection — when parsing in the
+        '''   <see cref="StringContext.Value"/> position, a terminating quote
+        '''   followed by <c>:</c> flags <see cref="m_last_string_broken_at_colon"/>
+        '''   so that <see cref="parse_object"/> can split the swallowed key back out.
         ''' </summary>
+        ''' <param name="context">
+        ''' The syntactic position of this string (key or value). This controls
+        ''' whether a <c>:</c> following the closing quote is legal (key position)
+        ''' or is treated as a missing-closing-quote signal (value position).
+        ''' </param>
         ''' <returns>The decoded string value.</returns>
-        Private Function parse_string() As String
+        Private Function parse_string(context As StringContext) As String
+            ' Reset the side-band signal so it only ever describes this string.
+            m_last_string_broken_at_colon = False
+
             ' Strategy 3: Record the opening quote character (either " or ')
             Dim quote As Char = peek()
             m_index += 1  ' Consume opening quote
@@ -580,8 +760,15 @@ Namespace LenientJson
                     ' If it is a structural character (, } ] : or EOF), this is the
                     ' real closing quote. Otherwise, this quote is an internal
                     ' unescaped quote and should be kept in the string content.
-                    If is_likely_closing_quote() Then
-                        ' Real closing quote — end of string
+                    Dim broken_at_colon As Boolean = False
+
+                    If is_likely_closing_quote(context, broken_at_colon) Then
+                        ' Real closing quote — end of string.
+                        ' In value position, broken_at_colon indicates the quote is
+                        ' followed by ':', proving the value's own closing quote was
+                        ' omitted and this string has swallowed the separator plus
+                        ' the next key (Strategy 16).
+                        m_last_string_broken_at_colon = broken_at_colon
                         Exit Do
                     Else
                         ' Internal unescaped quote — keep it in the string content
@@ -904,9 +1091,10 @@ Namespace LenientJson
 
             Dim c As Char = peek()
 
-            ' Strategy 3: Quoted key (double or single quote)
+            ' Strategy 3: Quoted key (double or single quote).
+            ' Key context: a ':' after the closing quote is perfectly legal here.
             If c = """"c OrElse c = "'"c Then
-                Return parse_string()
+                Return parse_string(StringContext.Key)
             End If
 
             ' Strategy 9: Unquoted key (JavaScript-style)
@@ -1007,11 +1195,31 @@ Namespace LenientJson
         ''' <c>}</c> or <c>,</c>) is treated as the closing quote.
         ''' </para>
         ''' </example>
+        ''' <para>
+        ''' Strategy 16 refines this test with syntactic context. A <c>:</c> is a
+        ''' legal successor only when the string sits in the <b>key</b> position.
+        ''' In the <b>value</b> position JSON permits only <c>,</c>, <c>}</c>,
+        ''' <c>]</c> or EOF, so a <c>:</c> there is proof that the value's closing
+        ''' quote was omitted. The quote is still accepted as the terminator (the
+        ''' string has to end somewhere), but <paramref name="broken_at_colon"/> is
+        ''' raised so the caller can split the swallowed key back out.
+        ''' </para>
+        ''' <param name="context">
+        ''' The syntactic position of the string being parsed.
+        ''' </param>
+        ''' <param name="broken_at_colon">
+        ''' Receives <c>True</c> when the terminator was accepted in the
+        ''' <see cref="StringContext.Value"/> position but is followed by <c>:</c>,
+        ''' i.e. the missing-closing-quote error of Strategy 16.
+        ''' </param>
         ''' <returns>
         ''' <c>True</c> if the quote is likely the real closing quote;
         ''' <c>False</c> if it is likely an internal unescaped quote.
         ''' </returns>
-        Private Function is_likely_closing_quote() As Boolean
+        Private Function is_likely_closing_quote(context As StringContext,
+                                                 ByRef broken_at_colon As Boolean) As Boolean
+
+            broken_at_colon = False
             ' The cursor is currently positioned just after the quote character
             ' that was consumed. Look ahead from the current position.
             Dim i As Integer = m_index
@@ -1039,13 +1247,30 @@ Namespace LenientJson
             '   ,  (separator before next key-value pair or array element)
             '   }  (closing an object)
             '   ]  (closing an array)
-            '   :  (after a key string, before its value)
+            '   :  (after a key string, before its value) — key position only
             Dim nextChar As Char = m_input(i)
 
-            Return nextChar = ","c OrElse
-               nextChar = "}"c OrElse
-               nextChar = "]"c OrElse
-               nextChar = ":"c
+            If nextChar = ","c OrElse nextChar = "}"c OrElse nextChar = "]"c Then
+                ' Legal terminator in either context.
+                Return True
+            End If
+
+            If nextChar = ":"c Then
+                If context = StringContext.Key Then
+                    ' Legal: a key string is followed by its colon.
+                    Return True
+                End If
+
+                ' Strategy 16: a value string can never be followed by ':' in valid
+                ' JSON. The closing quote was omitted upstream, so this string has
+                ' swallowed the separator and the next key. Accept the quote as the
+                ' terminator and signal the caller to repair the split.
+                broken_at_colon = True
+                Return True
+            End If
+
+            ' Any other character means this was an internal unescaped quote.
+            Return False
         End Function
 
 #End Region

@@ -77,13 +77,95 @@ Module simple_jsonParserTest
                                         {"name": "Alice", "age": 
                                    </json>
 
+    ''' <summary>
+    ''' Strategy 16 regression sample: the closing quote of a value string is
+    ''' dropped, so the value swallows the separator and the next key.
+    ''' Correct form would be: {"a": "v1", "b": "v2", "c": "v3"}
+    ''' </summary>
+    ReadOnly missing_quote_test As String = "{""a"": ""v1,b"": ""v2,c"": ""v3""}"
+
     Sub Main11()
+        Call test4()
         Call test3()
         Call test2()
         Call test1()
     End Sub
 
+    ''' <summary>
+    ''' Verifies Strategy 16 (missing closing quote recovery) against the
+    ''' production document <c>test_error_json.json</c>, in which the closing
+    ''' quote of nearly every string value was dropped by the LLM.
+    ''' </summary>
+    Sub test4()
+        ' --- Minimal synthetic case -------------------------------------------
+        Dim simple As JsonObject = LenientJsonParser.ParseJSON(missing_quote_test)
+
+        Call Console.WriteLine("[Strategy 16] minimal case keys: " & simple.ObjectKeys.JoinBy(", "))
+
+        For Each key As String In simple.ObjectKeys
+            Call Console.WriteLine($"  {key} = {simple(key).AsString(True)}")
+        Next
+
+        ' --- The real production document -------------------------------------
+        Dim file As String = "./test_error_json.json"
+
+        If Not file.FileExists Then
+            Call Console.WriteLine($"test data file not found: {file.GetFullPath}")
+            Call Pause()
+            Return
+        End If
+
+        Dim doc As JsonObject = LenientJsonParser.Open(file)
+
+        Call Console.WriteLine()
+        Call Console.WriteLine("[Strategy 16] test_error_json.json top-level keys:")
+        Call Console.WriteLine("  " & doc.ObjectKeys.JoinBy(", "))
+
+        For Each key As String In {"module_index", "module_name", "xlsx_file"}
+            Dim val As JsonElement = doc(key)
+            Call Console.WriteLine($"  {key} = {If(val Is Nothing, "<missing>", val.AsString(True))}")
+        Next
+
+        Dim goal As JsonElement = doc("goal")
+
+        If goal Is Nothing Then
+            Call Console.WriteLine("  goal = <missing>")
+        Else
+            Dim text As String = goal.AsString(True)
+            Call Console.WriteLine($"  goal ({text.Length} chars) = {Mid(text, 1, 40)}...")
+        End If
+
+        Dim sheets As JsonArray = TryCast(doc("sheets"), JsonArray)
+
+        If sheets Is Nothing Then
+            Call Console.WriteLine("  sheets = <missing or not an array>")
+        Else
+            Call Console.WriteLine($"  sheets = {sheets.length} element(s)")
+
+            For i As Integer = 0 To sheets.length - 1
+                Dim sheet As JsonObject = TryCast(sheets(i), JsonObject)
+
+                If sheet Is Nothing Then
+                    Call Console.WriteLine($"    [{i}] <not an object>")
+                    Continue For
+                End If
+
+                Call Console.WriteLine($"    [{i}] keys: {sheet.ObjectKeys.JoinBy(", ")}")
+
+                Dim name As JsonElement = sheet("sheet_name")
+                Dim csv As JsonElement = sheet("csv")
+
+                Call Console.WriteLine($"         sheet_name = {If(name Is Nothing, "<missing>", name.AsString(True))}")
+                Call Console.WriteLine($"         csv        = {If(csv Is Nothing, "<missing>", csv.AsString(True))}")
+            Next
+        End If
+
+        Pause()
+    End Sub
+
     Sub test3()
+        ' Regression: LLM_test2 contains internal unescaped quotes that are NOT
+        ' followed by ':', so Strategy 15 must still keep them inside the string.
         Dim parsed = LenientJsonParser.ParseJSON(LLM_test2)
 
         parsed = LenientJsonParser.ParseJSON(LLM_test3)
