@@ -1177,9 +1177,9 @@ Namespace XLSX.FileIO
                         sb.Append("<u/>")
                     End If
                 End If
-                If item.VerticalAlign = VerticalAlignValue.subscript Then
+                If item.VerticalAlign = TextVerticalAlignValue.subscript Then
                     sb.Append("<vertAlign val=""subscript""/>")
-                ElseIf item.VerticalAlign = VerticalAlignValue.superscript Then
+                ElseIf item.VerticalAlign = TextVerticalAlignValue.superscript Then
                     sb.Append("<vertAlign val=""superscript""/>")
                 End If
                 sb.Append("<sz val=""").Append(item.Size.ToString("G", culture)).Append("""/>")

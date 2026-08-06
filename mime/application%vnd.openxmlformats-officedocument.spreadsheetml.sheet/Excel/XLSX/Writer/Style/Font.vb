@@ -40,7 +40,7 @@ Namespace XLSX.Writer.Styling
         ''' <summary>
         ''' Default vertical alignment
         ''' </summary>
-        Public Shared ReadOnly DEFAULT_VERTICAL_ALIGN As VerticalAlignValue = VerticalAlignValue.none
+        Public Shared ReadOnly DEFAULT_VERTICAL_ALIGN As TextVerticalAlignValue = TextVerticalAlignValue.none
 
         ''' <summary>
         ''' Defines the size
@@ -190,7 +190,7 @@ Namespace XLSX.Writer.Styling
         ''' Gets or sets the alignment of the font (Default is none)
         ''' </summary>
         <Append>
-        Public Property VerticalAlign As VerticalAlignValue
+        Public Property VerticalAlign As TextVerticalAlignValue
 
         ''' <summary>
         ''' Initializes a new instance of the <see cref="Font"/> class

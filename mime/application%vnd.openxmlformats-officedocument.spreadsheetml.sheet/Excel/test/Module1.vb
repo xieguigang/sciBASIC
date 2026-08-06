@@ -1,59 +1,60 @@
 ﻿#Region "Microsoft.VisualBasic::ccab767fc2f28e93176df6dd914e6a9c, mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\test\Module1.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 29
-    '    Code Lines: 21 (72.41%)
-    ' Comment Lines: 1 (3.45%)
-    '    - Xml Docs: 0.00%
-    ' 
-    '   Blank Lines: 7 (24.14%)
-    '     File Size: 1.10 KB
+' Summaries:
 
 
-    ' Module Module1
-    ' 
-    '     Sub: testWriter, zip_test
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 29
+'    Code Lines: 21 (72.41%)
+' Comment Lines: 1 (3.45%)
+'    - Xml Docs: 0.00%
+' 
+'   Blank Lines: 7 (24.14%)
+'     File Size: 1.10 KB
+
+
+' Module Module1
+' 
+'     Sub: testWriter, zip_test
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports Microsoft.VisualBasic.ApplicationServices.Zip
 Imports Microsoft.VisualBasic.MIME.Office.Excel.XLSX.FileIO
 Imports Microsoft.VisualBasic.MIME.Office.Excel.XLSX.Writer
+Imports Microsoft.VisualBasic.MIME.Office.Excel.XLSX.Writer.Styling
 
 Module Module1
 
@@ -65,7 +66,7 @@ Module Module1
 
         workbook.AddWorksheet("page_nooote")
         workbook.CurrentWorksheet.AddNextCell("Test22222") ' Add cell A1
-        workbook.CurrentWorksheet.AddNextCell(4323355.2, New Style With {.CurrentFill = New Style.Fill With {.BackgroundColor = "#FFFFBB66"}}) ' Add cell B1
+        workbook.CurrentWorksheet.AddNextCell(4323355.2, New Style With {.CurrentFill = New Fill With {.BackgroundColor = "#FFFFBB66"}}) ' Add cell B1
         workbook.CurrentWorksheet.AddNextCell(DateTime.Now) ' Add cell C1
 
         Call testFillColors(workbook)
@@ -86,25 +87,25 @@ Module Module1
         Dim sheet = workbook.CurrentWorksheet
 
         ' background color only, hash prefixed with alpha - the original bug report
-        Call writeFillSample(sheet, "#FFFFBB66 -> orange", New Style.Fill With {.BackgroundColor = "#FFFFBB66"})
+        Call writeFillSample(sheet, "#FFFFBB66 -> orange", New Fill With {.BackgroundColor = "#FFFFBB66"})
         ' background color only, hash prefixed without alpha
-        Call writeFillSample(sheet, "#4472C4 -> blue", New Style.Fill With {.BackgroundColor = "#4472C4"})
+        Call writeFillSample(sheet, "#4472C4 -> blue", New Fill With {.BackgroundColor = "#4472C4"})
         ' background color only, plain 8 digit notation
-        Call writeFillSample(sheet, "FF70AD47 -> green", New Style.Fill With {.BackgroundColor = "FF70AD47", .ForegroundColor = "FFFF0000"})
+        Call writeFillSample(sheet, "FF70AD47 -> green", New Fill With {.BackgroundColor = "FF70AD47", .ForegroundColor = "FFFF0000"})
         ' background color only, plain 6 digit notation (alpha is completed to FF)
-        Call writeFillSample(sheet, "ED7D31 -> amber", New Style.Fill With {.BackgroundColor = "ED7D31"})
+        Call writeFillSample(sheet, "ED7D31 -> amber", New Fill With {.BackgroundColor = "ED7D31"})
         ' lower case input has to be normalized as well
-        Call writeFillSample(sheet, "#ffc000 -> yellow", New Style.Fill With {.BackgroundColor = "#ffc000"})
+        Call writeFillSample(sheet, "#ffc000 -> yellow", New Fill With {.BackgroundColor = "#ffc000"})
         ' foreground color only, which is what SetColor / ColorizedBackground produce
-        Call writeFillSample(sheet, "foreground A5A5A5 -> gray", New Style.Fill With {.ForegroundColor = "FFA5A5A5"})
+        Call writeFillSample(sheet, "foreground A5A5A5 -> gray", New Fill With {.ForegroundColor = "FFA5A5A5"})
         ' both colors set - background wins for a solid fill
-        Call writeFillSample(sheet, "fg black + bg red -> red", New Style.Fill With {.ForegroundColor = "FF000000", .BackgroundColor = "FFFF0000"})
+        Call writeFillSample(sheet, "fg black + bg red -> red", New Fill With {.ForegroundColor = "FF000000", .BackgroundColor = "FFFF0000"})
         ' an explicitly requested black background must stay black
-        Call writeFillSample(sheet, "#FF000000 -> black", New Style.Fill With {.BackgroundColor = "#FF000000"})
+        Call writeFillSample(sheet, "#FF000000 -> black", New Fill With {.BackgroundColor = "#FF000000"})
         ' non solid pattern fill keeps its original fgColor / bgColor semantics
-        Call writeFillSample(sheet, "gray125 pattern", New Style.Fill With {.PatternFill = Style.Fill.PatternValue.gray125})
+        Call writeFillSample(sheet, "gray125 pattern", New Fill With {.PatternFill = PatternValue.gray125})
         ' built in helper style has to stay compatible
-        Call writeFillSample(sheet, "ColorizedBackground(00B0F0)", Style.BasicStyles.ColorizedBackground("00B0F0").CurrentFill)
+        Call writeFillSample(sheet, "ColorizedBackground(00B0F0)", BasicStyles.ColorizedBackground("00B0F0").CurrentFill)
 
         ' no fill at all - this cell must render without any shading
         sheet.AddNextCell("no fill -> transparent")
@@ -112,10 +113,10 @@ Module Module1
         sheet.GoToNextRow()
 
         ' a default constructed fill is still "none" and must not paint anything
-        Call writeFillSample(sheet, "default Fill() -> transparent", New Style.Fill())
+        Call writeFillSample(sheet, "default Fill() -> transparent", New Fill())
     End Sub
 
-    Private Sub writeFillSample(sheet As Worksheet, label As String, fill As Style.Fill)
+    Private Sub writeFillSample(sheet As Worksheet, label As String, fill As Fill)
         sheet.AddNextCell(label)
         sheet.AddNextCell("sample", New Style With {.CurrentFill = fill})
         sheet.GoToNextRow()
