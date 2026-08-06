@@ -65,7 +65,7 @@ Module Module1
 
         workbook.AddWorksheet("page_nooote")
         workbook.CurrentWorksheet.AddNextCell("Test22222") ' Add cell A1
-        workbook.CurrentWorksheet.AddNextCell(4323355.2, New Style With {.CurrentFill = New Style.Fill With {.BackgroundColor = "FFFFBB66"}}) ' Add cell B1
+        workbook.CurrentWorksheet.AddNextCell(4323355.2, New Style With {.CurrentFill = New Style.Fill With {.BackgroundColor = "#FFFFBB66"}}) ' Add cell B1
         workbook.CurrentWorksheet.AddNextCell(DateTime.Now) ' Add cell C1
 
         workbook.Save()
