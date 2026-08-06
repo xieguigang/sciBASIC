@@ -160,13 +160,13 @@ Namespace XLSX.Writer.Styling
                 Case StyleEnum.underline
                     If underlineField Is Nothing Then
                         underlineField = New Style()
-                        underlineField.CurrentFont.Underline = Style.Font.UnderlineValue.u_single
+                        underlineField.CurrentFont.Underline = UnderlineValue.u_single
                     End If
                     s = underlineField
                 Case StyleEnum.doubleUnderline
                     If doubleUnderlineField Is Nothing Then
                         doubleUnderlineField = New Style()
-                        doubleUnderlineField.CurrentFont.Underline = Style.Font.UnderlineValue.u_double
+                        doubleUnderlineField.CurrentFont.Underline = UnderlineValue.u_double
                     End If
                     s = doubleUnderlineField
                 Case StyleEnum.strike
@@ -178,44 +178,44 @@ Namespace XLSX.Writer.Styling
                 Case StyleEnum.dateFormat
                     If dateFormatField Is Nothing Then
                         dateFormatField = New Style()
-                        dateFormatField.CurrentNumberFormat.Number = NumberFormat.FormatNumber.format_14
+                        dateFormatField.CurrentNumberFormat.Number = FormatNumber.format_14
                     End If
                     s = dateFormatField
                 Case StyleEnum.timeFormat
                     If timeFormatField Is Nothing Then
                         timeFormatField = New Style()
-                        timeFormatField.CurrentNumberFormat.Number = NumberFormat.FormatNumber.format_21
+                        timeFormatField.CurrentNumberFormat.Number = FormatNumber.format_21
                     End If
                     s = timeFormatField
                 Case StyleEnum.roundFormat
                     If roundFormatField Is Nothing Then
                         roundFormatField = New Style()
-                        roundFormatField.CurrentNumberFormat.Number = NumberFormat.FormatNumber.format_1
+                        roundFormatField.CurrentNumberFormat.Number = FormatNumber.format_1
                     End If
                     s = roundFormatField
                 Case StyleEnum.borderFrame
                     If borderFrameField Is Nothing Then
                         borderFrameField = New Style()
-                        borderFrameField.CurrentBorder.TopStyle = Border.StyleValue.thin
-                        borderFrameField.CurrentBorder.BottomStyle = Border.StyleValue.thin
-                        borderFrameField.CurrentBorder.LeftStyle = Border.StyleValue.thin
-                        borderFrameField.CurrentBorder.RightStyle = Border.StyleValue.thin
+                        borderFrameField.CurrentBorder.TopStyle = StyleValue.thin
+                        borderFrameField.CurrentBorder.BottomStyle = StyleValue.thin
+                        borderFrameField.CurrentBorder.LeftStyle = StyleValue.thin
+                        borderFrameField.CurrentBorder.RightStyle = StyleValue.thin
                     End If
                     s = borderFrameField
                 Case StyleEnum.borderFrameHeader
                     If borderFrameHeaderField Is Nothing Then
                         borderFrameHeaderField = New Style()
-                        borderFrameHeaderField.CurrentBorder.TopStyle = Border.StyleValue.thin
-                        borderFrameHeaderField.CurrentBorder.BottomStyle = Border.StyleValue.medium
-                        borderFrameHeaderField.CurrentBorder.LeftStyle = Border.StyleValue.thin
-                        borderFrameHeaderField.CurrentBorder.RightStyle = Border.StyleValue.thin
+                        borderFrameHeaderField.CurrentBorder.TopStyle = StyleValue.thin
+                        borderFrameHeaderField.CurrentBorder.BottomStyle = StyleValue.medium
+                        borderFrameHeaderField.CurrentBorder.LeftStyle = StyleValue.thin
+                        borderFrameHeaderField.CurrentBorder.RightStyle = StyleValue.thin
                         borderFrameHeaderField.CurrentFont.Bold = True
                     End If
                     s = borderFrameHeaderField
                 Case StyleEnum.dottedFill_0_125
                     If dottedFill_0_125Field Is Nothing Then
                         dottedFill_0_125Field = New Style()
-                        dottedFill_0_125Field.CurrentFill.PatternFill = Fill.PatternValue.gray125
+                        dottedFill_0_125Field.CurrentFill.PatternFill = PatternValue.gray125
                     End If
                     s = dottedFill_0_125Field
                 Case StyleEnum.mergeCellStyle
@@ -248,7 +248,7 @@ Namespace XLSX.Writer.Styling
         Public Shared Function ColorizedBackground(rgb As String) As Style
             Fill.ValidateColor(rgb, False)
             Dim s As Style = New Style()
-            s.CurrentFill.SetColor("FF" & rgb.ToUpper(), Fill.FillType.fillColor)
+            s.CurrentFill.SetColor("FF" & rgb.ToUpper(), FillType.fillColor)
             Return s
         End Function
 

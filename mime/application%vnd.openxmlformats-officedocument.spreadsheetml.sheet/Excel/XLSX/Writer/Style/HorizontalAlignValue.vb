@@ -39,6 +39,6 @@
         ''' <summary>Distributed alignment</summary>
         distributed
         ''' <summary>No alignment. The alignment will not be used in a style</summary>
-        none
+       ' none
     End Enum
 End Namespace

@@ -1,65 +1,65 @@
 ﻿#Region "Microsoft.VisualBasic::5e0fe7c4dad73634008c08bb528e8870, mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\XLSX\FileIO\LowLevel.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 1601
-    '    Code Lines: 1188 (74.20%)
-    ' Comment Lines: 316 (19.74%)
-    '    - Xml Docs: 93.35%
-    ' 
-    '   Blank Lines: 97 (6.06%)
-    '     File Size: 86.04 KB
+' Summaries:
 
 
-    '     Class LowLevel
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    ' 
-    '         Function: CalculatePaneHeight, CalculatePaneWidth, CreateAppPropertiesDocument, CreateAppString, CreateColsString
-    '                   CreateCorePropertiesDocument, CreateCorePropertiesString, CreateMergedCellsString, CreateMruColorsString, CreateRowString
-    '                   CreateSharedStringsDocument, CreateSheetProtectionString, CreateStyleBorderString, CreateStyleFillString, CreateStyleFontString
-    '                   CreateStyleNumberFormatString, CreateStyleSheetDocument, CreateStyleXfsString, CreateWorkbookDocument, CreateWorksheetPart
-    '                   EscapeXmlAttributeChars, EscapeXmlChars, GeneratePasswordHash, GetInternalColumnWidth, GetInternalPaneSplitHeight
-    '                   GetInternalPaneSplitWidth, GetInternalRowHeight, GetOADateTimeString, GetOATimeString, GetSortedSheetData
-    '                   HasPaneSplitting, NormalizeNewLines
-    ' 
-    '         Sub: AppendSharedString, AppendXmlTag, AppendXmlToPackagePart, CreatePaneString, CreateRowsString
-    '              CreateSheetViewString, CreateWorkbookProtectionString, Save, SaveAsStream, SaveAsStreamInternal
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 1601
+'    Code Lines: 1188 (74.20%)
+' Comment Lines: 316 (19.74%)
+'    - Xml Docs: 93.35%
+' 
+'   Blank Lines: 97 (6.06%)
+'     File Size: 86.04 KB
+
+
+'     Class LowLevel
+' 
+'         Constructor: (+1 Overloads) Sub New
+' 
+'         Function: CalculatePaneHeight, CalculatePaneWidth, CreateAppPropertiesDocument, CreateAppString, CreateColsString
+'                   CreateCorePropertiesDocument, CreateCorePropertiesString, CreateMergedCellsString, CreateMruColorsString, CreateRowString
+'                   CreateSharedStringsDocument, CreateSheetProtectionString, CreateStyleBorderString, CreateStyleFillString, CreateStyleFontString
+'                   CreateStyleNumberFormatString, CreateStyleSheetDocument, CreateStyleXfsString, CreateWorkbookDocument, CreateWorksheetPart
+'                   EscapeXmlAttributeChars, EscapeXmlChars, GeneratePasswordHash, GetInternalColumnWidth, GetInternalPaneSplitHeight
+'                   GetInternalPaneSplitWidth, GetInternalRowHeight, GetOADateTimeString, GetOATimeString, GetSortedSheetData
+'                   HasPaneSplitting, NormalizeNewLines
+' 
+'         Sub: AppendSharedString, AppendXmlTag, AppendXmlToPackagePart, CreatePaneString, CreateRowsString
+'              CreateSheetViewString, CreateWorkbookProtectionString, Save, SaveAsStream, SaveAsStreamInternal
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -76,6 +76,7 @@ Imports System.IO.Packaging
 Imports System.Text
 Imports System.Xml
 Imports Microsoft.VisualBasic.MIME.Office.Excel.XLSX.Writer
+Imports Microsoft.VisualBasic.MIME.Office.Excel.XLSX.Writer.Styling
 Imports std = System.Math
 
 Namespace XLSX.FileIO
@@ -1073,7 +1074,7 @@ Namespace XLSX.FileIO
         ''' </summary>
         ''' <returns>String with formatted XML data.</returns>
         Private Function CreateStyleBorderString() As String
-            Dim borderStyles As Style.Border() = m_styles.GetBorders()
+            Dim borderStyles As Border() = m_styles.GetBorders()
             Dim sb As StringBuilder = New StringBuilder()
             For Each item In borderStyles
                 If item.DiagonalDown AndAlso Not item.DiagonalUp Then
@@ -1086,8 +1087,8 @@ Namespace XLSX.FileIO
                     sb.Append("<border>")
                 End If
 
-                If item.LeftStyle <> Style.Border.StyleValue.none Then
-                    sb.Append("<left style=""" & Style.Border.GetStyleName(item.LeftStyle) & """>")
+                If item.LeftStyle <> StyleValue.none Then
+                    sb.Append("<left style=""" & Border.GetStyleName(item.LeftStyle) & """>")
                     If Not String.IsNullOrEmpty(item.LeftColor) Then
                         sb.Append("<color rgb=""").Append(item.LeftColor).Append("""/>")
                     Else
@@ -1097,8 +1098,8 @@ Namespace XLSX.FileIO
                 Else
                     sb.Append("<left/>")
                 End If
-                If item.RightStyle <> Style.Border.StyleValue.none Then
-                    sb.Append("<right style=""").Append(Style.Border.GetStyleName(item.RightStyle)).Append(""">")
+                If item.RightStyle <> StyleValue.none Then
+                    sb.Append("<right style=""").Append(Border.GetStyleName(item.RightStyle)).Append(""">")
                     If Not String.IsNullOrEmpty(item.RightColor) Then
                         sb.Append("<color rgb=""").Append(item.RightColor).Append("""/>")
                     Else
@@ -1108,8 +1109,8 @@ Namespace XLSX.FileIO
                 Else
                     sb.Append("<right/>")
                 End If
-                If item.TopStyle <> Style.Border.StyleValue.none Then
-                    sb.Append("<top style=""").Append(Style.Border.GetStyleName(item.TopStyle)).Append(""">")
+                If item.TopStyle <> StyleValue.none Then
+                    sb.Append("<top style=""").Append(Border.GetStyleName(item.TopStyle)).Append(""">")
                     If Not String.IsNullOrEmpty(item.TopColor) Then
                         sb.Append("<color rgb=""").Append(item.TopColor).Append("""/>")
                     Else
@@ -1119,8 +1120,8 @@ Namespace XLSX.FileIO
                 Else
                     sb.Append("<top/>")
                 End If
-                If item.BottomStyle <> Style.Border.StyleValue.none Then
-                    sb.Append("<bottom style=""").Append(Style.Border.GetStyleName(item.BottomStyle)).Append(""">")
+                If item.BottomStyle <> StyleValue.none Then
+                    sb.Append("<bottom style=""").Append(Border.GetStyleName(item.BottomStyle)).Append(""">")
                     If Not String.IsNullOrEmpty(item.BottomColor) Then
                         sb.Append("<color rgb=""").Append(item.BottomColor).Append("""/>")
                     Else
@@ -1130,8 +1131,8 @@ Namespace XLSX.FileIO
                 Else
                     sb.Append("<bottom/>")
                 End If
-                If item.DiagonalStyle <> Style.Border.StyleValue.none Then
-                    sb.Append("<diagonal style=""").Append(Style.Border.GetStyleName(item.DiagonalStyle)).Append(""">")
+                If item.DiagonalStyle <> StyleValue.none Then
+                    sb.Append("<diagonal style=""").Append(Border.GetStyleName(item.DiagonalStyle)).Append(""">")
                     If Not String.IsNullOrEmpty(item.DiagonalColor) Then
                         sb.Append("<color rgb=""").Append(item.DiagonalColor).Append("""/>")
                     Else
@@ -1152,8 +1153,8 @@ Namespace XLSX.FileIO
         ''' </summary>
         ''' <returns>String with formatted XML data.</returns>
         Private Function CreateStyleFontString() As String
-            Dim fontStyles As Style.Font() = m_styles.GetFonts()
-            Dim sb As StringBuilder = New StringBuilder()
+            Dim fontStyles As Font() = m_styles.GetFonts()
+            Dim sb As New StringBuilder()
             For Each item In fontStyles
                 sb.Append("<font>")
                 If item.Bold Then
@@ -1165,20 +1166,20 @@ Namespace XLSX.FileIO
                 If item.Strike Then
                     sb.Append("<strike/>")
                 End If
-                If item.Underline <> Style.Font.UnderlineValue.none Then
-                    If item.Underline = Style.Font.UnderlineValue.u_double Then
+                If item.Underline <> UnderlineValue.none Then
+                    If item.Underline = UnderlineValue.u_double Then
                         sb.Append("<u val=""double""/>")
-                    ElseIf item.Underline = Style.Font.UnderlineValue.singleAccounting Then
+                    ElseIf item.Underline = UnderlineValue.singleAccounting Then
                         sb.Append(" val=""singleAccounting""/>")
-                    ElseIf item.Underline = Style.Font.UnderlineValue.doubleAccounting Then
+                    ElseIf item.Underline = UnderlineValue.doubleAccounting Then
                         sb.Append(" val=""doubleAccounting""/>")
                     Else
                         sb.Append("<u/>")
                     End If
                 End If
-                If item.VerticalAlign = Style.Font.VerticalAlignValue.subscript Then
+                If item.VerticalAlign = VerticalAlignValue.subscript Then
                     sb.Append("<vertAlign val=""subscript""/>")
-                ElseIf item.VerticalAlign = Style.Font.VerticalAlignValue.superscript Then
+                ElseIf item.VerticalAlign = VerticalAlignValue.superscript Then
                     sb.Append("<vertAlign val=""superscript""/>")
                 End If
                 sb.Append("<sz val=""").Append(item.Size.ToString("G", culture)).Append("""/>")
@@ -1189,10 +1190,10 @@ Namespace XLSX.FileIO
                 End If
                 sb.Append("<name val=""").Append(item.Name).Append("""/>")
                 sb.Append("<family val=""").Append(item.Family).Append("""/>")
-                If item.Scheme <> Style.Font.SchemeValue.none Then
-                    If item.Scheme = Style.Font.SchemeValue.major Then
+                If item.Scheme <> SchemeValue.none Then
+                    If item.Scheme = SchemeValue.major Then
                         sb.Append("<scheme val=""major""/>")
-                    ElseIf item.Scheme = Style.Font.SchemeValue.minor Then
+                    ElseIf item.Scheme = SchemeValue.minor Then
                         sb.Append("<scheme val=""minor""/>")
                     End If
                 End If
@@ -1209,27 +1210,27 @@ Namespace XLSX.FileIO
         ''' </summary>
         ''' <returns>String with formatted XML data.</returns>
         Private Function CreateStyleFillString() As String
-            Dim fillStyles As Style.Fill() = m_styles.GetFills()
-            Dim sb As StringBuilder = New StringBuilder()
+            Dim fillStyles As Fill() = m_styles.GetFills()
+            Dim sb As New StringBuilder()
             For Each item In fillStyles
                 Dim effectiveColor As String = item.GetEffectiveFillColor()
                 ' A solid pattern without any usable color would be rendered by Excel using
                 ' the fgColor default, which is opaque black. Degrade to "none" instead so an
                 ' unconfigured fill stays invisible.
-                Dim patternValue As Style.Fill.PatternValue = item.PatternFill
-                If patternValue = Style.Fill.PatternValue.solid AndAlso String.IsNullOrEmpty(effectiveColor) Then
-                    patternValue = Style.Fill.PatternValue.none
+                Dim patternValue As PatternValue = item.PatternFill
+                If patternValue = PatternValue.solid AndAlso String.IsNullOrEmpty(effectiveColor) Then
+                    patternValue = PatternValue.none
                 End If
                 sb.Append("<fill>")
-                sb.Append("<patternFill patternType=""").Append(Style.Fill.GetPatternName(patternValue)).Append("""")
-                If patternValue = Style.Fill.PatternValue.solid Then
+                sb.Append("<patternFill patternType=""").Append(Styling.Fill.GetPatternName(patternValue)).Append("""")
+                If patternValue = PatternValue.solid Then
                     ' For a solid fill Excel renders fgColor and ignores bgColor, therefore
                     ' the effective (user facing "background") color has to go into fgColor.
                     sb.Append(">")
                     sb.Append("<fgColor rgb=""").Append(effectiveColor).Append("""/>")
                     sb.Append("<bgColor indexed=""").Append(item.IndexedColor.ToString("G", culture)).Append("""/>")
                     sb.Append("</patternFill>")
-                ElseIf patternValue = Style.Fill.PatternValue.mediumGray OrElse patternValue = Style.Fill.PatternValue.lightGray OrElse patternValue = Style.Fill.PatternValue.gray0625 OrElse patternValue = Style.Fill.PatternValue.darkGray Then
+                ElseIf patternValue = PatternValue.mediumGray OrElse patternValue = PatternValue.lightGray OrElse patternValue = PatternValue.gray0625 OrElse patternValue = PatternValue.darkGray Then
                     sb.Append(">")
                     sb.Append("<fgColor rgb=""").Append(item.ForegroundColor).Append("""/>")
                     If Not String.IsNullOrEmpty(item.BackgroundColor) Then
@@ -1249,8 +1250,8 @@ Namespace XLSX.FileIO
         ''' </summary>
         ''' <returns>String with formatted XML data.</returns>
         Private Function CreateStyleNumberFormatString() As String
-            Dim numberFormatStyles As Style.NumberFormat() = m_styles.GetNumberFormats()
-            Dim sb As StringBuilder = New StringBuilder()
+            Dim numberFormatStyles As NumberFormat() = m_styles.GetNumberFormats()
+            Dim sb As New StringBuilder()
             For Each item In numberFormatStyles
                 If item.IsCustomFormat Then
                     If String.IsNullOrEmpty(item.CustomFormatCode) Then
@@ -1278,53 +1279,53 @@ Namespace XLSX.FileIO
                 textRotation = style.CurrentCellXf.CalculateInternalRotation()
                 alignmentString = String.Empty
                 protectionString = String.Empty
-                If style.CurrentCellXf.HorizontalAlign <> Style.CellXf.HorizontalAlignValue.none OrElse style.CurrentCellXf.VerticalAlign <> Style.CellXf.VerticalAlignValue.none OrElse style.CurrentCellXf.Alignment <> Style.CellXf.TextBreakValue.none OrElse textRotation <> 0 Then
+                If style.CurrentCellXf.HorizontalAlign <> HorizontalAlignValue.none OrElse style.CurrentCellXf.VerticalAlign <> VerticalAlignValue.none OrElse style.CurrentCellXf.Alignment <> TextBreakValue.none OrElse textRotation <> 0 Then
                     sb2.Clear()
                     sb2.Append("<alignment")
-                    If style.CurrentCellXf.HorizontalAlign <> Style.CellXf.HorizontalAlignValue.none Then
+                    If style.CurrentCellXf.HorizontalAlign <> HorizontalAlignValue.none Then
                         sb2.Append(" horizontal=""")
-                        If style.CurrentCellXf.HorizontalAlign = Style.CellXf.HorizontalAlignValue.center Then
+                        If style.CurrentCellXf.HorizontalAlign = HorizontalAlignValue.center Then
                             sb2.Append("center")
-                        ElseIf style.CurrentCellXf.HorizontalAlign = Style.CellXf.HorizontalAlignValue.right Then
+                        ElseIf style.CurrentCellXf.HorizontalAlign = HorizontalAlignValue.right Then
                             sb2.Append("right")
-                        ElseIf style.CurrentCellXf.HorizontalAlign = Style.CellXf.HorizontalAlignValue.centerContinuous Then
+                        ElseIf style.CurrentCellXf.HorizontalAlign = HorizontalAlignValue.centerContinuous Then
                             sb2.Append("centerContinuous")
-                        ElseIf style.CurrentCellXf.HorizontalAlign = Style.CellXf.HorizontalAlignValue.distributed Then
+                        ElseIf style.CurrentCellXf.HorizontalAlign = HorizontalAlignValue.distributed Then
                             sb2.Append("distributed")
-                        ElseIf style.CurrentCellXf.HorizontalAlign = Style.CellXf.HorizontalAlignValue.fill Then
+                        ElseIf style.CurrentCellXf.HorizontalAlign = HorizontalAlignValue.fill Then
                             sb2.Append("fill")
-                        ElseIf style.CurrentCellXf.HorizontalAlign = Style.CellXf.HorizontalAlignValue.general Then
+                        ElseIf style.CurrentCellXf.HorizontalAlign = HorizontalAlignValue.general Then
                             sb2.Append("general")
-                        ElseIf style.CurrentCellXf.HorizontalAlign = Style.CellXf.HorizontalAlignValue.justify Then
+                        ElseIf style.CurrentCellXf.HorizontalAlign = HorizontalAlignValue.justify Then
                             sb2.Append("justify")
                         Else
                             sb2.Append("left")
                         End If
                         sb2.Append("""")
                     End If
-                    If style.CurrentCellXf.VerticalAlign <> Style.CellXf.VerticalAlignValue.none Then
+                    If style.CurrentCellXf.VerticalAlign <> VerticalAlignValue.none Then
                         sb2.Append(" vertical=""")
-                        If style.CurrentCellXf.VerticalAlign = Style.CellXf.VerticalAlignValue.center Then
+                        If style.CurrentCellXf.VerticalAlign = VerticalAlignValue.center Then
                             sb2.Append("center")
-                        ElseIf style.CurrentCellXf.VerticalAlign = Style.CellXf.VerticalAlignValue.distributed Then
+                        ElseIf style.CurrentCellXf.VerticalAlign = VerticalAlignValue.distributed Then
                             sb2.Append("distributed")
-                        ElseIf style.CurrentCellXf.VerticalAlign = Style.CellXf.VerticalAlignValue.justify Then
+                        ElseIf style.CurrentCellXf.VerticalAlign = VerticalAlignValue.justify Then
                             sb2.Append("justify")
-                        ElseIf style.CurrentCellXf.VerticalAlign = Style.CellXf.VerticalAlignValue.top Then
+                        ElseIf style.CurrentCellXf.VerticalAlign = VerticalAlignValue.top Then
                             sb2.Append("top")
                         Else
                             sb2.Append("bottom")
                         End If
                         sb2.Append("""")
                     End If
-                    If style.CurrentCellXf.Indent > 0 AndAlso (style.CurrentCellXf.HorizontalAlign = Style.CellXf.HorizontalAlignValue.left OrElse style.CurrentCellXf.HorizontalAlign = Style.CellXf.HorizontalAlignValue.right OrElse style.CurrentCellXf.HorizontalAlign = Style.CellXf.HorizontalAlignValue.distributed) Then
+                    If style.CurrentCellXf.Indent > 0 AndAlso (style.CurrentCellXf.HorizontalAlign = HorizontalAlignValue.left OrElse style.CurrentCellXf.HorizontalAlign = HorizontalAlignValue.right OrElse style.CurrentCellXf.HorizontalAlign = HorizontalAlignValue.distributed) Then
                         sb2.Append(" indent=""")
                         sb2.Append(style.CurrentCellXf.Indent.ToString("G", culture))
                         sb2.Append("""")
                     End If
 
-                    If style.CurrentCellXf.Alignment <> Style.CellXf.TextBreakValue.none Then
-                        If style.CurrentCellXf.Alignment = Style.CellXf.TextBreakValue.shrinkToFit Then
+                    If style.CurrentCellXf.Alignment <> TextBreakValue.none Then
+                        If style.CurrentCellXf.Alignment = TextBreakValue.shrinkToFit Then
                             sb2.Append(" shrinkToFit=""1")
                         Else
                             sb2.Append(" wrapText=""1")
@@ -1375,7 +1376,7 @@ Namespace XLSX.FileIO
                 If Not Equals(protectionString, String.Empty) Then
                     sb.Append(""" applyProtection=""1")
                 End If
-                If style.CurrentNumberFormat.Number <> Style.NumberFormat.FormatNumber.none Then
+                If style.CurrentNumberFormat.Number <> Styling.FormatNumber.none Then
                     sb.Append(""" applyNumberFormat=""1""")
                 Else
                     sb.Append("""")
@@ -1397,10 +1398,10 @@ Namespace XLSX.FileIO
         ''' </summary>
         ''' <returns>String with formatted XML data.</returns>
         Private Function CreateMruColorsString() As String
-            Dim fonts As Style.Font() = m_styles.GetFonts()
-            Dim fills As Style.Fill() = m_styles.GetFills()
-            Dim sb As StringBuilder = New StringBuilder()
-            Dim tempColors As List(Of String) = New List(Of String)()
+            Dim fonts As Font() = m_styles.GetFonts()
+            Dim fills As Fill() = m_styles.GetFills()
+            Dim sb As New StringBuilder()
+            Dim tempColors As New List(Of String)()
             For Each item In fonts
                 ' Only skip unset font colors here. The previous implementation compared
                 ' against Style.Fill.DEFAULT_COLOR, which belongs to fills and silently
@@ -1414,7 +1415,7 @@ Namespace XLSX.FileIO
             Next
             For Each item In fills
                 Dim effectiveColor As String = item.GetEffectiveFillColor()
-                If Not String.IsNullOrEmpty(effectiveColor) AndAlso Not Equals(effectiveColor, Style.Fill.DEFAULT_COLOR) AndAlso Not tempColors.Contains(effectiveColor) Then
+                If Not String.IsNullOrEmpty(effectiveColor) AndAlso Not Equals(effectiveColor, Styling.Fill.DEFAULT_COLOR) AndAlso Not tempColors.Contains(effectiveColor) Then
                     tempColors.Add(effectiveColor)
                 End If
             Next
