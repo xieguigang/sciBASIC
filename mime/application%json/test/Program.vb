@@ -53,7 +53,8 @@
 
 Module Program
     Sub Main()
-        Call writerTest.Main6()
+        Call simple_jsonParserTest.Main11()
+        ' Call writerTest.Main6()
     End Sub
 End Module
 

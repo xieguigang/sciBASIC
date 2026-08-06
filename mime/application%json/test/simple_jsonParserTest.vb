@@ -85,9 +85,9 @@ Module simple_jsonParserTest
     ReadOnly missing_quote_test As String = "{""a"": ""v1,b"": ""v2,c"": ""v3""}"
 
     Sub Main11()
-        Call test4()
-        Call test3()
-        Call test2()
+        ' Call test4()
+        ' Call test3()
+        ' Call test2()
         Call test1()
     End Sub
 
@@ -107,7 +107,7 @@ Module simple_jsonParserTest
         Next
 
         ' --- The real production document -------------------------------------
-        Dim file As String = "./test_error_json.json"
+        Dim file As String = "G:\pixelArtist\src\framework\mime\application%json\test\test_error_json.json"
 
         If Not file.FileExists Then
             Call Console.WriteLine($"test data file not found: {file.GetFullPath}")
@@ -170,7 +170,7 @@ Module simple_jsonParserTest
 
         parsed = LenientJsonParser.ParseJSON(LLM_test3)
 
-        Pause()
+        ' Pause()
     End Sub
 
     Sub test2()
