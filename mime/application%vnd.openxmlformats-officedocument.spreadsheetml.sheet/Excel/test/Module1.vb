@@ -61,7 +61,7 @@ Module Module1
     Sub testWriter()
         Dim workbook As New Workbook("basic.xlsx", "SXheet124234") ' Create New workbook
         workbook.CurrentWorksheet.AddNextCell("Test") ' Add cell A1
-        workbook.CurrentWorksheet.AddNextCell(55.2) ' Add cell B1
+        workbook.CurrentWorksheet.AddNextCell(55.2, New Style With {.CurrentFill = New Fill With {.ForegroundColor = "#FF00FF00"}}) ' Add cell B1
         workbook.CurrentWorksheet.AddNextCell(DateTime.Now) ' Add cell C1
 
         workbook.AddWorksheet("page_nooote")

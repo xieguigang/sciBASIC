@@ -21,27 +21,27 @@ Namespace XLSX.Writer.Styling
         ''' <summary>
         ''' Defines the bottomColor
         ''' </summary>
-        Private bottomColorField As String
+        Private m_bottomColor As String
 
         ''' <summary>
         ''' Defines the diagonalColor
         ''' </summary>
-        Private diagonalColorField As String
+        Private m_diagonalColor As String
 
         ''' <summary>
         ''' Defines the leftColor
         ''' </summary>
-        Private leftColorField As String
+        Private m_leftColor As String
 
         ''' <summary>
         ''' Defines the rightColor
         ''' </summary>
-        Private rightColorField As String
+        Private m_rightColor As String
 
         ''' <summary>
         ''' Defines the topColor
         ''' </summary>
-        Private topColorField As String
+        Private m_topColor As String
 
         ''' <summary>
         ''' Gets or sets the color code of the bottom border. The value is expressed as hex string with the format AARRGGBB. AA (Alpha) is usually FF
@@ -49,11 +49,11 @@ Namespace XLSX.Writer.Styling
         <Append>
         Public Property BottomColor As String
             Get
-                Return bottomColorField
+                Return m_bottomColor
             End Get
             Set(value As String)
                 Fill.ValidateColor(value, True, True)
-                bottomColorField = value
+                m_bottomColor = value
             End Set
         End Property
 
@@ -69,11 +69,11 @@ Namespace XLSX.Writer.Styling
         <Append>
         Public Property DiagonalColor As String
             Get
-                Return diagonalColorField
+                Return m_diagonalColor
             End Get
             Set(value As String)
                 Fill.ValidateColor(value, True, True)
-                diagonalColorField = value
+                m_diagonalColor = value
             End Set
         End Property
 
@@ -103,11 +103,11 @@ Namespace XLSX.Writer.Styling
         <Append>
         Public Property LeftColor As String
             Get
-                Return leftColorField
+                Return m_leftColor
             End Get
             Set(value As String)
                 Fill.ValidateColor(value, True, True)
-                leftColorField = value
+                m_leftColor = value
             End Set
         End Property
 
@@ -123,11 +123,11 @@ Namespace XLSX.Writer.Styling
         <Append>
         Public Property RightColor As String
             Get
-                Return rightColorField
+                Return m_rightColor
             End Get
             Set(value As String)
                 Fill.ValidateColor(value, True, True)
-                rightColorField = value
+                m_rightColor = value
             End Set
         End Property
 
@@ -143,11 +143,11 @@ Namespace XLSX.Writer.Styling
         <Append>
         Public Property TopColor As String
             Get
-                Return topColorField
+                Return m_topColor
             End Get
             Set(value As String)
                 Fill.ValidateColor(value, True, True)
-                topColorField = value
+                m_topColor = value
             End Set
         End Property
 

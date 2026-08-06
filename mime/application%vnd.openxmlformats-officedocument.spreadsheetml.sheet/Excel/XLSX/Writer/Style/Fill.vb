@@ -26,12 +26,12 @@ Namespace XLSX.Writer.Styling
         ''' <summary>
         ''' Defines the backgroundColor
         ''' </summary>
-        Private backgroundColorField As String = DEFAULT_COLOR
+        Private m_backgroundColor As String = DEFAULT_COLOR
 
         ''' <summary>
         ''' Defines the foregroundColor
         ''' </summary>
-        Private foregroundColorField As String = DEFAULT_COLOR
+        Private m_foregroundColor As String = DEFAULT_COLOR
 
         ''' <summary>
         ''' Gets or sets the background color of the fill. The value is expressed as hex string with the format AARRGGBB. AA (Alpha) is usually FF
@@ -39,10 +39,10 @@ Namespace XLSX.Writer.Styling
         <Append>
         Public Property BackgroundColor As String
             Get
-                Return backgroundColorField
+                Return m_backgroundColor
             End Get
             Set(value As String)
-                backgroundColorField = NormalizeColor(value, True)
+                m_backgroundColor = NormalizeColor(value, True)
                 If PatternFill = PatternValue.none Then
                     PatternFill = PatternValue.solid
                 End If
@@ -55,10 +55,10 @@ Namespace XLSX.Writer.Styling
         <Append>
         Public Property ForegroundColor As String
             Get
-                Return foregroundColorField
+                Return m_foregroundColor
             End Get
             Set(value As String)
-                foregroundColorField = NormalizeColor(value, True)
+                m_foregroundColor = NormalizeColor(value, True)
                 If PatternFill = PatternValue.none Then
                     PatternFill = PatternValue.solid
                 End If
@@ -87,8 +87,8 @@ Namespace XLSX.Writer.Styling
             ' opaque black one. Writing the backing fields keeps the default Fill truly
             ' empty, which is what both the XML writer and AbstractStyle.CopyProperties
             ' (which compares against a pristine reference instance) expect.
-            foregroundColorField = DEFAULT_COLOR
-            backgroundColorField = DEFAULT_COLOR
+            m_foregroundColor = DEFAULT_COLOR
+            m_backgroundColor = DEFAULT_COLOR
             IndexedColor = DEFAULT_INDEXED_COLOR
             PatternFill = DEFAULT_PATTERN_FILL
         End Sub
@@ -99,8 +99,8 @@ Namespace XLSX.Writer.Styling
         ''' <param name="foreground">Foreground color of the fill.</param>
         ''' <param name="background">Background color of the fill.</param>
         Public Sub New(foreground As String, background As String)
-            backgroundColorField = NormalizeColor(background, True)
-            foregroundColorField = NormalizeColor(foreground, True)
+            m_backgroundColor = NormalizeColor(background, True)
+            m_foregroundColor = NormalizeColor(foreground, True)
             IndexedColor = DEFAULT_INDEXED_COLOR
             PatternFill = PatternValue.solid
         End Sub
@@ -112,11 +112,11 @@ Namespace XLSX.Writer.Styling
         ''' <param name="filltype">Fill type (fill or pattern).</param>
         Public Sub New(value As String, filltype As FillType)
             If filltype = FillType.fillColor Then
-                backgroundColorField = DEFAULT_COLOR
-                foregroundColorField = NormalizeColor(value, True)
+                m_backgroundColor = DEFAULT_COLOR
+                m_foregroundColor = NormalizeColor(value, True)
             Else
-                backgroundColorField = NormalizeColor(value, True)
-                foregroundColorField = DEFAULT_COLOR
+                m_backgroundColor = NormalizeColor(value, True)
+                m_foregroundColor = DEFAULT_COLOR
             End If
             IndexedColor = DEFAULT_INDEXED_COLOR
             PatternFill = PatternValue.solid
@@ -147,8 +147,8 @@ Namespace XLSX.Writer.Styling
             ' Assign the backing fields directly and restore the pattern afterwards, so
             ' the auto-promotion inside the property setters cannot turn a copied "none"
             ' fill into a solid one.
-            lCopy.backgroundColorField = BackgroundColor
-            lCopy.foregroundColorField = ForegroundColor
+            lCopy.m_backgroundColor = BackgroundColor
+            lCopy.m_foregroundColor = ForegroundColor
             lCopy.IndexedColor = IndexedColor
             lCopy.PatternFill = PatternFill
             Return lCopy
@@ -182,11 +182,11 @@ Namespace XLSX.Writer.Styling
         ''' <param name="filltype">fill type (fill or pattern).</param>
         Public Sub SetColor(value As String, filltype As FillType)
             If filltype = FillType.fillColor Then
-                backgroundColorField = DEFAULT_COLOR
-                foregroundColorField = NormalizeColor(value, True)
+                m_backgroundColor = DEFAULT_COLOR
+                m_foregroundColor = NormalizeColor(value, True)
             Else
-                backgroundColorField = NormalizeColor(value, True)
-                foregroundColorField = DEFAULT_COLOR
+                m_backgroundColor = NormalizeColor(value, True)
+                m_foregroundColor = DEFAULT_COLOR
             End If
             PatternFill = PatternValue.solid
         End Sub

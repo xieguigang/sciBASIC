@@ -11,7 +11,19 @@ Namespace XLSX.Writer.Styling
         ''' <summary>
         ''' Defines the bold, italic, boldItalic, underline, doubleUnderline, strike, dateFormat, timeFormat, roundFormat, borderFrame, borderFrameHeader, dottedFill_0_125, mergeCellStyle
         ''' </summary>
-        Private Shared boldField, italicField, boldItalicField, underlineField, doubleUnderlineField, strikeField, dateFormatField, timeFormatField, roundFormatField, borderFrameField, borderFrameHeaderField, dottedFill_0_125Field, mergeCellStyleField As Style
+        Private Shared m_bold,
+            m_italic,
+            m_boldItalic,
+            m_underline,
+            m_doubleUnderline,
+            m_strike,
+            m_dateFormat,
+            m_timeFormat,
+            m_roundFormat,
+            m_borderFrame,
+            m_borderFrameHeader,
+            m_dottedFill_0_125,
+            m_mergeCellStyle As Style
 
         ''' <summary>
         ''' Gets the Bold
@@ -139,91 +151,91 @@ Namespace XLSX.Writer.Styling
             Dim s As Style = Nothing
             Select Case value
                 Case StyleEnum.bold
-                    If boldField Is Nothing Then
-                        boldField = New Style()
-                        boldField.CurrentFont.Bold = True
+                    If m_bold Is Nothing Then
+                        m_bold = New Style()
+                        m_bold.CurrentFont.Bold = True
                     End If
-                    s = boldField
+                    s = m_bold
                 Case StyleEnum.italic
-                    If italicField Is Nothing Then
-                        italicField = New Style()
-                        italicField.CurrentFont.Italic = True
+                    If m_italic Is Nothing Then
+                        m_italic = New Style()
+                        m_italic.CurrentFont.Italic = True
                     End If
-                    s = italicField
+                    s = m_italic
                 Case StyleEnum.boldItalic
-                    If boldItalicField Is Nothing Then
-                        boldItalicField = New Style()
-                        boldItalicField.CurrentFont.Italic = True
-                        boldItalicField.CurrentFont.Bold = True
+                    If m_boldItalic Is Nothing Then
+                        m_boldItalic = New Style()
+                        m_boldItalic.CurrentFont.Italic = True
+                        m_boldItalic.CurrentFont.Bold = True
                     End If
-                    s = boldItalicField
+                    s = m_boldItalic
                 Case StyleEnum.underline
-                    If underlineField Is Nothing Then
-                        underlineField = New Style()
-                        underlineField.CurrentFont.Underline = UnderlineValue.u_single
+                    If m_underline Is Nothing Then
+                        m_underline = New Style()
+                        m_underline.CurrentFont.Underline = UnderlineValue.u_single
                     End If
-                    s = underlineField
+                    s = m_underline
                 Case StyleEnum.doubleUnderline
-                    If doubleUnderlineField Is Nothing Then
-                        doubleUnderlineField = New Style()
-                        doubleUnderlineField.CurrentFont.Underline = UnderlineValue.u_double
+                    If m_doubleUnderline Is Nothing Then
+                        m_doubleUnderline = New Style()
+                        m_doubleUnderline.CurrentFont.Underline = UnderlineValue.u_double
                     End If
-                    s = doubleUnderlineField
+                    s = m_doubleUnderline
                 Case StyleEnum.strike
-                    If strikeField Is Nothing Then
-                        strikeField = New Style()
-                        strikeField.CurrentFont.Strike = True
+                    If m_strike Is Nothing Then
+                        m_strike = New Style()
+                        m_strike.CurrentFont.Strike = True
                     End If
-                    s = strikeField
+                    s = m_strike
                 Case StyleEnum.dateFormat
-                    If dateFormatField Is Nothing Then
-                        dateFormatField = New Style()
-                        dateFormatField.CurrentNumberFormat.Number = FormatNumber.format_14
+                    If m_dateFormat Is Nothing Then
+                        m_dateFormat = New Style()
+                        m_dateFormat.CurrentNumberFormat.Number = FormatNumber.format_14
                     End If
-                    s = dateFormatField
+                    s = m_dateFormat
                 Case StyleEnum.timeFormat
-                    If timeFormatField Is Nothing Then
-                        timeFormatField = New Style()
-                        timeFormatField.CurrentNumberFormat.Number = FormatNumber.format_21
+                    If m_timeFormat Is Nothing Then
+                        m_timeFormat = New Style()
+                        m_timeFormat.CurrentNumberFormat.Number = FormatNumber.format_21
                     End If
-                    s = timeFormatField
+                    s = m_timeFormat
                 Case StyleEnum.roundFormat
-                    If roundFormatField Is Nothing Then
-                        roundFormatField = New Style()
-                        roundFormatField.CurrentNumberFormat.Number = FormatNumber.format_1
+                    If m_roundFormat Is Nothing Then
+                        m_roundFormat = New Style()
+                        m_roundFormat.CurrentNumberFormat.Number = FormatNumber.format_1
                     End If
-                    s = roundFormatField
+                    s = m_roundFormat
                 Case StyleEnum.borderFrame
-                    If borderFrameField Is Nothing Then
-                        borderFrameField = New Style()
-                        borderFrameField.CurrentBorder.TopStyle = StyleValue.thin
-                        borderFrameField.CurrentBorder.BottomStyle = StyleValue.thin
-                        borderFrameField.CurrentBorder.LeftStyle = StyleValue.thin
-                        borderFrameField.CurrentBorder.RightStyle = StyleValue.thin
+                    If m_borderFrame Is Nothing Then
+                        m_borderFrame = New Style()
+                        m_borderFrame.CurrentBorder.TopStyle = StyleValue.thin
+                        m_borderFrame.CurrentBorder.BottomStyle = StyleValue.thin
+                        m_borderFrame.CurrentBorder.LeftStyle = StyleValue.thin
+                        m_borderFrame.CurrentBorder.RightStyle = StyleValue.thin
                     End If
-                    s = borderFrameField
+                    s = m_borderFrame
                 Case StyleEnum.borderFrameHeader
-                    If borderFrameHeaderField Is Nothing Then
-                        borderFrameHeaderField = New Style()
-                        borderFrameHeaderField.CurrentBorder.TopStyle = StyleValue.thin
-                        borderFrameHeaderField.CurrentBorder.BottomStyle = StyleValue.medium
-                        borderFrameHeaderField.CurrentBorder.LeftStyle = StyleValue.thin
-                        borderFrameHeaderField.CurrentBorder.RightStyle = StyleValue.thin
-                        borderFrameHeaderField.CurrentFont.Bold = True
+                    If m_borderFrameHeader Is Nothing Then
+                        m_borderFrameHeader = New Style()
+                        m_borderFrameHeader.CurrentBorder.TopStyle = StyleValue.thin
+                        m_borderFrameHeader.CurrentBorder.BottomStyle = StyleValue.medium
+                        m_borderFrameHeader.CurrentBorder.LeftStyle = StyleValue.thin
+                        m_borderFrameHeader.CurrentBorder.RightStyle = StyleValue.thin
+                        m_borderFrameHeader.CurrentFont.Bold = True
                     End If
-                    s = borderFrameHeaderField
+                    s = m_borderFrameHeader
                 Case StyleEnum.dottedFill_0_125
-                    If dottedFill_0_125Field Is Nothing Then
-                        dottedFill_0_125Field = New Style()
-                        dottedFill_0_125Field.CurrentFill.PatternFill = PatternValue.gray125
+                    If m_dottedFill_0_125 Is Nothing Then
+                        m_dottedFill_0_125 = New Style()
+                        m_dottedFill_0_125.CurrentFill.PatternFill = PatternValue.gray125
                     End If
-                    s = dottedFill_0_125Field
+                    s = m_dottedFill_0_125
                 Case StyleEnum.mergeCellStyle
-                    If mergeCellStyleField Is Nothing Then
-                        mergeCellStyleField = New Style()
-                        mergeCellStyleField.CurrentCellXf.ForceApplyAlignment = True
+                    If m_mergeCellStyle Is Nothing Then
+                        m_mergeCellStyle = New Style()
+                        m_mergeCellStyle.CurrentCellXf.ForceApplyAlignment = True
                     End If
-                    s = mergeCellStyleField
+                    s = m_mergeCellStyle
             End Select
             Return s.CopyStyle() ' Copy makes basic styles immutable
         End Function
