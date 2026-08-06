@@ -253,21 +253,39 @@ Namespace CommandLine.Reflection.EntryPoints
         ''' </summary>
         ''' <param name="callParameters"></param>
         ''' <param name="target"></param>
-        ''' <param name="[throw]"></param>
+        ''' <param name="throw"></param>
         ''' <returns></returns>
         Private Function tryInvoke(callParameters As Object(), target As Object, [throw] As Boolean) As Object
 #If DEBUG Then
-            Return EntryPoint.Invoke(target, callParameters)
+            Return eval(EntryPoint.Invoke(target, callParameters))
 #Else
             Return handleUnexpectedErrorCalls(callParameters, target, [throw])
 #End If
+        End Function
+
+        Private Shared Function eval(obj As Object) As Object
+            If obj Is Nothing Then
+                Return obj
+            ElseIf TypeOf obj Is Task Then
+                ' 2. 直接通过反射获取 Result 属性
+                Dim resultProp As PropertyInfo = obj.GetType().GetProperty("Result")
+                If resultProp IsNot Nothing Then
+                    ' 3. 获取值时，如果 Task 尚未完成，会在这里阻塞当前线程直到完成
+                    Dim resultValue As Object = resultProp.GetValue(obj)
+                    Return resultValue
+                Else
+                    Return Nothing
+                End If
+            Else
+                Return obj
+            End If
         End Function
 
         Private Function handleUnexpectedErrorCalls(callParameters As Object(), target As Object, [throw] As Boolean) As Object
             Dim rtvl As Object
 
             Try
-                rtvl = EntryPoint.Invoke(target, callParameters)
+                rtvl = eval(EntryPoint.Invoke(target, callParameters))
             Catch ex As Exception
                 rtvl = logError(ex, callParameters, [throw])
             End Try
