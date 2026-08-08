@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4d9cc8feb94d1182f5bffaab1f156143, Data_science\NLP\Stemmer.vb"
+﻿#Region "Microsoft.VisualBasic::4d9cc8feb94d1182f5bffaab1f156143, nlp\NLP\Stemmer.vb"
 
     ' Author:
     ' 

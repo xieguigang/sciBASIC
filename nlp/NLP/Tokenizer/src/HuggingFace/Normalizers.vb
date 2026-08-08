@@ -1,4 +1,4 @@
-#Region "Microsoft.VisualBasic::HuggingFace/Normalizers.vb"
+﻿#Region "Microsoft.VisualBasic::72479d8a10b875ea2eed1ad9f9f4430c, nlp\NLP\Tokenizer\src\HuggingFace\Normalizers.vb"
 
     ' Author:
     ' 
@@ -31,9 +31,71 @@
 
     ' Summaries:
 
-    '     Class NullNormalizer, SequenceNormalizer, UnicodeNormalizer, LowercaseNormalizer
-    '     Class StripAccentsNormalizer, StripNormalizer, ReplaceNormalizer, PrependNormalizer
-    '     Class BertNormalizer, NmtNormalizer, PrecompiledNormalizer
+
+    ' Code Statistics:
+
+    '   Total Lines: 348
+    '    Code Lines: 210 (60.34%)
+    ' Comment Lines: 59 (16.95%)
+    '    - Xml Docs: 98.31%
+    ' 
+    '   Blank Lines: 79 (22.70%)
+    '     File Size: 11.97 KB
+
+
+    '     Class NullNormalizer
+    ' 
+    '         Properties: Instance
+    ' 
+    '         Function: Normalize
+    ' 
+    '     Class SequenceNormalizer
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    '         Function: Normalize
+    ' 
+    '     Class UnicodeNormalizer
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    '         Function: Normalize
+    ' 
+    '     Class LowercaseNormalizer
+    ' 
+    '         Function: Normalize
+    ' 
+    '     Class StripAccentsNormalizer
+    ' 
+    '         Function: Normalize
+    ' 
+    '     Class StripNormalizer
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    '         Function: Normalize
+    ' 
+    '     Class ReplaceNormalizer
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    '         Function: Normalize
+    ' 
+    '     Class PrependNormalizer
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    '         Function: Normalize
+    ' 
+    '     Class BertNormalizer
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    '         Function: IsChineseChar, Normalize
+    ' 
+    '     Class NmtNormalizer
+    ' 
+    '         Function: Normalize
+    ' 
+    '     Class PrecompiledNormalizer
+    ' 
+    '         Function: Normalize
+    ' 
+    '         Sub: WarnOnce
     ' 
     ' 
     ' /********************************************************************************/

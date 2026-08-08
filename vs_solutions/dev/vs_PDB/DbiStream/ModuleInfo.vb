@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8050d72805bc95e80306de35e694d51b, vs_solutions\dev\vs_PDB\DbiStream\ModuleInfo.vb"
+﻿#Region "Microsoft.VisualBasic::e5ed55cbc7eb7933aafefc091135af25, vs_solutions\dev\vs_PDB\DbiStream\ModuleInfo.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 16
-    '    Code Lines: 9 (56.25%)
-    ' Comment Lines: 6 (37.50%)
+    '   Total Lines: 15
+    '    Code Lines: 9 (60.00%)
+    ' Comment Lines: 6 (40.00%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 1 (6.25%)
-    '     File Size: 640 B
+    '   Blank Lines: 0 (0.00%)
+    '     File Size: 638 B
 
 
     ' Class ModuleInfo
@@ -50,7 +50,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 ''' <summary>
 ''' One module entry from the module-info substream.

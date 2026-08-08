@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::628689058f193d9eed05794f093241a1, mime\text%markdown\MarkdownParser.vb"
+﻿#Region "Microsoft.VisualBasic::b1cf979edc32f9e05b34d2b6158905ac, mime\text%markdown\MarkdownParser.vb"
 
     ' Author:
     ' 
@@ -992,4 +992,3 @@ Public Class MarkdownParser
     End Function
 
 End Class
-

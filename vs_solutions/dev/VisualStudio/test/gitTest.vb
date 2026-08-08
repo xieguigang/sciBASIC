@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b7757f127d6e100942601275edc70c0e, vs_solutions\dev\VisualStudio\test\gitTest.vb"
+﻿#Region "Microsoft.VisualBasic::b8b974ef4a520e9aa999706b7389e67a, vs_solutions\dev\VisualStudio\test\gitTest.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 0.00%
     ' 
     '   Blank Lines: 4 (28.57%)
-    '     File Size: 477 B
+    '     File Size: 475 B
 
 
     ' Module gitTest
@@ -65,4 +65,3 @@ Public Module gitTest
         Pause()
     End Sub
 End Module
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::d42f08c5d73d08941d2a24bd29322752, Data_science\NLP\LDA\DocumentLoader.vb"
+﻿#Region "Microsoft.VisualBasic::d42f08c5d73d08941d2a24bd29322752, nlp\NLP\LDA\DocumentLoader.vb"
 
     ' Author:
     ' 

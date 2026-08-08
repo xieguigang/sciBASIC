@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::60fa583571d4ae3ae563851c759aa1d1, Data_science\Mathematica\SignalProcessing\wav\wav\VoicePrint\VoicePrintExtractor.vb"
+﻿#Region "Microsoft.VisualBasic::7f2917afee003edc3555b344b08df4bf, Data_science\Mathematica\SignalProcessing\wav\wav\VoicePrint\VoicePrintExtractor.vb"
 
     ' Author:
     ' 
@@ -464,4 +464,3 @@ Public Class VoicePrintExtractor
     End Function
 
 End Class
-

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a25347672374ea1825af8b654ae45f90, Microsoft.VisualBasic.Core\src\CommandLine\Reflection\EntryPoints\APIEntryPoint.vb"
+﻿#Region "Microsoft.VisualBasic::e6113efe3f58fa4c1c0c903a3e292614, Microsoft.VisualBasic.Core\src\CommandLine\Reflection\EntryPoints\APIEntryPoint.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 308
-    '    Code Lines: 164 (53.25%)
-    ' Comment Lines: 101 (32.79%)
-    '    - Xml Docs: 94.06%
+    '   Total Lines: 326
+    '    Code Lines: 179 (54.91%)
+    ' Comment Lines: 103 (31.60%)
+    '    - Xml Docs: 92.23%
     ' 
-    '   Blank Lines: 43 (13.96%)
-    '     File Size: 13.09 KB
+    '   Blank Lines: 44 (13.50%)
+    '     File Size: 13.86 KB
 
 
     '     Class APIEntryPoint
@@ -49,8 +49,8 @@
     ' 
     '         Constructor: (+3 Overloads) Sub New
     ' 
-    '         Function: DirectInvoke, EntryPointFullName, handleUnexpectedErrorCalls, HelpInformation, (+2 Overloads) Invoke
-    '                   InvokeCLI, logError, tryInvoke
+    '         Function: DirectInvoke, EntryPointFullName, eval, handleUnexpectedErrorCalls, HelpInformation
+    '                   (+2 Overloads) Invoke, InvokeCLI, logError, tryInvoke
     ' 
     '         Sub: argumentNote
     ' 

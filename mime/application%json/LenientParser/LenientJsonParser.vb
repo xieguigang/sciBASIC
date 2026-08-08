@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c16482d715aa04c8e96f2b2a4285efde, mime\application%json\LenientParser\LenientJsonParser.vb"
+﻿#Region "Microsoft.VisualBasic::673791ba3dc9e6b37c02880d17a74c84, mime\application%json\LenientParser\LenientJsonParser.vb"
 
     ' Author:
     ' 
@@ -34,25 +34,34 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 993
-    '    Code Lines: 530 (53.37%)
-    ' Comment Lines: 322 (32.43%)
-    '    - Xml Docs: 65.53%
+    '   Total Lines: 1218
+    '    Code Lines: 585 (48.03%)
+    ' Comment Lines: 468 (38.42%)
+    '    - Xml Docs: 67.74%
     ' 
-    '   Blank Lines: 141 (14.20%)
-    '     File Size: 39.33 KB
+    '   Blank Lines: 165 (13.55%)
+    '     File Size: 51.89 KB
 
 
     '     Class LenientJsonParser
     ' 
-    '         Constructor: (+1 Overloads) Sub New
     ' 
-    '         Function: at_end, check_infinity, is_hex_digit, is_likely_closing_quote, Open
-    '                   OpenStream, Parse, parse_array, parse_key, parse_keyword
-    '                   parse_number, parse_object, parse_string, parse_value, ParseJSON
-    '                   (+2 Overloads) peek
+    '         Enum StringContext
     ' 
-    '         Sub: parse_unicode_escape, skip_block_comment, skip_line_comment, skip_whitespace_and_comments
+    '             Key, Value
+    ' 
+    ' 
+    ' 
+    '  
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    ' 
+    '     Function: at_end, check_infinity, clean_recovered_key, is_hex_digit, is_likely_closing_quote
+    '               Open, OpenStream, Parse, parse_array, parse_key
+    '               parse_keyword, parse_number, parse_object, parse_string, parse_value
+    '               ParseJSON, (+2 Overloads) peek
+    ' 
+    '     Sub: parse_unicode_escape, skip_block_comment, skip_line_comment, skip_whitespace_and_comments
     ' 
     ' 
     ' /********************************************************************************/

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::31fa48b49617dc326c8db4f14762402d, mime\text%markdown\Render\TextRender.vb"
+﻿#Region "Microsoft.VisualBasic::29b2f24581f8eed5c6b119bff4aaf267, mime\text%markdown\Render\TextRender.vb"
 
     ' Author:
     ' 
@@ -143,4 +143,3 @@ Public Class TextRender : Inherits Render
         Return htmlTag.Replace(html, "")
     End Function
 End Class
-

@@ -1,65 +1,66 @@
-﻿#Region "Microsoft.VisualBasic::0110500a1a13881ab3099e5d683e5f1d, vs_solutions\dev\VisualStudio\sln\Solution.vb"
+﻿#Region "Microsoft.VisualBasic::7acd847c2080eb489d13c896f84c9a95, vs_solutions\dev\VisualStudio\sln\Solution.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 37
-'    Code Lines: 20 (54.05%)
-' Comment Lines: 11 (29.73%)
-'    - Xml Docs: 100.00%
-' 
-'   Blank Lines: 6 (16.22%)
-'     File Size: 1.14 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Class Solution
-' 
-'         Properties: FormatVersion, MinimumVisualStudioVersion, Projects, VisualStudioVersion
-' 
-'     Enum TypeId
-' 
-' 
-'  
-' 
-' 
-' 
-'     Class Project
-' 
-'         Properties: Guid, Name, NodeType, TreePath
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 300
+    '    Code Lines: 173 (57.67%)
+    ' Comment Lines: 69 (23.00%)
+    '    - Xml Docs: 91.30%
+    ' 
+    '   Blank Lines: 58 (19.33%)
+    '     File Size: 10.95 KB
+
+
+    '     Class Solution
+    ' 
+    '         Properties: [Global], Configurations, FilePath, FormatVersion, IsXmlFormat
+    '                     MinimumVisualStudioVersion, Projects, SolutionGuid, VisualStudioVersion
+    ' 
+    '         Function: GetChildProjects, GetProject, GetProjectFullPath, GetRootProjects, GetTypeGuid
+    '                   Load
+    ' 
+    '         Sub: Save, WriteProjectNode
+    ' 
+    '     Class SolutionConfiguration
+    ' 
+    '         Properties: Configuration, Name, Platform
+    ' 
+    '         Constructor: (+2 Overloads) Sub New
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

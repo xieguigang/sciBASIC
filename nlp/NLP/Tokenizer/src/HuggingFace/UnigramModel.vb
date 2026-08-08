@@ -1,4 +1,4 @@
-#Region "Microsoft.VisualBasic::HuggingFace/UnigramModel.vb"
+﻿#Region "Microsoft.VisualBasic::03bc5494726655937f14819528368c90, nlp\NLP\Tokenizer\src\HuggingFace\UnigramModel.vb"
 
     ' Author:
     ' 
@@ -31,10 +31,29 @@
 
     ' Summaries:
 
+
+    ' Code Statistics:
+
+    '   Total Lines: 267
+    '    Code Lines: 178 (66.67%)
+    ' Comment Lines: 36 (13.48%)
+    '    - Xml Docs: 80.56%
+    ' 
+    '   Blank Lines: 53 (19.85%)
+    '     File Size: 9.66 KB
+
+
     '     Class UnigramModel
     ' 
+    '         Properties: VocabSize
+    ' 
     '         Constructor: (+1 Overloads) Sub New
-    '         Function: Tokenize, TokenToId, IdToToken, Viterbi
+    '         Function: GetScore, IdToToken, Tokenize, TokenToId, Viterbi
+    '         Class TrieNode
+    ' 
+    ' 
+    ' 
+    ' 
     ' 
     ' 
     ' /********************************************************************************/

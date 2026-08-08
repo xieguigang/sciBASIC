@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ae4e0b095e558f4a20deba7078ee2251, Data\word2vec\VectorModel.vb"
+﻿#Region "Microsoft.VisualBasic::ae4e0b095e558f4a20deba7078ee2251, nlp\word2vec\VectorModel.vb"
 
     ' Author:
     ' 

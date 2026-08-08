@@ -1,65 +1,65 @@
-﻿#Region "Microsoft.VisualBasic::5e0fe7c4dad73634008c08bb528e8870, mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\XLSX\FileIO\LowLevel.vb"
+﻿#Region "Microsoft.VisualBasic::015e3470a1578f5a6ad7a545c6787266, mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\XLSX\FileIO\LowLevel.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 1601
-'    Code Lines: 1188 (74.20%)
-' Comment Lines: 316 (19.74%)
-'    - Xml Docs: 93.35%
-' 
-'   Blank Lines: 97 (6.06%)
-'     File Size: 86.04 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Class LowLevel
-' 
-'         Constructor: (+1 Overloads) Sub New
-' 
-'         Function: CalculatePaneHeight, CalculatePaneWidth, CreateAppPropertiesDocument, CreateAppString, CreateColsString
-'                   CreateCorePropertiesDocument, CreateCorePropertiesString, CreateMergedCellsString, CreateMruColorsString, CreateRowString
-'                   CreateSharedStringsDocument, CreateSheetProtectionString, CreateStyleBorderString, CreateStyleFillString, CreateStyleFontString
-'                   CreateStyleNumberFormatString, CreateStyleSheetDocument, CreateStyleXfsString, CreateWorkbookDocument, CreateWorksheetPart
-'                   EscapeXmlAttributeChars, EscapeXmlChars, GeneratePasswordHash, GetInternalColumnWidth, GetInternalPaneSplitHeight
-'                   GetInternalPaneSplitWidth, GetInternalRowHeight, GetOADateTimeString, GetOATimeString, GetSortedSheetData
-'                   HasPaneSplitting, NormalizeNewLines
-' 
-'         Sub: AppendSharedString, AppendXmlTag, AppendXmlToPackagePart, CreatePaneString, CreateRowsString
-'              CreateSheetViewString, CreateWorkbookProtectionString, Save, SaveAsStream, SaveAsStreamInternal
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 1610
+    '    Code Lines: 1189 (73.85%)
+    ' Comment Lines: 324 (20.12%)
+    '    - Xml Docs: 91.05%
+    ' 
+    '   Blank Lines: 97 (6.02%)
+    '     File Size: 86.06 KB
+
+
+    '     Class LowLevel
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
+    '         Function: CalculatePaneHeight, CalculatePaneWidth, CreateAppPropertiesDocument, CreateAppString, CreateColsString
+    '                   CreateCorePropertiesDocument, CreateCorePropertiesString, CreateMergedCellsString, CreateMruColorsString, CreateRowString
+    '                   CreateSharedStringsDocument, CreateSheetProtectionString, CreateStyleBorderString, CreateStyleFillString, CreateStyleFontString
+    '                   CreateStyleNumberFormatString, CreateStyleSheetDocument, CreateStyleXfsString, CreateWorkbookDocument, CreateWorksheetPart
+    '                   EscapeXmlAttributeChars, EscapeXmlChars, GeneratePasswordHash, GetInternalColumnWidth, GetInternalPaneSplitHeight
+    '                   GetInternalPaneSplitWidth, GetInternalRowHeight, GetOADateTimeString, GetOATimeString, GetSortedSheetData
+    '                   HasPaneSplitting, NormalizeNewLines
+    ' 
+    '         Sub: AppendSharedString, AppendXmlTag, AppendXmlToPackagePart, CreatePaneString, CreateRowsString
+    '              CreateSheetViewString, CreateWorkbookProtectionString, Save, SaveAsStream, SaveAsStreamInternal
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

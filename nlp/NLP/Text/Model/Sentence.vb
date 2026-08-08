@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::859cf26cf935f7c0da951fa76af2dcda, Data\Trinity\Model\Sentence.vb"
+﻿#Region "Microsoft.VisualBasic::ed25bf45fc0eb8ab68bec095da8ff652, nlp\NLP\Text\Model\Sentence.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 22 (16.42%)
-    '     File Size: 4.14 KB
+    '     File Size: 4.13 KB
 
 
     '     Class Sentence

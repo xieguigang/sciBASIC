@@ -1,4 +1,4 @@
-#Region "Microsoft.VisualBasic::HuggingFace/PostProcessors.vb"
+﻿#Region "Microsoft.VisualBasic::ae913ef63f2786b66342d1b0b33314c8, nlp\NLP\Tokenizer\src\HuggingFace\PostProcessors.vb"
 
     ' Author:
     ' 
@@ -31,8 +31,52 @@
 
     ' Summaries:
 
-    '     Class NullPostProcessor, ByteLevelPostProcessor, TemplatePostProcessor
-    '     Class BertPostProcessor, RobertaPostProcessor, SequencePostProcessor
+
+    ' Code Statistics:
+
+    '   Total Lines: 165
+    '    Code Lines: 94 (56.97%)
+    ' Comment Lines: 32 (19.39%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 39 (23.64%)
+    '     File Size: 6.17 KB
+
+
+    '     Class NullPostProcessor
+    ' 
+    '         Properties: Instance
+    ' 
+    '         Function: Process
+    ' 
+    '     Class ByteLevelPostProcessor
+    ' 
+    '         Function: Process
+    ' 
+    '     Class TemplatePostProcessor
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    '         Function: Process
+    '         Structure TemplatePiece
+    ' 
+    ' 
+    ' 
+    ' 
+    ' 
+    '     Class BertPostProcessor
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    '         Function: Process
+    ' 
+    '     Class RobertaPostProcessor
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    '         Function: Process
+    ' 
+    '     Class SequencePostProcessor
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    '         Function: Process
     ' 
     ' 
     ' /********************************************************************************/

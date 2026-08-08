@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0dda50e5aa9e2884c94b037fa8cce20a, Data_science\NLP\LDA\Debugger.vb"
+﻿#Region "Microsoft.VisualBasic::0dda50e5aa9e2884c94b037fa8cce20a, nlp\NLP\LDA\Debugger.vb"
 
     ' Author:
     ' 

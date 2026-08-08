@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3aa70d67c1d5e9aa85cd5c8f79fa13b6, tutorials\Marked\My Project\Application.Designer.vb"
+﻿#Region "Microsoft.VisualBasic::6fd5fa31618fd7d6c63067d3df1066c5, tutorials\Marked\My Project\Application.Designer.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 0.00%
     ' 
     '   Blank Lines: 7 (15.56%)
-    '     File Size: 1.93 KB
+    '     File Size: 1.92 KB
 
 
     '     Class MyApplication
@@ -101,4 +101,3 @@ Namespace My
         End Function
     End Class
 End Namespace
-

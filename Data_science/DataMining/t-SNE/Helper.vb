@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::036d324dfaecf8bfb223698502597b78, Data_science\MachineLearning\t-SNE\Helper.vb"
+﻿#Region "Microsoft.VisualBasic::036d324dfaecf8bfb223698502597b78, Data_science\DataMining\t-SNE\Helper.vb"
 
     ' Author:
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::58abf489d032d9c0d6a993bb5bef3c6c, Data\word2vec\TrainMethod.vb"
+﻿#Region "Microsoft.VisualBasic::58abf489d032d9c0d6a993bb5bef3c6c, nlp\word2vec\TrainMethod.vb"
 
     ' Author:
     ' 

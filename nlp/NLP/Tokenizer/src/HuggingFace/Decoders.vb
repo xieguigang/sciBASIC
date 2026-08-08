@@ -1,4 +1,4 @@
-#Region "Microsoft.VisualBasic::HuggingFace/Decoders.vb"
+﻿#Region "Microsoft.VisualBasic::a3964328e6d50a79370d724857bc0df0, nlp\NLP\Tokenizer\src\HuggingFace\Decoders.vb"
 
     ' Author:
     ' 
@@ -31,8 +31,60 @@
 
     ' Summaries:
 
-    '     Class NullDecoder, ByteLevelDecoder, WordPieceDecoder, MetaspaceDecoder
-    '     Class ReplaceDecoder, StripDecoder, FuseDecoder, ByteFallbackDecoder, SequenceDecoder
+
+    ' Code Statistics:
+
+    '   Total Lines: 283
+    '    Code Lines: 176 (62.19%)
+    ' Comment Lines: 40 (14.13%)
+    '    - Xml Docs: 92.50%
+    ' 
+    '   Blank Lines: 67 (23.67%)
+    '     File Size: 9.77 KB
+
+
+    '     Class NullDecoder
+    ' 
+    '         Properties: Instance
+    ' 
+    '         Function: Decode
+    ' 
+    '     Class ByteLevelDecoder
+    ' 
+    '         Function: Decode
+    ' 
+    '     Class WordPieceDecoder
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    '         Function: CleanUp, Decode
+    ' 
+    '     Class MetaspaceDecoder
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    '         Function: Decode
+    ' 
+    '     Class ReplaceDecoder
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    '         Function: Decode
+    ' 
+    '     Class StripDecoder
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    '         Function: Decode
+    ' 
+    '     Class FuseDecoder
+    ' 
+    '         Function: Decode
+    ' 
+    '     Class ByteFallbackDecoder
+    ' 
+    '         Function: Decode
+    ' 
+    '     Class SequenceDecoder
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    '         Function: Decode
     ' 
     ' 
     ' /********************************************************************************/

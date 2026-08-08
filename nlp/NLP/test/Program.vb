@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6ecc650e5a5c3e3cddf2aee702942407, Data_science\NLP\test\Program.vb"
+﻿#Region "Microsoft.VisualBasic::6ecc650e5a5c3e3cddf2aee702942407, nlp\NLP\test\Program.vb"
 
     ' Author:
     ' 

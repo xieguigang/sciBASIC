@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1f93735a29d102046e03b3eb29eeb5ba, mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\XLSX\FileIO\DynamicRow.vb"
+﻿#Region "Microsoft.VisualBasic::784dd814d0c43945346b3002afe7983b, mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\XLSX\FileIO\DynamicRow.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 35
-    '    Code Lines: 15 (42.86%)
-    ' Comment Lines: 15 (42.86%)
+    '   Total Lines: 27
+    '    Code Lines: 10 (37.04%)
+    ' Comment Lines: 12 (44.44%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 5 (14.29%)
-    '     File Size: 1.11 KB
+    '   Blank Lines: 5 (18.52%)
+    '     File Size: 860 B
 
 
     '     Class DynamicRow

@@ -1,4 +1,4 @@
-#Region "Microsoft.VisualBasic::HuggingFace/JsonReader.vb"
+﻿#Region "Microsoft.VisualBasic::af2973305a0b08c92be52382ad03eb21, nlp\NLP\Tokenizer\src\HuggingFace\JsonReader.vb"
 
     ' Author:
     ' 
@@ -31,13 +31,42 @@
 
     ' Summaries:
 
+
+    ' Code Statistics:
+
+    '   Total Lines: 478
+    '    Code Lines: 297 (62.13%)
+    ' Comment Lines: 96 (20.08%)
+    '    - Xml Docs: 87.50%
+    ' 
+    '   Blank Lines: 85 (17.78%)
+    '     File Size: 18.45 KB
+
+
+    '     Enum JsonNodeType
+    ' 
+    '         [Boolean], [Object], [String], Array, Null
+    '         Number
+    ' 
+    '  
+    ' 
+    ' 
+    ' 
     '     Class JsonNode
     ' 
-    '         Properties: Type, StringValue, NumberValue, BoolValue, Members, Items
+    '         Properties: BoolValue, IsNull, Items, Members, NumberValue
+    '                     StringValue, Type
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    '         Function: AsBoolean, AsDouble, AsInteger, AsString, NewArray
+    '                   NewBoolean, NewNumber, NewObject, NewString, ToString
     ' 
     '     Module JsonReader
     ' 
-    '         Function: Parse, ParseFile
+    '         Function: HexValue, Parse, ParseArray, ParseFile, ParseLiteral
+    '                   ParseNumber, ParseObject, ParseString, ParseValue
+    ' 
+    '         Sub: SkipWhitespace
     ' 
     ' 
     ' /********************************************************************************/

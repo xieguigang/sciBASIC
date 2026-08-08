@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3002503ff49cdbbf7d47832bad212cb4, Data\word2vec\Word2Vec.vb"
+﻿#Region "Microsoft.VisualBasic::3002503ff49cdbbf7d47832bad212cb4, nlp\word2vec\Word2Vec.vb"
 
     ' Author:
     ' 

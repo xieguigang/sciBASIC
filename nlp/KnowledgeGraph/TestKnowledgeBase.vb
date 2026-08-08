@@ -1,3 +1,58 @@
+﻿#Region "Microsoft.VisualBasic::bf2a59e1d2ddf2b78ac2104af9e4ca61, nlp\KnowledgeGraph\TestKnowledgeBase.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 250
+    '    Code Lines: 147 (58.80%)
+    ' Comment Lines: 81 (32.40%)
+    '    - Xml Docs: 11.11%
+    ' 
+    '   Blank Lines: 22 (8.80%)
+    '     File Size: 14.65 KB
+
+
+    ' Module TestKnowledgeBase
+    ' 
+    '     Function: BuildTestGraph
+    ' 
+    '     Sub: AddAttrs
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
 ' ============================================================================
 ' TestKnowledgeBase.vb - 测试知识库构建
 '
@@ -248,3 +303,4 @@ Public Module TestKnowledgeBase
     End Sub
 
 End Module
+

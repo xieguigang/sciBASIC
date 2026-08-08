@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9fc55aae6e0caf416f3aa455f6b0faf1, Data\Trinity\Model\Counter.vb"
+﻿#Region "Microsoft.VisualBasic::9fc55aae6e0caf416f3aa455f6b0faf1, nlp\NLP\Text\Model\Counter.vb"
 
     ' Author:
     ' 

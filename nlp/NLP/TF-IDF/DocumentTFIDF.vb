@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c6c0849c19d91412ce689407eae38998, Data_science\NLP\TF-IDF\DocumentTFIDF.vb"
+﻿#Region "Microsoft.VisualBasic::c6c0849c19d91412ce689407eae38998, nlp\NLP\TF-IDF\DocumentTFIDF.vb"
 
     ' Author:
     ' 

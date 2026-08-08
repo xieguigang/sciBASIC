@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::035202c86624cde24293ec282f0bcfa8, mime\text%markdown\MarkdownRender.vb"
+﻿#Region "Microsoft.VisualBasic::45f3b2bffcc3294807f854490080e1cd, mime\text%markdown\MarkdownRender.vb"
 
     ' Author:
     ' 
@@ -111,4 +111,3 @@ Public Class MarkdownRender
         Next
     End Function
 End Class
-

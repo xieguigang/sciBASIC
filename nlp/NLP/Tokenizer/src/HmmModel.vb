@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e3b74aaf8f60b471d2a0dd712229552b, Data_science\NLP\Tokenizer\src\HmmModel.vb"
+﻿#Region "Microsoft.VisualBasic::d6067abfb10d96e10d8f73635832ea8b, nlp\NLP\Tokenizer\src\HmmModel.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 62.50%
     ' 
     '   Blank Lines: 34 (12.69%)
-    '     File Size: 11.34 KB
+    '     File Size: 11.61 KB
 
 
     '     Class HmmModel

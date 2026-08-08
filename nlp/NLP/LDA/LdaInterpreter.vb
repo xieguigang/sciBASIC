@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bcd17124a96368ad0c277cf77d5ad11d, Data_science\NLP\LDA\LdaInterpreter.vb"
+﻿#Region "Microsoft.VisualBasic::bcd17124a96368ad0c277cf77d5ad11d, nlp\NLP\LDA\LdaInterpreter.vb"
 
     ' Author:
     ' 

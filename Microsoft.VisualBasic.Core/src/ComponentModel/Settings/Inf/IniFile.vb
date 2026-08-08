@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::66ee5b1146dd8fa2d9872b5d5762aafd, Microsoft.VisualBasic.Core\src\ComponentModel\Settings\Inf\IniFile.vb"
+﻿#Region "Microsoft.VisualBasic::35b016d48388319643c4670362ad92a7, Microsoft.VisualBasic.Core\src\ComponentModel\Settings\Inf\IniFile.vb"
 
     ' Author:
     ' 
@@ -34,18 +34,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 165
-    '    Code Lines: 105 (63.64%)
-    ' Comment Lines: 36 (21.82%)
-    '    - Xml Docs: 52.78%
+    '   Total Lines: 175
+    '    Code Lines: 110 (62.86%)
+    ' Comment Lines: 40 (22.86%)
+    '    - Xml Docs: 57.50%
     ' 
-    '   Blank Lines: 24 (14.55%)
-    '     File Size: 6.12 KB
+    '   Blank Lines: 25 (14.29%)
+    '     File Size: 6.45 KB
 
 
     '     Class IniFile
     ' 
-    '         Properties: comments, FileExists, path
+    '         Properties: comments, FileExists, path, SectionNames
     ' 
     '         Constructor: (+1 Overloads) Sub New
     ' 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a4085abf5e9039c4dbb02b07b3ca0d50, Data\Trinity\Model\Paragraph.vb"
+﻿#Region "Microsoft.VisualBasic::a4085abf5e9039c4dbb02b07b3ca0d50, nlp\NLP\Text\Model\Paragraph.vb"
 
     ' Author:
     ' 

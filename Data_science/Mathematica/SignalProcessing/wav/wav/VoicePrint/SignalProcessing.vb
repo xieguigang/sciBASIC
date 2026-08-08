@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e8cacae08d5d88d577961faccfb38b85, Data_science\Mathematica\SignalProcessing\wav\wav\VoicePrint\SignalProcessing.vb"
+﻿#Region "Microsoft.VisualBasic::12aa7c713fb0e88d921a05962aebfa21, Data_science\Mathematica\SignalProcessing\wav\wav\VoicePrint\SignalProcessing.vb"
 
     ' Author:
     ' 
@@ -473,4 +473,3 @@ Public Class MelFilterbank
     End Function
 
 End Class
-

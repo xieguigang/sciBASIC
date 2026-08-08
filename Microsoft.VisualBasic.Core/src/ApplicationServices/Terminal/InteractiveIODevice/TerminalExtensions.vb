@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4ad1fccf9461fe862e3256ae7bdb890b, Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\InteractiveIODevice\TerminalExtensions.vb"
+﻿#Region "Microsoft.VisualBasic::67775cf33dedf77cead475cef61664fa, Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\InteractiveIODevice\TerminalExtensions.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 16 (16.33%)
-    '     File Size: 3.60 KB
+    '     File Size: 3.61 KB
 
 
     '     Module TerminalEvents

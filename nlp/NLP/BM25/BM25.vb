@@ -1,3 +1,65 @@
+﻿#Region "Microsoft.VisualBasic::da102b8b05276a0bf67841615b2d735d, nlp\NLP\BM25\BM25.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 530
+    '    Code Lines: 291 (54.91%)
+    ' Comment Lines: 159 (30.00%)
+    '    - Xml Docs: 59.12%
+    ' 
+    '   Blank Lines: 80 (15.09%)
+    '     File Size: 20.01 KB
+
+
+    '     Class BM25Engine
+    ' 
+    '         Properties: AverageDocumentLength, B, DocumentCount, IdfMode, K1
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
+    '         Function: ComputeIdf, GetDocumentFrequency, GetDocumentLength, GetDocumentLengths, GetDocumentText
+    '                   GetIdf, GetStatistics, GetTermFrequency, GetVocabulary, ScoreDocument
+    '                   (+3 Overloads) Search, SimpleTokenizer
+    ' 
+    '         Sub: (+2 Overloads) AddDocument, (+2 Overloads) AddDocuments, BuildIndex, Clear, RefreshIdf
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
 Imports System.Text
 Imports std = System.Math
 
@@ -528,3 +590,4 @@ Namespace BM25
     End Class
 
 End Namespace
+

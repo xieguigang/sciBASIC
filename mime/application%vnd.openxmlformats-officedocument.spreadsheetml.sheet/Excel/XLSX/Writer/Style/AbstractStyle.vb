@@ -1,4 +1,62 @@
-﻿Imports System.Reflection
+﻿#Region "Microsoft.VisualBasic::475aeb431ada1d3d996b3ec0739a2b88, mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\XLSX\Writer\Style\AbstractStyle.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 108
+    '    Code Lines: 60 (55.56%)
+    ' Comment Lines: 38 (35.19%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 10 (9.26%)
+    '     File Size: 5.41 KB
+
+
+    '     Class AbstractStyle
+    ' 
+    '         Properties: InternalID
+    ' 
+    '         Function: CompareTo, Equals, HandleProperties
+    ' 
+    '         Sub: AddPropertyAsJson, CopyProperties
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+Imports System.Reflection
 Imports System.Text
 
 Namespace XLSX.Writer.Styling

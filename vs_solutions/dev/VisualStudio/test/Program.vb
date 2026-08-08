@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5777ff12b200dd6b2add34b45219f31a, vs_solutions\dev\VisualStudio\test\Program.vb"
+﻿#Region "Microsoft.VisualBasic::63f33d5b06507527a70a1afd574c483f, vs_solutions\dev\VisualStudio\test\Program.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 0.00%
     ' 
     '   Blank Lines: 1 (16.67%)
-    '     File Size: 87 B
+    '     File Size: 85 B
 
 
     ' Module Program
@@ -57,4 +57,3 @@ Module Program
         Call gitTest.Run()
     End Sub
 End Module
-
