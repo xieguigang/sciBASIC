@@ -3,6 +3,9 @@
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <RootNamespace>test</RootNamespace>
+    <!-- there are several Main entry points inside this test project, so the
+         startup object has to be specified explicitly. -->
+    <StartupObject>test.HFTokenizerTest</StartupObject>
     <TargetFramework>net10.0</TargetFramework>
     <Platforms>AnyCPU;x64</Platforms>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
