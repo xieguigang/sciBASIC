@@ -205,6 +205,29 @@ Namespace ChineseTokenizer.HuggingFace
         End Function
 
         ''' <summary>
+        ''' 直接从 json 文本中加载分词器。
+        ''' </summary>
+        ''' <param name="tokenizerJsonText">tokenizer.json 的文本内容。</param>
+        ''' <param name="tokenizerConfigJsonText">
+        ''' tokenizer_config.json 的文本内容，为空时使用缺省配置。
+        ''' </param>
+        ''' <remarks>
+        ''' 适用于模型数据以嵌入资源等形式随程序集一同分发的场景。
+        ''' </remarks>
+        Public Shared Function FromJson(tokenizerJsonText As String,
+                                        Optional tokenizerConfigJsonText As String = Nothing) As HuggingFaceTokenizer
+
+            Dim json As TokenizerJson = TokenizerJson.FromJson(JsonReader.Parse(tokenizerJsonText))
+            Dim config As TokenizerConfig = If(
+                String.IsNullOrEmpty(tokenizerConfigJsonText),
+                TokenizerConfig.Default(),
+                TokenizerConfig.FromJson(JsonReader.Parse(tokenizerConfigJsonText))
+            )
+
+            Return New HuggingFaceTokenizer(json, config)
+        End Function
+
+        ''' <summary>
         ''' 对文本进行编码。
         ''' </summary>
         ''' <param name="text">待编码的文本。</param>

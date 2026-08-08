@@ -291,7 +291,7 @@ Namespace ChineseTokenizer.HuggingFace
     ''' </summary>
     ''' <remarks>
     ''' <para>
-    ''' <paramref name="useRegex"/> 为真时会先套用 GPT-2 的经典切分正则，
+    ''' "useRegex" 为真时会先套用 GPT-2 的经典切分正则，
     ''' DeepSeek 的模型把它设置为 <c>false</c>，因为其上游已经串联了三个自定义的
     ''' <c>Split</c> 预分词器。
     ''' </para>

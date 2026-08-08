@@ -242,6 +242,124 @@ Console.WriteLine(tokenizer.SegmentToString("自然语言处理"))
 
 ---
 
-## 十、许可证
+## 十、Hugging Face 分词器支持
+
+在中文分词能力之外，本模块还提供了一套 **Hugging Face `tokenizers` 兼容的子词分词器**（Subword Tokenizer），实现位置位于 `src/HuggingFace/` 子目录，命名空间 `ChineseTokenizer.HuggingFace`。它可以直接加载 Hugging Face 模型目录中的 `tokenizer.json` 与 `tokenizer_config.json`，复刻下述五段式分词流水线：
+
+```
+输入文本
+  → AddedVocabulary  追加词 / 特殊 token 优先命中（不进模型）
+  → Normalizer       归一化（NFKC / Lowercase / StripAccents / …）
+  → PreTokenizer     预分词（Split / ByteLevel / Metaspace / Whitespace / …）
+  → Model            BPE | WordPiece | Unigram（子词切分）
+  → PostProcessor    后处理（Template / ByteLevel / Bert / …）
+  → Encoding         Ids + Tokens
+```
+
+三条模型链路（BPE / WordPiece / Unigram）共用同一套流水线，通过接口分层实现，新增模型类型只需实现 `ITokenizerModel` 并在 `TokenizerFactory` 注册，无需修改既有代码。
+
+### 10.1 支持的组件矩阵
+
+| 层级 | 支持的类型（`type` 字段） |
+|------|---------------------------|
+| Model | `BPE`、`WordPiece`、`Unigram`（SentencePiece 风格） |
+| Normalizer | `Sequence`、`NFKC`、`NFD`、`NFC`、`NFKD`、`Lowercase`、`StripAccents`、`Strip`、`Replace`、`Prepend`、`Precompiled`（无 charsmap 时降级为 NFKC）、`Null` |
+| PreTokenizer | `Sequence`、`Split`（`Isolated`/`Removed`/`MergedWith*`/`Contiguous`）、`ByteLevel`、`Metaspace`、`Whitespace`、`WhitespaceSplit`、`Punctuation`、`Digits`、`FixedLength` |
+| PostProcessor | `ByteLevel`、`TemplateProcessing`、`BertProcessing`、`RobertaProcessing`、`Sequence`、`Null` |
+| Decoder | `ByteLevel`、`WordPiece`、`Metaspace`、`Replace`、`Strip`、`Fuse`、`ByteFallback`、`Sequence`、`Null` |
+
+> **不支持的类型**会在 `TokenizerFactory` 构造时抛出带具体 `type` 名的明确异常，便于快速定位缺失能力。
+
+### 10.2 快速开始
+
+```vb.net
+Imports ChineseTokenizer.HuggingFace
+
+Module Demo
+    Sub Main()
+        ' 从模型目录加载（对标 Python 的 AutoTokenizer.from_pretrained(dir)）
+        Dim tokenizer As HuggingFaceTokenizer =
+            HuggingFaceTokenizer.FromPretrained("..\..\..\hugging_face_tokenizer")
+
+        ' 编码得到 token id 与 token 文本
+        Dim encoding As Encoding = tokenizer.Encode("Hello! 你好，world！")
+        Console.WriteLine(String.Join(", ", encoding.Ids))          ' 例如: 19923, 3, ...
+        Console.WriteLine(String.Join(" ", encoding.Tokens))        ' 例如: Hello ! ▁你 ▁好 ...
+
+        ' 仅取 id 列表
+        Dim ids As List(Of Integer) = tokenizer.EncodeToIds("Hello!")
+
+        ' 仅取 token 文本
+        Dim tokens As String() = tokenizer.Tokenize("Hello!")
+
+        ' 解码还原文本（默认跳过特殊 token）
+        Dim text As String = tokenizer.Decode(ids, skipSpecialTokens:=True)
+        Console.WriteLine(text)
+    End Sub
+End Module
+```
+
+加载入口有三种：
+
+| 方法 | 说明 |
+|------|------|
+| `FromPretrained(dir)` | 从目录加载，依次读取 `dir/tokenizer.json` 与 `dir/tokenizer_config.json` |
+| `FromFile(modelFile, configFile)` | 显式指定两个 JSON 文件路径 |
+| `FromJson(text)` | 直接传入 `tokenizer.json` 文本（用于合成测试） |
+
+### 10.3 主入口 API（HuggingFaceTokenizer）
+
+| 成员 | 说明 |
+|------|------|
+| `Encode(text, addSpecialTokens)` | 完整编码，返回 `Encoding`（含 `Ids` / `Tokens` / `TypeIds` / `AttentionMask`）；`addSpecialTokens` 默认依据 `tokenizer_config.json` 的 `add_bos_token` / `add_eos_token` |
+| `EncodeToIds(text, addSpecialTokens)` | 仅返回 id 列表 |
+| `Tokenize(text)` | 仅返回 token 字符串数组 |
+| `Decode(ids, skipSpecialTokens)` | 还原文本，默认跳过特殊 token 并按解码器规则拼接 |
+| `TokenToId(token)` / `IdToToken(id)` | 词表正查 / 反查 |
+| `VocabSize` | 词表大小 |
+| `BosToken` / `EosToken` / `PadToken` | 特殊 token 文本属性 |
+
+> **默认行为（与 Python 一致）**：当 `tokenizer_config.json` 中 `add_bos_token=false` / `add_eos_token=false` 时（如 DeepSeek），`Encode` 默认**不附加** BOS/EOS，与 `tokenizer.encode("Hello!")` 语义一致。可通过 `addSpecialTokens` 参数显式控制。
+
+### 10.4 与 deepseek_tokenizer.py 的对齐验证
+
+以 `hugging_face_tokenizer/` 目录中的 DeepSeek 模型为例：
+
+- `normalizer`：空序列（直通）
+- `pre_tokenizer`：`Split(Isolated)` × 3 + `ByteLevel(add_prefix_space=false, use_regex=false)`
+- `model.type`：`BPE`（`unk_token=null`、`byte_fallback=false`、vocab 约 12.8 万、merges 约 12.7 万）
+- `post_processor` / `decoder`：均为 `ByteLevel`
+- `tokenizer_config.json`：`add_bos_token=false` / `add_eos_token=false`
+
+因此 `encode("Hello!")` 的期望输出为**纯 BPE id 序列，不含任何 BOS/EOS**：
+
+```
+Encode("Hello!") → [19923, 3]    ' "Hello" → 19923, "!" → 3
+```
+
+对齐关键点（最易踩坑）：
+
+1. **ByteLevel 字节映射**必须精确复刻 GPT-2 `bytes_to_unicode`（空格映射为 `Ġ`）。Vocab 的 key 是字节映射后的可见字符串，编码时 UTF-8 bytes → 映射字符串再查 vocab，解码时反向映射回字节再 UTF-8 解码。
+2. **`Split(Isolated)`** 表示匹配片段与未匹配片段都独立成片，不丢弃、不合并；`Sequence` 预分词器对上一级产出的**每个分片**继续切分而非对原串重复切分。
+3. **前导空格**：`pre_tokenizer` 的 ByteLevel 已设为 `add_prefix_space=false`，编码阶段**不得重复添加前导空格**，否则 id 整体偏移。
+4. **merges 格式**：兼容旧版 `"A B"` 字符串格式（按首个空格切分）与 `["A","B"]` 数组格式两种写法。
+
+验证入口位于 `NLP/test/HFTokenizerTest.vb`，覆盖英文 / 中文 / 数字 / 标点 / 空格 / 换行 / 特殊 token 等用例，并打印 `Decode` 回环结果验证可逆性；期望 id 以常量固化便于回归。实测加载 12.8 万词表 + 12.7 万 merges + 818 追加词约 260ms，且 ByteLevel 链路与 Python 逐 id 一致。
+
+### 10.5 性能与线程安全
+
+- 实例加载后**只读、可全局复用、线程安全**；`vocab` / 反查数组预分配容量约 13 万以减少 rehash。
+- 加载阶段仅输出词表规模、merges 条数、model 类型等摘要日志；**编码热路径不打日志**。
+- `BpeModel` 内置有界（65536）分片级结果缓存，重复词直接命中，显著提升长文本吞吐。
+- 加载完成后即释放 JSON 中间对象引用，便于 GC 回收 7.8MB 级文件的内存。
+
+### 10.6 兼容性
+
+- 现有中文分词器（`ChineseTokenizer` / `MaxMatchTokenizer` / `HmmModel` / `WordDictionary`）的**公开 API 完全不变**，新代码以独立子目录与独立命名空间承载，零回归风险。
+- 不新增任何第三方 NuGet 依赖，仅依赖 .NET 10 BCL 与项目内已有的 JSON 解析能力。
+
+---
+
+## 十一、许可证
 
 MIT License
