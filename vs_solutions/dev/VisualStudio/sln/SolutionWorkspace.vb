@@ -1,4 +1,5 @@
 ﻿Imports Microsoft.VisualBasic.ApplicationServices.Development.VisualStudio.sln.File
+Imports Microsoft.VisualBasic.ApplicationServices.Development.VisualStudio.VBProj
 
 Namespace sln
 
@@ -12,8 +13,11 @@ Namespace sln
 
         Public ReadOnly Property Sln As Solution
 
+        Dim _VbProjs As VBProject()
+
         Sub New(sln As Solution)
             _Sln = sln
+            _VbProjs = sln.Projects.Select(Function(p) VBProject.Load(p.FullPath)).ToArray
         End Sub
 
         Public Overrides Function ToString() As String
@@ -21,7 +25,7 @@ Namespace sln
         End Function
 
         Public Iterator Function GetCompileFiles() As IEnumerable(Of String) Implements IProjectWorkspace.GetCompileFiles
-            For Each proj As Project In Sln.Projects
+            For Each proj As VBProject In _VbProjs
                 For Each file As String In DirectCast(proj, IProjectWorkspace).GetCompileFiles
                     Yield file
                 Next

@@ -189,6 +189,10 @@ Namespace sln
             Return children
         End Function
 
+        Public Function LoadWorkspace() As SolutionWorkspace
+            Return New SolutionWorkspace(Me)
+        End Function
+
         Public Shared Function Load(sln As String) As Solution
             Return Parser.Parse(path:=sln)
         End Function
