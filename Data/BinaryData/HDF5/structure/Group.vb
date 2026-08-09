@@ -170,6 +170,8 @@ Namespace struct
 
                 Call objects.Add(dobj)
             Next
+
+            Console.Error.WriteLine("[GB readGroup] btreeEntries=" & btree.symbolTableEntries.Count & " objects=" & objects.Count)
         End Sub
 
         Public Overrides Function ToString() As String

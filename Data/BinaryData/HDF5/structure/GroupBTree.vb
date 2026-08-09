@@ -99,8 +99,7 @@ Namespace struct
                 Try
                     node = New GroupNode(sb, e.targetAddress)
                     symbolTableEntries.AddRange(node.symbols)
-                Catch ex As Exception
-                    Console.Error.WriteLine("[DEBUG GroupBTree] 节点 " & e.targetAddress & " 解析失败: " & ex.GetType().Name & ": " & ex.Message)
+                Catch
                     ' 个别条目无法解析为符号表节点时跳过，保证整体遍历不中断
                 End Try
             Next
@@ -115,20 +114,16 @@ Namespace struct
                 Throw New IOException("signature is not valid")
             End If
 
-            ' 布局无关地扫描整个 B 树节点：HDF5 v1 B 树节点的条目起始偏移
-            ' 在不同文件/节点类型下并不固定（内部节点与叶子节点的条目结构不同，
-            ' 且节点头长度也会随 sizeOfKey/sizeOfValue 变化）。因此不依赖固定偏移，
-            ' 而是扫描节点体中的所有 8 字节对齐值，挑出真正指向 TREE/SNOD 节点的地址，
-            ' 去重后收集（SNOD）或递归（TREE），从而避免错位的条目解析。
+            ' 布局无关地扫描整个 B 树节点体：HDF5 v1 B 树节点的条目并不严格按 8 字节
+            ' 对齐（节点头长度为 26~28 字节，子节点指针的实际偏移随节点类型而变），
+            ' 因此不能依赖固定偏移或 8 字节步进。这里以 4 字节为步长扫描节点体，
+            ' 把每个 8 字节小端值当作候选地址，仅保留真正指向 TREE/SNOD 节点的地址，
+            ' 去重后收集（SNOD）或递归（TREE），从而兼容各种对齐方式。
             Dim soo As Integer = sb.sizeOfOffsets
             Dim raw = [in].readBytes(8192).ToArray()
             Dim seen As New HashSet(Of Long)()
-            Dim dbgSnod As Integer = 0
-            Dim dbgTree As Integer = 0
-            Dim dbgCandidates As Integer = 0
-            Dim dbgFirst As Long = -1
 
-            For i = 0 To raw.Length - soo Step soo
+            For i = 0 To raw.Length - soo Step 4
                 ' HDF5 文件偏移量以小端序存储，按小端拼接候选地址
                 Dim candidate As Long = 0
                 For j = 0 To soo - 1
@@ -139,9 +134,6 @@ Namespace struct
                 If candidate <= 96 OrElse candidate >= &H700000000L Then
                     Continue For
                 End If
-
-                dbgCandidates += 1
-                If dbgFirst < 0 Then dbgFirst = candidate
 
                 If seen.Contains(candidate) Then
                     Continue For
@@ -156,30 +148,14 @@ Namespace struct
 
                 seen.Add(candidate)
 
-                If address = 136 Then
-                    Console.Error.WriteLine("[DEBUG GB@136] cand=" & candidate & " sig=[" & sig & "]")
-                End If
-
                 If sig = signature Then
                     ' 子 B 树节点：递归
-                    dbgTree += 1
                     readAllEntries(sb, candidate, entryList)
                 ElseIf sig = "SNOD" Then
                     ' 符号表节点：直接以该地址作为目标地址加入
-                    dbgSnod += 1
                     entryList.Add(New BTreeEntry(candidate))
                 End If
             Next
-
-            Dim dbgLen As Integer = If(raw.Length < 256, raw.Length, 256)
-            If address <> 136 Then dbgLen = 0
-            Dim dbgHex As New System.Text.StringBuilder()
-            For k = 0 To dbgLen - 1 Step 1
-                dbgHex.Append(raw(k).ToString("X2"))
-                If (k + 1) Mod 4 = 0 Then dbgHex.Append(" ")
-            Next
-            Console.Error.WriteLine("[DEBUG GroupBTree] 节点 " & address & " 前64字节: " & dbgHex.ToString())
-            Console.Error.WriteLine("[DEBUG GroupBTree] 节点 " & address & " 扫描完成: 候选=" & dbgCandidates & " TREE=" & dbgTree & " SNOD=" & dbgSnod & " 首个候选=" & dbgFirst & " 累计entryList=" & entryList.Count)
         End Sub
 
         Protected Friend Overrides Sub printValues(console As TextWriter)
