@@ -64,9 +64,6 @@
 
 #End Region
 
-Imports System.ComponentModel
-Imports System.Text
-Imports System.Xml
 Imports Microsoft.VisualBasic.ApplicationServices.Development.VisualStudio.sln.File
 
 Namespace sln
@@ -208,124 +205,12 @@ Namespace sln
 
             If String.IsNullOrEmpty(target) Then
                 Throw New ArgumentNullException(NameOf(path), "A target path must be supplied (FilePath is empty).")
-            End If
-
-            FilePath = target
-            IsXmlFormat = True
-
-            Dim doc As New XmlDocument()
-            doc.AppendChild(doc.CreateXmlDeclaration("1.0", "utf-8", Nothing))
-
-            Dim root As XmlElement = doc.CreateElement("Solution")
-            doc.AppendChild(root)
-
-            If Not String.IsNullOrEmpty(FormatVersion) Then
-                root.SetAttribute("Version", FormatVersion)
-            End If
-
-            If Not String.IsNullOrEmpty(VisualStudioVersion) Then
-                root.SetAttribute("VisualStudioVersion", VisualStudioVersion)
-            End If
-
-            If Not String.IsNullOrEmpty(MinimumVisualStudioVersion) Then
-                root.SetAttribute("MinimumVisualStudioVersion", MinimumVisualStudioVersion)
-            End If
-
-            If Not String.IsNullOrEmpty([Global].SolutionGuid) Then
-                root.SetAttribute("Id", [Global].SolutionGuid)
-            End If
-
-            ' Emit project tree recursively from roots down.
-            For Each root_p In GetRootProjects()
-                WriteProjectNode(root, root_p, doc)
-            Next
-
-            ' Solution level configurations.
-            For Each cfg In Configurations
-                Dim cfgEl As XmlElement = doc.CreateElement("Configuration")
-                cfgEl.SetAttribute("Name", cfg.Name)
-                root.AppendChild(cfgEl)
-            Next
-
-            ' Remaining global properties (skip SolutionGuid, already on root).
-            For Each kv In [Global].Properties
-                If String.Equals(kv.Key, "SolutionGuid", StringComparison.OrdinalIgnoreCase) Then
-                    Continue For
-                End If
-
-                ' Configuration_* entries are produced by the parser's round-trip,
-                ' not genuine global properties, so they are skipped on save.
-                If kv.Key.StartsWith("Configuration_", StringComparison.OrdinalIgnoreCase) Then
-                    Continue For
-                End If
-
-                Dim propEl As XmlElement = doc.CreateElement("Property")
-                propEl.SetAttribute("Name", kv.Key)
-                propEl.SetAttribute("Value", kv.Value)
-                root.AppendChild(propEl)
-            Next
-
-            IO.Directory.CreateDirectory(IO.Path.GetDirectoryName(IO.Path.GetFullPath(target)))
-
-            Using writer As New XmlTextWriter(target, New UTF8Encoding(encoderShouldEmitUTF8Identifier:=True))
-                writer.Formatting = Formatting.Indented
-                writer.Indentation = 2
-                doc.WriteTo(writer)
-            End Using
-        End Sub
-
-        ''' <summary>
-        ''' Recursively write a project / folder node and its children into the
-        ''' slnx XML tree. Folders become ``&lt;Folder&gt;`` elements, projects
-        ''' become ``&lt;Project&gt;`` elements.
-        ''' </summary>
-        Private Sub WriteProjectNode(parent As XmlNode, p As Project, doc As XmlDocument)
-            Dim el As XmlElement
-
-            If p.IsFolder Then
-                el = doc.CreateElement("Folder")
-                el.SetAttribute("Name", If(p.Name, ""))
-
-                If Not String.IsNullOrEmpty(p.Guid) Then
-                    el.SetAttribute("Guid", p.Guid)
-                End If
             Else
-                el = doc.CreateElement("Project")
-                el.SetAttribute("Path", If(p.RelativePath, ""))
-                el.SetAttribute("Name", If(p.Name, ""))
+                FilePath = target
+                IsXmlFormat = True
 
-                If Not String.IsNullOrEmpty(p.Guid) Then
-                    el.SetAttribute("Guid", p.Guid)
-                End If
-
-                If Not String.IsNullOrEmpty(p.TypeGuid) Then
-                    el.SetAttribute("Type", p.TypeGuid)
-                ElseIf p.NodeType <> TypeId.Unknown Then
-                    el.SetAttribute("Type", GetTypeGuid(p.NodeType))
-                End If
+                Call Me.SaveSlnx(target)
             End If
-
-            parent.AppendChild(el)
-
-            ' Recurse into children so hierarchy is preserved as nesting.
-            For Each child In GetChildProjects(p.Guid)
-                WriteProjectNode(el, child, doc)
-            Next
         End Sub
-
-        ''' <summary>
-        ''' Resolve the project type GUID for an enum value via its
-        ''' <see cref="DescriptionAttribute"/> (inverse of <c>Parser.ResolveType</c>).
-        ''' </summary>
-        Private Function GetTypeGuid(type As TypeId) As String
-            Dim field = GetType(TypeId).GetField(type.ToString())
-            Dim attr = CType(Attribute.GetCustomAttribute(field, GetType(DescriptionAttribute)), DescriptionAttribute)
-
-            If attr IsNot Nothing Then
-                Return attr.Description
-            End If
-
-            Return String.Empty
-        End Function
     End Class
 End Namespace
