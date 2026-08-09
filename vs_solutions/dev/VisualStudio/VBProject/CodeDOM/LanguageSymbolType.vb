@@ -201,6 +201,10 @@ Namespace VBProj.CodeDOM
             End Get
         End Property
 
+        Public Function ToArray() As Source()
+            Return SourceLocations.ToArray()
+        End Function
+
         Public Sub Add(loc As Source)
             Call SourceLocations.Add(loc)
         End Sub

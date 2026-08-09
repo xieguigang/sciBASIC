@@ -198,6 +198,45 @@ End Namespace
         Dim en = CType(cls.InternalNested("InnerEnum"), EnumSymbol)
         Assert(en IsNot Nothing AndAlso en.Type = SymbolType.[Enum], "nested enum", failures)
         Assert(en.EnumBaseType IsNot Nothing AndAlso en.EnumBaseType.fullName = "Byte", "enum base Byte", failures)
+
+        ' ----- source location (IntRange) recording -----
+        ' Note: VBParser.Parse(src) has no file path, so Source.FilePath is empty
+        ' here; we only assert the recorded line ranges (1-based).
+        Assert(ns.Source IsNot Nothing, "namespace has source location", failures)
+        Assert(ns.Source.LineRange.Min = 99 AndAlso ns.Source.LineRange.Max = 136, "namespace line range 99-136", failures)
+        Assert(ns.Source.DeclarationLine = 100, "namespace declaration line 100", failures)
+
+        Assert(cls.Source IsNot Nothing, "class has source location", failures)
+        ' leading line includes the xml doc comment on line 105
+        Assert(cls.Source.LineRange.Min = 105 AndAlso cls.Source.LineRange.Max = 134, "class line range 105-134", failures)
+        Assert(cls.Source.DeclarationLine = 107, "class declaration line 107", failures)
+
+        Assert(prop.Source IsNot Nothing AndAlso prop.Source.LineRange.Min = 111 AndAlso prop.Source.LineRange.Max = 111, "auto-property Name single line 111", failures)
+        Assert(ctor.Source IsNot Nothing AndAlso ctor.Source.LineRange.Min = 114 AndAlso ctor.Source.LineRange.Max = 116, "Sub New 114-116", failures)
+        Assert(fn.Source IsNot Nothing AndAlso fn.Source.LineRange.Min = 118 AndAlso fn.Source.LineRange.Max = 124, "Compute 118-124 (line continuation)", failures)
+        Assert(fn.Source.DeclarationLine = 118, "Compute declaration line 118", failures)
+        Assert(del.Source IsNot Nothing AndAlso del.Source.LineRange.Min = 102 AndAlso del.Source.LineRange.Max = 103, "delegate 102-103", failures)
+        Assert(en.Source IsNot Nothing AndAlso en.Source.LineRange.Min = 130 AndAlso en.Source.LineRange.Max = 133, "enum 130-133", failures)
+
+        ' partial class merge: two partial declarations of the same class in one
+        ' source must produce a single symbol with IsMultiplePartial = True and
+        ' two recorded locations.
+        Dim partialSrc As String = "
+Partial Public Class Split
+    Public A As Integer
+End Class
+
+''' <summary>second part</summary>
+Partial Public Class Split
+    Public B As String
+End Class
+"
+        Dim proot As TypeContainerSymbol = VBParser.Parse(partialSrc)
+        Dim splitCls = CType(proot.InternalNested("Split"), TypeContainerSymbol)
+        Assert(splitCls IsNot Nothing, "partial class Split parsed", failures)
+        Assert(splitCls.Source IsNot Nothing AndAlso splitCls.Source.IsMultiplePartial, "partial class IsMultiplePartial", failures)
+        Assert(splitCls.Source.Count = 2, "partial class recorded 2 locations", failures)
+        Assert(splitCls.Members IsNot Nothing AndAlso splitCls.Members.ContainsKey("A") AndAlso splitCls.Members.ContainsKey("B"), "partial members merged A+B", failures)
     End Sub
 
     Sub TestProject()

@@ -294,6 +294,60 @@ Namespace VBProj
             Return proj
         End Function
 
+        ' walk the whole symbol tree and fill the absolute file path into every
+        ' recorded source location (the parser only records line ranges). A
+        ' HashSet of visited symbols guards against shared nodes produced by
+        ' partial-type merging.
+        Private Shared Sub FillSourceFilePath(sym As LanguageSymbolType, filePath As String)
+            If sym Is Nothing Then
+                Return
+            End If
+
+            Dim visited As New Generic.HashSet(Of LanguageSymbolType)
+            WalkSymbol(sym, filePath, visited)
+        End Sub
+
+        Private Shared Sub WalkSymbol(sym As LanguageSymbolType, filePath As String, visited As Generic.HashSet(Of LanguageSymbolType))
+            If sym Is Nothing OrElse visited.Contains(sym) Then
+                Return
+            End If
+            visited.Add(sym)
+
+            If sym.Source IsNot Nothing Then
+                For Each loc As Source In sym.Source
+                    If String.IsNullOrEmpty(loc.FilePath) Then
+                        loc.FilePath = filePath
+                    End If
+                Next
+            End If
+
+            If TypeOf sym Is TypeContainerSymbol Then
+                Dim ct As TypeContainerSymbol = DirectCast(sym, TypeContainerSymbol)
+
+                If ct.InternalNested IsNot Nothing Then
+                    For Each kv In ct.InternalNested
+                        WalkSymbol(kv.Value, filePath, visited)
+                    Next
+                End If
+
+                If ct.Members IsNot Nothing Then
+                    For Each kv In ct.Members
+                        WalkSymbol(kv.Value, filePath, visited)
+                    Next
+                End If
+            End If
+
+            If TypeOf sym Is CallableMemberSymbol Then
+                Dim cm As CallableMemberSymbol = DirectCast(sym, CallableMemberSymbol)
+
+                If cm.Locals IsNot Nothing Then
+                    For Each kv In cm.Locals
+                        WalkSymbol(kv.Value, filePath, visited)
+                    Next
+                End If
+            End If
+        End Sub
+
         ''' <summary>
         ''' Just read the vbproj xml file
         ''' </summary>
