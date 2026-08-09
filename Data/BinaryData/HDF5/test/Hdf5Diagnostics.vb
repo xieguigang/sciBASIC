@@ -384,33 +384,51 @@ Namespace test
                 Next
 
                 If symAddr >= 0 Then
-                    ' TREE 节点原始字节（前 96 字节）
-                    Dim raw = sb.FileReader(symAddr).readBytes(96).ToArray()
+                    ' 扫描根 TREE 节点，定位所有真实的 TREE/SNOD 子节点，确定条目布局
+                    Dim raw = sb.FileReader(symAddr).readBytes(512).ToArray()
                     Dim hex As New List(Of String)()
                     For Each b In raw
                         hex.Add(b.ToString("x2"))
                     Next
-                    sb2.AppendLine("treeRaw(96)= " & String.Join(" ", hex))
+                    sb2.AppendLine("treeRaw(512)= " & String.Join(" ", hex))
 
-                    ' 从偏移 12 起按 sizeOfOffsets 宽度读取候选子节点地址并尝试读取其签名
                     Dim soo As Integer = sb.sizeOfOffsets
                     Dim cands As New List(Of String)()
-                    For i = 12 To 84 Step soo
+                    For i = 0 To raw.Length - soo Step soo
                         Dim addr As Long = 0
                         For j = 0 To soo - 1
                             addr = (addr << 8) Or raw(i + j)
                         Next
-                        Dim childSig = "?"
-                        If addr > 0 AndAlso addr < 100000000000L Then
+                        If addr > 100 AndAlso addr < 8000000000L Then
+                            Dim childSig = "?"
                             Try
                                 childSig = Text.Encoding.ASCII.GetString(sb.FileReader(addr).readBytes(4).ToArray())
                             Catch
                                 childSig = "?"
                             End Try
+                            If childSig = "TREE" OrElse childSig = "SNOD" Then
+                                cands.Add("@node+" & i & "->" & addr & "[" & childSig & "]")
+                            End If
                         End If
-                        cands.Add("@" & i & "=" & addr & "[" & childSig & "]")
                     Next
-                    sb2.Append("candChildren: " & String.Join(", ", cands))
+                    sb2.AppendLine("rootNodeSizeOfOffsets=" & soo)
+
+                    ' 显式探测真实候选地址的签名
+                    Dim probeAddrs As Long() = {1072, 4383550, 192, 160, &Hb4e45af2L}
+                    Dim probes As New List(Of String)()
+                    For Each pa In probeAddrs
+                        If pa > 0 AndAlso pa < 6000000000L Then
+                            Dim psig = "?"
+                            Try
+                                psig = System.Text.Encoding.ASCII.GetString(sb.FileReader(pa).readBytes(8).ToArray())
+                            Catch
+                                psig = "?"
+                            End Try
+                            probes.Add(pa & "=[" & psig & "]")
+                        End If
+                    Next
+                    sb2.AppendLine("probeAddrs: " & String.Join(", ", probes))
+                    sb2.Append("realChildNodes: " & String.Join(", ", cands))
                 End If
 
                 entry.succeeded = True

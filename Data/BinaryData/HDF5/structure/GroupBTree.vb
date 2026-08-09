@@ -110,24 +110,79 @@ Namespace struct
                 Throw New IOException("signature is not valid")
             End If
 
-            Dim type As Integer = [in].readByte()
-            Dim level As Integer = [in].readByte()
-            Dim entryNum As Integer = [in].readShort()
+            ' HDF5 v1 B 树节点头：
+            '   signature(4) + version(1) + type(1) + entriesUsed(2) + nodeID(4)
+            ' 其中 type: 0 = 内部节点(需递归), 1 = 叶子节点(指向符号表节点)。
+            ' 注意：v1 B 树节点本身不内嵌 sizeOfKey/sizeOfValue，
+            '       key 固定为 4 字节，value 为 sizeOfOffsets 字节。
+            Dim version As Integer = [in].readByte()
+            Dim nodeType As Integer = [in].readByte()
+            Dim entriesUsed As Integer = [in].readShort()
+            [in].readInt() ' nodeID（4 字节），当前遍历不需要
 
-            Dim leftAddress As Long = ReadHelper.readO([in], sb)
-            Dim rightAddress As Long = ReadHelper.readO([in], sb)
-            Dim myEntries As New List(Of BTreeEntry)()
-
-            For i As Integer = 0 To entryNum - 1
-                myEntries.Add(New BTreeEntry(sb, [in].offset))
-            Next
-
-            If level = 0 Then
-                entryList.AddRange(myEntries)
-            Else
-                For Each entry As BTreeEntry In myEntries
-                    readAllEntries(sb, entry.targetAddress, entryList)
+            If nodeType = 1 Then
+                ' 叶子节点：每个条目 = [key(4)][符号表节点地址(O)]
+                For i As Integer = 0 To entriesUsed - 1
+                    [in].skipBytes(4) ' 跳过 key（4 字节）
+                    Dim childAddr As Long = ReadHelper.readO([in], sb)
+                    collectNode(sb, childAddr, entryList)
                 Next
+            Else
+                ' 内部节点：每个条目 = [key(4)][left(O)][right(O)]
+                ' 子 B 树节点地址为各条目的 left 与 right（以及首条目的左兄弟）。
+                Dim childAddrs As New List(Of Long)()
+                Dim firstLeft As Long = -1
+
+                For i As Integer = 0 To entriesUsed - 1
+                    [in].skipBytes(4) ' 跳过 key（4 字节）
+                    Dim left As Long = ReadHelper.readO([in], sb)
+                    Dim right As Long = ReadHelper.readO([in], sb)
+
+                    If i = 0 Then
+                        firstLeft = left
+                    End If
+
+                    childAddrs.Add(left)
+                    childAddrs.Add(right)
+                Next
+
+                If firstLeft > 0 Then
+                    childAddrs.Add(firstLeft)
+                End If
+
+                For Each ca In childAddrs
+                    ' HADDR_UNDEF 为全 1（转为 Long 即 -1），跳过无效地址
+                    If ca > 0 Then
+                        collectNode(sb, ca, entryList)
+                    End If
+                Next
+            End If
+        End Sub
+
+        ''' <summary>
+        ''' 容错地收集一个子节点：TREE 节点继续递归，SNOD 符号表节点直接加入，
+        ''' 其余未知签名则跳过，避免单个坏地址导致整个遍历崩溃。
+        ''' </summary>
+        Private Sub collectNode(sb As Superblock, address As Long, entryList As List(Of BTreeEntry))
+            If address <= 0 Then
+                Return
+            End If
+
+            Dim sig As String
+
+            Try
+                sig = System.Text.Encoding.ASCII.GetString(sb.FileReader(address).readBytes(4).ToArray())
+            Catch
+                Return
+            End Try
+
+            If sig = signature Then
+                readAllEntries(sb, address, entryList)
+            ElseIf sig = "SNOD" Then
+                entryList.Add(New BTreeEntry(sb, address))
+            Else
+                ' 未知签名：跳过，避免崩溃
+                Return
             End If
         End Sub
 
