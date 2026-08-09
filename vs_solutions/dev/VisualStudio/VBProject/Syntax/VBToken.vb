@@ -81,6 +81,7 @@ Namespace VBProj.Syntax
     ''' a single lexical token with its source text and line number
     ''' </summary>
     Public Structure Token
+
         Public Kind As TokenKind
         Public Text As String
         Public Line As Integer
