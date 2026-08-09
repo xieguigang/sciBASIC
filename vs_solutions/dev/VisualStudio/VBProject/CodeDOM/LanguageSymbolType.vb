@@ -112,7 +112,9 @@
 #End Region
 
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Model
+Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Scripting.MetaData
+Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace VBProj.CodeDOM
 
@@ -158,7 +160,47 @@ Namespace VBProj.CodeDOM
         ''' </summary>
         Public Property XmlDoc As String
 
+        Public Property Source As SourceLocations
+
+    End Class
+
+    Public Class SourceLocations : Implements Enumeration(Of Source)
+
+        Dim SourceLocations As New List(Of Source)
+
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property IsMultiplePartial As Boolean
+            Get
+                Return SourceLocations.TryCount > 1
+            End Get
+        End Property
+
+        Public Sub Add(loc As Source)
+            Call SourceLocations.Add(loc)
+        End Sub
+
+        Public Sub Add(file As String, startLine As Integer, endLine As Integer)
+            Call SourceLocations.Add(New Source With {.FilePath = file, .LineRange = New IntRange(startLine, endLine)})
+        End Sub
+
+        Private Iterator Function GenericEnumerator() As IEnumerator(Of Source) Implements Enumeration(Of Source).GenericEnumerator
+            For Each src As Source In SourceLocations
+                Yield src
+            Next
+        End Function
+    End Class
+
+    Public Class Source
+
+        Public Property FilePath As String
         Public Property LineRange As IntRange
+
+        Public Overrides Function ToString() As String
+            Return $"{FilePath} {LineRange.GetMinMax.GetJson}"
+        End Function
 
     End Class
 End Namespace
