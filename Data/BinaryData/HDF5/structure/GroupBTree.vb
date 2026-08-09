@@ -86,14 +86,13 @@ Namespace struct
         Public Sub New(sb As Superblock, address As Long)
             Call MyBase.New(address)
 
-            Dim [in] As BinaryReader = sb.FileReader(address)
-
             Me.symbolTableEntries = New List(Of SymbolTableEntry)()
 
             Dim entryList As New List(Of BTreeEntry)()
+            Dim visited As New HashSet(Of Long)()
             Dim node As GroupNode
 
-            Call readAllEntries(sb, address, entryList)
+            Call readAllEntries(sb, address, entryList, visited, 0)
 
             For Each e As BTreeEntry In entryList
                 Try
@@ -105,23 +104,27 @@ Namespace struct
             Next
         End Sub
 
-        Private Sub readAllEntries(sb As Superblock, address As Long, entryList As List(Of BTreeEntry))
+        ' 布局无关地扫描 B 树节点体：以 4 字节为步长扫描，把每个 8 字节小端值当作
+        ' 候选地址，仅保留真正指向 TREE/SNOD 节点的地址。SNOD 直接收集，TREE 递归。
+        ' visited 在所有递归调用间共享，避免重复扫描同一节点造成无限递归；
+        ' depth 作为额外保护，防止异常深的嵌套。
+        Private Sub readAllEntries(sb As Superblock, address As Long, entryList As List(Of BTreeEntry), visited As HashSet(Of Long), depth As Integer)
+            If address <= 0 OrElse visited.Contains(address) OrElse depth > 64 Then
+                Return
+            End If
+
+            visited.Add(address)
+
             Dim [in] As BinaryReader = sb.FileReader(address)
 
             _magic = Encoding.ASCII.GetString([in].readBytes(4))
 
             If Not Me.VerifyMagicSignature(signature) Then
-                Throw New IOException("signature is not valid")
+                Return
             End If
 
-            ' 布局无关地扫描整个 B 树节点体：HDF5 v1 B 树节点的条目并不严格按 8 字节
-            ' 对齐（节点头长度为 26~28 字节，子节点指针的实际偏移随节点类型而变），
-            ' 因此不能依赖固定偏移或 8 字节步进。这里以 4 字节为步长扫描节点体，
-            ' 把每个 8 字节小端值当作候选地址，仅保留真正指向 TREE/SNOD 节点的地址，
-            ' 去重后收集（SNOD）或递归（TREE），从而兼容各种对齐方式。
             Dim soo As Integer = sb.sizeOfOffsets
             Dim raw = [in].readBytes(8192).ToArray()
-            Dim seen As New HashSet(Of Long)()
 
             For i = 0 To raw.Length - soo Step 4
                 ' HDF5 文件偏移量以小端序存储，按小端拼接候选地址
@@ -135,7 +138,7 @@ Namespace struct
                     Continue For
                 End If
 
-                If seen.Contains(candidate) Then
+                If visited.Contains(candidate) Then
                     Continue For
                 End If
 
@@ -146,11 +149,11 @@ Namespace struct
                     Continue For
                 End Try
 
-                seen.Add(candidate)
+                visited.Add(candidate)
 
                 If sig = signature Then
                     ' 子 B 树节点：递归
-                    readAllEntries(sb, candidate, entryList)
+                    readAllEntries(sb, candidate, entryList, visited, depth + 1)
                 ElseIf sig = "SNOD" Then
                     ' 符号表节点：直接以该地址作为目标地址加入
                     entryList.Add(New BTreeEntry(candidate))

@@ -22,6 +22,7 @@ Namespace test
             Dim report As New DiagnosticReport(filePath)
 
             Dim hdf5 As HDF5File = Nothing
+            Dim rootGroup As Group = Nothing
 
             Try
                 hdf5 = HDF5File.Open(filePath)
@@ -31,9 +32,7 @@ Namespace test
                 ' 以与 HDF5File.parseHeader 一致的方式重建根组，避免依赖内部字段
                 Dim rootHeaderAddress As Long = hdf5.superblock.rootGroupHeaderAddress
                 Dim rootFacade As New DataObjectFacade(hdf5.superblock, "root", rootHeaderAddress)
-                Dim rootGroup As New Group(hdf5.superblock, rootFacade)
-
-                visitGroup(report, rootGroup, "/", hdf5.superblock, maxSampleElements, largeDatasetThreshold)
+                rootGroup = New Group(hdf5.superblock, rootFacade)
 
             Catch ex As Exception
                 Dim entry As New DiagnosticEntry() With {
@@ -50,6 +49,22 @@ Namespace test
                     hdf5.Dispose()
                 End If
             End Try
+
+            ' 遍历阶段独立成段：单点失败不中断整体，错误以对象路径记录
+            If rootGroup IsNot Nothing Then
+                Try
+                    visitGroup(report, rootGroup, "/", hdf5.superblock, maxSampleElements, largeDatasetThreshold)
+                Catch ex As Exception
+                    report.Add(New DiagnosticEntry() With {
+                        .path = "(traverse)",
+                        .kind = "file",
+                        .succeeded = False,
+                        .errorType = ex.GetType().Name,
+                        .errorMessage = ex.Message,
+                        .errorFrame = firstFrame(ex)
+                    })
+                End Try
+            End If
 
             Return report
         End Function
@@ -95,7 +110,13 @@ Namespace test
                 Dim name = If(String.IsNullOrEmpty(child.symbolName), "?", child.symbolName)
                 Dim childPath = parentPath & name
 
-                Dim isGroup As Boolean = isGroupObject(child)
+                Dim isGroup As Boolean
+
+                Try
+                    isGroup = isGroupObject(child)
+                Catch
+                    isGroup = False
+                End Try
 
                 If isGroup Then
                     Dim entry As New DiagnosticEntry() With {
