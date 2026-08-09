@@ -17,7 +17,11 @@ Namespace sln
 
         Sub New(sln As Solution)
             _Sln = sln
-            _VbProjs = sln.Projects.Select(Function(p) VBProject.Load(p.FullPath)).ToArray
+            _VbProjs = (From p As Project
+                        In sln.Projects
+                        Where p.FullPath.ExtensionSuffix("vbproj")
+                        Where p.FullPath.FileExists
+                        Select VBProject.Load(p.FullPath)).ToArray
         End Sub
 
         Public Overrides Function ToString() As String
