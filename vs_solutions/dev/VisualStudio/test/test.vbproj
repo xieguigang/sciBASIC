@@ -5,7 +5,7 @@
     <Platforms>AnyCPU;x64</Platforms>
     <Configurations>Debug;Release;Rsharp_app_release;mzkit_win32;nuget_release</Configurations>
     <OutputType>Exe</OutputType>
-    <StartupObject>test.vsTest</StartupObject>
+    <StartupObject>test.Program2222</StartupObject>
   </PropertyGroup>
 
   <ItemGroup>

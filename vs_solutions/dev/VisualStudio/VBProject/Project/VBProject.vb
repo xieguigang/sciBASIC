@@ -314,7 +314,7 @@ Namespace VBProj
             visited.Add(sym)
 
             If sym.Source IsNot Nothing Then
-                For Each loc As Source In sym.Source
+                For Each loc As Source In sym.Source.ToArray()
                     If String.IsNullOrEmpty(loc.FilePath) Then
                         loc.FilePath = filePath
                     End If

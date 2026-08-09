@@ -282,7 +282,7 @@ Namespace VBProj.CodeDOM.Syntax
             ParseBlock(stmts, i, target, stopKw, Nothing, blockEnd)
 
             If blockEnd = 0 Then
-                blockEnd = stmts(Math.Max(0, i - 1)).EndLine
+                blockEnd = stmts(If(i - 1 < 0, 0, i - 1)).EndLine
             End If
             AddSource(existing, stmt.LeadingLine, blockEnd, stmt.Line)
         End Sub
@@ -389,7 +389,7 @@ Namespace VBProj.CodeDOM.Syntax
                     Dim blockEnd As Integer = 0
                     ParseBlock(stmts, i, container, "property", inv, blockEnd)
                     If blockEnd = 0 Then
-                        blockEnd = stmts(Math.Max(0, i - 1)).EndLine
+                        blockEnd = stmts(If(i - 1 < 0, 0, i - 1)).EndLine
                     End If
                     AddSource(inv, stmt.LeadingLine, blockEnd, stmt.Line)
                 Else
@@ -399,7 +399,7 @@ Namespace VBProj.CodeDOM.Syntax
                 Dim blockEnd As Integer = 0
                 ParseBlock(stmts, i, container, kw, inv, blockEnd)
                 If blockEnd = 0 Then
-                    blockEnd = stmts(Math.Max(0, i - 1)).EndLine
+                    blockEnd = stmts(If(i - 1 < 0, 0, i - 1)).EndLine
                 End If
                 AddSource(inv, stmt.LeadingLine, blockEnd, stmt.Line)
             End If
@@ -635,7 +635,7 @@ Namespace VBProj.CodeDOM.Syntax
                 existing.Source = New SourceLocations()
             End If
             If sym.Source IsNot Nothing Then
-                For Each loc As Source In sym.Source
+                For Each loc As Source In sym.Source.ToArray()
                     existing.Source.Add(loc)
                 Next
             End If

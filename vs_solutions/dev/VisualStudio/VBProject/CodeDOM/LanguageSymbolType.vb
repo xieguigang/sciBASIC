@@ -260,7 +260,8 @@ Namespace VBProj.CodeDOM
                     Return ""
                 End If
 
-                Dim min As Integer = Math.Max(0, LineRange.Min - 1)
+                Dim rawMin As Integer = LineRange.Min - 1
+                Dim min As Integer = If(rawMin < 0, 0, rawMin)
 
                 Return FilePath _
                     .ReadAllLines _
