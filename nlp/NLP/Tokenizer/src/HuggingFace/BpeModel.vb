@@ -1,4 +1,4 @@
-#Region "Microsoft.VisualBasic::HuggingFace/BpeModel.vb"
+﻿#Region "Microsoft.VisualBasic::e168c8f1deb5acfb4aaf2d411529fa56, nlp\NLP\Tokenizer\src\HuggingFace\BpeModel.vb"
 
     ' Author:
     ' 
@@ -31,10 +31,25 @@
 
     ' Summaries:
 
+
+    ' Code Statistics:
+
+    '   Total Lines: 268
+    '    Code Lines: 169 (63.06%)
+    ' Comment Lines: 48 (17.91%)
+    '    - Xml Docs: 79.17%
+    ' 
+    '   Blank Lines: 51 (19.03%)
+    '     File Size: 10.59 KB
+
+
     '     Class BpeModel
     ' 
+    '         Properties: VocabSize
+    ' 
     '         Constructor: (+1 Overloads) Sub New
-    '         Function: Tokenize, TokenToId, IdToToken, MergeWord
+    '         Function: ApplyAffixes, GetMerged, IdToToken, MergeWord, Tokenize
+    '                   TokenToId
     ' 
     ' 
     ' /********************************************************************************/

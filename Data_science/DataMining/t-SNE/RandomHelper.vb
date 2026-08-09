@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7148346980fca295237af199a2de9462, Data_science\MachineLearning\t-SNE\RandomHelper.vb"
+﻿#Region "Microsoft.VisualBasic::7148346980fca295237af199a2de9462, Data_science\DataMining\t-SNE\RandomHelper.vb"
 
     ' Author:
     ' 

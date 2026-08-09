@@ -1,72 +1,72 @@
-﻿#Region "Microsoft.VisualBasic::752a389fd94d7cac170e6b2a0e544e95, mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\XLSX\Writer\Workbook.vb"
+﻿#Region "Microsoft.VisualBasic::ef55de8ea5e95a7804a5f5c81eb329f9, mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\XLSX\Writer\Workbook.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 952
-'    Code Lines: 472 (49.58%)
-' Comment Lines: 384 (40.34%)
-'    - Xml Docs: 97.40%
-' 
-'   Blank Lines: 96 (10.08%)
-'     File Size: 45.30 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Class Workbook
-' 
-'         Properties: CurrentWorksheet, Filename, Hidden, LockStructureIfProtected, LockWindowsIfProtected
-'                     SelectedWorksheet, UseWorkbookProtection, WorkbookMetadata, WorkbookProtectionPassword, WorkbookProtectionPasswordHash
-'                     Worksheets, WS
-' 
-'         Constructor: (+5 Overloads) Sub New
-' 
-'         Function: AddStyle, AddStyleComponent, AddWorksheet, (+3 Overloads) CopyWorksheetIntoThis, (+3 Overloads) CopyWorksheetTo
-'                   GetMruColors, GetNextWorksheetId, (+2 Overloads) GetWorksheet, (+2 Overloads) SetCurrentWorksheet
-' 
-'         Sub: AddMruColor, (+3 Overloads) AddWorksheet, ClearMruColors, Init, (+4 Overloads) RemoveStyle
-'              (+3 Overloads) RemoveWorksheet, ResolveMergedCells, Save, SaveAs, SaveAsStream
-'              SetCurrentWorksheet, (+3 Overloads) SetSelectedWorksheet, SetWorkbookProtection, ValidateWorksheets
-'         Class Shortener
-' 
-'             Constructor: (+1 Overloads) Sub New
-'             Sub: (+2 Overloads) Down, (+2 Overloads) Formula, (+2 Overloads) Left, NullCheck, (+2 Overloads) Right
-'                  SetCurrentWorksheet, SetCurrentWorksheetInternal, (+2 Overloads) Up, (+2 Overloads) Value
-' 
-' 
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 941
+    '    Code Lines: 460 (48.88%)
+    ' Comment Lines: 384 (40.81%)
+    '    - Xml Docs: 96.61%
+    ' 
+    '   Blank Lines: 97 (10.31%)
+    '     File Size: 45.03 KB
+
+
+    '     Class Workbook
+    ' 
+    '         Properties: CurrentWorksheet, Filename, Hidden, LockStructureIfProtected, LockWindowsIfProtected
+    '                     SelectedWorksheet, UseWorkbookProtection, WorkbookMetadata, WorkbookProtectionPassword, WorkbookProtectionPasswordHash
+    '                     Worksheets, WS
+    ' 
+    '         Constructor: (+5 Overloads) Sub New
+    ' 
+    '         Function: AddStyle, AddStyleComponent, AddWorksheet, (+3 Overloads) CopyWorksheetIntoThis, (+3 Overloads) CopyWorksheetTo
+    '                   GetMruColors, GetNextWorksheetId, (+2 Overloads) GetWorksheet, (+2 Overloads) SetCurrentWorksheet
+    ' 
+    '         Sub: AddMruColor, (+3 Overloads) AddWorksheet, ClearMruColors, Init, (+4 Overloads) RemoveStyle
+    '              (+3 Overloads) RemoveWorksheet, ResolveMergedCells, Save, SaveAs, SaveAsStream
+    '              SetCurrentWorksheet, (+3 Overloads) SetSelectedWorksheet, SetWorkbookProtection, ValidateWorksheets
+    '         Class Shortener
+    ' 
+    '             Constructor: (+1 Overloads) Sub New
+    '             Sub: (+2 Overloads) Down, (+2 Overloads) Formula, (+2 Overloads) Left, NullCheck, (+2 Overloads) Right
+    '                  SetCurrentWorksheet, SetCurrentWorksheetInternal, (+2 Overloads) Up, (+2 Overloads) Value
+    ' 
+    ' 
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

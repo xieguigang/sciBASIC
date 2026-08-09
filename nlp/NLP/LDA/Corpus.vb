@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0abbd8432b89e821ca2fc38749c69da6, Data_science\NLP\LDA\Corpus.vb"
+﻿#Region "Microsoft.VisualBasic::0abbd8432b89e821ca2fc38749c69da6, nlp\NLP\LDA\Corpus.vb"
 
     ' Author:
     ' 

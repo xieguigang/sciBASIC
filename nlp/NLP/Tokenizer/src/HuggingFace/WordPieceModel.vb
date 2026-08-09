@@ -1,4 +1,4 @@
-#Region "Microsoft.VisualBasic::HuggingFace/WordPieceModel.vb"
+﻿#Region "Microsoft.VisualBasic::3def3fd0d523592ef6bb9c8d0327ed2a, nlp\NLP\Tokenizer\src\HuggingFace\WordPieceModel.vb"
 
     ' Author:
     ' 
@@ -31,10 +31,24 @@
 
     ' Summaries:
 
+
+    ' Code Statistics:
+
+    '   Total Lines: 145
+    '    Code Lines: 95 (65.52%)
+    ' Comment Lines: 22 (15.17%)
+    '    - Xml Docs: 81.82%
+    ' 
+    '   Blank Lines: 28 (19.31%)
+    '     File Size: 5.18 KB
+
+
     '     Class WordPieceModel
     ' 
+    '         Properties: VocabSize
+    ' 
     '         Constructor: (+1 Overloads) Sub New
-    '         Function: Tokenize, TokenToId, IdToToken
+    '         Function: IdToToken, Tokenize, TokenToId
     ' 
     ' 
     ' /********************************************************************************/

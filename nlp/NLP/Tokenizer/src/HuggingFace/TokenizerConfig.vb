@@ -1,4 +1,4 @@
-#Region "Microsoft.VisualBasic::HuggingFace/TokenizerConfig.vb"
+﻿#Region "Microsoft.VisualBasic::dcd21f58bb5acbbbc451f51396a921e3, nlp\NLP\Tokenizer\src\HuggingFace\TokenizerConfig.vb"
 
     ' Author:
     ' 
@@ -31,9 +31,24 @@
 
     ' Summaries:
 
+
+    ' Code Statistics:
+
+    '   Total Lines: 100
+    '    Code Lines: 40 (40.00%)
+    ' Comment Lines: 49 (49.00%)
+    '    - Xml Docs: 91.84%
+    ' 
+    '   Blank Lines: 11 (11.00%)
+    '     File Size: 4.34 KB
+
+
     '     Class TokenizerConfig
     ' 
-    '         Function: ParseFile, [Default]
+    '         Properties: AddBosToken, AddEosToken, BosToken, CleanUpTokenizationSpaces, EosToken
+    '                     ModelMaxLength, PadToken, TokenizerClass, UnkToken
+    ' 
+    '         Function: [Default], FromJson, ParseFile
     ' 
     ' 
     ' /********************************************************************************/

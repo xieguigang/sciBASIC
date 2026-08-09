@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1095d194f47d7e7d60cda0c853481f6a, vs_solutions\dev\VisualStudio\sln\Global.vb"
+﻿#Region "Microsoft.VisualBasic::9388f48a2ff177e89282a5ba79cb701f, vs_solutions\dev\VisualStudio\sln\Global.vb"
 
 ' Author:
 ' 
@@ -34,27 +34,27 @@
 
 ' Code Statistics:
 
-'   Total Lines: 6
-'    Code Lines: 4 (66.67%)
-' Comment Lines: 0 (0.00%)
-'    - Xml Docs: 0.00%
+'   Total Lines: 38
+'    Code Lines: 18 (47.37%)
+' Comment Lines: 13 (34.21%)
+'    - Xml Docs: 100.00%
 ' 
-'   Blank Lines: 2 (33.33%)
-'     File Size: 74 B
+'   Blank Lines: 7 (18.42%)
+'     File Size: 1.19 KB
 
 
 '     Class [Global]
 ' 
+'         Properties: Properties, SolutionGuid
 ' 
+'         Function: GetValue
 ' 
 ' 
 ' /********************************************************************************/
 
 #End Region
 
-Imports System.Collections.Generic
-
-Namespace sln
+Namespace sln.File
 
     ''' <summary>
     ''' Carries the content of the solution ``GlobalSection`` pairs

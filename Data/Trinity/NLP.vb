@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::6c12260d369e6276a65179747984dc93, Data\Trinity\NLP.vb"
+﻿#Region "Microsoft.VisualBasic::edb9c476917e00fb5f3211314e444cee, Data\Trinity\NLP.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 103
-    '    Code Lines: 68 (66.02%)
-    ' Comment Lines: 22 (21.36%)
+    '   Total Lines: 80
+    '    Code Lines: 58 (72.50%)
+    ' Comment Lines: 11 (13.75%)
     '    - Xml Docs: 81.82%
     ' 
-    '   Blank Lines: 13 (12.62%)
-    '     File Size: 3.81 KB
+    '   Blank Lines: 11 (13.75%)
+    '     File Size: 3.04 KB
 
 
     ' Module NLPExtensions

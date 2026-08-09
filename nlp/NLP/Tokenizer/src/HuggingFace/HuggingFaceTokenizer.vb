@@ -1,4 +1,4 @@
-#Region "Microsoft.VisualBasic::HuggingFace/HuggingFaceTokenizer.vb"
+﻿#Region "Microsoft.VisualBasic::32940ce356fbe2a5fc91ec3a5226322a, nlp\NLP\Tokenizer\src\HuggingFace\HuggingFaceTokenizer.vb"
 
     ' Author:
     ' 
@@ -31,11 +31,27 @@
 
     ' Summaries:
 
+
+    ' Code Statistics:
+
+    '   Total Lines: 382
+    '    Code Lines: 201 (52.62%)
+    ' Comment Lines: 125 (32.72%)
+    '    - Xml Docs: 96.00%
+    ' 
+    '   Blank Lines: 56 (14.66%)
+    '     File Size: 15.93 KB
+
+
     '     Class HuggingFaceTokenizer
     ' 
+    '         Properties: BosToken, Config, EosToken, ModelType, PadToken
+    '                     VocabSize
+    ' 
     '         Constructor: (+1 Overloads) Sub New
-    '         Function: FromPretrained, FromFile, Encode, EncodeToIds, Tokenize
-    '                   Decode, TokenToId, IdToToken
+    '         Function: ApplyConfigSpecialTokens, Decode, Encode, EncodeCore, EncodeToIds
+    '                   FromFile, FromJson, FromPretrained, IdToToken, Tokenize
+    '                   TokenToId
     ' 
     ' 
     ' /********************************************************************************/

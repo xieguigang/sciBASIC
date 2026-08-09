@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3fd2267064f79504ca8ad25d0fa583a1, Data_science\NLP\LDA\LdaGibbsSampler.vb"
+﻿#Region "Microsoft.VisualBasic::3fd2267064f79504ca8ad25d0fa583a1, nlp\NLP\LDA\LdaGibbsSampler.vb"
 
     ' Author:
     ' 

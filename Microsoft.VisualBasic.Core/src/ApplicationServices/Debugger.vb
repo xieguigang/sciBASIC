@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2fec18e1aaa3da950cf65c5bc4f1b1b1, Microsoft.VisualBasic.Core\src\ApplicationServices\Debugger.vb"
+﻿#Region "Microsoft.VisualBasic::f2999a1c1ba69280b4f1ea1faf55b43c, Microsoft.VisualBasic.Core\src\ApplicationServices\Debugger.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 449
-    '    Code Lines: 262 (58.35%)
-    ' Comment Lines: 144 (32.07%)
+    '   Total Lines: 457
+    '    Code Lines: 269 (58.86%)
+    ' Comment Lines: 144 (31.51%)
     '    - Xml Docs: 93.75%
     ' 
-    '   Blank Lines: 43 (9.58%)
-    '     File Size: 18.05 KB
+    '   Blank Lines: 44 (9.63%)
+    '     File Size: 18.36 KB
 
 
     ' Module VBDebugger
@@ -56,7 +56,7 @@
     ' 
     '         Sub: [error], (+3 Overloads) Assertion, AttachLoggingDriver, cat, (+3 Overloads) debug
     '              echo, (+3 Overloads) Echo, EchoLine, info, log
-    '              logging, WaitOutput, warning, WriteLine
+    '              logging, WaitOutput, warning, Write, WriteLine
     ' 
     ' 
     ' 

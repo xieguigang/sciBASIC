@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b7f8261ed9f4d89d1f1d8f67549e86e6, mime\text%markdown\TOC.vb"
+﻿#Region "Microsoft.VisualBasic::0c68b96a6d0895a0f5129f305c62183a, mime\text%markdown\TOC.vb"
 
     ' Author:
     ' 
@@ -115,4 +115,3 @@ Public Module TOC
         Return out.ToString
     End Function
 End Module
-

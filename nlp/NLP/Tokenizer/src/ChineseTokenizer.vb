@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f528885f1bbf425e6d61f7ec6892bdf7, Data_science\NLP\Tokenizer\src\ChineseTokenizer.vb"
+﻿#Region "Microsoft.VisualBasic::53cb1fafebc3cce7257b0c2c163050dc, nlp\NLP\Tokenizer\src\ChineseTokenizer.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 86.67%
     ' 
     '   Blank Lines: 24 (12.18%)
-    '     File Size: 7.89 KB
+    '     File Size: 8.09 KB
 
 
     '     Enum SegmentAlgorithm

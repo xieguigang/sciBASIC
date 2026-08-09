@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f6026190b4239d5777df9f2f7cdcd484, mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\XLSX\Writer\Style.vb"
+﻿#Region "Microsoft.VisualBasic::cc22734b5615c8d77741389ed2790804, mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\XLSX\Writer\Style\Style.vb"
 
     ' Author:
     ' 
@@ -34,205 +34,22 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 2151
-    '    Code Lines: 1224 (56.90%)
-    ' Comment Lines: 751 (34.91%)
-    '    - Xml Docs: 98.93%
+    '   Total Lines: 208
+    '    Code Lines: 116 (55.77%)
+    ' Comment Lines: 70 (33.65%)
+    '    - Xml Docs: 91.43%
     ' 
-    '   Blank Lines: 176 (8.18%)
-    '     File Size: 96.94 KB
+    '   Blank Lines: 22 (10.58%)
+    '     File Size: 9.70 KB
 
 
     '     Class Style
     ' 
-    '         Properties: BottomColor, BottomStyle, CurrentBorder, CurrentCellXf, CurrentFill
-    '                     CurrentFont, CurrentNumberFormat, DiagonalColor, DiagonalDown, DiagonalStyle
-    '                     DiagonalUp, IsInternalStyle, LeftColor, LeftStyle, Name
-    '                     RightColor, RightStyle, TopColor, TopStyle
-    ' 
-    '         Constructor: (+4 Overloads) Sub New
-    '         Function: Append, (+2 Overloads) Copy, CopyBorder, CopyStyle, (+2 Overloads) GetHashCode
-    '                   GetStyleName, IsEmpty, (+2 Overloads) ToString
-    '         Class Border
-    ' 
-    ' 
-    '             Enum StyleValue
-    ' 
-    '                 dashDot, dashDotDot, dashed, dotted, hair
-    '                 medium, mediumDashDot, mediumDashDotDot, mediumDashed, none
-    '                 s_double, slantDashDot, thick, thin
-    ' 
-    ' 
-    ' 
-    ' 
-    ' 
-    '         Class CellXf
-    ' 
-    ' 
-    '             Enum HorizontalAlignValue
-    ' 
-    '                 center, centerContinuous, distributed, fill, general
-    '                 justify, left, none, right
-    ' 
-    ' 
-    ' 
-    '             Enum TextBreakValue
-    ' 
-    '                 none, shrinkToFit, wrapText
-    ' 
-    '  
-    ' 
-    ' 
-    ' 
-    '             Enum TextDirectionValue
-    ' 
-    '                 horizontal, vertical
-    ' 
-    '  
-    ' 
-    ' 
-    ' 
-    '             Enum VerticalAlignValue
-    ' 
-    '                 bottom, center, distributed, justify, none
-    '                 top
-    ' 
-    '  
-    ' 
-    ' 
-    ' 
-    '  
-    ' 
-    '     Properties: Alignment, ForceApplyAlignment, Hidden, HorizontalAlign, Indent
-    '                 Locked, TextDirection, TextRotation, VerticalAlign
-    ' 
-    '     Constructor: (+1 Overloads) Sub New
-    '     Function: CalculateInternalRotation, Copy, CopyCellXf, GetHashCode, ToString
-    ' 
-    '         Class Fill
-    ' 
-    ' 
-    '             Enum FillType
-    ' 
-    '                 fillColor, patternColor
-    ' 
-    ' 
-    ' 
-    '             Enum PatternValue
-    ' 
-    '                 darkGray, gray0625, gray125, lightGray, mediumGray
-    '                 none, solid
-    ' 
-    '  
-    ' 
-    ' 
-    ' 
-    '  
-    ' 
-    '     Properties: BackgroundColor, ForegroundColor, IndexedColor, PatternFill
-    ' 
-    '     Constructor: (+3 Overloads) Sub New
-    ' 
-    '     Function: Copy, CopyFill, GetHashCode, GetPatternName, ToString
-    ' 
-    '     Sub: SetColor, ValidateColor
-    ' 
-    '         Class Font
-    ' 
-    ' 
-    '             Enum SchemeValue
-    ' 
-    '                 major, minor, none
-    ' 
-    ' 
-    ' 
-    '             Enum VerticalAlignValue
-    ' 
-    '                 bottom, center, distributed, justify, none
-    '                 top
-    ' 
-    '  
-    ' 
-    ' 
-    ' 
-    '             Enum UnderlineValue
-    ' 
-    '                 doubleAccounting, none, singleAccounting, u_double, u_single
-    ' 
-    '  
-    ' 
-    ' 
-    ' 
-    '  
-    ' 
-    '     Properties: Bold, Charset, ColorTheme, ColorValue, Family
-    '                 IsDefaultFont, Italic, Name, Scheme, Size
-    '                 Strike, Underline, VerticalAlign
-    ' 
-    '     Constructor: (+1 Overloads) Sub New
-    '     Function: Copy, CopyFont, GetHashCode, ToString
-    ' 
-    '         Class NumberFormat
-    ' 
-    ' 
-    '             Enum FormatNumber
-    ' 
-    ' 
-    ' 
-    ' 
-    '             Enum FormatRange
-    ' 
-    '                 custom_format, defined_format, invalid, undefined
-    ' 
-    '  
-    ' 
-    ' 
-    ' 
-    '  
-    ' 
-    '     Properties: CustomFormatCode, CustomFormatID, IsCustomFormat, Number
-    ' 
-    '     Constructor: (+1 Overloads) Sub New
-    '     Function: Copy, CopyNumberFormat, GetHashCode, IsDateFormat, IsTimeFormat
-    '               ToString, TryParseFormatNumber
-    ' 
-    '         Class BasicStyles
-    ' 
-    ' 
-    '             Enum StyleEnum
-    ' 
-    '                 bold, boldItalic, borderFrame, borderFrameHeader, dateFormat
-    '                 dottedFill_0_125, doubleUnderline, italic, mergeCellStyle, roundFormat
-    '                 strike, timeFormat, underline
-    ' 
-    ' 
-    ' 
-    '  
-    ' 
-    '     Properties: Bold, BoldItalic, BorderFrame, BorderFrameHeader, DateFormat
-    '                 DottedFill_0_125, DoubleUnderline, Italic, MergeCellStyle, RoundFormat
-    '                 Strike, TimeFormat, Underline
-    ' 
-    '     Function: ColorizedBackground, ColorizedText, Font, GetStyle
-    ' 
-    '  
-    ' 
-    ' 
-    ' 
-    '     Class AbstractStyle
-    ' 
-    '         Properties: InternalID
-    ' 
-    '         Function: CompareTo, Equals, HandleProperties
-    ' 
-    '         Sub: AddPropertyAsJson, CopyProperties
-    '         Class AppendAttribute
-    ' 
-    '             Properties: Ignore, NestedProperty
-    ' 
-    '             Constructor: (+1 Overloads) Sub New
-    ' 
-    ' 
+    '         Properties: CurrentBorder, CurrentCellXf, CurrentFill, CurrentFont, CurrentNumberFormat
+    '                     IsInternalStyle, Name
+    ' 
+    '         Constructor: (+3 Overloads) Sub New
+    '         Function: Append, Copy, CopyStyle, GetHashCode, ToString
     ' 
     ' 
     ' /********************************************************************************/

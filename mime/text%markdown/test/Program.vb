@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::cf36c40ce047aff10a744814475d1785, mime\text%markdown\test\Program.vb"
+﻿#Region "Microsoft.VisualBasic::2fb11e7bc8cce07ef5f6e40536b882d4, mime\text%markdown\test\Program.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 202
-    '    Code Lines: 138 (68.32%)
-    ' Comment Lines: 4 (1.98%)
-    '    - Xml Docs: 75.00%
+    '   Total Lines: 205
+    '    Code Lines: 140 (68.29%)
+    ' Comment Lines: 3 (1.46%)
+    '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 60 (29.70%)
-    '     File Size: 5.92 KB
+    '   Blank Lines: 62 (30.24%)
+    '     File Size: 5.98 KB
 
 
     ' Module Program

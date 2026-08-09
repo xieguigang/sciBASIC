@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::8013d9125726f6b5f35276169bbd83d2, Data_science\NLP\Tokenizer\src\WordDictionary.vb"
+﻿#Region "Microsoft.VisualBasic::5111dc9492d7831bc3f7a2293afafff7, nlp\NLP\Tokenizer\src\WordDictionary.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 93.18%
     ' 
     '   Blank Lines: 28 (12.73%)
-    '     File Size: 9.09 KB
+    '     File Size: 9.31 KB
 
 
     '     Class WordDictionary

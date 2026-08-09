@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f39bd0e24a2c8206e3727891b2a71ade, mime\application%json\test\Program.vb"
+﻿#Region "Microsoft.VisualBasic::f3202df15a870a3ec083e52be563c4c3, mime\application%json\test\Program.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 5
-    '    Code Lines: 5 (100.00%)
-    ' Comment Lines: 0 (0.00%)
+    '   Total Lines: 6
+    '    Code Lines: 5 (83.33%)
+    ' Comment Lines: 1 (16.67%)
     '    - Xml Docs: 0.00%
     ' 
     '   Blank Lines: 0 (0.00%)
-    '     File Size: 90 B
+    '     File Size: 135 B
 
 
     ' Module Program
@@ -57,4 +57,3 @@ Module Program
         ' Call writerTest.Main6()
     End Sub
 End Module
-

@@ -1,4 +1,4 @@
-#Region "Microsoft.VisualBasic::HuggingFace/PreTokenizers.vb"
+﻿#Region "Microsoft.VisualBasic::c3afda3baa38a0d6ca58c111c469489c, nlp\NLP\Tokenizer\src\HuggingFace\PreTokenizers.vb"
 
     ' Author:
     ' 
@@ -31,11 +31,75 @@
 
     ' Summaries:
 
+
+    ' Code Statistics:
+
+    '   Total Lines: 518
+    '    Code Lines: 304 (58.69%)
+    ' Comment Lines: 112 (21.62%)
+    '    - Xml Docs: 91.07%
+    ' 
+    '   Blank Lines: 102 (19.69%)
+    '     File Size: 20.07 KB
+
+
     '     Enum SplitBehavior
     ' 
-    '     Class SequencePreTokenizer, SplitPreTokenizer, ByteLevelPreTokenizer
-    '     Class MetaspacePreTokenizer, WhitespacePreTokenizer, WhitespaceSplitPreTokenizer
-    '     Class PunctuationPreTokenizer, DigitsPreTokenizer, FixedLengthPreTokenizer
+    '         Contiguous, Isolated, MergedWithNext, MergedWithPrevious, Removed
+    ' 
+    '  
+    ' 
+    ' 
+    ' 
+    '     Class SequencePreTokenizer
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    '         Function: PreTokenize
+    ' 
+    '     Class PreTokenizerBase
+    ' 
+    '         Function: PreTokenize
+    ' 
+    '     Class SplitPreTokenizer
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    '         Sub: Append, Emit, SplitOne
+    ' 
+    '     Class ByteLevelPreTokenizer
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    '         Sub: SplitOne
+    ' 
+    '     Class MetaspacePreTokenizer
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    '         Sub: SplitOne
+    ' 
+    '     Class WhitespacePreTokenizer
+    ' 
+    '         Sub: SplitOne
+    ' 
+    '     Class WhitespaceSplitPreTokenizer
+    ' 
+    '         Sub: SplitOne
+    ' 
+    '     Class PunctuationPreTokenizer
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
+    '         Function: IsPunctuation
+    ' 
+    '         Sub: SplitOne
+    ' 
+    '     Class DigitsPreTokenizer
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    '         Sub: SplitOne
+    ' 
+    '     Class FixedLengthPreTokenizer
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    '         Sub: SplitOne
     ' 
     ' 
     ' /********************************************************************************/

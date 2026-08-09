@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c51495b55a581662e6b8bf97e9313b3e, tutorials\Marked\FormMarkWeb.Designer.vb"
+﻿#Region "Microsoft.VisualBasic::105e589b791e3dfcb6c5cfe81993231d, tutorials\Marked\FormMarkWeb.Designer.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 0.00%
     ' 
     '   Blank Lines: 5 (3.50%)
-    '     File Size: 5.46 KB
+    '     File Size: 5.45 KB
 
 
     ' Class FormMarkWeb
@@ -194,4 +194,3 @@ Partial Class FormMarkWeb
     Friend WithEvents TextBox1 As TextBox
 
 End Class
-

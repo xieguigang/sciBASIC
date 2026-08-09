@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f07273c76c6ed75277d67716019f0521, mime\text%markdown\Render\Render.vb"
+﻿#Region "Microsoft.VisualBasic::0b48b91246aa6177f8a401cc346f80c2, mime\text%markdown\Render\Render.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 100.00%
     ' 
     '   Blank Lines: 8 (13.79%)
-    '     File Size: 2.69 KB
+    '     File Size: 2.68 KB
 
 
     ' Class Render
@@ -109,4 +109,3 @@ Public MustInherit Class Render
         Return s
     End Function
 End Class
-

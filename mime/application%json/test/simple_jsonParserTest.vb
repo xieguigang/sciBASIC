@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::11732b7fef130b42096b275a77ebd1a4, mime\application%json\test\simple_jsonParserTest.vb"
+﻿#Region "Microsoft.VisualBasic::a988317fa83de740a1ce599b2fac17b9, mime\application%json\test\simple_jsonParserTest.vb"
 
     ' Author:
     ' 
@@ -34,18 +34,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 89
-    '    Code Lines: 61 (68.54%)
-    ' Comment Lines: 16 (17.98%)
-    '    - Xml Docs: 0.00%
+    '   Total Lines: 171
+    '    Code Lines: 106 (61.99%)
+    ' Comment Lines: 34 (19.88%)
+    '    - Xml Docs: 29.41%
     ' 
-    '   Blank Lines: 12 (13.48%)
-    '     File Size: 3.51 KB
+    '   Blank Lines: 31 (18.13%)
+    '     File Size: 7.05 KB
 
 
     ' Module simple_jsonParserTest
     ' 
-    '     Sub: Main11, test1, test2, test3
+    '     Sub: Main11, test1, test2, test3, test4
     ' 
     ' /********************************************************************************/
 

@@ -1,4 +1,4 @@
-#Region "Microsoft.VisualBasic::HuggingFace/Abstractions.vb"
+﻿#Region "Microsoft.VisualBasic::877809b6d4f73434367331665cf23e75, nlp\NLP\Tokenizer\src\HuggingFace\Abstractions.vb"
 
     ' Author:
     ' 
@@ -31,11 +31,58 @@
 
     ' Summaries:
 
+
+    ' Code Statistics:
+
+    '   Total Lines: 216
+    '    Code Lines: 67 (31.02%)
+    ' Comment Lines: 115 (53.24%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 34 (15.74%)
+    '     File Size: 7.70 KB
+
+
     '     Structure Token
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    '         Function: ToString
+    ' 
+    '     Class Split
+    ' 
+    '         Properties: [End], IsSpecial, SpecialId, Start, Value
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    '         Function: ToString
     ' 
     '     Class Encoding
     ' 
-    '     Interface INormalizer, IPreTokenizer, ITokenizerModel, IPostProcessor, IDecoder
+    '         Properties: AttentionMask, Count, Ids, Offsets, Tokens
+    '                     TypeIds
+    ' 
+    '         Function: ToString
+    ' 
+    '     Interface INormalizer
+    ' 
+    '         Function: Normalize
+    ' 
+    '     Interface IPreTokenizer
+    ' 
+    '         Function: PreTokenize
+    ' 
+    '     Interface ITokenizerModel
+    ' 
+    '         Properties: VocabSize
+    ' 
+    '         Function: IdToToken, Tokenize, TokenToId
+    ' 
+    '     Interface IPostProcessor
+    ' 
+    '         Function: Process
+    ' 
+    '     Interface IDecoder
+    ' 
+    '         Function: Decode
     ' 
     ' 
     ' /********************************************************************************/

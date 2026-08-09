@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::91a374c73271fb572e0c12cfe768ca81, Data_science\Mathematica\SignalProcessing\wav\wav\VoicePrint\WavVoicePrintReader.vb"
+﻿#Region "Microsoft.VisualBasic::33ca791f585923ed96fbd62ce550dd9f, Data_science\Mathematica\SignalProcessing\wav\wav\VoicePrint\WavVoicePrintReader.vb"
 
     ' Author:
     ' 
@@ -218,4 +218,3 @@ Public Class WavVoicePrintReader
     End Function
 
 End Class
-

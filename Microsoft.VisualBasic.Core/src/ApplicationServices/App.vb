@@ -1,75 +1,76 @@
-﻿#Region "Microsoft.VisualBasic::2ac81b93b3461a78ef0726b937ead305, Microsoft.VisualBasic.Core\src\ApplicationServices\App.vb"
+﻿#Region "Microsoft.VisualBasic::1bd212c6b8ff3ce2d49926a64a961b8a, Microsoft.VisualBasic.Core\src\ApplicationServices\App.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 1608
-'    Code Lines: 780 (48.51%)
-' Comment Lines: 642 (39.93%)
-'    - Xml Docs: 83.02%
-' 
-'   Blank Lines: 186 (11.57%)
-'     File Size: 69.23 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-' Module App
-' 
-'     Properties: AppSystemTemp, AssemblyName, BufferSize, Command, CommandLine
-'                 CPUCoreNumbers, CurrentDirectory, CurrentProcessTemp, CurrentUnixTimeMillis, Desktop
-'                 EnableAnsiColor, EnableTqdm, ExecutablePath, GetLastError, Github
-'                 HOME, Info, InputFile, IsConsoleApp, IsMicrosoftPlatform
-'                 LocalData, LocalDataTemp, LogErrDIR, LogFile, MemoryLoad
-'                 n_threads, NanoTime, NextTempName, OutFile, PID
-'                 Platform, PreviousDirectory, Process, ProductName, ProductProgramData
-'                 ProductSharedDIR, ProductSharedTemp, Running, RunningInGitBash, RunTimeDirectory
-'                 StartTime, StartupDirectory, StdErr, StdInput, StdOut
-'                 SysTemp, UnixTimeStamp, UserHOME, Version
-' 
-'     Constructor: (+1 Overloads) Sub New
-' 
-'     Function: __listFiles, (+2 Overloads) Argument, CheckIsMicrosoftPlatform, CLICode, (+2 Overloads) ElapsedMilliseconds
-'               Exit, finalizeCLI, FormatTime, (+2 Overloads) GetAppLocalData, GetAppVariables
-'               GetFile, GetNextUniqueName, GetProductSharedDIR, GetProductSharedTemp, GetTempFile
-'               GetVariable, (+3 Overloads) LogException, NullDevice, RedirectErrLogging, RedirectLogging
-'               (+13 Overloads) RunCLI, RunCLIInternal, SelfFolk, Shell, tempCode
-'               TemporaryEnvironment, TraceBugs
-' 
-'     Sub: __GCThreadInvoke, __removesTEMP, [Stop], AddExitCleanHook, (+2 Overloads) DoNothing
-'          FlushMemory, Free, JoinVariable, (+2 Overloads) JoinVariables, Pause
-'          (+2 Overloads) println, SetBufferSize, SetSystemTemp, StartGC, StopGC
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 1621
+    '    Code Lines: 788 (48.61%)
+    ' Comment Lines: 647 (39.91%)
+    '    - Xml Docs: 82.84%
+    ' 
+    '   Blank Lines: 186 (11.47%)
+    '     File Size: 69.47 KB
+
+
+    ' Module App
+    ' 
+    '     Properties: AppSystemTemp, AssemblyName, BufferSize, Command, CommandLine
+    '                 CPUCoreNumbers, CurrentDirectory, CurrentProcessTemp, CurrentUnixTimeMillis, Desktop
+    '                 EnableAnsiColor, EnableTqdm, ExecutablePath, GetLastError, Github
+    '                 HOME, Info, InputFile, IsConsoleApp, IsMicrosoftPlatform
+    '                 LocalData, LocalDataTemp, LogErrDIR, LogFile, MemoryLoad
+    '                 n_threads, NanoTime, NextTempName, OutFile, PID
+    '                 Platform, PreviousDirectory, Process, ProductName, ProductProgramData
+    '                 ProductSharedDIR, ProductSharedTemp, Running, RunningInGitBash, RunTimeDirectory
+    '                 StartTime, StartupDirectory, StdErr, StdInput, StdOut
+    '                 SysTemp, UnixTimeStamp, UserHOME, Version
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    ' 
+    '     Function: __listFiles, (+2 Overloads) Argument, CheckIsMicrosoftPlatform, CLICode, (+2 Overloads) ElapsedMilliseconds
+    '               Exit, finalizeCLI, FormatTime, (+2 Overloads) GetAppLocalData, GetAppVariables
+    '               GetFile, GetNextUniqueName, GetProductSharedDIR, GetProductSharedTemp, GetTempFile
+    '               GetVariable, (+3 Overloads) LogException, NullDevice, RedirectErrLogging, RedirectLogging
+    '               (+13 Overloads) RunCLI, RunCLIInternal, SelfFolk, Shell, tempCode
+    '               TemporaryEnvironment, TraceBugs
+    ' 
+    '     Sub: __GCThreadInvoke, __removesTEMP, [Stop], AddExitCleanHook, (+2 Overloads) DoNothing
+    '          FlushMemory, Free, JoinVariable, (+2 Overloads) JoinVariables, Pause
+    '          (+2 Overloads) println, SetBufferSize, SetSystemTemp, StartGC, Startup
+    '          StopGC
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

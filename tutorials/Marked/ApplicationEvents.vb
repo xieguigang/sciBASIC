@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::26599e130773bbe975602d69cd0c4040, tutorials\Marked\ApplicationEvents.vb"
+﻿#Region "Microsoft.VisualBasic::fdc012a9f89705f508bc312710f91752, tutorials\Marked\ApplicationEvents.vb"
 
     ' Author:
     ' 
@@ -81,4 +81,3 @@ Namespace My
 
     End Class
 End Namespace
-

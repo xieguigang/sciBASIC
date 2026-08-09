@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::73d4622107498a794ac2566e6091a38f, Microsoft.VisualBasic.Core\src\CommandLine\Parsers\CLIParser.vb"
+﻿#Region "Microsoft.VisualBasic::da4db1b906318749e080f4332a19aa69, Microsoft.VisualBasic.Core\src\CommandLine\Parsers\CLIParser.vb"
 
     ' Author:
     ' 
@@ -34,18 +34,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 155
-    '    Code Lines: 104 (67.10%)
-    ' Comment Lines: 29 (18.71%)
+    '   Total Lines: 156
+    '    Code Lines: 106 (67.95%)
+    ' Comment Lines: 29 (18.59%)
     '    - Xml Docs: 93.10%
     ' 
-    '   Blank Lines: 22 (14.19%)
-    '     File Size: 6.24 KB
+    '   Blank Lines: 21 (13.46%)
+    '     File Size: 6.45 KB
 
 
     '     Module CLIParser
     ' 
-    '         Function: checkKeyDuplicated, extract, (+2 Overloads) TryParse
+    '         Function: checkKeyDuplicated, extract, ParseCLIInternal, (+2 Overloads) TryParse
     ' 
     ' 
     ' /********************************************************************************/

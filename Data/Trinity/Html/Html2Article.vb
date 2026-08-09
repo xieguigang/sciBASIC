@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::7598927e136172e74237268c425e752f, Data\Trinity\Html\Html2Article.vb"
+﻿#Region "Microsoft.VisualBasic::c12d36b7ab19b928dcd9bf65d500d7e3, Data\Trinity\Html\Html2Article.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 292
-    '    Code Lines: 175 (59.93%)
-    ' Comment Lines: 83 (28.42%)
+    '   Total Lines: 291
+    '    Code Lines: 174 (59.79%)
+    ' Comment Lines: 83 (28.52%)
     '    - Xml Docs: 55.42%
     ' 
-    '   Blank Lines: 34 (11.64%)
-    '     File Size: 11.36 KB
+    '   Blank Lines: 34 (11.68%)
+    '     File Size: 11.34 KB
 
 
     ' Class Html2Article

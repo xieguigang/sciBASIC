@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::937a51322a6193a60c57c3ebfde6db0f, Data_science\NLP\Tokenizer\src\MaxMatchTokenizer.vb"
+﻿#Region "Microsoft.VisualBasic::7827a8634db3d9a2c6eed5cb897465ce, nlp\NLP\Tokenizer\src\MaxMatchTokenizer.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 71.05%
     ' 
     '   Blank Lines: 26 (15.48%)
-    '     File Size: 6.67 KB
+    '     File Size: 6.83 KB
 
 
     '     Class MaxMatchTokenizer

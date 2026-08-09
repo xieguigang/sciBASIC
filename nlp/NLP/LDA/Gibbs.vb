@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::9c44b9ca561d9c896174a313bb919d84, Data_science\NLP\LDA\Gibbs.vb"
+﻿#Region "Microsoft.VisualBasic::9c44b9ca561d9c896174a313bb919d84, nlp\NLP\LDA\Gibbs.vb"
 
     ' Author:
     ' 

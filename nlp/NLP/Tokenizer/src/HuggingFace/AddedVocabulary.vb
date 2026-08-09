@@ -1,4 +1,4 @@
-#Region "Microsoft.VisualBasic::HuggingFace/AddedVocabulary.vb"
+﻿#Region "Microsoft.VisualBasic::a0f3f375a542d7f0400b981fcdfad2a9, nlp\NLP\Tokenizer\src\HuggingFace\AddedVocabulary.vb"
 
     ' Author:
     ' 
@@ -31,10 +31,30 @@
 
     ' Summaries:
 
+
+    ' Code Statistics:
+
+    '   Total Lines: 219
+    '    Code Lines: 135 (61.64%)
+    ' Comment Lines: 43 (19.63%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 41 (18.72%)
+    '     File Size: 7.91 KB
+
+
     '     Class AddedVocabulary
     ' 
+    '         Properties: Count
+    ' 
     '         Constructor: (+1 Overloads) Sub New
-    '         Function: ExtractSpecial, TokenToId, IdToToken, IsSpecial
+    '         Function: ExtractSpecial, IdToToken, IsSpecial, IsWordBoundary, IsWordChar
+    '                   TokenToId
+    '         Class TrieNode
+    ' 
+    ' 
+    ' 
+    ' 
     ' 
     ' 
     ' /********************************************************************************/

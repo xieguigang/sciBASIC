@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::190b8cac841b1c0fe982114247883636, Data_science\Mathematica\SignalProcessing\wav\wav\VoicePrint\VoicePrint.vb"
+﻿#Region "Microsoft.VisualBasic::60d2959763219b1efef5811e446b5e78, Data_science\Mathematica\SignalProcessing\wav\wav\VoicePrint\VoicePrint.vb"
 
     ' Author:
     ' 
@@ -190,4 +190,3 @@ Public Module VoicePrint
         Return result
     End Function
 End Module
-

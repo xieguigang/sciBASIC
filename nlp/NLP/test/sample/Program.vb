@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::68b34c14bd34f9921a8df64f789fea93, Data_science\NLP\test\sample\Program.vb"
+﻿#Region "Microsoft.VisualBasic::c2f75390eefad84621186a0850cc7cf8, nlp\NLP\test\sample\Program.vb"
 
     ' Author:
     ' 
@@ -40,12 +40,12 @@
     '    - Xml Docs: 0.00%
     ' 
     '   Blank Lines: 18 (17.48%)
-    '     File Size: 4.51 KB
+    '     File Size: 4.61 KB
 
 
     ' Module Program
     ' 
-    '     Sub: Main
+    '     Sub: Mai222n
     ' 
     ' /********************************************************************************/
 

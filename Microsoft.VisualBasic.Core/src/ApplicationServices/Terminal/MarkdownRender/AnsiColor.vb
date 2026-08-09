@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fd9fb0f08a6e20a3c69afb259a3fec41, Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\MarkdownRender\AnsiColor.vb"
+﻿#Region "Microsoft.VisualBasic::d2ef696fcece7a7ef481dec3f1dd161e, Microsoft.VisualBasic.Core\src\ApplicationServices\Terminal\MarkdownRender\AnsiColor.vb"
 
     ' Author:
     ' 
@@ -34,16 +34,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 147
-    '    Code Lines: 112 (76.19%)
-    ' Comment Lines: 9 (6.12%)
+    '   Total Lines: 151
+    '    Code Lines: 115 (76.16%)
+    ' Comment Lines: 9 (5.96%)
     '    - Xml Docs: 66.67%
     ' 
-    '   Blank Lines: 26 (17.69%)
-    '     File Size: 6.68 KB
+    '   Blank Lines: 27 (17.88%)
+    '     File Size: 6.85 KB
 
 
     '     Structure AnsiColor
+    ' 
+    '         Properties: B, G, R
     ' 
     '         Constructor: (+1 Overloads) Sub New
     '         Function: (+2 Overloads) Equals, FromConsoleColor, GetCode, GetEscapeSequence, GetHashCode

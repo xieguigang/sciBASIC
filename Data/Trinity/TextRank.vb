@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::e3a01d8ff5bd73aeac48dbd5bf84ef49, Data\Trinity\TextRank.vb"
+﻿#Region "Microsoft.VisualBasic::8207fbfc64d6b2ba6391687fcd0def26, Data\Trinity\TextRank.vb"
 
     ' Author:
     ' 
@@ -34,19 +34,18 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 244
-    '    Code Lines: 160 (65.57%)
-    ' Comment Lines: 50 (20.49%)
-    '    - Xml Docs: 82.00%
+    '   Total Lines: 157
+    '    Code Lines: 101 (64.33%)
+    ' Comment Lines: 37 (23.57%)
+    '    - Xml Docs: 78.38%
     ' 
-    '   Blank Lines: 34 (13.93%)
-    '     File Size: 9.44 KB
+    '   Blank Lines: 19 (12.10%)
+    '     File Size: 6.37 KB
 
 
     ' Module TextRank
     ' 
-    '     Function: IsEmpty, Removes, Sentences, Similarity, StripMessy
-    '               TextGraph, TextRankGraph, Words
+    '     Function: TextGraph, TextRankGraph
     ' 
     '     Sub: TextRankGraph
     ' 

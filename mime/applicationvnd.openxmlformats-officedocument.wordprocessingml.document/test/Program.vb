@@ -1,3 +1,58 @@
+﻿#Region "Microsoft.VisualBasic::f231b53e2385a6c21e4b63941dcc9150, mime\applicationvnd.openxmlformats-officedocument.wordprocessingml.document\test\Program.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 415
+    '    Code Lines: 309 (74.46%)
+    ' Comment Lines: 55 (13.25%)
+    '    - Xml Docs: 0.00%
+    ' 
+    '   Blank Lines: 51 (12.29%)
+    '     File Size: 18.09 KB
+
+
+    ' Module Program
+    ' 
+    '     Function: Main
+    ' 
+    '     Sub: DemoBlockModel, DemoFullFeatures, DemoTextExtraction
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
 ' ============================================================================
 ' Program.vb - Word 文档生成模块 Demo
 '
@@ -413,3 +468,4 @@ sig_genes <- subset(results, padj < 0.05 & abs(log2FoldChange) > 1)",
     End Sub
 
 End Module
+

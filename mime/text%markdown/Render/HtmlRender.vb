@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::137000e98b00945e9d316b0e0398f38c, mime\text%markdown\Render\HtmlRender.vb"
+﻿#Region "Microsoft.VisualBasic::d7de5f1dda4bd5f52bb5cca6f95c8b97, mime\text%markdown\Render\HtmlRender.vb"
 
     ' Author:
     ' 
@@ -193,4 +193,3 @@ Public Class HtmlRender : Inherits Render
 
     ReadOnly _leadingWhitespace As New Regex("^[ ]*", RegexOptions.Multiline)
 End Class
-

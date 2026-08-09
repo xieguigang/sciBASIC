@@ -1,3 +1,59 @@
+﻿#Region "Microsoft.VisualBasic::42c0bf142c913c16970a83b939026fcd, nlp\NLP\test\HFTokenizerTest.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 288
+    '    Code Lines: 177 (61.46%)
+    ' Comment Lines: 61 (21.18%)
+    '    - Xml Docs: 95.08%
+    ' 
+    '   Blank Lines: 50 (17.36%)
+    '     File Size: 12.06 KB
+
+
+    ' Module HFTokenizerTest
+    ' 
+    '     Function: AssertIds, AssertTokens, Quote, ResolveModelDirectory, ShowAndVerify
+    '               TestUnigram, TestWordPiece
+    ' 
+    '     Sub: Main
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
 Imports Microsoft.VisualBasic.Data.NLP.ChineseTokenizer.HuggingFace
 Imports SysPath = System.IO.Path
 
@@ -286,3 +342,4 @@ Module HFTokenizerTest
     End Function
 
 End Module
+

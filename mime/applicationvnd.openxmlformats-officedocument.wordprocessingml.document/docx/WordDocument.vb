@@ -1,3 +1,78 @@
+﻿#Region "Microsoft.VisualBasic::092f5306ec442de28138eddc11f843c3, mime\applicationvnd.openxmlformats-officedocument.wordprocessingml.document\docx\WordDocument.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 1008
+    '    Code Lines: 734 (72.82%)
+    ' Comment Lines: 155 (15.38%)
+    '    - Xml Docs: 47.10%
+    ' 
+    '   Blank Lines: 119 (11.81%)
+    '     File Size: 50.83 KB
+
+
+    ' Class WordDocument
+    ' 
+    '     Properties: ApplicationName, Author, Description, Subject, Tags
+    '                 Title
+    ' 
+    '     Constructor: (+1 Overloads) Sub New
+    ' 
+    '     Function: Blockquote, BlockquoteStyle, CodeBlock, CodeStyle, DefaultStyle
+    '               DefinitionList, DocTitle, GetAlign, GetBlockquoteStyle, GetBodyXml
+    '               GetCodeStyle, GetDefaultStyle, GetHeadingStyles, GetImages, GetMargins
+    '               GetPageHeight, GetPageWidth, GetParagraphStyle, GetTableStyle, GetTitleStyle
+    '               H1, H2, H3, H4, H5
+    '               H6, Heading, HeadingStyle, Hr, Image
+    '               List, PageBreak, PageSetup, PageSetupA4, PageSetupLetter
+    '               (+2 Overloads) Paragraph, ParagraphStyle, PtToTwip, (+3 Overloads) Table, (+2 Overloads) TableAutoFitContents
+    '               (+2 Overloads) TableAutoFitWindow, TableStyle, TaskList, TitleStyle, Toc
+    '               ToEmu, ToJagged1D, ToJagged2D, WriteAutoFitTable, WriteBlocks
+    '               XEsc
+    ' 
+    '     Sub: ResolveImageExtent, Save, WriteBlock
+    '     Class ImageEntry
+    ' 
+    '         Properties: Data, Extension, HeightEmu, RelId, WidthEmu
+    ' 
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
 ' ============================================================================
 ' WordDocument.vb - Word 文档生成器主类
 '
@@ -1006,3 +1081,4 @@ Public Class WordDocument
     End Function
 
 End Class
+

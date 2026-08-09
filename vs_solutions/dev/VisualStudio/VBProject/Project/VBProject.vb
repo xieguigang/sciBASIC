@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::67989829e32dedb0ffbd9439821f1bf0, vs_solutions\dev\VisualStudio\VBProject\Project\VBProject.vb"
+﻿#Region "Microsoft.VisualBasic::4ca79f6a338eb3aaf808283588f71b52, vs_solutions\dev\VisualStudio\VBProject\Project\VBProject.vb"
 
 ' Author:
 ' 
@@ -34,13 +34,13 @@
 
 ' Code Statistics:
 
-'   Total Lines: 630
-'    Code Lines: 497 (78.89%)
-' Comment Lines: 64 (10.16%)
+'   Total Lines: 635
+'    Code Lines: 502 (79.06%)
+' Comment Lines: 64 (10.08%)
 '    - Xml Docs: 75.00%
 ' 
-'   Blank Lines: 69 (10.95%)
-'     File Size: 30.57 KB
+'   Blank Lines: 69 (10.87%)
+'     File Size: 30.98 KB
 
 
 '     Class VBProject
@@ -50,8 +50,8 @@
 '                     OutputType, PackageReferences, ProjectReferences, RootNamespace, Sdk
 ' 
 '         Function: [GetType], CleanName, ElementValue, ExtractImports, FindByLastName
-'                   FindInContainer, Generate, IsNuGetProperty, Load, LoadAssembly
-'                   LoadProjectXml, ParseConfigCondition, SplitImports, StripGenerics
+'                   FindInContainer, Generate, GetCompileFiles, IsNuGetProperty, Load
+'                   LoadAssembly, LoadProjectXml, ParseConfigCondition, SplitImports, StripGenerics
 ' 
 '         Sub: AddAttrIf, AddIf, ParseItemGroups, ParseProperties, Save
 '              SetMetadataProperty, SetNuGetProperty
@@ -64,9 +64,10 @@
 Imports System.IO
 Imports System.Text.RegularExpressions
 Imports Microsoft.VisualBasic.ApplicationServices.Development.VisualStudio.sln
+Imports Microsoft.VisualBasic.ApplicationServices.Development.VisualStudio.VBProj.CodeDOM
+Imports Microsoft.VisualBasic.ApplicationServices.Development.VisualStudio.VBProj.CodeDOM.Syntax
 Imports Microsoft.VisualBasic.ApplicationServices.Development.VisualStudio.VBProj.ProjectXml
 Imports Microsoft.VisualBasic.ApplicationServices.Development.VisualStudio.VBProj.Reflection
-Imports Microsoft.VisualBasic.ApplicationServices.Development.VisualStudio.VBProj.Syntax
 Imports Microsoft.VisualBasic.ApplicationServices.Development.XmlDoc.Serialization
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.Linq
@@ -121,11 +122,17 @@ Namespace VBProj
             End Get
         End Property
 
+        Public Overrides Function ToString() As String
+            Return RootNamespace
+        End Function
+
         ''' <summary>
         ''' Get symbol via fullname
         ''' </summary>
         ''' <param name="fullName">namespace + type symbol name</param>
-        ''' <returns></returns>
+        ''' <returns>
+        ''' returns nothing if the given symbol could not be found
+        ''' </returns>
         Public Overloads Function [GetType](fullName As String) As LanguageSymbolType
             If String.IsNullOrWhiteSpace(fullName) OrElse CompileFiles Is Nothing Then
                 Return Nothing
@@ -273,6 +280,10 @@ Namespace VBProj
                     Else
                         vbdoc.Types = New Dictionary(Of String, LanguageSymbolType)()
                     End If
+
+                    ' backfill the absolute file path into every recorded source
+                    ' location so that Source.CodeBlock can read the source text.
+                    FillSourceFilePath(root, full)
                 Catch
                     vbdoc.Types = New Dictionary(Of String, LanguageSymbolType)()
                 End Try
@@ -284,6 +295,60 @@ Namespace VBProj
 
             Return proj
         End Function
+
+        ' walk the whole symbol tree and fill the absolute file path into every
+        ' recorded source location (the parser only records line ranges). A
+        ' HashSet of visited symbols guards against shared nodes produced by
+        ' partial-type merging.
+        Private Shared Sub FillSourceFilePath(sym As LanguageSymbolType, filePath As String)
+            If sym Is Nothing Then
+                Return
+            End If
+
+            Dim visited As New Generic.HashSet(Of LanguageSymbolType)
+            WalkSymbol(sym, filePath, visited)
+        End Sub
+
+        Private Shared Sub WalkSymbol(sym As LanguageSymbolType, filePath As String, visited As Generic.HashSet(Of LanguageSymbolType))
+            If sym Is Nothing OrElse visited.Contains(sym) Then
+                Return
+            End If
+            visited.Add(sym)
+
+            If sym.Source IsNot Nothing Then
+                For Each loc As Source In sym.Source.ToArray()
+                    If String.IsNullOrEmpty(loc.FilePath) Then
+                        loc.FilePath = filePath
+                    End If
+                Next
+            End If
+
+            If TypeOf sym Is TypeContainerSymbol Then
+                Dim ct As TypeContainerSymbol = DirectCast(sym, TypeContainerSymbol)
+
+                If ct.InternalNested IsNot Nothing Then
+                    For Each kv In ct.InternalNested
+                        WalkSymbol(kv.Value, filePath, visited)
+                    Next
+                End If
+
+                If ct.Members IsNot Nothing Then
+                    For Each kv In ct.Members
+                        WalkSymbol(kv.Value, filePath, visited)
+                    Next
+                End If
+            End If
+
+            If TypeOf sym Is CallableMemberSymbol Then
+                Dim cm As CallableMemberSymbol = DirectCast(sym, CallableMemberSymbol)
+
+                If cm.Locals IsNot Nothing Then
+                    For Each kv In cm.Locals
+                        WalkSymbol(kv.Value, filePath, visited)
+                    Next
+                End If
+            End If
+        End Sub
 
         ''' <summary>
         ''' Just read the vbproj xml file

@@ -1,4 +1,4 @@
-#Region "Microsoft.VisualBasic::HuggingFace/TokenizerJson.vb"
+﻿#Region "Microsoft.VisualBasic::e0a15ce23819397b8e8659697e168ef0, nlp\NLP\Tokenizer\src\HuggingFace\TokenizerJson.vb"
 
     ' Author:
     ' 
@@ -31,13 +31,39 @@
 
     ' Summaries:
 
+
+    ' Code Statistics:
+
+    '   Total Lines: 350
+    '    Code Lines: 180 (51.43%)
+    ' Comment Lines: 122 (34.86%)
+    '    - Xml Docs: 97.54%
+    ' 
+    '   Blank Lines: 48 (13.71%)
+    '     File Size: 14.53 KB
+
+
     '     Class AddedTokenInfo
+    ' 
+    '         Properties: Content, Id, LStrip, Normalized, RStrip
+    '                     SingleWord, Special
+    ' 
+    '         Function: ToString
     ' 
     '     Class ModelSection
     ' 
+    '         Properties: ByteFallback, ContinuingSubwordPrefix, EndOfWordSuffix, FuseUnk, IdToToken
+    '                     IgnoreMerges, MaxInputCharsPerWord, Merges, Type, UnigramScores
+    '                     UnkId, UnkToken, Vocab
+    ' 
     '     Class TokenizerJson
     ' 
-    '         Function: ParseFile
+    '         Properties: AddedTokens, Decoder, Model, Normalizer, PostProcessor
+    '                     PreTokenizer
+    ' 
+    '         Function: FromJson, ParseAddedTokens, ParseFile, ParseModel, ParseTokenLiteral
+    ' 
+    '         Sub: ParseMerges, ParseVocab
     ' 
     ' 
     ' /********************************************************************************/

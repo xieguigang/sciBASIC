@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2ae21c3f65c9600b495d371babdef461, Microsoft.VisualBasic.Core\src\Extensions\IO\Path\Directory.vb"
+﻿#Region "Microsoft.VisualBasic::72bd380889b60165b0453979ba02f5b7, Microsoft.VisualBasic.Core\src\Extensions\IO\Path\Directory.vb"
 
     ' Author:
     ' 
@@ -50,9 +50,9 @@
     '         Constructor: (+1 Overloads) Sub New
     ' 
     '         Function: CopyTo, DeleteFile, EnumerateFiles, Exists, FileExists
-    '                   FileModifyTime, FileSize, FromLocalFileSystem, (+2 Overloads) GetFiles, GetFullPath
-    '                   GetRelativePath, GetSubDirectories, IsAbsolutePath, OpenFile, ReadAllText
-    '                   ToString, WriteText
+    '                   FileModifyTime, FileSize, FromLocalFileSystem, GetAllFiles, GetFiles
+    '                   GetFullPath, GetRelativePath, GetSubDirectories, IsAbsolutePath, OpenFile
+    '                   ReadAllText, ToString, WriteText
     ' 
     '         Sub: Close, CreateDirectory, Delete, Flush
     ' 

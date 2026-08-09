@@ -1,4 +1,4 @@
-#Region "Microsoft.VisualBasic::HuggingFace/ByteLevelAlphabet.vb"
+﻿#Region "Microsoft.VisualBasic::58a444b6720fde3adb5d0e4fa644333c, nlp\NLP\Tokenizer\src\HuggingFace\ByteLevelAlphabet.vb"
 
     ' Author:
     ' 
@@ -31,9 +31,22 @@
 
     ' Summaries:
 
+
+    ' Code Statistics:
+
+    '   Total Lines: 145
+    '    Code Lines: 70 (48.28%)
+    ' Comment Lines: 53 (36.55%)
+    '    - Xml Docs: 92.45%
+    ' 
+    '   Blank Lines: 22 (15.17%)
+    '     File Size: 5.66 KB
+
+
     '     Module ByteLevelAlphabet
     ' 
-    '         Function: EncodeBytes, DecodeToBytes, DecodeToString, GetChar, TryGetByte
+    '         Constructor: (+1 Overloads) Sub New
+    '         Function: DecodeToBytes, DecodeToString, EncodeBytes, GetChar, TryGetByte
     ' 
     ' 
     ' /********************************************************************************/

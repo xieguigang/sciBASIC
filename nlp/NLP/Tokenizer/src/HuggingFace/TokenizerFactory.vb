@@ -1,4 +1,4 @@
-#Region "Microsoft.VisualBasic::HuggingFace/TokenizerFactory.vb"
+﻿#Region "Microsoft.VisualBasic::fb5138bf0c9c4d534eb1a0dd0c029cba, nlp\NLP\Tokenizer\src\HuggingFace\TokenizerFactory.vb"
 
     ' Author:
     ' 
@@ -31,10 +31,23 @@
 
     ' Summaries:
 
+
+    ' Code Statistics:
+
+    '   Total Lines: 390
+    '    Code Lines: 268 (68.72%)
+    ' Comment Lines: 38 (9.74%)
+    '    - Xml Docs: 97.37%
+    ' 
+    '   Blank Lines: 84 (21.54%)
+    '     File Size: 15.91 KB
+
+
     '     Module TokenizerFactory
     ' 
-    '         Function: CreateNormalizer, CreatePreTokenizer, CreateModel
-    '                   CreatePostProcessor, CreateDecoder
+    '         Function: CreateDecoder, CreateModel, CreateNormalizer, CreatePostProcessor, CreatePreTokenizer
+    '                   ParseBehavior, ReadPattern, ReadPrependScheme, ReadTemplate, ReadTokenPair
+    '                   ResolveSpecialId
     ' 
     ' 
     ' /********************************************************************************/

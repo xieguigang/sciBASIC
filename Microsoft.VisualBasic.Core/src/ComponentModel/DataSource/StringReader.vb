@@ -1,72 +1,72 @@
-﻿#Region "Microsoft.VisualBasic::4687a8de632b15a6161c34ec3bb69229, Microsoft.VisualBasic.Core\src\ComponentModel\DataSource\StringReader.vb"
+﻿#Region "Microsoft.VisualBasic::2ea7ff38eee8ab3936381e2ebbcd3d6c, Microsoft.VisualBasic.Core\src\ComponentModel\DataSource\StringReader.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 333
-'    Code Lines: 177 (53.15%)
-' Comment Lines: 105 (31.53%)
-'    - Xml Docs: 88.57%
-' 
-'   Blank Lines: 51 (15.32%)
-'     File Size: 11.69 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Interface IStringGetter
-' 
-'         Function: GetOrdinal, GetSize, (+2 Overloads) GetString, HasKey, MoveNext
-' 
-'     Class DictionaryWrapper
-' 
-'         Constructor: (+1 Overloads) Sub New
-'         Function: GetOrdinal, GetSize, (+2 Overloads) GetString, HasKey, MoveNext
-' 
-'     Class StringArrayPointer
-' 
-'         Constructor: (+1 Overloads) Sub New
-'         Function: (+2 Overloads) ReadDouble, (+2 Overloads) ReadInteger, (+2 Overloads) ReadString, ToString
-' 
-'     Class StringReader
-' 
-'         Constructor: (+1 Overloads) Sub New
-'         Function: GetBoolean, GetByte, GetBytes, GetChar, GetChars
-'                   GetDateTime, GetDecimal, GetDouble, GetFloat, GetGuid
-'                   GetInt16, GetInt32, GetInt64, GetString, GetUInt64
-'                   IsNull, WrapDictionary
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 378
+    '    Code Lines: 215 (56.88%)
+    ' Comment Lines: 105 (27.78%)
+    '    - Xml Docs: 88.57%
+    ' 
+    '   Blank Lines: 58 (15.34%)
+    '     File Size: 12.82 KB
+
+
+    '     Interface IStringGetter
+    ' 
+    '         Function: GetOrdinal, GetSize, (+2 Overloads) GetString, HasKey, MoveNext
+    ' 
+    '     Class DictionaryWrapper
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    '         Function: GetOrdinal, GetSize, (+2 Overloads) GetString, HasKey, MoveNext
+    ' 
+    '     Class StringArrayPointer
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    '         Function: (+2 Overloads) ReadDouble, (+2 Overloads) ReadInteger, (+2 Overloads) ReadString, ToString
+    ' 
+    '     Class StringReader
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    '         Function: GetBoolean, GetByte, GetBytes, GetChar, GetChars
+    '                   GetDateTime, GetDecimal, GetDouble, GetFloat, GetGuid
+    '                   GetInt16, GetInt32, GetInt64, GetString, GetUInt64
+    '                   IsNull, WrapDictionary
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3330717e407558323c980fd1cf1b46c6, vs_solutions\dev\VisualStudio\VBProject\Project\ProjectFiles.vb"
+﻿#Region "Microsoft.VisualBasic::57a8f8912dd9dd672f1a36aa7881703a, vs_solutions\dev\VisualStudio\VBProject\Project\ProjectFiles.vb"
 
     ' Author:
     ' 

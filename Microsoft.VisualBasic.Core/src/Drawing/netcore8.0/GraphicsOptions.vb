@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::3a6ae4cd45b762bb003ae9b73c78c34f, Microsoft.VisualBasic.Core\src\Drawing\netcore8.0\GraphicsOptions.vb"
+﻿#Region "Microsoft.VisualBasic::c687f5b871dbb9dc44e22d25e030c210, Microsoft.VisualBasic.Core\src\Drawing\netcore8.0\GraphicsOptions.vb"
 
     ' Author:
     ' 
@@ -34,12 +34,12 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 241
-    '    Code Lines: 68 (28.22%)
-    ' Comment Lines: 126 (52.28%)
+    '   Total Lines: 240
+    '    Code Lines: 68 (28.33%)
+    ' Comment Lines: 126 (52.50%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 47 (19.50%)
+    '   Blank Lines: 46 (19.17%)
     '     File Size: 6.58 KB
 
 
@@ -107,7 +107,6 @@
     ' /********************************************************************************/
 
 #End Region
-
 
 Imports System.Drawing
 

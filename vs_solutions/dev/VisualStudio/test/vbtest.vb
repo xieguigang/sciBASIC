@@ -1,80 +1,81 @@
 ﻿#Region "Microsoft.VisualBasic::163e50a3be11b8fec374544d34729d3c, vs_solutions\dev\VisualStudio\test\vbtest.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 357
-    '    Code Lines: 303 (84.87%)
-    ' Comment Lines: 7 (1.96%)
-    '    - Xml Docs: 28.57%
-    ' 
-    '   Blank Lines: 47 (13.17%)
-    '     File Size: 18.07 KB
+' Summaries:
 
 
-    ' Module Program2222
-    ' 
-    '     Sub: Assert, Dump, Main1, RunAsserts, TestProject
-    '          TestReflection
-    '     Delegate Function
-    ' 
-    ' 
-    '     Class DemoClass
-    ' 
-    '         Properties: Name
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    '         Function: Compute
-    '         Operators: +
-    '         Enum InnerEnum
-    ' 
-    '             First
-    ' 
-    ' 
-    ' 
-    ' 
-    ' 
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 357
+'    Code Lines: 303 (84.87%)
+' Comment Lines: 7 (1.96%)
+'    - Xml Docs: 28.57%
+' 
+'   Blank Lines: 47 (13.17%)
+'     File Size: 18.07 KB
+
+
+' Module Program2222
+' 
+'     Sub: Assert, Dump, Main1, RunAsserts, TestProject
+'          TestReflection
+'     Delegate Function
+' 
+' 
+'     Class DemoClass
+' 
+'         Properties: Name
+' 
+'         Constructor: (+1 Overloads) Sub New
+'         Function: Compute
+'         Operators: +
+'         Enum InnerEnum
+' 
+'             First
+' 
+' 
+' 
+' 
+' 
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.IO
 Imports Microsoft.VisualBasic.ApplicationServices.Development.VisualStudio.VBProj
+Imports Microsoft.VisualBasic.ApplicationServices.Development.VisualStudio.VBProj.CodeDOM
+Imports Microsoft.VisualBasic.ApplicationServices.Development.VisualStudio.VBProj.CodeDOM.Syntax
 Imports Microsoft.VisualBasic.ApplicationServices.Development.VisualStudio.VBProj.ProjectXml
-Imports Microsoft.VisualBasic.ApplicationServices.Development.VisualStudio.VBProj.Syntax
 
 Module Program2222
 
@@ -197,6 +198,46 @@ End Namespace
         Dim en = CType(cls.InternalNested("InnerEnum"), EnumSymbol)
         Assert(en IsNot Nothing AndAlso en.Type = SymbolType.[Enum], "nested enum", failures)
         Assert(en.EnumBaseType IsNot Nothing AndAlso en.EnumBaseType.fullName = "Byte", "enum base Byte", failures)
+
+        ' ----- source location (IntRange) recording -----
+        ' Note: VBParser.Parse(src) has no file path, so Source.FilePath is empty
+        ' here; we only assert the recorded line ranges (1-based, relative to
+        ' the source string itself).
+        Assert(ns.Source IsNot Nothing, "namespace has source location", failures)
+        Assert(ns.Source.First.LineRange.Min = 4 AndAlso ns.Source.First.LineRange.Max = 41, "namespace line range 4-41", failures)
+        Assert(ns.Source.First.DeclarationLine = 5, "namespace declaration line 5", failures)
+
+        Assert(cls.Source IsNot Nothing, "class has source location", failures)
+        ' leading line includes the xml doc comment (src line 10)
+        Assert(cls.Source.First.LineRange.Min = 10 AndAlso cls.Source.First.LineRange.Max = 39, "class line range 10-39", failures)
+        Assert(cls.Source.First.DeclarationLine = 12, "class declaration line 12", failures)
+
+        Assert(prop.Source IsNot Nothing AndAlso prop.Source.First.LineRange.Min = 16 AndAlso prop.Source.First.LineRange.Max = 16, "auto-property Name single line 16", failures)
+        Assert(ctor.Source IsNot Nothing AndAlso ctor.Source.First.LineRange.Min = 19 AndAlso ctor.Source.First.LineRange.Max = 21, "Sub New 19-21", failures)
+        Assert(fn.Source IsNot Nothing AndAlso fn.Source.First.LineRange.Min = 23 AndAlso fn.Source.First.LineRange.Max = 29, "Compute 23-29 (line continuation)", failures)
+        Assert(fn.Source.First.DeclarationLine = 23, "Compute declaration line 23", failures)
+        Assert(del.Source IsNot Nothing AndAlso del.Source.First.LineRange.Min = 7 AndAlso del.Source.First.LineRange.Max = 8, "delegate 7-8", failures)
+        Assert(en.Source IsNot Nothing AndAlso en.Source.First.LineRange.Min = 35 AndAlso en.Source.First.LineRange.Max = 38, "enum 35-38", failures)
+
+        ' partial class merge: two partial declarations of the same class in one
+        ' source must produce a single symbol with IsMultiplePartial = True and
+        ' two recorded locations.
+        Dim partialSrc As String = "
+Partial Public Class Split
+    Public A As Integer
+End Class
+
+''' <summary>second part</summary>
+Partial Public Class Split
+    Public B As String
+End Class
+"
+        Dim proot As TypeContainerSymbol = VBParser.Parse(partialSrc)
+        Dim splitCls = CType(proot.InternalNested("Split"), TypeContainerSymbol)
+        Assert(splitCls IsNot Nothing, "partial class Split parsed", failures)
+        Assert(splitCls.Source IsNot Nothing AndAlso splitCls.Source.IsMultiplePartial, "partial class IsMultiplePartial", failures)
+        Assert(splitCls.Source.Count = 2, "partial class recorded 2 locations", failures)
+        Assert(splitCls.Members IsNot Nothing AndAlso splitCls.Members.ContainsKey("A") AndAlso splitCls.Members.ContainsKey("B"), "partial members merged A+B", failures)
     End Sub
 
     Sub TestProject()

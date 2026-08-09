@@ -1,4 +1,64 @@
-﻿Imports System.Text
+﻿#Region "Microsoft.VisualBasic::7a45159a375fb4dc5ef18d813e0667ba, mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\XLSX\Writer\Style\Border.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 331
+    '    Code Lines: 211 (63.75%)
+    ' Comment Lines: 91 (27.49%)
+    '    - Xml Docs: 98.90%
+    ' 
+    '   Blank Lines: 29 (8.76%)
+    '     File Size: 12.71 KB
+
+
+    '     Class Border
+    ' 
+    '         Properties: BottomColor, BottomStyle, DiagonalColor, DiagonalDown, DiagonalStyle
+    '                     DiagonalUp, LeftColor, LeftStyle, RightColor, RightStyle
+    '                     TopColor, TopStyle
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    '         Function: Copy, CopyBorder, GetHashCode, GetStyleName, IsEmpty
+    '                   ToString
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
+Imports System.Text
 
 Namespace XLSX.Writer.Styling
 
