@@ -92,6 +92,7 @@ Namespace struct
 
             Me.version = [in].readByte()
 
+
             If Me.version = 1 Then
 
                 [in].skipBytes(1)
@@ -102,7 +103,11 @@ Namespace struct
 
                 [in].skipBytes(4)
 
-                readVersion1([in], sb, [in].offset, Me.totalNumberOfHeaderMessages, Long.MaxValue)
+                ' 循环边界以「消息区大小」(objectHeaderSize) 为准，而非 totalNumberOfHeaderMessages：
+                ' 某些文件（如 10x Visium HD）根组对象头的消息区仅含 1 条 Group 消息，
+                ' 但 totalNumberOfHeaderMessages 字段写入了更大值，若按该计数遍历会越界读到
+                ' 紧随其后的 B 树节点 ("TREE")，把签名字节误当作消息类型而崩溃。
+                readVersion1([in], sb, [in].offset, Me.totalNumberOfHeaderMessages, Me.objectHeaderSize)
             ElseIf Me.version = &H4F Then
                 ' The first byte is 'O' of the "OHDR" signature of a version 2 object header.
                 Call readVersion2([in], sb, address)
