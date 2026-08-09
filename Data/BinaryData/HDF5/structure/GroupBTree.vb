@@ -94,7 +94,16 @@ Namespace struct
 
             Call readAllEntries(sb, address, entryList, visited, 0)
 
+            ' 去除重复的目标地址，避免同一 SNOD 节点被多次加入导致符号表条目重复
+            Dim dedup As New List(Of BTreeEntry)()
+            Dim seenTargets As New HashSet(Of Long)()
             For Each e As BTreeEntry In entryList
+                If seenTargets.Add(e.targetAddress) Then
+                    dedup.Add(e)
+                End If
+            Next
+
+            For Each e As BTreeEntry In dedup
                 Try
                     node = New GroupNode(sb, e.targetAddress)
                     symbolTableEntries.AddRange(node.symbols)

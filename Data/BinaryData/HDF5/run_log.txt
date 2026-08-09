@@ -1,0 +1,172 @@
+﻿G:\pixelArtist\src\framework\Data\BinaryData\BinaryData\binarydata-netcore5.vbproj : warning NU1510: PackageReference System.Drawing.Primitives will not be pruned. This package is automatically available and does not need to be referenced explicitly. Remove the PackageReference item. [G:\pixelArtist\src\framework\Data\BinaryData\HDF5\test\test.vbproj]
+G:\pixelArtist\src\framework\Data\BinaryData\BinaryData\binarydata-netcore5.vbproj : warning NU1510: PackageReference System.Drawing.Primitives will not be pruned. This package is automatically available and does not need to be referenced explicitly. Remove the PackageReference item. [TargetFramework=net10.0]
+
+################################################################
+诊断文件: C:\Users\Administrator\Downloads\Visium_HD_6p5mm_Rat_Liver_molecule_info.h5
+################################################################
+================================================================
+HDF5 诊断报告
+文件 : C:\Users\Administrator\Downloads\Visium_HD_6p5mm_Rat_Liver_molecule_info.h5
+时间 : 2026-08-10 00:20:40
+对象总数 : 1   成功 : 0   失败 : 1
+================================================================
+
+[FAIL] (open)  (file)
+    shape  : 
+    dtype  : 
+    layout : 
+    filter : 
+    !ERROR : ArgumentException : offset must be positive and bigger than 0
+    @frame : at Microsoft.VisualBasic.Data.IO.HDF5.device.BinaryFileReader.set_offset(Int64 Value) in G:\pixelArtist\src\framework\Data\BinaryData\HDF5\device\BinaryFileReader.vb:line 75
+
+
+----------------------------------------------------------------
+汇总 : 成功 0 / 失败 1 / 共 1
+----------------------------------------------------------------
+
+
+完整报告已写入: Z:\tmp\hdf5_diag\Visium_HD_6p5mm_Rat_Liver_molecule_info_report.txt
+
+################################################################
+诊断文件: C:\Users\Administrator\Downloads\Visium_HD_6p5mm_Rat_Liver_feature_slice.h5
+################################################################
+================================================================
+HDF5 诊断报告
+文件 : C:\Users\Administrator\Downloads\Visium_HD_6p5mm_Rat_Liver_feature_slice.h5
+时间 : 2026-08-10 00:20:40
+对象总数 : 15   成功 : 10   失败 : 5
+================================================================
+
+[OK  ] (superblock)  (file)
+    shape  : v0
+    dtype  : offsets=8 lengths=8
+    layout : rootGroup=96
+    filter : K(leaf=4,internal=16)
+    sample : Visium_HD_6p5mm_Rat_Liver_feature_slice.h5
+
+
+[OK  ] /feature_slices/  (group)
+    shape  : 
+    dtype  : 
+    layout : 
+    filter : 
+    sample : 
+
+
+[OK  ] /features/  (group)
+    shape  : 
+    dtype  : 
+    layout : 
+    filter : 
+    sample : 
+
+
+[OK  ] /images/  (group)
+    shape  : 
+    dtype  : 
+    layout : 
+    filter : 
+    sample : 
+
+
+[OK  ] /masks/  (group)
+    shape  : 
+    dtype  : 
+    layout : 
+    filter : 
+    sample : 
+
+
+[OK  ] /reads/  (group)
+    shape  : 
+    dtype  : 
+    layout : 
+    filter : 
+    sample : 
+
+
+[OK  ] /secondary_analysis/  (group)
+    shape  : 
+    dtype  : 
+    layout : 
+    filter : 
+    sample : 
+
+
+[OK  ] /segmentations/  (group)
+    shape  : 
+    dtype  : 
+    layout : 
+    filter : 
+    sample : 
+
+
+[OK  ] /umis/  (group)
+    shape  : 
+    dtype  : 
+    layout : 
+    filter : 
+    sample : 
+
+
+[FAIL] /features  (dataset)
+    shape  : [1]
+    dtype  : DATATYPE_STRING (256B)
+    layout : ContiguousStorage
+    filter : 
+    !ERROR : ObjectDisposedException : Cannot access a closed file.
+    @frame : at System.IO.FileStream.Seek(Int64 offset, SeekOrigin origin)
+
+
+[FAIL] /feature_slices  (dataset)
+    shape  : [25629]
+    dtype  : DATATYPE_STRING (256B)
+    layout : ChunkedStorage chunk=[25629]
+    filter : 2,0
+    !ERROR : ObjectDisposedException : Cannot access a closed file.
+    @frame : at System.IO.FileStream.Seek(Int64 offset, SeekOrigin origin)
+
+
+[FAIL] /umis  (dataset)
+    shape  : [25629]
+    dtype  : DATATYPE_STRING (256B)
+    layout : ChunkedStorage chunk=[25629]
+    filter : 2,0
+    !ERROR : ObjectDisposedException : Cannot access a closed file.
+    @frame : at System.IO.FileStream.Seek(Int64 offset, SeekOrigin origin)
+
+
+[FAIL] /reads  (dataset)
+    shape  : [25629]
+    dtype  : DATATYPE_STRING (256B)
+    layout : ChunkedStorage chunk=[25629]
+    filter : 2,0
+    !ERROR : ObjectDisposedException : Cannot access a closed file.
+    @frame : at System.IO.FileStream.Seek(Int64 offset, SeekOrigin origin)
+
+
+[FAIL] /masks  (dataset)
+    shape  : [25629]
+    dtype  : DATATYPE_STRING (256B)
+    layout : ChunkedStorage chunk=[25629]
+    filter : 2,0
+    !ERROR : ObjectDisposedException : Cannot access a closed file.
+    @frame : at System.IO.FileStream.Seek(Int64 offset, SeekOrigin origin)
+
+
+[OK  ] /images/  (group)
+    shape  : 
+    dtype  : 
+    layout : 
+    filter : 
+    sample : 
+
+
+----------------------------------------------------------------
+汇总 : 成功 10 / 失败 5 / 共 15
+----------------------------------------------------------------
+
+
+完整报告已写入: Z:\tmp\hdf5_diag\Visium_HD_6p5mm_Rat_Liver_feature_slice_report.txt
+
+全部诊断完成。
