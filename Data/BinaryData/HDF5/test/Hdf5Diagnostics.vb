@@ -28,7 +28,8 @@ Namespace test
 
                 report.Add(describeSuperblock(hdf5.superblock, filePath))
 
-                ' 临时调试：转储根组的首层子节点地址与签名，定位 molecule_info 打开失败原因
+                ' 临时调试：转储 parseHeader 错误与根组首层子节点地址/签名，定位 molecule_info 打开失败原因
+                report.Add(debugParseError(hdf5))
                 report.Add(debugRootGroup(hdf5.superblock, hdf5.superblock.rootGroupHeaderAddress))
 
                 ' 以与 HDF5File.parseHeader 一致的方式重建根组，避免依赖内部字段
@@ -342,6 +343,86 @@ Namespace test
 
             report.Add(entry)
         End Sub
+
+        Private Function debugParseError(hdf5 As HDF5File) As DiagnosticEntry
+            Dim entry As New DiagnosticEntry() With {
+                .path = "(debug parseHeader)",
+                .kind = "file"
+            }
+            If hdf5._lastParseHeaderError Is Nothing Then
+                entry.succeeded = True
+                entry.sampleValues = "parseHeader OK"
+            Else
+                Dim ex = hdf5._lastParseHeaderError
+                entry.succeeded = False
+                entry.errorType = ex.GetType().Name
+                entry.errorMessage = ex.Message
+                entry.errorFrame = firstFrame(ex)
+            End If
+            Return entry
+        End Function
+
+        Private Function debugRootGroup(sb As Superblock, rootHeaderAddress As Long) As DiagnosticEntry
+            Dim entry As New DiagnosticEntry() With {
+                .path = "(debug root group)",
+                .kind = "file"
+            }
+            Try
+                Dim sb2 As New StringBuilder()
+                sb2.Append("rootGroupHeaderAddress=" & rootHeaderAddress & "; ")
+
+                ' 对象头
+                Dim facade As New DataObjectFacade(sb, "root", rootHeaderAddress)
+                sb2.Append("messages=" & facade.dataObject.messages.Count & "; ")
+
+                Dim symAddr As Long = -1
+                For Each m In facade.dataObject.messages
+                    If m.headerMessageType Is ObjectHeaderMessageType.Group Then
+                        symAddr = m.groupMessage.bTreeAddress
+                        sb2.Append("symbolTableGroup=" & symAddr & "; ")
+                    End If
+                Next
+
+                If symAddr >= 0 Then
+                    ' TREE 节点原始字节（前 96 字节）
+                    Dim raw = sb.FileReader(symAddr).readBytes(96).ToArray()
+                    Dim hex As New List(Of String)()
+                    For Each b In raw
+                        hex.Add(b.ToString("x2"))
+                    Next
+                    sb2.AppendLine("treeRaw(96)= " & String.Join(" ", hex))
+
+                    ' 从偏移 12 起按 sizeOfOffsets 宽度读取候选子节点地址并尝试读取其签名
+                    Dim soo As Integer = sb.sizeOfOffsets
+                    Dim cands As New List(Of String)()
+                    For i = 12 To 84 Step soo
+                        Dim addr As Long = 0
+                        For j = 0 To soo - 1
+                            addr = (addr << 8) Or raw(i + j)
+                        Next
+                        Dim childSig = "?"
+                        If addr > 0 AndAlso addr < 100000000000L Then
+                            Try
+                                childSig = Text.Encoding.ASCII.GetString(sb.FileReader(addr).readBytes(4).ToArray())
+                            Catch
+                                childSig = "?"
+                            End Try
+                        End If
+                        cands.Add("@" & i & "=" & addr & "[" & childSig & "]")
+                    Next
+                    sb2.Append("candChildren: " & String.Join(", ", cands))
+                End If
+
+                entry.succeeded = True
+                entry.sampleValues = sb2.ToString()
+            Catch ex As Exception
+                entry.succeeded = False
+                entry.errorType = ex.GetType().Name
+                entry.errorMessage = ex.Message
+                entry.errorFrame = firstFrame(ex)
+            End Try
+            Return entry
+        End Function
 
         Private Function firstFrame(ex As Exception) As String
             If ex.StackTrace Is Nothing Then

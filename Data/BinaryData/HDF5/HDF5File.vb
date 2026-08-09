@@ -185,12 +185,22 @@ Public Class HDF5File : Implements IDisposable
         Dim sb As Superblock = Me.superblock
         Dim rootHeaderAddress As Long = sb.rootGroupHeaderAddress
         Dim objectFacade As New DataObjectFacade(sb, "root", rootHeaderAddress)
-        Dim rootGroup As New Group(sb, objectFacade)
-        Dim objects As List(Of DataObjectFacade) = rootGroup.objects
 
-        _attributes = attributeTable(rootGroup.attributes, Me.superblock)
-        rootObjects = objects.ToDictionary(Function(o) o.symbolName)
+        Try
+            Dim rootGroup As New Group(sb, objectFacade)
+            Dim objects As List(Of DataObjectFacade) = rootGroup.objects
+
+            _attributes = attributeTable(rootGroup.attributes, Me.superblock)
+            rootObjects = objects.ToDictionary(Function(o) o.symbolName)
+        Catch ex As Exception
+            ' 临时调试：根组构造失败时仍保留 superblock，便于外部手动遍历定位问题
+            _lastParseHeaderError = ex
+            rootObjects = New Dictionary(Of String, DataObjectFacade)()
+        End Try
     End Sub
+
+    ''' <summary>临时调试用：记录 parseHeader 时遇到的异常（成功时为 Nothing）。</summary>
+    Public _lastParseHeaderError As Exception = Nothing
 
     Public Shared Function attributeTable(attrs As AttributeMessage(), sb As Superblock) As Dictionary(Of String, Object)
         Dim table As New Dictionary(Of String, Object)
