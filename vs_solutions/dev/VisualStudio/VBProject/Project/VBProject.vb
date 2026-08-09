@@ -121,6 +121,10 @@ Namespace VBProj
             End Get
         End Property
 
+        Public Overrides Function ToString() As String
+            Return RootNamespace
+        End Function
+
         ''' <summary>
         ''' Get symbol via fullname
         ''' </summary>
