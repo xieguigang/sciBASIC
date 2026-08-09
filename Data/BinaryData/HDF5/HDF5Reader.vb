@@ -214,45 +214,36 @@ Public Class HDF5Reader : Implements IFileDump
     ''' <param name="dobj"></param>
     ''' <returns></returns>
     Private Shared Function parserObject(dobj As DataObjectFacade, container As HDF5Reader) As Group
-        ' parse or get layout
-        Dim layout As Layout = dobj.layout
+        ' 使用现代的 DataLayoutMessage 路径（其 dataset 为可正常工作的 ChunkedDatasetV3 等实现）。
+        Dim dl As DataLayoutMessage = dobj.layoutMessage
         Dim reader As BinaryReader = container.reader
         Dim sb As Superblock = container.superblock
 
-        container._layout = layout
         container._attributes = HDF5File.attributeTable(dobj.attributes, sb)
 
-        If layout.isEmpty Then
+        If dl Is Nothing OrElse dl.dataset Is Nothing Then
             Return New Group(sb, dobj)
         Else
-            ' parse btree index of the data
-            Dim dataTree As New DataBTree(layout)
-            Dim iter As DataChunkIterator = dataTree.getChunkIterator(sb)
-            Dim chunk As DataChunk
-
-            container._dataset = dobj.layout.dataset
-            container._dataBTree = dataTree
+            container._dataset = dl.dataset
             container._dataType = dobj.GetMessage(ObjectHeaderMessages.Datatype)
             container._dataSpace = dobj.GetMessage(ObjectHeaderMessages.Dataspace)
 
-            If Not container.dataset Is Nothing Then
+            ' 构造一个 struct.Layout 仅用于 ToString / 兼容属性
+            container._layout = New Layout() With {.dataAddress = dl.dataAddress}
+
+            If container.dataset IsNot Nothing Then
                 container.dataset.dataSpace = container.dataSpace
                 container.dataset.dataType = container.dataType.reader
-                container.dataset.dataLayout = layout
                 container.dataset.pipeline = dobj.filterMessage
-            End If
 
-            While iter.hasNext()
-                chunk = iter.[next](reader, sb)
-
-                ' Skip invalid chunks (e.g. B-tree high-key sentinels with no file position)
-                If chunk.filePosition < 0 Then
-                    Continue While
+                ' 将 ChunkedDatasetV3 所需的布局信息补全（旧 dataLayout 路径未填充）
+                If TypeOf container.dataset Is ChunkedDatasetV3 Then
+                    Dim chunked = DirectCast(container.dataset, ChunkedDatasetV3)
+                    If chunked.dimensionSize Is Nothing OrElse chunked.dimensionSize.Length = 0 Then
+                        chunked.dimensionSize = dl.chunkSize
+                    End If
                 End If
-
-                ' read/add a new data chunk block
-                container.chunks.Add(chunk)
-            End While
+            End If
 
             Return Nothing
         End If

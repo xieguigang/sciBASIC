@@ -92,6 +92,7 @@ Namespace struct
 
             Me.version = [in].readByte()
 
+
             If Me.version = 1 Then
 
                 [in].skipBytes(1)
@@ -102,7 +103,11 @@ Namespace struct
 
                 [in].skipBytes(4)
 
-                readVersion1([in], sb, [in].offset, Me.totalNumberOfHeaderMessages, Long.MaxValue)
+                ' 循环边界以「消息区大小」(objectHeaderSize) 为准，而非 totalNumberOfHeaderMessages：
+                ' 某些文件（如 10x Visium HD）根组对象头的消息区仅含 1 条 Group 消息，
+                ' 但 totalNumberOfHeaderMessages 字段写入了更大值，若按该计数遍历会越界读到
+                ' 紧随其后的 B 树节点 ("TREE")，把签名字节误当作消息类型而崩溃。
+                readVersion1([in], sb, [in].offset, Me.totalNumberOfHeaderMessages, Me.objectHeaderSize)
             ElseIf Me.version = &H4F Then
                 ' The first byte is 'O' of the "OHDR" signature of a version 2 object header.
                 Call readVersion2([in], sb, address)
@@ -112,6 +117,10 @@ Namespace struct
         End Sub
 
         Private Function readVersion1([in] As BinaryReader, sb As Superblock, address As Long, readMessages As Integer, maxBytes As Long) As Integer
+            If address <= 0 Then
+                Return 0
+            End If
+
             Dim count As Integer = 0
             Dim byteRead As Integer = 0
             ' read messages
@@ -132,7 +141,10 @@ Namespace struct
                     Dim cmsg As ContinueMessage = msg.continueMessage
                     Dim continuationBlockFilePos As Long = cmsg.offset
 
-                    count += readVersion1([in], sb, continuationBlockFilePos, readMessages - count, cmsg.length)
+                    ' 跳过无效的 continuation 块地址，避免负偏移导致整体解析崩溃
+                    If continuationBlockFilePos > 0 Then
+                        count += readVersion1([in], sb, continuationBlockFilePos, readMessages - count, cmsg.length)
+                    End If
                 ElseIf msg.headerMessageType IsNot ObjectHeaderMessageType.NIL Then
                     ' NOT NIL
                     Me.headerMessages.Add(msg)

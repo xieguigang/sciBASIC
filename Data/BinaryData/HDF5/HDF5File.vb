@@ -189,7 +189,14 @@ Public Class HDF5File : Implements IDisposable
         Dim objects As List(Of DataObjectFacade) = rootGroup.objects
 
         _attributes = attributeTable(rootGroup.attributes, Me.superblock)
-        rootObjects = objects.ToDictionary(Function(o) o.symbolName)
+
+        ' 用循环构建字典，跳过重复的符号名，避免单个重复键导致整个文件打开失败
+        rootObjects = New Dictionary(Of String, DataObjectFacade)
+        For Each o As DataObjectFacade In objects
+            If Not rootObjects.ContainsKey(o.symbolName) Then
+                rootObjects.Add(o.symbolName, o)
+            End If
+        Next
     End Sub
 
     Public Shared Function attributeTable(attrs As AttributeMessage(), sb As Superblock) As Dictionary(Of String, Object)

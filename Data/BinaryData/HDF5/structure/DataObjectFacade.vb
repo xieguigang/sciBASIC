@@ -143,8 +143,14 @@ Namespace struct
             Dim dobj As DataObject = sb.GetCacheObject(address)
 
             If dobj Is Nothing Then
-                dobj = New DataObject(sb, address)
-                sb.AddCacheObject(dobj)
+                Try
+                    dobj = New DataObject(sb, address)
+                    sb.AddCacheObject(dobj)
+                Catch ex As Exception
+                    ' 对象头解析失败（如地址无效、版本不支持）时返回 Nothing，
+                    ' 由调用方决定如何降级处理，避免单个坏对象中断整体遍历
+                    Return Nothing
+                End Try
             End If
 
             Return dobj
@@ -156,6 +162,10 @@ Namespace struct
         ''' <param name="type"></param>
         ''' <returns></returns>
         Public Function GetMessage(type As ObjectHeaderMessages) As Message
+            If dataObject Is Nothing OrElse dataObject.messages Is Nothing Then
+                Return Nothing
+            End If
+
             Dim objMsg = dataObject.messages.FirstOrDefault(Function(msg) msg.headerMessageTypeNumber = type)
 
             If objMsg Is Nothing Then

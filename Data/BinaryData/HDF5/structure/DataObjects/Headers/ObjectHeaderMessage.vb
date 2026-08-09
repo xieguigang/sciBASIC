@@ -113,7 +113,10 @@ Namespace struct
             Dim messageTypeNo As Short = [in].readShort()
             Me.headerMessageType = ObjectHeaderMessageType.[getType](messageTypeNo)
             If Me.headerMessageType Is Nothing Then
-                Throw New IOException("message type no (" & messageTypeNo & ") not supported")
+                ' 未知消息类型：按 sizeOfHeaderMessageData 原样跳过数据，保证后续消息
+                ' 偏移正确，避免「遇到不支持的类型就整体崩溃」导致整棵树无法遍历。
+                Me.headerMessageData = [in].readBytes(Me.sizeOfHeaderMessageData)
+                Return
             End If
             Me.sizeOfHeaderMessageData = [in].readShort()
             Me.headerMessageFlags = [in].readByte()

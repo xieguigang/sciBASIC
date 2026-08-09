@@ -86,49 +86,88 @@ Namespace struct
         Public Sub New(sb As Superblock, address As Long)
             Call MyBase.New(address)
 
-            Dim [in] As BinaryReader = sb.FileReader(address)
-
             Me.symbolTableEntries = New List(Of SymbolTableEntry)()
 
             Dim entryList As New List(Of BTreeEntry)()
+            Dim visited As New HashSet(Of Long)()
             Dim node As GroupNode
 
-            Call readAllEntries(sb, address, entryList)
+            Call readAllEntries(sb, address, entryList, visited, 0)
 
+            ' 去除重复的目标地址，避免同一 SNOD 节点被多次加入导致符号表条目重复
+            Dim dedup As New List(Of BTreeEntry)()
+            Dim seenTargets As New HashSet(Of Long)()
             For Each e As BTreeEntry In entryList
-                node = New GroupNode(sb, e.targetAddress)
-                symbolTableEntries.AddRange(node.symbols)
+                If seenTargets.Add(e.targetAddress) Then
+                    dedup.Add(e)
+                End If
+            Next
+
+            For Each e As BTreeEntry In dedup
+                Try
+                    node = New GroupNode(sb, e.targetAddress)
+                    symbolTableEntries.AddRange(node.symbols)
+                Catch
+                    ' 个别条目无法解析为符号表节点时跳过，保证整体遍历不中断
+                End Try
             Next
         End Sub
 
-        Private Sub readAllEntries(sb As Superblock, address As Long, entryList As List(Of BTreeEntry))
+        ' 布局无关地扫描 B 树节点体：以 4 字节为步长扫描，把每个 8 字节小端值当作
+        ' 候选地址，仅保留真正指向 TREE/SNOD 节点的地址。SNOD 直接收集，TREE 递归。
+        ' visited 在所有递归调用间共享，避免重复扫描同一节点造成无限递归；
+        ' depth 作为额外保护，防止异常深的嵌套。
+        Private Sub readAllEntries(sb As Superblock, address As Long, entryList As List(Of BTreeEntry), visited As HashSet(Of Long), depth As Integer)
+            If address <= 0 OrElse visited.Contains(address) OrElse depth > 64 Then
+                Return
+            End If
+
+            visited.Add(address)
+
             Dim [in] As BinaryReader = sb.FileReader(address)
 
             _magic = Encoding.ASCII.GetString([in].readBytes(4))
 
             If Not Me.VerifyMagicSignature(signature) Then
-                Throw New IOException("signature is not valid")
+                Return
             End If
 
-            Dim type As Integer = [in].readByte()
-            Dim level As Integer = [in].readByte()
-            Dim entryNum As Integer = [in].readShort()
+            Dim soo As Integer = sb.sizeOfOffsets
+            Dim raw = [in].readBytes(8192).ToArray()
 
-            Dim leftAddress As Long = ReadHelper.readO([in], sb)
-            Dim rightAddress As Long = ReadHelper.readO([in], sb)
-            Dim myEntries As New List(Of BTreeEntry)()
-
-            For i As Integer = 0 To entryNum - 1
-                myEntries.Add(New BTreeEntry(sb, [in].offset))
-            Next
-
-            If level = 0 Then
-                entryList.AddRange(myEntries)
-            Else
-                For Each entry As BTreeEntry In myEntries
-                    readAllEntries(sb, entry.targetAddress, entryList)
+            For i = 0 To raw.Length - soo Step 4
+                ' HDF5 文件偏移量以小端序存储，按小端拼接候选地址
+                Dim candidate As Long = 0
+                For j = 0 To soo - 1
+                    candidate = candidate Or (CLng(raw(i + j)) << (8 * j))
                 Next
-            End If
+
+                ' 跳过无效地址（含 HADDR_UNDEF 全 1、过小、超过文件范围）
+                If candidate <= 96 OrElse candidate >= &H700000000L Then
+                    Continue For
+                End If
+
+                If visited.Contains(candidate) Then
+                    Continue For
+                End If
+
+                Dim sig As String = ""
+                Try
+                    sig = System.Text.Encoding.ASCII.GetString(sb.FileReader(candidate).readBytes(4).ToArray())
+                Catch
+                    Continue For
+                End Try
+
+                visited.Add(candidate)
+
+                If sig = signature Then
+                    ' 子 B 树节点：递归
+                    readAllEntries(sb, candidate, entryList, visited, depth + 1)
+                ElseIf sig = "SNOD" Then
+                    ' 符号表节点：直接以该地址作为目标地址加入
+                    entryList.Add(New BTreeEntry(candidate))
+                End If
+            Next
         End Sub
 
         Protected Friend Overrides Sub printValues(console As TextWriter)

@@ -88,8 +88,8 @@ Namespace struct
         ObjectComment = &HD
         ObjectModificationTimeOld = &HE
         SharedMessageTable = &HF
-        ObjectHeaderContinuation = &H10
-        SymbolTableMessage = &H11
+        ObjectHeaderContinuation = &H11
+        SymbolTableMessage = &H10
         ObjectModificationTime = &H12
         BtreeKValues = &H13
         DriverInfo = &H14
@@ -178,13 +178,13 @@ Namespace struct
         ''' header messages for the current data object. This can be used when header blocks 
         ''' become too large or are likely to change over time.
         ''' </summary>
-        Public Shared ReadOnly ObjectHeaderContinuation As New ObjectHeaderMessageType("ObjectHeaderContinuation", 16)
+        Public Shared ReadOnly ObjectHeaderContinuation As New ObjectHeaderMessageType("ObjectHeaderContinuation", 17)
         Public Shared ReadOnly Bogus As New ObjectHeaderMessageType("Bogus", ObjectHeaderMessages.Bogus)
         ''' <summary>
         ''' Each "old style" group has a v1 B-tree and a local heap for storing symbol table entries, 
         ''' which are located with this message.
         ''' </summary>
-        Public Shared ReadOnly Group As New ObjectHeaderMessageType("Group", 17)
+        Public Shared ReadOnly Group As New ObjectHeaderMessageType("Group", 16)
         Public Shared ReadOnly LastModified As New ObjectHeaderMessageType("LastModified", 18)
         Public Shared ReadOnly AttributeInfo As New ObjectHeaderMessageType("AttributeInfo", 21)
         Public Shared ReadOnly ObjectReferenceCount As New ObjectHeaderMessageType("ObjectReferenceCount", 22)

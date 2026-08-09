@@ -89,4 +89,57 @@ Namespace dataset.filters
             Return BitConverter.GetBytes(checksum)
         End Function
     End Class
+
+    ''' <summary>
+    ''' HDF5 shuffle 过滤器：解码时按元素字节大小对字节进行反混洗还原。
+    ''' filterData(0) 为单个元素的字节宽度。
+    ''' </summary>
+    Public Class ShufflePipelineFilter : Implements IFilter
+
+        Public ReadOnly Property id As Integer Implements IFilter.id
+            Get
+                Return CInt(ReservedFilters.shuffle)
+            End Get
+        End Property
+
+        Public ReadOnly Property name As String Implements IFilter.name
+            Get
+                Return "shuffle"
+            End Get
+        End Property
+
+        Public Function decode(encodedData() As Byte, filterData() As Integer) As Byte() Implements IFilter.decode
+            If filterData Is Nothing OrElse filterData.Length = 0 Then
+                Return encodedData
+            End If
+
+            Dim elementSize As Integer = filterData(0)
+
+            If elementSize <= 1 Then
+                Return encodedData
+            End If
+
+            Dim total As Integer = encodedData.Length
+
+            If total Mod elementSize <> 0 Then
+                ' 长度不整齐，无法反混洗，原样返回以免产生错误数据
+                Return encodedData
+            End If
+
+            Dim outBytes(total - 1) As Byte
+            Dim numElements As Integer = total \ elementSize
+
+            For byteIndex = 0 To elementSize - 1
+                Dim outPos As Integer = byteIndex
+
+                For elemIndex = 0 To numElements - 1
+                    Dim inPos As Integer = byteIndex * numElements + elemIndex
+                    outBytes(outPos) = encodedData(inPos)
+                    outPos += elementSize
+                Next
+            Next
+
+            Return outBytes
+        End Function
+    End Class
 End Namespace

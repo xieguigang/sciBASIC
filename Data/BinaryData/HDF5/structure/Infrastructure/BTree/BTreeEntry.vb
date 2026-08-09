@@ -88,6 +88,15 @@ Namespace struct.BTree
             Me.targetAddress = ReadHelper.readO([in], sb)
         End Sub
 
+        ''' <summary>
+        ''' 直接以给定的目标地址构造（用于从 B 树叶子条目得到的符号表节点地址）。
+        ''' </summary>
+        Public Sub New(targetAddress As Long)
+            Call MyBase.New(targetAddress)
+            Me.targetAddress = targetAddress
+            Me.key = 0
+        End Sub
+
         Public Overrides Function ToString() As String
             Return $"{MyBase.ToString} [{key} => &{targetAddress}]"
         End Function

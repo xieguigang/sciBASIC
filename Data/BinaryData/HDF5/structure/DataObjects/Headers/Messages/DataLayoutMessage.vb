@@ -190,8 +190,8 @@ Namespace struct.messages
             Me._dimensionality = [in].readByte()
             Me._type = CInt([in].readByte)
 
-            ' Reserved (zero) 1 + 4 = 5 bytes
-            [in].skipBytes(5)
+            ' Reserved (zero) 1 byte，随后紧跟数据地址
+            [in].skipBytes(1)
 
             Dim isCompact As Boolean = (Me.type = LayoutClass.CompactStorage)
 

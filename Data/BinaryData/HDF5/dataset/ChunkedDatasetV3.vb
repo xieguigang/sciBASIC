@@ -209,7 +209,7 @@ Namespace dataset
             Dim chunkOffset As Long() = New Long(dimensionedIndex.Length - 1) {}
 
             For i As Integer = 0 To chunkOffset.Length - 1
-                Dim temp As Long = dataLayout.chunkSize(i)
+                Dim temp As Long = dimensionSize(i)
                 chunkOffset(i) = (dimensionedIndex(i) \ temp) * temp
             Next
 
@@ -240,7 +240,7 @@ Namespace dataset
                 Next
 
                 ' 然后下面的代码根据所计算出来的chunk编号查找出对应的chunk
-                Dim insideChunkLinearOffset As Integer = dimensionIndexToLinearIndex(insideChunk, dataLayout.chunkSize)
+                Dim insideChunkLinearOffset As Integer = dimensionIndexToLinearIndex(insideChunk, dimensionSize)
                 Dim key As New ChunkOffsetKey(chunkOffset)
                 Dim chunkData As Byte() = getDecodedChunk(chunkLookup, key)
 
@@ -302,7 +302,13 @@ Namespace dataset
         End Property
 
         Sub New(sb As Superblock, dataset As ChunkedDatasetV3)
-            Dim bTree As New DataBTree(dataset.dataLayout)
+            ' 用本对象自带的 B 树根地址与 chunk 维度构造一个 struct.Layout，
+            ' 避免依赖外部未正确填充的 dataLayout（旧式 struct.Layout 路径）。
+            Dim layout As New Layout() With {
+                .dataAddress = dataset.BtreeAddress,
+                .chunkSize = dataset.dimensionSize
+            }
+            Dim bTree As New DataBTree(layout)
             Dim chunkLookupMap As New Dictionary(Of String, DataChunk)()
 
             For Each chunk As DataChunk In bTree.EnumerateChunks(sb)
