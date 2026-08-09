@@ -198,6 +198,12 @@ Namespace VBProj.CodeDOM
         Public Property FilePath As String
         Public Property LineRange As IntRange
 
+        Public ReadOnly Property CodeBlock As String
+            Get
+                Return FilePath.ReadAllLines.Skip(LineRange.Min).Take(LineRange.Interval + 1).JoinBy(vbCrLf)
+            End Get
+        End Property
+
         Public Overrides Function ToString() As String
             Return $"{FilePath} {LineRange.GetMinMax.GetJson}"
         End Function
