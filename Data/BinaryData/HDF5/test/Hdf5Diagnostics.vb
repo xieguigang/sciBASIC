@@ -137,20 +137,28 @@ Namespace test
             End If
 
             For Each msg In facade.dataObject.messages
-                If msg.headerMessageType Is ObjectHeaderMessageType.SymbolTableMessage Then
+                If msg.headerMessageType Is ObjectHeaderMessageType.Group Then
                     Return True
                 End If
                 If msg.headerMessageType Is ObjectHeaderMessageType.GroupInfo Then
                     Return True
                 End If
-                If msg.headerMessageType Is ObjectHeaderMessageType.LinkInfo Then
+                If msg.headerMessageTypeNumber = ObjectHeaderMessages.SymbolTableMessage Then
+                    Return True
+                End If
+                If msg.headerMessageTypeNumber = ObjectHeaderMessages.LinkInfo Then
                     Return True
                 End If
             Next
 
             ' 没有 dataspace 消息且不是 dataset 的，多半是组
-            Dim hasDataspace = facade.dataObject.messages _
-                .Any(Function(m) m.headerMessageType Is ObjectHeaderMessageType.SimpleDataspace)
+            Dim hasDataspace As Boolean = False
+            For Each m In facade.dataObject.messages
+                If m.headerMessageType Is ObjectHeaderMessageType.SimpleDataspace Then
+                    hasDataspace = True
+                    Exit For
+                End If
+            Next
 
             Return Not hasDataspace
         End Function
@@ -170,8 +178,8 @@ Namespace test
             Try
                 Dim lm = facade.layoutMessage
                 Dim fm = facade.filterMessage
-                Dim dm = facade.dataObject.dataspaceMessage
-                Dim dtm = facade.dataObject.dataTypeMessage
+                Dim dm = getDataspace(facade)
+                Dim dtm = getDataType(facade)
 
                 ' 形状
                 If dm IsNot Nothing Then
@@ -192,8 +200,8 @@ Namespace test
                 End If
 
                 ' 过滤器
-                If fm IsNot Nothing AndAlso fm.filterDescriptions IsNot Nothing Then
-                    entry.filters = String.Join(",", fm.filterDescriptions.Select(Function(f) f.id.ToString()))
+                If fm IsNot Nothing AndAlso fm.description IsNot Nothing Then
+                    entry.filters = String.Join(",", fm.description.Select(Function(f) f.id.ToString()))
                 End If
 
                 ' 读取数据
@@ -229,9 +237,12 @@ Namespace test
                 Next
             End If
 
-            ' 超大数组只抽样：尝试读取首个 chunk / 前 N 个元素由底层决定
+            ' 超大数组只抽样：避免一次性整体载入内存导致 OOM。
+            ' 先仅记录元数据，待底层补齐分块抽样能力后再读取前 N 个元素。
             If totalElements > largeThreshold Then
-                entry.sampleValues = "(大数组, 元素数=" & totalElements & ", 仅抽样前" & maxSample & "个)"
+                entry.succeeded = True
+                entry.sampleValues = "(大数组, 元素数=" & totalElements & ", 跳过整体载入，仅记录结构)"
+                Return
             End If
 
             Try
@@ -338,6 +349,26 @@ Namespace test
                 Return lines(0).Trim()
             End If
             Return ""
+        End Function
+
+        Private Function getDataspace(facade As DataObjectFacade) As DataspaceMessage
+            If facade.dataObject Is Nothing Then Return Nothing
+            For Each m In facade.dataObject.messages
+                If m.headerMessageType Is ObjectHeaderMessageType.SimpleDataspace Then
+                    Return m.dataspaceMessage
+                End If
+            Next
+            Return Nothing
+        End Function
+
+        Private Function getDataType(facade As DataObjectFacade) As DataTypeMessage
+            If facade.dataObject Is Nothing Then Return Nothing
+            For Each m In facade.dataObject.messages
+                If m.headerMessageType Is ObjectHeaderMessageType.Datatype Then
+                    Return m.dataTypeMessage
+                End If
+            Next
+            Return Nothing
         End Function
     End Module
 

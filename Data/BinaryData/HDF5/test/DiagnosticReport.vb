@@ -40,11 +40,11 @@ Namespace test
         End Function
 
         Public Function successCount() As Integer
-            Return entries.Count(Function(e) e.succeeded)
+            Return entries.Where(Function(e) e.succeeded).Count()
         End Function
 
         Public Function failureCount() As Integer
-            Return entries.Count(Function(e) Not e.succeeded)
+            Return entries.Where(Function(e) Not e.succeeded).Count()
         End Function
 
         Public Function Render() As String
@@ -94,7 +94,7 @@ Namespace test
         End Function
 
         Public Sub WriteToFile(outPath As String)
-            File.WriteAllText(outPath, Render())
+            System.IO.File.WriteAllText(outPath, Render())
         End Sub
     End Class
 
