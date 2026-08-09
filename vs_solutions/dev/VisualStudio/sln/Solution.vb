@@ -198,7 +198,7 @@ Namespace sln
 
         ''' <summary>
         ''' Save this solution model as a ``.slnx`` (XML) file. The output is
-        ''' symmetric with <see cref="Parser.ParseSlnx"/> so it can be re-read.
+        ''' symmetric with <see cref="SlnxParser.ParseSlnx"/> so it can be re-read.
         ''' </summary>
         ''' <param name="path">
         ''' The target ``.slnx`` file path. When omitted, <see cref="FilePath"/> is used.
