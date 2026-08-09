@@ -31,32 +31,4 @@ Namespace VBProj.CodeDOM
         Public Property ImplementsInterfaces As TypeInfo()
 
     End Class
-
-    Public Class NamespaceSymbol : Inherits TypeContainerSymbol
-        Public Overrides ReadOnly Property Type As SymbolType = SymbolType.[Namespace]
-    End Class
-
-    Public Class ClassSymbol : Inherits TypeContainerSymbol
-        Public Overrides ReadOnly Property Type As SymbolType = SymbolType.[Class]
-    End Class
-
-    Public Class ModuleSymbol : Inherits TypeContainerSymbol
-        Public Overrides ReadOnly Property Type As SymbolType = SymbolType.[Module]
-    End Class
-
-    Public Class StructureSymbol : Inherits TypeContainerSymbol
-        Public Overrides ReadOnly Property Type As SymbolType = SymbolType.[Structure]
-    End Class
-
-    Public Class InterfaceSymbol : Inherits TypeContainerSymbol
-        Public Overrides ReadOnly Property Type As SymbolType = SymbolType.[Interface]
-    End Class
-
-    Public Class EnumSymbol : Inherits TypeContainerSymbol
-        Public Overrides ReadOnly Property Type As SymbolType = SymbolType.[Enum]
-        ''' <summary>
-        ''' the underlying base type of an enum, e.g. Enum X As Long
-        ''' </summary>
-        Public Property EnumBaseType As TypeInfo
-    End Class
 End Namespace
