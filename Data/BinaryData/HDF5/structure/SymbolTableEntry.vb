@@ -102,6 +102,13 @@ Namespace struct
 
             Me.linkNameOffset = ReadHelper.readO([in], sb)
             Me.objectHeaderAddress = ReadHelper.readO([in], sb)
+
+            ' 部分符号表条目的对象头地址以 32 位形式存入 64 位偏移字段，
+            ' 高 4 字节为 0xFFFFFFFF（符号扩展），读成有符号 64 位会得到负数。
+            ' 将其按低 32 位还原为有效地址，避免后续解析该对象头时崩溃。
+            If Me.objectHeaderAddress < 0 Then
+                Me.objectHeaderAddress = Me.objectHeaderAddress And &HFFFFFFFFL
+            End If
             Me.totalSymbolTableEntrySize = sb.sizeOfOffsets * 2
             Me.cacheType = [in].readInt()
             Me.reserved = [in].readInt()

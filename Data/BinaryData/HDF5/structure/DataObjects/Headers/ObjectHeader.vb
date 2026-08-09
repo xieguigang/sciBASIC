@@ -117,6 +117,10 @@ Namespace struct
         End Sub
 
         Private Function readVersion1([in] As BinaryReader, sb As Superblock, address As Long, readMessages As Integer, maxBytes As Long) As Integer
+            If address <= 0 Then
+                Return 0
+            End If
+
             Dim count As Integer = 0
             Dim byteRead As Integer = 0
             ' read messages
@@ -137,7 +141,10 @@ Namespace struct
                     Dim cmsg As ContinueMessage = msg.continueMessage
                     Dim continuationBlockFilePos As Long = cmsg.offset
 
-                    count += readVersion1([in], sb, continuationBlockFilePos, readMessages - count, cmsg.length)
+                    ' 跳过无效的 continuation 块地址，避免负偏移导致整体解析崩溃
+                    If continuationBlockFilePos > 0 Then
+                        count += readVersion1([in], sb, continuationBlockFilePos, readMessages - count, cmsg.length)
+                    End If
                 ElseIf msg.headerMessageType IsNot ObjectHeaderMessageType.NIL Then
                     ' NOT NIL
                     Me.headerMessages.Add(msg)

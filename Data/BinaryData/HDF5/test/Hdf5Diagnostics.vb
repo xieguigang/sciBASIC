@@ -23,16 +23,18 @@ Namespace test
 
             Dim hdf5 As HDF5File = Nothing
             Dim rootGroup As Group = Nothing
+            Dim sb As Superblock = Nothing
 
             Try
                 hdf5 = HDF5File.Open(filePath)
+                sb = hdf5.superblock
 
-                report.Add(describeSuperblock(hdf5.superblock, filePath))
+                report.Add(describeSuperblock(sb, filePath))
 
                 ' 以与 HDF5File.parseHeader 一致的方式重建根组，避免依赖内部字段
-                Dim rootHeaderAddress As Long = hdf5.superblock.rootGroupHeaderAddress
-                Dim rootFacade As New DataObjectFacade(hdf5.superblock, "root", rootHeaderAddress)
-                rootGroup = New Group(hdf5.superblock, rootFacade)
+                Dim rootHeaderAddress As Long = sb.rootGroupHeaderAddress
+                Dim rootFacade As New DataObjectFacade(sb, "root", rootHeaderAddress)
+                rootGroup = New Group(sb, rootFacade)
 
             Catch ex As Exception
                 Dim entry As New DiagnosticEntry() With {
@@ -44,16 +46,12 @@ Namespace test
                     .errorFrame = firstFrame(ex)
                 }
                 report.Add(entry)
-            Finally
-                If hdf5 IsNot Nothing Then
-                    hdf5.Dispose()
-                End If
             End Try
 
             ' 遍历阶段独立成段：单点失败不中断整体，错误以对象路径记录
-            If rootGroup IsNot Nothing Then
+            If rootGroup IsNot Nothing AndAlso sb IsNot Nothing Then
                 Try
-                    visitGroup(report, rootGroup, "/", hdf5.superblock, maxSampleElements, largeDatasetThreshold)
+                    visitGroup(report, rootGroup, "/", sb, maxSampleElements, largeDatasetThreshold)
                 Catch ex As Exception
                     report.Add(New DiagnosticEntry() With {
                         .path = "(traverse)",
@@ -64,6 +62,10 @@ Namespace test
                         .errorFrame = firstFrame(ex)
                     })
                 End Try
+            End If
+
+            If hdf5 IsNot Nothing Then
+                hdf5.Dispose()
             End If
 
             Return report

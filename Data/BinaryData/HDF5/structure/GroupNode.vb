@@ -124,7 +124,7 @@ Namespace struct
 
                 entryPos += entry.size
 
-                If entry.objectHeaderAddress <> 0 Then
+                If entry.objectHeaderAddress > 0 Then
                     symbols.Add(entry)
                 End If
             Next
