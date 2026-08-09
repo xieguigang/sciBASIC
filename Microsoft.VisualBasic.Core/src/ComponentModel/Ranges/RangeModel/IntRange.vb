@@ -117,6 +117,10 @@ Namespace ComponentModel.Ranges.Model
         Sub New()
         End Sub
 
+        Public Function GetMinMax() As Integer()
+            Return {Min, Max}
+        End Function
+
         ''' <summary>
         ''' 
         ''' </summary>
@@ -226,7 +230,7 @@ Namespace ComponentModel.Ranges.Model
         ''' 枚举出这个数值范围内的所有整数值，步长为1
         ''' </summary>
         ''' <returns></returns>
-        Public Iterator Function GenericEnumerator() As IEnumerator(Of Integer) Implements Enumeration(Of Integer).GenericEnumerator
+        Private Iterator Function GenericEnumerator() As IEnumerator(Of Integer) Implements Enumeration(Of Integer).GenericEnumerator
             For i As Integer = Min To Max
                 Yield i
             Next
