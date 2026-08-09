@@ -68,7 +68,6 @@ Imports Microsoft.VisualBasic.ApplicationServices.Development.VisualStudio.VBPro
 Imports Microsoft.VisualBasic.ApplicationServices.Development.VisualStudio.VBProj.CodeDOM.Syntax
 Imports Microsoft.VisualBasic.ApplicationServices.Development.VisualStudio.VBProj.ProjectXml
 Imports Microsoft.VisualBasic.ApplicationServices.Development.VisualStudio.VBProj.Reflection
-Imports Microsoft.VisualBasic.ApplicationServices.Development.VisualStudio.VBProj.Syntax
 Imports Microsoft.VisualBasic.ApplicationServices.Development.XmlDoc.Serialization
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.Linq
