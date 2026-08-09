@@ -120,8 +120,21 @@ Namespace VBProj.CodeDOM.Syntax
         ' block driver
         ' ------------------------------------------------------------------
 
-        Private Sub ParseBlock(stmts As List(Of VBStatement), ByRef i As Integer, container As TypeContainerSymbol, stopKeyword As String, member As CallableMemberSymbol)
+        ' build a source locations record. The file path is left empty and
+        ' filled in later by the project loader (VBProject.Load). startLine is
+        ' the leading line (xml doc / attribute block), endLine the last
+        ' physical line of the block, and declarationLine the line of the
+        ' declaration keyword; all are 1-based.
+        Private Sub AddSource(sym As LanguageSymbolType, startLine As Integer, endLine As Integer, declarationLine As Integer)
+            If sym.Source Is Nothing Then
+                sym.Source = New SourceLocations()
+            End If
+            sym.Source.Add("", startLine, endLine, declarationLine)
+        End Sub
+
+        Private Sub ParseBlock(stmts As List(Of VBStatement), ByRef i As Integer, container As TypeContainerSymbol, stopKeyword As String, member As CallableMemberSymbol, Optional ByRef blockEndLine As Integer = 0)
             Dim depth As Integer = 0
+            blockEndLine = If(i < stmts.Count, stmts(i).EndLine, 0)
 
             While i < stmts.Count
                 Dim stmt As VBStatement = stmts(i)
@@ -137,6 +150,7 @@ Namespace VBProj.CodeDOM.Syntax
                 If head = "end" Then
                     Dim endName As String = If(sp.Pos + 1 < stmt.Tokens.Count, stmt.Tokens(sp.Pos + 1).Text.ToLowerInvariant(), "")
                     If stopKeyword IsNot Nothing AndAlso depth <= 0 AndAlso endName = stopKeyword Then
+                        blockEndLine = stmt.EndLine
                         i += 1
                         Return
                     End If
@@ -260,10 +274,17 @@ Namespace VBProj.CodeDOM.Syntax
                 End While
             End If
 
-            AddToContainer(container, ct)
+            Dim existing As LanguageSymbolType = AddToContainer(container, ct)
+            Dim target As TypeContainerSymbol = If(TypeOf existing Is TypeContainerSymbol, DirectCast(existing, TypeContainerSymbol), ct)
             i += 1
             Dim stopKw As String = If(kw = "struct", "structure", kw)
-            ParseBlock(stmts, i, ct, stopKw, Nothing)
+            Dim blockEnd As Integer = 0
+            ParseBlock(stmts, i, target, stopKw, Nothing, blockEnd)
+
+            If blockEnd = 0 Then
+                blockEnd = stmts(Math.Max(0, i - 1)).EndLine
+            End If
+            AddSource(existing, stmt.LeadingLine, blockEnd, stmt.Line)
         End Sub
 
         ' container-level clauses that may appear on their own line inside a
@@ -365,10 +386,22 @@ Namespace VBProj.CodeDOM.Syntax
                     End If
                 End If
                 If hasBody Then
-                    ParseBlock(stmts, i, container, "property", inv)
+                    Dim blockEnd As Integer = 0
+                    ParseBlock(stmts, i, container, "property", inv, blockEnd)
+                    If blockEnd = 0 Then
+                        blockEnd = stmts(Math.Max(0, i - 1)).EndLine
+                    End If
+                    AddSource(inv, stmt.LeadingLine, blockEnd, stmt.Line)
+                Else
+                    AddSource(inv, stmt.LeadingLine, stmt.EndLine, stmt.Line)
                 End If
             Else
-                ParseBlock(stmts, i, container, kw, inv)
+                Dim blockEnd As Integer = 0
+                ParseBlock(stmts, i, container, kw, inv, blockEnd)
+                If blockEnd = 0 Then
+                    blockEnd = stmts(Math.Max(0, i - 1)).EndLine
+                End If
+                AddSource(inv, stmt.LeadingLine, blockEnd, stmt.Line)
             End If
         End Sub
 

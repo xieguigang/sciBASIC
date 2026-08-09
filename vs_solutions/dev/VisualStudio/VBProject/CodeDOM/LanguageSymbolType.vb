@@ -169,7 +169,7 @@ Namespace VBProj.CodeDOM
         Dim SourceLocations As New List(Of Source)
 
         ''' <summary>
-        ''' 
+        ''' true when this symbol is composed of several partial declarations.
         ''' </summary>
         ''' <returns></returns>
         Public ReadOnly Property IsMultiplePartial As Boolean
@@ -178,12 +178,39 @@ Namespace VBProj.CodeDOM
             End Get
         End Property
 
+        ''' <summary>
+        ''' the number of recorded source locations (partial declarations).
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property Count As Integer
+            Get
+                Return SourceLocations.Count
+            End Get
+        End Property
+
+        ''' <summary>
+        ''' the first recorded source location; nothing when empty.
+        ''' </summary>
+        ''' <returns></returns>
+        Public ReadOnly Property First As Source
+            Get
+                If SourceLocations.Count = 0 Then
+                    Return Nothing
+                End If
+                Return SourceLocations(0)
+            End Get
+        End Property
+
         Public Sub Add(loc As Source)
             Call SourceLocations.Add(loc)
         End Sub
 
-        Public Sub Add(file As String, startLine As Integer, endLine As Integer)
-            Call SourceLocations.Add(New Source With {.FilePath = file, .LineRange = New IntRange(startLine, endLine)})
+        Public Sub Add(file As String, startLine As Integer, endLine As Integer, Optional declarationLine As Integer = -1)
+            Call SourceLocations.Add(New Source With {
+                .FilePath = file,
+                .LineRange = New IntRange(startLine, endLine),
+                .DeclarationLine = If(declarationLine <= 0, startLine, declarationLine)
+            })
         End Sub
 
         Private Iterator Function GenericEnumerator() As IEnumerator(Of Source) Implements Enumeration(Of Source).GenericEnumerator
@@ -196,11 +223,46 @@ Namespace VBProj.CodeDOM
     Public Class Source
 
         Public Property FilePath As String
+
+        ''' <summary>
+        ''' the 1-based physical line range of the whole code block, including
+        ''' any leading xml documentation comment (''') / attribute block
+        ''' (&lt;...&gt;) and ending at the matching End XXX statement.
+        ''' </summary>
         Public Property LineRange As IntRange
 
+        ''' <summary>
+        ''' the 1-based physical line where the declaration keyword
+        ''' (Class / Function / ...) actually starts. May differ from
+        ''' <see cref="LineRange"/>.Min when a leading xml doc / attribute
+        ''' block is present.
+        ''' </summary>
+        Public Property DeclarationLine As Integer
+
+        ''' <summary>
+        ''' extract the raw VB.NET source text of this symbol from its file.
+        ''' </summary>
+        ''' <remarks>
+        ''' This property reads the whole file on every access (lazy, on
+        ''' demand). Do not call it inside hot loops or ToString overrides.
+        ''' </remarks>
         Public ReadOnly Property CodeBlock As String
             Get
-                Return FilePath.ReadAllLines.Skip(LineRange.Min).Take(LineRange.Interval + 1).JoinBy(vbCrLf)
+                If String.IsNullOrEmpty(FilePath) OrElse LineRange Is Nothing Then
+                    Return ""
+                End If
+
+                If Not System.IO.File.Exists(FilePath) Then
+                    Return ""
+                End If
+
+                Dim min As Integer = Math.Max(0, LineRange.Min - 1)
+
+                Return FilePath _
+                    .ReadAllLines _
+                    .Skip(min) _
+                    .Take(LineRange.Interval + 1) _
+                    .JoinBy(vbCrLf)
             End Get
         End Property
 

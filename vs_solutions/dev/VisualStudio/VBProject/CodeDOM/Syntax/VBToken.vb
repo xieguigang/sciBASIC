@@ -78,7 +78,12 @@ Namespace VBProj.CodeDOM.Syntax
     End Enum
 
     ''' <summary>
-    ''' a single lexical token with its source text and line number
+    ''' a single lexical token with its source text and line number.
+    '''
+    ''' <see cref="Line"/> holds the 1-based physical line of the logical
+    ''' statement this token belongs to (a statement may span several physical
+    ''' lines after continuation merging); it is not the exact line of the
+    ''' token itself.
     ''' </summary>
     Public Structure Token
 

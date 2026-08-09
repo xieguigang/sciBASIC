@@ -103,6 +103,9 @@ Namespace VBProj.CodeDOM.Syntax
             Dim stmts As New List(Of VBStatement)
             Dim xmlBuf As String = ""
             Dim attrBuf As New List(Of String)
+            ' the earliest physical line of the leading xml doc / attribute
+            ' block; 0 means "no leading block yet" for the current statement.
+            Dim leadingLine As Integer = 0
             Dim i As Integer = 0
 
             While i < physical.Length
@@ -112,11 +115,15 @@ Namespace VBProj.CodeDOM.Syntax
                 If trim.Length = 0 Then
                     ' a blank line breaks the association with a pending xml doc
                     xmlBuf = ""
+                    leadingLine = 0
                     i += 1
                     Continue While
                 End If
 
                 If trim.StartsWith("'''") Then
+                    If leadingLine = 0 Then
+                        leadingLine = i + 1
+                    End If
                     xmlBuf &= If(xmlBuf.Length = 0, "", vbCrLf) & trim.Substring(3).Trim()
                     i += 1
                     Continue While
@@ -130,15 +137,19 @@ Namespace VBProj.CodeDOM.Syntax
 
                 Dim logical As String = Nothing
                 Dim startLine As Integer = i + 1
-                BuildLogicalLine(physical, i, logical)
+                Dim endLine As Integer = startLine
+                BuildLogicalLine(physical, i, logical, endLine)
 
-                Dim tokens As List(Of Token) = Tokenize(logical)
+                Dim tokens As List(Of Token) = Tokenize(logical, startLine)
 
                 ' a statement that consists solely of attribute blocks
                 ' (e.g. a <ExportAPI> line on its own) is buffered and attached
                 ' to the next real declaration
                 Dim ownLineAttrs As List(Of String) = TryParseAttributes(tokens)
                 If ownLineAttrs IsNot Nothing Then
+                    If leadingLine = 0 Then
+                        leadingLine = startLine
+                    End If
                     attrBuf.AddRange(ownLineAttrs)
                     Continue While
                 End If
@@ -146,6 +157,8 @@ Namespace VBProj.CodeDOM.Syntax
                 If tokens.Count > 0 OrElse xmlBuf.Length > 0 OrElse attrBuf.Count > 0 Then
                     stmts.Add(New VBStatement With {
                         .Line = startLine,
+                        .EndLine = endLine,
+                        .LeadingLine = If(leadingLine = 0, startLine, leadingLine),
                         .tokens = tokens,
                         .XmlDoc = xmlBuf,
                         .Attributes = New List(Of String)(attrBuf)
@@ -154,6 +167,7 @@ Namespace VBProj.CodeDOM.Syntax
 
                 xmlBuf = ""
                 attrBuf.Clear()
+                leadingLine = 0
             End While
 
             Return stmts
@@ -204,8 +218,12 @@ Namespace VBProj.CodeDOM.Syntax
 
         ' merge a run of physical lines that are joined by the line continuation
         ' character (a trailing underscore, outside strings/comments)
-        Private Sub BuildLogicalLine(physical As String(), ByRef i As Integer, ByRef logical As String)
+        ' i is advanced past the logical line; endLine is the 1-based physical
+        ' line of the last physical line consumed (equal to startLine for a
+        ' single-line statement).
+        Private Sub BuildLogicalLine(physical As String(), ByRef i As Integer, ByRef logical As String, ByRef endLine As Integer)
             Dim sb As New StringBuilder()
+            Dim startLine As Integer = i + 1
 
             While i < physical.Length
                 Dim line As String = physical(i)
@@ -221,6 +239,7 @@ Namespace VBProj.CodeDOM.Syntax
             End While
 
             logical = sb.ToString().Trim()
+            endLine = i
         End Sub
 
         Private Shared Function IsContinuation(line As String) As Boolean
@@ -269,16 +288,16 @@ Namespace VBProj.CodeDOM.Syntax
             Return line.TrimEnd()
         End Function
 
-        Private Shared Sub FlushWord(sb As StringBuilder, toks As List(Of Token))
+        Private Shared Sub FlushWord(sb As StringBuilder, toks As List(Of Token), lineNum As Integer)
             If sb.Length > 0 Then
                 Dim w As String = sb.ToString()
                 sb.Clear()
                 Dim kind As TokenKind = If(Keywords.Contains(w), TokenKind.Keyword, TokenKind.Identifier)
-                toks.Add(New Token With {.kind = kind, .Text = w})
+                toks.Add(New Token With {.kind = kind, .Text = w, .Line = lineNum})
             End If
         End Sub
 
-        Private Shared Function Tokenize(line As String) As List(Of Token)
+        Private Shared Function Tokenize(line As String, lineNum As Integer) As List(Of Token)
             Dim toks As New List(Of Token)
             Dim n As Integer = line.Length
             Dim j As Integer = 0
@@ -309,11 +328,11 @@ Namespace VBProj.CodeDOM.Syntax
                             End While
 
                             If k < n AndAlso (line(k) = "c"c OrElse line(k) = "C"c) Then
-                                toks.Add(New Token With {.Kind = TokenKind.CharLiteral, .Text = sb.ToString()})
+                                toks.Add(New Token With {.Kind = TokenKind.CharLiteral, .Text = sb.ToString(), .Line = lineNum})
                                 sb.Clear()
                                 j = k
                             Else
-                                toks.Add(New Token With {.Kind = TokenKind.[String], .Text = sb.ToString()})
+                                toks.Add(New Token With {.Kind = TokenKind.[String], .Text = sb.ToString(), .Line = lineNum})
                                 sb.Clear()
                             End If
                         End If
@@ -321,16 +340,16 @@ Namespace VBProj.CodeDOM.Syntax
                 Else
                     Select Case c
                         Case """"c
-                            FlushWord(sb, toks)
+                            FlushWord(sb, toks, lineNum)
                             inStr = True
                             sb.Append(c)
 
                         Case "'"c
-                            FlushWord(sb, toks)
+                            FlushWord(sb, toks, lineNum)
                             inCom = True
 
                         Case "#"c
-                            FlushWord(sb, toks)
+                            FlushWord(sb, toks, lineNum)
                             Dim k As Integer = j + 1
                             While k < n AndAlso line(k) <> "#"c
                                 k += 1
@@ -341,14 +360,14 @@ Namespace VBProj.CodeDOM.Syntax
 
                         Case Else
                             If Char.IsWhiteSpace(c) Then
-                                FlushWord(sb, toks)
+                                FlushWord(sb, toks, lineNum)
                             ElseIf Char.IsLetter(c) OrElse c = "_"c OrElse c = "@"c Then
                                 If sb.Length = 0 Then
-                                    FlushWord(sb, toks)
+                                    FlushWord(sb, toks, lineNum)
                                 End If
                                 sb.Append(c)
                             ElseIf Char.IsDigit(c) OrElse (c = "&"c AndAlso j + 1 < n AndAlso (line(j + 1) = "H"c OrElse line(j + 1) = "h"c OrElse line(j + 1) = "O"c OrElse line(j + 1) = "o"c)) Then
-                                FlushWord(sb, toks)
+                                FlushWord(sb, toks, lineNum)
                                 Dim k As Integer = j
                                 If c = "&"c Then
                                     k += 1
@@ -359,18 +378,18 @@ Namespace VBProj.CodeDOM.Syntax
                                 While k < n AndAlso Char.IsLetter(line(k))
                                     k += 1
                                 End While
-                                toks.Add(New Token With {.Kind = TokenKind.Number, .Text = line.Substring(j, k - j)})
+                                toks.Add(New Token With {.Kind = TokenKind.Number, .Text = line.Substring(j, k - j), .Line = lineNum})
                                 j = k - 1
                             Else
-                                FlushWord(sb, toks)
+                                FlushWord(sb, toks, lineNum)
                                 Dim two As String = If(j + 1 < n, c & line(j + 1), c.ToString())
 
                                 Select Case two
                                     Case "<>", "<=", ">=", "<<", ">>", "+=", "-=", "*=", "/=", "\=", "^=", "&=", ":=", "->"
-                                        toks.Add(New Token With {.Kind = TokenKind.Punctuation, .Text = two})
+                                        toks.Add(New Token With {.Kind = TokenKind.Punctuation, .Text = two, .Line = lineNum})
                                         j += 1
                                     Case Else
-                                        toks.Add(New Token With {.Kind = TokenKind.Punctuation, .Text = c.ToString()})
+                                        toks.Add(New Token With {.Kind = TokenKind.Punctuation, .Text = c.ToString(), .Line = lineNum})
                                 End Select
                             End If
                     End Select
@@ -379,7 +398,7 @@ Namespace VBProj.CodeDOM.Syntax
                 j += 1
             End While
 
-            FlushWord(sb, toks)
+            FlushWord(sb, toks, lineNum)
             Return toks
         End Function
     End Class
