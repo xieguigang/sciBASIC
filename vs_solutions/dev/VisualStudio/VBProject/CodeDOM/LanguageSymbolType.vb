@@ -113,7 +113,7 @@
 
 Imports Microsoft.VisualBasic.Scripting.MetaData
 
-Namespace VBProj
+Namespace VBProj.CodeDOM
 
     ''' <summary>
     ''' the base class of all code symbol types in a VB language project.

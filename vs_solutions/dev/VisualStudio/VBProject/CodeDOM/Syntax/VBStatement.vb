@@ -1,4 +1,4 @@
-﻿Namespace VBProj.Syntax
+﻿Namespace VBProj.CodeDOM.Syntax
 
     ''' <summary>
     ''' a logical (already line-continued) source line together with the

@@ -60,7 +60,7 @@
 
 Imports System.Text
 
-Namespace VBProj.Syntax
+Namespace VBProj.CodeDOM.Syntax
 
     ''' <summary>
     ''' lexical scanner for VB.NET source code.
@@ -146,7 +146,7 @@ Namespace VBProj.Syntax
                 If tokens.Count > 0 OrElse xmlBuf.Length > 0 OrElse attrBuf.Count > 0 Then
                     stmts.Add(New VBStatement With {
                         .Line = startLine,
-                        .Tokens = tokens,
+                        .tokens = tokens,
                         .XmlDoc = xmlBuf,
                         .Attributes = New List(Of String)(attrBuf)
                     })

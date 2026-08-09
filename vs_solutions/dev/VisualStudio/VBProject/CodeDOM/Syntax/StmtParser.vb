@@ -1,6 +1,6 @@
 ﻿Imports System.Text
 
-Namespace VBProj.Syntax
+Namespace VBProj.CodeDOM.Syntax
 
     ' ------------------------------------------------------------------
     ' statement cursor : skips leading attributes and modifiers
