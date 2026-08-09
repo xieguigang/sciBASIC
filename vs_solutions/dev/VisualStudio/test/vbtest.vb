@@ -87,7 +87,7 @@ Module Program2222
         End Try
 
         Try
-            ' TestReflection()
+            TestReflection()
         Catch ex As Exception
             Console.WriteLine("[WARN] VBProject.LoadAssembly test failed: " & ex.Message)
             Console.WriteLine(ex.ToString())
@@ -201,22 +201,23 @@ End Namespace
 
         ' ----- source location (IntRange) recording -----
         ' Note: VBParser.Parse(src) has no file path, so Source.FilePath is empty
-        ' here; we only assert the recorded line ranges (1-based).
+        ' here; we only assert the recorded line ranges (1-based, relative to
+        ' the source string itself).
         Assert(ns.Source IsNot Nothing, "namespace has source location", failures)
-        Assert(ns.Source.First.LineRange.Min = 99 AndAlso ns.Source.First.LineRange.Max = 136, "namespace line range 99-136", failures)
-        Assert(ns.Source.First.DeclarationLine = 100, "namespace declaration line 100", failures)
+        Assert(ns.Source.First.LineRange.Min = 4 AndAlso ns.Source.First.LineRange.Max = 41, "namespace line range 4-41", failures)
+        Assert(ns.Source.First.DeclarationLine = 5, "namespace declaration line 5", failures)
 
         Assert(cls.Source IsNot Nothing, "class has source location", failures)
-        ' leading line includes the xml doc comment on line 105
-        Assert(cls.Source.First.LineRange.Min = 105 AndAlso cls.Source.First.LineRange.Max = 134, "class line range 105-134", failures)
-        Assert(cls.Source.First.DeclarationLine = 107, "class declaration line 107", failures)
+        ' leading line includes the xml doc comment (src line 10)
+        Assert(cls.Source.First.LineRange.Min = 10 AndAlso cls.Source.First.LineRange.Max = 39, "class line range 10-39", failures)
+        Assert(cls.Source.First.DeclarationLine = 12, "class declaration line 12", failures)
 
-        Assert(prop.Source IsNot Nothing AndAlso prop.Source.First.LineRange.Min = 111 AndAlso prop.Source.First.LineRange.Max = 111, "auto-property Name single line 111", failures)
-        Assert(ctor.Source IsNot Nothing AndAlso ctor.Source.First.LineRange.Min = 114 AndAlso ctor.Source.First.LineRange.Max = 116, "Sub New 114-116", failures)
-        Assert(fn.Source IsNot Nothing AndAlso fn.Source.First.LineRange.Min = 118 AndAlso fn.Source.First.LineRange.Max = 124, "Compute 118-124 (line continuation)", failures)
-        Assert(fn.Source.First.DeclarationLine = 118, "Compute declaration line 118", failures)
-        Assert(del.Source IsNot Nothing AndAlso del.Source.First.LineRange.Min = 102 AndAlso del.Source.First.LineRange.Max = 103, "delegate 102-103", failures)
-        Assert(en.Source IsNot Nothing AndAlso en.Source.First.LineRange.Min = 130 AndAlso en.Source.First.LineRange.Max = 133, "enum 130-133", failures)
+        Assert(prop.Source IsNot Nothing AndAlso prop.Source.First.LineRange.Min = 16 AndAlso prop.Source.First.LineRange.Max = 16, "auto-property Name single line 16", failures)
+        Assert(ctor.Source IsNot Nothing AndAlso ctor.Source.First.LineRange.Min = 19 AndAlso ctor.Source.First.LineRange.Max = 21, "Sub New 19-21", failures)
+        Assert(fn.Source IsNot Nothing AndAlso fn.Source.First.LineRange.Min = 23 AndAlso fn.Source.First.LineRange.Max = 29, "Compute 23-29 (line continuation)", failures)
+        Assert(fn.Source.First.DeclarationLine = 23, "Compute declaration line 23", failures)
+        Assert(del.Source IsNot Nothing AndAlso del.Source.First.LineRange.Min = 7 AndAlso del.Source.First.LineRange.Max = 8, "delegate 7-8", failures)
+        Assert(en.Source IsNot Nothing AndAlso en.Source.First.LineRange.Min = 35 AndAlso en.Source.First.LineRange.Max = 38, "enum 35-38", failures)
 
         ' partial class merge: two partial declarations of the same class in one
         ' source must produce a single symbol with IsMultiplePartial = True and
