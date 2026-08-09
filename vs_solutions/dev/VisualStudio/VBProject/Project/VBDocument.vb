@@ -58,6 +58,7 @@
 
 #End Region
 
+Imports Microsoft.VisualBasic.ApplicationServices.Development.VisualStudio.VBProj.CodeDOM
 Imports Microsoft.VisualBasic.Serialization.JSON
 
 Namespace VBProj

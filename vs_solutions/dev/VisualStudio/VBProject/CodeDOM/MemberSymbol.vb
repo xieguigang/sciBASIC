@@ -1,4 +1,6 @@
-﻿Namespace VBProj.CodeDOM
+﻿Imports Microsoft.VisualBasic.Scripting.MetaData
+
+Namespace VBProj.CodeDOM
 
     ''' <summary>
     ''' category base: a declaration that lives inside a <see cref="TypeContainerSymbol"/>,

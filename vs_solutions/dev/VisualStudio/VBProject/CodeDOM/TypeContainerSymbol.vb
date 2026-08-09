@@ -1,4 +1,6 @@
-﻿Namespace VBProj.CodeDOM
+﻿Imports Microsoft.VisualBasic.Scripting.MetaData
+
+Namespace VBProj.CodeDOM
 
     ''' <summary>
     ''' category base: a type declaration that can nest other types and members,
