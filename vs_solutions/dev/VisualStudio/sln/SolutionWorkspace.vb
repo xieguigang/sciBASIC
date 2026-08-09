@@ -1,5 +1,6 @@
 ﻿Imports Microsoft.VisualBasic.ApplicationServices.Development.VisualStudio.sln.File
 Imports Microsoft.VisualBasic.ApplicationServices.Development.VisualStudio.VBProj
+Imports Microsoft.VisualBasic.ApplicationServices.Development.VisualStudio.VBProj.CodeDOM
 
 Namespace sln
 
@@ -14,6 +15,20 @@ Namespace sln
         Public ReadOnly Property Sln As Solution
 
         Dim _VbProjs As VBProject()
+
+        Default Public ReadOnly Property GetSymbol(fullname As String) As LanguageSymbolType
+            Get
+                For Each proj As VBProject In _VbProjs
+                    Dim type As LanguageSymbolType = proj.GetType(fullname)
+
+                    If type IsNot Nothing Then
+                        Return type
+                    End If
+                Next
+
+                Return Nothing
+            End Get
+        End Property
 
         Sub New(sln As Solution)
             _Sln = sln

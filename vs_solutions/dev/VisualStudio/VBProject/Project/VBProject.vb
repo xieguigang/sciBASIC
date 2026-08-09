@@ -130,7 +130,9 @@ Namespace VBProj
         ''' Get symbol via fullname
         ''' </summary>
         ''' <param name="fullName">namespace + type symbol name</param>
-        ''' <returns></returns>
+        ''' <returns>
+        ''' returns nothing if the given symbol could not be found
+        ''' </returns>
         Public Overloads Function [GetType](fullName As String) As LanguageSymbolType
             If String.IsNullOrWhiteSpace(fullName) OrElse CompileFiles Is Nothing Then
                 Return Nothing
