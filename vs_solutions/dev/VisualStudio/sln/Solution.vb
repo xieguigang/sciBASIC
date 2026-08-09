@@ -1,72 +1,73 @@
 ﻿#Region "Microsoft.VisualBasic::7acd847c2080eb489d13c896f84c9a95, vs_solutions\dev\VisualStudio\sln\Solution.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 300
-    '    Code Lines: 173 (57.67%)
-    ' Comment Lines: 69 (23.00%)
-    '    - Xml Docs: 91.30%
-    ' 
-    '   Blank Lines: 58 (19.33%)
-    '     File Size: 10.95 KB
+' Summaries:
 
 
-    '     Class Solution
-    ' 
-    '         Properties: [Global], Configurations, FilePath, FormatVersion, IsXmlFormat
-    '                     MinimumVisualStudioVersion, Projects, SolutionGuid, VisualStudioVersion
-    ' 
-    '         Function: GetChildProjects, GetProject, GetProjectFullPath, GetRootProjects, GetTypeGuid
-    '                   Load
-    ' 
-    '         Sub: Save, WriteProjectNode
-    ' 
-    '     Class SolutionConfiguration
-    ' 
-    '         Properties: Configuration, Name, Platform
-    ' 
-    '         Constructor: (+2 Overloads) Sub New
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 300
+'    Code Lines: 173 (57.67%)
+' Comment Lines: 69 (23.00%)
+'    - Xml Docs: 91.30%
+' 
+'   Blank Lines: 58 (19.33%)
+'     File Size: 10.95 KB
+
+
+'     Class Solution
+' 
+'         Properties: [Global], Configurations, FilePath, FormatVersion, IsXmlFormat
+'                     MinimumVisualStudioVersion, Projects, SolutionGuid, VisualStudioVersion
+' 
+'         Function: GetChildProjects, GetProject, GetProjectFullPath, GetRootProjects, GetTypeGuid
+'                   Load
+' 
+'         Sub: Save, WriteProjectNode
+' 
+'     Class SolutionConfiguration
+' 
+'         Properties: Configuration, Name, Platform
+' 
+'         Constructor: (+2 Overloads) Sub New
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.ComponentModel
 Imports System.Text
 Imports System.Xml
+Imports Microsoft.VisualBasic.ApplicationServices.Development.VisualStudio.sln.File
 
 Namespace sln
 
@@ -327,40 +328,4 @@ Namespace sln
             Return String.Empty
         End Function
     End Class
-
-    ''' <summary>
-    ''' A solution level build configuration / platform pair, e.g. ``Debug|AnyCPU``.
-    ''' </summary>
-    Public Class SolutionConfiguration
-        ''' <summary>
-        ''' The combined name, e.g. ``Debug|AnyCPU``.
-        ''' </summary>
-        Public Property Name As String
-        ''' <summary>
-        ''' The configuration part, e.g. ``Debug``.
-        ''' </summary>
-        Public Property Configuration As String
-        ''' <summary>
-        ''' The platform part, e.g. ``AnyCPU``.
-        ''' </summary>
-        Public Property Platform As String
-
-        Public Sub New()
-        End Sub
-
-        Public Sub New(name As String)
-            Me.Name = name
-
-            If name IsNot Nothing Then
-                Dim parts = name.Split({"|"c}, 2)
-                Configuration = parts(0)
-
-                If parts.Length > 1 Then
-                    Platform = parts(1)
-                End If
-            End If
-        End Sub
-    End Class
-
-
 End Namespace

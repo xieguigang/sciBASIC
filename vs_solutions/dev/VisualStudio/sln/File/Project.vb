@@ -62,7 +62,7 @@
 
 Imports System.ComponentModel
 
-Namespace sln
+Namespace sln.File
 
     ''' <summary>
     ''' Known Visual Studio project type GUIDs.
@@ -126,5 +126,9 @@ Namespace sln
                 Return NodeType = TypeId.FolderGroup OrElse NodeType = TypeId.SolutionFolderAlt
             End Get
         End Property
+
+        Public Overrides Function ToString() As String
+            Return $"{Name} [{FullPath}]"
+        End Function
     End Class
 End Namespace
