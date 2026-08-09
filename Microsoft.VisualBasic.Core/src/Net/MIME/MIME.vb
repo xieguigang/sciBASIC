@@ -106,10 +106,11 @@ Namespace Net.Protocols.ContentTypes
         }
 
         Sub New()
-            SuffixTable = fetchUniqueContents() _
-                .ToDictionary(Function(x) x.FileExt.ToLower,
+            SuffixTable = FetchUniqueMimeContents() _
+                .GroupBy(Function(a) a.FileExt.ToLower) _
+                .ToDictionary(Function(x) x.Key,
                               Function(x)
-                                  Return x
+                                  Return x.First
                               End Function)
             ContentTypes = SuffixTable.Values _
                 .GroupBy(Function(f) f.MIMEType.ToLower) _
@@ -121,7 +122,15 @@ Namespace Net.Protocols.ContentTypes
                               End Function)
         End Sub
 
-        Private Iterator Function fetchUniqueContents() As IEnumerable(Of ContentType)
+        Private Iterator Function FetchUniqueMimeContents() As IEnumerable(Of ContentType)
+            ' add exteneded content types
+            ' custom mime type will overrides the mime types that defined in List_of_MIME_types___Internet_Media_Types_
+            Yield New ContentType With {.Details = "Deep Zoom Image", .FileExt = ".dzi", .MIMEType = "application/xml", .Name = "Deep Zoom Image"}
+            Yield New ContentType With {.Details = "Jpeg image", .FileExt = ".jpeg", .MIMEType = "image/jpeg", .Name = "Jpeg image"}
+            Yield New ContentType With {.Details = "ECMAScript Module JavaScript", .FileExt = ".mjs", .MIMEType = "application/javascript", .Name = "ECMAScript Module"}
+            Yield New ContentType With {.Details = "ECMAScript Module TypeScript", .FileExt = ".ts", .MIMEType = TypeScript, .Name = "Microsoft TypeScript"}
+            Yield New ContentType With {.Details = "ECMAScript Module JavaScript", .FileExt = ".js", .MIMEType = "application/javascript", .Name = "ECMAScript Module"}
+
             Dim uniqs = My.Resources _
                 .List_of_MIME_types___Internet_Media_Types_ _
                 .LineTokens _
@@ -133,12 +142,6 @@ Namespace Net.Protocols.ContentTypes
             For Each group In uniqs
                 Yield group.First
             Next
-
-            ' add exteneded content types
-            Yield New ContentType With {.Details = "Deep Zoom Image", .FileExt = ".dzi", .MIMEType = "application/xml", .Name = "Deep Zoom Image"}
-            Yield New ContentType With {.Details = "Jpeg image", .FileExt = ".jpeg", .MIMEType = "image/jpeg", .Name = "Jpeg image"}
-            Yield New ContentType With {.Details = "ECMAScript Module JavaScript", .FileExt = ".mjs", .MIMEType = "application/javascript", .Name = "ECMAScript Module"}
-            Yield New ContentType With {.Details = "ECMAScript Module TypeScript", .FileExt = ".ts", .MIMEType = TypeScript, .Name = "Microsoft TypeScript"}
         End Function
 
         <Extension>
