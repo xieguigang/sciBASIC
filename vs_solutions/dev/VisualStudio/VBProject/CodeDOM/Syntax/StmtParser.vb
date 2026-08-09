@@ -2,11 +2,11 @@
 
 Namespace VBProj.Syntax
 
-
     ' ------------------------------------------------------------------
     ' statement cursor : skips leading attributes and modifiers
     ' ------------------------------------------------------------------
     Friend Class StmtParser
+
         Public Tokens As List(Of Token)
         Public Pos As Integer
         Public Attributes As New List(Of String)
