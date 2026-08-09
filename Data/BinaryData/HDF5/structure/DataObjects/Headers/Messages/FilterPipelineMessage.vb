@@ -189,11 +189,19 @@ Namespace struct.messages
 
             If id = ReservedFilters.deflate Then
                 filter = New DeflatePipelineFilter
+            ElseIf id = ReservedFilters.shuffle Then
+                filter = New ShufflePipelineFilter
+            ElseIf id = ReservedFilters.fletcher32 Then
+                filter = New Fletcher32CheckSum
             End If
         End Sub
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Function doDecode(encodedBytes As IEnumerable(Of Byte)) As Byte()
+            If filter Is Nothing Then
+                Throw New NotSupportedException("未实现的 HDF5 过滤器(id=" & id & ", name=""" & name & """)，无法解码该数据集")
+            End If
+
             Return filter.decode(encodedBytes, clientData)
         End Function
 

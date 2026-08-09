@@ -30,8 +30,7 @@ Module Program
         Next
 
         Console.WriteLine()
-        Console.WriteLine("全部诊断完成。按任意键退出。")
-        Console.ReadKey()
+        Console.WriteLine("全部诊断完成。")
     End Sub
 
 End Module
