@@ -4,9 +4,9 @@ Module Program
 
     Sub Main(args As String())
         Dim files As New List(Of String) From {
-            "C:\Users\Administrator\Downloads\Visium_HD_6p5mm_Rat_Liver_molecule_info.h5"
+            "C:\Users\Administrator\Downloads\Visium_HD_6p5mm_Rat_Liver_molecule_info.h5",
+            "C:\Users\Administrator\Downloads\Visium_HD_6p5mm_Rat_Liver_feature_slice.h5"
         }
-        ' "C:\Users\Administrator\Downloads\Visium_HD_6p5mm_Rat_Liver_feature_slice.h5"
 
         Dim outDir As String = Path.Combine(Path.GetTempPath(), "hdf5_diag")
         Directory.CreateDirectory(outDir)

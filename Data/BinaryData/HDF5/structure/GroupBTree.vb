@@ -96,8 +96,12 @@ Namespace struct
             Call readAllEntries(sb, address, entryList)
 
             For Each e As BTreeEntry In entryList
-                node = New GroupNode(sb, e.targetAddress)
-                symbolTableEntries.AddRange(node.symbols)
+                Try
+                    node = New GroupNode(sb, e.targetAddress)
+                    symbolTableEntries.AddRange(node.symbols)
+                Catch
+                    ' 个别条目无法解析为符号表节点时跳过，保证整体遍历不中断
+                End Try
             Next
         End Sub
 
