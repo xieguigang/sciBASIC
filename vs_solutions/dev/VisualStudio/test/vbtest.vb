@@ -81,7 +81,7 @@ Module Program2222
 
     Sub Main1()
         Try
-            ' TestProject()
+            TestProject()
         Catch ex As Exception
             Console.WriteLine("[WARN] VBProject.Load test failed: " & ex.Message)
         End Try
