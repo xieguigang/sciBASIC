@@ -278,6 +278,10 @@ Namespace VBProj
                     Else
                         vbdoc.Types = New Dictionary(Of String, LanguageSymbolType)()
                     End If
+
+                    ' backfill the absolute file path into every recorded source
+                    ' location so that Source.CodeBlock can read the source text.
+                    FillSourceFilePath(root, full)
                 Catch
                     vbdoc.Types = New Dictionary(Of String, LanguageSymbolType)()
                 End Try

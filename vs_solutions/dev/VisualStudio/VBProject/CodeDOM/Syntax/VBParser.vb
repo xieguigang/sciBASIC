@@ -180,7 +180,7 @@ Namespace VBProj.CodeDOM.Syntax
                         ParseDelegate(stmt, stmts, i, container)
                     Case "dim", "static", "const"
                         If member IsNot Nothing Then
-                            DeclareLocals(stmt.Tokens, member)
+                            DeclareLocals(stmt, member)
                         Else
                             ParseField(stmt, container)
                         End If
@@ -448,6 +448,7 @@ Namespace VBProj.CodeDOM.Syntax
 
             AddToContainer(container, del)
             i += 1
+            AddSource(del, stmt.LeadingLine, stmt.EndLine, stmt.Line)
         End Sub
 
         ' ------------------------------------------------------------------
@@ -457,14 +458,14 @@ Namespace VBProj.CodeDOM.Syntax
         Private Sub ParseField(stmt As VBStatement, container As TypeContainerSymbol)
             Dim sp As StmtParser = NewCursor(stmt)
             Dim rest As List(Of Token) = stmt.Tokens.GetRange(sp.Pos, stmt.Tokens.Count - sp.Pos)
-            DeclareFields(rest, container)
+            DeclareFields(rest, container, stmt)
         End Sub
 
         ''' <summary>
         ''' declare type-level fields (Public/Private/Dim X As XX at container scope).
         ''' They are stored in <see cref="TypeContainerSymbol.Members"/>.
         ''' </summary>
-        Private Sub DeclareFields(tokens As List(Of Token), parent As TypeContainerSymbol)
+        Private Sub DeclareFields(tokens As List(Of Token), parent As TypeContainerSymbol, stmt As VBStatement)
             If parent.Members Is Nothing Then
                 parent.Members = New Dictionary(Of String, LanguageSymbolType)
             End If
@@ -510,11 +511,13 @@ Namespace VBProj.CodeDOM.Syntax
                 End If
 
                 If Not parent.Members.ContainsKey(name) Then
-                    parent.Members(name) = New VariableSymbol With {
+                    Dim v As New VariableSymbol With {
                         .Name = name,
                         .Parent = parent,
                         .ValueType = If(type, TypeInfoHelper.TypeRef("Object"))
                     }
+                    AddSource(v, stmt.LeadingLine, stmt.EndLine, stmt.Line)
+                    parent.Members(name) = v
                 End If
             Next
         End Sub
@@ -524,10 +527,12 @@ Namespace VBProj.CodeDOM.Syntax
         ''' They are stored in <see cref="CallableMemberSymbol.Locals"/> so that
         ''' they are never confused with type-level members.
         ''' </summary>
-        Private Sub DeclareLocals(tokens As List(Of Token), member As CallableMemberSymbol)
+        Private Sub DeclareLocals(stmt As VBStatement, member As CallableMemberSymbol)
             If member.Locals Is Nothing Then
                 member.Locals = New Dictionary(Of String, VariableSymbol)
             End If
+
+            Dim tokens As List(Of Token) = stmt.Tokens
 
             Dim start As Integer = 0
             If start < tokens.Count AndAlso {"dim", "static", "const"}.Contains(tokens(start).Text.ToLowerInvariant()) Then
@@ -570,11 +575,13 @@ Namespace VBProj.CodeDOM.Syntax
                 End If
 
                 If Not member.Locals.ContainsKey(name) Then
-                    member.Locals(name) = New VariableSymbol With {
+                    Dim v As New VariableSymbol With {
                         .Name = name,
                         .Parent = member,
                         .ValueType = If(type, TypeInfoHelper.TypeRef("Object"))
                     }
+                    AddSource(v, stmt.LeadingLine, stmt.EndLine, stmt.Line)
+                    member.Locals(name) = v
                 End If
             Next
         End Sub
@@ -583,20 +590,125 @@ Namespace VBProj.CodeDOM.Syntax
         ' low level token helpers
         ' ------------------------------------------------------------------
 
-        Private Sub AddToContainer(container As TypeContainerSymbol, sym As LanguageSymbolType)
+        ' add the symbol to the container. For container types (Class / Module /
+        ' Structure / Enum / Interface / Namespace) that already exist under the
+        ' same name, the new declaration is merged into the existing one and a
+        ' second source location is appended (so IsMultiplePartial becomes
+        ' True). The merged (or freshly added) symbol instance is returned so
+        ' that the caller keeps filling members into the right object.
+        Private Function AddToContainer(container As TypeContainerSymbol, sym As LanguageSymbolType) As LanguageSymbolType
             Select Case sym.Type
                 Case SymbolType.[Class], SymbolType.[Module], SymbolType.[Structure], SymbolType.[Enum], SymbolType.[Interface], SymbolType.[Namespace]
                     If container.InternalNested Is Nothing Then
                         container.InternalNested = New Dictionary(Of String, LanguageSymbolType)
                     End If
+
+                    If container.InternalNested.ContainsKey(sym.Name) Then
+                        Dim existing As LanguageSymbolType = container.InternalNested(sym.Name)
+                        MergePartial(existing, sym)
+                        Return existing
+                    End If
+
                     container.InternalNested(sym.Name) = sym
                 Case Else
                     If container.Members Is Nothing Then
                         container.Members = New Dictionary(Of String, LanguageSymbolType)
                     End If
-                    container.Members(sym.Name) = sym
+
+                    If Not container.Members.ContainsKey(sym.Name) Then
+                        container.Members(sym.Name) = sym
+                    End If
+
+                    Return container.Members(sym.Name)
             End Select
+
+            Return sym
+        End Function
+
+        ' merge a second partial declaration (sym) into the previously declared
+        ' one (existing). Members / nested types are unioned (the first
+        ' declaration wins on key collision, matching DeclareFields behaviour).
+        ' Inherits / Implements / Attributes / XmlDoc are also merged, and a new
+        ' source location is appended to existing.
+        Private Sub MergePartial(existing As LanguageSymbolType, sym As LanguageSymbolType)
+            If existing.Source Is Nothing Then
+                existing.Source = New SourceLocations()
+            End If
+            If sym.Source IsNot Nothing Then
+                For Each loc As Source In sym.Source
+                    existing.Source.Add(loc)
+                Next
+            End If
+
+            existing.Attributes = MergeStringList(existing.Attributes, sym.Attributes)
+            If String.IsNullOrEmpty(existing.XmlDoc) Then
+                existing.XmlDoc = sym.XmlDoc
+            ElseIf Not String.IsNullOrEmpty(sym.XmlDoc) Then
+                existing.XmlDoc = existing.XmlDoc & vbCrLf & sym.XmlDoc
+            End If
+
+            If TypeOf existing Is TypeContainerSymbol AndAlso TypeOf sym Is TypeContainerSymbol Then
+                Dim ect As TypeContainerSymbol = DirectCast(existing, TypeContainerSymbol)
+                Dim sct As TypeContainerSymbol = DirectCast(sym, TypeContainerSymbol)
+
+                If ect.InheritsType Is Nothing AndAlso sct.InheritsType IsNot Nothing Then
+                    ect.InheritsType = sct.InheritsType
+                End If
+                ect.ImplementsInterfaces = MergeTypeInfoArray(ect.ImplementsInterfaces, sct.ImplementsInterfaces)
+
+                If sct.InternalNested IsNot Nothing Then
+                    If ect.InternalNested Is Nothing Then
+                        ect.InternalNested = New Dictionary(Of String, LanguageSymbolType)
+                    End If
+                    For Each kv In sct.InternalNested
+                        If Not ect.InternalNested.ContainsKey(kv.Key) Then
+                            ect.InternalNested(kv.Key) = kv.Value
+                        End If
+                    Next
+                End If
+
+                If sct.Members IsNot Nothing Then
+                    If ect.Members Is Nothing Then
+                        ect.Members = New Dictionary(Of String, LanguageSymbolType)
+                    End If
+                    For Each kv In sct.Members
+                        If Not ect.Members.ContainsKey(kv.Key) Then
+                            ect.Members(kv.Key) = kv.Value
+                        End If
+                    Next
+                End If
+            End If
         End Sub
+
+        Private Function MergeStringList(existing As List(Of String), add As List(Of String)) As List(Of String)
+            If existing Is Nothing Then
+                existing = New List(Of String)
+            End If
+            If add IsNot Nothing Then
+                For Each s As String In add
+                    If Not existing.Contains(s) Then
+                        existing.Add(s)
+                    End If
+                Next
+            End If
+            Return existing
+        End Function
+
+        Private Function MergeTypeInfoArray(existing As TypeInfo(), add As TypeInfo()) As TypeInfo()
+            If existing Is Nothing OrElse existing.Length = 0 Then
+                Return add
+            End If
+            If add Is Nothing OrElse add.Length = 0 Then
+                Return existing
+            End If
+            Dim merged As New List(Of TypeInfo)(existing)
+            For Each t As TypeInfo In add
+                If Not merged.Contains(t) Then
+                    merged.Add(t)
+                End If
+            Next
+            Return merged.ToArray()
+        End Function
 
         Private Function ReadOperatorName(sp As StmtParser) As String
             If sp.Eof Then
