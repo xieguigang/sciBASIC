@@ -28,6 +28,9 @@ Namespace test
 
                 report.Add(describeSuperblock(hdf5.superblock, filePath))
 
+                ' 临时调试：转储根组的首层子节点地址与签名，定位 molecule_info 打开失败原因
+                report.Add(debugRootGroup(hdf5.superblock, hdf5.superblock.rootGroupHeaderAddress))
+
                 ' 以与 HDF5File.parseHeader 一致的方式重建根组，避免依赖内部字段
                 Dim rootHeaderAddress As Long = hdf5.superblock.rootGroupHeaderAddress
                 Dim rootFacade As New DataObjectFacade(hdf5.superblock, "root", rootHeaderAddress)
