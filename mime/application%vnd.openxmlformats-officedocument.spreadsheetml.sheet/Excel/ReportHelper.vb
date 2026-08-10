@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f0fa63d21a6d04ea4d1ffa5922b45f71, mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\ReportHelper.vb"
+﻿#Region "Microsoft.VisualBasic::3068485f8db25974aa8964c286e616a7, mime\application%vnd.openxmlformats-officedocument.spreadsheetml.sheet\Excel\ReportHelper.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 57.89%
     ' 
     '   Blank Lines: 17 (13.71%)
-    '     File Size: 6.23 KB
+    '     File Size: 6.22 KB
 
 
     ' Module ReportHelper
@@ -175,4 +175,3 @@ Public Module ReportHelper
     End Function
 
 End Module
-

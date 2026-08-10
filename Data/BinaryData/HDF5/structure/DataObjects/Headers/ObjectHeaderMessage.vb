@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a9302630e52d3c1cd7259e505974d254, Data\BinaryData\HDF5\structure\DataObjects\Headers\ObjectHeaderMessage.vb"
+﻿#Region "Microsoft.VisualBasic::d3d994cb4f14e9f845fc78fcd6f6da1b, Data\BinaryData\HDF5\structure\DataObjects\Headers\ObjectHeaderMessage.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 224
-    '    Code Lines: 177 (79.02%)
-    ' Comment Lines: 19 (8.48%)
-    '    - Xml Docs: 36.84%
+    '   Total Lines: 227
+    '    Code Lines: 178 (78.41%)
+    ' Comment Lines: 21 (9.25%)
+    '    - Xml Docs: 33.33%
     ' 
-    '   Blank Lines: 28 (12.50%)
-    '     File Size: 11.93 KB
+    '   Blank Lines: 28 (12.33%)
+    '     File Size: 12.17 KB
 
 
     '     Class ObjectHeaderMessage

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5c82bda0bb990af0990b08d170b115d4, vs_solutions\dev\VisualStudio\sln\Parser.vb"
+﻿#Region "Microsoft.VisualBasic::8a86977dccc83d9524b2386e8a844c41, vs_solutions\dev\VisualStudio\sln\File\Parser.vb"
 
     ' Author:
     ' 
@@ -34,22 +34,19 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 434
-    '    Code Lines: 292 (67.28%)
-    ' Comment Lines: 48 (11.06%)
-    '    - Xml Docs: 52.08%
+    '   Total Lines: 136
+    '    Code Lines: 91 (66.91%)
+    ' Comment Lines: 15 (11.03%)
+    '    - Xml Docs: 73.33%
     ' 
-    '   Blank Lines: 94 (21.66%)
-    '     File Size: 16.82 KB
+    '   Blank Lines: 30 (22.06%)
+    '     File Size: 4.58 KB
 
 
     '     Module Parser
     ' 
-    '         Function: ExtractSectionName, GetAttr, NormalizeGuid, Parse, ParseKeyValueSection
-    '                   ParseProjectDeclaration, ParseSln, ParseSlnx, ParseSolutionConfigurations, ResolveType
-    '                   SkipSection, SplitKeyValue, SplitQuoted, StripQuotes
-    ' 
-    '         Sub: ParseSlnxProjects
+    '         Function: ExtractSectionName, NormalizeGuid, Parse, ResolveType, SplitKeyValue
+    '                   SplitQuoted, StripQuotes
     ' 
     ' 
     ' /********************************************************************************/

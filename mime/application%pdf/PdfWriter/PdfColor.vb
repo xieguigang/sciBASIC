@@ -1,13 +1,16 @@
-#Region "Microsoft.VisualBasic::a1b2c3d4e5f60718293a4b5c6d7e8f90, mime\application%pdf\PdfWriter\PdfColor.vb"
+﻿#Region "Microsoft.VisualBasic::cc0be389a93099b585450b167a114d92, mime\application%pdf\PdfWriter\PdfColor.vb"
 
     ' Author:
     ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
-    ' Copyright (c) 2026 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -22,11 +25,27 @@
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
+
+
     ' /********************************************************************************/
 
-    ' Class PdfColor
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 76
+    '    Code Lines: 43 (56.58%)
+    ' Comment Lines: 24 (31.58%)
+    '    - Xml Docs: 62.50%
     ' 
-    '     Function: FromHex, ToFill, ToStroke, Format
+    '   Blank Lines: 9 (11.84%)
+    '     File Size: 3.11 KB
+
+
+    ' Structure PdfColor
+    ' 
+    '     Function: Format, FromHex, IsEmpty, ToFill, ToStroke
     ' 
     ' /********************************************************************************/
 

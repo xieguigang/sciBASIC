@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::a42351f698862b80505ff1f67bce174b, vs_solutions\dev\VisualStudio\VBProject\Syntax\TypeInfoHelper.vb"
+﻿#Region "Microsoft.VisualBasic::1146855864ebcb108155cbd6f34abb94, vs_solutions\dev\VisualStudio\VBProject\CodeDOM\Syntax\TypeInfoHelper.vb"
 
     ' Author:
     ' 

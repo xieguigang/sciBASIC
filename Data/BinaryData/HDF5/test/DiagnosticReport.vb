@@ -1,3 +1,69 @@
+﻿#Region "Microsoft.VisualBasic::45862d0d3494a19a5f60d2ff6788063a, Data\BinaryData\HDF5\test\DiagnosticReport.vb"
+
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 101
+    '    Code Lines: 75 (74.26%)
+    ' Comment Lines: 6 (5.94%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 20 (19.80%)
+    '     File Size: 4.20 KB
+
+
+    '     Class DiagnosticEntry
+    ' 
+    '         Properties: dataType, errorFrame, errorMessage, errorType, filters
+    '                     kind, layout, path, sampleValues, sanityWarning
+    '                     shape, succeeded
+    ' 
+    '     Class DiagnosticReport
+    ' 
+    '         Properties: entries, file, startedAt
+    ' 
+    '         Constructor: (+1 Overloads) Sub New
+    ' 
+    '         Function: Add, failureCount, formatEntry, Render, successCount
+    ' 
+    '         Sub: WriteToFile
+    ' 
+    ' 
+    ' /********************************************************************************/
+
+#End Region
+
 Imports System.IO
 Imports System.Text
 
@@ -99,3 +165,4 @@ Namespace test
     End Class
 
 End Namespace
+

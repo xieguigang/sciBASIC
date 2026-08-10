@@ -1,10 +1,12 @@
-#Region "Microsoft.VisualBasic::9f3c1a7b2e5d4c8a9b0c1d2e3f4a5b6c, mime\applicationvnd.openxmlformats-officedocument.wordprocessingml.document\docx\IDocumentWriter.vb"
+﻿#Region "Microsoft.VisualBasic::5add4346ec9c8ee287dafe8f01f9127d, mime\applicationvnd.openxmlformats-officedocument.wordprocessingml.document\docx\IDocumentWriter.vb"
 
     ' Author:
     ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
-    ' Copyright (c) 2026 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
@@ -24,6 +26,7 @@
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
+
     ' /********************************************************************************/
 
     ' Summaries:
@@ -31,24 +34,27 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 1
-    '    Code Lines: 1 (100.00%)
-    ' Comment Lines: 0 (0.00%)
-    '    - Xml Docs: 0.00%
+    '   Total Lines: 147
+    '    Code Lines: 65 (44.22%)
+    ' Comment Lines: 64 (43.54%)
+    '    - Xml Docs: 78.12%
     ' 
-    '   Blank Lines: 0 (0.00%)
-    '     File Size: 0.00 KB
+    '   Blank Lines: 18 (12.24%)
+    '     File Size: 8.15 KB
 
 
     ' Interface IDocumentWriter
     ' 
-    '     Properties: Author, Title, Subject, Description, Tags, ApplicationName
+    '     Properties: ApplicationName, Author, Description, Subject, Tags
+    '                 Title
     ' 
-    '     Function: HeadingStyle, ParagraphStyle, DefaultStyle, TableStyle, CodeStyle,
-    '               BlockquoteStyle, TitleStyle, PageSetup, PageSetupA4, PageSetupLetter,
-    '               DocTitle, H1, H2, H3, H4, H5, H6, Heading, Paragraph, CodeBlock,
-    '               Blockquote, List, TaskList, DefinitionList, Hr, PageBreak, Toc,
-    '               Table, TableAutoFitWindow, TableAutoFitContents, Image, WriteBlocks
+    '     Function: Blockquote, BlockquoteStyle, CodeBlock, CodeStyle, DefaultStyle
+    '               DefinitionList, DocTitle, H1, H2, H3
+    '               H4, H5, H6, Heading, HeadingStyle
+    '               Hr, Image, List, PageBreak, PageSetup
+    '               PageSetupA4, PageSetupLetter, (+2 Overloads) Paragraph, ParagraphStyle, (+3 Overloads) Table
+    '               (+2 Overloads) TableAutoFitContents, (+2 Overloads) TableAutoFitWindow, TableStyle, TaskList, TitleStyle
+    '               Toc, WriteBlocks
     ' 
     '     Sub: Save
     ' 

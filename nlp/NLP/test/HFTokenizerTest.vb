@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::42c0bf142c913c16970a83b939026fcd, nlp\NLP\test\HFTokenizerTest.vb"
+﻿#Region "Microsoft.VisualBasic::69fee46d650b8c3d7041c2f5755e14af, nlp\NLP\test\HFTokenizerTest.vb"
 
     ' Author:
     ' 
@@ -342,4 +342,3 @@ Module HFTokenizerTest
     End Function
 
 End Module
-

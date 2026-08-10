@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::77b4b1b36023991c94c181cb9ca906ca, Data\BinaryData\HDF5\HDF5Reader.vb"
+﻿#Region "Microsoft.VisualBasic::2d65e6a677ee80031c3ffaff9e464f38, Data\BinaryData\HDF5\HDF5Reader.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 211
-    '    Code Lines: 141 (66.82%)
-    ' Comment Lines: 39 (18.48%)
-    '    - Xml Docs: 76.92%
+    '   Total Lines: 202
+    '    Code Lines: 135 (66.83%)
+    ' Comment Lines: 38 (18.81%)
+    '    - Xml Docs: 78.95%
     ' 
-    '   Blank Lines: 31 (14.69%)
-    '     File Size: 7.53 KB
+    '   Blank Lines: 29 (14.36%)
+    '     File Size: 7.54 KB
 
 
     ' Class HDF5Reader

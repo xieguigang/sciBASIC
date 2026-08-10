@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ee15dacba0242dbf8bccc0d095015658, vs_solutions\dev\VisualStudio\sln\Project.vb"
+﻿#Region "Microsoft.VisualBasic::24744be580bdb31989fa87bc19bbc27f, vs_solutions\dev\VisualStudio\sln\File\Project.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 68
-    '    Code Lines: 30 (44.12%)
-    ' Comment Lines: 34 (50.00%)
+    '   Total Lines: 72
+    '    Code Lines: 33 (45.83%)
+    ' Comment Lines: 34 (47.22%)
     '    - Xml Docs: 100.00%
     ' 
-    '   Blank Lines: 4 (5.88%)
-    '     File Size: 2.69 KB
+    '   Blank Lines: 5 (6.94%)
+    '     File Size: 2.81 KB
 
 
     '     Enum TypeId
@@ -54,6 +54,8 @@
     ' 
     '         Properties: FullPath, Guid, IsFolder, Name, NodeType
     '                     ParentGuid, RelativePath, TreePath, TypeGuid
+    ' 
+    '         Function: ToString
     ' 
     ' 
     ' /********************************************************************************/

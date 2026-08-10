@@ -1,13 +1,16 @@
-#Region "Microsoft.VisualBasic::b2c3d4e5f60718293a4b5c6d7e8f901, mime\application%pdf\PdfWriter\PdfFontResource.vb"
+﻿#Region "Microsoft.VisualBasic::02bcef8095c8857cf51765b19d40b8ee, mime\application%pdf\PdfWriter\PdfFontResource.vb"
 
     ' Author:
     ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
-    ' Copyright (c) 2026 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -22,12 +25,36 @@
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
+
+
     ' /********************************************************************************/
 
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 181
+    '    Code Lines: 119 (65.75%)
+    ' Comment Lines: 43 (23.76%)
+    '    - Xml Docs: 62.79%
+    ' 
+    '   Blank Lines: 19 (10.50%)
+    '     File Size: 8.20 KB
+
+
+    ' Class PdfFontEntry
+    ' 
+    ' 
+    ' 
     ' Class PdfFontResource
     ' 
-    '     Function: LatinFont, CJKFontName, CharWidth, IsCJK, EncodeCJKHex,
-    '               GetRegistry, MeasureText
+    '     Constructor: (+1 Overloads) Sub New
+    ' 
+    '     Function: CharWidthLatin, CJKFontName, EncodeCJKHex, GetRegistry, InitHelveticaWidths
+    '               IsCJK, LatinFont, MeasureText
+    ' 
+    '     Sub: RegisterStandard
     ' 
     ' /********************************************************************************/
 

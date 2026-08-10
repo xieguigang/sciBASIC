@@ -1,113 +1,69 @@
-﻿#Region "Microsoft.VisualBasic::0a7a67f7b133aaf0b487024ed4ffd12f, vs_solutions\dev\VisualStudio\VBProject\LanguageSymbolType.vb"
+﻿#Region "Microsoft.VisualBasic::de50676217537c801148ab2d2ff7ddf8, vs_solutions\dev\VisualStudio\VBProject\CodeDOM\LanguageSymbolType.vb"
 
-' Author:
-' 
-'       asuka (amethyst.asuka@gcmodeller.org)
-'       xie (genetics@smrucc.org)
-'       xieguigang (xie.guigang@live.com)
-' 
-' Copyright (c) 2018 GPL3 Licensed
-' 
-' 
-' GNU GENERAL PUBLIC LICENSE (GPL3)
-' 
-' 
-' This program is free software: you can redistribute it and/or modify
-' it under the terms of the GNU General Public License as published by
-' the Free Software Foundation, either version 3 of the License, or
-' (at your option) any later version.
-' 
-' This program is distributed in the hope that it will be useful,
-' but WITHOUT ANY WARRANTY; without even the implied warranty of
-' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-' GNU General Public License for more details.
-' 
-' You should have received a copy of the GNU General Public License
-' along with this program. If not, see <http://www.gnu.org/licenses/>.
-
-
-
-' /********************************************************************************/
-
-' Summaries:
+    ' Author:
+    ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
+    '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
+    ' 
+    ' Copyright (c) 2018 GPL3 Licensed
+    ' 
+    ' 
+    ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
+    ' 
+    ' This program is free software: you can redistribute it and/or modify
+    ' it under the terms of the GNU General Public License as published by
+    ' the Free Software Foundation, either version 3 of the License, or
+    ' (at your option) any later version.
+    ' 
+    ' This program is distributed in the hope that it will be useful,
+    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
+    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    ' GNU General Public License for more details.
+    ' 
+    ' You should have received a copy of the GNU General Public License
+    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
-' Code Statistics:
 
-'   Total Lines: 198
-'    Code Lines: 71 (35.86%)
-' Comment Lines: 81 (40.91%)
-'    - Xml Docs: 100.00%
-' 
-'   Blank Lines: 46 (23.23%)
-'     File Size: 7.27 KB
+    ' /********************************************************************************/
+
+    ' Summaries:
 
 
-'     Class LanguageSymbolType
-' 
-'         Properties: Attributes, GenericTypeArguments, Modifiers, Name, Parent
-'                     XmlDoc
-' 
-'     Class TypeContainerSymbol
-' 
-'         Properties: ImplementsInterfaces, InheritsType, InternalNested, Members
-' 
-'     Class NamespaceSymbol
-' 
-'         Properties: Type
-' 
-'     Class ClassSymbol
-' 
-'         Properties: Type
-' 
-'     Class ModuleSymbol
-' 
-'         Properties: Type
-' 
-'     Class StructureSymbol
-' 
-'         Properties: Type
-' 
-'     Class InterfaceSymbol
-' 
-'         Properties: Type
-' 
-'     Class EnumSymbol
-' 
-'         Properties: EnumBaseType, Type
-' 
-'     Class MemberSymbol
-' 
-' 
-' 
-'     Class CallableMemberSymbol
-' 
-'         Properties: Locals, Parameters, ReturnType
-' 
-'     Class MethodSymbol
-' 
-'         Properties: Type
-' 
-'         Constructor: (+1 Overloads) Sub New
-' 
-'     Class PropertySymbol
-' 
-'         Properties: Type
-' 
-'     Class EventSymbol
-' 
-'         Properties: DelegateType, Type
-' 
-'     Class DelegateSymbol
-' 
-'         Properties: Parameters, Type, ValueType
-' 
-'     Class VariableSymbol
-' 
-'         Properties: Type, ValueType
-' 
-' 
-' /********************************************************************************/
+    ' Code Statistics:
+
+    '   Total Lines: 166
+    '    Code Lines: 80 (48.19%)
+    ' Comment Lines: 56 (33.73%)
+    '    - Xml Docs: 100.00%
+    ' 
+    '   Blank Lines: 30 (18.07%)
+    '     File Size: 5.83 KB
+
+
+    '     Class LanguageSymbolType
+    ' 
+    '         Properties: Attributes, GenericTypeArguments, Modifiers, Name, Parent
+    '                     Source, XmlDoc
+    ' 
+    '     Class SourceLocations
+    ' 
+    '         Properties: Count, First, IsMultiplePartial
+    ' 
+    '         Function: GenericEnumerator, ToArray
+    ' 
+    '         Sub: (+2 Overloads) Add
+    ' 
+    '     Class Source
+    ' 
+    '         Properties: CodeBlock, DeclarationLine, FilePath, LineRange
+    ' 
+    '         Function: ToString
+    ' 
+    ' 
+    ' /********************************************************************************/
 
 #End Region
 

@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::000bd99998d303c9378b905241ede7c2, nlp\KnowledgeGraph\KnowledgeGraph.vb"
+﻿#Region "Microsoft.VisualBasic::d08c865a733f08e88db64585094034aa, nlp\KnowledgeGraph\KnowledgeGraph.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 83.91%
     ' 
     '   Blank Lines: 40 (12.86%)
-    '     File Size: 10.93 KB
+    '     File Size: 10.92 KB
 
 
     ' Class EntityNode
@@ -380,4 +380,3 @@ Public Class KnowledgeGraph
     End Function
 
 End Class
-

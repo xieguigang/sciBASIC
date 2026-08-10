@@ -1,13 +1,16 @@
-#Region "Microsoft.VisualBasic::d4e5f60718293a4b5c6d7e8f9012345, mime\application%pdf\PdfWriter\PdfBlock.vb"
+﻿#Region "Microsoft.VisualBasic::8845c58a28215e0e7047e13b090b69a3, mime\application%pdf\PdfWriter\PdfBlock.vb"
 
     ' Author:
     ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
-    ' Copyright (c) 2026 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -22,11 +25,37 @@
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
+
+
     ' /********************************************************************************/
+
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 98
+    '    Code Lines: 35 (35.71%)
+    ' Comment Lines: 42 (42.86%)
+    '    - Xml Docs: 83.33%
+    ' 
+    '   Blank Lines: 21 (21.43%)
+    '     File Size: 3.29 KB
+
 
     ' Enum PdfBlockType
     ' 
+    '     Code, DefList, Heading, Hr, Image
+    '     List, PageBreak, Paragraph, Quote, Table
+    '     TaskList, Title, Toc
+    ' 
+    '  
+    ' 
+    ' 
+    ' 
     ' Class PdfBlock
+    ' 
+    ' 
     ' 
     ' /********************************************************************************/
 

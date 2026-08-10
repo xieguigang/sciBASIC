@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::092f5306ec442de28138eddc11f843c3, mime\applicationvnd.openxmlformats-officedocument.wordprocessingml.document\docx\WordDocument.vb"
+﻿#Region "Microsoft.VisualBasic::779145fd5e68cef35d02b110945ea883, mime\applicationvnd.openxmlformats-officedocument.wordprocessingml.document\docx\WordDocument.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 1008
-    '    Code Lines: 734 (72.82%)
-    ' Comment Lines: 155 (15.38%)
-    '    - Xml Docs: 47.10%
+    '   Total Lines: 1183
+    '    Code Lines: 863 (72.95%)
+    ' Comment Lines: 163 (13.78%)
+    '    - Xml Docs: 44.79%
     ' 
-    '   Blank Lines: 119 (11.81%)
-    '     File Size: 50.83 KB
+    '   Blank Lines: 157 (13.27%)
+    '     File Size: 59.80 KB
 
 
     ' Class WordDocument
@@ -55,12 +55,19 @@
     '               GetCodeStyle, GetDefaultStyle, GetHeadingStyles, GetImages, GetMargins
     '               GetPageHeight, GetPageWidth, GetParagraphStyle, GetTableStyle, GetTitleStyle
     '               H1, H2, H3, H4, H5
-    '               H6, Heading, HeadingStyle, Hr, Image
-    '               List, PageBreak, PageSetup, PageSetupA4, PageSetupLetter
-    '               (+2 Overloads) Paragraph, ParagraphStyle, PtToTwip, (+3 Overloads) Table, (+2 Overloads) TableAutoFitContents
-    '               (+2 Overloads) TableAutoFitWindow, TableStyle, TaskList, TitleStyle, Toc
-    '               ToEmu, ToJagged1D, ToJagged2D, WriteAutoFitTable, WriteBlocks
-    '               XEsc
+    '               H6, Heading, HeadingStyle, Hr, IDW_Blockquote
+    '               IDW_BlockquoteStyle, IDW_CodeBlock, IDW_CodeStyle, IDW_DefaultStyle, IDW_DefinitionList
+    '               IDW_DocTitle, IDW_H1, IDW_H2, IDW_H3, IDW_H4
+    '               IDW_H5, IDW_H6, IDW_Heading, IDW_HeadingStyle, IDW_Hr
+    '               IDW_Image, IDW_List, IDW_PageBreak, IDW_PageSetup, IDW_PageSetupA4
+    '               IDW_PageSetupLetter, IDW_Paragraph, IDW_Paragraph2, IDW_ParagraphStyle, IDW_Table1
+    '               IDW_Table2, IDW_Table3, IDW_TableAutoFitContents1, IDW_TableAutoFitContents2, IDW_TableAutoFitWindow1
+    '               IDW_TableAutoFitWindow2, IDW_TableStyle, IDW_TaskList, IDW_TitleStyle, IDW_Toc
+    '               IDW_WriteBlocks, Image, List, PageBreak, PageSetup
+    '               PageSetupA4, PageSetupLetter, (+2 Overloads) Paragraph, ParagraphStyle, PtToTwip
+    '               (+3 Overloads) Table, (+2 Overloads) TableAutoFitContents, (+2 Overloads) TableAutoFitWindow, TableStyle, TaskList
+    '               TitleStyle, Toc, ToEmu, ToJagged1D, ToJagged2D
+    '               WriteAutoFitTable, WriteBlocks, XEsc
     ' 
     '     Sub: ResolveImageExtent, Save, WriteBlock
     '     Class ImageEntry
@@ -1256,4 +1263,3 @@ Public Class WordDocument : Implements IDocumentWriter
     End Function
 
 End Class
-

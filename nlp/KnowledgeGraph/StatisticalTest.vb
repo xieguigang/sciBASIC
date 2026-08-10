@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::695d2b32d3e2b135d7020604a623c082, nlp\KnowledgeGraph\StatisticalTest.vb"
+﻿#Region "Microsoft.VisualBasic::0005a8eeee1ebb67a43007c64fb7010c, nlp\KnowledgeGraph\StatisticalTest.vb"
 
     ' Author:
     ' 
@@ -369,4 +369,3 @@ Public Class StatisticalTest
     End Function
 
 End Class
-

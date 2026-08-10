@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::da102b8b05276a0bf67841615b2d735d, nlp\NLP\BM25\BM25.vb"
+﻿#Region "Microsoft.VisualBasic::f983f717194a03c73986db9a2f5c0127, nlp\NLP\BM25\BM25.vb"
 
     ' Author:
     ' 
@@ -590,4 +590,3 @@ Namespace BM25
     End Class
 
 End Namespace
-

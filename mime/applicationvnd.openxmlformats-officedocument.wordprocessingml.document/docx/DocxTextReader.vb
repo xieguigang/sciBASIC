@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::0531ed41d6bb7d4381b7e7f86e9a5c72, mime\applicationvnd.openxmlformats-officedocument.wordprocessingml.document\docx\DocxTextReader.vb"
+﻿#Region "Microsoft.VisualBasic::9178b3363feac9fb665f847c26b7b62a, mime\applicationvnd.openxmlformats-officedocument.wordprocessingml.document\docx\DocxTextReader.vb"
 
     ' Author:
     ' 
@@ -193,4 +193,3 @@ Public Class DocxTextReader
     End Function
 
 End Class
-

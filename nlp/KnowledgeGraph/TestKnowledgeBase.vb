@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::bf2a59e1d2ddf2b78ac2104af9e4ca61, nlp\KnowledgeGraph\TestKnowledgeBase.vb"
+﻿#Region "Microsoft.VisualBasic::cbd17021f578e1047f5e43e7a4e8b408, nlp\KnowledgeGraph\TestKnowledgeBase.vb"
 
     ' Author:
     ' 
@@ -303,4 +303,3 @@ Public Module TestKnowledgeBase
     End Sub
 
 End Module
-

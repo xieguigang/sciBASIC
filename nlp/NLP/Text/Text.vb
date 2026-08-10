@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::63d0bdb3db1b183684258c8bcc2d312c, nlp\NLP\Text\Text.vb"
+﻿#Region "Microsoft.VisualBasic::6de65597f2c3fed4117e77789ee20a7d, nlp\NLP\Text\Text.vb"
 
     ' Author:
     ' 
@@ -146,4 +146,3 @@ Public Module Text
         Return coOccurNum / denominator
     End Function
 End Module
-

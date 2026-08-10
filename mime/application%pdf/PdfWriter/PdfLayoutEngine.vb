@@ -1,13 +1,16 @@
-#Region "Microsoft.VisualBasic::e5f60718293a4b5c6d7e8f901234567, mime\application%pdf\PdfWriter\PdfLayoutEngine.vb"
+﻿#Region "Microsoft.VisualBasic::26ac7721553b15818f6675535239fa7d, mime\application%pdf\PdfWriter\PdfLayoutEngine.vb"
 
     ' Author:
     ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
-    ' Copyright (c) 2026 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -22,11 +25,40 @@
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
+
+
     ' /********************************************************************************/
 
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 691
+    '    Code Lines: 546 (79.02%)
+    ' Comment Lines: 69 (9.99%)
+    '    - Xml Docs: 8.70%
+    ' 
+    '   Blank Lines: 76 (11.00%)
+    '     File Size: 30.78 KB
+
+
+    ' Class PdfRenderResult
+    ' 
+    ' 
+    ' 
     ' Class PdfLayoutEngine
     ' 
-    '     Function: Layout
+    '     Constructor: (+1 Overloads) Sub New
+    ' 
+    '     Function: DrawWrapped, EscapeLatin, FormatNum, GetAlign, Layout
+    '               WrapText
+    ' 
+    '     Sub: BuildPages, ComputeColumnWidths, DrawCenteredLine, DrawHLine, DrawLine
+    '          DrawRect, DrawTableRow, DrawVLine, EmitRun, NewPage
+    '          RenderCode, RenderDefList, RenderHeading, RenderHr, RenderImage
+    '          RenderList, RenderListItems, RenderParagraph, RenderQuote, RenderTable
+    '          RenderTaskList, RenderTitle, RenderToc
     ' 
     ' /********************************************************************************/
 

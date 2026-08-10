@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::c8433da9c0aecd4e3675355a65838a70, Microsoft.VisualBasic.Core\src\ComponentModel\Ranges\RangeModel\IntRange.vb"
+﻿#Region "Microsoft.VisualBasic::aacdbf65fb9078ffc110ecd86d227372, Microsoft.VisualBasic.Core\src\ComponentModel\Ranges\RangeModel\IntRange.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 177
-    '    Code Lines: 76 (42.94%)
-    ' Comment Lines: 77 (43.50%)
+    '   Total Lines: 181
+    '    Code Lines: 79 (43.65%)
+    ' Comment Lines: 77 (42.54%)
     '    - Xml Docs: 74.03%
     ' 
-    '   Blank Lines: 24 (13.56%)
-    '     File Size: 6.46 KB
+    '   Blank Lines: 25 (13.81%)
+    '     File Size: 6.56 KB
 
 
     '     Class IntRange
@@ -48,8 +48,8 @@
     '         Properties: Interval, Max, Min
     ' 
     '         Constructor: (+3 Overloads) Sub New
-    '         Function: GenericEnumerator, (+3 Overloads) IsInside, (+2 Overloads) IsOverlapping, MinMax, ScaleMapping
-    '                   ToString
+    '         Function: GenericEnumerator, GetMinMax, (+3 Overloads) IsInside, (+2 Overloads) IsOverlapping, MinMax
+    '                   ScaleMapping, ToString
     ' 
     ' 
     ' /********************************************************************************/

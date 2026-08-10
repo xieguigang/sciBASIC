@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::92b86b8d1a5ee51c66eb336d41860e0b, nlp\KnowledgeGraph\OntologyInferer.vb"
+﻿#Region "Microsoft.VisualBasic::d0c7208b91228cc9f4f745ce1ca2f188, nlp\KnowledgeGraph\OntologyInferer.vb"
 
     ' Author:
     ' 
@@ -431,4 +431,3 @@ Public Class OntologyInferer
     End Function
 
 End Class
-

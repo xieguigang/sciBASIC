@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::f570bbf6aa98922523cf08013a879c45, vs_solutions\dev\VisualStudio\VBProject\Syntax\VBParser.vb"
+﻿#Region "Microsoft.VisualBasic::b5e14c05359d0dbc05dee516d6377929, vs_solutions\dev\VisualStudio\VBProject\CodeDOM\Syntax\VBParser.vb"
 
     ' Author:
     ' 
@@ -34,34 +34,25 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 850
-    '    Code Lines: 650 (76.47%)
-    ' Comment Lines: 76 (8.94%)
-    '    - Xml Docs: 32.89%
+    '   Total Lines: 919
+    '    Code Lines: 701 (76.28%)
+    ' Comment Lines: 88 (9.58%)
+    '    - Xml Docs: 28.41%
     ' 
-    '   Blank Lines: 124 (14.59%)
-    '     File Size: 34.41 KB
+    '   Blank Lines: 130 (14.15%)
+    '     File Size: 38.85 KB
 
 
     '     Module VBParser
     ' 
-    '         Function: CleanType, IsBlockStarter, IsModifier, IsParamModifier, MapContainerSymbol
-    '                   MapMemberSymbol, NewCursor, Parse, ReadGenericParameters, ReadOperatorName
-    '                   ReadParameters, ReadTypeRef, SplitTopLevel
+    '         Function: AddToContainer, CleanType, IsBlockStarter, IsModifier, IsParamModifier
+    '                   MapContainerSymbol, MapMemberSymbol, MergeStringList, MergeTypeInfoArray, NewCursor
+    '                   Parse, ReadGenericParameters, ReadOperatorName, ReadParameters, ReadTypeRef
+    '                   SplitTopLevel
     ' 
-    '         Sub: AddToContainer, DeclareFields, DeclareLocals, ParseBlock, ParseContainerClause
-    '              ParseContainerType, ParseDelegate, ParseField, ParseInvokeMember, ParseOneParam
-    '         Class StmtParser
-    ' 
-    '             Properties: Current, Eof
-    ' 
-    '             Constructor: (+1 Overloads) Sub New
-    ' 
-    '             Function: ReadAttributeBlock
-    ' 
-    '             Sub: CollectLeading
-    ' 
-    ' 
+    '         Sub: AddSource, DeclareFields, DeclareLocals, MergePartial, ParseBlock
+    '              ParseContainerClause, ParseContainerType, ParseDelegate, ParseField, ParseInvokeMember
+    '              ParseOneParam
     ' 
     ' 
     ' /********************************************************************************/

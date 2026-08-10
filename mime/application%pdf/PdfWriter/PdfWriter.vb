@@ -1,13 +1,16 @@
-#Region "Microsoft.VisualBasic::f60718293a4b5c6d7e8f9012345678, mime\application%pdf\PdfWriter\PdfWriter.vb"
+﻿#Region "Microsoft.VisualBasic::6b8a554f5c5056eae3efa3b044d4837c, mime\application%pdf\PdfWriter\PdfWriter.vb"
 
     ' Author:
     ' 
+    '       asuka (amethyst.asuka@gcmodeller.org)
     '       xie (genetics@smrucc.org)
+    '       xieguigang (xie.guigang@live.com)
     ' 
-    ' Copyright (c) 2026 GPL3 Licensed
+    ' Copyright (c) 2018 GPL3 Licensed
     ' 
     ' 
     ' GNU GENERAL PUBLIC LICENSE (GPL3)
+    ' 
     ' 
     ' This program is free software: you can redistribute it and/or modify
     ' it under the terms of the GNU General Public License as published by
@@ -22,11 +25,34 @@
     ' You should have received a copy of the GNU General Public License
     ' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
+
+
     ' /********************************************************************************/
 
+    ' Summaries:
+
+
+    ' Code Statistics:
+
+    '   Total Lines: 315
+    '    Code Lines: 248 (78.73%)
+    ' Comment Lines: 34 (10.79%)
+    '    - Xml Docs: 14.71%
+    ' 
+    '   Blank Lines: 33 (10.48%)
+    '     File Size: 13.96 KB
+
+
+    ' Structure PdfWriteMeta
+    ' 
+    ' 
+    ' 
     ' Class PdfWriter
     ' 
-    '     Sub: Save
+    '     Function: BuildFontObject, BuildImageObject, BuildInfo, BuildResourceDict, BuildSMaskObject
+    '               CompressZlib, Fmt, IsStreamBody, PdfText
+    ' 
+    '     Sub: Save, WriteTo
     ' 
     ' /********************************************************************************/
 

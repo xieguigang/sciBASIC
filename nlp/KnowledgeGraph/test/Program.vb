@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::b2a94c302d69cdc100bacd03a1ff9170, nlp\KnowledgeGraph\test\Program.vb"
+﻿#Region "Microsoft.VisualBasic::9ef1b1d30d0a7b9dfd63ac4f00b428da, nlp\KnowledgeGraph\test\Program.vb"
 
     ' Author:
     ' 
@@ -341,4 +341,3 @@ Module Program
     End Function
 
 End Module
-

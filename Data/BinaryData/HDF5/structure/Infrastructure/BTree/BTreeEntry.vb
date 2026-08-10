@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::49926b555242b3d5810c86196797cfe1, Data\BinaryData\HDF5\structure\Infrastructure\BTree\BTreeEntry.vb"
+﻿#Region "Microsoft.VisualBasic::e5f817e0c127be0e2558a53393448f2a, Data\BinaryData\HDF5\structure\Infrastructure\BTree\BTreeEntry.vb"
 
     ' Author:
     ' 
@@ -34,20 +34,20 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 44
-    '    Code Lines: 25 (56.82%)
-    ' Comment Lines: 6 (13.64%)
-    '    - Xml Docs: 0.00%
+    '   Total Lines: 53
+    '    Code Lines: 30 (56.60%)
+    ' Comment Lines: 9 (16.98%)
+    '    - Xml Docs: 33.33%
     ' 
-    '   Blank Lines: 13 (29.55%)
-    '     File Size: 1.32 KB
+    '   Blank Lines: 14 (26.42%)
+    '     File Size: 1.66 KB
 
 
     '     Class BTreeEntry
     ' 
     '         Properties: key, targetAddress
     ' 
-    '         Constructor: (+1 Overloads) Sub New
+    '         Constructor: (+2 Overloads) Sub New
     ' 
     '         Function: ToString
     ' 

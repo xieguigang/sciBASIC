@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::1727659579cb78a56cfd6c57ce9fb077, Data\BinaryData\HDF5\structure\DataObjects\Headers\Messages\FilterPipelineMessage.vb"
+﻿#Region "Microsoft.VisualBasic::71bc25e652d5cedfb4eb93991f1b6e6e, Data\BinaryData\HDF5\structure\DataObjects\Headers\Messages\FilterPipelineMessage.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 137
-    '    Code Lines: 74 (54.01%)
-    ' Comment Lines: 40 (29.20%)
+    '   Total Lines: 145
+    '    Code Lines: 81 (55.86%)
+    ' Comment Lines: 40 (27.59%)
     '    - Xml Docs: 90.00%
     ' 
-    '   Blank Lines: 23 (16.79%)
-    '     File Size: 5.72 KB
+    '   Blank Lines: 24 (16.55%)
+    '     File Size: 6.14 KB
 
 
     '     Class FilterPipelineMessage

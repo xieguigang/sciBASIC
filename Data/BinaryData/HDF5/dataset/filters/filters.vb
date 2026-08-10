@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::2fe735b6df65338a8fb2f6d4779b8714, Data\BinaryData\HDF5\dataset\filters\filters.vb"
+﻿#Region "Microsoft.VisualBasic::6f3ce573963011e8da8c0fd06a2ccbf5, Data\BinaryData\HDF5\dataset\filters\filters.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 30
-    '    Code Lines: 20 (66.67%)
-    ' Comment Lines: 3 (10.00%)
-    '    - Xml Docs: 100.00%
+    '   Total Lines: 83
+    '    Code Lines: 56 (67.47%)
+    ' Comment Lines: 8 (9.64%)
+    '    - Xml Docs: 87.50%
     ' 
-    '   Blank Lines: 7 (23.33%)
-    '     File Size: 1.12 KB
+    '   Blank Lines: 19 (22.89%)
+    '     File Size: 2.94 KB
 
 
     '     Class DeflatePipelineFilter
@@ -50,6 +50,12 @@
     '         Function: decode
     ' 
     '     Class Fletcher32CheckSum
+    ' 
+    '         Properties: id, name
+    ' 
+    '         Function: decode
+    ' 
+    '     Class ShufflePipelineFilter
     ' 
     '         Properties: id, name
     ' 

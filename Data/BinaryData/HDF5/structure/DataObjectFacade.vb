@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fec9897acf571402da089a52c1779c89, Data\BinaryData\HDF5\structure\DataObjectFacade.vb"
+﻿#Region "Microsoft.VisualBasic::be99f049666b1f41f2b4311d09e9654b, Data\BinaryData\HDF5\structure\DataObjectFacade.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 257
-    '    Code Lines: 166 (64.59%)
-    ' Comment Lines: 42 (16.34%)
-    '    - Xml Docs: 19.05%
+    '   Total Lines: 267
+    '    Code Lines: 173 (64.79%)
+    ' Comment Lines: 44 (16.48%)
+    '    - Xml Docs: 18.18%
     ' 
-    '   Blank Lines: 49 (19.07%)
-    '     File Size: 10.55 KB
+    '   Blank Lines: 50 (18.73%)
+    '     File Size: 11.02 KB
 
 
     '     Class DataObjectFacade

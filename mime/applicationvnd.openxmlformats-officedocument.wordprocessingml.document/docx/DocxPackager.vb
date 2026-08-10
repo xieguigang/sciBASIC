@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::ea184a72925e172b30e718cec0207879, mime\applicationvnd.openxmlformats-officedocument.wordprocessingml.document\docx\DocxPackager.vb"
+﻿#Region "Microsoft.VisualBasic::3ee4d1dc1555adc88a53fb74a1b8a8a2, mime\applicationvnd.openxmlformats-officedocument.wordprocessingml.document\docx\DocxPackager.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 24.56%
     ' 
     '   Blank Lines: 40 (12.54%)
-    '     File Size: 16.99 KB
+    '     File Size: 16.98 KB
 
 
     ' Class DocxPackager
@@ -374,4 +374,3 @@ Public Class DocxPackager
     End Function
 
 End Class
-

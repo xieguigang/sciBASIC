@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::aea3dea8502c2feabbf7190fbdab6e79, mime\applicationvnd.openxmlformats-officedocument.wordprocessingml.document\docx\ImageHelper.vb"
+﻿#Region "Microsoft.VisualBasic::1b2fc888d609061add0a3fe7829d61dc, mime\applicationvnd.openxmlformats-officedocument.wordprocessingml.document\docx\ImageHelper.vb"
 
     ' Author:
     ' 
@@ -40,7 +40,7 @@
     '    - Xml Docs: 50.72%
     ' 
     '   Blank Lines: 46 (14.15%)
-    '     File Size: 12.24 KB
+    '     File Size: 12.23 KB
 
 
     ' Module ImageHelper
@@ -381,4 +381,3 @@ Public Module ImageHelper
     End Function
 
 End Module
-

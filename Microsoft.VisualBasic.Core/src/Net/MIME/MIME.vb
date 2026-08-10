@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::5fd4b6f3ee5a0c39fe0bb9ee65366b9a, Microsoft.VisualBasic.Core\src\Net\MIME\MIME.vb"
+﻿#Region "Microsoft.VisualBasic::88f07d671cf60eabb67b081497db01fc, Microsoft.VisualBasic.Core\src\Net\MIME\MIME.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 107
-    '    Code Lines: 70 (65.42%)
-    ' Comment Lines: 26 (24.30%)
-    '    - Xml Docs: 88.46%
+    '   Total Lines: 110
+    '    Code Lines: 72 (65.45%)
+    ' Comment Lines: 27 (24.55%)
+    '    - Xml Docs: 85.19%
     ' 
-    '   Blank Lines: 11 (10.28%)
-    '     File Size: 4.79 KB
+    '   Blank Lines: 11 (10.00%)
+    '     File Size: 5.14 KB
 
 
     '     Module MIME
@@ -48,7 +48,7 @@
     '         Properties: ContentTypes, SuffixTable, UnknownType
     ' 
     '         Constructor: (+1 Overloads) Sub New
-    '         Function: fetchUniqueContents, loadContents
+    '         Function: FetchUniqueMimeContents, loadContents
     ' 
     ' 
     ' /********************************************************************************/

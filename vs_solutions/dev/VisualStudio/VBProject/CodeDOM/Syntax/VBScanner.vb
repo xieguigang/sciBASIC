@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::dd51ad4765888e3733e510459f7f2597, vs_solutions\dev\VisualStudio\VBProject\Syntax\VBScanner.vb"
+﻿#Region "Microsoft.VisualBasic::45860d33eeacf38cf8731462baade043, vs_solutions\dev\VisualStudio\VBProject\CodeDOM\Syntax\VBScanner.vb"
 
     ' Author:
     ' 
@@ -34,19 +34,15 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 338
-    '    Code Lines: 264 (78.11%)
-    ' Comment Lines: 24 (7.10%)
-    '    - Xml Docs: 58.33%
+    '   Total Lines: 346
+    '    Code Lines: 272 (78.61%)
+    ' Comment Lines: 25 (7.23%)
+    '    - Xml Docs: 40.00%
     ' 
-    '   Blank Lines: 50 (14.79%)
-    '     File Size: 14.21 KB
+    '   Blank Lines: 49 (14.16%)
+    '     File Size: 15.05 KB
 
 
-    '     Class VBStatement
-    ' 
-    ' 
-    ' 
     '     Class VBScanner
     ' 
     '         Function: IsContinuation, Scan, StripContinuation, Tokenize, TryParseAttributes

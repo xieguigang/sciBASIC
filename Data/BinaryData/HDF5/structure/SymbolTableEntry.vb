@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::4d7ee32be68a44ea7e4f6eea2bf7bcc5, Data\BinaryData\HDF5\structure\SymbolTableEntry.vb"
+﻿#Region "Microsoft.VisualBasic::3f176b4f9bdae3bd6431a60a9c6ab00f, Data\BinaryData\HDF5\structure\SymbolTableEntry.vb"
 
     ' Author:
     ' 
@@ -34,13 +34,13 @@
 
     ' Code Statistics:
 
-    '   Total Lines: 120
-    '    Code Lines: 79 (65.83%)
-    ' Comment Lines: 16 (13.33%)
-    '    - Xml Docs: 50.00%
+    '   Total Lines: 127
+    '    Code Lines: 82 (64.57%)
+    ' Comment Lines: 19 (14.96%)
+    '    - Xml Docs: 42.11%
     ' 
-    '   Blank Lines: 25 (20.83%)
-    '     File Size: 5.20 KB
+    '   Blank Lines: 26 (20.47%)
+    '     File Size: 5.65 KB
 
 
     '     Class SymbolTableEntry

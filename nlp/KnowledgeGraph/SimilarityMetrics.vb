@@ -1,4 +1,4 @@
-﻿#Region "Microsoft.VisualBasic::fdb85cba3852a5e20f41ef31272a2be4, nlp\KnowledgeGraph\SimilarityMetrics.vb"
+﻿#Region "Microsoft.VisualBasic::84fc4beb32df7a08630b1764a02325e5, nlp\KnowledgeGraph\SimilarityMetrics.vb"
 
     ' Author:
     ' 
@@ -257,4 +257,3 @@ Public Module SimilarityMetrics
     End Function
 
 End Module
-
