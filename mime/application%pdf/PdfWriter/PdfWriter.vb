@@ -212,7 +212,7 @@ Public Class PdfWriter
 
     Private Shared Function IsStreamBody(body As Byte()) As Boolean
         ' 内容流对象体以 "stream" 结尾（其后紧跟原始数据）
-        Dim tail = Encoding.ASCII.GetString(body, Math.Max(0, body.Length - 8), Math.Min(8, body.Length))
+        Dim tail = Encoding.ASCII.GetString(body, System.Math.Max(0, body.Length - 8), System.Math.Min(8, body.Length))
         Return tail.Contains("stream")
     End Function
 
@@ -342,7 +342,7 @@ Public Class PdfWriter
     End Function
 
     Private Shared Function Fmt(v As Double) As String
-        If Math.Abs(v) < 0.001 Then Return "0"
+        If System.Math.Abs(v) < 0.001 Then Return "0"
         Return v.ToString("0.###", System.Globalization.CultureInfo.InvariantCulture)
     End Function
 

@@ -279,7 +279,7 @@ Public Class PdfLayoutEngine
 
     Private Shared Function FormatNum(v As Double) As String
         If v = 0 Then Return "0"
-        If Math.Abs(v) < 0.001 Then Return "0"
+        If System.Math.Abs(v) < 0.001 Then Return "0"
         Return v.ToString("0.###", System.Globalization.CultureInfo.InvariantCulture)
     End Function
 
@@ -309,7 +309,7 @@ Public Class PdfLayoutEngine
         If recordHeadingPages Then
             headingPages.Add(pageNo)
         End If
-        Dim s = headingStyles(Math.Min(Math.Max(b.Level, 1), 6) - 1)
+        Dim s = headingStyles(System.Math.Min(System.Math.Max(b.Level, 1), 6) - 1)
         y += If(s.SpaceBefore > 0, s.SpaceBefore, 6)
         Dim size = If(s.Size > 0, s.Size, 14)
         Dim lineH = size * (If(s.LineSpacing > 0, s.LineSpacing, 1.2))
