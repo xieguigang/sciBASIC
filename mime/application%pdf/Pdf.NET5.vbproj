@@ -150,6 +150,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Microsoft.VisualBasic.Core\src\Core.vbproj" />
+    <ProjectReference Include="..\application%json\JSON-netcore5.vbproj" />
+    <ProjectReference Include="..\applicationvnd.openxmlformats-officedocument.wordprocessingml.document\docx\WordDocument.vbproj" />
     <ProjectReference Include="..\text%markdown\markdown.NET5.vbproj" />
   </ItemGroup>
 
