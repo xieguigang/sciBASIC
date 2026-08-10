@@ -283,14 +283,6 @@ Public Class PdfLayoutEngine
         Return v.ToString("0.###", System.Globalization.CultureInfo.InvariantCulture)
     End Function
 
-    Private Sub EnsureSpace(need As Double)
-        If y + need > pageH - mBottom Then
-            ' 由调用方负责 NewPage 以保留 localResult —— 这里用临时页切换
-            sb.Append(vbCrLf & "% page break" & vbCrLf)
-            y = mTop
-        End If
-    End Sub
-
     ' ------------------------------------------------------------------
     ' 各块渲染
     ' ------------------------------------------------------------------
