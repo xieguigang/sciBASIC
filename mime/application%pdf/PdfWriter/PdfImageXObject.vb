@@ -166,15 +166,15 @@ Public Class PdfImageXObject
 
         ' 收集 IDAT
         Dim idat As New List(Of Byte)()
-        Dim pos = 8
+        Dim pos As Long = 8
         Do While pos + 8 <= data.Length
-            Dim len = BE32(data, pos)
-            Dim chunkType = System.Text.Encoding.ASCII.GetString(data, pos + 4, 4)
+            Dim len = BE32(data, CInt(pos))
+            ' 防御：长度非法或越界则停止解析
+            If len < 0 OrElse pos + 12 + len > data.Length Then Exit Do
+            Dim chunkType = System.Text.Encoding.ASCII.GetString(data, CInt(pos + 4), 4)
             If chunkType = "IDAT" Then
                 For i = 0 To len - 1
-                    If pos + 8 + i < data.Length Then
-                        idat.Add(data(pos + 8 + i))
-                    End If
+                    idat.Add(data(CInt(pos + 8 + i)))
                 Next
             End If
             pos += 12 + len
