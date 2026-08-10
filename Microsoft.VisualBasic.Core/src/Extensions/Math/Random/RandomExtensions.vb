@@ -248,6 +248,16 @@ Namespace Math
             Return seeds.Next(upper)
         End Function
 
+        Public Function GetBytes(width As Integer) As Byte()
+            Dim buf As Byte() = New Byte(width - 1) {}
+
+            For i As Integer = 0 To buf.Length - 1
+                buf(i) = CByte(seeds.Next(0, 255))
+            Next
+
+            Return buf
+        End Function
+
         ''' <summary>
         ''' Returns a random integer that is within a specified range.
         ''' </summary>
