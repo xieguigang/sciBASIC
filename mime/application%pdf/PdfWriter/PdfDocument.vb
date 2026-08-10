@@ -55,12 +55,12 @@ Public Class PdfDocument
     Implements IDocumentWriter
 
     ' 元数据
-    Public Property Author As String = ""
-    Public Property Title As String = ""
-    Public Property Subject As String = ""
-    Public Property Description As String = ""
-    Public Property Tags As String() = Nothing
-    Public Property ApplicationName As String = "VB.NET PdfDocument Generator"
+    Public Property Author As String = "" Implements IDocumentWriter.Author
+    Public Property Title As String = "" Implements IDocumentWriter.Title
+    Public Property Subject As String = "" Implements IDocumentWriter.Subject
+    Public Property Description As String = "" Implements IDocumentWriter.Description
+    Public Property Tags As String() = Nothing Implements IDocumentWriter.Tags
+    Public Property ApplicationName As String = "VB.NET PdfDocument Generator" Implements IDocumentWriter.ApplicationName
 
     ' 页面尺寸（twips）
     Private _pageWidth As Integer = 11906
@@ -149,28 +149,6 @@ Public Class PdfDocument
         Return Me
     End Function
 
-    Public Function HeadingStyle(level As Integer, style As WordStyle) As IDocumentWriter Implements IDocumentWriter.HeadingStyle
-        Return HeadingStyle(level, style)
-    End Function
-    Public Function ParagraphStyle(style As WordStyle) As IDocumentWriter Implements IDocumentWriter.ParagraphStyle
-        Return ParagraphStyle(style)
-    End Function
-    Public Function DefaultStyle(style As WordStyle) As IDocumentWriter Implements IDocumentWriter.DefaultStyle
-        Return DefaultStyle(style)
-    End Function
-    Public Function TableStyle(style As TableStyle) As IDocumentWriter Implements IDocumentWriter.TableStyle
-        Return TableStyle(style)
-    End Function
-    Public Function CodeStyle(style As WordStyle) As IDocumentWriter Implements IDocumentWriter.CodeStyle
-        Return CodeStyle(style)
-    End Function
-    Public Function BlockquoteStyle(style As WordStyle) As IDocumentWriter Implements IDocumentWriter.BlockquoteStyle
-        Return BlockquoteStyle(style)
-    End Function
-    Public Function TitleStyle(style As WordStyle) As IDocumentWriter Implements IDocumentWriter.TitleStyle
-        Return TitleStyle(style)
-    End Function
-
     ' ========================================================================
     ' 页面设置（twips）
     ' ========================================================================
@@ -193,18 +171,6 @@ Public Class PdfDocument
 
     Public Function PageSetupLetter() As PdfDocument
         Return PageSetup(12240, 15840, 1440, 1440, 1440, 1440)
-    End Function
-
-    Public Function PageSetup(pageWidth As Integer, pageHeight As Integer,
-                              marginTop As Integer, marginRight As Integer,
-                              marginBottom As Integer, marginLeft As Integer) As IDocumentWriter Implements IDocumentWriter.PageSetup
-        Return PageSetup(pageWidth, pageHeight, marginTop, marginRight, marginBottom, marginLeft)
-    End Function
-    Public Function PageSetupA4() As IDocumentWriter Implements IDocumentWriter.PageSetupA4
-        Return PageSetupA4()
-    End Function
-    Public Function PageSetupLetter() As IDocumentWriter Implements IDocumentWriter.PageSetupLetter
-        Return PageSetupLetter()
     End Function
 
     ' ========================================================================
@@ -237,7 +203,7 @@ Public Class PdfDocument
     End Function
 
     Public Function Heading(level As Integer, text As String) As PdfDocument
-        Dim idx = Math.Min(Math.Max(level, 1), 6) - 1
+        Dim idx = System.Math.Min(System.Math.Max(level, 1), 6) - 1
         Dim b As New PdfBlock() With {.Type = PdfBlockType.Heading, .Level = level, .Text = text, .Style = _headingStyles(idx).Clone()}
         blocks.Add(b)
         Return Me
@@ -320,61 +286,6 @@ Public Class PdfDocument
         Return Me
     End Function
 
-    Public Function DocTitle(text As String) As IDocumentWriter Implements IDocumentWriter.DocTitle
-        Return DocTitle(text)
-    End Function
-    Public Function H1(text As String) As IDocumentWriter Implements IDocumentWriter.H1
-        Return H1(text)
-    End Function
-    Public Function H2(text As String) As IDocumentWriter Implements IDocumentWriter.H2
-        Return H2(text)
-    End Function
-    Public Function H3(text As String) As IDocumentWriter Implements IDocumentWriter.H3
-        Return H3(text)
-    End Function
-    Public Function H4(text As String) As IDocumentWriter Implements IDocumentWriter.H4
-        Return H4(text)
-    End Function
-    Public Function H5(text As String) As IDocumentWriter Implements IDocumentWriter.H5
-        Return H5(text)
-    End Function
-    Public Function H6(text As String) As IDocumentWriter Implements IDocumentWriter.H6
-        Return H6(text)
-    End Function
-    Public Function Heading(level As Integer, text As String) As IDocumentWriter Implements IDocumentWriter.Heading
-        Return Heading(level, text)
-    End Function
-    Public Function Paragraph(text As String) As IDocumentWriter Implements IDocumentWriter.Paragraph
-        Return Paragraph(text)
-    End Function
-    Public Function Paragraph(text As String, style As WordStyle) As IDocumentWriter Implements IDocumentWriter.Paragraph
-        Return Paragraph(text, style)
-    End Function
-    Public Function CodeBlock(code As String, Optional language As String = "") As IDocumentWriter Implements IDocumentWriter.CodeBlock
-        Return CodeBlock(code, language)
-    End Function
-    Public Function Blockquote(text As String) As IDocumentWriter Implements IDocumentWriter.Blockquote
-        Return Blockquote(text)
-    End Function
-    Public Function List(items As String(), Optional ordered As Boolean = False) As IDocumentWriter Implements IDocumentWriter.List
-        Return List(items, ordered)
-    End Function
-    Public Function TaskList(items As String(), checked As Boolean()) As IDocumentWriter Implements IDocumentWriter.TaskList
-        Return TaskList(items, checked)
-    End Function
-    Public Function DefinitionList(terms As String(), definitions As String()) As IDocumentWriter Implements IDocumentWriter.DefinitionList
-        Return DefinitionList(terms, definitions)
-    End Function
-    Public Function Hr() As IDocumentWriter Implements IDocumentWriter.Hr
-        Return Hr()
-    End Function
-    Public Function PageBreak() As IDocumentWriter Implements IDocumentWriter.PageBreak
-        Return PageBreak()
-    End Function
-    Public Function Toc(Optional maxLevel As Integer = 3) As IDocumentWriter Implements IDocumentWriter.Toc
-        Return Toc(maxLevel)
-    End Function
-
     ' ========================================================================
     ' 表格
     ' ========================================================================
@@ -399,14 +310,11 @@ Public Class PdfDocument
                           Optional alignments As String() = Nothing) As PdfDocument
         Dim b As New PdfBlock() With {
             .Type = PdfBlockType.Table,
-            .TableHeaders = If(headers, New String() {}),
-            .TableRows = If(rows, New String()() {}),
+            .TableHeaders = CloneRows(headers),
+            .TableRows = CloneRows(rows),
             .TableAlignments = alignments,
             .TableMode = "equal"
         }
-        ' 拷贝一份，避免外部后续修改影响快照
-        b.TableHeaders = CloneRows(b.TableHeaders)
-        b.TableRows = CloneRows(b.TableRows)
         blocks.Add(b)
         Return Me
     End Function
@@ -429,14 +337,14 @@ Public Class PdfDocument
                                        Optional alignments As String() = Nothing,
                                        Optional center As Boolean = False,
                                        Optional threeLine As Boolean = False) As PdfDocument
-        Return AddAutoFitTable("window", ToJagged(headers), ToJagged(rows), alignments, center, threeLine)
+        Return AddAutoFitTable("window", ToJaggedHeaders(headers), ToJaggedRows(rows), alignments, center, threeLine)
     End Function
 
     Public Function TableAutoFitContents(headers As String(,), rows As String(,),
-                                          Optional alignments As String() = Nothing,
-                                          Optional center As Boolean = False,
-                                          Optional threeLine As Boolean = False) As PdfDocument
-        Return AddAutoFitTable("contents", ToJagged(headers), ToJagged(rows), alignments, center, threeLine)
+                                         Optional alignments As String() = Nothing,
+                                         Optional center As Boolean = False,
+                                         Optional threeLine As Boolean = False) As PdfDocument
+        Return AddAutoFitTable("contents", ToJaggedHeaders(headers), ToJaggedRows(rows), alignments, center, threeLine)
     End Function
 
     Private Function AddAutoFitTable(mode As String, headers As String(), rows As String()(),
@@ -454,41 +362,6 @@ Public Class PdfDocument
         Return Me
     End Function
 
-    Public Function Table(headers As String(), data As String(,)) As IDocumentWriter Implements IDocumentWriter.Table
-        Return Table(headers, data)
-    End Function
-    Public Function Table(headers As String(), data As String(,), alignments As String()) As IDocumentWriter Implements IDocumentWriter.Table
-        Return Table(headers, data, alignments)
-    End Function
-    Public Function Table(headers As String(), rows As String()(),
-                          Optional alignments As String() = Nothing) As IDocumentWriter Implements IDocumentWriter.Table
-        Return Table(headers, rows, alignments)
-    End Function
-    Public Function TableAutoFitWindow(headers As String(), rows As String()(),
-                                       Optional alignments As String() = Nothing,
-                                       Optional center As Boolean = False,
-                                       Optional threeLine As Boolean = False) As IDocumentWriter Implements IDocumentWriter.TableAutoFitWindow
-        Return TableAutoFitWindow(headers, rows, alignments, center, threeLine)
-    End Function
-    Public Function TableAutoFitContents(headers As String(), rows As String()(),
-                                         Optional alignments As String() = Nothing,
-                                         Optional center As Boolean = False,
-                                         Optional threeLine As Boolean = False) As IDocumentWriter Implements IDocumentWriter.TableAutoFitContents
-        Return TableAutoFitContents(headers, rows, alignments, center, threeLine)
-    End Function
-    Public Function TableAutoFitWindow(headers As String(,), rows As String(,),
-                                       Optional alignments As String() = Nothing,
-                                       Optional center As Boolean = False,
-                                       Optional threeLine As Boolean = False) As IDocumentWriter Implements IDocumentWriter.TableAutoFitWindow
-        Return TableAutoFitWindow(headers, rows, alignments, center, threeLine)
-    End Function
-    Public Function TableAutoFitContents(headers As String(,), rows As String(,),
-                                         Optional alignments As String() = Nothing,
-                                         Optional center As Boolean = False,
-                                         Optional threeLine As Boolean = False) As IDocumentWriter Implements IDocumentWriter.TableAutoFitContents
-        Return TableAutoFitContents(headers, rows, alignments, center, threeLine)
-    End Function
-
     ' ========================================================================
     ' 图片与 Markdown 块
     ' ========================================================================
@@ -497,7 +370,7 @@ Public Class PdfDocument
                           Optional width As Double = 0,
                           Optional height As Double = 0,
                           Optional caption As String = "") As PdfDocument
-        If Not File.Exists(file) Then
+        If Not System.IO.File.Exists(file) Then
             Console.Error.WriteLine($"[警告] 图片文件不存在: {file}")
             Return Me
         End If
@@ -510,13 +383,6 @@ Public Class PdfDocument
         }
         blocks.Add(b)
         Return Me
-    End Function
-
-    Public Function Image(file As String,
-                          Optional width As Double = 0,
-                          Optional height As Double = 0,
-                          Optional caption As String = "") As IDocumentWriter Implements IDocumentWriter.Image
-        Return Image(file, width, height, caption)
     End Function
 
     Public Function WriteBlocks(blocksInput As IEnumerable(Of JSONSchema.Block)) As PdfDocument
@@ -570,10 +436,6 @@ Public Class PdfDocument
         End Select
     End Sub
 
-    Public Function WriteBlocks(blocksInput As IEnumerable(Of JSONSchema.Block)) As IDocumentWriter Implements IDocumentWriter.WriteBlocks
-        Return WriteBlocks(blocksInput)
-    End Function
-
     ' ========================================================================
     ' 保存
     ' ========================================================================
@@ -603,6 +465,145 @@ Public Class PdfDocument
     End Sub
 
     ' ========================================================================
+    ' IDocumentWriter 显式接口实现（与公开方法同形，返回接口自身）
+    ' ========================================================================
+
+    Private Function IDW_HeadingStyle(level As Integer, style As WordStyle) As IDocumentWriter Implements IDocumentWriter.HeadingStyle
+        Return HeadingStyle(level, style)
+    End Function
+    Private Function IDW_ParagraphStyle(style As WordStyle) As IDocumentWriter Implements IDocumentWriter.ParagraphStyle
+        Return ParagraphStyle(style)
+    End Function
+    Private Function IDW_DefaultStyle(style As WordStyle) As IDocumentWriter Implements IDocumentWriter.DefaultStyle
+        Return DefaultStyle(style)
+    End Function
+    Private Function IDW_TableStyle(style As TableStyle) As IDocumentWriter Implements IDocumentWriter.TableStyle
+        Return TableStyle(style)
+    End Function
+    Private Function IDW_CodeStyle(style As WordStyle) As IDocumentWriter Implements IDocumentWriter.CodeStyle
+        Return CodeStyle(style)
+    End Function
+    Private Function IDW_BlockquoteStyle(style As WordStyle) As IDocumentWriter Implements IDocumentWriter.BlockquoteStyle
+        Return BlockquoteStyle(style)
+    End Function
+    Private Function IDW_TitleStyle(style As WordStyle) As IDocumentWriter Implements IDocumentWriter.TitleStyle
+        Return TitleStyle(style)
+    End Function
+
+    Private Function IDW_PageSetup(pageWidth As Integer, pageHeight As Integer,
+                                   marginTop As Integer, marginRight As Integer,
+                                   marginBottom As Integer, marginLeft As Integer) As IDocumentWriter Implements IDocumentWriter.PageSetup
+        Return PageSetup(pageWidth, pageHeight, marginTop, marginRight, marginBottom, marginLeft)
+    End Function
+    Private Function IDW_PageSetupA4() As IDocumentWriter Implements IDocumentWriter.PageSetupA4
+        Return PageSetupA4()
+    End Function
+    Private Function IDW_PageSetupLetter() As IDocumentWriter Implements IDocumentWriter.PageSetupLetter
+        Return PageSetupLetter()
+    End Function
+
+    Private Function IDW_DocTitle(text As String) As IDocumentWriter Implements IDocumentWriter.DocTitle
+        Return DocTitle(text)
+    End Function
+    Private Function IDW_H1(text As String) As IDocumentWriter Implements IDocumentWriter.H1
+        Return H1(text)
+    End Function
+    Private Function IDW_H2(text As String) As IDocumentWriter Implements IDocumentWriter.H2
+        Return H2(text)
+    End Function
+    Private Function IDW_H3(text As String) As IDocumentWriter Implements IDocumentWriter.H3
+        Return H3(text)
+    End Function
+    Private Function IDW_H4(text As String) As IDocumentWriter Implements IDocumentWriter.H4
+        Return H4(text)
+    End Function
+    Private Function IDW_H5(text As String) As IDocumentWriter Implements IDocumentWriter.H5
+        Return H5(text)
+    End Function
+    Private Function IDW_H6(text As String) As IDocumentWriter Implements IDocumentWriter.H6
+        Return H6(text)
+    End Function
+    Private Function IDW_Heading(level As Integer, text As String) As IDocumentWriter Implements IDocumentWriter.Heading
+        Return Heading(level, text)
+    End Function
+    Private Function IDW_Paragraph1(text As String) As IDocumentWriter Implements IDocumentWriter.Paragraph
+        Return Paragraph(text)
+    End Function
+    Private Function IDW_Paragraph2(text As String, style As WordStyle) As IDocumentWriter Implements IDocumentWriter.Paragraph
+        Return Paragraph(text, style)
+    End Function
+    Private Function IDW_CodeBlock(code As String, Optional language As String = "") As IDocumentWriter Implements IDocumentWriter.CodeBlock
+        Return CodeBlock(code, language)
+    End Function
+    Private Function IDW_Blockquote(text As String) As IDocumentWriter Implements IDocumentWriter.Blockquote
+        Return Blockquote(text)
+    End Function
+    Private Function IDW_List(items As String(), Optional ordered As Boolean = False) As IDocumentWriter Implements IDocumentWriter.List
+        Return List(items, ordered)
+    End Function
+    Private Function IDW_TaskList(items As String(), checked As Boolean()) As IDocumentWriter Implements IDocumentWriter.TaskList
+        Return TaskList(items, checked)
+    End Function
+    Private Function IDW_DefinitionList(terms As String(), definitions As String()) As IDocumentWriter Implements IDocumentWriter.DefinitionList
+        Return DefinitionList(terms, definitions)
+    End Function
+    Private Function IDW_Hr() As IDocumentWriter Implements IDocumentWriter.Hr
+        Return Hr()
+    End Function
+    Private Function IDW_PageBreak() As IDocumentWriter Implements IDocumentWriter.PageBreak
+        Return PageBreak()
+    End Function
+    Private Function IDW_Toc(Optional maxLevel As Integer = 3) As IDocumentWriter Implements IDocumentWriter.Toc
+        Return Toc(maxLevel)
+    End Function
+
+    Private Function IDW_Table1(headers As String(), data As String(,)) As IDocumentWriter Implements IDocumentWriter.Table
+        Return Table(headers, data)
+    End Function
+    Private Function IDW_Table2(headers As String(), data As String(,), alignments As String()) As IDocumentWriter Implements IDocumentWriter.Table
+        Return Table(headers, data, alignments)
+    End Function
+    Private Function IDW_Table3(headers As String(), rows As String()(),
+                                Optional alignments As String() = Nothing) As IDocumentWriter Implements IDocumentWriter.Table
+        Return Table(headers, rows, alignments)
+    End Function
+    Private Function IDW_TableAutoFitWindow1(headers As String(), rows As String()(),
+                                             Optional alignments As String() = Nothing,
+                                             Optional center As Boolean = False,
+                                             Optional threeLine As Boolean = False) As IDocumentWriter Implements IDocumentWriter.TableAutoFitWindow
+        Return TableAutoFitWindow(headers, rows, alignments, center, threeLine)
+    End Function
+    Private Function IDW_TableAutoFitContents1(headers As String(), rows As String()(),
+                                               Optional alignments As String() = Nothing,
+                                               Optional center As Boolean = False,
+                                               Optional threeLine As Boolean = False) As IDocumentWriter Implements IDocumentWriter.TableAutoFitContents
+        Return TableAutoFitContents(headers, rows, alignments, center, threeLine)
+    End Function
+    Private Function IDW_TableAutoFitWindow2(headers As String(,), rows As String(,),
+                                             Optional alignments As String() = Nothing,
+                                             Optional center As Boolean = False,
+                                             Optional threeLine As Boolean = False) As IDocumentWriter Implements IDocumentWriter.TableAutoFitWindow
+        Return TableAutoFitWindow(headers, rows, alignments, center, threeLine)
+    End Function
+    Private Function IDW_TableAutoFitContents2(headers As String(,), rows As String(,),
+                                               Optional alignments As String() = Nothing,
+                                               Optional center As Boolean = False,
+                                               Optional threeLine As Boolean = False) As IDocumentWriter Implements IDocumentWriter.TableAutoFitContents
+        Return TableAutoFitContents(headers, rows, alignments, center, threeLine)
+    End Function
+
+    Private Function IDW_Image(file As String,
+                               Optional width As Double = 0,
+                               Optional height As Double = 0,
+                               Optional caption As String = "") As IDocumentWriter Implements IDocumentWriter.Image
+        Return Image(file, width, height, caption)
+    End Function
+
+    Private Function IDW_WriteBlocks(blocksInput As IEnumerable(Of JSONSchema.Block)) As IDocumentWriter Implements IDocumentWriter.WriteBlocks
+        Return WriteBlocks(blocksInput)
+    End Function
+
+    ' ========================================================================
     ' 辅助
     ' ========================================================================
 
@@ -620,7 +621,7 @@ Public Class PdfDocument
         Return CType(headers.Clone(), String())
     End Function
 
-    Private Shared Function ToJagged(headers As String(,)) As String()
+    Private Shared Function ToJaggedHeaders(headers As String(,)) As String()
         If headers Is Nothing Then Return New String() {}
         Dim out(headers.GetLength(1) - 1) As String
         For j = 0 To headers.GetLength(1) - 1
@@ -629,9 +630,9 @@ Public Class PdfDocument
         Return out
     End Function
 
-    Private Shared Function ToJagged(rows As String(,)) As String()()
+    Private Shared Function ToJaggedRows(rows As String(,)) As String()()
         If rows Is Nothing Then Return New String()() {}
-        Dim out(rows.GetLength(0) - 1) As String()
+        Dim out(rows.GetLength(0) - 1)() As String
         For i = 0 To rows.GetLength(0) - 1
             Dim row(rows.GetLength(1) - 1) As String
             For j = 0 To rows.GetLength(1) - 1

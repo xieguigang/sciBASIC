@@ -40,6 +40,8 @@
 ' Clone 快照，避免后续 XxxStyle() 调用回溯影响已写入内容。
 ' ============================================================================
 
+Imports Microsoft.VisualBasic.MIME.Office.WordDocument
+
 ''' <summary>文档内容块类型。</summary>
 Public Enum PdfBlockType
     ''' <summary>文档大标题。</summary>
