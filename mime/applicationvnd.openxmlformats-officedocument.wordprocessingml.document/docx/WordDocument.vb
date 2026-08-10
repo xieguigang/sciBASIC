@@ -105,8 +105,7 @@ Imports std = System.Math
 ''' 支持通过流式 API 构建 docx 文档，包括标题、段落、表格、图片、
 ''' 目录(TOC)、分页符、代码块、引用、列表等。
 ''' </summary>
-Public Class WordDocument
-    Implements IDocumentWriter
+Public Class WordDocument : Implements IDocumentWriter
 
     ' === 元数据 ===
     Public Property Author As String = "" Implements IDocumentWriter.Author

@@ -1,34 +1,34 @@
 #Region "Microsoft.VisualBasic::60718293a4b5c6d7e8f90123456789, mime\application%pdf\PdfWriter\PdfDocument.vb"
 
-    ' Author:
-    ' 
-    '       xie (genetics@smrucc.org)
-    ' 
-    ' Copyright (c) 2026 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       xie (genetics@smrucc.org)
+' 
+' Copyright (c) 2026 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Class PdfDocument
-    ' 
-    '     Function: (与 WordDocument 一致的流式 API)
-    ' 
-    ' /********************************************************************************/
+' Class PdfDocument
+' 
+'     Function: (与 WordDocument 一致的流式 API)
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -43,7 +43,6 @@
 ' 图片文件缺失时走 [警告] 日志并跳过，不影响其余内容生成。
 ' ============================================================================
 
-Imports System.IO
 Imports Microsoft.VisualBasic.MIME.Office.WordDocument
 Imports Microsoft.VisualBasic.MIME.text.markdown
 
@@ -51,8 +50,7 @@ Imports Microsoft.VisualBasic.MIME.text.markdown
 ''' PDF 文档生成器。实现 <see cref="IDocumentWriter"/>，对外提供与
 ''' <c>WordDocument</c> 完全一致的编程接口，将文本、表格、图片写入并生成 PDF 文件。
 ''' </summary>
-Public Class PdfDocument
-    Implements IDocumentWriter
+Public Class PdfDocument : Implements IDocumentWriter
 
     ' 元数据
     Public Property Author As String = "" Implements IDocumentWriter.Author
