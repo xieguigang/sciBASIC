@@ -170,14 +170,14 @@ Public Class PdfImageXObject
         Do While pos < data.Length
             If pos + 8 > data.Length Then Exit Do
             Dim len = BE32(data, pos)
-            Dim ctype = System.Text.Encoding.ASCII.GetString(data, pos + 4, 4)
-            If ctype = "IDAT" Then
+            Dim chunkType = System.Text.Encoding.ASCII.GetString(data, pos + 4, 4)
+            If chunkType = "IDAT" Then
                 For i = 0 To len - 1
                     idat.Add(data(pos + 8 + i))
                 Next
             End If
             pos += 12 + len
-            If ctype = "IEND" Then Exit Do
+            If chunkType = "IEND" Then Exit Do
         Loop
 
         ' zlib 解压（复用读取侧 FlateDecode 工具）

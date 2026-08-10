@@ -109,12 +109,12 @@ Public Class WordDocument
     Implements IDocumentWriter
 
     ' === 元数据 ===
-    Public Property Author As String = ""
-    Public Property Title As String = ""
-    Public Property Subject As String = ""
-    Public Property Description As String = ""
-    Public Property Tags As String() = {}
-    Public Property ApplicationName As String = "VB.NET WordDocument Generator"
+    Public Property Author As String = "" Implements IDocumentWriter.Author
+    Public Property Title As String = "" Implements IDocumentWriter.Title
+    Public Property Subject As String = "" Implements IDocumentWriter.Subject
+    Public Property Description As String = "" Implements IDocumentWriter.Description
+    Public Property Tags As String() = {} Implements IDocumentWriter.Tags
+    Public Property ApplicationName As String = "VB.NET WordDocument Generator" Implements IDocumentWriter.ApplicationName
 
     ' === 页面设置 (twips) ===
     Private _pageWidth As Integer = 11906   ' A4 宽
@@ -1001,7 +1001,7 @@ Public Class WordDocument
     ' ========================================================================
 
     ''' <summary>保存为 .docx 文件。</summary>
-    Public Sub Save(filePath As String)
+    Public Sub Save(filePath As String) Implements IDocumentWriter.Save
         Dim packager As New DocxPackager()
         packager.Save(Me, filePath)
     End Sub
