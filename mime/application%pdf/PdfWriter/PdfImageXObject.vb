@@ -167,13 +167,14 @@ Public Class PdfImageXObject
         ' 收集 IDAT
         Dim idat As New List(Of Byte)()
         Dim pos = 8
-        Do While pos < data.Length
-            If pos + 8 > data.Length Then Exit Do
+        Do While pos + 8 <= data.Length
             Dim len = BE32(data, pos)
             Dim chunkType = System.Text.Encoding.ASCII.GetString(data, pos + 4, 4)
             If chunkType = "IDAT" Then
                 For i = 0 To len - 1
-                    idat.Add(data(pos + 8 + i))
+                    If pos + 8 + i < data.Length Then
+                        idat.Add(data(pos + 8 + i))
+                    End If
                 Next
             End If
             pos += 12 + len
@@ -181,6 +182,7 @@ Public Class PdfImageXObject
         Loop
 
         ' zlib 解压（复用读取侧 FlateDecode 工具）
+        If idat.Count = 0 Then Return Nothing
         Dim raw = FlateDecode.Decode(idat.ToArray())
         ' 逆滤波得到原始像素（channels 通道）
         Dim stride = w * channels

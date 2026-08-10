@@ -1,5 +1,4 @@
 Imports System.IO
-Imports System.Linq
 Imports Microsoft.VisualBasic.MIME.application.pdf
 Imports Microsoft.VisualBasic.MIME.application.pdf.PdfWriter
 Imports Microsoft.VisualBasic.MIME.Office.WordDocument
@@ -47,7 +46,7 @@ Module TestPdf
 
         ' 用现有读取模块回读文本，校验内容完整性
         Using fs As New FileStream(out, FileMode.Open, FileAccess.Read)
-            Dim texts = PDF.GetText(fs).ToList()
+            Dim texts = New List(Of String)(PDF.GetText(fs))
             Dim all = String.Join(vbCrLf, texts)
             Console.WriteLine("===== 解析页数 =====")
             Console.WriteLine("页码数: " & texts.Count)
@@ -71,17 +70,12 @@ Module TestPdf
         End Using
     End Sub
 
-    ''' <summary>用 System.Drawing 生成一张示例 PNG（红底）用于验证图片嵌入。</summary>
+    ''' <summary>写入一张内嵌的 1x1 示例 PNG（base64），用于验证图片嵌入与解码路径。</summary>
     Private Sub CreateSamplePng(path As String)
         Try
-            Using bmp As New System.Drawing.Bitmap(120, 60)
-                Using g = System.Drawing.Graphics.FromImage(bmp)
-                    g.Clear(System.Drawing.Color.FromArgb(&HFF, &H44, &H72, &HC4))
-                    g.DrawString("Test", New System.Drawing.Font("Arial", 16),
-                                 System.Drawing.Brushes.White, 10, 20)
-                End Using
-                bmp.Save(path, System.Drawing.Imaging.ImageFormat.Png)
-            End Using
+            Dim b64 = "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAC0lEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg=="
+            Dim bytes = Convert.FromBase64String(b64)
+            File.WriteAllBytes(path, bytes)
             Console.WriteLine("示例图片已生成: " & path)
         Catch ex As Exception
             Console.Error.WriteLine("[警告] 生成示例图片失败: " & ex.Message)
