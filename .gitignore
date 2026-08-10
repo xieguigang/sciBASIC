@@ -692,3 +692,4 @@ Data_science/MachineLearning/DeepLearning/_smoketest/network_model.cnn
 Data/BinaryData/Feather/test/_diff_value.txt
 Data/BinaryData/Feather/test/_diff_writer.txt
 mime/application%json/test/test_error_json.json
+mime/application%pdf/PdfWriter.Test/test_report.pdf
