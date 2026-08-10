@@ -150,6 +150,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Microsoft.VisualBasic.Core\src\Core.vbproj" />
+    <ProjectReference Include="..\text%markdown\markdown.NET5.vbproj" />
   </ItemGroup>
 
   <ItemGroup>
