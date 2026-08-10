@@ -107,6 +107,7 @@ Imports CommandLineArgs = Microsoft.VisualBasic.CommandLine.CommandLine
 Imports DevAssmInfo = Microsoft.VisualBasic.ApplicationServices.Development.AssemblyInfo
 Imports FS = Microsoft.VisualBasic.FileIO.FileSystem
 Imports std = System.Math
+Imports randf = Microsoft.VisualBasic.Math.RandomExtensions
 
 '                   _ooOoo_
 '                  o8888888o
@@ -1041,12 +1042,11 @@ Public Module App
     ''' </summary>
     ''' <returns></returns>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
-    Private Function tempCode() As String
-        Static tempHashCode As Uid = Uid.GetRandomId
+    Private Function NextTempCode() As String
+        Dim bytes() As Byte = randf.GetBytes(8)
+        Dim nextId As String = String.Join("", bytes.Select(Function(b) b.ToString("x2")))
 
-        SyncLock tempHashCode
-            Return FormatZero(++tempHashCode, "000000")
-        End SyncLock
+        Return nextId
     End Function
 
     ''' <summary>
@@ -1056,7 +1056,7 @@ Public Module App
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     Public Function GetNextUniqueName(prefix As String) As String
         Static tmp As [Default](Of String) = NameOf(tmp)
-        Return $"{prefix Or tmp}{App.tempCode}"
+        Return $"{prefix Or tmp}{App.NextTempCode}"
     End Function
 
     ''' <summary>
@@ -1456,7 +1456,7 @@ Public Module App
     <ExportAPI("Shared.TempFile")>
     Public Function GetProductSharedTemp() As String
         'Dim Temp As String = FileIO.FileSystem.GetTempFileName
-        Dim Name As String = App.tempCode  'FileIO.FileSystem.GetFileInfo(Temp).Name
+        Dim Name As String = App.NextTempCode  'FileIO.FileSystem.GetFileInfo(Temp).Name
         'Name = Name.ToUpper.Replace("TMP", "")
         Dim Temp = $"{App.ProductSharedTemp}/{App.AssemblyName}-{Name}.tmp"
         Return Temp
