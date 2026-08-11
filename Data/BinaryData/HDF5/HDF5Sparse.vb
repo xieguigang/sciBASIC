@@ -1,4 +1,4 @@
-#Region "Microsoft.VisualBasic::HDF5Sparse, Data\BinaryData\HDF5\HDF5Sparse.vb"
+
 
 ' 稀疏感知的 HDF5 读取辅助：在基础 HDF5 模块之上提供通用的流式分块读取
 ' 与 COO 三元组 -> SparseMatrix 的封装，供上层（如 STRaid）按 10x 语义组合使用。
@@ -86,7 +86,7 @@ Namespace Microsoft.VisualBasic.Data.IO.HDF5
             Optional ncols As Integer = -1) As SparseMatrix
 
             If indexCast Is Nothing Then
-                indexCast = Function(v)
+                indexCast = Function(v As TIndex)
                                 Dim l As Long = CLng(v)
                                 If l < 0 OrElse l > Integer.MaxValue Then
                                     Throw New OverflowException($"index value {l} exceeds 32-bit range.")
