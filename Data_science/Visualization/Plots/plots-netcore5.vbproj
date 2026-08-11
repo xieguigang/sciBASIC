@@ -135,8 +135,4 @@
     <Import Include="System.Data" />
   </ItemGroup>
 
-  <ItemGroup>
-    <PackageReference Include="System.Drawing.Primitives" Version="4.3.0" />
-  </ItemGroup>
-
 </Project>
