@@ -150,7 +150,7 @@ Namespace Dynamics
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Private Sub Assign(address As Integer) Implements IAddress(Of Integer).Assign
+        Private Overloads Sub Assign(address As Integer) Implements IAddress(Of Integer).Assign
             Index = address
         End Sub
     End Class

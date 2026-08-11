@@ -381,7 +381,6 @@
 
   <ItemGroup>
     <PackageReference Include="System.Composition" Version="10.0.11" />
-    <PackageReference Include="System.Diagnostics.DiagnosticSource" Version="10.0.11" />
     <PackageReference Include="System.Resources.Extensions" Version="10.0.11" />
   </ItemGroup>
 
