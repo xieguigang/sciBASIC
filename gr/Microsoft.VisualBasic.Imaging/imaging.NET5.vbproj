@@ -1090,7 +1090,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="System.Drawing.Primitives" Version="4.3.0" />
     <PackageReference Include="System.Resources.Extensions" Version="10.0.10" />
   </ItemGroup>
 
@@ -1107,9 +1106,6 @@
   <ItemGroup Condition=" '$(TargetFramework)' == 'net10.0-windows' ">
     <Reference Include="PresentationCore">
       <HintPath>C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\PresentationCore.dll</HintPath>
-    </Reference>
-    <Reference Include="WindowsBase">
-      <HintPath>C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8\WindowsBase.dll</HintPath>
     </Reference>
   </ItemGroup>
 </Project>
