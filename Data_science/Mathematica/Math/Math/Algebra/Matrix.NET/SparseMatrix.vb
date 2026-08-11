@@ -86,6 +86,19 @@ Namespace LinearAlgebra.Matrix
             End Get
         End Property
 
+        ''' <summary>
+        ''' 非零元素个数（即内部字典存储的 (row, col, value) 三元组数量）。
+        ''' </summary>
+        Public ReadOnly Property nnz As Integer
+            Get
+                Dim total As Integer = 0
+                For Each row In rows
+                    total += row.Value.Count
+                Next
+                Return total
+            End Get
+        End Property
+
         Default Overloads Property X(i As Integer, j As Integer) As Double Implements GeneralMatrix.X
             Get
                 Return [Get](i, j)
