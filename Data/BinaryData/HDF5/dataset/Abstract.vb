@@ -82,6 +82,18 @@ Namespace dataset
 
         Public MustOverride ReadOnly Property dimensions As Integer()
 
+        Public ReadOnly Property rank As Integer
+            Get
+                Dim r As Integer = 1
+
+                For Each d As Integer In dimensions
+                    r = r * d
+                Next
+
+                Return r
+            End Get
+        End Property
+
         Public Overridable ReadOnly Property scalar As Boolean
             Get
                 Return dataSpace.dimensionLength.Length = 0
