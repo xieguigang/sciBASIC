@@ -121,6 +121,7 @@ Namespace struct
             End If
             Me.sizeOfHeaderMessageData = [in].readShort()
             Me.headerMessageFlags = [in].readByte()
+            Call Console.WriteLine($"[DIAG]     dataSize={sizeOfHeaderMessageData}, flags={headerMessageFlags}, msgDataAt={[in].offset + If(headerVersion = 2, If(messageCreationOrder, 2, 0), 3)}")
 
             If headerVersion = 2 Then
                 ' v2 object headers store messages packed (no reserved/padding bytes). The

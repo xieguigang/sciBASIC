@@ -94,6 +94,13 @@ Namespace struct
 
             Call Console.WriteLine($"[DIAG] ObjectHeader@{address}: firstByte={version} (&H{version:X2}), isV2={version = &H4F}")
 
+            ' 诊断：转储对象头起始处的原始字节
+            Try
+                Dim rawHdr = sb.FileReader(address).readBytes(48).ToArray()
+                Call Console.WriteLine($"[DIAG]   raw bytes@{address}: {BitConverter.ToString(rawHdr)}")
+            Catch
+            End Try
+
             If Me.version = 1 Then
 
                 [in].skipBytes(1)

@@ -97,27 +97,44 @@ Namespace struct.messages
             Dim [in] As BinaryReader = sb.FileReader(address)
 
             ' Symbol Table Message 直接包含 B-tree 地址和 Local Heap 地址。
-            ' 此前有一个非标准的 IsContinuation hack 会检查 bTreeAddress 是否指向
-            ' continuation 消息并从中读取新地址，但这不是 HDF5 规范行为，
-            ' 可能在某些文件中破坏正确的地址。已移除，直接使用原始字段。
             Me.bTreeAddress = ReadHelper.readO([in], sb)
             Me.nameHeapAddress = ReadHelper.readO([in], sb)
 
+            ' h5py 生成的 v0 superblock 文件中，Symbol Table Message 的 bTreeAddress
+            ' 可能不直接指向 B-tree，而是指向一个 Object Header Continuation 消息块，
+            ' 其中 continuation-offset 字段才是真正的 B-tree 地址，
+            ' continuation-length 字段是真正的 Local Heap 地址。
+            ' 这不是 HDF5 规范行为，但 h5py 的实际输出如此，需要特殊处理。
+            If Me.bTreeAddress > 0 Then
+                Try
+                    Dim probe = sb.FileReader(Me.bTreeAddress).readBytes(2).ToArray()
+                    Dim typeNo As Integer = probe(0) Or (probe(1) << 8)
+                    If typeNo = 17 Then
+                        ' 确实是 continuation 消息：读取其 data 字段作为真实地址
+                        Dim c = sb.FileReader(Me.bTreeAddress)
+                        c.readBytes(8) ' 跳过 continuation 头部：type(2)+size(2)+flags(1)+reserved(3)
+                        Me.bTreeAddress = ReadHelper.readO(c, sb)
+                        Me.nameHeapAddress = ReadHelper.readO(c, sb)
+                    End If
+                Catch
+                End Try
+            End If
+
             Call Console.WriteLine($"[DIAG] GroupMessage@{address}: bTreeAddr={bTreeAddress}, nameHeapAddr={nameHeapAddress}")
 
-            ' 诊断：检查地址处的前 4 字节签名
+            ' 诊断：打印地址处的十六进制字节
             If bTreeAddress > 0 Then
                 Try
-                    Dim sig As String = System.Text.Encoding.ASCII.GetString(sb.FileReader(bTreeAddress).readBytes(4).ToArray())
-                    Call Console.WriteLine($"[DIAG]   bTreeAddr {bTreeAddress} -> sig='{sig}'")
+                    Dim bytes = sb.FileReader(bTreeAddress).readBytes(16).ToArray()
+                    Call Console.WriteLine($"[DIAG]   bTreeAddr {bTreeAddress} -> hex={BitConverter.ToString(bytes)}")
                 Catch ex As Exception
                     Call Console.WriteLine($"[DIAG]   bTreeAddr {bTreeAddress} -> read error: {ex.Message}")
                 End Try
             End If
             If nameHeapAddress > 0 Then
                 Try
-                    Dim sig As String = System.Text.Encoding.ASCII.GetString(sb.FileReader(nameHeapAddress).readBytes(4).ToArray())
-                    Call Console.WriteLine($"[DIAG]   nameHeapAddr {nameHeapAddress} -> sig='{sig}'")
+                    Dim bytes = sb.FileReader(nameHeapAddress).readBytes(16).ToArray()
+                    Call Console.WriteLine($"[DIAG]   nameHeapAddr {nameHeapAddress} -> hex={BitConverter.ToString(bytes)}")
                 Catch ex As Exception
                     Call Console.WriteLine($"[DIAG]   nameHeapAddr {nameHeapAddress} -> read error: {ex.Message}")
                 End Try
