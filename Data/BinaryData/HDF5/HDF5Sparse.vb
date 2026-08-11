@@ -87,7 +87,7 @@ Namespace Microsoft.VisualBasic.Data.IO.HDF5
 
             If indexCast Is Nothing Then
                 indexCast = Function(v As TIndex)
-                                Dim l As Long = CLng(v)
+                                Dim l As Long = CLng(CObj(v))
                                 If l < 0 OrElse l > Integer.MaxValue Then
                                     Throw New OverflowException($"index value {l} exceeds 32-bit range.")
                                 End If
@@ -96,7 +96,7 @@ Namespace Microsoft.VisualBasic.Data.IO.HDF5
             End If
 
             If valueCast Is Nothing Then
-                valueCast = Function(v) CDbl(v)
+                valueCast = Function(v) CDbl(CObj(v))
             End If
 
             Dim rowEnum As IEnumerable(Of TIndex()) = file.EnumerateChunkArrays(Of TIndex)(rowPath)
