@@ -319,7 +319,7 @@ Public Class AverageLinkageStrategy : Implements LinkageStrategy
         If n > 0 Then
             Return sum / n
         Else
-            Return0
+            Return 0
         End If
     End Function
 End Class
