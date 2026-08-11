@@ -306,7 +306,8 @@ Namespace dataset
             ' 避免依赖外部未正确填充的 dataLayout（旧式 struct.Layout 路径）。
             Dim layout As New Layout() With {
                 .dataAddress = dataset.BtreeAddress,
-                .chunkSize = dataset.dimensionSize
+                .chunkSize = dataset.dimensionSize,
+                .numberOfDimensions = dataset.dimensionSize.Length
             }
             Dim bTree As New DataBTree(layout)
             Dim chunkLookupMap As New Dictionary(Of String, DataChunk)()

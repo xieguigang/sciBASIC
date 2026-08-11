@@ -81,6 +81,7 @@ Namespace struct
     Public Class DataObjectFacade : Inherits HDF5Ptr
 
         Dim m_layout As Layout
+        Dim m_layoutMessage As DataLayoutMessage
 
         Public ReadOnly Property dataObject As DataObject
         Public ReadOnly Property symbolName As String
@@ -107,11 +108,68 @@ Namespace struct
             End Get
         End Property
 
+        ''' <summary>
+        ''' 返回 dataset 的 Data Layout 消息。该消息内的 <see cref="Hdf5Dataset"/> 在构造时
+        ''' 并不会填充 dataSpace / dataType / pipeline（这些信息来自对象头中的其它消息）。
+        ''' 因此这里在首次计算后，将 dataspace / datatype / filter pipeline 消息补全进
+        ''' dataset，避免 <see cref="Hdf5Dataset.dimensions"/> / size 因 dataSpace 为 Nothing
+        ''' 而抛出 NullReferenceException。
+        ''' </summary>
         Public ReadOnly Property layoutMessage As DataLayoutMessage
             Get
-                Return GetMessage(ObjectHeaderMessages.DataLayout)
+                If Me.m_layoutMessage Is Nothing Then
+                    Me.m_layoutMessage = GetMessage(ObjectHeaderMessages.DataLayout)
+
+                    If Me.m_layoutMessage IsNot Nothing Then
+                        Call attachDatasetMetadata()
+                    End If
+                End If
+
+                Return Me.m_layoutMessage
             End Get
         End Property
+
+        ''' <summary>
+        ''' 将对象头中的 dataspace / datatype / filter pipeline 消息关联到 layout 消息内的
+        ''' <see cref="Hdf5Dataset"/> 上，使数据集可被正确解码。
+        ''' </summary>
+        Private Sub attachDatasetMetadata()
+            If Me.m_layoutMessage Is Nothing OrElse Me.m_layoutMessage.dataset Is Nothing Then
+                Return
+            End If
+            If Me.dataObject Is Nothing OrElse Me.dataObject.messages Is Nothing Then
+                Return
+            End If
+
+            Dim dataspace As DataspaceMessage = Nothing
+            Dim datatype As DataTypeMessage = Nothing
+            Dim pipeline As FilterPipelineMessage = Nothing
+
+            For Each msg As ObjectHeaderMessage In Me.dataObject.messages
+                Select Case msg.headerMessageType.type
+                    Case ObjectHeaderMessages.Dataspace
+                        If msg.dataspaceMessage IsNot Nothing Then
+                            dataspace = msg.dataspaceMessage
+                        End If
+                    Case ObjectHeaderMessages.Datatype
+                        If msg.dataTypeMessage IsNot Nothing Then
+                            datatype = msg.dataTypeMessage
+                        End If
+                    Case ObjectHeaderMessages.DataStorageFilterPipeline
+                        If msg.filterPipelineMessage IsNot Nothing Then
+                            pipeline = msg.filterPipelineMessage
+                        End If
+                End Select
+            Next
+
+            Me.m_layoutMessage.dataset.dataSpace = dataspace
+
+            If datatype IsNot Nothing Then
+                Me.m_layoutMessage.dataset.dataType = datatype.reader
+            End If
+
+            Me.m_layoutMessage.dataset.pipeline = pipeline
+        End Sub
 
         Public ReadOnly Property filterMessage As FilterPipelineMessage
             Get

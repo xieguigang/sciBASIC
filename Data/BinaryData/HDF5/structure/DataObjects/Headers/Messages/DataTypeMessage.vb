@@ -173,6 +173,14 @@ Namespace struct.messages
                 Me.m_timeTypeByteSize = bitPrecision \ 8
             ElseIf Me.type = DataTypes.DATATYPE_STRING Then
                 Dim ptype As Integer = Me.m_flags(0) And &HF
+
+                ' 固定长度字符串数据集：必须创建 reader，否则 dataset.dataType 为 Nothing，
+                ' 后续 ParseDataChunk / diskSize 会因 dataSpace/dataType 为 Nothing 崩溃。
+                Me.reader = New StringData With {
+                    .[class] = DataTypes.DATATYPE_STRING,
+                    .size = byteSize,
+                    .version = version
+                }
             ElseIf Me.type = DataTypes.DATATYPE_BIT_FIELD Then
                 Dim bitOffset As Short = [in].readShort()
                 Dim bitPrecision As Short = [in].readShort()

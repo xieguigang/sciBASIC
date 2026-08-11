@@ -177,8 +177,23 @@ Namespace struct.messages
                 nameLength = [in].readShort
                 flags = [in].readShort
                 numberOfClientDataValues = [in].readShort
-                name = [in].readASCIIString
+                name = [in].readASCIIString(nameLength)
                 clientData = New Integer(numberOfClientDataValues - 1) {}
+
+                For i As Integer = 0 To numberOfClientDataValues - 1
+                    clientData(i) = [in].readInt
+                Next
+
+                ' HDF5 规范：单个 filter 描述符（头部 8 字节 + name 字段 nameLength 字节 +
+                ' client_data 字段 4*count 字节）整体需按 8 字节边界对齐，name 之后、client_data
+                ' 之后都可能存在填充字节。若不精确跳过对齐填充，下一个 filter 描述符的起始偏移会
+                ' 错位，导致读取到错误的 filter id（如将 deflate 读成 0），从而在 decode 阶段抛出
+                ' "未实现的过滤器" 异常。
+                Dim consumed As Integer = 8 + nameLength + 4 * numberOfClientDataValues
+                Dim filterPadding As Integer = (8 - (consumed Mod 8)) Mod 8
+                If filterPadding > 0 Then
+                    Call [in].skipBytes(filterPadding)
+                End If
 
                 For i As Integer = 0 To numberOfClientDataValues - 1
                     clientData(i) = [in].readInt
