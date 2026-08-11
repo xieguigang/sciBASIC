@@ -182,7 +182,15 @@ Namespace struct.messages
             ElseIf Me.type = LayoutClass.ChunkedStorage Then
                 Me._dimensionality = [in].readByte()
 
-                ' Call [in].skipBytes(3)
+                ' 诊断：打印 readO 前的位置和接下来的字节
+                Call Console.WriteLine($"[DIAG]   before readO: [in].offset={[in].offset}, msgAddr={address}, expected_offset={address + 3}")
+                Try
+                    Dim peekPos = [in].offset
+                    Dim peek = [in].readBytes(8).ToArray()
+                    Call Console.WriteLine($"[DIAG]   peek 8 bytes: {BitConverter.ToString(peek)}")
+                    [in].offset = peekPos
+                Catch
+                End Try
 
                 Me._dataAddress = ReadHelper.readO([in], sb)
                 Me._chunkSize = New Integer(Me.dimensionality - 2) {}

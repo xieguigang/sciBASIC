@@ -218,29 +218,22 @@ Namespace device
         End Function
 
         Public Shared Function ToLong(data As Byte(), littleEndian As Boolean) As Long
-            Dim temp As Long = 0
-
-            If littleEndian Then
-                temp = (data(0) And &HFF)
-                temp = temp Or (data(1) And &HFF) << 8
-                temp = temp Or (data(2) And &HFF) << 16
-                temp = temp Or (data(3) And &HFF) << 24
-                temp = temp Or (data(4) And &HFF) << 32
-                temp = temp Or (data(5) And &HFF) << 40
-                temp = temp Or (data(6) And &HFF) << 48
-                temp = temp Or (data(7) And &HFF) << 56
-            Else
-                temp = (data(0) And &HFF) << 56
-                temp = temp Or (data(1) And &HFF) << 48
-                temp = temp Or (data(2) And &HFF) << 40
-                temp = temp Or (data(3) And &HFF) << 32
-                temp = temp Or (data(4) And &HFF) << 24
-                temp = temp Or (data(5) And &HFF) << 16
-                temp = temp Or (data(6) And &HFF) << 8
-                temp = temp Or (data(7) And &HFF)
+            ' 此前使用 Integer 左移 (<< 24/32/40/48/56) 来拼接字节，
+            ' 当 byte ≥ 0x80 时 Integer 溢出，OR 到 Long 后被符号扩展为 0xFFFFFFFF_xxxxxx，
+            ' 导致所有 ≥ 2^31 的地址被读成负数。
+            ' 修复：用 BitConverter.ToInt64 直接转换，彻底避免移位溢出。
+            If data.Length < 8 Then
+                Dim padded(7) As Byte
+                Array.Copy(data, padded, data.Length)
+                data = padded
             End If
 
-            Return temp
+            If littleEndian = BitConverter.IsLittleEndian Then
+                Return BitConverter.ToInt64(data, 0)
+            Else
+                Dim rev As Byte() = {data(7), data(6), data(5), data(4), data(3), data(2), data(1), data(0)}
+                Return BitConverter.ToInt64(rev, 0)
+            End If
         End Function
 
         ''' <summary>
