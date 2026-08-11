@@ -230,10 +230,16 @@ Namespace struct
                 For i As Integer = 0 To Me.numberOfEntries
                     Dim key As Long = [in].readLong
 
-                    ' skip size, filterMask
+                    ' Read D offsets (dataset dimensions)
                     For j As Integer = 0 To layout.numberOfDimensions - 1
                         Me.offsets(i)(j) = CInt([in].readLong())
                     Next
+
+                    ' Skip the trailing zero offset — the (D+1)-th offset in each
+                    ' chunk B-tree key is always zero (datatype offset). Without
+                    ' this skip, every subsequent child pointer would be read from
+                    ' the wrong position, corrupting multi-level B-tree traversal.
+                    [in].skipBytes(sb.sizeOfOffsets)
 
                     Me.childPointer(i) = If((i = Me.numberOfEntries), -1, ReadHelper.readO([in], sb))
                 Next

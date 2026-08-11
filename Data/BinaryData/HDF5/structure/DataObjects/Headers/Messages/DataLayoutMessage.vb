@@ -196,23 +196,25 @@ Namespace struct.messages
             Dim isCompact As Boolean = (Me.type = LayoutClass.CompactStorage)
 
             If Not isCompact Then
-                ' Data AddressO (optional)
+                ' Data Address
                 Me._dataAddress = ReadHelper.readO([in], sb)
             End If
 
-            Me._chunkSize = New Integer(Me.dimensionality - 2) {}
+            ' Dimension sizes 仅存在于 ChunkedStorage 布局中。
+            ' Compact 和 Contiguous 布局没有 dimension sizes 字段，
+            ' 此前无条件读取会导致 reader 偏移错位，使后续字段读到错误数据。
+            If type = LayoutClass.ChunkedStorage Then
+                Me._chunkSize = New Integer(Me.dimensionality - 2) {}
 
-            For i As Integer = 0 To Me.dimensionality - 2
-                ' Dimension #n Size
-                Me.chunkSize(i) = [in].readInt()
-            Next
+                For i As Integer = 0 To Me.dimensionality - 2
+                    Me.chunkSize(i) = [in].readInt()
+                Next
 
-            If isCompact Then
-                ' Dataset Element Size (optional)
+                Me._dataElementSize = [in].readInt
+            ElseIf isCompact Then
+                ' Dataset Element Size
                 Me._dataElementSize = [in].readInt()
                 Me._dataAddress = [in].offset
-            ElseIf type = LayoutClass.ChunkedStorage Then
-                Me._dataElementSize = [in].readInt
             ElseIf type = LayoutClass.ContiguousStorage Then
                 ' Total Size of Dataset Storage (in bytes)
                 Me._continuousSize = ReadHelper.readL([in], sb)

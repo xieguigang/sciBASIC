@@ -231,6 +231,8 @@ Namespace struct
             _totalSuperBlockSize += _sizeOfOffsets * 4
             _rootGroupSymbolTableEntry = New SymbolTableEntry(Me, [in].offset)
             _totalSuperBlockSize += _rootGroupSymbolTableEntry.totalSymbolTableEntrySize
+
+            Call Console.WriteLine($"[DIAG] Superblock v{versionOfSuperblock}: sizeOfOffsets={sizeOfOffsets}, sizeOfLengths={sizeOfLengths}, baseAddr={baseAddress}, rootGroupHeaderAddr={rootGroupHeaderAddress}")
         End Sub
 
         Private Sub readVersion2([in] As BinaryReader)

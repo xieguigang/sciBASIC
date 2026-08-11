@@ -118,10 +118,15 @@ Public Class HDF5File : Implements IDisposable
                 .Where(Function(t) Not t.StringEmpty) _
                 .ToArray
             Dim rootName$ = path(Scan0)
-            Dim obj As DataObjectFacade = rootObjects _
+            Dim matchingKey As String = rootObjects _
                 .Keys _
-                .First(Function(name) name.TextEquals(rootName)) _
-                .GetValueOrDefault(rootObjects)
+                .FirstOrDefault(Function(name) name.TextEquals(rootName))
+
+            If matchingKey Is Nothing Then
+                Return Nothing
+            End If
+
+            Dim obj As DataObjectFacade = rootObjects(matchingKey)
             Dim reader As New HDF5Reader(Me, obj)
 
             For Each token As String In path.Skip(1)

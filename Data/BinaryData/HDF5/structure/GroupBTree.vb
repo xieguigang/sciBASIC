@@ -87,38 +87,32 @@ Namespace struct
             Call MyBase.New(address)
 
             Me.symbolTableEntries = New List(Of SymbolTableEntry)()
-
-            Dim entryList As New List(Of BTreeEntry)()
             Dim visited As New HashSet(Of Long)()
-            Dim node As GroupNode
 
-            Call readAllEntries(sb, address, entryList, visited, 0)
-
-            ' 去除重复的目标地址，避免同一 SNOD 节点被多次加入导致符号表条目重复
-            Dim dedup As New List(Of BTreeEntry)()
-            Dim seenTargets As New HashSet(Of Long)()
-            For Each e As BTreeEntry In entryList
-                If seenTargets.Add(e.targetAddress) Then
-                    dedup.Add(e)
-                End If
-            Next
-
-            For Each e As BTreeEntry In dedup
-                Try
-                    node = New GroupNode(sb, e.targetAddress)
-                    symbolTableEntries.AddRange(node.symbols)
-                Catch
-                    ' 个别条目无法解析为符号表节点时跳过，保证整体遍历不中断
-                End Try
-            Next
+            Call traverseBTree(sb, address, visited)
         End Sub
 
-        ' 布局无关地扫描 B 树节点体：以 4 字节为步长扫描，把每个 8 字节小端值当作
-        ' 候选地址，仅保留真正指向 TREE/SNOD 节点的地址。SNOD 直接收集，TREE 递归。
-        ' visited 在所有递归调用间共享，避免重复扫描同一节点造成无限递归；
-        ' depth 作为额外保护，防止异常深的嵌套。
-        Private Sub readAllEntries(sb As Superblock, address As Long, entryList As List(Of BTreeEntry), visited As HashSet(Of Long), depth As Integer)
-            If address <= 0 OrElse visited.Contains(address) OrElse depth > 64 Then
+        ''' <summary>
+        ''' 按照 HDF5 v1 B-tree (type=0 group) 的二进制结构正确遍历整棵树。
+        '''
+        ''' 节点布局:
+        '''   "TREE" 签名 (4 bytes)
+        '''   节点类型 (1 byte)  — 0 = group
+        '''   节点层级 (1 byte)  — 0 = leaf
+        '''   已用条目数 (2 bytes)
+        '''   左兄弟地址 (sizeOfOffsets bytes)
+        '''   右兄弟地址 (sizeOfOffsets bytes)
+        '''   交错排列的 key 与 child pointer:
+        '''     key[0] (sizeOfOffsets bytes)  — link name offset into local heap
+        '''     child[0] (sizeOfOffsets bytes) — SNOD 地址(leaf) 或子 B-tree 地址(internal)
+        '''     key[1], child[1], ...
+        '''     key[entriesUsed] (sizeOfOffsets bytes) — trailing key, 无 child
+        '''
+        ''' Leaf(level=0): child → SNOD(GroupNode) → 收集 SymbolTableEntry
+        ''' Internal(level&gt;0): child → 子 B-tree 节点 → 递归
+        ''' </summary>
+        Private Sub traverseBTree(sb As Superblock, address As Long, visited As HashSet(Of Long))
+            If address <= 0 OrElse visited.Contains(address) Then
                 Return
             End If
 
@@ -126,46 +120,51 @@ Namespace struct
 
             Dim [in] As BinaryReader = sb.FileReader(address)
 
+            ' 1. 读取 TREE 签名
             _magic = Encoding.ASCII.GetString([in].readBytes(4))
 
             If Not Me.VerifyMagicSignature(signature) Then
                 Return
             End If
 
-            Dim soo As Integer = sb.sizeOfOffsets
-            Dim raw = [in].readBytes(8192).ToArray()
+            ' 2. 读取节点头
+            Dim nodeType As Integer = [in].readByte()    ' 0 = group
+            Dim level As Integer = [in].readByte()        ' 0 = leaf
+            Dim entriesUsed As Integer = [in].readShort() ' 子节点数
 
-            For i = 0 To raw.Length - soo Step 4
-                ' HDF5 文件偏移量以小端序存储，按小端拼接候选地址
-                Dim candidate As Long = 0
-                For j = 0 To soo - 1
-                    candidate = candidate Or (CLng(raw(i + j)) << (8 * j))
-                Next
+            ' 3. 读取兄弟地址（跳过，遍历不需要）
+            ReadHelper.readO([in], sb) ' leftSibling
+            ReadHelper.readO([in], sb) ' rightSibling
 
-                ' 跳过无效地址（含 HADDR_UNDEF 全 1、过小、超过文件范围）
-                If candidate <= 96 OrElse candidate >= &H700000000L Then
+            ' 4. 先读出所有 child 地址，避免 GroupNode 构造时改变 reader 位置
+            Dim childAddresses As New List(Of Long)(entriesUsed)
+
+            For i As Integer = 0 To entriesUsed - 1
+                ' key[i]: sizeOfOffsets 字节的 link name offset（遍历不需要，跳过）
+                ReadHelper.readO([in], sb)
+
+                ' child[i]: sizeOfOffsets 字节的子节点地址
+                Dim childAddr As Long = ReadHelper.readO([in], sb)
+                childAddresses.Add(childAddr)
+            Next
+
+            ' 5. 处理各 child 地址
+            For Each childAddr As Long In childAddresses
+                If childAddr <= 0 Then
                     Continue For
                 End If
 
-                If visited.Contains(candidate) Then
-                    Continue For
-                End If
-
-                Dim sig As String = ""
-                Try
-                    sig = System.Text.Encoding.ASCII.GetString(sb.FileReader(candidate).readBytes(4).ToArray())
-                Catch
-                    Continue For
-                End Try
-
-                visited.Add(candidate)
-
-                If sig = signature Then
-                    ' 子 B 树节点：递归
-                    readAllEntries(sb, candidate, entryList, visited, depth + 1)
-                ElseIf sig = "SNOD" Then
-                    ' 符号表节点：直接以该地址作为目标地址加入
-                    entryList.Add(New BTreeEntry(candidate))
+                If level = 0 Then
+                    ' Leaf: child 指向 SNOD (Symbol Table Node)
+                    Try
+                        Dim snod As New GroupNode(sb, childAddr)
+                        symbolTableEntries.AddRange(snod.symbols)
+                    Catch
+                        ' 个别 SNOD 无法解析时跳过，不中断整体遍历
+                    End Try
+                Else
+                    ' Internal: child 指向子 B-tree 节点，递归
+                    Call traverseBTree(sb, childAddr, visited)
                 End If
             Next
         End Sub
