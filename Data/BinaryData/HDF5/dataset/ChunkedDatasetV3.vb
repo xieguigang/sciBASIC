@@ -80,6 +80,7 @@
 ' *****************************************************************************
 
 Imports System.IO
+Imports System.Runtime.InteropServices
 Imports Microsoft.VisualBasic.ComponentModel.Collection
 Imports Microsoft.VisualBasic.Data.IO.HDF5.struct
 Imports Microsoft.VisualBasic.Serialization.JSON
@@ -280,6 +281,40 @@ Namespace dataset
 
         Private Function getDataBuffer(sb As Superblock, chunk As DataChunk) As Byte()
             Return sb.FileReader(chunk.filePosition).readBytes(chunk.sizeOfChunk)
+        End Function
+
+        ''' <summary>
+        ''' 以 chunk 为单位流式枚举分块数据集的一维数组，避免一次性将整个数据集解压到内存。
+        ''' 每个 chunk 解压后转换为 <typeparamref name="T"/> 数组并 yield 返回，内存峰值维持在单 chunk 量级。
+        ''' </summary>
+        ''' <typeparam name="T">目标元素 .NET 类型（需与数据集元素的 HDF5 类型在字节布局上兼容，如 uint32→UInteger）。</typeparam>
+        ''' <param name="sb">文件超级块，用于定位 chunk 字节与解码过滤器。</param>
+        ''' <returns>按 chunk 顺序返回的每个 chunk 的解压后一维数组（最后一个 chunk 可能不满）。</returns>
+        Public Iterator Function EnumerateChunkArrays(Of T)(sb As Superblock) As IEnumerable(Of T())
+            If dataType Is Nothing Then
+                Throw New InvalidOperationException("dataset data type is not initialized.")
+            End If
+
+            Dim elementSize As Integer = dataType.size
+            Dim lookup As New ChunkLookup(sb, Me)
+
+            For Each chunk As DataChunk In lookup.chunkValues
+                Dim decoded As Byte() = decodeChunk(chunk, sb)
+                Dim n As Integer = decoded.Length \ elementSize
+
+                If n > 0 Then
+                    Dim array As T() = New T(n - 1) {}
+                    Dim handle As GCHandle = GCHandle.Alloc(array, GCHandleType.Pinned)
+
+                    Try
+                        Marshal.Copy(decoded, 0, handle.AddrOfPinnedObject, decoded.Length)
+                    Finally
+                        handle.Free()
+                    End Try
+
+                    Yield array
+                End If
+            Next
         End Function
     End Class
 
