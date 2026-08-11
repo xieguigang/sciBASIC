@@ -191,8 +191,12 @@ Namespace struct
             If Not Me.VerifyMagicSignature(signature) Then
                 ' [in].offset -= 4
                 ' Call "signature is not valid".Warning
-                Call Console.WriteLine("data around 64 bytes nearby:")
-                Call Console.WriteLine([in].debugView)
+                Call Console.WriteLine($"[DIAG] BTreeNode FAIL at address={address}, expected TREE")
+                Try
+                    Dim raw = sb.FileReader(address).readBytes(32).ToArray()
+                    Call Console.WriteLine($"[DIAG]   hex={BitConverter.ToString(raw)}")
+                Catch
+                End Try
 
                 Throw New IOException("signature is not valid: the block magic should be 'TREE'!")
             End If

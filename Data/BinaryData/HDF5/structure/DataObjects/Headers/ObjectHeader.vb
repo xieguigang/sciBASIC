@@ -94,10 +94,12 @@ Namespace struct
 
             Call Console.WriteLine($"[DIAG] ObjectHeader@{address}: firstByte={version} (&H{version:X2}), isV2={version = &H4F}")
 
-            ' 诊断：转储对象头起始处的原始字节
+            ' 诊断：转储对象头起始处的原始字节（不改变 reader 位置）
             Try
+                Dim savedPos As Long = [in].offset
                 Dim rawHdr = sb.FileReader(address).readBytes(48).ToArray()
                 Call Console.WriteLine($"[DIAG]   raw bytes@{address}: {BitConverter.ToString(rawHdr)}")
+                [in].offset = savedPos
             Catch
             End Try
 
