@@ -194,10 +194,6 @@ Namespace struct.messages
                 If filterPadding > 0 Then
                     Call [in].skipBytes(filterPadding)
                 End If
-
-                For i As Integer = 0 To numberOfClientDataValues - 1
-                    clientData(i) = [in].readInt
-                Next
             Else
                 Throw New NotImplementedException
             End If
