@@ -72,6 +72,7 @@ Namespace CommandLine.Reflection
         ''' <returns></returns>
         ''' <remarks>(这个命令的名称)</remarks>
         Public ReadOnly Property Name As String Implements IExportAPI.Name
+
         ''' <summary>
         ''' Something detail of help information.
         ''' </summary>

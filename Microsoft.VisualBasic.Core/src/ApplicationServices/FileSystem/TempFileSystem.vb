@@ -54,6 +54,7 @@
 #End Region
 
 Imports System.IO
+Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Linq
 Imports FS = Microsoft.VisualBasic.FileIO.FileSystem
 
@@ -64,6 +65,12 @@ Namespace ApplicationServices
     ''' </summary>
     Public Class TempFileSystem
 
+        ''' <summary>
+        ''' /tmp/&lt;assembly-name>/
+        ''' </summary>
+        ''' <returns></returns>
+        ''' 
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Function TempDir() As String
             Return App.AppSystemTemp
         End Function
@@ -74,7 +81,7 @@ Namespace ApplicationServices
         ''' <param name="ext"></param>
         ''' <param name="sessionID">It is recommended that use <see cref="App.PID"/> for this parameter.</param>
         ''' <returns></returns>
-        '''
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
         Public Shared Function GetAppSysTempFile(Optional ext$ = ".tmp",
                                                  Optional sessionID$ = "",
                                                  Optional prefix$ = Nothing) As String
