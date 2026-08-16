@@ -6,7 +6,7 @@
 		<AssemblyName>Microsoft.VisualBasic.Runtime</AssemblyName>
 		<Authors>xie.guigang@live.com</Authors>
 		<Company>sciBASIC#</Company>
-		<Version>5.0.1.2389</Version>    
+		<Version>10.5.3.8911</Version>    
 		<AssemblyVersion>5.33.69.2558</AssemblyVersion>
 		<Deterministic>false</Deterministic>
 		<RuntimeIdentifiers>win-x64;linux-x64;linux-arm64;osx-x64</RuntimeIdentifiers>
@@ -43,7 +43,7 @@
 		<RemoveIntegerChecks>true</RemoveIntegerChecks>
 		<DebugSymbols>true</DebugSymbols>
 		<DebugType>portable</DebugType>
-		<DefineConstants>netcore5=1,FRAMEWORD_CORE=1</DefineConstants>
+		<DefineConstants>FRAMEWORD_CORE=1</DefineConstants>
 		<DocumentationFile>Microsoft.VisualBasic.Runtime.xml</DocumentationFile>
 	</PropertyGroup>
 
@@ -52,7 +52,6 @@
 	  <RemoveIntegerChecks>true</RemoveIntegerChecks>
 	  <DebugSymbols>true</DebugSymbols>
 	  <DebugType>portable</DebugType>
-	  <DefineConstants>netcore5=1,FRAMEWORD_CORE=1</DefineConstants>
 	  <DocumentationFile>Microsoft.VisualBasic.Runtime.xml</DocumentationFile>
 	</PropertyGroup>
 
@@ -61,7 +60,7 @@
 	  <RemoveIntegerChecks>true</RemoveIntegerChecks>
 	  <DebugSymbols>true</DebugSymbols>
 	  <DebugType>portable</DebugType>
-	  <DefineConstants>netcore5=1,FRAMEWORD_CORE=1</DefineConstants>
+	  <DefineConstants>FRAMEWORD_CORE=1</DefineConstants>
 	  <DocumentationFile>Microsoft.VisualBasic.Runtime.xml</DocumentationFile>
 	</PropertyGroup>
 
@@ -70,7 +69,7 @@
 	  <RemoveIntegerChecks>true</RemoveIntegerChecks>
 	  <DebugSymbols>true</DebugSymbols>
 	  <DebugType>portable</DebugType>
-	  <DefineConstants>netcore5=1,FRAMEWORD_CORE=1</DefineConstants>
+	  <DefineConstants>FRAMEWORD_CORE</DefineConstants>
 	  <DocumentationFile>Microsoft.VisualBasic.Runtime.xml</DocumentationFile>
 	</PropertyGroup>
 
@@ -89,7 +88,7 @@
 		<DebugSymbols>true</DebugSymbols>
 		<DebugType>portable</DebugType>
 		<DefineDebug>false</DefineDebug>
-		<DefineConstants>netcore5=1</DefineConstants>
+		<DefineConstants></DefineConstants>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">
@@ -99,7 +98,6 @@
 	  <DebugSymbols>true</DebugSymbols>
 	  <DebugType>portable</DebugType>
 	  <DefineDebug>false</DefineDebug>
-	  <DefineConstants>netcore5=1</DefineConstants>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">
@@ -109,7 +107,7 @@
 	  <DebugSymbols>true</DebugSymbols>
 	  <DebugType>portable</DebugType>
 	  <DefineDebug>false</DefineDebug>
-	  <DefineConstants>netcore5=1</DefineConstants>
+	  <DefineConstants></DefineConstants>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='MEMI-Desktop|AnyCPU'">
@@ -119,7 +117,7 @@
 	  <DebugSymbols>true</DebugSymbols>
 	  <DebugType>portable</DebugType>
 	  <DefineDebug>false</DefineDebug>
-	  <DefineConstants>netcore5=1</DefineConstants>
+	  <DefineConstants></DefineConstants>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='MEMI-Desktop|ARM64'">
@@ -129,7 +127,6 @@
 	  <DebugSymbols>true</DebugSymbols>
 	  <DebugType>portable</DebugType>
 	  <DefineDebug>false</DefineDebug>
-	  <DefineConstants>netcore5=1</DefineConstants>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='MEMI-Desktop|ARM64'">
@@ -139,7 +136,7 @@
 	  <DebugSymbols>true</DebugSymbols>
 	  <DebugType>portable</DebugType>
 	  <DefineDebug>false</DefineDebug>
-	  <DefineConstants>netcore5=1</DefineConstants>
+	  <DefineConstants></DefineConstants>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x86'">
@@ -149,7 +146,7 @@
 	  <DebugSymbols>true</DebugSymbols>
 	  <DebugType>portable</DebugType>
 	  <DefineDebug>false</DefineDebug>
-	  <DefineConstants>netcore5=1</DefineConstants>
+	  <DefineConstants></DefineConstants>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='MEMI-Desktop|x86'">
@@ -159,7 +156,7 @@
 	  <DebugSymbols>true</DebugSymbols>
 	  <DebugType>portable</DebugType>
 	  <DefineDebug>false</DefineDebug>
-	  <DefineConstants>netcore5=1</DefineConstants>
+	  <DefineConstants></DefineConstants>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='mzkit|AnyCPU'">
@@ -169,7 +166,7 @@
 		<DebugSymbols>true</DebugSymbols>
 		<DebugType>portable</DebugType>
 		<DefineDebug>false</DefineDebug>
-		<DefineConstants>netcore5=1</DefineConstants>
+		<DefineConstants></DefineConstants>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='mzkit|ARM64'">
@@ -179,7 +176,6 @@
 	  <DebugSymbols>true</DebugSymbols>
 	  <DebugType>portable</DebugType>
 	  <DefineDebug>false</DefineDebug>
-	  <DefineConstants>netcore5=1</DefineConstants>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='mzkit|ARM64'">
@@ -189,7 +185,7 @@
 	  <DebugSymbols>true</DebugSymbols>
 	  <DebugType>portable</DebugType>
 	  <DefineDebug>false</DefineDebug>
-	  <DefineConstants>netcore5=1</DefineConstants>
+	  <DefineConstants></DefineConstants>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='mzkit|x86'">
@@ -199,7 +195,7 @@
 	  <DebugSymbols>true</DebugSymbols>
 	  <DebugType>portable</DebugType>
 	  <DefineDebug>false</DefineDebug>
-	  <DefineConstants>netcore5=1</DefineConstants>
+	  <DefineConstants></DefineConstants>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Rsharp_app_release|AnyCPU'">
@@ -403,7 +399,7 @@
 	</PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <DefineConstants>netcore5=1,UNIX=0</DefineConstants>
+    <DefineConstants>UNIX=0</DefineConstants>
     <RemoveIntegerChecks>true</RemoveIntegerChecks>
     <Optimize>false</Optimize>
     <DebugSymbols>true</DebugSymbols>
@@ -413,7 +409,7 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='MEMI-Desktop|x64'">
-    <DefineConstants>netcore5=1,UNIX=0</DefineConstants>
+    <DefineConstants>UNIX=0</DefineConstants>
     <RemoveIntegerChecks>true</RemoveIntegerChecks>
     <Optimize>false</Optimize>
     <DebugSymbols>true</DebugSymbols>
@@ -424,7 +420,7 @@
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='mzkit|x64'">
 		<DocumentationFile>Microsoft.VisualBasic.Runtime.xml</DocumentationFile>
-		<DefineConstants>netcore5=1,UNIX=1,FRAMEWORD_CORE=1</DefineConstants>
+		<DefineConstants>UNIX=1,FRAMEWORD_CORE=1</DefineConstants>
 		<RemoveIntegerChecks>true</RemoveIntegerChecks>
 		<Optimize>false</Optimize>
 		<DebugSymbols>true</DebugSymbols>
@@ -435,7 +431,7 @@
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Rsharp_app_release|x64'">
 		<DocumentationFile>Microsoft.VisualBasic.Runtime.xml</DocumentationFile>
-		<DefineConstants>netcore5=1,UNIX=1,FRAMEWORD_CORE=1</DefineConstants>
+		<DefineConstants>UNIX=1,FRAMEWORD_CORE=1</DefineConstants>
 		<RemoveIntegerChecks>true</RemoveIntegerChecks>
 		<Optimize>false</Optimize>
 		<BaseAddress>4194304</BaseAddress>
@@ -448,7 +444,7 @@
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='CFD_win32|x64'">
 	  <DocumentationFile>Microsoft.VisualBasic.Runtime.xml</DocumentationFile>
-	  <DefineConstants>netcore5=1,UNIX=1,FRAMEWORD_CORE=1</DefineConstants>
+	  <DefineConstants>UNIX=1,FRAMEWORD_CORE=1</DefineConstants>
 	  <RemoveIntegerChecks>true</RemoveIntegerChecks>
 	  <Optimize>false</Optimize>
 	  <BaseAddress>4194304</BaseAddress>
@@ -460,7 +456,7 @@
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='gcmodeller_desktop|x64'">
 	  <DocumentationFile>Microsoft.VisualBasic.Runtime.xml</DocumentationFile>
-	  <DefineConstants>netcore5=1,UNIX=1,FRAMEWORD_CORE=1</DefineConstants>
+	  <DefineConstants>UNIX=1,FRAMEWORD_CORE=1</DefineConstants>
 	  <RemoveIntegerChecks>true</RemoveIntegerChecks>
 	  <Optimize>false</Optimize>
 	  <BaseAddress>4194304</BaseAddress>
@@ -472,7 +468,7 @@
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='CellaLAB-Desktop|x64'">
 	  <DocumentationFile>Microsoft.VisualBasic.Runtime.xml</DocumentationFile>
-	  <DefineConstants>netcore5=1,UNIX=1,FRAMEWORD_CORE=1</DefineConstants>
+	  <DefineConstants>UNIX=1,FRAMEWORD_CORE=1</DefineConstants>
 	  <RemoveIntegerChecks>true</RemoveIntegerChecks>
 	  <Optimize>false</Optimize>
 	  <BaseAddress>4194304</BaseAddress>
@@ -484,7 +480,7 @@
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Desktop|x64'">
 	  <DocumentationFile>Microsoft.VisualBasic.Runtime.xml</DocumentationFile>
-	  <DefineConstants>netcore5=1,UNIX=1,FRAMEWORD_CORE=1</DefineConstants>
+	  <DefineConstants>UNIX=1,FRAMEWORD_CORE=1</DefineConstants>
 	  <RemoveIntegerChecks>true</RemoveIntegerChecks>
 	  <Optimize>false</Optimize>
 	  <BaseAddress>4194304</BaseAddress>
@@ -496,7 +492,7 @@
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Docker|x64'">
 	  <DocumentationFile>Microsoft.VisualBasic.Runtime.xml</DocumentationFile>
-	  <DefineConstants>netcore5=1,UNIX=1,FRAMEWORD_CORE=1</DefineConstants>
+	  <DefineConstants>UNIX=1,FRAMEWORD_CORE=1</DefineConstants>
 	  <RemoveIntegerChecks>true</RemoveIntegerChecks>
 	  <Optimize>false</Optimize>
 	  <BaseAddress>4194304</BaseAddress>
@@ -531,7 +527,7 @@
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='PlantMAT|x64'">
 		<DocumentationFile>Microsoft.VisualBasic.Runtime.xml</DocumentationFile>
-		<DefineConstants>netcore5=1,UNIX=1,FRAMEWORD_CORE=1</DefineConstants>
+		<DefineConstants>UNIX=1,FRAMEWORD_CORE=1</DefineConstants>
 		<RemoveIntegerChecks>true</RemoveIntegerChecks>
 		<Optimize>false</Optimize>
 		<BaseAddress>4194304</BaseAddress>
@@ -544,7 +540,7 @@
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='LipidSearch|x64'">
 		<DocumentationFile>Microsoft.VisualBasic.Runtime.xml</DocumentationFile>
-		<DefineConstants>netcore5=1,UNIX=1,FRAMEWORD_CORE=1</DefineConstants>
+		<DefineConstants>UNIX=1,FRAMEWORD_CORE=1</DefineConstants>
 		<RemoveIntegerChecks>true</RemoveIntegerChecks>
 		<Optimize>false</Optimize>
 		<BaseAddress>4194304</BaseAddress>
