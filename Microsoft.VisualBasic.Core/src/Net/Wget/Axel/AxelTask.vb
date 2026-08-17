@@ -64,7 +64,6 @@ Imports System.Runtime.Versioning
 
 Namespace Net.WebClient
 
-    <SupportedOSPlatform("windows")>
     Friend Class AxelTask
 
         ReadOnly url As String

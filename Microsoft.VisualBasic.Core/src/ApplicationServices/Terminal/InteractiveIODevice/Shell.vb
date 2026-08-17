@@ -78,7 +78,6 @@ Namespace ApplicationServices.Terminal
     ''' <summary>
     ''' Shell model for console.
     ''' </summary>
-    <SupportedOSPlatform("windows")>
     Public Class Shell
 
         Public Property ps1 As PS1

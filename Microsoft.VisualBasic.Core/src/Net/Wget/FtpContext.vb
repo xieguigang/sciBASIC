@@ -47,7 +47,7 @@
     ' 
     '         Properties: password, server, username
     ' 
-    '         Function: CreateRequest, ToString
+    '         Function: CreateFtpClient, ToString
     ' 
     ' 
     ' /********************************************************************************/

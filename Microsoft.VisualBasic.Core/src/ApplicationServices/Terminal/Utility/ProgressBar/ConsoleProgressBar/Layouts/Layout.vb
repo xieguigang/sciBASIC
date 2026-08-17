@@ -67,10 +67,10 @@ Imports std = System.Math
 Imports System.Runtime.Versioning
 
 Namespace ApplicationServices.Terminal.ProgressBar.ConsoleProgressBar
+
     ''' <summary>
     ''' Definition of a Layout for a ProgressBar representation
     ''' </summary>
-    <SupportedOSPlatform("windows")>
     Partial Public Class Layout
         ' Examples of ProgressBar:
         '      - Marquee is a Character moving around the ProgressBar

@@ -73,7 +73,7 @@ Imports Microsoft.VisualBasic.ApplicationServices.Terminal.ProgressBar.ConsolePr
 Imports System.Runtime.Versioning
 
 Namespace ApplicationServices.Terminal.ProgressBar.ConsoleProgressBar
-    <SupportedOSPlatform("windows")>
+
     Partial Public Class Text
         ''' <summary>
         ''' Definition for the Texts in a ProgressBar

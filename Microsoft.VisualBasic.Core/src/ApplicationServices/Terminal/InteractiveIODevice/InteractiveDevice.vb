@@ -66,7 +66,6 @@ Imports System.Runtime.Versioning
 
 Namespace ApplicationServices.Terminal
 
-    <SupportedOSPlatform("windows")>
     Public Class InteractiveDevice : Inherits Terminal
         Implements IDisposable
         Implements ISaveHandle

@@ -66,7 +66,6 @@ Namespace Net.WebClient
     ''' <summary>
     ''' linux axel liked multiple thread http file download module
     ''' </summary>
-    <SupportedOSPlatform("windows")>
     Public Class Axel
 
         ' --- 配置区 ---

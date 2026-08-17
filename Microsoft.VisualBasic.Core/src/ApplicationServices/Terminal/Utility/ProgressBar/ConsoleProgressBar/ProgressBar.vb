@@ -73,7 +73,6 @@
 '
 
 Imports System.Drawing
-Imports System.Runtime.Versioning
 Imports System.Threading
 Imports Microsoft.VisualBasic.ApplicationServices.Terminal.ProgressBar.ConsoleProgressBar.Extensions
 Imports std = System.Math
@@ -83,7 +82,6 @@ Namespace ApplicationServices.Terminal.ProgressBar.ConsoleProgressBar
     ''' <summary>
     ''' A ProgressBar for Console
     ''' </summary>
-    <SupportedOSPlatform("windows")>
     Public Class ProgressBar : Implements IDisposable
 
         ''' <summary>

@@ -69,7 +69,6 @@ Namespace ApplicationServices.Terminal.ProgressBar.ConsoleProgressBar
     ''' An element of a ProgressBar
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
-    <SupportedOSPlatform("windows")>
     Public Class Element(Of T)
         Private _ValueGetter As Func(Of ProgressBar, T)
         Private _ForegroundColorGetter As Func(Of ProgressBar, ConsoleColor)
