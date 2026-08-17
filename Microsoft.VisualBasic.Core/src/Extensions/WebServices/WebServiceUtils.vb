@@ -485,8 +485,8 @@ Public Module WebServiceUtils
     ''' Otherwise it will give The server committed a protocol violation. Section=ResponseStatusLine Error.
     ''' </param>
     ''' <returns>
-    ''' this function returns a stream object that produced by
-    ''' <see cref="HttpWebResponse.GetResponseStream()"/>
+    ''' this function returns a stream object that produced by the
+    ''' <see cref="HttpResponseMessage"/> content stream
     ''' </returns>
     <Extension>
     Public Function GetRequestRaw(url As String,
