@@ -55,6 +55,13 @@ Imports System
 
 Module Program
     Sub Main(args As String())
+        ' FTP 客户端命令行测试入口:
+        '   test.exe --ftp <host> <remotePath> [localPath] [user] [password] [--port N] [--ssl]
+        If args.Length > 0 AndAlso args(0) = "--ftp" Then
+            Call FtpTest.Run(args.Skip(1).ToArray()).GetAwaiter().GetResult()
+            Return
+        End If
+
         Call qgramTestSearch.Run()
         Call progrsssBarTest.testLoop()
         Call streamTest.dataUriStreamtest()

@@ -20,7 +20,7 @@ Imports Microsoft.VisualBasic.Net.FTP
 
 Module FtpTest
 
-    Async Function Main(args As String()) As Task
+    Public Async Function Run(args As String()) As Task
         Console.OutputEncoding = Text.Encoding.UTF8
 
         If args.Length < 2 Then
@@ -35,10 +35,11 @@ Module FtpTest
 
         Dim user As String = "anonymous"
         Dim password As String = "anonymous@localhost"
+        Dim port As Integer = 21
         Dim useSsl As Boolean = False
         Dim skipCert As Boolean = False
 
-        ' 解析可选参数
+        ' 解析可选位置参数
         Dim idx As Integer = 2
         If args.Length > 2 AndAlso Not args(2).StartsWith("--") Then
             ' args(2) 是 localPath，继续看后面的
@@ -53,6 +54,8 @@ Module FtpTest
         ' 解析开关
         For i As Integer = idx + 1 To args.Length - 1
             Select Case args(i)
+                Case "--port"
+                    If i + 1 < args.Length Then Integer.TryParse(args(i + 1), port) : i += 1
                 Case "--ssl", "--ftps"
                     useSsl = True
                 Case "--no-cert", "--skip-cert"
@@ -69,14 +72,14 @@ Module FtpTest
 
         Dim creds As New FtpCredentials(user, password)
 
-        Console.WriteLine($"FTP 服务器 : {host}")
+        Console.WriteLine($"FTP 服务器 : {host}:{port}")
         Console.WriteLine($"远程文件   : {remotePath}")
         Console.WriteLine($"本地保存   : {localPath}")
         Console.WriteLine($"用户       : {user}")
         Console.WriteLine($"FTPS 加密  : {If(useSsl, "是", "否")}")
         Console.WriteLine()
 
-        Using client As New FtpClient(host, 21, options, creds)
+        Using client As New FtpClient(host, port, options, creds)
 
             ' 显示文件信息
             Try
@@ -165,6 +168,7 @@ Module FtpTest
   password       密码 (默认: anonymous@localhost)
 
 选项:
+  --port <n>     端口 (默认: 21, 本地测试可指到 2121)
   --ssl           使用 FTPS (FTP over TLS)
   --no-cert       跳过证书验证 (用于自签名证书)
 

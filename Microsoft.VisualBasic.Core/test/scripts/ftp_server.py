@@ -51,7 +51,10 @@ def to_str(b):
 def rand_bytes(n):
     """生成 n 字节伪随机数据 (种子固定, 保证内容一致性)。"""
     rnd = random.Random(42)
-    return b"".join(bytes((rnd.randint(0, 255),)) for _ in range(n))
+    if PY3:
+        return bytes(rnd.randrange(256) for _ in range(n))
+    # Python 2: 通过 bytearray 生成再转 str (bytes)
+    return b"".join(chr(rnd.randint(0, 255)) for _ in range(n))
 
 
 class FtpServer(object):
@@ -235,8 +238,15 @@ class FtpServer(object):
                         data_socket = None
                     else:
                         self.send(conn, "502 Command not implemented.")
-        except (socket.timeout, OSError, IOError, ConnectionResetError if PY3 else OSError):
-            pass
+        except Exception as e:
+            import traceback
+            try:
+                conn.sendall(to_bytes("421 Service not available, closing control connection." + CRLF))
+            except Exception:
+                pass
+            print("[server] ERROR in handler:", repr(e), file=sys.stderr)
+            traceback.print_exc(file=sys.stderr)
+            sys.stderr.flush()
         finally:
             try:
                 conn.close()
