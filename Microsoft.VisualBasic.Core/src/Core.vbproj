@@ -32,6 +32,8 @@
     <InvariantGlobalization>false</InvariantGlobalization>
     <NoWarn>$(NoWarn);SYSLIB0003</NoWarn>
     <NoWarn>$(NoWarn);SYSLIB0004</NoWarn>
+    <WarningLevel>4</WarningLevel>
+    <NoWarn>$(NoWarn);BC42356</NoWarn>
     <AssemblyTitle>Microsoft VisualBasic Application Common Runtime</AssemblyTitle>
     <ApplicationIcon>sciBASIC#.ico</ApplicationIcon>
     <Title>Microsoft VisualBasic Application Common Runtime</Title>
