@@ -257,7 +257,7 @@ Namespace Text
             End If
 
             If BOMBytes(0) = &H2B AndAlso BOMBytes(1) = &H2F AndAlso BOMBytes(2) = &H76 Then
-                Return Encoding.UTF7
+                Return Encoding.GetEncoding("utf-7")
             End If
 
             If BOMBytes.Length < 4 Then

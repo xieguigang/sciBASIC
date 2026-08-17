@@ -127,7 +127,7 @@ Namespace Text
                 {Encodings.ASCII, Encoding.ASCII},
                 {Encodings.GB2312, __gbk2312_encoding()},
                 {Encodings.Unicode, Encoding.Unicode},
-                {Encodings.UTF7, Encoding.UTF7},
+                {Encodings.UTF7, Encoding.GetEncoding("utf-7")},
                 {Encodings.UTF32, Encoding.UTF32},
                 {Encodings.UTF8, utf8},
                 {Encodings.UTF8WithoutBOM, UTF8WithoutBOM},
