@@ -1,22 +1,22 @@
 #Region "Microsoft.VisualBasic::HttpClientFactory, Microsoft.VisualBasic.Core\src\Net\HTTP\HttpClientFactory.vb"
 
-    ' Shared HttpClient infrastructure for migrating away from the
-    ' obsolete HttpWebRequest / WebRequest API (SYSLIB0014).
-    '
-    ' Provides a single configured HttpClient instance that mirrors the
-    ' previous behaviour of the WebServiceUtils module:
-    '
-    '   * ignores SSL certificate errors (was ServicePointManager.ServerCertificateValidationCallback)
-    '   * applies gzip / deflate automatic decompression (was manual GZipStream handling)
-    '   * honours a configurable proxy (was WebRequest.DefaultWebProxy / WebServiceUtils.Proxy)
-    '   * sends a default user-agent header
+' Shared HttpClient infrastructure for migrating away from the
+' obsolete HttpWebRequest / WebRequest API (SYSLIB0014).
+'
+' Provides a single configured HttpClient instance that mirrors the
+' previous behaviour of the WebServiceUtils module:
+'
+'   * ignores SSL certificate errors (was ServicePointManager.ServerCertificateValidationCallback)
+'   * applies gzip / deflate automatic decompression (was manual GZipStream handling)
+'   * honours a configurable proxy (was WebRequest.DefaultWebProxy / WebServiceUtils.Proxy)
+'   * sends a default user-agent header
 
 #End Region
 
-Imports System.IO.Compression
+Imports System.Collections.Specialized
+Imports System.IO
 Imports System.Net
 Imports System.Net.Http
-Imports System.Net.Http.Headers
 Imports System.Net.Security
 Imports System.Security.Cryptography.X509Certificates
 

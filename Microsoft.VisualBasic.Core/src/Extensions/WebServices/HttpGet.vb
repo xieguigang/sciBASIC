@@ -147,7 +147,7 @@ Public Module HttpGet
 
         Try
 Re0:
-            Return BuildWebRequest(url, headers, proxy, UA, timeout:=timeout).UrlGet(echo:=echo).html
+            Return BuildWebRequest(url, headers, proxy, UA, timeout:=timeout).UrlGet(echo:=echo, timeout:=TimeSpan.FromSeconds(timeout)).html
 
             ' 20230620 the http error message at here could be various
             ' just check for the http status code 404 at here
@@ -199,35 +199,25 @@ Re0:
                                     proxy$,
                                     UA$,
                                     Optional isPost As Boolean = False,
-                                    Optional timeout As Long = 600) As HttpWebRequest
+                                    Optional timeout As Long = 600) As HttpRequestMessage
 
-        Dim webRequest As HttpWebRequest = HttpWebRequest.Create(url)
+        Dim request As New HttpRequestMessage(If(isPost, HttpMethod.Post, HttpMethod.Get), url)
 
-        webRequest.Headers.Add("Accept-Language", "en-US,en;q=0.8,zh-Hans-CN;q=0.5,zh-Hans;q=0.3")
-        webRequest.UserAgent = UA Or DefaultUA
+        request.Headers.Add("Accept-Language", "en-US,en;q=0.8,zh-Hans-CN;q=0.5,zh-Hans;q=0.3")
+        request.Headers.Add("User-Agent", UA Or DefaultUA)
 
-        If isPost Then
-            webRequest.Method = "POST"
-        End If
-
-        If HttpRequestTimeOut > 0 Then
-            webRequest.Timeout = 1000 * HttpRequestTimeOut
-        Else
-            webRequest.Timeout = 1000 * timeout
-        End If
-
+        ' The effective request timeout is decided by UrlGet / SendSync based
+        ' on HttpRequestTimeOut (>0 takes priority) or the passed-in timeout.
         If Not headers.IsNullOrEmpty Then
             For Each x As KeyValuePair(Of String, String) In headers
-                webRequest.Headers(x.Key) = x.Value
+                request.Headers.TryAddWithoutValidation(x.Key, x.Value)
             Next
         End If
         If Not String.IsNullOrEmpty(proxy) Then
-            webRequest.SetProxy(proxy)
-        Else
-            webRequest.Proxy = Nothing
+            Call HttpClientFactory.SetProxy(proxy)
         End If
 
-        Return webRequest
+        Return request
     End Function
 
     ''' <summary>
