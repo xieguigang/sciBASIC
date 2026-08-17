@@ -17,6 +17,7 @@
 
 Imports System.IO
 Imports Microsoft.VisualBasic.Net.FTP
+Imports Microsoft.VisualBasic.Net.WebClient
 
 Module FtpTest
 
@@ -38,6 +39,7 @@ Module FtpTest
         Dim port As Integer = 21
         Dim useSsl As Boolean = False
         Dim skipCert As Boolean = False
+        Dim useWget As Boolean = False
 
         ' 解析可选位置参数
         Dim idx As Integer = 2
@@ -60,6 +62,8 @@ Module FtpTest
                     useSsl = True
                 Case "--no-cert", "--skip-cert"
                     skipCert = True
+                Case "--wget"
+                    useWget = True
             End Select
         Next
 
@@ -157,6 +161,26 @@ Module FtpTest
             End Try
 
         End Using
+
+        ' 可选: 验证重构后的 FtpDownloader (替代 FtpWebRequest)
+        If useWget Then
+            Try
+                Console.WriteLine()
+                Console.WriteLine("验证重构后的 FtpDownloader (ftp:// 下载)...")
+                Dim wgetPath As String = "_wget_" & Path.GetFileName(remotePath)
+                Dim ftpUrl As String = $"ftp://{host}:{port}{remotePath}"
+                Dim wget As New FtpDownloader(ftpUrl, wgetPath, user, password)
+                AddHandler wget.DownloadProgressChanged, Sub(s, e)
+                                                             Console.WriteLine($"    {FormatSize(e.BytesReceived)} / {FormatSize(e.TotalBytes)}")
+                                                         End Sub
+                Await wget.DownloadFileAsync()
+                Console.WriteLine($"  FtpDownloader 完成: {wgetPath} ({FormatSize(New FileInfo(wgetPath).Length)})")
+                Console.WriteLine()
+            Catch ex As Exception
+                Console.WriteLine($"  FtpDownloader 失败: {ex.Message}")
+                Console.WriteLine(ex.StackTrace)
+            End Try
+        End If
     End Function
 
     Private Function FormatSize(bytes As Long) As String

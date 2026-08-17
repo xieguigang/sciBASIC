@@ -48,7 +48,7 @@
     '         Properties: LocalSaveFile
     ' 
     '         Constructor: (+2 Overloads) Sub New
-    '         Function: ftpRequest, OpenSaveStream
+    '         Function: DownloadFileAsync, OpenSaveStream
     ' 
     ' 
     ' /********************************************************************************/
@@ -56,15 +56,20 @@
 #End Region
 
 Imports System.IO
-Imports System.Net
+Imports Microsoft.VisualBasic.Net.FTP
 
 Namespace Net.WebClient
 
+    ''' <summary>
+    ''' 基于 <see cref="FtpClient"/> 实现的 FTP 文件下载器。
+    ''' 用于替代基于已过时 <see cref="System.Net.FtpWebRequest"/> 的旧实现。
+    ''' </summary>
     Public Class FtpDownloader : Inherits WebClient
 
         ReadOnly ftpUri As Uri
         ReadOnly localFilePath As String
-        ReadOnly request As FtpWebRequest
+        ReadOnly _client As FtpClient
+        ReadOnly _remotePath As String
         ReadOnly _bufferSize As Integer = 8192
         ReadOnly _buffer As Stream
 
@@ -80,7 +85,8 @@ Namespace Net.WebClient
 
             Me.ftpUri = New Uri(ftpUri)
             Me.localFilePath = localPath
-            Me.request = ftpRequest(user, password)
+            Me._client = CreateClient(user, password)
+            Me._remotePath = Me.ftpUri.AbsolutePath
         End Sub
 
         Sub New(ftpUri As String, buffer As Stream,
@@ -88,53 +94,41 @@ Namespace Net.WebClient
                 Optional password As String = "user@example.com")
 
             Me.ftpUri = New Uri(ftpUri)
-            Me.request = ftpRequest(user, password)
+            Me._client = CreateClient(user, password)
+            Me._remotePath = Me.ftpUri.AbsolutePath
             Me._buffer = buffer
         End Sub
 
-        Private Function ftpRequest(user As String, password As String) As FtpWebRequest
-#Disable Warning
-            Dim request = DirectCast(WebRequest.Create(Me.ftpUri), FtpWebRequest)
-#Enable Warning
+        Private Function CreateClient(user As String, password As String) As FtpClient
+            Dim port As Integer = ftpUri.Port
+            If port < 0 Then port = 21
 
-            request.Credentials = New NetworkCredential(user, password) ' 匿名登录
-            request.Method = WebRequestMethods.Ftp.DownloadFile
-            request.Proxy = Nothing
-            request.KeepAlive = False
-            request.UseBinary = True
-            request.EnableSsl = False
-            request.Timeout = 5000 ' 设置超时时间（毫秒）
-
-            Return request
+            Dim creds As New FtpCredentials(user, password)
+            Return New FtpClient(ftpUri.Host, port, Nothing, creds)
         End Function
 
         Public Overrides Async Function DownloadFileAsync() As Task
-            Using response As FtpWebResponse = Await request.GetResponseAsync()
-                Await RequestStream(response)
-            End Using
-        End Function
+            ' 进度映射: FtpDownloadProgress -> ProgressChangedEventArgs
+            Dim progress As New Progress(Of FtpDownloadProgress)(
+                Sub(p)
+                    Dim bytesReceived As Long = p.BytesTransferred
+                    Dim totalBytes As Long = p.TotalBytes
 
-        Private Async Function RequestStream(response As FtpWebResponse) As Task
-            Dim totalBytes As Long = response.ContentLength
+                    Call ProgressUpdate(New ProgressChangedEventArgs(bytesReceived, totalBytes))
+                End Sub)
 
-            Call ProgressUpdate(New ProgressChangedEventArgs(0, CLng(totalBytes)))
-
-            Using responseStream As Stream = response.GetResponseStream()
-                Dim localFileStream As Stream = OpenSaveStream()
-                Dim buffer As Byte() = New Byte(_bufferSize - 1) {}
-                Dim bytesRead As Integer = Await responseStream.ReadAsync(buffer, 0, buffer.Length)
-                Dim totalBytesRead As Long = bytesRead
-
-                While bytesRead > 0
-                    Await localFileStream.WriteAsync(buffer, 0, bytesRead)
-
-                    bytesRead = Await responseStream.ReadAsync(buffer, 0, buffer.Length)
-                    totalBytesRead += bytesRead
-
-                    Call ProgressUpdate(New ProgressChangedEventArgs(totalBytesRead, CLng(totalBytes)))
-                End While
-
-                Await localFileStream.FlushAsync
+            Using client As FtpClient = _client
+                If _buffer Is Nothing Then
+                    ' 下载到本地文件，完成后关闭文件流
+                    Using saveStream As Stream = OpenSaveStream()
+                        Await client.DownloadAsync(_remotePath, saveStream, progress:=progress)
+                        Await saveStream.FlushAsync()
+                    End Using
+                Else
+                    ' 下载到调用方传入的流，不关闭该流 (兼容原行为)
+                    Await client.DownloadAsync(_remotePath, _buffer, progress:=progress)
+                    Await _buffer.FlushAsync()
+                End If
             End Using
 
             Call ProgressFinished()

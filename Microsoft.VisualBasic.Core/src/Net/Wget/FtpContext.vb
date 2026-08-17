@@ -54,9 +54,9 @@
 
 #End Region
 
-Imports System.Net
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Language
+Imports Microsoft.VisualBasic.Net.FTP
 
 Namespace Net.WebClient
 
@@ -66,17 +66,20 @@ Namespace Net.WebClient
         Public Property password As String
         Public Property server As String
 
-        Public Function CreateRequest(dir As String) As FtpWebRequest
-            Dim ftpContext As String = $"ftp://{server}/{dir}"
-#Disable Warning SYSLIB0014 ' 类型或成员已过时
-            Dim request As FtpWebRequest = DirectCast(WebRequest.Create(ftpContext), FtpWebRequest)
-#Enable Warning SYSLIB0014 ' 类型或成员已过时
-
+        ''' <summary>
+        ''' 创建一个新的 FTP 客户端实例。
+        ''' 使用 <see cref="server"/> 作为主机、21 作为端口；
+        ''' 若提供了用户名/密码则用于认证，否则使用匿名登录。
+        ''' </summary>
+        Public Function CreateFtpClient() As FtpClient
+            Dim creds As FtpCredentials
             If Not (username.StringEmpty OrElse password.StringEmpty) Then
-                request.Credentials = New NetworkCredential(username, password)
+                creds = New FtpCredentials(username, password)
+            Else
+                creds = FtpCredentials.Anonymous
             End If
 
-            Return request
+            Return New FtpClient(server, 21, Nothing, creds)
         End Function
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
