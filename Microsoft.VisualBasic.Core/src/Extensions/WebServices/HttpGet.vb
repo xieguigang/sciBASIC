@@ -147,7 +147,7 @@ Public Module HttpGet
 
         Try
 Re0:
-            Return BuildWebRequest(url, headers, proxy, UA, timeout:=timeout).UrlGet(echo:=echo, timeout:=TimeSpan.FromSeconds(timeout)).html
+            Return BuildWebRequest(url, headers, proxy, UA, timeout:=timeout).UrlGet(echo:=echo, requestTimeout:=TimeSpan.FromSeconds(timeout)).html
 
             ' 20230620 the http error message at here could be various
             ' just check for the http status code 404 at here
@@ -228,19 +228,20 @@ Re0:
     <Extension>
     Public Function UrlGet(webrequest As HttpRequestMessage,
                            echo As Boolean,
-                           Optional timeout As TimeSpan = Nothing) As WebResponseResult
+                           Optional requestTimeout As TimeSpan = Nothing) As WebResponseResult
         Dim timer As Stopwatch = Stopwatch.StartNew
         Dim url As String = webrequest.RequestUri.ToString
         Dim html As String
+        Dim effectiveTimeout As TimeSpan = requestTimeout
 
         ' HttpRequestTimeOut (>0) takes priority over the passed-in timeout,
         ' mirroring the previous HttpWebRequest.Timeout behaviour.
         If HttpRequestTimeOut > 0 Then
-            timeout = TimeSpan.FromSeconds(HttpRequestTimeOut)
+            effectiveTimeout = TimeSpan.FromSeconds(HttpRequestTimeOut)
         End If
 
         ' gzip / deflate automatic decompression is handled by HttpClientFactory
-        Dim response As HttpResponseMessage = HttpClientFactory.SendSync(webrequest, timeout)
+        Dim response As HttpResponseMessage = HttpClientFactory.SendSync(webrequest, effectiveTimeout)
 
         Using reader As New StreamReader(response.Content.ReadAsStreamAsync().GetAwaiter().GetResult(), Encoding.UTF8)
             html = reader.ReadToEnd()

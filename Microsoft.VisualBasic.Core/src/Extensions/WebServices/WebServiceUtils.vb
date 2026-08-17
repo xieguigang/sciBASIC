@@ -815,7 +815,6 @@ Public Module WebServiceUtils
                                  Optional proxy$ = Nothing,
                                  Optional ua$ = Nothing,
                                  Optional retry% = 0,
-                                 Optional progressHandle As DownloadProgressChangedEventHandler = Nothing,
                                  Optional refer$ = Nothing,
                                  Optional timeout As Integer = 1000 * 60 * 30,
                                  Optional silent As Boolean = True,
@@ -843,7 +842,7 @@ RE0:
 
             Using response As HttpResponseMessage = HttpClientFactory _
                   .Client _
-                  .GetAsync(request, HttpCompletionOption.ResponseHeadersRead) _
+                  .SendAsync(request, HttpCompletionOption.ResponseHeadersRead) _
                   .GetAwaiter() _
                   .GetResult()
 

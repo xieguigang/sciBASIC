@@ -138,6 +138,16 @@ Namespace Net.Http
             Return Client.SendAsync(request).GetAwaiter().GetResult()
         End Function
 
+        Public Function SendSync(request As HttpRequestMessage, timeout As TimeSpan) As HttpResponseMessage
+            If timeout <= TimeSpan.Zero Then
+                Return Client.SendAsync(request).GetAwaiter().GetResult()
+            End If
+
+            Using cts As New Threading.CancellationTokenSource(timeout)
+                Return Client.SendAsync(request, cts.Token).GetAwaiter().GetResult()
+            End Using
+        End Function
+
         ''' <summary>
         ''' Synchronous POST of raw bytes with an explicit content-type.
         ''' </summary>
