@@ -61,10 +61,25 @@ Imports Microsoft.VisualBasic.Linq
 ''' </summary>
 Public Module StringBuilders
 
+    ''' <summary>
+    ''' Convert to string via <see cref="BitConverter.ToString"/> with - was stripped.
+    ''' </summary>
+    ''' <param name="data"></param>
+    ''' <returns></returns>
     <MethodImpl(MethodImplOptions.AggressiveInlining)>
     <Extension>
     Public Function ToHex(data As Byte()) As String
         Return BitConverter.ToString(data).Replace("-", "")
+    End Function
+
+    ''' <summary>
+    ''' Cast byte data as hex string via byte tostring('x2') 
+    ''' </summary>
+    ''' <param name="data"></param>
+    ''' <returns></returns>
+    <Extension>
+    Public Function ToHexString(data As IEnumerable(Of Byte)) As String
+        Return data.SafeQuery.Select(Function(b) b.ToString("x2")).JoinBy("")
     End Function
 
     ''' <summary>
