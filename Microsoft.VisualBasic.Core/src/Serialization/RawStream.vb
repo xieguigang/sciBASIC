@@ -183,7 +183,7 @@ Namespace Serialization
             If bytes.Length = 0 Then
                 Return empty(code)
             Else
-                Call raw.Read(bytes, Scan0, bytes.Length)
+                Call raw.ReadFully(bytes, Scan0, bytes.Length)
             End If
 
             Select Case code

@@ -84,7 +84,7 @@ Namespace Parallel.MMFProtocol.MapStream
         End Sub
 
         Public Function Read() As MMFStream
-            Call file.CreateViewStream.Read(buffer, Scan0, buffer.Length)
+            Call file.CreateViewStream.ReadFully(buffer, Scan0, buffer.Length)
             Return New MMFStream(buffer)
         End Function
 
@@ -170,7 +170,7 @@ Namespace Parallel.MMFProtocol.MapStream
         ''' <returns></returns>
         Public Function ReadBadge() As Long
             Dim buf As Byte() = New Byte(MMFStream.INT64 - 1) {}
-            Call file.CreateViewStream.Read(buf, Scan0, buf.Length)
+            Call file.CreateViewStream.ReadFully(buf, Scan0, buf.Length)
             Dim n As Long = BitConverter.ToInt64(buf, Scan0)
             Return n
         End Function

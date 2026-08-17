@@ -178,7 +178,7 @@ Namespace Text
             'First read only what we need for BOM detection
 
             Dim bomBytes As Byte() = New Byte(If(InputFileStream.Length > 4, 4, InputFileStream.Length) - 1) {}
-            InputFileStream.Read(bomBytes, 0, bomBytes.Length)
+            InputFileStream.ReadFully(bomBytes, 0, bomBytes.Length)
 
             encodingFound = DetectBOMBytes(bomBytes)
 
@@ -194,7 +194,7 @@ Namespace Text
             Call Array.Copy(bomBytes, sampleBytes, bomBytes.Length)
 
             If InputFileStream.Length > bomBytes.Length Then
-                InputFileStream.Read(sampleBytes, bomBytes.Length, sampleBytes.Length - bomBytes.Length)
+                InputFileStream.ReadFully(sampleBytes, bomBytes.Length, sampleBytes.Length - bomBytes.Length)
             End If
 
             InputFileStream.Position = originalPos

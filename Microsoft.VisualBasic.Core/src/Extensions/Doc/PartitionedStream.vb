@@ -139,7 +139,7 @@ Namespace Text
                 chunkBuffer = New Byte(_Total - _Current - 1) {}
             End If
 
-            Call _readerStream.Read(chunkBuffer, _Current, chunkBuffer.Length)
+            Call _readerStream.ReadFully(chunkBuffer, _Current, chunkBuffer.Length)
             Call previous.Append(chunkBuffer)
 
             Dim Text As String = _encoding.GetString(previous)

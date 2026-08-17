@@ -113,10 +113,10 @@ Namespace Serialization.BinaryDumping
 
         Public Shared Function Parse(s As Stream) As Buffer
             Dim bytes As Byte() = New Byte(RawStream.INT32 - 1) {}
-            Call s.Read(bytes, Scan0, RawStream.INT32)
+            Call s.ReadFully(bytes, Scan0, RawStream.INT32)
             Dim nlen As Integer = BitConverter.ToInt32(bytes, Scan0)
             bytes = New Byte(nlen - 1) {}
-            Call s.Read(bytes, Scan0, nlen)
+            Call s.ReadFully(bytes, Scan0, nlen)
             Return New Buffer(bytes)
         End Function
 

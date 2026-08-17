@@ -120,7 +120,7 @@ Namespace Text.Parser
             Else
                 Dim chunk As Byte() = New Byte(bytes.Length - 1) {}
                 Call s.Seek(Scan0, SeekOrigin.Begin)
-                Call s.Read(chunk, Scan0, chunk.Length)
+                Call s.ReadFully(chunk, Scan0, chunk.Length)
                 Return chunk.SequenceEqual(bytes)
             End If
         End Operator

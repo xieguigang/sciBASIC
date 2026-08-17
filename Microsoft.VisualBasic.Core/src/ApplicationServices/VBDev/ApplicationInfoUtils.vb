@@ -90,7 +90,7 @@ Namespace ApplicationServices.Development
 
             Try
                 s = New FileStream(filePath, FileMode.Open, FileAccess.Read)
-                s.Read(b, 0, 2048)
+                s.ReadFully(b, 0, 2048)
             Finally
                 If s IsNot Nothing Then
                     s.Close()

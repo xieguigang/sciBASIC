@@ -362,7 +362,7 @@ Public Module IOExtensions
                 buffer = New Byte(buffer_size - 1) {}
             End If
 
-            Call file.Read(buffer, Scan0, buffer_size)
+            Call file.ReadFully(buffer, Scan0, buffer_size)
 
             Return buffer
         End Using

@@ -199,7 +199,7 @@ Public Module LargeTextFile
         Dim buffer As Byte() = New Byte(length - 1) {}
 
         Call file.Seek(file.Length - length, SeekOrigin.Begin)
-        Call file.Read(buffer, 0, buffer.Length)
+        Call file.ReadFully(buffer, 0, buffer.Length)
 
         Dim value$ = textEncoder.GetString(buffer)
         Return value

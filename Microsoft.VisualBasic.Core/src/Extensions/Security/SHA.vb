@@ -119,7 +119,7 @@ Namespace SecurityString
 
             ' Use the password to generate pseudo-random bytes for the encryption
             ' key. Specify the size of the key in bytes (instead of bits).
-            Dim keyBytes As Byte() = Rfc2898DeriveBytes.Pbkdf2(strPassphrase, saltValueBytes, HashAlgorithmName.SHA1, passwordIterations, keySize \ 8)
+            Dim keyBytes As Byte() = Rfc2898DeriveBytes.Pbkdf2(Encoding.UTF8.GetBytes(strPassphrase), saltValueBytes, HashAlgorithmName.SHA1, passwordIterations, keySize \ 8)
             ' Create uninitialized Rijndael encryption object.
 
             Dim symmetricKey As Global.System.Security.Cryptography.Aes = Global.System.Security.Cryptography.Aes.Create()
@@ -184,7 +184,7 @@ Namespace SecurityString
 
             ' Use the password to generate pseudo-random bytes for the encryption
             ' key. Specify the size of the key in bytes (instead of bits).
-            Dim keyBytes As Byte() = Rfc2898DeriveBytes.Pbkdf2(strPassphrase, saltValueBytes, HashAlgorithmName.SHA1, passwordIterations, keySize \ 8)
+            Dim keyBytes As Byte() = Rfc2898DeriveBytes.Pbkdf2(Encoding.UTF8.GetBytes(strPassphrase), saltValueBytes, HashAlgorithmName.SHA1, passwordIterations, keySize \ 8)
             ' Create uninitialized Rijndael encryption object.
 
             Dim symmetricKey As Global.System.Security.Cryptography.Aes = Global.System.Security.Cryptography.Aes.Create()
