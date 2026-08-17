@@ -56,6 +56,8 @@
 
 Imports System.IO
 Imports System.Net
+Imports System.Net.Http
+Imports System.Net.Http.Headers
 Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports Microsoft.VisualBasic.Language
@@ -142,48 +144,41 @@ Namespace Net.Http
         ''' <param name="headers"></param>
         ''' <returns></returns>
         Public Function POST(api$, Optional headers As Dictionary(Of String, String) = Nothing) As WebResponseResult
-            Dim request As HttpWebRequest = WebRequest.Create(api)
-            request.ContentType = "multipart/form-data; boundary=" & boundary
-            request.Method = "POST"
-            request.KeepAlive = True
-            request.Credentials = CredentialCache.DefaultCredentials
+            Dim request As New HttpRequestMessage(HttpMethod.Post, api)
+            request.Headers.TryAddWithoutValidation("Accept", "*/*")
 
             For Each header In headers.SafeQuery
-                Call request.Headers.Add(header.Key, header.Value)
+                Call request.Headers.TryAddWithoutValidation(header.Key, header.Value)
             Next
 
-            Using requestStream As Stream = request.GetRequestStream
-                buffer.Position = Scan0
-                requestStream.Write(buffer.ToArray, Scan0, buffer.Length)
-                requestStream.Flush()
-            End Using
+            Dim content As New ByteArrayContent(buffer.ToArray)
+            content.Headers.ContentType = New MediaTypeHeaderValue("multipart/form-data; boundary=" & boundary)
+            request.Content = content
 
-            Using response As WebResponse = request.GetResponse
-                Try
-                    Dim responseStream As Stream = response.GetResponseStream
-
-                    Using responseReader As New StreamReader(responseStream)
-                        Dim responseText = responseReader.ReadToEnd()
-
-                        Return New WebResponseResult With {
-                            .url = api,
-                            .headers = ResponseHeaders.Header200,
-                            .html = responseText,
-                            .timespan = 0,
-                            .payload = ""
-                        }
-                    End Using
-                Catch ex As Exception When TypeOf ex Is WebException
-                    Dim page_stream = DirectCast(ex, WebException).Response.GetResponseStream
+            ' NOTE: the previous HttpWebRequest pipeline used
+            ' CredentialCache.DefaultCredentials; the shared HttpClient in
+            ' HttpClientFactory does not enable UseDefaultCredentials, so NTLM
+            ' default credentials are not forwarded here.
+            Using response As HttpResponseMessage = HttpClientFactory.SendSync(request)
+                If response.IsSuccessStatusCode Then
+                    Dim responseText$ = response.Content.ReadAsStringAsync().GetAwaiter().GetResult()
 
                     Return New WebResponseResult With {
-                        .html = WebServiceUtils.readStreamText(page_stream),
-                        .headers = ResponseHeaders.Header500InternalServerError,
-                        .url = api
+                        .url = api,
+                        .headers = ResponseHeaders.Header200,
+                        .html = responseText,
+                        .timespan = 0,
+                        .payload = ""
                     }
-                Catch ex As Exception
-                    Throw
-                End Try
+                Else
+                    Using pageStream As Stream = response.Content.ReadAsStreamAsync().GetAwaiter().GetResult()
+                        Return New WebResponseResult With {
+                            .html = WebServiceUtils.readStreamText(pageStream),
+                            .headers = ResponseHeaders.Header500InternalServerError,
+                            .url = api
+                        }
+                    End Using
+                End If
             End Using
         End Function
 

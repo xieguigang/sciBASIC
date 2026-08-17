@@ -59,6 +59,7 @@
 
 Imports System.IO
 Imports System.Net
+Imports System.Net.Http
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Parallel
 
@@ -138,24 +139,27 @@ Namespace Net.WebClient
         ''' </summary>
         ''' <param name="req"></param>
         ''' <param name="resp"></param>
-        Private Sub ReportRequest(req As WebRequest, resp As WebResponse, remote$) Handles task.ReportRequest
+        Private Sub ReportRequest(req As HttpRequestMessage, resp As HttpResponseMessage, remote$) Handles task.ReportRequest
             Dim domain As New DomainName(task.url)
-            Dim contentSize$ = resp.ContentLength
-            Dim sizePrettyPrint$ = StringFormats.Lanudry(resp.ContentLength) Or "N/A".When(resp.ContentLength = -1)
+            Dim contentLength As Long = resp.Content.Headers.ContentLength.GetValueOrDefault(-1)
+            Dim contentSize$ = contentLength
+            Dim sizePrettyPrint$ = StringFormats.Lanudry(contentLength) Or "N/A".When(contentLength = -1)
 
             If contentSize = "-1" Then
                 contentSize = "<Unknown Size>"
             End If
+
+            Dim contentType$ = If(resp.Content?.Headers.ContentType Is Nothing, "n/a", resp.Content.Headers.ContentType.MediaType)
 
             Call Console.WriteLine()
 
             Call ClearLine() : Console.WriteLine($"--{DateTime.UtcNow.ToString}--  {task.url}")
             Call ClearLine() : Console.WriteLine($"     => '{task.saveFile}'")
             Call ClearLine() : Console.WriteLine()
-            Call ClearLine() : Console.WriteLine($"Resolving {resp.ResponseUri.Host} ({domain})... {remote}")
-            Call ClearLine() : Console.WriteLine($"==> METHOD ... {req.Method}/{req.RequestUri.Scheme} {DirectCast(req, HttpWebRequest).ProtocolVersion}")
+            Call ClearLine() : Console.WriteLine($"Resolving {resp.RequestMessage.RequestUri.Host} ({domain})... {remote}")
+            Call ClearLine() : Console.WriteLine($"==> METHOD ... {req.Method.Method}/{req.RequestUri.Scheme} {resp.Version}")
             Call ClearLine() : Console.WriteLine($"==> SIZE {task.saveFile} ... {contentSize}")
-            Call ClearLine() : Console.WriteLine($"==> CONTENT-TYPE ... {resp.ContentType}")
+            Call ClearLine() : Console.WriteLine($"==> CONTENT-TYPE ... {contentType}")
             Call ClearLine() : Console.WriteLine($"Length: {contentSize} ({sizePrettyPrint})")
 
             Call Console.WriteLine()

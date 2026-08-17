@@ -226,13 +226,21 @@ Re0:
     ''' <param name="webrequest"></param>
     ''' <returns></returns>
     <Extension>
-    Public Function UrlGet(webrequest As HttpRequestMessage, echo As Boolean) As WebResponseResult
+    Public Function UrlGet(webrequest As HttpRequestMessage,
+                           echo As Boolean,
+                           Optional timeout As TimeSpan = Nothing) As WebResponseResult
         Dim timer As Stopwatch = Stopwatch.StartNew
         Dim url As String = webrequest.RequestUri.ToString
         Dim html As String
 
+        ' HttpRequestTimeOut (>0) takes priority over the passed-in timeout,
+        ' mirroring the previous HttpWebRequest.Timeout behaviour.
+        If HttpRequestTimeOut > 0 Then
+            timeout = TimeSpan.FromSeconds(HttpRequestTimeOut)
+        End If
+
         ' gzip / deflate automatic decompression is handled by HttpClientFactory
-        Dim response As HttpResponseMessage = HttpClientFactory.SendSync(webrequest)
+        Dim response As HttpResponseMessage = HttpClientFactory.SendSync(webrequest, timeout)
 
         Using reader As New StreamReader(response.Content.ReadAsStreamAsync().GetAwaiter().GetResult(), Encoding.UTF8)
             html = reader.ReadToEnd()

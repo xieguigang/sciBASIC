@@ -61,6 +61,7 @@
 
 Imports System.IO
 Imports System.Net
+Imports System.Net.Http
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Net.Http
 Imports Microsoft.VisualBasic.Parallel
@@ -108,7 +109,7 @@ Namespace Net.WebClient
         End Property
 
         Public Event DownloadProcess(wget As wgetTask, percentage#)
-        Public Event ReportRequest(req As WebRequest, resp As WebResponse, remote$)
+        Public Event ReportRequest(req As HttpRequestMessage, resp As HttpResponseMessage, remote$)
 
         ''' <summary>
         ''' Client status
@@ -187,41 +188,48 @@ RE:
 
         Private Sub doTaskInternal(bufferSize As Integer)
             ' Make a request for the url of the file to be downloaded
-            Dim req As WebRequest = HttpGet.BuildWebRequest(url, headers, Nothing, UserAgent.GoogleChrome)
+            Dim req As HttpRequestMessage = HttpGet.BuildWebRequest(url, headers, Nothing, UserAgent.GoogleChrome)
             Dim remote$ = "NA"
 
-            If TypeOf req Is HttpWebRequest Then
-                DirectCast(req, HttpWebRequest).ServicePoint.BindIPEndPointDelegate =
-                    Function(svrs, ip, counts)
-                        remote = ip.ToString
-                        Return Nothing
-                    End Function
-            End If
+            ' HttpClient has no equivalent of the BindIPEndPointDelegate hook,
+            ' so resolve the host to its first IP address for the console report.
+            Try
+                Dim addresses As IPAddress() = Dns.GetHostAddresses(New Uri(url).Host)
+                If Not addresses.IsNullOrEmpty Then
+                    remote = addresses(0).ToString()
+                Else
+                    remote = "NA"
+                End If
+            Catch ex As Exception
+                remote = "NA"
+            End Try
 
-            ' Ask for the response
-            Dim _resp As WebResponse = req.GetResponse
+            ' Ask for the response. ResponseHeadersRead returns as soon as the
+            ' headers are available so large files are streamed to disk.
+            Using _resp As HttpResponseMessage = HttpClientFactory.Client.SendAsync(req, HttpCompletionOption.ResponseHeadersRead).GetAwaiter().GetResult()
+                _totalSize = _resp.Content.Headers.ContentLength.GetValueOrDefault(-1)
+                _speedSamples = New List(Of Double)
+                _currentSize = 0
+                _startTime = App.ElapsedMilliseconds
+                _isUnknownContentSize = totalSize < 0
 
-            _totalSize = _resp.ContentLength
-            _speedSamples = New List(Of Double)
-            _currentSize = 0
-            _startTime = App.ElapsedMilliseconds
-            _isUnknownContentSize = totalSize < 0
+                RaiseEvent ReportRequest(req, _resp, remote)
+                RaiseEvent DownloadProcess(Me, 100 * currentSize / totalSize)
 
-            RaiseEvent ReportRequest(req, _resp, remote)
-            RaiseEvent DownloadProcess(Me, 100 * currentSize / totalSize)
+                Using netStream As Stream = _resp.Content.ReadAsStreamAsync().GetAwaiter().GetResult()
+                    If totalSize = -1 Then
+                        ' task with no Content-Length
+                        Call doDownloadTask(netStream, bufferSize, Function(read) read = 0)
+                    Else
+                        Call doDownloadTask(netStream, bufferSize, Function() currentSize >= totalSize)
+                    End If
+                End Using
+            End Using
 
-            If totalSize = -1 Then
-                ' task with no Content-Length
-                Call doDownloadTask(_resp, bufferSize, Function(read) read = 0)
-            Else
-                Call doDownloadTask(_resp, bufferSize, Function() currentSize >= totalSize)
-            End If
-
-            Call _resp.Close()
             Call _stream.Flush()
         End Sub
 
-        Private Sub doDownloadTask(resp As WebResponse, bufferSize%, exitJob As Func(Of Integer, Boolean))
+        Private Sub doDownloadTask(netStream As Stream, bufferSize%, exitJob As Func(Of Integer, Boolean))
             ' Make a buffer
             Dim buffer(bufferSize - 1) As Byte
             Dim read As Integer = Integer.MaxValue
@@ -229,8 +237,8 @@ RE:
             Dim secondAgo As Double
 
             Do While Not exitJob(read)
-                ' Read the buffer from the response the WebRequest gave you
-                read = resp.GetResponseStream.Read(buffer, Scan0, buffer.Length)
+                ' Read the buffer from the response stream
+                read = netStream.Read(buffer, Scan0, buffer.Length)
                 ' Write to filestream that you declared at the beginning 
                 ' of the DoWork sub
                 ' 20201101 如果不使用Take函数进行额外数据的清除操作
