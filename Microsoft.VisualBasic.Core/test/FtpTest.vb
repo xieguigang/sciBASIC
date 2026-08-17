@@ -95,6 +95,20 @@ Module FtpTest
                 Console.WriteLine()
             End Try
 
+            ' 列出远程根目录 (NLST)
+            Try
+                Console.WriteLine("正在列目录 (NLST /)...")
+                Dim listing = Await client.ListDirectoryAsync("/")
+                Console.WriteLine($"  共 {listing.Length} 个条目:")
+                For Each item In listing
+                    Console.WriteLine($"    - {item}")
+                Next
+                Console.WriteLine()
+            Catch ex As Exception
+                Console.WriteLine($"  (无法列目录: {ex.Message})")
+                Console.WriteLine()
+            End Try
+
             ' 下载文件
             Dim lastPercent As Double = -1
             Dim progress As New Progress(Of FtpDownloadProgress)(

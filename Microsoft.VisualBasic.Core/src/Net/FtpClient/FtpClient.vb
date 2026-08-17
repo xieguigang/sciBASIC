@@ -369,6 +369,64 @@ Namespace Net.FTP
             Return text
         End Function
 
+        ''' <summary>
+        ''' 列出远程目录内容 (NLST，仅返回名称)。目录不存在或无法访问时抛出异常。
+        ''' </summary>
+        ''' <param name="remotePath">远程目录路径，空或 Nothing 表示当前工作目录。</param>
+        ''' <param name="ct">取消令牌</param>
+        ''' <returns>目录项名称数组（不含路径前缀）。</returns>
+        Public Async Function ListDirectoryAsync(
+        Optional remotePath As String = Nothing,
+        Optional ct As CancellationToken = Nothing) As Task(Of String())
+
+            ThrowIfDisposed()
+            Await EnsureConnectedAsync(ct)
+
+            ' --- 确保二进制模式 ---
+            Await SendCommandAsync("TYPE I", ct)
+
+            ' --- 打开数据连接 ---
+            Dim dataStream As Stream = Await OpenDataConnectionAsync(ct)
+
+            ' --- 发送 NLST ---
+            Dim nlstCmd As String = If(String.IsNullOrWhiteSpace(remotePath), "NLST", "NLST " & remotePath)
+            Dim resp = Await SendCommandAsync(nlstCmd, ct)
+            If resp.StatusCode <> 150 AndAlso resp.StatusCode <> 125 Then
+                dataStream?.Dispose()
+                CloseDataConnection()
+                If resp.StatusCode = 550 Then
+                    Throw New FtpFileNotFoundException(
+                    "目录未找到或无权限: " & remotePath, resp.StatusCode)
+                End If
+                Throw New FtpException("NLST 失败: " & resp.ToString(), resp.StatusCode)
+            End If
+
+            ' --- 从数据连接读取目录项 ---
+            Dim items As New List(Of String)
+            Try
+                Using reader As New StreamReader(dataStream, _options.Encoding, False, 1024, leaveOpen:=False)
+                    Do While True
+                        Dim line = Await reader.ReadLineAsync(ct)
+                        If line Is Nothing Then Exit Do
+                        If line.Length > 0 Then
+                            items.Add(line)
+                        End If
+                    Loop
+                End Using
+            Finally
+                dataStream?.Dispose()
+                CloseDataConnection()
+            End Try
+
+            ' --- 读取传输完成响应 (226) ---
+            Dim completeResp = Await ReadResponseAsync(ct)
+            If completeResp.StatusCode <> 226 AndAlso completeResp.StatusCode <> 250 Then
+                Throw New FtpException("目录列表传输未完成: " & completeResp.ToString(), completeResp.StatusCode)
+            End If
+
+            Return items.ToArray()
+        End Function
+
         ' ========================================================================
         '  内部实现: 连接
         ' ========================================================================
