@@ -127,7 +127,6 @@ Namespace Text
                 {Encodings.ASCII, Encoding.ASCII},
                 {Encodings.GB2312, __gbk2312_encoding()},
                 {Encodings.Unicode, Encoding.Unicode},
-                {Encodings.UTF7, Encoding.GetEncoding("utf-7")},
                 {Encodings.UTF32, Encoding.UTF32},
                 {Encodings.UTF8, utf8},
                 {Encodings.UTF8WithoutBOM, UTF8WithoutBOM},
@@ -297,7 +296,6 @@ Namespace Text
                 Case NameOf(Encodings.GB2312) : Return Encodings.GB2312
                 Case NameOf(Encodings.Unicode) : Return Encodings.Unicode
                 Case NameOf(Encodings.UTF32) : Return Encodings.UTF32
-                Case NameOf(Encodings.UTF7) : Return Encodings.UTF7
                 Case NameOf(Encodings.UTF8) : Return Encodings.UTF8
                 Case NameOf(Encodings.Default) : Return Encodings.Default
                 Case Else

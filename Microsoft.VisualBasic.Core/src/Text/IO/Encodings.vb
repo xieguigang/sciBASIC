@@ -80,7 +80,7 @@ Namespace Text
         ''' (utf-16编码的别名？所以使用这个编码的效果是和<see cref="UTF16"/>的效果是一样的)
         ''' </summary>
         Unicode
-        UTF7
+
         ''' <summary>
         ''' 在Linux平台上面是<see cref="TextEncodings.UTF8WithoutBOM"/>，而在Windows平台上面则是带有BOM的UTF8格式. 
         ''' (HTML的默认的编码格式，假若所保存的html文本出现乱码，请考虑是不是应该要选择这个编码才行？)
