@@ -859,11 +859,6 @@ RE0:
                         Do While (read = netStream.Read(buffer, 0, buffer.Length)) > 0
                             Call fileStream.Write(buffer, 0, read)
                             received += read
-
-                            If Not progressHandle Is Nothing AndAlso total > 0 Then
-                                Dim args As New DownloadProgressChangedEventArgs(received, total, Nothing)
-                                Call progressHandle(Nothing, args)
-                            End If
                         Loop
                     End Using
                 End Using

@@ -237,7 +237,7 @@ Re0:
         ' HttpRequestTimeOut (>0) takes priority over the passed-in timeout,
         ' mirroring the previous HttpWebRequest.Timeout behaviour.
         If HttpRequestTimeOut > 0 Then
-            effectiveTimeout = TimeSpan.FromSeconds(HttpRequestTimeOut)
+            effectiveTimeout = timespan.FromSeconds(HttpRequestTimeOut)
         End If
 
         ' gzip / deflate automatic decompression is handled by HttpClientFactory
@@ -247,7 +247,7 @@ Re0:
             html = reader.ReadToEnd()
         End Using
 
-        Dim timespan As Long = timer.ElapsedMilliseconds
+        Dim elapsedMs As Long = timer.ElapsedMilliseconds
         Dim headers As New ResponseHeaders(response)
 
         ' 判断是否是由于还没有登陆校园网客户端而导致的错误
@@ -260,10 +260,10 @@ Re0:
             }
         ElseIf echo Then
             Dim title As String = html.HTMLTitle
-            Dim time$ = StringFormats.ReadableElapsedTime(timespan)
+            Dim time$ = StringFormats.ReadableElapsedTime(elapsedMs)
             Dim debug$ = $"[{url}] {title} - {Len(html)} chars in {time}"
 
-            If timespan > 1000 Then
+            If elapsedMs > 1000 Then
                 Call debug.Warning
             Else
                 Call debug.info
@@ -275,7 +275,7 @@ Re0:
 #End If
         Return New WebResponseResult With {
             .url = url,
-            .timespan = timespan,
+            .timespan = elapsedMs,
             .html = html,
             .headers = headers
         }
