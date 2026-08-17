@@ -105,17 +105,17 @@ Namespace ApplicationServices.Debugging.Diagnostics
             Dim bytes As Byte()
             Dim int_size As Byte() = New Byte(3) {}
 
-            buffer.Read(int_size, Scan0, 4)
-            buffer.Read(int_size, Scan0, 4)
+            buffer.ReadFully(int_size, Scan0, 4)
+            buffer.ReadFully(int_size, Scan0, 4)
             sizeof = BitConverter.ToInt32(int_size, Scan0)
 
             Dim frames As StackFrame() = New StackFrame(sizeof - 1) {}
 
             For i As Integer = 0 To frames.Length - 1
-                buffer.Read(int_size, Scan0, 4)
+                buffer.ReadFully(int_size, Scan0, 4)
                 sizeof = BitConverter.ToInt32(int_size, Scan0)
                 bytes = New Byte(sizeof - 1) {}
-                buffer.Read(bytes, Scan0, sizeof)
+                buffer.ReadFully(bytes, Scan0, sizeof)
 
                 frames(i) = Decode(bytes)
             Next

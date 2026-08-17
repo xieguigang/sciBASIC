@@ -70,8 +70,8 @@ Namespace SecurityString
         End Sub
 
         Public Overrides Function Decrypt(input() As Byte) As Byte()
-            Dim AES As Aes = Aes.Create()
-            Dim hashAES As MD5 = MD5.Create()
+            Dim AES As Global.System.Security.Cryptography.Aes = Global.System.Security.Cryptography.Aes.Create()
+            Dim hashAES As Global.System.Security.Cryptography.MD5 = Global.System.Security.Cryptography.MD5.Create()
             Dim hash(31) As Byte
             Dim temp As Byte() = hashAES.ComputeHash(ASCIIEncoding.ASCII.GetBytes(strPassphrase))
             Array.Copy(temp, 0, hash, 0, 16)
@@ -95,8 +95,8 @@ Namespace SecurityString
         End Function
 
         Public Overrides Function Encrypt(input() As Byte) As Byte()
-            Dim AES As Aes = Aes.Create()
-            Dim hashAES As MD5 = MD5.Create()
+            Dim AES As Global.System.Security.Cryptography.Aes = Global.System.Security.Cryptography.Aes.Create()
+            Dim hashAES As Global.System.Security.Cryptography.MD5 = Global.System.Security.Cryptography.MD5.Create()
             Dim hash(31) As Byte
             Dim temp As Byte() = hashAES.ComputeHash(ASCIIEncoding.ASCII.GetBytes(strPassphrase))
             Array.Copy(temp, 0, hash, 0, 16)

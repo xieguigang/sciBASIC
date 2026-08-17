@@ -70,6 +70,7 @@ Namespace ApplicationServices.Terminal
     ''' (交互式的命令行终端)
     ''' </summary>
     ''' <remarks></remarks>
+    <SupportedOSPlatform("windows")>
     Public Class Terminal : Implements STDIO__.IConsole, IShellDevice
 
 #Region "Console Member Inherits Details"

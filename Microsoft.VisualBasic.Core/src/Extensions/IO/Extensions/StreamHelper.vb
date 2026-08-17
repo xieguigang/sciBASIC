@@ -199,4 +199,27 @@ Public Module StreamHelper
 
         Return signed
     End Function
+
+    ''' <summary>
+    ''' read exactly <paramref name="count"/> bytes from the <paramref name="stream"/>
+    ''' into <paramref name="buffer"/>, looping until the requested number of bytes
+    ''' has been read or the stream end is reached. This avoids the inexact-read
+    ''' behaviour of <see cref="Stream.Read"/> (CA2022).
+    ''' </summary>
+    <Extension>
+    Public Function ReadFully(stream As Stream, buffer As Byte(), offset As Integer, count As Integer) As Integer
+        Dim total As Integer = 0
+
+        While total < count
+            Dim read As Integer = stream.Read(buffer, offset + total, count - total)
+
+            If read = 0 Then
+                Exit While
+            End If
+
+            total += read
+        End While
+
+        Return total
+    End Function
 End Module

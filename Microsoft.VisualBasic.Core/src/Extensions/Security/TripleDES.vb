@@ -62,7 +62,7 @@ Namespace SecurityString
 
     Public Class TripleDES : Inherits SecurityString.SecurityStringModel
 
-        Private ReadOnly _des As TripleDES = TripleDES.Create()
+        Private ReadOnly _des As Global.System.Security.Cryptography.TripleDES = Global.System.Security.Cryptography.TripleDES.Create()
         Private ReadOnly _uni As New UnicodeEncoding
         Private ReadOnly _key() As Byte
         Private ReadOnly _iv() As Byte

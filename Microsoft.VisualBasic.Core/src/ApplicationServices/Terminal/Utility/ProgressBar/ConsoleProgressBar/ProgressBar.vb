@@ -82,6 +82,7 @@ Namespace ApplicationServices.Terminal.ProgressBar.ConsoleProgressBar
     ''' <summary>
     ''' A ProgressBar for Console
     ''' </summary>
+    <SupportedOSPlatform("windows")>
     Public Class ProgressBar : Implements IDisposable
 
         ''' <summary>
