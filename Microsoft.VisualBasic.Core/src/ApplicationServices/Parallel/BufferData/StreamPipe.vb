@@ -82,7 +82,7 @@ Namespace Parallel
                     chunk = New Byte(delta - 1) {}
                 End If
 
-                buf.Read(chunk, Scan0, chunk.Length)
+                buf.ReadFully(chunk, Scan0, chunk.Length)
 
                 Yield chunk
             Loop

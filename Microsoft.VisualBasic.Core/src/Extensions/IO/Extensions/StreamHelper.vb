@@ -109,11 +109,11 @@ Public Module StreamHelper
 
             If dl > chunkSize Then
                 ' buffer之中还存在充足的数据进行复制
-                Call buffer.Read(chunk, Scan0, chunkSize)
+                Call buffer.ReadFully(chunk, Scan0, chunkSize)
             Else
                 ' 数据不足了
                 chunk = New Byte(dl - 1) {}
-                buffer.Read(chunk, Scan0, dl)
+                buffer.ReadFully(chunk, Scan0, dl)
             End If
 
             Yield chunk

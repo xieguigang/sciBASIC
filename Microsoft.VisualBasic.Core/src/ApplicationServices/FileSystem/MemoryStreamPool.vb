@@ -168,9 +168,9 @@ Namespace ApplicationServices
                 Dim smallBuf As Byte() = New Byte(delta - 1) {}
                 Dim buf2 As Byte() = New Byte(count - delta - 1) {}
 
-                Call current.Read(smallBuf, Scan0, smallBuf.Length)
+                Call current.ReadFully(smallBuf, Scan0, smallBuf.Length)
                 Call Seek(buffer_size * (block + 1), SeekOrigin.Begin)
-                Call Read(buf2, Scan0, buf2.Length)
+                Call ReadFully(buf2, Scan0, buf2.Length)
 
                 Call Array.ConstrainedCopy(smallBuf, Scan0, buffer, Scan0, smallBuf.Length)
                 Call Array.ConstrainedCopy(buf2, Scan0, buffer, smallBuf.Length, buf2.Length)
@@ -214,13 +214,13 @@ Namespace ApplicationServices
 
             If file.Length < buffer_size Then
                 buffer = New Byte(file.Length - 1) {}
-                file.Read(buffer, Scan0, file.Length)
+                file.ReadFully(buffer, Scan0, file.Length)
                 pool.Add(New MemoryStream(buffer))
             Else
                 Dim size As Integer = buffer_size
 
                 Do While file.Position < file.Length - 1
-                    Call file.Read(buffer, Scan0, count:=size)
+                    Call file.ReadFully(buffer, Scan0, count:=size)
                     Call pool.Add(New MemoryStream(buffer))
 
                     If file.Length - file.Position < buffer_size Then
