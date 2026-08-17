@@ -56,6 +56,8 @@
 Imports System.IO
 Imports System.IO.Compression
 Imports System.Net
+Imports System.Net.Http
+Imports System.Net.Http.Headers
 Imports System.Runtime.CompilerServices
 Imports System.Text
 Imports Microsoft.VisualBasic.Language
@@ -234,62 +236,49 @@ Re0:
     ''' <param name="webrequest"></param>
     ''' <returns></returns>
     <Extension>
-    Public Function UrlGet(webrequest As HttpWebRequest, echo As Boolean) As WebResponseResult
+    Public Function UrlGet(webrequest As HttpRequestMessage, echo As Boolean) As WebResponseResult
         Dim timer As Stopwatch = Stopwatch.StartNew
         Dim url As String = webrequest.RequestUri.ToString
         Dim html As String
 
-        Using response As HttpWebResponse = webrequest.GetResponse
-            ' 检查内容编码是否为gzip
-            If response.ContentEncoding.ToLower().Contains("gzip") Then
-                ' 使用GZipStream解压缩响应流
-                Using gzipStream As New GZipStream(response.GetResponseStream(), CompressionMode.Decompress)
-                    ' 读取解压缩后的流
-                    Using reader As New StreamReader(gzipStream, Encoding.UTF8)
-                        ' 返回响应内容
-                        html = reader.ReadToEnd()
-                    End Using
-                End Using
-            Else
-                ' 如果不是gzip压缩，直接读取响应流
-                Using reader As New StreamReader(response.GetResponseStream(), Encoding.UTF8)
-                    ' 返回响应内容
-                    html = reader.ReadToEnd()
-                End Using
-            End If
+        ' gzip / deflate automatic decompression is handled by HttpClientFactory
+        Dim response As HttpResponseMessage = HttpClientFactory.SendSync(webrequest)
 
-            Dim timespan As Long = timer.ElapsedMilliseconds
-            Dim headers As New ResponseHeaders(response.Headers)
+        Using reader As New StreamReader(response.Content.ReadAsStreamAsync().GetAwaiter().GetResult(), Encoding.UTF8)
+            html = reader.ReadToEnd()
+        End Using
 
-            ' 判断是否是由于还没有登陆校园网客户端而导致的错误
-            If InStr(html, "http://www.doctorcom.com", CompareMethod.Text) > 0 Then
-                Call doctorcomError.PrintException
+        Dim timespan As Long = timer.ElapsedMilliseconds
+        Dim headers As New ResponseHeaders(response)
 
-                Return New WebResponseResult With {
-                    .url = url,
-                    .html = ""
-                }
-            ElseIf echo Then
-                Dim title As String = html.HTMLTitle
-                Dim time$ = StringFormats.ReadableElapsedTime(timespan)
-                Dim debug$ = $"[{url}] {title} - {Len(html)} chars in {time}"
+        ' 判断是否是由于还没有登陆校园网客户端而导致的错误
+        If InStr(html, "http://www.doctorcom.com", CompareMethod.Text) > 0 Then
+            Call doctorcomError.PrintException
 
-                If timespan > 1000 Then
-                    Call debug.Warning
-                Else
-                    Call debug.info
-                End If
-            End If
-
-#If DEBUG Then
-            Call html.SaveTo($"{App.AppSystemTemp}/{App.PID}/{url.NormalizePathString}.html")
-#End If
             Return New WebResponseResult With {
                 .url = url,
-                .timespan = timespan,
-                .html = html,
-                .headers = headers
+                .html = ""
             }
-        End Using
+        ElseIf echo Then
+            Dim title As String = html.HTMLTitle
+            Dim time$ = StringFormats.ReadableElapsedTime(timespan)
+            Dim debug$ = $"[{url}] {title} - {Len(html)} chars in {time}"
+
+            If timespan > 1000 Then
+                Call debug.Warning
+            Else
+                Call debug.info
+            End If
+        End If
+
+#If DEBUG Then
+        Call html.SaveTo($"{App.AppSystemTemp}/{App.PID}/{url.NormalizePathString}.html")
+#End If
+        Return New WebResponseResult With {
+            .url = url,
+            .timespan = timespan,
+            .html = html,
+            .headers = headers
+        }
     End Function
 End Module

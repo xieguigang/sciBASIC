@@ -552,24 +552,6 @@ Public Module WebServiceUtils
     ''' <summary>
     ''' A wrapper web client for set a longer operation timeout
     ''' </summary>
-    Private Class WebClient : Inherits System.Net.WebClient
-
-        Public ReadOnly Property timeout As Integer
-
-        Sub New(timeout As Integer)
-            Call MyBase.New
-            Me.timeout = timeout
-        End Sub
-
-        Protected Overrides Function GetWebRequest(address As Uri) As WebRequest
-            Dim request As HttpWebRequest = MyBase.GetWebRequest(address)
-            request.Timeout = timeout
-            request.ReadWriteTimeout = timeout
-            Return request
-        End Function
-
-    End Class
-
     <Extension>
     Public Function PostMultipartForm(url$, data As Dictionary(Of String, String)) As WebResponseResult
         Dim form As New MultipartForm
@@ -813,24 +795,6 @@ Public Module WebServiceUtils
         End Using
     End Function
 
-    <Extension>
-    Public Sub SetProxy(ByRef request As HttpWebRequest, proxy As String)
-        request.Proxy = proxy.GetProxy
-    End Sub
-
-    <Extension>
-    Public Sub SetProxy(ByRef request As System.Net.WebClient, proxy As String)
-        request.Proxy = proxy.GetProxy
-    End Sub
-
-    <Extension>
-    Public Function GetProxy(proxy As String) As WebProxy
-        Return New WebProxy With {
-            .Address = New Uri(proxy),
-            .Credentials = New NetworkCredential()
-        }
-    End Function
-
     ''' <summary>
     ''' 设置默认的http请求的user-agent，默认为Google Chrome的UA字符串
     ''' </summary>
@@ -859,27 +823,51 @@ Public Module WebServiceUtils
                                  Optional trace$ = Nothing) As Boolean
 RE0:
         Try
-            Using browser As New WebClient(timeout)
-                If Not String.IsNullOrEmpty(proxy) Then
-                    Call browser.SetProxy(proxy)
-                End If
-                If Not refer.StringEmpty Then
-                    browser.Headers.Add(NameOf(refer), refer)
-                End If
-                If Not progressHandle Is Nothing Then
-                    AddHandler browser.DownloadProgressChanged, progressHandle
-                End If
+            If Not String.IsNullOrEmpty(proxy) Then
+                Call HttpClientFactory.SetProxy(proxy)
+            End If
 
-                strUrl = NetFile.MapGithubRawUrl(strUrl)
+            strUrl = NetFile.MapGithubRawUrl(strUrl)
 
-                Call browser.Headers.Add(UserAgent.UAheader, ua Or DefaultUA)
+            If Not silent Then
+                Call $"{strUrl} --> {save}".debug
+            End If
 
-                If Not silent Then
-                    Call $"{strUrl} --> {save}".debug
-                End If
+            Call save.ParentPath.MakeDir
 
-                Call save.ParentPath.MakeDir
-                Call browser.DownloadFile(strUrl, save)
+            Dim request As New HttpRequestMessage(HttpMethod.Get, strUrl)
+            If Not refer.StringEmpty Then
+                request.Headers.TryAddWithoutValidation(NameOf(refer), refer)
+            End If
+            request.Headers.TryAddWithoutValidation(UserAgent.UAheader, ua Or DefaultUA)
+
+            Using response As HttpResponseMessage = HttpClientFactory _
+                  .Client _
+                  .GetAsync(request, HttpCompletionOption.ResponseHeadersRead) _
+                  .GetAwaiter() _
+                  .GetResult()
+
+                response.EnsureSuccessStatusCode()
+
+                Dim total As Long = response.Content.Headers.ContentLength.GetValueOrDefault(-1)
+
+                Using netStream As Stream = response.Content.ReadAsStreamAsync().GetAwaiter().GetResult()
+                    Using fileStream As FileStream = File.OpenWrite(save)
+                        Dim buffer(8191) As Byte
+                        Dim received As Long = 0
+                        Dim read As Integer
+
+                        Do While (read = netStream.Read(buffer, 0, buffer.Length)) > 0
+                            Call fileStream.Write(buffer, 0, read)
+                            received += read
+
+                            If Not progressHandle Is Nothing AndAlso total > 0 Then
+                                Dim args As New DownloadProgressChangedEventArgs(received, total, Nothing)
+                                Call progressHandle(Nothing, args)
+                            End If
+                        Loop
+                    End Using
+                End Using
             End Using
 
             Return True
