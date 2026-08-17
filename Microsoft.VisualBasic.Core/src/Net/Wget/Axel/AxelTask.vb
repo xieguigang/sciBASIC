@@ -60,9 +60,11 @@ Imports System.Net.Http
 Imports System.Threading
 Imports Microsoft.VisualBasic.ComponentModel.Ranges.Unit
 Imports std = System.Math
+Imports System.Runtime.Versioning
 
 Namespace Net.WebClient
 
+    <SupportedOSPlatform("windows")>
     Friend Class AxelTask
 
         ReadOnly url As String

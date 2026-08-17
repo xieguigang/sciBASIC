@@ -64,6 +64,7 @@
 Imports Microsoft.VisualBasic.ApplicationServices.Terminal.LineEdit
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.UnixBash
+Imports System.Runtime.Versioning
 
 Namespace ApplicationServices.Terminal
 
@@ -77,6 +78,7 @@ Namespace ApplicationServices.Terminal
     ''' <summary>
     ''' Shell model for console.
     ''' </summary>
+    <SupportedOSPlatform("windows")>
     Public Class Shell
 
         Public Property ps1 As PS1

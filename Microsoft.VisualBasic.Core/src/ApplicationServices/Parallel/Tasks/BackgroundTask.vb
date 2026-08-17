@@ -110,9 +110,11 @@ Namespace Parallel.Tasks
         ''' 取消当前的任务的执行，在线程内部产生的异常可以在<see cref="ExecuteException"/>获取得到
         ''' </summary>
         Public Sub Abort()
-#Disable Warning
-            Call _taskThread.Abort()
-#Enable Warning
+            Try
+                Call _taskThread.Interrupt()
+            Catch ex As Exception
+
+            End Try
 
             TaskComplete = False
             _RunningTask = False

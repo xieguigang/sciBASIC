@@ -185,10 +185,14 @@ Namespace ApplicationServices.Terminal.Utility
 
         Private Sub detectKeyEvent()
             Do While App.Running AndAlso Not disposedValue
-                Dim key As ConsoleKeyInfo = Console.ReadKey()
+                If Console.KeyAvailable Then
+                    Dim key As ConsoleKeyInfo = Console.ReadKey(True)
 
-                If key.Modifiers = ConsoleModifiers.Control AndAlso key.Key = ConsoleKey.S Then
-                    Call userAction()
+                    If key.Modifiers = ConsoleModifiers.Control AndAlso key.Key = ConsoleKey.S Then
+                        Call userAction()
+                    End If
+                Else
+                    Call Thread.Sleep(50)
                 End If
             Loop
         End Sub
@@ -197,11 +201,6 @@ Namespace ApplicationServices.Terminal.Utility
             If Not disposedValue Then
                 If disposing Then
                     ' TODO: 释放托管状态(托管对象)
-                    Try
-                        Call workerThread.Abort()
-                    Catch ex As Exception
-
-                    End Try
                 End If
 
                 ' TODO: 释放未托管的资源(未托管的对象)并替代终结器

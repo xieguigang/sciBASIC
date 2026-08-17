@@ -1124,7 +1124,7 @@ mismatch:
 
             Try
                 ' Interrupt the editor
-                Call edit_thread.Abort()
+                Call edit_thread.Interrupt()
             Catch ex As Exception
 
             End Try

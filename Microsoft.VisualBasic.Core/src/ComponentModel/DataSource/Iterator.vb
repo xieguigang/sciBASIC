@@ -165,7 +165,11 @@ Namespace ComponentModel.DataSourceModel
         Public Sub Reset() Implements IEnumerator.Reset
             If Not _forEach Is Nothing Then
                 ' 终止这条线程然后再新建
-                Call _forEach.Abort()
+                Try
+                    Call _forEach.Interrupt()
+                Catch ex As Exception
+
+                End Try
             End If
 
             _Current = Nothing
@@ -210,7 +214,11 @@ Namespace ComponentModel.DataSourceModel
             If Not Me.disposedValue Then
                 If disposing Then
                     ' TODO: dispose managed state (managed objects).
-                    Call _forEach.Abort()
+                    Try
+                        Call _forEach.Interrupt()
+                    Catch ex As Exception
+
+                    End Try
                     Call _forEach.Free
                 End If
 

@@ -62,9 +62,11 @@ Imports System.IO
 Imports System.Text
 Imports Microsoft.VisualBasic.ComponentModel
 Imports Microsoft.VisualBasic.Text
+Imports System.Runtime.Versioning
 
 Namespace ApplicationServices.Terminal
 
+    <SupportedOSPlatform("windows")>
     Public Class InteractiveDevice : Inherits Terminal
         Implements IDisposable
         Implements ISaveHandle
