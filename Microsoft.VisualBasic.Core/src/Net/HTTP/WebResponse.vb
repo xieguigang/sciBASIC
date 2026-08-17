@@ -62,6 +62,7 @@
 #End Region
 
 Imports System.Net
+Imports System.Net.Http
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Net.Protocols.ContentTypes
 
@@ -107,19 +108,38 @@ Namespace Net.Http
         Dim code As HTTP_RFC = HTTP_RFC.RFC_OK
 
         Sub New(raw As WebHeaderCollection)
-            Dim header As HttpHeaderName
-
             For Each key As String In raw.AllKeys
-                header = ParseHeaderName(key)
-
-                If header = HttpHeaderName.Unknown Then
-                    customHeaders(key) = raw.Get(key)
-                Else
-                    headers(header) = raw.Get(key)
-                End If
-
-                stringIndex(key.ToLower) = raw.Get(key)
+                Call AddHeader(key, raw.Get(key))
             Next
+        End Sub
+
+        <MethodImpl(MethodImplOptions.AggressiveInlining)>
+        Public Sub New(msg As HttpResponseMessage)
+            For Each h In msg.Headers
+                For Each v As String In h.Value
+                    Call AddHeader(h.Key, v)
+                Next
+            Next
+
+            If Not msg.Content Is Nothing Then
+                For Each h In msg.Content.Headers
+                    For Each v As String In h.Value
+                        Call AddHeader(h.Key, v)
+                    Next
+                Next
+            End If
+        End Sub
+
+        Private Sub AddHeader(key As String, value As String)
+            Dim header As HttpHeaderName = ParseHeaderName(key)
+
+            If header = HttpHeaderName.Unknown Then
+                customHeaders(key) = value
+            Else
+                headers(header) = value
+            End If
+
+            stringIndex(key.ToLower) = value
         End Sub
 
         Private Sub New()

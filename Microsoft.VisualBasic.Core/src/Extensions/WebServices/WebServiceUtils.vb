@@ -73,6 +73,8 @@
 Imports System.Collections.Specialized
 Imports System.IO
 Imports System.Net
+Imports System.Net.Http
+Imports System.Net.Http.Headers
 Imports System.Net.NetworkInformation
 Imports System.Net.Security
 Imports System.Net.Sockets
@@ -453,15 +455,9 @@ Public Module WebServiceUtils
     End Function
 
     Sub New()
-        ServicePointManager.ServerCertificateValidationCallback = New RemoteCertificateValidationCallback(AddressOf CheckValidationResult)
+        ' SSL certificate validation is now handled by the shared
+        ' HttpClient (see Net.Http.HttpClientFactory).
     End Sub
-
-    Private Function CheckValidationResult(sender As Object,
-                                           certificate As X509Certificate,
-                                           chain As X509Chain,
-                                           errors As SslPolicyErrors) As Boolean
-        Return True
-    End Function
 
     ''' <summary>
     ''' Example for xx-net tool:
@@ -498,27 +494,20 @@ Public Module WebServiceUtils
                                   Optional userAgent As String = Nothing,
                                   Optional headers As Dictionary(Of String, String) = Nothing) As Stream
 
-        Dim request As HttpWebRequest
+        Dim request As New HttpRequestMessage(HttpMethod.Get, url)
 
-        If https Then
-            request = WebRequest.CreateDefault(New Uri(url))
-        Else
-            request = DirectCast(WebRequest.Create(url), HttpWebRequest)
+        If Not String.IsNullOrEmpty(userAgent) Then
+            request.Headers.Add("User-Agent", userAgent Or DefaultUA)
         End If
-
-        request.Method = "GET"
-        request.KeepAlive = False
-        request.ServicePoint.Expect100Continue = False
-        request.UserAgent = userAgent Or DefaultUA
 
         If Not headers.IsNullOrEmpty Then
             For Each x As KeyValuePair(Of String, String) In headers
-                request.Headers(x.Key) = x.Value
+                request.Headers.TryAddWithoutValidation(x.Key, x.Value)
             Next
         End If
 
-        Dim response As HttpWebResponse = DirectCast(request.GetResponse, HttpWebResponse)
-        Dim s As Stream = response.GetResponseStream()
+        Dim response As HttpResponseMessage = HttpClientFactory.SendSync(request)
+        Dim s As Stream = response.Content.ReadAsStreamAsync().GetAwaiter().GetResult()
 
         Return s
     End Function
@@ -622,77 +611,72 @@ Public Module WebServiceUtils
                       End Function
         }
 
-        Using request As New WebClient(timeout)
-            Call request.Headers.Add("User-Agent", UserAgent.GoogleChrome)
-            Call request.Headers.Add(NameOf(Referer), Referer)
+        If String.IsNullOrEmpty(proxy) Then
+            proxy = WebServiceUtils.Proxy
+        End If
+        If Not String.IsNullOrEmpty(proxy) Then
+            Call HttpClientFactory.SetProxy(proxy)
+        End If
 
-            For Each header In headers.SafeQuery
-                If Not request.Headers.ContainsKey(header.Key) Then
-                    request.Headers.Add(header.Key, header.Value)
-                End If
+        Call VBDebugger.EchoLine($"[POST] {url}....")
+
+        Dim timer As Stopwatch = Stopwatch.StartNew
+        Dim response As HttpResponseMessage = Nothing
+        Dim str$
+        Dim err As Exception = Nothing
+        Dim form As New FormUrlEncodedContent(
+            (params Or emptyBody).AllKeys _
+                .Select(Function(k) New KeyValuePair(Of String, String)(k, (params Or emptyBody)(k))))
+
+        Dim request As New HttpRequestMessage(HttpMethod.Post, url) With {
+            .Content = form
+        }
+        request.Headers.Add("User-Agent", UserAgent.GoogleChrome)
+        request.Headers.Add(NameOf(Referer), Referer)
+
+        For Each header In headers.SafeQuery
+            If Not request.Headers.Contains(header.Key) Then
+                request.Headers.TryAddWithoutValidation(header.Key, header.Value)
+            End If
+        Next
+
+        If strict Then
+            response = HttpClientFactory.SendSync(request)
+        Else
+            For i As Integer = 0 To retry
+                Try
+                    response = HttpClientFactory.SendSync(request)
+                    Exit For
+                Catch ex As Exception
+                    err = ex
+                    Call App.LogException(ex)
+                End Try
             Next
+        End If
 
-            If String.IsNullOrEmpty(proxy) Then
-                proxy = WebServiceUtils.Proxy
-            End If
-            If Not String.IsNullOrEmpty(proxy) Then
-                Call request.SetProxy(proxy)
-            End If
-
-            Call VBDebugger.EchoLine($"[POST] {url}....")
-
-            Dim timer As Stopwatch = Stopwatch.StartNew
-            Dim response As Byte() = Nothing
-            Dim str$
-            Dim err As Exception = Nothing
-
-            If strict Then
-                response = request.UploadValues(url, "POST", params Or emptyBody)
-            Else
-                For i As Integer = 0 To retry
-                    Try
-                        response = request.UploadValues(url, "POST", params Or emptyBody)
-                        Exit For
-                    Catch ex As Exception
-                        err = ex
-                        Call App.LogException(ex)
-                    End Try
-                Next
-            End If
-
-            If response Is Nothing Then
-                If Not TypeOf err Is WebException Then
-                    Return New WebResponseResult With {
-                        .headers = ResponseHeaders.HttpRequestError(err.Message.Match("\d+").DoCall(AddressOf Integer.Parse)),
-                        .html = err.Message,
-                        .timespan = 0,
-                        .url = url
-                    }
-                Else
-                    Dim webEx As WebException = err
-                    Dim s = webEx.Response.GetResponseStream
-                    Dim error_s As String = readStreamText(s)
-
-                    str = error_s
-                End If
-            Else
-                str = contentEncoding _
-                    .CodePage _
-                    .GetString(response)
-
-                Call VBDebugger.EchoLine($"[GET] {response.Length} bytes...")
-            End If
-
-            Dim rtvlHeaders As New ResponseHeaders(request.ResponseHeaders)
-            Dim result As New WebResponseResult With {
-                .url = url,
-                .html = str,
-                .timespan = timer.ElapsedMilliseconds,
-                .headers = rtvlHeaders
+        If response Is Nothing Then
+            Return New WebResponseResult With {
+                .headers = ResponseHeaders.HttpRequestError(err.Message.Match("\d+").DoCall(AddressOf Integer.Parse)),
+                .html = err.Message,
+                .timespan = 0,
+                .url = url
             }
+        End If
 
-            Return result
-        End Using
+        Dim data As Byte() = response.Content.ReadAsByteArrayAsync().GetAwaiter().GetResult()
+        str = contentEncoding.CodePage.GetString(data)
+
+        Call VBDebugger.EchoLine($"[GET] {data.Length} bytes...")
+
+        Dim rtvlHeaders As New ResponseHeaders(response)
+        Dim result As New WebResponseResult With {
+            .url = url,
+            .html = str,
+            .timespan = timer.ElapsedMilliseconds,
+            .headers = rtvlHeaders
+        }
+
+        Return result
     End Function
 
     ''' <summary>
@@ -709,38 +693,29 @@ Public Module WebServiceUtils
                              Optional timeout As Integer = 30 * 60 * 1000,
                              Optional verbose As Boolean = True) As String
 
-        Dim request As HttpWebRequest = DirectCast(WebRequest.Create(url), HttpWebRequest)
-
-        request.Method = "POST"
-        request.Accept = "application/json"
-        request.ContentLength = buffer.Length
-        request.ContentType = "multipart/form-data; boundary=------WebKitFormBoundaryBpijhG6dKsQpCMdN--;"
-        request.UserAgent = UserAgent.GoogleChrome
-        request.Referer = referer
-        request.Timeout = timeout
-
         If Not String.IsNullOrEmpty(Proxy) Then
-            Call request.SetProxy(Proxy)
+            Call HttpClientFactory.SetProxy(Proxy)
         End If
 
         If verbose Then
             Call VBDebugger.EchoLine($"[POST@{DateTime.UtcNow.ToString}] {url}....")
         End If
 
-        ' post data Is sent as a stream
-        With request.GetRequestStream()
-            ' Dim buffer = File.ReadBinary
+        Dim request As New HttpRequestMessage(HttpMethod.Post, url)
+        request.Headers.Add("Accept", "application/json")
+        request.Headers.Add("User-Agent", UserAgent.GoogleChrome)
 
-            ' Call New StreamWriter(.ByRef).Write(vbCrLf)
-            ' Call .Flush()
-            Call .Write(buffer, Scan0, buffer.Length)
-            Call .Flush()
-        End With
+        If Not String.IsNullOrEmpty(referer) Then
+            request.Headers.Add(NameOf(Referer), referer)
+        End If
 
-        ' returned values are returned as a stream, then read into a string
-        Dim response = DirectCast(request.GetResponse(), HttpWebResponse)
+        Dim content As New ByteArrayContent(buffer)
+        content.Headers.ContentType = New Headers.MediaTypeHeaderValue("multipart/form-data; boundary=------WebKitFormBoundaryBpijhG6dKsQpCMdN--;")
+        request.Content = content
 
-        Using responseStream As New StreamReader(response.GetResponseStream())
+        Dim response As HttpResponseMessage = HttpClientFactory.SendSync(request)
+
+        Using responseStream As New StreamReader(response.Content.ReadAsStreamAsync().GetAwaiter().GetResult())
             Dim html As New StringBuilder
             Dim s As New Value(Of String)
 
@@ -779,36 +754,32 @@ Public Module WebServiceUtils
         Next
 
         Dim postData As String = postString.JoinBy("&")
-        Dim request As HttpWebRequest = DirectCast(WebRequest.Create(url), HttpWebRequest)
-
-        request.Method = "POST"
-        request.Accept = "application/json"
-        request.ContentLength = postData.Length
-        request.ContentType = "application/x-www-form-urlencoded; charset=utf-8"
-        request.UserAgent = ua
-        request.Referer = Referer
 
         If Not String.IsNullOrEmpty(proxy) Then
-            Call request.SetProxy(proxy)
+            Call HttpClientFactory.SetProxy(proxy)
         End If
 
-        Call $"[POST] {url}....".debug
+        Dim request As New HttpRequestMessage(HttpMethod.Post, url)
+        request.Headers.Add("Accept", "application/json")
+        request.Headers.Add("User-Agent", ua)
 
-        ' post data Is sent as a stream
-        Using sender As New StreamWriter(request.GetRequestStream())
-            sender.Write(postData)
-        End Using
+        If Not String.IsNullOrEmpty(Referer) Then
+            request.Headers.Add(NameOf(Referer), Referer)
+        End If
+
+        Dim content As New ByteArrayContent(Encoding.UTF8.GetBytes(postData))
+        content.Headers.ContentType = New MediaTypeHeaderValue("application/x-www-form-urlencoded; charset=utf-8")
+        request.Content = content
+
+        Call $"[POST] {url}....".debug
 
         Dim page_stream As Stream = Nothing
         Dim err As Exception = Nothing
 
         Try
             ' returned values are returned as a stream, then read into a string
-            Dim response = DirectCast(request.GetResponse(), HttpWebResponse)
-            page_stream = response.GetResponseStream
-        Catch ex As Exception When TypeOf ex Is WebException
-            err = ex
-            page_stream = DirectCast(ex, WebException).Response.GetResponseStream
+            Dim response As HttpResponseMessage = HttpClientFactory.SendSync(request)
+            page_stream = response.Content.ReadAsStreamAsync().GetAwaiter().GetResult()
         Catch ex As Exception
             err = ex
         End Try

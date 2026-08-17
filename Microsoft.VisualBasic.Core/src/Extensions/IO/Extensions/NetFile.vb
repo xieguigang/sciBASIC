@@ -54,9 +54,10 @@
 #End Region
 
 Imports System.IO
-Imports System.Net
+Imports System.Net.Http
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.CommandLine.Reflection
+Imports Microsoft.VisualBasic.Net.Http
 Imports Microsoft.VisualBasic.Scripting.MetaData
 Imports Microsoft.VisualBasic.Text
 
@@ -92,9 +93,7 @@ Namespace FileIO
                 Dim file As New FileStream(path, FileMode.Open)
                 stream = file
             Else ' 网络文件
-                Dim WebRequest As HttpWebRequest = HttpWebRequest.Create(url)
-                Dim WebResponse As WebResponse = WebRequest.GetResponse
-                stream = WebResponse.GetResponseStream
+                stream = HttpClientFactory.GetStreamSync(url)
             End If
 
             Dim out As New StreamReader(stream, encoding.CodePage)
