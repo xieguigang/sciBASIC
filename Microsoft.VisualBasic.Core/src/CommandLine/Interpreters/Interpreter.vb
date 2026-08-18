@@ -471,19 +471,19 @@ Namespace CommandLine
         ''' 导出所有符合条件的静态方法
         ''' </summary>
         ''' <param name="Type"></param>
-        ''' <param name="[Throw]"></param>
+        ''' <param name="throw"></param>
         ''' <returns></returns>
-        Protected Overridable Function __getsAllCommands(Type As Type, Optional [Throw] As Boolean = True) As List(Of EntryPoints.APIEntryPoint)
-            Return GetAllCommands(Type, [Throw])
+        Protected Overridable Function __getsAllCommands(Type As Type, Optional [throw] As Boolean = True) As List(Of EntryPoints.APIEntryPoint)
+            Return GetAllCommands(Type, [throw])
         End Function
 
         ''' <summary>
         ''' 导出所有符合条件的静态方法，请注意，在这里已经将外部的属性标记和所属的函数的入口点进行连接了
         ''' </summary>
         ''' <param name="type"></param>
-        ''' <param name="[Throw]"></param>
+        ''' <param name="throw"></param>
         ''' <returns></returns>
-        Public Shared Function GetAllCommands(type As Type, Optional [Throw] As Boolean = True) As List(Of EntryPoints.APIEntryPoint)
+        Public Shared Function GetAllCommands(type As Type, Optional [throw] As Boolean = True) As List(Of EntryPoints.APIEntryPoint)
             If type Is Nothing Then
                 Return New List(Of APIEntryPoint)
             End If
@@ -495,7 +495,7 @@ Namespace CommandLine
                 From methodInfo As MethodInfo
                 In methods
                 Let commandInfo As APIEntryPoint =
-                    getAPI(methodInfo, commandAttribute, [Throw])
+                    getAPI(methodInfo, commandAttribute, [throw])
                 Where Not commandInfo Is Nothing
                 Select commandInfo
                 Order By commandInfo.Name Ascending

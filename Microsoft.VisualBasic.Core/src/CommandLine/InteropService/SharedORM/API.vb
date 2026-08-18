@@ -75,7 +75,7 @@ Namespace CommandLine.InteropService.SharedORM
         ' Usage:= /command1 /param1 <value1, means a string value?> /param2 <value2> [/boolean1 /boolean2 /opt <blabla, default=value233>]
 
         ''' <summary>
-        ''' 从<see cref="ExportAPIAttribute.Usage"/>之中解析出命令行的模型
+        ''' 从<see cref="ExportApiModel.Usage"/>之中解析出命令行的模型
         ''' </summary>
         ''' <param name="usage$">
         ''' + 由于习惯于在命令行的usage说明之中使用``&lt;>``括号对来包裹参数值，所以usage字符串数据还不能直接使用普通的命令行函数进行解析
