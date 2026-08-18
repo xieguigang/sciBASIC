@@ -152,8 +152,8 @@ Namespace CommandLine.Reflection.EntryPoints
         ''' <param name="attribute"></param>
         ''' <param name="Invoke"></param>
         ''' <remarks></remarks>
-        Public Sub New(attribute As ExportAPIAttribute, [Invoke] As MethodInfo, Optional [Throw] As Boolean = True)
-            _metaData = New Binding(Of ExportAPIAttribute, MethodInfo) With {
+        Public Sub New(attribute As ExportApiModel, [Invoke] As MethodInfo, Optional [Throw] As Boolean = True)
+            _metaData = New Binding(Of ExportApiModel, MethodInfo) With {
                 .Bind = attribute,
                 .Target = Invoke
             }

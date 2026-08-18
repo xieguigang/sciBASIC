@@ -57,21 +57,9 @@
 
 Namespace CommandLine.Reflection
 
-    ''' <summary>
-    ''' A command object that with a specific name.
-    ''' </summary>
-    ''' <remarks>(一个具有特定名称命令执行对象)</remarks>
-    <AttributeUsage(AttributeTargets.Method, AllowMultiple:=False, Inherited:=True)>
-    Public Class ExportAPIAttribute : Inherits Attribute
-        Implements IExportAPI
+    Public Class ExportApiModel : Implements IExportAPI
 
-        ''' <summary>
-        ''' The name of the commandline object.
-        ''' </summary>
-        ''' <value></value>
-        ''' <returns></returns>
-        ''' <remarks>(这个命令的名称)</remarks>
-        Public ReadOnly Property Name As String Implements IExportAPI.Name
+        Public Property Name As String Implements IExportAPI.Name
 
         ''' <summary>
         ''' Something detail of help information.
@@ -79,14 +67,14 @@ Namespace CommandLine.Reflection
         ''' <value></value>
         ''' <returns></returns>
         ''' <remarks>(详细的帮助信息)</remarks>
-        <Obsolete> Public Property Info As String Implements IExportAPI.Info
+        Public Property Info As String Implements IExportAPI.Info
         ''' <summary>
         ''' The usage of this command.
         ''' </summary>
         ''' <value></value>
         ''' <returns></returns>
         ''' <remarks>(这个命令的用法，本属性仅仅是一个助记符，当用户没有编写任何的使用方法信息的时候才会使用本属性的值)</remarks>
-        <Obsolete> Public Property Usage As String Implements IExportAPI.Usage
+        Public Property Usage As String Implements IExportAPI.Usage
         ''' <summary>
         ''' A example that to useing this command.
         ''' </summary>
@@ -94,7 +82,31 @@ Namespace CommandLine.Reflection
         ''' <returns></returns>
         ''' <remarks>(对这个命令的使用示例，本属性仅仅是一个助记符，当用户没有编写任何示例信息的时候才会使用本属性的值，
         ''' 在编写帮助示例的时候，需要编写出包括命令开关名称的完整的例子)</remarks>
-        <Obsolete> Public Property Example As String Implements IExportAPI.Example
+        Public Property Example As String Implements IExportAPI.Example
+
+        Sub New()
+        End Sub
+
+        Sub New(attr As ExportAPIAttribute)
+            Name = attr.Name
+        End Sub
+
+    End Class
+
+    ''' <summary>
+    ''' A command object that with a specific name.
+    ''' </summary>
+    ''' <remarks>(一个具有特定名称命令执行对象)</remarks>
+    <AttributeUsage(AttributeTargets.Method, AllowMultiple:=False, Inherited:=True)>
+    Public Class ExportAPIAttribute : Inherits Attribute
+
+        ''' <summary>
+        ''' The name of the commandline object.
+        ''' </summary>
+        ''' <value></value>
+        ''' <returns></returns>
+        ''' <remarks>(这个命令的名称)</remarks>
+        Public ReadOnly Property Name As String
 
         ''' <summary>
         ''' You are going to define a available export api 

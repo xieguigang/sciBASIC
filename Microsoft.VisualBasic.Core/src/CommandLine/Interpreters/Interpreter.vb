@@ -541,27 +541,20 @@ Namespace CommandLine
         ''' </summary>
         ''' <returns></returns>
         Private Shared Function doLoadApiInternal(cmdAttr As ExportAPIAttribute, methodInfo As MethodInfo, [throw] As Boolean) As APIEntryPoint
-            Dim commandInfo As New APIEntryPoint(cmdAttr, methodInfo, [throw])
+            Dim cmdModel As New ExportApiModel(cmdAttr)
+            Dim commandInfo As New APIEntryPoint(cmdModel, methodInfo, [throw])
 
-#Disable Warning
-            If cmdAttr.Info.StringEmpty Then
-                ' 帮助信息的获取兼容系统的Description方法
-                cmdAttr.Info = methodInfo.Description([default]:="")
-            End If
-            If cmdAttr.Usage.StringEmpty Then
-                ' 20240417
-                '
-                ' trim multiple line of the commandline usage text
-                ' into one line. this is convient for copy to terminal 
-                ' and modify value to use.
-                cmdAttr.Usage = methodInfo.Usage _
-                    .TrimNewLine _
-                    .StringReplace("\s{2,}", " ")
-            End If
-            If cmdAttr.Example.StringEmpty Then
-                cmdAttr.Example = methodInfo.ExampleInfo
-            End If
-#Enable Warning
+            ' 帮助信息的获取兼容系统的Description方法
+            cmdModel.Info = methodInfo.Description([default]:="")
+            ' 20240417
+            '
+            ' trim multiple line of the commandline usage text
+            ' into one line. this is convient for copy to terminal 
+            ' and modify value to use.
+            cmdModel.Usage = methodInfo.Usage _
+                .TrimNewLine _
+                .StringReplace("\s{2,}", " ")
+            cmdModel.Example = methodInfo.ExampleInfo
 
             Return commandInfo
         End Function
