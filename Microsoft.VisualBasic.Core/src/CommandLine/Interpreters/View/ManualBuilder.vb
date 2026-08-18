@@ -77,7 +77,7 @@ Namespace CommandLine.ManView
         <Extension> Public Function PrintHelp(api As APIEntryPoint) As Integer
             ' 因为在编写帮助信息的时候可能会有多行字符串，则在vb源代码里面会出现前导的空格，
             ' 所以在这里需要将每一行的前导空格删除掉， 否则会破坏掉输出的文本对齐格式。
-            Dim infoLines = api.Info _
+            Dim infoLines As String() = api.Info _
                 .LineTokens _
                 .Select(Function(s) s.Trim(" "c, ASCII.TAB)) _
                 .JoinBy(vbCrLf) _
@@ -104,7 +104,7 @@ Namespace CommandLine.ManView
                     api.Name.Length)
 
                 For Each line$ In infoLines.Skip(1)
-                    Call Console.WriteLine($"{blank}{line}")
+                    Call Console.WriteLine($"{blank}{Strings.Trim(line).Trim(ASCII.TAB, " "c)}")
                 Next
             End If
 
@@ -297,22 +297,22 @@ Namespace CommandLine.ManView
                         .Select(Function(str) str.Trim(" "c, ASCII.TAB)) _
                         .JoinBy(vbCrLf) _
                         .SplitParagraph(120) _
+                        .Select(Function(str) str.Trim(" "c, ASCII.TAB)) _
                         .ToArray
 
                     Call Console.Write(blank)
                     Call Console.WriteLine($"{infoLines.FirstOrDefault}")
 
                     If infoLines.Length > 1 Then
-                        Dim d% = 0
-
                         If param.Optional Then
-                            d = 13
+                            Dim d = 13
+                            blank = New String(" "c, helpOffset + d + 2)
+                        Else
+                            blank = New String(" "c, helpOffset + blank.Length + 3)
                         End If
 
-                        blank = New String(" "c, helpOffset + d + 2)
-
-                        For Each line In infoLines.Skip(1)
-                            Call Console.WriteLine(blank & line)
+                        For Each line As String In infoLines.Skip(1)
+                            Call Console.WriteLine(blank & line.Trim)
                         Next
                     End If
                 Next
