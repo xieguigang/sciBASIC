@@ -74,9 +74,10 @@ Namespace CommandLine.Reflection.EntryPoints
     ''' <summary>
     ''' The entry point data of the commands in the command line which was original loaded 
     ''' from the source meta data in the compiled target.
-    ''' (命令行命令的执行入口点)
     ''' </summary>
-    ''' <remarks></remarks>
+    ''' <remarks>
+    ''' (命令行命令的执行入口点)
+    ''' </remarks>
     Public Class APIEntryPoint : Inherits APIDelegate
 
 #Region "ReadOnly Properties"
