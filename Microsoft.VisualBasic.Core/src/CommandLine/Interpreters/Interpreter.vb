@@ -551,9 +551,7 @@ Namespace CommandLine
             ' trim multiple line of the commandline usage text
             ' into one line. this is convient for copy to terminal 
             ' and modify value to use.
-            cmdModel.Usage = methodInfo.Usage _
-                .TrimNewLine _
-                .StringReplace("\s{2,}", " ")
+            cmdModel.Usage = methodInfo.Usage.LineTokens.Select(AddressOf Strings.Trim).JoinBy(" ")
             cmdModel.Example = methodInfo.ExampleInfo
 
             Return commandInfo
