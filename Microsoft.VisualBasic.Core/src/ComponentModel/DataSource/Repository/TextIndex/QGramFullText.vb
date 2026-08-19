@@ -14,6 +14,8 @@ Namespace ComponentModel.DataSourceModel.Repository
         ReadOnly tokenlicer As Func(Of String, IEnumerable(Of String))
 
         Sub New(Optional q As Integer = 3, Optional tokenlicer As Func(Of String, IEnumerable(Of String)) = Nothing)
+            Me.docs = New Dictionary(Of String, String)
+            Me.word2Docs = New Dictionary(Of String, HashSet(Of String))
             Me.wordIndex = New QGramIndex(q)
             Me.tokenlicer = If(tokenlicer, AddressOf TextSplit.MakeWords)
         End Sub
@@ -63,6 +65,10 @@ Namespace ComponentModel.DataSourceModel.Repository
                     .text = docs(hit.docId)
                 }
             Next
+        End Function
+
+        Public Function Tokenize(q As String) As IEnumerable(Of String)
+            Return tokenlicer(q)
         End Function
 
         Public Function Search(q As String, Optional top As Integer = 3, Optional threshold As Double = 0) As IEnumerable(Of FindResult)
