@@ -127,7 +127,7 @@ Namespace Analysis
         <Extension>
         Public Function DecomposeGraph(components As Edge(), minVertices As Integer) As NetworkGraph
             Dim subnetwork As New NetworkGraph
-            Dim nodes = components _
+            Dim nodes As Node() = components _
                 .Select(Function(a) {a.U, a.V}) _
                 .IteratesALL _
                 .Distinct _
@@ -175,7 +175,7 @@ Namespace Analysis
                                        Optional minVertices As Integer = 5) As IEnumerable(Of NetworkGraph)
 
             Dim analysis As Kosaraju = Kosaraju.StronglyConnectedComponents(g)
-            Dim components = analysis _
+            Dim components As IEnumerable(Of NetworkGraph) = analysis _
                 .GetComponents _
                 .Where(Function(a) a.Length <> g.size.edges) _
                 .DecomposeGraph(minVertices)
