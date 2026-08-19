@@ -242,13 +242,15 @@ Public Module TextDoc
     ''' (通过具有缓存的流对象读取文本数据，使用迭代器来读取文件之中的所有的行，大文件推荐使用这个方法进行读取操作)
     ''' </remarks>
     <Extension>
-    Public Function IterateAllLines(path$, encoding As Encoding,
+    Public Iterator Function IterateAllLines(path$, encoding As Encoding,
                                     Optional verbose As Boolean = True,
                                     Optional unsafe As Boolean = False,
                                     Optional tqdm_wrap As Boolean = False) As IEnumerable(Of String)
         If path.IsURLPattern Then
             ' get request a html page
-            Return path.GET.LineTokens
+            For Each line As String In path.GET.LineTokens
+                Yield line
+            Next
         ElseIf Not path.FileExists Then
             Dim display_str As String = path
 
@@ -261,7 +263,7 @@ Public Module TextDoc
                     End If
 
                     ' returns an empty string collection
-                    Return New String() {}
+                    Return
                 End If
             ElseIf path.Length > 60 Then
                 display_str = path.Substring(0, 63) & "..."
@@ -272,12 +274,16 @@ Public Module TextDoc
             End If
 
             ' returns an empty string collection
-            Return New String() {}
+            Return
         End If
 
         ' path.Open is affects by the memory configuration
         Using fs As Stream = path.Open(FileMode.Open, doClear:=False, [readOnly]:=True, verbose:=verbose)
-            Return fs.IterateAllLines(encoding, verbose:=verbose, unsafe:=unsafe, tqdm_wrap:=tqdm_wrap)
+            ' 20260819 在这里应该是采用迭代器来进行数据返回
+            ' 否则Using在这里会在惰性加载之前就将fs流关闭掉，导致下游的文本读取函数抛出 “流不可用” 的异常
+            For Each line As String In fs.IterateAllLines(encoding, verbose:=verbose, unsafe:=unsafe, tqdm_wrap:=tqdm_wrap)
+                Yield line
+            Next
         End Using
     End Function
 

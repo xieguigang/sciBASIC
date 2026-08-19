@@ -692,9 +692,7 @@ Namespace Analysis.Louvain
         ''' <param name="subComm2">子社区2</param>
         ''' <param name="nodesInCommunity">社区内的节点列表</param>
         ''' <returns>合并收益</returns>
-        Private Function CalculateMergeGain(subComm1 As Integer,
-                                             subComm2 As Integer,
-                                             nodesInCommunity As List(Of Integer)) As Double
+        Private Function CalculateMergeGain(subComm1 As Integer, subComm2 As Integer, nodesInCommunity As List(Of Integer)) As Double
             Dim weight1 As Double = 0.0
             Dim weight2 As Double = 0.0
             Dim edgeWeightBetween As Double = 0.0
