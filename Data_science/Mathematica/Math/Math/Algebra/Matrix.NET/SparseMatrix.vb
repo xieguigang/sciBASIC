@@ -292,6 +292,53 @@ Namespace LinearAlgebra.Matrix
         End Function
 
         ''' <summary>
+        ''' 计算转置矩阵与向量的乘积：result = Aᵀ·y
+        ''' </summary>
+        ''' <param name="y">长度必须等于矩阵行数 m 的输入向量</param>
+        ''' <returns>长度为 n（列数）的结果向量</returns>
+        ''' <remarks>
+        ''' 直接遍历内部按行存储的非零元素字典完成计算，复杂度为 O(nnz)，
+        ''' 不会将稀疏矩阵转置或稠密化。适用于随机化 SVD 等只依赖
+        ''' 稀疏矩阵-向量乘法黑盒接口的迭代算法。
+        ''' </remarks>
+        Public Function MultiplyTranspose(y As Double()) As Double()
+            ' 1. 边界检查：输入向量 y 的长度必须与矩阵的行数 m 一致
+            If y Is Nothing Then
+                Throw New ArgumentNullException(NameOf(y))
+            End If
+
+            If y.Length <> Me.m Then
+                Throw New ArgumentException($"输入向量的长度 ({y.Length}) 必须与矩阵的行数 ({Me.m}) 相等。")
+            End If
+
+            ' 2. 初始化结果向量：长度为 n（列数），默认值 0.0
+            Dim result(Me.n - 1) As Double
+
+            ' 3. 执行稀疏转置乘法：result(j) += A(i, j) * y(i)
+            '    遍历所有包含非零元素的行，对每个非零元 A(i,j)，
+            '    累加到 result 的第 j 个分量上
+            For Each rowPair In Me.rows
+                Dim i As Integer = rowPair.Key                    ' 当前行索引 i
+                Dim yi As Double = y(i)                           ' y(i)，整行共用
+                Dim currentRow As Dictionary(Of UInteger, Double) = rowPair.Value
+
+                If yi = 0 Then
+                    ' y(i) 为零时该行所有非零元的贡献均为零，直接跳过
+                    Continue For
+                End If
+
+                For Each colPair In currentRow
+                    Dim j As Integer = colPair.Key                ' 非零元所在列索引 j
+                    Dim aij As Double = colPair.Value             ' 矩阵元素值 A(i, j)
+
+                    result(j) += aij * yi
+                Next
+            Next
+
+            Return result
+        End Function
+
+        ''' <summary>
         ''' 
         ''' </summary>
         ''' <param name="i"></param>
