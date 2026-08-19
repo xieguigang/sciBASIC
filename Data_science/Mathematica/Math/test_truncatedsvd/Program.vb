@@ -25,11 +25,11 @@ Module Program
         For i = 0 To m - 1
             dense(i) = New Double(n - 1) {}
             For j = 0 To n - 1
-                Dim s = 0.0
-                For t = 0 To r - 1
-                    s += G1(i)(t) * G2(j)(t)
+                Dim acc = 0.0
+                For tt = 0 To r - 1
+                    acc += G1(i)(tt) * G2(j)(tt)
                 Next
-                dense(i)(j) = s
+                dense(i)(j) = acc
             Next
         Next
 
@@ -62,12 +62,12 @@ Module Program
 
         ' 5. 截断 SVD：k = r = 5（满秩恢复）
         Dim svd As New TruncatedSVD(A, 5)
-        Dim s = svd.SingularValues
+        Dim sigma = svd.SingularValues
         Console.WriteLine()
         Console.WriteLine("=== 测试1: 奇异值精度 (k=5, 秩=5) ===")
-        Console.WriteLine("真实值: " & String.Join(", ", trueS.Take(5).Select(Function(x) x.ToString("F4"))))
-        Console.WriteLine("计算值: " & String.Join(", ", s.Select(Function(x) x.ToString("F4"))))
-        Dim svErr = Enumerable.Range(0, 5).Max(Function(i) Math.Abs(s(i) - trueS(i)) / trueS(i))
+        Console.WriteLine("真实值: " & String.Join(", ", trueS.Take(5).Select(Function(sv) sv.ToString("F4"))))
+        Console.WriteLine("计算值: " & String.Join(", ", sigma.Select(Function(sv) sv.ToString("F4"))))
+        Dim svErr = Enumerable.Range(0, 5).Max(Function(idx) Math.Abs(sigma(idx) - trueS(idx)) / trueS(idx))
         Console.WriteLine($"最大相对误差: {svErr:E3}")
 
         ' 6. 重构误差 ||A - U·Σ·Vᵀ||_F / ||A||_F
@@ -79,8 +79,8 @@ Module Program
         For i = 0 To m - 1
             For j = 0 To n - 1
                 Dim approx = 0.0
-                For t = 0 To 4
-                    approx += U(i)(t) * s(t) * V(j)(t)
+                For tt = 0 To 4
+                    approx += U(i)(tt) * sigma(tt) * V(j)(tt)
                 Next
                 reconErr += (dense(i)(j) - approx) ^ 2
                 frobA += dense(i)(j) ^ 2
@@ -92,14 +92,14 @@ Module Program
         Console.WriteLine()
         Console.WriteLine("=== 测试3: V 列正交性 ===")
         Dim orthErr = 0.0
-        For a = 0 To 4
-            For b = 0 To 4
-                Dim dot = 0.0
+        For ia = 0 To 4
+            For ib = 0 To 4
+                Dim dotv = 0.0
                 For i = 0 To n - 1
-                    dot += V(i)(a) * V(i)(b)
+                    dotv += V(i)(ia) * V(i)(ib)
                 Next
-                If a = b Then dot -= 1.0
-                orthErr += dot * dot
+                If ia = ib Then dotv -= 1.0
+                orthErr += dotv * dotv
             Next
         Next
         Console.WriteLine($"正交性偏差: {Math.Sqrt(orthErr):E3}")
@@ -107,16 +107,16 @@ Module Program
         ' 8. ReducedMatrix = A·V 一致性 + 形状
         Console.WriteLine()
         Console.WriteLine("=== 测试4: 降维矩阵 ReducedMatrix (m×k) ===")
-        Dim X = svd.ReducedMatrix
-        Console.WriteLine($"维度: {X.Length}x{X(0).Length} (期望 {m}x5)")
+        Dim Xred = svd.ReducedMatrix
+        Console.WriteLine($"维度: {Xred.Length}x{Xred(0).Length} (期望 {m}x5)")
         Dim redErr = 0.0, redNorm = 0.0
         For i = 0 To m - 1
-            For t = 0 To 4
+            For tt = 0 To 4
                 Dim av = 0.0
                 For j = 0 To n - 1
-                    av += dense(i)(j) * V(j)(t)
+                    av += dense(i)(j) * V(j)(tt)
                 Next
-                redErr += (X(i)(t) - av) ^ 2
+                redErr += (Xred(i)(tt) - av) ^ 2
                 redNorm += av ^ 2
             Next
         Next
@@ -130,13 +130,12 @@ Module Program
         Console.WriteLine()
         Console.WriteLine("=== 测试5: 更小截断 k=3 ===")
         Dim svd3 As New TruncatedSVD(A, 3)
-        Console.WriteLine("真实值: " & String.Join(", ", trueS.Take(3).Select(Function(x) x.ToString("F4"))))
-        Console.WriteLine("计算值: " & String.Join(", ", svd3.SingularValues.Select(Function(x) x.ToString("F4"))))
-        Dim X2 = TruncatedSVD.Reduce(A, 3)
-        Console.WriteLine($"Reduce(A,3) 维度: {X2.Length}x{X2(0).Length} (期望 {m}x3)")
+        Console.WriteLine("真实值: " & String.Join(", ", trueS.Take(3).Select(Function(sv) sv.ToString("F4"))))
+        Console.WriteLine("计算值: " & String.Join(", ", svd3.SingularValues.Select(Function(sv) sv.ToString("F4"))))
+        Dim Xred2 = TruncatedSVD.Reduce(A, 3)
+        Console.WriteLine($"Reduce(A,3) 维度: {Xred2.Length}x{Xred2(0).Length} (期望 {m}x3)")
 
-        ' 11. 非对称矩阵场景（G1·G2ᵀ 本身一般非对称，此测试天然覆盖）
-        ' 12. 参数校验
+        ' 11. 参数校验
         Console.WriteLine()
         Console.WriteLine("=== 测试6: 参数校验 ===")
         Try
@@ -152,22 +151,22 @@ Module Program
             Console.WriteLine("k>min(m,n) 正确抛出 ArgumentException: OK")
         End Try
 
-        ' 13. 大规模稀疏性能冒烟测试
+        ' 12. 大规模稀疏性能冒烟测试
         Console.WriteLine()
         Console.WriteLine("=== 测试7: 大规模稀疏矩阵性能 (2000×5000, nnz≈50000, k=20) ===")
         Dim bigM = 2000, bigN = 5000, nnz = 50000
         Dim br(nnz - 1) As Integer, bc(nnz - 1) As Integer, bv(nnz - 1) As Double
-        For t = 0 To nnz - 1
-            br(t) = rand.Next(bigM)
-            bc(t) = rand.Next(bigN)
-            bv(t) = rand.NextDouble() * 2 - 1
+        For idx = 0 To nnz - 1
+            br(idx) = rand.Next(bigM)
+            bc(idx) = rand.Next(bigN)
+            bv(idx) = rand.NextDouble() * 2 - 1
         Next
         Dim bigA As New SparseMatrix(br, bc, bv, bigM, bigN)
         Dim sw = System.Diagnostics.Stopwatch.StartNew()
         Dim bigSvd As New TruncatedSVD(bigA, 20)
         sw.Stop()
         Console.WriteLine($"完成耗时: {sw.ElapsedMilliseconds} ms")
-        Console.WriteLine($"奇异值(top5): " & String.Join(", ", bigSvd.SingularValues.Take(5).Select(Function(x) x.ToString("F4"))))
+        Console.WriteLine($"奇异值(top5): " & String.Join(", ", bigSvd.SingularValues.Take(5).Select(Function(sv) sv.ToString("F4"))))
         Dim bigX = bigSvd.ReducedMatrix
         Console.WriteLine($"降维结果: {bigX.Length}x{bigX(0).Length} 稠密矩阵")
 
