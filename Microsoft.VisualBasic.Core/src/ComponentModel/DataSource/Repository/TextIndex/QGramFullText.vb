@@ -35,7 +35,7 @@ Namespace ComponentModel.DataSourceModel.Repository
             Return Me
         End Function
 
-        Public Iterator Function Search(q As String, Optional threshold As Double = 0) As IEnumerable(Of FindResult)
+        Public Iterator Function Search(q As String, Optional top As Integer = 3, Optional threshold As Double = 0) As IEnumerable(Of FindResult)
             Dim words As String() = tokenlicer(Strings.Trim(q).ToLower).Distinct.ToArray
             Dim findDocs = words.Select(Function(i) wordIndex.FindSimilar(i)) _
                 .IteratesALL _
@@ -43,7 +43,27 @@ Namespace ComponentModel.DataSourceModel.Repository
                             Return (wi, word2Docs(wi.text))
                         End Function) _
                 .ToArray
+            Dim resultDocs = findDocs.Select(Function(a)
+                                                 Return a.Item2.Select(Function(docId) (docId, a.wi))
+                                             End Function) _
+                .IteratesALL _
+                .GroupBy(Function(a) a.docId) _
+                .ToArray
+            Dim rankDocs = From doc In resultDocs
+                           Let rank As Double = doc.Sum(Function(a) a.wi.similarity)
+                           Let docId = doc.Key
+                           Select docId, rank
+                           Order By rank Descending
+                           Take top
 
+            For Each hit In rankDocs
+                Yield New FindResult With {
+                    .index = -1,
+                    .levenshtein = 0,
+                    .similarity = hit.rank,
+                    .text = docs(hit.docId)
+                }
+            Next
         End Function
     End Class
 End Namespace
