@@ -54,6 +54,7 @@
 
 Imports System.Runtime.CompilerServices
 Imports randf = Microsoft.VisualBasic.Math.RandomExtensions
+Imports std = System.Math
 
 Namespace Analysis.LPA
 
@@ -249,7 +250,7 @@ Namespace Analysis.LPA
             Dim bestLabels As New List(Of Integer)
 
             For Each l As Integer In touched
-                If Math.Abs(labelCounter(l) - maxVotes) <= eps Then
+                If std.Abs(labelCounter(l) - maxVotes) <= eps Then
                     bestLabels.Add(l)
                 End If
 

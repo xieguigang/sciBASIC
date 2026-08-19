@@ -118,8 +118,8 @@ Namespace Analysis.LPA
             Next
 
             ' 缓存节点ID下标所对应的节点名，用于最后的社区划分结果的输出
-            For Each node As Node In g.vertex
-                lpa.nodeLabels(node.ID) = node.label
+            For Each nodeVertex As Node In g.vertex
+                lpa.nodeLabels(nodeVertex.ID) = nodeVertex.label
             Next
 
             Dim builder As New Builder

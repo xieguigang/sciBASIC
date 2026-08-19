@@ -55,6 +55,7 @@
 '       测试网络: 两个5节点的团(clique) + 1条桥边, 期望划分出2个社区
 ' =============================================================================
 
+Imports Microsoft.VisualBasic.Data.GraphTheory
 Imports Microsoft.VisualBasic.Data.GraphTheory.Analysis.LPA
 Imports Microsoft.VisualBasic.Data.GraphTheory.Network
 
