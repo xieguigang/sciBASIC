@@ -35,9 +35,8 @@ Namespace ComponentModel.DataSourceModel.Repository
             Return Me
         End Function
 
-        Public Iterator Function Search(q As String, Optional top As Integer = 3, Optional threshold As Double = 0) As IEnumerable(Of FindResult)
-            Dim words As String() = tokenlicer(Strings.Trim(q).ToLower).Distinct.ToArray
-            Dim findDocs = words.Select(Function(i) wordIndex.FindSimilar(i, threshold)) _
+        Public Iterator Function Search(queryWords As IEnumerable(Of String), Optional top As Integer = 3, Optional threshold As Double = 0) As IEnumerable(Of FindResult)
+            Dim findDocs = queryWords.Select(Function(i) wordIndex.FindSimilar(i, threshold)) _
                 .IteratesALL _
                 .Select(Function(wi)
                             Return (wi, word2Docs(wi.text))
@@ -64,6 +63,10 @@ Namespace ComponentModel.DataSourceModel.Repository
                     .text = docs(hit.docId)
                 }
             Next
+        End Function
+
+        Public Function Search(q As String, Optional top As Integer = 3, Optional threshold As Double = 0) As IEnumerable(Of FindResult)
+            Return Search(queryWords:=tokenlicer(Strings.Trim(q).ToLower).Distinct, top, threshold)
         End Function
     End Class
 End Namespace
