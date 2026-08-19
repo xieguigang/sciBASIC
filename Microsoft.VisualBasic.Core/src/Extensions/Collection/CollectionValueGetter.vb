@@ -402,7 +402,6 @@ Public Module CollectionValueGetter
     ''' 1. for input hash table object is nothing, this function will returns the default value
     ''' 2. for key is nothing or key is not found inside the hash table, this function also returns the default value
     ''' </remarks>
-    <DebuggerStepThrough>
     <Extension>
     Public Function TryGetValue(Of TKey, TValue)(table As IDictionary(Of TKey, TValue),
                                                  index As TKey,
