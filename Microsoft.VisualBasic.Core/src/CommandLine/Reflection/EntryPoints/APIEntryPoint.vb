@@ -74,9 +74,10 @@ Namespace CommandLine.Reflection.EntryPoints
     ''' <summary>
     ''' The entry point data of the commands in the command line which was original loaded 
     ''' from the source meta data in the compiled target.
-    ''' (命令行命令的执行入口点)
     ''' </summary>
-    ''' <remarks></remarks>
+    ''' <remarks>
+    ''' (命令行命令的执行入口点)
+    ''' </remarks>
     Public Class APIEntryPoint : Inherits APIDelegate
 
 #Region "ReadOnly Properties"
@@ -152,8 +153,8 @@ Namespace CommandLine.Reflection.EntryPoints
         ''' <param name="attribute"></param>
         ''' <param name="Invoke"></param>
         ''' <remarks></remarks>
-        Public Sub New(attribute As ExportAPIAttribute, [Invoke] As MethodInfo, Optional [Throw] As Boolean = True)
-            _metaData = New Binding(Of ExportAPIAttribute, MethodInfo) With {
+        Public Sub New(attribute As ExportApiModel, [Invoke] As MethodInfo, Optional [Throw] As Boolean = True)
+            _metaData = New Binding(Of ExportApiModel, MethodInfo) With {
                 .Bind = attribute,
                 .Target = Invoke
             }

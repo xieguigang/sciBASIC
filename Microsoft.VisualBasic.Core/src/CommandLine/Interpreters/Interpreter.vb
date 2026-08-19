@@ -471,19 +471,19 @@ Namespace CommandLine
         ''' 导出所有符合条件的静态方法
         ''' </summary>
         ''' <param name="Type"></param>
-        ''' <param name="[Throw]"></param>
+        ''' <param name="throw"></param>
         ''' <returns></returns>
-        Protected Overridable Function __getsAllCommands(Type As Type, Optional [Throw] As Boolean = True) As List(Of EntryPoints.APIEntryPoint)
-            Return GetAllCommands(Type, [Throw])
+        Protected Overridable Function __getsAllCommands(Type As Type, Optional [throw] As Boolean = True) As List(Of EntryPoints.APIEntryPoint)
+            Return GetAllCommands(Type, [throw])
         End Function
 
         ''' <summary>
         ''' 导出所有符合条件的静态方法，请注意，在这里已经将外部的属性标记和所属的函数的入口点进行连接了
         ''' </summary>
         ''' <param name="type"></param>
-        ''' <param name="[Throw]"></param>
+        ''' <param name="throw"></param>
         ''' <returns></returns>
-        Public Shared Function GetAllCommands(type As Type, Optional [Throw] As Boolean = True) As List(Of EntryPoints.APIEntryPoint)
+        Public Shared Function GetAllCommands(type As Type, Optional [throw] As Boolean = True) As List(Of EntryPoints.APIEntryPoint)
             If type Is Nothing Then
                 Return New List(Of APIEntryPoint)
             End If
@@ -495,7 +495,7 @@ Namespace CommandLine
                 From methodInfo As MethodInfo
                 In methods
                 Let commandInfo As APIEntryPoint =
-                    getAPI(methodInfo, commandAttribute, [Throw])
+                    getAPI(methodInfo, commandAttribute, [throw])
                 Where Not commandInfo Is Nothing
                 Select commandInfo
                 Order By commandInfo.Name Ascending
@@ -541,27 +541,18 @@ Namespace CommandLine
         ''' </summary>
         ''' <returns></returns>
         Private Shared Function doLoadApiInternal(cmdAttr As ExportAPIAttribute, methodInfo As MethodInfo, [throw] As Boolean) As APIEntryPoint
-            Dim commandInfo As New APIEntryPoint(cmdAttr, methodInfo, [throw])
+            Dim cmdModel As New ExportApiModel(cmdAttr)
+            Dim commandInfo As New APIEntryPoint(cmdModel, methodInfo, [throw])
 
-#Disable Warning
-            If cmdAttr.Info.StringEmpty Then
-                ' 帮助信息的获取兼容系统的Description方法
-                cmdAttr.Info = methodInfo.Description([default]:="")
-            End If
-            If cmdAttr.Usage.StringEmpty Then
-                ' 20240417
-                '
-                ' trim multiple line of the commandline usage text
-                ' into one line. this is convient for copy to terminal 
-                ' and modify value to use.
-                cmdAttr.Usage = methodInfo.Usage _
-                    .TrimNewLine _
-                    .StringReplace("\s{2,}", " ")
-            End If
-            If cmdAttr.Example.StringEmpty Then
-                cmdAttr.Example = methodInfo.ExampleInfo
-            End If
-#Enable Warning
+            ' 帮助信息的获取兼容系统的Description方法
+            cmdModel.Info = methodInfo.Description([default]:="")
+            ' 20240417
+            '
+            ' trim multiple line of the commandline usage text
+            ' into one line. this is convient for copy to terminal 
+            ' and modify value to use.
+            cmdModel.Usage = methodInfo.Usage.LineTokens.Select(AddressOf Strings.Trim).JoinBy(" ")
+            cmdModel.Example = methodInfo.ExampleInfo
 
             Return commandInfo
         End Function

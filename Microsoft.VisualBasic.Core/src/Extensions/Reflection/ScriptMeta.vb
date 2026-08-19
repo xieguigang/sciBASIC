@@ -123,7 +123,7 @@ NULL:       If Not strict Then
     End Function
 
     ''' <summary>
-    ''' Get object usage information
+    ''' Get object usage information via read string from <see cref="UsageAttribute"/>
     ''' </summary>
     ''' <param name="m"></param>
     ''' <returns></returns>

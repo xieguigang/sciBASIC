@@ -68,7 +68,7 @@ Namespace CommandLine.Reflection.EntryPoints
     Public Class APIDelegate : Implements IExportAPI
 
         Protected _NumberOfParameters As Integer
-        Protected _metaData As Binding(Of ExportAPIAttribute, MethodInfo)
+        Protected _metaData As Binding(Of ExportApiModel, MethodInfo)
         Protected __funcInvoker As Func(Of Object(), Integer)
 
         ''' <summary>
@@ -82,8 +82,6 @@ Namespace CommandLine.Reflection.EntryPoints
                 Return _metaData.Bind.Name
             End Get
         End Property
-
-#Disable Warning
 
         Public ReadOnly Property Info() As String Implements IExportAPI.Info
             Get
@@ -102,7 +100,6 @@ Namespace CommandLine.Reflection.EntryPoints
                 Return _metaData.Bind.Example
             End Get
         End Property
-#Enable Warning
 
         ''' <summary>
         ''' 不可以使用本方法初始化目标对象为实例方法的类型
@@ -110,7 +107,7 @@ Namespace CommandLine.Reflection.EntryPoints
         ''' <param name="attribute"></param>
         ''' <param name="Invoke"></param>
         ''' <remarks></remarks>
-        Public Sub New(attribute As Binding(Of ExportAPIAttribute, MethodInfo), [Invoke] As Func(Of Object(), Integer))
+        Public Sub New(attribute As Binding(Of ExportApiModel, MethodInfo), [Invoke] As Func(Of Object(), Integer))
             _metaData = attribute
             __funcInvoker = Invoke
             _metaData = attribute
