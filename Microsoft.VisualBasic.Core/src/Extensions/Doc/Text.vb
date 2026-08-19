@@ -242,15 +242,13 @@ Public Module TextDoc
     ''' (通过具有缓存的流对象读取文本数据，使用迭代器来读取文件之中的所有的行，大文件推荐使用这个方法进行读取操作)
     ''' </remarks>
     <Extension>
-    Public Iterator Function IterateAllLines(path$, encoding As Encoding,
-                                             Optional verbose As Boolean = True,
-                                             Optional unsafe As Boolean = False,
-                                             Optional tqdm_wrap As Boolean = False) As IEnumerable(Of String)
+    Public Function IterateAllLines(path$, encoding As Encoding,
+                                    Optional verbose As Boolean = True,
+                                    Optional unsafe As Boolean = False,
+                                    Optional tqdm_wrap As Boolean = False) As IEnumerable(Of String)
         If path.IsURLPattern Then
             ' get request a html page
-            For Each line As String In path.GET.LineTokens
-                Yield line
-            Next
+            Return path.GET.LineTokens
         ElseIf Not path.FileExists Then
             Dim display_str As String = path
 
@@ -263,7 +261,7 @@ Public Module TextDoc
                     End If
 
                     ' returns an empty string collection
-                    Return
+                    Return New String() {}
                 End If
             ElseIf path.Length > 60 Then
                 display_str = path.Substring(0, 63) & "..."
@@ -274,24 +272,34 @@ Public Module TextDoc
             End If
 
             ' returns an empty string collection
-            Return
+            Return New String() {}
         End If
 
         ' path.Open is affects by the memory configuration
         Using fs As Stream = path.Open(FileMode.Open, doClear:=False, [readOnly]:=True, verbose:=verbose)
-            Using reader As New StreamReader(fs, encoding Or DefaultEncoding)
-                If tqdm_wrap Then
-                    For Each line As String In ReadLines(reader)
-                        Yield line
-                    Next
-                Else
-                    Dim line As Value(Of String) = ""
+            Return fs.IterateAllLines(encoding, verbose:=verbose, unsafe:=unsafe, tqdm_wrap:=tqdm_wrap)
+        End Using
+    End Function
 
-                    Do While (line = reader.ReadLine) IsNot Nothing
-                        Yield CStr(line)
-                    Loop
-                End If
-            End Using
+    <Extension>
+    Public Iterator Function IterateAllLines(fs As Stream,
+                                             Optional encoding As Encoding = Nothing,
+                                             Optional verbose As Boolean = True,
+                                             Optional unsafe As Boolean = False,
+                                             Optional tqdm_wrap As Boolean = False) As IEnumerable(Of String)
+
+        Using reader As New StreamReader(fs, encoding Or DefaultEncoding)
+            If tqdm_wrap Then
+                For Each line As String In ReadLines(reader)
+                    Yield line
+                Next
+            Else
+                Dim line As Value(Of String) = ""
+
+                Do While (line = reader.ReadLine) IsNot Nothing
+                    Yield CStr(line)
+                Loop
+            End If
         End Using
     End Function
 
