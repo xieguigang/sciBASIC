@@ -65,18 +65,6 @@ Imports Microsoft.VisualBasic.Linq
 
 Namespace Data.Trinity.NLP
 
-    Public Interface ITokenCount
-        Property Token As String
-        Property Id As Integer
-        Property Count As Integer
-    End Interface
-
-    Public Interface ILink
-        Property source As Integer
-        Property target As Integer
-        Property Count As Integer
-    End Interface
-
     ''' <summary>
     ''' 应用于字符串分析的，自然语言处理
     ''' </summary>
@@ -137,9 +125,11 @@ Namespace Data.Trinity.NLP
 
             For Each x As T In data
                 Dim tokens As String() = getValue(x).ToLower.Split
-                tokens = tokens.Where( ' 前面已经用ToLower转换为小写了，所以在这里直接使用indexof来判断
-                Function(s) Array.IndexOf(ignores, s) = -1 AndAlso
-                    Regex.Match(s, "\d+:?").Value <> s).ToArray
+                tokens = tokens.Where(
+                    Function(s)
+                        ' 前面已经用ToLower转换为小写了，所以在这里直接使用indexof来判断
+                        Return Array.IndexOf(ignores, s) = -1 AndAlso Regex.Match(s, "\d+:?").Value <> s
+                    End Function).ToArray
 
                 For Each s As String In tokens
                     If Not nodes.ContainsKey(s) Then
