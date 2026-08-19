@@ -37,7 +37,7 @@ Namespace ComponentModel.DataSourceModel.Repository
 
         Public Iterator Function Search(q As String, Optional top As Integer = 3, Optional threshold As Double = 0) As IEnumerable(Of FindResult)
             Dim words As String() = tokenlicer(Strings.Trim(q).ToLower).Distinct.ToArray
-            Dim findDocs = words.Select(Function(i) wordIndex.FindSimilar(i)) _
+            Dim findDocs = words.Select(Function(i) wordIndex.FindSimilar(i, threshold)) _
                 .IteratesALL _
                 .Select(Function(wi)
                             Return (wi, word2Docs(wi.text))
