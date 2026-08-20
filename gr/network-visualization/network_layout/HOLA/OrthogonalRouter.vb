@@ -26,11 +26,12 @@ Namespace Hola
                 Dim pv = AsPoint(V.data.initialPostion)
 
                 ' Z 形正交路径：U -> (midX, U.y) -> (midX, V.y) -> V
+                ' 两个拐点都必须相对整条边 (U -> V) 用 CreateVector 生成，
+                ' 以保证比例语义一致，渲染层用 GetPoint(U, V) 还原
                 Dim midX = (pu.X + pv.X) / 2.0F
 
                 Dim bend1 = WayPointVector.CreateVector(pu, pv, midX, pu.Y)
-                Dim midPoint = New System.Drawing.PointF(midX, pu.Y)
-                Dim bend2 = WayPointVector.CreateVector(midPoint, pv, midX, pv.Y)
+                Dim bend2 = WayPointVector.CreateVector(pu, pv, midX, pv.Y)
 
                 e.data.bends = {bend1, bend2}
             Next
