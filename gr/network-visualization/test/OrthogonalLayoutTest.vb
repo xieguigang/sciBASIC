@@ -72,6 +72,10 @@ Module OrthogonalLayoutTest
         ' Call test2()
     End Sub
 
+    Sub holaTest()
+
+    End Sub
+
     Sub test1()
         Dim g As New NetworkGraph
 
