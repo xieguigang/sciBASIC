@@ -418,7 +418,7 @@ Public Class VoicePrintExtractor
                 variance += diff * diff
             Next
             variance /= features.Length
-            Dim std As Double = std.Sqrt(variance)
+            Dim std As Double = System.Math.Sqrt(variance)
             If std < 1.0E-10 Then std = 1.0
 
             ' 归一化
