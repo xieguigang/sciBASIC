@@ -334,11 +334,8 @@ Namespace ApplicationServices.Terminal.ProgressBar.Tqdm
             Dim curCursorTop As Integer = 0
 
             Try
-                If Not Console.IsOutputRedirected Then
-                    curCursorTop = Console.CursorTop
-                End If
+                curCursorTop = Console.CursorTop
             Catch
-                curCursorTop = 0
             End Try
 
             ' Build our output string
@@ -415,10 +412,8 @@ Namespace ApplicationServices.Terminal.ProgressBar.Tqdm
             ' Clear the previous line by resetting the cursor position and overwriting with spaces.
             ' Guard against headless / redirected output where the console handle is invalid.
             Try
-                If Not Console.IsOutputRedirected Then
-                    Console.Write(New String(" "c, std.Min(_prevLength, Console.BufferWidth - 1))) ' Clear the buffer
-                    Console.CursorLeft = 0
-                End If
+                Console.Write(New String(" "c, std.Min(_prevLength, Console.BufferWidth - 1))) ' Clear the buffer
+                Console.CursorLeft = 0
             Catch
                 ' ignore console cursor errors in headless environments
             End Try
