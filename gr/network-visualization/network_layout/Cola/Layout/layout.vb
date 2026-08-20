@@ -503,14 +503,14 @@ Namespace Cola
 
         Public Function getLinkLength(link As Link(Of Node)) As Double
             If Not _linkDistance Like GetType(Double) Then
-                Return _linkDistance(link)
+                Return _linkDistance.VB(link)
             Else
                 Return _linkDistance
             End If
         End Function
 
         Private Function getLinkType(link As Link(Of Node)) As Double
-            Return If(_linkType Like GetType(Integer), 0, _linkType(link))
+            Return If(_linkType Like GetType(Integer), 0, _linkType.VB(link))
         End Function
 
         Private linkAccessor As New LinkTypeAccessor(Of Link(Of Node)) With {
@@ -518,7 +518,7 @@ Namespace Cola
             .getTargetIndex = AddressOf Layout.getTargetIndex,
             .setLength = Sub(l, len) l.length = len,
             .GetLinkType = Function(l)
-                               Return If(_linkType Like GetType(Integer), 0, Me._linkType(l))
+                               Return If(_linkType Like GetType(Integer), 0, _linkType.VB(l))
                            End Function
         }
 
@@ -670,8 +670,14 @@ Namespace Cola
                                       y(System.Math.Max(Interlocked.Increment(i), i - 1)) = 0
                                   End Sub)
             Else
+                Dim leafList As New List(Of [Variant](Of Integer, Node))
+
+                For Each n In Me._nodes
+                    leafList.Add(New [Variant](Of Integer, Node)(n))
+                Next
+
                 Me._rootGroup = New Node With {
-                    .leaves = Me._nodes.Select(Function(n) New [Variant](Of Integer, Node)(n)).ToList,
+                    .leaves = leafList,
                     .groups = New List(Of [Variant](Of Integer, Node))
                 }
             End If
