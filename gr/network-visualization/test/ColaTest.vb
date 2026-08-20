@@ -104,7 +104,7 @@ Module ColaTest
 
         ' Render the laid-out graph to an image for visual inspection
         Call NetworkVisualizer _
-            .DrawImage(g, "1000,1000", displayId:=True, drawEdgeBends:=True, labelerIterations:=-1, minLinkWidth:=8) _
+            .DrawImage(g, "1000,1000", displayId:=False, drawEdgeBends:=True, labelerIterations:=-1, minLinkWidth:=8) _
             .Save("./Cola_layout.png")
 
         Console.WriteLine("Cola layout complete. Output written to ./Cola_layout.png")

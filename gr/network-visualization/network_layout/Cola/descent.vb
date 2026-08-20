@@ -167,17 +167,17 @@ Namespace Cola
             ' dimensionality
             Me.n = x(0).Length
             ' number of nodes
-            Me.H = New Double(Me.k)()() {}
-            Me.g = New Double(Me.k)() {}
-            Me.Hd = New Double(Me.k)() {}
-            Me.a = New Double(Me.k)() {}
-            Me.b = New Double(Me.k)() {}
-            Me.c = New Double(Me.k)() {}
-            Me.d = New Double(Me.k)() {}
-            Me.e = New Double(Me.k)() {}
-            Me.ia = New Double(Me.k)() {}
-            Me.ib = New Double(Me.k)() {}
-            Me.xtmp = New Double(Me.k)() {}
+            Me.H = New Double(Me.k - 1)()() {}
+            Me.g = New Double(Me.k - 1)() {}
+            Me.Hd = New Double(Me.k - 1)() {}
+            Me.a = New Double(Me.k - 1)() {}
+            Me.b = New Double(Me.k - 1)() {}
+            Me.c = New Double(Me.k - 1)() {}
+            Me.d = New Double(Me.k - 1)() {}
+            Me.e = New Double(Me.k - 1)() {}
+            Me.ia = New Double(Me.k - 1)() {}
+            Me.ib = New Double(Me.k - 1)() {}
+            Me.xtmp = New Double(Me.k - 1)() {}
             Me.locks = New Locks()
             Me.minD = Double.MaxValue
             Dim i As Integer = n
@@ -196,21 +196,21 @@ Namespace Cola
             End If
             i = Me.k
             While System.Math.Max(Interlocked.Decrement(i), i + 1)
-                Me.g(i) = New Double(Me.n) {}
-                Me.H(i) = New Double(Me.n)() {}
+                Me.g(i) = New Double(Me.n - 1) {}
+                Me.H(i) = New Double(Me.n - 1)() {}
                 j = n
                 While System.Math.Max(Interlocked.Decrement(j), j + 1)
-                    Me.H(i)(j) = New Double(Me.n) {}
+                    Me.H(i)(j) = New Double(Me.n - 1) {}
                 End While
-                Me.Hd(i) = New Double(Me.n) {}
-                Me.a(i) = New Double(Me.n) {}
-                Me.b(i) = New Double(Me.n) {}
-                Me.c(i) = New Double(Me.n) {}
-                Me.d(i) = New Double(Me.n) {}
-                Me.e(i) = New Double(Me.n) {}
-                Me.ia(i) = New Double(Me.n) {}
-                Me.ib(i) = New Double(Me.n) {}
-                Me.xtmp(i) = New Double(Me.n) {}
+                Me.Hd(i) = New Double(Me.n - 1) {}
+                Me.a(i) = New Double(Me.n - 1) {}
+                Me.b(i) = New Double(Me.n - 1) {}
+                Me.c(i) = New Double(Me.n - 1) {}
+                Me.d(i) = New Double(Me.n - 1) {}
+                Me.e(i) = New Double(Me.n - 1) {}
+                Me.ia(i) = New Double(Me.n - 1) {}
+                Me.ib(i) = New Double(Me.n - 1) {}
+                Me.xtmp(i) = New Double(Me.n - 1) {}
             End While
         End Sub
 
@@ -228,7 +228,7 @@ Namespace Cola
         End Function
 
         Private Function offsetDir() As Double()
-            Dim u = New Double(Me.k) {}
+            Dim u = New Double(Me.k - 1) {}
             Dim l# = 0
             Dim x#
 
@@ -256,9 +256,9 @@ Namespace Cola
             '                            if (isNaN(x[i][u])) debugger;
             '        DEBUG 
 
-            Dim d__1 As Double() = New Double(Me.k) {}
-            Dim d2__2 As Double() = New Double(Me.k) {}
-            Dim Huu As Double() = New Double(Me.k) {}
+            Dim d__1 As Double() = New Double(Me.k - 1) {}
+            Dim d2__2 As Double() = New Double(Me.k - 1) {}
+            Dim Huu As Double() = New Double(Me.k - 1) {}
             Dim maxH As Double = 0
 
             For u As Integer = 0 To n - 1
