@@ -1,5 +1,5 @@
+Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
-Imports Microsoft.VisualBasic.Data.visualize.Network.Graph.Model
 Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts
 
 Namespace Hola
@@ -70,7 +70,7 @@ Namespace Hola
         End Sub
 
         <MethodImpl(MethodImplOptions.AggressiveInlining)>
-        Public Function IndexOf(n As Node) As Integer
+        Public Function IndexOfNode(n As Node) As Integer
             Return indexOf(n)
         End Function
 

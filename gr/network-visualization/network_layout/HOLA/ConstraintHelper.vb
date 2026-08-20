@@ -1,4 +1,5 @@
-Imports Microsoft.VisualBasic.Data.visualize.Network.Graph.Model
+Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
 Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts
 Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts.Cola
 Imports Microsoft.VisualBasic.Language
