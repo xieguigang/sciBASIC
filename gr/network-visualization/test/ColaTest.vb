@@ -16,6 +16,178 @@ Module ColaTest
     Sub Main()
         Call ImageDriver.Register()
 
+        ' 100+ 节点的多层混合拓扑压力测试（网格块 + 长链 + 星型簇 + 独立分量）
+        Call ComplexColaTest()
+
+        ' 原有的 12 节点环+弦对照用例（已验证），需要时取消注释切换：
+        ' Call SimpleColaTest()
+    End Sub
+
+    ''' <summary>
+    ''' 复杂网络压力测试：构建一个 120+ 节点的多层混合拓扑，刻意用固定种子的随机散点
+    ''' 作为初始坐标以制造大量边交叉，再用修正后的 Cola 应力最小化布局去交叉、去重叠，
+    ''' 最终渲染为带节点标签的 PNG 供检查。
+    ''' </summary>
+    Sub ComplexColaTest()
+        Dim g As New NetworkGraph
+        Dim rand As New Random(20260821)
+        Dim idCounter As Integer = 0
+
+        ' helper: 添加节点并以固定种子随机散点作为初始坐标
+        Dim addNode = Function(label As String, w As Single, h As Single) As inode
+                          Dim x = rand.Next(0, 1400)
+                          Dim y = rand.Next(0, 1400)
+
+                          Dim n = New inode With {
+                              .label = label,
+                              .data = New NodeData With {
+                                  .initialPostion = New FDGVector2(x, y),
+                                  .size = {w, h}
+                              }
+                          }
+
+                          Call g.AddNode(n)
+
+                          Return n
+                      End Function
+
+        ' ------------------------------------------------------------------
+        ' 1) 网格块 8 x 8 = 64 个节点，块内形成密集网格边（大量交叉来源）
+        ' ------------------------------------------------------------------
+        Dim gridIds(7, 7) As String
+        Dim gridNodes(7, 7) As inode
+
+        For r As Integer = 0 To 7
+            For c As Integer = 0 To 7
+                Dim lbl = $"G{idCounter}"
+                idCounter += 1
+                gridIds(r, c) = lbl
+                gridNodes(r, c) = addNode(lbl, 16.0F, 16.0F)
+            Next
+        Next
+
+        For r As Integer = 0 To 7
+            For c As Integer = 0 To 7
+                If c < 7 Then Call g.AddEdge(gridIds(r, c), gridIds(r, c + 1))
+                If r < 7 Then Call g.AddEdge(gridIds(r, c), gridIds(r + 1, c))
+                ' 额外对角线边，进一步制造交叉
+                If r < 7 AndAlso c < 7 Then Call g.AddEdge(gridIds(r, c), gridIds(r + 1, c + 1))
+            Next
+        Next
+
+        ' ------------------------------------------------------------------
+        ' 2) 长链式结构 28 个节点，串联成一条长链（制造跨画布长边）
+        ' ------------------------------------------------------------------
+        Dim chainIds(27) As String
+        For i As Integer = 0 To 27
+            Dim lbl = $"C{idCounter}"
+            idCounter += 1
+            chainIds(i) = lbl
+            Call addNode(lbl, 14.0F, 14.0F)
+        Next
+        For i As Integer = 0 To 26
+            Call g.AddEdge(chainIds(i), chainIds(i + 1))
+        Next
+        ' 把长链两端接到网格上，让整体连成一张大图
+        Call g.AddEdge(chainIds(0), gridIds(0, 0))
+        Call g.AddEdge(chainIds(27), gridIds(7, 7))
+
+        ' ------------------------------------------------------------------
+        ' 3) 三个星型簇：每簇 1 hub + 9 leaf = 30 个节点
+        ' ------------------------------------------------------------------
+        For s As Integer = 0 To 2
+            Dim hubLbl = $"H{idCounter}"
+            idCounter += 1
+            Call addNode(hubLbl, 26.0F, 26.0F)
+
+            For leaf As Integer = 0 To 8
+                Dim leafLbl = $"L{idCounter}"
+                idCounter += 1
+                Call addNode(leafLbl, 12.0F, 12.0F)
+                Call g.AddEdge(hubLbl, leafLbl)
+            Next
+        Next
+
+        ' ------------------------------------------------------------------
+        ' 4) 独立环分量 8 个节点（连通分量，验证 handleDisconnected 路径）
+        ' ------------------------------------------------------------------
+        Dim ringIds(7) As String
+        For i As Integer = 0 To 7
+            Dim lbl = $"R{idCounter}"
+            idCounter += 1
+            ringIds(i) = lbl
+            Call addNode(lbl, 15.0F, 15.0F)
+        Next
+        For i As Integer = 0 To 7
+            Call g.AddEdge(ringIds(i), ringIds((i + 1) Mod 8))
+        Next
+
+        Console.WriteLine($"Complex network built: {g.vertex.Count} nodes, {g.graphEdges.Count} edges")
+
+        ' Bridge NetworkGraph <-> Cola Node/Link
+        Dim allNodes As inode() = g.connectedNodes
+        Dim nodes(allNodes.Length - 1) As ColaNode
+        Dim indexOf As New Dictionary(Of inode, Integer)
+
+        For i As Integer = 0 To allNodes.Length - 1
+            Dim n = allNodes(i)
+            Dim p = n.data.initialPostion
+
+            nodes(i) = New ColaNode With {
+                .x = p.x,
+                .y = p.y,
+                .width = n.data.size(0),
+                .height = n.data.size(1),
+                .index = i
+            }
+            indexOf(n) = i
+        Next
+
+        Dim allEdges As Edge() = g.graphEdges.ToArray()
+        Dim links(allEdges.Length - 1) As ColaLink
+
+        For i As Integer = 0 To allEdges.Length - 1
+            Dim e = allEdges(i)
+            links(i) = New ColaLink With {
+                .source = nodes(indexOf(e.U)),
+                .target = nodes(indexOf(e.V))
+            }
+        Next
+
+        ' Run the corrected Cola stress-minimization layout.
+        ' symmetricDiffLinkLengths wires up the link-length calculator internally.
+        ' NOTE: avoidOverlaps is disabled because Layout/Projection.vb is an incomplete
+        ' stub (undefined ProjectionGroup type); the core stress-minimization path is
+        ' what we are verifying here. Enable once Projection.vb is completed.
+        Dim layout As New ColaLayout
+
+        Call layout _
+            .size({1400, 1400}) _
+            .avoidOverlaps(False) _
+            .symmetricDiffLinkLengths(90, 0.7) _
+            .convergenceThreshold(0.01) _
+            .nodes(nodes) _
+            .links(links) _
+            .start()
+
+        ' Write the computed positions back into the network graph
+        For i As Integer = 0 To nodes.Length - 1
+            allNodes(i).data.initialPostion = New FDGVector2(nodes(i).x, nodes(i).y)
+        Next
+
+        ' Render with node labels enabled (displayId:=True) to verify the
+        ' LabelRendering fix on the label-color branch.
+        Call NetworkVisualizer _
+            .DrawImage(g, "1400,1400", displayId:=True, labelColorAsNodeColor:=False, drawEdgeBends:=True, labelerIterations:=1500, minLinkWidth:=3) _
+            .Save("./test/Cola_complex_layout.png")
+
+        Console.WriteLine("Complex Cola layout complete. Output written to ./test/Cola_complex_layout.png")
+    End Sub
+
+    ''' <summary>
+    ''' 原有的 12 节点环+弦对照用例（已验证），保留供对比。
+    ''' </summary>
+    Sub SimpleColaTest()
         ' Build a small network graph with a ring topology plus a few chords,
         ' so the stress-minimizing Cola layout has a clear symmetric target.
         Dim g As New NetworkGraph

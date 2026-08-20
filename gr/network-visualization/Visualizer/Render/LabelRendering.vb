@@ -132,8 +132,18 @@ Friend Class LabelRendering
                     br = New SolidBrush(color)
                 End If
             Else
-                br = .color
-                br = New SolidBrush(DirectCast(br, SolidBrush).Color.Darken(0.005))
+                ' 节点标签颜色取自节点的 Brush，但该 Brush 未必是 SolidBrush，
+                ' 直接 DirectCast 会在 HatchBrush/TextureBrush 等非 SolidBrush 类型时崩溃。
+                ' 这里做类型安全处理：能取 SolidBrush.Color 就用它并略微调暗，否则回退到默认标签色。
+                Dim baseColor As Color
+
+                If TypeOf .color Is SolidBrush Then
+                    baseColor = DirectCast(.color, SolidBrush).Color
+                Else
+                    baseColor = defaultLabelColor.Color
+                End If
+
+                br = New SolidBrush(baseColor.Darken(0.005))
             End If
 
             lx = .label.X
