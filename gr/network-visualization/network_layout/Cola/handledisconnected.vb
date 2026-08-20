@@ -362,9 +362,13 @@ Namespace Cola
 
         End Sub
 
-        Private Function get_entire_width(data) As Double
+        Private Function get_entire_width(data As List(Of Graph)) As Double
             Dim width = 0.0
-            data.forEach(Sub(d) width += d.width + packingOptions.PADDING)
+
+            For Each d As Graph In data
+                width += d.Width + packingOptions.PADDING
+            Next
+
             Return width
         End Function
 
