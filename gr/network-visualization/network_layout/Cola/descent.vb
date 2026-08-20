@@ -194,21 +194,21 @@ Namespace Cola
             End If
             i = Me.k
             While System.Math.Max(Interlocked.Decrement(i), i + 1)
-                Me.g(i) = New Double(Me.k) {}
-                Me.H(i) = New Double(Me.k)() {}
+                Me.g(i) = New Double(Me.n) {}
+                Me.H(i) = New Double(Me.n)() {}
                 j = n
                 While System.Math.Max(Interlocked.Decrement(j), j + 1)
-                    Me.H(i)(j) = New Double(Me.k) {}
+                    Me.H(i)(j) = New Double(Me.n) {}
                 End While
-                Me.Hd(i) = New Double(Me.k) {}
-                Me.a(i) = New Double(Me.k) {}
-                Me.b(i) = New Double(Me.k) {}
-                Me.c(i) = New Double(Me.k) {}
-                Me.d(i) = New Double(Me.k) {}
-                Me.e(i) = New Double(Me.k) {}
-                Me.ia(i) = New Double(Me.k) {}
-                Me.ib(i) = New Double(Me.k) {}
-                Me.xtmp(i) = New Double(Me.k) {}
+                Me.Hd(i) = New Double(Me.n) {}
+                Me.a(i) = New Double(Me.n) {}
+                Me.b(i) = New Double(Me.n) {}
+                Me.c(i) = New Double(Me.n) {}
+                Me.d(i) = New Double(Me.n) {}
+                Me.e(i) = New Double(Me.n) {}
+                Me.ia(i) = New Double(Me.n) {}
+                Me.ib(i) = New Double(Me.n) {}
+                Me.xtmp(i) = New Double(Me.n) {}
             End While
         End Sub
 

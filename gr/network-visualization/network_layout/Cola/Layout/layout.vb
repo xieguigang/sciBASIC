@@ -579,8 +579,8 @@ Namespace Cola
             Dim w = Me._canvasSize(0)
             Dim h = Me._canvasSize(1)
 
-            Dim x = New Double(N__2) {}
-            Dim y = New Double(N__2) {}
+            Dim x = New Double(N__2 - 1) {}
+            Dim y = New Double(N__2 - 1) {}
 
             Dim G__3 As Double()() = Nothing
 
