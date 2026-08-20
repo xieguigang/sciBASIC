@@ -69,6 +69,9 @@ Imports inode = Microsoft.VisualBasic.Data.visualize.Network.Graph.Node
 Module OrthogonalLayoutTest
 
     Sub Main()
+        ' 注册 GDI 光栅渲染驱动，否则 NetworkVisualizer 无法输出 PNG
+        Call Microsoft.VisualBasic.Imaging.Driver.ImageDriver.Register()
+
         ' Call test1()
         Call holaTest()
         ' Call test2()
@@ -131,8 +134,8 @@ Module OrthogonalLayoutTest
                     log.WriteLine($"{n.label,3}  ->  ({p.x:F1}, {p.y:F1})")
                 Next
 
-                ' 渲染为 PNG
-                Call NetworkVisualizer.DrawImage(g, "1000,1000", labelerIterations:=-1, minLinkWidth:=8) _
+                ' 渲染为 PNG（关闭节点标签渲染，避免框架 label style 缺失导致的转换异常）
+                Call NetworkVisualizer.DrawImage(g, "1000,1000", displayId:=False, labelerIterations:=-1, minLinkWidth:=8) _
                     .Save("./HOLA_layout.png")
 
                 log.WriteLine()
