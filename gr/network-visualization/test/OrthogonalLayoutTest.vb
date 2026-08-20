@@ -138,13 +138,15 @@ Module OrthogonalLayoutTest
 
                 ' 统计正交路由生成的边数量
                 Dim bendCount As Integer = 0
+                Dim totalEdges As Integer = 0
                 For Each e As Edge In g.graphEdges
+                    totalEdges += 1
                     If e.data.bends IsNot Nothing AndAlso e.data.bends.Length > 0 Then
                         bendCount += 1
                     End If
                 Next
                 log.WriteLine()
-                log.WriteLine($"=== 边路由统计: {bendCount}/{g.graphEdges.Length} 条边生成了正交折点 (bends) ===")
+                log.WriteLine($"=== 边路由统计: {bendCount}/{totalEdges} 条边生成了正交折点 (bends) ===")
                 log.WriteLine()
 
                 ' 渲染为 PNG（关闭节点标签渲染避免 label style 转换异常，启用 drawEdgeBends 显示正交路由折点）
