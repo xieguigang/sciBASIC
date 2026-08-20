@@ -3,10 +3,10 @@ Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Driver
 
-Imports Cola = Microsoft.VisualBasic.Data.visualize.Network.Layout.Cola
-Imports ColaNode = Microsoft.VisualBasic.Data.visualize.Network.Layout.Cola.Node
-Imports ColaLayout = Microsoft.VisualBasic.Data.visualize.Network.Layout.Cola.Layout
-Imports ColaLink = Microsoft.VisualBasic.Data.visualize.Network.Layout.Cola.Link(Of Microsoft.VisualBasic.Data.visualize.Network.Layout.Cola.Node)
+Imports Cola = Microsoft.VisualBasic.Data.visualize.Network.Layouts.Cola
+Imports ColaNode = Microsoft.VisualBasic.Data.visualize.Network.Layouts.Cola.Node
+Imports ColaLayout = Microsoft.VisualBasic.Data.visualize.Network.Layouts.Cola.Layout
+Imports ColaLink = Microsoft.VisualBasic.Data.visualize.Network.Layouts.Cola.Link(Of Microsoft.VisualBasic.Data.visualize.Network.Layouts.Cola.Node)
 
 Module ColaTest
 
