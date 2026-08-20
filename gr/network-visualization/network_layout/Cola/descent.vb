@@ -161,6 +161,8 @@ Namespace Cola
 
         Public Sub New(x As Double()(), Dmatrix As Double()(), Optional G As Double()() = Nothing)
             Me.x = x
+            Me.Dmatrix = Dmatrix
+            Me.Gmatrix = G
             Me.k = x.Length
             ' dimensionality
             Me.n = x(0).Length
