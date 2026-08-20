@@ -1,3 +1,4 @@
+Imports System.Linq
 Imports Microsoft.VisualBasic.Data.visualize.Network
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
 Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts
@@ -49,37 +50,35 @@ Module ColaTest
 
         ' Bridge NetworkGraph <-> Cola Node/Link
         Dim allNodes As inode() = g.connectedNodes
+        Dim nodes(allNodes.Length - 1) As ColaNode
 
-        Dim nodes As ColaNode() = allNodes _
-            .Select(Function(n, i)
-                        Dim p = n.data.initialPostion
-                        Return New ColaNode With {
-                            .x = p.x,
-                            .y = p.y,
-                            .width = n.data.size.Width,
-                            .height = n.data.size.Height,
-                            .index = i
-                        }
-                    End Function) _
-            .ToArray
-
-        ' remember the mapping from inode index -> cola node
+        ' remember the mapping from inode -> cola node index
         Dim indexOf As New Dictionary(Of inode, Integer)
 
         For i As Integer = 0 To allNodes.Length - 1
-            indexOf(allNodes(i)) = i
+            Dim n = allNodes(i)
+            Dim p = n.data.initialPostion
+
+            nodes(i) = New ColaNode With {
+                .x = p.x,
+                .y = p.y,
+                .width = n.data.size(0),
+                .height = n.data.size(1),
+                .index = i
+            }
+            indexOf(n) = i
         Next
 
-        Dim links As ColaLink() = g.graphEdges _
-            .Select(Function(e)
-                        Dim src = nodes(indexOf(e.U))
-                        Dim tgt = nodes(indexOf(e.V))
-                        Return New ColaLink With {
-                            .source = src,
-                            .target = tgt
-                        }
-                    End Function) _
-            .ToArray
+        Dim allEdges As Edge() = g.graphEdges.ToArray()
+        Dim links(allEdges.Length - 1) As ColaLink
+
+        For i As Integer = 0 To allEdges.Length - 1
+            Dim e = allEdges(i)
+            links(i) = New ColaLink With {
+                .source = nodes(indexOf(e.U)),
+                .target = nodes(indexOf(e.V))
+            }
+        Next
 
         ' Run the corrected Cola stress-minimization layout.
         ' symmetricDiffLinkLengths wires up the link-length calculator internally.
@@ -96,7 +95,7 @@ Module ColaTest
 
         ' Write the computed positions back into the network graph
         For i As Integer = 0 To nodes.Length - 1
-            g.nodes(i).data.initialPostion = New FDGVector2(nodes(i).x, nodes(i).y)
+            allNodes(i).data.initialPostion = New FDGVector2(nodes(i).x, nodes(i).y)
         Next
 
         ' Render the laid-out graph to an image for visual inspection
