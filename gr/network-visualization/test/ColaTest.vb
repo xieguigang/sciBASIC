@@ -177,9 +177,12 @@ Module ColaTest
 
         ' Render with node labels enabled (displayId:=True) to verify the
         ' LabelRendering fix on the label-color branch.
+        ' NOTE: the test runs with working directory = test/, so a relative
+        ' path like "./Cola_complex_layout.png" lands in test/ (consistent with
+        ' the other HOLA_* tests), not test/test/.
         Call NetworkVisualizer _
             .DrawImage(g, "1400,1400", displayId:=True, labelColorAsNodeColor:=False, drawEdgeBends:=True, labelerIterations:=1500, minLinkWidth:=3) _
-            .Save("./test/Cola_complex_layout.png")
+            .Save("./Cola_complex_layout.png")
 
         Console.WriteLine("Complex Cola layout complete. Output written to ./test/Cola_complex_layout.png")
     End Sub
