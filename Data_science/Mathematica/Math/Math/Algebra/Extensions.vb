@@ -305,4 +305,10 @@ Namespace LinearAlgebra
             Next
         End Function
     End Module
+
+    Public Enum ApplyOnAxis As Integer
+        Any = -1
+        Column = 0
+        Row = 1
+    End Enum
 End Namespace

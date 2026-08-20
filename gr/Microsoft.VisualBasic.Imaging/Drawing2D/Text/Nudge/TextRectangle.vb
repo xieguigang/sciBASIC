@@ -60,7 +60,7 @@
 
 Imports System.Drawing
 Imports System.Runtime.CompilerServices
-Imports np = Microsoft.VisualBasic.Math.LinearAlgebra.Matrix.Numpy
+Imports Microsoft.VisualBasic.Math.LinearAlgebra
 
 Namespace Drawing2D.Text.Nudge
 
@@ -129,25 +129,25 @@ Namespace Drawing2D.Text.Nudge
         End Function
 
         Public Sub left_translation()
-            Dim x1 = r.x1 + np.array({-r.l - 2 * marge(0), 0})
+            Dim x1 = r.x1 + New Vector({-r.l - 2 * marge(0), 0})
             r = New PlateRectangle(x1, r.l, r.h)
             state += 1
         End Sub
 
         Public Sub right_translation()
-            Dim x1 = r.x1 + np.array({r.l + 2 * marge(0), 0})
+            Dim x1 = r.x1 + New Vector({r.l + 2 * marge(0), 0})
             r = New PlateRectangle(x1, r.l, r.h)
             state -= 1
         End Sub
 
         Public Sub upper_translation()
-            Dim x1 = r.x1 + np.array({0, r.h + 2 * marge(1)})
+            Dim x1 = r.x1 + New Vector({0, r.h + 2 * marge(1)})
             r = New PlateRectangle(x1, r.l, r.h)
             state -= 2
         End Sub
 
         Public Sub down_translation()
-            Dim x1 = r.x1 + np.array({0, -r.h - 2 * marge(1)})
+            Dim x1 = r.x1 + New Vector({0, -r.h - 2 * marge(1)})
             r = New PlateRectangle(x1, r.l, r.h)
             state += 2
         End Sub

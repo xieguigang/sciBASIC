@@ -59,7 +59,6 @@ Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.MIME.Html.CSS
 Imports Microsoft.VisualBasic.Serialization.JSON
-Imports np = Microsoft.VisualBasic.Math.LinearAlgebra.Matrix.Numpy
 
 Namespace Drawing2D.Text.Nudge
 
@@ -149,7 +148,7 @@ Namespace Drawing2D.Text.Nudge
             Dim l As Double = label.width
             Dim h As Double = label.height
 
-            Return New TextRectangle(label.text, New PlateRectangle(xy + np.array(marge), l, h), 1, marge)
+            Return New TextRectangle(label.text, New PlateRectangle(xy + New Vector(marge), l, h), 1, marge)
         End Function
 
         <Extension>
@@ -173,9 +172,9 @@ Namespace Drawing2D.Text.Nudge
             Dim marge As Vector
 
             If add_marge Then
-                marge = np.array({x_scope / figwidth, y_scope / figheight}) / 15
+                marge = New Vector({x_scope / figwidth, y_scope / figheight}) / 15
             Else
-                marge = np.array({0, 0})
+                marge = New Vector({0.0, 0.0})
             End If
 
             Dim list_tr As New List(Of TextRectangle)
