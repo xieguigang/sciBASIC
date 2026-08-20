@@ -620,14 +620,8 @@ Namespace Cola
                 '       if (typeof l.source == "number") l.source = this._nodes[<number>l.source];
                 '       if (typeof l.target == "number") l.target = this._nodes[<number>l.target];
                 '   });
-                Me._links.ForEach(Sub(l, i)
-                                      If TypeOf l.source Is Integer Then
-                                          l.source = Me._nodes(CType(l.source, Integer))
-                                      End If
-                                      If TypeOf l.target Is Integer Then
-                                          l.target = Me._nodes(CType(l.target, Integer))
-                                      End If
-                                  End Sub)
+                ' In the VB translation Link(Of Node).source/.target are typed as Node, so callers
+                ' always supply Node references directly and the numeric-resolution branch is a no-op.
                 Me._links.DoEach(Sub(e)
                                      Dim u = Layout.getSourceIndex(e)
                                      Dim v = Layout.getTargetIndex(e)
