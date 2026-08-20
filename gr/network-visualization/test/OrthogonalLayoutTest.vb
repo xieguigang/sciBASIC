@@ -119,7 +119,7 @@ Module OrthogonalLayoutTest
         Call g.AddEdge("3", "10")   ' 长边，制造大交叉
 
         ' 执行 HOLA 布局
-        Call g.HOLA.DoLayout()
+        Call HOLA.DoLayout(g)
 
         ' 打印布局后的节点坐标
         Call Console.WriteLine(vbLf & "=== HOLA layout result (label, x, y) ===")

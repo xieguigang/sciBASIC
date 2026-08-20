@@ -34,14 +34,14 @@ Namespace Hola
         ''' <summary>
         ''' 每个节点的邻居索引集合（无向），用于扫描松弛阶段的局部处理。
         ''' </summary>
-        Public ReadOnly neighbours As Integer()()
+        Public ReadOnly neighbours As List(Of Integer)()
 
         Sub New(nodes As Node(), edges As (u As Integer, v As Integer)(), opts As HolaOptions)
             Me.nodes = nodes
             Me.edges = edges
             Me.indexOf = New Dictionary(Of Node, Integer)
             Me.positions = New FDGVector2(nodes.Length - 1) {}
-            Me.neighbours = New Integer(nodes.Length - 1)() {}
+            Me.neighbours = New List(Of Integer)(nodes.Length - 1) {}
 
             For i As Integer = 0 To nodes.Length - 1
                 indexOf(nodes(i)) = i
@@ -52,20 +52,20 @@ Namespace Hola
                 Else
                     positions(i) = New FDGVector2(pos.x, pos.y)
                 End If
-                neighbours(i) = {}
+                neighbours(i) = New List(Of Integer)
             Next
 
             ' 构建无向邻居表
-            Dim adj As New List(Of Integer())(nodes.Length)
+            Dim adj(nodes.Length - 1) As List(Of Integer)
             For i As Integer = 0 To nodes.Length - 1
-                adj.Add(New List(Of Integer))
+                adj(i) = New List(Of Integer)
             Next
             For Each e In edges
                 adj(e.u).Add(e.v)
                 adj(e.v).Add(e.u)
             Next
             For i As Integer = 0 To nodes.Length - 1
-                neighbours(i) = adj(i).ToArray
+                neighbours(i) = adj(i)
             Next
         End Sub
 

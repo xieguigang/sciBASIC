@@ -16,7 +16,6 @@ Namespace Hola
         ''' <param name="graph">要布局的网络图</param>
         ''' <param name="opts">可选算法参数</param>
         ''' <returns>已布局的同一图实例</returns>
-        <Extension>
         Public Function DoLayout(graph As NetworkGraph, Optional opts As HolaOptions = Nothing) As NetworkGraph
             Return New HolaLayouter().Layout(graph, opts)
         End Function

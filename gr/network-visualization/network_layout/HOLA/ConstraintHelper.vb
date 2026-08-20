@@ -76,14 +76,15 @@ Namespace Hola
                 vmap(idx) = k
                 Dim c = GetCoord(state.positions(idx), ax)
                 ' 期望值即当前值（投影梯度下降的初值）；weight 取 1 保持中性
-                variables(k) = New Variable(k, c, c, 1.0)
+                variables(k) = New Variable(c, 1.0)
+                variables(k).index = k
             Next
 
-            ' 构建约束：CoLa 语法 Constraint(left, right, gap) 表示 right - left >= gap
+            ' 构建约束：CoLa 语法 Constraint(left, right, gap, equality) 表示 right - left >= gap
             Dim constraints(pairs.Length - 1) As Constraint
             For i As Integer = 0 To pairs.Length - 1
                 Dim pr = pairs(i)
-                constraints(i) = New Constraint(vmap(pr.left), vmap(pr.right), pr.gap, equality)
+                constraints(i) = New Constraint(variables(vmap(pr.left)), variables(vmap(pr.right)), pr.gap, equality)
             Next
 
             Dim solver = New Solver(variables, constraints)
