@@ -1,5 +1,6 @@
 Imports Microsoft.VisualBasic.Data.visualize.Network
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
+Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Imaging.Driver
 
@@ -7,6 +8,7 @@ Imports Cola = Microsoft.VisualBasic.Data.visualize.Network.Layouts.Cola
 Imports ColaNode = Microsoft.VisualBasic.Data.visualize.Network.Layouts.Cola.Node
 Imports ColaLayout = Microsoft.VisualBasic.Data.visualize.Network.Layouts.Cola.Layout
 Imports ColaLink = Microsoft.VisualBasic.Data.visualize.Network.Layouts.Cola.Link(Of Microsoft.VisualBasic.Data.visualize.Network.Layouts.Cola.Node)
+Imports inode = Microsoft.VisualBasic.Data.visualize.Network.Graph.Node
 
 Module ColaTest
 
@@ -46,7 +48,9 @@ Module ColaTest
         Call g.AddEdge("4", "10")
 
         ' Bridge NetworkGraph <-> Cola Node/Link
-        Dim nodes As ColaNode() = g.nodes _
+        Dim allNodes As inode() = g.connectedNodes
+
+        Dim nodes As ColaNode() = allNodes _
             .Select(Function(n, i)
                         Dim p = n.data.initialPostion
                         Return New ColaNode With {
@@ -62,11 +66,11 @@ Module ColaTest
         ' remember the mapping from inode index -> cola node
         Dim indexOf As New Dictionary(Of inode, Integer)
 
-        For i As Integer = 0 To g.nodes.Count - 1
-            indexOf(g.nodes(i)) = i
+        For i As Integer = 0 To allNodes.Length - 1
+            indexOf(allNodes(i)) = i
         Next
 
-        Dim links As ColaLink() = g.edges _
+        Dim links As ColaLink() = g.graphEdges _
             .Select(Function(e)
                         Dim src = nodes(indexOf(e.U))
                         Dim tgt = nodes(indexOf(e.V))
