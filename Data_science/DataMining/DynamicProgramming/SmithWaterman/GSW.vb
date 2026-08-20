@@ -72,7 +72,7 @@ Namespace SmithWaterman
     ''' Generic Smith-Waterman computing kernel.(Smith-Waterman泛型化通用计算核心)
     ''' </summary>
     ''' <typeparam name="T"></typeparam>
-    Public Class GSW(Of T)
+    Public Class GSW(Of T) : Implements IDisposable
 
 #Region "input data"
 
@@ -90,6 +90,7 @@ Namespace SmithWaterman
         ''' The lengths of the input strings
         ''' </summary>
         ReadOnly queryLength%, subjectLength%
+        Private disposedValue As Boolean
 #End Region
 
 #Region "Matrix"
@@ -434,5 +435,120 @@ Namespace SmithWaterman
                 Next
             Next
         End Function
+
+        ''' <summary>
+        ''' 轻量级路径:只求得分最高的单条局部比对(HSP),用于序列聚类等
+        ''' “只需要一个最佳比对结果”的场景。
+        ''' </summary>
+        ''' <param name="scoreThreshold">
+        ''' HSP 收集的绝对得分阈值。传入 0 表示收集所有正分 HSP。
+        ''' </param>
+        ''' <param name="minW">
+        ''' 最短片段长度过滤(query 与 subject 两侧都需满足);0 表示不限制。
+        ''' 若该值大于 min(query, subject) 长度,则自动收敛到后者。
+        ''' </param>
+        ''' <returns>得分最高的 HSP;若没有满足条件的比对则返回 Nothing。</returns>
+        ''' <remarks>
+        ''' 与 <see cref="Workspace.CreateHSP"/> + <see cref="Workspace.GetBestAlignment"/> 
+        ''' 的组合语义保持一致,但**不会**调用 <see cref="GetDPMAT"/>(整矩阵复制)与 
+        ''' <see cref="GetTraceback"/>(递归回溯),也不会构造任何持有 <see cref="score"/> / 
+        ''' <see cref="prevCells"/> 各行引用的包装对象。
+        ''' 
+        ''' 这一点非常关键:此前上游只需要一条最佳 HSP 时也会走完整的 Output 构建流程,
+        ''' 单次比对额外分配约两倍 DP 矩阵大小的大对象(且通过行引用别名使 
+        ''' <see cref="Dispose"/> 无法真正释放矩阵),在 O(n^2) 的两两比对循环中会持续
+        ''' 堆积大对象堆(LOH)碎片,表现为内存无法回收。
+        ''' </remarks>
+        Public Function GetBestHSP(Optional scoreThreshold As Double = 0, Optional minW As Integer = 0) As LocalHSPMatch(Of T)
+            ' 片段长度过滤阈值收敛:minW 不应超过较短序列的长度,否则会过滤掉全部结果
+            Dim m2Len As Integer = std.Min(queryLength, subjectLength)
+
+            If minW > m2Len Then
+                minW = m2Len
+            End If
+
+            ' 先在 Match 层面(轻量 struct/class,不含序列副本)完成链化与择优,
+            ' 只对最终胜出的那一条构造 LocalHSPMatch —— 避免为每条候选 HSP
+            ' 都复制 seq1/seq2 两段子序列。
+            Dim candidates As Match() = GetMatches(scoreThreshold) _
+                .Where(Function(m)
+                           Return std.Abs(m.toA - m.fromA) >= minW AndAlso
+                                  std.Abs(m.toB - m.fromB) >= minW
+                       End Function) _
+                .ToArray
+
+            If candidates.Length = 0 Then
+                Return Nothing
+            End If
+
+            Dim bestChain As Match = SimpleChaining _
+                .Chaining(candidates, debug:=False) _
+                .OrderByDescending(Function(m) m.score) _
+                .FirstOrDefault
+
+            Erase candidates
+
+            If bestChain Is Nothing Then
+                Return Nothing
+            Else
+                Return New LocalHSPMatch(Of T)(bestChain, query, subject, symbol)
+            End If
+        End Function
+
+        Protected Overridable Sub Dispose(disposing As Boolean)
+            If Not disposedValue Then
+                If disposing Then
+                    ' TODO: dispose managed state (managed objects)
+
+                    Erase _query
+                    Erase _subject
+
+                    ' 注意:score / prevCells 是 jagged array(锯齿数组),
+                    ' 直接 Erase 只会置空**外层**引用数组,各行子数组若被外部对象
+                    ' (例如包装成行视图的输出对象)别名持有,则依然可达而无法回收。
+                    ' 因此这里先逐行置空,切断对每一行的引用,再释放外层数组。
+                    Call eraseRows(_score)
+                    Call eraseRows(_prevCells)
+
+                    Erase _score
+                    Erase _prevCells
+                End If
+
+                ' TODO: free unmanaged resources (unmanaged objects) and override finalizer
+                ' TODO: set large fields to null
+                disposedValue = True
+            End If
+        End Sub
+
+        ''' <summary>
+        ''' 逐行清空锯齿数组中每一行的引用。
+        ''' </summary>
+        ''' <remarks>
+        ''' 对于 jagged array,外层数组只保存各行的引用。若仅 Erase 外层数组,
+        ''' 而某个外部对象仍持有其中若干行(行视图/行包装),那些行占用的内存不会被回收。
+        ''' 先把外层数组的每个槽位置为 Nothing,可以确保在外层引用消失后各行也不可达。
+        ''' </remarks>
+        Private Shared Sub eraseRows(Of TRow)(matrix As TRow()())
+            If matrix Is Nothing Then
+                Return
+            End If
+
+            For i As Integer = 0 To matrix.Length - 1
+                matrix(i) = Nothing
+            Next
+        End Sub
+
+        ' ' TODO: override finalizer only if 'Dispose(disposing As Boolean)' has code to free unmanaged resources
+        ' Protected Overrides Sub Finalize()
+        '     ' Do not change this code. Put cleanup code in 'Dispose(disposing As Boolean)' method
+        '     Dispose(disposing:=False)
+        '     MyBase.Finalize()
+        ' End Sub
+
+        Public Sub Dispose() Implements IDisposable.Dispose
+            ' Do not change this code. Put cleanup code in 'Dispose(disposing As Boolean)' method
+            Dispose(disposing:=True)
+            GC.SuppressFinalize(Me)
+        End Sub
     End Class
 End Namespace
