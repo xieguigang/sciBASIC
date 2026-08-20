@@ -177,9 +177,17 @@ Friend Class LabelRendering
             End With
 
             Dim rectf As RectangleF = rect.OffSet2D(.style.Size / 5, 0).ToFloat
-            Dim path As GraphicsPath = g.GetStringPath(.label.text, rectf, .style)
+            Dim path As GraphicsPath = Nothing
 
-            If Not labelTextStroke Is Nothing Then
+            Try
+                path = g.GetStringPath(.label.text, rectf, .style)
+            Catch ex As Exception
+                ' 某些字体/坐标组合下 GetStringPath 会抛 "Value is not valid"，
+                ' 这里降级为直接绘制文本字符串，保证标签始终可渲染。
+                path = Nothing
+            End Try
+
+            If Not labelTextStroke Is Nothing AndAlso Not path Is Nothing Then
                 ' 绘制轮廓（描边）
                 Call g.DrawString(.label.text, .style, br, lx, ly)
                 Call g.DrawPath(labelTextStroke, path)
