@@ -11,12 +11,5 @@
   9  ->  (154.0, 185.0)
  10  ->  (194.0, 190.0)
  11  ->  (234.0, 195.0)
-ERROR: System.InvalidCastException: Specified cast is not valid.
-   at Microsoft.VisualBasic.Data.visualize.Network.LabelRendering.renderLabel(LayoutLabel label, IGraphics g, SolidBrush defaultLabelColor, Pen labelTextStroke) in G:\pixelArtist\src\framework\gr\network-visualization\Visualizer\Render\LabelRendering.vb:line 170
-   at Microsoft.VisualBasic.Data.visualize.Network.LabelRendering.renderLabels(IGraphics g, IEnumerable`1 labelList) in G:\pixelArtist\src\framework\gr\network-visualization\Visualizer\Render\LabelRendering.vb:line 114
-   at Microsoft.VisualBasic.Data.visualize.Network.NetworkPlot._Closure$__3-0._Lambda$__1(IGraphics& g, GraphicsRegion region) in G:\pixelArtist\src\framework\gr\network-visualization\Visualizer\NetworkPlot.vb:line 178
-   at Microsoft.VisualBasic.Imaging.Driver.ImageDriver.GraphicsPlot(DeviceDescription desc, IPlot plot) in G:\pixelArtist\src\framework\gr\Microsoft.VisualBasic.Imaging\Drivers\CreateGraphicsDriver.vb:line 114
-   at Microsoft.VisualBasic.Imaging.Drawing2D.g.GraphicsPlots(Size& size, Padding& padding, String bg, IPlot plotAPI, Drivers driver, Int32 dpi) in G:\pixelArtist\src\framework\gr\Microsoft.VisualBasic.Imaging\Drawing2D\g.vb:line 288
-   at Microsoft.VisualBasic.Data.visualize.Network.NetworkPlot.Render() in G:\pixelArtist\src\framework\gr\network-visualization\Visualizer\NetworkPlot.vb:line 186
-   at Microsoft.VisualBasic.Data.visualize.Network.NetworkVisualizer.DrawImage(NetworkGraph net, String canvasSize, String padding, String background, String defaultColor, Boolean displayId, Boolean labelColorAsNodeColor, String nodeStroke, Single minLinkWidth, Func`2 linkWidth, Variant`2 nodeRadius, Variant`2 fontSize, String labelFontBase, Variant`2 edgeDashTypes, Single edgeShadowDistance, DrawNodeShape drawNodeShape, Func`5 nodeWidget, DrawShape shapeRender, Func`2 getNodeLabel, GetLabelPosition getLabelPosition, Func`2 getLabelColor, Boolean hideDisconnectedNode, Boolean throwEx, NamedValue`1 hullPolygonGroups, Int32 labelerIterations, Int32 labelWordWrapWidth, Boolean showLabelerProgress, String defaultEdgeColor, String defaultLabelColor, String labelTextStroke, Boolean showConvexHullLegend, Boolean drawEdgeBends, Boolean drawEdgeDirection, String convexHullLabelFontCSS, Single convexHullScale, Single convexHullCurveDegree, Boolean fillConvexHullPolygon, Drivers driver, Int32 ppi) in G:\pixelArtist\src\framework\gr\network-visualization\Visualizer\NetworkVisualizer.vb:line 250
-   at Test.OrthogonalLayoutTest.holaTest() in G:\pixelArtist\src\framework\gr\network-visualization\test\OrthogonalLayoutTest.vb:line 138
+
+[HOLA] done. see ./HOLA_layout.png and ./HOLA_result.txt

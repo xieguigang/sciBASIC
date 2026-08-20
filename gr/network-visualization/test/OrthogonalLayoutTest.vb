@@ -99,7 +99,7 @@ Module OrthogonalLayoutTest
                         .label = labels(i),
                         .data = New NodeData With {
                             .initialPostion = New FDGVector2(x, y),
-                            .size = {8, 8}
+                            .size = {18, 18}
                         }
                     })
                 Next
@@ -129,16 +129,32 @@ Module OrthogonalLayoutTest
 
                 ' 打印布局后的节点坐标
                 log.WriteLine("=== HOLA layout result (label, x, y) ===")
+                log.WriteLine($"{"label",-5}  {"x",8}  {"y",8}  {"bends?",6}")
+                log.WriteLine(New String("-"c, 40))
                 For Each n As inode In g.connectedNodes
                     Dim p = n.data.initialPostion
-                    log.WriteLine($"{n.label,3}  ->  ({p.x:F1}, {p.y:F1})")
+                    log.WriteLine($"{n.label,-5}  {p.x,8:F1}  {p.y,8:F1}")
                 Next
 
-                ' 渲染为 PNG（关闭节点标签渲染，避免框架 label style 缺失导致的转换异常）
-                Call NetworkVisualizer.DrawImage(g, "1000,1000", displayId:=False, labelerIterations:=-1, minLinkWidth:=8) _
+                ' 统计正交路由生成的边数量
+                Dim bendCount As Integer = 0
+                For Each e As Edge In g.graphEdges
+                    If e.data.bends IsNot Nothing AndAlso e.data.bends.Length > 0 Then
+                        bendCount += 1
+                    End If
+                Next
+                log.WriteLine()
+                log.WriteLine($"=== 边路由统计: {bendCount}/{g.graphEdges.Length} 条边生成了正交折点 (bends) ===")
+                log.WriteLine()
+
+                ' 渲染为 PNG（关闭节点标签渲染避免 label style 转换异常，启用 drawEdgeBends 显示正交路由折点）
+                Call NetworkVisualizer.DrawImage(g, "1000,1000",
+                                                 displayId:=False,
+                                                 drawEdgeBends:=True,
+                                                 labelerIterations:=-1,
+                                                 minLinkWidth:=8) _
                     .Save("./HOLA_layout.png")
 
-                log.WriteLine()
                 log.WriteLine("[HOLA] done. see ./HOLA_layout.png and ./HOLA_result.txt")
             Catch ex As Exception
                 log.WriteLine("ERROR: " & ex.ToString())
