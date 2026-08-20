@@ -57,6 +57,7 @@ Imports Microsoft.VisualBasic.Data.visualize.Network
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
 Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts
 Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts.Orthogonal
+Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts.Hola
 Imports Microsoft.VisualBasic.Drawing
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Scripting.Runtime
@@ -68,12 +69,72 @@ Imports inode = Microsoft.VisualBasic.Data.visualize.Network.Graph.Node
 Module OrthogonalLayoutTest
 
     Sub Main()
-        Call test1()
+        ' Call test1()
+        Call holaTest()
         ' Call test2()
     End Sub
 
+    ''' <summary>
+    ''' HOLA 正交布局算法测试 demo：
+    ''' 1. 构造一张存在较多连线交叉的网络图（含初始坐标起点）；
+    ''' 2. 调用 HOLA.DoLayout 执行六阶段布局并写回坐标；
+    ''' 3. 打印布局后每个节点的 (label, x, y) 坐标；
+    ''' 4. 用 NetworkVisualizer 渲染为 PNG 供查看。
+    ''' </summary>
     Sub holaTest()
+        Dim g As New NetworkGraph
 
+        ' 构造 12 个节点的图，初始坐标给一个故意"乱"的起点（含交叉），便于观察 HOLA 效果
+        Dim labels = {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11"}
+        For i As Integer = 0 To labels.Length - 1
+            Dim x = 100.0 + (i Mod 4) * 40.0 + (i \ 4) * 7.0
+            Dim y = 100.0 + (i \ 4) * 40.0 + (i Mod 4) * 5.0
+            Call g.AddNode(New inode With {
+                .label = labels(i),
+                .data = New NodeData With {
+                    .initialPostion = New FDGVector2(x, y),
+                    .size = {8, 8}
+                }
+            })
+        Next
+
+        ' 一组边，刻意制造交叉与不对齐
+        Call g.AddEdge("0", "1")
+        Call g.AddEdge("0", "2")
+        Call g.AddEdge("1", "3")
+        Call g.AddEdge("2", "3")
+        Call g.AddEdge("2", "4")
+        Call g.AddEdge("3", "5")
+        Call g.AddEdge("4", "5")
+        Call g.AddEdge("4", "6")
+        Call g.AddEdge("5", "7")
+        Call g.AddEdge("6", "7")
+        Call g.AddEdge("6", "8")
+        Call g.AddEdge("7", "9")
+        Call g.AddEdge("8", "9")
+        Call g.AddEdge("8", "10")
+        Call g.AddEdge("9", "11")
+        Call g.AddEdge("10", "11")
+        Call g.AddEdge("0", "11")   ' 长边，制造大交叉
+        Call g.AddEdge("3", "10")   ' 长边，制造大交叉
+
+        ' 执行 HOLA 布局
+        Call g.HOLA.DoLayout()
+
+        ' 打印布局后的节点坐标
+        Call Console.WriteLine(vbLf & "=== HOLA layout result (label, x, y) ===")
+        For Each n As inode In g.connectedNodes
+            Dim p = n.data.initialPostion
+            Call Console.WriteLine($"{n.label,3}  ->  ({p.x:F1}, {p.y:F1})")
+        Next
+
+        ' 渲染为 PNG
+        Call NetworkVisualizer.DrawImage(g, "1000,1000", labelerIterations:=-1, minLinkWidth:=8) _
+            .Save("./HOLA_layout.png")
+
+        Call Console.WriteLine(vbLf & "[HOLA] done. see ./HOLA_layout.png")
+
+        Pause()
     End Sub
 
     Sub test1()
