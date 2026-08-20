@@ -106,12 +106,28 @@ Namespace SmithWaterman
         ''' 
         <Extension>
         Private Function ChainingImpl(matches As Match(), debug As Boolean) As IEnumerable(Of Match)
-            Dim size As Integer = matches.Count
-            ' Hold adjaency matrix as a double [] the (i,j)= i*(i-1)/2+j
+            Dim size As Integer = matches.Length
+            ' Hold adjacency matrix as a double [] the (i,j)= i*(i-1)/2+j
             'with sink
-            Dim adjMatrix As Double() = New Double(size * (size - 1) \ 2 + size - 2) {}
+            ' size*(size-1) 在 32 位 Integer 下易溢出;当正分 HSP 数量很大(如长随机序列比对)时
+            ' O(n^2) 链化既不可用也无必要,直接返回得分最高的单条 match 作为最佳链。
+            Dim sizeL As Long = size
+            ' size*(size-1) 在 32 位 Integer 下于 size>46340 时溢出(与下方循环内 i_j 索引同源);
+            ' 当正分 HSP 数量很大(如长随机序列比对)时 O(n^2) 链化既不可用也无必要,
+            ' 直接返回得分最高的单条 match 作为最佳链。
+            If sizeL * (sizeL - 1) > Integer.MaxValue Then
+                Dim top As Match = matches(0)
+                For i As Integer = 1 To size - 1
+                    If matches(i).score > top.score Then
+                        top = matches(i)
+                    End If
+                Next
+                Return {top}
+            End If
+            Dim dims As Integer = CInt(sizeL * (sizeL - 1) \ 2 + sizeL - 2)
+            Dim adjMatrix As Double() = New Double(dims) {}
             ' Hold score matrix as a double [] the (i,j)= i*(i-1)/2+j
-            Dim sMatrix As Double() = New Double(size * (size - 1) \ 2 + size - 2) {}
+            Dim sMatrix As Double() = New Double(dims) {}
             'Hold max score of chain end at match i
             Dim sMax As Double() = New Double(size - 1) {}
             ' Hold the previous match index point to match i
@@ -242,6 +258,11 @@ Namespace SmithWaterman
         ''' System out the input array as an strict lower diagonal matrix
         ''' </summary>
         Public Sub printLowerMatrix(m As Double(), size As Integer)
+            ' size*(size-1) 在 32 位 Integer 下于 size>46340 时溢出,此处同样用 Long 计算索引
+            If CLng(size) * (size - 1) > Integer.MaxValue Then
+                Console.WriteLine("[printLowerMatrix] size 过大,跳过矩阵打印。")
+                Return
+            End If
             Console.Write(vbTab)
             For i As Integer = 0 To size - 1
                 Console.Write(i & vbTab)
@@ -250,7 +271,7 @@ Namespace SmithWaterman
             For i As Integer = 0 To size - 1
                 Console.Write(i & vbTab)
                 For j As Integer = 0 To i - 1
-                    Dim i_j As Integer = i * (i - 1) \ 2 + j
+                    Dim i_j As Integer = CInt(CLng(i) * (i - 1) \ 2 + j)
                     Console.Write(CSng(m(i_j)) & vbTab)
                 Next
                 Console.WriteLine()
