@@ -5,7 +5,7 @@
     <OutputType>WinExe</OutputType>
     <UseWindowsForms>True</UseWindowsForms>
     <UseWPF>True</UseWPF>
-    <StartupObject>test.FormCanvas</StartupObject>
+    <StartupObject>test.OrthogonalLayoutTest</StartupObject>
     <Platforms>AnyCPU;x64</Platforms>
     <Configurations>Debug;Release;Rsharp_app_release;mzkit;mzkit_win32;CellaLAB-Desktop</Configurations>
   </PropertyGroup>
