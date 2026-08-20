@@ -97,16 +97,29 @@ Namespace Analysis.Louvain
         End Sub
 
         Public Shared Function Load(Of Node As {New, Network.Node},
-                                       Edge As {New, Network.Edge(Of Node)})(g As NetworkGraph(Of Node, Edge), Optional eps As Double = 0.00000001) As LouvainCommunity
-
-            Dim louvain As New LouvainCommunity(eps:=eps) With {
-                .n = g.size.vertex,
-                .global_n = .n,
-                .m = g.size.edges * 2,
-                .edge = New Louvain.Edge(.m - 1) {},
-                .head = New Integer(.n - 1) {}
-            }
+                                       Edge As {New, Network.Edge(Of Node)})(g As NetworkGraph(Of Node, Edge),
+                                                                             Optional eps As Double = 0.00000001,
+                                                                             Optional leiden As Boolean = False) As LouvainCommunity
+            Dim louvain As LouvainCommunity
             Dim builder As New Builder
+
+            If leiden Then
+                louvain = New LeidenCommunity(eps:=eps) With {
+                    .n = g.size.vertex,
+                    .global_n = .n,
+                    .m = g.size.edges * 2,
+                    .edge = New Louvain.Edge(.m - 1) {},
+                    .head = New Integer(.n - 1) {}
+                }
+            Else
+                louvain = New LouvainCommunity(eps:=eps) With {
+                    .n = g.size.vertex,
+                    .global_n = .n,
+                    .m = g.size.edges * 2,
+                    .edge = New Louvain.Edge(.m - 1) {},
+                    .head = New Integer(.n - 1) {}
+                }
+            End If
 
             For i As Integer = 0 To louvain.n - 1
                 louvain.head(i) = -1

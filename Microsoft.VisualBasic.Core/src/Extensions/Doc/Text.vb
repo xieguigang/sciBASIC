@@ -243,9 +243,9 @@ Public Module TextDoc
     ''' </remarks>
     <Extension>
     Public Iterator Function IterateAllLines(path$, encoding As Encoding,
-                                             Optional verbose As Boolean = True,
-                                             Optional unsafe As Boolean = False,
-                                             Optional tqdm_wrap As Boolean = False) As IEnumerable(Of String)
+                                    Optional verbose As Boolean = True,
+                                    Optional unsafe As Boolean = False,
+                                    Optional tqdm_wrap As Boolean = False) As IEnumerable(Of String)
         If path.IsURLPattern Then
             ' get request a html page
             For Each line As String In path.GET.LineTokens
@@ -279,19 +279,33 @@ Public Module TextDoc
 
         ' path.Open is affects by the memory configuration
         Using fs As Stream = path.Open(FileMode.Open, doClear:=False, [readOnly]:=True, verbose:=verbose)
-            Using reader As New StreamReader(fs, encoding Or DefaultEncoding)
-                If tqdm_wrap Then
-                    For Each line As String In ReadLines(reader)
-                        Yield line
-                    Next
-                Else
-                    Dim line As Value(Of String) = ""
+            ' 20260819 在这里应该是采用迭代器来进行数据返回
+            ' 否则Using在这里会在惰性加载之前就将fs流关闭掉，导致下游的文本读取函数抛出 “流不可用” 的异常
+            For Each line As String In fs.IterateAllLines(encoding, verbose:=verbose, unsafe:=unsafe, tqdm_wrap:=tqdm_wrap)
+                Yield line
+            Next
+        End Using
+    End Function
 
-                    Do While (line = reader.ReadLine) IsNot Nothing
-                        Yield CStr(line)
-                    Loop
-                End If
-            End Using
+    <Extension>
+    Public Iterator Function IterateAllLines(fs As Stream,
+                                             Optional encoding As Encoding = Nothing,
+                                             Optional verbose As Boolean = True,
+                                             Optional unsafe As Boolean = False,
+                                             Optional tqdm_wrap As Boolean = False) As IEnumerable(Of String)
+
+        Using reader As New StreamReader(fs, encoding Or DefaultEncoding)
+            If tqdm_wrap Then
+                For Each line As String In ReadLines(reader)
+                    Yield line
+                Next
+            Else
+                Dim line As Value(Of String) = ""
+
+                Do While (line = reader.ReadLine) IsNot Nothing
+                    Yield CStr(line)
+                Loop
+            End If
         End Using
     End Function
 

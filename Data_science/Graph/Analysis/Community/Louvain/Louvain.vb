@@ -349,6 +349,159 @@ Namespace Analysis.Louvain
         End Sub
 
         ''' <summary>
+        ''' 纯计算逻辑：评估节点 i 应该移动到哪个簇，但不实际移动
+        ''' </summary>
+        Private Function EvaluateBestCluster(i As Integer) As Integer
+            Dim edgeWeightPerCluster = New Double(n - 1) {}
+            Dim j As Integer = head(i)
+            While j <> -1
+                Dim l = cluster(edge(j).v)
+                edgeWeightPerCluster(l) += edge(j).weight
+                j = edge(j).next
+            End While
+
+            Dim bestCluster = cluster(i) ' 默认保持原簇
+            Dim maxx_deltaQ = 0.0 ' 增量的最大值
+            Dim vis = New Boolean(n - 1) {}
+            Dim cur_deltaQ As Double
+
+            j = head(i)
+            While j <> -1
+                Dim l = cluster(edge(j).v)
+                If Not vis(l) Then
+                    vis(l) = True
+                    cur_deltaQ = edgeWeightPerCluster(l)
+                    ' 注意：这里的 cluster_weight 是全局当前状态的快照（读取是安全的）
+                    cur_deltaQ -= node_weight(i) * cluster_weight(l) * resolution
+
+                    If cur_deltaQ > maxx_deltaQ Then
+                        bestCluster = l
+                        maxx_deltaQ = cur_deltaQ
+                    End If
+                End If
+                j = edge(j).next
+            End While
+
+            ' 如果增量小于误差，则不移动
+            ' If maxx_deltaQ < eps Then bestCluster = cluster(i) ' 已默认赋值
+
+            Return bestCluster
+        End Function
+
+        ''' <summary>
+        ''' 
+        ''' </summary>
+        ''' <param name="max_clusters">
+        ''' set the limits of the max number of the node class we finally have.
+        ''' </param>
+        ''' <returns></returns>
+        Public Function SolveClustersParallel(Optional max_clusters As Integer = Integer.MaxValue) As LouvainCommunity
+            Dim count As Integer = 0   ' 迭代次数
+            Dim update_flag As Boolean ' 标记是否发生过更新
+            Dim enum_time As Integer
+            Dim point As Integer
+
+            Call setCluster0()
+
+            Do
+                ' 第一重循环，每次循环rebuild一次图
+                count += 1
+                cluster_weight = New Double(n - 1) {}
+
+                For j As Integer = 0 To n - 1
+                    ' 生成簇的权值
+                    cluster_weight(cluster(j)) += node_weight(j)
+                Next
+
+                ' 生成随机序列
+                Dim order = New Integer(n - 1) {}
+                Dim maxLoop As Integer = 0
+
+                For i As Integer = 0 To n - 1
+                    order(i) = i
+                Next
+
+                For i As Integer = 0 To n - 1
+                    Dim j = randf.seeds.Next(n)
+                    Dim temp = order(i)
+                    order(i) = order(j)
+                    order(j) = temp
+                Next
+
+                enum_time = 0       ' 枚举次数，到n时代表所有点已经遍历过且无移动的点
+                point = 0           ' 循环指针
+                update_flag = False ' 是否发生过更新的标记
+                maxLoop = node_weight.Length * 50
+
+                enum_time = 0
+                point = 0
+                update_flag = False
+                maxLoop = node_weight.Length * 50
+                Dim max As Integer = maxLoop
+                Dim deltaP As Integer = maxLoop / 25
+                Dim p As Integer = Scan0
+
+                Call VBDebugger.EchoLine("")
+                Call VBDebugger.Echo($" [loop_{count}] Progress: ")
+
+                ' 【改造点】引入并行计算
+                Do
+                    ' 用于存放每个节点计算出的最佳目标簇
+                    Dim bestClusters As Integer() = New Integer(n - 1) {}
+                    Dim nodesProcessed As Integer = 0
+
+                    ' 1. 并行计算阶段：评估本轮参与迭代的节点
+                    ' 取出接下来要处理的一批节点 (批处理可以减少同步开销，这里简单全量并行)
+                    ' 注意：由于 n 可能很大，Parallel.For 会自动进行分区和线程池调度
+                    Call System.Threading.Tasks.Parallel.For(0, n, Sub(i) bestClusters(i) = EvaluateBestCluster(i))
+
+                    ' 2. 串行更新阶段：应用变更并统计是否发生移动
+                    For i As Integer = 0 To n - 1
+                        Dim targetCluster = bestClusters(i)
+                        If targetCluster <> cluster(i) Then
+                            ' 发生移动，更新全局权重和簇分配
+                            cluster_weight(cluster(i)) -= node_weight(i)
+                            cluster_weight(targetCluster) += node_weight(i)
+                            cluster(i) = targetCluster
+                            update_flag = True
+                            enum_time = 0
+                        Else
+                            enum_time += 1
+                        End If
+                    Next
+
+                    ' 由于采用了全量并行计算，原本基于 point 的单步循环逻辑需要调整
+                    ' 可以简单认为完成了一轮全量遍历
+                    maxLoop -= n
+                    If maxLoop < 0 Then Exit Do
+                    p += 1
+                    If p = deltaP Then
+                        p = 0
+                        VBDebugger.Echo(vbTab & $"{CInt(100 * (max - maxLoop) / max)}%")
+                    End If
+
+                    ' 如果一轮下来没有任何节点移动，则跳出内层循环
+                    If Not update_flag Then
+                        Exit Do
+                    End If
+                Loop While enum_time < n ' 条件调整：只要本轮有更新，就继续下一轮全量并行评估
+
+                If count > maxIterations OrElse Not update_flag Then
+                    Exit Do
+                ElseIf GetClusterCount() >= max_clusters Then
+                    Exit Do
+                End If
+
+                rebuildGraph()
+                setCluster0()
+            Loop While True
+
+            Call VBDebugger.EchoLine("")
+
+            Return Me
+        End Function
+
+        ''' <summary>
         ''' 
         ''' </summary>
         ''' <param name="max_clusters">

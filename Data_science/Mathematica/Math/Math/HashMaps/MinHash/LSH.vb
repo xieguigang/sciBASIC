@@ -57,6 +57,7 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
+Imports Microsoft.VisualBasic.ApplicationServices.Terminal.ProgressBar.Tqdm
 Imports Microsoft.VisualBasic.Data.Repository
 Imports std = System.Math
 
@@ -151,8 +152,10 @@ Namespace HashMaps.MinHash
             Dim alreadyFound As New HashSet(Of (Integer, Integer))()
             Dim seqIndex = allSequences.ToDictionary(Function(s) s.ID)
 
+            Call $"processing of {buckets.Count} LSH buckets...".debug
+
             ' for each bucket of the sequnece id
-            For Each bucket As List(Of Integer) In buckets.Values
+            For Each bucket As List(Of Integer) In TqdmWrapper.Wrap(buckets.Values)
                 ' 如果一个桶里有多个序列，说明它们在某个波段完全匹配，是相似候选
                 If bucket.Count > 1 Then
                     ' 简单两两组合 (实际优化可以用排序等)

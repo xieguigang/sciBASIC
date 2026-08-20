@@ -1,58 +1,58 @@
 ﻿#Region "Microsoft.VisualBasic::364fde4d4a0f170e98965e25e245cefc, Microsoft.VisualBasic.Core\src\ComponentModel\Settings\Inf\Section.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 146
-    '    Code Lines: 93 (63.70%)
-    ' Comment Lines: 30 (20.55%)
-    '    - Xml Docs: 93.33%
-    ' 
-    '   Blank Lines: 23 (15.75%)
-    '     File Size: 4.87 KB
+' Summaries:
 
 
-    '     Class Section
-    ' 
-    '         Properties: Comment, Items, Name
-    ' 
-    '         Function: CreateDocFragment, GenericEnumerator, GetValue, Have, ToString
-    ' 
-    '         Sub: appendComments, Delete, SetComments, SetValue
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 146
+'    Code Lines: 93 (63.70%)
+' Comment Lines: 30 (20.55%)
+'    - Xml Docs: 93.33%
+' 
+'   Blank Lines: 23 (15.75%)
+'     File Size: 4.87 KB
+
+
+'     Class Section
+' 
+'         Properties: Comment, Items, Name
+' 
+'         Function: CreateDocFragment, GenericEnumerator, GetValue, Have, ToString
+' 
+'         Sub: appendComments, Delete, SetComments, SetValue
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
@@ -64,7 +64,9 @@ Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Language.Default
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Serialization.JSON
+Imports Microsoft.VisualBasic.Text
 Imports HashValue = Microsoft.VisualBasic.Text.Xml.Models.Property
+Imports ASCII = Microsoft.VisualBasic.Text.ASCII
 
 Namespace ComponentModel.Settings.Inf
 
@@ -127,15 +129,15 @@ Namespace ComponentModel.Settings.Inf
         ''' </summary>
         ''' <param name="Name"></param>
         ''' <param name="value"></param>
-        Public Sub SetValue(Name$, value$, Optional comment$ = Nothing)
-            Dim KeyFind As String = Name.ToLower
+        Public Sub SetValue(name$, value$, Optional comment$ = Nothing)
+            Dim KeyFind As String = name.ToLower
 
             If configTable.ContainsKey(KeyFind) Then
                 Call configTable.Remove(KeyFind)
             End If
 
             configTable(KeyFind) = New HashValue With {
-                .name = Name,
+                .name = name,
                 .comment = comment,
                 .value = value
             }
@@ -181,7 +183,7 @@ Namespace ComponentModel.Settings.Inf
 
         Private Shared Sub appendComments(sb As StringBuilder, comments$, symbol$)
             If Not comments.StringEmpty Then
-                For Each line As String In comments.LineTokens
+                For Each line As String In comments.Trim(ASCII.CR, ASCII.LF, " "c, ASCII.TAB, ";"c).LineTokens
                     Call sb.AppendLine(symbol & " " & line)
                 Next
             End If

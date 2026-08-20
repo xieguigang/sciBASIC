@@ -98,20 +98,66 @@ Namespace SmithWaterman
         End Function
 
         ''' <summary>
+        ''' 链化算法所允许的最大 match 数量。
+        ''' </summary>
+        ''' <remarks>
+        ''' <see cref="ChainingImpl"/> 需要分配 adjMatrix 与 sMatrix 两个长度约为
+        ''' size*(size-1)/2 的 <see cref="Double"/> 数组,内存开销是 O(n^2):
+        ''' 
+        ''' * size = 4096  -> 2 * 64MB   = 128 MB
+        ''' * size = 8192  -> 2 * 256MB  = 512 MB
+        ''' * size = 46340 -> 2 * 8.2GB  = 16 GB(此前仅在此处才会触发溢出保护)
+        ''' 
+        ''' 这两个数组远大于 85KB,会直接进入大对象堆(LOH)。LOH 默认不做压缩,
+        ''' 因此在两两比对的 O(n^2) 外层循环中反复分配/丢弃会造成进程常驻内存
+        ''' 持续攀升且不归还,外部观察即为“内存泄漏”。
+        ''' 
+        ''' 取 4096 作为上限:低于该规模时单次链化的临时内存不超过约 128MB;
+        ''' 超过该规模时链化对最终“最佳比对”的贡献极小(候选片段已高度碎片化),
+        ''' 直接返回得分最高的单条 match 即可,收益/开销比更合理。
+        ''' </remarks>
+        Const maxChainingSize As Integer = 4096
+
+        ''' <summary>
+        ''' 在候选 match 中直接线性挑选得分最高的一条,作为退化的“最佳链”。
+        ''' </summary>
+        Private Function topScoreMatch(matches As Match()) As Match
+            Dim top As Match = matches(Scan0)
+
+            For i As Integer = 1 To matches.Length - 1
+                If matches(i).score > top.score Then
+                    top = matches(i)
+                End If
+            Next
+
+            Return top
+        End Function
+
+        ''' <summary>
         ''' Identify the best chain from given list of match
         ''' </summary>
         ''' <param name="matches"> a list of match </param>
         ''' <param name="debug">  if true, print list of input match, adjacency, score matrix, best chain found. </param>
         ''' <returns> the optimal chain as a list of match </returns>
-        ''' 
         <Extension>
         Private Function ChainingImpl(matches As Match(), debug As Boolean) As IEnumerable(Of Match)
-            Dim size As Integer = matches.Count
-            ' Hold adjaency matrix as a double [] the (i,j)= i*(i-1)/2+j
+            Dim size As Integer = matches.Length
+            ' Hold adjacency matrix as a double [] the (i,j)= i*(i-1)/2+j
             'with sink
-            Dim adjMatrix As Double() = New Double(size * (size - 1) \ 2 + size - 2) {}
+            '
+            ' 规模保护:链化需要 O(n^2) 的 adjMatrix/sMatrix(见 maxChainingSize 说明)。
+            ' 当候选 match 数量过大时,这两个数组会进入 LOH 并造成内存持续膨胀,
+            ' 因此退化为“直接取最高分 match”,既避免巨量分配也不影响最佳比对的选取。
+            ' 该阈值同时覆盖了 size>46340 时 i*(i-1) 在 32 位 Integer 下溢出的问题。
+            If size > maxChainingSize Then
+                Return {topScoreMatch(matches)}
+            End If
+
+            Dim sizeL As Long = size
+            Dim dims As Integer = CInt(sizeL * (sizeL - 1) \ 2 + sizeL - 2)
+            Dim adjMatrix As Double() = New Double(dims) {}
             ' Hold score matrix as a double [] the (i,j)= i*(i-1)/2+j
-            Dim sMatrix As Double() = New Double(size * (size - 1) \ 2 + size - 2) {}
+            Dim sMatrix As Double() = New Double(dims) {}
             'Hold max score of chain end at match i
             Dim sMax As Double() = New Double(size - 1) {}
             ' Hold the previous match index point to match i
@@ -188,6 +234,9 @@ Namespace SmithWaterman
             'now the chain end with match at maxIndex
             'the score is max;
             'trace back to the begining of the chain;
+            Erase adjMatrix
+            Erase sMatrix
+            Erase sMax
 
             If maxIndex = 0 Then
                 Return {
@@ -242,6 +291,11 @@ Namespace SmithWaterman
         ''' System out the input array as an strict lower diagonal matrix
         ''' </summary>
         Public Sub printLowerMatrix(m As Double(), size As Integer)
+            ' size*(size-1) 在 32 位 Integer 下于 size>46340 时溢出,此处同样用 Long 计算索引
+            If CLng(size) * (size - 1) > Integer.MaxValue Then
+                Console.WriteLine("[printLowerMatrix] size 过大,跳过矩阵打印。")
+                Return
+            End If
             Console.Write(vbTab)
             For i As Integer = 0 To size - 1
                 Console.Write(i & vbTab)
@@ -250,7 +304,7 @@ Namespace SmithWaterman
             For i As Integer = 0 To size - 1
                 Console.Write(i & vbTab)
                 For j As Integer = 0 To i - 1
-                    Dim i_j As Integer = i * (i - 1) \ 2 + j
+                    Dim i_j As Integer = CInt(CLng(i) * (i - 1) \ 2 + j)
                     Console.Write(CSng(m(i_j)) & vbTab)
                 Next
                 Console.WriteLine()

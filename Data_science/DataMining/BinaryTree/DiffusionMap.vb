@@ -1,59 +1,59 @@
 ﻿#Region "Microsoft.VisualBasic::ab524aabf5eceabc36f8dd0af02b69f8, Data_science\DataMining\BinaryTree\DiffusionMap.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 137
-    '    Code Lines: 52 (37.96%)
-    ' Comment Lines: 68 (49.64%)
-    '    - Xml Docs: 86.76%
-    ' 
-    '   Blank Lines: 17 (12.41%)
-    '     File Size: 5.66 KB
+' Summaries:
 
 
-    ' Class DiffusionMap
-    ' 
-    '     Function: compute_diffusion_map, step_5
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 137
+'    Code Lines: 52 (37.96%)
+' Comment Lines: 68 (49.64%)
+'    - Xml Docs: 86.76%
+' 
+'   Blank Lines: 17 (12.41%)
+'     File Size: 5.66 KB
+
+
+' Class DiffusionMap
+' 
+'     Function: compute_diffusion_map, step_5
+' 
+' /********************************************************************************/
 
 #End Region
 
+Imports Microsoft.VisualBasic.Math
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Math.LinearAlgebra.Matrix
-Imports np = Microsoft.VisualBasic.Math.LinearAlgebra.Matrix.Numpy
 Imports std = System.Math
 
 ''' <summary>
@@ -120,15 +120,15 @@ Public Class DiffusionMap
 
         If alpha > 0 Then
             ' Step 2
-            Dim d = np.array(L_alpha.sum(axis:=1)).flatten
+            Dim d = New Vector(L_alpha.sum(axis:=1)).flatten
 
-            d_alpha = np.power(d, -alpha)
+            d_alpha = d ^ -alpha
             L_alpha = d_alpha.t * L_alpha
             L_alpha = L_alpha * d_alpha.r
         End If
 
         ' Step 3
-        d_alpha = np.power(np.array(L_alpha.sum(axis:=1)).flatten, -1)
+        d_alpha = New Vector(L_alpha.sum(axis:=1)).flatten ^ -1
         L_alpha = d_alpha.t * L_alpha
 
         Dim M = L_alpha
@@ -150,7 +150,7 @@ Public Class DiffusionMap
         End With
 
         ' get max value index
-        Dim lambda_idx = np.argsort(lambdas).Last
+        Dim lambda_idx = Ranks.argsort(lambdas).Last
         Dim max_lambdas = lambdas(lambda_idx)
         Dim max_vector = vectors(lambda_idx)
 

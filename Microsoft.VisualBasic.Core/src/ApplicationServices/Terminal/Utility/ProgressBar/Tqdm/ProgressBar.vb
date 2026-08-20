@@ -329,8 +329,14 @@ Namespace ApplicationServices.Terminal.ProgressBar.Tqdm
             Dim fills = If(current = 0, 0, current / _total * _width)
             Dim ifills As Integer = fills
 
-            ' Store the beginning of the line, so we can move back there for the next print
-            Dim curCursorTop = Console.CursorTop
+            ' Store the beginning of the line, so we can move back there for the next print.
+            ' Guard against headless / redirected output where the console handle is invalid.
+            Dim curCursorTop As Integer = 0
+
+            Try
+                curCursorTop = Console.CursorTop
+            Catch
+            End Try
 
             ' Build our output string
             ' Start by typing "backspace" over the previous print, and then add a \r in case anything was added. 
@@ -403,9 +409,14 @@ Namespace ApplicationServices.Terminal.ProgressBar.Tqdm
         ''' </summary>
         ''' <param name="text">The text to be printed on the new line.</param>
         Public Sub PrintLine(text As String)
-            ' Clear the previous line by resetting the cursor position and overwriting with spaces
-            Console.Write(New String(" "c, std.Min(_prevLength, Console.BufferWidth - 1))) ' Clear the buffer
-            Console.CursorLeft = 0
+            ' Clear the previous line by resetting the cursor position and overwriting with spaces.
+            ' Guard against headless / redirected output where the console handle is invalid.
+            Try
+                Console.Write(New String(" "c, std.Min(_prevLength, Console.BufferWidth - 1))) ' Clear the buffer
+                Console.CursorLeft = 0
+            Catch
+                ' ignore console cursor errors in headless environments
+            End Try
 
             ' Print the new line of text
             Console.WriteLine(text)

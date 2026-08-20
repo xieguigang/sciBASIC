@@ -1,63 +1,64 @@
 ﻿#Region "Microsoft.VisualBasic::35b016d48388319643c4670362ad92a7, Microsoft.VisualBasic.Core\src\ComponentModel\Settings\Inf\IniFile.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 175
-    '    Code Lines: 110 (62.86%)
-    ' Comment Lines: 40 (22.86%)
-    '    - Xml Docs: 57.50%
-    ' 
-    '   Blank Lines: 25 (14.29%)
-    '     File Size: 6.45 KB
+' Summaries:
 
 
-    '     Class IniFile
-    ' 
-    '         Properties: comments, FileExists, path, SectionNames
-    ' 
-    '         Constructor: (+1 Overloads) Sub New
-    ' 
-    '         Function: GenericEnumerator, OpenSection, ReadValue, ToString
-    ' 
-    '         Sub: (+2 Overloads) Dispose, Flush, WriteComment, WriteValue
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 175
+'    Code Lines: 110 (62.86%)
+' Comment Lines: 40 (22.86%)
+'    - Xml Docs: 57.50%
+' 
+'   Blank Lines: 25 (14.29%)
+'     File Size: 6.45 KB
+
+
+'     Class IniFile
+' 
+'         Properties: comments, FileExists, path, SectionNames
+' 
+'         Constructor: (+1 Overloads) Sub New
+' 
+'         Function: GenericEnumerator, OpenSection, ReadValue, ToString
+' 
+'         Sub: (+2 Overloads) Dispose, Flush, WriteComment, WriteValue
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
+Imports System.Globalization
 Imports System.IO
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Linq
@@ -182,6 +183,45 @@ Namespace ComponentModel.Settings.Inf
                 Return data(section).GetValue(key, default$)
             Else
                 Return [default]
+            End If
+        End Function
+
+        Public Function ReadString(section As String, key As String, defaultVal As String) As String
+            Dim s As String = ReadValue(section, key)
+            If String.IsNullOrWhiteSpace(s) Then
+                Return defaultVal
+            Else
+                Return s.Trim()
+            End If
+        End Function
+
+        Public Function ReadInt32(section As String, key As String, defaultVal As Integer) As Integer
+            Dim s As String = ReadValue(section, key)
+            Dim v As Integer
+            If Not String.IsNullOrEmpty(s) AndAlso Integer.TryParse(s.Trim(), v) Then
+                Return v
+            Else
+                Return defaultVal
+            End If
+        End Function
+
+        Public Function ReadDouble(section As String, key As String, defaultVal As Double) As Double
+            Dim s As String = ReadValue(section, key)
+            Dim v As Double
+            If Not String.IsNullOrEmpty(s) AndAlso Double.TryParse(s.Trim(), NumberStyles.Float, CultureInfo.InvariantCulture, v) Then
+                Return v
+            Else
+                Return defaultVal
+            End If
+        End Function
+
+        Public Function ReadBoolean(section As String, key As String, defaultVal As Boolean) As Boolean
+            Dim s As String = ReadValue(section, key)
+            Dim v As Boolean
+            If Not String.IsNullOrEmpty(s) AndAlso Boolean.TryParse(s.Trim(), v) Then
+                Return v
+            Else
+                Return defaultVal
             End If
         End Function
 

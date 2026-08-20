@@ -63,6 +63,9 @@ Imports Microsoft.VisualBasic.ComponentModel.DataSourceModel
 
 Namespace Analysis
 
+    ''' <summary>
+    ''' Ullmann算法是子图同构 问题的经典回溯算法，由J.R. Ullmann于1976年提出。它在网络图分析、化学信息学（分子结构匹配）、模式识别等领域有广泛应用。
+    ''' </summary>
     Public Class Ullmann
 
         ''' <summary>

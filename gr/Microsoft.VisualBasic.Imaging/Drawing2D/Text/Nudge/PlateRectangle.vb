@@ -1,63 +1,63 @@
 ﻿#Region "Microsoft.VisualBasic::79be4bf930733f918300519c34d6f175, gr\Microsoft.VisualBasic.Imaging\Drawing2D\Text\Nudge\PlateRectangle.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 120
-    '    Code Lines: 71 (59.17%)
-    ' Comment Lines: 35 (29.17%)
-    '    - Xml Docs: 100.00%
-    ' 
-    '   Blank Lines: 14 (11.67%)
-    '     File Size: 4.29 KB
+' Summaries:
 
 
-    '     Class PlateRectangle
-    ' 
-    '         Properties: Rectangle
-    ' 
-    '         Constructor: (+2 Overloads) Sub New
-    '         Function: contains_point, contains_rectangle_top, covers_rectangle, isEqual, ToString
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 120
+'    Code Lines: 71 (59.17%)
+' Comment Lines: 35 (29.17%)
+'    - Xml Docs: 100.00%
+' 
+'   Blank Lines: 14 (11.67%)
+'     File Size: 4.29 KB
+
+
+'     Class PlateRectangle
+' 
+'         Properties: Rectangle
+' 
+'         Constructor: (+2 Overloads) Sub New
+'         Function: contains_point, contains_rectangle_top, covers_rectangle, isEqual, ToString
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
 Imports System.Drawing
 Imports System.Runtime.CompilerServices
-Imports np = Microsoft.VisualBasic.Math.LinearAlgebra.Matrix.Numpy
+Imports Microsoft.VisualBasic.Math.LinearAlgebra
 
 Namespace Drawing2D.Text.Nudge
 
@@ -91,7 +91,7 @@ Namespace Drawing2D.Text.Nudge
         ''' <param name="l">l for the length of the rectangle to get the bottom right point</param>
         ''' <param name="h">h for the height of the rectangle</param>
         Sub New(bottomLeft As Double(), l As Double, h As Double)
-            Dim x1 = np.array(bottomLeft)
+            Dim x1 = New Vector(bottomLeft)
 
             Me.x1 = x1
             Me.l = l

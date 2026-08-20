@@ -128,7 +128,7 @@ Namespace Analysis
 
         Private Sub reset(gr As NetworkGraph)
             ' do graph reset
-            For Each v In gr.vertex
+            For Each v As Node In gr.vertex
                 v.visited = False
             Next
         End Sub

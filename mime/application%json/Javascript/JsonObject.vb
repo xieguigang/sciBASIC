@@ -171,9 +171,9 @@ Namespace Javascript
         ''' get comment string about the associated property key, used for generates the Hjson style json output.
         ''' </summary>
         ''' <param name="key"></param>
-        ''' <returns></returns>
+        ''' <returns>returns nothing if missing comment data</returns>
         Public Function GetCommentText(key As String) As String
-            Return comments.TryGetValue(key)
+            Return comments.TryGetValue(key, mute:=True)
         End Function
 
         Public Function GetString(key As String) As String

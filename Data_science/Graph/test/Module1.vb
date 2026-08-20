@@ -60,6 +60,7 @@ Imports Microsoft.VisualBasic.Data.GraphTheory.DinicMaxFlow
 Module Program
     Sub Main()
         Call testFlow()
+        Call testLPA()
     End Sub
 
     Sub testFlow()
