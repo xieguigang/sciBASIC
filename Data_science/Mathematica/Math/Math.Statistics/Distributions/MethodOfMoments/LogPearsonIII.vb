@@ -1,59 +1,59 @@
 ﻿#Region "Microsoft.VisualBasic::63b961991e12f0841226c87392f2f354, Data_science\Mathematica\Math\Math.Statistics\Distributions\MethodOfMoments\LogPearsonIII.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 90
-    '    Code Lines: 73 (81.11%)
-    ' Comment Lines: 10 (11.11%)
-    '    - Xml Docs: 30.00%
-    ' 
-    '   Blank Lines: 7 (7.78%)
-    '     File Size: 3.81 KB
+' Summaries:
 
 
-    '     Class LogPearsonIII
-    ' 
-    '         Constructor: (+3 Overloads) Sub New
-    '         Function: Bullentin17BConfidenceLimit, GetCDF, GetInvCDF, GetPDF, Validate
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 90
+'    Code Lines: 73 (81.11%)
+' Comment Lines: 10 (11.11%)
+'    - Xml Docs: 30.00%
+' 
+'   Blank Lines: 7 (7.78%)
+'     File Size: 3.81 KB
+
+
+'     Class LogPearsonIII
+' 
+'         Constructor: (+3 Overloads) Sub New
+'         Function: Bullentin17BConfidenceLimit, GetCDF, GetInvCDF, GetPDF, Validate
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
-Imports stdNum = System.Math
+Imports std = System.Math
 
 '
 ' * To change this license header, choose License Headers in Project Properties.
@@ -89,25 +89,25 @@ Namespace Distributions.MethodOfMoments
         End Sub
         Public Sub New(data As Double())
             For i As Integer = 0 To data.Length - 1
-                data(i) = stdNum.Log10(data(i))
+                data(i) = std.Log10(data(i))
             Next i
             Dim PM As New MomentFunctions.ProductMoments(data)
-            _Mean = PM.Mean()
-            _StDev = PM.StandardDeviation
+            _Mean = PM.mean()
+            _StDev = PM.standardDeviation
             _Skew = PM.skewness()
-            PeriodOfRecord = (PM.SampleSize())
+            PeriodOfRecord = (PM.sampleSize())
         End Sub
         Public Overrides Function GetInvCDF(probability As Double) As Double
             If _Skew = 0 Then
                 Dim zeroSkewNorm As New Normal(_Mean, _StDev)
                 Dim logflow As Double = zeroSkewNorm.GetInvCDF(probability)
-                Return stdNum.Pow(10, logflow)
+                Return std.Pow(10, logflow)
             Else
                 Dim sn As New Normal
                 Dim z As Double = sn.GetInvCDF(probability)
-                Dim k As Double = (2 / _Skew) * (stdNum.Pow((z - _Skew / 6.0) * _Skew / 6.0 + 1, 3) - 1)
+                Dim k As Double = (2 / _Skew) * (std.Pow((z - _Skew / 6.0) * _Skew / 6.0 + 1, 3) - 1)
                 Dim logflow As Double = _Mean + (k * _StDev)
-                Return stdNum.Pow(10, logflow)
+                Return std.Pow(10, logflow)
             End If
         End Function
         Public Overrides Function GetCDF(value As Double) As Double
@@ -123,18 +123,18 @@ Namespace Distributions.MethodOfMoments
             If _Skew = 0 Then
                 k = z1
             Else
-                k = (2 / _Skew) * (stdNum.Pow((z1 - _Skew / 6.0) * _Skew / 6.0 + 1, 3) - 1)
+                k = (2 / _Skew) * (std.Pow((z1 - _Skew / 6.0) * _Skew / 6.0 + 1, 3) - 1)
             End If
             Dim z As Double = sn.GetInvCDF(alphaValue)
-            Dim zSquared As Double = stdNum.Pow(z, 2)
-            Dim kSquared As Double = stdNum.Pow(k, 2)
+            Dim zSquared As Double = std.Pow(z, 2)
+            Dim kSquared As Double = std.Pow(k, 2)
             Dim Avalue As Double = (1 - (zSquared) / 2 \ (PeriodOfRecord() - 1))
             Dim Bvalue As Double = (kSquared) - ((zSquared) / PeriodOfRecord())
-            Dim RootValue As Double = stdNum.Sqrt(kSquared - (Avalue * Bvalue))
+            Dim RootValue As Double = std.Sqrt(kSquared - (Avalue * Bvalue))
             If alphaValue > 0.5 Then
-                Return stdNum.Pow(10, _Mean + _StDev * (k + RootValue) / Avalue)
+                Return std.Pow(10, _Mean + _StDev * (k + RootValue) / Avalue)
             Else
-                Return stdNum.Pow(10, _Mean + _StDev * (k - RootValue) / Avalue)
+                Return std.Pow(10, _Mean + _StDev * (k - RootValue) / Avalue)
             End If
         End Function
         Public Overrides Iterator Function Validate() As IEnumerable(Of Exception)
