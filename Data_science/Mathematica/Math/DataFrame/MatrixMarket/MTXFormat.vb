@@ -52,6 +52,7 @@
 
 #End Region
 
+Imports System.Globalization
 Imports System.IO
 Imports Microsoft.VisualBasic.Language
 Imports Microsoft.VisualBasic.Math.LinearAlgebra.Matrix
@@ -130,5 +131,43 @@ Namespace MatrixMarket
 
             Return matrix
         End Function
+
+        ''' <summary>
+        ''' Saves a <see cref="SparseMatrix"/> into a Matrix Market coordinate
+        ''' text file (<c>%%MatrixMarket matrix coordinate real general</c>).
+        ''' </summary>
+        Public Shared Sub WriteMatrix(matrix As SparseMatrix, filepath As String)
+            Using file As Stream = filepath.Open(FileMode.OpenOrCreate, doClear:=True, [readOnly]:=False)
+                Call WriteMatrix(matrix, New StreamWriter(file))
+            End Using
+        End Sub
+
+        ''' <summary>
+        ''' Writes a <see cref="SparseMatrix"/> as a Matrix Market coordinate
+        ''' stream. The indices are emitted 1-based to match
+        ''' <see cref="ReadMatrix"/>.
+        ''' </summary>
+        Public Shared Sub WriteMatrix(matrix As SparseMatrix, writer As StreamWriter)
+            Dim M As Integer = matrix.RowDimension
+            Dim N As Integer = matrix.ColumnDimension
+            Dim L As Integer = matrix.nnz
+
+            Call writer.WriteLine("%%MatrixMarket matrix coordinate real general")
+            Call writer.WriteLine("% written by sciBASIC# MTXFormat")
+            Call writer.WriteLine($"{M}  {N}  {L}")
+
+            For i As Integer = 0 To M - 1
+                For j As Integer = 0 To N - 1
+                    Dim v As Double = matrix(i, j)
+
+                    If v <> 0.0 Then
+                        ' indices are 1-based
+                        Call writer.WriteLine($"{i + 1}  {j + 1}  {v.ToString("g", CultureInfo.InvariantCulture)}")
+                    End If
+                Next
+            Next
+
+            Call writer.Flush()
+        End Sub
     End Class
 End Namespace
