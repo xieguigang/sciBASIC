@@ -61,18 +61,13 @@
 #End Region
 
 Imports System.IO
-Imports System.Text
 Imports System.Runtime.CompilerServices
-Imports System.Collections.Generic
+Imports System.Text
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.MachineLearning.CNN
-Imports Microsoft.VisualBasic.MachineLearning.CNN.trainers
 Imports Microsoft.VisualBasic.MachineLearning.CNN.layers
-Imports Microsoft.VisualBasic.MachineLearning.CNN.data
 Imports Microsoft.VisualBasic.MachineLearning.CNN.losslayers
-Imports Microsoft.VisualBasic.MachineLearning.CNN.SaveModelCNN
-Imports Microsoft.VisualBasic.MachineLearning.CNN.ReadModelCNN
-Imports Microsoft.VisualBasic.MachineLearning.ComponentModel.StoreProcedure
+Imports Microsoft.VisualBasic.MachineLearning.CNN.trainers
 
 Namespace NeuralNetwork
 
