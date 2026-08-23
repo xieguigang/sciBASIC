@@ -57,7 +57,7 @@
 #End Region
 
 Imports System.Runtime.CompilerServices
-Imports stdNum = System.Math
+Imports std = System.Math
 
 '
 ' * To change this license header, choose License Headers in Project Properties.
@@ -90,7 +90,7 @@ Namespace MomentFunctions
         Public ReadOnly Property StDev() As Double
             <MethodImpl(MethodImplOptions.AggressiveInlining)>
             Get
-                Return stdNum.Sqrt(_SampleVariance)
+                Return std.Sqrt(_SampleVariance)
             End Get
         End Property
 
@@ -200,7 +200,7 @@ Namespace MomentFunctions
                     N21 = 0
                 End If
 
-                _SampleVariance = N21 + (stdNum.Pow(observation - Mean, 2.0)) / count
+                _SampleVariance = N21 + (std.Pow(observation - Mean, 2.0)) / count
                 means = newmean
             End If
 
@@ -217,8 +217,8 @@ Namespace MomentFunctions
         Private Sub TestForConvergence()
             If Count > _MinValuesBeforeConvergenceTest Then
                 If Not IsConverged Then
-                    Dim var As Double = (_ZAlphaForConvergence * Me.StDev()) / (Me.Mean() * stdNum.Abs(Me.StDev()))
-                    _IsConverged = (stdNum.Abs(var) <= _ToleranceForConvergence)
+                    Dim var As Double = (_ZAlphaForConvergence * Me.StDev()) / (Me.Mean() * std.Abs(Me.StDev()))
+                    _IsConverged = (std.Abs(var) <= _ToleranceForConvergence)
                 End If
             End If
         End Sub

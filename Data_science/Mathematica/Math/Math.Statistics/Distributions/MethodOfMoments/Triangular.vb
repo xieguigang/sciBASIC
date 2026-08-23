@@ -1,60 +1,60 @@
 ﻿#Region "Microsoft.VisualBasic::029b5b10261d6d2d4053ef0c25936d06, Data_science\Mathematica\Math\Math.Statistics\Distributions\MethodOfMoments\Triangular.vb"
 
-    ' Author:
-    ' 
-    '       asuka (amethyst.asuka@gcmodeller.org)
-    '       xie (genetics@smrucc.org)
-    '       xieguigang (xie.guigang@live.com)
-    ' 
-    ' Copyright (c) 2018 GPL3 Licensed
-    ' 
-    ' 
-    ' GNU GENERAL PUBLIC LICENSE (GPL3)
-    ' 
-    ' 
-    ' This program is free software: you can redistribute it and/or modify
-    ' it under the terms of the GNU General Public License as published by
-    ' the Free Software Foundation, either version 3 of the License, or
-    ' (at your option) any later version.
-    ' 
-    ' This program is distributed in the hope that it will be useful,
-    ' but WITHOUT ANY WARRANTY; without even the implied warranty of
-    ' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    ' GNU General Public License for more details.
-    ' 
-    ' You should have received a copy of the GNU General Public License
-    ' along with this program. If not, see <http://www.gnu.org/licenses/>.
+' Author:
+' 
+'       asuka (amethyst.asuka@gcmodeller.org)
+'       xie (genetics@smrucc.org)
+'       xieguigang (xie.guigang@live.com)
+' 
+' Copyright (c) 2018 GPL3 Licensed
+' 
+' 
+' GNU GENERAL PUBLIC LICENSE (GPL3)
+' 
+' 
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+' 
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+' 
+' You should have received a copy of the GNU General Public License
+' along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 
-    ' /********************************************************************************/
+' /********************************************************************************/
 
-    ' Summaries:
-
-
-    ' Code Statistics:
-
-    '   Total Lines: 103
-    '    Code Lines: 81 (78.64%)
-    ' Comment Lines: 16 (15.53%)
-    '    - Xml Docs: 18.75%
-    ' 
-    '   Blank Lines: 6 (5.83%)
-    '     File Size: 4.23 KB
+' Summaries:
 
 
-    '     Class Triangular
-    ' 
-    '         Constructor: (+3 Overloads) Sub New
-    '         Function: GetCDF, GetInvCDF, GetMax, GetMin, GetMostLikely
-    '                   GetPDF, Validate
-    ' 
-    ' 
-    ' /********************************************************************************/
+' Code Statistics:
+
+'   Total Lines: 103
+'    Code Lines: 81 (78.64%)
+' Comment Lines: 16 (15.53%)
+'    - Xml Docs: 18.75%
+' 
+'   Blank Lines: 6 (5.83%)
+'     File Size: 4.23 KB
+
+
+'     Class Triangular
+' 
+'         Constructor: (+3 Overloads) Sub New
+'         Function: GetCDF, GetInvCDF, GetMax, GetMin, GetMostLikely
+'                   GetPDF, Validate
+' 
+' 
+' /********************************************************************************/
 
 #End Region
 
-Imports stdNum = System.Math
+Imports std = System.Math
 
 '
 ' * To change this license header, choose License Headers in Project Properties.
@@ -102,26 +102,26 @@ Namespace Distributions.MethodOfMoments
             '        _MostLikely = PM.GetMean();
 
             'Alternate Method from Ben Chaon
-            Dim sqrt2 As Double = stdNum.Sqrt(2)
-            Dim sqrt3 As Double = stdNum.Sqrt(3)
+            Dim sqrt2 As Double = std.Sqrt(2)
+            Dim sqrt3 As Double = std.Sqrt(3)
             Dim a3 As Double = PM.skewness()
             Dim b3 As Double
             Dim angle As Double
             Dim aa As Double
             Dim bb As Double
             If 8 - a3 * a3 < 0 Then
-                a3 = stdNum.Sin(a3) * 2 * sqrt2
+                a3 = std.Sin(a3) * 2 * sqrt2
                 b3 = 0
             Else
-                b3 = stdNum.Sqrt(8 - a3 * a3)
+                b3 = std.Sqrt(8 - a3 * a3)
             End If
-            angle = stdNum.Atan2(b3, a3)
-            aa = stdNum.Cos(angle / 3.0)
-            bb = stdNum.Sin(angle / 3.0)
-            _Min = (PM.Mean() + sqrt2 * PM.StandardDeviation() * (aa - sqrt3 * bb))
-            _MostLikely = (PM.Mean() - 2 * sqrt2 * PM.StandardDeviation() * aa)
-            _Max = (PM.Mean() + sqrt2 * PM.StandardDeviation() * (aa + sqrt3 * bb))
-            PeriodOfRecord = (PM.SampleSize())
+            angle = std.Atan2(b3, a3)
+            aa = std.Cos(angle / 3.0)
+            bb = std.Sin(angle / 3.0)
+            _Min = (PM.mean() + sqrt2 * PM.standardDeviation() * (aa - sqrt3 * bb))
+            _MostLikely = (PM.mean() - 2 * sqrt2 * PM.standardDeviation() * aa)
+            _Max = (PM.mean() + sqrt2 * PM.standardDeviation() * (aa + sqrt3 * bb))
+            PeriodOfRecord = (PM.sampleSize())
         End Sub
         Public Overrides Function GetInvCDF(probability As Double) As Double
             Dim a As Double = _MostLikely - _Min
@@ -129,17 +129,17 @@ Namespace Distributions.MethodOfMoments
             If probability <= 0 Then
                 Return _Min
             ElseIf probability < (a / (_Max - _Min)) Then
-                Return _Min + stdNum.Sqrt(probability * (_Max - _Min) * a)
+                Return _Min + std.Sqrt(probability * (_Max - _Min) * a)
             ElseIf probability < 1 Then
-                Return _Max - stdNum.Sqrt((1 - probability) * (_Max - _Min) * b)
+                Return _Max - std.Sqrt((1 - probability) * (_Max - _Min) * b)
             Else
                 Return _Max
             End If
         End Function
         Public Overrides Function GetCDF(value As Double) As Double
             If value < _Min Then Return 0
-            If value < _MostLikely Then Return (stdNum.Pow((value - _Min), 2) / (_Max - _Min) * (_MostLikely - _Min))
-            If value <= _Max Then Return 1 - (stdNum.Pow((_Max - value), 2) / (_Max - _Min) * (_Max - _MostLikely))
+            If value < _MostLikely Then Return (std.Pow((value - _Min), 2) / (_Max - _Min) * (_MostLikely - _Min))
+            If value <= _Max Then Return 1 - (std.Pow((_Max - value), 2) / (_Max - _Min) * (_Max - _MostLikely))
             Return 1
         End Function
         Public Overrides Function GetPDF(value As Double) As Double

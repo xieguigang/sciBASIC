@@ -57,7 +57,7 @@
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
 Imports Microsoft.VisualBasic.Math.LinearAlgebra.Matrix
-Imports stdNum = System.Math
+Imports std = System.Math
 
 Namespace Multivariate
 
@@ -68,7 +68,7 @@ Namespace Multivariate
         Public Property Yfit As Double Implements IFitError.Yfit
 
         Public Overrides Function ToString() As String
-            Return $"{stdNum.Abs(Y - Yfit)} = |{Y} - {Yfit}|"
+            Return $"{std.Abs(Y - Yfit)} = |{Y} - {Yfit}|"
         End Function
 
         Public Shared Iterator Function RunTest(MLR As MLRFit, X As GeneralMatrix, Y As Vector) As IEnumerable(Of [Error])
