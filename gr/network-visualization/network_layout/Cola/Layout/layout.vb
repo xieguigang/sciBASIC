@@ -92,13 +92,9 @@ Namespace Cola
         Private _rootGroup As Node
 
         ''' <summary>
-        ''' 与<see cref="_indexLinks"/>是一一对应的
+        ''' 与<see cref="_links"/>是一一对应的
         ''' </summary>
         Private _links As Link(Of Node)() = {}
-        ''' <summary>
-        ''' 因为在typescript里面，类型是可变的，所以在这里会需要这个额外的index对象来保持兼容
-        ''' </summary>
-        Private _indexLinks As Link(Of Integer)() = {}
 
         Private _constraints As Constraint(Of Integer)() = {}
         Private _distanceMatrix As Integer()() = Nothing
@@ -507,14 +503,14 @@ Namespace Cola
 
         Public Function getLinkLength(link As Link(Of Node)) As Double
             If Not _linkDistance Like GetType(Double) Then
-                Return _linkDistance(link)
+                Return _linkDistance.VB(link)
             Else
                 Return _linkDistance
             End If
         End Function
 
         Private Function getLinkType(link As Link(Of Node)) As Double
-            Return If(_linkType Like GetType(Integer), 0, _linkType(link))
+            Return If(_linkType Like GetType(Integer), 0, _linkType.VB(link))
         End Function
 
         Private linkAccessor As New LinkTypeAccessor(Of Link(Of Node)) With {
@@ -522,7 +518,7 @@ Namespace Cola
             .getTargetIndex = AddressOf Layout.getTargetIndex,
             .setLength = Sub(l, len) l.length = len,
             .GetLinkType = Function(l)
-                               Return If(_linkType Like GetType(Integer), 0, Me._linkType(l))
+                               Return If(_linkType Like GetType(Integer), 0, _linkType.VB(l))
                            End Function
         }
 
@@ -583,8 +579,8 @@ Namespace Cola
             Dim w = Me._canvasSize(0)
             Dim h = Me._canvasSize(1)
 
-            Dim x = New Double(N__2) {}
-            Dim y = New Double(N__2) {}
+            Dim x = New Double(N__2 - 1) {}
+            Dim y = New Double(N__2 - 1) {}
 
             Dim G__3 As Double()() = Nothing
 
@@ -619,12 +615,13 @@ Namespace Cola
                 ' G is a square matrix with G[i][j] = 1 iff there exists an edge between node i and node j
                 ' otherwise 2. (
                 G__3 = Descent.createSquareMatrix(N__2, Function() 2)
-                Me._links.ForEach(Sub(l, i)
-                                      Dim index = _indexLinks(i)
-
-                                      l.source = Me._nodes(index.source)
-                                      l.target = Me._nodes(index.target)
-                                  End Sub)
+                ' TS source (layout.ts start()): resolve numeric link endpoints to node references.
+                '   this._links.forEach(l => {
+                '       if (typeof l.source == "number") l.source = this._nodes[<number>l.source];
+                '       if (typeof l.target == "number") l.target = this._nodes[<number>l.target];
+                '   });
+                ' In the VB translation Link(Of Node).source/.target are typed as Node, so callers
+                ' always supply Node references directly and the numeric-resolution branch is a no-op.
                 Me._links.DoEach(Sub(e)
                                      Dim u = Layout.getSourceIndex(e)
                                      Dim v = Layout.getTargetIndex(e)
@@ -673,13 +670,19 @@ Namespace Cola
                                       y(System.Math.Max(Interlocked.Increment(i), i - 1)) = 0
                                   End Sub)
             Else
+                Dim leafList As New List(Of [Variant](Of Integer, Node))
+
+                For Each n In Me._nodes
+                    leafList.Add(New [Variant](Of Integer, Node)(n))
+                Next
+
                 Me._rootGroup = New Node With {
-                    .leaves = Me._nodes.Select(Function(n) New [Variant](Of Integer, Node)(n)).ToList,
+                    .leaves = leafList,
                     .groups = New List(Of [Variant](Of Integer, Node))
                 }
             End If
 
-            Dim curConstraints As Constraint(Of Integer)() = If(Me._constraints Is Nothing, Me._constraints, {})
+            Dim curConstraints As Constraint(Of Integer)() = If(Me._constraints Is Nothing, {}, Me._constraints)
 
             If Me._directedLinkConstraints IsNot Nothing Then
                 Me.linkAccessor.getMinSeparation = Me._directedLinkConstraints.getMinSeparation

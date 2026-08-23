@@ -76,6 +76,13 @@ Namespace Cola
         Sub New(vs As Variable())
             Dim n As i32 = vs.Length
 
+            ' 预分配列表容量并按 blockInd 索引位置放置，避免空列表索引赋值越界
+            list = New List(Of Block)(vs.Length)
+            For i As Integer = 0 To vs.Length - 1
+                list.Add(Nothing)
+            Next
+
+            n = vs.Length
             While (--n)
                 Dim b As New Block(vs(n))
                 list(CInt(n)) = b

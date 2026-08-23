@@ -57,6 +57,7 @@ Imports Microsoft.VisualBasic.Data.visualize.Network
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
 Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts
 Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts.Orthogonal
+Imports Microsoft.VisualBasic.Data.visualize.Network.Layouts.Hola
 Imports Microsoft.VisualBasic.Drawing
 Imports Microsoft.VisualBasic.Imaging
 Imports Microsoft.VisualBasic.Scripting.Runtime
@@ -68,8 +69,218 @@ Imports inode = Microsoft.VisualBasic.Data.visualize.Network.Graph.Node
 Module OrthogonalLayoutTest
 
     Sub Main()
-        Call test1()
+        ' 注册 GDI 光栅渲染驱动，否则 NetworkVisualizer 无法输出 PNG
+        Call Microsoft.VisualBasic.Imaging.Driver.ImageDriver.Register()
+
+        ' Call test1()
+
+        ' 复杂网络压力测试（~48 节点：网格+链式+星型+独立分量）
+        Call holaComplexTest()
+
+        ' 原 12 节点对照用例（已验证），需要时取消注释切换：
+        ' Call holaTest()
         ' Call test2()
+    End Sub
+
+    ''' <summary>
+    ''' HOLA 正交布局算法测试 demo：
+    ''' 1. 构造一张存在较多连线交叉的网络图（含初始坐标起点）；
+    ''' 2. 调用 HOLA.DoLayout 执行六阶段布局并写回坐标；
+    ''' 3. 打印布局后每个节点的 (label, x, y) 坐标；
+    ''' 4. 用 NetworkVisualizer 渲染为 PNG 供查看。
+    ''' </summary>
+    Sub holaTest()
+        ' WinExe 工程无控制台，结果统一写入文件便于查看
+        Using log As New StreamWriter("./HOLA_result.txt")
+            Try
+                Dim g As New NetworkGraph
+
+                ' 构造 12 个节点的图，初始坐标给一个故意"乱"的起点（含交叉），便于观察 HOLA 效果
+                Dim labels = {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11"}
+                For i As Integer = 0 To labels.Length - 1
+                    Dim x = 100.0 + (i Mod 4) * 40.0 + (i \ 4) * 7.0
+                    Dim y = 100.0 + (i \ 4) * 40.0 + (i Mod 4) * 5.0
+                    Call g.AddNode(New inode With {
+                        .label = labels(i),
+                        .data = New NodeData With {
+                            .initialPostion = New FDGVector2(x, y),
+                            .size = {18, 18}
+                        }
+                    })
+                Next
+
+                ' 一组边，刻意制造交叉与不对齐
+                Call g.AddEdge("0", "1")
+                Call g.AddEdge("0", "2")
+                Call g.AddEdge("1", "3")
+                Call g.AddEdge("2", "3")
+                Call g.AddEdge("2", "4")
+                Call g.AddEdge("3", "5")
+                Call g.AddEdge("4", "5")
+                Call g.AddEdge("4", "6")
+                Call g.AddEdge("5", "7")
+                Call g.AddEdge("6", "7")
+                Call g.AddEdge("6", "8")
+                Call g.AddEdge("7", "9")
+                Call g.AddEdge("8", "9")
+                Call g.AddEdge("8", "10")
+                Call g.AddEdge("9", "11")
+                Call g.AddEdge("10", "11")
+                Call g.AddEdge("0", "11")   ' 长边，制造大交叉
+                Call g.AddEdge("3", "10")   ' 长边，制造大交叉
+
+                ' 执行 HOLA 布局
+                Call HOLA.DoLayout(g)
+
+                ' 打印布局后的节点坐标
+                log.WriteLine("=== HOLA layout result (label, x, y) ===")
+                log.WriteLine($"{"label",-5}  {"x",8}  {"y",8}  {"bends?",6}")
+                log.WriteLine(New String("-"c, 40))
+                For Each n As inode In g.connectedNodes
+                    Dim p = n.data.initialPostion
+                    log.WriteLine($"{n.label,-5}  {p.x,8:F1}  {p.y,8:F1}")
+                Next
+
+                ' 统计正交路由生成的边数量
+                Dim bendCount As Integer = 0
+                Dim totalEdges As Integer = 0
+                For Each e As Edge In g.graphEdges
+                    totalEdges += 1
+                    If e.data.bends IsNot Nothing AndAlso e.data.bends.Length > 0 Then
+                        bendCount += 1
+                    End If
+                Next
+                log.WriteLine()
+                log.WriteLine($"=== 边路由统计: {bendCount}/{totalEdges} 条边生成了正交折点 (bends) ===")
+                log.WriteLine()
+
+                ' 渲染为 PNG（关闭节点标签渲染避免 label style 转换异常，启用 drawEdgeBends 显示正交路由折点）
+                Call NetworkVisualizer.DrawImage(g, "1000,1000",
+                                                 displayId:=False,
+                                                 drawEdgeBends:=True,
+                                                 labelerIterations:=-1,
+                                                 minLinkWidth:=8) _
+                    .Save("./HOLA_layout.png")
+
+                log.WriteLine("[HOLA] done. see ./HOLA_layout.png and ./HOLA_result.txt")
+            Catch ex As Exception
+                log.WriteLine("ERROR: " & ex.ToString())
+            End Try
+        End Using
+    End Sub
+
+    ''' <summary>
+    ''' HOLA 复杂合成网络压力测试 demo：
+    ''' 程序化生成约 48 个节点的多层混合拓扑（网格块 + 链式 + 星型 + 独立连通分量），
+    ''' 使用固定种子的随机散点初始坐标刻意制造大量边交叉，再调用 HOLA.DoLayout
+    ''' 进行六阶段正交布局，最后渲染为 PNG 供目视验证正交对齐与边连接正确性。
+    ''' </summary>
+    Sub holaComplexTest()
+        ' WinExe 工程无控制台，结果统一写入文件便于查看
+        Using log As New StreamWriter("./HOLA_complex_result.txt")
+            Try
+                Dim g As New NetworkGraph
+                Dim rnd As New Random(12345)
+
+                ' 用固定种子的随机散点作为 HOLA 起点，凸显去交叉/对齐/去重叠效果
+                Dim rndPos = Function() New FDGVector2(rnd.NextDouble() * 1000.0, rnd.NextDouble() * 1000.0)
+                Dim addNode = Sub(label As String)
+                                  Call g.AddNode(New inode With {
+                                      .label = label,
+                                      .data = New NodeData With {
+                                          .initialPostion = rndPos(),
+                                          .size = {18, 18}
+                                      }
+                                  })
+                              End Sub
+
+                ' === 1) 网格块 5 x 4 = 20 节点 ===
+                Dim rows = 5, cols = 4
+                Dim grid(rows - 1, cols - 1) As String
+                Dim nodeId = 0
+                For r As Integer = 0 To rows - 1
+                    For c As Integer = 0 To cols - 1
+                        Dim id = "n" & nodeId
+                        grid(r, c) = id
+                        Call addNode(id)
+                        nodeId += 1
+                    Next
+                Next
+                ' 行列相邻边
+                For r As Integer = 0 To rows - 1
+                    For c As Integer = 0 To cols - 1
+                        If c + 1 < cols Then Call g.AddEdge(grid(r, c), grid(r, c + 1))
+                        If r + 1 < rows Then Call g.AddEdge(grid(r, c), grid(r + 1, c))
+                    Next
+                Next
+                ' 跨行/跨列边，刻意制造交叉
+                Call g.AddEdge(grid(0, 0), grid(4, 3))
+                Call g.AddEdge(grid(0, 3), grid(4, 0))
+                Call g.AddEdge(grid(1, 1), grid(3, 2))
+                Call g.AddEdge(grid(2, 0), grid(2, 3))
+
+                ' === 2) 链式结构 12 节点，两端接到网格块形成长边交叉 ===
+                Dim chain(11) As String
+                For i As Integer = 0 To 11
+                    chain(i) = "c" & i
+                    Call addNode(chain(i))
+                Next
+                For i As Integer = 0 To 10
+                    Call g.AddEdge(chain(i), chain(i + 1))
+                Next
+                ' 链两端接到网格块对角，制造跨图长边
+                Call g.AddEdge(chain(0), grid(0, 0))
+                Call g.AddEdge(chain(11), grid(4, 3))
+
+                ' === 3) 星型结构 1 hub + 7 leaf，hub 连到网格块 ===
+                Dim hub = "hub"
+                Call addNode(hub)
+                Call g.AddEdge(hub, grid(2, 1))   ' hub 挂到网格块中心
+                For i As Integer = 0 To 6
+                    Dim leaf = "leaf" & i
+                    Call addNode(leaf)
+                    Call g.AddEdge(hub, leaf)
+                Next
+
+                ' === 4) 独立小连通分量 5 节点环，验证多分量不被误连 ===
+                Dim ring = {"r0", "r1", "r2", "r3", "r4"}
+                For Each rn In ring
+                    Call addNode(rn)
+                Next
+                For i As Integer = 0 To ring.Length - 1
+                    Call g.AddEdge(ring(i), ring((i + 1) Mod ring.Length))
+                Next
+
+                ' === 执行 HOLA 布局 ===
+                Call HOLA.DoLayout(g)
+
+                ' 统计节点/边/生成 bends 的边数
+                Dim nodeCount = 0
+                For Each n As inode In g.connectedNodes
+                    nodeCount += 1
+                Next
+                Dim totalEdges = 0, bendCount = 0
+                For Each e As Edge In g.graphEdges
+                    totalEdges += 1
+                    If e.data.bends IsNot Nothing AndAlso e.data.bends.Length > 0 Then
+                        bendCount += 1
+                    End If
+                Next
+                log.WriteLine($"=== HOLA complex network: {nodeCount} nodes, {totalEdges} edges, {bendCount} edges with bends ===")
+
+                ' 渲染为 PNG（放大画布以容纳更多节点；启用 drawEdgeBends 显示正交折点）
+                Call NetworkVisualizer.DrawImage(g, "1400,1400",
+                                                 displayId:=False,
+                                                 drawEdgeBends:=True,
+                                                 labelerIterations:=-1,
+                                                 minLinkWidth:=8) _
+                    .Save("./HOLA_complex_layout.png")
+
+                log.WriteLine("[HOLA] complex test done. see ./HOLA_complex_layout.png")
+            Catch ex As Exception
+                log.WriteLine("ERROR: " & ex.ToString())
+            End Try
+        End Using
     End Sub
 
     Sub test1()

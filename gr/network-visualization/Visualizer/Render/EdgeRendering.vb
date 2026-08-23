@@ -58,7 +58,6 @@
 
 Imports System.Drawing
 Imports System.Drawing.Drawing2D
-Imports Microsoft.VisualBasic.ComponentModel.Algorithm.base
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph
 Imports Microsoft.VisualBasic.Data.visualize.Network.Graph.EdgeBundling
 Imports Microsoft.VisualBasic.Imaging
@@ -196,21 +195,21 @@ Friend Class EdgeRendering
                 Call $"{edge.ID} removes {edge.data.bends.Length - bends.Length} bends points.".debug
             End If
 
-            If bends.Length = 1 Then
-                Yield draw.Render(g, {a, b})
-            Else
-                Dim segmentTuples = bends.SlideWindows(2).ToArray
+            ' 构造完整路径：起点 A + 全部 bends 拐点 + 终点 B
+            ' 每个 bend 用相对整条边 (A -> B) 的比例偏移还原为绝对坐标
+            Dim path As New List(Of PointF) From {a}
 
-                For i As Integer = 0 To segmentTuples.Length - 1
-                    Dim line As SlideWindow(Of WayPointVector) = segmentTuples(i)
-                    Dim pta = line(Scan0).GetPoint(a.X, a.Y, b.X, b.Y)
-                    Dim ptb = line(1).GetPoint(a.X, a.Y, b.X, b.Y)
+            For Each bend In bends
+                path.Add(bend.GetPoint(a.X, a.Y, b.X, b.Y))
+            Next
 
-                    draw.drawDir = If(i = segmentTuples.Length - 1, config.DrawEdgeDirection, False)
+            path.Add(b)
 
-                    Yield draw.Render(g, {pta, ptb})
-                Next
-            End If
+            For i As Integer = 0 To path.Count - 2
+                draw.drawDir = If(i = path.Count - 2, config.DrawEdgeDirection, False)
+
+                Yield draw.Render(g, {path(i), path(i + 1)})
+            Next
         Else
             If config.DrawEdgeDirection Then
                 ' needs reduce the line length

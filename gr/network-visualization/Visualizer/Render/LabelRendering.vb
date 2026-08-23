@@ -132,8 +132,18 @@ Friend Class LabelRendering
                     br = New SolidBrush(color)
                 End If
             Else
-                br = .color
-                br = New SolidBrush(DirectCast(br, SolidBrush).Color.Darken(0.005))
+                ' 节点标签颜色取自节点的 Brush，但该 Brush 未必是 SolidBrush，
+                ' 直接 DirectCast 会在 HatchBrush/TextureBrush 等非 SolidBrush 类型时崩溃。
+                ' 这里做类型安全处理：能取 SolidBrush.Color 就用它并略微调暗，否则回退到默认标签色。
+                Dim baseColor As Color
+
+                If TypeOf .color Is SolidBrush Then
+                    baseColor = DirectCast(.color, SolidBrush).Color
+                Else
+                    baseColor = defaultLabelColor.Color
+                End If
+
+                br = New SolidBrush(baseColor.Darken(0.005))
             End If
 
             lx = .label.X
@@ -167,9 +177,17 @@ Friend Class LabelRendering
             End With
 
             Dim rectf As RectangleF = rect.OffSet2D(.style.Size / 5, 0).ToFloat
-            Dim path As GraphicsPath = g.GetStringPath(.label.text, rectf, .style)
+            Dim path As GraphicsPath = Nothing
 
-            If Not labelTextStroke Is Nothing Then
+            Try
+                path = g.GetStringPath(.label.text, rectf, .style)
+            Catch ex As Exception
+                ' 某些字体/坐标组合下 GetStringPath 会抛 "Value is not valid"，
+                ' 这里降级为直接绘制文本字符串，保证标签始终可渲染。
+                path = Nothing
+            End Try
+
+            If Not labelTextStroke Is Nothing AndAlso Not path Is Nothing Then
                 ' 绘制轮廓（描边）
                 Call g.DrawString(.label.text, .style, br, lx, ly)
                 Call g.DrawPath(labelTextStroke, path)

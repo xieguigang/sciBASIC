@@ -1,0 +1,2 @@
+=== HOLA complex network: 45 nodes, 61 edges, 61 edges with bends ===
+[HOLA] complex test done. see ./HOLA_complex_layout.png

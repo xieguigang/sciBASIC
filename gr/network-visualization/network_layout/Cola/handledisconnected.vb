@@ -362,9 +362,13 @@ Namespace Cola
 
         End Sub
 
-        Private Function get_entire_width(data) As Double
+        Private Function get_entire_width(data As List(Of Graph)) As Double
             Dim width = 0.0
-            data.forEach(Sub(d) width += d.width + packingOptions.PADDING)
+
+            For Each d As Graph In data
+                width += d.Width + packingOptions.PADDING
+            Next
+
             Return width
         End Function
 
@@ -381,8 +385,8 @@ Namespace Cola
         ''' <param name="links"></param>
         ''' <returns></returns>
         Public Shared Function separateGraphs(nodes As any, links As Link(Of Node)()) As List(Of Graph)
-            Dim marks = New Object() {}
-            Dim ways As New List(Of List(Of Node))
+            Dim marks As New Dictionary(Of Integer, Integer)
+            Dim ways As New Dictionary(Of Integer, List(Of Node))
             Dim graphs As New List(Of Graph)
             Dim clusters = 0
 
@@ -391,13 +395,13 @@ Namespace Cola
                 Dim n1 = link.source
                 Dim n2 = link.target
 
-                If Not ways(n1.index) Is Nothing Then
+                If ways.ContainsKey(n1.index) Then
                     ways(n1.index).Add(n2)
                 Else
                     ways(n1.index) = New List(Of Node) From {n2}
                 End If
 
-                If Not ways(n2.index) Is Nothing Then
+                If ways.ContainsKey(n2.index) Then
                     ways(n2.index).Add(n1)
                 Else
                     ways(n2.index) = New List(Of Node) From {n1}
@@ -407,7 +411,7 @@ Namespace Cola
             For i As Integer = 0 To nodes.length - 1
                 Dim node = nodes(i)
 
-                If marks(node.index) IsNot Nothing Then
+                If marks.ContainsKey(node.index) Then
                     Continue For
                 Else
                     Call explore_node(node, True, marks, clusters, ways, graphs)
@@ -417,8 +421,8 @@ Namespace Cola
             Return graphs
         End Function
 
-        Private Shared Sub explore_node(n As Node, is_new As Boolean, marks As any(), ByRef clusters As Integer, ways As List(Of List(Of Node)), graphs As List(Of Graph))
-            If marks(n.index) IsNot Nothing Then
+        Private Shared Sub explore_node(n As Node, is_new As Boolean, marks As Dictionary(Of Integer, Integer), ByRef clusters As Integer, ways As Dictionary(Of Integer, List(Of Node)), graphs As List(Of Graph))
+            If marks.ContainsKey(n.index) Then
                 Return
             End If
             If is_new Then
@@ -430,9 +434,9 @@ Namespace Cola
             marks(n.index) = clusters
             graphs(clusters - 1).array.Add(n)
 
-            Dim adjacent = ways(n.index)
+            Dim adjacent As List(Of Node) = Nothing
 
-            If adjacent Is Nothing Then
+            If Not ways.TryGetValue(n.index, adjacent) OrElse adjacent Is Nothing Then
                 Return
             End If
 

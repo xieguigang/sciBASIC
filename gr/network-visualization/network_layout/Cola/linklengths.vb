@@ -101,7 +101,7 @@ Namespace Cola
         Private Function getNeighbours(Of Link)(links As Link(), la As LinkAccessor(Of Link)) As Dictionary(Of Integer, Dictionary(Of Integer, Object))
             Dim neighbours As New Dictionary(Of Integer, Dictionary(Of Integer, Object))
             Dim addNeighbours = Sub(u As Integer, v As Integer)
-                                    If neighbours(u) Is Nothing Then
+                                    If Not neighbours.ContainsKey(u) Then
                                         neighbours(u) = New Dictionary(Of Integer, any)
                                     End If
                                     neighbours(u)(v) = New Object
