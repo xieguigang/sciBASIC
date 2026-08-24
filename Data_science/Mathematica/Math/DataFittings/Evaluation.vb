@@ -56,7 +56,7 @@
 Imports System.Runtime.CompilerServices
 Imports Microsoft.VisualBasic.Linq
 Imports Microsoft.VisualBasic.Math.LinearAlgebra
-Imports stdNum = System.Math
+Imports std = System.Math
 
 ''' <summary>
 ''' Data fitting result evaluation.
@@ -116,7 +116,7 @@ Public Class Evaluation
         result.SSR = pCalc.Select(Function(t) t.SSR).Sum
         ' 残差平方和
         result.SSE = pCalc.Select(Function(t) t.SSE).Sum
-        result.RMSE = stdNum.Sqrt(result.SSE / CDbl(length))
+        result.RMSE = std.Sqrt(result.SSE / CDbl(length))
 
         Return result
     End Function
