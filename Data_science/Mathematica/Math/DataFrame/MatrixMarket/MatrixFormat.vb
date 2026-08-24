@@ -55,7 +55,7 @@ Public Module MatrixFormat
             Return m.WriteData(file)
         End If
 
-        Using wr As New BinaryWriter(file)
+        Using wr As New BinaryWriter(file, Encoding.ASCII, leaveOpen:=True)
             Call wr.Write(Encoding.ASCII.GetBytes(magicV2))
             ' 写入压缩标志位（位于 magic 之后、数据块之前）
             wr.Write(CByte(MatrixCompression.GZip))
